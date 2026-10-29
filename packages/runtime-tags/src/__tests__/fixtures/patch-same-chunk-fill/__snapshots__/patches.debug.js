@@ -9,7 +9,9 @@
         r(e)
       }
     }))()
-  },
+  }
+}
+{
   "PatchChild:BranchScopes:#text/3": {
     "PatchPending:#text/0": 1,
     "PatchChild:BranchScopes:#text/0": {
@@ -18,7 +20,7 @@
   }
 }
 (_.a.f(_.a = {
-  name: _(0)["PatchChild:BranchScopes:#text/3"]["PatchChild:BranchScopes:#text/0"]["PatchText:#text/0"]
+  name: _(1)["PatchChild:BranchScopes:#text/3"]["PatchChild:BranchScopes:#text/0"]["PatchText:#text/0"]
 }), 0)
 
 // PATCH
@@ -32,7 +34,9 @@
         r(e)
       }
     }))()
-  },
+  }
+}
+{
   "PatchChild:BranchScopes:#text/3": {
     "PatchPending:#text/0": 1,
     "PatchChild:BranchScopes:#text/0": {
@@ -41,7 +45,7 @@
   }
 }
 (_.a.f(_.a = {
-  name: _(0)["PatchChild:BranchScopes:#text/3"]["PatchChild:BranchScopes:#text/0"]["PatchText:#text/0"]
+  name: _(1)["PatchChild:BranchScopes:#text/3"]["PatchChild:BranchScopes:#text/0"]["PatchText:#text/0"]
 }), 0)
 
 // PATCH
@@ -55,7 +59,9 @@
         r(e)
       }
     }))()
-  },
+  }
+}
+{
   "PatchChild:BranchScopes:#text/3": {
     "PatchPending:#text/0": 1,
     "PatchChild:BranchScopes:#text/0": {
@@ -64,7 +70,7 @@
   }
 }
 (_.a.f(_.a = {
-  name: _(0)["PatchChild:BranchScopes:#text/3"]["PatchChild:BranchScopes:#text/0"]["PatchText:#text/0"]
+  name: _(1)["PatchChild:BranchScopes:#text/3"]["PatchChild:BranchScopes:#text/0"]["PatchText:#text/0"]
 }), 0)
 
 // PATCH
@@ -78,7 +84,9 @@
         r(e)
       }
     }))()
-  },
+  }
+}
+{
   "PatchChild:BranchScopes:#text/3": {
     "PatchPending:#text/0": 1,
     "PatchChild:BranchScopes:#text/0": {
@@ -87,5 +95,5 @@
   }
 }
 (_.a.f(_.a = {
-  name: _(0)["PatchChild:BranchScopes:#text/3"]["PatchChild:BranchScopes:#text/0"]["PatchText:#text/0"]
+  name: _(1)["PatchChild:BranchScopes:#text/3"]["PatchChild:BranchScopes:#text/0"]["PatchText:#text/0"]
 }), 0)

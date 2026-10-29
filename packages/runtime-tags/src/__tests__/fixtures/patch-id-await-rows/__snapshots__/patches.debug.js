@@ -34,7 +34,10 @@
         "PatchText:#text/1": "b"
       }
     }
-  }, 1, {
+  }]
+}
+{
+  "PatchLoopItem:#text/0": [1, {
     "PatchChild:BranchScopes:#text/1": {
       "PatchChild:#childScope/0": {
         "PatchSetup:": {

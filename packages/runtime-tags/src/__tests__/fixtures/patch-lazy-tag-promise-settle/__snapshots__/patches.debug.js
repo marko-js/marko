@@ -9,7 +9,9 @@
         r(e)
       }
     }))()
-  },
+  }
+}
+{
   "PatchChild:BranchScopes:#text/2": {
     "PatchPending:#text/0": 1,
     "PatchChild:BranchScopes:#text/0": {

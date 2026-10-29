@@ -971,7 +971,7 @@ export class Chunk {
   public catchRange: { id: string; end: Chunk } | null = null;
   public placeholder: {
     body: Chunk;
-    render: () => void;
+    render: (pending?: boolean) => void;
     branchId: number;
     scopeId: number;
     // Reserved ahead of the body for the placeholder's own branch.
@@ -1112,10 +1112,10 @@ export class Chunk {
     let end = body;
     while (end.next && !end.async) end = end.next;
 
-    if (end.async && state.writeReorders === false) {
+    if (state.writeReorders === false) {
       // A state that never reorders keeps the whole body in order: past each
-      // `<await>` is the rest it forked.
-      placeholder.render();
+      // `<await>` is the rest it forked. It learns if the body is pending.
+      placeholder.render(end.async);
       while (end.next) end = end.next;
     }
 
@@ -1131,8 +1131,11 @@ export class Chunk {
     const { effects } = this;
     const beforeBranch = deferBranchStart(this);
     if (
-      this.render(withBranchId, placeholderBranchId, placeholder.render) !==
-      this
+      this.render<number, () => void>(
+        withBranchId,
+        placeholderBranchId,
+        placeholder.render,
+      ) !== this
     ) {
       // TODO: eventually this should be allowed.
       // Once it's allowed we'll need check if placeholder needs to be disposed once body complete.

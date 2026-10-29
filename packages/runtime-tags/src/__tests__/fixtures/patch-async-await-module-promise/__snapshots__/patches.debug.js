@@ -1,14 +1,18 @@
 // PATCH
 [`packages/runtime-tags/src/__tests__/fixtures/patch-async-await-module-promise/template.marko_2*content;D ;<em> </em>`, `packages/runtime-tags/src/__tests__/fixtures/patch-async-await-module-promise/template.marko_1*shell;b%;<!><!><!>`, {
   "PatchBranch:#main/2": [{
-    "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-async-await-module-promise/template.marko_2*content",
+    "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-async-await-module-promise/template.marko_2*content"
+  }, "packages/runtime-tags/src/__tests__/fixtures/patch-async-await-module-promise/template.marko_1*shell"]
+}]
+{
+  "PatchChild:BranchScopes:#main/2": {
     "PatchChild:BranchScopes:#text/0": {
       "PatchSetup:": {
         "PatchText:#text/0": "thing"
       }
     }
-  }, "packages/runtime-tags/src/__tests__/fixtures/patch-async-await-module-promise/template.marko_1*shell"]
-}]
+  }
+}
 ;CQo
 
 // PATCH holding CQo
@@ -19,11 +23,15 @@
 // PATCH holding CQo
 {
   "PatchBranch:#main/2": [{
-    "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-async-await-module-promise/template.marko_2*content",
+    "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-async-await-module-promise/template.marko_2*content"
+  }, "packages/runtime-tags/src/__tests__/fixtures/patch-async-await-module-promise/template.marko_1*shell"]
+}
+{
+  "PatchChild:BranchScopes:#main/2": {
     "PatchChild:BranchScopes:#text/0": {
       "PatchSetup:": {
         "PatchText:#text/0": "thing"
       }
     }
-  }, "packages/runtime-tags/src/__tests__/fixtures/patch-async-await-module-promise/template.marko_1*shell"]
+  }
 }

@@ -1,6 +1,8 @@
 // PATCH
+{
+  "PatchText:#text/0": "Store!"
+}
 [`packages/runtime-tags/src/__tests__/fixtures/patch-async-try-placeholder/template.marko_2*content,<em>loading</em>`, {
-  "PatchText:#text/0": "Store!",
   "PatchChild:BranchScopes:#text/1": {
     "PatchPending:#text/0": 1
   }

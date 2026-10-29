@@ -18,14 +18,20 @@
     }))()
   }
 }]
-[{
+{
   "PatchChild:#childScope/1": {
     "PatchLoopItem:#text/0": [
       [0, 1], {
         "PatchChild:BranchScopes:#text/0": {
           "PatchText:#text/1": "b"
         }
-      },
+      }
+    ]
+  }
+}
+{
+  "PatchChild:#childScope/1": {
+    "PatchLoopItem:#text/0": [
       [1, 2], {
         "PatchChild:BranchScopes:#text/0": {
           "PatchText:#text/1": "b"
@@ -33,5 +39,6 @@
       }
     ]
   }
-}, _.b.f("b")][0]
+}
+(_.b.f("b"), 0)
 ;CgM

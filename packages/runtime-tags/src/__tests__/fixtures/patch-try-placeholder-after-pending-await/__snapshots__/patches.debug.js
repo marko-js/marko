@@ -1,6 +1,8 @@
 // PATCH
+{
+  "PatchPending:#text/0": 1
+}
 [`packages/runtime-tags/src/__tests__/fixtures/patch-try-placeholder-after-pending-await/template.marko_3*content,<i>loading</i>`, {
-  "PatchPending:#text/0": 1,
   "PatchChild:BranchScopes:#text/1": {
     "PatchPending:#text/0": 1
   }

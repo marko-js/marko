@@ -1,6 +1,8 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-page-created-try-placeholder/b.marko !packages/runtime-tags/src/__tests__/fixtures/patch-page-created-try-placeholder/b.marko_0; b%;<button>go</button><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-page-created-try-placeholder/b.marko_1*content;b%;<!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-page-created-try-placeholder/b.marko_3*content;D ;<p> </p>`, `packages/runtime-tags/src/__tests__/fixtures/patch-page-created-try-placeholder/b.marko_2*content`, {
-  "PatchDynamicTag:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-page-created-try-placeholder/b.marko",
+[`packages/runtime-tags/src/__tests__/fixtures/patch-page-created-try-placeholder/b.marko !packages/runtime-tags/src/__tests__/fixtures/patch-page-created-try-placeholder/b.marko_0; b%;<button>go</button><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-page-created-try-placeholder/b.marko_1*content;b%;<!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-page-created-try-placeholder/b.marko_3*content;D ;<p> </p>`, {
+  "PatchDynamicTag:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-page-created-try-placeholder/b.marko"
+}]
+[`packages/runtime-tags/src/__tests__/fixtures/patch-page-created-try-placeholder/b.marko_2*content`, {
   "PatchChild:BranchScopes:#text/0": {
     "PatchChild:BranchScopes:#text/1": [{
       "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-page-created-try-placeholder/b.marko_3*content"
@@ -13,7 +15,7 @@
       "PatchChild:BranchScopes:#text/0": {
         "PatchText:#text/0": "slow"
       }
-    }, $, _(0)["PatchChild:BranchScopes:#text/0"]["PatchChild:BranchScopes:#text/1"][2], _(0)["PatchChild:BranchScopes:#text/0"]["PatchChild:BranchScopes:#text/1"][3]]
+    }, $, _(1)["PatchChild:BranchScopes:#text/0"]["PatchChild:BranchScopes:#text/1"][2], _(1)["PatchChild:BranchScopes:#text/0"]["PatchChild:BranchScopes:#text/1"][3]]
   }
 }
 ;DzY

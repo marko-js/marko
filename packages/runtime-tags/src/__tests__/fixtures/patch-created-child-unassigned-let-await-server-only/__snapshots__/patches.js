@@ -2,14 +2,18 @@
 [`b;b%;<!><!><!>`, `b0;D ;<p> </p>`, {
   fa: "b",
   cAa: {
-    pa: "b0",
+    pa: "b0"
+  }
+}]
+{
+  cAa: {
     cAa: {
       s: {
         ta: 2
       }
     }
   }
-}]
+}
 ;CQY
 
 // PATCH holding CQY
@@ -23,7 +27,11 @@
 {
   fa: "b",
   cAa: {
-    pa: "b0",
+    pa: "b0"
+  }
+}
+{
+  cAa: {
     cAa: {
       s: {
         ta: 3

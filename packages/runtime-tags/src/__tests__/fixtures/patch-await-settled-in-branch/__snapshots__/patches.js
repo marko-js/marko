@@ -19,10 +19,14 @@
 // PATCH holding CQo
 {
   ba: [{
-    pa: "a0",
+    pa: "a0"
+  }, "a2"],
+  tb: "d"
+}
+{
+  cAa: {
     cAa: {
       ta: "y"
     }
-  }, "a2"],
-  tb: "d"
+  }
 }

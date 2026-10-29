@@ -1,6 +1,8 @@
 // PATCH
+{
+  pa: 1
+}
 [`b !b0; b%;<button class=toggle>toggle</button><!><!>`, `a7`, {
-  pa: 1,
   cAa: {
     fa: ["b", "a7"],
     cAa: {
@@ -24,13 +26,32 @@
 ;EcA
 
 // PATCH holding EcA
-[`a11 !;D l%;<b> </b><!><!>`, `a0`, {
-  pa: 1,
+{
+  pa: 1
+}
+[`a11 !;D l%;<b> </b><!><!>`, {
   cAa: {
     fa: [">div", "a7"],
     cAa: {
       cAa: {
-        pa: "a11",
+        pa: "a11"
+      }
+    }
+  },
+  va17: (p => p = new Promise((f, r) => _.a = {
+    f,
+    r(e) {
+      p.catch(_ => 0);
+      r(e)
+    }
+  }))(),
+  va18: !0,
+  va8: "c"
+}]
+[`a0`, {
+  cAa: {
+    cAa: {
+      cAa: {
         cAa: {
           ta: "z",
           fb: ["b", "a0"],
@@ -46,14 +67,6 @@
       }
     }
   },
-  va17: (p => p = new Promise((f, r) => _.a = {
-    f,
-    r(e) {
-      p.catch(_ => 0);
-      r(e)
-    }
-  }))(),
-  va18: !0,
   va8: "c"
 }]
 (_.a.f("z"), 0)
@@ -61,7 +74,9 @@
 
 // PATCH holding EcY
 {
-  pa: 1,
+  pa: 1
+}
+{
   cAa: {
     fa: ["b", "a7"],
     cAa: {

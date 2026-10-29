@@ -1,6 +1,8 @@
 // PATCH
-[`b !b6; b%;<button>go</button><!><!>`, `b3;b%;<!><!><!>`, `b0;D ;<p> </p>`, `b1`, {
-  fa: "b",
+[`b !b6; b%;<button>go</button><!><!>`, `b3;b%;<!><!><!>`, `b0;D ;<p> </p>`, {
+  fa: "b"
+}]
+[`b1`, {
   cAa: {
     cAb: [{
       pa: "b0"

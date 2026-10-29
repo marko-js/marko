@@ -1,10 +1,12 @@
 // PATCH
-[`a2`, {
+{
   ta: "Store!",
+  pc: 1
+}
+[`a2`, {
   cAb: {
     pa: 1
-  },
-  pc: 1
+  }
 }]
 {
   cAb: {

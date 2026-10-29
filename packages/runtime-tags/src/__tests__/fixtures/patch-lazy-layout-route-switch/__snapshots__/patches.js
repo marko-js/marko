@@ -33,15 +33,21 @@ a, c, [`d4;b%b/b&b;<!><!><h1>B</h1><!>`, {
       fb: "^^d1",
       cAb: {
         ba: [1, {}, "d4"]
-      },
+      }
+    }
+  }, "d2"]
+}]
+{
+  cAa: {
+    cb: {
       cAa: {
         la: [{
           ta: "x"
         }, "a0"]
       }
     }
-  }, "d2"]
-}]
+  }
+}
 ;GYYL
 
 // PATCH holding GYYL

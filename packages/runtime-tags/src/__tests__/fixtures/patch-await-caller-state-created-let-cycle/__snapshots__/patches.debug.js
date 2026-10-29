@@ -4,11 +4,17 @@
     "PatchChild:#childScope/0": {
       "PatchSetup:": {
         "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-await-caller-state-created-let-cycle/tags/show-await.marko_1*content"
-      },
-      "PatchChild:BranchScopes:#text/0": {
-        "PatchText:#text/1": "b"
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-await-caller-state-created-let-cycle/template.marko_1*shell"]
 }]
+{
+  "PatchChild:BranchScopes:#text/1": {
+    "PatchChild:#childScope/0": {
+      "PatchChild:BranchScopes:#text/0": {
+        "PatchText:#text/1": "b"
+      }
+    }
+  }
+}
 ;CxQ

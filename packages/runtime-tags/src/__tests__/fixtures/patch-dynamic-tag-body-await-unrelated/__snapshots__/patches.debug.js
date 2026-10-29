@@ -6,11 +6,13 @@
       "PatchText:#text/0": "b"
     }
   },
-  "PatchPending:#text/1": 1,
+  "PatchPending:#text/1": 1
+}]
+{
   "PatchChild:BranchScopes:#text/1": {
     "PatchText:#text/0": "y"
   }
-}]
+}
 ;CgM
 
 // PATCH holding CgM

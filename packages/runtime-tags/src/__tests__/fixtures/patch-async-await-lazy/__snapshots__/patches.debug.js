@@ -1,10 +1,12 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-async-await-lazy/template.marko_2*content`, {
+{
   "PatchText:#text/0": "Store!",
+  "PatchPending:#text/2": 1
+}
+[`packages/runtime-tags/src/__tests__/fixtures/patch-async-await-lazy/template.marko_2*content`, {
   "PatchChild:BranchScopes:#text/1": {
     "PatchPending:#text/0": 1
-  },
-  "PatchPending:#text/2": 1
+  }
 }]
 {
   "PatchChild:BranchScopes:#text/1": {

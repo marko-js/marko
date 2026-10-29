@@ -1,6 +1,8 @@
 // PATCH
 {
-  pa: 1,
+  pa: 1
+}
+{
   cAa: {
     ta: "b"
   }

@@ -44,12 +44,12 @@
 REMOVE: button
 REMOVE: b
 REMOVE: div
+INSERT: button, b
+INSERT: b:nth-of-type(1) + div
 INSERT: div + button
 INSERT: button:nth-of-type(2) + b
 UPDATE: b:nth-of-type(2)::text@0 "" => "e"
 UPDATE: b:nth-of-type(2)::text@2 "" => "y"
-INSERT: button, b
-INSERT: b:nth-of-type(1) + div
 ```
 
 # Update

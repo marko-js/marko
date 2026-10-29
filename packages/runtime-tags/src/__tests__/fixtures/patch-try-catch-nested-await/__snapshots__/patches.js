@@ -1,6 +1,5 @@
 // PATCH
 [`a1;D ;<span> </span>`, {
-  cAa: 0,
   ka: [{
     ta: "boom"
   }, "a1"]

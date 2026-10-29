@@ -1,6 +1,5 @@
 // PATCH
 [`packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-child-await/template.marko_2*content;D ;<b> </b>`, {
-  "PatchChild:BranchScopes:#text/0": 0,
   "PatchCatch:#text/0": [{
     "PatchText:#text/0": "boom"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-child-await/template.marko_2*content"]

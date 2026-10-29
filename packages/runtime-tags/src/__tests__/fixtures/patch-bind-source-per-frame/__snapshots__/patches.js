@@ -2,7 +2,9 @@
 {
   xf: "b",
   pa: 1,
-  pb: 1,
+  pb: 1
+}
+{
   cAa: {
     ja: {
       id: "one",

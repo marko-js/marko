@@ -1,15 +1,18 @@
 // PATCH
 [`a2,<span>ok</span>`, {
-  cAa: 0,
-  va9: "b",
-  ka: []
+  va9: "b"
 }]
+{
+  ka: []
+}
 ;CAE
 
 // PATCH holding CAE
 {
+  va9: "c"
+}
+{
   cAa: [{
     pa: "a2"
-  }, "a7"],
-  va9: "c"
+  }, "a7"]
 }

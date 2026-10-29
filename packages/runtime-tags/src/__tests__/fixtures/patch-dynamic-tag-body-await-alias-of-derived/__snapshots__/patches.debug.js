@@ -1,8 +1,13 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-alias-of-derived/tags/card.marko;b%;<!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-alias-of-derived/template.marko_1*content`, `packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-alias-of-derived/tags/card.marko_1*content;b%;<!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-alias-of-derived/tags/keeper.marko !packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-alias-of-derived/tags/keeper.marko_0; b%;<button class=toggle>toggle</button><!><!>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-alias-of-derived/tags/card.marko;b%;<!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-alias-of-derived/template.marko_1*content`, `packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-alias-of-derived/tags/card.marko_1*content;b%;<!><!><!>`, {
   "PatchDynamicTag:#text/0": ["packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-alias-of-derived/tags/card.marko", "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-alias-of-derived/template.marko_1*content"],
   "PatchChild:BranchScopes:#text/0": {
-    "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-alias-of-derived/tags/card.marko_1*content",
+    "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-alias-of-derived/tags/card.marko_1*content"
+  },
+  "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-alias-of-derived/template.marko_fill2": "b"
+}]
+[`packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-alias-of-derived/tags/keeper.marko !packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-alias-of-derived/tags/keeper.marko_0; b%;<button class=toggle>toggle</button><!><!>`, {
+  "PatchChild:BranchScopes:#text/0": {
     "PatchChild:BranchScopes:#text/0": {
       "PatchDynamicTag:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-alias-of-derived/tags/keeper.marko",
       "PatchChild:BranchScopes:#text/0": {
@@ -12,8 +17,7 @@
         "PatchBindFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-alias-of-derived/tags/keeper.marko_fill0": "^^^packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-alias-of-derived/template.marko_1*content"
       }
     }
-  },
-  "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-alias-of-derived/template.marko_fill2": "b"
+  }
 }]
 ;DS0
 
@@ -21,7 +25,12 @@
 {
   "PatchDynamicTag:#text/0": ["packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-alias-of-derived/tags/card.marko", "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-alias-of-derived/template.marko_1*content"],
   "PatchChild:BranchScopes:#text/0": {
-    "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-alias-of-derived/tags/card.marko_1*content",
+    "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-alias-of-derived/tags/card.marko_1*content"
+  },
+  "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-alias-of-derived/template.marko_fill2": "c"
+}
+{
+  "PatchChild:BranchScopes:#text/0": {
     "PatchChild:BranchScopes:#text/0": {
       "PatchDynamicTag:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-alias-of-derived/tags/keeper.marko",
       "PatchChild:BranchScopes:#text/0": {
@@ -31,6 +40,5 @@
         "PatchBindFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-alias-of-derived/tags/keeper.marko_fill0": "^^^packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-alias-of-derived/template.marko_1*content"
       }
     }
-  },
-  "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-alias-of-derived/template.marko_fill2": "c"
+  }
 }

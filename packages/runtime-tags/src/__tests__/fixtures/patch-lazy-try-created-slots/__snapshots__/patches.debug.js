@@ -1,6 +1,9 @@
 // PATCH
 "ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-try-created-slots/child.marko", [`packages/runtime-tags/src/__tests__/fixtures/patch-lazy-try-created-slots/child.marko_1*content;b%;<!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-lazy-try-created-slots/child.marko_4*content;D ;<em> </em>`, `packages/runtime-tags/src/__tests__/fixtures/patch-lazy-try-created-slots/template.marko_1*shell;b%b/b%c&b;<!><!><!><!><!><!>`, {
-  "PatchBranch:#main/0": [{
+  "PatchBranch:#main/0": "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-try-created-slots/template.marko_1*shell"
+}]
+{
+  "PatchChild:BranchScopes:#main/0": {
     "PatchChild:#childScope/1": {
       "PatchChild:BranchScopes:#text/0": [{
         "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-try-created-slots/child.marko_4*content",
@@ -9,26 +12,29 @@
         }
       }, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-try-created-slots/child.marko_3*content", "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-try-created-slots/child.marko_1*content", "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-try-created-slots/child.marko_2*content"]
     }
-  }, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-try-created-slots/template.marko_1*shell"]
-}]
+  }
+}
 ;EaI
 
 // PATCH holding EaI
-"ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-try-created-slots/child.marko", [`packages/runtime-tags/src/__tests__/fixtures/patch-lazy-try-created-slots/child.marko_2*content,<i>loading</i>`, {
-  "PatchBranch:#main/0": [{
+"ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-try-created-slots/child.marko", {
+  "PatchBranch:#main/0": "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-try-created-slots/template.marko_1*shell"
+}
+[`packages/runtime-tags/src/__tests__/fixtures/patch-lazy-try-created-slots/child.marko_2*content,<i>loading</i>`, {
+  "PatchChild:BranchScopes:#main/0": {
     "PatchChild:#childScope/1": {
       "PatchChild:BranchScopes:#text/0": [{
         "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-try-created-slots/child.marko_4*content"
       }, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-try-created-slots/child.marko_3*content", "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-try-created-slots/child.marko_1*content", "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-try-created-slots/child.marko_2*content"]
     }
-  }, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-try-created-slots/template.marko_1*shell"]
+  }
 }]
 [`packages/runtime-tags/src/__tests__/fixtures/patch-lazy-try-created-slots/child.marko_3*content;D ;<b> </b>`, {
   "PatchChild:BranchScopes:#main/0": {
     "PatchChild:#childScope/1": {
       "PatchCatch:#text/0": [{
         "PatchText:#text/0": "boom"
-      }, _(0)["PatchBranch:#main/0"][0]["PatchChild:#childScope/1"]["PatchChild:BranchScopes:#text/0"][1]]
+      }, _(1)["PatchChild:BranchScopes:#main/0"]["PatchChild:#childScope/1"]["PatchChild:BranchScopes:#text/0"][1]]
     }
   }
 }]
@@ -36,7 +42,10 @@
 
 // PATCH holding Ebo
 "ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-try-created-slots/child.marko", {
-  "PatchBranch:#main/0": [{
+  "PatchBranch:#main/0": "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-try-created-slots/template.marko_1*shell"
+}
+{
+  "PatchChild:BranchScopes:#main/0": {
     "PatchChild:#childScope/1": {
       "PatchChild:BranchScopes:#text/0": [{
         "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-try-created-slots/child.marko_4*content",
@@ -45,5 +54,5 @@
         }
       }, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-try-created-slots/child.marko_3*content", "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-try-created-slots/child.marko_1*content", "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-try-created-slots/child.marko_2*content"]
     }
-  }, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-try-created-slots/template.marko_1*shell"]
+  }
 }

@@ -1,6 +1,8 @@
 // PATCH
+{
+  pa: 1
+}
 [`b !b0; b%;<button class=toggle>toggle</button><!><!>`, `a0`, {
-  pa: 1,
   cAa: {
     ca: {
       fa: ["b", "a0"],
@@ -18,7 +20,9 @@
 
 // PATCH holding CxI
 {
-  pa: 1,
+  pa: 1
+}
+{
   cAa: {
     ca: {
       fa: ["b", "a0"],

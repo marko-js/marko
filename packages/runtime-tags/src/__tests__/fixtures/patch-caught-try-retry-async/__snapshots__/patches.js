@@ -1,9 +1,12 @@
 // PATCH
-[`a3;b%;<!><!><!>`, `a0;D ;<p> </p>`, `a4;b%;<!><!><!>`, `a1,Unavailable`, {
-  ba: [{
+[`a3;b%;<!><!><!>`, `a0;D ;<p> </p>`, `a4;b%;<!><!><!>`, {
+  ba: "a4"
+}]
+[`a1,Unavailable`, {
+  cAa: {
     cAa: [0, "a1", "a3"],
     ka: []
-  }, "a4"]
+  }
 }]
 ;DTY
 
@@ -14,12 +17,15 @@
 
 // PATCH holding DTY
 {
-  ba: [{
+  ba: "a4"
+}
+{
+  cAa: {
     cAa: [{
       pa: "a0",
       cAa: {
         ta: "ready"
       }
     }, "a1", "a3"]
-  }, "a4"]
+  }
 }

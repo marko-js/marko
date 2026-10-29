@@ -1,6 +1,9 @@
 // PATCH
 [`packages/runtime-tags/src/__tests__/fixtures/patch-await-caller-state-if-created-placeholder-pending/tags/show-await.marko_1*content;b%;<!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-await-caller-state-if-created-placeholder-pending/tags/show-await.marko_2*content;D%c%;<p><!>:<!></p>`, `packages/runtime-tags/src/__tests__/fixtures/patch-await-caller-state-if-created-placeholder-pending/template.marko_1*shell packages/runtime-tags/src/__tests__/fixtures/patch-await-caller-state-if-created-placeholder-pending/template.marko_1_p#0:7/init;b/b%c&b;<!><!><!><!><!>`, {
-  "PatchBranch:#text/2": [{
+  "PatchBranch:#text/2": "packages/runtime-tags/src/__tests__/fixtures/patch-await-caller-state-if-created-placeholder-pending/template.marko_1*shell"
+}]
+{
+  "PatchChild:BranchScopes:#text/2": {
     "PatchChild:#childScope/0": {
       "PatchChild:BranchScopes:#text/0": [{
         "PatchSetup:": {
@@ -12,13 +15,16 @@
         }
       }, $, "packages/runtime-tags/src/__tests__/fixtures/patch-await-caller-state-if-created-placeholder-pending/tags/show-await.marko_1*content", "packages/runtime-tags/src/__tests__/fixtures/patch-await-caller-state-if-created-placeholder-pending/tags/show-await.marko_3*content"]
     }
-  }, "packages/runtime-tags/src/__tests__/fixtures/patch-await-caller-state-if-created-placeholder-pending/template.marko_1*shell"]
-}]
+  }
+}
 ;D0o
 
 // PATCH holding D0o
 {
-  "PatchBranch:#text/2": [{
+  "PatchBranch:#text/2": "packages/runtime-tags/src/__tests__/fixtures/patch-await-caller-state-if-created-placeholder-pending/template.marko_1*shell"
+}
+{
+  "PatchChild:BranchScopes:#text/2": {
     "PatchChild:#childScope/0": {
       "PatchChild:BranchScopes:#text/0": [{
         "PatchSetup:": {
@@ -30,5 +36,5 @@
         }
       }, $, "packages/runtime-tags/src/__tests__/fixtures/patch-await-caller-state-if-created-placeholder-pending/tags/show-await.marko_1*content", "packages/runtime-tags/src/__tests__/fixtures/patch-await-caller-state-if-created-placeholder-pending/tags/show-await.marko_3*content"]
     }
-  }, "packages/runtime-tags/src/__tests__/fixtures/patch-await-caller-state-if-created-placeholder-pending/template.marko_1*shell"]
+  }
 }

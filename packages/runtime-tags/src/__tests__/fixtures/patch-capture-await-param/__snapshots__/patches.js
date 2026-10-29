@@ -1,6 +1,8 @@
 // PATCH
 {
-  pa: 1,
+  pa: 1
+}
+{
   cAa: {
     xc: "b",
     ca: {
@@ -12,7 +14,9 @@
 
 // PATCH
 {
-  pa: 1,
+  pa: 1
+}
+{
   cAa: {
     xc: "b",
     ca: {

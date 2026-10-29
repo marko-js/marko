@@ -4,14 +4,22 @@
     "PatchChild:#childScope/0": {
       "PatchDynamicTag:#text/0": "^^packages/runtime-tags/src/__tests__/fixtures/patch-content-await/template.marko_2*content",
       "PatchChild:BranchScopes:#text/0": {
-        "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-content-await/template.marko_3*content",
+        "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-content-await/template.marko_3*content"
+      }
+    }
+  }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-await/template.marko_1*shell"]
+}]
+{
+  "PatchChild:BranchScopes:#main/0": {
+    "PatchChild:#childScope/0": {
+      "PatchChild:BranchScopes:#text/0": {
         "PatchChild:BranchScopes:#text/0": {
           "PatchText:#text/0": "x"
         }
       }
     }
-  }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-await/template.marko_1*shell"]
-}]
+  }
+}
 ;DSw
 
 // PATCH holding DSw
@@ -20,13 +28,21 @@
     "PatchChild:#childScope/0": {
       "PatchDynamicTag:#text/0": "^^packages/runtime-tags/src/__tests__/fixtures/patch-content-await/template.marko_2*content",
       "PatchChild:BranchScopes:#text/0": {
-        "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-content-await/template.marko_3*content",
+        "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-content-await/template.marko_3*content"
+      }
+    }
+  }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-await/template.marko_1*shell"]
+}
+{
+  "PatchChild:BranchScopes:#main/0": {
+    "PatchChild:#childScope/0": {
+      "PatchChild:BranchScopes:#text/0": {
         "PatchChild:BranchScopes:#text/0": {
           "PatchText:#text/0": "y"
         }
       }
     }
-  }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-await/template.marko_1*shell"]
+  }
 }
 
 // PATCH holding DSw
@@ -40,11 +56,19 @@
     "PatchChild:#childScope/0": {
       "PatchDynamicTag:#text/0": "^^packages/runtime-tags/src/__tests__/fixtures/patch-content-await/template.marko_2*content",
       "PatchChild:BranchScopes:#text/0": {
-        "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-content-await/template.marko_3*content",
+        "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-content-await/template.marko_3*content"
+      }
+    }
+  }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-await/template.marko_1*shell"]
+}
+{
+  "PatchChild:BranchScopes:#main/0": {
+    "PatchChild:#childScope/0": {
+      "PatchChild:BranchScopes:#text/0": {
         "PatchChild:BranchScopes:#text/0": {
           "PatchText:#text/0": "z"
         }
       }
     }
-  }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-await/template.marko_1*shell"]
+  }
 }

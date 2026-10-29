@@ -2,12 +2,16 @@
 [`a0;D ;<em> </em>`, `a2;b%;<!><!><!>`, {
   ta: "Store",
   bb: [{
-    pa: "a0",
+    pa: "a0"
+  }, "a2"]
+}]
+{
+  cAb: {
     cAa: {
       ta: "hi"
     }
-  }, "a2"]
-}]
+  }
+}
 ;Cwo
 
 // PATCH holding Cwo

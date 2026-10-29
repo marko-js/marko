@@ -20,7 +20,6 @@ import "./child.feat";
 import "./loop-item.feat";
 import { createBranch, setupBranch } from "../renderer";
 import { collectScopes, syncGen } from "../scope";
-import type { Signal } from "../signals";
 import { applyInFlush, flushWait } from "./apply";
 import {
   patchers,
@@ -63,7 +62,7 @@ patchers[PatchKey.Pending] = (scope, accessor, value) => {
       });
       return onStreamLanded(
         scope,
-        (_: Scope) =>
+        (_?: never) =>
           deferred === scope[AccessorPrefix.Promise + accessor] && pend(),
       );
     }
@@ -103,9 +102,9 @@ function createAwaitBranch(scope: Scope, accessor: Accessor, id: string | 0) {
   (scope[link] as BranchScope)[AccessorProp.PendingScopes] = pendingScopes;
 }
 
-// Queues `signal` as a render once the reorder's walk links the body of the
-// streaming try holding `scope`, as `_await_promise` does a deferred value.
-function onStreamLanded<T>(scope: Scope, signal: Signal<T>, value?: T) {
+// Queues `render` once the reorder's walk links the body of the streaming try
+// holding `scope`, after those queued before it.
+function onStreamLanded(scope: Scope, render: () => void) {
   // A custom tag's child the walk has not reached links to its branch only
   // through its owners.
   while (!scope[AccessorProp.ClosestBranch]) {
@@ -118,9 +117,20 @@ function onStreamLanded<T>(scope: Scope, signal: Signal<T>, value?: T) {
       "A patch reached an `<await>` whose in-order content is still streaming. Start patches from an effect, which in-order content holds until it completes (RESUMABILITY.md, Timing).",
     );
   }
-  const complete = (tryBranch[AccessorProp.AwaitCounter] as AwaitCounter).c;
-  (tryBranch[AccessorProp.AwaitCounter] as AwaitCounter).c = (_?: never) =>
-    complete() || queueAsyncRender(scope, signal, value);
+  const awaitCounter = tryBranch[AccessorProp.AwaitCounter] as AwaitCounter;
+  if (!awaitCounter.l) {
+    const complete = awaitCounter.c;
+    const landed = (awaitCounter.l = []);
+    awaitCounter.c = (_?: never) =>
+      complete() || queueAsyncRender(tryBranch, runLanded, landed);
+  }
+  awaitCounter.l.push(render);
+}
+
+// One render runs them in the order the flushes queued them: renders queued on
+// one scope run in no set order.
+function runLanded(_: Scope, landed: (() => void)[]) {
+  for (const render of landed.splice(0)) render();
 }
 
 // A created body's setup ran as its patch applied: `resolveAwait` only inserts it.
@@ -150,14 +160,16 @@ patchers[PatchKey.Child] = (scope, link, value) => {
     const wait = flushWait;
     const settle = wait();
     // A flush applies outside a run's renders, so in that run's effects.
-    onStreamLanded(scope, queueEffect, (_: Scope) =>
-      settle(
-        // A later response superseded this one: settled as applied.
-        stop !== render[RenderDataProp.StopPatch] ||
-          !scope[link] ||
-          applyInFlush(wait, render, (_?: never) =>
-            patchScope({ [PatchKey.Child + link]: value } as Scope, scope),
-          ),
+    onStreamLanded(scope, (_?: never) =>
+      queueEffect(scope, (_: Scope) =>
+        settle(
+          // A later response superseded this one: settled as applied.
+          stop !== render[RenderDataProp.StopPatch] ||
+            !scope[link] ||
+            applyInFlush(wait, render, (_?: never) =>
+              patchScope({ [PatchKey.Child + link]: value } as Scope, scope),
+            ),
+        ),
       ),
     );
   } else {

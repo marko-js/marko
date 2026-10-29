@@ -3,7 +3,13 @@
   cc: {
     cAa: {
       ta: "b",
-      pc: 1,
+      pc: 1
+    }
+  }
+}
+{
+  cc: {
+    cAa: {
       cAc: {
         ta: "b"
       }
@@ -16,7 +22,13 @@
   cc: {
     cAa: {
       ta: "c",
-      pc: 1,
+      pc: 1
+    }
+  }
+}
+{
+  cc: {
+    cAa: {
       cAc: {
         ta: "c"
       }

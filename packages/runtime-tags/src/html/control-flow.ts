@@ -607,7 +607,7 @@ export function _try(
 
 export function tryPlaceholder(
   content: () => void,
-  placeholder: () => void,
+  placeholder: (pending?: boolean) => void,
   branchId: number,
   scopeId: number,
   placeholderBranchId: number,

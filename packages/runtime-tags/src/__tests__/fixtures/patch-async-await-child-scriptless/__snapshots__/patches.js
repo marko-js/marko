@@ -1,24 +1,32 @@
 // PATCH
 [`a0;/D l&;<b class=pill> </b>`, `a2;b%;<!><!><!>`, {
   ba: [{
-    pa: "a0",
+    pa: "a0"
+  }, "a2"]
+}]
+{
+  cAa: {
     cAa: {
       ca: {
         ta: "one"
       }
     }
-  }, "a2"]
-}]
+  }
+}
 ;DQo
 
 // PATCH holding DQo
 {
   ba: [{
-    pa: "a0",
+    pa: "a0"
+  }, "a2"]
+}
+{
+  cAa: {
     cAa: {
       ca: {
         ta: "two"
       }
     }
-  }, "a2"]
+  }
 }

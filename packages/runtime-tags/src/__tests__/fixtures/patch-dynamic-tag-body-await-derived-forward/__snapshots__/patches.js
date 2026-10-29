@@ -1,8 +1,13 @@
 // PATCH
-[`b;b%;<!><!><!>`, `a0`, `b7 !;b%;<!><!><!>`, `c !c0; b%;<button class=toggle>toggle</button><!><!>`, `b0`, {
+[`b;b%;<!><!><!>`, `a0`, `b7 !;b%;<!><!><!>`, {
   fa: ["b", "a0"],
   cAa: {
-    pa: "b7",
+    pa: "b7"
+  },
+  va5: "b"
+}]
+[`c !c0; b%;<button class=toggle>toggle</button><!><!>`, `b0`, {
+  cAa: {
     cAa: {
       fa: ["c", "b0"],
       cAa: {
@@ -13,8 +18,7 @@
       },
       ub3: "^^a0"
     }
-  },
-  va5: "b"
+  }
 }]
 ;D14
 
@@ -22,7 +26,12 @@
 {
   fa: ["b", "a0"],
   cAa: {
-    pa: "b7",
+    pa: "b7"
+  },
+  va5: "c"
+}
+{
+  cAa: {
     cAa: {
       fa: ["c", "b0"],
       cAa: {
@@ -33,6 +42,5 @@
       },
       ub3: "^^a0"
     }
-  },
-  va5: "c"
+  }
 }

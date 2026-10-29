@@ -65,7 +65,11 @@ patch, fill, structural param, shell).
   `decisions.ts`).
 - **Flushes.** `html/patches/writer.ts` (`PatchRenderState`) collects a flush's entries into
   one nested tree of patches rooted at the page root; scope ids never ride
-  the wire, a patch nests under its parent's structural entry. Each flush
+  the wire, a patch nests under its parent's structural entry. It serializes
+  a flush at each step, as a document does, so a settled value ships in the
+  write that carries its promise; a `<try>` body with a placeholder or catch
+  waits for its settle, its catch or the write that reaches it, as a document
+  decides in-order content once the stream reaches it. Each flush
   is one line and one expression, which `joinFlush` asserts in debug; an
   empty line ends each write, and `dom/patches/apply.ts` applies a write's
   flushes together, evaluating each as an arrow's body.

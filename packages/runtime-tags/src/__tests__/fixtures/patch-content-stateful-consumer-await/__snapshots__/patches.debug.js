@@ -13,7 +13,7 @@
     }
   }))()
 }]
-[{
+{
   "PatchChild:#childScope/0": {
     "PatchChild:BranchScopes:#text/1": {
       "PatchChild:BranchScopes:#text/0": {
@@ -21,5 +21,6 @@
       }
     }
   }
-}, _.a.f("two")][0]
+}
+(_.a.f("two"), 0)
 ;BgI

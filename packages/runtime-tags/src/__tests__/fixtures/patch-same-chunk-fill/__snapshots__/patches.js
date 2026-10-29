@@ -9,7 +9,9 @@
         r(e)
       }
     }))()
-  },
+  }
+}
+{
   cAd: {
     pa: 1,
     cAa: {
@@ -18,7 +20,7 @@
   }
 }
 (_.a.f(_.a = {
-  name: _(0).cAd.cAa.ta
+  name: _(1).cAd.cAa.ta
 }), 0)
 
 // PATCH
@@ -32,7 +34,9 @@
         r(e)
       }
     }))()
-  },
+  }
+}
+{
   cAd: {
     pa: 1,
     cAa: {
@@ -41,7 +45,7 @@
   }
 }
 (_.a.f(_.a = {
-  name: _(0).cAd.cAa.ta
+  name: _(1).cAd.cAa.ta
 }), 0)
 
 // PATCH
@@ -55,7 +59,9 @@
         r(e)
       }
     }))()
-  },
+  }
+}
+{
   cAd: {
     pa: 1,
     cAa: {
@@ -64,7 +70,7 @@
   }
 }
 (_.a.f(_.a = {
-  name: _(0).cAd.cAa.ta
+  name: _(1).cAd.cAa.ta
 }), 0)
 
 // PATCH
@@ -78,7 +84,9 @@
         r(e)
       }
     }))()
-  },
+  }
+}
+{
   cAd: {
     pa: 1,
     cAa: {
@@ -87,5 +95,5 @@
   }
 }
 (_.a.f(_.a = {
-  name: _(0).cAd.cAa.ta
+  name: _(1).cAd.cAa.ta
 }), 0)

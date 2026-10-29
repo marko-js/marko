@@ -269,9 +269,8 @@ export function addSetupId(
   id: string,
 ) {
   const setup = ensurePatchSetup(state, ensureScopePatch(state, scopeId));
-  const setupIds = (state.setupIds ??= new Map());
-  let ids = setupIds.get(setup);
-  if (!ids) setupIds.set(setup, (ids = new Set()));
+  let ids = state.setupIds.get(setup);
+  if (!ids) state.setupIds.set(setup, (ids = new Set()));
   if (!ids.has(id)) {
     ids.add(id);
     setup[PatchKey.Init] = setup[PatchKey.Init]
@@ -308,7 +307,7 @@ export function patchTreeNode<T extends object>(
   state: PatchRenderState,
   node: T,
 ) {
-  (state.patchTreeNodes ||= new Set()).add(node);
+  state.patchTreeNodes.add(node);
   return node;
 }
 
@@ -371,8 +370,6 @@ export function linkScopePatch(
     // Every other patch nests inside an ancestor's structural entry rooted
     // here (`queueScope` is patch-inert, so the root registers directly).
     _base_scope(scopeId, patch);
-    // A lazy module is named only by the flush that first needs it.
-    state.patchFlushReadyIds = undefined;
     const { channel } = getChunk()!;
     channel.writeScopes[scopeId] = patch;
     channel.flushScopes = true;
@@ -382,15 +379,14 @@ export function linkScopePatch(
 // The flush holding the current root names the lazy modules it first needs in
 // the response (`PatchRenderState.addResumes`); later flushes wait behind it.
 export function patchWait(state: PatchRenderState, readyId: string) {
-  const readyIds = (state.readyIds ||= new Set());
-  if (readyIds.has(readyId)) return;
-  readyIds.add(readyId);
-  // The root first (creating it starts the current root's ids afresh).
-  ensureScopePatch(state, ROOT_SCOPE_ID);
+  if (state.readyIds?.has(readyId) || state.patchFlushReadyIds?.has(readyId)) {
+    return;
+  }
   (state.patchFlushReadyIds ??= new Set()).add(readyId);
+  ensureScopePatch(state, ROOT_SCOPE_ID);
 }
 
-// The flush's merge tree of patches by scope; `joinFlush` drops it.
+// The flush's merge tree of patches by scope.
 function ensurePatchTree(state: PatchRenderState) {
   return (state.patchTree ??= {});
 }
@@ -547,16 +543,12 @@ export class PatchRenderState extends PatchPageState {
   // A flush carries every entry rendered so far, so a patch never reorders: the
   // client creates a shown `@placeholder` from the shell its render ships.
   override writeReorders: State["writeReorders"] = false;
-  // The boundary's pending count before the flush serialized.
-  count = 0;
-  // Output held for the async values its serializing found.
-  held = "";
-  // The flush's merge tree of patches by scope; `joinFlush` drops it.
+  // The flush's merge tree of patches by scope; each serialization starts the next.
   patchTree?: Record<number, Record<string, unknown>>;
-  // Every object and array the patch writers built for the flush's tree.
-  patchTreeNodes?: Set<object>;
+  // Every object and array the patch writers built for a flush's tree.
+  patchTreeNodes = new WeakSet<object>();
   // The lazy templates the current root is the first in the response to name
-  // (all it named are `readyIds`): its flush applies once all are resident.
+  // (those flushes named are `readyIds`): its flush applies once all are resident.
   patchFlushReadyIds?: Set<string>;
   // How a scope hangs off its parent: a reference's path from the root walks
   // these, and a scope writing after its parent's entry re-links through one.
@@ -568,7 +560,10 @@ export class PatchRenderState extends PatchPageState {
   // before it.
   pendingAwaits = new Set<number>();
   // Each setup envelope's ids.
-  setupIds?: Map<object, Set<string>>;
+  setupIds = new WeakMap<object, Set<string>>();
+  // Each `<try>` body whose patch waits until it settles, throws or a write
+  // reaches it.
+  pendingTries = new Set<number>();
   // Each owner's withheld entry the response renders, with the scope it is in.
   withheldRendered?: Map<string, number>;
   // What each scope's slots holding built objects depend on, by accessor.
@@ -589,13 +584,6 @@ export class PatchRenderState extends PatchPageState {
   // composing shell's) and those its entries mount.
   override queueEffect() {}
 
-  // A pending patch must not stringify until its flush is emitted: the same
-  // patch objects keep receiving later writes.
-  override serializeFlush(boundary: Boundary) {
-    this.count = boundary.count;
-    if (!boundary.count) super.serializeFlush(boundary);
-  }
-
   constructor($global: State["$global"]) {
     super($global);
     this.hasWalkerRuntime = true;
@@ -604,10 +592,17 @@ export class PatchRenderState extends PatchPageState {
     this.hasWrittenGlobals = true;
   }
 
+  override serializeFlush(boundary: Boundary) {
+    super.serializeFlush(boundary);
+    this.#startTree();
+  }
+
   // Each line is one expression; an empty line ends the write, whose lines the
   // client applies together.
   override joinFlush(_html: string, scripts: string, pending: number) {
-    let out = this.held + (scripts ? scripts + "\n" : "");
+    // The write serialized one more (`Chunk.flush`).
+    this.#startTree();
+    let out = scripts ? scripts + "\n" : "";
     if (MARKO_DEBUG && this.pendingShells) {
       throw new Error(
         "Invalid patch state, a shell was shipped with nothing to resume in its chunk.",
@@ -622,22 +617,11 @@ export class PatchRenderState extends PatchPageState {
     ) {
       out += ";" + encodeHeld(this.heldShells) + "\n";
     }
-    this.patchTree = this.patchTreeNodes = this.setupIds = undefined;
-    // Serializing at the write first saw these values: those already settled (a
-    // resolved promise) join this write, which the stream's next tick sends.
-    if (pending > this.count) {
-      this.held = out;
-      const { boundary } = this.serializer;
-      boundary.startAsync();
-      Promise.resolve().then(() => boundary.endAsync());
-      return "";
-    }
-    this.held = "";
     return out && out + "\n";
   }
 
-  // Each item is a line applied before the next evaluates; the first, the tree or
-  // `[...shells, tree]`, is led by the lazy modules it waits for (`_a,_b,{…}`).
+  // Each item is a line applied before the next evaluates, the tree or `[...shells,
+  // tree]`, led by the lazy modules it is the first to wait for (`_a,_b,{…}`).
   override addResumes(channel: Channel, resumes: string) {
     if (!resumes) return;
     // The client reads a leading id (or a debug id's string) as a module to
@@ -647,22 +631,35 @@ export class PatchRenderState extends PatchPageState {
         `Invalid patch state, a flush starts with "${resumes[0]}".`,
       );
     }
-    if (channel.resumes) {
-      channel.resumes += "\n" + resumes;
-    } else {
-      let ready = "";
-      // An optimized id ships as its template id (the client restores the
-      // `_`); a debug id is a path, so it ships as a string.
-      for (const id of this.patchFlushReadyIds || []) {
-        ready += (MARKO_DEBUG ? JSON.stringify(id) : id.slice(1)) + ",";
+    let ready = "";
+    // An optimized id ships as its template id (the client restores the
+    // `_`); a debug id is a path, so it ships as a string.
+    for (const id of this.patchFlushReadyIds || []) {
+      ready += (MARKO_DEBUG ? JSON.stringify(id) : id.slice(1)) + ",";
+      (this.readyIds ||= new Set()).add(id);
+    }
+    const flush =
+      ready +
+      (this.pendingShells
+        ? "[" + this.pendingShells + "," + resumes + "]"
+        : resumes);
+    channel.resumes = channel.resumes ? channel.resumes + "\n" + flush : flush;
+    this.pendingShells = "";
+  }
+
+  // A later flush's tree is its own, re-linked from the root (the serializer drops
+  // an empty one); the nodes of a `<try>` body still waiting carry over.
+  #startTree() {
+    const tree = this.patchTree;
+    this.patchFlushReadyIds = this.patchTree = undefined;
+    for (const key in tree) {
+      let scopeId = +key;
+      while (scopeId in this.patchLinks && !this.pendingTries.has(scopeId)) {
+        scopeId = this.patchLinks[scopeId].parent;
       }
-      channel.resumes =
-        ready +
-        (this.pendingShells
-          ? "[" + this.pendingShells + "," + resumes + "]"
-          : resumes);
-      this.pendingShells = "";
-      this.patchFlushReadyIds = undefined;
+      if (this.pendingTries.has(scopeId)) {
+        ensurePatchTree(this)[+key] = tree[+key];
+      }
     }
   }
 

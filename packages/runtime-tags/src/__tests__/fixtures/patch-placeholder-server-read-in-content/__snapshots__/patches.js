@@ -1,5 +1,8 @@
 // PATCH
 [`a3;b%;<!><!><!>`, `a1,<div id=done>done</div>`, {
+  va9: "b"
+}]
+{
   cc: {
     cAa: {
       cAa: [{
@@ -7,7 +10,6 @@
         cAa: {}
       }, $, "a3", "a6"]
     }
-  },
-  va9: "b"
-}]
+  }
+}
 ;Cwo

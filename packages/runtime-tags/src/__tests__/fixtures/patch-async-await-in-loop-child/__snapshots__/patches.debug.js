@@ -18,7 +18,11 @@
           "PatchText:#text/0": "uno"
         }
       }
-    },
+    }
+  ]
+}
+{
+  "PatchLoopItem:#text/0": [
     [1, 2], {
       "PatchChild:#childScope/0": {
         "PatchChild:BranchScopes:#text/0": {

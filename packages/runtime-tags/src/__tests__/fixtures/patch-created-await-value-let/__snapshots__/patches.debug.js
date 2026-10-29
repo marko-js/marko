@@ -8,13 +8,17 @@
 [`packages/runtime-tags/src/__tests__/fixtures/patch-created-await-value-let/template.marko_2*content !packages/runtime-tags/src/__tests__/fixtures/patch-created-await-value-let/template.marko_2; D%c%;<button><!> <!></button>`, `packages/runtime-tags/src/__tests__/fixtures/patch-created-await-value-let/template.marko_1*shell;b%;<!><!><!>`, {
   "PatchText:#text/0": "c",
   "PatchBranch:#text/1": [{
-    "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-created-await-value-let/template.marko_2*content",
+    "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-created-await-value-let/template.marko_2*content"
+  }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-await-value-let/template.marko_1*shell"]
+}]
+{
+  "PatchChild:BranchScopes:#text/1": {
     "PatchChild:BranchScopes:#text/0": {
       "PatchText:#text/2": 3,
       "PatchSetupValues:": {
         "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-await-value-let/template.marko_fill1": !1
       }
     }
-  }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-await-value-let/template.marko_1*shell"]
-}]
+  }
+}
 ;CQo

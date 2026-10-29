@@ -43,10 +43,10 @@ INSERT: main > div:nth-of-type(1)::text("a!")
 ```
 ## Change
 ```
-UPDATE: main > div:nth-of-type(2) > em::text@0 "a!" => "b!"
-UPDATE: main > div:nth-of-type(2) > em::text@3 "x" => "y"
 REMOVE: main > div:nth-of-type(1)::text("a!")
 INSERT: main > div:nth-of-type(1)::text("b!")
+UPDATE: main > div:nth-of-type(2) > em::text@0 "a!" => "b!"
+UPDATE: main > div:nth-of-type(2) > em::text@3 "x" => "y"
 ```
 
 # Update `{"show":true,"on":true,"note":"c","v":{"value":"z"}}`
@@ -67,13 +67,13 @@ INSERT: main > div:nth-of-type(1)::text("b!")
 ```
 ## Change
 ```
+REMOVE: main > div::text("b!")
+INSERT: main > div::text("c!")
 INSERT: main > div + .toggle
 REMOVE: main > em + div
 INSERT: .toggle + em
 UPDATE: main > em::text@0 "" => "c!"
 UPDATE: main > em::text@3 "" => "z"
-REMOVE: main > div::text("b!")
-INSERT: main > div::text("c!")
 ```
 
 # Update
@@ -140,11 +140,11 @@ UPDATE: main > em::text@3 "" => "z"
 ```
 ## Change
 ```
+REMOVE: main > div:nth-of-type(1)::text("c!")
+INSERT: main > div:nth-of-type(1)::text("d!")
 INSERT: main > div:nth-of-type(1) + div
 REMOVE: main > div:nth-of-type(2) + button
 REMOVE: main > div:nth-of-type(2) + em
 UPDATE: main > div:nth-of-type(2) > em::text@0 "" => "d!"
 UPDATE: main > div:nth-of-type(2) > em::text@3 "" => "w"
-REMOVE: main > div:nth-of-type(1)::text("c!")
-INSERT: main > div:nth-of-type(1)::text("d!")
 ```

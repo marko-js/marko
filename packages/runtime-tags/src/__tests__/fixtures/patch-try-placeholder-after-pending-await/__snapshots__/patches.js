@@ -1,6 +1,8 @@
 // PATCH
+{
+  pa: 1
+}
 [`a1,<i>loading</i>`, {
-  pa: 1,
   cAb: {
     pa: 1
   }

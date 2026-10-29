@@ -1,9 +1,11 @@
 // PATCH
 {
+  va8: "second"
+}
+{
   cAa: {
     pa: 1
-  },
-  va8: "second"
+  }
 }
 {
   cAa: {

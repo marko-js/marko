@@ -19,9 +19,9 @@
 ```
 ## Change
 ```
-REMOVE: main > b
 REMOVE: main > p
 REMOVE: main > span
+REMOVE: main > b
 ```
 
 # Update

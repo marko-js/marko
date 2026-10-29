@@ -1,10 +1,12 @@
 // PATCH
 {
   "PatchText:#text/0": "Store!",
+  "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-async-try-placeholder-hole/template.marko_fill0": "Store!"
+}
+{
   "PatchChild:BranchScopes:#text/1": {
     "PatchPending:#text/0": 1
-  },
-  "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-async-try-placeholder-hole/template.marko_fill0": "Store!"
+  }
 }
 {
   "PatchChild:BranchScopes:#text/1": {

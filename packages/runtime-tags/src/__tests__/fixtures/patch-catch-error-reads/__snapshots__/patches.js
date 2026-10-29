@@ -1,9 +1,10 @@
 // PATCH
-[`a0`, `a2`, {
-  cAa: 0,
+[`a0`, {
   kb: [{
     ta: "SHOWN_code2"
-  }, "a0"],
+  }, "a0"]
+}]
+[`a2`, {
   ka: [{
     ta: "SHOWN_message1"
   }, "a2"]

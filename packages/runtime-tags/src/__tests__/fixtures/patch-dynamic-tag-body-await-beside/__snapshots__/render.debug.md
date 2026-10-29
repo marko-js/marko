@@ -55,13 +55,13 @@ INSERT: main > div:nth-of-type(2) > b::text("a")
 ```
 INSERT: main > button
 REMOVE: main > b + div
+INSERT: main > button:nth-of-type(2) + b
+UPDATE: main > b::text " " => "b"
 INSERT: main > button
 REMOVE: main > em + div
-INSERT: main > button:nth-of-type(2) + b
 INSERT: main > button:nth-of-type(1) + em
-UPDATE: main > b::text " " => "b"
-UPDATE: main > em::text@2 "" => "y"
 UPDATE: main > em::text@0 "" => "b"
+UPDATE: main > em::text@2 "" => "y"
 ```
 
 # Update

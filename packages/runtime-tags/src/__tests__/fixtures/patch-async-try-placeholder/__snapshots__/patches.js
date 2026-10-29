@@ -1,6 +1,8 @@
 // PATCH
+{
+  ta: "Store!"
+}
 [`a1,<em>loading</em>`, {
-  ta: "Store!",
   cAb: {
     pa: 1
   }

@@ -57,6 +57,8 @@ export interface AwaitCounter {
   m?: (effects: unknown[]) => unknown[];
   i: number;
   c: () => void | 1;
+  // The renders patches queue until the streaming body lands, in their order.
+  l?: (() => void)[];
 }
 
 export {

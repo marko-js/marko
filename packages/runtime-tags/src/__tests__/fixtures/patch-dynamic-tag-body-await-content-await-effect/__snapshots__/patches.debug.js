@@ -1,6 +1,8 @@
 // PATCH
+{
+  "PatchPending:#text/0": 1
+}
 [`packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-content-await-effect/tags/card.marko !packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-content-await-effect/tags/card.marko_0; b%;<button class=toggle>toggle</button><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-content-await-effect/template.marko_2*content`, {
-  "PatchPending:#text/0": 1,
   "PatchChild:BranchScopes:#text/0": {
     "PatchDynamicTag:#text/0": ["packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-content-await-effect/tags/card.marko", "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-content-await-effect/template.marko_2*content"],
     "PatchChild:BranchScopes:#text/0": {
@@ -24,13 +26,32 @@
 ;ERE
 
 // PATCH holding ERE
-[`packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-content-await-effect/template.marko_3*content !;D l%;<b> </b><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-content-await-effect/template.marko_4*content`, {
-  "PatchPending:#text/0": 1,
+{
+  "PatchPending:#text/0": 1
+}
+[`packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-content-await-effect/template.marko_3*content !;D l%;<b> </b><!><!>`, {
   "PatchChild:BranchScopes:#text/0": {
     "PatchDynamicTag:#text/0": [">div", "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-content-await-effect/template.marko_2*content"],
     "PatchChild:BranchScopes:#text/0": {
       "PatchChild:BranchScopes:#div/0": {
-        "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-content-await-effect/template.marko_3*content",
+        "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-content-await-effect/template.marko_3*content"
+      }
+    }
+  },
+  "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-content-await-effect/template.marko_fill0": (p => p = new Promise((f, r) => _.a = {
+    f,
+    r(e) {
+      p.catch(_ => 0);
+      r(e)
+    }
+  }))(),
+  "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-content-await-effect/template.marko_fill1": !0,
+  "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-content-await-effect/template.marko_fill2": "c"
+}]
+[`packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-content-await-effect/template.marko_4*content`, {
+  "PatchChild:BranchScopes:#text/0": {
+    "PatchChild:BranchScopes:#text/0": {
+      "PatchChild:BranchScopes:#div/0": {
         "PatchChild:BranchScopes:#text/0": {
           "PatchText:#text/0": "z",
           "PatchDynamicTag:#text/1": ["packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-content-await-effect/tags/card.marko", "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-content-await-effect/template.marko_4*content"],
@@ -46,14 +67,6 @@
       }
     }
   },
-  "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-content-await-effect/template.marko_fill0": (p => p = new Promise((f, r) => _.a = {
-    f,
-    r(e) {
-      p.catch(_ => 0);
-      r(e)
-    }
-  }))(),
-  "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-content-await-effect/template.marko_fill1": !0,
   "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-content-await-effect/template.marko_fill2": "c"
 }]
 (_.a.f("z"), 0)
@@ -61,7 +74,9 @@
 
 // PATCH holding EdE
 {
-  "PatchPending:#text/0": 1,
+  "PatchPending:#text/0": 1
+}
+{
   "PatchChild:BranchScopes:#text/0": {
     "PatchDynamicTag:#text/0": ["packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-content-await-effect/tags/card.marko", "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-content-await-effect/template.marko_2*content"],
     "PatchChild:BranchScopes:#text/0": {

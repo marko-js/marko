@@ -4,14 +4,22 @@
     ca: {
       fa: "^^a3",
       cAa: {
-        pa: "a1",
+        pa: "a1"
+      }
+    }
+  }, "a4"]
+}]
+{
+  cAa: {
+    ca: {
+      cAa: {
         cAa: {
           ta: "x"
         }
       }
     }
-  }, "a4"]
-}]
+  }
+}
 ;DRo
 
 // PATCH holding DRo
@@ -20,13 +28,21 @@
     ca: {
       fa: "^^a3",
       cAa: {
-        pa: "a1",
+        pa: "a1"
+      }
+    }
+  }, "a4"]
+}
+{
+  cAa: {
+    ca: {
+      cAa: {
         cAa: {
           ta: "y"
         }
       }
     }
-  }, "a4"]
+  }
 }
 
 // PATCH holding DRo
@@ -40,11 +56,19 @@
     ca: {
       fa: "^^a3",
       cAa: {
-        pa: "a1",
+        pa: "a1"
+      }
+    }
+  }, "a4"]
+}
+{
+  cAa: {
+    ca: {
+      cAa: {
         cAa: {
           ta: "z"
         }
       }
     }
-  }, "a4"]
+  }
 }

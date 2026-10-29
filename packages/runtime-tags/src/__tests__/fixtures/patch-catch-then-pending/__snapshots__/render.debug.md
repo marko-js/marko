@@ -29,6 +29,20 @@ UPDATE: main > p::text " " => "b"
 ```
 
 # Update `{"promise":{"value":2},"detail":"c"}`
+```html
+<main>
+  <p>
+    c
+  </p>
+  <button>
+    0
+  </button>
+</main>
+```
+## Change
+```
+UPDATE: main > p::text "b" => "c"
+```
 ## Console
 ```
 ERROR Error: A patch rendered the body of a `<try>` this page caught: the page loads the URL as a document instead.

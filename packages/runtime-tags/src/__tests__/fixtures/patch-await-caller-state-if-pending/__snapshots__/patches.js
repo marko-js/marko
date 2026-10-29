@@ -4,13 +4,19 @@
     ca: {
       s: {
         pa: "b2"
-      },
-      cAa: {
-        ta: "b"
       }
     }
   }, "a1"]
 }]
+{
+  cAc: {
+    ca: {
+      cAa: {
+        ta: "b"
+      }
+    }
+  }
+}
 ;Cwo
 
 // PATCH holding Cwo
@@ -19,10 +25,16 @@
     ca: {
       s: {
         pa: "b2"
-      },
+      }
+    }
+  }, "a1"]
+}
+{
+  cAc: {
+    ca: {
       cAa: {
         ta: "c"
       }
     }
-  }, "a1"]
+  }
 }

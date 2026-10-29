@@ -51,7 +51,17 @@
           "PatchDynamicTag:#text/1": "^^packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-await-frame/template.marko_3*content",
           "PatchChild:BranchScopes:#text/1": {
             "PatchBranch:#text/0": [1, {}, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-await-frame/template.marko_6*shell"]
-          },
+          }
+        }
+      }, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-await-frame/template.marko_2*shell"]
+    }
+  }
+}]
+{
+  "PatchChild:#childScope/0": {
+    "PatchChild:BranchScopes:#text/0": {
+      "PatchChild:BranchScopes:#text/0": {
+        "PatchChild:#childScope/1": {
           "PatchChild:BranchScopes:#text/0": {
             "PatchLoop:#text/0": [{
               "PatchText:#text/0": "z"
@@ -66,10 +76,10 @@
             }, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-await-frame/docs.marko_2*shell"]
           }
         }
-      }, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-await-frame/template.marko_2*shell"]
+      }
     }
   }
-}]
+}
 ;IRza
 
 // PATCH holding IRza

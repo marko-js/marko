@@ -33,15 +33,21 @@
       "PatchDynamicTag:#text/1": "^^packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-route-switch/template.marko_2*content",
       "PatchChild:BranchScopes:#text/1": {
         "PatchBranch:#text/0": [1, {}, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-route-switch/template.marko_5*shell"]
-      },
+      }
+    }
+  }, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-route-switch/template.marko_1*shell"]
+}]
+{
+  "PatchChild:BranchScopes:#text/0": {
+    "PatchChild:#childScope/1": {
       "PatchChild:BranchScopes:#text/0": {
         "PatchLoop:#text/0": [{
           "PatchText:#text/0": "x"
         }, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-route-switch/layout.marko_2*shell"]
       }
     }
-  }, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-route-switch/template.marko_1*shell"]
-}]
+  }
+}
 ;GYwN
 
 // PATCH holding GYwN

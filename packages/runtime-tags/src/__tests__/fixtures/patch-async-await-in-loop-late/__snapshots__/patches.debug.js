@@ -12,7 +12,11 @@
       "PatchChild:BranchScopes:#text/0": {
         "PatchText:#text/0": "uno"
       }
-    },
+    }
+  ]
+}
+{
+  "PatchLoopItem:#text/0": [
     [1, 2], {
       "PatchChild:BranchScopes:#text/0": {
         "PatchText:#text/0": "dos"

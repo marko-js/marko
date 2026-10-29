@@ -1,6 +1,8 @@
 // PATCH
 {
-  va1: "y",
+  va1: "y"
+}
+{
   cb: {
     cAa: {
       ta: "b"
@@ -10,7 +12,9 @@
 
 // PATCH
 {
-  va1: "z",
+  va1: "z"
+}
+{
   cb: {
     cAa: {
       ta: "c"

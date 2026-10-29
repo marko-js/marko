@@ -20,7 +20,7 @@
     }
   }
 }]
-[{
+{
   "PatchChild:BranchScopes:#text/1": {
     "PatchChild:#childScope/0": {
       "PatchLoopItem:#text/0": [
@@ -28,7 +28,15 @@
           "PatchChild:BranchScopes:#text/0": {
             "PatchText:#text/1": "b"
           }
-        },
+        }
+      ]
+    }
+  }
+}
+{
+  "PatchChild:BranchScopes:#text/1": {
+    "PatchChild:#childScope/0": {
+      "PatchLoopItem:#text/0": [
         [1, 2], {
           "PatchChild:BranchScopes:#text/0": {
             "PatchText:#text/1": "b"
@@ -37,5 +45,6 @@
       ]
     }
   }
-}, _.b.f("b")][0]
+}
+(_.b.f("b"), 0)
 ;D0g

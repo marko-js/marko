@@ -2,7 +2,9 @@
 {
   $: {
     brand: "bmce"
-  },
+  }
+}
+{
   cb: {
     cAa: {
       cAb: {

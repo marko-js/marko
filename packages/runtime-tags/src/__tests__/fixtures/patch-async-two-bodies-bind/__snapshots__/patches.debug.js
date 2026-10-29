@@ -6,7 +6,9 @@
 {
   "PatchChild:BranchScopes:#text/0": {
     "PatchText:#text/0": "a2"
-  },
+  }
+}
+{
   "PatchChild:BranchScopes:#text/1": {
     "PatchMarkedWrite:second": "b2",
     "PatchAttrs:#button/0": {

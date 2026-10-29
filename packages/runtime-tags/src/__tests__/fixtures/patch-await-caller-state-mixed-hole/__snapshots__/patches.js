@@ -1,7 +1,11 @@
 // PATCH
 {
   cb: {
-    xe: "b",
+    xe: "b"
+  }
+}
+{
+  cb: {
     cAa: {
       ib1: ">e"
     }
@@ -11,7 +15,11 @@
 // PATCH
 {
   cb: {
-    xe: "c",
+    xe: "c"
+  }
+}
+{
+  cb: {
     cAa: {
       ib1: ">e"
     }

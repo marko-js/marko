@@ -2,7 +2,9 @@
 {
   "PatchMarkedWrite:input_title": "b",
   "PatchPending:#text/0": 1,
-  "PatchPending:#text/1": 1,
+  "PatchPending:#text/1": 1
+}
+{
   "PatchChild:BranchScopes:#text/0": {
     "PatchAttrs:#button/0": {
       id: "one",

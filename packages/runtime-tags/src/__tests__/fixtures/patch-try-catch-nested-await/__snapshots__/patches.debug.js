@@ -1,6 +1,5 @@
 // PATCH
 [`packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-nested-await/template.marko_3*content;D ;<span> </span>`, {
-  "PatchChild:BranchScopes:#text/0": 0,
   "PatchCatch:#text/0": [{
     "PatchText:#text/0": "boom"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-try-catch-nested-await/template.marko_3*content"]

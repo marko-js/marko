@@ -1,6 +1,8 @@
 // PATCH
 {
-  "PatchPending:#text/0": 1,
+  "PatchPending:#text/0": 1
+}
+{
   "PatchChild:BranchScopes:#text/0": {
     "PatchMarkedWrite:value": "b",
     "PatchChild:#childScope/0": {
@@ -12,7 +14,9 @@
 
 // PATCH
 {
-  "PatchPending:#text/0": 1,
+  "PatchPending:#text/0": 1
+}
+{
   "PatchChild:BranchScopes:#text/0": {
     "PatchMarkedWrite:value": "b",
     "PatchChild:#childScope/0": {

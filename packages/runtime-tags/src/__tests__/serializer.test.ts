@@ -3059,7 +3059,7 @@ describe("serializer", () => {
       assert.equal(
         stringifyScopes(
           new PatchSerializerState({
-            patchTreeNodes: new Set(),
+            patchTreeNodes: new WeakSet(),
           } as PatchRenderState),
           [[1, {}, { value: 1 }]],
           patchBoundary(),
@@ -3075,7 +3075,7 @@ describe("serializer", () => {
       assert.equal(
         stringifyScopes(
           new PatchSerializerState({
-            patchTreeNodes: new Set(),
+            patchTreeNodes: new WeakSet(),
           } as PatchRenderState),
           [[1, {}, { value: { wrapper } }]],
           patchBoundary(),

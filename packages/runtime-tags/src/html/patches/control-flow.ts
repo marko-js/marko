@@ -46,7 +46,6 @@ import {
   openScopePatch,
   linkScopePatch,
   linkBranch,
-  peekScopePatch,
   ensureFills,
   patchTreeNode,
   ensurePatchSetup,
@@ -654,18 +653,6 @@ export function _try(
   const branchContent = inCreatable()
     ? content
     : () => withKeptBranchId(branchId, content);
-  // A flush that leaves the body pending ships the placeholder's shell, as a
-  // document renders the placeholder.
-  const bodyContent = placeholderContent
-    ? () =>
-        tryPlaceholder(
-          branchContent,
-          () => shipShell(state, placeholderId),
-          branchId,
-          scopeId,
-          placeholderBranchId,
-        )
-    : branchContent;
   const renderers = (): void =>
     writeTryRenderers(
       branchId,
@@ -679,63 +666,72 @@ export function _try(
   // A patch shows `@placeholder` from received client state and creates
   // `@catch` in its entry, so no document reorder rides the flush stream.
   let writesRenderers = false;
-  if (catchContent) {
-    // Its entry goes out whenever the body renders, so a try the page caught
-    // learns it; a body that throws leaves its patch out (or voids the entry).
+  if (catchContent || placeholderContent) {
+    // The body's patch waits for its settle, its catch or the write that reaches
+    // it, as a document decides in-order content once the stream reaches it.
     const body = openScopePatch(state, branchId);
     // Its shell ships ahead of those its body ships, as the entry leads them.
     if (create) shipShell(state, bodyId);
-    let entry: unknown[] | undefined;
-    let settled = false;
+    state.pendingTries.add(branchId);
+    // A try the page caught learns of every body that renders; a settled one with
+    // only a placeholder links once it wrote. The write links ahead of nested tries.
+    const link = (pending?: boolean) => {
+      if (
+        state.pendingTries.delete(branchId) &&
+        (pending !== undefined || catchContent || create || hasKeys(body))
+      ) {
+        if (pending) shipShell(state, placeholderId);
+        linkScopePatch(state, branchId, body);
+      }
+    };
     writesRenderers = tryBoundary(
-      bodyContent,
+      // A write sending it pending ships the placeholder's shell with it.
+      () =>
+        tryPlaceholder(
+          branchContent,
+          (pending) => chunk.render(link, pending),
+          branchId,
+          scopeId,
+          placeholderBranchId,
+        ),
       catchContent,
       branchId,
       renderers,
-      (err) => {
-        getIds().depth = depth;
-        settled = true;
-        // A body that threw before claiming its id keeps it paired.
-        if (_peek_scope_id() === branchId) _scope_id();
-        if (!entry) {
-          if (create) linkScopePatch(state, branchId, body)![0] = 0;
-        } else if (peekScopePatch(state, branchId) === body) {
-          // Still in the flush to go out (a flush sent it pending otherwise).
-          if (create) {
-            entry[0] = 0;
-          } else {
-            writePatchEntry(
-              state,
-              scopeId,
-              PatchKey.Child + AccessorPrefix.BranchScopes + accessor,
-              0,
-            );
+      catchContent &&
+        ((err) => {
+          getIds().depth = depth;
+          // A body that threw before claiming its id keeps it paired.
+          if (_peek_scope_id() === branchId) _scope_id();
+          // Unless a write sent it, the body's entry is void.
+          if (state.pendingTries.delete(branchId) && create) {
+            linkScopePatch(state, branchId, body)![0] = 0;
           }
-        }
-        // The client renders a catch no flush creates; one reading its error
-        // sits where no patch renders its try (stateful or off the branch path).
-        if (shellContent! & 1) shipShell(state, catchId);
-        writePatchEntry(
-          state,
-          scopeId,
-          PatchKey.Catch + accessor,
-          createsCatch
-            ? writeCatch(state, scopeId, accessor, catchContent, err, catchId!)
-            : [],
-        );
-      },
-      () => {
-        settled = true;
-        if (!entry) linkScopePatch(state, branchId, body);
-      },
+          // The client renders a catch no flush creates; one reading its error
+          // sits where no patch renders its try (stateful or off the branch path).
+          if (shellContent! & 1) shipShell(state, catchId);
+          writePatchEntry(
+            state,
+            scopeId,
+            PatchKey.Catch + accessor,
+            createsCatch
+              ? writeCatch(
+                  state,
+                  scopeId,
+                  accessor,
+                  catchContent,
+                  err,
+                  catchId!,
+                )
+              : [],
+          );
+        }),
+      link,
     );
-    // A caught try rejects a body still pending here, even one that later throws.
-    if (!settled) entry = linkScopePatch(state, branchId, body);
   } else {
     // A try this flush may create needs its entry even when its body writes
     // nothing.
     if (create) ensureScopePatch(state, branchId);
-    withBranchId(branchId, bodyContent);
+    withBranchId(branchId, branchContent);
   }
   applyBranchStart(chunk, beforeBranch, true);
   if (!writesRenderers) renderers();

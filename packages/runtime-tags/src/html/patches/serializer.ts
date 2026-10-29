@@ -43,7 +43,7 @@ export class PatchSerializerState extends SerializerState {
   // The flush's tree, written as `writeObjectProps` would, without tracking
   // the identity of nodes the patch writers built (each appears once).
   override writeScopeProps(props: object, ref: Reference) {
-    return writePatchProps(this, props, ref, this.render.patchTreeNodes!);
+    return writePatchProps(this, props, ref, this.render.patchTreeNodes);
   }
 
   // A patch run has no cursor: its single flush is the page root, and an
@@ -131,7 +131,7 @@ function writePatchProps(
   state: PatchSerializerState,
   node: object,
   ref: Reference,
-  patchTreeNodes: Set<object>,
+  patchTreeNodes: WeakSet<object>,
 ) {
   let sep = "";
   for (const key in node) {
@@ -145,7 +145,7 @@ function writePatchProp(
   node: object,
   key: string,
   ref: Reference,
-  patchTreeNodes: Set<object>,
+  patchTreeNodes: WeakSet<object>,
   sep: string,
 ) {
   const escapedKey = toObjectKey(key);
@@ -199,7 +199,7 @@ function writePatchTreeNode(
   node: object,
   parent: Reference,
   accessor: string,
-  patchTreeNodes: Set<object>,
+  patchTreeNodes: WeakSet<object>,
 ) {
   const ref = new Reference(parent, accessor, state.flushId, state.buf.length);
   ref.channel = state.channel;

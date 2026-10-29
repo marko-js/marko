@@ -1,8 +1,10 @@
 // PATCH
-[`a0`, {
+{
   pb: 1,
   ea11: "e",
-  xe: "b",
+  xe: "b"
+}
+[`a0`, {
   cAb: {
     fa: [">div", "a0"],
     cAa: {
@@ -16,10 +18,12 @@
 ;CgE
 
 // PATCH holding CgE
-[`b !b0; b%;<button class=toggle>toggle</button><!><!>`, {
+{
   pb: 1,
   ea11: "e",
-  xe: "c",
+  xe: "c"
+}
+[`b !b0; b%;<button class=toggle>toggle</button><!><!>`, {
   cAb: {
     fa: ["b", "a0"],
     cAa: {
@@ -38,7 +42,9 @@
 {
   pb: 1,
   ea11: "e",
-  xe: "d",
+  xe: "d"
+}
+{
   cAb: {
     fa: [">div", "a0"],
     cAa: {

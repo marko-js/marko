@@ -1,15 +1,17 @@
 // PATCH
-a, [`b2`, {
+a, {
   cb: {
     ea0: ">f",
     xe: {
       label: "b"
     }
   },
+  xf: "b"
+}
+[`b2`, {
   cAc: {
     pa: 1
-  },
-  xf: "b"
+  }
 }]
 {
   cAc: {

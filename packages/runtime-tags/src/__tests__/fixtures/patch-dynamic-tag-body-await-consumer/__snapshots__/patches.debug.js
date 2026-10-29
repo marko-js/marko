@@ -25,10 +25,14 @@
     "PatchPending:#text/1": "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-consumer/tags/card.marko_1*content",
     "PatchSetupValues:": {
       "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-consumer/tags/card.marko_fill1": !0
-    },
-    "PatchChild:BranchScopes:#text/1": {
-      "PatchBindFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-consumer/tags/card.marko_fill2": "^^packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-consumer/template.marko_1*content"
     }
   },
   "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-consumer/template.marko_fill2": "c"
+}
+{
+  "PatchChild:BranchScopes:#text/0": {
+    "PatchChild:BranchScopes:#text/1": {
+      "PatchBindFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-consumer/tags/card.marko_fill2": "^^packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-consumer/template.marko_1*content"
+    }
+  }
 }

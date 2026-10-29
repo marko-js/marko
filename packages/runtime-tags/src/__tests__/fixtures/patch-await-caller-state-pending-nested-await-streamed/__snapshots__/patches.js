@@ -2,7 +2,13 @@
 {
   cc: {
     cAa: {
-      ta: "b",
+      ta: "b"
+    }
+  }
+}
+{
+  cc: {
+    cAa: {
       cAc: {
         pa: 1,
         cAa: {
@@ -14,10 +20,16 @@
 }
 
 // PATCH
+{
+  cc: {
+    cAa: {
+      ta: "c"
+    }
+  }
+}
 [`b1,<i>inner loading</i>`, {
   cc: {
     cAa: {
-      ta: "c",
       cAc: {
         pa: 1
       }

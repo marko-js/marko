@@ -1,7 +1,11 @@
 // PATCH
 {
   cb: {
-    xe: "b",
+    xe: "b"
+  }
+}
+{
+  cb: {
     cAa: {
       tb: "b",
       ic5: ">e"

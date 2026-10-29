@@ -1,10 +1,16 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-await-caller-state-if-created-nested-if/tags/show-await.marko_1*content;D%c%l%;<p><!>:<!></p><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-await-caller-state-if-created-nested-if/template.marko_1*shell packages/runtime-tags/src/__tests__/fixtures/patch-await-caller-state-if-created-nested-if/template.marko_1_p#0:7/init;b/b%c&b;<!><!><!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-await-caller-state-if-created-nested-if/tags/show-await.marko_2*shell;D ;<em> </em>`, {
+[`packages/runtime-tags/src/__tests__/fixtures/patch-await-caller-state-if-created-nested-if/tags/show-await.marko_1*content;D%c%l%;<p><!>:<!></p><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-await-caller-state-if-created-nested-if/template.marko_1*shell packages/runtime-tags/src/__tests__/fixtures/patch-await-caller-state-if-created-nested-if/template.marko_1_p#0:7/init;b/b%c&b;<!><!><!><!><!>`, {
   "PatchBranch:#text/2": [{
     "PatchChild:#childScope/0": {
       "PatchSetup:": {
         "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-await-caller-state-if-created-nested-if/tags/show-await.marko_1*content"
-      },
+      }
+    }
+  }, "packages/runtime-tags/src/__tests__/fixtures/patch-await-caller-state-if-created-nested-if/template.marko_1*shell"]
+}]
+[`packages/runtime-tags/src/__tests__/fixtures/patch-await-caller-state-if-created-nested-if/tags/show-await.marko_2*shell;D ;<em> </em>`, {
+  "PatchChild:BranchScopes:#text/2": {
+    "PatchChild:#childScope/0": {
       "PatchChild:BranchScopes:#text/0": {
         "PatchText:#text/0": "b",
         "PatchBranch:#text/2": [{
@@ -12,7 +18,7 @@
         }, "packages/runtime-tags/src/__tests__/fixtures/patch-await-caller-state-if-created-nested-if/tags/show-await.marko_2*shell"]
       }
     }
-  }, "packages/runtime-tags/src/__tests__/fixtures/patch-await-caller-state-if-created-nested-if/template.marko_1*shell"]
+  }
 }]
 ;DSw
 
@@ -22,11 +28,17 @@
     "PatchChild:#childScope/0": {
       "PatchSetup:": {
         "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-await-caller-state-if-created-nested-if/tags/show-await.marko_1*content"
-      },
+      }
+    }
+  }, "packages/runtime-tags/src/__tests__/fixtures/patch-await-caller-state-if-created-nested-if/template.marko_1*shell"]
+}
+{
+  "PatchChild:BranchScopes:#text/2": {
+    "PatchChild:#childScope/0": {
       "PatchChild:BranchScopes:#text/0": {
         "PatchText:#text/0": "c",
         "PatchBranch:#text/2": 0
       }
     }
-  }, "packages/runtime-tags/src/__tests__/fixtures/patch-await-caller-state-if-created-nested-if/template.marko_1*shell"]
+  }
 }

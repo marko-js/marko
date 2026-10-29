@@ -12,20 +12,24 @@
   "PatchLoopItem:#text/0": [
     [0, 1], {
       "PatchChild:BranchScopes:#text/0": {
-        "PatchDynamicTag:#text/0": [_.c = "packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-await/tags/card.marko", _.b = "packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-await/template.marko_3*content"],
+        "PatchDynamicTag:#text/0": ["packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-await/tags/card.marko", "packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-await/template.marko_3*content"],
         "PatchChild:BranchScopes:#text/0": {
           "PatchSetupValues:": {
             "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-await/tags/card.marko_fill1": !0
           },
-          "PatchBindFill:packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-await/tags/card.marko_fill0": _.d = "^packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-await/template.marko_3*content"
+          "PatchBindFill:packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-await/tags/card.marko_fill0": "^packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-await/template.marko_3*content"
         },
         "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-await/template.marko_fill1": "y"
       },
       "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-await/template.marko_fill0": "c"
-    },
+    }
+  ]
+}]
+{
+  "PatchLoopItem:#text/0": [
     [1, 2], {
       "PatchChild:BranchScopes:#text/0": {
-        "PatchDynamicTag:#text/0": [">div", _.b],
+        "PatchDynamicTag:#text/0": [">div", _(1)["PatchLoopItem:#text/0"][1]["PatchChild:BranchScopes:#text/0"]["PatchDynamicTag:#text/0"][1]],
         "PatchChild:BranchScopes:#text/0": {
           "PatchChild:BranchScopes:#div/0": {
             "PatchText:#text/0": "d",
@@ -33,20 +37,24 @@
           }
         }
       }
-    },
+    }
+  ]
+}
+{
+  "PatchLoopItem:#text/0": [
     [2, 3], {
       "PatchChild:BranchScopes:#text/0": {
-        "PatchDynamicTag:#text/0": [_.c, _.b],
+        "PatchDynamicTag:#text/0": [_(1)["PatchLoopItem:#text/0"][1]["PatchChild:BranchScopes:#text/0"]["PatchDynamicTag:#text/0"][0], _.b = _(1)["PatchLoopItem:#text/0"][1]["PatchChild:BranchScopes:#text/0"]["PatchDynamicTag:#text/0"][1]],
         "PatchChild:BranchScopes:#text/0": {
           "PatchSetupValues:": {
             "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-await/tags/card.marko_fill1": !0
           },
-          "PatchBindFill:packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-await/tags/card.marko_fill0": _.d
+          "PatchBindFill:packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-await/tags/card.marko_fill0": _(1)["PatchLoopItem:#text/0"][1]["PatchChild:BranchScopes:#text/0"]["PatchChild:BranchScopes:#text/0"]["PatchBindFill:packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-await/tags/card.marko_fill0"]
         },
         "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-await/template.marko_fill1": "y"
       },
       "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-await/template.marko_fill0": "e"
     }
   ]
-}]
+}
 ;DTU

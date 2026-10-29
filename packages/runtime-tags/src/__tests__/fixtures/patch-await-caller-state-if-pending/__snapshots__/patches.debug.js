@@ -4,13 +4,19 @@
     "PatchChild:#childScope/0": {
       "PatchSetup:": {
         "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-await-caller-state-if-pending/tags/show-await.marko_1*content"
-      },
-      "PatchChild:BranchScopes:#text/0": {
-        "PatchText:#text/0": "b"
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-await-caller-state-if-pending/template.marko_1*shell"]
 }]
+{
+  "PatchChild:BranchScopes:#text/2": {
+    "PatchChild:#childScope/0": {
+      "PatchChild:BranchScopes:#text/0": {
+        "PatchText:#text/0": "b"
+      }
+    }
+  }
+}
 ;CxQ
 
 // PATCH holding CxQ
@@ -19,10 +25,16 @@
     "PatchChild:#childScope/0": {
       "PatchSetup:": {
         "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-await-caller-state-if-pending/tags/show-await.marko_1*content"
-      },
+      }
+    }
+  }, "packages/runtime-tags/src/__tests__/fixtures/patch-await-caller-state-if-pending/template.marko_1*shell"]
+}
+{
+  "PatchChild:BranchScopes:#text/2": {
+    "PatchChild:#childScope/0": {
       "PatchChild:BranchScopes:#text/0": {
         "PatchText:#text/0": "c"
       }
     }
-  }, "packages/runtime-tags/src/__tests__/fixtures/patch-await-caller-state-if-pending/template.marko_1*shell"]
+  }
 }

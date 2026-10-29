@@ -1,14 +1,18 @@
 // PATCH
 [`a0;D ;<em> </em>`, `a2;b%;<!><!><!>`, {
   bc: [{
-    pa: "a0",
+    pa: "a0"
+  }, "a2"]
+}]
+{
+  cAc: {
     cAa: {
       s: {
         ta: "thing"
       }
     }
-  }, "a2"]
-}]
+  }
+}
 ;CQo
 
 // PATCH holding CQo
@@ -19,11 +23,15 @@
 // PATCH holding CQo
 {
   bc: [{
-    pa: "a0",
+    pa: "a0"
+  }, "a2"]
+}
+{
+  cAc: {
     cAa: {
       s: {
         ta: "thing"
       }
     }
-  }, "a2"]
+  }
 }

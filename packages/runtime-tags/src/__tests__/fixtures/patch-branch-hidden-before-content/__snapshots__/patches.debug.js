@@ -3,13 +3,19 @@
   "PatchBranch:#text/0": 0,
   "PatchChild:#childScope/1": {
     "PatchChild:BranchScopes:#text/0": {
-      "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-branch-hidden-before-content/template.marko_3*content",
+      "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-branch-hidden-before-content/template.marko_3*content"
+    }
+  }
+}]
+{
+  "PatchChild:#childScope/1": {
+    "PatchChild:BranchScopes:#text/0": {
       "PatchChild:BranchScopes:#text/0": {
         "PatchText:#text/0": "two"
       }
     }
   }
-}]
+}
 ;CAM
 
 // PATCH holding CAM
