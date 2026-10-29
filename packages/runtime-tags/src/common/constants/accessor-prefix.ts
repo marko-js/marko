@@ -11,6 +11,9 @@ export const ControlledValue = "G";
 export const DynamicHTMLLastChild = "H";
 export const DynamicHTMLValue = "R";
 export const EventAttributes = "I";
+// What names a first-value `<let>`'s value as its scope was created, where a
+// call passed it from the server (`_first_value`).
+export const FirstValueId = "V";
 export const IdFallback = "J";
 export const KeyedScopes = "O";
 export const Lifecycle = "K";

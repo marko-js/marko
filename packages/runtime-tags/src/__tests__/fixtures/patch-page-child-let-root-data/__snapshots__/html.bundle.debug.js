@@ -22,6 +22,7 @@ var outer_default = _template("__tests__/tags/outer.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $cg__input_tag = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	let T = input.tag;
+	_first_value($scope0_id, "T", T, $scope0_reason, 1);
 	_if(() => {
 		if (input.more) {
 			const $scope1_id = _scope_id();

@@ -3,11 +3,12 @@
   "PatchLoop:#text/1": [{
     "PatchChild:#childScope/0": {
       "PatchFirstValue:value": {
-        "PatchDynamicTag:#text/1": _.a = "^^^packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-define-content-method-rows/template.marko_1*content",
+        "": _.a = "packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-define-content-method-rows/template.marko_1*content 1",
+        "PatchDynamicTag:#text/1": _.b = "^^^packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-define-content-method-rows/template.marko_1*content",
         "PatchChild:BranchScopes:#text/1": {
           "PatchText:#text/0": "b",
           "PatchSetup:": {
-            "PatchInit:": _.b = "packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-define-content-method-rows/template.marko_1_input_label#0:4/subscribe"
+            "PatchInit:": _.c = "packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-define-content-method-rows/template.marko_1_input_label#0:4/subscribe"
           }
         }
       }
@@ -15,11 +16,12 @@
   }, {
     "PatchChild:#childScope/0": {
       "PatchFirstValue:value": {
-        "PatchDynamicTag:#text/1": _.a,
+        "": _.a,
+        "PatchDynamicTag:#text/1": _.b,
         "PatchChild:BranchScopes:#text/1": {
           "PatchText:#text/0": "b",
           "PatchSetup:": {
-            "PatchInit:": _.b
+            "PatchInit:": _.c
           }
         }
       }
@@ -34,11 +36,12 @@
   "PatchLoop:#text/1": [{
     "PatchChild:#childScope/0": {
       "PatchFirstValue:value": {
-        "PatchDynamicTag:#text/1": _.a = "^^^packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-define-content-method-rows/template.marko_1*content",
+        "": _.a = "packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-define-content-method-rows/template.marko_1*content 1",
+        "PatchDynamicTag:#text/1": _.b = "^^^packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-define-content-method-rows/template.marko_1*content",
         "PatchChild:BranchScopes:#text/1": {
           "PatchText:#text/0": "c",
           "PatchSetup:": {
-            "PatchInit:": _.b = "packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-define-content-method-rows/template.marko_1_input_label#0:4/subscribe"
+            "PatchInit:": _.c = "packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-define-content-method-rows/template.marko_1_input_label#0:4/subscribe"
           }
         }
       }
@@ -46,11 +49,12 @@
   }, {
     "PatchChild:#childScope/0": {
       "PatchFirstValue:value": {
-        "PatchDynamicTag:#text/1": _.a,
+        "": _.a,
+        "PatchDynamicTag:#text/1": _.b,
         "PatchChild:BranchScopes:#text/1": {
           "PatchText:#text/0": "c",
           "PatchSetup:": {
-            "PatchInit:": _.b
+            "PatchInit:": _.c
           }
         }
       }

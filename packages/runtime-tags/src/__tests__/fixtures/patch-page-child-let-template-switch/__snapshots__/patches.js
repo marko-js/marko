@@ -1,21 +1,21 @@
 // PATCH
-[`b;E ;<strong><i> </i></strong>`, `a2 a>d2!a>d0;/ bD%l&;<button>clear</button><section><!></section>`, {
+[`c;D ;<em> </em>`, `a2 a>d2!a>d0;/ bD%l&;<button>clear</button><section><!></section>`, {
   ba: [{
     ca: {
       Fg: {
-        fb: "b",
+        fb: "c",
         cAb: {
-          ta: "B"
+          ta: "b"
         }
       },
       vd1: "b"
     }
   }, "a2"]
 }]
-;CwY
+;Cwo
 
-// PATCH holding CwY
-{
+// PATCH holding Cwo
+[`b;E ;<strong><i> </i></strong>`, {
   ba: [{
     ca: {
       Fg: {
@@ -27,4 +27,5 @@
       vd1: "c"
     }
   }, "a2"]
-}
+}]
+;Cw4

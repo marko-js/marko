@@ -2190,6 +2190,7 @@ const accessorPrefixDescriptions: Record<string, string> = {
   DynamicHTMLLastChild: "the dynamic html",
   DynamicHTMLValue: "the dynamic html value",
   EventAttributes: "the event handlers",
+  FirstValueId: "the held value id",
   IdFallback: "the generated id",
   KeyedScopes: "the keyed scopes",
   Lifecycle: "the lifecycle handlers",

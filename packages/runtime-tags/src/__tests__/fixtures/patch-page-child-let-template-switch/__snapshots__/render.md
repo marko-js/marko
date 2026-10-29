@@ -10,40 +10,22 @@
 </section>
 ```
 
-# Update `{"show":true,"big":true,"label":"b"}`
+# Update `{"show":true,"big":false,"label":"b"}`
 ```html
 <button>
   clear
 </button>
 <section>
-  <strong>
-    <i>
-      B
-    </i>
-  </strong>
+  <em>
+    b
+  </em>
 </section>
 ```
 ## Change
 ```
-INSERT: section > strong
-REMOVE: section > strong + em
-UPDATE: section > strong > i::text " " => "B"
+UPDATE: section > em::text "a" => "b"
 ```
 
 # Update `{"show":true,"big":true,"label":"c"}`
-```html
-<button>
-  clear
-</button>
-<section>
-  <strong>
-    <i>
-      C
-    </i>
-  </strong>
-</section>
-```
-## Change
-```
-UPDATE: section > strong > i::text "B" => "C"
-```
+
+## Patch rejected (navigate)

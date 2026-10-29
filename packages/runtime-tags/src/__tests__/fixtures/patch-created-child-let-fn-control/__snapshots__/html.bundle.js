@@ -7,6 +7,7 @@ var outer_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let f = input.fmt;
+	_first_value($scope0_id, "h", f, $scope0_reason, 0);
 	_html(`<button>plain</button>${_el_resume($scope0_id, "a")}<input${_attr_input_value($scope0_id, "b", f(input.label), 0, "n2b", (_mask_group($scope0_reason, 1) | _mask_group($scope0_reason, 0)) << 1, 0, void 0, void 0, void 0, "h")}>${_el_resume($scope0_id, "b")}<textarea>${_attr_textarea_value($scope0_id, "c", f(input.label), 0, "n2c", (_mask_group($scope0_reason, 1) | _mask_group($scope0_reason, 0)) << 1, 0, void 0, void 0, void 0, "h")}</textarea>${_el_resume($scope0_id, "c")}`);
 	_script($scope0_id, "b0");
 	_filled_guard($scope0_reason, 0) && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "wh", f, 1);

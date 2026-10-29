@@ -20,18 +20,29 @@ import { BindingType, getDebugAccess, reserveId } from "../util/bindings";
 import evaluate from "../util/evaluate";
 import { hasEmittedAssignment } from "../util/finalize-references";
 import { isOptimize, isOutputDOM, isPatch } from "../util/marko-config";
-import { onReasonsSettled, readsHeldData } from "../util/patch/decisions";
+import {
+  getFirstValueRoot,
+  onReasonsSettled,
+  readsHeldData,
+} from "../util/patch/decisions";
 import { getPatchFill, rootsOwnReads } from "../util/patch/refresh";
-import { addReason } from "../util/reasons";
+import { getRootGroupArgs } from "../util/patch/writers";
+import { addReason, getSourcesForExpr } from "../util/reasons";
 import {
   mergeReferences,
   onFinalizeReferences,
   setDerivedFrom,
   trackVarReferences,
 } from "../util/references";
+import { callRuntime } from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
+import { getScopeAccessorLiteral } from "../util/scope-accessor";
 import { getScopeExpression } from "../util/scope-read";
-import { ensureSection, getSection } from "../util/sections";
+import {
+  ensureSection,
+  getScopeIdIdentifier,
+  getSection,
+} from "../util/sections";
 import {
   addValue,
   initValue,
@@ -41,7 +52,7 @@ import {
 } from "../util/signals";
 import { findSlot, ensureSlot, SlotKind } from "../util/slots";
 import { bindingReaders, someRead } from "../util/solve-reasons";
-import { ALWAYS } from "../util/sources";
+import { ALWAYS, createSources } from "../util/sources";
 import translateVar from "../util/translate-var";
 
 export default {
@@ -195,6 +206,29 @@ export default {
         };
       } else {
         translateVar(tag, valueAttr.value, "let");
+
+        // A `<let>` holding code the page may not load records its value's id
+        // for a call passing it from the server (`_first_value`).
+        const init =
+          isPatch() &&
+          getFirstValueRoot(binding) === binding &&
+          getSourcesForExpr(binding.derivedFrom as t.NodeExtra);
+        if (init && init.param) {
+          tag.insertBefore(
+            t.expressionStatement(
+              callRuntime(
+                "_first_value",
+                getScopeIdIdentifier(section),
+                getScopeAccessorLiteral(binding),
+                t.identifier(binding.name),
+                ...getRootGroupArgs(
+                  section,
+                  createSources(undefined, init.param),
+                ),
+              ),
+            ),
+          );
+        }
 
         if (unused) {
           if (valueChangeAttr && !evaluate(valueChangeAttr.value).pure) {

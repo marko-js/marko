@@ -25,6 +25,7 @@ var outer_default = _template("d", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let T = input.tag;
+	_first_value($scope0_id, "g", T, $scope0_reason, 0);
 	_html(`<button>clear</button>${_el_resume($scope0_id, "a")}<section>`);
 	_dynamic_tag($scope0_id, "b", T, { label: input.label }, 1, 0, 0, 1, (_mask_group($scope0_reason, 1) | _mask_group($scope0_reason, 0)) << 1, 0, "g");
 	_html("</section>");

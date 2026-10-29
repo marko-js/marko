@@ -35,8 +35,7 @@ import {
   SERVER_ALL,
   _content_withhold,
   _patch_fill,
-  ensurePatchSetup,
-  ensureScopePatch,
+  ensureFirstValueFills,
   findOwnerDepth,
   getUpdatesFrom,
   inCreatable,
@@ -360,11 +359,10 @@ export function writeDynamicTagEntry(
       // A first-value `<let>` names the tag: a live branch keeps it where it
       // renders that renderer, else takes it, as a created one does.
       if (firstValueKey) {
-        ensurePatchSetup(
-          state,
-          ensureScopePatch(state, scopeId),
-          firstValueKey,
-        )[key] = value;
+        const fills = ensureFirstValueFills(state, scopeId, firstValueKey);
+        // The client reads the held id from the tag entry naming it.
+        if (fills[""] === value) delete fills[""];
+        fills[key] = value;
         return PatchPairing.Render;
       }
       writePatchEntry(state, scopeId, key, value);

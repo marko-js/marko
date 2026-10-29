@@ -7,6 +7,7 @@ var outer_default = _template("__tests__/tags/outer.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let f = input.fmt;
+	_first_value($scope0_id, "f", f, $scope0_reason, 0);
 	_html(`<button>plain</button>${_el_resume($scope0_id, "#button/0")}<input${_attr_input_value($scope0_id, "#input/1", f(input.label), 0, "PatchControl:2#input/1", (_mask_group($scope0_reason, 1) | _mask_group($scope0_reason, 0)) << 1, 0, void 0, void 0, void 0, "f")}>${_el_resume($scope0_id, "#input/1")}<textarea>${_attr_textarea_value($scope0_id, "#textarea/2", f(input.label), 0, "PatchControl:2#textarea/2", (_mask_group($scope0_reason, 1) | _mask_group($scope0_reason, 0)) << 1, 0, void 0, void 0, void 0, "f")}</textarea>${_el_resume($scope0_id, "#textarea/2")}`);
 	_script($scope0_id, "__tests__/tags/outer.marko_0");
 	_filled_guard($scope0_reason, 0) && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "PatchWrite:f", f, 1);

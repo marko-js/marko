@@ -7,7 +7,9 @@ var card_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let c = input.content;
+	_first_value($scope0_id, "h", c, $scope0_reason, 0);
 	let o = input.other;
+	_first_value($scope0_id, "i", o, $scope0_reason, 1);
 	_html(`<button>clear</button>${_el_resume($scope0_id, "a")}`);
 	_dynamic_tag($scope0_id, "b", c, {}, 2, 0, 0, 1, $scope0_reason, 0, "h");
 	_dynamic_tag($scope0_id, "c", o, {}, 10, 0, 0, 1, $scope0_reason, 1, "i");

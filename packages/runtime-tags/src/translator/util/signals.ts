@@ -2554,10 +2554,6 @@ export function writeHTMLResumeStatements(
   let debugVars: t.ObjectProperty[] | undefined;
   const writeBinding = (binding: Binding) => {
     const reason = getWriteReason(binding);
-    // A patch template writes a `<let>` as main does, where client code on the
-    // page reads it: a site a later patch creates, reading one the page never
-    // wrote, renders from its current init. Whether the page keeps such a
-    // `<let>` holding code it never loads is not yet decided.
     if (!reason) return;
     const accessor = getScopeAccessor(binding);
     const value = getDeclaredBindingExpression(binding);

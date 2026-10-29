@@ -15,6 +15,7 @@ var template_default = _template("a", (input) => {
 		const $scope3_id = _scope_id();
 		const $scope3_reason = _scope_reason();
 		let c = input.content;
+		_first_value($scope3_id, "f", c, $scope3_reason, 0);
 		_html(`<section><button>clear</button>${_el_resume($scope3_id, "a")}`);
 		_dynamic_tag($scope3_id, "b", c, {}, 2, 0, 0, 1, $scope3_reason, 0, "f");
 		_html("</section>");

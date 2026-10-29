@@ -11,6 +11,7 @@ var outer_default = _template("__tests__/tags/outer.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	let f = input.fmt;
+	_first_value($scope0_id, "f", f, $scope0_reason, 0);
 	const o = { f };
 	_html(`<button>plain</button>${_el_resume($scope0_id, "#button/0")}<p>${_text_resume($scope0_id, "#text/1", [input.label].map(f).join(), 1, (_mask_group($scope0_reason, 1) | _mask_group($scope0_reason, 0)) << 1, 0, 1, "f")}</p><p>${_text_resume($scope0_id, "#text/2", f(input.label), 1, (_mask_group($scope0_reason, 1) | _mask_group($scope0_reason, 0)) << 1, 0, 1, "f")}</p><p>${_text_resume($scope0_id, "#text/3", o.f(input.label), 1, (_mask_group($scope0_reason, 1) | _mask_group($scope0_reason, 0)) << 1, 0, 1, "f")}</p>`);
 	_script($scope0_id, "__tests__/tags/outer.marko_0");

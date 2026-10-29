@@ -10,6 +10,7 @@ var outer_default = _template("__tests__/tags/outer.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let f = input.fmt;
+	_first_value($scope0_id, "f", f, $scope0_reason, 0);
 	_html(`<button>plain</button>${_el_resume($scope0_id, "#button/0")}${_style_html(`--M_packages-1bruntime-19tags-1bsrc-1b__tests__-1bfixtures-1bpatch-19created-19child-19let-19fn-19style-1btags-1bouter-1amarko_0:${_escape_style_value(f(input.label) === "w-b" ? "red" : "blue", $scope0_id, "PatchStyle:#style/1 --M_packages-1bruntime-19tags-1bsrc-1b__tests__-1bfixtures-1bpatch-19created-19child-19let-19fn-19style-1btags-1bouter-1amarko_0", (_mask_group($scope0_reason, 1) | _mask_group($scope0_reason, 0)) << 1, 0, "f")};`)}${_el_resume($scope0_id, "#style/1")}<p class=x>x</p>`);
 	_script($scope0_id, "__tests__/tags/outer.marko_0");
 	_filled_guard($scope0_reason, 0) && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "PatchWrite:f", f, 1);

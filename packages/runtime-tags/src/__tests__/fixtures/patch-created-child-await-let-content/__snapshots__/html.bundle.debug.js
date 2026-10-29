@@ -14,6 +14,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 	_await($scope0_id, "#text/0", resolveAfter("v", 1), (v) => {
 		const $scope1_id = _scope_id();
 		let c = input.content;
+		_first_value($scope1_id, "c", c, $scope0_reason, 0);
 		_html(`<button>clear</button>${_el_resume($scope1_id, "#button/0")}`);
 		_dynamic_tag($scope1_id, "#text/1", c, {}, 2, 0, 0, 1, $scope0_reason, 0, "c");
 		_script($scope1_id, "__tests__/tags/card.marko_1");

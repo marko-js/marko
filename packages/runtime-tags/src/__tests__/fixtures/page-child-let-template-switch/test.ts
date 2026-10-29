@@ -5,7 +5,7 @@ export const config: TestConfig = {
   equivalent: false,
   steps: [
     { show: true, big: false, label: "a" },
-    { show: true, big: true, label: "b" },
+    { show: true, big: false, label: "b" },
     { show: true, big: true, label: "c" },
   ],
 };

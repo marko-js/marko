@@ -6,6 +6,7 @@ var card_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let c = { slot: { body: input.content } };
+	_first_value($scope0_id, "e", c, $scope0_reason, 0);
 	_html("<section>");
 	_dynamic_tag($scope0_id, "a", c.slot.body, {}, 2, 0, 0, 1, $scope0_reason, 0, "e");
 	_html("</section>");

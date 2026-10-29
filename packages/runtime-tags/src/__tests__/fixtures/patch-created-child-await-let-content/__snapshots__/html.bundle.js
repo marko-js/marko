@@ -13,6 +13,7 @@ var card_default = _template("b", (input) => {
 	_await($scope0_id, "a", resolveAfter("v", 1), (v) => {
 		const $scope1_id = _scope_id();
 		let c = input.content;
+		_first_value($scope1_id, "c", c, $scope0_reason, 0);
 		_html(`<button>clear</button>${_el_resume($scope1_id, "a")}`);
 		_dynamic_tag($scope1_id, "b", c, {}, 2, 0, 0, 1, $scope0_reason, 0, "c");
 		_script($scope1_id, "b0");

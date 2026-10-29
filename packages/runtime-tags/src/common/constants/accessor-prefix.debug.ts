@@ -10,6 +10,7 @@ export const ControlledValue = "ControlledValue:";
 export const DynamicHTMLLastChild = "DynamicHTMLLastChild:";
 export const DynamicHTMLValue = "DynamicHTMLValue:";
 export const EventAttributes = "EventAttributes:";
+export const FirstValueId = "FirstValueId:";
 export const IdFallback = "IdFallback:";
 export const KeyedScopes = "KeyedScopes:";
 export const Lifecycle = "Lifecycle:";

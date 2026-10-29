@@ -10,6 +10,7 @@ var outer_default = _template("__tests__/tags/outer.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let value = input.data;
+	_first_value($scope0_id, "value", value, $scope0_reason, 0);
 	_html(`<button>clear</button>${_el_resume($scope0_id, "#button/0")}`);
 	_if(() => {
 		if (input.label !== "x") {

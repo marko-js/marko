@@ -7,6 +7,7 @@ var outer_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let f = input.fmt;
+	_first_value($scope0_id, "m", f, $scope0_reason, 0);
 	_html(`<button>plain</button>${_el_resume($scope0_id, "a")}<p>${_text_resume($scope0_id, "b", f(input.label), 1, (_mask_group($scope0_reason, 1) | _mask_group($scope0_reason, 0)) << 1, 0, 1, "m")}</p><div>${_html_resume($scope0_id, "c", f(input.label), 1, (_mask_group($scope0_reason, 1) | _mask_group($scope0_reason, 0)) << 1, 0, 1, "m")}</div><i${_attr("title", f(input.label), $scope0_id, "ad$title", (_mask_group($scope0_reason, 1) | _mask_group($scope0_reason, 0)) << 1, 0, "m")}${_attr_class(f(input.label), $scope0_id, "ad$class", (_mask_group($scope0_reason, 1) | _mask_group($scope0_reason, 0)) << 1, 0, "m")}${_attr_style({ color: f(input.label).length > 3 ? "red" : "blue" }, $scope0_id, "ad$style", (_mask_group($scope0_reason, 1) | _mask_group($scope0_reason, 0)) << 1, 0, "m")}></i>${_el_resume($scope0_id, "d")}<section><!--${_escape_comment(f(input.label), $scope0_id, "me", (_mask_group($scope0_reason, 1) | _mask_group($scope0_reason, 0)) << 1, 0, "m") || " "}-->${_el_resume($scope0_id, "e")}</section>`);
 	const $show = f(input.label) !== "w-c";
 	_show_start($show, 0);

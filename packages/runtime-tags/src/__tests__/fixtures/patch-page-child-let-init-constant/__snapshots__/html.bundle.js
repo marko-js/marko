@@ -19,7 +19,9 @@ var outer_default = _template("d", (input) => {
 	const $scope0_id = _scope_id();
 	let n = input.n;
 	let T = input.tag;
+	_first_value($scope0_id, "j", T, $scope0_reason, 2);
 	let f = input.fmt;
+	_first_value($scope0_id, "k", f, $scope0_reason, 3);
 	_if(() => {
 		if (input.more) {
 			const $scope1_id = _scope_id();

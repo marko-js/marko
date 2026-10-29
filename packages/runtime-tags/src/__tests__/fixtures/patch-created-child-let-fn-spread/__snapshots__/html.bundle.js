@@ -7,6 +7,7 @@ var outer_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let f = input.fmt;
+	_first_value($scope0_id, "i", f, $scope0_reason, 0);
 	_html(`<button>plain</button>${_el_resume($scope0_id, "a")}<section`);
 	_attrs_content(f(input.label), "b", $scope0_id, "section", 0, 1, 0, (_mask_group($scope0_reason, 1) | _mask_group($scope0_reason, 0)) << 1, 0, "i");
 	_html(`</section>${_el_resume($scope0_id, "b")}<i`);

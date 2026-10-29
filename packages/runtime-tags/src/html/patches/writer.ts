@@ -328,12 +328,73 @@ export function toFirstValueKey(firstValue: Accessor): FirstValueKey {
 export function ensurePatchSetup(
   state: PatchRenderState,
   patch: Record<string, unknown>,
-  key:
-    | typeof PatchKey.Setup
-    | typeof PatchKey.SetupValues
-    | FirstValueKey = PatchKey.Setup,
+  key: typeof PatchKey.Setup | typeof PatchKey.SetupValues = PatchKey.Setup,
 ) {
   return (patch[key] ??= patchTreeNode(state, {})) as Record<string, unknown>;
+}
+
+// A scope's entries a first-value `<let>` gates; where the page holds the id of
+// the `<let>`'s value, they carry the server's (`""`) for the client to match,
+// unless their tag entry names it.
+export function ensureFirstValueFills(
+  state: PatchRenderState,
+  scopeId: number,
+  key: FirstValueKey,
+) {
+  const patch = ensureScopePatch(state, scopeId);
+  let fills = patch[key] as Record<string, unknown> | undefined;
+  if (!fills) {
+    fills = patch[key] = patchTreeNode(state, {});
+    let owner: number | undefined = scopeId,
+      i = PatchKey.FirstValue.length;
+    for (; key[i] === "^"; i++) {
+      const link: PatchLink | undefined = state.patchLinks[owner!];
+      owner = link && (link.owner ?? link.parent);
+    }
+    const id = state.firstValueIds?.[owner + " " + key.slice(i)];
+    if (id !== undefined) fills[""] = id;
+  }
+  return fills;
+}
+
+// A first-value `<let>` a call passes from the server: a page writes the id of
+// its value, and a patch the id each of its renders of the value must match.
+export function _first_value(
+  scopeId: number,
+  accessor: Accessor,
+  value: unknown,
+  mask?: GroupMask,
+  group?: number,
+) {
+  if (getUpdatesFrom(mask, group!) !== UpdatesFrom.Server || inUnpatched()) {
+    return;
+  }
+  const state = getState();
+  const id = getHeldId(value);
+  if (!(state instanceof PatchRenderState)) {
+    // A value nothing names holds `-1`, which no patch matches.
+    _base_scope(scopeId, {
+      [AccessorPrefix.FirstValueId + accessor]: id ?? -1,
+    });
+  } else {
+    // Whether the client holds the scope or creates it is the client's to know.
+    (state.firstValueIds ||= {})[scopeId + " " + accessor] = id;
+  }
+}
+
+// What names a held value without its code, as a tag entry names a renderer: a
+// template's id, a registration's with the scope it binds, a native tag's
+// name, `0` for none.
+function getHeldId(value: any): string | 0 | undefined {
+  if (!value) return 0;
+  if (typeof value === "string") return ">" + value;
+  const renderer = value.content || value.default || value;
+  const registered = REGISTRY.get(renderer);
+  return registered
+    ? registered.scope
+      ? registered.id + " " + (registered.scope as ScopeInternals)[K_SCOPE_ID]
+      : registered.id
+    : renderer[RendererProp.Id];
 }
 
 export function ensureScopePatch(
@@ -371,11 +432,8 @@ export function linkScopePatch(
       const entry = slotIds && patchTreeNode(state, [patch, ...slotIds]);
       const key = link.key || PatchKey.Child + hop;
       if (link.firstValue) {
-        ensurePatchSetup(
-          state,
-          ensureScopePatch(state, parent),
-          link.firstValue,
-        )[key] = entry || patch;
+        ensureFirstValueFills(state, parent, link.firstValue)[key] =
+          entry || patch;
       } else {
         writePatchEntry(state, parent, key, entry || patch);
       }
@@ -590,6 +648,9 @@ export class PatchRenderState extends PatchPageState {
   withheldRendered?: Map<string, number>;
   // What each scope's slots holding built objects depend on, by accessor.
   liveDeps?: Record<number, Record<string, string>>;
+  // The id of each first-value `<let>`'s value the patch renders
+  // (`_first_value`), by its scope and accessor.
+  firstValueIds?: Record<string, string | 0 | undefined>;
   // The writes each entry re-runs on, and its scope, resolved as the flush
   // serializes.
   entryDeps?: Map<string[], number>;
@@ -763,7 +824,7 @@ export function ensureFills(
   const patch = ensureScopePatch(state, scopeId);
   return updatesFrom === UpdatesFrom.Server
     ? firstValue
-      ? ensurePatchSetup(state, patch, toFirstValueKey(firstValue))
+      ? ensureFirstValueFills(state, scopeId, toFirstValueKey(firstValue))
       : patch
     : ensurePatchSetup(state, patch);
 }

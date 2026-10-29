@@ -23,7 +23,9 @@ var outer_default = _template("__tests__/tags/outer.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let n = input.n;
 	let T = input.tag;
+	_first_value($scope0_id, "T", T, $scope0_reason, 2);
 	let f = input.fmt;
+	_first_value($scope0_id, "f", f, $scope0_reason, 3);
 	_if(() => {
 		if (input.more) {
 			const $scope1_id = _scope_id();

@@ -1,4 +1,4 @@
-// size: 29615 (min) 10890 (brotli)
+// size: 29615 (min) 10892 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");

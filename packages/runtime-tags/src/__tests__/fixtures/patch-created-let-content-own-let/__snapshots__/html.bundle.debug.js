@@ -7,6 +7,7 @@ var outer_default = _template("__tests__/tags/outer.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let o = input.content;
+	_first_value($scope0_id, "o", o, $scope0_reason, 0);
 	_html(`<button>x</button>${_el_resume($scope0_id, "#button/0")}<section>`);
 	_dynamic_tag($scope0_id, "#text/1", o, {}, 2, 0, 0, 1, $scope0_reason, 0, "o");
 	_html("</section>");

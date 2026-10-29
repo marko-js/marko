@@ -7,6 +7,7 @@ var outer_default = _template("__tests__/tags/outer.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let f = input.fmt;
+	_first_value($scope0_id, "f", f, $scope0_reason, 0);
 	_html(`<button>plain</button>${_el_resume($scope0_id, "#button/0")}<p>${_text_resume($scope0_id, "#text/1", f(input.label), 1, (_mask_group($scope0_reason, 1) | _mask_group($scope0_reason, 0)) << 1, 0, 1, "f")}</p><div>${_html_resume($scope0_id, "#text/2", f(input.label), 1, (_mask_group($scope0_reason, 1) | _mask_group($scope0_reason, 0)) << 1, 0, 1, "f")}</div><i${_attr("title", f(input.label), $scope0_id, "PatchAttr:#i/3 title", (_mask_group($scope0_reason, 1) | _mask_group($scope0_reason, 0)) << 1, 0, "f")}${_attr_class(f(input.label), $scope0_id, "PatchAttr:#i/3 class", (_mask_group($scope0_reason, 1) | _mask_group($scope0_reason, 0)) << 1, 0, "f")}${_attr_style({ color: f(input.label).length > 3 ? "red" : "blue" }, $scope0_id, "PatchAttr:#i/3 style", (_mask_group($scope0_reason, 1) | _mask_group($scope0_reason, 0)) << 1, 0, "f")}></i>${_el_resume($scope0_id, "#i/3")}<section><!--${_escape_comment(f(input.label), $scope0_id, "PatchTextContent:#comment/4", (_mask_group($scope0_reason, 1) | _mask_group($scope0_reason, 0)) << 1, 0, "f") || " "}-->${_el_resume($scope0_id, "#comment/4")}</section>`);
 	const $show = f(input.label) !== "w-c";
 	_show_start($show, 0);

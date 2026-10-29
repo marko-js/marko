@@ -10,7 +10,7 @@
 </section>
 ```
 
-# Update `{"show":true,"big":true,"label":"b"}`
+# Update `{"show":true,"big":false,"label":"b"}`
 ```html
 <button>
   clear

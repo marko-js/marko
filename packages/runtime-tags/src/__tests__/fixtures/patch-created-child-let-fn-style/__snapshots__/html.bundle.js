@@ -7,6 +7,7 @@ var outer_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let f = input.fmt;
+	_first_value($scope0_id, "g", f, $scope0_reason, 0);
 	_html(`<button>plain</button>${_el_resume($scope0_id, "a")}${_style_html(`--M_b0:${_escape_style_value(f(input.label) === "w-b" ? "red" : "blue", $scope0_id, "yb$--M_b0", (_mask_group($scope0_reason, 1) | _mask_group($scope0_reason, 0)) << 1, 0, "g")};`)}${_el_resume($scope0_id, "b")}<p class=x>x</p>`);
 	_script($scope0_id, "b0");
 	_filled_guard($scope0_reason, 0) && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "wg", f, 1);
