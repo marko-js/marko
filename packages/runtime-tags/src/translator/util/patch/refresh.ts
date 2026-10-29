@@ -1180,11 +1180,8 @@ export function hasEffectRead(binding: Binding) {
   return false;
 }
 
-// An effect re-reading it that the declaration's fill carries: any, where no closure
-// keeps an unpatched join key that ships beside it (the fill's run, whole or split
-// as its signal decides, replaces their registrations); else where only that fill
-// reaches: in its own section, or in structure whose closure registration ships
-// only with client renders some pages make.
+// Whether the declaration's fill must re-run an effect reading it: any effect when it
+// carries all, else one in its own section or where a closure's registration may not ship.
 function readsDeclarationOnlyEffect(binding: Binding, carriesAll: boolean) {
   for (const read of binding.reads.keys()) {
     if (
