@@ -173,6 +173,12 @@ export function _hoist_read_error() {
   }
 }
 
+export function _signal_read_error() {
+  if (MARKO_DEBUG) {
+    throw new Error("Cannot use $signal in a server render.");
+  }
+}
+
 export function _assert_hoist(value: unknown) {
   if (MARKO_DEBUG && value !== undefined && typeof value !== "function") {
     throw new Error(
