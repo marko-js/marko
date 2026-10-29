@@ -96,11 +96,6 @@ export type TestConfig = {
    * server streams (reordered content lands before resume starts).
    */
   entry_delay?: number;
-  /**
-   * Sends each patch write a line at a time, an animation frame between its
-   * lines, as a network may split it.
-   */
-  split_writes?: true;
   /** Aborts the SSR render once the first flush streams, simulating a disconnect. */
   abort_ssr?: boolean;
   error_dom?: boolean;
@@ -764,66 +759,76 @@ function testFixtures(interop?: true) {
                     patchHeaders.push(headers["x-marko-patch"].split(";")[1]);
                     try {
                       const writes = template.patch(input, headers);
-                      for await (const flush of config.split_writes
-                        ? splitWrites(writes)
-                        : writes) {
-                        if (
-                          flushes.length &&
-                          !flushes[flushes.length - 1].endsWith("\n\n")
+                      for await (const write of writes) {
+                        for (
+                          let start = 0, end;
+                          start < write.length;
+                          start = end
                         ) {
-                          // Within a write, a frame passes before its next line.
-                          await new Promise((resolve) =>
-                            browser.window.requestAnimationFrame(resolve),
-                          );
-                        } else if (flushes.length && betweenFlushes) {
-                          tracker.logUpdate(input);
-                          tracker.beginUpdate();
-                          const between = await betweenFlushes(
-                            browser.window.document,
-                          );
-                          // Abandoned, the navigation aborts its response; a
-                          // superseded one is left to the next `patch()`.
+                          end = write.indexOf("\n", start) + 1;
+                          if (write[end] === "\n") end++;
+                          const flush = write.slice(start, end);
                           if (
-                            between === "abandon" ||
-                            between === "supersede"
+                            flushes.length &&
+                            !flushes[flushes.length - 1].endsWith("\n\n")
                           ) {
-                            tracker.logUpdate(between);
-                            if (between === "abandon") response.abort();
-                            abandoned = true;
-                            break;
+                            // Within a write, a frame passes before its next line.
+                            await new Promise((resolve) =>
+                              browser.window.requestAnimationFrame(resolve),
+                            );
+                          } else if (flushes.length && betweenFlushes) {
+                            tracker.logUpdate(input);
+                            tracker.beginUpdate();
+                            const between = await betweenFlushes(
+                              browser.window.document,
+                            );
+                            // Abandoned, the navigation aborts its response; a
+                            // superseded one is left to the next `patch()`.
+                            if (
+                              between === "abandon" ||
+                              between === "supersede"
+                            ) {
+                              tracker.logUpdate(between);
+                              if (between === "abandon") response.abort();
+                              abandoned = true;
+                              break;
+                            }
+                            run();
+                            await browser.runAsyncScripts();
+                            run();
+                            tracker.logUpdate(betweenFlushes);
+                            tracker.beginUpdate();
                           }
-                          run();
-                          await browser.runAsyncScripts();
-                          run();
-                          tracker.logUpdate(betweenFlushes);
-                          tracker.beginUpdate();
+                          flushes.push(flush);
+                          // Each flush is a chunk of the response's body, whose
+                          // last ends with the token line.
+                          await response.send(flush);
+                          // The page applies a write once its empty line arrives.
+                          if (!flush.endsWith("\n\n")) continue;
+                          const result = response.result();
+                          // A held load or a still-streaming document settles
+                          // the wait later; the patch must have applied by the end.
+                          if (
+                            typeof result === "object" &&
+                            (config.hold_load || config.patch_while_streaming)
+                          ) {
+                            held.push(result);
+                            landing++;
+                            void Promise.resolve(result).finally(
+                              () => landing--,
+                            );
+                            continue;
+                          }
+                          if (typeof result === "object") {
+                            // A deferred patch is waiting on a lazy module; load
+                            // triggers schedule via setTimeout, so a macrotask
+                            // tick must pass before the chunk can be imported.
+                            await resolveAfter(0, 1);
+                            await browser.runAsyncScripts();
+                          }
+                          if (!(applied = !!(await result))) break;
                         }
-                        flushes.push(flush);
-                        // Each flush is a chunk of the response's body, whose
-                        // last ends with the token line.
-                        await response.send(flush);
-                        // The page applies a write once its empty line arrives.
-                        if (!flush.endsWith("\n\n")) continue;
-                        const result = response.result();
-                        // A held load or a still-streaming document settles
-                        // the wait later; the patch must have applied by the end.
-                        if (
-                          typeof result === "object" &&
-                          (config.hold_load || config.patch_while_streaming)
-                        ) {
-                          held.push(result);
-                          landing++;
-                          void Promise.resolve(result).finally(() => landing--);
-                          continue;
-                        }
-                        if (typeof result === "object") {
-                          // A deferred patch is waiting on a lazy module; load
-                          // triggers schedule via setTimeout, so a macrotask
-                          // tick must pass before the chunk can be imported.
-                          await resolveAfter(0, 1);
-                          await browser.runAsyncScripts();
-                        }
-                        if (!(applied = !!(await result))) break;
+                        if (!applied || abandoned) break;
                       }
                       // Every flush sent: the body ends.
                       if (applied && !abandoned) await response.end();
@@ -1310,11 +1315,6 @@ function byPropertyName(a: string, b: string) {
 
 function propertyName(declaration: string) {
   return declaration.slice(0, declaration.indexOf(":"));
-}
-
-// Each line of each write on its own, the write's empty line with its last.
-async function* splitWrites(writes: AsyncIterable<string>) {
-  for await (const write of writes) yield* write.match(/[^\n]*\n\n?/g)!;
 }
 
 // A wire flush, formatted; the token line (`;` and the token) is no code.
