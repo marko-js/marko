@@ -6,7 +6,7 @@ const $input_label = ($scope, input_label) => _text($scope.b, input_label);
 
 // tags/list.marko
 const $for_content__dynamicTag = /*@__PURE__*/ _dynamic_tag(0);
-const $for_content__input_row__OR__item_id__OR__item_label = /*@__PURE__*/ _fill_join_for("c1", 5, /*@__PURE__*/ _or(5, ($scope) => $for_content__dynamicTag($scope, $scope._.f, ($_) => ({
+const $for_content__input_row__OR__item_id__OR__item_label = /*@__PURE__*/ _fill_for("c1", 5, /*@__PURE__*/ _or(5, ($scope) => $for_content__dynamicTag($scope, $scope._.f, ($_) => ({
 	id: $scope.d,
 	label: $scope.e
 })), 2), 2);

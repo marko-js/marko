@@ -31,7 +31,7 @@ const $for_content__setup = ($scope) => {
 	$input_name($scope["#childScope/1"], $scope["#LoopKey"]);
 };
 const $if_content__for = /*@__PURE__*/ _for_of("#text/0", /*@__PURE__*/ ((_w0, _w1) => `${_w0}${_w1}`)($template$1, $template$1), /*@__PURE__*/ ((_w0, _w1) => `/${_w0}&/${_w1}&`)($walks$1, $walks$1), $for_content__setup);
-const $if_content__input_items = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_items#0:5/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_items", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $if_content__for($scope, [$scope._.input_items, "key"]))));
+const $if_content__input_items = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_items#0:5/init", /*@__PURE__*/ _fill("__tests__/template.marko_fill0", "input_items", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $if_content__for($scope, [$scope._.input_items, "key"]))));
 const $if_content__setup = $if_content__input_items;
 const $headingId = /*@__PURE__*/ _const("headingId", ($scope) => _attr($scope["#h2/0"], "id", $scope.headingId));
 function $setup($scope) {

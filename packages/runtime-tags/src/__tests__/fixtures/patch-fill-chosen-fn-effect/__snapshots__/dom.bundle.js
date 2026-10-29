@@ -1,5 +1,5 @@
 // template.marko
-const $if_content__pick = /*@__PURE__*/ _fill_join("a4", 9, /*@__PURE__*/ _if_closure(1, 0, ($scope) => _text($scope.a, typeof $scope._.j)));
+const $if_content__pick = /*@__PURE__*/ _fill("a4", 9, /*@__PURE__*/ _if_closure(1, 0, ($scope) => _text($scope.a, typeof $scope._.j)));
 const $if_content__setup = $if_content__pick;
 const $pick__script = _script("a2", ($scope) => {
 	{

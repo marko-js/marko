@@ -3,7 +3,7 @@ const $template = "<!><!><!>";
 const $walks = "b%c";
 const $setup = ($_) => {};
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $input_show__OR__input_a = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "input_a", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_show", /*@__PURE__*/ _or(5, ($scope) => $dynamicTag($scope, $scope.input_show ? child_default : null, ($_) => ({ x: $scope.input_a })))));
+const $input_show__OR__input_a = /*@__PURE__*/ _fill("__tests__/template.marko_fill1", "input_a", /*@__PURE__*/ _fill("__tests__/template.marko_fill0", "input_show", /*@__PURE__*/ _or(5, ($scope) => $dynamicTag($scope, $scope.input_show ? child_default : null, ($_) => ({ x: $scope.input_a })))));
 const $input_show = /*@__PURE__*/ _const("input_show", $input_show__OR__input_a);
 const $input_a = /*@__PURE__*/ _const("input_a", $input_show__OR__input_a);
 const $input = ($scope, input) => {

@@ -3,7 +3,7 @@ const $template = "<!><!><style></style>";
 const $walks = "b%b b";
 const $setup = ($_) => {};
 const $else_content__input_attrs__script = _script("__tests__/template.marko_1_input_attrs#0:5", ($scope) => _attrs_script($scope, "#style/1"));
-const $else_content__input_attrs = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_attrs#0:5/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_attrs", /*@__PURE__*/ _if_closure("#text/0", 1, ($scope) => {
+const $else_content__input_attrs = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_attrs#0:5/init", /*@__PURE__*/ _fill("__tests__/template.marko_fill0", "input_attrs", /*@__PURE__*/ _if_closure("#text/0", 1, ($scope) => {
 	$else_content__input_attrs__script($scope);
 	_attrs($scope, "#style/1", {
 		nonce: $scope.$global.cspNonce,

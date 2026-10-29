@@ -1,6 +1,6 @@
 // tags/badge.marko
 const $template = "<em> </em>";
-const $setup__$global_brand = /*@__PURE__*/ _fill_global_join("b0", ($scope) => _text($scope.a, $scope.$.brand), "brand");
+const $setup__$global_brand = /*@__PURE__*/ _fill_global("b0", ($scope) => _text($scope.a, $scope.$.brand), "brand");
 const $setup = $setup__$global_brand;
 
 // template.marko

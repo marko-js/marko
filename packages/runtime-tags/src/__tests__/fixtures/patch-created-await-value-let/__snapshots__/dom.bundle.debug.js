@@ -14,7 +14,7 @@ const $await_content__v = ($scope, v) => _text($scope["#text/2"], v);
 const $await_content__$params = ($scope, $params2) => $await_content__v($scope, $params2[0]);
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<button><!> <!></button>", " D%c%", $await_content__setup);
 const $if_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
-const $if_content__input_value = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_value#0:6/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_value", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $if_content__await_promise($scope, $scope._.input_value))));
+const $if_content__input_value = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_value#0:6/init", /*@__PURE__*/ _fill("__tests__/template.marko_fill0", "input_value", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $if_content__await_promise($scope, $scope._.input_value))));
 const $if_content__setup = ($scope) => {
 	$if_content__input_value._($scope);
 	$await_content($scope);

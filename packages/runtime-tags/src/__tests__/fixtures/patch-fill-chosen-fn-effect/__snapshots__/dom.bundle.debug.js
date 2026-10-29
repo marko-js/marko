@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<pre id=log></pre><div id=d></div><main><!><button>+</button></main>";
 const $walks = "b bD%b l";
-const $if_content__pick = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "pick", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => _text($scope["#text/0"], typeof $scope._.pick)));
+const $if_content__pick = /*@__PURE__*/ _fill("__tests__/template.marko_fill0", "pick", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => _text($scope["#text/0"], typeof $scope._.pick)));
 const $if_content__setup = $if_content__pick;
 const $pick__script = _script("__tests__/template.marko_0_pick#9", ($scope) => {
 	{

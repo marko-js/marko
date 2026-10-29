@@ -3,7 +3,7 @@ const $template = /*@__PURE__*/ ((_w0) => `<p> </p>${_w0}`)("");
 const $walks = /*@__PURE__*/ ((_w0) => `D /${_w0}&l`)("");
 const $setup = ($_) => {};
 const $c = ($scope, c) => $input_value($scope["#childScope/1"], c);
-const $a__OR__b = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "b", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "a", /*@__PURE__*/ _or(8, ($scope) => $c($scope, {
+const $a__OR__b = /*@__PURE__*/ _fill("__tests__/template.marko_fill1", "b", /*@__PURE__*/ _fill("__tests__/template.marko_fill0", "a", /*@__PURE__*/ _or(8, ($scope) => $c($scope, {
 	a: $scope.a,
 	b: $scope.b
 }))));

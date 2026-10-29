@@ -4,7 +4,7 @@ const $walks = "D%b l";
 const $for_content__item_id = ($scope, item_id) => _text($scope["#text/0"], item_id);
 const $for_content__$params = ($scope, $params2) => $for_content__item_id($scope, $params2[0]?.id);
 const $for = /*@__PURE__*/ _for_of("#text/0", "<li> </li>", "D ", 0, $for_content__$params);
-const $input_key__OR__items = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_key", /*@__PURE__*/ _or(6, ($scope) => $for($scope, [$scope.items, $scope.input_key.bind(null)])));
+const $input_key__OR__items = /*@__PURE__*/ _fill("__tests__/template.marko_fill0", "input_key", /*@__PURE__*/ _or(6, ($scope) => $for($scope, [$scope.items, $scope.input_key.bind(null)])));
 const $items = _let("items/5", $input_key__OR__items);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$items($scope, [...$scope.items, { id: 2 }]);

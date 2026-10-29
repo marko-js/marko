@@ -11,7 +11,7 @@ var grand_default = /*@__PURE__*/ _template("__tests__/tags/grand/index.marko", 
 // tags/card/index.marko
 const $template$1 = "<section><h2> </h2><!><button>+</button></section>";
 const $walks$1 = "E l%b l";
-const $if_content__input_content = /*@__PURE__*/ _fill_join("__tests__/tags/card/index.marko_fill0", "input_content", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $input_content$1($scope["#childScope/0"], $scope._.input_content)));
+const $if_content__input_content = /*@__PURE__*/ _fill("__tests__/tags/card/index.marko_fill0", "input_content", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $input_content$1($scope["#childScope/0"], $scope._.input_content)));
 const $if_content__setup = $if_content__input_content;
 const $if = /*@__PURE__*/ _if("#text/1", $template$2, /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l"), $if_content__setup);
 const $open = /*@__PURE__*/ _fill_let("__tests__/tags/card/index.marko_fill1", "open/7", ($scope) => $if($scope, $scope.open ? 0 : 1));
@@ -33,7 +33,7 @@ var card_default = /*@__PURE__*/ _template("__tests__/tags/card/index.marko", $t
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}</main>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `D/${_w0}&l`)($walks$1);
-const $card_content__input_note = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_note", /*@__PURE__*/ _closure_get("input_note/5", ($scope) => _text($scope["#text/0"], $scope._.input_note), 0, "__tests__/template.marko_1_input_note#0:4/subscribe"), 0);
+const $card_content__input_note = /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill0", "input_note", /*@__PURE__*/ _closure_get("input_note/5", ($scope) => _text($scope["#text/0"], $scope._.input_note), 0, "__tests__/template.marko_1_input_note#0:4/subscribe"), 0);
 const $card_content__setup = $card_content__input_note;
 const $card_content = _content("__tests__/template.marko_1*content", "<em> </em>", "D ", $card_content__setup);
 function $setup($scope) {

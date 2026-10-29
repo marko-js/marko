@@ -8,7 +8,7 @@ const $try_content__setup = ($scope) => {
 	$try_content__input_promise($scope);
 	$await_content($scope);
 };
-const $placeholder_content__input_msg = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_msg", /*@__PURE__*/ _closure_get("input_msg/8", ($scope) => _text($scope["#text/0"], $scope._.input_msg), 0, "__tests__/template.marko_1_input_msg#0:5/subscribe"), 0);
+const $placeholder_content__input_msg = /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill0", "input_msg", /*@__PURE__*/ _closure_get("input_msg/8", ($scope) => _text($scope["#text/0"], $scope._.input_msg), 0, "__tests__/template.marko_1_input_msg#0:5/subscribe"), 0);
 const $placeholder_content__setup = $placeholder_content__input_msg;
 const $placeholder_content = _content("__tests__/template.marko_1*content", "<em>loading <!></em>", "Db%", $placeholder_content__setup);
 const $count = _let("count/7", ($scope) => _text($scope["#text/1"], $scope.count));

@@ -24,7 +24,7 @@ function $setup($scope) {
 const $input_note = ($scope, input_note) => $input_note$1($scope.a, input_note);
 
 // template.marko
-const $if_content__input_note = /*@__PURE__*/ _fill_join("a1", 4, /*@__PURE__*/ _if_closure(0, 0, ($scope) => $input_note($scope.a, $scope._.e)));
+const $if_content__input_note = /*@__PURE__*/ _fill("a1", 4, /*@__PURE__*/ _if_closure(0, 0, ($scope) => $input_note($scope.a, $scope._.e)));
 const $if_content__setup = ($scope) => {
 	$if_content__input_note._($scope);
 	$setup($scope.a);

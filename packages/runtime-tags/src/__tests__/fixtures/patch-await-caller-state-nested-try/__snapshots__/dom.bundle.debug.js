@@ -2,7 +2,7 @@
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $catch_content = _content("__tests__/tags/show-await.marko_3*content", "<em>caught</em>");
-const $try_content__setup__$global_brand = /*@__PURE__*/ _fill_global_join("__tests__/tags/show-await.marko_2_$global_brand#0:10", ($scope) => _text($scope["#text/0"], $scope.$global.brand), "brand");
+const $try_content__setup__$global_brand = /*@__PURE__*/ _fill_global("__tests__/tags/show-await.marko_2_$global_brand#0:10", ($scope) => _text($scope["#text/0"], $scope.$global.brand), "brand");
 const $try_content__setup = $try_content__setup__$global_brand;
 const $await_content__x = ($scope, x) => _text($scope["#text/0"], x);
 const $await_content__try = /*@__PURE__*/ _try("#text/1", "<span> </span>", "D ", $try_content__setup, 0, $catch_content);

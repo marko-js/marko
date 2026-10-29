@@ -3,7 +3,7 @@ const $template$1 = "<html><body><main><!><!></main></body></html>";
 const $walks$1 = "F%b%n";
 const $setup$1 = ($_) => {};
 const $input_content_direct = /*@__PURE__*/ _dynamic_tag_content("#text/1");
-const $if_content__input_a__OR__input_b = /*@__PURE__*/ _fill_join_if("__tests__/layout.marko_fill1 __tests__/layout.marko_fill1/unpatched", "input_b", /*@__PURE__*/ _fill_join_if("__tests__/layout.marko_fill0 __tests__/layout.marko_fill0/unpatched", "input_a", /*@__PURE__*/ _or_resume("__tests__/layout.marko_1_input_a#0:5_input_b#0:6/init", 1, ($scope) => _text($scope["#text/0"], $scope._.input_a + $scope._.input_b)), "#text/0", 0), "#text/0", 0);
+const $if_content__input_a__OR__input_b = /*@__PURE__*/ _fill_if("__tests__/layout.marko_fill1 __tests__/layout.marko_fill1/unpatched", "input_b", /*@__PURE__*/ _fill_if("__tests__/layout.marko_fill0 __tests__/layout.marko_fill0/unpatched", "input_a", /*@__PURE__*/ _or_resume("__tests__/layout.marko_1_input_a#0:5_input_b#0:6/init", 1, ($scope) => _text($scope["#text/0"], $scope._.input_a + $scope._.input_b)), "#text/0", 0), "#text/0", 0);
 const $if_content__input_a = /*@__PURE__*/ _if_closure("#text/0", 0, $if_content__input_a__OR__input_b);
 const $if_content__setup = ($scope) => {
 	$if_content__input_a._($scope);

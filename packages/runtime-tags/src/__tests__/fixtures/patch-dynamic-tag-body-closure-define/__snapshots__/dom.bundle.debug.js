@@ -6,7 +6,7 @@ const $showFoodiv_content__setup = $showFoodiv_content__count;
 const $showFoodiv_content = _content("__tests__/template.marko_3*content", "count <!>", "b%", $showFoodiv_content__setup);
 _content_resume($showFoodiv_content);
 const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $if_content__input_content = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_content", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.input_content)));
+const $if_content__input_content = /*@__PURE__*/ _fill("__tests__/template.marko_fill0", "input_content", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.input_content)));
 const $if_content__setup = $if_content__input_content;
 const $Foo_content__if = /*@__PURE__*/ _if("#text/1", "<!><!><!>", "b%", $if_content__setup);
 const $Foo_content__open = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill1", "open/5", ($scope) => $Foo_content__if($scope, $scope.open ? 0 : 1));

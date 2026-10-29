@@ -9,7 +9,7 @@ const $if_content__setup = ($scope) => {
 	$Info_content__setup($scope["#childScope/0"]);
 	$Info_content__id($scope["#childScope/0"], "x");
 };
-const $Info_content__input_n = /*@__PURE__*/ _init_resume("__tests__/tags/panel.marko_1_input_n#0:3/init", /*@__PURE__*/ _fill_join_closure("__tests__/tags/panel.marko_fill0", "input_n", /*@__PURE__*/ _closure_get("input_n/5", ($scope) => _text($scope["#text/1"], $scope._.input_n), 0, "__tests__/tags/panel.marko_1_input_n#0:3/subscribe"), 0));
+const $Info_content__input_n = /*@__PURE__*/ _init_resume("__tests__/tags/panel.marko_1_input_n#0:3/init", /*@__PURE__*/ _fill_closure("__tests__/tags/panel.marko_fill0", "input_n", /*@__PURE__*/ _closure_get("input_n/5", ($scope) => _text($scope["#text/1"], $scope._.input_n), 0, "__tests__/tags/panel.marko_1_input_n#0:3/subscribe"), 0));
 const $Info_content__setup = $Info_content__input_n;
 const $Info_content__id = ($scope, id) => _text($scope["#text/0"], id);
 const $Info_content__$params = ($scope, $params2) => $Info_content__$temp($scope, $params2[0]);

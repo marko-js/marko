@@ -18,7 +18,7 @@ const $Box_content__$params = ($scope, $params2) => {
 };
 const $Box_content = _content("__tests__/template.marko_1*content", "<button> </button>", " D ", $Box_content__setup, $Box_content__$params);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $input_show__OR__input_label__OR__Tag = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "input_label", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_show", /*@__PURE__*/ _or(6, ($scope) => $dynamicTag($scope, $scope.Box, ($_) => ({
+const $input_show__OR__input_label__OR__Tag = /*@__PURE__*/ _fill("__tests__/template.marko_fill1", "input_label", /*@__PURE__*/ _fill("__tests__/template.marko_fill0", "input_show", /*@__PURE__*/ _or(6, ($scope) => $dynamicTag($scope, $scope.Box, ($_) => ({
 	show: $scope.input_show,
 	label: $scope.input_label
 })), 2)));

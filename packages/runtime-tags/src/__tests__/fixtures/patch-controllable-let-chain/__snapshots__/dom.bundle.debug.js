@@ -7,7 +7,7 @@ const $if_content__a = _let("a/2", ($scope) => {
 	$if_content__b($scope, $scope.a);
 	_attr_input_value($scope, "#input/0", $scope.a, $valueChange($scope));
 });
-const $if_content__input_text = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_text#0:4/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_text", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__a($scope, $scope._.input_text))));
+const $if_content__input_text = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_text#0:4/init", /*@__PURE__*/ _fill("__tests__/template.marko_fill0", "input_text", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__a($scope, $scope._.input_text))));
 const $if_content__setup__script = _script("__tests__/template.marko_1", ($scope) => {
 	_attr_input_value_script($scope, "#input/0");
 	_attr_input_value_script($scope, "#input/1");

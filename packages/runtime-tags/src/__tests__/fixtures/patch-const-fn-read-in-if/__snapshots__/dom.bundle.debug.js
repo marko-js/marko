@@ -1,7 +1,7 @@
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<!><!>${_w0}`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `b%b/${_w0}&`)($walks$1);
-const $if_content__f = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_f#0:6/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "f", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => _text($scope["#text/0"], $scope._.f()))));
+const $if_content__f = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_f#0:6/init", /*@__PURE__*/ _fill("__tests__/template.marko_fill0", "f", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => _text($scope["#text/0"], $scope._.f()))));
 const $if_content__setup = $if_content__f;
 const $f2 = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "f", $if_content__f);
 const $input_a = /*@__PURE__*/ _const("input_a", ($scope) => $f2($scope, $f($scope)));

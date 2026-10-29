@@ -20,7 +20,7 @@ const $Panel_content__$params = ($scope, $params2) => {
 	$Panel_content__fmt($scope, $params2[0]);
 	$Panel_content__label($scope, $params2[1]);
 };
-const $if_content__input_label = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => {
+const $if_content__input_label = /*@__PURE__*/ _fill("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => {
 	$Panel_content__fmt($scope["#childScope/0"], lib.format);
 	$Panel_content__label($scope["#childScope/0"], $scope._.input_label);
 }));

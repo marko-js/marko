@@ -47,7 +47,7 @@ const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $
 const $Body_content__setup__script = _script("__tests__/template.marko_4", ($scope) => console.log("define setup"));
 const $Body_content__setup = $Body_content__setup__script;
 const $inputtag_content__for = /*@__PURE__*/ _for_of_unkeyed("#text/1", 0, 0, 0, $for_content3__$params);
-const $inputtag_content__input_items = /*@__PURE__*/ _init_resume("__tests__/template.marko_3_input_items#0:6/init", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0/content", "input_items", /*@__PURE__*/ _closure_get("input_items/10", ($scope) => $inputtag_content__for($scope, [$scope._._.input_items]), ($scope) => $scope._._, "__tests__/template.marko_3_input_items#0:6/subscribe"), 1));
+const $inputtag_content__input_items = /*@__PURE__*/ _init_resume("__tests__/template.marko_3_input_items#0:6/init", /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill0/content", "input_items", /*@__PURE__*/ _closure_get("input_items/10", ($scope) => $inputtag_content__for($scope, [$scope._._.input_items]), ($scope) => $scope._._, "__tests__/template.marko_3_input_items#0:6/subscribe"), 1));
 const $inputtag_content__setup__script = _script("__tests__/template.marko_3", ($scope) => console.log("tag body setup"));
 const $inputtag_content__setup = ($scope) => {
 	$inputtag_content__input_items($scope);
@@ -57,7 +57,7 @@ const $inputtag_content__setup = ($scope) => {
 const $inputtag_content = _content("__tests__/template.marko_3*content", /*@__PURE__*/ ((_w0) => `${_w0}<!><!>`)($template$3), /*@__PURE__*/ ((_w0) => `/${_w0}&%c`)("b"), $inputtag_content__setup);
 _content_resume($inputtag_content);
 const $body_content__for = /*@__PURE__*/ _for_of_unkeyed("#text/0", 0, 0, 0, $for_content2__$params);
-const $body_content__input_items = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_input_items#0:6/init", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0/content", "input_items", /*@__PURE__*/ _closure_get("input_items/10", ($scope) => $body_content__for($scope, [$scope._._.input_items]), ($scope) => $scope._._), 0));
+const $body_content__input_items = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_input_items#0:6/init", /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill0/content", "input_items", /*@__PURE__*/ _closure_get("input_items/10", ($scope) => $body_content__for($scope, [$scope._._.input_items]), ($scope) => $scope._._), 0));
 const $body_content__setup__script = _script("__tests__/template.marko_2", ($scope) => console.log("content setup"));
 const $body_content__setup = ($scope) => {
 	$body_content__input_items($scope);
@@ -65,7 +65,7 @@ const $body_content__setup = ($scope) => {
 };
 const $body_content = /*@__PURE__*/ _content("__tests__/template.marko_2*content", "<em>content</em><!><!>", "b%", $body_content__setup);
 const $if_content__for = /*@__PURE__*/ _for_of_unkeyed("#text/2", "<i> </i>", "D ", 0, $for_content__$params);
-const $if_content__input_items = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_items#0:6/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_items", /*@__PURE__*/ _if_closure("#text/2", 0, ($scope) => $if_content__for($scope, [$scope._.input_items]))));
+const $if_content__input_items = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_items#0:6/init", /*@__PURE__*/ _fill("__tests__/template.marko_fill0", "input_items", /*@__PURE__*/ _if_closure("#text/2", 0, ($scope) => $if_content__for($scope, [$scope._.input_items]))));
 const $if_content__setup__script = _script("__tests__/template.marko_1", ($scope) => console.log("branch setup", document.querySelectorAll("i").length));
 const $if_content__setup = ($scope) => {
 	$if_content__input_items._($scope);
@@ -78,9 +78,9 @@ const $if_content__setup = ($scope) => {
 	$if_content__setup__script($scope);
 };
 const $if_content__if = /*@__PURE__*/ _if("#text/3", "<u>nested</u>", 0, $if_content2__setup);
-const $if_content__input_nested = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_nested#0:7/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "input_nested", /*@__PURE__*/ _if_closure("#text/2", 0, ($scope) => $if_content__if($scope, $scope._.input_nested ? 0 : 1))));
+const $if_content__input_nested = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_nested#0:7/init", /*@__PURE__*/ _fill("__tests__/template.marko_fill1", "input_nested", /*@__PURE__*/ _if_closure("#text/2", 0, ($scope) => $if_content__if($scope, $scope._.input_nested ? 0 : 1))));
 const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/5", $inputtag_content);
-const $if_content__input_tag = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_tag#0:8/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill2", "input_tag", /*@__PURE__*/ _if_closure("#text/2", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.input_tag))));
+const $if_content__input_tag = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_tag#0:8/init", /*@__PURE__*/ _fill("__tests__/template.marko_fill2", "input_tag", /*@__PURE__*/ _if_closure("#text/2", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.input_tag))));
 const $if_content__count__script = _script("__tests__/template.marko_1_count#0:9", ($scope) => console.log("branch count", $scope._.count));
 const $if_content__count = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_count#0:9/init", /*@__PURE__*/ _if_closure("#text/2", 0, $if_content__count__script));
 const $count = _let("count/9", ($scope) => {

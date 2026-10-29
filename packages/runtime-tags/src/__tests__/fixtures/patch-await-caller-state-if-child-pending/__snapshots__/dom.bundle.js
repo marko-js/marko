@@ -2,7 +2,7 @@
 const $await_content__x = ($scope, x) => _text($scope.b, x);
 const $await_content__$params = ($scope, $params2) => $await_content__x($scope, $params2[0]);
 const $if_content__await_promise = /*@__PURE__*/ _await_promise(0, $await_content__$params);
-const $if_content__input_promise = /*@__PURE__*/ _init_resume("b5", /*@__PURE__*/ _fill_join("b6", 4, /*@__PURE__*/ _if_closure(0, 0, ($scope) => $if_content__await_promise($scope, $scope._.e))));
+const $if_content__input_promise = /*@__PURE__*/ _init_resume("b5", /*@__PURE__*/ _fill("b6", 4, /*@__PURE__*/ _if_closure(0, 0, ($scope) => $if_content__await_promise($scope, $scope._.e))));
 const $input_promise = /*@__PURE__*/ _fill_const("b6", 4, $if_content__input_promise);
 
 // template.marko

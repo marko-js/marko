@@ -2,7 +2,7 @@
 const $template = "<!><!><!>";
 const $walks = "b%c";
 const $setup = ($_) => {};
-const $if_content__input_label__OR__input_n = /*@__PURE__*/ _fill_join_if("__tests__/template.marko_fill1 __tests__/template.marko_fill1/unpatched", "input_n", /*@__PURE__*/ _fill_join_if("__tests__/template.marko_fill0 __tests__/template.marko_fill0/unpatched", "input_label", /*@__PURE__*/ _or_resume("__tests__/template.marko_1_input_label#0:4_input_n#0:5/init", 1, ($scope) => $input_opts($scope["#childScope/0"], {
+const $if_content__input_label__OR__input_n = /*@__PURE__*/ _fill_if("__tests__/template.marko_fill1 __tests__/template.marko_fill1/unpatched", "input_n", /*@__PURE__*/ _fill_if("__tests__/template.marko_fill0 __tests__/template.marko_fill0/unpatched", "input_label", /*@__PURE__*/ _or_resume("__tests__/template.marko_1_input_label#0:4_input_n#0:5/init", 1, ($scope) => $input_opts($scope["#childScope/0"], {
 	label: $scope._.input_label,
 	n: $scope._.input_n
 })), "#text/0", 0), "#text/0", 0);

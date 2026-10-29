@@ -2,7 +2,7 @@
 const $template$1 = "<p><!> <!></p>";
 const $walks$1 = "D%c%l";
 const $input_value = ($scope, input_value) => _text($scope["#text/0"], input_value);
-const $setup__$global_flag = /*@__PURE__*/ _fill_global_join("__tests__/tags/g-badge/index.marko_0_$global_flag#6", ($scope) => _text($scope["#text/1"], $scope.$global.flag), "flag");
+const $setup__$global_flag = /*@__PURE__*/ _fill_global("__tests__/tags/g-badge/index.marko_0_$global_flag#6", ($scope) => _text($scope["#text/1"], $scope.$global.flag), "flag");
 const $setup$1 = $setup__$global_flag;
 const $input = ($scope, input) => $input_value($scope, input.value);
 var g_badge_default = /*@__PURE__*/ _template("__tests__/tags/g-badge/index.marko", $template$1, $walks$1, $setup$1, $input);

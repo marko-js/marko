@@ -22,7 +22,7 @@ var other_default = /*@__PURE__*/ _template("c", $template, $walks, $setup, $inp
 
 // tags/chooser.marko
 const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag(0);
-const $if_content__input_Tag__OR__input_label = /*@__PURE__*/ _fill_join_if("e2", 5, /*@__PURE__*/ _fill_join_if("e1", 4, /*@__PURE__*/ _or(1, ($scope) => $if_content__dynamicTag($scope, $scope._.e, ($_) => ({ label: $scope._.f }))), 1, 0), 1, 0);
+const $if_content__input_Tag__OR__input_label = /*@__PURE__*/ _fill_if("e2", 5, /*@__PURE__*/ _fill_if("e1", 4, /*@__PURE__*/ _or(1, ($scope) => $if_content__dynamicTag($scope, $scope._.e, ($_) => ({ label: $scope._.f }))), 1, 0), 1, 0);
 const $if_content__input_Tag = /*@__PURE__*/ _if_closure(1, 0, $if_content__input_Tag__OR__input_label);
 const $if_content__setup = ($scope) => {
 	$if_content__input_Tag._($scope);

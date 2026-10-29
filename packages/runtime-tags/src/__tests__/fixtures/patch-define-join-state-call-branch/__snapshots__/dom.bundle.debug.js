@@ -3,7 +3,7 @@ const $Row_content__walks = "b%c";
 const $Row_content__template = "<!><!><!>";
 const $template$1 = /*@__PURE__*/ ((_w0, _w1) => `<!>${_w0}${_w1}<button class=t>t</button>`)($Row_content__template, $Row_content__template);
 const $walks$1 = /*@__PURE__*/ ((_w0, _w1) => `b/${_w0}&/${_w1}& b`)($Row_content__walks, $Row_content__walks);
-const $if_content__input_a__OR__input_b = /*@__PURE__*/ _fill_join_subscribers("__tests__/tags/panel.marko_fill1/unpatched", "input_b", /*@__PURE__*/ _fill_join_subscribers("__tests__/tags/panel.marko_fill0/unpatched", "input_a", /*@__PURE__*/ _or_resume("__tests__/tags/panel.marko_2_input_a#0:5_input_b#0:6/init", 1, ($scope) => _text($scope["#text/0"], $scope._._.input_a + $scope._._.input_b)), "input_a/9", 0), "input_b/10", 0);
+const $if_content__input_a__OR__input_b = /*@__PURE__*/ _fill_subscribers("__tests__/tags/panel.marko_fill1/unpatched", "input_b", /*@__PURE__*/ _fill_subscribers("__tests__/tags/panel.marko_fill0/unpatched", "input_a", /*@__PURE__*/ _or_resume("__tests__/tags/panel.marko_2_input_a#0:5_input_b#0:6/init", 1, ($scope) => _text($scope["#text/0"], $scope._._.input_a + $scope._._.input_b)), "input_a/9", 0), "input_b/10", 0);
 const $if_content__input_a = /*@__PURE__*/ _closure_get("input_a/9", $if_content__input_a__OR__input_b, ($scope) => $scope._._, "__tests__/tags/panel.marko_2_input_a#0:5/subscribe");
 const $if_content__setup = ($scope) => {
 	$if_content__input_a($scope);

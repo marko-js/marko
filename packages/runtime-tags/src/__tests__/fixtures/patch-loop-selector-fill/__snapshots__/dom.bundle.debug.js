@@ -2,7 +2,7 @@
 const $template = "<main><ul></ul><button>+</button></main>";
 const $walks = "D b l";
 const $for_content__if = /*@__PURE__*/ _if("#text/1", "<span>*</span>");
-const $for_content__input_selected = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_selected", /*@__PURE__*/ _for_closure("#ul/0", ($scope) => $for_content__if($scope, $scope._.input_selected === $scope["#LoopKey"] ? 0 : 1)));
+const $for_content__input_selected = /*@__PURE__*/ _fill("__tests__/template.marko_fill0", "input_selected", /*@__PURE__*/ _for_closure("#ul/0", ($scope) => $for_content__if($scope, $scope._.input_selected === $scope["#LoopKey"] ? 0 : 1)));
 const $for_content__setup = ($scope) => {
 	$for_content__input_selected._($scope);
 	_text($scope["#text/0"], $scope["#LoopKey"]);

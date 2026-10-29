@@ -1,5 +1,5 @@
 // tags/child.marko
-const $Content_content__input_label = /*@__PURE__*/ _init_resume("b2", /*@__PURE__*/ _fill_join_closure("b4", 2, /*@__PURE__*/ _closure_get(5, ($scope) => _text($scope.b, $scope._.c), 0, "b3"), 0));
+const $Content_content__input_label = /*@__PURE__*/ _init_resume("b2", /*@__PURE__*/ _fill_closure("b4", 2, /*@__PURE__*/ _closure_get(5, ($scope) => _text($scope.b, $scope._.c), 0, "b3"), 0));
 const $Content_content__setup__script = _script("b1", ($scope) => _on($scope.a, "click", function() {
 	$count($scope._, +$scope._.d + 1);
 }));

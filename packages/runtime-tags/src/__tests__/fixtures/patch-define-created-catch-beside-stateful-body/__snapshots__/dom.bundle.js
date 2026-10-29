@@ -11,14 +11,14 @@ const $Panel_content__$temp = ($scope, $temp) => {
 	$Panel_content__tag_input_label($scope, $temp.label);
 };
 const $Panel_content = _content$1("a4", $Panel_content__template, $Panel_content__walks, 0, $Panel_content__$params);
-const $catch_content__input_label = /*@__PURE__*/ _fill_join_closure("a10", 5, /*@__PURE__*/ _closure_get(13, ($scope) => $Panel_content__tag_input_label($scope.a, $scope._.f), 0, "a5"), 0);
+const $catch_content__input_label = /*@__PURE__*/ _fill_closure("a10", 5, /*@__PURE__*/ _closure_get(13, ($scope) => $Panel_content__tag_input_label($scope.a, $scope._.f), 0, "a5"), 0);
 const $catch_content__setup = ($scope) => {
 	$catch_content__input_label($scope);
 	$Panel_content__isOpen($scope.a, true);
 };
 const $catch_content = _content$1("a8", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Panel_content__template), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Panel_content__walks), $catch_content__setup);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag(1);
-const $input_label__OR__open__OR__Tag = /*@__PURE__*/ _fill_join("a11", 11, /*@__PURE__*/ _fill_join("a10", 5, /*@__PURE__*/ _or(12, ($scope) => $dynamicTag($scope, $scope.l, ($_) => ({
+const $input_label__OR__open__OR__Tag = /*@__PURE__*/ _fill("a11", 11, /*@__PURE__*/ _fill("a10", 5, /*@__PURE__*/ _or(12, ($scope) => $dynamicTag($scope, $scope.l, ($_) => ({
 	isOpen: !$scope.i,
 	label: $scope.f + "!"
 })), 2)));

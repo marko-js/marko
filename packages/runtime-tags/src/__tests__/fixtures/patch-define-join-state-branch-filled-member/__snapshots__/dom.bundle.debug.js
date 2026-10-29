@@ -8,9 +8,9 @@ const $if_content2__setup = ($scope) => {
 	$Info_content__setup($scope["#childScope/0"]);
 };
 const $if_content__input_a__script = _script("__tests__/tags/panel.marko_2_input_a#0:5", ($scope) => _el_read($scope["#div/0"]).textContent = "s:" + $scope._.input_a);
-const $if_content__input_a = /*@__PURE__*/ _fill_join("__tests__/tags/panel.marko_fill0 __tests__/tags/panel.marko_fill0/unpatched", "input_a", /*@__PURE__*/ _if_closure("#text/1", 0, $if_content__input_a__script));
+const $if_content__input_a = /*@__PURE__*/ _fill("__tests__/tags/panel.marko_fill0 __tests__/tags/panel.marko_fill0/unpatched", "input_a", /*@__PURE__*/ _if_closure("#text/1", 0, $if_content__input_a__script));
 const $if_content__setup = $if_content__input_a;
-const $Info_content__input_a__OR__input_b = /*@__PURE__*/ _fill_join_subscribers("__tests__/tags/panel.marko_fill1/unpatched", "input_b", /*@__PURE__*/ _fill_join_subscribers("__tests__/tags/panel.marko_fill0/unpatched | __tests__/tags/panel.marko_fill0", "input_a", /*@__PURE__*/ _or_resume("__tests__/tags/panel.marko_1_input_a#0:5_input_b#0:6/init", 1, ($scope) => _text($scope["#text/0"], $scope._.input_a + ":" + $scope._.input_b)), "input_a/9", 0), "input_b/10", 0);
+const $Info_content__input_a__OR__input_b = /*@__PURE__*/ _fill_subscribers("__tests__/tags/panel.marko_fill1/unpatched", "input_b", /*@__PURE__*/ _fill_subscribers("__tests__/tags/panel.marko_fill0/unpatched | __tests__/tags/panel.marko_fill0", "input_a", /*@__PURE__*/ _or_resume("__tests__/tags/panel.marko_1_input_a#0:5_input_b#0:6/init", 1, ($scope) => _text($scope["#text/0"], $scope._.input_a + ":" + $scope._.input_b)), "input_a/9", 0), "input_b/10", 0);
 const $Info_content__input_a = /*@__PURE__*/ _closure_get("input_a/9", $Info_content__input_a__OR__input_b, 0, "__tests__/tags/panel.marko_1_input_a#0:5/subscribe");
 const $Info_content__setup = ($scope) => {
 	$Info_content__input_a($scope);

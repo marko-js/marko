@@ -1,7 +1,7 @@
 // tags/badge.marko
 const $template$1 = "<em> </em>";
 const $walks$1 = "D l";
-const $setup__$global_brand = /*@__PURE__*/ _fill_global_join("__tests__/tags/badge.marko_0_$global_brand#4", ($scope) => _text($scope["#text/0"], $scope.$global.brand), "brand");
+const $setup__$global_brand = /*@__PURE__*/ _fill_global("__tests__/tags/badge.marko_0_$global_brand#4", ($scope) => _text($scope["#text/0"], $scope.$global.brand), "brand");
 const $setup$1 = $setup__$global_brand;
 var badge_default = /*@__PURE__*/ _template("__tests__/tags/badge.marko", $template$1, "D l", $setup$1);
 

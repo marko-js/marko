@@ -9,7 +9,7 @@ const $template = "<html><body><!><main> </main><!></body></html>";
 const $walks = "E%bD l%m";
 const $if = /*@__PURE__*/ _if("#text/0", "<a href=#main>Skip to content</a>");
 const $if2 = /*@__PURE__*/ _if("#text/2", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)("b"));
-const $setup__$global_meta = /*@__PURE__*/ _fill_global_path_join("__tests__/template.marko_0_$global_meta#5", ($scope) => {
+const $setup__$global_meta = /*@__PURE__*/ _fill_global_path("__tests__/template.marko_0_$global_meta#5", ($scope) => {
 	$if($scope, $scope.$global.meta.headings ? 0 : 1);
 	$if2($scope, !$scope.$global.meta.hideFooter ? 0 : 1);
 }, "meta", "headings", 0, "meta", "hideFooter");

@@ -22,7 +22,7 @@ const $setup__$global_brand__script = _fill_global_script("__tests__/template.ma
 		el.dataset.g = (el.dataset.g || "") + "[" + $scope.$global.brand + "]";
 	}
 }, "brand");
-const $setup__$global_brand = /*@__PURE__*/ _fill_global_join("__tests__/template.marko_0_$global_brand#30", ($scope) => {
+const $setup__$global_brand = /*@__PURE__*/ _fill_global("__tests__/template.marko_0_$global_brand#30", ($scope) => {
 	$setup__$global_brand__script($scope);
 	_text($scope["#text/13"], $scope.$global.brand);
 }, "brand");

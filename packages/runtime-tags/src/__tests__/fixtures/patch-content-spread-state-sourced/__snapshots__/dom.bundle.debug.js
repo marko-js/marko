@@ -2,7 +2,7 @@
 const $template$1 = "<div></div><button>+</button>";
 const $walks$1 = " b b";
 const $input__OR__count__script = _script("__tests__/tags/box.marko_0_input#3_count#4", ($scope) => _attrs_script($scope, "#div/0"));
-const $input__OR__count = /*@__PURE__*/ _fill_join("__tests__/tags/box.marko_fill0", "input", /*@__PURE__*/ _or(5, ($scope) => {
+const $input__OR__count = /*@__PURE__*/ _fill("__tests__/tags/box.marko_fill0", "input", /*@__PURE__*/ _or(5, ($scope) => {
 	_attrs_content($scope, "#div/0", {
 		...$scope.input,
 		"data-count": $scope.count
@@ -23,7 +23,7 @@ var box_default = /*@__PURE__*/ _template("__tests__/tags/box.marko", $template$
 // template.marko
 const $template = $template$1;
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1);
-const $box_content__input_note = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_note", /*@__PURE__*/ _closure_get("input_note/5", ($scope) => _text($scope["#text/0"], $scope._.input_note), 0, "__tests__/template.marko_1_input_note#0:4/subscribe"), 0);
+const $box_content__input_note = /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill0", "input_note", /*@__PURE__*/ _closure_get("input_note/5", ($scope) => _text($scope["#text/0"], $scope._.input_note), 0, "__tests__/template.marko_1_input_note#0:4/subscribe"), 0);
 const $box_content__setup = $box_content__input_note;
 const $box_content = _content("__tests__/template.marko_1*content", "<em> </em>", "D ", $box_content__setup);
 function $setup($scope) {

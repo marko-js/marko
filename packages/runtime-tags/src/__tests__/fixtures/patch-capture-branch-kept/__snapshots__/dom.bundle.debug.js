@@ -40,7 +40,7 @@ var probe_default = /*@__PURE__*/ _template("__tests__/tags/probe.marko", $templ
 const $template = "<button>add</button><!><!>";
 const $walks = " b%c";
 const $item_content__if = /*@__PURE__*/ _if("#text/0", "<span>shown</span>");
-const $item_content__s = /*@__PURE__*/ _init_resume("__tests__/tags/child.marko_2_s#1:2/init", _closure_resume("__tests__/tags/child.marko_2_s#1:2/subscribe", /*@__PURE__*/ _fill_join_closure("__tests__/tags/child.marko_fill2", "s", /*@__PURE__*/ _closure_get("s/9", ($scope) => $item_content__if($scope, $scope._.s ? 0 : 1)), 0)));
+const $item_content__s = /*@__PURE__*/ _init_resume("__tests__/tags/child.marko_2_s#1:2/init", _closure_resume("__tests__/tags/child.marko_2_s#1:2/subscribe", /*@__PURE__*/ _fill_closure("__tests__/tags/child.marko_fill2", "s", /*@__PURE__*/ _closure_get("s/9", ($scope) => $item_content__if($scope, $scope._.s ? 0 : 1)), 0)));
 const $item_content__setup = $item_content__s;
 const $item_content = /*@__PURE__*/ _content("__tests__/tags/child.marko_2*content", "<!><!><!>", "b%", $item_content__setup);
 const $if_content__s__closure = /*@__PURE__*/ _closure($item_content__s);
@@ -48,7 +48,7 @@ const $if_content__s = /*@__PURE__*/ _fill_const("__tests__/tags/child.marko_fil
 	$if_content__s__closure($scope);
 	$get$1($scope["#childScope/1"], $get($scope));
 }, /*@__PURE__*/ _fill_mark("s", $if_content__s__closure));
-const $if_content__input_show = /*@__PURE__*/ _init_resume("__tests__/tags/child.marko_1_input_show#0:5/init", /*@__PURE__*/ _fill_join("__tests__/tags/child.marko_fill0", "input_show", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $if_content__s($scope, $scope._.input_show))));
+const $if_content__input_show = /*@__PURE__*/ _init_resume("__tests__/tags/child.marko_1_input_show#0:5/init", /*@__PURE__*/ _fill("__tests__/tags/child.marko_fill0", "input_show", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $if_content__s($scope, $scope._.input_show))));
 const $if_content__setup = ($scope) => {
 	$if_content__input_show._($scope);
 	$if_content__items._($scope);

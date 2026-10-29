@@ -2,7 +2,7 @@
 const $template$2 = "<em><!> <!></em>";
 const $walks$2 = "D%c%l";
 const $input_label$2 = ($scope, input_label) => _text($scope["#text/0"], input_label);
-const $setup__$global_brand = /*@__PURE__*/ _fill_global_join("__tests__/tags/picker/card.marko_0_$global_brand#6", ($scope) => _text($scope["#text/1"], $scope.$global.brand), "brand");
+const $setup__$global_brand = /*@__PURE__*/ _fill_global("__tests__/tags/picker/card.marko_0_$global_brand#6", ($scope) => _text($scope["#text/1"], $scope.$global.brand), "brand");
 const $setup$2 = $setup__$global_brand;
 const $input$2 = ($scope, input) => $input_label$2($scope, input.label);
 var card_default = /*@__PURE__*/ _template("__tests__/tags/picker/card.marko", $template$2, $walks$2, $setup$2, $input$2);
@@ -12,7 +12,7 @@ const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $setup$1 = ($_) => {};
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $input_on__OR__input_label = /*@__PURE__*/ _fill_join("__tests__/tags/picker/index.marko_fill1", "input_label", /*@__PURE__*/ _fill_join("__tests__/tags/picker/index.marko_fill0", "input_on", /*@__PURE__*/ _or_resume("__tests__/tags/picker/index.marko_0_input_on#3_input_label#4/init", 5, ($scope) => $dynamicTag($scope, $scope.input_on ? card_default : null, ($_) => ({ label: $scope.input_label })))));
+const $input_on__OR__input_label = /*@__PURE__*/ _fill("__tests__/tags/picker/index.marko_fill1", "input_label", /*@__PURE__*/ _fill("__tests__/tags/picker/index.marko_fill0", "input_on", /*@__PURE__*/ _or_resume("__tests__/tags/picker/index.marko_0_input_on#3_input_label#4/init", 5, ($scope) => $dynamicTag($scope, $scope.input_on ? card_default : null, ($_) => ({ label: $scope.input_label })))));
 const $input_on = /*@__PURE__*/ _const("input_on", $input_on__OR__input_label);
 const $input_label$1 = /*@__PURE__*/ _const("input_label", $input_on__OR__input_label);
 const $input$1 = ($scope, input) => {

@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<main><h1> </h1></main>";
 const $walks = "E m";
-const $setup__$global_other = /*@__PURE__*/ _fill_global_join("__tests__/template.marko_0_$global_other#4", ($scope) => _text($scope["#text/0"], $scope.$global.other), "other");
+const $setup__$global_other = /*@__PURE__*/ _fill_global("__tests__/template.marko_0_$global_other#4", ($scope) => _text($scope["#text/0"], $scope.$global.other), "other");
 const $setup__$global__script = _fill_global_script("__tests__/template.marko_0_$global#3", ($scope) => {
 	{
 		const g = $scope.$global;

@@ -36,7 +36,7 @@ const $Wrapper_content__$temp = ($scope, $temp5) => {
 	$Wrapper_content__a($scope, $temp5.a);
 	$Wrapper_content__b($scope, $temp5.b);
 };
-const $Inner_content__input_label__OR__x__OR__z = /*@__PURE__*/ _fill_join("| __tests__/template.marko_fill1", "x", /*@__PURE__*/ _fill_join("| __tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _or_resume("__tests__/template.marko_2_input_label#0:4_x#1:4_z#3/init", 4, ($scope) => _text($scope["#text/0"], $scope._._.input_label + $scope._.x + $scope.z), 2)));
+const $Inner_content__input_label__OR__x__OR__z = /*@__PURE__*/ _fill("| __tests__/template.marko_fill1", "x", /*@__PURE__*/ _fill("| __tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _or_resume("__tests__/template.marko_2_input_label#0:4_x#1:4_z#3/init", 4, ($scope) => _text($scope["#text/0"], $scope._._.input_label + $scope._.x + $scope.z), 2)));
 const $Inner_content__input_label = /*@__PURE__*/ _closure_get("input_label/7", $Inner_content__input_label__OR__x__OR__z, ($scope) => $scope._._, "__tests__/template.marko_2_input_label#0:4/subscribe");
 const $Inner_content__setup = ($scope) => {
 	$Inner_content__input_label($scope);

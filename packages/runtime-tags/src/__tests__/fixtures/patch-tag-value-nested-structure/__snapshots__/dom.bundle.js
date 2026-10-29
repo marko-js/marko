@@ -8,7 +8,7 @@ const $if_content2__setup = ($scope) => {
 	$if_content2__setup__script($scope);
 };
 const $if_content__if = /*@__PURE__*/ _if(0, "<button class=read> </button>", " D ", $if_content2__setup);
-const $if_content__input_y = /*@__PURE__*/ _init_resume("b5", /*@__PURE__*/ _fill_join("b7", 6, /*@__PURE__*/ _if_closure(0, 0, ($scope) => $if_content__if($scope, $scope._.g ? 0 : 1))));
+const $if_content__input_y = /*@__PURE__*/ _init_resume("b5", /*@__PURE__*/ _fill("b7", 6, /*@__PURE__*/ _if_closure(0, 0, ($scope) => $if_content__if($scope, $scope._.g ? 0 : 1))));
 const $out = _let(7, ($scope) => _text($scope.b, $scope.h));
 const $input_y = /*@__PURE__*/ _fill_const("b7", 6, $if_content__input_y);
 

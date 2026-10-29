@@ -19,7 +19,7 @@ const $Panel_content__fmt = /*@__PURE__*/ _const(4, ($scope) => {
 });
 const $Panel_content__a = /*@__PURE__*/ _const(5, $Panel_content__fmt__OR__a);
 const $Panel_content__b = /*@__PURE__*/ _const(7, $Panel_content__fmt__OR__b);
-const $if_content__input_label = /*@__PURE__*/ _fill_join("a4", 4, /*@__PURE__*/ _if_closure(0, 0, ($scope) => {
+const $if_content__input_label = /*@__PURE__*/ _fill("a4", 4, /*@__PURE__*/ _if_closure(0, 0, ($scope) => {
 	$Panel_content__fmt($scope.a, lib.format);
 	$Panel_content__a($scope.a, $scope._.e);
 	$Panel_content__b($scope.a, $scope._.e + "!");

@@ -12,7 +12,7 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 const $template$1 = "<button>tab=<!></button>";
 const $walks$1 = " Db%l";
 const $selected = /*@__PURE__*/ _fill_let_change("__tests__/tags/demo-card.marko_fill2", "selected/7", ($scope) => _text($scope["#text/1"], String($scope.selected)));
-const $input_tab__OR__input_tabChange = /*@__PURE__*/ _fill_join("__tests__/tags/demo-card.marko_fill1", "input_tabChange", /*@__PURE__*/ _fill_join("__tests__/tags/demo-card.marko_fill0", "input_tab", /*@__PURE__*/ _or_resume("__tests__/tags/demo-card.marko_0_input_tab#4_input_tabChange#5/init", 6, ($scope) => $selected($scope, $scope.input_tab, $scope.input_tabChange))));
+const $input_tab__OR__input_tabChange = /*@__PURE__*/ _fill("__tests__/tags/demo-card.marko_fill1", "input_tabChange", /*@__PURE__*/ _fill("__tests__/tags/demo-card.marko_fill0", "input_tab", /*@__PURE__*/ _or_resume("__tests__/tags/demo-card.marko_0_input_tab#4_input_tabChange#5/init", 6, ($scope) => $selected($scope, $scope.input_tab, $scope.input_tabChange))));
 const $input_tab = /*@__PURE__*/ _const("input_tab", $input_tab__OR__input_tabChange);
 const $input_tabChange = /*@__PURE__*/ _const("input_tabChange", $input_tab__OR__input_tabChange);
 const $setup__script = _script("__tests__/tags/demo-card.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {

@@ -12,7 +12,7 @@ var wrap_default = /*@__PURE__*/ _template("__tests__/tags/wrap.marko", $templat
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $setup$1 = ($_) => {};
-const $wrap_content__input_n = /*@__PURE__*/ _init_resume("__tests__/tags/panel.marko_2_input_n#0:4/init", /*@__PURE__*/ _fill_join_closure("__tests__/tags/panel.marko_fill0", "input_n", /*@__PURE__*/ _closure_get("input_n/5", ($scope) => _text($scope["#text/0"], $scope._._.input_n), ($scope) => $scope._._), 0));
+const $wrap_content__input_n = /*@__PURE__*/ _init_resume("__tests__/tags/panel.marko_2_input_n#0:4/init", /*@__PURE__*/ _fill_closure("__tests__/tags/panel.marko_fill0", "input_n", /*@__PURE__*/ _closure_get("input_n/5", ($scope) => _text($scope["#text/0"], $scope._._.input_n), ($scope) => $scope._._), 0));
 const $wrap_content__setup = $wrap_content__input_n;
 const $wrap_content = /*@__PURE__*/ _content("__tests__/tags/panel.marko_2*content", "<em> </em>", "D ", $wrap_content__setup);
 const $if_content__setup = ($scope) => $input_content_direct($scope["#childScope/0"], $wrap_content($scope));

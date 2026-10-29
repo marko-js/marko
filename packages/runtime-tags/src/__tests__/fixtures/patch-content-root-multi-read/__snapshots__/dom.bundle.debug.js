@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<main><!><p> </p><button>+</button></main>";
 const $walks = "D%bD l l";
-const $input_content__OR__count = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_content", /*@__PURE__*/ _or(7, ($scope) => _text($scope["#text/1"], $scope.input_content + ":" + $scope.count)));
+const $input_content__OR__count = /*@__PURE__*/ _fill("__tests__/template.marko_fill0", "input_content", /*@__PURE__*/ _or(7, ($scope) => _text($scope["#text/1"], $scope.input_content + ":" + $scope.count)));
 const $count = _let("count/6", $input_content__OR__count);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
 	$count($scope, +$scope.count + 1);

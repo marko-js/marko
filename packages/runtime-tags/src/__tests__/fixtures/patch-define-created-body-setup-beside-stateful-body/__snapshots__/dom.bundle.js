@@ -1,7 +1,7 @@
 // template.marko
 const $Panel_content__walks = "b%c";
 const $Panel_content__template = "<!><!><!>";
-const $if_content2__label = /*@__PURE__*/ _init_resume("a0", /*@__PURE__*/ _fill_join("a4", 4, /*@__PURE__*/ _if_closure(0, 0, ($scope) => _text($scope.a, $scope._.e))));
+const $if_content2__label = /*@__PURE__*/ _init_resume("a0", /*@__PURE__*/ _fill("a4", 4, /*@__PURE__*/ _if_closure(0, 0, ($scope) => _text($scope.a, $scope._.e))));
 const $if_content2__setup = ($scope) => {
 	$if_content2__label._($scope);
 	$if_content2__n._($scope);
@@ -19,7 +19,7 @@ const $Panel_content__$temp = ($scope, $temp) => {
 };
 const $Panel_content = _content$1("a3", $Panel_content__template, $Panel_content__walks, $Panel_content__setup, $Panel_content__$params);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag(1);
-const $input_label__OR__open__OR__Tag = /*@__PURE__*/ _fill_join("a10", 11, /*@__PURE__*/ _fill_join("a8 a9", 6, /*@__PURE__*/ _or(12, ($scope) => $dynamicTag($scope, $scope.l, ($_) => ({
+const $input_label__OR__open__OR__Tag = /*@__PURE__*/ _fill("a10", 11, /*@__PURE__*/ _fill("a8 a9", 6, /*@__PURE__*/ _or(12, ($scope) => $dynamicTag($scope, $scope.l, ($_) => ({
 	isOpen: !$scope.i,
 	label: $scope.g + "!"
 })), 2)));

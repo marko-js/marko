@@ -14,7 +14,7 @@ var card_default = /*@__PURE__*/ _template("__tests__/tags/card.marko", $templat
 const $template$1 = "<button>add</button><button>rename</button><ul></ul>";
 const $walks$1 = " b b b";
 const $for_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $for_content__input_row__OR__item_id__OR__item_label = /*@__PURE__*/ _fill_join_for("__tests__/tags/list.marko_fill0", "input_row", /*@__PURE__*/ _or(5, ($scope) => $for_content__dynamicTag($scope, $scope._.input_row, ($_) => ({
+const $for_content__input_row__OR__item_id__OR__item_label = /*@__PURE__*/ _fill_for("__tests__/tags/list.marko_fill0", "input_row", /*@__PURE__*/ _or(5, ($scope) => $for_content__dynamicTag($scope, $scope._.input_row, ($_) => ({
 	id: $scope.item_id,
 	label: $scope.item_label
 })), 2), "#ul/2");

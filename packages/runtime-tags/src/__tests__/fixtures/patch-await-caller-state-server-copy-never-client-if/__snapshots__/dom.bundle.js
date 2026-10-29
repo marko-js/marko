@@ -1,5 +1,5 @@
 // tags/show-await.marko
-const $if_content__input_label = /*@__PURE__*/ _init_resume("b1", /*@__PURE__*/ _fill_join_closure("b7", 4, /*@__PURE__*/ _closure_get(5, ($scope) => _text($scope.d, $scope._._.e), ($scope) => $scope._._, "b2"), 0));
+const $if_content__input_label = /*@__PURE__*/ _init_resume("b1", /*@__PURE__*/ _fill_closure("b7", 4, /*@__PURE__*/ _closure_get(5, ($scope) => _text($scope.d, $scope._._.e), ($scope) => $scope._._, "b2"), 0));
 const $if_content__n = _let(4, ($scope) => _text($scope.c, $scope.e));
 const $if_content__setup = ($scope) => {
 	$if_content__input_label($scope);

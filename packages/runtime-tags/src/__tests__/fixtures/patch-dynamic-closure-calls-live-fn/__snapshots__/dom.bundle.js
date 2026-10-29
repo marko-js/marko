@@ -1,5 +1,5 @@
 // tags/panel.marko
-const $for_content__f = /*@__PURE__*/ _init_resume("b2", /*@__PURE__*/ _fill_join_closure("b6", 6, /*@__PURE__*/ _closure_get(8, ($scope) => _text($scope.b, $scope._._.g()), ($scope) => $scope._._, "b3"), 0));
+const $for_content__f = /*@__PURE__*/ _init_resume("b2", /*@__PURE__*/ _fill_closure("b6", 6, /*@__PURE__*/ _closure_get(8, ($scope) => _text($scope.b, $scope._._.g()), ($scope) => $scope._._, "b3"), 0));
 const $for_content__setup__script = _script("b1", ($scope) => _on($scope.a, "click", function() {
 	$out($scope._._, $scope._._.g());
 }));

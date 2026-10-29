@@ -20,14 +20,14 @@ const $Panel_content = _content("__tests__/template.marko_3*content", $Panel_con
 const $try_content__if = /*@__PURE__*/ _if("#text/0", " ", " ", $if_content2__setup);
 const $try_content__input_fail = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_input_fail#0:6/init", /*@__PURE__*/ _closure_get("input_fail/14", ($scope) => $try_content__if($scope, $scope._.input_fail ? 0 : 1), 0, "__tests__/template.marko_2_input_fail#0:6/subscribe"));
 const $try_content__setup = $try_content__input_fail;
-const $catch_content__input_label = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _closure_get("input_label/13", ($scope) => $Panel_content__tag_input_label($scope["#childScope/0"], $scope._.input_label), 0, "__tests__/template.marko_1_input_label#0:5/subscribe"), 0);
+const $catch_content__input_label = /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _closure_get("input_label/13", ($scope) => $Panel_content__tag_input_label($scope["#childScope/0"], $scope._.input_label), 0, "__tests__/template.marko_1_input_label#0:5/subscribe"), 0);
 const $catch_content__setup = ($scope) => {
 	$catch_content__input_label($scope);
 	$Panel_content__isOpen($scope["#childScope/0"], true);
 };
 const $catch_content = _content("__tests__/template.marko_1*content", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Panel_content__template), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Panel_content__walks), $catch_content__setup);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
-const $input_label__OR__open__OR__Tag = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "Tag", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _or(12, ($scope) => $dynamicTag($scope, $scope.Tag, ($_) => ({
+const $input_label__OR__open__OR__Tag = /*@__PURE__*/ _fill("__tests__/template.marko_fill1", "Tag", /*@__PURE__*/ _fill("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _or(12, ($scope) => $dynamicTag($scope, $scope.Tag, ($_) => ({
 	isOpen: !$scope.open,
 	label: $scope.input_label + "!"
 })), 2)));

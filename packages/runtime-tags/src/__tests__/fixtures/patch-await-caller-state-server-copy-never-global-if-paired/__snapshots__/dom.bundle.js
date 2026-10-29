@@ -6,7 +6,7 @@ const $if_content__setup = ($scope) => {
 	$if_content__n($scope, 3);
 };
 const $await_content__if = /*@__PURE__*/ _if(0, "<p><!>:<!></p>", "D%c%", $if_content__setup);
-const $await_content__x__$global_flag = /*@__PURE__*/ _fill_global_join("b4", ($scope) => $await_content__if($scope, $scope.c && $scope.$.flag ? 0 : 1), "flag");
+const $await_content__x__$global_flag = /*@__PURE__*/ _fill_global("b4", ($scope) => $await_content__if($scope, $scope.c && $scope.$.flag ? 0 : 1), "flag");
 const $await_content__x = /*@__PURE__*/ _const(2, ($scope) => {
 	$await_content__x__$global_flag($scope);
 	$if_content__x($scope);

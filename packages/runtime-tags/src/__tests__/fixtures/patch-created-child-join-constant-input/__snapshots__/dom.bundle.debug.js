@@ -2,7 +2,7 @@
 const $template$1 = "<p> </p>";
 const $walks$1 = "D l";
 const $setup$1 = ($_) => {};
-const $input_a__OR__input_b = /*@__PURE__*/ _fill_join("__tests__/tags/child.marko_fill1", "input_b", /*@__PURE__*/ _fill_join("__tests__/tags/child.marko_fill0", "input_a", /*@__PURE__*/ _or_resume("__tests__/tags/child.marko_0_input_a#3_input_b#4/init", 5, ($scope) => _text($scope["#text/0"], $scope.input_a + $scope.input_b))));
+const $input_a__OR__input_b = /*@__PURE__*/ _fill("__tests__/tags/child.marko_fill1", "input_b", /*@__PURE__*/ _fill("__tests__/tags/child.marko_fill0", "input_a", /*@__PURE__*/ _or_resume("__tests__/tags/child.marko_0_input_a#3_input_b#4/init", 5, ($scope) => _text($scope["#text/0"], $scope.input_a + $scope.input_b))));
 const $input_a = /*@__PURE__*/ _const("input_a", $input_a__OR__input_b);
 const $input_b = /*@__PURE__*/ _const("input_b", $input_a__OR__input_b);
 const $input$1 = ($scope, input) => {
@@ -14,7 +14,7 @@ var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $templ
 // template.marko
 const $template = "<!><!><button class=n>+</button>";
 const $walks = "b%b b";
-const $if_content__input_y = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_y#0:5/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_y", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_a($scope["#childScope/1"], $scope._.input_y))));
+const $if_content__input_y = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_y#0:5/init", /*@__PURE__*/ _fill("__tests__/template.marko_fill0", "input_y", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_a($scope["#childScope/1"], $scope._.input_y))));
 const $if_content__setup = ($scope) => {
 	$if_content__input_y._($scope);
 	$if_content__n._($scope);

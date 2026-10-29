@@ -7,7 +7,7 @@ const $if_content__setup = ($scope) => {
 	$scope["#childScope/0"]._ = $scope._;
 	$foo_content__setup($scope["#childScope/0"]);
 };
-const $foo_content__input_x = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_x", /*@__PURE__*/ _closure_get("input_x/6", ($scope) => _text($scope["#text/0"], $scope._.input_x), 0, "__tests__/template.marko_1_input_x#0:4/subscribe"), 0);
+const $foo_content__input_x = /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill0", "input_x", /*@__PURE__*/ _closure_get("input_x/6", ($scope) => _text($scope["#text/0"], $scope._.input_x), 0, "__tests__/template.marko_1_input_x#0:4/subscribe"), 0);
 const $foo_content__setup = $foo_content__input_x;
 const $if = /*@__PURE__*/ _if("#text/0", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($foo_content__template), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($foo_content__walks), $if_content__setup);
 const $s = _let("s/5", ($scope) => $if($scope, $scope.s ? 0 : 1));

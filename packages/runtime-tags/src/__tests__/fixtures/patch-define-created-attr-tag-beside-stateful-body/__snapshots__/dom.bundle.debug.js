@@ -6,7 +6,7 @@ const $walks = "b%b%b b";
 const $for_content__it_label = ($scope, it_label) => _text($scope["#text/0"], it_label);
 const $for_content__$params = ($scope, $params3) => $for_content__it_label($scope, $params3[0]?.label);
 const $if_content2__for = /*@__PURE__*/ _for_of_unkeyed("#text/0", "<em> </em>", "D ", 0, $for_content__$params);
-const $if_content2__item = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill3", "item", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content2__for($scope, [$scope._.item])));
+const $if_content2__item = /*@__PURE__*/ _fill("__tests__/template.marko_fill3", "item", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content2__for($scope, [$scope._.item])));
 const $if_content2__setup = $if_content2__item;
 const $Panel_content__if = /*@__PURE__*/ _if("#text/0", "<!><!><!>", "b%", $if_content2__setup);
 const $Panel_content__isOpen = ($scope, isOpen) => $Panel_content__if($scope, isOpen ? 0 : 1);
@@ -17,7 +17,7 @@ const $Panel_content__$temp = ($scope, $temp) => {
 	$Panel_content__tag_input_item($scope, $temp.item);
 };
 const $Panel_content = _content("__tests__/template.marko_2*content", $Panel_content__template, $Panel_content__walks, 0, $Panel_content__$params);
-const $if_content__input_open = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_open#0:6/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_open", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $Panel_content__isOpen($scope["#childScope/0"], $scope._.input_open))));
+const $if_content__input_open = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_open#0:6/init", /*@__PURE__*/ _fill("__tests__/template.marko_fill0", "input_open", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $Panel_content__isOpen($scope["#childScope/0"], $scope._.input_open))));
 const $if_content__setup = ($scope) => {
 	$if_content__input_open._($scope);
 	let $item;
@@ -27,7 +27,7 @@ const $if_content__setup = ($scope) => {
 	$Panel_content__tag_input_item($scope["#childScope/0"], $item);
 };
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
-const $input_label__OR__open__OR__Tag = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill2", "Tag", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "input_label", /*@__PURE__*/ _or(13, ($scope) => $dynamicTag($scope, $scope.Tag, ($_) => ({
+const $input_label__OR__open__OR__Tag = /*@__PURE__*/ _fill("__tests__/template.marko_fill2", "Tag", /*@__PURE__*/ _fill("__tests__/template.marko_fill1", "input_label", /*@__PURE__*/ _or(13, ($scope) => $dynamicTag($scope, $scope.Tag, ($_) => ({
 	isOpen: !$scope.open,
 	item: attrTag({ label: $scope.input_label + "!" })
 })), 2)));

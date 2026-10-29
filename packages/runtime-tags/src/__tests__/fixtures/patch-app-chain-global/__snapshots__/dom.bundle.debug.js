@@ -20,7 +20,7 @@ const $pattern2 = ($scope, $pattern) => {
 };
 const $q = ($scope, q) => _text($scope["#text/1"], q);
 const $issues = ($scope, issues) => _text($scope["#text/2"], issues ? "!" : "");
-const $setup__$global_search = /*@__PURE__*/ _fill_global_join("__tests__/page-b.marko_0_$global_search#6", ($scope) => $pattern2($scope, $scope.$global.search), "search");
+const $setup__$global_search = /*@__PURE__*/ _fill_global("__tests__/page-b.marko_0_$global_search#6", ($scope) => $pattern2($scope, $scope.$global.search), "search");
 const $count = /*@__PURE__*/ _fill_let("__tests__/page-b.marko_fill0", "count/7", ($scope) => _text($scope["#text/3"], $scope.count));
 const $setup__script = _script("__tests__/page-b.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, +$scope.count + 1);

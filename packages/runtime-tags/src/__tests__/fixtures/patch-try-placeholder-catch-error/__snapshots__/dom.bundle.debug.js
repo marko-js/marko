@@ -21,7 +21,7 @@ const $try_content2__setup = ($scope) => {
 	$try_content2__input_slow($scope);
 	$await_content($scope);
 };
-const $try_content__input_title__OR__input_fail = /*@__PURE__*/ _fill_join_subscribers("__tests__/template.marko_fill1", "input_fail", /*@__PURE__*/ _fill_join_subscribers("__tests__/template.marko_fill0", "input_title", /*@__PURE__*/ _or(1, ($scope) => _text($scope["#text/0"], check($scope._._.input_title, $scope._._.input_fail))), "input_title/6", 0), "input_fail/7", 0);
+const $try_content__input_title__OR__input_fail = /*@__PURE__*/ _fill_subscribers("__tests__/template.marko_fill1", "input_fail", /*@__PURE__*/ _fill_subscribers("__tests__/template.marko_fill0", "input_title", /*@__PURE__*/ _or(1, ($scope) => _text($scope["#text/0"], check($scope._._.input_title, $scope._._.input_fail))), "input_title/6", 0), "input_fail/7", 0);
 const $try_content__input_title = /*@__PURE__*/ _closure_get("input_title/6", $try_content__input_title__OR__input_fail, ($scope) => $scope._._, "__tests__/template.marko_2_input_title#0:3/subscribe");
 const $try_content__setup = ($scope) => {
 	$try_content__input_title($scope);

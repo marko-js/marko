@@ -21,7 +21,7 @@ const $Panel_content__$params = ($scope, $params2) => $Panel_content__tag_input(
 const $Panel_content__attrs_item = /*@__PURE__*/ _const(4, $if_content2__attrs_item);
 const $Panel_content = _content$1("a3", $Panel_content__template, $Panel_content__walks, 0, $Panel_content__$params);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag(1);
-const $input_label__OR__open__OR__Tag = /*@__PURE__*/ _fill_join("a6", 11, /*@__PURE__*/ _fill_join("a5", 7, /*@__PURE__*/ _or(12, ($scope) => $dynamicTag($scope, $scope.l, ($_) => ({
+const $input_label__OR__open__OR__Tag = /*@__PURE__*/ _fill("a6", 11, /*@__PURE__*/ _fill("a5", 7, /*@__PURE__*/ _or(12, ($scope) => $dynamicTag($scope, $scope.l, ($_) => ({
 	isOpen: !$scope.i,
 	item: attrTag({ label: $scope.h + "!" })
 })), 2)));

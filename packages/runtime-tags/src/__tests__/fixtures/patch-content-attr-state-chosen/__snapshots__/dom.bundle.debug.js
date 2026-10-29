@@ -1,10 +1,10 @@
 // template.marko
 const $template = "<button>toggle</button><section></section>";
 const $walks = " b b";
-const $two_content__input_b = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_b", /*@__PURE__*/ _closure_get("input_b/9", ($scope) => _text($scope["#text/0"], $scope._.input_b), 0, "__tests__/template.marko_2_input_b#0:4/subscribe"), 1);
+const $two_content__input_b = /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill0", "input_b", /*@__PURE__*/ _closure_get("input_b/9", ($scope) => _text($scope["#text/0"], $scope._.input_b), 0, "__tests__/template.marko_2_input_b#0:4/subscribe"), 1);
 const $two_content__setup = $two_content__input_b;
 const $two_content = _content("__tests__/template.marko_2*content", "<strong>two <!></strong>", "Db%", $two_content__setup);
-const $one_content__input_b = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_b", /*@__PURE__*/ _closure_get("input_b/9", ($scope) => _text($scope["#text/0"], $scope._.input_b), 0, "__tests__/template.marko_1_input_b#0:4/subscribe"), 0);
+const $one_content__input_b = /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill0", "input_b", /*@__PURE__*/ _closure_get("input_b/9", ($scope) => _text($scope["#text/0"], $scope._.input_b), 0, "__tests__/template.marko_1_input_b#0:4/subscribe"), 0);
 const $one_content__setup = $one_content__input_b;
 const $one_content = _content("__tests__/template.marko_1*content", "<em>one <!></em>", "Db%", $one_content__setup);
 const $mode__OR__one__OR__two = /*@__PURE__*/ _or(8, ($scope) => _attr_content($scope, "#section/1", $scope.mode ? $scope.one : $scope.two), 2);

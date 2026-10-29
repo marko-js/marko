@@ -9,7 +9,7 @@ const $template = "<ul></ul>";
 function link(data, id) {
 	return `/?q=${data.q}&sel=${id}`;
 }
-const $for_content__input_data__OR__item_id = /*@__PURE__*/ _fill_join("| c1", 4, /*@__PURE__*/ _fill_join_for("c4", 4, /*@__PURE__*/ _or_resume("c2", 5, ($scope) => $input_href($scope.b, link($scope._.e, $scope.e))), 0));
+const $for_content__input_data__OR__item_id = /*@__PURE__*/ _fill("| c1", 4, /*@__PURE__*/ _fill_for("c4", 4, /*@__PURE__*/ _or_resume("c2", 5, ($scope) => $input_href($scope.b, link($scope._.e, $scope.e))), 0));
 const $for_content__input_data = /*@__PURE__*/ _for_closure(0, $for_content__input_data__OR__item_id);
 const $for_content__setup__script = _script("c0", ($scope) => _on($scope.a, "mouseenter", function() {
 	$hovered($scope._, $scope.e);
@@ -19,7 +19,7 @@ const $for_content__setup = ($scope) => {
 	$for_content__hovered._($scope);
 	$for_content__setup__script($scope);
 };
-const $for_content__hovered__OR__item_id = /*@__PURE__*/ _fill_join("c1", 4, /*@__PURE__*/ _or(6, ($scope) => _attr_class_item($scope.a, "hovered", $scope._.f === $scope.e)));
+const $for_content__hovered__OR__item_id = /*@__PURE__*/ _fill("c1", 4, /*@__PURE__*/ _or(6, ($scope) => _attr_class_item($scope.a, "hovered", $scope._.f === $scope.e)));
 const $for_content__hovered = /*@__PURE__*/ _init_resume("c7", /*@__PURE__*/ _for_closure(0, $for_content__hovered__OR__item_id));
 const $for_content__item_id = /*@__PURE__*/ _fill_const("c1", 4, ($scope) => {
 	$for_content__hovered__OR__item_id($scope);

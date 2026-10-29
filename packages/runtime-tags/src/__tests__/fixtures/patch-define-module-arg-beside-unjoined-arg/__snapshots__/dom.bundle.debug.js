@@ -23,7 +23,7 @@ const $Panel_content__$temp = ($scope, $temp) => {
 	$Panel_content__label($scope, $temp.label);
 	$Panel_content__title($scope, $temp.title);
 };
-const $if_content__input_label = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => {
+const $if_content__input_label = /*@__PURE__*/ _fill("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => {
 	$Panel_content__fmt($scope["#childScope/0"], lib.format);
 	$Panel_content__label($scope["#childScope/0"], $scope._.input_label);
 }));
@@ -32,7 +32,7 @@ const $if_content__setup = ($scope) => {
 	$if_content__input_title._($scope);
 	$Panel_content__fmt($scope["#childScope/0"], lib.format);
 };
-const $if_content__input_title = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "input_title", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $Panel_content__title($scope["#childScope/0"], $scope._.input_title)));
+const $if_content__input_title = /*@__PURE__*/ _fill("__tests__/template.marko_fill1", "input_title", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $Panel_content__title($scope["#childScope/0"], $scope._.input_title)));
 const $if = /*@__PURE__*/ _if("#text/0", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Panel_content__template), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Panel_content__walks), $if_content__setup);
 const $open = _let("open/6", ($scope) => $if($scope, $scope.open ? 0 : 1));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {

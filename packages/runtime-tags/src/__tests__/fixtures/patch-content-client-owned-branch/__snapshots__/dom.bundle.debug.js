@@ -3,7 +3,7 @@ const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $setup$1 = ($_) => {};
 const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $if_content__input_body = /*@__PURE__*/ _init_resume("__tests__/tags/panel/index.marko_1_input_body#0:4/init", /*@__PURE__*/ _fill_join("__tests__/tags/panel/index.marko_fill0", "input_body", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.input_body))));
+const $if_content__input_body = /*@__PURE__*/ _init_resume("__tests__/tags/panel/index.marko_1_input_body#0:4/init", /*@__PURE__*/ _fill("__tests__/tags/panel/index.marko_fill0", "input_body", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.input_body))));
 const $if_content__setup = $if_content__input_body;
 const $if = /*@__PURE__*/ _if("#text/0", "<!><!><!>", "b%", $if_content__setup);
 const $input_open = ($scope, input_open) => $if($scope, input_open ? 0 : 1);
@@ -17,7 +17,7 @@ var panel_default = /*@__PURE__*/ _template("__tests__/tags/panel/index.marko", 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}<button>+</button></main>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `D/${_w0}& l`)("b%c");
-const $body_content__input_title = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_title#0:4/init", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_title", /*@__PURE__*/ _closure_get("input_title/6", ($scope) => _text($scope["#text/0"], $scope._.input_title), 0, "__tests__/template.marko_1_input_title#0:4/subscribe"), 0));
+const $body_content__input_title = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_title#0:4/init", /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill0", "input_title", /*@__PURE__*/ _closure_get("input_title/6", ($scope) => _text($scope["#text/0"], $scope._.input_title), 0, "__tests__/template.marko_1_input_title#0:4/subscribe"), 0));
 const $body_content__setup = $body_content__input_title;
 const $body_content = _content("__tests__/template.marko_1*content", "<em> </em>", "D ", $body_content__setup);
 const $count = _let("count/5", ($scope) => $input_open($scope["#childScope/0"], $scope.count % 2 === 0));

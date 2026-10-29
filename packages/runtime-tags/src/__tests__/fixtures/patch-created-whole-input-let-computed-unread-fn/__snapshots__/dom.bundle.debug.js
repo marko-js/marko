@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<!><!><!>";
 const $walks = "b%c";
-const $if_content__input_label__OR__k = /*@__PURE__*/ _fill_join_if("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _or_resume("__tests__/template.marko_1_input_label#0:4_k#0:5/init", 1, ($scope) => $input$1($scope["#childScope/0"], {
+const $if_content__input_label__OR__k = /*@__PURE__*/ _fill_if("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _or_resume("__tests__/template.marko_1_input_label#0:4_k#0:5/init", 1, ($scope) => $input$1($scope["#childScope/0"], {
 	opts: { [$scope._.k]() {
 		return "f:" + $scope._.input_label;
 	} },

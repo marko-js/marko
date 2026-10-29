@@ -16,12 +16,12 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 const $template = "<button>toggle</button><!><!>";
 const $walks = " b%c";
 const $if_content__x = _let("x/2", ($scope) => _text($scope["#text/0"], $scope.x));
-const $if_content__input_v = /*@__PURE__*/ _fill_join("__tests__/tags/child.marko_fill0", "input_v", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $if_content__x($scope, $scope._.input_v)));
+const $if_content__input_v = /*@__PURE__*/ _fill("__tests__/tags/child.marko_fill0", "input_v", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $if_content__x($scope, $scope._.input_v)));
 const $if_content__setup = ($scope) => {
 	$if_content__input_v._($scope);
 	$if_content__input_w._($scope);
 };
-const $if_content__input_w = /*@__PURE__*/ _fill_join("__tests__/tags/child.marko_fill1", "input_w", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => _text($scope["#text/1"], $scope._.input_w)));
+const $if_content__input_w = /*@__PURE__*/ _fill("__tests__/tags/child.marko_fill1", "input_w", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => _text($scope["#text/1"], $scope._.input_w)));
 const $if = /*@__PURE__*/ _if("#text/1", "<p><!> <!></p>", "D%c%", $if_content__setup);
 const $on = /*@__PURE__*/ _fill_let("__tests__/tags/child.marko_fill2", "on/6", ($scope) => $if($scope, $scope.on ? 0 : 1));
 const $setup__script = _script("__tests__/tags/child.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {

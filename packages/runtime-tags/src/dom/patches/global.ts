@@ -24,7 +24,7 @@ const globalJoins: Record<string, [SignalFn, (string | 0)[]]> = {};
 // The scopes subscribed to each join, by its id, from every render on the page.
 const globalScopes: Record<string, Set<Scope> | undefined> = {};
 
-export function _fill_global_join(
+export function _fill_global(
   id: string,
   join: SignalFn,
   ...keys: (string | 0)[]
@@ -57,7 +57,7 @@ export function _fill_global_for(
     (MARKO_DEBUG
       ? ownerLoopNodeAccessor
       : decodeAccessor(ownerLoopNodeAccessor as number));
-  _fill_global_join(
+  _fill_global(
     id,
     (owner: Scope) => {
       for (const row of toArray(owner[rows as keyof Scope] as Scope)) join(row);
@@ -82,19 +82,19 @@ export function _fill_global_script(
     subscribeToScopeSet(globalScopes, id, scope);
   });
   const queue = (scope: Scope) => queueEffect(scope, effect);
-  _fill_global_join(id, queue, ...keys);
+  _fill_global(id, queue, ...keys);
   return queue;
 }
 
 // Registrations with a nested member, each member ending in `0`: only a page
 // with one checks paths, and only on such registrations.
-export function _fill_global_path_join(
+export function _fill_global_path(
   id: string,
   join: SignalFn,
   ...keys: (string | 0)[]
 ): SignalFn {
   changesMember = membersChanged;
-  return _fill_global_join(id, join, ...keys, 0);
+  return _fill_global(id, join, ...keys, 0);
 }
 export function _fill_global_path_for(
   id: string,

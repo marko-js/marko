@@ -3,7 +3,7 @@ const $template$1 = "<section></section>";
 const $walks$1 = " b";
 const $setup$1 = ($_) => {};
 const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $if_content__input_content__OR__input_item = /*@__PURE__*/ _fill_join_if("__tests__/tags/card/index.marko_fill1 __tests__/tags/card/index.marko_fill1/unpatched", "input_item", /*@__PURE__*/ _fill_join_if("__tests__/tags/card/index.marko_fill0 __tests__/tags/card/index.marko_fill0/unpatched", "input_content", /*@__PURE__*/ _or_resume("__tests__/tags/card/index.marko_1_input_content#0:4_input_item#0:5/init", 1, ($scope) => $if_content__dynamicTag($scope, $scope._.input_content, ($_) => ({ item: $scope._.input_item }))), "#section/0", 0), "#section/0", 0);
+const $if_content__input_content__OR__input_item = /*@__PURE__*/ _fill_if("__tests__/tags/card/index.marko_fill1 __tests__/tags/card/index.marko_fill1/unpatched", "input_item", /*@__PURE__*/ _fill_if("__tests__/tags/card/index.marko_fill0 __tests__/tags/card/index.marko_fill0/unpatched", "input_content", /*@__PURE__*/ _or_resume("__tests__/tags/card/index.marko_1_input_content#0:4_input_item#0:5/init", 1, ($scope) => $if_content__dynamicTag($scope, $scope._.input_content, ($_) => ({ item: $scope._.input_item }))), "#section/0", 0), "#section/0", 0);
 const $if_content__input_content = /*@__PURE__*/ _if_closure("#section/0", 0, $if_content__input_content__OR__input_item);
 const $if_content__setup = ($scope) => {
 	$if_content__input_content._($scope);

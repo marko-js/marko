@@ -1,7 +1,7 @@
 // tags/badge.marko
 const $template$1 = "<p> </p>";
 const $walks$1 = " D l";
-const $count__$global_brand = /*@__PURE__*/ _fill_global_join("__tests__/tags/badge.marko_0_count#2_$global_brand#6", ($scope) => _text($scope["#text/1"], $scope.count + _global_read($scope.$global, "brand")), "brand");
+const $count__$global_brand = /*@__PURE__*/ _fill_global("__tests__/tags/badge.marko_0_count#2_$global_brand#6", ($scope) => _text($scope["#text/1"], $scope.count + _global_read($scope.$global, "brand")), "brand");
 const $count = /*@__PURE__*/ _fill_let("__tests__/tags/badge.marko_fill0", "count/2", $count__$global_brand);
 const $setup__$global__script = _fill_global_script("__tests__/tags/badge.marko_0_$global#5", ($scope) => _el_read($scope["#p/0"]).dataset.log = (_el_read($scope["#p/0"]).dataset.log || "") + "[" + JSON.stringify($scope.$global) + "]", "");
 const $setup__$global = $setup__$global__script;

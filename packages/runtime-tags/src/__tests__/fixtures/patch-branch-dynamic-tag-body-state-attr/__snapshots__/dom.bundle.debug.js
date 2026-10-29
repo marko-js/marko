@@ -6,7 +6,7 @@ const $inputtag_content__setup = $inputtag_content__count;
 const $inputtag_content = _content("__tests__/template.marko_2*content", "<span>x</span>", " ", $inputtag_content__setup);
 _content_resume($inputtag_content);
 const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $inputtag_content);
-const $if_content__input_tag = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_tag#0:5/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_tag", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.input_tag))));
+const $if_content__input_tag = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_tag#0:5/init", /*@__PURE__*/ _fill("__tests__/template.marko_fill0", "input_tag", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.input_tag))));
 const $if_content__setup = $if_content__input_tag;
 const $count__closure = /*@__PURE__*/ _closure($inputtag_content__count);
 const $count = _let("count/6", $count__closure);

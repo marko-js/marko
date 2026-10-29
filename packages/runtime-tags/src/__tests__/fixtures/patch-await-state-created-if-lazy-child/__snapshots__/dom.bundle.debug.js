@@ -18,7 +18,7 @@ const $template = "<button class=open>inc</button><!><!>";
 const $walks = " b%c";
 let $load_Lazy_setup = /*@__PURE__*/ _load_setup(($_) => import("./v:lazy.marko.setup.mjs"));
 let $load_Lazy_tag_input_label = /*@__PURE__*/ _load_signal_patch(($_) => import("./v:lazy.marko.input_label.mjs"), "ready:__tests__/lazy.marko");
-const $await_content__input_label__OR__x = /*@__PURE__*/ _fill_join_subscribers("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _or_resume("__tests__/template.marko_2_input_label#0:5_x#3/init", 4, ($scope) => $load_Lazy_tag_input_label($scope["#childScope/1"], $scope._._.input_label + $scope.x)), "input_label/7", 0);
+const $await_content__input_label__OR__x = /*@__PURE__*/ _fill_subscribers("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _or_resume("__tests__/template.marko_2_input_label#0:5_x#3/init", 4, ($scope) => $load_Lazy_tag_input_label($scope["#childScope/1"], $scope._._.input_label + $scope.x)), "input_label/7", 0);
 const $await_content__input_label = _closure_resume("__tests__/template.marko_2_input_label#0:5/subscribe", /*@__PURE__*/ _closure_get("input_label/7", $await_content__input_label__OR__x, ($scope) => $scope._._));
 const $await_content__setup = ($scope) => {
 	$await_content__input_label($scope);

@@ -5,7 +5,7 @@ const $template = "<!><!><!>";
 const $walks = "b%c";
 const $setup = ($_) => {};
 const WORD = "w";
-const $Body_content__v__OR__w = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill2", "w", /*@__PURE__*/ _or_resume("__tests__/template.marko_2_v#3_w#4/init", 5, ($scope) => _text($scope["#text/0"], $scope.v + $scope.w)));
+const $Body_content__v__OR__w = /*@__PURE__*/ _fill("__tests__/template.marko_fill2", "w", /*@__PURE__*/ _or_resume("__tests__/template.marko_2_v#3_w#4/init", 5, ($scope) => _text($scope["#text/0"], $scope.v + $scope.w)));
 const $Body_content__v = /*@__PURE__*/ _const("v", $Body_content__v__OR__w);
 const $Body_content__w = /*@__PURE__*/ _const("w", $Body_content__v__OR__w);
 const $Body_content__$params = ($scope, $params2) => $Body_content__$temp($scope, $params2[0]);
@@ -13,8 +13,8 @@ const $Body_content__$temp = ($scope, $temp) => {
 	$Body_content__v($scope, $temp.v);
 	$Body_content__w($scope, $temp.w);
 };
-const $if_content__input_a__OR__x = /*@__PURE__*/ _fill_join_if("__tests__/template.marko_fill0", "input_a", /*@__PURE__*/ _or_resume("__tests__/template.marko_1_input_a#0:4_x#4/init", 5, ($scope) => _text($scope["#text/3"], $scope.x + $scope._.input_a)), "#text/0", 0);
-const $if_content__input_a = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_a#0:4/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_a", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => {
+const $if_content__input_a__OR__x = /*@__PURE__*/ _fill_if("__tests__/template.marko_fill0", "input_a", /*@__PURE__*/ _or_resume("__tests__/template.marko_1_input_a#0:4_x#4/init", 5, ($scope) => _text($scope["#text/3"], $scope.x + $scope._.input_a)), "#text/0", 0);
+const $if_content__input_a = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_a#0:4/init", /*@__PURE__*/ _fill("__tests__/template.marko_fill0", "input_a", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => {
 	$if_content__input_a__OR__x($scope);
 	_text($scope["#text/1"], $scope._.input_a);
 })));

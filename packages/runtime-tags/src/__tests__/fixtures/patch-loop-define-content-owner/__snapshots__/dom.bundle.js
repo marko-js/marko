@@ -1,7 +1,7 @@
 // template.marko
 const $Card_content__walks = "D%b%l";
 const $Card_content__template = "<p><!><!></p>";
-const $rowcardCardspan_content__row_label = /*@__PURE__*/ _init_resume("a10", /*@__PURE__*/ _fill_join_closure("a14", 7, /*@__PURE__*/ _closure_get(13, ($scope) => _text($scope.a, $scope._.h), 0, "a11"), 2));
+const $rowcardCardspan_content__row_label = /*@__PURE__*/ _init_resume("a10", /*@__PURE__*/ _fill_closure("a14", 7, /*@__PURE__*/ _closure_get(13, ($scope) => _text($scope.a, $scope._.h), 0, "a11"), 2));
 const $rowcardCardspan_content__setup = ($scope) => {
 	$rowcardCardspan_content__row_label($scope);
 	$rowcardCardspan_content__n($scope);
@@ -10,7 +10,7 @@ const $rowcardCardspan_content__n = /*@__PURE__*/ _init_resume("a18", /*@__PURE_
 const $rowcardCardspan_content = _content$1("a1", "<b><!> <!></b>", "D%c%", $rowcardCardspan_content__setup);
 _content_resume($rowcardCardspan_content);
 const $Card_content2__n = /*@__PURE__*/ _init_resume("a20", /*@__PURE__*/ _closure_get(15, ($scope) => _text($scope.b, $scope._.l)));
-const $Label_content__row_label = /*@__PURE__*/ _init_resume("a7", /*@__PURE__*/ _fill_join_closure("a14", 7, /*@__PURE__*/ _closure_get(13, ($scope) => _text($scope.a, $scope._.h), 0, "a8"), 0));
+const $Label_content__row_label = /*@__PURE__*/ _init_resume("a7", /*@__PURE__*/ _fill_closure("a14", 7, /*@__PURE__*/ _closure_get(13, ($scope) => _text($scope.a, $scope._.h), 0, "a8"), 0));
 const $Label_content__setup = ($scope) => {
 	$Label_content__row_label($scope);
 	$Label_content__n($scope);

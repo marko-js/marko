@@ -11,10 +11,10 @@ var wrapper_default = /*@__PURE__*/ _template("__tests__/tags/wrapper.marko", $t
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<button>+</button>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}& b`)("D%l");
-const $if_content__shout = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "shout", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => _text($scope["#text/0"], $scope._.shout)));
+const $if_content__shout = /*@__PURE__*/ _fill("__tests__/template.marko_fill0", "shout", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => _text($scope["#text/0"], $scope._.shout)));
 const $if_content__setup = $if_content__shout;
 const $wrapper_content__if = /*@__PURE__*/ _if("#text/0", "<p> </p>", "D ", $if_content__setup);
-const $wrapper_content__count__OR__shout = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "shout", /*@__PURE__*/ _or(3, ($scope) => $wrapper_content__if($scope, $scope._.count > 0 && $scope.shout ? 0 : 1)));
+const $wrapper_content__count__OR__shout = /*@__PURE__*/ _fill("__tests__/template.marko_fill0", "shout", /*@__PURE__*/ _or(3, ($scope) => $wrapper_content__if($scope, $scope._.count > 0 && $scope.shout ? 0 : 1)));
 const $wrapper_content__shout = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "shout", ($scope) => {
 	$wrapper_content__count__OR__shout($scope);
 	$if_content__shout($scope);

@@ -8,7 +8,7 @@ var card_default = /*@__PURE__*/ _template("__tests__/tags/card/index.marko", $t
 // template.marko
 const $template = "<main><!><button>t</button></main>";
 const $walks = "D%b l";
-const $if_content__fmt = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "fmt", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input$1($scope["#childScope/0"], { fn: $scope._.fmt })));
+const $if_content__fmt = /*@__PURE__*/ _fill("__tests__/template.marko_fill0", "fmt", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input$1($scope["#childScope/0"], { fn: $scope._.fmt })));
 const $if_content__setup = $if_content__fmt;
 const $pattern2 = ($scope, $pattern) => $fmt2($scope, $pattern[0]);
 const $fmt2 = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "fmt", $if_content__fmt);

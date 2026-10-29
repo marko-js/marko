@@ -2,7 +2,7 @@
 const $template = "<!><!><!>";
 const $walks = "b%c";
 const $setup = ($_) => {};
-const $if_content__input_text__OR__fmt = /*@__PURE__*/ _fill_join_if("__tests__/template.marko_fill1 __tests__/template.marko_fill1/unpatched", "fmt", /*@__PURE__*/ _fill_join_if("__tests__/template.marko_fill0 __tests__/template.marko_fill0/unpatched", "input_text", /*@__PURE__*/ _or_resume("__tests__/template.marko_1_input_text#0:5_fmt#0:6/init", 1, ($scope) => _html($scope, $scope._.fmt($scope._.input_text), "#text/0")), "#text/0", 0), "#text/0", 0);
+const $if_content__input_text__OR__fmt = /*@__PURE__*/ _fill_if("__tests__/template.marko_fill1 __tests__/template.marko_fill1/unpatched", "fmt", /*@__PURE__*/ _fill_if("__tests__/template.marko_fill0 __tests__/template.marko_fill0/unpatched", "input_text", /*@__PURE__*/ _or_resume("__tests__/template.marko_1_input_text#0:5_fmt#0:6/init", 1, ($scope) => _html($scope, $scope._.fmt($scope._.input_text), "#text/0")), "#text/0", 0), "#text/0", 0);
 const $if_content__input_text = /*@__PURE__*/ _if_closure("#text/0", 0, $if_content__input_text__OR__fmt);
 const $if_content__setup = ($scope) => {
 	$if_content__input_text._($scope);

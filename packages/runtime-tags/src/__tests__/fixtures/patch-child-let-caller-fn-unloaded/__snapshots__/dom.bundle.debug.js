@@ -17,7 +17,7 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 const $template = "<p> </p>";
 const $walks = "D l";
 const $setup = ($_) => {};
-const $input_label__OR__fns = /*@__PURE__*/ _fill_join("__tests__/tags/outer.marko_fill0", "input_label", /*@__PURE__*/ _or_resume("__tests__/tags/outer.marko_0_input_label#4_fns#5/init", 6, ($scope) => _text($scope["#text/0"], $scope.fns.f($scope.input_label))));
+const $input_label__OR__fns = /*@__PURE__*/ _fill("__tests__/tags/outer.marko_fill0", "input_label", /*@__PURE__*/ _or_resume("__tests__/tags/outer.marko_0_input_label#4_fns#5/init", 6, ($scope) => _text($scope["#text/0"], $scope.fns.f($scope.input_label))));
 const $fns = _let("fns/5", $input_label__OR__fns);
 const $input_fmt = ($scope, input_fmt) => $fns($scope, { f: input_fmt });
 const $input_label = /*@__PURE__*/ _const("input_label", $input_label__OR__fns);

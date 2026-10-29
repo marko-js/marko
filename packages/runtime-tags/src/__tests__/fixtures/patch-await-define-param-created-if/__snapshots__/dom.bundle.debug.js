@@ -18,7 +18,7 @@ const $Show_content__$temp = ($scope, $temp) => {
 	$Show_content__p($scope, $temp.p);
 	$Show_content__tag_input_label($scope, $temp.label);
 };
-const $if_content__input_label = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_label#0:5/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $Show_content__tag_input_label($scope["#childScope/0"], $scope._.input_label))));
+const $if_content__input_label = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_label#0:5/init", /*@__PURE__*/ _fill("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $Show_content__tag_input_label($scope["#childScope/0"], $scope._.input_label))));
 const $if_content__setup = ($scope) => {
 	$if_content__input_label._($scope);
 	$if_content__n._($scope);

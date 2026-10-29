@@ -12,7 +12,7 @@ const lib = { format(value) {
 const $Panel_content__walks = "D l";
 const $Panel_content__template = "<em> </em>";
 const $Panel_content__props = ($scope, props) => _text($scope.a, props.fmt(props.label));
-const $if_content__input_label = /*@__PURE__*/ _fill_join("a2", 4, /*@__PURE__*/ _if_closure(0, 0, ($scope) => $Panel_content__props($scope.a, {
+const $if_content__input_label = /*@__PURE__*/ _fill("a2", 4, /*@__PURE__*/ _if_closure(0, 0, ($scope) => $Panel_content__props($scope.a, {
 	fmt: lib.format,
 	label: $scope._.e
 })));

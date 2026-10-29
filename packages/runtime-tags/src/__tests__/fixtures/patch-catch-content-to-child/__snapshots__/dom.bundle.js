@@ -3,7 +3,7 @@ const $template = "<div><!></div>";
 const $input_content_direct = /*@__PURE__*/ _dynamic_tag_content(0);
 
 // template.marko
-const $box_content__input_label = /*@__PURE__*/ _init_resume("a0", /*@__PURE__*/ _fill_join_closure("a8", 5, /*@__PURE__*/ _closure_get(8, ($scope) => _text($scope.c, $scope._._.f), ($scope) => $scope._._, "a1"), 0));
+const $box_content__input_label = /*@__PURE__*/ _init_resume("a0", /*@__PURE__*/ _fill_closure("a8", 5, /*@__PURE__*/ _closure_get(8, ($scope) => _text($scope.c, $scope._._.f), ($scope) => $scope._._, "a1"), 0));
 const $box_content__setup = ($scope) => {
 	$box_content__input_label($scope);
 	$box_content__count($scope);

@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<button>drop</button><ul></ul>";
 const $walks = " b b";
-const $for_content__input_label = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _for_closure("#ul/1", ($scope) => _text($scope["#text/1"], $scope._.input_label)));
+const $for_content__input_label = /*@__PURE__*/ _fill("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _for_closure("#ul/1", ($scope) => _text($scope["#text/1"], $scope._.input_label)));
 const $for_content__setup = ($scope) => {
 	$for_content__input_label._($scope);
 	_text($scope["#text/0"], $scope["#LoopKey"]);

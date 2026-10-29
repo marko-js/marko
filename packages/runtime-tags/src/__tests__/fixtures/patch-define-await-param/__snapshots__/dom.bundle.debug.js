@@ -3,7 +3,7 @@ const $Info_content__walks = "b%c";
 const $Info_content__template = "<!><!><!>";
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<button>+</button>`)($Info_content__template);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}& b`)($Info_content__walks);
-const $placeholder_content__id = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "id", /*@__PURE__*/ _closure_get("id/8", ($scope) => _text($scope["#text/0"], $scope._.id), 0, "__tests__/template.marko_4_id#1:3/subscribe"), 1);
+const $placeholder_content__id = /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill0", "id", /*@__PURE__*/ _closure_get("id/8", ($scope) => _text($scope["#text/0"], $scope._.id), 0, "__tests__/template.marko_4_id#1:3/subscribe"), 1);
 const $placeholder_content__setup = $placeholder_content__id;
 const $placeholder_content = _content("__tests__/template.marko_4*content", "loading <!>", "b%", $placeholder_content__setup);
 const $await_content__count = /*@__PURE__*/ _init_resume("__tests__/template.marko_3_count#0:6/init", /*@__PURE__*/ _closure_get("count/7", ($scope) => _text($scope["#text/2"], $scope._._._.count), ($scope) => $scope._._._, "__tests__/template.marko_3_count#0:6/subscribe"));
@@ -11,7 +11,7 @@ const $await_content__setup = ($scope) => {
 	$await_content__count($scope);
 	$await_content__id($scope);
 };
-const $await_content__id = /*@__PURE__*/ _init_resume("__tests__/template.marko_3_id#1:3/init", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "id", /*@__PURE__*/ _closure_get("id/8", ($scope) => _text($scope["#text/0"], $scope._._.id), ($scope) => $scope._._, "__tests__/template.marko_3_id#1:3/subscribe"), 0));
+const $await_content__id = /*@__PURE__*/ _init_resume("__tests__/template.marko_3_id#1:3/init", /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill0", "id", /*@__PURE__*/ _closure_get("id/8", ($scope) => _text($scope["#text/0"], $scope._._.id), ($scope) => $scope._._, "__tests__/template.marko_3_id#1:3/subscribe"), 0));
 const $await_content__v = ($scope, v) => _text($scope["#text/1"], v);
 const $await_content__$params = ($scope, $params3) => $await_content__v($scope, $params3[0]);
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<p><!>:<!>:<!></p>", "D%c%c%", $await_content__setup);

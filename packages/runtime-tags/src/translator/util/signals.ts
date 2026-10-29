@@ -581,7 +581,7 @@ export function getSignal(
           // Deep closure positions reassemble the indexed composite via a
           // shared per-key table, keyed by the serialized index.
           closureGet = buildClosureFillJoin(
-            "_fill_join_closure",
+            "_fill_closure",
             section,
             closure,
             closureGet,
@@ -693,7 +693,7 @@ function wrapGlobalJoins(signal: Signal, value: t.Expression): t.Expression {
         ...args,
       )
     : callRuntime(
-        path ? "_fill_global_path_join" : "_fill_global_join",
+        path ? "_fill_global_path" : "_fill_global",
         id,
         value,
         ...args,
@@ -1848,7 +1848,7 @@ function wrapJoinFills(
   return expr;
 }
 
-const ownSectionPath = { helper: "_fill_join", args: [] } as const;
+const ownSectionPath = { helper: "_fill", args: [] } as const;
 
 // What runs the join from the member's fill: the join in its own section, the
 // branch hops from the member's section, or its owner's closure subscribers.
@@ -1864,7 +1864,7 @@ function getJoinFillPath(section: Section, member: Binding) {
     // A chain passing a non-optional section runs the join in its owner's
     // closure subscribers; in stateful structure its closure signal does.
     return {
-      helper: "_fill_join_subscribers",
+      helper: "_fill_subscribers",
       args: [
         getClosureAccessorLiteral(member),
         t.numericLiteral(getDynamicClosureIndex(member, section)),
@@ -1883,7 +1883,7 @@ function getFillJoinHops(section: Section, owner: Section) {
   const conditional = hops[0].kind === "if";
   if (hops.every((hop) => (hop.kind === "if") === conditional)) {
     return {
-      helper: conditional ? "_fill_join_if" : "_fill_join_for",
+      helper: conditional ? "_fill_if" : "_fill_for",
       args: hops.reverse().flatMap(getHopArgs),
     } as const;
   }
@@ -1895,7 +1895,7 @@ function getFillJoinHops(section: Section, owner: Section) {
     dispatch = buildClosureHop(hop, dispatch);
   }
   return {
-    helper: "_fill_join",
+    helper: "_fill",
     args: [t.arrowFunctionExpression([joinId], dispatch)],
   } as const;
 }
@@ -1912,14 +1912,14 @@ function wrapClosureFill(
     return value;
   }
   return registersClosureFill(section, closure)
-    ? buildClosureFillJoin("_fill_join", section, closure, value)
+    ? buildClosureFillJoin("_fill", section, closure, value)
     : value;
 }
 
 // A closure's fill join in `section`, under its key unless its declaration's
 // registration carries it, and under its unpatched key, which re-runs joins too.
 function buildClosureFillJoin(
-  helper: "_fill_join" | "_fill_join_closure",
+  helper: "_fill" | "_fill_closure",
   section: Section,
   closure: Binding,
   value: t.Expression,

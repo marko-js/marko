@@ -3,7 +3,7 @@ const $template = "<main><!><button> </button></main>";
 const $walks = "D%b D m";
 const $await_content__value = ($scope, value) => _text($scope["#text/0"], value);
 const $await_content__$params = ($scope, $params2) => $await_content__value($scope, $params2[0]);
-const $placeholder_content__n__$global_brand = /*@__PURE__*/ _fill_global_join("__tests__/template.marko_2_n#0:6_$global_brand#0:7", ($scope) => _text($scope["#text/0"], $scope._.n + _global_read($scope.$global, "brand")), "brand");
+const $placeholder_content__n__$global_brand = /*@__PURE__*/ _fill_global("__tests__/template.marko_2_n#0:6_$global_brand#0:7", ($scope) => _text($scope["#text/0"], $scope._.n + _global_read($scope.$global, "brand")), "brand");
 const $placeholder_content__n = /*@__PURE__*/ _closure_get("n/8", $placeholder_content__n__$global_brand, 0, "__tests__/template.marko_2_n#0:6/subscribe");
 const $placeholder_content__setup = $placeholder_content__n;
 const $placeholder_content = _content("__tests__/template.marko_2*content", "<p> </p>", "D ", $placeholder_content__setup);

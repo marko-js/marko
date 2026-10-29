@@ -1,6 +1,6 @@
 // tags/error-wrapper.marko
 const $catch_content__input_fallback__script = _script("b0", ($scope) => _attrs_script($scope, "b"));
-const $catch_content__input_fallback = /*@__PURE__*/ _init_resume("b1", /*@__PURE__*/ _fill_join_closure("b7", 3, /*@__PURE__*/ _closure_get(5, ($scope) => {
+const $catch_content__input_fallback = /*@__PURE__*/ _init_resume("b1", /*@__PURE__*/ _fill_closure("b7", 3, /*@__PURE__*/ _closure_get(5, ($scope) => {
 	$catch_content__input_fallback__script($scope);
 	_attrs_content($scope, "b", { content: $scope._.d });
 }, 0, "b2"), 0));
@@ -10,7 +10,7 @@ const $catch_content__$params = ($scope, $params2) => $catch_content__err_messag
 const $catch_content = _content$1("b5", "<b> </b><div></div>", "D l ", $catch_content__setup, $catch_content__$params);
 
 // template.marko
-const $fallback_content__input_label = /*@__PURE__*/ _init_resume("a0", /*@__PURE__*/ _fill_join_closure("a4", 6, /*@__PURE__*/ _closure_get(8, ($scope) => _text($scope.a, $scope._.g), 0, "a1"), 0));
+const $fallback_content__input_label = /*@__PURE__*/ _init_resume("a0", /*@__PURE__*/ _fill_closure("a4", 6, /*@__PURE__*/ _closure_get(8, ($scope) => _text($scope.a, $scope._.g), 0, "a1"), 0));
 const $fallback_content__setup = ($scope) => {
 	$fallback_content__input_label($scope);
 	$fallback_content__count($scope);

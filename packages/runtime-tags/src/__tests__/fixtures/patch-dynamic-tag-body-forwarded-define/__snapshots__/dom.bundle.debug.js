@@ -2,7 +2,7 @@
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $if_content__content = /*@__PURE__*/ _fill_join("__tests__/tags/fwd.marko_fill1", "content", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.content)));
+const $if_content__content = /*@__PURE__*/ _fill("__tests__/tags/fwd.marko_fill1", "content", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.content)));
 const $if_content__setup = $if_content__content;
 const $Wrap_content__if = /*@__PURE__*/ _if("#text/1", "<!><!><!>", "b%", $if_content__setup);
 const $Wrap_content__open = /*@__PURE__*/ _fill_let("__tests__/tags/fwd.marko_fill2", "open/5", ($scope) => $Wrap_content__if($scope, $scope.open ? 0 : 1));
@@ -17,12 +17,12 @@ const $Wrap_content__$params = ($scope, $params2) => $Wrap_content__content($sco
 const $Wrap_content__content = /*@__PURE__*/ _fill_const("__tests__/tags/fwd.marko_fill1", "content", $if_content__content);
 const $Wrap_content = /*@__PURE__*/ _content("__tests__/tags/fwd.marko_2*content", "<button class=toggle>t</button><!><!>", " b%", $Wrap_content__setup, $Wrap_content__$params);
 const $globalppWrap_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $globalppWrap_content__input_content = /*@__PURE__*/ _init_resume("__tests__/tags/fwd.marko_1_input_content#0:3/init", /*@__PURE__*/ _fill_join_closure("__tests__/tags/fwd.marko_fill0", "input_content", /*@__PURE__*/ _closure_get("input_content/5", ($scope) => $globalppWrap_content__dynamicTag($scope, $scope._.input_content), 0, "__tests__/tags/fwd.marko_1_input_content#0:3/subscribe"), 0));
+const $globalppWrap_content__input_content = /*@__PURE__*/ _init_resume("__tests__/tags/fwd.marko_1_input_content#0:3/init", /*@__PURE__*/ _fill_closure("__tests__/tags/fwd.marko_fill0", "input_content", /*@__PURE__*/ _closure_get("input_content/5", ($scope) => $globalppWrap_content__dynamicTag($scope, $scope._.input_content), 0, "__tests__/tags/fwd.marko_1_input_content#0:3/subscribe"), 0));
 const $globalppWrap_content__setup = $globalppWrap_content__input_content;
 const $globalppWrap_content = _content("__tests__/tags/fwd.marko_1*content", "<!><!><!>", "b%", $globalppWrap_content__setup);
 _content_resume($globalppWrap_content);
 const $dynamicTag$1 = /*@__PURE__*/ _dynamic_tag("#text/0", $globalppWrap_content);
-const $Wrap__$global_p = /*@__PURE__*/ _fill_global_join("__tests__/tags/fwd.marko_0_Wrap#4_$global_p#13", ($scope) => $dynamicTag$1($scope, _global_read($scope.$global, "p") ? "p" : $scope.Wrap), "p");
+const $Wrap__$global_p = /*@__PURE__*/ _fill_global("__tests__/tags/fwd.marko_0_Wrap#4_$global_p#13", ($scope) => $dynamicTag$1($scope, _global_read($scope.$global, "p") ? "p" : $scope.Wrap), "p");
 const $Wrap = /*@__PURE__*/ _const("Wrap", $Wrap__$global_p);
 function $setup$1($scope) {
 	$Wrap($scope, { content: $Wrap_content($scope) });
@@ -36,7 +36,7 @@ var fwd_default = /*@__PURE__*/ _template("__tests__/tags/fwd.marko", $template$
 const $template = "<main><!></main>";
 const $walks = "D%l";
 const $setup = ($_) => {};
-const $inputonFwddiv_content__input_note = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_note#0:4/init", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_note", /*@__PURE__*/ _closure_get("input_note/5", ($scope) => _text($scope["#text/0"], $scope._.input_note), 0, "__tests__/template.marko_1_input_note#0:4/subscribe"), 0));
+const $inputonFwddiv_content__input_note = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_note#0:4/init", /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill0", "input_note", /*@__PURE__*/ _closure_get("input_note/5", ($scope) => _text($scope["#text/0"], $scope._.input_note), 0, "__tests__/template.marko_1_input_note#0:4/subscribe"), 0));
 const $inputonFwddiv_content__setup = $inputonFwddiv_content__input_note;
 const $inputonFwddiv_content = _content("__tests__/template.marko_1*content", "<em> </em>", "D ", $inputonFwddiv_content__setup);
 _content_resume($inputonFwddiv_content);

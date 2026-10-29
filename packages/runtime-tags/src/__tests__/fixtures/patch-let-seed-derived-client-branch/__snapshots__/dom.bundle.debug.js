@@ -1,13 +1,13 @@
 // template.marko
 const $template = "<button>toggle</button><!><!>";
 const $walks = " b%c";
-const $if_content__input_w = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_w", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => _text($scope["#text/1"], $scope._.input_w)));
+const $if_content__input_w = /*@__PURE__*/ _fill("__tests__/template.marko_fill0", "input_w", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => _text($scope["#text/1"], $scope._.input_w)));
 const $if_content__setup = ($scope) => {
 	$if_content__input_w._($scope);
 	$if_content__d._($scope);
 };
 const $if_content__x = _let("x/2", ($scope) => _text($scope["#text/0"], $scope.x));
-const $if_content__d = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "d", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $if_content__x($scope, $scope._.d)));
+const $if_content__d = /*@__PURE__*/ _fill("__tests__/template.marko_fill1", "d", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $if_content__x($scope, $scope._.d)));
 const $d = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill1", "d", $if_content__d);
 const $input_v = ($scope, input_v) => $d($scope, input_v + "!");
 const $if = /*@__PURE__*/ _if("#text/1", "<p><!> <!></p>", "D%c%", $if_content__setup);

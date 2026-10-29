@@ -12,7 +12,7 @@ const $get__script = _script("d0", ($scope) => {
 
 // tags/child.marko
 const $item_content__if = /*@__PURE__*/ _if(0, "<span>shown</span>");
-const $item_content__s = /*@__PURE__*/ _init_resume("b6", _closure_resume("b11", /*@__PURE__*/ _fill_join_closure("b1", 2, /*@__PURE__*/ _closure_get(9, ($scope) => $item_content__if($scope, $scope._.c ? 0 : 1)), 0)));
+const $item_content__s = /*@__PURE__*/ _init_resume("b6", _closure_resume("b11", /*@__PURE__*/ _fill_closure("b1", 2, /*@__PURE__*/ _closure_get(9, ($scope) => $item_content__if($scope, $scope._.c ? 0 : 1)), 0)));
 const $item_content = /*@__PURE__*/ _content$1("b4", "<!><!><!>", "b%", $item_content__s);
 const $if_content__items = /*@__PURE__*/ _init_resume("b13", /*@__PURE__*/ _if_closure(1, 0, ($scope) => {
 	let $item;

@@ -30,7 +30,7 @@ const $for_content__item = ($scope, item) => {
 const $for_content__item_name = ($scope, item_name) => _text($scope["#text/0"], item_name);
 const $for_content__item_value = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "item_value");
 const $for_content__row_item = $for_content__item;
-const $for_content__item_value__OR__qty = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "item_value", ($scope) => _text($scope["#text/2"], $scope.qty * $scope.item_value));
+const $for_content__item_value__OR__qty = /*@__PURE__*/ _fill("__tests__/template.marko_fill0", "item_value", ($scope) => _text($scope["#text/2"], $scope.qty * $scope.item_value));
 const $for_content__qty = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill1", "qty/10", ($scope) => {
 	$input_value($scope["#childScope/1"], $scope.qty);
 	$for_content__item_value__OR__qty($scope);
@@ -50,7 +50,7 @@ const $for_content__$params = ($scope, $params2) => {
 const $p = ($scope, p) => $p_entries($scope, p?.entries);
 const $for = /*@__PURE__*/ _for_of("#text/0", /*@__PURE__*/ ((_w0) => `<article><strong> </strong><form>${_w0}<button class=sell>Sell <!></button></form></article>`)($template$1), /*@__PURE__*/ ((_w0) => `E lD/${_w0}&Db%n`)($walks$1), $for_content__setup, $for_content__$params);
 const $p_entries = ($scope, p_entries) => $for($scope, [p_entries, (row) => row.item.id]);
-const $setup__$global_data = /*@__PURE__*/ _fill_global_path_join("__tests__/template.marko_0_$global_data#5", ($scope) => $p($scope, $scope.$global.data.player), "data", "player");
+const $setup__$global_data = /*@__PURE__*/ _fill_global_path("__tests__/template.marko_0_$global_data#5", ($scope) => $p($scope, $scope.$global.data.player), "data", "player");
 const $setup = $setup__$global_data;
 const $valueChange = ($scope) => (_new_qty) => {
 	$for_content__qty($scope, _new_qty);

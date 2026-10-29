@@ -1,6 +1,6 @@
 // tags/navlist.marko
 const $for_content__active = ($scope, active) => _attr_class_item($scope.a, "active", active);
-const $for_content__input_path__OR__item_href = /*@__PURE__*/ _fill_join_for("b3", 4, /*@__PURE__*/ _or_resume("b1", 5, ($scope) => $for_content__active($scope, $scope.e === $scope._.e)), 0);
+const $for_content__input_path__OR__item_href = /*@__PURE__*/ _fill_for("b3", 4, /*@__PURE__*/ _or_resume("b1", 5, ($scope) => $for_content__active($scope, $scope.e === $scope._.e)), 0);
 const $for_content__input_path = /*@__PURE__*/ _for_closure(0, $for_content__input_path__OR__item_href);
 const $for_content__setup__script = _script("b0", ($scope) => _on($scope.a, "click", function(e) {
 	e.preventDefault();

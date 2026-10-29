@@ -13,7 +13,7 @@ const $Panel_content__$params = ($scope, $params2) => $Panel_content__$temp($sco
 const $Panel_content__$temp = ($scope, $temp) => $Panel_content__label($scope, $temp.label);
 const $Panel_content = _content("__tests__/template.marko_1*content", $Panel_content__template, $Panel_content__walks, 0, $Panel_content__$params);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
-const $input_label__OR__open__OR__Panel = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _or(8, ($scope) => $dynamicTag($scope, $scope.open ? "b" : $scope.Panel, ($_) => ({ label: $scope.input_label })), 2));
+const $input_label__OR__open__OR__Panel = /*@__PURE__*/ _fill("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _or(8, ($scope) => $dynamicTag($scope, $scope.open ? "b" : $scope.Panel, ($_) => ({ label: $scope.input_label })), 2));
 const $open = _let("open/6", $input_label__OR__open__OR__Panel);
 const $Panel = /*@__PURE__*/ _const("Panel", $input_label__OR__open__OR__Panel);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {

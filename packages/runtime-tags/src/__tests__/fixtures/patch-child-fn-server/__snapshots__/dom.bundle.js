@@ -2,7 +2,7 @@
 const $input = ($scope, input) => _text($scope.a, input.format(input.value));
 
 // template.marko
-const $input_suffix__OR__count = /*@__PURE__*/ _fill_join("a1", 4, /*@__PURE__*/ _or(6, ($scope) => $input($scope.a, {
+const $input_suffix__OR__count = /*@__PURE__*/ _fill("a1", 4, /*@__PURE__*/ _or(6, ($scope) => $input($scope.a, {
 	value: $scope.f,
 	format: (v) => v + $scope.e
 })));

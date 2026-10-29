@@ -2,7 +2,7 @@
 const $template = "<!><!><!>";
 const $walks = "b%c";
 const $setup = ($_) => {};
-const $if_content__input_b__OR__x = /*@__PURE__*/ _fill_join_if("__tests__/template.marko_fill0", "input_b", /*@__PURE__*/ _or_resume("__tests__/template.marko_1_input_b#0:5_x#0:6/init", 1, ($scope) => _text($scope["#text/0"], $scope._.x + $scope._.input_b)), "#text/0", 0);
+const $if_content__input_b__OR__x = /*@__PURE__*/ _fill_if("__tests__/template.marko_fill0", "input_b", /*@__PURE__*/ _or_resume("__tests__/template.marko_1_input_b#0:5_x#0:6/init", 1, ($scope) => _text($scope["#text/0"], $scope._.x + $scope._.input_b)), "#text/0", 0);
 const $if_content__input_b = /*@__PURE__*/ _if_closure("#text/0", 0, $if_content__input_b__OR__x);
 const $if_content__setup = ($scope) => {
 	$if_content__input_b._($scope);

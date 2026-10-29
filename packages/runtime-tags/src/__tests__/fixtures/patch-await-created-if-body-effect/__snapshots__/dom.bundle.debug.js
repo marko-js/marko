@@ -18,7 +18,7 @@ const $template = "<button class=open>inc</button><!><!>";
 const $walks = " b%c";
 let $load_Lazy_setup = /*@__PURE__*/ _load_setup(($_) => import("./v:lazy.marko.setup.mjs"));
 let $load_Lazy_tag_input_label = /*@__PURE__*/ _load_signal_patch(($_) => import("./v:lazy.marko.input_label.mjs"), "ready:__tests__/lazy.marko");
-const $await_content__n__OR__x = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "x", /*@__PURE__*/ _or(4, ($scope) => $load_Lazy_tag_input_label($scope["#childScope/1"], $scope.x + $scope._._.n)));
+const $await_content__n__OR__x = /*@__PURE__*/ _fill("__tests__/template.marko_fill1", "x", /*@__PURE__*/ _or(4, ($scope) => $load_Lazy_tag_input_label($scope["#childScope/1"], $scope.x + $scope._._.n)));
 const $await_content__n = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_n#0:6/init", /*@__PURE__*/ _closure_get("n/8", $await_content__n__OR__x, ($scope) => $scope._._, "__tests__/template.marko_2_n#0:6/subscribe"));
 const $await_content__setup = ($scope) => {
 	$await_content__n($scope);
@@ -32,7 +32,7 @@ const $await_content__x = /*@__PURE__*/ _fill_const("__tests__/template.marko_fi
 const $await_content__$params = ($scope, $params2) => $await_content__x($scope, $params2[0]);
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<!><!><!>", "b%/&", $await_content__setup);
 const $if_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
-const $if_content__input_label = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_label#0:5/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $if_content__await_promise($scope, Promise.resolve($scope._.input_label)))));
+const $if_content__input_label = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_label#0:5/init", /*@__PURE__*/ _fill("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $if_content__await_promise($scope, Promise.resolve($scope._.input_label)))));
 const $if_content__setup = ($scope) => {
 	$if_content__input_label._($scope);
 	$await_content($scope);

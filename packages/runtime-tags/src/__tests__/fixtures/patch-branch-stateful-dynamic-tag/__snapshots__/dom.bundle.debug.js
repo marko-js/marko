@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<!><!><button>+</button>";
 const $walks = "b%b b";
-const $countbi_content__input_label = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _closure_get("input_label/7", ($scope) => _text($scope["#text/0"], $scope._._.input_label), ($scope) => $scope._._, "__tests__/template.marko_2_input_label#0:5/subscribe"), 0);
+const $countbi_content__input_label = /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _closure_get("input_label/7", ($scope) => _text($scope["#text/0"], $scope._._.input_label), ($scope) => $scope._._, "__tests__/template.marko_2_input_label#0:5/subscribe"), 0);
 const $countbi_content__setup = $countbi_content__input_label;
 const $countbi_content = /*@__PURE__*/ _content("__tests__/template.marko_2*content", " ", " ", $countbi_content__setup);
 const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $countbi_content);

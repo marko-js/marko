@@ -121,7 +121,7 @@ _Avoid_: dependency array
 **Join**:
 Work a signal runs again when any input it reads changes: an intersection's
 (`_or`), or any signal a fill or a `$global` key re-runs, one over a single
-closure included (`_fill_join`, `$global` join). Say intersection where the
+closure included (`_fill`, `$global` join). Say intersection where the
 thing is one.
 
 **Signal**:
@@ -460,7 +460,7 @@ _Avoid_: server-required param
 A signal's client work that reads `$global` as it renders (each expression
 records the deepest member it reads, as a property alias would), split into a
 function the signal calls. A patch build registers it with the members it
-reads, each as its keys from `$global` (`_fill_global_join`), so a patch
+reads, each as its keys from `$global` (`_fill_global`), so a patch
 changing one re-runs only that work, once, on each scope that ran it. Work
 reading under the same keys shares one join; a script keeps its own, so it
 runs again only when what it reads changes. A loop's rows reading one share a
@@ -496,7 +496,7 @@ A value a patch writes into a hole is a _fill_. A _patch fill_ is a
 server-sourced binding whose reads intersect client state, so patches refresh
 it through a registered fill signal. A _join fill_ is a known child's input read by a join whose other
 inputs a caller may pass client state: the section owning the join
-registers it on the join alone (`_fill_join`), and writes it only while
+registers it on the join alone (`_fill`), and writes it only while
 another input is client-sourced (otherwise the value is a write). A written
 join takes them where each member its patch ships is a template input only it
 calls for, its scopes reached by hops; otherwise

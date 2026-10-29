@@ -2,7 +2,7 @@
 const $input_v = ($scope, input_v) => _text($scope.a, input_v);
 
 // template.marko
-const $count__$global_suffix = /*@__PURE__*/ _fill_global_join("a0", ($scope) => $input_v($scope.a, $scope.d + $scope.$.suffix), "suffix");
+const $count__$global_suffix = /*@__PURE__*/ _fill_global("a0", ($scope) => $input_v($scope.a, $scope.d + $scope.$.suffix), "suffix");
 const $count = _let(3, ($scope) => {
 	_text($scope.c, $scope.d);
 	$count__$global_suffix($scope);

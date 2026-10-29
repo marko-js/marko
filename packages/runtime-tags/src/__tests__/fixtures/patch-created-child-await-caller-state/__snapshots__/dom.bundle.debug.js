@@ -13,7 +13,7 @@ var card_default = /*@__PURE__*/ _template("__tests__/tags/card.marko", $templat
 // template.marko
 const $template = "<button class=toggle>toggle</button><!><!>";
 const $walks = " b%c";
-const $if_content__input_p = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_p#0:5/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_p", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $input_promise($scope["#childScope/1"], $scope._.input_p))));
+const $if_content__input_p = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_p#0:5/init", /*@__PURE__*/ _fill("__tests__/template.marko_fill0", "input_p", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $input_promise($scope["#childScope/1"], $scope._.input_p))));
 const $if_content__setup = ($scope) => {
 	$if_content__input_p._($scope);
 	$if_content__n._($scope);

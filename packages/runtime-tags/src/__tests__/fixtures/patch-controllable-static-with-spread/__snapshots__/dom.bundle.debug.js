@@ -2,7 +2,7 @@
 const $template = "<input><p> </p>";
 const $walks = " bD l";
 const $input_rest__OR__text__script = _script("__tests__/template.marko_0_input_rest#4_text#5", ($scope) => _attrs_script($scope, "#input/0"));
-const $input_rest__OR__text = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_rest", /*@__PURE__*/ _or(6, ($scope) => {
+const $input_rest__OR__text = /*@__PURE__*/ _fill("__tests__/template.marko_fill0", "input_rest", /*@__PURE__*/ _or(6, ($scope) => {
 	_attrs($scope, "#input/0", {
 		value: $scope.text,
 		valueChange: $valueChange($scope),

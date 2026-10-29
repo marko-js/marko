@@ -1,7 +1,7 @@
 // tags/label-view.marko
 const $template$1 = "<!><!><span>x</span>";
 const $walks$1 = "b%b b";
-const $if_content__get = /*@__PURE__*/ _fill_join("__tests__/tags/label-view.marko_fill4", "get", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => _text($scope["#text/0"], $scope._.get())));
+const $if_content__get = /*@__PURE__*/ _fill("__tests__/tags/label-view.marko_fill4", "get", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => _text($scope["#text/0"], $scope._.get())));
 const $if_content__setup = $if_content__get;
 const $if = /*@__PURE__*/ _if("#text/0", "<p> </p>", "D ", $if_content__setup);
 const $open = /*@__PURE__*/ _fill_let("__tests__/tags/label-view.marko_fill3", "open/8", ($scope) => $if($scope, $scope.open ? 0 : 1));
@@ -13,7 +13,7 @@ function $setup$1($scope) {
 	$open($scope, true);
 }
 const $get = /*@__PURE__*/ _fill_const("__tests__/tags/label-view.marko_fill4", "get", $if_content__get);
-const $input_flag__OR__input_a__OR__input_b = /*@__PURE__*/ _fill_join("__tests__/tags/label-view.marko_fill2", "input_b", /*@__PURE__*/ _fill_join("__tests__/tags/label-view.marko_fill1", "input_a", /*@__PURE__*/ _fill_join("__tests__/tags/label-view.marko_fill0", "input_flag", /*@__PURE__*/ _or_resume("__tests__/tags/label-view.marko_0_input_flag#4_input_a#5_input_b#6/init", 7, ($scope) => $get($scope, $scope.input_flag ? $scope.input_a : $scope.input_b), 2))));
+const $input_flag__OR__input_a__OR__input_b = /*@__PURE__*/ _fill("__tests__/tags/label-view.marko_fill2", "input_b", /*@__PURE__*/ _fill("__tests__/tags/label-view.marko_fill1", "input_a", /*@__PURE__*/ _fill("__tests__/tags/label-view.marko_fill0", "input_flag", /*@__PURE__*/ _or_resume("__tests__/tags/label-view.marko_0_input_flag#4_input_a#5_input_b#6/init", 7, ($scope) => $get($scope, $scope.input_flag ? $scope.input_a : $scope.input_b), 2))));
 const $input_flag = /*@__PURE__*/ _const("input_flag", $input_flag__OR__input_a__OR__input_b);
 const $input_a = /*@__PURE__*/ _const("input_a", $input_flag__OR__input_a__OR__input_b);
 const $input_b = /*@__PURE__*/ _const("input_b", $input_flag__OR__input_a__OR__input_b);

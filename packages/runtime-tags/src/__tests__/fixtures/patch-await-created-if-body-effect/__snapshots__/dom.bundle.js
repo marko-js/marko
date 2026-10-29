@@ -1,6 +1,6 @@
 // template.marko
 let $load_Lazy_tag_input_label = /*@__PURE__*/ _load_signal_patch(($_) => import("./v:lazy.marko.input_label.mjs"), "_a");
-const $await_content__n__OR__x = /*@__PURE__*/ _fill_join("b1", 3, /*@__PURE__*/ _or(4, ($scope) => $load_Lazy_tag_input_label($scope.b, $scope.d + $scope._._.g)));
+const $await_content__n__OR__x = /*@__PURE__*/ _fill("b1", 3, /*@__PURE__*/ _or(4, ($scope) => $load_Lazy_tag_input_label($scope.b, $scope.d + $scope._._.g)));
 const $await_content__n = /*@__PURE__*/ _init_resume("b10", /*@__PURE__*/ _closure_get(8, $await_content__n__OR__x, ($scope) => $scope._._, "b2"));
 const $await_content__x__script = _script("b0", ($scope) => console.log("await", $scope.d));
 const $n = _let(6, /* @__PURE__ */ _closure($await_content__n));

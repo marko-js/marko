@@ -6,8 +6,8 @@
         "brotli": 6101
       },
       "files": {
-        "tags/error-wrapper.marko": 645,
-        "template.marko": 890
+        "tags/error-wrapper.marko": 640,
+        "template.marko": 885
       }
     }
   },

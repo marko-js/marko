@@ -28,10 +28,10 @@ var card_default = /*@__PURE__*/ _template("__tests__/tags/card.marko", $templat
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main><!>${_w0}<button id=o>o</button></main>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `D%b/${_w0}& l`)($walks$1);
-const $if_content__input_badge_label = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "input_badge_label", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_label($scope["#childScope/0"], $scope._.input_badge_label)));
+const $if_content__input_badge_label = /*@__PURE__*/ _fill("__tests__/template.marko_fill1", "input_badge_label", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_label($scope["#childScope/0"], $scope._.input_badge_label)));
 const $if_content__setup = $if_content__input_badge_label;
 const $if = /*@__PURE__*/ _if("#text/0", $template$2, /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D l"), $if_content__setup);
-const $input_props__OR__on = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_props", /*@__PURE__*/ _or(8, ($scope) => {
+const $input_props__OR__on = /*@__PURE__*/ _fill("__tests__/template.marko_fill0", "input_props", /*@__PURE__*/ _or(8, ($scope) => {
 	const $card_input_spread = {
 		...$scope.input_props,
 		note: $scope.on ? "on" : "off"

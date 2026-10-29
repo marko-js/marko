@@ -6,11 +6,11 @@
         "brotli": 6702
       },
       "files": {
-        "tags/toggle-if.marko": 461,
-        "tags/toggle-for.marko": 494,
-        "tags/toggle-tag.marko": 623,
-        "tags/param-host.marko": 1629,
-        "tags/const-host.marko": 1576,
+        "tags/toggle-if.marko": 456,
+        "tags/toggle-for.marko": 489,
+        "tags/toggle-tag.marko": 618,
+        "tags/param-host.marko": 1609,
+        "tags/const-host.marko": 1556,
         "template.marko": 265
       }
     }

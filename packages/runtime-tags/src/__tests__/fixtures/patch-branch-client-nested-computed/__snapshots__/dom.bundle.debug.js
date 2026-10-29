@@ -2,7 +2,7 @@
 const $template = "<main><!><button>+</button></main>";
 const $walks = "D%b l";
 const $if_content__if = /*@__PURE__*/ _if("#text/0", "<p>promo</p>");
-const $if_content__input = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__if($scope, $scope._.input[$scope._.input.key] ? 0 : 1)));
+const $if_content__input = /*@__PURE__*/ _fill("__tests__/template.marko_fill0", "input", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__if($scope, $scope._.input[$scope._.input.key] ? 0 : 1)));
 const $if_content__setup = $if_content__input;
 const $if = /*@__PURE__*/ _if("#text/0", "<!><!><!>", "b%", $if_content__setup);
 const $open = _let("open/4", ($scope) => $if($scope, $scope.open ? 0 : 1));

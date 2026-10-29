@@ -2,11 +2,11 @@
 const $template$1 = "<p></p><!><!>";
 const $walks$1 = " b%c";
 const $setup$1 = ($_) => {};
-const $if_content__z__$global_mark = /*@__PURE__*/ _fill_global_join("__tests__/tags/gm/index.marko_1_z#0:6_$global_mark#0:10", ($scope) => _attr($scope["#i/0"], "data-z", $scope._.z + _global_read($scope.$global, "mark")), "mark");
-const $if_content__z = /*@__PURE__*/ _init_resume("__tests__/tags/gm/index.marko_1_z#0:6/init", /*@__PURE__*/ _fill_join("__tests__/tags/gm/index.marko_fill0", "z", /*@__PURE__*/ _if_closure("#text/1", 0, $if_content__z__$global_mark)));
+const $if_content__z__$global_mark = /*@__PURE__*/ _fill_global("__tests__/tags/gm/index.marko_1_z#0:6_$global_mark#0:10", ($scope) => _attr($scope["#i/0"], "data-z", $scope._.z + _global_read($scope.$global, "mark")), "mark");
+const $if_content__z = /*@__PURE__*/ _init_resume("__tests__/tags/gm/index.marko_1_z#0:6/init", /*@__PURE__*/ _fill("__tests__/tags/gm/index.marko_fill0", "z", /*@__PURE__*/ _if_closure("#text/1", 0, $if_content__z__$global_mark)));
 const $if_content__setup$1 = $if_content__z;
 const $z = /*@__PURE__*/ _fill_const("__tests__/tags/gm/index.marko_fill0", "z", $if_content__z);
-const $input_v__$global_flag = /*@__PURE__*/ _fill_global_join("__tests__/tags/gm/index.marko_0_input_v#4_$global_flag#6", ($scope) => $z($scope, $scope.input_v + _global_read($scope.$global, "flag")), "flag");
+const $input_v__$global_flag = /*@__PURE__*/ _fill_global("__tests__/tags/gm/index.marko_0_input_v#4_$global_flag#6", ($scope) => $z($scope, $scope.input_v + _global_read($scope.$global, "flag")), "flag");
 const $if$1 = /*@__PURE__*/ _if("#text/1", "<i></i>", " ", $if_content__setup$1);
 const $input_v = /*@__PURE__*/ _const("input_v", ($scope) => {
 	$if$1($scope, $scope.input_v ? 0 : 1);
@@ -22,7 +22,7 @@ var gm_default = /*@__PURE__*/ _template("__tests__/tags/gm/index.marko", $templ
 // template.marko
 const $template = "<main><!><button>t</button></main>";
 const $walks = "D%b l";
-const $if_content__input_w = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_w", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_w$1($scope["#childScope/0"], $scope._.input_w)));
+const $if_content__input_w = /*@__PURE__*/ _fill("__tests__/template.marko_fill0", "input_w", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_w$1($scope["#childScope/0"], $scope._.input_w)));
 const $if_content__setup = ($scope) => {
 	$if_content__input_w._($scope);
 	$input_v($scope["#childScope/0"], "a");

@@ -3,7 +3,7 @@ const $template$1 = "<p> </p>";
 const $walks$1 = "D l";
 const $setup$1 = ($_) => {};
 const $get = ($scope, get) => _text($scope["#text/0"], get && get());
-const $input_flag__OR__input_a = /*@__PURE__*/ _fill_join("__tests__/tags/label-view.marko_fill1", "input_a", /*@__PURE__*/ _fill_join("__tests__/tags/label-view.marko_fill0", "input_flag", /*@__PURE__*/ _or_resume("__tests__/tags/label-view.marko_0_input_flag#3_input_a#4/init", 5, ($scope) => $get($scope, $scope.input_flag ? $scope.input_a : null))));
+const $input_flag__OR__input_a = /*@__PURE__*/ _fill("__tests__/tags/label-view.marko_fill1", "input_a", /*@__PURE__*/ _fill("__tests__/tags/label-view.marko_fill0", "input_flag", /*@__PURE__*/ _or_resume("__tests__/tags/label-view.marko_0_input_flag#3_input_a#4/init", 5, ($scope) => $get($scope, $scope.input_flag ? $scope.input_a : null))));
 const $input_flag = /*@__PURE__*/ _const("input_flag", $input_flag__OR__input_a);
 const $input_a = /*@__PURE__*/ _const("input_a", $input_flag__OR__input_a);
 const $input$1 = ($scope, input) => {

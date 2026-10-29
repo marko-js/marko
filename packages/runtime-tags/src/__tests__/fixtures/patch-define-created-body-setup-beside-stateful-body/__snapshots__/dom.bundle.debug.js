@@ -3,7 +3,7 @@ const $Panel_content__walks = "b%c";
 const $Panel_content__template = "<!><!><!>";
 const $template = "<!><!><!><button>toggle</button>";
 const $walks = "b%b%b b";
-const $if_content2__label = /*@__PURE__*/ _init_resume("__tests__/template.marko_3_label#2:4/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill2", "label", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => _text($scope["#text/0"], $scope._.label))));
+const $if_content2__label = /*@__PURE__*/ _init_resume("__tests__/template.marko_3_label#2:4/init", /*@__PURE__*/ _fill("__tests__/template.marko_fill2", "label", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => _text($scope["#text/0"], $scope._.label))));
 const $if_content2__setup = ($scope) => {
 	$if_content2__label._($scope);
 	$if_content2__n._($scope);
@@ -26,9 +26,9 @@ const $if_content__setup = ($scope) => {
 	$if_content__input_label._($scope);
 	$Panel_content__setup($scope["#childScope/0"]);
 };
-const $if_content__input_label = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_label#0:6/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0/unpatched", "input_label", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $Panel_content__tag_input_label($scope["#childScope/0"], $scope._.input_label))));
+const $if_content__input_label = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_label#0:6/init", /*@__PURE__*/ _fill("__tests__/template.marko_fill0/unpatched", "input_label", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $Panel_content__tag_input_label($scope["#childScope/0"], $scope._.input_label))));
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
-const $input_label__OR__open__OR__Tag = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "Tag", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0 __tests__/template.marko_fill0/unpatched", "input_label", /*@__PURE__*/ _or(12, ($scope) => $dynamicTag($scope, $scope.Tag, ($_) => ({
+const $input_label__OR__open__OR__Tag = /*@__PURE__*/ _fill("__tests__/template.marko_fill1", "Tag", /*@__PURE__*/ _fill("__tests__/template.marko_fill0 __tests__/template.marko_fill0/unpatched", "input_label", /*@__PURE__*/ _or(12, ($scope) => $dynamicTag($scope, $scope.Tag, ($_) => ({
 	isOpen: !$scope.open,
 	label: $scope.input_label + "!"
 })), 2)));

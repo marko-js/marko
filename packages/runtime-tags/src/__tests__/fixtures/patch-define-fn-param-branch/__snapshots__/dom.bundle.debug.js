@@ -3,7 +3,7 @@ const $Panel_content__walks = "b%c";
 const $Panel_content__template = "<!><!><!>";
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<button>toggle</button>`)($Panel_content__template);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}& b`)($Panel_content__walks);
-const $if_content__label = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "label", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => _text($scope["#text/0"], $scope._.label)));
+const $if_content__label = /*@__PURE__*/ _fill("__tests__/template.marko_fill0", "label", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => _text($scope["#text/0"], $scope._.label)));
 const $if_content__setup = $if_content__label;
 const $Panel_content__if = /*@__PURE__*/ _if("#text/0", "<em> </em>", "D ", $if_content__setup);
 const $Panel_content__isOpen = ($scope, isOpen) => $Panel_content__if($scope, isOpen() ? 0 : 1);

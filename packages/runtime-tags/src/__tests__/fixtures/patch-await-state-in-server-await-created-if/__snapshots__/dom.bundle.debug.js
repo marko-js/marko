@@ -17,7 +17,7 @@ const $await_content__s__closure = /*@__PURE__*/ _closure($await_content2__s);
 const $await_content__s = /*@__PURE__*/ _const("s", $await_content__s__closure);
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<!><!><!>", "b%", $await_content__setup);
 const $if_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
-const $if_content__input_label = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_label#0:5/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $if_content__await_promise($scope, Promise.resolve($scope._.input_label)))));
+const $if_content__input_label = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_label#0:5/init", /*@__PURE__*/ _fill("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $if_content__await_promise($scope, Promise.resolve($scope._.input_label)))));
 const $if_content__setup = ($scope) => {
 	$if_content__input_label._($scope);
 	$await_content($scope);

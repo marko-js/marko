@@ -12,7 +12,7 @@ const $Card_content__setup = $await_content;
 const $Card_content__promise = $Card_content__await_promise;
 const $Card_content__$params = ($scope, $params2) => $Card_content__$temp($scope, $params2[0]);
 const $Card_content__$temp = ($scope, $temp) => $Card_content__promise($scope, $temp.promise);
-const $if_content__input_p = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_p#0:4/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_p", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $Card_content__promise($scope["#childScope/0"], $scope._.input_p))));
+const $if_content__input_p = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_p#0:4/init", /*@__PURE__*/ _fill("__tests__/template.marko_fill0", "input_p", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $Card_content__promise($scope["#childScope/0"], $scope._.input_p))));
 const $if_content__setup = ($scope) => {
 	$if_content__input_p._($scope);
 	$Card_content__setup($scope["#childScope/0"]);

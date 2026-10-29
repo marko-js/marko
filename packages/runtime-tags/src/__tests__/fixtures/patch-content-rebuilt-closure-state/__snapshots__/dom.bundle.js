@@ -6,7 +6,7 @@ const $input_item = ($scope, input_item) => $for($scope, [input_item]);
 
 // tags/child.marko
 const $item_content__if = /*@__PURE__*/ _if(0, "<span>shown</span>");
-const $item_content__input_show = /*@__PURE__*/ _init_resume("b2", _closure_resume("b7", /*@__PURE__*/ _fill_join_closure("b4", 4, /*@__PURE__*/ _closure_get(6, ($scope) => $item_content__if($scope, $scope._.e ? 0 : 1)), 0)));
+const $item_content__input_show = /*@__PURE__*/ _init_resume("b2", _closure_resume("b7", /*@__PURE__*/ _fill_closure("b4", 4, /*@__PURE__*/ _closure_get(6, ($scope) => $item_content__if($scope, $scope._.e ? 0 : 1)), 0)));
 const $item_content = /*@__PURE__*/ _content$1("b1", "<!><!><!>", "b%", $item_content__input_show);
 const $items = /*@__PURE__*/ _fill_let("b5", 5, ($scope) => {
 	let $item;

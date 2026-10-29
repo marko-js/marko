@@ -4,7 +4,7 @@ const $walks = "D l";
 const $setup = ($_) => {};
 const $c__script = _script("__tests__/template.marko_0_c#8", ($scope) => console.log($scope.c));
 const $c = /*@__PURE__*/ _const("c", $c__script);
-const $a__OR__b = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "b", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "a", /*@__PURE__*/ _or(7, ($scope) => $c($scope, {
+const $a__OR__b = /*@__PURE__*/ _fill("__tests__/template.marko_fill1", "b", /*@__PURE__*/ _fill("__tests__/template.marko_fill0", "a", /*@__PURE__*/ _or(7, ($scope) => $c($scope, {
 	a: $scope.a,
 	b: $scope.b
 }))));

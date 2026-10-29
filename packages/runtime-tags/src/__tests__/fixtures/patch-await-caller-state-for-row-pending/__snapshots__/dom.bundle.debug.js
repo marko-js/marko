@@ -2,7 +2,7 @@
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $setup$1 = ($_) => {};
-const $await_content__input_label = /*@__PURE__*/ _init_resume("__tests__/tags/show-await.marko_2_input_label#0:5/init", /*@__PURE__*/ _fill_join_closure("__tests__/tags/show-await.marko_fill1", "input_label", /*@__PURE__*/ _closure_get("input_label/7", ($scope) => _text($scope["#text/1"], $scope._._.input_label), ($scope) => $scope._._, "__tests__/tags/show-await.marko_2_input_label#0:5/subscribe"), 0));
+const $await_content__input_label = /*@__PURE__*/ _init_resume("__tests__/tags/show-await.marko_2_input_label#0:5/init", /*@__PURE__*/ _fill_closure("__tests__/tags/show-await.marko_fill1", "input_label", /*@__PURE__*/ _closure_get("input_label/7", ($scope) => _text($scope["#text/1"], $scope._._.input_label), ($scope) => $scope._._, "__tests__/tags/show-await.marko_2_input_label#0:5/subscribe"), 0));
 const $await_content__setup = ($scope) => {
 	$await_content__input_label($scope);
 	$await_content__item($scope);
@@ -12,7 +12,7 @@ const $await_content__x = ($scope, x) => _text($scope["#text/2"], x);
 const $await_content__$params = ($scope, $params3) => $await_content__x($scope, $params3[0]);
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<p><!><!>:<!></p>", "D%b%c%", $await_content__setup);
 const $for_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
-const $for_content__input_promise = /*@__PURE__*/ _init_resume("__tests__/tags/show-await.marko_1_input_promise#0:4/init", /*@__PURE__*/ _fill_join("__tests__/tags/show-await.marko_fill0", "input_promise", /*@__PURE__*/ _for_closure("#text/0", ($scope) => $for_content__await_promise($scope, $scope._.input_promise))));
+const $for_content__input_promise = /*@__PURE__*/ _init_resume("__tests__/tags/show-await.marko_1_input_promise#0:4/init", /*@__PURE__*/ _fill("__tests__/tags/show-await.marko_fill0", "input_promise", /*@__PURE__*/ _for_closure("#text/0", ($scope) => $for_content__await_promise($scope, $scope._.input_promise))));
 const $for_content__setup = ($scope) => {
 	$for_content__input_promise._($scope);
 	$await_content($scope);

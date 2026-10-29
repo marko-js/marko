@@ -10,7 +10,7 @@ var widget_default = /*@__PURE__*/ _template("__tests__/tags/widget/index.marko"
 const $template = "<main></main>";
 const $walks = " b";
 const $setup = ($_) => {};
-const $await_content__input_value = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_input_value#0:4/init", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_value", /*@__PURE__*/ _closure_get("input_value/5", ($scope) => $input_label($scope["#childScope/0"], $scope._._.input_value), ($scope) => $scope._._, "__tests__/template.marko_2_input_value#0:4/subscribe"), 0));
+const $await_content__input_value = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_input_value#0:4/init", /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill0", "input_value", /*@__PURE__*/ _closure_get("input_value/5", ($scope) => $input_label($scope["#childScope/0"], $scope._._.input_value), ($scope) => $scope._._, "__tests__/template.marko_2_input_value#0:4/subscribe"), 0));
 const $await_content__setup = ($scope) => {
 	$await_content__input_value($scope);
 	_var($scope, "#childScope/0", $await_content__w);
@@ -18,7 +18,7 @@ const $await_content__setup = ($scope) => {
 const $await_content__w = _var_resume("__tests__/template.marko_2_w#3/var", ($scope, w) => _text($scope["#text/2"], w));
 const $await_content = /*@__PURE__*/ _await_content("#text/0", /*@__PURE__*/ ((_w0) => `${_w0}<em> </em>`)(""), /*@__PURE__*/ ((_w0) => `0${_w0}&D l`)(""), $await_content__setup);
 const $if_content__await_promise = /*@__PURE__*/ _await_promise("#text/0");
-const $if_content__input_value = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_value#0:4/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_value", /*@__PURE__*/ _if_closure("#main/0", 0, ($scope) => $if_content__await_promise($scope, Promise.resolve($scope._.input_value)))));
+const $if_content__input_value = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_value#0:4/init", /*@__PURE__*/ _fill("__tests__/template.marko_fill0", "input_value", /*@__PURE__*/ _if_closure("#main/0", 0, ($scope) => $if_content__await_promise($scope, Promise.resolve($scope._.input_value)))));
 const $if_content__setup = ($scope) => {
 	$if_content__input_value._($scope);
 	$await_content($scope);

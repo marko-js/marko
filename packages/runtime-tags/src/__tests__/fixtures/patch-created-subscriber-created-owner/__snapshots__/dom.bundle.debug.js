@@ -2,13 +2,13 @@
 const $template = "<!><!><!>";
 const $walks = "b%c";
 const $setup = ($_) => {};
-const $if_content__input_label = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_label#0:4/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_label$1($scope["#childScope/0"], $scope._.input_label))));
+const $if_content__input_label = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_label#0:4/init", /*@__PURE__*/ _fill("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_label$1($scope["#childScope/0"], $scope._.input_label))));
 const $if_content__setup = ($scope) => {
 	$if_content__input_label._($scope);
 	$if_content__input_error._($scope);
 	$setup$1($scope["#childScope/0"]);
 };
-const $if_content__input_error = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_error#0:5/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "input_error", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_error$1($scope["#childScope/0"], $scope._.input_error))));
+const $if_content__input_error = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_error#0:5/init", /*@__PURE__*/ _fill("__tests__/template.marko_fill1", "input_error", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_error$1($scope["#childScope/0"], $scope._.input_error))));
 const $if = /*@__PURE__*/ _if("#text/0", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c"), $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input = ($scope, input) => {
@@ -38,7 +38,7 @@ function boom(error) {
 }
 const $try_content__input_error = /*@__PURE__*/ _init_resume("__tests__/tags/child.marko_3_input_error#0:4/init", /*@__PURE__*/ _closure_get("input_error/6", ($scope) => _text($scope["#text/0"], $scope._.input_error ? boom($scope._.input_error) : "ok"), 0, "__tests__/tags/child.marko_3_input_error#0:4/subscribe"));
 const $try_content__setup = $try_content__input_error;
-const $box_content__input_label = /*@__PURE__*/ _init_resume("__tests__/tags/child.marko_2_input_label#0:3/init", /*@__PURE__*/ _fill_join_closure("__tests__/tags/child.marko_fill0", "input_label", /*@__PURE__*/ _closure_get("input_label/5", ($scope) => _text($scope["#text/1"], $scope._._.input_label), ($scope) => $scope._._, "__tests__/tags/child.marko_2_input_label#0:3/subscribe"), 0));
+const $box_content__input_label = /*@__PURE__*/ _init_resume("__tests__/tags/child.marko_2_input_label#0:3/init", /*@__PURE__*/ _fill_closure("__tests__/tags/child.marko_fill0", "input_label", /*@__PURE__*/ _closure_get("input_label/5", ($scope) => _text($scope["#text/1"], $scope._._.input_label), ($scope) => $scope._._, "__tests__/tags/child.marko_2_input_label#0:3/subscribe"), 0));
 const $box_content__setup = ($scope) => {
 	$box_content__input_label($scope);
 	$box_content__err_message($scope);

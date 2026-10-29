@@ -1,6 +1,6 @@
 // tags/show-await.marko
 const $await_content__if = /*@__PURE__*/ _if(1, "<b>on</b>");
-const $await_content__x__$global_flag = /*@__PURE__*/ _fill_global_join("b3", ($scope) => $await_content__if($scope, $scope.d && $scope.$.flag ? 0 : 1), "flag");
+const $await_content__x__$global_flag = /*@__PURE__*/ _fill_global("b3", ($scope) => $await_content__if($scope, $scope.d && $scope.$.flag ? 0 : 1), "flag");
 const $await_content__x = /*@__PURE__*/ _const(3, ($scope) => {
 	_text($scope.a, $scope.d);
 	$await_content__x__$global_flag($scope);

@@ -2,7 +2,7 @@
 const $template$1 = "<p> </p>";
 const $walks$1 = "D l";
 const $setup$1 = ($_) => {};
-const $input_label__OR__input_qty = /*@__PURE__*/ _fill_join("__tests__/tags/combo/index.marko_fill1", "input_qty", /*@__PURE__*/ _fill_join("__tests__/tags/combo/index.marko_fill0", "input_label", /*@__PURE__*/ _or_resume("__tests__/tags/combo/index.marko_0_input_label#3_input_qty#4/init", 5, ($scope) => _text($scope["#text/0"], $scope.input_label + $scope.input_qty))));
+const $input_label__OR__input_qty = /*@__PURE__*/ _fill("__tests__/tags/combo/index.marko_fill1", "input_qty", /*@__PURE__*/ _fill("__tests__/tags/combo/index.marko_fill0", "input_label", /*@__PURE__*/ _or_resume("__tests__/tags/combo/index.marko_0_input_label#3_input_qty#4/init", 5, ($scope) => _text($scope["#text/0"], $scope.input_label + $scope.input_qty))));
 const $input_label = /*@__PURE__*/ _const("input_label", $input_label__OR__input_qty);
 const $input_qty = /*@__PURE__*/ _const("input_qty", $input_label__OR__input_qty);
 const $input$1 = ($scope, input) => {

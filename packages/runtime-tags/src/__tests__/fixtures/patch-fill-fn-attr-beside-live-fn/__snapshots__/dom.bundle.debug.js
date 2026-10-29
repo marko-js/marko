@@ -8,12 +8,12 @@ var card_default = /*@__PURE__*/ _template("__tests__/tags/card/index.marko", $t
 // template.marko
 const $template = "<main><!><button>t</button></main>";
 const $walks = "D%b l";
-const $if_content__input_title = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_title", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input$1($scope["#childScope/0"], { fn: (s) => s + ":" + $scope._.input_title })));
+const $if_content__input_title = /*@__PURE__*/ _fill("__tests__/template.marko_fill0", "input_title", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input$1($scope["#childScope/0"], { fn: (s) => s + ":" + $scope._.input_title })));
 const $if_content__setup = ($scope) => {
 	$if_content__input_title._($scope);
 	$if_content__tag._($scope);
 };
-const $if_content__tag = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "tag", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input$1($scope["#childScope/1"], { fn: $scope._.tag })));
+const $if_content__tag = /*@__PURE__*/ _fill("__tests__/template.marko_fill1", "tag", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input$1($scope["#childScope/1"], { fn: $scope._.tag })));
 const $tag2 = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill1", "tag", $if_content__tag);
 const $input_title = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "input_title", ($scope) => {
 	$if_content__input_title($scope);

@@ -9,7 +9,7 @@ var user_info_default = /*@__PURE__*/ _template("__tests__/tags/user-info.marko"
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<button class=inc> </button>${_w0}<p> </p><!><!>`)("");
 const $walks = /*@__PURE__*/ ((_w0) => ` D 0${_w0}&lD l%c`)("");
-const $if_content__input_user = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_user2#0:10/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_user2", /*@__PURE__*/ _if_closure("#text/5", 0, ($scope) => $input_user$1($scope["#childScope/0"], $scope._.input_user2))));
+const $if_content__input_user = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_user2#0:10/init", /*@__PURE__*/ _fill("__tests__/template.marko_fill0", "input_user2", /*@__PURE__*/ _if_closure("#text/5", 0, ($scope) => $input_user$1($scope["#childScope/0"], $scope._.input_user2))));
 const $if_content__setup = ($scope) => {
 	$if_content__input_user._($scope);
 	_var($scope, "#childScope/0", $if_content__info);

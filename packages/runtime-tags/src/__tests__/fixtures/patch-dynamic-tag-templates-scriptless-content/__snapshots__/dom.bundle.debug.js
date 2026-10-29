@@ -19,7 +19,7 @@ const $template = "<!><!><!>";
 const $walks = "b%c";
 const $setup = ($_) => {};
 const $inputtag_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $inputtag_content__input_bold__OR__input_label = /*@__PURE__*/ _fill_join_subscribers("__tests__/template.marko_fill1/unpatched", "input_label", /*@__PURE__*/ _fill_join_subscribers("__tests__/template.marko_fill0/unpatched", "input_bold", /*@__PURE__*/ _or_resume("__tests__/template.marko_1_input_bold#0:4_input_label#0:5/init", 1, ($scope) => $inputtag_content__dynamicTag($scope, $scope._.input_bold ? bold_default : italic_default, ($_) => ({ label: $scope._.input_label }))), "input_bold/6", 0), "input_label/7", 0);
+const $inputtag_content__input_bold__OR__input_label = /*@__PURE__*/ _fill_subscribers("__tests__/template.marko_fill1/unpatched", "input_label", /*@__PURE__*/ _fill_subscribers("__tests__/template.marko_fill0/unpatched", "input_bold", /*@__PURE__*/ _or_resume("__tests__/template.marko_1_input_bold#0:4_input_label#0:5/init", 1, ($scope) => $inputtag_content__dynamicTag($scope, $scope._.input_bold ? bold_default : italic_default, ($_) => ({ label: $scope._.input_label }))), "input_bold/6", 0), "input_label/7", 0);
 const $inputtag_content__input_bold = /*@__PURE__*/ _closure_get("input_bold/6", $inputtag_content__input_bold__OR__input_label, 0, "__tests__/template.marko_1_input_bold#0:4/subscribe");
 const $inputtag_content__setup = ($scope) => {
 	$inputtag_content__input_bold($scope);

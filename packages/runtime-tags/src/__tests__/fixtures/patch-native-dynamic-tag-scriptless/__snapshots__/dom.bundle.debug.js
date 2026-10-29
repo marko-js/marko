@@ -6,7 +6,7 @@ const $inputonsectionarticle_content__input_label = /*@__PURE__*/ _init_resume("
 const $inputonsectionarticle_content__setup = $inputonsectionarticle_content__input_label;
 const $inputonsectionarticle_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", " ", " ", $inputonsectionarticle_content__setup);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $inputonsectionarticle_content);
-const $input_on__OR__input_label = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "input_label", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_on", /*@__PURE__*/ _or(5, ($scope) => $dynamicTag($scope, $scope.input_on ? "section" : "article", ($_) => ({ class: $scope.input_label })))));
+const $input_on__OR__input_label = /*@__PURE__*/ _fill("__tests__/template.marko_fill1", "input_label", /*@__PURE__*/ _fill("__tests__/template.marko_fill0", "input_on", /*@__PURE__*/ _or(5, ($scope) => $dynamicTag($scope, $scope.input_on ? "section" : "article", ($_) => ({ class: $scope.input_label })))));
 const $input_on = /*@__PURE__*/ _const("input_on", $input_on__OR__input_label);
 const $input_label__closure = /*@__PURE__*/ _closure($inputonsectionarticle_content__input_label);
 const $input_label = /*@__PURE__*/ _const("input_label", ($scope) => {

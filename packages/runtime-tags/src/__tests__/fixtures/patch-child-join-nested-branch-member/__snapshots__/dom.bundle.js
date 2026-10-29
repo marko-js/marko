@@ -1,5 +1,5 @@
 // tags/panel.marko
-const $input_b__OR__input_a = /*@__PURE__*/ _fill_join("| b5", 5, /*@__PURE__*/ _or_resume("b6", 7, ($scope) => _text($scope.b, $scope.g + ":" + $scope.f)));
+const $input_b__OR__input_a = /*@__PURE__*/ _fill("| b5", 5, /*@__PURE__*/ _or_resume("b6", 7, ($scope) => _text($scope.b, $scope.g + ":" + $scope.f)));
 const $input_a = /*@__PURE__*/ _const(6, $input_b__OR__input_a);
 
 // template.marko

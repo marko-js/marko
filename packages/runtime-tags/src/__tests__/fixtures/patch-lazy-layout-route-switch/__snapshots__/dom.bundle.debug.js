@@ -13,7 +13,7 @@ const $Layout_content__if = /*@__PURE__*/ _if("#text/0", "<!><!><!>", "b%/&", $i
 const $Layout_content__input_page = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_input_page#0:3/init", /*@__PURE__*/ _closure_get("input_page/5", ($scope) => $Layout_content__if($scope, $scope._._.input_page === 1 ? 0 : 1), ($scope) => $scope._._));
 const $Layout_content__setup = $Layout_content__input_page;
 const $Layout_content = /*@__PURE__*/ _content("__tests__/template.marko_2*content", "<!><!><!>", "b%", $Layout_content__setup);
-const $else_content__input_list = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_list#0:4/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_list", /*@__PURE__*/ _if_closure("#text/0", 1, ($scope) => $load_Layout_tag_input_list($scope["#childScope/1"], $scope._.input_list))));
+const $else_content__input_list = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_list#0:4/init", /*@__PURE__*/ _fill("__tests__/template.marko_fill0", "input_list", /*@__PURE__*/ _if_closure("#text/0", 1, ($scope) => $load_Layout_tag_input_list($scope["#childScope/1"], $scope._.input_list))));
 const $else_content__setup = ($scope) => {
 	$else_content__input_list._($scope);
 	$load_Layout_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);

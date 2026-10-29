@@ -2,7 +2,7 @@
 const $template = "<!><!><!>";
 const $walks = "b%c";
 const $setup = ($_) => {};
-const $if_content__input_label = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_label#0:4/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_label$1($scope["#childScope/0"], $scope._.input_label))));
+const $if_content__input_label = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_label#0:4/init", /*@__PURE__*/ _fill("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_label$1($scope["#childScope/0"], $scope._.input_label))));
 const $if_content__setup = ($scope) => {
 	$if_content__input_label._($scope);
 	$setup$1($scope["#childScope/0"]);
@@ -19,7 +19,7 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 // tags/child/index.marko
 const $template = "<!><!><button>+</button>";
 const $walks = "b%b b";
-const $countbi_content__input_label = /*@__PURE__*/ _fill_join_closure("__tests__/tags/child/index.marko_fill0", "input_label", /*@__PURE__*/ _closure_get("input_label/6", ($scope) => _text($scope["#text/0"], $scope._.input_label), 0, "__tests__/tags/child/index.marko_1_input_label#0:4/subscribe"), 0);
+const $countbi_content__input_label = /*@__PURE__*/ _fill_closure("__tests__/tags/child/index.marko_fill0", "input_label", /*@__PURE__*/ _closure_get("input_label/6", ($scope) => _text($scope["#text/0"], $scope._.input_label), 0, "__tests__/tags/child/index.marko_1_input_label#0:4/subscribe"), 0);
 const $countbi_content__setup = $countbi_content__input_label;
 const $countbi_content = /*@__PURE__*/ _content("__tests__/tags/child/index.marko_1*content", " ", " ", $countbi_content__setup);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $countbi_content);

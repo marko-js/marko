@@ -2,7 +2,7 @@
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $setup$1 = ($_) => {};
-const $for_content__input_n = /*@__PURE__*/ _init_resume("__tests__/tags/panel.marko_1_input_n#0:4/init", /*@__PURE__*/ _fill_join("__tests__/tags/panel.marko_fill0", "input_n", /*@__PURE__*/ _for_closure("#text/0", ($scope) => _text($scope["#text/1"], $scope._.input_n))));
+const $for_content__input_n = /*@__PURE__*/ _init_resume("__tests__/tags/panel.marko_1_input_n#0:4/init", /*@__PURE__*/ _fill("__tests__/tags/panel.marko_fill0", "input_n", /*@__PURE__*/ _for_closure("#text/0", ($scope) => _text($scope["#text/1"], $scope._.input_n))));
 const $for_content__setup = $for_content__input_n;
 const $for_content__item = ($scope, item) => _text($scope["#text/0"], item);
 const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);

@@ -1,7 +1,7 @@
 // tags/alpha.marko
 const $template$1 = "<i>A <!></i>";
 const $walks$1 = "Db%l";
-const $setup__$global_brand = /*@__PURE__*/ _fill_global_join("b0", ($scope) => _text($scope.a, $scope.$.brand), "brand");
+const $setup__$global_brand = /*@__PURE__*/ _fill_global("b0", ($scope) => _text($scope.a, $scope.$.brand), "brand");
 const $setup = $setup__$global_brand;
 var alpha_default = /*@__PURE__*/ _template("b", $template$1, $walks$1, $setup);
 

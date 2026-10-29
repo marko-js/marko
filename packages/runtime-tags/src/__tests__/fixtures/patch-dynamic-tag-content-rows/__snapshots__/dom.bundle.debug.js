@@ -4,12 +4,12 @@ const $walks$1 = "E l%bD%l b l";
 const $setup$1 = ($_) => {};
 const $input_header_direct = /*@__PURE__*/ _dynamic_tag_content("#text/2");
 const $for_content2__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
-const $for_content2__input_content = /*@__PURE__*/ _init_resume("__tests__/tags/layout.marko_2_input_content#0:8/init", /*@__PURE__*/ _fill_join("__tests__/tags/layout.marko_fill0", "input_content", /*@__PURE__*/ _for_closure("#ol/4", ($scope) => $for_content2__dynamicTag($scope, $scope._.input_content))));
+const $for_content2__input_content = /*@__PURE__*/ _init_resume("__tests__/tags/layout.marko_2_input_content#0:8/init", /*@__PURE__*/ _fill("__tests__/tags/layout.marko_fill0", "input_content", /*@__PURE__*/ _for_closure("#ol/4", ($scope) => $for_content2__dynamicTag($scope, $scope._.input_content))));
 const $for_content2__setup = $for_content2__input_content;
 const $for_content2__n = ($scope, n) => _text($scope["#text/0"], n);
 const $for_content2__$params = ($scope, $params3) => $for_content2__n($scope, $params3[0]);
 const $for_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
-const $for_content__input_row = /*@__PURE__*/ _init_resume("__tests__/tags/layout.marko_1_input_row#0:11/init", /*@__PURE__*/ _fill_join("__tests__/tags/layout.marko_fill1", "input_row", /*@__PURE__*/ _for_closure("#ul/3", ($scope) => $for_content__dynamicTag($scope, $scope._.input_row))));
+const $for_content__input_row = /*@__PURE__*/ _init_resume("__tests__/tags/layout.marko_1_input_row#0:11/init", /*@__PURE__*/ _fill("__tests__/tags/layout.marko_fill1", "input_row", /*@__PURE__*/ _for_closure("#ul/3", ($scope) => $for_content__dynamicTag($scope, $scope._.input_row))));
 const $for_content__setup = $for_content__input_row;
 const $for_content__n = ($scope, n) => _text($scope["#text/0"], n);
 const $for_content__$params = ($scope, $params2) => $for_content__n($scope, $params2[0]);
@@ -40,13 +40,13 @@ var layout_default = /*@__PURE__*/ _template("__tests__/tags/layout.marko", $tem
 // template.marko
 const $template = $template$1;
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1);
-const $layout_content__input_text = /*@__PURE__*/ _init_resume("__tests__/template.marko_3_input_text#0:5/init", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_text", /*@__PURE__*/ _closure_get("input_text/6", ($scope) => _text($scope["#text/0"], $scope._.input_text), 0, "__tests__/template.marko_3_input_text#0:5/subscribe"), 2));
+const $layout_content__input_text = /*@__PURE__*/ _init_resume("__tests__/template.marko_3_input_text#0:5/init", /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill0", "input_text", /*@__PURE__*/ _closure_get("input_text/6", ($scope) => _text($scope["#text/0"], $scope._.input_text), 0, "__tests__/template.marko_3_input_text#0:5/subscribe"), 2));
 const $layout_content__setup = $layout_content__input_text;
 const $layout_content = _content("__tests__/template.marko_3*content", "<p> <input></p>", "D ", $layout_content__setup);
-const $row_content__input_text = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_input_text#0:5/init", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_text", /*@__PURE__*/ _closure_get("input_text/6", ($scope) => _text($scope["#text/0"], $scope._.input_text), 0, "__tests__/template.marko_2_input_text#0:5/subscribe"), 1));
+const $row_content__input_text = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_input_text#0:5/init", /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill0", "input_text", /*@__PURE__*/ _closure_get("input_text/6", ($scope) => _text($scope["#text/0"], $scope._.input_text), 0, "__tests__/template.marko_2_input_text#0:5/subscribe"), 1));
 const $row_content__setup = $row_content__input_text;
 const $row_content = _content("__tests__/template.marko_2*content", "<em> <input></em>", "D ", $row_content__setup);
-const $header_content__input_text = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_text", /*@__PURE__*/ _closure_get("input_text/6", ($scope) => _text($scope["#text/0"], $scope._.input_text), 0, "__tests__/template.marko_1_input_text#0:5/subscribe"), 0);
+const $header_content__input_text = /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill0", "input_text", /*@__PURE__*/ _closure_get("input_text/6", ($scope) => _text($scope["#text/0"], $scope._.input_text), 0, "__tests__/template.marko_1_input_text#0:5/subscribe"), 0);
 const $header_content__setup = $header_content__input_text;
 const $header_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "<b> <input></b>", "D ", $header_content__setup);
 function $setup($scope) {

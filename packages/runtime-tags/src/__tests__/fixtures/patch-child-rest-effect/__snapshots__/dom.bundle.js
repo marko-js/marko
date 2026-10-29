@@ -12,7 +12,7 @@ const $input_label__script = _script("b0", ($scope) => {
 const $input_label = /*@__PURE__*/ _const(3, $input_label__script);
 
 // template.marko
-const $input_title__OR__count = /*@__PURE__*/ _fill_join("a1", 4, /*@__PURE__*/ _or(6, ($scope) => $input($scope.a, {
+const $input_title__OR__count = /*@__PURE__*/ _fill("a1", 4, /*@__PURE__*/ _or(6, ($scope) => $input($scope.a, {
 	value: $scope.f,
 	label: $scope.e
 })));

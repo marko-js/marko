@@ -45,7 +45,7 @@ const $if_content2__setup = ($scope) => $if_content2__for($scope, [[
 	8,
 	9
 ]]);
-const $if_content__input_label = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_label#0:8/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _if_closure("#text/3", 0, ($scope) => $input_label$1($scope["#childScope/0"], $scope._.input_label))));
+const $if_content__input_label = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_label#0:8/init", /*@__PURE__*/ _fill("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _if_closure("#text/3", 0, ($scope) => $input_label$1($scope["#childScope/0"], $scope._.input_label))));
 const $if_content__setup = ($scope) => {
 	$if_content__input_label._($scope);
 	$if_content__p._($scope);

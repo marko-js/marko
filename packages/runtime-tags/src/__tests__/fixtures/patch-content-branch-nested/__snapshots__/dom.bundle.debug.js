@@ -16,16 +16,16 @@ var widget_default = /*@__PURE__*/ _template("__tests__/tags/widget/index.marko"
 const $template = "<main></main>";
 const $walks = " b";
 const $setup = ($_) => {};
-const $widget_content__input_text = /*@__PURE__*/ _init_resume("__tests__/template.marko_3_input_text#0:6/init", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill2", "input_text", /*@__PURE__*/ _closure_get("input_text/9", ($scope) => _text($scope["#text/0"], $scope._._._.input_text), ($scope) => $scope._._._), 0));
+const $widget_content__input_text = /*@__PURE__*/ _init_resume("__tests__/template.marko_3_input_text#0:6/init", /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill2", "input_text", /*@__PURE__*/ _closure_get("input_text/9", ($scope) => _text($scope["#text/0"], $scope._._._.input_text), ($scope) => $scope._._._), 0));
 const $widget_content__setup = $widget_content__input_text;
 const $widget_content = /*@__PURE__*/ _content("__tests__/template.marko_3*content", "<em> </em>", "D ", $widget_content__setup);
-const $if_content2__input_label = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_input_label#0:5/init", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill1", "input_label", /*@__PURE__*/ _closure_get("input_label/8", ($scope) => $input_label$1($scope["#childScope/0"], $scope._._.input_label), ($scope) => $scope._._, "__tests__/template.marko_2_input_label#0:5/subscribe"), 0));
+const $if_content2__input_label = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_input_label#0:5/init", /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill1", "input_label", /*@__PURE__*/ _closure_get("input_label/8", ($scope) => $input_label$1($scope["#childScope/0"], $scope._._.input_label), ($scope) => $scope._._, "__tests__/template.marko_2_input_label#0:5/subscribe"), 0));
 const $if_content2__setup = ($scope) => {
 	$if_content2__input_label($scope);
 	$input_content_direct($scope["#childScope/0"], $widget_content($scope));
 };
 const $if_content__if = /*@__PURE__*/ _if("#div/0", /*@__PURE__*/ ((_w0) => `${_w0}<!>`)($template$1), /*@__PURE__*/ ((_w0) => `/${_w0}&b`)($walks$1), $if_content2__setup);
-const $if_content__input_b = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_b#0:4/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_b", /*@__PURE__*/ _if_closure("#main/0", 0, ($scope) => $if_content__if($scope, $scope._.input_b ? 0 : 1))));
+const $if_content__input_b = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_b#0:4/init", /*@__PURE__*/ _fill("__tests__/template.marko_fill0", "input_b", /*@__PURE__*/ _if_closure("#main/0", 0, ($scope) => $if_content__if($scope, $scope._.input_b ? 0 : 1))));
 const $if_content__setup = $if_content__input_b;
 const $if = /*@__PURE__*/ _if("#main/0", "<div></div>", " ", $if_content__setup);
 const $input_a = ($scope, input_a) => $if($scope, input_a ? 0 : 1);

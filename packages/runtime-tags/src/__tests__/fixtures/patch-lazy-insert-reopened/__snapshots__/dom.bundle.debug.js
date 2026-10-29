@@ -22,7 +22,7 @@ const $if_content2__setup = ($scope) => {
 	$load_Lazy_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
 	$load_Lazy_tag_input_label($scope["#childScope/1"], "s");
 };
-const $if_content__input_label = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _if_closure("#text/2", 0, ($scope) => $load_Lazy_tag_input_label($scope["#childScope/1"], $scope._.input_label)));
+const $if_content__input_label = /*@__PURE__*/ _fill("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _if_closure("#text/2", 0, ($scope) => $load_Lazy_tag_input_label($scope["#childScope/1"], $scope._.input_label)));
 const $if_content__setup = ($scope) => {
 	$if_content__input_label._($scope);
 	$load_Lazy_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);

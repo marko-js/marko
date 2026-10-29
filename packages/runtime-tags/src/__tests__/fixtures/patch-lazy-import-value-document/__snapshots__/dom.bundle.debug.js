@@ -20,7 +20,7 @@ const $walks = " b";
 const $setup = ($_) => {};
 const Child = /*@__PURE__*/ _load_template("__tests__/child.marko", ($_) => import("./child.mjs").then((mod) => mod.default));
 const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
-const $if_content__input_label__OR__alt = /*@__PURE__*/ _fill_join_if("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _or_resume("__tests__/template.marko_1_input_label#0:4_alt#2/init", 3, ($scope) => $if_content__dynamicTag($scope, $scope.alt ? Child : other_default, ($_) => ({ label: $scope._.input_label }))), "#main/0", 0);
+const $if_content__input_label__OR__alt = /*@__PURE__*/ _fill_if("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _or_resume("__tests__/template.marko_1_input_label#0:4_alt#2/init", 3, ($scope) => $if_content__dynamicTag($scope, $scope.alt ? Child : other_default, ($_) => ({ label: $scope._.input_label }))), "#main/0", 0);
 const $if_content__input_label = /*@__PURE__*/ _if_closure("#main/0", 0, $if_content__input_label__OR__alt);
 const $if_content__alt = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill1", "alt/2", $if_content__input_label__OR__alt);
 const $if_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/0"], "click", function() {

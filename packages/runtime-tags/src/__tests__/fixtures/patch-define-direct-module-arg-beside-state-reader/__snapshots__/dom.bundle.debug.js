@@ -13,7 +13,7 @@ const $Panel_content__walks = "b%c";
 const $Panel_content__template = "<!><!><!>";
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!><button class=toggle>toggle</button>`)($Panel_content__template);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&%b b`)($Panel_content__walks);
-const $if_content2__fmt__OR__label = /*@__PURE__*/ _fill_join_if("__tests__/template.marko_fill2/unpatched", "label", /*@__PURE__*/ _fill_join_if("__tests__/template.marko_fill1/unpatched", "fmt", /*@__PURE__*/ _or_resume("__tests__/template.marko_3_fmt#2:4_label#2:5/init", 1, ($scope) => _text($scope["#text/0"], $scope._.fmt($scope._.label))), "#text/0", 0), "#text/0", 0);
+const $if_content2__fmt__OR__label = /*@__PURE__*/ _fill_if("__tests__/template.marko_fill2/unpatched", "label", /*@__PURE__*/ _fill_if("__tests__/template.marko_fill1/unpatched", "fmt", /*@__PURE__*/ _or_resume("__tests__/template.marko_3_fmt#2:4_label#2:5/init", 1, ($scope) => _text($scope["#text/0"], $scope._.fmt($scope._.label))), "#text/0", 0), "#text/0", 0);
 const $if_content2__fmt = /*@__PURE__*/ _if_closure("#text/0", 0, $if_content2__fmt__OR__label);
 const $if_content2__setup = ($scope) => {
 	$if_content2__fmt._($scope);
@@ -30,7 +30,7 @@ const $Panel_content__$temp = ($scope, $temp) => {
 	$Panel_content__tag_input_fmt($scope, $temp.fmt);
 	$Panel_content__tag_input_label($scope, $temp.label);
 };
-const $if_content__input_label = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => _text($scope["#text/0"], $scope._.input_label)));
+const $if_content__input_label = /*@__PURE__*/ _fill("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => _text($scope["#text/0"], $scope._.input_label)));
 const $if_content__setup = $if_content__input_label;
 const $if = /*@__PURE__*/ _if("#text/1", "<b> </b>", "D ", $if_content__setup);
 const $open = _let("open/7", ($scope) => $if($scope, $scope.open ? 0 : 1));

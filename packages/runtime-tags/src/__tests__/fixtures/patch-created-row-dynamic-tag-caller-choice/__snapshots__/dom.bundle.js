@@ -13,12 +13,12 @@ const $Card_content__$params = ($scope, $params2) => {
 const $Card_content__content = /*@__PURE__*/ _const(5, $if_content__content);
 const $Card_content = _content$1("b1", "<p><!><!></p>", "D%b%", 0, $Card_content__$params);
 const $for_content__dynamicTag = /*@__PURE__*/ _dynamic_tag(0);
-const $for_content__input_card__OR__Card__OR__Label__OR__tag = /*@__PURE__*/ _fill_join_for("b11", 10, /*@__PURE__*/ _fill_join_for("b10", 8, /*@__PURE__*/ _fill_join_for("b9", 7, /*@__PURE__*/ _or_resume("b6", 3, ($scope) => $for_content__dynamicTag($scope, $scope._.h ? $scope._.i : "span", ($_) => ({
+const $for_content__input_card__OR__Card__OR__Label__OR__tag = /*@__PURE__*/ _fill_for("b11", 10, /*@__PURE__*/ _fill_for("b10", 8, /*@__PURE__*/ _fill_for("b9", 7, /*@__PURE__*/ _or_resume("b6", 3, ($scope) => $for_content__dynamicTag($scope, $scope._.h ? $scope._.i : "span", ($_) => ({
 	label: $scope.c,
 	content: $scope._.k
 })), 3), 2), 2), 2);
 const $for_content__input_card = /*@__PURE__*/ _for_closure(2, $for_content__input_card__OR__Card__OR__Label__OR__tag);
-const $Label_content__input_label = /*@__PURE__*/ _init_resume("b4", /*@__PURE__*/ _fill_join_closure("b8", 5, /*@__PURE__*/ _closure_get(11, ($scope) => _text($scope.a, $scope._.f), 0, "b5"), 0));
+const $Label_content__input_label = /*@__PURE__*/ _init_resume("b4", /*@__PURE__*/ _fill_closure("b8", 5, /*@__PURE__*/ _closure_get(11, ($scope) => _text($scope.a, $scope._.f), 0, "b5"), 0));
 const $Label_content__setup = ($scope) => {
 	$Label_content__input_label($scope);
 	$Label_content__n($scope);

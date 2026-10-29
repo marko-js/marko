@@ -2,7 +2,7 @@
 const $template = "<input><input><p id=out>-</p><button>interactive</button>";
 const $walks = " b c b";
 const $input_attrs__OR__input_on__script = _script("__tests__/template.marko_0_input_attrs#5_input_on#6", ($scope) => _attrs_script($scope, "#input/0"));
-const $input_attrs__OR__input_on = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "input_on", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_attrs", /*@__PURE__*/ _or(7, ($scope) => {
+const $input_attrs__OR__input_on = /*@__PURE__*/ _fill("__tests__/template.marko_fill1", "input_on", /*@__PURE__*/ _fill("__tests__/template.marko_fill0", "input_attrs", /*@__PURE__*/ _or(7, ($scope) => {
 	$input_attrs__OR__input_on__script($scope);
 	_attrs($scope, "#input/0", {
 		type: "checkbox",

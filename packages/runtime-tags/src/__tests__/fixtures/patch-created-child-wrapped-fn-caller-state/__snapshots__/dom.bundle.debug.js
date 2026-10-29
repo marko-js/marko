@@ -13,7 +13,7 @@ const $Panel_content__walks = "b%c";
 const $Panel_content__template = "<!><!><!>";
 const $template$1 = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Panel_content__template);
 const $walks$1 = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Panel_content__walks);
-const $if_content__fmt__OR__label = /*@__PURE__*/ _fill_join_if("__tests__/tags/rowsx.marko_fill1/unpatched", "label", /*@__PURE__*/ _fill_join_if("__tests__/tags/rowsx.marko_fill0/unpatched", "fmt", /*@__PURE__*/ _or_resume("__tests__/tags/rowsx.marko_2_fmt#1:4_label#1:5/init", 1, ($scope) => _text($scope["#text/0"], $scope._.fmt($scope._.label))), "#text/0", 0), "#text/0", 0);
+const $if_content__fmt__OR__label = /*@__PURE__*/ _fill_if("__tests__/tags/rowsx.marko_fill1/unpatched", "label", /*@__PURE__*/ _fill_if("__tests__/tags/rowsx.marko_fill0/unpatched", "fmt", /*@__PURE__*/ _or_resume("__tests__/tags/rowsx.marko_2_fmt#1:4_label#1:5/init", 1, ($scope) => _text($scope["#text/0"], $scope._.fmt($scope._.label))), "#text/0", 0), "#text/0", 0);
 const $if_content__fmt = /*@__PURE__*/ _if_closure("#text/0", 0, $if_content__fmt__OR__label);
 const $if_content__setup$1 = ($scope) => {
 	$if_content__fmt._($scope);
@@ -48,7 +48,7 @@ var rowsx_default = /*@__PURE__*/ _template("__tests__/tags/rowsx.marko", $templ
 // template.marko
 const $template = "<!><!><button class=l>l</button>";
 const $walks = "b%b b";
-const $if_content__input_open = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_open#0:5/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_open", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_open$1($scope["#childScope/0"], $scope._.input_open))));
+const $if_content__input_open = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_open#0:5/init", /*@__PURE__*/ _fill("__tests__/template.marko_fill0", "input_open", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_open$1($scope["#childScope/0"], $scope._.input_open))));
 const $if_content__setup = ($scope) => {
 	$if_content__input_open._($scope);
 	$if_content__l._($scope);

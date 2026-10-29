@@ -2,14 +2,14 @@
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $setup$1 = ($_) => {};
-const $if_content3__input_b__OR__input_a = /*@__PURE__*/ _fill_join_if("__tests__/tags/panel.marko_fill1/unpatched", "input_a", /*@__PURE__*/ _fill_join_if("__tests__/tags/panel.marko_fill0/unpatched | __tests__/tags/panel.marko_fill0", "input_b", /*@__PURE__*/ _or_resume("__tests__/tags/panel.marko_3_input_b#0:4_input_a#0:5/init", 1, ($scope) => _text($scope["#text/0"], $scope._._.input_a + ":" + $scope._._.input_b)), "#text/0", 0, "#span/1", 0), "#text/0", 0, "#span/1", 0);
+const $if_content3__input_b__OR__input_a = /*@__PURE__*/ _fill_if("__tests__/tags/panel.marko_fill1/unpatched", "input_a", /*@__PURE__*/ _fill_if("__tests__/tags/panel.marko_fill0/unpatched | __tests__/tags/panel.marko_fill0", "input_b", /*@__PURE__*/ _or_resume("__tests__/tags/panel.marko_3_input_b#0:4_input_a#0:5/init", 1, ($scope) => _text($scope["#text/0"], $scope._._.input_a + ":" + $scope._._.input_b)), "#text/0", 0, "#span/1", 0), "#text/0", 0, "#span/1", 0);
 const $if_content3__input_b = /*@__PURE__*/ _closure_index(1, /*@__PURE__*/ _closure_get("input_b/7", $if_content3__input_b__OR__input_a, ($scope) => $scope._._, "__tests__/tags/panel.marko_3_input_b#0:4/subscribe"));
 const $if_content3__setup = ($scope) => {
 	$if_content3__input_b($scope);
 	$if_content3__input_a($scope);
 };
 const $if_content3__input_a = /*@__PURE__*/ _closure_get("input_a/8", $if_content3__input_b__OR__input_a, ($scope) => $scope._._, "__tests__/tags/panel.marko_3_input_a#0:5/subscribe");
-const $if_content2__input_b = /*@__PURE__*/ _init_resume("__tests__/tags/panel.marko_2_input_b#0:4/init", /*@__PURE__*/ _fill_join_closure("__tests__/tags/panel.marko_fill0 __tests__/tags/panel.marko_fill0/unpatched", "input_b", /*@__PURE__*/ _closure_get("input_b/7", ($scope) => _attr($scope["#em/0"], "title", $scope._._.input_b), ($scope) => $scope._._, "__tests__/tags/panel.marko_2_input_b#0:4/subscribe"), 0));
+const $if_content2__input_b = /*@__PURE__*/ _init_resume("__tests__/tags/panel.marko_2_input_b#0:4/init", /*@__PURE__*/ _fill_closure("__tests__/tags/panel.marko_fill0 __tests__/tags/panel.marko_fill0/unpatched", "input_b", /*@__PURE__*/ _closure_get("input_b/7", ($scope) => _attr($scope["#em/0"], "title", $scope._._.input_b), ($scope) => $scope._._, "__tests__/tags/panel.marko_2_input_b#0:4/subscribe"), 0));
 const $if_content2__setup = $if_content2__input_b;
 const $if_content__if = /*@__PURE__*/ _if("#div/0", "<em></em>", " ", $if_content2__setup);
 const $if_content__if2 = /*@__PURE__*/ _if("#span/1", "<i> </i>", "D ", $if_content3__setup);

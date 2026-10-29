@@ -7,7 +7,7 @@ const $if_content__setup = ($scope) => {
 	$if_content__input_depth._($scope);
 	$if_content__input_get._($scope);
 };
-const $if_content__input_get = /*@__PURE__*/ _init_resume("__tests__/tags/tree.marko_1_input_get#0:5/init", /*@__PURE__*/ _fill_join("__tests__/tags/tree.marko_fill0", "input_get", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_get($scope["#childScope/0"], $scope._.input_get))));
+const $if_content__input_get = /*@__PURE__*/ _init_resume("__tests__/tags/tree.marko_1_input_get#0:5/init", /*@__PURE__*/ _fill("__tests__/tags/tree.marko_fill0", "input_get", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_get($scope["#childScope/0"], $scope._.input_get))));
 const $if = /*@__PURE__*/ _if("#text/0", /*@__PURE__*/ ((_w0) => `<!>${_w0}`)($template$1), /*@__PURE__*/ ((_w0) => `b/${_w0}&`)($walks$1), $if_content__setup);
 const $input_depth = /*@__PURE__*/ _const("input_depth", ($scope) => {
 	_text($scope["#text/1"], $scope.input_depth);

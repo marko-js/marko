@@ -2,7 +2,7 @@
 const $template$2 = "<button class=toggle>t</button><!><!>";
 const $walks$2 = " b%c";
 const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $if_content__input_content = /*@__PURE__*/ _fill_join("__tests__/tags/keeper.marko_fill0", "input_content", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.input_content)));
+const $if_content__input_content = /*@__PURE__*/ _fill("__tests__/tags/keeper.marko_fill0", "input_content", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.input_content)));
 const $if_content__setup = $if_content__input_content;
 const $if = /*@__PURE__*/ _if("#text/1", "<!><!><!>", "b%", $if_content__setup);
 const $open = /*@__PURE__*/ _fill_let("__tests__/tags/keeper.marko_fill1", "open/5", ($scope) => $if($scope, $scope.open ? 0 : 1));
@@ -32,7 +32,7 @@ const $D_content__walks = "b%b%c";
 const $D_content__template = "<!><!><!><!>";
 const $template = /*@__PURE__*/ ((_w0, _w1) => `<main>${_w0}${_w1}</main>`)($D_content__template, $D_content__template);
 const $walks = /*@__PURE__*/ ((_w0, _w1) => `D0${_w0}&/${_w1}&l`)($D_content__walks, $D_content__walks);
-const $X_content__label = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_label#1:4/init", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "label", /*@__PURE__*/ _closure_get("label/10", ($scope) => _text($scope["#text/0"], $scope._.label), 0, "__tests__/template.marko_2_label#1:4/subscribe"), 0));
+const $X_content__label = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_label#1:4/init", /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill0", "label", /*@__PURE__*/ _closure_get("label/10", ($scope) => _text($scope["#text/0"], $scope._.label), 0, "__tests__/template.marko_2_label#1:4/subscribe"), 0));
 const $X_content__setup = $X_content__label;
 const $X_content = _content("__tests__/template.marko_2*content", "<em> </em>", "D ", $X_content__setup);
 const $D_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");

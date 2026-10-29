@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<button class=inc> </button><section></section>";
 const $walks = " D l b";
-const $frag_content__input_rec_name = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_rec_name#0:6/init", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_rec_name", /*@__PURE__*/ _closure_get("input_rec_name/12", ($scope) => _text($scope["#text/0"], $scope._.input_rec_name), 0, "__tests__/template.marko_1_input_rec_name#0:6/subscribe"), 0));
+const $frag_content__input_rec_name = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_rec_name#0:6/init", /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill0", "input_rec_name", /*@__PURE__*/ _closure_get("input_rec_name/12", ($scope) => _text($scope["#text/0"], $scope._.input_rec_name), 0, "__tests__/template.marko_1_input_rec_name#0:6/subscribe"), 0));
 const $frag_content__setup = $frag_content__input_rec_name;
 const $frag_content = _content("__tests__/template.marko_1*content", "<em> </em>", "D ", $frag_content__setup);
 const $n = _let("n/8", ($scope) => _text($scope["#text/1"], $scope.n));

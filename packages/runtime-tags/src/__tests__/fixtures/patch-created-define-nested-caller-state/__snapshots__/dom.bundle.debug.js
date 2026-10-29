@@ -5,7 +5,7 @@ const $Outer_content__walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Inner_conte
 const $Outer_content__template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Inner_content__template);
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<button>+</button>`)($Outer_content__template);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}& b`)($Outer_content__walks);
-const $if_content__v = /*@__PURE__*/ _init_resume("__tests__/template.marko_3_v#1:3/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "v", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => _text($scope["#text/0"], $scope._.v))));
+const $if_content__v = /*@__PURE__*/ _init_resume("__tests__/template.marko_3_v#1:3/init", /*@__PURE__*/ _fill("__tests__/template.marko_fill0", "v", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => _text($scope["#text/0"], $scope._.v))));
 const $if_content__setup = $if_content__v;
 const $Outer_content__v = ($scope, v) => $Inner_content__tag_input_v($scope["#childScope/0"], v);
 const $Outer_content__show = ($scope, show) => $Inner_content__show($scope["#childScope/0"], show);

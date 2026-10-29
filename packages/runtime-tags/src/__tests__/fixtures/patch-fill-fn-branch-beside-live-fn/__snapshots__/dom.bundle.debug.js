@@ -8,23 +8,23 @@ var card_default = /*@__PURE__*/ _template("__tests__/tags/card/index.marko", $t
 // template.marko
 const $template = "<main><!><button>t</button></main>";
 const $walks = "D%b l";
-const $if_content__fmt = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill3", "fmt", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input$1($scope["#childScope/0"], { fn: $scope._.fmt })));
+const $if_content__fmt = /*@__PURE__*/ _fill("__tests__/template.marko_fill3", "fmt", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input$1($scope["#childScope/0"], { fn: $scope._.fmt })));
 const $if_content__setup = ($scope) => {
 	$if_content__fmt._($scope);
 	$if_content__alt._($scope);
 	$if_content__last._($scope);
 	$if_content__tag._($scope);
 };
-const $if_content__alt = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill4", "alt", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input$1($scope["#childScope/1"], { fn: $scope._.alt })));
-const $if_content__last = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill5", "last", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input$1($scope["#childScope/2"], { fn: $scope._.last })));
-const $if_content__tag = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill6", "tag", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input$1($scope["#childScope/3"], { fn: $scope._.tag })));
+const $if_content__alt = /*@__PURE__*/ _fill("__tests__/template.marko_fill4", "alt", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input$1($scope["#childScope/1"], { fn: $scope._.alt })));
+const $if_content__last = /*@__PURE__*/ _fill("__tests__/template.marko_fill5", "last", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input$1($scope["#childScope/2"], { fn: $scope._.last })));
+const $if_content__tag = /*@__PURE__*/ _fill("__tests__/template.marko_fill6", "tag", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input$1($scope["#childScope/3"], { fn: $scope._.tag })));
 const $fmt3 = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill3", "fmt", $if_content__fmt);
-const $input_flag__OR__input_title = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "input_title", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_flag", /*@__PURE__*/ _or(6, ($scope) => $fmt3($scope, $scope.input_flag ? $fmt($scope) : $fmt2))));
+const $input_flag__OR__input_title = /*@__PURE__*/ _fill("__tests__/template.marko_fill1", "input_title", /*@__PURE__*/ _fill("__tests__/template.marko_fill0", "input_flag", /*@__PURE__*/ _or(6, ($scope) => $fmt3($scope, $scope.input_flag ? $fmt($scope) : $fmt2))));
 const $input_flag = /*@__PURE__*/ _const("input_flag", $input_flag__OR__input_title);
 const $last2 = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill5", "last", $if_content__last);
 const $tag2 = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill6", "tag", $if_content__tag);
 const $alt2 = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill4", "alt", $if_content__alt);
-const $input_title__OR__input_alt = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill2", "input_alt", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "input_title", /*@__PURE__*/ _or(8, ($scope) => $alt2($scope, $scope.input_alt || $alt($scope)))));
+const $input_title__OR__input_alt = /*@__PURE__*/ _fill("__tests__/template.marko_fill2", "input_alt", /*@__PURE__*/ _fill("__tests__/template.marko_fill1", "input_title", /*@__PURE__*/ _or(8, ($scope) => $alt2($scope, $scope.input_alt || $alt($scope)))));
 const $input_title = /*@__PURE__*/ _const("input_title", ($scope) => {
 	$last2($scope, (0, $last($scope)));
 	$tag2($scope, $tag($scope));

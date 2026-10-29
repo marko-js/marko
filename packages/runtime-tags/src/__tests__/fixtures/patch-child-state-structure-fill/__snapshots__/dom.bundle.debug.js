@@ -2,7 +2,7 @@
 const $template$1 = "<div></div>";
 const $walks$1 = " b";
 const $setup$1 = ($_) => {};
-const $if_content__input_title = /*@__PURE__*/ _init_resume("__tests__/tags/toggle-panel/index.marko_1_input_title#0:4/init", /*@__PURE__*/ _fill_join("__tests__/tags/toggle-panel/index.marko_fill0", "input_title", /*@__PURE__*/ _if_closure("#div/0", 0, ($scope) => _text($scope["#text/0"], $scope._.input_title))));
+const $if_content__input_title = /*@__PURE__*/ _init_resume("__tests__/tags/toggle-panel/index.marko_1_input_title#0:4/init", /*@__PURE__*/ _fill("__tests__/tags/toggle-panel/index.marko_fill0", "input_title", /*@__PURE__*/ _if_closure("#div/0", 0, ($scope) => _text($scope["#text/0"], $scope._.input_title))));
 const $if_content__setup = $if_content__input_title;
 const $if = /*@__PURE__*/ _if("#div/0", "<em> </em>", "D ", $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);

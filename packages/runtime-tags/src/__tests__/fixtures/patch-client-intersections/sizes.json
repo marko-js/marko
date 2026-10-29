@@ -6,8 +6,8 @@
         "brotli": 2386
       },
       "files": {
-        "tags/price-card.marko": 381,
-        "tags/promo-tag.marko": 386,
+        "tags/price-card.marko": 376,
+        "tags/promo-tag.marko": 381,
         "tags/site-footer.marko": 213
       }
     }

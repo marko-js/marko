@@ -2,16 +2,16 @@
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $setup$1 = ($_) => {};
-const $frag_content__c = /*@__PURE__*/ _init_resume("__tests__/tags/child.marko_2_c#1:2/init", /*@__PURE__*/ _fill_join_closure("__tests__/tags/child.marko_fill3", "c", /*@__PURE__*/ _closure_get("c/10", ($scope) => _text($scope["#text/0"], $scope._.c), 0, "__tests__/tags/child.marko_2_c#1:2/subscribe"), 0));
+const $frag_content__c = /*@__PURE__*/ _init_resume("__tests__/tags/child.marko_2_c#1:2/init", /*@__PURE__*/ _fill_closure("__tests__/tags/child.marko_fill3", "c", /*@__PURE__*/ _closure_get("c/10", ($scope) => _text($scope["#text/0"], $scope._.c), 0, "__tests__/tags/child.marko_2_c#1:2/subscribe"), 0));
 const $frag_content__setup = $frag_content__c;
 const $frag_content = _content("__tests__/tags/child.marko_2*content", "<em> </em>", "D ", $frag_content__setup);
-const $if_content__input_a__OR__c = /*@__PURE__*/ _fill_join("| __tests__/tags/child.marko_fill3", "c", /*@__PURE__*/ _fill_join_if("__tests__/tags/child.marko_fill1/unpatched", "input_a", /*@__PURE__*/ _or_resume("__tests__/tags/child.marko_1_input_a#0:5_c#2/init", 3, ($scope) => _text($scope["#text/0"], $scope._.input_a + $scope.c)), "#text/0", 0));
+const $if_content__input_a__OR__c = /*@__PURE__*/ _fill("| __tests__/tags/child.marko_fill3", "c", /*@__PURE__*/ _fill_if("__tests__/tags/child.marko_fill1/unpatched", "input_a", /*@__PURE__*/ _or_resume("__tests__/tags/child.marko_1_input_a#0:5_c#2/init", 3, ($scope) => _text($scope["#text/0"], $scope._.input_a + $scope.c)), "#text/0", 0));
 const $if_content__c__closure = /*@__PURE__*/ _closure($frag_content__c);
 const $if_content__c = /*@__PURE__*/ _fill_const("__tests__/tags/child.marko_fill3", "c", ($scope) => {
 	$if_content__c__closure($scope);
 	$if_content__input_a__OR__c($scope);
 }, /*@__PURE__*/ _fill_mark("c", $if_content__c__closure));
-const $if_content__input_b = /*@__PURE__*/ _init_resume("__tests__/tags/child.marko_1_input_b#0:4/init", /*@__PURE__*/ _fill_join("__tests__/tags/child.marko_fill0", "input_b", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__c($scope, $scope._.input_b + "!"))));
+const $if_content__input_b = /*@__PURE__*/ _init_resume("__tests__/tags/child.marko_1_input_b#0:4/init", /*@__PURE__*/ _fill("__tests__/tags/child.marko_fill0", "input_b", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__c($scope, $scope._.input_b + "!"))));
 const $if_content__frag = ($scope, frag) => $if_content__frag_content($scope, frag?.content);
 const $if_content__setup = ($scope) => {
 	$if_content__input_b._($scope);
@@ -20,7 +20,7 @@ const $if_content__setup = ($scope) => {
 	$if_content__frag($scope, { content: $frag_content($scope) });
 };
 const $if_content__input_a = /*@__PURE__*/ _if_closure("#text/0", 0, $if_content__input_a__OR__c);
-const $if_content__input_mode__OR__frag_content = /*@__PURE__*/ _fill_join_if("__tests__/tags/child.marko_fill2", "input_mode", /*@__PURE__*/ _or_resume("__tests__/tags/child.marko_1_input_mode#0:6_frag_content#5/init", 6, ($scope) => _attr_content($scope, "#section/1", $scope._.input_mode ? $scope.frag_content : null)), "#text/0", 0);
+const $if_content__input_mode__OR__frag_content = /*@__PURE__*/ _fill_if("__tests__/tags/child.marko_fill2", "input_mode", /*@__PURE__*/ _or_resume("__tests__/tags/child.marko_1_input_mode#0:6_frag_content#5/init", 6, ($scope) => _attr_content($scope, "#section/1", $scope._.input_mode ? $scope.frag_content : null)), "#text/0", 0);
 const $if_content__input_mode = /*@__PURE__*/ _if_closure("#text/0", 0, $if_content__input_mode__OR__frag_content);
 const $if_content__frag_content = /*@__PURE__*/ _const("frag_content", $if_content__input_mode__OR__frag_content);
 const $if = /*@__PURE__*/ _if("#text/0", "<p> </p><section></section>", "D l ", $if_content__setup);

@@ -6,9 +6,9 @@ function boom(error) {
 }
 const $try_content__input_error = /*@__PURE__*/ _init_resume("__tests__/template.marko_4_input_error#0:4/init", /*@__PURE__*/ _closure_get("input_error/6", ($scope) => _text($scope["#text/0"], $scope._.input_error ? boom($scope._.input_error) : "ok"), 0, "__tests__/template.marko_4_input_error#0:4/subscribe"));
 const $try_content__setup = $try_content__input_error;
-const $else_content__input_label = /*@__PURE__*/ _init_resume("__tests__/template.marko_3_input_label#0:3/init", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _closure_get("input_label/5", ($scope) => _text($scope["#text/0"], $scope._._.input_label), ($scope) => $scope._._, "__tests__/template.marko_3_input_label#0:3/subscribe"), 1));
+const $else_content__input_label = /*@__PURE__*/ _init_resume("__tests__/template.marko_3_input_label#0:3/init", /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _closure_get("input_label/5", ($scope) => _text($scope["#text/0"], $scope._._.input_label), ($scope) => $scope._._, "__tests__/template.marko_3_input_label#0:3/subscribe"), 1));
 const $else_content__setup = $else_content__input_label;
-const $if_content__input_label = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_input_label#0:3/init", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _closure_get("input_label/5", ($scope) => _text($scope["#text/0"], $scope._._.input_label), ($scope) => $scope._._, "__tests__/template.marko_2_input_label#0:3/subscribe"), 0));
+const $if_content__input_label = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_input_label#0:3/init", /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _closure_get("input_label/5", ($scope) => _text($scope["#text/0"], $scope._._.input_label), ($scope) => $scope._._, "__tests__/template.marko_2_input_label#0:3/subscribe"), 0));
 const $if_content__setup = $if_content__input_label;
 const $catch_content__if = /*@__PURE__*/ _if("#text/0", "<b> </b>", "D ", $if_content__setup, "<i> </i>", "D ", $else_content__setup);
 const $catch_content__err_status = ($scope, err_status) => $catch_content__if($scope, err_status === 404 ? 0 : 1);

@@ -2,7 +2,7 @@
 const $for_content__setup__script = _script("b0", ($scope) => _on($scope.a, "click", function() {
 	$hovered($scope._, $scope.f);
 }));
-const $for_content__hovered__OR__item_id = /*@__PURE__*/ _fill_join("b1", 5, /*@__PURE__*/ _or(7, ($scope) => _attr_class_item($scope.a, "hovered", $scope._.f === $scope.f)));
+const $for_content__hovered__OR__item_id = /*@__PURE__*/ _fill("b1", 5, /*@__PURE__*/ _or(7, ($scope) => _attr_class_item($scope.a, "hovered", $scope._.f === $scope.f)));
 const $for_content__hovered = /*@__PURE__*/ _init_resume("b7", /*@__PURE__*/ _for_closure(0, $for_content__hovered__OR__item_id));
 const $hovered = /*@__PURE__*/ _fill_let("b5", 5, $for_content__hovered);
 

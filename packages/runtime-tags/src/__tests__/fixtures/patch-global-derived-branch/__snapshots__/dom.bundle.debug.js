@@ -18,7 +18,7 @@ const $summary = /*@__PURE__*/ _const("summary", ($scope) => {
 	$if($scope, $scope.summary ? 0 : 1);
 	$if_content__summary($scope);
 });
-const $setup__$global = /*@__PURE__*/ _fill_global_join("__tests__/template.marko_0_$global#7", ($scope) => $summary($scope, collected($scope.$global)), "");
+const $setup__$global = /*@__PURE__*/ _fill_global("__tests__/template.marko_0_$global#7", ($scope) => $summary($scope, collected($scope.$global)), "");
 const $setup = $setup__$global;
 const $input = ($scope, input) => $input_items($scope, input.items);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

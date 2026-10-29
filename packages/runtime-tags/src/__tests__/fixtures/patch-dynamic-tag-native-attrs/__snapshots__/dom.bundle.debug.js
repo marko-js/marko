@@ -10,7 +10,7 @@ function $setup($scope) {
 	$setup__script($scope);
 }
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/2");
-const $input_tag__OR__input_cls__OR__input_sty__OR__input_title__OR__input_x__OR__input_hidden = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill5", "input_hidden", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill4", "input_x", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill3", "input_title", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill2", "input_sty", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "input_cls", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_tag", /*@__PURE__*/ _or(12, ($scope) => $dynamicTag($scope, $scope.input_tag, ($_) => ({
+const $input_tag__OR__input_cls__OR__input_sty__OR__input_title__OR__input_x__OR__input_hidden = /*@__PURE__*/ _fill("__tests__/template.marko_fill5", "input_hidden", /*@__PURE__*/ _fill("__tests__/template.marko_fill4", "input_x", /*@__PURE__*/ _fill("__tests__/template.marko_fill3", "input_title", /*@__PURE__*/ _fill("__tests__/template.marko_fill2", "input_sty", /*@__PURE__*/ _fill("__tests__/template.marko_fill1", "input_cls", /*@__PURE__*/ _fill("__tests__/template.marko_fill0", "input_tag", /*@__PURE__*/ _or(12, ($scope) => $dynamicTag($scope, $scope.input_tag, ($_) => ({
 	class: $scope.input_cls,
 	style: $scope.input_sty,
 	title: $scope.input_title,
@@ -25,7 +25,7 @@ const $input_title = /*@__PURE__*/ _const("input_title", $input_tag__OR__input_c
 const $input_x = /*@__PURE__*/ _const("input_x", $input_tag__OR__input_cls__OR__input_sty__OR__input_title__OR__input_x__OR__input_hidden);
 const $input_hidden = /*@__PURE__*/ _const("input_hidden", $input_tag__OR__input_cls__OR__input_sty__OR__input_title__OR__input_x__OR__input_hidden);
 const $dynamicTag2 = /*@__PURE__*/ _dynamic_tag("#text/3");
-const $input_field__OR__input_checked = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill7", "input_checked", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill6", "input_field", /*@__PURE__*/ _or(15, ($scope) => $dynamicTag2($scope, $scope.input_field, ($_) => ({
+const $input_field__OR__input_checked = /*@__PURE__*/ _fill("__tests__/template.marko_fill7", "input_checked", /*@__PURE__*/ _fill("__tests__/template.marko_fill6", "input_field", /*@__PURE__*/ _or(15, ($scope) => $dynamicTag2($scope, $scope.input_field, ($_) => ({
 	type: "checkbox",
 	checked: $scope.input_checked,
 	checkedChange: $checkedChange

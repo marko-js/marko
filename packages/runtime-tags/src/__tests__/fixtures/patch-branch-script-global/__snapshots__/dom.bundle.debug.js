@@ -9,7 +9,7 @@ const $if_content__setup__$global_brand__script = _fill_global_script("__tests__
 }, "brand");
 const $if_content__setup__$global_brand = $if_content__setup__$global_brand__script;
 const $if_content__setup = $if_content__setup__$global_brand;
-const $setup__$global_brand = /*@__PURE__*/ _fill_global_join("__tests__/template.marko_0_$global_brand#5", ($scope) => _text($scope["#text/0"], $scope.$global.brand), "brand");
+const $setup__$global_brand = /*@__PURE__*/ _fill_global("__tests__/template.marko_0_$global_brand#5", ($scope) => _text($scope["#text/0"], $scope.$global.brand), "brand");
 const $setup = $setup__$global_brand;
 const $if = /*@__PURE__*/ _if("#text/1", "<p>promo</p>", 0, $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);

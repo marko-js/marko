@@ -2,7 +2,7 @@
 const $template = "<button> </button><!><!>";
 const $walks = " D l%c";
 const $placeholder_content = _content("__tests__/template.marko_3*content", "<em>loading</em>");
-const $await_content__input_label__OR__n = /*@__PURE__*/ _fill_join_subscribers("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _or_resume("__tests__/template.marko_2_input_label#0:6_n#0:7/init", 1, ($scope) => _text($scope["#text/0"], $scope._._.input_label + $scope._._.n)), "input_label/9", 0);
+const $await_content__input_label__OR__n = /*@__PURE__*/ _fill_subscribers("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _or_resume("__tests__/template.marko_2_input_label#0:6_n#0:7/init", 1, ($scope) => _text($scope["#text/0"], $scope._._.input_label + $scope._._.n)), "input_label/9", 0);
 const $await_content__input_label = _closure_resume("__tests__/template.marko_2_input_label#0:6/subscribe", /*@__PURE__*/ _closure_get("input_label/9", $await_content__input_label__OR__n, ($scope) => $scope._._));
 const $await_content__setup = ($scope) => {
 	$await_content__input_label($scope);

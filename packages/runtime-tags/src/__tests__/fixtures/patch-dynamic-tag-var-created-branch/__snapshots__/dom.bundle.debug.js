@@ -19,7 +19,7 @@ const $template = "<main></main>";
 const $walks = " b";
 const $setup = ($_) => {};
 const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", 0, ($_) => $if_content__x);
-const $if_content__input_which__OR__input_a = /*@__PURE__*/ _fill_join_if("__tests__/template.marko_fill1 __tests__/template.marko_fill1/unpatched", "input_a", /*@__PURE__*/ _fill_join_if("__tests__/template.marko_fill0 __tests__/template.marko_fill0/unpatched", "input_which", /*@__PURE__*/ _or_resume("__tests__/template.marko_1_input_which#0:4_input_a#0:5/init", 3, ($scope) => $if_content__dynamicTag($scope, $scope._.input_which ? one_default : two_default, ($_) => ({ a: $scope._.input_a }))), "#main/0", 0), "#main/0", 0);
+const $if_content__input_which__OR__input_a = /*@__PURE__*/ _fill_if("__tests__/template.marko_fill1 __tests__/template.marko_fill1/unpatched", "input_a", /*@__PURE__*/ _fill_if("__tests__/template.marko_fill0 __tests__/template.marko_fill0/unpatched", "input_which", /*@__PURE__*/ _or_resume("__tests__/template.marko_1_input_which#0:4_input_a#0:5/init", 3, ($scope) => $if_content__dynamicTag($scope, $scope._.input_which ? one_default : two_default, ($_) => ({ a: $scope._.input_a }))), "#main/0", 0), "#main/0", 0);
 const $if_content__input_which = /*@__PURE__*/ _if_closure("#main/0", 0, $if_content__input_which__OR__input_a);
 const $if_content__setup = ($scope) => {
 	$if_content__input_which._($scope);

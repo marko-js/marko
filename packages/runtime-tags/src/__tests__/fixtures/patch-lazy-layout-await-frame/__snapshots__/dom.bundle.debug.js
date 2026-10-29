@@ -22,7 +22,7 @@ const $Docs_content__if = /*@__PURE__*/ _if("#text/0", "<!><!><!>", "b%/&", $if_
 const $Docs_content__input_page = /*@__PURE__*/ _init_resume("__tests__/template.marko_3_input_page#0:3/init", /*@__PURE__*/ _closure_get("input_page/5", ($scope) => $Docs_content__if($scope, $scope._._._.input_page === 1 ? 0 : 1), ($scope) => $scope._._._));
 const $Docs_content__setup = $Docs_content__input_page;
 const $Docs_content = /*@__PURE__*/ _content("__tests__/template.marko_3*content", "<!><!><!>", "b%", $Docs_content__setup);
-const $else_content__input_list = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_input_list#0:4/init", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_list", /*@__PURE__*/ _closure_get("input_list/6", ($scope) => $load_Docs_tag_input_list($scope["#childScope/1"], $scope._._.input_list), ($scope) => $scope._._, "__tests__/template.marko_2_input_list#0:4/subscribe"), 0));
+const $else_content__input_list = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_input_list#0:4/init", /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill0", "input_list", /*@__PURE__*/ _closure_get("input_list/6", ($scope) => $load_Docs_tag_input_list($scope["#childScope/1"], $scope._._.input_list), ($scope) => $scope._._, "__tests__/template.marko_2_input_list#0:4/subscribe"), 0));
 const $else_content__setup = ($scope) => {
 	$else_content__input_list($scope);
 	$load_Docs_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);

@@ -2179,7 +2179,7 @@ function attrTags(first, attrs) {
 function* attrTagIterator() {
   (yield this, yield* this[rest]);
 }
-function _fill_global_join(id, join, ...keys) {
+function _fill_global(id, join, ...keys) {
   return (
     (patchers.$ = patchGlobals),
     (_resumed[id] ||= (scope) => subscribeToScopeSet(globalScopes, id, scope)),
@@ -2194,7 +2194,7 @@ function _fill_global_join(id, join, ...keys) {
 function _fill_global_for(id, ownerLoopNodeAccessor, join, ...keys) {
   let rows = "A" + decodeAccessor(ownerLoopNodeAccessor);
   return (
-    _fill_global_join(
+    _fill_global(
       id,
       (owner) => {
         for (let row of toArray(owner[rows])) join(row);
@@ -2211,10 +2211,10 @@ function _fill_global_script(id, fn, ...keys) {
       (fn(scope), subscribeToScopeSet(globalScopes, id, scope));
     }),
     queue = (scope) => queueEffect(scope, effect);
-  return (_fill_global_join(id, queue, ...keys), queue);
+  return (_fill_global(id, queue, ...keys), queue);
 }
-function _fill_global_path_join(id, join, ...keys) {
-  return ((changesMember = membersChanged), _fill_global_join(id, join, ...keys, 0));
+function _fill_global_path(id, join, ...keys) {
+  return ((changesMember = membersChanged), _fill_global(id, join, ...keys, 0));
 }
 function _fill_global_path_for(id, ownerLoopNodeAccessor, join, ...keys) {
   return (
@@ -2495,20 +2495,20 @@ function fillJoin(keys, valueAccessor, join, dispatch) {
     }
   return join;
 }
-function _fill_join(keys, valueAccessor, join, buildDispatch) {
+function _fill(keys, valueAccessor, join, buildDispatch) {
   return fillJoin(keys, valueAccessor, join, buildDispatch?.(join) || join);
 }
-function _fill_join_if(keys, valueAccessor, join, ...hops) {
+function _fill_if(keys, valueAccessor, join, ...hops) {
   let dispatch = join;
   for (let i = hops.length; i; i -= 2) dispatch = _if_closure(hops[i - 2], hops[i - 1], dispatch);
   return fillJoin(keys, valueAccessor, join, dispatch);
 }
-function _fill_join_for(keys, valueAccessor, join, ...hops) {
+function _fill_for(keys, valueAccessor, join, ...hops) {
   let dispatch = join;
   for (let i = hops.length; i--;) dispatch = _for_closure(hops[i], dispatch);
   return fillJoin(keys, valueAccessor, join, dispatch);
 }
-function _fill_join_closure(keys, valueAccessor, join, index) {
+function _fill_closure(keys, valueAccessor, join, index) {
   join.c = index;
   for (let key of keys.split(" ")) {
     let signals = (closureFillJoins[key] ??= []);
@@ -2527,7 +2527,7 @@ function _fill_join_closure(keys, valueAccessor, join, index) {
   }
   return join;
 }
-function _fill_join_subscribers(keys, valueAccessor, join, closureAccessor, index) {
+function _fill_subscribers(keys, valueAccessor, join, closureAccessor, index) {
   let instancesAccessor = decodeAccessor(closureAccessor),
     signalIndex = "C" + instancesAccessor;
   return fillJoin(keys, valueAccessor, join, (scope) => {

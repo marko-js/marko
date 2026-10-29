@@ -2,7 +2,7 @@
 const $template$1 = "<section></section>";
 const $walks$1 = " b";
 const $one_content = _content("__tests__/tags/frag-host.marko_2*content", "<em>one</em>");
-const $two_content__input_b = /*@__PURE__*/ _init_resume("__tests__/tags/frag-host.marko_1_input_b#0:3/init", /*@__PURE__*/ _fill_join_closure("__tests__/tags/frag-host.marko_fill0", "input_b", /*@__PURE__*/ _closure_get("input_b/8", ($scope) => _text($scope["#text/0"], $scope._.input_b), 0, "__tests__/tags/frag-host.marko_1_input_b#0:3/subscribe"), 0));
+const $two_content__input_b = /*@__PURE__*/ _init_resume("__tests__/tags/frag-host.marko_1_input_b#0:3/init", /*@__PURE__*/ _fill_closure("__tests__/tags/frag-host.marko_fill0", "input_b", /*@__PURE__*/ _closure_get("input_b/8", ($scope) => _text($scope["#text/0"], $scope._.input_b), 0, "__tests__/tags/frag-host.marko_1_input_b#0:3/subscribe"), 0));
 const $two_content__setup = $two_content__input_b;
 const $two_content = _content("__tests__/tags/frag-host.marko_1*content", "<strong> </strong>", "D ", $two_content__setup);
 const $input_mode__OR__one__OR__two = /*@__PURE__*/ _or_resume("__tests__/tags/frag-host.marko_0_input_mode#4_one#5_two#6/init", 7, ($scope) => _attr_content($scope, "#section/0", $scope.input_mode ? $scope.one : $scope.two), 2);

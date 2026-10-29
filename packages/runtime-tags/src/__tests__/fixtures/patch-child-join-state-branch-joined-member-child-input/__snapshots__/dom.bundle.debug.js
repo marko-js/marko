@@ -10,7 +10,7 @@ var cell_default = /*@__PURE__*/ _template("__tests__/tags/cell.marko", $templat
 const $template$1 = /*@__PURE__*/ ((_w0) => `<!><!>${_w0}`)($template$2);
 const $walks$1 = /*@__PURE__*/ ((_w0) => `b%b/${_w0}&`)("D l");
 const $setup$1 = ($_) => {};
-const $if_content__input_a__OR__input_b = /*@__PURE__*/ _fill_join_if("__tests__/tags/child.marko_fill1/unpatched", "input_b", /*@__PURE__*/ _fill_join_if("__tests__/tags/child.marko_fill0/unpatched", "input_a", /*@__PURE__*/ _or_resume("__tests__/tags/child.marko_1_input_a#0:4_input_b#0:8/init", 1, ($scope) => _text($scope["#text/0"], $scope._.input_a + $scope._.input_b)), "#text/0", 0), "#text/0", 0);
+const $if_content__input_a__OR__input_b = /*@__PURE__*/ _fill_if("__tests__/tags/child.marko_fill1/unpatched", "input_b", /*@__PURE__*/ _fill_if("__tests__/tags/child.marko_fill0/unpatched", "input_a", /*@__PURE__*/ _or_resume("__tests__/tags/child.marko_1_input_a#0:4_input_b#0:8/init", 1, ($scope) => _text($scope["#text/0"], $scope._.input_a + $scope._.input_b)), "#text/0", 0), "#text/0", 0);
 const $if_content__input_a = /*@__PURE__*/ _if_closure("#text/0", 0, $if_content__input_a__OR__input_b);
 const $if_content__setup = ($scope) => {
 	$if_content__input_a._($scope);

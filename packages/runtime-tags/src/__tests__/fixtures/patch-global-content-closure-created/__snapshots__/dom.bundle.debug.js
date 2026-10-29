@@ -3,7 +3,7 @@ const $template$2 = "<!><!><!>";
 const $walks$2 = "b%c";
 const $setup$2 = ($_) => {};
 const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $if_content__input_body = /*@__PURE__*/ _init_resume("__tests__/tags/panel/index.marko_1_input_body#0:4/init", /*@__PURE__*/ _fill_join("__tests__/tags/panel/index.marko_fill0", "input_body", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.input_body))));
+const $if_content__input_body = /*@__PURE__*/ _init_resume("__tests__/tags/panel/index.marko_1_input_body#0:4/init", /*@__PURE__*/ _fill("__tests__/tags/panel/index.marko_fill0", "input_body", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.input_body))));
 const $if_content__setup$1 = $if_content__input_body;
 const $if$1 = /*@__PURE__*/ _if("#text/0", "<!><!><!>", "b%", $if_content__setup$1);
 const $input_open = ($scope, input_open) => $if$1($scope, input_open ? 0 : 1);
@@ -17,7 +17,7 @@ var panel_default = /*@__PURE__*/ _template("__tests__/tags/panel/index.marko", 
 // tags/card.marko
 const $template$1 = /*@__PURE__*/ ((_w0) => `<!>${_w0}<button class=b>+</button>`)($template$2);
 const $walks$1 = /*@__PURE__*/ ((_w0) => `b/${_w0}& b`)("b%c");
-const $body_content__setup__$global_brand = /*@__PURE__*/ _fill_global_join("__tests__/tags/card.marko_1_$global_brand#0:6", ($scope) => _text($scope["#text/0"], $scope.$global.brand), "brand");
+const $body_content__setup__$global_brand = /*@__PURE__*/ _fill_global("__tests__/tags/card.marko_1_$global_brand#0:6", ($scope) => _text($scope["#text/0"], $scope.$global.brand), "brand");
 const $body_content__setup = $body_content__setup__$global_brand;
 const $body_content = _content("__tests__/tags/card.marko_1*content", "<em> </em>", "D ", $body_content__setup);
 const $count = /*@__PURE__*/ _fill_let("__tests__/tags/card.marko_fill0", "count/2", ($scope) => $input_open($scope["#childScope/0"], $scope.count % 2 === 0));

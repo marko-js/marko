@@ -2,7 +2,7 @@
 const $template$1 = "<button class=toggle>toggle</button><!><!>";
 const $walks$1 = " b%c";
 const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $if_content__input_content = /*@__PURE__*/ _fill_join("__tests__/tags/card.marko_fill0", "input_content", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.input_content)));
+const $if_content__input_content = /*@__PURE__*/ _fill("__tests__/tags/card.marko_fill0", "input_content", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.input_content)));
 const $if_content__setup = $if_content__input_content;
 const $if = /*@__PURE__*/ _if("#text/1", "<!><!><!>", "b%", $if_content__setup);
 const $open = /*@__PURE__*/ _fill_let("__tests__/tags/card.marko_fill1", "open/5", ($scope) => $if($scope, $scope.open ? 0 : 1));
@@ -26,7 +26,7 @@ const $await_content__setup = ($scope) => {
 	$scope["#childScope/0"]._ = $scope._;
 	$Body_content__setup($scope["#childScope/0"]);
 };
-const $inputonCarddiv_content__input_note = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_input_note#0:4/init", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_note", /*@__PURE__*/ _closure_get("input_note/7", ($scope) => _text($scope["#text/0"], $scope._._.input_note), ($scope) => $scope._._, "__tests__/template.marko_2_input_note#0:4/subscribe"), 0));
+const $inputonCarddiv_content__input_note = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_input_note#0:4/init", /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill0", "input_note", /*@__PURE__*/ _closure_get("input_note/7", ($scope) => _text($scope["#text/0"], $scope._._.input_note), ($scope) => $scope._._, "__tests__/template.marko_2_input_note#0:4/subscribe"), 0));
 const $inputonCarddiv_content__setup = $inputonCarddiv_content__input_note;
 const $inputonCarddiv_content = _content("__tests__/template.marko_2*content", "<em> </em>", "D ", $inputonCarddiv_content__setup);
 _content_resume($inputonCarddiv_content);

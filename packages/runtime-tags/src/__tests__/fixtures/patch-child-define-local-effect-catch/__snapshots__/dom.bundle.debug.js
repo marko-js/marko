@@ -20,7 +20,7 @@ const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Card_content__walks);
 const $await_content__v = ($scope, v) => _text($scope["#text/0"], v);
 const $await_content__$params = ($scope, $params3) => $await_content__v($scope, $params3[0]);
 const $catch_content__x__script = _script("__tests__/tags/wrap.marko_3_x#1:1", ($scope) => console.log("catch", $scope._.x));
-const $catch_content__x = /*@__PURE__*/ _init_resume("__tests__/tags/wrap.marko_3_x#1:1/init", _closure_resume("__tests__/tags/wrap.marko_3_x#1:1/subscribe", /*@__PURE__*/ _fill_join_closure("__tests__/tags/wrap.marko_fill0", "x", /*@__PURE__*/ _closure_get("x/7", $catch_content__x__script), 0)));
+const $catch_content__x = /*@__PURE__*/ _init_resume("__tests__/tags/wrap.marko_3_x#1:1/init", _closure_resume("__tests__/tags/wrap.marko_3_x#1:1/subscribe", /*@__PURE__*/ _fill_closure("__tests__/tags/wrap.marko_fill0", "x", /*@__PURE__*/ _closure_get("x/7", $catch_content__x__script), 0)));
 const $catch_content__setup = $catch_content__x;
 const $catch_content__err_message = ($scope, err_message) => _text($scope["#text/0"], err_message);
 const $catch_content__$params = ($scope, $params2) => $catch_content__err_message($scope, $params2[0]?.message);

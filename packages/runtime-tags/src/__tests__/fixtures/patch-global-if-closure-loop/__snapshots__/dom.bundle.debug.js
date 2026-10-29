@@ -2,10 +2,10 @@
 const $template = "<button>t</button><!><!>";
 const $walks = " b%c";
 const $for_content__x = ($scope, x) => _text($scope["#text/0"], x);
-const $for_content__setup__$global_brand = /*@__PURE__*/ _fill_global_join("__tests__/template.marko_2_$global_brand#0:7", ($scope) => _text($scope["#text/1"], $scope.$global.brand), "brand");
+const $for_content__setup__$global_brand = /*@__PURE__*/ _fill_global("__tests__/template.marko_2_$global_brand#0:7", ($scope) => _text($scope["#text/1"], $scope.$global.brand), "brand");
 const $for_content__setup = $for_content__setup__$global_brand;
 const $for_content__$params = ($scope, $params2) => $for_content__x($scope, $params2[0]);
-const $if_content__setup__$global_brand = /*@__PURE__*/ _fill_global_join("__tests__/template.marko_1_$global_brand#0:7", ($scope) => _text($scope["#text/0"], $scope.$global.brand), "brand");
+const $if_content__setup__$global_brand = /*@__PURE__*/ _fill_global("__tests__/template.marko_1_$global_brand#0:7", ($scope) => _text($scope["#text/0"], $scope.$global.brand), "brand");
 const $if_content__for = /*@__PURE__*/ _for_of_unkeyed("#text/1", "<i><!><!></i>", "D%b%", $for_content__setup, $for_content__$params);
 const $if_content__setup = ($scope) => {
 	$if_content__for($scope, [[1, 2]]);

@@ -9,7 +9,7 @@ const $label = /*@__PURE__*/ _const("label", ($scope) => {
 	_text($scope["#text/1"], $scope.label);
 	$for_content__label($scope);
 });
-const $input_prefix__OR__n = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_prefix", /*@__PURE__*/ _or(8, ($scope) => $label($scope, `${$scope.input_prefix}${$scope.n}`)));
+const $input_prefix__OR__n = /*@__PURE__*/ _fill("__tests__/template.marko_fill0", "input_prefix", /*@__PURE__*/ _or(8, ($scope) => $label($scope, `${$scope.input_prefix}${$scope.n}`)));
 const $n = _let("n/7", $input_prefix__OR__n);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$n($scope, +$scope.n + 1);

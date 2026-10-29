@@ -2,7 +2,7 @@
 const $template = "<!><!><!>";
 const $walks = "b%c";
 const $setup = ($_) => {};
-const $if_content__input_a = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_a#0:4/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_a", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_a$1($scope["#childScope/0"], $scope._.input_a))));
+const $if_content__input_a = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_a#0:4/init", /*@__PURE__*/ _fill("__tests__/template.marko_fill0", "input_a", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_a$1($scope["#childScope/0"], $scope._.input_a))));
 const $if_content__setup = ($scope) => {
 	$if_content__input_a._($scope);
 	$setup$1($scope["#childScope/0"]);
@@ -20,7 +20,7 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 // tags/kid.marko
 const $template = "<div> </div><!><button>t</button>";
 const $walks = "D l%b b";
-const $if_content__input_b = /*@__PURE__*/ _fill_join("__tests__/tags/kid.marko_fill0", "input_b", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => _text($scope["#text/0"], $scope._.input_b)));
+const $if_content__input_b = /*@__PURE__*/ _fill("__tests__/tags/kid.marko_fill0", "input_b", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => _text($scope["#text/0"], $scope._.input_b)));
 const $if_content__setup = $if_content__input_b;
 const $if = /*@__PURE__*/ _if("#text/1", "<p> </p>", "D ", $if_content__setup);
 const $on = /*@__PURE__*/ _fill_let("__tests__/tags/kid.marko_fill1", "on/7", ($scope) => $if($scope, $scope.on ? 0 : 1));

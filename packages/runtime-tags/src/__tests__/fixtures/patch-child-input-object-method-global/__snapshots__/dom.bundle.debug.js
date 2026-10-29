@@ -2,14 +2,14 @@
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $setup$1 = ($_) => {};
-const $else_content__input_text__OR__highlight = /*@__PURE__*/ _fill_join_if("__tests__/tags/code-block.marko_fill1/unpatched", "highlight", /*@__PURE__*/ _fill_join_if("__tests__/tags/code-block.marko_fill0/unpatched", "input_text", /*@__PURE__*/ _or_resume("__tests__/tags/code-block.marko_2_input_text#0:4_highlight#0:6/init", 1, ($scope) => _html($scope, $scope._.highlight($scope._.input_text), "#text/0")), "#text/0", 1), "#text/0", 1);
+const $else_content__input_text__OR__highlight = /*@__PURE__*/ _fill_if("__tests__/tags/code-block.marko_fill1/unpatched", "highlight", /*@__PURE__*/ _fill_if("__tests__/tags/code-block.marko_fill0/unpatched", "input_text", /*@__PURE__*/ _or_resume("__tests__/tags/code-block.marko_2_input_text#0:4_highlight#0:6/init", 1, ($scope) => _html($scope, $scope._.highlight($scope._.input_text), "#text/0")), "#text/0", 1), "#text/0", 1);
 const $else_content__input_text = /*@__PURE__*/ _if_closure("#text/0", 1, $else_content__input_text__OR__highlight);
 const $else_content__setup = ($scope) => {
 	$else_content__input_text._($scope);
 	$else_content__highlight._($scope);
 };
 const $else_content__highlight = /*@__PURE__*/ _if_closure("#text/0", 1, $else_content__input_text__OR__highlight);
-const $if_content__input_text__OR__highlight = /*@__PURE__*/ _fill_join_if("__tests__/tags/code-block.marko_fill1/unpatched", "highlight", /*@__PURE__*/ _fill_join_if("__tests__/tags/code-block.marko_fill0/unpatched", "input_text", /*@__PURE__*/ _or_resume("__tests__/tags/code-block.marko_1_input_text#0:4_highlight#0:6/init", 1, ($scope) => _html($scope, $scope._.highlight($scope._.input_text), "#text/0")), "#text/0", 0), "#text/0", 0);
+const $if_content__input_text__OR__highlight = /*@__PURE__*/ _fill_if("__tests__/tags/code-block.marko_fill1/unpatched", "highlight", /*@__PURE__*/ _fill_if("__tests__/tags/code-block.marko_fill0/unpatched", "input_text", /*@__PURE__*/ _or_resume("__tests__/tags/code-block.marko_1_input_text#0:4_highlight#0:6/init", 1, ($scope) => _html($scope, $scope._.highlight($scope._.input_text), "#text/0")), "#text/0", 0), "#text/0", 0);
 const $if_content__input_text = /*@__PURE__*/ _if_closure("#text/0", 0, $if_content__input_text__OR__highlight);
 const $if_content__setup = ($scope) => {
 	$if_content__input_text._($scope);
@@ -20,7 +20,7 @@ const $highlight2 = /*@__PURE__*/ _const("highlight", ($scope) => {
 	$if_content__highlight($scope);
 	$else_content__highlight($scope);
 });
-const $input_cursor__$global_theme = /*@__PURE__*/ _fill_global_join("__tests__/tags/code-block.marko_0_input_cursor#3_$global_theme#8", ($scope) => $highlight2($scope, $highlight($scope)), "theme");
+const $input_cursor__$global_theme = /*@__PURE__*/ _fill_global("__tests__/tags/code-block.marko_0_input_cursor#3_$global_theme#8", ($scope) => $highlight2($scope, $highlight($scope)), "theme");
 const $input_cursor = /*@__PURE__*/ _const("input_cursor", $input_cursor__$global_theme);
 const $if = /*@__PURE__*/ _if("#text/0", "<div> </div>", "D ", $if_content__setup, "<span> </span>", "D ", $else_content__setup);
 const $input_text_length = ($scope, input_text_length) => $if($scope, input_text_length > 2 ? 0 : 1);

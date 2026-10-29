@@ -2,7 +2,7 @@
 const $template$1 = "<span> </span><!><!>";
 const $walks$1 = "D l%c";
 const $setup$1 = ($_) => {};
-const $if_content__input_a$1 = /*@__PURE__*/ _init_resume("__tests__/tags/child.marko_1_input_a#0:5/init", /*@__PURE__*/ _fill_join("__tests__/tags/child.marko_fill0", "input_a", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => _text($scope["#text/0"], $scope._.input_a))));
+const $if_content__input_a$1 = /*@__PURE__*/ _init_resume("__tests__/tags/child.marko_1_input_a#0:5/init", /*@__PURE__*/ _fill("__tests__/tags/child.marko_fill0", "input_a", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => _text($scope["#text/0"], $scope._.input_a))));
 const $if_content__setup$1 = $if_content__input_a$1;
 const $if$1 = /*@__PURE__*/ _if("#text/1", "<em> </em>", "D ", $if_content__setup$1);
 const $input_v = ($scope, input_v) => {
@@ -20,8 +20,8 @@ var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $templ
 const $template = "<!><!><!>";
 const $walks = "b%c";
 const $setup = ($_) => {};
-const $if_content__input_a__OR__x = /*@__PURE__*/ _fill_join_if("__tests__/template.marko_fill0", "input_a", /*@__PURE__*/ _or_resume("__tests__/template.marko_1_input_a#0:4_x#3/init", 4, ($scope) => _text($scope["#text/2"], $scope.x + $scope._.input_a)), "#text/0", 0);
-const $if_content__input_a = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_a#0:4/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_a", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => {
+const $if_content__input_a__OR__x = /*@__PURE__*/ _fill_if("__tests__/template.marko_fill0", "input_a", /*@__PURE__*/ _or_resume("__tests__/template.marko_1_input_a#0:4_x#3/init", 4, ($scope) => _text($scope["#text/2"], $scope.x + $scope._.input_a)), "#text/0", 0);
+const $if_content__input_a = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_a#0:4/init", /*@__PURE__*/ _fill("__tests__/template.marko_fill0", "input_a", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => {
 	$if_content__input_a__OR__x($scope);
 	$input_a$1($scope["#childScope/0"], $scope._.input_a);
 })));

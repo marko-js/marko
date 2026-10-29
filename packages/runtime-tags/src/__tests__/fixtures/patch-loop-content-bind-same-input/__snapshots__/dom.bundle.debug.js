@@ -2,7 +2,7 @@
 const $template$1 = "<button>toggle</button><!><!>";
 const $walks$1 = " b%c";
 const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $if_content__item_content = /*@__PURE__*/ _fill_join("__tests__/tags/list.marko_fill1", "item_content", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.item_content)));
+const $if_content__item_content = /*@__PURE__*/ _fill("__tests__/tags/list.marko_fill1", "item_content", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.item_content)));
 const $if_content__setup = $if_content__item_content;
 const $for_content__if = /*@__PURE__*/ _if("#text/0", "<!><!><!>", "b%", $if_content__setup);
 const $for_content__open = /*@__PURE__*/ _init_resume("__tests__/tags/list.marko_1_open#0:5/init", /*@__PURE__*/ _for_closure("#text/1", ($scope) => $for_content__if($scope, $scope._.open ? 0 : 1)));
@@ -25,7 +25,7 @@ var list_default = /*@__PURE__*/ _template("__tests__/tags/list.marko", $templat
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<!>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&b`)($walks$1);
-const $item_content__input_note = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_note", /*@__PURE__*/ _closure_get("input_note/5", ($scope) => _text($scope["#text/1"], $scope._.input_note), 0, "__tests__/template.marko_1_input_note#0:4/subscribe"), 0);
+const $item_content__input_note = /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill0", "input_note", /*@__PURE__*/ _closure_get("input_note/5", ($scope) => _text($scope["#text/1"], $scope._.input_note), 0, "__tests__/template.marko_1_input_note#0:4/subscribe"), 0);
 const $item_content__setup = $item_content__input_note;
 const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__tests__/template.marko_1*content", "<em><!>:<!></em>", "D%c%", $item_content__setup), { label: ($scope) => _text($scope["#text/0"], $scope.label) });
 _resumed["__tests__/template.marko_1*content"] = $item_content;

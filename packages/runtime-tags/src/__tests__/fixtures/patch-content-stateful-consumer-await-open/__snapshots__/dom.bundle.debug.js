@@ -2,7 +2,7 @@
 const $template$1 = "<button>toggle</button><div><!></div><!><!>";
 const $walks$1 = " bD%l%c";
 const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $if_content__input_content = /*@__PURE__*/ _fill_join("__tests__/tags/wrap.marko_fill0", "input_content", /*@__PURE__*/ _if_closure("#text/2", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.input_content)));
+const $if_content__input_content = /*@__PURE__*/ _fill("__tests__/tags/wrap.marko_fill0", "input_content", /*@__PURE__*/ _if_closure("#text/2", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.input_content)));
 const $if_content__setup = $if_content__input_content;
 const $if = /*@__PURE__*/ _if("#text/2", "<section><!></section>", "D%", $if_content__setup);
 const $open = /*@__PURE__*/ _fill_let("__tests__/tags/wrap.marko_fill1", "open/6", ($scope) => $if($scope, $scope.open ? 0 : 1));
@@ -28,7 +28,7 @@ const $await_content__v = ($scope, v) => _text($scope["#text/0"], v);
 const $await_content__$params = ($scope, $params2) => $await_content__v($scope, $params2[0]);
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<em> </em>", "D ");
 const $wrap_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
-const $wrap_content__input_promise = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_promise", /*@__PURE__*/ _closure_get("input_promise/4", ($scope) => $wrap_content__await_promise($scope, $scope._.input_promise), 0, "__tests__/template.marko_1_input_promise#0:3/subscribe"), 0);
+const $wrap_content__input_promise = /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill0", "input_promise", /*@__PURE__*/ _closure_get("input_promise/4", ($scope) => $wrap_content__await_promise($scope, $scope._.input_promise), 0, "__tests__/template.marko_1_input_promise#0:3/subscribe"), 0);
 const $wrap_content__setup = ($scope) => {
 	$wrap_content__input_promise($scope);
 	$await_content($scope);

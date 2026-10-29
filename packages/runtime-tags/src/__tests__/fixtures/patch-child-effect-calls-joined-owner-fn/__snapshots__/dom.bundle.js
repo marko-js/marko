@@ -4,7 +4,7 @@ const $get__script = _script("b0", ($scope) => {
 	console.log("run", $scope.h());
 });
 const $get = /*@__PURE__*/ _const(7, $get__script);
-const $input_flag__OR__input_a__OR__input_b = /*@__PURE__*/ _fill_join("b3", 5, /*@__PURE__*/ _fill_join("b2", 4, /*@__PURE__*/ _fill_join("b1", 3, /*@__PURE__*/ _or_resume("b4", 6, ($scope) => $get($scope, $scope.d ? $scope.e : $scope.f), 2))));
+const $input_flag__OR__input_a__OR__input_b = /*@__PURE__*/ _fill("b3", 5, /*@__PURE__*/ _fill("b2", 4, /*@__PURE__*/ _fill("b1", 3, /*@__PURE__*/ _or_resume("b4", 6, ($scope) => $get($scope, $scope.d ? $scope.e : $scope.f), 2))));
 const $input_a = /*@__PURE__*/ _const(4, $input_flag__OR__input_a__OR__input_b);
 
 // template.marko

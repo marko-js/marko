@@ -15,7 +15,7 @@ const $setup__$global_brand__script = _fill_global_script("__tests__/tags/badge/
 		el.dataset.log = (el.dataset.log || "") + "[" + $scope.$global.brand + "]";
 	}
 }, "brand");
-const $setup__$global_brand = /*@__PURE__*/ _fill_global_join("__tests__/tags/badge/index.marko_0_$global_brand#4", ($scope) => {
+const $setup__$global_brand = /*@__PURE__*/ _fill_global("__tests__/tags/badge/index.marko_0_$global_brand#4", ($scope) => {
 	$setup__$global_brand__script($scope);
 	_text($scope["#text/0"], $scope.$global.brand);
 }, "brand");

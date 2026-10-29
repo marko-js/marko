@@ -1,5 +1,5 @@
 // tags/panel.marko
-const $if_content__input_n = /*@__PURE__*/ _init_resume("b0", /*@__PURE__*/ _fill_join("b2", 4, /*@__PURE__*/ _if_closure(0, 0, ($scope) => _text($scope.a, $scope._.e))));
+const $if_content__input_n = /*@__PURE__*/ _init_resume("b0", /*@__PURE__*/ _fill("b2", 4, /*@__PURE__*/ _if_closure(0, 0, ($scope) => _text($scope.a, $scope._.e))));
 const $input_n = /*@__PURE__*/ _fill_const("b2", 4, $if_content__input_n);
 
 // template.marko

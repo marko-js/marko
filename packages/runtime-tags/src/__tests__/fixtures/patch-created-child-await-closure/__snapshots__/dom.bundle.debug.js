@@ -2,7 +2,7 @@
 const $template = "<!><!><!>";
 const $walks = "b%c";
 const $setup = ($_) => {};
-const $if_content__input_promise = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_promise#0:4/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_promise", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_promise$1($scope["#childScope/0"], $scope._.input_promise))));
+const $if_content__input_promise = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_promise#0:4/init", /*@__PURE__*/ _fill("__tests__/template.marko_fill0", "input_promise", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_promise$1($scope["#childScope/0"], $scope._.input_promise))));
 const $if_content__setup = ($scope) => {
 	$if_content__input_promise._($scope);
 	$setup$1($scope["#childScope/0"]);

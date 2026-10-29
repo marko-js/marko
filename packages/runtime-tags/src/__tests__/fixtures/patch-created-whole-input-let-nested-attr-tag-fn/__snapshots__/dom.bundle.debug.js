@@ -2,7 +2,7 @@
 const $template = "<!><!><!>";
 const $walks = "b%c";
 const $setup = ($_) => {};
-const $if_content__input_on__OR__input_label = /*@__PURE__*/ _fill_join_if("__tests__/template.marko_fill1 __tests__/template.marko_fill1/unpatched", "input_label", /*@__PURE__*/ _fill_join_if("__tests__/template.marko_fill0 __tests__/template.marko_fill0/unpatched", "input_on", /*@__PURE__*/ _or_resume("__tests__/template.marko_1_input_on#0:4_input_label#0:5/init", 1, ($scope) => {
+const $if_content__input_on__OR__input_label = /*@__PURE__*/ _fill_if("__tests__/template.marko_fill1 __tests__/template.marko_fill1/unpatched", "input_label", /*@__PURE__*/ _fill_if("__tests__/template.marko_fill0 __tests__/template.marko_fill0/unpatched", "input_on", /*@__PURE__*/ _or_resume("__tests__/template.marko_1_input_on#0:4_input_label#0:5/init", 1, ($scope) => {
 	let $b;
 	if ($scope._.input_on) {
 		$b = attrTag({ fn: function() {

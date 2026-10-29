@@ -2,7 +2,7 @@
 const $template$1 = "<button> </button>";
 const $walks$1 = " D l";
 const $g = ($scope, g) => _text($scope["#text/1"], g());
-const $input_fn__OR__open = /*@__PURE__*/ _fill_join("__tests__/tags/card.marko_fill0", "input_fn", /*@__PURE__*/ _or(6, ($scope) => $g($scope, $scope.open ? $scope.input_fn : () => "-")));
+const $input_fn__OR__open = /*@__PURE__*/ _fill("__tests__/tags/card.marko_fill0", "input_fn", /*@__PURE__*/ _or(6, ($scope) => $g($scope, $scope.open ? $scope.input_fn : () => "-")));
 const $open = /*@__PURE__*/ _fill_let("__tests__/tags/card.marko_fill1", "open/5", $input_fn__OR__open);
 const $setup__script = _script("__tests__/tags/card.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$open($scope, !$scope.open);
@@ -27,7 +27,7 @@ const $try_content__setup = ($scope) => {
 	$try_content__input_promise($scope);
 	$await_content($scope);
 };
-const $placeholder_content__input_label = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _closure_get("input_label/5", ($scope) => $input_fn($scope["#childScope/0"], $fn($scope)), 0, "__tests__/template.marko_1_input_label#0:3/subscribe"), 0);
+const $placeholder_content__input_label = /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _closure_get("input_label/5", ($scope) => $input_fn($scope["#childScope/0"], $fn($scope)), 0, "__tests__/template.marko_1_input_label#0:3/subscribe"), 0);
 const $placeholder_content__setup = ($scope) => {
 	$placeholder_content__input_label($scope);
 	$setup$1($scope["#childScope/0"]);

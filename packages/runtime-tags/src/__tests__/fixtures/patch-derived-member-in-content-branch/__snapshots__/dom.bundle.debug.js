@@ -11,7 +11,7 @@ var wrapper_default = /*@__PURE__*/ _template("__tests__/tags/wrapper.marko", $t
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<button>+</button>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}& b`)("D%l");
-const $if_content__label = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "label", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => _text($scope["#text/0"], $scope._.label)));
+const $if_content__label = /*@__PURE__*/ _fill("__tests__/template.marko_fill0", "label", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => _text($scope["#text/0"], $scope._.label)));
 const $if_content__setup = $if_content__label;
 const $wrapper_content__item = ($scope, item) => $wrapper_content__label($scope, item.label);
 const $wrapper_content__input_label = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_label#0:4/init", /*@__PURE__*/ _closure_get("input_label/6", ($scope) => $wrapper_content__item($scope, { label: $scope._.input_label }), 0, "__tests__/template.marko_1_input_label#0:4/subscribe"));
@@ -20,7 +20,7 @@ const $wrapper_content__setup = ($scope) => {
 	$wrapper_content__count($scope);
 };
 const $wrapper_content__if = /*@__PURE__*/ _if("#text/0", "<p> </p>", "D ", $if_content__setup);
-const $wrapper_content__count__OR__label = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "label", /*@__PURE__*/ _or(3, ($scope) => $wrapper_content__if($scope, $scope._.count > 0 && $scope.label ? 0 : 1)));
+const $wrapper_content__count__OR__label = /*@__PURE__*/ _fill("__tests__/template.marko_fill0", "label", /*@__PURE__*/ _or(3, ($scope) => $wrapper_content__if($scope, $scope._.count > 0 && $scope.label ? 0 : 1)));
 const $wrapper_content__count = /*@__PURE__*/ _closure_get("count/7", $wrapper_content__count__OR__label, 0, "__tests__/template.marko_1_count#0:5/subscribe");
 const $wrapper_content__label = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "label", ($scope) => {
 	$wrapper_content__count__OR__label($scope);

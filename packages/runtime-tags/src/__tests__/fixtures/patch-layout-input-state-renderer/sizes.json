@@ -6,7 +6,7 @@
         "brotli": 5515
       },
       "files": {
-        "layout.marko": 362,
+        "layout.marko": 352,
         "nav-a.marko": 337,
         "nav-b.marko": 321,
         "v:nav-a.marko.register-default.js": 85,

@@ -9,7 +9,7 @@ const $try_content__setup = ($scope) => {
 	$await_content($scope);
 };
 const $placeholder_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $placeholder_content__input_content = /*@__PURE__*/ _fill_join_closure("__tests__/tags/card/index.marko_fill0", "input_content", /*@__PURE__*/ _closure_get("input_content/5", ($scope) => $placeholder_content__dynamicTag($scope, $scope._.input_content), 0, "__tests__/tags/card/index.marko_1_input_content#0:3/subscribe"), 0);
+const $placeholder_content__input_content = /*@__PURE__*/ _fill_closure("__tests__/tags/card/index.marko_fill0", "input_content", /*@__PURE__*/ _closure_get("input_content/5", ($scope) => $placeholder_content__dynamicTag($scope, $scope._.input_content), 0, "__tests__/tags/card/index.marko_1_input_content#0:3/subscribe"), 0);
 const $placeholder_content__setup = $placeholder_content__input_content;
 const $placeholder_content = _content("__tests__/tags/card/index.marko_1*content", "<!><!><!>", "b%", $placeholder_content__setup);
 const $try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content__setup, $placeholder_content);
@@ -29,7 +29,7 @@ var card_default = /*@__PURE__*/ _template("__tests__/tags/card/index.marko", $t
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}</main>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `D/${_w0}&l`)("D%l");
-const $card_content__input_note = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_note", /*@__PURE__*/ _closure_get("input_note/5", ($scope) => _text($scope["#text/0"], $scope._.input_note), 0, "__tests__/template.marko_1_input_note#0:4/subscribe"), 0);
+const $card_content__input_note = /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill0", "input_note", /*@__PURE__*/ _closure_get("input_note/5", ($scope) => _text($scope["#text/0"], $scope._.input_note), 0, "__tests__/template.marko_1_input_note#0:4/subscribe"), 0);
 const $card_content__setup = $card_content__input_note;
 const $card_content = _content("__tests__/template.marko_1*content", "<em> </em>", "D ", $card_content__setup);
 function $setup($scope) {

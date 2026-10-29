@@ -2,7 +2,7 @@
 const $template = "<main><!><button>+</button></main>";
 const $walks = "D%b l";
 const $if_content__title = /*@__PURE__*/ _const("title");
-const $if_content__input_title = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_title", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__title($scope, $scope._.input_title)));
+const $if_content__input_title = /*@__PURE__*/ _fill("__tests__/template.marko_fill0", "input_title", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__title($scope, $scope._.input_title)));
 const $if_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/0"], "click", function() {
 	document.querySelector("main").dataset.title = $scope.title;
 }));

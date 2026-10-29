@@ -79,30 +79,30 @@ export {
 } from "./dom/dom";
 export { _on } from "./dom/event";
 export {
+  _fill_global,
   _fill_global_for,
-  _fill_global_join,
+  _fill_global_path,
   _fill_global_path_for,
-  _fill_global_path_join,
   _fill_global_path_script,
   _fill_global_script,
 } from "./dom/patches/global";
 export { _load_lazy, _load_signal_patch } from "./dom/patches/load";
 export {
+  _bind_resume,
   _closure_index,
   _closure_resume,
+  _fill,
+  _fill_closure,
   _fill_const,
-  _fill_join,
-  _fill_join_closure,
-  _fill_join_for,
-  _fill_join_if,
-  _fill_join_subscribers,
+  _fill_for,
+  _fill_if,
   _fill_let,
   _fill_let_change,
   _fill_mark,
   _fill_resume,
   _fill_run,
+  _fill_subscribers,
   _fill_var_resume,
-  _bind_resume,
   _init_resume,
   _or_resume,
 } from "./dom/patches/signals";

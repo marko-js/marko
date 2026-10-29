@@ -11,7 +11,7 @@ var frame_default = /*@__PURE__*/ _template("__tests__/tags/frame.marko", $templ
 // template.marko
 const $template = "<!><!><button class=a>a</button><button class=b>b</button>";
 const $walks = "b%b b b";
-const $frame_content2__input_label__OR__b = /*@__PURE__*/ _fill_join_subscribers("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _or_resume("__tests__/template.marko_3_input_label#0:6_b#0:8/init", 2, ($scope) => _text($scope["#text/1"], $scope._._.input_label + ":" + $scope._._.b)), "input_label/9", 1);
+const $frame_content2__input_label__OR__b = /*@__PURE__*/ _fill_subscribers("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _or_resume("__tests__/template.marko_3_input_label#0:6_b#0:8/init", 2, ($scope) => _text($scope["#text/1"], $scope._._.input_label + ":" + $scope._._.b)), "input_label/9", 1);
 const $frame_content2__input_label = _closure_resume("__tests__/template.marko_3_input_label#0:6/subscribe", /*@__PURE__*/ _closure_index(1, /*@__PURE__*/ _closure_get("input_label/9", $frame_content2__input_label__OR__b, ($scope) => $scope._._)));
 const $frame_content2__setup = ($scope) => {
 	$frame_content2__input_label($scope);
@@ -22,7 +22,7 @@ const $frame_content2__b = /*@__PURE__*/ _init_resume("__tests__/template.marko_
 	$frame_content2__input_label__OR__b($scope);
 }, ($scope) => $scope._._));
 const $frame_content2 = /*@__PURE__*/ _content("__tests__/template.marko_3*content", "<p class=b><!> <!></p>", "D%c%", $frame_content2__setup);
-const $frame_content__input_label__OR__a = /*@__PURE__*/ _fill_join_subscribers("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _or_resume("__tests__/template.marko_2_input_label#0:6_a#0:7/init", 1, ($scope) => _text($scope["#text/0"], $scope._._.input_label + ":" + $scope._._.a)), "input_label/9", 0);
+const $frame_content__input_label__OR__a = /*@__PURE__*/ _fill_subscribers("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _or_resume("__tests__/template.marko_2_input_label#0:6_a#0:7/init", 1, ($scope) => _text($scope["#text/0"], $scope._._.input_label + ":" + $scope._._.a)), "input_label/9", 0);
 const $frame_content__input_label = _closure_resume("__tests__/template.marko_2_input_label#0:6/subscribe", /*@__PURE__*/ _closure_get("input_label/9", $frame_content__input_label__OR__a, ($scope) => $scope._._));
 const $frame_content__setup = ($scope) => {
 	$frame_content__input_label($scope);

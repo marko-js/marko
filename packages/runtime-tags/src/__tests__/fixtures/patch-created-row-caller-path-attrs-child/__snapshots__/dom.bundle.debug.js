@@ -13,7 +13,7 @@ const $setup$1 = ($_) => {};
 const $if_content__input_page$1 = /*@__PURE__*/ _init_resume("__tests__/tags/navx.marko_2_input_page#0:6/init", /*@__PURE__*/ _if_closure("#main/1", 0, ($scope) => _text($scope["#text/0"], $scope._.input_page)));
 const $if_content__setup$1 = $if_content__input_page$1;
 const $for_content__active = ($scope, active) => _attr_class_item($scope["#a/0"], "active", active);
-const $for_content__input_path__OR__item_href = /*@__PURE__*/ _fill_join_for("__tests__/tags/navx.marko_fill0/unpatched", "input_path", /*@__PURE__*/ _or_resume("__tests__/tags/navx.marko_1_input_path#0:5_item_href#5/init", 6, ($scope) => $for_content__active($scope, $scope.item_href === $scope._.input_path)), "#nav/0");
+const $for_content__input_path__OR__item_href = /*@__PURE__*/ _fill_for("__tests__/tags/navx.marko_fill0/unpatched", "input_path", /*@__PURE__*/ _or_resume("__tests__/tags/navx.marko_1_input_path#0:5_item_href#5/init", 6, ($scope) => $for_content__active($scope, $scope.item_href === $scope._.input_path)), "#nav/0");
 const $for_content__input_path = /*@__PURE__*/ _for_closure("#nav/0", $for_content__input_path__OR__item_href);
 const $for_content__setup = $for_content__input_path;
 const $for_content__item_href = /*@__PURE__*/ _const("item_href", ($scope) => {
@@ -45,13 +45,13 @@ var navx_default = /*@__PURE__*/ _template("__tests__/tags/navx.marko", $templat
 // template.marko
 const $template = "<!><!><button class=p>p</button>";
 const $walks = "b%b b";
-const $if_content__input_items = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_items#0:5/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_items", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_items$1($scope["#childScope/0"], $scope._.input_items))));
+const $if_content__input_items = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_items#0:5/init", /*@__PURE__*/ _fill("__tests__/template.marko_fill0", "input_items", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_items$1($scope["#childScope/0"], $scope._.input_items))));
 const $if_content__setup = ($scope) => {
 	$if_content__input_items._($scope);
 	$if_content__input_page._($scope);
 	$if_content__path._($scope);
 };
-const $if_content__input_page = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_page#0:6/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "input_page", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_page$1($scope["#childScope/0"], $scope._.input_page))));
+const $if_content__input_page = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_page#0:6/init", /*@__PURE__*/ _fill("__tests__/template.marko_fill1", "input_page", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_page$1($scope["#childScope/0"], $scope._.input_page))));
 const $if_content__path = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_path#0:7/init", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_path($scope["#childScope/0"], $scope._.path)));
 const $path = _let("path/7", $if_content__path);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {

@@ -89,7 +89,7 @@ function fillJoin<T extends SignalFn>(
 }
 // A fill runs the join, through `buildDispatch` where it runs in branches, or
 // runs nothing where another key or the scope's init re-runs it.
-export function _fill_join<T extends SignalFn>(
+export function _fill<T extends SignalFn>(
   keys: string,
   valueAccessor: EncodedAccessor,
   join: T,
@@ -99,7 +99,7 @@ export function _fill_join<T extends SignalFn>(
 }
 // Owner-side dispatch for cross-section joins over branch scopes; per-kind
 // helpers keep branch-free bundles free of the other kind.
-export function _fill_join_if<T extends SignalFn>(
+export function _fill_if<T extends SignalFn>(
   keys: string,
   valueAccessor: EncodedAccessor,
   join: T,
@@ -115,7 +115,7 @@ export function _fill_join_if<T extends SignalFn>(
   }
   return fillJoin(keys, valueAccessor, join, dispatch);
 }
-export function _fill_join_for<T extends SignalFn>(
+export function _fill_for<T extends SignalFn>(
   keys: string,
   valueAccessor: EncodedAccessor,
   join: T,
@@ -131,7 +131,7 @@ export function _fill_join_for<T extends SignalFn>(
 // Deep closure positions of one key reassemble the indexed composite; a
 // shaken position is simply absent.
 const closureFillJoins: Record<string, SignalFn[]> = {};
-export function _fill_join_closure<T extends ReturnType<typeof _closure_get>>(
+export function _fill_closure<T extends ReturnType<typeof _closure_get>>(
   keys: string,
   valueAccessor: EncodedAccessor,
   join: T,
@@ -174,7 +174,7 @@ export function _fill_join_closure<T extends ReturnType<typeof _closure_get>>(
 
 // A join in content its owner's closure subscribers hold: the fill runs it in each
 // subscribed scope of this closure position.
-export function _fill_join_subscribers<T extends SignalFn>(
+export function _fill_subscribers<T extends SignalFn>(
   keys: string,
   valueAccessor: EncodedAccessor,
   join: T,

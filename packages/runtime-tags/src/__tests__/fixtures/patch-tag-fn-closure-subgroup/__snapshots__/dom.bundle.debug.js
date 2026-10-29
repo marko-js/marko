@@ -2,9 +2,9 @@
 const $template$1 = "<div> </div>";
 const $walks$1 = "D l";
 const $setup$1 = ($_) => {};
-const $input_d__OR__f = /*@__PURE__*/ _fill_join("__tests__/tags/code-block.marko_fill4", "f", /*@__PURE__*/ _fill_join("__tests__/tags/code-block.marko_fill3", "input_d", /*@__PURE__*/ _or_resume("__tests__/tags/code-block.marko_0_input_d#7_f#8/init", 9, ($scope) => _text($scope["#text/0"], $scope.f($scope.input_d)))));
+const $input_d__OR__f = /*@__PURE__*/ _fill("__tests__/tags/code-block.marko_fill4", "f", /*@__PURE__*/ _fill("__tests__/tags/code-block.marko_fill3", "input_d", /*@__PURE__*/ _or_resume("__tests__/tags/code-block.marko_0_input_d#7_f#8/init", 9, ($scope) => _text($scope["#text/0"], $scope.f($scope.input_d)))));
 const $f2 = /*@__PURE__*/ _const("f", $input_d__OR__f);
-const $input_a__OR__input_b__OR__input_c = /*@__PURE__*/ _fill_join("__tests__/tags/code-block.marko_fill2", "input_c", /*@__PURE__*/ _fill_join("__tests__/tags/code-block.marko_fill1", "input_b", /*@__PURE__*/ _fill_join("__tests__/tags/code-block.marko_fill0", "input_a", /*@__PURE__*/ _or_resume("__tests__/tags/code-block.marko_0_input_a#3_input_b#4_input_c#5/init", 6, ($scope) => $f2($scope, $f($scope)), 2))));
+const $input_a__OR__input_b__OR__input_c = /*@__PURE__*/ _fill("__tests__/tags/code-block.marko_fill2", "input_c", /*@__PURE__*/ _fill("__tests__/tags/code-block.marko_fill1", "input_b", /*@__PURE__*/ _fill("__tests__/tags/code-block.marko_fill0", "input_a", /*@__PURE__*/ _or_resume("__tests__/tags/code-block.marko_0_input_a#3_input_b#4_input_c#5/init", 6, ($scope) => $f2($scope, $f($scope)), 2))));
 const $input_a$1 = /*@__PURE__*/ _const("input_a", $input_a__OR__input_b__OR__input_c);
 const $input_b = /*@__PURE__*/ _const("input_b", $input_a__OR__input_b__OR__input_c);
 const $input_c$1 = /*@__PURE__*/ _const("input_c", $input_a__OR__input_b__OR__input_c);

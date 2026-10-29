@@ -8,7 +8,7 @@ const $Card_content__record_name = ($scope, record_name) => _text($scope["#text/
 const $Card_content__$params = ($scope, $params2) => $Card_content__record_name($scope, $params2[0].record?.name);
 const $Card_content = _content("__tests__/tags/picker.marko_1*content", "<h4> </h4>", "D ", 0, $Card_content__$params);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $input_useA__OR__input_record__OR__Card__OR__Other = /*@__PURE__*/ _fill_join("__tests__/tags/picker.marko_fill1", "input_record", /*@__PURE__*/ _fill_join("__tests__/tags/picker.marko_fill0", "input_useA", /*@__PURE__*/ _or_resume("__tests__/tags/picker.marko_0_input_useA#3_input_record#4_Card#5_Other#6/init", 7, ($scope) => $dynamicTag($scope, $scope.input_useA ? $scope.Card : $scope.Other, ($_) => ({ record: $scope.input_record })), 3)));
+const $input_useA__OR__input_record__OR__Card__OR__Other = /*@__PURE__*/ _fill("__tests__/tags/picker.marko_fill1", "input_record", /*@__PURE__*/ _fill("__tests__/tags/picker.marko_fill0", "input_useA", /*@__PURE__*/ _or_resume("__tests__/tags/picker.marko_0_input_useA#3_input_record#4_Card#5_Other#6/init", 7, ($scope) => $dynamicTag($scope, $scope.input_useA ? $scope.Card : $scope.Other, ($_) => ({ record: $scope.input_record })), 3)));
 const $Card = /*@__PURE__*/ _const("Card", $input_useA__OR__input_record__OR__Card__OR__Other);
 const $Other = /*@__PURE__*/ _const("Other", $input_useA__OR__input_record__OR__Card__OR__Other);
 function $setup$1($scope) {

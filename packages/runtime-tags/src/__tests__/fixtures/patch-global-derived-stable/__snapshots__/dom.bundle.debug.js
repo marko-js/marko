@@ -5,7 +5,7 @@ function brandOf(g) {
 	return g.brand;
 }
 const $name = ($scope, name) => _text($scope["#text/1"], name);
-const $setup__$global = /*@__PURE__*/ _fill_global_join("__tests__/template.marko_0_$global#4", ($scope) => {
+const $setup__$global = /*@__PURE__*/ _fill_global("__tests__/template.marko_0_$global#4", ($scope) => {
 	_text($scope["#text/0"], brandOf($scope.$global));
 	$name($scope, brandOf($scope.$global));
 }, "");

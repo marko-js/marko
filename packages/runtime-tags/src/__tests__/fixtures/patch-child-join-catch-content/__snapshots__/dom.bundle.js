@@ -1,10 +1,10 @@
 // tags/wrapper.marko
 const $catch_content__dynamicTag = /*@__PURE__*/ _dynamic_tag(0);
-const $catch_content__input_fallback = /*@__PURE__*/ _fill_join_closure("c5", 3, /*@__PURE__*/ _closure_get(5, ($scope) => $catch_content__dynamicTag($scope, $scope._.d), 0, "c0"), 0);
+const $catch_content__input_fallback = /*@__PURE__*/ _fill_closure("c5", 3, /*@__PURE__*/ _closure_get(5, ($scope) => $catch_content__dynamicTag($scope, $scope._.d), 0, "c0"), 0);
 const $catch_content = _content$1("c3", "<!><!><!>", "b%", $catch_content__input_fallback);
 
 // tags/panel.marko
-const $fallback_content__input_a__OR__input_b = /*@__PURE__*/ _fill_join_subscribers("b5", 5, /*@__PURE__*/ _fill_join_subscribers("b4", 4, /*@__PURE__*/ _or_resume("b2", 1, ($scope) => _text($scope.a, $scope._.e + $scope._.f)), 6, 0), 7, 0);
+const $fallback_content__input_a__OR__input_b = /*@__PURE__*/ _fill_subscribers("b5", 5, /*@__PURE__*/ _fill_subscribers("b4", 4, /*@__PURE__*/ _or_resume("b2", 1, ($scope) => _text($scope.a, $scope._.e + $scope._.f)), 6, 0), 7, 0);
 const $fallback_content__input_a = /*@__PURE__*/ _closure_get(6, $fallback_content__input_a__OR__input_b, 0, "b0");
 const $fallback_content__setup = ($scope) => {
 	$fallback_content__input_a($scope);

@@ -1,6 +1,6 @@
 // tags/frag-host.marko
 const $one_content = _content$1("b0", "<em>one</em>");
-const $two_content__input_b = /*@__PURE__*/ _init_resume("b2", /*@__PURE__*/ _fill_join_closure("b5", 4, /*@__PURE__*/ _closure_get(9, ($scope) => _text($scope.a, $scope._.e), 0, "b3"), 0));
+const $two_content__input_b = /*@__PURE__*/ _init_resume("b2", /*@__PURE__*/ _fill_closure("b5", 4, /*@__PURE__*/ _closure_get(9, ($scope) => _text($scope.a, $scope._.e), 0, "b3"), 0));
 const $two_content = _content$1("b1", "<strong> </strong>", "D ", $two_content__input_b);
 const $input_mode__OR__one__OR__two__script = _script("b4", ($scope) => {
 	_attrs_script($scope, "a");

@@ -2,7 +2,7 @@
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $await_content__g = /*@__PURE__*/ _fill_let_change("__tests__/tags/show-await.marko_fill2", "g/6", ($scope) => _text($scope["#text/0"], $scope.g));
-const $await_content__input_label__OR__a = /*@__PURE__*/ _fill_join_subscribers("__tests__/tags/show-await.marko_fill0", "input_label", /*@__PURE__*/ _or_resume("__tests__/tags/show-await.marko_1_input_label#0:4_a#4/init", 5, ($scope) => $await_content__g($scope, $scope.a + ":" + $scope._.input_label, $valueChange($scope))), "input_label/5", 0);
+const $await_content__input_label__OR__a = /*@__PURE__*/ _fill_subscribers("__tests__/tags/show-await.marko_fill0", "input_label", /*@__PURE__*/ _or_resume("__tests__/tags/show-await.marko_1_input_label#0:4_a#4/init", 5, ($scope) => $await_content__g($scope, $scope.a + ":" + $scope._.input_label, $valueChange($scope))), "input_label/5", 0);
 const $await_content__input_label = _closure_resume("__tests__/tags/show-await.marko_1_input_label#0:4/subscribe", /*@__PURE__*/ _closure_get("input_label/5", $await_content__input_label__OR__a));
 const $await_content__setup__script = _script("__tests__/tags/show-await.marko_1", ($scope) => _on($scope["#button/1"], "click", function() {
 	$await_content__g($scope, "q");
@@ -33,7 +33,7 @@ var show_await_default = /*@__PURE__*/ _template("__tests__/tags/show-await.mark
 // template.marko
 const $template = "<button class=set>set</button><!><!>";
 const $walks = " b%c";
-const $if_content__input_promise = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_promise#0:6/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_promise", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $input_promise$1($scope["#childScope/0"], $scope._.input_promise))));
+const $if_content__input_promise = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_promise#0:6/init", /*@__PURE__*/ _fill("__tests__/template.marko_fill0", "input_promise", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $input_promise$1($scope["#childScope/0"], $scope._.input_promise))));
 const $if_content__setup = ($scope) => {
 	$if_content__input_promise._($scope);
 	$if_content__l._($scope);

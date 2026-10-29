@@ -8,7 +8,7 @@ var brand_default = /*@__PURE__*/ _template("b", $template, "D l", 0, $input);
 // tags/show-await.marko
 const tags = [brand_default];
 const $await_content__dynamicTag = /*@__PURE__*/ _dynamic_tag(0);
-const $await_content__x = /*@__PURE__*/ _const(2, /* @__PURE__ */ _fill_global_join("c0", ($scope) => $await_content__dynamicTag($scope, $scope.c && $scope.$.flag ? tags[0] : null, ($_) => ({ label: $scope.c })), "flag"));
+const $await_content__x = /*@__PURE__*/ _const(2, /* @__PURE__ */ _fill_global("c0", ($scope) => $await_content__dynamicTag($scope, $scope.c && $scope.$.flag ? tags[0] : null, ($_) => ({ label: $scope.c })), "flag"));
 const $await_content__$params = ($scope, $params2) => $await_content__x($scope, $params2[0]);
 const $await_promise = /*@__PURE__*/ _await_promise(0, $await_content__$params);
 const $input_promise = $await_promise;

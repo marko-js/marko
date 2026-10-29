@@ -20,7 +20,7 @@ const $n = _let("n/7", ($scope) => {
 	$n__closure($scope);
 });
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $input_show__OR__input_label__OR__Content = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "input_label", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_show", /*@__PURE__*/ _or(9, ($scope) => $dynamicTag($scope, $scope.input_show ? $scope.Content : "span", ($_) => ({ label: $scope.input_label })), 2)));
+const $input_show__OR__input_label__OR__Content = /*@__PURE__*/ _fill("__tests__/template.marko_fill1", "input_label", /*@__PURE__*/ _fill("__tests__/template.marko_fill0", "input_show", /*@__PURE__*/ _or(9, ($scope) => $dynamicTag($scope, $scope.input_show ? $scope.Content : "span", ($_) => ({ label: $scope.input_label })), 2)));
 const $Content = /*@__PURE__*/ _const("Content", $input_show__OR__input_label__OR__Content);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$n($scope, +$scope.n + 1);

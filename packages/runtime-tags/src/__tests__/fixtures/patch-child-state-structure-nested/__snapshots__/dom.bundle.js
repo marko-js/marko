@@ -1,7 +1,7 @@
 // tags/panel/index.marko
-const $if_content2__input_title = /*@__PURE__*/ _init_resume("b0", /*@__PURE__*/ _fill_join_closure("b6", 5, /*@__PURE__*/ _closure_get(7, ($scope) => _text($scope.a, $scope._._.f), ($scope) => $scope._._, "b1"), 0));
+const $if_content2__input_title = /*@__PURE__*/ _init_resume("b0", /*@__PURE__*/ _fill_closure("b6", 5, /*@__PURE__*/ _closure_get(7, ($scope) => _text($scope.a, $scope._._.f), ($scope) => $scope._._, "b1"), 0));
 const $if_content__if = /*@__PURE__*/ _if(0, "<em> </em>", "D ", $if_content2__input_title);
-const $if_content__input_inner = /*@__PURE__*/ _init_resume("b4", /*@__PURE__*/ _fill_join("b5", 4, /*@__PURE__*/ _if_closure(0, 0, ($scope) => $if_content__if($scope, $scope._.e ? 0 : 1))));
+const $if_content__input_inner = /*@__PURE__*/ _init_resume("b4", /*@__PURE__*/ _fill("b5", 4, /*@__PURE__*/ _if_closure(0, 0, ($scope) => $if_content__if($scope, $scope._.e ? 0 : 1))));
 const $if = /*@__PURE__*/ _if(0, "<section></section>", " ", $if_content__input_inner);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 

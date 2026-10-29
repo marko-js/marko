@@ -1,5 +1,5 @@
 // tags/card.marko
-const $if_content2__input_label = /*@__PURE__*/ _fill_join("b11 b12", 7, /*@__PURE__*/ _if_closure(1, 0, ($scope) => _text($scope.a, $scope._.h)));
+const $if_content2__input_label = /*@__PURE__*/ _fill("b11 b12", 7, /*@__PURE__*/ _if_closure(1, 0, ($scope) => _text($scope.a, $scope._.h)));
 const $if_content2__setup = $if_content2__input_label;
 const $if2 = /*@__PURE__*/ _if(1, "<b> </b>", "D ", $if_content2__setup);
 const $open = /*@__PURE__*/ _fill_let("b13", 8, ($scope) => $if2($scope, $scope.i ? 0 : 1));

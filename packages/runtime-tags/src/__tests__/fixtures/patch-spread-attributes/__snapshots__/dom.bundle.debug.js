@@ -2,7 +2,7 @@
 const $template = "<main><a> </a><!><button> </button></main>";
 const $walks = "D D l%b D m";
 const $if_content__input_img__script = _script("__tests__/template.marko_1_input_img#0:10", ($scope) => _attrs_script($scope, "#img/0"));
-const $if_content__input_img = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_img#0:10/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_img", /*@__PURE__*/ _if_closure("#text/2", 0, ($scope) => {
+const $if_content__input_img = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_img#0:10/init", /*@__PURE__*/ _fill("__tests__/template.marko_fill0", "input_img", /*@__PURE__*/ _if_closure("#text/2", 0, ($scope) => {
 	$if_content__input_img__script($scope);
 	_attrs($scope, "#img/0", {
 		alt: "hero",

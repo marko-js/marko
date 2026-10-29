@@ -8,7 +8,7 @@ const $if_content__setup$1 = ($scope) => {
 	$if_content__n($scope, 3);
 };
 const $await_content__if = /*@__PURE__*/ _if("#text/0", "<p><!>:<!></p>", "D%c%", $if_content__setup$1);
-const $await_content__x__$global_flag = /*@__PURE__*/ _fill_global_join("__tests__/tags/show-await.marko_1_$global_flag#0:8_x#2", ($scope) => $await_content__if($scope, $scope.x && _global_read($scope.$global, "flag") ? 0 : 1), "flag");
+const $await_content__x__$global_flag = /*@__PURE__*/ _fill_global("__tests__/tags/show-await.marko_1_$global_flag#0:8_x#2", ($scope) => $await_content__if($scope, $scope.x && _global_read($scope.$global, "flag") ? 0 : 1), "flag");
 const $await_content__x = /*@__PURE__*/ _const("x", ($scope) => {
 	$await_content__x__$global_flag($scope);
 	$if_content__x($scope);

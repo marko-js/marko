@@ -2,7 +2,7 @@
 const $template$1 = "<div><button class=open>toggle</button><!></div>";
 const $walks$1 = "D b%l";
 const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $if_content__input_content = /*@__PURE__*/ _fill_join("__tests__/tags/toggle.marko_fill0", "input_content", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.input_content)));
+const $if_content__input_content = /*@__PURE__*/ _fill("__tests__/tags/toggle.marko_fill0", "input_content", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.input_content)));
 const $if_content__setup$1 = $if_content__input_content;
 const $if$1 = /*@__PURE__*/ _if("#text/1", "<!><!><!>", "b%", $if_content__setup$1);
 const $open = /*@__PURE__*/ _fill_let("__tests__/tags/toggle.marko_fill1", "open/5", ($scope) => $if$1($scope, $scope.open ? 0 : 1));

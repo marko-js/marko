@@ -10,7 +10,7 @@ const $Panel_content__label = ($scope, label) => _text($scope["#text/0"], label)
 const $Panel_content__$params = ($scope, $params2) => $Panel_content__label($scope, $params2[0]);
 const $Panel_content = _content("__tests__/template.marko_1*content", $Panel_content__template, $Panel_content__walks, 0, $Panel_content__$params);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1", 0, 0, 1);
-const $input_label__OR__open__OR__Panel__OR__Other = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _or(9, ($scope) => $dynamicTag($scope, $scope.open ? $scope.Other : $scope.Panel, ($_) => [$scope.input_label]), 3));
+const $input_label__OR__open__OR__Panel__OR__Other = /*@__PURE__*/ _fill("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _or(9, ($scope) => $dynamicTag($scope, $scope.open ? $scope.Other : $scope.Panel, ($_) => [$scope.input_label]), 3));
 const $open = _let("open/6", $input_label__OR__open__OR__Panel__OR__Other);
 const $Panel = /*@__PURE__*/ _const("Panel", $input_label__OR__open__OR__Panel__OR__Other);
 const $Other = /*@__PURE__*/ _const("Other", $input_label__OR__open__OR__Panel__OR__Other);

@@ -10,7 +10,7 @@ const $try_content__setup = ($scope) => {
 	$try_content__input_promise($scope);
 	$await_content($scope);
 };
-const $catch_content__input_title = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_title", /*@__PURE__*/ _closure_get("input_title/5", ($scope) => _text($scope["#text/0"], $scope._.input_title), 0, "__tests__/template.marko_1_input_title#0:3/subscribe"), 0);
+const $catch_content__input_title = /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill0", "input_title", /*@__PURE__*/ _closure_get("input_title/5", ($scope) => _text($scope["#text/0"], $scope._.input_title), 0, "__tests__/template.marko_1_input_title#0:3/subscribe"), 0);
 const $catch_content__setup = $catch_content__input_title;
 const $catch_content = _content("__tests__/template.marko_1*content", "<em> </em>", "D ", $catch_content__setup);
 const $try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content__setup, 0, $catch_content);

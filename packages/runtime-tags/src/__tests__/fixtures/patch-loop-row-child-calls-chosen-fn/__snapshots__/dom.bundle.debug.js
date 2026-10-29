@@ -13,7 +13,7 @@ var label_view_default = /*@__PURE__*/ _template("__tests__/tags/label-view.mark
 const $template = "<!><!><button>noop</button>";
 const $walks = "b%c";
 const $setup = ($_) => {};
-const $for_content__up__OR__low__OR__item_upper = /*@__PURE__*/ _fill_join_for("__tests__/template.marko_fill1/unpatched", "low", /*@__PURE__*/ _fill_join_for("__tests__/template.marko_fill0/unpatched", "up", /*@__PURE__*/ _or_resume("__tests__/template.marko_1_up#0:5_low#0:6_item_upper#3/init", 4, ($scope) => $input$1($scope["#childScope/0"], { get: $scope.item_upper ? $scope._.up : $scope._.low }), 2), "#text/0"), "#text/0");
+const $for_content__up__OR__low__OR__item_upper = /*@__PURE__*/ _fill_for("__tests__/template.marko_fill1/unpatched", "low", /*@__PURE__*/ _fill_for("__tests__/template.marko_fill0/unpatched", "up", /*@__PURE__*/ _or_resume("__tests__/template.marko_1_up#0:5_low#0:6_item_upper#3/init", 4, ($scope) => $input$1($scope["#childScope/0"], { get: $scope.item_upper ? $scope._.up : $scope._.low }), 2), "#text/0"), "#text/0");
 const $for_content__up = /*@__PURE__*/ _for_closure("#text/0", $for_content__up__OR__low__OR__item_upper);
 const $for_content__setup = ($scope) => {
 	$for_content__up._($scope);

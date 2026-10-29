@@ -3,7 +3,7 @@ const $template$2 = "<!><!><!>";
 const $walks$2 = "b%c";
 const $setup$2 = ($_) => {};
 const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $if_content__input_body = /*@__PURE__*/ _init_resume("__tests__/tags/wrap.marko_1_input_body#0:4/init", /*@__PURE__*/ _fill_join("__tests__/tags/wrap.marko_fill0", "input_body", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.input_body))));
+const $if_content__input_body = /*@__PURE__*/ _init_resume("__tests__/tags/wrap.marko_1_input_body#0:4/init", /*@__PURE__*/ _fill("__tests__/tags/wrap.marko_fill0", "input_body", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.input_body))));
 const $if_content__setup = $if_content__input_body;
 const $if = /*@__PURE__*/ _if("#text/0", "<div><!></div>", "D%", $if_content__setup);
 const $input_show$2 = ($scope, input_show) => $if($scope, input_show ? 0 : 1);

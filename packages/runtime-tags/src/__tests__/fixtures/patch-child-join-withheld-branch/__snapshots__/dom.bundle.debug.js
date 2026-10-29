@@ -2,7 +2,7 @@
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $setup$1 = ($_) => {};
-const $frag_content__input_a__OR__input_b = /*@__PURE__*/ _fill_join_subscribers("__tests__/tags/child.marko_fill1/unpatched", "input_b", /*@__PURE__*/ _fill_join_subscribers("__tests__/tags/child.marko_fill0/unpatched", "input_a", /*@__PURE__*/ _or_resume("__tests__/tags/child.marko_2_input_a#0:4_input_b#0:5/init", 1, ($scope) => _text($scope["#text/0"], $scope._._.input_a + $scope._._.input_b)), "input_a/7", 0), "input_b/8", 0);
+const $frag_content__input_a__OR__input_b = /*@__PURE__*/ _fill_subscribers("__tests__/tags/child.marko_fill1/unpatched", "input_b", /*@__PURE__*/ _fill_subscribers("__tests__/tags/child.marko_fill0/unpatched", "input_a", /*@__PURE__*/ _or_resume("__tests__/tags/child.marko_2_input_a#0:4_input_b#0:5/init", 1, ($scope) => _text($scope["#text/0"], $scope._._.input_a + $scope._._.input_b)), "input_a/7", 0), "input_b/8", 0);
 const $frag_content__input_a = /*@__PURE__*/ _closure_get("input_a/7", $frag_content__input_a__OR__input_b, ($scope) => $scope._._, "__tests__/tags/child.marko_2_input_a#0:4/subscribe");
 const $frag_content__setup = ($scope) => {
 	$frag_content__input_a($scope);
@@ -10,7 +10,7 @@ const $frag_content__setup = ($scope) => {
 };
 const $frag_content__input_b = /*@__PURE__*/ _closure_get("input_b/8", $frag_content__input_a__OR__input_b, ($scope) => $scope._._, "__tests__/tags/child.marko_2_input_b#0:5/subscribe");
 const $frag_content = _content("__tests__/tags/child.marko_2*content", "<em> </em>", "D ", $frag_content__setup);
-const $if_content__input_mode__OR__frag_content = /*@__PURE__*/ _fill_join_if("__tests__/tags/child.marko_fill2", "input_mode", /*@__PURE__*/ _or_resume("__tests__/tags/child.marko_1_input_mode#0:6_frag_content#2/init", 3, ($scope) => _attr_content($scope, "#section/0", $scope._.input_mode ? $scope.frag_content : null)), "#text/0", 0);
+const $if_content__input_mode__OR__frag_content = /*@__PURE__*/ _fill_if("__tests__/tags/child.marko_fill2", "input_mode", /*@__PURE__*/ _or_resume("__tests__/tags/child.marko_1_input_mode#0:6_frag_content#2/init", 3, ($scope) => _attr_content($scope, "#section/0", $scope._.input_mode ? $scope.frag_content : null)), "#text/0", 0);
 const $if_content__input_mode = /*@__PURE__*/ _if_closure("#text/0", 0, $if_content__input_mode__OR__frag_content);
 const $if_content__frag = ($scope, frag) => $if_content__frag_content($scope, frag?.content);
 const $if_content__setup = ($scope) => {

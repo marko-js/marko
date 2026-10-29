@@ -18,7 +18,7 @@ var widget_default = /*@__PURE__*/ _template("__tests__/tags/widget/index.marko"
 // template.marko
 const $template = "<main><!><button class=outer>+</button></main>";
 const $walks = "D%b l";
-const $if_content__input_label = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_label$1($scope["#childScope/0"], $scope._.input_label)));
+const $if_content__input_label = /*@__PURE__*/ _fill("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_label$1($scope["#childScope/0"], $scope._.input_label)));
 const $if_content__setup = ($scope) => {
 	$if_content__input_label._($scope);
 	$setup$1($scope["#childScope/0"]);

@@ -3,7 +3,7 @@ const $template$2 = "<!><!><!>";
 const $walks$2 = "b%c";
 const $setup$2 = ($_) => {};
 const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $if_content__input_content = /*@__PURE__*/ _init_resume("__tests__/tags/toggle.marko_1_input_content#0:4/init", /*@__PURE__*/ _fill_join("__tests__/tags/toggle.marko_fill0", "input_content", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.input_content))));
+const $if_content__input_content = /*@__PURE__*/ _init_resume("__tests__/tags/toggle.marko_1_input_content#0:4/init", /*@__PURE__*/ _fill("__tests__/tags/toggle.marko_fill0", "input_content", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.input_content))));
 const $if_content__setup = $if_content__input_content;
 const $if = /*@__PURE__*/ _if("#text/0", "<!><!><!>", "b%", $if_content__setup);
 const $input_open = ($scope, input_open) => $if($scope, input_open ? 0 : 1);
@@ -27,7 +27,7 @@ var wrapper_default = /*@__PURE__*/ _template("__tests__/tags/wrapper.marko", $t
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<button>+</button>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}& b`)("D%l");
-const $toggle_content__label = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_label#1:1/init", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "label", /*@__PURE__*/ _closure_get("label/8", ($scope) => _text($scope["#text/0"], $scope._.label), 0, "__tests__/template.marko_2_label#1:1/subscribe"), 0));
+const $toggle_content__label = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_label#1:1/init", /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill0", "label", /*@__PURE__*/ _closure_get("label/8", ($scope) => _text($scope["#text/0"], $scope._.label), 0, "__tests__/template.marko_2_label#1:1/subscribe"), 0));
 const $toggle_content__setup = $toggle_content__label;
 const $toggle_content = _content("__tests__/template.marko_2*content", "<p> </p>", "D ", $toggle_content__setup);
 const $wrapper_content__label__closure = /*@__PURE__*/ _closure($toggle_content__label);

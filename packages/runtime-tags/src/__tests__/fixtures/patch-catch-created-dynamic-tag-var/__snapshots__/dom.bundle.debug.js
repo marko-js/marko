@@ -29,7 +29,7 @@ function boom() {
 const $try_content__input_fail = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_input_fail#0:5/init", /*@__PURE__*/ _closure_get("input_fail/8", ($scope) => _text($scope["#text/0"], $scope._.input_fail ? boom() : "ok"), 0, "__tests__/template.marko_2_input_fail#0:5/subscribe"));
 const $try_content__setup = $try_content__input_fail;
 const $catch_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1", 0, ($_) => $catch_content__v);
-const $catch_content__input_big__OR__input_label = /*@__PURE__*/ _fill_join_subscribers("__tests__/template.marko_fill1/unpatched", "input_label", /*@__PURE__*/ _fill_join_subscribers("__tests__/template.marko_fill0/unpatched", "input_big", /*@__PURE__*/ _or_resume("__tests__/template.marko_1_input_big#0:3_input_label#0:4/init", 4, ($scope) => $catch_content__dynamicTag($scope, $scope._.input_big ? huge_label_default : tiny_label_default, ($_) => ({ label: $scope._.input_label }))), "input_big/6", 0), "input_label/7", 0);
+const $catch_content__input_big__OR__input_label = /*@__PURE__*/ _fill_subscribers("__tests__/template.marko_fill1/unpatched", "input_label", /*@__PURE__*/ _fill_subscribers("__tests__/template.marko_fill0/unpatched", "input_big", /*@__PURE__*/ _or_resume("__tests__/template.marko_1_input_big#0:3_input_label#0:4/init", 4, ($scope) => $catch_content__dynamicTag($scope, $scope._.input_big ? huge_label_default : tiny_label_default, ($_) => ({ label: $scope._.input_label }))), "input_big/6", 0), "input_label/7", 0);
 const $catch_content__input_big = /*@__PURE__*/ _closure_get("input_big/6", $catch_content__input_big__OR__input_label, 0, "__tests__/template.marko_1_input_big#0:3/subscribe");
 const $catch_content__setup = ($scope) => {
 	$catch_content__input_big($scope);

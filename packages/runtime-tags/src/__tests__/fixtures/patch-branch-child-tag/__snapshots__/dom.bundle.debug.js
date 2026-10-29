@@ -13,12 +13,12 @@ var badge_default = /*@__PURE__*/ _template("__tests__/tags/badge.marko", $templ
 // template.marko
 const $template = "<main><!><button> </button></main>";
 const $walks = "D%b D m";
-const $if_content__input_title = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_title#0:6/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_title", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_label($scope["#childScope/0"], $scope._.input_title))));
+const $if_content__input_title = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_title#0:6/init", /*@__PURE__*/ _fill("__tests__/template.marko_fill0", "input_title", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_label($scope["#childScope/0"], $scope._.input_title))));
 const $if_content__setup = ($scope) => {
 	$if_content__input_title._($scope);
 	$if_content__input_note._($scope);
 };
-const $if_content__input_note = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_note#0:7/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "input_note", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_note$1($scope["#childScope/0"], $scope._.input_note))));
+const $if_content__input_note = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_note#0:7/init", /*@__PURE__*/ _fill("__tests__/template.marko_fill1", "input_note", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_note$1($scope["#childScope/0"], $scope._.input_note))));
 const $count = _let("count/8", ($scope) => _text($scope["#text/2"], $scope.count));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$count($scope, +$scope.count + 1);

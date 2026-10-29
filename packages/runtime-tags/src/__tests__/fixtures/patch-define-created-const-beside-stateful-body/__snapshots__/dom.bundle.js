@@ -12,7 +12,7 @@ const $Panel_content__$temp = ($scope, $temp) => {
 };
 const $Panel_content = _content$1("a3", $Panel_content__template, $Panel_content__walks, 0, $Panel_content__$params);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag(1);
-const $input_label__OR__open__OR__Tag = /*@__PURE__*/ _fill_join("a8", 11, /*@__PURE__*/ _fill_join("a6 a7", 6, /*@__PURE__*/ _or(12, ($scope) => $dynamicTag($scope, $scope.l, ($_) => ({
+const $input_label__OR__open__OR__Tag = /*@__PURE__*/ _fill("a8", 11, /*@__PURE__*/ _fill("a6 a7", 6, /*@__PURE__*/ _or(12, ($scope) => $dynamicTag($scope, $scope.l, ($_) => ({
 	isOpen: !$scope.i,
 	label: $scope.g + "!"
 })), 2)));

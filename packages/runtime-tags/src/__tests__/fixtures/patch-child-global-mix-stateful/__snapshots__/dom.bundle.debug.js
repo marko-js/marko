@@ -2,9 +2,9 @@
 const $template$1 = "<p></p>";
 const $walks$1 = " b";
 const $setup$1 = ($_) => {};
-const $z__$global_mark = /*@__PURE__*/ _fill_global_join("__tests__/tags/gm/index.marko_0_z#4_$global_mark#7", ($scope) => _attr($scope["#p/0"], "data-z", $scope.z + _global_read($scope.$global, "mark")), "mark");
+const $z__$global_mark = /*@__PURE__*/ _fill_global("__tests__/tags/gm/index.marko_0_z#4_$global_mark#7", ($scope) => _attr($scope["#p/0"], "data-z", $scope.z + _global_read($scope.$global, "mark")), "mark");
 const $z = /*@__PURE__*/ _const("z", $z__$global_mark);
-const $input_v__$global_flag = /*@__PURE__*/ _fill_global_join("__tests__/tags/gm/index.marko_0_input_v#3_$global_flag#5", ($scope) => $z($scope, $scope.input_v + _global_read($scope.$global, "flag")), "flag");
+const $input_v__$global_flag = /*@__PURE__*/ _fill_global("__tests__/tags/gm/index.marko_0_input_v#3_$global_flag#5", ($scope) => $z($scope, $scope.input_v + _global_read($scope.$global, "flag")), "flag");
 const $input_v = /*@__PURE__*/ _const("input_v", $input_v__$global_flag);
 const $input = ($scope, input) => $input_v($scope, input.v);
 var gm_default = /*@__PURE__*/ _template("__tests__/tags/gm/index.marko", $template$1, " b", 0, $input);

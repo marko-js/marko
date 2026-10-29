@@ -29,7 +29,7 @@ const $card_content__setup = ($scope) => {
 	$card_content__p_name($scope);
 	$card_content__item_id($scope);
 };
-const $card_content__p_name = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_p_name#0:8/init", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "p_name", /*@__PURE__*/ _closure_get("p_name/10", ($scope) => _text($scope["#text/0"], $scope._._.p_name), ($scope) => $scope._._), 0));
+const $card_content__p_name = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_p_name#0:8/init", /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill0", "p_name", /*@__PURE__*/ _closure_get("p_name/10", ($scope) => _text($scope["#text/0"], $scope._._.p_name), ($scope) => $scope._._), 0));
 const $card_content__item_id = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_item_id#1:4/init", /*@__PURE__*/ _closure_get("item_id/11", ($scope) => _text($scope["#text/2"], $scope._.item_id)));
 const $card_content = /*@__PURE__*/ _content("__tests__/template.marko_2*content", "<span><!>/<!>/<!></span>", "D%c%c%", $card_content__setup);
 const $for_content__setup = ($scope) => $input_content($scope["#childScope/0"], $card_content($scope));

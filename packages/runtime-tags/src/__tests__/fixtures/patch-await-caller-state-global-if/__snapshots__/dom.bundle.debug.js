@@ -2,7 +2,7 @@
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $await_content__if = /*@__PURE__*/ _if("#text/1", "<b>on</b>");
-const $await_content__x__$global_flag = /*@__PURE__*/ _fill_global_join("__tests__/tags/show-await.marko_1_$global_flag#0:9_x#3", ($scope) => $await_content__if($scope, $scope.x && _global_read($scope.$global, "flag") ? 0 : 1), "flag");
+const $await_content__x__$global_flag = /*@__PURE__*/ _fill_global("__tests__/tags/show-await.marko_1_$global_flag#0:9_x#3", ($scope) => $await_content__if($scope, $scope.x && _global_read($scope.$global, "flag") ? 0 : 1), "flag");
 const $await_content__x = /*@__PURE__*/ _const("x", ($scope) => {
 	_text($scope["#text/0"], $scope.x);
 	$await_content__x__$global_flag($scope);

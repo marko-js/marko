@@ -15,12 +15,12 @@ var keep_default = /*@__PURE__*/ _template("__tests__/tags/keep.marko", $templat
 const $template = "<!><!><!>";
 const $walks = "b%c";
 const $setup = ($_) => {};
-const $keep_content__input_note = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_input_note#0:4/init", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_note", /*@__PURE__*/ _closure_get("input_note/5", ($scope) => _text($scope["#text/1"], $scope._._.input_note), ($scope) => $scope._._, "__tests__/template.marko_2_input_note#0:4/subscribe"), 0));
+const $keep_content__input_note = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_input_note#0:4/init", /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill0", "input_note", /*@__PURE__*/ _closure_get("input_note/5", ($scope) => _text($scope["#text/1"], $scope._._.input_note), ($scope) => $scope._._, "__tests__/template.marko_2_input_note#0:4/subscribe"), 0));
 const $keep_content__setup = ($scope) => {
 	$keep_content__input_note($scope);
 	$keep_content__b($scope);
 };
-const $keep_content__b = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_b#1:2/init", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill1", "b", /*@__PURE__*/ _closure_get("b/6", ($scope) => _text($scope["#text/0"], $scope._.b), 0, "__tests__/template.marko_2_b#1:2/subscribe"), 0));
+const $keep_content__b = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_b#1:2/init", /*@__PURE__*/ _fill_closure("__tests__/template.marko_fill1", "b", /*@__PURE__*/ _closure_get("b/6", ($scope) => _text($scope["#text/0"], $scope._.b), 0, "__tests__/template.marko_2_b#1:2/subscribe"), 0));
 const $keep_content = _content("__tests__/template.marko_2*content", "<!>:<!>", "%c%", $keep_content__setup);
 const $for_content__setup = ($scope) => {
 	$setup$1($scope["#childScope/0"]);

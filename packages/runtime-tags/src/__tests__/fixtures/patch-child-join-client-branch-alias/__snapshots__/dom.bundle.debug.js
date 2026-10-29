@@ -2,7 +2,7 @@
 const $template$1 = "<em> </em><!><!>";
 const $walks$1 = "D l%c";
 const $setup$1 = ($_) => {};
-const $if_content__input_b__OR__input_a = /*@__PURE__*/ _fill_join_if("__tests__/tags/child.marko_fill0 __tests__/tags/child.marko_fill0/unpatched", "input_a", /*@__PURE__*/ _fill_join_if("__tests__/tags/child.marko_fill1 __tests__/tags/child.marko_fill1/unpatched", "input_b", /*@__PURE__*/ _or_resume("__tests__/tags/child.marko_1_input_b#0:6_a#0:6/init", 1, ($scope) => _text($scope["#text/0"], $scope._.input_a + $scope._.input_b)), "#text/1", 0), "#text/1", 0);
+const $if_content__input_b__OR__input_a = /*@__PURE__*/ _fill_if("__tests__/tags/child.marko_fill0 __tests__/tags/child.marko_fill0/unpatched", "input_a", /*@__PURE__*/ _fill_if("__tests__/tags/child.marko_fill1 __tests__/tags/child.marko_fill1/unpatched", "input_b", /*@__PURE__*/ _or_resume("__tests__/tags/child.marko_1_input_b#0:6_a#0:6/init", 1, ($scope) => _text($scope["#text/0"], $scope._.input_a + $scope._.input_b)), "#text/1", 0), "#text/1", 0);
 const $if_content__input_a = /*@__PURE__*/ _if_closure("#text/1", 0, $if_content__input_b__OR__input_a);
 const $if_content__setup = ($scope) => {
 	$if_content__input_a._($scope);

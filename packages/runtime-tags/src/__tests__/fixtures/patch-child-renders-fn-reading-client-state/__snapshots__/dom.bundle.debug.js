@@ -22,7 +22,7 @@ var card_default = /*@__PURE__*/ _template("__tests__/tags/card.marko", $templat
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<button>more</button><span> </span>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}& bD l`)("D l");
-const $input_label__OR__n = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _or(8, ($scope) => $input_fn($scope["#childScope/0"], $fn($scope))));
+const $input_label__OR__n = /*@__PURE__*/ _fill("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _or(8, ($scope) => $input_fn($scope["#childScope/0"], $fn($scope))));
 const $n = _let("n/7", $input_label__OR__n);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$n($scope, +$scope.n + 1);

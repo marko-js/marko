@@ -15,7 +15,7 @@ function $setup($scope) {
 const $input_label = ($scope, input_label) => _text($scope.a, input_label);
 
 // template.marko
-const $if_content__input_label = /*@__PURE__*/ _fill_join("a2", 4, /*@__PURE__*/ _if_closure(0, 0, ($scope) => $input_label($scope.a, $scope._.e)));
+const $if_content__input_label = /*@__PURE__*/ _fill("a2", 4, /*@__PURE__*/ _if_closure(0, 0, ($scope) => $input_label($scope.a, $scope._.e)));
 const $if_content__setup = ($scope) => {
 	$if_content__input_label._($scope);
 	$setup($scope.a);

@@ -14,7 +14,7 @@ const $Panel_content__template = "<em> </em>";
 const $Panel_content__fmt__OR__label = /*@__PURE__*/ _or_resume("a1", 5, ($scope) => _text($scope.a, $scope.d($scope.e)));
 const $Panel_content__fmt = /*@__PURE__*/ _const(3, $Panel_content__fmt__OR__label);
 const $Panel_content__label = /*@__PURE__*/ _const(4, $Panel_content__fmt__OR__label);
-const $if_content__input_label = /*@__PURE__*/ _fill_join("a3", 4, /*@__PURE__*/ _if_closure(0, 0, ($scope) => {
+const $if_content__input_label = /*@__PURE__*/ _fill("a3", 4, /*@__PURE__*/ _if_closure(0, 0, ($scope) => {
 	$Panel_content__fmt($scope.a, lib.format);
 	$Panel_content__label($scope.a, $scope._.e);
 }));

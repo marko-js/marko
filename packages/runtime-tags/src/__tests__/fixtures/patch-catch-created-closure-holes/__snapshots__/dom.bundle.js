@@ -4,7 +4,7 @@ const $catch_content__upper = /*@__PURE__*/ _const(8, ($scope) => {
 	_text($scope.d, $scope.i);
 	$catch_content__err_message__OR__upper($scope);
 });
-const $catch_content__input_msg = /*@__PURE__*/ _init_resume("a0", _closure_resume("a2", /*@__PURE__*/ _fill_join_closure("a8", 3, /*@__PURE__*/ _closure_get(5, ($scope) => {
+const $catch_content__input_msg = /*@__PURE__*/ _init_resume("a0", _closure_resume("a2", /*@__PURE__*/ _fill_closure("a8", 3, /*@__PURE__*/ _closure_get(5, ($scope) => {
 	_attr($scope.a, "title", $scope._.d);
 	_text($scope.c, $scope._.d);
 	$catch_content__upper($scope, $scope._.d.toUpperCase());

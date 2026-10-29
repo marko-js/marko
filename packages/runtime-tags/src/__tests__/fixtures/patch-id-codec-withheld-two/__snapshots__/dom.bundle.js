@@ -15,7 +15,7 @@ const $keeper_content2__input_prefix__OR__uid = /*@__PURE__*/ _or(4, ($scope) =>
 	_text($scope.b, $scope._.e + " " + $scope.d);
 	_attr($scope.c, "title", $scope._.e + " " + $scope.d);
 });
-const $keeper_content2__input_prefix = /*@__PURE__*/ _fill_join_closure("a4", 4, /*@__PURE__*/ _closure_get(5, $keeper_content2__input_prefix__OR__uid, 0, "a2"), 1);
+const $keeper_content2__input_prefix = /*@__PURE__*/ _fill_closure("a4", 4, /*@__PURE__*/ _closure_get(5, $keeper_content2__input_prefix__OR__uid, 0, "a2"), 1);
 const $keeper_content2__uid = /*@__PURE__*/ _const(3, ($scope) => {
 	_attr($scope.a, "for", $scope.d);
 	_attr($scope.c, "id", $scope.d);
@@ -30,7 +30,7 @@ const $keeper_content__input_prefix__OR__uid = /*@__PURE__*/ _or(4, ($scope) => 
 	_text($scope.b, $scope._.e + " " + $scope.d);
 	_attr($scope.c, "title", $scope._.e + " " + $scope.d);
 });
-const $keeper_content__input_prefix = /*@__PURE__*/ _fill_join_closure("a4", 4, /*@__PURE__*/ _closure_get(5, $keeper_content__input_prefix__OR__uid, 0, "a0"), 0);
+const $keeper_content__input_prefix = /*@__PURE__*/ _fill_closure("a4", 4, /*@__PURE__*/ _closure_get(5, $keeper_content__input_prefix__OR__uid, 0, "a0"), 0);
 const $keeper_content__uid = /*@__PURE__*/ _const(3, ($scope) => {
 	_attr($scope.a, "for", $scope.d);
 	_attr($scope.c, "id", $scope.d);

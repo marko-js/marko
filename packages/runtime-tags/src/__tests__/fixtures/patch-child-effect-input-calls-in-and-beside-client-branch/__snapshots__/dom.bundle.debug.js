@@ -13,7 +13,7 @@ const $Panel_content__walks = "b%c";
 const $Panel_content__template = "<!><!><!>";
 const $template$1 = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!><!><button class=toggle>toggle</button>`)($Panel_content__template);
 const $walks$1 = /*@__PURE__*/ ((_w0) => `b/${_w0}&%b%b b`)($Panel_content__walks);
-const $if_content3__fmt__OR__label = /*@__PURE__*/ _fill_join_if("__tests__/tags/card.marko_fill5/unpatched", "label", /*@__PURE__*/ _fill_join_if("__tests__/tags/card.marko_fill4/unpatched", "fmt", /*@__PURE__*/ _or_resume("__tests__/tags/card.marko_4_fmt#3:4_label#3:5/init", 1, ($scope) => _text($scope["#text/0"], $scope._.fmt($scope._.label))), "#text/0", 0), "#text/0", 0);
+const $if_content3__fmt__OR__label = /*@__PURE__*/ _fill_if("__tests__/tags/card.marko_fill5/unpatched", "label", /*@__PURE__*/ _fill_if("__tests__/tags/card.marko_fill4/unpatched", "fmt", /*@__PURE__*/ _or_resume("__tests__/tags/card.marko_4_fmt#3:4_label#3:5/init", 1, ($scope) => _text($scope["#text/0"], $scope._.fmt($scope._.label))), "#text/0", 0), "#text/0", 0);
 const $if_content3__fmt = /*@__PURE__*/ _if_closure("#text/0", 0, $if_content3__fmt__OR__label);
 const $if_content3__setup = ($scope) => {
 	$if_content3__fmt._($scope);
@@ -30,16 +30,16 @@ const $Panel_content__$temp = ($scope, $temp) => {
 	$Panel_content__tag_input_fmt($scope, $temp.fmt);
 	$Panel_content__tag_input_label($scope, $temp.label);
 };
-const $if_content2__input_label = /*@__PURE__*/ _fill_join("__tests__/tags/card.marko_fill1 __tests__/tags/card.marko_fill1/unpatched", "input_label", /*@__PURE__*/ _if_closure("#text/2", 0, ($scope) => _text($scope["#text/0"], $scope._.input_label)));
+const $if_content2__input_label = /*@__PURE__*/ _fill("__tests__/tags/card.marko_fill1 __tests__/tags/card.marko_fill1/unpatched", "input_label", /*@__PURE__*/ _if_closure("#text/2", 0, ($scope) => _text($scope["#text/0"], $scope._.input_label)));
 const $if_content2__setup = $if_content2__input_label;
-const $if_content__input_fmt = /*@__PURE__*/ _init_resume("__tests__/tags/card.marko_1_input_fmt#0:6/init", /*@__PURE__*/ _fill_join("__tests__/tags/card.marko_fill0", "input_fmt", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $Panel_content__tag_input_fmt($scope["#childScope/0"], $scope._.input_fmt))));
+const $if_content__input_fmt = /*@__PURE__*/ _init_resume("__tests__/tags/card.marko_1_input_fmt#0:6/init", /*@__PURE__*/ _fill("__tests__/tags/card.marko_fill0", "input_fmt", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $Panel_content__tag_input_fmt($scope["#childScope/0"], $scope._.input_fmt))));
 const $if_content__setup = ($scope) => {
 	$if_content__input_fmt._($scope);
 	$if_content__input_label._($scope);
 	$if_content__input_open._($scope);
 };
-const $if_content__input_label = /*@__PURE__*/ _init_resume("__tests__/tags/card.marko_1_input_label#0:7/init", /*@__PURE__*/ _fill_join("__tests__/tags/card.marko_fill1/unpatched", "input_label", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $Panel_content__tag_input_label($scope["#childScope/0"], $scope._.input_label))));
-const $if_content__input_open = /*@__PURE__*/ _init_resume("__tests__/tags/card.marko_1_input_open#0:9/init", /*@__PURE__*/ _fill_join("__tests__/tags/card.marko_fill2", "input_open", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $Panel_content__isOpen($scope["#childScope/0"], $scope._.input_open))));
+const $if_content__input_label = /*@__PURE__*/ _init_resume("__tests__/tags/card.marko_1_input_label#0:7/init", /*@__PURE__*/ _fill("__tests__/tags/card.marko_fill1/unpatched", "input_label", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $Panel_content__tag_input_label($scope["#childScope/0"], $scope._.input_label))));
+const $if_content__input_open = /*@__PURE__*/ _init_resume("__tests__/tags/card.marko_1_input_open#0:9/init", /*@__PURE__*/ _fill("__tests__/tags/card.marko_fill2", "input_open", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $Panel_content__isOpen($scope["#childScope/0"], $scope._.input_open))));
 const $if2 = /*@__PURE__*/ _if("#text/2", "<b> </b>", "D ", $if_content2__setup);
 const $open = /*@__PURE__*/ _fill_let("__tests__/tags/card.marko_fill3", "open/10", ($scope) => $if2($scope, $scope.open ? 0 : 1));
 const $setup__script$1 = _script("__tests__/tags/card.marko_0", ($scope) => _on($scope["#button/3"], "click", function() {

@@ -6,7 +6,7 @@ const $input_count = ($scope, input_count) => _text($scope.b, input_count);
 const $input_label = ($scope, input_label) => _text($scope.c, input_label);
 
 // template.marko
-const $catch_content__input_label = /*@__PURE__*/ _init_resume("a0", _closure_resume("a1", /*@__PURE__*/ _fill_join_closure("a8", 5, /*@__PURE__*/ _closure_get(8, ($scope) => $input_label($scope.a, $scope._.f)), 0)));
+const $catch_content__input_label = /*@__PURE__*/ _init_resume("a0", _closure_resume("a1", /*@__PURE__*/ _fill_closure("a8", 5, /*@__PURE__*/ _closure_get(8, ($scope) => $input_label($scope.a, $scope._.f)), 0)));
 const $catch_content__setup = ($scope) => {
 	$catch_content__input_label($scope);
 	$catch_content__count($scope);

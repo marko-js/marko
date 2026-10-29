@@ -26,7 +26,7 @@ var small_label_default = /*@__PURE__*/ _template("c", $template, $walks, 0, $in
 
 // template.marko
 const $catch_content__dynamicTag = /*@__PURE__*/ _dynamic_tag(0);
-const $catch_content__input_large__OR__input_label__OR__count__OR__err_message = /*@__PURE__*/ _fill_join("a0", 3, /*@__PURE__*/ _fill_join_subscribers("a10", 6, /*@__PURE__*/ _fill_join_subscribers("a9", 5, /*@__PURE__*/ _or_resume("a14", 4, ($scope) => $catch_content__dynamicTag($scope, $scope._.f ? large_label_default : small_label_default, ($_) => ({
+const $catch_content__input_large__OR__input_label__OR__count__OR__err_message = /*@__PURE__*/ _fill("a0", 3, /*@__PURE__*/ _fill_subscribers("a10", 6, /*@__PURE__*/ _fill_subscribers("a9", 5, /*@__PURE__*/ _or_resume("a14", 4, ($scope) => $catch_content__dynamicTag($scope, $scope._.f ? large_label_default : small_label_default, ($_) => ({
 	message: $scope.d,
 	count: $scope._.i,
 	label: $scope._.g

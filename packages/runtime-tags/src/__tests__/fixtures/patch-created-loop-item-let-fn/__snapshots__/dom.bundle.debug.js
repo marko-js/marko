@@ -5,7 +5,7 @@ const $setup = ($_) => {};
 const $for_content__item = ($scope, item) => $input_opts($scope["#childScope/0"], item);
 const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);
 const $if_content__for = /*@__PURE__*/ _for_of_unkeyed("#text/0", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D l"), 0, $for_content__$params);
-const $if_content__input_label = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_label#0:4/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__for($scope, [[{ fn() {
+const $if_content__input_label = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_label#0:4/init", /*@__PURE__*/ _fill("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $if_content__for($scope, [[{ fn() {
 	return "f:" + $scope._.input_label;
 } }]]))));
 const $if_content__setup = $if_content__input_label;

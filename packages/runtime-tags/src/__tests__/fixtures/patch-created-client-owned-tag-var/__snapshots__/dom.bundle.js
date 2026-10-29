@@ -5,7 +5,7 @@ const $input_x = /*@__PURE__*/ _const(3, ($scope) => {
 });
 
 // tags/wrap.marko
-const $if_content__input_label = /*@__PURE__*/ _init_resume("c2", /*@__PURE__*/ _fill_join("c4", 4, /*@__PURE__*/ _if_closure(0, 0, ($scope) => $input_x($scope.a, $scope._.e))));
+const $if_content__input_label = /*@__PURE__*/ _init_resume("c2", /*@__PURE__*/ _fill("c4", 4, /*@__PURE__*/ _if_closure(0, 0, ($scope) => $input_x($scope.a, $scope._.e))));
 const $if_content__setup__script = _script("c1", ($scope) => _on($scope.d, "click", function() {
 	console.log($scope.e);
 }));

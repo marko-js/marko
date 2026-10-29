@@ -1,7 +1,7 @@
 // tags/field/index.marko
 const $template$1 = "<input>";
 const $walks$1 = " b";
-const $input_value__OR__input_valueChange = /*@__PURE__*/ _fill_join("__tests__/tags/field/index.marko_fill1", "input_valueChange", /*@__PURE__*/ _fill_join("__tests__/tags/field/index.marko_fill0", "input_value", /*@__PURE__*/ _or_resume("__tests__/tags/field/index.marko_0_input_value#3_input_valueChange#4/init", 5, ($scope) => _attr_input_value($scope, "#input/0", $scope.input_value, $scope.input_valueChange))));
+const $input_value__OR__input_valueChange = /*@__PURE__*/ _fill("__tests__/tags/field/index.marko_fill1", "input_valueChange", /*@__PURE__*/ _fill("__tests__/tags/field/index.marko_fill0", "input_value", /*@__PURE__*/ _or_resume("__tests__/tags/field/index.marko_0_input_value#3_input_valueChange#4/init", 5, ($scope) => _attr_input_value($scope, "#input/0", $scope.input_value, $scope.input_valueChange))));
 const $input_value = /*@__PURE__*/ _const("input_value", $input_value__OR__input_valueChange);
 const $input_valueChange = /*@__PURE__*/ _const("input_valueChange", $input_value__OR__input_valueChange);
 const $setup__script$1 = _script("__tests__/tags/field/index.marko_0", ($scope) => _attr_input_value_script($scope, "#input/0"));
@@ -15,7 +15,7 @@ var field_default = /*@__PURE__*/ _template("__tests__/tags/field/index.marko", 
 // template.marko
 const $template = "<main><!><button>+</button><output></output></main>";
 const $walks = "D%b l";
-const $if_content__handle = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "handle", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_valueChange($scope["#childScope/0"], $scope._.handle)));
+const $if_content__handle = /*@__PURE__*/ _fill("__tests__/template.marko_fill0", "handle", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $input_valueChange($scope["#childScope/0"], $scope._.handle)));
 const $if_content__setup = ($scope) => {
 	$if_content__handle._($scope);
 	$setup$1($scope["#childScope/0"]);

@@ -22,7 +22,7 @@ var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $templ
 // template.marko
 const $template = "<button> </button><!><!>";
 const $walks = " D l%c";
-const $if_content__input_msg = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_msg#0:6/init", /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_msg", /*@__PURE__*/ _if_closure("#text/2", 0, ($scope) => $input_label($scope["#childScope/0"], $scope._.input_msg))));
+const $if_content__input_msg = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_msg#0:6/init", /*@__PURE__*/ _fill("__tests__/template.marko_fill0", "input_msg", /*@__PURE__*/ _if_closure("#text/2", 0, ($scope) => $input_label($scope["#childScope/0"], $scope._.input_msg))));
 const $if_content__setup = ($scope) => {
 	$if_content__input_msg._($scope);
 	$if_content__count._($scope);

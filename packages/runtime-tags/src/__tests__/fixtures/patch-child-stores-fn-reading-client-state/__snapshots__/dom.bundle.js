@@ -10,7 +10,7 @@ function $g() {
 _resumed.b0 = $g;
 
 // template.marko
-const $input_label__OR__n = /*@__PURE__*/ _fill_join("a2", 5, /*@__PURE__*/ _or(8, ($scope) => $input_fn($scope.a, $fn($scope))));
+const $input_label__OR__n = /*@__PURE__*/ _fill("a2", 5, /*@__PURE__*/ _or(8, ($scope) => $input_fn($scope.a, $fn($scope))));
 const $n = _let(7, $input_label__OR__n);
 const $setup__script = _script("a1", ($scope) => _on($scope.b, "click", function() {
 	$n($scope, +$scope.h + 1);

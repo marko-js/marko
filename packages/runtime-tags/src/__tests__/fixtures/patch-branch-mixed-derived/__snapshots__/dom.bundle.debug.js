@@ -3,7 +3,7 @@ const $template = "<main><!><button>+</button></main>";
 const $walks = "D%b l";
 const $if = /*@__PURE__*/ _if("#text/0", "<p>big</p>");
 const $big = ($scope, big) => $if($scope, big ? 0 : 1);
-const $input_min__OR__count = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_min", /*@__PURE__*/ _or(6, ($scope) => $big($scope, $scope.count > $scope.input_min)));
+const $input_min__OR__count = /*@__PURE__*/ _fill("__tests__/template.marko_fill0", "input_min", /*@__PURE__*/ _or(6, ($scope) => $big($scope, $scope.count > $scope.input_min)));
 const $count = _let("count/5", $input_min__OR__count);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$count($scope, +$scope.count + 1);
