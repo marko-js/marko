@@ -1,4 +1,4 @@
-# Render `{"label":"a","slow":{"value":"s1"},"failing":{},"other":{},"$global":{"brand":"acme","serializedGlobals":["brand"]}}`
+# Render `{"label":"a","slow":{"value":"s1"},"failing":{"value":{}},"other":{},"$global":{"brand":"acme","serializedGlobals":["brand"]}}`
 ```html
 <button>
   0
@@ -116,4 +116,4 @@ REMOVE: em:nth-of-type(1) + p
 REMOVE: em:nth-of-type(1) + i
 ```
 
-# Update `{"label":"c","slow":{},"failing":{},"other":{},"$global":{"brand":"cmce","serializedGlobals":["brand"]}}`
+# Update `{"label":"c","slow":{},"failing":{"value":{}},"other":{},"$global":{"brand":"cmce","serializedGlobals":["brand"]}}`

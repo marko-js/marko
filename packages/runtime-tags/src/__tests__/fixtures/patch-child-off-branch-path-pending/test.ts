@@ -1,8 +1,6 @@
 import type { TestConfig } from "../../main.test";
-import { navigate, resolveAfter, wait } from "../../utils/resolve";
+import { navigate, rejectAfter, resolveAfter, wait } from "../../utils/resolve";
 
-const reject = () =>
-  new Promise<never>((_, fail) => setTimeout(() => fail(new Error("x")), 1));
 const click = (document: Document) => {
   document.querySelector<HTMLButtonElement>("button")!.click();
 };
@@ -15,7 +13,7 @@ export const config: TestConfig = {
     {
       label: "a",
       slow: resolveAfter("s1"),
-      failing: reject(),
+      failing: rejectAfter(new Error("x")),
       other: Promise.resolve("o1"),
       $global: { brand: "acme", serializedGlobals: ["brand"] },
     },
@@ -35,14 +33,14 @@ export const config: TestConfig = {
     {
       label: "c",
       slow: Promise.resolve("s3"),
-      failing: reject(),
+      failing: rejectAfter(new Error("x")),
       other: Promise.resolve("o3"),
       $global: { brand: "cmce", serializedGlobals: ["brand"] },
     },
   ],
 };
 
-// A frame passes before each later flush applies.
+// An animation frame passes before each later write applies.
 function betweenFlushes(document: Document) {
   return new Promise((resolve) =>
     document.defaultView!.requestAnimationFrame(resolve),

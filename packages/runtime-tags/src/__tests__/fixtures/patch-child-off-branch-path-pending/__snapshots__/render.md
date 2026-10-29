@@ -1,4 +1,4 @@
-# Render `{"label":"a","slow":{"value":"s1"},"failing":{},"other":{},"$global":{"brand":"acme","serializedGlobals":["brand"]}}`
+# Render `{"label":"a","slow":{"value":"s1"},"failing":{"value":{}},"other":{},"$global":{"brand":"acme","serializedGlobals":["brand"]}}`
 ```html
 <button>
   0
@@ -24,34 +24,6 @@ document.querySelector("button").click();
 <button>
   0
 </button>
-<p>
-  acme!
-</p>
-<p>
-  0 a
-</p>
-<p>
-  fixed
-</p>
-<p>
-  fixed
-</p>
-<b>
-  o1
-</b>
-```
-## Change
-```
-INSERT: p:nth-of-type(4)::text("fixed")
-INSERT: b::text("o1")
-INSERT: p:nth-of-type(3) + :is(p, b)
-```
-
-# Update
-```html
-<button>
-  0
-</button>
 <em>
   s1
 </em>
@@ -69,11 +41,14 @@ INSERT: p:nth-of-type(3) + :is(p, b)
 ```
 INSERT: em:nth-of-type(1)::text("s1")
 INSERT: em:nth-of-type(2)::text("s1")
+INSERT: p::text("fixed")
+INSERT: b::text("o1")
 REMOVE: t > p:nth-of-type(1) + p
 REMOVE: p
 INSERT: button + em
 REMOVE: p
 INSERT: em:nth-of-type(1) + em
+INSERT: em:nth-of-type(2) + :is(p, b)
 ```
 
 # Update `{"label":"b","slow":{"value":"s2"},"failing":{},"other":{},"$global":{"brand":"bmce","serializedGlobals":["brand"]}}`
@@ -143,7 +118,7 @@ INSERT: em:nth-of-type(1) + em
 REMOVE: em:nth-of-type(2) + p
 ```
 
-# Update `{"label":"c","slow":{},"failing":{},"other":{},"$global":{"brand":"cmce","serializedGlobals":["brand"]}}`
+# Update `{"label":"c","slow":{},"failing":{"value":{}},"other":{},"$global":{"brand":"cmce","serializedGlobals":["brand"]}}`
 ```html
 <button>
   0
