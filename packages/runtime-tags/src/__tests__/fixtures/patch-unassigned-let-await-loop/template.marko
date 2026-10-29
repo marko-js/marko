@@ -1,0 +1,2 @@
+<let/items=input.items/>
+<for|v| of=items><await|r|=Promise.resolve(v)><p>${r + input.w}</p></await></for>

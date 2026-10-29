@@ -494,12 +494,11 @@ export function getShippedBranchShellId(section: Section) {
 // A scope whose ids a shell names (its own or a composing one's) sets up an `<await>`
 // the client settles as plain's setup does: its promise keeps client code, no entry.
 export function initsAwaitContent(body: Section) {
-  const section = body.parent!;
   return (
     isPatch() &&
     !!body.branch?.await &&
     isStatefulBranch(body) &&
-    (!section.parent || patchCreatesOrComposes(section))
+    patchCreatesOrComposes(body.parent!)
   );
 }
 

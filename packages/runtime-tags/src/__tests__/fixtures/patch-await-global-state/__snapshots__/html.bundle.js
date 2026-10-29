@@ -1,7 +1,7 @@
 // template.marko
 _shells({
 	a2: "a2;D ;<p> </p>",
-	a: "a a3!a1;b%b D ;<!><!><button> </button>"
+	a: "a !a1;b%b D ;<!><!><button> </button>"
 });
 var template_default = _template("a", (input) => {
 	_scope_reason();

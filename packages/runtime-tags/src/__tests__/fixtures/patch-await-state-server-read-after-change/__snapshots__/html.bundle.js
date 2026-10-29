@@ -1,7 +1,7 @@
 // template.marko
 _shells({
 	a3: "a3;D%c%;<p><!>:<!></p>",
-	a: "a a4!a1; b%;<button class=open>inc</button><!><!>"
+	a: "a !a1; b%;<button class=open>inc</button><!><!>"
 });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $wi__input_label = _write_if($scope0_reason, 0);

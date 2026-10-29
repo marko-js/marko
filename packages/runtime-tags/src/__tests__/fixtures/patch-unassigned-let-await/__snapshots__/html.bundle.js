@@ -1,7 +1,7 @@
 // template.marko
 _shells({
 	a2: "a2;D%c%;<p><!> <!></p>",
-	a: "a a3;b%;<!><!><!>"
+	a: "a !;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $wi__input_w = _write_if($scope0_reason, 1);

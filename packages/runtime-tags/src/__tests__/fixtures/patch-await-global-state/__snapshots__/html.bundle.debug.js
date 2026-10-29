@@ -1,10 +1,10 @@
 // template.marko
 const $template = "<!><!><button> </button>";
 const $walks = "b%b D l";
-const $setup = [["__tests__/template.marko_0_#text#0/init"], ["__tests__/template.marko_0"]];
+const $setup = [[], ["__tests__/template.marko_0"]];
 _shells({
 	"__tests__/template.marko_0_#text#0/await": "__tests__/template.marko_0_#text#0/await;D ;<p> </p>",
-	"__tests__/template.marko": "__tests__/template.marko __tests__/template.marko_0_#text#0/init!__tests__/template.marko_0;b%b D ;<!><!><button> </button>"
+	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;b%b D ;<!><!><button> </button>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason();

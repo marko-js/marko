@@ -105,7 +105,7 @@ export default {
     // An await a patch may reach pairs its body through a `PatchChild` entry.
     if (isPatch()) {
       onReasonsSettled(() => {
-        if (patchMayWrite(section)) linkRuntimeFeature("patches/await");
+        if (patchMayWrite(bodySection)) linkRuntimeFeature("patches/await");
       });
     }
     const valueExtra = (valueAttr.value.extra ??= {});

@@ -1,0 +1,3 @@
+<let/x=input.v/>
+<button onClick() { x = "z"; }>set</button>
+<await|r|=Promise.resolve(x)><p>${r} ${input.w}</p></await>

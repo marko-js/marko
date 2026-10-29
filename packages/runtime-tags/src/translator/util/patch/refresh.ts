@@ -64,7 +64,7 @@ import {
   sectionUtil,
   isLoopBody,
 } from "../sections";
-import { inCreatedCatch, shipsContentShell } from "../shell";
+import { inCreatedCatch, initsAwaitContent, shipsContentShell } from "../shell";
 import { findSlot, type Slot, SlotKind } from "../slots";
 import {
   bindingReaders,
@@ -489,8 +489,8 @@ export function rootsOwnReads(binding: Binding) {
   );
 }
 
-// Client state decides the signal, which no kept client code runs: only own-read
-// `<let>`s reach its values or create its section, and nothing always creates it.
+// Client code must run the signal (state reaches it, or settles its `<await>`) yet none
+// kept does: only own-read `<let>`s reach it, and nothing always creates it.
 export function reachesOnlyByOwnReads(
   section: Section,
   refs: ReferencedBindings,
@@ -500,8 +500,27 @@ export function reachesOnlyByOwnReads(
     getSourcesForRef(refs)?.state,
     creation?.state,
   );
-  return !!state && !creation?.always && every(state, rootsOwnReads);
+  return (
+    (!!state || inClientSettledAwait(section)) &&
+    !creation?.always &&
+    every(state, rootsOwnReads)
+  );
 }
+
+// In an `<await>` client state settles, or called there: nothing creates it anew,
+// so only its owner's code keeps it, or its renderer where a shell inits it.
+const [inClientSettledAwait] = createAnalysisMemo(
+  (section: Section): boolean => {
+    for (let cur: Section | undefined = section; cur; cur = cur.parent) {
+      if (cur.branch?.await && isStatefulBranch(cur)) {
+        return !initsAwaitContent(cur);
+      }
+      if (some(cur.callSections, inClientSettledAwait)) return true;
+    }
+    return false;
+  },
+  false,
+);
 
 // A `<let>` at its initial value as `section`'s scope is created: created with it, or
 // nothing assigns it and it is no page's own, which keeps its first value.

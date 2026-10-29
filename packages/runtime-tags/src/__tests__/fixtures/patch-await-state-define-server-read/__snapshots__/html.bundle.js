@@ -3,7 +3,7 @@ const $Row_content__walks = "D%c%l";
 const $Row_content__template = "<em><!>:<!></em>";
 _shells({
 	a4: /*@__PURE__*/ (() => `a4;${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Row_content__walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Row_content__template)}`)(),
-	a: "a a5!a2; b%;<button class=open>inc</button><!><!>"
+	a: "a !a2; b%;<button class=open>inc</button><!><!>"
 });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $wi__input_label = _write_if($scope0_reason, 0);
