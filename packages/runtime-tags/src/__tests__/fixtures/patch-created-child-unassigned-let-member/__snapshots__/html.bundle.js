@@ -7,9 +7,9 @@ var card_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	let c = { slot: { body: input.content } };
 	_html("<section>");
-	_dynamic_tag($scope0_id, "a", c.slot.body, {}, 2, 0, 0, 1, _client_guard($scope0_reason, 0) << 1, 0);
+	_dynamic_tag($scope0_id, "a", c.slot.body, {}, 2, 0, 0, 1, $scope0_reason, 0, "e");
 	_html("</section>");
-	_scope($scope0_id, {}) || _content_withhold(input.content);
+	_scope($scope0_id, {});
 });
 
 // template.marko

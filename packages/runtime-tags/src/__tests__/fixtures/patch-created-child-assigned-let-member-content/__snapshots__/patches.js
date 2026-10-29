@@ -2,7 +2,7 @@
 [`a1;Db%;<em>static <!></em>`, `a2 !a>b0;/D b%l&;<section><button>clear</button><!></section>`, {
   ba: [{
     ca: {
-      s: {
+      Ff: {
         fb: "^^a1"
       }
     },
@@ -17,7 +17,7 @@
 {
   ba: [{
     ca: {
-      s: {
+      Ff: {
         fb: "^^a1"
       }
     },
@@ -31,7 +31,7 @@
 {
   ba: [{
     ca: {
-      s: {
+      Ff: {
         fb: "^^a1"
       }
     },

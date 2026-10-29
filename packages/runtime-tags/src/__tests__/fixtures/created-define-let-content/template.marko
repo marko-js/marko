@@ -1,0 +1,5 @@
+<define/Card|input|>
+  <let/c=input.content/>
+  <section><button onClick() { c = undefined }>clear</button><${c}/></section>
+</define>
+<if=input.show><Card><em>static ${input.label}</em></Card></if>

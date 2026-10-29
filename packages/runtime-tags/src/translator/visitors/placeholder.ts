@@ -7,12 +7,14 @@ import buildStringExpression from "../util/build-string-expression";
 import evaluate from "../util/evaluate";
 import { isOutputHTML } from "../util/marko-config";
 import {
+  getFirstValueLet,
   keepsSeededMarker,
   linkHolePatcher,
   writesPatchHole,
 } from "../util/patch/decisions";
 import {
   getExprRootGroupArgs,
+  getHoleGroupArgs,
   getPatchHoleGroupArgs,
 } from "../util/patch/writers";
 import { addReasonExprs } from "../util/reasons";
@@ -144,6 +146,8 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
   // A state-sourced hole derives through the signal graph, and inside
   // unpatched structure owner fills refresh it: neither patch-writes.
   const patchWrites = !!nodeBinding && writesPatchHole(section, valueExtra);
+  // A first-value `<let>`'s function it calls: the server writes it meanwhile.
+  const firstValue = !!nodeBinding && !!getFirstValueLet(valueExtra);
   const canWriteHTML = isHTML || (confident && node.escape);
   const method = canWriteHTML
     ? node.escape
@@ -162,7 +166,7 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
   } else {
     const siblingText = extra[kSiblingText]!;
     const markerReason = nodeBinding && getWriteReason(nodeBinding);
-    const isPatchText = isHTML && patchWrites;
+    const isPatchText = isHTML && (patchWrites || !!firstValue);
 
     if (isHTML) {
       if (markerReason) {
@@ -182,12 +186,14 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
           // The patch write is also the output and resume writer, so the value
           // evaluates once; its group args follow.
           ...(isPatchText
-            ? keepsSeededMarker(section, valueExtra)
-              ? [
-                  ...getExprRootGroupArgs(section, valueExtra),
-                  t.numericLiteral(1),
-                ]
-              : getPatchHoleGroupArgs(section, valueExtra)
+            ? firstValue
+              ? withRewritten(getHoleGroupArgs(section, valueExtra))
+              : keepsSeededMarker(section, valueExtra)
+                ? [
+                    ...getExprRootGroupArgs(section, valueExtra),
+                    t.numericLiteral(1),
+                  ]
+                : getPatchHoleGroupArgs(section, valueExtra)
             : []),
         )}`;
       } else {
@@ -316,4 +322,10 @@ function getInlinedBodyTag(parent: t.NodePath) {
       return tag;
     }
   }
+}
+
+// A first-value hole's marker stays whatever its group (client code rewrites
+// it once it sets the `<let>`): `rewritten` comes before the `<let>`'s key.
+function withRewritten([mask, group, key]: t.Expression[]) {
+  return [mask, group, t.numericLiteral(1), key];
 }

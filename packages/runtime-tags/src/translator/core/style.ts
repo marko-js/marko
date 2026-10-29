@@ -23,9 +23,13 @@ import { getPatchKey } from "../util/get-accessor-enums";
 import { isCoreTagName } from "../util/is-core-tag";
 import { isOutputDOM, isPatch } from "../util/marko-config";
 import { type Opt, push } from "../util/optional";
-import { onReasonsSettled, writesPatchHole } from "../util/patch/decisions";
+import {
+  linkHolePatcher,
+  onReasonsSettled,
+  serverWritesHole,
+} from "../util/patch/decisions";
 import { patchWrites } from "../util/patch/structure";
-import { getExprRootGroupArgs, getNamedPatchKey } from "../util/patch/writers";
+import { getHoleGroupArgs, getNamedPatchKey } from "../util/patch/writers";
 import { addReasonExprs } from "../util/reasons";
 import { getReferencedBindings, mergeReferences } from "../util/references";
 import { callRuntime, linkRuntimeFeature } from "../util/runtime";
@@ -132,6 +136,7 @@ function analyzeDynamicStyle(tag: t.NodePath<t.MarkoTag>, names: string[]) {
     const valueExtra = (value.extra ??= {});
     valueExtra.rendersValue = true;
     exprExtras = push(exprExtras, valueExtra);
+    linkHolePatcher(section, valueExtra, "patches/style");
   }
 
   addReasonExprs(ensureSlot(binding), exprExtras);
@@ -247,8 +252,8 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
                 t.stringLiteral(
                   getNamedPatchKey(getPatchKey().Style, binding, names[i]),
                 ),
-                ...(writesPatchHole(section, value.extra)
-                  ? getExprRootGroupArgs(section, value.extra!)
+                ...(serverWritesHole(section, value.extra)
+                  ? getHoleGroupArgs(section, value.extra!)
                   : [t.numericLiteral(0), t.numericLiteral(0)]),
               ]
             : []),

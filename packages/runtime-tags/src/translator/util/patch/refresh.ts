@@ -92,6 +92,8 @@ import {
 import { createAnalysisState } from "../state";
 import { getWriteReason } from "../write-guard";
 import {
+  getFirstValueLet,
+  getFirstValueRoot,
   getStateInitSources,
   getWriteSources,
   hasClientState,
@@ -402,6 +404,7 @@ function holdsWithin(
 // A value a patch fills where its reads call for it: state or a local of a
 // scope a patch may create, or a server value a patch keeps current.
 export function canPatchFill(binding: Binding) {
+  if (getFirstValueRoot(binding)) return false;
   // State fills only where a server value keeps reaching it (a controlled `<let>`'s
   // controller, a per-render value); a created scope's arrives as resume values.
   if (
@@ -731,6 +734,18 @@ function computeFillReadKind(binding: Binding) {
     // A handler reads the slot at call time: the owner write keeps it
     // current with no registration to shake.
     if (readsAtCall(read, binding)) continue;
+    // A first-value hole whose `<let>` no client code sets renders on the client
+    // only where a caller passes the `<let>`'s init from client state.
+    const firstValue = getFirstValueLet(read);
+    if (firstValue && !firstValue.assignments) {
+      const init = getSourcesForExpr(firstValue.derivedFrom as t.NodeExtra);
+      if (init?.param) {
+        kind = mergeKinds(kind, {
+          joins: createSources(undefined, init.param),
+        });
+      }
+      continue;
+    }
     const refs = getReferencedBindings(read);
     const written = Array.isArray(refs) && isPatchWrittenJoin(refs);
     if (written) {

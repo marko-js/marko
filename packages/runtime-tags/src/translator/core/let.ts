@@ -20,7 +20,7 @@ import { BindingType, getDebugAccess, reserveId } from "../util/bindings";
 import evaluate from "../util/evaluate";
 import { hasEmittedAssignment } from "../util/finalize-references";
 import { isOptimize, isOutputDOM, isPatch } from "../util/marko-config";
-import { onReasonsSettled } from "../util/patch/decisions";
+import { onReasonsSettled, readsHeldData } from "../util/patch/decisions";
 import { getPatchFill, rootsOwnReads } from "../util/patch/refresh";
 import { addReason } from "../util/reasons";
 import {
@@ -40,6 +40,7 @@ import {
   writeSlot,
 } from "../util/signals";
 import { findSlot, ensureSlot, SlotKind } from "../util/slots";
+import { bindingReaders, someRead } from "../util/solve-reasons";
 import { ALWAYS } from "../util/sources";
 import translateVar from "../util/translate-var";
 
@@ -96,11 +97,16 @@ export default {
 
     const tagSection = ensureSection(tag);
     const binding = trackVarReferences(tag, BindingType.let)!;
-    // A `<let>` a patch fills registers its fill, and a page root's reads may register
-    // their own: only the page's module holds either.
+    // A `<let>` a patch fills registers its fill, a page root's reads may
+    // register their own, and one held beside data renders that data on the
+    // client: only the page's module holds any of them.
     if (isPatch()) {
       onReasonsSettled(() => {
-        if (getPatchFill(binding).fill || rootsOwnReads(binding))
+        if (
+          getPatchFill(binding).fill ||
+          rootsOwnReads(binding) ||
+          someRead(bindingReaders(binding, true), readsHeldData)
+        )
           getProgram().node.extra.isInteractive = true;
       });
     }

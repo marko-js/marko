@@ -31,9 +31,12 @@ export function _text_resume(
   mask?: GroupMask,
   group?: number,
   rewritten?: 1,
+  firstValue?: Accessor,
 ) {
   const fills =
-    group === undefined ? undefined : ensureFills(scopeId, mask, group);
+    group === undefined
+      ? undefined
+      : ensureFills(scopeId, mask, group, undefined, firstValue);
   return fills === undefined
     ? _base_text_resume(
         scopeId,
@@ -59,9 +62,12 @@ export function _html_resume(
   mask?: GroupMask,
   group?: number,
   rewritten?: 1,
+  firstValue?: Accessor,
 ) {
   const fills =
-    group === undefined ? undefined : ensureFills(scopeId, mask, group);
+    group === undefined
+      ? undefined
+      : ensureFills(scopeId, mask, group, undefined, firstValue);
   return fills === undefined
     ? _base_html_resume(
         scopeId,
@@ -91,9 +97,12 @@ export function _escape_style_value(
   key?: string,
   mask?: GroupMask,
   group?: number,
+  firstValue?: Accessor,
 ) {
   const fills =
-    group === undefined ? undefined : ensureFills(scopeId!, mask, group, 1);
+    group === undefined
+      ? undefined
+      : ensureFills(scopeId!, mask, group, 1, firstValue);
   return fills === undefined
     ? _base_escape_style_value(value)
     : _client_guard(mask!, group!)
@@ -119,9 +128,12 @@ function withTextFill(escape: (value: unknown) => string) {
     key?: string,
     mask?: GroupMask,
     group?: number,
+    firstValue?: Accessor,
   ) => {
     const fills =
-      group === undefined ? undefined : ensureFills(scopeId!, mask, group);
+      group === undefined
+        ? undefined
+        : ensureFills(scopeId!, mask, group, undefined, firstValue);
     return fills === undefined ? escape(value) : writeFill(fills, key!, value);
   };
 }

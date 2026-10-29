@@ -1,0 +1,5 @@
+<let/f=input.fmt/>
+<button onClick() { f = (v) => ({ title: "p-" + v }) }>plain</button>
+<section ...f(input.label)/>
+<i ...{ title: f(input.label).title }/>
+<p ...{ title: f(input.label).title }>body</p>

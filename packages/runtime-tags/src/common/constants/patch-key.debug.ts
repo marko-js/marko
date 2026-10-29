@@ -27,6 +27,7 @@ export const Var = "PatchVar:";
 export const Write = "PatchWrite:";
 export const MarkedWrite = "PatchMarkedWrite:";
 export const Withheld = "PatchWithheld:";
+export const FirstValue = "PatchFirstValue:";
 
 type Self = typeof import("./patch-key.debug");
 export type Value = Self[keyof Self];

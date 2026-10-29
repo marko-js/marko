@@ -8,7 +8,7 @@ var outer_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	let o = input.content;
 	_html(`<button>x</button>${_el_resume($scope0_id, "a")}<section>`);
-	_dynamic_tag($scope0_id, "b", o, {}, 2, 0, 0, 1, _client_guard($scope0_reason, 0) << 1, 0, 1);
+	_dynamic_tag($scope0_id, "b", o, {}, 2, 0, 0, 1, $scope0_reason, 0, "f");
 	_html("</section>");
 	_script($scope0_id, "b0");
 	_scope($scope0_id, {}) || _content_withhold(input.content);

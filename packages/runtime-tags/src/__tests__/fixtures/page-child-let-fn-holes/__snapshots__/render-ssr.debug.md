@@ -1,0 +1,23 @@
+# Render `{"show":true,"label":"a"}`
+```html
+<button>
+  plain
+</button>
+<p>
+  w-a
+</p>
+<div>
+  w-a
+</div>
+<i
+  class="w-a"
+  style="color:blue"
+  title="w-a"
+/>
+<section>
+  <!--w-a-->
+</section>
+<em>
+  shown
+</em>
+```

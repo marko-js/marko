@@ -44,6 +44,9 @@ export const Write = "w";
 export const MarkedWrite = "x";
 // Content a client consumer keeps: the holes each instance its owner holds takes.
 export const Withheld = "W";
+// Entries that apply while a `<let>` holds the first value the server rendered:
+// client code has not set its slot.
+export const FirstValue = "F";
 
 type Self = typeof import("./patch-key");
 export type Value = Self[keyof Self];

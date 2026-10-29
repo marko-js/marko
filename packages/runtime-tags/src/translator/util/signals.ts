@@ -10,6 +10,7 @@ import {
   type Binding,
   BindingType,
   bindingUtil,
+  getAliasRoot,
   getCanonicalBinding,
   getDebugName,
   getDebugNames,
@@ -42,7 +43,13 @@ import {
   reduce,
   some,
 } from "./optional";
-import { writesPatchHole } from "./patch/decisions";
+import {
+  getFirstValueGuard,
+  getFirstValueLet,
+  getFirstValueRoot,
+  isHeldData,
+  writesPatchHole,
+} from "./patch/decisions";
 import {
   getCreatedInits,
   getLiveCaptures,
@@ -161,6 +168,7 @@ import {
   getSlotWriteReason,
   getSectionWriteReason,
   getEmittedReasonStatement,
+  andGuard,
 } from "./write-guard";
 import { flushInto } from "./writer";
 
@@ -178,6 +186,8 @@ export interface Signal {
     signal: Signal;
     /** None for a signal that runs on the scope alone. */
     value: t.Expression | undefined;
+    /** Runs the signal only where it holds (a first-value `<let>` client code set). */
+    guard?: t.Expression | false;
   }>;
   intersections: Opt<Signal>;
   /** Its `$global` joins: work reading `$global` keys, which it calls. */
@@ -1221,11 +1231,14 @@ export function buildSignalFn(signal: Signal): t.Expression {
     ).push(
       t.expressionStatement(
         signalHasWork(value.signal)
-          ? t.callExpression(value.signal.identifier, [
-              scopeIdentifier,
-              ...(value.value ? [value.value] : []),
-              ...getTranslatedExtraArgs(value.signal),
-            ])
+          ? andGuard(
+              value.guard,
+              t.callExpression(value.signal.identifier, [
+                scopeIdentifier,
+                ...(value.value ? [value.value] : []),
+                ...getTranslatedExtraArgs(value.signal),
+              ]),
+            )
           : withLeadingComment(
               value.value!,
               getDebugNames(value.signal.referencedBindings),
@@ -1503,8 +1516,11 @@ export function addStatement(
         ? "patch"
         : type
     ];
-
-  if (Array.isArray(statement)) {
+  const guard =
+    type === "render" && getFirstValueRenderGuard(targetSection, expr, signal);
+  if (guard) {
+    pushGuarded(statements, guard, statement);
+  } else if (Array.isArray(statement)) {
     statements.push(...statement);
   } else {
     statements.push(
@@ -1514,6 +1530,55 @@ export function addStatement(
 
   if (!isPure || type === "effect") {
     signal.storesValue = true;
+  }
+}
+
+// A first-value hole renders on the client once client code set its `<let>`,
+// which the `<let>`'s own signal (or an alias's, not a closure's) has set.
+function getFirstValueRenderGuard(
+  section: Section,
+  expr: t.NodeExtra | undefined,
+  signal: Signal,
+) {
+  const firstValue = isPatch() && !!expr && getFirstValueLet(expr);
+  const own = signal.referencedBindings;
+  return (
+    firstValue &&
+    !(
+      section === firstValue.section &&
+      own &&
+      !Array.isArray(own) &&
+      getAliasRoot(own) === firstValue
+    ) &&
+    getFirstValueGuard(section, firstValue)
+  );
+}
+
+// Renders in a row that the same `<let>` gates share one check.
+function pushGuarded(
+  statements: t.Statement[],
+  guard: t.Expression,
+  render: t.Statement | t.Statement[] | t.Expression,
+) {
+  const body = Array.isArray(render)
+    ? render
+    : [t.isExpression(render) ? t.expressionStatement(render) : render];
+  const last = statements[statements.length - 1];
+  if (last?.type === "IfStatement" && t.isNodesEquivalent(last.test, guard)) {
+    (last.consequent as t.BlockStatement).body.push(...body);
+  } else if (
+    last?.type === "ExpressionStatement" &&
+    last.expression.type === "LogicalExpression" &&
+    t.isNodesEquivalent(last.expression.left, guard)
+  ) {
+    statements[statements.length - 1] = t.ifStatement(
+      guard,
+      t.blockStatement([t.expressionStatement(last.expression.right), ...body]),
+    );
+  } else if (body.length === 1 && body[0].type === "ExpressionStatement") {
+    statements.push(t.expressionStatement(andGuard(guard, body[0].expression)));
+  } else {
+    statements.push(t.ifStatement(guard, t.blockStatement(body)));
   }
 }
 
@@ -1549,6 +1614,7 @@ export function addValue(
   parentSignal.values.push({
     signal,
     value,
+    guard: getFirstValueRenderGuard(targetSection, expr, parentSignal),
   });
 
   if (
@@ -2073,11 +2139,12 @@ function wrapCreatedInit(
 ) {
   const { section } = signal;
   if (!getCreatedInits(section).get(closure)?.init) return value;
-  return callRuntime(
-    "_init_resume",
-    t.stringLiteral(getResumeRegisterId(section, closure, "init")),
-    value,
-  );
+  const id = getResumeRegisterId(section, closure, "init");
+  // A held `<let>`'s data has no fill shipping its readers: their inits register
+  // as a registered function does.
+  return isHeldData(closure)
+    ? registerRuntimeValue(id, value)
+    : callRuntime("_init_resume", t.stringLiteral(id), value);
 }
 
 // A fill walks the closure's subscribers by the position each stamped where a
@@ -2487,6 +2554,10 @@ export function writeHTMLResumeStatements(
   let debugVars: t.ObjectProperty[] | undefined;
   const writeBinding = (binding: Binding) => {
     const reason = getWriteReason(binding);
+    // A patch template writes a `<let>` as main does, where client code on the
+    // page reads it: a site a later patch creates, reading one the page never
+    // wrote, renders from its current init. Whether the page keeps such a
+    // `<let>` holding code it never loads is not yet decided.
     if (!reason) return;
     const accessor = getScopeAccessor(binding);
     const value = getDeclaredBindingExpression(binding);
@@ -2494,7 +2565,16 @@ export function writeHTMLResumeStatements(
     scopeProperties.push(
       toObjectProperty(
         accessor,
-        (isPatch() && getExprIfUnfilled(section, binding, reason, value)) ||
+        (isPatch() &&
+          // A first-value `<let>`'s slot stays absent while the server renders
+          // its holes, unless the client renders them (its group the client's).
+          (getFirstValueRoot(binding) && isConditionalReason(reason)
+            ? t.logicalExpression(
+                "&&",
+                getCallerGroupGuard(section, "_unfilled_if", reason)!,
+                value,
+              )
+            : getExprIfUnfilled(section, binding, reason, value))) ||
           ifWritten(reason, value),
       ),
     );

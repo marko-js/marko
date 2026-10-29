@@ -2,10 +2,12 @@
 [`a1;Db%;<em>static <!></em>`, `a2;/D%l&;<section><!></section>`, {
   ba: [{
     ca: {
-      fa: "^^a1"
-    },
-    Wa1: {
-      ta: "b"
+      Fe: {
+        fa: "^^a1",
+        cAa: {
+          ta: "b"
+        }
+      }
     }
   }, "a2"]
 }]
@@ -15,10 +17,12 @@
 {
   ba: [{
     ca: {
-      fa: "^^a1"
-    },
-    Wa1: {
-      ta: "c"
+      Fe: {
+        fa: "^^a1",
+        cAa: {
+          ta: "c"
+        }
+      }
     }
   }, "a2"]
 }

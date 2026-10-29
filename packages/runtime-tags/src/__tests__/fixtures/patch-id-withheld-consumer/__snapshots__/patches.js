@@ -4,7 +4,9 @@
     ca: {
       s: {
         aa$id: "sM_1UA",
-        ab$for: "sM_1UA",
+        ab$for: "sM_1UA"
+      },
+      Fi: {
         fd: "^^a0"
       }
     },
@@ -19,7 +21,9 @@
     ca: {
       s: {
         aa$id: "sM_2UA",
-        ab$for: "sM_2UA",
+        ab$for: "sM_2UA"
+      },
+      Fi: {
         fd: "^^a0"
       }
     },

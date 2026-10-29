@@ -97,11 +97,14 @@ import {
 import {
   getEffectWrites,
   getExprWriteGroups,
+  getFirstValueKey,
+  getFirstValueLet,
   getRenderedValueSources,
   getSeedWriteGroups,
   getStateInitSources,
   getWriteGroups,
   getWriteSources,
+  isHeldData,
   type WriteGroups,
 } from "./decisions";
 import {
@@ -322,14 +325,15 @@ export function writePatchResumeStatements(
       othersClient || unpatched ? getFilledGuard(section, binding) : undefined;
     const inPlace = othersClient && andGuard(filled, othersClient);
     // A seed writes what plain's document would: a group-gated value only
-    // where the group is the client's.
+    // where the group is the client's, but a held `<let>`'s data wherever a
+    // created scope reads it.
     const entry =
       seeds || inPlace
         ? seeds
           ? andGuard(
               getStateInitGuard(section, binding),
               andGuard(
-                isDynamicWriteGuard(section, seeds)
+                isDynamicWriteGuard(section, seeds) && !isHeldData(binding)
                   ? getCallerGroupGuard(section, "_client_guard", seeds)
                   : undefined,
                 buildPatchWrite(
@@ -1051,7 +1055,7 @@ export function buildPatchTextContent(
     text,
     getScopeIdIdentifier(section),
     t.stringLiteral(getPatchKey().TextContent + getScopeAccessor(nodeBinding)),
-    ...getPatchHoleGroupArgs(section, extra),
+    ...getHoleGroupArgs(section, extra, getPatchHoleGroupArgs),
   );
 }
 
@@ -1114,12 +1118,14 @@ function buildSubscribe(
 // passes the server's group `0`, since main's calls pass none.
 export function getPatchHoleGroupArgs(section: Section, extra: t.NodeExtra) {
   const groupArgs = getExprRootGroupArgs(section, extra);
-  return groupArgs.length
-    ? groupArgs
-    : [
-        buildGroupMask([{ value: UpdatesFrom.Server, names: "" }])!,
-        t.numericLiteral(0),
-      ];
+  return groupArgs.length ? groupArgs : getServerGroupArgs();
+}
+
+function getServerGroupArgs() {
+  return [
+    buildGroupMask([{ value: UpdatesFrom.Server, names: "" }])!,
+    t.numericLiteral(0),
+  ];
 }
 
 // Group args for an expression's write in `section`; a value fixed for the
@@ -1184,6 +1190,43 @@ export function getRendererGroupArgs(
       ? []
       : [args[1]]
     : [args[1], args[0]];
+}
+
+// A first-value hole's groups, its own inputs' and its `<let>`'s init's (which a
+// caller passing client state holds itself), composed; else the server's.
+export function getFirstValueGroupArgs(
+  section: Section,
+  extra: t.NodeExtra,
+  state: Binding,
+) {
+  const own = getWriteSources(extra)?.param;
+  const init = getSourcesForExpr(state.derivedFrom as t.NodeExtra)?.param;
+  const groups = getCallerParamGroupsAt(own, section);
+  for (const group of getCallerParamGroupsAt(init, section)) {
+    if (!groups.some(([, other]) => other === group[1])) groups.push(group);
+  }
+  return groups.length
+    ? buildWriteGroupArgs({ groups, params: bindingUtil.union(own, init) })
+    : getServerGroupArgs();
+}
+
+// A value hole's trailing patch args: its group's, or for a first-value hole
+// its server input's group and the key of the `<let>` gating its write.
+export function getHoleGroupArgs(
+  section: Section,
+  extra: t.NodeExtra,
+  getGroupArgs: (
+    section: Section,
+    extra: t.NodeExtra,
+  ) => t.Expression[] = getExprRootGroupArgs,
+): t.Expression[] {
+  const firstValue = getFirstValueLet(extra);
+  return firstValue
+    ? [
+        ...getFirstValueGroupArgs(section, extra, firstValue),
+        getFirstValueKey(section, firstValue),
+      ]
+    : getGroupArgs(section, extra);
 }
 
 // A hole of initial values seeds a created scope alone (a group mask of `0`), and

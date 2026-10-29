@@ -1,0 +1,4 @@
+<define/Body><em>${input.label}</em></define>
+<const/api={ make(i) { return { content: Body.content, i }; } }/>
+<button onClick() { api.make(0) }>make</button>
+<for|i| of=input.show ? [1, 2] : [1]><outer data=api.make(i)/></for>

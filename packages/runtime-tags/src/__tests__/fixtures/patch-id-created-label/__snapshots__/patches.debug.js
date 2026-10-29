@@ -47,7 +47,7 @@
   },
   "PatchLoop:#text/3": [1, {
     "PatchChild:#childScope/0": {
-      "PatchSetup:": {
+      "PatchFirstValue:c": {
         "PatchDynamicTag:#text/1": _.g = "^^packages/runtime-tags/src/__tests__/fixtures/patch-id-created-label/template.marko_6*content"
       }
     },
@@ -60,7 +60,7 @@
     }
   }, 2, {
     "PatchChild:#childScope/0": {
-      "PatchSetup:": {
+      "PatchFirstValue:c": {
         "PatchDynamicTag:#text/1": _.g
       }
     },

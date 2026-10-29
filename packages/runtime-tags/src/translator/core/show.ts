@@ -22,10 +22,10 @@ import { isPatch } from "../util/marko-config";
 import {
   linkHolePatcher,
   onReasonsSettled,
-  writesPatchHole,
+  serverWritesHole,
 } from "../util/patch/decisions";
 import { patchCreatesOrComposes } from "../util/patch/refresh";
-import { getExprRootGroupArgs } from "../util/patch/writers";
+import { getHoleGroupArgs } from "../util/patch/writers";
 import { addReasonExprs } from "../util/reasons";
 import { mergeReferences } from "../util/references";
 import { callRuntime, linkRuntimeFeature } from "../util/runtime";
@@ -227,12 +227,12 @@ export default {
         // scope finds the range's markers by.
         const start = tagExtra[kStartBinding];
         const end = tagExtra[kEndBinding];
-        const patchArgs = writesPatchHole(tagSection, tagExtra)
+        const patchArgs = serverWritesHole(tagSection, tagExtra)
           ? [
               getScopeAccessorLiteral(nodeBinding, true),
               start && getScopeAccessorLiteral(start, true),
               end && getScopeAccessorLiteral(end, true),
-              ...getExprRootGroupArgs(tagSection, tagExtra),
+              ...getHoleGroupArgs(tagSection, tagExtra),
             ]
           : [];
         // The runtime calls bracket the body's statements (rather than taking a

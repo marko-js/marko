@@ -52,6 +52,7 @@ import {
   getSettledParamsTree,
 } from "./params-tree";
 import {
+  getFirstValueRoot,
   hasClientState,
   isPatchKeyedSlot,
   onReasonsSettled,
@@ -1244,6 +1245,35 @@ function buildGroupMaskExpr(
 // A group's bits from its call site's sources: state's, its callers' composed
 // at render, else the server's, or none for a constant the child never reads.
 function getGroupSourcesValue(
+  section: Section,
+  childScopeBinding: Binding,
+  group: ParamReasonGroup,
+  sources: Sources | undefined,
+  clientDerived: boolean,
+): number | t.Expression {
+  const value = getPageGroupValue(
+    section,
+    childScopeBinding,
+    group,
+    sources,
+    clientDerived,
+  );
+  // First-value `<let>`s alone, which the client has not set while the server
+  // renders their holes: a patch seeds a child it creates and leaves a live one's.
+  return isPatch() &&
+    sources?.state &&
+    !sources.param &&
+    !sources.global &&
+    every(sources.state, (state) => !!getFirstValueRoot(state))
+    ? t.conditionalExpression(
+        scopePageIdentifier(section.program),
+        typeof value === "number" ? t.numericLiteral(value) : value,
+        t.numericLiteral(0),
+      )
+    : value;
+}
+
+function getPageGroupValue(
   section: Section,
   childScopeBinding: Binding,
   group: ParamReasonGroup,

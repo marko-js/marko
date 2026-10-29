@@ -1,0 +1,7 @@
+<let/f=input.fmt/>
+<button onClick() { f = (v) => v }>plain</button>
+<const/g=f/>
+<const/o={ f }/>
+<p>${[input.label].map(f).join()}</p>
+<p>${g(input.label)}</p>
+<p>${o.f(input.label)}</p>

@@ -116,6 +116,9 @@ declare module "@marko/compiler/dist/types" {
     /** The tag-root `KnownExprs` of the call site that linked this expression
      * to a derives template's binding, for dereferencing its reasons. */
     callSiteExprs?: KnownExprs;
+    /** The bindings it calls, calls a member of (`a.wrap(…)`), or passes to a
+     * call, which may call it (`list.map(f)`). */
+    invokes?: Opt<Binding>;
     binding?: Binding;
     assignment?: Binding;
     assignmentTo?: Binding;
@@ -844,6 +847,7 @@ function trackReference(
     | t.NodePath<t.MemberExpression>
     | t.NodePath<t.OptionalMemberExpression> = referencePath;
   let reference = binding;
+  let invoked = false;
 
   while (true) {
     const { parent } = root;
@@ -877,6 +881,7 @@ function trackReference(
     }
 
     if (isInvokedFunction(root.parentPath) && !isEventOrChangeHandler(prop)) {
+      invoked = true;
       break;
     }
 
@@ -894,7 +899,22 @@ function trackReference(
   // The read may resolve elsewhere, but HTML writes one rooted at a declared
   // name as authored.
   (referencePath.node.extra ??= {}).binding = binding;
-  addReadToExpression(root, reference, undefined);
+  addReadToExpression(
+    root,
+    reference,
+    undefined,
+    invoked || isInvokedFunction(root) || isCallArgument(root),
+  );
+}
+
+// Passed to a call, which may invoke it (`list.map(f)`).
+function isCallArgument(path: t.NodePath) {
+  const { parent } = path;
+  return (
+    (parent.type === "CallExpression" ||
+      parent.type === "OptionalCallExpression") &&
+    parent.callee !== path.node
+  );
 }
 
 // Assigning a member (`obj.x = 1`, `obj.x++`, `delete obj.x`, a destructuring
@@ -977,7 +997,7 @@ function mergeInto(
   const fnReadsByExpression = getFunctionReadsByExpression();
   let reads = readsByExpression.get(targetExtra);
   let exprFnReads = fnReadsByExpression.get(targetExtra);
-  let { isEffect, retained } = targetExtra;
+  let { isEffect, retained, invokes } = targetExtra;
 
   for (const node of nodes) {
     if (!node) continue;
@@ -989,6 +1009,7 @@ function mergeInto(
       const additionalReads = readsByExpression.get(extra);
       const additionalExprFnReads = fnReadsByExpression.get(extra);
       isEffect ||= extra.isEffect;
+      forEach(extra.invokes, (binding) => (invokes = push(invokes, binding)));
       if (additionalReads) {
         forEach(additionalReads, (read) => {
           const bindingReads = read.binding.reads;
@@ -1024,6 +1045,7 @@ function mergeInto(
   readsByExpression.set(targetExtra, reads);
   targetExtra.isEffect = isEffect;
   targetExtra.retained = retained;
+  targetExtra.invokes = invokes;
   targetExtra.spreadFrom = getSpreadOnlyBindings(reads);
   targetExtra.section = section;
 
@@ -1245,6 +1267,7 @@ function addReadToExpression(
     | t.NodePath<t.OptionalMemberExpression>,
   binding: Binding,
   getter: Getter | undefined,
+  invoked?: boolean,
 ) {
   const { node } = root;
   const fnRoot = getFnRoot(root);
@@ -1261,6 +1284,7 @@ function addReadToExpression(
   extra.exprRoot = rootExtra;
   rootExtra.buildsObject ??= buildsObject(exprRoot.node);
   const read = addRead(exprExtra, extra, binding, section, getter);
+  if (invoked) exprExtra.invokes = push(exprExtra.invokes, binding);
 
   const { parent } = root;
   if (

@@ -2,7 +2,7 @@
 [`b2 !b0; b%;<button>clear</button><!><!>`, {
   ca: {
     ba: [{
-      s: {
+      Fc: {
         fb: "^^^a1",
         cAb: {
           ta: "b"
@@ -18,7 +18,7 @@
 {
   ca: {
     ba: [{
-      s: {
+      Fc: {
         fb: "^^^a1",
         cAb: {
           ta: "c"
@@ -33,7 +33,7 @@
 {
   ca: {
     ba: [{
-      s: {
+      Fc: {
         fb: "^^^a1",
         cAb: {
           ta: "d"

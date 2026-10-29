@@ -10,7 +10,7 @@ import { assertIdentifierVar } from "../util/assert";
 import { type Binding, BindingType, createBinding } from "../util/bindings";
 import { bodyToText, bodyToUncoercedText } from "../util/body-to-text";
 import { isOutputHTML } from "../util/marko-config";
-import { linkHolePatcher, writesPatchHole } from "../util/patch/decisions";
+import { linkHolePatcher, serverWritesHole } from "../util/patch/decisions";
 import { buildPatchTextContent } from "../util/patch/writers";
 import { addAlwaysReason, addReasonExprs } from "../util/reasons";
 import {
@@ -108,7 +108,7 @@ export default {
         if (
           nodeBinding &&
           isReferencedExtra(tagExtra) &&
-          writesPatchHole(tagSection, tagExtra)
+          serverWritesHole(tagSection, tagExtra)
         ) {
           // An emptiable body still pads, so the resume marker claims no
           // stray text.

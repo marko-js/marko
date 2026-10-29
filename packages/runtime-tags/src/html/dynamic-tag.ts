@@ -53,7 +53,7 @@ export let _dynamic_tag = (
   markerGuard?: 1 | 0,
   // Passed by a debug build's compiler for a tag variable.
   tagVar?: 1,
-  // A patch build's pairing (`PatchPairing`; `Setup` maps to `Render` first).
+  // A patch build's pairing (`PatchPairing`).
   pairing?: PatchPairing,
   // The child's scope reason, where the client's default does not hold.
   reason?: GroupMask,

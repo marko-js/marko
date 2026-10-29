@@ -35,11 +35,13 @@ import {
 import { writeDynamicTagEntry, pairsContent } from "./dynamic-tag";
 import {
   _patch_bind,
+  type FirstValueKey,
   normalizePatchValue,
   PatchRenderState,
   ensureFills,
   popIdHop,
   pushIdHop,
+  toFirstValueKey,
   walkMarkers,
   withKeptBranchId,
   writeFill,
@@ -55,9 +57,12 @@ export function _attr(
   key?: string,
   mask?: GroupMask,
   group?: number,
+  firstValue?: Accessor,
 ) {
   const fills =
-    scopeId === undefined ? undefined : ensureFills(scopeId, mask, group!);
+    scopeId === undefined
+      ? undefined
+      : ensureFills(scopeId, mask, group!, undefined, firstValue);
   return fills === undefined
     ? _base_attr(name, value)
     : writeFill(fills, key!, normalizeAttrValue(value));
@@ -71,6 +76,7 @@ export function _attr_class(
   key?: string,
   mask?: GroupMask,
   group?: number,
+  firstValue?: Accessor,
 ) {
   return patchStringAttr(
     "class",
@@ -79,6 +85,7 @@ export function _attr_class(
     key,
     mask,
     group,
+    firstValue,
   );
 }
 
@@ -88,6 +95,7 @@ export function _attr_style(
   key?: string,
   mask?: GroupMask,
   group?: number,
+  firstValue?: Accessor,
 ) {
   return patchStringAttr(
     "style",
@@ -96,6 +104,7 @@ export function _attr_style(
     key,
     mask,
     group,
+    firstValue,
   );
 }
 
@@ -107,9 +116,12 @@ export function _attr_option_value(
   key?: string,
   mask?: GroupMask,
   group?: number,
+  firstValue?: Accessor,
 ) {
   const fills =
-    scopeId === undefined ? undefined : ensureFills(scopeId, mask, group!);
+    scopeId === undefined
+      ? undefined
+      : ensureFills(scopeId, mask, group!, undefined, firstValue);
   return fills === undefined
     ? _base_attr_option_value(value)
     : writeFill(fills, key!, normalizeAttrValue(value));
@@ -122,9 +134,12 @@ function patchStringAttr(
   key: string | undefined,
   mask: GroupMask | undefined,
   group: number | undefined,
+  firstValue?: Accessor,
 ) {
   const fills =
-    scopeId === undefined ? undefined : ensureFills(scopeId, mask, group!);
+    scopeId === undefined
+      ? undefined
+      : ensureFills(scopeId, mask, group!, undefined, firstValue);
   return fills === undefined
     ? stringAttr(name, value)
     : writeFill(fills, key!, value || undefined);
@@ -146,9 +161,12 @@ export function _attrs(
   flag?: 0 | 1 | 2,
   mask?: GroupMask,
   group?: number,
+  firstValue?: Accessor,
 ) {
   const fills =
-    group === undefined ? undefined : ensureFills(scopeId, mask, group);
+    group === undefined
+      ? undefined
+      : ensureFills(scopeId, mask, group, undefined, firstValue);
   return fills === undefined
     ? _base_attrs(data, accessor, scopeId, tagName)
     : writeAttrsFill(
@@ -171,9 +189,12 @@ export function _attrs_partial(
   flag?: 0 | 1 | 2,
   mask?: GroupMask,
   group?: number,
+  firstValue?: Accessor,
 ) {
   const fills =
-    group === undefined ? undefined : ensureFills(scopeId, mask, group);
+    group === undefined
+      ? undefined
+      : ensureFills(scopeId, mask, group, undefined, firstValue);
   return fills === undefined
     ? _base_attrs_partial(data, skip, accessor, scopeId, tagName)
     : writeAttrsFill(
@@ -239,17 +260,36 @@ export function _attrs_content(
   controllable?: 0 | 1,
   mask?: GroupMask,
   group?: number,
+  firstValue?: Accessor,
 ) {
   const content = data?.content;
-  const pairing = getContentPairing(scopeId, accessor, content, mask, group);
+  const firstValueKey = firstValue ? toFirstValueKey(firstValue) : undefined;
+  const pairing = getContentPairing(
+    scopeId,
+    accessor,
+    content,
+    mask,
+    group,
+    firstValueKey,
+  );
   const fills =
-    group === undefined ? undefined : ensureFills(scopeId, mask, group);
+    group === undefined
+      ? undefined
+      : ensureFills(scopeId, mask, group, undefined, firstValue);
   if (fills === undefined) {
     _html(`${_base_attrs(data, accessor, scopeId, tagName)}>`);
   } else {
     writeAttrsFill(fills, accessor, withoutContent(data), 0, controllable);
   }
-  renderPatchedContent(accessor, scopeId, content, markerGuard, pairing, site);
+  renderPatchedContent(
+    accessor,
+    scopeId,
+    content,
+    markerGuard,
+    pairing,
+    site,
+    firstValueKey,
+  );
 }
 
 export function _attrs_partial_content(
@@ -263,17 +303,36 @@ export function _attrs_partial_content(
   controllable?: 0 | 1,
   mask?: GroupMask,
   group?: number,
+  firstValue?: Accessor,
 ) {
   const content = data?.content;
-  const pairing = getContentPairing(scopeId, accessor, content, mask, group);
+  const firstValueKey = firstValue ? toFirstValueKey(firstValue) : undefined;
+  const pairing = getContentPairing(
+    scopeId,
+    accessor,
+    content,
+    mask,
+    group,
+    firstValueKey,
+  );
   const fills =
-    group === undefined ? undefined : ensureFills(scopeId, mask, group);
+    group === undefined
+      ? undefined
+      : ensureFills(scopeId, mask, group, undefined, firstValue);
   if (fills === undefined) {
     _html(`${_base_attrs_partial(data, skip, accessor, scopeId, tagName)}>`);
   } else {
     writeAttrsFill(fills, accessor, withoutContent(data), skip, controllable);
   }
-  renderPatchedContent(accessor, scopeId, content, markerGuard, pairing, site);
+  renderPatchedContent(
+    accessor,
+    scopeId,
+    content,
+    markerGuard,
+    pairing,
+    site,
+    firstValueKey,
+  );
 }
 
 // Content no patch entry names (no group passed) is the resumed page's.
@@ -283,10 +342,21 @@ function getContentPairing(
   content: unknown,
   mask: GroupMask | undefined,
   group: number | undefined,
+  firstValueKey?: FirstValueKey,
 ) {
   return group === undefined
     ? PatchPairing.Skip
-    : writeDynamicTagEntry(scopeId, accessor, content, 0, 0, 0, mask, group);
+    : writeDynamicTagEntry(
+        scopeId,
+        accessor,
+        content,
+        0,
+        0,
+        0,
+        mask,
+        group,
+        firstValueKey,
+      );
 }
 
 // Content pairs as a dynamic tag's does: a kept body seeds no creation, and one
@@ -298,21 +368,28 @@ function renderPatchedContent(
   markerGuard: 1 | 0 | undefined,
   pairing: PatchPairing,
   site: number,
+  firstValueKey?: FirstValueKey,
 ) {
   const state = getState();
   const renderer = normalizeDynamicRenderer<ServerRenderer>(content);
-  const pairs = pairsContent(state, scopeId, accessor, renderer, 0, pairing);
-  pushIdHop(IdHop.Site, MARKO_DEBUG ? [accessor, site] : site);
-  if (pairing === PatchPairing.Render || pairing === PatchPairing.Setup) {
+  const pairs = pairsContent(
+    state,
+    scopeId,
+    accessor,
+    renderer,
+    0,
+    pairing,
+    firstValueKey,
+  );
+  const render = () =>
     _base_attr_content(accessor, scopeId, content, markerGuard);
+  pushIdHop(IdHop.Site, MARKO_DEBUG ? [accessor, site] : site);
+  if (pairing === PatchPairing.Render) {
+    render();
   } else if (pairs) {
-    withKeptBranchId(_peek_scope_id(), () =>
-      _base_attr_content(accessor, scopeId, content, markerGuard),
-    );
+    withKeptBranchId(_peek_scope_id(), render);
   } else if (!(state instanceof PatchRenderState)) {
-    withUnpatched(() =>
-      _base_attr_content(accessor, scopeId, content, markerGuard),
-    );
+    withUnpatched(render);
   }
   popIdHop();
 }
@@ -338,6 +415,7 @@ export function _attr_input_value(
   bindKey?: string,
   bindMask?: GroupMask,
   bindGroup?: number,
+  firstValue?: Accessor,
 ) {
   return patchControl(
     scopeId,
@@ -349,6 +427,7 @@ export function _attr_input_value(
     bindKey,
     bindMask,
     bindGroup,
+    firstValue,
   )
     ? ""
     : _base_attr_input_value(scopeId, nodeAccessor, value, valueChange);
@@ -365,6 +444,7 @@ export function _attr_input_checked(
   bindKey?: string,
   bindMask?: GroupMask,
   bindGroup?: number,
+  firstValue?: Accessor,
 ) {
   return patchControl(
     scopeId,
@@ -376,6 +456,7 @@ export function _attr_input_checked(
     bindKey,
     bindMask,
     bindGroup,
+    firstValue,
   )
     ? ""
     : _base_attr_input_checked(scopeId, nodeAccessor, checked, checkedChange);
@@ -394,6 +475,7 @@ export function _attr_input_checkedValue(
   bindKey?: string,
   bindMask?: GroupMask,
   bindGroup?: number,
+  firstValue?: Accessor,
 ) {
   return patchControl(
     scopeId,
@@ -405,6 +487,7 @@ export function _attr_input_checkedValue(
     bindKey,
     bindMask,
     bindGroup,
+    firstValue,
   )
     ? ""
     : _base_attr_input_checkedValue(
@@ -427,6 +510,7 @@ export function _attr_details_or_dialog_open(
   bindKey?: string,
   bindMask?: GroupMask,
   bindGroup?: number,
+  firstValue?: Accessor,
 ) {
   return patchControl(
     scopeId,
@@ -438,6 +522,7 @@ export function _attr_details_or_dialog_open(
     bindKey,
     bindMask,
     bindGroup,
+    firstValue,
   )
     ? ""
     : _base_attr_details_or_dialog_open(
@@ -461,6 +546,7 @@ export function _attr_select_value(
   bindKey?: string,
   bindMask?: GroupMask,
   bindGroup?: number,
+  firstValue?: Accessor,
 ) {
   if (
     patchControl(
@@ -473,6 +559,7 @@ export function _attr_select_value(
       bindKey,
       bindMask,
       bindGroup,
+      firstValue,
     )
   ) {
     content();
@@ -492,6 +579,7 @@ export function _attr_textarea_value(
   bindKey?: string,
   bindMask?: GroupMask,
   bindGroup?: number,
+  firstValue?: Accessor,
 ) {
   return patchControl(
     scopeId,
@@ -503,6 +591,7 @@ export function _attr_textarea_value(
     bindKey,
     bindMask,
     bindGroup,
+    firstValue,
   )
     ? ""
     : _base_attr_textarea_value(scopeId, nodeAccessor, value, valueChange);
@@ -520,6 +609,7 @@ function patchControl(
   bindKey: string | undefined,
   bindMask: GroupMask | undefined,
   bindGroup: number | undefined,
+  firstValue: Accessor | undefined,
 ) {
   const state = getState();
   if (!(state instanceof PatchRenderState)) {
@@ -529,7 +619,7 @@ function patchControl(
   }
   if (bindKey) _patch_bind(scopeId, bindKey, handler, bindMask, bindGroup);
   if (controlKey) {
-    const fills = ensureFills(scopeId, mask, group!);
+    const fills = ensureFills(scopeId, mask, group!, undefined, firstValue);
     if (fills) fills[controlKey] = normalizePatchValue(value);
   }
   return true;

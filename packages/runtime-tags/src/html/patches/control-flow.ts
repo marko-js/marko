@@ -78,6 +78,7 @@ export function _show_end(
   end?: EncodedAccessor,
   mask?: GroupMask,
   group?: number,
+  firstValue?: Accessor,
 ) {
   _base_show_end(
     scopeId,
@@ -89,7 +90,7 @@ export function _show_end(
     singleNode,
   );
   if (node !== undefined) {
-    const fills = ensureFills(scopeId, mask, group!);
+    const fills = ensureFills(scopeId, mask, group!, undefined, firstValue);
     if (fills) {
       const entry: unknown[] = [display ? 1 : 0, node];
       if (start !== undefined) entry.push(start);

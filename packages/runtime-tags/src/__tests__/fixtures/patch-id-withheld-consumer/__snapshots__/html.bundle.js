@@ -9,7 +9,7 @@ var card_default = _template("b", (input) => {
 	const own = _id("A");
 	let c = input.content;
 	_html(`<input${_attr("id", own, $scope0_id, "aa$id", 0, 0)}>${_el_resume($scope0_id, "a", 0)}<label${_attr("for", own, $scope0_id, "ab$for", 0, 0)}>own</label>${_el_resume($scope0_id, "b", 0)}<button>clear</button>${_el_resume($scope0_id, "c")}`);
-	_dynamic_tag($scope0_id, "d", c, {}, 2, 0, 0, 1, _client_guard($scope0_reason, 0) << 1, 0, 1);
+	_dynamic_tag($scope0_id, "d", c, {}, 2, 0, 0, 1, $scope0_reason, 0, "i");
 	_script($scope0_id, "b0");
 	_scope($scope0_id, {}) || _content_withhold(input.content);
 });

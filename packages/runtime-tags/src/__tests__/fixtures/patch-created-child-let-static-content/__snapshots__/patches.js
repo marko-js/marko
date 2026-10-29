@@ -2,7 +2,7 @@
 [`a0,<em>static</em>`, `a1 !a>b0;/D b%l&;<section><button>clear</button><!></section>`, {
   ba: [{
     ca: {
-      s: {
+      Ff: {
         fb: "^^a0"
       }
     }

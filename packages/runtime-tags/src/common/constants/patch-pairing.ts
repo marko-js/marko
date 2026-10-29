@@ -5,8 +5,6 @@ export const Render = 1;
 export const Skip = 2;
 // Pairs it keeping the live branch: no entry ships.
 export const Keep = 3;
-// Renders it into the setup only a scope the flush creates applies.
-export const Setup = 4;
 
 type Self = typeof import("./patch-pairing");
 export type Value = Self[keyof Self];

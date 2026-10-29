@@ -317,10 +317,21 @@ export function patchTreeNode<T extends object>(
   return node;
 }
 
+// The first-value entries a `<let>` gates (`PatchKey.FirstValue` + its key).
+export type FirstValueKey = `${typeof PatchKey.FirstValue}${string}`;
+
+// The entry key gating a first-value hole's writes on its `<let>`'s slot.
+export function toFirstValueKey(firstValue: Accessor): FirstValueKey {
+  return `${PatchKey.FirstValue}${firstValue}`;
+}
+
 export function ensurePatchSetup(
   state: PatchRenderState,
   patch: Record<string, unknown>,
-  key: typeof PatchKey.Setup | typeof PatchKey.SetupValues = PatchKey.Setup,
+  key:
+    | typeof PatchKey.Setup
+    | typeof PatchKey.SetupValues
+    | FirstValueKey = PatchKey.Setup,
 ) {
   return (patch[key] ??= patchTreeNode(state, {})) as Record<string, unknown>;
 }
@@ -359,9 +370,12 @@ export function linkScopePatch(
       if (contentId) shipShell(state, contentId);
       const entry = slotIds && patchTreeNode(state, [patch, ...slotIds]);
       const key = link.key || PatchKey.Child + hop;
-      if (link.setup) {
-        ensurePatchSetup(state, ensureScopePatch(state, parent))[key] =
-          entry || patch;
+      if (link.firstValue) {
+        ensurePatchSetup(
+          state,
+          ensureScopePatch(state, parent),
+          link.firstValue,
+        )[key] = entry || patch;
       } else {
         writePatchEntry(state, parent, key, entry || patch);
       }
@@ -429,8 +443,8 @@ export interface PatchLink {
   slotIds?: (string | undefined)[];
   // A content body's owner (its client `_`) when not the rendering scope.
   owner?: number;
-  // Linked into the parent's setup: only a created parent takes it.
-  setup?: boolean;
+  // The parent's first-value entries it links into (`PatchKey.FirstValue`).
+  firstValue?: FirstValueKey;
   // The parent's entry key, where not a child entry's.
   key?: string;
 }
@@ -686,7 +700,7 @@ export function linkBranch(
   contentId?: string,
   slotIds?: (string | undefined)[],
   ownerScopeId?: number,
-  setup?: boolean,
+  firstValueKey?: FirstValueKey,
 ) {
   // The id a pairing peeks is its own: no other branch has linked or opened it.
   state.patchLinks[branchId] = {
@@ -695,7 +709,7 @@ export function linkBranch(
     contentId,
     slotIds,
     owner: ownerScopeId,
-    setup,
+    firstValue: firstValueKey,
   };
 }
 
@@ -733,6 +747,7 @@ export function ensureFills(
   mask: GroupMask,
   group: number,
   setup?: 1,
+  firstValue?: Accessor,
 ) {
   const state = getState();
   if (!(state instanceof PatchRenderState)) {
@@ -747,7 +762,9 @@ export function ensureFills(
     return 0;
   const patch = ensureScopePatch(state, scopeId);
   return updatesFrom === UpdatesFrom.Server
-    ? patch
+    ? firstValue
+      ? ensurePatchSetup(state, patch, toFirstValueKey(firstValue))
+      : patch
     : ensurePatchSetup(state, patch);
 }
 

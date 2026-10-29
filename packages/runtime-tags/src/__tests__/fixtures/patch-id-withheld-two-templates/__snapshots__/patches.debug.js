@@ -3,8 +3,10 @@
   "PatchLoop:#text/0": [1, {
     "PatchChild:#childScope/0": {
       "PatchChild:#childScope/0": {
-        "PatchSetup:": {
-          "PatchDynamicTag:#text/1": _.c = "^^packages/runtime-tags/src/__tests__/fixtures/patch-id-withheld-two-templates/tags/relay.marko_1*content",
+        "PatchFirstValue:c": {
+          "PatchDynamicTag:#text/1": _.c = "^^packages/runtime-tags/src/__tests__/fixtures/patch-id-withheld-two-templates/tags/relay.marko_1*content"
+        },
+        "PatchFirstValue:o": {
           "PatchDynamicTag:#text/2": _.d = "^^^packages/runtime-tags/src/__tests__/fixtures/patch-id-withheld-two-templates/template.marko_2*content"
         }
       },
@@ -25,8 +27,10 @@
   }, 2, {
     "PatchChild:#childScope/0": {
       "PatchChild:#childScope/0": {
-        "PatchSetup:": {
-          "PatchDynamicTag:#text/1": _.c,
+        "PatchFirstValue:c": {
+          "PatchDynamicTag:#text/1": _.c
+        },
+        "PatchFirstValue:o": {
           "PatchDynamicTag:#text/2": _.d
         }
       },

@@ -28,6 +28,7 @@ import {
 } from "../writer";
 import { kKeptInstance } from "./serializer";
 import {
+  type FirstValueKey,
   PatchRenderState,
   popIdHop,
   pushIdHop,
@@ -46,6 +47,7 @@ import {
   withheldRenderers,
   withOwnerHops,
   withUnpatched,
+  toFirstValueKey,
   writePatchEntry,
 } from "./writer";
 
@@ -64,8 +66,9 @@ export function _dynamic_tag(
   markerGuard?: 1 | 0,
   mask?: GroupMask,
   group?: number,
-  // A tag client state names: the client's once its scope exists.
-  createdOnly?: 1 | 0,
+  // A tag a server-initialized `<let>` names: its entries apply while the
+  // `<let>` (this key, a `^` per owner up) holds that first value.
+  firstValue?: Accessor | 0,
   // The group its renderer changes by, where not the tag's, and its mask where
   // that differs from the tag's.
   rendererGroup?: number,
@@ -73,6 +76,7 @@ export function _dynamic_tag(
   // A patch build passes the variable's registration, which a patch fills.
   tagVar?: 1 | string,
 ) {
+  const firstValueKey = firstValue ? toFirstValueKey(firstValue) : undefined;
   const pairing =
     patched & 3
       ? writeDynamicTagEntry(
@@ -84,7 +88,7 @@ export function _dynamic_tag(
           typeof tagVar === "string" ? tagVar : 0,
           mask,
           group,
-          createdOnly,
+          firstValueKey,
           rendererGroup,
           rendererMask,
           !!(patched & 4),
@@ -106,6 +110,7 @@ export function _dynamic_tag(
       ? 0
       : undefined,
     patched >> 3,
+    firstValueKey,
   );
 }
 
@@ -126,6 +131,7 @@ function renderDynamicTag(
   // The call site, where a template renders the tag (a native tag's body,
   // rendered by base, has none: its element renders one content).
   site?: number,
+  firstValueKey?: FirstValueKey,
 ) {
   const state = getState();
   const isPatchRender = state instanceof PatchRenderState;
@@ -139,6 +145,7 @@ function renderDynamicTag(
     renderer,
     content,
     pairing,
+    firstValueKey,
   );
   if (isPatchRender && !pairs) return;
   // The child's groups are unknown: a patch template's page or response
@@ -148,38 +155,23 @@ function renderDynamicTag(
   if (site !== undefined) {
     pushIdHop(IdHop.Site, MARKO_DEBUG ? [accessor, site] : site);
   }
-  if (!pairs) {
-    const unpatched = withUnpatched(() =>
-      _base_dynamic_tag(
-        scopeId,
-        accessor,
-        tag,
-        inputOrArgs,
-        content,
-        inputIsArgs,
-        markerGuard,
-        tagVar ? 1 : undefined,
-        pairing,
-        reason,
-        renderDynamicTag,
-      ),
+  const render = () =>
+    _base_dynamic_tag(
+      scopeId,
+      accessor,
+      tag,
+      inputOrArgs,
+      content,
+      inputIsArgs,
+      markerGuard,
+      tagVar ? 1 : undefined,
+      pairing,
+      reason,
+      renderDynamicTag,
     );
-    if (site !== undefined) popIdHop();
-    return unpatched;
-  }
-  const value = _base_dynamic_tag(
-    scopeId,
-    accessor,
-    tag,
-    inputOrArgs,
-    content,
-    inputIsArgs,
-    markerGuard,
-    tagVar ? 1 : undefined,
-    pairing === PatchPairing.Setup ? PatchPairing.Render : pairing,
-    reason,
-    renderDynamicTag,
-  );
+  // A tag the patch skips is the resumed page's, as is one a first-value `<let>`
+  // names once client code sets it: both unpatched, so its content subscribes.
+  const value = !pairs || firstValueKey ? withUnpatched(render) : render();
   if (site !== undefined) popIdHop();
   // A template whose own state drives its return keeps the client's value.
   if (
@@ -202,11 +194,10 @@ export function pairsContent(
   renderer: ServerRenderer | string | undefined,
   content: unknown,
   pairing: PatchPairing | undefined,
+  firstValueKey?: FirstValueKey,
 ) {
   const pairs =
-    pairing === PatchPairing.Render ||
-    pairing === PatchPairing.Keep ||
-    pairing === PatchPairing.Setup;
+    pairing === PatchPairing.Render || pairing === PatchPairing.Keep;
   if (state instanceof PatchRenderState) {
     if (!pairs) {
       const readyId = (renderer as ServerRenderer)?.[RendererProp.ReadyId];
@@ -227,7 +218,7 @@ export function pairsContent(
           typeof renderer === "function"
             ? renderer[RendererProp.Owner]
             : undefined,
-          pairing === PatchPairing.Setup,
+          firstValueKey,
         );
       }
     }
@@ -299,7 +290,7 @@ export function writeDynamicTagEntry(
   varId: string | 0,
   mask?: GroupMask,
   group?: number,
-  createdOnly?: 1 | 0,
+  firstValueKey?: FirstValueKey,
   rendererGroup?: number,
   rendererMask = mask,
   namesRegistered?: boolean,
@@ -310,6 +301,15 @@ export function writeDynamicTagEntry(
     walkMarkers(state);
   } else {
     const renderer = normalizeDynamicRenderer<ServerRenderer>(tag);
+    // A page instance of kept content a first-value `<let>` names is the page's:
+    // its holes ride the owner's withheld entry.
+    if (
+      firstValueKey &&
+      withheldRenderers.has(renderer as ServerRenderer) &&
+      !inCreatable()
+    ) {
+      return PatchPairing.Skip;
+    }
     const fixed =
       rendererGroup !== undefined &&
       !writesEntry(getUpdatesFrom(rendererMask, rendererGroup));
@@ -357,21 +357,26 @@ export function writeDynamicTagEntry(
       while (entry.length > 1 && !entry[entry.length - 1]) entry.pop();
       const value = entry.length > 1 ? entry : entry[0];
       const key = PatchKey.DynamicTag + accessor;
-      // Client state names the tag: only a scope the flush creates takes it.
-      if (createdOnly) {
-        ensurePatchSetup(state, ensureScopePatch(state, scopeId))[key] = value;
-        return PatchPairing.Setup;
+      // A first-value `<let>` names the tag: a live branch keeps it where it
+      // renders that renderer, else takes it, as a created one does.
+      if (firstValueKey) {
+        ensurePatchSetup(
+          state,
+          ensureScopePatch(state, scopeId),
+          firstValueKey,
+        )[key] = value;
+        return PatchPairing.Render;
       }
       writePatchEntry(state, scopeId, key, value);
     } else if (!(updatesFrom & UpdatesFrom.Client)) {
-      // No entry ships: the live branch stays paired, a constant group's holes
-      // seed nothing in it, and client state renders a live scope's tag itself.
-      return createdOnly ? PatchPairing.Skip : PatchPairing.Keep;
+      // No entry ships: the live branch stays paired, and a constant group's
+      // holes seed nothing in it.
+      return PatchPairing.Keep;
     }
   }
-  // A tag deriving from a group updating from the client, or named by client
-  // state, is the resumed page's to render.
-  return createdOnly || updatesFrom & UpdatesFrom.Client
+  // A tag deriving from a group updating from the client is the resumed page's
+  // to render.
+  return updatesFrom & UpdatesFrom.Client
     ? PatchPairing.Skip
     : PatchPairing.Render;
 }

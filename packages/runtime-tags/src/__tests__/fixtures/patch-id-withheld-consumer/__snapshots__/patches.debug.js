@@ -4,7 +4,9 @@
     "PatchChild:#childScope/0": {
       "PatchSetup:": {
         "PatchAttr:#input/0 id": _.a = "sM_[1].#childScope/0@0.own",
-        "PatchAttr:#label/1 for": _.a,
+        "PatchAttr:#label/1 for": _.a
+      },
+      "PatchFirstValue:c": {
         "PatchDynamicTag:#text/3": _.d = "^^packages/runtime-tags/src/__tests__/fixtures/patch-id-withheld-consumer/template.marko_2*content"
       }
     },
@@ -19,7 +21,9 @@
     "PatchChild:#childScope/0": {
       "PatchSetup:": {
         "PatchAttr:#input/0 id": _.c = "sM_[2].#childScope/0@0.own",
-        "PatchAttr:#label/1 for": _.c,
+        "PatchAttr:#label/1 for": _.c
+      },
+      "PatchFirstValue:c": {
         "PatchDynamicTag:#text/3": _.d
       }
     },

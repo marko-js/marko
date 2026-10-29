@@ -38,13 +38,15 @@ import { isOptimize, isOutputHTML, isPatch } from "../../util/marko-config";
 import { analyzeAttributeTags } from "../../util/nested-attribute-tags";
 import { concat, type Opt } from "../../util/optional";
 import {
-  keepsSeededMarker,
+  getFirstValueKey,
+  getFirstValueLet,
   linkHolePatcher,
-  writesPatchHole,
   onReasonsSettled,
+  writesPatchHole,
 } from "../../util/patch/decisions";
 import {
   getExprRootGroupArgs,
+  getFirstValueGroupArgs,
   getRendererGroupArgs,
 } from "../../util/patch/writers";
 import { addAlwaysReason, addReasonExprs } from "../../util/reasons";
@@ -220,13 +222,16 @@ export default {
       // The dynamic tag entry applies without this template's dom module.
       linkHolePatcher(tagSection, tagExtra, "patches/dynamic-tag");
       // Fallback: a write a patch sends its params (a `<let>` its input seeds,
-      // say) links page-level.
+      // say) links page-level, and a fill where a first-value `<let>` names it.
       if (
         isPatch() &&
         node.name.type !== "StringLiteral" &&
         inputNodes.length
       ) {
         linkRuntimeFeature("patches/write");
+        onReasonsSettled(() => {
+          if (getFirstValueLet(tagExtra)) linkRuntimeFeature("patches/fill");
+        });
       }
 
       if (hasVar) {
@@ -265,15 +270,6 @@ export default {
 
       structure.marker(tag, nodeBinding);
       structure.enterShallow(tag);
-      // A tag client state names is the patch's to create alone: its entry
-      // rides a created scope's setup, with the child entry of what it renders.
-      if (isPatch()) {
-        onReasonsSettled(() => {
-          if (keepsSeededMarker(tagSection, tagExtra)) {
-            linkRuntimeFeature("patches/setup-child");
-          }
-        });
-      }
       // A class API tag without a tags template renders only through the
       // interop: dom output renders nothing at its marker, nor its body.
       if (
@@ -515,20 +511,30 @@ export default {
           !input.properties.length;
         let patched = 0;
         let patchArgs: (t.Expression | false)[] = [];
-        if (writesPatchHole(tagSection, tag.node.extra)) {
+        // A tag a first-value `<let>` names writes its entry while the `<let>`
+        // holds that value, under the `<let>`'s key.
+        const firstValue = getFirstValueLet(tagExtra);
+        if (firstValue) {
+          patched =
+            (emptyInput ? 2 : 1) |
+            (namesRegisteredTemplates(tagSection, tagExtra) ? 4 : 0);
+          patchArgs = [
+            ...getFirstValueGroupArgs(tagSection, tagExtra, firstValue),
+            getFirstValueKey(tagSection, firstValue),
+          ];
+        } else if (writesPatchHole(tagSection, tag.node.extra)) {
           const groupArgs = getExprRootGroupArgs(tagSection, tagExtra);
           // A renderer the name hands unchanged pairs while its input changes.
           const rendererArgs = groupArgs.length
             ? getRendererGroupArgs(tagSection, tagExtra, groupArgs)
             : [];
-          const createdOnly = keepsSeededMarker(tagSection, tagExtra);
           patched =
             (emptyInput ? 2 : 1) |
             (namesRegisteredTemplates(tagSection, tagExtra) ? 4 : 0);
           patchArgs = [
             groupArgs[0],
             groupArgs[1],
-            createdOnly ? t.numericLiteral(1) : absentArg(0),
+            absentArg(0),
             rendererArgs[0],
             rendererArgs[1],
           ];
@@ -562,7 +568,7 @@ export default {
           // them) follows the input: the order a patch build's calls are smallest in.
           patched |= nextIdSite() << 3;
           const [content, inputIsArgs, markerGuard] = callArgs.slice(4);
-          const [mask, group, createdOnly, rendererGroup, rendererMask] =
+          const [mask, group, firstValueKey, rendererGroup, rendererMask] =
             patchArgs;
           dynamicTagExpr = callRuntime(
             "_dynamic_tag",
@@ -573,7 +579,7 @@ export default {
             markerGuard || absentArg(1),
             mask,
             group,
-            createdOnly,
+            firstValueKey,
             rendererGroup,
             rendererMask || (!rendererGroup && absentArg(0)),
             tagVarArg,

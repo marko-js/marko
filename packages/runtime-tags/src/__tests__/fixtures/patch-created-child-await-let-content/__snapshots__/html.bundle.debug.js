@@ -15,7 +15,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 		const $scope1_id = _scope_id();
 		let c = input.content;
 		_html(`<button>clear</button>${_el_resume($scope1_id, "#button/0")}`);
-		_dynamic_tag($scope1_id, "#text/1", c, {}, 2, 0, 0, 1, $cg__input_content << 1, 0, 1);
+		_dynamic_tag($scope1_id, "#text/1", c, {}, 2, 0, 0, 1, $scope0_reason, 0, "c");
 		_script($scope1_id, "__tests__/tags/card.marko_1");
 		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, $cg__input_content ? "__tests__/tags/card.marko_1_input_content#0:3/init" : "__tests__/tags/card.marko_1_input_content#0:3/subscribe");
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_content__closures, _scope($scope1_id, {}, "__tests__/tags/card.marko", "2:2"), $cg__input_content && "__tests__/tags/card.marko_1_input_content#0:3/subscribe");

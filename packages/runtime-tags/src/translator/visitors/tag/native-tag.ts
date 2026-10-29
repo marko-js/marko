@@ -61,12 +61,14 @@ import {
 import { type Opt, push } from "../../util/optional";
 import {
   linkHolePatcher,
+  serverWritesHole,
   writesPatchHole,
   writesPatchHandler,
 } from "../../util/patch/decisions";
 import {
   buildPatchTextContent,
   getExprRootGroupArgs,
+  getHoleGroupArgs,
   getNamedPatchKey,
   getPatchHoleGroupArgs,
 } from "../../util/patch/writers";
@@ -706,12 +708,12 @@ export default {
             attributes,
             controllable.attrs.find(isDefined),
           )!.value.extra!;
-          const writesControl = writesPatchHole(tagSection, controlExtra);
+          const writesControl = serverWritesHole(tagSection, controlExtra);
           if (writesControl || bindsHandler) {
             // A param-sourced control value writes only where its group
             // updates from the server.
-            const [mask, group] = writesControl
-              ? getExprRootGroupArgs(tagSection, controlExtra)
+            const [mask, group, firstValue] = writesControl
+              ? getHoleGroupArgs(tagSection, controlExtra)
               : [];
             const [bindMask, bindGroup] = bindsHandler
               ? getExprRootGroupArgs(tagSection, changeAttr!.value.extra!)
@@ -736,6 +738,7 @@ export default {
                 ),
               bindMask,
               bindGroup,
+              firstValue,
             ];
           }
 
@@ -838,7 +841,7 @@ export default {
 
             if (
               value.extra?.rendersValue &&
-              writesPatchHole(tagSection, value.extra)
+              serverWritesHole(tagSection, value.extra)
             ) {
               // The attribute's helper also writes its patch entry (the
               // expression appears once): the element and group args trail.
@@ -851,7 +854,7 @@ export default {
                 t.stringLiteral(
                   getNamedPatchKey(getPatchKey().Attr, nodeBinding!, name),
                 ),
-                ...getExprRootGroupArgs(tagSection, value.extra!),
+                ...getHoleGroupArgs(tagSection, value.extra),
               )}`;
               continue;
             }
@@ -886,10 +889,14 @@ export default {
 
           if (!spreadContent) {
             // A patch write renders the set itself; its group args trail.
-            const patchArgs = writesPatchHole(tagSection, tagExtra)
+            const patchArgs = serverWritesHole(tagSection, tagExtra)
               ? [
                   getPatchSpreadFlag(tagName, !!controllable, injectsNonce),
-                  ...getPatchHoleGroupArgs(tagSection, tagExtra),
+                  ...getHoleGroupArgs(
+                    tagSection,
+                    tagExtra,
+                    getPatchHoleGroupArgs,
+                  ),
                 ]
               : [];
             if (skipExpression) {
@@ -948,7 +955,7 @@ export default {
             nodeBinding && getWriteReason(nodeBinding),
             true,
           );
-          const patches = writesPatchHole(tagSection, tagExtra);
+          const patches = serverWritesHole(tagSection, tagExtra);
           const contentArgs = [
             ...(isPatch() ? [t.numericLiteral(nextIdSite())] : []),
             markerGuard || absentArg(1),
@@ -957,7 +964,11 @@ export default {
                   !controllable && controllableElements.has(tagName)
                     ? t.numericLiteral(1)
                     : absentArg(0),
-                  ...getPatchHoleGroupArgs(tagSection, tagExtra),
+                  ...getHoleGroupArgs(
+                    tagSection,
+                    tagExtra,
+                    getPatchHoleGroupArgs,
+                  ),
                 ]
               : []),
           ];
@@ -1040,7 +1051,7 @@ export default {
         } else if (isTextOnly) {
           const rawTextHelper = getRawTextEscapeHelper(tagName);
           const textExtra = getTextContentExtra(tag.node);
-          if (textExtra && writesPatchHole(tagSection, textExtra)) {
+          if (textExtra && serverWritesHole(tagSection, textExtra)) {
             write`${buildPatchTextContent(
               tagSection,
               nodeBinding!,

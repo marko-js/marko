@@ -8,6 +8,7 @@ import {
   BindingType,
   bindingUtil,
   compareReferences,
+  getAliasRoot,
   getCanonicalBinding,
   isStateSourced,
 } from "../bindings";
@@ -15,22 +16,30 @@ import { createPassMemo } from "../cyclic-memo";
 import { mergeInitSources } from "../finalize-references";
 import { isClientAtEveryCall } from "../known-tag";
 import { isPatch } from "../marko-config";
+import { isTrackedFunction } from "../module-registrations";
 import { every, forEach, type Opt, push, reduce, some } from "../optional";
 import {
   getSourcesForExpr,
   getSourcesForRef,
   isConditionalReason,
+  isUnconditionalReason,
 } from "../reasons";
 import {
+  getCanonicalExtra,
   getConstantBindings,
+  getNameRead,
+  getReferencedBindings,
   getReferencedBindingsInFunction,
   type ReferencedExtra,
 } from "../references";
 import { type DOMRuntimeFeature, linkRuntimeFeature } from "../runtime";
+import { getScopeAccessor } from "../scope-accessor";
+import { getScopeExpression } from "../scope-read";
 import {
   getCallerParamGroupsAt,
   getLoopBody,
   isLoopBody,
+  isSameOrAncestorSection,
   type ParamReasonGroup,
   type Section,
 } from "../sections";
@@ -38,6 +47,7 @@ import { hasOwnSetupWork } from "../setup-work";
 import { inCreatedCatch } from "../shell";
 import { getSignals, type Signal } from "../signals";
 import { findSlot, SlotKind, type Slot } from "../slots";
+import { bindingReaders, someRead } from "../solve-reasons";
 import { mergeSources, type Sources, withSources } from "../sources";
 import { createAnalysisState } from "../state";
 import {
@@ -63,19 +73,52 @@ export function writesPatchHole(
 ) {
   const sources = getWriteSources(extra);
   return (
-    patchWrites(section) && (!sources?.state || seedsOnly(section, sources))
+    patchWrites(section) &&
+    (!sources?.state || seedsOnly(section, sources, extra))
+  );
+}
+
+// The server writes the hole's value into a patch: a patch hole, or a
+// first-value hole while its `<let>` holds that value.
+export function serverWritesHole(
+  section: Section,
+  extra: t.NodeExtra | undefined,
+) {
+  return (
+    writesPatchHole(section, extra) || !!(extra && getFirstValueLet(extra))
   );
 }
 
 // Read only from `<let>`s at the initial value the server renders where the scope
 // is created: the hole seeds a created scope alone.
-export function seedsOnly(section: Section, sources: Sources | undefined) {
+export function seedsOnly(
+  section: Section,
+  sources: Sources | undefined,
+  read?: t.NodeExtra,
+) {
   return (
     patchCreatesOrComposes(section) &&
     !!sources?.state &&
     !sources.param &&
     !sources.global &&
-    every(sources.state, (state) => holdsInitialValue(state, section))
+    every(sources.state, (state) => holdsInitialValue(state, section)) &&
+    !readsHeldData(read)
+  );
+}
+
+// A read of first-value `<let>` members only as data (`v.n` beside the tag
+// `v.content`): the page holds them, so client code renders it.
+export function readsHeldData(read: t.NodeExtra | undefined) {
+  const bindings = getReferencedBindings(read);
+  return !!bindings && every(bindings, isHeldData);
+}
+
+// A member of a first-value `<let>` no read takes as the held value (`v.n`
+// beside the tag `v.content`): data the page holds.
+export function isHeldData(binding: Binding) {
+  const root = getAliasRoot(binding);
+  return (
+    root !== binding && !!getFirstValueRoot(root) && !getFirstValueRoot(binding)
   );
 }
 
@@ -88,6 +131,81 @@ export function holdsInitialValue(state: Binding, section: Section) {
     !fillsInitialValue(state)
   );
 }
+
+// The server-initialized `<let>` (here or enclosing) whose code the hole runs:
+// a tag it names, or a function a value hole calls with server input.
+export const getFirstValueLet = createPassMemo(computeFirstValueLet, undefined);
+
+function computeFirstValueLet(expr: t.NodeExtra): Binding | undefined {
+  const extra = getCanonicalExtra(expr);
+  if (!isPatch() || !extra.section || !patchWrites(extra.section)) return;
+  const sources = getWriteSources(extra);
+  const state = sources?.state;
+  if (
+    !sources ||
+    sources.global ||
+    Array.isArray(state) ||
+    state?.type !== BindingType.let ||
+    !isSameOrAncestorSection(state.section, extra.section)
+  ) {
+    return;
+  }
+  // A function the template defines is client code the page can register.
+  if (isTrackedFunction(state.derivedFrom as t.NodeExtra)) return;
+  const init = getSourcesForExpr(state.derivedFrom as t.NodeExtra);
+  // Plain writes it on every render (client code reads it): the page holds it.
+  if (
+    init?.state ||
+    init?.global ||
+    isUnconditionalReason(findSlot(state)?.reason)
+  ) {
+    return;
+  }
+  const name = getNameRead(extra)?.binding;
+  if (
+    (name && getAliasRoot(name) === state) ||
+    (extra.rendersValue &&
+      sources.param &&
+      some(extra.invokes, (called) => holdsLet(called, state)))
+  ) {
+    return state;
+  }
+}
+
+// The callee is the `<let>`, a member of it, or a `<const>` of it alone.
+function holdsLet(called: Binding, state: Binding) {
+  if (getAliasRoot(called) === state) return true;
+  const sources = getSourcesForRef(called);
+  return sources?.state === state && !sources.param && !sources.global;
+}
+
+// The entries' key on the hole's scope: a `^` per owner up to the `<let>`'s.
+export function getFirstValueKey(section: Section, state: Binding) {
+  return t.stringLiteral(
+    "^".repeat(section.depth - state.section.depth) + getScopeAccessor(state),
+  );
+}
+
+// Client code renders the hole only once it set the `<let>`.
+export function getFirstValueGuard(section: Section, state: Binding) {
+  return t.binaryExpression(
+    "in",
+    t.stringLiteral(getScopeAccessor(state)),
+    getScopeExpression(section, state.section),
+  );
+}
+
+// The first-value `<let>` the binding is or belongs to, where a read takes it as
+// the held value (`v.tag`, not the data `v.n`): no fill or seed carries it.
+export const getFirstValueRoot = createPassMemo((binding: Binding) => {
+  const root = getAliasRoot(binding);
+  return someRead(
+    bindingReaders(binding, true),
+    (read) => getFirstValueLet(read) === root,
+  )
+    ? root
+    : undefined;
+}, undefined);
 
 // A seed-only hole a `<let>` the client assigns sources: that `<let>`'s signal
 // rewrites the node, so the page keeps its marker whatever the group.
@@ -401,7 +519,8 @@ export function getRenderedValueSources(binding: Binding) {
 }
 
 // The runtime features a hole's patch entries apply through (its patchers, and
-// `controllable` a spread re-claims), linked where a patch writes it.
+// `controllable` a spread re-claims), linked where a patch writes it; a
+// first-value hole's entries apply through `patches/first-value` too.
 export function linkHolePatcher(
   section: Section,
   extra: t.NodeExtra,
@@ -409,7 +528,9 @@ export function linkHolePatcher(
 ) {
   if (isPatch()) {
     onReasonsSettled(() => {
-      if (writesPatchHole(section, extra)) {
+      const firstValue = !!getFirstValueLet(extra);
+      if (firstValue || writesPatchHole(section, extra)) {
+        if (firstValue) linkRuntimeFeature("patches/first-value");
         for (const feature of features) {
           if (feature) linkRuntimeFeature(feature);
         }
@@ -466,8 +587,13 @@ function computePatchKeying(slot: Slot) {
   }
 }
 
+// A server value, or a first-value `<let>`'s, which the server renders until
+// client code sets it.
 function rendersServerValue(extra: t.NodeExtra) {
-  return !!extra.rendersValue && !getWriteSources(extra)?.state;
+  return (
+    !!extra.rendersValue &&
+    (!getWriteSources(extra)?.state || !!getFirstValueLet(extra))
+  );
 }
 
 // Whether a function's own captures read state.

@@ -9,8 +9,8 @@ var card_default = _template("b", (input) => {
 	let c = input.content;
 	let o = input.other;
 	_html(`<button>clear</button>${_el_resume($scope0_id, "a")}`);
-	_dynamic_tag($scope0_id, "b", c, {}, 2, 0, 0, 1, _client_guard($scope0_reason, 0) << 1, 0, 1);
-	_dynamic_tag($scope0_id, "c", o, {}, 10, 0, 0, 1, _client_guard($scope0_reason, 1) << 1, 0, 1);
+	_dynamic_tag($scope0_id, "b", c, {}, 2, 0, 0, 1, $scope0_reason, 0, "h");
+	_dynamic_tag($scope0_id, "c", o, {}, 10, 0, 0, 1, $scope0_reason, 1, "i");
 	_script($scope0_id, "b0");
 	_scope($scope0_id, {}) || (_content_withhold(input.content), _content_withhold(input.other));
 });

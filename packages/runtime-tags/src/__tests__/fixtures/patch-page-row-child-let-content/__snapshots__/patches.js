@@ -2,7 +2,7 @@
 [`a2;D%c%;<em><!> <!></em>`, `a3 !a>b0;/D b%bD m&;<section><button>clear</button><!><p> </p></section>`, {
   la: [{
     ca: {
-      s: {
+      Fi: {
         fb: "^^a2"
       },
       tc: "SHOWN_a"
@@ -13,7 +13,7 @@
     }
   }, {
     ca: {
-      s: {
+      Fi: {
         fb: "^^a2"
       },
       tc: "SHOWN_b"

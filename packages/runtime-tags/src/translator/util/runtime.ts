@@ -157,6 +157,7 @@ export const domPatchRuntimeFeatures = [
   "patches/control-open",
   "patches/control-select",
   "patches/dynamic-tag",
+  "patches/first-value",
   "patches/effect",
   "patches/fill-change",
   "patches/marked-write",
@@ -177,7 +178,6 @@ export const domPatchRuntimeFeatures = [
   "patches/bind",
   "patches/var",
   "patches/withheld",
-  "patches/setup-child",
 ] as const;
 export type DOMRuntimeFeature =
   | (typeof domRuntimeFeatures)[number]
