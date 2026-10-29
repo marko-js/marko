@@ -1,11 +1,12 @@
 import type { TestConfig } from "../../main.test";
-const click = (sel: string) => (d: Document) =>
-  d.querySelector<HTMLElement>(sel)!.click();
 
-// A child's input joined with caller state under structure the caller's state
-// picks (an unpatched join key the closures keep), rendered in a branch the
-// child's state picks, and read by an effect in a branch the input picks: a
-// patch filling it re-runs the effect.
+function click(sel: string) {
+  return (document: Document) =>
+    document.querySelector<HTMLElement>(sel)!.click();
+}
+
+// The closures keep an unpatched join key beside the declaration's fill, so the
+// effect in the patch-written branch must re-run by its closure's registration.
 export const config: TestConfig = {
   patches: true,
   steps: [

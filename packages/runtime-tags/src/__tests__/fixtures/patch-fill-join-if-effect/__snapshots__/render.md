@@ -28,7 +28,7 @@
 
 # Update
 ```js
-d.querySelector(sel).click();
+document.querySelector(sel).click();
 ```
 ```html
 <div>
@@ -60,7 +60,7 @@ REMOVE: p
 
 # Update
 ```js
-d.querySelector(sel).click();
+document.querySelector(sel).click();
 ```
 ```html
 <p>
