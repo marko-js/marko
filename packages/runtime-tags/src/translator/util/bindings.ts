@@ -390,6 +390,17 @@ export function someAlias<A>(
   return false;
 }
 
+// Whether a read of the binding passes `test`.
+export function someBindingRead(
+  binding: Binding,
+  test: (read: ReferencedExtra, binding: Binding) => boolean,
+) {
+  for (const read of binding.reads.keys()) {
+    if (test(read, binding)) return true;
+  }
+  return false;
+}
+
 // Whether a read of the binding in `section` passes `test`.
 export function someReadIn(
   binding: Binding,

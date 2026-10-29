@@ -16,6 +16,7 @@ import {
   type ReferencedBindings,
   someAlias,
   someUpToAliasRoot,
+  someBindingRead,
   someReadIn,
 } from "../bindings";
 import { createAnalysisMemo, createPassMemo } from "../cyclic-memo";
@@ -510,28 +511,28 @@ function readsPastRenders(
 ): boolean {
   if (seen.has(binding)) return false;
   seen.add(binding);
-  for (const read of binding.reads.keys()) {
-    if (read.section !== section) return true;
-    if (
-      read.rendersValue ||
-      read.isEffect ||
-      read.initialValue ||
-      read.nameOnly ||
-      (!assigned && (!!getExprBranch(read) || !!read.callSiteExprs))
-    ) {
-      continue;
-    }
-    if (
-      !read.derives ||
-      some(
-        read.derives,
-        (derived) =>
-          derived.section !== section ||
-          readsPastRenders(derived, section, assigned, seen),
-      )
-    ) {
-      return true;
-    }
+  if (
+    someBindingRead(
+      binding,
+      (read) =>
+        read.section !== section ||
+        (!(
+          read.rendersValue ||
+          read.isEffect ||
+          read.initialValue ||
+          read.nameOnly ||
+          (!assigned && (!!getExprBranch(read) || !!read.callSiteExprs))
+        ) &&
+          (!read.derives ||
+            some(
+              read.derives,
+              (derived) =>
+                derived.section !== section ||
+                readsPastRenders(derived, section, assigned, seen),
+            ))),
+    )
+  ) {
+    return true;
   }
   for (const alias of binding.propertyAliases.values()) {
     if (readsPastRenders(alias, section, assigned, seen)) return true;
@@ -990,19 +991,16 @@ export function getClosureReadSources(closure: Binding, section: Section) {
 // Reads only the declaration's own signal reaches: a capture another template
 // reads, a kept closure, or a child's param from it.
 function hasDeclarationOnlyReads(binding: Binding) {
-  for (const read of binding.reads.keys()) {
-    if (
+  return someBindingRead(
+    binding,
+    (read) =>
       keepsClosureFills(read.section) ||
       (!readsValuesOnResume(read) &&
         some(read.derives, (derived) =>
           isCalleeParam(derived, binding.section),
         ) &&
-        !!getDerivedNeeds(read))
-    ) {
-      return true;
-    }
-  }
-  return false;
+        !!getDerivedNeeds(read)),
+  );
 }
 
 // What deriving the read's values needs of it: an uncontrolled `<let>` derives once,
@@ -1161,28 +1159,18 @@ function mergeConditions(
 // An effect read of a written value re-runs by register id when a patch
 // changes what it saw; ask through `someAlias` (direct aliases only).
 export function hasEffectRead(binding: Binding) {
-  for (const read of binding.reads.keys()) {
-    if (readsValuesOnResume(read)) return true;
-  }
-  return false;
+  return someBindingRead(binding, readsValuesOnResume);
 }
 
 // An effect reading it alone in a scope a patch writes, which only its declaration's
 // signal or a closure of it runs: neither ships where main never changes the value.
 function readsOwnEffect(binding: Binding) {
-  for (const read of binding.reads.keys()) {
-    if (
-      (read.section === binding.section || patchWrites(read.section)) &&
-      isOwnEffectRead(read, binding)
-    ) {
-      return true;
-    }
-  }
-  return false;
+  return someBindingRead(binding, isOwnEffectRead);
 }
 
 function isOwnEffectRead(read: ReferencedExtra, binding: Binding) {
   return (
+    (read.section === binding.section || patchWrites(read.section)) &&
     readsValuesOnResume(read) &&
     rerunsFromClosure(read, binding) &&
     !Array.isArray(getReferencedBindings(read))
@@ -1268,17 +1256,18 @@ function initsIntersectionByWrite(intersection: Intersection, member: Binding) {
 
 // A member such an intersection reads, which the patch writes for the intersection's init (its
 // sources settle before solve, so no pass resets it).
-const [writesForIntersectionInit] = createAnalysisMemo((binding: Binding) => {
-  for (const read of binding.reads.keys()) {
-    const intersection = getReferencedBindings(read);
-    if (
-      Array.isArray(intersection) &&
-      initsIntersectionByWrite(intersection, binding)
-    )
-      return true;
-  }
-  return false;
-}, false);
+const [writesForIntersectionInit] = createAnalysisMemo(
+  (binding: Binding) => someBindingRead(binding, initsByWriteRead),
+  false,
+);
+
+function initsByWriteRead(read: ReferencedExtra, binding: Binding) {
+  const intersection = getReferencedBindings(read);
+  return (
+    Array.isArray(intersection) &&
+    initsIntersectionByWrite(intersection, binding)
+  );
+}
 
 // A source of a built object an effect reads, here or as another template's input:
 // the object's readers depend on its sources (`holdsBuiltObject`).
@@ -1853,11 +1842,10 @@ function rendersBeforeCall(read: ReferencedExtra, how: number) {
 }
 
 function readsOtherIntersection(binding: Binding, intersection: Intersection) {
-  for (const read of binding.reads.keys()) {
+  return someBindingRead(binding, (read) => {
     const refs = getReferencedBindings(read);
-    if (Array.isArray(refs) && refs !== intersection) return true;
-  }
-  return false;
+    return Array.isArray(refs) && refs !== intersection;
+  });
 }
 
 // Whether a value is shipped for a written intersection its scope inits, which then depends
