@@ -11,17 +11,18 @@ const $try_content__setup = ($scope) => {
 	$await_content($scope);
 };
 const $placeholder_content__input_title__script = _script("__tests__/template.marko_1_input_title#0:4", ($scope) => console.log("placeholder shown: " + $scope._.input_title));
-const $placeholder_content__input_title = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_title", /*@__PURE__*/ _closure_get("input_title/6", ($scope) => {
+const $placeholder_content__input_title = /*@__PURE__*/ _closure_get("input_title/6", ($scope) => {
 	_text($scope["#text/0"], $scope._.input_title);
 	$placeholder_content__input_title__script($scope);
-}, 0, "__tests__/template.marko_1_input_title#0:4/subscribe"), 0);
+}, 0, "__tests__/template.marko_1_input_title#0:4/subscribe");
 const $placeholder_content__setup = $placeholder_content__input_title;
 const $placeholder_content = _content("__tests__/template.marko_1*content", "<em>loading <!></em>", "Db%", $placeholder_content__setup);
 const $input_title__closure = /*@__PURE__*/ _closure($placeholder_content__input_title);
-const $input_title = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "input_title", ($scope) => {
+_fill_run("__tests__/template.marko_fill0", "input_title", $input_title__closure);
+const $input_title = /*@__PURE__*/ _const("input_title", ($scope) => {
 	$input_title__closure($scope);
 	_text($scope["#text/0"], $scope.input_title);
-}, $input_title__closure);
+});
 const $try = /*@__PURE__*/ _try("#text/1", "<!><!><!>", "b%", $try_content__setup, $placeholder_content);
 function $setup($scope) {
 	$try($scope);

@@ -323,10 +323,6 @@ function computePatchFill(binding: Binding): PatchFill {
   // a fill only client-sourced join members call for reaches its joins alone.
   const fillsReads =
     fill === true || !!conditions?.structure || hasContents(conditions);
-  // Its declaration's run is whole, so it carries closures' effects: no closure
-  // keeps an unpatched join key and the patch fills none of its holes.
-  const runsWhole =
-    !unpatchedJoins && !someAlias(binding, hasFilledHoleRead, undefined, true);
   // Only the patch's key reaches the declaration: a `<let>` nothing assigns, a template
   // input its signal alone reads, or an always-filled server value its effects read.
   const ownRegistration =
@@ -337,7 +333,7 @@ function computePatchFill(binding: Binding): PatchFill {
         (fill === true &&
           someAlias(
             binding,
-            (alias) => readsDeclarationOnlyEffect(alias, runsWhole),
+            (alias) => readsDeclarationOnlyEffect(alias, !unpatchedJoins),
             undefined,
             true,
           )));
@@ -1184,14 +1180,16 @@ export function hasEffectRead(binding: Binding) {
   return false;
 }
 
-// An effect re-reading it that the declaration's fill carries: any where its run
-// is whole, else where only that fill reaches: in its own section, or in structure
-// whose closure registration ships only with client renders some pages make.
-function readsDeclarationOnlyEffect(binding: Binding, runsWhole: boolean) {
+// An effect re-reading it that the declaration's fill carries: any, where no closure
+// keeps an unpatched join key that ships beside it (the fill's run, whole or split
+// as its signal decides, replaces their registrations); else where only that fill
+// reaches: in its own section, or in structure whose closure registration ships
+// only with client renders some pages make.
+function readsDeclarationOnlyEffect(binding: Binding, carriesAll: boolean) {
   for (const read of binding.reads.keys()) {
     if (
       isRenderEffectRead(read, binding) &&
-      (runsWhole ||
+      (carriesAll ||
         read.section === binding.section ||
         !clientRenders(read.section))
     ) {
@@ -1199,11 +1197,6 @@ function readsDeclarationOnlyEffect(binding: Binding, runsWhole: boolean) {
     }
   }
   return false;
-}
-
-// A hole the patch fills in its own section, which leaves its run to the patch.
-function hasFilledHoleRead(binding: Binding) {
-  return someReadIn(binding, binding.section, isFilledHole);
 }
 
 function isRenderEffectRead(read: ReferencedExtra, binding: Binding) {

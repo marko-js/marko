@@ -1,0 +1,10 @@
+<let/open=true/>
+<if=input.show>
+  <p>${input.a + input.b}</p>
+</if>
+<if=input.on>
+  <div/el/>
+  <script>el().textContent = "s:" + input.a</script>
+</if>
+<if=open><i>${input.a}</i></if>
+<button.t onClick() { open = !open }>t</button>
