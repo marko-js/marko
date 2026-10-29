@@ -103,22 +103,7 @@ export default {
       }
       case "$signal":
         if (isOutputHTML()) {
-          replaceWithExtra(
-            identifier,
-            t.callExpression(
-              t.arrowFunctionExpression(
-                [],
-                t.blockStatement([
-                  t.throwStatement(
-                    t.newExpression(t.identifier("Error"), [
-                      t.stringLiteral("Cannot use $signal in a server render."),
-                    ]),
-                  ),
-                ]),
-              ),
-              [],
-            ),
-          );
+          replaceWithExtra(identifier, callRuntime("_signal_read_error"));
         } else {
           const exprRoot = identifier.node.extra!.exprRoot!;
           const canonicalExtra = getCanonicalExtra(exprRoot);
