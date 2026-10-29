@@ -1184,9 +1184,9 @@ export function hasEffectRead(binding: Binding) {
   return false;
 }
 
-// An effect re-reading it where only the declaration's fill reaches: in its own
-// section, or in structure whose closure registration ships only with client
-// renders some pages make.
+// An effect re-reading it that the declaration's fill carries: any where its run
+// is whole, else where only that fill reaches: in its own section, or in structure
+// whose closure registration ships only with client renders some pages make.
 function readsDeclarationOnlyEffect(binding: Binding, runsWhole: boolean) {
   for (const read of binding.reads.keys()) {
     if (
