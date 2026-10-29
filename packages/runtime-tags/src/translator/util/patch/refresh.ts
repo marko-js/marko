@@ -1229,13 +1229,13 @@ function rendersWithOwner(content: Section) {
   );
 }
 
-// A read rendering the content in structure or beside other inputs, or using
-// it any other way than passing it on.
+// A read rendering the content, or passing it on, in structure; rendering it
+// beside other inputs; or using it any other way than passing it on.
 function rendersApart(read: ReferencedExtra) {
   return isContentRender(read)
     ? !!read.section.parent ||
         Array.isArray(getReferencedBindings(read.merged || read))
-    : !read.derives;
+    : !read.derives || !!read.section.parent;
 }
 
 // The branch of the control flow tag whose expression the read is.

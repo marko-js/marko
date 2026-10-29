@@ -68,7 +68,7 @@ var template_default = _template("a", (input) => {
 	_patch_child_end();
 	_scope($scope0_id, {
 		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.label,
-		f: _write_if($scope0_reason, 2) && _unfilled_if($scope0_reason, 2) && $input_label__closures,
+		f: _write_if($scope0_reason, 2) && $input_label__closures,
 		a: _existing_scope($childScope)
 	}) || _filled_guard($scope0_reason, 2) && _patch_fill($scope0_id, "va3", input.label, !_server_guard($scope0_reason, 2));
 }, 1);

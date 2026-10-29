@@ -52,7 +52,7 @@ var template_default = _template("a", (input) => {
 	_html("</main>");
 	_scope($scope0_id, {
 		e: input.note,
-		f: _write_if($scope0_reason, 1) && _unfilled_if($scope0_reason, 1) && $input_note__closures,
+		f: _write_if($scope0_reason, 1) && $input_note__closures,
 		a: _existing_scope($childScope)
 	}) || _filled_guard($scope0_reason, 1) && _patch_fill($scope0_id, "va2", input.note, !_server_guard($scope0_reason, 1));
 }, 1);
