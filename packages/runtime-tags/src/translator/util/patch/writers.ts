@@ -2,7 +2,7 @@
 // guards, group args and boundary flags gating them.
 import { types as t } from "@marko/compiler";
 
-import { type Falsy, UpdatesFrom } from "../../../common/types";
+import { UpdatesFrom } from "../../../common/types";
 import {
   type Binding,
   bindingUtil,
@@ -411,10 +411,12 @@ export function writePatchResumeStatements(
                   "_client_guard",
                   fromIter(getParamSelectedStructure(closureSection) || []),
                 ),
-                callPatchRuntime(
+                callRuntime(
                   "_patch_init_entry",
-                  section,
-                  getResumeRegisterId(closureSection, binding, "init"),
+                  getScopeIdIdentifier(section),
+                  t.stringLiteral(
+                    getResumeRegisterId(closureSection, binding, "init"),
+                  ),
                   t.arrayExpression(
                     getDeps(
                       section,
@@ -451,10 +453,10 @@ export function writePatchResumeStatements(
           // A mixed join re-runs as its members change, under its group where params decide it.
           const init = andGuard(
             needed,
-            callPatchRuntime(
+            callRuntime(
               "_patch_init_entry",
-              section,
-              getResumeRegisterId(section, ref, "init"),
+              getScopeIdIdentifier(section),
+              t.stringLiteral(getResumeRegisterId(section, ref, "init")),
               t.arrayExpression(deps),
               ...groupArgs,
             ),
@@ -608,10 +610,10 @@ function buildLetChangeWrites(
         t.numericLiteral(1),
         ...(t.isNumericLiteral(seedGroup[0]) ? [] : seedGroup),
       ),
-      callPatchRuntime(
+      callRuntime(
         "_patch_bind",
-        section,
-        bindKey,
+        getScopeIdIdentifier(section),
+        t.stringLiteral(bindKey),
         t.cloneNode(change.expression),
         ...bindGroupArgs,
       ),
@@ -619,10 +621,10 @@ function buildLetChangeWrites(
   }
   const groupArgs = getRootGroupArgs(section, controller);
   return [
-    callPatchRuntime(
+    callRuntime(
       "_patch_let_change",
-      section,
-      getPatchKey().Fill + getPatchFillKey(binding),
+      getScopeIdIdentifier(section),
+      t.stringLiteral(getPatchKey().Fill + getPatchFillKey(binding)),
       getDeclaredBindingExpression(binding),
       t.stringLiteral(bindKey),
       t.cloneNode(change.expression),
@@ -732,10 +734,10 @@ export function buildLocalFill(section: Section, binding: Binding) {
       );
     }),
     (param) =>
-      callPatchRuntime(
+      callRuntime(
         "_patch_init",
-        section,
-        getResumeRegisterId(section, param, "init"),
+        getScopeIdIdentifier(section),
+        t.stringLiteral(getResumeRegisterId(section, param, "init")),
       ),
   );
   const fill = inits.length
@@ -909,21 +911,6 @@ export function getValueNodeMarkerGuard(section: Section, binding: Binding) {
   }
 }
 
-// A patch writer's call: the scope it writes, then its entry key.
-export function callPatchRuntime(
-  name: HTMLRuntimeHelpers,
-  section: Section,
-  key: string,
-  ...args: Array<t.Expression | Falsy>
-) {
-  return callRuntime(
-    name,
-    getScopeIdIdentifier(section),
-    t.stringLiteral(key),
-    ...args,
-  );
-}
-
 // A fill's patch write; a `setup` applies it only to a scope the flush creates.
 export function buildPatchFill(
   section: Section,
@@ -932,10 +919,10 @@ export function buildPatchFill(
   setup?: t.Expression,
   ...groupArgs: t.Expression[]
 ) {
-  return callPatchRuntime(
+  return callRuntime(
     "_patch_fill",
-    section,
-    getPatchKey().Fill + getPatchFillKey(binding, split),
+    getScopeIdIdentifier(section),
+    t.stringLiteral(getPatchKey().Fill + getPatchFillKey(binding, split)),
     getDeclaredBindingExpression(binding),
     setup,
     ...groupArgs,
@@ -949,11 +936,13 @@ export function buildPatchWrite(
   setup?: t.Expression,
 ) {
   const marked = isMarkedWrite(binding);
-  return callPatchRuntime(
+  return callRuntime(
     "_patch_write",
-    section,
-    (marked ? getPatchKey().MarkedWrite : getPatchKey().Write) +
-      getScopeAccessor(binding),
+    getScopeIdIdentifier(section),
+    t.stringLiteral(
+      (marked ? getPatchKey().MarkedWrite : getPatchKey().Write) +
+        getScopeAccessor(binding),
+    ),
     value,
     setup,
   );
@@ -972,10 +961,10 @@ export function buildReturnChangeBind(
     return handler;
   }
   const sources = getWriteSources(extra);
-  return callPatchRuntime(
+  return callRuntime(
     "_patch_bind",
-    section,
-    getPatchKey().Write + getAccessorProp().TagVariableChange,
+    getScopeIdIdentifier(section),
+    t.stringLiteral(getPatchKey().Write + getAccessorProp().TagVariableChange),
     handler,
     ...getRootGroupArgs(section, sources, !sources || !!sources.state),
   );
@@ -1021,7 +1010,11 @@ function buildClientInit(
   return t.logicalExpression(
     "&&",
     getCallerGroupGuard(section, "_client_guard", sources)!,
-    callPatchRuntime("_patch_init", section, initId),
+    callRuntime(
+      "_patch_init",
+      getScopeIdIdentifier(section),
+      t.stringLiteral(initId),
+    ),
   );
 }
 
