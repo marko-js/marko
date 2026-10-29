@@ -162,16 +162,10 @@ REMOVE: h1 + section
 <button>
   x
 </button>
-<section>
-  <input />
-  <label>
-    g
-  </label>
-</section>
 ```
 ## Change
 ```
 INSERT: h1 + button
-INSERT: button + section
-INSERT: section > :is(input, label)
 ```
+
+## Patch rejected (navigate)

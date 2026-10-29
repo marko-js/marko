@@ -166,16 +166,14 @@ REMOVE: h1 + section
 <button>
   x
 </button>
-<section>
-  <input />
-  <label>
-    g
-  </label>
-</section>
 ```
 ## Change
 ```
 INSERT: h1 + button
-INSERT: button + section
-INSERT: section > :is(input, label)
 ```
+## Console
+```
+ERROR Error: Kept content renders in an `<await>` the client settles in structure a patch created: the page loads the URL as a document instead.
+```
+
+## Patch rejected (navigate)
