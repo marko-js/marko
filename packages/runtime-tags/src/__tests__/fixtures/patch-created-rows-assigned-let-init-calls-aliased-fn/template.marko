@@ -1,0 +1,8 @@
+<for|row| of=(input.show ? [1, 2] : [])>
+  <let/x=input.v/>
+  <const/f=(v) => v/>
+  <const/g=f/>
+  <let/y=g(x)/>
+  <button onClick() { y = "click"; }>set</button>
+  <p>${y + input.w}</p>
+</for>

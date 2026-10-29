@@ -501,7 +501,9 @@ export function atInitialValueAsCreated(state: Binding, section: Section) {
 // A value a created scope gets from no other channel, unless a seeded join's client
 // init alone reads it (`getClientInitWrites`).
 function seedsCreatedScope(binding: Binding) {
-  return mayTakeSeed(binding) && !readsOnlyInSeededJoins(binding);
+  return (
+    mayTakeSeed(binding) && readsOutsideSeededJoins(binding, binding.section)
+  );
 }
 
 // A value a created scope gets from no other channel (a resumed one reads it
@@ -1314,32 +1316,36 @@ const writesForJoinInit = createPassMemo((binding: Binding) => {
   return false;
 }, false);
 
-// The members a seeded join's client init writes first: seeds it alone reads, as
+// The values a seeded join's client init writes first: seeds it alone reads, as
 // state arrives by its own init.
 export function getClientInitWrites(join: Intersection) {
-  return join.filter(
-    (member) =>
-      !member.sources?.state &&
-      readsOnlyInSeededJoins(member) &&
-      mayTakeSeed(member),
-  );
+  return join
+    .map(getCanonicalBinding)
+    .filter(
+      (root) =>
+        !root.sources?.state &&
+        !readsOutsideSeededJoins(root, root.section) &&
+        mayTakeSeed(root),
+    );
 }
 
-// Read, by no alias, only in its own section's seeded joins (a closure's scope is
-// another's).
-function readsOnlyInSeededJoins(binding: Binding) {
-  if (binding.aliases.size || binding.propertyAliases.size) return false;
+// Read, by itself or an alias, outside `section`'s seeded joins (a closure's
+// scope is another's).
+function readsOutsideSeededJoins(binding: Binding, section: Section): boolean {
   for (const read of binding.reads.keys()) {
     const join = getReferencedBindings(read);
     if (
       !Array.isArray(join) ||
-      read.section !== binding.section ||
-      !seedsJoinReads(read.section, join)
+      read.section !== section ||
+      !seedsJoinReads(section, join)
     ) {
-      return false;
+      return true;
     }
   }
-  return binding.reads.size > 0;
+  for (const alias of binding.aliases) {
+    if (readsOutsideSeededJoins(alias, section)) return true;
+  }
+  return false;
 }
 
 // A state join whose reads a created scope takes from the patch where the server
