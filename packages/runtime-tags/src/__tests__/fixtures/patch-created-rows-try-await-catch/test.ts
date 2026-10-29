@@ -1,0 +1,31 @@
+import assert from "node:assert/strict";
+
+import type { TestConfig } from "../../main.test";
+import { navigate, rejectAfter } from "../../utils/resolve";
+
+// A created scope's client row awaits a promise that rejects in a `<try>` whose
+// catch renders passed content: the client renders that catch; the patch applies.
+export const config: TestConfig = {
+  patches: true,
+  steps: () => [
+    { show: false, label: "a", promise: 0 },
+    check,
+    navigate(() => ({
+      show: true,
+      label: "b",
+      promise: rejectAfter(new Error("probe")),
+    })),
+    check,
+    { show: true, label: "c", promise: 0 },
+    check,
+  ],
+};
+
+function check(document: Document) {
+  const ids = new Set<string>();
+  for (const input of document.querySelectorAll("input")) {
+    assert(!ids.has(input.id), "duplicate " + input.id);
+    ids.add(input.id);
+    assert.equal(input.labels?.length, 1, "labels of " + input.id);
+  }
+}

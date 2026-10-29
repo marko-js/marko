@@ -58,7 +58,6 @@ import {
   walkMarkers,
   freshEntries,
   renderFresh,
-  withFreshKept,
   withKeptBranchId,
   withUnpatched,
   writeFresh,
@@ -529,11 +528,10 @@ function writeCreatedRows<A, B>(
       : [index, itemKey];
     index++;
     state.patchLinks[branchId] = { parent: scopeId, hop: [accessor, at] };
-    const patch = openScopePatch(state, branchId);
     pushIdHop(IdHop.Row, itemKey);
-    withBranchId(branchId, () => withFreshKept(cb, a, b));
+    const patch = renderFresh(state, cb, a, b);
     popIdHop();
-    if (hasKeys(patch)) {
+    if (patch && hasKeys(patch)) {
       items.push(typeof at === "number" ? at : patchTreeNode(state, at), patch);
     }
   });
@@ -778,14 +776,24 @@ export function _try(
         // The client renders a catch no flush creates; one reading its error
         // sits where no patch renders its try (stateful or off the branch path).
         if (shellContent! & 1) shipShell(state, catchId);
-        writePatchEntry(
-          state,
-          scopeId,
-          PatchKey.Catch + accessor,
-          createsCatch
-            ? writeCatch(state, scopeId, accessor, catchContent, err, catchId!)
-            : [],
-        );
+        // A fresh try's client catches too, rendering what it holds itself.
+        if (!fresh) {
+          writePatchEntry(
+            state,
+            scopeId,
+            PatchKey.Catch + accessor,
+            createsCatch
+              ? writeCatch(
+                  state,
+                  scopeId,
+                  accessor,
+                  catchContent,
+                  err,
+                  catchId!,
+                )
+              : [],
+          );
+        }
       },
       () => {
         settled = true;
