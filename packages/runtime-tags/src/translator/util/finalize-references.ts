@@ -11,7 +11,6 @@ import {
   bindingUtil,
   compareIntersections,
   getAliasRoot,
-  someAlias,
   getBindings,
   getCanonicalBinding,
   getAssignedObject,
@@ -38,7 +37,6 @@ import {
   reduce,
   some,
 } from "./optional";
-import { hasEffectRead } from "./patch/refresh";
 import {
   addAlwaysReason,
   addOwnerReason,
@@ -606,8 +604,8 @@ function resolveRootSources(binding: Binding) {
   if (
     isPatch() &&
     !binding.sources &&
-    ((binding.type === BindingType.let && resolveInitialValue(binding)) ||
-      holdsClientValue(binding))
+    binding.type === BindingType.let &&
+    resolveInitialValue(binding)
   ) {
     binding.sources = createSources(binding, undefined);
   }
@@ -688,34 +686,6 @@ function mapReturnedParams(
       withSources(sources, sources.state, params),
     );
   }
-}
-
-// A per-render initial value client code reads (so the page serializes it) is the
-// client's, kept across navigations; an `<await>` body's params stay the server's.
-function holdsClientValue(binding: Binding) {
-  return (
-    differsPerRender(binding) &&
-    binding !== binding.section.params &&
-    readsInClientCode(binding)
-  );
-}
-
-function readsInClientCode(binding: Binding): boolean {
-  if (someAlias(binding, hasEffectRead, undefined)) return true;
-  for (const part of binding.propertyAliases.values()) {
-    if (readsInClientCode(part)) return true;
-  }
-  return false;
-}
-
-// A `<let>`, `<const>` or `<await>` value (or part) whose expression has side
-// effects.
-export function differsPerRender(binding: Binding) {
-  return some(getAliasRoot(binding).derivedFrom || undefined, hasSideEffects);
-}
-
-function hasSideEffects(expr: t.NodeExtra) {
-  return expr.pure === false;
 }
 
 // What an init reads, `$global` included, its bindings resolved first.

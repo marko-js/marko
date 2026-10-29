@@ -29,7 +29,7 @@ var show_await_default = _template("b", (input) => {
 // template.marko
 _shells({
 	a: "a !a2; b b%;<button class=open>pend</button><button class=settle>settle</button><!><!>",
-	a1: /*@__PURE__*/ (() => `a1${_shell_marker(_shell_setup([["a6"], []], ["a>", $setup]))};${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c")};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template)}`)()
+	a1: /*@__PURE__*/ (() => `a1${_shell_marker(_shell_setup([["a5"], []], ["a>", $setup]))};${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c")};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template)}`)()
 });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
@@ -56,7 +56,6 @@ var template_default = _template("a", (input) => {
 		}
 	}, $scope0_id, "c", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["a1"], $scope0_reason, 0);
 	_script($scope0_id, "a2");
-	_patch_fill($scope0_id, "va4", p, 1);
 	_scope($scope0_id, {
 		g: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.label,
 		h: _write_if($scope0_reason, 0) && p,

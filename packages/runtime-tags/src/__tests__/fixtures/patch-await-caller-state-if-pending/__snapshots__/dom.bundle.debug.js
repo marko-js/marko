@@ -27,7 +27,7 @@ const $if_content__setup = ($scope) => {
 	$setup$1($scope["#childScope/0"]);
 };
 const $if_content__p = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_p#0:7/init", /*@__PURE__*/ _if_closure("#text/2", 0, ($scope) => $input_promise($scope["#childScope/0"], $scope._.p)));
-const $p = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill1", "p/7", $if_content__p);
+const $p = /*@__PURE__*/ _let("p/7", $if_content__p);
 const $resolve = /*@__PURE__*/ _let("resolve/8", ($scope) => _attr($scope["#button/1"], "disabled", !$scope.resolve));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	_on($scope["#button/0"], "click", function() {
@@ -40,9 +40,9 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	});
 });
 function $setup($scope) {
+	$p($scope, Promise.resolve(0));
 	$resolve($scope, undefined);
 	$setup__script($scope);
-	$p($scope, Promise.resolve(0));
 }
 const $if = /*@__PURE__*/ _if("#text/2", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c"), $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);

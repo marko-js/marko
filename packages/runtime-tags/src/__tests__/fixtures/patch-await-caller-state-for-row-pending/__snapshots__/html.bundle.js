@@ -52,7 +52,6 @@ var template_default = _template("a", (input) => {
 	});
 	_patch_child_end();
 	_script($scope0_id, "a0");
-	_patch_fill($scope0_id, "va1", p, 1);
 	_scope($scope0_id, {
 		i: resolve,
 		c: _existing_scope($childScope)

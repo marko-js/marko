@@ -19,7 +19,7 @@ import {
   someReadIn,
 } from "../bindings";
 import { createAnalysisMemo, createPassMemo } from "../cyclic-memo";
-import { differsPerRender, readsValuesOnResume } from "../finalize-references";
+import { readsValuesOnResume } from "../finalize-references";
 import {
   derivesConstantInput,
   ensureKnownTagPatchGroups,
@@ -141,14 +141,11 @@ function isPatchSent(binding: Binding) {
   return (
     isPatch() &&
     getCanonicalBinding(binding) === binding &&
-    ((hasParamOrGlobalSource(binding.sources) &&
-      !binding.sources!.state &&
-      (binding.type === BindingType.param ||
-        binding.type === BindingType.derived ||
-        (binding.type === BindingType.let && !binding.assignments))) ||
-      // Read only by functions, it follows the server's value (sources
-      // resolve before registration says whether client code reads it).
-      (!binding.sources && differsPerRender(binding))) &&
+    hasParamOrGlobalSource(binding.sources) &&
+    !binding.sources!.state &&
+    (binding.type === BindingType.param ||
+      binding.type === BindingType.derived ||
+      (binding.type === BindingType.let && !binding.assignments)) &&
     !derivesLocals(binding.section)
   );
 }
@@ -398,7 +395,7 @@ function holdsWithin(
 // scope a patch may create, or a server value a patch keeps current.
 export function canPatchFill(binding: Binding) {
   // State fills only where a server value keeps reaching it (a controlled `<let>`'s
-  // controller, a per-render value); a created scope's arrives as resume values.
+  // controller); a created scope's arrives as resume values.
   if (
     patchWritesValues(binding.section) &&
     getCanonicalBinding(binding) === binding &&
@@ -408,7 +405,6 @@ export function canPatchFill(binding: Binding) {
       return (
         patchWritesScope(binding.section) &&
         (!!findSlot(binding, SlotKind.ChangeHandler) ||
-          differsPerRender(binding) ||
           // The seed runs a `<let>`'s signal where plain keeps it and client code holds
           // the value, or takes it past the scope's renders and effects (a child, a join).
           (binding.type === BindingType.let &&
@@ -1436,24 +1432,6 @@ function isRegisteredFnCapture(binding: Binding) {
 
 function isRegisteredFnRead(read: Read) {
   return !!read.fnRoot?.reason;
-}
-
-// A created scope's state that keeps a fill seeds whole, so its signal runs:
-// a `<let>`, or a per-render value written or rendered whole.
-export function seedsLetWhole(binding: Binding) {
-  return (
-    binding.type === BindingType.let ||
-    !!getWriteReason(binding) ||
-    hasRenderRead(binding)
-  );
-}
-
-// An effect reads the slot its write sets; any other read renders.
-export function hasRenderRead(binding: Binding) {
-  for (const expr of binding.reads.keys()) {
-    if (!expr.isEffect) return true;
-  }
-  return false;
 }
 
 // Kept content with nodes of its own: its instances take their holes as data.

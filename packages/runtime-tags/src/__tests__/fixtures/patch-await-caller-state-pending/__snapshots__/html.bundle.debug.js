@@ -56,7 +56,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	});
 	_patch_child_end();
 	_script($scope0_id, "__tests__/template.marko_0");
-	_patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", p, 1);
 	_scope($scope0_id, {
 		resolve,
 		"#childScope/2": _existing_scope($childScope)

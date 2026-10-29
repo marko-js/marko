@@ -1,7 +1,0 @@
-static let n = 0;
-<let/shown=""/>
-<await|uid|=Promise.resolve("u" + ++n)>
-  <label for=`${uid}-${input.name}`>${input.label}</label>
-  <button onClick() { shown = uid }>show</button>
-</await>
-<output>${shown}</output>

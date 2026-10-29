@@ -2,7 +2,7 @@
 let renders = 0;
 const names = ["x", "y"];
 _shells({
-	a: "a !;E%c%lD l%b%;<main><p><!> <!></p><h1> </h1><!><!></main>",
+	a: "a;E%c%lD l%b%;<main><p><!> <!></p><h1> </h1><!><!></main>",
 	a1: "a1;D%c%l%;<span><!> <!></span><!><!>",
 	a0: "a0;D ;<i> </i>",
 	a2: "a2;D ;<b> </b>"
@@ -31,5 +31,5 @@ var template_default = _template("a", (input) => {
 		}
 	}, $scope0_id, "e", 1, _write_guard($scope0_reason, 1), 1, 0, 0, ["a1"], $scope0_reason, 1);
 	_html("</main>");
-	_scope($scope0_id, { j: _unfilled_if($scope0_reason, 1) && label }) || _client_guard($scope0_reason, 1) && _patch_fill($scope0_id, "va3", label);
+	_scope($scope0_id, { j: _unfilled_if($scope0_reason, 1) && label });
 }, 1);

@@ -124,7 +124,6 @@ import {
   getUnfilledReadSources,
   getUnfilledSubscribedSources,
   patchWritesScope,
-  seedsLetWhole,
   type CreatedInit,
   type FillConditions,
   initedJoinDependsOn,
@@ -639,8 +638,7 @@ function buildLetChangeWrites(
   ];
 }
 
-// A created scope's `<let>` seeds what the document writes of it or its renders
-// read, whole or by member: one value its signals derive where they render it.
+// A created scope's `<let>` seeds its value, which its signals render from.
 function buildLetSeeds(section: Section, binding: Binding) {
   const setup = t.numericLiteral(1);
   const guard = getCallerGroupGuard(
@@ -648,25 +646,7 @@ function buildLetSeeds(section: Section, binding: Binding) {
     "_filled_guard",
     getStateInitSources(binding),
   );
-  if (seedsLetWhole(binding)) {
-    return [
-      andGuard(guard, buildPatchFill(section, binding, undefined, setup)),
-    ];
-  }
-  const writes: t.Expression[] = [];
-  const addMemberSeeds = (member: Binding) => {
-    for (const alias of member.propertyAliases.values()) {
-      if (getWriteReason(alias)) {
-        writes.push(
-          andGuard(guard, buildPatchWrite(section, alias, undefined, setup)),
-        );
-      } else {
-        addMemberSeeds(alias);
-      }
-    }
-  };
-  addMemberSeeds(binding);
-  return writes;
+  return [andGuard(guard, buildPatchFill(section, binding, undefined, setup))];
 }
 
 // A created scope's own state starts from its inits' values: the server's

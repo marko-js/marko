@@ -5,7 +5,7 @@ let renders = 0;
 const names = ["x", "y"];
 const $setup = [[], []];
 _shells({
-	"__tests__/template.marko": "__tests__/template.marko !;E%c%lD l%b%;<main><p><!> <!></p><h1> </h1><!><!></main>",
+	"__tests__/template.marko": "__tests__/template.marko;E%c%lD l%b%;<main><p><!> <!></p><h1> </h1><!><!></main>",
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell;D%c%l%;<span><!> <!></span><!><!>",
 	"__tests__/template.marko_2*shell": "__tests__/template.marko_2*shell;D ;<i> </i>",
 	"__tests__/template.marko_3*shell": "__tests__/template.marko_3*shell;D ;<b> </b>"
@@ -34,5 +34,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}
 	}, $scope0_id, "#text/4", 1, _write_guard($scope0_reason, 1), 1, 0, 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 1);
 	_html("</main>");
-	_scope($scope0_id, { label: _unfilled_if($scope0_reason, 1) && label }, "__tests__/template.marko", 0, { label: "3:8" }) || _client_guard($scope0_reason, 1) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", label);
+	_scope($scope0_id, { label: _unfilled_if($scope0_reason, 1) && label }, "__tests__/template.marko", 0, { label: "3:8" });
 }, 1);

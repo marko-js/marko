@@ -7,14 +7,14 @@ const $for_content2__name = ($scope, name) => _text($scope["#text/0"], name);
 const $for_content2__$params = ($scope, $params3) => $for_content2__name($scope, $params3[0]);
 const $for_content__name = ($scope, name) => _text($scope["#text/0"], name);
 const $for_content__$params = ($scope, $params2) => $for_content__name($scope, $params2[0]);
-const $if_content__label = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "label", /*@__PURE__*/ _if_closure("#text/4", 0, ($scope) => _text($scope["#text/1"], $scope._.label)));
+const $if_content__label = /*@__PURE__*/ _if_closure("#text/4", 0, ($scope) => _text($scope["#text/1"], $scope._.label));
 const $if_content__for = /*@__PURE__*/ _for_of_unkeyed("#text/2", "<b> </b>", "D ", 0, $for_content2__$params);
 const $if_content__setup = ($scope) => {
 	$if_content__label._($scope);
 	_text($scope["#text/0"], ++renders);
 	$if_content__for($scope, [names]);
 };
-const $label = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "label", ($scope) => _text($scope["#text/1"], $scope.label));
+const $label = /*@__PURE__*/ _const("label", ($scope) => _text($scope["#text/1"], $scope.label));
 const $for = /*@__PURE__*/ _for_of_unkeyed("#text/3", "<i> </i>", "D ", 0, $for_content__$params);
 function $setup($scope) {
 	_text($scope["#text/0"], ++renders);

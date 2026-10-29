@@ -70,7 +70,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}
 	}, $scope0_id, "#text/2", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 0);
 	_script($scope0_id, "__tests__/template.marko_0");
-	_patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill1", p, 1);
 	_scope($scope0_id, {
 		input_label: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.label,
 		p: _write_if($scope0_reason, 0) && p,

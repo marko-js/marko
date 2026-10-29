@@ -28,7 +28,7 @@ var show_await_default = /*@__PURE__*/ _template("__tests__/tags/show-await.mark
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<button class=open>pend</button><button class=settle>settle</button>${_w0}<!>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => ` b b/${_w0}&b`)("b%c");
-const $p = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill0", "p/7", ($scope) => $input_promise($scope["#childScope/2"], $scope.p));
+const $p = /*@__PURE__*/ _let("p/7", ($scope) => $input_promise($scope["#childScope/2"], $scope.p));
 const $resolve = /*@__PURE__*/ _let("resolve/8", ($scope) => _attr($scope["#button/1"], "disabled", !$scope.resolve));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	_on($scope["#button/0"], "click", function() {
@@ -41,9 +41,9 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	});
 });
 function $setup($scope) {
+	$p($scope, Promise.resolve(0));
 	$resolve($scope, undefined);
 	$setup__script($scope);
-	$p($scope, Promise.resolve(0));
 }
 const $input_label = ($scope, input_label) => $input_label$1($scope["#childScope/2"], input_label);
 const $input_show = ($scope, input_show) => $input_show$1($scope["#childScope/2"], input_show);
