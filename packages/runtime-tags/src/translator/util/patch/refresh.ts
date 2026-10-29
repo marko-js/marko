@@ -330,7 +330,8 @@ function computePatchFill(binding: Binding): PatchFill {
     (binding.sources?.state
       ? !binding.assignments && bindingUtil.has(binding.sources.state, binding)
       : (!binding.section.parent && hasDeclarationOnlyReads(binding)) ||
-        (fill === true && someAlias(binding, readsOwnEffect, undefined, true)));
+        (fill === true &&
+          someAlias(binding, readsDeclarationOnlyEffect, undefined, true)));
   // A client join and withheld content both call for it: it refreshes the
   // content under a key of its own, which a patch writing the join sends.
   const splitsContent =
@@ -1174,8 +1175,19 @@ export function hasEffectRead(binding: Binding) {
   return false;
 }
 
-function readsOwnEffect(binding: Binding) {
-  return someReadIn(binding, binding.section, isRenderEffectRead);
+// An effect re-reading it where only the declaration's fill reaches: in its own
+// section, or in structure whose closure registration ships only with client
+// renders some pages make.
+function readsDeclarationOnlyEffect(binding: Binding) {
+  for (const read of binding.reads.keys()) {
+    if (
+      isRenderEffectRead(read, binding) &&
+      (read.section === binding.section || !clientRenders(read.section))
+    ) {
+      return true;
+    }
+  }
+  return false;
 }
 
 function isRenderEffectRead(read: ReferencedExtra, binding: Binding) {
@@ -1326,6 +1338,12 @@ export function holdsBuiltObject(binding: Binding) {
 
 function isBuiltObject(expr: t.NodeExtra) {
   return !!expr.buildsObject;
+}
+
+// Structure the client renders wherever it resumes, which ships its closures'
+// fill registrations: content it renders, or unpatched structure.
+function clientRenders(section: Section) {
+  return inClientRenderedContent(section) || !patchWrites(section);
 }
 
 // Structure the client may render: content, unpatched structure, or
