@@ -387,7 +387,7 @@ const tagIdsByGlobal = new WeakMap<Scope[typeof AccessorProp.Global], number>();
 // With `accessor`, the minted id memoizes on the scope so a keyed `<id>`'s
 // nullish fallback stays stable across recomputes. The slot is deliberately
 // not serialized: a resumed scope's first recompute simply mints again.
-export function _id(scope: Scope, accessor?: Accessor) {
+export function _id(scope: Scope, accessor?: string) {
   let id = accessor && (scope[accessor] as string | undefined);
   if (!id) {
     const $global = scope[AccessorProp.Global];
