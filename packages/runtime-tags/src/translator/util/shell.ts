@@ -182,12 +182,12 @@ function recordPatchEntries(binding: Binding) {
   }
 }
 
-// A mixed join's init records what it re-runs on; one a caller's groups decide ships
-// where a call's client state mixes its group, linking there as a fill's does.
+// A mixed join's init records the values it waits on; one a caller's groups decide
+// ships where a call's client state mixes its group, linking as a fill's does.
 function recordJoinInits(section: Section) {
   for (const [join, init] of getCreatedInits(section)) {
     if (init.init !== "mixed" || !Array.isArray(join)) continue;
-    // Its dependencies, for its entry and for the fills that must mark them.
+    // Its entry names these, and the fills of these mark them.
     init.deps = getMixedInitDeps(section, join);
     for (const dep of init.deps) getMixedInitDepSet().add(dep);
     const sources = getSourcesForRef(join);

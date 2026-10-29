@@ -790,8 +790,8 @@ export function initValue(binding: Binding, isLet = false) {
         return callRuntime(helper, ...trimEmptyArgs([accessor, fn]));
       }
       if (!ownRegistration) {
-        // Where it ships it replaces the joins' registrations of its key, so
-        // it marks the change their mixed inits re-run on, as theirs do.
+        // Where it ships it replaces the joins' registrations of its key, so it
+        // marks the value where a mixed init waits on it, as theirs do.
         const run =
           fillFn ||
           (getMixedInitDepSet().has(getCanonicalBinding(binding))
