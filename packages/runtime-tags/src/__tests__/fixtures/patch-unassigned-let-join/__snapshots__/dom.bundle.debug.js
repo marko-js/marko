@@ -3,7 +3,7 @@ const $template = "<p> </p><p> </p>";
 const $walks = "D lD l";
 const $setup = ($_) => {};
 const $input_w__OR__x = /*@__PURE__*/ _or(7, ($scope) => _text($scope["#text/1"], $scope.x + $scope.input_w));
-const $x = _let("x/6", ($scope) => {
+const $x = /*@__PURE__*/ _let("x/6", ($scope) => {
 	_text($scope["#text/0"], $scope.x);
 	$input_w__OR__x($scope);
 });

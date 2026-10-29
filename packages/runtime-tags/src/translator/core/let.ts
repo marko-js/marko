@@ -96,8 +96,8 @@ export default {
 
     const tagSection = ensureSection(tag);
     const binding = trackVarReferences(tag, BindingType.let)!;
-    // A `<let>` a patch fills registers its fill, and a page root's may root its reads:
-    // only the page's module holds either.
+    // A `<let>` a patch fills registers its fill, and a page root's reads may register
+    // their own: only the page's module holds either.
     if (isPatch()) {
       onReasonsSettled(() => {
         if (getPatchFill(binding).fill || rootsOwnReads(binding))

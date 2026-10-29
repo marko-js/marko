@@ -17,7 +17,7 @@ const $try_content__if = /*@__PURE__*/ _if("#text/0", "<!><!><!>", "b%", $if_con
 const $try_content__input_show = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_input_show#0:4/init", /*@__PURE__*/ _closure_get("input_show/7", ($scope) => $try_content__if($scope, $scope._.input_show ? 0 : 1), 0, "__tests__/template.marko_1_input_show#0:4/subscribe"));
 const $try_content__setup = $try_content__input_show;
 const $x__closure = /*@__PURE__*/ _closure($placeholder_content__x);
-const $x = _let("x/6", $x__closure);
+const $x = /*@__PURE__*/ _let("x/6", $x__closure);
 const $input_v = $x;
 const $try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content__setup, $placeholder_content);
 function $setup($scope) {

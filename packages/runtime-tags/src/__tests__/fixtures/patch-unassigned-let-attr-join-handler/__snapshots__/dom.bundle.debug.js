@@ -5,7 +5,7 @@ const $input_name__OR__uid = /*@__PURE__*/ _or(12, ($scope) => {
 	_attr($scope["#label/0"], "for", `${$scope.uid}-${$scope.input_name}`);
 	_attr($scope["#input/2"], "id", `${$scope.uid}-${$scope.input_name}`);
 });
-const $uid = _let("uid/11", $input_name__OR__uid);
+const $uid = /*@__PURE__*/ _let("uid/11", $input_name__OR__uid);
 const $input_id = $uid;
 const $shown = /*@__PURE__*/ _let("shown/13", ($scope) => _text($scope["#text/4"], $scope.shown));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/3"], "click", function() {

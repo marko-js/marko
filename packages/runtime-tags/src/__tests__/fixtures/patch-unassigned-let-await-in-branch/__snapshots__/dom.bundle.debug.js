@@ -13,13 +13,13 @@ const $await_content__value = ($scope, value) => _text($scope["#text/0"], value)
 const $await_content__$params = ($scope, $params2) => $await_content__value($scope, $params2[0]);
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<em> </em>", "D ");
 const $if_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
-const $if_content__input_promise = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_promise", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $if_content__await_promise($scope, $scope._.input_promise)));
+const $if_content__input_promise = _resumed["__tests__/template.marko_1_input_promise#0:5/patch"] = _with_branches(/*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "input_promise", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $if_content__await_promise($scope, $scope._.input_promise))));
 const $if_content__setup = ($scope) => {
 	$if_content__input_promise._($scope);
 	$await_content($scope);
 };
 const $if = /*@__PURE__*/ _if("#text/1", "<!><!><!>", "b%", $if_content__setup);
-const $show = _let("show/6", ($scope) => $if($scope, $scope.show ? 0 : 1));
+const $show = /*@__PURE__*/ _let("show/6", ($scope) => $if($scope, $scope.show ? 0 : 1));
 const $input_show = $show;
 function $setup($scope) {
 	$input_onHide($scope["#childScope/0"], function() {

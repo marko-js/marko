@@ -1,3 +1,2 @@
 // template.marko
-const $if_content__x = /*@__PURE__*/ _init_resume("a2", /*@__PURE__*/ _if_closure(0, 0, ($scope) => _attr_class($scope.a, $scope._.f)));
-const $x = _let(5, $if_content__x);
+const $if_content__x = _resumed.a3 = /*@__PURE__*/ _init_resume("a2", /*@__PURE__*/ _if_closure(0, 0, ($scope) => _attr_class($scope.a, $scope._.f)));

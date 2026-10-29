@@ -476,8 +476,8 @@ function mayBeCreated(section: Section) {
   return !!section.parent || !section.template!.page;
 }
 
-// A page's own `<let>` nothing resumed assigns, read past its renders: no handler roots
-// the client code reading it, so its signal does.
+// A page's own `<let>` nothing resumed assigns, read past its renders: its signal
+// never runs, so what its reads register roots itself (`reachesOnlyByOwnReads`).
 export function rootsOwnReads(binding: Binding) {
   return (
     isPatch() &&
@@ -487,6 +487,31 @@ export function rootsOwnReads(binding: Binding) {
     !hasResumableAssignment(binding) &&
     readsPastRenders(binding, binding.section)
   );
+}
+
+// Client state reaches the signal only through pages' own `<let>`s that root
+// their reads: its values' state, and the state choosing the structure around it.
+export function reachesOnlyByOwnReads(
+  section: Section,
+  refs: ReferencedBindings,
+) {
+  const state = bindingUtil.union(
+    getSourcesForRef(refs)?.state,
+    getStructureState(section),
+  );
+  return !!state && every(state, rootsOwnReads);
+}
+
+// The state choosing the structure around `section`, up to its template.
+export function getStructureState(section: Section) {
+  let state: Sources["state"];
+  for (let cur = section; cur.parent; cur = cur.parent) {
+    state = bindingUtil.union(
+      state,
+      getSourcesForRef(getReferencedBindings(cur.branchExpr))?.state,
+    );
+  }
+  return state;
 }
 
 // A `<let>` at its initial value as `section`'s scope is created: created with it, or

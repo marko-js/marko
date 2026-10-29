@@ -68,7 +68,8 @@ import {
   effectEntryNamesFill,
   initedJoinDependsOn,
   rerunsByEntry,
-  rootsOwnReads,
+  getStructureState,
+  reachesOnlyByOwnReads,
 } from "./patch/refresh";
 import { patchesBranchesAt } from "./patch/structure";
 import {
@@ -827,12 +828,11 @@ export function initValue(binding: Binding, isLet = false) {
       return fn;
     }
 
-    const value = callRuntime(
+    return callRuntime(
       helper,
       getScopeAccessorLiteral(binding, true, isLet),
       fn,
     );
-    return rootsOwnReads(binding) ? t.removeComments(value) : value;
   };
 
   binding.aliases.forEach(initAliasValue);
@@ -1743,6 +1743,23 @@ export function writeSignals(section: Section) {
             signal,
             binding,
             wrapClosureFill(signal, binding, value),
+          );
+        }
+        // A registration only a page's own `<let>` reaches, whose signal never
+        // runs, is kept by the registry: a wrapper's, or a closure's own fill.
+        if (
+          (value !== unwrapped ||
+            (!!binding &&
+              !Array.isArray(binding) &&
+              registersClosureFill(signal.section, binding))) &&
+          reachesOnlyByOwnReads(signal.section, binding)
+        ) {
+          // Its branches, which no client code renders, resume by their markers.
+          value = registerRuntimeValue(
+            getResumeRegisterId(signal.section, binding, "patch"),
+            getStructureState(signal.section)
+              ? callRuntime("_with_branches", value)
+              : value,
           );
         }
         // A wrapper takes the signal as a callback whose result goes unused.

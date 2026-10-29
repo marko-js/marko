@@ -14,7 +14,7 @@ const $await_content__$params = ($scope, $params2) => $await_content__value($sco
 const $placeholder_content = _content("__tests__/template.marko_3*content", "<p>loading</p>");
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<em> </em>", "D ");
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
-const $try_content__input_promise = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_promise", /*@__PURE__*/ _closure_get("input_promise/7", ($scope) => $try_content__await_promise($scope, $scope._._.input_promise), ($scope) => $scope._._, "__tests__/template.marko_2_input_promise#0:5/subscribe"), 0);
+const $try_content__input_promise = _resumed["__tests__/template.marko_2_input_promise#0:5/patch"] = _with_branches(/*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_promise", /*@__PURE__*/ _closure_get("input_promise/7", ($scope) => $try_content__await_promise($scope, $scope._._.input_promise), ($scope) => $scope._._, "__tests__/template.marko_2_input_promise#0:5/subscribe"), 0));
 const $try_content__setup = ($scope) => {
 	$try_content__input_promise($scope);
 	$await_content($scope);
@@ -22,7 +22,7 @@ const $try_content__setup = ($scope) => {
 const $if_content__try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content__setup, $placeholder_content);
 const $if_content__setup = ($scope) => $if_content__try($scope);
 const $if = /*@__PURE__*/ _if("#text/1", "<!><!><!>", "b%", $if_content__setup);
-const $show = _let("show/6", ($scope) => $if($scope, $scope.show ? 0 : 1));
+const $show = /*@__PURE__*/ _let("show/6", ($scope) => $if($scope, $scope.show ? 0 : 1));
 const $input_show = $show;
 function $setup($scope) {
 	$input_onHide($scope["#childScope/0"], function() {

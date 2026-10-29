@@ -7,7 +7,7 @@ const $for_content__setup__script = _script("__tests__/template.marko_1", ($scop
 const $for_content__setup = $for_content__setup__script;
 const $for_content__i = /*@__PURE__*/ _const("i", ($scope) => _text($scope["#text/1"], $scope.i));
 const $for_content__$params = ($scope, $params2) => $for_content__i($scope, $params2[0]);
-const $x = _let("x/6");
+const $x = /*@__PURE__*/ _let("x/6");
 const $input_v = $x;
 const $seen = /*@__PURE__*/ _let("seen/7", ($scope) => _text($scope["#text/1"], $scope.seen));
 function $setup($scope) {

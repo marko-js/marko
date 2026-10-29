@@ -5,7 +5,7 @@ export {
   _hoist_read_error,
 } from "./common/errors";
 export { forIn, forOf, forTo, forUntil } from "./common/for";
-export { _call } from "./common/helpers";
+export { _call, withBranches as _with_branches } from "./common/helpers";
 export { $signal, $signalReset } from "./dom/abort-signal";
 export { compat } from "./dom/compat";
 export {

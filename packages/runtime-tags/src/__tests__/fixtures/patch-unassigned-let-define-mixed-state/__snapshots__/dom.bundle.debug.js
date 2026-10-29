@@ -13,7 +13,7 @@ const $Body_content__a = /*@__PURE__*/ _fill_const("__tests__/template.marko_fil
 const $Body_content__$params = ($scope, $params2) => $Body_content__$temp($scope, $params2[0]);
 const $Body_content__$temp = ($scope, $temp) => $Body_content__a($scope, $temp.a);
 const $k__OR__c = /*@__PURE__*/ _or(8, ($scope) => $Body_content__a($scope["#childScope/2"], $scope.c ? $scope.k + $scope.c : ""));
-const $k = _let("k/6", $k__OR__c);
+const $k = /*@__PURE__*/ _let("k/6", $k__OR__c);
 const $input_v = $k;
 const $c = /*@__PURE__*/ _let("c/7", ($scope) => {
 	_text($scope["#text/1"], $scope.c);

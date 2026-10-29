@@ -20,7 +20,7 @@ const $wrap_content__setup = ($scope) => {
 const $wrap_content__uid = /*@__PURE__*/ _closure_get("uid/10", $wrap_content__input_name__OR__uid);
 const $wrap_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "<p> </p>", "D ", $wrap_content__setup);
 const $uid__closure = /*@__PURE__*/ _closure($wrap_content__uid);
-const $uid = _let("uid/7", $uid__closure);
+const $uid = /*@__PURE__*/ _let("uid/7", $uid__closure);
 const $input_id = $uid;
 const $n = /*@__PURE__*/ _let("n/8", ($scope) => _text($scope["#text/2"], $scope.n));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {

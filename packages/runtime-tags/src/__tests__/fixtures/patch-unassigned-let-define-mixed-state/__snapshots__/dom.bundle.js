@@ -6,7 +6,6 @@ const $Body_content__a = /*@__PURE__*/ _fill_const("a1", 3, ($scope) => {
 	$if_content__a($scope);
 });
 const $k__OR__c = /*@__PURE__*/ _or(8, ($scope) => $Body_content__a($scope.c, $scope.h ? $scope.g + $scope.h : ""));
-const $k = _let(6, $k__OR__c);
 const $c = /*@__PURE__*/ _let(7, ($scope) => {
 	_text($scope.b, $scope.h);
 	$k__OR__c($scope);
