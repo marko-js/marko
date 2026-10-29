@@ -23,7 +23,6 @@ import {
   namesBodyOwner,
   patchComposes,
   patchCreates,
-  patchCreatesOrComposes,
   getPatchWrite,
   keepsHoles,
   readsKeptInputOnClient,
@@ -470,18 +469,6 @@ export function getShippedBranchShellId(section: Section) {
   if (getShells()[id] === section) return id;
 }
 
-// A scope whose ids a shell names (its own or a composing one's) sets up an `<await>`
-// the client settles as plain's setup does: its promise keeps client code, no entry.
-export function initsAwaitContent(body: Section) {
-  const section = body.parent!;
-  return (
-    isPatch() &&
-    !!body.branch?.await &&
-    isStatefulBranch(body) &&
-    (!section.parent || patchCreatesOrComposes(section))
-  );
-}
-
 // A flush may create a branch-path body outside stateful structure.
 function shipsBranchShell(section: Section) {
   return !!section.branch?.optional && patchWrites(section);
@@ -669,11 +656,6 @@ function hasIds(setup: ShellSetup) {
 // The inits every created scope of the section runs.
 function getShellInitIds(section: Section) {
   const ids: string[] = [];
-  for (const body of section.children) {
-    if (initsAwaitContent(body)) {
-      ids.push(getResumeRegisterId(section, body.branch!.nodeBinding, "init"));
-    }
-  }
   for (const [ref, init] of getCreatedInits(section)) {
     if (init.init === "always") {
       ids.push(getResumeRegisterId(section, ref, "init"));

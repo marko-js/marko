@@ -3,9 +3,10 @@ const $template = "<main><h1> </h1><!><button>Next</button></main>";
 const $walks = "E l%b l";
 const $setup = [[], ["__tests__/template.marko_0"]];
 _shells({
+	"__tests__/template.marko_3*content": "__tests__/template.marko_3*content;D ;<em> </em>",
 	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content",
 	"__tests__/template.marko_1_#text#0/await": "__tests__/template.marko_1_#text#0/await;D ;<em> </em>",
-	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content __tests__/template.marko_1_#text#0/init __tests__/template.marko_1_n#0:6/init;b%;<!><!><!>",
+	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content __tests__/template.marko_1_n#0:6/init;b%;<!><!><!>",
 	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;E l%b ;<main><h1> </h1><!><button>Next</button></main>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
@@ -21,7 +22,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope3_id = _scope_id();
 			_html(`<em>${_text_resume($scope3_id, "#text/0", value)}</em>`);
 			_scope($scope3_id, {}, "__tests__/template.marko", "8:6");
-		}, 1, 0);
+		}, 1, "__tests__/template.marko_3*content", 2, 1);
 		_subscribe($n__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "6:4"), "__tests__/template.marko_1_n#0:6/subscribe", 0);
 		_resume_branch($scope1_id);
 	}, () => {

@@ -5,7 +5,7 @@ const $await_content2__y = ($scope, y) => _text($scope["#text/0"], y);
 const $await_content2__$params = ($scope, $params3) => $await_content2__y($scope, $params3[0]);
 const $await_content__x = ($scope, x) => _text($scope["#text/0"], x);
 const $await_content__n = /*@__PURE__*/ _fill_let("__tests__/tags/show-await.marko_fill0", "n/6", ($scope) => _text($scope["#text/2"], $scope.n));
-const $await_content2 = _resumed["__tests__/tags/show-await.marko_1_#text#3/init"] = /*@__PURE__*/ _await_content("#text/3", "<b> </b>", "D ");
+const $await_content2 = /*@__PURE__*/ _await_content("#text/3", "<b> </b>", "D ");
 const $await_content__await_promise = /*@__PURE__*/ _await_promise("#text/3", $await_content2__$params);
 const $await_content__q = /*@__PURE__*/ _fill_let("__tests__/tags/show-await.marko_fill1", "q/7", ($scope) => $await_content__await_promise($scope, $scope.q));
 const $await_content__setup__script = _script("__tests__/tags/show-await.marko_1", ($scope) => _on($scope["#button/1"], "click", function() {

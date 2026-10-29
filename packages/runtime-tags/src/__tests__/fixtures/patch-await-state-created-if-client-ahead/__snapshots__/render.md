@@ -18,12 +18,6 @@ document.querySelector("button.open").click();
 ```
 
 # Update `{"show":true,"label":"b"}`
-## Console
-```
-LOG "await" 2
-```
-
-# Update
 ```html
 <button
   class="open"
@@ -39,6 +33,11 @@ LOG "await" 2
 ## Change
 ```
 INSERT: .open + .child
+UPDATE: .child::text@0 "" => "b2"
+```
+## Console
+```
+LOG "await" 2
 ```
 
 # Update

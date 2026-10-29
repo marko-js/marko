@@ -1,6 +1,7 @@
 // lazy.marko
 const $template = "<button class=child><!>:<!></button>";
 const $walks = " D%c%l";
+const $setup = [[], ["a0"]];
 _shells({ a: "a !a0; D%c%;<button class=child><!>:<!></button>" });
 var lazy_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
@@ -15,9 +16,10 @@ var lazy_default = _template("a", (input) => {
 // template.marko
 const $Lazy_withLoadAssets = withLoadAssets(() => lazy_default, "a", flush, "_a");
 _shells({
-	b: "b !b4; b%;<button class=open>inc</button><!><!>",
-	b3: /*@__PURE__*/ (() => `b3;${/*@__PURE__*/ ((_w0) => `b%b/${_w0}&b`)($walks)};${/*@__PURE__*/ ((_w0) => `<!><!>${_w0}<!>`)($template)}`)(),
-	b2: "b2 b8 b9;b%;<!><!><!>"
+	b2: /*@__PURE__*/ (() => `b2${_shell_marker(_shell_setup([["b1", "b8"], []], ["b>", $setup]))};${/*@__PURE__*/ ((_w0) => `b%b/${_w0}&b`)($walks)};${/*@__PURE__*/ ((_w0) => `<!><!>${_w0}<!>`)($template)}`)(),
+	b: "b !b5; b%;<button class=open>inc</button><!><!>",
+	b3: /*@__PURE__*/ (() => `b3${_shell_marker(_shell_setup([["b1", "b8"], []], ["b>", $setup]))};${((_w0) => `b%b/${_w0}&b`)($walks)};${((_w0) => `<!><!>${_w0}<!>`)($template)}`)(),
+	b4: "b4 b10;b%;<!><!><!>"
 });
 var template_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $wi__input_label = _write_if($scope0_reason, 1);
@@ -39,15 +41,15 @@ var template_default = _template("b", (input) => {
 					d: x,
 					b: _existing_scope($childScope)
 				}), "b1");
-			}, 1, 0);
+			}, 1, "b2", 1);
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["b2"], $scope0_reason, 0);
-	_script($scope0_id, "b4");
+	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["b4"], $scope0_reason, 0);
+	_script($scope0_id, "b5");
 	_scope($scope0_id, {
 		f: input.label,
 		g: n,
 		h: $wi__input_label && $input_label__closures
-	}) || _filled_guard($scope0_reason, 1) && _patch_fill($scope0_id, "vb5", input.label, !_server_guard($scope0_reason, 1));
+	}) || _filled_guard($scope0_reason, 1) && _patch_fill($scope0_id, "vb6", input.label, !_server_guard($scope0_reason, 1));
 }, 1);

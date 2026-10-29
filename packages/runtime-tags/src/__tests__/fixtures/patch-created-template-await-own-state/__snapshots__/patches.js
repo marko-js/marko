@@ -1,24 +1,30 @@
 // PATCH
-[`b b5!b1; b%;<button class=toggle>toggle</button><!><!>`, `a0`, {
+[`b !b3; b%;<button class=toggle>toggle</button><!><!>`, `a0`, `b1;b%;<!><!><!>`, {
   fa: ["b", "a0"],
   cAa: {
-    o: {
-      vb3: 1
+    s: {
+      pb: "b1"
     },
-    ub2: "^a0"
+    o: {
+      vb5: 1
+    },
+    ub4: "^a0"
   },
   va3: "b"
 }]
-;CQY
+;Cw4
 
-// PATCH holding CQY
+// PATCH holding Cw4
 {
   fa: ["b", "a0"],
   cAa: {
-    o: {
-      vb3: 1
+    s: {
+      pb: "b1"
     },
-    ub2: "^a0"
+    o: {
+      vb5: 1
+    },
+    ub4: "^a0"
   },
   va3: "c"
 }

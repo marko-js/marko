@@ -7,7 +7,7 @@ const $if_content__setup = $if_content__input_content;
 const $await_content__if = /*@__PURE__*/ _if("#text/0", "<!><!><!>", "b%", $if_content__setup);
 const $await_content__x = ($scope, x) => $await_content__if($scope, x ? 0 : 1);
 const $await_content__$params = ($scope, $params2) => $await_content__x($scope, $params2[0]);
-const $await_content = _resumed["__tests__/tags/card.marko_0_#text#1/init"] = /*@__PURE__*/ _await_content("#text/1", "<!><!><!>", "b%");
+const $await_content = /*@__PURE__*/ _await_content("#text/1", "<!><!><!>", "b%");
 const $await_promise = /*@__PURE__*/ _await_promise("#text/1", $await_content__$params);
 const $n = /*@__PURE__*/ _fill_let("__tests__/tags/card.marko_fill1", "n/5", ($scope) => $await_promise($scope, Promise.resolve($scope.n)));
 const $setup__script = _script("__tests__/tags/card.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {

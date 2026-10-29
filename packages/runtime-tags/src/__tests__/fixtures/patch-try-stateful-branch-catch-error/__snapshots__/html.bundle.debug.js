@@ -20,7 +20,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					const $scope4_id = _scope_id();
 					_html(`<em>${_text_resume($scope4_id, "#text/0", v, $wg__input_p)}</em>`);
 					$wi__input_p && _scope($scope4_id, {}, "__tests__/template.marko", "5:6");
-				}, $wg__input_p, 0);
+				}, $wg__input_p, void 0, 2);
 				_subscribe($wi__input_p && $input_p__closures, _scope($scope3_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "4:4"), "__tests__/template.marko_3_input_p#0:5/subscribe", 0);
 				_resume_branch($scope3_id);
 			}, void 0, (err) => {

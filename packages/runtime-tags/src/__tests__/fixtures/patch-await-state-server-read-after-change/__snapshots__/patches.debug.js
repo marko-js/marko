@@ -1,4 +1,6 @@
 // PATCH
 {
-  "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-await-state-server-read-after-change/template.marko_fill0": "b"
+  "PatchChild:BranchScopes:#text/1": {
+    "PatchText:#text/0": "b"
+  }
 }

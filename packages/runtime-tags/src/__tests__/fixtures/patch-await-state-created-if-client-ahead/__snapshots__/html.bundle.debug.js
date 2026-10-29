@@ -19,9 +19,10 @@ const $walks = " b%c";
 const $Lazy_withLoadAssets = withLoadAssets(() => lazy_default, "__tests__/lazy.marko", flush, "ready:__tests__/lazy.marko");
 const $setup = [[], ["__tests__/template.marko_0"]];
 _shells({
+	"__tests__/template.marko_2*content": /*@__PURE__*/ (() => `__tests__/template.marko_2*content${_shell_marker(_shell_setup([["__tests__/template.marko_2_input_label#0:5/subscribe", "__tests__/template.marko_2_input_label#0:5_x#3/init"], []], ["#childScope/1>", $setup$1]))};${/*@__PURE__*/ ((_w0) => `b%b/${_w0}&b`)($walks$1)};${/*@__PURE__*/ ((_w0) => `<!><!>${_w0}<!>`)($template$1)}`)(),
 	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0; b%;<button class=open>inc</button><!><!>",
-	"__tests__/template.marko_1_#text#0/await": /*@__PURE__*/ (() => `__tests__/template.marko_1_#text#0/await;${/*@__PURE__*/ ((_w0) => `b%b/${_w0}&b`)($walks$1)};${/*@__PURE__*/ ((_w0) => `<!><!>${_w0}<!>`)($template$1)}`)(),
-	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell __tests__/template.marko_1_#text#0/init __tests__/template.marko_1_n#0:6/init;b%;<!><!><!>"
+	"__tests__/template.marko_1_#text#0/await": /*@__PURE__*/ (() => `__tests__/template.marko_1_#text#0/await${_shell_marker(_shell_setup([["__tests__/template.marko_2_input_label#0:5/subscribe", "__tests__/template.marko_2_input_label#0:5_x#3/init"], []], ["#childScope/1>", $setup$1]))};${((_w0) => `b%b/${_w0}&b`)($walks$1)};${((_w0) => `<!><!>${_w0}<!>`)($template$1)}`)(),
+	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell __tests__/template.marko_1_n#0:6/init;b%;<!><!><!>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wi__input_label = _write_if($scope0_reason, 1);
@@ -43,7 +44,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					x,
 					"#childScope/1": _existing_scope($childScope)
 				}, "__tests__/template.marko", "5:4", { x: "5:10" }), "__tests__/template.marko_2_input_label#0:5/subscribe");
-			}, 1, 0);
+			}, 1, "__tests__/template.marko_2*content", 1);
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:2");
 			return 0;
 		}

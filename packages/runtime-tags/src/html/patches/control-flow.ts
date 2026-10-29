@@ -511,25 +511,15 @@ export function _await<T>(
   promise: Promise<T> | T,
   content: (value: T) => void,
   markerGuard?: number,
-  shellId?: 0 | string,
+  shellId?: string,
   unfilled?: 1 | 2 | 3,
   alwaysPairs?: 1,
   mayWithhold?: 1,
 ) {
   const state = getState();
-  // `0`: a thenable of client state, resolved by `_await_promise`. A string is
-  // the body's content id, letting a created scope build the await branch.
   if (!(state instanceof PatchRenderState)) {
-    // A body no patch renders is the resumed page's: no patch fills its reads.
-    return _base_await(
-      scopeId,
-      accessor,
-      promise,
-      shellId === 0 ? (value: T) => withUnpatched(content, value) : content,
-      markerGuard,
-    );
+    return _base_await(scopeId, accessor, promise, content, markerGuard);
   }
-  if (shellId === 0) return;
   // No patch fills the promise: the client settles it, and the server's copy only
   // renders the body's holes as data. A rejected copy writes nothing.
   if (unfilled) {

@@ -18,8 +18,8 @@ const $template = "<button class=open>inc</button><!><!>";
 const $walks = " b%c";
 let $load_Lazy_setup = /*@__PURE__*/ _load_setup(($_) => import("./v:lazy.marko.setup.mjs"));
 let $load_Lazy_tag_input_label = /*@__PURE__*/ _load_signal_patch(($_) => import("./v:lazy.marko.input_label.mjs"), "ready:__tests__/lazy.marko");
-const $await_content__input_label__OR__x = /*@__PURE__*/ _or(4, ($scope) => $load_Lazy_tag_input_label($scope["#childScope/1"], $scope._._.input_label + $scope.x));
-const $await_content__input_label = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _closure_get("input_label/7", $await_content__input_label__OR__x, ($scope) => $scope._._, "__tests__/template.marko_2_input_label#0:5/subscribe"), 0);
+const $await_content__input_label__OR__x = /*@__PURE__*/ _fill_join_subscribers("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _or_resume("__tests__/template.marko_2_input_label#0:5_x#3/init", 4, ($scope) => $load_Lazy_tag_input_label($scope["#childScope/1"], $scope._._.input_label + $scope.x)), "input_label/7", 0);
+const $await_content__input_label = _closure_resume("__tests__/template.marko_2_input_label#0:5/subscribe", /*@__PURE__*/ _closure_get("input_label/7", $await_content__input_label__OR__x, ($scope) => $scope._._));
 const $await_content__setup = ($scope) => {
 	$await_content__input_label($scope);
 	$load_Lazy_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
@@ -30,7 +30,7 @@ const $await_content__x = /*@__PURE__*/ _const("x", ($scope) => {
 	$await_content__x__script($scope);
 });
 const $await_content__$params = ($scope, $params2) => $await_content__x($scope, $params2[0]);
-const $await_content = _resumed["__tests__/template.marko_1_#text#0/init"] = /*@__PURE__*/ _await_content("#text/0", "<!><!><!>", "b%/&", $await_content__setup);
+const $await_content = /*@__PURE__*/ _await_content("#text/0", "<!><!><!>", "b%/&", $await_content__setup);
 const $if_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
 const $if_content__n = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_n#0:6/init", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $if_content__await_promise($scope, Promise.resolve($scope._.n))));
 const $if_content__setup = ($scope) => {

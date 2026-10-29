@@ -1,4 +1,8 @@
 // PATCH
 {
-  va3: "b"
+  cAb: {
+    ca: {
+      ta: "b"
+    }
+  }
 }

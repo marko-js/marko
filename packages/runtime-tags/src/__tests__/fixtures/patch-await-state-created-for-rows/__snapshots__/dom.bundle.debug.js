@@ -1,11 +1,11 @@
 // template.marko
 const $template = "<button class=open>inc</button><!><!>";
 const $walks = " b%c";
-const $await_content__item = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "item", /*@__PURE__*/ _closure_get("item/7", ($scope) => _text($scope["#text/0"], $scope._.item), 0, "__tests__/template.marko_2_item#1:2/subscribe"), 0);
+const $await_content__item = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_item#1:2/init", /*@__PURE__*/ _closure_get("item/7", ($scope) => _text($scope["#text/0"], $scope._.item), 0, "__tests__/template.marko_2_item#1:2/subscribe"));
 const $await_content__setup = $await_content__item;
 const $await_content__x = ($scope, x) => _text($scope["#text/1"], x);
 const $await_content__$params = ($scope, $params3) => $await_content__x($scope, $params3[0]);
-const $await_content = _resumed["__tests__/template.marko_1_#text#0/init"] = /*@__PURE__*/ _await_content("#text/0", "<p><!>:<!></p>", "D%c%", $await_content__setup);
+const $await_content = /*@__PURE__*/ _await_content("#text/0", "<p><!>:<!></p>", "D%c%", $await_content__setup);
 const $for_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
 const $for_content__n = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_n#0:5/init", /*@__PURE__*/ _for_closure("#text/1", ($scope) => $for_content__await_promise($scope, Promise.resolve($scope._.n))));
 const $for_content__setup = ($scope) => {
@@ -14,7 +14,7 @@ const $for_content__setup = ($scope) => {
 };
 const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);
 const $for_content__item__closure = /*@__PURE__*/ _closure($await_content__item);
-const $for_content__item = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "item", $for_content__item__closure);
+const $for_content__item = /*@__PURE__*/ _const("item", $for_content__item__closure);
 const $n = /*@__PURE__*/ _let("n/5", $for_content__n);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$n($scope, +$scope.n + 1);

@@ -22,7 +22,7 @@ import {
 } from "../util/patch/decisions";
 import { awaitMayWithhold } from "../util/patch/refresh";
 import {
-  isStatefulBranch,
+  settlesOnClient,
   patchWrites,
   patchMayWrite,
 } from "../util/patch/structure";
@@ -33,7 +33,6 @@ import {
   callRuntime,
   importRuntimeFeature,
   linkRuntimeFeature,
-  registerRuntimeValue,
 } from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
 import { getScopeAccessorLiteral } from "../util/scope-accessor";
@@ -49,11 +48,10 @@ import {
   type Section,
 } from "../util/sections";
 import { addSetupWork } from "../util/setup-work";
-import { findShellId, initsAwaitContent } from "../util/shell";
+import { findShellId } from "../util/shell";
 import {
   addStatement,
   addValue,
-  getResumeRegisterId,
   getSignal,
   setSectionOwnerResumedByMarker,
   trimEmptyArgs,
@@ -185,21 +183,15 @@ export default {
         signal.build = () => {
           const branchRenderArgs = getBranchRendererArgs(bodySection);
           const branchParams = branchRenderArgs.pop();
-          const content = callRuntime(
-            "_await_content",
-            getScopeAccessorLiteral(nodeBinding, true),
-            ...trimEmptyArgs(branchRenderArgs),
-          );
           (signal.prependStatements ||= []).push(
             t.variableDeclaration("const", [
               t.variableDeclarator(
                 t.identifier(bodySection.name),
-                initsAwaitContent(bodySection)
-                  ? registerRuntimeValue(
-                      getResumeRegisterId(section, nodeBinding, "init"),
-                      content,
-                    )
-                  : content,
+                callRuntime(
+                  "_await_content",
+                  getScopeAccessorLiteral(nodeBinding, true),
+                  ...trimEmptyArgs(branchRenderArgs),
+                ),
               ),
             ]),
           );
@@ -234,33 +226,32 @@ export default {
   types: runtimeInfo.name + "/tags/await.d.marko",
 } as Tag;
 
-// A stateful body settles by `_await_promise` alone: its `0` skips the Pending entry.
 function getPendingArgs(bodySection: Section): Array<t.Expression | Falsy> {
-  if (isStatefulBranch(bodySection)) return [t.numericLiteral(0)];
   const shellId = findShellId(bodySection);
   const sources = getWriteSources(bodySection.branchExpr);
-  // Where no patch fills the promise, the client settles the branch it rendered.
-  const unfilled = getCallerGroupGuard(
-    bodySection.parent!,
-    "_unfilled_if",
-    sources,
-  );
+  // The client settles a promise of its own state, and one a caller passes where
+  // no patch fills it: the server's copy renders only the body's holes as data.
+  const unfilled = settlesOnClient(bodySection)
+    ? t.numericLiteral(1)
+    : getCallerGroupGuard(bodySection.parent!, "_unfilled_if", sources);
   const unwritten =
     unfilled &&
     getUnwrittenBodies(
       bodySection,
-      getCallerParamGroupsAt(sources!.param, bodySection.parent!),
+      getCallerParamGroupsAt(sources?.param, bodySection.parent!),
     );
   return [
     shellId && t.stringLiteral(shellId),
     // Where the client owns the promise, `2`: no render of the body writes what the
     // client lacks; `3`: only a created one does, writing the body's setup work.
     unwritten
-      ? t.logicalExpression(
-          "&&",
-          unfilled,
-          t.numericLiteral(unwritten === "all" ? 2 : 3),
-        )
+      ? t.isNumericLiteral(unfilled)
+        ? t.numericLiteral(unwritten === "all" ? 2 : 3)
+        : t.logicalExpression(
+            "&&",
+            unfilled,
+            t.numericLiteral(unwritten === "all" ? 2 : 3),
+          )
       : unfilled,
     // An always-pairing body's Pending entry drops its creation id outside
     // divergent contexts.

@@ -1,7 +1,8 @@
 // tags/card.marko
 _shells({
-	b4: "b4;b%;<!><!><!>",
-	b: "b b5!b1; b%;<button class=toggle>toggle</button><!><!>"
+	b1: "b1;b%;<!><!><!>",
+	b2: "b2;b%;<!><!><!>",
+	b: "b !b3; b%;<button class=toggle>toggle</button><!><!>"
 });
 var card_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 0), $wi__input_content = _write_if($scope0_reason, 0);
@@ -20,14 +21,14 @@ var card_default = _template("b", (input) => {
 			}
 		}, $scope1_id, "a");
 		_scope($scope1_id, {});
-	}, 1, 0);
-	_script($scope0_id, "b1");
-	_patch_fill($scope0_id, "vb3", n, 1);
+	}, 1, "b1", 1, 1);
+	_script($scope0_id, "b3");
+	_patch_fill($scope0_id, "vb5", n, 1);
 	_scope($scope0_id, {
 		e: input.content,
 		f: n,
 		g: $wi__input_content && $input_content__closures
-	}) || (_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "vb2", input.content, !_server_guard($scope0_reason, 0)), _content_withhold(input.content));
+	}) || (_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "vb4", input.content, !_server_guard($scope0_reason, 0)), _content_withhold(input.content));
 });
 
 // template.marko

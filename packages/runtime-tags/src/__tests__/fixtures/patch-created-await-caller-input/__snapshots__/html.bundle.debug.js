@@ -17,8 +17,9 @@ const $template$1 = /*@__PURE__*/ ((_w0) => `<main>${_w0}<button>toggle</button>
 const $walks$1 = /*@__PURE__*/ ((_w0) => `D/${_w0}& l`)("D%l");
 const $setup$1 = _shell_setup([[], ["__tests__/under-wrapper.marko_0"]], ["#childScope/0>", $setup$2]);
 _shells({
+	"__tests__/under-wrapper.marko_2*content": "__tests__/under-wrapper.marko_2*content;D ;<p> </p>",
 	"__tests__/under-wrapper.marko_1_#text#0/await": "__tests__/under-wrapper.marko_1_#text#0/await;D ;<p> </p>",
-	"__tests__/under-wrapper.marko_1*content": "__tests__/under-wrapper.marko_1*content __tests__/under-wrapper.marko_1_#text#0/init __tests__/under-wrapper.marko_1_input_second#0:4/subscribe __tests__/under-wrapper.marko_1_input_first#0:5/subscribe __tests__/under-wrapper.marko_1_showSecond#0:6/init __tests__/under-wrapper.marko_1_input_second#0:4_input_first#0:5_showSecond#0:6/init;b%;<!><!><!>",
+	"__tests__/under-wrapper.marko_1*content": "__tests__/under-wrapper.marko_1*content __tests__/under-wrapper.marko_1_input_second#0:4/subscribe __tests__/under-wrapper.marko_1_input_first#0:5/subscribe __tests__/under-wrapper.marko_1_showSecond#0:6/init __tests__/under-wrapper.marko_1_input_second#0:4_input_first#0:5_showSecond#0:6/init;b%;<!><!><!>",
 	"__tests__/under-wrapper.marko": /*@__PURE__*/ (() => `__tests__/under-wrapper.marko${_shell_marker($setup$1)};${((_w0) => `D/${_w0}& l`)("D%l")};${((_w0) => `<main>${_w0}<button>toggle</button></main>`)($template$2)}`)()
 });
 var under_wrapper_default = _template("__tests__/under-wrapper.marko", (input) => {
@@ -38,7 +39,7 @@ var under_wrapper_default = _template("__tests__/under-wrapper.marko", (input) =
 			const $scope2_id = _scope_id();
 			_html(`<p>${_text_resume($scope2_id, "#text/0", value)}</p>`);
 			_scope($scope2_id, {}, "__tests__/under-wrapper.marko", "4:6");
-		}, 1, 0);
+		}, 1, "__tests__/under-wrapper.marko_2*content", 2);
 		_subscribe($showSecond__closures, _subscribe($wi__input_first && $input_first__closures, _subscribe($wi__input_second && $input_second__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/under-wrapper.marko", "3:4"))));
 		_resume_branch($scope1_id);
 	}, $scope0_id, 1) });

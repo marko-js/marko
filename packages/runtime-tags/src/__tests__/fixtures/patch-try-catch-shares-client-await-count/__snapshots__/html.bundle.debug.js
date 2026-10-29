@@ -46,7 +46,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					const $scope7_id = _scope_id();
 					_html(`<em>${_text_resume($scope7_id, "#text/0", c)}</em>`);
 					_scope($scope7_id, {}, "__tests__/template.marko", "10:10");
-				}, void 0, 0);
+				}, void 0, void 0, 2);
 				_subscribe($pending__closures, _scope($scope3_id, { "ClosureSignalIndex:pending/7": 1 }, "__tests__/template.marko", "9:8"), "__tests__/template.marko_3_pending#0:5/subscribe", 0);
 				return 0;
 			}

@@ -1,25 +1,27 @@
 // template.marko
 const $template = "<button class=open>inc</button><!><!>";
 const $walks = " b%c";
-const $setup = [["__tests__/template.marko_0_#text#1/init"], ["__tests__/template.marko_0"]];
+const $setup = [[], ["__tests__/template.marko_0"]];
 _shells({
+	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content;D%c%;<p><!>:<!></p>",
 	"__tests__/template.marko_0_#text#1/await": "__tests__/template.marko_0_#text#1/await;D%c%;<p><!>:<!></p>",
-	"__tests__/template.marko": "__tests__/template.marko __tests__/template.marko_0_#text#1/init!__tests__/template.marko_0; b%;<button class=open>inc</button><!><!>"
+	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0; b%;<button class=open>inc</button><!><!>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_label = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = new Set();
 	let n = 0;
 	_html(`<button class=open>inc</button>${_el_resume($scope0_id, "#button/0")}`);
 	_await($scope0_id, "#text/1", Promise.resolve(n), (x) => {
 		const $scope1_id = _scope_id();
-		_html(`<p>${_text_resume($scope1_id, "#text/0", input.label, _write_guard($scope0_reason, 0))}:${_text_resume($scope1_id, "#text/1", x, 2)}</p>`);
-		_subscribe($wi__input_label && $input_label__closures, _scope($scope1_id, {}, "__tests__/template.marko", "3:2"), "__tests__/template.marko_1_input_label#0:4/subscribe");
-	}, 1, 0);
+		_html(`<p>${_text_resume($scope1_id, "#text/0", input.label, 1, $scope0_reason, 0)}:${_text_resume($scope1_id, "#text/1", x, 2)}</p>`);
+		_unfilled_if($scope0_reason, 0) && _patch_init($scope1_id, $cg__input_label ? "__tests__/template.marko_1_input_label#0:4/init" : "__tests__/template.marko_1_input_label#0:4/subscribe");
+		_subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope1_id, {}, "__tests__/template.marko", "3:2"), $cg__input_label && "__tests__/template.marko_1_input_label#0:4/subscribe");
+	}, 1, "__tests__/template.marko_1*content", 1, 1);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		n,
-		"ClosureScopes:input_label/6": $wi__input_label && $input_label__closures
-	}, "__tests__/template.marko", 0, { n: "1:6" }) || _filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/template.marko_fill0", input.label, !_server_guard($scope0_reason, 0));
+		"ClosureScopes:input_label/6": _write_if($scope0_reason, 0) && _unfilled_if($scope0_reason, 0) && $input_label__closures
+	}, "__tests__/template.marko", 0, { n: "1:6" });
 }, 1);

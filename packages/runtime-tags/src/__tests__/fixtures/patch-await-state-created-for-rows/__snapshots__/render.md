@@ -47,7 +47,6 @@ UPDATE: p::text@2 "0" => "1"
 ```
 INSERT: p:nth-of-type(1) + p
 UPDATE: p:nth-of-type(2)::text@2 "" => "1"
-UPDATE: p:nth-of-type(2)::text@0 "" => "b"
 ```
 
 # Update

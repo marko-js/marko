@@ -27,7 +27,6 @@ document.querySelector("button.open").click();
 ```
 INSERT: .open + p
 UPDATE: p::text@2 "" => "1"
-UPDATE: p::text@0 "" => "b"
 ```
 
 # Update

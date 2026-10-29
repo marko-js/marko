@@ -1,11 +1,11 @@
 // template.marko
 const $template = "<button class=open>inc</button><!><!>";
 const $walks = " b%c";
-const $await_content__input_label = /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _closure_get("input_label/7", ($scope) => _text($scope["#text/0"], $scope._._.input_label), ($scope) => $scope._._, "__tests__/template.marko_2_input_label#0:5/subscribe"), 0);
+const $await_content__input_label = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_input_label#0:5/init", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_label", /*@__PURE__*/ _closure_get("input_label/7", ($scope) => _text($scope["#text/0"], $scope._._.input_label), ($scope) => $scope._._, "__tests__/template.marko_2_input_label#0:5/subscribe"), 0));
 const $await_content__setup = $await_content__input_label;
 const $await_content__x = ($scope, x) => _text($scope["#text/1"], x);
 const $await_content__$params = ($scope, $params2) => $await_content__x($scope, $params2[0]);
-const $await_content = _resumed["__tests__/template.marko_1_#text#0/init"] = /*@__PURE__*/ _await_content("#text/0", "<p><!>:<!></p>", "D%c%", $await_content__setup);
+const $await_content = /*@__PURE__*/ _await_content("#text/0", "<p><!>:<!></p>", "D%c%", $await_content__setup);
 const $if_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
 const $if_content__n = /*@__PURE__*/ _init_resume("__tests__/template.marko_1_n#0:6/init", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $if_content__await_promise($scope, Promise.resolve($scope._.n))));
 const $if_content__setup = ($scope) => {

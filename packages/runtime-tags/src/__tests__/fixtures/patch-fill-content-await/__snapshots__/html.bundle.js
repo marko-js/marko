@@ -12,8 +12,11 @@ var frame_default = _template("b", (input) => {
 });
 
 // template.marko
-const $setup = _shell_setup([[], ["a4"]], ["a>", $setup$1]);
-_shells({ a: /*@__PURE__*/ (() => `a${_shell_marker($setup)};${((_w0) => `D/${_w0}& l`)("D%l")};${((_w0) => `<main>${_w0}<button>toggle</button></main>`)($template)}`)() });
+const $setup = _shell_setup([[], ["a5"]], ["a>", $setup$1]);
+_shells({
+	a0: "a0;D ;<p> </p>",
+	a: /*@__PURE__*/ (() => `a${_shell_marker($setup)};${((_w0) => `D/${_w0}& l`)("D%l")};${((_w0) => `<main>${_w0}<button>toggle</button></main>`)($template)}`)()
+});
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $wi__input_second = _write_if($scope0_reason, 0), $wi__input_first = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
@@ -24,20 +27,20 @@ var template_default = _template("a", (input) => {
 	_html("<main>");
 	_set_scope_reason(0);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
-	frame_default({ content: _content("a3", () => {
+	frame_default({ content: _content("a4", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		_await($scope1_id, "a", input.first, (value) => {
 			const $scope2_id = _scope_id();
 			_html(`<p>${_text_resume($scope2_id, "a", value)}</p>`);
 			_scope($scope2_id, {});
-		}, 1, 0);
-		_subscribe($showSecond__closures, _subscribe($wi__input_first && $input_first__closures, _subscribe($wi__input_second && $input_second__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 0) && "a0", 0), _client_guard($scope0_reason, 1) && "a1", 0), "a2", 0);
+		}, 1, "a0", 2);
+		_subscribe($showSecond__closures, _subscribe($wi__input_first && $input_first__closures, _subscribe($wi__input_second && $input_second__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 0) && "a1", 0), _client_guard($scope0_reason, 1) && "a2", 0), "a3", 0);
 		_resume_branch($scope1_id);
 	}, $scope0_id) });
 	_patch_child_end();
 	_html(`<button>toggle</button>${_el_resume($scope0_id, "b")}</main>`);
-	_script($scope0_id, "a4");
+	_script($scope0_id, "a5");
 	_scope($scope0_id, {
 		e: input.second,
 		f: input.first,
@@ -46,5 +49,5 @@ var template_default = _template("a", (input) => {
 		i: $wi__input_first && $input_first__closures,
 		j: $showSecond__closures,
 		a: _existing_scope($childScope)
-	}) || (_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va5", input.second, !_server_guard($scope0_reason, 0)), _filled_guard($scope0_reason, 1) && _patch_fill($scope0_id, "va6", input.first, !_server_guard($scope0_reason, 1)));
+	}) || (_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "va6", input.second, !_server_guard($scope0_reason, 0)), _filled_guard($scope0_reason, 1) && _patch_fill($scope0_id, "va7", input.first, !_server_guard($scope0_reason, 1)));
 }, 1);

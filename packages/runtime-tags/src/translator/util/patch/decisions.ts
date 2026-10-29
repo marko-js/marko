@@ -48,7 +48,7 @@ import {
 } from "./refresh";
 import {
   isKnownChildNode,
-  isStatefulBranch,
+  settlesOnClient,
   patchesBranchesAt,
   patchWrites,
 } from "./structure";
@@ -194,7 +194,7 @@ export function getUnwrittenBodies(
     if (branch?.await) {
       // `_await` writes nothing for a body that settles by `_await_promise`, and
       // its Pending entry where a patch fills its promise.
-      if (isStatefulBranch(child)) continue;
+      if (settlesOnClient(child)) continue;
       if (
         !(
           getSourcesUpdatesFrom(

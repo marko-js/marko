@@ -1,18 +1,28 @@
 // PATCH
-[`a4 >a>a8 a9;b/b%c&b;<!><!><!><!><!>`, {
+[`a2;D%c%;<p><!>:<!></p>`, `a3 a10;b/b%c&b;<!><!><!><!><!>`, {
   bb: [{
     ca: {
-      va2: "b"
+      s: {
+        pa: "a2"
+      },
+      cAa: {
+        ta: "b"
+      }
     }
-  }, "a4"]
+  }, "a3"]
 }]
-;BAE
+;BwY
 
-// PATCH holding BAE
+// PATCH holding BwY
 {
   bb: [{
     ca: {
-      va2: "c"
+      s: {
+        pa: "a2"
+      },
+      cAa: {
+        ta: "c"
+      }
     }
-  }, "a4"]
+  }, "a3"]
 }

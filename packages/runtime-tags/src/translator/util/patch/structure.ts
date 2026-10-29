@@ -93,10 +93,10 @@ function isPatchedCall(callSection: Section) {
 // A branch body whose branch expression has a state reason (or nested in one), or
 // that every consumer or call makes stateful.
 export const isStatefulBranch = createPassMemo((section: Section) => {
-  // An optional branch, a dynamic tag body, or an `<await>` body: the client settles
-  // one whose promise derives from client state or that every call passes it.
+  // An optional branch or a dynamic tag body: the client renders one whose
+  // expression derives from client state or that every call passes it.
   const expr =
-    isPatch() && (section.branch?.optional !== false || section.branch.await)
+    isPatch() && section.branch?.optional !== false
       ? section.branchExpr
       : undefined;
   const sources = expr && getSourcesForExpr(expr);
@@ -110,6 +110,17 @@ export const isStatefulBranch = createPassMemo((section: Section) => {
         isPassedStateByEveryCall(sources)))
   );
 }, false);
+
+// An `<await>` body is its owner's branch; the client settles its promise where that
+// derives from client state, client-owned structure holds it, or every call passes state.
+export function settlesOnClient(body: Section) {
+  const sources = getSourcesForExpr(body.branchExpr!);
+  return (
+    hasClientState(sources) ||
+    inStatefulBranch(body.parent!) ||
+    isPassedStateByEveryCall(sources)
+  );
+}
 
 // Params of `<define>` bodies that every call passes client state, where nothing
 // else renders the bodies: each group's, or (`anyGroup`) one group's.

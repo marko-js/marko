@@ -14,7 +14,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_await($scope1_id, "#text/0", Promise.resolve("loaded"), (v) => {
 				const $scope2_id = _scope_id();
 				_html(`<em>${_escape(v)}</em>`);
-			}, 0, 0);
+			}, 0, void 0, 2);
 			_scope($scope1_id, {}, "__tests__/template.marko", "3:2");
 			return 0;
 		}

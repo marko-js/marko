@@ -2,9 +2,10 @@
 const $template = "<!><!><!>";
 const $setup$1 = [[], []];
 _shells({
-	b3: "b3;D ;<b> </b>",
-	b4: "b4 b8!b0;D l D l%;<p> </p><button class=q> </button><!><!>",
-	b5: "b5 b8!b0;D l D l%;<p> </p><button class=q> </button><!><!>",
+	b0: "b0;D ;<b> </b>",
+	b1: "b1;D ;<b> </b>",
+	b2: "b2 !b4;D l D l%;<p> </p><button class=q> </button><!><!>",
+	b3: "b3 !b4;D l D l%;<p> </p><button class=q> </button><!><!>",
 	b: "b;b%;<!><!><!>"
 });
 var show_await_default = _template("b", (input) => {
@@ -19,12 +20,12 @@ var show_await_default = _template("b", (input) => {
 			const $scope2_id = _scope_id();
 			_html(`<b>${_text_resume($scope2_id, "a", y)}</b>`);
 			_scope($scope2_id, {});
-		}, 1, 0);
-		_script($scope1_id, "b0");
-		_patch_fill($scope1_id, "vb1", n, 1);
-		_patch_fill($scope1_id, "vb2", q, 1);
+		}, 1, "b0", 2, 1);
+		_script($scope1_id, "b4");
+		_patch_fill($scope1_id, "vb5", n, 1);
+		_patch_fill($scope1_id, "vb6", q, 1);
 		_scope($scope1_id, { g: n });
-	}, 1, "b4", _unfilled_if($scope0_reason, 0) && 3, 1);
+	}, 1, "b2", _unfilled_if($scope0_reason, 0) && 3, 1);
 });
 
 // template.marko

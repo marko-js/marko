@@ -14,10 +14,11 @@ var frame_default = _template("c", (input) => {
 // under-wrapper.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}<button>toggle</button></main>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `D/${_w0}& l`)("D%l");
-const $setup = _shell_setup([[], ["b1"]], ["a>", $setup$1]);
+const $setup = _shell_setup([[], ["b3"]], ["a>", $setup$1]);
 _shells({
-	b5: "b5;D ;<p> </p>",
-	b0: "b0 b8 b9 b10 b11 b12;b%;<!><!><!>",
+	b0: "b0;D ;<p> </p>",
+	b1: "b1;D ;<p> </p>",
+	b2: "b2 b9 b10 b11 b12;b%;<!><!><!>",
 	b: /*@__PURE__*/ (() => `b${_shell_marker($setup)};${((_w0) => `D/${_w0}& l`)("D%l")};${((_w0) => `<main>${_w0}<button>toggle</button></main>`)($template$1)}`)()
 });
 var under_wrapper_default = _template("b", (input) => {
@@ -30,21 +31,21 @@ var under_wrapper_default = _template("b", (input) => {
 	_html("<main>");
 	_set_scope_reason(0);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
-	frame_default({ content: _content("b0", () => {
+	frame_default({ content: _content("b2", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		_await($scope1_id, "a", input.first, (value) => {
 			const $scope2_id = _scope_id();
 			_html(`<p>${_text_resume($scope2_id, "a", value)}</p>`);
 			_scope($scope2_id, {});
-		}, 1, 0);
+		}, 1, "b0", 2);
 		_subscribe($showSecond__closures, _subscribe($wi__input_first && $input_first__closures, _subscribe($wi__input_second && $input_second__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }))));
 		_resume_branch($scope1_id);
 	}, $scope0_id, 1) });
 	_patch_child_end();
 	_html(`<button>toggle</button>${_el_resume($scope0_id, "b")}</main>`);
-	_script($scope0_id, "b1");
-	_patch_fill($scope0_id, "vb4", showSecond, 1);
+	_script($scope0_id, "b3");
+	_patch_fill($scope0_id, "vb6", showSecond, 1);
 	_scope($scope0_id, {
 		e: input.second,
 		f: input.first,
@@ -53,7 +54,7 @@ var under_wrapper_default = _template("b", (input) => {
 		i: $wi__input_first && $input_first__closures,
 		j: $showSecond__closures,
 		a: _existing_scope($childScope)
-	}) || (_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "vb2", input.second, !_server_guard($scope0_reason, 0)), _filled_guard($scope0_reason, 1) && _patch_fill($scope0_id, "vb3", input.first, !_server_guard($scope0_reason, 1)));
+	}) || (_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "vb4", input.second, !_server_guard($scope0_reason, 0)), _filled_guard($scope0_reason, 1) && _patch_fill($scope0_id, "vb5", input.first, !_server_guard($scope0_reason, 1)));
 });
 
 // template.marko

@@ -1,10 +1,11 @@
 // tags/card.marko
 const $template$1 = "<button class=toggle>toggle</button><!><!>";
 const $walks$1 = " b%c";
-const $setup$1 = [["__tests__/tags/card.marko_0_#text#1/init"], ["__tests__/tags/card.marko_0"]];
+const $setup$1 = [[], ["__tests__/tags/card.marko_0"]];
 _shells({
+	"__tests__/tags/card.marko_1*content": "__tests__/tags/card.marko_1*content;b%;<!><!><!>",
 	"__tests__/tags/card.marko_0_#text#1/await": "__tests__/tags/card.marko_0_#text#1/await;b%;<!><!><!>",
-	"__tests__/tags/card.marko": "__tests__/tags/card.marko __tests__/tags/card.marko_0_#text#1/init!__tests__/tags/card.marko_0; b%;<button class=toggle>toggle</button><!><!>"
+	"__tests__/tags/card.marko": "__tests__/tags/card.marko !__tests__/tags/card.marko_0; b%;<button class=toggle>toggle</button><!><!>"
 });
 var card_default = _template("__tests__/tags/card.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 0), $wi__input_content = _write_if($scope0_reason, 0);
@@ -23,7 +24,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 			}
 		}, $scope1_id, "#text/0");
 		_scope($scope1_id, {}, "__tests__/tags/card.marko", "3:2");
-	}, 1, 0);
+	}, 1, "__tests__/tags/card.marko_1*content", 1, 1);
 	_script($scope0_id, "__tests__/tags/card.marko_0");
 	_patch_fill($scope0_id, "PatchFill:__tests__/tags/card.marko_fill1", n, 1);
 	_scope($scope0_id, {

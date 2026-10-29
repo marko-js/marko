@@ -8,12 +8,6 @@
 ```
 
 # Update `{"show":true,"label":"b"}`
-## Console
-```
-LOG "await" 0
-```
-
-# Update
 ```html
 <button
   class="open"
@@ -29,6 +23,11 @@ LOG "await" 0
 ## Change
 ```
 INSERT: .open + .child
+UPDATE: .child::text@0 "" => "b0"
+```
+## Console
+```
+LOG "await" 0
 ```
 
 # Update

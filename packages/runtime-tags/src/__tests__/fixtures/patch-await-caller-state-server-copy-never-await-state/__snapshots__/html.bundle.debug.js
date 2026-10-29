@@ -3,9 +3,10 @@ const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $setup$1 = [[], []];
 _shells({
+	"__tests__/tags/show-await.marko_2*content": "__tests__/tags/show-await.marko_2*content;D ;<b> </b>",
 	"__tests__/tags/show-await.marko_1_#text#3/await": "__tests__/tags/show-await.marko_1_#text#3/await;D ;<b> </b>",
-	"__tests__/tags/show-await.marko_1*content": "__tests__/tags/show-await.marko_1*content __tests__/tags/show-await.marko_1_#text#3/init!__tests__/tags/show-await.marko_1;D l D l%;<p> </p><button class=q> </button><!><!>",
-	"__tests__/tags/show-await.marko_0_#text#0/await": "__tests__/tags/show-await.marko_0_#text#0/await __tests__/tags/show-await.marko_1_#text#3/init!__tests__/tags/show-await.marko_1;D l D l%;<p> </p><button class=q> </button><!><!>",
+	"__tests__/tags/show-await.marko_1*content": "__tests__/tags/show-await.marko_1*content !__tests__/tags/show-await.marko_1;D l D l%;<p> </p><button class=q> </button><!><!>",
+	"__tests__/tags/show-await.marko_0_#text#0/await": "__tests__/tags/show-await.marko_0_#text#0/await !__tests__/tags/show-await.marko_1;D l D l%;<p> </p><button class=q> </button><!><!>",
 	"__tests__/tags/show-await.marko": "__tests__/tags/show-await.marko;b%;<!><!><!>"
 });
 var show_await_default = _template("__tests__/tags/show-await.marko", (input) => {
@@ -20,7 +21,7 @@ var show_await_default = _template("__tests__/tags/show-await.marko", (input) =>
 			const $scope2_id = _scope_id();
 			_html(`<b>${_text_resume($scope2_id, "#text/0", y)}</b>`);
 			_scope($scope2_id, {}, "__tests__/tags/show-await.marko", "6:4");
-		}, 1, 0);
+		}, 1, "__tests__/tags/show-await.marko_2*content", 2, 1);
 		_script($scope1_id, "__tests__/tags/show-await.marko_1");
 		_patch_fill($scope1_id, "PatchFill:__tests__/tags/show-await.marko_fill0", n, 1);
 		_patch_fill($scope1_id, "PatchFill:__tests__/tags/show-await.marko_fill1", q, 1);
