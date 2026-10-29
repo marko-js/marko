@@ -1,0 +1,8 @@
+<let/f=input.fmt/>
+<button onClick() { f = (v) => "p-" + v }>plain</button>
+<p>${f(input.label)}</p>
+<div>$!{f(input.label)}</div>
+<i title=f(input.label) class=f(input.label) style={ color: f(input.label).length > 3 ? "red" : "blue" }/>
+<section><html-comment>${f(input.label)}</html-comment></section>
+<show=f(input.label) !== "w-c"><em>shown</em></show>
+<title>${f(input.label)}</title>

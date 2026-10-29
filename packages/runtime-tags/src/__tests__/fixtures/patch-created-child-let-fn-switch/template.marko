@@ -1,0 +1,6 @@
+<const/plain=(v) => "p-" + v/>
+<const/loud=(v) => "l-" + v/>
+
+<if=input.show>
+  <outer fmt=(input.alt ? loud : plain) label=input.label more=input.more/>
+</if>

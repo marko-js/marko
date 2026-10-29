@@ -9,6 +9,7 @@ import {
   loadFileForImport,
 } from "@marko/compiler/babel-utils";
 
+import { BindingType } from "./bindings";
 import { generateUid } from "./generate-uid";
 import {
   getDeclarationRoot,
@@ -19,15 +20,23 @@ import {
 } from "./get-root";
 import isInvokedFunction from "./is-invoked-function";
 import isStatic from "./is-static";
-import { getMarkoOpts, isOutputHTML } from "./marko-config";
+import { getMarkoOpts, isOutputHTML, isPatch } from "./marko-config";
+import { some } from "./optional";
 import { isUnconditionalReason, type Reason } from "./reasons";
 import {
   getCanonicalExtra,
   isRegisteredFnExtra,
+  type ReferencedExtra,
   type RegisteredFnExtra,
 } from "./references";
 import { callRuntime, getRuntimePath, registerRuntimeValue } from "./runtime";
-import { getReasonForExpr, landsRetained } from "./solve-reasons";
+import {
+  extraReaders,
+  getReasonForBinding,
+  getReasonForExpr,
+  landsRetained,
+  someRead,
+} from "./solve-reasons";
 import { ALWAYS, mergeSources } from "./sources";
 import { createAnalysisState } from "./state";
 import { getLiteralName, isValidPropertyIdentifier } from "./to-property-name";
@@ -127,6 +136,10 @@ export function finalizeRegistrations() {
     if (fnExtra.reason) {
       registerFunction(fnExtra);
       programExtra.isInteractive ||= isUnconditionalReason(fnExtra.reason);
+      programExtra.hasResumes ||= reachesPage(
+        fnExtra.reason,
+        getReferencesByFn().get(fnExtra)!,
+      );
     }
   }
 
@@ -142,10 +155,35 @@ export function finalizeRegistrations() {
         const extra = (node.extra ??= {});
         extra.registeredImports ??= new Map();
         extra.registeredImports.set(local, registered);
+        programExtra.hasResumes ||= reachesPage(reason, exprExtras);
       }
       programExtra.isInteractive ||= isUnconditionalReason(reason);
     }
   }
+}
+
+// A `<let>` keeps its value on the client, so a patch build writes it, or
+// what client code builds from it, where main does for a caller's client
+// state: wherever a patch may change a value its readers join. Code landing in
+// one has to reach the page then, as an unconditional reason's does.
+function reachesPage(reason: Reason, exprExtras: Set<t.NodeExtra>) {
+  if (!isPatch() || isUnconditionalReason(reason)) return false;
+  for (const exprExtra of exprExtras) {
+    if (
+      someRead(extraReaders(getCanonicalExtra(exprExtra)), landsInWrittenLet)
+    ) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function landsInWrittenLet(read: ReferencedExtra) {
+  return some(
+    read.derives,
+    (binding) =>
+      binding.type === BindingType.let && !!getReasonForBinding(binding, true),
+  );
 }
 
 /**

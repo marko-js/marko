@@ -1,0 +1,6 @@
+import Card from "./tags/card.marko";
+import Big from "./tags/big.marko";
+
+<if=input.show>
+  <outer tag=(input.big ? Big : Card) label=input.label/>
+</if>
