@@ -4,7 +4,8 @@
     "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-await-created-if-body-effect-update/template.marko_2*content",
     "PatchChild:BranchScopes:#text/0": {
       "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-await-created-if-body-effect-update/template.marko_fill1": "b",
-      "PatchText:#text/0": "b"
+      "PatchText:#text/0": "b",
+      "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-await-created-if-body-effect-update/template.marko_2_x#3": "x"
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-await-created-if-body-effect-update/template.marko_1*shell"]
 }]
@@ -16,7 +17,8 @@
     "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-await-created-if-body-effect-update/template.marko_2*content",
     "PatchChild:BranchScopes:#text/0": {
       "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-await-created-if-body-effect-update/template.marko_fill1": "c",
-      "PatchText:#text/0": "c"
+      "PatchText:#text/0": "c",
+      "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-await-created-if-body-effect-update/template.marko_2_x#3": "x"
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-await-created-if-body-effect-update/template.marko_1*shell"]
 }

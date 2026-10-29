@@ -37,7 +37,7 @@ var template_default = _template("b", (input) => {
 				const $childScope = _peek_scope_id($scope2_id, "b", 0);
 				$Lazy_withLoadAssets({ label: x + n });
 				_patch_child_end();
-				_script($scope2_id, "b0");
+				_script($scope2_id, "b0", 1, _filled_guard($scope0_reason, 1), "d");
 				_subscribe($n__closures, _scope($scope2_id, {
 					d: x,
 					b: _existing_scope($childScope)

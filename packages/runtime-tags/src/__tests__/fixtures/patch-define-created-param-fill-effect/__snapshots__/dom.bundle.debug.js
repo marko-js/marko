@@ -3,15 +3,15 @@ const $Panel_content__walks = "b%c";
 const $Panel_content__template = "<!><!><!>";
 const $template = "<!><!><button id=t>toggle</button>";
 const $walks = "b%b b";
-const $if_content2__label = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => _text($scope["#text/0"], $scope._.label));
+const $if_content2__label = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill1", "label", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => _text($scope["#text/0"], $scope._.label)));
 const $if_content2__setup = $if_content2__label;
 const $Panel_content__if = /*@__PURE__*/ _if("#text/0", "<em> </em>", "D ", $if_content2__setup);
 const $Panel_content__isOpen = ($scope, isOpen) => $Panel_content__if($scope, isOpen ? 0 : 1);
 const $Panel_content__label__script = _script("__tests__/template.marko_2_label#4", ($scope) => console.log("effect", $scope.label));
-const $Panel_content__label = _fill_resume("__tests__/template.marko_fill1", /*@__PURE__*/ _const("label", ($scope) => {
+const $Panel_content__label = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill1", "label", ($scope) => {
 	$if_content2__label($scope);
 	$Panel_content__label__script($scope);
-}));
+}, /*@__PURE__*/ _fill_mark("label", $if_content2__label));
 const $Panel_content__$params = ($scope, $params2) => $Panel_content__$temp($scope, $params2[0]);
 const $Panel_content__$temp = ($scope, $temp) => {
 	$Panel_content__isOpen($scope, $temp.isOpen);

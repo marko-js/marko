@@ -20,7 +20,7 @@ var card_default = /*@__PURE__*/ _template("__tests__/tags/card.marko", $templat
 // template.marko
 const $template = "<main><div></div><!></main>";
 const $walks = "D b%l";
-const $inputonCarddiv_content__input_note = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_input_note#0:4/init", /*@__PURE__*/ _closure_get("input_note/7", ($scope) => _text($scope["#text/0"], $scope._._.input_note), ($scope) => $scope._._, "__tests__/template.marko_2_input_note#0:4/subscribe"));
+const $inputonCarddiv_content__input_note = /*@__PURE__*/ _init_resume("__tests__/template.marko_2_input_note#0:4/init", /*@__PURE__*/ _fill_join_closure("__tests__/template.marko_fill0", "input_note", /*@__PURE__*/ _closure_get("input_note/7", ($scope) => _text($scope["#text/0"], $scope._._.input_note), ($scope) => $scope._._, "__tests__/template.marko_2_input_note#0:4/subscribe"), 0));
 const $inputonCarddiv_content__setup = ($scope) => {
 	$inputonCarddiv_content__input_note($scope);
 	$inputonCarddiv_content__v($scope);
@@ -35,12 +35,11 @@ const $await_content__$params = ($scope, $params2) => $await_content__v($scope, 
 const $await_content__v__closure = /*@__PURE__*/ _closure($inputonCarddiv_content__v);
 const $await_content__v = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill1", "v", $await_content__v__closure);
 const $input_note__closure = /*@__PURE__*/ _closure($inputonCarddiv_content__input_note);
-_fill_run("__tests__/template.marko_fill0", "input_note", /*@__PURE__*/ _fill_mark("input_note", $input_note__closure));
 const $input_note__script = _script("__tests__/template.marko_0_input_note#4", ($scope) => _el_read($scope["#div/0"]).textContent = $scope.input_note);
-const $input_note = /*@__PURE__*/ _const("input_note", ($scope) => {
+const $input_note = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "input_note", ($scope) => {
 	$input_note__closure($scope);
 	$input_note__script($scope);
-});
+}, /*@__PURE__*/ _fill_mark("input_note", $input_note__closure));
 const $await_content = /*@__PURE__*/ _await_content("#text/1", "<!><!><!>", "b%", $await_content__setup);
 const $await_promise = /*@__PURE__*/ _await_promise("#text/1", $await_content__$params);
 const $setup = $await_content;

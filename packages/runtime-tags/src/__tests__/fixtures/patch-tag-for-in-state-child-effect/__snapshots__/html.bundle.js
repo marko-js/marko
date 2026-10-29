@@ -55,7 +55,7 @@ var shape_default = _template("c", (input) => {
 	}, 0, $scope0_id, "a", 1, 1, 1, 0, 0, "c4", $scope0_reason, 1);
 	_html(`<button></button>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "c7");
-	_script($scope0_id, "c8");
+	_script($scope0_id, "c8", 1, _filled_guard($scope0_reason, 3), "g");
 	_patch_fill($scope0_id, "vc11", s, 1);
 	_scope($scope0_id, {
 		f: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.sel,

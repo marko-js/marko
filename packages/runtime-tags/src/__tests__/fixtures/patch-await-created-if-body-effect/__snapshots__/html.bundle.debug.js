@@ -40,7 +40,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $childScope = _peek_scope_id($scope2_id, "#childScope/1", 0);
 				$Lazy_withLoadAssets({ label: x + n });
 				_patch_child_end();
-				_script($scope2_id, "__tests__/template.marko_2_x#3");
+				_script($scope2_id, "__tests__/template.marko_2_x#3", 1, _filled_guard($scope0_reason, 1), "x");
 				_subscribe($n__closures, _scope($scope2_id, {
 					x,
 					"#childScope/1": _existing_scope($childScope)

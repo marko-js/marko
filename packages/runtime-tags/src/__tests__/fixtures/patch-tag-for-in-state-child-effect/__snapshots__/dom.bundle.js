@@ -1,26 +1,20 @@
 // tags/child.marko
 const $input_a = ($scope, input_a) => _text($scope.a, input_a);
-const $input_b$1 = ($scope, input_b) => _text($scope.b, input_b);
+const $input_b = ($scope, input_b) => _text($scope.b, input_b);
 const $input = ($scope, input) => {
 	_text($scope.c, typeof input.get === "function" ? input.get() : "");
 	$input_a($scope, input.a);
-	$input_b$1($scope, input.b);
+	$input_b($scope, input.b);
 };
 
 // tags/shape.marko
-const $if_content__input_b__OR__s__OR__v = /*@__PURE__*/ _fill_join_if("c5", 4, /*@__PURE__*/ _or_resume("c0", 1, ($scope) => $input($scope.a, {
+const $if_content__input_b__OR__s__OR__v = /*@__PURE__*/ _fill_join_if("c5", 4, /*@__PURE__*/ _fill_join("c10", 6, /*@__PURE__*/ _or_resume("c0", 1, ($scope) => $input($scope.a, {
 	a: $scope._.e + $scope._._.h,
 	b: $scope._._.g
-}), 2), 0, 0);
-const $if_content__input_b = _closure_resume("c1", /*@__PURE__*/ _closure_get(9, $if_content__input_b__OR__s__OR__v, ($scope) => $scope._._));
+}), 2), ($join) => /*@__PURE__*/ _for_closure(0, /*@__PURE__*/ _if_closure(0, 0, $join))), 0, 0);
 const $if_content__s = /*@__PURE__*/ _init_resume("c13", /*@__PURE__*/ _closure_get(10, $if_content__input_b__OR__s__OR__v, ($scope) => $scope._._, "c2"));
 const $s = /*@__PURE__*/ _fill_let("c11", 7, /* @__PURE__ */ _closure($if_content__s));
 const $setup__script = _script("c7", ($scope) => _on($scope.b, "click", function() {
 	$s($scope, +$scope.h + 1);
 }));
-const $input_b__closure = /*@__PURE__*/ _closure($if_content__input_b);
 const $input_b__script = _script("c8", ($scope) => document.body.dataset.b = String($scope.g));
-const $input_b = fill("c10", /*@__PURE__*/ _const(6, ($scope) => {
-	$input_b__closure($scope);
-	$input_b__script($scope);
-}));

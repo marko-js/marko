@@ -320,14 +320,13 @@ function computePatchFill(binding: Binding): PatchFill {
   // a fill only client-sourced join members call for reaches its joins alone.
   const fillsReads =
     fill === true || !!conditions?.structure || hasContents(conditions);
-  // Only the patch's key reaches the declaration: a `<let>` nothing assigns, a template
-  // input its signal alone reads, or an always-filled server value its own effects read.
+  // Only the patch's key reaches the declaration: a `<let>` nothing assigns, or a
+  // template input its signal alone reads.
   const ownRegistration =
     !!fill &&
     (binding.sources?.state
       ? !binding.assignments && bindingUtil.has(binding.sources.state, binding)
-      : (!binding.section.parent && hasDeclarationOnlyReads(binding)) ||
-        (fill === true && someAlias(binding, readsOwnEffect, undefined, true)));
+      : !binding.section.parent && hasDeclarationOnlyReads(binding));
   // A client join and withheld content both call for it: it refreshes the
   // content under a key of its own, which a patch writing the join sends.
   const splitsContent =
@@ -974,24 +973,23 @@ export function getClosureReadSources(closure: Binding, section: Section) {
   return sources;
 }
 
-// Reads only the declaration's own signal reaches: an effect in its section, a
-// capture another template reads, a kept closure, or a child's param from it.
+// Reads only the declaration's own signal reaches: a capture another template
+// reads, a kept closure, or a child's param from it.
 function hasDeclarationOnlyReads(binding: Binding) {
   for (const read of binding.reads.keys()) {
     if (
       keepsClosureFills(read.section) ||
-      (readsValuesOnResume(read)
-        ? !read.invokeOnly && read.section === binding.section
-        : some(read.derives, (derived) =>
-            isCalleeParam(derived, binding.section),
-          ) &&
-          (getDerivedNeeds(read) ||
-            some(
-              read.derives,
-              (derived) =>
-                isCalleeParam(derived, binding.section) &&
-                isClientDerivedParam(derived),
-            )))
+      (!readsValuesOnResume(read) &&
+        some(read.derives, (derived) =>
+          isCalleeParam(derived, binding.section),
+        ) &&
+        (getDerivedNeeds(read) ||
+          some(
+            read.derives,
+            (derived) =>
+              isCalleeParam(derived, binding.section) &&
+              isClientDerivedParam(derived),
+          )))
     ) {
       return true;
     }
@@ -1170,12 +1168,17 @@ export function hasEffectRead(binding: Binding) {
   return false;
 }
 
+// An effect in its section reading it alone, which only its declaration's signal runs.
 function readsOwnEffect(binding: Binding) {
-  return someReadIn(binding, binding.section, isRenderEffectRead);
+  return someReadIn(binding, binding.section, isOwnEffectRead);
 }
 
-function isRenderEffectRead(read: ReferencedExtra, binding: Binding) {
-  return readsValuesOnResume(read) && rerunsFromClosure(read, binding);
+function isOwnEffectRead(read: ReferencedExtra, binding: Binding) {
+  return (
+    readsValuesOnResume(read) &&
+    rerunsFromClosure(read, binding) &&
+    !Array.isArray(getReferencedBindings(read))
+  );
 }
 
 // Whether a patch re-runs an effect that reads `binding` (its fill root).
@@ -2417,9 +2420,17 @@ export function writesSeed(binding: Binding) {
 function computePatchWrite(binding: Binding): PatchWrite {
   const write = isPatchWritten(binding) && leavesReadUnfilled(binding);
   const sources = getSourcesForRef(binding);
+  const { fill, effectRead } = getPatchFill(binding);
   return {
     write,
-    effect: write && getPatchFill(binding).effectRead,
+    // An effect of a server value alone re-runs by its entry where a fill sends the
+    // value, since the fill's registrations run its joins only.
+    effect:
+      effectRead &&
+      (write ||
+        (fill === true &&
+          !sources?.state &&
+          someAlias(binding, readsOwnEffect, undefined, true))),
     seed: seedsCreatedScope(binding),
     unfillable: !!sources?.param && !sources.global && !patchRefreshes(binding),
   };

@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<pre id=log></pre><div id=d></div><main><!><button>+</button></main>";
 const $walks = "b bD%b l";
-const $if_content__pick = /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => _text($scope["#text/0"], typeof $scope._.pick));
+const $if_content__pick = /*@__PURE__*/ _fill_join("__tests__/template.marko_fill0", "pick", /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => _text($scope["#text/0"], typeof $scope._.pick)));
 const $if_content__setup = $if_content__pick;
 const $pick__script = _script("__tests__/template.marko_0_pick#9", ($scope) => {
 	{
@@ -10,10 +10,10 @@ const $pick__script = _script("__tests__/template.marko_0_pick#9", ($scope) => {
 		log.last = $scope.pick;
 	}
 });
-const $pick = _fill_resume("__tests__/template.marko_fill0", /*@__PURE__*/ _const("pick", ($scope) => {
+const $pick = /*@__PURE__*/ _fill_const("__tests__/template.marko_fill0", "pick", ($scope) => {
 	$if_content__pick($scope);
 	$pick__script($scope);
-}));
+}, /*@__PURE__*/ _fill_mark("pick", $if_content__pick));
 const $input_upper__OR__fa__OR__fb = /*@__PURE__*/ _or(8, ($scope) => $pick($scope, $scope.input_upper ? $scope.fa : $scope.fb), 2);
 const $fa2 = /*@__PURE__*/ _const("fa", $input_upper__OR__fa__OR__fb);
 const $fb2 = /*@__PURE__*/ _const("fb", $input_upper__OR__fa__OR__fb);

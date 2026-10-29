@@ -73,7 +73,7 @@ var card_default = _template("b", (input) => {
 	}, $scope0_id, "b", 1, 1, 0, 0, 1);
 	_html(`<button class=toggle>toggle</button>${_el_resume($scope0_id, "c")}`);
 	_script($scope0_id, "b8");
-	_script($scope0_id, "b9");
+	_script($scope0_id, "b9", 1, _filled_guard($scope0_reason, 3), "h");
 	_patch_fill($scope0_id, "vb13", open, 1);
 	_scope($scope0_id, {
 		g: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.open,

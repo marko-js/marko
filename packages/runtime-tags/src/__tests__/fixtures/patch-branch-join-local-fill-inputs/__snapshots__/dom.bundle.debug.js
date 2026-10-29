@@ -4,8 +4,8 @@ const $walks$1 = "b%b b";
 const $setup$1 = ($_) => {};
 const $if_content__m__OR__x__OR__y = /*@__PURE__*/ _fill_join("__tests__/tags/child.marko_fill4", "y", /*@__PURE__*/ _fill_join("__tests__/tags/child.marko_fill3", "x", /*@__PURE__*/ _or(7, ($scope) => _text($scope["#text/0"], $scope.x + $scope.y + $scope.m), 2)));
 const $if_content__x = /*@__PURE__*/ _const("x", $if_content__m__OR__x__OR__y);
-const $if_content__input_a__OR__input_b = /*@__PURE__*/ _fill_join_if("__tests__/tags/child.marko_fill1/unpatched | __tests__/tags/child.marko_fill1", "input_b", /*@__PURE__*/ _fill_join_if("__tests__/tags/child.marko_fill0/unpatched", "input_a", /*@__PURE__*/ _or_resume("__tests__/tags/child.marko_1_input_a#0:5_input_b#0:6/init", 3, ($scope) => _text($scope["#text/1"], $scope._.input_a + $scope._.input_b)), "#text/0", 0), "#text/0", 0);
-const $if_content__input_a = /*@__PURE__*/ _init_resume("__tests__/tags/child.marko_1_input_a#0:5/init", /*@__PURE__*/ _fill_join("__tests__/tags/child.marko_fill0/unpatched", "input_a", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => {
+const $if_content__input_a__OR__input_b = /*@__PURE__*/ _fill_join_if("__tests__/tags/child.marko_fill1/unpatched | __tests__/tags/child.marko_fill1", "input_b", /*@__PURE__*/ _fill_join_if("__tests__/tags/child.marko_fill0/unpatched | __tests__/tags/child.marko_fill0", "input_a", /*@__PURE__*/ _or_resume("__tests__/tags/child.marko_1_input_a#0:5_input_b#0:6/init", 3, ($scope) => _text($scope["#text/1"], $scope._.input_a + $scope._.input_b)), "#text/0", 0), "#text/0", 0);
+const $if_content__input_a = /*@__PURE__*/ _init_resume("__tests__/tags/child.marko_1_input_a#0:5/init", /*@__PURE__*/ _fill_join("__tests__/tags/child.marko_fill0 __tests__/tags/child.marko_fill0/unpatched", "input_a", /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => {
 	$if_content__x($scope, $scope._.input_a + "!");
 	$if_content__input_a__OR__input_b($scope);
 })));
@@ -26,12 +26,11 @@ const $if_content__input_b = /*@__PURE__*/ _init_resume("__tests__/tags/child.ma
 })));
 const $if = /*@__PURE__*/ _if("#text/0", "<p> </p><em> </em><button class=m>m</button>", "D lD l ", $if_content__setup);
 const $input_show$1 = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
-_fill_run("__tests__/tags/child.marko_fill0", "input_a", /*@__PURE__*/ _fill_mark("input_a", $if_content__input_a));
 const $input_a__script = _script("__tests__/tags/child.marko_0_input_a#5", ($scope) => _el_read($scope["#div/1"]).textContent = "s:" + $scope.input_a);
-const $input_a = /*@__PURE__*/ _const("input_a", ($scope) => {
+const $input_a = /*@__PURE__*/ _fill_const("__tests__/tags/child.marko_fill0", "input_a", ($scope) => {
 	$if_content__input_a($scope);
 	$input_a__script($scope);
-});
+}, /*@__PURE__*/ _fill_mark("input_a", $if_content__input_a));
 const $input$1 = ($scope, input) => {
 	$input_show$1($scope, input.show);
 	$input_a($scope, input.a);

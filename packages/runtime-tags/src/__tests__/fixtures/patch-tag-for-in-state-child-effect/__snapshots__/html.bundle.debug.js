@@ -58,7 +58,7 @@ var shape_default = _template("__tests__/tags/shape.marko", (input) => {
 	}, 0, $scope0_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/tags/shape.marko_1*shell", $scope0_reason, 1);
 	_html(`<button></button>${_el_resume($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/tags/shape.marko_0");
-	_script($scope0_id, "__tests__/tags/shape.marko_0_input_b#6");
+	_script($scope0_id, "__tests__/tags/shape.marko_0_input_b#6", 1, _filled_guard($scope0_reason, 3), "input_b");
 	_patch_fill($scope0_id, "PatchFill:__tests__/tags/shape.marko_fill2", s, 1);
 	_scope($scope0_id, {
 		input_sel: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.sel,

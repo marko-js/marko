@@ -8,7 +8,8 @@ a, [`b3 b10!b>a0;b%b/ D%c%l&b;<!><!><button class=child><!>:<!></button><!>`, `b
         o: {
           va1: 0
         }
-      }
+      },
+      eb0: "d"
     }
   }, "b5"]
 }]

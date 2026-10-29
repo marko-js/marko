@@ -8,7 +8,7 @@ const $setup__script = _script("b0", ($scope) => _on($scope.a, "click", function
 }));
 
 // template.marko
-const $inputonCarddiv_content__input_note = /*@__PURE__*/ _init_resume("a1", /*@__PURE__*/ _closure_get(7, ($scope) => _text($scope.a, $scope._._.e), ($scope) => $scope._._, "a2"));
+const $inputonCarddiv_content__input_note = /*@__PURE__*/ _init_resume("a1", /*@__PURE__*/ _fill_join_closure("a6", 4, /*@__PURE__*/ _closure_get(7, ($scope) => _text($scope.a, $scope._._.e), ($scope) => $scope._._, "a2"), 0));
 const $inputonCarddiv_content__setup = ($scope) => {
 	$inputonCarddiv_content__input_note($scope);
 	$inputonCarddiv_content__v($scope);
@@ -16,6 +16,4 @@ const $inputonCarddiv_content__setup = ($scope) => {
 const $inputonCarddiv_content__v = /*@__PURE__*/ _init_resume("a3", /*@__PURE__*/ _fill_join_closure("a5", 2, /*@__PURE__*/ _closure_get(9, ($scope) => _text($scope.b, $scope._.c), 0, "a4"), 0));
 const $inputonCarddiv_content = _content$1("a0", "<em><!> <!></em>", "D%c%", $inputonCarddiv_content__setup);
 _content_resume($inputonCarddiv_content);
-const $input_note__closure = /*@__PURE__*/ _closure($inputonCarddiv_content__input_note);
-_fill_run("a6", 4, /*@__PURE__*/ _fill_mark(4, $input_note__closure));
 const $input_note__script = _script("a11", ($scope) => $scope.a.textContent = $scope.e);

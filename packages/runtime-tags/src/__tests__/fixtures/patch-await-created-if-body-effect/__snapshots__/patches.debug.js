@@ -8,7 +8,8 @@
         "PatchSetupValues:": {
           "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-await-created-if-body-effect/lazy.marko_fill0": 0
         }
-      }
+      },
+      "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-await-created-if-body-effect/template.marko_2_x#3": "x"
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-await-created-if-body-effect/template.marko_1*shell"]
 }]

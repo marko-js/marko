@@ -11,7 +11,7 @@ var template_default = _template("a", (input) => {
 	_html(`<pre id=log></pre><div id=d></div>${_el_resume($scope0_id, "a")}<main>`);
 	_if(() => {}, $scope0_id, "b", 1, 1, 0, 0, 1);
 	_html(`<button>+</button>${_el_resume($scope0_id, "c")}</main>`);
-	_script($scope0_id, "a2");
+	_script($scope0_id, "a2", 1, _filled_guard($scope0_reason, 0), "j");
 	_script($scope0_id, "a3");
 	_scope($scope0_id, {
 		g: _unfilled_if($scope0_reason, 0) && fa,

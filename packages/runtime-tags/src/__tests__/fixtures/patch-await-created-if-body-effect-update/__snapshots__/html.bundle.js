@@ -19,7 +19,7 @@ var template_default = _template("a", (input) => {
 				_filled_guard($scope0_reason, 1) && _patch_fill($scope2_id, "va2", x);
 				_html(`<p>${_text_resume($scope2_id, "a", x, 1, $scope0_reason, 1)}</p>`);
 				_if(() => {}, $scope2_id, "b", 1, 1, 0, 0, 1);
-				_script($scope2_id, "a1");
+				_script($scope2_id, "a1", 1, _filled_guard($scope0_reason, 1), "d");
 				_subscribe($n__closures, _scope($scope2_id, { d: x }), "a3");
 			}, 1, "a4", _unfilled_if($scope0_reason, 1));
 			_client_guard($scope0_reason, 1) && _patch_init($scope1_id, "a7");

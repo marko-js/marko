@@ -85,7 +85,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 	}, $scope0_id, "#text/2", 1, 1, 0, 0, 1);
 	_html(`<button class=toggle>toggle</button>${_el_resume($scope0_id, "#button/3")}`);
 	_script($scope0_id, "__tests__/tags/card.marko_0");
-	_script($scope0_id, "__tests__/tags/card.marko_0_input_label#7");
+	_script($scope0_id, "__tests__/tags/card.marko_0_input_label#7", 1, _filled_guard($scope0_reason, 5), "input_label");
 	_patch_fill($scope0_id, "PatchFill:__tests__/tags/card.marko_fill3", open, 1);
 	_scope($scope0_id, {
 		input_fmt: (_unfilled_if($scope0_reason, 6) || _unfilled_if($scope0_reason, 4)) && input.fmt,

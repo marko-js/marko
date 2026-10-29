@@ -23,7 +23,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				return 0;
 			}
 		}, $scope2_id, "#text/0", _write_guard($scope2_reason, 0), $wg__isOpen, 0, 0, 1);
-		_script($scope2_id, "__tests__/template.marko_2_label#4", $wg__isOpen);
+		_script($scope2_id, "__tests__/template.marko_2_label#4", $wg__isOpen, _filled_guard($scope2_reason, 2), "label");
 		_scope($scope2_id, { label }, "__tests__/template.marko", "2:2", { label: "2:25" }) || _filled_guard($scope2_reason, 2) && _patch_fill($scope2_id, "PatchFill:__tests__/template.marko_fill1", label, !_server_guard($scope2_reason, 2));
 	}, $scope0_id) };
 	_if(() => {

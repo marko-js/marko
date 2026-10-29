@@ -17,7 +17,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const y = input.label + "!";
 			_filled_guard($scope0_reason, 1) ? _patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill1", y) : _patch_init($scope1_id, "__tests__/template.marko_1_input_label#0:5/init");
 			_html(`<p>${_text_resume($scope1_id, "#text/0", y + n)}</p>`);
-			_script($scope1_id, "__tests__/template.marko_1_y#1");
+			_script($scope1_id, "__tests__/template.marko_1_y#1", 1, _filled_guard($scope0_reason, 1), "y");
 			_scope($scope1_id, {
 				y,
 				_: _scope_with_id($scope0_id)

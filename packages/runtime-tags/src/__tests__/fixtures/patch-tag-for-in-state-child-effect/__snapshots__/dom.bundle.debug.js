@@ -30,11 +30,11 @@ var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $templ
 // tags/shape.marko
 const $template = "<!><!><button></button>";
 const $walks = "b%b b";
-const $if_content__input_b__OR__s__OR__v = /*@__PURE__*/ _fill_join_if("__tests__/tags/shape.marko_fill3", "v", /*@__PURE__*/ _or_resume("__tests__/tags/shape.marko_2_input_b#0:6_s#0:7_v#1:4/init", 1, ($scope) => $input$1($scope["#childScope/0"], {
+const $if_content__input_b__OR__s__OR__v = /*@__PURE__*/ _fill_join_if("__tests__/tags/shape.marko_fill3", "v", /*@__PURE__*/ _fill_join("__tests__/tags/shape.marko_fill1", "input_b", /*@__PURE__*/ _or_resume("__tests__/tags/shape.marko_2_input_b#0:6_s#0:7_v#1:4/init", 1, ($scope) => $input$1($scope["#childScope/0"], {
 	a: $scope._.v + $scope._._.s,
 	b: $scope._._.input_b
-}), 2), "#text/0", 0);
-const $if_content__input_b = _closure_resume("__tests__/tags/shape.marko_2_input_b#0:6/subscribe", /*@__PURE__*/ _closure_get("input_b/9", $if_content__input_b__OR__s__OR__v, ($scope) => $scope._._));
+}), 2), ($join) => /*@__PURE__*/ _for_closure("#text/0", /*@__PURE__*/ _if_closure("#text/0", 0, $join))), "#text/0", 0);
+const $if_content__input_b = /*@__PURE__*/ _closure_get("input_b/9", $if_content__input_b__OR__s__OR__v, ($scope) => $scope._._, "__tests__/tags/shape.marko_2_input_b#0:6/subscribe");
 const $if_content__setup = ($scope) => {
 	$if_content__input_b($scope);
 	$if_content__s($scope);
@@ -60,10 +60,10 @@ const $for = /*@__PURE__*/ _for_in("#text/0", "<!><!><!>", "b%", $for_content__s
 const $input_obj = ($scope, input_obj) => $for($scope, [input_obj]);
 const $input_b__closure = /*@__PURE__*/ _closure($if_content__input_b);
 const $input_b__script = _script("__tests__/tags/shape.marko_0_input_b#6", ($scope) => document.body.dataset.b = String($scope.input_b));
-const $input_b = _fill_resume("__tests__/tags/shape.marko_fill1", /*@__PURE__*/ _const("input_b", ($scope) => {
+const $input_b = /*@__PURE__*/ _fill_const("__tests__/tags/shape.marko_fill1", "input_b", ($scope) => {
 	$input_b__closure($scope);
 	$input_b__script($scope);
-}));
+}, /*@__PURE__*/ _fill_mark("input_b", $input_b__closure));
 const $input = ($scope, input) => {
 	$input_obj($scope, input.obj);
 	$input_sel($scope, input.sel);

@@ -20,7 +20,7 @@ var template_default = _template("a", (input) => {
 				return 0;
 			}
 		}, $scope2_id, "a", _write_guard($scope2_reason, 0), $wg__isOpen, 0, 0, 1);
-		_script($scope2_id, "a1", $wg__isOpen);
+		_script($scope2_id, "a1", $wg__isOpen, _filled_guard($scope2_reason, 2), "e");
 		_scope($scope2_id, { e: label }) || _filled_guard($scope2_reason, 2) && _patch_fill($scope2_id, "va2", label, !_server_guard($scope2_reason, 2));
 	}, $scope0_id) };
 	_if(() => {

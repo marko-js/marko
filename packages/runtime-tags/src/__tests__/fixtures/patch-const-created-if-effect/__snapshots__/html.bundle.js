@@ -14,7 +14,7 @@ var template_default = _template("a", (input) => {
 			const y = input.label + "!";
 			_filled_guard($scope0_reason, 1) ? _patch_fill($scope1_id, "va0", y) : _patch_init($scope1_id, "a1");
 			_html(`<p>${_text_resume($scope1_id, "a", y + n)}</p>`);
-			_script($scope1_id, "a2");
+			_script($scope1_id, "a2", 1, _filled_guard($scope0_reason, 1), "b");
 			_scope($scope1_id, {
 				b: y,
 				_: _scope_with_id($scope0_id)
