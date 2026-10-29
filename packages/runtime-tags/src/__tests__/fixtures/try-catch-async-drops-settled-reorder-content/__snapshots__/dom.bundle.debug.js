@@ -31,7 +31,7 @@ const $try_content2__setup = ($scope) => {
 };
 const $placeholder_content = _content("__tests__/template.marko_2*content", "loading");
 const $try_content__try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content2__setup, 0, $catch_content);
-const $try_content__setup = ($scope) => $try_content__try($scope);
+const $try_content__setup = $try_content__try;
 const $try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content__setup, $placeholder_content);
 const $await_content3 = /*@__PURE__*/ _await_content("#text/1", " ", " ");
 const $await_promise = /*@__PURE__*/ _await_promise("#text/1", $await_content3__$params);

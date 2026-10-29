@@ -10,7 +10,7 @@ const $try_content__setup = ($scope) => _text($scope["#text/1"], (() => {
 	throw new Error("ERROR!");
 })());
 const $await_content__try = /*@__PURE__*/ _try("#text/0", /*@__PURE__*/ ((_w0) => `<!>${_w0} `)($Item_content__template), /*@__PURE__*/ ((_w0) => `b/${_w0}& b`)($Item_content__walks), $try_content__setup, 0, $catch_content);
-const $await_content__setup = ($scope) => $await_content__try($scope);
+const $await_content__setup = $await_content__try;
 const $el_getter = _hoist_resume("__tests__/template.marko_0_#span#1:0/hoist", "#span/0", "ClosureScopes:1");
 const $await_content = /*@__PURE__*/ _await_content("#text/1", "<!><!><!>", "b%", $await_content__setup);
 const $await_promise = /*@__PURE__*/ _await_promise("#text/1");

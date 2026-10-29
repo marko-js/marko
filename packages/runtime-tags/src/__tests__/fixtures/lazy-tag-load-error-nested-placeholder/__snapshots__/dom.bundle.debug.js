@@ -15,11 +15,9 @@ const $catch_content = _content("__tests__/template.marko_4*content", "caught: <
 const $try_content2__setup = ($scope) => $load_Child_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
 const $placeholder_content = _content("__tests__/template.marko_2*content", "loading outer...");
 const $try_content__try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%/&", $try_content2__setup, 0, $catch_content);
-const $try_content__setup = ($scope) => $try_content__try($scope);
+const $try_content__setup = $try_content__try;
 const $try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content__setup, $placeholder_content);
-function $setup($scope) {
-	$try($scope);
-}
+const $setup = $try;
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", $setup);
 
 // v:child.marko.setup.js

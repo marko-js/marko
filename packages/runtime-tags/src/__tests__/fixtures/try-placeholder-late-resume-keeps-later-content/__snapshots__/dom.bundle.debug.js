@@ -15,7 +15,7 @@ const $try_content__setup = ($scope) => {
 	$try_content__await_promise($scope, resolveAfter(1, 1));
 };
 const $if_content__try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content__setup, $placeholder_content);
-const $if_content__setup = ($scope) => $if_content__try($scope);
+const $if_content__setup = $if_content__try;
 const $count__closure = /*@__PURE__*/ _closure($await_content__count, $await_content2__count);
 const $count = /*@__PURE__*/ _let("count/5", ($scope) => {
 	_text($scope["#text/1"], $scope.count);
