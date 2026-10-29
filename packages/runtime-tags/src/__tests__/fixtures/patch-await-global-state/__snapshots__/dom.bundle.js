@@ -3,7 +3,7 @@ const $await_content__v = ($scope, v) => _text($scope.a, v);
 const $await_content__$params = ($scope, $params2) => $await_content__v($scope, $params2[0]);
 const $await_promise = /*@__PURE__*/ _await_promise(0, $await_content__$params);
 const $count__$global_suffix = /*@__PURE__*/ _fill_global_join("a2", ($scope) => $await_promise($scope, Promise.resolve($scope.d + $scope.$.suffix)), "suffix");
-const $count = /*@__PURE__*/ _let(3, ($scope) => {
+const $count = _let(3, ($scope) => {
 	_text($scope.c, $scope.d);
 	$count__$global_suffix($scope);
 });

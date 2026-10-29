@@ -1,8 +1,8 @@
 // template.marko
 const $template = "<div id=spread></div><input name=spread><div> </div><p> </p><button>+</button>";
 const $walks = " b bD lD l b";
-const $setup = [[], ["__tests__/template.marko_0"]];
-_shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0; b bD lD l ;<div id=spread></div><input name=spread><div> </div><p> </p><button>+</button>" });
+const $setup = [[], ["__tests__/template.marko_0", "__tests__/template.marko_0_attrs#9"]];
+_shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0 __tests__/template.marko_0_attrs#9; b bD lD l ;<div id=spread></div><input name=spread><div> </div><p> </p><button>+</button>" });
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();

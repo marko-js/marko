@@ -15,7 +15,7 @@ const $for_content__setup = ($scope) => {
 const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);
 const $for_content__item__closure = /*@__PURE__*/ _closure($await_content__item);
 const $for_content__item = /*@__PURE__*/ _const("item", $for_content__item__closure);
-const $n = /*@__PURE__*/ _let("n/5", $for_content__n);
+const $n = _let("n/5", $for_content__n);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$n($scope, +$scope.n + 1);
 }));

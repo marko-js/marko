@@ -493,7 +493,7 @@ export function isQueuedOnCreate(section: Section, refs: ReferencedBindings) {
       getSourcesForRef(refs)?.state,
       (state) =>
         state.section !== section ||
-        !!state.assignments ||
+        !!getPatchFill(state).fill ||
         !!getWriteReason(state),
     ) ||
     // A fill's run leaves out an effect its entry re-runs.

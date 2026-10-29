@@ -6,7 +6,7 @@ const $await_content2__$params = ($scope, $params3) => $await_content2__y($scope
 const $await_content__x = ($scope, x) => _text($scope["#text/0"], x);
 const $await_content2 = /*@__PURE__*/ _await_content("#text/1", "<b> </b>", "D ");
 const $await_content__await_promise = /*@__PURE__*/ _await_promise("#text/1", $await_content2__$params);
-const $await_content__q = /*@__PURE__*/ _let("q/4", ($scope) => $await_content__await_promise($scope, $scope.q));
+const $await_content__q = _let("q/4", ($scope) => $await_content__await_promise($scope, $scope.q));
 const $await_content__setup = ($scope) => {
 	$await_content2($scope);
 	$await_content__q($scope, Promise.resolve("k"));
@@ -19,7 +19,7 @@ const $if_content__setup = ($scope) => {
 	$if_content__n._($scope);
 	$await_content($scope);
 };
-const $n = /*@__PURE__*/ _let("n/6", ($scope) => {
+const $n = _let("n/6", ($scope) => {
 	_text($scope["#text/1"], $scope.n);
 	$if_content__n($scope);
 });
