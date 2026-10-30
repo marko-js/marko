@@ -25,7 +25,6 @@ const $Foo_content__input = ($scope, input) => {
 	$Foo_content__tag_input_message($scope, input?.message);
 };
 const $Foo_content = _content("__tests__/template.marko_1*content", $Foo_content__template, $Foo_content__walks, 0, $Foo_content__$params);
-_content_resume($Foo_content);
 const $Foo = /*@__PURE__*/ _const("Foo");
 function $setup($scope) {
 	$scope["#childScope/0"]._ = $scope;

@@ -165,6 +165,8 @@ export default {
 
       const tagSection = ensureSection(tag);
       const inputNodes = getAllTagReferenceNodes(node);
+      // The tag reads as one; what its name reads is not handed to it as an input.
+      (node.name.extra ??= {}).tagName = true;
       const tagExtra = mergeReferences(tagSection, node, [
         node.name,
         ...inputNodes,

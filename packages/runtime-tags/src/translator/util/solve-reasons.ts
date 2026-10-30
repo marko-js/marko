@@ -22,6 +22,7 @@ import { addKnownTagReasons } from "./known-tag";
 import { addFunctionReasons } from "./module-registrations";
 import {
   concat,
+  every,
   first,
   forEach,
   type OneMany,
@@ -40,6 +41,7 @@ import {
   type Reason,
 } from "./reasons";
 import {
+  type Read,
   type ReferencedExtra,
   getFunctionReadsByExpression,
   getConstantBindingsInFunction,
@@ -284,11 +286,14 @@ function addRegisteredFnReasons(
 }
 
 // Who reads a value through its aliases and derives links (a cyclic graph):
-// what rereads it after resume, and the reads it lands in (an effect, an input).
+// what rereads it after resume, and the reads it lands in (an effect, an input),
+// each with whether it reaches it only as a dynamic tag's name.
 interface Readers {
   reason: undefined | Reason;
-  reads: ReadonlySet<ReferencedExtra> | undefined;
+  reads: ReadMap;
 }
+
+type ReadMap = ReadonlyMap<ReferencedExtra, boolean> | undefined;
 
 const UNREAD: Readers = { reason: undefined, reads: undefined };
 
@@ -322,11 +327,7 @@ export function bindingLandsRetained(
   binding: Binding,
   properties: Opt<string>,
 ) {
-  const { reads } = bindingReaders(binding, properties);
-  if (reads) {
-    for (const read of reads) if (read.retained) return true;
-  }
-  return false;
+  return someRead(bindingReaders(binding, properties), isRetainedInput);
 }
 
 // Whether the value lands somewhere retained (itself included), where client
@@ -334,10 +335,18 @@ export function bindingLandsRetained(
 export function landsRetained(extra: t.NodeExtra) {
   if (extra.retained) return true;
   if (!extra.isEffect) {
-    const { reads } = extraReaders(extra);
-    if (reads) {
-      for (const read of reads) if (read.retained) return true;
-    }
+    return someRead(extraReaders(extra), isRetained);
+  }
+  return false;
+}
+
+function someRead(
+  { reads }: Readers,
+  leaf: (read: ReferencedExtra, tagNameOnly: boolean) => boolean,
+) {
+  if (reads) {
+    for (const [read, tagNameOnly] of reads)
+      if (leaf(read, tagNameOnly)) return true;
   }
   return false;
 }
@@ -470,7 +479,7 @@ function computeBindingReaders(
       continue;
     }
     readers = mergeReaders(
-      withLandingRead(readers, expr),
+      withLandingRead(readers, expr, binding),
       readersOfDerives(expr, binding, properties),
     );
   }
@@ -517,20 +526,41 @@ function mergeReaders(a: Readers, b: Readers): Readers {
 
 // Answers are shared across memo keys: adding copies (at most once per
 // merge), and adding nothing new keeps the identity.
-function withLandingRead(readers: Readers, read: ReferencedExtra): Readers {
-  return readers.reads?.has(read)
+function withLandingRead(
+  readers: Readers,
+  read: ReferencedExtra,
+  binding: Binding,
+): Readers {
+  const had = readers.reads?.get(read);
+  const tagNameOnly =
+    (had ?? true) && every(binding.reads.get(read), isTagNameRead);
+  return had === tagNameOnly
     ? readers
-    : { reason: readers.reason, reads: new Set(readers.reads).add(read) };
+    : {
+        reason: readers.reason,
+        reads: new Map(readers.reads).set(read, tagNameOnly),
+      };
 }
 
-function unionReads(
-  a: ReadonlySet<ReferencedExtra> | undefined,
-  b: ReadonlySet<ReferencedExtra> | undefined,
-) {
+function isRetainedInput(read: ReferencedExtra, tagNameOnly: boolean) {
+  return !tagNameOnly && isRetained(read);
+}
+
+function isRetained(read: ReferencedExtra) {
+  return !!read.retained;
+}
+
+function isTagNameRead({ extra }: Read) {
+  return !!extra.exprRoot?.tagName;
+}
+
+function unionReads(a: ReadMap, b: ReadMap) {
   if (!a || !b || a === b) return a || b;
-  let result: Set<ReferencedExtra> | undefined;
-  for (const read of b) {
-    if (!a.has(read)) (result ??= new Set(a)).add(read);
+  let result: Map<ReferencedExtra, boolean> | undefined;
+  for (const [read, tagNameOnly] of b) {
+    const had = a.get(read);
+    const merged = (had ?? true) && tagNameOnly;
+    if (had !== merged) (result ??= new Map(a)).set(read, merged);
   }
   return result || a;
 }
