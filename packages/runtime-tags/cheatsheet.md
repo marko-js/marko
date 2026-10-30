@@ -127,7 +127,7 @@ Don't fetch while rendering: start data loads early, pass the promise through th
 </div>
 ```
 
-- Repeated attr tags (many `<@tab ...>`) arrive as the singular prop `input.tab`: the first tab's attrs, made iterable, not an array: `input.tab[i]` and `input.tab.length` are undefined. To index or count, spread first: `<const/tabs=[...input.tab ?? []]>` then `tabs[active]`/`tabs.length`. Looping directly is fine: `<for|tab| of=input.tab>`.
+- Repeated attr tags (many `<@tab ...>`) arrive as the singular prop `input.tab`: the first tab's attrs, made iterable, not an array: `input.tab[i]` and `input.tab.length` are undefined. To index or count, spread first: `<const/tabs=[...input.tab ?? []]>` then `tabs[active]`/`tabs.length`. Looping directly is fine: `<for|tab| of=input.tab>`. From data, build them with `attrTag`/`attrTags` (`marko/common/attr-tag`): `attrTag(o)` makes `o` iterable and its own first item, `attrTags(tags, next)` adds a tag without replacing the first, and both are typed as `Marko.AttrTag<T>`.
 - Text: `0` renders; `false`/`null`/`undefined`/`""`/`NaN` render nothing. `$!{html}` inserts raw HTML; it must be a balanced fragment (no truncated excerpts), or updating it after SSR removes the wrong nodes.
 - Conditional attrs: `false`/`null` attrs are omitted from HTML. `aria-selected` etc. want strings: `aria-selected=(i === active && "true")`.
 - `class=` / `style=` accept strings, objects, arrays: `class=["btn", { active }]`, `style={ color }` (single braces). A toggled class may not repeat another name in its `class=` value (`["a", { a: on }]` is an error). `style=` keys are kebab-case CSS names (`{ "background-color": c }`); camelCase keys are written verbatim. `...input` spreads attrs onto a tag; `content=` passes body content as an attr.
@@ -181,7 +181,7 @@ import PriceChart from "<price-chart>" with { load: "visible#chart" }
 
 ## TypeScript
 
-`export interface Input` types `input`; generic as `Input<T>`, body content as `Marko.Body<[params]>`, repeated attr tags as `Marko.AttrTag<T>`.
+`export interface Input` types `input`; generic as `Input<T>`, body content as `Marko.Body<[params]>`, repeated attr tags as `Marko.AttrTag<T>` — the same type `attrTag`/`attrTags` (`marko/common/attr-tag`) take and return, so tags assembled in a story or a test need no cast. An array of attrs is not one: it iterates, but the singular read (`input.tab.value`) is undefined, so the component renders a different shape than the caller built.
 
 ```marko
 export interface Input<T> {
@@ -219,6 +219,7 @@ Each left-hand habit is an error or silently wrong.
 | `el.focus()` on a ref                                       | `el().focus()` inside `<script>`/handler                                             |
 | filling `input.api` from a child's `<script>` for a parent  | `<return=api>` in the child; parent `<Child/api>` then `api.x()`                     |
 | `input.tab[0]` / `input.tab.length`                         | `[...input.tab ?? []]` first (attr tags are iterables, not arrays)                   |
+| `render({ tab: [{ value }] })` (attrs as an array)          | `attrTag({ value })` then `attrTags(tags, { value2 })` (`marko/common/attr-tag`)     |
 | bare text on its own line at template root                  | wrap in an element (`<p>...`), or prefix the line with `--` and a space              |
 | `onInput(e) { q = e.target.value }` to sync an input        | `value:=q`; the change handler owns the value                                        |
 | `<script>` syncing a draft field back from `value`          | `<const/draft=pending ?? value>`; a `<let>` holds only the uncommitted edit          |

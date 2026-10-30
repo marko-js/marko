@@ -1,22 +1,28 @@
+import type {} from "../../index";
 type Attrs = Record<PropertyKey, unknown>;
-type AttrTag = Attrs & { [rest]: Attrs[] };
+type Tag<T> = Marko.AttrTag<T> & {
+  [rest]: T[];
+};
 const empty: never[] = [];
 const rest: unique symbol = (
   MARKO_DEBUG ? Symbol("Attribute Tag") : Symbol()
 ) as any;
 
-export function attrTag(attrs: Attrs): AttrTag {
-  attrs[Symbol.iterator] = attrTagIterator;
-  attrs[rest] = empty;
-  return attrs as AttrTag;
+export function attrTag<T extends object>(attrs: T): Marko.AttrTag<T> {
+  (attrs as Attrs)[Symbol.iterator] = attrTagIterator;
+  (attrs as Attrs)[rest] = empty;
+  return attrs as Tag<T>;
 }
 
-export function attrTags(first: undefined | AttrTag, attrs: Attrs) {
+export function attrTags<T extends object>(
+  first: Marko.AttrTag<T> | undefined,
+  attrs: T,
+): Marko.AttrTag<T> {
   if (first) {
-    if (first[rest] === empty) {
-      first[rest] = [attrs];
+    if ((first as Tag<T>)[rest] === empty) {
+      (first as Tag<T>)[rest] = [attrs];
     } else {
-      first[rest].push(attrs);
+      (first as Tag<T>)[rest].push(attrs);
     }
 
     return first;
@@ -25,7 +31,7 @@ export function attrTags(first: undefined | AttrTag, attrs: Attrs) {
   return attrTag(attrs);
 }
 
-function* attrTagIterator(this: AttrTag) {
+function* attrTagIterator<T>(this: Tag<T>): Generator<T> {
   yield this;
   yield* this[rest];
 }
