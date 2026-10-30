@@ -56,6 +56,15 @@ const MARKO_FILE_REG = /^<.*>$|\.marko$/;
 // Matches `pre-analyze`, which rewrites a bound PascalCase tag to `<${Name}>`.
 const TAG_NAME_IDENTIFIER_REG = /^[A-Z][a-zA-Z0-9_$]*$/;
 
+// The declared binding a PascalCase string tag name refers to, if any. Only
+// `getBinding` is used: `hasBinding` is also true for built-in globals.
+export function getTagNameBinding(tag: t.NodePath<t.MarkoTag>) {
+  const tagName = getTagName(tag);
+  return tagName && TAG_NAME_IDENTIFIER_REG.test(tagName)
+    ? tag.scope.getBinding(tagName)
+    : undefined;
+}
+
 export default function analyzeTagNameType(tag: t.NodePath<t.MarkoTag>) {
   const extra = (tag.node.extra ??= {});
 
@@ -110,10 +119,7 @@ export default function analyzeTagNameType(tag: t.NodePath<t.MarkoTag>) {
         // the rest is unresolvable. `DynamicTag.analyze` reports it: at
         // translate the scope its hint reads is already rewritten, and the
         // error escapes analyze batching.
-        const tagName = (name.node as t.StringLiteral).value;
-        extra.tagNameUnresolved = !(
-          TAG_NAME_IDENTIFIER_REG.test(tagName) && tag.scope.hasBinding(tagName)
-        );
+        extra.tagNameUnresolved = !getTagNameBinding(tag);
       } else if (childFile !== getFile() && isAnalyzing(childFile)) {
         // Closing a cross-file cycle: the child's analysis is incomplete, so
         // the runtime path renders it rather than composing its template.
@@ -335,7 +341,7 @@ export function isUnresolvedKnownWrongTag(tag: t.NodePath<t.MarkoTag>) {
 
 export function tagNotFoundError(tag: t.NodePath<t.MarkoTag>) {
   const tagName = getTagName(tag);
-  if (tagName && tag.scope.hasBinding(tagName)) {
+  if (tagName && tag.scope.getBinding(tagName)) {
     return tag
       .get("name")
       .buildCodeFrameError(
