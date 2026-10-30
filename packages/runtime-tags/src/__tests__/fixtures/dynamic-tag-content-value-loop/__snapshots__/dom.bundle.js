@@ -1,0 +1,18 @@
+// tags/card.marko
+const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag(0);
+const $if_content__input_content = /*@__PURE__*/ _if_closure(1, 0, ($scope) => $if_content__dynamicTag($scope, $scope._.e));
+const $if = /*@__PURE__*/ _if(1, "<!><!><!>", "b%", $if_content__input_content);
+const $open = /*@__PURE__*/ _let(5, ($scope) => $if($scope, $scope.f ? 0 : 1));
+const $setup__script = _script("b0", ($scope) => _on($scope.a, "click", function() {
+	$open($scope, !$scope.f);
+}));
+
+// template.marko
+const $Label_content__input_note = /*@__PURE__*/ _closure_get(6, ($scope) => _text($scope.b, $scope._._.e), ($scope) => $scope._._, "a1");
+const $Label_content__setup = ($scope) => {
+	$Label_content__input_note($scope);
+	$Label_content__item($scope);
+};
+const $Label_content__item = /*@__PURE__*/ _closure_get(8, ($scope) => _text($scope.a, $scope._.c), 0, "a2");
+const $Label_content = _content("a0", "<em><!> <!></em>", "D%c%", $Label_content__setup);
+_content_resume($Label_content);

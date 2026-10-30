@@ -26,6 +26,7 @@ import {
   type SortedOpt,
   forEach,
   reduce,
+  some,
 } from "./optional";
 import {
   isGuardedReason,
@@ -36,11 +37,12 @@ import {
   setParamReasonGroups,
 } from "./reasons";
 import { type Slot } from "./slots";
-import { getReasonForBinding } from "./solve-reasons";
+import { bindingLandsRetained, getReasonForBinding } from "./solve-reasons";
 import { ALWAYS, mergeSources, type Sources } from "./sources";
 import { createOutputSectionState } from "./state";
 import { getTagContentType, getTagFacts } from "./tag-facts";
 import analyzeTagNameType, { TagNameType } from "./tag-name-type";
+import { getWriteReason } from "./write-guard";
 
 // A set of the section's params that reasons wait on together; each
 // call site passes whether the group changed.
@@ -328,12 +330,27 @@ export function forEachSection(fn: (section: Section) => void) {
   sections?.forEach(fn);
 }
 
-// For content a tag the analysis cannot resolve receives, which code it cannot
-// see may render later, the closures read in it from outside it.
+// For content code the analysis cannot see may render later (a body or value a
+// tag it cannot resolve receives), the closures it reads that its owners may not write.
 export function getDynamicTagContentClosures(section: Section) {
-  if (section.branchExpr?.tagNameType === TagNameType.DynamicTag) {
-    return getClosuresFromAbove(section, section, new Set());
+  const { derives } = section;
+  if (
+    section.branchExpr?.tagNameType === TagNameType.DynamicTag ||
+    (derives &&
+      some(derives.binding, (binding) =>
+        bindingLandsRetained(binding, derives.properties),
+      ))
+  ) {
+    return bindingUtil.filter(
+      getClosuresFromAbove(section, section, new Set()),
+      mayBeUnwritten,
+    );
   }
+}
+
+function mayBeUnwritten(closure: Binding) {
+  const reason = getWriteReason(closure);
+  return !reason || isGuardedReason(reason);
 }
 
 // What a render of `section` reads from above `top`: its own and its nested

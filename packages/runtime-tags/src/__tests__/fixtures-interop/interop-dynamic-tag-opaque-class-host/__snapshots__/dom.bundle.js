@@ -47,7 +47,6 @@ const $inputuseClassClassLayoutsection_content__setup = ($scope) => {
 	$inputuseClassClassLayoutsection_content__setup__script($scope);
 };
 const $inputuseClassClassLayoutsection_content = _content("a0", "<button id=tags> </button>", " D ", $inputuseClassClassLayoutsection_content__setup);
-_content_resume($inputuseClassClassLayoutsection_content);
 const $count = /*@__PURE__*/ _let(5, /* @__PURE__ */ _closure($inputuseClassClassLayoutsection_content__count));
 
 // v:template.marko.hydrate-6.js

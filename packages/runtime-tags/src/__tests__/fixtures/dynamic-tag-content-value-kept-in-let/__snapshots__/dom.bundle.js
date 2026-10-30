@@ -1,0 +1,13 @@
+// tags/kept.marko
+const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag(0);
+const $if_content__setup = /* @__PURE__ */ _if_closure(1, 0, ($scope) => $if_content__dynamicTag($scope, $scope._.f));
+const $if = /*@__PURE__*/ _if(1, "<!><!><!>", "b%", $if_content__setup);
+const $open = /*@__PURE__*/ _let(6, ($scope) => $if($scope, $scope.g ? 0 : 1));
+const $setup__script = _script("b0", ($scope) => _on($scope.a, "click", function() {
+	$open($scope, !$scope.g);
+}));
+
+// template.marko
+const $Label_content__input_note = /*@__PURE__*/ _closure_get(7, ($scope) => _text($scope.a, $scope._.d), 0, "a1");
+const $Label_content = _content("a0", "<em> </em>", "D ", $Label_content__input_note);
+_content_resume($Label_content);
