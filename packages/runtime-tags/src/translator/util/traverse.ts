@@ -88,6 +88,20 @@ export function traverseFindAwait(node: undefined | null | t.Node | t.Node[]) {
   });
 }
 
+export function traverseFindSuper(node: undefined | null | t.Node | t.Node[]) {
+  return traverseFind(node, (child) => {
+    switch (child.type) {
+      // A nested method binds `super` to its own object or class.
+      case "ObjectMethod":
+      case "ClassMethod":
+      case "ClassPrivateMethod":
+        return skip;
+      case "Super":
+        return true;
+    }
+  });
+}
+
 export function traverse(
   visit: (
     node: t.Node,
