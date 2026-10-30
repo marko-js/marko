@@ -1,0 +1,6 @@
+import Card from "./tags/card.marko";
+<define/Tree|{ n }|>
+  <em>${input.note}</em>
+  <if=n><Tree n=n - 1/></if>
+</define>
+<${input.on ? Card : "div"}><Tree n=1/></>

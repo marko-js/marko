@@ -115,7 +115,7 @@ const [getCallSiteSourcesByParam] = createAnalysisState(
   () => new Map<ParamBinding, Sources | undefined>(),
 );
 
-const kChildSection = Symbol("known tag child section");
+export const kChildSection = Symbol("known tag child section");
 const kParamsTree = Symbol("known tag params tree");
 const kKnownExprs = Symbol("known tag exprs");
 

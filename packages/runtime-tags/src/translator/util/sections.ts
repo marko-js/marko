@@ -15,6 +15,7 @@ import type * as Step from "./constants/step";
 import * as StructureKind from "./constants/structure-kind";
 import { generateUid, generateUidIdentifier } from "./generate-uid";
 import { isCoreTag, isCoreTagName } from "./is-core-tag";
+import { kChildSection } from "./known-tag";
 import {
   addSorted,
   find,
@@ -331,13 +332,16 @@ export function forEachSection(fn: (section: Section) => void) {
 // see may render later, the closures read in it from outside it.
 export function getDynamicTagContentClosures(section: Section) {
   if (section.branchExpr?.tagNameType === TagNameType.DynamicTag) {
-    return getClosuresFromAbove(section, section);
+    return getClosuresFromAbove(section, section, new Set());
   }
 }
 
+// What a render of `section` reads from above `top`: its own and its nested
+// sections' closures, and those of each `<define>` body a direct call renders.
 function getClosuresFromAbove(
   section: Section,
   top: Section,
+  seen: Set<Section>,
 ): ReferencedBindings {
   // Closures are of ancestors, so those above `top` sort before it.
   let closures = bindingUtil.leadingRun(
@@ -347,7 +351,26 @@ function getClosuresFromAbove(
     top,
   );
   for (const child of section.children) {
-    closures = bindingUtil.union(closures, getClosuresFromAbove(child, top));
+    closures = bindingUtil.union(
+      closures,
+      getClosuresFromAbove(child, top, seen),
+    );
+  }
+  for (const tagExtra of section.knownTags || []) {
+    const body = tagExtra[kChildSection]!;
+    if (!seen.has(body)) {
+      seen.add(body);
+      // A body defined outside `top` sits in one of its ancestors, so what is
+      // above the body is above `top` too.
+      closures = bindingUtil.union(
+        closures,
+        getClosuresFromAbove(
+          body,
+          isSameOrAncestorSection(top, body) ? top : body,
+          seen,
+        ),
+      );
+    }
   }
   return closures;
 }
