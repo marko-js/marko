@@ -1,0 +1,12 @@
+static function pick(tag: unknown) {
+  return tag;
+}
+
+<define/Foo|input|>
+  <if=input.depth>
+    <${pick(Foo)} message="done"/>
+  </if>
+  <else>${input.message}</else>
+</define>
+
+<Foo depth=1/>

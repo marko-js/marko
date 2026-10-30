@@ -22,7 +22,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			input_message: input?.message,
 			_: _scope_with_id($scope0_id)
 		}, "__tests__/template.marko", "1:2", { input_message: ["input.message", "1:13"] });
-	}, $scope0_id, ($scope) => [{ Foo }]) };
+	}, $scope0_id) };
 	Foo.content({ depth: 1 });
 	_scope($scope0_id, { Foo }, "__tests__/template.marko", 0, { Foo: "1:9" });
 }, 1);

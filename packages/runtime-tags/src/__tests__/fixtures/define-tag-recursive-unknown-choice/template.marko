@@ -1,0 +1,7 @@
+define/Foo|input|
+  if=input.bar
+    ${input.alt ? Foo : 0} message=input.bar
+  else
+    -- ${JSON.stringify(input.message)}
+
+Foo bar="hi"
