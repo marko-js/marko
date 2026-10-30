@@ -1371,6 +1371,13 @@ export class Chunk {
       html = state.mark(ResumeSymbol.ReorderStart, "") + html;
     }
 
+    // An effect can read `$global`, and a page whose only client code is one
+    // writes no scopes, so the globals flush above never runs. They serialize
+    // with this walker-runtime flush, before the effects added below.
+    if (effects && !state.hasWrittenGlobals) {
+      flushSerializerGlobals(boundary);
+    }
+
     if (state.needsWalkerRuntime && !state.hasWalkerRuntime) {
       state.hasWalkerRuntime = true;
       scripts = concatScripts(scripts, state.runtimeScript());
