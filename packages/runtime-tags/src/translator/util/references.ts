@@ -833,6 +833,9 @@ function trackReference(
     const { parent } = root;
     if (!t.isMemberExpression(parent) && !t.isOptionalMemberExpression(parent))
       break;
+    // A reference used as a member key is only read; only the member object
+    // continues the walk that can reach an assigned member.
+    if (parent.object !== root.node) break;
 
     let prop = getMemberExpressionPropString(parent);
     if (isAssignedMember(root.parentPath!)) {
