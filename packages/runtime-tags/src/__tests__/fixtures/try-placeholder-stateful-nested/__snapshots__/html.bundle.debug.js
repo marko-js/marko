@@ -3,7 +3,7 @@ var note_default = _template("__tests__/tags/note.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_label = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_html(`<span>${_text_resume($scope0_id, "#text/0", input.label, $wg__input_label)}</span>`);
-	_script($scope0_id, "__tests__/tags/note.marko_0_input_label#3", $wg__input_label);
+	_script($scope0_id, "__tests__/tags/note.marko_0", $wg__input_label);
 	_scope($scope0_id, { input_label: input.label }, "__tests__/tags/note.marko", 0, { input_label: ["input.label"] });
 	$wg__input_label || _resume_branch($scope0_id);
 });

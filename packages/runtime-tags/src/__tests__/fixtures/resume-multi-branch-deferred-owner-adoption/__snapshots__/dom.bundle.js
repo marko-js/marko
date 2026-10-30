@@ -1,20 +1,18 @@
 // tags/child.marko
 const $template = "<!><!><!>";
-const $if_content__input__script = _script("b0", ($scope) => _lifecycle($scope, { onDestroy: function() {
+const $if_content__input_item = /*@__PURE__*/ _if_closure(0, 0, ($scope) => _text($scope.a, $scope._.e));
+const $if_content__setup__script = _script("b0", ($scope) => _lifecycle($scope, { onDestroy: function() {
 	$scope._.c.log().append(`destroyed ${$scope._.c.item}`);
 } }));
-const $if_content__input = /*@__PURE__*/ _if_closure(0, 0, $if_content__input__script);
 const $if_content__setup = ($scope) => {
-	$if_content__input._($scope);
 	$if_content__input_item._($scope);
+	$if_content__setup__script($scope);
 };
-const $if_content__input_item = /*@__PURE__*/ _if_closure(0, 0, ($scope) => _text($scope.a, $scope._.e));
 const $if = /*@__PURE__*/ _if(0, "<span> </span>", "D ", $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input = /*@__PURE__*/ _const(2, ($scope) => {
 	$input_show($scope, $scope.c.show);
 	$input_item($scope, $scope.c.item);
-	$if_content__input($scope);
 });
 const $input_item = /*@__PURE__*/ _const(4, $if_content__input_item);
 

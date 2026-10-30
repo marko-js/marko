@@ -1,0 +1,17 @@
+<let/other=0/>
+<button#bump onClick() { other++ }>Bump</button>
+<lifecycle
+  onMount() {
+    document.addEventListener("keydown", () => {
+      document.getElementById("listener")!.textContent = `listener saw ${other}`;
+    });
+  }
+  onUpdate() {
+    window.n = (window.n || 0) + 1;
+    document.getElementById("runs")!.textContent = `update ran ${window.n} times`;
+  }
+/>
+<lifecycle onUpdate() { document.getElementById("own")!.textContent = `own ${other}` }/>
+<div#listener>never</div>
+<div#runs>never</div>
+<div#own>never</div>
