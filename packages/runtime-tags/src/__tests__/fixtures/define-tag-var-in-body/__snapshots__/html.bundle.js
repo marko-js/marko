@@ -22,7 +22,7 @@ var template_default = _template("a", (input) => {
 			e: input?.message,
 			_: _scope_with_id($scope0_id)
 		});
-	}, $scope0_id) };
+	}, $scope0_id, ($scope) => [{ b: Foo }]) };
 	Foo.content({ depth: 1 });
 	_scope($scope0_id, { b: Foo });
 }, 1);

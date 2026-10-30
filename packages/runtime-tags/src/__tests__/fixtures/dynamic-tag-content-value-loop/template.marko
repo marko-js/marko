@@ -1,0 +1,5 @@
+import Card from "./tags/card.marko";
+<for|item| of=input.items>
+  <define/Label><em>${item} ${input.note}</em></define>
+  <${input.on ? Card : "div"} content=Label/>
+</for>

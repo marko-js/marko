@@ -9,7 +9,6 @@ import { toAccess } from "../../html/serializer";
 import {
   type Binding,
   BindingType,
-  bindingUtil,
   getCanonicalBinding,
   getDebugName,
   getDebugNames,
@@ -158,10 +157,7 @@ export function setSectionOwnerResumedByMarker(section: Section) {
 // Registered content's closures its owners' scope flushes may lack, by section:
 // one values object per owner down to the content's own.
 export function getContentClosureValues(bodySection: Section) {
-  const contentClosures = bindingUtil.filter(
-    getDynamicTagContentClosures(bodySection),
-    mayBeUnwritten,
-  );
+  const contentClosures = getDynamicTagContentClosures(bodySection);
   if (!contentClosures) return;
   const scope = generateUidIdentifier("scope");
   const closures = Array.isArray(contentClosures)
@@ -194,11 +190,6 @@ export function getContentClosureValues(bodySection: Section) {
     section = section.parent!;
   }
   return { scope, levels: levels.reverse() };
-}
-
-function mayBeUnwritten(closure: Binding) {
-  const reason = getWriteReason(closure);
-  return !reason || isGuardedReason(reason);
 }
 
 const [getScopeProperties] = createOutputSectionState<

@@ -316,6 +316,19 @@ export function getReasonForExpr(extra: t.NodeExtra): undefined | Reason {
   return extra.isEffect ? ALWAYS : extraReaders(extra).reason;
 }
 
+// Whether a binding's value lands somewhere retained, where client code may read
+// it as is.
+export function bindingLandsRetained(
+  binding: Binding,
+  properties: Opt<string>,
+) {
+  const { reads } = bindingReaders(binding, properties);
+  if (reads) {
+    for (const read of reads) if (read.retained) return true;
+  }
+  return false;
+}
+
 // Whether the value lands somewhere retained (itself included), where client
 // code may read a function as is.
 export function landsRetained(extra: t.NodeExtra) {
