@@ -45,7 +45,7 @@ import {
 export type Reasons = SortedOneMany<Sources>;
 
 // The `Sources` whose changes lead client code to read something after resume;
-// an `always` one is unconditional but still says what it reads.
+// an `always` one is never guarded but still says what it reads.
 export type Reason = Sources;
 
 export function addReason(slot: Slot, reason: undefined | false | Reason) {
@@ -108,17 +108,10 @@ export function mapBodyParams(
 
 // Read only when a caller's params (or `$global`) change, so each call site
 // guards it.
-export function isConditionalReason(
+export function isGuardedReason(
   reason: undefined | Reason,
 ): reason is Sources & { state: undefined; always: undefined } {
   return !!reason && !reason.always && !reason.state;
-}
-
-// Read on every render of the page: always, or when state can change.
-export function isUnconditionalReason(
-  reason: undefined | Reason,
-): reason is Reason {
-  return !!reason && !isConditionalReason(reason);
 }
 
 // Read when state changes; state only has readers when it can change on the

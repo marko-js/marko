@@ -128,13 +128,13 @@ _Avoid_: serialization flag, demand
 **Write reason**:
 Translate's conclusion from a slot's reason (`getWriteGuard`): whether
 and under which guard the server writes it.
-`always` and state reasons write unconditionally; param-only ones produce
-per-call guards.
-_Avoid_: serialization flag, serialized value
+`always` and state reasons write unconditionally; param-only ones are
+_guarded_ (`isGuardedReason`): each call site guards them.
+_Avoid_: serialization flag, serialized value, conditional reason
 
 **Param reason group**:
 A param set a template's call sites report as two bits (`paramReasonGroups`),
-built from what each write reason leaves conditional. The list is the
+built from what each write reason leaves guarded. The list is the
 template's interface to its callers, fixed at analyze exit.
 
 **Slot**:

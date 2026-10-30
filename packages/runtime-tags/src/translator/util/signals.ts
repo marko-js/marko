@@ -31,12 +31,7 @@ import { getDeclaredBindingExpression } from "./get-declared-binding-expression"
 import { isOptimize, isOutputHTML } from "./marko-config";
 import { forEach, type Opt, push, reduce, some } from "./optional";
 import { getReadReplacement } from "./read-replacement";
-import {
-  getNodeReasons,
-  isConditionalReason,
-  isUnconditionalReason,
-  type Reason,
-} from "./reasons";
+import { getNodeReasons, isGuardedReason, type Reason } from "./reasons";
 import {
   type AssignedBindingExtra,
   getReferencedBindings,
@@ -202,7 +197,8 @@ export function getContentClosureValues(bodySection: Section) {
 }
 
 function mayBeUnwritten(closure: Binding) {
-  return !isUnconditionalReason(getWriteReason(closure));
+  const reason = getWriteReason(closure);
+  return !reason || isGuardedReason(reason);
 }
 
 const [getScopeProperties] = createOutputSectionState<
@@ -1292,7 +1288,7 @@ export function writeHTMLResumeStatements(
           SlotKind.ClosureScopes,
         )?.reason;
         const subscribeArg =
-          isConditionalReason(closureScopesReason) &&
+          isGuardedReason(closureScopesReason) &&
           !isSameReason(closureScopesReason, sectionReason)
             ? getExprIfWritten(closure.section, closureScopesReason, identifier)
             : identifier;
