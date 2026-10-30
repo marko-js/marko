@@ -1,4 +1,4 @@
-// size: 5860 (min) 2580 (brotli)
+// size: 5918 (min) 2602 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36);
 let branchesEnabled;
@@ -60,14 +60,7 @@ let walkInternal = function walkInternal(currentWalkIndex, walkCodes, scope) {
         (scope[decodeAccessor(currentScopeIndex++)] = createScope(scope.$, scope.F)),
       )),
         value === 48 && (scope[decodeAccessor(currentScopeIndex++)] = skipScope()));
-    else if (value < 92)
-      for (value = 25 * currentMultiplier + value - 67; value--;)
-        if (currentNode.firstChild) currentNode = currentNode.firstChild;
-        else {
-          for (; !currentNode.nextSibling && currentNode.parentNode;)
-            currentNode = currentNode.parentNode;
-          walkNextSibling();
-        }
+    else if (value < 92) for (value = 25 * currentMultiplier + value - 67; value--;) walkNextNode();
     else if (value < 107)
       for (value = 10 * currentMultiplier + value - 97; value--;) walkNextSibling();
     else if (value < 117) {
@@ -75,6 +68,11 @@ let walkInternal = function walkInternal(currentWalkIndex, walkCodes, scope) {
         currentNode = currentNode.parentNode || currentNode;
       walkNextSibling();
     } else storedMultiplier = currentMultiplier * 10 + value - 117;
+};
+let walkNextNode = (_) => {
+  if (currentNode.firstChild) return (currentNode = currentNode.firstChild);
+  for (; !currentNode.nextSibling && currentNode.parentNode;) currentNode = currentNode.parentNode;
+  walkNextSibling();
 };
 let walkNextSibling = (_) => (currentNode = currentNode.nextSibling || currentNode);
 let _resumed = {};
@@ -250,7 +248,8 @@ function toArray(opt) {
   return opt ? (Array.isArray(opt) ? opt : [opt]) : [];
 }
 function _on(element, type, handler) {
-  (delegate(type, handleDelegated), (element[1 + type] = handler || null));
+  (element[1 + type] === void 0 && delegate(type, handleDelegated),
+    (element[1 + type] = handler || null));
 }
 function handleDelegated(ev) {
   let target = !rendering && ev.target;
@@ -426,7 +425,9 @@ function _attr(element, name, value) {
 }
 function setAttribute(element, name, value) {
   element.getAttribute(name) != value &&
-    (value === void 0 ? element.removeAttribute(name) : element.setAttribute(name, value));
+    (value === void 0
+      ? element.removeAttribute(name)
+      : (name !== "nonce" || element.nonce !== value) && element.setAttribute(name, value));
 }
 function _text(node, value) {
   let normalizedValue = _to_text(value);
