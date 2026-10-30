@@ -8,7 +8,7 @@ import {
 import { generateUid, ensureSharedUid } from "./generate-uid";
 import { some } from "./optional";
 import {
-  isConditionalReason,
+  isGuardedReason,
   mapBodyParams,
   type Reason,
   type Reasons,
@@ -26,7 +26,7 @@ import { compareSources, type Sources } from "./sources";
 import { createOutputSectionState } from "./state";
 import { withLeadingComment } from "./with-comment";
 
-type ConditionalReason = Sources & { state: undefined };
+type GuardedReason = Sources & { state: undefined };
 
 export function isSameReason(a: Reason | undefined, b: Reason | undefined) {
   // Reasons read always match whatever their sources: both guard as `1`.
@@ -117,7 +117,7 @@ export function buildGroupMask(
 // Every section body consumes (and clears) its caller's reason; it binds it,
 // with its hoisted guards, only when a guard is dynamic.
 export function getScopeReasonStatement(section: Section): t.Statement {
-  return hasConditionalReason(section)
+  return hasGuardedReason(section)
     ? t.variableDeclaration("const", getSectionGuards(section).declarators)
     : t.expressionStatement(callRuntime("_scope_reason"));
 }
@@ -163,7 +163,7 @@ export function getWriteGuardForAny(
 
   // A static member decides before any dynamic guard is built (and hoisted).
   for (const reason of reasons) {
-    if (!isConditionalReason(reason)) {
+    if (!isGuardedReason(reason)) {
       return omitUnconditional
         ? undefined
         : withLeadingComment(t.numericLiteral(1), getDebugNames(reason.state));
@@ -183,7 +183,7 @@ export function getExprIfWritten<
   R extends (T extends {} ? t.Expression : undefined),
 >(section: Section, reason: T, expr: t.Expression): R {
   const ownReason = mapBodyParams(section, reason);
-  if (!isConditionalReason(ownReason)) {
+  if (!isGuardedReason(ownReason)) {
     return (ownReason && expr) as R;
   }
 
@@ -249,8 +249,8 @@ function getOrHoistSectionGuard(
 function isDynamicWriteGuard(
   section: Section,
   reason: undefined | Reason,
-): reason is ConditionalReason {
-  return isConditionalReason(reason) && !isCrossSection(section, reason);
+): reason is GuardedReason {
+  return isGuardedReason(reason) && !isCrossSection(section, reason);
 }
 
 function isCrossSection(section: Section, reason: Sources) {
@@ -267,10 +267,10 @@ function createGuardHoists(): GuardHoists {
   };
 }
 
-function hasConditionalReason(section: Section) {
+function hasGuardedReason(section: Section) {
   if (
     section.paramReasonGroups ||
-    isConditionalReason(mapBodyParams(section, section.reason))
+    isGuardedReason(mapBodyParams(section, section.reason))
   ) {
     return true;
   }
@@ -278,7 +278,7 @@ function hasConditionalReason(section: Section) {
 }
 
 function isConditionalSlot(slot: Slot) {
-  return isConditionalReason(mapBodyParams(slot.section, slot.reason));
+  return isGuardedReason(mapBodyParams(slot.section, slot.reason));
 }
 
 function scopeReasonIdentifier(section: Section) {

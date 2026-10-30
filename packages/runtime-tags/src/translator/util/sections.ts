@@ -27,7 +27,7 @@ import {
   reduce,
 } from "./optional";
 import {
-  isConditionalReason,
+  isGuardedReason,
   type KnownExprs,
   mapBodyParams,
   mapParamReason,
@@ -560,7 +560,7 @@ function ensureSlotReasonGroups(slot: Slot) {
 // The groups the section's guards test, in its own terms.
 function ensureReasonGroups(section: Section, reason: Section["reason"]) {
   const ownReason = mapBodyParams(section, reason);
-  if (isConditionalReason(ownReason)) {
+  if (isGuardedReason(ownReason)) {
     forEachParamGroup(ownReason.param, ensureParamReasonGroup);
   }
 }
