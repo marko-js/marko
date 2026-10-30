@@ -225,7 +225,8 @@ export default {
         !hasVar &&
         !node.arguments &&
         !node.attributes.length &&
-        !node.body.body.length
+        !node.body.body.length &&
+        !tagExtra.attrTagLookup
       ) {
         tagExtra.nameOnly = true;
       }
