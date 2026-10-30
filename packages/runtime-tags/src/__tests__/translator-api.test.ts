@@ -189,6 +189,71 @@ describe("runtime-tags/translator-api", () => {
     });
   });
 
+  describe("a section that subscribes to many dynamic closures", () => {
+    const contentSection = (reads: number) => {
+      const content = Array.from(
+        { length: reads },
+        (_, i) => `  <p>\${input.p${i}}</p>`,
+      ).join("\n");
+      return `<define/Panel|props|>\n  <\${props.content}/>\n</define>\n<Panel>\n${content}\n</Panel>\n`;
+    };
+
+    const htmlOf = (reads: number) =>
+      compiler.compileSync(
+        contentSection(reads),
+        path.join(import.meta.dirname, "tmp.marko"),
+        {
+          ...baseConfig,
+          cache: new Map(),
+          output: "html",
+          optimize: true,
+        },
+      ).code;
+
+    // The nesting level of every `_subscribe(` call, counted over the parens
+    // that precede it. A subscription written as its own statement sits at the
+    // same level as its siblings; one passed as another's argument sits deeper.
+    const subscribeDepths = (code: string) => {
+      const depths: number[] = [];
+      let depth = 0;
+      for (let i = 0; i < code.length; ++i) {
+        const char = code[i];
+        if (char === "(") ++depth;
+        else if (char === ")") --depth;
+        else if (code.startsWith("_subscribe(", i)) depths.push(depth + 1);
+      }
+      return depths;
+    };
+
+    it("subscribes to each closure in its own statement", () => {
+      const depths = subscribeDepths(htmlOf(8));
+      assert.equal(depths.length, 8);
+      assert.equal(
+        new Set(depths).size,
+        1,
+        "subscriptions nested inside each other",
+      );
+    });
+
+    it("names the guard a section resumes under once", () => {
+      assert.match(htmlOf(4), /const \$scope\d+_guard = /);
+    });
+
+    it("charges the same per closure however wide the section is", () => {
+      // What eight more reads cost when the section already holds 32 of them,
+      // against what eight more cost at 8. Nested subscriptions re-print the
+      // guard per read, so the second figure grows with the width.
+      const perRead = (from: number, to: number) =>
+        (htmlOf(to).length - htmlOf(from).length) / (to - from);
+      const narrow = perRead(8, 16);
+      const wide = perRead(32, 64);
+      assert.ok(
+        wide < narrow * 1.5,
+        `a read costs ${wide} bytes at 64 closures and ${narrow} at 16`,
+      );
+    });
+  });
+
   describe("option validation", () => {
     it("compiles load imports eagerly when linkAssets is not configured", () => {
       for (const output of ["html", "dom"] as const) {

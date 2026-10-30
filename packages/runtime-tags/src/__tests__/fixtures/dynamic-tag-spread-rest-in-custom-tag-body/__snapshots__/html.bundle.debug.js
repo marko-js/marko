@@ -20,7 +20,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const { label: $label2, ...rest } = input.button;
 		_html(`<button${_attrs(rest, "#button/0", $scope1_id, "button")}>${_text_resume($scope1_id, "#text/1", input.button.label, _write_guard($scope0_reason, 1))}</button>${_el_resume($scope1_id, "#button/0")}`);
 		_script($scope1_id, "__tests__/template.marko_1_rest#0:5");
-		_subscribe($wi__rest && $rest__closures, _subscribe($wi__input_button_label && $label__closures, _scope($scope1_id, { _: $wi__input_button_label__OR__rest && _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:2", { "EventAttributes:#button/0": ["...rest", "4:21"] }), "__tests__/template.marko_1_label#0:4/subscribe"), "__tests__/template.marko_1_rest#0:5/subscribe");
+		const $scope1_write = _scope($scope1_id, { _: $wi__input_button_label__OR__rest && _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:2", { "EventAttributes:#button/0": ["...rest", "4:21"] });
+		_subscribe($wi__input_button_label && $label__closures, $scope1_write, "__tests__/template.marko_1_label#0:4/subscribe");
+		_subscribe($wi__rest && $rest__closures, $scope1_write, "__tests__/template.marko_1_rest#0:5/subscribe");
 	}, $scope0_id) });
 	$wi__input_button_label__OR__rest && _scope($scope0_id, {
 		"ClosureScopes:label/6": $wi__input_button_label && $label__closures,
