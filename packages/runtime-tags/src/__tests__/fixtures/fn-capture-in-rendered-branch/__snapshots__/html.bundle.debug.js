@@ -26,9 +26,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "#text/0", _write_guard($scope0_reason, 0), $wg__input_show, 0, 0, 1);
-	_write_if($scope0_reason, 2) && _scope($scope0_id, {
+	_scope($scope0_id, {
 		input_step: input.step,
-		log
+		log: _write_if($scope0_reason, 2) && log
 	}, "__tests__/template.marko", 0, {
 		input_step: ["input.step"],
 		log: "2:8"

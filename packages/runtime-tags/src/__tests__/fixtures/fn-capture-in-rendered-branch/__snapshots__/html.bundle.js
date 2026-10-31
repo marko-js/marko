@@ -26,8 +26,8 @@ var template_default = _template("a", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "a", _write_guard($scope0_reason, 0), $wg__input_show, 0, 0, 1);
-	_write_if($scope0_reason, 2) && _scope($scope0_id, {
+	_scope($scope0_id, {
 		d: input.step,
-		f: log
+		f: _write_if($scope0_reason, 2) && log
 	});
 }, 1);
