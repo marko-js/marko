@@ -480,7 +480,11 @@ function computeBindingReaders(
     }
     readers = mergeReaders(
       withLandingRead(readers, expr, binding),
-      readersOfDerives(expr, binding, properties),
+      readersInOwner(
+        expr,
+        binding,
+        readersOfDerives(expr, binding, properties),
+      ),
     );
   }
   for (const alias of binding.aliases) {
@@ -500,6 +504,24 @@ function computeBindingReaders(
     readers = mergePropertyReaders(readers, alias, property, properties);
   }
   return readers;
+}
+
+// A read in a branch under the binding's section rereads it when that branch
+// is created, not whenever the branch's own code runs.
+function readersInOwner(
+  read: ReferencedExtra,
+  binding: Binding,
+  readers: Readers,
+): Readers {
+  const { section } = read;
+  if (
+    !readers.reason?.always ||
+    !isSameOrAncestorSection(binding.section, section)
+  ) {
+    return readers;
+  }
+  const created = getBranchExprReasonUntil(section, binding.section);
+  return created ? { reason: created, reads: readers.reads } : readers;
 }
 
 function mergePropertyReaders(
