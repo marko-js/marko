@@ -1,5 +1,13 @@
 # @marko/runtime-tags
 
+## 6.4.8
+
+### Patch Changes
+
+- [#4544](https://github.com/marko-js/marko/pull/4544) [`29ffd37`](https://github.com/marko-js/marko/commit/29ffd375773bc80c8fc62d087c0dd7157c744249) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix content passed as a value (an attribute, a spread, a `<const>`) to a tag that may resolve to a component losing the values it reads when that component renders it again after resume.
+
+- [#4542](https://github.com/marko-js/marko/pull/4542) [`17fdafa`](https://github.com/marko-js/marko/commit/17fdafa4b61d52130747aabb126b96d3a001e362) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix a `<define>` called inside a dynamic tag's body losing the values it reads from outside when the component renders that body again after resume.
+
 ## 6.4.7
 
 ### Patch Changes
