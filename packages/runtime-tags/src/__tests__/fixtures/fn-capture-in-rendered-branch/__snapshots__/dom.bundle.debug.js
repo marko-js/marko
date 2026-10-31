@@ -1,3 +1,12 @@
+// components/child.marko
+const $template$1 = "<button>go</button>";
+const $walks$1 = " b";
+const $setup$1 = ($_) => {};
+const $input_onClick__script = _script("__tests__/components/child.marko_0_input_onClick#3", ($scope) => _on($scope["#button/0"], "click", $scope.input_onClick));
+const $input_onClick = /*@__PURE__*/ _const("input_onClick", $input_onClick__script);
+const $input$1 = ($scope, input) => $input_onClick($scope, input.onClick);
+var child_default = /*@__PURE__*/ _template("__tests__/components/child.marko", $template$1, " b", 0, $input$1);
+
 // template.marko
 const $template = "<!><!><!>";
 const $walks = "b%c";
@@ -17,12 +26,3 @@ const $log = ($scope) => () => {
 };
 _resumed["__tests__/template.marko_0/log"] = $log;
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", 0, $input);
-
-// components/child.marko
-const $template = "<button>go</button>";
-const $walks = " b";
-const $setup = ($_) => {};
-const $input_onClick__script = _script("__tests__/components/child.marko_0_input_onClick#3", ($scope) => _on($scope["#button/0"], "click", $scope.input_onClick));
-const $input_onClick = /*@__PURE__*/ _const("input_onClick", $input_onClick__script);
-const $input = ($scope, input) => $input_onClick($scope, input.onClick);
-var child_default = /*@__PURE__*/ _template("__tests__/components/child.marko", $template, " b", 0, $input);
