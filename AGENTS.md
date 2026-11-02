@@ -15,7 +15,7 @@ A "translator" is the Babel-plugin half of a runtime package; the compiler loads
 All from repo root. Tests and tooling run directly from TS source (native Node type stripping plus the `~ts` resolve hook for extensionless imports; package `exports` point at `src/` until publish), so no build step is needed to iterate.
 
 ```sh
-pnpm test                                                 # whole suite fanned across CPU cores (~3x faster than serial)
+pnpm test                                                 # whole suite fanned across up to 8 cores (MARKO_TEST_WORKERS overrides)
 pnpm test -- --grep "runtime-tags/translator <fixture> "  # scoped test run
 pnpm run test:serial -- --grep "..."                      # same run in one process: bail at first failure, live output, --inspect-brk
 pnpm test -- <file.test.ts>                               # only the given spec files (dirs and globs work too)
