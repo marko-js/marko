@@ -8,8 +8,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html(`<input${_attr_input_value($scope1_id, "#input/0", a, $aChange)}>${_el_resume($scope1_id, "#input/0")}<input${_attr_input_value($scope1_id, "#input/1", a, $aChange)}>${_el_resume($scope1_id, "#input/1")}<input${_attr_input_value($scope1_id, "#input/2", a, $aChange)}>${_el_resume($scope1_id, "#input/2")}`);
 		_script($scope1_id, "__tests__/template.marko_1");
 		_scope($scope1_id, {
-			$aChange: _write_if($scope1_reason, 0) && $aChange,
-			a: _write_if($scope1_reason, 1) && a
+			$aChange,
+			a
 		}, "__tests__/template.marko", "1:2", {
 			$aChange: 0,
 			a: "1:16",

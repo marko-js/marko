@@ -15,7 +15,7 @@ import type * as Step from "./constants/step";
 import * as StructureKind from "./constants/structure-kind";
 import { generateUid, generateUidIdentifier } from "./generate-uid";
 import { isCoreTag, isCoreTagName } from "./is-core-tag";
-import { kChildSection } from "./known-tag";
+import type { KnownTagExtra } from "./known-tag";
 import {
   addSorted,
   find,
@@ -139,11 +139,11 @@ export interface Section {
   returnValueExpr: t.NodeExtra | undefined;
   isHoistThrough: true | undefined;
   branchExpr: t.NodeExtra | undefined;
-  /** For a `<define>` body or a template rendering itself, the sections whose
-   * direct calls render it. */
-  callSections: SortedOpt<Section>;
+  /** For a `<define>` body or a template rendering itself, the known tags whose
+   * direct calls render it (each in its child scope binding's section). */
+  calls: Opt<KnownTagExtra>;
   /** The known tags rendering in it, in analyze order. */
-  knownTags: t.MarkoTagExtra[] | undefined;
+  knownTags: KnownTagExtra[] | undefined;
   /** The content's rendering tag (its extra), and each child binding that
    * derives from the content, at `properties`. */
   derives:
@@ -249,7 +249,7 @@ export function ensureBodySection(
       returnValueExpr: undefined,
       content: getContentInfo(path),
       branchExpr: undefined,
-      callSections: undefined,
+      calls: undefined,
       knownTags: undefined,
       derives: undefined,
       dropped: !!extra.dropped,
@@ -374,7 +374,7 @@ function getClosuresFromAbove(
     );
   }
   for (const tagExtra of section.knownTags || []) {
-    const body = tagExtra[kChildSection]!;
+    const body = tagExtra.childSection;
     if (!seen.has(body)) {
       seen.add(body);
       // A body defined outside `top` sits in one of its ancestors, so what is

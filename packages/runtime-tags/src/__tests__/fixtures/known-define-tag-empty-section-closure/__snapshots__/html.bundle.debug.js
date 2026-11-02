@@ -5,16 +5,14 @@ var test_default = _template("__tests__/tags/test.marko", (input) => {
 	const count = 123;
 	const Tag = { content: _content("__tests__/tags/test.marko_1*content", (input) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason(), $wg__input_x = _write_guard($scope1_reason, 0), $wi__input_x = _write_if($scope1_reason, 0);
+		const $scope1_reason = _scope_reason();
 		_if(() => {
 			if (input.x) {
 				const $scope2_id = _scope_id();
 				_html(`<div>${_escape(count)}</div>`);
-				$wi__input_x && _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/test.marko", "3:4");
 				return 0;
 			}
-		}, $scope1_id, "#text/0", $wg__input_x, $wg__input_x, 0, 0, 1);
-		$wi__input_x && _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/test.marko", "2:2");
+		}, $scope1_id, "#text/0", 0, 0, 0, 0, 1);
 	}, $scope0_id) };
 	Tag.content({ x: 1 });
 	_scope($scope0_id, { count }, "__tests__/tags/test.marko", 0, { count: "1:8" });

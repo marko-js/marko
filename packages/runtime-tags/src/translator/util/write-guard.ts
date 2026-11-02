@@ -23,7 +23,7 @@ import {
 } from "./sections";
 import { findSectionSlot, findSlot, type Slot, SlotKind } from "./slots";
 import { compareSources, type Sources } from "./sources";
-import { createOutputSectionState } from "./state";
+import { createAnalysisSectionState, createOutputSectionState } from "./state";
 import { withLeadingComment } from "./with-comment";
 
 type GuardedReason = Sources & { state: undefined };
@@ -149,6 +149,10 @@ export function getWriteGuard(
         );
   }
 
+  const bit = getGroupsBit(reason.param);
+  if (bit !== undefined) {
+    return bit && omitUnconditional ? undefined : t.numericLiteral(bit);
+  }
   return orEachParamGroup(reason.param, "_write_guard");
 }
 
@@ -161,43 +165,96 @@ export function getWriteGuardForAny(
     return getWriteGuard(section, reasons, omitUnconditional);
   }
 
-  // A static member decides before any dynamic guard is built (and hoisted).
+  // A member always written decides before any dynamic guard is built (and
+  // hoisted); one never written adds nothing.
   for (const reason of reasons) {
-    if (!isGuardedReason(reason)) {
+    if (getWriteBit(section, reason) === 1) {
       return omitUnconditional
         ? undefined
         : withLeadingComment(t.numericLiteral(1), getDebugNames(reason.state));
     }
   }
 
-  let expr!: t.Expression;
+  let expr: t.Expression | undefined;
   for (const reason of reasons) {
-    expr = orGuard(expr, getWriteGuard(section, reason, false)!);
+    if (getWriteBit(section, reason) !== 0) {
+      expr = orGuard(expr, getWriteGuard(section, reason, false)!);
+    }
   }
 
-  return expr;
+  return expr || t.numericLiteral(0);
 }
 
-export function getExprIfWritten<
-  T extends undefined | Reason,
-  R extends (T extends {} ? t.Expression : undefined),
->(section: Section, reason: T, expr: t.Expression): R {
+// The expression where the server writes it: `undefined` where it never does.
+export function getExprIfWritten(
+  section: Section,
+  reason: undefined | Reason,
+  expr: t.Expression,
+) {
   const ownReason = mapBodyParams(section, reason);
   if (!isGuardedReason(ownReason)) {
-    return (ownReason && expr) as R;
+    return ownReason && expr;
   }
 
-  return andGuard(orEachParamGroup(ownReason.param, "_write_if"), expr) as R;
+  const bit = getGroupsBit(ownReason.param);
+  if (bit !== undefined) return bit ? expr : undefined;
+  return andGuard(orEachParamGroup(ownReason.param, "_write_if"), expr);
 }
 
-// Each param group's `check`, or-ed together.
+// Whether the server ever writes what the reason guards, where `section` reads it.
+export function isEverWritten(section: Section, reason: undefined | Reason) {
+  const ownReason = mapBodyParams(section, reason);
+  return isGuardedReason(ownReason)
+    ? getGroupsBit(ownReason.param) !== 0
+    : !!ownReason;
+}
+
+// The constant a reason's guard folds to: `0` unwritten, `1` always written.
+function getWriteBit(section: Section, reason: undefined | Reason) {
+  return isDynamicWriteGuard(section, reason)
+    ? getGroupsBit(reason.param)
+    : reason
+      ? 1
+      : 0;
+}
+
+// `1` where some group is always written, `0` where every group never is.
+function getGroupsBit(params: Sources["param"]) {
+  return reduceParamGroups(params, addGroupBit, 0 as number | undefined);
+}
+
+function addGroupBit(
+  bit: number | undefined,
+  section: Section,
+  group: ParamReasonGroup,
+) {
+  const groupBit = getStaticGroupBit(section, group);
+  return bit === 1 || groupBit === 1
+    ? 1
+    : bit === 0 && groupBit === 0
+      ? 0
+      : undefined;
+}
+
+// Each param group's `check`, or-ed together, but for a group never written.
 function orEachParamGroup(params: Sources["param"], check: GroupCheck) {
-  return reduceParamGroups(
-    params,
-    (expr: t.Expression | undefined, section, group) =>
-      orGuard(expr, getOrHoistSectionGuard(section, group, check)),
-    undefined,
-  );
+  return reduceParamGroups(params, orGroupChecks[check], undefined)!;
+}
+
+const orGroupChecks = {
+  _write_guard: orGroupCheck("_write_guard"),
+  _write_if: orGroupCheck("_write_if"),
+} satisfies Record<GroupCheck, unknown>;
+
+function orGroupCheck(check: GroupCheck) {
+  return (
+    expr: t.Expression | undefined,
+    section: Section,
+    group: ParamReasonGroup,
+  ) =>
+    getStaticGroupBit(section, group) === 0
+      ? expr
+      : orGuard(expr, getOrHoistSectionGuard(section, group, check));
 }
 
 function orGuard(guard: t.Expression | undefined, other: t.Expression) {
@@ -257,6 +314,52 @@ function isCrossSection(section: Section, reason: Sources) {
   return some(
     reason.param,
     (param) => !isSameOrAncestorSection(param.section, section),
+  );
+}
+
+// The constant every render of a `<define>` body's group passes (by index: a group can come
+// as a new run of params), where each call passes the same; a recursive call's is no constant.
+const [getStaticGroupBits] = createAnalysisSectionState(
+  () => new Map<number, number | undefined>(),
+);
+function getStaticGroupBit(body: Section, group: ParamReasonGroup) {
+  const bits = getStaticGroupBits(body);
+  const index = getParamReasonGroupIndex(body, group);
+  if (!bits.has(index)) {
+    bits.set(index, undefined);
+    bits.set(index, isOnlyCalled(body) ? getCallsBit(body, group) : undefined);
+  }
+  return bits.get(index);
+}
+
+function getCallsBit(body: Section, group: ParamReasonGroup) {
+  const calls = body.calls!;
+  let bit: number | undefined;
+  for (const call of Array.isArray(calls) ? calls : [calls]) {
+    const callSection = call.childScopeBinding.section;
+    const callBit = getWriteBit(
+      callSection,
+      findSlot(call.childScopeBinding, SlotKind.ParamGroup, callSection, group)
+        ?.reason,
+    );
+    if (callBit === undefined || (bit !== undefined && bit !== callBit)) {
+      return;
+    }
+    bit = callBit;
+  }
+  return bit;
+}
+
+// A `<define>` body its known calls alone render: its var is read nowhere else.
+function isOnlyCalled(body: Section) {
+  return !!body.calls && !!body.derives && !some(body.derives.binding, isUsed);
+}
+
+function isUsed(binding: Binding) {
+  return (
+    !!binding.reads.size ||
+    !!binding.aliases.size ||
+    !!binding.propertyAliases.size
   );
 }
 

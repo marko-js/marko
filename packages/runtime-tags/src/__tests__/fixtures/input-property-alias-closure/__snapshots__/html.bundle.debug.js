@@ -5,9 +5,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $input_text__closures = new Set();
 	const Child = { content: _content("__tests__/template.marko_1*content", (input) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason(), $wg__input_text = _write_guard($scope1_reason, 1), $wg__input_content = _write_guard($scope1_reason, 2);
+		const $scope1_reason = _scope_reason(), $wg__input_text = _write_guard($scope1_reason, 1);
 		_html(`${_text_resume($scope1_id, "#text/0", input.text, $wg__input_text)} and `);
-		_dynamic_tag($scope1_id, "#text/1", input.content, {}, 0, 0, $wg__input_content);
+		_dynamic_tag($scope1_id, "#text/1", input.content, {}, 0, 0, 0);
 		_write_if($scope1_reason, 0) && _scope($scope1_id, {}, "__tests__/template.marko", "1:1");
 	}, $scope0_id) };
 	_set_scope_reason($wg__input_text2 << 1 | $wg__input_text2 << 3);

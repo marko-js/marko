@@ -4,15 +4,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const Wrap = { content: _content("__tests__/template.marko_1*content", ({ as, onClick, content }) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason(), $wg__as__OR__onClick__OR__content = _write_guard($scope1_reason, 3);
+		const $scope1_reason = _scope_reason();
 		_dynamic_tag($scope1_id, "#text/0", as, {
 			onClick,
 			content
-		}, 0, 0, $wg__as__OR__onClick__OR__content);
-		_write_if($scope1_reason, 3) && _scope($scope1_id, {
-			as: _write_if($scope1_reason, 2) && as,
-			onClick: _write_if($scope1_reason, 1) && onClick,
-			content: _write_if($scope1_reason, 0) && content
+		});
+		_scope($scope1_id, {
+			as,
+			content
 		}, "__tests__/template.marko", "1:1", {
 			as: "1:15",
 			onClick: "1:19",
@@ -21,15 +20,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id) };
 	const Message = { content: _content("__tests__/template.marko_2*content", (input) => {
 		const $scope2_id = _scope_id();
-		const $scope2_reason = _scope_reason(), $wg__input_before__OR__input_after = _write_guard($scope2_reason, 0);
-		_html(_text_resume($scope2_id, "#text/0", input.before + input.after, $wg__input_before__OR__input_after));
-		_write_if($scope2_reason, 0) && _scope($scope2_id, {
-			input_before: _write_if($scope2_reason, 2) && input.before,
-			input_after: _write_if($scope2_reason, 1) && input.after
-		}, "__tests__/template.marko", "4:1", {
-			input_before: ["input.before", "4:16"],
-			input_after: ["input.after", "4:16"]
-		});
+		const $scope2_reason = _scope_reason();
+		_html(_text_resume($scope2_id, "#text/0", input.before + input.after, 0));
 	}, $scope0_id) };
 	let x = 1;
 	_set_scope_reason(162);
