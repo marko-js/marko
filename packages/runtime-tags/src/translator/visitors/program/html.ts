@@ -13,10 +13,7 @@ import { getMarkoOpts } from "../../util/marko-config";
 import { writeModuleRegistrations } from "../../util/module-registrations";
 import { first, forEach } from "../../util/optional";
 import { getReadReplacement } from "../../util/read-replacement";
-import {
-  isRegisteredFnExtra,
-  getReferencedBindingsInFunction,
-} from "../../util/references";
+import { isRegisteredFnExtra } from "../../util/references";
 import { callRuntime, importRuntime } from "../../util/runtime";
 import { getLocalsScopeAccessor } from "../../util/scope-accessor";
 import {
@@ -285,8 +282,7 @@ function buildResumeCall(node: Exclude<t.Function, t.FunctionDeclaration>) {
           | t.ArrowFunctionExpression,
         t.stringLiteral(extra.registerId),
         t.objectExpression(localProperties),
-        (getReferencedBindingsInFunction(extra) || extra.referencesScope) &&
-          getScopeIdIdentifier(extra.section),
+        extra.referencesScope && getScopeIdIdentifier(extra.section),
       );
     }
 
@@ -296,8 +292,7 @@ function buildResumeCall(node: Exclude<t.Function, t.FunctionDeclaration>) {
         | t.FunctionExpression
         | t.ArrowFunctionExpression,
       t.stringLiteral(extra.registerId),
-      (getReferencedBindingsInFunction(extra) || extra.referencesScope) &&
-        getScopeIdIdentifier(extra.section),
+      extra.referencesScope && getScopeIdIdentifier(extra.section),
     );
   }
 }

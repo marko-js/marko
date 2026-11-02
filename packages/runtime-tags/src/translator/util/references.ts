@@ -137,6 +137,8 @@ declare module "@marko/compiler/dist/types" {
   }
 
   export interface FunctionExtra {
+    /** Its body uses its scope when invoked, so a registered one is given it;
+     * complete once references finalize. */
     referencesScope?: boolean;
     [kReferencedBindingsInFunction]?: ReferencedBindings;
     referencedLocalBindingsInFunction?: SortedOpt<Binding>;
@@ -1400,6 +1402,8 @@ export function setResolvedFunctionReads(
 ) {
   extra[kReferencedBindingsInFunction] = referencedBindings;
   extra[kConstantBindingsInFunction] = constantBindings;
+  // A constant, like a referenced binding, is read from the scope that holds it.
+  extra.referencesScope ||= !!(referencedBindings || constantBindings);
 }
 
 export function setResolvedReads(

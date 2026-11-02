@@ -1129,18 +1129,14 @@ export function writeRegisteredFns() {
   const statements: t.Statement[] = [];
   for (const registeredFn of registeredFns) {
     let fn: t.Statement;
-    if (
-      registeredFn.referencedBindings ||
-      registeredFn.referencesScope ||
-      registeredFn.referencedLocals
-    ) {
+    if (registeredFn.referencesScope || registeredFn.referencedLocals) {
       let params: (t.Identifier | t.Pattern)[];
       let prologue: t.Statement[] | undefined;
       if (registeredFn.referencedLocals) {
         // The scope hop stays inside the returned function: resume may call
         // the factory before its scopes hydrate (stubs fill in place).
         params = [localsIdentifier];
-        if (registeredFn.referencedBindings || registeredFn.referencesScope) {
+        if (registeredFn.referencesScope) {
           prologue = [
             t.variableDeclaration("const", [
               t.variableDeclarator(
@@ -1713,7 +1709,6 @@ const [getRegisteredFns] = createOutputState<
     node: t.Function;
     section: Section;
     referencesScope: undefined | boolean;
-    referencedBindings: ReferencedBindings;
     referencedLocals: Opt<Binding>;
   }[]
 >(() => []);
@@ -1745,7 +1740,6 @@ function registerFnExpression(node: t.Function) {
   if (isRegisteredFnExtra(extra)) {
     const id = extra.name;
     const referencesScope = extra.referencesScope;
-    const referencedBindings = getReferencedBindingsInFunction(extra);
     const referencedLocals = extra.referencedLocalBindingsInFunction;
     getRegisteredFns().push({
       id,
@@ -1753,14 +1747,13 @@ function registerFnExpression(node: t.Function) {
       registerId: extra.registerId,
       section: extra.section,
       referencesScope,
-      referencedBindings,
       referencedLocals,
     });
 
     if (referencedLocals) {
       // The argument mirrors the locals scope `_resume_locals` serializes.
       const properties: t.ObjectExpression["properties"] = [];
-      if (referencesScope || referencedBindings) {
+      if (referencesScope) {
         properties.push(
           t.objectProperty(
             t.identifier(getAccessorProp().Owner),
@@ -1779,7 +1772,7 @@ function registerFnExpression(node: t.Function) {
       return t.callExpression(t.identifier(id), [
         t.objectExpression(properties),
       ]);
-    } else if (referencesScope || referencedBindings) {
+    } else if (referencesScope) {
       return t.callExpression(t.identifier(id), [scopeIdentifier]);
     } else {
       return t.identifier(id);
