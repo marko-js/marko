@@ -4,6 +4,8 @@ var notEmptyAttr = attrHelper.___notEmptyAttr;
 var isEmptyAttrValue = attrHelper.___isEmptyAttrValue;
 var classHelper = require("./class-attr");
 var styleHelper = require("./style-attr");
+// Characters that end or break an attribute name in the HTML parser.
+var invalidAttrNameReg = /[\s/>"'=]/;
 
 module.exports = function dynamicAttr(name, value) {
   switch (name) {
@@ -14,22 +16,8 @@ module.exports = function dynamicAttr(name, value) {
     case "renderBody":
       return "";
     default:
-      return isEmptyAttrValue(value) || isInvalidAttrName(name)
+      return isEmptyAttrValue(value) || invalidAttrNameReg.test(name)
         ? ""
         : notEmptyAttr(name, value);
   }
 };
-
-// https://html.spec.whatwg.org/multipage/syntax.html#attributes-2
-// Technically the above includes more invalid characters for attributes.
-// In practice however the only character that does not become an attribute name
-// is when there is a >.
-function isInvalidAttrName(name) {
-  for (let i = name.length; i--;) {
-    if (name[i] === ">") {
-      return true;
-    }
-  }
-
-  return false;
-}
