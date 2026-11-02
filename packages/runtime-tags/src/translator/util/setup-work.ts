@@ -41,7 +41,8 @@ export function finalizeSetupWork() {
 // A direct call of a `<define>` body or of the template itself sets up the
 // called scope, or its owner, in the calling section's setup.
 function setCallSectionsSetup(body: Section) {
-  forEach(body.callSections, (callSection) => {
+  forEach(body.calls, (call) => {
+    const callSection = call.childScopeBinding.section;
     if (!callSection.hasSetupWork) {
       callSection.hasSetupWork = true;
       setCallSectionsSetup(callSection);

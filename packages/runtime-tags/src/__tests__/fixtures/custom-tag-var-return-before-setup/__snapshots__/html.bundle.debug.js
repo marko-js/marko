@@ -47,12 +47,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, 0, $scope0_id, "#text/1");
 	const Count = { content: _content("__tests__/template.marko_2*content", ({ x }) => {
 		const $scope2_id = _scope_id();
-		const $scope2_reason = _scope_reason(), $wg__x = _write_guard($scope2_reason, 0), $wi__x = _write_if($scope2_reason, 0);
+		const $scope2_reason = _scope_reason();
 		const $childScope3 = _peek_scope_id();
 		let v = child_default({ x });
-		$wi__x && _var($scope2_id, "#scopeOffset/1", $childScope3, "__tests__/template.marko_2_v#6/var");
-		_html(`<p class=define>${_text_resume($scope2_id, "#text/2", v, $wg__x)}</p>`);
-		$wi__x && _scope($scope2_id, { "#childScope/0": _existing_scope($childScope3) }, "__tests__/template.marko", "10:2");
+		_var($scope2_id, "#scopeOffset/1", $childScope3, "__tests__/template.marko_2_v#6/var");
+		_html(`<p class=define>${_text_resume($scope2_id, "#text/2", v)}</p>`);
+		_scope($scope2_id, { "#childScope/0": _existing_scope($childScope3) }, "__tests__/template.marko", "10:2");
 	}, $scope0_id) };
 	_set_scope_reason(2);
 	const $childScope4 = _peek_scope_id();

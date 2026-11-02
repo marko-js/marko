@@ -6,9 +6,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(`<button>${_text_resume($scope0_id, "#text/1", count)}</button>${_el_resume($scope0_id, "#button/0")}`);
 	const MyTag = { content: _content("__tests__/template.marko_1*content", ({ name, count }) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason(), $wg__name = _write_guard($scope1_reason, 1), $wg__count = _write_guard($scope1_reason, 2);
-		_html(`<div>Hello ${_text_resume($scope1_id, "#text/0", name, $wg__name * 2)} ${_text_resume($scope1_id, "#text/1", count, $wg__count * 2)}</div>`);
-		_write_if($scope1_reason, 0) && _scope($scope1_id, {}, "__tests__/template.marko", "6:2");
+		const $scope1_reason = _scope_reason();
+		_html(`<div>Hello ${_text_resume($scope1_id, "#text/0", name, 0 * 2)} ${_text_resume($scope1_id, "#text/1", count, 2)}</div>`);
+		_scope($scope1_id, {}, "__tests__/template.marko", "6:2");
 	}, $scope0_id) };
 	_set_scope_reason(34);
 	const $childScope = _peek_scope_id();

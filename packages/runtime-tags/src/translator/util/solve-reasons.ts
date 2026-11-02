@@ -190,7 +190,8 @@ function getBranchExprReason(section: Section) {
     );
     // A direct call renders the body in place, so what creates a section from
     // the call up to the define (or the body, for a recursive call) creates it.
-    forEach(section.callSections, (callSection) => {
+    forEach(section.calls, (call) => {
+      const callSection = call.childScopeBinding.section;
       reason = mergeSources(
         reason,
         getBranchExprReasonUntil(
@@ -252,7 +253,8 @@ function addClosureReasons(section: Section) {
 // created, reading the owner chain between them.
 function addCallOwnerReasons(body: Section) {
   if (body.readsOwner) {
-    forEach(body.callSections, (callSection) => {
+    forEach(body.calls, (call) => {
+      const callSection = call.childScopeBinding.section;
       addOwnerReason(
         callSection,
         body.parent!,

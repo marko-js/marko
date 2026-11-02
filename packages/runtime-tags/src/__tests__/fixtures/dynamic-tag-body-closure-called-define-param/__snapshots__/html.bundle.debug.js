@@ -30,15 +30,15 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $input_on__closures = new Set();
 	const Note = { content: _content("__tests__/template.marko_1*content", ({ label }) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason(), $wg__label = _write_guard($scope1_reason, 0);
+		const $scope1_reason = _scope_reason();
 		_if(() => {
 			if (input.on) {
 				const $scope2_id = _scope_id();
-				_html(`<em>${_text_resume($scope2_id, "#text/0", label, $wg__label)} ${_text_resume($scope2_id, "#text/1", input.note, $wg__input_note * 2)}</em>`);
-				($wi__input_on__OR__input_note || _write_if($scope1_reason, 0)) && _subscribe($wi__input_note && $input_note__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:4"), "__tests__/template.marko_2_input_note#0:4/subscribe", $wg__input_note || $wg__label);
+				_html(`<em>${_text_resume($scope2_id, "#text/0", label, 0)} ${_text_resume($scope2_id, "#text/1", input.note, $wg__input_note * 2)}</em>`);
+				$wi__input_on__OR__input_note && _subscribe($wi__input_note && $input_note__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:4"), "__tests__/template.marko_2_input_note#0:4/subscribe", $wg__input_note);
 				return 0;
 			}
-		}, $scope1_id, "#text/0", $wg__input_on || $wg__label, $wg__input_on, 0, 0, 1);
+		}, $scope1_id, "#text/0", $wg__input_on, $wg__input_on, 0, 0, 1);
 		$wi__input_on__OR__input_note && _subscribe($wi__input_on && $input_on__closures, _scope($scope1_id, {
 			label: $wi__input_on && label,
 			_: _scope_with_id($scope0_id)

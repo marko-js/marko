@@ -4,12 +4,12 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	const Wrap = { content: _content("a0", ({ "aChange": $aChange, a }) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason();
+		_scope_reason();
 		_html(`<input${_attr_input_value($scope1_id, "a", a, $aChange)}>${_el_resume($scope1_id, "a")}<input${_attr_input_value($scope1_id, "b", a, $aChange)}>${_el_resume($scope1_id, "b")}<input${_attr_input_value($scope1_id, "c", a, $aChange)}>${_el_resume($scope1_id, "c")}`);
 		_script($scope1_id, "a1");
 		_scope($scope1_id, {
-			f: _write_if($scope1_reason, 0) && $aChange,
-			g: _write_if($scope1_reason, 1) && a
+			f: $aChange,
+			g: a
 		});
 	}, $scope0_id) };
 	let n = 1;

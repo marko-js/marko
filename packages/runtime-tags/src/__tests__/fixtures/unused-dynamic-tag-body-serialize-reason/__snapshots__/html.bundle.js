@@ -4,25 +4,20 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	const Wrap = { content: _content("a1", ({ as, onClick, content }) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason(), $wg__as__OR__onClick__OR__content = _write_guard($scope1_reason, 3);
+		_scope_reason();
 		_dynamic_tag($scope1_id, "a", as, {
 			onClick,
 			content
-		}, 0, 0, $wg__as__OR__onClick__OR__content);
-		_write_if($scope1_reason, 3) && _scope($scope1_id, {
-			d: _write_if($scope1_reason, 2) && as,
-			e: _write_if($scope1_reason, 1) && onClick,
-			f: _write_if($scope1_reason, 0) && content
+		});
+		_scope($scope1_id, {
+			d: as,
+			f: content
 		});
 	}, $scope0_id) };
 	const Message = { content: _content("a2", (input) => {
 		const $scope2_id = _scope_id();
-		const $scope2_reason = _scope_reason(), $wg__input_before__OR__input_after = _write_guard($scope2_reason, 0);
-		_html(_text_resume($scope2_id, "a", input.before + input.after, $wg__input_before__OR__input_after));
-		_write_if($scope2_reason, 0) && _scope($scope2_id, {
-			d: _write_if($scope2_reason, 2) && input.before,
-			e: _write_if($scope2_reason, 1) && input.after
-		});
+		_scope_reason();
+		_html(_text_resume($scope2_id, "a", input.before + input.after, 0));
 	}, $scope0_id) };
 	let x = 1;
 	_set_scope_reason(162);

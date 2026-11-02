@@ -1284,18 +1284,23 @@ export function writeHTMLResumeStatements(
             ? getExprIfWritten(closure.section, closureScopesReason, identifier)
             : identifier;
         const changeable = isChangeableDynamicClosure(section, closure);
-        addWriteScopeBuilder(section, (expr) => {
-          const resumeId =
-            changeable &&
-            t.stringLiteral(getResumeRegisterId(section, closure, "subscribe"));
-          return callRuntime(
-            "_subscribe",
-            subscribeArg,
-            expr,
-            resumeId,
-            resumeId && markerGuard,
-          );
-        });
+        // No call writes the subscriber set: the scope joins none.
+        if (subscribeArg) {
+          addWriteScopeBuilder(section, (expr) => {
+            const resumeId =
+              changeable &&
+              t.stringLiteral(
+                getResumeRegisterId(section, closure, "subscribe"),
+              );
+            return callRuntime(
+              "_subscribe",
+              subscribeArg,
+              expr,
+              resumeId,
+              resumeId && markerGuard,
+            );
+          });
+        }
       }
     }
   });
@@ -1333,12 +1338,8 @@ export function writeHTMLResumeStatements(
     if (!reason) return;
     const accessor = getScopeAccessor(binding);
     pendingProperties.delete(accessor);
-    scopeProperties.push(
-      toObjectProperty(
-        accessor,
-        ifWritten(reason, getDeclaredBindingExpression(binding)),
-      ),
-    );
+    const value = ifWritten(reason, getDeclaredBindingExpression(binding));
+    if (value) scopeProperties.push(toObjectProperty(accessor, value));
 
     if (debug) {
       const { root, access } = getDebugAccess(binding, false, toAccess);
@@ -1369,25 +1370,19 @@ export function writeHTMLResumeStatements(
     const ownerReason = findSectionSlot(section, SlotKind.Owner)?.reason;
     if (ownerReason) {
       pendingProperties.delete(ownerAccessor);
-      if (!getOwnerResumedByMarker(section)) {
-        scopeProperties.push(
-          toObjectProperty(
-            ownerAccessor,
-            ifWritten(
-              ownerReason,
-              callRuntime(
-                "_scope_with_id",
-                getScopeIdIdentifier(section.parent),
-              ),
-            ),
-          ),
+      const owner =
+        !getOwnerResumedByMarker(section) &&
+        ifWritten(
+          ownerReason,
+          callRuntime("_scope_with_id", getScopeIdIdentifier(section.parent)),
         );
-      }
+      if (owner) scopeProperties.push(toObjectProperty(ownerAccessor, owner));
     }
   }
 
   for (const [key, { expression, reason }] of pendingProperties) {
-    scopeProperties.push(toObjectProperty(key, ifWritten(reason, expression)));
+    const value = ifWritten(reason, expression);
+    if (value) scopeProperties.push(toObjectProperty(key, value));
   }
 
   if (sectionReason) {
@@ -1428,11 +1423,8 @@ export function writeHTMLResumeStatements(
     const writeCall = writeScopeBuilder
       ? writeScopeBuilder(callRuntime("_scope", ...writeScopeArgs))
       : callRuntime("_scope", ...writeScopeArgs);
-    body.push(
-      t.expressionStatement(
-        getExprIfWritten(section, sectionReason, writeCall),
-      ),
-    );
+    const write = getExprIfWritten(section, sectionReason, writeCall);
+    if (write) body.push(t.expressionStatement(write));
   }
 
   const resumeClosestBranch =
