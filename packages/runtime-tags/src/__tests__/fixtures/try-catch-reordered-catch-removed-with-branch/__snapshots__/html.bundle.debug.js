@@ -33,7 +33,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_html(`<span>${_text_resume($scope2_id, "#text/0", count)}</span>`);
 				_script($scope2_id, "__tests__/template.marko_2_count#0:4");
 				_subscribe($count__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "16:6"), "__tests__/template.marko_2_count#0:4/subscribe");
-			}, void 0, "__tests__/template.marko_2*content");
+			}, 0, "__tests__/template.marko_2*content");
 			_scope($scope1_id, {}, "__tests__/template.marko", "8:2");
 			return 0;
 		}

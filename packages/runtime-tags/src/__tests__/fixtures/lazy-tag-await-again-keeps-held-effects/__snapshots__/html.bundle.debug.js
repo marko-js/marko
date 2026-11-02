@@ -27,7 +27,7 @@ var child_default = _template("__tests__/child.marko", (input) => {
 		const $scope2_id = _scope_id();
 		_html(_text_resume($scope2_id, "#text/0", err.message, $wg__err_message));
 		_write_if($scope2_reason, 0) && _scope($scope2_id, {}, "__tests__/child.marko", "11:4");
-	}, void 0, "__tests__/child.marko_2*content");
+	}, 0, "__tests__/child.marko_2*content");
 });
 
 // template.marko

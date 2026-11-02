@@ -56,7 +56,7 @@ import {
   trackVarReferences,
   mergeTagReferences,
 } from "./references";
-import { callRuntime } from "./runtime";
+import { absentArg, callRuntime } from "./runtime";
 import {
   getScopeAccessorLiteral,
   getScopeOffsetAccessorLiteral,
@@ -310,7 +310,7 @@ function isDroppedNode(node: t.Node) {
 }
 
 function toRenderArg(arg: t.Expression | t.SpreadElement) {
-  return isDroppedNode(arg) ? t.buildUndefinedNode() : arg;
+  return isDroppedNode(arg) ? absentArg(0) : arg;
 }
 
 export function knownTagTranslateHTML(

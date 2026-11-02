@@ -18,7 +18,7 @@ var child_default = _template("a", (input) => {
 		_scope_reason();
 		_scope_id();
 		_html("error");
-	}, void 0, "a2");
+	}, 0, "a2");
 	_scope($scope0_id, {
 		b: count,
 		c: $count__closures

@@ -27,7 +27,7 @@ var template_default = _template("a", (input) => {
 		_html(`<button>${_text_resume($scope2_id, "b", err.message, _write_guard($scope2_reason, 0))} ${_text_resume($scope2_id, "c", n, 2)}</button>${_el_resume($scope2_id, "a")}`);
 		_script($scope2_id, "a0");
 		_scope($scope2_id, { g: n });
-	}, void 0, "a2");
+	}, 0, "a2");
 	_html(`<button class=toggle>${_text_resume($scope0_id, "c", show)}</button>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "a3");
 	_scope($scope0_id, {

@@ -14,7 +14,7 @@ import { initBranchSection } from "../util/branch-tag";
 import { getTagName } from "../util/get-tag-name";
 import { analyzeAttributeTags } from "../util/nested-attribute-tags";
 import { mergeTagReferences } from "../util/references";
-import { callRuntime, importRuntimeFeature } from "../util/runtime";
+import { absentArg, callRuntime, importRuntimeFeature } from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
 import { getScopeAccessorLiteral } from "../util/scope-accessor";
 import {
@@ -130,8 +130,11 @@ export default {
             (catchSection
               ? buildContent(catchTag.get("body"))
               : t.arrowFunctionExpression([], t.blockStatement([]))),
-          placeholderSection &&
-            t.stringLiteral(getResumeRegisterId(placeholderSection, "content")),
+          (placeholderSection &&
+            t.stringLiteral(
+              getResumeRegisterId(placeholderSection, "content"),
+            )) ||
+            absentArg(0),
           catchTag &&
             t.stringLiteral(
               catchSection
