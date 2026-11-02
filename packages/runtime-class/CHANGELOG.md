@@ -1,5 +1,15 @@
 # Change Log
 
+## 5.39.48
+
+### Patch Changes
+
+- [#4553](https://github.com/marko-js/marko/pull/4553) [`626a3a4`](https://github.com/marko-js/marko/commit/626a3a4b058a4c9187428b61a514835da9c94e54) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Skip spread attribute names containing whitespace, `/`, `=`, or quotes during SSR, matching Marko 6, so one key can no longer render as several attributes.
+
+- Updated dependencies [[`65a914b`](https://github.com/marko-js/marko/commit/65a914b9e40e4dcd9b1cdc62167bec930088ae03), [`29ffd37`](https://github.com/marko-js/marko/commit/29ffd375773bc80c8fc62d087c0dd7157c744249), [`17fdafa`](https://github.com/marko-js/marko/commit/17fdafa4b61d52130747aabb126b96d3a001e362), [`fba9123`](https://github.com/marko-js/marko/commit/fba91233916d3c72e62e04cb72e080778a550088)]:
+  - @marko/compiler@5.42.14
+  - @marko/runtime-tags@6.4.8
+
 ## 5.39.47
 
 ### Patch Changes

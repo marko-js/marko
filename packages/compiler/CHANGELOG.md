@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.42.14
+
+### Patch Changes
+
+- [#4551](https://github.com/marko-js/marko/pull/4551) [`65a914b`](https://github.com/marko-js/marko/commit/65a914b9e40e4dcd9b1cdc62167bec930088ae03) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Add the native `<selectedcontent>` tag.
+
 ## 5.42.13
 
 ### Patch Changes
