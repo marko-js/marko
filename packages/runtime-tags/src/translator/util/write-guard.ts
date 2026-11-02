@@ -5,8 +5,9 @@ import {
   getDebugNames,
   getDebugNamesAsIdentifier,
 } from "./bindings";
+import { createAnalysisMemo } from "./cyclic-memo";
 import { generateUid, ensureSharedUid } from "./generate-uid";
-import { some } from "./optional";
+import { first, some } from "./optional";
 import {
   isGuardedReason,
   mapBodyParams,
@@ -23,7 +24,7 @@ import {
 } from "./sections";
 import { findSectionSlot, findSlot, type Slot, SlotKind } from "./slots";
 import { compareSources, type Sources } from "./sources";
-import { createAnalysisSectionState, createOutputSectionState } from "./state";
+import { createOutputSectionState } from "./state";
 import { withLeadingComment } from "./with-comment";
 
 type GuardedReason = Sources & { state: undefined };
@@ -317,20 +318,18 @@ function isCrossSection(section: Section, reason: Sources) {
   );
 }
 
-// The constant every render of a `<define>` body's group passes (by index: a group can come
-// as a new run of params), where each call passes the same; a recursive call's is no constant.
-const [getStaticGroupBits] = createAnalysisSectionState(
-  () => new Map<number, number | undefined>(),
-);
+// The constant every render of a `<define>` body's group passes, where each call passes
+// the same; a recursive call's is no constant. Asked by the body's own group.
 function getStaticGroupBit(body: Section, group: ParamReasonGroup) {
-  const bits = getStaticGroupBits(body);
-  const index = getParamReasonGroupIndex(body, group);
-  if (!bits.has(index)) {
-    bits.set(index, undefined);
-    bits.set(index, isOnlyCalled(body) ? getCallsBit(body, group) : undefined);
-  }
-  return bits.get(index);
+  return getBodyGroupBit(
+    body.paramReasonGroups![getParamReasonGroupIndex(body, group)],
+  );
 }
+
+const [getBodyGroupBit] = createAnalysisMemo((group: ParamReasonGroup) => {
+  const body = first(group).section;
+  return isOnlyCalled(body) ? getCallsBit(body, group) : undefined;
+}, undefined);
 
 function getCallsBit(body: Section, group: ParamReasonGroup) {
   const calls = body.calls!;
