@@ -1,5 +1,20 @@
 # @marko/runtime-tags
 
+## 6.4.8
+
+### Patch Changes
+
+- [#4551](https://github.com/marko-js/marko/pull/4551) [`65a914b`](https://github.com/marko-js/marko/commit/65a914b9e40e4dcd9b1cdc62167bec930088ae03) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Add the native `<selectedcontent>` tag.
+
+- [#4544](https://github.com/marko-js/marko/pull/4544) [`29ffd37`](https://github.com/marko-js/marko/commit/29ffd375773bc80c8fc62d087c0dd7157c744249) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix content passed as a value (an attribute, a spread, a `<const>`) to a tag that may resolve to a component losing the values it reads when that component renders it again after resume.
+
+- [#4542](https://github.com/marko-js/marko/pull/4542) [`17fdafa`](https://github.com/marko-js/marko/commit/17fdafa4b61d52130747aabb126b96d3a001e362) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix a `<define>` called inside a dynamic tag's body losing the values it reads from outside when the component renders that body again after resume.
+
+- [#4552](https://github.com/marko-js/marko/pull/4552) [`fba9123`](https://github.com/marko-js/marko/commit/fba91233916d3c72e62e04cb72e080778a550088) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - A `<define>` body rendered only by its own tags, all passing the same constant reason for a group of its params, no longer checks that group's write guard at render time: it writes always, or never, as those calls decide.
+
+- Updated dependencies [[`65a914b`](https://github.com/marko-js/marko/commit/65a914b9e40e4dcd9b1cdc62167bec930088ae03)]:
+  - @marko/compiler@5.42.14
+
 ## 6.4.7
 
 ### Patch Changes
