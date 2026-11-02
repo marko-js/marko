@@ -108,7 +108,7 @@ Fixture-based snapshot tests driven by `src/__tests__/main.test.ts`. Fixtures li
 From the repo root:
 
 ```sh
-pnpm test                                                            # whole suite, fanned across CPU cores
+pnpm test                                                            # whole suite, fanned across up to 8 cores
 pnpm test -- --grep "runtime-tags/translator <fixture> "             # one fixture (note trailing space)
 pnpm run test:update -- --grep "runtime-tags/translator <fixture> "  # regenerate its snapshots
 pnpm test -- --grep "translator-interop"                             # interop suite (run after base suite passes)
