@@ -46,6 +46,7 @@ import {
   getReferencedBindings,
 } from "../../util/references";
 import {
+  absentArg,
   callRuntime,
   getCompatRuntimeFile,
   importRuntimeFeature,
@@ -471,7 +472,7 @@ export default {
               // passes it, so a hardcoded 0 here was an SSR/CSR mismatch.
               contentProp ? contentProp.value : t.numericLiteral(0),
               t.numericLiteral(1),
-              markerGuard,
+              markerGuard || absentArg(1),
               debugTagVar,
             )
           : callRuntime(
@@ -480,9 +481,9 @@ export default {
               getScopeAccessorLiteral(nodeBinding),
               tagExpression,
               args[0],
-              args[1] || (markerGuard ? t.numericLiteral(0) : undefined),
-              markerGuard ? t.numericLiteral(0) : undefined,
-              markerGuard,
+              args[1] || absentArg(0),
+              absentArg(0),
+              markerGuard || absentArg(1),
               debugTagVar,
             );
 

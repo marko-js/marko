@@ -17,7 +17,7 @@ var tags_child_default = _template("c", (input) => {
 			_scope_id();
 			_html("<div id=caught>CAUGHT</div>");
 		}, 0);
-	}, void 0, "c0");
+	}, 0, "c0");
 });
 
 // components/class-wrap.marko

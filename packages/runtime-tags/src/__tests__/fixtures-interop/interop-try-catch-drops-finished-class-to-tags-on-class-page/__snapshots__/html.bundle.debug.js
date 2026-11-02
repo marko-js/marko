@@ -41,7 +41,7 @@ var tags_page_default = _template("__tests__/components/tags-page.marko", (input
 		const $scope2_id = _scope_id();
 		_html(`caught ${_text_resume($scope2_id, "#text/0", err.message, $wg__err_message * 2)}`);
 		_write_if($scope2_reason, 0) && _scope($scope2_id, {}, "__tests__/components/tags-page.marko", "4:4");
-	}, void 0, "__tests__/components/tags-page.marko_2*content");
+	}, 0, "__tests__/components/tags-page.marko_2*content");
 });
 
 // template.marko

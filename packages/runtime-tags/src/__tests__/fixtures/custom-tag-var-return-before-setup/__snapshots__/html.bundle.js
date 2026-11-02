@@ -85,7 +85,7 @@ var template_default = _template("a", (input) => {
 		$wi__err_message && _var($scope6_id, "b", $childScope6, "a5");
 		_html(`<p class=catch>${_text_resume($scope6_id, "c", v, $wg__err_message)}</p>`);
 		$wi__err_message && _scope($scope6_id, { a: _existing_scope($childScope6) });
-	}, void 0, "a6");
+	}, 0, "a6");
 	_script($scope0_id, "a7");
 	_scope($scope0_id, {
 		g: list,

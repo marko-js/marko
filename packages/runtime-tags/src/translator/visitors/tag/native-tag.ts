@@ -64,6 +64,7 @@ import {
   isTagVarUsed,
 } from "../../util/references";
 import {
+  absentArg,
   callRuntime,
   importRuntime,
   importRuntimeFeature,
@@ -636,7 +637,8 @@ export default {
               getScopeIdIdentifier(tagSection),
               nodeAccessor,
               ...controllable.attrs.map(
-                (index) => attrAt(attributes, index)?.value,
+                (index, i) =>
+                  attrAt(attributes, index)?.value || (i === 1 && absentArg(0)),
               ),
             )}`;
           }
@@ -671,7 +673,7 @@ export default {
                 attrAt(attributes, controllable.attrs[0])?.value ||
                   t.buildUndefinedNode(),
                 attrAt(attributes, controllable.attrs[1])?.value ||
-                  t.buildUndefinedNode(),
+                  absentArg(0),
               ],
             });
           } else if (spreadExpression) {

@@ -19,7 +19,7 @@ var tags_child_default = _template("__tests__/components/tags-child.marko", (inp
 		const $scope3_id = _scope_id();
 		_html(_text_resume($scope3_id, "#text/0", err.message, $wg__err_message));
 		_write_if($scope3_reason, 0) && _scope($scope3_id, {}, "__tests__/components/tags-child.marko", "10:4");
-	}, void 0, "__tests__/components/tags-child.marko_3*content");
+	}, 0, "__tests__/components/tags-child.marko_3*content");
 	_script($scope0_id, "__tests__/components/tags-child.marko_0_input_name#3", 0);
 	_scope($scope0_id, {
 		input_name: input.name,

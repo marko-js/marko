@@ -86,7 +86,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		$wi__err_message && _var($scope6_id, "#scopeOffset/1", $childScope6, "__tests__/template.marko_6_v#6/var");
 		_html(`<p class=catch>${_text_resume($scope6_id, "#text/2", v, $wg__err_message)}</p>`);
 		$wi__err_message && _scope($scope6_id, { "#childScope/0": _existing_scope($childScope6) }, "__tests__/template.marko", "25:4");
-	}, void 0, "__tests__/template.marko_6*content");
+	}, 0, "__tests__/template.marko_6*content");
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		list,

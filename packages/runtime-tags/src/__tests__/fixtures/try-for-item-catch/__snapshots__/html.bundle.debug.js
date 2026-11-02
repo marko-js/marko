@@ -27,7 +27,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope3_id = _scope_id();
 		_html(_text_resume($scope3_id, "#text/0", err, $wg__err));
 		_write_if($scope3_reason, 0) && _scope($scope3_id, {}, "__tests__/template.marko", "14:4");
-	}, void 0, "__tests__/template.marko_3*content");
+	}, 0, "__tests__/template.marko_3*content");
 	_scope($scope0_id, {
 		clickCount,
 		"ClosureScopes:clickCount/3": $clickCount__closures

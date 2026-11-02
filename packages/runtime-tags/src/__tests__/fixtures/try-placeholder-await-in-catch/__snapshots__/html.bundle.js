@@ -23,7 +23,7 @@ var template_default = _template("a", (input) => {
 				$wg__err_message || $wi__err_message && _resume_branch($scope5_id);
 			}, $wg__err_message);
 			$wi__err_message && _scope($scope4_id, { e: $catch_content__err_message__closures });
-		}, void 0, "a1");
+		}, 0, "a1");
 	}, () => {
 		_scope_reason();
 		_scope_id();
