@@ -20,6 +20,7 @@ import { getTagName } from "../util/get-tag-name";
 import { getOnlyChildParentTagName } from "../util/is-only-child-in-parent";
 import { addReasonExprs } from "../util/reasons";
 import { mergeReferences } from "../util/references";
+import { replaceWithStatements } from "../util/replace-with-statements";
 import { callRuntime } from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
 import { getScopeAccessorLiteral } from "../util/scope-accessor";
@@ -175,9 +176,7 @@ export default {
         const bodyStatements = tag.node.body.body as unknown as t.Statement[];
 
         if (staticDisplay !== undefined) {
-          for (const replacement of tag.replaceWithMultiple(bodyStatements)) {
-            replacement.skip();
-          }
+          replaceWithStatements(tag, bodyStatements);
           return;
         }
 
@@ -227,9 +226,7 @@ export default {
             ),
           ),
         ];
-        for (const replacement of tag.replaceWithMultiple(statements)) {
-          replacement.skip();
-        }
+        replaceWithStatements(tag, statements);
       },
     },
     dom: {
