@@ -21,7 +21,7 @@
 ```
 INSERT: #page-caught
 INSERT: #page-caught::text("page caught")
-INSERT: #class
+INSERT: #page-caught + #class
 INSERT: #class > #tags
 INSERT: #tags::text("tags")
 ```

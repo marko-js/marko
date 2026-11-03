@@ -106,7 +106,12 @@ export function getNodeSelector(
   prev: Node | null,
   parent: Node,
 ): string {
-  let after: Node | null = prev;
+  // An anchor a later mutation removed has no position: describe the inserted
+  // nodes by where they now sit.
+  let after: Node | null =
+    prev && prev.parentNode !== parent && nodes[0].parentNode === parent
+      ? nodes[0].previousSibling
+      : prev;
   while (after && isIgnoredNode(after)) after = after.previousSibling;
   const names = nodes.map(getNodeName);
   const body = parent.ownerDocument?.body;
