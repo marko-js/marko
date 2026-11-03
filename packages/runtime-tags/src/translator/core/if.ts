@@ -17,7 +17,7 @@ import { bodyToUncoercedText } from "../util/body-to-text";
 import {
   getBranchResumeArgs,
   initBranchSection,
-  isSingleNodeBranch,
+  isSingleNodeContent,
   resumeOwnerByMarkerWhenUnconditional,
 } from "../util/branch-tag";
 import { getTagName } from "../util/get-tag-name";
@@ -168,7 +168,7 @@ export const IfTag = {
                   ifTag,
                   branchReasons,
                   branches.every(([, branchBody]) =>
-                    isSingleNodeBranch(branchBody),
+                    isSingleNodeContent(branchBody?.content),
                   ),
                 ),
               ),

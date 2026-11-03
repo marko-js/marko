@@ -126,13 +126,10 @@ export function isEndTagWrittenByBranch(nodeBinding: Binding | undefined) {
   return !!nodeBinding && getBranchEndTags().has(nodeBinding);
 }
 
-// Resume adopts the element before a branch's resume comments, so only a
-// body of one tag qualifies; a placeholder may write zero or many nodes.
-export function isSingleNodeBranch(bodySection: Section | undefined) {
-  return !!(
-    bodySection?.content?.singleChild &&
-    bodySection.content.startType === ContentType.Tag
-  );
+// Resume adopts the element before a branch's resume comments, so only
+// content of one tag qualifies; a placeholder may write zero or many nodes.
+export function isSingleNodeContent(content: Section["content"] | undefined) {
+  return !!(content?.singleChild && content.startType === ContentType.Tag);
 }
 
 export type ForType = "in" | "of" | "to" | "until";

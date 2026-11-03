@@ -413,7 +413,7 @@ export function forEachSectionReverse(fn: (section: Section) => void) {
   }
 }
 
-function getContentInfo(
+export function getContentInfo(
   path: t.NodePath<t.Program | t.MarkoTagBody>,
 ): Section["content"] {
   const body = path.get("body");

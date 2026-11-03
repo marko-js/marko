@@ -11,9 +11,9 @@ var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $templ
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c");
-const $child_content__show = /*@__PURE__*/ _show("#text/1", "#text/0");
+const $child_content__show = /*@__PURE__*/ _show("#text/0");
 const $child_content__setup = ($scope) => $child_content__show($scope, false);
-const $child_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "<!><!><button>go</button><!><!>", "b%c%", $child_content__setup);
+const $child_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "<!><button>go</button><!><!>", "c%", $child_content__setup);
 function $setup($scope) {
 	$input_content_direct($scope["#childScope/0"], $child_content($scope));
 }

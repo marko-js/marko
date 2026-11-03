@@ -22,7 +22,7 @@ import {
   getBranchResumeArgs,
   getForType,
   initBranchSection,
-  isSingleNodeBranch,
+  isSingleNodeContent,
   resumeOwnerByMarkerWhenUnconditional,
 } from "../util/branch-tag";
 import { detectForSelector, isForSelectorClosure } from "../util/for-selector";
@@ -216,7 +216,7 @@ export default {
             ...getBranchResumeArgs(
               tag,
               branchReason,
-              isSingleNodeBranch(bodySection),
+              isSingleNodeContent(bodySection?.content),
             ),
           );
         }
