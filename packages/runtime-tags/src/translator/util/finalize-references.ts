@@ -303,7 +303,11 @@ function resolveBindings() {
     }
 
     const canonicalBinding = getCanonicalBinding(binding);
-    section.bindings = bindingUtil.add(section.bindings, canonicalBinding);
+    // A direct alias shares its root's slot, which the root adds on its own
+    // turn; a pruned root needs none.
+    if (canonicalBinding === binding) {
+      section.bindings = bindingUtil.add(section.bindings, binding);
+    }
     bindingNamesBySection.get(section)?.add(canonicalBinding.name);
     if (binding.localOf) {
       section.localClosures = bindingUtil.add(section.localClosures, binding);
