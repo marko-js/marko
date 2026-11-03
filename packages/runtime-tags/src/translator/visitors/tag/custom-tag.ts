@@ -21,6 +21,7 @@ import {
 } from "../../util/generate-uid";
 import { getTagNameHint } from "../../util/get-tag-name";
 import {
+  type KnownTagExtra,
   knownTagAnalyze,
   knownTagTranslateDOM,
   knownTagTranslateHTML,
@@ -44,11 +45,7 @@ import {
 import { addStatement, getSignal } from "../../util/signals";
 import { createOutputState } from "../../util/state";
 import * as structure from "../../util/structure";
-import {
-  importOrSelfReferenceName,
-  isCircularRequest,
-  type LoadImportConfig,
-} from "../../util/tag-import";
+import type { LoadImportConfig } from "../../util/tag-import";
 import { getTagRelativePath, tagNotFoundError } from "../../util/tag-name-type";
 import type { TemplateVisitor } from "../../util/visitors";
 import * as writer from "../../util/writer";
@@ -105,9 +102,12 @@ export default {
         );
       }
 
-      // A name other than the template's own import is not read: DOM composes
-      // the template and HTML calls its import (`translateHTML`).
-      if (!isTemplateImport(tag)) dropNodes(tag.node.name);
+      // Only the name of another template's import is read, by HTML. DOM
+      // composes the template, and HTML calls it through its import or, when
+      // the tag is this template, its own content (`translateHTML`).
+      if (childSection === programExtra.section || !isTemplateImport(tag)) {
+        dropNodes(tag.node.name);
+      }
 
       knownTagAnalyze(tag, childSection, childExtra.paramsTree);
 
@@ -145,10 +145,11 @@ export default {
 
 function translateHTML(tag: t.NodePath<t.MarkoTag>) {
   const { node } = tag;
+  const tagExtra = node.extra as KnownTagExtra;
   let tagIdentifier: t.Expression;
   if (node.name.extra?.dropped) {
     const relativePath = getTagRelativePath(tag);
-    const loadConfig = node.extra?.tagNameLoad;
+    const loadConfig = tagExtra.tagNameLoad;
     const importTemplate = () =>
       importDefault(getFile(), relativePath, getTagNameHint(node));
     if (loadConfig) {
@@ -162,9 +163,10 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
         ),
       );
     } else {
-      tagIdentifier = isCircularRequest(getFile(), relativePath)
-        ? t.identifier(ensureSharedUid("content"))
-        : importTemplate();
+      tagIdentifier =
+        tagExtra.childSection === getProgram().node.extra.section
+          ? t.identifier(ensureSharedUid("content"))
+          : importTemplate();
     }
   } else {
     tagIdentifier = node.name;
@@ -175,14 +177,14 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
 
 function translateDOM(tag: t.NodePath<t.MarkoTag>) {
   const { node } = tag;
+  const tagExtra = node.extra as KnownTagExtra;
   const file = getFile();
   const relativePath = getTagRelativePath(tag);
   const programSection = getProgram().node.extra.section!;
   const childFile = loadFileForTag(tag)!;
-  const childExtra = childFile.ast.program.extra;
-  const childExports = childExtra.exportNames!;
-  const childSection = childExtra.section!;
-  const loadConfig = node.extra?.tagNameLoad;
+  const childExports = childFile.ast.program.extra.exportNames!;
+  const { childSection } = tagExtra;
+  const loadConfig = tagExtra.tagNameLoad;
   const isLoad = !!loadConfig;
   const tagName = getTagNameHint(node);
 
@@ -245,7 +247,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
           t.callExpression(setupIdent, [
             scopeIdentifier,
             createScopeReadExpression(childBinding, section),
-            createScopeReadExpression(node.extra!.nodeBinding!, section),
+            createScopeReadExpression(tagExtra.nodeBinding!, section),
           ]),
         );
       },
@@ -272,8 +274,8 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
     knownTagTranslateDOM(
       tag,
       (binding, preferredName, directContent) =>
-        importOrSelfReferenceName(
-          getFile(),
+        importNamed(
+          file,
           relativePath,
           (directContent && childExports.directContent.get(binding)) ||
             childExports.params.get(binding)!,
@@ -286,12 +288,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
               section,
               undefined,
               t.callExpression(
-                importOrSelfReferenceName(
-                  file,
-                  relativePath,
-                  childExports.setup,
-                  tagName,
-                ),
+                importNamed(file, relativePath, childExports.setup, tagName),
                 [createScopeReadExpression(childBinding, section)],
               ),
             );
