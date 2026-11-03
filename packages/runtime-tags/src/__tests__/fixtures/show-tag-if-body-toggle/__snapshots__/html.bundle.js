@@ -7,8 +7,8 @@ var template_default = _template("a", (input) => {
 	_show_start(visible);
 	_scope_id();
 	_html("<b>B</b>");
-	_show_end($scope0_id, "e", visible);
+	_show_end($scope0_id, "d", visible);
 	_html(" y</div>");
 	_script($scope0_id, "a0");
-	_scope($scope0_id, { f: visible });
+	_scope($scope0_id, { e: visible });
 }, 1);

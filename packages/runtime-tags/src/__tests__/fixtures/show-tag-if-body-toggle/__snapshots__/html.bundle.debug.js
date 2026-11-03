@@ -9,7 +9,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_html("<b>B</b>");
 	}
-	_show_end($scope0_id, "#text/4", visible);
+	_show_end($scope0_id, "#text/3", visible);
 	_html(" y</div>");
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, { visible }, "__tests__/template.marko", 0, { visible: "1:6" });
