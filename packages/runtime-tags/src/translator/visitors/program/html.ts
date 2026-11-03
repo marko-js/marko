@@ -132,22 +132,21 @@ export default {
 
       writeHTMLResumeStatements(program);
       traverseReplace(program.node, "body", replaceNode);
-      const renderContent: t.Statement[] = [];
-      const section = getSection(program);
-      renderContent.push(getScopeReasonStatement(section));
+      const statics: t.Statement[] = [];
+      const renderContent: t.Statement[] = [
+        getScopeReasonStatement(getSection(program)),
+      ];
 
       for (const child of program.get("body")) {
         if (!isStatic(child)) {
           renderContent.push(child.node);
-          child.remove();
         } else if (child.isMarkoScriptlet()) {
-          if (child.node.target && child.node.target !== "server") {
-            child.remove();
-          } else {
-            child.replaceWithMultiple(child.node.body);
-          }
+          statics.push(...child.node.body);
+        } else {
+          statics.push(child.node);
         }
       }
+      program.node.body = statics;
 
       writeModuleRegistrations(program);
 

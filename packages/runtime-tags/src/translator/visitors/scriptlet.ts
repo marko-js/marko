@@ -49,7 +49,6 @@ export default {
         if (decl) {
           if (isHTML) {
             // handled in program exit for html currently.
-            scriptlet.node.target = null;
             scriptlet.node.body = [decl];
           } else {
             scriptlet.replaceWith(decl);

@@ -45,6 +45,7 @@ import {
   trackVarReferences,
   getReferencedBindings,
 } from "../../util/references";
+import { replaceWithStatements } from "../../util/replace-with-statements";
 import {
   absentArg,
   callRuntime,
@@ -527,9 +528,7 @@ export default {
           statements.push(t.expressionStatement(dynamicTagExpr));
         }
 
-        for (const replacement of tag.replaceWithMultiple(statements)) {
-          replacement.skip();
-        }
+        replaceWithStatements(tag, statements);
       } else {
         const section = getSection(tag);
         const bodySection = getSectionForBody(tag.get("body"));
