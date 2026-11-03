@@ -32,7 +32,6 @@ import {
 } from "./sections";
 import { ensureSectionSlot, ensureSlot, type Slot, SlotKind } from "./slots";
 import {
-  compareSources,
   ALWAYS,
   mergeSources,
   type Sources,
@@ -48,12 +47,14 @@ export type Reasons = SortedOneMany<Sources>;
 // an `always` one is never guarded but still says what it reads.
 export type Reason = Sources;
 
+// The single point of assigning slot reasons, to aid in debugging. A merge
+// adding nothing returns the reason it had.
 export function addReason(slot: Slot, reason: undefined | false | Reason) {
   if (reason) {
-    const curReason = slot.reason;
-    const newReason = mergeSources(curReason, reason);
-    if (curReason !== newReason) {
-      setSlotReason(slot, newReason);
+    const newReason = mergeSources(slot.reason, reason);
+    if (slot.reason !== newReason) {
+      reasonsVersion++;
+      slot.reason = newReason;
     }
   }
 }
@@ -311,12 +312,6 @@ export function getReasonsVersion() {
   return reasonsVersion;
 }
 
-// Exists as the single point of assigning slot reasons to aid in debugging.
-function setSlotReason(slot: Slot, reason: Reason) {
-  if (!isSameSources(slot.reason, reason)) reasonsVersion++;
-  slot.reason = reason;
-}
-
 // Exists as the single point of assigning param reason groups: call sites
 // map each group, so a new one moves the version too.
 export function setParamReasonGroups(
@@ -325,9 +320,4 @@ export function setParamReasonGroups(
 ) {
   reasonsVersion++;
   section.paramReasonGroups = groups;
-}
-
-// Merges rebuild equal sources, so only a change in them counts.
-function isSameSources(a: Reason | undefined, b: Reason) {
-  return !!a && compareSources(a, b) === 0;
 }
