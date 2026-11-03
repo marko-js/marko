@@ -782,8 +782,9 @@ function getNearestReadBy(binding: Binding | undefined, expr: ReferencedExtra) {
   }
 }
 
+// A direct alias has no slot of its own, so its slot owner stores the value.
 function markLazyRead(binding: Binding) {
-  binding.hasLazyReads = true;
+  getCanonicalBinding(binding).hasLazyReads = true;
 }
 
 function addBindingGetter(binding: Binding, { invoked, hoisted }: Getter) {
@@ -798,7 +799,7 @@ function addBindingGetter(binding: Binding, { invoked, hoisted }: Getter) {
 }
 
 // A lazy read is excluded from `referencedBindings` and instead reads the
-// binding's own scope slot on invocation; sound only for a subscriber-free own slot.
+// binding's scope slot on invocation, which its slot owner then stores.
 function isLazyRead(
   expr: { section: Section; invokeOnly?: true },
   read: Read,
@@ -809,16 +810,8 @@ function isLazyRead(
     expr.invokeOnly &&
     read.deferred &&
     !isChangeHandlerRead &&
-    // Roots and section params own a live slot; other aliases forward to their
-    // aliased binding with no own slot, so reading them live would go stale on resume.
-    (!binding.aliasOf || isParamBinding(binding)) &&
     binding.type !== BindingType.constant
   );
-}
-
-function isParamBinding(binding: Binding) {
-  const root = getAliasRoot(binding);
-  return root === root.section.params;
 }
 
 function resolveReferencedBindings(
