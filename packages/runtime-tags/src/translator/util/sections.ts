@@ -38,7 +38,7 @@ import { type Slot } from "./slots";
 import { bindingLandsRetained, getReasonForBinding } from "./solve-reasons";
 import { ALWAYS, mergeSources, type Sources } from "./sources";
 import { createOutputSectionState } from "./state";
-import { getStaticPlaceholderText } from "./static-text";
+import { getPlaceholderContentType } from "./static-text";
 import { getTagContentType, getTagFacts } from "./tag-facts";
 import analyzeTagNameType, { TagNameType } from "./tag-name-type";
 import { getWriteReason } from "./write-guard";
@@ -454,9 +454,7 @@ export function getNodeContentType(
     case "MarkoText":
       return ContentType.Text;
     case "MarkoPlaceholder":
-      return getStaticPlaceholderText(path.node as t.MarkoPlaceholder) === ""
-        ? null
-        : ContentType.Placeholder;
+      return getPlaceholderContentType(path.node as t.MarkoPlaceholder);
     case "MarkoScriptlet":
     case "MarkoComment":
     case "ImportDeclaration":

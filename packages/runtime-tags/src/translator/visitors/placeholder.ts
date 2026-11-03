@@ -24,8 +24,8 @@ import { addStatement } from "../util/signals";
 import { ensureSlot } from "../util/slots";
 import {
   followsStaticText,
+  getPlaceholderContentType,
   getStaticPlaceholderText,
-  isStaticText,
 } from "../util/static-text";
 import * as structure from "../util/structure";
 import { getTagFacts, isInTextBody } from "../util/tag-facts";
@@ -53,9 +53,7 @@ export default {
 
       const { node } = placeholder;
       const valueExtra = (node.value.extra ??= {});
-      if (getStaticPlaceholderText(node) === "") return;
-
-      if (!isStaticText(node)) {
+      if (getPlaceholderContentType(node) === ContentType.Placeholder) {
         const section = ensureSection(placeholder);
         const nodeBinding = ((node.extra ??= {}).nodeBinding = createBinding(
           "#text",
@@ -71,12 +69,12 @@ export default {
       if (isInTextBody(placeholder)) return;
 
       const { node } = placeholder;
-      const staticText = getStaticPlaceholderText(node);
-      if (staticText === "") return;
+      const contentType = getPlaceholderContentType(node);
+      if (contentType === null) return;
 
       const extra = node.extra || {};
-      if (staticText !== undefined && node.escape) {
-        structure.writeTextTo(placeholder, staticText);
+      if (contentType === ContentType.Text) {
+        structure.writeTextTo(placeholder, getStaticPlaceholderText(node)!);
       } else {
         const before = extra[kTextBefore];
         const after = extra[kTextAfter];
@@ -97,7 +95,7 @@ export default {
 
       // Adjacent static text merges into one DOM text node, so only the run's
       // first node emits its walk step; later nodes defer to it.
-      if (!isStaticText(node) || !followsStaticText(placeholder)) {
+      if (contentType !== ContentType.Text || !followsStaticText(placeholder)) {
         structure.enterShallow(placeholder);
       }
     },
@@ -116,7 +114,7 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
   if (node.extra?.needsTextCoercion) {
     injectTextCoercion(value);
   }
-  if (getStaticPlaceholderText(node) === "") {
+  if (getPlaceholderContentType(node) === null) {
     placeholder.remove();
     return;
   }
