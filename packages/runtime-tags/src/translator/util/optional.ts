@@ -496,20 +496,21 @@ export function findSorted<T>(
   data: T[],
   item: T,
 ): T | undefined {
-  let max = data.length;
-  let pos = 0;
-
-  while (pos < max) {
-    const mid = (pos + max) >>> 1;
-    const cur = data[mid];
-    const compareResult = compare(cur, item);
-    if (compareResult === 0) return cur;
-    if (compareResult > 0) max = mid;
-    else pos = mid + 1;
-  }
+  const index = searchSorted(compare, data, item);
+  if (index >= 0) return data[index];
 }
 
 export function findIndexSorted<T>(
+  compare: Compare<T>,
+  data: T[],
+  item: T,
+): number {
+  const index = searchSorted(compare, data, item);
+  return index < 0 ? -1 : index;
+}
+
+// The index of the item equal to `item`, or `~` the index it would go at.
+export function searchSorted<T>(
   compare: Compare<T>,
   data: T[],
   item: T,
@@ -525,7 +526,7 @@ export function findIndexSorted<T>(
     else pos = mid + 1;
   }
 
-  return -1;
+  return ~pos;
 }
 
 export function addSorted<T, U extends T[]>(
@@ -533,31 +534,20 @@ export function addSorted<T, U extends T[]>(
   data: U,
   item: T,
 ): U {
+  let pos = searchSorted(compare, data, item);
+  if (pos >= 0) return data;
+  pos = ~pos;
+
   const len = data.length;
-  let max = len;
-  let pos = 0;
-
-  while (pos < max) {
-    const mid = (pos + max) >>> 1;
-    const compareResult = compare(data[mid], item);
-    if (compareResult === 0) return data;
-    if (compareResult > 0) max = mid;
-    else pos = mid + 1;
-  }
-
   const result = new Array(len + 1) as U;
   for (let i = 0; i < pos; i++) {
     result[i] = data[i];
   }
 
-  let cur = item;
+  result[pos] = item;
   while (pos < len) {
-    const next = cur;
-    cur = data[pos];
-    result[pos++] = next;
+    result[pos + 1] = data[pos++];
   }
-
-  result[len] = cur;
 
   return result;
 }
