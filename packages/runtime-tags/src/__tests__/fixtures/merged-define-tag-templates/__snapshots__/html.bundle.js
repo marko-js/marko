@@ -5,7 +5,7 @@ var template_default = _template("a", (input) => {
 	const A = { content: _content("a0", ({ value }) => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
-		_html(_text_resume($scope1_id, "a", value));
+		_html(_text_resume($scope1_id, "a", value, 2));
 		_scope($scope1_id, {});
 	}, $scope0_id) };
 	const B = { content: _content("a1", ({ value }) => {

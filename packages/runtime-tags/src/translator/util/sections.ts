@@ -38,6 +38,7 @@ import { type Slot } from "./slots";
 import { bindingLandsRetained, getReasonForBinding } from "./solve-reasons";
 import { ALWAYS, mergeSources, type Sources } from "./sources";
 import { createOutputSectionState } from "./state";
+import { getStaticPlaceholderText } from "./static-text";
 import { getTagContentType, getTagFacts } from "./tag-facts";
 import analyzeTagNameType, { TagNameType } from "./tag-name-type";
 import { getWriteReason } from "./write-guard";
@@ -93,7 +94,11 @@ export interface StructureNode {
   // Set at an element's exit, once only-child control flow may have bound it;
   // still unset there, the element is not addressed and the op drops.
   binding: Binding | undefined;
-  marker: boolean;
+  /** `undefined` for a text node at its section's edge: a marker where the
+   * section is inlined (`isInlinedSection`), known once calls are analyzed. */
+  marker: boolean | undefined;
+  /** A placeholder's text node, written as a space where it is no marker. */
+  text?: true;
 }
 
 export interface StructureChild {
@@ -449,7 +454,9 @@ export function getNodeContentType(
     case "MarkoText":
       return ContentType.Text;
     case "MarkoPlaceholder":
-      return ContentType.Placeholder;
+      return getStaticPlaceholderText(path.node as t.MarkoPlaceholder) === ""
+        ? null
+        : ContentType.Placeholder;
     case "MarkoScriptlet":
     case "MarkoComment":
     case "ImportDeclaration":
@@ -466,6 +473,12 @@ export function getNodeContentType(
   }
 
   return ContentType.Dynamic;
+}
+
+// Whether the section renders inside its callers' markup, so text beside its
+// edges is theirs: a template, or a body its direct calls render.
+export function isInlinedSection(section: Section) {
+  return !section.parent || !!section.calls;
 }
 
 // The section `structure.child` inlines; a load tag renders behind a marker.
