@@ -1,0 +1,5 @@
+<if=input.show>
+  <const/c=input.b + "!"/>
+  <define/frag><em>${input.a + c}</em><i>${c}</i></define>
+  <section content=(input.mode ? frag.content : null)/>
+</if>

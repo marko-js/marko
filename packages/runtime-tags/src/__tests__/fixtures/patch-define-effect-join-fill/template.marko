@@ -1,0 +1,8 @@
+<let/n=0/>
+<define/Row|{ a, b }|>
+  <p>${a + b}</p>
+  <div/el/>
+  <script>el().textContent = "s:" + a</script>
+</define>
+<Row a=input.a b=n/>
+<button onClick() { n++ }>+</button>

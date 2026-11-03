@@ -1,0 +1,9 @@
+<id/heading/><h1 id=heading>Fields</h1>
+<for|item| of=input.items><field name=item.key heading=heading/></for>
+<for|item| of=input.items by="key"><field name=item.key heading=heading/></for>
+<for|key, value| in=input.record><field name=key heading=heading/></for>
+<for|key, value| in=input.record by=(key) => "key-" + key><field name=value heading=heading/></for>
+<for|i| to=input.end from=input.start><field name=i heading=heading/></for>
+<for|i| to=input.end from=input.start by=(i) => "to-" + i><field name=i heading=heading/></for>
+<for|i| until=input.end from=input.start step=2><field name=i heading=heading/></for>
+<for|i| until=input.end from=input.start step=2 by=(i) => "until-" + i><field name=i heading=heading/></for>

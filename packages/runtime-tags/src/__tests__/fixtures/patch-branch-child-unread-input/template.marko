@@ -1,0 +1,12 @@
+<let/n=0/>
+<button.inc onClick() { n++ }>${n}</button>
+<if=input.admin>
+  <panel data=input.adminData/>
+</if>
+<else>
+  <card user=input.user/>
+</else>
+<if=input.more>
+  <card ...input.props/>
+  <toggle user=input.other/>
+</if>

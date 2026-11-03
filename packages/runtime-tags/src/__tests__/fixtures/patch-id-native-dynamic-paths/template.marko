@@ -1,0 +1,11 @@
+<define/Body><id/uid/><label for=uid>body</label><input id=uid/></define>
+<define/Wrap|{ on, content }|>
+  <const/Tag=on ? "p" : "div"/>
+  <${Tag} content=content/>
+</define>
+<for|item| of=input.items>
+  <const/Tag=item.on ? "p" : "div"/>
+  <${Tag}><@content><id/uid/><label for=uid>attr</label><input id=uid/></@content></>
+  <Wrap on=item.on content=Body/>
+  <${Tag}({ content: Body })/>
+</for>

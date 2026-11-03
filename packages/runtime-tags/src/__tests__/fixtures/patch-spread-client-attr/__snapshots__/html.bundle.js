@@ -1,0 +1,10 @@
+// template.marko
+_shells({ a: "a !a0 a1;D ;<main><div>x</div></main>" });
+var template_default = _template("a", (input) => {
+	const $scope0_reason = _scope_reason();
+	const $scope0_id = _scope_id();
+	_html(`<main><div${_attrs_partial(input.attrs, { "data-mounted": 1 }, "a", $scope0_id, "div", 0, $scope0_reason, 0)}>x</div>${_el_resume($scope0_id, "a")}</main>`);
+	_script($scope0_id, "a0");
+	_script($scope0_id, "a1");
+	_scope($scope0_id, {});
+}, 1);

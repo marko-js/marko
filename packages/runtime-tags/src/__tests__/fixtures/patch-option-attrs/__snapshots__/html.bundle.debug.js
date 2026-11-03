@@ -1,0 +1,26 @@
+// template.marko
+const $template = "<main><select></select><select id=plain><option value=a>A</option><option value=b>B</option></select><em> </em><button>+</button></main>";
+const $walks = "D bD b lD l l";
+const $setup = [[], ["__tests__/template.marko_0"]];
+_shells({
+	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;D bD b lD l ;<main><select></select><select id=plain><option value=a>A</option><option value=b>B</option></select><em> </em><button>+</button></main>",
+	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell; D ;<option> </option>"
+});
+var template_default = _template("__tests__/template.marko", (input) => {
+	const $scope0_reason = _scope_reason();
+	const $scope0_id = _scope_id();
+	let count = 0;
+	_html("<main>");
+	_attr_select_value($scope0_id, "#select/0", input.picked, 0, () => {
+		_html("<select>");
+		_for_of(input.options, (o) => {
+			const $scope1_id = _scope_id();
+			_html(`<option${_attr_option_value(o.value, $scope1_id, "PatchAttr:#option/0 value", $scope0_reason, 1)}>${_text_resume($scope1_id, "#text/1", o.label, 1, $scope0_reason, 1)}</option>${_el_resume($scope1_id, "#option/0", _mask_group($scope0_reason, 1))}`);
+			_scope($scope1_id, {}, "__tests__/template.marko", "4:6");
+		}, (o) => o.id, $scope0_id, "#select/0", 1, 1, 1, 0, 0, "__tests__/template.marko_1*shell", $scope0_reason, 1);
+		_html("</select>");
+	}, "PatchControl:3#select/0", $scope0_reason, 0);
+	_html(`${_el_resume($scope0_id, "#select/0")}<select id=plain><option${_attr_option_value("a")}${_attr("selected", input.pick === "a", $scope0_id, "PatchAttr:#option/1 selected", $scope0_reason, 2)}>A</option>${_el_resume($scope0_id, "#option/1", _mask_group($scope0_reason, 2))}<option${_attr_option_value("b")}${_attr("selected", input.pick === "b", $scope0_id, "PatchAttr:#option/2 selected", $scope0_reason, 2)}>B</option>${_el_resume($scope0_id, "#option/2", _mask_group($scope0_reason, 2))}</select><em>${_text_resume($scope0_id, "#text/3", count)}</em><button>+</button>${_el_resume($scope0_id, "#button/4")}</main>`);
+	_script($scope0_id, "__tests__/template.marko_0");
+	_scope($scope0_id, { count }, "__tests__/template.marko", 0, { count: "1:6" });
+}, 1);

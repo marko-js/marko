@@ -1,0 +1,10 @@
+<main>
+  <h1>${input.title}</h1>
+  <if=input.show>
+    <let/count=0 valueChange(next) {
+      document.querySelector("main")!.dataset.attempt = String(next);
+    }/>
+    <p>Seen ${count}</p>
+    <button onClick() { count++ }>+</button>
+  </if>
+</main>

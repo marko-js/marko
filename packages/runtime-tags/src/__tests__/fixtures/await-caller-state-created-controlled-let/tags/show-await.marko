@@ -1,0 +1,6 @@
+<await|x|=input.promise>
+  <let/a=x/>
+  <let/g value=(a + ":" + input.label) valueChange(v) { a = v; }/>
+  <p>${g}</p>
+  <button.g onClick() { g = "q"; }>g</button>
+</await>

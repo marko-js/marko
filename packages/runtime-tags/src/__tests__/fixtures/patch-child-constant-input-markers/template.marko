@@ -1,0 +1,11 @@
+<let/count=0/>
+<main>
+  <badge label="New" tone="info"/>
+  <badge label="Sale" tone="warn"/>
+  <badge label="Hot" tone="info"/>
+  <badge label=input.status tone="info"/>
+  <for|p| of=input.items by="id">
+    <p>${p.name} <badge label="Item" tone="info"/></p>
+  </for>
+  <button onClick() { count++ }>${count}</button>
+</main>

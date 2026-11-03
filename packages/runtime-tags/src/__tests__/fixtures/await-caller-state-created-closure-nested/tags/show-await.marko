@@ -1,0 +1,6 @@
+<await|x|=input.promise>
+  <try>
+    <p>${x}:${input.promise ? "p" : "-"}</p>
+    <@catch>error</@catch>
+  </try>
+</await>

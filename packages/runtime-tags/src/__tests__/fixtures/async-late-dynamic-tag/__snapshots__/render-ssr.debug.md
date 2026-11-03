@@ -1,0 +1,20 @@
+# Render `{"as":"div","p":{},"q":{}}`
+```html
+<main>
+  <div
+    class="box"
+  >
+    <em>
+      1
+    </em>
+  </div>
+  <section>
+    <b>
+      a
+    </b>
+  </section>
+  <button>
+    interactive
+  </button>
+</main>
+```

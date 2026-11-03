@@ -1,0 +1,29 @@
+// template.marko
+_shells({
+	a0: "a0,<em>static</em>",
+	a1: "a1,<s>caught</s>",
+	a2: "a2,<em>static</em>",
+	a3: "a3;b%;<!><!><!>",
+	a: "a;E l%;<main><p> </p><!></main>"
+});
+var template_default = _template("a", (input) => {
+	const $scope0_reason = _scope_reason();
+	const $scope0_id = _scope_id();
+	const $global$1 = $global();
+	_html(`<main><p>${_text_resume($scope0_id, "a", input.label, 1, $scope0_reason, 0)}</p>`);
+	_try($scope0_id, "b", () => {
+		_scope_reason();
+		const $scope1_id = _scope_id();
+		_await($scope1_id, "a", $global$1.promise, (v) => {
+			_scope_id();
+			_html("<em>static</em>");
+		}, 1, "a0");
+		_fill_global_subscribe("a4", $scope1_id);
+	}, void 0, () => {
+		_scope_reason();
+		_scope_id();
+		_html("<s>caught</s>");
+	}, 0, "a1", "a3", 0, 0, 1);
+	_html("</main>");
+	_scope($scope0_id, {});
+}, 1);

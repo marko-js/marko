@@ -1,0 +1,15 @@
+<try><await|value|=input.promise><p>${value}</p></await>
+<@catch|error|>
+<for|i| of=[0,1]><id/rowId/><label for=rowId>row</label><input id=rowId/>
+<if=true><id/branchId/><label for=branchId>branch</label><input id=branchId/><field name="caught"/></if>
+</for>
+<for|i| in={a:0,b:1}><id/rowId/><label for=rowId>row</label><input id=rowId/>
+<if=true><id/branchId/><label for=branchId>branch</label><input id=branchId/><field name="caught"/></if>
+</for>
+<for|i| to=1><id/rowId/><label for=rowId>row</label><input id=rowId/>
+<if=true><id/branchId/><label for=branchId>branch</label><input id=branchId/><field name="caught"/></if>
+</for>
+<for|i| until=2><id/rowId/><label for=rowId>row</label><input id=rowId/>
+<if=true><id/branchId/><label for=branchId>branch</label><input id=branchId/><field name="caught"/></if>
+</for>
+</@catch></try>

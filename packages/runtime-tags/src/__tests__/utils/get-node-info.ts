@@ -1,4 +1,4 @@
-export function getNodePath(node: Node) {
+export function getNodePath(node: Node, runtimeId?: string) {
   const body = node.ownerDocument?.body;
   if (node === body) return node.nodeName.toLowerCase();
 
@@ -22,7 +22,10 @@ export function getNodePath(node: Node) {
             found = true;
           } else if (isText(child)) {
             hasOtherText = true;
-            if (!found) offset += child.length;
+            if (!found)
+              offset += runtimeId
+                ? normalizeStructuralIds(child.data, runtimeId).length
+                : child.length;
           }
         }
       }
@@ -105,6 +108,7 @@ export function getNodeSelector(
   nodes: Node[],
   prev: Node | null,
   parent: Node,
+  runtimeId?: string,
 ): string {
   let after: Node | null = prev;
   while (after && isIgnoredNode(after)) after = after.previousSibling;
@@ -112,8 +116,8 @@ export function getNodeSelector(
   const body = parent.ownerDocument?.body;
   if (!after && parent === body) return names.join(", ");
   const rhs = names.length === 1 ? names[0] : `:is(${names.join(", ")})`;
-  if (after) return `${getNodePath(after)} + ${rhs}`;
-  const parentPath = getNodePath(parent);
+  if (after) return `${getNodePath(after, runtimeId)} + ${rhs}`;
+  const parentPath = getNodePath(parent, runtimeId);
   return nodes.length === 1 && isText(nodes[0])
     ? parentPath + rhs
     : `${parentPath} > ${rhs}`;
@@ -189,4 +193,37 @@ function isComment(node: Node): node is Comment {
 
 function isEmptyTextNode(node: Node): node is Text {
   return isText(node) && !node.nodeValue;
+}
+
+// Structural ids differ by build (optimized `s<rid>…<declaration>`, debug `s<rid>.<site>@<n>[<key>].<name>`):
+// each is numbered by first appearance, so a duplicate stays visible.
+export function normalizeStructuralIds(
+  value: string,
+  runtimeId = "M",
+  withRenderIds?: boolean,
+) {
+  const key = String.raw`\[(?:-?[\d.e+]+|"(?:[^"\\]|\\.)*"|\\".*?\\"|&quot;.*?&quot;|&#34;.*?&#34;)\]`;
+  const structural =
+    String.raw`\bs${runtimeId}[\w-]*` +
+    String.raw`(?:(?:\.[\w$:#/-]*@\d+|${key}|\^${key})*\.[\w$]+(?:~\d+)?|[A-Z_-][\w-]*)`;
+  const seen = new Map<string, number>();
+  return value.replace(
+    new RegExp(
+      withRenderIds
+        ? structural + String.raw`|\b[cs]${runtimeId}_[0-9a-z]+\b`
+        : structural,
+      "g",
+    ),
+    (match) => {
+      // A debug key's quotes and escapes may be escaped where it is written,
+      // and its accessors only label sites, which exclusive branches share.
+      const id = match
+        .replace(/&quot;|&#34;/g, '"')
+        .replace(/\\(["\\])/g, "$1")
+        .replace(/\.[\w$:#/-]*@/g, "@");
+      let n = seen.get(id);
+      if (n === undefined) seen.set(id, (n = seen.size));
+      return "M_" + n;
+    },
+  );
 }
