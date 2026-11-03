@@ -34,7 +34,7 @@ ERROR!
 ```
 ## Change
 ```
-INSERT: ::text("ERROR!")
+INSERT: button:nth-of-type(2) + ::text("ERROR!")
 ```
 
 # Update
