@@ -1,5 +1,5 @@
 import { types as t } from "@marko/compiler";
-import { getFile, getProgram } from "@marko/compiler/babel-utils";
+import { getFile, getProgram, importNamed } from "@marko/compiler/babel-utils";
 
 import { ReservedId, WalkCode, WalkRangeSize } from "../../common/types";
 import { type Binding, BindingType, createBinding } from "./bindings";
@@ -23,7 +23,6 @@ import {
   type StructureRef,
 } from "./sections";
 import { createOutputState, createOutputSectionState } from "./state";
-import { importOrSelfReferenceName } from "./tag-import";
 import { withLeadingComment } from "./with-comment";
 
 const walkCodeToName = {
@@ -311,12 +310,7 @@ function resolveRef(ref: StructureRef, part: "template" | "walks") {
     declareOwnExports();
     return t.identifier(name);
   }
-  return importOrSelfReferenceName(
-    getFile(),
-    ref.path,
-    name,
-    `${ref.hint}_${part}`,
-  );
+  return importNamed(getFile(), ref.path, name, `${ref.hint}_${part}`);
 }
 
 interface SectionMeta {
