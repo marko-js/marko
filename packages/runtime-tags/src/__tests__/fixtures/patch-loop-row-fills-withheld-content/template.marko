@@ -1,0 +1,5 @@
+<let/open=true/>
+<button onClick() { open = !open }>toggle</button>
+<for|p| of=input.panels by="id">
+  <panel open=open><p>${p.text}</p></panel>
+</for>

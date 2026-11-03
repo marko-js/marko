@@ -510,7 +510,7 @@ function writeControlledScope(
   }
 }
 
-function stringAttr(name: string, value: string) {
+export function stringAttr(name: string, value: string) {
   return value && " " + name + attrAssignment(value);
 }
 

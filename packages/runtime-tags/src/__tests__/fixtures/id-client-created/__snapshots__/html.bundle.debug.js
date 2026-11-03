@@ -1,0 +1,21 @@
+// template.marko
+var template_default = _template("__tests__/template.marko", (input) => {
+	const $scope0_reason = _scope_reason(), $wg__input_prefix = _write_guard($scope0_reason, 0);
+	const $scope0_id = _scope_id();
+	let items = input.items;
+	_html(`<button>add</button>${_el_resume($scope0_id, "#button/0")}`);
+	_for_of(items, (item) => {
+		const $scope1_id = _scope_id();
+		const headingId = _id();
+		_html(`<h2${_attr("id", headingId)}>${_escape(item.key)}</h2><input${_attr("aria-describedby", headingId)}${_attr("title", input.prefix + " " + headingId)}>${_el_resume($scope1_id, "#input/2", $wg__input_prefix)}`);
+		_scope($scope1_id, { headingId: _write_if($scope0_reason, 0) && headingId }, "__tests__/template.marko", "3:2", { headingId: "4:7" });
+	}, "key", $scope0_id, "#text/1");
+	_script($scope0_id, "__tests__/template.marko_0");
+	_scope($scope0_id, {
+		input_prefix: input.prefix,
+		items
+	}, "__tests__/template.marko", 0, {
+		input_prefix: ["input.prefix"],
+		items: "1:6"
+	});
+}, 1);

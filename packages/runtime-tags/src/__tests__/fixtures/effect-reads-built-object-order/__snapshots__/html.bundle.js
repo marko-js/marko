@@ -1,0 +1,18 @@
+// template.marko
+var template_default = _template("a", (input) => {
+	const $scope0_reason = _scope_reason(), $wg__input_x = _write_guard($scope0_reason, 0);
+	const $scope0_id = _scope_id();
+	const a = { y: input.y };
+	const b = { x: input.x };
+	const c = {
+		a,
+		b
+	};
+	_html(`<p>${_text_resume($scope0_id, "a", input.x, $wg__input_x)}</p>`);
+	_script($scope0_id, "a0", $wg__input_x);
+	_scope($scope0_id, {
+		f: _write_if($scope0_reason, 0) && a,
+		g: _write_if($scope0_reason, 1) && b,
+		i: c
+	});
+}, 1);

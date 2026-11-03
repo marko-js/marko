@@ -1,0 +1,5 @@
+<p>${JSON.stringify(input)}</p>
+<script>
+  const el = document.querySelector("main")!;
+  el.dataset.log = (el.dataset.log || "") + "[" + input.label + "]";
+</script>

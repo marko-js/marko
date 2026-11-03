@@ -1,0 +1,10 @@
+<let/outer=["a"]/>
+<let/inner=["x"]/>
+<main>
+  <for|o| of=outer>
+    <for|i| of=inner>
+      <div>${o}${i}</div>
+    </for>
+  </for>
+  <button onClick() { outer = [...outer, "b"] }>+</button>
+</main>

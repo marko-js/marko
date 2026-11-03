@@ -47,6 +47,93 @@ builds page/load entries, records module `renderedLength`, and measures minified
 and Brotli size. Inspect optimized `dom.bundle.js`, chunk placement, and
 `sizes.json`; raw compiler output does not show transitive retention.
 
+## Patch protocol
+
+With the `patches` compiler option a template also answers a navigation with
+a patch render: a server rerender whose patches apply to the live document
+instead of a new page. `CONTEXT.md` defines the terms (patch render, flush,
+patch, fill, structural param, shell).
+
+- **Updates from.** Every write carries the group bits the caller set
+  (`_set_scope_reason`, read by `_scope_reason`): two bits per param
+  group, client and server. A page render writes what any contribution
+  can change; a patch render writes the holes of server-sourced groups as
+  bare values and leaves unpatched structure to the resumed page, which the
+  server keeps current through fills (`_fill_*` in `dom/patches/signals.ts`, keyed by
+  `getPatchFillKey`). `translator/util/patch/` decides per binding what a
+  patch fills, writes or leaves alone (`refresh.ts`, `structure.ts`,
+  `decisions.ts`).
+- **Flushes.** `html/patches/writer.ts` (`PatchRenderState`) collects a flush's entries into
+  one nested tree of patches rooted at the page root; scope ids never ride
+  the wire, a patch nests under its parent's structural entry. Each flush
+  is one line and one expression, which `joinFlush` asserts in debug;
+  `dom/patches/apply.ts` evaluates it as an arrow's body.
+- **Applying.** `dom/patches/apply.ts` walks each patch beside its live scope and
+  dispatches each entry by its key prefix (`PatchKey`, debug spelled
+  `Patch<Kind>:`) into `patchers`, one `dom/patches/*.feat.ts` module per kind,
+  imported only where a template emits that kind. A scope a flush creates
+  applies through `setupPatchers`, where every entry is required.
+- **Shells.** Structure a server-rendered branch expression decides (a
+  branch, a loop body, a dynamic tag's content) is created client-side from a shell: the section's
+  template and walk plus the register ids a fresh scope runs, decided per
+  template at analyze exit in `translator/util/shell.ts` (a caller composing
+  a child's root reads that decision) and registered by the HTML module
+  (`_shells`). A flush ships a shell the page's held-shell token
+  lacks, once per response.
+- **Pairing and rejection.** Branches, loops, boundaries and children pair
+  on their resume markers; anything a matched build cannot pair throws,
+  and the caller falls back to a full navigation. A flush that
+  writes into a lazy tag's render waits for its module, like the document's
+  ready channels (`dom/patches/ready.feat.ts`); a module that fails settles
+  pending flushes as not applied.
+- **Caught tries.** A `<try>` whose `@catch` shows keeps it, as a client render
+  does (`patches/try` and the catch patchers): a patch never replaces its catch,
+  whose closures subscribe as unpatched structure's do. A body that throws again
+  before its entry flushes sends none, and the catch stays; a patch carrying one
+  that renders, or one still pending when a flush goes out, rejects, so the
+  caller loads the URL as a document. Only a try a flush creates anew renders
+  its body, or its catch if that throws. A body is told from a catch by its
+  catch renderer, which a patch page's document writes with the try's marks,
+  before the body settles.
+- **Timing.** Like a reorder, a flush arrives after effects ran and may find
+  its owners changed; the group bits decide what it writes. A caller
+  installed from an effect, as `@marko/run`'s router is, never applies one
+  while in-order content streams, since that content holds every effect.
+- **Transport.** `patch($global, signal)` gives a navigation's request headers
+  and the apply for its response, which the signal stops. `x-marko-patch` is `<build>;<held-shell token>`:
+  the server's build (the integration names it once, `setPatchBuild`) as the
+  document's render data named it. The caller ends the request's query with
+  a bare `~` (`?~`, or `&~` after other parameters), so every cache keys a
+  patch apart from its page's document and no response varies on the header.
+  A server reads a request with `patchRequestKind(headers, url)`, which strips
+  that marker from `url` and takes a request without it as a document's;
+  another build's (`PatchRequestKind.Stale`) is answered before running
+  anything, an uncached 412 with no body under `patchResponseHeaders(kind)`,
+  and its own (`PatchRequestKind.Patch`) with `template.patch(input, headers)`
+  under `patchResponseHeaders(kind)`, uncached, whose
+  `x-marko-patch` names the build again for the page to check, one flush per
+  line; every response ends with a `;` line, followed by the token when the
+  shells it sent changed what the page holds.
+  `apply(response, onCommit, onApplied, onEnd, onFail)` reads the body's lines
+  as flushes: `onCommit` right before the first changes the page, `onApplied`
+  once each flush has applied, with anything it waits on (a lazy module, a body
+  the document still streams), `onEnd` once the body ended and all applied, and
+  `onFail` for a response that is no patch, a failed flush or a cut stream. A
+  later `patch()` ends the response. `@marko/vite` names the build
+  (`@marko/vite/patch`); `@marko/run` sends the headers and decides what a
+  failure loads.
+
+Each flush runs as the document's resume scripts do: a script element
+carrying the live page's `$global.cspNonce` (`evaluate`), whose thunk the flush
+applies; a patch page's document always serializes that nonce
+(`PatchPageState.getSerializedGlobals`), so a nonce CSP needs no
+`unsafe-eval`. A flush the page's CSP refuses leaves no thunk and fails like
+any other; debug builds warn which nonce the policy must allow. A patch
+render ships no nonce of its own (`_patch_nonce`): a script's or style's
+spread entry skips `nonce` so the live element keeps the page's. Nothing
+stamps a nonce on the scripts and styles a patch creates, and a browser runs
+no `<html-script>` a patch creates.
+
 ## Compiler model
 
 Terms live in [CONTEXT.md](./CONTEXT.md); start here:
@@ -108,11 +195,15 @@ write merges, so they only grow and cycles settle.
 
 Across known tags, `ensureSectionReasonGroups()` groups child parameter
 dependencies. The parent calls `_set_scope_reason(...)`; the child consumes
-and clears it with `_scope_reason()`. HTML runtime encoding is two bits per
-group at `1 + 2 * group` (the low bit says the group serializes; a dynamic
-guard shifts into its place), a keyed object of group values past fifteen
-groups, or none. `write-guard.ts` emits/hoists `_write_if` and
-`_write_guard` calls.
+and clears it with `_scope_reason()`. HTML runtime encoding is one value for
+plain and patch templates: two bits per group at `1 + 2 * group` (client
+contributes, server contributes; a dynamic guard shifts into its place), a
+keyed object of group values past fifteen groups, or none. A plain template
+reads any contribution as "write"; a patch template reads the two bits as where
+the group updates from (`_write_if`, `_filled_guard`, `_client_guard`), and a
+render kind gate (`_page_render`) tells a page render, which writes resume
+data, from a patch, which carries fills alone. `write-guard.ts` emits/hoists
+`_write_if` and `_write_guard` calls.
 
 ### Signal lowering
 

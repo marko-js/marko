@@ -1,0 +1,28 @@
+<const/{ fmt, wrap, quoted, keyed, templated }={
+  fmt: (s: string) => s + ":" + input.title,
+  wrap(s: string) {
+    return "(" + s + input.title + ")";
+  },
+  "quoted": (s: string) => s + "'" + input.title,
+  ["keyed"]: (s: string) => s + "[" + input.title,
+  [`templated`]: (s: string) => s + "`" + input.title,
+}/>
+<const/o={
+  get: (s: string) => s + "=" + input.title,
+  0: (s: string) => s + "0" + input.title,
+}/>
+<const/tag=(s: string) => s + "#" + input.title/>
+<let/show=true/>
+<main>
+  <if=show>
+    <card fn=fmt/>
+    <card fn=wrap/>
+    <card fn=quoted/>
+    <card fn=keyed/>
+    <card fn=templated/>
+    <card fn=o.get/>
+    <card fn=o[0]/>
+    <card fn=tag/>
+  </if>
+  <button onClick() { show = !show }>t</button>
+</main>

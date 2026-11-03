@@ -1,0 +1,12 @@
+<if=input.page === 0>
+  <p>a</p>
+</if>
+<else>
+  <let/mounted=false/>
+  <script>mounted = true</script>
+  <if=mounted>
+    <html-style>
+      p {}
+    </html-style>
+  </if>
+</else>

@@ -1,0 +1,115 @@
+# Render `{"title":"Store","show":true}`
+```html
+<main>
+  <h1>
+    Store
+  </h1>
+  <p>
+    a hit 0
+  </p>
+  <span>
+    Seen 0
+  </span>
+  <button>
+    +
+  </button>
+  <p>
+    b hit 0
+  </p>
+  <span>
+    Seen 0
+  </span>
+  <button>
+    +
+  </button>
+</main>
+```
+
+# Update `{"title":"Store!","show":false}`
+```html
+<main>
+  <h1>
+    Store!
+  </h1>
+  <p>
+    a hit 0
+  </p>
+  <p>
+    b hit 0
+  </p>
+</main>
+```
+## Change
+```
+UPDATE: main > h1::text "Store" => "Store!"
+REMOVE: main > p:nth-of-type(1) + span
+REMOVE: main > p:nth-of-type(1) + button
+REMOVE: main > p:nth-of-type(2) + span
+REMOVE: main > p:nth-of-type(2) + button
+```
+
+# Update `{"title":"Store!","show":true}`
+```html
+<main>
+  <h1>
+    Store!
+  </h1>
+  <p>
+    a hit 0
+  </p>
+  <span>
+    Seen 0
+  </span>
+  <button>
+    +
+  </button>
+  <p>
+    b hit 0
+  </p>
+  <span>
+    Seen 0
+  </span>
+  <button>
+    +
+  </button>
+</main>
+```
+## Change
+```
+INSERT: main > p:nth-of-type(1) + :is(span, button)
+INSERT: main > p:nth-of-type(2) + :is(span, button)
+```
+
+# Update
+```js
+document.querySelector("button").click();
+```
+```html
+<main>
+  <h1>
+    Store!
+  </h1>
+  <p>
+    a hit 1
+  </p>
+  <span>
+    Seen 0
+  </span>
+  <button>
+    +
+  </button>
+  <p>
+    b hit 0
+  </p>
+  <span>
+    Seen 0
+  </span>
+  <button>
+    +
+  </button>
+</main>
+```
+## Change
+```
+UPDATE: main > p:nth-of-type(1)::text@6 "0" => "1"
+```

@@ -1,0 +1,8 @@
+<wrap show=input.show>
+  <try>
+    <await|v|=input.value>
+      <p>${input.id}:${v}</p>
+    </await>
+    <@placeholder>loading ${input.id}</@placeholder>
+  </try>
+</wrap>

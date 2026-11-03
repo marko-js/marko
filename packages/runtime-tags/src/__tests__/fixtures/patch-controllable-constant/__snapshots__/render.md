@@ -1,0 +1,59 @@
+# Render `{"note":"a"}`
+```html
+<main>
+  <textarea>
+    hello
+  </textarea>
+  <select>
+    <option
+      value="a"
+    >
+      A
+    </option>
+    <option
+      selected=""
+      value="b"
+    >
+      B
+    </option>
+  </select>
+  <p>
+    a
+  </p>
+  <button>
+    0
+  </button>
+</main>
+```
+
+# Update `{"note":"b"}`
+```html
+<main>
+  <textarea>
+    hello
+  </textarea>
+  <select>
+    <option
+      value="a"
+    >
+      A
+    </option>
+    <option
+      selected=""
+      value="b"
+    >
+      B
+    </option>
+  </select>
+  <p>
+    b
+  </p>
+  <button>
+    0
+  </button>
+</main>
+```
+## Change
+```
+UPDATE: main > p::text "a" => "b"
+```

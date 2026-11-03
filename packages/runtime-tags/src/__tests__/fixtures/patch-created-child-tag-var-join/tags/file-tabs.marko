@@ -1,0 +1,3 @@
+<let/tabs:=input.files>
+<p>${tabs.map((tab) => tab.path).join()}</p>
+<button onClick() { tabs = [...tabs, { path: "b" }] }>+</button>
