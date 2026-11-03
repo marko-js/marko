@@ -1,0 +1,17 @@
+// template.marko
+var template_default = _template("a", (input) => {
+	_scope_reason();
+	const $scope0_id = _scope_id();
+	let state = {
+		a: 1,
+		b: 2
+	};
+	const { a, ...rest } = state;
+	_html(`<button class=bump>bump</button>${_el_resume($scope0_id, "a")}<button class=show>show</button>${_el_resume($scope0_id, "b")}<div class=a>${_text_resume($scope0_id, "c", a)}</div><div class=log>${_text_resume($scope0_id, "d", "")}</div>`);
+	_script($scope0_id, "a0");
+	_scope($scope0_id, {
+		f: state.a,
+		g: state.b,
+		h: rest
+	});
+}, 1);

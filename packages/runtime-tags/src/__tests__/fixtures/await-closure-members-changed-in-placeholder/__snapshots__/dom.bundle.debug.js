@@ -20,24 +20,22 @@ const $value = /*@__PURE__*/ _let("value/2", ($scope) => {
 	$value_b($scope, $scope.value?.b);
 });
 const $value_a__closure = /*@__PURE__*/ _closure($await_content__value_a);
-const $value_a__script = _script("__tests__/template.marko_0_value_a#3", ($scope) => _on($scope["#button/0"], "click", function() {
+const $value_a = /*@__PURE__*/ _const("value_a", $value_a__closure);
+const $value_b__closure = /*@__PURE__*/ _closure($await_content__value_b);
+const $value_b = /*@__PURE__*/ _const("value_b", $value_b__closure);
+const $try = /*@__PURE__*/ _try("#text/1", "<!><!><!>", "b%", $try_content__setup, $placeholder_content);
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$value($scope, {
 		a: $scope.value_a + 1,
 		b: 1
 	});
 }));
-const $value_a = /*@__PURE__*/ _const("value_a", ($scope) => {
-	$value_a__closure($scope);
-	$value_a__script($scope);
-});
-const $value_b__closure = /*@__PURE__*/ _closure($await_content__value_b);
-const $value_b = /*@__PURE__*/ _const("value_b", $value_b__closure);
-const $try = /*@__PURE__*/ _try("#text/1", "<!><!><!>", "b%", $try_content__setup, $placeholder_content);
 function $setup($scope) {
 	$value($scope, {
 		a: 1,
 		b: 1
 	});
 	$try($scope);
+	$setup__script($scope);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

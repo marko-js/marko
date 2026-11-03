@@ -29,12 +29,8 @@ const $pattern2 = _var_resume("a0", ($scope, $pattern) => {
 	$value($scope, $pattern.value);
 	$valueChange2($scope, $pattern.valueChange);
 });
-const $value__OR__$valueChange__script = _script("a1", ($scope) => _on($scope.c, "click", function() {
+const $value = /*@__PURE__*/ _const(8, ($scope) => _text($scope.d, $scope.i));
+const $valueChange2__script = _script("a1", ($scope) => _on($scope.c, "click", function() {
 	$scope.j(+$scope.i + 1);
 }));
-const $value__OR__$valueChange = /*@__PURE__*/ _or(10, $value__OR__$valueChange__script, 1, 1);
-const $value = /*@__PURE__*/ _const(8, ($scope) => {
-	_text($scope.d, $scope.i);
-	$value__OR__$valueChange($scope);
-});
-const $valueChange2 = /*@__PURE__*/ _const(9, $value__OR__$valueChange);
+const $valueChange2 = /*@__PURE__*/ _const(9, $valueChange2__script);

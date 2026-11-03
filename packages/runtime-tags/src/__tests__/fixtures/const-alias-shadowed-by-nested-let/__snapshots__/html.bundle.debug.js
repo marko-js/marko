@@ -25,7 +25,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, "__tests__/template.marko", "3:2", { x: "3:12" }), "__tests__/template.marko_1_x_n#0:3/subscribe");
 	}, $scope0_id) });
 	_html(`<button class=outer></button>${_el_resume($scope0_id, "#button/1")}`);
-	_script($scope0_id, "__tests__/template.marko_0_x_n#3");
+	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		x_n: x.n,
 		"ClosureScopes:x_n/4": $x_n__closures
