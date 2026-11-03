@@ -1,4 +1,4 @@
-// size: 27386 (min) 10220 (brotli)
+// size: 27281 (min) 10179 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -152,10 +152,9 @@ let _if = /*@__PURE__*/ withBranches((nodeAccessor, ...branchesArgs) => {
       );
   };
 });
-let _show = /*@__PURE__*/ withBranches((nodeAccessor, startNodeAccessor, endNodeAccessor) => {
+let _show = /*@__PURE__*/ withBranches((nodeAccessor, startNodeAccessor) => {
   ((nodeAccessor = decodeAccessor(nodeAccessor)),
-    startNodeAccessor !== void 0 && (startNodeAccessor = decodeAccessor(startNodeAccessor)),
-    endNodeAccessor !== void 0 && (endNodeAccessor = decodeAccessor(endNodeAccessor)));
+    startNodeAccessor !== void 0 && (startNodeAccessor = decodeAccessor(startNodeAccessor)));
   let rangeAccessor = "A" + nodeAccessor;
   return (scope, display) => {
     let referenceNode = scope[nodeAccessor],
@@ -164,31 +163,20 @@ let _show = /*@__PURE__*/ withBranches((nodeAccessor, startNodeAccessor, endNode
       range = scope[rangeAccessor];
     range ||
       ((range = scope[rangeAccessor] = {}),
-      (range.K = onlyChild
-        ? parentNode.lastChild
-        : endNodeAccessor
-          ? scope[endNodeAccessor]
-          : referenceNode.previousSibling),
       (range.S = onlyChild
-        ? parentNode.firstChild
+        ? parentNode.insertBefore(new Text(), parentNode.firstChild)
         : startNodeAccessor
           ? scope[startNodeAccessor]
-          : range.K));
+          : referenceNode.previousSibling));
     let startNode = range.S;
-    if (range.L && startNode === range.K && startNode.tagName === "T") {
-      let wrapper = startNode;
-      (wrapper.firstChild || wrapper.appendChild(new Text()),
-        (range = scope[rangeAccessor] = {}),
-        (range.S = startNode = wrapper.firstChild),
-        (range.K = wrapper.lastChild),
-        wrapper.replaceWith(...wrapper.childNodes));
-    }
-    let inDom = onlyChild ? !!parentNode.firstChild : startNode.parentNode === parentNode;
-    display
-      ? inDom || insertBranchBefore(range, parentNode, onlyChild ? null : referenceNode)
-      : inDom &&
-        (onlyChild && ((range.S = parentNode.firstChild), (range.K = parentNode.lastChild)),
-        tempDetachBranch(range));
+    range.L && startNode.tagName === "T"
+      ? display && startNode.replaceWith((range.S = new Text()), ...startNode.childNodes)
+      : display
+        ? startNode.parentNode !== parentNode &&
+          parentNode.insertBefore(startNode.parentNode, onlyChild ? null : referenceNode)
+        : startNode.parentNode === parentNode &&
+          ((range.K = onlyChild ? parentNode.lastChild : referenceNode.previousSibling),
+          tempDetachBranch(range));
   };
 });
 let _dynamic_tag = /*@__PURE__*/ withBranches(

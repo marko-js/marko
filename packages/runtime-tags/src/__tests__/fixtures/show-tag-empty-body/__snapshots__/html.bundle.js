@@ -6,7 +6,7 @@ var template_default = _template("a", (input) => {
 	_html(`<button>reveal</button>${_el_resume($scope0_id, "a")}`);
 	_show_start(reveal);
 	_html(_text_resume($scope0_id, "c", input.note, _write_guard($scope0_reason, 0)));
-	_show_end($scope0_id, "e", reveal);
+	_show_end($scope0_id, "d", reveal);
 	_script($scope0_id, "a0");
-	_scope($scope0_id, { i: reveal });
+	_scope($scope0_id, { h: reveal });
 }, 1);

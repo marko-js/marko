@@ -14,11 +14,11 @@ var template_default = _template("a", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "d", 1, 1, 0, 0, 1);
-	_show_end($scope0_id, "f", visible);
+	_show_end($scope0_id, "e", visible);
 	_html(" y</div>");
 	_script($scope0_id, "a0");
 	_scope($scope0_id, {
-		g: visible,
-		h: inner
+		f: visible,
+		g: inner
 	});
 }, 1);

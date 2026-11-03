@@ -506,18 +506,11 @@ export const _if = /*@__PURE__*/ withBranches(
 // The `<show>` body always exists, so this signal never renders; it only moves
 // the body's range in/out of a detached fragment (SSR hides it in a `<t hidden>` wrapper).
 export const _show = /*@__PURE__*/ withBranches(
-  (
-    nodeAccessor: EncodedAccessor,
-    startNodeAccessor?: EncodedAccessor,
-    endNodeAccessor?: EncodedAccessor,
-  ) => {
+  (nodeAccessor: EncodedAccessor, startNodeAccessor?: EncodedAccessor) => {
     if (!MARKO_DEBUG) {
       nodeAccessor = decodeAccessor(nodeAccessor as number);
       if (startNodeAccessor !== undefined) {
         startNodeAccessor = decodeAccessor(startNodeAccessor as number);
-      }
-      if (endNodeAccessor !== undefined) {
-        endNodeAccessor = decodeAccessor(endNodeAccessor as number);
       }
     }
     const rangeAccessor = AccessorPrefix.BranchScopes + nodeAccessor;
@@ -532,58 +525,42 @@ export const _show = /*@__PURE__*/ withBranches(
       let range = scope[rangeAccessor] as BranchScope | undefined;
 
       if (!range) {
-        // Client render: derive the range from the template's static shape.
+        // Client render: the body starts at its start marker or is one element;
+        // an only child has no markers, so an empty text starts its body.
         range = scope[rangeAccessor] = {} as BranchScope;
-        // A body edge without a marker is a static element ending the body;
-        // only a one-element body, which it also starts, lacks a start marker.
-        range[AccessorProp.EndNode] = onlyChild
-          ? parentNode.lastChild!
-          : endNodeAccessor
-            ? (scope[endNodeAccessor as Accessor] as ChildNode)
-            : referenceNode.previousSibling!;
         range[AccessorProp.StartNode] = onlyChild
-          ? parentNode.firstChild!
+          ? parentNode.insertBefore(new Text(), parentNode.firstChild)
           : startNodeAccessor
             ? (scope[startNodeAccessor as Accessor] as ChildNode)
-            : range[AccessorProp.EndNode];
+            : referenceNode.previousSibling!;
       }
 
-      let startNode = range[AccessorProp.StartNode];
+      // Resumed hidden, the `<t hidden>` wrapper hides the body in place until
+      // shown, then gives way to its children after an empty text that starts it.
+      const startNode = range[AccessorProp.StartNode];
       if (
         range[AccessorProp.Id] &&
-        startNode === range[AccessorProp.EndNode] &&
         (startNode as Partial<Element>).tagName === "T"
       ) {
-        // First update after resuming hidden: dissolve the `<t>` wrapper, leaving its
-        // children. Replacing it with a plain holder ensures a body `<t>` is never mistaken for it.
-        const wrapper = startNode as Element;
-        if (!wrapper.firstChild) wrapper.appendChild(new Text());
-        range = scope[rangeAccessor] = {} as BranchScope;
-        range[AccessorProp.StartNode] = startNode = wrapper.firstChild!;
-        range[AccessorProp.EndNode] = wrapper.lastChild!;
-        wrapper.replaceWith(...wrapper.childNodes);
-      }
-
-      // An only child owns every node in the parent, so the parent being empty is
-      // what says it is hidden; its cached marker may have been replaced by the body.
-      const inDom = onlyChild
-        ? !!parentNode.firstChild
-        : startNode.parentNode === parentNode;
-      if (display) {
-        if (!inDom) {
-          insertBranchBefore(
-            range,
-            parentNode,
+        if (display) {
+          startNode.replaceWith(
+            (range[AccessorProp.StartNode] = new Text()),
+            ...startNode.childNodes,
+          );
+        }
+      } else if (display) {
+        // Body control flow can replace any node but the start, so a hidden body
+        // is the whole fragment its start was parked in.
+        if (startNode.parentNode !== parentNode) {
+          parentNode.insertBefore(
+            startNode.parentNode!,
             onlyChild ? null : referenceNode,
           );
         }
-      } else if (inDom) {
-        if (onlyChild) {
-          // An only child has no markers; body control flow can replace the
-          // parent's first and last child, so read them at each hide.
-          range[AccessorProp.StartNode] = parentNode.firstChild!;
-          range[AccessorProp.EndNode] = parentNode.lastChild!;
-        }
+      } else if (startNode.parentNode === parentNode) {
+        range[AccessorProp.EndNode] = onlyChild
+          ? parentNode.lastChild!
+          : referenceNode.previousSibling!;
         tempDetachBranch(range);
       }
     };
