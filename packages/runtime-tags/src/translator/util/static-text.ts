@@ -21,8 +21,7 @@ export function followsStaticText(path: t.NodePath) {
   // sides still merges into one node and must emit only one walk step.
   while (
     prev.node &&
-    (getNodeContentType(prev as t.NodePath<t.Statement>, "endType") === null ||
-      (prev.isMarkoPlaceholder() && getStaticPlaceholderText(prev.node) === ""))
+    getNodeContentType(prev as t.NodePath<t.Statement>, "endType") === null
   ) {
     prev = prev.getPrevSibling();
   }

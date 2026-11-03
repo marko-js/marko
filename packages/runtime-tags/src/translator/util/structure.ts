@@ -15,6 +15,7 @@ import {
   ContentType,
   getSection,
   getSectionForBody,
+  isInlinedSection,
   type Section,
   StructureKind,
   type StructureOp,
@@ -106,18 +107,27 @@ function pushMarkup(structure: StructureOp[], str: string) {
 }
 
 // A node the markup renders, held in `binding` (set later while unknown).
-export function node(
-  path: t.NodePath<t.MarkoTag | t.MarkoPlaceholder>,
-  binding?: Binding,
-) {
+export function node(path: t.NodePath<t.MarkoTag>, binding?: Binding) {
   return addNode(path, binding, false);
 }
 
-// A `<!>` marker that what renders in its place replaces.
-export function marker(
-  path: t.NodePath<t.MarkoTag | t.MarkoPlaceholder>,
+// A placeholder's text node, or the `<!>` marker its text replaces where text
+// beside it may merge with it (`undefined` settles at the section's edge).
+export function text(
+  path: t.NodePath<t.MarkoPlaceholder>,
   binding: Binding,
+  marker: boolean | undefined,
 ) {
+  getSection(path).structure?.push({
+    kind: StructureKind.Node,
+    binding,
+    marker,
+    text: true,
+  });
+}
+
+// A `<!>` marker that what renders in its place replaces.
+export function marker(path: t.NodePath<t.MarkoTag>, binding: Binding) {
   addNode(path, binding, true);
 }
 
@@ -147,7 +157,7 @@ export function controlFlowNode(tag: t.NodePath<t.MarkoTag>, section: Section) {
 }
 
 function addNode(
-  path: t.NodePath<t.MarkoTag | t.MarkoPlaceholder>,
+  path: t.NodePath<t.MarkoTag>,
   binding: Binding | undefined,
   marker: boolean,
 ) {
@@ -183,6 +193,13 @@ function resolveStructure(section: Section) {
     separate(resolved);
   }
   let textEdge: undefined | "own" | "child";
+  const writeText = (value: string) => {
+    if (textEdge === "child") {
+      separate(resolved);
+    }
+    appendLiteral(resolved.writes, value);
+    textEdge = "own";
+  };
 
   for (const op of section.structure!) {
     if (typeof op === "string") {
@@ -193,11 +210,7 @@ function resolveStructure(section: Section) {
     } else {
       switch (op.kind) {
         case StructureKind.Text:
-          if (textEdge === "child") {
-            separate(resolved);
-          }
-          appendLiteral(resolved.writes, op.value);
-          textEdge = "own";
+          writeText(op.value);
           break;
         case StructureKind.ModuleRead:
           resolved.writes.push(toModuleReadExpression(op.read), "");
@@ -205,8 +218,12 @@ function resolveStructure(section: Section) {
           break;
         case StructureKind.Node: {
           if (!op.binding) continue;
+          const marker = op.marker ?? isInlinedSection(section);
+          if (op.text && !marker) {
+            writeText(" ");
+          }
           const withVar = hasScopeOffset(op.binding);
-          const code = op.marker
+          const code = marker
             ? withVar
               ? WalkCode.DynamicTagWithVar
               : WalkCode.Replace
@@ -214,7 +231,7 @@ function resolveStructure(section: Section) {
           flushSteps(resolved);
           resolved.walkComment.push(walkCodeToName[code]);
           appendLiteral(resolved.walks, String.fromCharCode(code));
-          if (op.marker) {
+          if (marker) {
             appendLiteral(resolved.writes, "<!>");
             textEdge = undefined;
           }
