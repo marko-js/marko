@@ -24,6 +24,7 @@ import { isOutputDOM } from "../util/marko-config";
 import { type Opt, push } from "../util/optional";
 import { addReasonExprs } from "../util/reasons";
 import { getReferencedBindings, mergeReferences } from "../util/references";
+import { replaceWithStatements } from "../util/replace-with-statements";
 import { callRuntime } from "../util/runtime";
 import { getScopeAccessorLiteral } from "../util/scope-accessor";
 import { createScopeReadExpression, scopeIdentifier } from "../util/scope-read";
@@ -221,7 +222,7 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
   }
 
   emitStyleImport(tag);
-  tag.remove();
+  replaceWithStatements(tag);
 }
 
 function translateDOM(tag: t.NodePath<t.MarkoTag>) {
@@ -262,7 +263,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
   }
 
   emitStyleImport(tag);
-  tag.remove();
+  replaceWithStatements(tag);
 }
 
 function dynamicStyleValues(node: t.MarkoTag) {

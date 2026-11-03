@@ -24,6 +24,7 @@ import { getTagName } from "../util/get-tag-name";
 import { isConditionTag, isCoreTagName } from "../util/is-core-tag";
 import { addReasonExprs, type Reasons } from "../util/reasons";
 import { mergeReferences } from "../util/references";
+import { replaceWithStatements } from "../util/replace-with-statements";
 import { callRuntime } from "../util/runtime";
 import { getScopeAccessorLiteral } from "../util/scope-accessor";
 import {
@@ -123,7 +124,6 @@ export const IfTag = {
         if (isLastBranch(tag)) {
           const branches = getBranches(tag);
           const [ifTag] = branches[0];
-          const nextTag = tag.getNextSibling();
           let branchReasons: Reasons | undefined;
           let statement: t.Statement | undefined;
 
@@ -176,9 +176,9 @@ export const IfTag = {
           }
 
           for (const [branchTag] of branches) {
-            branchTag.remove();
+            replaceWithStatements(branchTag);
           }
-          nextTag.insertBefore(statement!);
+          replaceWithStatements(tag, [statement!]);
         }
       },
     },
@@ -207,7 +207,7 @@ export const IfTag = {
               });
             }
 
-            branchTag.remove();
+            replaceWithStatements(branchTag);
             expr = testAttr
               ? t.conditionalExpression(testAttr.value, consequent, expr)
               : consequent;

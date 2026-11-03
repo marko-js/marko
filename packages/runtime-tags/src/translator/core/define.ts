@@ -17,6 +17,7 @@ import {
   trackVarReferences,
   mergeTagReferences,
 } from "../util/references";
+import { replaceWithStatements } from "../util/replace-with-statements";
 import runtimeInfo from "../util/runtime-info";
 import {
   ensureSection,
@@ -108,7 +109,7 @@ export default {
     enter(tag) {
       // An unreferenced `<define>`'s content was dropped in analyze.
       if (!tag.node.var || tag.node.body.extra?.dropped) {
-        tag.remove();
+        replaceWithStatements(tag);
         return;
       }
 
@@ -127,7 +128,7 @@ export default {
           "const",
           translatedAttrs.statements,
         );
-        tag.insertBefore(translatedAttrs.statements);
+        replaceWithStatements(tag, translatedAttrs.statements);
       } else {
         if (t.isIdentifier(node.var)) {
           const babelBinding = tag.scope.getBinding(node.var.name)!;
@@ -174,7 +175,7 @@ export default {
           // Matches the analysis, which drops the tag whenever every reference
           // is direct.
           if (bodySection && allDirectReferences) {
-            tag.remove();
+            replaceWithStatements(tag);
             return;
           }
         }
@@ -195,9 +196,8 @@ export default {
           initValue(tag.get("var").node!.extra!.binding!)!,
           propsToExpression(translatedAttrs.properties),
         );
+        replaceWithStatements(tag);
       }
-
-      tag.remove();
     },
   },
   attributes: {},

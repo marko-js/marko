@@ -25,6 +25,7 @@ import { finalizeRegistrations } from "../../util/module-registrations";
 import { type ParamsTree, exposeParamsTree } from "../../util/params-tree";
 import { isGuardedReason, mapBodyParams } from "../../util/reasons";
 import { trackParamsReferences } from "../../util/references";
+import { writeBodyStatements } from "../../util/replace-with-statements";
 import {
   dynamicImport,
   getCompatRuntimeFile,
@@ -273,6 +274,7 @@ export default {
       }
     },
     exit(program) {
+      writeBodyStatements(program.node);
       if (isOutputHTML()) {
         programHTML.translate.exit(program);
       } else {

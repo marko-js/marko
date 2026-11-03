@@ -176,7 +176,7 @@ export default {
         const bodySection = getSectionForBody(tagBody);
 
         if (!bodySection) {
-          tag.remove();
+          replaceWithStatements(tag);
           return;
         }
 
@@ -237,7 +237,7 @@ export default {
         const bodySection = getSectionForBody(tagBody);
 
         if (!bodySection) {
-          tag.remove();
+          replaceWithStatements(tag);
         }
       },
       exit(tag) {
@@ -282,7 +282,7 @@ export default {
 
         addValue(tagSection, tagExtra, signal, t.arrayExpression(loopArgs));
 
-        tag.remove();
+        replaceWithStatements(tag);
       },
     },
   }),
