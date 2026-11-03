@@ -23,8 +23,6 @@ import {
   type OneMany,
   type Opt,
   Sorted,
-  type SortedOpt,
-  forEach,
   reduce,
   some,
 } from "./optional";
@@ -131,8 +129,9 @@ export interface Section {
   selector: Set<Binding> | undefined;
   /** The canonical intersections its work waits on, once ids allocate. */
   intersections: Map<Intersection, IntersectionMeta> | undefined;
-  /** The slots of its scope, its own and its bindings'. */
-  slots: SortedOpt<Slot>;
+  /** The slots of its scope, its own and its bindings', which `slots.ts` keeps
+   * sorted. */
+  slots: Slot[];
   /** When client code reads anything in its scope: its slots' reasons merged. */
   reason: undefined | Reason;
   paramReasonGroups: ParamReasonGroups | undefined;
@@ -243,7 +242,7 @@ export function ensureBodySection(
       selector: undefined,
       intersections: undefined,
       isHoistThrough: undefined,
-      slots: undefined,
+      slots: [],
       reason: undefined,
       paramReasonGroups: undefined,
       returnValueExpr: undefined,
@@ -590,11 +589,9 @@ export function getCommonSection(section: Section, other: Section) {
 export function ensureSectionReasonGroups(section: Section) {
   ensureReasonGroups(section, section.reason);
 
-  forEach(section.slots, ensureSlotReasonGroups);
-}
-
-function ensureSlotReasonGroups(slot: Slot) {
-  ensureReasonGroups(slot.section, slot.reason);
+  for (const slot of section.slots) {
+    ensureReasonGroups(slot.section, slot.reason);
+  }
 }
 
 // The groups the section's guards test, in its own terms.

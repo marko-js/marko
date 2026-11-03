@@ -276,15 +276,13 @@ export function getKnownExprsAt(
 }
 
 export function applyReasonExprs(section: Section) {
-  forEach(section.slots, applySlotExprs);
-}
-
-function applySlotExprs(slot: Slot) {
-  addReason(slot, getSourcesForExprs(slot.reasonExprs));
+  for (const slot of section.slots) {
+    addReason(slot, getSourcesForExprs(slot.reasonExprs));
+  }
 }
 
 export function mergeSlotReasons(section: Section) {
-  section.reason = reduce(section.slots, mergeSlotReason, section.reason);
+  section.reason = section.slots.reduce(mergeSlotReason, section.reason);
 }
 
 // A scope is written when any slot in it is.
@@ -295,7 +293,7 @@ function mergeSlotReason(sectionReason: Reason | undefined, slot: Slot) {
 // Each reason a node of the section resumes for, kept apart so each one's guard
 // stays buildable.
 export function getNodeReasons(section: Section) {
-  return reduce(section.slots, addNodeReason, undefined);
+  return section.slots.reduce<Reasons | undefined>(addNodeReason, undefined);
 }
 
 function addNodeReason(reasons: Reasons | undefined, slot: Slot) {

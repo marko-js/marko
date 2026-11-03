@@ -21,11 +21,9 @@ import {
 import { finalizeContentDerives } from "./content-derives";
 import { generateUid } from "./generate-uid";
 import {
-  addSorted,
   every,
   concat,
   filter,
-  findSorted,
   forEach,
   first,
   last,
@@ -33,6 +31,7 @@ import {
   type SortedOneMany,
   push,
   reduce,
+  searchSorted,
   some,
 } from "./optional";
 import {
@@ -924,17 +923,18 @@ function getCanonicalIntersection(
   section: Section,
   intersection: Intersection,
 ) {
-  const intersections = intersectionsBySection.get(section) || [];
-  const canonical = findSorted(
-    compareIntersections,
-    intersections,
-    intersection,
-  );
-  if (canonical) return canonical;
-  intersectionsBySection.set(
-    section,
-    addSorted(compareIntersections, intersections, intersection),
-  );
+  const intersections = intersectionsBySection.get(section);
+  if (!intersections) {
+    intersectionsBySection.set(section, [intersection]);
+  } else {
+    const index = searchSorted(
+      compareIntersections,
+      intersections,
+      intersection,
+    );
+    if (index >= 0) return intersections[index];
+    intersections.splice(~index, 0, intersection);
+  }
   return intersection;
 }
 
