@@ -1,0 +1,22 @@
+{
+  "dom": {
+    "template.marko.page.mjs": {
+      "total": {
+        "min": 14885,
+        "brotli": 6292
+      },
+      "files": {
+        "tags/show-await.marko": 657,
+        "template.marko": 490
+      }
+    }
+  },
+  "html": {
+    "min": 517,
+    "brotli": 326
+  },
+  "patch": {
+    "min": 224,
+    "brotli": 135
+  }
+}

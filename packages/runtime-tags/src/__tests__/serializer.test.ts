@@ -1,6 +1,8 @@
 import assert from "node:assert/strict";
 import { inspect } from "node:util";
 
+import { PatchSerializerState } from "../html/patches/serializer";
+import type { PatchRenderState } from "../html/patches/writer";
 import type { ScopeFlush } from "../html/serializer";
 import {
   dropQueuedCall,
@@ -3051,6 +3053,37 @@ describe("serializer", () => {
     const value = scopes.get(1)!.value as object[];
     assert.equal(value.at(-1), value.at(-2));
   });
+
+  describe("patch flushes", () => {
+    it("serializes a scope run bare", () => {
+      assert.equal(
+        stringifyScopes(
+          new PatchSerializerState({
+            patchTreeNodes: new Set(),
+          } as PatchRenderState),
+          [[1, {}, { value: 1 }]],
+          patchBoundary(),
+        ),
+        `{value:1}`,
+      );
+    });
+
+    it("assigns on the built tree and yields it", () => {
+      const err = new Error("boom") as Error & { cause: unknown };
+      const wrapper = { err };
+      err.cause = wrapper;
+      assert.equal(
+        stringifyScopes(
+          new PatchSerializerState({
+            patchTreeNodes: new Set(),
+          } as PatchRenderState),
+          [[1, {}, { value: { wrapper } }]],
+          patchBoundary(),
+        ),
+        `[{value:{wrapper:_.a={err:_.b=new Error("boom")}}},_.b.cause=_.a][0]`,
+      );
+    });
+  });
 });
 
 // The round-trip gate every `assertStringify` leans on: a built-in that lost
@@ -3504,4 +3537,8 @@ function abortedStringifying(scopes: ScopeFlush[]) {
   } as any as Boundary;
   stringifyScopes(serializer, scopes, boundary);
   return (aborted as Error)?.message;
+}
+
+function patchBoundary() {
+  return { signal: { aborted: false }, state: {} } as any as Boundary;
 }

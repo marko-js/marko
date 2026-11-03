@@ -1,0 +1,9 @@
+import Labeled from "./tags/labeled.marko";
+import Plain from "./tags/plain.marko";
+<for|item| of=input.items><${item.on ? Labeled : Plain} name=item.key/></for>
+<for|item| of=input.items>
+  <${item.on ? "p" : "div"}><id/bodyId/><label for=bodyId>${item.key}</label><input id=bodyId/></>
+</for>
+<for|item| of=input.items>
+  <${item.on ? Plain : null} name=item.key><id/nullId/><label for=nullId>${item.key}</label><input id=nullId/></>
+</for>

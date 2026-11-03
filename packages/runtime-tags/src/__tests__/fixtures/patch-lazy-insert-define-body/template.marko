@@ -1,0 +1,12 @@
+import Lazy from "./lazy.marko" with { load: "render" }
+<define/Row|{ label }: { label: string }|>
+  <Lazy label=label/>
+</define>
+<let/open=false/>
+<button.open onClick() { open = true }>open</button>
+<if=input.show>
+  <Row label="s"/>
+</if>
+<if=open>
+  <Row label="c"/>
+</if>

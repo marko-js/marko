@@ -1,0 +1,9 @@
+import Field from "./tags/field.marko";
+<if=input.show><field name="child"/></if>
+<id/afterChild/>
+<input id=afterChild/>
+<label for=afterChild>after child</label>
+<${input.show ? Field : null} name="dynamic"/>
+<id/afterTag/>
+<input id=afterTag/>
+<label for=afterTag>after tag</label>

@@ -1,0 +1,7 @@
+<let/on=false/>
+<main>
+  <if=input.show>
+    <a ...{ ...input.attrs, class: on ? "on" : "off" }>go</a>
+  </if>
+  <button onClick() { on = !on }>t</button>
+</main>

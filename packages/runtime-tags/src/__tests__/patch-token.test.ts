@@ -1,0 +1,143 @@
+import assert from "node:assert/strict";
+
+import { _shells, rawShells } from "../html/patches/shells";
+import {
+  _template_patch,
+  patchRequestKind,
+  patchResponseHeaders,
+} from "../html/patches/template";
+import { decodeHeld, encodeHeld } from "../html/patches/token";
+import { setPatchBuild } from "../html/patches/writer";
+
+describe("patch token", () => {
+  it("names held shells by registry index, as a bitmap when shorter", () => {
+    _shells({ d: "d;;", d0: "d0;;", d2: "d2;;", b13: "b13;;", ab5: "ab5;;" });
+    const ids = new Set(["d", "d2", "ab5"]);
+    const token = encodeHeld(ids);
+    assert.equal(token, "CxU");
+    assert.deepEqual([...decodeHeld(token)!].sort(), [...ids].sort());
+  });
+
+  it("voids a token of another registry size", () => {
+    const token = encodeHeld(new Set(["d"]));
+    _shells({ zz: "zz;;" });
+    assert.equal(decodeHeld(token), undefined);
+  });
+
+  it("holds nothing for a token that does not parse", () => {
+    _shells({ d: "d;;" });
+    assert.equal(decodeHeld("!!"), undefined);
+    assert.equal(decodeHeld("not base64 at all"), undefined);
+  });
+
+  it("holds nothing for an index outside the registry", () => {
+    _shells({ d: "d;;" });
+    const size = Object.keys(rawShells).length;
+    assert.equal(
+      decodeHeld(btoa(String.fromCharCode(size * 2, size + 5))),
+      undefined,
+    );
+  });
+
+  it("stays under budget by forgetting its highest indices", () => {
+    const registered: Record<string, string> = {};
+    const ids = new Set<string>();
+    // Larger than a bitmap within budget covers.
+    for (let i = 0; i < 8000; i++) {
+      const id = "t" + i.toString(36);
+      registered[id] = id + ";;";
+      if (i % 2) ids.add(id);
+    }
+    _shells(registered);
+    const token = encodeHeld(ids);
+    assert.ok(token.length <= 1024, token.length + " > 1024");
+    const kept = decodeHeld(token)!;
+    assert.ok(kept.size > 500 && kept.size < ids.size, String(kept.size));
+    assert.ok(kept.has("t1"), "a low index stays");
+  });
+
+  it("names a few held shells of a large registry by their deltas", () => {
+    const registered: Record<string, string> = {};
+    for (let i = 0; i < 100; i++) registered["s" + i] = "s" + i + ";;";
+    _shells(registered);
+    const ids = new Set(["s1", "s50", "s99"]);
+    const token = encodeHeld(ids);
+    // Size × 2 as a two byte varint, then three deltas.
+    assert.equal(atob(token).length, 5);
+    assert.deepEqual([...decodeHeld(token)!].sort(), [...ids].sort());
+  });
+
+  it("tells a patch request of another build", () => {
+    // Until a build is named, every request is another build's, and no
+    // patch renders.
+    assert.equal(patchRequestKind({ "x-marko-patch": ";" }, marked()), "stale");
+    assert.throws(
+      () => _template_patch("t", () => {}, 1).patch({}),
+      /setPatchBuild/,
+    );
+    setPatchBuild("b1");
+    assert.equal(
+      patchRequestKind({ "x-marko-patch": "b0;CxU" }, marked()),
+      "stale",
+    );
+    assert.equal(
+      patchRequestKind({ "x-marko-patch": "b1;CxU" }, marked()),
+      "patch",
+    );
+    assert.equal(
+      patchRequestKind({ "x-marko-patch": "b1;" }, marked()),
+      "patch",
+    );
+    assert.equal(patchRequestKind({ "x-marko-patch": "" }, marked()), "stale");
+    assert.equal(patchRequestKind(new Headers(), marked()), undefined);
+  });
+
+  it("takes only a request whose URL ends with the marker as a patch, and strips it", () => {
+    const headers = { "x-marko-patch": "b1;" };
+    const url = marked("/p?q=a%20b");
+    assert.equal(patchRequestKind(headers, url), "patch");
+    assert.equal(url.href, "https://x.test/p?q=a%20b#top");
+    const bare = marked("/p");
+    assert.equal(patchRequestKind(headers, bare), "patch");
+    assert.equal(bare.href, "https://x.test/p#top");
+    // A cache or proxy that dropped, moved or rewrote the marker leaves a
+    // document's request, its URL untouched.
+    for (const href of [
+      "https://x.test/p?q=1",
+      "https://x.test/p?~&q=1",
+      "https://x.test/p?~=",
+      "https://x.test/p?q=1&~=",
+      "https://x.test/p?%7E",
+      "https://x.test/p?x~",
+      "https://x.test/p?q=~",
+    ]) {
+      const url = new URL(href);
+      assert.equal(patchRequestKind(headers, url), undefined, href);
+      assert.equal(url.href, href);
+    }
+    // A marked URL without the header is a document's, the marker still stripped.
+    const headerless = marked("/p");
+    assert.equal(patchRequestKind(new Headers(), headerless), undefined);
+    assert.equal(headerless.href, "https://x.test/p#top");
+  });
+
+  it("marks a patch with its build, refuses another build's uncached and leaves a document as is", () => {
+    assert.deepEqual(patchResponseHeaders(undefined), {});
+    assert.deepEqual(patchResponseHeaders("patch"), {
+      "content-type": "text/javascript;charset=UTF-8",
+      "cache-control": "no-store",
+      "x-marko-patch": "b1",
+    });
+    assert.deepEqual(patchResponseHeaders("stale"), {
+      "cache-control": "no-store",
+    });
+  });
+});
+
+// A patch request's URL as the router sends it: the marker last in its query.
+function marked(path = "/") {
+  return new URL(
+    path + (path.includes("?") ? "&" : "?") + "~#top",
+    "https://x.test",
+  );
+}
