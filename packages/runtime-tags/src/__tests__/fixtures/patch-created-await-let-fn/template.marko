@@ -1,0 +1,2 @@
+import { resolveAfter } from "../../utils/resolve"
+<if=input.show><await|v|=resolveAfter("v", 1)><card fn() { return v + ":" + input.label }/></await></if>

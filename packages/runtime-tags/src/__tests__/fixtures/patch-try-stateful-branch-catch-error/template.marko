@@ -1,0 +1,10 @@
+<let/show=true/>
+<button onClick() { show = !show }>toggle</button>
+<if=show>
+  <try>
+    <await|v|=input.p>
+      <em>${v}</em>
+    </await>
+    <@catch|err|><p>${input.title} ${err.message}</p></@catch>
+  </try>
+</if>

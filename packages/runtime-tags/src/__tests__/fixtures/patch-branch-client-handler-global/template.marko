@@ -1,0 +1,10 @@
+<const/title=$global.title + "!"/>
+<let/show=false/>
+<main>
+  <if=show>
+    <button.read onClick() {
+      document.querySelector("main")!.dataset.title = title;
+    }>read</button>
+  </if>
+  <button.step onClick() { show = true }>show</button>
+</main>

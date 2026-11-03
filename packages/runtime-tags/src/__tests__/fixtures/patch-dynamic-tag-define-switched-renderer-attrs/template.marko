@@ -1,0 +1,7 @@
+<define/A>a</define>
+<define/B>b</define>
+<define/Wrap|{ n, content }|>
+  <span>${n}</span>
+  <${content} title=input.t/>
+</define>
+<Wrap n=input.n content=(input.x === 1 ? A : B)/>

@@ -1,0 +1,9 @@
+<main>
+  <h1>${input.title}</h1>
+  <select multiple=input.many value=input.choice valueChange(next: string | string[]) {
+    document.querySelector("main")!.dataset.choice = String(next);
+  }>
+    <option value="a">A</option>
+    <option value="b">B</option>
+  </select>
+</main>

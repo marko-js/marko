@@ -71,6 +71,11 @@ const [getReferencesByImport] = createAnalysisState(
     >(),
 );
 
+// A function its template may register once client code reads it.
+export function isTrackedFunction(extra: t.NodeExtra) {
+  return getReferencesByFn().has(extra as RegisteredFnExtra);
+}
+
 // Tracks a function its template may register once client code reads it,
 // reserving the id an importer registers it under when it is exported.
 export function trackFunction(

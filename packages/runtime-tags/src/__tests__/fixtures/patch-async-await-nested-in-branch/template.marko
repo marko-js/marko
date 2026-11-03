@@ -1,0 +1,10 @@
+<main>
+  <if=input.show>
+    <await|outer|=input.outer>
+      <await|inner|=input.inner>
+        <em>${outer}:${inner}</em>
+      </await>
+    </await>
+  </if>
+  <button onClick() {}>interactive</button>
+</main>

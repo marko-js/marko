@@ -1,0 +1,17 @@
+// PATCH
+`packages/runtime-tags/src/__tests__/fixtures/patch-loop-state/template.marko_1*shell packages/runtime-tags/src/__tests__/fixtures/patch-loop-state/template.marko_1_count#0:6/setup;D%c%;<li><!> (<!>)</li>`
+{
+  "PatchLoop:#ul/0": [2, {
+    "PatchText:#text/0": "Rye"
+  }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-state/template.marko_1*shell"]
+}
+;BAE
+
+// PATCH holding BAE
+{
+  "PatchLoop:#ul/0": [2, {
+    "PatchText:#text/0": "Rye"
+  }, 3, {
+    "PatchText:#text/0": "Milk"
+  }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-state/template.marko_1*shell"]
+}

@@ -1,0 +1,11 @@
+// template.marko
+const $template = "<html><head><title></title></head><body><main> </main></body></html>";
+const $walks = "E lE n";
+const $setup = [[], []];
+_shells({ "__tests__/template.marko": "__tests__/template.marko;E lE ;<html><head><title></title></head><body><main> </main></body></html>" });
+var template_default = _template("__tests__/template.marko", (input) => {
+	const $scope0_reason = _scope_reason();
+	const $scope0_id = _scope_id();
+	_html(`<html><head><title>${_escape(`${_to_text(input.title)} & more <3`, $scope0_id, "PatchTextContent:#title/0", $scope0_reason, 0)}</title>${_el_resume($scope0_id, "#title/0", _mask_group($scope0_reason, 0))}${_flush_head()}</head><body><main>${_text_resume($scope0_id, "#text/1", input.body, 1, $scope0_reason, 1)}</main>`), _trailers("</body></html>");
+	_scope($scope0_id, {}, "__tests__/template.marko", 0);
+}, 1);

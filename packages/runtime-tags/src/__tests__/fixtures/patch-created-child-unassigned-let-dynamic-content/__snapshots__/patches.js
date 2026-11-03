@@ -1,0 +1,33 @@
+// PATCH
+[`a1;Db%;<em>static <!></em>`, `a2;/Db%l&;<section><button>x</button><!></section>`]
+{
+  ba: [{
+    ca: {
+      fa: "^^a1",
+      cAa: {
+        ta: "b"
+      }
+    }
+  }, "a2"],
+  xe: "b"
+}
+;CQY
+
+// PATCH holding CQY
+{
+  ba: 0,
+  xe: "c"
+}
+
+// PATCH holding CQY
+{
+  ba: [{
+    ca: {
+      fa: "^^a1",
+      cAa: {
+        ta: "d"
+      }
+    }
+  }, "a2"],
+  xe: "d"
+}

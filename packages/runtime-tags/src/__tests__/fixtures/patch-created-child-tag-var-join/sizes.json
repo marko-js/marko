@@ -1,0 +1,36 @@
+{
+  "dom": {
+    "route-pg.marko.load.mjs": {
+      "min": 93,
+      "brotli": 88
+    },
+    "template.marko.page.mjs": {
+      "min": 1596,
+      "brotli": 829
+    },
+    "route-pg.mjs": {
+      "total": {
+        "min": 2750,
+        "brotli": 1303
+      },
+      "files": {
+        "tags/file-store.marko": 332,
+        "tags/file-tabs.marko": 514,
+        "tags/file-host.marko": 325,
+        "tags/route-pg.marko": 245
+      }
+    },
+    "shared": {
+      "min": 12988,
+      "brotli": 5771
+    }
+  },
+  "html": {
+    "min": 310,
+    "brotli": 226
+  },
+  "patch": {
+    "min": 253,
+    "brotli": 191
+  }
+}
