@@ -16,6 +16,12 @@ non-inlined tag body. Sections own bindings and signals; scopes are their live
 executions.
 _Avoid_: fragment, block, component
 
+**Known child**:
+A section its callers render in place (`isKnownChild`): a template's root, or
+a `<define>` body its direct calls render. Text beside its edges is its
+callers'.
+_Avoid_: inlined section
+
 **Binding**:
 The compiler record for a template value or property, including its reads,
 assignments, aliases, closures, hoists, consumers, and sources. Only retained
