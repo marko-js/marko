@@ -28,6 +28,7 @@ import {
 } from "../../util/known-tag";
 import { getMarkoOpts, isOutputHTML } from "../../util/marko-config";
 import { dropNodes } from "../../util/references";
+import { replaceWithStatements } from "../../util/replace-with-statements";
 import {
   callRuntime,
   dynamicImport,
@@ -307,7 +308,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
     importNamed(file, relativePath, childExports.walks, `${tagName}_walks`);
   }
 
-  tag.remove();
+  replaceWithStatements(tag);
 }
 
 // Declares a load import's signal or setup, cached under `key` for every tag

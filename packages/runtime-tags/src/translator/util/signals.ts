@@ -39,6 +39,10 @@ import {
   isAssignedBindingExtra,
   isRegisteredFnExtra,
 } from "./references";
+import {
+  insertStatementBefore,
+  replaceWithStatements,
+} from "./replace-with-statements";
 import { callRuntime, registerRuntimeValue } from "./runtime";
 import {
   getClosureAccessorLiteral,
@@ -878,7 +882,7 @@ export function addTagStatement(
   if (isOutputHTML()) {
     // Buffered markup is deliberately not flushed first: source-order
     // interleaving of a dev statement is not worth splitting the html write.
-    tag.insertBefore(statement);
+    insertStatementBefore(tag, statement);
   } else {
     addStatement(
       "render",
@@ -886,9 +890,8 @@ export function addTagStatement(
       tag.node.attributes[0]?.value.extra,
       statement,
     );
+    replaceWithStatements(tag);
   }
-
-  tag.remove();
 }
 
 export function addValue(

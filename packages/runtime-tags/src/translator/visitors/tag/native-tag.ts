@@ -1199,7 +1199,7 @@ export default {
           }
         }
 
-        tag.remove();
+        replaceWithStatements(tag);
       },
     },
   }),

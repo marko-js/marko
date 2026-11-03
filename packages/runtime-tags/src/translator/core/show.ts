@@ -234,7 +234,7 @@ export default {
         const tagExtra = tag.node.extra!;
 
         if (tagExtra[kStaticDisplay] === true) {
-          tag.remove();
+          replaceWithStatements(tag);
           return;
         }
 
@@ -260,7 +260,7 @@ export default {
         };
         addValue(tagSection, tagExtra, signal, display);
 
-        tag.remove();
+        replaceWithStatements(tag);
       },
     },
   }),

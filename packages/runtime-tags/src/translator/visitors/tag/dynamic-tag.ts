@@ -254,7 +254,7 @@ export default {
         !isOutputHTML() &&
         !getTagTemplate(tag)
       ) {
-        tag.remove();
+        replaceWithStatements(tag);
         return;
       }
 
@@ -316,7 +316,7 @@ export default {
             },
           );
 
-          tag.remove();
+          replaceWithStatements(tag);
         }
 
         return;
@@ -342,7 +342,7 @@ export default {
           !markerReason &&
           !classHydration
         ) {
-          tag.remove();
+          replaceWithStatements(tag);
           return;
         }
 
@@ -626,7 +626,7 @@ export default {
           }
         }
         addValue(section, tagExtra, signal, tagExpression);
-        tag.remove();
+        replaceWithStatements(tag);
       }
     },
   },

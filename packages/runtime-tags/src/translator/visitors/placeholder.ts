@@ -7,6 +7,7 @@ import buildStringExpression from "../util/build-string-expression";
 import evaluate from "../util/evaluate";
 import { isOutputHTML } from "../util/marko-config";
 import { addReasonExprs } from "../util/reasons";
+import { replaceWithStatements } from "../util/replace-with-statements";
 import { callRuntime } from "../util/runtime";
 import { getScopeAccessorLiteral } from "../util/scope-accessor";
 import { createScopeReadExpression, scopeIdentifier } from "../util/scope-read";
@@ -115,7 +116,7 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
     injectTextCoercion(value);
   }
   if (getPlaceholderContentType(node) === null) {
-    placeholder.remove();
+    replaceWithStatements(placeholder);
     return;
   }
 
@@ -183,7 +184,7 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
     }
   }
 
-  placeholder.remove();
+  replaceWithStatements(placeholder);
 }
 
 // Produces an expression equivalent to `_escape(value)` that escapes as little as

@@ -14,6 +14,7 @@ import {
 import { BindingType, createBinding } from "../util/bindings";
 import { initBranchSection } from "../util/branch-tag";
 import { setDerivedFrom, trackParamsReferences } from "../util/references";
+import { replaceWithStatements } from "../util/replace-with-statements";
 import { callRuntime, importRuntimeFeature } from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
 import { getScopeAccessorLiteral } from "../util/scope-accessor";
@@ -118,23 +119,21 @@ export default {
         setSectionOwnerResumedByMarker(bodySection);
         writeHTMLResumeStatements(tag);
 
-        tag
-          .replaceWith(
-            t.expressionStatement(
-              callRuntime(
-                "_await",
-                getScopeIdIdentifier(section),
-                getScopeAccessorLiteral(nodeBinding),
-                valueAttr.value,
-                t.arrowFunctionExpression(
-                  node.body.params,
-                  toOnlyExpressionOrBlock(node.body.body),
-                ),
-                getWriteGuard(section, bodySection.reason, true),
+        replaceWithStatements(tag, [
+          t.expressionStatement(
+            callRuntime(
+              "_await",
+              getScopeIdIdentifier(section),
+              getScopeAccessorLiteral(nodeBinding),
+              valueAttr.value,
+              t.arrowFunctionExpression(
+                node.body.params,
+                toOnlyExpressionOrBlock(node.body.body),
               ),
+              getWriteGuard(section, bodySection.reason, true),
             ),
-          )[0]
-          .skip();
+          ),
+        ]);
       },
     },
     dom: {
@@ -179,7 +178,7 @@ export default {
 
         addValue(section, valueExpr.extra, signal, valueExpr);
 
-        tag.remove();
+        replaceWithStatements(tag);
       },
     },
   }),
