@@ -15,7 +15,7 @@ import {
   ContentType,
   getSection,
   getSectionForBody,
-  isInlinedSection,
+  isKnownChild,
   type Section,
   StructureKind,
   type StructureOp,
@@ -217,7 +217,7 @@ function resolveStructure(section: Section) {
           break;
         case StructureKind.Node: {
           if (!op.binding) continue;
-          const marker = op.marker ?? isInlinedSection(section);
+          const marker = op.marker ?? isKnownChild(section);
           if (op.text && !marker) {
             writeText(" ");
           }

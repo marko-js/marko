@@ -95,7 +95,7 @@ export interface StructureNode {
   // still unset there, the element is not addressed and the op drops.
   binding: Binding | undefined;
   /** `undefined` for a text node at its section's edge: a marker where the
-   * section is inlined (`isInlinedSection`), known once calls are analyzed. */
+   * section is a known child (`isKnownChild`), known once calls are analyzed. */
   marker: boolean | undefined;
   /** A placeholder's text node, written as a space where it is no marker. */
   text?: true;
@@ -475,9 +475,9 @@ export function getNodeContentType(
   return ContentType.Dynamic;
 }
 
-// Whether the section renders inside its callers' markup, so text beside its
-// edges is theirs: a template, or a body its direct calls render.
-export function isInlinedSection(section: Section) {
+// A section its callers render in place, so text beside its edges is theirs:
+// a template, or a body its direct calls render.
+export function isKnownChild(section: Section) {
   return !section.parent || !!section.calls;
 }
 

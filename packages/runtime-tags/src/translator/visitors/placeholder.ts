@@ -17,7 +17,7 @@ import {
   getScopeIdIdentifier,
   getSection,
   getSectionForBody,
-  isInlinedSection,
+  isKnownChild,
 } from "../util/sections";
 import { addSetupExpr } from "../util/setup-work";
 import { addStatement } from "../util/signals";
@@ -38,7 +38,7 @@ const kTextAfter = Symbol("text may merge after the placeholder");
 declare module "@marko/compiler/dist/types" {
   export interface MarkoPlaceholderExtra {
     /** Whether text may merge into its text node from that side; `undefined`
-     * where that side is its section's edge (see `isInlinedSection`). */
+     * where that side is its section's edge (see `isKnownChild`). */
     [kTextBefore]?: boolean;
     [kTextAfter]?: boolean;
   }
@@ -90,7 +90,7 @@ export default {
             (!node.escape &&
               content!.singleChild &&
               content!.startType === ContentType.Placeholder) ||
-            // A side at its section's edge leaves it to whether the section is inlined.
+            // A side at its section's edge leaves it to whether the section is a known child.
             (before === false && after === false ? false : undefined),
         );
       }
@@ -154,7 +154,7 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
           getScopeIdIdentifier(section),
           getScopeAccessorLiteral(nodeBinding!),
           value,
-          (extra[kTextBefore] ?? isInlinedSection(section))
+          (extra[kTextBefore] ?? isKnownChild(section))
             ? guard
               ? t.binaryExpression("*", guard, t.numericLiteral(2))
               : t.numericLiteral(2)
