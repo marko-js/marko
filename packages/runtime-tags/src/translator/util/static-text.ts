@@ -2,7 +2,7 @@ import { types as t } from "@marko/compiler";
 
 import { _escape, _unescaped } from "../../html/content";
 import evaluate from "./evaluate";
-import { getNodeContentType } from "./sections";
+import { ContentType, getNodeContentType } from "./sections";
 
 // A run of adjacent static text (literal `MarkoText` and confident non-void escaped
 // `${...}`) becomes one DOM text node; only the node starting a run emits a walk step.
@@ -11,7 +11,7 @@ export function isStaticText(node?: t.Node) {
     case "MarkoText":
       return true;
     case "MarkoPlaceholder":
-      return node.escape && !!getStaticPlaceholderText(node);
+      return getPlaceholderContentType(node) === ContentType.Text;
   }
 }
 
@@ -27,6 +27,17 @@ export function followsStaticText(path: t.NodePath) {
   }
 
   return isStaticText(prev.node);
+}
+
+// What a placeholder renders: nothing (`null`), the text its value known at
+// compile time writes, or a node it updates.
+export function getPlaceholderContentType(placeholder: t.MarkoPlaceholder) {
+  const text = getStaticPlaceholderText(placeholder);
+  return text === ""
+    ? null
+    : text !== undefined && placeholder.escape
+      ? ContentType.Text
+      : ContentType.Placeholder;
 }
 
 // What a placeholder known at compile time writes. Asking the runtime's own text
