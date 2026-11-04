@@ -38,7 +38,13 @@ const COMPAT_REGISTRY = new WeakMap<
 export const compat = {
   $global,
   writeLoadAsset,
-  fork: _await,
+  fork: ((scopeId, accessor, promise, content) =>
+    _await(scopeId, accessor, promise, (value) => {
+      // Class output has no scope of its own; claim the id so sibling branch markers stay unique.
+      const branchId = _peek_scope_id();
+      content(value);
+      if (_peek_scope_id() === branchId) _scope_id();
+    })) as typeof _await,
   write: _html,
   writeScript,
   nextScopeId: _scope_id,
