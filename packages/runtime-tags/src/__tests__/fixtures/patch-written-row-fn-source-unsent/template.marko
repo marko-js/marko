@@ -1,0 +1,6 @@
+<for|item| of=input.items>
+  <const/v=input.a + item/>
+  <const/g() { return v; }/>
+  <if=input.x><em>${g()}</em></if>
+</for>
+<counter/>

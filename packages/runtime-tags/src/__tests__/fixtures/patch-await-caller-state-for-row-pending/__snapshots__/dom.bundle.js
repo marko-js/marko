@@ -1,0 +1,19 @@
+// tags/show-await.marko
+const $await_content__$params = ($scope, $params3) => _text($scope.c, $params3[0]);
+const $for_content__await_promise = /*@__PURE__*/ _await_promise(0, $await_content__$params);
+const $for_content__input_promise = /*@__PURE__*/ _for_closure_patch("b5", 0, ($scope) => $for_content__await_promise($scope, $scope._.e), 6);
+const $input_promise = /*@__PURE__*/ _const(4, $for_content__input_promise);
+
+// template.marko
+const $p = _let(7, ($scope) => $input_promise($scope.c, $scope.h));
+const $resolve = _let(8, ($scope) => _attr($scope.b, "disabled", !$scope.i));
+const $setup__script = _script("a0", ($scope) => {
+	_on($scope.a, "click", function() {
+		$p($scope, new Promise((r) => {
+			$resolve($scope, r);
+		}));
+	});
+	_on($scope.b, "click", function() {
+		$scope.i(42);
+	});
+});

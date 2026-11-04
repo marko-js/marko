@@ -1,0 +1,23 @@
+import type { TestConfig } from "../../main.test";
+import { flush, navigate, resolveAfter } from "../../utils/resolve";
+
+// Inside a `<try>` with a `@catch`, the patch's values settle in separate flushes,
+// each waiting for the body the document still streams: they apply in order.
+export const config: TestConfig = {
+  patches: true,
+  patch_while_streaming: true,
+  steps: () => [
+    { msg: "a", outer: resolveAfter("o", 1), inner: resolveAfter("i", 2) },
+    navigate(settleLater),
+    flush,
+    flush,
+  ],
+};
+
+function settleLater() {
+  return {
+    msg: "b",
+    outer: resolveAfter("o", 1),
+    inner: resolveAfter("i", 2),
+  };
+}

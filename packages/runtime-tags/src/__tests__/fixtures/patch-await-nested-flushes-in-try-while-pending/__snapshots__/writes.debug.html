@@ -1,0 +1,50 @@
+<button>0<!--M_$1 #text/1--></button><!--M_$1 #button/0--><!--M_[--><!--M_!^b--><!--M_[--><!--M_!^4--><em>outer
+  loading</em><!--M_!4--><!--M_]2 #text/0 4--><!--M_!b--><!--M_]1 #text/2 2-->
+<t hidden M_=4><!--M_#c--></t>
+<script>
+  WALKER_RUNTIME("M")("_").patchBuild = "b";
+  REORDER_RUNTIME(M._);
+  M._.r = [_ => [1, {
+      count: 0
+    }, {
+      _: _(1),
+      "#CatchContent": "packages/runtime-tags/src/__tests__/fixtures/patch-await-nested-flushes-in-try-while-pending/template.marko_6*content"
+    }, 1, {
+      _: _(2),
+      "#PlaceholderContent": "packages/runtime-tags/src/__tests__/fixtures/patch-await-nested-flushes-in-try-while-pending/template.marko_7*content"
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/patch-await-nested-flushes-in-try-while-pending/template.marko_0 1"
+  ];
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<t hidden M_=c><!--M_[-->
+  <div id=outer>a<!--M_$6 #text/0-->
+    <!>o<!--M_$6 #text/1-->
+  </div><!--M_[--><!--M_!^8--><em>inner
+    loading</em><!--M_!8--><!--M_]6 #text/2 8--><!--M_]4 #text/0 6-->
+</t>
+<t hidden M_=8><!--M_#d--></t>
+<script>
+  M._.r.push(_ => [8, {
+    _: _(6),
+    "#PlaceholderContent": "packages/runtime-tags/src/__tests__/fixtures/patch-await-nested-flushes-in-try-while-pending/template.marko_8*content"
+  }]);
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<t hidden M_=d><!--M_[-->
+  <div id=inner>a<!--M_$10 #text/0-->
+    <!>i<!--M_$10 #text/1-->
+  </div><!--M_]8 #text/0 10-->
+</t>
+<script>
+  M._.r.push(_ => [10, {
+    "ClosureSignalIndex:input_msg/10": 1
+  }]);
+  M._.w()
+</script>
