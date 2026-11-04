@@ -30,7 +30,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_for_of(input.rows, (row) => {
 		const $scope1_id = _scope_id();
 		const $for_content__row_id__closures = new Set();
-		_set_scope_reason(_mask_group($scope0_reason, 1) << 3);
+		_set_scope_reason(_updates_from($scope0_reason, 1) << 3);
 		const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 		card_default({
 			user: row.user,

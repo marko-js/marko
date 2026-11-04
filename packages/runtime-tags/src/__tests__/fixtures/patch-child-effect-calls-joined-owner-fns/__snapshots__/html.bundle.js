@@ -30,7 +30,7 @@ var template_default = _template("a", (input) => {
 	_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xd", input.title, !_server_guard($scope0_reason, 0));
 	const up = _bind_resume(() => "U" + input.title, "a0", $scope0_id);
 	const low = _bind_resume(() => "l" + input.title, "a1", $scope0_id);
-	_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 0) << 3 | _mask_group($scope0_reason, 0) << 5 | _mask_group($scope0_reason, 0) << 7 | _mask_group($scope0_reason, 0) << 11 | _mask_group($scope0_reason, 0) << 13);
+	_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 0) << 3 | _updates_from($scope0_reason, 0) << 5 | _updates_from($scope0_reason, 0) << 7 | _updates_from($scope0_reason, 0) << 11 | _updates_from($scope0_reason, 0) << 13);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	label_view_default({
 		a: up,

@@ -51,7 +51,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let p = Promise.resolve(0);
 	let resolve = undefined;
 	_html(`<button class=open>pend</button>${_el_mark($scope0_id, "#button/0")}<button${_attr("disabled", !resolve)} class=settle>settle</button>${_el_mark($scope0_id, "#button/1")}`);
-	_set_scope_reason(152 | (_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 2) << 5 | _mask_group($scope0_reason, 1) << 9));
+	_set_scope_reason(152 | (_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 2) << 5 | _updates_from($scope0_reason, 1) << 9));
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/2", 0);
 	show_await_default({
 		promise: p,

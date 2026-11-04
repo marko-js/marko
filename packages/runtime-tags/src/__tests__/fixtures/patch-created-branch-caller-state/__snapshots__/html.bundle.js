@@ -28,7 +28,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 0;
-	_set_scope_reason(8 | _mask_group($scope0_reason, 0) << 1);
+	_set_scope_reason(8 | _updates_from($scope0_reason, 0) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	panel_default({
 		open: input.open,

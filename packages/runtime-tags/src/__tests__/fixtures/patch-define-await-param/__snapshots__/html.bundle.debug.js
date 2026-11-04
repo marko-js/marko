@@ -51,7 +51,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			"ClosureScopes:value/9": _write_if($scope1_reason, 1) && _unfilled_if($scope1_reason, 1) && $Info_content__value__closures
 		}, "__tests__/template.marko", "2:2", { id: "2:16" }) || $fg__id && _patch_write($scope1_id, "PatchMarkedWrite:id", id, !_server_guard($scope1_reason, 0));
 	}, $scope0_id) };
-	_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 1) << 3);
+	_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 1) << 3);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	Info.content({
 		id: input.id,

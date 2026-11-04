@@ -19,7 +19,7 @@ var panel_default = _template("b", (input) => {
 			_if(() => {
 				if (input.show) {
 					const $scope2_id = _scope_id();
-					_html(`<em${_attr("title", input.b, $scope2_id, "aa$title", $scope0_reason, 5)}></em>${_el_mark($scope2_id, "a", _mask_group($scope0_reason, 5))}`);
+					_html(`<em${_attr("title", input.b, $scope2_id, "aa$title", $scope0_reason, 5)}></em>${_el_mark($scope2_id, "a", _updates_from($scope0_reason, 5))}`);
 					_unfilled_if($scope0_reason, 5) && _patch_subscribe($scope2_id, "b0", $cg__input_b);
 					_subscribe(_unfilled_if($scope0_reason, 5) && $input_b__closures, _scope($scope2_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope1_id) }), $cg__input_b && "b0");
 					return 0;
@@ -63,7 +63,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 0;
-	_set_scope_reason(8696 | (_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 2) << 9 | _mask_group($scope0_reason, 1) << 11));
+	_set_scope_reason(8696 | (_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 2) << 9 | _updates_from($scope0_reason, 1) << 11));
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	panel_default({
 		a: count,

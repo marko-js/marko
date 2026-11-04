@@ -7,7 +7,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $cg__input_a__OR__input_b = _client_guard($scope0_reason, 0), $fg__input_a = _filled_guard($scope0_reason, 1), $fg__input_b = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
-	_html(`<p>${_text_mark($scope0_id, "#text/0", input.a + input.b + $global$1.g, 1, (2 | _mask_group($scope0_reason, 0)) << 1, 0)}</p>`);
+	_html(`<p>${_text_mark($scope0_id, "#text/0", input.a + input.b + $global$1.g, 1, (2 | _updates_from($scope0_reason, 0)) << 1, 0)}</p>`);
 	_fill_global_subscribe("__tests__/tags/child.marko_0_input_a#3_input_b#4_$global_g#6", $scope0_id, $cg__input_a__OR__input_b);
 	_patch_render($scope0_id, "__tests__/tags/child.marko_0_input_a#3_input_b#4/setup", [$fg__input_a && "input_a", $fg__input_b && "input_b"], $scope0_reason, 0);
 	_scope($scope0_id, {
@@ -28,14 +28,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let n = 0;
-	_set_scope_reason(38 | _mask_group($scope0_reason, 0) << 3);
+	_set_scope_reason(38 | _updates_from($scope0_reason, 0) << 3);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	child_default({
 		a: input.x,
 		b: "n" + n
 	});
 	_patch_child_end();
-	_set_scope_reason(14 | _mask_group($scope0_reason, 1) << 5);
+	_set_scope_reason(14 | _updates_from($scope0_reason, 1) << 5);
 	const $childScope2 = _peek_scope_id($scope0_id, "#childScope/1", 1);
 	child_default({
 		a: "m" + n,

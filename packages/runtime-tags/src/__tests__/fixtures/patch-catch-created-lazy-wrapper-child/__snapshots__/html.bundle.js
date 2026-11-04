@@ -22,7 +22,7 @@ _shells({ c: `c${_shell_marker($setup)};${((_w0) => `b%b/${_w0}&b`)($walks$1)};$
 var wrapper_default = _template("c", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
+	_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "b", 0);
 	$Child_withLoadAssets({ label: input.label });
 	_patch_child_end();
@@ -53,7 +53,7 @@ var template_default = _template("b", (input) => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		_html(`<b>${_text_mark($scope1_id, "a", err.message, 1, 4, 0)}</b>`);
-		_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
+		_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
 		const $childScope = _peek_scope_id($scope1_id, "b", 0);
 		wrapper_default({ label: input.label });
 		_patch_child_end();

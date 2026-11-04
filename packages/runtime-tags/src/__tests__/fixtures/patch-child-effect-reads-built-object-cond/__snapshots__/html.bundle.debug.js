@@ -19,7 +19,7 @@ _shells({ "__tests__/template.marko": `__tests__/template.marko${_shell_marker($
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $fg__input_flag = _filled_guard($scope0_reason, 1), $fg__input_title = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
-	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
+	_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	child_default({ item: _patch_live($childScope, input.flag ? { t: input.title } : { t: "none" }, $scope0_id, "input_flag input_title") });
 	_patch_child_end();

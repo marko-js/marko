@@ -17,22 +17,22 @@ var code_block_default = _template("b", (input) => {
 	_if(() => {
 		if (input.text.length > 2) {
 			const $scope1_id = _scope_id();
-			_html(`<div>${_html_mark($scope1_id, "a", highlight(input.text), 1, (2 | _mask_group($scope0_reason, 0)) << 1, 0)}</div>`);
+			_html(`<div>${_html_mark($scope1_id, "a", highlight(input.text), 1, (2 | _updates_from($scope0_reason, 0)) << 1, 0)}</div>`);
 			_patch_render($scope1_id, "b1", [
 				$fg__input_text && ">e",
-				_filled_guard((2 | _mask_group($scope0_reason, 1)) << 1, 0) && ">g",
+				_filled_guard((2 | _updates_from($scope0_reason, 1)) << 1, 0) && ">g",
 				$fg__input_cursor && ">d"
-			], (2 | _mask_group($scope0_reason, 0)) << 1, 0);
+			], (2 | _updates_from($scope0_reason, 0)) << 1, 0);
 			_scope($scope1_id, { _: ($scope0_page || $wi__input_cursor__OR__input_text) && _scope_with_id($scope0_id) });
 			return 0;
 		} else {
 			const $scope2_id = _scope_id();
-			_html(`<span>${_html_mark($scope2_id, "a", highlight(input.text), 1, (2 | _mask_group($scope0_reason, 0)) << 1, 0)}</span>`);
+			_html(`<span>${_html_mark($scope2_id, "a", highlight(input.text), 1, (2 | _updates_from($scope0_reason, 0)) << 1, 0)}</span>`);
 			_patch_render($scope2_id, "b2", [
 				$fg__input_text && ">e",
-				_filled_guard((2 | _mask_group($scope0_reason, 1)) << 1, 0) && ">g",
+				_filled_guard((2 | _updates_from($scope0_reason, 1)) << 1, 0) && ">g",
 				$fg__input_cursor && ">d"
-			], (2 | _mask_group($scope0_reason, 0)) << 1, 0);
+			], (2 | _updates_from($scope0_reason, 0)) << 1, 0);
 			_scope($scope2_id, { _: ($scope0_page || $wi__input_cursor__OR__input_text) && _scope_with_id($scope0_id) });
 			return 1;
 		}
@@ -40,13 +40,13 @@ var code_block_default = _template("b", (input) => {
 	_fill_global_subscribe("b5", $scope0_id, $cg__input_cursor);
 	$fg__input_text && $cg__input_text_length && _patch_render($scope0_id, "b6", "e");
 	$fg__input_text && $cg__input_text_length && _patch_render($scope0_id, "b7", "e");
-	_filled_guard((2 | _mask_group($scope0_reason, 1)) << 1, 0) && $cg__input_text_length && _patch_render($scope0_id, "b8", [_filled_guard((2 | _mask_group($scope0_reason, 1)) << 1, 0) && "g", $fg__input_cursor && "d"]);
-	_filled_guard((2 | _mask_group($scope0_reason, 1)) << 1, 0) && $cg__input_text_length && _patch_render($scope0_id, "b9", [_filled_guard((2 | _mask_group($scope0_reason, 1)) << 1, 0) && "g", $fg__input_cursor && "d"]);
+	_filled_guard((2 | _updates_from($scope0_reason, 1)) << 1, 0) && $cg__input_text_length && _patch_render($scope0_id, "b8", [_filled_guard((2 | _updates_from($scope0_reason, 1)) << 1, 0) && "g", $fg__input_cursor && "d"]);
+	_filled_guard((2 | _updates_from($scope0_reason, 1)) << 1, 0) && $cg__input_text_length && _patch_render($scope0_id, "b9", [_filled_guard((2 | _updates_from($scope0_reason, 1)) << 1, 0) && "g", $fg__input_cursor && "d"]);
 	_scope($scope0_id, {
 		d: _unfilled_if($scope0_reason, 0) && input.cursor,
 		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0) || _unfilled_if()) && input.text,
 		g: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && highlight
-	}) || ($fg__input_text && $cg__input_cursor && _patch_write($scope0_id, "xe", input.text, !_server_guard($scope0_reason, 2)), _filled_guard((2 | _mask_group($scope0_reason, 1)) << 1, 0) && _client_guard($scope0_reason, 2) && _patch_write($scope0_id, "xg", highlight, !_server_guard((2 | _mask_group($scope0_reason, 1)) << 1, 0)));
+	}) || ($fg__input_text && $cg__input_cursor && _patch_write($scope0_id, "xe", input.text, !_server_guard($scope0_reason, 2)), _filled_guard((2 | _updates_from($scope0_reason, 1)) << 1, 0) && _client_guard($scope0_reason, 2) && _patch_write($scope0_id, "xg", highlight, !_server_guard((2 | _updates_from($scope0_reason, 1)) << 1, 0)));
 });
 
 // template.marko
@@ -55,7 +55,7 @@ _shells({ a: `a${_shell_marker($setup)};${((_w0) => `b/${_w0}&b`)("b%c")};${((_w
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 0) << 5 | _mask_group($scope0_reason, 0) << 7);
+	_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 0) << 5 | _updates_from($scope0_reason, 0) << 7);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	code_block_default({
 		text: input.text,

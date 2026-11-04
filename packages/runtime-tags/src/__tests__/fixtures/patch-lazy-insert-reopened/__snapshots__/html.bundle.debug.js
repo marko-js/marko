@@ -41,7 +41,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_if(() => {
 		if (open) {
 			const $scope1_id = _scope_id();
-			_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
+			_set_scope_reason(_updates_from($scope0_reason, 1) << 1);
 			const $childScope2 = _peek_scope_id($scope1_id, "#childScope/1", 1);
 			$Lazy_withLoadAssets({ label: input.label });
 			_patch_child_end();

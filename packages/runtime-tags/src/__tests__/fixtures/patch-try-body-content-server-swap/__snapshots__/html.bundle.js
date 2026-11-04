@@ -66,7 +66,7 @@ var template_default = _template("a", (input) => {
 			Cl: $wi__input_label && 1
 		}), $cg__input_label && "a3");
 	}, $scope0_id) };
-	_set_scope_reason(38 | _mask_group($scope0_reason, 1) << 3);
+	_set_scope_reason(38 | _updates_from($scope0_reason, 1) << 3);
 	const $childScope = _peek_scope_id($scope0_id, "c", 0);
 	wrapper_default({
 		fail: false,

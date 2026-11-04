@@ -39,7 +39,7 @@ var template_default = _template("a", (input) => {
 	let s = store_default({});
 	_var($scope0_id, "b", $childScope, "a0");
 	_patch_child_end();
-	_set_scope_reason(10 | _mask_group($scope0_reason, 0) << 5);
+	_set_scope_reason(10 | _updates_from($scope0_reason, 0) << 5);
 	const $childScope2 = _peek_scope_id($scope0_id, "c", 1);
 	child_default({
 		s,

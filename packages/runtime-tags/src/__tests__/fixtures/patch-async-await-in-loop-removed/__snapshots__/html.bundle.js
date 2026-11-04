@@ -34,7 +34,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let items = [{ id: 1 }, { id: 2 }];
 	_html(`<button>drop</button>${_el_mark($scope0_id, "a")}`);
-	_set_scope_reason(14 | _mask_group($scope0_reason, 0) << 5);
+	_set_scope_reason(14 | _updates_from($scope0_reason, 0) << 5);
 	const $childScope = _peek_scope_id($scope0_id, "b", 0);
 	rows_default({
 		items,

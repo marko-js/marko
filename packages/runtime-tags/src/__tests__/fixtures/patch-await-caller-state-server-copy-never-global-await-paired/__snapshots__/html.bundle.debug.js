@@ -17,9 +17,9 @@ var show_await_default = _template("__tests__/tags/show-await.marko", (input) =>
 		const $scope1_id = _scope_id();
 		_await($scope1_id, "#text/0", Promise.resolve(x + ":" + $global$1.flag), (y) => {
 			const $scope2_id = _scope_id();
-			_html(`<p>${_text_mark($scope2_id, "#text/0", y, 1, (2 | _mask_group($scope0_reason, 0)) << 1, 0)}</p>`);
+			_html(`<p>${_text_mark($scope2_id, "#text/0", y, 1, (2 | _updates_from($scope0_reason, 0)) << 1, 0)}</p>`);
 			_scope($scope2_id, {}, "__tests__/tags/show-await.marko", "2:4");
-		}, 1, "__tests__/tags/show-await.marko_2*content", _unfilled_if((2 | _mask_group($scope0_reason, 0)) << 1, 0) && 2, 1);
+		}, 1, "__tests__/tags/show-await.marko_2*content", _unfilled_if((2 | _updates_from($scope0_reason, 0)) << 1, 0) && 2, 1);
 		_fill_global_subscribe("__tests__/tags/show-await.marko_1_$global_flag#0:10_x#2", $scope1_id, _client_guard($scope0_reason, 0));
 		_write_if($scope0_reason, 0) && _scope($scope1_id, { x: _unfilled_if($scope0_reason, 0) && x }, "__tests__/tags/show-await.marko", "1:2", { x: "1:8" });
 	}, 1, "__tests__/tags/show-await.marko_1*content", _unfilled_if($scope0_reason, 0) && 3, 1);

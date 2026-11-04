@@ -30,7 +30,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let p = input.promise;
 	_html(`<button class=swap>swap</button>${_el_mark($scope0_id, "#button/0")}<h1>${_text_mark($scope0_id, "#text/1", input.title, 1, $scope0_reason, 1)}</h1>`);
-	_set_scope_reason(2 | _mask_group($scope0_reason, 2) << 3);
+	_set_scope_reason(2 | _updates_from($scope0_reason, 2) << 3);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/2", 0);
 	show_await_default({
 		promise: p,

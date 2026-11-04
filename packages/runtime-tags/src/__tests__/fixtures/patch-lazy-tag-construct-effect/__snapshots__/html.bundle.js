@@ -27,7 +27,7 @@ var template_default = _template("b", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_html(`<div${_attrs(input.attrs, "a", $scope1_id, "div", 0, $scope0_reason, 2)}>x</div>${_el_mark($scope1_id, "a")}`);
-			_set_scope_reason(_mask_group($scope0_reason, 3) << 1);
+			_set_scope_reason(_updates_from($scope0_reason, 3) << 1);
 			const $childScope = _peek_scope_id($scope1_id, "c", 0);
 			$Child_withLoadAssets({ label: input.label });
 			_patch_child_end();

@@ -29,7 +29,7 @@ var template_default = _template("a", (input) => {
 	const $input_show__closures = /* @__PURE__ */ new Set();
 	const $n__closures = /* @__PURE__ */ new Set();
 	let n = 0;
-	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
+	_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
 	let $item;
 	forOf(input.labels, (label) => {
 		$item = attrTags($item, { content: _content("a1", () => {

@@ -41,7 +41,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let b = "b";
 	_html(`<button>b</button>${_el_mark($scope0_id, "a")}`);
-	_set_scope_reason(10142 | (_mask_group($scope0_reason, 0) << 5 | _mask_group($scope0_reason, 1) << 11 | _mask_group($scope0_reason, 2) << 15 | _mask_group($scope0_reason, 3) << 17));
+	_set_scope_reason(10142 | (_updates_from($scope0_reason, 0) << 5 | _updates_from($scope0_reason, 1) << 11 | _updates_from($scope0_reason, 2) << 15 | _updates_from($scope0_reason, 3) << 17));
 	const $childScope = _peek_scope_id($scope0_id, "b", 0);
 	code_block_default({
 		a: input.a,

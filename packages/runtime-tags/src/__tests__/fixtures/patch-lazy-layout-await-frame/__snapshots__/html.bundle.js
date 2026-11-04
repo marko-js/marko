@@ -26,13 +26,13 @@ var icon_default = _template("f", (input) => {
 	_if(() => {
 		if (input.name) {
 			const $scope1_id = _scope_id();
-			_html(`<path${_attr("d", input.name, $scope1_id, "aa$d", $scope0_reason, 0)}></path>${_el_mark($scope1_id, "a", _mask_group($scope0_reason, 0))}`);
+			_html(`<path${_attr("d", input.name, $scope1_id, "aa$d", $scope0_reason, 0)}></path>${_el_mark($scope1_id, "a", _updates_from($scope0_reason, 0))}`);
 			_client_guard($scope0_reason, 0) && _patch_render($scope1_id, "f0");
 			_scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) });
 			return 0;
 		}
 	}, $scope0_id, "a", 1, 1, 1, 0, 0, ["f1"], $scope0_reason, 0);
-	_html(`</svg>${_el_mark($scope0_id, "a", _mask_group($scope0_reason, 0))}`);
+	_html(`</svg>${_el_mark($scope0_id, "a", _updates_from($scope0_reason, 0))}`);
 	_scope($scope0_id, {});
 });
 
@@ -61,7 +61,7 @@ var docs_default = _template("a", (input) => {
 		_if(() => {
 			if (list[0]) {
 				const $scope2_id = _scope_id();
-				_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
+				_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
 				const $childScope = _peek_scope_id($scope2_id, "a", 0);
 				icon_default({ name: list[0] });
 				_patch_child_end();
@@ -132,7 +132,7 @@ var template_default = _template("e", (input) => {
 				return 0;
 			} else {
 				const $scope2_id = _scope_id();
-				_set_scope_reason(_mask_group($scope0_reason, 2) << 1);
+				_set_scope_reason(_updates_from($scope0_reason, 2) << 1);
 				const $childScope3 = _peek_scope_id($scope2_id, "b", 1);
 				$Docs_withLoadAssets({
 					list: input.list,

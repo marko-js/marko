@@ -62,7 +62,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const $input_id__closures = new Set();
 	const $input_which__closures = new Set();
-	_set_scope_reason(_mask_group($scope0_reason, 2) << 1 | _mask_group($scope0_reason, 2) << 3);
+	_set_scope_reason(_updates_from($scope0_reason, 2) << 1 | _updates_from($scope0_reason, 2) << 3);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 1);
 	wrap_default({
 		show: input.show,

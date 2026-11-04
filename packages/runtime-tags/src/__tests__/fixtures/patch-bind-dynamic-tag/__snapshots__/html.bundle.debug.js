@@ -66,7 +66,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_store#7/var");
 	_patch_child_end();
 	_html(`<p>${_text_mark($scope0_id, "#text/2", store.last)}</p>`);
-	_set_scope_reason(8 | _mask_group($scope0_reason, 0) << 1);
+	_set_scope_reason(8 | _updates_from($scope0_reason, 0) << 1);
 	const $childScope2 = _peek_scope_id($scope0_id, "#childScope/3", 1);
 	child_default({
 		show: input.show,

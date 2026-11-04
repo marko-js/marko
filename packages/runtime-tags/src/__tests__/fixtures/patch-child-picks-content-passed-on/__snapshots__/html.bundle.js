@@ -19,7 +19,7 @@ _shells({ b: `b${_shell_marker($setup$1)};${((_w0) => `b/${_w0}&`)($walks$1)};${
 var pick_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $fg__input_on = _filled_guard($scope0_reason, 4), $fg__input_a = _filled_guard($scope0_reason, 5), $fg__input_b = _filled_guard($scope0_reason, 6);
 	const $scope0_id = _scope_id();
-	_set_scope_reason(_mask_group($scope0_reason, 3) << 1 | _mask_group($scope0_reason, 7) << 3);
+	_set_scope_reason(_updates_from($scope0_reason, 3) << 1 | _updates_from($scope0_reason, 7) << 3);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	view_default({
 		content: input.on ? input.a : input.b,
@@ -53,7 +53,7 @@ var template_default = _template("a", (input) => {
 	const $s__closures = /* @__PURE__ */ new Set();
 	let s = 0;
 	_html(`<button>s</button>${_el_mark($scope0_id, "a")}`);
-	_set_scope_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 1) << 3 | _mask_group($scope0_reason, 1) << 7 | _mask_group($scope0_reason, 1) << 9 | _mask_group($scope0_reason, 3) << 15);
+	_set_scope_reason(_updates_from($scope0_reason, 1) << 1 | _updates_from($scope0_reason, 1) << 3 | _updates_from($scope0_reason, 1) << 7 | _updates_from($scope0_reason, 1) << 9 | _updates_from($scope0_reason, 3) << 15);
 	const $childScope = _peek_scope_id($scope0_id, "b", 0);
 	pick_default({
 		on: input.on,

@@ -38,7 +38,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_html("<main>");
-			_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
+			_set_scope_reason(_updates_from($scope0_reason, 1) << 1);
 			const $childScope = _peek_scope_id($scope1_id, "#childScope/1", 0);
 			$Child_withLoadAssets({ title: input.title });
 			_patch_child_end();

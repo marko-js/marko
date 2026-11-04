@@ -16,11 +16,11 @@ var template_default = _template("a", (input) => {
 		const $scope1_reason = _scope_reason(), $fg__label = _filled_guard($scope1_reason, 0);
 		_html("<p>info</p>");
 		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "a2");
-		_patch_render($scope1_id, "a3", [$fg__input_page && ">g", $fg__label && "c"], (_mask_group($scope0_reason, 1) | _mask_group($scope1_reason, 0)) << 1, 0) || _script($scope1_id, "a1", 0, ($fg__input_page || $fg__label) && (_client_guard($scope0_reason, 1) || _client_guard($scope1_reason, 0) ? 2 : 1), [$fg__input_page && ">g", $fg__label && "c"]);
+		_patch_render($scope1_id, "a3", [$fg__input_page && ">g", $fg__label && "c"], (_updates_from($scope0_reason, 1) | _updates_from($scope1_reason, 0)) << 1, 0) || _script($scope1_id, "a1", 0, ($fg__input_page || $fg__label) && (_client_guard($scope0_reason, 1) || _client_guard($scope1_reason, 0) ? 2 : 1), [$fg__input_page && ">g", $fg__label && "c"]);
 		_subscribe($wi__input_page && $input_page__closures, _scope($scope1_id, {
 			c: label,
 			_: _scope_with_id($scope0_id)
-		}), _client_guard((_mask_group($scope0_reason, 1) | _mask_group($scope1_reason, 0)) << 1, 0) && "a2", 0) || $fg__label && _patch_write($scope1_id, "xc", label, !_server_guard($scope1_reason, 0));
+		}), _client_guard((_updates_from($scope0_reason, 1) | _updates_from($scope1_reason, 0)) << 1, 0) && "a2", 0) || $fg__label && _patch_write($scope1_id, "xc", label, !_server_guard($scope1_reason, 0));
 		_resume_branch($scope1_id);
 	}, $scope0_id) };
 	_set_scope_reason(2);
@@ -30,7 +30,7 @@ var template_default = _template("a", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope2_id = _scope_id();
-			_set_scope_reason(_mask_group($scope0_reason, 3) << 1);
+			_set_scope_reason(_updates_from($scope0_reason, 3) << 1);
 			const $childScope2 = _peek_scope_id($scope2_id, "a", 1, 0, $scope0_id);
 			Info.content({ label: input.label });
 			_patch_child_end();

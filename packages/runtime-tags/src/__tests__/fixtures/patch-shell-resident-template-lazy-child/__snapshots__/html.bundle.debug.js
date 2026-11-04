@@ -35,7 +35,7 @@ var other_default = _template("__tests__/other.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html(`<i>${_text_mark($scope0_id, "#text/0", input.label, 1, $scope0_reason, 0)}</i>`);
-	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
+	_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/2", 0);
 	$Lazy_withLoadAssets({ label: input.label });
 	_patch_child_end();
@@ -85,7 +85,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $fg__input_which = _filled_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	_dynamic_tag($scope0_id, "#text/0", input.which ? counter_default : other_default, { label: input.label }, 1, 0, 0, _write_guard($scope0_reason, 0), $scope0_reason, 0);
-	_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 1) << 3 | _mask_group($scope0_reason, 2) << 5);
+	_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 1) << 3 | _updates_from($scope0_reason, 2) << 5);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/1", 1);
 	chooser_default({
 		Tag: input.which ? counter_default : other_default,

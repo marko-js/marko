@@ -26,7 +26,7 @@ _shells({
 var relay_default = _template("__tests__/tags/relay.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_set_scope_reason(_mask_group($scope0_reason, 0) << 3);
+	_set_scope_reason(_updates_from($scope0_reason, 0) << 3);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	card_default({
 		other: input.content,

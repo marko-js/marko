@@ -29,7 +29,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $input_promise__closures = new Set();
 	let count = 0;
 	_html(`<button>Count ${_text_mark($scope0_id, "#text/1", count, 2)}</button>${_el_mark($scope0_id, "#button/0")}`);
-	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
+	_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/2", 0);
 	probe_default({ promise: input.promise });
 	_patch_child_end();

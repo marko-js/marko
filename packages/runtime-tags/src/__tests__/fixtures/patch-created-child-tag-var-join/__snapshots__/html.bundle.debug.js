@@ -81,7 +81,7 @@ var file_host_default = _template("__tests__/tags/file-host.marko", (input) => {
 	file_panes_default({ first: attrTag({ content: _content("__tests__/tags/file-host.marko_1*content", () => {
 		const $scope1_reason = _scope_reason();
 		const $scope1_id = _scope_id();
-		_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 1) << 3 | _mask_group($scope0_reason, 2) << 5);
+		_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 1) << 3 | _updates_from($scope0_reason, 2) << 5);
 		const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 		file_tabs_default({
 			files: input.files,

@@ -18,7 +18,7 @@ var pass_default = _template("c", (input) => {
 	const $scope0_reason = _scope_reason(), $cg__input_x = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
-	_set_scope_reason((2 | _mask_group($scope0_reason, 0)) << 1);
+	_set_scope_reason((2 | _updates_from($scope0_reason, 0)) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	label_text_default({ v: input.x + $global$1.suffix });
 	_patch_child_end();

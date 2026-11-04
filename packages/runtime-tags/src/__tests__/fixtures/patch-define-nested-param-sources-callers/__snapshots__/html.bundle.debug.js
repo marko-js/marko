@@ -21,18 +21,18 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const Inner = { content: _content("__tests__/template.marko_2*content", ({ z }) => {
 			const $scope2_id = _scope_id();
 			const $scope2_reason = _scope_reason(), $fg__z = _filled_guard($scope2_reason, 0);
-			_html(`<p>${_text_mark($scope2_id, "#text/0", input.label + x + z, 1, (_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 1) | _mask_group($scope2_reason, 0)) << 1, 0)}</p>`);
+			_html(`<p>${_text_mark($scope2_id, "#text/0", input.label + x + z, 1, (_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 1) | _updates_from($scope2_reason, 0)) << 1, 0)}</p>`);
 			_patch_render($scope2_id, "__tests__/template.marko_2_input_label#0:4_x#1:3_z#3/setup", [
 				$fg__input_label && ">>input_label",
 				$fg__x && ">x",
 				$fg__z && "z"
-			], (_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 1) | _mask_group($scope2_reason, 0)) << 1, 0);
-			_subscribe(_unfilled_if((_mask_group($scope1_reason, 1) | _mask_group($scope2_reason, 0)) << 1, 0) && $wi__x && $Outer_content__x__closures, _subscribe(_unfilled_if((_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 1) | _mask_group($scope2_reason, 0)) << 1, 0) && $wi__input_label && $input_label__closures, _scope($scope2_id, {
+			], (_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 1) | _updates_from($scope2_reason, 0)) << 1, 0);
+			_subscribe(_unfilled_if((_updates_from($scope1_reason, 1) | _updates_from($scope2_reason, 0)) << 1, 0) && $wi__x && $Outer_content__x__closures, _subscribe(_unfilled_if((_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 1) | _updates_from($scope2_reason, 0)) << 1, 0) && $wi__input_label && $input_label__closures, _scope($scope2_id, {
 				z: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope1_reason, 1) || _unfilled_if($scope2_reason, 0)) && z,
 				_: ($wi__input_label || $wi__x || _write_if($scope2_reason, 0)) && _scope_with_id($scope1_id)
-			}, "__tests__/template.marko", "3:4", { z: "3:19" }), _client_guard((_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 1) | _mask_group($scope2_reason, 0)) << 1, 0) && "__tests__/template.marko_2_input_label#0:4/subscribe"), _client_guard((_mask_group($scope1_reason, 1) | _mask_group($scope2_reason, 0)) << 1, 0) && "__tests__/template.marko_2_x#1:3/subscribe") || $fg__z && ($cg__input_label || _client_guard($scope1_reason, 1)) && _patch_write($scope2_id, "PatchMarkedWrite:z", z, !_server_guard($scope2_reason, 0));
+			}, "__tests__/template.marko", "3:4", { z: "3:19" }), _client_guard((_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 1) | _updates_from($scope2_reason, 0)) << 1, 0) && "__tests__/template.marko_2_input_label#0:4/subscribe"), _client_guard((_updates_from($scope1_reason, 1) | _updates_from($scope2_reason, 0)) << 1, 0) && "__tests__/template.marko_2_x#1:3/subscribe") || $fg__z && ($cg__input_label || _client_guard($scope1_reason, 1)) && _patch_write($scope2_id, "PatchMarkedWrite:z", z, !_server_guard($scope2_reason, 0));
 		}, $scope1_id) };
-		_set_scope_reason(_mask_group($scope1_reason, 2) << 1);
+		_set_scope_reason(_updates_from($scope1_reason, 2) << 1);
 		const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 		Inner.content({ z: y });
 		_patch_child_end();
@@ -47,7 +47,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const Wrapper = { content: _content("__tests__/template.marko_3*content", ({ a, b }) => {
 		const $scope3_id = _scope_id();
 		const $scope3_reason = _scope_reason();
-		_set_scope_reason(_mask_group($scope3_reason, 0) << 1 | _mask_group($scope3_reason, 0) << 3);
+		_set_scope_reason(_updates_from($scope3_reason, 0) << 1 | _updates_from($scope3_reason, 0) << 3);
 		const $childScope2 = _peek_scope_id($scope3_id, "#childScope/0", 1);
 		Outer.content({
 			x: a,
@@ -66,7 +66,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			"#childScope/1": _existing_scope($childScope3)
 		}, "__tests__/template.marko", "8:2");
 	}, $scope0_id) };
-	_set_scope_reason(8 | _mask_group($scope0_reason, 1) << 1);
+	_set_scope_reason(8 | _updates_from($scope0_reason, 1) << 1);
 	const $childScope4 = _peek_scope_id($scope0_id, "#childScope/0", 3);
 	Wrapper.content({
 		a: input.a,

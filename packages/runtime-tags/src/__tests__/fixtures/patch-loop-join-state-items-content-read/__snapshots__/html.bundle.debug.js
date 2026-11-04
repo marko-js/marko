@@ -20,7 +20,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	}, $scope0_id) };
 	_html("<section>");
 	_attr_content("#section/0", $scope0_id, input.mode ? frag.content : null, 0, 1, $scope0_reason, 4);
-	_html(`</section>${_el_mark($scope0_id, "#section/0", _mask_group($scope0_reason, 4))}`);
+	_html(`</section>${_el_mark($scope0_id, "#section/0", _updates_from($scope0_reason, 4))}`);
 	_for_of(input.items, (item) => {
 		const $scope2_id = _scope_id();
 		$fg__input_items && $cg__input_b && _patch_write($scope2_id, "PatchMarkedWrite:item", item, !_server_guard($scope0_reason, 5));
@@ -56,7 +56,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let list = ["p", "q"];
 	let m = false;
-	_set_scope_reason(2622 | _mask_group($scope0_reason, 0) << 7);
+	_set_scope_reason(2622 | _updates_from($scope0_reason, 0) << 7);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	child_default({
 		b: input.b,

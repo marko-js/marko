@@ -73,7 +73,7 @@ var template_default = _template("a", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope3_id = _scope_id();
-			_set_scope_reason(38 | _mask_group($scope0_reason, 3) << 3);
+			_set_scope_reason(38 | _updates_from($scope0_reason, 3) << 3);
 			const $childScope = _peek_scope_id($scope3_id, "a", 0);
 			wrapper_default({
 				fail: false,

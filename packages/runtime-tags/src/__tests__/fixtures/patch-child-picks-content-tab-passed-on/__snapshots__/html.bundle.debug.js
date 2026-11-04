@@ -18,7 +18,7 @@ _shells({ "__tests__/tags/tabs.marko": `__tests__/tags/tabs.marko${_shell_marker
 var tabs_default = _template("__tests__/tags/tabs.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
+	_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	view_default({ content: [...input.tab].find((t) => t.active)?.content });
 	_patch_child_end();
@@ -41,7 +41,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $s__closures = new Set();
 	let s = 0;
 	_html(`<button class=s>s</button>${_el_mark($scope0_id, "#button/0")}`);
-	_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
+	_set_scope_reason(_updates_from($scope0_reason, 1) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/1", 0);
 	tabs_default({ tab: attrTags(attrTag({
 		active: input.x === 1,

@@ -41,7 +41,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $cg__input_note = _client_guard($scope0_reason, 1), $fg__input_note = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = /* @__PURE__ */ new Set();
-	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
+	_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
 	let $item;
 	forOf(input.labels, (label) => {
 		$item = attrTags($item, { content: _content_resume("a1", () => {

@@ -57,7 +57,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $cg__input_text = _client_guard($scope0_reason, 3), $wi__input_text = _write_if($scope0_reason, 3), $wi__input_rows__OR__input_text = _write_if($scope0_reason, 0), $fg__input_text = _filled_guard($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	const $input_text__closures = new Set();
-	_set_scope_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 2) << 7);
+	_set_scope_reason(_updates_from($scope0_reason, 1) << 1 | _updates_from($scope0_reason, 2) << 7);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	layout_default({
 		title: input.title,

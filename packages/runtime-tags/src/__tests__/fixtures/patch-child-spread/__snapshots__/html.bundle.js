@@ -24,14 +24,14 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_html("<main>");
-	_set_scope_reason(_mask_group($scope0_reason, 2) << 1 | _mask_group($scope0_reason, 3) << 3);
+	_set_scope_reason(_updates_from($scope0_reason, 2) << 1 | _updates_from($scope0_reason, 3) << 3);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	card_default(input.props);
 	_patch_child_end();
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_set_scope_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 1) << 3);
+			_set_scope_reason(_updates_from($scope0_reason, 1) << 1 | _updates_from($scope0_reason, 1) << 3);
 			const $childScope2 = _peek_scope_id($scope1_id, "a", 1);
 			card_default({
 				title: "fixed",

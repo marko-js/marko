@@ -10,7 +10,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		href: input.url,
 		title: input.title,
 		class: input.cls
-	}, "#a/0", $scope0_id, "a", 0, $scope0_reason, 3)}>x</a>${_el_mark($scope0_id, "#a/0")}<img${_attr("src", `${input.url}?w=${input.width}`, $scope0_id, "PatchAttr:#img/1 src", $scope0_reason, 2)}>${_el_mark($scope0_id, "#img/1", _mask_group($scope0_reason, 2))}`);
+	}, "#a/0", $scope0_id, "a", 0, $scope0_reason, 3)}>x</a>${_el_mark($scope0_id, "#a/0")}<img${_attr("src", `${input.url}?w=${input.width}`, $scope0_id, "PatchAttr:#img/1 src", $scope0_reason, 2)}>${_el_mark($scope0_id, "#img/1", _updates_from($scope0_reason, 2))}`);
 	_script($scope0_id, "__tests__/template.marko_0_input_url#4_input_title#5_input_cls#6");
 	_patch_render($scope0_id, "__tests__/template.marko_0_input_url#4_input_title#5_input_cls#6/setup", [
 		$fg__input_url && "input_url",

@@ -28,7 +28,7 @@ var template_default = _template("a", (input) => {
 		m.dataset.b = String(+(m.dataset.b || 0) + 1);
 	}, "a1", $scope0_id);
 	_html("<main>");
-	_set_scope_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 0) << 3);
+	_set_scope_reason(_updates_from($scope0_reason, 1) << 1 | _updates_from($scope0_reason, 0) << 3);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	child_default({
 		label: input.x,

@@ -31,7 +31,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_html("<main>");
-	_set_scope_reason(2 | _mask_group($scope0_reason, 0) << 3);
+	_set_scope_reason(2 | _updates_from($scope0_reason, 0) << 3);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	list_default({
 		items: _patch_live($childScope, count ? ["a", "b"] : ["a"], $scope0_id, ""),

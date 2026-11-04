@@ -2,7 +2,7 @@
 [`packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-alias-content/template.marko_2*content;Db%;<em>static <!></em>`, `packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-alias-content/template.marko_1*shell !#childScope/0>#childScope/1>packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-alias-content/tags/card.marko_0 #childScope/0>packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-alias-content/tags/outer.marko_0;/ b/D b%l&&;<button>drop</button><section><button>clear</button><!></section>`]
 {
   "PatchBranch:#text/0": [{
-    "PatchWithheld:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-alias-content/template.marko_2*content": {
+    "PatchClientBranch:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-alias-content/template.marko_2*content": {
       "PatchText:#text/0": "b"
     },
     "PatchChild:#childScope/0": {
@@ -18,7 +18,7 @@
 // PATCH holding Cxg
 {
   "PatchBranch:#text/0": [{
-    "PatchWithheld:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-alias-content/template.marko_2*content": {
+    "PatchClientBranch:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-alias-content/template.marko_2*content": {
       "PatchText:#text/0": "c"
     },
     "PatchChild:#childScope/0": {
@@ -33,7 +33,7 @@
 // PATCH holding Cxg
 {
   "PatchBranch:#text/0": [{
-    "PatchWithheld:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-alias-content/template.marko_2*content": {
+    "PatchClientBranch:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-alias-content/template.marko_2*content": {
       "PatchText:#text/0": "d"
     },
     "PatchChild:#childScope/0": {

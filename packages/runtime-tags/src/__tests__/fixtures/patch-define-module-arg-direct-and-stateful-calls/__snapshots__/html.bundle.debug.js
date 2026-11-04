@@ -32,7 +32,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			label: "3:22"
 		}) || ($fg__fmt && _client_guard($scope2_reason, 2) && _patch_write($scope2_id, "PatchMarkedWrite:fmt", fmt, !_server_guard($scope2_reason, 1)), $fg__label && _client_guard($scope2_reason, 1) && _patch_write($scope2_id, "PatchMarkedWrite:label", label, !_server_guard($scope2_reason, 2)));
 	}, $scope0_id) };
-	_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 0) << 5);
+	_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 0) << 5);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	Panel.content({
 		fmt: lib.format,
@@ -42,7 +42,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_if(() => {
 		if (open) {
 			const $scope1_id = _scope_id();
-			_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 0) << 5);
+			_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 0) << 5);
 			const $childScope2 = _peek_scope_id($scope1_id, "#childScope/0", 1);
 			Panel.content({
 				fmt: lib.format,

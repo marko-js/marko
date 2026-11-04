@@ -18,18 +18,18 @@ var template_default = _template("a", (input) => {
 		const Inner = { content: _content("a0", ({ z }) => {
 			const $scope2_id = _scope_id();
 			const $scope2_reason = _scope_reason(), $fg__z = _filled_guard($scope2_reason, 0);
-			_html(`<p>${_text_mark($scope2_id, "a", input.label + x + z, 1, (_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 1) | _mask_group($scope2_reason, 0)) << 1, 0)}</p>`);
+			_html(`<p>${_text_mark($scope2_id, "a", input.label + x + z, 1, (_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 1) | _updates_from($scope2_reason, 0)) << 1, 0)}</p>`);
 			_patch_render($scope2_id, "a1", [
 				$fg__input_label && ">>e",
 				$fg__x && ">d",
 				$fg__z && "d"
-			], (_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 1) | _mask_group($scope2_reason, 0)) << 1, 0);
-			_subscribe(_unfilled_if((_mask_group($scope1_reason, 1) | _mask_group($scope2_reason, 0)) << 1, 0) && $wi__x && $Outer_content__x__closures, _subscribe(_unfilled_if((_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 1) | _mask_group($scope2_reason, 0)) << 1, 0) && $wi__input_label && $input_label__closures, _scope($scope2_id, {
+			], (_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 1) | _updates_from($scope2_reason, 0)) << 1, 0);
+			_subscribe(_unfilled_if((_updates_from($scope1_reason, 1) | _updates_from($scope2_reason, 0)) << 1, 0) && $wi__x && $Outer_content__x__closures, _subscribe(_unfilled_if((_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 1) | _updates_from($scope2_reason, 0)) << 1, 0) && $wi__input_label && $input_label__closures, _scope($scope2_id, {
 				d: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope1_reason, 1) || _unfilled_if($scope2_reason, 0)) && z,
 				_: ($wi__input_label || $wi__x || _write_if($scope2_reason, 0)) && _scope_with_id($scope1_id)
-			}), _client_guard((_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 1) | _mask_group($scope2_reason, 0)) << 1, 0) && "a2"), _client_guard((_mask_group($scope1_reason, 1) | _mask_group($scope2_reason, 0)) << 1, 0) && "a3") || $fg__z && ($cg__input_label || _client_guard($scope1_reason, 1)) && _patch_write($scope2_id, "xd", z, !_server_guard($scope2_reason, 0));
+			}), _client_guard((_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 1) | _updates_from($scope2_reason, 0)) << 1, 0) && "a2"), _client_guard((_updates_from($scope1_reason, 1) | _updates_from($scope2_reason, 0)) << 1, 0) && "a3") || $fg__z && ($cg__input_label || _client_guard($scope1_reason, 1)) && _patch_write($scope2_id, "xd", z, !_server_guard($scope2_reason, 0));
 		}, $scope1_id) };
-		_set_scope_reason(_mask_group($scope1_reason, 2) << 1);
+		_set_scope_reason(_updates_from($scope1_reason, 2) << 1);
 		const $childScope = _peek_scope_id($scope1_id, "a", 0);
 		Inner.content({ z: y });
 		_patch_child_end();
@@ -44,7 +44,7 @@ var template_default = _template("a", (input) => {
 	const Wrapper = { content: _content("a6", ({ a, b }) => {
 		const $scope3_id = _scope_id();
 		const $scope3_reason = _scope_reason();
-		_set_scope_reason(_mask_group($scope3_reason, 0) << 1 | _mask_group($scope3_reason, 0) << 3);
+		_set_scope_reason(_updates_from($scope3_reason, 0) << 1 | _updates_from($scope3_reason, 0) << 3);
 		const $childScope2 = _peek_scope_id($scope3_id, "a", 1);
 		Outer.content({
 			x: a,
@@ -63,7 +63,7 @@ var template_default = _template("a", (input) => {
 			b: _existing_scope($childScope3)
 		});
 	}, $scope0_id) };
-	_set_scope_reason(8 | _mask_group($scope0_reason, 1) << 1);
+	_set_scope_reason(8 | _updates_from($scope0_reason, 1) << 1);
 	const $childScope4 = _peek_scope_id($scope0_id, "a", 3);
 	Wrapper.content({
 		a: input.a,

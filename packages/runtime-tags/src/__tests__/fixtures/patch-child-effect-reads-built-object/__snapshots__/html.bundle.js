@@ -15,7 +15,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const item = { label: input.title };
-	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
+	_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	label_default({ item: _patch_live($childScope, item, $scope0_id, "d") });
 	_patch_child_end();

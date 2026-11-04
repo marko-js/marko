@@ -26,7 +26,7 @@ var error_wrapper_default = _template("__tests__/tags/error-wrapper.marko", (inp
 		const $scope1_id = _scope_id();
 		_html(`<b>${_text_mark($scope1_id, "#text/0", err.message, 1, 4, 0)}</b><div>`);
 		_attr_content("#div/1", $scope1_id, input.fallback, 0, 1, $scope0_reason, 0);
-		_html(`</div>${_el_mark($scope1_id, "#div/1", _mask_group($scope0_reason, 0))}`);
+		_html(`</div>${_el_mark($scope1_id, "#div/1", _updates_from($scope0_reason, 0))}`);
 		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "__tests__/tags/error-wrapper.marko_1_input_fallback#0:3/subscribe", $cg__input_fallback);
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_fallback__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/error-wrapper.marko", "6:4"), $cg__input_fallback && "__tests__/tags/error-wrapper.marko_1_input_fallback#0:3/subscribe");
 	}, 0, "__tests__/tags/error-wrapper.marko_1*content", "__tests__/tags/error-wrapper.marko_2*content", 1, 1, 1);
@@ -53,7 +53,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $count__closures = new Set();
 	let count = 0;
 	_html(`<button>${_text_mark($scope0_id, "#text/1", count)}</button>${_el_mark($scope0_id, "#button/0")}`);
-	_set_scope_reason(_mask_group($scope0_reason, 0) << 3);
+	_set_scope_reason(_updates_from($scope0_reason, 0) << 3);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/2", 0);
 	error_wrapper_default({
 		fail: input.fail,

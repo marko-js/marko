@@ -25,7 +25,7 @@ var error_wrapper_default = _template("b", (input) => {
 		const $scope1_id = _scope_id();
 		_html(`<b>${_text_mark($scope1_id, "a", err.message, 1, 4, 0)}</b><div>`);
 		_attr_content("b", $scope1_id, input.fallback, 0, 1, $scope0_reason, 0);
-		_html(`</div>${_el_mark($scope1_id, "b", _mask_group($scope0_reason, 0))}`);
+		_html(`</div>${_el_mark($scope1_id, "b", _updates_from($scope0_reason, 0))}`);
 		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "b0", $cg__input_fallback);
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_fallback__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), $cg__input_fallback && "b0");
 	}, 0, "b2", "b3", 1, 1, 1);
@@ -50,7 +50,7 @@ var template_default = _template("a", (input) => {
 	const $count__closures = /* @__PURE__ */ new Set();
 	let count = 0;
 	_html(`<button>${_text_mark($scope0_id, "b", count)}</button>${_el_mark($scope0_id, "a")}`);
-	_set_scope_reason(_mask_group($scope0_reason, 0) << 3);
+	_set_scope_reason(_updates_from($scope0_reason, 0) << 3);
 	const $childScope = _peek_scope_id($scope0_id, "c", 0);
 	error_wrapper_default({
 		fail: input.fail,

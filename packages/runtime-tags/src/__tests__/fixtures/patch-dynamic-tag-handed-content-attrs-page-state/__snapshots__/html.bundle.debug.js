@@ -28,7 +28,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $input_y__closures = new Set();
 	let s = 0;
 	_html(`<button class=s>s</button>${_el_mark($scope0_id, "#button/0")}`);
-	_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 0) << 5);
+	_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 0) << 5);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/1", 0);
 	one_default({
 		t: input.y,

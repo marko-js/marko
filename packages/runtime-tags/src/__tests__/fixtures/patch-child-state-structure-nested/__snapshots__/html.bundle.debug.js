@@ -52,7 +52,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_html("<main>");
-	_set_scope_reason(62 | (_mask_group($scope0_reason, 0) << 7 | _mask_group($scope0_reason, 1) << 9));
+	_set_scope_reason(62 | (_updates_from($scope0_reason, 0) << 7 | _updates_from($scope0_reason, 1) << 9));
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	panel_default({
 		show: count % 2 === 0,

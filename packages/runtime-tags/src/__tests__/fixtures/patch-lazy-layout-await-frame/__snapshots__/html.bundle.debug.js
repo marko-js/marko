@@ -27,13 +27,13 @@ var icon_default = _template("__tests__/tags/icon.marko", (input) => {
 	_if(() => {
 		if (input.name) {
 			const $scope1_id = _scope_id();
-			_html(`<path${_attr("d", input.name, $scope1_id, "PatchAttr:#path/0 d", $scope0_reason, 0)}></path>${_el_mark($scope1_id, "#path/0", _mask_group($scope0_reason, 0))}`);
+			_html(`<path${_attr("d", input.name, $scope1_id, "PatchAttr:#path/0 d", $scope0_reason, 0)}></path>${_el_mark($scope1_id, "#path/0", _updates_from($scope0_reason, 0))}`);
 			_client_guard($scope0_reason, 0) && _patch_render($scope1_id, "__tests__/tags/icon.marko_1_input_name#0:3/setup");
 			_scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }, "__tests__/tags/icon.marko", "2:4");
 			return 0;
 		}
 	}, $scope0_id, "#svg/0", 1, 1, 1, 0, 0, ["__tests__/tags/icon.marko_1*shell"], $scope0_reason, 0);
-	_html(`</svg>${_el_mark($scope0_id, "#svg/0", _mask_group($scope0_reason, 0))}`);
+	_html(`</svg>${_el_mark($scope0_id, "#svg/0", _updates_from($scope0_reason, 0))}`);
 	_scope($scope0_id, {}, "__tests__/tags/icon.marko", 0);
 });
 
@@ -62,7 +62,7 @@ var docs_default = _template("__tests__/docs.marko", (input) => {
 		_if(() => {
 			if (list[0]) {
 				const $scope2_id = _scope_id();
-				_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
+				_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
 				const $childScope = _peek_scope_id($scope2_id, "#childScope/0", 0);
 				icon_default({ name: list[0] });
 				_patch_child_end();
@@ -137,7 +137,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				return 0;
 			} else {
 				const $scope2_id = _scope_id();
-				_set_scope_reason(_mask_group($scope0_reason, 2) << 1);
+				_set_scope_reason(_updates_from($scope0_reason, 2) << 1);
 				const $childScope3 = _peek_scope_id($scope2_id, "#childScope/1", 1);
 				$Docs_withLoadAssets({
 					list: input.list,

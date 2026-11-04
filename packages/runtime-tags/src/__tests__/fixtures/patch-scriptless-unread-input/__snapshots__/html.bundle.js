@@ -23,7 +23,7 @@ var template_default = _template("a", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_set_scope_reason(_mask_group($scope0_reason, 3) << 1);
+			_set_scope_reason(_updates_from($scope0_reason, 3) << 1);
 			const $childScope = _peek_scope_id($scope1_id, "a", 0);
 			card_default({ user: input.user });
 			_patch_child_end();
@@ -35,7 +35,7 @@ var template_default = _template("a", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 2), 1, 0, 0, ["a1"], $scope0_reason, 2);
-	_set_scope_reason(_mask_group($scope0_reason, 4) << 1);
+	_set_scope_reason(_updates_from($scope0_reason, 4) << 1);
 	const $childScope2 = _peek_scope_id($scope0_id, "b", 1);
 	card_default({ user: input.user2 });
 	_patch_child_end();

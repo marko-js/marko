@@ -23,7 +23,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_for_of(items, (item) => {
 		const $scope1_id = _scope_id();
 		_html(`<li>${_text_mark($scope1_id, "#text/0", item)}`);
-		_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
+		_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
 		const $childScope = _peek_scope_id($scope1_id, "#childScope/1", 0);
 		badge_default({ text: input.note });
 		_patch_child_end();

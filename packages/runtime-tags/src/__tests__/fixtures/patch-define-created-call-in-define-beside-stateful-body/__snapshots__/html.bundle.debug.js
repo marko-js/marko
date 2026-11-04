@@ -36,7 +36,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_if(() => {
 			if (show) {
 				const $scope3_id = _scope_id();
-				_set_scope_reason(_mask_group($scope2_reason, 1) << 1 | _mask_group($scope2_reason, 2) << 3);
+				_set_scope_reason(_updates_from($scope2_reason, 1) << 1 | _updates_from($scope2_reason, 2) << 3);
 				const $childScope = _peek_scope_id($scope3_id, "#childScope/0", 0);
 				Inner.content({
 					isOpen,
@@ -62,7 +62,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			label: "7:25"
 		}) || ($fg__isOpen && $cg__show && _patch_write($scope2_id, "PatchMarkedWrite:isOpen", isOpen, !_server_guard($scope2_reason, 1)), $fg__label2 && $cg__show && _patch_write($scope2_id, "PatchMarkedWrite:label", label, !_server_guard($scope2_reason, 2)));
 	}, $scope0_id) };
-	_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 1) << 3 | _mask_group($scope0_reason, 2) << 5 | _mask_group($scope0_reason, 3) << 7);
+	_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 1) << 3 | _updates_from($scope0_reason, 2) << 5 | _updates_from($scope0_reason, 3) << 7);
 	const $childScope2 = _peek_scope_id($scope0_id, "#childScope/0", 1);
 	Outer.content({
 		isOpen: input.open,

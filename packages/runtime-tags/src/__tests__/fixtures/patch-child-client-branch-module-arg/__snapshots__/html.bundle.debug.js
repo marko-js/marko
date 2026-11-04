@@ -49,7 +49,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_set_scope_reason(_mask_group($scope0_reason, 2) << 1 | _mask_group($scope0_reason, 0) << 3 | _mask_group($scope0_reason, 3) << 5 | _mask_group($scope0_reason, 0) << 7 | _mask_group($scope0_reason, 2) << 9 | _mask_group($scope0_reason, 3) << 13);
+			_set_scope_reason(_updates_from($scope0_reason, 2) << 1 | _updates_from($scope0_reason, 0) << 3 | _updates_from($scope0_reason, 3) << 5 | _updates_from($scope0_reason, 0) << 7 | _updates_from($scope0_reason, 2) << 9 | _updates_from($scope0_reason, 3) << 13);
 			const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 			Panel.content({
 				isOpen: input.open,
@@ -101,7 +101,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let shown = true;
-	_set_scope_reason(8 | (_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 0) << 7));
+	_set_scope_reason(8 | (_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 0) << 7));
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	card_default({
 		show: shown,
@@ -109,7 +109,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		label: input.label
 	});
 	_patch_child_end();
-	_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 0) << 7);
+	_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 0) << 7);
 	const $childScope2 = _peek_scope_id($scope0_id, "#childScope/1", 1);
 	card_default({
 		show: true,

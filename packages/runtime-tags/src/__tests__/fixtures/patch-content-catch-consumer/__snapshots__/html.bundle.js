@@ -86,7 +86,7 @@ var template_default = _template("a", (input) => {
 	const $count__closures = /* @__PURE__ */ new Set();
 	let count = 0;
 	_html(`<button>${_text_mark($scope0_id, "b", count)}</button>${_el_mark($scope0_id, "a")}`);
-	_set_scope_reason(_mask_group($scope0_reason, 0) << 3);
+	_set_scope_reason(_updates_from($scope0_reason, 0) << 3);
 	const $childScope = _peek_scope_id($scope0_id, "c", 0);
 	wrapper_default({
 		fail: input.fail,
@@ -99,7 +99,7 @@ var template_default = _template("a", (input) => {
 		}, $scope0_id) })
 	});
 	_patch_child_end();
-	_set_scope_reason(_mask_group($scope0_reason, 0) << 3);
+	_set_scope_reason(_updates_from($scope0_reason, 0) << 3);
 	const $childScope2 = _peek_scope_id($scope0_id, "d", 1);
 	error_wrapper_default({
 		fail: input.fail,

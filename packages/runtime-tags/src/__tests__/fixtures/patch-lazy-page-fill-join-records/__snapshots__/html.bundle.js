@@ -142,7 +142,7 @@ var template_default = _template("d", (input) => {
 			return 0;
 		} else {
 			const $scope1_id = _scope_id();
-			_set_scope_reason(_mask_group($scope0_reason, 4) << 1);
+			_set_scope_reason(_updates_from($scope0_reason, 4) << 1);
 			const $childScope3 = _peek_scope_id($scope1_id, "b", 1);
 			$Layout_withLoadAssets({
 				list: input.list,
@@ -152,7 +152,7 @@ var template_default = _template("d", (input) => {
 					_if(() => {
 						if (input.page === 1) {
 							const $scope3_id = _scope_id();
-							_set_scope_reason(_mask_group($scope0_reason, 6) << 1 | _mask_group($scope0_reason, 5) << 3);
+							_set_scope_reason(_updates_from($scope0_reason, 6) << 1 | _updates_from($scope0_reason, 5) << 3);
 							const $childScope = _peek_scope_id($scope3_id, "b", 0);
 							$PageA_withLoadAssets({
 								wide: input.wide,
@@ -168,7 +168,7 @@ var template_default = _template("d", (input) => {
 							return 0;
 						} else {
 							const $scope4_id = _scope_id();
-							_set_scope_reason(_mask_group($scope0_reason, 6) << 1);
+							_set_scope_reason(_updates_from($scope0_reason, 6) << 1);
 							const $childScope2 = _peek_scope_id($scope4_id, "b", 0);
 							$PageB_withLoadAssets({ note: input.note });
 							_patch_child_end();

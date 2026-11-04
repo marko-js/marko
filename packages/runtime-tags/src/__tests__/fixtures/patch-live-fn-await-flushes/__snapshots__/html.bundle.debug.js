@@ -37,7 +37,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			where: "3:19"
 		}) || ($fg__fn && _patch_write($scope3_id, "PatchMarkedWrite:fn", fn, !_server_guard($scope3_reason, 1)), $fg__where && _patch_write($scope3_id, "PatchMarkedWrite:where", where, !_server_guard($scope3_reason, 2)));
 	}, $scope0_id) };
-	_set_scope_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 1) << 3);
+	_set_scope_reason(_updates_from($scope0_reason, 1) << 1 | _updates_from($scope0_reason, 1) << 3);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	Use.content({
 		fn,
@@ -49,7 +49,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_await($scope1_id, "#text/0", input.promise, (value) => {
 			const $scope2_id = _scope_id();
-			_set_scope_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 1) << 3);
+			_set_scope_reason(_updates_from($scope0_reason, 1) << 1 | _updates_from($scope0_reason, 1) << 3);
 			const $childScope2 = _peek_scope_id($scope2_id, "#childScope/0", 1);
 			Use.content({
 				fn,

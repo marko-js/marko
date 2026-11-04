@@ -34,7 +34,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_if(() => {
 				if (input.b) {
 					const $scope2_id = _scope_id();
-					_set_scope_reason(_mask_group($scope0_reason, 5) << 1);
+					_set_scope_reason(_updates_from($scope0_reason, 5) << 1);
 					const $childScope = _peek_scope_id($scope2_id, "#childScope/0", 0);
 					widget_default({
 						label: input.label,

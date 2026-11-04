@@ -43,7 +43,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, $scope0_id) })
 	});
 	_patch_child_end();
-	_set_scope_reason(_mask_group($scope0_reason, 2) << 1 | _mask_group($scope0_reason, 2) << 3);
+	_set_scope_reason(_updates_from($scope0_reason, 2) << 1 | _updates_from($scope0_reason, 2) << 3);
 	const $childScope2 = _peek_scope_id($scope0_id, "#childScope/1", 2);
 	Panel.content({
 		open: input.open,

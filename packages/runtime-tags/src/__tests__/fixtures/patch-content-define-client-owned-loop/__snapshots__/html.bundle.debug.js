@@ -30,7 +30,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	List.content({ items: _patch_live($childScope, count % 2 ? ["a"] : ["a", "b"], $scope0_id, "") });
 	_patch_child_end();
-	_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
+	_set_scope_reason(_updates_from($scope0_reason, 1) << 1);
 	const $childScope2 = _peek_scope_id($scope0_id, "#childScope/1", 1);
 	List.content({ items: input.items });
 	_patch_child_end();

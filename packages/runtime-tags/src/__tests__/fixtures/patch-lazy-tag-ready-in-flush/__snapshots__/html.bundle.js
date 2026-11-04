@@ -30,7 +30,7 @@ var template_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	const $input_a__closures = /* @__PURE__ */ new Set();
 	const $input_b__closures = /* @__PURE__ */ new Set();
-	_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
+	_set_scope_reason(_updates_from($scope0_reason, 1) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "b", 0);
 	$Child_withLoadAssets({ label: input.label });
 	_patch_child_end();

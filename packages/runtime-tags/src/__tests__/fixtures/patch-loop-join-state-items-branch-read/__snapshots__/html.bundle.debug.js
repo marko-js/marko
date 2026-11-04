@@ -45,7 +45,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let list = ["p", "q"];
 	let show = true;
-	_set_scope_reason(570 | _mask_group($scope0_reason, 2) << 7);
+	_set_scope_reason(570 | _updates_from($scope0_reason, 2) << 7);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	child_default({
 		b: input.b,
@@ -53,7 +53,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		show
 	});
 	_patch_child_end();
-	_set_scope_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 0) << 3 | _mask_group($scope0_reason, 4) << 5 | _mask_group($scope0_reason, 2) << 7 | _mask_group($scope0_reason, 3) << 9);
+	_set_scope_reason(_updates_from($scope0_reason, 1) << 1 | _updates_from($scope0_reason, 0) << 3 | _updates_from($scope0_reason, 4) << 5 | _updates_from($scope0_reason, 2) << 7 | _updates_from($scope0_reason, 3) << 9);
 	const $childScope2 = _peek_scope_id($scope0_id, "#childScope/1", 1);
 	child_default({
 		b: input.b,

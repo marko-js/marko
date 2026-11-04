@@ -24,7 +24,7 @@ var template_default = _template("a", (input) => {
 	_for_of(input.items, (item, i) => {
 		const $scope1_id = _scope_id();
 		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "xd", i, !$sg__input_items);
-		_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | ($scope0_page ? 3 : 0) << 3);
+		_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | ($scope0_page ? 3 : 0) << 3);
 		const $childScope = _peek_scope_id($scope1_id, "a", 0);
 		row_default({
 			item,

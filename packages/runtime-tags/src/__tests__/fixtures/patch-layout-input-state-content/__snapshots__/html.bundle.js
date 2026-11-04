@@ -35,7 +35,7 @@ var layout_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html(`<html>${_flush_head()}<body><main>`);
-	_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 0) << 3);
+	_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 0) << 3);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	wrap_default({
 		show: input.open,

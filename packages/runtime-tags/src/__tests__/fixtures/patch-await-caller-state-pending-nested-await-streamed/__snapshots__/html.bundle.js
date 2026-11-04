@@ -52,7 +52,7 @@ var template_default = _template("a", (input) => {
 	let p = Promise.resolve(0);
 	let resolve = void 0;
 	_html(`<button class=open>pend</button>${_el_mark($scope0_id, "a")}<button${_attr("disabled", true)} class=settle>settle</button>${_el_mark($scope0_id, "b")}`);
-	_set_scope_reason(8 | (_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 1) << 5 | _mask_group($scope0_reason, 2) << 7));
+	_set_scope_reason(8 | (_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 1) << 5 | _updates_from($scope0_reason, 2) << 7));
 	const $childScope = _peek_scope_id($scope0_id, "c", 0);
 	show_await_default({
 		promise: p,

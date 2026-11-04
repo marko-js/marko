@@ -17,7 +17,7 @@ var feed_list_default = _template("__tests__/tags/feed-list.marko", (input) => {
 	_for_of(input.items, (item) => {
 		const $scope1_id = _scope_id();
 		$fg__input_items && _patch_write($scope1_id, "PatchMarkedWrite:item_id", item?.id, !$sg__input_items);
-		_html(`<li${hovered === item.id ? " class=hovered" : ""}><a${_attr("href", link(input.data, item.id), $scope1_id, "PatchAttr:#a/1 href", $scope0_reason, 0)}>${_text_mark($scope1_id, "#text/2", item.id, 1, $scope0_reason, 1)}</a>${_el_mark($scope1_id, "#a/1", _mask_group($scope0_reason, 0))}</li>${_el_mark($scope1_id, "#li/0")}`);
+		_html(`<li${hovered === item.id ? " class=hovered" : ""}><a${_attr("href", link(input.data, item.id), $scope1_id, "PatchAttr:#a/1 href", $scope0_reason, 0)}>${_text_mark($scope1_id, "#text/2", item.id, 1, $scope0_reason, 1)}</a>${_el_mark($scope1_id, "#a/1", _updates_from($scope0_reason, 0))}</li>${_el_mark($scope1_id, "#li/0")}`);
 		_script($scope1_id, "__tests__/tags/feed-list.marko_1");
 		_patch_render($scope1_id, "__tests__/tags/feed-list.marko_1_input_data#0:4_item_id#5/setup", [$fg__input_data && ">input_data", $fg__input_items && "item_id"], $scope0_reason, 0);
 		_patch_render($scope1_id, "__tests__/tags/feed-list.marko_1_hovered#0:5_item_id#5/setup", $fg__input_items && "item_id");
@@ -48,7 +48,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let open = false;
 	_html(`<button class=toggle>${_text_mark($scope0_id, "#text/1", open ? "open" : "closed")}</button>${_el_mark($scope0_id, "#button/0")}`);
-	_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 1) << 3 | _mask_group($scope0_reason, 2) << 5);
+	_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 1) << 3 | _updates_from($scope0_reason, 2) << 5);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/2", 0);
 	feed_list_default({
 		items: input.items,

@@ -35,7 +35,7 @@ var mid_default = _template("c", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let s = "!";
-	_set_scope_reason(2 | _mask_group($scope0_reason, 0) << 3);
+	_set_scope_reason(2 | _updates_from($scope0_reason, 0) << 3);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	child_default({
 		suffix: s,

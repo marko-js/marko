@@ -49,7 +49,7 @@ var heading_default = _template("c", (input) => {
 	const $scope0_id = _scope_id();
 	const $input_n__closures = /* @__PURE__ */ new Set();
 	const $input_type__closures = /* @__PURE__ */ new Set();
-	_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
+	_set_scope_reason(_updates_from($scope0_reason, 1) << 1);
 	let $item;
 	forUntil(input.n, 0, 1, (i) => {
 		$item = attrTags($item, { content: _content("c5", () => {
@@ -98,7 +98,7 @@ _shells({ a: `a${_shell_marker($setup)};${((_w0) => `b/${_w0}&b`)($walks)};${((_
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 0) << 3);
+	_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 0) << 3);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	heading_default({
 		type: card_default,

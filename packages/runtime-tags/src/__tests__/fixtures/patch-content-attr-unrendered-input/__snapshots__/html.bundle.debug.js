@@ -21,7 +21,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id) };
 	_html("<section>");
 	_attr_content("#section/2", $scope0_id, input.on ? frag.content : null, 0, 1, $scope0_reason, 2);
-	_html(`</section>${_el_mark($scope0_id, "#section/2", _mask_group($scope0_reason, 2))}`);
+	_html(`</section>${_el_mark($scope0_id, "#section/2", _updates_from($scope0_reason, 2))}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	$fg__input_rec_name && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_rec_name#6/subscribers", "input_rec_name");
 	_scope($scope0_id, {

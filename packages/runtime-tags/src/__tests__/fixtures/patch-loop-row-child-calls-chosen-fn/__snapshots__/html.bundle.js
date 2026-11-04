@@ -24,7 +24,7 @@ var template_default = _template("a", (input) => {
 	_for_of(input.items, (item) => {
 		const $scope1_id = _scope_id();
 		$fg__input_items && _patch_write($scope1_id, "xd", item?.upper, !_server_guard($scope0_reason, 2));
-		_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
+		_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
 		const $childScope = _peek_scope_id($scope1_id, "a", 0);
 		label_view_default(_patch_live($childScope, { get: item.upper ? up : low }, $scope1_id, ">f >d >g d"));
 		_patch_child_end();

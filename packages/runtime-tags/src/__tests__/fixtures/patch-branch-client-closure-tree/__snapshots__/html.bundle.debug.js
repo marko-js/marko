@@ -33,7 +33,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					return 0;
 				}
 			}, $scope1_id, "#text/0", 1, 1, 0, 0, 1);
-			_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
+			_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
 			const $childScope = _peek_scope_id($scope1_id, "#childScope/1", 0);
 			note_default({ text: input.title });
 			_patch_child_end();

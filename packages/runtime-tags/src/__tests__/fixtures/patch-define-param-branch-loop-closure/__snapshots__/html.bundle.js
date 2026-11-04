@@ -32,7 +32,7 @@ var template_default = _template("a", (input) => {
 			f: _write_if($scope1_reason, 2) && (_unfilled_if($scope1_reason, 2) || _unfilled_if($scope1_reason, 1)) && $Panel_content__label__closures
 		}) || $fg__label && $cg__isOpen && _patch_write($scope1_id, "xe", label, !_server_guard($scope1_reason, 2));
 	}, $scope0_id) };
-	_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 1) << 3 | _mask_group($scope0_reason, 2) << 5);
+	_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 1) << 3 | _updates_from($scope0_reason, 2) << 5);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	Panel.content({
 		isOpen: input.open,

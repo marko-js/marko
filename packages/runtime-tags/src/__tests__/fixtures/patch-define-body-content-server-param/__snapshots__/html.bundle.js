@@ -21,7 +21,7 @@ var one_default = _template("b", (input) => {
 			e: (_unfilled_if($scope1_reason, 1) || _unfilled_if($scope1_reason, 0)) && t
 		}) || ($fg__content && _client_guard($scope1_reason, 2) && _patch_write($scope1_id, "xd", content, !_server_guard($scope1_reason, 1)), $fg__t && _client_guard($scope1_reason, 1) && _patch_write($scope1_id, "xe", t, !_server_guard($scope1_reason, 2)));
 	}, $scope0_id, 1) };
-	_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 1) << 3 | _mask_group($scope0_reason, 2) << 5);
+	_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 1) << 3 | _updates_from($scope0_reason, 2) << 5);
 	const $childScope = _peek_scope_id($scope0_id, "a", 1);
 	Wrap.content({
 		content: input.content,
@@ -39,7 +39,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let z = 0;
 	_html(`<button class=z>z</button>${_el_mark($scope0_id, "a")}`);
-	_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 0) << 5);
+	_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 0) << 5);
 	const $childScope = _peek_scope_id($scope0_id, "b", 0);
 	one_default({
 		t: input.y,

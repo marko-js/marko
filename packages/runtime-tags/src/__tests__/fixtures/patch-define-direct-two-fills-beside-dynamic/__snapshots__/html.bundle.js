@@ -24,7 +24,7 @@ var template_default = _template("a", (input) => {
 		$fg__label && $cg__isOpen && _patch_render($scope1_id, "a0", "e");
 		_write_if($scope1_reason, 0) && _scope($scope1_id, { e: (_unfilled_if($scope1_reason, 0) || _unfilled_if($scope1_reason, 1)) && label }) || $fg__label && $cg__isOpen && _patch_write($scope1_id, "xe", label, !_server_guard($scope1_reason, 1));
 	}, $scope0_id) };
-	_set_scope_reason(_mask_group($scope0_reason, 2) << 1 | _mask_group($scope0_reason, 2) << 3);
+	_set_scope_reason(_updates_from($scope0_reason, 2) << 1 | _updates_from($scope0_reason, 2) << 3);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	Panel.content({
 		isOpen: input.show,

@@ -15,7 +15,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_html("<div>");
 		_attr_content("#div/0", $scope1_id, input.content, 0, 1, $scope0_reason, 1);
-		_html(`</div>${_el_mark($scope1_id, "#div/0", _mask_group($scope0_reason, 1))}`);
+		_html(`</div>${_el_mark($scope1_id, "#div/0", _updates_from($scope0_reason, 1))}`);
 		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "__tests__/tags/card.marko_1_input_content#0:4/subscribe", $cg__input_content);
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_content__closures, _scope($scope1_id, {}, "__tests__/tags/card.marko", "1:2"), $cg__input_content && "__tests__/tags/card.marko_1_input_content#0:4/subscribe");
 	}, 1, "__tests__/tags/card.marko_1*content", _unfilled_if($scope0_reason, 0), 1, 1);
@@ -67,7 +67,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $input_note__closures = new Set();
 	const $input_on__closures = new Set();
 	_html("<main>");
-	_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
+	_set_scope_reason(_updates_from($scope0_reason, 1) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 1);
 	card_default({
 		p: input.p,

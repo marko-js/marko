@@ -20,7 +20,7 @@ var card_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html(`<section><h2>${_text_mark($scope0_id, "a", input.title, 1, $scope0_reason, 0)}</h2>`);
-	_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
+	_set_scope_reason(_updates_from($scope0_reason, 1) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "b", 0);
 	frame_default({ content: input.content });
 	_patch_child_end();
@@ -45,7 +45,7 @@ var template_default = _template("a", (input) => {
 	_for_of(input.items, (item) => {
 		const $scope1_id = _scope_id();
 		const $for_content__item_id__closures = /* @__PURE__ */ new Set();
-		_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
+		_set_scope_reason(_updates_from($scope0_reason, 1) << 1);
 		const $childScope = _peek_scope_id($scope1_id, "a", 0);
 		card_default({
 			title: item.title,

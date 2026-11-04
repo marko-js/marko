@@ -16,7 +16,7 @@ var card_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html(`<h3>${_text_mark($scope0_id, "a", input.title, 1, $scope0_reason, 0)}</h3>`);
-	_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
+	_set_scope_reason(_updates_from($scope0_reason, 1) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "b", 0);
 	badge_default({ text: input.subtitle });
 	_patch_child_end();

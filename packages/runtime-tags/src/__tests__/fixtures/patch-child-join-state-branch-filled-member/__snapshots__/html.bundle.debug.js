@@ -56,7 +56,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let n = "k";
 	let s = true;
-	_set_scope_reason(574 | _mask_group($scope0_reason, 0) << 7);
+	_set_scope_reason(574 | _updates_from($scope0_reason, 0) << 7);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	child_default({
 		a: input.a,

@@ -25,7 +25,7 @@ var child_default = _template("b", (input) => {
 			}, $scope1_id) };
 			_html("<section>");
 			_attr_content("b", $scope1_id, input.mode ? frag.content : null, 0, 1, $scope0_reason, 8);
-			_html(`</section>${_el_mark($scope1_id, "b", _mask_group($scope0_reason, 8))}`);
+			_html(`</section>${_el_mark($scope1_id, "b", _updates_from($scope0_reason, 8))}`);
 			$cg__input_mode && _patch_write($scope1_id, "wf", frag?.content, 1);
 			$fg__input_b && _patch_subscribers($scope1_id, "b2", "c");
 			$cg__input_b && _patch_render($scope1_id, "b3");
@@ -58,7 +58,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let n = 0;
 	let m = false;
-	_set_scope_reason(165624 | (_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 3) << 11 | _mask_group($scope0_reason, 2) << 13));
+	_set_scope_reason(165624 | (_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 3) << 11 | _updates_from($scope0_reason, 2) << 13));
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	child_default({
 		a: n,
@@ -67,7 +67,7 @@ var template_default = _template("a", (input) => {
 		mode: m
 	});
 	_patch_child_end();
-	_set_scope_reason(133088 | (_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 1) << 3 | _mask_group($scope0_reason, 3) << 11 | _mask_group($scope0_reason, 2) << 13 | _mask_group($scope0_reason, 4) << 15));
+	_set_scope_reason(133088 | (_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 1) << 3 | _updates_from($scope0_reason, 3) << 11 | _updates_from($scope0_reason, 2) << 13 | _updates_from($scope0_reason, 4) << 15));
 	const $childScope2 = _peek_scope_id($scope0_id, "b", 1);
 	child_default({
 		a: input.y,

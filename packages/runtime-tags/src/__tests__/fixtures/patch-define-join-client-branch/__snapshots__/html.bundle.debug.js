@@ -59,7 +59,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let count = 0;
 	let s = false;
-	_set_scope_reason(9198 | _mask_group($scope0_reason, 1) << 11);
+	_set_scope_reason(9198 | _updates_from($scope0_reason, 1) << 11);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	panel_default({
 		a: count,
@@ -67,7 +67,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		show: s
 	});
 	_patch_child_end();
-	_set_scope_reason(8696 | (_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 2) << 9 | _mask_group($scope0_reason, 1) << 11));
+	_set_scope_reason(8696 | (_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 2) << 9 | _updates_from($scope0_reason, 1) << 11));
 	const $childScope2 = _peek_scope_id($scope0_id, "#childScope/1", 1);
 	panel_default({
 		a: input.y,

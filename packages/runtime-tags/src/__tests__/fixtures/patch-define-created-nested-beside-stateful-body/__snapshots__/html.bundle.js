@@ -30,14 +30,14 @@ var template_default = _template("a", (input) => {
 	const Outer = { content: _content("a4", ({ isOpen, label }) => {
 		const $scope3_id = _scope_id();
 		const $scope3_reason = _scope_reason();
-		_set_scope_reason(_mask_group($scope3_reason, 0) << 1 | _mask_group($scope3_reason, 1) << 3);
+		_set_scope_reason(_updates_from($scope3_reason, 0) << 1 | _updates_from($scope3_reason, 1) << 3);
 		const $childScope = _peek_scope_id($scope3_id, "a", 0);
 		Inner.content({
 			isOpen,
 			label
 		});
 		_patch_child_end();
-		_set_scope_reason(_mask_group($scope3_reason, 1) << 3);
+		_set_scope_reason(_updates_from($scope3_reason, 1) << 3);
 		const $childScope2 = _peek_scope_id($scope3_id, "b", 1);
 		Inner.content({
 			isOpen: true,
@@ -52,7 +52,7 @@ var template_default = _template("a", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_set_scope_reason(_mask_group($scope0_reason, 2) << 1 | _mask_group($scope0_reason, 3) << 3);
+			_set_scope_reason(_updates_from($scope0_reason, 2) << 1 | _updates_from($scope0_reason, 3) << 3);
 			const $childScope3 = _peek_scope_id($scope1_id, "a", 2);
 			Outer.content({
 				isOpen: input.open,

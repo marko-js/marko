@@ -6,7 +6,7 @@ _shells({ "__tests__/tags/card.marko": "__tests__/tags/card.marko; D ;<a> </a>" 
 var card_default = _template("__tests__/tags/card.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<a${_attr("href", input.href, $scope0_id, "PatchAttr:#a/0 href", $scope0_reason, 0)}>${_text_mark($scope0_id, "#text/1", input.label, 1, $scope0_reason, 1)}</a>${_el_mark($scope0_id, "#a/0", _mask_group($scope0_reason, 0))}`);
+	_html(`<a${_attr("href", input.href, $scope0_id, "PatchAttr:#a/0 href", $scope0_reason, 0)}>${_text_mark($scope0_id, "#text/1", input.label, 1, $scope0_reason, 1)}</a>${_el_mark($scope0_id, "#a/0", _updates_from($scope0_reason, 0))}`);
 	_scope($scope0_id, {}, "__tests__/tags/card.marko", 0);
 });
 
@@ -30,7 +30,7 @@ var feed_list_default = _template("__tests__/tags/feed-list.marko", (input) => {
 		const $scope1_id = _scope_id();
 		$fg__input_items && _patch_write($scope1_id, "PatchMarkedWrite:item_id", item?.id, !$sg__input_items);
 		_html(`<li${hovered === item.id ? " class=hovered" : ""}>`);
-		_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 1) << 3);
+		_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 1) << 3);
 		const $childScope = _peek_scope_id($scope1_id, "#childScope/1", 0);
 		card_default({
 			label: item.id,

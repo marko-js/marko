@@ -62,7 +62,7 @@ var template_default = _template("a", (input) => {
 	const $input_note__closures = /* @__PURE__ */ new Set();
 	const $input_on__closures = /* @__PURE__ */ new Set();
 	_html("<main>");
-	_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
+	_set_scope_reason(_updates_from($scope0_reason, 1) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "a", 1);
 	card_default({
 		p: input.p,

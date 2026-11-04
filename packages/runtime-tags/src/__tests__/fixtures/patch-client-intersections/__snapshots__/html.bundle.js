@@ -61,7 +61,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
 	_html(`<main><h1>${_text_mark($scope0_id, "a", input.title, 1, $scope0_reason, 0)}</h1><p${_attr("title", $global$1.locale, $scope0_id, "ab$title")}>${_text_mark($scope0_id, "c", $global$1.brand, 1, 4, 0)}</p>${_el_mark($scope0_id, "b")}`);
-	_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
+	_set_scope_reason(_updates_from($scope0_reason, 1) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "d", 0);
 	price_card_default({ label: input.label });
 	_patch_child_end();
@@ -69,7 +69,7 @@ var template_default = _template("a", (input) => {
 	const $childScope2 = _peek_scope_id($scope0_id, "e", 1);
 	promo_tag_default({ text: "Sale" });
 	_patch_child_end();
-	_set_scope_reason(_mask_group($scope0_reason, 2) << 1);
+	_set_scope_reason(_updates_from($scope0_reason, 2) << 1);
 	const $childScope3 = _peek_scope_id($scope0_id, "f", 2);
 	site_footer_default({ year: input.year });
 	_patch_child_end();

@@ -27,7 +27,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		$fg__label && $cg__isOpen && _patch_render($scope1_id, "__tests__/template.marko_2_label#1:4/setup", "label");
 		_write_if($scope1_reason, 0) && _scope($scope1_id, { label: (_unfilled_if($scope1_reason, 0) || _unfilled_if($scope1_reason, 1)) && label }, "__tests__/template.marko", "2:2", { label: "2:25" }) || $fg__label && $cg__isOpen && _patch_write($scope1_id, "PatchMarkedWrite:label", label, !_server_guard($scope1_reason, 1));
 	}, $scope0_id) };
-	_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 0) << 3);
+	_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 0) << 3);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	Panel.content({
 		isOpen: input.show,

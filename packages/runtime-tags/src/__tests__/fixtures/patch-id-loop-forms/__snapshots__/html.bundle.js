@@ -7,7 +7,7 @@ var field_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const uid = input.uid || _id("A");
-	_html(`<label${_attr("for", uid, $scope0_id, "aa$for", $scope0_reason, 0)}>${_text_mark($scope0_id, "b", input.name, 1, $scope0_reason, 1)}</label>${_el_mark($scope0_id, "a", _mask_group($scope0_reason, 0))}<input${_attr("id", uid, $scope0_id, "ac$id", $scope0_reason, 0)}${_attr("aria-describedby", input.heading, $scope0_id, "ac$aria-describedby", $scope0_reason, 2)}>${_el_mark($scope0_id, "c", _mask_group($scope0_reason, 0) || _mask_group($scope0_reason, 2))}`);
+	_html(`<label${_attr("for", uid, $scope0_id, "aa$for", $scope0_reason, 0)}>${_text_mark($scope0_id, "b", input.name, 1, $scope0_reason, 1)}</label>${_el_mark($scope0_id, "a", _updates_from($scope0_reason, 0))}<input${_attr("id", uid, $scope0_id, "ac$id", $scope0_reason, 0)}${_attr("aria-describedby", input.heading, $scope0_id, "ac$aria-describedby", $scope0_reason, 2)}>${_el_mark($scope0_id, "c", _updates_from($scope0_reason, 0) || _updates_from($scope0_reason, 2))}`);
 	_scope($scope0_id, {});
 });
 
@@ -30,7 +30,7 @@ var template_default = _template("a", (input) => {
 	_html(`<h1${_attr("id", heading, $scope0_id, "aa$id", 0, 0)}>Fields</h1>${_el_mark($scope0_id, "a", 0)}`);
 	_for_of(input.items, (item) => {
 		const $scope1_id = _scope_id();
-		_set_scope_reason(_mask_group($scope0_reason, 2) << 3);
+		_set_scope_reason(_updates_from($scope0_reason, 2) << 3);
 		const $childScope = _peek_scope_id($scope1_id, "a", 0);
 		field_default({
 			name: item.key,
@@ -63,7 +63,7 @@ var template_default = _template("a", (input) => {
 	}, 0, $scope0_id, "d", 1, 1, 1, 0, 0, "a2", $scope0_reason, 3);
 	_for_in(input.record, (key, value) => {
 		const $scope4_id = _scope_id();
-		_set_scope_reason(_mask_group($scope0_reason, 3) << 3);
+		_set_scope_reason(_updates_from($scope0_reason, 3) << 3);
 		const $childScope4 = _peek_scope_id($scope4_id, "a", 3);
 		field_default({
 			name: value,
@@ -85,7 +85,7 @@ var template_default = _template("a", (input) => {
 	}, 0, $scope0_id, "f", 1, 1, 1, 0, 0, "a4", $scope0_reason, 0);
 	_for_to(input.end, input.start, 1, (i) => {
 		const $scope6_id = _scope_id();
-		_set_scope_reason(_mask_group($scope0_reason, 0) << 3);
+		_set_scope_reason(_updates_from($scope0_reason, 0) << 3);
 		const $childScope6 = _peek_scope_id($scope6_id, "a", 5);
 		field_default({
 			name: i,
@@ -107,7 +107,7 @@ var template_default = _template("a", (input) => {
 	}, 0, $scope0_id, "h", 1, 1, 1, 0, 0, "a6", $scope0_reason, 0);
 	_for_until(input.end, input.start, 2, (i) => {
 		const $scope8_id = _scope_id();
-		_set_scope_reason(_mask_group($scope0_reason, 0) << 3);
+		_set_scope_reason(_updates_from($scope0_reason, 0) << 3);
 		const $childScope8 = _peek_scope_id($scope8_id, "a", 7);
 		field_default({
 			name: i,

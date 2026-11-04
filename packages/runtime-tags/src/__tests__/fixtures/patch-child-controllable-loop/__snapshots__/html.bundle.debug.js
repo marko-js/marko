@@ -49,7 +49,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		let hits = 0;
 		_html(`<p>${_text_mark($scope1_id, "#text/0", name, 1, 0, 0)} hit ${_text_mark($scope1_id, "#text/1", hits, 2, 0, 0, 1)}</p>`);
-		_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
+		_set_scope_reason(_updates_from($scope0_reason, 1) << 1);
 		const $childScope = _peek_scope_id($scope1_id, "#childScope/2", 0);
 		counter_default({
 			show: input.show,

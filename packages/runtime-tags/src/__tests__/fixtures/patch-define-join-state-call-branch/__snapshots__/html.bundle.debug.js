@@ -35,7 +35,7 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	Row.content({ show: t });
 	_patch_child_end();
-	_set_scope_reason(_mask_group($scope0_reason, 3) << 1);
+	_set_scope_reason(_updates_from($scope0_reason, 3) << 1);
 	const $childScope2 = _peek_scope_id($scope0_id, "#childScope/1", 1);
 	Row.content({ show: input.show });
 	_patch_child_end();
@@ -68,7 +68,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let n = "k";
-	_set_scope_reason(38 | (_mask_group($scope0_reason, 1) << 3 | _mask_group($scope0_reason, 2) << 7));
+	_set_scope_reason(38 | (_updates_from($scope0_reason, 1) << 3 | _updates_from($scope0_reason, 2) << 7));
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	panel_default({
 		a: input.a,
@@ -76,7 +76,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		show: input.show
 	});
 	_patch_child_end();
-	_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 1) << 3 | _mask_group($scope0_reason, 3) << 5 | _mask_group($scope0_reason, 2) << 7);
+	_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 1) << 3 | _updates_from($scope0_reason, 3) << 5 | _updates_from($scope0_reason, 2) << 7);
 	const $childScope2 = _peek_scope_id($scope0_id, "#childScope/1", 1);
 	panel_default({
 		a: input.a,

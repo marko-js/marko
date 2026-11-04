@@ -45,7 +45,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, $scope1_id, "#text/0", 1, $wg__on, 1, 0, 0, ["__tests__/template.marko_2*shell"], $scope1_reason, 0);
 		($wi__input_a || $wi__on) && _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:2");
 	}, $scope0_id) };
-	_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
+	_set_scope_reason(_updates_from($scope0_reason, 1) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	D.content({ on: input.x });
 	_patch_child_end();

@@ -43,7 +43,7 @@ var template_default = _template("a", (input) => {
 		}, $scope1_id, "a", 1, $wg__on, 1, 0, 0, ["a2"], $scope1_reason, 0);
 		($wi__input_a || $wi__on) && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
 	}, $scope0_id) };
-	_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
+	_set_scope_reason(_updates_from($scope0_reason, 1) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	D.content({ on: input.x });
 	_patch_child_end();

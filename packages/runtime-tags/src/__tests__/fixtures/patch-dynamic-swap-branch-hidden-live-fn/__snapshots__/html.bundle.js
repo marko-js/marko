@@ -70,7 +70,7 @@ var w_default = _template("c", (input) => {
 		$wg__input_show || _resume_branch($scope2_id);
 	}, $scope0_id) };
 	_dynamic_tag($scope0_id, "a", input.flag ? A : B, { x: input.x }, 1, 0, 0, _write_guard($scope0_reason, 0), $scope0_reason, 0);
-	_set_scope_reason(_mask_group($scope0_reason, 2) << 1);
+	_set_scope_reason(_updates_from($scope0_reason, 2) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "b", 1);
 	probe_default({ get: _bind_resume(function() {
 		return "s:" + input.show;
@@ -97,7 +97,7 @@ _shells({ a: `a${_shell_marker($setup)};${((_w0) => `b/${_w0}&`)($walks)};${((_w
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 1) << 3 | _mask_group($scope0_reason, 3) << 5 | _mask_group($scope0_reason, 4) << 7 | _mask_group($scope0_reason, 2) << 9);
+	_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 1) << 3 | _updates_from($scope0_reason, 3) << 5 | _updates_from($scope0_reason, 4) << 7 | _updates_from($scope0_reason, 2) << 9);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	w_default({
 		x: input.a,

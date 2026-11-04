@@ -29,18 +29,18 @@ var template_default = _template("a", (input) => {
 	const D = { content: _content("a1", ({ on }) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $fg__on = _filled_guard($scope1_reason, 0);
-		_html(`<span>${_text_mark($scope1_id, "a", on && f(), 1, (_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0)) << 1, 0)}</span>`);
+		_html(`<span>${_text_mark($scope1_id, "a", on && f(), 1, (_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 0)) << 1, 0)}</span>`);
 		_patch_render($scope1_id, "a2", [
 			$fg__input_a && ">g",
 			$fg__input_a && ">e",
 			$fg__on && "d"
-		], (_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0)) << 1, 0);
-		_subscribe(_unfilled_if((_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0)) << 1, 0) && $wi__input_a && $f2__closures, _scope($scope1_id, {
+		], (_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 0)) << 1, 0);
+		_subscribe(_unfilled_if((_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 0)) << 1, 0) && $wi__input_a && $f2__closures, _scope($scope1_id, {
 			d: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope1_reason, 0)) && on,
 			_: ($wi__input_a || _write_if($scope1_reason, 0)) && _scope_with_id($scope0_id)
-		}), _client_guard((_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0)) << 1, 0) && "a3") || $fg__on && _client_guard($scope0_reason, 0) && _patch_write($scope1_id, "xd", on, !_server_guard($scope1_reason, 0));
+		}), _client_guard((_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 0)) << 1, 0) && "a3") || $fg__on && _client_guard($scope0_reason, 0) && _patch_write($scope1_id, "xd", on, !_server_guard($scope1_reason, 0));
 	}, $scope0_id) };
-	_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
+	_set_scope_reason(_updates_from($scope0_reason, 1) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	D.content({ on: input.x });
 	_patch_child_end();

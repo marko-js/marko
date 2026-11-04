@@ -33,14 +33,14 @@ var template_default = _template("a", (input) => {
 			const $scope1_id = _scope_id();
 			_await($scope1_id, "a", input.promise, (value) => {
 				const $scope2_id = _scope_id();
-				_set_scope_reason(_mask_group($scope0_reason, 3) << 3);
+				_set_scope_reason(_updates_from($scope0_reason, 3) << 3);
 				const $childScope = _peek_scope_id($scope2_id, "a", 0);
 				Panel.content({
 					isOpen: true,
 					label: value
 				});
 				_patch_child_end();
-				_set_scope_reason(_mask_group($scope0_reason, 4) << 3);
+				_set_scope_reason(_updates_from($scope0_reason, 4) << 3);
 				const $childScope2 = _peek_scope_id($scope2_id, "b", 1);
 				Panel.content({
 					isOpen: true,

@@ -27,7 +27,7 @@ var template_default = _template("a", (input) => {
 		_write_if($scope2_reason, 1) && _scope($scope2_id, { e: _unfilled_if($scope2_reason, 1) && content }) || $fg__content && $cg__show && _patch_write($scope2_id, "xe", content, !_server_guard($scope2_reason, 2));
 	}, $scope0_id) };
 	_html("<main>");
-	_set_scope_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 1) << 3);
+	_set_scope_reason(_updates_from($scope0_reason, 1) << 1 | _updates_from($scope0_reason, 1) << 3);
 	const $childScope = _peek_scope_id($scope0_id, "a", 1);
 	Card.content({
 		show: input.show,

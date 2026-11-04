@@ -25,7 +25,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
 		_filled_guard($scope1_reason, 0) && _patch_write($scope1_id, "PatchMarkedWrite:text", text, !_server_guard($scope1_reason, 0));
-		_set_scope_reason(_mask_group($scope1_reason, 0) << 1);
+		_set_scope_reason(_updates_from($scope1_reason, 0) << 1);
 		const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 		label_default({ get: _bind_resume(function() {
 			return text;
@@ -36,7 +36,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			"#childScope/0": _existing_scope($childScope)
 		}, "__tests__/template.marko", "1:2", { text: "1:15" });
 	}, $scope0_id) };
-	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
+	_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
 	const $childScope2 = _peek_scope_id($scope0_id, "#childScope/0", 1);
 	Row.content({ text: input.v });
 	_patch_child_end();

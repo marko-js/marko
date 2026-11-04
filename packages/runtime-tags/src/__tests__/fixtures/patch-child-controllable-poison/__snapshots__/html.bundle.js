@@ -47,7 +47,7 @@ var template_default = _template("a", (input) => {
 	_html(`<main><h1>${_text_mark($scope0_id, "a", input.title, 1, $scope0_reason, 0)}</h1><p>Last ${_text_mark($scope0_id, "b", last, 2)}</p>`);
 	_for_of(["a", "b"], (name) => {
 		const $scope1_id = _scope_id();
-		_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
+		_set_scope_reason(_updates_from($scope0_reason, 1) << 1);
 		const $childScope = _peek_scope_id($scope1_id, "a", 0);
 		counter_default({
 			show: input.show,

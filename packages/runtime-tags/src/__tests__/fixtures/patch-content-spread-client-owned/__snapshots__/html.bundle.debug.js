@@ -57,7 +57,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let mode = false;
 	_html(`<button>toggle</button>${_el_mark($scope0_id, "#button/0")}`);
-	_set_scope_reason(8 | _mask_group($scope0_reason, 0) << 1);
+	_set_scope_reason(8 | _updates_from($scope0_reason, 0) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/1", 0);
 	frag_host_default({
 		mode,

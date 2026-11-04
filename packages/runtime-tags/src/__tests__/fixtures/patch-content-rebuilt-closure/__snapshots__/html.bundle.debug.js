@@ -30,7 +30,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 2), $wi__input_items__OR__input_show = _write_if($scope0_reason, 0), $fg__input_show = _filled_guard($scope0_reason, 2), $cg__input_items = _client_guard($scope0_reason, 1), $wi__input_show = _write_if($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_show__closures = new Set();
-	_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
+	_set_scope_reason(_updates_from($scope0_reason, 1) << 1);
 	let $item;
 	forOf(input.items, (item) => {
 		$item = attrTags($item, { content: _content("__tests__/tags/child.marko_1*content", () => {
@@ -70,7 +70,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let items = [1, 2];
 	_html(`<button>add</button>${_el_mark($scope0_id, "#button/0")}`);
-	_set_scope_reason(14 | _mask_group($scope0_reason, 0) << 5);
+	_set_scope_reason(14 | _updates_from($scope0_reason, 0) << 5);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/1", 0);
 	child_default({
 		items,

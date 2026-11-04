@@ -92,12 +92,12 @@ _shells({ "__tests__/tags/page.marko": `__tests__/tags/page.marko${_shell_marker
 var page_default = _template("__tests__/tags/page.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $cg__input_items = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
-	_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
+	_set_scope_reason(_updates_from($scope0_reason, 1) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0, $cg__input_items && 1);
 	let tabs = src_default({ items: input.items });
 	$cg__input_items && _var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/tags/page.marko_0_tabs#7/var");
 	_patch_child_end();
-	_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 1) << 3 | _mask_group($scope0_reason, 2) << 5);
+	_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 1) << 3 | _updates_from($scope0_reason, 2) << 5);
 	const $childScope2 = _peek_scope_id($scope0_id, "#childScope/2", 1);
 	view_default({
 		tabs,
@@ -124,7 +124,7 @@ var wrap_default = _template("__tests__/tags/wrap.marko", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 2) << 3 | _mask_group($scope0_reason, 3) << 5);
+			_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 2) << 3 | _updates_from($scope0_reason, 3) << 5);
 			const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 			page_default({
 				items: input.items,
@@ -159,7 +159,7 @@ _shells({ "__tests__/template.marko": `__tests__/template.marko${_shell_marker($
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 1) << 3 | _mask_group($scope0_reason, 2) << 5 | _mask_group($scope0_reason, 3) << 7);
+	_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 1) << 3 | _updates_from($scope0_reason, 2) << 5 | _updates_from($scope0_reason, 3) << 7);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	wrap_default({
 		show: input.show,

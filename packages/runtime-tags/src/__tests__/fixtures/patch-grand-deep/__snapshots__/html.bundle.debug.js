@@ -20,7 +20,7 @@ var l2_default = _template("__tests__/tags/l1/tags/l2/index.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let n = 0;
 	_html(`<button class=n>${_text_mark($scope0_id, "#text/1", n)}</button>${_el_mark($scope0_id, "#button/0")}`);
-	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
+	_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/2", 0);
 	l3_default({ note: input.note });
 	_patch_child_end();
@@ -40,7 +40,7 @@ _shells({ "__tests__/tags/l1/index.marko": `__tests__/tags/l1/index.marko${_shel
 var l1_default = _template("__tests__/tags/l1/index.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
+	_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	l2_default({ note: input.note });
 	_patch_child_end();
@@ -60,7 +60,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_if(() => {
 		if (show) {
 			const $scope1_id = _scope_id();
-			_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
+			_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
 			const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 			l1_default({ note: input.note });
 			_patch_child_end();

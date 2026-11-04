@@ -21,7 +21,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}) || ($fg__a && _client_guard($scope1_reason, 2) && _patch_write($scope1_id, "PatchMarkedWrite:a", a, !_server_guard($scope1_reason, 1)), $fg__b && _client_guard($scope1_reason, 1) && _patch_write($scope1_id, "PatchMarkedWrite:b", b, !_server_guard($scope1_reason, 2)));
 		return $return;
 	}, $scope0_id) };
-	_set_scope_reason(14 | _mask_group($scope0_reason, 0) << 5);
+	_set_scope_reason(14 | _updates_from($scope0_reason, 0) << 5);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0, 1);
 	let total = Sum.content({
 		a: n,

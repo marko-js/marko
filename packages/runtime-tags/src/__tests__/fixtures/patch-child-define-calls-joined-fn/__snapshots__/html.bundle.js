@@ -29,7 +29,7 @@ var label_view_default = _template("b", (input) => {
 			h: get
 		}) || ($fg__a && _client_guard($scope1_reason, 2) && _patch_write($scope1_id, "xd", a, !_server_guard($scope1_reason, 4)), $fg__b && _client_guard($scope1_reason, 1) && _patch_write($scope1_id, "xe", b, !_server_guard($scope1_reason, 5)), $fg__flag && _client_guard($scope1_reason, 0) && _patch_write($scope1_id, "xf", flag, !_server_guard($scope1_reason, 6)), $fg__a__OR__b__OR__flag && _patch_write($scope1_id, "xh", get, !_server_guard($scope1_reason, 3)));
 	}, $scope0_id, 1) };
-	_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 1) << 3 | _mask_group($scope0_reason, 2) << 5 | _mask_group($scope0_reason, 3) << 7 | _mask_group($scope0_reason, 4) << 9 | _mask_group($scope0_reason, 5) << 11 | _mask_group($scope0_reason, 6) << 13);
+	_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 1) << 3 | _updates_from($scope0_reason, 2) << 5 | _updates_from($scope0_reason, 3) << 7 | _updates_from($scope0_reason, 4) << 9 | _updates_from($scope0_reason, 5) << 11 | _updates_from($scope0_reason, 6) << 13);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	Show.content({
 		a: input.a,
@@ -50,7 +50,7 @@ var template_default = _template("a", (input) => {
 	let upper = false;
 	const up = _bind_resume(() => "U" + input.title, "a0", $scope0_id);
 	const low = _bind_resume(() => "l" + input.title, "a1", $scope0_id);
-	_set_scope_reason(1950 | (_mask_group($scope0_reason, 0) << 5 | _mask_group($scope0_reason, 0) << 11));
+	_set_scope_reason(1950 | (_updates_from($scope0_reason, 0) << 5 | _updates_from($scope0_reason, 0) << 11));
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	label_view_default({
 		a: low,

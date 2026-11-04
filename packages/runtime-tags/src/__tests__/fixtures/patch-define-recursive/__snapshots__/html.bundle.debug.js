@@ -19,7 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_if(() => {
 			if (n) {
 				const $scope2_id = _scope_id();
-				_set_scope_reason(_mask_group($scope1_reason, 0) << 1);
+				_set_scope_reason(_updates_from($scope1_reason, 0) << 1);
 				const $childScope = _peek_scope_id($scope2_id, "#childScope/0", 0, 0, $scope0_id);
 				foo.content(n - 1);
 				_patch_child_end();

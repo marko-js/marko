@@ -16,7 +16,7 @@ _shells({ a: `a${_shell_marker($setup)};${((_w0) => `/${_w0}&`)(" b")};${$templa
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $fg__input_flag = _filled_guard($scope0_reason, 1), $fg__input_title = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
-	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
+	_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	child_default({ item: _patch_live($childScope, input.flag && { t: input.title }, $scope0_id, "d e") });
 	_patch_child_end();

@@ -39,7 +39,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			rows: "3:8"
 		}) || ($fg__selected && _patch_write($scope1_id, "PatchMarkedWrite:selected", selected, !_server_guard($scope1_reason, 1)), $fg__flag && _patch_write($scope1_id, "PatchMarkedWrite:flag", flag, !_server_guard($scope1_reason, 2)));
 	}, $scope0_id) };
-	_set_scope_reason(38 | _mask_group($scope0_reason, 0) << 3);
+	_set_scope_reason(38 | _updates_from($scope0_reason, 0) << 3);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	List.content({
 		selected: input.sel,

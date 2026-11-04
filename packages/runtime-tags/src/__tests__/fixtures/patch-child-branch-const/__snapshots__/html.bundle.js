@@ -12,7 +12,7 @@ var card_default = _template("b", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_html(`<h2${_attr_class(input.title, $scope1_id, "aa$class", $scope0_reason, 2)}>${_text_mark($scope1_id, "b", input.title, 1, $scope0_reason, 2)}</h2>${_el_mark($scope1_id, "a", _mask_group($scope0_reason, 2))}<p>${_text_mark($scope1_id, "c", input.note, 1, $scope0_reason, 3)}</p>`);
+			_html(`<h2${_attr_class(input.title, $scope1_id, "aa$class", $scope0_reason, 2)}>${_text_mark($scope1_id, "b", input.title, 1, $scope0_reason, 2)}</h2>${_el_mark($scope1_id, "a", _updates_from($scope0_reason, 2))}<p>${_text_mark($scope1_id, "c", input.note, 1, $scope0_reason, 3)}</p>`);
 			_client_guard($scope0_reason, 2) && _patch_render($scope1_id, "b0");
 			_client_guard($scope0_reason, 3) && _patch_render($scope1_id, "b1");
 			_scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) });
@@ -35,7 +35,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html("<main>");
-	_set_scope_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 0) << 3 | _mask_group($scope0_reason, 1) << 7);
+	_set_scope_reason(_updates_from($scope0_reason, 1) << 1 | _updates_from($scope0_reason, 0) << 3 | _updates_from($scope0_reason, 1) << 7);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	card_default({
 		show: input.show,

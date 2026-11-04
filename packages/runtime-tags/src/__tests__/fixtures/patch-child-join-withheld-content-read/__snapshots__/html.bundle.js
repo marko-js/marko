@@ -20,7 +20,7 @@ var child_default = _template("b", (input) => {
 	}, $scope0_id) };
 	_html("<section>");
 	_attr_content("a", $scope0_id, input.mode ? frag.content : null, 0, 1, $scope0_reason, 4);
-	_html(`</section>${_el_mark($scope0_id, "a", _mask_group($scope0_reason, 4))}`);
+	_html(`</section>${_el_mark($scope0_id, "a", _updates_from($scope0_reason, 4))}`);
 	_if(() => {
 		if (input.b) {
 			const $scope2_id = _scope_id();
@@ -51,7 +51,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let m = true;
 	let n = "";
-	_set_scope_reason(614 | (_mask_group($scope0_reason, 0) << 3 | _mask_group($scope0_reason, 1) << 7 | _mask_group($scope0_reason, 2) << 11));
+	_set_scope_reason(614 | (_updates_from($scope0_reason, 0) << 3 | _updates_from($scope0_reason, 1) << 7 | _updates_from($scope0_reason, 2) << 11));
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	child_default({
 		a: input.x,
@@ -59,7 +59,7 @@ var template_default = _template("a", (input) => {
 		mode: m
 	});
 	_patch_child_end();
-	_set_scope_reason(2622 | _mask_group($scope0_reason, 1) << 7);
+	_set_scope_reason(2622 | _updates_from($scope0_reason, 1) << 7);
 	const $childScope2 = _peek_scope_id($scope0_id, "b", 1);
 	child_default({
 		a: input.x,

@@ -69,7 +69,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			"ClosureSignalIndex:input_label/11": $wi__input_label && 1
 		}, "__tests__/template.marko", "4:2"), $cg__input_label && "__tests__/template.marko_2_input_label#0:5/subscribe");
 	}, $scope0_id) };
-	_set_scope_reason(38 | _mask_group($scope0_reason, 1) << 3);
+	_set_scope_reason(38 | _updates_from($scope0_reason, 1) << 3);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/2", 0);
 	wrapper_default({
 		fail: count > 1,

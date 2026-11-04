@@ -25,7 +25,7 @@ _shells({ b: `b${_shell_marker($setup)};${((_w0) => `b/${_w0}&b`)("b%c")};${((_w
 var outer_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
+	_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	inner_default({ open: input.o });
 	_patch_child_end();
@@ -42,7 +42,7 @@ var template_default = _template("a", (input) => {
 	_if(() => {
 		{
 			const $scope1_id = _scope_id();
-			_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
+			_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
 			const $childScope = _peek_scope_id($scope1_id, "a", 0);
 			outer_default({ o: input.o });
 			_patch_child_end();

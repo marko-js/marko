@@ -21,9 +21,9 @@ var show_await_default = _template("b", (input) => {
 		_await($scope1_id, "a", input.promise, (x) => {
 			const $scope2_id = _scope_id();
 			$fg__input_promise && $cg__text && _patch_write($scope2_id, "xc", x, !_server_guard($scope0_reason, 0));
-			_html(`<p>${_text_mark($scope2_id, "a", x + ":" + text, 1, (_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0)) << 1, 0)}</p>`);
+			_html(`<p>${_text_mark($scope2_id, "a", x + ":" + text, 1, (_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 0)) << 1, 0)}</p>`);
 			_unfilled_if($scope1_reason, 0) && _patch_subscribe($scope2_id, "b0");
-			_patch_render($scope2_id, "b1", [$fg__text && ">d", $fg__input_promise && "c"], (_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0)) << 1, 0);
+			_patch_render($scope2_id, "b1", [$fg__text && ">d", $fg__input_promise && "c"], (_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 0)) << 1, 0);
 			_subscribe(_unfilled_if($scope1_reason, 0) && $Row_content__text__closures, _scope($scope2_id, { c: (_unfilled_if($scope1_reason, 0) || _unfilled_if($scope0_reason, 0)) && x }), $cg__text && "b0");
 		}, 1, "b2", _unfilled_if($scope0_reason, 0));
 		$fg__text && _patch_subscribers($scope1_id, "b5", "d");
@@ -35,7 +35,7 @@ var show_await_default = _template("b", (input) => {
 		}), $cg__input_promise && "b6", 0) || $fg__text && $cg__input_promise && _patch_write($scope1_id, "xd", text, !_server_guard($scope1_reason, 0));
 		($wi__input_promise || $wi__text) && _resume_branch($scope1_id);
 	}, $scope0_id, 1) };
-	_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
+	_set_scope_reason(_updates_from($scope0_reason, 1) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	Row.content({ text: input.label });
 	_patch_child_end();
@@ -53,7 +53,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let p = input.promise;
 	_html(`<button class=swap>swap</button>${_el_mark($scope0_id, "a")}`);
-	_set_scope_reason(2 | _mask_group($scope0_reason, 1) << 3);
+	_set_scope_reason(2 | _updates_from($scope0_reason, 1) << 3);
 	const $childScope = _peek_scope_id($scope0_id, "b", 0);
 	show_await_default({
 		promise: p,

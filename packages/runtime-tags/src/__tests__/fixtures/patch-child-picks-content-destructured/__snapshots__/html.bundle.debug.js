@@ -39,7 +39,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $s__closures = new Set();
 	let s = 0;
 	_html(`<button>s</button>${_el_mark($scope0_id, "#button/0")}`);
-	_set_scope_reason(_mask_group($scope0_reason, 1) << 3 | _mask_group($scope0_reason, 1) << 5 | _mask_group($scope0_reason, 1) << 7 | _mask_group($scope0_reason, 1) << 13);
+	_set_scope_reason(_updates_from($scope0_reason, 1) << 3 | _updates_from($scope0_reason, 1) << 5 | _updates_from($scope0_reason, 1) << 7 | _updates_from($scope0_reason, 1) << 13);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/1", 0);
 	pick_default({
 		on: input.on,

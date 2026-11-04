@@ -14,14 +14,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (count < 2) {
 			const $scope1_id = _scope_id();
 			_html(`<span>${_text_mark($scope1_id, "#text/0", greeting, $scope0_page || _write_guard($scope0_reason, 0))} ${_text_mark($scope1_id, "#text/1", count, 2)}</span>`);
-			_client_guard((2 | _mask_group($scope0_reason, 0)) << 1, 0) && _patch_render($scope1_id, "__tests__/template.marko_1_greeting#0:5/setup");
+			_client_guard((2 | _updates_from($scope0_reason, 0)) << 1, 0) && _patch_render($scope1_id, "__tests__/template.marko_1_greeting#0:5/setup");
 			_scope($scope1_id, {}, "__tests__/template.marko", "4:2");
 			return 0;
 		}
 	}, $scope0_id, "#text/1", 1, 1, 0, 0, 1);
 	_fill_global_subscribe("__tests__/template.marko_0_input_name#4_$global_prefix#5", $scope0_id, $cg__input_name);
 	_script($scope0_id, "__tests__/template.marko_0");
-	_filled_guard((2 | _mask_group($scope0_reason, 0)) << 1, 0) && _patch_render($scope0_id, "__tests__/template.marko_1_greeting#0:5/setup", _filled_guard((2 | _mask_group($scope0_reason, 0)) << 1, 0) && "greeting");
+	_filled_guard((2 | _updates_from($scope0_reason, 0)) << 1, 0) && _patch_render($scope0_id, "__tests__/template.marko_1_greeting#0:5/setup", _filled_guard((2 | _updates_from($scope0_reason, 0)) << 1, 0) && "greeting");
 	_scope($scope0_id, {
 		input_name: _write_if($scope0_reason, 0) && input.name,
 		greeting,
@@ -30,5 +30,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_name: ["input.name"],
 		greeting: "1:8",
 		count: "2:6"
-	}) || (_filled_guard($scope0_reason, 0) && $cg__input_name && _patch_write($scope0_id, "PatchMarkedWrite:input_name", input.name, !_server_guard($scope0_reason, 0)), _filled_guard((2 | _mask_group($scope0_reason, 0)) << 1, 0) && _patch_write($scope0_id, "PatchMarkedWrite:greeting", greeting, !_server_guard((2 | _mask_group($scope0_reason, 0)) << 1, 0)));
+	}) || (_filled_guard($scope0_reason, 0) && $cg__input_name && _patch_write($scope0_id, "PatchMarkedWrite:input_name", input.name, !_server_guard($scope0_reason, 0)), _filled_guard((2 | _updates_from($scope0_reason, 0)) << 1, 0) && _patch_write($scope0_id, "PatchMarkedWrite:greeting", greeting, !_server_guard((2 | _updates_from($scope0_reason, 0)) << 1, 0)));
 }, 1);

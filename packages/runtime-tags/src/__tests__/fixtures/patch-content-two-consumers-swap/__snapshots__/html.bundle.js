@@ -24,7 +24,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	const $input_note__closures = /* @__PURE__ */ new Set();
 	_html("<main>");
-	_set_scope_reason(_mask_group($scope0_reason, 2) << 1);
+	_set_scope_reason(_updates_from($scope0_reason, 2) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	card_default({
 		title: input.t1,
@@ -39,7 +39,7 @@ var template_default = _template("a", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope2_id = _scope_id();
-			_set_scope_reason(_mask_group($scope0_reason, 5) << 1);
+			_set_scope_reason(_updates_from($scope0_reason, 5) << 1);
 			const $childScope2 = _peek_scope_id($scope2_id, "a", 1);
 			card_default({
 				title: input.t2,

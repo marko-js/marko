@@ -32,14 +32,14 @@ var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let n = 0;
-	_set_scope_reason(14 | _mask_group($scope0_reason, 0) << 5);
+	_set_scope_reason(14 | _updates_from($scope0_reason, 0) << 5);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	child_default({
 		a: input.x,
 		b: ""
 	});
 	_patch_child_end();
-	_set_scope_reason(38 | _mask_group($scope0_reason, 1) << 3);
+	_set_scope_reason(38 | _updates_from($scope0_reason, 1) << 3);
 	const $childScope2 = _peek_scope_id($scope0_id, "b", 1);
 	child_default({
 		a: "c0",

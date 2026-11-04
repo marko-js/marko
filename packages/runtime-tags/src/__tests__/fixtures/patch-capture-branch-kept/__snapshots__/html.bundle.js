@@ -71,7 +71,7 @@ var child_default = _template("b", (input) => {
 			const $childScope = _peek_scope_id($scope1_id, "a", 0);
 			list_default({ item: $item });
 			_patch_child_end();
-			_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
+			_set_scope_reason(_updates_from($scope0_reason, 1) << 1);
 			const $childScope2 = _peek_scope_id($scope1_id, "b", 1);
 			probe_default({ get: _bind_resume(function() {
 				return "s:" + s;
@@ -104,7 +104,7 @@ _shells({ a: `a${_shell_marker($setup)};${((_w0) => `/${_w0}&b`)($walks)};${((_w
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 1) << 3);
+	_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 1) << 3);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	child_default({
 		on: input.on,

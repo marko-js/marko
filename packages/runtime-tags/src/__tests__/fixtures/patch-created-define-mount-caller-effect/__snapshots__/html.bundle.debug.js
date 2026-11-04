@@ -19,11 +19,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_reason = _scope_reason(), $fg__label = _filled_guard($scope1_reason, 0);
 		_html("<p>info</p>");
 		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_page#0:6/subscribe");
-		_patch_render($scope1_id, "__tests__/template.marko_1_input_page#0:6_label#2/setup", [$fg__input_page && ">input_page", $fg__label && "label"], (_mask_group($scope0_reason, 1) | _mask_group($scope1_reason, 0)) << 1, 0) || _script($scope1_id, "__tests__/template.marko_1_input_page#0:6_label#2", 0, ($fg__input_page || $fg__label) && (_client_guard($scope0_reason, 1) || _client_guard($scope1_reason, 0) ? 2 : 1), [$fg__input_page && ">input_page", $fg__label && "label"]);
+		_patch_render($scope1_id, "__tests__/template.marko_1_input_page#0:6_label#2/setup", [$fg__input_page && ">input_page", $fg__label && "label"], (_updates_from($scope0_reason, 1) | _updates_from($scope1_reason, 0)) << 1, 0) || _script($scope1_id, "__tests__/template.marko_1_input_page#0:6_label#2", 0, ($fg__input_page || $fg__label) && (_client_guard($scope0_reason, 1) || _client_guard($scope1_reason, 0) ? 2 : 1), [$fg__input_page && ">input_page", $fg__label && "label"]);
 		_subscribe($wi__input_page && $input_page__closures, _scope($scope1_id, {
 			label,
 			_: _scope_with_id($scope0_id)
-		}, "__tests__/template.marko", "3:2", { label: "3:16" }), _client_guard((_mask_group($scope0_reason, 1) | _mask_group($scope1_reason, 0)) << 1, 0) && "__tests__/template.marko_1_input_page#0:6/subscribe", 0) || $fg__label && _patch_write($scope1_id, "PatchMarkedWrite:label", label, !_server_guard($scope1_reason, 0));
+		}, "__tests__/template.marko", "3:2", { label: "3:16" }), _client_guard((_updates_from($scope0_reason, 1) | _updates_from($scope1_reason, 0)) << 1, 0) && "__tests__/template.marko_1_input_page#0:6/subscribe", 0) || $fg__label && _patch_write($scope1_id, "PatchMarkedWrite:label", label, !_server_guard($scope1_reason, 0));
 		_resume_branch($scope1_id);
 	}, $scope0_id) };
 	_set_scope_reason(2);
@@ -33,7 +33,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope2_id = _scope_id();
-			_set_scope_reason(_mask_group($scope0_reason, 3) << 1);
+			_set_scope_reason(_updates_from($scope0_reason, 3) << 1);
 			const $childScope2 = _peek_scope_id($scope2_id, "#childScope/0", 1, 0, $scope0_id);
 			Info.content({ label: input.label });
 			_patch_child_end();

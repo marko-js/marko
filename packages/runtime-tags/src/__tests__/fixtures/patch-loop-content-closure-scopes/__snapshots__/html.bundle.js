@@ -24,7 +24,7 @@ var template_default = _template("a", (input) => {
 	_for_of(input.panels, (p) => {
 		const $scope1_id = _scope_id();
 		const $for_content__p_text__closures = /* @__PURE__ */ new Set();
-		_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
+		_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
 		const $childScope = _peek_scope_id($scope1_id, "a", 0);
 		panel_default({
 			label: p.label,

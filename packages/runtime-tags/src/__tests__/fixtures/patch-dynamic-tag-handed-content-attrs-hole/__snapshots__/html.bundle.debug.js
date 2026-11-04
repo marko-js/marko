@@ -26,7 +26,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $cg__input_y = _client_guard($scope0_reason, 0), $wi__input_y = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_y__closures = new Set();
-	_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 0) << 5);
+	_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 0) << 5);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	one_default({
 		t: input.y,

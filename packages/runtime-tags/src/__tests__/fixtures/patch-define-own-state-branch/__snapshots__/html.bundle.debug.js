@@ -33,7 +33,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			open: "2:8"
 		}) || $fg__label && _patch_write($scope1_id, "PatchMarkedWrite:label", label, !_server_guard($scope1_reason, 0));
 	}, $scope0_id) };
-	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
+	_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	Panel.content({ label: input.label });
 	_patch_child_end();

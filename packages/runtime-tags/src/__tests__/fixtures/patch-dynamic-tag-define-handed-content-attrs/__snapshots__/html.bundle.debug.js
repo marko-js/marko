@@ -15,16 +15,16 @@ var one_default = _template("__tests__/tags/one.marko", (input) => {
 	const Wrap = { content: _content("__tests__/tags/one.marko_1*content", ({ t }) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $wg__t = _write_guard($scope1_reason, 0), $fg__t = _filled_guard($scope1_reason, 0), $wi__t = _write_if($scope1_reason, 0);
-		_dynamic_tag($scope1_id, "#text/0", input.content, { title: t }, 1, 0, 0, $wg__input_content || $wg__t, (_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0)) << 1, 0, 0, 0, $scope0_reason);
+		_dynamic_tag($scope1_id, "#text/0", input.content, { title: t }, 1, 0, 0, $wg__input_content || $wg__t, (_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 0)) << 1, 0, 0, 0, $scope0_reason);
 		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "__tests__/tags/one.marko_1_input_content#0:3/subscribe");
-		_patch_render($scope1_id, "__tests__/tags/one.marko_1_input_content#0:3_t#3/setup", [$fg__input_content && ">input_content", $fg__t && "t"], (_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0)) << 1, 0);
-		($wi__input_content || $wi__t) && _subscribe(_unfilled_if((_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0)) << 1, 0) && $wi__input_content && $input_content__closures, _scope($scope1_id, {
+		_patch_render($scope1_id, "__tests__/tags/one.marko_1_input_content#0:3_t#3/setup", [$fg__input_content && ">input_content", $fg__t && "t"], (_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 0)) << 1, 0);
+		($wi__input_content || $wi__t) && _subscribe(_unfilled_if((_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 0)) << 1, 0) && $wi__input_content && $input_content__closures, _scope($scope1_id, {
 			t: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope1_reason, 0)) && t,
 			_: _scope_with_id($scope0_id)
-		}, "__tests__/tags/one.marko", "1:2", { t: "1:16" }), _client_guard((_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0)) << 1, 0) && "__tests__/tags/one.marko_1_input_content#0:3/subscribe", $wg__input_content || $wg__t) || $fg__t && _client_guard($scope0_reason, 0) && _patch_write($scope1_id, "PatchMarkedWrite:t", t, !_server_guard($scope1_reason, 0));
+		}, "__tests__/tags/one.marko", "1:2", { t: "1:16" }), _client_guard((_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 0)) << 1, 0) && "__tests__/tags/one.marko_1_input_content#0:3/subscribe", $wg__input_content || $wg__t) || $fg__t && _client_guard($scope0_reason, 0) && _patch_write($scope1_id, "PatchMarkedWrite:t", t, !_server_guard($scope1_reason, 0));
 		$wg__input_content || $wg__t || ($wi__input_content || $wi__t) && _resume_branch($scope1_id);
 	}, $scope0_id, 1) };
-	_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
+	_set_scope_reason(_updates_from($scope0_reason, 1) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 1);
 	Wrap.content({ t: input.t });
 	_patch_child_end();
@@ -46,7 +46,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let z = 0;
 	_html(`<button class=z>z</button>${_el_mark($scope0_id, "#button/0")}`);
-	_set_scope_reason(_mask_group($scope0_reason, 0) << 3);
+	_set_scope_reason(_updates_from($scope0_reason, 0) << 3);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/1", 0);
 	one_default({
 		t: input.y,

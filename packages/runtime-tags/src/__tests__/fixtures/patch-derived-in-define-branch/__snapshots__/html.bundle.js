@@ -19,7 +19,7 @@ var template_default = _template("a", (input) => {
 			_: _scope_with_id($scope0_id)
 		}), "a3") || $fg__value && _patch_write($scope1_id, "xd", value, !_server_guard($scope1_reason, 0));
 	}, $scope0_id) };
-	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
+	_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	Show.content({ value: input.label });
 	_patch_child_end();

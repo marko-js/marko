@@ -5,7 +5,7 @@ _shells({ b: "b;D ;<svg viewBox=\"0 0 1 1\"><title></title></svg>" });
 var icon_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<svg viewBox="0 0 1 1"><title>${_escape(input.name, $scope0_id, "ma", $scope0_reason, 0)}</title>${_el_mark($scope0_id, "a", _mask_group($scope0_reason, 0))}</svg>`);
+	_html(`<svg viewBox="0 0 1 1"><title>${_escape(input.name, $scope0_id, "ma", $scope0_reason, 0)}</title>${_el_mark($scope0_id, "a", _updates_from($scope0_reason, 0))}</svg>`);
 	_scope($scope0_id, {});
 });
 
@@ -27,11 +27,11 @@ var navx_default = _template("c", (input) => {
 		$fg__input_items && _client_guard($scope0_reason, 2) && _patch_write($scope1_id, "xf", item?.href, !_server_guard($scope0_reason, 1));
 		const active = item.href === input.path;
 		_html(`<a${_attr_class(["link", { active }], $scope1_id, "aa$class", $scope0_reason, 0)}${_attr("href", item.href, $scope1_id, "aa$href", $scope0_reason, 1)}>`);
-		_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
+		_set_scope_reason(_updates_from($scope0_reason, 1) << 1);
 		const $childScope = _peek_scope_id($scope1_id, "b", 0);
 		icon_default({ name: item.icon });
 		_patch_child_end();
-		_html(`<span>${_text_mark($scope1_id, "c", item.label, 1, $scope0_reason, 1)}</span></a>${_el_mark($scope1_id, "a", _mask_group($scope0_reason, 0) || _mask_group($scope0_reason, 1))}`);
+		_html(`<span>${_text_mark($scope1_id, "c", item.label, 1, $scope0_reason, 1)}</span></a>${_el_mark($scope1_id, "a", _updates_from($scope0_reason, 0) || _updates_from($scope0_reason, 1))}`);
 		_patch_render($scope1_id, "c0", [$fg__input_path && ">f", $fg__input_items && "f"], $scope0_reason, 0);
 		_scope($scope1_id, {
 			f: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && item?.href,
@@ -66,7 +66,7 @@ var template_default = _template("a", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_set_scope_reason(38 | (_mask_group($scope0_reason, 1) << 3 | _mask_group($scope0_reason, 2) << 7));
+			_set_scope_reason(38 | (_updates_from($scope0_reason, 1) << 3 | _updates_from($scope0_reason, 2) << 7));
 			const $childScope = _peek_scope_id($scope1_id, "a", 0);
 			navx_default({
 				items: input.items,

@@ -15,7 +15,7 @@ var template_default = _template("a", (input) => {
       main.dataset.ran = (+main.dataset.ran || 0) + 1;
       main.dataset.nonce = document.currentScript.getAttribute("nonce");
       main.dataset.connected = document.currentScript.isConnected; }
-    <\/script>${_el_mark($scope1_id, "a", _mask_group($scope0_reason, 1))}`);
+    <\/script>${_el_mark($scope1_id, "a", _updates_from($scope0_reason, 1))}`);
 			_client_guard($scope0_reason, 1) && _patch_render($scope1_id, "a0");
 			_scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) });
 			return 0;

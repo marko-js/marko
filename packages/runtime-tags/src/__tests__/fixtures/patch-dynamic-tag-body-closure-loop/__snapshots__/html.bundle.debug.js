@@ -62,7 +62,7 @@ var heading_default = _template("__tests__/tags/heading.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const $input_n__closures = new Set();
 	const $input_type__closures = new Set();
-	_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
+	_set_scope_reason(_updates_from($scope0_reason, 1) << 1);
 	let $item;
 	forUntil(input.n, 0, 1, (i) => {
 		$item = attrTags($item, { content: _content("__tests__/tags/heading.marko_1*content", () => {
@@ -116,7 +116,7 @@ _shells({ "__tests__/template.marko": `__tests__/template.marko${_shell_marker($
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 0) << 3);
+	_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 0) << 3);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	heading_default({
 		type: card_default,

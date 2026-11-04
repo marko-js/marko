@@ -18,7 +18,7 @@ _shells({ "__tests__/tags/mid/index.marko": `__tests__/tags/mid/index.marko${_sh
 var mid_default = _template("__tests__/tags/mid/index.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
+	_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	leaf_default(input);
 	_patch_child_end();
@@ -38,7 +38,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_if(() => {
 		if (show) {
 			const $scope1_id = _scope_id();
-			_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
+			_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
 			const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 			mid_default({ text: input.text });
 			_patch_child_end();

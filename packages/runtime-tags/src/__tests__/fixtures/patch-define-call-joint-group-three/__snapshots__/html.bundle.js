@@ -10,21 +10,21 @@ var template_default = _template("a", (input) => {
 	const Row = { content: _content("a0", ({ a, b, c }) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $fg__b = _filled_guard($scope1_reason, 5), $fg__a = _filled_guard($scope1_reason, 4), $fg__c = _filled_guard($scope1_reason, 6);
-		_html(`<p>${_text_mark($scope1_id, "a", a + b + c, 1, $scope1_reason, 3)}</p><em>${_text_mark($scope1_id, "b", input.y + b, 1, (_mask_group($scope0_reason, 1) | _mask_group($scope1_reason, 5)) << 1, 0)}</em>`);
-		_patch_render($scope1_id, "a1", [$fg__input_y && ">e", $fg__b && "f"], (_mask_group($scope0_reason, 1) | _mask_group($scope1_reason, 5)) << 1, 0);
+		_html(`<p>${_text_mark($scope1_id, "a", a + b + c, 1, $scope1_reason, 3)}</p><em>${_text_mark($scope1_id, "b", input.y + b, 1, (_updates_from($scope0_reason, 1) | _updates_from($scope1_reason, 5)) << 1, 0)}</em>`);
+		_patch_render($scope1_id, "a1", [$fg__input_y && ">e", $fg__b && "f"], (_updates_from($scope0_reason, 1) | _updates_from($scope1_reason, 5)) << 1, 0);
 		_patch_render($scope1_id, "a2", [
 			$fg__a && "e",
 			$fg__b && "f",
 			$fg__c && "h"
 		], $scope1_reason, 3);
-		_subscribe(_unfilled_if((_mask_group($scope0_reason, 1) | _mask_group($scope1_reason, 5)) << 1, 0) && $wi__input_y && $input_y__closures, _scope($scope1_id, {
+		_subscribe(_unfilled_if((_updates_from($scope0_reason, 1) | _updates_from($scope1_reason, 5)) << 1, 0) && $wi__input_y && $input_y__closures, _scope($scope1_id, {
 			e: (_unfilled_if($scope1_reason, 2) || _unfilled_if($scope1_reason, 3)) && a,
 			f: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope1_reason, 1) || _unfilled_if($scope1_reason, 5) || _unfilled_if($scope1_reason, 3)) && b,
 			h: (_unfilled_if($scope1_reason, 0) || _unfilled_if($scope1_reason, 3)) && c,
 			_: ($wi__input_y || _write_if($scope1_reason, 5)) && _scope_with_id($scope0_id)
-		}), _client_guard((_mask_group($scope0_reason, 1) | _mask_group($scope1_reason, 5)) << 1, 0) && "a3") || ($fg__a && _client_guard($scope1_reason, 2) && _patch_write($scope1_id, "xe", a, !_server_guard($scope1_reason, 4)), $fg__b && (_client_guard($scope0_reason, 1) || _client_guard($scope1_reason, 1)) && _patch_write($scope1_id, "xf", b, !_server_guard($scope1_reason, 5)), $fg__c && _client_guard($scope1_reason, 0) && _patch_write($scope1_id, "xh", c, !_server_guard($scope1_reason, 6)));
+		}), _client_guard((_updates_from($scope0_reason, 1) | _updates_from($scope1_reason, 5)) << 1, 0) && "a3") || ($fg__a && _client_guard($scope1_reason, 2) && _patch_write($scope1_id, "xe", a, !_server_guard($scope1_reason, 4)), $fg__b && (_client_guard($scope0_reason, 1) || _client_guard($scope1_reason, 1)) && _patch_write($scope1_id, "xf", b, !_server_guard($scope1_reason, 5)), $fg__c && _client_guard($scope1_reason, 0) && _patch_write($scope1_id, "xh", c, !_server_guard($scope1_reason, 6)));
 	}, $scope0_id) };
-	_set_scope_reason(926 | (_mask_group($scope0_reason, 0) << 5 | _mask_group($scope0_reason, 2) << 11 | _mask_group($scope0_reason, 3) << 13));
+	_set_scope_reason(926 | (_updates_from($scope0_reason, 0) << 5 | _updates_from($scope0_reason, 2) << 11 | _updates_from($scope0_reason, 3) << 13));
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	Row.content({
 		a: n,

@@ -15,13 +15,13 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 			const $scope1_id = _scope_id();
 			const c = $global$1.g + "!";
 			_client_guard($scope0_reason, 0) && _patch_write($scope1_id, "PatchMarkedWrite:c", c);
-			_html(`<p>${_text_mark($scope1_id, "#text/0", input.a + input.b + c, 1, (2 | _mask_group($scope0_reason, 0)) << 1, 0)}</p>`);
+			_html(`<p>${_text_mark($scope1_id, "#text/0", input.a + input.b + c, 1, (2 | _updates_from($scope0_reason, 0)) << 1, 0)}</p>`);
 			_fill_global_subscribe("__tests__/tags/child.marko_1_$global_g#0:8", $scope1_id);
 			_patch_render($scope1_id, "__tests__/tags/child.marko_1_input_a#0:4_input_b#0:5_c#1/setup", [
 				$fg__input_a && ">input_a",
 				$fg__input_b && ">input_b",
 				"c"
-			], (2 | _mask_group($scope0_reason, 0)) << 1, 0);
+			], (2 | _updates_from($scope0_reason, 0)) << 1, 0);
 			_scope($scope1_id, {
 				c: _unfilled_if($scope0_reason, 0) && c,
 				_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id)
@@ -49,7 +49,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let n = 0;
-	_set_scope_reason(158 | (_mask_group($scope0_reason, 3) << 5 | _mask_group($scope0_reason, 2) << 9));
+	_set_scope_reason(158 | (_updates_from($scope0_reason, 3) << 5 | _updates_from($scope0_reason, 2) << 9));
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	child_default({
 		a: n,
@@ -57,7 +57,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		show: input.show
 	});
 	_patch_child_end();
-	_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 1) << 3 | _mask_group($scope0_reason, 3) << 5 | _mask_group($scope0_reason, 4) << 7 | _mask_group($scope0_reason, 2) << 9);
+	_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 1) << 3 | _updates_from($scope0_reason, 3) << 5 | _updates_from($scope0_reason, 4) << 7 | _updates_from($scope0_reason, 2) << 9);
 	const $childScope2 = _peek_scope_id($scope0_id, "#childScope/1", 1);
 	child_default({
 		a: input.y,

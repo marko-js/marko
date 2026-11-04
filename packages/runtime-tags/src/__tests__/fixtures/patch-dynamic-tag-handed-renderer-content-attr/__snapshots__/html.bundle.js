@@ -52,7 +52,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $cg__input_x = _client_guard($scope0_reason, 1), $fg__input_y = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_y__closures = /* @__PURE__ */ new Set();
-	_set_scope_reason(_mask_group($scope0_reason, 1) << 3 | _mask_group($scope0_reason, 1) << 5 | _mask_group($scope0_reason, 1) << 7 | _mask_group($scope0_reason, 1) << 13);
+	_set_scope_reason(_updates_from($scope0_reason, 1) << 3 | _updates_from($scope0_reason, 1) << 5 | _updates_from($scope0_reason, 1) << 7 | _updates_from($scope0_reason, 1) << 13);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	one_default({
 		Tag: card_default,

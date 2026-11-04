@@ -48,7 +48,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $fg__input_x = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let count = 0;
-	_set_scope_reason(102 | _mask_group($scope0_reason, 1) << 3);
+	_set_scope_reason(102 | _updates_from($scope0_reason, 1) << 3);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	panel_default({
 		n: count + input.x,

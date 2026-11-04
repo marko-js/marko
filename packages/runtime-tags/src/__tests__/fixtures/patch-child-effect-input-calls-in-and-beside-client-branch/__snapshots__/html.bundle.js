@@ -43,7 +43,7 @@ var card_default = _template("b", (input) => {
 			f: (_unfilled_if($scope3_reason, 0) || _unfilled_if($scope3_reason, 2)) && label
 		}) || ($fg__fmt && _client_guard($scope3_reason, 1) && _patch_write($scope3_id, "xe", fmt, !_server_guard($scope3_reason, 5)), $fg__label && _client_guard($scope3_reason, 0) && _patch_write($scope3_id, "xf", label, !_server_guard($scope3_reason, 6)));
 	}, $scope0_id, 1) };
-	_set_scope_reason(_mask_group($scope0_reason, 4) << 1 | _mask_group($scope0_reason, 5) << 3 | _mask_group($scope0_reason, 0) << 5 | _mask_group($scope0_reason, 0) << 7 | _mask_group($scope0_reason, 4) << 11 | _mask_group($scope0_reason, 5) << 13);
+	_set_scope_reason(_updates_from($scope0_reason, 4) << 1 | _updates_from($scope0_reason, 5) << 3 | _updates_from($scope0_reason, 0) << 5 | _updates_from($scope0_reason, 0) << 7 | _updates_from($scope0_reason, 4) << 11 | _updates_from($scope0_reason, 5) << 13);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	Panel.content({
 		isOpen: true,
@@ -54,7 +54,7 @@ var card_default = _template("b", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_set_scope_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 2) << 3 | _mask_group($scope0_reason, 0) << 5 | _mask_group($scope0_reason, 3) << 7 | _mask_group($scope0_reason, 7) << 9 | _mask_group($scope0_reason, 4) << 11 | _mask_group($scope0_reason, 5) << 13);
+			_set_scope_reason(_updates_from($scope0_reason, 1) << 1 | _updates_from($scope0_reason, 2) << 3 | _updates_from($scope0_reason, 0) << 5 | _updates_from($scope0_reason, 3) << 7 | _updates_from($scope0_reason, 7) << 9 | _updates_from($scope0_reason, 4) << 11 | _updates_from($scope0_reason, 5) << 13);
 			const $childScope2 = _peek_scope_id($scope1_id, "a", 1);
 			Panel.content({
 				isOpen: input.open,
@@ -105,7 +105,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let shown = true;
-	_set_scope_reason(8192 | (_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 0) << 5 | _mask_group($scope0_reason, 0) << 7 | _mask_group($scope0_reason, 0) << 11));
+	_set_scope_reason(8192 | (_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 0) << 5 | _updates_from($scope0_reason, 0) << 7 | _updates_from($scope0_reason, 0) << 11));
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	card_default({
 		show: shown,
@@ -114,7 +114,7 @@ var template_default = _template("a", (input) => {
 		label: input.label
 	});
 	_patch_child_end();
-	_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 0) << 5 | _mask_group($scope0_reason, 0) << 7 | _mask_group($scope0_reason, 0) << 11);
+	_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 0) << 5 | _updates_from($scope0_reason, 0) << 7 | _updates_from($scope0_reason, 0) << 11);
 	const $childScope2 = _peek_scope_id($scope0_id, "b", 1);
 	card_default({
 		show: true,

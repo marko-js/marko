@@ -27,7 +27,7 @@ var wrap_default = _template("__tests__/tags/wrap.marko", (input) => {
 		}, $scope1_id, "#text/0", 1, $wg__open, 1, 0, 0, ["__tests__/tags/wrap.marko_2*shell"], $scope1_reason, 0);
 		($wi__input_title || $wi__open) && _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/wrap.marko", "1:2");
 	}, $scope0_id, 1) };
-	_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
+	_set_scope_reason(_updates_from($scope0_reason, 1) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	Panel.content({ open: input.open });
 	_patch_child_end();
@@ -49,7 +49,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_html("<main>");
-	_set_scope_reason(8 | _mask_group($scope0_reason, 0) << 1);
+	_set_scope_reason(8 | _updates_from($scope0_reason, 0) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	wrap_default({
 		open: count % 2 === 0,

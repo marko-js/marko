@@ -21,7 +21,7 @@ var frag_host_default = _template("b", (input) => {
 		}, $scope1_id) };
 		_html("<section>");
 		_attr_content("a", $scope1_id, i || input.mode ? frag.content : null, 0, 1, $scope0_reason, 2);
-		_html(`</section>${_el_mark($scope1_id, "a", _mask_group($scope0_reason, 2))}`);
+		_html(`</section>${_el_mark($scope1_id, "a", _updates_from($scope0_reason, 2))}`);
 		$cg__input_mode && _patch_write($scope1_id, "wc", i, 1);
 		$cg__input_mode && _patch_write($scope1_id, "we", frag?.content, 1);
 		$cg__input_mode && _patch_render($scope1_id, "b2");
@@ -46,7 +46,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let mode = false;
 	_html(`<button>toggle</button>${_el_mark($scope0_id, "a")}`);
-	_set_scope_reason(38 | _mask_group($scope0_reason, 0) << 3);
+	_set_scope_reason(38 | _updates_from($scope0_reason, 0) << 3);
 	const $childScope = _peek_scope_id($scope0_id, "b", 0);
 	frag_host_default({
 		mode,

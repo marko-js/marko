@@ -18,7 +18,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html(`<p>${_text_mark($scope2_id, "#text/0", o.fn(), 1, _client_guard($scope2_reason, 0) << 1, 0, 1)}</p>`);
 		_scope($scope2_id, {}, "__tests__/template.marko", "1:2");
 	}, $scope0_id) };
-	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
+	_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	Card.content({ opts: _patch_live($childScope, { fn() {
 		return "root:" + input.label;
@@ -27,7 +27,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
+			_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
 			const $childScope2 = _peek_scope_id($scope1_id, "#childScope/0", 1);
 			Card.content({ opts: _patch_live($childScope2, { fn() {
 				return "if:" + input.label;

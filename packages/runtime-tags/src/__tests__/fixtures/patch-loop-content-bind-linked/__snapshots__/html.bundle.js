@@ -46,7 +46,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	const $input_note__closures = /* @__PURE__ */ new Set();
 	$fg__input_note && _patch_write($scope0_id, "xd", input.note, !_server_guard($scope0_reason, 0));
-	_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 1) << 3);
+	_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 1) << 3);
 	let $item;
 	forOf(input.labels, (label) => {
 		$item = attrTags($item, { content: _content_resume("a2", () => {

@@ -94,7 +94,7 @@ var template_default = _template("a", (input) => {
 		}), $cg__input_x && "a15", $wg__input_x) || $fg__v && $cg__input_x && _patch_write($scope2_id, "xe", h, !$sg__v);
 		$wg__input_x || $wi__input_x && _resume_branch($scope2_id);
 	}, $scope0_id) };
-	_set_scope_reason(_mask_group($scope0_reason, 2) << 1);
+	_set_scope_reason(_updates_from($scope0_reason, 2) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "c", 0);
 	Show.content({ v: input.a });
 	_patch_child_end();

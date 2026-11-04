@@ -56,7 +56,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html("<main>");
-	_set_scope_reason(_mask_group($scope0_reason, 2) << 1 | _mask_group($scope0_reason, 3) << 3 | _mask_group($scope0_reason, 0) << 5 | _mask_group($scope0_reason, 1) << 7 | _mask_group($scope0_reason, 2) << 11 | _mask_group($scope0_reason, 3) << 13 | _mask_group($scope0_reason, 4) << 15);
+	_set_scope_reason(_updates_from($scope0_reason, 2) << 1 | _updates_from($scope0_reason, 3) << 3 | _updates_from($scope0_reason, 0) << 5 | _updates_from($scope0_reason, 1) << 7 | _updates_from($scope0_reason, 2) << 11 | _updates_from($scope0_reason, 3) << 13 | _updates_from($scope0_reason, 4) << 15);
 	const $childScope = _peek_scope_id($scope0_id, "a", 1);
 	host_default({
 		show: input.show,

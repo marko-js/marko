@@ -19,7 +19,7 @@ _shells({ "__tests__/tags/mid.marko": `__tests__/tags/mid.marko${_shell_marker($
 var mid_default = _template("__tests__/tags/mid.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
+	_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	label_view_default(_patch_live($childScope, { get: input.get }, $scope0_id, "input_get"));
 	_patch_child_end();

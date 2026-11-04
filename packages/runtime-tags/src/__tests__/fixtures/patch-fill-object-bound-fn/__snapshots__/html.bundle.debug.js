@@ -43,7 +43,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let s = store_default({});
 	_var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_s#6/var");
 	_patch_child_end();
-	_set_scope_reason(10 | _mask_group($scope0_reason, 0) << 5);
+	_set_scope_reason(10 | _updates_from($scope0_reason, 0) << 5);
 	const $childScope2 = _peek_scope_id($scope0_id, "#childScope/2", 1);
 	child_default({
 		s,

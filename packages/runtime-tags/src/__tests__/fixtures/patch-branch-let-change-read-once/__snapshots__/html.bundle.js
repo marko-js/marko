@@ -28,7 +28,7 @@ var template_default = _template("a", (input) => {
 			_script($scope1_id, "a2");
 			_patch_render($scope1_id, "a3", $fg__input_start && ">f", $scope0_reason, 2);
 			const $countChange = read($global$1, onCount) || void 0;
-			_patch_let_change($scope1_id, "va4", count, "we", $countChange, (2 | _mask_group($scope0_reason, 2)) << 1, 0);
+			_patch_let_change($scope1_id, "va4", count, "we", $countChange, (2 | _updates_from($scope0_reason, 2)) << 1, 0);
 			_scope($scope1_id, {
 				d: count,
 				_: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id),

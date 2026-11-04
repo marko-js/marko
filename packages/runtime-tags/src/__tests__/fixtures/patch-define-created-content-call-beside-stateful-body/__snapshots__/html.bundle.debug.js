@@ -44,14 +44,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		$fg__content && $cg__show && _patch_render($scope4_id, "__tests__/template.marko_5_content#4:4/setup", "content");
 		_write_if($scope4_reason, 1) && _scope($scope4_id, { content: _unfilled_if($scope4_reason, 1) && content }, "__tests__/template.marko", "7:2", { content: "7:22" }) || $fg__content && $cg__show && _patch_write($scope4_id, "PatchMarkedWrite:content", content, !_server_guard($scope4_reason, 2));
 	}, $scope0_id) };
-	_set_scope_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 1) << 3);
+	_set_scope_reason(_updates_from($scope0_reason, 1) << 1 | _updates_from($scope0_reason, 1) << 3);
 	const $childScope2 = _peek_scope_id($scope0_id, "#childScope/0", 2);
 	Wrap.content({
 		show: input.show,
 		content: _content_resume("__tests__/template.marko_1*content", () => {
 			const $scope1_reason = _scope_reason();
 			const $scope1_id = _scope_id();
-			_set_scope_reason(_mask_group($scope0_reason, 2) << 3);
+			_set_scope_reason(_updates_from($scope0_reason, 2) << 3);
 			const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 1);
 			Panel.content({
 				isOpen: true,

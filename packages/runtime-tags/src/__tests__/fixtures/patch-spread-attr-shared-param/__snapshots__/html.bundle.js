@@ -7,7 +7,7 @@ var template_default = _template("a", (input) => {
 		href: input.url,
 		title: input.title,
 		class: input.cls
-	}, "a", $scope0_id, "a", 0, $scope0_reason, 3)}>x</a>${_el_mark($scope0_id, "a")}<img${_attr("src", `${input.url}?w=${input.width}`, $scope0_id, "ab$src", $scope0_reason, 2)}>${_el_mark($scope0_id, "b", _mask_group($scope0_reason, 2))}`);
+	}, "a", $scope0_id, "a", 0, $scope0_reason, 3)}>x</a>${_el_mark($scope0_id, "a")}<img${_attr("src", `${input.url}?w=${input.width}`, $scope0_id, "ab$src", $scope0_reason, 2)}>${_el_mark($scope0_id, "b", _updates_from($scope0_reason, 2))}`);
 	_script($scope0_id, "a0");
 	_patch_render($scope0_id, "a1", [
 		$fg__input_url && "e",

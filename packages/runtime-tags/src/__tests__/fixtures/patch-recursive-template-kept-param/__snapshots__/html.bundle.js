@@ -43,7 +43,7 @@ const $content = (input) => {
 	_if(() => {
 		if (input.n) {
 			const $scope1_id = _scope_id();
-			_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 1) << 3);
+			_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 1) << 3);
 			const $childScope = _peek_scope_id($scope1_id, "a", 0);
 			$content({
 				n: input.n - 1,
@@ -67,7 +67,7 @@ const $content = (input) => {
 			return 0;
 		}
 	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["c5"], $scope0_reason, 0);
-	_set_scope_reason(_mask_group($scope0_reason, 2) << 1);
+	_set_scope_reason(_updates_from($scope0_reason, 2) << 1);
 	const $childScope2 = _peek_scope_id($scope0_id, "b", 1);
 	keeper_default({ content: input.content });
 	_patch_child_end();
@@ -92,7 +92,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html("<main>");
-	_set_scope_reason(_mask_group($scope0_reason, 0) << 3);
+	_set_scope_reason(_updates_from($scope0_reason, 0) << 3);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	level_default({
 		n: 2,

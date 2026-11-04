@@ -19,7 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id) };
 	_html("<main><section>");
 	_attr_content("#section/0", $scope0_id, input.mode ? frag.content : null, 0, 1, $scope0_reason, 2);
-	_html(`</section>${_el_mark($scope0_id, "#section/0", _mask_group($scope0_reason, 2))}<p>${_text_mark($scope0_id, "#text/1", input.note, 1, $scope0_reason, 1)}</p></main>`);
+	_html(`</section>${_el_mark($scope0_id, "#section/0", _updates_from($scope0_reason, 2))}<p>${_text_mark($scope0_id, "#text/1", input.note, 1, $scope0_reason, 1)}</p></main>`);
 	$fg__input_note && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_note#4/subscribers", "input_note");
 	_scope($scope0_id, {
 		input_note: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1)) && input.note,

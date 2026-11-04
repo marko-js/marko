@@ -35,7 +35,7 @@ var child_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $fg__input_count = _filled_guard($scope0_reason, 1), $wi__input_count = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_count__closures = /* @__PURE__ */ new Set();
-	_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 0) << 3);
+	_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 0) << 3);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	wrap_default({
 		show: input.show,
@@ -66,14 +66,14 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_html(`<button>${_text_mark($scope0_id, "b", count)}</button>${_el_mark($scope0_id, "a")}`);
-	_set_scope_reason(8 | _mask_group($scope0_reason, 0) << 1);
+	_set_scope_reason(8 | _updates_from($scope0_reason, 0) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "c", 0);
 	child_default({
 		show: input.show,
 		count
 	});
 	_patch_child_end();
-	_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 1) << 3);
+	_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 1) << 3);
 	const $childScope2 = _peek_scope_id($scope0_id, "d", 1);
 	child_default({
 		show: input.show,

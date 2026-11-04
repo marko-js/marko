@@ -33,14 +33,14 @@ var template_default = _template("a", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope3_id = _scope_id();
-			_set_scope_reason(_mask_group($scope0_reason, 3) << 1 | _mask_group($scope0_reason, 1) << 3);
+			_set_scope_reason(_updates_from($scope0_reason, 3) << 1 | _updates_from($scope0_reason, 1) << 3);
 			const $childScope = _peek_scope_id($scope3_id, "a", 0, 0, $scope0_id);
 			Panel.content({
 				isOpen: input.open,
 				label: input.label
 			});
 			_patch_child_end();
-			_set_scope_reason(_mask_group($scope0_reason, 1) << 3);
+			_set_scope_reason(_updates_from($scope0_reason, 1) << 3);
 			const $childScope2 = _peek_scope_id($scope3_id, "b", 1, 0, $scope0_id);
 			Panel.content({
 				isOpen: true,

@@ -32,7 +32,7 @@ var a_tag_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html(`<span>a${_text_mark($scope0_id, "a", input.n, 2, $scope0_reason, 0)}</span>`);
-	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
+	_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "b", 0);
 	b_tag_default({ n: input.n });
 	_patch_child_end();
@@ -52,7 +52,7 @@ var template_default = _template("a", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
+			_set_scope_reason(_updates_from($scope0_reason, 1) << 1);
 			const $childScope = _peek_scope_id($scope1_id, "a", 0);
 			a_tag_default({ n: input.n });
 			_patch_child_end();

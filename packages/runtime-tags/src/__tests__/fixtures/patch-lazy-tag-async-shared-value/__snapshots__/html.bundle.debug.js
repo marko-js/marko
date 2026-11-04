@@ -6,7 +6,7 @@ _shells({ "__tests__/child.marko": "__tests__/child.marko; ;<div></div>" });
 var child_default = _template("__tests__/child.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $fg__input_name = _filled_guard($scope0_reason, 1), $fg__input_item = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
-	_html(`<div${_attr_class(input.name, $scope0_id, "PatchAttr:#div/0 class", $scope0_reason, 1)}></div>${_el_mark($scope0_id, "#div/0", _mask_group($scope0_reason, 1))}`);
+	_html(`<div${_attr_class(input.name, $scope0_id, "PatchAttr:#div/0 class", $scope0_reason, 1)}></div>${_el_mark($scope0_id, "#div/0", _updates_from($scope0_reason, 1))}`);
 	_patch_render($scope0_id, "__tests__/child.marko_0_input_name#3_input_item#4/setup", [$fg__input_name && "input_name", $fg__input_item && "input_item"], $scope0_reason, 0) || _script($scope0_id, "__tests__/child.marko_0_input_name#3_input_item#4", 1, ($fg__input_name || $fg__input_item) && (_client_guard($scope0_reason, 1) || _client_guard($scope0_reason, 2) ? 2 : 1), [$fg__input_name && "input_name", $fg__input_item && "input_item"]);
 	_scope($scope0_id, {
 		input_name: input.name,
@@ -36,7 +36,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $input_promise__closures = new Set();
 	const item = { label: input.label };
 	_html("<main>");
-	_set_scope_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 1) << 5);
+	_set_scope_reason(_updates_from($scope0_reason, 1) << 1 | _updates_from($scope0_reason, 1) << 5);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/1", 0);
 	$Child_withLoadAssets({
 		name: "a",
@@ -49,7 +49,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_await($scope1_id, "#text/0", input.promise, (value) => {
 			const $scope2_id = _scope_id();
 			_html(`<span>${_text_mark($scope2_id, "#text/0", value, 1, $scope0_reason, 2)}</span>`);
-			_set_scope_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 1) << 5);
+			_set_scope_reason(_updates_from($scope0_reason, 1) << 1 | _updates_from($scope0_reason, 1) << 5);
 			const $childScope2 = _peek_scope_id($scope2_id, "#childScope/2", 1);
 			$Child_withLoadAssets({
 				name: "c",

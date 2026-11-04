@@ -67,7 +67,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 	}, () => {
 		const $scope1_reason = _scope_reason();
 		const $scope1_id = _scope_id();
-		_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
+		_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
 		const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 		note_default({ label: input.label });
 		_patch_child_end();
@@ -92,7 +92,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 	}, void 0, () => {
 		const $scope3_reason = _scope_reason();
 		const $scope3_id = _scope_id();
-		_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
+		_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
 		const $childScope2 = _peek_scope_id($scope3_id, "#childScope/0", 1);
 		note_default({ label: input.label });
 		_patch_child_end();
@@ -178,7 +178,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			"#childScope/2": _existing_scope($childScope3)
 		}, "__tests__/template.marko", "8:4"), _client_guard($scope0_reason, 0) && "__tests__/template.marko_1_input_label#0:6/subscribe"), "__tests__/template.marko_1_n#0:11/subscribe");
 	}, void 0, "__tests__/template.marko_1*content", void 0, "__tests__/template.marko_2*content", 1);
-	_set_scope_reason(_mask_group($scope0_reason, 1) << 3 | _mask_group($scope0_reason, 3) << 5 | _mask_group($scope0_reason, 2) << 7);
+	_set_scope_reason(_updates_from($scope0_reason, 1) << 3 | _updates_from($scope0_reason, 3) << 5 | _updates_from($scope0_reason, 2) << 7);
 	const $childScope4 = _peek_scope_id($scope0_id, "#childScope/3", 3);
 	card_default({
 		label: "fixed",

@@ -61,7 +61,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 	}, $scope0_id, 1) };
 	_await($scope0_id, "#text/0", input.p, (x) => {
 		const $scope3_id = _scope_id();
-		_set_scope_reason(_mask_group($scope0_reason, 2) << 1);
+		_set_scope_reason(_updates_from($scope0_reason, 2) << 1);
 		const $childScope = _peek_scope_id($scope3_id, "#childScope/0", 2, 0, $scope0_id);
 		K.content({ x });
 		_patch_child_end();

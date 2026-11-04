@@ -5,7 +5,7 @@ _shells({ a: "a; ;<div></div>" });
 var child_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $fg__input_name = _filled_guard($scope0_reason, 1), $fg__input_item = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
-	_html(`<div${_attr_class(input.name, $scope0_id, "aa$class", $scope0_reason, 1)}></div>${_el_mark($scope0_id, "a", _mask_group($scope0_reason, 1))}`);
+	_html(`<div${_attr_class(input.name, $scope0_id, "aa$class", $scope0_reason, 1)}></div>${_el_mark($scope0_id, "a", _updates_from($scope0_reason, 1))}`);
 	_patch_render($scope0_id, "a1", [$fg__input_name && "d", $fg__input_item && "e"], $scope0_reason, 0) || _script($scope0_id, "a0", 1, ($fg__input_name || $fg__input_item) && (_client_guard($scope0_reason, 1) || _client_guard($scope0_reason, 2) ? 2 : 1), [$fg__input_name && "d", $fg__input_item && "e"]);
 	_scope($scope0_id, {
 		d: input.name,
@@ -30,7 +30,7 @@ var template_default = _template("b", (input) => {
 	const $input_promise__closures = /* @__PURE__ */ new Set();
 	const item = { label: input.label };
 	_html("<main>");
-	_set_scope_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 1) << 5);
+	_set_scope_reason(_updates_from($scope0_reason, 1) << 1 | _updates_from($scope0_reason, 1) << 5);
 	const $childScope = _peek_scope_id($scope0_id, "b", 0);
 	$Child_withLoadAssets({
 		name: "a",
@@ -43,7 +43,7 @@ var template_default = _template("b", (input) => {
 		_await($scope1_id, "a", input.promise, (value) => {
 			const $scope2_id = _scope_id();
 			_html(`<span>${_text_mark($scope2_id, "a", value, 1, $scope0_reason, 2)}</span>`);
-			_set_scope_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 1) << 5);
+			_set_scope_reason(_updates_from($scope0_reason, 1) << 1 | _updates_from($scope0_reason, 1) << 5);
 			const $childScope2 = _peek_scope_id($scope2_id, "c", 1);
 			$Child_withLoadAssets({
 				name: "c",

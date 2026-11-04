@@ -55,7 +55,7 @@ var template_default = _template("a", (input) => {
 	_if(() => {
 		if (input.admin) {
 			const $scope1_id = _scope_id();
-			_set_scope_reason(_mask_group($scope0_reason, 2) << 1);
+			_set_scope_reason(_updates_from($scope0_reason, 2) << 1);
 			const $childScope = _peek_scope_id($scope1_id, "a", 0);
 			panel_default({ data: input.adminData });
 			_patch_child_end();
@@ -67,7 +67,7 @@ var template_default = _template("a", (input) => {
 			return 0;
 		} else {
 			const $scope2_id = _scope_id();
-			_set_scope_reason(_mask_group($scope0_reason, 3) << 1);
+			_set_scope_reason(_updates_from($scope0_reason, 3) << 1);
 			const $childScope2 = _peek_scope_id($scope2_id, "a", 0);
 			card_default({ user: input.user });
 			_patch_child_end();
@@ -82,11 +82,11 @@ var template_default = _template("a", (input) => {
 	_if(() => {
 		if (input.more) {
 			const $scope3_id = _scope_id();
-			_set_scope_reason(_mask_group($scope0_reason, 6) << 1);
+			_set_scope_reason(_updates_from($scope0_reason, 6) << 1);
 			const $childScope3 = _peek_scope_id($scope3_id, "a", 1);
 			card_default(input.props);
 			_patch_child_end();
-			_set_scope_reason(_mask_group($scope0_reason, 5) << 1 | _mask_group($scope0_reason, 5) << 3);
+			_set_scope_reason(_updates_from($scope0_reason, 5) << 1 | _updates_from($scope0_reason, 5) << 3);
 			const $childScope4 = _peek_scope_id($scope3_id, "b", 2);
 			toggle_default({ user: input.other });
 			_patch_child_end();

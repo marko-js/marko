@@ -10,12 +10,12 @@ var template_default = _template("a", (input) => {
 	const Panel = { content: _content_resume("a0", ({ value }) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $fg__value = _filled_guard($scope1_reason, 0);
-		_html(`<p>${_text_mark($scope1_id, "a", value + input.title, 1, (_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0)) << 1, 0)}</p>`);
-		_patch_render($scope1_id, "a1", [$fg__input_title && ">f", $fg__value && "d"], (_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0)) << 1, 0);
-		_subscribe(_unfilled_if((_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0)) << 1, 0) && $wi__input_title && $input_title__closures, _scope($scope1_id, {
+		_html(`<p>${_text_mark($scope1_id, "a", value + input.title, 1, (_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 0)) << 1, 0)}</p>`);
+		_patch_render($scope1_id, "a1", [$fg__input_title && ">f", $fg__value && "d"], (_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 0)) << 1, 0);
+		_subscribe(_unfilled_if((_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 0)) << 1, 0) && $wi__input_title && $input_title__closures, _scope($scope1_id, {
 			d: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope1_reason, 0)) && value,
 			_: _scope_with_id($scope0_id)
-		}), _client_guard((_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 0)) << 1, 0) && "a2") || $fg__value && _client_guard($scope0_reason, 0) && _patch_write($scope1_id, "xd", value, !_server_guard($scope1_reason, 0));
+		}), _client_guard((_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 0)) << 1, 0) && "a2") || $fg__value && _client_guard($scope0_reason, 0) && _patch_write($scope1_id, "xd", value, !_server_guard($scope1_reason, 0));
 	}, $scope0_id) };
 	_html("<main>");
 	_set_scope_reason(0);

@@ -7,7 +7,7 @@ var field_default = _template("__tests__/tags/field.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const uid = input.uid || _id("uid");
-	_html(`<label${_attr("for", uid, $scope0_id, "PatchAttr:#label/0 for", $scope0_reason, 0)}>${_text_mark($scope0_id, "#text/1", input.name, 1, $scope0_reason, 1)}</label>${_el_mark($scope0_id, "#label/0", _mask_group($scope0_reason, 0))}<input${_attr("id", uid, $scope0_id, "PatchAttr:#input/2 id", $scope0_reason, 0)}${_attr("aria-describedby", input.heading, $scope0_id, "PatchAttr:#input/2 aria-describedby", $scope0_reason, 2)}>${_el_mark($scope0_id, "#input/2", _mask_group($scope0_reason, 0) || _mask_group($scope0_reason, 2))}`);
+	_html(`<label${_attr("for", uid, $scope0_id, "PatchAttr:#label/0 for", $scope0_reason, 0)}>${_text_mark($scope0_id, "#text/1", input.name, 1, $scope0_reason, 1)}</label>${_el_mark($scope0_id, "#label/0", _updates_from($scope0_reason, 0))}<input${_attr("id", uid, $scope0_id, "PatchAttr:#input/2 id", $scope0_reason, 0)}${_attr("aria-describedby", input.heading, $scope0_id, "PatchAttr:#input/2 aria-describedby", $scope0_reason, 2)}>${_el_mark($scope0_id, "#input/2", _updates_from($scope0_reason, 0) || _updates_from($scope0_reason, 2))}`);
 	_scope($scope0_id, {}, "__tests__/tags/field.marko", 0);
 });
 
@@ -33,7 +33,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(`<h1${_attr("id", heading, $scope0_id, "PatchAttr:#h1/0 id", 0, 0)}>Fields</h1>${_el_mark($scope0_id, "#h1/0", 0)}`);
 	_for_of(input.items, (item) => {
 		const $scope1_id = _scope_id();
-		_set_scope_reason(_mask_group($scope0_reason, 2) << 3);
+		_set_scope_reason(_updates_from($scope0_reason, 2) << 3);
 		const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 		field_default({
 			name: item.key,
@@ -66,7 +66,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, 0, $scope0_id, "#text/3", 1, 1, 1, 0, 0, "__tests__/template.marko_3*shell", $scope0_reason, 3);
 	_for_in(input.record, (key, value) => {
 		const $scope4_id = _scope_id();
-		_set_scope_reason(_mask_group($scope0_reason, 3) << 3);
+		_set_scope_reason(_updates_from($scope0_reason, 3) << 3);
 		const $childScope4 = _peek_scope_id($scope4_id, "#childScope/0", 3);
 		field_default({
 			name: value,
@@ -88,7 +88,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, 0, $scope0_id, "#text/5", 1, 1, 1, 0, 0, "__tests__/template.marko_5*shell", $scope0_reason, 0);
 	_for_to(input.end, input.start, 1, (i) => {
 		const $scope6_id = _scope_id();
-		_set_scope_reason(_mask_group($scope0_reason, 0) << 3);
+		_set_scope_reason(_updates_from($scope0_reason, 0) << 3);
 		const $childScope6 = _peek_scope_id($scope6_id, "#childScope/0", 5);
 		field_default({
 			name: i,
@@ -110,7 +110,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, 0, $scope0_id, "#text/7", 1, 1, 1, 0, 0, "__tests__/template.marko_7*shell", $scope0_reason, 0);
 	_for_until(input.end, input.start, 2, (i) => {
 		const $scope8_id = _scope_id();
-		_set_scope_reason(_mask_group($scope0_reason, 0) << 3);
+		_set_scope_reason(_updates_from($scope0_reason, 0) << 3);
 		const $childScope8 = _peek_scope_id($scope8_id, "#childScope/0", 7);
 		field_default({
 			name: i,

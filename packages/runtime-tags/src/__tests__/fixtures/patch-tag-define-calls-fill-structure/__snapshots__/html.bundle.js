@@ -32,11 +32,11 @@ var shape_default = _template("b", (input) => {
 		}, $scope1_id, "a", 1, $wg__on, 1, 0, 0, ["b2"], $scope1_reason, 0);
 		($wi__input_a || $wi__on) && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
 	}, $scope0_id, 1) };
-	_set_scope_reason(_mask_group($scope0_reason, 2) << 1);
+	_set_scope_reason(_updates_from($scope0_reason, 2) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	D.content({ on: input.x });
 	_patch_child_end();
-	_set_scope_reason(_mask_group($scope0_reason, 3) << 1);
+	_set_scope_reason(_updates_from($scope0_reason, 3) << 1);
 	const $childScope2 = _peek_scope_id($scope0_id, "b", 1);
 	D.content({ on: input.y });
 	_patch_child_end();
@@ -60,7 +60,7 @@ _shells({ a: `a${_shell_marker($setup)};${((_w0) => `b/${_w0}&`)($walks)};${((_w
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 1) << 3 | _mask_group($scope0_reason, 2) << 5 | _mask_group($scope0_reason, 3) << 7);
+	_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 1) << 3 | _updates_from($scope0_reason, 2) << 5 | _updates_from($scope0_reason, 3) << 7);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	shape_default({
 		a: input.a,

@@ -19,7 +19,7 @@ _shells({ "__tests__/tags/mid.marko": `__tests__/tags/mid.marko${_shell_marker($
 var mid_default = _template("__tests__/tags/mid.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
+	_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	label_default({ get: input.get });
 	_patch_child_end();
@@ -37,7 +37,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	$fg__input_title && _patch_write($scope0_id, "PatchMarkedWrite:input_title", input.title, !$sg__input_title);
 	const up = _bind_resume(() => "U" + input.title, "__tests__/template.marko_0/up", $scope0_id);
 	const low = _bind_resume(() => "l" + input.title, "__tests__/template.marko_0/low", $scope0_id);
-	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
+	_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	mid_default({ get: input.upper ? up : low });
 	_patch_child_end();

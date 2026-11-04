@@ -21,7 +21,7 @@ var show_await_default = _template("b", (input) => {
 				_scope($scope2_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope1_id) });
 				return 0;
 			}
-		}, $scope1_id, "a", 1, $scope0_page || $wg__input_promise, 1, 0, 0, ["b1"], (2 | _mask_group($scope0_reason, 0)) << 1, 0);
+		}, $scope1_id, "a", 1, $scope0_page || $wg__input_promise, 1, 0, 0, ["b1"], (2 | _updates_from($scope0_reason, 0)) << 1, 0);
 		_fill_global_subscribe("b4", $scope1_id, $cg__input_promise);
 		_scope($scope1_id, { c: _unfilled_if($scope0_reason, 0) && x });
 	}, 1, "b2", _unfilled_if($scope0_reason, 0) && 2, 1);

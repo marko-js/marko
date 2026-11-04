@@ -8,10 +8,10 @@ var template_default = _template("a", (input) => {
 	const Card = { content: _content("a0", ({ href }) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
-		_html(`<a${_attr("href", href, $scope1_id, "aa$href", $scope1_reason, 0)}>x</a>${_el_mark($scope1_id, "a", _mask_group($scope1_reason, 0))}`);
+		_html(`<a${_attr("href", href, $scope1_id, "aa$href", $scope1_reason, 0)}>x</a>${_el_mark($scope1_id, "a", _updates_from($scope1_reason, 0))}`);
 		_scope($scope1_id, {});
 	}, $scope0_id) };
-	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
+	_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	Card.content({ href: input.q + input.item });
 	_patch_child_end();

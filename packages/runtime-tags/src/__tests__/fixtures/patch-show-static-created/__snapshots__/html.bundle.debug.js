@@ -23,7 +23,7 @@ _shells({
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $fg__input_label = _filled_guard($scope0_reason, 0), $cg__input_show = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
-	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
+	_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	hidden_note_default({ text: input.label });
 	_patch_child_end();
@@ -42,7 +42,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_show_start(false, 0);
 			_html("<s>single</s>");
 			_show_end($scope1_id, "#text/6", false, 0, 0, 0, 1, "#text/6", void 0, 0, 0);
-			_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
+			_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
 			const $childScope2 = _peek_scope_id($scope1_id, "#childScope/7", 1);
 			hidden_note_default({ text: input.label });
 			_patch_child_end();

@@ -25,14 +25,14 @@ var template_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	let n = 0;
 	_html(`<button class=inc>${_text_mark($scope0_id, "b", n)}</button>${_el_mark($scope0_id, "a")}`);
-	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
+	_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "d", 0);
 	$Card_withLoadAssets({ user: input.user });
 	_patch_child_end();
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_set_scope_reason(_mask_group($scope0_reason, 2) << 1);
+			_set_scope_reason(_updates_from($scope0_reason, 2) << 1);
 			const $childScope2 = _peek_scope_id($scope1_id, "b", 1);
 			$Card_withLoadAssets({ user: input.user2 });
 			_patch_child_end();

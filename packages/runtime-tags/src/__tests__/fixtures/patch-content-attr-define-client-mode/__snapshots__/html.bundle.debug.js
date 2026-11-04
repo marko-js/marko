@@ -19,7 +19,7 @@ var frag_host_default = _template("__tests__/tags/frag-host.marko", (input) => {
 	}, $scope0_id) };
 	_html("<section>");
 	_attr_content("#section/0", $scope0_id, input.mode ? frag.content : null, 0, 1, $scope0_reason, 2);
-	_html(`</section>${_el_mark($scope0_id, "#section/0", _mask_group($scope0_reason, 2))}`);
+	_html(`</section>${_el_mark($scope0_id, "#section/0", _updates_from($scope0_reason, 2))}`);
 	$cg__input_mode && _patch_write($scope0_id, "PatchWrite:frag_content", frag?.content, 1);
 	$fg__input_note && _patch_subscribers($scope0_id, "__tests__/tags/frag-host.marko_0_input_note#3/subscribers", "input_note");
 	$cg__input_mode && _patch_render($scope0_id, "__tests__/tags/frag-host.marko_0_input_mode#4_frag_content#6/setup");
@@ -43,7 +43,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let mode = false;
 	_html(`<button>toggle</button>${_el_mark($scope0_id, "#button/0")}`);
-	_set_scope_reason(38 | _mask_group($scope0_reason, 0) << 3);
+	_set_scope_reason(38 | _updates_from($scope0_reason, 0) << 3);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/1", 0);
 	frag_host_default({
 		mode,

@@ -36,7 +36,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let b = "b";
 	_html(`<button>b</button>${_el_mark($scope0_id, "#button/0")}`);
-	_set_scope_reason(10118 | (_mask_group($scope0_reason, 0) << 3 | _mask_group($scope0_reason, 1) << 5 | _mask_group($scope0_reason, 2) << 11 | _mask_group($scope0_reason, 3) << 15 | _mask_group($scope0_reason, 4) << 17));
+	_set_scope_reason(10118 | (_updates_from($scope0_reason, 0) << 3 | _updates_from($scope0_reason, 1) << 5 | _updates_from($scope0_reason, 2) << 11 | _updates_from($scope0_reason, 3) << 15 | _updates_from($scope0_reason, 4) << 17));
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/1", 0);
 	rows_default({
 		a: input.a,

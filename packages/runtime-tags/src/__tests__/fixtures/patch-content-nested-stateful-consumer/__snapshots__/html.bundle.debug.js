@@ -25,7 +25,7 @@ var card_default = _template("__tests__/tags/card/index.marko", (input) => {
 	_if(() => {
 		if (open) {
 			const $scope1_id = _scope_id();
-			_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
+			_set_scope_reason(_updates_from($scope0_reason, 1) << 1);
 			const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 			grand_default({ content: input.content });
 			_patch_child_end();
@@ -57,7 +57,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const $input_note__closures = new Set();
 	_html("<main>");
-	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
+	_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	card_default({
 		title: input.title,

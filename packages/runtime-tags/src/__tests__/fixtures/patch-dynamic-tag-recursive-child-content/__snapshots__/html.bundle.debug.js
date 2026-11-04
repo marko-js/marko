@@ -37,14 +37,14 @@ const $content = (input) => {
 	const $scope0_id = _scope_id();
 	const $input_node_kid__closures = new Set();
 	_html(`<li>${_text_mark($scope0_id, "#text/0", input.node.name, 1, $scope0_reason, 0)}`);
-	_set_scope_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 1) << 3);
+	_set_scope_reason(_updates_from($scope0_reason, 1) << 1 | _updates_from($scope0_reason, 1) << 3);
 	const $childScope2 = _peek_scope_id($scope0_id, "#childScope/1", 1);
 	wrap_default({
 		show: !!input.node.kid,
 		content: _content_resume("__tests__/tags/tree.marko_1*content", () => {
 			const $scope1_reason = _scope_reason();
 			const $scope1_id = _scope_id();
-			_set_scope_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 1) << 3);
+			_set_scope_reason(_updates_from($scope0_reason, 1) << 1 | _updates_from($scope0_reason, 1) << 3);
 			const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 			$content({ node: input.node.kid });
 			_patch_child_end();

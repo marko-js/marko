@@ -24,7 +24,7 @@ var wrap_default = _template("c", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
+			_set_scope_reason(_updates_from($scope0_reason, 1) << 1);
 			const $childScope = _peek_scope_id($scope1_id, "a", 0, $cg__input_label && 1);
 			let v = card_default({ x: input.label });
 			$fg__input_label && _patch_write($scope1_id, "xe", v, !$sg__input_label);
@@ -53,7 +53,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let label = input.label;
 	_html(`<button class=edit>edit</button>${_el_mark($scope0_id, "a")}`);
-	_set_scope_reason(8 | _mask_group($scope0_reason, 1) << 1);
+	_set_scope_reason(8 | _updates_from($scope0_reason, 1) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "b", 0);
 	wrap_default({
 		label,

@@ -24,14 +24,14 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $fg__content = _filled_guard($scope1_reason, 1);
 		_html(`<span>${_text_mark($scope1_id, "a", n, 1, $scope1_reason, 0)}</span>`);
-		_dynamic_tag($scope1_id, "b", content, { title: input.t }, 1, 0, 0, _write_guard($scope0_reason, 0) || _write_guard($scope1_reason, 1), (_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 1)) << 1, 0, 0, 1, $scope1_reason);
-		_patch_render($scope1_id, "a3", [$fg__input_t && ">d", $fg__content && "f"], (_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 1)) << 1, 0);
-		_subscribe(_unfilled_if((_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 1)) << 1, 0) && $wi__input_t && $input_t__closures, _scope($scope1_id, {
+		_dynamic_tag($scope1_id, "b", content, { title: input.t }, 1, 0, 0, _write_guard($scope0_reason, 0) || _write_guard($scope1_reason, 1), (_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 1)) << 1, 0, 0, 1, $scope1_reason);
+		_patch_render($scope1_id, "a3", [$fg__input_t && ">d", $fg__content && "f"], (_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 1)) << 1, 0);
+		_subscribe(_unfilled_if((_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 1)) << 1, 0) && $wi__input_t && $input_t__closures, _scope($scope1_id, {
 			f: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope1_reason, 1)) && content,
 			_: ($wi__input_t || _write_if($scope1_reason, 1)) && _scope_with_id($scope0_id)
-		}), _client_guard((_mask_group($scope0_reason, 0) | _mask_group($scope1_reason, 1)) << 1, 0) && "a4") || $fg__content && _client_guard($scope0_reason, 0) && _patch_write($scope1_id, "xf", content, !_server_guard($scope1_reason, 1));
+		}), _client_guard((_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 1)) << 1, 0) && "a4") || $fg__content && _client_guard($scope0_reason, 0) && _patch_write($scope1_id, "xf", content, !_server_guard($scope1_reason, 1));
 	}, $scope0_id) };
-	_set_scope_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 2) << 3);
+	_set_scope_reason(_updates_from($scope0_reason, 1) << 1 | _updates_from($scope0_reason, 2) << 3);
 	const $childScope = _peek_scope_id($scope0_id, "a", 1);
 	Wrap.content({
 		n: input.n,

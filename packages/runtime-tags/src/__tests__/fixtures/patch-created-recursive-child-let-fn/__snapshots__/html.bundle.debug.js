@@ -26,11 +26,11 @@ const $content = (input) => {
 	_if(() => {
 		if (input.depth) {
 			const $scope1_id = _scope_id();
-			_set_scope_reason(_mask_group($scope0_reason, 2) << 1);
+			_set_scope_reason(_updates_from($scope0_reason, 2) << 1);
 			const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 			card_default({ fn: input.fn });
 			_patch_child_end();
-			_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 1) << 3 | _mask_group($scope0_reason, 2) << 5);
+			_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 1) << 3 | _updates_from($scope0_reason, 2) << 5);
 			const $childScope2 = _peek_scope_id($scope1_id, "#childScope/1", 1);
 			$content({
 				fn: input.fn,
@@ -66,7 +66,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_set_scope_reason(_mask_group($scope0_reason, 1) << 1 | _mask_group($scope0_reason, 1) << 5);
+			_set_scope_reason(_updates_from($scope0_reason, 1) << 1 | _updates_from($scope0_reason, 1) << 5);
 			const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 			tree_default({
 				depth: 2,

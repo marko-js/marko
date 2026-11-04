@@ -89,7 +89,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_set_scope_reason(134 | (_mask_group($scope0_reason, 1) << 3 | _mask_group($scope0_reason, 2) << 5));
+			_set_scope_reason(134 | (_updates_from($scope0_reason, 1) << 3 | _updates_from($scope0_reason, 2) << 5));
 			const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 			rowsy_default({
 				card,

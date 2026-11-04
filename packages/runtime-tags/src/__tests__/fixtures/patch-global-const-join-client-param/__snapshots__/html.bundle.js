@@ -17,11 +17,11 @@ var gate_default = _template("b", (input) => {
 			_scope($scope1_id, {});
 			return 0;
 		}
-	}, $scope0_id, "a", 1, $scope0_page || _write_guard($scope0_reason, 0), 1, 0, 0, ["b0"], (2 | _mask_group($scope0_reason, 0)) << 1, 0);
-	_html(`<p>${_text_mark($scope0_id, "b", flag && input.on ? "on" : "off", 1, (2 | _mask_group($scope0_reason, 0)) << 1, 0)}</p>`);
+	}, $scope0_id, "a", 1, $scope0_page || _write_guard($scope0_reason, 0), 1, 0, 0, ["b0"], (2 | _updates_from($scope0_reason, 0)) << 1, 0);
+	_html(`<p>${_text_mark($scope0_id, "b", flag && input.on ? "on" : "off", 1, (2 | _updates_from($scope0_reason, 0)) << 1, 0)}</p>`);
 	_fill_global_subscribe("b1", $scope0_id);
 	$cg__input_on && _patch_write($scope0_id, "we", input.on, 1);
-	_patch_render($scope0_id, "b2", [_filled_guard($scope0_reason, 0) && "e", "f"], (2 | _mask_group($scope0_reason, 0)) << 1, 0);
+	_patch_render($scope0_id, "b2", [_filled_guard($scope0_reason, 0) && "e", "f"], (2 | _updates_from($scope0_reason, 0)) << 1, 0);
 	_scope($scope0_id, {
 		e: _unfilled_if($scope0_reason, 0) && input.on,
 		f: _unfilled_if($scope0_reason, 0) && flag

@@ -27,7 +27,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let p = input.promise;
 	_html(`<button class=swap>swap</button>${_el_mark($scope0_id, "a")}<h1>${_text_mark($scope0_id, "b", input.title, 1, $scope0_reason, 1)}</h1>`);
-	_set_scope_reason(2 | _mask_group($scope0_reason, 2) << 3);
+	_set_scope_reason(2 | _updates_from($scope0_reason, 2) << 3);
 	const $childScope = _peek_scope_id($scope0_id, "c", 0);
 	show_await_default({
 		promise: p,

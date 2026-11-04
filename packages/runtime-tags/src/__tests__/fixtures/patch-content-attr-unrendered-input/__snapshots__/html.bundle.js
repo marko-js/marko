@@ -18,7 +18,7 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id) };
 	_html("<section>");
 	_attr_content("c", $scope0_id, input.on ? frag.content : null, 0, 1, $scope0_reason, 2);
-	_html(`</section>${_el_mark($scope0_id, "c", _mask_group($scope0_reason, 2))}`);
+	_html(`</section>${_el_mark($scope0_id, "c", _updates_from($scope0_reason, 2))}`);
 	_script($scope0_id, "a2");
 	$fg__input_rec_name && _patch_subscribers($scope0_id, "a3", "g");
 	_scope($scope0_id, {

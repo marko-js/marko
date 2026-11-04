@@ -32,7 +32,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $input_show__closures = new Set();
 	const $n__closures = new Set();
 	let n = 0;
-	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
+	_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
 	let $item;
 	forOf(input.labels, (label) => {
 		$item = attrTags($item, { content: _content("__tests__/template.marko_1*content", () => {

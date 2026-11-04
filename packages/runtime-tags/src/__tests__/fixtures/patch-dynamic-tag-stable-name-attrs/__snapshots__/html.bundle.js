@@ -12,7 +12,7 @@ var template_default = _template("a", (input) => {
 		_scope($scope1_id, {});
 	}, $scope0_id) };
 	_dynamic_tag($scope0_id, "a", Row, { label: input.y }, 1, 0, 0, _write_guard($scope0_reason, 0), $scope0_reason, 0, 0, 0, 0);
-	_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
+	_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "b", 1);
 	Row.content({ label: input.y });
 	_patch_child_end();

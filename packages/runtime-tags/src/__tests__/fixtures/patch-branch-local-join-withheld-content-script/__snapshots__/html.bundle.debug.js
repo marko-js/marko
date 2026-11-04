@@ -29,7 +29,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 			}, $scope1_id) };
 			_html("<section>");
 			_attr_content("#section/1", $scope1_id, input.mode ? frag.content : null, 0, 1, $scope0_reason, 6);
-			_html(`</section>${_el_mark($scope1_id, "#section/1", _mask_group($scope0_reason, 6))}`);
+			_html(`</section>${_el_mark($scope1_id, "#section/1", _updates_from($scope0_reason, 6))}`);
 			_script($scope1_id, "__tests__/tags/child.marko_1_c#2", 1, $fg__input_b, "c");
 			$cg__input_mode && _patch_write($scope1_id, "PatchWrite:frag_content", frag?.content, 1);
 			$fg__input_b && _patch_subscribers($scope1_id, "__tests__/tags/child.marko_1_c#2/subscribers", "c");
@@ -72,7 +72,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let n = 0;
 	let m = false;
-	_set_scope_reason(10366 | (_mask_group($scope0_reason, 2) << 7 | _mask_group($scope0_reason, 1) << 9));
+	_set_scope_reason(10366 | (_updates_from($scope0_reason, 2) << 7 | _updates_from($scope0_reason, 1) << 9));
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	child_default({
 		a: n,
@@ -81,7 +81,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		mode: m
 	});
 	_patch_child_end();
-	_set_scope_reason(8312 | (_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 2) << 7 | _mask_group($scope0_reason, 1) << 9 | _mask_group($scope0_reason, 3) << 11));
+	_set_scope_reason(8312 | (_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 2) << 7 | _updates_from($scope0_reason, 1) << 9 | _updates_from($scope0_reason, 3) << 11));
 	const $childScope2 = _peek_scope_id($scope0_id, "#childScope/1", 1);
 	child_default({
 		a: input.y,

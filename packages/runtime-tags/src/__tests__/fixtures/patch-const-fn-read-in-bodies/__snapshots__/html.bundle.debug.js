@@ -103,7 +103,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}), $cg__input_x && "__tests__/template.marko_2_input_x#0:8/subscribe", $wg__input_x) || $fg__v && $cg__input_x && _patch_write($scope2_id, "PatchMarkedWrite:h", h, !$sg__v);
 		$wg__input_x || $wi__input_x && _resume_branch($scope2_id);
 	}, $scope0_id) };
-	_set_scope_reason(_mask_group($scope0_reason, 2) << 1);
+	_set_scope_reason(_updates_from($scope0_reason, 2) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/2", 0);
 	Show.content({ v: input.a });
 	_patch_child_end();

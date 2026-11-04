@@ -28,7 +28,7 @@ var template_default = _template("b", (input) => {
 	_html("<main>");
 	_await($scope0_id, "a", input.first, (first) => {
 		const $scope1_id = _scope_id();
-		_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
+		_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
 		const $childScope = _peek_scope_id($scope1_id, "b", 0);
 		$Child_withLoadAssets({ label: first });
 		_patch_child_end();
@@ -36,7 +36,7 @@ var template_default = _template("b", (input) => {
 	}, 1, "b1", _unfilled_if($scope0_reason, 0), 1);
 	_await($scope0_id, "b", input.second, (second) => {
 		const $scope2_id = _scope_id();
-		_set_scope_reason(_mask_group($scope0_reason, 1) << 1);
+		_set_scope_reason(_updates_from($scope0_reason, 1) << 1);
 		const $childScope2 = _peek_scope_id($scope2_id, "b", 1);
 		$Child_withLoadAssets({ label: second });
 		_patch_child_end();

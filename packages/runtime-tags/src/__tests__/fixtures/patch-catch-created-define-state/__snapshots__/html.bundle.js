@@ -56,7 +56,7 @@ var template_default = _template("c", (input) => {
 	const LazyBody = { content: _content("c0", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
-		_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
+		_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
 		const $childScope = _peek_scope_id($scope1_id, "b", 0);
 		$LazyChild_withLoadAssets({ label: input.label });
 		_patch_child_end();
@@ -69,7 +69,7 @@ var template_default = _template("c", (input) => {
 	const ChildBody = { content: _content("c2", () => {
 		const $scope2_id = _scope_id();
 		_scope_reason();
-		_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
+		_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
 		const $childScope2 = _peek_scope_id($scope2_id, "a", 1);
 		child_default({ label: input.label });
 		_patch_child_end();
@@ -92,7 +92,7 @@ var template_default = _template("c", (input) => {
 	const Inner = { content: _content("c7", () => {
 		const $scope3_id = _scope_id();
 		_scope_reason();
-		_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
+		_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
 		const $childScope3 = _peek_scope_id($scope3_id, "b", 2);
 		$LazyChild_withLoadAssets({ label: input.label });
 		_patch_child_end();

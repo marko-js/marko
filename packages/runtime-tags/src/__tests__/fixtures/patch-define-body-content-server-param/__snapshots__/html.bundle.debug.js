@@ -24,7 +24,7 @@ var one_default = _template("__tests__/tags/one.marko", (input) => {
 			t: "1:25"
 		}) || ($fg__content && _client_guard($scope1_reason, 2) && _patch_write($scope1_id, "PatchMarkedWrite:content", content, !_server_guard($scope1_reason, 1)), $fg__t && _client_guard($scope1_reason, 1) && _patch_write($scope1_id, "PatchMarkedWrite:t", t, !_server_guard($scope1_reason, 2)));
 	}, $scope0_id, 1) };
-	_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 1) << 3 | _mask_group($scope0_reason, 2) << 5);
+	_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 1) << 3 | _updates_from($scope0_reason, 2) << 5);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 1);
 	Wrap.content({
 		content: input.content,
@@ -44,7 +44,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let z = 0;
 	_html(`<button class=z>z</button>${_el_mark($scope0_id, "#button/0")}`);
-	_set_scope_reason(_mask_group($scope0_reason, 0) << 1 | _mask_group($scope0_reason, 0) << 5);
+	_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 0) << 5);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/1", 0);
 	one_default({
 		t: input.y,
