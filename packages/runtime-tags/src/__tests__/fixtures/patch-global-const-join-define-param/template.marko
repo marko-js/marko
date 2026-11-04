@@ -1,0 +1,7 @@
+<let/on=true/>
+<button onClick() { on = !on }>toggle</button>
+<define/Show|{ v }|>
+  <const/flag=$global.flag/>
+  <if=flag && v><b>shown</b></if>
+</define>
+<Show v=on/>

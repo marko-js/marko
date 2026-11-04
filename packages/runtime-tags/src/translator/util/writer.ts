@@ -6,6 +6,8 @@ import buildStringExpression, {
   appendLiteral,
 } from "./build-string-expression";
 import { isOutputHTML } from "./marko-config";
+import { isPatchKeyedByValues } from "./patch/decisions";
+import { getValueNodeMarkerGuard } from "./patch/writers";
 import type { Reason } from "./reasons";
 import { insertStatementBefore } from "./replace-with-statements";
 import { callRuntime } from "./runtime";
@@ -100,7 +102,9 @@ export function markNode(
         "_el_mark",
         getScopeIdIdentifier(section),
         getScopeAccessorLiteral(nodeBinding),
-        getWriteGuard(section, reason, true),
+        (isPatchKeyedByValues(nodeBinding) &&
+          getValueNodeMarkerGuard(section, nodeBinding)) ||
+          getWriteGuard(section, reason, true),
       )}`;
     }
   }

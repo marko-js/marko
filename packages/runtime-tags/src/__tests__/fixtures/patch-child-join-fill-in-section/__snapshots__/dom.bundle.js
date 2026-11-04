@@ -1,0 +1,15 @@
+// tags/child.marko
+const $if_content__input_a = /*@__PURE__*/ _if_closure_patch("b0", 0, 0, ($scope) => _text($scope.a, $scope._.f));
+const $if = /*@__PURE__*/ _if(0, "<i> </i>", "D ", $if_content__input_a);
+const $open = /*@__PURE__*/ _fill_let("b3", 8, ($scope) => $if($scope, $scope.i ? 0 : 1));
+const $setup__script$1 = _script("b1", ($scope) => _on($scope.c, "click", function() {
+	$open($scope, !$scope.i);
+}));
+const $input_a__OR__input_c = /*@__PURE__*/ _or_patch("b2", 7, ($scope) => _text($scope.b, $scope.f + $scope.g));
+const $input_c = /*@__PURE__*/ _const(6, $input_a__OR__input_c);
+
+// template.marko
+const $n = _let(7, ($scope) => $input_c($scope.a, $scope.h));
+const $setup__script = _script("a0", ($scope) => _on($scope.c, "click", function() {
+	$n($scope, $scope.h + "k");
+}));
