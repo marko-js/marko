@@ -1,0 +1,23 @@
+// PATCH
+"ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-async-shared-value/child.marko", {
+  "PatchChild:#childScope/1": {
+    "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-async-shared-value/child.marko_0_input_name#3_input_item#4",
+    "PatchMarkedWrite:input_item": {
+      label: "b"
+    }
+  },
+  "PatchChild:BranchScopes:#text/2": {
+    "PatchPending:#text/0": 1
+  }
+}
+{
+  "PatchChild:BranchScopes:#text/2": {
+    "PatchChild:BranchScopes:#text/0": {
+      "PatchText:#text/0": "y",
+      "PatchChild:#childScope/2": {
+        "PatchEffect:": _(0)["PatchChild:#childScope/1"]["PatchEffect:"],
+        "PatchMarkedWrite:input_item": _(0)["PatchChild:#childScope/1"]["PatchMarkedWrite:input_item"]
+      }
+    }
+  }
+}

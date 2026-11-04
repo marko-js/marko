@@ -50,19 +50,27 @@ function setCallSectionSetup(call: KnownTagExtra) {
 }
 
 function hasOwnSetupWork(section: Section) {
-  const info = getSetupInfo(section);
   // Setup subscribes the section to the closures it reads, and sets up another
   // template it renders.
-  if (
-    info.always ||
-    section.referencedClosures ||
-    callsOtherTemplateSetup(section)
-  ) {
-    return true;
-  }
+  return (
+    getSetupInfo(section).always ||
+    !!section.referencedClosures ||
+    callsOtherTemplateSetup(section) ||
+    hasSetupWorkReadingNothing(section)
+  );
+}
+
+// Whether the section's setup runs work reading nothing, but for the expressions
+// `skip` leaves out.
+export function hasSetupWorkReadingNothing(
+  section: Section,
+  skip?: (extra: t.NodeExtra) => boolean | undefined,
+) {
+  const info = getSetupInfo(section);
+  if (info.always) return true;
   for (const expr of info.exprs) {
     const extra = getCanonicalExpr(expr);
-    if (!extra.dropped && !getReferencedBindings(extra)) {
+    if (!extra.dropped && !getReferencedBindings(extra) && !skip?.(extra)) {
       return true;
     }
   }

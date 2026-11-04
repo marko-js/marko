@@ -1,0 +1,34 @@
+// PATCH
+"ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-click-resident/child.marko", `packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-click-resident/template.marko_1*shell !#childScope/1>packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-click-resident/child.marko_0_attrs#5;D%b/ b&l;<main><!><button>go</button></main>`
+{
+  "PatchBranch:#text/0": [{
+    "PatchChild:#childScope/1": {
+      "PatchMarkedWrite:input_title": "b",
+      "PatchAttrs:#button/0": {
+        title: "b",
+        onClick: _(["BranchScopes:#text/0", "#childScope/1"], "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-click-resident/child.marko_0/handler")
+      },
+      "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-click-resident/child.marko_0_attrs#5"
+    }
+  }, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-click-resident/template.marko_1*shell"]
+}
+;BgI
+
+// PATCH holding BgI
+{
+  "PatchBranch:#text/0": 0
+}
+
+// PATCH holding BgI
+"ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-click-resident/child.marko", {
+  "PatchBranch:#text/0": [{
+    "PatchChild:#childScope/1": {
+      "PatchMarkedWrite:input_title": "c",
+      "PatchAttrs:#button/0": {
+        title: "c",
+        onClick: _(["BranchScopes:#text/0", "#childScope/1"], "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-click-resident/child.marko_0/handler")
+      },
+      "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-click-resident/child.marko_0_attrs#5"
+    }
+  }, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-click-resident/template.marko_1*shell"]
+}

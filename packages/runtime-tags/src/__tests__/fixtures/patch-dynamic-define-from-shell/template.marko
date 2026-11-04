@@ -1,0 +1,13 @@
+<let/picked=""/>
+<define/Card|{ user }|>
+  <h4>${user.name}</h4>
+  <address-view address=user.address/>
+  <button.pick onClick() { picked = user.name }>pick</button>
+</define>
+<define/Other|{ user }|>
+  <h5>${user.name}</h5>
+</define>
+<main>
+  <${input.useA ? Card : Other} user=input.user/>
+  <output>${picked}</output>
+</main>

@@ -1,0 +1,4 @@
+<for|i| of=[0, 1]>
+  <define/frag><em>${input.note}</em></define>
+  <section content=(i || input.mode ? frag.content : null)/>
+</for>

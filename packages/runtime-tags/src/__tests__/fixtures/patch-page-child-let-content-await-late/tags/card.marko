@@ -1,0 +1,7 @@
+import { resolveAfter } from "../../../utils/resolve"
+
+<let/c=input.content/>
+<div><${c}/></div>
+<await|v|=resolveAfter("v", 1)>
+  <section><${c}/></section>
+</await>

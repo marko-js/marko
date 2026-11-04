@@ -1,0 +1,10 @@
+<if=input.outer>
+  <let/x=1/>
+  <button.x onClick() { x++ }>${x}</button>
+  <if=input.show>
+    <let/y=x/>
+    <span/el/>
+    <script>el().dataset.y = String(y);</script>
+    <button.y onClick() { el().title = String(y) }>go</button>
+  </if>
+</if>

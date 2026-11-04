@@ -1,0 +1,17 @@
+static function boom(msg: string): never {
+  throw new Error(msg);
+}
+<try>
+  <p>${input.early ? boom("early") : "ok"}</p>
+  <@catch|err|>
+    <b>${$global.label + " " + (err as Error).message}</b>
+    <await|v|=$global.p><i>${v}</i></await>
+  </@catch>
+</try>
+<try>
+  <p>${input.late ? boom("late") : "ok"}</p>
+  <@catch|err|>
+    <b>${$global.label + " " + (err as Error).message}</b>
+    <await|v|=$global.p><i>${v}</i></await>
+  </@catch>
+</try>

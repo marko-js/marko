@@ -1,0 +1,7 @@
+import Note from "./note.marko" with { load: "render" }
+
+<let/show=true/>
+<let/T=Note/>
+<card><em>${input.label}</em></card>
+<if=show><${T}/></if>
+<button class="toggle" onClick() { show = !show; T = null }>toggle</button>

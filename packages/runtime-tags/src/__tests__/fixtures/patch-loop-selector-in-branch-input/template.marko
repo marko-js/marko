@@ -1,0 +1,9 @@
+<let/rows=[{ id: 1 }, { id: 2 }, { id: 3 }]/>
+<if=rows.length>
+  <ul>
+    <for|row| of=rows by="id">
+      <li>${row.id}${input.selected === row.id ? "*" : ""}</li>
+    </for>
+  </ul>
+</if>
+<button onClick() { rows = [...rows, { id: rows.length + 1 }] }>+</button>

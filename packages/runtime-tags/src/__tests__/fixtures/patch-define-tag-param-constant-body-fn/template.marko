@@ -1,0 +1,7 @@
+<define/D|{ on }|>
+  <const/f() { return "A"; }/>
+  <if=on><span>${f()}</span></if>
+</define>
+<D on=true/>
+<let/n=0/>
+<button onClick() { n++ }>${n}</button>

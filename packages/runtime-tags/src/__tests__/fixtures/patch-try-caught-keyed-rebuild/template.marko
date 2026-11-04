@@ -1,0 +1,14 @@
+static const SITE = "Shop";
+static function throwIt(): string {
+  throw new Error("boom");
+}
+<main>
+  <for|page| of=input.pages by="key">
+    <try>
+      <p>${SITE} ${page.title}</p>
+      <counter/>
+      <if=page.fail>${throwIt()}</if>
+      <@catch>caught</@catch>
+    </try>
+  </for>
+</main>
