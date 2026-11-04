@@ -1,0 +1,8 @@
+<let/show=true/>
+<define/Foo|input|>
+  <let/open=false/>
+  <button#open onClick() { open = true }>open</button>
+  <if=open><${input.content}/></if>
+</define>
+<let/count=1/>
+<${show ? Foo : "div"}>count ${count}</>

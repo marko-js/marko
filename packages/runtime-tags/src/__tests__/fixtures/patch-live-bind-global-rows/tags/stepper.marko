@@ -1,0 +1,3 @@
+<const/clamp=(v: unknown) => Math.min(input.max, Number(v))>
+<let/current:=input.value>
+<input type="number" value:clamp:=current>

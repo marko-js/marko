@@ -1,0 +1,9 @@
+<if=input.show>
+  <await|v|=Promise.resolve(1)>
+    <div/el/>
+    <script>
+      el().textContent = String(v);
+      console.log("await", v);
+    </script>
+  </await>
+</if>

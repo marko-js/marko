@@ -1,0 +1,14 @@
+<html>
+  <body>
+    <if=$global.meta.headings>
+      <a/skip href="#main">Skip to content</a>
+      <script>skip().title = input.msg</script>
+    </if>
+    <main>${input.msg}</main>
+    <if=!$global.meta.hideFooter>
+      <site-footer/>
+      <p/note/>
+      <script>note().textContent = input.msg</script>
+    </if>
+  </body>
+</html>
