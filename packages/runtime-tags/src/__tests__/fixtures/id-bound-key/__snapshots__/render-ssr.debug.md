@@ -1,0 +1,111 @@
+# Render `{"keys":[0,"0","a b","a_b","💠","","1Sa2Da0","aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",-1,1.5],"show":false}`
+```html
+<label
+  for="sM_1"
+>
+  0
+</label>
+<input
+  id="sM_1"
+/>
+<p>
+  0:0
+</p>
+<label
+  for="sM_2"
+>
+  0
+</label>
+<input
+  id="sM_2"
+/>
+<p>
+  0:0
+</p>
+<label
+  for="sM_3"
+>
+  a b
+</label>
+<input
+  id="sM_3"
+/>
+<p>
+  a b:0
+</p>
+<label
+  for="sM_4"
+>
+  a_b
+</label>
+<input
+  id="sM_4"
+/>
+<p>
+  a_b:0
+</p>
+<label
+  for="sM_5"
+>
+  💠
+</label>
+<input
+  id="sM_5"
+/>
+<p>
+  💠:0
+</p>
+<label
+  for="sM_6"
+/>
+<input
+  id="sM_6"
+/>
+<p>
+  :0
+</p>
+<label
+  for="sM_7"
+>
+  1Sa2Da0
+</label>
+<input
+  id="sM_7"
+/>
+<p>
+  1Sa2Da0:0
+</p>
+<label
+  for="sM_8"
+>
+  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+</label>
+<input
+  id="sM_8"
+/>
+<p>
+  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa:0
+</p>
+<label
+  for="sM_9"
+>
+  -1
+</label>
+<input
+  id="sM_9"
+/>
+<p>
+  -1:0
+</p>
+<label
+  for="sM_a"
+>
+  1.5
+</label>
+<input
+  id="sM_a"
+/>
+<p>
+  1.5:0
+</p>
+```

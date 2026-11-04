@@ -1,0 +1,4 @@
+<wrap show=input.show><span>${input.depth}</span></wrap>
+<if=input.depth>
+  <tree-a show=input.show depth=(input.depth - 1)/>
+</if>

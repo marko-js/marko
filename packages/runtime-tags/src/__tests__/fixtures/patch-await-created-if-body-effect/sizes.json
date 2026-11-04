@@ -1,0 +1,28 @@
+{
+  "dom": {
+    "lazy.marko.load.mjs": {
+      "min": 86,
+      "brotli": 90
+    },
+    "template.marko.page.mjs": {
+      "min": 7019,
+      "brotli": 3207
+    },
+    "lazy.mjs": {
+      "min": 285,
+      "brotli": 192
+    },
+    "shared": {
+      "min": 10120,
+      "brotli": 4626
+    }
+  },
+  "html": {
+    "min": 398,
+    "brotli": 277
+  },
+  "patch": {
+    "min": 164,
+    "brotli": 155
+  }
+}
