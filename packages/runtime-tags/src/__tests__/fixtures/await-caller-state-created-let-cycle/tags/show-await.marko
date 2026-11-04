@@ -1,0 +1,6 @@
+<await|x|=input.promise>
+  <let/b=x/>
+  <let/a={ v: b, self: () => a }/>
+  <p>${b}|${input.label}</p>
+  <button.log onClick() { console.log(a.v) }>log</button>
+</await>

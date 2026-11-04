@@ -1,0 +1,12 @@
+<let/open=false/>
+<main>
+  <if=open>
+    <if=input.on>
+      <p>on</p>
+    </if>
+    <else>
+      <span>off</span>
+    </else>
+  </if>
+  <button onClick() { open = !open }>+</button>
+</main>

@@ -1,0 +1,7 @@
+<let/upper=false/>
+<const/up=() => "U" + input.title/>
+<const/low=() => "l" + input.title/>
+<const/pick=upper ? up : low/>
+<output>${pick()}</output>
+<script>console.log("run", pick())</script>
+<button onClick() { upper = !upper }>toggle</button>

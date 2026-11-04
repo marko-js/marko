@@ -1,0 +1,4 @@
+<const/highlight(text: string) {
+  return text.replace(input.cursor.test, (m) => `<b>${input.cursor.content((s) => s)}</b>`);
+}/>
+<div>$!{highlight(input.text)}</div>

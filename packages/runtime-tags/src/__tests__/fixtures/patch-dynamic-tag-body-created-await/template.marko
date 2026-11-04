@@ -1,0 +1,6 @@
+import Card from "./tags/card.marko";
+<main>
+  <${input.on ? Card : "div"}>
+    <await|w|=input.w><em>${input.note} ${w}</em></await>
+  </>
+</main>
