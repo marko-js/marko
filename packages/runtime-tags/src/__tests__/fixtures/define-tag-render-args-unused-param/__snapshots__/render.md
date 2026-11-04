@@ -6,6 +6,7 @@
 <p>
   1
 </p>
+<h1 />
 <button>
   1
 </button>
@@ -22,6 +23,7 @@ document.querySelector("button").click();
 <p>
   2
 </p>
+<h1 />
 <button>
   2
 </button>
@@ -44,6 +46,7 @@ document.querySelector("button").click();
 <p>
   3
 </p>
+<h1 />
 <button>
   3
 </button>
@@ -66,6 +69,7 @@ document.querySelector("button").click();
 <p>
   4
 </p>
+<h1 />
 <button>
   4
 </button>

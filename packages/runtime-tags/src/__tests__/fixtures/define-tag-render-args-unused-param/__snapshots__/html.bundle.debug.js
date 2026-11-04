@@ -17,6 +17,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_dynamic_tag($scope3_id, "#text/0", opts.content, {}, 0, 0, 0);
 		_html("</p>");
 	}, $scope0_id) };
+	const Titled = { content: _content("__tests__/template.marko_4*content", (a, opts) => {
+		const $scope4_id = _scope_id();
+		const $scope4_reason = _scope_reason();
+		_html(`<h1>${_text_mark($scope4_id, "#text/0", opts.title, 0)}</h1>`);
+	}, $scope0_id) };
 	_set_scope_reason(34);
 	const $childScope = _peek_scope_id();
 	MyTag.content(0, "Hello", x);
@@ -24,13 +29,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		_html(_text_mark($scope1_id, "#text/0", x));
-		_subscribe($x__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "10:2"), "__tests__/template.marko_1_x#0:4/subscribe");
+		_subscribe($x__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "13:2"), "__tests__/template.marko_1_x#0:5/subscribe");
 	}, $scope0_id) });
-	_html(`<button>${_text_mark($scope0_id, "#text/3", x)}</button>${_el_mark($scope0_id, "#button/2")}`);
+	Titled.content(0, {});
+	_html(`<button>${_text_mark($scope0_id, "#text/4", x)}</button>${_el_mark($scope0_id, "#button/3")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		x,
 		"#childScope/0": _existing_scope($childScope),
-		"ClosureScopes:x/5": $x__closures
+		"ClosureScopes:x/6": $x__closures
 	}, "__tests__/template.marko", 0, { x: "1:6" });
 }, 1);

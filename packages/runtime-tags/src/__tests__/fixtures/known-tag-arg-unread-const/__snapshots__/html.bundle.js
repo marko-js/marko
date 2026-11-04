@@ -9,5 +9,5 @@ var child_default = _template("b", (input) => {
 var template_default = _template("a", (input) => {
 	_scope_reason();
 	_scope_id();
-	child_default({});
+	child_default();
 }, 1);
