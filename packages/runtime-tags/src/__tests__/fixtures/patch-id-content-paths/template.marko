@@ -1,0 +1,10 @@
+import Field from "./tags/field.marko";
+<define/Item|{ name }|><field name=name/></define>
+<define/Content|{ item: items }|><for|item| of=items><${item}/></for></define>
+<if=input.flip><Item name="first"/></if><else><Item name="other"/></else>
+<${input.flip ? Field : "section"} name="dynamic"><field name="content"/></>
+<Content>
+ <for|item| of=input.items><@item><field name=item.key/></@item></for>
+</Content>
+<forward><field name="forwarded"/></forward>
+<nested/>

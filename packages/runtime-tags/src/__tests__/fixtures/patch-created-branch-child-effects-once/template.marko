@@ -1,0 +1,36 @@
+<let/count=0/>
+<button onClick() { count++ }>${count}</button>
+<define/Body>
+  <script>console.log("define setup")</script>
+  <b>define</b>
+</define>
+<if=input.show>
+  <script>console.log("branch setup", document.querySelectorAll("i").length)</script>
+  <outer/>
+  <Body/>
+  <for|item| of=input.items>
+    <script>console.log("row setup", item)</script>
+    <i>${item}</i>
+  </for>
+  <if=input.nested>
+    <script>console.log("nested setup")</script>
+    <u>nested</u>
+  </if>
+  <wrap>
+    <@body>
+      <script>console.log("content setup")</script>
+      <em>content</em>
+      <for|item| of=input.items>
+        <script>console.log("content row setup", item)</script>
+      </for>
+    </@body>
+  </wrap>
+  <${input.tag}>
+    <script>console.log("tag body setup")</script>
+    <inner/>
+    <for|item| of=input.items>
+      <script>console.log("tag body row setup", item)</script>
+    </for>
+  </>
+  <script>console.log("branch count", count)</script>
+</if>

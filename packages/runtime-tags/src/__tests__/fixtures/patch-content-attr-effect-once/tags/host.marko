@@ -1,0 +1,6 @@
+<define/extra>
+  <em>${input.label}</em>
+  <script>console.log("child mount")</script>
+</define>
+<div content=extra/>
+<script>console.log("parent mount " + typeof extra, document.querySelector("em")?.textContent)</script>

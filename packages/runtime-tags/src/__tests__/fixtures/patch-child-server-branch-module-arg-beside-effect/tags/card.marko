@@ -1,0 +1,17 @@
+import { lib } from "../lib";
+<let/open=true/>
+<define/Panel|{ isOpen, fmt, label }|>
+  <if=isOpen>
+    <em>${fmt(label)}</em>
+  </if>
+</define>
+<if=input.show>
+  <Panel isOpen=input.open fmt=lib.format label=input.label/>
+</if>
+<if=open>
+  <b>${input.label}</b>
+</if>
+<script>
+  console.log("label", input.label);
+</script>
+<button.toggle onClick() { open = !open }>toggle</button>

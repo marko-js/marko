@@ -1,0 +1,9 @@
+<let/last=0/>
+<main>
+  <p>last ${last}</p>
+  <if=input.show>
+    <let/count=input.start valueChange(next) { last = next }/>
+    <span>Seen ${count}</span>
+    <button onClick() { count++ }>+</button>
+  </if>
+</main>
