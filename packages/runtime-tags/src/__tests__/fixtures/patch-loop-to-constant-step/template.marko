@@ -1,0 +1,12 @@
+<let/picked=-1/>
+<p>picked ${picked}</p>
+<div.from>
+  <for|i| from=1 to=input.n step=2>
+    <button onClick() { picked = i }>${i}</button>
+  </for>
+</div>
+<div.step>
+  <for|i| until=input.n step=3>
+    <button onClick() { picked = i }>${i}</button>
+  </for>
+</div>
