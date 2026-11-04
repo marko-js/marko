@@ -1,14 +1,14 @@
 // template.marko
 const $template = "<!><!><button class=set></button>";
 const $walks = "b%b b";
-const $if_content__a__script = _script("__tests__/template.marko_1_a#0:3", ($scope) => _on($scope["#button/0"], "click", function() {
+const $if_content__a = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => _text($scope["#text/1"], $scope._.a));
+const $if_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/0"], "click", function() {
 	document.body.dataset.a = String($scope._.a);
 }));
-const $if_content__a = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => {
-	_text($scope["#text/1"], $scope._.a);
-	$if_content__a__script($scope);
-});
-const $if_content__setup = $if_content__a;
+const $if_content__setup = ($scope) => {
+	$if_content__a._($scope);
+	$if_content__setup__script($scope);
+};
 const $if = /*@__PURE__*/ _if("#text/0", "<button class=read> </button>", " D ", $if_content__setup);
 const $obj = /*@__PURE__*/ _let("obj/2", ($scope) => {
 	$a($scope, $scope.obj?.a);

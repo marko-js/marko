@@ -1,6 +1,7 @@
 import type { types as t } from "@marko/compiler";
 
 import { getMarkoOpts, isOutputHTML } from "../util/marko-config";
+import { replaceWithStatements } from "../util/replace-with-statements";
 import { callRuntime } from "../util/runtime";
 import type { TemplateVisitor } from "../util/visitors";
 import * as writer from "../util/writer";
@@ -16,7 +17,7 @@ export default {
           writer.writeTo(documentType)`${callRuntime("_flush_head")}`;
         }
       }
-      documentType.remove();
+      replaceWithStatements(documentType);
     },
   },
 } satisfies TemplateVisitor<t.MarkoDocumentType>;

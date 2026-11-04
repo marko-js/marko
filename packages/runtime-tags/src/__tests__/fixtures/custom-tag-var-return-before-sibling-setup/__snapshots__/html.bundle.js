@@ -19,18 +19,16 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	_content("a1", ({ color }) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason(), $wg__color = _write_guard($scope1_reason, 0);
-		_html(`${_style_html(`--M_a0:${_escape_style_value(color)};`)}${_el_resume($scope1_id, "a", $wg__color)}<div class=box></div>`);
-		_write_if($scope1_reason, 0) && _scope($scope1_id, {});
+		_scope_reason();
+		_html(`${_style_html(`--M_a0:${_escape_style_value(color)};`)}${_el_resume($scope1_id, "a", 0)}<div class=box></div>`);
 	}, $scope0_id);
 	_content("a2", ({ value }) => {
 		const $scope3_id = _scope_id();
-		const $scope3_reason = _scope_reason(), $wg__value = _write_guard($scope3_reason, 0);
+		_scope_reason();
 		_await($scope3_id, "a", value, (v) => {
 			const $scope4_id = _scope_id();
-			_html(`<span>${_text_resume($scope4_id, "a", v, $wg__value)}</span>`);
-			_write_if($scope3_reason, 0) && _scope($scope4_id, {});
-		}, $wg__value);
+			_html(`<span>${_text_resume($scope4_id, "a", v, 0)}</span>`);
+		}, 0);
 	}, $scope0_id);
 	let top = child_default({});
 	swatch_default({ color: top });

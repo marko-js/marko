@@ -5,9 +5,9 @@ var template_default = _template("a", (input) => {
 	let x = 1;
 	const MyTag = { content: _content("a0", ({ number }) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason(), $wg__number = _write_guard($scope1_reason, 0);
-		_html(`<div>${_text_resume($scope1_id, "a", number, $wg__number)}</div>`);
-		_write_if($scope1_reason, 0) && _scope($scope1_id, {});
+		_scope_reason();
+		_html(`<div>${_text_resume($scope1_id, "a", number)}</div>`);
+		_scope($scope1_id, {});
 	}, $scope0_id) };
 	_set_scope_reason(2);
 	const $childScope = _peek_scope_id();

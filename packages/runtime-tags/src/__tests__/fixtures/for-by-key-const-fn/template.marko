@@ -1,0 +1,8 @@
+<let/items=[{ id: "a" }, { id: "b" }]/>
+<for|item| of=items by="id">
+  <const/select() {
+    document.getElementById("log").textContent = item.id;
+  }/>
+  <button onClick=select>${item.id}</button>
+</for>
+<div#log/>

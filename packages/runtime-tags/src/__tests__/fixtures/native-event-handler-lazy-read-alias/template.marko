@@ -1,4 +1,4 @@
-// A destructured alias read (`n`, stays subscribed) and a root property read (`state.tag`, lazy) both observe current values.
+// A destructured alias read (`n`) and a root property read (`state.tag`) are both lazy and observe current values.
 <let/state={ n: 0, tag: "x" }/>
 <const/{ n }=state/>
 <let/log=""/>

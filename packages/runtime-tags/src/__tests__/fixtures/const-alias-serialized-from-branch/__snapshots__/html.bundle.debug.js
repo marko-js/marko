@@ -7,7 +7,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (obj) {
 			const $scope1_id = _scope_id();
 			_html(`<button class=read>${_text_resume($scope1_id, "#text/1", obj.a)}</button>${_el_resume($scope1_id, "#button/0")}`);
-			_script($scope1_id, "__tests__/template.marko_1_a#0:3");
+			_script($scope1_id, "__tests__/template.marko_1");
 			_scope($scope1_id, {}, "__tests__/template.marko", "2:2");
 			return 0;
 		}

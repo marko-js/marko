@@ -10,7 +10,7 @@ var child_default = _template("__tests__/child.marko", (input) => {
 });
 
 // layout.marko
-const $Child_withLoadAssets = withLoadAssets(child_default, flush, "ready:__tests__/child.marko");
+const $Child_withLoadAssets = withLoadAssets(() => child_default, "__tests__/child.marko", flush, "ready:__tests__/child.marko");
 var layout_default = _template("__tests__/layout.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
@@ -31,5 +31,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope_reason();
 		const $scope2_id = _scope_id();
 		_html("caught");
-	}, void 0, "__tests__/template.marko_2*content");
+	}, 0, "__tests__/template.marko_2*content");
 }, 1);

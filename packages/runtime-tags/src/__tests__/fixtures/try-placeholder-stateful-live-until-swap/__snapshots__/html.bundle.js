@@ -11,10 +11,7 @@ var template_default = _template("a", (input) => {
 			const $scope3_id = _scope_id();
 			_html(`<button>loaded ${_text_resume($scope3_id, "b", clicks, 2)}</button>${_el_resume($scope3_id, "a")}`);
 			_script($scope3_id, "a2");
-			_subscribe($clicks__closures, _scope($scope3_id, {
-				_: _scope_with_id($scope2_id),
-				Cc: 1
-			}), "a3");
+			_subscribe($clicks__closures, _scope($scope3_id, { Cc: 1 }), "a3");
 		});
 		_scope($scope2_id, { _: _scope_with_id($scope0_id) });
 	}, () => {

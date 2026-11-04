@@ -1,0 +1,9 @@
+<define/Foo|input|>
+  <if=input.depth>
+    <const/Pair=[Foo]/>
+    <${0 || Foo} message="done" content=Pair[0]/>
+  </if>
+  <else>${input.message}</else>
+</define>
+
+<Foo depth=1/>

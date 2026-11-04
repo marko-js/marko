@@ -10,11 +10,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_await($scope1_id, "#text/0", input.value, (v) => {
 			const $scope2_id = _scope_id();
 			_html(`<em>${_escape(item.id)}:${_text_resume($scope2_id, "#text/1", v, $wg__input_value * 2)}</em>`);
-			_scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "4:9");
+			_scope($scope2_id, {}, "__tests__/template.marko", "4:9");
 			$wg__input_value || _resume_branch($scope2_id);
 		});
 		_html("</div>");
-		_scope($scope1_id, { "#LoopKey": _write_if($scope0_reason, 0) && item?.id }, "__tests__/template.marko", "3:2", { "#LoopKey": ["item.id", "3:6"] });
+		_scope($scope1_id, {}, "__tests__/template.marko", "3:2");
 	}, "id", $scope0_id, "#text/1", 1, 1, 0, 0, 1);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {

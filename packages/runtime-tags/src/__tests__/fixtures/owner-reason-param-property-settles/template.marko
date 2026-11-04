@@ -1,0 +1,7 @@
+<let/obj={ list: ["a", "b"], show: true, name: "first" }/>
+<let/count=1/>
+<button onClick() {
+  obj = { list: ["a"], show: true, name: "second" };
+  count++;
+}>update</button>
+<child obj=obj count=count/>

@@ -8,7 +8,7 @@ var lazy_default = _template("c", (input) => {
 });
 
 // components/tags-child.marko
-const $Lazy_withLoadAssets = withLoadAssets(lazy_default, flush, "_c");
+const $Lazy_withLoadAssets = withLoadAssets(() => lazy_default, "c", flush, "_c");
 var tags_child_default = _template("b", (input) => {
 	_scope_reason();
 	_scope_id();

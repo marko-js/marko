@@ -14,7 +14,7 @@ const $try_content4__setup = ($scope) => {
 };
 const $await_content3__value = ($scope, value) => _attr_class($scope["#div/0"], value);
 const $await_content3__try = /*@__PURE__*/ _try("#text/1", "<!><!><!>", "b%", $try_content4__setup, $placeholder_content4);
-const $await_content3__setup = ($scope) => $await_content3__try($scope);
+const $await_content3__setup = $await_content3__try;
 const $await_content3__$params = ($scope, $params4) => $await_content3__value($scope, $params4[0]);
 const $await_content3 = /*@__PURE__*/ _await_content("#text/0", "<div level=3><!></div>", " D%", $await_content3__setup);
 const $try_content3__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content3__$params);
@@ -42,7 +42,7 @@ const $try_content2__setup = ($scope) => {
 };
 const $await_content__value = ($scope, value) => _attr_class($scope["#div/0"], value);
 const $await_content__try = /*@__PURE__*/ _try("#text/1", "<!><!><!>", "b%", $try_content2__setup, $placeholder_content2);
-const $await_content__setup = ($scope) => $await_content__try($scope);
+const $await_content__setup = $await_content__try;
 const $await_content__$params = ($scope, $params2) => $await_content__value($scope, $params2[0]);
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<div level=1><!></div>", " D%", $await_content__setup);
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);

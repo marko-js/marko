@@ -10,7 +10,7 @@ var counter_default = _template("b", (input) => {
 });
 
 // tags/lazy-wrap.marko
-const $Counter_withLoadAssets = withLoadAssets(counter_default, flush, "_b");
+const $Counter_withLoadAssets = withLoadAssets(() => counter_default, "b", flush, "_b");
 var lazy_wrap_default = _template("c", (input) => {
 	_scope_reason();
 	_scope_id();

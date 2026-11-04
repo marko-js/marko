@@ -13,7 +13,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $show = !compact;
 		_show_start($show, 0);
 		_html(`<li>${_escape(label)}</li>`);
-		_show_end($scope1_id, "#text/2", $show, 1, 0, 0, 1);
+		_show_end($scope1_id, "#text/1", $show, 1, 0, 0, 1);
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "6:4");
 	}, 0, $scope0_id, "#ul/1", 1, 0);
 	_html("</ul>");

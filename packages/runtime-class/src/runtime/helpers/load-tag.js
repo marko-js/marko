@@ -68,29 +68,32 @@ exports.withPageAssets = function withPageAssets(
 };
 
 // Its importer passes the bundler's resolver, so it resolves on a page of either
-// API, whichever page entry rendered.
+// API, whichever page entry rendered. Only its tag renders it, reading the template
+// as it renders: an import cycle may not have evaluated that module yet.
 exports.withLoadAssets = function withLoadAssets(
   typeId,
-  template,
+  getTemplate,
   assetFlush,
   triggers,
 ) {
-  return createFacade(template, function (input, out) {
-    var key = out.___assignedKey;
-    var def = out.___assignedComponentDef;
+  return {
+    _: function (input, out) {
+      var key = out.___assignedKey;
+      var def = out.___assignedComponentDef;
 
-    if (willRerender(def)) {
-      out.bf(key + "s", def.___component, true);
-      writeLoadAsset(out, typeId, assetFlush, triggers);
-      out.ef();
-      out.bf(key, def.___component, true);
-      template._(input, out);
-      out.ef();
-    } else {
-      writeLoadAsset(out, typeId, assetFlush, triggers);
-      template._(input, out);
-    }
-  });
+      if (willRerender(def)) {
+        out.bf(key + "s", def.___component, true);
+        writeLoadAsset(out, typeId, assetFlush, triggers);
+        out.ef();
+        out.bf(key, def.___component, true);
+        getTemplate()._(input, out);
+        out.ef();
+      } else {
+        writeLoadAsset(out, typeId, assetFlush, triggers);
+        getTemplate()._(input, out);
+      }
+    },
+  };
 };
 
 // Within Tags content the Tags writer places it apart from what a `@catch` drops,
