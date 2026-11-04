@@ -1,0 +1,9 @@
+<const/mk=() => input.title/>
+<const/bag={ get: mk }/>
+<let/open=false/>
+<main>
+  <if=open>
+    <p>${bag.get()}</p>
+  </if>
+  <button onClick() { open = !open }>+</button>
+</main>

@@ -1,0 +1,6 @@
+<static-child>
+  <if=input.show><em>${input.label}</em></if>
+  <for|item| of=input.items><li>${item}</li></for>
+  <div class=input.cls/>
+</static-child>
+<p>${input.label}</p>

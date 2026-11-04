@@ -1,0 +1,10 @@
+<box/bonus/>
+<const/p=$global.data/>
+<button class="bonus" onClick() { bonus = 5 }>bonus</button>
+<for|item| of=input.items>
+  <panel>
+    <@aside>
+      <counter base=(bonus ?? p.base) + item.n/>
+    </@aside>
+  </panel>
+</for>

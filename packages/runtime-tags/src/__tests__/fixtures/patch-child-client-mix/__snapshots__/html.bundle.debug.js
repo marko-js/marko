@@ -1,0 +1,48 @@
+// tags/label/index.marko
+const $template$1 = "<em> </em>";
+const $walks$1 = "D l";
+const $setup$1 = [[], []];
+_shells({ "__tests__/tags/label/index.marko": "__tests__/tags/label/index.marko;D ;<em> </em>" });
+var label_default = _template("__tests__/tags/label/index.marko", (input) => {
+	const $scope0_reason = _scope_reason();
+	const $scope0_id = _scope_id();
+	_html(`<em>${_text_mark($scope0_id, "#text/0", input.text, 1, $scope0_reason, 0)}</em>`);
+	_scope($scope0_id, {}, "__tests__/tags/label/index.marko", 0);
+});
+
+// template.marko
+const $template = "<main><!><button>+</button><button class=t>t</button></main>";
+const $walks = "D%b b l";
+const $setup = [[], ["__tests__/template.marko_0"]];
+_shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;D%b b ;<main><!><button>+</button><button class=t>t</button></main>" });
+var template_default = _template("__tests__/template.marko", (input) => {
+	const $scope0_reason = _scope_reason(), $fg__input_suffix = _filled_guard($scope0_reason, 0);
+	const $scope0_id = _scope_id();
+	let count = 0;
+	let show = true;
+	_html("<main>");
+	_if(() => {
+		if (show) {
+			const $scope1_id = _scope_id();
+			_set_scope_reason(6);
+			const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
+			label_default({ text: count + input.suffix });
+			_patch_child_end();
+			_patch_render($scope1_id, "__tests__/template.marko_1_input_suffix#0:5_count#0:6/setup", _filled_guard($scope0_reason, 0) && ">input_suffix");
+			_scope($scope1_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "4:4");
+			return 0;
+		}
+	}, $scope0_id, "#text/0", 1, 1, 0, 0, 1);
+	_html(`<button>+</button>${_el_mark($scope0_id, "#button/1")}<button class=t>t</button>${_el_mark($scope0_id, "#button/2")}</main>`);
+	_script($scope0_id, "__tests__/template.marko_0");
+	$fg__input_suffix && _patch_render($scope0_id, "__tests__/template.marko_1_input_suffix#0:5/setup", "input_suffix");
+	_scope($scope0_id, {
+		input_suffix: input.suffix,
+		count,
+		show
+	}, "__tests__/template.marko", 0, {
+		input_suffix: ["input.suffix"],
+		count: "1:6",
+		show: "2:6"
+	}) || $fg__input_suffix && _patch_write($scope0_id, "PatchMarkedWrite:input_suffix", input.suffix, !_server_guard($scope0_reason, 0));
+}, 1);
