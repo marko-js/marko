@@ -1,0 +1,7 @@
+<for|item| of=input.items by="k">
+  <div><show=(item.on ? input.id : "")>shown</show></div>
+</for>
+<try>
+  <p>${input.id}</p>
+  <@placeholder>loading ${input.id}</@placeholder>
+</try>

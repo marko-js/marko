@@ -1,0 +1,201 @@
+# Render `{"show":false}`
+```html
+<section>
+  <label
+    for="sM_.#childScope/0@2.#text/0@0.#childScope/0@1.uid"
+  >
+    direct
+  </label>
+  <input
+    id="sM_.#childScope/0@2.#text/0@0.#childScope/0@1.uid"
+  />
+</section>
+<section>
+  <em>
+    none
+  </em>
+</section>
+<section>
+  <label
+    for="sM_.#childScope/2@5.#childScope/0@1.#text/0@0.#text/0@0.#childScope/0@4.uid"
+  >
+    body
+  </label>
+  <input
+    id="sM_.#childScope/2@5.#childScope/0@1.#text/0@0.#text/0@0.#childScope/0@4.uid"
+  />
+</section>
+<section>
+  <em>
+    none
+  </em>
+</section>
+<section>
+  <label
+    for="sM_.#childScope/4@8.#childScope/0@0.#text/0@0.#childScope/0@7.uid"
+  >
+    attr
+  </label>
+  <input
+    id="sM_.#childScope/4@8.#childScope/0@0.#text/0@0.#childScope/0@7.uid"
+  />
+</section>
+<section>
+  <label
+    for="sM_.#childScope/5@9.#text/0@0.#childScope/0@0.uid"
+  >
+    defined
+  </label>
+  <input
+    id="sM_.#childScope/5@9.#text/0@0.#childScope/0@0.uid"
+  />
+</section>
+<label
+  for="sM_.#childScope/6@11.#childScope/0@2.#text/0@0.#text/0@1.#childScope/0@10.uid"
+>
+  define
+</label>
+<input
+  id="sM_.#childScope/6@11.#childScope/0@2.#text/0@0.#text/0@1.#childScope/0@10.uid"
+/>
+<em>
+  none
+</em>
+<label
+  for="sM_.#childScope/8@14.#childScope/0@1.#text/0@0.#childScope/0@13.uid"
+>
+  inner
+</label>
+<input
+  id="sM_.#childScope/8@14.#childScope/0@1.#text/0@0.#childScope/0@13.uid"
+/>
+<em>
+  none
+</em>
+<label
+  for="sM_.#childScope/10@16.#text/0@0.uid"
+>
+  named
+</label>
+<input
+  id="sM_.#childScope/10@16.#text/0@0.uid"
+/>
+```
+
+# Update
+```js
+const ids = new Set();
+for (const input of document.querySelectorAll("input")) {
+  assert(!ids.has(input.id), "duplicate " + input.id);
+  ids.add(input.id);
+  assert.equal(input.labels?.length, 1, "labels of " + input.id);
+}
+```
+
+# Update `{"show":true}`
+```html
+<section>
+  <label
+    for="sM_.#childScope/0@2.#text/0@0.#childScope/0@1.uid"
+  >
+    direct
+  </label>
+  <input
+    id="sM_.#childScope/0@2.#text/0@0.#childScope/0@1.uid"
+  />
+</section>
+<section>
+  <em>
+    none
+  </em>
+</section>
+<section>
+  <label
+    for="sM_.#childScope/2@5.#childScope/0@1.#text/0@0.#text/0@0.#childScope/0@4.uid"
+  >
+    body
+  </label>
+  <input
+    id="sM_.#childScope/2@5.#childScope/0@1.#text/0@0.#text/0@0.#childScope/0@4.uid"
+  />
+</section>
+<section>
+  <em>
+    none
+  </em>
+</section>
+<section>
+  <label
+    for="sM_.#childScope/4@8.#childScope/0@0.#text/0@0.#childScope/0@7.uid"
+  >
+    attr
+  </label>
+  <input
+    id="sM_.#childScope/4@8.#childScope/0@0.#text/0@0.#childScope/0@7.uid"
+  />
+</section>
+<section>
+  <label
+    for="sM_.#childScope/5@9.#text/0@0.#childScope/0@0.uid"
+  >
+    defined
+  </label>
+  <input
+    id="sM_.#childScope/5@9.#text/0@0.#childScope/0@0.uid"
+  />
+</section>
+<label
+  for="sM_.#childScope/6@11.#childScope/0@2.#text/0@0.#text/0@1.#childScope/0@10.uid"
+>
+  define
+</label>
+<input
+  id="sM_.#childScope/6@11.#childScope/0@2.#text/0@0.#text/0@1.#childScope/0@10.uid"
+/>
+<em>
+  none
+</em>
+<label
+  for="sM_.#childScope/8@14.#childScope/0@1.#text/0@0.#childScope/0@13.uid"
+>
+  inner
+</label>
+<input
+  id="sM_.#childScope/8@14.#childScope/0@1.#text/0@0.#childScope/0@13.uid"
+/>
+<em>
+  none
+</em>
+<label
+  for="sM_.#childScope/10@16.#text/0@0.uid"
+>
+  named
+</label>
+<input
+  id="sM_.#childScope/10@16.#text/0@0.uid"
+/>
+<section>
+  <label
+    for="sM_.#childScope/0@18.#childScope/0@1.#text/0@0.#text/0@0.#childScope/0@17.uid"
+  >
+    created
+  </label>
+  <input
+    id="sM_.#childScope/0@18.#childScope/0@1.#text/0@0.#text/0@0.#childScope/0@17.uid"
+  />
+</section>
+```
+## Change
+```
+INSERT: #sM_.#childScope/10@16.#text/0@0.uid + section
+```
+
+# Update
+```js
+const ids = new Set();
+for (const input of document.querySelectorAll("input")) {
+  assert(!ids.has(input.id), "duplicate " + input.id);
+  ids.add(input.id);
+  assert.equal(input.labels?.length, 1, "labels of " + input.id);
+}
+```
