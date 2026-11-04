@@ -1,0 +1,64 @@
+// tags/kid.marko
+const $template$1 = "<div> </div><!><button>t</button>";
+const $walks$1 = "D l%b b";
+const $setup$1 = [[], ["__tests__/tags/kid.marko_0"]];
+_shells({ "__tests__/tags/kid.marko": "__tests__/tags/kid.marko !__tests__/tags/kid.marko_0;D l%b ;<div> </div><!><button>t</button>" });
+var kid_default = _template("__tests__/tags/kid.marko", (input) => {
+	const $scope0_reason = _scope_reason(), $wg__input_b = _write_guard($scope0_reason, 1), $fg__input_b = _filled_guard($scope0_reason, 1);
+	const $scope0_id = _scope_id();
+	let on = false;
+	_html(`<div>${_text_mark($scope0_id, "#text/0", input.a, 1, $scope0_reason, 0)}</div>`);
+	_if(() => {
+		if (on) {
+			const $scope1_id = _scope_id();
+			_html(`<p>${_text_mark($scope1_id, "#text/0", input.b, $wg__input_b)}</p>`);
+			_client_guard($scope0_reason, 1) && _patch_render($scope1_id, "__tests__/tags/kid.marko_1_input_b#0:6/setup");
+			_scope($scope1_id, {}, "__tests__/tags/kid.marko", "3:2");
+			return 0;
+		}
+	}, $scope0_id, "#text/1", 1, 1, 0, 0, 1);
+	_html(`<button>t</button>${_el_mark($scope0_id, "#button/2")}`);
+	_script($scope0_id, "__tests__/tags/kid.marko_0");
+	$fg__input_b && _patch_render($scope0_id, "__tests__/tags/kid.marko_1_input_b#0:6/setup", "input_b");
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/kid.marko_0_on#7/fill", on, 1);
+	_scope($scope0_id, {
+		input_b: input.b,
+		on
+	}, "__tests__/tags/kid.marko", 0, {
+		input_b: ["input.b"],
+		on: "1:6"
+	}) || $fg__input_b && _patch_write($scope0_id, "PatchMarkedWrite:input_b", input.b, !_server_guard($scope0_reason, 1));
+});
+
+// template.marko
+const $template = "<!><!><!>";
+const $walks = "b%c";
+const $setup = [[], []];
+_shells({
+	"__tests__/template.marko": "__tests__/template.marko;b%;<!><!><!>",
+	"__tests__/template.marko_1*shell": `__tests__/template.marko_1*shell${_shell_marker([[], []], ["#childScope/0>", $setup$1])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1)};${$template$1}`
+});
+var template_default = _template("__tests__/template.marko", (input) => {
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0), $fg__input_a = _filled_guard($scope0_reason, 1);
+	const $scope0_id = _scope_id();
+	_if(() => {
+		if (input.show) {
+			const $scope1_id = _scope_id();
+			_set_scope_reason(_updates_from($scope0_reason, 1) << 1);
+			const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
+			kid_default({
+				a: input.a,
+				b: "const"
+			});
+			_patch_child_end();
+			_client_guard($scope0_reason, 1) && _patch_render($scope1_id, "__tests__/template.marko_1_input_a#0:4/setup");
+			_scope($scope1_id, {
+				_: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id),
+				"#childScope/0": _existing_scope($childScope)
+			}, "__tests__/template.marko", "1:2");
+			return 0;
+		}
+	}, $scope0_id, "#text/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 0);
+	$fg__input_a && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "__tests__/template.marko_1_input_a#0:4/setup", "input_a");
+	_scope($scope0_id, { input_a: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.a }, "__tests__/template.marko", 0, { input_a: ["input.a"] }) || $fg__input_a && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_a", input.a, !_server_guard($scope0_reason, 1));
+}, 1);

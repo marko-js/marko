@@ -45,16 +45,28 @@ import {
 } from "../../util/get-accessor-enums";
 import { getTagName } from "../../util/get-tag-name";
 import { isEventOrChangeHandler } from "../../util/is-event-or-change-handler";
+import { nextIdSite } from "../../util/known-tag";
 import {
   getMarkoOpts,
   isOptimize,
   isOutputHTML,
+  isPatch,
 } from "../../util/marko-config";
 import {
   getStyleImportRead,
   toModuleReadExpression,
 } from "../../util/module-read";
 import { type Opt, push } from "../../util/optional";
+import {
+  linkHolePatcher,
+  fillsHole,
+  fillsHandler,
+} from "../../util/patch/decisions";
+import {
+  buildPatchTextContent,
+  getExprRootGroupArgs,
+  getPatchHoleGroupArgs,
+} from "../../util/patch/writers";
 import { addAlwaysReason, addReasonExprs } from "../../util/reasons";
 import {
   dropNodes,
@@ -62,6 +74,7 @@ import {
   mergeReferences,
   trackDomVarReferences,
   isTagVarUsed,
+  getCanonicalExpr,
 } from "../../util/references";
 import { replaceWithStatements } from "../../util/replace-with-statements";
 import {
@@ -116,6 +129,7 @@ const htmlSelectArgs = new WeakMap<
   {
     helper: "_attr_select_value" | "_attrs_select_value";
     args: t.Expression[];
+    patchArgs: t.Expression[];
   }
 >();
 
@@ -272,10 +286,14 @@ export default {
             hasEventHandlers = true;
             addSetupExpr(tagSection, attr.value);
           } else {
-            if (isChangeHandlerAttr) valueExtra.retained = true;
+            if (isChangeHandlerAttr) {
+              valueExtra.retained = true;
+              valueExtra.changeHandler = true;
+            }
             if (isDynamicAttr(attr.value, delimitedAttrMeta)) {
               hasDynamicAttributes = true;
               addSetupExpr(tagSection, attr.value);
+              valueExtra.rendersValue = true;
             } else if (attr.name === "content" && tagName !== "meta") {
               // Content is rendered by the client whatever its value.
               addSetupExpr(tagSection, attr.value);
@@ -413,14 +431,36 @@ export default {
           getProgram().node.extra.isInteractive = true;
         }
 
+        if (content !== undefined) {
+          const contentExtra = (attributes[content].value.extra ??= {});
+          contentExtra.rendersContent = true;
+          linkHolePatcher(tagSection, contentExtra, "patches/dynamic-tag");
+        }
+
         if (spread) {
           const spreadExtra = mergeReferences(
             tagSection,
             tag.node,
             spread.map((index) => attributes[index].value),
           );
+          linkHolePatcher(
+            tagSection,
+            spreadExtra,
+            "patches/attrs",
+            spreadRendersContent(
+              tag,
+              attrAt(attributes, content),
+              isTextOnly,
+            ) && "patches/dynamic-tag",
+            // A spread owning the element's controllable (no static one
+            // survives the merge) re-claims it at run time.
+            !controllable &&
+              controllableElements.has(tagName) &&
+              "controllable",
+          );
 
           spreadExtra.rendersContent = true;
+          spreadExtra.rendersValue = true;
           // Functions in native tag attrs are only ever invoked (handlers)
           // or stringified from static source, so reads inside can be lazy.
           for (const index of spread) {
@@ -433,7 +473,20 @@ export default {
           const values = controllable.attrs.map((index) =>
             index === undefined ? undefined : attributes[index].value,
           );
-          exprExtras = mergeReferenceGroup(tagSection, values);
+          const controlExtra = mergeReferenceGroup(tagSection, values);
+          exprExtras = controlExtra;
+          if (values.some(rendersValue)) {
+            controlExtra.rendersValue = true;
+          }
+          // A patched control's entries apply through its type's feature, which
+          // loads `patches/control`.
+          linkHolePatcher(
+            tagSection,
+            controlExtra,
+            patchControlFeatures[
+              getControllableHelper(tagName, controllable.state)
+            ],
+          );
         }
 
         if (own) {
@@ -451,13 +504,14 @@ export default {
         }
 
         if (textPlaceholders) {
-          exprExtras = push(
-            exprExtras,
+          const textExtra =
             textPlaceholders.length === 1
               ? (textPlaceholders[0].extra ??= {})
-              : mergeReferenceGroup(tagSection, textPlaceholders),
-          );
+              : mergeReferenceGroup(tagSection, textPlaceholders);
+          exprExtras = push(exprExtras, textExtra);
           addSetupExpr(tagSection, textPlaceholders[0]);
+          textExtra.rendersValue = true;
+          linkHolePatcher(tagSection, textExtra, "patches/text-content");
         }
 
         if (injectsNonce && !spread) {
@@ -494,6 +548,9 @@ export default {
             write`${getStaticAttrMarkup(name, computed)}`;
           } else if (name === "class" || name === "style") {
             const meta = delimitedAttrMetas[name]!;
+            if (isDynamicAttr(value, meta)) {
+              linkHolePatcher(tagSection, value.extra!, "patches/attr");
+            }
             const { staticParts } = meta;
             if (staticParts.length && getDelimitedAttrItems(name, meta)) {
               if (staticParts.every(isLiteralPart)) {
@@ -512,6 +569,8 @@ export default {
                 write`"`;
               }
             }
+          } else {
+            linkHolePatcher(tagSection, value.extra!, "patches/attr");
           }
         }
       }
@@ -634,16 +693,42 @@ export default {
           write`${callRuntime("_attr_nonce")}`;
         }
 
+        // A patched control's helper writes the bind and control entries from
+        // the values it renders.
+        let patchArgs: t.Expression[] = [];
+        const controlHelper =
+          controllable && getControllableHelper(tagName, controllable.state);
         if (controllable) {
+          const changeAttr = attrAt(attributes, controllable.attrs[1]);
+          const fillsChangeHandler =
+            !!changeAttr && fillsHandler(tagSection, changeAttr.value);
+          // The control's attributes read as one group.
+          const controlExtra = attrAt(
+            attributes,
+            controllable.attrs.find(isDefined),
+          )!.value.extra!;
+          const fillsControl = fillsHole(tagSection, controlExtra);
+          if (fillsControl || fillsChangeHandler) {
+            // Bits: 1 the control's entry, 2 its handler's bind; both take
+            // that group.
+            patchArgs = [
+              t.numericLiteral(
+                (fillsControl ? 1 : 0) | (fillsChangeHandler ? 2 : 0),
+              ),
+              ...getExprRootGroupArgs(tagSection, controlExtra),
+            ];
+          }
+
           if (tagName !== "select" && tagName !== "textarea") {
             write`${callRuntime(
-              getControllableHelper(tagName, controllable.state),
+              controlHelper!,
               getScopeIdIdentifier(tagSection),
               nodeAccessor,
               ...controllable.attrs.map(
                 (index, i) =>
                   attrAt(attributes, index)?.value || (i === 1 && absentArg(0)),
               ),
+              ...patchArgs,
             )}`;
           }
 
@@ -679,6 +764,7 @@ export default {
                 attrAt(attributes, controllable.attrs[1])?.value ||
                   absentArg(0),
               ],
+              patchArgs,
             });
           } else if (spreadExpression) {
             const spreadIdentifier = declareConstBefore(
@@ -689,6 +775,7 @@ export default {
             htmlSelectArgs.set(tag.node, {
               helper: "_attrs_select_value",
               args: [spreadIdentifier],
+              patchArgs: [],
             });
             spreadExpression = spreadIdentifier;
           }
@@ -696,15 +783,17 @@ export default {
           if (controllable) {
             const value = attrAt(attributes, controllable.attrs[0]);
             const valueChange = attrAt(attributes, controllable.attrs[1]);
-            writeAtStartOfBody = valueChange
-              ? callRuntime(
-                  "_attr_textarea_value",
-                  getScopeIdIdentifier(tagSection),
-                  nodeAccessor,
-                  value?.value,
-                  valueChange.value,
-                )
-              : callRuntime("_textarea_value", value!.value);
+            writeAtStartOfBody =
+              valueChange || patchArgs.length
+                ? callRuntime(
+                    controlHelper!,
+                    getScopeIdIdentifier(tagSection),
+                    nodeAccessor,
+                    value?.value,
+                    valueChange?.value || (isPatch() && absentArg(0)),
+                    ...patchArgs,
+                  )
+                : callRuntime("_textarea_value", value!.value);
           } else if (spreadExpression) {
             const spreadIdentifier = declareConstBefore(
               tag,
@@ -725,6 +814,31 @@ export default {
           for (const index of own) {
             const { name, value } = attributes[index] as t.MarkoAttribute;
             const { confident, computed } = evaluate(value);
+
+            if (
+              value.extra!.rendersValue &&
+              fillsHole(tagSection, value.extra)
+            ) {
+              // The attribute's helper also writes its patch entry (the
+              // expression appears once): the element and group args trail.
+              const helper = getPatchAttrHelper(tagName, name);
+              const scopeId = getScopeIdIdentifier(tagSection);
+              const accessor = getScopeAccessorLiteral(nodeBinding!);
+              const groupArgs = getExprRootGroupArgs(tagSection, value.extra!);
+              write`${
+                helper === "_attr"
+                  ? callRuntime(
+                      "_attr",
+                      t.stringLiteral(name),
+                      value,
+                      scopeId,
+                      accessor,
+                      ...groupArgs,
+                    )
+                  : callRuntime(helper, value, scopeId, accessor, ...groupArgs)
+              }`;
+              continue;
+            }
 
             if (tagName === "option" && name === "value") {
               write`${callRuntime("_attr_option_value", value)}`;
@@ -755,6 +869,13 @@ export default {
           addHTMLEffectCall(tagSection, tagExtra);
 
           if (!spreadContent) {
+            // A patch write renders the set itself; its group args trail.
+            const patchArgs = fillsHole(tagSection, tagExtra)
+              ? [
+                  getPatchSpreadFlag(tagName, !!controllable, injectsNonce),
+                  ...getPatchHoleGroupArgs(tagSection, tagExtra),
+                ]
+              : [];
             if (skipExpression) {
               write`${callRuntime(
                 "_attrs_partial",
@@ -763,6 +884,7 @@ export default {
                 nodeAccessor,
                 getScopeIdIdentifier(tagSection),
                 t.stringLiteral(tagName),
+                ...patchArgs,
               )}`;
             } else {
               write`${callRuntime(
@@ -771,6 +893,7 @@ export default {
                 nodeAccessor,
                 getScopeIdIdentifier(tagSection),
                 t.stringLiteral(tagName),
+                ...patchArgs,
               )}`;
             }
           }
@@ -781,27 +904,67 @@ export default {
         } else if (contentAttr) {
           write`>`;
           htmlContentAttrTags.add(tag.node);
+          const content = contentAttr.value;
+          // A `content=` a patch writes renders from a dynamic tag entry, like
+          // a dynamic tag (the client signal shape is the same).
+          const patches = fillsHole(tagSection, content.extra);
+          const scopeId = getScopeIdIdentifier(tagSection);
+          const markerGuard =
+            getWriteGuard(
+              tagSection,
+              nodeBinding && getWriteReason(nodeBinding),
+              true,
+            ) || absentArg(1);
           (tag.node.body.body as t.Statement[]) = [
             t.expressionStatement(
-              callRuntime(
-                "_attr_content",
-                nodeAccessor,
-                getScopeIdIdentifier(tagSection),
-                contentAttr.value,
-                getWriteGuard(
-                  tagSection,
-                  nodeBinding && getWriteReason(nodeBinding),
-                  true,
-                ),
-              ),
+              isPatch()
+                ? patches
+                  ? callRuntime(
+                      "_attr_content",
+                      nodeAccessor,
+                      scopeId,
+                      content,
+                      t.numericLiteral(nextIdSite()),
+                      markerGuard,
+                      ...getPatchHoleGroupArgs(tagSection, content.extra!),
+                    )
+                  : callRuntime(
+                      "_attr_content",
+                      nodeAccessor,
+                      scopeId,
+                      content,
+                      t.numericLiteral(nextIdSite()),
+                      markerGuard,
+                    )
+                : callRuntime(
+                    "_attr_content",
+                    nodeAccessor,
+                    scopeId,
+                    content,
+                    markerGuard,
+                  ),
             ),
           ];
         } else if (spreadContent) {
-          const markerGuard = getWriteGuard(
-            tagSection,
-            nodeBinding && getWriteReason(nodeBinding),
-            true,
-          );
+          const markerGuard =
+            getWriteGuard(
+              tagSection,
+              nodeBinding && getWriteReason(nodeBinding),
+              true,
+            ) || absentArg(1);
+          const patches = fillsHole(tagSection, tagExtra);
+          const contentArgs = isPatch()
+            ? patches
+              ? [
+                  t.numericLiteral(nextIdSite()),
+                  markerGuard,
+                  !controllable && controllableElements.has(tagName)
+                    ? t.numericLiteral(1)
+                    : absentArg(0),
+                  ...getPatchHoleGroupArgs(tagSection, tagExtra),
+                ]
+              : [t.numericLiteral(nextIdSite()), markerGuard]
+            : [markerGuard];
           htmlContentAttrTags.add(tag.node);
           (tag.node.body.body as t.Statement[]) = [
             skipExpression
@@ -813,7 +976,7 @@ export default {
                     nodeAccessor,
                     getScopeIdIdentifier(tagSection),
                     t.stringLiteral(tagName),
-                    markerGuard,
+                    ...contentArgs,
                   ),
                 )
               : t.expressionStatement(
@@ -823,7 +986,7 @@ export default {
                     nodeAccessor,
                     getScopeIdIdentifier(tagSection),
                     t.stringLiteral(tagName),
-                    markerGuard,
+                    ...contentArgs,
                   ),
                 ),
           ];
@@ -875,12 +1038,22 @@ export default {
                   [],
                   t.blockStatement(tag.node.body.body),
                 ),
+                ...selectArgs.patchArgs,
               ),
             ),
           ];
         } else if (isTextOnly) {
           const rawTextHelper = getRawTextEscapeHelper(tagName);
-          if (rawTextHelper) {
+          const textExtra = getTextContentExtra(tag.node);
+          if (textExtra && fillsHole(tagSection, textExtra)) {
+            write`${buildPatchTextContent(
+              tagSection,
+              nodeBinding!,
+              bodyToText(tag.node.body, tagName === "title"),
+              rawTextHelper || "_escape",
+              textExtra,
+            )}`;
+          } else if (rawTextHelper) {
             // Raw text escapers neutralize multi-character tokens, so the whole
             // body escapes as one string: a `</script` split across adjacent
             // interpolations slips past per-placeholder calls.
@@ -1197,6 +1370,15 @@ export default {
   }),
 } satisfies TemplateVisitor<t.MarkoTag>;
 
+// A text-only body's placeholders, merged into one expression.
+function getTextContentExtra(node: t.MarkoTag) {
+  for (const child of node.body.body) {
+    if (child.type === "MarkoPlaceholder") {
+      return getCanonicalExpr(child.value.extra!);
+    }
+  }
+}
+
 function getRelatedControllable(
   tagName: string,
   attributes: t.MarkoTag["attributes"],
@@ -1346,6 +1528,20 @@ function spreadRendersContent(
   );
 }
 
+// A patched spread's flag: `1` when it claims the element's controllable, `2`
+// when it carries the page's nonce (`injectsNonce`), which the live element keeps.
+function getPatchSpreadFlag(
+  tagName: string,
+  controllable: boolean,
+  injectsNonce: boolean,
+) {
+  return !controllable && controllableElements.has(tagName)
+    ? t.numericLiteral(1)
+    : injectsNonce
+      ? t.numericLiteral(2)
+      : absentArg(0);
+}
+
 // The spread object both outputs write: the spreads and the attributes among
 // them, with the nonce the page requires when nothing sets it.
 function buildSpreadExpression(
@@ -1358,12 +1554,14 @@ function buildSpreadExpression(
     props.push(
       t.objectProperty(
         t.identifier("nonce"),
-        t.memberExpression(
-          isOutputHTML()
-            ? callRuntime("$global")
-            : toMemberExpression(scopeIdentifier, getAccessorProp().Global),
-          t.identifier("cspNonce"),
-        ),
+        isOutputHTML() && isPatch()
+          ? callRuntime("_patch_nonce")
+          : t.memberExpression(
+              isOutputHTML()
+                ? callRuntime("$global")
+                : toMemberExpression(scopeIdentifier, getAccessorProp().Global),
+              t.identifier("cspNonce"),
+            ),
       ),
     );
   }
@@ -1436,6 +1634,17 @@ function getControllableHelper(tagName: string, state: Controllable["state"]) {
           : ("_attr_input_value" as const);
   }
 }
+
+// By a control's server helper: the feature applying its entries.
+const patchControlFeatures = {
+  _attr_input_checked: "patches/control-input",
+  _attr_input_checkedValue: "patches/control-checked-value",
+  _attr_details_open: "patches/control-open",
+  _attr_dialog_open: "patches/control-open",
+  _attr_select_value: "patches/control-select",
+  _attr_textarea_value: "patches/control-input",
+  _attr_input_value: "patches/control-input",
+} as const;
 
 function assertValidNativeAttrName(
   tag: t.NodePath<t.MarkoTag>,
@@ -2013,6 +2222,17 @@ function getClassNames(part: DelimitedAttrPart | undefined) {
       : [part.join(".")];
 }
 
+// The patched attribute's helper; class, style and an `<option>`'s value (which
+// marks it selected) each have their own.
+function getPatchAttrHelper(tagName: string, name: string) {
+  if (tagName === "option" && name === "value") {
+    return "_attr_option_value";
+  }
+  return name === "class" || name === "style"
+    ? (`_attr_${name}` as const)
+    : "_attr";
+}
+
 // A class or style value the template holds whole never needs the element.
 function isDynamicAttr(
   value: t.Expression,
@@ -2195,4 +2415,8 @@ function addToggle(
   alternate: DelimitedAttrPart | undefined,
 ) {
   (meta.toggles ||= []).push({ key, value, alternate });
+}
+
+function rendersValue(value: t.Node | undefined) {
+  return value?.extra?.rendersValue;
 }

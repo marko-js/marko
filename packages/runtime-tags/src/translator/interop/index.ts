@@ -58,10 +58,15 @@ export function createInteropTranslator(translate5: any) {
         ["marko-interop", { migrate: migrateOutGlobal }],
       ]),
     ),
-    getRuntimeEntryFiles(output: Config["output"], optimize: boolean) {
+    getRuntimeEntryFiles(
+      output: Config["output"],
+      optimize: boolean,
+      patches?: boolean,
+    ) {
       return [
-        ...translate5.getRuntimeEntryFiles(output, optimize),
-        ...translate6.getRuntimeEntryFiles(output, optimize),
+        // A patch build compiles no class API template (`isTagsAPI`).
+        ...(patches ? [] : translate5.getRuntimeEntryFiles(output, optimize)),
+        ...translate6.getRuntimeEntryFiles(output, optimize, patches),
       ];
     },
   };

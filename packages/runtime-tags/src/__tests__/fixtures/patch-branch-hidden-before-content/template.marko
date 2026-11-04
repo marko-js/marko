@@ -1,0 +1,12 @@
+<let/count=0/>
+<main>
+  <if=input.error>
+    <p class="error">${input.error}</p>
+  </if>
+  <wrap>
+    <await|value|=input.promise>
+      <em>${value}</em>
+    </await>
+  </wrap>
+  <button onClick() { count++ }>Count ${count}</button>
+</main>
