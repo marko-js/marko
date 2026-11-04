@@ -1,0 +1,6 @@
+<await|x|=input.promise>
+  <const/upper=x.toUpperCase()/>
+  <p title=x>${input.label}:${x}:${upper}:${input.label + x}</p>
+  <if=(x.length > 6)><em>long</em></if>
+  <echo value=x/>
+</await>

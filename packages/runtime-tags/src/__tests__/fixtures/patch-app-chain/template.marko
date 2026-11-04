@@ -1,0 +1,13 @@
+import Layout from "./layout.marko"
+import PageA from "./page-a.marko" with { load: "render" }
+import PageB from "./page-b.marko" with { load: "render" }
+
+<script>$global.log?.("router")</script>
+<Layout>
+  <if=input.page<=0>
+    <PageA/>
+  </>
+  <else>
+    <PageB/>
+  </>
+</>

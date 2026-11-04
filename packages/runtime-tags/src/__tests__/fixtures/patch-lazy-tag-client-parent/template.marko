@@ -1,0 +1,9 @@
+import Wrapper from "./components/wrapper.marko"
+
+<let/mounted=false/>
+<script>mounted = true</script>
+<main>
+  <if=mounted>
+    <Wrapper show=input.show label=input.label/>
+  </if>
+</main>

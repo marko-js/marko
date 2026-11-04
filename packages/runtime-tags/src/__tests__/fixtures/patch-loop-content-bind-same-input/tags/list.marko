@@ -1,0 +1,5 @@
+<let/open=true/>
+<button onClick() { open = !open }>toggle</button>
+<for|item| of=input.item>
+  <if=open><${item.content}/></if>
+</for>

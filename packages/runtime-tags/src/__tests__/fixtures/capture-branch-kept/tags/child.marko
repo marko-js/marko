@@ -1,0 +1,11 @@
+<let/items=[1, 2]>
+<button onClick() { items = [...items, items.length + 1] }>add</button>
+<if=input.on>
+  <const/s=input.show/>
+  <list>
+    <for|item| of=items>
+      <@item><if=s><span>shown</span></if></@item>
+    </for>
+  </list>
+  <probe get() { return "s:" + s }/>
+</if>
