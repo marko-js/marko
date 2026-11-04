@@ -1,0 +1,8 @@
+<let/n=0/>
+<define/Box|{ x }|>
+  <p>${input.a + x}</p>
+</define>
+<Box x=n/>
+<const/Tag=Box/>
+<${Tag} x=input.x/>
+<button onClick() { n++ }>inc</button>

@@ -1,0 +1,6 @@
+<define/Card|{ opts }: { opts: { fn(): string } }|>
+  <let/o=opts/>
+  <p>${o.fn()}</p>
+</define>
+<Card opts={ fn() { return "root:" + input.label } }/>
+<if=input.show><Card opts={ fn() { return "if:" + input.label } }/></if>

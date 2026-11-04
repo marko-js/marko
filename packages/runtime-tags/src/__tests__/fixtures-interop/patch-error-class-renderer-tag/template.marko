@@ -1,0 +1,7 @@
+<let/show = false/>
+<let/count = 0/>
+<button id="toggle" onClick() { show = !show }>toggle</button>
+<if=show>
+  <legacy-greeting/>
+  <button id="inc" onClick() { count++ }>${count}</button>
+</if>

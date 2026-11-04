@@ -1,5 +1,7 @@
 export const DEFAULT_RUNTIME_ID = "M";
 export const DEFAULT_RENDER_ID = "_";
+// A render's first scope id: the page root, where every patch tree is rooted.
+export const ROOT_SCOPE_ID = 1;
 
 // Runtime-owned register ids start with `_`: `encodeTemplateId` never emits
 // it first, so they cannot collide with a template's optimized id.
