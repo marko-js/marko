@@ -1,0 +1,6 @@
+// use tags
+import A from "./a.marko"
+<span>t ${input.depth}</span>
+<if=(input.depth > 0)>
+  <A depth=input.depth - 1/>
+</if>

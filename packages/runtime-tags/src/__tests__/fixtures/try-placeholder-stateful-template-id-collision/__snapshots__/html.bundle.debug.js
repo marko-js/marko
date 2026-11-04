@@ -43,7 +43,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_dynamic_tag($scope3_id, "#text/0", tag, { label: `${body} ${clicks}` });
 			_subscribe($tag__closures, _subscribe($clicks__closures, _scope($scope3_id, {
 				body,
-				_: _scope_with_id($scope2_id),
 				"ClosureSignalIndex:clicks/6": 1
 			}, "__tests__/template.marko", "11:4", { body: "11:10" }), "__tests__/template.marko_3_clicks#0:4/subscribe"), "__tests__/template.marko_3_tag#0:5/subscribe");
 		});

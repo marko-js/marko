@@ -12,7 +12,7 @@ import {
   assertOnlyValueAttr,
 } from "../util/assert";
 import { type Binding, BindingType, createBinding } from "../util/bindings";
-import { buildBranchEndArgs } from "../util/branch-tag";
+import { buildBranchEndArgs, isSingleNodeContent } from "../util/branch-tag";
 import evaluate from "../util/evaluate";
 import { declareConstBefore } from "../util/generate-uid";
 import { getParentTag } from "../util/get-parent-tag";
@@ -20,27 +20,30 @@ import { getTagName } from "../util/get-tag-name";
 import { getOnlyChildParentTagName } from "../util/is-only-child-in-parent";
 import { addReasonExprs } from "../util/reasons";
 import { mergeReferences } from "../util/references";
+import { replaceWithStatements } from "../util/replace-with-statements";
 import { callRuntime } from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
 import { getScopeAccessorLiteral } from "../util/scope-accessor";
 import {
+  ContentType,
   ensureSection,
+  getContentInfo,
   getScopeIdIdentifier,
   getSection,
+  type Section,
 } from "../util/sections";
 import { addSetupWork } from "../util/setup-work";
 import { addValue, getSignal } from "../util/signals";
 import { ensureSlot, SlotKind } from "../util/slots";
 import * as structure from "../util/structure";
 import { getTagFacts } from "../util/tag-facts";
-import analyzeTagNameType, { TagNameType } from "../util/tag-name-type";
 import { translateByTarget } from "../util/visitors";
 import * as writer from "../util/writer";
 
 const kStartBinding = Symbol("<show> range start binding");
 const kEndBinding = Symbol("<show> range end binding");
 const kStaticDisplay = Symbol("<show> static display");
-const kSingleNodeBody = Symbol("<show> single node body");
+const kBodyContent = Symbol("<show> body content");
 const htmlDisplayRefs = new WeakMap<t.MarkoTag, t.Identifier>();
 
 declare module "@marko/compiler/dist/types" {
@@ -48,7 +51,7 @@ declare module "@marko/compiler/dist/types" {
     [kStartBinding]?: Binding;
     [kEndBinding]?: Binding;
     [kStaticDisplay]?: boolean;
-    [kSingleNodeBody]?: boolean;
+    [kBodyContent]?: Section["content"];
   }
 }
 
@@ -70,8 +73,6 @@ export default {
       const display = tag.node.attributes[0].value;
       const displayEval = evaluate(display);
 
-      tagExtra[kSingleNodeBody] = isSingleNodeBody(tag);
-
       if (displayEval.confident) {
         tagExtra[kStaticDisplay] = !!displayEval.computed;
       }
@@ -81,12 +82,15 @@ export default {
       assertLegalHiddenContext(tag);
 
       const tagSection = ensureSection(tag);
+      const content = (tagExtra[kBodyContent] = getContentInfo(
+        tag.get("body"),
+      ));
 
-      // The only-child parent, or the body range's start marker, precedes the
-      // body, so it is recorded here.
+      // The only-child parent, or the start marker of a body other than one
+      // element, precedes the body, so it is recorded here.
       if (getOnlyChildParentTagName(tag)) {
         structure.controlFlowNode(tag, tagSection);
-      } else {
+      } else if (!isSingleNodeContent(content)) {
         tagExtra[kStartBinding] = createBinding(
           "#text",
           BindingType.dom,
@@ -109,10 +113,11 @@ export default {
 
       const tagSection = getSection(tag);
 
-      if (tagExtra[kStartBinding]) {
-        // Control flow in the body owns the nodes at the end of the range, so
-        // a multi-node body gets an end marker that travels with it when hidden.
-        if (!tagExtra[kSingleNodeBody]) {
+      if (!getOnlyChildParentTagName(tag)) {
+        // Unless a static element or the start marker ends the range, its end
+        // is a marker that travels with the body when hidden.
+        const content = tagExtra[kBodyContent];
+        if (content && content.endType !== ContentType.Tag) {
           tagExtra[kEndBinding] = createBinding(
             "#text",
             BindingType.dom,
@@ -171,9 +176,7 @@ export default {
         const bodyStatements = tag.node.body.body as unknown as t.Statement[];
 
         if (staticDisplay !== undefined) {
-          for (const replacement of tag.replaceWithMultiple(bodyStatements)) {
-            replacement.skip();
-          }
+          replaceWithStatements(tag, bodyStatements);
           return;
         }
 
@@ -182,7 +185,7 @@ export default {
           htmlDisplayRefs.get(tag.node) || tag.node.attributes[0].value;
         const nodeBinding = tagExtra.nodeBinding!;
         const onlyChildParentTagName = getOnlyChildParentTagName(tag);
-        const singleNode = tagExtra[kSingleNodeBody];
+        const singleNode = isSingleNodeContent(tagExtra[kBodyContent]);
         const endArgs = buildBranchEndArgs(
           tagSection,
           nodeBinding,
@@ -223,9 +226,7 @@ export default {
             ),
           ),
         ];
-        for (const replacement of tag.replaceWithMultiple(statements)) {
-          replacement.skip();
-        }
+        replaceWithStatements(tag, statements);
       },
     },
     dom: {
@@ -233,7 +234,7 @@ export default {
         const tagExtra = tag.node.extra!;
 
         if (tagExtra[kStaticDisplay] === true) {
-          tag.remove();
+          replaceWithStatements(tag);
           return;
         }
 
@@ -259,7 +260,7 @@ export default {
         };
         addValue(tagSection, tagExtra, signal, display);
 
-        tag.remove();
+        replaceWithStatements(tag);
       },
     },
   }),
@@ -274,28 +275,6 @@ export default {
   ],
   types: runtimeInfo.name + "/tags/show.d.marko",
 } as Tag;
-
-// True when the body renders exactly one static node, so the single-node
-// resume mark applies.
-function isSingleNodeBody(tag: t.NodePath<t.MarkoTag>) {
-  let elements = 0;
-
-  for (const child of tag.get("body").get("body")) {
-    if (child.isMarkoComment()) continue;
-
-    if (
-      child.isMarkoTag() &&
-      analyzeTagNameType(child) === TagNameType.NativeTag &&
-      t.isStringLiteral(child.node.name)
-    ) {
-      elements++;
-    } else {
-      return false;
-    }
-  }
-
-  return elements === 1;
-}
 
 function assertValidShow(tag: t.NodePath<t.MarkoTag>) {
   assertNoVar(tag);

@@ -13,7 +13,7 @@ var counter_default = _template("__tests__/tags/counter.marko", (input) => {
 });
 
 // tags/lazy-wrap.marko
-const $Counter_withLoadAssets = withLoadAssets(counter_default, flush, "ready:__tests__/tags/counter.marko");
+const $Counter_withLoadAssets = withLoadAssets(() => counter_default, "__tests__/tags/counter.marko", flush, "ready:__tests__/tags/counter.marko");
 var lazy_wrap_default = _template("__tests__/tags/lazy-wrap.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();

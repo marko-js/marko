@@ -8,7 +8,7 @@ var child_default = _template("__tests__/child.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_html(`<button>${_text_resume($scope1_id, "#text/1", count)}:${_escape(value)}</button>${_el_resume($scope1_id, "#button/0")}`);
 		_script($scope1_id, "__tests__/child.marko_1");
-		_subscribe($count__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/child.marko", "4:2"), "__tests__/child.marko_1_count#0:4/subscribe");
+		_subscribe($count__closures, _scope($scope1_id, {}, "__tests__/child.marko", "4:2"), "__tests__/child.marko_1_count#0:4/subscribe");
 	});
 	_scope($scope0_id, {
 		count,
@@ -18,7 +18,7 @@ var child_default = _template("__tests__/child.marko", (input) => {
 });
 
 // template.marko
-const $Child_withLoadAssets = withLoadAssets(child_default, flush$1, "ready:__tests__/child.marko");
+const $Child_withLoadAssets = withLoadAssets(() => child_default, "__tests__/child.marko", flush$1, "ready:__tests__/child.marko");
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();

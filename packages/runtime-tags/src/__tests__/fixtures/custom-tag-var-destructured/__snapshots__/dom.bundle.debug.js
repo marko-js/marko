@@ -31,23 +31,20 @@ const $pattern2 = _var_resume("__tests__/template.marko_0_$pattern#6/var", ($sco
 	$inc($scope, $pattern.inc);
 	$missing2($scope, $pattern.missing);
 });
-const $count__OR__$countChange__script = _script("__tests__/template.marko_0_count#7_$countChange#8", ($scope) => _on($scope["#button/3"], "click", function() {
+const $count = /*@__PURE__*/ _const("count", ($scope) => _text($scope["#text/4"], $scope.count));
+const $countChange2__script = _script("__tests__/template.marko_0_$countChange#8", ($scope) => _on($scope["#button/3"], "click", function() {
 	$scope.$countChange($scope.count + 10);
 }));
-const $count__OR__$countChange = /*@__PURE__*/ _or(9, $count__OR__$countChange__script, 1, "#scopeOffset/1");
-const $count = /*@__PURE__*/ _const("count", ($scope) => {
-	_text($scope["#text/4"], $scope.count);
-	$count__OR__$countChange($scope);
-});
-const $countChange2 = /*@__PURE__*/ _const("$countChange", $count__OR__$countChange);
-const $inc__script = _script("__tests__/template.marko_0_inc#10", ($scope) => _on($scope["#button/2"], "click", function() {
-	$scope.inc();
-}));
-const $inc = /*@__PURE__*/ _const("inc", $inc__script);
+const $countChange2 = /*@__PURE__*/ _const("$countChange", $countChange2__script);
+const $inc = /*@__PURE__*/ _const("inc");
 const $missing3 = ($scope, missing) => _text($scope["#text/5"], missing);
 const $missing2 = ($scope, $missing) => $missing3($scope, void 0 !== $missing ? $missing : "fallback");
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
+	$scope.inc();
+}));
 function $setup($scope) {
 	$setup$1($scope["#childScope/0"]);
 	_var($scope, "#childScope/0", $pattern2);
+	$setup__script($scope);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

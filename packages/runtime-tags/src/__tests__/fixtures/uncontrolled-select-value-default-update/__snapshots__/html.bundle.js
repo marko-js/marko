@@ -3,13 +3,13 @@ var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let value = "a";
-	_attr_select_value($scope0_id, "a", "a", void 0, () => {
+	_attr_select_value($scope0_id, "a", "a", 0, () => {
 		_html(`<select><option${_attr_option_value("")}></option><option${_attr_option_value("a")}></option></select>`);
 	});
-	_attr_select_value($scope0_id, "b", "a", void 0, () => {
+	_attr_select_value($scope0_id, "b", "a", 0, () => {
 		_html(`<select><option${_attr_option_value("")}></option><option${_attr_option_value("b")}></option></select>`);
 	});
-	_attr_select_value($scope0_id, "c", value, void 0, () => {
+	_attr_select_value($scope0_id, "c", value, 0, () => {
 		_html(`<select><option${_attr_option_value("")}></option><option${_attr_option_value("b")}></option></select>`);
 	});
 	_html(_el_resume($scope0_id, "c"));

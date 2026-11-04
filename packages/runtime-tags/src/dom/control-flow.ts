@@ -534,15 +534,18 @@ export const _show = /*@__PURE__*/ withBranches(
       if (!range) {
         // Client render: derive the range from the template's static shape.
         range = scope[rangeAccessor] = {} as BranchScope;
-        range[AccessorProp.StartNode] = onlyChild
-          ? parentNode.firstChild!
-          : (scope[startNodeAccessor as Accessor] as ChildNode);
+        // A body edge without a marker is a static element ending the body;
+        // only a one-element body, which it also starts, lacks a start marker.
         range[AccessorProp.EndNode] = onlyChild
           ? parentNode.lastChild!
-          : endNodeAccessor === undefined
-            ? // A single static node body bounds itself.
-              referenceNode.previousSibling!
-            : (scope[endNodeAccessor as Accessor] as ChildNode);
+          : endNodeAccessor
+            ? (scope[endNodeAccessor as Accessor] as ChildNode)
+            : referenceNode.previousSibling!;
+        range[AccessorProp.StartNode] = onlyChild
+          ? parentNode.firstChild!
+          : startNodeAccessor
+            ? (scope[startNodeAccessor as Accessor] as ChildNode)
+            : range[AccessorProp.EndNode];
       }
 
       let startNode = range[AccessorProp.StartNode];

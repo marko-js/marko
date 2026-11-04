@@ -26,6 +26,7 @@ import {
   setDerivedFrom,
   trackVarReferences,
 } from "../util/references";
+import { replaceWithStatements } from "../util/replace-with-statements";
 import runtimeInfo from "../util/runtime-info";
 import { getScopeExpression } from "../util/scope-read";
 import { ensureSection, getSection } from "../util/sections";
@@ -127,7 +128,7 @@ export default {
       const { node } = tag;
       // Nothing reads or assigns it and its value was dropped.
       if (node.extra?.dropped) {
-        tag.remove();
+        replaceWithStatements(tag);
         return;
       }
       const tagVar = node.var!;
@@ -155,7 +156,7 @@ export default {
               addValue(section, tagExtra, initValue(binding)!, attr.value);
             }
           }
-          tag.remove();
+          replaceWithStatements(tag);
           return;
         }
 
@@ -180,7 +181,9 @@ export default {
 
         if (unused) {
           if (valueChangeAttr && !evaluate(valueChangeAttr.value).pure) {
-            tag.insertBefore(t.expressionStatement(valueChangeAttr.value));
+            replaceWithStatements(tag, [
+              t.expressionStatement(valueChangeAttr.value),
+            ]);
           }
         } else if (valueChangeAttr) {
           const accessor = writeSlot(
@@ -205,7 +208,7 @@ export default {
         }
       }
 
-      tag.remove();
+      replaceWithStatements(tag);
     },
   },
   parseOptions: {

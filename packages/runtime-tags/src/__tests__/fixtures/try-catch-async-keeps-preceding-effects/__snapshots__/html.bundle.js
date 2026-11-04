@@ -37,5 +37,5 @@ var template_default = _template("a", (input) => {
 		const $scope5_id = _scope_id();
 		_html(_text_resume($scope5_id, "a", err.message, $wg__err_message));
 		_write_if($scope5_reason, 0) && _scope($scope5_id, {});
-	}, void 0, "a1");
+	}, 0, "a1");
 }, 1);

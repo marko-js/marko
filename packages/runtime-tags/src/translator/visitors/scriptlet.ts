@@ -4,6 +4,7 @@ import { getProgram } from "@marko/compiler/babel-utils";
 import { reportAnalyzeError } from "../util/analyze-errors";
 import { isOutputHTML } from "../util/marko-config";
 import { mergeReferences } from "../util/references";
+import { replaceWithStatements } from "../util/replace-with-statements";
 import { ensureSection } from "../util/sections";
 import { replaceRegisteredFunctionNode } from "../util/signals";
 import { traverseReplace } from "../util/traverse";
@@ -40,32 +41,21 @@ export default {
 
       if (node.target && node.target !== (isHTML ? "server" : "client")) {
         const ids = Object.keys(scriptlet.getOuterBindingIdentifiers());
-        const decl =
-          ids.length &&
-          t.variableDeclaration(
-            "var",
-            ids.map((key) => t.variableDeclarator(t.identifier(key))),
-          );
-        if (decl) {
-          if (isHTML) {
-            // handled in program exit for html currently.
-            scriptlet.node.target = null;
-            scriptlet.node.body = [decl];
-          } else {
-            scriptlet.replaceWith(decl);
-          }
-        } else {
-          scriptlet.remove();
-        }
-
-        return;
+        node.body = ids.length
+          ? [
+              t.variableDeclaration(
+                "var",
+                ids.map((key) => t.variableDeclarator(t.identifier(key))),
+              ),
+            ]
+          : [];
+      } else if (!isHTML) {
+        traverseReplace(node, "body", replaceRegisteredFunctionNode);
       }
 
-      if (isHTML) {
-        // handled in program exit for html currently.
-      } else {
-        traverseReplace(node, "body", replaceRegisteredFunctionNode);
-        scriptlet.replaceWithMultiple(node.body);
+      // Html keeps it: the program exit moves static code out of the render.
+      if (!isHTML) {
+        replaceWithStatements(scriptlet, node.body);
       }
     },
   },

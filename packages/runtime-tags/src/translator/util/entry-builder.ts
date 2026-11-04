@@ -16,7 +16,6 @@ import {
 
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
-    needsCompat?: boolean;
     isInteractive?: boolean;
     hasClientStatement?: boolean;
     page?: boolean;
@@ -168,7 +167,7 @@ const builder = {
     const { analyzedTags, assetImports } = file.metadata.marko;
     const { loadImports } = programExtra;
 
-    const init = !!(programExtra.isInteractive || programExtra.needsCompat);
+    const init = !!programExtra.isInteractive;
     const hasClientStatement = !!programExtra.hasClientStatement;
     // The topmost templates with client side work or resumes are what the
     // bundle links; everything below one of them arrives through its imports.

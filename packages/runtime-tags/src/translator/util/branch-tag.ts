@@ -3,7 +3,7 @@ import { types as t } from "@marko/compiler";
 import { type Binding } from "./bindings";
 import { getOnlyChildParentTagName } from "./is-only-child-in-parent";
 import { push, some } from "./optional";
-import { isStateReason, isUnconditionalReason, type Reasons } from "./reasons";
+import { isGuardedReason, isStateReason, type Reasons } from "./reasons";
 import { hasResumableAssignment } from "./references";
 import { callRuntime } from "./runtime";
 import { getScopeAccessorLiteral } from "./scope-accessor";
@@ -46,11 +46,15 @@ export function resumeOwnerByMarkerWhenUnconditional(
   nodeBinding: Binding,
 ) {
   const branchExprReason = findSlot(nodeBinding, SlotKind.BranchExpr)?.reason;
+  const branchReason = getBranchWriteReason(bodySection);
+  const nodeReason = getWriteReason(nodeBinding);
   if (
     isStateReason(branchExprReason) &&
     some(branchExprReason.state, hasResumableAssignment) &&
-    isUnconditionalReason(getBranchWriteReason(bodySection)) &&
-    isUnconditionalReason(getWriteReason(nodeBinding))
+    branchReason &&
+    !isGuardedReason(branchReason) &&
+    nodeReason &&
+    !isGuardedReason(nodeReason)
   ) {
     setSectionOwnerResumedByMarker(bodySection);
   }
@@ -122,13 +126,10 @@ export function isEndTagWrittenByBranch(nodeBinding: Binding | undefined) {
   return !!nodeBinding && getBranchEndTags().has(nodeBinding);
 }
 
-// Resume adopts the element before a branch's resume comments, so only a
-// body of one tag qualifies; a placeholder may write zero or many nodes.
-export function isSingleNodeBranch(bodySection: Section | undefined) {
-  return !!(
-    bodySection?.content?.singleChild &&
-    bodySection.content.startType === ContentType.Tag
-  );
+// Resume adopts the element before a branch's resume comments, so only
+// content of one tag qualifies; a placeholder may write zero or many nodes.
+export function isSingleNodeContent(content: Section["content"] | undefined) {
+  return !!(content?.singleChild && content.startType === ContentType.Tag);
 }
 
 export type ForType = "in" | "of" | "to" | "until";

@@ -13,10 +13,7 @@ import { getMarkoOpts } from "../../util/marko-config";
 import { writeModuleRegistrations } from "../../util/module-registrations";
 import { first, forEach } from "../../util/optional";
 import { getReadReplacement } from "../../util/read-replacement";
-import {
-  isRegisteredFnExtra,
-  getReferencedBindingsInFunction,
-} from "../../util/references";
+import { isRegisteredFnExtra } from "../../util/references";
 import { callRuntime, importRuntime } from "../../util/runtime";
 import { getLocalsScopeAccessor } from "../../util/scope-accessor";
 import {
@@ -135,22 +132,21 @@ export default {
 
       writeHTMLResumeStatements(program);
       traverseReplace(program.node, "body", replaceNode);
-      const renderContent: t.Statement[] = [];
-      const section = getSection(program);
-      renderContent.push(getScopeReasonStatement(section));
+      const statics: t.Statement[] = [];
+      const renderContent: t.Statement[] = [
+        getScopeReasonStatement(getSection(program)),
+      ];
 
       for (const child of program.get("body")) {
         if (!isStatic(child)) {
           renderContent.push(child.node);
-          child.remove();
         } else if (child.isMarkoScriptlet()) {
-          if (child.node.target && child.node.target !== "server") {
-            child.remove();
-          } else {
-            child.replaceWithMultiple(child.node.body);
-          }
+          statics.push(...child.node.body);
+        } else {
+          statics.push(child.node);
         }
       }
+      program.node.body = statics;
 
       writeModuleRegistrations(program);
 
@@ -285,8 +281,7 @@ function buildResumeCall(node: Exclude<t.Function, t.FunctionDeclaration>) {
           | t.ArrowFunctionExpression,
         t.stringLiteral(extra.registerId),
         t.objectExpression(localProperties),
-        (getReferencedBindingsInFunction(extra) || extra.referencesScope) &&
-          getScopeIdIdentifier(extra.section),
+        extra.referencesScope && getScopeIdIdentifier(extra.section),
       );
     }
 
@@ -296,8 +291,7 @@ function buildResumeCall(node: Exclude<t.Function, t.FunctionDeclaration>) {
         | t.FunctionExpression
         | t.ArrowFunctionExpression,
       t.stringLiteral(extra.registerId),
-      (getReferencedBindingsInFunction(extra) || extra.referencesScope) &&
-        getScopeIdIdentifier(extra.section),
+      extra.referencesScope && getScopeIdIdentifier(extra.section),
     );
   }
 }

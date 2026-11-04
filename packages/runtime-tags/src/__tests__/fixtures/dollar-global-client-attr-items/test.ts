@@ -1,0 +1,13 @@
+import type { TestConfig } from "../../main.test";
+
+function click(document: Document) {
+  document.querySelector("button")!.click();
+}
+
+export const config: TestConfig = {
+  steps: [
+    { $global: { on: true, color: "red", serializedGlobals: ["on", "color"] } },
+    click,
+    click,
+  ],
+};

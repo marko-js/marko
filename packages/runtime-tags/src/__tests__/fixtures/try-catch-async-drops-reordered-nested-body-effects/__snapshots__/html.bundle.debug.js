@@ -30,7 +30,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope5_id = _scope_id();
 				_html(`caught ${_text_resume($scope5_id, "#text/0", err.message, $wg__err_message * 2)}`);
 				_write_if($scope5_reason, 0) && _scope($scope5_id, {}, "__tests__/template.marko", "11:8");
-			}, void 0, "__tests__/template.marko_5*content");
+			}, 0, "__tests__/template.marko_5*content");
 		}, 0);
 	}, () => {
 		_scope_reason();

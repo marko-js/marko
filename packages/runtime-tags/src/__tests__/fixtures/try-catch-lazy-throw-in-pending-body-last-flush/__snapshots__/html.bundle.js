@@ -8,7 +8,7 @@ var thrower_default = _template("b", (input) => {
 });
 
 // template.marko
-const $Thrower_withLoadAssets = withLoadAssets(thrower_default, flush$1, "_b");
+const $Thrower_withLoadAssets = withLoadAssets(() => thrower_default, "b", flush$1, "_b");
 var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
@@ -32,5 +32,5 @@ var template_default = _template("a", (input) => {
 		const $scope3_id = _scope_id();
 		_html(`caught ${_text_resume($scope3_id, "a", err.message, $wg__err_message * 2)}`);
 		_write_if($scope3_reason, 0) && _scope($scope3_id, {});
-	}, void 0, "a0");
+	}, 0, "a0");
 }, 1);

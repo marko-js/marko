@@ -30,10 +30,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		_html(`<button id=pick>pick</button>${_el_resume($scope1_id, "a")}`);
 		_script($scope1_id, "a1");
-		_scope($scope1_id, {
-			c: v,
-			_: _scope_with_id($scope0_id)
-		});
+		_scope($scope1_id, { c: v });
 	});
 	_html(`<div>${_text_resume($scope0_id, "c", picked)}</div>`);
 	_scope($scope0_id, { a: _write_if($scope0_reason, 0) && _existing_scope($childScope) });

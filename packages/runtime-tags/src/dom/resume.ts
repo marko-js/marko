@@ -49,8 +49,6 @@ export interface RenderData {
   b?: Record<string, ResumeData>;
   /* --- Used by inline runtime --- */
 
-  // Document
-  d: never;
   // Walked node lookup
   l: never;
   // Reorder-runtime
@@ -560,7 +558,10 @@ function runResumeEffects(render: RenderData) {
   }
 }
 
-export function getRegisteredWithScope<T = unknown>(id: string, scope?: Scope) {
+export function getRegisteredWithScope<T = unknown>(
+  scope: Scope | undefined,
+  id: string,
+) {
   return (scope ? (_resumed[id] as RegisteredFn)(scope) : _resumed[id]) as T;
 }
 

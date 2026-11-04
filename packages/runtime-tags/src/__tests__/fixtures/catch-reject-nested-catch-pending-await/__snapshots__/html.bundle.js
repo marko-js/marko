@@ -24,7 +24,7 @@ var template_default = _template("a", (input) => {
 					_scope_reason();
 					_scope_id();
 					_html("inner caught");
-				}, void 0, "a0");
+				}, 0, "a0");
 				_await($scope4_id, "b", rejectAfter(/* @__PURE__ */ new Error("ERROR!"), 2), () => {
 					_scope_id();
 					_html("never outer");
@@ -34,10 +34,10 @@ var template_default = _template("a", (input) => {
 				const $scope5_id = _scope_id();
 				_html(`caught: ${_text_resume($scope5_id, "a", err.message, $wg__err_message * 2)}`);
 				_write_if($scope5_reason, 0) && _scope($scope5_id, {});
-			}, void 0, "a1");
+			}, 0, "a1");
 			_html(`<div>changes: ${_text_resume($scope2_id, "c", changes, 2)}</div>${_el_resume($scope2_id, "b")}`);
 			_script($scope2_id, "a2");
-			_subscribe($changes__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "a3");
+			_subscribe($changes__closures, _scope($scope2_id, {}), "a3");
 		});
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 	}, () => {

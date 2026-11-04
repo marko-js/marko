@@ -1,6 +1,6 @@
 // template.marko
-const $template = "<div><!><b></b><i></i></div><div><b></b><i> </i><u></u></div>";
-const $walks = "D%lDbD m";
+const $template = "<div> <b></b><i></i></div><div><b></b><i> </i><u></u></div>";
+const $walks = "D lDbD m";
 const $setup = ($_) => {};
 const $input_x = ($scope, input_x) => {
 	_text($scope["#text/0"], input_x);

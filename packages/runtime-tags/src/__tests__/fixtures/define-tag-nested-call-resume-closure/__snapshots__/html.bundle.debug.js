@@ -12,16 +12,16 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id) };
 	const D = { content: _content("__tests__/template.marko_2*content", ({ on }) => {
 		const $scope2_id = _scope_id();
-		const $scope2_reason = _scope_reason(), $wg__on = _write_guard($scope2_reason, 0), $wi__on = _write_if($scope2_reason, 0);
+		const $scope2_reason = _scope_reason();
 		_if(() => {
 			if (on) {
 				const $scope3_id = _scope_id();
 				E.content({});
-				$wi__on && _scope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "2:20");
+				_scope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "2:20");
 				return 0;
 			}
-		}, $scope2_id, "#text/0", $wg__on, $wg__on);
-		$wi__on && _scope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:2");
+		}, $scope2_id, "#text/0");
+		_scope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:2");
 	}, $scope0_id) };
 	let on = false;
 	_html(`<button></button>${_el_resume($scope0_id, "#button/0")}`);

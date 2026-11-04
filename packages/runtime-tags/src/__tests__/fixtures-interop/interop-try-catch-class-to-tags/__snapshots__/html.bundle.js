@@ -13,7 +13,7 @@ var tags_child_default = _template("b", (input) => {
 		_scope_reason();
 		_scope_id();
 		_html("<div id=caught>caught</div>");
-	}, void 0, "b0");
+	}, 0, "b0");
 });
 
 // template.marko

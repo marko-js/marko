@@ -496,20 +496,21 @@ export function findSorted<T>(
   data: T[],
   item: T,
 ): T | undefined {
-  let max = data.length;
-  let pos = 0;
-
-  while (pos < max) {
-    const mid = (pos + max) >>> 1;
-    const cur = data[mid];
-    const compareResult = compare(cur, item);
-    if (compareResult === 0) return cur;
-    if (compareResult > 0) max = mid;
-    else pos = mid + 1;
-  }
+  const index = searchSorted(compare, data, item);
+  if (index >= 0) return data[index];
 }
 
 export function findIndexSorted<T>(
+  compare: Compare<T>,
+  data: T[],
+  item: T,
+): number {
+  const index = searchSorted(compare, data, item);
+  return index < 0 ? -1 : index;
+}
+
+// The index of the item equal to `item`, or `~` the index it would go at.
+export function searchSorted<T>(
   compare: Compare<T>,
   data: T[],
   item: T,
@@ -525,7 +526,7 @@ export function findIndexSorted<T>(
     else pos = mid + 1;
   }
 
-  return -1;
+  return ~pos;
 }
 
 export function addSorted<T, U extends T[]>(
@@ -533,31 +534,20 @@ export function addSorted<T, U extends T[]>(
   data: U,
   item: T,
 ): U {
+  let pos = searchSorted(compare, data, item);
+  if (pos >= 0) return data;
+  pos = ~pos;
+
   const len = data.length;
-  let max = len;
-  let pos = 0;
-
-  while (pos < max) {
-    const mid = (pos + max) >>> 1;
-    const compareResult = compare(data[mid], item);
-    if (compareResult === 0) return data;
-    if (compareResult > 0) max = mid;
-    else pos = mid + 1;
-  }
-
   const result = new Array(len + 1) as U;
   for (let i = 0; i < pos; i++) {
     result[i] = data[i];
   }
 
-  let cur = item;
+  result[pos] = item;
   while (pos < len) {
-    const next = cur;
-    cur = data[pos];
-    result[pos++] = next;
+    result[pos + 1] = data[pos++];
   }
-
-  result[len] = cur;
 
   return result;
 }
@@ -704,13 +694,15 @@ function differenceSorted<T>(compare: Compare<T>, a: Many<T>, b: Many<T>) {
 }
 
 // Walks the shorter and searches the longer when it is much longer, copying the
-// longer's items between; `a`'s item wins a tie.
+// longer's items between; `a`'s item wins a tie, and a side holding the other is
+// the union itself.
 function unionSorted<T>(compare: Compare<T>, a: Many<T>, b: Many<T>): Many<T> {
   const long = a.length < b.length ? b : a;
   const short = long === a ? b : a;
   if (!isMuchLonger(long, short)) return unionSortedRepeatable(compare, a, b);
   const result = [] as unknown as Many<T>;
   let from = 0;
+  let holdsShort = true;
 
   for (let i = 0; i < short.length; i++) {
     const item = short[i];
@@ -721,6 +713,7 @@ function unionSorted<T>(compare: Compare<T>, a: Many<T>, b: Many<T>): Many<T> {
       item,
       short.length - i,
     );
+    holdsShort &&= found >= 0 && (long === a || long[found] === item);
     const end = found < 0 ? ~found : found;
     while (from < end) result.push(long[from++]);
     if (found >= 0) {
@@ -733,7 +726,7 @@ function unionSorted<T>(compare: Compare<T>, a: Many<T>, b: Many<T>): Many<T> {
 
   while (from < long.length) result.push(long[from++]);
 
-  return result;
+  return holdsShort ? long : result;
 }
 
 function unionSortedRepeatable<T>(
@@ -746,30 +739,32 @@ function unionSortedRepeatable<T>(
   const result = [] as unknown as Many<T>;
   let aIndex = 0;
   let bIndex = 0;
-  let same = true;
+  let aOnly = false;
+  let bOnly = false;
 
   while (aIndex < aLen && bIndex < bLen) {
     const aValue = a[aIndex];
     const bValue = b[bIndex];
     const delta = compare(aValue, bValue);
     if (delta === 0) {
+      aOnly ||= aValue !== bValue;
       aIndex++;
       bIndex++;
       result.push(aValue);
     } else if (delta < 0) {
-      same = false;
+      aOnly = true;
       aIndex++;
       result.push(aValue);
     } else {
-      same = false;
+      bOnly = true;
       bIndex++;
       result.push(bValue);
     }
   }
 
-  if (same && aLen === bLen) {
-    return a;
-  }
+  // A side holding the other is the union itself; `a`'s item wins a tie.
+  if (!bOnly && bIndex === bLen) return a;
+  if (!aOnly && aIndex === aLen) return b;
 
   while (aIndex < aLen) {
     result.push(a[aIndex++]);
