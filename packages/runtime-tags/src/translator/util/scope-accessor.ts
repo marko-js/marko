@@ -164,7 +164,7 @@ function getSectionInstancesAccessor(section: Section) {
   // would be a byte shorter, but hoists are too rare for that to pay.
   return isOptionalBranch(section)
     ? getAccessorPrefix().BranchScopes +
-        getScopeAccessor(section.branch.nodeBinding)
+        getScopeAccessor(section.branch.tag.nodeBinding)
     : getAccessorPrefix().ClosureScopes + section.id;
 }
 

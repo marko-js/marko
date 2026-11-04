@@ -25,6 +25,8 @@ import {
   getScopeIdIdentifier,
   getSection,
   getSectionForBody,
+  mayMergeWithText,
+  type ControlFlowTagExtra,
 } from "../util/sections";
 import {
   addValue,
@@ -84,7 +86,10 @@ export default {
       }
     }
     const section = ensureSection(tag);
-    const tagExtra = mergeTagReferences(section, tag.node);
+    const tagExtra = mergeTagReferences(
+      section,
+      tag.node,
+    ) as ControlFlowTagExtra;
     const nodeBinding = (tagExtra.nodeBinding = createBinding(
       "#text",
       BindingType.dom,
@@ -101,9 +106,10 @@ export default {
         );
     }
 
+    tagExtra.textBefore = mayMergeWithText(tag, true);
     initBranchSection(ensureBodySection(tag.get("body"))!, tagExtra, {
-      nodeBinding,
-      optional: false,
+      kind: "try",
+      tag: tagExtra,
     });
     structure.marker(tag, nodeBinding);
     structure.enterShallow(tag);

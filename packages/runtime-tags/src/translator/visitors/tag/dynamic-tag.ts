@@ -69,6 +69,7 @@ import {
   getScopeIdIdentifier,
   getSection,
   getSectionForBody,
+  mayMergeWithText,
   removeDroppedContent,
   type Section,
   StructureKind,
@@ -168,11 +169,12 @@ export default {
       const tagSection = ensureSection(tag);
       const inputNodes = getAllTagReferenceNodes(node);
       // The tag reads as one; what its name reads is not handed to it as an input.
-      (node.name.extra ??= {}).tagName = true;
+      (node.name.extra ??= {}).tagName = node.extra ??= {};
       const tagExtra = mergeReferences(tagSection, node, [
         node.name,
         ...inputNodes,
       ]);
+      tagExtra.textBefore = mayMergeWithText(tag, true);
       // Name-only tags are left out: flagging them registers sibling attr-tag
       // props through `for` items, so a bare function as the name stays unregistered.
       if (inputNodes.length) tagExtra.retained = true;

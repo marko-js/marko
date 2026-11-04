@@ -186,6 +186,12 @@ Renderable children passed to a tag. The Tags API calls this _content_; syntax
 and ASTs say _body_, while the Class API says `renderBody`.
 _Avoid_: children, renderBody, body outside syntax or AST discussion
 
+**Content site**:
+A dynamic tag rendering content in a template the content is passed to: one
+naming it, or naming what holds it as `content`. A deep site is one past a
+further call, whose template's root edge follows that call, unseen from the first.
+_Avoid_: render target, consumer
+
 **Client renderer (`Renderer`)**:
 A descriptor for creating a branch, carrying clone/setup/parameter work and
 optional owner or closure data. Its static shape starts as a template and walk

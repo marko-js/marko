@@ -24,7 +24,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 							content: _content_resume("__tests__/template.marko_5*content", () => {
 								const $scope5_reason = _scope_reason();
 								const $scope5_id = _scope_id();
-								_html(`${_text_mark($scope5_id, "#text/0", input.depth, $wg__input_depth)}: `);
+								_html(`${_text_mark($scope5_id, "#text/0", input.depth, $wg__input_depth * 2)}: `);
 								_dynamic_tag($scope5_id, "#text/1", input.content, {}, 0, 0, 0);
 								_subscribe($wi__input_depth && $Tree_content2__input_depth__closures, _scope($scope5_id, {
 									_: _scope_with_id($scope4_id),

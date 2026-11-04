@@ -18,7 +18,7 @@ var template_default = _template("a", (input) => {
 		content: _content("a0", (x) => {
 			const $scope1_reason = _scope_reason(), $wg__x = _write_guard($scope1_reason, 0);
 			const $scope1_id = _scope_id();
-			_html(_text_mark($scope1_id, "a", x, $wg__x));
+			_html(_text_mark($scope1_id, "a", x, $wg__x * 2));
 			_write_if($scope1_reason, 0) && _scope($scope1_id, {});
 		}, $scope0_id)
 	});

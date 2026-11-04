@@ -4,7 +4,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const $scope0_id = _scope_id();
 	_await($scope0_id, "#text/0", input.value, (value) => {
 		const $scope1_id = _scope_id();
-		_html(_text_mark($scope1_id, "#text/0", value, $wg__input_value));
+		_html(_text_mark($scope1_id, "#text/0", value, $wg__input_value * 2));
 		_write_if($scope0_reason, 0) && _scope($scope1_id, {}, "__tests__/tags/child.marko", "1:2");
 	}, $wg__input_value);
 });

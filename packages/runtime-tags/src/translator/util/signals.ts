@@ -124,11 +124,6 @@ type closureSignalBuilder = (
   closure: Binding,
   render: t.Expression,
 ) => t.Expression;
-// Structured facts about a branch section's closure hop: what kind of
-// branch it is and which node binding (plus branch index) addresses it.
-export type ClosureHop =
-  | { kind: "if"; nodeBinding: Binding; index: number }
-  | { kind: "for"; nodeBinding: Binding };
 export const [getSignals] = createOutputSectionState<Map<unknown, Signal>>(
   () => new Map(),
 );
@@ -136,17 +131,26 @@ const [getClosureSignalBuilder, _setClosureSignalBuilder] =
   createOutputSectionState<closureSignalBuilder | undefined>();
 export function setClosureSignalBuilder(
   tag: t.NodePath<t.MarkoTag>,
-  hop: ClosureHop,
-  build: closureSignalBuilder = (_closure, render) =>
-    buildClosureHop(hop, render),
+  build?: closureSignalBuilder,
 ) {
-  _setClosureSignalBuilder(getSectionForBody(tag.get("body"))!, build);
+  const section = getSectionForBody(tag.get("body"))!;
+  _setClosureSignalBuilder(
+    section,
+    build || ((_closure, render) => buildClosureHop(section, render)),
+  );
 }
 
-export function buildClosureHop(hop: ClosureHop, render: t.Expression) {
-  const accessor = getScopeAccessorLiteral(hop.nodeBinding, true);
-  return hop.kind === "if"
-    ? callRuntime("_if_closure", accessor, t.numericLiteral(hop.index), render)
+// The hop from a branch of an `<if>` or `<for>` to the scope its closure is in.
+export function buildClosureHop(section: Section, render: t.Expression) {
+  const branch = section.branch!;
+  const accessor = getScopeAccessorLiteral(branch.tag.nodeBinding, true);
+  return branch.kind === "if"
+    ? callRuntime(
+        "_if_closure",
+        accessor,
+        t.numericLiteral(branch.index),
+        render,
+      )
     : callRuntime("_for_closure", accessor, render);
 }
 
@@ -1113,13 +1117,12 @@ function pushInstancesAccessor(section: Section, accessors: t.Expression[]) {
   const { branch } = section;
   // The branches of an `<if>` chain share one slot, so the read checks which renders.
   accessors.push(
-    branch?.index !== undefined &&
-      Array.isArray(branch.nodeBinding.branchBodies)
+    branch?.kind === "if" && Array.isArray(branch.tag.nodeBinding.branchBodies)
       ? t.arrayExpression([
           instancesAccessor,
           t.stringLiteral(
             getAccessorPrefix().ConditionalRenderer +
-              getScopeAccessor(branch.nodeBinding),
+              getScopeAccessor(branch.tag.nodeBinding),
           ),
           t.numericLiteral(branch.index),
         ])

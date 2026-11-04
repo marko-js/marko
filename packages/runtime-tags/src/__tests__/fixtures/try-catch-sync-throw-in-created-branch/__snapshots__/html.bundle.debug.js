@@ -107,7 +107,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					const $scope18_id = _scope_id();
 					_html(_text_mark($scope18_id, "#text/0", (() => {
 						throw new Error(`catch of ${err.message}`);
-					})(), $wg__err_message6));
+					})(), $wg__err_message6 * 2));
 					_write_if($scope18_reason, 0) && _scope($scope18_id, {}, "__tests__/template.marko", "37:8");
 				}, 0, "__tests__/template.marko_18*content");
 				_scope($scope16_id, {}, "__tests__/template.marko", "34:4");

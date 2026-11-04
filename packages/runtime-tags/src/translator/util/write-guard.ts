@@ -211,7 +211,41 @@ export function isEverWritten(section: Section, reason: undefined | Reason) {
 }
 
 // The constant a reason's guard folds to: `0` unwritten, `1` always written.
-function getWriteBit(section: Section, reason: undefined | Reason) {
+// Whether a guard on `reason` in a known tag's template writes for every render
+// of `call` (in `callSection`): always there, or by a param group it always passes.
+export function isWrittenForCall(
+  section: Section,
+  reason: undefined | Reason,
+  call: t.MarkoTagExtra,
+  callSection: Section,
+) {
+  if (getWriteBit(section, reason) === 1) return true;
+  const { childScopeBinding, childSection } = call;
+  return (
+    !!childScopeBinding &&
+    isDynamicWriteGuard(section, reason) &&
+    reduceParamGroups(
+      reason.param,
+      (written, groupSection, group) =>
+        written ||
+        (groupSection === childSection &&
+          getWriteBit(
+            callSection,
+            findSlot(
+              childScopeBinding,
+              SlotKind.ParamGroup,
+              callSection,
+              childSection.paramReasonGroups![
+                getParamReasonGroupIndex(childSection, group)
+              ],
+            )?.reason,
+          ) === 1),
+      false,
+    )
+  );
+}
+
+export function getWriteBit(section: Section, reason: undefined | Reason) {
   return isDynamicWriteGuard(section, reason)
     ? getGroupsBit(reason.param)
     : reason

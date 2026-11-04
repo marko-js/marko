@@ -13,6 +13,7 @@ import {
 import * as ContentType from "./constants/content-type";
 import type * as Step from "./constants/step";
 import * as StructureKind from "./constants/structure-kind";
+import { createAnalysisMemo } from "./cyclic-memo";
 import { generateUid, generateUidIdentifier } from "./generate-uid";
 import { isCoreTag, isCoreTagName } from "./is-core-tag";
 import type { KnownTagExtra } from "./known-tag";
@@ -35,13 +36,22 @@ import {
   setParamReasonGroups,
 } from "./reasons";
 import { type Slot } from "./slots";
-import { bindingLandsRetained, getReasonForBinding } from "./solve-reasons";
+import {
+  bindingLandsRetained,
+  getContentSites,
+  getReasonForBinding,
+} from "./solve-reasons";
 import { ALWAYS, mergeSources, type Sources } from "./sources";
 import { createOutputSectionState } from "./state";
 import { getPlaceholderContentType } from "./static-text";
 import { getTagContentType, getTagFacts } from "./tag-facts";
 import analyzeTagNameType, { TagNameType } from "./tag-name-type";
-import { getWriteReason } from "./write-guard";
+import {
+  getBranchWriteReason,
+  getWriteBit,
+  getWriteReason,
+  isWrittenForCall,
+} from "./write-guard";
 
 // A set of the section's params that reasons wait on together; each
 // call site passes whether the group changed.
@@ -169,16 +179,10 @@ export interface Section {
    * `<define>` body or template it calls in place. */
   hasSetupWork: boolean;
   /** Its tag, which renders it in place into branch scopes at the tag's node
-   * binding, and whether its branch expression's value can leave it unrendered. */
+   * binding; an `<if>` chain's at `index`, the renderer index it renders as. */
   branch:
-    | {
-        nodeBinding: Binding;
-        optional: boolean;
-        /** An `<if>` branch's place in its chain, the renderer index it renders as. */
-        index?: number;
-        /** An `<await>` body, made with its owner: its promise settles into it. */
-        await?: true;
-      }
+    | { kind: "if"; tag: ControlFlowTagExtra; index: number }
+    | { kind: "for" | "await" | "try"; tag: ControlFlowTagExtra }
     | undefined;
   content: null | {
     startType: ContentType;
@@ -190,6 +194,11 @@ export interface Section {
   structure: StructureOp[] | null;
 }
 
+/** A control flow tag's extra once analyzed: its branches render at its node. */
+export interface ControlFlowTagExtra extends t.MarkoTagExtra {
+  nodeBinding: Binding;
+}
+
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
     section?: Section;
@@ -198,6 +207,18 @@ declare module "@marko/compiler/dist/types" {
 
   export interface MarkoTagBodyExtra {
     section?: Section;
+  }
+
+  export interface MarkoTagExtra {
+    /** For a tag rendering content in its place or through a template, whether
+     * text may merge into it from before; `undefined` at its section's edge. */
+    textBefore?: boolean;
+  }
+
+  export interface MarkoPlaceholderExtra {
+    /** Whether text may merge into its text node from before; `undefined` at its
+     * section's edge. */
+    textBefore?: boolean;
   }
 }
 
@@ -479,6 +500,158 @@ export function isKnownChild(section: Section) {
   return !section.parent || !!section.renderedBy;
 }
 
+// Whether resumed text leading the section may follow text the server wrote with
+// no mark; `undefined` at a template's root edge, which its caller decides.
+export const [getSectionTextBefore] = createAnalysisMemo(
+  (section: Section) => getTextBeforeIn(section, undefined),
+  true,
+);
+
+// `getSectionTextBefore`, where `content` is given seen through the call passing it
+// to the section's template, whose params then follow what that call passes.
+function getTextBeforeIn(
+  section: Section,
+  content: Section | undefined,
+): boolean | undefined {
+  const { branch, derives } = section;
+  if (branch) {
+    const { tag } = branch;
+    const tagSection = tag.nodeBinding.section;
+    return (
+      !isStartMarked(branch, section, content) &&
+      // A row follows the one before, even one whose text ends in its own resume
+      // mark and so needs no `<!>` after it: rows are not traced to their last text.
+      ((branch.kind === "for" && mayEndWithText(section)) ||
+        (tag.textBefore ??
+          (content
+            ? getTextBeforeIn(tagSection, content)
+            : getSectionTextBefore(tagSection))))
+    );
+  }
+  if (!section.parent) return undefined;
+  return !derives || !!section.renderedBy || mayContentFollowText(section);
+}
+
+// Content follows text where the tags rendering it may, and at the root edge of a
+// template it is passed to, where its own tag may.
+function mayContentFollowText(section: Section) {
+  const { tag } = section.derives!;
+  const { unseen, sites, deepSites } = getContentSites(section.derives!);
+  const tagFollowsText = () =>
+    tag.textBefore ?? getSectionTextBefore(section.parent!) ?? true;
+  return (
+    unseen ||
+    (!!tag.tagNameNullable && tagFollowsText()) ||
+    some(
+      sites,
+      (site) => getSiteTextBefore(site, section) ?? tagFollowsText(),
+    ) ||
+    some(deepSites, (site) => getSiteTextBefore(site, undefined) ?? true)
+  );
+}
+
+// What may come before a dynamic tag rendering content, `undefined` at its
+// template's root edge.
+function getSiteTextBefore(
+  site: t.MarkoTagExtra,
+  content: Section | undefined,
+) {
+  return site.textBefore ?? getTextBeforeIn(site.nodeBinding!.section, content);
+}
+
+// As the runtime marks a start: `<try>` where it resumes, `<await>` by its reason,
+// others by branch and marker, whose reason an only child's branch expression shares.
+function isStartMarked(
+  branch: NonNullable<Section["branch"]>,
+  section: Section,
+  content: Section | undefined,
+) {
+  const { nodeBinding } = branch.tag;
+  const tagSection = nodeBinding.section;
+  return (
+    branch.kind === "try" ||
+    (branch.kind === "await"
+      ? isAlwaysWritten(tagSection, section.reason, content)
+      : isAlwaysWritten(tagSection, getBranchWriteReason(section), content) &&
+        isAlwaysWritten(tagSection, getWriteReason(nodeBinding), content))
+  );
+}
+
+// Whether `reason` is always written in `section`, or for the call passing
+// `content` to its template where given.
+function isAlwaysWritten(
+  section: Section,
+  reason: Reason | undefined,
+  content: Section | undefined,
+) {
+  return content
+    ? isWrittenForCall(section, reason, content.derives!.tag, content.parent!)
+    : getWriteBit(section, reason) === 1;
+}
+
+// Whether the section's content may end with text.
+export function mayEndWithText(section: Section) {
+  return !!section.content && mayRenderText(section.content.endType);
+}
+
+// Whether text may merge with what renders at `path` from one side, past what
+// renders nothing and out through bodies rendered in place.
+export function mayMergeWithText(
+  path: t.NodePath,
+  before: boolean,
+): boolean | undefined {
+  let sibling = getSibling(path, before);
+  let parent: t.NodePath = path.parentPath!;
+  for (;;) {
+    if (!sibling.node) {
+      const inlinedTag = getInlinedBodyTag(parent);
+      if (!inlinedTag) {
+        // An element's body ends at the element; beside its section's own edge
+        // renders whatever inlines the section.
+        return getSectionForBody(
+          parent as t.NodePath<t.MarkoTagBody | t.Program>,
+        )
+          ? undefined
+          : false;
+      }
+      sibling = getSibling(inlinedTag, before);
+      parent = inlinedTag.parentPath;
+    } else {
+      const contentType = getNodeContentType(
+        sibling as t.NodePath<t.Statement>,
+        before ? "endType" : "startType",
+      );
+      if (contentType !== null) return mayRenderText(contentType);
+      sibling = getSibling(sibling, before);
+    }
+  }
+}
+
+function getSibling(path: t.NodePath, before: boolean) {
+  return before ? path.getPrevSibling() : path.getNextSibling();
+}
+
+// The tag rendering `parent` in its own place and section, so the body's
+// edges render against the tag's own siblings.
+function getInlinedBodyTag(parent: t.NodePath) {
+  if (parent.isMarkoTagBody()) {
+    const tag = parent.parentPath as t.NodePath<t.MarkoTag>;
+    const facts = getTagFacts(tag);
+    if (facts.controlFlow && facts.inlineBody) {
+      return tag;
+    }
+  }
+}
+
+// Content of this type may render text at its edge.
+function mayRenderText(contentType: ContentType) {
+  return (
+    contentType === ContentType.Text ||
+    contentType === ContentType.Dynamic ||
+    contentType === ContentType.Placeholder
+  );
+}
+
 // The known child section `structure.child` renders in place; a load tag
 // renders behind a marker.
 function getKnownChildSection(tag: t.NodePath<t.MarkoTag>) {
@@ -536,7 +709,8 @@ export function getRendererReason(section: Section) {
 export function isOptionalBranch(
   section: Section,
 ): section is Section & { branch: NonNullable<Section["branch"]> } {
-  return !!section.branch?.optional;
+  const kind = section.branch?.kind;
+  return kind === "if" || kind === "for";
 }
 
 export function isInParentSection(binding: Binding, section: Section) {
