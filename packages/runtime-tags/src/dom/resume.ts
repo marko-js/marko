@@ -64,8 +64,8 @@ export interface RenderData {
   // last patch response ended with, sent with the next request.
   [RenderDataProp.HeldShells]?: string;
   // Its live patch response's stop, which the next one calls: what it left
-  // held never applies once it stopped.
-  [RenderDataProp.StopPatch]?: () => void;
+  // waiting never applies once it stopped.
+  [RenderDataProp.PatchStop]?: () => void;
 }
 type RegisteredFn<S extends Scope = Scope> = (scope: S) => void;
 

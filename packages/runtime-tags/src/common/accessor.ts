@@ -2,7 +2,7 @@ import * as AccessorPrefix from "./constants/accessor-prefix";
 import * as AccessorProp from "./constants/accessor-prop";
 import * as ClosureScopesProp from "./constants/closure-scopes-prop";
 import * as ClosureSignalProp from "./constants/closure-signal-prop";
-import * as HeldFlushProp from "./constants/held-flush-prop";
+import * as WaitingFlushProp from "./constants/waiting-flush-prop";
 import * as KeyedScopesProp from "./constants/keyed-scopes-prop";
 import * as PatchKey from "./constants/patch-key";
 import * as PatchPendingProp from "./constants/patch-pending-prop";
@@ -30,8 +30,8 @@ export { ClosureSignalProp };
 type ClosureScopesProp = ClosureScopesProp.Value;
 export { ClosureScopesProp };
 
-type HeldFlushProp = HeldFlushProp.Value;
-export { HeldFlushProp };
+type WaitingFlushProp = WaitingFlushProp.Value;
+export { WaitingFlushProp };
 
 type KeyedScopesProp = KeyedScopesProp.Value;
 export { KeyedScopesProp };

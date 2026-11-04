@@ -6,7 +6,7 @@ import {
   type Scope,
 } from "../../common/types";
 import { _resumed, installBoundFnRevive } from "../resume";
-import { getLoopItem, patchers, patchRender } from "./apply";
+import { getLoopItem, patchers, renderData } from "./apply";
 import { installBoundFnResolver, type OwnerBound } from "./bind.feat";
 import { writtenReferences, reviveBoundFn } from "./signals";
 
@@ -18,7 +18,7 @@ patchers[PatchKey.Bind] = (scope, accessor, entry) => {
   const fn = resolveBoundFn(scope, entry);
   if (scope[accessor] !== fn) {
     scope[AccessorPrefix.PatchChanged + accessor] =
-      patchRender[RenderDataProp.StopPatch];
+      renderData[RenderDataProp.PatchStop];
     scope[accessor] = fn;
   }
 };
@@ -53,10 +53,10 @@ function resolveBoundFn(owner: Scope, entry: OwnerBound) {
   ];
   if (
     !bound[1] ||
-    (bound[0] !== patchRender[RenderDataProp.StopPatch] &&
+    (bound[0] !== renderData[RenderDataProp.PatchStop] &&
       writtenReferences[registryId]?.(owner))
   ) {
-    bound[0] = patchRender[RenderDataProp.StopPatch];
+    bound[0] = renderData[RenderDataProp.PatchStop];
     bound[1] = (_resumed[registryId] as (owner: Scope) => unknown)(owner);
   }
   return bound[1];

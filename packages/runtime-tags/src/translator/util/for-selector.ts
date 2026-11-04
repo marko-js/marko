@@ -8,7 +8,7 @@ import {
 } from "./bindings";
 import { forEach, some } from "./optional";
 import { getPatchFill } from "./patch/refresh";
-import { inStatefulBranch } from "./patch/structure";
+import { inStatefulStructure } from "./patch/structure";
 import { getReferencedBindings } from "./references";
 import { isDirectClosure, type Section } from "./sections";
 
@@ -21,7 +21,7 @@ export function isForSelectorClosure(
     !!bodySection.selector?.has(canonical) &&
     // A fill refreshes through the plain scan join; the keyed selector dispatch
     // has no fill channel. Asked at translate, once the solve decides fills.
-    !(inStatefulBranch(bodySection) && getPatchFill(canonical).fill)
+    !(inStatefulStructure(bodySection) && getPatchFill(canonical).fill)
   );
 }
 

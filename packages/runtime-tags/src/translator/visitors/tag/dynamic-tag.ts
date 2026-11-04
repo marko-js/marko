@@ -225,7 +225,7 @@ export default {
       ));
       // The dynamic tag entry applies without this template's dom module.
       linkHolePatcher(tagSection, tagExtra, "patches/dynamic-tag");
-      // Fallback: a write a patch sends its params (a `<let>` its input seeds,
+      // Fallback: a write a patch fills into its params (a `<let>` its input seeds,
       // say) links page-level.
       if (
         isPatch() &&

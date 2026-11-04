@@ -277,7 +277,7 @@ export function scopePageIdentifier(section: Section) {
   return id;
 }
 
-// Whether the client owns a param of the reason, in whichever section it
+// Whether a param of the reason updates from the client, in whichever section it
 // lives: what a value written for a patch needs to wire on the client.
 export function getClientGuard(section: Section, reason: Reason) {
   if (isDynamicWriteGuard(section, reason)) {
@@ -343,7 +343,7 @@ function orMaskGroup(
   section: Section,
   group: ParamReasonGroup,
 ) {
-  const bits = callRuntime("_mask_group", ...getGroupArgs(section, group));
+  const bits = callRuntime("_updates_from", ...getGroupArgs(section, group));
   return value ? t.binaryExpression("|", value, bits) : bits;
 }
 

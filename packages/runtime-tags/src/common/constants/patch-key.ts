@@ -16,7 +16,7 @@ export const Html = "q";
 // A dynamic tag whose renderer arrives as input: the entry renders it.
 export const DynamicTag = "f";
 // Mirrors `AccessorProp.Global` on live scopes.
-export const Globals = "$";
+export const Global = "$";
 // Registered renders a scope runs: a fresh one's setup, in the shell's
 // `setup…!scripts…` grammar, or any scope's signals the patch writes.
 export const Render = "i";

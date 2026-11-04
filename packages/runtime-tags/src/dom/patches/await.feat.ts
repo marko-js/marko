@@ -24,7 +24,7 @@ import type { Signal } from "../signals";
 import { applyInFlush, flushWait } from "./apply";
 import {
   patchers,
-  patchRender,
+  renderData,
   patchScope,
   setupPatchers,
   withCreating,
@@ -48,7 +48,7 @@ const patchPending = {
 
 patchers[PatchKey.Pending] = (scope, accessor, value) => {
   const link = AccessorPrefix.BranchScopes + accessor;
-  // The server now owns this await: its value supersedes a client one.
+  // This await now updates from the server: its value supersedes a client one.
   const pend = (_?: never) =>
     _await_promise(
       (MARKO_DEBUG ? accessor : encodeAccessor(accessor)) as EncodedAccessor,
@@ -145,15 +145,15 @@ patchers[PatchKey.Child] = (scope, link, value) => {
         | Partial<PatchPending>
         | undefined
     )?.[PatchPendingProp.Resolve]?.();
-    const render = patchRender;
-    const stop = render[RenderDataProp.StopPatch];
+    const render = renderData;
+    const stop = render[RenderDataProp.PatchStop];
     const wait = flushWait;
     const settle = wait();
     // A flush applies outside a run's renders, so in that run's effects.
     onStreamLanded(scope, queueEffect, (_: Scope) =>
       settle(
         // A later response superseded this one: settled as applied.
-        stop !== render[RenderDataProp.StopPatch] ||
+        stop !== render[RenderDataProp.PatchStop] ||
           !scope[link] ||
           applyInFlush(wait, render, (_?: never) =>
             patchScope({ [PatchKey.Child + link]: value } as Scope, scope),

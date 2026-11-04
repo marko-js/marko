@@ -4,13 +4,13 @@ import { getFile, loadFileForImport } from "@marko/compiler/babel-utils";
 import { hasClientWork } from "../../util/entry-builder";
 import { linkKnownTagPatchEntries } from "../../util/known-tag";
 import { finalizeReasonsSettled } from "../../util/patch/decisions";
-import { linkPatchSends } from "../../util/shell";
+import { linkPatchFills } from "../../util/shell";
 
 // What a page with this module links, once reasons and setup work settle: the
 // runtime features its patches apply through, and whether it loads client work.
 export function finalizePageLinks(programExtra: t.ProgramExtra) {
   finalizeReasonsSettled();
-  linkPatchSends();
+  linkPatchFills();
   linkKnownTagPatchEntries();
   // Every page with this template links the modules the entry links.
   programExtra.includesClientWork =

@@ -702,7 +702,7 @@ export function recordKnownTagPatchFacts(section: Section) {
   }
 }
 
-// Once param entries are recorded (`linkPatchSends`), each call links the
+// Once param entries are recorded (`linkPatchFills`), each call links the
 // patchers its known child's params need; its callers link what it forwards.
 export function linkKnownTagPatchEntries() {
   let grew: boolean;
@@ -1029,7 +1029,7 @@ export const derivesConstantParam = createPassMemo(
           hasClientState(sources) ||
           hasParamOrGlobalSource(sources) ||
           !rendersCallOnClient(call.childScopeBinding.section) ||
-          feedsClientStateBeside(call, body, param)
+          passesClientStateBeside(call, body, param)
         ) {
           return false;
         }
@@ -1044,7 +1044,7 @@ export const derivesConstantParam = createPassMemo(
 
 // A call feeding client state to a param intersecting this one: the client
 // re-runs the intersection (main serializes the module read for it), so none derive it.
-function feedsClientStateBeside(
+function passesClientStateBeside(
   tagExtra: t.MarkoTagExtra,
   body: Section,
   param: ParamBinding,

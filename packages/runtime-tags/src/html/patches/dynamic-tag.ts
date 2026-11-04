@@ -32,7 +32,7 @@ import {
   PatchRenderState,
   popIdHop,
   pushIdHop,
-  SERVER_ALL,
+  ALL_SERVER,
   _client_branch,
   _patch_fill,
   ensurePatchSetup,
@@ -158,7 +158,7 @@ function renderDynamicTag(
   // The child's groups are unknown: a patch template's page or response
   // writes the tag even where nothing resumes.
   const reason =
-    givenReason ?? (markerGuard !== 0 || isPatchRender ? SERVER_ALL : 0);
+    givenReason ?? (markerGuard !== 0 || isPatchRender ? ALL_SERVER : 0);
   if (site !== undefined) {
     pushIdHop(IdHop.Site, MARKO_DEBUG ? [accessor, site] : site);
   }

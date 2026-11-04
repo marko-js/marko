@@ -241,7 +241,7 @@ function getPendingArgs(bodySection: Section): Array<t.Expression | Falsy> {
     );
   return [
     shellId && t.stringLiteral(shellId),
-    // Where the client owns the promise, `2`: no render of the body writes what the
+    // Where the promise updates from the client, `2`: no render of the body writes what the
     // client lacks; `3`: only a created one does, writing the body's setup work.
     unwritten
       ? t.isNumericLiteral(unfilled)

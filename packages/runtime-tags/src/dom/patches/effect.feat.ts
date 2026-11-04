@@ -7,7 +7,7 @@ import {
 import "./write.feat";
 import { pendingEffects, queueEffect, runId } from "../queue";
 import { _resumed } from "../resume";
-import { readChanged, patchers, patchRender } from "./apply";
+import { readChanged, patchers, renderData } from "./apply";
 import "./marked-write.feat";
 
 declare module "./apply" {
@@ -30,7 +30,7 @@ patchers[PatchKey.Effect] = (scope, id, reads) => {
 // at most once per patch: one they queued already runs.
 patchers[PatchKey.QueuedEffect] = (scope, id, reads) => {
   if (scope[AccessorProp.Gen] !== runId) {
-    const stop = patchRender[RenderDataProp.StopPatch];
+    const stop = renderData[RenderDataProp.PatchStop];
     const batch = pendingEffects as unknown[] & {
       [QueuedEffects]?: Map<unknown, Set<unknown>>;
     };

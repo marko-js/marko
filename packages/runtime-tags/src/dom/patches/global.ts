@@ -14,7 +14,7 @@ import { patchers } from "./apply";
 
 declare module "./apply" {
   interface PatchValues {
-    [PatchKey.Globals]: Record<string, unknown>;
+    [PatchKey.Global]: Record<string, unknown>;
   }
 }
 
@@ -30,7 +30,7 @@ export function _fill_global(
   ...keys: (string | 0)[]
 ): SignalFn {
   // A retained signal brings the patcher that re-runs it.
-  patchers[PatchKey.Globals] = patchGlobals;
+  patchers[PatchKey.Global] = patchGlobal;
   // A scope the document subscribes does so on resume, unless an effect of this id
   // registered first: it subscribes as it runs.
   _resumed[id] ||= (scope: Scope) =>
@@ -118,7 +118,7 @@ let changesMember: typeof membersChanged | undefined;
 
 // Each signal reading a member the patch changes re-runs once per live scope, then
 // the globals land; a later (calling) signal sorts first within a scope (`order`).
-function patchGlobals(
+function patchGlobal(
   live: Scope,
   _accessor: string,
   value: Record<string, unknown>,

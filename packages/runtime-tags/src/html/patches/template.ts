@@ -14,7 +14,7 @@ import {
   PatchPageState,
   PatchRenderState,
   patchBuild,
-  getPatchGlobals,
+  getPatchGlobal,
   patchTreeNode,
   ensureScopePatch,
 } from "./writer";
@@ -71,9 +71,9 @@ function renderPatch(
       state.heldShells = decodeHeld(held);
       state.heldCount = state.heldShells?.size || 0;
     }
-    const globals = getPatchGlobals(state.$global);
+    const globals = getPatchGlobal(state.$global);
     if (globals) {
-      ensureScopePatch(state, ROOT_SCOPE_ID)[PatchKey.Globals] = patchTreeNode(
+      ensureScopePatch(state, ROOT_SCOPE_ID)[PatchKey.Global] = patchTreeNode(
         state,
         globals,
       );

@@ -700,7 +700,7 @@ export default {
           controllable && getControllableHelper(tagName, controllable.state);
         if (controllable) {
           const changeAttr = attrAt(attributes, controllable.attrs[1]);
-          const bindsHandler =
+          const fillsHandler =
             !!changeAttr && writesPatchHandler(tagSection, changeAttr.value);
           // The control's attributes read as one group.
           const controlExtra = attrAt(
@@ -708,13 +708,13 @@ export default {
             controllable.attrs.find(isDefined),
           )!.value.extra!;
           const writesControl = writesPatchHole(tagSection, controlExtra);
-          if (writesControl || bindsHandler) {
+          if (writesControl || fillsHandler) {
             // A param-sourced control value writes only where its group
             // updates from the server.
             const [mask, group] = writesControl
               ? getExprRootGroupArgs(tagSection, controlExtra)
               : [];
-            const [bindMask, bindGroup] = bindsHandler
+            const [changeMask, changeGroup] = fillsHandler
               ? getExprRootGroupArgs(tagSection, changeAttr!.value.extra!)
               : [];
             patchArgs = [
@@ -727,7 +727,7 @@ export default {
                 : absentArg(0),
               writesControl ? mask : absentArg(0),
               writesControl ? group : absentArg(0),
-              bindsHandler &&
+              fillsHandler &&
                 t.stringLiteral(
                   getPatchKey().Write +
                     getPrefixedScopeAccessor(
@@ -735,8 +735,8 @@ export default {
                       getAccessorPrefix().ControlledHandler,
                     ),
                 ),
-              bindMask,
-              bindGroup,
+              changeMask,
+              changeGroup,
             ];
           }
 

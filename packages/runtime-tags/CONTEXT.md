@@ -381,9 +381,9 @@ mixes, a written intersection the scope renders rides the scope's own
 `PatchKey.Render` entry, created or paired.
 _Avoid_: seed block, init payload
 
-**Held flush**:
+**Waiting flush**:
 A flush waiting for the lazy modules it writes into to register
-(`patches/ready`, `holdFlush`); later flushes of the response queue behind it, and a
+(`patches/ready`, `waitFlush`); later flushes of the response queue behind it, and a
 rejected one is discarded.
 
 **Known child**:
@@ -411,7 +411,7 @@ _Avoid_: rebuild, rebuilt structure
 **Stateful structure**:
 A branch body whose branch expression has a state reason (its `BranchExpr`
 slot) — state sources, no `$global`, param sources a patch fills —
-derived from its branch expression (`isStatefulBranch`), never stored; or a
+derived from its branch expression (`isStatefulStructure`), never stored; or a
 content or `<define>` body every consumer renders with client state. Resumed
 code re-renders it, so patch renders skip it and flushes omit its entry. A
 body only some consumer renders so (`getStatefulConsumers`) is patch-written
@@ -514,7 +514,7 @@ Every other value a patch sends is a write.
 _Avoid_: deliver/delivery, forwarder
 
 **Client branch**:
-Content a consumer renders instead of the patch: one the client owns (a tag
+Content a consumer renders instead of the patch: one that updates from the client (a tag
 client state names, unpatched structure) skips it, and the flush reports the
 content (`_client_branch`); a dynamic tag whose renderer is a template renders as
 a client branch the content the compiler names for it. A write the branch reads

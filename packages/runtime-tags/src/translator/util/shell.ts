@@ -32,8 +32,8 @@ import {
   runsSubscribersByWrite,
 } from "./patch/refresh";
 import {
-  inStatefulBranch,
-  isStatefulBranch,
+  inStatefulStructure,
+  isStatefulStructure,
   patchMayWrite,
   patchWrites,
 } from "./patch/structure";
@@ -123,9 +123,9 @@ export const [getShells] = createOutputState(() => {
   return shells;
 });
 
-// At analyze exit, what a page links for the module's patches: the sends a
+// At analyze exit, what a page links for the module's patches: the fills a
 // caller's params decide (read in its compile) and the module's registrations.
-export function linkPatchSends() {
+export function linkPatchFills() {
   const programExtra = getProgram().node.extra;
   forEachSection((section) => {
     if (keepsHoles(section)) linkRuntimeFeature("patches/client-branch");
@@ -152,7 +152,7 @@ function isPatchUpdated(closure: Binding) {
   return !!getPatchFill(root).fill || !!getPatchWrite(root).write;
 }
 
-// A patch's sends into the binding's scope: one a caller's param decides waits
+// A patch's fills into the binding's scope: one a caller's param decides waits
 // there for the caller; the rest link page-level, as the module may not load.
 function recordPatchEntries(binding: Binding) {
   const write = writesSeed(binding) || getPatchWrite(binding).write;
@@ -259,7 +259,7 @@ function recordClosureRenders(binding: Binding) {
       return;
     }
     const { own, structure } = getClosureRenderGroups(binding, closureSection);
-    // No caller decides it: the page links what it sends.
+    // No caller decides it: the page links what it fills.
     if (!own.length) linkRuntimeFeature("patches/render");
     for (const [section, params] of own) {
       addParamFill(section, {
@@ -276,7 +276,7 @@ function recordClosureRenders(binding: Binding) {
   });
 }
 
-// What a patch sends into a section's scopes by its params, here or in a child
+// What a patch fills into a section's scopes by its params, here or in a child
 // they are passed to (`linkKnownTagPatchEntries`).
 export interface ParamEntries {
   fills: ParamFill[];
@@ -286,7 +286,7 @@ export interface ParamEntries {
   bound: SortedOpt<Binding>;
 }
 
-// A fill by its params (`params` unset: sent whatever they are), where `client`'s
+// A fill by its params (`params` unset: filled whatever they are), where `client`'s
 // group may be the client's.
 export interface ParamFill {
   params: ParamReasonGroup | undefined;
@@ -449,7 +449,7 @@ export function shipsContentShell(section: Section) {
     !section.boundaryContent &&
     !section.dropped &&
     patchMayCreate(section) &&
-    !isStatefulBranch(section)
+    !isStatefulStructure(section)
   );
 }
 
@@ -495,7 +495,7 @@ function shipsBranchShell(section: Section) {
 
 // A boundary creates from its content shell, never inside a stateful branch.
 function shipsBoundaryShell(section: Section) {
-  return !isStatefulBranch(section) && !inStatefulBranch(section.parent!);
+  return !isStatefulStructure(section) && !inStatefulStructure(section.parent!);
 }
 
 // The shell a patch creates a body from, as a writer's argument: `0` for none.

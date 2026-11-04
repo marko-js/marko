@@ -67,7 +67,7 @@ export const patchScope = <P extends Scope | 0>(
 };
 // The render a flush is applying against (set by `runFlush`); its response
 // marks a change, which counts for all of that response's flushes.
-export let patchRender!: RenderData;
+export let renderData!: RenderData;
 // Set while a patch applies to a tree a shell's walk just created: fresh
 // scopes met then have no renderer to set them up (see `PatchKey.Setup`).
 export let creating = 0;
@@ -82,7 +82,7 @@ export function withCreating<A, B>(fn: (a: A, b: B) => unknown, a?: A, b?: B) {
 
 // Installed by `patches/ready`: every flush passes it, so a flush naming lazy
 // modules (and every later one of its response) waits for them.
-let holdFlush:
+let waitFlush:
   | ((
       renderId: string,
       response: object,
@@ -176,21 +176,21 @@ export function patch(
   // it stops reading, and nothing it left waiting applies or reports.
   const render = curRenders[$global.renderId];
   const stop = (_?: Event) => {
-    if (render[RenderDataProp.StopPatch] === stop) {
-      render[RenderDataProp.StopPatch] = undefined;
+    if (render[RenderDataProp.PatchStop] === stop) {
+      render[RenderDataProp.PatchStop] = undefined;
       // A body the fetch's own abort or a network error ended rejects this.
       reader?.cancel().catch((_) => 0);
     }
   };
-  render[RenderDataProp.StopPatch]?.();
-  render[RenderDataProp.StopPatch] = stop;
+  render[RenderDataProp.PatchStop]?.();
+  render[RenderDataProp.PatchStop] = stop;
   signal.addEventListener("abort", stop);
   // The caller commits once, before the first line; a promise (a commit the
   // browser completes later) holds each line, and a stopped response applies none.
   const committed = (then: () => void) => {
     if (commit) ((committing = commit()), (commit = undefined));
     const go = (_?: unknown) =>
-      render[RenderDataProp.StopPatch] === stop && then();
+      render[RenderDataProp.PatchStop] === stop && then();
     if (committing) committing.then(go);
     else go();
   };
@@ -205,7 +205,7 @@ export function patch(
     }
     // Re-shipped globals land on the globals object, so `$global` reads never go
     // stale; a page with `$global` signals installed its own (`_fill_global`).
-    patchers[PatchKey.Globals] ||= (live, _key, value) =>
+    patchers[PatchKey.Global] ||= (live, _key, value) =>
       Object.assign(live[AccessorProp.Global], value);
     // Reports once: at the first failure, else when the last wait applies.
     let waits = 1;
@@ -247,8 +247,8 @@ export function patch(
       }),
     );
   };
-  const applyLine: ApplyFlush = holdFlush
-    ? (flush, done) => holdFlush!($global.renderId, stop, flush, apply, done)
+  const applyLine: ApplyFlush = waitFlush
+    ? (flush, done) => waitFlush!($global.renderId, stop, flush, apply, done)
     : apply;
   return [
     // The build the document named, then the render's token once a response
@@ -270,7 +270,7 @@ export function patch(
       let ended: unknown;
       let waiting = 0;
       const fail = (why?: string) => {
-        if (render[RenderDataProp.StopPatch] === stop) {
+        if (render[RenderDataProp.PatchStop] === stop) {
           if (MARKO_DEBUG) console.warn(`A patch rejected: ${why}.`);
           stop();
           onFail();
@@ -280,7 +280,7 @@ export function patch(
       // once the body ended and every flush applied.
       const done: FlushDone = (applied) =>
         applied
-          ? render[RenderDataProp.StopPatch] === stop &&
+          ? render[RenderDataProp.PatchStop] === stop &&
             (onApplied(), --waiting || (ended && onEnd()))
           : MARKO_DEBUG
             ? fail("a flush did not apply")
@@ -289,7 +289,7 @@ export function patch(
       // A server marks a patch with its build; anything else (another build's,
       // or its refusal) is a document the caller loads; a stopped one is not read.
       if (
-        render[RenderDataProp.StopPatch] !== stop ||
+        render[RenderDataProp.PatchStop] !== stop ||
         response.headers.get("x-marko-patch") !==
           render[RenderDataProp.PatchBuild]
       ) {
@@ -313,7 +313,7 @@ export function patch(
           let start = 0;
           let at;
           while (
-            render[RenderDataProp.StopPatch] === stop &&
+            render[RenderDataProp.PatchStop] === stop &&
             ~(at = text.indexOf("\n", start))
           ) {
             waiting++;
@@ -326,7 +326,7 @@ export function patch(
       } catch {
         return MARKO_DEBUG ? fail("the stream was cut short") : fail();
       }
-      if (render[RenderDataProp.StopPatch] === stop) {
+      if (render[RenderDataProp.PatchStop] === stop) {
         ended = 1;
         // The server ends each flush with a newline: a remainder was cut short.
         if (partial + decoder.decode()) {
@@ -347,7 +347,7 @@ let warnedRefusedFlush = false;
 export function readChanged(
   scope: Scope,
   reads: string,
-  stop = patchRender[RenderDataProp.StopPatch],
+  stop = renderData[RenderDataProp.PatchStop],
 ) {
   for (let end = reads.length, start; ~end; end = start) {
     let owner = scope;
@@ -359,8 +359,8 @@ export function readChanged(
   }
 }
 
-export function installHoldFlush(hold: NonNullable<typeof holdFlush>) {
-  holdFlush = hold;
+export function installWaitFlush(hold: NonNullable<typeof waitFlush>) {
+  waitFlush = hold;
 }
 
 // Applies data a flush left waiting on a streaming body, the waits it starts
@@ -387,7 +387,7 @@ function runFlush(render: RenderData, apply: () => void): Applied {
   // the app's: it runs once every render is done.
   pendingEffects.unshift((_: 0) => (rendered = 1), 0);
   try {
-    patchRender = render;
+    renderData = render;
     // A page with no effects never wrote a walk call; pairing into resumed
     // branches needs the walked links, so finish the resume before patching.
     render.w();

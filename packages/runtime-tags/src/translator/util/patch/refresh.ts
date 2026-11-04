@@ -101,13 +101,13 @@ import {
   patchWrites,
   hasStructuralParam,
   isKnownChildNode,
-  inStatefulBranch,
-  isStatefulBranch,
+  inStatefulStructure,
+  isStatefulStructure,
   getParamSelectedStructure,
   calleeKeepsInput,
   getStatefulConsumers,
   isPassedStateByEveryCall,
-  isStatefulLeaf,
+  isStatefulRead,
 } from "./structure";
 
 // Stable wire/registry key for a fill: a register id for a template-wide fill
@@ -136,9 +136,9 @@ export function getPatchFillBindings(section: Section) {
   return bindingUtil.filter(section.bindings, isPatchFillBinding);
 }
 
-// A canonical root server value a patch sends to keep it current (aliases
+// A canonical root server value a patch fills to keep it current (aliases
 // never get ordinals; `$global` readers re-read the re-shipped bag).
-function isPatchSent(binding: Binding) {
+function isPatchFilled(binding: Binding) {
   return (
     isPatch() &&
     getCanonicalBinding(binding) === binding &&
@@ -151,7 +151,7 @@ function isPatchSent(binding: Binding) {
 }
 
 // Content plain renders on the client derives its locals from its closures
-// there: a patch neither fills nor sends them.
+// there: a patch fills none of them.
 export function derivesLocals(section: Section) {
   return isContentScope(section) && !!getRendererReason(section);
 }
@@ -249,7 +249,7 @@ export const [getPatchWrite] = createAnalysisMemo(computePatchWrite, UNREAD);
 function computePatchFill(binding: Binding): PatchFill {
   const { kind, contentKind, keptInLet } = getFillReadKind(binding);
   // A server value the patch writes reaches client-rendered structure by its closures.
-  const owned = hasGuardedSources(binding);
+  const guarded = hasGuardedSources(binding);
   // A value only intersections the patch writes call for rides its slot write.
   const writes = getIntersectionWrites(kind);
   const reasons = writes ? undefined : kind;
@@ -287,15 +287,15 @@ function computePatchFill(binding: Binding): PatchFill {
     effectRead,
     fnReference,
     objectSource,
-    // A sent value effects, function references, built objects' readers or an intersection a
+    // A filled value effects, function references, built objects' readers or an intersection a
     // write's render reads: written where a flush writes its scope.
     writeReads:
-      isPatchSent(binding) &&
+      isPatchFilled(binding) &&
       (effectRead ||
         fnReference ||
         objectSource ||
         writesForIntersectionInit(binding) ||
-        (owned && !!kind)),
+        (guarded && !!kind)),
     // Only the patch's key reaches the declaration: a `<let>` nothing assigns.
     ownRegistration: fill && !binding.assignments,
     intersectionWrites: fill ? writes : undefined,
@@ -504,7 +504,7 @@ function computeFillReadKind(binding: Binding) {
   }
   // A known child that is itself stateful structure renders every read from
   // what its calls pass, on the client.
-  if (isKnownChild(binding.section) && isStatefulBranch(binding.section)) {
+  if (isKnownChild(binding.section) && isStatefulStructure(binding.section)) {
     kind = true;
   }
   for (const [read] of binding.reads) {
@@ -688,7 +688,7 @@ function getReadStructure(
       const kept = keepsContent(readSection);
       if (
         !kept &&
-        (isStatefulBranch(readSection) || getStatefulConsumers(readSection))
+        (isStatefulStructure(readSection) || getStatefulConsumers(readSection))
       ) {
         return true;
       }
@@ -872,7 +872,7 @@ function rendersWithOwner(content: Section) {
   return (
     !!derives &&
     isKnownTagExtra(derives.tag) &&
-    !isStatefulBranch(content) &&
+    !isStatefulStructure(content) &&
     !someRead(getDerivedReaders(derives), rendersApart)
   );
 }
@@ -948,8 +948,8 @@ export function getPassedReads(section: Section, extra: t.NodeExtra) {
   return hops;
 }
 
-// A value a patch may send, as `>` hops from `section` up to its own (what the
-// runtime's `readChanged` reads); client state and constants it never sends.
+// A value a patch may fill, as `>` hops from `section` up to its own (what the
+// runtime's `readChanged` reads); client state and constants it never fills.
 export function getWriteHop(section: Section, binding: Binding) {
   const sources = getSourcesForReferencedBindings(binding);
   if (sources?.param || sources?.global) {
@@ -960,7 +960,7 @@ export function getWriteHop(section: Section, binding: Binding) {
   }
 }
 
-// An effect its entry re-runs on every member a patch sends: one it writes, or
+// An effect its entry re-runs on every member a patch fills: one it writes, or
 // one it fills (whose fill marks its change), with no client state among them.
 export function runsByEntry(refs: ReferencedBindings) {
   return !!refs && every(refs, runsEffectOnPatch);
@@ -1700,7 +1700,7 @@ export function isSectionParam(binding: Binding) {
 }
 
 // The caller params a `$global` signal reads unfilled: a changed key re-runs it
-// only where the client owns them.
+// only where they update from the client.
 export function getUnfillableSources(refs: ReferencedBindings) {
   return getSourcesForReferencedBindings(
     bindingUtil.filter(refs, isUnfillablePatchRead),
@@ -1771,7 +1771,7 @@ function patchMayCreateAtRead(
   const rendersContent = isContentRender(read);
   const inTemplate = read.section.program === content.program;
   return (
-    !isStatefulLeaf(read) &&
+    !isStatefulRead(read) &&
     (rendersContent ||
       !read.derives ||
       some(
@@ -1923,7 +1923,7 @@ export function fillSubscribes(closure: Binding, section: Section) {
 export function closureCarriesFill(closure: Binding, section: Section) {
   return (
     hasLoneRead(closure, section) ||
-    (inStatefulBranch(section) && hasClosureSignalRead(closure, section))
+    (inStatefulStructure(section) && hasClosureSignalRead(closure, section))
   );
 }
 
@@ -2074,7 +2074,7 @@ function findUnfilledStructure(
         // fills the intersection's hole itself.
         if (fill && !filledHole) return false;
         // A caller param fills (or is written for an intersection's render) by its group;
-        // one no patch sends re-runs the intersection only where the client calls it.
+        // one no patch fills re-runs the intersection only where the client calls it.
         if (hasCallerParamSource(partner.sources)) {
           structure = sourcesUtil.add(
             structure,
@@ -2234,7 +2234,7 @@ function computePatchWrite(binding: Binding): PatchWrite {
   const { fill, effectRead } = getPatchFill(binding);
   return {
     write,
-    // An effect of a server value alone re-runs by its entry where a fill sends the
+    // An effect of a server value alone re-runs by its entry where a fill supplies the
     // value, since the fill's registrations run its intersections only.
     effect:
       effectRead &&
@@ -2248,7 +2248,7 @@ function computePatchWrite(binding: Binding): PatchWrite {
 }
 
 // A client read the patch leaves unfilled: always, or under structure a caller
-// group owns.
+// group updates from the client.
 function leavesReadUnfilled(binding: Binding) {
   const structure =
     !getPatchFill(binding).objectSource &&
@@ -2263,7 +2263,7 @@ function leavesReadUnfilled(binding: Binding) {
   );
 }
 
-// A sent value effects, function references, built objects or an intersection a write's render reads,
+// A filled value effects, function references, built objects or an intersection a write's render reads,
 // in a scope a flush writes, that no fill always renders.
 function isPatchWritten(binding: Binding) {
   const { fill, writeReads } = getPatchFill(binding);

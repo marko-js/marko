@@ -1,5 +1,5 @@
 import { AccessorPrefix, PatchKey, RenderDataProp } from "../../common/types";
-import { patchers, patchRender } from "./apply";
+import { patchers, renderData } from "./apply";
 // A created scope takes the same value as a plain setup write.
 import "./write.feat";
 
@@ -7,7 +7,7 @@ import "./write.feat";
 patchers[PatchKey.MarkedWrite] = (scope, accessor, value) => {
   if (scope[accessor] !== value) {
     scope[AccessorPrefix.PatchChanged + accessor] =
-      patchRender[RenderDataProp.StopPatch];
+      renderData[RenderDataProp.PatchStop];
   }
   scope[accessor] = value;
 };

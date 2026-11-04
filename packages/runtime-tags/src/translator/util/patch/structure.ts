@@ -26,7 +26,7 @@ import { hasClientState, holdsInitialValue } from "./decisions";
 // stateful structure.
 export function patchWrites(section: Section) {
   return (
-    isPatch() && section.enclosing.branchPath && !inStatefulBranch(section)
+    isPatch() && section.enclosing.branchPath && !inStatefulStructure(section)
   );
 }
 
@@ -35,25 +35,25 @@ export function patchWrites(section: Section) {
 export const patchMayWrite = createPassMemo(
   (section: Section): boolean =>
     (!section.parent || patchMayWrite(section.parent)) &&
-    (!isStatefulBranch(section) || !!section.derives),
+    (!isStatefulStructure(section) || !!section.derives),
   false,
 );
 
 // Inside stateful structure (inclusive). The parent is asked first, so only the
 // section's own answer can loop back to it, where it reads as not stateful.
-export const inStatefulBranch = createPassMemo(
+export const inStatefulStructure = createPassMemo(
   (section: Section): boolean =>
-    (!!section.parent && inStatefulBranch(section.parent)) ||
-    isStatefulBranch(section),
+    (!!section.parent && inStatefulStructure(section.parent)) ||
+    isStatefulStructure(section),
   false,
 );
 
 // Content read inside stateful structure renders there; a tag rendering it
 // with client state renders it on the client wherever it sits.
-export function isStatefulLeaf(read: ReferencedExtra) {
+export function isStatefulRead(read: ReferencedExtra) {
   return (
     (isContentRender(read) || !!read.derives) &&
-    (inStatefulBranch(read.section) ||
+    (inStatefulStructure(read.section) ||
       // State the client never changes renders as the server does.
       (!!read.rendersContent && hasClientState(getSourcesForExpr(read))))
   );
@@ -63,7 +63,7 @@ export function isStatefulLeaf(read: ReferencedExtra) {
 function isPatchedLeaf(read: ReferencedExtra) {
   return (
     isContentRender(read) &&
-    (!isStatefulLeaf(read) ||
+    (!isStatefulRead(read) ||
       (!!read.nameOnly &&
         every(getSourcesForExpr(read)?.state, (state) =>
           holdsInitialValue(state, read.section),
@@ -77,7 +77,7 @@ export const getStatefulConsumers = createPassMemo(
   (section: Section): "some" | "every" | undefined => {
     const { derives } = section;
     const readers = derives && getDerivedReaders(derives);
-    if (!readers || !someRead(readers, isStatefulLeaf)) return;
+    if (!readers || !someRead(readers, isStatefulRead)) return;
     return some(section.renderedBy, isPatchedCall) ||
       someRead(readers, isPatchedLeaf)
       ? "some"
@@ -87,12 +87,12 @@ export const getStatefulConsumers = createPassMemo(
 );
 
 function isPatchedCall(call: KnownTagExtra) {
-  return !inStatefulBranch(call.childScopeBinding.section);
+  return !inStatefulStructure(call.childScopeBinding.section);
 }
 
 // A branch body whose branch expression has a state reason (or nested in one), or
 // that every consumer or call makes stateful.
-export const isStatefulBranch = createPassMemo((section: Section) => {
+export const isStatefulStructure = createPassMemo((section: Section) => {
   // An optional branch or a dynamic tag body: the client renders one whose
   // expression derives from client state or that every call passes it.
   const expr =
@@ -106,18 +106,18 @@ export const isStatefulBranch = createPassMemo((section: Section) => {
     getStatefulConsumers(section) === "every" ||
     (!!expr &&
       (hasClientState(sources) ||
-        inStatefulBranch(section.parent!) ||
+        inStatefulStructure(section.parent!) ||
         isPassedStateByEveryCall(sources)))
   );
 }, false);
 
 // An `<await>` body is its owner's branch; the client settles its promise where that
-// derives from client state, client-owned structure holds it, or every call passes state.
+// derives from client state, structure updating from the client holds it, or every call passes state.
 export function settlesOnClient(body: Section) {
   const sources = getSourcesForExpr(body.branchExpr!);
   return (
     hasClientState(sources) ||
-    inStatefulBranch(body.parent!) ||
+    inStatefulStructure(body.parent!) ||
     isPassedStateByEveryCall(sources)
   );
 }
@@ -199,7 +199,7 @@ export function hasStructuralParam(group: ParamReasonGroup) {
 export function patchesBranchesAt(binding: Binding) {
   return (
     patchWrites(binding.section) &&
-    !some(binding.branchBodies, isStatefulBranch)
+    !some(binding.branchBodies, isStatefulStructure)
   );
 }
 

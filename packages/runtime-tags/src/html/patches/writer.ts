@@ -392,18 +392,18 @@ function ensurePatchTree(state: PatchRenderState) {
 
 // Every group server-sourced, for a child whose groups the caller cannot see;
 // bit 0, which no group uses, keeps it apart from any mask, as `ALL_GROUPS`.
-export const SERVER_ALL = 0x55555555;
+export const ALL_SERVER = 0x55555555;
 
-// Where a group updates from: its 2 bits, which `_mask_group` also composes
-// into a child's mask. No mask (no group args) reads as `SERVER_ALL`.
+// Where a group updates from: its 2 bits, which `_updates_from` also composes
+// into a child's mask. No mask (no group args) reads as `ALL_SERVER`.
 export function getUpdatesFrom(mask: GroupMask, group: number) {
-  return mask === undefined || mask === SERVER_ALL
+  return mask === undefined || mask === ALL_SERVER
     ? UpdatesFrom.Server
     : getGroupReason(mask, group);
 }
 
-// Whether the group is client-sourced (the low mask bit): the resumed page then
-// owns whatever derives from the group.
+// Whether the group is client-sourced (the low mask bit): whatever derives from
+// the group then updates from the resumed page.
 export function _client_guard(mask: GroupMask, group: number) {
   return getUpdatesFrom(mask, group) & UpdatesFrom.Client ? 1 : 0;
 }
@@ -480,9 +480,9 @@ export class PatchPageState extends State {
   }
 }
 
-// A patch's globals keep undefined-valued keys (they overwrite, where a resume
+// A patch's `$global` values keep undefined-valued keys (they overwrite, where a resume
 // elides) but not the nonce: the document's CSP decides the live page's.
-export function getPatchGlobals($global: Record<string, unknown>) {
+export function getPatchGlobal($global: Record<string, unknown>) {
   const serializedGlobals = $global.serializedGlobals as
     | string[]
     | Record<string, boolean>
@@ -593,7 +593,7 @@ export class PatchRenderState extends PatchPageState {
     super($global);
     this.hasWalkerRuntime = true;
     this.hasWrittenReady = true;
-    // The live page owns its serialized globals; a flush never re-ships them.
+    // The live page keeps its serialized globals; a flush never re-ships them.
     this.hasWrittenGlobals = true;
   }
 
@@ -907,17 +907,17 @@ export function _patch_let_change(
   scopeId: number,
   valueKey: string,
   value: unknown,
-  bindKey: string,
+  changeKey: string,
   change: unknown,
   mask?: GroupMask,
   group?: number,
-  bindMask?: GroupMask,
-  bindGroup?: number,
+  changeMask?: GroupMask,
+  changeGroup?: number,
 ) {
   if (getState() instanceof PatchRenderState) {
     const filled = change && _filled_guard(mask, group!);
     _patch_fill(scopeId, valueKey, value, filled ? undefined : 1, mask, group);
-    _patch_bind(scopeId, bindKey, change, bindMask, bindGroup);
+    _patch_bind(scopeId, changeKey, change, changeMask, changeGroup);
   }
 }
 
@@ -1028,7 +1028,7 @@ export function _patch_write(
 }
 
 // An effect, and in a patch render its entry (`1`, or `2` queued) valued by the
-// writes it depends on that the patch sends.
+// writes it depends on that the patch fills.
 export function _script(
   scopeId: number,
   registryId: string,

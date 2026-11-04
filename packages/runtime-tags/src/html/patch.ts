@@ -67,7 +67,7 @@ export {
   _client_branch,
   _fill_global_subscribe,
   _filled_guard,
-  getUpdatesFrom as _mask_group,
+  getUpdatesFrom as _updates_from,
   _page_render,
   _patch_bind,
   _patch_child,

@@ -335,9 +335,9 @@ export function _attr_input_value(
   controlKey?: string | 0,
   mask?: GroupMask,
   group?: number,
-  bindKey?: string,
-  bindMask?: GroupMask,
-  bindGroup?: number,
+  changeKey?: string,
+  changeMask?: GroupMask,
+  changeGroup?: number,
 ) {
   return patchControl(
     scopeId,
@@ -346,9 +346,9 @@ export function _attr_input_value(
     controlKey,
     mask,
     group,
-    bindKey,
-    bindMask,
-    bindGroup,
+    changeKey,
+    changeMask,
+    changeGroup,
   )
     ? ""
     : _base_attr_input_value(scopeId, nodeAccessor, value, valueChange);
@@ -362,9 +362,9 @@ export function _attr_input_checked(
   controlKey?: string | 0,
   mask?: GroupMask,
   group?: number,
-  bindKey?: string,
-  bindMask?: GroupMask,
-  bindGroup?: number,
+  changeKey?: string,
+  changeMask?: GroupMask,
+  changeGroup?: number,
 ) {
   return patchControl(
     scopeId,
@@ -373,9 +373,9 @@ export function _attr_input_checked(
     controlKey,
     mask,
     group,
-    bindKey,
-    bindMask,
-    bindGroup,
+    changeKey,
+    changeMask,
+    changeGroup,
   )
     ? ""
     : _base_attr_input_checked(scopeId, nodeAccessor, checked, checkedChange);
@@ -391,9 +391,9 @@ export function _attr_input_checkedValue(
   controlKey?: string | 0,
   mask?: GroupMask,
   group?: number,
-  bindKey?: string,
-  bindMask?: GroupMask,
-  bindGroup?: number,
+  changeKey?: string,
+  changeMask?: GroupMask,
+  changeGroup?: number,
 ) {
   return patchControl(
     scopeId,
@@ -402,9 +402,9 @@ export function _attr_input_checkedValue(
     controlKey,
     mask,
     group,
-    bindKey,
-    bindMask,
-    bindGroup,
+    changeKey,
+    changeMask,
+    changeGroup,
   )
     ? ""
     : _base_attr_input_checkedValue(
@@ -424,9 +424,9 @@ export function _attr_details_or_dialog_open(
   controlKey?: string | 0,
   mask?: GroupMask,
   group?: number,
-  bindKey?: string,
-  bindMask?: GroupMask,
-  bindGroup?: number,
+  changeKey?: string,
+  changeMask?: GroupMask,
+  changeGroup?: number,
 ) {
   return patchControl(
     scopeId,
@@ -435,9 +435,9 @@ export function _attr_details_or_dialog_open(
     controlKey,
     mask,
     group,
-    bindKey,
-    bindMask,
-    bindGroup,
+    changeKey,
+    changeMask,
+    changeGroup,
   )
     ? ""
     : _base_attr_details_or_dialog_open(
@@ -458,9 +458,9 @@ export function _attr_select_value(
   controlKey?: string | 0,
   mask?: GroupMask,
   group?: number,
-  bindKey?: string,
-  bindMask?: GroupMask,
-  bindGroup?: number,
+  changeKey?: string,
+  changeMask?: GroupMask,
+  changeGroup?: number,
 ) {
   if (
     patchControl(
@@ -470,9 +470,9 @@ export function _attr_select_value(
       controlKey,
       mask,
       group,
-      bindKey,
-      bindMask,
-      bindGroup,
+      changeKey,
+      changeMask,
+      changeGroup,
     )
   ) {
     content();
@@ -489,9 +489,9 @@ export function _attr_textarea_value(
   controlKey?: string | 0,
   mask?: GroupMask,
   group?: number,
-  bindKey?: string,
-  bindMask?: GroupMask,
-  bindGroup?: number,
+  changeKey?: string,
+  changeMask?: GroupMask,
+  changeGroup?: number,
 ) {
   return patchControl(
     scopeId,
@@ -500,9 +500,9 @@ export function _attr_textarea_value(
     controlKey,
     mask,
     group,
-    bindKey,
-    bindMask,
-    bindGroup,
+    changeKey,
+    changeMask,
+    changeGroup,
   )
     ? ""
     : _base_attr_textarea_value(scopeId, nodeAccessor, value, valueChange);
@@ -517,9 +517,9 @@ function patchControl(
   controlKey: string | 0 | undefined,
   mask: GroupMask | undefined,
   group: number | undefined,
-  bindKey: string | undefined,
-  bindMask: GroupMask | undefined,
-  bindGroup: number | undefined,
+  changeKey: string | undefined,
+  changeMask: GroupMask | undefined,
+  changeGroup: number | undefined,
 ) {
   const state = getState();
   if (!(state instanceof PatchRenderState)) {
@@ -527,7 +527,7 @@ function patchControl(
     if (controlKey) walkMarkers(state);
     return false;
   }
-  if (bindKey) _patch_bind(scopeId, bindKey, handler, bindMask, bindGroup);
+  if (changeKey) _patch_bind(scopeId, changeKey, handler, changeMask, changeGroup);
   if (controlKey) {
     const fills = ensureFills(scopeId, mask, group!);
     if (fills) fills[controlKey] = normalizePatchValue(value);

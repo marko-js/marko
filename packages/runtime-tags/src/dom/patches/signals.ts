@@ -22,7 +22,7 @@ import {
   type Signal,
   type SignalFn,
 } from "../signals";
-import { readChanged, patchFills, patchRender, setupPatchers } from "./apply";
+import { readChanged, patchFills, renderData, setupPatchers } from "./apply";
 
 // A declaration's fill run that leaves out a signal its scope renders marks its
 // change for that render, as a write marks it.
@@ -34,7 +34,7 @@ export function _fill_mark(
     scope[
       AccessorPrefix.PatchChanged +
         (MARKO_DEBUG ? valueAccessor : decodeAccessor(valueAccessor as number))
-    ] = patchRender[RenderDataProp.StopPatch];
+    ] = renderData[RenderDataProp.PatchStop];
     if (fillFn) fillFn(scope);
   };
 }

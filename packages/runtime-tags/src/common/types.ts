@@ -65,7 +65,7 @@ export {
   ClosureScopesProp,
   PatchKey,
   ClosureSignalProp,
-  HeldFlushProp,
+  WaitingFlushProp,
   KeyedScopesProp,
   PatchPendingProp,
   PendingRenderProp,

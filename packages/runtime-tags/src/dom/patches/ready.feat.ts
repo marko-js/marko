@@ -1,40 +1,40 @@
-import { HeldFlushProp, RenderDataProp } from "../../common/types";
+import { WaitingFlushProp, RenderDataProp } from "../../common/types";
 import { curRenders, installReady } from "../resume";
-import { type Applied, type FlushDone, installHoldFlush } from "./apply";
+import { type Applied, type FlushDone, installWaitFlush } from "./apply";
 import { isLoaded, startLoad } from "./load";
 
-// A flush held for lazy modules, unevaluated (as a ready channel's thunk is),
+// A flush waiting for lazy modules, unevaluated (as a ready channel's thunk is),
 // with the apply its response runs it by and the done its caller awaits.
-type Held = {
-  [HeldFlushProp.Deps]: string[];
-  [HeldFlushProp.Flush]: string;
-  [HeldFlushProp.Apply]: (flush: string, done: FlushDone) => void;
-  [HeldFlushProp.Done]: FlushDone;
-  [HeldFlushProp.Stop]: object;
+type Waiting = {
+  [WaitingFlushProp.ReadyIds]: string[];
+  [WaitingFlushProp.Flush]: string;
+  [WaitingFlushProp.Apply]: (flush: string, done: FlushDone) => void;
+  [WaitingFlushProp.Done]: FlushDone;
+  [WaitingFlushProp.Stop]: object;
 };
-// A render's held flushes, in order: once a flush waits, every later flush of
+// A render's waiting flushes, in order: once a flush waits, every later flush of
 // its response waits behind it.
-const held = new Map<string, Held[]>();
+const waiting = new Map<string, Waiting[]>();
 
 // Module evaluation is the enablement: a patch page's entry imports it once a
 // template it reaches has a lazy load import.
-installHoldFlush(holdFlush);
-installReady(applyHeldFlushes, recordFailed);
+installWaitFlush(waitFlush);
+installReady(applyWaitingFlushes, recordFailed);
 
 // A flush led by ids (`_a,_b,{…}`) names the lazy modules its response first
 // needs there; it applies once they are resident and every earlier flush has.
-function holdFlush(
+function waitFlush(
   renderId: string,
   stop: object,
   ledFlush: string,
-  apply: Held[typeof HeldFlushProp.Apply],
+  apply: Waiting[typeof WaitingFlushProp.Apply],
   done: FlushDone,
 ) {
-  const deps: string[] = [];
-  let queue: Held[] | 0 | undefined = held.get(renderId);
+  const readyIds: string[] = [];
+  let queue: Waiting[] | 0 | undefined = waiting.get(renderId);
   // A response re-ships full state: what an earlier one left waiting is
   // superseded, and its appliers settle as applied.
-  if (queue && queue[0][HeldFlushProp.Stop] !== stop) {
+  if (queue && queue[0][WaitingFlushProp.Stop] !== stop) {
     settle(renderId, queue, 1);
     queue = 0;
   }
@@ -47,7 +47,7 @@ function holdFlush(
       ? ledFlush[start] === '"' && ~(end = ledFlush.indexOf('",', start))
       : /[\w$]/.test(ledFlush[start]) && ~(end = ledFlush.indexOf(",", start));
   ) {
-    deps.push(
+    readyIds.push(
       MARKO_DEBUG
         ? ledFlush.slice(start + 1, end)
         : "_" + ledFlush.slice(start, end),
@@ -57,33 +57,33 @@ function holdFlush(
   const flush = ledFlush.slice(start);
   // A lazy tag whose module died at page load stays inert: a flush naming
   // it could never apply, so it rejects (the caller navigates).
-  for (const dep of deps) {
-    if (failed.has(dep)) {
+  for (const readyId of readyIds) {
+    if (failed.has(readyId)) {
       if (queue) settle(renderId, queue, 0);
       return done(0);
     }
   }
-  if (!queue && deps.every(isLoaded)) return apply(flush, done);
-  if (!queue) held.set(renderId, (queue = []));
+  if (!queue && readyIds.every(isLoaded)) return apply(flush, done);
+  if (!queue) waiting.set(renderId, (queue = []));
   queue.push({
-    [HeldFlushProp.Deps]: deps,
-    [HeldFlushProp.Flush]: flush,
-    [HeldFlushProp.Apply]: apply,
-    [HeldFlushProp.Done]: done,
-    [HeldFlushProp.Stop]: stop,
+    [WaitingFlushProp.ReadyIds]: readyIds,
+    [WaitingFlushProp.Flush]: flush,
+    [WaitingFlushProp.Apply]: apply,
+    [WaitingFlushProp.Done]: done,
+    [WaitingFlushProp.Stop]: stop,
   });
-  for (const dep of deps) startLoad(dep, rejectHeldFlushes);
+  for (const readyId of readyIds) startLoad(readyId, rejectWaitingFlushes);
 }
 
 // A module landing applies the flushes it unblocks, oldest first.
-function applyHeldFlushes(readyId: string) {
-  for (const [renderId, queue] of held) {
+function applyWaitingFlushes(readyId: string) {
+  for (const [renderId, queue] of waiting) {
     if (
-      queue.some((heldFlush) => heldFlush[HeldFlushProp.Deps].includes(readyId))
+      queue.some((waitingFlush) => waitingFlush[WaitingFlushProp.ReadyIds].includes(readyId))
     ) {
       if (
-        queue[0][HeldFlushProp.Stop] !==
-        curRenders[renderId][RenderDataProp.StopPatch]
+        queue[0][WaitingFlushProp.Stop] !==
+        curRenders[renderId][RenderDataProp.PatchStop]
       ) {
         // A later navigation started (`patch()`): this response is abandoned.
         settle(renderId, queue, 1);
@@ -92,22 +92,22 @@ function applyHeldFlushes(readyId: string) {
         while (
           !stopped &&
           queue.length &&
-          queue[0][HeldFlushProp.Deps].every(isLoaded)
+          queue[0][WaitingFlushProp.ReadyIds].every(isLoaded)
         ) {
-          const heldFlush = queue.shift()!;
-          heldFlush[HeldFlushProp.Apply](
-            heldFlush[HeldFlushProp.Flush],
+          const waitingFlush = queue.shift()!;
+          waitingFlush[WaitingFlushProp.Apply](
+            waitingFlush[WaitingFlushProp.Flush],
             (applied) => {
               // A flush that fails fails the flushes behind it.
               if (!applied && !stopped) {
                 stopped = 1;
                 settle(renderId, queue, 0);
               }
-              heldFlush[HeldFlushProp.Done](applied);
+              waitingFlush[WaitingFlushProp.Done](applied);
             },
           );
         }
-        if (!queue.length) held.delete(renderId);
+        if (!queue.length) waiting.delete(renderId);
       }
     }
   }
@@ -118,22 +118,22 @@ function applyHeldFlushes(readyId: string) {
 const failed = new Set<string>();
 function recordFailed(readyId: string) {
   failed.add(readyId);
-  rejectHeldFlushes(readyId);
+  rejectWaitingFlushes(readyId);
 }
 
 // The flushes waiting on a module that failed to load reject (their caller
 // navigates).
-function rejectHeldFlushes(readyId: string) {
-  for (const [renderId, queue] of held) {
+function rejectWaitingFlushes(readyId: string) {
+  for (const [renderId, queue] of waiting) {
     if (
-      queue.some((heldFlush) => heldFlush[HeldFlushProp.Deps].includes(readyId))
+      queue.some((waitingFlush) => waitingFlush[WaitingFlushProp.ReadyIds].includes(readyId))
     ) {
       settle(renderId, queue, 0);
     }
   }
 }
 
-function settle(renderId: string, queue: Held[], applied: Applied) {
-  held.delete(renderId);
-  for (const heldFlush of queue) heldFlush[HeldFlushProp.Done](applied);
+function settle(renderId: string, queue: Waiting[], applied: Applied) {
+  waiting.delete(renderId);
+  for (const waitingFlush of queue) waitingFlush[WaitingFlushProp.Done](applied);
 }

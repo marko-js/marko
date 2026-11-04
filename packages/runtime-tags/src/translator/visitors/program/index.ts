@@ -180,7 +180,7 @@ export default {
           const { filename } = entryFile.opts;
           const readyId = getReadyId(entryFile)!;
           // A rejected chunk blocks this ready id forever: debug reports it;
-          // patch pages also report in production so held flushes settle.
+          // patch pages also report in production so waiting flushes settle.
           const report = !markoOpts.optimize || isPatch();
           program.node.body = [
             t.importDeclaration(

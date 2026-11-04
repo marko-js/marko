@@ -507,7 +507,7 @@ export function writePatchResumeStatements(
   }
 
   // Elsewhere a controlled `<let>` only fills, while its handler controls it
-  // and the server owns its controller.
+  // and its controller updates from the server.
   for (const [binding, change] of letChanges) {
     const controller = getSourcesForExpr(binding.derivedFrom as t.NodeExtra);
     if (!controller?.state) {
@@ -536,7 +536,7 @@ export function writePatchResumeStatements(
 }
 
 // A controlled `<let>`'s value, a fill while its handler controls it and the
-// server owns its controller, else a seed; then its handler binds.
+// controller updates from the server, else a seed; then its handler binds.
 function buildLetChangeWrites(
   section: Section,
   binding: Binding,
@@ -546,7 +546,7 @@ function buildLetChangeWrites(
   const bindGroupArgs = change.reason.always
     ? []
     : getRootGroupArgs(section, change.reason);
-  const bindKey =
+  const changeKey =
     getPatchKey().Write +
     getPrefixedScopeAccessor(binding, getAccessorPrefix().TagVariableChange);
   const controller = getSourcesForExpr(binding.derivedFrom as t.NodeExtra);
@@ -564,7 +564,7 @@ function buildLetChangeWrites(
       callRuntime(
         "_patch_bind",
         getScopeIdIdentifier(section),
-        t.stringLiteral(bindKey),
+        t.stringLiteral(changeKey),
         t.cloneNode(change.expression),
         ...bindGroupArgs,
       ),
@@ -577,7 +577,7 @@ function buildLetChangeWrites(
       getScopeIdIdentifier(section),
       t.stringLiteral(getPatchKey().Fill + getPatchFillKey(binding)),
       getDeclaredBindingExpression(binding),
-      t.stringLiteral(bindKey),
+      t.stringLiteral(changeKey),
       t.cloneNode(change.expression),
       groupArgs[0],
       groupArgs[1],
@@ -598,7 +598,7 @@ function buildLetSeeds(section: Section, binding: Binding) {
 }
 
 // A created scope's own state starts from its inits' values: the server's
-// only where it owns their caller groups.
+// only where their caller groups update from the server.
 function getStateInitGuard(section: Section, binding: Binding) {
   return getCallerGroupGuard(
     section,
@@ -778,7 +778,7 @@ export function getValueNodeMarkerGuard(section: Section, binding: Binding) {
         )))
   ) {
     return (
-      orCallerGroupGuards(section, undefined, "_mask_group", rendered) ||
+      orCallerGroupGuards(section, undefined, "_updates_from", rendered) ||
       t.numericLiteral(0)
     );
   }
@@ -1152,7 +1152,7 @@ function getClientBranchGuard(
       getScopeIdIdentifier(scopeSection),
     );
     guard = orGuard(guard, check);
-    // Live too where the client owns what picks it, which a patch never
+    // Live too where what picks it updates from the client, which a patch never
     // sees: each group once.
     const reason = getRendererReason(content);
     if (reason && isDynamicWriteGuard(section, reason)) {
@@ -1177,7 +1177,7 @@ function getUnfilledPatchWrite(section: Section, binding: Binding) {
     undefined,
     getConstantSetup(section, binding),
   );
-  // A built object's source rides its readers' entries, where a patch sends them.
+  // A built object's source rides its readers' entries, where a patch fills them.
   if (getPatchFill(binding).objectSource) return write;
   const canonical = getCanonicalBinding(binding);
   const contents = getClosureContents(canonical);
@@ -1270,7 +1270,7 @@ function getConstantSetup(section: Section, binding: Binding) {
 }
 
 // What an entry depends on, as shells' hops (`>` per owner up), each where this instance's
-// patch sends it (bare where the entry's guard checks its one group); one read stands alone.
+// patch fills it (bare where the entry's guard checks its one group); one read stands alone.
 function getReads(
   section: Section,
   roots: Binding[],
