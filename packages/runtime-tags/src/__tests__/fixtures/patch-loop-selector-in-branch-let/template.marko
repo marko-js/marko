@@ -1,0 +1,9 @@
+<let/rows=[{ id: 1 }, { id: 2 }, { id: 3 }]/>
+<let/selected:=input.selected/>
+<if=rows.length>
+  <ul>
+    <for|row| of=rows by="id">
+      <li class=(selected === row.id && "sel") onClick() { selected = row.id }>${row.id}</li>
+    </for>
+  </ul>
+</if>

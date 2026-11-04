@@ -1,0 +1,12 @@
+static function check(fail?: boolean) {
+  if (fail) throw new Error("down");
+}
+<main>
+  <if=input.show>
+    <try>
+      <const/ready=check(input.fail)/>
+      <p>Ready</p>
+      <@catch>Unavailable</@catch>
+    </try>
+  </if>
+</main>

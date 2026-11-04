@@ -1,0 +1,8 @@
+<let/n=0/>
+<button.inc onClick() { n++ }>${n}</button>
+<user-info/info user=input.user/>
+<p>${info.name}</p>
+<if=input.show>
+  <user-info/info2 user=input.user2/>
+  <p>${info2.name}</p>
+</if>
