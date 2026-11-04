@@ -3,10 +3,14 @@ import { getFile, importDefault } from "@marko/compiler/babel-utils";
 
 import { getUnusedParamIdentifier } from "../../util/generate-uid";
 import { addTagVarBindings } from "../../util/known-tag";
-import { isOptimize } from "../../util/marko-config";
+import { isOptimize, isPatch } from "../../util/marko-config";
 import { writeModuleRegistrations } from "../../util/module-registrations";
 import { forEach } from "../../util/optional";
-import { callRuntime, registerRuntimeValue } from "../../util/runtime";
+import {
+  callRuntime,
+  importRuntimeFeature,
+  registerRuntimeValue,
+} from "../../util/runtime";
 import {
   getScopeAccessor,
   getSectionScopesAccessorLiteral,
@@ -14,10 +18,10 @@ import {
 import { scopeIdentifier } from "../../util/scope-read";
 import { isSectionRendererElided } from "../../util/section-renderer";
 import {
+  getRendererReason,
   forEachSectionReverse,
   getDynamicTagContentClosures,
   getSectionForBody,
-  getRendererReason,
   isDynamicClosure,
   type Section,
   setBranchRendererArgs,
@@ -45,6 +49,11 @@ import type { TemplateVisitor } from "../../util/visitors";
 export default {
   translate: {
     enter(program) {
+      // A page that loads this module takes the features analyze linked
+      // from it rather than from its entry.
+      for (const feature of program.node.extra.runtimeFeatures || []) {
+        importRuntimeFeature(feature);
+      }
       const section = getSectionForBody(program)!;
       forEachSectionReverse((childSection) => {
         if (childSection !== section) {
@@ -165,6 +174,11 @@ export default {
                     : undefined,
                 ]),
               );
+
+              // A flush binds registered content by id (a loop's values ride along).
+              if (registerReason && isPatch()) {
+                importRuntimeFeature("patches/bind");
+              }
 
               if (objProps.length) {
                 renderer = callRuntime(

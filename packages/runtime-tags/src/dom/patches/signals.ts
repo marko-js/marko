@@ -1,0 +1,193 @@
+import { decodeAccessor } from "../../common/helpers";
+import {
+  type Accessor,
+  AccessorProp,
+  ClosureSignalProp,
+  type EncodedAccessor,
+  PatchKey,
+  type Scope,
+} from "../../common/types";
+import { queueRender } from "../queue";
+import { _resumed, _var_resume, getRegisteredWithScope } from "../resume";
+import {
+  _closure_get,
+  _const,
+  _for_selector,
+  _for_closure,
+  _if_closure,
+  _let,
+  _let_change,
+  _or,
+  _script,
+  type Signal,
+  type SignalFn,
+} from "../signals";
+import { readChanged, patchFills, setupPatchers } from "./apply";
+
+// A declaration doubles as its fill; `fillFn` (renders minus what the
+// flush does itself) is the fill's run when it differs, `0` when nothing is left.
+function fill<T extends Signal<any>>(
+  key: string,
+  signal: T,
+  id: EncodedAccessor,
+  fillFn: SignalFn | 0 | undefined,
+) {
+  patchFills[key] =
+    fillFn === undefined
+      ? signal
+      : _const(
+          MARKO_DEBUG
+            ? (id as string).slice(0, (id as string).lastIndexOf("/"))
+            : id,
+          fillFn || undefined,
+        );
+  return signal;
+}
+
+// A dynamic tag's variable a patch writes takes the value through its own
+// resume registration, under the same id.
+export function _fill_var_resume<T extends Signal<unknown>>(
+  id: string,
+  signal: T,
+): T {
+  patchFills[id] = signal;
+  return _var_resume(id, signal);
+}
+export function _fill_let<T>(
+  key: string,
+  id: EncodedAccessor,
+  fn?: SignalFn,
+  fillFn?: SignalFn | 0,
+) {
+  return fill(key, _let<T>(id, fn), id, fillFn);
+}
+// A fill is the controller's value, never an assignment the handler takes.
+export function _fill_let_change<T>(
+  key: string,
+  id: EncodedAccessor,
+  fn?: SignalFn,
+  fillFn?: SignalFn | 0,
+) {
+  return fill(key, _let_change<T>(id, fn), id, fillFn ?? fn ?? 0);
+}
+// Registers a `<let>`'s fill only a patch's key reaches, keeping it and its
+// value signal.
+export {
+  _fill_let as _fill_let_resume,
+  _fill_let_change as _fill_let_change_resume,
+};
+
+// Per registration with filled references, a function's or an effect's: whether a patch
+// changed one on its owner (in the response `stop` names).
+export const filledReferences: Record<
+  string,
+  (owner: Scope, stop?: Parameters<typeof readChanged>[2]) => unknown
+> = {};
+
+// Records a registration's filled references (`id read …`) under its id, which it returns.
+export function _filled_id(key: string) {
+  const sep = key.indexOf(" ");
+  const reads = key.slice(sep + 1);
+  filledReferences[(key = key.slice(0, sep))] = (owner, stop) =>
+    readChanged(owner, reads, stop);
+  return key;
+}
+
+// A registration of a function with filled references (`patches/marked-bind`): `id read …`.
+export function _bind_resume(key: string, factory: (owner: Scope) => unknown) {
+  _resumed[_filled_id(key)] = factory;
+}
+
+// An effect with filled references (`patches/effect`), keyed as a function's.
+export function _script_patch(key: string, fn: (scope: Scope) => void) {
+  return _script(_filled_id(key), fn);
+}
+
+// An intersection a flush renders by this id, after whatever members arrive: a created
+// scope's setup, or a filled intersection's where its group mixes (`patches/render`).
+export function _or_patch(
+  setupId: string,
+  id: number,
+  fn: SignalFn,
+  defaultPending?: number,
+  scopeIdAccessor?: EncodedAccessor,
+): Signal<never> {
+  // A child's scope offset follows its node, so it is never accessor 0.
+  const scopeIdKey = (
+    scopeIdAccessor
+      ? MARKO_DEBUG
+        ? scopeIdAccessor
+        : decodeAccessor(scopeIdAccessor as number)
+      : AccessorProp.Id
+  ) as Accessor;
+  // Queued in the same order as the intersection's own renders.
+  _resumed[setupId] = (scope: Scope) =>
+    queueRender(scope, fn, id, 0, scope[scopeIdKey]);
+  return _or(id, fn, defaultPending, scopeIdAccessor);
+}
+
+// Closure positions an owner's entry runs by id over its subscribed scopes, as main's
+// `_closure` composite does; a position whose subscriber shook out is absent.
+export const closureSubscribers: Record<
+  string,
+  ReturnType<typeof _closure_get>[]
+> = {};
+// A subscriber a flush names registers once, under its resume id: main's resume, with
+// its setup as `._` (as `_if_closure`'s), and its position in its owner's walk.
+export function _closure_get_patch(
+  id: string,
+  valueAccessor: EncodedAccessor,
+  fn: SignalFn,
+  getOwnerScope?: (scope: Scope) => Scope,
+  walkId?: string,
+  index?: number,
+) {
+  const closureSignal = _closure_get(valueAccessor, fn, getOwnerScope, id);
+  (_resumed[id] as { _?: unknown })._ = closureSignal;
+  // A created scope resumes the subscriber its setup envelope names (main's resume).
+  setupPatchers[PatchKey.Subscribers] = getRegisteredWithScope;
+  if (walkId) {
+    closureSignal[ClosureSignalProp.Index] = index!;
+    (closureSubscribers[walkId] ??= [])[index!] = closureSignal;
+  }
+  return closureSignal;
+}
+
+// An `<if>`/`<for>` closure a created scope sets up, registered under its id with
+// the signal it runs, so it lives exactly as long.
+export function _if_closure_patch(
+  id: string,
+  ownerConditionalNodeAccessor: EncodedAccessor,
+  branch: number,
+  fn: SignalFn,
+) {
+  return (_resumed[id] = _if_closure(ownerConditionalNodeAccessor, branch, fn));
+}
+export function _for_closure_patch(
+  setupId: string,
+  ownerLoopNodeAccessor: EncodedAccessor,
+  fn: SignalFn,
+  id: number,
+  scopeIdAccessor?: EncodedAccessor,
+) {
+  return (_resumed[setupId] = _for_closure(
+    ownerLoopNodeAccessor,
+    fn,
+    id,
+    scopeIdAccessor,
+  ));
+}
+export function _for_selector_patch(
+  setupId: string,
+  ownerLoopNodeAccessor: EncodedAccessor,
+  ownerValueAccessor: EncodedAccessor,
+  fn: SignalFn,
+  getValueScope?: (scope: Scope) => Scope,
+) {
+  return (_resumed[setupId] = _for_selector(
+    ownerLoopNodeAccessor,
+    ownerValueAccessor,
+    fn,
+    getValueScope,
+  ));
+}

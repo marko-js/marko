@@ -43,6 +43,12 @@ export interface Binding {
   /** The identifier of each emitted assignment to it (set in finalize). */
   assignments: Opt<AssignedBindingExtra>;
   sources: undefined | Sources;
+  /** For a `<let>`: its initial value reads no state but `<let>`s created with its
+   * scope, at theirs. */
+  readsInitialValues: boolean;
+  /** For a `<let>` that is its own state source (patch builds): the sources its
+   * initial value reads, through those of the state it reads. */
+  initialValueSources: undefined | Sources;
   /** The intersection whose work computes it, or the nearest one it derives
    * from. Set on alias roots only. */
   intersection: Intersection | undefined;
@@ -158,6 +164,8 @@ export function createBinding(
     excludeProperties,
     assignedProperties: undefined,
     sources: undefined,
+    readsInitialValues: false,
+    initialValueSources: undefined,
     intersection: undefined,
     derivedFrom: undefined,
     reads: new Map(),
@@ -384,6 +392,52 @@ export function someAlias<A>(
   return false;
 }
 
+// Whether the binding or a property alias of it, at any depth, passes `test`.
+export function somePart(
+  binding: Binding,
+  test: (part: Binding) => boolean,
+): boolean {
+  if (test(binding)) return true;
+  for (const part of binding.propertyAliases.values()) {
+    if (somePart(part, test)) return true;
+  }
+  return false;
+}
+
+// Whether a read of the binding passes `test`.
+export function someBindingRead(
+  binding: Binding,
+  test: (read: ReferencedExtra, binding: Binding) => unknown,
+) {
+  for (const read of binding.reads.keys()) {
+    if (test(read, binding)) return true;
+  }
+  return false;
+}
+
+// A value a read of the binding derives passes `test`.
+export function someDerivedRead(
+  binding: Binding,
+  test: (derived: Binding, expr: ReferencedExtra) => boolean,
+) {
+  for (const expr of binding.reads.keys()) {
+    if (some(expr.derives, (derived) => test(derived, expr))) return true;
+  }
+  return false;
+}
+
+// Whether a read of the binding in `section` passes `test`.
+export function someReadIn(
+  binding: Binding,
+  section: Section,
+  test: (read: ReferencedExtra, binding: Binding) => boolean,
+) {
+  for (const read of binding.reads.keys()) {
+    if (read.section === section && test(read, binding)) return true;
+  }
+  return false;
+}
+
 // Whether the binding, or a value it aliases (transitively), passes `test`.
 export function someUpToAliasRoot<A>(
   binding: Binding | undefined,
@@ -457,6 +511,18 @@ export function getDebugAccess(
 // other modules.
 export function isTemplateParam(binding: Binding) {
   return binding.type === BindingType.param && !binding.section.parent;
+}
+
+// A param by type (a template's or `<define>`'s), or the section's params and their
+// aliases, a loop item's (typed `derived`) included.
+export function isSectionParam(binding: Binding) {
+  if (binding.type === BindingType.param) return true;
+  const root = getAliasRoot(binding);
+  return root === root.section.params;
+}
+
+export function isStateSourced(binding: Binding) {
+  return !!binding.sources?.state;
 }
 
 export function getDebugName(binding: Binding) {

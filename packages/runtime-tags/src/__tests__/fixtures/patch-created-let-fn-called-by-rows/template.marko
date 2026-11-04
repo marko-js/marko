@@ -1,0 +1,8 @@
+<const/sizes=[{ id: "s" }, { id: "m" }]/>
+<if=input.show>
+  <let/sel=sizes[0]/>
+  <const/isSel=(s) => s.id === sel.id/>
+  <for|size| of=sizes>
+    <button class={ on: isSel(size) } onClick() { sel = size }>${size.id}</button>
+  </for>
+</if>

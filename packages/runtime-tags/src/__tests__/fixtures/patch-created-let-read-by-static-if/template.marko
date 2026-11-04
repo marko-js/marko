@@ -1,0 +1,8 @@
+<const/items=[1, 2]/>
+<if=input.show>
+  <let/count=1/>
+  <button onClick() { count = 5 }>set</button>
+  <if=items.length>
+    <span>${count}</span>
+  </if>
+</if>

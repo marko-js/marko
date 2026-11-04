@@ -1,0 +1,6 @@
+<let/sel=""/>
+<if=input.b>
+  <for|item| of=input.items>
+    <button class={ on: item.id === sel } onClick() { sel = item.id }>${item.id}</button>
+  </for>
+</if>

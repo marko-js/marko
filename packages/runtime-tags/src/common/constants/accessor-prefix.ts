@@ -1,3 +1,5 @@
+// A bound registration's function for its owner, and the run last binding it.
+export const BoundFn = "U";
 export const BranchScopes = "A";
 export const ClosureScopes = "B";
 export const ClosureSignalIndex = "C";
@@ -12,6 +14,8 @@ export const EventAttributes = "I";
 export const IdFallback = "J";
 export const KeyedScopes = "O";
 export const Lifecycle = "K";
+// A patch's change mark of a value an entry depends on, by its response.
+export const PatchChanged = "T";
 export const Promise = "L";
 export const TagVariableChange = "M";
 export const TryBranch = "Q";

@@ -2152,6 +2152,7 @@ function throwUnserializable(
 // Keep in sync with common/constants/accessor-prefix.debug.ts; the serializer
 // parity test walks every prefix.
 const accessorPrefixDescriptions: Record<string, string> = {
+  BoundFn: "the bound function",
   BranchScopes: "the branch scopes",
   ClosureScopes: "the closure scopes",
   ClosureSignalIndex: "the closure signal index",
@@ -2166,6 +2167,7 @@ const accessorPrefixDescriptions: Record<string, string> = {
   IdFallback: "the generated id",
   KeyedScopes: "the keyed scopes",
   Lifecycle: "the lifecycle handlers",
+  PatchChanged: "the patch change mark",
   Promise: "the pending promise",
   TagVariableChange: "the tag variable change handler",
   TryBranch: "the try branch",

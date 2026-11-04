@@ -1,0 +1,13 @@
+// tags/reveal.marko
+const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag(0);
+const $if_content__input_content = /*@__PURE__*/ _if_closure_patch("c0", 1, 0, ($scope) => $if_content__dynamicTag($scope, $scope._.e));
+const $if = /*@__PURE__*/ _if(1, "<!><!><!>", "b%", $if_content__input_content);
+const $show = /*@__PURE__*/ _fill_let("c2", 5, ($scope) => $if($scope, $scope.f ? 0 : 1));
+const $setup__script = _script("c1", ($scope) => _on($scope.a, "click", function() {
+	$show($scope, !$scope.f);
+}));
+
+// template.marko
+const $inputwrapCarddiv_content__row_label = /*@__PURE__*/ _closure_get_patch("a1", 6, ($scope) => _text($scope.a, $scope._.d), 0, "a3", 0);
+const $inputwrapCarddiv_content = /*@__PURE__*/ _content$1("a0", "<b> </b>", "D ", $inputwrapCarddiv_content__row_label);
+_content_closures_resume($inputwrapCarddiv_content);

@@ -6,6 +6,7 @@ import {
   type Tag,
 } from "@marko/compiler/babel-utils";
 
+import type { Falsy } from "../../common/types";
 import {
   assertHasBody,
   assertNoSpreadAttrs,
@@ -14,14 +15,37 @@ import {
 } from "../util/assert";
 import { BindingType, createBinding } from "../util/bindings";
 import { initBranchSection } from "../util/branch-tag";
+import { isPatch } from "../util/marko-config";
+import {
+  getUnwrittenBodies,
+  getFillSources,
+  onReasonsSettled,
+} from "../util/patch/decisions";
+import { awaitMayRenderClientBranch } from "../util/patch/refresh";
+import {
+  hasStatefulBranchExpr,
+  patchFillsSection,
+  patchMayFillSection,
+} from "../util/patch/structure";
+import {
+  alwaysPairs,
+  getCallerGroupGuard,
+  setBodyEntries,
+} from "../util/patch/writers";
 import { setDerivedFrom, trackParamsReferences } from "../util/references";
 import { replaceWithStatements } from "../util/replace-with-statements";
-import { callRuntime, importRuntimeFeature } from "../util/runtime";
+import {
+  absentArg,
+  callRuntime,
+  importRuntimeFeature,
+  linkRuntimeFeature,
+} from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
 import { getScopeAccessorLiteral } from "../util/scope-accessor";
 import { scopeIdentifier } from "../util/scope-read";
 import {
   getBranchRendererArgs,
+  getCallerParamGroupsAt,
   ensureSection,
   ensureBodySection,
   getScopeIdIdentifier,
@@ -29,8 +53,10 @@ import {
   getSectionForBody,
   mayMergeWithText,
   type ControlFlowTagExtra,
+  type Section,
 } from "../util/sections";
 import { addSetupWork } from "../util/setup-work";
+import { findShellId } from "../util/shell";
 import {
   addStatement,
   addValue,
@@ -42,7 +68,7 @@ import {
 import * as structure from "../util/structure";
 import { toOnlyExpressionOrBlock } from "../util/to-only-or-block";
 import { translateByTarget } from "../util/visitors";
-import { getWriteGuard } from "../util/write-guard";
+import { andGuard, getWriteGuard, ifEver } from "../util/write-guard";
 import * as writer from "../util/writer";
 
 export default {
@@ -83,6 +109,12 @@ export default {
     ));
 
     const bodySection = ensureBodySection(tagBody)!;
+    // An await a patch may reach pairs its body through a `PatchChild` entry.
+    if (isPatch()) {
+      onReasonsSettled(() => {
+        if (patchMayFillSection(section)) linkRuntimeFeature("patches/await");
+      });
+    }
     const valueExtra = (valueAttr.value.extra ??= {});
 
     const paramsBinding = trackParamsReferences(tagBody, BindingType.derived);
@@ -121,23 +153,84 @@ export default {
         // `_await` writes the branch marker whenever the body is written, and
         // resume takes the body's owner from it.
         setSectionOwnerResumedByMarker(bodySection);
+        const sources = isPatch()
+          ? getFillSources(bodySection.branchExpr)
+          : undefined;
+        // The client settles a promise of its own state, and one a caller passes where
+        // no patch fills it: the server's copy renders only the body's holes as data.
+        const unfilled =
+          isPatch() &&
+          (hasStatefulBranchExpr(bodySection)
+            ? t.numericLiteral(1)
+            : ifEver(
+                getCallerGroupGuard(
+                  bodySection.parent!,
+                  "_unfilled_if",
+                  sources,
+                ),
+              ));
+        const unwritten =
+          unfilled &&
+          getUnwrittenBodies(
+            bodySection,
+            getCallerParamGroupsAt(sources?.param, bodySection.parent!),
+          );
+        // Where the copy may not render, its `<await>` writes the body's entries.
+        const entries: t.Statement[] | undefined = unwritten ? [] : undefined;
+        if (entries) setBodyEntries(bodySection, entries);
         writeHTMLResumeStatements(tag);
 
-        replaceWithStatements(tag, [
-          t.expressionStatement(
-            callRuntime(
-              "_await",
-              getScopeIdIdentifier(section),
-              getScopeAccessorLiteral(nodeBinding),
-              valueAttr.value,
-              t.arrowFunctionExpression(
-                node.body.params,
-                toOnlyExpressionOrBlock(node.body.body),
+        const scopeId = getScopeIdIdentifier(section);
+        const accessor = getScopeAccessorLiteral(nodeBinding);
+        const content = t.arrowFunctionExpression(
+          node.body.params,
+          toOnlyExpressionOrBlock(node.body.body),
+        );
+        // A patch page always marks a patchable boundary: the
+        // flush pairs its body through the resumed branch link.
+        const markerGuard = patchFillsSection(section)
+          ? t.numericLiteral(1)
+          : getWriteGuard(section, bodySection.reason, true);
+        if (isPatch()) {
+          const bodyScopeId = getScopeIdIdentifier(bodySection);
+          const awaitCall = callRuntime(
+            "_await",
+            scopeId,
+            accessor,
+            valueAttr.value,
+            content,
+            markerGuard,
+            ...getPendingArgs(bodySection, unfilled, unwritten),
+          );
+          replaceWithStatements(
+            tag,
+            entries?.length
+              ? [
+                  t.variableDeclaration("const", [
+                    t.variableDeclarator(bodyScopeId, awaitCall),
+                  ]),
+                  // Where no copy renders, the scope id it returns takes the entries.
+                  t.ifStatement(
+                    bodyScopeId,
+                    t.blockStatement(entries.map(cloneEntry)),
+                  ),
+                ]
+              : [t.expressionStatement(awaitCall)],
+          );
+        } else {
+          replaceWithStatements(tag, [
+            t.expressionStatement(
+              callRuntime(
+                "_await",
+                scopeId,
+                accessor,
+                valueAttr.value,
+                content,
+                markerGuard,
               ),
-              getWriteGuard(section, bodySection.reason, true),
             ),
-          ),
-        ]);
+          ]);
+        }
       },
     },
     dom: {
@@ -188,3 +281,28 @@ export default {
   }),
   types: runtimeInfo.name + "/tags/await.d.marko",
 } as Tag;
+
+function cloneEntry(entry: t.Statement) {
+  return t.cloneNode(entry, true);
+}
+
+function getPendingArgs(
+  bodySection: Section,
+  unfilled: t.Expression | undefined | false,
+  unwritten: ReturnType<typeof getUnwrittenBodies> | false | undefined,
+): Array<t.Expression | Falsy> {
+  const shellId = findShellId(bodySection);
+  return [
+    shellId && t.stringLiteral(shellId),
+    // Where the promise updates from the client, `2`: no render of the body writes a value
+    // the client lacks; `3`: only a created one does, writing the body's setup work.
+    unwritten
+      ? andGuard(unfilled, t.numericLiteral(unwritten === "all" ? 2 : 3))
+      : unfilled,
+    // An always-pairing body's Pending entry drops its creation id outside
+    // structure a flush may create.
+    alwaysPairs(bodySection) ? t.numericLiteral(1) : absentArg(0),
+    // Pending, its body may yet keep content made before it.
+    awaitMayRenderClientBranch(bodySection) && t.numericLiteral(1),
+  ];
+}

@@ -1,0 +1,6 @@
+<if=input.show>
+  <let/sel={ id: 1, token: input.token }/>
+  <for|item| of=[1, 2]>
+    <button onClick() { sel = { id: item } }>${item === sel.id ? "*" : ""}${item}</button>
+  </for>
+</if>

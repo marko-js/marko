@@ -1,0 +1,7 @@
+<const/items=[1, 2]/>
+<if=input.show>
+  <let/sel=items[input.i]/>
+  <for|item| of=items>
+    <button onClick() { sel = item }>${item === sel ? "*" : ""}${item}</button>
+  </for>
+</if>

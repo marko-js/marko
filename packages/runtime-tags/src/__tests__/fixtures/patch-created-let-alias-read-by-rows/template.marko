@@ -1,0 +1,7 @@
+<if=input.show>
+  <let/sel=1/>
+  <const/picked=sel/>
+  <for|item| of=[1, 2]>
+    <button onClick() { sel = item }>${item === picked ? "*" : ""}${item}</button>
+  </for>
+</if>

@@ -23,7 +23,7 @@ export type Renderer = {
   [RendererProp.LocalClosures]?: SetupFn;
   // A debug build marks a lazily loaded template, for a dynamic tag variable check.
   [RendererProp.Lazy]?: 1;
-};
+} & ReturnMark; // A debug patch shell marks its renderer.
 
 export type SetupFn = ((scope: Scope) => void) & ReturnMark;
 
@@ -83,7 +83,10 @@ export function createAndSetupBranch(
 
 // Setup runs as the branch is created, before its values, as a template mounts;
 // the closure signals it calls queue their first render, once owners settle.
-export function setupBranch(renderer: Renderer, branch: BranchScope) {
+export function setupBranch(
+  renderer: Partial<Pick<Renderer, typeof RendererProp.Setup>>,
+  branch: BranchScope,
+) {
   renderer[RendererProp.Setup]?.(branch);
   return branch;
 }

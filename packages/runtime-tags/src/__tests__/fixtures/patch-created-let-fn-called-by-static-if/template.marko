@@ -1,0 +1,9 @@
+<const/on=true/>
+<if=input.show>
+  <let/n=1/>
+  <const/add=(v) => v + n/>
+  <if=on>
+    <b>${add(10)}</b>
+  </if>
+  <button onClick() { n = 5 }>set</button>
+</if>

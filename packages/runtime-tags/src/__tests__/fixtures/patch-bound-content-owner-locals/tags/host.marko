@@ -1,0 +1,7 @@
+<if=input.show>
+  <${input.wrap}>
+    <for|entry| of=input.items>
+      <@item><i>${entry.text}:${input.label}</i></@item>
+    </for>
+  </>
+</if>

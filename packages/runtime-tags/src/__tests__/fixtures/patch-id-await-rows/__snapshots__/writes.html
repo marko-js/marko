@@ -1,0 +1,33 @@
+<!--M_[--><label for=sM_0TA>before</label><input id=sM_0TA>
+<script>
+  WALKER_RUNTIME("M")("_").n = "b";
+  M._.r = [_ => [2, {
+    a: _(3)
+  }, 1, {
+    a: _(5)
+  }]];
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<!--M_[--><label for=sM_0UA>a<!--M_$7 b--></label><input
+  id=sM_0UA><!--M_]2 b 6--><!--M_[2--><label for=sM_1TA>before</label><input
+  id=sM_1TA>
+<script>
+  M._.r.push(_ => [6, {
+    a: _(7)
+  }]);
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<!--M_[--><label for=sM_1UA>b<!--M_$9 b--></label><input
+  id=sM_1UA><!--M_]4 b 8--><!--M_]1 a 4-->
+<script>
+  M._.r.push(_ => [8, {
+    a: _(9)
+  }]);
+  M._.w()
+</script>

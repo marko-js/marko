@@ -448,7 +448,7 @@ export function renderCatch(scope: Scope, error?: unknown) {
 
 // `ParentBranch` links a branch to its enclosing one (on resume through the serialized
 // closest branch id and markers), and a `@placeholder` is parented beside its `<try>`.
-function findTryWithPlaceholder(scope: Scope) {
+export function findTryWithPlaceholder(scope: Scope) {
   let branch = scope[AccessorProp.ClosestBranch];
   while (branch && !branch[AccessorProp.PlaceholderContent]) {
     branch = branch[AccessorProp.ParentBranch];
@@ -860,7 +860,7 @@ export function setBranch<T>(
   }
 }
 
-const loop = /*@__PURE__*/ withBranches(
+export const loop = /*@__PURE__*/ withBranches(
   <T extends unknown[] = unknown[]>(
     forEach: (value: T, cb: (key: unknown, args: unknown[]) => void) => void,
     reorder?: typeof reorderKeyed,
@@ -1003,7 +1003,7 @@ const loop = /*@__PURE__*/ withBranches(
           return;
         }
 
-        // Unreachable for an unkeyed loop: its kept branches never move.
+        // Unreachable for an unkeyed loop: its paired branches never move.
         reorder!(newScopes, start, newEnd, parentNode, afterReference);
       };
     },
@@ -1057,7 +1057,7 @@ export const _for_until_unkeyed = /*@__PURE__*/ loop<
   [until: number, from?: number, step?: number]
 >(([until, from, step], cb) => forUntil(until, from, step, (v) => cb(v, [v])));
 
-function reorderKeyed(
+export function reorderKeyed(
   newScopes: BranchScope[],
   start: number,
   newEnd: number,

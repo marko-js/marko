@@ -1,0 +1,30 @@
+// template.marko
+const $template = "<main><!><!><button> </button></main>";
+const $walks = "D%b%b D m";
+function boom(error) {
+	throw error;
+}
+const $catch_content2__$params = ($scope, $params3) => _text($scope["#text/0"], $params3[0]?.message);
+const $catch_content2 = _content_resume("__tests__/template.marko_4*content", "<i> </i>", "D ", 0, $catch_content2__$params);
+const $catch_content__$params = ($scope, $params2) => _text($scope["#text/0"], $params2[0]);
+const $catch_content = _content_resume("__tests__/template.marko_3*content", "<b> </b>", "D ", 0, $catch_content__$params);
+const $try_content2__input_error = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_2_input_error#0:6/subscribe", "input_error/8", ($scope) => _text($scope["#text/0"], $scope._.input_error ? boom($scope._.input_error) : "ok"));
+const $try_content2__setup = $try_content2__input_error;
+const $try_content__input_error = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_1_input_error#0:6/subscribe", "input_error/8", ($scope) => _text($scope["#text/0"], $scope._.input_error ? boom($scope._.input_error) : "ok"));
+const $try_content__setup = $try_content__input_error;
+const $count = _let("count/7", ($scope) => _text($scope["#text/3"], $scope.count));
+const $try = /*@__PURE__*/ _try("#text/0", "<p> </p>", "D ", $try_content__setup, 0, $catch_content);
+const $try2 = /*@__PURE__*/ _try("#text/1", "<p> </p>", "D ", $try_content2__setup, 0, $catch_content2);
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
+	$count($scope, +$scope.count + 1);
+}));
+function $setup($scope) {
+	$count($scope, 0);
+	$try($scope);
+	$try2($scope);
+	$setup__script($scope);
+}
+const $input = ($scope, input) => $input_error($scope, input.error);
+const $input_error__closure = /*@__PURE__*/ _closure($try_content__input_error, $try_content2__input_error);
+const $input_error = /*@__PURE__*/ _const("input_error", $input_error__closure);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

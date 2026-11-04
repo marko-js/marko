@@ -1,0 +1,35 @@
+// template.marko
+const $template = "<main><!></main>";
+const $walks = "D%l";
+const $await_content2__$params = ($scope, $params4) => _text($scope["#text/0"], $params4[0]);
+const $await_content__$params = ($scope, $params3) => _text($scope["#text/0"], $params3[0]);
+const $catch_content__$params = ($scope, $params2) => _text($scope["#text/0"], $params2[0]?.message);
+const $catch_content = _content_resume("__tests__/template.marko_4*content", "<s> </s>", "D ", 0, $catch_content__$params);
+const $placeholder_content = _content_resume("__tests__/template.marko_3*content", "<i>loading</i>");
+const $await_content = /*@__PURE__*/ _await_content("#text/0", "<b> </b>", "D ");
+const $try_content2__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
+const $try_content2__input_a = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_2_input_a#0:3/subscribe", "input_a/5", ($scope) => $try_content2__await_promise($scope, $scope._._.input_a), ($scope) => $scope._._);
+const $try_content2__setup = ($scope) => {
+	$try_content2__input_a($scope);
+	$await_content($scope);
+};
+const $await_content2 = /*@__PURE__*/ _await_content("#text/1", "<em> </em>", "D ");
+const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/1", $await_content2__$params);
+const $try_content__input_b = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_1_input_b#0:4/subscribe", "input_b/6", ($scope) => $try_content__await_promise($scope, $scope._.input_b));
+const $try_content__try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content2__setup, 0, $catch_content);
+const $try_content__setup = ($scope) => {
+	$try_content__input_b($scope);
+	$await_content2($scope);
+	$try_content__try($scope);
+};
+const $try = /*@__PURE__*/ _try("#text/0", "<!><!><!><!>", "b%b%", $try_content__setup, $placeholder_content);
+const $setup = $try;
+const $input = ($scope, input) => {
+	$input_a($scope, input.a);
+	$input_b($scope, input.b);
+};
+const $input_a__closure = /*@__PURE__*/ _closure($try_content2__input_a);
+const $input_a = /*@__PURE__*/ _const("input_a", $input_a__closure);
+const $input_b__closure = /*@__PURE__*/ _closure($try_content__input_b);
+const $input_b = /*@__PURE__*/ _const("input_b", $input_b__closure);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "D%l", $setup, $input);

@@ -5,6 +5,7 @@ import {
   assertNoParams,
   assertNoVar,
   type Tag,
+  getProgram,
 } from "@marko/compiler/babel-utils";
 
 import type { Falsy } from "../../common/types";
@@ -12,10 +13,20 @@ import { assertHasBody, coreTagLink } from "../util/assert";
 import { BindingType, createBinding } from "../util/bindings";
 import { initBranchSection } from "../util/branch-tag";
 import { getTagName } from "../util/get-tag-name";
+import { isPatch } from "../util/marko-config";
 import { analyzeAttributeTags } from "../util/nested-attribute-tags";
+import { onReasonsSettled } from "../util/patch/decisions";
+import { patchCreates } from "../util/patch/refresh";
+import { patchMayFillSection } from "../util/patch/structure";
+import { alwaysPairs } from "../util/patch/writers";
 import { mergeTagReferences } from "../util/references";
 import { replaceWithStatements } from "../util/replace-with-statements";
-import { absentArg, callRuntime, importRuntimeFeature } from "../util/runtime";
+import {
+  absentArg,
+  callRuntime,
+  importRuntimeFeature,
+  linkRuntimeFeature,
+} from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
 import { getScopeAccessorLiteral } from "../util/scope-accessor";
 import {
@@ -122,6 +133,25 @@ export default {
       kind: "try",
       tag: tagExtra,
     });
+    if (isPatch()) {
+      // A patch build loads the module registering every `@catch` and `@placeholder`.
+      getProgram().node.extra.isInteractive = true;
+      // A `<try>` a patch may reach applies its body through `patches/try`, and
+      // a `@catch` a patch creates from its shell, `patches/catch-created`.
+      onReasonsSettled(() => {
+        if (patchMayFillSection(section)) {
+          linkRuntimeFeature("patches/try");
+          if (attrTags["@catch"]) {
+            const { catchSection } = getTryParts(tag);
+            linkRuntimeFeature(
+              catchSection && patchCreates(catchSection)
+                ? "patches/catch-created"
+                : "patches/catch",
+            );
+          }
+        }
+      });
+    }
     structure.marker(tag, nodeBinding);
     structure.enterShallow(tag);
   },
@@ -133,6 +163,7 @@ export default {
       exit(tag) {
         const section = getSection(tag);
         const tagBody = tag.get("body");
+        const bodySection = getSectionForBody(tagBody)!;
         const nodeBinding = tag.node.extra!.nodeBinding!;
         const { catchTag, catchSection, placeholderTag, placeholderSection } =
           getTryParts(tag);
@@ -160,6 +191,18 @@ export default {
                 : getResumeRegistryId(section, nodeBinding, "catch"),
             ),
         ];
+        if (isPatch()) {
+          // A patch creates from the body's shell; an always-pairing body
+          // drops it outside structure a flush may create.
+          tryArgs.push(
+            t.stringLiteral(getResumeRegistryId(bodySection, "content")),
+            alwaysPairs(bodySection) ? t.numericLiteral(1) : absentArg(0),
+            // A flush creates a catch whose effects its entries mount.
+            catchSection && patchCreates(catchSection)
+              ? t.numericLiteral(1)
+              : absentArg(0),
+          );
+        }
 
         replaceWithStatements(tag, [
           t.expressionStatement(callRuntime("_try", ...tryArgs)),
@@ -190,7 +233,11 @@ export default {
               t.variableDeclaration("const", [
                 t.variableDeclarator(
                   catchContent,
-                  callRuntime("_content", t.stringLiteral(emptyCatchId)),
+                  // A try a patch creates looks its empty catch up by id.
+                  callRuntime(
+                    isPatch() ? "_content_resume" : "_content",
+                    t.stringLiteral(emptyCatchId),
+                  ),
                 ),
               ]),
             );

@@ -2,12 +2,14 @@ import assert from "assert";
 import fs from "fs";
 import { createRequire } from "module";
 import path from "path";
+import * as timers from "timers/promises";
 
 import * as compiler from "@marko/compiler";
 import jsBeautify from "js-beautify";
 
-const { html_beautify } = jsBeautify;
+const { html_beautify, js_beautify } = jsBeautify;
 
+import { DEFAULT_RENDER_ID } from "../common/meta";
 import type { Input } from "../common/types";
 import * as tagsTranslator from "../translator";
 import {
@@ -18,15 +20,22 @@ import {
 } from "./utils/bundle";
 import { captureConsole, type ConsoleRecord } from "./utils/capture-console";
 import createBrowser from "./utils/create-browser";
-import type { LoadFault } from "./utils/import-with-context";
+import { normalizeStructuralIds } from "./utils/get-node-info";
+import {
+  type LoadFault,
+  waitForPendingModules,
+} from "./utils/import-with-context";
 import {
   type Destroy,
   type Flush,
   type FlushType,
   isDestroy,
   isFlush,
+  isNavigate,
   isThrows,
+  isRelease,
   isWait,
+  type Navigate,
   resetResolveState,
   resolveAfter,
   type Throws,
@@ -37,7 +46,7 @@ import {
   stripDebugRuntime,
   stripOptimizeRuntime,
 } from "./utils/strip-inline-runtime";
-import createMutationTracker from "./utils/track-mutations";
+import createMutationTracker, { formatBody } from "./utils/track-mutations";
 
 const require = createRequire(import.meta.url);
 
@@ -47,6 +56,7 @@ type Step =
   | Flush
   | Destroy
   | Throws
+  | Navigate
   | ((document: Document) => unknown);
 type Steps = [Input, ...Step[]];
 export type TestConfig = {
@@ -64,10 +74,22 @@ export type TestConfig = {
    */
   reject_load?: string[];
   /**
+   * Rejects the first dynamic chunk import whose specifier contains one of
+   * these substrings, then lets it load (a network blip).
+   */
+  reject_load_once?: string[];
+  /**
    * Delays any dynamic chunk import whose specifier contains one of these
    * substrings to the next `resolveAfter` tick, past the next animation frame.
    */
   delay_load?: string[];
+  /**
+   * Keeps lazy load module scripts, and dynamic imports, whose file name
+   * contains one of these substrings in flight until a `release` step lands
+   * them; a patch waiting on one is not awaited, and must have applied by
+   * the end of the steps.
+   */
+  hold_load?: string[];
   /**
    * Streams this many extra flushes into the document before the page's
    * entry module runs, simulating a bundle that loads slower than the
@@ -81,6 +103,17 @@ export type TestConfig = {
   skip_optimize?: boolean;
   /** Debug intentionally logs a dev-only diagnostic the optimized build cannot. */
   skip_parity?: boolean;
+  // A fixture whose patches are MEANT to reject declares it; anything else
+  // rejecting fails the test rather than snapshotting the navigation.
+  expect_rejection?: boolean;
+  /**
+   * A rejected patch leaves the page in place (its navigation was dropped, as
+   * when the page left for the back/forward cache), so later steps still run.
+   */
+  stay_on_rejection?: true;
+  /** Compares a patched page's control defaults, not live values, with a
+   * fresh render (a patch refreshes defaults and leaves typed input). */
+  compare_defaults?: boolean;
   skip_dom?: boolean;
   skip_html?: boolean;
   skip_csr?: boolean;
@@ -93,6 +126,26 @@ export type TestConfig = {
   fix_guide?: boolean;
   /** Compiles the fixture with a custom `runtimeId` compiler option. */
   runtime_id?: string;
+  /** Compiles the fixture with the `patches` compiler option. */
+  patches?: boolean;
+  /** Patch: never compare a patched page with a fresh render of its input: a caught `<try>`
+   * keeps its `@catch`, or client effects leave state. */
+  skip_fresh_render?: boolean;
+  /** Patch: a step's input has no document that finishes, as with a promise the server never
+   * settles: skips the fresh-render comparison and the size check. */
+  skip_documents?: boolean;
+  /** Patch: applies a step's patch while the document is still
+   * streaming; by default the remaining flushes land first. */
+  patch_while_streaming?: boolean;
+  /** Patch: the build the server names after the document renders (a deploy),
+   * which every patch it renders carries. */
+  patch_build?: string;
+  /** Patch: a known bug, described here, leaves the patched page unlike a
+   * client render of the same steps; the csr test fails once they agree. */
+  csr_divergence?: string;
+  /** Patch: why patching a step's input again changes the page (or rejects);
+   * the ssr test fails once it no longer does. */
+  same_input_divergence?: string;
 };
 
 // `scripts/test-parallel` fans the fixtures across CPU cores by giving each
@@ -157,6 +210,7 @@ function testFixtures(interop?: true) {
       const hasCompilerError = !!config.error_compiler;
       // Render logs by file, then mode, for the parity check below.
       const renderLogs = new Map<string, Map<string, string>>();
+      const usesPatches = !!config.patches;
       const skipHTML = config.skip_html;
       const skipDOM = config.skip_dom;
       const stripFixtureDir = async (str: string | Promise<string>) =>
@@ -208,21 +262,45 @@ function testFixtures(interop?: true) {
           const equivalent = config.equivalent !== false;
           const skipSSR =
             hasCompilerError || skipDOM || skipHTML || config.skip_ssr;
+          // A patch fixture's csr test replays its patch run against a client
+          // render of the same steps (`oracle`), since patches only resume.
           const skipCSR =
             optimize || hasCompilerError || skipDOM || config.skip_csr;
           const stats: {
             dom?: Record<string, ChunkSizes | Sizes>;
             html?: Sizes;
+            patch?: Sizes;
           } = {};
           const browsers: ReturnType<typeof createBrowser>[] = [];
-          const loadFault: LoadFault | undefined =
-            (config.reject_load || config.delay_load) &&
-            ((id: string) =>
-              config.reject_load?.some((s) => id.includes(s))
-                ? "reject"
-                : config.delay_load?.some((s) => id.includes(s))
-                  ? "delay"
-                  : undefined);
+          // Each page fails its own loads (`reject_load_once` counts per page).
+          const loadFault = (): LoadFault | undefined => {
+            const rejectedOnce = new Set<string>();
+            return (
+              (config.reject_load ||
+                config.reject_load_once ||
+                config.delay_load ||
+                config.hold_load) &&
+              ((id: string) => {
+                // Only a fixture asset can fail to load, never a runtime module
+                // (the prebuilt runtime splits `dom/load.ts` into a chunk).
+                if (id.includes("/dist/dom-")) return;
+                // Names match the asset's file, never a directory above it.
+                const file = path.basename(id);
+                const named = (names?: string[]) =>
+                  names?.some((s) => file.includes(s));
+                return named(config.reject_load) ||
+                  (named(config.reject_load_once) &&
+                    !rejectedOnce.has(id) &&
+                    rejectedOnce.add(id))
+                  ? "reject"
+                  : named(config.delay_load)
+                    ? "delay"
+                    : named(config.hold_load)
+                      ? "hold"
+                      : undefined;
+              })
+            );
+          };
 
           // Mocha retains suite closures for the entire run, so the cached
           // browsers/bundles are released once the fixture finishes to keep
@@ -240,8 +318,14 @@ function testFixtures(interop?: true) {
               () => {},
             );
             ssrRunner.reset();
+            plainRunner.peek()?.then(
+              (runner) => runner.disposeServer(),
+              () => {},
+            );
+            plainRunner.reset();
             csr.reset();
             ssr.reset();
+            oracle.reset();
           });
           const getModeOpts = once((): compiler.Config => ({
             translator,
@@ -256,6 +340,7 @@ function testFixtures(interop?: true) {
               browserslistConfigFile: false,
             },
             optimize,
+            patches: usesPatches,
             optimizeKnownTemplates: optimize
               ? (
                   fs.readdirSync(fixtureDir, {
@@ -273,6 +358,16 @@ function testFixtures(interop?: true) {
               { template: "./template.marko" },
               getModeOpts(),
               interop,
+            ),
+          );
+          // The client render a patch fixture's oracle replays: a plain build.
+          const plainRunner = once(() =>
+            createServerRunner(
+              fixtureDir,
+              { template: "./template.marko" },
+              { ...getModeOpts(), cache: new Map(), patches: false },
+              interop,
+              "plain",
             ),
           );
 
@@ -356,10 +451,14 @@ function testFixtures(interop?: true) {
             const runClient = (await ssrRunner()).clientRunner!;
             const { document } = browser.window;
             const { input, steps } = await getSteps(config);
-            const tracker = createMutationTracker(browser);
+            const tracker = createMutationTracker(
+              browser,
+              undefined,
+              usesPatches ? config.runtime_id || "M" : undefined,
+            );
             const { template, run } = await runClient(
               browser.ctx,
-              loadFault || undefined,
+              loadFault() || undefined,
             );
             const instance = template.mount(input, document.body, "afterbegin");
             tracker.logRender(input);
@@ -378,22 +477,38 @@ function testFixtures(interop?: true) {
             return { browser, tracker };
           });
 
-          const ssr = once(async () => {
+          const ssr = once(() => runSSR());
+          const oracle = once(() => runSSR(true));
+          const runSSR = async (withClient?: boolean) => {
             resetResolveState();
             const runner = await ssrRunner();
             const abortController = config.abort_ssr
               ? new AbortController()
               : undefined;
-            const { input, steps } = await getSteps(
-              config,
-              abortController?.signal,
-            );
+            let input!: Input;
+            let steps!: Step[];
             const chunks: string[] = [];
+            const patches: string[] = [];
+            // The header each input's request sent, alongside its flushes.
+            const patchHeaders: string[] = [];
+            // Each applied response's index and input, whose document it must cost less than.
+            const docInputs: [number, Input][] = [];
             const logs: ConsoleRecord[][] = [];
+            let server!: Awaited<ReturnType<typeof runner.runServer>>;
+            let template!: (typeof server)["template"];
             const capture = captureConsole();
 
             try {
-              const { template } = await runner.runServer();
+              ({ template } = server = await runner.runServer());
+              // The timers a fixture's steps start race the render's first
+              // flush from one event-loop phase, whichever tests ran before.
+              await timers.setTimeout();
+              ({ input, steps } = await getSteps(
+                config,
+                abortController?.signal,
+              ));
+              // A patch server names its build, as an integration does.
+              server.setPatchBuild?.("b");
               if (abortController) {
                 input.$global = {
                   ...(input.$global as any),
@@ -435,11 +550,15 @@ function testFixtures(interop?: true) {
               resetResolveState();
               capture.cleanup();
             }
+            if (usesPatches) {
+              const html = chunks.join("");
+              assertSecretsRendered(html, html, `"${entry}" document`);
+            }
 
             const browser = createBrowser(
               runner.assets,
               config.load_order,
-              loadFault || undefined,
+              loadFault() || undefined,
             );
             browsers.push(browser);
             const { window } = browser;
@@ -452,11 +571,23 @@ function testFixtures(interop?: true) {
             };
             // Attach the tracker's error listener before the first flush so
             // errors thrown by inline resume scripts in it aren't swallowed.
-            const tracker = createMutationTracker(browser);
+            const tracker = createMutationTracker(
+              browser,
+              config.expect_rejection ? /^A patch rejected/ : undefined,
+              usesPatches ? config.runtime_id || "M" : undefined,
+            );
             let hasFlush = flushNext();
             for (let i = config.entry_delay || 0; i && hasFlush; i--) {
               hasFlush = flushNext();
             }
+            const drainFlushes = async () => {
+              while (hasFlush) {
+                await resolveAfter(0, 1);
+                tracker.beginUpdate();
+                await flushAndResume();
+                tracker.logUpdate();
+              }
+            };
 
             for (const group of logs) {
               for (const { type, args } of group) {
@@ -465,24 +596,372 @@ function testFixtures(interop?: true) {
             }
 
             await browser.runAsyncScripts(() => tracker.logRender(input));
-            const { run } =
-              browser.ctx as typeof import("@marko/runtime-tags/dom");
+            const { patch, run } =
+              browser.ctx as typeof import("@marko/runtime-tags/dom") &
+                typeof import("@marko/runtime-tags/dom/patch");
+            // The live page's `$global`: a patch page's document serializes
+            // its nonce, which every patch keeps.
+            const pageGlobal = {
+              renderId: config.embedded ? "embedded" : DEFAULT_RENDER_ID,
+              cspNonce: (input.$global as { cspNonce?: string } | undefined)
+                ?.cspNonce,
+            };
+            // A client render replaying the steps is ground truth for a patched
+            // page, most of all once a client step leaves the server's view.
+            let client = withClient
+              ? await mountClient(
+                  (await plainRunner()).clientRunner!,
+                  input,
+                  config.runtime_id || "M",
+                )
+              : undefined;
+            let rejected = false;
+            const held: Promise<unknown>[] = [];
+            // A held response leaves the page behind the client render until
+            // it lands, so the two compare once every held patch has.
+            let comparesOnceLanded = false;
+            let landing = 0;
+            // The latest input's response.
+            let response: ReturnType<typeof streamPatch> | undefined;
 
+            // Until a client-side step diverges the page from what the
+            // server would render for the same input, every applied patch
+            // must leave the DOM as a fresh render of that input would.
+            let diverged = false;
+            // The document a fresh request for a step's input loads.
+            const renderFresh = async (input: Input) => {
+              const capture = captureConsole();
+              const freshChunks: string[] = [];
+              try {
+                resetResolveState();
+                for await (const data of template.render(input)) {
+                  freshChunks.push(data);
+                }
+              } finally {
+                resetResolveState();
+                capture.cleanup();
+              }
+              return freshChunks;
+            };
+            const assertPatchedLikeFresh = async (input: Input) => {
+              const freshChunks = await renderFresh(input);
+              // The fresh page resumes like the live one did, so client
+              // effects and reorders land on both sides.
+              const fresh = createBrowser(
+                runner.assets,
+                config.load_order,
+                loadFault() || undefined,
+              );
+              browsers.push(fresh);
+              const freshFlush = fresh.stream(freshChunks);
+              while (freshFlush());
+              await fresh.runAsyncScripts();
+              // Ids compare by the nodes sharing them: content the client renders mints its own.
+              const expected = formatClientPage(
+                fresh.window.document,
+                config.compare_defaults,
+                config.runtime_id,
+              );
+              // Effects the patch re-ran render on the scheduler's next
+              // frame turn, as the fresh page's did before its snapshot.
+              browser.flush("raf");
+              await timers.setImmediate();
+              await timers.setImmediate();
+              const actual = formatClientPage(
+                browser.window.document,
+                config.compare_defaults,
+                config.runtime_id,
+              );
+              if (expected !== actual) {
+                throw new Error(
+                  `A patch left the page unlike a fresh render of ${JSON.stringify(input)}.\n--- fresh render\n${expected}\n--- patched page\n${actual}\n`,
+                );
+              }
+            };
+            const assertPatchedLikeClient = async (step: string) => {
+              browser.flush("raf");
+              client!.browser.flush("raf");
+              await timers.setImmediate();
+              await timers.setImmediate();
+              const expected = formatClientPage(
+                client!.browser.window.document,
+                config.compare_defaults,
+                config.runtime_id,
+              );
+              const actual = formatClientPage(
+                browser.window.document,
+                config.compare_defaults,
+                config.runtime_id,
+              );
+              if (expected !== actual) {
+                throw new Error(
+                  `A patched page left a client render of the same steps after ${step}.\n--- client render\n${expected}\n--- patched page\n${actual}\n`,
+                );
+              }
+            };
+            // Patching the input the page shows again does to values the client computes what a
+            // client update to it does; only the oracle's run asks (its renders reach no snapshot).
+            let sameInputDiverged = false;
+            const assertSameInputLikeClient = async (input: Input) => {
+              if (!withClient || hasFlush) return;
+              tracker.beginUpdate();
+              const previous = response!;
+              const same = (response = streamPatch(patch, pageGlobal, server));
+              previous.superseded();
+              if (previous.ended) assertCommittedOnce(previous);
+              let applied: 0 | 1 = 1;
+              for await (const flush of template.patch(input, same.headers)) {
+                await same.send(flush);
+                const result = same.result();
+                if (typeof result === "object") {
+                  await resolveAfter(0, 1);
+                  await browser.runAsyncScripts();
+                }
+                if (!(applied = await result)) break;
+              }
+              if (applied) await same.end();
+              browser.flush("raf");
+              await timers.setImmediate();
+              await timers.setImmediate();
+              const changes = tracker.takeChanges().sort();
+              // A navigation's input is new data, so the client takes a copy; with no
+              // client render to ask, nothing may change.
+              const expected = client
+                ? (await client.updateChanges(copyPlain(input))).sort()
+                : [];
+              if (applied && String(changes) === String(expected)) return;
+              if (config.same_input_divergence) {
+                sameInputDiverged = true;
+                return;
+              }
+              throw new Error(
+                `Patching ${JSON.stringify(input)} again ${applied ? "did not do what a client update to it does" : "rejected"} (set \`same_input_divergence\` if known).\n--- client update\n${expected.join("\n")}\n--- patch\n${changes.join("\n")}`,
+              );
+            };
             await runSteps(steps, tracker, browser, run, {
               onFlush: hasFlush ? flushAndResume : undefined,
+              onStep: () => {
+                diverged = true;
+              },
+              afterStep: withClient
+                ? async (update) => {
+                    // A thrown step's error has no client render to compare.
+                    if (isThrows(update)) client = undefined;
+                    if (!client) return;
+                    if (landing) {
+                      // A step's assertions describe the lagging page; one failing
+                      // here skips the rest of its step, so actions go first.
+                      await client.apply(update).catch(assertionsOnly);
+                      await client.settle();
+                      return;
+                    }
+                    await client.apply(update);
+                    // A document still streaming is not yet the page to compare.
+                    if (!hasFlush) {
+                      await assertPatchedLikeClient(String(update));
+                    }
+                  }
+                : undefined,
+              onInput: usesPatches
+                ? async (input, betweenFlushes, throwsError) => {
+                    // A navigation follows the delivered document unless the
+                    // fixture wants the race with a still-streaming one.
+                    if (hasFlush && !config.patch_while_streaming) {
+                      await drainFlushes();
+                    }
+                    // A step whose render throws has no fresh or client
+                    // render to compare.
+                    if (throwsError) client = undefined;
+                    const hasDocument = !throwsError && !config.skip_documents;
+                    const freshRenders =
+                      !withClient &&
+                      !hasFlush &&
+                      !diverged &&
+                      !config.skip_fresh_render &&
+                      hasDocument;
+                    tracker.beginUpdate();
+                    let applied = true;
+                    let abandoned = false;
+                    const flushes: string[] = [];
+                    // One response per input, as a navigation is, from build
+                    // `b`; it stops the one before at once.
+                    const previous = response;
+                    if (config.patch_build) {
+                      server.setPatchBuild!(config.patch_build);
+                    }
+                    response = streamPatch(patch, pageGlobal, server);
+                    previous?.superseded();
+                    if (previous?.ended) assertCommittedOnce(previous);
+                    const { headers } = response;
+                    // The token follows the build.
+                    patchHeaders.push(headers["x-marko-patch"].split(";")[1]);
+                    try {
+                      for await (const flush of template.patch(
+                        input,
+                        headers,
+                      )) {
+                        if (flushes.length && betweenFlushes) {
+                          tracker.logUpdate(input);
+                          tracker.beginUpdate();
+                          const between = await betweenFlushes(
+                            browser.window.document,
+                          );
+                          // Abandoned, the navigation aborts its response; a
+                          // superseded one is left to the next `patch()`.
+                          if (
+                            between === "abandon" ||
+                            between === "supersede"
+                          ) {
+                            tracker.logUpdate(between);
+                            if (between === "abandon") response.abort();
+                            abandoned = true;
+                            break;
+                          }
+                          run();
+                          await browser.runAsyncScripts();
+                          run();
+                          tracker.logUpdate(betweenFlushes);
+                          tracker.beginUpdate();
+                        }
+                        flushes.push(flush);
+                        // Each flush is a chunk of the response's body, whose
+                        // last ends with the token line.
+                        await response.send(flush);
+                        const result = response.result();
+                        // A held load or a still-streaming document settles
+                        // the wait later; the patch must have applied by the end.
+                        if (
+                          typeof result === "object" &&
+                          (config.hold_load || config.patch_while_streaming)
+                        ) {
+                          held.push(result);
+                          landing++;
+                          void Promise.resolve(result).finally(() => landing--);
+                          continue;
+                        }
+                        if (typeof result === "object") {
+                          // A deferred patch is waiting on a lazy module; load
+                          // triggers schedule via setTimeout, so a macrotask
+                          // tick must pass before the chunk can be imported.
+                          await resolveAfter(0, 1);
+                          await browser.runAsyncScripts();
+                        }
+                        if (!(applied = !!(await result))) break;
+                      }
+                      // Every flush sent: the body ends.
+                      if (applied && !abandoned) await response.end();
+                    } catch (err) {
+                      // A response that fails to render is a document load.
+                      if (!config.expect_rejection) throw err;
+                      applied = false;
+                    }
+                    patches.push(flushes.join(""));
+                    if (applied && hasDocument) {
+                      docInputs.push([patches.length - 1, input]);
+                    }
+                    // A held or refused response has no page to compare yet.
+                    if (applied && !held.length) {
+                      assertSecretsRendered(
+                        patches[patches.length - 1],
+                        browser.window.document.documentElement.outerHTML,
+                        `"${entry}" patch ${patches.length}`,
+                      );
+                    }
+                    if (throwsError) tracker.logErrors(input);
+                    else tracker.logUpdate(input);
+                    // A response the client interleaves with, or a refused
+                    // one, has no client render to replay.
+                    if (betweenFlushes || !applied) client = undefined;
+                    // A client render keeps the `$global` it mounted with.
+                    if (
+                      input.$global &&
+                      !equalByValue(input.$global, client?.$global)
+                    )
+                      client = undefined;
+                    if (held.length) {
+                      if (client) {
+                        await client.update(input);
+                        comparesOnceLanded = true;
+                      }
+                      return applied;
+                    }
+                    if (applied && !betweenFlushes && freshRenders) {
+                      await assertPatchedLikeFresh(input);
+                    }
+                    if (client) {
+                      await client.update(input);
+                      if (!hasFlush) {
+                        await assertPatchedLikeClient(JSON.stringify(input));
+                      }
+                    }
+                    if (applied && !held.length && !betweenFlushes) {
+                      await assertSameInputLikeClient(input);
+                    }
+                    if (!applied) {
+                      if (!config.expect_rejection) {
+                        // The step's client console (a debug run warns the
+                        // reason) is the diagnostic; the log has it already.
+                        throw new Error(
+                          "A patch unexpectedly rejected (set `expect_rejection` if intended).\n" +
+                            tracker.getLastLog(),
+                        );
+                      }
+                      rejected = true;
+                      tracker.logStatus("## Patch rejected (navigate)");
+                    }
+                    return applied || config.stay_on_rejection;
+                  }
+                : undefined,
             });
-
-            while (hasFlush) {
-              await resolveAfter(0, 1);
-              tracker.beginUpdate();
-              await flushAndResume();
-              tracker.logUpdate();
+            // A run awaits only what it uses, as a plain one does: a client
+            // render still landing after the last step stays out of the log.
+            if (held.length) {
+              (await Promise.all(held)).forEach((applied, i) => {
+                // A held patch rejects in the step that lands what it waits on.
+                if (!applied && config.expect_rejection) rejected = true;
+                else assert.ok(applied, `Held patch ${i + 1} did not apply.`);
+              });
+            }
+            if (response?.closed && !response.failed) {
+              assert.ok(response.ended, "The last patch response never ended.");
+              assertCommittedOnce(response);
+            }
+            assert.ok(
+              !response?.reportedStopped,
+              "A stopped patch response reported.",
+            );
+            if (
+              withClient &&
+              config.same_input_divergence &&
+              !sameInputDiverged
+            ) {
+              throw new Error(
+                "Patching each input again changes nothing: drop `same_input_divergence`.",
+              );
+            }
+            if (config.expect_rejection && !rejected) {
+              throw new Error(
+                "No patch rejected (drop `expect_rejection` if the case now applies).",
+              );
             }
 
+            if (hasFlush) await drainFlushes();
+            if (comparesOnceLanded && client) {
+              await browser.runAsyncScripts();
+              await assertPatchedLikeClient("the held patches landed");
+            }
             tracker.cleanup();
 
-            return { browser, tracker, chunks };
-          });
+            return {
+              browser,
+              tracker,
+              chunks,
+              patches,
+              patchHeaders,
+              docInputs,
+              renderFresh,
+            };
+          };
 
           skipHTML || it("html", () => snapCompile("html"));
           skipDOM || it("dom", () => snapCompile("dom"));
@@ -514,6 +993,22 @@ function testFixtures(interop?: true) {
               );
             });
 
+          // A patch template also compiles as a tag, whose input callers pass; only
+          // `template.marko` compiles as the page (`embed-test-transform`).
+          !optimize &&
+            usesPatches &&
+            !hasCompilerError &&
+            it("tag", () => {
+              const source = fs.readFileSync(templateFile, "utf8");
+              for (const output of ["html", "dom"] as const) {
+                compiler.compileSync(source, resolve("tag.marko"), {
+                  ...getModeOpts(),
+                  output,
+                  resolveVirtualDependency: resolveVirtualPath,
+                });
+              }
+            });
+
           optimize &&
             !hasCompilerError &&
             after(function sizesGate() {
@@ -543,7 +1038,39 @@ function testFixtures(interop?: true) {
             it("ssr", async () => {
               await snapMode(
                 async () => {
-                  const { tracker, chunks } = await ssr();
+                  const {
+                    tracker,
+                    chunks,
+                    patches,
+                    patchHeaders,
+                    docInputs,
+                    renderFresh,
+                  } = await ssr();
+                  if (usesPatches) {
+                    // Each wire flush is one expression; format them
+                    // independently so beautify cannot glue `}{`.
+                    await snapMode(
+                      () =>
+                        patches
+                          .map((joined, i) => {
+                            const held = patchHeaders[i];
+                            const flushes = joined
+                              .split("\n")
+                              .map(formatPatchFlush)
+                              .filter(Boolean)
+                              .join("\n");
+                            return (
+                              "// PATCH" +
+                              (held ? " holding " + held : "") +
+                              "\n" +
+                              flushes
+                            );
+                          })
+                          .join("\n\n")
+                          .trimEnd() + "\n",
+                      "patches.js",
+                    );
+                  }
                   await snapMode(async () => {
                     const pretty = html_beautify(
                       (optimize ? stripOptimizeRuntime : stripDebugRuntime)(
@@ -562,6 +1089,26 @@ function testFixtures(interop?: true) {
                       stats.html = await getSizes(
                         stripDefaultScript(chunks.join("")),
                       );
+                      if (usesPatches) {
+                        stats.patch = await getSizes(patches.join(""));
+                        // A response must cost less on the wire, raw and
+                        // compressed, than the document for the same input;
+                        // a larger one ships what the client already has.
+                        for (const [i, input] of docInputs) {
+                          // Rendered once the run is done: a render resets the
+                          // resolve state a later step's `resolveAfter` reads.
+                          const doc = await getSizes(
+                            stripDefaultScript(
+                              (await renderFresh(input)).join(""),
+                            ),
+                          );
+                          const flush = await getSizes(patches[i]);
+                          assert.ok(
+                            flush.min < doc.min && flush.brotli < doc.brotli,
+                            `patch response ${i} (${flush.min}b/${flush.brotli}b brotli) is not smaller than its document (${doc.min}b/${doc.brotli}b) for "${entry}"`,
+                          );
+                        }
+                      }
                     }
 
                     return `${pretty}\n`;
@@ -575,6 +1122,7 @@ function testFixtures(interop?: true) {
             });
 
           skipCSR ||
+            usesPatches ||
             it("csr", () =>
               snapMode(
                 async () => stripFixtureDir((await csr()).tracker.getLogs()),
@@ -582,6 +1130,18 @@ function testFixtures(interop?: true) {
                 config.error_dom,
                 "csr",
               ));
+
+          skipCSR ||
+            !usesPatches ||
+            config.error_html ||
+            it("csr", () =>
+              config.csr_divergence
+                ? assert.rejects(
+                    oracle(),
+                    /left a client render/,
+                    "The patched page now matches a client render; drop `csr_divergence`.",
+                  )
+                : oracle());
         });
       }
 
@@ -593,9 +1153,19 @@ function testFixtures(interop?: true) {
             const debug = logs.get("debug");
             const optimize = logs.get("optimize");
             if (debug !== undefined && optimize !== undefined) {
+              // Ids are numbered per step: a debug id may name what changed
+              // in a slot (a dynamic element's tag) where the optimized one
+              // stays, so only each document's own id structure must match.
+              const normalize = (log: string) =>
+                log
+                  .split(/^(?=# )/m)
+                  .map((step) =>
+                    normalizeStructuralIds(step, config.runtime_id),
+                  )
+                  .join("");
               assert.strictEqual(
-                unnamedStyles(optimize),
-                unnamedStyles(debug),
+                normalize(unnamedStyles(optimize)),
+                normalize(unnamedStyles(debug)),
                 `${file} diverges between optimize and debug`,
               );
             }
@@ -623,7 +1193,15 @@ async function runSteps(
   browser: ReturnType<typeof createBrowser>,
   run: () => void,
   opts: {
-    onInput?: (input: Input) => void;
+    onStep?: () => void;
+    afterStep?: (
+      update: Wait | Flush | ((document: Document) => unknown),
+    ) => Promise<void>;
+    onInput?: (
+      input: Input,
+      betweenFlushes?: (document: Document) => unknown,
+      throwsError?: boolean,
+    ) => void | boolean | Promise<void | boolean>;
     onFlush?: () => Promise<void>;
     onDestroy?: () => void;
   },
@@ -641,7 +1219,14 @@ async function runSteps(
       await browser.runAsyncScripts();
       run();
       tracker.logUpdate();
+      if (opts.afterStep) await opts.afterStep(update);
+    } else if (isRelease(update)) {
+      await browser.releaseLoads();
+      await browser.runAsyncScripts();
+      run();
+      tracker.logUpdate("Release");
     } else if (isFlush(update)) {
+      opts.onStep?.();
       if (update.flushType === "stream") {
         if (opts.onFlush) {
           tracker.beginUpdate();
@@ -654,7 +1239,9 @@ async function runSteps(
         run();
         tracker.logUpdate();
       }
+      if (opts.afterStep) await opts.afterStep(update);
     } else if (typeof update === "function") {
+      opts.onStep?.();
       tracker.beginUpdate();
       await update(browser.window.document);
       run();
@@ -665,8 +1252,17 @@ async function runSteps(
       } else {
         tracker.logUpdate(update);
       }
+      if (opts.afterStep) await opts.afterStep(update);
     } else if (opts.onInput) {
-      opts.onInput(update);
+      const input = isNavigate(update)
+        ? typeof update.navigateInput === "function"
+          ? update.navigateInput()
+          : update.navigateInput
+        : update;
+      const between = isNavigate(update) ? update.betweenFlushes : undefined;
+      if ((await opts.onInput(input, between, isThrows(update))) === false) {
+        break;
+      }
     } else {
       // if new input is detected, stop testing
       // this will be covered by the client tests
@@ -683,6 +1279,20 @@ async function getSteps(config: TestConfig, signal?: AbortSignal) {
   return { input, steps };
 }
 
+// A fixture's `SECRET_…` values are ones a patch page must never send: any the
+// page or a patch sends must be in markup the page renders.
+function assertSecretsRendered(sent: string, page: string, what: string) {
+  const markup = page.replace(scriptBodyRe, "");
+  for (const { 0: secret, index } of sent.matchAll(/SECRET_\w*/g)) {
+    if (!markup.includes(secret)) {
+      throw new Error(
+        `${what} sends ${secret}, which the page doesn't render: …${sent.slice(Math.max(0, index - 60), index + secret.length)}`,
+      );
+    }
+  }
+}
+const scriptBodyRe = /(?<=<script\b[^>]*>)[\s\S]*?(?=<\/script>)/g;
+
 function stripDefaultScript(html: string) {
   return html.replace(
     `<script async type=module src="template.marko.page.mjs"></script>`,
@@ -696,6 +1306,296 @@ function once<T>(fn: () => T) {
     peek: () => cached,
     reset() {
       cached = undefined;
+    },
+  });
+}
+
+// The body, then what its formatting drops: the head, and the text of every
+// `<title>` and `<style>` (a scoped rule's class names the scope that wrote
+// it, which differs for one the client created).
+function formatPage(document: Document, compareDefaults?: boolean) {
+  return [
+    formatBody(document.body, false, compareDefaults),
+    formatBody(document.head, false, compareDefaults),
+    ...Array.from(document.querySelectorAll("title,style"), formatElementText),
+  ]
+    .filter(Boolean)
+    .join("\n");
+}
+
+function formatElementText(el: Element) {
+  const text = el.textContent!.replace(/\.[cs]M_[0-9a-z]+~/g, ".M~");
+  return (
+    `<${el.localName}>` +
+    (el.localName === "style"
+      ? text.replace(ruleOfDeclarations, sortRule)
+      : text)
+  );
+}
+
+// Only a `<style>` that is wholly one generated rule of custom properties, set in the
+// order their writes ran, which a patch needn't keep: they compare by name.
+function sortRule(_: string, open: string, declarations: string) {
+  return (
+    open + declarations.match(declaration)!.sort(byPropertyName).join("") + "}"
+  );
+}
+
+// A value is escapes, plain characters and lone slashes: no raw quote, comment opener,
+// `;`, `{` or `}`, which `escapeStyleValue` always escapes.
+const declarationSource = String.raw`--M_[\w-]+:(?:\\[\s\S]|\/(?!\*)|[^\\;{}"'/])*;`;
+const declaration = new RegExp(declarationSource, "g");
+const ruleOfDeclarations = new RegExp(
+  String.raw`^(\.M~\*\{)((?:${declarationSource})+)\}$`,
+);
+
+function byPropertyName(a: string, b: string) {
+  return propertyName(a).localeCompare(propertyName(b));
+}
+
+function propertyName(declaration: string) {
+  return declaration.slice(0, declaration.indexOf(":"));
+}
+
+// A wire flush, formatted; the token line (`;` and the token) is no code.
+function formatPatchFlush(line: string) {
+  const flush = line.trimEnd();
+  return flush[0] === ";"
+    ? flush
+    : js_beautify(flush, { indent_size: 2 }).trimEnd();
+}
+
+function resolveVirtualPath(
+  _from: string,
+  { virtualPath }: { virtualPath: string },
+) {
+  return virtualPath;
+}
+
+// Mounts the csr build and replays each step on it as the patched page takes it.
+async function mountClient(
+  runClient: NonNullable<
+    Awaited<ReturnType<typeof createServerRunner>>["clientRunner"]
+  >,
+  input: Input,
+  runtimeId: string,
+) {
+  const browser = createBrowser();
+  const { template, run } = await runClient(browser.ctx);
+  const instance = template.mount(
+    input,
+    browser.window.document.body,
+    "afterbegin",
+  );
+  // Lazy modules and awaited values land over several macrotasks; a page
+  // that never stops changing (a timer) settles after a bounded wait.
+  const settle = async () => {
+    for (let i = 20, html = ""; i-- && html !== getHTML();) {
+      html = getHTML();
+      run();
+      await waitForPendingModules(browser.ctx);
+      await timers.setTimeout();
+      run();
+    }
+  };
+  const getHTML = () => browser.window.document.body.innerHTML;
+  await settle();
+  let tracker: ReturnType<typeof createMutationTracker> | undefined;
+  return {
+    browser,
+    settle,
+    $global: input.$global,
+    async update(input: Input) {
+      instance.update(input);
+      await settle();
+    },
+    /** What an update changes (nodes, values, console), as the patched page's tracker takes it. */
+    async updateChanges(input: Input) {
+      if (!tracker) {
+        tracker = createMutationTracker(browser, undefined, runtimeId);
+        tracker.logRender(input);
+      }
+      tracker.takeChanges();
+      tracker.beginUpdate();
+      await this.update(input);
+      return tracker.takeChanges();
+    },
+    async apply(update: Wait | Flush | ((document: Document) => unknown)) {
+      if (isFlush(update)) {
+        if (update.flushType !== "stream") {
+          browser.flush(update.flushType as Exclude<FlushType, "stream">);
+        }
+      } else if (!isWait(update)) {
+        await update(browser.window.document);
+      }
+      await settle();
+    },
+  };
+}
+
+// Plain objects and arrays compare by value; anything else, such as a promise
+// or a function, only by identity.
+function equalByValue(a: unknown, b: unknown): boolean {
+  if (a === b) return true;
+  if (!isPlain(a) || !isPlain(b) || Array.isArray(a) !== Array.isArray(b)) {
+    return false;
+  }
+  const keys = Object.keys(a);
+  return (
+    keys.length === Object.keys(b).length &&
+    keys.every((key) => Object.hasOwn(b, key) && equalByValue(a[key], b[key]))
+  );
+}
+
+// A copy of plain objects and arrays; anything else, such as a promise or a
+// function, is kept.
+function copyPlain<T>(value: T): T {
+  if (!isPlain(value)) return value;
+  if (Array.isArray(value)) return value.map(copyPlain) as T;
+  const copy: Record<string, unknown> = {};
+  for (const key in value) copy[key] = copyPlain(value[key]);
+  return copy as T;
+}
+
+function isPlain(value: unknown): value is Record<string, unknown> {
+  if (!value || typeof value !== "object") return false;
+  const proto = Object.getPrototypeOf(value);
+  return proto === Object.prototype || proto === Array.prototype;
+}
+
+function assertionsOnly(err: unknown) {
+  if (!(err instanceof assert.AssertionError)) throw err;
+}
+
+// A client render names its `<id>`s apart from the server's (`c` vs `s`):
+// both number by first appearance.
+function formatClientPage(
+  document: Document,
+  compareDefaults?: boolean,
+  runtimeId?: string,
+) {
+  return normalizeStructuralIds(
+    formatPage(document, compareDefaults),
+    runtimeId,
+    true,
+  );
+}
+
+// A patch response whose body the harness streams one flush at a time, each
+// sent once the page has read the one before.
+function assertCommittedOnce(response: { commits: number }) {
+  assert.equal(
+    response.commits,
+    1,
+    "A patch response that applied did not commit exactly once.",
+  );
+}
+
+function streamPatch(
+  patch: typeof import("@marko/runtime-tags/dom/patch").patch,
+  $global: Parameters<typeof patch>[0],
+  // The server that rendered the patch, whatever the request's build.
+  server: Partial<Pick<typeof import("../html/patch"), "patchResponseHeaders">>,
+) {
+  const encoder = new TextEncoder();
+  const navigation = new AbortController();
+  const [headers, apply] = patch($global, navigation.signal);
+  let wake!: (controller?: ReadableStreamDefaultController) => void;
+  // The body's controller once the page reads again; none once it cancelled.
+  let wanted = new Promise<ReadableStreamDefaultController | undefined>(
+    (resolve) => (wake = resolve),
+  );
+  const waiters: ((applied: 0 | 1) => void)[] = [];
+  const settle = (applied: 0 | 1) => {
+    for (const resolve of waiters.splice(0)) resolve(applied);
+  };
+  // Flushes sent and flushes the page reported applied, each its line.
+  let sent = 0;
+  let applied = 0;
+  const state = {
+    failed: false,
+    closed: false,
+    ended: false,
+    // The caller commits (its history) once per response that applies.
+    commits: 0,
+    cancelled: false,
+    stopped: false,
+    reportedStopped: false,
+  };
+  // A stopped response reports nothing.
+  const report = (fn: () => unknown) => (): undefined => {
+    if (state.stopped) state.reportedStopped = true;
+    else fn();
+  };
+  apply(
+    new Response(
+      new ReadableStream(
+        {
+          pull: (controller) => wake(controller),
+          cancel: () => {
+            state.cancelled = true;
+            wake();
+          },
+        },
+        { highWaterMark: 0 },
+      ),
+      { headers: server.patchResponseHeaders!("patch") },
+    ),
+    report(() => state.commits++),
+    report(() => ++applied === sent && settle(1)),
+    report(() => (state.ended = true)),
+    report(() => {
+      state.failed = true;
+      settle(0);
+    }),
+  );
+  return Object.assign(state, {
+    headers,
+    async send(flush: string) {
+      const controller = await wanted;
+      if (controller) {
+        wanted = new Promise((resolve) => (wake = resolve));
+        // The server ends every flush with a newline, and the page reports each.
+        for (let at = -1; (at = flush.indexOf("\n", at + 1)) >= 0;) sent++;
+        // In thirds, as a network may split it: a flush spans reads.
+        const bytes = encoder.encode(flush);
+        const third = Math.ceil(bytes.length / 3);
+        for (let at = 0; at < bytes.length; at += third) {
+          controller.enqueue(bytes.subarray(at, at + third));
+        }
+        await wanted;
+      }
+    },
+    // Whether every flush sent so far applied: now, or a promise of it while
+    // a flush waits (a module, a streaming body).
+    result(): 0 | 1 | Promise<0 | 1> {
+      return state.failed
+        ? 0
+        : applied === sent
+          ? 1
+          : new Promise((resolve) => waiters.push(resolve));
+    },
+    async end() {
+      state.closed = true;
+      (await wanted)?.close();
+    },
+    // The navigation's abort stops the response: its body is cancelled now.
+    abort() {
+      state.stopped = true;
+      navigation.abort();
+      assert.ok(state.cancelled, "Aborting did not stop the patch response.");
+    },
+    // A later `patch()` stops a response still reading at once; what it left
+    // waiting settles as applied, as the page drops it.
+    superseded() {
+      if (!state.stopped && !state.closed && !state.failed) {
+        assert.ok(
+          state.cancelled,
+          "A later patch() did not stop the response.",
+        );
+      }
+      state.stopped = true;
+      settle(1);
     },
   });
 }

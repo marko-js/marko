@@ -1,0 +1,9 @@
+<let/text=input.text/>
+<button onClick() { text += "!" }>+</button>
+<if=input.show>
+  <wrap>
+    <const/label=text/>
+    <div/el/>
+    <script>el().textContent = label</script>
+  </wrap>
+</if>

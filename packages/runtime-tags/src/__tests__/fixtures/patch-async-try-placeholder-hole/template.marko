@@ -1,0 +1,12 @@
+<main>
+  <h1>${input.title}</h1>
+  <try>
+    <await|value|=input.promise>
+      <em>${value}</em>
+    </await>
+    <@placeholder>
+      <em>loading ${input.title}</em>
+      <script>console.log("placeholder shown: " + input.title)</script>
+    </@placeholder>
+  </try>
+</main>
