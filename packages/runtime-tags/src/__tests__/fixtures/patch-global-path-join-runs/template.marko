@@ -1,0 +1,7 @@
+import { track } from "./track";
+
+<let/open=true/>
+<button onClick() { open = !open }>t</button>
+<if=open>
+  <p>${track("p", $global.o.x)}</p>
+</if>

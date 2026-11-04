@@ -1,0 +1,8 @@
+<let/flag=false/>
+<button.flag onClick() { flag = !flag }>f</button>
+<if=flag><${input.wrap}/></if>
+<if=input.show>
+  <${input.native ? "section" : input.wrap}>
+    <i>${input.label}</i>
+  </>
+</if>

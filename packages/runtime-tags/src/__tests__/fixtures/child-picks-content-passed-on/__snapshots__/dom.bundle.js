@@ -1,0 +1,9 @@
+// template.marko
+const $b_content__s = /*@__PURE__*/ _closure_get(9, ($scope) => _text($scope.a, $scope._.h), 0, "a1");
+const $b_content = _content("a3", "B<!>", "b%", $b_content__s);
+const $a_content__input_x = /*@__PURE__*/ _closure_get(8, ($scope) => _text($scope.a, $scope._.f), 0, "a0");
+const $a_content = _content("a2", "A<!>", "b%", $a_content__input_x);
+const $s = /*@__PURE__*/ _let(7, /* @__PURE__ */ _closure($b_content__s));
+const $setup__script = _script("a4", ($scope) => _on($scope.a, "click", function() {
+	$s($scope, +$scope.h + 1);
+}));

@@ -1,0 +1,11 @@
+<let/count=0/>
+<define/Inner|{ v, show }|>
+  <if=show>
+    <em>${v}</em>
+  </if>
+</define>
+<define/Outer|{ v, show }|>
+  <Inner v=v show=show/>
+</define>
+<Outer v=count show=input.show/>
+<button onClick() { count++ }>+</button>

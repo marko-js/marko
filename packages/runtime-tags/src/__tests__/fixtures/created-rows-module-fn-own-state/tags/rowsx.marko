@@ -1,0 +1,11 @@
+import { lib } from "./lib";
+<let/suffix="s"/>
+<define/Panel|{ isOpen, fmt, label }|>
+  <if=isOpen>
+    <em>${fmt(label)}</em>
+  </if>
+</define>
+<for|x| of=input.items>
+  <Panel isOpen=input.open fmt=lib.format label=suffix + x/>
+</for>
+<button.l onClick() { suffix += "!" }>l</button>
