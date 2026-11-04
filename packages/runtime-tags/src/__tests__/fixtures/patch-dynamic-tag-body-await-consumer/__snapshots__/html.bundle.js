@@ -1,0 +1,72 @@
+// tags/card.marko
+_shells({
+	b4: "b4 b3;b%;<!><!><!>",
+	b5: "b5 b3;b%;<!><!><!>",
+	b: "b !b6; b%;<button class=toggle>toggle</button><!><!>"
+});
+var card_default = _template("b", (input) => {
+	const $scope0_reason = _scope_reason(), $wg__input_p__OR__input_content = _write_guard($scope0_reason, 0), $wi__input_content = _write_if($scope0_reason, 2);
+	const $scope0_id = _scope_id();
+	const $input_content__closures = /* @__PURE__ */ new Set();
+	const $open__closures = /* @__PURE__ */ new Set();
+	let open = true;
+	_html(`<button class=toggle>toggle</button>${_el_mark($scope0_id, "a")}`);
+	_await($scope0_id, "b", input.p, (x) => {
+		const $scope1_id = _scope_id();
+		_filled_guard($scope0_reason, 1) && _unfilled_if($scope0_reason, 2) && _patch_write($scope1_id, "xc", x, !_server_guard($scope0_reason, 1));
+		const c = x && input.content;
+		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "xe", c, !_server_guard($scope0_reason, 0));
+		_if(() => {
+			{
+				const $scope2_id = _scope_id();
+				_dynamic_tag($scope2_id, "a", c, {}, 0, 0, 0, $wg__input_p__OR__input_content);
+				_client_guard($scope0_reason, 0) && _patch_render($scope2_id, "b0");
+				_scope($scope2_id, {});
+				return 0;
+			}
+		}, $scope1_id, "a");
+		_filled_guard($scope0_reason, 0) && _patch_render($scope1_id, "b0", "e");
+		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "b1");
+		_patch_render($scope1_id, "b2", [_filled_guard($scope0_reason, 2) && ">f", _filled_guard($scope0_reason, 1) && "c"], $scope0_reason, 0);
+		_subscribe($open__closures, _subscribe($wi__input_content && $input_content__closures, _scope($scope1_id, {
+			c: $wi__input_content && x,
+			e: c
+		}), _client_guard($scope0_reason, 2) && "b1"), "b3");
+	}, 1, "b4", _unfilled_if($scope0_reason, 1), 1);
+	_script($scope0_id, "b6");
+	_patch_fill($scope0_id, "vb7", open, 1);
+	_scope($scope0_id, {
+		f: _write_if($scope0_reason, 1) && input.content,
+		g: open,
+		h: $wi__input_content && $input_content__closures,
+		i: $open__closures
+	}) || _filled_guard($scope0_reason, 2) && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xf", input.content, !_server_guard($scope0_reason, 2));
+});
+
+// template.marko
+_shells({
+	a0: "a0",
+	a: "a;D%;<main><!></main>"
+});
+var template_default = _template("a", (input) => {
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $cg__input_note = _client_guard($scope0_reason, 4), $wg__input_on__OR__input_p = _write_guard($scope0_reason, 0), $fg__input_note = _filled_guard($scope0_reason, 4), $fg__input_on = _filled_guard($scope0_reason, 2), $fg__input_p = _filled_guard($scope0_reason, 3);
+	const $scope0_id = _scope_id();
+	const $input_note__closures = /* @__PURE__ */ new Set();
+	_html("<main>");
+	_dynamic_tag($scope0_id, "a", input.on ? card_default : "div", { p: input.on && input.p }, 1, _content_resume("a0", () => {
+		const $scope1_id = _scope_id();
+		_scope_reason();
+		_html(`<em>${_text_mark($scope1_id, "a", input.note, 1, $scope0_reason, 4)}</em>`);
+		_unfilled_if($scope0_reason, 4) && _patch_subscribe($scope1_id, "a1", $cg__input_note);
+		_subscribe(_unfilled_if($scope0_reason, 4) && $input_note__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }), $cg__input_note && "a1");
+	}, $scope0_id, ($scope) => $scope0_page ? [{ g: input.note }] : []), 0, $wg__input_on__OR__input_p, $scope0_reason, 0, 0, void 0, 0, 0, "a0");
+	_html("</main>");
+	$fg__input_note && _patch_subscribers($scope0_id, "a2", "g");
+	_patch_render($scope0_id, "a3", [$fg__input_on && "d", $fg__input_p && "e"], $scope0_reason, 0);
+	_scope($scope0_id, {
+		d: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 0)) && input.on,
+		e: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.p,
+		g: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 4)) && input.note,
+		h: _write_if($scope0_reason, 4) && $input_note__closures
+	}) || ($fg__input_on && _unfilled_if($scope0_reason, 3) && _patch_write($scope0_id, "xd", input.on, !_server_guard($scope0_reason, 2)), $fg__input_p && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xe", input.p, !_server_guard($scope0_reason, 3)), $fg__input_note && (_client_branch_if("a0", $scope0_id) || _unfilled_if($scope0_reason, 0)) && _patch_write($scope0_id, "xg", input.note, !_server_guard($scope0_reason, 4)));
+}, 1);

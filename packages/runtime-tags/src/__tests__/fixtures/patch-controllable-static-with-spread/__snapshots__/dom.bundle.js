@@ -1,0 +1,16 @@
+// template.marko
+const $input_rest__OR__text__script = _script("a1", ($scope) => _attrs_script($scope, "a"));
+const $input_rest__OR__text = /*@__PURE__*/ _or_patch("a2", 6, ($scope) => {
+	_attrs($scope, "a", {
+		value: $scope.f,
+		valueChange: $valueChange($scope),
+		...$scope.e
+	}, _controllable_input);
+	$input_rest__OR__text__script($scope);
+});
+const $text = _let(5, ($scope) => {
+	_text($scope.b, $scope.f);
+	$input_rest__OR__text($scope);
+});
+const $valueChange = ($scope) => (_new_text) => $text($scope, _new_text);
+_resumed.a0 = $valueChange;

@@ -1,0 +1,8 @@
+<let/count=0/>
+<p>${input.label}</p>
+<input value=input.label valueChange(v) { console.log(v + ":" + input.label) }>
+<input value=String(count) valueChange(v) { console.log(v + ":" + input.label) }>
+<if=count>
+  <em>${input.label}</em>
+</if>
+<button onClick() { count++ }>${count}</button>
