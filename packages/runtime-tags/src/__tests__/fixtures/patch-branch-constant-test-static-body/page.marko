@@ -1,0 +1,7 @@
+static const ITEMS = ["a", "b"];
+<for|m| of=ITEMS>
+  <span>${m}</span>
+  <if=m === "b">
+    <p>last</p>
+  </if>
+</for>

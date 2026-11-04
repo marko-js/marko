@@ -1,0 +1,25 @@
+<ul>
+  <li class=sel>1</li><!--M_$3 #li/0-->
+  <li>2</li><!--M_$4 #li/0-->
+  <li>3</li><!--M_$5 #li/0--><!--M_}2 #ul/0 5 4 3-->
+</ul><!--M_|1 #text/0 2-->
+<script>
+  WALKER_RUNTIME("M")("_").patchBuild = "b";
+  M._.r = [_ => [1, {
+      selected: 1
+    }, {
+      _: _(1)
+    }, {
+      "#LoopKey": 1,
+      _: _(2)
+    }, {
+      "#LoopKey": 2,
+      _: _(2)
+    }, {
+      "#LoopKey": 3,
+      _: _(2)
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/patch-loop-selector-in-branch-let/template.marko_2 3 4 5"
+  ];
+  M._.w()
+</script>
