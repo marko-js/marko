@@ -524,9 +524,9 @@ _Avoid_: withheld content
 **Kept content**:
 Content a known child renders from its state, where plain renders it nowhere on
 the client (`keepsContent`): it creates from its shell, never by registration, and a flush
-renders its holes once per owner under the _withheld entry_
-(`PatchWithheld:<id>`), which the client applies to each live instance in the
-owner's `WithheldScopes:<id>` set (`_content_kept`).
+renders its holes once per owner under the _client branch entry_
+(`PatchClientBranch:<id>`), which the client applies to each live instance in the
+owner's `ClientBranchScopes:<id>` set (`_content_kept`).
 
 **Written intersection**:
 An intersection of two or more params, one a caller passes, whose every read the patch

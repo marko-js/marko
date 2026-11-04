@@ -27,7 +27,7 @@ export const LoopItem = "PatchLoopItem:";
 export const Var = "PatchVar:";
 export const Write = "PatchWrite:";
 export const MarkedWrite = "PatchMarkedWrite:";
-export const Withheld = "PatchWithheld:";
+export const ClientBranch = "PatchClientBranch:";
 
 type Self = typeof import("./patch-key.debug");
 export type Value = Self[keyof Self];

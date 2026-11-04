@@ -356,7 +356,7 @@ export function patchWritesScope(section: Section) {
 }
 
 // A scope a flush writes values into: also content plain renders nowhere on
-// the client, which a paired consumer or the withheld entry reaches.
+// the client, which a paired consumer or the client branch entry reaches.
 function patchWritesValues(section: Section) {
   return (
     patchWritesScope(section) ||

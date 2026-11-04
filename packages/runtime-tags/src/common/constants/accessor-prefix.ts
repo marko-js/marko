@@ -20,9 +20,9 @@ export const Promise = "L";
 export const TagVariableChange = "M";
 export const TryBranch = "Q";
 // The instances of a content its owner holds where a client consumer keeps them.
-export const WithheldScopes = "P";
-// The holes its owner's last withheld entry gave them.
-export const WithheldHoles = "S";
+export const ClientBranchScopes = "P";
+// The holes its owner's last client branch entry gave them.
+export const ClientBranchHoles = "S";
 
 type Self = typeof import("./accessor-prefix");
 export type Value = Self[keyof Self];

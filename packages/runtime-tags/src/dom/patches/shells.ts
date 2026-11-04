@@ -100,7 +100,7 @@ export const getContent = (id: string, owner?: Scope) => {
 export const getShell = (id: string) =>
   (_resumed["=" + id] as ContentFactory | undefined)?.[RendererProp.Shell];
 
-// Kept content's instances join their owner's set as they're created (`patches/withheld`).
+// Kept content's instances join their owner's set as they're created (`patches/client-branch`).
 let keepInstance: ((branch: Scope, id: string) => void) | undefined;
 export const installKeptInstances = (keep: NonNullable<typeof keepInstance>) =>
   (keepInstance = keep);

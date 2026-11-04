@@ -10,15 +10,15 @@ import { installKeptInstances } from "./shells";
 
 declare module "./apply" {
   interface PatchValues {
-    [PatchKey.Withheld]: Scope;
+    [PatchKey.ClientBranch]: Scope;
   }
 }
 
 // The holes of content a client consumer keeps, for each live instance its
 // owner holds.
-patchers[PatchKey.Withheld] = (scope, contentId, value) => {
-  scope[AccessorPrefix.WithheldHoles + contentId] = value;
-  for (const instance of (scope[AccessorPrefix.WithheldScopes + contentId] as
+patchers[PatchKey.ClientBranch] = (scope, contentId, value) => {
+  scope[AccessorPrefix.ClientBranchHoles + contentId] = value;
+  for (const instance of (scope[AccessorPrefix.ClientBranchScopes + contentId] as
     | Set<Scope>
     | undefined) || []) {
     if (instance[AccessorProp.Gen] > 0) patchScope(value, instance);
@@ -29,8 +29,8 @@ patchers[PatchKey.Withheld] = (scope, contentId, value) => {
 // the holes the owner last took, and leaves it when destroyed.
 installKeptInstances((branch, id) => {
   const owner = branch[AccessorProp.Owner]!;
-  subscribeToScopeSet(owner, AccessorPrefix.WithheldScopes + id, branch);
-  if (owner[AccessorPrefix.WithheldHoles + id]) {
-    patchScope(owner[AccessorPrefix.WithheldHoles + id] as Scope, branch);
+  subscribeToScopeSet(owner, AccessorPrefix.ClientBranchScopes + id, branch);
+  if (owner[AccessorPrefix.ClientBranchHoles + id]) {
+    patchScope(owner[AccessorPrefix.ClientBranchHoles + id] as Scope, branch);
   }
 });

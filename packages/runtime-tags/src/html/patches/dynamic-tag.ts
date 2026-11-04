@@ -45,7 +45,7 @@ import {
   patchWait,
   shipShell,
   walkMarkers,
-  withheldRenderers,
+  clientBranchRenderers,
   withOwnerHops,
   withUnpatched,
   writePatchEntry,
@@ -273,22 +273,22 @@ function keepHoles(id: string, fn: ServerRenderer, scopeId: number) {
     const state = getState();
     const instanceId = _peek_scope_id();
     const result = fn(...args);
-    // An instance a patch may create takes its holes from the owner's withheld
+    // An instance a patch may create takes its holes from the owner's client branch
     // entry, where the flush renders one (`kKeptInstance`).
     if (
       state instanceof PatchRenderState &&
       inCreatable() &&
-      // Not the withheld entry's own render, which links under its key.
+      // Not the client branch entry's own render, which links under its key.
       !state.patchLinks[instanceId].key
     ) {
       const patch = state.patchTree![instanceId];
       if (patch) {
         (patch as { [kKeptInstance]?: string })[kKeptInstance] =
-          PatchKey.Withheld + id + " " + scopeId;
+          PatchKey.ClientBranch + id + " " + scopeId;
       }
     }
     if (!(state instanceof PatchRenderState)) {
-      const key = AccessorPrefix.WithheldScopes + id;
+      const key = AccessorPrefix.ClientBranchScopes + id;
       (
         (scopeWithId(state, scopeId)[key] ||
           _scope(scopeId, { [key]: new Set() })[key]) as Set<ScopeInternals>
@@ -296,7 +296,7 @@ function keepHoles(id: string, fn: ServerRenderer, scopeId: number) {
     }
     return result;
   };
-  withheldRenderers.add(renderer);
+  clientBranchRenderers.add(renderer);
   return renderer;
 }
 

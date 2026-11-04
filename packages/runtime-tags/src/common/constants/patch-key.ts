@@ -45,7 +45,7 @@ export const Var = "z";
 export const Write = "w";
 export const MarkedWrite = "x";
 // Content a client consumer keeps: the holes each instance its owner holds takes.
-export const Withheld = "W";
+export const ClientBranch = "W";
 
 type Self = typeof import("./patch-key");
 export type Value = Self[keyof Self];

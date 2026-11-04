@@ -156,17 +156,17 @@ function writePatchProp(
 ) {
   const escapedKey = toObjectKey(key);
   let member = (node as Record<string, unknown>)[key];
-  // A created instance takes the holes from its owner's withheld entry instead,
+  // A created instance takes the holes from its owner's client branch entry instead,
   // where this flush writes that entry.
   const kept = (member as { [kKeptInstance]?: string } | undefined)?.[
     kKeptInstance
   ];
-  const withheldId = kept
-    ? state.render.withheldRendered?.get(kept)
+  const clientBranchId = kept
+    ? state.render.clientBranchRendered?.get(kept)
     : undefined;
   if (
-    withheldId !== undefined &&
-    patchTreeNodes.has(state.render.patchTree![withheldId]!)
+    clientBranchId !== undefined &&
+    patchTreeNodes.has(state.render.patchTree![clientBranchId]!)
   ) {
     return sep;
   }
@@ -195,7 +195,7 @@ function writePatchProp(
   return sep;
 }
 
-// The withheld entry a kept instance's patch repeats where its scope is created.
+// The client branch entry a kept instance's patch repeats where its scope is created.
 export const kKeptInstance = Symbol();
 
 // A node keeps a reference (a later flush may reach a value by its path) but

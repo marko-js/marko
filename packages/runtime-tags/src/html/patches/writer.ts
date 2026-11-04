@@ -2,7 +2,7 @@ import { ROOT_SCOPE_ID } from "../../common/meta";
 import {
   encodeIdKey,
   encodeIdSite,
-  withheldIdToken,
+  clientBranchIdToken,
 } from "../../common/patch-path";
 import {
   type Accessor,
@@ -69,7 +69,7 @@ export interface IdPath {
   built: number;
 }
 
-// The render enters a row, a call site or a withheld render; an address built
+// The render enters a row, a call site or a client branch render; an address built
 // deeper is stale.
 export function pushIdHop(
   kind: IdHop,
@@ -108,10 +108,10 @@ function encodeHop(kind: IdHop, value: IdPath["path"][number]) {
           "]"
       : encodeIdKey(value as string | number);
   }
-  if (kind === IdHop.Withheld) {
+  if (kind === IdHop.ClientBranch) {
     return MARKO_DEBUG
       ? "^[" + JSON.stringify(value) + "]"
-      : withheldIdToken + encodeIdKey(value as string);
+      : clientBranchIdToken + encodeIdKey(value as string);
   }
   return MARKO_DEBUG
     ? "." +
@@ -212,8 +212,8 @@ export function _client_branch(value: unknown) {
     const id = (content as ServerRenderer)[RendererProp.Id];
     const owner = (content as ServerRenderer)[RendererProp.Owner]!;
     if (id) addClientBranch(state, id, owner);
-    if (withheldRenderers.has(content as ServerRenderer)) {
-      renderWithheld(state, content as ServerRenderer, id!, owner);
+    if (clientBranchRenderers.has(content as ServerRenderer)) {
+      renderClientBranch(state, content as ServerRenderer, id!, owner);
     }
   }
 }
@@ -231,18 +231,18 @@ export function addClientBranch(
 }
 
 // Content whose kept instances take their holes as data (`_content`'s `elide` 2).
-export const withheldRenderers = new WeakSet<ServerRenderer>();
+export const clientBranchRenderers = new WeakSet<ServerRenderer>();
 
 // A flush that leaves content to the consumers keeping it renders its holes
 // once for its owner, under the entry every instance there takes.
-function renderWithheld(
+function renderClientBranch(
   state: PatchRenderState,
   renderer: ServerRenderer,
   id: string,
   ownerId: number,
 ) {
-  const rendered = (state.withheldRendered ??= new Map());
-  const key = PatchKey.Withheld + id;
+  const rendered = (state.clientBranchRendered ??= new Map());
+  const key = PatchKey.ClientBranch + id;
   if (rendered.has(key + " " + ownerId)) return;
   const scopeId = _base_peek_scope_id();
   rendered.set(key + " " + ownerId, scopeId);
@@ -251,7 +251,7 @@ function renderWithheld(
     hop: "",
     key,
   };
-  pushIdHop(IdHop.Withheld, id);
+  pushIdHop(IdHop.ClientBranch, id);
   renderer({});
   popIdHop();
 }
@@ -563,8 +563,8 @@ export class PatchRenderState extends PatchPageState {
   pendingAwaits = new Set<number>();
   // Each setup envelope's ids.
   setupIds?: Map<object, Set<string>>;
-  // Each owner's withheld entry the response renders, with the scope it is in.
-  withheldRendered?: Map<string, number>;
+  // Each owner's client branch entry the response renders, with the scope it is in.
+  clientBranchRendered?: Map<string, number>;
   // What each scope's slots holding built objects depend on, by accessor.
   writtenReads?: Record<number, Record<string, string>>;
   // The writes each entry re-runs on, and its scope, resolved as the flush

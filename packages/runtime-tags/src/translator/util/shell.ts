@@ -128,7 +128,7 @@ export const [getShells] = createOutputState(() => {
 export function linkPatchSends() {
   const programExtra = getProgram().node.extra;
   forEachSection((section) => {
-    if (keepsHoles(section)) linkRuntimeFeature("patches/withheld");
+    if (keepsHoles(section)) linkRuntimeFeature("patches/client-branch");
     if (
       // Boundary content no shell creates renders by the renderer its
       // module registers.

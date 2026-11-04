@@ -2188,8 +2188,8 @@ const accessorPrefixDescriptions: Record<string, string> = {
   Promise: "the pending promise",
   TagVariableChange: "the tag variable change handler",
   TryBranch: "the try branch",
-  WithheldScopes: "the kept content instances",
-  WithheldHoles: "the kept content holes",
+  ClientBranchScopes: "the kept content instances",
+  ClientBranchHoles: "the kept content holes",
 };
 
 // A readable phrase for an internal `<Prefix>:<node accessor>` scope slot.
