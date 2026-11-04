@@ -1,0 +1,9 @@
+<define/A|{ label }|>
+  <em>${label}</em>
+</define>
+<define/B|{ label }|>
+  <b>${label}</b>
+</define>
+<child label=input.label>
+  <@slot renderer=(input.a ? A : B)/>
+</child>

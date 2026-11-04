@@ -1,0 +1,9 @@
+// template.marko
+const $catch_content__input_title = /*@__PURE__*/ _closure_get_patch("a0", 9, ($scope) => _text($scope.b, $scope._._.g), ($scope) => $scope._._, "a8", 0);
+const $catch_content__setup = $catch_content__input_title;
+const $catch_content__$params = ($scope, $params2) => _text($scope.a, $params2[0]?.message);
+const $catch_content = _content$1("a4", "<em><!> <!></em>", "D%c%", $catch_content__setup, $catch_content__$params);
+const $count = _let(8, ($scope) => _text($scope.b, $scope.i));
+const $setup__script = _script("a7", ($scope) => _on($scope.a, "click", function() {
+	$count($scope, +$scope.i + 1);
+}));

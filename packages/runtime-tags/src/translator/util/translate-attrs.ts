@@ -7,7 +7,7 @@ import { getDeclaredBindingExpression } from "./get-declared-binding-expression"
 import { getKnownAttrValues } from "./get-known-attr-values";
 import { getAttributeTagParent } from "./get-parent-tag";
 import { getTagName } from "./get-tag-name";
-import { isOutputHTML } from "./marko-config";
+import { isOutputHTML, isPatch } from "./marko-config";
 import {
   type AttrTagMeta,
   type AttrTagLookup,
@@ -16,20 +16,26 @@ import {
 } from "./nested-attribute-tags";
 import { toArray } from "./optional";
 import { type ParamsTree, getParamsTreeAt } from "./params-tree";
+import { isContentSentAsBindReference, keepsHoles } from "./patch/refresh";
 import { callRuntime } from "./runtime";
 import { getScopeAccessor } from "./scope-accessor";
 import { scopeIdentifier } from "./scope-read";
 import { getSectionRendererIdentifier } from "./section-renderer";
 import {
+  getRendererReason,
   getScopeIdIdentifier,
   getSection,
   getSectionForBody,
-  getRendererReason,
   type Section,
 } from "./sections";
+import { shipsContentShell } from "./shell";
 import { getContentClosureValues, getResumeRegistryId } from "./signals";
 import { toObjectProperty } from "./to-property-name";
-import { getScopeReasonStatement } from "./write-guard";
+import {
+  getReasonSection,
+  getScopeReasonStatement,
+  scopePageIdentifier,
+} from "./write-guard";
 
 const contentProps = new WeakSet<t.Node>();
 type ContentKey = "renderBody" | "content";
@@ -412,6 +418,8 @@ function buildContent(body: t.NodePath<t.MarkoTagBody>) {
         getScopeReasonStatement(bodySection),
       );
 
+      // An unregistered shell content elides its slot (`0`); kept content names
+      // its section (never the program's `0`), whose scopes its owner holds.
       return callRuntime(
         serialized ? "_content_resume" : "_content",
         t.stringLiteral(getResumeRegistryId(bodySection, "content")),
@@ -424,7 +432,15 @@ function buildContent(body: t.NodePath<t.MarkoTagBody>) {
             getAttributeTagParent(body.parentPath as t.NodePath<t.MarkoTag>),
           ),
         ),
-        serialized && getRegisteredLocals(bodySection),
+        serialized
+          ? getRegisteredLocals(bodySection)
+          : keepsHoles(bodySection)
+            ? t.numericLiteral(bodySection.id)
+            : shipsContentShell(bodySection) && t.numericLiteral(0),
+        serialized &&
+          isPatch() &&
+          isContentSentAsBindReference(bodySection) &&
+          t.numericLiteral(1),
       );
     } else {
       // Nothing reads content whose renderer is elided, so it has no property.
@@ -448,12 +464,21 @@ function getRegisteredLocals(bodySection: Section) {
   const contentClosureValues = getContentClosureValues(bodySection);
   const localClosureValues = getLocalClosureValues(bodySection);
   if (contentClosureValues || localClosureValues) {
+    const locals = localClosureValues ? [localClosureValues] : [];
+    const values = t.arrayExpression([
+      ...locals,
+      ...(contentClosureValues?.levels || []),
+    ]);
+    // A patch render writes each closure the client reads, so it sends none.
     return t.arrowFunctionExpression(
       contentClosureValues ? [contentClosureValues.scope] : [],
-      t.arrayExpression([
-        ...(localClosureValues ? [localClosureValues] : []),
-        ...(contentClosureValues?.levels || []),
-      ]),
+      contentClosureValues?.written
+        ? t.conditionalExpression(
+            scopePageIdentifier(getReasonSection(bodySection.parent!)),
+            values,
+            t.arrayExpression(locals),
+          )
+        : values,
     );
   }
 }

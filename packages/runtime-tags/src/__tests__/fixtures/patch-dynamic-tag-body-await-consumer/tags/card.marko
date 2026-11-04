@@ -1,0 +1,6 @@
+<let/open=true/>
+<button.toggle onClick() { open = !open }>toggle</button>
+<await|x|=input.p>
+  <const/c=x && input.content/>
+  <if=open><${c}/></if>
+</await>

@@ -1,0 +1,7 @@
+<if=input.show>
+  <card>
+    <define/Inner><b onClick() { console.log(input.label) }>${input.label}</b></define>
+    <cmp a=Inner b=Inner o=input.obj p=input.obj/>
+  </card>
+</if>
+<p>${input.obj.n}</p>

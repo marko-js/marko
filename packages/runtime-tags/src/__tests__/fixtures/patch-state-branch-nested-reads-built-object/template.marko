@@ -1,0 +1,10 @@
+<let/open=true/>
+<const/b={ value: input.x }/>
+<if=open>
+  <div>
+    <if=open>
+      <i>${JSON.stringify(b)}</i>
+    </if>
+  </div>
+</if>
+<button onClick() { open = !open }>toggle</button>
