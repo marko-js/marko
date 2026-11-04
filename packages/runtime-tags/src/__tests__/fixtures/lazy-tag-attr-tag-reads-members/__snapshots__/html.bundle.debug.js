@@ -28,7 +28,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_subscribe($value_a__closures, $scope1_write, "__tests__/template.marko_1_value_a#0:4/subscribe");
 		_subscribe($value_b__closures, $scope1_write, "__tests__/template.marko_1_value_b#0:5/subscribe");
 	}, $scope0_id) }) });
-	_script($scope0_id, "__tests__/template.marko_0_value_a#4");
+	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		value_a: value?.a,
 		"ClosureScopes:value_a/6": $value_a__closures,

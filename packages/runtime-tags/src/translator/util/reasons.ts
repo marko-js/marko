@@ -32,7 +32,6 @@ import {
 } from "./sections";
 import { ensureSectionSlot, ensureSlot, type Slot, SlotKind } from "./slots";
 import {
-  compareSources,
   ALWAYS,
   mergeSources,
   type Sources,
@@ -48,12 +47,14 @@ export type Reasons = SortedOneMany<Sources>;
 // an `always` one is never guarded but still says what it reads.
 export type Reason = Sources;
 
+// The single point of assigning slot reasons, to aid in debugging. A merge
+// adding nothing returns the reason it had.
 export function addReason(slot: Slot, reason: undefined | false | Reason) {
   if (reason) {
-    const curReason = slot.reason;
-    const newReason = mergeSources(curReason, reason);
-    if (curReason !== newReason) {
-      setSlotReason(slot, newReason);
+    const newReason = mergeSources(slot.reason, reason);
+    if (slot.reason !== newReason) {
+      reasonsVersion++;
+      slot.reason = newReason;
     }
   }
 }
@@ -276,15 +277,13 @@ export function getKnownExprsAt(
 }
 
 export function applyReasonExprs(section: Section) {
-  forEach(section.slots, applySlotExprs);
-}
-
-function applySlotExprs(slot: Slot) {
-  addReason(slot, getSourcesForExprs(slot.reasonExprs));
+  for (const slot of section.slots) {
+    addReason(slot, getSourcesForExprs(slot.reasonExprs));
+  }
 }
 
 export function mergeSlotReasons(section: Section) {
-  section.reason = reduce(section.slots, mergeSlotReason, section.reason);
+  section.reason = section.slots.reduce(mergeSlotReason, section.reason);
 }
 
 // A scope is written when any slot in it is.
@@ -295,7 +294,7 @@ function mergeSlotReason(sectionReason: Reason | undefined, slot: Slot) {
 // Each reason a node of the section resumes for, kept apart so each one's guard
 // stays buildable.
 export function getNodeReasons(section: Section) {
-  return reduce(section.slots, addNodeReason, undefined);
+  return section.slots.reduce<Reasons | undefined>(addNodeReason, undefined);
 }
 
 function addNodeReason(reasons: Reasons | undefined, slot: Slot) {
@@ -313,12 +312,6 @@ export function getReasonsVersion() {
   return reasonsVersion;
 }
 
-// Exists as the single point of assigning slot reasons to aid in debugging.
-function setSlotReason(slot: Slot, reason: Reason) {
-  if (!isSameSources(slot.reason, reason)) reasonsVersion++;
-  slot.reason = reason;
-}
-
 // Exists as the single point of assigning param reason groups: call sites
 // map each group, so a new one moves the version too.
 export function setParamReasonGroups(
@@ -327,9 +320,4 @@ export function setParamReasonGroups(
 ) {
   reasonsVersion++;
   section.paramReasonGroups = groups;
-}
-
-// Merges rebuild equal sources, so only a change in them counts.
-function isSameSources(a: Reason | undefined, b: Reason) {
-  return !!a && compareSources(a, b) === 0;
 }

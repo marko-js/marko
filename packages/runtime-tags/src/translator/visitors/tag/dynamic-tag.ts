@@ -45,6 +45,7 @@ import {
   trackVarReferences,
   getReferencedBindings,
 } from "../../util/references";
+import { replaceWithStatements } from "../../util/replace-with-statements";
 import {
   absentArg,
   callRuntime,
@@ -253,7 +254,7 @@ export default {
         !isOutputHTML() &&
         !getTagTemplate(tag)
       ) {
-        tag.remove();
+        replaceWithStatements(tag);
         return;
       }
 
@@ -315,7 +316,7 @@ export default {
             },
           );
 
-          tag.remove();
+          replaceWithStatements(tag);
         }
 
         return;
@@ -341,7 +342,7 @@ export default {
           !markerReason &&
           !classHydration
         ) {
-          tag.remove();
+          replaceWithStatements(tag);
           return;
         }
 
@@ -527,9 +528,7 @@ export default {
           statements.push(t.expressionStatement(dynamicTagExpr));
         }
 
-        for (const replacement of tag.replaceWithMultiple(statements)) {
-          replacement.skip();
-        }
+        replaceWithStatements(tag, statements);
       } else {
         const section = getSection(tag);
         const bodySection = getSectionForBody(tag.get("body"));
@@ -627,7 +626,7 @@ export default {
           }
         }
         addValue(section, tagExtra, signal, tagExpression);
-        tag.remove();
+        replaceWithStatements(tag);
       }
     },
   },

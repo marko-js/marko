@@ -38,7 +38,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let { valueChange: $valueChange, value } = _dynamic_tag($scope0_id, "#text/0", input.a ? a_default : b_default, {}, 0, 0, 1, 1);
 	_var($scope0_id, "#scopeOffset/1", $inputaAB_scope, "__tests__/template.marko_0_$pattern#7/var");
 	_html(`<button>${_text_resume($scope0_id, "#text/3", value)}</button>${_el_resume($scope0_id, "#button/2")}`);
-	_script($scope0_id, "__tests__/template.marko_0_value#8_$valueChange#9");
+	_script($scope0_id, "__tests__/template.marko_0_$valueChange#9");
 	_scope($scope0_id, {
 		value,
 		$valueChange

@@ -24,15 +24,13 @@ const $wrap_content__setup = ($scope) => {
 const $wrap_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "<span><!>-<!></span><button></button>", "D%c%l ", $wrap_content__setup);
 const $x = /*@__PURE__*/ _let("x/2", ($scope) => $x_n($scope, $scope.x.n));
 const $x_n__closure = /*@__PURE__*/ _closure($wrap_content__x_n);
-const $x_n__script = _script("__tests__/template.marko_0_x_n#3", ($scope) => _on($scope["#button/1"], "click", function() {
+const $x_n = /*@__PURE__*/ _const("x_n", $x_n__closure);
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$x($scope, { n: $scope.x_n + 1 });
 }));
-const $x_n = /*@__PURE__*/ _const("x_n", ($scope) => {
-	$x_n__closure($scope);
-	$x_n__script($scope);
-});
 function $setup($scope) {
 	$input_content_direct($scope["#childScope/0"], $wrap_content($scope));
 	$x($scope, { n: 1 });
+	$setup__script($scope);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

@@ -1,0 +1,14 @@
+<button class=change>change</button><!--M_$1 a--><!--M_[-->
+<div>hello<!--M_$2 a--></div><button
+  class=log>log</button><!--M_$2 b--><!--M_[2-->
+<div>world<!--M_$3 a--></div><button
+  class=log>log</button><!--M_$3 b--><!--M_]1 b 3-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [2, {
+    e: "hello"
+  }, {
+    e: "world"
+  }], "a0 2 3 a1 1"];
+  M._.w()
+</script>

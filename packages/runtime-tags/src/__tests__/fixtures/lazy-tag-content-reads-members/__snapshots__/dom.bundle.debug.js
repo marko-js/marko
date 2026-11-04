@@ -26,18 +26,15 @@ const $value = /*@__PURE__*/ _let("value/3", ($scope) => {
 	$value_b($scope, $scope.value?.b);
 });
 const $value_a__closure = /*@__PURE__*/ _closure($Child_content__value_a);
-const $value_a__script = _script("__tests__/template.marko_0_value_a#4", ($scope) => _on($scope["#button/0"], "click", function() {
+const $value_a = /*@__PURE__*/ _const("value_a", $value_a__closure);
+const $value_b__closure = /*@__PURE__*/ _closure($Child_content__value_b);
+const $value_b = /*@__PURE__*/ _const("value_b", $value_b__closure);
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$value($scope, {
 		a: $scope.value_a + 1,
 		b: 1
 	});
 }));
-const $value_a = /*@__PURE__*/ _const("value_a", ($scope) => {
-	$value_a__closure($scope);
-	$value_a__script($scope);
-});
-const $value_b__closure = /*@__PURE__*/ _closure($Child_content__value_b);
-const $value_b = /*@__PURE__*/ _const("value_b", $value_b__closure);
 function $setup($scope) {
 	$load_Child_setup($scope, $scope["#childScope/2"], $scope["#text/1"]);
 	$load_Child_tag_input_content($scope["#childScope/2"], $Child_content($scope));
@@ -45,6 +42,7 @@ function $setup($scope) {
 		a: 1,
 		b: 1
 	});
+	$setup__script($scope);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
 

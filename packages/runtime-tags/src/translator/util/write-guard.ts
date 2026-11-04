@@ -404,7 +404,7 @@ function hasGuardedReason(section: Section) {
   ) {
     return true;
   }
-  return some(section.slots, isConditionalSlot);
+  return section.slots.some(isConditionalSlot);
 }
 
 function isConditionalSlot(slot: Slot) {

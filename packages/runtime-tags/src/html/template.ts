@@ -379,6 +379,8 @@ class ServerRendered implements RenderedTemplate {
           return;
         }
 
+        // Writes once the render completes or on the tick after it waits on
+        // async work, so a render with no async boundary is a single write.
         if (write || status === FlushStatus.complete) {
           head = head.consume(boundary);
           // An abort re-entered above, so the next pass reports it.

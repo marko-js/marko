@@ -1,4 +1,4 @@
-// size: 27389 (min) 10220 (brotli)
+// size: 27386 (min) 10220 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -164,12 +164,16 @@ let _show = /*@__PURE__*/ withBranches((nodeAccessor, startNodeAccessor, endNode
       range = scope[rangeAccessor];
     range ||
       ((range = scope[rangeAccessor] = {}),
-      (range.S = onlyChild ? parentNode.firstChild : scope[startNodeAccessor]),
       (range.K = onlyChild
         ? parentNode.lastChild
-        : endNodeAccessor === void 0
-          ? referenceNode.previousSibling
-          : scope[endNodeAccessor]));
+        : endNodeAccessor
+          ? scope[endNodeAccessor]
+          : referenceNode.previousSibling),
+      (range.S = onlyChild
+        ? parentNode.firstChild
+        : startNodeAccessor
+          ? scope[startNodeAccessor]
+          : range.K));
     let startNode = range.S;
     if (range.L && startNode === range.K && startNode.tagName === "T") {
       let wrapper = startNode;
@@ -1119,7 +1123,7 @@ function runResumeEffects(render) {
     isResuming = 0;
   }
 }
-function getRegisteredWithScope(id, scope) {
+function getRegisteredWithScope(scope, id) {
   return scope ? _resumed[id](scope) : _resumed[id];
 }
 function _var_resume(id, signal) {
@@ -2112,7 +2116,7 @@ let compat = {
   },
   resolveRegistered(value, $global) {
     return Array.isArray(value) && typeof value[0] == "string"
-      ? getRegisteredWithScope(value[0], getRenderScopes($global)?.[value[1]])
+      ? getRegisteredWithScope(getRenderScopes($global)?.[value[1]], value[0])
       : value;
   },
   createRenderer(params, clone) {

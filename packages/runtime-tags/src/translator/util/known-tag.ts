@@ -56,6 +56,7 @@ import {
   trackVarReferences,
   mergeTagReferences,
 } from "./references";
+import { replaceWithStatements } from "./replace-with-statements";
 import { absentArg, callRuntime } from "./runtime";
 import {
   getScopeAccessorLiteral,
@@ -381,7 +382,7 @@ export function knownTagTranslateHTML(
     );
 
     if (childGroupMask) {
-      tag.insertBefore(
+      statements.unshift(
         t.expressionStatement(callRuntime("_set_scope_reason", childGroupMask)),
       );
     }
@@ -405,9 +406,7 @@ export function knownTagTranslateHTML(
     );
   }
 
-  for (const replacement of tag.replaceWithMultiple(statements)) {
-    replacement.skip();
-  }
+  replaceWithStatements(tag, statements);
 }
 
 export function knownTagTranslateDOM(

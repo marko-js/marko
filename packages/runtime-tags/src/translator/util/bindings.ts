@@ -97,7 +97,8 @@ export interface Binding {
   /** In a template's or `<define>`'s params tree, which known call sites set
    * directly. */
   exposed: boolean;
-  /** Read on invocation from its own scope slot, so its signal stores it. */
+  /** Owns a scope slot read on invocation, through it or a direct alias, so
+   * its signal stores it. */
   hasLazyReads: boolean;
 }
 

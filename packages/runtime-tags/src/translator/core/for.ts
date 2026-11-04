@@ -22,7 +22,7 @@ import {
   getBranchResumeArgs,
   getForType,
   initBranchSection,
-  isSingleNodeBranch,
+  isSingleNodeContent,
   resumeOwnerByMarkerWhenUnconditional,
 } from "../util/branch-tag";
 import { detectForSelector, isForSelectorClosure } from "../util/for-selector";
@@ -38,6 +38,7 @@ import {
   trackParamsReferences,
   mergeTagReferences,
 } from "../util/references";
+import { replaceWithStatements } from "../util/replace-with-statements";
 import { callRuntime } from "../util/runtime";
 import { getScopeAccessorLiteral } from "../util/scope-accessor";
 import {
@@ -175,7 +176,7 @@ export default {
         const bodySection = getSectionForBody(tagBody);
 
         if (!bodySection) {
-          tag.remove();
+          replaceWithStatements(tag);
           return;
         }
 
@@ -216,7 +217,7 @@ export default {
             ...getBranchResumeArgs(
               tag,
               branchReason,
-              isSingleNodeBranch(bodySection),
+              isSingleNodeContent(bodySection?.content),
             ),
           );
         }
@@ -225,9 +226,7 @@ export default {
           t.expressionStatement(callRuntime(forTagHTMLRuntime, ...forTagArgs)),
         );
 
-        for (const replacement of tag.replaceWithMultiple(statements)) {
-          replacement.skip();
-        }
+        replaceWithStatements(tag, statements);
       },
     },
     dom: {
@@ -238,7 +237,7 @@ export default {
         const bodySection = getSectionForBody(tagBody);
 
         if (!bodySection) {
-          tag.remove();
+          replaceWithStatements(tag);
         }
       },
       exit(tag) {
@@ -283,7 +282,7 @@ export default {
 
         addValue(tagSection, tagExtra, signal, t.arrayExpression(loopArgs));
 
-        tag.remove();
+        replaceWithStatements(tag);
       },
     },
   }),

@@ -23,8 +23,6 @@ import {
   type OneMany,
   type Opt,
   Sorted,
-  type SortedOpt,
-  forEach,
   reduce,
   some,
 } from "./optional";
@@ -40,6 +38,7 @@ import { type Slot } from "./slots";
 import { bindingLandsRetained, getReasonForBinding } from "./solve-reasons";
 import { ALWAYS, mergeSources, type Sources } from "./sources";
 import { createOutputSectionState } from "./state";
+import { getPlaceholderContentType } from "./static-text";
 import { getTagContentType, getTagFacts } from "./tag-facts";
 import analyzeTagNameType, { TagNameType } from "./tag-name-type";
 import { getWriteReason } from "./write-guard";
@@ -95,7 +94,11 @@ export interface StructureNode {
   // Set at an element's exit, once only-child control flow may have bound it;
   // still unset there, the element is not addressed and the op drops.
   binding: Binding | undefined;
-  marker: boolean;
+  /** `undefined` for a text node at its section's edge: a marker where the
+   * section is a known child (`isKnownChild`), known once calls are analyzed. */
+  marker: boolean | undefined;
+  /** A placeholder's text node, written as a space where it is no marker. */
+  text?: true;
 }
 
 export interface StructureChild {
@@ -131,8 +134,9 @@ export interface Section {
   selector: Set<Binding> | undefined;
   /** The canonical intersections its work waits on, once ids allocate. */
   intersections: Map<Intersection, IntersectionMeta> | undefined;
-  /** The slots of its scope, its own and its bindings'. */
-  slots: SortedOpt<Slot>;
+  /** The slots of its scope, its own and its bindings', which `slots.ts` keeps
+   * sorted. */
+  slots: Slot[];
   /** When client code reads anything in its scope: its slots' reasons merged. */
   reason: undefined | Reason;
   paramReasonGroups: ParamReasonGroups | undefined;
@@ -243,7 +247,7 @@ export function ensureBodySection(
       selector: undefined,
       intersections: undefined,
       isHoistThrough: undefined,
-      slots: undefined,
+      slots: [],
       reason: undefined,
       paramReasonGroups: undefined,
       returnValueExpr: undefined,
@@ -409,7 +413,7 @@ export function forEachSectionReverse(fn: (section: Section) => void) {
   }
 }
 
-function getContentInfo(
+export function getContentInfo(
   path: t.NodePath<t.Program | t.MarkoTagBody>,
 ): Section["content"] {
   const body = path.get("body");
@@ -450,7 +454,7 @@ export function getNodeContentType(
     case "MarkoText":
       return ContentType.Text;
     case "MarkoPlaceholder":
-      return ContentType.Placeholder;
+      return getPlaceholderContentType(path.node as t.MarkoPlaceholder);
     case "MarkoScriptlet":
     case "MarkoComment":
     case "ImportDeclaration":
@@ -467,6 +471,12 @@ export function getNodeContentType(
   }
 
   return ContentType.Dynamic;
+}
+
+// A section its callers render in place, so text beside its edges is theirs:
+// a template, or a body its direct calls render.
+export function isKnownChild(section: Section) {
+  return !section.parent || !!section.calls;
 }
 
 // The section `structure.child` inlines; a load tag renders behind a marker.
@@ -590,11 +600,9 @@ export function getCommonSection(section: Section, other: Section) {
 export function ensureSectionReasonGroups(section: Section) {
   ensureReasonGroups(section, section.reason);
 
-  forEach(section.slots, ensureSlotReasonGroups);
-}
-
-function ensureSlotReasonGroups(slot: Slot) {
-  ensureReasonGroups(slot.section, slot.reason);
+  for (const slot of section.slots) {
+    ensureReasonGroups(slot.section, slot.reason);
+  }
 }
 
 // The groups the section's guards test, in its own terms.
