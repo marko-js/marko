@@ -1,0 +1,7 @@
+<let/l="a"/>
+<let/o=true/>
+<if=input.show>
+  <rowsx label=l open=o items=input.items/>
+</if>
+<button.l onClick() { l += "!" }>l</button>
+<button.o onClick() { o = !o }>o</button>

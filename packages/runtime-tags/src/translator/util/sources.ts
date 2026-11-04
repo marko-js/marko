@@ -6,6 +6,7 @@ import {
   someUpToAliasRoot,
 } from "./bindings";
 import { every, Sorted, some, type SortedOpt } from "./optional";
+import { isKnownChild, isCallerParamAt, type Section } from "./sections";
 
 export interface Sources {
   state: SortedOpt<Binding>;
@@ -148,6 +149,28 @@ function dropCovered(params: Sources["param"], other: Sources["param"]) {
     params,
     (binding) => !isCoveredParam(binding.aliasOf, other),
   );
+}
+
+// Whether the sources read a param a caller passes (`isKnownChild`).
+export function hasCallerParamSource(sources: Sources | undefined) {
+  return some(sources?.param, isCallerParam);
+}
+
+// Whether a write in `section` gates on a group of the sources' params.
+export function hasCallerParamSourceAt(
+  sources: Sources | undefined,
+  section: Section,
+) {
+  return some(sources?.param, (param) => isCallerParamAt(param, section));
+}
+
+function isCallerParam(binding: ParamBinding) {
+  return isKnownChild(binding.section);
+}
+
+// Whether the sources read what the server supplies: params or `$global`.
+export function hasParamOrGlobalSource(sources: Sources | undefined) {
+  return !!(sources?.param || sources?.global);
 }
 
 function isInParams(binding: Binding, params: Sources["param"]) {

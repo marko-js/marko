@@ -1,0 +1,9 @@
+import Loaded from "./tags/loaded.marko";
+<for|item| of=input.items by="key">
+ <try>
+  <@placeholder><field name="loading"/></@placeholder>
+  <await|ready|=item.promise>
+   <${input.loaded ? Loaded : "section"} name=ready><field name=item.key/></>
+  </await>
+ </try>
+</for>

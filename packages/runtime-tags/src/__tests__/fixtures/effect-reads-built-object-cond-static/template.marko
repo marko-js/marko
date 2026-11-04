@@ -1,0 +1,4 @@
+static const NONE = { t: "none" };
+<const/item=input.flag ? { t: input.title } : NONE/>
+<output/el/>
+<script>el().textContent = JSON.stringify(item); console.log("run", JSON.stringify(item))</script>

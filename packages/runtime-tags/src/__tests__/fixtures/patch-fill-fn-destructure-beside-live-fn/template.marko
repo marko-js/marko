@@ -1,0 +1,10 @@
+<const/[fmt]=[(s: string) => s + ":" + input.title]/>
+<const/tag=(s: string) => s + "#" + input.title/>
+<let/show=true/>
+<main>
+  <if=show>
+    <card fn=fmt/>
+    <card fn=tag/>
+  </if>
+  <button onClick() { show = !show }>t</button>
+</main>

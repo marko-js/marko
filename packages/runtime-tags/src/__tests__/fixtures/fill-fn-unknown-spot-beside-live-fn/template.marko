@@ -1,0 +1,14 @@
+<const/key=input.key/>
+<const/o={ [key]: (s: string) => s + ":" + input.title, key: input.title }/>
+<const/[first]=[...input.pre, (s: string) => s + "=" + input.title]/>
+<const/tag=(s: string) => s + "#" + input.title/>
+<let/show=true/>
+<main>
+  <if=show>
+    <card fn=o[key]/>
+    <card fn=first/>
+    <card fn=tag/>
+    <p>${o.key}</p>
+  </if>
+  <button onClick() { show = !show }>t</button>
+</main>
