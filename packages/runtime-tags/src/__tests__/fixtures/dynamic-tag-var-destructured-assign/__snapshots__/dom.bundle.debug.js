@@ -45,15 +45,11 @@ const $pattern2 = _var_resume("__tests__/template.marko_0_$pattern#7/var", ($sco
 	$value($scope, $pattern.value);
 	$valueChange2($scope, $pattern.valueChange);
 });
-const $value__OR__$valueChange__script = _script("__tests__/template.marko_0_value#8_$valueChange#9", ($scope) => _on($scope["#button/2"], "click", function() {
+const $value = /*@__PURE__*/ _const("value", ($scope) => _text($scope["#text/3"], $scope.value));
+const $valueChange2__script = _script("__tests__/template.marko_0_$valueChange#9", ($scope) => _on($scope["#button/2"], "click", function() {
 	$scope.$valueChange(+$scope.value + 1);
 }));
-const $value__OR__$valueChange = /*@__PURE__*/ _or(10, $value__OR__$valueChange__script, 1, "#scopeOffset/1");
-const $value = /*@__PURE__*/ _const("value", ($scope) => {
-	_text($scope["#text/3"], $scope.value);
-	$value__OR__$valueChange($scope);
-});
-const $valueChange2 = /*@__PURE__*/ _const("$valueChange", $value__OR__$valueChange);
+const $valueChange2 = /*@__PURE__*/ _const("$valueChange", $valueChange2__script);
 const $input_a = ($scope, input_a) => $dynamicTag($scope, input_a ? a_default : b_default);
 const $input = ($scope, input) => $input_a($scope, input.a);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, 0, $input);

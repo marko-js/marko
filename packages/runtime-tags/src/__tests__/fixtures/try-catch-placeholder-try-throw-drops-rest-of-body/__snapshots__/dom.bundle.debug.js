@@ -8,7 +8,7 @@ const $try_content2__setup = ($scope) => _text($scope["#text/0"], (() => {
 	throw new Error("ERROR!");
 })());
 const $await_content__try = /*@__PURE__*/ _try("#text/0", " ", " ", $try_content2__setup, $placeholder_content);
-const $await_content__setup = ($scope) => $await_content__try($scope);
+const $await_content__setup = $await_content__try;
 const $catch_content__err_message = ($scope, err_message) => _text($scope["#text/0"], err_message);
 const $catch_content__$params = ($scope, $params2) => $catch_content__err_message($scope, $params2[0]?.message);
 const $catch_content = _content("__tests__/template.marko_2*content", "caught <!>", "b%", 0, $catch_content__$params);

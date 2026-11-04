@@ -14,7 +14,7 @@ var template_default = _template("a", (input) => {
 		const $scope5_id = _scope_id();
 		_html(`caught ${_text_resume($scope5_id, "a", err.message, $wg__err_message * 2)}`);
 		_write_if($scope5_reason, 0) && _scope($scope5_id, {});
-	}, void 0, "a1");
+	}, 0, "a1");
 	_try($scope0_id, "c", () => {
 		_scope_reason();
 		const $scope2_id = _scope_id();
@@ -28,7 +28,7 @@ var template_default = _template("a", (input) => {
 		const $scope7_id = _scope_id();
 		_html(`outer caught ${_text_resume($scope7_id, "a", err.message, $wg__err_message2 * 2)}`);
 		_write_if($scope7_reason, 0) && _scope($scope7_id, {});
-	}, void 0, "a4");
+	}, 0, "a4");
 	_try($scope0_id, "d", () => {
 		_scope_reason();
 		const $scope3_id = _scope_id();
@@ -42,7 +42,7 @@ var template_default = _template("a", (input) => {
 		const $scope11_id = _scope_id();
 		_html(`outer caught ${_text_resume($scope11_id, "a", err.message, $wg__err_message4 * 2)}`);
 		_write_if($scope11_reason, 0) && _scope($scope11_id, {});
-	}, void 0, "a7");
+	}, 0, "a7");
 	_try($scope0_id, "e", () => {
 		_scope_reason();
 		const $scope4_id = _scope_id();
@@ -56,7 +56,7 @@ var template_default = _template("a", (input) => {
 		const $scope15_id = _scope_id();
 		_html(`outer caught ${_text_resume($scope15_id, "a", err.message, $wg__err_message5 * 2)}`);
 		_write_if($scope15_reason, 0) && _scope($scope15_id, {});
-	}, void 0, "a10");
+	}, 0, "a10");
 	_script($scope0_id, "a11");
 	_scope($scope0_id, { g: $show__closures });
 }, 1);

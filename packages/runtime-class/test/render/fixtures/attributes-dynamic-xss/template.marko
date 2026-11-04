@@ -1,3 +1,13 @@
-$ var attrs = { '></div><script>alert("hi")</script>':true };
+$ var attrs = {
+  '></div><script>alert("hi")</script>': true,
+  "data-x onerror": "alert(1)",
+  "data-x\nonerror": "alert(1)",
+  "data-x/onerror": "alert(1)",
+  "data-x=1 onerror": "alert(1)",
+  'data-x"': "alert(1)",
+  "data-x'": "alert(1)",
+  "data-ok": "1",
+};
 
 <div ...attrs/>
+<span id="merged" ...attrs/>

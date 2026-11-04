@@ -21,6 +21,6 @@ var template_default = _template("a", (input) => {
 				_script($scope4_id, "a0");
 				_scope($scope4_id, { f: clicks });
 			});
-		}, void 0, "a1");
+		}, 0, "a1");
 	});
 }, 1);

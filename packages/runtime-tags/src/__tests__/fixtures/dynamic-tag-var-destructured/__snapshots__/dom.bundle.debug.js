@@ -25,12 +25,13 @@ const $pattern2 = _var_resume("__tests__/template.marko_0_$pattern#4/var", ($sco
 	$inc($scope, $pattern.inc);
 });
 const $count = ($scope, count) => _text($scope["#text/3"], count);
-const $inc__script = _script("__tests__/template.marko_0_inc#6", ($scope) => _on($scope["#button/2"], "click", function() {
+const $inc = /*@__PURE__*/ _const("inc");
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
 	$scope.inc();
 }));
-const $inc = /*@__PURE__*/ _const("inc", $inc__script);
 function $setup($scope) {
 	$setup$1($scope["#childScope/0"]);
 	_var($scope, "#childScope/0", $pattern2);
+	$setup__script($scope);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

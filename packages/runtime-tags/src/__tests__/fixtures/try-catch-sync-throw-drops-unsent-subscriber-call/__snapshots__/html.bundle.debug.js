@@ -25,7 +25,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope4_id = _scope_id();
 			_html(`caught ${_text_resume($scope4_id, "#text/0", err.message, $wg__err_message * 2)}`);
 			_write_if($scope4_reason, 0) && _scope($scope4_id, {}, "__tests__/template.marko", "11:6");
-		}, void 0, "__tests__/template.marko_4*content");
+		}, 0, "__tests__/template.marko_4*content");
 	}, 0);
 	_script($scope0_id, "__tests__/template.marko_0", 0);
 	_scope($scope0_id, { "ClosureScopes:1": $Item_content__subscribers }, "__tests__/template.marko", 0);

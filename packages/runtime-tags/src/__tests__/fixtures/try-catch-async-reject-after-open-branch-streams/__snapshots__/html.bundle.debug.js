@@ -27,7 +27,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html(`<button>${_text_resume($scope2_id, "#text/1", err.message, _write_guard($scope2_reason, 0))} ${_text_resume($scope2_id, "#text/2", n, 2)}</button>${_el_resume($scope2_id, "#button/0")}`);
 		_script($scope2_id, "__tests__/template.marko_2");
 		_scope($scope2_id, { n }, "__tests__/template.marko", "11:4", { n: "12:10" });
-	}, void 0, "__tests__/template.marko_2*content");
+	}, 0, "__tests__/template.marko_2*content");
 	_html(`<button class=toggle>${_text_resume($scope0_id, "#text/2", show)}</button>${_el_resume($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {

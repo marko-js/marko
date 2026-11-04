@@ -7,7 +7,7 @@ const $for_content__setup = ($scope) => {
 	$for_content__enabled._($scope);
 	$for_content__selected._($scope);
 };
-const $for_content__selected = /*@__PURE__*/ _for_selector("#ul/1", "selected", "#LoopKey", $for_content__enabled__OR__selected);
+const $for_content__selected = /*@__PURE__*/ _for_selector("#ul/1", "selected", $for_content__enabled__OR__selected);
 const $for_content__row_label = ($scope, row_label) => _text($scope["#text/1"], row_label);
 const $for_content__$params = ($scope, $params2) => $for_content__row_label($scope, $params2[0]?.label);
 const $enabled = /*@__PURE__*/ _let("enabled/2", $for_content__enabled);

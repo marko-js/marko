@@ -23,7 +23,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				$wg__err_message || $wi__err_message && _resume_branch($scope5_id);
 			}, $wg__err_message);
 			$wi__err_message && _scope($scope4_id, { "ClosureScopes:err_message/4": $catch_content__err_message__closures }, "__tests__/template.marko", "6:6");
-		}, void 0, "__tests__/template.marko_4*content");
+		}, 0, "__tests__/template.marko_4*content");
 	}, () => {
 		_scope_reason();
 		const $scope2_id = _scope_id();

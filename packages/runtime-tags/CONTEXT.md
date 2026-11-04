@@ -4,7 +4,8 @@ Marko 6 compiles `.marko` templates into one dependency graph, then lowers it
 to streaming HTML and resume state or fine-grained DOM code.
 
 This is the canonical implementation glossary. _Avoid_ lists name misleading
-synonyms, not exact APIs, platform types, or legacy options. See
+synonyms, not exact APIs, platform types, or legacy options. Record a rename
+in the entry's _Avoid_ when it is agreed. See
 [RESUMABILITY.md](./RESUMABILITY.md) for the architecture and code map.
 
 ## Compiler model
@@ -14,6 +15,12 @@ A compile-time analysis and codegen unit formed from a template program or
 non-inlined tag body. Sections own bindings and signals; scopes are their live
 executions.
 _Avoid_: fragment, block, component
+
+**Known child**:
+A section its callers render in place (`isKnownChild`): a template's root, or
+a `<define>` body its direct calls render. Text beside its edges is its
+callers'.
+_Avoid_: inlined section
 
 **Binding**:
 The compiler record for a template value or property, including its reads,
@@ -127,13 +134,13 @@ _Avoid_: serialization flag, demand
 **Write reason**:
 Translate's conclusion from a slot's reason (`getWriteGuard`): whether
 and under which guard the server writes it.
-`always` and state reasons write unconditionally; param-only ones produce
-per-call guards.
-_Avoid_: serialization flag, serialized value
+`always` and state reasons write unconditionally; param-only ones are
+_guarded_ (`isGuardedReason`): each call site guards them.
+_Avoid_: serialization flag, serialized value, conditional reason
 
 **Param reason group**:
 A param set a template's call sites report as two bits (`paramReasonGroups`),
-built from what each write reason leaves conditional. The list is the
+built from what each write reason leaves guarded. The list is the
 template's interface to its callers, fixed at analyze exit.
 
 **Slot**:

@@ -33,7 +33,7 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		_scope_id();
 		_html("<div id=page-caught>page caught</div>");
-	}, void 0, "a0");
+	}, 0, "a0");
 	_await($scope0_id, "b", resolveAfter("v", 1), (value) => {
 		const $scope4_id = _scope_id();
 		_dynamic_tag($scope4_id, "a", _marko_template, {}, 0, 0, 0);

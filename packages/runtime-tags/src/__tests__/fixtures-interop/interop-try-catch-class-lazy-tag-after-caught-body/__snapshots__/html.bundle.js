@@ -37,6 +37,6 @@ var template_default = _template("a", (input) => {
 		const $scope2_id = _scope_id();
 		_html(`caught ${_text_resume($scope2_id, "a", err.message, $wg__err_message * 2)}`);
 		_write_if($scope2_reason, 0) && _scope($scope2_id, {});
-	}, void 0, "a0");
+	}, 0, "a0");
 	_dynamic_tag($scope0_id, "b", _marko_template, {}, 0, 0, 0);
 }, 1);

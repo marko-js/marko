@@ -8,6 +8,7 @@ import { getUnusedParamIdentifier } from "../util/generate-uid";
 import { isOutputHTML } from "../util/marko-config";
 import { analyzeAttributeTags } from "../util/nested-attribute-tags";
 import {
+  dropContent,
   dropNodes,
   getAllTagReferenceNodes,
   isReferenceHoisted,
@@ -16,6 +17,7 @@ import {
   trackVarReferences,
   mergeTagReferences,
 } from "../util/references";
+import { replaceWithStatements } from "../util/replace-with-statements";
 import runtimeInfo from "../util/runtime-info";
 import {
   ensureSection,
@@ -51,6 +53,15 @@ export default {
     }
 
     assertNoTagVarMutation(tag);
+
+    if (
+      t.isIdentifier(tag.node.var) &&
+      !tag.scope.getBinding(tag.node.var.name)!.referencePaths.length
+    ) {
+      dropContent(tag.node.body);
+      dropNodes(getAllTagReferenceNodes(tag.node));
+      return;
+    }
 
     const paramsBinding = trackParamsReferences(tagBody, BindingType.param);
     setTagContentDerives(tag, varBinding);
@@ -96,8 +107,9 @@ export default {
   },
   translate: {
     enter(tag) {
-      if (!tag.node.var) {
-        tag.remove();
+      // An unreferenced `<define>`'s content was dropped in analyze.
+      if (!tag.node.var || tag.node.body.extra?.dropped) {
+        replaceWithStatements(tag);
         return;
       }
 
@@ -116,7 +128,7 @@ export default {
           "const",
           translatedAttrs.statements,
         );
-        tag.insertBefore(translatedAttrs.statements);
+        replaceWithStatements(tag, translatedAttrs.statements);
       } else {
         if (t.isIdentifier(node.var)) {
           const babelBinding = tag.scope.getBinding(node.var.name)!;
@@ -161,9 +173,9 @@ export default {
           }
 
           // Matches the analysis, which drops the tag whenever every reference
-          // is direct — including a `<define>` with no references at all.
+          // is direct.
           if (bodySection && allDirectReferences) {
-            tag.remove();
+            replaceWithStatements(tag);
             return;
           }
         }
@@ -184,9 +196,8 @@ export default {
           initValue(tag.get("var").node!.extra!.binding!)!,
           propsToExpression(translatedAttrs.properties),
         );
+        replaceWithStatements(tag);
       }
-
-      tag.remove();
     },
   },
   attributes: {},

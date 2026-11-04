@@ -33,7 +33,7 @@ var template_default = _template("b", (input) => {
 		_scope_reason();
 		_scope_id();
 		_html("<div id=error>failed</div>");
-	}, void 0, "b1");
+	}, 0, "b1");
 	_html("</main>");
 	$wi__input_label && _scope($scope0_id, { e: $input_label__closures });
 }, 1);

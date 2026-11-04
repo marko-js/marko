@@ -51,7 +51,7 @@ const $catch_content__setup__script = _script("__tests__/template.marko_2", ($sc
 const $catch_content__setup = $catch_content__setup__script;
 const $catch_content = _content("__tests__/template.marko_2*content", 0, 0, $catch_content__setup);
 const $try_content__try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content2__setup, $placeholder_content);
-const $try_content__setup = ($scope) => $try_content__try($scope);
+const $try_content__setup = $try_content__try;
 const $try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content__setup, 0, $catch_content);
 const $await_content2 = /*@__PURE__*/ _await_content("#text/1", "<!><!><!>", "b%", $await_content2__setup);
 const $await_promise = /*@__PURE__*/ _await_promise("#text/1");
