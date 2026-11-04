@@ -488,13 +488,13 @@ A binding or expression with no sources, so fixed for its scope's lifetime: a
 constant, an `<id>`, a `<define>`'s renderer. A patch write of a stable value
 only seeds a created scope.
 
-**Kept structure**:
+**Paired structure**:
 A loop or branch whose expression is stable (its group's mask is `0`), outside
 structure a flush creates: its scopes stay, so
-the patch renders its body as kept (`withKeptBranchId`, not creatable), ships
-no shell, and a kept branch with nothing filled ships no entry. Outside such
+the patch renders its body as paired (`withKeptBranchId`, not creatable), ships
+no shell, and a paired branch with nothing filled ships no entry. Outside such
 structure an `<await>` body whose promise the client settles, or that always
-pairs, renders kept too (`keptBranch`): no flush creates it.
+pairs, renders paired too (`keptBranch`): no flush creates it.
 _Avoid_: static branch, frozen rows
 
 **Branch path**:

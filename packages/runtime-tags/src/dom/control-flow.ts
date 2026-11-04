@@ -1026,7 +1026,7 @@ const loop = /*@__PURE__*/ withBranches(
           return;
         }
 
-        // Unreachable for an unkeyed loop: its kept branches never move.
+        // Unreachable for an unkeyed loop: its paired branches never move.
         reorder!(newScopes, start, newEnd, parentNode, afterReference);
       };
     },

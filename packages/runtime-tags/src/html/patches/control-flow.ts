@@ -42,7 +42,7 @@ import {
   getIds,
   getUpdatesFrom,
   inCreatable,
-  keptBranch,
+  pairedBranch,
   openScopePatch,
   linkScopePatch,
   linkBranch,
@@ -55,7 +55,7 @@ import {
   pushIdHop,
   shipShell,
   walkMarkers,
-  withKeptBranchId,
+  withPairedBranchId,
   withUnpatched,
   writePatchEntry,
 } from "./writer";
@@ -152,20 +152,20 @@ export function writeBranch(
   // re-renders on the resumed page: the patch skips it.
   if (updatesFrom & UpdatesFrom.Client) return;
   // One whose expression derives from nothing request-derived, outside
-  // structure a flush creates, keeps its branch: the entry ships only what its body fills.
-  const kept = !updatesFrom && !inCreatable();
+  // structure a flush creates, pairs its branch: the entry ships only what its body fills.
+  const paired = !updatesFrom && !inCreatable();
   const branchId = _peek_scope_id();
   state.patchLinks[branchId] = {
     parent: scopeId,
     hop: AccessorPrefix.BranchScopes + accessor,
   };
   const opened = openScopePatch(state, branchId);
-  const branchIndex = (kept ? withKeptBranchId : withBranchId)(branchId, cb);
+  const branchIndex = (paired ? withPairedBranchId : withBranchId)(branchId, cb);
   const shellId =
-    branchIndex === undefined || kept
+    branchIndex === undefined || paired
       ? undefined
       : shipShell(state, shellIds[branchIndex]);
-  if (kept && !hasKeys(opened)) {
+  if (paired && !hasKeys(opened)) {
     if (branchIndex === undefined) _scope_id();
     return;
   }
@@ -439,15 +439,15 @@ export function writeLoop<A, B>(
   mask?: GroupMask,
   group?: number,
 ) {
-  // A list updating from the client, or a kept one, keeps its rows: its entry
+  // A list updating from the client, or a paired one, pairs its rows: its entry
   // ships only what the rows themselves fill.
   const updatesFrom = getUpdatesFrom(mask, group!);
   const clientRows = updatesFrom & UpdatesFrom.Client;
-  const rowsKept = clientRows || (!updatesFrom && !inCreatable());
+  const rowsPaired = clientRows || (!updatesFrom && !inCreatable());
   const patches: object[] = [];
   const keys: (string | number)[] = [];
   let indexKeys = true;
-  const row = rowsKept ? keptBranch(cb) : cb;
+  const row = rowsPaired ? pairedBranch(cb) : cb;
   const iterateItems = MARKO_DEBUG && by ? checkLoopKeys(cb, iterate) : iterate;
   iterateItems((itemKey, sameAsIndex, a, b) => {
     indexKeys &&= sameAsIndex;
@@ -465,7 +465,7 @@ export function writeLoop<A, B>(
     withBranchId(branchId, row, a, b);
     popIdHop();
   });
-  if (rowsKept && !patches.some(hasKeys)) return 1;
+  if (rowsPaired && !patches.some(hasKeys)) return 1;
   if (clientRows) {
     // The rows are the client's: each patch applies to the row it still
     // holds under that key, and none is added or removed.
@@ -482,9 +482,9 @@ export function writeLoop<A, B>(
       writePatchEntry(state, scopeId, PatchKey.LoopItem + accessor, items);
     return 1;
   }
-  // Kept rows are never created, so they need no shell.
+  // Paired rows are never created, so they need no shell.
   const sentShellId =
-    patches.length && !rowsKept ? shipShell(state, shellId) : undefined;
+    patches.length && !rowsPaired ? shipShell(state, shellId) : undefined;
   // Interleaved `[key, patch, …, shellId?]`: keys drop when every key
   // is its index, and the shell rides as a trailing string.
   const entry: unknown[] = patchTreeNode(state, []);
@@ -544,11 +544,11 @@ export function _await<T>(
       scopeId,
       accessor,
       copy,
-      creatable ? settle : keptBranch<T | typeof skipped, void>(settle),
+      creatable ? settle : pairedBranch<T | typeof skipped, void>(settle),
     );
   }
   // A created scope builds the body from this shell, even when settled; an
-  // always-pairing body outside creatable structure only pairs, rendered kept.
+  // always-pairing body outside creatable structure only pairs, rendered paired.
   const elide = alwaysPairs && !inCreatable();
   if (!elide) shipShell(state, shellId);
   writePatchEntry(
@@ -573,7 +573,7 @@ export function _await<T>(
     scopeId,
     accessor,
     promise,
-    elide ? keptBranch<T, void>(settle) : settle,
+    elide ? pairedBranch<T, void>(settle) : settle,
   );
 }
 
@@ -641,7 +641,7 @@ export function _try(
   // only where the try's scope is.
   const branchContent = inCreatable()
     ? content
-    : () => withKeptBranchId(branchId, content);
+    : () => withPairedBranchId(branchId, content);
   // A flush that leaves the body pending ships the placeholder's shell, as a
   // document renders the placeholder.
   const bodyContent = placeholderContent

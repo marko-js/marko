@@ -41,7 +41,7 @@ import {
   popIdHop,
   pushIdHop,
   walkMarkers,
-  withKeptBranchId,
+  withPairedBranchId,
   writeFill,
   withUnpatched,
 } from "./writer";
@@ -289,7 +289,7 @@ function getContentPairing(
     : writeDynamicTagEntry(scopeId, accessor, content, 0, 0, 0, mask, group);
 }
 
-// Content pairs as a dynamic tag's does: a kept body seeds no creation, and one
+// Content pairs as a dynamic tag's does: a paired body seeds no creation, and one
 // updating from the client is the resumed page's (unpatched, or skipped).
 function renderPatchedContent(
   accessor: Accessor,
@@ -306,7 +306,7 @@ function renderPatchedContent(
   if (pairing === PatchPairing.Render || pairing === PatchPairing.Setup) {
     _base_attr_content(accessor, scopeId, content, markerGuard);
   } else if (pairs) {
-    withKeptBranchId(_peek_scope_id(), () =>
+    withPairedBranchId(_peek_scope_id(), () =>
       _base_attr_content(accessor, scopeId, content, markerGuard),
     );
   } else if (!(state instanceof PatchRenderState)) {

@@ -175,31 +175,31 @@ function getPatchReadyIds() {
 }
 
 // The branch a patch renders whose expression nothing behind can change.
-const kKeptBranch = Symbol("Kept Branch");
+const kPairedBranch = Symbol("Paired Branch");
 
-// Whether a flush may create the scopes rendering here: in a branch not kept
+// Whether a flush may create the scopes rendering here: in a branch not paired
 // (the client decides by divergence).
 export function inCreatable() {
   const context = getChunk()!.context;
   return (
     context?.[kBranchId] !== undefined &&
-    context[kBranchId] !== context[kKeptBranch]
+    context[kBranchId] !== context[kPairedBranch]
   );
 }
 
 // Renders a branch a flush pairs but never creates.
-export function withKeptBranchId<T>(branchId: number, cb: () => T): T {
-  return withBranchId(branchId, keepBranch<T, void, void>, cb);
+export function withPairedBranchId<T>(branchId: number, cb: () => T): T {
+  return withBranchId(branchId, pairBranch<T, void, void>, cb);
 }
 
 // The renderer of a branch a flush pairs but never creates (a loop's rows, an
-// `<await>` body), in the branch its caller opens, as `withKeptBranchId` renders.
-export function keptBranch<A, B>(cb: (a: A, b: B) => void) {
-  return (a: A, b: B) => keepBranch(cb, a, b);
+// `<await>` body), in the branch its caller opens, as `withPairedBranchId` renders.
+export function pairedBranch<A, B>(cb: (a: A, b: B) => void) {
+  return (a: A, b: B) => pairBranch(cb, a, b);
 }
 
-function keepBranch<T, U, V>(cb: (a: U, b: V) => T, a: U, b: V): T {
-  return withContext(kKeptBranch, getChunk()!.context![kBranchId], cb, a, b);
+function pairBranch<T, U, V>(cb: (a: U, b: V) => T, a: U, b: V): T {
+  return withContext(kPairedBranch, getChunk()!.context![kBranchId], cb, a, b);
 }
 
 // A consumer keeps content for the resumed page to render: the values inside fill
