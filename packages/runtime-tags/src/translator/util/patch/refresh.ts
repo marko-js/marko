@@ -1640,18 +1640,6 @@ function readsOtherIntersection(binding: Binding, intersection: Intersection) {
   });
 }
 
-// Whether a value is shipped for a filled intersection its scope renders, which then depends
-// on the value's fill (`_fill_mark`).
-export function initedIntersectionDependsOn(binding: Binding) {
-  if (writesForIntersectionInit(binding)) return true;
-  for (const intersection of getFillReadKind(
-    binding,
-  ).filledIntersections?.keys() || []) {
-    if (rendersFilledIntersection(intersection)) return true;
-  }
-  return false;
-}
-
 // A filled intersection the scope renders: some shipped member has no fill to re-run it
 // (written for its render, below the root, over subscribers, in two, filled for others).
 export const rendersFilledIntersection = createPassMemo(
@@ -2175,9 +2163,7 @@ function ensureBindingGroups(binding: Binding) {
   // Its write in place gates on each filled intersection's other members.
   forEach(filledMembers, ensureCallerParamGroups);
   // A created scope's `<let>` seeds by what its initial value reads.
-  if (binding.type === BindingType.let) {
-    ensureCallerParamGroups(getStateInitSources(binding));
-  }
+  ensureCallerParamGroups(getStateInitSources(binding));
 }
 
 // A page writes a value a patch fills (and its closure set) only where a client

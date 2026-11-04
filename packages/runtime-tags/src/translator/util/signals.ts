@@ -59,7 +59,6 @@ import {
   runsSubscribersByWrite,
   hasTagCallerParamAt,
   effectEntryNamesFill,
-  initedIntersectionDependsOn,
   runsByEntry,
 } from "./patch/refresh";
 import { patchesBranchesAt } from "./patch/structure";
@@ -874,22 +873,18 @@ function pushCanonicalSources(list: Opt<Sources>, binding: Binding) {
   return sources ? push(list, sources) : list;
 }
 
+// Only an uncontrolled `<let>`'s init is its initial value (`core/let.ts`).
 function setsInitialValue({ referencedBindings }: Signal) {
-  return (
-    !!referencedBindings &&
-    !Array.isArray(referencedBindings) &&
-    isLetBinding(referencedBindings) &&
-    !!(referencedBindings.derivedFrom as t.NodeExtra | undefined)?.initialValue
-  );
+  return !!(
+    (referencedBindings as Binding).derivedFrom as t.NodeExtra | undefined
+  )?.initialValue;
 }
 
 // A fill's run leaving out what its change judges (a render's intersection, an effect's
 // entry, a function with filled references' bind) marks it; the signal's own run needs none.
 function markFill(signal: Signal, fillFn: t.Expression) {
   const binding = signal.referencedBindings as Binding;
-  return initedIntersectionDependsOn(binding) ||
-    effectEntryNamesFill(binding) ||
-    isFilledReference(binding)
+  return effectEntryNamesFill(binding) || isFilledReference(binding)
     ? callRuntime("_fill_mark", getScopeAccessorLiteral(binding, true), fillFn)
     : fillFn;
 }
