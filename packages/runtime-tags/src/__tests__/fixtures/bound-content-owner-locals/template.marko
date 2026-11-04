@@ -1,0 +1,9 @@
+<main>
+  <host show=input.show items=input.items label=input.label>
+    <@wrap|{ item }|>
+      <let/open=true/>
+      <button.toggle onClick() { open = !open }>toggle</button>
+      <if=open><for|entry| of=item><${entry.content}/></for></if>
+    </@wrap>
+  </host>
+</main>

@@ -62,7 +62,7 @@ declare module "../common/types" {
   }
 }
 
-type AssetFlush = (
+export type AssetFlush = (
   g: $Global,
   type: "block" | "defer",
   asset: string,

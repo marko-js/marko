@@ -1,0 +1,661 @@
+# Render `{"show":true,"keys":["aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa ",4095,4096,16777215,16777216,9007199254740991]}`
+```html
+<label
+  for="sM_1"
+>
+  key
+</label>
+<input
+  id="sM_1"
+/>
+<label
+  for="sM_2"
+>
+  key
+</label>
+<input
+  id="sM_2"
+/>
+<label
+  for="sM_3"
+>
+  key
+</label>
+<input
+  id="sM_3"
+/>
+<label
+  for="sM_4"
+>
+  key
+</label>
+<input
+  id="sM_4"
+/>
+<label
+  for="sM_5"
+>
+  key
+</label>
+<input
+  id="sM_5"
+/>
+<label
+  for="sM_6"
+>
+  key
+</label>
+<input
+  id="sM_6"
+/>
+<label
+  for="sM_7"
+>
+  key
+</label>
+<input
+  id="sM_7"
+/>
+<label
+  for="sM_8"
+>
+  key
+</label>
+<input
+  id="sM_8"
+/>
+<label
+  for="sM_9"
+>
+  key
+</label>
+<input
+  id="sM_9"
+/>
+<label
+  for="sM_a"
+>
+  decl0
+</label>
+<input
+  id="sM_a"
+/>
+<label
+  for="sM_b"
+>
+  decl1
+</label>
+<input
+  id="sM_b"
+/>
+<label
+  for="sM_c"
+>
+  decl2
+</label>
+<input
+  id="sM_c"
+/>
+<label
+  for="sM_d"
+>
+  decl3
+</label>
+<input
+  id="sM_d"
+/>
+<label
+  for="sM_e"
+>
+  decl4
+</label>
+<input
+  id="sM_e"
+/>
+<label
+  for="sM_f"
+>
+  decl5
+</label>
+<input
+  id="sM_f"
+/>
+<label
+  for="sM_g"
+>
+  decl6
+</label>
+<input
+  id="sM_g"
+/>
+<label
+  for="sM_h"
+>
+  decl7
+</label>
+<input
+  id="sM_h"
+/>
+<label
+  for="sM_i"
+>
+  decl8
+</label>
+<input
+  id="sM_i"
+/>
+<label
+  for="sM_j"
+>
+  decl9
+</label>
+<input
+  id="sM_j"
+/>
+<label
+  for="sM_k"
+>
+  decl10
+</label>
+<input
+  id="sM_k"
+/>
+<label
+  for="sM_l"
+>
+  decl11
+</label>
+<input
+  id="sM_l"
+/>
+<label
+  for="sM_m"
+>
+  decl12
+</label>
+<input
+  id="sM_m"
+/>
+<label
+  for="sM_n"
+>
+  decl13
+</label>
+<input
+  id="sM_n"
+/>
+<label
+  for="sM_o"
+>
+  decl14
+</label>
+<input
+  id="sM_o"
+/>
+<label
+  for="sM_p"
+>
+  decl15
+</label>
+<input
+  id="sM_p"
+/>
+<label
+  for="sM_q"
+>
+  decl16
+</label>
+<input
+  id="sM_q"
+/>
+<label
+  for="sM_r"
+>
+  decl17
+</label>
+<input
+  id="sM_r"
+/>
+<label
+  for="sM_s"
+>
+  decl18
+</label>
+<input
+  id="sM_s"
+/>
+<label
+  for="sM_t"
+>
+  decl19
+</label>
+<input
+  id="sM_t"
+/>
+<label
+  for="sM_u"
+>
+  decl20
+</label>
+<input
+  id="sM_u"
+/>
+<label
+  for="sM_v"
+>
+  decl21
+</label>
+<input
+  id="sM_v"
+/>
+<label
+  for="sM_w"
+>
+  decl22
+</label>
+<input
+  id="sM_w"
+/>
+<label
+  for="sM_x"
+>
+  decl23
+</label>
+<input
+  id="sM_x"
+/>
+<label
+  for="sM_y"
+>
+  decl24
+</label>
+<input
+  id="sM_y"
+/>
+<label
+  for="sM_z"
+>
+  decl25
+</label>
+<input
+  id="sM_z"
+/>
+<label
+  for="sM_10"
+>
+  decl26
+</label>
+<input
+  id="sM_10"
+/>
+<label
+  for="sM_11"
+>
+  decl27
+</label>
+<input
+  id="sM_11"
+/>
+<label
+  for="sM_12"
+>
+  decl28
+</label>
+<input
+  id="sM_12"
+/>
+<label
+  for="sM_13"
+>
+  decl29
+</label>
+<input
+  id="sM_13"
+/>
+<label
+  for="sM_14"
+>
+  decl30
+</label>
+<input
+  id="sM_14"
+/>
+<label
+  for="sM_15"
+>
+  decl31
+</label>
+<input
+  id="sM_15"
+/>
+<label
+  for="sM_16"
+>
+  decl32
+</label>
+<input
+  id="sM_16"
+/>
+<label
+  for="sM_17"
+>
+  decl33
+</label>
+<input
+  id="sM_17"
+/>
+<label
+  for="sM_18"
+>
+  decl34
+</label>
+<input
+  id="sM_18"
+/>
+<label
+  for="sM_19"
+>
+  decl35
+</label>
+<input
+  id="sM_19"
+/>
+<label
+  for="sM_1a"
+>
+  decl36
+</label>
+<input
+  id="sM_1a"
+/>
+<label
+  for="sM_1b"
+>
+  decl37
+</label>
+<input
+  id="sM_1b"
+/>
+<label
+  for="sM_1c"
+>
+  decl38
+</label>
+<input
+  id="sM_1c"
+/>
+<label
+  for="sM_1d"
+>
+  decl39
+</label>
+<input
+  id="sM_1d"
+/>
+<label
+  for="sM_1e"
+>
+  decl40
+</label>
+<input
+  id="sM_1e"
+/>
+<label
+  for="sM_1f"
+>
+  decl41
+</label>
+<input
+  id="sM_1f"
+/>
+<label
+  for="sM_1g"
+>
+  decl42
+</label>
+<input
+  id="sM_1g"
+/>
+<label
+  for="sM_1h"
+>
+  decl43
+</label>
+<input
+  id="sM_1h"
+/>
+<label
+  for="sM_1i"
+>
+  decl44
+</label>
+<input
+  id="sM_1i"
+/>
+<label
+  for="sM_1j"
+>
+  decl45
+</label>
+<input
+  id="sM_1j"
+/>
+<label
+  for="sM_1k"
+>
+  decl46
+</label>
+<input
+  id="sM_1k"
+/>
+<label
+  for="sM_1l"
+>
+  decl47
+</label>
+<input
+  id="sM_1l"
+/>
+<label
+  for="sM_1m"
+>
+  decl48
+</label>
+<input
+  id="sM_1m"
+/>
+<label
+  for="sM_1n"
+>
+  decl49
+</label>
+<input
+  id="sM_1n"
+/>
+<label
+  for="sM_1o"
+>
+  decl50
+</label>
+<input
+  id="sM_1o"
+/>
+<label
+  for="sM_1p"
+>
+  decl51
+</label>
+<input
+  id="sM_1p"
+/>
+<label
+  for="sM_1q"
+>
+  decl52
+</label>
+<input
+  id="sM_1q"
+/>
+<label
+  for="sM_1r"
+>
+  decl53
+</label>
+<input
+  id="sM_1r"
+/>
+<label
+  for="sM_1s"
+>
+  decl54
+</label>
+<input
+  id="sM_1s"
+/>
+<label
+  for="sM_1t"
+>
+  decl55
+</label>
+<input
+  id="sM_1t"
+/>
+<label
+  for="sM_1u"
+>
+  decl56
+</label>
+<input
+  id="sM_1u"
+/>
+<label
+  for="sM_1v"
+>
+  decl57
+</label>
+<input
+  id="sM_1v"
+/>
+<label
+  for="sM_1w"
+>
+  decl58
+</label>
+<input
+  id="sM_1w"
+/>
+<label
+  for="sM_1x"
+>
+  decl59
+</label>
+<input
+  id="sM_1x"
+/>
+<label
+  for="sM_1y"
+>
+  field
+</label>
+<input
+  id="sM_1y"
+/>
+<label
+  for="sM_1z"
+>
+  field
+</label>
+<input
+  id="sM_1z"
+/>
+<label
+  for="sM_20"
+>
+  field
+</label>
+<input
+  id="sM_20"
+/>
+<label
+  for="sM_21"
+>
+  field
+</label>
+<input
+  id="sM_21"
+/>
+<label
+  for="sM_22"
+>
+  field
+</label>
+<input
+  id="sM_22"
+/>
+<label
+  for="sM_23"
+>
+  field
+</label>
+<input
+  id="sM_23"
+/>
+<label
+  for="sM_24"
+>
+  field
+</label>
+<input
+  id="sM_24"
+/>
+<label
+  for="sM_25"
+>
+  field
+</label>
+<input
+  id="sM_25"
+/>
+<label
+  for="sM_26"
+>
+  field
+</label>
+<input
+  id="sM_26"
+/>
+<label
+  for="sM_27"
+>
+  field
+</label>
+<input
+  id="sM_27"
+/>
+<label
+  for="sM_28"
+>
+  field
+</label>
+<input
+  id="sM_28"
+/>
+<label
+  for="sM_29"
+>
+  field
+</label>
+<input
+  id="sM_29"
+/>
+```
+
+# Update
+```js
+const ids = new Set();
+for (const input of document.querySelectorAll("input")) {
+  assert(!ids.has(input.id), "duplicate " + input.id);
+  ids.add(input.id);
+  assert.equal(input.labels?.length, 1);
+}
+```

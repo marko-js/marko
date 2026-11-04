@@ -1,0 +1,11 @@
+import CardA from "./card-a.marko";
+import CardB from "./card-b.marko";
+
+<let/n=0/>
+<button.inc onClick() { n++ }>${n}</button>
+<define/Row|{ user }|><p>${user.name}</p></define>
+<define/Alt|{ user }|><i>${user.name}</i></define>
+<${input.which ? CardA : CardB} user=input.user/>
+<${input.alt ? Alt : Row} user=input.user2/>
+<${input.tag} class=input.cls title=input.title/>
+<${input.none ? CardA : null} user=input.hidden/>

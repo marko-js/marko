@@ -1,0 +1,13 @@
+<let/count=0/>
+<const/handler=(event) => event.target.dataset.seen = input.title/>
+<main>
+  <await=input.one>
+    <const/attrs={ title: input.title, onClick: handler }/>
+    <button id="one" ...attrs>one</button>
+  </await>
+  <await=input.two>
+    <const/attrs={ title: input.title, onClick: handler }/>
+    <button id="two" ...attrs>two</button>
+  </await>
+  <em>${count}</em>
+</main>

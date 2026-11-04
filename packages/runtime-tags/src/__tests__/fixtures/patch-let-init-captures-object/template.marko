@@ -1,0 +1,2 @@
+<let/a={ self: () => a }/>
+<button onClick() { a = { self: () => a.self() }; }>${typeof a.self}</button>

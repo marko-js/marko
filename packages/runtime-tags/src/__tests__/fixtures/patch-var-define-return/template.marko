@@ -1,0 +1,8 @@
+<let/n=0/>
+<define/Sum|{ a, b }|>
+  <return=a + b/>
+</define>
+<Sum/total a=n b=input.b/>
+<div/el>${total}</div>
+<script>el().dataset.total = String(total)</script>
+<button onClick() { n++ }>+</button>

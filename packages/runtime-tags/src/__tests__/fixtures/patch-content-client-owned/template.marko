@@ -1,0 +1,9 @@
+<let/open=input.open/>
+<main>
+  <if=open>
+    <card title=input.title>
+      <em>${input.note}</em>
+    </card>
+  </if>
+  <button onClick() { open = !open }>+</button>
+</main>

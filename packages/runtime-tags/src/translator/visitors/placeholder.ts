@@ -6,9 +6,18 @@ import { injectTextCoercion } from "../util/body-to-text";
 import buildStringExpression from "../util/build-string-expression";
 import evaluate from "../util/evaluate";
 import { isOutputHTML } from "../util/marko-config";
+import {
+  keepsSeededMarker,
+  linkHolePatcher,
+  fillsHole,
+} from "../util/patch/decisions";
+import {
+  getExprRootGroupArgs,
+  getPatchHoleGroupArgs,
+} from "../util/patch/writers";
 import { addReasonExprs } from "../util/reasons";
 import { replaceWithStatements } from "../util/replace-with-statements";
-import { callRuntime } from "../util/runtime";
+import { absentArg, callRuntime } from "../util/runtime";
 import { getScopeAccessorLiteral } from "../util/scope-accessor";
 import { createScopeReadExpression, scopeIdentifier } from "../util/scope-read";
 import {
@@ -59,6 +68,12 @@ export default {
         analyzeSiblingText(placeholder);
         addSetupExpr(section, node.value);
         addReasonExprs(ensureSlot(nodeBinding), valueExtra);
+        valueExtra.rendersValue = true;
+        linkHolePatcher(
+          section,
+          valueExtra,
+          node.escape ? "patches/text" : "patches/html",
+        );
       }
     },
     exit(placeholder) {
@@ -110,6 +125,7 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
   if (node.extra?.needsTextCoercion) {
     injectTextCoercion(value);
   }
+  const valueExtra = (value.extra ??= {});
   if (getPlaceholderContentType(node) === null) {
     replaceWithStatements(placeholder);
     return;
@@ -121,6 +137,10 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
   const write = writer.writeTo(placeholder);
   const extra = node.extra || {};
   const nodeBinding = extra.nodeBinding;
+  const section = getSection(placeholder);
+  // A state-sourced hole derives through the signal graph, and inside
+  // unpatched structure owner fills refresh it: neither patch-writes.
+  const filledHole = !!nodeBinding && fillsHole(section, valueExtra);
   const canWriteHTML = isHTML || (confident && node.escape);
   const method = canWriteHTML
     ? node.escape
@@ -130,13 +150,15 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
       ? "_text"
       : "_html";
 
-  if (confident && canWriteHTML) {
+  // Static markup has no template text to ride: a created scope gets it
+  // from the flush like a dynamic hole.
+  if (confident && canWriteHTML && !(isHTML && filledHole && !node.escape)) {
     if (isHTML) {
       write`${node.escape ? _escape(computed) : _unescaped(computed)}`;
     }
   } else {
-    const section = getSection(placeholder);
     const markerReason = nodeBinding && getWriteReason(nodeBinding);
+    const isPatchText = isHTML && filledHole;
 
     if (isHTML) {
       if (markerReason) {
@@ -152,7 +174,17 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
             ? guard
               ? t.binaryExpression("*", guard, t.numericLiteral(2))
               : t.numericLiteral(2)
-            : guard,
+            : guard || absentArg(1),
+          // The patch write is also the output and resume writer, so the value
+          // evaluates once; its group args follow.
+          ...(isPatchText
+            ? keepsSeededMarker(section, valueExtra)
+              ? [
+                  ...getExprRootGroupArgs(section, valueExtra),
+                  t.numericLiteral(1),
+                ]
+              : getPatchHoleGroupArgs(section, valueExtra)
+            : []),
         )}`;
       } else {
         write`${

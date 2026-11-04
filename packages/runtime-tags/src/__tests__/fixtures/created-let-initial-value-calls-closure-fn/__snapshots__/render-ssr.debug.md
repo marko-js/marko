@@ -1,0 +1,6 @@
+# Render `{"show":true,"inner":true,"v":"a","w":"1"}`
+```html
+<p>
+  a1
+</p>
+```
