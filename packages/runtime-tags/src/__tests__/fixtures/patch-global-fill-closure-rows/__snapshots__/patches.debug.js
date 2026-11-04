@@ -1,0 +1,48 @@
+// PATCH
+"ready:packages/runtime-tags/src/__tests__/fixtures/patch-global-fill-closure-rows/shop.marko", [`packages/runtime-tags/src/__tests__/fixtures/patch-global-fill-closure-rows/shop.marko_3*shell packages/runtime-tags/src/__tests__/fixtures/patch-global-fill-closure-rows/shop.marko_3_now#0:8/subscribe packages/runtime-tags/src/__tests__/fixtures/patch-global-fill-closure-rows/shop.marko_3_drops#0:9/subscribe; D%c%l/D l&;<span><!> <!></span><em> </em>`, `packages/runtime-tags/src/__tests__/fixtures/patch-global-fill-closure-rows/shop.marko_2*shell;b%;<!><!><!>`]
+{
+  "$global:": {
+    data: {
+      player: _.b = {
+        owned: ["b"],
+        bank: {
+          x: 0,
+          y: 1
+        },
+        rate: 3
+      }
+    }
+  },
+  "PatchChild:#childScope/1": {
+    "PatchLoop:#text/3": [{
+      "PatchBranch:#text/0": [{
+        "PatchLoop:#text/0": [{
+          "PatchSetup:": {
+            "PatchText:#text/1": "x",
+            "PatchWrite:part": "x"
+          },
+          "PatchChild:#childScope/3": {
+            "PatchText:#text/0": 6
+          },
+          "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-global-fill-closure-rows/shop.marko_3_p#0:4_drops#0:9_part#5/setup": ">>>p",
+          "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-global-fill-closure-rows/shop.marko_3_proj#0:7_now#0:8_have#7/setup": _.a = ">>>proj have >>>p"
+        }, {
+          "PatchSetup:": {
+            "PatchText:#text/1": "y",
+            "PatchWrite:part": "y"
+          },
+          "PatchChild:#childScope/3": {
+            "PatchText:#text/0": 6
+          },
+          "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-global-fill-closure-rows/shop.marko_3_p#0:4_drops#0:9_part#5/setup": ">>>p",
+          "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-global-fill-closure-rows/shop.marko_3_proj#0:7_now#0:8_have#7/setup": _.a
+        }, "packages/runtime-tags/src/__tests__/fixtures/patch-global-fill-closure-rows/shop.marko_3*shell"]
+      }, "packages/runtime-tags/src/__tests__/fixtures/patch-global-fill-closure-rows/shop.marko_2*shell"]
+    }, {
+      "PatchBranch:#text/0": 0
+    }],
+    "PatchMarkedWrite:p": _.b,
+    "PatchMarkedWrite:proj": 6
+  }
+}
+;DQw

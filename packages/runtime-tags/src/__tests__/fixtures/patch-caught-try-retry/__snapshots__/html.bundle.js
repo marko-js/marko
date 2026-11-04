@@ -1,0 +1,42 @@
+// template.marko
+function check(fail) {
+	if (fail) throw new Error("down");
+}
+_shells({
+	a1: "a1,Unavailable",
+	a2: "a2,<p>Ready</p>",
+	a: "a; ;<main></main>",
+	a3: "a3;b%;<!><!><!>"
+});
+var template_default = _template("a", (input) => {
+	const $scope0_reason = _scope_reason(), $cg__input_fail = _client_guard($scope0_reason, 2), $wi__input_show__OR__input_fail = _write_if($scope0_reason, 0), $wg__input_show = _write_guard($scope0_reason, 1), $ui__input_show = _unfilled_if($scope0_reason, 1), $ui__input_fail = _unfilled_if($scope0_reason, 2), $fg__input_fail = _filled_guard($scope0_reason, 2);
+	const $scope0_id = _scope_id();
+	const $input_fail__closures = /* @__PURE__ */ new Set();
+	_html("<main>");
+	_if(() => {
+		if (input.show) {
+			const $scope1_id = _scope_id();
+			_try($scope1_id, "a", () => {
+				_scope_reason();
+				const $scope2_id = _scope_id();
+				check(input.fail);
+				_html("<p>Ready</p>");
+				_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope2_id, "a0", $cg__input_fail);
+				$wi__input_show__OR__input_fail && _subscribe(_unfilled_if($scope0_reason, 2) && $input_fail__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), $cg__input_fail && "a0", 0);
+				$wi__input_show__OR__input_fail && _resume_branch($scope2_id);
+			}, void 0, () => {
+				_scope_reason();
+				_scope_id();
+				_html("Unavailable");
+			}, 0, "a1", "a2", 0, 0, 1);
+			$wi__input_show__OR__input_fail && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
+			return 0;
+		}
+	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["a3"], $scope0_reason, 1);
+	_html(`</main>${_el_mark($scope0_id, "a", $wg__input_show)}`);
+	$fg__input_fail && _client_guard($scope0_reason, 1) && _patch_subscribers($scope0_id, "a4", "e");
+	_scope($scope0_id, {
+		e: ($ui__input_show || $ui__input_fail) && input.fail,
+		f: _write_if($scope0_reason, 2) && ($ui__input_fail || $ui__input_show) && $input_fail__closures
+	}) || $fg__input_fail && $ui__input_show && _patch_write($scope0_id, "xe", input.fail, !_server_guard($scope0_reason, 2));
+}, 1);

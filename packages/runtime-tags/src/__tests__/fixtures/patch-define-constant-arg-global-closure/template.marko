@@ -1,0 +1,9 @@
+<let/n=0/>
+<define/D|{ v }|>
+  <const/z=v + $global.flag/>
+  <wrap>
+    <p data-z=(z + $global.mark)/>
+  </wrap>
+</define>
+<D v="a"/>
+<button onClick() { n++ }>${n}</button>

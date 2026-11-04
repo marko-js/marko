@@ -1,5 +1,6 @@
 import { types as t } from "@marko/compiler";
 
+import { UpdatesFrom } from "../../common/types";
 import {
   type Binding,
   getDebugNames,
@@ -7,7 +8,10 @@ import {
 } from "./bindings";
 import { createAnalysisMemo } from "./cyclic-memo";
 import { generateUid, ensureSharedUid } from "./generate-uid";
+import { getCallUpdatesFrom, type KnownTagExtra } from "./known-tag";
+import { isPatch } from "./marko-config";
 import { first, some } from "./optional";
+import { hasPatchKeyedNodes, isPatchKeyedSlot } from "./patch/decisions";
 import {
   isGuardedReason,
   mapBodyParams,
@@ -18,6 +22,7 @@ import { callRuntime, type HTMLRuntimeHelpers } from "./runtime";
 import {
   findParamReasonGroupIndex,
   getParamReasonGroupIndex,
+  getScopeIdIdentifier,
   isOptionalBranch,
   isSameOrAncestorSection,
   type ParamReasonGroup,
@@ -25,7 +30,7 @@ import {
   type Section,
 } from "./sections";
 import { findSectionSlot, findSlot, type Slot, SlotKind } from "./slots";
-import { compareSources, type Sources } from "./sources";
+import { ALWAYS, compareSources, mergeSources, type Sources } from "./sources";
 import { createOutputSectionState } from "./state";
 import { withLeadingComment } from "./with-comment";
 
@@ -42,22 +47,53 @@ export function isSameReason(a: Reason | undefined, b: Reason | undefined) {
 const groupCheckPrefixes = {
   _write_guard: "wg",
   _write_if: "wi",
+  // A patch build's checks of the mask alone,
+  _client_guard: "cg",
+  _server_guard: "sg",
+  _updates_from: "uf",
+  // and of the render context too, which is fixed only within one body.
+  _filled_guard: "fg",
+  _unfilled_if: "ui",
 } satisfies Partial<Record<HTMLRuntimeHelpers, string>>;
-type GroupCheck = keyof typeof groupCheckPrefixes;
+export type GroupCheck = keyof typeof groupCheckPrefixes;
+type MaskCheck = Exclude<GroupCheck, "_filled_guard" | "_unfilled_if">;
 
 // Keyed by param reason group: a section's guard for a set of params is
 // that group's check, whatever else the reason reads.
 interface GuardShares {
-  names: Map<number, string>;
-  pending: Map<number, t.ParenthesizedExpression>;
+  names: Map<ParamReasonGroup, string>;
+  pending: Map<ParamReasonGroup, t.ParenthesizedExpression>;
 }
 
-const [getSectionGuards] = createOutputSectionState((section: Section) => ({
-  shares: new Map<GroupCheck, GuardShares>(),
+interface SharedGuards {
+  shares: Map<GroupCheck, GuardShares>;
+  declarators: t.VariableDeclarator[];
+}
+
+const [getSectionGuards] = createOutputSectionState<
+  SharedGuards & {
+    page?: true;
+    /** The statement binding the reason, once a body has it. */
+    statement?: t.Statement;
+  }
+>((section) => ({
+  shares: new Map(),
   declarators: [
     t.variableDeclarator(
       scopeReasonIdentifier(section),
       callRuntime("_scope_reason"),
+    ),
+  ],
+}));
+
+// A body's checks of the render context for groups of the bodies around it,
+// shared beside its scope id.
+const [getBodyGuards] = createOutputSectionState<SharedGuards>((section) => ({
+  shares: new Map(),
+  declarators: [
+    t.variableDeclarator(
+      getScopeIdIdentifier(section),
+      callRuntime("_scope_id"),
     ),
   ],
 }));
@@ -109,22 +145,50 @@ export function buildGroupMask(
 }
 
 // Every section body consumes (and clears) its caller's reason; it binds it,
-// with its shared guards, only when a guard is dynamic.
+// with its shared guards, only when a guard is dynamic or in a patch build.
 export function getScopeReasonStatement(section: Section): t.Statement {
-  return hasGuardedReason(section)
-    ? t.variableDeclaration("const", getSectionGuards(section).declarators)
-    : t.expressionStatement(callRuntime("_scope_reason"));
+  // A patch build's child scope writes may still add this body's page guard.
+  const guards = getSectionGuards(section);
+  return (guards.statement =
+    isPatch() || hasGuardedReason(section)
+      ? t.variableDeclaration("const", guards.declarators)
+      : t.expressionStatement(callRuntime("_scope_reason")));
+}
+
+// The statement binding the section's reason, once its body has one.
+export function getEmittedReasonStatement(section: Section) {
+  return getSectionGuards(section).statement;
+}
+
+// The statement claiming a body's scope id, with the checks it shares there.
+export function getScopeIdStatement(section: Section) {
+  return t.variableDeclaration("const", getBodyGuards(section).declarators);
 }
 
 // A binding's write reason: whether, and under which guard, the server
-// writes it.
+// writes it (always where a patch keys an entry on it).
 export function getWriteReason(binding: Binding) {
-  return findSlot(binding)?.reason;
+  return getSlotWriteReason(findSlot(binding));
 }
 
 // A branch's write reason: whether the server writes the scope it resumes.
 export function getBranchWriteReason(section: Section) {
-  return findSectionSlot(section, SlotKind.Branch)?.reason;
+  return getSlotWriteReason(findSectionSlot(section, SlotKind.Branch));
+}
+
+// The reason a slot writes with (its write reason): its reason, always where
+// a patch keys an entry on it.
+export function getSlotWriteReason(slot: Slot | undefined) {
+  return slot && isPatchKeyedSlot(slot)
+    ? mergeSources(ALWAYS, slot.reason)
+    : slot?.reason;
+}
+
+// A scope is written when any slot in it is, a patch-keyed node's included.
+export function getSectionWriteReason(section: Section) {
+  return isPatch() && hasPatchKeyedNodes(section)
+    ? mergeSources(ALWAYS, section.reason)
+    : section.reason;
 }
 
 // Resume joins a branch to its parent at the marker its tag writes wherever the
@@ -155,11 +219,11 @@ export function getWriteGuard(
         );
   }
 
-  const bit = getGroupsBit(reason.param);
-  if (bit !== undefined) {
+  const bit = getGroupsBit(reason.param, "_write_guard");
+  if (bit === 1 || (bit === 0 && !reason.global)) {
     return bit && omitUnconditional ? undefined : t.numericLiteral(bit);
   }
-  return orEachParamGroup(reason.param, "_write_guard");
+  return getDynamicGuard(section, reason, "_write_guard");
 }
 
 export function getWriteGuardForAny(
@@ -202,16 +266,114 @@ export function getExprIfWritten(
     return ownReason && expr;
   }
 
-  const bit = getGroupsBit(ownReason.param);
-  if (bit !== undefined) return bit ? expr : undefined;
-  return andGuard(orEachParamGroup(ownReason.param, "_write_if"), expr);
+  const bit = getGroupsBit(ownReason.param, "_write_if");
+  if (bit === 1) return expr;
+  if (bit === 0 && !ownReason.global) return undefined;
+  return andGuard(getDynamicGuard(section, ownReason, "_write_if"), expr);
+}
+
+// The global dimension has no param slots: it is patch-only, where a
+// page render serializes it and a patch render re-ships every global instead.
+function getDynamicGuard(
+  section: Section,
+  reason: Sources & { state: undefined },
+  check: keyof typeof orGroupChecks,
+) {
+  const paramGuard = orEachParamGroup(reason.param, check);
+  if (!reason.global) return paramGuard;
+  const globalGuard = scopePageIdentifier(getReasonSection(section));
+  return paramGuard ? orGuard(globalGuard, paramGuard) : globalGuard;
+}
+
+// Branch and boundary bodies declare no reason of their own; the nearest
+// enclosing content body or the root does.
+export function getReasonSection(section: Section) {
+  let cur = section;
+  while (cur.parent && cur.branch) cur = cur.parent;
+  return cur;
+}
+
+// A page render's gate, for what a page and a patch render pass differently:
+// a known child's group arguments, content locals, the global dimension.
+export function scopePageIdentifier(section: Section) {
+  const state = getSectionGuards(section);
+  const id = t.identifier(ensureSharedUid(`scope${section.id}_page`, section));
+  if (!state.page) {
+    state.page = true;
+    state.declarators.push(
+      t.variableDeclarator(t.cloneNode(id), callRuntime("_page_render")),
+    );
+  }
+  return id;
+}
+
+// A group's runtime check arguments: its section's reason and its index.
+export function getGroupArgs(
+  section: Section,
+  group: ParamReasonGroup,
+  index = getParamReasonGroupIndex(section, group),
+): [t.Expression, t.Expression] {
+  return [
+    scopeReasonIdentifier(section),
+    withLeadingComment(t.numericLiteral(index), getDebugNames(group)),
+  ];
+}
+
+// The 2-bit value caller groups pass together, or'd into `bits`, where every call
+// passes each as a constant; undefined where one composes at render.
+export function getGroupsConstant(
+  groups: [Section, ParamReasonGroup][],
+  bits: number,
+) {
+  for (const [section, group] of groups) {
+    const value = getStaticGroupValue(section, group);
+    if (value === undefined) return;
+    bits |= value;
+  }
+  return bits;
+}
+
+// The same as a mask value: what a child's mask composes for them, a constant group
+// folded into `bits`, the rest read at render.
+export function buildGroupsValue(
+  groups: [Section, ParamReasonGroup][],
+  bits: number,
+) {
+  let composed: t.Expression | undefined;
+  for (const [section, group] of groups) {
+    const value = getStaticGroupValue(section, group);
+    if (value === undefined) composed = orMaskGroup(composed, section, group);
+    else bits |= value;
+  }
+  if (!composed) return bits;
+  return bits
+    ? t.binaryExpression("|", t.numericLiteral(bits), composed)
+    : composed;
+}
+
+// The groups' bits or'd at render.
+export function buildComposedGroupValue(groups: [Section, ParamReasonGroup][]) {
+  let value: t.Expression | undefined;
+  for (const [section, group] of groups) {
+    value = orMaskGroup(value, section, group);
+  }
+  return value!;
+}
+
+function orMaskGroup(
+  value: t.Expression | undefined,
+  section: Section,
+  group: ParamReasonGroup,
+) {
+  const bits = getOrShareSectionGuard(section, group, "_updates_from");
+  return value ? t.binaryExpression("|", value, bits) : bits;
 }
 
 // Whether the server ever writes what the reason guards, where `section` reads it.
 export function isEverWritten(section: Section, reason: undefined | Reason) {
   const ownReason = mapBodyParams(section, reason);
   return isGuardedReason(ownReason)
-    ? getGroupsBit(ownReason.param) !== 0
+    ? !!ownReason.global || getGroupsBit(ownReason.param, "_write_if") !== 0
     : !!ownReason;
 }
 
@@ -251,102 +413,158 @@ export function isWrittenForCall(
 
 // The constant a reason's guard folds to: `0` unwritten, `1` always written.
 export function getWriteBit(section: Section, reason: undefined | Reason) {
-  return isDynamicWriteGuard(section, reason)
-    ? getGroupsBit(reason.param)
-    : reason
-      ? 1
-      : 0;
+  if (!isDynamicWriteGuard(section, reason)) return reason ? 1 : 0;
+  const bit = getGroupsBit(reason.param, "_write_guard");
+  // A patch build's global dimension gates a page render apart from the params.
+  return bit === 0 && reason.global ? undefined : bit;
 }
 
-// `1` where some group is always written, `0` where every group never is.
-function getGroupsBit(params: Sources["param"]) {
-  return reduceParamGroups(params, addGroupBit, 0 as number | undefined);
+// `1` where some group's `check` always holds, `0` where every group's never does.
+function getGroupsBit(params: Sources["param"], check: GroupCheck) {
+  return reduceParamGroups(
+    params,
+    (bit: number | undefined, section, group) => {
+      const groupBit = getStaticGroupBit(section, group, check);
+      return bit === 1 || groupBit === 1
+        ? 1
+        : bit === 0 && groupBit === 0
+          ? 0
+          : undefined;
+    },
+    0,
+  );
 }
 
-function addGroupBit(
-  bit: number | undefined,
-  section: Section,
-  group: ParamReasonGroup,
+// Each param group's `check`, or-ed together.
+function orEachParamGroup(
+  params: Sources["param"],
+  check: keyof typeof orGroupChecks,
 ) {
-  const groupBit = getStaticGroupBit(section, group);
-  return bit === 1 || groupBit === 1
-    ? 1
-    : bit === 0 && groupBit === 0
-      ? 0
-      : undefined;
-}
-
-// Each param group's `check`, or-ed together, but for a group never written.
-function orEachParamGroup(params: Sources["param"], check: GroupCheck) {
   return reduceParamGroups(params, orGroupChecks[check], undefined)!;
 }
 
 const orGroupChecks = {
   _write_guard: orGroupCheck("_write_guard"),
   _write_if: orGroupCheck("_write_if"),
-} satisfies Record<GroupCheck, unknown>;
+};
 
-function orGroupCheck(check: GroupCheck) {
+function orGroupCheck(check: MaskCheck) {
   return (
     expr: t.Expression | undefined,
     section: Section,
     group: ParamReasonGroup,
-  ) =>
-    getStaticGroupBit(section, group) === 0
-      ? expr
-      : orGuard(expr, getOrShareSectionGuard(section, group, check));
+  ) => orGuard(expr, getOrShareSectionGuard(section, group, check));
 }
 
-function orGuard(guard: t.Expression | undefined, other: t.Expression) {
-  return guard ? t.logicalExpression("||", guard, other) : other;
+// A check folded to `1` holds always, so the guard does; one folded to `0` adds nothing.
+export function orGuard(guard: t.Expression | undefined, other: t.Expression) {
+  return !guard || isNever(guard) || isAlways(other)
+    ? other
+    : isNever(other) || isAlways(guard)
+      ? guard
+      : t.logicalExpression("||", guard, other);
 }
 
+// A guard folded to `1` holds always and one folded to `0` never; what is never stays so.
 export function andGuard(
   guard: t.Expression | undefined | false,
   expr: t.Expression,
 ) {
-  return guard ? t.logicalExpression("&&", guard, expr) : expr;
+  return !guard || isAlways(guard) || isNever(expr)
+    ? expr
+    : isNever(guard)
+      ? guard
+      : t.logicalExpression("&&", guard, expr);
+}
+
+// The guarded expression where it ever holds: none where a guard folds to never.
+export function ifEver(expr: t.Expression | undefined | false) {
+  return expr && !isNever(expr) ? expr : undefined;
+}
+
+// A guard's negation, folded where the guard is.
+export function notGuard(guard: t.Expression) {
+  return isAlways(guard)
+    ? t.numericLiteral(0)
+    : isNever(guard)
+      ? t.numericLiteral(1)
+      : t.unaryExpression("!", guard);
+}
+
+export function isNever(guard: t.Expression) {
+  return t.isNumericLiteral(guard, { value: 0 });
+}
+
+export function isAlways(guard: t.Expression) {
+  return t.isNumericLiteral(guard, { value: 1 });
+}
+
+// A check of the mask alone, shared beside its group's reason.
+export function getOrShareSectionGuard(
+  section: Section,
+  params: ParamReasonGroup,
+  check: MaskCheck,
+): t.Expression {
+  return shareGroupCheck(getSectionGuards(section), section, params, check);
+}
+
+// A check `section` evaluates of a group of `groupSection`: one also reading the
+// render context shares only within that body, beside its own reason or scope id.
+export function getOrShareGroupCheck(
+  section: Section,
+  groupSection: Section,
+  params: ParamReasonGroup,
+  check: GroupCheck,
+) {
+  return shareGroupCheck(
+    section === groupSection ||
+      (check !== "_filled_guard" && check !== "_unfilled_if")
+      ? getSectionGuards(groupSection)
+      : getBodyGuards(section),
+    groupSection,
+    params,
+    check,
+  );
 }
 
 // The first use stays inline; a second shares it through a declarator.
-function getOrShareSectionGuard(
+function shareGroupCheck(
+  guards: SharedGuards,
   section: Section,
   params: ParamReasonGroup,
   check: GroupCheck,
 ): t.Expression {
   if (!section.paramReasonGroups) return scopeReasonIdentifier(section);
+  const bit = getStaticGroupBit(section, params, check);
+  if (bit !== undefined) return t.numericLiteral(bit);
 
-  const state = getSectionGuards(section);
-  let tracking = state.shares.get(check);
-  if (!tracking) state.shares.set(check, (tracking = createGuardShares()));
+  let tracking = guards.shares.get(check);
+  if (!tracking) guards.shares.set(check, (tracking = createGuardShares()));
   const index = getParamReasonGroupIndex(section, params);
-  const name = tracking.names.get(index);
+  const group = section.paramReasonGroups[index];
+  const name = tracking.names.get(group);
   if (name) return t.identifier(name);
 
-  const guard = callRuntime(
-    check,
-    scopeReasonIdentifier(section),
-    withLeadingComment(t.numericLiteral(index), getDebugNames(params)),
-  );
-  const pending = tracking.pending.get(index);
+  const guard = callRuntime(check, ...getGroupArgs(section, params, index));
+  const pending = tracking.pending.get(group);
   if (!pending) {
     const expr = t.parenthesizedExpression(guard);
-    tracking.pending.set(index, expr);
+    tracking.pending.set(group, expr);
     return expr;
   }
 
   const shared = generateUid(
     `${groupCheckPrefixes[check]}__${getDebugNamesAsIdentifier(params)}`,
   );
-  tracking.names.set(index, shared);
-  tracking.pending.delete(index);
-  state.declarators.push(t.variableDeclarator(t.identifier(shared), guard));
+  tracking.names.set(group, shared);
+  tracking.pending.delete(group);
+  guards.declarators.push(t.variableDeclarator(t.identifier(shared), guard));
   pending.expression = t.identifier(shared);
   return t.parenthesizedExpression(t.identifier(shared));
 }
 
 // Whether the guard for a reason is a runtime mask rather than a constant.
-function isDynamicWriteGuard(
+export function isDynamicWriteGuard(
   section: Section,
   reason: undefined | Reason,
 ): reason is Sources & { state: undefined } {
@@ -362,34 +580,76 @@ function isCrossSection(section: Section, reason: Sources) {
 
 // The constant every render of a `<define>` body's group passes, where each call passes
 // the same; none for a recursive call, or params no guard groups (a function's readers').
-function getStaticGroupBit(body: Section, group: ParamReasonGroup) {
+function getStaticGroupValue(body: Section, group: ParamReasonGroup) {
   const index = findParamReasonGroupIndex(body, group);
   return index === -1
     ? undefined
-    : getBodyGroupBit(body.paramReasonGroups![index]);
+    : getBodyGroupValue(body.paramReasonGroups![index]);
 }
 
-const [getBodyGroupBit] = createAnalysisMemo((group: ParamReasonGroup) => {
+const [getBodyGroupValue] = createAnalysisMemo((group: ParamReasonGroup) => {
   const body = first(group).section;
-  return isOnlyCalled(body) ? getCallsBit(body, group) : undefined;
+  return isOnlyCalled(body) ? getCallsValue(body, group) : undefined;
 }, undefined);
 
-function getCallsBit(body: Section, group: ParamReasonGroup) {
+// What `check` returns for a group every call passes the same constant, where that
+// decides it: in a plain build its write bit, in a patch build its value's answer.
+export function getStaticGroupBit(
+  section: Section,
+  group: ParamReasonGroup,
+  check: GroupCheck,
+) {
+  const value = getStaticGroupValue(section, group);
+  return value === undefined || !isPatch()
+    ? value
+    : getPatchCheckBit(check, value);
+}
+
+// What a patch build's check returns for a group's value, where that decides it; others
+// also read whether a page renders, the whole mask or the render context.
+export function getPatchCheckBit(check: GroupCheck, value: number) {
+  switch (check) {
+    case "_client_guard":
+      return value & UpdatesFrom.Client;
+    case "_server_guard":
+      return +(value === UpdatesFrom.Server);
+    case "_unfilled_if":
+      return value & UpdatesFrom.Client || (value ? undefined : 0);
+    case "_filled_guard":
+      return value ? +(value === UpdatesFrom.Server) : undefined;
+    case "_write_if":
+      return value ? undefined : 0;
+  }
+}
+
+// What every call passes in its mask for the group, where each passes the same constant:
+// a plain call its write bit, a patch call where the group updates from.
+function getCallsValue(body: Section, group: ParamReasonGroup) {
   const renderedBy = body.renderedBy!;
-  let bit: number | undefined;
+  let value: number | undefined;
   for (const call of Array.isArray(renderedBy) ? renderedBy : [renderedBy]) {
-    const callSection = call.childScopeBinding.section;
-    const callBit = getWriteBit(
-      callSection,
-      findSlot(call.childScopeBinding, SlotKind.ParamGroup, callSection, group)
-        ?.reason,
-    );
-    if (callBit === undefined || (bit !== undefined && bit !== callBit)) {
+    const callValue = isPatch()
+      ? getCallUpdatesFrom(call, group)
+      : getCallWriteBit(call, group);
+    if (
+      callValue === undefined ||
+      (value !== undefined && value !== callValue)
+    ) {
       return;
     }
-    bit = callBit;
+    value = callValue;
   }
-  return bit;
+  return value;
+}
+
+// The write bit a plain call passes for its child's group, where it is a constant.
+function getCallWriteBit(call: KnownTagExtra, group: ParamReasonGroup) {
+  const callSection = call.childScopeBinding.section;
+  return getWriteBit(
+    callSection,
+    findSlot(call.childScopeBinding, SlotKind.ParamGroup, callSection, group)
+      ?.reason,
+  );
 }
 
 // A `<define>` body its known calls alone render: its var is read nowhere else.

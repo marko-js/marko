@@ -36,6 +36,11 @@ export const _template = (
         `render() is not implemented for the DOM compilation of a Marko template`,
       );
     };
+    renderer.patch = (_) => {
+      throw new Error(
+        `patch() is not implemented for the DOM compilation of a Marko template`,
+      );
+    };
   }
 
   return (_resumed[id] = renderer);

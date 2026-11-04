@@ -1,0 +1,7 @@
+<define/Level|{ n, label, content }|>
+  <if=n>
+    <Level n=(n - 1) label=label><em>${n}:${label}</em></Level>
+  </if>
+  <keeper content=content/>
+</define>
+<main><Level n=2 label=input.label/></main>
