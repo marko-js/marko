@@ -1,0 +1,9 @@
+<let/n=0/>
+<define/D|{ label }|>
+  <const/l=label + "!"/>
+  <define/E><span>${l} ${n}</span></define>
+  <E/>
+  <for|i| of=[1, 2]><E/></for>
+</define>
+<D label="x"/>
+<button onClick() { n++ }>t</button>

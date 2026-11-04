@@ -1,0 +1,6 @@
+<define/R|{ flip, depth }|>
+  <if=flip><span>${input.v}</span></if>
+  <if=depth><R flip=!flip depth=depth - 1/></if>
+</define>
+<R depth=2/>
+<if=input.on><R flip=true depth=1/></if>

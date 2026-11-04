@@ -1,0 +1,6 @@
+import Card from "./tags/card.marko";
+<main>
+  <for|row| of=input.rows by="id">
+    <${input.on ? Card : "div"}><em>${input.note} ${row.label}</em></>
+  </for>
+</main>

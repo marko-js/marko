@@ -1,0 +1,37 @@
+// template.marko
+const $template = "<!><!><button> </button>";
+const $walks = "b%b D l";
+const $setup = [[], ["__tests__/template.marko_0"]];
+_shells({
+	"__tests__/template.marko_1*content": "__tests__/template.marko_1*content !__tests__/template.marko_1",
+	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;b%b D ;<!><!><button> </button>"
+});
+var template_default = _template("__tests__/template.marko", (input) => {
+	const $scope0_reason = _scope_reason(), $ui__input_show__OR__input_label = _unfilled_if($scope0_reason, 0), $ui__input_label = _unfilled_if($scope0_reason, 2), $ui__input_show = _unfilled_if($scope0_reason, 1), $fg__input_show = _filled_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 2);
+	const $scope0_id = _scope_id();
+	let n = 0;
+	const Content = { content: _content_resume("__tests__/template.marko_1*content", ({ label }) => {
+		const $scope1_id = _scope_id();
+		const $scope1_reason = _scope_reason();
+		let count = 0;
+		_html(`<em>${_text_mark($scope1_id, "#text/1", label, 1, 4, 0)} ${_text_mark($scope1_id, "#text/2", count, 2)}</em>${_el_mark($scope1_id, "#em/0")}`);
+		_script($scope1_id, "__tests__/template.marko_1");
+		_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_1_count#6/fill", count, 1);
+		_scope($scope1_id, { count }, "__tests__/template.marko", "2:2", { count: "3:8" });
+	}, $scope0_id) };
+	_dynamic_tag($scope0_id, "#text/0", input.show ? Content : "span", { label: input.label }, 1, 0, 0, _write_guard($scope0_reason, 0), $scope0_reason, 0);
+	_html(`<button>${_text_mark($scope0_id, "#text/2", n)}</button>${_el_mark($scope0_id, "#button/1")}`);
+	_script($scope0_id, "__tests__/template.marko_0");
+	_patch_render($scope0_id, "__tests__/template.marko_0_input_show#5_input_label#6_Content#8/setup", (($fg__input_show ? " input_show" : "") + ($fg__input_label ? " input_label" : "")).slice(1), $scope0_reason, 0);
+	_scope($scope0_id, {
+		input_show: ($ui__input_label || $ui__input_show__OR__input_label) && input.show,
+		input_label: ($ui__input_show || $ui__input_show__OR__input_label) && input.label,
+		n,
+		Content: $ui__input_show__OR__input_label && Content
+	}, "__tests__/template.marko", 0, {
+		input_show: ["input.show"],
+		input_label: ["input.label"],
+		n: "1:6",
+		Content: "2:9"
+	}) || ($fg__input_show && $ui__input_label && _patch_write($scope0_id, "PatchMarkedWrite:input_show", input.show, !_server_guard($scope0_reason, 1)), $fg__input_label && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 2)));
+}, 1);

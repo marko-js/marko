@@ -1,0 +1,21 @@
+# Render `{"label":"a","tag":"t1"}`
+```html
+<button>
+  clear
+</button>
+<em>
+  a
+</em>
+<span>
+  t1
+</span>
+<span>
+  t1
+</span>
+<span>
+  t1
+</span>
+<button>
+  toggle
+</button>
+```

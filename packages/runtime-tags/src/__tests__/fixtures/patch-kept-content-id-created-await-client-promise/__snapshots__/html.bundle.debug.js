@@ -1,0 +1,95 @@
+// tags/card.marko
+const $template$2 = "<section><!></section>";
+const $walks$2 = "D%l";
+const $setup$2 = [[], []];
+_shells({ "__tests__/tags/card.marko": "__tests__/tags/card.marko;D%;<section><!></section>" });
+var card_default = _template("__tests__/tags/card.marko", (input) => {
+	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 0);
+	const $scope0_id = _scope_id();
+	_html("<section>");
+	_dynamic_tag($scope0_id, "#text/0", input.content, {}, 2, 0, 0, $wg__input_content, $scope0_reason, 0);
+	_html("</section>");
+	_scope($scope0_id, {}, "__tests__/tags/card.marko", 0);
+});
+
+// tags/outer.marko
+const $template$1 = "<button>x</button><!><!>";
+const $walks$1 = " b%c";
+const $setup$1 = [[], ["__tests__/tags/outer.marko_0"]];
+_shells({
+	"__tests__/tags/outer.marko_1*content": `__tests__/tags/outer.marko_1*content${_shell_marker([["__tests__/tags/outer.marko_1_c#0:6/subscribe"], []], ["#childScope/0>", $setup$2])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l")};${$template$2}`,
+	"__tests__/tags/outer.marko_0_#text#1/await": `__tests__/tags/outer.marko_0_#text#1/await${_shell_marker([["__tests__/tags/outer.marko_1_c#0:6/subscribe"], []], ["#childScope/0>", $setup$2])};${((_w0) => `/${_w0}&`)("D%l")};${$template$2}`,
+	"__tests__/tags/outer.marko": "__tests__/tags/outer.marko !__tests__/tags/outer.marko_0; b%;<button>x</button><!><!>"
+});
+var outer_default = _template("__tests__/tags/outer.marko", (input) => {
+	const $scope0_reason = _scope_reason();
+	const $scope0_id = _scope_id();
+	const $c__closures = new Set();
+	let c = input.content;
+	let p = input.promise;
+	_html(`<button>x</button>${_el_mark($scope0_id, "#button/0")}`);
+	_await($scope0_id, "#text/1", p, () => {
+		const $scope1_id = _scope_id();
+		_set_scope_reason(2);
+		const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
+		card_default({ content: c });
+		_patch_child_end();
+		_subscribe($c__closures, _scope($scope1_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/tags/outer.marko", "4:2"), "__tests__/tags/outer.marko_1_c#0:6/subscribe", 0);
+		_resume_branch($scope1_id);
+	}, 1, "__tests__/tags/outer.marko_1*content", 1, 1);
+	_script($scope0_id, "__tests__/tags/outer.marko_0");
+	_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/tags/outer.marko_0_c#6/fill", c, 1);
+	_filled_guard($scope0_reason, 1) && _patch_fill($scope0_id, "PatchFill:__tests__/tags/outer.marko_0_p#7/fill", p, 1);
+	_scope($scope0_id, { "ClosureScopes:c/8": $c__closures }, "__tests__/tags/outer.marko", 0) || _client_branch(input.content);
+});
+
+// template.marko
+const $template = "<h1>A value the client holds</h1><!><!>";
+const $walks = "b%c";
+const $setup = [[], []];
+_shells({
+	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content|2; b D ;<input><label> </label>",
+	"__tests__/template.marko": "__tests__/template.marko;b%;<h1>A value the client holds</h1><!><!>",
+	"__tests__/template.marko_1*shell": `__tests__/template.marko_1*shell${_shell_marker([[], []], ["#childScope/0>", $setup$1])};${/*@__PURE__*/ ((_w0) => `/${_w0}&b`)($walks$1)};${/*@__PURE__*/ ((_w0) => `${_w0}<!>`)($template$1)}`
+});
+var template_default = _template("__tests__/template.marko", (input) => {
+	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 4), $wg__input_show = _write_guard($scope0_reason, 2), $ui__input_show = _unfilled_if($scope0_reason, 2), $ui__input_label = _unfilled_if($scope0_reason, 4), $fg__input_promise = _filled_guard($scope0_reason, 3), $fg__input_label = _filled_guard($scope0_reason, 4), $cg__input_show = _client_guard($scope0_reason, 2);
+	const $scope0_id = _scope_id();
+	const $input_label__closures = new Set();
+	_html("<h1>A value the client holds</h1>");
+	_if(() => {
+		if (input.show) {
+			const $scope1_id = _scope_id();
+			_set_scope_reason(_updates_from($scope0_reason, 3) << 3);
+			const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
+			outer_default({
+				promise: input.promise,
+				content: _content("__tests__/template.marko_2*content", () => {
+					const $scope2_reason = _scope_reason();
+					const $scope2_id = _scope_id();
+					const uid = _id("uid");
+					_html(`<input${_attr("id", uid, $scope2_id, "#input/0", 0, 0)}>${_el_mark($scope2_id, "#input/0", 0)}<label${_attr("for", uid, $scope2_id, "#label/1", 0, 0)}>${_text_mark($scope2_id, "#text/2", input.label, 1, $scope0_reason, 4)}</label>${_el_mark($scope2_id, "#label/1", 0)}`);
+					$cg__input_label && _patch_render($scope2_id, "__tests__/template.marko_2_input_label#0:5/subscribe");
+					_subscribe(_unfilled_if($scope0_reason, 4) && $input_label__closures, _scope($scope2_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope1_id) }, "__tests__/template.marko", "2:17"), $cg__input_label && "__tests__/template.marko_2_input_label#0:5/subscribe");
+				}, $scope1_id, 2)
+			});
+			_patch_child_end();
+			_client_guard($scope0_reason, 3) && _patch_render($scope1_id, "__tests__/template.marko_1_input_promise#0:4/setup");
+			_scope($scope1_id, {
+				_: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id),
+				"#childScope/0": _existing_scope($childScope)
+			}, "__tests__/template.marko", "2:2");
+			return 0;
+		}
+	}, $scope0_id, "#text/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 2);
+	$fg__input_promise && $cg__input_show && _patch_render($scope0_id, "__tests__/template.marko_1_input_promise#0:4/setup", "input_promise");
+	$fg__input_label && $cg__input_show && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_label#5/subscribers", "input_label");
+	_scope($scope0_id, {
+		input_promise: ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.promise,
+		input_label: ($ui__input_show || $ui__input_label) && input.label,
+		"ClosureScopes:input_label/7": _write_if($scope0_reason, 4) && ($ui__input_label || $ui__input_show) && $input_label__closures
+	}, "__tests__/template.marko", 0, {
+		input_promise: ["input.promise"],
+		input_label: ["input.label"]
+	}) || ($fg__input_promise && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_promise", input.promise, !_server_guard($scope0_reason, 3)), $fg__input_label && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 4)));
+}, 1);

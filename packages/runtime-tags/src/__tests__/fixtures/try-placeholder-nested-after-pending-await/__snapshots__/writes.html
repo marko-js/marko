@@ -1,0 +1,25 @@
+<main><!--M_[--><!--M_!^3--><i>outer</i><!--M_!3--><!--M_]1 a 3--></main>
+<t hidden M_=3>
+  <!--M_#b--><!--M_[--><!--M_!^5--><i>inner</i><!--M_!5--><!--M_]3 b 5--></t>
+<t hidden M_=5><!--M_#c--></t>
+<script>
+  WALKER_RUNTIME("M")("_");
+  REORDER_RUNTIME(M._);
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<t hidden M_=c><span>4</span></t>
+<script>
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<t hidden M_=b>
+  <p>3</p>
+</t>
+<script>
+  M._.w()
+</script>
