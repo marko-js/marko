@@ -1,0 +1,12 @@
+<if=input.show>
+  <try>
+    <script>console.log("caught body setup")</script>
+    <p>caught</p>
+    <@catch>failed</@catch>
+  </try>
+  <try>
+    <script>console.log("placeholder body setup")</script>
+    <p>placeholder</p>
+    <@placeholder>loading</@placeholder>
+  </try>
+</if>

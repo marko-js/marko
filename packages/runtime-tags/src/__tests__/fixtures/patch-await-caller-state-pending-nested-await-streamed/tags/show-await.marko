@@ -1,0 +1,9 @@
+<await|x|=input.promise>
+  <p>${input.label}:${x}</p>
+  <try>
+    <@placeholder><i>inner loading</i></@placeholder>
+    <await|y|=input.inner>
+      <em>${y}</em>
+    </await>
+  </try>
+</await>

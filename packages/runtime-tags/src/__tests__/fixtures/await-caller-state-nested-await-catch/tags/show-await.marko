@@ -1,0 +1,9 @@
+<await|x|=input.promise>
+  <p>${x}</p>
+  <try>
+    <await|y|=input.other>
+      <b>${x}</b>
+    </await>
+    <@catch><span>caught</span></@catch>
+  </try>
+</await>

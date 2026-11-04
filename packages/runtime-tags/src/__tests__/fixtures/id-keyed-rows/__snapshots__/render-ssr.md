@@ -1,0 +1,19 @@
+# Render `{"items":[{"key":"a"},{"key":"b"}]}`
+```html
+<label
+  for="sM_1"
+>
+  a
+</label>
+<input
+  id="sM_1"
+/>
+<label
+  for="sM_2"
+>
+  b
+</label>
+<input
+  id="sM_2"
+/>
+```
