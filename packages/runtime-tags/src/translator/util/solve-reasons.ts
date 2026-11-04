@@ -31,6 +31,8 @@ import {
   reduce,
   rest,
   some,
+  Sorted,
+  type SortedOpt,
 } from "./optional";
 import { ensurePatchReasonGroups } from "./patch/refresh";
 import {
@@ -324,40 +326,36 @@ function addRegisteredFnReasons(
   }
 }
 
-// Who reads a value through its aliases and derives links (a cyclic graph):
-// what rereads it after resume, the `LANDS_*` bits of the reads it lands in, and
-// in a patch build those reads, each with how the value reaches it (`READ_*` bits).
+// Who reads a value through its aliases and derives links (a cyclic graph): what
+// rereads it after resume, and the reads it lands in (an effect, an input).
 export interface Readers {
   reason: undefined | Reason;
-  lands: number;
-  reads?: ReadMap;
+  reads?: SortedOpt<ReferencedExtra>;
+  /** Of its reads, those it reaches before a call site hands it to a callee. */
+  beforeCall?: SortedOpt<ReferencedExtra>;
+  /** Of its reads, those it reaches as more than a dynamic tag's name. */
+  asInput?: SortedOpt<ReferencedExtra>;
 }
 
-// Lands in a retained read, where client code may read it as is.
-const LANDS_RETAINED = 1;
-// Reaches a retained read as more than a dynamic tag's name.
-const LANDS_RETAINED_INPUT = 2;
+const kLandingOrder = Symbol("order a read first lands in");
+declare module "@marko/compiler/dist/types" {
+  export interface NodeExtra {
+    [kLandingOrder]?: number;
+  }
+}
+let landings = 0;
+// Reads in the order a value first lands in them: one order for every template a
+// process compiles, as a value's reads cross into its callees'.
+const readUtil = new Sorted(function compareReads(
+  a: ReferencedExtra,
+  b: ReferencedExtra,
+) {
+  return a[kLandingOrder]! - b[kLandingOrder]!;
+});
 
-// How a value reaches a read: before a call site hands it to a callee (on some
-// path), and only as a dynamic tag's name (on every path).
-export const READ_BEFORE_CALL = 1;
-export const READ_TAG_NAME_ONLY = 2;
+const UNREAD: Readers = { reason: undefined };
 
-type ReadMap = ReadonlyMap<ReferencedExtra, number> | undefined;
-
-const UNREAD: Readers = { reason: undefined, lands: 0 };
-
-const ALWAYS_READ: Readers = { reason: ALWAYS, lands: 0 };
-
-const RETAINED_TAG_NAME_READ: Readers = {
-  reason: undefined,
-  lands: LANDS_RETAINED,
-};
-
-const RETAINED_INPUT_READ: Readers = {
-  reason: undefined,
-  lands: LANDS_RETAINED | LANDS_RETAINED_INPUT,
-};
+const ALWAYS_READ: Readers = { reason: ALWAYS };
 
 export const extraReaders = createPassMemo(computeExtraReaders, UNREAD);
 
@@ -384,7 +382,7 @@ export function bindingLandsRetained(
   binding: Binding,
   properties: Opt<string>,
 ) {
-  return !!(bindingReaders(binding, properties).lands & LANDS_RETAINED_INPUT);
+  return some(bindingReaders(binding, properties).asInput, isRetained);
 }
 
 // Whether the value lands somewhere retained (itself included), where client
@@ -392,19 +390,19 @@ export function bindingLandsRetained(
 export function landsRetained(extra: t.NodeExtra) {
   return (
     !!extra.retained ||
-    (!extra.isEffect && !!(extraReaders(extra).lands & LANDS_RETAINED))
+    (!extra.isEffect && some(extraReaders(extra).reads, isRetained))
   );
 }
 
-// Whether a read the value reaches passes `leaf`, given how it reaches it.
+// Whether a read the value reaches passes `leaf`, given whether it reaches it
+// as more than a dynamic tag's name.
 export function someRead(
-  { reads }: Readers,
-  leaf: (read: ReferencedExtra, how: number) => boolean,
+  readers: Readers,
+  leaf: (read: ReferencedExtra, asInput: boolean) => boolean,
 ) {
-  if (reads) {
-    for (const [read, how] of reads) if (leaf(read, how)) return true;
-  }
-  return false;
+  return some(readers.reads, (read) =>
+    leaf(read, readUtil.has(readers.asInput, read)),
+  );
 }
 
 // Who reads what content derives: the bindings it passes through, at its path.
@@ -459,14 +457,15 @@ function readersOfDerived(
   );
   const exprs = extra.callSiteExprs;
   if (!exprs) return linked;
-  const reads = readsPastCall(linked.reads);
-  return linked.reason || reads !== linked.reads
+  // A callee's reads are its call site's: past the call.
+  return linked.reason || linked.beforeCall
     ? {
         reason:
           linked.reason &&
           mapParamReason(binding.section.program, linked.reason, exprs, true),
-        lands: linked.lands,
-        reads,
+        reads: linked.reads,
+        beforeCall: undefined,
+        asInput: linked.asInput,
       }
     : linked;
 }
@@ -520,7 +519,7 @@ function computeBindingReaders(
       ? undefined
       : first(properties);
   const reason = findSlot(binding)?.reason;
-  let readers: Readers = reason ? { reason, lands: 0 } : UNREAD;
+  let readers: Readers = reason ? { reason } : UNREAD;
   // A property is read with the value it is read from.
   const aliased = binding.aliasOf;
   if (properties !== true && aliased) {
@@ -545,12 +544,10 @@ function computeBindingReaders(
       ) {
         readers = mergeReaders(readers, ALWAYS_READ);
       }
-      // A patch template asks which effects render content.
-      if (isPatch()) readers = withLandingRead(readers, expr, binding);
+      readers = withLandingRead(readers, expr, binding);
       continue;
     }
-    readers = mergeReaders(readers, landingReaders(expr, binding));
-    if (isPatch()) readers = withLandingRead(readers, expr, binding);
+    readers = withLandingRead(readers, expr, binding);
     readers = mergeReaders(
       readers,
       readersOfDerives(expr, binding, properties),
@@ -591,81 +588,51 @@ function mergeReaders(a: Readers, b: Readers): Readers {
   if (a === UNREAD) return b;
   if (b === UNREAD) return a;
   const reason = mergeSources(a.reason, b.reason);
-  const lands = a.lands | b.lands;
-  const reads = unionReads(a.reads, b.reads);
-  if (reason === a.reason && lands === a.lands && reads === a.reads) return a;
-  if (reason === b.reason && lands === b.lands && reads === b.reads) return b;
-  return { reason, lands, reads };
+  const reads = readUtil.union(a.reads, b.reads);
+  const beforeCall = readUtil.union(a.beforeCall, b.beforeCall);
+  const asInput = readUtil.union(a.asInput, b.asInput);
+  if (isSameReaders(a, reason, reads, beforeCall, asInput)) return a;
+  if (isSameReaders(b, reason, reads, beforeCall, asInput)) return b;
+  return { reason, reads, beforeCall, asInput };
 }
 
-// What a read the binding's value lands in adds: only a retained one counts.
-function landingReaders(read: ReferencedExtra, binding: Binding): Readers {
-  return !read.retained
-    ? UNREAD
-    : every(binding.reads.get(read), isTagNameRead)
-      ? RETAINED_TAG_NAME_READ
-      : RETAINED_INPUT_READ;
+function isSameReaders(
+  readers: Readers,
+  reason: Readers["reason"],
+  reads: Readers["reads"],
+  beforeCall: Readers["beforeCall"],
+  asInput: Readers["asInput"],
+) {
+  return (
+    reason === readers.reason &&
+    reads === readers.reads &&
+    beforeCall === readers.beforeCall &&
+    asInput === readers.asInput
+  );
 }
 
-// A patch build's reads: adding one copies (at most once per merge), and adding
-// nothing new keeps the identity, as answers are shared across memo keys.
+// A read the value lands in, reached here before any call; adding one already held
+// keeps the identity, as answers are shared across memo keys.
 function withLandingRead(
   readers: Readers,
   read: ReferencedExtra,
   binding: Binding,
 ): Readers {
-  const reads = addRead(
-    readers.reads,
-    read,
-    READ_BEFORE_CALL |
-      (every(binding.reads.get(read), isTagNameRead) ? READ_TAG_NAME_ONLY : 0),
-  );
-  return reads === readers.reads
+  read[kLandingOrder] ??= landings++;
+  const reads = readUtil.add(readers.reads, read);
+  const beforeCall = readUtil.add(readers.beforeCall, read);
+  const asInput = every(binding.reads.get(read), isTagNameRead)
+    ? readers.asInput
+    : readUtil.add(readers.asInput, read);
+  return isSameReaders(readers, readers.reason, reads, beforeCall, asInput)
     ? readers
-    : { reason: readers.reason, lands: readers.lands, reads };
+    : { reason: readers.reason, reads, beforeCall, asInput };
 }
 
-export function isRetainedInput(read: ReferencedExtra, how: number) {
-  return !(how & READ_TAG_NAME_ONLY) && !!read.retained;
+function isRetained(read: ReferencedExtra) {
+  return !!read.retained;
 }
 
 function isTagNameRead({ extra }: Read) {
   return !!extra.exprRoot?.tagName;
-}
-
-function addRead(reads: ReadMap, read: ReferencedExtra, how: number) {
-  const had = reads?.get(read);
-  const merged = mergeHow(had, how);
-  return had === merged ? reads : new Map(reads).set(read, merged);
-}
-
-function unionReads(a: ReadMap, b: ReadMap) {
-  if (!a || !b || a === b) return a || b;
-  let result: Map<ReferencedExtra, number> | undefined;
-  for (const [read, how] of b) {
-    const had = a.get(read);
-    const merged = mergeHow(had, how);
-    if (had !== merged) (result ??= new Map(a)).set(read, merged);
-  }
-  return result || a;
-}
-
-// Before a call on any path; only as a tag name on every path.
-function mergeHow(had: number | undefined, how: number) {
-  return had === undefined
-    ? how
-    : ((had | how) & READ_BEFORE_CALL) | (had & how);
-}
-
-// A callee's reads, as its call site's: past the call.
-function readsPastCall(reads: ReadMap) {
-  let result: Map<ReferencedExtra, number> | undefined;
-  if (reads) {
-    for (const [read, how] of reads) {
-      if (how & READ_BEFORE_CALL) {
-        (result ??= new Map(reads)).set(read, how & ~READ_BEFORE_CALL);
-      }
-    }
-  }
-  return result || reads;
 }

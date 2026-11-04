@@ -67,7 +67,7 @@ import {
   getSignals,
   isEffectOutsideShell,
 } from "./signals";
-import { bindingReaders, isRetainedInput } from "./solve-reasons";
+import { bindingReaders } from "./solve-reasons";
 import { type Sources } from "./sources";
 import {
   createAnalysisState,
@@ -216,12 +216,9 @@ function recordClientBranchContents(binding: Binding) {
       add(branchExpr, content);
     }
     forEach(derives?.binding, (held) => {
-      const { reads } = bindingReaders(held, derives!.properties);
-      if (reads) {
-        for (const [read, how] of reads) {
-          if (isRetainedInput(read, how)) add(read, content);
-        }
-      }
+      forEach(bindingReaders(held, derives!.properties).asInput, (read) => {
+        if (read.retained) add(read, content);
+      });
     });
   });
 }

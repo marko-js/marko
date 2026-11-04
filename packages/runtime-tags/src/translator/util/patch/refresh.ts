@@ -77,8 +77,6 @@ import {
   extraReaders,
   getBranchExprReasonUntil,
   getDerivedReaders,
-  READ_TAG_NAME_ONLY,
-  READ_BEFORE_CALL,
   someRead,
 } from "../solve-reasons";
 import {
@@ -1639,7 +1637,7 @@ export const isPatchWrittenIntersection = createPassMemo(
 // re-run and the calls whose callees keep their inputs, through derived values.
 function leavesReadToPatch(read: ReferencedExtra): boolean {
   return (
-    !rendersAtSite(read) && !someRead(extraReaders(read), rendersBeforeCall)
+    !rendersAtSite(read) && !some(extraReaders(read).beforeCall, rendersAtSite)
   );
 }
 
@@ -1656,12 +1654,6 @@ function rendersAtSite(read: ReferencedExtra) {
           : derived.type === BindingType.derived,
       ))
   );
-}
-
-// A read the client renders where it sits, in the value's own derives: a call site
-// answers for its callee's reads.
-function rendersBeforeCall(read: ReferencedExtra, how: number) {
-  return !!(how & READ_BEFORE_CALL) && rendersAtSite(read);
 }
 
 function readsOtherIntersection(binding: Binding, intersection: Intersection) {
@@ -1781,8 +1773,8 @@ const patchMayCreateOwn = createPassMemo((section: Section): boolean => {
   // A known consumer decides by where it renders the content; an unknown
   // one may do anything.
   if (!derives) return true;
-  return someRead(getDerivedReaders(derives), (read, how) =>
-    patchMayCreateAtRead(read, how, section),
+  return someRead(getDerivedReaders(derives), (read, asInput) =>
+    patchMayCreateAtRead(read, asInput, section),
   );
 }, false);
 
@@ -1790,7 +1782,7 @@ const patchMayCreateOwn = createPassMemo((section: Section): boolean => {
 // read passing it on within the template leaves it to the reads of what it derives.
 function patchMayCreateAtRead(
   read: ReferencedExtra,
-  how: number,
+  asInput: boolean,
   content: Section,
 ) {
   const rendersContent = isContentRender(read);
@@ -1807,9 +1799,9 @@ function patchMayCreateAtRead(
     // what its call site hands it, unless the child picks it.
     ((inTemplate
       ? rendersContent &&
-        switchesContent(read, how) &&
+        switchesContent(read, asInput) &&
         patchWrites(read.section)
-      : picksContent(read, how)) ||
+      : picksContent(read, asInput)) ||
       // A callee's root renders where its call site does, which the content's
       // own sections answer.
       patchMayCreateEnclosing(
@@ -1821,21 +1813,17 @@ function patchMayCreateAtRead(
 
 // A read that may switch the content it renders: its input, or by a name with
 // sources (one with none renders the same content for its scope's life).
-function switchesContent(read: ReferencedExtra, how: number) {
+function switchesContent(read: ReferencedExtra, asInput: boolean) {
   const name = getNameRead(read);
-  return !name || !!name.binding.sources || !(how & READ_TAG_NAME_ONLY);
+  return !name || !!name.binding.sources || asInput;
 }
 
 // A read choosing what it renders or passes on, unless handed on as is: a
 // dynamic tag's name (its renderer may render its input anywhere), else itself.
-function picksContent(read: ReferencedExtra, how: number) {
+function picksContent(read: ReferencedExtra, asInput: boolean) {
   const name = getNameRead(read);
   const passed = name || read.read;
-  return (
-    !passed ||
-    !isSectionParam(passed.binding) ||
-    (!!name && !(how & READ_TAG_NAME_ONLY))
-  );
+  return !passed || !isSectionParam(passed.binding) || (!!name && asInput);
 }
 
 // The read a dynamic tag's name renders unchanged by the tag: a param its caller
