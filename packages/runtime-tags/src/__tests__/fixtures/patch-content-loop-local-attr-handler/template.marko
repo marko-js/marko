@@ -1,0 +1,7 @@
+<let/picked="none"/>
+<menu>
+  <for|x| of=input.items>
+    <@item id=x.id label=x.name onPick() { picked = x.name }/>
+  </for>
+</menu>
+<p>${picked}</p>

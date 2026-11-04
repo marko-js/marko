@@ -1,0 +1,6 @@
+<await|x|=input.promise>
+  <p>${input.label}:${x}</p>
+  <await|y|=Promise.resolve(input.label)>
+    <em>${y}</em>
+  </await>
+</await>

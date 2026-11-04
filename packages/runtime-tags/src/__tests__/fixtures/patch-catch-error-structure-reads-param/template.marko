@@ -1,0 +1,10 @@
+static function boom(error: unknown): never {
+  throw error;
+}
+<try>
+  <p>${input.error ? boom(input.error) : "ok"}</p>
+  <@catch|err|>
+    <if=(err as { status?: number }).status === 404><b>${input.label}</b></if>
+    <else><i>${input.label}</i></else>
+  </@catch>
+</try>

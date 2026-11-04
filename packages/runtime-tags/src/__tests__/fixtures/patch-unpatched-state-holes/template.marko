@@ -1,0 +1,10 @@
+<let/html="<b>a</b>"/>
+<let/attrs={ title: "a" }/>
+<div ...attrs id="spread"/>
+<input ...attrs name="spread"/>
+<div>$!{html}</div>
+<p>${input.n}</p>
+<button onClick() {
+  html = "<i>b</i>";
+  attrs = { title: "b" };
+}>+</button>

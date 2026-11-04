@@ -1,0 +1,10 @@
+<let/count=0/>
+<wrapper>
+  <const/label=input.label/>
+  <if=input.label>
+    <if=(count > 0 && label)>
+      <p>${label}</p>
+    </if>
+  </if>
+</wrapper>
+<button onClick() { count++ }>+</button>

@@ -1,0 +1,6 @@
+<const/up=() => "U" + input.title/>
+<const/low=() => "l" + input.title/>
+<for|item| of=input.items by="id">
+  <label-view get=(item.upper ? up : low)/>
+</for>
+<button>noop</button>

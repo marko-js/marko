@@ -1,0 +1,6 @@
+<if=input.show>
+  <card/r label=input.label/>
+  <let/l=r/>
+  <p>${l.fn()}</p>
+  <button onClick() { l = { fn: () => "set" } }>set</button>
+</if>

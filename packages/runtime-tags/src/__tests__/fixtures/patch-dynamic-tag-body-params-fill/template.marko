@@ -1,0 +1,7 @@
+<define/Card|{ label, content }|>
+  <let/open=true/>
+  <button.toggle onClick() { open = !open }>t</button>
+  <p>${label}<if=open><${content}/></if></p>
+</define>
+<define/Label><em>${input.label}</em></define>
+<${input.card ? Card : "span"} label=input.tag content=Label/>

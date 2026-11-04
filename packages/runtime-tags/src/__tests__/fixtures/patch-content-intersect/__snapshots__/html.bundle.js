@@ -1,0 +1,35 @@
+// tags/box/index.marko
+_shells({ b: "b;D%;<div class=box><!></div>" });
+var box_default = _template("b", (input) => {
+	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 0);
+	const $scope0_id = _scope_id();
+	_html("<div class=box>");
+	_dynamic_tag($scope0_id, "a", input.content, {}, 2, 0, 0, $wg__input_content, $scope0_reason, 0);
+	_html("</div>");
+	_scope($scope0_id, {});
+});
+
+// template.marko
+_shells({ a: "a !a4;D%b ;<main><!><button>+</button></main>" });
+var template_default = _template("a", (input) => {
+	const $scope0_reason = _scope_reason();
+	_write_guard($scope0_reason, 0);
+	const $fg__input_a = _filled_guard($scope0_reason, 1), $fg__input_b = _filled_guard($scope0_reason, 2), $wi__input_a = _write_if($scope0_reason, 1), $wi__input_b = _write_if($scope0_reason, 2);
+	const $scope0_id = _scope_id();
+	const $input_a__closures = /* @__PURE__ */ new Set();
+	const $input_b__closures = /* @__PURE__ */ new Set();
+	let open = false;
+	_html("<main>");
+	_if(() => {}, $scope0_id, "a", 1, 1, 0, 0, 1);
+	_html(`<button>+</button>${_el_mark($scope0_id, "b")}</main>`);
+	_script($scope0_id, "a4");
+	$fg__input_a && _patch_subscribers($scope0_id, "a5", "e");
+	$fg__input_b && _patch_subscribers($scope0_id, "a6", "f");
+	_scope($scope0_id, {
+		e: input.a,
+		f: input.b,
+		g: open,
+		h: $wi__input_a && $input_a__closures,
+		i: $wi__input_b && $input_b__closures
+	}) || ($fg__input_a && _patch_write($scope0_id, "xe", input.a, !_server_guard($scope0_reason, 1)), $fg__input_b && _patch_write($scope0_id, "xf", input.b, !_server_guard($scope0_reason, 2)));
+}, 1);

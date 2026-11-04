@@ -1,0 +1,8 @@
+<let/out=""/>
+<if=input.x>
+  <const/v=input.a/>
+  <if=input.y>
+    <button.read onClick() { out = v }>${v}</button>
+  </if>
+</if>
+<output>${out}</output>
