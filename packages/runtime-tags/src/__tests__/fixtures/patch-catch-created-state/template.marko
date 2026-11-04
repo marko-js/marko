@@ -1,0 +1,12 @@
+static function boom(error: unknown): never {
+  throw error;
+}
+<main>
+  <try>
+    <p>${input.error ? boom(input.error) : "ok"}</p>
+    <@catch|err|>
+      <let/shown=(err as Error).message/>
+      <button onClick() { shown += "!" }>${shown}</button>
+    </@catch>
+  </try>
+</main>

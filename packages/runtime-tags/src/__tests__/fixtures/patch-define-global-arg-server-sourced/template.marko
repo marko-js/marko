@@ -1,0 +1,11 @@
+<let/open=false/>
+<define/Label|{ text }|>
+  <p>${text}</p>
+  <if=open><span>${text}</span></if>
+  <script>
+    document.getElementById("log")!.textContent = text;
+  </script>
+</define>
+<pre id="log"/>
+<Label text=$global.text/>
+<button onClick() { open = !open }>toggle</button>
