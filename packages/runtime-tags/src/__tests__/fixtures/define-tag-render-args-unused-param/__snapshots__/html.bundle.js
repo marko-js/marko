@@ -7,7 +7,7 @@ var template_default = _template("a", (input) => {
 	const MyTag = { content: _content("a0", (a, b, c) => {
 		const $scope2_id = _scope_id();
 		_scope_reason();
-		_html(`<div>${_text_resume($scope2_id, "a", b, 0)}|${_text_resume($scope2_id, "b", c, 2)}</div>`);
+		_html(`<div>${_text_mark($scope2_id, "a", b, 0)}|${_text_mark($scope2_id, "b", c, 2)}</div>`);
 		_scope($scope2_id, {});
 	}, $scope0_id) };
 	const Wrap = { content: _content("a1", (a, opts) => {
@@ -23,10 +23,10 @@ var template_default = _template("a", (input) => {
 	Wrap.content(0, { content: _content("a3", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
-		_html(_text_resume($scope1_id, "a", x));
+		_html(_text_mark($scope1_id, "a", x));
 		_subscribe($x__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a2");
 	}, $scope0_id) });
-	_html(`<button>${_text_resume($scope0_id, "d", x)}</button>${_el_resume($scope0_id, "c")}`);
+	_html(`<button>${_text_mark($scope0_id, "d", x)}</button>${_el_mark($scope0_id, "c")}`);
 	_script($scope0_id, "a4");
 	_scope($scope0_id, {
 		e: x,

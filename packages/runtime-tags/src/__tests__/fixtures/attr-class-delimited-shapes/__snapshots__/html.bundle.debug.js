@@ -7,7 +7,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const moreStyles = ["display:block"];
 	const obj = { o: true };
 	const k = "computed";
-	_html(`<button>inc</button>${_el_resume($scope0_id, "#button/0")}<div${_attr_class([
+	_html(`<button>inc</button>${_el_mark($scope0_id, "#button/0")}<div${_attr_class([
 		"a",
 		["b", d],
 		...more,
@@ -17,11 +17,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			...obj,
 			"q": d
 		}
-	])}></div>${_el_resume($scope0_id, "#div/1")}<div${_attr_style([
+	])}></div>${_el_mark($scope0_id, "#div/1")}<div${_attr_style([
 		"color:red",
 		["margin:0", d && "padding:0"],
 		...moreStyles
-	])}></div>${_el_resume($scope0_id, "#div/2")}`);
+	])}></div>${_el_mark($scope0_id, "#div/2")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		d,

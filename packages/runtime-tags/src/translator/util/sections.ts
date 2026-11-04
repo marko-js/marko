@@ -145,7 +145,7 @@ export interface Section {
   branchExpr: t.NodeExtra | undefined;
   /** For a `<define>` body or a template rendering itself, the known tags whose
    * direct calls render it (each in its child scope binding's section). */
-  calls: Opt<KnownTagExtra>;
+  renderedBy: Opt<KnownTagExtra>;
   /** The known tags rendering in it, in analyze order. */
   knownTags: KnownTagExtra[] | undefined;
   /** The content's rendering tag (its extra), and each child binding that
@@ -253,7 +253,7 @@ export function ensureBodySection(
       returnValueExpr: undefined,
       content: getContentInfo(path),
       branchExpr: undefined,
-      calls: undefined,
+      renderedBy: undefined,
       knownTags: undefined,
       derives: undefined,
       dropped: !!extra.dropped,
@@ -428,13 +428,13 @@ export function getContentInfo(
         }
       }
 
-      // A lone node's content is that of the section it inlines, or else its
-      // one type at both edges.
-      const inlined =
+      // A lone node's content is that of the known child section it renders,
+      // or else its one type at both edges.
+      const knownChild =
         end.type === "MarkoTag" &&
-        getInlinedSection(end as t.NodePath<t.MarkoTag>);
-      return inlined
-        ? inlined.content
+        getKnownChildSection(end as t.NodePath<t.MarkoTag>);
+      return knownChild
+        ? knownChild.content
         : {
             startType: endType,
             endType,
@@ -464,7 +464,7 @@ export function getNodeContentType(
       return null;
     case "MarkoTag": {
       const tag = path as t.NodePath<t.MarkoTag>;
-      const tagSection = getInlinedSection(tag);
+      const tagSection = getKnownChildSection(tag);
       if (!tagSection) return getTagContentType(tag);
       return tagSection.content ? tagSection.content[edge] : null;
     }
@@ -476,11 +476,12 @@ export function getNodeContentType(
 // A section its callers render in place, so text beside its edges is theirs:
 // a template, or a body its direct calls render.
 export function isKnownChild(section: Section) {
-  return !section.parent || !!section.calls;
+  return !section.parent || !!section.renderedBy;
 }
 
-// The section `structure.child` inlines; a load tag renders behind a marker.
-function getInlinedSection(tag: t.NodePath<t.MarkoTag>) {
+// The known child section `structure.child` renders in place; a load tag
+// renders behind a marker.
+function getKnownChildSection(tag: t.NodePath<t.MarkoTag>) {
   return (
     tag.node.extra?.defineBodySection ||
     (!isCoreTag(tag) &&

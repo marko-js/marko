@@ -2,7 +2,7 @@
 var child_default = _template("__tests__/child.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_value = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html(`<span>${_text_resume($scope0_id, "#text/0", input.value, $wg__input_value)}</span>`);
+	_html(`<span>${_text_mark($scope0_id, "#text/0", input.value, $wg__input_value)}</span>`);
 	_script($scope0_id, "__tests__/child.marko_0_input_value#3", $wg__input_value);
 	_scope($scope0_id, { input_value: input.value }, "__tests__/child.marko", 0, { input_value: ["input.value"] });
 });
@@ -38,7 +38,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, void 0, (err) => {
 			const $scope4_reason = _scope_reason(), $wg__err_message2 = _write_guard($scope4_reason, 0);
 			const $scope4_id = _scope_id();
-			_html(`caught ${_text_resume($scope4_id, "#text/0", err.message, $wg__err_message2 * 2)}`);
+			_html(`caught ${_text_mark($scope4_id, "#text/0", err.message, $wg__err_message2 * 2)}`);
 			_write_if($scope4_reason, 0) && _scope($scope4_id, {}, "__tests__/template.marko", "12:6");
 		}, 0, "__tests__/template.marko_4*content");
 		_await($scope1_id, "#text/1", rejectAfter(new Error("outer"), 2), (v) => {
@@ -49,7 +49,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope2_reason = _scope_reason(), $wg__err_message = _write_guard($scope2_reason, 0);
 		const $scope2_id = _scope_id();
 		$Child_withLoadAssets({ value: "catch" });
-		_html(` caught ${_text_resume($scope2_id, "#text/2", err.message, $wg__err_message * 2)}`);
+		_html(` caught ${_text_mark($scope2_id, "#text/2", err.message, $wg__err_message * 2)}`);
 		_write_if($scope2_reason, 0) && _scope($scope2_id, {}, "__tests__/template.marko", "15:4");
 	}, 0, "__tests__/template.marko_2*content");
 }, 1);

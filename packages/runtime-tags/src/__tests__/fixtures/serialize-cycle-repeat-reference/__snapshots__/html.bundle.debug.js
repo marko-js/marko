@@ -15,7 +15,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let graph = buildGraph();
 	let result = "pending";
-	_html(`<button id=go>go</button>${_el_resume($scope0_id, "#button/0")}<div id=out>${_text_resume($scope0_id, "#text/1", result)}</div>`);
+	_html(`<button id=go>go</button>${_el_mark($scope0_id, "#button/0")}<div id=out>${_text_mark($scope0_id, "#text/1", result)}</div>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		graph_byId: graph?.byId,

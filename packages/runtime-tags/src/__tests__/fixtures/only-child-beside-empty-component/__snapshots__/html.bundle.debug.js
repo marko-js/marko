@@ -35,10 +35,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	Nothing.content({ v: open });
 	_for_of(open ? [1, 2] : [1], (item) => {
 		const $scope3_id = _scope_id();
-		_html(`<li>${_text_resume($scope3_id, "#text/0", item)}</li>`);
+		_html(`<li>${_text_mark($scope3_id, "#text/0", item)}</li>`);
 		_scope($scope3_id, {}, "__tests__/template.marko", "10:4");
 	}, 0, $scope0_id, "#ul/3", 1, 1, 1, "</ul>", 1);
-	_html(`<button>toggle</button>${_el_resume($scope0_id, "#button/5")}`);
+	_html(`<button>toggle</button>${_el_mark($scope0_id, "#button/5")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		open,

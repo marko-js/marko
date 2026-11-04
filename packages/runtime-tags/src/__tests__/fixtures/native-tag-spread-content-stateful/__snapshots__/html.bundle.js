@@ -4,7 +4,7 @@ var my_box_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	_html("<div");
 	_attrs_content(input, "a", $scope0_id, "div");
-	_html(`</div>${_el_resume($scope0_id, "a")}`);
+	_html(`</div>${_el_mark($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
 	_scope($scope0_id, {});
 });
@@ -19,7 +19,7 @@ var template_default = _template("a", (input) => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
 			let count = 0;
-			_html(`<button type=button class=inc>increment</button>${_el_resume($scope1_id, "a")}<span class=count>${_text_resume($scope1_id, "b", count)}</span>`);
+			_html(`<button type=button class=inc>increment</button>${_el_mark($scope1_id, "a")}<span class=count>${_text_mark($scope1_id, "b", count)}</span>`);
 			_script($scope1_id, "a0");
 			_scope($scope1_id, { c: count });
 		}, $scope0_id)

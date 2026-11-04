@@ -15,7 +15,7 @@ var template_default = _template("a", (input) => {
 					label: input.label
 				});
 				$wi__input_depth__OR__input_label && _var($scope2_id, "b", $childScope, "a0");
-				_html(`<span>${_text_resume($scope2_id, "c", child, $wg__input_label)}</span>`);
+				_html(`<span>${_text_mark($scope2_id, "c", child, $wg__input_label)}</span>`);
 				$wi__input_depth__OR__input_label && _scope($scope2_id, {
 					_: _scope_with_id($scope1_id),
 					a: _existing_scope($childScope)
@@ -38,7 +38,7 @@ var template_default = _template("a", (input) => {
 		depth: 1,
 		label
 	});
-	_html(`<button>${_text_resume($scope0_id, "d", label)}</button>${_el_resume($scope0_id, "c")}`);
+	_html(`<button>${_text_mark($scope0_id, "d", label)}</button>${_el_mark($scope0_id, "c")}`);
 	_script($scope0_id, "a2");
 	_scope($scope0_id, {
 		e: label,

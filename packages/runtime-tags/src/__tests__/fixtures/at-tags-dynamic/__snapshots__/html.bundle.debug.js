@@ -6,7 +6,7 @@ var hello_default = _template("__tests__/tags/hello/index.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_html(`<div class=item${_attrs_partial(attrs, { class: 1 }, "#div/0", $scope1_id, "div")}>`);
 		_dynamic_tag($scope1_id, "#text/1", content, {}, 0, 0, $wg__input_list_item);
-		_html(`</div>${_el_resume($scope1_id, "#div/0")}`);
+		_html(`</div>${_el_mark($scope1_id, "#div/0")}`);
 		_script($scope1_id, "__tests__/tags/hello/index.marko_1_attrs#5");
 		_scope($scope1_id, {}, "__tests__/tags/hello/index.marko", "1:1", { "EventAttributes:#div/0": ["...attrs", "2:15"] });
 	}, 0, $scope0_id, "#text/0", $wg__input_list_item, $wg__input_list_item, 0, 0, 1);
@@ -14,12 +14,12 @@ var hello_default = _template("__tests__/tags/hello/index.marko", (input) => {
 		const $scope2_id = _scope_id();
 		_html("<div class=col");
 		_attrs_partial_content(attrs, { class: 1 }, "#div/0", $scope2_id, "div");
-		_html(`</div>${_el_resume($scope2_id, "#div/0")}`);
+		_html(`</div>${_el_mark($scope2_id, "#div/0")}`);
 		_for_of(row, ({ content, ...attrs }) => {
 			const $scope3_id = _scope_id();
 			_html(`<div class=row${_attrs_partial(attrs, { class: 1 }, "#div/0", $scope3_id, "div")}>`);
 			_dynamic_tag($scope3_id, "#text/1", content, {}, 0, 0, $wg__input_col);
-			_html(`</div>${_el_resume($scope3_id, "#div/0")}`);
+			_html(`</div>${_el_mark($scope3_id, "#div/0")}`);
 			_script($scope3_id, "__tests__/tags/hello/index.marko_3_attrs#5");
 			_scope($scope3_id, {}, "__tests__/tags/hello/index.marko", "7:3", { "EventAttributes:#div/0": ["...attrs", "8:16"] });
 		}, 0, $scope2_id, "#text/1", $wg__input_col, $wg__input_col, 0, 0, 1);
@@ -68,7 +68,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				content: _content("__tests__/template.marko_3*content", () => {
 					const $scope3_reason = _scope_reason(), $wg__row = _write_guard($scope3_reason, 0);
 					const $scope3_id = _scope_id();
-					_html(_text_resume($scope3_id, "#text/0", row, $wg__row));
+					_html(_text_mark($scope3_id, "#text/0", row, $wg__row));
 					_write_if($scope3_reason, 0) && _scope($scope3_id, {}, "__tests__/template.marko", "16:18");
 				}, $scope0_id)
 			});

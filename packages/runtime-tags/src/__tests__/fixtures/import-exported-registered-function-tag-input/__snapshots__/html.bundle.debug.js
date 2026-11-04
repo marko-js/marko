@@ -12,7 +12,7 @@ var press_default = _template("__tests__/tags/press.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let label = "quiet";
-	_html(`<button>press</button>${_el_resume($scope0_id, "#button/0")}<div>${_text_resume($scope0_id, "#text/1", label)}</div>`);
+	_html(`<button>press</button>${_el_mark($scope0_id, "#button/0")}<div>${_text_mark($scope0_id, "#text/1", label)}</div>`);
 	_script($scope0_id, "__tests__/tags/press.marko_0");
 	_scope($scope0_id, {
 		input,

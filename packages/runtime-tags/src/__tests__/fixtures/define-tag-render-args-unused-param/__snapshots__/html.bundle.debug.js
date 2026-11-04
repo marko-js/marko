@@ -7,7 +7,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const MyTag = { content: _content("__tests__/template.marko_2*content", (a, b, c) => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason();
-		_html(`<div>${_text_resume($scope2_id, "#text/0", b, 0)}|${_text_resume($scope2_id, "#text/1", c, 2)}</div>`);
+		_html(`<div>${_text_mark($scope2_id, "#text/0", b, 0)}|${_text_mark($scope2_id, "#text/1", c, 2)}</div>`);
 		_scope($scope2_id, {}, "__tests__/template.marko", "2:2");
 	}, $scope0_id) };
 	const Wrap = { content: _content("__tests__/template.marko_3*content", (a, opts) => {
@@ -23,10 +23,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	Wrap.content(0, { content: _content("__tests__/template.marko_1*content", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
-		_html(_text_resume($scope1_id, "#text/0", x));
+		_html(_text_mark($scope1_id, "#text/0", x));
 		_subscribe($x__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "10:2"), "__tests__/template.marko_1_x#0:4/subscribe");
 	}, $scope0_id) });
-	_html(`<button>${_text_resume($scope0_id, "#text/3", x)}</button>${_el_resume($scope0_id, "#button/2")}`);
+	_html(`<button>${_text_mark($scope0_id, "#text/3", x)}</button>${_el_mark($scope0_id, "#button/2")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		x,

@@ -11,7 +11,7 @@ var make_default = _template("b", (input) => {
 var reader_default = _template("d", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<p></p>${_el_resume($scope0_id, "a")}`);
+	_html(`<p></p>${_el_mark($scope0_id, "a")}`);
 	_script($scope0_id, "d0");
 	_scope($scope0_id, { c: input });
 });
@@ -36,7 +36,7 @@ var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let v = "a";
-	_html(`<button></button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button></button>${_el_mark($scope0_id, "a")}`);
 	_set_scope_reason(2);
 	const $childScope = _peek_scope_id();
 	pair_default({ v });

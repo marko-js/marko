@@ -8,7 +8,7 @@ var child_default = _template("b", (input) => {
 		_dynamic_tag($scope1_id, "a", it.content, {}, 0, 0, $wg__input_item);
 		_write_if($scope0_reason, 1) && _scope($scope1_id, {});
 	}, 0, $scope0_id, "a", $wg__input_item, $wg__input_item);
-	_html(`<p>${_text_resume($scope0_id, "b", Object.keys(rest).join(), $wg__rest)}</p>`);
+	_html(`<p>${_text_mark($scope0_id, "b", Object.keys(rest).join(), $wg__rest)}</p>`);
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
@@ -17,7 +17,7 @@ var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let mode = 0;
-	_html(`<button id=toggle>toggle</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button id=toggle>toggle</button>${_el_mark($scope0_id, "a")}`);
 	_set_scope_reason(42);
 	let $item;
 	let $other;

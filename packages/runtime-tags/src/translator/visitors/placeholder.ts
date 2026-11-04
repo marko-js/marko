@@ -149,7 +149,7 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
         // `<!>` between non-empty text and the mergeable text before it.
         const guard = getWriteGuard(section, markerReason, true);
         write`${callRuntime(
-          node.escape ? "_text_resume" : "_html_resume",
+          node.escape ? "_text_mark" : "_html_mark",
           getScopeIdIdentifier(section),
           getScopeAccessorLiteral(nodeBinding!),
           value,

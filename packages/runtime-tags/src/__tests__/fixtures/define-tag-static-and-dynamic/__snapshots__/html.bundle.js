@@ -3,14 +3,14 @@ var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let useBox = false;
-	_html(`<button id=toggle>toggle</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button id=toggle>toggle</button>${_el_mark($scope0_id, "a")}`);
 	const Box = { content: _content_resume("a0", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
 		let count = 0;
-		_html(`<button class=box>${_text_resume($scope1_id, "b", count)} `);
+		_html(`<button class=box>${_text_mark($scope1_id, "b", count)} `);
 		_dynamic_tag($scope1_id, "c", input.content, {}, 0, 0, _write_guard($scope1_reason, 0));
-		_html(`</button>${_el_resume($scope1_id, "a")}`);
+		_html(`</button>${_el_mark($scope1_id, "a")}`);
 		_script($scope1_id, "a1");
 		_scope($scope1_id, { g: count });
 	}, $scope0_id) };

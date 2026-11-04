@@ -14,7 +14,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html(`<dt>${_escape(row.id)}</dt><dd>${_escape(row.id)}</dd>`);
 		_scope($scope1_id, {}, "__tests__/template.marko", "4:4");
 	}, "id", $scope0_id, "#dl/0", 1, 1, 1, "</dl>");
-	_html(`<button class=reverse>reverse</button>${_el_resume($scope0_id, "#button/1")}<button class=swap>swap middle</button>${_el_resume($scope0_id, "#button/2")}<button class=mixed>add and move</button>${_el_resume($scope0_id, "#button/3")}`);
+	_html(`<button class=reverse>reverse</button>${_el_mark($scope0_id, "#button/1")}<button class=swap>swap middle</button>${_el_mark($scope0_id, "#button/2")}<button class=mixed>add and move</button>${_el_mark($scope0_id, "#button/3")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		rows,

@@ -7,7 +7,7 @@ import {
   getDeepestPropertyAlias,
   isOwnBinding,
   type ParamBinding,
-  propsUtil,
+  propertiesUtil,
   type ReferencedBindings,
 } from "./bindings";
 import { getCallSiteSources } from "./known-tag";
@@ -21,7 +21,7 @@ import {
 } from "./optional";
 import {
   isReferencedExtra,
-  getCanonicalExtra,
+  getCanonicalExpr,
   getReferencedBindings,
 } from "./references";
 import {
@@ -122,9 +122,9 @@ export function isStateReason(reason: undefined | Reason): reason is Sources {
 }
 
 export function getSourcesForExpr(expr: t.NodeExtra) {
-  const root = getCanonicalExtra(expr);
+  const root = getCanonicalExpr(expr);
   return isReferencedExtra(root)
-    ? getSourcesForRef(getReferencedBindings(root))
+    ? getSourcesForReferencedBindings(getReferencedBindings(root))
     : undefined;
 }
 
@@ -137,8 +137,8 @@ export function getSourcesForExprs(exprs: Opt<t.NodeExtra> | boolean) {
   }
 }
 
-export function getSourcesForRef(ref: ReferencedBindings) {
-  return reduce(ref, mergeBindingSources);
+export function getSourcesForReferencedBindings(bindings: ReferencedBindings) {
+  return reduce(bindings, mergeBindingSources);
 }
 
 // What reruns the call site expressions passing content to the bindings that
@@ -251,7 +251,7 @@ export function mapParamBindingToExpr(
     let result: Opt<t.NodeExtra> = curExpr.value;
     if (curExpr.known) {
       for (const key in curExpr.known) {
-        if (!propsUtil.has(binding.excludeProperties, key)) {
+        if (!propertiesUtil.has(binding.excludeProperties, key)) {
           result = concat(result, curExpr.known[key].value);
         }
       }
@@ -263,7 +263,7 @@ export function mapParamBindingToExpr(
 }
 
 // The call site's known expressions at `binding`, passing through property-less
-// links; past the props it lists, only the value expression holding it.
+// links; past the properties it lists, only the value expression holding it.
 export function getKnownExprsAt(
   exprs: KnownExprs,
   binding: Binding,

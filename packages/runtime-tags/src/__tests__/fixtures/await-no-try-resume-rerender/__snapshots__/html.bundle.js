@@ -4,10 +4,10 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	const $n__closures = /* @__PURE__ */ new Set();
 	let n = 0;
-	_html(`<button id=a>A</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button id=a>A</button>${_el_mark($scope0_id, "a")}`);
 	_await($scope0_id, "b", resolveAfter(n, 0), (v) => {
 		const $scope1_id = _scope_id();
-		_html(`<div id=out>done ${_text_resume($scope1_id, "a", n, 2)}</div>`);
+		_html(`<div id=out>done ${_text_mark($scope1_id, "a", n, 2)}</div>`);
 		_subscribe($n__closures, _scope($scope1_id, {}), "a0");
 	});
 	_script($scope0_id, "a1");

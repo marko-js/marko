@@ -75,7 +75,7 @@ type MemoPath = Opt<string> | true;
 interface PathKeys<K> {
   value?: [K, MemoPath];
   all?: [K, MemoPath];
-  props?: Map<string, PathKeys<K>>;
+  properties?: Map<string, PathKeys<K>>;
 }
 export function createPassPathMemo<K extends object, R>(
   compute: (key: K, path: MemoPath) => R,
@@ -98,7 +98,7 @@ export function createPassPathMemo<K extends object, R>(
 
 // The keys under `property`, made on first use.
 function ensurePropKeys<K>(pathKeys: PathKeys<K>, property: string) {
-  let next = pathKeys.props?.get(property);
-  if (!next) (pathKeys.props ??= new Map()).set(property, (next = {}));
+  let next = pathKeys.properties?.get(property);
+  if (!next) (pathKeys.properties ??= new Map()).set(property, (next = {}));
   return next;
 }

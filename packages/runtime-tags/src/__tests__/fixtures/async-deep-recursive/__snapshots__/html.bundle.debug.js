@@ -24,7 +24,7 @@ const $content = (input) => {
 				const $scope4_id = _scope_id();
 				_html("LOADING...");
 			}, void 0, "__tests__/tags/recurse.marko_4*content");
-			_html(`</div>${_el_resume($scope1_id, "#div/0", $wg__input_level)}`);
+			_html(`</div>${_el_mark($scope1_id, "#div/0", $wg__input_level)}`);
 			$wi__input_level && _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/recurse.marko", "3:1");
 			return 0;
 		}

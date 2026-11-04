@@ -10,6 +10,6 @@ var template_default = _template("a", (input) => {
 	};
 	input.a;
 	(() => track(2))();
-	_html(`<div>${_text_resume($scope0_id, "a", input.a?.b, $wg__input_a_b)}</div>`);
+	_html(`<div>${_text_mark($scope0_id, "a", input.a?.b, $wg__input_a_b)}</div>`);
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {});
 }, 1);

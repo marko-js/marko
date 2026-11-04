@@ -4,7 +4,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let outer = true;
 	let inner = false;
-	_html(`<button id=o>outer</button>${_el_resume($scope0_id, "a")}<button id=i>inner</button>${_el_resume($scope0_id, "b")}`);
+	_html(`<button id=o>outer</button>${_el_mark($scope0_id, "a")}<button id=i>inner</button>${_el_mark($scope0_id, "b")}`);
 	_show_start(outer);
 	_html("before ");
 	_show_start(inner, 0);

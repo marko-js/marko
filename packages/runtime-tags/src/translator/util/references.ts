@@ -14,7 +14,7 @@ import {
   isRest,
   isIndexProperty,
   isOwnBinding,
-  propsUtil,
+  propertiesUtil,
   getNearestDeclared,
 } from "./bindings";
 import { forEachIdentifierPath } from "./for-each-identifier";
@@ -60,7 +60,7 @@ export interface Read {
 
 export interface ResolvedRead {
   binding: Binding;
-  props: Opt<string>;
+  properties: Opt<string>;
   inOwnBody: boolean;
   getter: Getter | undefined;
   /** Set for same-section local reads: the function root that owns the read. */
@@ -144,12 +144,12 @@ declare module "@marko/compiler/dist/types" {
     referencedLocalBindingsInFunction?: SortedOpt<Binding>;
     [kConstantBindingsInFunction]?: ReferencedBindings;
     name?: string;
-    registerId?: string;
+    registryId?: string;
     /** When client code reads the function itself, which registers it. */
     reason?: Reason;
     // Reserved for a function reachable through an export: importing templates
     // resolve it to register the function without this template registering it.
-    exportRegisterId?: string;
+    exportRegistryId?: string;
   }
 
   export interface ArrowFunctionExpressionExtra extends FunctionExtra {}
@@ -442,7 +442,7 @@ function trackReferencesForBinding(babelBinding: t.Binding, binding: Binding) {
       trackReference(ref, binding);
     } else {
       // Same-section local reads stay lexical unless their function root ends
-      // up registered (hoisted), so the read records that root for translate.
+      // up registered, so the read records that root for translate.
       const fnRoot = getFnRoot(ref);
       if (fnRoot) {
         const fnExtra = (fnRoot.node.extra ??= {}) as ReferencedFunctionExtra;
@@ -686,7 +686,7 @@ function createBindingsAndTrackReferences(
           }
 
           if (hasRest) {
-            excludeProperties = propsUtil.add(excludeProperties, key);
+            excludeProperties = propertiesUtil.add(excludeProperties, key);
           }
 
           if (t.isLVal(prop.value)) {
@@ -856,7 +856,7 @@ function trackReference(
           prop = `${+prop + reference.restOffset}`;
           reference = reference.aliasOf;
         }
-      } else if (!propsUtil.has(reference.excludeProperties, prop)) {
+      } else if (!propertiesUtil.has(reference.excludeProperties, prop)) {
         reference = reference.aliasOf;
       }
     }
@@ -1094,11 +1094,11 @@ export function addRead(
 // A dropped expression is never emitted by either output (its bindings can
 // prune); an untracked one is emitted but read some other way.
 export function dropNodes(node: t.Node | t.Node[]) {
-  forEachNodeExtra(node, dropExtra);
+  forEachNodeExtra(node, dropExpr);
 }
 
 function untrackNodes(node: t.Node | t.Node[]) {
-  forEachNodeExtra(node, untrackExtra);
+  forEachNodeExtra(node, untrackExpr);
 }
 
 function forEachNodeExtra(
@@ -1114,14 +1114,14 @@ function forEachNodeExtra(
   }
 }
 
-export function dropExtra(exprExtra: ReferencedExtra) {
+export function dropExpr(exprExtra: ReferencedExtra) {
   exprExtra.dropped = true;
-  untrackExtra(exprExtra);
+  untrackExpr(exprExtra);
 }
 
 // A merged expression is never dropped and a dropped one never merged:
 // both would strand reads the target already took.
-function untrackExtra(exprExtra: ReferencedExtra) {
+function untrackExpr(exprExtra: ReferencedExtra) {
   /* v8 ignore next 3 -- a merged reference is never dropped */
   if (exprExtra.merged) {
     throw new Error("Cannot drop a merged reference");
@@ -1195,7 +1195,7 @@ function addReadToExpression(
   // Reads recorded after the owning expression merged into another node's extra
   // must land on the merge target, else its references split and the read is lost.
   const rootExtra = (exprRoot.node.extra ??= { section }) as ReferencedExtra;
-  const exprExtra = getCanonicalExtra(rootExtra);
+  const exprExtra = getCanonicalExpr(rootExtra);
   // A read tracked after its expression was dropped (`$global`, a hoisted
   // reference) must not keep the binding alive.
   if (exprExtra.dropped) return;
@@ -1287,18 +1287,18 @@ export function getAllTagReferenceNodes(
 
 export function createResolvedRead(
   binding: Binding,
-  props: Opt<string>,
+  properties: Opt<string>,
   inOwnBody: boolean = false,
 ): ResolvedRead {
-  return { binding, props, inOwnBody, getter: undefined };
+  return { binding, properties, inOwnBody, getter: undefined };
 }
 
 export function createResolvedGetterRead(
   binding: Binding,
-  props: Opt<string>,
+  properties: Opt<string>,
   getter: Getter,
 ): ResolvedRead {
-  return { binding, props, inOwnBody: false, getter };
+  return { binding, properties, inOwnBody: false, getter };
 }
 
 export interface ReferencedExtra extends t.NodeExtra {
@@ -1325,7 +1325,7 @@ export function hasResumableAssignment(binding: Binding) {
 }
 
 function isResumableAssignment({ exprRoot, fnRoot }: AssignedBindingExtra) {
-  return !!getCanonicalExtra(exprRoot).isEffect || !!fnRoot?.reason;
+  return !!getCanonicalExpr(exprRoot).isEffect || !!fnRoot?.reason;
 }
 
 export function isAssignedBindingExtra(
@@ -1337,7 +1337,7 @@ export function isAssignedBindingExtra(
 export interface RegisteredFnExtra extends ReferencedExtra, t.FunctionExtra {
   exprRoot: t.NodeExtra;
   name: string;
-  registerId: string;
+  registryId: string;
   reason: Reason;
 }
 
@@ -1346,14 +1346,14 @@ export function isRegisteredFnExtra(
 ): extra is RegisteredFnExtra {
   return (
     isReferencedExtra(extra) &&
-    (extra as RegisteredFnExtra).registerId !== undefined
+    (extra as RegisteredFnExtra).registryId !== undefined
   );
 }
 
 // An expression's reads resolve on the extra it merges into, so these read
 // that one whichever extra they are given.
 export function getReferencedBindings(extra: t.NodeExtra | undefined) {
-  return extra && getCanonicalExtra(extra)[kReferencedBindings];
+  return extra && getCanonicalExpr(extra)[kReferencedBindings];
 }
 
 // The bindings a binding derives from.
@@ -1374,13 +1374,13 @@ export function getValueReferences(
 
 function addValueReferences(refs: ReferencedBindings, expr: t.NodeExtra) {
   // An attribute tag's expression is read through the group it merged into.
-  return isReferencedExtra(getCanonicalExtra(expr)) && !expr.initialValue
+  return isReferencedExtra(getCanonicalExpr(expr)) && !expr.initialValue
     ? bindingUtil.union(refs, getReferencedBindings(expr))
     : refs;
 }
 
 export function getLazyBindings(extra: t.NodeExtra | undefined) {
-  return extra && getCanonicalExtra(extra)[kLazyBindings];
+  return extra && getCanonicalExpr(extra)[kLazyBindings];
 }
 
 // What a function's body reads when invoked, resolved with its expression.
@@ -1412,7 +1412,7 @@ export function setResolvedReads(
   extra[kLazyBindings] = lazyBindings;
 }
 
-export function getCanonicalExtra<T extends t.NodeExtra>(extra: T): T {
+export function getCanonicalExpr<T extends t.NodeExtra>(extra: T): T {
   while (extra.merged) {
     extra = extra.merged as T;
   }
@@ -1420,10 +1420,10 @@ export function getCanonicalExtra<T extends t.NodeExtra>(extra: T): T {
   return extra;
 }
 
-function addNumericPropertiesUntil(props: SortedOpt<string>, len: number) {
-  let result = props;
+function addNumericPropertiesUntil(properties: SortedOpt<string>, len: number) {
+  let result = properties;
   for (let i = len; i--;) {
-    result = propsUtil.add(result, i + "");
+    result = propertiesUtil.add(result, i + "");
   }
   return result;
 }

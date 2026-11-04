@@ -16,12 +16,12 @@ var template_default = _template("a", (input) => {
 	$item = attrTag({ content: _content("a0", (y) => {
 		const $scope1_reason = _scope_reason(), $wg__y = _write_guard($scope1_reason, 0);
 		const $scope1_id = _scope_id();
-		_html(`y: ${_text_resume($scope1_id, "a", y, $wg__y * 2)}`);
+		_html(`y: ${_text_mark($scope1_id, "a", y, $wg__y * 2)}`);
 		_write_if($scope1_reason, 0) && _scope($scope1_id, {});
 	}, $scope0_id) });
 	const $childScope = _peek_scope_id();
 	hello_default({ item: $item });
-	_html(`<button>Toggle</button>${_el_resume($scope0_id, "b")}`);
+	_html(`<button>Toggle</button>${_el_mark($scope0_id, "b")}`);
 	_script($scope0_id, "a1");
 	_scope($scope0_id, {
 		c: x,

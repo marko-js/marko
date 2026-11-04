@@ -36,7 +36,7 @@ export function getSlotAccessor(slot: PlaceSlot) {
       return getAccessorProp().Owner;
     case SlotKind.ReturnChangeHandler:
       return getAccessorProp().TagVariableChange;
-    case SlotKind.Instances:
+    case SlotKind.Scopes:
       return getSectionInstancesAccessor(slot.owner);
   }
 }
@@ -168,6 +168,6 @@ function getSectionInstancesAccessor(section: Section) {
     : getAccessorPrefix().ClosureScopes + section.id;
 }
 
-export function getSectionInstancesAccessorLiteral(section: Section) {
+export function getSectionScopesAccessorLiteral(section: Section) {
   return t.stringLiteral(getSectionInstancesAccessor(section));
 }

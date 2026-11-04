@@ -32,7 +32,7 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		_html("aliased");
 	}, $scope0_id));
-	_html(`<div>${_text_resume($scope0_id, "d", n)}</div>`);
+	_html(`<div>${_text_mark($scope0_id, "d", n)}</div>`);
 	_scope($scope0_id, {
 		g: input.tag,
 		h: n,

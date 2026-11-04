@@ -8,7 +8,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_if(() => {
 		if (count) {
 			const $scope1_id = _scope_id();
-			_html(`<button id=own>${_text_resume($scope1_id, "#text/1", count)}</button>${_el_resume($scope1_id, "#button/0")}`);
+			_html(`<button id=own>${_text_mark($scope1_id, "#text/1", count)}</button>${_el_mark($scope1_id, "#button/0")}`);
 			_script($scope1_id, "__tests__/template.marko_1");
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:4");
 			return 0;
@@ -18,7 +18,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope2_id = _scope_id();
-			_html(`<button id=param>${_text_resume($scope2_id, "#text/1", count)}</button>${_el_resume($scope2_id, "#button/0")}`);
+			_html(`<button id=param>${_text_mark($scope2_id, "#text/1", count)}</button>${_el_mark($scope2_id, "#button/0")}`);
 			_script($scope2_id, "__tests__/template.marko_2");
 			_scope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "9:4");
 			return 0;
@@ -29,6 +29,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html(_escape(x));
 		_scope($scope3_id, {}, "__tests__/template.marko", "13:2");
 	}, 0, $scope0_id, "#text/2");
-	_html(`<span>${_text_resume($scope0_id, "#text/3", typeof inc)}</span>`);
+	_html(`<span>${_text_mark($scope0_id, "#text/3", typeof inc)}</span>`);
 	_scope($scope0_id, { count }, "__tests__/template.marko", 0, { count: "1:6" });
 }, 1);

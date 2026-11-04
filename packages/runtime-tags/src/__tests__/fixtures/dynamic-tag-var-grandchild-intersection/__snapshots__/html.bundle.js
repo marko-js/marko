@@ -9,7 +9,7 @@ var grandchild_default = _template("c", (input) => {
 			n = value;
 		}, "c0", $scope0_id)
 	};
-	_html(`<span>${_text_resume($scope0_id, "a", n)}</span>`);
+	_html(`<span>${_text_mark($scope0_id, "a", n)}</span>`);
 	_scope($scope0_id, {});
 	return $return;
 });
@@ -35,7 +35,7 @@ var template_default = _template("a", (input) => {
 	const $Tag_scope = _peek_scope_id();
 	let v = _dynamic_tag($scope0_id, "a", Tag, {});
 	_var($scope0_id, "b", $Tag_scope, "a0");
-	_html(`<button class=inc>${_text_resume($scope0_id, "d", "0:" + v?.n)}</button>${_el_resume($scope0_id, "c")}`);
+	_html(`<button class=inc>${_text_mark($scope0_id, "d", "0:" + v?.n)}</button>${_el_mark($scope0_id, "c")}`);
 	_script($scope0_id, "a1");
 	_scope($scope0_id, {
 		e: a,

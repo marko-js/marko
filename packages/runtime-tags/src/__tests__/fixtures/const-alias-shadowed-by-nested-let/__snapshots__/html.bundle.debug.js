@@ -17,14 +17,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		let x = 10;
-		_html(`<span>${_text_resume($scope1_id, "#text/0", n)}-${_text_resume($scope1_id, "#text/1", x, 2)}</span><button></button>${_el_resume($scope1_id, "#button/2")}`);
+		_html(`<span>${_text_mark($scope1_id, "#text/0", n)}-${_text_mark($scope1_id, "#text/1", x, 2)}</span><button></button>${_el_mark($scope1_id, "#button/2")}`);
 		_script($scope1_id, "__tests__/template.marko_1");
 		_subscribe($x_n__closures, _scope($scope1_id, {
 			x,
 			_: _scope_with_id($scope0_id)
 		}, "__tests__/template.marko", "3:2", { x: "3:12" }), "__tests__/template.marko_1_x_n#0:3/subscribe");
 	}, $scope0_id) });
-	_html(`<button class=outer></button>${_el_resume($scope0_id, "#button/1")}`);
+	_html(`<button class=outer></button>${_el_mark($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		x_n: x.n,

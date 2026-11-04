@@ -17,7 +17,7 @@ var template_default = _template("b", (input) => {
 	$Child_withLoadAssets({ content: _content("b1", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
-		_html(`<div>${_text_resume($scope1_id, "a", input.value, $wg__input_value)}</div>`);
+		_html(`<div>${_text_mark($scope1_id, "a", input.value, $wg__input_value)}</div>`);
 		$wi__input_value && _subscribe($input_value__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "b0", $wg__input_value);
 		$wg__input_value || $wi__input_value && _resume_branch($scope1_id);
 	}, $scope0_id) });

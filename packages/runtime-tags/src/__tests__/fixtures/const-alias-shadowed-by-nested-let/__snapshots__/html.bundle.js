@@ -17,14 +17,14 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		let x = 10;
-		_html(`<span>${_text_resume($scope1_id, "a", n)}-${_text_resume($scope1_id, "b", x, 2)}</span><button></button>${_el_resume($scope1_id, "c")}`);
+		_html(`<span>${_text_mark($scope1_id, "a", n)}-${_text_mark($scope1_id, "b", x, 2)}</span><button></button>${_el_mark($scope1_id, "c")}`);
 		_script($scope1_id, "a0");
 		_subscribe($x_n__closures, _scope($scope1_id, {
 			d: x,
 			_: _scope_with_id($scope0_id)
 		}), "a1");
 	}, $scope0_id) });
-	_html(`<button class=outer></button>${_el_resume($scope0_id, "b")}`);
+	_html(`<button class=outer></button>${_el_mark($scope0_id, "b")}`);
 	_script($scope0_id, "a3");
 	_scope($scope0_id, {
 		d: x.n,

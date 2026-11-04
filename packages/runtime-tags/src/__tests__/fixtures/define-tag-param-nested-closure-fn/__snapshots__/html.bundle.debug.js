@@ -3,7 +3,7 @@ var counter_default = _template("__tests__/tags/counter.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let n = 0;
-	_html(`<button>${_text_resume($scope0_id, "#text/1", n)}</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button>${_text_mark($scope0_id, "#text/1", n)}</button>${_el_mark($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/tags/counter.marko_0");
 	_scope($scope0_id, { n }, "__tests__/tags/counter.marko", 0, { n: "1:6" });
 });
@@ -23,7 +23,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_if(() => {
 			if (show) {
 				const $scope3_id = _scope_id();
-				_html(`<span>${_text_resume($scope3_id, "#text/0", f(), $wg__input_a)}</span>`);
+				_html(`<span>${_text_mark($scope3_id, "#text/0", f(), $wg__input_a)}</span>`);
 				($wi__input_a || $wi__show) && _subscribe($wi__input_a && $f2__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "3:4"), "__tests__/template.marko_3_f#0:6/subscribe", $wg__input_a);
 				return 0;
 			}
@@ -36,7 +36,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_set_scope_reason($wg__on << 1);
 		const $childScope = _peek_scope_id();
 		E.content({ show: on });
-		_html(`<p>${_text_resume($scope1_id, "#text/1", input.a, $wg__input_a)}</p>`);
+		_html(`<p>${_text_mark($scope1_id, "#text/1", input.a, $wg__input_a)}</p>`);
 		($wi__input_a || $wi__on) && _subscribe($wi__input_a && $input_a__closures, _scope($scope1_id, {
 			_: $wi__input_a && _scope_with_id($scope0_id),
 			"#childScope/0": $wi__on && _existing_scope($childScope)

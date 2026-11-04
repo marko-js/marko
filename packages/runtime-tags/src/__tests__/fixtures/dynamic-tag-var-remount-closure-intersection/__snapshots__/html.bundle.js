@@ -28,14 +28,14 @@ var template_default = _template("a", (input) => {
 	_for_of(items, (item) => {
 		const $scope1_id = _scope_id();
 		let m = 0;
-		_html(`<button${_attr_class("row" + item)}>${_text_resume($scope1_id, "b", "0:" + c)}</button>${_el_resume($scope1_id, "a")}`);
+		_html(`<button${_attr_class("row" + item)}>${_text_mark($scope1_id, "b", "0:" + c)}</button>${_el_mark($scope1_id, "a")}`);
 		_script($scope1_id, "a1");
 		_scope($scope1_id, {
 			e: m,
 			_: _scope_with_id($scope0_id)
 		});
 	}, 0, $scope0_id, "c", 1, 0, 0, 0, 1);
-	_html(`<button class=toggle></button>${_el_resume($scope0_id, "d")}`);
+	_html(`<button class=toggle></button>${_el_mark($scope0_id, "d")}`);
 	_script($scope0_id, "a2");
 	_scope($scope0_id, {
 		e: b,

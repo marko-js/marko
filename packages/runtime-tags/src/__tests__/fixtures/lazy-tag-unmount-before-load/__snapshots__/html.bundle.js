@@ -2,7 +2,7 @@
 var child_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_value = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html(`<span>${_text_resume($scope0_id, "a", input.value, $wg__input_value)}</span>`);
+	_html(`<span>${_text_mark($scope0_id, "a", input.value, $wg__input_value)}</span>`);
 	_script($scope0_id, "a0", $wg__input_value);
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
@@ -13,7 +13,7 @@ var template_default = _template("b", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let show = true;
-	_html(`<button>Toggle</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button>Toggle</button>${_el_mark($scope0_id, "a")}`);
 	_if(() => {
 		{
 			const $scope1_id = _scope_id();

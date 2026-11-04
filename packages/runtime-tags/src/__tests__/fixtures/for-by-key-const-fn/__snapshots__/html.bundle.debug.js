@@ -8,7 +8,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const select = _resume(function() {
 			document.getElementById("log").textContent = item.id;
 		}, "__tests__/template.marko_1/select", $scope1_id);
-		_html(`<button>${_escape(item.id)}</button>${_el_resume($scope1_id, "#button/0")}`);
+		_html(`<button>${_escape(item.id)}</button>${_el_mark($scope1_id, "#button/0")}`);
 		_script($scope1_id, "__tests__/template.marko_1_select#3");
 		_scope($scope1_id, {
 			"#LoopKey": item?.id,

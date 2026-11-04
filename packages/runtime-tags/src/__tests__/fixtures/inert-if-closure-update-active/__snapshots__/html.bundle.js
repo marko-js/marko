@@ -6,12 +6,12 @@ var template_default = _template("a", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_html(_text_resume($scope1_id, "a", value));
+			_html(_text_mark($scope1_id, "a", value));
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
 	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 0));
-	_html(`<button>Update</button>${_el_resume($scope0_id, "b")}`);
+	_html(`<button>Update</button>${_el_mark($scope0_id, "b")}`);
 	_script($scope0_id, "a0");
 	_scope($scope0_id, { f: _write_if($scope0_reason, 0) && value });
 }, 1);

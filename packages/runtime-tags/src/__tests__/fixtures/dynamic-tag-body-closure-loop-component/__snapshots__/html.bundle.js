@@ -4,7 +4,7 @@ var card_default = _template("b", (input) => {
 	_write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let open = false;
-	_html(`<button id=toggle>toggle</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button id=toggle>toggle</button>${_el_mark($scope0_id, "a")}`);
 	_if(() => {}, $scope0_id, "b");
 	_script($scope0_id, "b0");
 	_scope($scope0_id, {
@@ -39,7 +39,7 @@ var heading_default = _template("c", (input) => {
 			_dynamic_tag($scope1_id, "a", input.type, {}, _content_resume("c0", () => {
 				const $scope2_id = _scope_id();
 				_scope_reason();
-				_html(`item ${_text_resume($scope2_id, "a", i, $wg__i * 2)}`);
+				_html(`item ${_text_mark($scope2_id, "a", i, $wg__i * 2)}`);
 				($wi__input_type || $wi__i) && _subscribe($wi__i && $item_content__i__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "c1", $wg__i);
 				$wg__i || ($wi__input_type || $wi__i) && _resume_branch($scope2_id);
 			}, $scope1_id, ($scope) => [{ b: i }]), 0, $wg__input_type);

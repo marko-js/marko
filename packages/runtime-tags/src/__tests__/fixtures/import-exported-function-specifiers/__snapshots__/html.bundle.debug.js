@@ -5,7 +5,7 @@ function shout(message) {
 var handlers_default = _template("__tests__/tags/handlers.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_message = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html(`<div>${_text_resume($scope0_id, "#text/0", input.message, $wg__input_message)}</div>`);
+	_html(`<div>${_text_mark($scope0_id, "#text/0", input.message, $wg__input_message)}</div>`);
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/handlers.marko", 0);
 });
 
@@ -18,7 +18,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let quiet = shout;
 	let message = "Hello";
 	const label = "static";
-	_html(`<button>${_escape(label)}</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button>${_escape(label)}</button>${_el_mark($scope0_id, "#button/0")}`);
 	_dynamic_tag($scope0_id, "#text/2", handlers_default, { message });
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {

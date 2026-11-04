@@ -5,7 +5,7 @@ var template_default = _template("a", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_html(`${_style_html(`--M_a0:${_escape_style_value(input.color)};`)}${_el_resume($scope1_id, "a", $wg__input_color)}<div class=box>Hi</div>`);
+			_html(`${_style_html(`--M_a0:${_escape_style_value(input.color)};`)}${_el_mark($scope1_id, "a", $wg__input_color)}<div class=box>Hi</div>`);
 			_write_if($scope0_reason, 0) && _scope($scope1_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id) });
 			return 0;
 		}

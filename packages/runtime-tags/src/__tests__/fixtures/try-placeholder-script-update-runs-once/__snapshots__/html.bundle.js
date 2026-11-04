@@ -4,13 +4,13 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	const $n__closures = /* @__PURE__ */ new Set();
 	let n = 0;
-	_html(`<button>inc</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button>inc</button>${_el_mark($scope0_id, "a")}`);
 	_try($scope0_id, "b", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		_await($scope1_id, "a", 0, (v) => {
 			const $scope3_id = _scope_id();
-			_html(`value ${_text_resume($scope3_id, "a", v, 2)}`);
+			_html(`value ${_text_mark($scope3_id, "a", v, 2)}`);
 			_scope($scope3_id, {});
 		});
 		_script($scope1_id, "a0", 0);

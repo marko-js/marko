@@ -23,7 +23,7 @@ var ui_select_default = _template("c", (input) => {
 				const $scope2_id = _scope_id();
 				_html(`<span${_attrs(c, "a", $scope2_id, "span")}>`);
 				_dynamic_tag($scope2_id, "b", o.content, {}, 0, 0, $wg__input_option);
-				_html(`</span>${_el_resume($scope2_id, "a")}`);
+				_html(`</span>${_el_mark($scope2_id, "a")}`);
 				_script($scope2_id, "c0");
 				_scope($scope2_id, { _: _write_if($scope1_reason, 0) && _scope_with_id($scope1_id) });
 			}, 0, $scope1_id, "a", $wg__input_option || _write_guard($scope1_reason, 0), $wg__input_option, 0, 0, 1);

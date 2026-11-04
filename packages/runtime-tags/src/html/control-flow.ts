@@ -14,7 +14,7 @@ import { forInBy, forOfBy, forStepBy } from "./for";
 import type { ServerRenderer } from "./template";
 import {
   $chunk,
-  _el_resume,
+  _el_mark,
   _peek_scope_id,
   _resume,
   _scope as writeScope,
@@ -440,7 +440,7 @@ function writeBranchEnd(
         );
     $chunk.writeHTML(mark + endTag);
   } else if (markerGuard !== 0) {
-    $chunk.writeHTML(endTag + _el_resume(scopeId, accessor));
+    $chunk.writeHTML(endTag + _el_mark(scopeId, accessor));
   } else {
     $chunk.writeHTML(endTag);
   }

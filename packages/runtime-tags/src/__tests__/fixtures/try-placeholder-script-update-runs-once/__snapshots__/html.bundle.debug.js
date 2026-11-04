@@ -4,13 +4,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const $n__closures = new Set();
 	let n = 0;
-	_html(`<button>inc</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button>inc</button>${_el_mark($scope0_id, "#button/0")}`);
 	_try($scope0_id, "#text/1", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		_await($scope1_id, "#text/0", n ? resolveAfter(n) : 0, (v) => {
 			const $scope3_id = _scope_id();
-			_html(`value ${_text_resume($scope3_id, "#text/0", v, 2)}`);
+			_html(`value ${_text_mark($scope3_id, "#text/0", v, 2)}`);
 			_scope($scope3_id, {}, "__tests__/template.marko", "10:4");
 		});
 		_script($scope1_id, "__tests__/template.marko_1_n#0:2", 0);
