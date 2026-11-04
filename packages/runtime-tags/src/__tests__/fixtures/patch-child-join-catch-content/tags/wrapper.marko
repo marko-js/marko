@@ -1,0 +1,7 @@
+static function boom(): never {
+  throw new Error("SHOWN_message");
+}
+<try>
+  <p>${input.fail ? boom() : "ok"}</p>
+  <@catch><${input.fallback}/></@catch>
+</try>

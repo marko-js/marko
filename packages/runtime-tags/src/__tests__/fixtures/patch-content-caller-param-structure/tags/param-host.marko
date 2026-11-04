@@ -1,0 +1,12 @@
+<toggle-if open=input.open>
+  <p>if ${input.label}</p>
+</toggle-if>
+<toggle-for open=input.open>
+  <p>for ${input.label}</p>
+</toggle-for>
+<toggle-tag open=input.open>
+  <p>tag ${input.label}</p>
+</toggle-tag>
+<${input.open ? "div" : "section"}>
+  <p>own ${input.label}</p>
+</>
