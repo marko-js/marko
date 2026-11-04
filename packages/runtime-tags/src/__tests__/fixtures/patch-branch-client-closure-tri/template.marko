@@ -1,0 +1,13 @@
+<let/open=false/>
+<main>
+  <if=open>
+    <b>${"x:" + input.title}</b>
+    <if=open>
+      <i>${"y:" + input.title}</i>
+      <if=open>
+        <u>${"z:" + input.title}</u>
+      </if>
+    </if>
+  </if>
+  <button onClick() { open = !open }>+</button>
+</main>

@@ -1,0 +1,6 @@
+<let/n=0/>
+<button.inc onClick() { n++ }>${n}</button>
+<if=input.show>
+  <input.b value=input.value valueChange(next) { console.log(next) }>
+  <input.c type="checkbox" checked=input.flag checkedChange(next) { console.log(next) }>
+</if>

@@ -1,0 +1,6 @@
+<const/greeting=$global.prefix + ":" + input.name/>
+<let/count=0/>
+<button onClick() { count++ }>inc</button>
+<if=count < 2>
+  <span>${greeting} ${count}</span>
+</if>

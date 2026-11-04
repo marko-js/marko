@@ -1,0 +1,11 @@
+<define/Card>
+  <const/x=input.label + "!"/>
+  <try>
+    <await|v|=input.promise><em>${v}</em></await>
+    <@catch|err|>
+      <script>console.log("catch", x)</script>
+      <b>${err.message}</b>
+    </@catch>
+  </try>
+</define>
+<Card/>

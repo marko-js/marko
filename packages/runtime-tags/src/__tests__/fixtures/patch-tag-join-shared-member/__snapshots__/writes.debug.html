@@ -1,0 +1,17 @@
+<button>b</button><!--M_$1 #button/0-->
+<div>abc<!--M_$2 #text/0--></div>
+<div>ad<!--M_$2 #text/1--></div>
+<script>
+  WALKER_RUNTIME("M")("_").patchBuild = "b";
+  M._.r = [_ => [1, {
+      b: "b",
+      "#childScope/1": _(2)
+    }, {
+      input_a: "a",
+      input_b: "b",
+      input_c: "c"
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/patch-tag-join-shared-member/template.marko_0 1"
+  ];
+  M._.w()
+</script>

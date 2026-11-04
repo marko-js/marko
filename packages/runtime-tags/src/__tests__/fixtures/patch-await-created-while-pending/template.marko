@@ -1,0 +1,14 @@
+<let/count=0/>
+<button onClick() { count++ }>${count}</button>
+<try>
+  <section>
+    <for|item| of=input.items by="id">
+      <await=item.promise>
+        <div>${item.msg} done</div>
+      </await>
+    </for>
+  </section>
+  <@placeholder>
+    <em>loading</em>
+  </@placeholder>
+</try>

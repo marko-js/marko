@@ -1,0 +1,9 @@
+static const handlers = {
+  a() {
+    document.body.dataset.ran = "a";
+  },
+  b() {
+    document.body.dataset.ran = "b";
+  },
+};
+<button onClick=handlers[$global.mode as "a" | "b"]>run</button>

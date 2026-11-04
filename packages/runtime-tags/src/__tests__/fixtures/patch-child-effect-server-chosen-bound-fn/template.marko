@@ -1,0 +1,5 @@
+<let/last="none"/>
+<const/fa(v) { last = "a" + v }/>
+<const/fb(v) { last = "b" + v }/>
+<child v=input.x fn=(input.pick ? fa : fb)/>
+<p>${last}</p>

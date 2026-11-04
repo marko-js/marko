@@ -1,0 +1,12 @@
+<const/[, , chars]=[..."ab", (s: string) => s + ":" + input.title]/>
+<const/[, items]=[...[input.title], (s: string) => s + "=" + input.title]/>
+<const/tag=(s: string) => s + "#" + input.title/>
+<let/show=true/>
+<main>
+  <if=show>
+    <card fn=chars/>
+    <card fn=items/>
+    <card fn=tag/>
+  </if>
+  <button onClick() { show = !show }>t</button>
+</main>

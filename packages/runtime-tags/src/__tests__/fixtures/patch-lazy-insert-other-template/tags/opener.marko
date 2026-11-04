@@ -1,0 +1,6 @@
+import Lazy from "../lazy.marko" with { load: "render" }
+<let/open=false/>
+<button.open onClick() { open = !open }>open</button>
+<if=open>
+  <Lazy label="c"/>
+</if>
