@@ -1,0 +1,20 @@
+# Render `{"x":"a","items":["p"]}`
+```html
+<p>
+  ap
+</p>
+<div>
+  s:pa
+</div>
+<p>
+  m0p
+</p>
+<div>
+  s:pm0
+</div>
+<button
+  class="n"
+>
+  +
+</button>
+```

@@ -1,0 +1,9 @@
+<let/open=true/>
+<if=open>
+  <i>${input.b}</i>
+</if>
+<for|item| of=input.items>
+  <const/d=input.b + item/>
+  <p>${d}</p>
+</for>
+<button.t onClick() { open = !open }>t</button>

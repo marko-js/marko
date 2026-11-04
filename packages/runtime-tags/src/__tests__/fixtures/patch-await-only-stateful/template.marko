@@ -1,0 +1,8 @@
+<let/open=false/>
+<button onClick() { open = !open }>toggle</button>
+<if=open>
+  <await|v|=Promise.resolve("loaded")>
+    <em>${v}</em>
+  </await>
+</if>
+<p>${input.title}</p>
