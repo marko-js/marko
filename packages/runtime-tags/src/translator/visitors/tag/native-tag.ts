@@ -61,8 +61,8 @@ import {
 import { type Opt, push } from "../../util/optional";
 import {
   linkHolePatcher,
-  writesPatchHole,
-  writesPatchHandler,
+  fillsHole,
+  fillsHandler,
 } from "../../util/patch/decisions";
 import {
   buildPatchTextContent,
@@ -700,34 +700,34 @@ export default {
           controllable && getControllableHelper(tagName, controllable.state);
         if (controllable) {
           const changeAttr = attrAt(attributes, controllable.attrs[1]);
-          const fillsHandler =
-            !!changeAttr && writesPatchHandler(tagSection, changeAttr.value);
+          const fillsChangeHandler =
+            !!changeAttr && fillsHandler(tagSection, changeAttr.value);
           // The control's attributes read as one group.
           const controlExtra = attrAt(
             attributes,
             controllable.attrs.find(isDefined),
           )!.value.extra!;
-          const writesControl = writesPatchHole(tagSection, controlExtra);
-          if (writesControl || fillsHandler) {
+          const fillsControl = fillsHole(tagSection, controlExtra);
+          if (fillsControl || fillsChangeHandler) {
             // A param-sourced control value writes only where its group
             // updates from the server.
-            const [mask, group] = writesControl
+            const [mask, group] = fillsControl
               ? getExprRootGroupArgs(tagSection, controlExtra)
               : [];
-            const [changeMask, changeGroup] = fillsHandler
+            const [changeMask, changeGroup] = fillsChangeHandler
               ? getExprRootGroupArgs(tagSection, changeAttr!.value.extra!)
               : [];
             patchArgs = [
-              writesControl
+              fillsControl
                 ? t.stringLiteral(
                     getPatchKey().Control +
                       patchControls[controlHelper!].kind +
                       getScopeAccessor(nodeBinding!),
                   )
                 : absentArg(0),
-              writesControl ? mask : absentArg(0),
-              writesControl ? group : absentArg(0),
-              fillsHandler &&
+              fillsControl ? mask : absentArg(0),
+              fillsControl ? group : absentArg(0),
+              fillsChangeHandler &&
                 t.stringLiteral(
                   getPatchKey().Write +
                     getPrefixedScopeAccessor(
@@ -838,7 +838,7 @@ export default {
 
             if (
               value.extra?.rendersValue &&
-              writesPatchHole(tagSection, value.extra)
+              fillsHole(tagSection, value.extra)
             ) {
               // The attribute's helper also writes its patch entry (the
               // expression appears once): the element and group args trail.
@@ -886,7 +886,7 @@ export default {
 
           if (!spreadContent) {
             // A patch write renders the set itself; its group args trail.
-            const patchArgs = writesPatchHole(tagSection, tagExtra)
+            const patchArgs = fillsHole(tagSection, tagExtra)
               ? [
                   getPatchSpreadFlag(tagName, !!controllable, injectsNonce),
                   ...getPatchHoleGroupArgs(tagSection, tagExtra),
@@ -922,7 +922,7 @@ export default {
           htmlContentAttrTags.add(tag.node);
           // A `content=` a patch writes renders from a dynamic tag entry, like
           // a dynamic tag (the client signal shape is the same).
-          const patches = writesPatchHole(tagSection, contentAttr.value.extra);
+          const patches = fillsHole(tagSection, contentAttr.value.extra);
           (tag.node.body.body as t.Statement[]) = [
             t.expressionStatement(
               callRuntime(
@@ -948,7 +948,7 @@ export default {
             nodeBinding && getWriteReason(nodeBinding),
             true,
           );
-          const patches = writesPatchHole(tagSection, tagExtra);
+          const patches = fillsHole(tagSection, tagExtra);
           const contentArgs = [
             ...(isPatch() ? [t.numericLiteral(nextIdSite())] : []),
             markerGuard || absentArg(1),
@@ -1041,7 +1041,7 @@ export default {
         } else if (isTextOnly) {
           const rawTextHelper = getRawTextEscapeHelper(tagName);
           const textExtra = getTextContentExtra(tag.node);
-          if (textExtra && writesPatchHole(tagSection, textExtra)) {
+          if (textExtra && fillsHole(tagSection, textExtra)) {
             write`${buildPatchTextContent(
               tagSection,
               nodeBinding!,

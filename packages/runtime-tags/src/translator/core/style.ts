@@ -23,8 +23,8 @@ import { getPatchKey } from "../util/get-accessor-enums";
 import { isCoreTagName } from "../util/is-core-tag";
 import { isOutputDOM, isPatch } from "../util/marko-config";
 import { type Opt, push } from "../util/optional";
-import { onReasonsSettled, writesPatchHole } from "../util/patch/decisions";
-import { patchWrites } from "../util/patch/structure";
+import { onReasonsSettled, fillsHole } from "../util/patch/decisions";
+import { patchFillsSection } from "../util/patch/structure";
 import { getExprRootGroupArgs, getNamedPatchKey } from "../util/patch/writers";
 import { addReasonExprs } from "../util/reasons";
 import { getReferencedBindings, mergeReferences } from "../util/references";
@@ -141,7 +141,7 @@ function analyzeDynamicStyle(tag: t.NodePath<t.MarkoTag>, names: string[]) {
     onReasonsSettled(() => {
       // The flush writes a dynamic style's rule, even a state-sourced one: a
       // scope the flush creates never runs the setup that writes its selector.
-      if (patchWrites(section)) {
+      if (patchFillsSection(section)) {
         linkRuntimeFeature("patches/style");
       }
     });
@@ -242,13 +242,13 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
         callRuntime(
           "_escape_style_value",
           value,
-          ...(patchWrites(section)
+          ...(patchFillsSection(section)
             ? [
                 getScopeIdIdentifier(section),
                 t.stringLiteral(
                   getNamedPatchKey(getPatchKey().Style, binding, names[i]),
                 ),
-                ...(writesPatchHole(section, value.extra)
+                ...(fillsHole(section, value.extra)
                   ? getExprRootGroupArgs(section, value.extra!)
                   : [t.numericLiteral(0), t.numericLiteral(0)]),
               ]

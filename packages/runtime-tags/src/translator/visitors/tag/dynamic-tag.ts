@@ -40,7 +40,7 @@ import { concat, type Opt, toArray } from "../../util/optional";
 import {
   keepsSeededMarker,
   linkHolePatcher,
-  writesPatchHole,
+  fillsHole,
   onReasonsSettled,
 } from "../../util/patch/decisions";
 import {
@@ -522,7 +522,7 @@ export default {
           !input.properties.length;
         let patched = 0;
         let patchArgs: (t.Expression | false)[] = [];
-        if (writesPatchHole(tagSection, tag.node.extra)) {
+        if (fillsHole(tagSection, tag.node.extra)) {
           const groupArgs = getExprRootGroupArgs(tagSection, tagExtra);
           // A renderer the name hands unchanged pairs while its input changes.
           const rendererArgs = groupArgs.length
@@ -642,7 +642,7 @@ export default {
           const varBinding = tag.node.var.extra!.binding!;
           tagVarSignal = initValue(varBinding);
           // A patch writes the variable's value by its resume id.
-          tagVarSignal.register = writesPatchHole(section, tag.node.extra)
+          tagVarSignal.register = fillsHole(section, tag.node.extra)
             ? "fill"
             : true;
           tagVarSignal.referenced = true;

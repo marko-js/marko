@@ -17,7 +17,7 @@ import { isPatch } from "../util/marko-config";
 import { analyzeAttributeTags } from "../util/nested-attribute-tags";
 import { onReasonsSettled } from "../util/patch/decisions";
 import { patchCreates } from "../util/patch/refresh";
-import { patchMayWrite } from "../util/patch/structure";
+import { patchMayFillSection } from "../util/patch/structure";
 import { alwaysPairs } from "../util/patch/writers";
 import { mergeTagReferences } from "../util/references";
 import { replaceWithStatements } from "../util/replace-with-statements";
@@ -122,7 +122,7 @@ export default {
       // A `<try>` a patch may reach applies its body through `patches/try`, and
       // a `@catch` a patch creates from its shell, `patches/catch-created`.
       onReasonsSettled(() => {
-        if (patchMayWrite(section)) {
+        if (patchMayFillSection(section)) {
           linkRuntimeFeature("patches/try");
           if (attrTags["@catch"]) {
             const { catchSection } = getTryParts(tag);

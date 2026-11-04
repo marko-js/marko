@@ -40,7 +40,7 @@ import { findSlot, SlotKind, type Slot } from "../slots";
 import { mergeSources, type Sources, withSources } from "../sources";
 import { createAnalysisState } from "../state";
 import {
-  getWrittenReads,
+  getFilledReads,
   getPatchWrite,
   fillsInitialValue,
   getPatchFill,
@@ -52,18 +52,16 @@ import {
   isKnownChildNode,
   settlesOnClient,
   patchesBranchesAt,
-  patchWrites,
+  patchFillsSection,
 } from "./structure";
 
 // A hole a patch writes (a value, a control's, a site it renders): in
 // patch-written structure, not state-sourced.
-export function writesPatchHole(
-  section: Section,
-  extra: t.NodeExtra | undefined,
-) {
-  const sources = getWriteSources(extra);
+export function fillsHole(section: Section, extra: t.NodeExtra | undefined) {
+  const sources = getFillSources(extra);
   return (
-    patchWrites(section) && (!sources?.state || seedsOnly(section, sources))
+    patchFillsSection(section) &&
+    (!sources?.state || seedsOnly(section, sources))
   );
 }
 
@@ -100,18 +98,18 @@ export function keepsSeededMarker(
   section: Section,
   extra: t.NodeExtra | undefined,
 ) {
-  return seedsOnly(section, getWriteSources(extra));
+  return seedsOnly(section, getFillSources(extra));
 }
 
 // A handler written inline merged its references with its control's, so
 // only its own references say whether it is client-sourced.
-export function writesPatchHandler(tagSection: Section, value: t.Expression) {
+export function fillsHandler(tagSection: Section, value: t.Expression) {
   switch (value.type) {
     case "ArrowFunctionExpression":
     case "FunctionExpression":
-      return patchWrites(tagSection) && !referencesState(value.extra!);
+      return patchFillsSection(tagSection) && !referencesState(value.extra!);
     default:
-      return writesPatchHole(tagSection, value.extra);
+      return fillsHole(tagSection, value.extra);
   }
 }
 
@@ -120,7 +118,7 @@ export function writesPatchHandler(tagSection: Section, value: t.Expression) {
 export function isFilledHole(read: ReferencedExtra) {
   return (
     !!(read.rendersValue || read.rendersContent || picksBranch(read)) &&
-    writesPatchHole(read.section, read)
+    fillsHole(read.section, read)
   );
 }
 
@@ -199,7 +197,7 @@ export function getUnwrittenBodies(
         !(
           getSourcesUpdatesFrom(
             section,
-            getWriteSources(child.branchExpr),
+            getFillSources(child.branchExpr),
             groups,
           ) & UpdatesFrom.Client
         )
@@ -245,7 +243,7 @@ export function getExprWriteGroups(
   section: Section,
   extra: t.NodeExtra | undefined,
 ) {
-  const sources = getWriteSources(extra);
+  const sources = getFillSources(extra);
   return seedsOnly(section, sources)
     ? getSeedWriteGroups(section, sources!.state)
     : getWriteGroups(section, sources, !sources);
@@ -276,7 +274,7 @@ function getMaskUpdatesFrom(
   if (write.seed) {
     return holdsGroups(write.groups, groups) ? UpdatesFrom.Client : 0;
   }
-  // A group beyond theirs may add the server's bit, where a written intersection's render writes.
+  // A group beyond theirs may add the server's bit, where a filled intersection's render writes.
   if (
     write.groups.length === groups.length &&
     groups.every(([section, group]) =>
@@ -303,11 +301,11 @@ export function getEffectWrites(section: Section, signal: Signal) {
   const byEntry = runsByEntry(signal.referencedBindings);
   forEach(signal.referencedBindings, (binding) => {
     const root = getCanonicalBinding(binding);
-    // A function with written references it may hold re-runs it as each reference a patch writes changes.
+    // A function with filled references it may hold re-runs it as each reference a patch writes changes.
     for (const read of runsEffectOnPatch(root) ||
     (byEntry && getPatchFill(root).fill)
       ? [root]
-      : getWrittenReads(root).filter(
+      : getFilledReads(root).filter(
           (read) => read !== root && !!getPatchWrite(read).write,
         )) {
       reads.push(read);
@@ -365,7 +363,7 @@ function isSlotWritten(slot: Slot, groups: [Section, ParamReasonGroup][]) {
   return some(slot.reasonExprs, (expr) =>
     expr.rendersContent
       ? !(getWriteUpdatesFrom(slot.section, expr, groups) & UpdatesFrom.Client)
-      : (!node || (expr.rendersValue && writesPatchHole(slot.section, expr))) &&
+      : (!node || (expr.rendersValue && fillsHole(slot.section, expr))) &&
         getWriteUpdatesFrom(slot.section, expr, groups) === UpdatesFrom.Server,
   );
 }
@@ -391,7 +389,7 @@ function getSourcesUpdatesFrom(
 
 // What a patch write of the expression follows: its reads' sources, `$global`'s
 // for the keys it reads, and its loop keys' (a key changes with its collection).
-export function getWriteSources(extra: t.NodeExtra | undefined) {
+export function getFillSources(extra: t.NodeExtra | undefined) {
   return mergeSources(
     extra && getSourcesForExpr(extra),
     getSourcesForReferencedBindings(getConstantBindings(extra)),
@@ -403,7 +401,7 @@ export function getRenderedValueSources(binding: Binding) {
   let sources: Opt<Sources>;
   forEach(findSlot(binding)!.reasonExprs, (expr) => {
     if (rendersServerValue(expr)) {
-      const exprSources = getWriteSources(expr);
+      const exprSources = getFillSources(expr);
       if (exprSources) sources = push(sources, exprSources);
     }
   });
@@ -419,7 +417,7 @@ export function linkHolePatcher(
 ) {
   if (isPatch()) {
     onReasonsSettled(() => {
-      if (writesPatchHole(section, extra)) {
+      if (fillsHole(section, extra)) {
         for (const feature of features) {
           if (feature) linkRuntimeFeature(feature);
         }
@@ -463,12 +461,12 @@ function computePatchKeying(slot: Slot) {
     const node = slot.owner;
     if (isKnownChildNode(node)) {
       // A known child's scope, which a patch pairs through.
-      if (patchWrites(slot.section)) return "pairs";
+      if (patchFillsSection(slot.section)) return "pairs";
     } else if (getLoopBody(node) && patchesBranchesAt(node)) {
       // The marker of loop rows a patch pairs.
       return "pairs";
     } else if (
-      patchWrites(slot.section) &&
+      patchFillsSection(slot.section) &&
       some(slot.reasonExprs, rendersServerValue)
     ) {
       return "values";
@@ -477,7 +475,7 @@ function computePatchKeying(slot: Slot) {
 }
 
 function rendersServerValue(extra: t.NodeExtra) {
-  return !!extra.rendersValue && !getWriteSources(extra)?.state;
+  return !!extra.rendersValue && !getFillSources(extra)?.state;
 }
 
 // Whether a function's own references read state.

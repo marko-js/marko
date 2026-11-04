@@ -79,7 +79,9 @@ function waitFlush(
 function applyWaitingFlushes(readyId: string) {
   for (const [renderId, queue] of waiting) {
     if (
-      queue.some((waitingFlush) => waitingFlush[WaitingFlushProp.ReadyIds].includes(readyId))
+      queue.some((waitingFlush) =>
+        waitingFlush[WaitingFlushProp.ReadyIds].includes(readyId),
+      )
     ) {
       if (
         queue[0][WaitingFlushProp.Stop] !==
@@ -126,7 +128,9 @@ function recordFailed(readyId: string) {
 function rejectWaitingFlushes(readyId: string) {
   for (const [renderId, queue] of waiting) {
     if (
-      queue.some((waitingFlush) => waitingFlush[WaitingFlushProp.ReadyIds].includes(readyId))
+      queue.some((waitingFlush) =>
+        waitingFlush[WaitingFlushProp.ReadyIds].includes(readyId),
+      )
     ) {
       settle(renderId, queue, 0);
     }
@@ -135,5 +139,6 @@ function rejectWaitingFlushes(readyId: string) {
 
 function settle(renderId: string, queue: Waiting[], applied: Applied) {
   waiting.delete(renderId);
-  for (const waitingFlush of queue) waitingFlush[WaitingFlushProp.Done](applied);
+  for (const waitingFlush of queue)
+    waitingFlush[WaitingFlushProp.Done](applied);
 }

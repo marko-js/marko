@@ -13,7 +13,7 @@ import { getMarkoOpts, isPatch } from "../../util/marko-config";
 import { writeModuleRegistrations } from "../../util/module-registrations";
 import { first, forEach } from "../../util/optional";
 import {
-  getWrittenReferences,
+  getFilledReferences,
   getPatchFillBindings,
   patchCreates,
 } from "../../util/patch/refresh";
@@ -355,7 +355,7 @@ function buildResumeCall(node: Exclude<t.Function, t.FunctionDeclaration>) {
     }
 
     return callRuntime(
-      isPatch() && getWrittenReferences(extra) ? "_bind_resume" : "_resume",
+      isPatch() && getFilledReferences(extra) ? "_bind_resume" : "_resume",
       simplifyFunction(node) as
         | t.FunctionExpression
         | t.ArrowFunctionExpression,

@@ -30,7 +30,7 @@ import { getAccessorProp } from "../util/get-accessor-enums";
 import { getKnownAttrValues } from "../util/get-known-attr-values";
 import { isPatch } from "../util/marko-config";
 import { fromIter } from "../util/optional";
-import { getWriteSources, onReasonsSettled } from "../util/patch/decisions";
+import { getFillSources, onReasonsSettled } from "../util/patch/decisions";
 import {
   patchesBranchesAt,
   recordStructuralParams,
@@ -189,7 +189,7 @@ export default {
           );
           // A collection reading a param a caller passes may be client-sourced
           // at runtime, and the rows it keeps patch in place.
-          if (hasCallerParamSource(getWriteSources(tagExtra))) {
+          if (hasCallerParamSource(getFillSources(tagExtra))) {
             linkRuntimeFeature("patches/loop-item");
           }
         }

@@ -9,7 +9,7 @@ import { isOutputHTML } from "../util/marko-config";
 import {
   keepsSeededMarker,
   linkHolePatcher,
-  writesPatchHole,
+  fillsHole,
 } from "../util/patch/decisions";
 import {
   getExprRootGroupArgs,
@@ -145,7 +145,7 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
   const section = getSection(placeholder);
   // A state-sourced hole derives through the signal graph, and inside
   // unpatched structure owner fills refresh it: neither patch-writes.
-  const patchWrites = !!nodeBinding && writesPatchHole(section, valueExtra);
+  const filledHole = !!nodeBinding && fillsHole(section, valueExtra);
   const canWriteHTML = isHTML || (confident && node.escape);
   const method = canWriteHTML
     ? node.escape
@@ -157,13 +157,13 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
 
   // Static markup has no template text to ride: a created scope gets it
   // from the flush like a dynamic hole.
-  if (confident && canWriteHTML && !(isHTML && patchWrites && !node.escape)) {
+  if (confident && canWriteHTML && !(isHTML && filledHole && !node.escape)) {
     if (isHTML) {
       write`${node.escape ? _escape(computed) : _unescaped(computed)}`;
     }
   } else {
     const markerReason = nodeBinding && getWriteReason(nodeBinding);
-    const isPatchText = isHTML && patchWrites;
+    const isPatchText = isHTML && filledHole;
 
     if (isHTML) {
       if (markerReason) {

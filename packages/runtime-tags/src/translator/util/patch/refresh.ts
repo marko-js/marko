@@ -92,13 +92,9 @@ import {
 } from "../sources";
 import { createAnalysisState } from "../state";
 import { getWriteReason } from "../write-guard";
+import { getStateInitSources, getFillSources, isFilledHole } from "./decisions";
 import {
-  getStateInitSources,
-  getWriteSources,
-  isFilledHole,
-} from "./decisions";
-import {
-  patchWrites,
+  patchFillsSection,
   hasStructuralParam,
   isKnownChildNode,
   inStatefulStructure,
@@ -228,7 +224,7 @@ export interface PatchFill {
   objectSource?: boolean;
   writeReads?: boolean;
   ownRegistration?: boolean;
-  intersectionWrites?: SortedOpt<Sources>;
+  filledMembers?: SortedOpt<Sources>;
 }
 
 // What a patch writes and seeds, asked once shells are built.
@@ -251,8 +247,8 @@ function computePatchFill(binding: Binding): PatchFill {
   // A server value the patch writes reaches client-rendered structure by its closures.
   const guarded = hasGuardedSources(binding);
   // A value only intersections the patch writes call for rides its slot write.
-  const writes = getIntersectionWrites(kind);
-  const reasons = writes ? undefined : kind;
+  const members = getFilledMembers(kind);
+  const reasons = members ? undefined : kind;
   const fill = canPatchFill(binding);
   const effectRead = someAlias(binding, hasEffectRead, undefined, true);
   const fnReference = someAlias(
@@ -298,7 +294,7 @@ function computePatchFill(binding: Binding): PatchFill {
         (guarded && !!kind)),
     // Only the patch's key reaches the declaration: a `<let>` nothing assigns.
     ownRegistration: fill && !binding.assignments,
-    intersectionWrites: fill ? writes : undefined,
+    filledMembers: fill ? members : undefined,
   };
 }
 
@@ -307,9 +303,9 @@ function computePatchFill(binding: Binding): PatchFill {
 export function canPatchFill(binding: Binding) {
   return (
     !!binding.sources?.state &&
-    patchWritesValues(binding.section) &&
+    patchFillsValues(binding.section) &&
     getCanonicalBinding(binding) === binding &&
-    patchWritesScope(binding.section) &&
+    patchFillsScope(binding.section) &&
     (!!findSlot(binding, SlotKind.ChangeHandler) ||
       // The seed runs a `<let>`'s signal where plain keeps it and client code holds
       // the value, or takes it past the scope's renders and effects (a child, an intersection).
@@ -344,9 +340,9 @@ export const fillsInitialValue = createPassMemo(
 
 // A scope a flush writes into: a known child, a branch, `<await>` or `<try>` body, a
 // `@catch`, attribute tag `<for>` content, or content it creates from its shell.
-export function patchWritesScope(section: Section) {
+export function patchFillsScope(section: Section) {
   return (
-    patchWrites(section) &&
+    patchFillsSection(section) &&
     (isKnownChild(section) ||
       !!section.branch ||
       section.boundaryContent === "catch" ||
@@ -357,10 +353,10 @@ export function patchWritesScope(section: Section) {
 
 // A scope a flush writes values into: also content plain renders nowhere on
 // the client, which a paired consumer or the client branch entry reaches.
-function patchWritesValues(section: Section) {
+function patchFillsValues(section: Section) {
   return (
-    patchWritesScope(section) ||
-    (patchWrites(section) &&
+    patchFillsScope(section) ||
+    (patchFillsSection(section) &&
       isContentScope(section) &&
       !getRendererReason(section))
   );
@@ -378,9 +374,7 @@ function seedsCreatedScope(binding: Binding) {
   const { section } = binding;
   return (
     mayBeCreated(section) &&
-    (binding.localOf
-      ? shipsContentShell(section)
-      : patchWritesScope(section)) &&
+    (binding.localOf ? shipsContentShell(section) : patchFillsScope(section)) &&
     binding.type !== BindingType.dom &&
     binding.type !== BindingType.constant &&
     every(binding.sources?.state, (state) => isFirstState(state, section)) &&
@@ -461,7 +455,7 @@ export interface FillConditions {
   // The `<await>` bodies a read crosses handing it on to what may keep it.
   passedUnder?: SortedOpt<Section>;
   // An intersection the patch writes reads it: its other members, where the client runs it.
-  writes?: SortedOpt<Sources>;
+  members?: SortedOpt<Sources>;
 }
 
 // What a binding's reads (and its direct aliases') need of its fill, and the
@@ -469,12 +463,12 @@ export interface FillConditions {
 const getFillReadKind = createPassMemo(computeFillReadKind, {
   kind: undefined,
   contentKind: undefined,
-  writtenIntersections: undefined,
+  filledIntersections: undefined,
   keptInLet: false,
 } as {
   kind: true | FillConditions | undefined;
   contentKind: true | FillConditions | undefined;
-  writtenIntersections: Map<Intersection, Section> | undefined;
+  filledIntersections: Map<Intersection, Section> | undefined;
   keptInLet: boolean;
 });
 
@@ -485,8 +479,8 @@ function computeFillReadKind(binding: Binding) {
   let contentKind: true | FillConditions | undefined;
   // A `<let>` it gives itself to keeps it on the client, as content it renders.
   let keptInLet = false;
-  // Each written intersection its value is shipped for, by the section reading it.
-  let writtenIntersections: Map<Intersection, Section> | undefined;
+  // Each filled intersection its value is shipped for, by the section reading it.
+  let filledIntersections: Map<Intersection, Section> | undefined;
   for (const alias of binding.propertyAliases.values()) {
     contentKind = mergeKinds(contentKind, getFillReadKind(alias).contentKind);
   }
@@ -496,9 +490,9 @@ function computeFillReadKind(binding: Binding) {
     // A property alias or rest fills on its own; a direct alias reads this.
     if (isDirectAlias(alias)) {
       kind = mergeKinds(kind, aliasFill.kind);
-      for (const [intersection, section] of aliasFill.writtenIntersections ||
+      for (const [intersection, section] of aliasFill.filledIntersections ||
         []) {
-        (writtenIntersections ||= new Map()).set(intersection, section);
+        (filledIntersections ||= new Map()).set(intersection, section);
       }
     }
   }
@@ -515,7 +509,7 @@ function computeFillReadKind(binding: Binding) {
     // current with no registration to shake.
     if (readsAtCall(read, binding)) continue;
     const refs = getReferencedBindings(read);
-    const written = Array.isArray(refs) && isPatchWrittenIntersection(refs);
+    const written = Array.isArray(refs) && isFilledIntersection(refs);
     // A derived value renders it by its own kind; passed to another template,
     // this read renders it, and the callee reports its own state.
     let rendersContent = isContentRender(read);
@@ -545,14 +539,14 @@ function computeFillReadKind(binding: Binding) {
         mergeKinds(readKind || {}, { passedUnder: handOff?.under }),
       );
     }
-    if (written && readKind !== true && readKind?.writes) {
-      (writtenIntersections ||= new Map()).set(refs, read.section);
+    if (written && readKind !== true && readKind?.members) {
+      (filledIntersections ||= new Map()).set(refs, read.section);
     }
   }
   return {
     kind,
     contentKind,
-    writtenIntersections,
+    filledIntersections,
     keptInLet,
   };
 }
@@ -596,7 +590,7 @@ function getReadKind(
   let conditions: FillConditions | undefined;
   if (!effect) {
     const sources = getSourcesForReferencedBindings(refs);
-    // A function with written references' intersection with client state gets it by its bind and render.
+    // A function with filled references' intersection with client state gets it by its bind and render.
     if (
       Array.isArray(refs) &&
       holdsRegisteredFn(binding) &&
@@ -611,10 +605,10 @@ function getReadKind(
     if (written) {
       // The patch renders the intersection where it runs on the client, which needs
       // a caller's value of this binding.
-      const writes =
+      const members =
         hasCallerParamSourceAt(binding.sources, binding.section) &&
         getOtherInputs(sources, binding);
-      if (writes) conditions = mergeConditions(conditions, { writes });
+      if (members) conditions = mergeConditions(conditions, { members });
     } else {
       // An intersection whose other members a caller may pass client state,
       // dispatched from this scope; an `<await>` value re-fires no promise.
@@ -650,7 +644,7 @@ function getReadKind(
       }
     }
   }
-  // A written intersection's read needs the binding wherever the intersection runs on the
+  // A filled intersection's read needs the binding wherever the intersection runs on the
   // client, whatever structure it sits in; it still hands the value on under `<await>` bodies.
   if (written) {
     if (handOff) getReadStructure(binding, read, effect, handOff);
@@ -903,7 +897,7 @@ function mergeConditions(
     fills: sourcesUtil.union(a?.fills, b.fills),
     contents: sectionUtil.union(a?.contents, b.contents),
     passedUnder: sectionUtil.union(a?.passedUnder, b.passedUnder),
-    writes: sourcesUtil.union(a?.writes, b.writes),
+    members: sourcesUtil.union(a?.members, b.members),
   };
 }
 
@@ -921,7 +915,7 @@ function readsOwnEffect(binding: Binding) {
 
 function isOwnEffectRead(read: ReferencedExtra, binding: Binding) {
   return (
-    (read.section === binding.section || patchWrites(read.section)) &&
+    (read.section === binding.section || patchFillsSection(read.section)) &&
     readsValuesOnResume(read) &&
     runsFromClosure(read, binding) &&
     !Array.isArray(getReferencedBindings(read))
@@ -939,7 +933,7 @@ export function getPassedReads(section: Section, extra: t.NodeExtra) {
   const hops = new Set<string>();
   for (const read of reduce(
     getReferencedBindings(extra),
-    addWrittenReads,
+    addFilledReads,
     new Set<Binding>(),
   )) {
     const hop = getWriteHop(section, read);
@@ -988,7 +982,7 @@ export function holdsRegisteredFn(binding: Binding) {
 }
 
 // An intersection its scope renders by id once a write marks the member: client state over
-// a bound function with written references, or a written caller-fed row param beside caller state.
+// a bound function with filled references, or a written caller-fed row param beside caller state.
 function rendersIntersectionByWrite(
   intersection: Intersection,
   member: Binding,
@@ -1000,13 +994,13 @@ function rendersIntersectionByWrite(
     const others = getOtherInputs(sources, member);
     return (
       !!sources?.state ||
-      isPatchWrittenIntersection(intersection) ||
+      isFilledIntersection(intersection) ||
       (!!others && hasTagCallerParamAt(others, member.section)) ||
       someBindingRead(
         member,
         (read) =>
           getReferencedBindings(read) === intersection &&
-          patchWrites(read.section) &&
+          patchFillsSection(read.section) &&
           !leavesReadToPatch(read) &&
           !(read.derives && every(read.derives, isServerSourced)),
       )
@@ -1109,12 +1103,14 @@ export function clientMayRender(section: Section) {
 // Content a flush can't reach by data (below `upTo`), or unpatched structure: no
 // caller's params decide.
 export function clientMayRenderInAnyCall(section: Section, upTo?: Section) {
-  return !!getClientRenderedContents(section, upTo) || !patchWrites(section);
+  return (
+    !!getClientRenderedContents(section, upTo) || !patchFillsSection(section)
+  );
 }
 
 // The references of a function a patch may write, as hops from its section,
 // which its `_bind_resume` names. One reading client state is the client's.
-export const [getWrittenReferences] = createAnalysisMemo(
+export const [getFilledReferences] = createAnalysisMemo(
   (fn: t.FunctionExtra & t.NodeExtra): string | undefined => {
     const references: string[] = [];
     let clientState = false;
@@ -1129,10 +1125,10 @@ export const [getWrittenReferences] = createAnalysisMemo(
   undefined,
 );
 
-export function hasWrittenReferences(
+export function hasFilledReferences(
   expr: t.NodeExtra,
 ): expr is t.FunctionExtra & t.NodeExtra {
-  return !!getWrittenReferences(expr);
+  return !!getFilledReferences(expr);
 }
 
 // A function a value the expressions may evaluate to passes `test`, following each
@@ -1192,8 +1188,8 @@ export function someReturnedFnValueOf(
 }
 
 // What an entry reading `binding` depends on: what an object is built from, else
-// a value's own change and the written references of the functions it may hold.
-export const [getWrittenReads] = createAnalysisMemo(
+// a value's own change and the filled references of the functions it may hold.
+export const [getFilledReads] = createAnalysisMemo(
   (binding: Binding): Binding[] => {
     const root = getCanonicalBinding(binding);
     // What the object reads, even as a param's property a call passes.
@@ -1201,7 +1197,7 @@ export const [getWrittenReads] = createAnalysisMemo(
       ? Array.from(
           reduce(
             getValueReferences(root.derivedFrom || undefined),
-            addWrittenReads,
+            addFilledReads,
             new Set<Binding>(),
           ),
         )
@@ -1213,7 +1209,7 @@ export const [getWrittenReads] = createAnalysisMemo(
             ? Array.from(
                 reduce(
                   getValueReferences(root.derivedFrom || undefined),
-                  addWrittenReads,
+                  addFilledReads,
                   new Set<Binding>(),
                 ),
               ).filter((read) =>
@@ -1225,14 +1221,14 @@ export const [getWrittenReads] = createAnalysisMemo(
   [] as Binding[],
 );
 
-// What the functions with written references a value may hold read from the scope when called, where a
+// What the functions with filled references a value may hold read from the scope when called, where a
 // patch writes it: a call sees each change with no new function.
 export const [getFnValueReferences] = createAnalysisMemo(
   (holder: Binding): Binding[] => {
     const references = new Set<Binding>();
     // Visits every function it may hold.
     someFnValueOf(holder, (fn) => {
-      if (hasWrittenReferences(fn)) {
+      if (hasFilledReferences(fn)) {
         forEach(getReferencedBindingsInFunction(fn), (ref) => {
           const reference = getCanonicalBinding(ref);
           if (getWriteHop(fn.section!, reference)) references.add(reference);
@@ -1245,11 +1241,11 @@ export const [getFnValueReferences] = createAnalysisMemo(
   [] as Binding[],
 );
 
-export function addWrittenReads(reads: Set<Binding>, binding: Binding) {
-  return getWrittenReads(binding).reduce(addWrittenRead, reads);
+export function addFilledReads(reads: Set<Binding>, binding: Binding) {
+  return getFilledReads(binding).reduce(addFilledRead, reads);
 }
 
-function addWrittenRead(reads: Set<Binding>, binding: Binding) {
+function addFilledRead(reads: Set<Binding>, binding: Binding) {
   return reads.add(binding);
 }
 
@@ -1319,7 +1315,7 @@ export function keepsContent(section: Section) {
     rendersFromChildState(section) &&
     !getRendererReason(section) &&
     !section.params &&
-    patchWrites(section)
+    patchFillsSection(section)
   );
 }
 
@@ -1474,8 +1470,8 @@ function getIntersectionSetup(
       : undefined;
   }
   if (!hasTagCallerParamAt(sources, section)) return;
-  // A written intersection no member's fill re-runs: a patch names it on any scope.
-  if (rendersWrittenIntersection(intersection)) return { setup: "mixed" };
+  // A filled intersection no member's fill re-runs: a patch names it on any scope.
+  if (rendersFilledIntersection(intersection)) return { setup: "mixed" };
   return { setup: "client" };
 }
 
@@ -1587,7 +1583,7 @@ function passesClientState(passed: Sources | undefined) {
 
 // An intersection of params, one a caller passes, whose reads the patch leaves to holes
 // and effect entries: where its group mixes, a member's fill or the render re-runs it.
-export const isPatchWrittenIntersection = createPassMemo(
+export const isFilledIntersection = createPassMemo(
   (intersection: Intersection) => {
     let section: Section | undefined;
     for (const read of intersection[0].reads.keys()) {
@@ -1644,33 +1640,33 @@ function readsOtherIntersection(binding: Binding, intersection: Intersection) {
   });
 }
 
-// Whether a value is shipped for a written intersection its scope renders, which then depends
+// Whether a value is shipped for a filled intersection its scope renders, which then depends
 // on the value's fill (`_fill_mark`).
 export function initedIntersectionDependsOn(binding: Binding) {
   if (writesForIntersectionInit(binding)) return true;
   for (const intersection of getFillReadKind(
     binding,
-  ).writtenIntersections?.keys() || []) {
-    if (rendersWrittenIntersection(intersection)) return true;
+  ).filledIntersections?.keys() || []) {
+    if (rendersFilledIntersection(intersection)) return true;
   }
   return false;
 }
 
-// A written intersection the scope renders: some shipped member has no fill to re-run it
+// A filled intersection the scope renders: some shipped member has no fill to re-run it
 // (written for its render, below the root, over subscribers, in two, filled for others).
-export const rendersWrittenIntersection = createPassMemo(
+export const rendersFilledIntersection = createPassMemo(
   (intersection: Intersection) =>
-    isPatchWrittenIntersection(intersection) &&
+    isFilledIntersection(intersection) &&
     some(intersection, (ref) => {
       const member = getCanonicalBinding(ref);
       if (rendersIntersectionByWrite(intersection, member)) return true;
-      const { kind, writtenIntersections } = getFillReadKind(member);
-      const section = writtenIntersections?.get(intersection);
+      const { kind, filledIntersections } = getFillReadKind(member);
+      const section = filledIntersections?.get(intersection);
       return (
         !!section &&
         !(
-          getIntersectionWrites(kind) &&
-          writtenIntersections!.size === 1 &&
+          getFilledMembers(kind) &&
+          filledIntersections!.size === 1 &&
           !member.section.parent &&
           // Its key's hops reach every scope of the intersection, unlike a subscriber set.
           section.enclosing.nonOptionalAncestor ===
@@ -1683,11 +1679,11 @@ export const rendersWrittenIntersection = createPassMemo(
 
 // The other members' sources of the intersections the patch writes, for a value only
 // those intersections call for.
-function getIntersectionWrites(kind: true | FillConditions | undefined) {
+function getFilledMembers(kind: true | FillConditions | undefined) {
   return kind !== true &&
-    kind?.writes &&
+    kind?.members &&
     !(kind.structure || kind.intersections || kind.fills || kind.contents)
-    ? kind.writes
+    ? kind.members
     : undefined;
 }
 
@@ -1750,7 +1746,7 @@ const patchMayCreateOwn = createPassMemo((section: Section): boolean => {
   if (section.branch) return false;
   if (section.branchExpr) {
     // A dynamic tag body: the tag renders it whenever its branch expression changes.
-    return !!getWriteSources(section.branchExpr) && patchWrites(section);
+    return !!getFillSources(section.branchExpr) && patchFillsSection(section);
   }
   const { derives } = section;
   // A known consumer decides by where it renders the content; an unknown
@@ -1783,7 +1779,7 @@ function patchMayCreateAtRead(
     ((inTemplate
       ? rendersContent &&
         switchesContent(read, asInput) &&
-        patchWrites(read.section)
+        patchFillsSection(read.section)
       : picksContent(read, asInput)) ||
       // A callee's root renders where its call site does, which the content's
       // own sections answer.
@@ -1859,7 +1855,7 @@ function keepsWithInput(read: ReferencedExtra) {
 function patchMayCreateEnclosing(section: Section, root: boolean): boolean {
   // A `@catch` or `@placeholder` a patch shows is created as a branch is.
   if (section.branch?.optional || section.boundaryContent) {
-    return patchWrites(section);
+    return patchFillsSection(section);
   }
   return section.parent
     ? patchMayCreateOwn(section) ||
@@ -1874,7 +1870,7 @@ export function patchCreates(section: Section) {
     (!!section.branch ||
       section.boundaryContent === "catch" ||
       shipsContentShell(section)) &&
-    patchWrites(section)
+    patchFillsSection(section)
   );
 }
 
@@ -1901,7 +1897,9 @@ export const patchComposes = createPassMemo(
 // create the call: its shell hop, or its patch link below its owner, names it.
 export function namesBodyOwner(section: Section, body: Section) {
   return (
-    body.readsOwner && patchWrites(section) && patchCreatesOrComposes(section)
+    body.readsOwner &&
+    patchFillsSection(section) &&
+    patchCreatesOrComposes(section)
   );
 }
 
@@ -2020,7 +2018,7 @@ function findUnfilledStructure(
       clientMayRender(read.section)
     ) {
       if (
-        !patchWrites(read.section) ||
+        !patchFillsSection(read.section) ||
         getClientRenderedContents(read.section, binding.section)
       ) {
         return false;
@@ -2069,7 +2067,7 @@ function findUnfilledStructure(
       for (const ref of refs) {
         const partner = getCanonicalBinding(ref);
         if (partner === binding) continue;
-        const { fill, intersectionWrites } = getPatchFill(partner);
+        const { fill, filledMembers } = getPatchFill(partner);
         // A partner's fill re-runs the intersection client side, unless the flush
         // fills the intersection's hole itself.
         if (fill && !filledHole) return false;
@@ -2079,7 +2077,7 @@ function findUnfilledStructure(
           structure = sourcesUtil.add(
             structure,
             getSourcesForReferencedBindings(
-              fill || intersectionWrites || writesForIntersectionInit(partner)
+              fill || filledMembers || writesForIntersectionInit(partner)
                 ? refs
                 : partner,
             )!,
@@ -2133,7 +2131,7 @@ export function isResumedRead(read: ReferencedExtra) {
   return (
     readsValuesOnResume(read) ||
     !!getSourcesForReferencedBindings(getReferencedBindings(read))?.state ||
-    !patchWrites(read.section) ||
+    !patchFillsSection(read.section) ||
     !!getDerivedNeeds(read)
   );
 }
@@ -2166,16 +2164,16 @@ function ensureSlotGroups(slot: Slot) {
 }
 
 function ensureBindingGroups(binding: Binding) {
-  const { fill, writeReads, intersectionWrites } = getPatchFill(binding);
+  const { fill, writeReads, filledMembers } = getPatchFill(binding);
   if (
     fill ||
-    intersectionWrites ||
-    (writeReads && patchWritesScope(binding.section))
+    filledMembers ||
+    (writeReads && patchFillsScope(binding.section))
   ) {
     ensureCallerParamGroups(getSourcesForReferencedBindings(binding));
   }
-  // Its write in place gates on each written intersection's other members.
-  forEach(intersectionWrites, ensureCallerParamGroups);
+  // Its write in place gates on each filled intersection's other members.
+  forEach(filledMembers, ensureCallerParamGroups);
   // A created scope's `<let>` seeds by what its initial value reads.
   if (binding.type === BindingType.let) {
     ensureCallerParamGroups(getStateInitSources(binding));
@@ -2217,7 +2215,7 @@ function ensureWriteGroups(slot: Slot) {
 }
 
 function ensureExprWriteGroups(expr: t.NodeExtra) {
-  if (!expr.consumed) ensureCallerParamGroups(getWriteSources(expr));
+  if (!expr.consumed) ensureCallerParamGroups(getFillSources(expr));
 }
 
 // A created scope's seed a flush writes; a registration it carries binds by
@@ -2267,7 +2265,7 @@ function leavesReadUnfilled(binding: Binding) {
 // in a scope a flush writes, that no fill always renders.
 function isPatchWritten(binding: Binding) {
   const { fill, writeReads } = getPatchFill(binding);
-  return fill !== true && !!writeReads && patchWritesValues(binding.section);
+  return fill !== true && !!writeReads && patchFillsValues(binding.section);
 }
 
 // Its group is the server's on every instance: guarded sources (a page's input,

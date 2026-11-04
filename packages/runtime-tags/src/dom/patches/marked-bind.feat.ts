@@ -8,10 +8,10 @@ import {
 import { _resumed, installBoundFnRevive } from "../resume";
 import { getLoopItem, patchers, renderData } from "./apply";
 import { installBoundFnResolver, type OwnerBound } from "./bind.feat";
-import { writtenReferences, reviveBoundFn } from "./signals";
+import { filledReferences, reviveBoundFn } from "./signals";
 
 // Where a page compares a bound function's identity (a marked slot, a fill, a
-// function with written references), a bind marks its slot only for a new one.
+// function with filled references), a bind marks its slot only for a new one.
 installBoundFnRevive(reviveBoundFn);
 installBoundFnResolver(resolveBoundFn);
 patchers[PatchKey.Bind] = (scope, accessor, entry) => {
@@ -54,7 +54,7 @@ function resolveBoundFn(owner: Scope, entry: OwnerBound) {
   if (
     !bound[1] ||
     (bound[0] !== renderData[RenderDataProp.PatchStop] &&
-      writtenReferences[registryId]?.(owner))
+      filledReferences[registryId]?.(owner))
   ) {
     bound[0] = renderData[RenderDataProp.PatchStop];
     bound[1] = (_resumed[registryId] as (owner: Scope) => unknown)(owner);

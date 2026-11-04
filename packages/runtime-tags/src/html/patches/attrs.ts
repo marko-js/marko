@@ -527,7 +527,8 @@ function patchControl(
     if (controlKey) walkMarkers(state);
     return false;
   }
-  if (changeKey) _patch_bind(scopeId, changeKey, handler, changeMask, changeGroup);
+  if (changeKey)
+    _patch_bind(scopeId, changeKey, handler, changeMask, changeGroup);
   if (controlKey) {
     const fills = ensureFills(scopeId, mask, group!);
     if (fills) fills[controlKey] = normalizePatchValue(value);

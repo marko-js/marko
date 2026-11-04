@@ -55,7 +55,7 @@ import {
 } from "./patch/decisions";
 import {
   getPassedReads,
-  getWrittenReferences,
+  getFilledReferences,
   holdsBuiltObject,
   runsEffectOnPatch,
   holdsRegisteredFn,
@@ -64,12 +64,12 @@ import {
 import {
   calleeKeepsInput,
   getParamSelectedStructure,
-  patchWrites,
+  patchFillsSection,
   hasStructuralParam,
   recordStructuralParams,
 } from "./patch/structure";
 import {
-  mayHoldReturnedFnWithWrittenReferences,
+  mayHoldReturnedFnWithFilledReferences,
   mayHoldScopeBoundFn,
 } from "./patch/writers";
 import {
@@ -237,7 +237,7 @@ export function knownTagAnalyze(
   if (isPatch()) {
     // Children inside unpatched structure never pair from a patch.
     onReasonsSettled(() => {
-      if (patchWrites(section)) linkRuntimeFeature("patches/child");
+      if (patchFillsSection(section)) linkRuntimeFeature("patches/child");
     });
   }
   ensureBodySection(tagBody);
@@ -455,11 +455,11 @@ export function knownTagTranslateHTML(
                   getScopeAccessorLiteral(childScopeBinding),
                   t.numericLiteral(nextIdSite()),
                   // Only a patch render of a section patches write reads these two.
-                  (patchWrites(section) &&
+                  (patchFillsSection(section) &&
                     varId &&
                     guardVar(t.numericLiteral(1))) ||
                     absentArg(0),
-                  patchWrites(section) &&
+                  patchFillsSection(section) &&
                     childSection.parent !== section &&
                     namesBodyOwner(section, childSection) &&
                     getScopeIdIdentifier(childSection.parent!),
@@ -473,7 +473,7 @@ export function knownTagTranslateHTML(
     writeSlot(childScopeSlot, callRuntime("_existing_scope", peekScopeId));
 
     // An object the call builds anew: the child's readers depend on its sources.
-    if (isPatch() && patchWrites(section)) {
+    if (isPatch() && patchFillsSection(section)) {
       const inputReads = new Set<string>();
       for (const prop of properties) {
         if (t.isObjectProperty(prop) && t.isExpression(prop.value)) {
@@ -709,7 +709,7 @@ export function linkKnownTagPatchEntries() {
   do {
     grew = false;
     forEachSection((section) => {
-      if (!patchWrites(section)) return;
+      if (!patchFillsSection(section)) return;
       for (const tagExtra of section.knownTags || []) {
         const groups = getParamGroupSources(tagExtra);
         if (!groups) continue;
@@ -745,7 +745,7 @@ export function linkKnownTagPatchEntries() {
             linkRuntimeFeature("patches/marked-bind");
           }
           // A child's returned function it passes on binds where that child isn't.
-          if (mayHoldReturnedFnWithWrittenReferences(exprs)) {
+          if (mayHoldReturnedFnWithFilledReferences(exprs)) {
             linkRuntimeFeature("patches/marked-bind");
           }
         }
@@ -1580,11 +1580,11 @@ function isBuiltObjectExpr(extra: t.NodeExtra) {
   return !!ref && !Array.isArray(ref) && holdsBuiltObject(ref);
 }
 
-// A function with written references as the call passes it: a literal reading a reference a patch
+// A function with filled references as the call passes it: a literal reading a reference a patch
 // writes, or a binding holding one.
 function isLiveArg(extra: t.NodeExtra | undefined) {
   if (!extra) return false;
-  if (isRegisteredFnExtra(extra)) return !!getWrittenReferences(extra);
+  if (isRegisteredFnExtra(extra)) return !!getFilledReferences(extra);
   const ref = getReferencedBindings(extra);
   return !!ref && !Array.isArray(ref) && holdsRegisteredFn(ref);
 }
@@ -2170,7 +2170,7 @@ function writeToSignal(
 // A call some instance of which the client renders: in stateful structure, or
 // in param-selected structure a caller may hand it.
 function rendersCallOnClient(section: Section) {
-  return !patchWrites(section) || !!getParamSelectedStructure(section);
+  return !patchFillsSection(section) || !!getParamSelectedStructure(section);
 }
 
 // Where the client renders the call, its module reads the callee stores (an intersection

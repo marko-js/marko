@@ -17,14 +17,14 @@ import { initBranchSection } from "../util/branch-tag";
 import { isPatch } from "../util/marko-config";
 import {
   getUnwrittenBodies,
-  getWriteSources,
+  getFillSources,
   onReasonsSettled,
 } from "../util/patch/decisions";
 import { awaitMayRenderClientBranch } from "../util/patch/refresh";
 import {
   settlesOnClient,
-  patchWrites,
-  patchMayWrite,
+  patchFillsSection,
+  patchMayFillSection,
 } from "../util/patch/structure";
 import { alwaysPairs, getCallerGroupGuard } from "../util/patch/writers";
 import { setDerivedFrom, trackParamsReferences } from "../util/references";
@@ -104,7 +104,7 @@ export default {
     // An await a patch may reach pairs its body through a `PatchChild` entry.
     if (isPatch()) {
       onReasonsSettled(() => {
-        if (patchMayWrite(section)) linkRuntimeFeature("patches/await");
+        if (patchMayFillSection(section)) linkRuntimeFeature("patches/await");
       });
     }
     const valueExtra = (valueAttr.value.extra ??= {});
@@ -160,7 +160,7 @@ export default {
               ),
               // A patch page always marks a patchable boundary: the
               // flush pairs its body through the resumed branch link.
-              patchWrites(section)
+              patchFillsSection(section)
                 ? t.numericLiteral(1)
                 : getWriteGuard(section, bodySection.reason, true),
               ...(isPatch() ? getPendingArgs(bodySection) : []),
@@ -227,7 +227,7 @@ export default {
 
 function getPendingArgs(bodySection: Section): Array<t.Expression | Falsy> {
   const shellId = findShellId(bodySection);
-  const sources = getWriteSources(bodySection.branchExpr);
+  const sources = getFillSources(bodySection.branchExpr);
   // The client settles a promise of its own state, and one a caller passes where
   // no patch fills it: the server's copy renders only the body's holes as data.
   const unfilled = settlesOnClient(bodySection)

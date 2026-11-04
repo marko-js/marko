@@ -41,13 +41,13 @@ import {
   reduce,
   some,
 } from "./optional";
-import { getEffectWrites, writesPatchHole } from "./patch/decisions";
+import { getEffectWrites, fillsHole } from "./patch/decisions";
 import {
   keepsClosureFills,
   hasGuardedSources,
   getCreatedSetup,
-  getWrittenReferences,
-  isPatchWrittenIntersection,
+  getFilledReferences,
+  isFilledIntersection,
   getPatchFillKey,
   getUnfillableSources,
   getPatchFill,
@@ -73,7 +73,7 @@ import {
   getPatchFillCalls,
   getRootGroupArgs,
   hasCallerGroupsAt,
-  isWrittenReference,
+  isFilledReference,
   isScopeBoundFn,
   writePatchResumeStatements,
 } from "./patch/writers";
@@ -639,7 +639,7 @@ const [getGlobalSignals] = createAnalysisMemo((section: Section) => {
       effects.add(id);
       continue;
     }
-    // The client runs a written intersection wherever its group has a client member, and
+    // The client runs a filled intersection wherever its group has a client member, and
     // derives a value a patch writes only where a caller passes it client state.
     const unfilled =
       getUnfillableSources(referencedBindings) ||
@@ -647,7 +647,7 @@ const [getGlobalSignals] = createAnalysisMemo((section: Section) => {
         ? getSourcesForReferencedBindings(referencedBindings)
         : isResumedRead(expr)) ||
       (Array.isArray(referencedBindings) &&
-        isPatchWrittenIntersection(referencedBindings) &&
+        isFilledIntersection(referencedBindings) &&
         getSourcesForReferencedBindings(referencedBindings));
     const prev = signals.get(id);
     signals.set(
@@ -884,12 +884,12 @@ function setsInitialValue({ referencedBindings }: Signal) {
 }
 
 // A fill's run leaving out what its change judges (a render's intersection, an effect's
-// entry, a function with written references' bind) marks it; the signal's own run needs none.
+// entry, a function with filled references' bind) marks it; the signal's own run needs none.
 function markFill(signal: Signal, fillFn: t.Expression) {
   const binding = signal.referencedBindings as Binding;
   return initedIntersectionDependsOn(binding) ||
     effectEntryNamesFill(binding) ||
-    isWrittenReference(binding)
+    isFilledReference(binding)
     ? callRuntime("_fill_mark", getScopeAccessorLiteral(binding, true), fillFn)
     : fillFn;
 }
@@ -905,17 +905,17 @@ function patchRenders(signal: Signal): boolean {
     signal.patchRendered = false;
     signal.patchRendered =
       patchesStructure(signal) ||
-      rendersWrittenIntersection(signal) ||
+      rendersFilledIntersection(signal) ||
       !hasClientRender(signal);
   }
   return signal.patchRendered;
 }
 
 // An intersection whose reads the patch writes: its members' fills leave it to the patch.
-function rendersWrittenIntersection({ referencedBindings }: Signal) {
+function rendersFilledIntersection({ referencedBindings }: Signal) {
   return (
     Array.isArray(referencedBindings) &&
-    isPatchWrittenIntersection(referencedBindings)
+    isFilledIntersection(referencedBindings)
   );
 }
 
@@ -1041,7 +1041,7 @@ function buildIntersection(
   const { source, id, returnedBy } = section.intersections!.get(intersection)!;
   if (source) return fn;
   // A created scope sets the intersection up by its id (`getCreatedSetup`), as any scope
-  // renders a written intersection where its group mixes (`patches/render`).
+  // renders a filled intersection where its group mixes (`patches/render`).
   const setup = isPatch() && getCreatedSetup(section).get(intersection);
   const setupId = setup && getResumeRegistryId(section, intersection, "setup");
   // One a caller's groups decide links where the call sends it (`recordIntersectionRenders`).
@@ -1401,7 +1401,7 @@ export function addStatement(
       type === "render" &&
       isPatch() &&
       !!expr?.rendersValue &&
-      writesPatchHole(targetSection, expr)
+      fillsHole(targetSection, expr)
         ? "patch"
         : type
     ];
@@ -1848,15 +1848,15 @@ export function writeRegisteredFns() {
 
   for (const registeredFn of registeredFns) {
     const fn = registeredFn.node.extra as t.FunctionExtra & t.NodeExtra;
-    const live = isPatch() && !!getWrittenReferences(fn);
+    const live = isPatch() && !!getFilledReferences(fn);
     statements.push(
       t.expressionStatement(
-        // A function with written references a patch binds records what resume revives of it.
+        // A function with filled references a patch binds records what resume revives of it.
         live
           ? callRuntime(
               "_bind_resume",
               t.stringLiteral(
-                registeredFn.registryId + " " + getWrittenReferences(fn),
+                registeredFn.registryId + " " + getFilledReferences(fn),
               ),
               t.identifier(registeredFn.id),
             )

@@ -18,7 +18,7 @@ declare module "./apply" {
   }
 }
 
-// A written intersection a scope renders where its group mixes, valued by the writes it depends
+// A filled intersection a scope renders where its group mixes, valued by the writes it depends
 // on: a live scope re-renders it once one changed, checked ahead of the scope's renders.
 patchers[PatchKey.Render] = (scope, id, reads) => {
   if (scope[AccessorProp.Gen] === runId) {

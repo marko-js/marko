@@ -318,7 +318,8 @@ normal render's flush.
 _Avoid_: frame
 
 **Patch**:
-One scope's part of a flush: the fills it writes into the scope's holes and
+One scope's part of a flush: the fills it supplies for the scope's holes (each a write or a registered
+fill) and
 the structural entries it navigates by (a branch, a loop, a child, a setup
 envelope), keyed by the accessors resume uses and applied to the live scope
 (`patchScope`). A flush's patches nest under their parent's structural
@@ -377,7 +378,7 @@ scopes, which may read them; its values follow the scope's child entries on the
 wire, as their renders may read what those write. A write never sets a slot a
 value's signal sets, which would then skip its renders: a `<let>` whose renders
 read members seeds the written ones in that one value too. Where its group
-mixes, a written intersection the scope renders rides the scope's own
+mixes, a filled intersection the scope renders rides the scope's own
 `PatchKey.Render` entry, created or paired.
 _Avoid_: seed block, init payload
 
@@ -414,7 +415,7 @@ slot) — state sources, no `$global`, param sources a patch fills —
 derived from its branch expression (`isStatefulStructure`), never stored; or a
 content or `<define>` body every consumer renders with client state. Resumed
 code re-renders it, so patch renders skip it and flushes omit its entry. A
-body only some consumer renders so (`getStatefulConsumers`) is patch-written
+body only some consumer renders so (`getStatefulConsumers`) is patched
 structure whose instances each consumer sets at render: a call by its mask, a
 dynamic tag or stateful chain by rendering it unpatched.
 _Avoid_: state-selected, client-owned
@@ -425,7 +426,7 @@ reads it from the group's two bits (`getUpdatesFrom`: `UpdatesFrom.Client`
 renders, `UpdatesFrom.Server` contributes). The client bit is set by
 client state, or for a server value the client derives: a call input its
 callee reads alone (`isClientDerivedParam`) where the fills of what the input reads
-ship, which then reach it and no hole is written. Only the group of a
+ship, which then reach it and no hole is filled. Only the group of a
 known child's param is decided per call, at render, and only code in that body
 reads it (`isCallerParamAt`); analysis knows only sources (state, params,
 `$global`), so translate code names those and never decides where a group
@@ -434,15 +435,33 @@ _Avoid_: ownership, owned (owner is the owner scope); server-/client- as a
 compile-time fact
 
 **Hole / filled / unfilled**:
-A read a patch keeps current by writing its value at the site is a _hole_ the
-patch _fills_; the html gates say which side acts on a param group:
+A _hole_ is anywhere client code needs a server value: a site the patch renders
+(text, attribute, `<show>` display, branch choice), a scope slot client code
+reads (a join's member, an effect's or handler's value), or a `<let>`/`$global`
+declaration that reaches every read. A patch _fills_ it: the decision
+(`fillsHole`, `isFilledHole`) and the act. It lands by a write where main would
+serialize the value (`PatchKey.Write`, `_patch_write`; the same verb as main's
+write reason) or by a registered fill (**Patch fill**). The write is the value's
+write reason on the instance (`getUnfilledPatchWrite`), a `<define>` body's
+params mapped to what its calls pass (`mapBodyParams`), a caller group's client
+bit deciding a guarded one (`_client_guard`); always where a `<let>` keeps
+content reading it, and where a consumer renders the content reading it as a
+client branch (`_client_branch_if`). What the client runs on a filled slot is
+named by the scope's entries, each valued by the filled reads it depends on
+(`writeReadsEntry`): an effect's, which also mounts it in a scope its flush
+created whose shell names no effect reading what a patch fills (one the created
+scope's own render queues ships as a `QueuedEffect`, which only re-runs it); a
+render, a filled intersection's or an `<if>`/`<for>` closure's; and the walk
+over a dynamic closure's subscribed scopes (`PatchSubscribers`). The html gates
+say which side acts on a param group:
 `_filled_guard` (a patch fills it: server-sourced, or constant where a created
 scope needs the seed), `_unfilled_if` (no patch fills it: the group is
 client-sourced, or the read sits in unpatched structure, unless the value is a `<define>`
 param a call passes as a module read from structure the client renders, which
 the call's forwards there push first: `derivesConstantParam`). Translate derives reads no patch can
 fill (`PatchWrite.unfillable`), never the gate.
-_Avoid_: server-side/client-side value, owned read
+_Avoid_: server-side/client-side value, owned read, effect write, capture
+write
 
 **Unpatched structure**:
 Structure patch renders skip and so never fill: stateful structure, a
@@ -451,7 +470,7 @@ branch or loop whose expression derives from a group updating from the client
 a dynamic tag site a patch never pairs, a `@catch` (one reading its error is
 written once, by the patch creating it). The html writer tracks it at render
 as context (`withUnpatched`, `inUnpatched`) because a child template cannot
-see how its parent reached it; the static cases are where `patchWrites` fails.
+see how its parent reached it; the static cases are where `patchFillsSection` fails.
 _Avoid_: client-owned structure, client-selected
 
 **Caught try**:
@@ -485,32 +504,32 @@ _Avoid_: part, global part, `$global` join
 
 **Stable**:
 A binding or expression with no sources, so fixed for its scope's lifetime: a
-constant, an `<id>`, a `<define>`'s renderer. A patch write of a stable value
+constant, an `<id>`, a `<define>`'s renderer. A fill of a stable value
 only seeds a created scope.
 
 **Paired structure**:
 A loop or branch whose expression is stable (its group's mask is `0`), outside
 structure a flush creates: its scopes stay, so
-the patch renders its body as paired (`withKeptBranchId`, not creatable), ships
+the patch renders its body as paired (`withPairedBranchId`, not creatable), ships
 no shell, and a paired branch with nothing filled ships no entry. Outside such
 structure an `<await>` body whose promise the client settles, or that always
-pairs, renders paired too (`keptBranch`): no flush creates it.
+pairs, renders paired too (`pairedBranch`): no flush creates it.
 _Avoid_: static branch, frozen rows
 
 **Branch path**:
 The root section and every section below it crossing no dropped content and
 no boundary content reading no params: a `@placeholder`, or a `@catch` reading
 none of its error (`enclosing.branchPath`). Outside stateful structure, its text
-and attr holes emit direct patch writes (`patchWrites`), a `@catch`'s into the
+and attr holes are filled by direct patch writes (`patchFillsSection`), a `@catch`'s into the
 scope its flush creates.
 _Avoid_: capture path, patch section
 
 **Patch fill**:
-A hole a patch writes is _filled_ (`isFilledHole`, `_filled_guard`). A value
-takes a registered _fill_ only where it is state a server value keeps reaching:
-a `<let>`'s declaration (`_fill_let`, `_fill_let_change`, `_fill_let_resume`),
-which reaches every read, and `$global`'s per-read setup (`_fill_global*`).
-Every other value a patch sends is a write.
+A fill lands one of two ways. It runs a registered _fill_ only where the hole
+is state a server value keeps reaching: a `<let>`'s declaration (`_fill_let`,
+`_fill_let_change`, `_fill_let_resume`), which reaches every read, and
+`$global`'s per-read setup (`_fill_global*`). Every other fill _writes_ the slot
+(`_patch_write`, `PatchKey.Write`).
 _Avoid_: deliver/delivery, forwarder
 
 **Client branch**:
@@ -528,29 +547,15 @@ renders its holes once per owner under the _client branch entry_
 (`PatchClientBranch:<id>`), which the client applies to each live instance in the
 owner's `ClientBranchScopes:<id>` set (`_content_kept`).
 
-**Written intersection**:
+**Filled intersection**:
 An intersection of two or more params, one a caller passes, whose every read the patch
-leaves to a hole it writes or an effect its entry re-runs, through any `<const>`
-of it (`isPatchWrittenIntersection`); not where each call of a `<define>` body passes a
+leaves to a hole it fills or an effect its entry re-runs, through any `<const>`
+of it (`isFilledIntersection`); not where each call of a `<define>` body passes a
 member client state, unless a member reads another intersection. Where its group is
-server-sourced on the instance the patch writes its holes; where the group mixes the
+server-sourced on the instance the patch fills its holes; where the group mixes the
 client re-runs it, by the scope's render entry, created or paired
 (`_patch_render`), unless each member it ships re-runs it by its own fill, and a
 member the client's side needs is written in place on its slot.
-
-**Patch write**:
-A patch writes a value where main would serialize it: its write reason on the
-instance (`getUnfilledPatchWrite`), a `<define>` body's params mapped to what its
-calls pass (`mapBodyParams`), a caller group's client bit deciding a guarded one
-(`_client_guard`); always where a `<let>` keeps content reading it, and where a
-consumer renders the content reading it as a client branch (`_client_branch_if`).
-What the client runs on it is named by the scope's entries, each valued by the writes
-it depends on (`writeReadsEntry`): an effect's, which also mounts it in a scope its
-flush created whose shell names no effect reading what a patch writes (one the created
-scope's own render queues ships as a `QueuedEffect`, which only re-runs it); a render,
-a written intersection's or an `<if>`/`<for>` closure's; and the walk over a dynamic
-closure's subscribed scopes (`PatchSubscribers`).
-_Avoid_: effect write, capture write
 
 **Marked write / marked bind**:
 A live scope's write (`PatchKey.MarkedWrite`) sets the slot and, only when the value
@@ -565,13 +570,13 @@ Here, as everywhere in the patch protocol, _bind_ means a registration attached 
 owner scope (an owner-bound entry), not main's two-way binding (`:=`).
 _Avoid_: dirty flag, version (a mark names its response)
 
-**Written references**:
-The bindings a registered function references that a patch may write
-(`getWrittenReferences`, `hasWrittenReferences`). Its registration names them as
+**Filled references**:
+The bindings a registered function references that a patch may fill
+(`getFilledReferences`, `hasFilledReferences`). Its registration names them as
 reads (`_bind_resume`, keyed `id read …`), and a bind of it makes a new function only
 when one of them changed in that response, shared per owner and registration (marked
 bind); a function reading client state is the client's and has none.
-_Avoid_: written captures, live function, live bind, held function
+_Avoid_: written references, written captures, live function, live bind, held function
 
 **Built object**:
 A value an object or array literal builds, one a branch may yield one from
@@ -607,8 +612,8 @@ _Avoid_: bind table, bind source, bind 0
 **Patch-keyed node**:
 A dom node the writer emits a patch entry keyed on, so its marker or scope ref
 is written whatever its reason says: a node rendering a value a flush
-writes (`rendersValue`, `writesPatchHole`), a known tag's child scope ref
-(`isKnownChildNode`, `patchWrites`), or the marker of loop rows a flush
+writes (`rendersValue`, `fillsHole`), a known tag's child scope ref
+(`isKnownChildNode`, `patchFillsSection`), or the marker of loop rows a flush
 pairs (`getLoopBody`, `patchesBranchesAt`). Analyze records what the template
 renders there; the patch module concludes once per analysis which slots are keyed
 (`isPatchKeyedSlot`), which forces their writes (`getSlotWriteReason`). Being

@@ -566,7 +566,7 @@ export class PatchRenderState extends PatchPageState {
   // Each owner's client branch entry the response renders, with the scope it is in.
   clientBranchRendered?: Map<string, number>;
   // What each scope's slots holding built objects depend on, by accessor.
-  writtenReads?: Record<number, Record<string, string>>;
+  filledReads?: Record<number, Record<string, string>>;
   // The writes each entry re-runs on, and its scope, resolved as the flush
   // serializes.
   entryReads?: Map<string[], number>;
@@ -928,7 +928,7 @@ function bindEntry(state: PatchRenderState, scopeId: number, value: unknown) {
     typeof value === "function" ? REGISTRY.get(value) : undefined;
   const bound = registered?.scope as ScopeInternals | undefined;
   const up = bound && findOwnerDepth(state, scopeId, bound[K_SCOPE_ID]!);
-  // A function with written references' owner may be below the scope (a child's `<return>`): up to
+  // A function with filled references' owner may be below the scope (a child's `<return>`): up to
   // the scope both reach, then down.
   if (
     up === undefined &&
@@ -1009,8 +1009,8 @@ export function _patch_write(
       ).length,
     );
     // A built object's readers depend on its sources, which the call recorded.
-    const reads = getWrittenReads(state, scopeId, value);
-    if (reads) ((state.writtenReads ??= {})[scopeId] ??= {})[accessor] = reads;
+    const reads = getBuiltObjectReads(state, scopeId, value);
+    if (reads) ((state.filledReads ??= {})[scopeId] ??= {})[accessor] = reads;
     if (setup && !inCreatable()) return "";
     const bind = bindEntry(state, scopeId, value);
     const patch = ensureScopePatch(state, scopeId);
@@ -1126,7 +1126,7 @@ export function resolveEntryReads(
       owner = link && (link.owner ?? link.parent);
     }
     const referenced =
-      owner !== undefined && state.writtenReads?.[owner]?.[name.slice(up)];
+      owner !== undefined && state.filledReads?.[owner]?.[name.slice(up)];
     if (referenced) {
       const hops = name.slice(0, up);
       for (const read of referenced.split(" ")) {
@@ -1145,7 +1145,7 @@ function addRead(seen: Set<string>, reads: string, read: string) {
   return reads ? reads + " " + read : read;
 }
 
-// Functions with written references: their registrations name them (`patches/marked-bind`).
+// Functions with filled references: their registrations name them (`patches/marked-bind`).
 const WRITTEN_REFERENCE_FNS = new WeakSet<WeakKey>();
 
 export function _bind_resume<T extends WeakKey>(
@@ -1176,7 +1176,7 @@ export function _patch_live<T>(
 
 // What a built object a call passed depends on: its sources, as hops from the scope
 // through the owner it was built in.
-function getWrittenReads(
+function getBuiltObjectReads(
   state: PatchRenderState,
   scopeId: number,
   value: unknown,

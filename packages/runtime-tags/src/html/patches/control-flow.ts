@@ -160,7 +160,10 @@ export function writeBranch(
     hop: AccessorPrefix.BranchScopes + accessor,
   };
   const opened = openScopePatch(state, branchId);
-  const branchIndex = (paired ? withPairedBranchId : withBranchId)(branchId, cb);
+  const branchIndex = (paired ? withPairedBranchId : withBranchId)(
+    branchId,
+    cb,
+  );
   const shellId =
     branchIndex === undefined || paired
       ? undefined

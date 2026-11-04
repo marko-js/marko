@@ -324,11 +324,11 @@ export function writeDynamicTagEntry(
     const renderer = normalizeDynamicRenderer<ServerRenderer>(tag);
     const fixed =
       rendererGroup !== undefined &&
-      !writesEntry(getUpdatesFrom(rendererMask, rendererGroup));
+      !isFilledEntry(getUpdatesFrom(rendererMask, rendererGroup));
     // A renderer its caller hands unchanged pairs, and its render writes its new
     // input, but for input a native element or the content's own code renders.
     if (
-      writesEntry(updatesFrom) &&
+      isFilledEntry(updatesFrom) &&
       (!fixed ||
         typeof renderer === "string" ||
         (!!renderer && clientInputRenderers.has(renderer)))
@@ -405,7 +405,7 @@ const clientInputRenderers = new WeakSet<ServerRenderer>();
 
 // The flush writes the entry: a server value changed it, or it seeds a scope
 // the flush may create.
-function writesEntry(sources: number) {
+function isFilledEntry(sources: number) {
   return sources === UpdatesFrom.Server || (!sources && inCreatable());
 }
 

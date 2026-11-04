@@ -106,19 +106,19 @@ import {
   getSeedWriteGroups,
   getStateInitSources,
   getWriteGroups,
-  getWriteSources,
+  getFillSources,
   type WriteGroups,
 } from "./decisions";
 import {
   setupFromClient,
   clientMayRenderInAnyCall,
-  addWrittenReads,
-  hasWrittenReferences,
+  addFilledReads,
+  hasFilledReferences,
   someFnValue,
   someReturnedFnValue,
   someReturnedFnValueOf,
   getCreatedSetup,
-  getWrittenReferences,
+  getFilledReferences,
   getPatchFill,
   getPatchFillBindings,
   isSectionParam,
@@ -129,7 +129,7 @@ import {
   someReached,
   getUnfilledReadSources,
   getUnfilledSubscribedSources,
-  patchWritesScope,
+  patchFillsScope,
   getWriteHop,
   runsEffectOnPatch,
   runsSubscribersByWrite,
@@ -137,7 +137,7 @@ import {
 import { getParamSelectedStructure } from "./structure";
 
 // The fills (and a known child's writes) a section's patch writes as `_scope`'s else;
-// a known child's written references write where declared, its params' to `paramWrites`.
+// a known child's filled references write where declared, its params' to `paramWrites`.
 export function getPatchFillCalls(
   section: Section,
   paramWrites: t.Statement[],
@@ -175,7 +175,7 @@ function pushKnownChildCalls(
   fillCalls: t.Expression[],
   paramWrites: t.Statement[],
 ) {
-  if (!isKnownChild(section) || !isWrittenReference(binding)) {
+  if (!isKnownChild(section) || !isFilledReference(binding)) {
     fillCalls.push(...buildPatchCalls(section, binding));
   } else if (isSectionParam(binding) && !isNamedWhereHidden(binding)) {
     const write = buildDeclarationWrite(binding);
@@ -260,23 +260,18 @@ export function writePatchResumeStatements(
       }
     });
   }
-  // Beside fills: a created scope's seeds and written intersection members' slot writes.
+  // Beside fills: a created scope's seeds and filled intersection members' slot writes.
   forEach(section.bindings, (binding) => {
     const { seed, write } = getPatchWrite(binding);
     const seeds = seed && getWriteReason(binding);
     // A value written in place wherever its group is the server's needs no more; in place
     // where an intersection the patch writes runs on the client (another member is the client's).
-    const intersectionWrites = write
+    const filledMembers = write
       ? undefined
-      : getPatchFill(binding).intersectionWrites;
+      : getPatchFill(binding).filledMembers;
     const othersClient =
-      intersectionWrites &&
-      orCallerGroupGuards(
-        section,
-        undefined,
-        "_client_guard",
-        intersectionWrites,
-      );
+      filledMembers &&
+      orCallerGroupGuards(section, undefined, "_client_guard", filledMembers);
     const inPlace =
       othersClient && andGuard(getFilledGuard(section, binding), othersClient);
     // A seed writes what plain's document would: a group-gated value only
@@ -309,7 +304,7 @@ export function writePatchResumeStatements(
     if (entry) body.push(t.expressionStatement(entry));
   });
 
-  // A closure over a patch-written slot (a value or a function with written references' new bind)
+  // A closure over a patch-written slot (a value or a function with filled references' new bind)
   // the client renders re-runs on a live scope once marked: no node reaches it.
   forEach(section.bindings, (binding) => {
     // A call may hand the client the structure around each subscriber, unless no param selects one's.
@@ -394,7 +389,7 @@ export function writePatchResumeStatements(
   });
 
   // The setup a flush names: a created or composed scope's where the client contributes
-  // the group, a subscriber, and on any scope a written intersection's render.
+  // the group, a subscriber, and on any scope a filled intersection's render.
   for (const [ref, setup] of getCreatedSetup(section)) {
     if (Array.isArray(ref)) {
       if (setup.setup === "mixed") {
@@ -493,7 +488,7 @@ export function writePatchResumeStatements(
 
   // A scope a flush writes, and so may create, seeds its state in the setup
   // envelope; content an attribute tag `<for>` creates also seeds its loop params.
-  if (patchWritesScope(section)) {
+  if (patchFillsScope(section)) {
     forEach(getPatchFillBindings(section), (binding) => {
       if (!isStateSourced(binding)) return;
       const change = letChanges.get(binding);
@@ -628,12 +623,12 @@ function isNamedWhereHidden(binding: Binding) {
   return !!named?.aliasOf && !!getNearestDeclared(named.aliasOf);
 }
 
-// A known child's written reference's calls, else a branch local's write, unless
+// A known child's filled reference's calls, else a branch local's write, unless
 // its section's end decides it.
 function buildDeclarationWrite(binding: Binding) {
   const { section } = binding;
   if (isKnownChild(section)) {
-    if (isWrittenReference(binding)) {
+    if (isFilledReference(binding)) {
       const calls = buildPatchCalls(section, binding);
       if (calls.length) return toSequenceExpression(calls);
     }
@@ -832,7 +827,7 @@ export function buildReturnChangeBind(
   if (refs && getCreatedSetup(section).get(refs)?.setup === "always") {
     return handler;
   }
-  const sources = getWriteSources(extra);
+  const sources = getFillSources(extra);
   return callRuntime(
     "_patch_bind",
     getScopeIdIdentifier(section),
@@ -1278,7 +1273,7 @@ function getReads(
   entryGroup?: ParamReasonGroup | false,
 ) {
   const reads: t.Expression[] = [];
-  for (const root of roots.reduce(addWrittenReads, new Set<Binding>())) {
+  for (const root of roots.reduce(addFilledReads, new Set<Binding>())) {
     const hop = getWriteHop(section, root);
     if (hop) {
       const sources = getSourcesForReferencedBindings(root)!;
@@ -1308,11 +1303,11 @@ function getSoleCallerGroup(section: Section, list: Opt<Sources>) {
 
 function noop() {}
 
-// A written reference of a function a patch may bind: its change makes the function anew.
-export function isWrittenReference(binding: Binding) {
+// A filled reference of a function a patch may bind: its change makes the function anew.
+export function isFilledReference(binding: Binding) {
   return someAlias(
     getCanonicalBinding(binding),
-    hasWrittenReferenceRead,
+    hasFilledReferenceRead,
     undefined,
     true,
   );
@@ -1322,9 +1317,9 @@ export function isWrittenReference(binding: Binding) {
 // marked slot or a fill, or any that binds a live one, here or in a call's template.
 export const [comparesBoundFn] = createAnalysisMemo(
   (fn: t.NodeExtra) =>
-    // A function with written references keeps its record wherever a patch binds it (its references
+    // A function with filled references keeps its record wherever a patch binds it (its references
     // judge it); a `<return>`'s caller links the record where it compares.
-    getWrittenReferences(fn)
+    getFilledReferences(fn)
       ? reachesBoundHolder(fn, bindsLive)
       : reachesBoundHolder(fn, comparesHeld, readsAsValue),
   false,
@@ -1359,7 +1354,7 @@ function isValueRead(read: Read) {
   return !(read.extra.exprRoot || read.extra).changeHandler;
 }
 
-// A holder of a function with written references a patch binds: one this template writes or fills, or
+// A holder of a function with filled references a patch binds: one this template writes or fills, or
 // another template's its entries or fill read.
 function bindsLive(held: Binding, own: boolean, expr?: t.NodeExtra) {
   return own
@@ -1369,16 +1364,16 @@ function bindsLive(held: Binding, own: boolean, expr?: t.NodeExtra) {
         intersectsClientState(held, expr!);
 }
 
-// A read of the binding lands in a function with written references its template registers.
-function hasWrittenReferenceRead(binding: Binding) {
+// A read of the binding lands in a function with filled references its template registers.
+function hasFilledReferenceRead(binding: Binding) {
   for (const reads of binding.reads.values()) {
-    if (some(reads, isWrittenReferenceRead)) return true;
+    if (some(reads, isFilledReferenceRead)) return true;
   }
   return false;
 }
 
-function isWrittenReferenceRead({ fnRoot }: Read) {
-  return !!fnRoot?.reason && !!getWrittenReferences(fnRoot);
+function isFilledReferenceRead({ fnRoot }: Read) {
+  return !!fnRoot?.reason && !!getFilledReferences(fnRoot);
 }
 
 // A function reaches a holder `test` accepts (`own`: in its template, not a
@@ -1406,16 +1401,14 @@ function reachesBoundHolder(
   );
 }
 
-// A value that may hold a function with written references a known child's `<return>` registers:
+// A value that may hold a function with filled references a known child's `<return>` registers:
 // the child leaves its record to the caller, which sees the holder.
-export function mayHoldReturnedFnWithWrittenReferencesIn(binding: Binding) {
-  return someReturnedFnValueOf(binding, hasWrittenReferences);
+export function mayHoldReturnedFnWithFilledReferencesIn(binding: Binding) {
+  return someReturnedFnValueOf(binding, hasFilledReferences);
 }
 
-export function mayHoldReturnedFnWithWrittenReferences(
-  exprs: Opt<t.NodeExtra>,
-) {
-  return someReturnedFnValue(exprs, hasWrittenReferences);
+export function mayHoldReturnedFnWithFilledReferences(exprs: Opt<t.NodeExtra>) {
+  return someReturnedFnValue(exprs, hasFilledReferences);
 }
 
 // A value that may be or hold a function its template registers with a scope,

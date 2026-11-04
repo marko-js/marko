@@ -18,9 +18,9 @@ declare module "./apply" {
 // owner holds.
 patchers[PatchKey.ClientBranch] = (scope, contentId, value) => {
   scope[AccessorPrefix.ClientBranchHoles + contentId] = value;
-  for (const instance of (scope[AccessorPrefix.ClientBranchScopes + contentId] as
-    | Set<Scope>
-    | undefined) || []) {
+  for (const instance of (scope[
+    AccessorPrefix.ClientBranchScopes + contentId
+  ] as Set<Scope> | undefined) || []) {
     if (instance[AccessorProp.Gen] > 0) patchScope(value, instance);
   }
 };

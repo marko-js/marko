@@ -34,14 +34,14 @@ import {
 import {
   inStatefulStructure,
   isStatefulStructure,
-  patchMayWrite,
-  patchWrites,
+  patchMayFillSection,
+  patchFillsSection,
 } from "./patch/structure";
 import {
   getClosureContents,
   getClosureRenderGroups,
   hasCallerGroupsAt,
-  mayHoldReturnedFnWithWrittenReferencesIn,
+  mayHoldReturnedFnWithFilledReferencesIn,
   runsClosureByWrite,
 } from "./patch/writers";
 import { getSourcesForReferencedBindings } from "./reasons";
@@ -187,8 +187,8 @@ function recordPatchEntries(binding: Binding) {
     if (write)
       linkRuntimeFeature(marked ? "patches/marked-write" : "patches/write");
   }
-  // A function with written references a known child returns that it holds binds by its record.
-  if (write && mayHoldReturnedFnWithWrittenReferencesIn(binding)) {
+  // A function with filled references a known child returns that it holds binds by its record.
+  if (write && mayHoldReturnedFnWithFilledReferencesIn(binding)) {
     linkRuntimeFeature("patches/marked-bind");
   }
 }
@@ -342,7 +342,7 @@ export function createsFromShell(section: Section) {
       !section.referencedClosures &&
       !section.children.length &&
       !section.hasSetupWork &&
-      patchMayWrite(section.parent!))
+      patchMayFillSection(section.parent!))
   );
 }
 
@@ -490,7 +490,7 @@ export function getShippedBranchShellId(section: Section) {
 
 // A flush may create a branch-path body outside stateful structure.
 function shipsBranchShell(section: Section) {
-  return !!section.branch?.optional && patchWrites(section);
+  return !!section.branch?.optional && patchFillsSection(section);
 }
 
 // A boundary creates from its content shell, never inside a stateful branch.

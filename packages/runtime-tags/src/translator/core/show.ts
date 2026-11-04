@@ -26,7 +26,7 @@ import { isPatch } from "../util/marko-config";
 import {
   linkHolePatcher,
   onReasonsSettled,
-  writesPatchHole,
+  fillsHole,
 } from "../util/patch/decisions";
 import { patchCreatesOrComposes } from "../util/patch/refresh";
 import { getExprRootGroupArgs } from "../util/patch/writers";
@@ -217,7 +217,7 @@ export default {
         // A patched display's entry names the encoded accessors a created
         // scope finds the range's markers by.
         const start = tagExtra[kStartBinding];
-        const patchArgs = writesPatchHole(tagSection, tagExtra)
+        const patchArgs = fillsHole(tagSection, tagExtra)
           ? [
               getScopeAccessorLiteral(nodeBinding, true),
               start && getScopeAccessorLiteral(start, true),

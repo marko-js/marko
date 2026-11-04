@@ -2,13 +2,13 @@ import * as AccessorPrefix from "./constants/accessor-prefix.debug";
 import * as AccessorProp from "./constants/accessor-prop.debug";
 import * as ClosureScopesProp from "./constants/closure-scopes-prop.debug";
 import * as ClosureSignalProp from "./constants/closure-signal-prop.debug";
-import * as WaitingFlushProp from "./constants/waiting-flush-prop.debug";
 import * as KeyedScopesProp from "./constants/keyed-scopes-prop.debug";
 import * as PatchKey from "./constants/patch-key.debug";
 import * as PatchPendingProp from "./constants/patch-pending-prop.debug";
 import * as PendingRenderProp from "./constants/pending-render-prop.debug";
 import * as RenderDataProp from "./constants/render-data-prop.debug";
 import * as RendererProp from "./constants/renderer-prop.debug";
+import * as WaitingFlushProp from "./constants/waiting-flush-prop.debug";
 type AccessorPrefix = AccessorPrefix.Value;
 export { AccessorPrefix };
 

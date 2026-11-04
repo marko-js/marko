@@ -24,7 +24,7 @@ import { hasClientState, holdsInitialValue } from "./decisions";
 
 // Every render of the section is patch-written: on the branch path, outside
 // stateful structure.
-export function patchWrites(section: Section) {
+export function patchFillsSection(section: Section) {
   return (
     isPatch() && section.enclosing.branchPath && !inStatefulStructure(section)
   );
@@ -32,9 +32,9 @@ export function patchWrites(section: Section) {
 
 // Some render of the section may be patch-written: no branch on its chain is
 // stateful, but content, which another consumer may render patched.
-export const patchMayWrite = createPassMemo(
+export const patchMayFillSection = createPassMemo(
   (section: Section): boolean =>
-    (!section.parent || patchMayWrite(section.parent)) &&
+    (!section.parent || patchMayFillSection(section.parent)) &&
     (!isStatefulStructure(section) || !!section.derives),
   false,
 );
@@ -160,7 +160,7 @@ function getStructureSources(section: Section) {
 export const getParamSelectedStructure = createPassMemo(
   (section: Section): Sources[] | undefined => {
     const chain = section.parent && getParamSelectedStructure(section.parent);
-    const sources = patchWrites(section)
+    const sources = patchFillsSection(section)
       ? getStructureSources(section)
       : undefined;
     return sources?.param && !sources.state
@@ -171,13 +171,15 @@ export const getParamSelectedStructure = createPassMemo(
 );
 
 // A call input its callee keeps per instance where a patch renders the call: its
-// own fill or holes where its group is the server's, a written intersection where it mixes.
+// own fill or holes where its group is the server's, a filled intersection where it mixes.
 export function calleeKeepsInput(
   section: Section,
   sources: Sources | undefined,
 ) {
   return (
-    patchWrites(section) && !sources?.state && hasParamOrGlobalSource(sources)
+    patchFillsSection(section) &&
+    !sources?.state &&
+    hasParamOrGlobalSource(sources)
   );
 }
 
@@ -198,7 +200,7 @@ export function hasStructuralParam(group: ParamReasonGroup) {
 // the node's section, and none is stateful (a chain with one is the client's).
 export function patchesBranchesAt(binding: Binding) {
   return (
-    patchWrites(binding.section) &&
+    patchFillsSection(binding.section) &&
     !some(binding.branchBodies, isStatefulStructure)
   );
 }

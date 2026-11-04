@@ -57,8 +57,8 @@ patch, fill, structural param, shell).
 - **Updates from.** Every write carries the group bits the caller set
   (`_set_scope_reason`, read by `_scope_reason`): two bits per param
   group, client and server. A page render writes what any contribution
-  can change; a patch render writes the holes of server-sourced groups as
-  bare values and leaves unpatched structure to the resumed page, which the
+  can change; a patch render fills the holes of server-sourced groups with
+  bare values (writes) and leaves unpatched structure to the resumed page, which the
   server keeps current through fills (`_fill_*` in `dom/patches/signals.ts`, keyed by
   `getPatchFillKey`). `translator/util/patch/` decides per binding what a
   patch fills, writes or leaves alone (`refresh.ts`, `structure.ts`,

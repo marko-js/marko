@@ -92,15 +92,15 @@ export function _fill_let_change<T>(
   );
 }
 
-// Per registration of a function with written references: whether a patch changed one on its owner.
-export const writtenReferences: Record<string, (owner: Scope) => unknown> = {};
+// Per registration of a function with filled references: whether a patch changed one on its owner.
+export const filledReferences: Record<string, (owner: Scope) => unknown> = {};
 
-// A registration of a function with written references (`patches/marked-bind`): `id read …`.
+// A registration of a function with filled references (`patches/marked-bind`): `id read …`.
 export function _bind_resume(key: string, factory: (owner: Scope) => unknown) {
   const sep = key.indexOf(" ");
   const id = key.slice(0, sep);
   const reads = key.slice(sep + 1);
-  writtenReferences[id] = (owner: Scope) => readChanged(owner, reads);
+  filledReferences[id] = (owner: Scope) => readChanged(owner, reads);
   _resumed[id] = factory;
 }
 
@@ -114,7 +114,7 @@ export function reviveBoundFn(id: string, owner: Scope) {
 }
 
 // An intersection a flush renders by this id, after whatever members arrive: a created
-// scope's setup, or a written intersection's where its group mixes (`patches/render`).
+// scope's setup, or a filled intersection's where its group mixes (`patches/render`).
 export function _or_patch(
   initId: string,
   id: number,

@@ -16,7 +16,7 @@ import { generateUidIdentifier } from "../util/generate-uid";
 import { getKnownAttrValues } from "../util/get-known-attr-values";
 import { getParentTag } from "../util/get-parent-tag";
 import { isPatch } from "../util/marko-config";
-import { getWriteSources } from "../util/patch/decisions";
+import { getFillSources } from "../util/patch/decisions";
 import { buildReturnChangeBind } from "../util/patch/writers";
 import { addReason } from "../util/reasons";
 import { onFinalizeReferences } from "../util/references";
@@ -113,7 +113,7 @@ export default {
       // A patch binds the handler under its callers' param groups.
       if (isPatch()) {
         onFinalizeReferences(() =>
-          ensureCallerParamGroups(getWriteSources(changeExtra)),
+          ensureCallerParamGroups(getFillSources(changeExtra)),
         );
       }
     }
