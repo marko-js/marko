@@ -1,0 +1,6 @@
+<define/Box|{ show, label }|>
+  <let/n=0/>
+  <button onClick() { n++ }>${show ? label + n : "-"}</button>
+</define>
+<const/Tag=Box/>
+<${Tag} show=input.show label=input.label/>

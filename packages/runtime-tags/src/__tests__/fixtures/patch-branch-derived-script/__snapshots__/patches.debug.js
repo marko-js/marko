@@ -1,0 +1,6 @@
+// PATCH
+`packages/runtime-tags/src/__tests__/fixtures/patch-branch-derived-script/template.marko_1*shell packages/runtime-tags/src/__tests__/fixtures/patch-branch-derived-script/template.marko_1_count#0:5/setup;Db%;<p>Seen <!></p>`
+{
+  "PatchBranch:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-branch-derived-script/template.marko_1*shell"
+}
+;BAE

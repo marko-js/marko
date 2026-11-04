@@ -1,0 +1,54 @@
+// lib.ts
+const units = [
+	"",
+	"K",
+	"M"
+];
+const lib = { format(value) {
+	return value.toUpperCase() + units[value.length % units.length];
+} };
+
+// template.marko
+const $Panel_content__walks = "b%c";
+const $Panel_content__template = "<!><!><!>";
+const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!><button class=toggle>toggle</button>`)($Panel_content__template);
+const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&%b b`)($Panel_content__walks);
+const $if_content2__fmt__OR__label = /*@__PURE__*/ _or_patch("__tests__/template.marko_3_fmt#2:4_label#2:5/setup", 1, ($scope) => _text($scope["#text/0"], $scope._.fmt($scope._.label)));
+const $if_content2__fmt = /*@__PURE__*/ _if_closure_patch("__tests__/template.marko_3_fmt#2:4/setup", "#text/0", 0, $if_content2__fmt__OR__label);
+const $if_content2__setup = ($scope) => {
+	$if_content2__fmt._($scope);
+	$if_content2__label._($scope);
+};
+const $if_content2__label = /*@__PURE__*/ _if_closure_patch("__tests__/template.marko_3_label#2:5/setup", "#text/0", 0, $if_content2__fmt__OR__label);
+const $Panel_content__if = /*@__PURE__*/ _if("#text/0", "<em> </em>", "D ", $if_content2__setup);
+const $Panel_content__isOpen = ($scope, isOpen) => $Panel_content__if($scope, isOpen ? 0 : 1);
+const $Panel_content__tag_input_fmt = /*@__PURE__*/ _const("fmt", $if_content2__fmt);
+const $Panel_content__tag_input_label = /*@__PURE__*/ _const("label", $if_content2__label);
+const $Panel_content__$params = ($scope, $params2) => $Panel_content__$temp($scope, $params2[0]);
+const $Panel_content__$temp = ($scope, $temp) => {
+	$Panel_content__isOpen($scope, $temp.isOpen);
+	$Panel_content__tag_input_fmt($scope, $temp.fmt);
+	$Panel_content__tag_input_label($scope, $temp.label);
+};
+const $if_content__input_label = /*@__PURE__*/ _if_closure_patch("__tests__/template.marko_1_input_label#0:6/setup", "#text/1", 0, ($scope) => _text($scope["#text/0"], $scope._.input_label));
+const $if_content__setup = $if_content__input_label;
+const $if = /*@__PURE__*/ _if("#text/1", "<b> </b>", "D ", $if_content__setup);
+const $open = _let("open/7", ($scope) => $if($scope, $scope.open ? 0 : 1));
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
+	$open($scope, !$scope.open);
+}));
+function $setup($scope) {
+	$Panel_content__tag_input_fmt($scope["#childScope/0"], lib.format);
+	$open($scope, true);
+	$setup__script($scope);
+}
+const $input_open = ($scope, input_open) => $Panel_content__isOpen($scope["#childScope/0"], input_open);
+const $input_label = /*@__PURE__*/ _const("input_label", ($scope) => {
+	$if_content__input_label($scope);
+	$Panel_content__tag_input_label($scope["#childScope/0"], $scope.input_label);
+});
+const $input = ($scope, input) => {
+	$input_label($scope, input.label);
+	$input_open($scope, input.open);
+};
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

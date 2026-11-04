@@ -1,0 +1,23 @@
+static function boom(msg: string): never {
+  throw new Error(msg);
+}
+<try>
+  <p>${input.fail ? boom(input.msg) : input.msg}</p>
+  <@catch|err|>
+    <const/w=input.v * 10/>
+    <b>${(err as Error).message}</b>
+    <script>console.log("catch", input.v)</script>
+    <if=input.show>
+      <i>${w}</i>
+      <script>console.log("if", input.v)</script>
+    </if>
+    <for|x| of=input.items>
+      <u>${x}</u>
+      <script>console.log("for", x, input.v)</script>
+    </for>
+    <wrap>
+      <s>${w}</s>
+      <script>console.log("content", input.v)</script>
+    </wrap>
+  </@catch>
+</try>

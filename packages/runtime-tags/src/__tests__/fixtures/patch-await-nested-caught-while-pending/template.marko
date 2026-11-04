@@ -1,0 +1,24 @@
+<let/count=0/>
+<button onClick() { count++ }>${count}</button>
+<try>
+  <await|a|=input.outer>
+    <div id="outer">${input.msg} ${a}</div>
+    <try>
+      <await|b|=input.inner>
+        <div id="inner">${input.msg} ${b}</div>
+      </await>
+      <@placeholder>
+        <em>inner loading</em>
+      </@placeholder>
+      <@catch>
+        <em>inner failed</em>
+      </@catch>
+    </try>
+  </await>
+  <@placeholder>
+    <em>outer loading</em>
+  </@placeholder>
+</try>
+<await|c|=input.last>
+  <span id="last">${input.msg} ${c}</span>
+</await>

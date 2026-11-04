@@ -1,0 +1,201 @@
+# Render `{"show":false}`
+```html
+<section>
+  <label
+    for="sM_WUVA"
+  >
+    direct
+  </label>
+  <input
+    id="sM_WUVA"
+  />
+</section>
+<section>
+  <em>
+    none
+  </em>
+</section>
+<section>
+  <label
+    for="sM_ZVUUYA"
+  >
+    body
+  </label>
+  <input
+    id="sM_ZVUUYA"
+  />
+</section>
+<section>
+  <em>
+    none
+  </em>
+</section>
+<section>
+  <label
+    for="sM_-1UU-0A"
+  >
+    attr
+  </label>
+  <input
+    id="sM_-1UU-0A"
+  />
+</section>
+<section>
+  <label
+    for="sM_-2UUA"
+  >
+    defined
+  </label>
+  <input
+    id="sM_-2UUA"
+  />
+</section>
+<label
+  for="sM_-4WUV-3A"
+>
+  define
+</label>
+<input
+  id="sM_-4WUV-3A"
+/>
+<em>
+  none
+</em>
+<label
+  for="sM_-7VU-6A"
+>
+  inner
+</label>
+<input
+  id="sM_-7VU-6A"
+/>
+<em>
+  none
+</em>
+<label
+  for="sM_-9UA"
+>
+  named
+</label>
+<input
+  id="sM_-9UA"
+/>
+```
+
+# Update
+```js
+const ids = new Set();
+for (const input of document.querySelectorAll("input")) {
+  assert(!ids.has(input.id), "duplicate " + input.id);
+  ids.add(input.id);
+  assert.equal(input.labels?.length, 1, "labels of " + input.id);
+}
+```
+
+# Update `{"show":true}`
+```html
+<section>
+  <label
+    for="sM_WUVA"
+  >
+    direct
+  </label>
+  <input
+    id="sM_WUVA"
+  />
+</section>
+<section>
+  <em>
+    none
+  </em>
+</section>
+<section>
+  <label
+    for="sM_ZVUUYA"
+  >
+    body
+  </label>
+  <input
+    id="sM_ZVUUYA"
+  />
+</section>
+<section>
+  <em>
+    none
+  </em>
+</section>
+<section>
+  <label
+    for="sM_-1UU-0A"
+  >
+    attr
+  </label>
+  <input
+    id="sM_-1UU-0A"
+  />
+</section>
+<section>
+  <label
+    for="sM_-2UUA"
+  >
+    defined
+  </label>
+  <input
+    id="sM_-2UUA"
+  />
+</section>
+<label
+  for="sM_-4WUV-3A"
+>
+  define
+</label>
+<input
+  id="sM_-4WUV-3A"
+/>
+<em>
+  none
+</em>
+<label
+  for="sM_-7VU-6A"
+>
+  inner
+</label>
+<input
+  id="sM_-7VU-6A"
+/>
+<em>
+  none
+</em>
+<label
+  for="sM_-9UA"
+>
+  named
+</label>
+<input
+  id="sM_-9UA"
+/>
+<section>
+  <label
+    for="sM_-abVUU-aaA"
+  >
+    created
+  </label>
+  <input
+    id="sM_-abVUU-aaA"
+  />
+</section>
+```
+## Change
+```
+INSERT: #sM_-9UA + section
+```
+
+# Update
+```js
+const ids = new Set();
+for (const input of document.querySelectorAll("input")) {
+  assert(!ids.has(input.id), "duplicate " + input.id);
+  ids.add(input.id);
+  assert.equal(input.labels?.length, 1, "labels of " + input.id);
+}
+```

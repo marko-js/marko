@@ -1,0 +1,8 @@
+<if=input.page === 0>
+  <p>a</p>
+</if>
+<else>
+  <html-style>p.s { color: red }</html-style>
+  <html-style ...input.attrs>p.t { color: green }</html-style>
+</else>
+<html-style ...input.attrs>p.u { --page: ${input.page} }</html-style>

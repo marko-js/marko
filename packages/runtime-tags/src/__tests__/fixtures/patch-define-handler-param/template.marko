@@ -1,0 +1,7 @@
+<let/cart=[] as string[]/>
+<define/Card|{ id }|>
+  <h1>Product ${id}</h1>
+  <button onClick() { cart = [...cart, id] }>Add to cart</button>
+</define>
+<Card id=input.id/>
+<p>Cart: ${cart.join(",")}</p>

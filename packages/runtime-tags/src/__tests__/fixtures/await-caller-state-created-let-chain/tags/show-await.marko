@@ -1,0 +1,11 @@
+<await|x|=input.promise>
+  <let/a=x/>
+  <let/b=a/>
+  <let/c=b/>
+  <let/d:=c/>
+  <style>
+    .v { color: ${c}; }
+  </style>
+  <p.v>${b}|${c}|${d}</p>
+  <card label=x/>
+</await>
