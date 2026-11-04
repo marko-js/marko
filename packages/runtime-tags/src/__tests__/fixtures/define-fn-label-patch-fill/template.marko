@@ -1,0 +1,4 @@
+<let/count=0/>
+<define/Row|{ fn, label }|><p>${fn() + label}</p></define>
+<Row fn=(() => count) label=input.label/>
+<button onClick() { count++ }>+</button>

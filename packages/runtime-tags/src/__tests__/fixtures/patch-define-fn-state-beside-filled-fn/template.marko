@@ -1,0 +1,4 @@
+<let/count=0/>
+<define/Row|{ a, b }|><p>${a() + b()}</p></define>
+<Row a=(() => count) b=(() => input.x)/>
+<button onClick() { count++ }>+</button>

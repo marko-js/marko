@@ -1,0 +1,13 @@
+import { resolveAfter } from "../../utils/resolve";
+<for|item| of=input.items>
+  <wrap>
+    <let/n=1/>
+    <script>n = 5</script>
+    <try>
+      <await=resolveAfter(0, 1)>
+        <p>${n}</p>
+      </await>
+      <@placeholder>loading</@placeholder>
+    </try>
+  </wrap>
+</for>

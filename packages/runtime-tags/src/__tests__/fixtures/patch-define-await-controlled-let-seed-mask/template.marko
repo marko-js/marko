@@ -1,0 +1,10 @@
+<let/p=resolveAfter("x", 1)/>
+<define/S|{ promise }|>
+  <await|x|=promise>
+    <let/s=x/>
+    <let/c=s valueChange(v) { s = v }/>
+    <span>${c}</span>
+  </await>
+</define>
+<if=input.show><S promise=p/></if>
+static import { resolveAfter } from "../../utils/resolve";

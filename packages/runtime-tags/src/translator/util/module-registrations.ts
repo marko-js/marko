@@ -19,7 +19,7 @@ import {
 } from "./get-root";
 import isInvokedFunction from "./is-invoked-function";
 import isStatic from "./is-static";
-import { getMarkoOpts, isOutputHTML } from "./marko-config";
+import { getMarkoOpts, isOutputHTML, isPatch } from "./marko-config";
 import { isGuardedReason, type Reason } from "./reasons";
 import {
   getCanonicalExpr,
@@ -27,7 +27,12 @@ import {
   type RegisteredFnExtra,
 } from "./references";
 import { callRuntime, getRuntimePath, registerRuntimeValue } from "./runtime";
-import { getReasonForExpr, landsRetained } from "./solve-reasons";
+import {
+  getReasonForExpr,
+  landsInitialValue,
+  landsRetained,
+  landsRetainedAsInput,
+} from "./solve-reasons";
 import { ALWAYS, mergeSources } from "./sources";
 import { createAnalysisState } from "./state";
 import { getLiteralName, isValidPropertyIdentifier } from "./to-property-name";
@@ -71,6 +76,11 @@ const [getReferencesByImport] = createAnalysisState(
       Set<t.NodeExtra>
     >(),
 );
+
+// A function its template may register once client code reads it.
+export function isTrackedFunction(extra: t.NodeExtra) {
+  return getReferencesByFn().has(extra as RegisteredFnExtra);
+}
 
 // Tracks a function its template may register once client code reads it,
 // reserving the id an importer registers it under when it is exported.
@@ -289,9 +299,13 @@ function resolveReason(exprExtras: Set<t.NodeExtra>) {
   for (const exprExtra of exprExtras) {
     const extra = getCanonicalExpr(exprExtra);
     if (!exprExtra.consumed || extra.retained) {
+      // A patch may re-run any intersection reading a `<let>`, so code in its initial
+      // value is read whatever its caller passes.
       reason = mergeSources(
         reason,
-        landsRetained(extra) ? ALWAYS : getReasonForExpr(extra),
+        landsRetained(extra) || (isPatch() && landsInitialValue(extra))
+          ? ALWAYS
+          : getReasonForExpr(extra),
       );
     }
   }
@@ -300,13 +314,21 @@ function resolveReason(exprExtras: Set<t.NodeExtra>) {
 }
 
 // When the server writes a template: an effect reading it runs on the client
-// instead of reading it from the resume data.
+// instead; a patch may write one in an unknown tag's input or a `<let>`'s initial value.
 function resolveTemplateReason(exprExtras: Set<t.NodeExtra>) {
   let reason: undefined | Reason;
   for (const exprExtra of exprExtras) {
     const extra = getCanonicalExpr(exprExtra);
     if (!extra.isEffect) {
-      reason = mergeSources(reason, getReasonForExpr(extra));
+      // A dynamic tag reads its attributes as one; one its known templates read
+      // derives where the template goes past the call.
+      const passed = exprExtra.derives ? exprExtra : extra;
+      reason = mergeSources(
+        reason,
+        isPatch() && (landsRetainedAsInput(passed) || landsInitialValue(passed))
+          ? ALWAYS
+          : getReasonForExpr(extra),
+      );
     }
   }
 

@@ -1,0 +1,54 @@
+// template.marko
+const $Panel_content__walks = "b%c";
+const $Panel_content__template = "<!><!><!>";
+_shells({
+	a: `a !a3;${((_w0) => `b/${_w0}&%b b`)($Panel_content__walks)};${((_w0) => `<!>${_w0}<!><button>toggle</button>`)($Panel_content__template)}`,
+	a1: "a1;D ;<em> </em>"
+});
+var template_default = _template("a", (input) => {
+	const $scope0_reason = _scope_reason(), $uf__input_show__OR__input_label__OR__input_rest = _updates_from($scope0_reason, 2), $fg__input_show = _filled_guard($scope0_reason, 3), $fg__input_label = _filled_guard($scope0_reason, 4), $fg__input_rest = _filled_guard($scope0_reason, 5), $fg__input_other = _filled_guard($scope0_reason, 6);
+	const $scope0_id = _scope_id();
+	let open = false;
+	const Panel = { content: _content_resume("a2", ({ isOpen, label }) => {
+		const $scope1_id = _scope_id();
+		const $scope1_reason = _scope_reason(), $wg__isOpen = _write_guard($scope1_reason, 0), $ui__isOpen = _unfilled_if($scope1_reason, 0), $fg__label = _filled_guard($scope1_reason, 1), $wi__isOpen = _write_if($scope1_reason, 0);
+		_if(() => {
+			if (isOpen) {
+				const $scope2_id = _scope_id();
+				_html(`<em>${_text_mark($scope2_id, "a", label, 1, $scope1_reason, 1)}</em>`);
+				_client_guard($scope1_reason, 1) && _patch_render($scope2_id, "a0");
+				_scope($scope2_id, { _: _write_if($scope1_reason, 1) && _scope_with_id($scope1_id) });
+				return 0;
+			}
+		}, $scope1_id, "a", 1, $wg__isOpen, 1, 0, 0, ["a1"], $scope1_reason, 0);
+		$fg__label && _client_guard($scope1_reason, 0) && _patch_render($scope1_id, "a0", "e");
+		$wi__isOpen && _scope($scope1_id, { e: $wi__isOpen && ($ui__isOpen || _unfilled_if($scope1_reason, 1)) && label }) || $fg__label && $ui__isOpen && _patch_write($scope1_id, "xe", label, !_server_guard($scope1_reason, 1));
+	}, $scope0_id) };
+	_set_scope_reason($uf__input_show__OR__input_label__OR__input_rest << 1 | $uf__input_show__OR__input_label__OR__input_rest << 3);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
+	Panel.content({
+		isOpen: input.show,
+		label: input.label,
+		...input.rest
+	});
+	_patch_child_end();
+	const Tag = input.other ? "div" : Panel;
+	_dynamic_tag($scope0_id, "b", Tag, {
+		isOpen: true,
+		label: input.label + "!"
+	}, 8);
+	_html(`<button>toggle</button>${_el_mark($scope0_id, "c")}`);
+	_script($scope0_id, "a3");
+	_patch_render($scope0_id, "a4", (($fg__input_show ? " f" : "") + ($fg__input_label ? " g" : "") + ($fg__input_rest ? " h" : "")).slice(1), $scope0_reason, 2);
+	_patch_render($scope0_id, "a5", $fg__input_other && "j", $scope0_reason, 6);
+	_patch_render($scope0_id, "a6", (($fg__input_label ? " g" : "") + ($fg__input_other ? " n" : "")).slice(1));
+	_scope($scope0_id, {
+		f: _write_if($scope0_reason, 1) && input.show,
+		g: input.label,
+		h: _write_if($scope0_reason, 0) && input.rest,
+		k: open,
+		l: _unfilled_if($scope0_reason, 6) && Panel,
+		n: Tag,
+		a: _existing_scope($childScope)
+	}) || ($fg__input_show && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xf", input.show, !_server_guard($scope0_reason, 3)), $fg__input_label && _patch_write($scope0_id, "xg", input.label, !_server_guard($scope0_reason, 4)), $fg__input_rest && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xh", input.rest, !_server_guard($scope0_reason, 5)), $fg__input_other && _patch_write($scope0_id, "xn", Tag, !_server_guard($scope0_reason, 6)));
+}, 1);

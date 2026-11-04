@@ -1,0 +1,8 @@
+import { coin } from "./helper";
+<let/count=0/>
+<main>
+  <if=(count > input.min && coin() > 0.5)>
+    <p>win</p>
+  </if>
+  <button onClick() { count = count + 1 }>+</button>
+</main>
