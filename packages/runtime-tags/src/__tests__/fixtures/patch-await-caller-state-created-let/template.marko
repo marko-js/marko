@@ -1,0 +1,5 @@
+<let/p=input.promise/>
+<button.swap onClick() { p = Promise.resolve("green"); }>swap</button>
+<if=input.show>
+  <show-await promise=p label=input.label/>
+</if>

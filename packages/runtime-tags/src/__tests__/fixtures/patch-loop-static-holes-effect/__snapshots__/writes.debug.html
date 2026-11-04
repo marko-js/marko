@@ -1,0 +1,22 @@
+<ul><!--M_[-->
+  <li>1:<!>a<!--M_$2 #text/2--></li><!--M_$2 #li/0--><!--M_[2-->
+  <li>2:<!>a<!--M_$3 #text/2--></li><!--M_$3 #li/0--><!--M_]1 #ul/0 3-->
+</ul><!--M_$1 #ul/0-->
+<ol><!--M_[-->
+  <li>1</li><!--M_[4-->
+  <li>2</li><!--M_]1 #ol/1 5-->
+</ol><!--M_$1 #ol/1--><!--M_]1 #text/2-->
+<script>
+  WALKER_RUNTIME("M")("_").patchBuild = "b";
+  M._.r = [_ => [1, {
+      input_note: "a",
+      "ClosureScopes:input_note/7": new Set
+    }, {
+      _: _(1)
+    }, {
+      _: _(1)
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/patch-loop-static-holes-effect/template.marko_1_input_note#0:5 2 3"
+  ];
+  M._.w()
+</script>

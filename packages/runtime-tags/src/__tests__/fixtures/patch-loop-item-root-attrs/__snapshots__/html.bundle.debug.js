@@ -1,0 +1,56 @@
+// tags/icon.marko
+const $template$1 = "<svg viewBox=\"0 0 1 1\"><title></title></svg>";
+const $walks$1 = "D l";
+const $setup$1 = [[], []];
+_shells({ "__tests__/tags/icon.marko": "__tests__/tags/icon.marko;D ;<svg viewBox=\"0 0 1 1\"><title></title></svg>" });
+var icon_default = _template("__tests__/tags/icon.marko", (input) => {
+	const $scope0_reason = _scope_reason();
+	const $scope0_id = _scope_id();
+	_html(`<svg viewBox="0 0 1 1"><title>${_escape(input.name, $scope0_id, "PatchTextContent:#title/0", $scope0_reason, 0)}</title>${_el_mark($scope0_id, "#title/0", _updates_from($scope0_reason, 0))}</svg>`);
+	_scope($scope0_id, {}, "__tests__/tags/icon.marko", 0);
+});
+
+// template.marko
+const $template = "<nav></nav><main></main>";
+const $walks = " b b";
+const $setup = [[], []];
+_shells({
+	"__tests__/template.marko": "__tests__/template.marko; b ;<nav></nav><main></main>",
+	"__tests__/template.marko_1*shell": `__tests__/template.marko_1*shell${_shell_marker([[], []], ["#childScope/1>", $setup$1])};${/*@__PURE__*/ ((_w0) => ` D/${_w0}&D m`)("D l")};${/*@__PURE__*/ ((_w0) => `<a class=link>${_w0}<span> </span></a>`)($template$1)}`,
+	"__tests__/template.marko_2*shell": "__tests__/template.marko_2*shell;D ;<p> </p>"
+});
+var template_default = _template("__tests__/template.marko", (input) => {
+	const $scope0_reason = _scope_reason(), $uf__input_items = _updates_from($scope0_reason, 1), $wg__input_page = _write_guard($scope0_reason, 3), $ui__input_items = _unfilled_if($scope0_reason, 1), $fg__input_path = _filled_guard($scope0_reason, 2);
+	const $scope0_id = _scope_id();
+	_html("<nav>");
+	_for_of(input.items, (item) => {
+		const $scope1_id = _scope_id(), $ui__input_path = _unfilled_if($scope0_reason, 2), $fg__input_items = _filled_guard($scope0_reason, 1);
+		$fg__input_items && $ui__input_path && _patch_write($scope1_id, "PatchMarkedWrite:item_href", item?.href, !_server_guard($scope0_reason, 1));
+		const active = item.href === input.path;
+		_html(`<a${_attr_class(["link", { active }], $scope1_id, "#a/0", $scope0_reason, 0)}${_attr("href", item.href, $scope1_id, "#a/0", $scope0_reason, 1)}>`);
+		_set_scope_reason($uf__input_items << 1);
+		const $childScope = _peek_scope_id($scope1_id, "#childScope/1", 0);
+		icon_default({ name: item.icon });
+		_patch_child_end();
+		_html(`<span>${_text_mark($scope1_id, "#text/2", item.label, 1, $scope0_reason, 1)}</span></a>${_el_mark($scope1_id, "#a/0", _updates_from($scope0_reason, 0) || $uf__input_items)}`);
+		_patch_render($scope1_id, "__tests__/template.marko_1_input_path#0:5_item_href#5/setup", [_filled_guard($scope0_reason, 2) && ">input_path", $fg__input_items && "item_href"], $scope0_reason, 0);
+		_scope($scope1_id, {
+			item_href: ($ui__input_path || _unfilled_if($scope0_reason, 0)) && item?.href,
+			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id),
+			"#childScope/1": _existing_scope($childScope)
+		}, "__tests__/template.marko", "2:4", { item_href: ["item.href", "2:8"] });
+	}, 0, $scope0_id, "#nav/0", 1, 1, 1, 0, 0, "__tests__/template.marko_1*shell", $scope0_reason, 1);
+	_html(`</nav>${_el_mark($scope0_id, "#nav/0")}<main>`);
+	_if(() => {
+		if (input.page) {
+			const $scope2_id = _scope_id();
+			_html(`<p>${_text_mark($scope2_id, "#text/0", input.page, 1, $scope0_reason, 3)}</p>`);
+			_client_guard($scope0_reason, 3) && _patch_render($scope2_id, "__tests__/template.marko_2_input_page#0:6/setup");
+			_scope($scope2_id, { _: _write_if($scope0_reason, 3) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "10:8");
+			return 0;
+		}
+	}, $scope0_id, "#main/1", 1, $wg__input_page, 1, 0, 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 3);
+	_html(`</main>${_el_mark($scope0_id, "#main/1", $wg__input_page)}`);
+	$fg__input_path && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "__tests__/template.marko_1_input_path#0:5/setup", "input_path");
+	_scope($scope0_id, { input_path: ($ui__input_items || _unfilled_if($scope0_reason, 0)) && input.path }, "__tests__/template.marko", 0, { input_path: ["input.path"] }) || $fg__input_path && $ui__input_items && _patch_write($scope0_id, "PatchMarkedWrite:input_path", input.path, !_server_guard($scope0_reason, 2));
+}, 1);
