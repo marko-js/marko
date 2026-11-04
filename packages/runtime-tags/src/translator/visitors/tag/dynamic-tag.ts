@@ -33,10 +33,21 @@ import {
   knownTagAnalyze,
   knownTagTranslateDOM,
   knownTagTranslateHTML,
+  nextIdSite,
 } from "../../util/known-tag";
-import { isOptimize, isOutputHTML } from "../../util/marko-config";
+import { isOptimize, isOutputHTML, isPatch } from "../../util/marko-config";
 import { analyzeAttributeTags } from "../../util/nested-attribute-tags";
-import { concat, type Opt } from "../../util/optional";
+import { concat, type Opt, toArray } from "../../util/optional";
+import {
+  keepsSeededMarker,
+  linkHolePatcher,
+  fillsHole,
+  onReasonsSettled,
+} from "../../util/patch/decisions";
+import {
+  getExprRootGroupArgs,
+  getRendererGroupArgs,
+} from "../../util/patch/writers";
 import { addAlwaysReason, addReasonExprs } from "../../util/reasons";
 import {
   getAllTagReferenceNodes,
@@ -52,6 +63,7 @@ import {
   callRuntime,
   getCompatRuntimeFile,
   importRuntimeFeature,
+  linkRuntimeFeature,
   registerRuntimeValue,
 } from "../../util/runtime";
 import {
@@ -75,6 +87,10 @@ import {
   type Section,
   StructureKind,
 } from "../../util/sections";
+import {
+  getClientBranchContents,
+  namesRegisteredTemplates,
+} from "../../util/shell";
 import {
   addStatement,
   addValue,
@@ -149,6 +165,15 @@ export default {
       if (node.extra!.tagNameType === TagNameType.NativeTag) {
         assertNoNativeAttrTags(tag);
       }
+      // A class API template fails its own patch compile (`isTagsAPI`), so
+      // only a legacy taglib `renderer` reaches here.
+      if (node.extra!.featureType === "class" && isPatch()) {
+        throw tag
+          .get("name")
+          .buildCodeFrameError(
+            `The Marko 5 (class API) tag \`${getTagNameHint(node)}\` cannot render with the experimental \`patches\` option, which compiles the tags API only. Migrate it to the tags API, stop rendering it, or turn \`patches\` off.`,
+          );
+      }
       if (node.var && node.extra!.featureType === "class") {
         throw tag
           .get("var")
@@ -182,6 +207,7 @@ export default {
       // Name-only tags are left out: flagging them registers sibling attr-tag
       // props through `for` items, so a bare function as the name stays unregistered.
       if (inputNodes.length) tagExtra.retained = true;
+      if (node.name.type !== "StringLiteral") tagExtra.rendersContent = true;
       const tagBody = tag.get("body");
       const hasVar = !!tag.node.var;
       const usesVar = isTagVarUsed(tag);
@@ -203,6 +229,17 @@ export default {
         BindingType.dom,
         tagSection,
       ));
+      // The dynamic tag entry applies without this template's dom module.
+      linkHolePatcher(tagSection, tagExtra, "patches/dynamic-tag");
+      // Fallback: a write a patch fills into its params (a `<let>` its input seeds,
+      // say) links page-level.
+      if (
+        isPatch() &&
+        node.name.type !== "StringLiteral" &&
+        inputNodes.length
+      ) {
+        linkRuntimeFeature("patches/write");
+      }
 
       if (hasVar) {
         trackVarReferences(tag, BindingType.derived)!.returnedBy = {
@@ -241,6 +278,15 @@ export default {
 
       structure.marker(tag, nodeBinding);
       structure.enterShallow(tag);
+      // A tag client state names is the patch's to create alone: its entry
+      // rides a created scope's setup, with the child entry of what it renders.
+      if (isPatch()) {
+        onReasonsSettled(() => {
+          if (keepsSeededMarker(tagSection, tagExtra)) {
+            linkRuntimeFeature("patches/setup-child");
+          }
+        });
+      }
       // A class API tag without a tags template renders only through the
       // interop: dom output renders nothing at its marker, nor its body.
       if (
@@ -467,33 +513,97 @@ export default {
         const markerGuard = getWriteGuard(tagSection, markerReason, true);
         // For a debug build's check that the tag it renders is not lazy.
         const debugTagVar = !isOptimize() && node.var && t.numericLiteral(1);
-        const dynamicTagExpr = hasTagArgs
-          ? callRuntime(
-              "_dynamic_tag",
-              getScopeIdIdentifier(tagSection),
-              getScopeAccessorLiteral(nodeBinding),
-              tagExpression,
-              t.arrayExpression(args),
-              // Fallback body for a null/string renderer; the DOM side already
-              // passes it, so a hardcoded 0 here was an SSR/CSR mismatch.
-              contentProp ? contentProp.value : t.numericLiteral(0),
-              t.numericLiteral(1),
-              markerGuard || absentArg(1),
-              debugTagVar,
-            )
-          : callRuntime(
-              "_dynamic_tag",
-              getScopeIdIdentifier(tagSection),
-              getScopeAccessorLiteral(nodeBinding),
-              tagExpression,
-              args[0],
-              args[1] || absentArg(0),
-              absentArg(0),
-              markerGuard || absentArg(1),
-              debugTagVar,
+        // The resumed variable's id: `_var` wires it, a patch entry fills it.
+        const varId =
+          node.var &&
+          isTagVarResumed(tag) &&
+          getResumeRegistryId(tagSection, node.var.extra?.binding, "var");
+        // A patched tag writes its entry from what it renders (the entry ships
+        // no statically empty input) and marks its branch whatever its reason.
+        const input = args[0];
+        const emptyInput =
+          !hasTagArgs &&
+          input.type === "ObjectExpression" &&
+          !input.properties.length;
+        let patched = 0;
+        let groupArgs: t.Expression[] = [];
+        let rendererArgs: t.Expression[] = [];
+        let createdOnly: t.NumericLiteral | undefined;
+        if (fillsHole(tagSection, tag.node.extra)) {
+          groupArgs = getExprRootGroupArgs(tagSection, tagExtra);
+          // A renderer the name hands unchanged pairs while its input changes.
+          if (groupArgs.length) {
+            rendererArgs = getRendererGroupArgs(
+              tagSection,
+              tagExtra,
+              groupArgs,
             );
+          }
+          createdOnly = keepsSeededMarker(tagSection, tagExtra)
+            ? t.numericLiteral(1)
+            : absentArg(0);
+          patched =
+            (emptyInput ? 2 : 1) |
+            (namesRegisteredTemplates(tagSection, tagExtra) ? 4 : 0);
+        }
+        const tagVarArg =
+          patched && varId ? t.stringLiteral(varId) : debugTagVar;
+        const scopeIdArg = getScopeIdIdentifier(tagSection);
+        const accessorArg = getScopeAccessorLiteral(nodeBinding);
+        const inputArg = hasTagArgs ? t.arrayExpression(args) : input;
+        // Fallback body for a null/string renderer; the DOM side already
+        // passes it, so a hardcoded 0 here was an SSR/CSR mismatch.
+        const contentArg = hasTagArgs
+          ? contentProp
+            ? contentProp.value
+            : t.numericLiteral(0)
+          : args[1] || absentArg(0);
+        const inputIsArgs = hasTagArgs ? t.numericLiteral(1) : absentArg(0);
+        const markerArg = markerGuard || absentArg(1);
+        let dynamicTagExpr: t.Expression;
+        if (isPatch()) {
+          // `patched` (its flags, with the call site an `<id>` names above
+          // them) follows the input: the order a patch build's calls are smallest in.
+          patched |= nextIdSite() << 3;
+          const branches = getClientBranchContents().get(nodeBinding);
+          const clientBranchIds =
+            branches && toArray(branches, getContentIdLiteral);
+          dynamicTagExpr = callRuntime(
+            "_dynamic_tag",
+            scopeIdArg,
+            accessorArg,
+            tagExpression,
+            inputArg,
+            patched ? t.numericLiteral(patched) : absentArg(0),
+            contentArg,
+            inputIsArgs,
+            markerArg,
+            groupArgs[0],
+            groupArgs[1],
+            createdOnly,
+            rendererArgs[0],
+            rendererArgs[1] || (!rendererArgs[0] && absentArg(0)),
+            tagVarArg || (clientBranchIds && absentArg(0)),
+            clientBranchIds &&
+              (clientBranchIds.length === 1
+                ? clientBranchIds[0]
+                : t.arrayExpression(clientBranchIds)),
+          );
+        } else {
+          dynamicTagExpr = callRuntime(
+            "_dynamic_tag",
+            scopeIdArg,
+            accessorArg,
+            tagExpression,
+            inputArg,
+            contentArg,
+            inputIsArgs,
+            markerArg,
+            tagVarArg,
+          );
+        }
 
-        if (node.var && isTagVarResumed(tag)) {
+        if (varId) {
           const dynamicScopeIdentifier = generateUidIdentifier(
             tag.get("name").toString() + "_scope",
           );
@@ -514,13 +624,7 @@ export default {
                 getScopeIdIdentifier(tagSection),
                 getScopeOffsetAccessorLiteral(nodeBinding),
                 dynamicScopeIdentifier,
-                t.stringLiteral(
-                  getResumeRegistryId(
-                    tagSection,
-                    node.var.extra?.binding,
-                    "var",
-                  ),
-                ),
+                t.stringLiteral(varId),
                 mutatesTagVar
                   ? getScopeAccessorLiteral(nodeBinding)
                   : undefined,
@@ -544,7 +648,10 @@ export default {
         if (tag.node.var && isTagVarResumed(tag)) {
           const varBinding = tag.node.var.extra!.binding!;
           tagVarSignal = initValue(varBinding);
-          tagVarSignal.register = true;
+          // A patch writes the variable's value by its resume id.
+          tagVarSignal.register = fillsHole(section, tag.node.extra)
+            ? "fill"
+            : true;
           tagVarSignal.referenced = true;
           tagVarSignal.buildAssignment = (valueSection, value) =>
             buildVarChange(
@@ -696,4 +803,8 @@ function getDynamicTagInputBindings(tagExtra: t.MarkoTagExtra): Opt<Binding> {
 // something reads the value, or writes it back through the tag.
 function isTagVarResumed(tag: t.NodePath<t.MarkoTag>) {
   return !tag.node.var!.extra!.binding!.pruned || isTagVarAssigned(tag);
+}
+
+function getContentIdLiteral(content: Section) {
+  return t.stringLiteral(getResumeRegistryId(content, "content"));
 }

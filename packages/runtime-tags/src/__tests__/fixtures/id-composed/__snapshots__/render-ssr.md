@@ -1,0 +1,44 @@
+# Render `{"items":[{"key":"a"},{"key":"b"}]}`
+```html
+<h2
+  id="sM_1"
+>
+  Fields
+</h2>
+<label
+  for="sM_2"
+>
+  a
+</label>
+<input
+  aria-describedby="sM_1"
+  id="sM_2"
+/>
+<label
+  for="sM_3"
+>
+  a
+</label>
+<input
+  aria-describedby="sM_1"
+  id="sM_3"
+/>
+<label
+  for="sM_4"
+>
+  b
+</label>
+<input
+  aria-describedby="sM_1"
+  id="sM_4"
+/>
+<label
+  for="sM_5"
+>
+  b
+</label>
+<input
+  aria-describedby="sM_1"
+  id="sM_5"
+/>
+```

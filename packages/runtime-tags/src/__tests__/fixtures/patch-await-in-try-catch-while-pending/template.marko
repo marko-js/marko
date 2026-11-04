@@ -1,0 +1,15 @@
+<let/count=0/>
+<button onClick() { count++ }>${count}</button>
+<try>
+  <section>
+    <try>
+      <await=input.promise>
+        <div id="done">${input.msg} done</div>
+      </await>
+      <@catch><p>oops</p></@catch>
+    </try>
+  </section>
+  <@placeholder>
+    <em>loading</em>
+  </@placeholder>
+</try>

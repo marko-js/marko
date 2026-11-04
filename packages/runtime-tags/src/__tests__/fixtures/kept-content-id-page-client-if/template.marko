@@ -1,0 +1,8 @@
+<define/Field>
+  <id/uid/>
+  <input id=uid/>
+  <label for=uid>${input.label}</label>
+</define>
+<let/field=Field/>
+<button onClick() { field = undefined }>x</button>
+<if=field><card content=field/></if>
