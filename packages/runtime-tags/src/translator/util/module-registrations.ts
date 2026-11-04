@@ -31,6 +31,7 @@ import {
   getReasonForExpr,
   landsInitialValue,
   landsRetained,
+  landsRetainedAsInput,
 } from "./solve-reasons";
 import { ALWAYS, mergeSources } from "./sources";
 import { createAnalysisState } from "./state";
@@ -321,15 +322,21 @@ function resolveReason(exprExtras: Set<t.NodeExtra>) {
 }
 
 // When the server writes a template: an effect reading it runs on the client
-// instead of reading it from the resume data.
+// instead, and a patch may write one passed in an unknown tag's input.
 function resolveTemplateReason(exprExtras: Set<t.NodeExtra>) {
   let reason: undefined | Reason;
   for (const exprExtra of exprExtras) {
     const extra = getCanonicalExpr(exprExtra);
     if (!extra.isEffect) {
-      reason = mergeSources(reason, getReasonForExpr(extra));
+      reason = mergeSources(
+        reason,
+        isPatch() && landsRetainedAsInput(extra)
+          ? ALWAYS
+          : getReasonForExpr(extra),
+      );
     }
   }
+
   return reason;
 }
 

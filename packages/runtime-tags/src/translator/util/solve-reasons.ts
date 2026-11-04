@@ -412,6 +412,12 @@ export function getContentSites({
   };
 }
 
+// Whether the value lands somewhere retained (itself included) as more than a
+// dynamic tag's name.
+export function landsRetainedAsInput(extra: t.NodeExtra) {
+  return !!extra.retained || some(exprReaders(extra).asInput, isRetained);
+}
+
 // Whether the value lands somewhere retained (itself included), where client
 // code may read a function as is.
 export function landsRetained(extra: t.NodeExtra) {
