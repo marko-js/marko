@@ -12,16 +12,28 @@ import {
   assertOnlyValueAttr,
 } from "../util/assert";
 import { type Binding, BindingType, createBinding } from "../util/bindings";
-import { buildBranchEndArgs, isSingleNodeContent } from "../util/branch-tag";
+import {
+  buildBranchEndArgs,
+  getPatchEndArgs,
+  isSingleNodeContent,
+} from "../util/branch-tag";
 import evaluate from "../util/evaluate";
 import { declareConstBefore } from "../util/generate-uid";
 import { getParentTag } from "../util/get-parent-tag";
 import { getTagName } from "../util/get-tag-name";
 import { getOnlyChildParentTagName } from "../util/is-only-child-in-parent";
+import { isPatch } from "../util/marko-config";
+import {
+  linkHolePatcher,
+  onReasonsSettled,
+  fillsHole,
+} from "../util/patch/decisions";
+import { patchCreatesOrComposes } from "../util/patch/refresh";
+import { getExprRootGroupArgs } from "../util/patch/writers";
 import { addReasonExprs } from "../util/reasons";
 import { mergeReferences } from "../util/references";
 import { replaceWithStatements } from "../util/replace-with-statements";
-import { callRuntime } from "../util/runtime";
+import { callRuntime, linkRuntimeFeature } from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
 import { getScopeAccessorLiteral } from "../util/scope-accessor";
 import {
@@ -121,6 +133,12 @@ export default {
       if (tagExtra[kStaticDisplay] === undefined) {
         addReasonExprs(ensureSlot(nodeBinding), tagExtra);
         addReasonExprs(ensureSlot(nodeBinding, SlotKind.BranchExpr), tagExtra);
+        tagExtra.rendersValue = true;
+        linkHolePatcher(tagSection, tagExtra, "patches/show");
+      } else if (isPatch()) {
+        onReasonsSettled(() => {
+          if (flushHides(tag)) linkRuntimeFeature("patches/show");
+        });
       }
     },
   },
@@ -133,13 +151,13 @@ export default {
         const staticDisplay = tagExtra[kStaticDisplay];
         if (staticDisplay === true) return;
 
-        if (staticDisplay === false) {
+        if (staticDisplay === false && !flushHides(tag)) {
           writer.writeTo(tag)`<t hidden>`;
           return;
         }
 
         const display = tag.node.attributes[0].value;
-        if (!t.isIdentifier(display)) {
+        if (staticDisplay === undefined && !t.isIdentifier(display)) {
           // Read once; referenced by both bracketing runtime calls.
           htmlDisplayRefs.set(
             tag.node,
@@ -150,8 +168,9 @@ export default {
       exit(tag) {
         const tagExtra = tag.node.extra!;
         const staticDisplay = tagExtra[kStaticDisplay];
+        const hidden = staticDisplay === false && !flushHides(tag);
 
-        if (staticDisplay === false) {
+        if (hidden) {
           writer.writeTo(tag)`</t>`;
         }
 
@@ -159,7 +178,7 @@ export default {
 
         const bodyStatements = tag.node.body.body as unknown as t.Statement[];
 
-        if (staticDisplay !== undefined) {
+        if (staticDisplay || hidden) {
           replaceWithStatements(tag, bodyStatements);
           return;
         }
@@ -195,6 +214,16 @@ export default {
               ),
             );
 
+        // A patched display's entry names the encoded accessors a created
+        // scope finds the range's markers by.
+        const start = tagExtra[kStartBinding];
+        const patchArgs = fillsHole(tagSection, tagExtra)
+          ? [
+              getScopeAccessorLiteral(nodeBinding, true),
+              start && getScopeAccessorLiteral(start, true),
+              ...getExprRootGroupArgs(tagSection, tagExtra),
+            ]
+          : [];
         // The runtime calls bracket the body's statements (rather than taking a
         // callback) so declarations in them stay readable by later statements.
         const statements = [
@@ -206,7 +235,8 @@ export default {
               getScopeIdIdentifier(tagSection),
               getScopeAccessorLiteral(nodeBinding),
               display,
-              ...endArgs,
+              ...(patchArgs.length ? getPatchEndArgs(endArgs) : endArgs),
+              ...patchArgs,
             ),
           ),
         ];
@@ -255,6 +285,12 @@ export default {
   ],
   types: runtimeInfo.name + "/tags/show.d.marko",
 } as Tag;
+
+// A scope a flush creates never runs the setup that hides a static `<show>`:
+// there it renders as a constant display, whose flush entry hides it.
+function flushHides(tag: t.NodePath<t.MarkoTag>) {
+  return isPatch() && patchCreatesOrComposes(getSection(tag));
+}
 
 function assertValidShow(tag: t.NodePath<t.MarkoTag>) {
   assertNoVar(tag);

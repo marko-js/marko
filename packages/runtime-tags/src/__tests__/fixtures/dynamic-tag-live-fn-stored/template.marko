@@ -1,0 +1,4 @@
+import Reader from "./tags/reader.marko";
+<output id="out"></output>
+<const/fn=() => { document.getElementById("out").textContent = "v:" + input.title }/>
+<${input.alt || Reader} fn=fn/>

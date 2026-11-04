@@ -1,0 +1,26 @@
+// PATCH
+{
+  "PatchChild:#childScope/0": {
+    "PatchText:#text/0": "b"
+  },
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-nested-child-client-owned/template.marko_0_input_note#4/subscribers": "input_note",
+  "PatchMarkedWrite:input_note": "y"
+}
+
+// PATCH
+{
+  "PatchChild:#childScope/0": {
+    "PatchText:#text/0": "c"
+  },
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-nested-child-client-owned/template.marko_0_input_note#4/subscribers": "input_note",
+  "PatchMarkedWrite:input_note": "z"
+}
+
+// PATCH
+{
+  "PatchChild:#childScope/0": {
+    "PatchText:#text/0": "d"
+  },
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-nested-child-client-owned/template.marko_0_input_note#4/subscribers": "input_note",
+  "PatchMarkedWrite:input_note": "w"
+}

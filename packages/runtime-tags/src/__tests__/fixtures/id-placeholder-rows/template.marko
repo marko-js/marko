@@ -1,0 +1,8 @@
+<id/heading/><h1 id=heading>Fields</h1>
+<for|row| of=input.rows by="key">
+ <try>
+  <await|v|=row.promise><p>${v}</p></await>
+  <@placeholder><field name=row.key heading=heading/></@placeholder>
+  <@catch|error|><field name=error.message heading=heading/></@catch>
+ </try>
+</for>

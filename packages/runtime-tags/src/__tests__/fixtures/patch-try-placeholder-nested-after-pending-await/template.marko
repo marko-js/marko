@@ -1,0 +1,14 @@
+<main>
+  <try>
+    <await|a|=input.a>
+      <p>${a}</p>
+    </await>
+    <try>
+      <await|b|=input.b>
+        <span>${b}</span>
+      </await>
+      <@placeholder><i>inner</i></@placeholder>
+    </try>
+    <@placeholder><i>outer</i></@placeholder>
+  </try>
+</main>

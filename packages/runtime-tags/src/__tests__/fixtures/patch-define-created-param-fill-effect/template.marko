@@ -1,0 +1,9 @@
+<let/o=true/>
+<define/Panel|{ isOpen, label }|>
+  <if=isOpen><em>${label}</em></if>
+  <script>console.log("effect", label)</script>
+</define>
+<if=input.show>
+  <Panel isOpen=o label=input.label/>
+</if>
+<button id="t" onClick() { o = !o }>toggle</button>

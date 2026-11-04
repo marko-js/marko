@@ -1,0 +1,8 @@
+<let/s=0/>
+<button onClick() { s++ }>${s}</button>
+<const/cm=`${input.a}:${s}`/>
+<for|it| of=input.items by="id">
+  <let/cv=""/>
+  <input value=(it.v + cm) valueChange(v) { cv = v }/>
+  <span>${cv}</span>
+</for>
