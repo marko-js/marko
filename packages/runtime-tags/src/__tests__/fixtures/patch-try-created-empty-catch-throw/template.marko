@@ -1,0 +1,9 @@
+<main>
+  <if=input.show>
+    <try>
+      <await|v|=input.promise><em>${v}</em></await>
+      <counter/>
+      <@catch/>
+    </try>
+  </if>
+</main>

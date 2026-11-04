@@ -1,0 +1,6 @@
+<define/Panel|{ isOpen, label }|>
+  <if=isOpen>
+    <for|x| of=[1, 2]><em>${label}${x}</em></for>
+  </if>
+</define>
+<Panel isOpen=input.open label=input.label/>

@@ -1,0 +1,9 @@
+<define/TextField|input|>
+  <const/{ value, valueChange, ...attrs }=input/>
+  <input ...attrs value=value valueChange=valueChange/>
+</define>
+<TextField placeholder=input.hint value=input.v valueChange(next) { document.title = next }/>
+<define/Log|{ log, value }|>
+  <script>log(value)</script>
+</define>
+<Log log(value) { console.log(value, input.hint) } value=input.v/>

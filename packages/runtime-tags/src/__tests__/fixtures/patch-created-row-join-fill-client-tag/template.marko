@@ -1,0 +1,6 @@
+<row-list tally=input.tally type=input.type settled=input.settled/>
+<let/more=false/>
+<p onClick() { more = true }/>
+<if=more>
+  <row-list tally=[] type="a" settled=0/>
+</if>

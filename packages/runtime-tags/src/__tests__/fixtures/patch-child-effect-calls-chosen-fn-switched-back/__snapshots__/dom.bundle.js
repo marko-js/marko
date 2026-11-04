@@ -1,0 +1,25 @@
+// tags/child.marko
+const $fn__script = _script("b0", ($scope) => {
+	{
+		const m = document.querySelector("main");
+		const seen = m.seen ||= /* @__PURE__ */ new Set();
+		m.dataset.last = seen.has($scope.d) ? "same" : "new";
+		seen.add($scope.d);
+		$scope.d();
+	}
+});
+
+// template.marko
+const $flag = _let(6, ($scope) => _text($scope.b, $scope.g));
+const $fa = ($scope) => function() {
+	$flag($scope, 1);
+	const m = document.querySelector("main");
+	m.dataset.a = String(+(m.dataset.a || 0) + 1);
+};
+const $fb = ($scope) => function() {
+	$flag($scope, 2);
+	const m = document.querySelector("main");
+	m.dataset.b = String(+(m.dataset.b || 0) + 1);
+};
+_resumed.a0 = $fa;
+_resumed.a1 = $fb;
