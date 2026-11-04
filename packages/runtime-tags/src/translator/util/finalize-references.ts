@@ -20,13 +20,10 @@ import {
 } from "./bindings";
 import { finalizeContentDerives } from "./content-derives";
 import { generateUid } from "./generate-uid";
-import { finalizeRegistrations } from "./module-registrations";
 import {
-  addSorted,
   every,
   concat,
   filter,
-  findSorted,
   forEach,
   first,
   last,
@@ -34,6 +31,7 @@ import {
   type SortedOneMany,
   push,
   reduce,
+  searchSorted,
   some,
 } from "./optional";
 import {
@@ -75,7 +73,6 @@ import {
 } from "./sections";
 import { addSetupWork } from "./setup-work";
 import { ensureSectionSlot, ensureSlot, SlotKind } from "./slots";
-import { solveReasons } from "./solve-reasons";
 import {
   ALWAYS,
   type Sources,
@@ -86,6 +83,8 @@ import {
 } from "./sources";
 import { createAnalysisState } from "./state";
 
+// Settles reads, assignments, pruning, sources and the reasons tags add, before
+// the solve; each section's intersections are what the solve and ids read.
 export function finalizeReferences() {
   const intersectionsBySection = new Map<Section, Intersection[]>();
   settleAssignments();
@@ -100,11 +99,8 @@ export function finalizeReferences() {
     finalize();
   }
   forEachSection(applyReasonExprs);
-  solveReasons(intersectionsBySection);
-  finalizeRegistrations();
-  allocateIds(intersectionsBySection);
   getReadsByExpression().clear();
-  getFunctionReadsByExpression().clear();
+  return intersectionsBySection;
 }
 
 // Only emitted assignments count, so pruning can ask each binding directly.
@@ -307,7 +303,11 @@ function resolveBindings() {
     }
 
     const canonicalBinding = getCanonicalBinding(binding);
-    section.bindings = bindingUtil.add(section.bindings, canonicalBinding);
+    // A direct alias shares its root's slot, which the root adds on its own
+    // turn; a pruned root needs none.
+    if (canonicalBinding === binding) {
+      section.bindings = bindingUtil.add(section.bindings, binding);
+    }
     bindingNamesBySection.get(section)?.add(canonicalBinding.name);
     if (binding.localOf) {
       section.localClosures = bindingUtil.add(section.localClosures, binding);
@@ -316,6 +316,14 @@ function resolveBindings() {
 }
 
 function addSectionReasons(section: Section) {
+  // A call links the body's scope to its owner through the calling scopes;
+  // sections run in order, so a body's own calls come after it.
+  if (section.readsOwner) {
+    forEach(section.calls, (call) => {
+      setReadsOwner(call.childScopeBinding.section, section.parent!);
+    });
+  }
+
   if (section.isHoistThrough) {
     addReason(ensureSectionSlot(section, SlotKind.Scope), ALWAYS);
   }
@@ -341,7 +349,9 @@ function addSectionReasons(section: Section) {
 }
 
 // Dense per-section ids for bindings, intersections, and closure accessors.
-function allocateIds(intersectionsBySection: Map<Section, Intersection[]>) {
+export function allocateIds(
+  intersectionsBySection: Map<Section, Intersection[]>,
+) {
   const closureIdEnds = new Map<Section, number>();
   forEachSection((section) => {
     const { bindings } = section;
@@ -775,8 +785,9 @@ function getNearestReadBy(binding: Binding | undefined, expr: ReferencedExtra) {
   }
 }
 
+// A direct alias has no slot of its own, so its slot owner stores the value.
 function markLazyRead(binding: Binding) {
-  binding.hasLazyReads = true;
+  getCanonicalBinding(binding).hasLazyReads = true;
 }
 
 function addBindingGetter(binding: Binding, { invoked, hoisted }: Getter) {
@@ -791,7 +802,7 @@ function addBindingGetter(binding: Binding, { invoked, hoisted }: Getter) {
 }
 
 // A lazy read is excluded from `referencedBindings` and instead reads the
-// binding's own scope slot on invocation; sound only for a subscriber-free own slot.
+// binding's scope slot on invocation, which its slot owner then stores.
 function isLazyRead(
   expr: { section: Section; invokeOnly?: true },
   read: Read,
@@ -802,16 +813,8 @@ function isLazyRead(
     expr.invokeOnly &&
     read.deferred &&
     !isChangeHandlerRead &&
-    // Roots and section params own a live slot; other aliases forward to their
-    // aliased binding with no own slot, so reading them live would go stale on resume.
-    (!binding.aliasOf || isParamBinding(binding)) &&
     binding.type !== BindingType.constant
   );
-}
-
-function isParamBinding(binding: Binding) {
-  const root = getAliasRoot(binding);
-  return root === root.section.params;
 }
 
 function resolveReferencedBindings(
@@ -924,17 +927,18 @@ function getCanonicalIntersection(
   section: Section,
   intersection: Intersection,
 ) {
-  const intersections = intersectionsBySection.get(section) || [];
-  const canonical = findSorted(
-    compareIntersections,
-    intersections,
-    intersection,
-  );
-  if (canonical) return canonical;
-  intersectionsBySection.set(
-    section,
-    addSorted(compareIntersections, intersections, intersection),
-  );
+  const intersections = intersectionsBySection.get(section);
+  if (!intersections) {
+    intersectionsBySection.set(section, [intersection]);
+  } else {
+    const index = searchSorted(
+      compareIntersections,
+      intersections,
+      intersection,
+    );
+    if (index >= 0) return intersections[index];
+    intersections.splice(~index, 0, intersection);
+  }
   return intersection;
 }
 

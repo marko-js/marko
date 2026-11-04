@@ -10,6 +10,7 @@ import {
   propsUtil,
   type ReferencedBindings,
 } from "./bindings";
+import { getCallSiteSources } from "./known-tag";
 import {
   concat,
   forEach,
@@ -25,12 +26,12 @@ import {
 } from "./references";
 import {
   forEachAncestorSection,
+  isSameOrAncestorSection,
   type ParamReasonGroups,
   type Section,
 } from "./sections";
 import { ensureSectionSlot, ensureSlot, type Slot, SlotKind } from "./slots";
 import {
-  compareSources,
   ALWAYS,
   mergeSources,
   type Sources,
@@ -43,15 +44,17 @@ import {
 export type Reasons = SortedOneMany<Sources>;
 
 // The `Sources` whose changes lead client code to read something after resume;
-// an `always` one is unconditional but still says what it reads.
+// an `always` one is never guarded but still says what it reads.
 export type Reason = Sources;
 
+// The single point of assigning slot reasons, to aid in debugging. A merge
+// adding nothing returns the reason it had.
 export function addReason(slot: Slot, reason: undefined | false | Reason) {
   if (reason) {
-    const curReason = slot.reason;
-    const newReason = mergeSources(curReason, reason);
-    if (curReason !== newReason) {
-      setSlotReason(slot, newReason);
+    const newReason = mergeSources(slot.reason, reason);
+    if (slot.reason !== newReason) {
+      reasonsVersion++;
+      slot.reason = newReason;
     }
   }
 }
@@ -76,19 +79,40 @@ function addOwnerSlotReason(section: Section, reason: Reason) {
   addReason(ensureSectionSlot(section, SlotKind.Owner), reason);
 }
 
+// A reason as `section` guards it: a param of a `<define>` body it cannot
+// guard by becomes what the body's calls pass, as if they were inlined.
+export function mapBodyParams(
+  section: Section,
+  reason: undefined | Reason,
+  seen?: Set<ParamBinding>,
+): Reason | undefined {
+  if (!reason) return;
+  let mapped: Sources | undefined;
+  const params = bindingUtil.filter(reason.param, (param) => {
+    if (isSameOrAncestorSection(param.section, section)) return true;
+    if (!(seen ||= new Set()).has(param)) {
+      seen.add(param);
+      mapped = mergeSources(mapped, getCallSiteSources(param));
+    }
+    return false;
+  });
+  if (params === reason.param) return reason;
+  // A reason whose params are only ever passed constants still writes: code
+  // that tests the stored reason for a write at all expects one.
+  return (
+    mergeSources(
+      mapBodyParams(section, mapped, seen),
+      withSources(reason, reason.state, params),
+    ) || ALWAYS
+  );
+}
+
 // Read only when a caller's params (or `$global`) change, so each call site
 // guards it.
-export function isConditionalReason(
+export function isGuardedReason(
   reason: undefined | Reason,
 ): reason is Sources & { state: undefined; always: undefined } {
   return !!reason && !reason.always && !reason.state;
-}
-
-// Read on every render of the page: always, or when state can change.
-export function isUnconditionalReason(
-  reason: undefined | Reason,
-): reason is Reason {
-  return !!reason && !isConditionalReason(reason);
 }
 
 // Read when state changes; state only has readers when it can change on the
@@ -253,15 +277,13 @@ export function getKnownExprsAt(
 }
 
 export function applyReasonExprs(section: Section) {
-  forEach(section.slots, applySlotExprs);
-}
-
-function applySlotExprs(slot: Slot) {
-  addReason(slot, getSourcesForExprs(slot.reasonExprs));
+  for (const slot of section.slots) {
+    addReason(slot, getSourcesForExprs(slot.reasonExprs));
+  }
 }
 
 export function mergeSlotReasons(section: Section) {
-  section.reason = reduce(section.slots, mergeSlotReason, section.reason);
+  section.reason = section.slots.reduce(mergeSlotReason, section.reason);
 }
 
 // A scope is written when any slot in it is.
@@ -272,7 +294,7 @@ function mergeSlotReason(sectionReason: Reason | undefined, slot: Slot) {
 // Each reason a node of the section resumes for, kept apart so each one's guard
 // stays buildable.
 export function getNodeReasons(section: Section) {
-  return reduce(section.slots, addNodeReason, undefined);
+  return section.slots.reduce<Reasons | undefined>(addNodeReason, undefined);
 }
 
 function addNodeReason(reasons: Reasons | undefined, slot: Slot) {
@@ -290,12 +312,6 @@ export function getReasonsVersion() {
   return reasonsVersion;
 }
 
-// Exists as the single point of assigning slot reasons to aid in debugging.
-function setSlotReason(slot: Slot, reason: Reason) {
-  if (!isSameSources(slot.reason, reason)) reasonsVersion++;
-  slot.reason = reason;
-}
-
 // Exists as the single point of assigning param reason groups: call sites
 // map each group, so a new one moves the version too.
 export function setParamReasonGroups(
@@ -304,9 +320,4 @@ export function setParamReasonGroups(
 ) {
   reasonsVersion++;
   section.paramReasonGroups = groups;
-}
-
-// Merges rebuild equal sources, so only a change in them counts.
-function isSameSources(a: Reason | undefined, b: Reason) {
-  return !!a && compareSources(a, b) === 0;
 }

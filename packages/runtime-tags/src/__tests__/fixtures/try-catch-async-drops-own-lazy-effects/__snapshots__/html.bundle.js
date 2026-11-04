@@ -7,7 +7,7 @@ var child_default = _template("a", (input) => {
 });
 
 // template.marko
-const $Child_withLoadAssets = withLoadAssets(child_default, flush$1, "_a");
+const $Child_withLoadAssets = withLoadAssets(() => child_default, "a", flush$1, "_a");
 var template_default = _template("b", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
@@ -25,5 +25,5 @@ var template_default = _template("b", (input) => {
 		const $scope2_id = _scope_id();
 		_html(_text_resume($scope2_id, "a", err.message, $wg__err_message));
 		_write_if($scope2_reason, 0) && _scope($scope2_id, {});
-	}, void 0, "b0");
+	}, 0, "b0");
 }, 1);

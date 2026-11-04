@@ -2,7 +2,7 @@
 var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	_attr_select_value($scope0_id, "a", "b", void 0, () => {
+	_attr_select_value($scope0_id, "a", "b", 0, () => {
 		_html(`<select><option${_attr_option_value("a")}>A</option>`);
 		_try($scope0_id, "b", () => {
 			_scope_reason();

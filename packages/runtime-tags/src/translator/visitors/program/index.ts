@@ -9,7 +9,10 @@ import { hasAnalyzeErrors } from "../../util/analyze-errors";
 import { addAssetImport } from "../../util/asset-imports";
 import { type Binding, BindingType } from "../../util/bindings";
 import entryBuilder from "../../util/entry-builder";
-import { finalizeReferences } from "../../util/finalize-references";
+import {
+  allocateIds,
+  finalizeReferences,
+} from "../../util/finalize-references";
 import { generateUid, getUnusedParamIdentifier } from "../../util/generate-uid";
 import getStyleFile from "../../util/get-style-file";
 import { analyzeRecursiveTags } from "../../util/known-tag";
@@ -18,9 +21,11 @@ import {
   getReadyId,
   isOutputHTML,
 } from "../../util/marko-config";
+import { finalizeRegistrations } from "../../util/module-registrations";
 import { type ParamsTree, exposeParamsTree } from "../../util/params-tree";
-import { isUnconditionalReason } from "../../util/reasons";
+import { isGuardedReason, mapBodyParams } from "../../util/reasons";
 import { trackParamsReferences } from "../../util/references";
+import { writeBodyStatements } from "../../util/replace-with-statements";
 import {
   dynamicImport,
   getCompatRuntimeFile,
@@ -34,7 +39,9 @@ import {
   getRendererReason,
 } from "../../util/sections";
 import { finalizeSetupWork } from "../../util/setup-work";
+import { solveReasons } from "../../util/solve-reasons";
 import type { TemplateVisitor } from "../../util/visitors";
+import { needsCompat } from "../tag/dynamic-tag";
 import programDOM from "./dom";
 import programHTML from "./html";
 import { preAnalyze } from "./pre-analyze";
@@ -109,7 +116,10 @@ export default {
       // skipped, so skip finalization work that assumes an error-free template.
       if (hasAnalyzeErrors()) return;
       analyzeRecursiveTags();
-      finalizeReferences();
+      const intersectionsBySection = finalizeReferences();
+      solveReasons(intersectionsBySection);
+      finalizeRegistrations();
+      allocateIds(intersectionsBySection);
       const programExtra = program.node.extra!;
       const paramsBinding = programExtra.binding;
       if (paramsBinding && !paramsBinding.pruned) {
@@ -121,8 +131,9 @@ export default {
       // Anything revived or unconditionally registered against this module
       // has to reach the client on its own.
       forEachSection((childSection) => {
+        const reason = mapBodyParams(childSection, childSection.reason);
         programExtra.hasResumes ||= !!(
-          isUnconditionalReason(childSection.reason) ||
+          (reason && !isGuardedReason(reason)) ||
           (childSection !== section &&
             !isSectionRendererElided(childSection) &&
             getRendererReason(childSection))
@@ -263,13 +274,14 @@ export default {
       }
     },
     exit(program) {
+      writeBodyStatements(program.node);
       if (isOutputHTML()) {
         programHTML.translate.exit(program);
       } else {
         programDOM.translate.exit(program);
       }
 
-      if (program.node.extra?.needsCompat) {
+      if (needsCompat()) {
         const compatFile = getCompatRuntimeFile();
         const body: [undefined | t.Statement, ...t.Statement[]] = [undefined];
 

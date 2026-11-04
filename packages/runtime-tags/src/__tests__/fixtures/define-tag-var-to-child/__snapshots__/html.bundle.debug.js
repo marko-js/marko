@@ -19,7 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id) };
 	const $childScope = _peek_scope_id();
 	let x = Inc.content({ a: input.a });
-	_var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_x#8/var");
+	$wi__input_a && _var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_x#8/var");
 	_set_scope_reason($wg__input_a << 1);
 	const $childScope2 = _peek_scope_id();
 	show_value_default({ value: x });

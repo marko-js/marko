@@ -5,20 +5,20 @@ var sum_with_default = _template("b", (input) => {
 	const $input_n__closures = /* @__PURE__ */ new Set();
 	const Sum = { content: _content("b0", ({ a }) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason(), $wi__a = _write_if($scope1_reason, 0);
+		_scope_reason();
 		const $return = a + input.n;
-		($wi__input_n || $wi__a) && _subscribe($wi__input_n && $input_n__closures, _scope($scope1_id, {
+		$wi__input_n && _subscribe($wi__input_n && $input_n__closures, _scope($scope1_id, {
 			c: $wi__input_n && a,
 			_: _scope_with_id($scope0_id)
 		}), "b1", 0);
-		($wi__input_n || $wi__a) && _resume_branch($scope1_id);
+		$wi__input_n && _resume_branch($scope1_id);
 		return $return;
 	}, $scope0_id) };
 	const $childScope = _peek_scope_id();
 	let x = Sum.content({ a: 1 });
-	_var($scope0_id, "b", $childScope, "b2");
+	$wi__input_n && _var($scope0_id, "b", $childScope, "b2");
 	_html(`<div>${_text_resume($scope0_id, "c", x, $wg__input_n)}</div>`);
-	_scope($scope0_id, {
+	$wi__input_n && _scope($scope0_id, {
 		f: input.n,
 		h: $wi__input_n && $input_n__closures,
 		a: $wi__input_n && _existing_scope($childScope)

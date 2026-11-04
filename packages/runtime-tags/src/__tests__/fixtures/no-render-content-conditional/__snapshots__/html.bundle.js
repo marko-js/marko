@@ -7,16 +7,16 @@ var my_const_default = _template("c", (input) => {
 
 // tags/child.marko
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $wi__input_foo = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $childScope = _peek_scope_id();
 	let x = my_const_default({ value: input.foo });
-	_var($scope0_id, "b", $childScope, "b0");
+	$wi__input_foo && _var($scope0_id, "b", $childScope, "b0");
 	_script($scope0_id, "b1", _write_guard($scope0_reason, 0));
 	_scope($scope0_id, {
 		d: input,
 		f: x,
-		a: _write_if($scope0_reason, 0) && _existing_scope($childScope)
+		a: $wi__input_foo && _existing_scope($childScope)
 	});
 });
 

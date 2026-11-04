@@ -18,7 +18,7 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id) };
 	const $childScope = _peek_scope_id();
 	let x = Inc.content({ a: input.a });
-	_var($scope0_id, "b", $childScope, "a1");
+	$wi__input_a && _var($scope0_id, "b", $childScope, "a1");
 	_set_scope_reason($wg__input_a << 1);
 	const $childScope2 = _peek_scope_id();
 	show_value_default({ value: x });

@@ -143,7 +143,7 @@ export function translateLoadTag(path, tagName, relativePath) {
     );
     loadArgs = [
       t.stringLiteral(childFile.metadata.marko.id),
-      t.identifier(tagName),
+      t.arrowFunctionExpression([], t.identifier(tagName)),
       importNamed(file, linkAssets.runtime, "flush", "marko_asset_flush"),
     ];
     if (triggers) loadArgs.push(t.valueToNode(triggers));

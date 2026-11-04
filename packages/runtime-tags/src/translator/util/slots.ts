@@ -6,7 +6,7 @@ import {
   getCanonicalBinding,
 } from "./bindings";
 import * as SlotKind from "./constants/slot-kind";
-import { type Opt, Sorted, type SortedOpt } from "./optional";
+import { type Opt } from "./optional";
 import { type Reason } from "./reasons";
 import { type ParamReasonGroup, type Section } from "./sections";
 
@@ -62,8 +62,6 @@ export interface SectionSlot extends BaseSlot {
   group: undefined;
 }
 
-const slotUtil = new Sorted<Slot>(compareSlots);
-
 // Analysis makes a slot on first use; translate only finds what analysis made.
 export function ensureSlot(
   binding: Binding,
@@ -72,10 +70,7 @@ export function ensureSlot(
   group?: ParamReasonGroup,
 ): Slot {
   const owner = getCanonicalBinding(binding);
-  return (
-    findSlot(owner, kind, section, group) ||
-    addSlot(kind, section || owner.section, owner, group)
-  );
+  return ensureIn(section || owner.section, owner, kind, group);
 }
 
 export function findSlot(
@@ -102,10 +97,7 @@ export function ensureSectionSlot(
   kind: SectionSlotKind,
   section = owner,
 ): Slot {
-  return (
-    findSectionSlot(owner, kind, section) ||
-    addSlot(kind, section, owner, undefined)
-  );
+  return ensureIn(section, owner, kind, undefined);
 }
 
 export function findSectionSlot<K extends SectionSlotKind>(
@@ -121,13 +113,17 @@ export function findSectionSlot(
   return findIn(section.slots, getOwnerOrder(owner), kind, undefined);
 }
 
-// Made only here, so every slot has one shape.
-function addSlot(
-  kind: SlotKind,
+// One search finds the slot or the index a new one goes at, and slots are made
+// only here, so every slot has one shape.
+function ensureIn(
   section: Section,
   owner: Binding | Section,
+  kind: SlotKind,
   group: ParamReasonGroup | undefined,
 ) {
+  const { slots } = section;
+  const index = searchIn(slots, getOwnerOrder(owner), kind, group);
+  if (index >= 0) return slots[index];
   const slot = {
     kind,
     section,
@@ -136,35 +132,38 @@ function addSlot(
     reason: undefined,
     reasonExprs: undefined,
   } as Slot;
-  section.slots = slotUtil.add(section.slots, slot);
+  slots.splice(~index, 0, slot);
   return slot;
 }
 
-// Searched by key rather than a probe slot, so comparisons read only slots.
 function findIn(
-  slots: SortedOpt<Slot>,
+  slots: Slot[],
   order: number,
   kind: SlotKind,
   group: ParamReasonGroup | undefined,
 ) {
-  if (slots === undefined) return;
-  if (!Array.isArray(slots)) {
-    return compareSlotTo(slots, order, kind, group) ? undefined : slots;
-  }
+  const index = searchIn(slots, order, kind, group);
+  if (index >= 0) return slots[index];
+}
+
+// Searched by key rather than a probe slot, so a lookup allocates nothing; the
+// index of the slot with this key, or `~` the index it goes at.
+function searchIn(
+  slots: Slot[],
+  order: number,
+  kind: SlotKind,
+  group: ParamReasonGroup | undefined,
+) {
   let pos = 0;
   let max = slots.length;
   while (pos < max) {
     const mid = (pos + max) >>> 1;
-    const slot = slots[mid];
-    const result = compareSlotTo(slot, order, kind, group);
-    if (result === 0) return slot;
+    const result = compareSlotTo(slots[mid], order, kind, group);
+    if (result === 0) return mid;
     if (result > 0) max = mid;
     else pos = mid + 1;
   }
-}
-
-function compareSlots(a: Slot, b: Slot) {
-  return compareSlotTo(a, getOwnerOrder(b.owner), b.kind, b.group);
+  return ~pos;
 }
 
 // A scope's section-owned slots come first, then its bindings' by creation;

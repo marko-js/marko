@@ -5,9 +5,15 @@ import {
   getDebugNames,
   getDebugNamesAsIdentifier,
 } from "./bindings";
+import { createAnalysisMemo } from "./cyclic-memo";
 import { generateUid, ensureSharedUid } from "./generate-uid";
-import { some } from "./optional";
-import { isConditionalReason, type Reason, type Reasons } from "./reasons";
+import { first, some } from "./optional";
+import {
+  isGuardedReason,
+  mapBodyParams,
+  type Reason,
+  type Reasons,
+} from "./reasons";
 import { callRuntime, type HTMLRuntimeHelpers } from "./runtime";
 import {
   getParamReasonGroupIndex,
@@ -21,7 +27,7 @@ import { compareSources, type Sources } from "./sources";
 import { createOutputSectionState } from "./state";
 import { withLeadingComment } from "./with-comment";
 
-type ConditionalReason = Sources & { state: undefined };
+type GuardedReason = Sources & { state: undefined };
 
 export function isSameReason(a: Reason | undefined, b: Reason | undefined) {
   // Reasons read always match whatever their sources: both guard as `1`.
@@ -112,7 +118,7 @@ export function buildGroupMask(
 // Every section body consumes (and clears) its caller's reason; it binds it,
 // with its hoisted guards, only when a guard is dynamic.
 export function getScopeReasonStatement(section: Section): t.Statement {
-  return hasConditionalReason(section)
+  return hasGuardedReason(section)
     ? t.variableDeclaration("const", getSectionGuards(section).declarators)
     : t.expressionStatement(callRuntime("_scope_reason"));
 }
@@ -144,6 +150,10 @@ export function getWriteGuard(
         );
   }
 
+  const bit = getGroupsBit(reason.param);
+  if (bit !== undefined) {
+    return bit && omitUnconditional ? undefined : t.numericLiteral(bit);
+  }
   return orEachParamGroup(reason.param, "_write_guard");
 }
 
@@ -156,49 +166,103 @@ export function getWriteGuardForAny(
     return getWriteGuard(section, reasons, omitUnconditional);
   }
 
-  // A static member decides before any dynamic guard is built (and hoisted).
+  // A member always written decides before any dynamic guard is built (and
+  // hoisted); one never written adds nothing.
   for (const reason of reasons) {
-    if (!isConditionalReason(reason)) {
+    if (getWriteBit(section, reason) === 1) {
       return omitUnconditional
         ? undefined
         : withLeadingComment(t.numericLiteral(1), getDebugNames(reason.state));
     }
   }
 
-  let expr!: t.Expression;
+  let expr: t.Expression | undefined;
   for (const reason of reasons) {
-    expr = orGuard(expr, getWriteGuard(section, reason, false)!);
+    if (getWriteBit(section, reason) !== 0) {
+      expr = orGuard(expr, getWriteGuard(section, reason, false)!);
+    }
   }
 
-  return expr;
+  return expr || t.numericLiteral(0);
 }
 
-export function getExprIfWritten<
-  T extends undefined | Reason,
-  R extends (T extends {} ? t.Expression : undefined),
->(section: Section, reason: T, expr: t.Expression): R {
-  if (!isDynamicWriteGuard(section, reason)) {
-    return (reason && expr) as R;
+// The expression where the server writes it: `undefined` where it never does.
+export function getExprIfWritten(
+  section: Section,
+  reason: undefined | Reason,
+  expr: t.Expression,
+) {
+  const ownReason = mapBodyParams(section, reason);
+  if (!isGuardedReason(ownReason)) {
+    return ownReason && expr;
   }
 
-  return andGuard(orEachParamGroup(reason.param, "_write_if"), expr) as R;
+  const bit = getGroupsBit(ownReason.param);
+  if (bit !== undefined) return bit ? expr : undefined;
+  return andGuard(orEachParamGroup(ownReason.param, "_write_if"), expr);
 }
 
-// Each param group's `check`, or-ed together.
+// Whether the server ever writes what the reason guards, where `section` reads it.
+export function isEverWritten(section: Section, reason: undefined | Reason) {
+  const ownReason = mapBodyParams(section, reason);
+  return isGuardedReason(ownReason)
+    ? getGroupsBit(ownReason.param) !== 0
+    : !!ownReason;
+}
+
+// The constant a reason's guard folds to: `0` unwritten, `1` always written.
+function getWriteBit(section: Section, reason: undefined | Reason) {
+  return isDynamicWriteGuard(section, reason)
+    ? getGroupsBit(reason.param)
+    : reason
+      ? 1
+      : 0;
+}
+
+// `1` where some group is always written, `0` where every group never is.
+function getGroupsBit(params: Sources["param"]) {
+  return reduceParamGroups(params, addGroupBit, 0 as number | undefined);
+}
+
+function addGroupBit(
+  bit: number | undefined,
+  section: Section,
+  group: ParamReasonGroup,
+) {
+  const groupBit = getStaticGroupBit(section, group);
+  return bit === 1 || groupBit === 1
+    ? 1
+    : bit === 0 && groupBit === 0
+      ? 0
+      : undefined;
+}
+
+// Each param group's `check`, or-ed together, but for a group never written.
 function orEachParamGroup(params: Sources["param"], check: GroupCheck) {
-  return reduceParamGroups(
-    params,
-    (expr: t.Expression | undefined, section, group) =>
-      orGuard(expr, getOrHoistSectionGuard(section, group, check)),
-    undefined,
-  );
+  return reduceParamGroups(params, orGroupChecks[check], undefined)!;
+}
+
+const orGroupChecks = {
+  _write_guard: orGroupCheck("_write_guard"),
+  _write_if: orGroupCheck("_write_if"),
+} satisfies Record<GroupCheck, unknown>;
+
+function orGroupCheck(check: GroupCheck) {
+  return (
+    expr: t.Expression | undefined,
+    section: Section,
+    group: ParamReasonGroup,
+  ) =>
+    getStaticGroupBit(section, group) === 0
+      ? expr
+      : orGuard(expr, getOrHoistSectionGuard(section, group, check));
 }
 
 function orGuard(guard: t.Expression | undefined, other: t.Expression) {
   return guard ? t.logicalExpression("||", guard, other) : other;
 }
 
-function andGuard(guard: t.Expression | undefined, expr: t.Expression) {
+function andGuard(guard: t.Expression | undefined | false, expr: t.Expression) {
   return guard ? t.logicalExpression("&&", guard, expr) : expr;
 }
 
@@ -243,14 +307,58 @@ function getOrHoistSectionGuard(
 function isDynamicWriteGuard(
   section: Section,
   reason: undefined | Reason,
-): reason is ConditionalReason {
-  return isConditionalReason(reason) && !isCrossSection(section, reason);
+): reason is GuardedReason {
+  return isGuardedReason(reason) && !isCrossSection(section, reason);
 }
 
 function isCrossSection(section: Section, reason: Sources) {
   return some(
     reason.param,
     (param) => !isSameOrAncestorSection(param.section, section),
+  );
+}
+
+// The constant every render of a `<define>` body's group passes, where each call passes
+// the same; a recursive call's is no constant. Asked by the body's own group.
+function getStaticGroupBit(body: Section, group: ParamReasonGroup) {
+  return getBodyGroupBit(
+    body.paramReasonGroups![getParamReasonGroupIndex(body, group)],
+  );
+}
+
+const [getBodyGroupBit] = createAnalysisMemo((group: ParamReasonGroup) => {
+  const body = first(group).section;
+  return isOnlyCalled(body) ? getCallsBit(body, group) : undefined;
+}, undefined);
+
+function getCallsBit(body: Section, group: ParamReasonGroup) {
+  const calls = body.calls!;
+  let bit: number | undefined;
+  for (const call of Array.isArray(calls) ? calls : [calls]) {
+    const callSection = call.childScopeBinding.section;
+    const callBit = getWriteBit(
+      callSection,
+      findSlot(call.childScopeBinding, SlotKind.ParamGroup, callSection, group)
+        ?.reason,
+    );
+    if (callBit === undefined || (bit !== undefined && bit !== callBit)) {
+      return;
+    }
+    bit = callBit;
+  }
+  return bit;
+}
+
+// A `<define>` body its known calls alone render: its var is read nowhere else.
+function isOnlyCalled(body: Section) {
+  return !!body.calls && !!body.derives && !some(body.derives.binding, isUsed);
+}
+
+function isUsed(binding: Binding) {
+  return (
+    !!binding.reads.size ||
+    !!binding.aliases.size ||
+    !!binding.propertyAliases.size
   );
 }
 
@@ -261,15 +369,18 @@ function createGuardHoists(): GuardHoists {
   };
 }
 
-function hasConditionalReason(section: Section) {
-  if (section.paramReasonGroups || isConditionalReason(section.reason)) {
+function hasGuardedReason(section: Section) {
+  if (
+    section.paramReasonGroups ||
+    isGuardedReason(mapBodyParams(section, section.reason))
+  ) {
     return true;
   }
-  return some(section.slots, isConditionalSlot);
+  return section.slots.some(isConditionalSlot);
 }
 
 function isConditionalSlot(slot: Slot) {
-  return isConditionalReason(slot.reason);
+  return isGuardedReason(mapBodyParams(slot.section, slot.reason));
 }
 
 function scopeReasonIdentifier(section: Section) {

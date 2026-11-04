@@ -1,0 +1,40 @@
+<!--M#s0-->
+<div><span>b 4</span><!--F#1--><span>t <!>
+      3<!--Ms$1 #text/0--></span><!--Ms[--><!--Ms[-->
+  <script async type=module src="b.marko.load.mjs"></script><!--M#s1--><span>a
+    2</span><!--F#1s--><!--F/--><!--F#1--><span>b 1</span><!--F#1--><span>t <!>
+      0<!--Ms$4 #text/0--></span><!--Ms]4 #text/1--><!--F/--><!--F/--><!--M/--><!--Ms]2 #text/0 3--><!--Ms]1 #text/1 2--><!--F/-->
+</div><!--M/-->
+<script>
+  WALKER_RUNTIME("M")("s");
+  M.s.r = [_ => [1, {
+    m5c: "s0-1-1"
+  }, {
+    "ConditionalRenderer:#text/0": _._[
+      "packages/runtime-tags/src/__tests__/fixtures-interop/lazy-class-cycle-through-tags/a.marko"
+      ],
+    _: _(1)
+  }, {
+    m5c: "s1",
+    m5i: {
+      depth: 2
+    }
+  }, {
+    m5c: "s1-1-1"
+  }], "$compat_setScope 4 $compat_setScope 1 $compat_setScope 3"];
+  M.s.w();
+  $MC = (window.$MC || []).concat({
+    "w": [
+      ["s0", 0, {}, {
+        "f": 1
+      }],
+      ["s1", 1, 3, {
+        "f": 1
+      }]
+    ],
+    "t": [
+      "packages/runtime-tags/src/__tests__/fixtures-interop/lazy-class-cycle-through-tags/template.marko",
+      "packages/runtime-tags/src/__tests__/fixtures-interop/lazy-class-cycle-through-tags/a.marko"
+    ]
+  })
+</script>

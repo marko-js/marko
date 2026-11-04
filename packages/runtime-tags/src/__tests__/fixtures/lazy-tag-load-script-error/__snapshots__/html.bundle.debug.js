@@ -9,7 +9,7 @@ var child_default = _template("__tests__/child.marko", (input) => {
 });
 
 // template.marko
-const $Child_withLoadAssets = withLoadAssets(child_default, flush, "ready:__tests__/child.marko", [{
+const $Child_withLoadAssets = withLoadAssets(() => child_default, "__tests__/child.marko", flush, "ready:__tests__/child.marko", [{
 	type: "on-click",
 	selector: "body"
 }]);
@@ -33,7 +33,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope_reason();
 		const $scope2_id = _scope_id();
 		_html("<div id=error>failed</div>");
-	}, void 0, "__tests__/template.marko_2*content");
+	}, 0, "__tests__/template.marko_2*content");
 	_html("</main>");
 	$wi__input_label && _scope($scope0_id, { "ClosureScopes:input_label/4": $input_label__closures }, "__tests__/template.marko", 0);
 }, 1);

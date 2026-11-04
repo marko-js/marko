@@ -1,10 +1,15 @@
 import { types as t } from "@marko/compiler";
 
 import { type Binding, BindingType, getAliasRoot } from "./bindings";
+import { getAccessorProp } from "./get-accessor-enums";
 import { getDeclaredBindingExpression } from "./get-declared-binding-expression";
 import { isOptimize, isOutputDOM } from "./marko-config";
 import { reduce, size } from "./optional";
-import { type ResolvedRead, isRegisteredFnExtra } from "./references";
+import {
+  getReferencedBindings,
+  isRegisteredFnExtra,
+  type ResolvedRead,
+} from "./references";
 import { callRuntime } from "./runtime";
 import {
   getLocalsScopeAccessor,
@@ -33,13 +38,44 @@ export function getReadReplacement(
   node: t.Identifier | t.MemberExpression | t.OptionalMemberExpression,
   signal?: Signal,
 ) {
+  if (
+    isOutputDOM() &&
+    !isOptimize() &&
+    node.type === "MemberExpression" &&
+    !node.computed &&
+    node.property.type === "Identifier" &&
+    node.object.extra?.binding?.type === BindingType.global &&
+    getReferencedBindings(node.object.extra.exprRoot)
+  ) {
+    // A debug build checks each `$global` key a signal reads, since a signal
+    // re-runs against the resumed globals, which hold only serialized keys.
+    return callRuntime(
+      "_global_read",
+      node.object,
+      t.stringLiteral(node.property.name),
+    );
+  }
+
   const { extra } = node;
   if (!extra || extra.assignment) return;
   const { read, binding } = extra;
 
   if (!read) {
-    if (binding && node.type === "Identifier" && node.name !== binding.name) {
-      node.name = binding.name;
+    if (binding) {
+      if (binding.type === BindingType.global) {
+        // HTML reads the `$global` its program declares; the client reads the
+        // scope's, keeping the extra its debug key check reads.
+        if (isOutputDOM()) {
+          const globals = toMemberExpression(
+            scopeIdentifier,
+            getAccessorProp().Global,
+          );
+          globals.extra = extra;
+          return globals;
+        }
+      } else if (node.type === "Identifier" && node.name !== binding.name) {
+        node.name = binding.name;
+      }
     }
     return;
   }

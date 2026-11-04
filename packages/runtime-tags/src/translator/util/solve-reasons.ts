@@ -13,11 +13,16 @@ import {
   propsUtil,
   someUpToAliasRoot,
 } from "./bindings";
-import { createAnalysisMemo, createAnalysisPathMemo } from "./cyclic-memo";
+import {
+  createPassMemo,
+  createPassPathMemo,
+  resetPassMemos,
+} from "./cyclic-memo";
 import { addKnownTagReasons } from "./known-tag";
 import { addFunctionReasons } from "./module-registrations";
 import {
   concat,
+  every,
   first,
   forEach,
   type OneMany,
@@ -36,6 +41,7 @@ import {
   type Reason,
 } from "./reasons";
 import {
+  type Read,
   type ReferencedExtra,
   getFunctionReadsByExpression,
   getConstantBindingsInFunction,
@@ -71,16 +77,16 @@ export function solveReasons(
   let reasonsVersion: number;
   do {
     reasonsVersion = getReasonsVersion();
-    // Answers read the reasons of the moment, so each pass asks afresh.
-    resetExtraReaders();
-    resetBindingReaders();
+    resetPassMemos();
     forEachSection((section) =>
       addIntersectionReasons(section, intersectionsBySection.get(section)),
     );
     forEachSection(addClosureReasons);
+    forEachSection(addCallOwnerReasons);
     addRegisteredFnReasons(getFunctionReadsByExpression());
     forEachSectionReverse(solveSectionReasons);
   } while (reasonsVersion !== getReasonsVersion());
+  getFunctionReadsByExpression().clear();
 }
 
 function solveSectionReasons(section: Section) {
@@ -184,7 +190,8 @@ function getBranchExprReason(section: Section) {
     );
     // A direct call renders the body in place, so what creates a section from
     // the call up to the define (or the body, for a recursive call) creates it.
-    forEach(section.callSections, (callSection) => {
+    forEach(section.calls, (call) => {
+      const callSection = call.childScopeBinding.section;
       reason = mergeSources(
         reason,
         getBranchExprReasonUntil(
@@ -197,6 +204,8 @@ function getBranchExprReason(section: Section) {
     });
     return reason;
   }
+  // An `<await>`'s promise settles into the body its owner made.
+  if (section.branch?.await) return;
   return branchExpr ? getSourcesForExpr(branchExpr) : ALWAYS;
 }
 
@@ -240,6 +249,21 @@ function addClosureReasons(section: Section) {
   });
 }
 
+// A call links its body's scope to the body's owner as the calling scope is
+// created, reading the owner chain between them.
+function addCallOwnerReasons(body: Section) {
+  if (body.readsOwner) {
+    forEach(body.calls, (call) => {
+      const callSection = call.childScopeBinding.section;
+      addOwnerReason(
+        callSection,
+        body.parent!,
+        getBranchExprReasonUntil(callSection, body.parent!),
+      );
+    });
+  }
+}
+
 // Client code reading a function reads what the function references, owners
 // included.
 function addRegisteredFnReasons(
@@ -264,30 +288,36 @@ function addRegisteredFnReasons(
 }
 
 // Who reads a value through its aliases and derives links (a cyclic graph):
-// what rereads it after resume, and the reads it lands in (an effect, an input).
+// what rereads it after resume, and the `LANDS_*` bits of the reads it lands in.
 interface Readers {
   reason: undefined | Reason;
-  reads: ReadonlySet<ReferencedExtra> | undefined;
+  lands: number;
 }
 
-const UNREAD: Readers = { reason: undefined, reads: undefined };
+// Lands in a retained read, where client code may read it as is.
+const LANDS_RETAINED = 1;
+// Reaches a retained read as more than a dynamic tag's name.
+const LANDS_RETAINED_INPUT = 2;
 
-const ALWAYS_READ: Readers = {
-  reason: ALWAYS,
-  reads: undefined,
+const UNREAD: Readers = { reason: undefined, lands: 0 };
+
+const ALWAYS_READ: Readers = { reason: ALWAYS, lands: 0 };
+
+const RETAINED_TAG_NAME_READ: Readers = {
+  reason: undefined,
+  lands: LANDS_RETAINED,
 };
 
-const [extraReaders, resetExtraReaders] = createAnalysisMemo(
-  computeExtraReaders,
-  UNREAD,
-);
+const RETAINED_INPUT_READ: Readers = {
+  reason: undefined,
+  lands: LANDS_RETAINED | LANDS_RETAINED_INPUT,
+};
+
+const extraReaders = createPassMemo(computeExtraReaders, UNREAD);
 
 // A binding's answer is per asked path: the value itself, one of its
 // properties (a destructured part), or the whole with every property.
-const [bindingReaders, resetBindingReaders] = createAnalysisPathMemo(
-  computeBindingReaders,
-  UNREAD,
-);
+const bindingReaders = createPassPathMemo(computeBindingReaders, UNREAD);
 
 export function getReasonForBinding(
   binding: Binding,
@@ -302,17 +332,22 @@ export function getReasonForExpr(extra: t.NodeExtra): undefined | Reason {
   return extra.isEffect ? ALWAYS : extraReaders(extra).reason;
 }
 
+// Whether a binding's value lands in a retained read as more than a dynamic
+// tag's name, where client code may read it as is.
+export function bindingLandsRetained(
+  binding: Binding,
+  properties: Opt<string>,
+) {
+  return !!(bindingReaders(binding, properties).lands & LANDS_RETAINED_INPUT);
+}
+
 // Whether the value lands somewhere retained (itself included), where client
 // code may read a function as is.
 export function landsRetained(extra: t.NodeExtra) {
-  if (extra.retained) return true;
-  if (!extra.isEffect) {
-    const { reads } = extraReaders(extra);
-    if (reads) {
-      for (const read of reads) if (read.retained) return true;
-    }
-  }
-  return false;
+  return (
+    !!extra.retained ||
+    (!extra.isEffect && !!(extraReaders(extra).lands & LANDS_RETAINED))
+  );
 }
 
 function computeExtraReaders(extra: t.NodeExtra): Readers {
@@ -361,7 +396,7 @@ function readersOfDerived(
           exprs,
           true,
         ),
-        reads: linked.reads,
+        lands: linked.lands,
       }
     : linked;
 }
@@ -415,7 +450,7 @@ function computeBindingReaders(
       ? undefined
       : first(properties);
   const reason = findSlot(binding)?.reason;
-  let readers: Readers = reason ? { reason, reads: undefined } : UNREAD;
+  let readers: Readers = reason ? { reason, lands: 0 } : UNREAD;
   // A property is read with the value it is read from.
   const aliased = binding.aliasOf;
   if (properties !== true && aliased) {
@@ -442,8 +477,9 @@ function computeBindingReaders(
       }
       continue;
     }
+    readers = mergeReaders(readers, landingReaders(expr, binding));
     readers = mergeReaders(
-      withLandingRead(readers, expr),
+      readers,
       readersOfDerives(expr, binding, properties),
     );
   }
@@ -482,28 +518,21 @@ function mergeReaders(a: Readers, b: Readers): Readers {
   if (a === UNREAD) return b;
   if (b === UNREAD) return a;
   const reason = mergeSources(a.reason, b.reason);
-  const reads = unionReads(a.reads, b.reads);
-  if (reason === a.reason && reads === a.reads) return a;
-  if (reason === b.reason && reads === b.reads) return b;
-  return { reason, reads };
+  const lands = a.lands | b.lands;
+  if (reason === a.reason && lands === a.lands) return a;
+  if (reason === b.reason && lands === b.lands) return b;
+  return { reason, lands };
 }
 
-// Answers are shared across memo keys: adding copies (at most once per
-// merge), and adding nothing new keeps the identity.
-function withLandingRead(readers: Readers, read: ReferencedExtra): Readers {
-  return readers.reads?.has(read)
-    ? readers
-    : { reason: readers.reason, reads: new Set(readers.reads).add(read) };
+// What a read the binding's value lands in adds: only a retained one counts.
+function landingReaders(read: ReferencedExtra, binding: Binding): Readers {
+  return !read.retained
+    ? UNREAD
+    : every(binding.reads.get(read), isTagNameRead)
+      ? RETAINED_TAG_NAME_READ
+      : RETAINED_INPUT_READ;
 }
 
-function unionReads(
-  a: ReadonlySet<ReferencedExtra> | undefined,
-  b: ReadonlySet<ReferencedExtra> | undefined,
-) {
-  if (!a || !b || a === b) return a || b;
-  let result: Set<ReferencedExtra> | undefined;
-  for (const read of b) {
-    if (!a.has(read)) (result ??= new Set(a)).add(read);
-  }
-  return result || a;
+function isTagNameRead({ extra }: Read) {
+  return !!extra.exprRoot?.tagName;
 }

@@ -753,8 +753,8 @@ function clearTryRenderers(branchId: number) {
 
 export function writeTryRenderers(
   branchId: number,
-  catchContent: ServerRenderer | undefined,
-  placeholderContent: ServerRenderer | undefined,
+  catchContent: unknown,
+  placeholderContent: unknown,
 ) {
   writeScope(branchId, {
     [AccessorProp.CatchContent]: catchContent,

@@ -12,6 +12,7 @@ import {
 } from "@marko/compiler/babel-utils";
 import { distance } from "fastest-levenshtein";
 
+import * as ClassHydration from "../visitors/tag/constants/class-hydration";
 import * as TagNameType from "./constants/tag-name-type";
 import { isAnalyzing } from "./get-compile-stage";
 import { getTagName, getTagNameHint } from "./get-tag-name";
@@ -69,6 +70,7 @@ export default function analyzeTagNameType(tag: t.NodePath<t.MarkoTag>) {
 
   if (extra.tagNameType === undefined) {
     const name = tag.get("name");
+    let load: LoadImportConfig | undefined;
     if (name.isStringLiteral()) {
       extra.tagNameType =
         name.node.value[0] === "@"
@@ -81,7 +83,7 @@ export default function analyzeTagNameType(tag: t.NodePath<t.MarkoTag>) {
       extra.tagNameType = TagNameType.NativeTag;
       extra.tagNameNullable = extra[kTagNameDynamic] = false;
     } else if (name.isIdentifier()) {
-      analyzeExpressionTagName(name, extra);
+      load = analyzeExpressionTagName(name, extra);
       extra[kTagNameDynamic] = !extra.tagNameImported;
     } else {
       analyzeExpressionTagName(name, extra);
@@ -101,9 +103,13 @@ export default function analyzeTagNameType(tag: t.NodePath<t.MarkoTag>) {
         extra.tagNameType = TagNameType.DynamicTag;
         extra[kTagNameDynamic] = true;
         extra.featureType = "class";
-        // The interop rebuilds this boundary before its Tags descendants can
-        // resume, which is client work of this template's own.
-        if (childFile?.ast.program.extra?.hydratesTags) {
+        // Client work of its own: Tags descendants resume through the boundary,
+        // or a Class component hydrates on the input this template sends it.
+        if (
+          childFile?.ast.program.extra?.hydratesTags ||
+          (childFile?.metadata.marko.classHydration === ClassHydration.Self &&
+            (tag.node.attributes.length || tag.node.body.body.length))
+        ) {
           getProgram().node.extra!.isInteractive = true;
         }
       } else if (!childFile) {
@@ -121,15 +127,20 @@ export default function analyzeTagNameType(tag: t.NodePath<t.MarkoTag>) {
         extra[kTagNameDynamic] = true;
       }
     }
+
+    // A custom tag its load import names renders through the load path; one
+    // that turned dynamic renders the import's `_load_template` instead.
+    if (load && !extra[kTagNameDynamic]) extra.tagNameLoad = load;
   }
 
   return extra[kTagNameDynamic] ? TagNameType.DynamicTag : extra.tagNameType!;
 }
 
+// The load import a name resolving to one template names, if any.
 function analyzeExpressionTagName(
   name: t.NodePath<t.Expression>,
   extra: t.MarkoTagExtra,
-) {
+): LoadImportConfig | undefined {
   const pending = [name] as t.NodePath<t.Expression>[];
   const seen = new Set<t.Node>();
   let path: (typeof pending)[0] | undefined;
@@ -268,7 +279,7 @@ function analyzeExpressionTagName(
     // A name that may be nullish renders the body in its place, so it stays dynamic.
     if (tagNameImported && !nullable) {
       extra.tagNameImported = tagNameImported;
-      extra.tagNameLoad = tagNameLoad;
+      return tagNameLoad;
     }
   }
 }

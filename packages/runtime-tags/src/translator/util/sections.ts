@@ -15,6 +15,7 @@ import type * as Step from "./constants/step";
 import * as StructureKind from "./constants/structure-kind";
 import { generateUid, generateUidIdentifier } from "./generate-uid";
 import { isCoreTag, isCoreTagName } from "./is-core-tag";
+import type { KnownTagExtra } from "./known-tag";
 import {
   addSorted,
   find,
@@ -22,23 +23,25 @@ import {
   type OneMany,
   type Opt,
   Sorted,
-  type SortedOpt,
-  forEach,
   reduce,
+  some,
 } from "./optional";
 import {
-  isConditionalReason,
+  isGuardedReason,
   type KnownExprs,
+  mapBodyParams,
   mapParamReason,
   type Reason,
   setParamReasonGroups,
 } from "./reasons";
 import { type Slot } from "./slots";
-import { getReasonForBinding } from "./solve-reasons";
+import { bindingLandsRetained, getReasonForBinding } from "./solve-reasons";
 import { ALWAYS, mergeSources, type Sources } from "./sources";
 import { createOutputSectionState } from "./state";
+import { getPlaceholderContentType } from "./static-text";
 import { getTagContentType, getTagFacts } from "./tag-facts";
 import analyzeTagNameType, { TagNameType } from "./tag-name-type";
+import { getWriteReason } from "./write-guard";
 
 // A set of the section's params that reasons wait on together; each
 // call site passes whether the group changed.
@@ -91,7 +94,11 @@ export interface StructureNode {
   // Set at an element's exit, once only-child control flow may have bound it;
   // still unset there, the element is not addressed and the op drops.
   binding: Binding | undefined;
-  marker: boolean;
+  /** `undefined` for a text node at its section's edge: a marker where the
+   * section is a known child (`isKnownChild`), known once calls are analyzed. */
+  marker: boolean | undefined;
+  /** A placeholder's text node, written as a space where it is no marker. */
+  text?: true;
 }
 
 export interface StructureChild {
@@ -124,22 +131,23 @@ export interface Section {
   hoisted: ReferencedBindings;
   /** The closures its `<for>` rows read only by comparing them to the row's
    * key, which a row selector updates. */
-  selector: { key: Binding; closures: Set<Binding> } | undefined;
+  selector: Set<Binding> | undefined;
   /** The canonical intersections its work waits on, once ids allocate. */
   intersections: Map<Intersection, IntersectionMeta> | undefined;
-  /** The slots of its scope, its own and its bindings'. */
-  slots: SortedOpt<Slot>;
+  /** The slots of its scope, its own and its bindings', which `slots.ts` keeps
+   * sorted. */
+  slots: Slot[];
   /** When client code reads anything in its scope: its slots' reasons merged. */
   reason: undefined | Reason;
   paramReasonGroups: ParamReasonGroups | undefined;
   returnValueExpr: t.NodeExtra | undefined;
   isHoistThrough: true | undefined;
   branchExpr: t.NodeExtra | undefined;
-  /** For a `<define>` body or a template rendering itself, the sections whose
-   * direct calls render it. */
-  callSections: SortedOpt<Section>;
+  /** For a `<define>` body or a template rendering itself, the known tags whose
+   * direct calls render it (each in its child scope binding's section). */
+  calls: Opt<KnownTagExtra>;
   /** The known tags rendering in it, in analyze order. */
-  knownTags: t.MarkoTagExtra[] | undefined;
+  knownTags: KnownTagExtra[] | undefined;
   /** The content's rendering tag (its extra), and each child binding that
    * derives from the content, at `properties`. */
   derives:
@@ -168,6 +176,8 @@ export interface Section {
         optional: boolean;
         /** An `<if>` branch's place in its chain, the renderer index it renders as. */
         index?: number;
+        /** An `<await>` body, made with its owner: its promise settles into it. */
+        await?: true;
       }
     | undefined;
   content: null | {
@@ -237,13 +247,13 @@ export function ensureBodySection(
       selector: undefined,
       intersections: undefined,
       isHoistThrough: undefined,
-      slots: undefined,
+      slots: [],
       reason: undefined,
       paramReasonGroups: undefined,
       returnValueExpr: undefined,
       content: getContentInfo(path),
       branchExpr: undefined,
-      callSections: undefined,
+      calls: undefined,
       knownTags: undefined,
       derives: undefined,
       dropped: !!extra.dropped,
@@ -324,17 +334,35 @@ export function forEachSection(fn: (section: Section) => void) {
   sections?.forEach(fn);
 }
 
-// For content a tag the analysis cannot resolve receives, which code it cannot
-// see may render later, the closures read in it from outside it.
+// For content code the analysis cannot see may render later (a body or value a
+// tag it cannot resolve receives), the closures it reads that its owners may not write.
 export function getDynamicTagContentClosures(section: Section) {
-  if (section.branchExpr?.tagNameType === TagNameType.DynamicTag) {
-    return getClosuresFromAbove(section, section);
+  const { derives } = section;
+  if (
+    section.branchExpr?.tagNameType === TagNameType.DynamicTag ||
+    (derives &&
+      some(derives.binding, (binding) =>
+        bindingLandsRetained(binding, derives.properties),
+      ))
+  ) {
+    return bindingUtil.filter(
+      getClosuresFromAbove(section, section, new Set()),
+      mayBeUnwritten,
+    );
   }
 }
 
+function mayBeUnwritten(closure: Binding) {
+  const reason = getWriteReason(closure);
+  return !reason || isGuardedReason(reason);
+}
+
+// What a render of `section` reads from above `top`: its own and its nested
+// sections' closures, and those of each `<define>` body a direct call renders.
 function getClosuresFromAbove(
   section: Section,
   top: Section,
+  seen: Set<Section>,
 ): ReferencedBindings {
   // Closures are of ancestors, so those above `top` sort before it.
   let closures = bindingUtil.leadingRun(
@@ -344,7 +372,26 @@ function getClosuresFromAbove(
     top,
   );
   for (const child of section.children) {
-    closures = bindingUtil.union(closures, getClosuresFromAbove(child, top));
+    closures = bindingUtil.union(
+      closures,
+      getClosuresFromAbove(child, top, seen),
+    );
+  }
+  for (const tagExtra of section.knownTags || []) {
+    const body = tagExtra.childSection;
+    if (!seen.has(body)) {
+      seen.add(body);
+      // A body defined outside `top` sits in one of its ancestors, so what is
+      // above the body is above `top` too.
+      closures = bindingUtil.union(
+        closures,
+        getClosuresFromAbove(
+          body,
+          isSameOrAncestorSection(top, body) ? top : body,
+          seen,
+        ),
+      );
+    }
   }
   return closures;
 }
@@ -366,7 +413,7 @@ export function forEachSectionReverse(fn: (section: Section) => void) {
   }
 }
 
-function getContentInfo(
+export function getContentInfo(
   path: t.NodePath<t.Program | t.MarkoTagBody>,
 ): Section["content"] {
   const body = path.get("body");
@@ -407,7 +454,7 @@ export function getNodeContentType(
     case "MarkoText":
       return ContentType.Text;
     case "MarkoPlaceholder":
-      return ContentType.Placeholder;
+      return getPlaceholderContentType(path.node as t.MarkoPlaceholder);
     case "MarkoScriptlet":
     case "MarkoComment":
     case "ImportDeclaration":
@@ -424,6 +471,12 @@ export function getNodeContentType(
   }
 
   return ContentType.Dynamic;
+}
+
+// A section its callers render in place, so text beside its edges is theirs:
+// a template, or a body its direct calls render.
+export function isKnownChild(section: Section) {
+  return !section.parent || !!section.calls;
 }
 
 // The section `structure.child` inlines; a load tag renders behind a marker.
@@ -545,18 +598,18 @@ export function getCommonSection(section: Section, other: Section) {
 }
 
 export function ensureSectionReasonGroups(section: Section) {
-  ensureReasonGroups(section.reason);
+  ensureReasonGroups(section, section.reason);
 
-  forEach(section.slots, ensureSlotReasonGroups);
+  for (const slot of section.slots) {
+    ensureReasonGroups(slot.section, slot.reason);
+  }
 }
 
-function ensureSlotReasonGroups(slot: Slot) {
-  ensureReasonGroups(slot.reason);
-}
-
-export function ensureReasonGroups(reason: Section["reason"]) {
-  if (isConditionalReason(reason)) {
-    forEachParamGroup(reason.param, ensureParamReasonGroup);
+// The groups the section's guards test, in its own terms.
+function ensureReasonGroups(section: Section, reason: Section["reason"]) {
+  const ownReason = mapBodyParams(section, reason);
+  if (isGuardedReason(ownReason)) {
+    forEachParamGroup(ownReason.param, ensureParamReasonGroup);
   }
 }
 

@@ -1,6 +1,6 @@
 // tags/countdown.marko
 const $content = (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_label = _write_guard($scope0_reason, 2), $wg__input_depth__OR__input_label = _write_guard($scope0_reason, 0), $wg__input_depth = _write_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_label = _write_guard($scope0_reason, 2), $wg__input_depth__OR__input_label = _write_guard($scope0_reason, 0), $wi__input_depth__OR__input_label = _write_if($scope0_reason, 0), $wg__input_depth = _write_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.depth) {
@@ -11,9 +11,9 @@ const $content = (input) => {
 				depth: input.depth - 1,
 				label: input.label
 			});
-			_var($scope1_id, "#scopeOffset/1", $childScope, "__tests__/tags/countdown.marko_1_child#3/var");
+			$wi__input_depth__OR__input_label && _var($scope1_id, "#scopeOffset/1", $childScope, "__tests__/tags/countdown.marko_1_child#3/var");
 			_html(`<span>${_text_resume($scope1_id, "#text/2", child, $wg__input_label)}</span>`);
-			_write_if($scope0_reason, 0) && _scope($scope1_id, {
+			$wi__input_depth__OR__input_label && _scope($scope1_id, {
 				_: _scope_with_id($scope0_id),
 				"#childScope/0": _existing_scope($childScope)
 			}, "__tests__/tags/countdown.marko", "1:2");

@@ -3,8 +3,8 @@
 // single file in one process. This slices those suites into round-robin
 // "slots" (see `MARKO_TEST_SLOT_*` in runtime-tags' main.test.ts and the
 // mocha-autotest patch) and packs the slots plus every other spec file into
-// one mocha worker per core: every slotted worker loads all sliced files but
-// only runs its own slice of their fixtures.
+// one mocha worker per core, up to `DEFAULT_WORKERS`: every slotted worker loads
+// all sliced files but only runs its own slice of their fixtures.
 //
 // This is what `pnpm test` runs, and what CI runs; a scoped `--grep` works here
 // too, and spec files (or dirs/globs) given on the command line replace the
@@ -65,7 +65,13 @@ const SLICE_SUITES = [...SLICED_FILES.keys()]
 const DEFAULT_FILE_MS = 2_000;
 
 const CORES = os.availableParallelism();
-const WORKERS = Math.max(1, Number(process.env.MARKO_TEST_WORKERS) || CORES);
+// Past 8 workers the suite gains little wall time (32 cores: 8 workers 26s, 16 19s,
+// 32 19s) while each worker's startup adds CPU; `MARKO_TEST_WORKERS` overrides it.
+const DEFAULT_WORKERS = Math.min(CORES, 8);
+const WORKERS = Math.max(
+  1,
+  Number(process.env.MARKO_TEST_WORKERS) || DEFAULT_WORKERS,
+);
 // Memory a worker may grow to: room above the heap cap, tighter under coverage.
 // Runs on a machine share one slot per core (and per budget) through tmpdir.
 const WORKER_MEM = (process.env.NODE_V8_COVERAGE ? 2 : 3) * 1024 ** 3;

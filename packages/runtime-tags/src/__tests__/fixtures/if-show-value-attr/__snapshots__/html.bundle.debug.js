@@ -25,7 +25,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $show = n > 0;
 	_show_start($show, 0);
 	_html("<span>shown</span>");
-	_show_end($scope0_id, "#text/3", $show, 1, 0, 0, 1);
+	_show_end($scope0_id, "#text/2", $show, 1, 0, 0, 1);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, { n }, "__tests__/template.marko", 0, { n: "1:6" });
 }, 1);

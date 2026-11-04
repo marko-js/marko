@@ -1,0 +1,8 @@
+<let/show=true/>
+<for|item, key| of=["a", "b"]>
+  <const/k=key/>
+  <let/count=0/>
+  <button onClick() { count++ }>${count}</button>
+  <if=show>${k}</if>
+</for>
+<button.toggle onClick() { show = !show }/>

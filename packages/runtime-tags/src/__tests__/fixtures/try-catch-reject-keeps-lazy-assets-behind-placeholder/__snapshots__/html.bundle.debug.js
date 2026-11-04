@@ -8,7 +8,7 @@ var child_default = _template("__tests__/child.marko", (input) => {
 });
 
 // template.marko
-const $Child_withLoadAssets = withLoadAssets(child_default, flush$1, "ready:__tests__/child.marko");
+const $Child_withLoadAssets = withLoadAssets(() => child_default, "__tests__/child.marko", flush$1, "ready:__tests__/child.marko");
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
@@ -38,5 +38,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		$Child_withLoadAssets({ value: "catch" });
 		_html(` caught ${_text_resume($scope2_id, "#text/2", err.message, $wg__err_message * 2)}`);
 		_write_if($scope2_reason, 0) && _scope($scope2_id, {}, "__tests__/template.marko", "11:4");
-	}, void 0, "__tests__/template.marko_2*content");
+	}, 0, "__tests__/template.marko_2*content");
 }, 1);

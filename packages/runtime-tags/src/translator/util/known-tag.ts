@@ -7,6 +7,7 @@ import {
   BindingType,
   bindingUtil,
   createBinding,
+  type ParamBinding,
   getDebugNames,
   ensurePropertyAlias,
   getPropertyAlias,
@@ -24,7 +25,7 @@ import {
   getAttrTagIdentifier,
   getAttrTagPaths,
 } from "./nested-attribute-tags";
-import { forEach, fromIter, type SortedOpt } from "./optional";
+import { forEach, fromIter, push, type SortedOpt } from "./optional";
 import {
   type ParamsTree,
   getAllKnownPropNames,
@@ -40,6 +41,7 @@ import {
   getSourcesForExprs,
   type KnownExprs,
   getKnownExprsAt,
+  mapParamBindingToExpr,
   mapParamReasonToExpr,
 } from "./reasons";
 import {
@@ -54,7 +56,8 @@ import {
   trackVarReferences,
   mergeTagReferences,
 } from "./references";
-import { callRuntime } from "./runtime";
+import { replaceWithStatements } from "./replace-with-statements";
+import { absentArg, callRuntime } from "./runtime";
 import {
   getScopeAccessorLiteral,
   getScopeOffsetAccessorLiteral,
@@ -70,7 +73,6 @@ import {
   isSameOrAncestorSection,
   type ParamReasonGroups,
   type Section,
-  sectionUtil,
 } from "./sections";
 import { addSetupExpr, addSetupWork } from "./setup-work";
 import {
@@ -81,6 +83,7 @@ import {
   writeSlot,
 } from "./signals";
 import { findSlot, ensureSlot, SlotKind } from "./slots";
+import { mergeSources, type Sources } from "./sources";
 import { createAnalysisState, createOutputSectionState } from "./state";
 import {
   toMemberExpression,
@@ -99,7 +102,12 @@ import translateVar, {
   buildVarChange,
   isTagVarAssigned,
 } from "./translate-var";
-import { buildGroupMask, getWriteGuard } from "./write-guard";
+import {
+  buildGroupMask,
+  getExprIfWritten,
+  getWriteGuard,
+  isEverWritten,
+} from "./write-guard";
 
 type AttrTagGroup = AttrTagLookup[string]["group"];
 
@@ -107,7 +115,11 @@ type AttrTagGroup = AttrTagLookup[string]["group"];
 // sends early reaches tags that read it only once they are set up too.
 const [getTagVarBindings] = createOutputSectionState(() => [] as t.Statement[]);
 
-const kChildSection = Symbol("known tag child section");
+// Call sites settle with sources, before anything maps a param through them.
+const [getCallSiteSourcesByParam] = createAnalysisState(
+  () => new Map<ParamBinding, Sources | undefined>(),
+);
+
 const kParamsTree = Symbol("known tag params tree");
 const kKnownExprs = Symbol("known tag exprs");
 
@@ -115,11 +127,18 @@ declare module "@marko/compiler/dist/types" {
   export interface MarkoTagExtra {
     /** The dom binding a known tag holds its child's scope in. */
     childScopeBinding?: Binding;
-    [kChildSection]?: Section;
+    /** The section a known tag renders: another template's, a `<define>` body. */
+    childSection?: Section;
     /** The child's params tree the call site was analyzed against. */
     [kParamsTree]?: ParamsTree;
     [kKnownExprs]?: KnownExprs;
   }
+}
+
+// A known tag's extra, which always holds its child's section and scope binding.
+export interface KnownTagExtra extends t.MarkoTagExtra {
+  childScopeBinding: Binding;
+  childSection: Section;
 }
 
 // A recursive tag (a `<define>` or template rendering itself) waits for its
@@ -138,26 +157,23 @@ export function knownTagAnalyze(
 
   const section = ensureSection(tag);
   const tagBody = tag.get("body");
-  const tagExtra = (tag.node.extra ??= {});
+  const tagExtra = (tag.node.extra ??= {}) as KnownTagExtra;
   tagExtra.childScopeBinding = createBinding(
     "#childScope",
     BindingType.dom,
     section,
   );
+  tagExtra.childSection = childSection;
   ensureBodySection(tagBody);
   trackParamsReferences(tagBody, BindingType.param);
   (section.knownTags ||= []).push(tagExtra);
-  tagExtra[kChildSection] = childSection;
   const varBinding = trackVarReferences(tag, BindingType.derived);
   const recursive = isSameOrAncestorSection(childSection, section);
   let exprs: KnownExprs | undefined;
   // A `<define>` body, or the template rendering itself, renders in place of
   // this call.
   if (childSection.program === section.program) {
-    childSection.callSections = sectionUtil.add(
-      childSection.callSections,
-      section,
-    );
+    childSection.calls = push(childSection.calls, tagExtra);
     if (recursive) {
       getRecursiveTags().push(tag);
     } else {
@@ -193,7 +209,7 @@ export function knownTagAnalyze(
 // Every body is analyzed now, so each recursive tag takes its callee's tree.
 export function analyzeRecursiveTags() {
   for (const tag of getRecursiveTags()) {
-    const childSection = tag.node.extra![kChildSection]!;
+    const childSection = tag.node.extra!.childSection!;
     assertTerminates(tag, childSection);
     const exprs = analyzeKnownTagParams(
       tag,
@@ -220,8 +236,8 @@ function assertTerminates(tag: t.NodePath<t.MarkoTag>, childSection: Section) {
           `A ${childSection === getProgram().node.extra.section ? "template" : "`<define>`"} that renders itself outside a branch never terminates. Render \`<${getTagNameHint(tag.node)}>\` inside a branch that eventually stops, such as \`<if>\`.`,
         );
     }
-    forEach(caller.callSections, (callSection) => {
-      callers.add(callSection);
+    forEach(caller.calls, (call) => {
+      callers.add(call.childScopeBinding.section);
     });
   }
 }
@@ -271,8 +287,8 @@ function assertReturns(tag: t.NodePath<t.MarkoTag>, childSection: Section) {
 
 // The child's scope resumes, and with it any tag variable, which HTML wires
 // with `_var` and DOM registers for.
-function isChildScopeResumed(tagExtra: t.MarkoTagExtra) {
-  return !!findSlot(tagExtra.childScopeBinding!)?.reason;
+function isChildScopeResumed(section: Section, tagExtra: t.MarkoTagExtra) {
+  return isEverWritten(section, findSlot(tagExtra.childScopeBinding!)?.reason);
 }
 
 // Arguments a child reads none of are dropped, so the render call passes
@@ -295,7 +311,7 @@ function isDroppedNode(node: t.Node) {
 }
 
 function toRenderArg(arg: t.Expression | t.SpreadElement) {
-  return isDroppedNode(arg) ? t.buildUndefinedNode() : arg;
+  return isDroppedNode(arg) ? absentArg(0) : arg;
 }
 
 export function knownTagTranslateHTML(
@@ -304,7 +320,7 @@ export function knownTagTranslateHTML(
 ) {
   const { node } = tag;
   const tagExtra = node.extra!;
-  const childSection = tagExtra[kChildSection]!;
+  const childSection = tagExtra.childSection!;
   const paramsTree = getSettledParamsTree(tagExtra[kParamsTree]);
 
   writeHTMLResumeStatements(tag);
@@ -324,8 +340,8 @@ export function knownTagTranslateHTML(
   const childScopeBinding = tagExtra.childScopeBinding!;
 
   let varStatement: t.Statement | undefined;
-  if (isChildScopeResumed(tagExtra)) {
-    const peekScopeId = generateUidIdentifier(childScopeBinding?.name);
+  if (isChildScopeResumed(section, tagExtra)) {
+    const peekScopeId = generateUidIdentifier(childScopeBinding.name);
     // After the attr statements: building attribute tags can consume scope
     // ids (eg `_resume_locals`), and the peek must see the child's root id.
     statements.push(
@@ -334,24 +350,26 @@ export function knownTagTranslateHTML(
       ]),
     );
 
-    writeSlot(
-      findSlot(childScopeBinding),
-      callRuntime("_existing_scope", peekScopeId),
-    );
+    const childScopeSlot = findSlot(childScopeBinding)!;
+    writeSlot(childScopeSlot, callRuntime("_existing_scope", peekScopeId));
 
     if (tagVar) {
-      // Deferred below the render call: `_var` mints the post-render scope id
-      // for the scope offset.
+      // Below the render call, `_var` mints the scope offset's post-render id;
+      // guarded, as its registration ships only where the guard holds.
       varStatement = t.expressionStatement(
-        callRuntime(
-          "_var",
-          getScopeIdIdentifier(section),
-          getScopeOffsetAccessorLiteral(childScopeBinding),
-          peekScopeId,
-          t.stringLiteral(
-            getResumeRegisterId(section, tagVar.extra?.binding, "var"),
+        getExprIfWritten(
+          section,
+          childScopeSlot.reason!,
+          callRuntime(
+            "_var",
+            getScopeIdIdentifier(section),
+            getScopeOffsetAccessorLiteral(childScopeBinding),
+            peekScopeId,
+            t.stringLiteral(
+              getResumeRegisterId(section, tagVar.extra?.binding, "var"),
+            ),
           ),
-        ),
+        )!,
       );
     }
   }
@@ -364,7 +382,7 @@ export function knownTagTranslateHTML(
     );
 
     if (childGroupMask) {
-      tag.insertBefore(
+      statements.unshift(
         t.expressionStatement(callRuntime("_set_scope_reason", childGroupMask)),
       );
     }
@@ -388,9 +406,7 @@ export function knownTagTranslateHTML(
     );
   }
 
-  for (const replacement of tag.replaceWithMultiple(statements)) {
-    replacement.skip();
-  }
+  replaceWithStatements(tag, statements);
 }
 
 export function knownTagTranslateDOM(
@@ -412,7 +428,7 @@ export function knownTagTranslateDOM(
     const varBinding = node.var.extra!.binding!;
     const signal = initValue(varBinding);
     // The `_var` setup call below references the signal.
-    signal.register = isChildScopeResumed(extra);
+    signal.register = isChildScopeResumed(getSection(tag), extra);
     signal.referenced = true;
     signal.buildAssignment = (valueSection, value) =>
       buildVarChange(
@@ -443,6 +459,23 @@ export function knownTagTranslateDOM(
   }
 }
 
+// What a `<define>` body's calls pass for its param. Another renderer reading
+// the body on the client already makes what the body reads always.
+export function getCallSiteSources(param: ParamBinding) {
+  const sourcesByParam = getCallSiteSourcesByParam();
+  if (sourcesByParam.has(param)) return sourcesByParam.get(param);
+  const body = param.section;
+  let sources: Sources | undefined;
+  forEach(body.calls, (call) => {
+    sources = mergeSources(
+      sources,
+      getSourcesForExprs(mapParamBindingToExpr(call[kKnownExprs]!, param)),
+    );
+  });
+  sourcesByParam.set(param, sources);
+  return sources;
+}
+
 export function addTagVarBindings(section: Section) {
   const bindings = getTagVarBindings(section);
   if (bindings.length) addStatement("render", section, undefined, bindings);
@@ -452,8 +485,8 @@ export function addKnownTagReasons(section: Section) {
   for (const tagExtra of section.knownTags || []) {
     const { childScopeBinding } = tagExtra;
     const knownExprs = tagExtra[kKnownExprs];
-    const childSection = tagExtra[kChildSection]!;
-    if (knownExprs && childScopeBinding && childSection.paramReasonGroups) {
+    const { childSection } = tagExtra;
+    if (knownExprs && childSection.paramReasonGroups) {
       for (const group of childSection.paramReasonGroups) {
         // Sources settle before solving, so a group maps once: a later pass
         // only meets the groups it added.
@@ -476,7 +509,7 @@ export function addKnownTagReasons(section: Section) {
 // setup: a load tag always, any other when that template has setup work.
 export function callsOtherTemplateSetup(section: Section) {
   for (const tagExtra of section.knownTags || []) {
-    const childSection = tagExtra[kChildSection]!;
+    const { childSection } = tagExtra;
     if (
       tagExtra.tagNameLoad ||
       (childSection.program !== section.program && childSection.hasSetupWork)

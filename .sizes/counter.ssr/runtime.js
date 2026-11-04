@@ -1,4 +1,4 @@
-// size: 2356 (min) 1199 (brotli)
+// size: 2339 (min) 1194 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36);
 let rendering;
@@ -83,8 +83,7 @@ function runRenders(renders = pendingRenders) {
   }
 }
 function _on(element, type, handler) {
-  (element[1 + type] === void 0 && delegate(type, handleDelegated),
-    (element[1 + type] = handler || null));
+  (delegate(type, handleDelegated), (element[1 + type] = handler || null));
 }
 function handleDelegated(ev) {
   let target = !rendering && ev.target;

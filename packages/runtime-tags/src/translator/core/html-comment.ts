@@ -16,6 +16,7 @@ import {
   mergeReferences,
   trackDomVarReferences,
 } from "../util/references";
+import { replaceWithStatements } from "../util/replace-with-statements";
 import { callRuntime } from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
 import { createScopeReadExpression } from "../util/scope-read";
@@ -141,7 +142,7 @@ export default {
         writer.markNode(tag, nodeBinding, getWriteReason(nodeBinding));
       }
 
-      tag.remove();
+      replaceWithStatements(tag);
     },
   },
   parseOptions: {

@@ -11,14 +11,14 @@ var child_default = _template("a", (input) => {
 			const $scope2_id = _scope_id();
 			_html(`<button>${_text_resume($scope2_id, "b", count)}:${_escape(value)}</button>${_el_resume($scope2_id, "a")}`);
 			_script($scope2_id, "a0");
-			_subscribe($count__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "a1");
+			_subscribe($count__closures, _scope($scope2_id, {}), "a1");
 		});
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 	}, void 0, () => {
 		_scope_reason();
 		_scope_id();
 		_html("error");
-	}, void 0, "a2");
+	}, 0, "a2");
 	_scope($scope0_id, {
 		b: count,
 		c: $count__closures
@@ -27,7 +27,7 @@ var child_default = _template("a", (input) => {
 });
 
 // template.marko
-const $Child_withLoadAssets = withLoadAssets(child_default, flush$1, "_a");
+const $Child_withLoadAssets = withLoadAssets(() => child_default, "a", flush$1, "_a");
 var template_default = _template("b", (input) => {
 	_scope_reason();
 	_scope_id();
