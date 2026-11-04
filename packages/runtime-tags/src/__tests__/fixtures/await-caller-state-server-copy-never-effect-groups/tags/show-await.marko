@@ -1,0 +1,7 @@
+<define/Row|{ text }|>
+  <await|x|=(text && input.promise)>
+    <p>${x}</p>
+    <script>document.body.dataset.v = String(x)</script>
+  </await>
+</define>
+<Row text=input.label/>

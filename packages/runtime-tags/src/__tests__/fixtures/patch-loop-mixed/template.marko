@@ -1,0 +1,9 @@
+<let/items=["a"]/>
+<main>
+  <ul>
+    <for|entry| of=[input.first, ...items]>
+      <li>${entry}</li>
+    </for>
+  </ul>
+  <button onClick() { items = [...items, "b"] }>+</button>
+</main>

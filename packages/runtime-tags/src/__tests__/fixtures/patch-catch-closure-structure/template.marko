@@ -1,0 +1,19 @@
+static function boom(error: unknown): never {
+  throw error;
+}
+<let/count=0/>
+<main>
+  <try>
+    <p>${input.error ? boom(input.error) : "ok"}</p>
+    <@catch|err|>
+      <b>${(err as Error).message}</b>
+      <if=input.detail>
+        <i>${input.detail}</i>
+        <script>
+          console.log("detail", input.detail);
+        </script>
+      </if>
+    </@catch>
+  </try>
+  <button onClick() { count++ }>${count}</button>
+</main>

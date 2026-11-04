@@ -1,0 +1,6 @@
+import Child from "./child.marko" with { load: "on-click body" }
+
+<const/item={ label: input.label }>
+<let/count=0>
+<button onClick() { count++; document.title = JSON.stringify(item) }>${count}</button>
+<Child item=item/>

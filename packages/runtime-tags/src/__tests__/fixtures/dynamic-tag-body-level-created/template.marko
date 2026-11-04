@@ -1,0 +1,7 @@
+import Card from "./tags/card.marko";
+<main>
+  <if=input.show>
+    <counter/v/>
+    <${input.on ? Card : "div"}><em>${input.note} ${v}</em></>
+  </if>
+</main>
