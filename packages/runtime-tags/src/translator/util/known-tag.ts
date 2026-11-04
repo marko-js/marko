@@ -123,6 +123,7 @@ const [getCallSiteSourcesByParam] = createAnalysisState(
 
 const kParamsTree = Symbol("known tag params tree");
 const kKnownExprs = Symbol("known tag exprs");
+const kPassesInput = Symbol("known tag passes input");
 
 declare module "@marko/compiler/dist/types" {
   export interface MarkoTagExtra {
@@ -133,6 +134,8 @@ declare module "@marko/compiler/dist/types" {
     /** The child's params tree the call site was analyzed against. */
     [kParamsTree]?: ParamsTree;
     [kKnownExprs]?: KnownExprs;
+    /** The call passes its input after its arguments, as written in source. */
+    [kPassesInput]?: boolean;
   }
 }
 
@@ -254,9 +257,16 @@ function analyzeKnownTagParams(
   tag: t.NodePath<t.MarkoTag>,
   paramsTree: ParamsTree | undefined,
 ) {
-  const tagExtra = tag.node.extra!;
+  const { node } = tag;
+  const tagExtra = node.extra!;
   const attrExprs = new Set([tagExtra]);
   tagExtra[kParamsTree] = paramsTree;
+  // Attributes beside arguments are an error, so a call with arguments passes
+  // its input only to carry a body or attribute tags.
+  tagExtra[kPassesInput] =
+    !node.arguments?.length ||
+    !!node.body.body.length ||
+    !!node.attributeTags.length;
   const exprs = (tagExtra[kKnownExprs] = analyzeParams(
     tagExtra,
     getSection(tag),
@@ -266,7 +276,7 @@ function analyzeKnownTagParams(
   ));
   setTagContentDerives(
     tag,
-    paramsTree?.properties?.[tag.node.arguments?.length ?? 0]?.binding,
+    paramsTree?.properties?.[node.arguments?.length ?? 0]?.binding,
     exprs,
   );
   addReasonExprs(ensureSlot(tagExtra.childScopeBinding!), fromIter(attrExprs));
@@ -304,13 +314,12 @@ function getRenderArgs(
   properties: t.ObjectExpression["properties"],
 ) {
   const args = tag.node.arguments;
+  const withInput = tag.node.extra![kPassesInput];
   const renderArgs: (t.Expression | t.SpreadElement)[] =
-    args?.length && (properties.length || !args.every(isDroppedNode))
+    args?.length && (withInput || !args.every(isDroppedNode))
       ? args.map(toRenderArg)
       : [];
-  if (!renderArgs.length || properties.length) {
-    renderArgs.push(propsToExpression(properties));
-  }
+  if (withInput) renderArgs.push(propsToExpression(properties));
   return renderArgs;
 }
 
@@ -600,7 +609,7 @@ function analyzeParams(
   }
 
   const attrsTree = paramsTree.properties[i];
-  if (attrsTree) {
+  if (attrsTree && rootTagExtra[kPassesInput]) {
     known[i] = analyzeAttrs(
       rootTagExtra,
       section,
@@ -614,6 +623,14 @@ function analyzeParams(
     tag.node.arguments = null;
     dropAllTagNodes(tag.node);
     tag.node.arguments = args;
+  }
+
+  // A param the call passes nothing for is written `undefined` in setup.
+  for (const key in paramsTree.properties) {
+    if (!known[key]) {
+      addSetupWork(section);
+      break;
+    }
   }
 
   return paramsExpr;
@@ -1061,8 +1078,25 @@ function writeParamsToSignals(
   }
 
   const attrsTree = paramsTree.properties[i];
-  if (attrsTree) {
+  if (attrsTree && tag.node.extra![kPassesInput]) {
     writeAttrsToSignals(tag, attrsTree, `${hint}_input`, info);
+  }
+
+  // A param the call passes nothing for is undefined, as the server leaves it.
+  const { known } = tag.node.extra![kKnownExprs]!;
+  for (const key in paramsTree.properties) {
+    if (!known![key]) {
+      writeToSignal(
+        info,
+        info.getBindingIdentifier(
+          paramsTree.properties[key].binding,
+          `${hint}_param_${key}`,
+        ),
+        undefined,
+        undefined,
+        true,
+      );
+    }
   }
 }
 
