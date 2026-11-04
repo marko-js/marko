@@ -1,0 +1,10 @@
+static function boom(msg: string): never {
+  throw new Error(msg);
+}
+<try>
+  <p>${input.fail ? boom(input.msg) : input.msg}</p>
+  <@catch|err|>
+    <const/upper=input.msg.toUpperCase()/>
+    <b title=input.msg>${(err as Error).message} ${input.msg} ${upper} ${(err as Error).message + upper}</b>
+  </@catch>
+</try>

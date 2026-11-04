@@ -1,0 +1,15 @@
+<await|a|=input.p>
+  <const/c=input.n/>
+</await>
+<try>
+  <const/d=input.n/>
+  <@placeholder><em>loading</em></@placeholder>
+</try>
+<for|i| to=input.n>
+  <for|j| to=i>
+    <const/e=input.n/>
+  </for>
+</for>
+<await|b|=input.p>
+  <script>document.body.dataset.n = input.n</script>
+</await>

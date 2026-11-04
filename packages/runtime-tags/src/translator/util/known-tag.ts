@@ -1,7 +1,7 @@
 import { types as t } from "@marko/compiler";
 import { getProgram, isAttributeTag } from "@marko/compiler/babel-utils";
 
-import { ReservedId } from "../../common/types";
+import { UpdatesFrom, ReservedId } from "../../common/types";
 import {
   type Binding,
   BindingType,
@@ -14,11 +14,15 @@ import {
   isInvokeOnlyBinding,
   isOwnBinding,
   propertiesUtil,
+  type ReferencedBindings,
   reserveId,
 } from "./bindings";
 import { setTagContentDerives } from "./content-derives";
+import { createPassMemo } from "./cyclic-memo";
 import { generateUidIdentifier } from "./generate-uid";
 import { getTagName, getTagNameHint } from "./get-tag-name";
+import { isOptimize, isPage, isPatch } from "./marko-config";
+import { getModuleRead } from "./module-read";
 import {
   analyzeAttributeTags,
   type AttrTagLookup,
@@ -26,7 +30,17 @@ import {
   getAttrTagIdentifier,
   getAttrTagPaths,
 } from "./nested-attribute-tags";
-import { forEach, fromIter, push, type SortedOpt } from "./optional";
+import {
+  every,
+  forEach,
+  fromIter,
+  type Opt,
+  push,
+  reduce,
+  some,
+  type SortedOpt,
+  toArray,
+} from "./optional";
 import {
   type ParamsTree,
   getAllKnownPropertyNames,
@@ -36,11 +50,35 @@ import {
   hasAllKnownProperties,
 } from "./params-tree";
 import {
+  hasClientState,
+  isPatchKeyedSlot,
+  onReasonsSettled,
+} from "./patch/decisions";
+import {
+  getPassedReads,
+  getFilledReferences,
+  hasFilledReferences,
+  holdsBuiltObject,
+  runsEffectOnPatch,
+  holdsRegisteredFn,
+  namesBodyOwner,
+  someReturnedFnValue,
+} from "./patch/refresh";
+import {
+  calleeKeepsInput,
+  getParamSelectedStructure,
+  patchFillsSection,
+  hasStructuralParam,
+  recordStructuralParams,
+} from "./patch/structure";
+import { getCallerGroupGuard, mayHoldScopeBoundFn } from "./patch/writers";
+import {
   addAlwaysReason,
   addReasonExprs,
   addReason,
   getSourcesForExpr,
   getSourcesForExprs,
+  getSourcesForReferencedBindings,
   type KnownExprs,
   mapParamBindingToExpr,
   mapParamReasonToExpr,
@@ -51,14 +89,22 @@ import {
   dropNodes,
   getAllTagReferenceNodes,
   getChildTagReferenceNodes,
+  isRegisteredFnExtra,
   mergeReferences,
   type ReferencedExtra,
   setDerivedFrom,
   trackParamsReferences,
   trackVarReferences,
+  getReferencedBindings,
+  getReferencedBindingsInFunction,
 } from "./references";
 import { replaceWithStatements } from "./replace-with-statements";
-import { absentArg, callRuntime } from "./runtime";
+import {
+  absentArg,
+  linkRuntimeFeature,
+  callRuntime,
+  importRuntimeFeature,
+} from "./runtime";
 import {
   getScopeAccessorLiteral,
   getScopeOffsetAccessorLiteral,
@@ -66,17 +112,23 @@ import {
 import { createScopeReadExpression, scopeIdentifier } from "./scope-read";
 import { getSectionRendererIdentifier } from "./section-renderer";
 import {
+  ensureReasonGroups,
   ensureSection,
   ensureBodySection,
+  forEachSection,
+  getCallerParamGroups,
+  getCallerParamGroupsAt,
   getScopeIdIdentifier,
   getSection,
   getSectionForBody,
   isSameOrAncestorSection,
   mayMergeWithText,
+  type ParamReasonGroup,
   type ParamReasonGroups,
   type Section,
 } from "./sections";
 import { addSetupExpr, addSetupWork } from "./setup-work";
+import { addParamFill, getParamEntries, type ParamFill } from "./shell";
 import {
   addStatement,
   getResumeRegistryId,
@@ -85,8 +137,18 @@ import {
   writeSlot,
 } from "./signals";
 import { findSlot, ensureSlot, SlotKind } from "./slots";
-import { mergeSources, type Sources } from "./sources";
-import { createAnalysisState, createOutputSectionState } from "./state";
+import {
+  hasCallerParamSource,
+  hasParamOrGlobalSource,
+  mergeSources,
+  type Sources,
+} from "./sources";
+import {
+  createAnalysisState,
+  createOutputSectionState,
+  createOutputState,
+} from "./state";
+import { hasScopeOffset } from "./structure";
 import { toMemberExpression, toObjectProperty } from "./to-property-name";
 import {
   addDynamicAttrTagStatements,
@@ -101,11 +163,15 @@ import translateVar, {
   isTagVarAssigned,
 } from "./translate-var";
 import {
+  andGuard,
+  buildGroupsValue,
   buildGroupMask,
   getExprIfWritten,
   getWriteGuard,
+  getGroupsConstant,
   getWriteReason,
   isEverWritten,
+  scopePageIdentifier,
 } from "./write-guard";
 
 type AttrTagGroup = AttrTagLookup[string]["group"];
@@ -122,11 +188,16 @@ const [getCallSiteSourcesByParam] = createAnalysisState(
 const kParamsTree = Symbol("known tag params tree");
 const kKnownExprs = Symbol("known tag exprs");
 const kPassesInput = Symbol("known tag passes input");
+const kModuleReadInput = Symbol("known tag module read input");
 
 declare module "@marko/compiler/dist/types" {
   export interface MarkoSpreadAttributeExtra {
     /** The binding it spreads, which its known child reads prop by prop. */
     knownSpread?: Binding;
+  }
+  export interface NodeExtra {
+    /** An argument or attribute value the call passes that is a module read. */
+    [kModuleReadInput]?: true;
   }
   export interface MarkoTagExtra {
     /** The dom binding a known tag holds its child's scope in. */
@@ -171,6 +242,12 @@ export function knownTagAnalyze(
     section,
   );
   tagExtra.childSection = childSection;
+  if (isPatch()) {
+    // Children inside unpatched structure never pair from a patch.
+    onReasonsSettled(() => {
+      if (patchFillsSection(section)) linkRuntimeFeature("patches/child");
+    });
+  }
   ensureBodySection(tagBody);
   trackParamsReferences(tagBody, BindingType.param);
   (section.knownTags ||= []).push(tagExtra);
@@ -358,47 +435,134 @@ export function knownTagTranslateHTML(
 
   const childScopeBinding = tagExtra.childScopeBinding!;
 
+  let liveInput: ((input: t.Expression) => t.Expression) | undefined;
   let varStatement: t.Statement | undefined;
+  // A patch pairs the child through its scope ref, whatever the reason.
   if (isChildScopeResumed(section, tagExtra)) {
     const peekScopeId = generateUidIdentifier(childScopeBinding.name);
+    const childScopeSlot = findSlot(childScopeBinding)!;
+    const childScopeReason = childScopeSlot.reason;
+    const varId =
+      tagVar &&
+      childScopeReason &&
+      t.stringLiteral(
+        getResumeRegistryId(section, tagVar.extra?.binding, "var"),
+      );
+    // A patch keys the child's scope, so it writes it even for a constant group;
+    // the wiring resolves where no patch fills the variable (`_unfilled_if`).
+    const guardVar = (expr: t.Expression) =>
+      isPatchKeyedSlot(childScopeSlot)
+        ? andGuard(
+            getCallerGroupGuard(section, "_unfilled_if", childScopeReason),
+            expr,
+          )
+        : getExprIfWritten(section, childScopeReason!, expr);
     // After the attr statements: building attribute tags can consume scope
     // ids (eg `_resume_locals`), and the peek must see the child's root id.
     statements.push(
       t.variableDeclaration("const", [
-        t.variableDeclarator(peekScopeId, callRuntime("_peek_scope_id")),
+        t.variableDeclarator(
+          peekScopeId,
+          isPatch()
+            ? callRuntime(
+                "_peek_scope_id",
+                getScopeIdIdentifier(section),
+                getScopeAccessorLiteral(childScopeBinding),
+                t.numericLiteral(nextIdSite()),
+                // Only a patch render of a section the patch fills reads these two.
+                (patchFillsSection(section) &&
+                  varId &&
+                  guardVar(t.numericLiteral(1))) ||
+                  absentArg(0),
+                patchFillsSection(section) &&
+                  childSection.parent !== section &&
+                  namesBodyOwner(section, childSection) &&
+                  getScopeIdIdentifier(childSection.parent!),
+              )
+            : callRuntime("_peek_scope_id"),
+        ),
       ]),
     );
 
-    const childScopeSlot = findSlot(childScopeBinding)!;
     writeSlot(childScopeSlot, callRuntime("_existing_scope", peekScopeId));
 
-    if (tagVar) {
+    // An object the call builds anew from what a patch fills: the child's readers
+    // depend on its sources.
+    if (isPatch() && patchFillsSection(section)) {
+      const inputReads = new Set<string>();
+      for (const prop of properties) {
+        if (t.isObjectProperty(prop) && t.isExpression(prop.value)) {
+          const { extra } = prop.value;
+          if (!extra) continue;
+          const reads = getPassedReads(section, extra);
+          for (const read of reads) inputReads.add(read);
+          if (reads.size && isBuiltObjectExpr(extra)) {
+            prop.value = callRuntime(
+              "_patch_live",
+              peekScopeId,
+              prop.value,
+              getScopeIdIdentifier(section),
+              t.stringLiteral([...reads].join(" ")),
+            );
+          }
+        }
+      }
+      // A child reading its whole input: the object the call builds anew.
+      if (inputReads.size && some(tagExtra.derives, runsEffectOnPatch)) {
+        liveInput = (input) =>
+          callRuntime(
+            "_patch_live",
+            peekScopeId,
+            input,
+            getScopeIdIdentifier(section),
+            t.stringLiteral([...inputReads].join(" ")),
+          );
+      }
+    }
+
+    if (varId) {
       // Below the render call, `_var` mints the scope offset's post-render id;
       // guarded, as its registration ships only where the guard holds.
       varStatement = t.expressionStatement(
-        getExprIfWritten(
-          section,
-          childScopeSlot.reason!,
+        guardVar(
           callRuntime(
             "_var",
             getScopeIdIdentifier(section),
             getScopeOffsetAccessorLiteral(childScopeBinding),
             peekScopeId,
-            t.stringLiteral(
-              getResumeRegistryId(section, tagVar.extra?.binding, "var"),
-            ),
+            varId,
           ),
         )!,
       );
     }
+  } else if (isPatch()) {
+    statements.push(
+      t.expressionStatement(
+        callRuntime(
+          "_patch_child",
+          t.numericLiteral(nextIdSite()),
+          !isOptimize() && getScopeAccessorLiteral(childScopeBinding),
+        ),
+      ),
+    );
   }
 
   if (childSection.paramReasonGroups) {
-    const childGroupMask = buildChildGroupMask(
-      section,
-      childScopeBinding,
-      childSection.paramReasonGroups,
-    );
+    let childGroupMask: t.Expression | undefined;
+    if (isPatch()) {
+      // The scope reason carries the group mask, which an instance in stateful
+      // structure (patch renders skip it) needs for what its page resumes.
+      const groups = getParamGroupSources(tagExtra);
+      if (groups) {
+        childGroupMask = buildGroupMaskExpr(section, tag.node, groups);
+      }
+    } else {
+      childGroupMask = buildChildGroupMask(
+        section,
+        childScopeBinding,
+        childSection.paramReasonGroups,
+      );
+    }
 
     if (childGroupMask) {
       statements.unshift(
@@ -407,22 +571,29 @@ export function knownTagTranslateHTML(
     }
   }
 
+  const renderArgs = getRenderArgs(tag, properties);
+  if (liveInput) {
+    renderArgs[renderArgs.length - 1] = liveInput(
+      renderArgs[renderArgs.length - 1] as t.Expression,
+    );
+  }
   if (tagVar) {
     // The render call reads attr-tag bindings, so its declaration must follow
     // the attr statements rather than precede the tag.
     translateVar(
       tag,
-      t.callExpression(tagIdentifier, getRenderArgs(tag, properties)),
+      t.callExpression(tagIdentifier, renderArgs),
       "let",
       statements,
     );
     if (varStatement) statements.push(varStatement);
   } else {
     statements.push(
-      t.expressionStatement(
-        t.callExpression(tagIdentifier, getRenderArgs(tag, properties)),
-      ),
+      t.expressionStatement(t.callExpression(tagIdentifier, renderArgs)),
     );
+  }
+  if (isPatch()) {
+    statements.push(t.expressionStatement(callRuntime("_patch_child_end")));
   }
 
   replaceWithStatements(tag, statements);
@@ -451,6 +622,8 @@ export function knownTagTranslateDOM(
         value,
         varBinding,
       );
+    // A flush creating the child seeds the wiring through its setup.
+    if (isPatch()) importRuntimeFeature("patches/var");
     getTagVarBindings(tagSection).push(
       t.expressionStatement(
         callRuntime(
@@ -519,6 +692,209 @@ export function addKnownTagReasons(section: Section) {
   }
 }
 
+// A known tag var's wiring guard asks whether the client holds the child's
+// scope, by its ref's own reason (a patch keys the ref, so writes it always).
+export function ensureKnownTagPatchGroups(section: Section) {
+  for (const { childScopeBinding } of section.knownTags || []) {
+    if (hasScopeOffset(childScopeBinding)) {
+      ensureReasonGroups(section, findSlot(childScopeBinding)?.reason);
+    }
+  }
+}
+
+// The params a patch template's known children make structural: a param passed
+// to a child's structural param makes this template's params so too.
+export function recordKnownTagPatchFacts(section: Section) {
+  for (const tagExtra of section.knownTags || []) {
+    for (const { params, sources } of getParamGroupSources(tagExtra) || []) {
+      if (hasStructuralParam(params)) recordStructuralParams(sources);
+    }
+  }
+}
+
+// Once param entries are recorded (`linkPatchFills`), each call links the
+// patchers its known child's params need; its callers link what it forwards.
+export function linkKnownTagPatchEntries() {
+  let grew: boolean;
+  do {
+    grew = false;
+    forEachSection((section) => {
+      if (!patchFillsSection(section)) return;
+      for (const tagExtra of section.knownTags || []) {
+        const groups = getParamGroupSources(tagExtra);
+        if (!groups) continue;
+        const child = getParamEntries(tagExtra.childSection);
+        for (const fill of child.fills) {
+          grew = linkParamFill(tagExtra[kKnownExprs]!, fill) || grew;
+        }
+        for (const { params, sources, exprs } of groups) {
+          const written = bindingUtil.intersects(params, child.written);
+          const marked = bindingUtil.intersects(params, child.marked);
+          const bound = bindingUtil.intersects(params, child.bound);
+          if (!(written || marked || bound)) continue;
+          const forwarded = getCallerParamGroups(sources?.param);
+          for (const [caller, group] of forwarded) {
+            if (written) grew = rollUp(caller, "written", group) || grew;
+            if (marked) grew = rollUp(caller, "marked", group) || grew;
+            if (bound) grew = rollUp(caller, "bound", group) || grew;
+          }
+          // Content or a function it passes a fill carries ships as a bind.
+          if (
+            bound &&
+            (mayHoldScopeBoundFn(exprs) || passesBoundContent(tagExtra, params))
+          ) {
+            linkRuntimeFeature("patches/bind");
+          }
+          // A value the call passes of its own, no param of its own in it.
+          if (written && !forwarded.length) linkRuntimeFeature("patches/write");
+          // A bound value a marked slot takes keeps its identity record.
+          if (
+            marked &&
+            (mayHoldScopeBoundFn(exprs) || passesBoundContent(tagExtra, params))
+          ) {
+            linkRuntimeFeature("patches/marked-bind");
+          }
+          // A child's returned function it passes on binds where that child isn't.
+          if (someReturnedFnValue(exprs, hasFilledReferences)) {
+            linkRuntimeFeature("patches/marked-bind");
+          }
+        }
+      }
+    });
+  } while (grew);
+  // A patched entry is a page (a build contract: debug builds refuse an embedded
+  // render's patch), and no call links its own input.
+  const root = getParamEntries(getProgram().node.extra.section!);
+  if (isPage()) {
+    for (const fill of root.fills) {
+      if (fill.client === true) linkParamFillFeatures(fill);
+    }
+    if (root.written) linkRuntimeFeature("patches/write");
+    if (root.marked) linkRuntimeFeature("patches/marked-write");
+  }
+}
+
+// Whether the call passes its child content (a body's or an attribute tag's) that
+// reaches one of `params`: a patch sends written content as a bind, as it registers.
+function passesBoundContent(
+  tagExtra: t.MarkoTagExtra,
+  params: Sources["param"],
+) {
+  return !!getContentReaches()
+    .get(tagExtra)
+    ?.some((binding) => bindingUtil.has(params, binding));
+}
+
+// Each call's child bindings its content reaches, along each content's property path.
+const [getContentReaches] = createAnalysisState(() => {
+  const reaches = new Map<t.MarkoTagExtra, Binding[]>();
+  forEachSection(({ derives }) => {
+    if (!derives) return;
+    const path = toArray(derives.properties, identity);
+    let reached = reaches.get(derives.tag);
+    if (!reached) reaches.set(derives.tag, (reached = []));
+    forEach(derives.binding, (binding) => {
+      for (
+        let cur: Binding | undefined = binding, i = 0;
+        cur;
+        cur = cur.propertyAliases.get(path[i++])
+      ) {
+        reached.push(cur);
+      }
+    });
+  });
+  return reaches;
+});
+
+function identity<T>(value: T) {
+  return value;
+}
+
+// The call sends the fill where it passes the server's value for the fill's
+// params and the client's for a param its guard checks, as the server's masks do.
+function linkParamFill(knownExprs: KnownExprs, fill: ParamFill) {
+  const own = getPassedSources(knownExprs, fill.params);
+  // Its own group the call's client state sets: `_filled_guard` is 0, so it
+  // never ships.
+  if (hasClientState(own)) return false;
+  const client =
+    fill.client === true || getPassedSources(knownExprs, fill.client);
+  const clientState = client === true || !!client?.state;
+  const clientGroups = clientState ? [] : getCallerParamGroups(client?.param);
+  if (!clientState && !clientGroups.length) return false;
+  const ownGroups = getCallerParamGroups(own?.param);
+  if (!ownGroups.length && clientState) {
+    linkParamFillFeatures(fill);
+    return false;
+  }
+  let grew = false;
+  // Its own params roll up with the client ones. The call's own value ($global,
+  // a constant) has none: its client ones roll up alone, to their callers.
+  for (const [caller, params] of ownGroups.length ? ownGroups : clientGroups) {
+    const clientParams = !ownGroups.length
+      ? params
+      : clientState ||
+        clientGroups.reduce<Sources["param"]>(unionGroup, undefined)!;
+    grew =
+      addParamFill(caller, {
+        params: ownGroups.length ? params : undefined,
+        client: clientParams,
+        render: fill.render,
+      }) || grew;
+  }
+  return grew;
+}
+
+function unionGroup(
+  all: Sources["param"],
+  [, group]: ReturnType<typeof getCallerParamGroups>[number],
+) {
+  return bindingUtil.union(all, group);
+}
+
+function linkParamFillFeatures({ render }: ParamFill) {
+  linkRuntimeFeature(render ? "patches/render" : "patches/fill");
+}
+
+function getPassedSources(knownExprs: KnownExprs, params: Sources["param"]) {
+  return (
+    params &&
+    reduce(mapParamReasonToExpr(knownExprs, params), mergeAllSourcesForExpr)
+  );
+}
+
+function rollUp(
+  section: Section,
+  key: "written" | "marked" | "bound",
+  params: ParamReasonGroup,
+) {
+  const entries = getParamEntries(section);
+  if (bindingUtil.isSuperset(entries[key], params)) return false;
+  entries[key] = bindingUtil.union(entries[key], params);
+  return true;
+}
+
+// Whether some call of the `<define>` body passes the params what `test` holds
+// of: the sources of their call-site expressions.
+export function someCallPasses(
+  body: Section,
+  params: Sources["param"],
+  test: (sources: Sources | undefined) => boolean,
+) {
+  return some(body.renderedBy, (call) =>
+    test(getPassedSources(call[kKnownExprs]!, params)),
+  );
+}
+
+// Whether every call of the `<define>` body passes the params what `test` holds of.
+export function everyCallPasses(
+  body: Section,
+  params: Sources["param"],
+  test: (sources: Sources | undefined) => boolean,
+) {
+  return !someCallPasses(body, params, (sources) => !test(sources));
+}
+
 // A known tag rendering another template calls its setup in the section's
 // setup: a load tag always, any other when that template has setup work.
 export function callsOtherTemplateSetup(section: Section) {
@@ -532,6 +908,30 @@ export function callsOtherTemplateSetup(section: Section) {
     }
   }
   return false;
+}
+
+// An `<id>`'s address numbers each call site rendering another scope's content
+// across its template: a branch adds nothing, so accessors could repeat.
+const [getIdSites, setIdSites] = createOutputState(() => 0);
+export function nextIdSite() {
+  const site = getIdSites();
+  setIdSites(site + 1);
+  return site;
+}
+
+// An `<if>`'s branches never render together, so each numbers its sites from
+// the first branch's, and what follows numbers past all of them.
+const [getBranchIdSites] = createOutputState(
+  () => new Map<object, [first: number, next: number]>(),
+);
+export function enterBranchIdSites(branches: object) {
+  const range = getBranchIdSites().get(branches);
+  if (range) setIdSites(range[0]);
+  else getBranchIdSites().set(branches, [getIdSites(), 0]);
+}
+export function exitBranchIdSites(branches: object) {
+  const range = getBranchIdSites().get(branches)!;
+  setIdSites((range[1] = Math.max(range[1], getIdSites())));
 }
 
 // Each group's serialize guard is its bit; groups sharing a guard still shift it
@@ -560,6 +960,215 @@ function buildChildGroupMask(
       };
     }),
   );
+}
+
+export interface ParamGroupSources {
+  /** The child params this group covers. */
+  params: ParamReasonGroup;
+  /** The call site's sources for this group, function-body reads included. */
+  sources: Sources | undefined;
+  /** The call site's expressions for this group. */
+  exprs: Opt<t.NodeExtra>;
+}
+
+// A tag analyzed as a known child template (vs a `<define>` var's tag).
+export function isKnownTagExtra(tagExtra: t.MarkoTagExtra) {
+  return !!tagExtra[kKnownExprs];
+}
+
+// A child's param intersects another, the call (`exprs`) passing client state among
+// them: the client re-runs that intersection where its group is the client's.
+export function intersectsClientState(
+  param: Binding,
+  exprs: KnownExprs | undefined,
+) {
+  return (
+    !!exprs &&
+    !!param.section.paramReasonGroups?.some(
+      (params) =>
+        Array.isArray(params) &&
+        bindingUtil.has(params, param) &&
+        hasClientState(getPassedSources(exprs, params)),
+    )
+  );
+}
+
+// Per-group sources for a known templated call site, aligned with the
+// child's `paramReasonGroups` indices.
+export function getParamGroupSources(
+  tagExtra: t.MarkoTagExtra,
+): ParamGroupSources[] | undefined {
+  const groups = tagExtra.childSection!.paramReasonGroups;
+  if (groups) {
+    const knownExprs = tagExtra[kKnownExprs]!;
+    return groups.map((params) => {
+      const exprs = mapParamReasonToExpr(knownExprs, params);
+      return { params, sources: reduce(exprs, mergeAllSourcesForExpr), exprs };
+    });
+  }
+}
+
+// A param every call derives from a module read (`derivesConstantParam`).
+export function derivesConstantInput(binding: Binding) {
+  const params = binding.sources?.param;
+  return params === binding && derivesConstantParam(params);
+}
+
+// A `<define>` param every call passing a constant where the client renders it passes
+// a module read, which that call's fill runs push: the client derives it.
+const derivesConstantParam = createPassMemo((param: ParamBinding): boolean => {
+  const body = param.section;
+  let derives = false;
+  return (
+    !!body.parent &&
+    !some(body.renderedBy, (call) => {
+      const exprs = mapParamReasonToExpr(call[kKnownExprs]!, param);
+      const sources = reduce(exprs, mergeAllSourcesForExpr);
+      if (
+        hasClientState(sources) ||
+        hasParamOrGlobalSource(sources) ||
+        !rendersCallOnClient(call.childScopeBinding.section) ||
+        // Main serializes the module read for that intersection.
+        intersectsClientState(param, call[kKnownExprs])
+      ) {
+        return false;
+      }
+      derives = true;
+      return !exprs || !every(exprs, isModuleReadInput);
+    }) &&
+    derives
+  );
+}, false);
+
+function isModuleReadInput(extra: t.NodeExtra | undefined) {
+  return !!extra?.[kModuleReadInput];
+}
+
+// The instance's sources mask (2 bits per group at `1 + 2i`; keyed when
+// dynamic), or undefined when the all-server default is equivalent.
+function buildGroupMaskExpr(
+  section: Section,
+  tag: t.MarkoTag,
+  groups: ParamGroupSources[],
+): t.Expression | undefined {
+  const isScopeBound = (expr: t.NodeExtra) => isScopeBoundExpr(tag, expr);
+  const values = groups.map(({ sources, exprs }) => {
+    const value = getGroupSourcesValue(section, sources, buildGroupsValue);
+    if (
+      !exprs ||
+      !every(exprs, isScopeBound) ||
+      passesOneValue(section, sources, exprs)
+    ) {
+      return value;
+    }
+    const patchValue = getPatchGroupValue(
+      section,
+      sources,
+      exprs,
+      buildGroupsValue,
+    );
+    return t.conditionalExpression(
+      scopePageIdentifier(section.program),
+      typeof value === "number" ? t.numericLiteral(value) : value,
+      typeof patchValue === "number"
+        ? t.numericLiteral(patchValue)
+        : patchValue,
+    );
+  });
+  if (values.every(isServerOnly)) return;
+  return buildGroupMask(
+    values.map((value, i) => ({
+      value,
+      names: getDebugNames(groups[i].params),
+    })),
+  );
+}
+
+// A group's value from its call site's sources: state's, the server's, or none for a
+// constant; its callers' groups `combine` with them.
+function getGroupSourcesValue<R>(
+  section: Section,
+  sources: Sources | undefined,
+  combine: (groups: [Section, ParamReasonGroup][], bits: number) => R,
+) {
+  if (sources?.state) {
+    return sources.param
+      ? UpdatesFrom.Client | UpdatesFrom.Server
+      : UpdatesFrom.Client;
+  }
+  return getGroupParamValue(section, sources, combine);
+}
+
+// A group's value from its call site's param and `$global` sources: params this section's
+// callers pass compose their groups' bits, a `$global` source adds a static server bit.
+function getGroupParamValue<R>(
+  section: Section,
+  sources: Sources | undefined,
+  combine: (groups: [Section, ParamReasonGroup][], bits: number) => R,
+) {
+  const callerGroups = getCallerParamGroupsAt(sources?.param, section);
+  if (callerGroups.length) {
+    return combine(callerGroups, sources!.global ? UpdatesFrom.Server : 0);
+  }
+  return isUngatedGroup(sources) ? UpdatesFrom.Server : 0;
+}
+
+// Where a patch call's child group updates from, where every render passes a constant.
+// A merged input is scope-bound by its tag's attributes, which only its node holds.
+export function getCallUpdatesFrom(
+  call: KnownTagExtra,
+  group: ParamReasonGroup,
+) {
+  const exprs = mapParamReasonToExpr(call[kKnownExprs]!, group);
+  if (some(exprs, isKnownTagExtra)) return;
+  const section = call.childScopeBinding.section;
+  const sources = reduce(exprs, mergeAllSourcesForExpr);
+  if (
+    !exprs ||
+    !every(exprs, isRegisteredFnExtra) ||
+    passesOneValue(section, sources, exprs)
+  ) {
+    return getGroupSourcesValue(section, sources, getGroupsConstant);
+  }
+}
+
+// A function its scope registers is fixed for the child's life: a page passes its group as
+// its sources say, a patch as the references it writes say, else as a constant.
+function getPatchGroupValue<R>(
+  section: Section,
+  sources: Sources | undefined,
+  exprs: Opt<t.NodeExtra>,
+  combine: (groups: [Section, ParamReasonGroup][], bits: number) => R,
+) {
+  return some(exprs, passesFilledReferences)
+    ? getGroupParamValue(section, sources, combine)
+    : 0;
+}
+
+// Whether a scope-bound group passes one value on page and patch renders: the same
+// sources, or the same constant.
+function passesOneValue(
+  section: Section,
+  sources: Sources | undefined,
+  exprs: Opt<t.NodeExtra>,
+) {
+  if (!sources?.state && some(exprs, passesFilledReferences)) return true;
+  const value = getGroupSourcesValue(section, sources, getGroupsConstant);
+  return (
+    value !== undefined &&
+    value === getPatchGroupValue(section, sources, exprs, getGroupsConstant)
+  );
+}
+
+// The server alone contributes the group, as the all-server default says.
+function isServerOnly(value: number | t.Expression) {
+  return value === UpdatesFrom.Server;
+}
+
+// A group with param or `$global` sources but none a caller passes: no
+// caller gates it, so its mask is fixed and a patch writes it.
+function isUngatedGroup(sources: Sources | undefined) {
+  return hasParamOrGlobalSource(sources) && !hasCallerParamSource(sources);
 }
 
 function analyzeParams(
@@ -596,6 +1205,9 @@ function analyzeParams(
         known[i] = { value: argValueExtra };
         rootAttrExprs.add(argValueExtra);
         addSetupExpr(section, arg);
+        if (getModuleRead(tag, arg as t.Expression)) {
+          argValueExtra[kModuleReadInput] = true;
+        }
         setDerivedFrom(argTree.binding, argValueExtra, paramsExpr);
       } else {
         dropNodes(arg);
@@ -853,6 +1465,7 @@ function analyzeAttrs(
         known[attr.name] = { value: attrExtra };
         rootAttrExprs.add(attrExtra);
         addSetupExpr(section, attr.value);
+        if (getModuleRead(tag, attr.value)) attrExtra[kModuleReadInput] = true;
         setDerivedFrom(attrTree.binding, attrExtra, rootExprs);
         if (isInvokeOnlyInput(attrTree.binding)) attrExtra.invokeOnly = true;
       }
@@ -969,6 +1582,35 @@ function readsParamsByName(
 
 function isSpreadArgument(arg: t.Expression | t.SpreadElement) {
   return arg.type === "SpreadElement";
+}
+
+// An object the call builds anew each time it runs: a literal, or a binding holding one.
+function isBuiltObjectExpr(extra: t.NodeExtra) {
+  if (extra.buildsObject) return true;
+  const ref = getReferencedBindings(extra);
+  return !!ref && !Array.isArray(ref) && holdsBuiltObject(ref);
+}
+
+// A function with filled references as the call passes it: a literal reading a reference a patch
+// writes, or a binding holding one.
+function passesFilledReferences(extra: t.NodeExtra) {
+  if (isRegisteredFnExtra(extra)) return !!getFilledReferences(extra);
+  const ref = getReferencedBindings(extra);
+  return !!ref && !Array.isArray(ref) && holdsRegisteredFn(ref);
+}
+
+// A function its scope registers, or the tag's own merged expression where each
+// attribute is one, it passes no attribute tag, and the child only calls into it.
+function isScopeBoundExpr(tag: t.MarkoTag, expr: t.NodeExtra) {
+  return isKnownTagExtra(expr)
+    ? !tag.attributeTags.length &&
+        every(expr.derives, isInvokeOnlyBinding) &&
+        tag.attributes.every(isRegisteredFnAttr)
+    : isRegisteredFnExtra(expr);
+}
+
+function isRegisteredFnAttr(attr: t.MarkoAttribute | t.MarkoSpreadAttribute) {
+  return isRegisteredFnExtra(attr.value.extra);
 }
 
 function setDerivedFromTag(
@@ -1115,9 +1757,21 @@ function writeParamsToSignals(
 
   let i = 0;
   if (tag.node.arguments) {
+    const constants = getDerivedConstants(
+      info,
+      tag.node.arguments.map(
+        (arg, j) =>
+          [
+            paramsTree.properties[j]?.binding,
+            `${hint}_param_${j}`,
+            arg as t.Expression,
+          ] as const,
+      ),
+    );
     for (const arg of tag.node.arguments) {
       const argTree = paramsTree.properties[i];
       if (argTree) {
+        pushDerivedConstants(info, constants, arg.extra, argTree.binding);
         writeToSignal(
           info,
           info.getBindingIdentifier(argTree.binding, `${hint}_param_${i}`),
@@ -1406,10 +2060,23 @@ function writeAttrsToSignals(
   // Attributes were gathered last to first so the last duplicate wins.
   const inputProps = attrProps.reverse().concat(contentProps);
 
+  const constants = getDerivedConstants(
+    info,
+    staticAttrs.map(
+      (attr) =>
+        [
+          (getParamsTreeAt(paramsTree, attr.name) as ParamsTree).binding,
+          `${hint}_${attr.name}`,
+          attr.value,
+        ] as const,
+    ),
+  );
   for (let i = staticAttrs.length; i--;) {
     const attr = staticAttrs[i];
     const attrSignal = getSignalIdentifier(info, paramsTree, hint, attr.name);
+    const tree = getParamsTreeAt(paramsTree, attr.name) as ParamsTree;
     remaining.delete(attr.name);
+    pushDerivedConstants(info, constants, attr.value.extra, tree.binding);
     writeToSignal(
       info,
       attrSignal,
@@ -1440,7 +2107,7 @@ function writeAttrsToSignals(
 
     if (!isSimpleReference(spreadExpr)) {
       spreadId = generateUidIdentifier(`${hint}_spread`);
-      addStatement("render", info.tagSection, tagExtra, [
+      addStatement(getForwardType(info, tagExtra), info.tagSection, tagExtra, [
         t.variableDeclaration("const", [
           t.variableDeclarator(spreadId, spreadExpr),
         ]),
@@ -1508,12 +2175,87 @@ function writeToSignal(
     info.tagSection,
   );
   addStatement(
-    "render",
+    getForwardType(info, expr),
     info.tagSection,
     expr,
     t.callExpression(signal, value ? [scope, value] : [scope]),
     isPure,
   );
+}
+
+// A call some instance of which the client renders: in stateful structure, or
+// in param-selected structure a caller may hand it.
+function rendersCallOnClient(section: Section) {
+  return !patchFillsSection(section) || !!getParamSelectedStructure(section);
+}
+
+// Where the client renders the call, its module reads the callee stores (an intersection
+// reads them): resumed, it holds none, which no page writes, so it derives them.
+function getDerivedConstants(
+  info: TranslateDOMInfo,
+  inputs: (readonly [Binding | undefined, string, t.Expression])[],
+) {
+  const constants: DerivedConstant[] = [];
+  if (isPatch() && rendersCallOnClient(info.tagSection)) {
+    for (const [binding, name, value] of inputs) {
+      if (
+        binding &&
+        isModuleReadInput(value.extra) &&
+        derivesConstantInput(binding) &&
+        findSlot(binding)?.reason
+      ) {
+        constants.push({ binding, name, value, signals: new Set() });
+      }
+    }
+  }
+  return constants;
+}
+
+interface DerivedConstant {
+  binding: Binding;
+  name: string;
+  value: t.Expression;
+  // The signals of other inputs it is pushed in, once each.
+  signals: Set<ReferencedBindings>;
+}
+
+// A fill reaching the call by an input an intersection reads with a constant pushes the
+// constant first, as setup does (the signal sees the same value, so it re-runs nothing).
+function pushDerivedConstants(
+  info: TranslateDOMInfo,
+  constants: DerivedConstant[],
+  expr: t.NodeExtra | undefined,
+  param: Binding,
+) {
+  const referencedBindings = expr && getReferencedBindings(expr);
+  if (!referencedBindings) return;
+  for (const constant of constants) {
+    if (
+      !constant.signals.has(referencedBindings) &&
+      param.section.paramReasonGroups?.some(
+        (group) =>
+          bindingUtil.has(group, constant.binding) &&
+          bindingUtil.has(group, param),
+      )
+    ) {
+      constant.signals.add(referencedBindings);
+      writeToSignal(
+        info,
+        info.getBindingIdentifier(constant.binding, constant.name),
+        expr,
+        t.cloneNode(constant.value, true),
+        true,
+      );
+    }
+  }
+}
+
+// A forward the child patches itself (holes it writes, its own fills) is a patch
+// statement, which a fill's run leaves.
+function getForwardType(info: TranslateDOMInfo, expr: t.NodeExtra | undefined) {
+  return calleeKeepsInput(info.tagSection, expr && getSourcesForExpr(expr))
+    ? "patch"
+    : "render";
 }
 
 // The child signal setting the prop `name` of `paramsTree`.
@@ -1571,4 +2313,18 @@ function isRestTree([, tree]: [AttrTagMeta, ParamsTree | true]) {
 
 function toAttrTagDeclarator([attrTagMeta]: [AttrTagMeta, ParamsTree | true]) {
   return t.variableDeclarator(getAttrTagIdentifier(attrTagMeta));
+}
+
+// Everything a group's call-site expressions may read, reads inside function
+// values included: they inform where it updates from, never serialization.
+function mergeAllSourcesForExpr(
+  sources: Sources | undefined,
+  expr: t.NodeExtra,
+) {
+  return mergeSources(
+    mergeSources(sources, getSourcesForExpr(expr)),
+    getSourcesForReferencedBindings(
+      getReferencedBindingsInFunction(expr as t.FunctionExtra),
+    ),
+  );
 }

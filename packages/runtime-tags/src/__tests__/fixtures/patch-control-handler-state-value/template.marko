@@ -1,0 +1,5 @@
+<let/l=input.n/>
+<button onClick() { l++ }>${l}</button>
+<if=input.show>
+  <input value=String(l) valueChange(v) { console.log(v) }/>
+</if>
