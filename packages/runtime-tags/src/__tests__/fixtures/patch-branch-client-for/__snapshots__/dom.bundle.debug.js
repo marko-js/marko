@@ -1,0 +1,19 @@
+// template.marko
+const $template = "<main><!><button>+</button></main>";
+const $walks = "D%b l";
+const $for_content__$params = ($scope, $params2) => _text($scope["#text/0"], $params2[0]);
+const $if_content__for = /*@__PURE__*/ _for_of_unkeyed("#text/0", "<p> </p>", "D ", 0, $for_content__$params);
+const $if_content__input_items = /*@__PURE__*/ _if_closure_patch("__tests__/template.marko_1_input_items#0:4/setup", "#text/0", 0, ($scope) => $if_content__for($scope, [$scope._.input_items]));
+const $if_content__setup = $if_content__input_items;
+const $if = /*@__PURE__*/ _if("#text/0", "<!><!><!>", "b%", $if_content__setup);
+const $count = _let("count/5", ($scope) => $if($scope, $scope.count > 1 ? 0 : 1));
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
+	$count($scope, +$scope.count + 1);
+}));
+function $setup($scope) {
+	$count($scope, 0);
+	$setup__script($scope);
+}
+const $input = ($scope, input) => $input_items($scope, input.items);
+const $input_items = /*@__PURE__*/ _const("input_items", $if_content__input_items);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

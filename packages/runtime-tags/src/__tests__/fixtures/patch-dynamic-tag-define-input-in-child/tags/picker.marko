@@ -1,0 +1,7 @@
+<define/Card|{ record }|>
+  <h4>${record.name}</h4>
+</define>
+<define/Other|{ record }|>
+  <h5>${record.name}</h5>
+</define>
+<${input.useA ? Card : Other} record=input.record/>

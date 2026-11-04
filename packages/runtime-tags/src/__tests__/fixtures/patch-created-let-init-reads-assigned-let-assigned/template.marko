@@ -1,0 +1,7 @@
+<if=input.show>
+  <let/x=1/>
+  <let/y=x/>
+  <span/el>${input.a}</span>
+  <script>el().dataset.y = String(y);</script>
+  <button onClick() { y = x + 1 }>${x + input.a}</button>
+</if>

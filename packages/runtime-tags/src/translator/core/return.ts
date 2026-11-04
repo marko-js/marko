@@ -16,11 +16,19 @@ import {
 import { generateUidIdentifier } from "../util/generate-uid";
 import { getKnownAttrValues } from "../util/get-known-attr-values";
 import { getParentTag } from "../util/get-parent-tag";
+import { isPatch } from "../util/marko-config";
+import { getFillSources } from "../util/patch/decisions";
+import { buildReturnChangeBind } from "../util/patch/writers";
 import { addReason } from "../util/reasons";
+import { onFinalizeReferences } from "../util/references";
 import { replaceWithStatements } from "../util/replace-with-statements";
 import { callRuntime } from "../util/runtime";
 import { scopeIdentifier } from "../util/scope-read";
-import { ensureSection, getSection } from "../util/sections";
+import {
+  ensureCallerParamGroups,
+  ensureSection,
+  getSection,
+} from "../util/sections";
 import { addSetupExpr } from "../util/setup-work";
 import {
   addStatement,
@@ -69,13 +77,20 @@ export default {
     }
 
     if (valueChangeAttr) {
-      (valueChangeAttr.value.extra ??= {}).isEffect = true;
+      const changeExtra = (valueChangeAttr.value.extra ??= {});
+      changeExtra.isEffect = true;
       addSetupExpr(section, valueChangeAttr.value);
       // TODO: this should be based on the parent actually mutating the tag variable.
       addReason(
         ensureSectionSlot(section, SlotKind.ReturnChangeHandler),
         ALWAYS,
       );
+      // A patch binds the handler under its callers' param groups.
+      if (isPatch()) {
+        onFinalizeReferences(() =>
+          ensureCallerParamGroups(getFillSources(changeExtra)),
+        );
+      }
     }
 
     addSetupExpr(section, valueAttr.value);
@@ -89,13 +104,20 @@ export default {
         writer.flushBefore(tag);
 
         if (attrs.valueChange) {
+          const handler = t.logicalExpression(
+            "||",
+            attrs.valueChange,
+            t.buildUndefinedNode(),
+          );
           writeSlot(
             findSectionSlot(section, SlotKind.ReturnChangeHandler),
-            t.logicalExpression(
-              "||",
-              attrs.valueChange,
-              t.buildUndefinedNode(),
-            ),
+            isPatch()
+              ? buildReturnChangeBind(
+                  section,
+                  handler,
+                  attrs.valueChange.extra!,
+                )
+              : handler,
           );
         }
 

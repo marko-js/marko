@@ -1,0 +1,5 @@
+<let/n=0/>
+<button onClick() { n++ }>${n ? fail() : "ok"}</button>
+static function fail(): string {
+  throw new Error("boom");
+}

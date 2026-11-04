@@ -1,0 +1,38 @@
+// PATCH
+`packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-native-body-swap/template.marko_1*content;b%;body <!>`
+{
+  "PatchDynamicTag:#text/0": [">div", "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-native-body-swap/template.marko_1*content"],
+  "PatchChild:BranchScopes:#text/0": {
+    "PatchChild:BranchScopes:#div/0": {
+      "PatchText:#text/0": "b"
+    }
+  },
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-native-body-swap/template.marko_0_input_x#4/subscribers": "input_x"
+}
+;BgI
+
+// PATCH holding BgI
+{
+  "PatchDynamicTag:#text/0": [">div", "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-native-body-swap/template.marko_1*content"],
+  "PatchChild:BranchScopes:#text/0": {
+    "PatchChild:BranchScopes:#div/0": {
+      "PatchText:#text/0": "c"
+    }
+  },
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-native-body-swap/template.marko_0_input_x#4/subscribers": "input_x"
+}
+
+// PATCH holding BgI
+`packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-native-body-swap/outer.marko;D%;<section><!></section>`
+{
+  "PatchDynamicTag:#text/0": ["packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-native-body-swap/outer.marko", "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-native-body-swap/template.marko_1*content"],
+  "PatchChild:BranchScopes:#text/0": {
+    "PatchDynamicTag:#text/0": "^^packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-native-body-swap/template.marko_1*content",
+    "PatchChild:BranchScopes:#text/0": {
+      "PatchText:#text/0": "d"
+    }
+  },
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-native-body-swap/template.marko_0_input_x#4/subscribers": "input_x",
+  "PatchMarkedWrite:input_x": "d"
+}
+;BwU

@@ -1,0 +1,6 @@
+<define/one><em>one</em></define>
+<define/two><strong>${input.b}</strong></define>
+<const/sectionAttrs={ content: input.mode ? one : two }/>
+<section ...sectionAttrs/>
+<const/divAttrs={ content: input.mode ? two : one }/>
+<div ...divAttrs id="partial"/>

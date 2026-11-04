@@ -1,0 +1,24 @@
+<main>
+  <p>${input.v1}</p>
+  <p>${input.v2}</p>
+  <p>${input.v3}</p>
+  <p>${input.v4}</p>
+  <p>${input.v5}</p>
+  <p>${input.v6}</p>
+  <p>${input.v7}</p>
+  <p>${input.v8}</p>
+  <p>${input.v9}</p>
+  <p>${input.v10}</p>
+  <p>${input.v11}</p>
+  <p>${input.v12}</p>
+  <p>${input.v1}</p>
+  <h1>${$global.brand}</h1>
+  <script>
+    const el = document.querySelector("main")!;
+    el.dataset.g = (el.dataset.g || "") + "[" + $global.brand + "]";
+  </script>
+  <script>
+    const el = document.querySelector("main")!;
+    el.dataset.runs = (el.dataset.runs || "") + "(" + input.label + ")";
+  </script>
+</main>

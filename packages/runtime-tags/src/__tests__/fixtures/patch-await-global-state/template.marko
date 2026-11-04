@@ -1,0 +1,5 @@
+<let/count=0/>
+<await|v|=Promise.resolve(count + $global.suffix)>
+  <p>${v}</p>
+</await>
+<button onClick() { count++ }>${count}</button>
