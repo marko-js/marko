@@ -233,7 +233,7 @@ export function addClientBranch(
 
 // Content whose kept instances take their holes as data, by its section
 // (`_content`'s `elide`).
-export const clientBranchRenderers = new WeakMap<ServerRenderer, string>();
+export const clientBranchRenderers = new WeakMap<ServerRenderer, number>();
 
 // A flush that leaves content to the consumers keeping it renders its holes
 // once for its owner, under the entry every instance there takes.
@@ -242,7 +242,7 @@ function renderClientBranch(
   renderer: ServerRenderer,
   id: string,
   ownerId: number,
-  section: string,
+  section: number,
 ) {
   const rendered = (state.clientBranchRendered ??= new Map());
   const key = PatchKey.ClientBranch + section;

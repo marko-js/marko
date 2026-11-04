@@ -43,7 +43,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					label,
 					_: _scope_with_id($scope1_id)
 				}, "__tests__/template.marko", "3:4", { label: "4:12" }));
-			}, $scope1_id, 1) });
+			}, $scope1_id, 0) });
 			_patch_child_end();
 			_scope($scope1_id, {
 				_: _scope_with_id($scope0_id),

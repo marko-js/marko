@@ -28,7 +28,7 @@ var src_default = _template("c", (input) => {
 			_html(`<button>${_text_mark($scope1_id, "b", t, 1, 4, 0)} ${_text_mark($scope1_id, "c", count, 2)}</button>${_el_mark($scope1_id, "a")}`);
 			_script($scope1_id, "c0");
 			_subscribe($count__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
-		}, $scope0_id, 1) });
+		}, $scope0_id, 0) });
 	});
 	const $childScope = _peek_scope_id($scope0_id, "a", 0, $cg__input_items && 1);
 	let h = holder_default({ tab: $tab });

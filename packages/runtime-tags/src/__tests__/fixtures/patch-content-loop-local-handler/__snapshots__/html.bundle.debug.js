@@ -43,7 +43,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				x_name: x?.name,
 				_: _scope_with_id($scope0_id)
 			}, "__tests__/template.marko", "4:6", { x_name: 0 });
-		}, $scope0_id, 1) });
+		}, $scope0_id, 0) });
 	});
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	menu_default({ item: $item });

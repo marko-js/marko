@@ -40,7 +40,7 @@ var template_default = _template("a", (input) => {
 			const $scope1_id = _scope_id();
 			_html(_text_mark($scope1_id, "a", i, 1, 4, 0));
 			_scope($scope1_id, {});
-		}, $scope0_id, 1)
+		}, $scope0_id, 0)
 	});
 	_patch_child_end();
 	_scope($scope0_id, { a: _existing_scope($childScope) });

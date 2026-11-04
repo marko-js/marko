@@ -23,7 +23,7 @@ var card_default = _template("b", (input) => {
 			($wi__input_w || $wi__items) && _subscribe($wi__input_w && $input_w__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), $cg__input_w && "b0", $wg__input_w || $wg__items);
 		}, 0, $scope1_id, "a", $wg__items, $wg__items, 0, 0, 1);
 		($wi__input_w || $wi__items) && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
-	}, $scope0_id, 1) };
+	}, $scope0_id, 0) };
 	_set_scope_reason(2);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	List.content({ items: k });

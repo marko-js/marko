@@ -94,7 +94,7 @@ var file_host_default = _template("__tests__/tags/file-host.marko", (input) => {
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id),
 			"#childScope/0": _existing_scope($childScope)
 		}, "__tests__/tags/file-host.marko", "2:4")));
-	}, $scope0_id, 1) }) });
+	}, $scope0_id, 0) }) });
 	_patch_child_end();
 	_scope($scope0_id, {
 		"ClosureScopes:input_files/5": _write_if($scope0_reason, 1) && _unfilled_if($scope0_reason, 1) && $input_files__closures,

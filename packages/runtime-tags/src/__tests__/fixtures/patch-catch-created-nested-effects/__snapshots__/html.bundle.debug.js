@@ -89,7 +89,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_: _scope_with_id($scope1_id),
 				"ClosureSignalIndex:input_v/8": $wi__input_v && 3
 			}, "__tests__/template.marko", "18:6")));
-		}, $scope1_id, 1) });
+		}, $scope1_id, 0) });
 		_patch_child_end();
 		_script($scope1_id, "__tests__/template.marko_1_input_v#0:3");
 		$cg__input_show && _patch_write($scope1_id, "PatchWrite:w", w, 1);

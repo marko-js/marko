@@ -19,7 +19,7 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 		_html(`<p>${_text_mark($scope1_id, "#text/0", id, 1, $scope1_reason, 0)}:${_text_mark($scope1_id, "#text/1", input.n, 2, $scope0_reason, 1)}</p>`);
 		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "__tests__/tags/panel.marko_1_input_n#0:3/subscribe", $cg__input_n);
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_n__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }, "__tests__/tags/panel.marko", "1:2"), $cg__input_n && "__tests__/tags/panel.marko_1_input_n#0:3/subscribe");
-	}, $scope0_id, 1) };
+	}, $scope0_id, 0) };
 	_if(() => {
 		if (input.show) {
 			const $scope2_id = _scope_id();

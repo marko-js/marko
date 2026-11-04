@@ -52,7 +52,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					_html(`<i>${_text_mark($scope3_id, "#text/0", $global$1.brand, 1, 4, 0)}</i>`);
 					_fill_global_subscribe("__tests__/template.marko_3_$global_brand#0:7", $scope3_id);
 					_scope($scope3_id, {}, "__tests__/template.marko", "6:6");
-				}, $scope2_id, 1)
+				}, $scope2_id, 0)
 			});
 			_patch_child_end();
 			_scope($scope2_id, { "#childScope/0": _existing_scope($childScope2) }, "__tests__/template.marko", "5:4");

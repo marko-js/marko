@@ -49,7 +49,7 @@ var wrap_default = _template("b", (input) => {
 			h: $wi__input_label && $Card_content__x__closures
 		}), $cg__input_label && "b9", 0) || $fg__input_label && _patch_write($scope1_id, "xb", x, !$sg__input_label);
 		_resume_branch($scope1_id);
-	}, $scope0_id, 1) };
+	}, $scope0_id, 0) };
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	Card.content({});
 	_patch_child_end();

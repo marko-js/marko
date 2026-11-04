@@ -28,7 +28,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				y: _unfilled_if($scope1_reason, 0) && y,
 				_: ($wi__value || _write_if($scope2_reason, 0)) && _scope_with_id($scope1_id)
 			}, "__tests__/template.marko", "3:4", { y: "3:19" }));
-		}, $scope1_id, 1) };
+		}, $scope1_id, 0) };
 		_set_scope_reason(2);
 		const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 		Inner.content({ y: count });

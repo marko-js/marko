@@ -48,7 +48,7 @@ var child_default = _template("b", (input) => {
 			_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "b2", _client_guard($scope0_reason, 0));
 			_subscribe(_unfilled_if($scope0_reason, 0) && $input_show__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
 			$wg__input_show || _resume_branch($scope1_id);
-		}, $scope0_id, 1) });
+		}, $scope0_id, 0) });
 	});
 	const $childScope = _peek_scope_id($scope0_id, "b", 0);
 	list_default({ item: $item });

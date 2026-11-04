@@ -50,7 +50,7 @@ var template_default = _template("a", (input) => {
 						d: i,
 						_: _scope_with_id($scope1_id)
 					}));
-				}, $scope1_id, 1)
+				}, $scope1_id, 0)
 			});
 			_patch_child_end();
 			_scope($scope1_id, {

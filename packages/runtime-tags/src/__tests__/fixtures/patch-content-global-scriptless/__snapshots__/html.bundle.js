@@ -50,7 +50,7 @@ var template_default = _template("a", (input) => {
 					_html(`<i>${_text_mark($scope3_id, "a", $global$1.brand, 1, 4, 0)}</i>`);
 					_fill_global_subscribe("a2", $scope3_id);
 					_scope($scope3_id, {});
-				}, $scope2_id, 1)
+				}, $scope2_id, 0)
 			});
 			_patch_child_end();
 			_scope($scope2_id, { a: _existing_scope($childScope2) });

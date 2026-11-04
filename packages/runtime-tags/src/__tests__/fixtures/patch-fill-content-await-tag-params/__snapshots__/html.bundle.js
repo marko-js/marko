@@ -44,7 +44,7 @@ var inner_default = _template("c", (input) => {
 		_patch_render($scope1_id, "c5", [$fg__input_second && ">e", $fg__input_first && ">f"]);
 		_subscribe($showSecond__closures, _subscribe($wi__input_first && $input_first__closures, _subscribe($wi__input_second && $input_second__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }))));
 		_resume_branch($scope1_id);
-	}, $scope0_id, 1) });
+	}, $scope0_id, 0) });
 	_patch_child_end();
 	_html(`<button>toggle</button>${_el_mark($scope0_id, "b")}</main>`);
 	_script($scope0_id, "c6");

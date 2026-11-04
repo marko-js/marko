@@ -40,7 +40,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_client_guard($scope0_reason, 2) && _patch_render($scope2_id, "__tests__/template.marko_2_input_prefix#0:4/subscribe");
 			$cg__input_items && _patch_render($scope2_id, "__tests__/template.marko_2_item#1:2/subscribe");
 			_subscribe(_unfilled_if($scope0_reason, 1) && $for_content__item__closures, _subscribe(_unfilled_if($scope0_reason, 2) && $input_prefix__closures, _scope($scope2_id, { _: $wi__input_items__OR__input_prefix && _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:6")));
-		}, $scope1_id, 1) });
+		}, $scope1_id, 0) });
 		_patch_child_end();
 		_scope($scope1_id, {
 			_: $wi__input_items__OR__input_prefix && _scope_with_id($scope0_id),

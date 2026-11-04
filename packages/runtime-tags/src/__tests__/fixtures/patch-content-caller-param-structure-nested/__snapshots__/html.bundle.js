@@ -59,7 +59,7 @@ var toggle_tag_default = _template("g", (input) => {
 		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "g1", _client_guard($scope0_reason, 2));
 		$wi__input_open__OR__input_content && _subscribe(_unfilled_if($scope0_reason, 2) && $input_content__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
 		$wg__input_content || $wi__input_open__OR__input_content && _resume_branch($scope1_id);
-	}, $scope0_id, 1), 0, $wg__input_open, $scope0_reason, 1);
+	}, $scope0_id, 0), 0, $wg__input_open, $scope0_reason, 1);
 	$fg__input_content && _patch_subscribers($scope0_id, "g2", "e");
 	_scope($scope0_id, {
 		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.content,
@@ -136,7 +136,7 @@ var param_host_default = _template("d", (input) => {
 			_: $wi__input_open__OR__input_label && _scope_with_id($scope0_id),
 			Ci: $wi__input_label && 3
 		}));
-	}, $scope0_id, 1), 0, _write_guard($scope0_reason, 1), $scope0_reason, 1);
+	}, $scope0_id, 0), 0, _write_guard($scope0_reason, 1), $scope0_reason, 1);
 	$fg__input_label && _patch_subscribers($scope0_id, "d8", "h");
 	_scope($scope0_id, {
 		h: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.label,
@@ -240,14 +240,14 @@ var define_host_default = _template("b", (input) => {
 				_: ($wi__input_label || $wi__open) && _scope_with_id($scope1_id),
 				Cf: $wi__input_label && 3
 			}));
-		}, $scope1_id, 1), 0, _write_guard($scope1_reason, 0), $scope1_reason, 0);
+		}, $scope1_id, 0), 0, _write_guard($scope1_reason, 0), $scope1_reason, 0);
 		_scope($scope1_id, {
 			_: ($wi__input_label || $wi__open) && _scope_with_id($scope0_id),
 			a: _existing_scope($childScope),
 			b: _existing_scope($childScope2),
 			c: _existing_scope($childScope3)
 		});
-	}, $scope0_id, 1) };
+	}, $scope0_id, 0) };
 	_set_scope_reason(_updates_from($scope0_reason, 1) << 1);
 	const $childScope4 = _peek_scope_id($scope0_id, "a", 4);
 	Sel.content({ open: input.open });

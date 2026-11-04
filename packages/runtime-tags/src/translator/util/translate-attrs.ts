@@ -425,8 +425,8 @@ function buildContent(body: t.NodePath<t.MarkoTagBody>) {
       const serialized = getRendererReason(bodySection);
       body.node.body.unshift(getScopeReasonStatement(bodySection) as any);
 
-      // An unregistered shell content elides its slot (`1`); kept content names
-      // its section, whose scopes its owner holds, as it keeps their holes.
+      // An unregistered shell content elides its slot (`0`); kept content names
+      // its section (never the program's `0`), whose scopes its owner holds.
       return callRuntime(
         serialized ? "_content_resume" : "_content",
         t.stringLiteral(getResumeRegistryId(bodySection, "content")),
@@ -442,8 +442,8 @@ function buildContent(body: t.NodePath<t.MarkoTagBody>) {
         serialized
           ? getRegisteredLocals(bodySection)
           : keepsHoles(bodySection)
-            ? t.stringLiteral(bodySection.id + "")
-            : shipsContentShell(bodySection) && t.numericLiteral(1),
+            ? t.numericLiteral(bodySection.id)
+            : shipsContentShell(bodySection) && t.numericLiteral(0),
         serialized &&
           readsKeptInputOnClient(bodySection) &&
           t.numericLiteral(1),

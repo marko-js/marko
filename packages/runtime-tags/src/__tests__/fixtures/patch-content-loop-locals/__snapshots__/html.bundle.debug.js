@@ -55,7 +55,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				label,
 				_: _scope_with_id($scope0_id)
 			}, "__tests__/template.marko", "4:6", { label: "3:8" })));
-		}, $scope0_id, 1) });
+		}, $scope0_id, 0) });
 	});
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	list_default({ item: $item });

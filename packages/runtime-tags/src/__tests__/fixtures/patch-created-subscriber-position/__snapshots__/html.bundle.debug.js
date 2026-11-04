@@ -43,7 +43,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope2_id, "__tests__/template.marko_2_input_label#0:6/subscribe");
 				_patch_render($scope2_id, "__tests__/template.marko_2_input_label#0:6_a#0:7/setup", $fg__input_label && ">>input_label");
 				_subscribe($a__closures, _subscribe($wi__input_label && $input_label__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "5:6")));
-			}, $scope1_id, 1) });
+			}, $scope1_id, 0) });
 			_patch_child_end();
 			_set_scope_reason(0);
 			const $childScope2 = _peek_scope_id($scope1_id, "#childScope/1", 1);
@@ -57,7 +57,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					_: _scope_with_id($scope1_id),
 					"ClosureSignalIndex:input_label/9": $wi__input_label && 1
 				}, "__tests__/template.marko", "6:6")));
-			}, $scope1_id, 1) });
+			}, $scope1_id, 0) });
 			_patch_child_end();
 			_html("</main>");
 			_scope($scope1_id, {

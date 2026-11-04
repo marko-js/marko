@@ -42,7 +42,7 @@ var card_default = _template("b", (input) => {
 			e: (_unfilled_if($scope3_reason, 1, 5) || _unfilled_if($scope3_reason, 2, 5)) && fmt,
 			f: (_unfilled_if($scope3_reason, 0) || _unfilled_if($scope3_reason, 2)) && label
 		}) || ($fg__fmt && _client_guard($scope3_reason, 1) && _patch_write($scope3_id, "xe", fmt, !_server_guard($scope3_reason, 5)), $fg__label && _client_guard($scope3_reason, 0) && _patch_write($scope3_id, "xf", label, !_server_guard($scope3_reason, 6)));
-	}, $scope0_id, 1) };
+	}, $scope0_id, 0) };
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();

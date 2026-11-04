@@ -46,7 +46,7 @@ var template_default = _template("a", (input) => {
 			_html(`<span>${_text_mark($scope2_id, "a", err.message, 1, 4, 0)} ${_text_mark($scope2_id, "b", count, 2)} ${_text_mark($scope2_id, "c", input.label, 2, $scope0_reason, 0)}</span>`);
 			_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope2_id, "a0", _client_guard($scope0_reason, 0));
 			_subscribe(_unfilled_if() && $wi__err_message && $catch_content__err_message__closures, _subscribe($count__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }))));
-		}, $scope1_id, 1) });
+		}, $scope1_id, 0) });
 		_patch_child_end();
 		_scope($scope1_id, {
 			_: _scope_with_id($scope0_id),

@@ -45,7 +45,7 @@ var forward_body_default = _template("d", (input) => {
 		_client_guard($scope0_reason, 0) && _patch_render($scope1_id, "d0");
 		$wi__input_content && _subscribe(_unfilled_if($scope0_reason, 0) && $input_content__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
 		$wg__input_content || $wi__input_content && _resume_branch($scope1_id);
-	}, $scope0_id, 1) });
+	}, $scope0_id, 0) });
 	_patch_child_end();
 	_scope($scope0_id, {
 		e: $wi__input_content && _unfilled_if($scope0_reason, 0) && $input_content__closures,
@@ -88,7 +88,7 @@ var forward_define_default = _template("e", (input) => {
 		const $scope2_reason = _scope_reason(), $wg__content = _write_guard($scope2_reason, 0);
 		_dynamic_tag($scope2_id, "a", content, {}, 2, 0, 0, $wg__content, $scope2_reason, 0);
 		_write_if($scope2_reason, 0) && _scope($scope2_id, {});
-	}, $scope0_id, 1) };
+	}, $scope0_id, 0) };
 	_set_scope_reason(0);
 	const $childScope = _peek_scope_id($scope0_id, "a", 2);
 	Wrap.content({ content: _content("e2", () => {
@@ -98,7 +98,7 @@ var forward_define_default = _template("e", (input) => {
 		_client_guard($scope0_reason, 0) && _patch_render($scope1_id, "e1");
 		$wi__input_content && _subscribe(_unfilled_if($scope0_reason, 0) && $input_content__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
 		$wg__input_content || $wi__input_content && _resume_branch($scope1_id);
-	}, $scope0_id, 1) });
+	}, $scope0_id, 0) });
 	_patch_child_end();
 	_scope($scope0_id, {
 		e: $wi__input_content && $input_content__closures,
@@ -127,7 +127,7 @@ var forward_inner_default = _template("f", (input) => {
 		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "f1", $cg__input_content);
 		$wi__input_content && _subscribe(_unfilled_if($scope0_reason, 0) && $input_content__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), $cg__input_content && "f1", $wg__input_content);
 		$wg__input_content || $wi__input_content && _resume_branch($scope1_id);
-	}, $scope0_id, 1) };
+	}, $scope0_id, 0) };
 	const $childScope = _peek_scope_id($scope0_id, "a", 1);
 	Inner.content({});
 	_patch_child_end();
@@ -240,7 +240,7 @@ var template_default = _template("a", (input) => {
 		field_default({ label: "define" });
 		_patch_child_end();
 		_scope($scope7_id, { a: _existing_scope($childScope11) });
-	}, $scope0_id, 1) });
+	}, $scope0_id, 0) });
 	_patch_child_end();
 	_set_scope_reason(0);
 	const $childScope13 = _peek_scope_id($scope0_id, "h", 12);
@@ -248,7 +248,7 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		_scope_id();
 		_html("<em>none</em>");
-	}, $scope0_id, 1) });
+	}, $scope0_id, 0) });
 	_patch_child_end();
 	_set_scope_reason(0);
 	const $childScope15 = _peek_scope_id($scope0_id, "i", 14);
@@ -276,7 +276,7 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		_scope_id();
 		_html("<em>none</em>");
-	}, $scope0_id, 1) });
+	}, $scope0_id, 0) });
 	_patch_child_end();
 	_if(() => {
 		if (input.show) {
@@ -291,7 +291,7 @@ var template_default = _template("a", (input) => {
 				field_default({ label: "created" });
 				_patch_child_end();
 				_scope($scope13_id, { a: _existing_scope($childScope18) });
-			}, $scope12_id, 1) });
+			}, $scope12_id, 0) });
 			_patch_child_end();
 			_scope($scope12_id, { a: _existing_scope($childScope19) });
 			return 0;

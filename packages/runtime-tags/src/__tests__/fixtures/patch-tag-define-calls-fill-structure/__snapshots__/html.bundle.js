@@ -31,7 +31,7 @@ var shape_default = _template("b", (input) => {
 			}
 		}, $scope1_id, "a", 1, $wg__on, 1, 0, 0, ["b2"], $scope1_reason, 0);
 		($wi__input_a || $wi__on) && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
-	}, $scope0_id, 1) };
+	}, $scope0_id, 0) };
 	_set_scope_reason(_updates_from($scope0_reason, 2) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	D.content({ on: input.x });

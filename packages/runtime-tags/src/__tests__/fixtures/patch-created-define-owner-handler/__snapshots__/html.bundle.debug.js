@@ -19,7 +19,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 		_html(`<button>${_text_mark($scope1_id, "#text/1", k)}</button>${_el_mark($scope1_id, "#button/0")}`);
 		_script($scope1_id, "__tests__/tags/card.marko_1");
 		_subscribe($k__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/card.marko", "2:2"), "__tests__/tags/card.marko_1_k#0:4/subscribe");
-	}, $scope0_id, 1) };
+	}, $scope0_id, 0) };
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	Panel.content({});
 	_patch_child_end();

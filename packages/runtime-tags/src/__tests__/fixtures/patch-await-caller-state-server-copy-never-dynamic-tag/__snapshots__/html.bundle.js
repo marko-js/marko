@@ -19,7 +19,7 @@ var show_await_default = _template("b", (input) => {
 			_html(_text_mark($scope2_id, "a", x, 1, $scope0_reason, 0));
 			_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope2_id, "b1", _client_guard($scope0_reason, 0));
 			_subscribe(_unfilled_if($scope0_reason, 0) && $await_content__x__closures, _scope($scope2_id, { _: $wi__input_promise && _scope_with_id($scope1_id) }));
-		}, $scope1_id, 1), 0, $wg__input_promise, $scope0_reason, 0);
+		}, $scope1_id, 0), 0, $wg__input_promise, $scope0_reason, 0);
 		$wi__input_promise && _scope($scope1_id, { d: $await_content__x__closures });
 	}, 1, "b2", _unfilled_if($scope0_reason, 0) && 2, 1);
 });

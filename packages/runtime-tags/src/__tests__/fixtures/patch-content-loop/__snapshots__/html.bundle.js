@@ -31,7 +31,7 @@ var template_default = _template("a", (input) => {
 			_html(`<b>${_text_mark($scope2_id, "a", item.text, 1, $scope0_reason, 0)}</b>`);
 			_client_guard($scope0_reason, 0) && _patch_render($scope2_id, "a0");
 			_subscribe(_unfilled_if($scope0_reason, 0) && $for_content__item_text__closures, _scope($scope2_id, { _: $wi__input_items && _scope_with_id($scope1_id) }));
-		}, $scope1_id, 1) });
+		}, $scope1_id, 0) });
 		_patch_child_end();
 		_html("</li>");
 		_scope($scope1_id, {

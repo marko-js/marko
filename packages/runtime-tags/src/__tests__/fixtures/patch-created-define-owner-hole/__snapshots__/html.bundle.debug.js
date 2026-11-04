@@ -18,7 +18,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 		const $scope1_reason = _scope_reason();
 		_html(`<p>${_text_mark($scope1_id, "#text/0", k)}</p>`);
 		_subscribe($k__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/card.marko", "2:2"), "__tests__/tags/card.marko_1_k#0:5/subscribe");
-	}, $scope0_id, 1) };
+	}, $scope0_id, 0) };
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	Panel.content({});
 	_patch_child_end();

@@ -60,7 +60,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_client_guard($scope0_reason, 0) && _patch_render($scope2_id, "__tests__/template.marko_2_p_name#0:8/subscribe");
 				$cg__input_items && _patch_render($scope2_id, "__tests__/template.marko_2_item_id#1:4/subscribe");
 				_subscribe(_unfilled_if($scope0_reason, 1) && $for_content__item_id__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $p_name__closures, _subscribe($count__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "5:6"))));
-			}, $scope1_id, 1)
+			}, $scope1_id, 0)
 		});
 		_patch_child_end();
 		_scope($scope1_id, {

@@ -41,7 +41,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_client_guard($scope0_reason, 2) && _patch_render($scope2_id, "__tests__/template.marko_2_input_label#0:4/subscribe");
 				$cg__input_rows && _patch_render($scope2_id, "__tests__/template.marko_2_row_id#1:4/subscribe");
 				_subscribe(_unfilled_if($scope0_reason, 1) && $for_content__row_id__closures, _subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope2_id, { _: $wi__input_rows__OR__input_label && _scope_with_id($scope1_id) }, "__tests__/template.marko", "1:26")));
-			}, $scope1_id, "2")
+			}, $scope1_id, 2)
 		});
 		_patch_child_end();
 		_scope($scope1_id, {

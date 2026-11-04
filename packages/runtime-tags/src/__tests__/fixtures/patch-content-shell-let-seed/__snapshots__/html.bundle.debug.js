@@ -42,7 +42,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					n,
 					_: $wi__input_show__OR__input_label && _scope_with_id($scope1_id)
 				}, "__tests__/template.marko", "2:4", { n: "3:10" }));
-			}, $scope1_id, 1) });
+			}, $scope1_id, 0) });
 			_patch_child_end();
 			_scope($scope1_id, {
 				_: $wi__input_show__OR__input_label && _scope_with_id($scope0_id),

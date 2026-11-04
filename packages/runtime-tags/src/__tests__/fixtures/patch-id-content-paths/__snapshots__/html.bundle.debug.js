@@ -143,7 +143,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			field_default({ name: item.key });
 			_patch_child_end();
 			_scope($scope7_id, { "#childScope/0": _existing_scope($childScope5) }, "__tests__/template.marko", "7:29");
-		}, $scope0_id, 1) });
+		}, $scope0_id, 0) });
 	});
 	const $childScope6 = _peek_scope_id($scope0_id, "#childScope/2", 6);
 	Content.content({ item: $item });

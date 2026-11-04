@@ -88,7 +88,7 @@ var page_default = _template("a", (input) => {
 				_: _scope_with_id($scope1_id),
 				a: _existing_scope($childScope2)
 			})));
-		}, $scope1_id, 1) }) });
+		}, $scope1_id, 0) }) });
 		_patch_child_end();
 		$fg__input_items && $cg__input_items && _patch_subscribers($scope1_id, "a4", "d");
 		_scope($scope1_id, {

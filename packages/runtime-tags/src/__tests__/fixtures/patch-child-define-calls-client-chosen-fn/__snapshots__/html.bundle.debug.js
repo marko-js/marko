@@ -17,7 +17,7 @@ var mid_define_default = _template("__tests__/tags/mid-define.marko", (input) =>
 		_html(`<output></output>${_el_mark($scope1_id, "#output/0")}`);
 		_script($scope1_id, "__tests__/tags/mid-define.marko_1_get#3", 1, $fg__get, "get");
 		_scope($scope1_id, { get }, "__tests__/tags/mid-define.marko", "1:2", { get: "1:16" }) || $fg__get && _patch_write($scope1_id, "PatchMarkedWrite:get", get, !_server_guard($scope1_reason, 0));
-	}, $scope0_id, 1) };
+	}, $scope0_id, 0) };
 	_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	Show.content({ get: input.get });

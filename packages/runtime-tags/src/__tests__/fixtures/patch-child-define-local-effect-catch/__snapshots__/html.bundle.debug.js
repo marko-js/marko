@@ -49,7 +49,7 @@ var wrap_default = _template("__tests__/tags/wrap.marko", (input) => {
 			"ClosureScopes:x/7": $wi__input_label && $Card_content__x__closures
 		}, "__tests__/tags/wrap.marko", "1:2", { x: "2:10" }), $cg__input_label && "__tests__/tags/wrap.marko_1_input_label#0:3/subscribe", 0) || $fg__input_label && _patch_write($scope1_id, "PatchMarkedWrite:x", x, !$sg__input_label);
 		_resume_branch($scope1_id);
-	}, $scope0_id, 1) };
+	}, $scope0_id, 0) };
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	Card.content({});
 	_patch_child_end();

@@ -34,7 +34,7 @@ var template_default = _template("a", (input) => {
 				_html(`<p>${_text_mark($scope2_id, "a", p.text, 1, $scope0_reason, 0)}</p>`);
 				_client_guard($scope0_reason, 0) && _patch_render($scope2_id, "a0");
 				_subscribe(_unfilled_if($scope0_reason, 0) && $for_content__p_text__closures, _scope($scope2_id, { _: $wi__input_panels && _scope_with_id($scope1_id) }));
-			}, $scope1_id, 1)
+			}, $scope1_id, 0)
 		});
 		_patch_child_end();
 		_scope($scope1_id, {

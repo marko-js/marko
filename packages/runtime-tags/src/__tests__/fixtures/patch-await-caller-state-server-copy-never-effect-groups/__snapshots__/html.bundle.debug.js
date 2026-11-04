@@ -31,7 +31,7 @@ var show_await_default = _template("__tests__/tags/show-await.marko", (input) =>
 			_: _scope_with_id($scope0_id)
 		}, "__tests__/tags/show-await.marko", "1:2", { text: "1:15" }), _client_guard((_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 0)) << 1, 0) && "__tests__/tags/show-await.marko_1_input_promise#0:3/subscribe", 0) || $fg__text && $cg__input_promise && _patch_write($scope1_id, "PatchMarkedWrite:text", text, !_server_guard($scope1_reason, 0));
 		($wi__input_promise || $wi__text) && _resume_branch($scope1_id);
-	}, $scope0_id, 1) };
+	}, $scope0_id, 0) };
 	_set_scope_reason(_updates_from($scope0_reason, 1) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	Row.content({ text: input.label });

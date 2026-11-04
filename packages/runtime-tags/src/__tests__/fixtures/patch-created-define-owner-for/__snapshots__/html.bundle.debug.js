@@ -23,7 +23,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 			($wi__input_w || $wi__items) && _subscribe($wi__input_w && $input_w__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/card.marko", "2:26"), $cg__input_w && "__tests__/tags/card.marko_2_input_w#0:5/subscribe", $wg__input_w || $wg__items);
 		}, 0, $scope1_id, "#text/0", $wg__items, $wg__items, 0, 0, 1);
 		($wi__input_w || $wi__items) && _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/card.marko", "2:2");
-	}, $scope0_id, 1) };
+	}, $scope0_id, 0) };
 	_set_scope_reason(2);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	List.content({ items: k });

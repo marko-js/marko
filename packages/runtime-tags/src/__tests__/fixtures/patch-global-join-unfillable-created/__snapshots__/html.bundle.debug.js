@@ -34,7 +34,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				y: "3:19",
 				b: "4:12"
 			}));
-		}, $scope1_id, 1) };
+		}, $scope1_id, 0) };
 		_set_scope_reason(2);
 		const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 		Inner.content({ y: count });

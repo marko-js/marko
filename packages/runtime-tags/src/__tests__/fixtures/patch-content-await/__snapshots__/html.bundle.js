@@ -41,7 +41,7 @@ var template_default = _template("a", (input) => {
 				$cg__input_value && _patch_render($scope2_id, "a5");
 				$wi__input_show__OR__input_value && _subscribe(_unfilled_if($scope0_reason, 2) && $input_value__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }));
 				$wi__input_show__OR__input_value && _resume_branch($scope2_id);
-			}, $scope1_id, 1) });
+			}, $scope1_id, 0) });
 			_patch_child_end();
 			_scope($scope1_id, {
 				_: $wi__input_show__OR__input_value && _scope_with_id($scope0_id),

@@ -30,7 +30,7 @@ var template_default = _template("a", (input) => {
 		_html(_text_mark($scope1_id, "a", input.note, 1, $scope0_reason, 6));
 		_client_guard($scope0_reason, 6) && _patch_render($scope1_id, "a2");
 		_subscribe(_unfilled_if($scope0_reason, 6) && $input_note__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }));
-	}, $scope0_id, 1), 0, $wg__input_wrap, $scope0_reason, 5);
+	}, $scope0_id, 0), 0, $wg__input_wrap, $scope0_reason, 5);
 	$fg__input_note && $cg__input_wrap && _patch_subscribers($scope0_id, "a3", "i");
 	_patch_render($scope0_id, "a4", [$fg__input_tag && "e", $fg__input_cls && "f"], $scope0_reason, 0);
 	_scope($scope0_id, {

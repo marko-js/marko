@@ -151,7 +151,7 @@ var template_default = _template("d", (input) => {
 					$cg__input_page && _patch_render($scope2_id, "d9");
 					$wi__input_page__OR__input_wide__OR__input_note && _subscribe(_unfilled_if($scope0_reason, 2) && $input_page__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }));
 					$wg__input_page || $wi__input_page__OR__input_wide__OR__input_note && _resume_branch($scope2_id);
-				}, $scope1_id, 1)
+				}, $scope1_id, 0)
 			});
 			_patch_child_end();
 			_client_guard($scope0_reason, 3) && _patch_render($scope1_id, "d10");

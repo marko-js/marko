@@ -57,7 +57,7 @@ var template_default = _template("a", (input) => {
 					Cn: $wi__input_rows && 1,
 					Cp: 1
 				})));
-			}, $scope2_id, 1)
+			}, $scope2_id, 0)
 		});
 		_patch_child_end();
 		_dynamic_tag($scope2_id, "d", row.card ? Card : "span", { label: "dynamic" }, 17, _content_resume("a1", () => {

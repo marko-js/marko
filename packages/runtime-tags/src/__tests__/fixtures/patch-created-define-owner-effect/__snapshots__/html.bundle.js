@@ -19,7 +19,7 @@ var card_default = _template("b", (input) => {
 		_patch_render($scope1_id, "b3", $fg__input_w && ">f") || _script($scope1_id, "b1", 0, $sg__input_w && 2, ">f");
 		_subscribe($k__closures, _subscribe($wi__input_w && $input_w__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 1) && "b2", 0), "b4", 0);
 		_resume_branch($scope1_id);
-	}, $scope0_id, 1) };
+	}, $scope0_id, 0) };
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	Panel.content({});
 	_patch_child_end();

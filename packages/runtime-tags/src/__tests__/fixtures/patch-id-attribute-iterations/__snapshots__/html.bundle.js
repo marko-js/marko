@@ -46,7 +46,7 @@ var template_default = _template("a", (input) => {
 			field_default({ name: item });
 			_patch_child_end();
 			_scope($scope3_id, { a: _existing_scope($childScope) });
-		}, $scope0_id, 1) });
+		}, $scope0_id, 0) });
 	});
 	forIn(input.record, (key, value) => {
 		$item = attrTags($item, { content: _content("a3", () => {
@@ -57,7 +57,7 @@ var template_default = _template("a", (input) => {
 			field_default({ name: key });
 			_patch_child_end();
 			_scope($scope4_id, { a: _existing_scope($childScope2) });
-		}, $scope0_id, 1) });
+		}, $scope0_id, 0) });
 	});
 	forTo(input.end, 0, 1, (i) => {
 		$item = attrTags($item, { content: _content("a2", () => {
@@ -68,7 +68,7 @@ var template_default = _template("a", (input) => {
 			field_default({ name: i });
 			_patch_child_end();
 			_scope($scope5_id, { a: _existing_scope($childScope3) });
-		}, $scope0_id, 1) });
+		}, $scope0_id, 0) });
 	});
 	forUntil(input.end, 0, 1, (i) => {
 		$item = attrTags($item, { content: _content("a1", () => {
@@ -79,7 +79,7 @@ var template_default = _template("a", (input) => {
 			field_default({ name: i });
 			_patch_child_end();
 			_scope($scope6_id, { a: _existing_scope($childScope4) });
-		}, $scope0_id, 1) });
+		}, $scope0_id, 0) });
 	});
 	const $childScope5 = _peek_scope_id($scope0_id, "a", 5);
 	Content.content({ item: $item });

@@ -23,7 +23,7 @@ var panel_default = _template("b", (input) => {
 		_unfilled_if($scope0_reason, 4) && _patch_subscribe($scope1_id, "b2");
 		_patch_render($scope1_id, "b3", [$fg__input_a && ">f", $fg__input_b && ">g"], $scope0_reason, 0);
 		_subscribe(_unfilled_if($scope0_reason, 4) && $input_b__closures, _subscribe(_unfilled_if($scope0_reason, 3) && $input_a__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id) }), $cg__input_a && "b1"), _client_guard($scope0_reason, 4) && "b2");
-	}, $scope0_id, 1) };
+	}, $scope0_id, 0) };
 	_if(() => {
 		if (input.show) {
 			const $scope3_id = _scope_id();

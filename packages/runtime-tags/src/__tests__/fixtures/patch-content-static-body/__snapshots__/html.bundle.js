@@ -33,7 +33,7 @@ var template_default = _template("a", (input) => {
 					_scope_reason();
 					_scope_id();
 					_html("<em>static body</em>");
-				}, $scope1_id, 1)
+				}, $scope1_id, 0)
 			});
 			_patch_child_end();
 			_client_guard($scope0_reason, 1) && _patch_render($scope1_id, "a1");

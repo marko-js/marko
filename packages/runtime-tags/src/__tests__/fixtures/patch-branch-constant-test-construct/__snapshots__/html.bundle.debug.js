@@ -59,7 +59,7 @@ var page_default = _template("__tests__/page.marko", (input) => {
 				}
 			}, $scope2_id, "#text/1", 1, 0, 1, 0, 0, ["__tests__/page.marko_3*shell"], 0, 0);
 			_scope($scope2_id, { _: $wi__input_down && _scope_with_id($scope1_id) }, "__tests__/page.marko", "4:6");
-		}, $scope1_id, 1) }) });
+		}, $scope1_id, 0) }) });
 		_patch_child_end();
 		_scope($scope1_id, {
 			_: $wi__input_down && _scope_with_id($scope0_id),

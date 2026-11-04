@@ -36,14 +36,14 @@ var child_default = _template("b", (input) => {
 			_scope_id();
 			_scope_reason();
 			_html("content");
-		}, $scope1_id, 1), 0, 1, $scope0_reason, 0, 0, void 0, 0, "b2");
+		}, $scope1_id, 0), 0, 1, $scope0_reason, 0, 0, void 0, 0, "b2");
 		_var($scope1_id, "b", $inputa11yTextbutton_scope, "b2");
 		_client_guard($scope0_reason, 0) && _patch_render($scope1_id, "b3");
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_a11yText__closures, _subscribe($wrapper_content__subscribers, _scope($scope1_id, {
 			c: $btn,
 			_: $wi__input_a11yText && _scope_with_id($scope0_id)
 		})));
-	}, $scope0_id, 1) });
+	}, $scope0_id, 0) });
 	_patch_child_end();
 	const $return = { btn: $btn_getter };
 	_scope($scope0_id, {

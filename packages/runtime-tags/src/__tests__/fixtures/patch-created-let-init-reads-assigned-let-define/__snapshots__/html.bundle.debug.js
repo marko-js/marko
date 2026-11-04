@@ -31,7 +31,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					v: "5:18",
 					w: "5:21"
 				}) || $fg__w && _client_guard($scope2_reason, 1) && _patch_write($scope2_id, "PatchMarkedWrite:w", w, !_server_guard($scope2_reason, 2));
-			}, $scope1_id, 1) };
+			}, $scope1_id, 0) };
 			_set_scope_reason(10);
 			const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 			Body.content({

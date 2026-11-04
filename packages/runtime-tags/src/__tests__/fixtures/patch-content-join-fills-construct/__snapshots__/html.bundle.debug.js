@@ -93,7 +93,7 @@ var page_default = _template("__tests__/page.marko", (input) => {
 				_: _scope_with_id($scope1_id),
 				"#childScope/0": _existing_scope($childScope2)
 			}, "__tests__/page.marko", "6:6")));
-		}, $scope1_id, 1) }) });
+		}, $scope1_id, 0) }) });
 		_patch_child_end();
 		$fg__input_items && $cg__input_items && _patch_subscribers($scope1_id, "__tests__/page.marko_1_item_n#3/subscribers", "item_n");
 		_scope($scope1_id, {

@@ -80,7 +80,7 @@ var page_default = _template("a", (input) => {
 			_: _scope_with_id($scope0_id),
 			a: _existing_scope($childScope2)
 		}));
-	}, $scope0_id, 1) }) });
+	}, $scope0_id, 0) }) });
 	_patch_child_end();
 	_script($scope0_id, "a2");
 	_patch_render($scope0_id, "a3", $fg__input_base && "g");

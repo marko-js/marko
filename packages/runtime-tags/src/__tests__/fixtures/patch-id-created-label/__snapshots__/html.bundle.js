@@ -74,7 +74,7 @@ var template_default = _template("a", (input) => {
 			const uid = _id("C");
 			_html(`<input${_attr("id", uid, $scope6_id, "aa$id", 0, 0)}>${_el_mark($scope6_id, "a", 0)}<label${_attr("for", uid, $scope6_id, "ab$for", 0, 0)}>${_text_mark($scope6_id, "c", row.id, 1, $scope0_reason, 5)}</label>${_el_mark($scope6_id, "b", 0)}`);
 			_scope($scope6_id, { _: _write_if($scope0_reason, 5) && _scope_with_id($scope5_id) });
-		}, $scope5_id, "6") });
+		}, $scope5_id, 6) });
 		_patch_child_end();
 		_scope($scope5_id, { a: _existing_scope($childScope) });
 	}, "id", $scope0_id, "d", 1, 1, 1, 0, 0, "a5", $scope0_reason, 5);

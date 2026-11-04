@@ -36,7 +36,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					const $scope2_reason = _scope_reason();
 					const $scope2_id = _scope_id();
 					_html("<em>static body</em>");
-				}, $scope1_id, 1)
+				}, $scope1_id, 0)
 			});
 			_patch_child_end();
 			_client_guard($scope0_reason, 1) && _patch_render($scope1_id, "__tests__/template.marko_1_input_title#0:4/setup");

@@ -34,7 +34,7 @@ var template_default = _template("a", (input) => {
 				_script($scope2_id, "a2");
 				_client_guard($scope0_reason, 2) && _patch_render($scope2_id, "a3");
 				_subscribe($if_content__n__closures, _subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) })));
-			}, $scope1_id, 1) });
+			}, $scope1_id, 0) });
 			_patch_child_end();
 			_patch_fill($scope1_id, "va5", n, 1);
 			_scope($scope1_id, {

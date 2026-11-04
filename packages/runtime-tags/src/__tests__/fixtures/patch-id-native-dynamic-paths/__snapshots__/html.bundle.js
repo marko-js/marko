@@ -37,7 +37,7 @@ var template_default = _template("a", (input) => {
 			const uid = _id("B");
 			_html(`<label${_attr("for", uid, $scope4_id, "aa$for", 0, 0)}>attr</label>${_el_mark($scope4_id, "a", 0)}<input${_attr("id", uid, $scope4_id, "ab$id", 0, 0)}>${_el_mark($scope4_id, "b", 0)}`);
 			_scope($scope4_id, {});
-		}, $scope2_id, 1) }) }, 9, 0, 0, $wg__input_items, $scope0_reason, 0);
+		}, $scope2_id, 0) }) }, 9, 0, 0, $wg__input_items, $scope0_reason, 0);
 		_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 0) << 3);
 		const $childScope = _peek_scope_id($scope2_id, "b", 2);
 		Wrap.content({

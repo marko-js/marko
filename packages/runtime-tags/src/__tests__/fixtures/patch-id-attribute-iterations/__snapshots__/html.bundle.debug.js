@@ -49,7 +49,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			field_default({ name: item });
 			_patch_child_end();
 			_scope($scope3_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "3:28");
-		}, $scope0_id, 1) });
+		}, $scope0_id, 0) });
 	});
 	forIn(input.record, (key, value) => {
 		$item = attrTags($item, { content: _content("__tests__/template.marko_4*content", () => {
@@ -60,7 +60,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			field_default({ name: key });
 			_patch_child_end();
 			_scope($scope4_id, { "#childScope/0": _existing_scope($childScope2) }, "__tests__/template.marko", "4:34");
-		}, $scope0_id, 1) });
+		}, $scope0_id, 0) });
 	});
 	forTo(input.end, 0, 1, (i) => {
 		$item = attrTags($item, { content: _content("__tests__/template.marko_5*content", () => {
@@ -71,7 +71,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			field_default({ name: i });
 			_patch_child_end();
 			_scope($scope5_id, { "#childScope/0": _existing_scope($childScope3) }, "__tests__/template.marko", "5:23");
-		}, $scope0_id, 1) });
+		}, $scope0_id, 0) });
 	});
 	forUntil(input.end, 0, 1, (i) => {
 		$item = attrTags($item, { content: _content("__tests__/template.marko_6*content", () => {
@@ -82,7 +82,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			field_default({ name: i });
 			_patch_child_end();
 			_scope($scope6_id, { "#childScope/0": _existing_scope($childScope4) }, "__tests__/template.marko", "6:26");
-		}, $scope0_id, 1) });
+		}, $scope0_id, 0) });
 	});
 	const $childScope5 = _peek_scope_id($scope0_id, "#childScope/0", 5);
 	Content.content({ item: $item });

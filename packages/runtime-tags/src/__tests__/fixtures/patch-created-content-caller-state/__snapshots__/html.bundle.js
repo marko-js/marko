@@ -34,7 +34,7 @@ var panel_default = _template("b", (input) => {
 				_html(`<em>${_text_mark($scope2_id, "a", input.n, 1, $scope0_reason, 2)}</em>`);
 				_client_guard($scope0_reason, 2) && _patch_render($scope2_id, "b0");
 				_subscribe(_unfilled_if($scope0_reason, 2) && $input_n__closures, _scope($scope2_id, { _: $wi__input_show__OR__input_n && _scope_with_id($scope1_id) }));
-			}, $scope1_id, 1) });
+			}, $scope1_id, 0) });
 			_patch_child_end();
 			_scope($scope1_id, {
 				_: $wi__input_show__OR__input_n && _scope_with_id($scope0_id),

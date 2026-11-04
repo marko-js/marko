@@ -104,7 +104,7 @@ var template_default = _template("e", (input) => {
 						Ce: 1
 					}));
 					$wg__input_page || $wi__input_page && _resume_branch($scope3_id);
-				}, $scope2_id, 1) });
+				}, $scope2_id, 0) });
 				_patch_child_end();
 				_scope($scope2_id, {
 					_: $wi__input_page && _scope_with_id($scope1_id),

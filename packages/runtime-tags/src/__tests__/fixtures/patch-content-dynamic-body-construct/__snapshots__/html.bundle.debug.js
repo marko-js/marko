@@ -39,7 +39,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					_html(`<em>${_text_mark($scope2_id, "#text/0", input.note, 1, $scope0_reason, 4)}</em>`);
 					_client_guard($scope0_reason, 4) && _patch_render($scope2_id, "__tests__/template.marko_2_input_note#0:5/subscribe");
 					_subscribe(_unfilled_if($scope0_reason, 4) && $input_note__closures, _scope($scope2_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:6"));
-				}, $scope1_id, 1)
+				}, $scope1_id, 0)
 			});
 			_patch_child_end();
 			_client_guard($scope0_reason, 3) && _patch_render($scope1_id, "__tests__/template.marko_1_input_title#0:4/setup");

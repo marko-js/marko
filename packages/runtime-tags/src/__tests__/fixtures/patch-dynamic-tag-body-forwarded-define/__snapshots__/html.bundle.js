@@ -30,7 +30,7 @@ var fwd_default = _template("b", (input) => {
 			e: content,
 			f: open
 		});
-	}, $scope0_id, 1) };
+	}, $scope0_id, 0) };
 	_dynamic_tag($scope0_id, "a", $global$1.p ? "p" : Wrap, {}, 18, _content_resume("b4", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();

@@ -60,7 +60,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					"ClosureSignalIndex:row_label/13": $wi__input_rows && 1,
 					"ClosureSignalIndex:n/15": 1
 				}, "__tests__/template.marko", "9:6")));
-			}, $scope2_id, 1)
+			}, $scope2_id, 0)
 		});
 		_patch_child_end();
 		_dynamic_tag($scope2_id, "#text/3", row.card ? Card : "span", { label: "dynamic" }, 17, _content_resume("__tests__/template.marko_7*content", () => {

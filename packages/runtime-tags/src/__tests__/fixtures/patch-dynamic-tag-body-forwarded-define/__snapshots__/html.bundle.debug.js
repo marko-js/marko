@@ -36,7 +36,7 @@ var fwd_default = _template("__tests__/tags/fwd.marko", (input) => {
 			content: "1:16",
 			open: "2:8"
 		});
-	}, $scope0_id, 1) };
+	}, $scope0_id, 0) };
 	_dynamic_tag($scope0_id, "#text/0", $global$1.p ? "p" : Wrap, {}, 18, _content_resume("__tests__/tags/fwd.marko_1*content", () => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();

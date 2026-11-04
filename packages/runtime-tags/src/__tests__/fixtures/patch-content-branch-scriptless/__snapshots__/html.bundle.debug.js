@@ -37,7 +37,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_html(`<em>${_text_mark($scope2_id, "#text/0", input.text, 1, $scope0_reason, 2)}</em>`);
 				_client_guard($scope0_reason, 2) && _patch_render($scope2_id, "__tests__/template.marko_2_input_text#0:4/subscribe");
 				_subscribe(_unfilled_if($scope0_reason, 2) && $input_text__closures, _scope($scope2_id, { _: $wi__input_show__OR__input_text && _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:6"));
-			}, $scope1_id, 1) });
+			}, $scope1_id, 0) });
 			_patch_child_end();
 			_scope($scope1_id, {
 				_: $wi__input_show__OR__input_text && _scope_with_id($scope0_id),

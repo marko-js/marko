@@ -59,7 +59,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				$cg__input_items && _patch_render($scope2_id, "__tests__/template.marko_2_item_alt#1:4/subscribe");
 				$wi__input_items && _subscribe(_unfilled_if($scope0_reason, 0) && $for_content__item_alt__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:6"));
 				$wg__input_items || $wi__input_items && _resume_branch($scope2_id);
-			}, $scope1_id, 1)
+			}, $scope1_id, 0)
 		});
 		_patch_child_end();
 		_scope($scope1_id, {

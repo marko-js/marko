@@ -108,7 +108,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 						"ClosureSignalIndex:input_page/4": 1
 					}, "__tests__/template.marko", "11:6"));
 					$wg__input_page || $wi__input_page && _resume_branch($scope3_id);
-				}, $scope2_id, 1) });
+				}, $scope2_id, 0) });
 				_patch_child_end();
 				_scope($scope2_id, {
 					_: $wi__input_page && _scope_with_id($scope1_id),

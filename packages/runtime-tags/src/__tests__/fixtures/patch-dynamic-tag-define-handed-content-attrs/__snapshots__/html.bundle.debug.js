@@ -23,7 +23,7 @@ var one_default = _template("__tests__/tags/one.marko", (input) => {
 			_: _scope_with_id($scope0_id)
 		}, "__tests__/tags/one.marko", "1:2", { t: "1:16" }), _client_guard((_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 0)) << 1, 0) && "__tests__/tags/one.marko_1_input_content#0:3/subscribe", $wg__input_content || $wg__t) || $fg__t && _client_guard($scope0_reason, 0) && _patch_write($scope1_id, "PatchMarkedWrite:t", t, !_server_guard($scope1_reason, 0));
 		$wg__input_content || $wg__t || ($wi__input_content || $wi__t) && _resume_branch($scope1_id);
-	}, $scope0_id, 1) };
+	}, $scope0_id, 0) };
 	_set_scope_reason(_updates_from($scope0_reason, 1) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 1);
 	Wrap.content({ t: input.t });

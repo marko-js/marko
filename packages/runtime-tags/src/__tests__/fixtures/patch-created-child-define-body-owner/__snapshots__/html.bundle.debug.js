@@ -18,7 +18,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 		const $scope1_reason = _scope_reason();
 		_html(`<p>${_text_mark($scope1_id, "#text/0", n)}</p>`);
 		_subscribe($n__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/child.marko", "2:2"), "__tests__/tags/child.marko_1_n#0:2/subscribe");
-	}, $scope0_id, 1) };
+	}, $scope0_id, 0) };
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	Count.content({});
 	_patch_child_end();

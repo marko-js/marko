@@ -68,7 +68,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 					_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope2_id, "__tests__/tags/child.marko_2_s#1:2/subscribe", $cg__input_show);
 					_subscribe(_unfilled_if($scope0_reason, 1) && $if_content__s__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/child.marko", "7:8"));
 					$wg__input_show || _resume_branch($scope2_id);
-				}, $scope1_id, 1) });
+				}, $scope1_id, 0) });
 			});
 			const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 			list_default({ item: $item });

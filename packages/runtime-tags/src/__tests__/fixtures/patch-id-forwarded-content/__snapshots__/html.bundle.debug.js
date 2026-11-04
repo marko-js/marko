@@ -46,7 +46,7 @@ var forward_body_default = _template("__tests__/tags/forward-body.marko", (input
 		_client_guard($scope0_reason, 0) && _patch_render($scope1_id, "__tests__/tags/forward-body.marko_1_input_content#0:3/subscribe");
 		$wi__input_content && _subscribe(_unfilled_if($scope0_reason, 0) && $input_content__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/forward-body.marko", "1:2"));
 		$wg__input_content || $wi__input_content && _resume_branch($scope1_id);
-	}, $scope0_id, 1) });
+	}, $scope0_id, 0) });
 	_patch_child_end();
 	_scope($scope0_id, {
 		"ClosureScopes:input_content/4": $wi__input_content && _unfilled_if($scope0_reason, 0) && $input_content__closures,
@@ -89,7 +89,7 @@ var forward_define_default = _template("__tests__/tags/forward-define.marko", (i
 		const $scope2_reason = _scope_reason(), $wg__content = _write_guard($scope2_reason, 0);
 		_dynamic_tag($scope2_id, "#text/0", content, {}, 2, 0, 0, $wg__content, $scope2_reason, 0);
 		_write_if($scope2_reason, 0) && _scope($scope2_id, {}, "__tests__/tags/forward-define.marko", "1:2");
-	}, $scope0_id, 1) };
+	}, $scope0_id, 0) };
 	_set_scope_reason(0);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 2);
 	Wrap.content({ content: _content("__tests__/tags/forward-define.marko_1*content", () => {
@@ -99,7 +99,7 @@ var forward_define_default = _template("__tests__/tags/forward-define.marko", (i
 		_client_guard($scope0_reason, 0) && _patch_render($scope1_id, "__tests__/tags/forward-define.marko_1_input_content#0:3/subscribe");
 		$wi__input_content && _subscribe(_unfilled_if($scope0_reason, 0) && $input_content__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/forward-define.marko", "2:2"));
 		$wg__input_content || $wi__input_content && _resume_branch($scope1_id);
-	}, $scope0_id, 1) });
+	}, $scope0_id, 0) });
 	_patch_child_end();
 	_scope($scope0_id, {
 		"ClosureScopes:input_content/4": $wi__input_content && $input_content__closures,
@@ -128,7 +128,7 @@ var forward_inner_default = _template("__tests__/tags/forward-inner.marko", (inp
 		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "__tests__/tags/forward-inner.marko_1_input_content#0:3/subscribe", $cg__input_content);
 		$wi__input_content && _subscribe(_unfilled_if($scope0_reason, 0) && $input_content__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/forward-inner.marko", "1:2"), $cg__input_content && "__tests__/tags/forward-inner.marko_1_input_content#0:3/subscribe", $wg__input_content);
 		$wg__input_content || $wi__input_content && _resume_branch($scope1_id);
-	}, $scope0_id, 1) };
+	}, $scope0_id, 0) };
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 1);
 	Inner.content({});
 	_patch_child_end();
@@ -244,7 +244,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		field_default({ label: "define" });
 		_patch_child_end();
 		_scope($scope7_id, { "#childScope/0": _existing_scope($childScope11) }, "__tests__/template.marko", "8:2");
-	}, $scope0_id, 1) });
+	}, $scope0_id, 0) });
 	_patch_child_end();
 	_set_scope_reason(0);
 	const $childScope13 = _peek_scope_id($scope0_id, "#childScope/7", 12);
@@ -252,7 +252,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope8_reason = _scope_reason();
 		const $scope8_id = _scope_id();
 		_html("<em>none</em>");
-	}, $scope0_id, 1) });
+	}, $scope0_id, 0) });
 	_patch_child_end();
 	_set_scope_reason(0);
 	const $childScope15 = _peek_scope_id($scope0_id, "#childScope/8", 14);
@@ -280,7 +280,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope11_reason = _scope_reason();
 		const $scope11_id = _scope_id();
 		_html("<em>none</em>");
-	}, $scope0_id, 1) });
+	}, $scope0_id, 0) });
 	_patch_child_end();
 	_if(() => {
 		if (input.show) {
@@ -295,7 +295,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				field_default({ label: "created" });
 				_patch_child_end();
 				_scope($scope13_id, { "#childScope/0": _existing_scope($childScope18) }, "__tests__/template.marko", "14:4");
-			}, $scope12_id, 1) });
+			}, $scope12_id, 0) });
 			_patch_child_end();
 			_scope($scope12_id, { "#childScope/0": _existing_scope($childScope19) }, "__tests__/template.marko", "13:2");
 			return 0;

@@ -32,7 +32,7 @@ var template_default = _template("a", (input) => {
 				const $scope2_id = _scope_id();
 				_html("<p>body</p>");
 				_script($scope2_id, "a0", 0);
-			}, $scope1_id, 1) }) });
+			}, $scope1_id, 0) }) });
 			_patch_child_end();
 			_scope($scope1_id, { a: _existing_scope($childScope) });
 			return 0;

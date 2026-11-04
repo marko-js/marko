@@ -52,7 +52,7 @@ var template_default = _template("a", (input) => {
 				c: label,
 				_: _scope_with_id($scope0_id)
 			})));
-		}, $scope0_id, 1) });
+		}, $scope0_id, 0) });
 	});
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	list_default({ item: $item });

@@ -85,7 +85,7 @@ var page_default = _template("__tests__/page.marko", (input) => {
 			_: _scope_with_id($scope0_id),
 			"#childScope/0": _existing_scope($childScope2)
 		}, "__tests__/page.marko", "5:4"));
-	}, $scope0_id, 1) }) });
+	}, $scope0_id, 0) }) });
 	_patch_child_end();
 	_script($scope0_id, "__tests__/page.marko_0");
 	_patch_render($scope0_id, "__tests__/page.marko_0_input_base#6_bonus#7/setup", $fg__input_base && "input_base");

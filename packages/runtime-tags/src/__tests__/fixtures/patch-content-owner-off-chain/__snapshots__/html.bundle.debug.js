@@ -31,7 +31,7 @@ var src_default = _template("__tests__/tags/src.marko", (input) => {
 			_html(`<button>${_text_mark($scope1_id, "#text/1", t, 1, 4, 0)} ${_text_mark($scope1_id, "#text/2", count, 2)}</button>${_el_mark($scope1_id, "#button/0")}`);
 			_script($scope1_id, "__tests__/tags/src.marko_1");
 			_subscribe($count__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/src.marko", "4:6"));
-		}, $scope0_id, 1) });
+		}, $scope0_id, 0) });
 	});
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0, $cg__input_items && 1);
 	let h = holder_default({ tab: $tab });

@@ -54,14 +54,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_html(_text_mark($scope2_id, "#text/0", input.label, 1, $scope0_reason, 2));
 				_client_guard($scope0_reason, 2) && _patch_render($scope2_id, "__tests__/template.marko_2_input_label#0:5/subscribe");
 				_subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope2_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope1_id) }, "__tests__/template.marko", "5:6"));
-			}, $scope1_id, 1)
+			}, $scope1_id, 0)
 		});
 		_patch_child_end();
 		_subscribe($count__closures, _scope($scope1_id, {
 			_: _scope_with_id($scope0_id),
 			"#childScope/0": _existing_scope($childScope)
 		}, "__tests__/template.marko", "4:4"));
-	}, $scope0_id, 1), 0, _write_guard($scope0_reason, 1), $scope0_reason, 1);
+	}, $scope0_id, 0), 0, _write_guard($scope0_reason, 1), $scope0_reason, 1);
 	_html(`<button>+</button>${_el_mark($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	$fg__input_label && $cg__input_on && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_label#5/subscribers", "input_label");

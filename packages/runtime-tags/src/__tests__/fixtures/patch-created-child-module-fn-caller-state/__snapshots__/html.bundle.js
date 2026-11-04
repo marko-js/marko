@@ -40,7 +40,7 @@ var rowsx_default = _template("b", (input) => {
 			e: (_unfilled_if($scope1_reason, 1) || _unfilled_if($scope1_reason, 2)) && fmt,
 			f: (_unfilled_if($scope1_reason, 0) || _unfilled_if($scope1_reason, 2)) && label
 		}) || ($fg__fmt && _client_guard($scope1_reason, 1) && _patch_write($scope1_id, "xe", fmt, !_server_guard($scope1_reason, 5)), $fg__label && _client_guard($scope1_reason, 0) && _patch_write($scope1_id, "xf", label, !_server_guard($scope1_reason, 6)));
-	}, $scope0_id, 1) };
+	}, $scope0_id, 0) };
 	_set_scope_reason(_updates_from($scope0_reason, 1) << 1 | _updates_from($scope0_reason, 0) << 3 | _updates_from($scope0_reason, 2) << 5 | _updates_from($scope0_reason, 0) << 7 | _updates_from($scope0_reason, 1) << 9 | _updates_from($scope0_reason, 2) << 13);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	Panel.content({

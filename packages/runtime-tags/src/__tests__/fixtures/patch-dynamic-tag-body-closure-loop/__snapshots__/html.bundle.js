@@ -76,7 +76,7 @@ var heading_default = _template("c", (input) => {
 			}));
 			(_client_branch_if("c0", $scope1_id) || $cg__input_type) && _patch_write($scope1_id, "xb", i);
 			$wg__input_type || ($wi__input_n__OR__input_type || $wi__i) && _resume_branch($scope1_id);
-		}, $scope0_id, 1) });
+		}, $scope0_id, 0) });
 	});
 	const $childScope = _peek_scope_id($scope0_id, "a", 1);
 	list_default({ item: $item });

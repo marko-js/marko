@@ -54,7 +54,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 						_: _write_if($scope0_reason, 0) && _scope_with_id($scope2_id),
 						"ClosureSignalIndex:input_note/8": $wi__input_note && 1
 					}, "__tests__/template.marko", "6:6"));
-				}, $scope2_id, 1)
+				}, $scope2_id, 0)
 			});
 			_patch_child_end();
 			_client_guard($scope0_reason, 5) && _patch_render($scope2_id, "__tests__/template.marko_2_input_t2#0:7/setup");

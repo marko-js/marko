@@ -48,14 +48,14 @@ var template_default = _template("c", (input) => {
 				_html(_text_mark($scope2_id, "a", input.label, 1, $scope0_reason, 2));
 				_client_guard($scope0_reason, 2) && _patch_render($scope2_id, "c0");
 				_subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope2_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope1_id) }));
-			}, $scope1_id, 1)
+			}, $scope1_id, 0)
 		});
 		_patch_child_end();
 		_subscribe($count__closures, _scope($scope1_id, {
 			_: _scope_with_id($scope0_id),
 			a: _existing_scope($childScope)
 		}));
-	}, $scope0_id, 1), 0, _write_guard($scope0_reason, 1), $scope0_reason, 1);
+	}, $scope0_id, 0), 0, _write_guard($scope0_reason, 1), $scope0_reason, 1);
 	_html(`<button>+</button>${_el_mark($scope0_id, "b")}`);
 	_script($scope0_id, "c3");
 	$fg__input_label && $cg__input_on && _patch_subscribers($scope0_id, "c4", "f");

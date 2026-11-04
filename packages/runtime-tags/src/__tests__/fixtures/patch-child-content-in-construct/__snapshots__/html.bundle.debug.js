@@ -34,7 +34,7 @@ var card_default = _template("__tests__/tags/card/index.marko", (input) => {
 		_html(`<em>${_text_mark($scope1_id, "#text/0", input.note, 1, $scope0_reason, 0)}</em>`);
 		_client_guard($scope0_reason, 0) && _patch_render($scope1_id, "__tests__/tags/card/index.marko_1_input_note#0:5/subscribe");
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_note__closures, _scope($scope1_id, { _: $wi__input_note && _scope_with_id($scope0_id) }, "__tests__/tags/card/index.marko", "3:2"));
-	}, $scope0_id, 1) });
+	}, $scope0_id, 0) });
 	_patch_child_end();
 	_script($scope0_id, "__tests__/tags/card/index.marko_0");
 	_patch_fill($scope0_id, "PatchFill:__tests__/tags/card/index.marko_fill0", n, 1);

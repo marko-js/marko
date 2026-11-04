@@ -38,7 +38,7 @@ var template_default = _template("a", (input) => {
 					d: n,
 					_: $wi__input_show__OR__input_label && _scope_with_id($scope1_id)
 				}));
-			}, $scope1_id, 1) });
+			}, $scope1_id, 0) });
 			_patch_child_end();
 			_scope($scope1_id, {
 				_: $wi__input_show__OR__input_label && _scope_with_id($scope0_id),

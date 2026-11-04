@@ -54,7 +54,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 						i,
 						_: _scope_with_id($scope1_id)
 					}, "__tests__/template.marko", "3:4", { i: "3:11" }));
-				}, $scope1_id, 1)
+				}, $scope1_id, 0)
 			});
 			_patch_child_end();
 			_scope($scope1_id, {

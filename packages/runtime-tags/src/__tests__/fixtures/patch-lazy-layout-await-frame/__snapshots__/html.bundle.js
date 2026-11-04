@@ -162,7 +162,7 @@ var template_default = _template("e", (input) => {
 							Cf: 1
 						}));
 						$wg__input_page || $wi__input_page && _resume_branch($scope3_id);
-					}, $scope2_id, 1)
+					}, $scope2_id, 0)
 				});
 				_patch_child_end();
 				$cg__input_list && _patch_render($scope2_id, "e6");

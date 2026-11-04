@@ -42,7 +42,7 @@ var rowsx_default = _template("b", (input) => {
 			e: (_unfilled_if($scope3_reason, 1) || _unfilled_if($scope3_reason, 2)) && fmt,
 			f: (_unfilled_if($scope3_reason, 0) || _unfilled_if($scope3_reason, 2)) && label
 		}) || ($fg__fmt && _client_guard($scope3_reason, 1) && _patch_write($scope3_id, "xe", fmt, !_server_guard($scope3_reason, 5)), $fg__label && _client_guard($scope3_reason, 0) && _patch_write($scope3_id, "xf", label, !_server_guard($scope3_reason, 6)));
-	}, $scope0_id, 1) };
+	}, $scope0_id, 0) };
 	_for_of(input.items, (x) => {
 		const $scope1_id = _scope_id();
 		$fg__input_items && $cg__input_label && _patch_write($scope1_id, "xc", x, !_server_guard($scope0_reason, 2));

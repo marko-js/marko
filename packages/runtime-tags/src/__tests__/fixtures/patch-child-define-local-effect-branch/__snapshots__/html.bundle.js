@@ -36,7 +36,7 @@ var wrap_default = _template("b", (input) => {
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id)
 		}), $cg__input_label && "b4", $wg__input_show), $cg__input_show && "b5", $wg__input_show) || $fg__input_label && _patch_write($scope1_id, "xb", x, !$sg__input_label);
 		$wg__input_show || _resume_branch($scope1_id);
-	}, $scope0_id, 1) };
+	}, $scope0_id, 0) };
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	Card.content({});
 	_patch_child_end();

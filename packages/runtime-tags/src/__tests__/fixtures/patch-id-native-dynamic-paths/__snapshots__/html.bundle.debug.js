@@ -43,7 +43,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const uid = _id("uid~1");
 			_html(`<label${_attr("for", uid, $scope4_id, "PatchAttr:#label/0 for", 0, 0)}>attr</label>${_el_mark($scope4_id, "#label/0", 0)}<input${_attr("id", uid, $scope4_id, "PatchAttr:#input/1 id", 0, 0)}>${_el_mark($scope4_id, "#input/1", 0)}`);
 			_scope($scope4_id, {}, "__tests__/template.marko", "8:12");
-		}, $scope2_id, 1) }) }, 9, 0, 0, $wg__input_items, $scope0_reason, 0);
+		}, $scope2_id, 0) }) }, 9, 0, 0, $wg__input_items, $scope0_reason, 0);
 		_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 0) << 3);
 		const $childScope = _peek_scope_id($scope2_id, "#childScope/1", 2);
 		Wrap.content({

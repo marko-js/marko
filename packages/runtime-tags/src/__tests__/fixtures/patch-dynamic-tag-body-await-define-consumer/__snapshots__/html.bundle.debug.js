@@ -58,7 +58,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 			$wg__input_content || ($wi__input_content || $wi__x) && _resume_branch($scope2_id);
 		}, $scope1_id, ($scope) => $scope1_page ? [{ input_content: input.content }, { _: $scope($scope0_id) }] : []), 0, $wg__x, $scope1_reason, 0, 0, void 0, 0, 0, "__tests__/tags/card.marko_2*content");
 		($wi__input_content || $wi__x) && _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/card.marko", "2:2");
-	}, $scope0_id, 1) };
+	}, $scope0_id, 0) };
 	_await($scope0_id, "#text/0", input.p, (x) => {
 		const $scope3_id = _scope_id();
 		_set_scope_reason(_updates_from($scope0_reason, 2) << 1);

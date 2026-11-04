@@ -253,13 +253,13 @@ export function _content(
   id: string,
   fn: ServerRenderer,
   scopeId?: number,
-  elide?: 1 | string,
+  elide?: number,
 ) {
-  if (!elide) return _base_content(id, fn, scopeId);
+  if (elide === undefined) return _base_content(id, fn, scopeId);
   const state = getState();
   const content = _base_content(
     id,
-    elide === 1 ? fn : keepHoles(fn, scopeId!, elide),
+    elide ? keepHoles(fn, scopeId!, elide) : fn,
     scopeId,
   );
   return state instanceof PatchRenderState
@@ -269,7 +269,7 @@ export function _content(
 
 // Kept content (`elide` its section) takes its instances' holes as data: each one
 // a page renders joins the section's scopes its owner holds, and the client adds those it creates.
-function keepHoles(fn: ServerRenderer, scopeId: number, section: string) {
+function keepHoles(fn: ServerRenderer, scopeId: number, section: number) {
   const renderer = (...args: Parameters<ServerRenderer>) => {
     const state = getState();
     const instanceId = _peek_scope_id();

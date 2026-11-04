@@ -84,7 +84,7 @@ var template_default = _template("a", (input) => {
 				_: _scope_with_id($scope1_id),
 				Ci: $wi__input_v && 3
 			})));
-		}, $scope1_id, 1) });
+		}, $scope1_id, 0) });
 		_patch_child_end();
 		_script($scope1_id, "a14");
 		$cg__input_show && _patch_write($scope1_id, "wh", w, 1);

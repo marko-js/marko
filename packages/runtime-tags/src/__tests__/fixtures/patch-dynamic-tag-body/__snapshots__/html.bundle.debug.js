@@ -36,7 +36,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html(_text_mark($scope1_id, "#text/0", input.note, 1, $scope0_reason, 6));
 		_client_guard($scope0_reason, 6) && _patch_render($scope1_id, "__tests__/template.marko_1_input_note#0:8/subscribe");
 		_subscribe(_unfilled_if($scope0_reason, 6) && $input_note__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4"));
-	}, $scope0_id, 1), 0, $wg__input_wrap, $scope0_reason, 5);
+	}, $scope0_id, 0), 0, $wg__input_wrap, $scope0_reason, 5);
 	$fg__input_note && $cg__input_wrap && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_note#8/subscribers", "input_note");
 	_patch_render($scope0_id, "__tests__/template.marko_0_input_tag#4_input_cls#5/setup", [$fg__input_tag && "input_tag", $fg__input_cls && "input_cls"], $scope0_reason, 0);
 	_scope($scope0_id, {

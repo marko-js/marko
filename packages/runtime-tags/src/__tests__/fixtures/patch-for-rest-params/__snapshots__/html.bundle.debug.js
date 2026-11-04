@@ -43,7 +43,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope1_id = _scope_id();
 			_html(_text_mark($scope1_id, "#text/0", i, 1, 4, 0));
 			_scope($scope1_id, {}, "__tests__/template.marko", "1:2");
-		}, $scope0_id, 1)
+		}, $scope0_id, 0)
 	});
 	_patch_child_end();
 	_scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", 0);

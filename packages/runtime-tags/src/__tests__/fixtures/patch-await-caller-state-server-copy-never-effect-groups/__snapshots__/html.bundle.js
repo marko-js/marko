@@ -31,7 +31,7 @@ var show_await_default = _template("b", (input) => {
 			_: _scope_with_id($scope0_id)
 		}), _client_guard((_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 0)) << 1, 0) && "b4", 0) || $fg__text && $cg__input_promise && _patch_write($scope1_id, "xd", text, !_server_guard($scope1_reason, 0));
 		($wi__input_promise || $wi__text) && _resume_branch($scope1_id);
-	}, $scope0_id, 1) };
+	}, $scope0_id, 0) };
 	_set_scope_reason(_updates_from($scope0_reason, 1) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	Row.content({ text: input.label });

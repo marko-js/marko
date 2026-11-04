@@ -56,7 +56,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					_html("loading");
 				}, void 0, "__tests__/template.marko_5*content", void 0, "__tests__/template.marko_3*content", 0, 0, 2);
 				$wi__input_show__OR__input_value && _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:6");
-			}, $scope1_id, 1) });
+			}, $scope1_id, 0) });
 			_patch_child_end();
 			_scope($scope1_id, {
 				_: $wi__input_show__OR__input_value && _scope_with_id($scope0_id),

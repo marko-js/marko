@@ -26,7 +26,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 			}
 		}, $scope1_id, "#text/0", $wg__open, $wg__open, 0, 0, 1);
 		($wi__input_w || $wi__open) && _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/card.marko", "2:2");
-	}, $scope0_id, 1) };
+	}, $scope0_id, 0) };
 	_set_scope_reason(2);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	Panel.content({ open: k });

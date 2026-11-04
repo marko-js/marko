@@ -35,7 +35,7 @@ var template_default = _template("a", (input) => {
 			_html("<p>item</p>");
 			_script($scope1_id, "a0", 0, 1, "a");
 			_scope($scope1_id, { a: label });
-		}, $scope0_id, 1) });
+		}, $scope0_id, 0) });
 	});
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	list_default({ item: $item });

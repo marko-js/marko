@@ -37,7 +37,7 @@ var outer_default = _template("c", (input) => {
 		_client_guard($scope0_reason, 0) && _patch_render($scope1_id, "c0");
 		$wi__input_content && _subscribe(_unfilled_if($scope0_reason, 0) && $input_content__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
 		$wg__input_content || $wi__input_content && _resume_branch($scope1_id);
-	}, $scope0_id, "1") });
+	}, $scope0_id, 1) });
 	_patch_child_end();
 	_scope($scope0_id, {
 		e: $wi__input_content && _unfilled_if($scope0_reason, 0) && $input_content__closures,
@@ -66,7 +66,7 @@ var template_default = _template("a", (input) => {
 				_html(`<em>static ${_text_mark($scope2_id, "a", input.label, 2, $scope0_reason, 2)}</em>`);
 				_client_guard($scope0_reason, 2) && _patch_render($scope2_id, "a0");
 				_subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope2_id, { _: $wi__input_show__OR__input_label && _scope_with_id($scope1_id) }));
-			}, $scope1_id, 1) });
+			}, $scope1_id, 0) });
 			_patch_child_end();
 			_scope($scope1_id, {
 				_: $wi__input_show__OR__input_label && _scope_with_id($scope0_id),

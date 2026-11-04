@@ -19,7 +19,7 @@ var card_default = _template("b", (input) => {
 		_html(`<button>${_text_mark($scope1_id, "b", k)}</button>${_el_mark($scope1_id, "a")}`);
 		_script($scope1_id, "b1");
 		_subscribe($k__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "b2");
-	}, $scope0_id, 1) };
+	}, $scope0_id, 0) };
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	Panel.content({});
 	_patch_child_end();

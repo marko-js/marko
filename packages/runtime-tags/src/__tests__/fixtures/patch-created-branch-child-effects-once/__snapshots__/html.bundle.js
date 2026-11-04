@@ -102,7 +102,7 @@ var template_default = _template("a", (input) => {
 				_script($scope2_id, "a12");
 				$cg__input_items && _patch_render($scope2_id, "a13");
 				_subscribe($wi__input_items && $input_items__closures, _scope($scope2_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope1_id) }));
-			}, $scope1_id, 1) }) });
+			}, $scope1_id, 0) }) });
 			_patch_child_end();
 			_dynamic_tag($scope1_id, "f", input.tag, {}, 34, _content_resume("a4", () => {
 				const $scope3_id = _scope_id();

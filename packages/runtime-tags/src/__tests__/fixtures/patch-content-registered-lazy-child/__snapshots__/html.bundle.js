@@ -64,7 +64,7 @@ var template_default = _template("b", (input) => {
 				_html(`<em>${_text_mark($scope2_id, "a", input.note, 1, $scope0_reason, 2)}</em>`);
 				_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope2_id, "b0", _client_guard($scope0_reason, 2));
 				_subscribe(_unfilled_if($scope0_reason, 2) && $input_note__closures, _scope($scope2_id, { _: $wi__input_show__OR__input_note && _scope_with_id($scope1_id) }));
-			}, $scope1_id, 1) });
+			}, $scope1_id, 0) });
 			_patch_child_end();
 			_scope($scope1_id, {
 				_: $wi__input_show__OR__input_note && _scope_with_id($scope0_id),

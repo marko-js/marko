@@ -30,7 +30,7 @@ patchers[PatchKey.ClientBranch] = (scope, section, value) => {
 
 // A kept content's shell names its section after its id (`id|section`).
 installPatchShells((shell) => {
-  const kept = /^([^ ;,|]*)\|(\d+)/.exec(shell);
+  const kept = /^([^;,]*)\|(\d+)/.exec(shell);
   if (kept) {
     keptSections[registerShell(kept[1] + shell.slice(kept[0].length))] =
       kept[2];
@@ -45,12 +45,10 @@ installKeptInstances((branch, id) => {
   const section = keptSections[id];
   if (section) {
     const owner = branch[AccessorProp.Owner]!;
+    const holes = owner[AccessorPrefix.ClientBranchHoles + section] as
+      | Scope
+      | undefined;
     subscribeToScopeSet(owner, AccessorPrefix.ClosureScopes + section, branch);
-    if (owner[AccessorPrefix.ClientBranchHoles + section]) {
-      patchScope(
-        owner[AccessorPrefix.ClientBranchHoles + section] as Scope,
-        branch,
-      );
-    }
+    if (holes) patchScope(holes, branch);
   }
 });

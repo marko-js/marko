@@ -45,7 +45,7 @@ var rowsx_default = _template("__tests__/tags/rowsx.marko", (input) => {
 			fmt: "3:25",
 			label: "3:30"
 		}) || ($fg__fmt && _client_guard($scope2_reason, 1) && _patch_write($scope2_id, "PatchMarkedWrite:fmt", fmt, !_server_guard($scope2_reason, 5)), $fg__label && _client_guard($scope2_reason, 0) && _patch_write($scope2_id, "PatchMarkedWrite:label", label, !_server_guard($scope2_reason, 6)));
-	}, $scope0_id, 1) };
+	}, $scope0_id, 0) };
 	_for_of(input.items, (x) => {
 		const $scope1_id = _scope_id();
 		$fg__input_items && _patch_write($scope1_id, "PatchMarkedWrite:x", x, !$sg__input_items);

@@ -45,7 +45,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 			fmt: "3:25",
 			label: "3:30"
 		}) || ($fg__fmt && _client_guard($scope3_reason, 1) && _patch_write($scope3_id, "PatchMarkedWrite:fmt", fmt, !_server_guard($scope3_reason, 5)), $fg__label && _client_guard($scope3_reason, 0) && _patch_write($scope3_id, "PatchMarkedWrite:label", label, !_server_guard($scope3_reason, 6)));
-	}, $scope0_id, 1) };
+	}, $scope0_id, 0) };
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();

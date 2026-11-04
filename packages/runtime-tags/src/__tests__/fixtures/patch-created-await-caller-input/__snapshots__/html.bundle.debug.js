@@ -45,7 +45,7 @@ var under_wrapper_default = _template("__tests__/under-wrapper.marko", (input) =
 		_patch_render($scope1_id, "__tests__/under-wrapper.marko_1_input_second#0:4_input_first#0:5_showSecond#0:6/setup", [$fg__input_second && ">input_second", $fg__input_first && ">input_first"]);
 		_subscribe($showSecond__closures, _subscribe($wi__input_first && $input_first__closures, _subscribe($wi__input_second && $input_second__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/under-wrapper.marko", "3:4"))));
 		_resume_branch($scope1_id);
-	}, $scope0_id, 1) });
+	}, $scope0_id, 0) });
 	_patch_child_end();
 	_html(`<button>toggle</button>${_el_mark($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/under-wrapper.marko_0");
