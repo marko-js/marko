@@ -28,8 +28,15 @@ import {
 import { detectForSelector, isForSelectorClosure } from "../util/for-selector";
 import { getAccessorProp } from "../util/get-accessor-enums";
 import { getKnownAttrValues } from "../util/get-known-attr-values";
+import { isPatch } from "../util/marko-config";
 import { fromIter } from "../util/optional";
-import { addReasonExprs } from "../util/reasons";
+import { getFillSources, onReasonsSettled } from "../util/patch/decisions";
+import {
+  patchesBranchesAt,
+  recordStructuralParams,
+} from "../util/patch/structure";
+import { getExprRootGroupArgs } from "../util/patch/writers";
+import { addReasonExprs, getSourcesForExpr } from "../util/reasons";
 import {
   dropNodes,
   getAllTagReferenceNodes,
@@ -39,7 +46,7 @@ import {
   mergeTagReferences,
 } from "../util/references";
 import { replaceWithStatements } from "../util/replace-with-statements";
-import { callRuntime } from "../util/runtime";
+import { callRuntime, linkRuntimeFeature } from "../util/runtime";
 import { getScopeAccessorLiteral } from "../util/scope-accessor";
 import {
   getBranchRendererArgs,
@@ -48,6 +55,7 @@ import {
   getSection,
   getSectionForBody,
 } from "../util/sections";
+import { getShellIdArg } from "../util/shell";
 import {
   addValue,
   buildClosureHop,
@@ -57,6 +65,7 @@ import {
   writeHTMLResumeStatements,
 } from "../util/signals";
 import { ensureSlot, SlotKind } from "../util/slots";
+import { hasCallerParamSource } from "../util/sources";
 import * as structure from "../util/structure";
 import { getMemberExpressionPropString } from "../util/to-property-name";
 import { translateByTarget } from "../util/visitors";
@@ -166,6 +175,26 @@ export default {
       nodeBinding,
       optional: true,
     });
+
+    if (isPatch()) {
+      onFinalizeReferences(() => {
+        recordStructuralParams(getSourcesForExpr(tagExtra));
+      });
+      onReasonsSettled(() => {
+        if (patchesBranchesAt(nodeBinding)) {
+          linkRuntimeFeature(
+            isKeyedByIndex(forType!, getKnownAttrValues(tag.node))
+              ? "patches/loop"
+              : "patches/loop-keyed",
+          );
+          // A collection reading a param a caller passes may be client-sourced
+          // at runtime, and the rows it keeps patch in place.
+          if (hasCallerParamSource(getFillSources(tagExtra))) {
+            linkRuntimeFeature("patches/loop-item");
+          }
+        }
+      });
+    }
   },
   translate: translateByTarget({
     html: {
@@ -188,12 +217,16 @@ export default {
         const tagBody = tag.get("body");
         const bodySection = getSectionForBody(tagBody)!;
         const { node } = tag;
+        const tagSection = getSection(tag);
         const nodeBinding = node.extra!.nodeBinding!;
         const forAttrs = getKnownAttrValues(node);
         const forType = getForType(node)!;
         const params = node.body.params;
         const statements: t.Statement[] = [];
         const bodyStatements = node.body.body as t.Statement[];
+        // A patchable loop keeps its markers: item pairing and insertion
+        // go through branch markers, which elision would remove.
+        const patchesBranches = patchesBranchesAt(nodeBinding);
         const branchReason = getBranchWriteReason(bodySection);
 
         resumeOwnerByMarkerWhenUnconditional(bodySection, nodeBinding);
@@ -218,8 +251,19 @@ export default {
               tag,
               branchReason,
               isSingleNodeContent(bodySection?.content),
+              patchesBranches,
             ),
           );
+
+          if (patchesBranches) {
+            forTagArgs.push(
+              // Item body shell id so patches can create additions.
+              getShellIdArg(bodySection),
+              // A loop whose expression derives from params yields to the client
+              // when the call site passes state for them.
+              ...getExprRootGroupArgs(tagSection, node.extra!),
+            );
+          }
         }
 
         statements.push(
@@ -250,16 +294,21 @@ export default {
         const tagExtra = node.extra!;
         const nodeBinding = tagExtra.nodeBinding!;
         const hop = { kind: "for", nodeBinding } as const;
-        setClosureSignalBuilder(tag, hop, (closure, render) => {
+        setClosureSignalBuilder(tag, hop, (closure, render, setupId) => {
           if (!isForSelectorClosure(bodySection, closure)) {
-            return buildClosureHop(hop, render);
+            return buildClosureHop(hop, render, setupId);
           }
-          return callRuntime(
-            "_for_selector",
-            getScopeAccessorLiteral(nodeBinding, true),
-            getScopeAccessorLiteral(closure, true),
-            render,
-          );
+          const loopAccessor = getScopeAccessorLiteral(nodeBinding, true);
+          const valueAccessor = getScopeAccessorLiteral(closure, true);
+          return setupId
+            ? callRuntime(
+                "_for_selector_patch",
+                setupId,
+                loopAccessor,
+                valueAccessor,
+                render,
+              )
+            : callRuntime("_for_selector", loopAccessor, valueAccessor, render);
         });
 
         const forType = getForType(node)!;

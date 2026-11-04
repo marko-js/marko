@@ -1,0 +1,5 @@
+<let/mode="a"/>
+<span>${mode}</span>
+<button.mode onClick() { mode = "b" }>b</button>
+<button.go onClick=(mode === "a" ? input.onA : input.onB)>go</button>
+<return=mode valueChange=(mode === "a" ? input.onA : input.onB)/>

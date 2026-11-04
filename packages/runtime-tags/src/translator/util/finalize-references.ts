@@ -20,6 +20,7 @@ import {
 } from "./bindings";
 import { finalizeContentDerives } from "./content-derives";
 import { generateUid } from "./generate-uid";
+import { isPatch } from "./marko-config";
 import {
   every,
   concat,
@@ -40,6 +41,7 @@ import {
   addReasonExprs,
   addReason,
   applyReasonExprs,
+  getSourcesForExpr,
   getSourcesForReferencedBindings,
   mapParamBindingToExpr,
 } from "./reasons";
@@ -54,11 +56,15 @@ import {
   getAssignments,
   getCanonicalExpr,
   getFunctionReadsByExpression,
+  getGlobalReads,
+  getNameReadByExpression,
   getReadsByExpression,
+  getReferencedBindings,
   getReferenceFinalizers,
   getValueReferences,
   isReferencedExtra,
   setResolvedFunctionReads,
+  setNameRead,
   setResolvedReads,
 } from "./references";
 import {
@@ -70,9 +76,11 @@ import {
   setReadsOwner,
   StructureKind,
   type StructureOp,
+  finalizeEnclosing,
 } from "./sections";
 import { addSetupWork } from "./setup-work";
 import { ensureSectionSlot, ensureSlot, SlotKind } from "./slots";
+import { addGlobalReadReasons } from "./solve-reasons";
 import {
   ALWAYS,
   type Sources,
@@ -94,6 +102,7 @@ export function finalizeReferences() {
   resolveReads(intersectionsBySection);
   forEachSection(finalizeContentDerives);
   resolveBindings();
+  forEachSection(finalizeEnclosing);
   forEachSection(addSectionReasons);
   for (const finalize of getReferenceFinalizers()) {
     finalize();
@@ -160,6 +169,7 @@ function excludeAssignedChangeHandlers() {
 
 function resolveReads(intersectionsBySection: Map<Section, Intersection[]>) {
   const fnReadsByExpression = getFunctionReadsByExpression();
+  const nameReadByExpression = getNameReadByExpression();
   for (const [expr, reads] of getReadsByExpression()) {
     if (isReferencedExtra(expr)) {
       const exprBindings = resolveReferencedBindings(
@@ -171,9 +181,13 @@ function resolveReads(intersectionsBySection: Map<Section, Intersection[]>) {
         expr,
         exprBindings.referencedBindings,
         exprBindings.lazyBindings,
+        exprBindings.constantBindings,
+        exprBindings.globalBindings,
       );
+      const nameRead = nameReadByExpression.get(expr)?.extra.read;
+      if (nameRead) setNameRead(expr, nameRead);
       if (exprBindings.globalBindings) {
-        getProgram().node.extra.hasGlobalRead = true;
+        (expr.section.globalReadExprs ||= []).push(expr);
       }
       if (!exprBindings.referencedBindings) {
         // With no resolved references, any statement this expression keys
@@ -348,6 +362,8 @@ function addSectionReasons(section: Section) {
     addReasonExprs(branchSlot, section.branchExpr);
     addReasonExprs(ensureSlot(section.branch.nodeBinding), section.branchExpr);
   }
+
+  addGlobalReadReasons(section);
 }
 
 // Dense per-section ids for bindings, intersections, and closure accessors.
@@ -527,7 +543,9 @@ function resolveIntersectionSource(
     sources = mergeSources(sources, member.sources);
   }
 
-  if (!sources || (sources.state && sources.param)) {
+  // A `$global` member changes apart from the source beside it (only a patch changes
+  // `$global` after render), so the intersection runs on its own.
+  if (!sources || (sources.state && sources.param) || sources.global) {
     return undefined;
   }
 
@@ -553,8 +571,10 @@ function resolveBindingSources(binding: Binding) {
       if (aliasRoot !== binding) {
         resolveBindingSources(aliasRoot);
         binding.sources = aliasRoot.sources;
-      } else if (binding.assignments) {
+      } else if (binding.assignments || isPatch()) {
+        // A patch build keeps every `<let>` as client state, assigned or not.
         binding.sources = createSources(binding, undefined);
+        if (isPatch()) resolveInitialValue(binding);
       } else {
         resolveDerivedSources(binding);
       }
@@ -584,14 +604,43 @@ function resolveBindingSources(binding: Binding) {
   }
 }
 
+// A `<let>`'s init: what it reads, through the inits of the state it reads, and for an
+// uncontrolled one (taken once, as its scope is created), whether it reads only initial values.
+function resolveInitialValue(binding: Binding) {
+  const init = binding.derivedFrom as t.NodeExtra;
+  const sources = resolveInitSources(init);
+  binding.initSources = reduce(sources?.state, mergeInitSources, sources);
+  if (!init.initialValue) return false;
+  binding.initReadsInitialValues = every(
+    sources?.state,
+    (state) =>
+      state.initReadsInitialValues && state.section === binding.section,
+  );
+  return !!sources;
+}
+
+export function mergeInitSources(sources: Sources | undefined, state: Binding) {
+  return mergeSources(sources, state.initSources);
+}
+
 function resolveDerivedSources(binding: Binding) {
   const exprs = binding.derivedFrom;
 
   if (exprs === undefined) {
     binding.sources = createSources(binding, undefined);
-  } else if (exprs) {
+    return;
+  }
+  // A `$global` key a child's `<return>` reads changes its variable too.
+  const returned = binding.returnedBy?.section?.returnValueExpr;
+  if (returned && getSourcesForExpr(returned)?.global) {
+    binding.sources = globalSources;
+  }
+  if (exprs) {
     const refs = getValueReferences(exprs);
     binding.sources = reduce(refs, mergeResolvedSources, binding.sources);
+    if (some(exprs, readsGlobalValue)) {
+      binding.sources = mergeSources(binding.sources, globalSources);
+    }
     binding.intersection = Array.isArray(refs)
       ? refs
       : refs && getRootIntersection(refs);
@@ -629,6 +678,26 @@ function mapReturnedParams(
       withSources(sources, sources.state, params),
     );
   }
+}
+
+// What an init reads, `$global` included, its bindings resolved first.
+function resolveInitSources(init: t.NodeExtra) {
+  if (isReferencedExtra(getCanonicalExpr(init))) {
+    const sources = reduce(
+      getReferencedBindings(init),
+      mergeResolvedSources,
+      undefined as Sources | undefined,
+    );
+    return getGlobalReads(init)
+      ? mergeSources(sources, globalSources)
+      : sources;
+  }
+}
+
+// A `<let>`'s init reads `$global` once, at creation, as `getValueReferences`
+// reads its bindings.
+function readsGlobalValue(expr: t.NodeExtra) {
+  return !expr.initialValue && !!getGlobalReads(expr);
 }
 
 function mergeResolvedSources(sources: Sources | undefined, ref: Binding) {
@@ -864,7 +933,12 @@ function resolveReferencedBindings(
       if (binding.type === BindingType.global) {
         // `$global` reads stay verbatim member chains: no read slot,
         // no signal, no register-id participation.
-        globalBindings = bindingUtil.add(globalBindings, binding);
+        getProgram().node.extra.hasGlobalRead = true;
+        // Only a patch changes `$global` after the page renders: it keeps the paths
+        // read as the expression evaluates (a function invoked later reads it live).
+        if (isPatch() && !(expr.invokeOnly && read.deferred)) {
+          globalBindings = bindingUtil.add(globalBindings, binding);
+        }
       } else if (binding.type !== BindingType.dom) {
         const isLazy = isLazyRead(expr, read, binding, isChangeHandlerRead);
         if (isLazy) {

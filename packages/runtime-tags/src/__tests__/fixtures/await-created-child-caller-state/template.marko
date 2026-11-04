@@ -1,0 +1,5 @@
+<let/n=0/>
+<button.open onClick() { n++ }>inc</button>
+<if=input.show>
+  <show-await promise=Promise.resolve(n) label=input.label/>
+</if>

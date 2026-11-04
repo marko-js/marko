@@ -1,0 +1,6 @@
+import fragA from "./frag-a.marko";
+import fragB from "./frag-b.marko";
+<main>
+  <section content=(input.mode === "a" ? fragA : fragB)/>
+  <p>${input.note}</p>
+</main>

@@ -1,0 +1,10 @@
+<let/show=false/>
+<main>
+  <div>
+    <if=show>
+      <p>${input.title}</p>
+    </if>
+  </div>
+  <span>${input.label}</span>
+  <button onClick() { show = !show }>+</button>
+</main>

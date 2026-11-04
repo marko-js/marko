@@ -1,0 +1,8 @@
+import Tagged from "./tagged.marko" with { load: "render" }
+
+<const/node=(() => {
+  const n = { name: input.name, self: null as unknown };
+  n.self = n;
+  return n;
+})()/>
+<Tagged node=node/>
