@@ -1,0 +1,11 @@
+static function check(fail?: boolean) {
+  if (fail) throw new Error("down");
+}
+<main>
+  <for|row| of=input.rows by="key">
+    <try>
+      <p>${row.key}${check(row.fail)}</p>
+      <@catch>Unavailable ${row.key}</@catch>
+    </try>
+  </for>
+</main>

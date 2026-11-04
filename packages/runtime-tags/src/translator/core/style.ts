@@ -18,21 +18,26 @@ import { MagicString, type SourceMap } from "magic-string";
 
 import { coreTagLink } from "../util/assert";
 import { addAssetImport } from "../util/asset-imports";
-import { BindingType, createBinding } from "../util/bindings";
+import { type Binding, BindingType, createBinding } from "../util/bindings";
 import buildStringExpression from "../util/build-string-expression";
 import { isCoreTagName } from "../util/is-core-tag";
-import { isOutputDOM } from "../util/marko-config";
+import { isOutputDOM, isPatch } from "../util/marko-config";
 import { type Opt, push } from "../util/optional";
+import { onReasonsSettled, fillsHole } from "../util/patch/decisions";
+import { patchFillsSection } from "../util/patch/structure";
+import { getExprRootGroupArgs } from "../util/patch/writers";
 import { addReasonExprs } from "../util/reasons";
 import { getReferencedBindings, mergeReferences } from "../util/references";
 import { replaceWithStatements } from "../util/replace-with-statements";
-import { callRuntime } from "../util/runtime";
+import { callRuntime, linkRuntimeFeature } from "../util/runtime";
 import { getScopeAccessorLiteral } from "../util/scope-accessor";
 import { createScopeReadExpression, scopeIdentifier } from "../util/scope-read";
 import {
   getNodeContentType,
   ensureSection,
+  getScopeIdIdentifier,
   getSection,
+  type Section,
 } from "../util/sections";
 import { addSetupWork } from "../util/setup-work";
 import { addStatement } from "../util/signals";
@@ -126,10 +131,22 @@ function analyzeDynamicStyle(tag: t.NodePath<t.MarkoTag>, names: string[]) {
   const tagExtra = mergeReferences(section, node, []);
   let exprExtras: Opt<t.NodeExtra> = tagExtra;
   for (const value of dynamicStyleValues(node)) {
-    exprExtras = push(exprExtras, (value.extra ??= {}));
+    const valueExtra = (value.extra ??= {});
+    valueExtra.rendersValue = true;
+    exprExtras = push(exprExtras, valueExtra);
   }
 
   addReasonExprs(ensureSlot(binding), exprExtras);
+  // Stateful structure is known only once reasons settle.
+  if (isPatch()) {
+    onReasonsSettled(() => {
+      // The flush writes a dynamic style's rule, even a state-sourced one: a
+      // scope the flush creates never runs the setup that writes its selector.
+      if (patchFillsSection(section)) {
+        linkRuntimeFeature("patches/style");
+      }
+    });
+  }
 }
 
 function createCustomPropertyNames(tag: t.NodePath<t.MarkoTag>) {
@@ -217,7 +234,10 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
   const binding = node.extra?.nodeBinding;
 
   if (binding) {
-    writer.writeTo(tag)`${callRuntime("_style_html", buildStyleDecls(node))}`;
+    writer.writeTo(tag)`${callRuntime(
+      "_style_html",
+      buildStyleDecls(node, getSection(tag), binding),
+    )}`;
     writer.markNode(tag, binding, getWriteReason(binding));
   }
 
@@ -305,13 +325,30 @@ function emitStyleImport(tag: t.NodePath<t.MarkoTag>) {
   }
 }
 
-function buildStyleDecls(node: t.MarkoTag) {
+// Where a patch fills the section, each value's helper also writes its entry,
+// so it takes the property name and writes the declaration.
+function buildStyleDecls(node: t.MarkoTag, section: Section, binding: Binding) {
   const names = node.extra![kCustomPropertyNames]!;
+  const patched = patchFillsSection(section);
   const parts: (string | t.Expression)[] = [];
 
   dynamicStyleValues(node).forEach((value, i) => {
-    parts.push(`${names[i]}:`);
-    parts.push(callRuntime("_escape_style_value", value));
+    if (patched) {
+      parts.push(
+        callRuntime(
+          "_escape_style_value",
+          value,
+          getScopeIdIdentifier(section),
+          getScopeAccessorLiteral(binding),
+          t.stringLiteral(names[i]),
+          ...(fillsHole(section, value.extra)
+            ? getExprRootGroupArgs(section, value.extra!)
+            : [t.numericLiteral(0), t.numericLiteral(0)]),
+        ),
+      );
+    } else {
+      parts.push(`${names[i]}:`, callRuntime("_escape_style_value", value));
+    }
     parts.push(";");
   });
 
