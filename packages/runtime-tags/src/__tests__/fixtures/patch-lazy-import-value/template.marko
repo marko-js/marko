@@ -1,0 +1,10 @@
+import Child from "./child.marko" with { load: "render" }
+import Other from "./other.marko"
+
+<main>
+  <if=input.show>
+    <let/alt=false/>
+    <button onClick() { alt = !alt }>toggle</button>
+    <${alt ? Child : Other} label=input.label/>
+  </if>
+</main>

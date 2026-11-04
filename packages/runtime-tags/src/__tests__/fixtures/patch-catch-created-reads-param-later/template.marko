@@ -1,0 +1,7 @@
+static function boom(msg: string): never {
+  throw new Error(msg);
+}
+<try>
+  <p>${input.fail ? boom(input.msg) : input.msg}</p>
+  <@catch|err|><b>${(err as Error).message} ${input.msg}</b></@catch>
+</try>

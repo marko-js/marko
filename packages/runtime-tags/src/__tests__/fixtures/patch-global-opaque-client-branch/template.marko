@@ -1,0 +1,4 @@
+static function brandOf(g) { return g.brand + "!"; }
+<let/open=false/>
+<button onClick() { open = !open }>t</button>
+<if=open><p>${brandOf($global)}</p></if>

@@ -1,0 +1,9 @@
+<let/n=1/>
+<button onClick() { n++ }>${n}</button>
+<if=input.show>
+  <await|x|=Promise.resolve(n)>
+    <p>${x}</p>
+    <let/q=Promise.resolve("k")/>
+    <await|y|=q><b>${y}</b></await>
+  </await>
+</if>

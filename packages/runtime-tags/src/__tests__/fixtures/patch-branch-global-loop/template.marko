@@ -1,0 +1,14 @@
+import { itemsFor } from "./items";
+
+<const/[search, issues]=$global.search>
+<if=issues>
+  <p>invalid</p>
+</if>
+<else>
+  <const/items=itemsFor(search.q)>
+  <div>
+    <for|item| of=items by="id">
+      <row ...item/>
+    </for>
+  </div>
+</else>

@@ -1,0 +1,7 @@
+<let/n=0/>
+<button.open onClick() { n++ }>inc</button>
+<if=input.show>
+  <const/y=input.label + "!"/>
+  <p>${y + n}</p>
+  <script>console.log("const", y)</script>
+</if>

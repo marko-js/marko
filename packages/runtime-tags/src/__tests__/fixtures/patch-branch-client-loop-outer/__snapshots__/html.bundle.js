@@ -1,0 +1,30 @@
+// template.marko
+_shells({
+	a: "a !a2;D%b ;<main><!><button>+</button></main>",
+	a1: "a1 a5;D%b%;<li><!><!></li>"
+});
+var template_default = _template("a", (input) => {
+	const $scope0_reason = _scope_reason();
+	_write_guard($scope0_reason, 1);
+	_client_guard($scope0_reason, 1);
+	const $fg__input_note = _filled_guard($scope0_reason, 1), $wi__input_note = _write_if($scope0_reason, 1);
+	const $scope0_id = _scope_id();
+	const $input_note__closures = /* @__PURE__ */ new Set();
+	let expand = false;
+	_html("<main>");
+	_for_of(input.items, (item) => {
+		const $scope1_id = _scope_id();
+		_html(`<li>${_text_mark($scope1_id, "a", item, 1, $scope0_reason, 0)}`);
+		_if(() => {}, $scope1_id, "b", 1, 1, 0, 0, 1);
+		_html("</li>");
+		_scope($scope1_id, { _: _scope_with_id($scope0_id) });
+	}, 0, $scope0_id, "a", 1, 1, 1, 0, 0, "a1", $scope0_reason, 0);
+	_html(`<button>+</button>${_el_mark($scope0_id, "b")}</main>`);
+	_script($scope0_id, "a2");
+	$fg__input_note && _patch_subscribers($scope0_id, "a3", "f");
+	_scope($scope0_id, {
+		f: input.note,
+		g: expand,
+		h: $wi__input_note && $input_note__closures
+	}) || $fg__input_note && _patch_write($scope0_id, "xf", input.note, !_server_guard($scope0_reason, 1));
+}, 1);
