@@ -1,0 +1,11 @@
+static function check(x: unknown) {
+  if (x) throw new Error("boom");
+  return 1;
+}
+<main>
+  <try>
+    <const/y=check(input.boom)/>
+    <em>ok</em>
+    <@catch|err|><b>${err.message}</b></@catch>
+  </try>
+</main>

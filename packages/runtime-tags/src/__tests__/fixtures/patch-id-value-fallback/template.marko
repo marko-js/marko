@@ -1,0 +1,6 @@
+<id/heading=input.heading/><h1 id=heading>Fields</h1>
+<id/second/><label for=second>second</label><input id=second>
+<for|item| of=input.items by="key"><field name=item.key uid=item.uid heading=heading/></for>
+<let/local="given"/><id/localId=local/>
+<label for=localId>local</label><input id=localId>
+<button onClick() { local = local ? "" : "given" }>toggle</button>
