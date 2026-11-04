@@ -1,0 +1,20 @@
+static function boom(error: unknown): never {
+  throw error;
+}
+<main>
+  <try>
+    <p>${input.error ? boom(input.error) : "ok"}</p>
+    <@catch|err|>
+      <b>${(err as Error).message}</b>
+      <button onClick() { console.log((err as Error).message) }>log</button>
+    </@catch>
+  </try>
+  <try>
+    <p>${input.error ? boom(input.error) : "ok"}</p>
+    <@catch|err|>
+      <script>
+        console.log(((err as Error).cause as { code: string }).code);
+      </script>
+    </@catch>
+  </try>
+</main>

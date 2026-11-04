@@ -1,0 +1,22 @@
+{
+  "dom": {
+    "template.marko.page.mjs": {
+      "total": {
+        "min": 8939,
+        "brotli": 4037
+      },
+      "files": {
+        "tags/gm-badge/index.marko": 206,
+        "template.marko": 286
+      }
+    }
+  },
+  "html": {
+    "min": 380,
+    "brotli": 269
+  },
+  "patch": {
+    "min": 69,
+    "brotli": 73
+  }
+}

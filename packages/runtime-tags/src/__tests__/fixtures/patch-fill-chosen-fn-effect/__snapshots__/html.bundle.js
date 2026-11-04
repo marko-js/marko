@@ -1,0 +1,25 @@
+// template.marko
+_shells({ a: "a !a4;b bD%b ;<pre id=log></pre><div id=d></div><main><!><button>+</button></main>" });
+var template_default = _template("a", (input) => {
+	const $scope0_reason = _scope_reason();
+	_write_guard($scope0_reason, 0);
+	const $wi__input_upper = _write_if($scope0_reason, 0), $fg__input_upper = _filled_guard($scope0_reason, 0);
+	const $scope0_id = _scope_id();
+	const fa = _resume(() => "a:" + ((el) => el())(_el_read_error).id, "a0", $scope0_id);
+	const fb = _resume(() => "b:" + ((el) => el())(_el_read_error).id, "a1", $scope0_id);
+	const pick = input.upper ? fa : fb;
+	let open = false;
+	_html(`<pre id=log></pre><div id=d></div>${_el_mark($scope0_id, "a")}<main>`);
+	_if(() => {}, $scope0_id, "b", 1, 1, 0, 0, 1);
+	_html(`<button>+</button>${_el_mark($scope0_id, "c")}</main>`);
+	_script($scope0_id, "a3", 1, $fg__input_upper, "j");
+	_script($scope0_id, "a4");
+	$fg__input_upper && _patch_render($scope0_id, "a2", "j");
+	_patch_render($scope0_id, "a5", $fg__input_upper && "f", $scope0_reason, 0);
+	_scope($scope0_id, {
+		g: $wi__input_upper && fa,
+		h: $wi__input_upper && fb,
+		j: pick,
+		k: open
+	}) || $fg__input_upper && _patch_write($scope0_id, "xj", pick, !_server_guard($scope0_reason, 0));
+}, 1);
