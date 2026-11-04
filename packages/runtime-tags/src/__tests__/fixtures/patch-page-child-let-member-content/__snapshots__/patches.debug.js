@@ -1,13 +1,13 @@
 // PATCH
 {
-  "PatchClientBranch:packages/runtime-tags/src/__tests__/fixtures/patch-page-child-let-member-content/template.marko_1*content": {
+  "PatchClientBranch:1": {
     "PatchText:#text/0": "b"
   }
 }
 
 // PATCH
 {
-  "PatchClientBranch:packages/runtime-tags/src/__tests__/fixtures/patch-page-child-let-member-content/template.marko_1*content": {
+  "PatchClientBranch:1": {
     "PatchText:#text/0": "c"
   }
 }

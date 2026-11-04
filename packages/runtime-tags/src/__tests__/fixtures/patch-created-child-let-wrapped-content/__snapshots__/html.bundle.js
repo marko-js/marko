@@ -19,7 +19,7 @@ const $template = $template$1;
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1);
 const $setup = _shell_setup([[], []], ["a>", $setup$1]);
 _shells({
-	c1: "c1;D%;<b><!></b>",
+	c1: "c1|1;D%;<b><!></b>",
 	c: `c${_shell_marker($setup)};${((_w0) => `/${_w0}&`)($walks$1)};${$template$1}`
 });
 var outer_default = _template("c", (input) => {
@@ -37,7 +37,7 @@ var outer_default = _template("c", (input) => {
 		_client_guard($scope0_reason, 0) && _patch_render($scope1_id, "c0");
 		$wi__input_content && _subscribe(_unfilled_if($scope0_reason, 0) && $input_content__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
 		$wg__input_content || $wi__input_content && _resume_branch($scope1_id);
-	}, $scope0_id, 2) });
+	}, $scope0_id, "1") });
 	_patch_child_end();
 	_scope($scope0_id, {
 		e: $wi__input_content && _unfilled_if($scope0_reason, 0) && $input_content__closures,

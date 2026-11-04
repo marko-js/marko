@@ -24,6 +24,7 @@ import {
   type State,
   _peek_scope_id,
   _scope,
+  _subscribe,
   getState,
   scopeWithId,
 } from "../writer";
@@ -252,13 +253,13 @@ export function _content(
   id: string,
   fn: ServerRenderer,
   scopeId?: number,
-  elide?: 1 | 2,
+  elide?: 1 | string,
 ) {
   if (!elide) return _base_content(id, fn, scopeId);
   const state = getState();
   const content = _base_content(
     id,
-    elide > 1 ? keepHoles(id, fn, scopeId!) : fn,
+    elide === 1 ? fn : keepHoles(fn, scopeId!, elide),
     scopeId,
   );
   return state instanceof PatchRenderState
@@ -266,9 +267,9 @@ export function _content(
     : register("", content, undefined, undefined, "0");
 }
 
-// Kept content (`elide` 2) takes its instances' holes as data: each one a page
-// renders enters its owner's set, and the client adds those it creates.
-function keepHoles(id: string, fn: ServerRenderer, scopeId: number) {
+// Kept content (`elide` its section) takes its instances' holes as data: each one
+// a page renders joins the section's scopes its owner holds, and the client adds those it creates.
+function keepHoles(fn: ServerRenderer, scopeId: number, section: string) {
   const renderer = (...args: Parameters<ServerRenderer>) => {
     const state = getState();
     const instanceId = _peek_scope_id();
@@ -284,19 +285,22 @@ function keepHoles(id: string, fn: ServerRenderer, scopeId: number) {
       const patch = state.patchTree![instanceId];
       if (patch) {
         (patch as { [kKeptInstance]?: string })[kKeptInstance] =
-          PatchKey.ClientBranch + id + " " + scopeId;
+          PatchKey.ClientBranch + section + " " + scopeId;
       }
     }
     if (!(state instanceof PatchRenderState)) {
-      const key = AccessorPrefix.ClientBranchScopes + id;
-      (
-        (scopeWithId(state, scopeId)[key] ||
-          _scope(scopeId, { [key]: new Set() })[key]) as Set<ScopeInternals>
-      ).add(scopeWithId(state, instanceId));
+      const instances = AccessorPrefix.ClosureScopes + section;
+      _subscribe(
+        (scopeWithId(state, scopeId)[instances] ||
+          _scope(scopeId, { [instances]: new Set() })[
+            instances
+          ]) as Set<ScopeInternals>,
+        scopeWithId(state, instanceId),
+      );
     }
     return result;
   };
-  clientBranchRenderers.add(renderer);
+  clientBranchRenderers.set(renderer, section);
   return renderer;
 }
 

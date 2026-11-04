@@ -1,5 +1,5 @@
 // PATCH
-[`a2;D%c%;<em><!> <!></em>`, `a3 !a>b0;/D b%bD m&;<section><button>clear</button><!><p> </p></section>`]
+[`a2|2;D%c%;<em><!> <!></em>`, `a3 !a>b0;/D b%bD m&;<section><button>clear</button><!><p> </p></section>`]
 {
   la: [{
     ca: {
@@ -8,7 +8,7 @@
       },
       tc: "SHOWN_a"
     },
-    Wa2: {
+    W2: {
       ta: 1,
       tb: "b"
     }
@@ -19,7 +19,7 @@
       },
       tc: "SHOWN_b"
     },
-    Wa2: {
+    W2: {
       ta: 2,
       tb: "b"
     }

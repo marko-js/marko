@@ -2188,7 +2188,6 @@ const accessorPrefixDescriptions: Record<string, string> = {
   Promise: "the pending promise",
   TagVariableChange: "the tag variable change handler",
   TryBranch: "the try branch",
-  ClientBranchScopes: "the kept content instances",
   ClientBranchHoles: "the kept content holes",
 };
 

@@ -5,8 +5,8 @@ import {
   type Scope,
 } from "../../common/types";
 import { subscribeToScopeSet } from "../signals";
-import { patchers, patchScope } from "./apply";
-import { installKeptInstances } from "./shells";
+import { installPatchShells, patchers, patchScope } from "./apply";
+import { installKeptInstances, registerShell } from "./shells";
 
 declare module "./apply" {
   interface PatchValues {
@@ -14,23 +14,43 @@ declare module "./apply" {
   }
 }
 
-// The holes of content a client consumer keeps, for each live instance its
-// owner holds.
-patchers[PatchKey.ClientBranch] = (scope, contentId, value) => {
-  scope[AccessorPrefix.ClientBranchHoles + contentId] = value;
-  for (const instance of (scope[
-    AccessorPrefix.ClientBranchScopes + contentId
-  ] as Set<Scope> | undefined) || []) {
+// Each kept content's section by its id: its owner holds the section's scopes.
+const keptSections: Record<string, string> = {};
+
+// The holes of content a client consumer keeps, for each live instance among
+// its section's scopes (the entry's key) its owner holds.
+patchers[PatchKey.ClientBranch] = (scope, section, value) => {
+  scope[AccessorPrefix.ClientBranchHoles + section] = value;
+  for (const instance of (scope[AccessorPrefix.ClosureScopes + section] as
+    | Set<Scope>
+    | undefined) || []) {
     if (instance[AccessorProp.Gen] > 0) patchScope(value, instance);
   }
 };
 
-// Content created from its shell enters its owner's set, whoever creates it, with
-// the holes the owner last took, and leaves it when destroyed.
+// A kept content's shell names its section after its id (`id|section`).
+installPatchShells((shell) => {
+  const kept = /^([^ ;,|]*)\|(\d+)/.exec(shell);
+  if (kept) {
+    keptSections[registerShell(kept[1] + shell.slice(kept[0].length))] =
+      kept[2];
+  } else {
+    registerShell(shell);
+  }
+});
+
+// Content created from its shell joins its owner's set, with the holes the owner
+// last took, and leaves it when destroyed.
 installKeptInstances((branch, id) => {
-  const owner = branch[AccessorProp.Owner]!;
-  subscribeToScopeSet(owner, AccessorPrefix.ClientBranchScopes + id, branch);
-  if (owner[AccessorPrefix.ClientBranchHoles + id]) {
-    patchScope(owner[AccessorPrefix.ClientBranchHoles + id] as Scope, branch);
+  const section = keptSections[id];
+  if (section) {
+    const owner = branch[AccessorProp.Owner]!;
+    subscribeToScopeSet(owner, AccessorPrefix.ClosureScopes + section, branch);
+    if (owner[AccessorPrefix.ClientBranchHoles + section]) {
+      patchScope(
+        owner[AccessorPrefix.ClientBranchHoles + section] as Scope,
+        branch,
+      );
+    }
   }
 });

@@ -1,5 +1,5 @@
 // PATCH
-[`c0; b ;<input><label>relay</label>`, `a0; b Db%;<input><label>p <!></label>`, `a1 !a>a>b0;// b%b%c&b&b;<button>clear</button><!><!><!><!><!>`]
+[`c0|1; b ;<input><label>relay</label>`, `a0|2; b Db%;<input><label>p <!></label>`, `a1 !a>a>b0;// b%b%c&b&b;<button>clear</button><!><!><!><!><!>`]
 {
   la: [1, {
     ca: {
@@ -9,14 +9,14 @@
           fc: "^^^a0"
         }
       },
-      Wc0: {
+      W1: {
         s: {
           aa$id: "sM_1UUThc0A",
           ab$for: "sM_1UUThc0A"
         }
       }
     },
-    Wa0: {
+    W2: {
       s: {
         aa$id: "sM_1UUTha0A",
         ab$for: "sM_1UUTha0A"
@@ -31,14 +31,14 @@
           fc: "^^^a0"
         }
       },
-      Wc0: {
+      W1: {
         s: {
           aa$id: "sM_2UUThc0A",
           ab$for: "sM_2UUThc0A"
         }
       }
     },
-    Wa0: {
+    W2: {
       s: {
         aa$id: "sM_2UUTha0A",
         ab$for: "sM_2UUTha0A"

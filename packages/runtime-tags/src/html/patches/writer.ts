@@ -212,8 +212,9 @@ export function _client_branch(value: unknown) {
     const id = (content as ServerRenderer)[RendererProp.Id];
     const owner = (content as ServerRenderer)[RendererProp.Owner]!;
     if (id) addClientBranch(state, id, owner);
-    if (clientBranchRenderers.has(content as ServerRenderer)) {
-      renderClientBranch(state, content as ServerRenderer, id!, owner);
+    const section = clientBranchRenderers.get(content as ServerRenderer);
+    if (section) {
+      renderClientBranch(state, content as ServerRenderer, id!, owner, section);
     }
   }
 }
@@ -230,8 +231,9 @@ export function addClientBranch(
   }
 }
 
-// Content whose kept instances take their holes as data (`_content`'s `elide` 2).
-export const clientBranchRenderers = new WeakSet<ServerRenderer>();
+// Content whose kept instances take their holes as data, by its section
+// (`_content`'s `elide`).
+export const clientBranchRenderers = new WeakMap<ServerRenderer, string>();
 
 // A flush that leaves content to the consumers keeping it renders its holes
 // once for its owner, under the entry every instance there takes.
@@ -240,9 +242,10 @@ function renderClientBranch(
   renderer: ServerRenderer,
   id: string,
   ownerId: number,
+  section: string,
 ) {
   const rendered = (state.clientBranchRendered ??= new Map());
-  const key = PatchKey.ClientBranch + id;
+  const key = PatchKey.ClientBranch + section;
   if (rendered.has(key + " " + ownerId)) return;
   const scopeId = _base_peek_scope_id();
   rendered.set(key + " " + ownerId, scopeId);

@@ -1,8 +1,8 @@
 // PATCH
-[`a2 !a>b>b0 a>c0;/ b/D b%l&&;<button>drop</button><section><button>clear</button><!></section>`, `a1;Db%;<em>static <!></em>`]
+[`a2 !a>b>b0 a>c0;/ b/D b%l&&;<button>drop</button><section><button>clear</button><!></section>`, `a1|2;Db%;<em>static <!></em>`]
 {
   ba: [{
-    Wa1: {
+    W2: {
       ta: "b"
     },
     ca: {
@@ -20,7 +20,7 @@
 // PATCH holding CwY
 {
   ba: [{
-    Wa1: {
+    W2: {
       ta: "c"
     },
     ca: {
@@ -37,7 +37,7 @@
 // PATCH holding CwY
 {
   ba: [{
-    Wa1: {
+    W2: {
       ta: "d"
     },
     ca: {

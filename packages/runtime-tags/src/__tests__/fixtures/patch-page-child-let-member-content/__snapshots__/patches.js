@@ -1,13 +1,13 @@
 // PATCH
 {
-  Wa1: {
+  W1: {
     ta: "b"
   }
 }
 
 // PATCH
 {
-  Wa1: {
+  W1: {
     ta: "c"
   }
 }

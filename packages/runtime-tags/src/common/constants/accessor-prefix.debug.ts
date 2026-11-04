@@ -17,7 +17,6 @@ export const PatchChanged = "PatchChanged:";
 export const Promise = "Promise:";
 export const TagVariableChange = "TagVariableChange:";
 export const TryBranch = "TryBranch:";
-export const ClientBranchScopes = "ClientBranchScopes:";
 export const ClientBranchHoles = "ClientBranchHoles:";
 
 type Self = typeof import("./accessor-prefix.debug");

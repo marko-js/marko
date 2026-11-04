@@ -19,9 +19,8 @@ export const PatchChanged = "T";
 export const Promise = "L";
 export const TagVariableChange = "M";
 export const TryBranch = "Q";
-// The instances of a content its owner holds where a client consumer keeps them.
-export const ClientBranchScopes = "P";
-// The holes its owner's last client branch entry gave them.
+// The holes kept content's owner last took from its client branch entry, by the
+// accessor of the set it holds the content's instances in.
 export const ClientBranchHoles = "S";
 
 type Self = typeof import("./accessor-prefix");

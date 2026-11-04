@@ -16,7 +16,7 @@ var card_default = _template("b", (input) => {
 
 // template.marko
 _shells({
-	a2: "a2;D%c%;<em><!> <!></em>",
+	a2: "a2|2;D%c%;<em><!> <!></em>",
 	a: "a;b%;<!><!><!>",
 	a3: `a3${_shell_marker([[], []], ["a>", $setup])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks)};${$template}`
 });
@@ -38,7 +38,7 @@ var template_default = _template("a", (input) => {
 				_client_guard($scope0_reason, 2) && _patch_render($scope2_id, "a0");
 				$cg__input_rows && _patch_render($scope2_id, "a1");
 				_subscribe(_unfilled_if($scope0_reason, 1) && $for_content__row_id__closures, _subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope2_id, { _: $wi__input_rows__OR__input_label && _scope_with_id($scope1_id) })));
-			}, $scope1_id, 2)
+			}, $scope1_id, "2")
 		});
 		_patch_child_end();
 		_scope($scope1_id, {

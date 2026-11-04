@@ -19,7 +19,7 @@ const $template$1 = $template$2;
 const $walks$1 = /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$2);
 const $setup$1 = _shell_setup([[], []], ["#childScope/0>", $setup$2]);
 _shells({
-	"__tests__/tags/outer.marko_1*content": "__tests__/tags/outer.marko_1*content;D%;<b><!></b>",
+	"__tests__/tags/outer.marko_1*content": "__tests__/tags/outer.marko_1*content|1;D%;<b><!></b>",
 	"__tests__/tags/outer.marko": `__tests__/tags/outer.marko${_shell_marker($setup$1)};${((_w0) => `/${_w0}&`)($walks$2)};${$template$2}`
 });
 var outer_default = _template("__tests__/tags/outer.marko", (input) => {
@@ -37,7 +37,7 @@ var outer_default = _template("__tests__/tags/outer.marko", (input) => {
 		_client_guard($scope0_reason, 0) && _patch_render($scope1_id, "__tests__/tags/outer.marko_1_input_content#0:3/subscribe");
 		$wi__input_content && _subscribe(_unfilled_if($scope0_reason, 0) && $input_content__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/outer.marko", "1:2"));
 		$wg__input_content || $wi__input_content && _resume_branch($scope1_id);
-	}, $scope0_id, 2) });
+	}, $scope0_id, "1") });
 	_patch_child_end();
 	_scope($scope0_id, {
 		"ClosureScopes:input_content/4": $wi__input_content && _unfilled_if($scope0_reason, 0) && $input_content__closures,

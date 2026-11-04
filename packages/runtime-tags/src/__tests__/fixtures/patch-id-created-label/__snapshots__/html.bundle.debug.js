@@ -18,7 +18,7 @@ const $template = "<!><!><!><!><!><!>";
 const $walks = "b%b%b%b%c";
 const $setup = [[], []];
 _shells({
-	"__tests__/template.marko_6*content": "__tests__/template.marko_6*content; b D ;<input><label> </label>",
+	"__tests__/template.marko_6*content": "__tests__/template.marko_6*content|6; b D ;<input><label> </label>",
 	"__tests__/template.marko_3*content": "__tests__/template.marko_3*content",
 	"__tests__/template.marko": "__tests__/template.marko;b%b%b%b%;<!><!><!><!><!><!>",
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell; b%;<input><!><!>",
@@ -80,7 +80,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const uid = _id("uid~2");
 			_html(`<input${_attr("id", uid, $scope6_id, "PatchAttr:#input/0 id", 0, 0)}>${_el_mark($scope6_id, "#input/0", 0)}<label${_attr("for", uid, $scope6_id, "PatchAttr:#label/1 for", 0, 0)}>${_text_mark($scope6_id, "#text/2", row.id, 1, $scope0_reason, 5)}</label>${_el_mark($scope6_id, "#label/1", 0)}`);
 			_scope($scope6_id, { _: _write_if($scope0_reason, 5) && _scope_with_id($scope5_id) }, "__tests__/template.marko", "14:4");
-		}, $scope5_id, 2) });
+		}, $scope5_id, "6") });
 		_patch_child_end();
 		_scope($scope5_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "13:2");
 	}, "id", $scope0_id, "#text/3", 1, 1, 1, 0, 0, "__tests__/template.marko_5*shell", $scope0_reason, 5);

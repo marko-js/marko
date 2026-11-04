@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-created-child-unassigned-let-dynamic-content/template.marko_2*content;Db%;<em>static <!></em>`, `packages/runtime-tags/src/__tests__/fixtures/patch-created-child-unassigned-let-dynamic-content/template.marko_1*shell;/Db%l&;<section><button>x</button><!></section>`]
+[`packages/runtime-tags/src/__tests__/fixtures/patch-created-child-unassigned-let-dynamic-content/template.marko_2*content|2;Db%;<em>static <!></em>`, `packages/runtime-tags/src/__tests__/fixtures/patch-created-child-unassigned-let-dynamic-content/template.marko_1*shell;/Db%l&;<section><button>x</button><!></section>`]
 {
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {
@@ -7,7 +7,7 @@
         "PatchDynamicTag:#text/0": "^^packages/runtime-tags/src/__tests__/fixtures/patch-created-child-unassigned-let-dynamic-content/template.marko_2*content"
       }
     },
-    "PatchClientBranch:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-unassigned-let-dynamic-content/template.marko_2*content": {
+    "PatchClientBranch:2": {
       "PatchText:#text/0": "b"
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-child-unassigned-let-dynamic-content/template.marko_1*shell"],
@@ -29,7 +29,7 @@
         "PatchDynamicTag:#text/0": "^^packages/runtime-tags/src/__tests__/fixtures/patch-created-child-unassigned-let-dynamic-content/template.marko_2*content"
       }
     },
-    "PatchClientBranch:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-unassigned-let-dynamic-content/template.marko_2*content": {
+    "PatchClientBranch:2": {
       "PatchText:#text/0": "d"
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-child-unassigned-let-dynamic-content/template.marko_1*shell"],

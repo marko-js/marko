@@ -1,5 +1,5 @@
 // PATCH
-[`c1;D%;<b><!></b>`, `a1;Db%;<em>static <!></em>`, `a2 !a>a>b0;//D b%l&&;<section><button>clear</button><!></section>`]
+[`c1|1;D%;<b><!></b>`, `a1;Db%;<em>static <!></em>`, `a2 !a>a>b0;//D b%l&&;<section><button>clear</button><!></section>`]
 {
   ba: [{
     ca: {
@@ -8,7 +8,7 @@
           fb: "^^c1"
         }
       },
-      Wc1: {
+      W1: {
         fa: "^^^a1",
         cAa: {
           ta: "b"
@@ -28,7 +28,7 @@
           fb: "^^c1"
         }
       },
-      Wc1: {
+      W1: {
         fa: "^^^a1",
         cAa: {
           ta: "c"
@@ -47,7 +47,7 @@
           fb: "^^c1"
         }
       },
-      Wc1: {
+      W1: {
         fa: "^^^a1",
         cAa: {
           ta: "d"

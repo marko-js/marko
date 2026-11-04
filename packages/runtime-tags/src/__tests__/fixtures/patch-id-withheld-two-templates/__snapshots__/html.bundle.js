@@ -20,7 +20,7 @@ const $template = /*@__PURE__*/ ((_w0) => `${_w0}<!>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&b`)($walks$1);
 const $setup = _shell_setup([[], []], ["a>", $setup$1]);
 _shells({
-	c0: "c0; b ;<input><label>relay</label>",
+	c0: "c0|1; b ;<input><label>relay</label>",
 	c: `c${_shell_marker($setup)};${((_w0) => `/${_w0}&b`)($walks$1)};${((_w0) => `${_w0}<!>`)($template$1)}`
 });
 var relay_default = _template("c", (input) => {
@@ -36,7 +36,7 @@ var relay_default = _template("c", (input) => {
 			const rid = _id("A");
 			_html(`<input${_attr("id", rid, $scope1_id, "aa$id", 0, 0)}>${_el_mark($scope1_id, "a", 0)}<label${_attr("for", rid, $scope1_id, "ab$for", 0, 0)}>relay</label>${_el_mark($scope1_id, "b", 0)}`);
 			_scope($scope1_id, {});
-		}, $scope0_id, 2)
+		}, $scope0_id, "1")
 	});
 	_patch_child_end();
 	_scope($scope0_id, { a: _existing_scope($childScope) });
@@ -44,7 +44,7 @@ var relay_default = _template("c", (input) => {
 
 // template.marko
 _shells({
-	a0: "a0; b Db%;<input><label>p <!></label>",
+	a0: "a0|2; b Db%;<input><label>p <!></label>",
 	a: "a;b%;<!><!><!>",
 	a1: `a1${_shell_marker([[], []], ["a>", $setup])};${/*@__PURE__*/ ((_w0) => `/${_w0}&b`)($walks)};${/*@__PURE__*/ ((_w0) => `${_w0}<!>`)($template)}`
 });
@@ -61,7 +61,7 @@ var template_default = _template("a", (input) => {
 			const uid = _id("A");
 			_html(`<input${_attr("id", uid, $scope2_id, "aa$id", 0, 0)}>${_el_mark($scope2_id, "a", 0)}<label${_attr("for", uid, $scope2_id, "ab$for", 0, 0)}>p ${_text_mark($scope2_id, "c", row.id, 2, $scope0_reason, 0)}</label>${_el_mark($scope2_id, "b", 0)}`);
 			_scope($scope2_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope1_id) });
-		}, $scope1_id, 2) });
+		}, $scope1_id, "2") });
 		_patch_child_end();
 		_scope($scope1_id, { a: _existing_scope($childScope) });
 	}, "id", $scope0_id, "a", 1, 1, 1, 0, 0, "a1", $scope0_reason, 0);

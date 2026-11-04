@@ -16,7 +16,7 @@ var card_default = _template("b", (input) => {
 
 // template.marko
 _shells({
-	a0: "a0; b D ;<input><label> </label>",
+	a0: "a0|2; b D ;<input><label> </label>",
 	a: "a;b%;<!><!><!>",
 	a1: `a1${_shell_marker([[], []], ["a>", $setup])};${/*@__PURE__*/ ((_w0) => `/${_w0}&b`)($walks)};${/*@__PURE__*/ ((_w0) => `${_w0}<!>`)($template)}`
 });
@@ -33,7 +33,7 @@ var template_default = _template("a", (input) => {
 			const uid = _id("A");
 			_html(`<input${_attr("id", uid, $scope2_id, "aa$id", 0, 0)}>${_el_mark($scope2_id, "a", 0)}<label${_attr("for", uid, $scope2_id, "ab$for", 0, 0)}>${_text_mark($scope2_id, "c", row.id, 1, $scope0_reason, 0)}</label>${_el_mark($scope2_id, "b", 0)}`);
 			_scope($scope2_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope1_id) });
-		}, $scope1_id, 2) });
+		}, $scope1_id, "2") });
 		_patch_child_end();
 		_scope($scope1_id, { a: _existing_scope($childScope) });
 	}, "id", $scope0_id, "a", 1, 1, 1, 0, 0, "a1", $scope0_reason, 0);

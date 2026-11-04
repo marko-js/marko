@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-id-created-label/template.marko_2*shell; D ;<label> </label>`, `packages/runtime-tags/src/__tests__/fixtures/patch-id-created-label/template.marko_1*shell; b%;<input><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-id-created-label/template.marko_3*content`, `packages/runtime-tags/src/__tests__/fixtures/patch-id-created-label/template.marko_4*shell; ;<label>field</label>`, `packages/runtime-tags/src/__tests__/fixtures/patch-id-created-label/template.marko_6*content; b D ;<input><label> </label>`, `packages/runtime-tags/src/__tests__/fixtures/patch-id-created-label/template.marko_5*shell !#childScope/0>packages/runtime-tags/src/__tests__/fixtures/patch-id-created-label/tags/card.marko_0;/ b%c&b;<button>clear</button><!><!><!>`]
+[`packages/runtime-tags/src/__tests__/fixtures/patch-id-created-label/template.marko_2*shell; D ;<label> </label>`, `packages/runtime-tags/src/__tests__/fixtures/patch-id-created-label/template.marko_1*shell; b%;<input><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-id-created-label/template.marko_3*content`, `packages/runtime-tags/src/__tests__/fixtures/patch-id-created-label/template.marko_4*shell; ;<label>field</label>`, `packages/runtime-tags/src/__tests__/fixtures/patch-id-created-label/template.marko_6*content|6; b D ;<input><label> </label>`, `packages/runtime-tags/src/__tests__/fixtures/patch-id-created-label/template.marko_5*shell !#childScope/0>packages/runtime-tags/src/__tests__/fixtures/patch-id-created-label/tags/card.marko_0;/ b%c&b;<button>clear</button><!><!><!>`]
 {
   "PatchLoop:#text/0": ["b", {
     "PatchSetup:": {
@@ -52,7 +52,7 @@
         "PatchDynamicTag:#text/1": _.g = "^^packages/runtime-tags/src/__tests__/fixtures/patch-id-created-label/template.marko_6*content"
       }
     },
-    "PatchClientBranch:packages/runtime-tags/src/__tests__/fixtures/patch-id-created-label/template.marko_6*content": {
+    "PatchClientBranch:6": {
       "PatchSetup:": {
         "PatchAttr:#input/0 id": _.f = "sM_[1].#childScope/0@2^[\"packages/runtime-tags/src/__tests__/fixtures/patch-id-created-label/template.marko_6*content\"].uid~2",
         "PatchAttr:#label/1 for": _.f
@@ -65,7 +65,7 @@
         "PatchDynamicTag:#text/1": _.g
       }
     },
-    "PatchClientBranch:packages/runtime-tags/src/__tests__/fixtures/patch-id-created-label/template.marko_6*content": {
+    "PatchClientBranch:6": {
       "PatchSetup:": {
         "PatchAttr:#input/0 id": _.h = "sM_[2].#childScope/0@2^[\"packages/runtime-tags/src/__tests__/fixtures/patch-id-created-label/template.marko_6*content\"].uid~2",
         "PatchAttr:#label/1 for": _.h

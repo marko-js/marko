@@ -538,17 +538,20 @@ export function getSectionEffectRegistryIds(
   return ids;
 }
 
-// The shell `id setupIds;walks;template` (`,` for `;walks;` when the walk is
-// empty): the section's dom template parts, none where the client registers them.
+// The shell `id[|section] setupIds;walks;template` (`,` for `;walks;` when the walk
+// is empty): the section's dom template parts, none where the client registers them.
 export function buildShell(
   id: string,
   section: Section,
   setupIds?: t.Expression,
 ) {
   // A debug build marks content with a `<return>` for the client's check of
-  // a dynamic tag variable over it.
+  // a dynamic tag variable over it; kept content names its section after `|`,
+  // whose scopes its owner holds (main's `ClosureScopes` key).
   const parts: (string | t.Expression)[] = [
-    (section.returnValueExpr && !isOptimize() ? "^" : "") + id,
+    (section.returnValueExpr && !isOptimize() ? "^" : "") +
+      id +
+      (keepsHoles(section) ? "|" + section.id : ""),
   ];
   if (setupIds) parts.push(setupIds);
   // Content the page's bundle registers ships its setup ids, no markup.
