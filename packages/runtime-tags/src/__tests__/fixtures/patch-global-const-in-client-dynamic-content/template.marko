@@ -1,0 +1,7 @@
+<let/open=true/>
+<button onClick() { open = !open }>toggle</button>
+<const/h=$global.label + "!"/>
+<define/A>
+  <p>${h}</p>
+</define>
+<${open ? A : null}/>

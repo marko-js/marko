@@ -1,0 +1,11 @@
+static function boom(msg: string): never {
+  throw new Error(msg);
+}
+<try>
+  <p>${input.late ? boom("late") : "ok"}</p>
+  <@catch|err|>
+    <b>${(err as Error).message}</b>
+    <for|i| until=input.n><i>${i}:${$global.label}</i></for>
+  </@catch>
+</try>
+<script>document.body.dataset.ready = "1"</script>

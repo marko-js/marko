@@ -1,0 +1,8 @@
+<if=input.show>
+  <card>
+    <await|v|=input.p>
+      <define/Inner><b onClick() { console.log(v) }>${v}${input.label}</b></define>
+      <${input.tag} content=Inner/>
+    </await>
+  </card>
+</if>

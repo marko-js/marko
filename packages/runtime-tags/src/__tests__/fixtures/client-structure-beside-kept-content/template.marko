@@ -1,0 +1,6 @@
+<let/show=true/>
+<let/items=[1, 2]/>
+<card><em>${input.label}</em></card>
+<if=show><badge tag=input.tag/></if>
+<for|item| of=items><badge tag=input.tag/></for>
+<button onClick() { show = !show; items = [] }>toggle</button>

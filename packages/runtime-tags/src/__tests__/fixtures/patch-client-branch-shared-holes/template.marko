@@ -1,0 +1,14 @@
+<const/top=function() { console.log("top", input.label) }/>
+<if=input.show>
+  <card>
+    <define/Note><i>${input.label}</i></define>
+    <const/h=function() { console.log("h", input.label) }/>
+    <${input.flag ? Note : "b"} x=1/>
+    <button onClick() { console.log("own", input.label) }>own</button>
+    <${input.tag} onClick() { console.log("static") }>s</>
+    <${input.tag} onClick=top>t</>
+    <press onPress() { console.log("press", input.label) }/>
+    <press onPress=h/>
+    <span>${typeof h}</span>
+  </card>
+</if>

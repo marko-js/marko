@@ -1,0 +1,7 @@
+<for|r| of=input.rows by="id">
+  <card>
+    <define/Inner><b onClick() { console.log(r.label, input.label) }>${r.label}${input.label}</b></define>
+    <${input.tag} content=Inner/>
+    <${input.tag} onClick() { console.log("direct", r.label) }>${r.label}</>
+  </card>
+</for>

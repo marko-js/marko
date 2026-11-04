@@ -6,6 +6,7 @@ import {
   type Tag,
 } from "@marko/compiler/babel-utils";
 
+import { encodeIdDeclaration } from "../../common/patch-path";
 import {
   assertHasVar,
   assertIdentifierVar,
@@ -16,7 +17,7 @@ import {
 import { BindingType } from "../util/bindings";
 import evaluate from "../util/evaluate";
 import { getAccessorPrefix } from "../util/get-accessor-enums";
-import { isOutputHTML } from "../util/marko-config";
+import { isOptimize, isOutputHTML, isPatch } from "../util/marko-config";
 import { setDerivedFrom, trackVarReferences } from "../util/references";
 import { replaceWithStatements } from "../util/replace-with-statements";
 import { callRuntime } from "../util/runtime";
@@ -26,6 +27,8 @@ import { scopeIdentifier } from "../util/scope-read";
 import { ensureSection, getSection } from "../util/sections";
 import { addSetupExpr } from "../util/setup-work";
 import { addValue, initValue } from "../util/signals";
+import { createOutputState } from "../util/state";
+import translateVar from "../util/translate-var";
 
 export default {
   analyze(tag) {
@@ -66,22 +69,24 @@ export default {
         return;
       }
 
+      // A patch build's id names its declaration under its render's path.
+      const binding = node.var!.extra!.binding!;
       const id = isOutputHTML()
-        ? callRuntime("_id")
+        ? callRuntime(
+            "_id",
+            isPatch() && t.stringLiteral(nextIdDeclaration(binding.name)),
+          )
         : callRuntime("_id", scopeIdentifier);
 
       if (isOutputHTML()) {
-        replaceWithStatements(tag, [
-          t.variableDeclaration("const", [
-            t.variableDeclarator(
-              node.var!,
-              valueAttr ? t.logicalExpression("||", valueAttr.value, id) : id,
-            ),
-          ]),
-        ]);
+        translateVar(
+          tag,
+          valueAttr ? t.logicalExpression("||", valueAttr.value, id) : id,
+        );
+        replaceWithStatements(tag);
       } else {
         const section = getSection(tag);
-        const signal = initValue(node.var!.extra!.binding!);
+        const signal = initValue(binding);
 
         if (valueAttr) {
           const { value } = valueAttr;
@@ -103,7 +108,7 @@ export default {
                     scopeIdentifier,
                     t.stringLiteral(
                       getPrefixedScopeAccessor(
-                        node.var!.extra!.binding!,
+                        binding,
                         getAccessorPrefix().IdFallback,
                       ),
                     ),
@@ -132,3 +137,19 @@ export default {
   ],
   types: runtimeInfo.name + "/tags/id.d.marko",
 } as Tag;
+
+// A declaration's code is unique in its template, whose instance its address
+// names; debug names the binding, numbered where the template repeats it.
+const [getIdDeclarations, setIdDeclarations] = createOutputState(() => 0);
+const [getIdNames] = createOutputState(() => new Map<string, number>());
+function nextIdDeclaration(name: string) {
+  if (isOptimize()) {
+    const declaration = getIdDeclarations();
+    setIdDeclarations(declaration + 1);
+    return encodeIdDeclaration(declaration);
+  }
+  const names = getIdNames();
+  const repeats = names.get(name) ?? 0;
+  names.set(name, repeats + 1);
+  return repeats ? name + "~" + repeats : name;
+}

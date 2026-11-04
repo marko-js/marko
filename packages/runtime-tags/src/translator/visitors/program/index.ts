@@ -20,6 +20,7 @@ import {
   getMarkoOpts,
   getReadyId,
   isOutputHTML,
+  isPatch,
 } from "../../util/marko-config";
 import { finalizeRegistrations } from "../../util/module-registrations";
 import { type ParamsTree, exposeParamsTree } from "../../util/params-tree";
@@ -45,12 +46,13 @@ import type { TemplateVisitor } from "../../util/visitors";
 import { needsCompat } from "../tag/dynamic-tag";
 import programDOM from "./dom";
 import programHTML from "./html";
+import { finalizePageLinks } from "./patch";
 import { preAnalyze } from "./pre-analyze";
 
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
     /** Client code reads something of its own after resume (a section, or a
-     * renderer it registers), so a page bundles it. */
+     * renderer it registers, what a flush seeds or fills), so a page bundles it. */
     hasResumes?: boolean;
     /** What the template reads of its params (its input is the first), the
      * contract its callers keep. */
@@ -138,6 +140,7 @@ export default {
       // A template with no setup work lets its callers skip its setup export
       // (checked when this template translates).
       finalizeSetupWork();
+      if (isPatch()) finalizePageLinks();
     },
   },
   translate: {
@@ -170,8 +173,8 @@ export default {
           const { filename } = entryFile.opts;
           const readyId = getReadyId(entryFile)!;
           // A rejected chunk blocks this ready id forever: debug reports it;
-          // production saves the bytes (devtools shows the network error).
-          const report = !markoOpts.optimize;
+          // patch pages also report in production so waiting flushes settle.
+          const report = !markoOpts.optimize || isPatch();
           program.node.body = [
             t.importDeclaration(
               [
