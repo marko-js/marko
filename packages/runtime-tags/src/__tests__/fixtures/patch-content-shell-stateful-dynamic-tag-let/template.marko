@@ -1,0 +1,6 @@
+import Card from "./card.marko";
+<${Card}>
+  <let/n=0/>
+  <${input.on ? "p" : "div"} data-n=n>${input.label}</>
+  <button onClick() { n++ }>${n}</button>
+</>
