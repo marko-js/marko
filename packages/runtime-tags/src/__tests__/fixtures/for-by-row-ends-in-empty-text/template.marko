@@ -1,0 +1,7 @@
+<let/items=[{ id: 1 }]/>
+<for|item| of=items by="id">
+  <if=(item.id > 9)>big</if>
+  <else><section/></else>
+  ${false}
+</for>
+<button onClick() { items = [...items, { id: items.length + 1 }] }>add</button>

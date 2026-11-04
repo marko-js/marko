@@ -20,7 +20,7 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		_scope_id();
 		_html("error");
-	}, void 0, "a2");
+	}, 0, "a2");
 	_script($scope0_id, "a3");
 	_scope($scope0_id, {
 		c: a,

@@ -1,7 +1,7 @@
 import { DEFAULT_RUNTIME_ID } from "../common/meta";
 import { type $Global, RendererProp, type Template } from "../common/types";
 import { quoteScriptTemplateLiteral } from "./content";
-import { register, toObjectKey } from "./serializer";
+import { toObjectKey } from "./serializer";
 import { _template, type ServerRenderer } from "./template";
 import {
   _html,
@@ -70,23 +70,22 @@ type AssetFlush = (
 ) => string;
 
 // Its importer passes the bundler's asset flush, so it resolves on a page of either
-// API, whichever page entry rendered. It serializes as the template it loads.
+// API, whichever page entry rendered. It is a template under the id of the one it
+// loads, whose module it reads as it renders: an import cycle may not have run it.
 export function withLoadAssets(
-  renderer: ServerRenderer,
+  template: () => ServerRenderer,
+  id: string,
   flush: AssetFlush,
   assetId: string,
   triggers?: Trigger[],
 ): ServerRenderer {
-  return register(
-    renderer[RendererProp.Id]!,
-    Object.assign(
-      (input: unknown) => {
-        writeLoadAsset(assetId, flush, triggers);
-        return writeWaitReady(assetId, renderer, input);
-      },
-      MARKO_DEBUG ? { ...renderer, [RendererProp.Lazy]: 1 as const } : renderer,
-    ),
-  );
+  const renderer: ServerRenderer = (input: unknown) => {
+    writeLoadAsset(assetId, flush, triggers);
+    return writeWaitReady(assetId, template(), input);
+  };
+  if (MARKO_DEBUG) renderer[RendererProp.Lazy] = 1;
+  _template(id, renderer);
+  return renderer;
 }
 
 // Also writes a Class API lazy tag's asset rendering within Tags content.

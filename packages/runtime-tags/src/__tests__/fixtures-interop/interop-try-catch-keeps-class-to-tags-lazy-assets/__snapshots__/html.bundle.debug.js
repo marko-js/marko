@@ -9,7 +9,7 @@ var lazy_child_default = _template("__tests__/tags/lazy-child.marko", (input) =>
 
 // tags/tags-child.marko
 var import_html = require_html();
-const $Lazy_withLoadAssets$1 = withLoadAssets(lazy_child_default, flush$1, "ready:__tests__/tags/lazy-child.marko");
+const $Lazy_withLoadAssets$1 = withLoadAssets(() => lazy_child_default, "__tests__/tags/lazy-child.marko", flush$1, "ready:__tests__/tags/lazy-child.marko");
 var tags_child_default = _template("__tests__/tags/tags-child.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
@@ -32,7 +32,7 @@ _marko_template._ = (0, import_renderer.default)(function(input, out, _component
 }, _marko_component);
 
 // template.marko
-const $Lazy_withLoadAssets = withLoadAssets(lazy_child_default, flush$1, "ready:__tests__/tags/lazy-child.marko");
+const $Lazy_withLoadAssets = withLoadAssets(() => lazy_child_default, "__tests__/tags/lazy-child.marko", flush$1, "ready:__tests__/tags/lazy-child.marko");
 s("__tests__/components/class-wrap.marko", _marko_template);
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
@@ -55,5 +55,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		$Lazy_withLoadAssets({ value: "catch" });
 		_html(` caught ${_text_resume($scope2_id, "#text/2", err.message, $wg__err_message * 2)}`);
 		_write_if($scope2_reason, 0) && _scope($scope2_id, {}, "__tests__/template.marko", "9:4");
-	}, void 0, "__tests__/template.marko_2*content");
+	}, 0, "__tests__/template.marko_2*content");
 }, 1);

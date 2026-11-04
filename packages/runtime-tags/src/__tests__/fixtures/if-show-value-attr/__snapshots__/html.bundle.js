@@ -15,7 +15,7 @@ var template_default = _template("a", (input) => {
 	const $show = false;
 	_show_start($show, 0);
 	_html("<span>shown</span>");
-	_show_end($scope0_id, "d", $show, 1, 0, 0, 1);
+	_show_end($scope0_id, "c", $show, 1, 0, 0, 1);
 	_script($scope0_id, "a0");
-	_scope($scope0_id, { e: n });
+	_scope($scope0_id, { d: n });
 }, 1);

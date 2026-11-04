@@ -106,6 +106,8 @@ export default (api, markoOpts) => {
       return finalAst;
     },
     pre(file) {
+      this.hasLaterPlugins =
+        file.opts.plugins.length > 1 || file.opts.presets.length > 0;
       const { buildError: prevBuildError } = file.hub;
       const { buildCodeFrameError: prevCodeFrameError } = file;
       const prevFS = taglibConfig.fs;
@@ -150,7 +152,9 @@ export default (api, markoOpts) => {
         traverseAll(file, rootTranslators);
 
         finalizeMeta(metadata.marko);
-        file.path.scope.crawl(); // Ensure all scopes are accurate for subsequent babel plugins
+        if (this.hasLaterPlugins) {
+          file.path.scope.crawl();
+        }
       } finally {
         taglibConfig.fs = prevFS;
         setFileInternal(prevFile);
@@ -162,6 +166,13 @@ export default (api, markoOpts) => {
           file.___analyzedFiles =
             undefined;
       }
+    },
+    visitor: {
+      Program(program) {
+        // Babel's own pass then only hoists statements marked `_blockHoist`,
+        // and Marko marks none.
+        if (!this.hasLaterPlugins) program.skip();
+      },
     },
   };
 };

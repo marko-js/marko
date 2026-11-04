@@ -20,7 +20,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope_reason();
 			const $scope5_id = _scope_id();
 			_html("caught");
-		}, void 0, "__tests__/template.marko_5*content");
+		}, 0, "__tests__/template.marko_5*content");
 		_await($scope2_id, "#text/1", resolveAfter("outer", 3), (y) => {
 			const $scope7_id = _scope_id();
 			_html(`<div>${_escape(y)}</div>`);

@@ -19,8 +19,7 @@ const $catch_content__setup = ($scope) => {
 	$catch_content__await_promise($scope, resolveAfter("caught", 2));
 };
 const $catch_content = _content("a2", "<!><!><!>", "b%", $catch_content__setup);
-const $if_content__try = /*@__PURE__*/ _try(0, "<!><!><!>", "b%", $try_content__setup, 0, $catch_content);
-const $if_content__setup = ($scope) => $if_content__try($scope);
+const $if_content__setup = /* @__PURE__ */ _try(0, "<!><!><!>", "b%", $try_content__setup, 0, $catch_content);
 const $count__closure = /*@__PURE__*/ _closure($await_content__count);
 const $count = /*@__PURE__*/ _let(4, ($scope) => {
 	_text($scope.b, $scope.e);

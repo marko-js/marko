@@ -7,6 +7,7 @@ import buildStringExpression from "../util/build-string-expression";
 import evaluate from "../util/evaluate";
 import { isOutputHTML } from "../util/marko-config";
 import { addReasonExprs } from "../util/reasons";
+import { replaceWithStatements } from "../util/replace-with-statements";
 import { callRuntime } from "../util/runtime";
 import { getScopeAccessorLiteral } from "../util/scope-accessor";
 import { createScopeReadExpression, scopeIdentifier } from "../util/scope-read";
@@ -16,27 +17,31 @@ import {
   ensureSection,
   getScopeIdIdentifier,
   getSection,
+  getSectionForBody,
+  isKnownChild,
 } from "../util/sections";
 import { addSetupExpr } from "../util/setup-work";
 import { addStatement } from "../util/signals";
 import { ensureSlot } from "../util/slots";
 import {
   followsStaticText,
+  getPlaceholderContentType,
   getStaticPlaceholderText,
-  isStaticText,
 } from "../util/static-text";
 import * as structure from "../util/structure";
 import { getTagFacts, isInTextBody } from "../util/tag-facts";
 import type { TemplateVisitor } from "../util/visitors";
 import { getWriteGuard, getWriteReason } from "../util/write-guard";
 import * as writer from "../util/writer";
-import * as SiblingText from "./constants/sibling-text";
 
-const kSiblingText = Symbol("placeholder has sibling text");
-type SiblingText = SiblingText.Value;
+const kTextBefore = Symbol("text may merge before the placeholder");
+const kTextAfter = Symbol("text may merge after the placeholder");
 declare module "@marko/compiler/dist/types" {
   export interface MarkoPlaceholderExtra {
-    [kSiblingText]?: SiblingText;
+    /** Whether text may merge into its text node from that side; `undefined`
+     * where that side is its section's edge (see `isKnownChild`). */
+    [kTextBefore]?: boolean;
+    [kTextAfter]?: boolean;
   }
 }
 
@@ -49,9 +54,7 @@ export default {
 
       const { node } = placeholder;
       const valueExtra = (node.value.extra ??= {});
-      if (getStaticPlaceholderText(node) === "") return;
-
-      if (!isStaticText(node)) {
+      if (getPlaceholderContentType(node) === ContentType.Placeholder) {
         const section = ensureSection(placeholder);
         const nodeBinding = ((node.extra ??= {}).nodeBinding = createBinding(
           "#text",
@@ -67,34 +70,33 @@ export default {
       if (isInTextBody(placeholder)) return;
 
       const { node } = placeholder;
-      const staticText = getStaticPlaceholderText(node);
-      if (staticText === "") return;
+      const contentType = getPlaceholderContentType(node);
+      if (contentType === null) return;
 
       const extra = node.extra || {};
-      if (staticText !== undefined && node.escape) {
-        structure.writeTextTo(placeholder, staticText);
+      if (contentType === ContentType.Text) {
+        structure.writeTextTo(placeholder, getStaticPlaceholderText(node)!);
       } else {
-        const siblingText = extra[kSiblingText]!;
-        const nodeBinding = extra.nodeBinding!;
+        const before = extra[kTextBefore];
+        const after = extra[kTextAfter];
         const { content } = getSection(placeholder);
-        if (
-          siblingText === SiblingText.Before ||
-          siblingText === SiblingText.After ||
-          // A lone text node is cloned without a parent, and `_html` needs one.
-          (!node.escape &&
-            content!.singleChild &&
-            content!.startType === ContentType.Placeholder)
-        ) {
-          structure.marker(placeholder, nodeBinding);
-        } else {
-          structure.writeTextTo(placeholder, " ");
-          structure.node(placeholder, nodeBinding);
-        }
+        structure.text(
+          placeholder,
+          extra.nodeBinding!,
+          before ||
+            after ||
+            // A lone text node is cloned without a parent, and `_html` needs one.
+            (!node.escape &&
+              content!.singleChild &&
+              content!.startType === ContentType.Placeholder) ||
+            // A side at its section's edge leaves it to whether the section is a known child.
+            (before === false && after === false ? false : undefined),
+        );
       }
 
       // Adjacent static text merges into one DOM text node, so only the run's
       // first node emits its walk step; later nodes defer to it.
-      if (!isStaticText(node) || !followsStaticText(placeholder)) {
+      if (contentType !== ContentType.Text || !followsStaticText(placeholder)) {
         structure.enterShallow(placeholder);
       }
     },
@@ -113,8 +115,8 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
   if (node.extra?.needsTextCoercion) {
     injectTextCoercion(value);
   }
-  if (getStaticPlaceholderText(node) === "") {
-    placeholder.remove();
+  if (getPlaceholderContentType(node) === null) {
+    replaceWithStatements(placeholder);
     return;
   }
 
@@ -139,7 +141,6 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
     }
   } else {
     const section = getSection(placeholder);
-    const siblingText = extra[kSiblingText]!;
     const markerReason = nodeBinding && getWriteReason(nodeBinding);
 
     if (isHTML) {
@@ -152,7 +153,7 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
           getScopeIdIdentifier(section),
           getScopeAccessorLiteral(nodeBinding!),
           value,
-          siblingText === SiblingText.Before
+          (extra[kTextBefore] ?? isKnownChild(section))
             ? guard
               ? t.binaryExpression("*", guard, t.numericLiteral(2))
               : t.numericLiteral(2)
@@ -183,7 +184,7 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
     }
   }
 
-  placeholder.remove();
+  replaceWithStatements(placeholder);
 }
 
 // Produces an expression equivalent to `_escape(value)` that escapes as little as
@@ -232,11 +233,9 @@ function buildEscapedTextExpression(value: t.Expression): t.Expression {
 }
 
 function analyzeSiblingText(placeholder: t.NodePath<t.MarkoPlaceholder>) {
-  placeholder.node.extra![kSiblingText] = mayMergeWithText(placeholder, true)
-    ? SiblingText.Before
-    : mayMergeWithText(placeholder, false)
-      ? SiblingText.After
-      : SiblingText.None;
+  const extra = placeholder.node.extra!;
+  extra[kTextBefore] = mayMergeWithText(placeholder, true);
+  extra[kTextAfter] = mayMergeWithText(placeholder, false);
 }
 
 // Whether text the placeholder's text node may merge with is on one side of it,
@@ -244,13 +243,21 @@ function analyzeSiblingText(placeholder: t.NodePath<t.MarkoPlaceholder>) {
 function mayMergeWithText(
   placeholder: t.NodePath<t.MarkoPlaceholder>,
   before: boolean,
-) {
+): boolean | undefined {
   let sibling = getSibling(placeholder, before);
   let parent: t.NodePath = placeholder.parentPath;
   for (;;) {
     if (!sibling.node) {
       const inlinedTag = getInlinedBodyTag(parent);
-      if (!inlinedTag) return parent.isProgram();
+      if (!inlinedTag) {
+        // An element's body ends at the element; beside its section's own edge
+        // renders whatever inlines the section.
+        return getSectionForBody(
+          parent as t.NodePath<t.MarkoTagBody | t.Program>,
+        )
+          ? undefined
+          : false;
+      }
       sibling = getSibling(inlinedTag, before);
       parent = inlinedTag.parentPath;
     } else {

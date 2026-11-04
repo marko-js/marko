@@ -2,6 +2,7 @@ import { types as t } from "@marko/compiler";
 import { getFile } from "@marko/compiler/babel-utils";
 
 import { isTranslate } from "./get-compile-stage";
+import { insertStatementBefore } from "./replace-with-statements";
 import type { Section } from "./sections";
 import { createOutputState } from "./state";
 import { traverse } from "./traverse";
@@ -46,7 +47,8 @@ export function declareConstBefore(
   expr: t.Expression,
 ) {
   const id = generateUidIdentifier(name);
-  tag.insertBefore(
+  insertStatementBefore(
+    tag,
     t.variableDeclaration("const", [t.variableDeclarator(id, expr)]),
   );
   return id;

@@ -8,7 +8,7 @@ var lazy_default = _template("__tests__/tags/lazy.marko", (input) => {
 });
 
 // components/tags-child.marko
-const $Lazy_withLoadAssets = withLoadAssets(lazy_default, flush, "ready:__tests__/tags/lazy.marko");
+const $Lazy_withLoadAssets = withLoadAssets(() => lazy_default, "__tests__/tags/lazy.marko", flush, "ready:__tests__/tags/lazy.marko");
 var tags_child_default = _template("__tests__/components/tags-child.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();

@@ -26,10 +26,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope5_id = _scope_id();
 				_html(`caught: ${_text_resume($scope5_id, "#text/0", err.message, $wg__err_message * 2)}`);
 				_write_if($scope5_reason, 0) && _scope($scope5_id, {}, "__tests__/template.marko", "18:8");
-			}, void 0, "__tests__/template.marko_5*content");
+			}, 0, "__tests__/template.marko_5*content");
 			_html(`<div>changes: ${_text_resume($scope2_id, "#text/2", changes, 2)}</div>${_el_resume($scope2_id, "#div/1")}`);
 			_script($scope2_id, "__tests__/template.marko_2");
-			_subscribe($changes__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "10:4"), "__tests__/template.marko_2_changes#0:1/subscribe");
+			_subscribe($changes__closures, _scope($scope2_id, {}, "__tests__/template.marko", "10:4"), "__tests__/template.marko_2_changes#0:1/subscribe");
 		});
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "8:2");
 	}, () => {

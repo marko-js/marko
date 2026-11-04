@@ -1,6 +1,6 @@
 // template.marko
-const $A_content__walks = " b";
-const $A_content__template = " ";
+const $A_content__walks = "%b";
+const $A_content__template = "<!>";
 const $B_content__walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($A_content__walks);
 const $B_content__template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($A_content__template);
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($B_content__template);

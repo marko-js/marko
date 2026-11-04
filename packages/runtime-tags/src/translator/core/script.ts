@@ -13,6 +13,7 @@ import {
 import { assertNoBodyContent } from "../util/assert";
 import { isOutputDOM } from "../util/marko-config";
 import { dropNodes, getAllTagReferenceNodes } from "../util/references";
+import { replaceWithStatements } from "../util/replace-with-statements";
 import runtimeInfo from "../util/runtime-info";
 import { ensureSection, getSection } from "../util/sections";
 import { addSetupExpr } from "../util/setup-work";
@@ -106,7 +107,7 @@ export default {
       const { node } = tag;
       const [valueAttr] = node.attributes;
       if (!valueAttr?.value.extra?.isEffect) {
-        tag.remove();
+        replaceWithStatements(tag);
         return;
       }
 
@@ -161,7 +162,7 @@ export default {
         addHTMLEffectCall(section, value.extra);
       }
 
-      tag.remove();
+      replaceWithStatements(tag);
     },
   },
   parseOptions: {
