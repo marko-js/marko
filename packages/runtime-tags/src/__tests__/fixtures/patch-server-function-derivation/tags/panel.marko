@@ -1,0 +1,18 @@
+static const summarize = (data: { items: string[] }) => ({ n: data.items.length });
+server function rows(data: { items: string[] }, summary: { n: number }) {
+  return data.items.map((id) => ({ id, name: id.toUpperCase() + summary.n }));
+}
+<const/data=$global.data>
+<const/summary=summarize(data)>
+<const/pending=rows(data, summary)>
+<let/count=0/>
+<let/open=false/>
+<button class="count" onClick() { count++ }>${count}</button>
+<button class="open" onClick() { open = !open }>open</button>
+<if=open>
+  <p class="summary">${JSON.stringify(summary)}</p>
+  <p class="total">${pending.length}</p>
+</if>
+<for|row| of=pending by="id">
+  <p>${row.name}/${count}</p>
+</for>
