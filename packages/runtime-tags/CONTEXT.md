@@ -96,9 +96,9 @@ _Avoid_: ref
 **Initial value**:
 A `<let>`'s value as its scope is created, from its `value=` (`initialValue`);
 an uncontrolled `<let>` takes it once. In a patch template, the server renders
-it where its init reads only other `<let>`s at theirs and no patch fills it or
-state its init reads; otherwise client code computes it.
-_Avoid_: first value
+it where its `value=` reads only other `<let>`s at theirs and no patch fills it
+or state that reads; otherwise client code computes it.
+_Avoid_: first value, init (for a `<let>`'s value)
 
 **Module read**:
 A read of an import binding (`styles.box`, `logo`) and its member names, which

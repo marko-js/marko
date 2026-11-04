@@ -92,7 +92,11 @@ import {
 } from "../sources";
 import { createAnalysisState } from "../state";
 import { getWriteReason } from "../write-guard";
-import { getStateInitSources, getFillSources, isFilledHole } from "./decisions";
+import {
+  getStateInitialValueSources,
+  getFillSources,
+  isFilledHole,
+} from "./decisions";
 import {
   patchFillsSection,
   hasStructuralParam,
@@ -290,7 +294,7 @@ function computePatchFill(binding: Binding): PatchFill {
       (effectRead ||
         fnReference ||
         objectSource ||
-        writesForIntersectionInit(binding) ||
+        writesForIntersectionRender(binding) ||
         (guarded && !!kind)),
     // Only the patch's key reaches the declaration: a `<let>` nothing assigns.
     ownRegistration: fill && !binding.assignments,
@@ -311,30 +315,30 @@ export function canPatchFill(binding: Binding) {
       // the value, or takes it past the scope's renders and effects (a child, an intersection).
       (binding.type === BindingType.let &&
         mayBeCreated(binding.section) &&
-        !initRunsFromFills(binding) &&
+        !initialValueRunsFromFills(binding) &&
         (!!getWriteReason(binding) || readsPastRenders(binding)))) &&
     bindingUtil.has(binding.sources.state, binding)
   );
 }
 
-// A `<let>` whose init reads `<let>`s that are filled or read filled ones: their
-// fills run its init on the client, so it takes none.
-function initRunsFromFills(binding: Binding): boolean {
-  const sources = binding.initSources;
+// A `<let>` whose initial value reads `<let>`s that are filled or read filled ones:
+// their fills compute it on the client, so it takes none.
+function initialValueRunsFromFills(binding: Binding): boolean {
+  const sources = binding.initialValueSources;
   return (
     !!sources?.state &&
     every(
       sources.state,
-      (state) => !!state.initSources?.state || canPatchFill(state),
+      (state) => !!state.initialValueSources?.state || canPatchFill(state),
     )
   );
 }
 
 // A `<let>` whose initial value client code computes where a patch creates its
-// scope: a patch fills it, or state its init reads.
+// scope: a patch fills it, or state its initial value reads.
 export const fillsInitialValue = createPassMemo(
   (state: Binding): boolean =>
-    canPatchFill(state) || some(state.initSources?.state, canPatchFill),
+    canPatchFill(state) || some(state.initialValueSources?.state, canPatchFill),
   false,
 );
 
@@ -404,7 +408,7 @@ function readsPastRenders(binding: Binding) {
 }
 
 // A `<let>` the created scope starts from its render's value, as a resumed
-// one does: its own, with no server value reaching it or state its init reads.
+// one does: its own, with no server value reaching it or state its initial value reads.
 export function isFirstState(state: Binding, section: Section) {
   return (
     state.type === BindingType.let &&
@@ -814,7 +818,7 @@ function addNestedMemberFill(fills: SortedOpt<Sources>, member: Binding) {
   // as its own arm covers; one an effect, function reference or built object reads re-runs kept code.
   return !isKnownChild(member.section) &&
     (fill ||
-      (writesForIntersectionInit(member) &&
+      (writesForIntersectionRender(member) &&
         (effectRead || fnReference || objectSource)))
     ? sourcesUtil.add(fills, getSourcesForReferencedBindings(member)!)
     : fills;
@@ -1011,18 +1015,18 @@ function rendersIntersectionByWrite(
 
 // A member such an intersection reads, which the patch writes for the intersection's render (its
 // sources settle before solve, so no pass resets it).
-const [writesForIntersectionInit] = createAnalysisMemo(
+const [writesForIntersectionRender] = createAnalysisMemo(
   (binding: Binding) =>
     someAlias(
       binding,
-      (alias) => someBindingRead(alias, initsByWriteRead),
+      (alias) => someBindingRead(alias, rendersByWriteRead),
       undefined,
       true,
     ),
   false,
 );
 
-function initsByWriteRead(read: ReferencedExtra, binding: Binding) {
+function rendersByWriteRead(read: ReferencedExtra, binding: Binding) {
   const intersection = getReferencedBindings(read);
   return (
     Array.isArray(intersection) &&
@@ -2065,7 +2069,7 @@ function findUnfilledStructure(
           structure = sourcesUtil.add(
             structure,
             getSourcesForReferencedBindings(
-              fill || filledMembers || writesForIntersectionInit(partner)
+              fill || filledMembers || writesForIntersectionRender(partner)
                 ? refs
                 : partner,
             )!,
@@ -2074,7 +2078,7 @@ function findUnfilledStructure(
       }
     }
     // A callee keeps its copy of what a call passes, as an uncontrolled `<let>` does of
-    // its init; a value a patch fills or writes reaches readers so, but through a function.
+    // its initial value; a value a patch fills or writes reaches readers so, but through a function.
     if (
       !read.callSiteExprs &&
       !read.initialValue &&
@@ -2163,7 +2167,7 @@ function ensureBindingGroups(binding: Binding) {
   // Its write in place gates on each filled intersection's other members.
   forEach(filledMembers, ensureCallerParamGroups);
   // A created scope's `<let>` seeds by what its initial value reads.
-  ensureCallerParamGroups(getStateInitSources(binding));
+  ensureCallerParamGroups(getStateInitialValueSources(binding));
 }
 
 // A page writes a value a patch fills (and its closure set) only where a client

@@ -604,7 +604,7 @@ function resolveBindingSources(binding: Binding) {
   }
 }
 
-// A `<let>`'s init: what it reads, through the inits of the state it reads, and whether
+// A `<let>`'s initial value: what it reads, through those of the state it reads, and whether
 // it reads only initial values (of `<let>`s created with its scope).
 function resolveInitialValue(binding: Binding) {
   const sources = reduce(
@@ -612,16 +612,22 @@ function resolveInitialValue(binding: Binding) {
     mergeResolvedSources,
     undefined as Sources | undefined,
   );
-  binding.initSources = reduce(sources?.state, mergeInitSources, sources);
-  binding.initReadsInitialValues = every(
+  binding.initialValueSources = reduce(
     sources?.state,
-    (state) =>
-      state.initReadsInitialValues && state.section === binding.section,
+    mergeInitialValueSources,
+    sources,
+  );
+  binding.readsInitialValues = every(
+    sources?.state,
+    (state) => state.readsInitialValues && state.section === binding.section,
   );
 }
 
-export function mergeInitSources(sources: Sources | undefined, state: Binding) {
-  return mergeSources(sources, state.initSources);
+export function mergeInitialValueSources(
+  sources: Sources | undefined,
+  state: Binding,
+) {
+  return mergeSources(sources, state.initialValueSources);
 }
 
 function resolveDerivedSources(binding: Binding) {
@@ -681,7 +687,7 @@ function mapReturnedParams(
   }
 }
 
-// A `<let>`'s init reads `$global` once, at creation, as `getValueReferences`
+// A `<let>`'s initial value reads `$global` once, at creation, as `getValueReferences`
 // reads its bindings.
 function readsGlobalValue(expr: t.NodeExtra) {
   return !expr.initialValue && !!getGlobalReads(expr);

@@ -853,7 +853,7 @@ export function _patch_fill(
   const state = getState();
   if (state instanceof PatchRenderState) {
     // A seed for a branch no flush creates is dropped before any scan, and a
-    // client group's: the client derives it (its inits, or its own value).
+    // client group's: the client derives it (its initial values, or its own value).
     if (setup && (!inCreatable() || _client_guard(mask!, group!))) return "";
     const bind = bindEntry(state, scopeId, value);
     const patch = ensureScopePatch(state, scopeId);

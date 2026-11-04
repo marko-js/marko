@@ -12,7 +12,7 @@ import {
   isStateSourced,
 } from "../bindings";
 import { createPassMemo } from "../cyclic-memo";
-import { mergeInitSources } from "../finalize-references";
+import { mergeInitialValueSources } from "../finalize-references";
 import { isPatch } from "../marko-config";
 import { every, forEach, type Opt, push, reduce, some } from "../optional";
 import {
@@ -81,7 +81,7 @@ export function seedsOnly(section: Section, sources: Sources | undefined) {
 // from initial values only, created with the scope, and unfilled.
 export function holdsInitialValue(state: Binding, section: Section) {
   return (
-    state.initReadsInitialValues &&
+    state.readsInitialValues &&
     state.section === section &&
     !fillsInitialValue(state)
   );
@@ -254,7 +254,7 @@ export function getSeedWriteGroups(
   section: Section,
   states: Sources["state"],
 ): WriteGroups {
-  const params = getStateInitSources(states)?.param;
+  const params = getStateInitialValueSources(states)?.param;
   return {
     groups: getCallerParamGroupsAt(params, section),
     params,
@@ -324,10 +324,10 @@ export function getEffectWrites(section: Section, signal: Signal) {
 }
 
 // The params and `$global` each state's initial value reads, through other states.
-// A controlled `<let>` that is no state root has no init fact, so it answers none.
-export function getStateInitSources(states: Sources["state"]) {
-  const inits = reduce(states, mergeInitSources);
-  return inits && withSources(inits, undefined, inits.param);
+// A controlled `<let>` that is no state root has no initial-value fact, so it answers none.
+export function getStateInitialValueSources(states: Sources["state"]) {
+  const sources = reduce(states, mergeInitialValueSources);
+  return sources && withSources(sources, undefined, sources.param);
 }
 
 // Whether a mask composing `writeGroups` holds the bits of each of `groups`.

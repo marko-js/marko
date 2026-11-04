@@ -873,7 +873,7 @@ function pushCanonicalSources(list: Opt<Sources>, binding: Binding) {
   return sources ? push(list, sources) : list;
 }
 
-// Only an uncontrolled `<let>`'s init is its initial value (`core/let.ts`).
+// Only an uncontrolled `<let>`'s `value=` is marked its initial value (`core/let.ts`).
 function setsInitialValue({ referencedBindings }: Signal) {
   return !!(
     (referencedBindings as Binding).derivedFrom as t.NodeExtra | undefined

@@ -158,11 +158,11 @@ function recordPatchEntries(binding: Binding) {
   const write = writesSeed(binding) || getPatchWrite(binding).write;
   const { fill } = getPatchFill(binding);
   if (!write && !fill) return;
-  // A fill carries what its `<let>`'s init read: a caller passing content or a
+  // A fill carries what its `<let>`'s initial value read: a caller passing content or a
   // function there links the bind it ships as.
   if (fill) {
     for (const [section, params] of getCallerParamGroups(
-      binding.initSources?.param,
+      binding.initialValueSources?.param,
     )) {
       const entries = getParamEntries(section);
       entries.bound = bindingUtil.union(entries.bound, params);

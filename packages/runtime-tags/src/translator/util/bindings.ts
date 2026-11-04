@@ -42,12 +42,12 @@ export interface Binding {
   /** The identifier of each emitted assignment to it (set in finalize). */
   assignments: Opt<AssignedBindingExtra>;
   sources: undefined | Sources;
-  /** For a `<let>`: its init reads no state but `<let>`s at their initial value
-   * as its scope is created (created with it, or nothing assigns them). */
-  initReadsInitialValues: boolean;
+  /** For a `<let>`: its initial value reads no state but `<let>`s at theirs as its
+   * scope is created (created with it, or nothing assigns them). */
+  readsInitialValues: boolean;
   /** For a `<let>` that is its own state source (patch builds): the sources its
-   * init reads, through the inits of the state it reads. */
-  initSources: undefined | Sources;
+   * initial value reads, through those of the state it reads. */
+  initialValueSources: undefined | Sources;
   /** The intersection whose work computes it, or the nearest one it derives
    * from. Set on alias roots only. */
   intersection: Intersection | undefined;
@@ -163,8 +163,8 @@ export function createBinding(
     excludeProperties,
     assignedProperties: undefined,
     sources: undefined,
-    initReadsInitialValues: false,
-    initSources: undefined,
+    readsInitialValues: false,
+    initialValueSources: undefined,
     intersection: undefined,
     derivedFrom: undefined,
     reads: new Map(),

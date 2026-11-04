@@ -104,7 +104,7 @@ import {
   getExprWriteGroups,
   getRenderedValueSources,
   getSeedWriteGroups,
-  getStateInitSources,
+  getStateInitialValueSources,
   getWriteGroups,
   getFillSources,
   type WriteGroups,
@@ -280,7 +280,7 @@ export function writePatchResumeStatements(
       seeds || inPlace
         ? seeds
           ? andGuard(
-              getStateInitGuard(section, binding),
+              getStateInitialValueGuard(section, binding),
               andGuard(
                 isDynamicWriteGuard(section, seeds)
                   ? getCallerGroupGuard(section, "_client_guard", seeds)
@@ -587,18 +587,18 @@ function buildLetSeeds(section: Section, binding: Binding) {
   const guard = getCallerGroupGuard(
     section,
     "_filled_guard",
-    getStateInitSources(binding),
+    getStateInitialValueSources(binding),
   );
   return [andGuard(guard, buildPatchFill(section, binding, setup))];
 }
 
-// A created scope's own state starts from its inits' values: the server's
+// A created scope's own state starts from its initial values: the server's
 // only where their caller groups update from the server.
-function getStateInitGuard(section: Section, binding: Binding) {
+function getStateInitialValueGuard(section: Section, binding: Binding) {
   return getCallerGroupGuard(
     section,
     "_filled_guard",
-    getStateInitSources(binding.sources?.state),
+    getStateInitialValueSources(binding.sources?.state),
   );
 }
 
@@ -951,7 +951,7 @@ export function getRendererGroupArgs(
 }
 
 // A hole of initial values seeds a created scope alone (a group mask of `0`), and
-// is the client's where it holds a caller group their inits read.
+// is the client's where it holds a caller group their initial values read.
 function getSeedOnlyGroupArgs(section: Section, states: Sources["state"]) {
   return buildWriteGroupArgs(getSeedWriteGroups(section, states));
 }
