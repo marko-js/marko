@@ -1,0 +1,7 @@
+<define/Inner|{ fn, label }|>
+  <button onClick=fn>${label}</button>
+</define>
+<define/Outer|{ fn, label }|>
+  <Inner fn=fn label=label/>
+</define>
+<Outer fn() { console.log("clicked") } label=input.label/>

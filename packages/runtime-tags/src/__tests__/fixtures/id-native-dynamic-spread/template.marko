@@ -1,0 +1,5 @@
+<define/Body><id/uid/><label for=uid>body</label><input id=uid/></define>
+<for|item| of=input.items>
+  <const/Tag=item.on ? "p" : "div"/>
+  <${Tag} ...{ content: Body }/>
+</for>

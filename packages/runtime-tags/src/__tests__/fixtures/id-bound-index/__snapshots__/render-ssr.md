@@ -1,0 +1,25 @@
+# Render `{"show":false}`
+```html
+<label
+  for="sM_1"
+>
+  x
+</label>
+<input
+  id="sM_1"
+/>
+<p>
+  x:0
+</p>
+<label
+  for="sM_2"
+>
+  y
+</label>
+<input
+  id="sM_2"
+/>
+<p>
+  y:0
+</p>
+```

@@ -1,0 +1,12 @@
+<let/open=true/>
+<define/Info>
+  <p>${input.a + ":" + input.b}</p>
+</define>
+<if=input.show>
+  <Info/>
+</if>
+<if=open>
+  <div/el/>
+  <script>el().textContent = "s:" + input.a</script>
+</if>
+<button.t onClick() { open = !open }>t</button>
