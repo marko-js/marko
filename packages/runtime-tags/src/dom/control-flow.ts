@@ -44,10 +44,10 @@ import {
 import {
   collectScopes,
   destroyBranch,
+  detachBranch,
   insertBranchBefore,
   removeAndDestroyBranch,
   syncGen,
-  tempDetachBranch,
 } from "./scope";
 import { type Signal, subscribeToScopeSet } from "./signals";
 import { getDebugKey } from "./walker";
@@ -161,7 +161,7 @@ export function _await_promise(
               scope[nodeAccessor] as Node,
               awaitBranch[AccessorProp.StartNode],
             );
-            tempDetachBranch(tryBranch);
+            detachBranch(tryBranch);
           }
         });
       }
@@ -281,7 +281,7 @@ export function startAwait(
       tryBranch[AccessorProp.StartNode].parentNode!,
       tryBranch[AccessorProp.StartNode],
     );
-    tempDetachBranch(tryBranch);
+    detachBranch(tryBranch);
   });
   return awaitCounter;
 }
@@ -371,10 +371,9 @@ function dismissPlaceholder(tryBranch: BranchScope) {
   const placeholderBranch = tryBranch[AccessorProp.PlaceholderBranch];
   if (placeholderBranch) {
     tryBranch[AccessorProp.PlaceholderBranch] = 0;
-    // The temporarily detached try branch has a DocumentFragment parent
-    // containing its complete DOM range.
-    placeholderBranch[AccessorProp.StartNode].parentNode!.insertBefore(
-      tryBranch[AccessorProp.StartNode].parentNode!,
+    insertBranchBefore(
+      tryBranch,
+      placeholderBranch[AccessorProp.StartNode].parentNode!,
       placeholderBranch[AccessorProp.StartNode],
     );
     removeAndDestroyBranch(placeholderBranch);
@@ -561,7 +560,7 @@ export const _show = /*@__PURE__*/ withBranches(
         range[AccessorProp.EndNode] = onlyChild
           ? parentNode.lastChild!
           : referenceNode.previousSibling!;
-        tempDetachBranch(range);
+        detachBranch(range);
       }
     };
   },
@@ -1116,6 +1115,8 @@ function reorderKeyed(
     if (~tail && i === tails[tail]) {
       tail--;
     } else {
+      // A kept branch moves within the document, so it is parked first.
+      if (~sources[i]) detachBranch(newScopes[start + i]);
       insertBranchBefore(newScopes[start + i], parentNode, afterReference);
     }
 

@@ -1,4 +1,4 @@
-// size: 3806 (min) 1709 (brotli)
+// size: 3732 (min) 1690 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36);
 let rendering;
@@ -174,6 +174,9 @@ function cleanupScope(scope) {}
 function removeAndDestroyBranch(branch) {
   (destroyBranch(branch), removeChildNodes(branch.S, branch.K));
 }
+function insertBranchBefore(branch, parentNode, nextSibling) {
+  parentNode.insertBefore(branch.S.parentNode || branch.S, nextSibling);
+}
 function schedule() {
   isScheduled || ((isScheduled = 1), queueMicrotask(flushAndWaitFrame));
 }
@@ -250,7 +253,7 @@ function _content(id, template, walks, setup, params, dynamicScopesAccessor) {
 }
 function createCloneableHTML(html, ns) {
   let { firstChild, lastChild } = parseHTML(html, ns),
-    parent = document.createElementNS(ns, "t");
+    parent = new DocumentFragment();
   return (
     insertChildNodes(parent, null, firstChild, lastChild),
     firstChild === lastChild && firstChild.nodeType < 8
@@ -259,7 +262,8 @@ function createCloneableHTML(html, ns) {
         }
       : (branch, walks) => {
           let clone = parent.cloneNode(!0);
-          (walk(clone.firstChild, walks, branch),
+          ((clone.namespaceURI = ns),
+            walk(clone.firstChild, walks, branch),
             (branch.S = clone.firstChild),
             (branch.K = clone.lastChild));
         }
@@ -273,28 +277,16 @@ function _text(node, value) {
   node.data !== normalizedValue && (node.data = normalizedValue);
 }
 function removeChildNodes(startNode, endNode) {
-  let stop = endNode.nextSibling;
-  for (; startNode !== stop;) {
+  for (endNode = endNode.nextSibling; startNode !== endNode;) {
     let next = startNode.nextSibling;
     (startNode.remove(), (startNode = next));
   }
 }
 function insertChildNodes(parentNode, referenceNode, startNode, endNode) {
-  if (parentNode.isConnected)
-    parentNode.insertBefore(toInsertNode(startNode, endNode), referenceNode);
-  else {
-    let stop = endNode.nextSibling;
-    for (; startNode !== stop;) {
-      let next = startNode.nextSibling;
-      (parentNode.insertBefore(startNode, referenceNode), (startNode = next));
-    }
+  for (endNode = endNode.nextSibling; startNode !== endNode;) {
+    let next = startNode.nextSibling;
+    (parentNode.insertBefore(startNode, referenceNode), (startNode = next));
   }
-  return parentNode;
-}
-function toInsertNode(startNode, endNode) {
-  return startNode === endNode
-    ? startNode
-    : insertChildNodes(new DocumentFragment(), null, startNode, endNode);
 }
 //#endregion
 //#region packages/runtime-tags/dist/dom.mjs
@@ -341,7 +333,7 @@ function mount(input = {}, reference, position) {
         args?.(branch, input));
     });
   return (
-    insertChildNodes(parentNode, nextSibling, branch.S, branch.K),
+    insertBranchBefore(branch, parentNode, nextSibling),
     runEffects(effects),
     {
       get value() {

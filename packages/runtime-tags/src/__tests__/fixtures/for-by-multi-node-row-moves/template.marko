@@ -1,0 +1,12 @@
+<let/rows=[{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }]/>
+
+<dl>
+  <for|row| of=rows by="id">
+    <dt>${row.id}</dt>
+    <dd>${row.id}</dd>
+  </for>
+</dl>
+
+<button.reverse onClick() { rows = [...rows].reverse() }>reverse</button>
+<button.swap onClick() { rows = [rows[0], rows[2], rows[1], rows[3]] }>swap middle</button>
+<button.mixed onClick() { rows = [{ id: 9 }, ...rows.slice(2), ...rows.slice(0, 2)] }>add and move</button>

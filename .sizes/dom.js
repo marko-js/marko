@@ -1,4 +1,4 @@
-// size: 27281 (min) 10179 (brotli)
+// size: 27189 (min) 10160 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -127,7 +127,7 @@ let _html = /*@__PURE__*/ withDynamicHtml(function (scope, value, accessor) {
       branch = scope.F;
     (branch?.S === firstChild && (branch.S = newFirstChild),
       branch?.K === lastChild && (branch.K = newLastChild),
-      insertChildNodes(parentNode, firstChild, newFirstChild, newLastChild),
+      firstChild.before(...newContent.childNodes),
       removeChildNodes(firstChild, lastChild));
   }
 });
@@ -176,7 +176,7 @@ let _show = /*@__PURE__*/ withBranches((nodeAccessor, startNodeAccessor) => {
           parentNode.insertBefore(startNode.parentNode, onlyChild ? null : referenceNode)
         : startNode.parentNode === parentNode &&
           ((range.K = onlyChild ? parentNode.lastChild : referenceNode.previousSibling),
-          tempDetachBranch(range));
+          detachBranch(range));
   };
 });
 let _dynamic_tag = /*@__PURE__*/ withBranches(
@@ -607,9 +607,9 @@ function removeAndDestroyBranch(branch) {
   (destroyBranch(branch), removeChildNodes(branch.S, branch.K));
 }
 function insertBranchBefore(branch, parentNode, nextSibling) {
-  insertChildNodes(parentNode, nextSibling, branch.S, branch.K);
+  parentNode.insertBefore(branch.S.parentNode || branch.S, nextSibling);
 }
-function tempDetachBranch(branch) {
+function detachBranch(branch) {
   let fragment = new DocumentFragment();
   ((fragment.namespaceURI = branch.S.parentNode.namespaceURI),
     insertChildNodes(fragment, null, branch.S, branch.K));
@@ -1204,7 +1204,7 @@ function _content_closures(renderer, closureFns) {
 }
 function createCloneableHTML(html, ns) {
   let { firstChild, lastChild } = parseHTML(html, ns),
-    parent = document.createElementNS(ns, "t");
+    parent = new DocumentFragment();
   return (
     insertChildNodes(parent, null, firstChild, lastChild),
     firstChild === lastChild && firstChild.nodeType < 8
@@ -1213,7 +1213,8 @@ function createCloneableHTML(html, ns) {
         }
       : (branch, walks) => {
           let clone = parent.cloneNode(!0);
-          (walk(clone.firstChild, walks, branch),
+          ((clone.namespaceURI = ns),
+            walk(clone.firstChild, walks, branch),
             (branch.S = clone.firstChild),
             (branch.K = clone.lastChild));
         }
@@ -1377,28 +1378,16 @@ function _lifecycle(scope, thisObj, index = 0) {
       trackAbort(scope, accessor, (_) => thisObj.onDestroy?.()));
 }
 function removeChildNodes(startNode, endNode) {
-  let stop = endNode.nextSibling;
-  for (; startNode !== stop;) {
+  for (endNode = endNode.nextSibling; startNode !== endNode;) {
     let next = startNode.nextSibling;
     (startNode.remove(), (startNode = next));
   }
 }
 function insertChildNodes(parentNode, referenceNode, startNode, endNode) {
-  if (parentNode.isConnected)
-    parentNode.insertBefore(toInsertNode(startNode, endNode), referenceNode);
-  else {
-    let stop = endNode.nextSibling;
-    for (; startNode !== stop;) {
-      let next = startNode.nextSibling;
-      (parentNode.insertBefore(startNode, referenceNode), (startNode = next));
-    }
+  for (endNode = endNode.nextSibling; startNode !== endNode;) {
+    let next = startNode.nextSibling;
+    (parentNode.insertBefore(startNode, referenceNode), (startNode = next));
   }
-  return parentNode;
-}
-function toInsertNode(startNode, endNode) {
-  return startNode === endNode
-    ? startNode
-    : insertChildNodes(new DocumentFragment(), null, startNode, endNode);
 }
 function resolveCursorPosition(inputType, initialPosition, initialValue, updatedValue) {
   if (
@@ -1817,7 +1806,7 @@ function _await_promise(nodeAccessor, params) {
             countAwait(awaitCounter, scope, (_) => {
               awaitBranch.V ||
                 (awaitBranch.S.parentNode.insertBefore(scope[nodeAccessor], awaitBranch.S),
-                tempDetachBranch(tryBranch));
+                detachBranch(tryBranch));
             }))
           : (awaitCounter = startAwait(scope, tryBranch)));
       let thisPromise = (scope[promiseAccessor] = promise.then(
@@ -1884,7 +1873,7 @@ function startAwait(scope, tryBranch = findTryWithPlaceholder(scope)) {
         tryBranch.S.parentNode,
       )).PT = tryBranch),
         insertBranchBefore(tryBranch.P, tryBranch.S.parentNode, tryBranch.S),
-        tempDetachBranch(tryBranch));
+        detachBranch(tryBranch));
     }),
     awaitCounter
   );
@@ -1935,7 +1924,7 @@ function dismissPlaceholder(tryBranch) {
   let placeholderBranch = tryBranch.P;
   placeholderBranch &&
     ((tryBranch.P = 0),
-    placeholderBranch.S.parentNode.insertBefore(tryBranch.S.parentNode, placeholderBranch.S),
+    insertBranchBefore(tryBranch, placeholderBranch.S.parentNode, placeholderBranch.S),
     removeAndDestroyBranch(placeholderBranch));
 }
 function _try(nodeAccessor, template, walks, setup, placeholderContent, catchContent) {
@@ -2033,7 +2022,8 @@ function reorderKeyed(newScopes, start, newEnd, parentNode, afterReference) {
   for (let i = diffLen; i--;)
     (~tail && i === tails[tail]
       ? tail--
-      : insertBranchBefore(newScopes[start + i], parentNode, afterReference),
+      : (~sources[i] && detachBranch(newScopes[start + i]),
+        insertBranchBefore(newScopes[start + i], parentNode, afterReference)),
       (afterReference = newScopes[start + i].S));
 }
 function bySecondArg(_item, index) {
@@ -2139,7 +2129,7 @@ let compat = {
         renderer.d?.(branch, renderer._ ? args[0] : args));
     };
     if (((component.effects = rendering ? renderBranch() : prepareEffects(renderBranch)), created))
-      return toInsertNode(branch.S, branch.K);
+      return branch.S.parentNode || branch.S;
   },
 };
 let _template = (id, template, walks, setup, inputSignal) => {
@@ -2197,7 +2187,7 @@ function mount(input = {}, reference, position) {
         args?.(branch, input));
     });
   return (
-    insertChildNodes(parentNode, nextSibling, branch.S, branch.K),
+    insertBranchBefore(branch, parentNode, nextSibling),
     runEffects(effects),
     {
       get value() {
