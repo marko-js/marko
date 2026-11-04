@@ -1,0 +1,5 @@
+import { lib } from "./lib";
+<let/shown=true/>
+<card show=shown open=true fmt=(s: string) => s + "!" label=input.label/>
+<card show=true open=true fmt=lib.format label=input.label/>
+<button.hide onClick() { shown = !shown }>hide</button>

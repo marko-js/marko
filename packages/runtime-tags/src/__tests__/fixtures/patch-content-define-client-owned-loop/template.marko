@@ -1,0 +1,11 @@
+<let/count=1/>
+<define/List|{ items }|>
+  <ul>
+    <for|item| of=items>
+      <li>${item}${input.suffix}</li>
+    </for>
+  </ul>
+</define>
+<List items=(count % 2 ? ["a"] : ["a", "b"])/>
+<List items=input.items/>
+<button onClick() { count++ }>+</button>

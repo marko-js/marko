@@ -7,6 +7,8 @@ import {
   getPropertyAlias,
 } from "./bindings";
 import { forEach, some } from "./optional";
+import { getPatchFill } from "./patch/refresh";
+import { inStatefulStructure } from "./patch/structure";
 import { getReferencedBindings } from "./references";
 import { isDirectClosure, type Section } from "./sections";
 
@@ -14,7 +16,13 @@ export function isForSelectorClosure(
   bodySection: Section,
   closure: Binding,
 ): boolean {
-  return !!bodySection.selector?.has(getCanonicalBinding(closure));
+  const canonical = getCanonicalBinding(closure);
+  return (
+    !!bodySection.selector?.has(canonical) &&
+    // A fill refreshes each row's intersection of the value and its key; the keyed
+    // selector dispatch has no fill channel. Asked at translate, once fills settle.
+    !(inStatefulStructure(bodySection) && getPatchFill(canonical).fill)
+  );
 }
 
 export function isForSelectorValue(binding: Binding): boolean {
