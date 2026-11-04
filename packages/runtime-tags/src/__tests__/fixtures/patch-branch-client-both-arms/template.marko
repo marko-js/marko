@@ -1,0 +1,10 @@
+<let/on=false/>
+<main>
+  <if=on>
+    <b>${input.title}</b>
+  </if>
+  <else>
+    <i>${input.title}</i>
+  </else>
+  <button onClick() { on = !on }>toggle</button>
+</main>

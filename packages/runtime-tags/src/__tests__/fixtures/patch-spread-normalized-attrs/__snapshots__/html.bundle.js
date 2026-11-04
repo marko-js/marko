@@ -1,0 +1,30 @@
+// template.marko
+_shells({
+	a: "a !a3 a4 a5; D l b%b ;<button class=inc> </button><div>x</div><!><input>",
+	a2: "a2 !a0; ;<a>z</a>"
+});
+var template_default = _template("a", (input) => {
+	const $scope0_reason = _scope_reason(), $ui__input_show = _unfilled_if($scope0_reason, 1), $fg__input_link = _filled_guard($scope0_reason, 2);
+	const $scope0_id = _scope_id();
+	let n = 0;
+	_html(`<button class=inc>${_text_mark($scope0_id, "b", n)}</button>${_el_mark($scope0_id, "a")}<div${_attrs(input.attrs, "c", $scope0_id, "div", 0, $scope0_reason, 0)}>x</div>${_el_mark($scope0_id, "c")}`);
+	_if(() => {
+		if (input.show) {
+			const $scope1_id = _scope_id();
+			_html(`<a${_attrs(input.link, "a", $scope1_id, "a", 0, $scope0_reason, 2)}>z</a>${_el_mark($scope1_id, "a")}`);
+			_script($scope1_id, "a0");
+			_client_guard($scope0_reason, 2) && _patch_render($scope1_id, "a1");
+			_scope($scope1_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id) });
+			return 0;
+		}
+	}, $scope0_id, "d", 1, _write_guard($scope0_reason, 1), 1, 0, 0, ["a2"], $scope0_reason, 1);
+	_html(`<input${_attrs(input.field, "e", $scope0_id, "input", 1, $scope0_reason, 3)}>${_el_mark($scope0_id, "e")}`);
+	_script($scope0_id, "a3");
+	_script($scope0_id, "a4");
+	_script($scope0_id, "a5");
+	$fg__input_link && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "a1", "j");
+	_scope($scope0_id, {
+		j: ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.link,
+		l: n
+	}) || $fg__input_link && $ui__input_show && _patch_write($scope0_id, "xj", input.link, !_server_guard($scope0_reason, 2));
+}, 1);

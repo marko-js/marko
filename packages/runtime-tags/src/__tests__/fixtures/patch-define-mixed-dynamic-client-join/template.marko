@@ -1,0 +1,9 @@
+<let/n=0/>
+<define/Panel|{ value }|>
+  <p>${value + input.title}</p>
+</define>
+<main>
+  <Panel value="s"/>
+  <${input.dyn ? Panel : null} value=n/>
+  <button onClick() { n++ }>+</button>
+</main>
