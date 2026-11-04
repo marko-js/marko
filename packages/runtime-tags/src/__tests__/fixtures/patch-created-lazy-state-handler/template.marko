@@ -1,0 +1,6 @@
+import Picker from "./tags/picker.marko" with { load: "render" };
+<let/count=0/>
+<if=input.show>
+  <Picker onPick() { count++ }/>
+</if>
+<span>${count}</span>
