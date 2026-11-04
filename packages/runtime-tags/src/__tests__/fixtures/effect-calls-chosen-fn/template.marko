@@ -1,0 +1,8 @@
+<const/up=() => "U" + input.title/>
+<const/low=() => "l" + input.title/>
+<const/pick=input.upper ? up : low/>
+<output/out/>
+<script>
+  out().textContent = pick();
+  console.log("run", pick());
+</script>

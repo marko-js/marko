@@ -1,0 +1,5 @@
+<let/upper=false/>
+<const/up=() => "U" + input.title/>
+<const/low=() => "l" + input.title/>
+<label-view get=(upper ? up : low)/>
+<button onClick() { upper = !upper }>toggle</button>
