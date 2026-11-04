@@ -1,0 +1,14 @@
+import Outer from "./tags/outer.marko" with { load: "render" }
+import Inner from "./tags/inner.marko" with { load: "render" }
+<Outer>
+  <let/a=input.a/>
+  <Inner>
+    <script>console.log(a)</script>
+  </Inner>
+</Outer>
+<Outer>
+  <let/b=input.a/>
+  <Inner>
+    <script>console.log(b)</script>
+  </Inner>
+</Outer>

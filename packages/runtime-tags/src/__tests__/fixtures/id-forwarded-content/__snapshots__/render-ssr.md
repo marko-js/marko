@@ -1,0 +1,93 @@
+# Render `{"show":false}`
+```html
+<section>
+  <label
+    for="sM_1"
+  >
+    direct
+  </label>
+  <input
+    id="sM_1"
+  />
+</section>
+<section>
+  <em>
+    none
+  </em>
+</section>
+<section>
+  <label
+    for="sM_2"
+  >
+    body
+  </label>
+  <input
+    id="sM_2"
+  />
+</section>
+<section>
+  <em>
+    none
+  </em>
+</section>
+<section>
+  <label
+    for="sM_3"
+  >
+    attr
+  </label>
+  <input
+    id="sM_3"
+  />
+</section>
+<section>
+  <label
+    for="sM_4"
+  >
+    defined
+  </label>
+  <input
+    id="sM_4"
+  />
+</section>
+<label
+  for="sM_5"
+>
+  define
+</label>
+<input
+  id="sM_5"
+/>
+<em>
+  none
+</em>
+<label
+  for="sM_6"
+>
+  inner
+</label>
+<input
+  id="sM_6"
+/>
+<em>
+  none
+</em>
+<label
+  for="sM_7"
+>
+  named
+</label>
+<input
+  id="sM_7"
+/>
+```
+
+# Update
+```js
+const ids = new Set();
+for (const input of document.querySelectorAll("input")) {
+  assert(!ids.has(input.id), "duplicate " + input.id);
+  ids.add(input.id);
+  assert.equal(input.labels?.length, 1, "labels of " + input.id);
+}
+```

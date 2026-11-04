@@ -1,0 +1,57 @@
+<script async type=module src="outer.marko.load.mjs"></script>
+<script async type=module src="inner.marko.load.mjs"></script>
+<!--M_[--><!--M_[--><!--M_]4 #text/0 5--><!--M_]2 #text/0 3--><!--M_[--><!--M_[--><!--M_]8 #text/0 9--><!--M_]6 #text/0 7-->
+<script>
+  WALKER_RUNTIME("M")("_").patchBuild = "b";
+  M._.b = {
+    "ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-nested-content-reads-let/tags/outer.marko": [
+      _ => [2, {
+        "ConditionalRenderer:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-nested-content-reads-let/template.marko_1*content 1"
+      }, {
+        a: "a",
+        _: _(1),
+        "ClosureScopes:a/8": new Set,
+        "#childScope/1": _(4)
+      }]
+    ]
+  };
+  M._.b[
+    "ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-nested-content-reads-let/tags/inner.marko"
+    ] = [
+    [
+      "ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-nested-content-reads-let/tags/outer.marko"],
+    _ => [4, {
+      "ConditionalRenderer:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-nested-content-reads-let/template.marko_3*content 3"
+    }, {
+      _: _(3)
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-nested-content-reads-let/template.marko_3_a#1:2 5 packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-nested-content-reads-let/template.marko_3_a#1:2/subscribe 5"
+  ];
+  M._.b[
+    "ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-nested-content-reads-let/tags/outer.marko"
+    ].push(_ => [6, {
+    "ConditionalRenderer:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-nested-content-reads-let/template.marko_2*content 1"
+  }, {
+    b: "a",
+    _: _(1),
+    "ClosureScopes:b/8": new Set,
+    "#childScope/1": _(8),
+    "ClosureSignalIndex:input_a/7": 1
+  }]);
+  M._.b[
+    "ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-nested-content-reads-let/tags/inner.marko"
+    ].push([
+      "ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-nested-content-reads-let/tags/outer.marko"
+    ], _ => [8, {
+      "ConditionalRenderer:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-nested-content-reads-let/template.marko_4*content 7"
+    }, {
+      _: _(7)
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-nested-content-reads-let/template.marko_4_b#2:2 9 packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-nested-content-reads-let/template.marko_4_b#2:2/subscribe 9"
+    );
+  M._.r = [_ => [1, {
+    "#childScope/1": _(2),
+    "#childScope/3": _(6)
+  }]];
+  M._.w()
+</script>
