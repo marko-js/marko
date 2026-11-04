@@ -31,7 +31,7 @@ var template_default = _template("a", (input) => {
 				const $scope2_id = _scope_id();
 				_html(`<span class=caught>${_text_resume($scope2_id, "a", count)}</span>`);
 				_subscribe($count__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "a0");
-			}, void 0, "a2");
+			}, 0, "a2");
 			_scope($scope1_id, {});
 			return 0;
 		}

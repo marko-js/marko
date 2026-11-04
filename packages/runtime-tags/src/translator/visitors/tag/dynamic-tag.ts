@@ -45,7 +45,9 @@ import {
   trackVarReferences,
   getReferencedBindings,
 } from "../../util/references";
+import { replaceWithStatements } from "../../util/replace-with-statements";
 import {
+  absentArg,
   callRuntime,
   getCompatRuntimeFile,
   importRuntimeFeature,
@@ -165,6 +167,8 @@ export default {
 
       const tagSection = ensureSection(tag);
       const inputNodes = getAllTagReferenceNodes(node);
+      // The tag reads as one; what its name reads is not handed to it as an input.
+      (node.name.extra ??= {}).tagName = true;
       const tagExtra = mergeReferences(tagSection, node, [
         node.name,
         ...inputNodes,
@@ -223,7 +227,8 @@ export default {
         !hasVar &&
         !node.arguments &&
         !node.attributes.length &&
-        !node.body.body.length
+        !node.body.body.length &&
+        !tagExtra.attrTagLookup
       ) {
         tagExtra.nameOnly = true;
       }
@@ -249,7 +254,7 @@ export default {
         !isOutputHTML() &&
         !getTagTemplate(tag)
       ) {
-        tag.remove();
+        replaceWithStatements(tag);
         return;
       }
 
@@ -311,7 +316,7 @@ export default {
             },
           );
 
-          tag.remove();
+          replaceWithStatements(tag);
         }
 
         return;
@@ -337,7 +342,7 @@ export default {
           !markerReason &&
           !classHydration
         ) {
-          tag.remove();
+          replaceWithStatements(tag);
           return;
         }
 
@@ -468,7 +473,7 @@ export default {
               // passes it, so a hardcoded 0 here was an SSR/CSR mismatch.
               contentProp ? contentProp.value : t.numericLiteral(0),
               t.numericLiteral(1),
-              markerGuard,
+              markerGuard || absentArg(1),
               debugTagVar,
             )
           : callRuntime(
@@ -477,9 +482,9 @@ export default {
               getScopeAccessorLiteral(nodeBinding),
               tagExpression,
               args[0],
-              args[1] || (markerGuard ? t.numericLiteral(0) : undefined),
-              markerGuard ? t.numericLiteral(0) : undefined,
-              markerGuard,
+              args[1] || absentArg(0),
+              absentArg(0),
+              markerGuard || absentArg(1),
               debugTagVar,
             );
 
@@ -523,9 +528,7 @@ export default {
           statements.push(t.expressionStatement(dynamicTagExpr));
         }
 
-        for (const replacement of tag.replaceWithMultiple(statements)) {
-          replacement.skip();
-        }
+        replaceWithStatements(tag, statements);
       } else {
         const section = getSection(tag);
         const bodySection = getSectionForBody(tag.get("body"));
@@ -623,7 +626,7 @@ export default {
           }
         }
         addValue(section, tagExtra, signal, tagExpression);
-        tag.remove();
+        replaceWithStatements(tag);
       }
     },
   },

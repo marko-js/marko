@@ -10,6 +10,7 @@ import {
 import { assertNoBodyContent, assertNoSpreadAttrs } from "../util/assert";
 import { isOutputDOM } from "../util/marko-config";
 import { mergeTagReferences } from "../util/references";
+import { replaceWithStatements } from "../util/replace-with-statements";
 import { callRuntime } from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
 import { scopeIdentifier } from "../util/scope-read";
@@ -84,7 +85,7 @@ export default {
         addHTMLEffectCall(section, tagExtra);
       }
 
-      tag.remove();
+      replaceWithStatements(tag);
     },
   },
   parseOptions: {

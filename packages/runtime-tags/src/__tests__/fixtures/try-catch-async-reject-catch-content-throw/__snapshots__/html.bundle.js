@@ -33,14 +33,14 @@ var template_default = _template("a", (input) => {
 				e: err?.message,
 				f: n
 			});
-		}, void 0, "a2");
+		}, 0, "a2");
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 	}, void 0, (outer) => {
 		const $scope3_reason = _scope_reason(), $wg__outer_message = _write_guard($scope3_reason, 0);
 		const $scope3_id = _scope_id();
 		_html(`<p>outer caught ${_text_resume($scope3_id, "a", outer.message, $wg__outer_message * 2)}</p>`);
 		_write_if($scope3_reason, 0) && _scope($scope3_id, {});
-	}, void 0, "a3");
+	}, 0, "a3");
 	_html(`<button class=toggle>${_text_resume($scope0_id, "c", show)}</button>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "a4");
 	_scope($scope0_id, {

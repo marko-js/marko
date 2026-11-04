@@ -1,0 +1,7 @@
+<let/n=0/>
+<b class={ on: $global.on, big: n > 1 } style={ color: $global.color, order: n > 9 ? n : 0 }>
+  ${n}
+</b>
+<i class=[$global.on && "on", n && "set"]/>
+<u class={ all: $global, set: n > 0 }/>
+<button onClick() { n++ }>inc</button>

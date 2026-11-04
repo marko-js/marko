@@ -38,14 +38,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				err_message: ["err.message", "15:13"],
 				n: "16:12"
 			});
-		}, void 0, "__tests__/template.marko_4*content");
+		}, 0, "__tests__/template.marko_4*content");
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:2");
 	}, void 0, (outer) => {
 		const $scope3_reason = _scope_reason(), $wg__outer_message = _write_guard($scope3_reason, 0);
 		const $scope3_id = _scope_id();
 		_html(`<p>outer caught ${_text_resume($scope3_id, "#text/0", outer.message, $wg__outer_message * 2)}</p>`);
 		_write_if($scope3_reason, 0) && _scope($scope3_id, {}, "__tests__/template.marko", "5:4");
-	}, void 0, "__tests__/template.marko_3*content");
+	}, 0, "__tests__/template.marko_3*content");
 	_html(`<button class=toggle>${_text_resume($scope0_id, "#text/2", show)}</button>${_el_resume($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {

@@ -21,6 +21,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_script($scope4_id, "__tests__/template.marko_4");
 				_scope($scope4_id, { clicks }, "__tests__/template.marko", "9:8", { clicks: "10:14" });
 			});
-		}, void 0, "__tests__/template.marko_3*content");
+		}, 0, "__tests__/template.marko_3*content");
 	});
 }, 1);

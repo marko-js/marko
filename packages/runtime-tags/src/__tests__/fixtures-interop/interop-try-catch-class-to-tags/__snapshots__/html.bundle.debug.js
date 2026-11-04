@@ -13,7 +13,7 @@ var tags_child_default = _template("__tests__/components/tags-child.marko", (inp
 		_scope_reason();
 		const $scope2_id = _scope_id();
 		_html("<div id=caught>caught</div>");
-	}, void 0, "__tests__/components/tags-child.marko_2*content");
+	}, 0, "__tests__/components/tags-child.marko_2*content");
 });
 
 // template.marko

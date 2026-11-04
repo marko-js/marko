@@ -83,6 +83,22 @@ describe("runtime-tags/translator-api", () => {
     assert.equal(code.match(/ from "\.\/tags\/card\.marko"/g)?.length, 1, code);
   });
 
+  // Fixture bundles strip comments, so only the compiled module shows them.
+  it("drops open tag comments from the server output", () => {
+    const { code } = compiler.compileSync(
+      `<card /* open-tag-comment *//>
+<card
+  // open-tag-comment
+/>
+<\${input.tag} /* open-tag-comment *//>
+<div /* open-tag-comment */><card/></div>
+`,
+      path.join(fixture("dynamic-tag-const-import-if"), "comments.marko"),
+      { ...baseConfig, cache: new Map(), output: "html" },
+    );
+    assert.ok(!code.includes("open-tag-comment"), code);
+  });
+
   describe("style blocks with sourceMaps", () => {
     const styleSrc = `<style>\n  .foo { color: red }\n</style>\n<div class="foo"/>\n`;
     const compileWithSourceMaps = (sourceMaps: "both" | "inline" | true) => {

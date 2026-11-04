@@ -17,16 +17,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, "__tests__/template.marko_0/f");
 	const D = { content: _content("__tests__/template.marko_1*content", ({ on }) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason(), $wg__on = _write_guard($scope1_reason, 0), $wi__on = _write_if($scope1_reason, 0);
+		const $scope1_reason = _scope_reason();
 		_if(() => {
 			if (on) {
 				const $scope2_id = _scope_id();
 				_html(`<span>${_escape(f())}</span>`);
-				$wi__on && _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:4");
 				return 0;
 			}
-		}, $scope1_id, "#text/0", $wg__on, $wg__on, 0, 0, 1);
-		$wi__on && _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:2");
+		}, $scope1_id, "#text/0", 0, 0, 0, 0, 1);
 	}, $scope0_id) };
 	D.content({ on: true });
 	counter_default({});

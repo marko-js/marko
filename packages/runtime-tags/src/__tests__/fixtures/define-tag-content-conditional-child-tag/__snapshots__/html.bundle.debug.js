@@ -30,18 +30,15 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const Box = { content: _content("__tests__/template.marko_2*content", (input) => {
 		const $scope2_id = _scope_id();
 		const $Box_content2__input_content__closures = new Set();
-		const $scope2_reason = _scope_reason(), $wg__input_content = _write_guard($scope2_reason, 0), $wi__input_content = _write_if($scope2_reason, 0);
+		const $scope2_reason = _scope_reason();
 		child_default({ content: _content_resume("__tests__/template.marko_3*content", () => {
 			const $scope3_reason = _scope_reason();
 			const $scope3_id = _scope_id();
-			_dynamic_tag($scope3_id, "#text/0", input.content, {}, 0, 0, $wg__input_content);
-			_subscribe($wi__input_content && $Box_content2__input_content__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "2:4"), "__tests__/template.marko_3_input_content#2:3/subscribe", $wg__input_content);
-			$wg__input_content || _resume_branch($scope3_id);
+			_dynamic_tag($scope3_id, "#text/0", input.content, {}, 0, 0, 0);
+			_scope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "2:4");
+			_resume_branch($scope3_id);
 		}, $scope2_id) });
-		_scope($scope2_id, {
-			input_content: input.content,
-			"ClosureScopes:input_content/5": $wi__input_content && $Box_content2__input_content__closures
-		}, "__tests__/template.marko", "1:2", { input_content: ["input.content", "1:13"] });
+		_scope($scope2_id, { input_content: input.content }, "__tests__/template.marko", "1:2", { input_content: ["input.content", "1:13"] });
 	}, $scope0_id) };
 	Box.content({ content: _content_resume("__tests__/template.marko_1*content", () => {
 		const $scope1_reason = _scope_reason();

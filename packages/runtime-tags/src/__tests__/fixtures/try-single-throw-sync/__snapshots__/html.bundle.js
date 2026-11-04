@@ -14,6 +14,6 @@ var template_default = _template("a", (input) => {
 		const $scope2_id = _scope_id();
 		_html(_text_resume($scope2_id, "a", err.message, $wg__err_message));
 		_write_if($scope2_reason, 0) && _scope($scope2_id, {});
-	}, void 0, "a0");
+	}, 0, "a0");
 	_html("After");
 }, 1);

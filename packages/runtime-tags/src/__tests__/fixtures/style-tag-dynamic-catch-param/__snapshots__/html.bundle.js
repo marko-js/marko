@@ -16,7 +16,7 @@ var template_default = _template("a", (input) => {
 				const $scope3_id = _scope_id();
 				_html(`${_style_html(`--M_a0:${_escape_style_value(err.message)};`)}${_el_resume($scope3_id, "a", $wg__err_message)}<div class=caught></div>`);
 				_write_if($scope3_reason, 0) && _scope($scope3_id, {});
-			}, void 0, "a1");
+			}, 0, "a1");
 			$wi__input_show && _scope($scope1_id, {});
 			return 0;
 		}

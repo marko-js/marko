@@ -9,7 +9,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let box = { count: 0 };
 	let log = "";
 	_html(`<button class=write>write</button>${_el_resume($scope0_id, "#button/0")}<button class=read>read</button>${_el_resume($scope0_id, "#button/1")}<p>${_text_resume($scope0_id, "#text/2", log)}</p>`);
-	_script($scope0_id, "__tests__/template.marko_0_live_nested#4");
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		live,

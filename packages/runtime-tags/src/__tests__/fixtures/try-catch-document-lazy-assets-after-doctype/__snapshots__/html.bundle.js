@@ -28,5 +28,5 @@ var template_default = _template("c", (input) => {
 		_scope_reason();
 		_scope_id();
 		_html("caught");
-	}, void 0, "c0");
+	}, 0, "c0");
 }, 1);

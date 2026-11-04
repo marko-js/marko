@@ -34,10 +34,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $show = input.show;
 	_show_start($show, 0);
 	_html("<span>show input</span>");
-	_show_end($scope0_id, "#text/6", $show, $wg__input_show, 0, 0, 1);
+	_show_end($scope0_id, "#text/5", $show, $wg__input_show, 0, 0, 1);
 	_show_start(open, 0);
 	_html("<span>show state</span>");
-	_show_end($scope0_id, "#text/8", open, 1, 0, 0, 1);
+	_show_end($scope0_id, "#text/6", open, 1, 0, 0, 1);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, { open }, "__tests__/template.marko", 0, { open: "1:6" });
 }, 1);

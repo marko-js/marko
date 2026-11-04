@@ -23,8 +23,9 @@ import {
 } from "../../util/marko-config";
 import { finalizeRegistrations } from "../../util/module-registrations";
 import { type ParamsTree, exposeParamsTree } from "../../util/params-tree";
-import { isUnconditionalReason, mapBodyParams } from "../../util/reasons";
+import { isGuardedReason, mapBodyParams } from "../../util/reasons";
 import { trackParamsReferences } from "../../util/references";
+import { writeBodyStatements } from "../../util/replace-with-statements";
 import {
   dynamicImport,
   getCompatRuntimeFile,
@@ -130,10 +131,9 @@ export default {
       // Anything revived or unconditionally registered against this module
       // has to reach the client on its own.
       forEachSection((childSection) => {
+        const reason = mapBodyParams(childSection, childSection.reason);
         programExtra.hasResumes ||= !!(
-          isUnconditionalReason(
-            mapBodyParams(childSection, childSection.reason),
-          ) ||
+          (reason && !isGuardedReason(reason)) ||
           (childSection !== section &&
             !isSectionRendererElided(childSection) &&
             getRendererReason(childSection))
@@ -274,6 +274,7 @@ export default {
       }
     },
     exit(program) {
+      writeBodyStatements(program.node);
       if (isOutputHTML()) {
         programHTML.translate.exit(program);
       } else {
