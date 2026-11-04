@@ -1,0 +1,7 @@
+<let/items=[{ id: "a" }, { id: "b" }]/>
+<for|item| of=items by="id">
+  <dismiss-button label=item.id onDismiss() {
+    document.getElementById("log").textContent = item.id;
+  }/>
+</for>
+<div#log/>

@@ -13,7 +13,7 @@ var import_load_tag = require_load_tag();
 var import_render_tag = /* @__PURE__ */ __toESM(require_render_tag());
 const _marko_componentType = "c";
 const _marko_template = (0, import_html.t)(_marko_componentType);
-const _marko_load_Child = (0, import_load_tag.withLoadAssets)("b", _marko_template$1, flush);
+const _marko_load_Child = (0, import_load_tag.withLoadAssets)("b", () => _marko_template$1, flush);
 _marko_template._ = (0, import_renderer.default)(function(input, out, _componentDef, _component, state, $global) {
 	out.w("<div class=wrap>");
 	(0, import_render_tag.default)(_marko_load_Child, { "value": 1 }, out, _componentDef, "1");
@@ -37,6 +37,6 @@ var template_default = _template("a", (input) => {
 		const $scope2_id = _scope_id();
 		_html(`caught ${_text_resume($scope2_id, "a", err.message, $wg__err_message * 2)}`);
 		_write_if($scope2_reason, 0) && _scope($scope2_id, {});
-	}, void 0, "a0");
+	}, 0, "a0");
 	_dynamic_tag($scope0_id, "b", _marko_template, {}, 0, 0, 0);
 }, 1);

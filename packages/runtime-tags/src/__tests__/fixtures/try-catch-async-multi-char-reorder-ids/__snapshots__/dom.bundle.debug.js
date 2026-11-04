@@ -26,7 +26,7 @@ const $try_content__setup = ($scope) => {
 	$try_content__await_promise($scope, $scope._["#LoopKey"] === 54 ? rejectAfter(new Error("ERROR!"), 1) : resolveAfter($scope._["#LoopKey"], 1));
 };
 const $for_content__try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content__setup, 0, $catch_content);
-const $for_content__setup = ($scope) => $for_content__try($scope);
+const $for_content__setup = $for_content__try;
 const $for = /*@__PURE__*/ _for_until_unkeyed("#text/0", "<!><!><!>", "b%", $for_content__setup);
 function $setup($scope) {
 	$for($scope, [

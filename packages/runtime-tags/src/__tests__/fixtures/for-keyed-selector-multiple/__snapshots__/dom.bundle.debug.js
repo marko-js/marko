@@ -5,12 +5,12 @@ const $for_content__selected__OR__hovered = /*@__PURE__*/ _or(2, ($scope) => _at
 	sel: $scope._.selected === $scope["#LoopKey"],
 	hov: $scope._.hovered === $scope["#LoopKey"]
 }));
-const $for_content__selected = /*@__PURE__*/ _for_selector("#ul/2", "selected", "#LoopKey", $for_content__selected__OR__hovered);
+const $for_content__selected = /*@__PURE__*/ _for_selector("#ul/2", "selected", $for_content__selected__OR__hovered);
 const $for_content__setup = ($scope) => {
 	$for_content__selected._($scope);
 	$for_content__hovered._($scope);
 };
-const $for_content__hovered = /*@__PURE__*/ _for_selector("#ul/2", "hovered", "#LoopKey", $for_content__selected__OR__hovered);
+const $for_content__hovered = /*@__PURE__*/ _for_selector("#ul/2", "hovered", $for_content__selected__OR__hovered);
 const $for_content__row_label = ($scope, row_label) => _text($scope["#text/1"], row_label);
 const $for_content__$params = ($scope, $params2) => $for_content__row_label($scope, $params2[0]?.label);
 const $selected = /*@__PURE__*/ _let("selected/3", $for_content__selected);

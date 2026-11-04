@@ -13,7 +13,7 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		_scope_id();
 		_html("Rejected A");
-	}, void 0, "a0");
+	}, 0, "a0");
 	_try($scope0_id, "b", () => {
 		_scope_reason();
 		const $scope4_id = _scope_id();
@@ -25,5 +25,5 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		_scope_id();
 		_html("Rejected B");
-	}, void 0, "a1");
+	}, 0, "a1");
 }, 1);

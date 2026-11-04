@@ -1,6 +1,6 @@
 // template.marko
-const $Message_content__walks = " b";
-const $Message_content__template = " ";
+const $Message_content__walks = "%b";
+const $Message_content__template = "<!>";
 const $Wrap_content__walks = "b%c";
 const $Wrap_content__template = "<!><!><!>";
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Wrap_content__template);

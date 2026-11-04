@@ -41,10 +41,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_html(`<button id=pick>pick</button>${_el_resume($scope1_id, "#button/0")}`);
 		_script($scope1_id, "__tests__/template.marko_1");
-		_scope($scope1_id, {
-			v,
-			_: _scope_with_id($scope0_id)
-		}, "__tests__/template.marko", "10:2", { v: "10:8" });
+		_scope($scope1_id, { v }, "__tests__/template.marko", "10:2", { v: "10:8" });
 	});
 	_html(`<div>${_text_resume($scope0_id, "#text/2", picked && picked.text)}</div>`);
 	_scope($scope0_id, { "#childScope/0": _write_if($scope0_reason, 0) && _existing_scope($childScope) }, "__tests__/template.marko", 0);

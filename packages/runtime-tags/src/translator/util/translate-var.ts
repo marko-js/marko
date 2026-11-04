@@ -14,6 +14,7 @@ import { generateUidIdentifier } from "./generate-uid";
 import { getDeclaredBindingExpression } from "./get-declared-binding-expression";
 import { isOptimize } from "./marko-config";
 import { toArray } from "./optional";
+import { insertStatementBefore } from "./replace-with-statements";
 import { importRuntime } from "./runtime";
 import { getSection, type Section } from "./sections";
 import { findSlot } from "./slots";
@@ -95,7 +96,7 @@ export default function translateVar(
   if (statements) {
     statements.push(declaration);
   } else {
-    tag.insertBefore(declaration);
+    insertStatementBefore(tag, declaration);
   }
 }
 
@@ -169,7 +170,8 @@ function translateAliasInSection(
 ) {
   const aliased = alias.aliasOf!;
   const value = getDeclaredBindingExpression(aliased);
-  getSectionTarget(tag, alias.section).insertBefore(
+  insertStatementBefore(
+    getSectionTarget(tag, alias.section),
     t.variableDeclaration(kind, [
       t.variableDeclarator(
         id,
@@ -200,7 +202,8 @@ function translateRest(
     inPlace = false;
   }
   const value = getDeclaredBindingExpression(from, inPlace);
-  target.insertBefore(
+  insertStatementBefore(
+    target,
     t.variableDeclaration(kind, [
       t.variableDeclarator(
         getRestPattern(rest, id, from, false),

@@ -13,7 +13,7 @@ var grand_child_default = _template("b", (input) => {
 });
 
 // child.marko
-const $GrandChild_withLoadAssets = withLoadAssets(grand_child_default, flush$1, "_b");
+const $GrandChild_withLoadAssets = withLoadAssets(() => grand_child_default, "b", flush$1, "_b");
 var child_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
@@ -26,10 +26,7 @@ var child_default = _template("a", (input) => {
 		_set_scope_reason(2);
 		const $childScope = _peek_scope_id();
 		$GrandChild_withLoadAssets({ value: count });
-		_subscribe($count__closures, _scope($scope1_id, {
-			_: _scope_with_id($scope0_id),
-			c: _existing_scope($childScope)
-		}), "a0");
+		_subscribe($count__closures, _scope($scope1_id, { c: _existing_scope($childScope) }), "a0");
 	});
 	_script($scope0_id, "a1");
 	_scope($scope0_id, {
@@ -39,7 +36,7 @@ var child_default = _template("a", (input) => {
 });
 
 // template.marko
-const $Child_withLoadAssets = withLoadAssets(child_default, flush$1, "_a");
+const $Child_withLoadAssets = withLoadAssets(() => child_default, "a", flush$1, "_a");
 var template_default = _template("c", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();

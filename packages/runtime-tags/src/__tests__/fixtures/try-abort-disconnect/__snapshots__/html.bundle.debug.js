@@ -18,7 +18,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope_reason();
 		const $scope3_id = _scope_id();
 		_html("caught-a");
-	}, void 0, "__tests__/template.marko_3*content");
+	}, 0, "__tests__/template.marko_3*content");
 	_try($scope0_id, "#text/1", () => {
 		const $scope2_reason = _scope_reason();
 		const $scope2_id = _scope_id();
@@ -33,7 +33,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope_reason();
 		const $scope5_id = _scope_id();
 		_html("caught-b");
-	}, void 0, "__tests__/template.marko_5*content");
+	}, 0, "__tests__/template.marko_5*content");
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {
 		"ClosureScopes:input_a/6": $wi__input_a && $input_a__closures,
 		"ClosureScopes:input_b/7": $wi__input_b && $input_b__closures

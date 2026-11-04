@@ -10,6 +10,6 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id) };
 	_set_scope_reason($wg__input_a << 1);
 	const $childScope = _peek_scope_id();
-	Foo.content(input.a, void 0);
+	Foo.content(input.a, 0);
 	_write_if($scope0_reason, 0) && _scope($scope0_id, { a: _existing_scope($childScope) });
 }, 1);

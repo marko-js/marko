@@ -1,6 +1,6 @@
 # Render
 ```html
-caught An @placeholder cannot contain async content.
+caught
 <div
   id="ref"
 >
@@ -10,7 +10,7 @@ caught An @placeholder cannot contain async content.
 
 # Update
 ```html
-caught An @placeholder cannot contain async content.
+caught
 <div
   id="ref"
 >

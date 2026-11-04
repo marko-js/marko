@@ -30,7 +30,7 @@ var template_default = _template("a", (input) => {
 			const $scope4_id = _scope_id();
 			_html(`caught ${_text_resume($scope4_id, "a", err.message, $wg__err_message * 2)}`);
 			_write_if($scope4_reason, 0) && _scope($scope4_id, {});
-		}, void 0, "a2");
+		}, 0, "a2");
 	}, () => {
 		_scope_reason();
 		_scope_id();

@@ -12,6 +12,6 @@ var template_default = _template("a", (input) => {
 			_html(_escape(data));
 		}, 0);
 		_html("c");
-	}, void 0, () => {}, void 0, "a0");
+	}, void 0, () => {}, 0, "a0");
 	_html("d");
 }, 1);

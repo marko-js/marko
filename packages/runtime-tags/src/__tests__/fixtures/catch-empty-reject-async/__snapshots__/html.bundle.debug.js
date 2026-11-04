@@ -12,6 +12,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_html(_escape(data));
 		}, 0);
 		_html("c");
-	}, void 0, () => {}, void 0, "__tests__/template.marko_0_#text#0/catch");
+	}, void 0, () => {}, 0, "__tests__/template.marko_0_#text#0/catch");
 	_html("d");
 }, 1);

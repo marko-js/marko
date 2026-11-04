@@ -1,0 +1,5 @@
+import Card from "./tags/card.marko";
+<define/Note|{ label }|>
+  <if=input.on><em>${label} ${input.note}</em></if>
+</define>
+<${input.on ? Card : "div"}><Note label="x"/></>

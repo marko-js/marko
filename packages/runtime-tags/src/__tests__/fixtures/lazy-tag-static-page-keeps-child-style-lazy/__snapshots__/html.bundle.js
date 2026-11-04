@@ -6,7 +6,7 @@ var static_child_default = _template("b", (input) => {
 });
 
 // template.marko
-const $Child_withLoadAssets = withLoadAssets(static_child_default, flush, "_b");
+const $Child_withLoadAssets = withLoadAssets(() => static_child_default, "b", flush, "_b");
 var template_default = _template("a", (input) => {
 	_scope_reason();
 	_scope_id();

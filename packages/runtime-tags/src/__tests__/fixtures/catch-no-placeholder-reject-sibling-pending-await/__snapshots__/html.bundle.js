@@ -14,7 +14,7 @@ var template_default = _template("a", (input) => {
 		const $scope2_id = _scope_id();
 		_html(`Caught: ${_text_resume($scope2_id, "a", error.message, $wg__error_message * 2)}`);
 		_write_if($scope2_reason, 0) && _scope($scope2_id, {});
-	}, void 0, "a0");
+	}, 0, "a0");
 	_try($scope0_id, "b", () => {
 		_scope_reason();
 		const $scope4_id = _scope_id();
@@ -27,5 +27,5 @@ var template_default = _template("a", (input) => {
 		const $scope5_id = _scope_id();
 		_html(`Caught: ${_text_resume($scope5_id, "a", error.message, $wg__error_message2 * 2)}`);
 		_write_if($scope5_reason, 0) && _scope($scope5_id, {});
-	}, void 0, "a1");
+	}, 0, "a1");
 }, 1);
