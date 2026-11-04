@@ -19,7 +19,7 @@ import {
 } from "./get-root";
 import isInvokedFunction from "./is-invoked-function";
 import isStatic from "./is-static";
-import { getMarkoOpts, isOutputHTML } from "./marko-config";
+import { getMarkoOpts, isOutputHTML, isPatch } from "./marko-config";
 import { isGuardedReason, type Reason } from "./reasons";
 import {
   getCanonicalExpr,
@@ -27,7 +27,11 @@ import {
   type RegisteredFnExtra,
 } from "./references";
 import { callRuntime, getRuntimePath, registerRuntimeValue } from "./runtime";
-import { getReasonForExpr, landsRetained } from "./solve-reasons";
+import {
+  getReasonForExpr,
+  landsInitialValue,
+  landsRetained,
+} from "./solve-reasons";
 import { ALWAYS, mergeSources } from "./sources";
 import { createAnalysisState } from "./state";
 import { getLiteralName, isValidPropertyIdentifier } from "./to-property-name";
@@ -123,10 +127,10 @@ export function addFunctionReasons() {
 
 export function finalizeRegistrations() {
   const programExtra = getProgram().node.extra;
-  for (const fnExtra of getReferencesByFn().keys()) {
+  for (const [fnExtra, exprExtras] of getReferencesByFn()) {
     if (fnExtra.reason) {
       registerFunction(fnExtra);
-      programExtra.isInteractive ||= !isGuardedReason(fnExtra.reason);
+      programExtra.isInteractive ||= isLoadedReason(fnExtra.reason, exprExtras);
     }
   }
 
@@ -143,7 +147,7 @@ export function finalizeRegistrations() {
         extra.registeredImports ??= new Map();
         extra.registeredImports.set(local, registered);
       }
-      programExtra.isInteractive ||= !isGuardedReason(reason);
+      programExtra.isInteractive ||= isLoadedReason(reason, exprExtras);
     }
   }
 }
@@ -289,6 +293,18 @@ export function writeModuleRegistrations(program: t.NodePath<t.Program>) {
   program.node.body.push(...statements);
 }
 
+// Whether the page loads the registration: a caller changing the params loads
+// it otherwise, but a patch build writes a `<let>`'s initial value in place.
+function isLoadedReason(reason: Reason, exprExtras: Set<t.NodeExtra>) {
+  if (!isGuardedReason(reason)) return true;
+  if (isPatch()) {
+    for (const exprExtra of exprExtras) {
+      if (landsInitialValue(getCanonicalExpr(exprExtra))) return true;
+    }
+  }
+  return false;
+}
+
 function resolveReason(exprExtras: Set<t.NodeExtra>) {
   let reason: undefined | Reason;
   for (const exprExtra of exprExtras) {
@@ -314,7 +330,6 @@ function resolveTemplateReason(exprExtras: Set<t.NodeExtra>) {
       reason = mergeSources(reason, getReasonForExpr(extra));
     }
   }
-
   return reason;
 }
 

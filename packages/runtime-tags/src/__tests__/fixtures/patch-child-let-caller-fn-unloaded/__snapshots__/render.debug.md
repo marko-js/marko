@@ -6,9 +6,12 @@
 ```
 
 # Update `{"label":"b"}`
-## Console
+```html
+<p>
+  f-b
+</p>
 ```
-ERROR TypeError: $scope.fns.f is not a function
+## Change
 ```
-
-## Patch rejected (navigate)
+UPDATE: p::text "f-a" => "f-b"
+```

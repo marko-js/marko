@@ -421,6 +421,12 @@ export function landsRetained(extra: t.NodeExtra) {
   );
 }
 
+// Whether the value reaches the initial value of an uncontrolled `<let>` that
+// client code reads after resume.
+export function landsInitialValue(extra: t.NodeExtra) {
+  return some(exprReaders(extra).reads, isReadInitialValue);
+}
+
 // Whether a read the value reaches passes `leaf`, given whether it reaches it
 // as more than a dynamic tag's name.
 export function someRead(
@@ -654,6 +660,14 @@ function withLandingRead(
   return isSameReaders(readers, readers.reason, reads, directReads, asInput)
     ? readers
     : { reason: readers.reason, reads, directReads, asInput };
+}
+
+function isReadInitialValue(read: ReferencedExtra) {
+  return !!read.initialValue && some(read.derives, isReadAfterResume);
+}
+
+function isReadAfterResume(binding: Binding) {
+  return !!bindingReaders(binding, true).reason;
 }
 
 function isRetained(read: ReferencedExtra) {

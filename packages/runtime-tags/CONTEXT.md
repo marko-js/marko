@@ -649,6 +649,7 @@ or `always` reason). Everything below a root arrives through its imports. An
 entry that initializes the runtime imports every root. A param-only reason is
 never a root's own (the parent passing it client state already bundles the
 template).
-A patch page always initializes, so a registration its payload names always
-resolves.
+A patch page always initializes. In a patch build a registration whose value
+lands in a `<let>`'s initial value is its template's own: a patch writes it
+with no client caller to load it.
 _Avoid_: linked page, unlinked page, scriptless page (as a bundling state)

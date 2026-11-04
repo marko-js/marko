@@ -6,5 +6,12 @@
 ```
 
 # Update `{"label":"b"}`
-
-## Patch rejected (navigate)
+```html
+<p>
+  f-b
+</p>
+```
+## Change
+```
+UPDATE: p::text "f-a" => "f-b"
+```
