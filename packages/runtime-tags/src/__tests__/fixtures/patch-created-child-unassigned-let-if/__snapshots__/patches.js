@@ -1,34 +1,32 @@
 // PATCH
-[`b;b%;<!><!><!>`, `b1;Dc%;<p><b>yes</b> <!></p>`]
+`b !;b%;<!><!><!>`
 {
   fc: "b",
   cAc: {
-    ba: [{
-      ta: 1
-    }, "b1"],
-    s: {
-      wd: 1
-    }
+    ib0: "d",
+    o: {
+      vb1: 1
+    },
+    xd: 1
   }
 }
-;BwY
+;BAE
 
-// PATCH holding BwY
+// PATCH holding BAE
 {
   fc: [">div", 0, {
     n: 1
   }]
 }
 
-// PATCH holding BwY
+// PATCH holding BAE
 {
   fc: "b",
   cAc: {
-    ba: [{
-      ta: 2
-    }, "b1"],
-    s: {
-      wd: 2
-    }
+    ib0: "d",
+    o: {
+      vb1: 2
+    },
+    xd: 2
   }
 }

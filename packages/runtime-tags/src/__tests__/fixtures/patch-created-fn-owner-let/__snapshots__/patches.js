@@ -1,27 +1,33 @@
 // PATCH
-`a1 !a>a>b0;// D l&&;<button> </button>`
+`a2 !a>a>b0;// D l&&;<button> </button>`
 {
+  xe: "b",
   ba: [{
     ca: {
-      ca: {
-        s: {
-          tb: "f:b"
-        }
+      ic0: "c",
+      o: {
+        vc1: !0
+      },
+      xc: {
+        fn: _(["Aa"], "a0")
       }
     }
-  }, "a1"]
+  }, "a2"]
 }
 ;CAE
 
 // PATCH holding CAE
 {
+  xe: "d",
   ba: [{
     ca: {
-      ca: {
-        s: {
-          tb: "f:d"
-        }
+      ic0: "c",
+      o: {
+        vc1: !0
+      },
+      xc: {
+        fn: _(["Aa"], "a0")
       }
     }
-  }, "a1"]
+  }, "a2"]
 }

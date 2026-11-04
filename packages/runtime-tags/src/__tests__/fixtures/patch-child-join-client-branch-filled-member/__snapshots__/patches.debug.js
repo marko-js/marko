@@ -2,9 +2,7 @@
 `packages/runtime-tags/src/__tests__/fixtures/patch-child-join-client-branch-filled-member/tags/child.marko_1*shell;D ;<p> </p>`
 {
   "PatchChild:#childScope/0": {
-    "PatchBranch:#text/0": [{
-      "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-child-join-client-branch-filled-member/tags/child.marko_1_input_a#0:6_input_b#0:7/setup": ">input_a"
-    }],
+    "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-child-join-client-branch-filled-member/tags/child.marko_1_input_a#0:6/setup": "input_a",
     "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-child-join-client-branch-filled-member/tags/child.marko_2_input_a#0:6/setup": "input_a",
     "PatchMarkedWrite:input_a": "y"
   },
@@ -21,9 +19,7 @@
 // PATCH holding BgE
 {
   "PatchChild:#childScope/0": {
-    "PatchBranch:#text/0": [{
-      "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-child-join-client-branch-filled-member/tags/child.marko_1_input_a#0:6_input_b#0:7/setup": ">input_a"
-    }],
+    "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-child-join-client-branch-filled-member/tags/child.marko_1_input_a#0:6/setup": "input_a",
     "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-child-join-client-branch-filled-member/tags/child.marko_2_input_a#0:6/setup": "input_a",
     "PatchMarkedWrite:input_a": "z"
   },

@@ -5,7 +5,7 @@ const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $if_content__input_content = /*@__PURE__*/ _if_closure_patch("__tests__/tags/frame.marko_1_input_content#0:3/setup", "#section/0", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.input_content));
 const $if_content__setup = $if_content__input_content;
 const $if = /*@__PURE__*/ _if("#section/0", "<!><!><!>", "b%", $if_content__setup);
-const $open = _let("open/4", ($scope) => $if($scope, $scope.open ? 0 : 1));
+const $open = _fill_let_resume("__tests__/tags/frame.marko_fill0", _let("open/4", ($scope) => $if($scope, $scope.open ? 0 : 1)));
 function $setup$1($scope) {
 	$open($scope, true);
 }
@@ -22,12 +22,12 @@ const $await_content__v = ($scope, v) => _text($scope["#text/0"], v);
 const $await_content__$params = ($scope, $params2) => $await_content__v($scope, $params2[0]);
 const $await_content2 = /*@__PURE__*/ _await_content("#text/0", "<b> </b>", "D ");
 const $frame_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content2__$params);
-const $frame_content__input_q = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_2_input_q#0:7/subscribe", "input_q/9", ($scope) => $frame_content__await_promise($scope, $scope._.input_q));
+const $frame_content__input_q = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_2_input_q#0:7/subscribe", "input_q/9", ($scope) => $frame_content__await_promise($scope, $scope._.input_q), 0, "__tests__/template.marko_0_input_q#7/subscribers", 0);
 const $frame_content__setup = ($scope) => {
 	$frame_content__input_q($scope);
 	$await_content2($scope);
 };
-const $frame_content = /*@__PURE__*/ _content("__tests__/template.marko_2*content", "<!><!><!>", "b%", $frame_content__setup);
+const $frame_content = _content("__tests__/template.marko_2*content", "<!><!><!>", "b%", $frame_content__setup);
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<em> </em>", "D ");
 const $inputas_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
 const $inputas_content__input_p = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_1_input_p#0:6/subscribe", "input_p/8", ($scope) => $inputas_content__await_promise($scope, $scope._.input_p), 0, "__tests__/template.marko_0_input_p#6/subscribers", 0);

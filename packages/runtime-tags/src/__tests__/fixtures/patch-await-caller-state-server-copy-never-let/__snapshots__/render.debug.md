@@ -21,8 +21,8 @@
 ## Change
 ```
 INSERT: .swap + p
-UPDATE: p::text@2 "" => "a"
 UPDATE: p::text@0 "" => "a"
+UPDATE: p::text@2 "" => "a"
 ```
 
 # Update

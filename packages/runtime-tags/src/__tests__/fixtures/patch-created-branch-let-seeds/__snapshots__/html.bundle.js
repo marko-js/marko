@@ -3,7 +3,7 @@ const $template = "<!><!><!>";
 const $setup$1 = [[], []];
 _shells({
 	b: "b;b%;<!><!><!>",
-	b4: "b4 b6!b0;D l ;<span> </span><button>+</button>"
+	b5: "b5 !b0;D l ;<span> </span><button>+</button>"
 });
 var view_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 1), $fg__input_x = _filled_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 1), $fg__input_y = _filled_guard($scope0_reason, 3);
@@ -15,10 +15,10 @@ var view_default = _template("b", (input) => {
 			let b = input.y;
 			_html(`<span>${_text_resume($scope1_id, "a", a + b)}</span><button>+</button>${_el_resume($scope1_id, "b")}`);
 			_script($scope1_id, "b0");
-			$fg__input_y && _patch_write($scope1_id, "wd", b, 1);
 			_client_guard($scope0_reason, 2) && _patch_render($scope1_id, "b1");
 			_client_guard($scope0_reason, 3) && _patch_render($scope1_id, "b2");
 			$fg__input_x && _patch_fill($scope1_id, "vb3", a, 1);
+			$fg__input_y && _patch_fill($scope1_id, "vb4", b, 1);
 			_scope($scope1_id, {
 				c: a,
 				d: b,
@@ -26,7 +26,7 @@ var view_default = _template("b", (input) => {
 			});
 			return 0;
 		}
-	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["b4"], $scope0_reason, 1);
+	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["b5"], $scope0_reason, 1);
 	$fg__input_x && $cg__input_show && _patch_render($scope0_id, "b1", "e");
 	$fg__input_y && $cg__input_show && _patch_render($scope0_id, "b2", "f");
 	_scope($scope0_id, {

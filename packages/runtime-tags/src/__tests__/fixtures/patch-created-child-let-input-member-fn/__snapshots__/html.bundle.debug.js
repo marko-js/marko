@@ -8,7 +8,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let all = input;
 	const f = all.opts.fn;
-	_html(`<p>${_text_resume($scope0_id, "#text/0", input.opts.label, 1, $scope0_reason, 1)}</p><p>${_text_resume($scope0_id, "#text/1", f(), 1, _client_guard($scope0_reason, 0) << 1, 0)}</p>`);
+	_html(`<p>${_text_resume($scope0_id, "#text/0", input.opts.label, 1, $scope0_reason, 1)}</p><p>${_text_resume($scope0_id, "#text/1", f(), 1, _client_guard($scope0_reason, 0) << 1, 0, 1)}</p>`);
 	_scope($scope0_id, {}, "__tests__/tags/card.marko", 0);
 });
 

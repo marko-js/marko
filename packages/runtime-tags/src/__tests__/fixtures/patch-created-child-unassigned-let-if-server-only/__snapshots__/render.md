@@ -22,6 +22,7 @@
 ```
 REMOVE: main > p + div
 INSERT: main > p
+UPDATE: main > p::text@1 "" => "1"
 ```
 
 # Update `{"on":false,"n":1}`
@@ -54,4 +55,5 @@ UPDATE: main > div[n] null => "1"
 ```
 REMOVE: main > p + div
 INSERT: main > p
+UPDATE: main > p::text@1 "" => "2"
 ```

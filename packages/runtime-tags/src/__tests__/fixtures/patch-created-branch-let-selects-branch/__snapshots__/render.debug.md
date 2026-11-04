@@ -9,6 +9,7 @@
 ## Change
 ```
 INSERT: span
+UPDATE: span::text " " => "b"
 ```
 
 # Update `{"show":true,"open":true,"label":"c"}`

@@ -10,11 +10,11 @@
     },
     "route-pg.mjs": {
       "total": {
-        "min": 2585,
-        "brotli": 1171
+        "min": 2566,
+        "brotli": 1162
       },
       "files": {
-        "tags/tab-editor.marko": 342,
+        "tags/tab-editor.marko": 354,
         "tags/route-pg.marko": 355
       }
     },

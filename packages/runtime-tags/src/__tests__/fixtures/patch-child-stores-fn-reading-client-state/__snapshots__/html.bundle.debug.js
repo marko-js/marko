@@ -2,22 +2,24 @@
 const $template$1 = "";
 const $walks$1 = "";
 const $setup$1 = [[], []];
-_shells({ "__tests__/tags/card.marko": "__tests__/tags/card.marko," });
+_shells({ "__tests__/tags/card.marko": "__tests__/tags/card.marko !," });
 var card_default = _template("__tests__/tags/card.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_fn = _server_guard($scope0_reason, 0), $fg__input_fn = _filled_guard($scope0_reason, 0), $cg__input_fn = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $sg__input_fn = _server_guard($scope0_reason, 0), $fg__input_fn = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let open = true;
 	const g = open ? input.fn : _resume(() => "-", "__tests__/tags/card.marko_0/g");
-	_script($scope0_id, "__tests__/tags/card.marko_0_g#5", 0, $fg__input_fn, "g");
-	$cg__input_fn && _patch_write($scope0_id, "PatchWrite:open", open, 1);
-	$cg__input_fn && _patch_render($scope0_id, "__tests__/tags/card.marko_0_input_fn#2_open#3/setup");
+	_script($scope0_id, "__tests__/tags/card.marko_0_g#5", 0, $sg__input_fn && 2, "input_fn");
+	_patch_render($scope0_id, "__tests__/tags/card.marko_0_input_fn#2_open#3/setup", $fg__input_fn && "input_fn");
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/card.marko_fill0", open, 1);
 	_scope($scope0_id, {
+		input_fn: input.fn,
 		open: _write_if($scope0_reason, 0) && open,
 		g
 	}, "__tests__/tags/card.marko", 0, {
+		input_fn: ["input.fn"],
 		open: "1:6",
 		g: "2:8"
-	}) || $fg__input_fn && _patch_write($scope0_id, "PatchMarkedWrite:g", g, !$sg__input_fn);
+	}) || $fg__input_fn && _patch_write($scope0_id, "PatchMarkedWrite:input_fn", input.fn, !$sg__input_fn);
 	_resume_branch($scope0_id);
 });
 

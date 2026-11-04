@@ -14,7 +14,6 @@
 ## Change
 ```
 INSERT: span, .b
-UPDATE: span::text " " => "x1"
 ```
 
 # Update

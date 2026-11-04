@@ -7,7 +7,7 @@ var card_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	let c = { slot: { body: input.content } };
 	_html("<section>");
-	_dynamic_tag($scope0_id, "a", c.slot.body, {}, 2, 0, 0, 1, _client_guard($scope0_reason, 0) << 1, 0);
+	_dynamic_tag($scope0_id, "a", c.slot.body, {}, 2, 0, 0, 1, _client_guard($scope0_reason, 0) << 1, 0, 1);
 	_html("</section>");
 	_scope($scope0_id, {}) || _client_branch(input.content);
 });
@@ -33,7 +33,7 @@ var template_default = _template("a", (input) => {
 				_html(`<em>static ${_text_resume($scope2_id, "a", input.label, 2, $scope0_reason, 2)}</em>`);
 				_client_guard($scope0_reason, 2) && _patch_render($scope2_id, "a0");
 				_subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope2_id, { _: $wi__input_show__OR__input_label && _scope_with_id($scope1_id) }));
-			}, $scope1_id, 1) });
+			}, $scope1_id, 2) });
 			_patch_child_end();
 			_scope($scope1_id, {
 				_: $wi__input_show__OR__input_label && _scope_with_id($scope0_id),

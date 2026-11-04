@@ -15,6 +15,7 @@
     "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-client-intersections/tags/promo-tag.marko_0_input_text#4_seen#5/setup": ""
   },
   "PatchChild:#childScope/5": {
-    "PatchText:#text/0": 2027
+    "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-client-intersections/tags/site-footer.marko_0_input_year#3_frozen#4/setup": "input_year",
+    "PatchMarkedWrite:input_year": 2027
   }
 }

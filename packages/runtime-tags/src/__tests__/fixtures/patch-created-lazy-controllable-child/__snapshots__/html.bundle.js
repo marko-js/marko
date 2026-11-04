@@ -2,13 +2,14 @@
 const $template$1 = "<p>sel=<!></p>";
 const $walks$1 = "Db%l";
 const $setup$1 = [[], []];
-_shells({ c: "c;Db%;<p>sel=<!></p>" });
+_shells({ c: "c !;Db%;<p>sel=<!></p>" });
 var tab_editor_default = _template("c", (input) => {
 	const $scope0_reason = _scope_reason(), $fg__input_tab = _filled_guard($scope0_reason, 1), $fg__input_tabChange = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	let selected = input.tab;
-	_html(`<p>sel=${_text_resume($scope0_id, "a", String(selected), 2, $scope0_reason, 0)}</p>`);
+	_html(`<p>sel=${_text_resume($scope0_id, "a", String(selected), 2)}</p>`);
 	_patch_render($scope0_id, "c0", [$fg__input_tab && "d", $fg__input_tabChange && "e"], $scope0_reason, 0);
+	_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "vc1", selected, 1);
 	_scope($scope0_id, {
 		d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.tab,
 		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.tabChange

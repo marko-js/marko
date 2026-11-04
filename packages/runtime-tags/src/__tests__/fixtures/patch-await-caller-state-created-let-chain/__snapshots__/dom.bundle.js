@@ -8,11 +8,11 @@ const $setup__script$1 = _script("b0", ($scope) => _on($scope.b, "click", functi
 }));
 
 // tags/show-await.marko
-const $await_content__d = /*@__PURE__*/ _let_change(10, ($scope) => _text($scope.d, $scope.k));
+const $await_content__d = fill("c2", /*@__PURE__*/ _let_change(10, ($scope) => _text($scope.d, $scope.k)));
 const $await_content__c = _let(9, ($scope) => {
-	$await_content__d($scope, $scope.j, $valueChange($scope));
 	_style_rule_item($scope.a, "--M_c0", $scope.j);
 	_text($scope.c, $scope.j);
+	$await_content__d($scope, $scope.j, $valueChange($scope));
 });
 const $await_content__b = _let(8, ($scope) => {
 	$await_content__c($scope, $scope.i);

@@ -7,7 +7,7 @@ var card_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let o = { label: input.label };
-	_html(`<p>${_text_resume($scope0_id, "a", o.label, 1, _client_guard($scope0_reason, 0) << 1, 0)}</p><button>log</button>${_el_resume($scope0_id, "b")}`);
+	_html(`<p>${_text_resume($scope0_id, "a", o.label, 1, _client_guard($scope0_reason, 0) << 1, 0, 1)}</p><button>log</button>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "b0");
 	_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "wh", o?.label, 1);
 	_scope($scope0_id, { h: o?.label });
@@ -17,8 +17,8 @@ var card_default = _template("b", (input) => {
 const $template = "<!><!><!>";
 const $setup = [[], []];
 _shells({
-	c2: `c2${_shell_marker([[], []], ["e>", $setup$1])};${/*@__PURE__*/ ((_w0) => ` bD%c%c%l/${_w0}&`)($walks)};${/*@__PURE__*/ ((_w0) => `<style></style><p class=v><!>|<!>|<!></p>${_w0}`)($template$1)}`,
-	c3: `c3${_shell_marker([[], []], ["e>", $setup$1])};${((_w0) => ` bD%c%c%l/${_w0}&`)($walks)};${((_w0) => `<style></style><p class=v><!>|<!>|<!></p>${_w0}`)($template$1)}`,
+	c3: `c3${_shell_marker([[], []], ["e>", $setup$1])};${/*@__PURE__*/ ((_w0) => ` bD%c%c%l/${_w0}&`)($walks)};${/*@__PURE__*/ ((_w0) => `<style></style><p class=v><!>|<!>|<!></p>${_w0}`)($template$1)}`,
+	c4: `c4${_shell_marker([[], []], ["e>", $setup$1])};${((_w0) => ` bD%c%c%l/${_w0}&`)($walks)};${((_w0) => `<style></style><p class=v><!>|<!>|<!></p>${_w0}`)($template$1)}`,
 	c: "c;b%;<!><!><!>"
 });
 var show_await_default = _template("c", (input) => {
@@ -29,13 +29,14 @@ var show_await_default = _template("c", (input) => {
 		let b = x;
 		let c = b;
 		let d = c;
-		_html(`${_style_html(`--M_c0:${_escape_style_value(c, $scope1_id, "ya$--M_c0", $cg__input_promise << 1, 0)};`)}${_el_resume($scope1_id, "a")}<p class=v>${_text_resume($scope1_id, "b", b, 1, $cg__input_promise << 1, 0)}|${_text_resume($scope1_id, "c", c, 2, $cg__input_promise << 1, 0, 1)}|${_text_resume($scope1_id, "d", d, 2, $cg__input_promise << 1, 0, 1)}</p>`);
+		_html(`${_style_html(`--M_c0:${_escape_style_value(c, $scope1_id, "ya$--M_c0", $cg__input_promise << 1, 0)};`)}${_el_resume($scope1_id, "a")}<p class=v>${_text_resume($scope1_id, "b", b, 1, $cg__input_promise << 1, 0, 1)}|${_text_resume($scope1_id, "c", c, 2, $cg__input_promise << 1, 0, 1)}|${_text_resume($scope1_id, "d", d, 2)}</p>`);
 		_set_scope_reason(_mask_group($scope0_reason, 0) << 1);
 		const $childScope = _peek_scope_id($scope1_id, "e", 0);
 		card_default({ label: x });
 		_patch_child_end();
+		_filled_guard($scope0_reason, 0) && _patch_fill($scope1_id, "vc2", d, 1);
 		_scope($scope1_id, { e: _existing_scope($childScope) });
-	}, 1, "c2", _unfilled_if($scope0_reason, 0), 1);
+	}, 1, "c3", _unfilled_if($scope0_reason, 0), 1);
 });
 
 // template.marko

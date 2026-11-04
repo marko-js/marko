@@ -18,7 +18,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				},
 				label: input.label
 			};
-			_html(`<p>${_text_resume($scope1_id, "#text/0", o.label, 1, $cg__input_label << 1, 0)}</p>`);
+			_html(`<p>${_text_resume($scope1_id, "#text/0", o.label, 1, $cg__input_label << 1, 0, 1)}</p>`);
 			$cg__input_label && _patch_render($scope1_id, "__tests__/template.marko_1_input_label#0:4/setup");
 			_scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "1:2");
 			return 0;

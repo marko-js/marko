@@ -12,7 +12,7 @@ const $for_content__$params = ($scope, $params2) => $for_content__o($scope, $par
 const $for_content__o = /*@__PURE__*/ _const("o", $for_content2__o);
 const $for = /*@__PURE__*/ _for_of_unkeyed("#text/0", "<!><!><!>", "b%", $for_content__setup, $for_content__$params);
 const $outer = _let("outer/2", ($scope) => $for($scope, [$scope.outer]));
-const $inner = _let("inner/3");
+const $inner = _let("inner/3", $for_content__inner);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$outer($scope, [...$scope.outer, "b"]);
 }));

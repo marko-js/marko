@@ -9,10 +9,10 @@ const $if_content__input_a = /*@__PURE__*/ _if_closure_patch("__tests__/template
 });
 const $if_content__k = /*@__PURE__*/ _const("k");
 const $if_content__y__script = _script("__tests__/template.marko_1_y#6", ($scope) => _el_read($scope["#span/0"]).dataset.y = String($scope.y));
-const $if_content__y = _let("y/6", ($scope) => {
+const $if_content__y = _fill_let_resume("__tests__/template.marko_fill1", _let("y/6", ($scope) => {
 	$if_content__y__script($scope);
 	$if_content__k($scope, $scope.y + 1);
-});
+}));
 const $if_content__x = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill0", "x/4", ($scope) => {
 	$if_content__y($scope, $scope.x);
 	$if_content__input_a__OR__x($scope);

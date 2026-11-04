@@ -2,9 +2,7 @@
 `b1;D ;<p> </p>`
 {
   ca: {
-    ba: [{
-      ib0: ">g"
-    }],
+    ib5: "g",
     ib3: "g",
     xg: "y"
   },
@@ -21,9 +19,7 @@
 // PATCH holding BgI
 {
   ca: {
-    ba: [{
-      ib0: ">g"
-    }],
+    ib5: "g",
     ib3: "g",
     xg: "z"
   },

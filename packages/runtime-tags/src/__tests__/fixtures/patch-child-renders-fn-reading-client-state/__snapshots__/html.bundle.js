@@ -1,20 +1,21 @@
 // tags/card.marko
 const $template = "<p> </p>";
 const $setup$1 = [[], []];
-_shells({ b: "b;D ;<p> </p>" });
+_shells({ b: "b !;D ;<p> </p>" });
 var card_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_fn = _server_guard($scope0_reason, 0), $fg__input_fn = _filled_guard($scope0_reason, 0), $cg__input_fn = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $sg__input_fn = _server_guard($scope0_reason, 0), $fg__input_fn = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let open = true;
 	const g = input.fn;
-	_html(`<p>${_text_resume($scope0_id, "a", g(), 1, $scope0_reason, 0)}</p>`);
-	_script($scope0_id, "b1", 1, $fg__input_fn, "g");
-	$cg__input_fn && _patch_write($scope0_id, "we", open, 1);
-	$cg__input_fn && _patch_render($scope0_id, "b2");
+	_html(`<p>${_text_resume($scope0_id, "a", g())}</p>`);
+	_script($scope0_id, "b1", 1, $sg__input_fn && 2, "d");
+	_patch_render($scope0_id, "b2", $fg__input_fn && "d");
+	_patch_fill($scope0_id, "vb3", open, 1);
 	_scope($scope0_id, {
+		d: input.fn,
 		e: _write_if($scope0_reason, 0) && open,
 		g
-	}) || $fg__input_fn && _patch_write($scope0_id, "xg", g, !$sg__input_fn);
+	}) || $fg__input_fn && _patch_write($scope0_id, "xd", input.fn, !$sg__input_fn);
 });
 
 // template.marko

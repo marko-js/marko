@@ -2,7 +2,7 @@
 const $g2__script = _script("b1", ($scope) => console.log("run", $scope.f()));
 const $g2 = /*@__PURE__*/ _const(5, $g2__script);
 const $input_fn__OR__open = /*@__PURE__*/ _or_patch("b2", 4, ($scope) => $g2($scope, $scope.d ? $scope.c : $g));
-const $open = _let(3, $input_fn__OR__open);
+const $open = fill("b3", _let(3, $input_fn__OR__open));
 const $input_fn = /*@__PURE__*/ _const(2, $input_fn__OR__open);
 function $g() {
 	return "-";

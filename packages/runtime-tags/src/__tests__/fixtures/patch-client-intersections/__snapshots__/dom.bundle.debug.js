@@ -57,7 +57,7 @@ var promo_tag_default = /*@__PURE__*/ _template("__tests__/tags/promo-tag.marko"
 const $template = "<footer> </footer>";
 const $walks = "D l";
 const $input_year__OR__frozen = /*@__PURE__*/ _or_patch("__tests__/tags/site-footer.marko_0_input_year#3_frozen#4/setup", 5, ($scope) => _text($scope["#text/0"], $scope.input_year + $scope.frozen));
-const $frozen = _let("frozen/4", $input_year__OR__frozen);
+const $frozen = _fill_let_resume("__tests__/tags/site-footer.marko_fill0", _let("frozen/4", $input_year__OR__frozen));
 function $setup($scope) {
 	$frozen($scope, 0);
 }

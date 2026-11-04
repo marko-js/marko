@@ -25,6 +25,7 @@
 ```
 REMOVE: main > p + div
 INSERT: main > p
+UPDATE: main > p::text " " => "2"
 ```
 
 # Update `{"on":true,"n":3}`

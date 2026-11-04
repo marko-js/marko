@@ -1,14 +1,14 @@
 // tags/outer.marko
 const $template = "<p> </p>";
 const $setup$1 = [[], []];
-_shells({ b: "b;D ;<p> </p>" });
+_shells({ b: "b !;D ;<p> </p>" });
 var outer_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $fg__input_b = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	let x = input.a;
 	_html(`<p>${_text_resume($scope0_id, "a", x + input.b)}</p>`);
-	_filled_guard($scope0_reason, 0) && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "wf", x, 1);
 	_patch_render($scope0_id, "b0", $fg__input_b && "e");
+	_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "vb1", x, 1);
 	_scope($scope0_id, {
 		e: input.b,
 		f: _write_if($scope0_reason, 1) && x

@@ -51,7 +51,6 @@ import {
 import {
   hasClientState,
   isPatchKeyedSlot,
-  keepsInitialValue,
   onReasonsSettled,
 } from "./patch/decisions";
 import {
@@ -1103,13 +1102,7 @@ function getGroupSourcesValue<R>(
   sources: Sources | undefined,
   combine: (groups: [Section, ParamReasonGroup][], bits: number) => R,
 ) {
-  // State alone that the client never changes is a call-site constant.
-  if (
-    sources?.state &&
-    (sources.param ||
-      sources.global ||
-      !every(sources.state, keepsInitialValue))
-  ) {
+  if (sources?.state) {
     return sources.param
       ? UpdatesFrom.Client | UpdatesFrom.Server
       : UpdatesFrom.Client;

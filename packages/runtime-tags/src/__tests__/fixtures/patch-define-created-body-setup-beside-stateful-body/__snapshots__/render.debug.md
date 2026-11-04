@@ -24,6 +24,7 @@
 ```
 INSERT: em
 UPDATE: em:nth-of-type(2)::text@0 "a!" => "b!"
+UPDATE: em:nth-of-type(1)::text@2 "" => "1"
 ```
 
 # Update
@@ -80,4 +81,5 @@ REMOVE: em
 ## Change
 ```
 INSERT: em
+UPDATE: em::text@2 "" => "1"
 ```

@@ -6,8 +6,8 @@ const $if_content2__setup = ($scope) => {
 	$if_content2__label._($scope);
 	$if_content2__n._($scope);
 };
-const $if_content2__n = /*@__PURE__*/ _if_closure(0, 0, ($scope) => _text($scope.b, $scope._.f));
-const $Panel_content__n = _let(5);
+const $if_content2__n = /*@__PURE__*/ _if_closure_patch("a11", 0, 0, ($scope) => _text($scope.b, $scope._.f));
+const $Panel_content__n = fill("a4", _let(5, $if_content2__n));
 const $Panel_content__setup = ($scope) => $Panel_content__n($scope, 1);
 const $Panel_content__if = /*@__PURE__*/ _if(0, "<em><!> <!></em>", "D%c%", $if_content2__setup);
 const $Panel_content__isOpen = ($scope, isOpen) => $Panel_content__if($scope, isOpen ? 0 : 1);
@@ -19,11 +19,11 @@ const $Panel_content__$temp = ($scope, $temp) => {
 };
 const $Panel_content = _content$1("a3", $Panel_content__template, $Panel_content__walks, $Panel_content__setup, $Panel_content__$params);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag(1);
-const $input_label__OR__open__OR__Tag = /*@__PURE__*/ _or_patch("a8", 12, ($scope) => $dynamicTag($scope, $scope.l, ($_) => ({
+const $input_label__OR__open__OR__Tag = /*@__PURE__*/ _or_patch("a9", 12, ($scope) => $dynamicTag($scope, $scope.l, ($_) => ({
 	isOpen: !$scope.i,
 	label: $scope.g + "!"
 })), 2);
 const $open = _let(8, $input_label__OR__open__OR__Tag);
-const $setup__script = _script("a6", ($scope) => _on($scope.c, "click", function() {
+const $setup__script = _script("a7", ($scope) => _on($scope.c, "click", function() {
 	$open($scope, !$scope.i);
 }));

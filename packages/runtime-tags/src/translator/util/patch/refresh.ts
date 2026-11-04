@@ -147,8 +147,7 @@ function isPatchSent(binding: Binding) {
     hasParamOrGlobalSource(binding.sources) &&
     !binding.sources!.state &&
     (binding.type === BindingType.param ||
-      binding.type === BindingType.derived ||
-      (binding.type === BindingType.let && !binding.assignments)) &&
+      binding.type === BindingType.derived) &&
     !derivesLocals(binding.section)
   );
 }
@@ -318,12 +317,7 @@ export function canPatchFill(binding: Binding) {
       // the value, or takes it past the scope's renders and effects (a child, an intersection).
       (binding.type === BindingType.let &&
         mayBeCreated(binding.section) &&
-        ((!!binding.assignments && !!getWriteReason(binding)) ||
-          readsPastRenders(
-            binding,
-            binding.section,
-            !!binding.assignments,
-          )))) &&
+        (!!getWriteReason(binding) || readsPastRenders(binding)))) &&
     bindingUtil.has(binding.sources.state, binding)
   );
 }
@@ -393,41 +387,14 @@ function seedsCreatedScope(binding: Binding) {
 
 // Read in `section` past renders, effects, setup, name-only dynamic tags and (never
 // assigned) control flow and call arguments: by a child, intersection or return.
-function readsPastRenders(
-  binding: Binding,
-  section: Section,
-  assigned: boolean,
-  seen = new Set<Binding>(),
-): boolean {
-  if (seen.has(binding)) return false;
-  seen.add(binding);
-  if (
-    someBindingRead(
-      binding,
-      (read) =>
-        read.section !== section ||
-        (!(
-          read.rendersValue ||
-          read.isEffect ||
-          read.initialValue ||
-          read.nameOnly ||
-          (!assigned && (!!getExprBranch(read) || !!read.callSiteExprs))
-        ) &&
-          (!read.derives ||
-            some(
-              read.derives,
-              (derived) =>
-                derived.section !== section ||
-                readsPastRenders(derived, section, assigned, seen),
-            ))),
-    )
-  ) {
-    return true;
-  }
-  for (const alias of binding.propertyAliases.values()) {
-    if (readsPastRenders(alias, section, assigned, seen)) return true;
-  }
-  return false;
+function readsPastRenders(binding: Binding) {
+  return someRead(
+    bindingReaders(binding, true),
+    (read) =>
+      !(read.rendersValue || read.isEffect || read.nameOnly) &&
+      (!read.derives ||
+        some(read.derives, (derived) => derived.section !== binding.section)),
+  );
 }
 
 // A `<let>` the created scope starts from its render's value, as a resumed

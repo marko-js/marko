@@ -1,35 +1,41 @@
 // PATCH
-[`a1;D ;<span> </span>`, `a2;b%;<!><!><!>`]
+`a3 !;b%;<!><!><!>`
 {
   ba: [{
-    ba: [{
-      ta: "b"
-    }, "a1"]
-  }, "a2"],
+    o: {
+      va2: !0
+    }
+  }, "a3"],
+  Sa4: "f",
   xf: "b"
 }
-;BwY
+;BAE
 
-// PATCH holding BwY
+// PATCH holding BAE
 {
   ba: [{
-    ba: [{
-      ta: "c"
-    }, "a1"]
-  }, "a2"],
+    o: {
+      va2: !0
+    }
+  }, "a3"],
+  Sa4: "f",
   xf: "c"
 }
 
-// PATCH holding BwY
+// PATCH holding BAE
 {
   ba: 0,
+  Sa4: "f",
   xf: "d"
 }
 
-// PATCH holding BwY
+// PATCH holding BAE
 {
   ba: [{
-    ba: 0
-  }, "a2"],
+    o: {
+      va2: !1
+    }
+  }, "a3"],
+  Sa4: "f",
   xf: "e"
 }

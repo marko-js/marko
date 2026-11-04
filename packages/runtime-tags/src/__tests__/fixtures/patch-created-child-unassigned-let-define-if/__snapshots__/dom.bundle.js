@@ -1,7 +1,7 @@
 // tags/card.marko
 const $Panel_content__if = /*@__PURE__*/ _if(0, "<p><b>yes</b></p>");
 const $Panel_content__open = ($scope, open) => $Panel_content__if($scope, open ? 0 : 1);
-const $n = _let(4, ($scope) => $Panel_content__open($scope.a, $scope.e));
+const $n = fill("b1", _let(4, ($scope) => $Panel_content__open($scope.a, $scope.e)));
 
 // template.marko
 const $c = _let(8, ($scope) => _text($scope.b, $scope.i));

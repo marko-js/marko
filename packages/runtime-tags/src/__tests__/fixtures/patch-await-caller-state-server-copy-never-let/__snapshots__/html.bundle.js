@@ -2,20 +2,21 @@
 const $template = "<!><!><!>";
 const $setup = [[], []];
 _shells({
-	b1: "b1;D%c%;<p><!>:<!></p>",
-	b2: "b2;D%c%;<p><!>:<!></p>",
+	b2: "b2 !;D%c%;<p><!>:<!></p>",
+	b3: "b3 !;D%c%;<p><!>:<!></p>",
 	b: "b;b%;<!><!><!>"
 });
 var show_await_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_promise = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_await($scope0_id, "a", input.promise, (x) => {
 		const $scope1_id = _scope_id();
 		let n = x;
 		let m = n;
-		_html(`<p>${_text_resume($scope1_id, "a", n, 1, $cg__input_promise << 1, 0, 1)}:${_text_resume($scope1_id, "b", m, 2, $cg__input_promise << 1, 0, 1)}</p>`);
+		_html(`<p>${_text_resume($scope1_id, "a", n, 1, _client_guard($scope0_reason, 0) << 1, 0, 1)}:${_text_resume($scope1_id, "b", m, 2)}</p>`);
+		_filled_guard($scope0_reason, 0) && _patch_fill($scope1_id, "vb1", m, 1);
 		_scope($scope1_id, {});
-	}, 1, "b1", _unfilled_if($scope0_reason, 0) && 2, 1);
+	}, 1, "b2", _unfilled_if($scope0_reason, 0) && 2, 1);
 });
 
 // template.marko

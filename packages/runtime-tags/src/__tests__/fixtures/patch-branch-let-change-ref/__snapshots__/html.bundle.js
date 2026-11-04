@@ -18,7 +18,8 @@ var template_default = _template("a", (input) => {
 			_html(`<span>Seen ${_text_resume($scope1_id, "a", count, 2)}</span><button>+</button>${_el_resume($scope1_id, "b")}`);
 			_script($scope1_id, "a1");
 			const $countChange = handler || void 0;
-			_patch_let_change($scope1_id, "va2", count, "we", $countChange);
+			_patch_fill($scope1_id, "va2", count, 1);
+			_patch_bind($scope1_id, "we", $countChange);
 			_scope($scope1_id, {
 				d: count,
 				_: _scope_with_id($scope0_id),

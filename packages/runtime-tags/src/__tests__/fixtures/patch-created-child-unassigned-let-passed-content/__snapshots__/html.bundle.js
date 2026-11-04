@@ -20,13 +20,14 @@ const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1);
 const $setup = _shell_setup([[], []], ["a>", $setup$1]);
 _shells({ c: `c${_shell_marker($setup)};${((_w0) => `/${_w0}&`)($walks$1)};${$template$1}` });
 var outer_default = _template("c", (input) => {
-	_scope_reason();
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let o = input.content;
-	_set_scope_reason(0);
+	_set_scope_reason(2);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	card_default({ content: o });
 	_patch_child_end();
+	_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "vc0", o, 1);
 	_scope($scope0_id, { a: _existing_scope($childScope) }) || _client_branch(input.content);
 });
 

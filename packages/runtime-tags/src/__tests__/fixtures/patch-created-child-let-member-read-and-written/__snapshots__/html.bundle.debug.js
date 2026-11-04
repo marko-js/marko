@@ -7,7 +7,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let o = input.opts;
-	_html(`<p>${_text_resume($scope0_id, "#text/0", o.label, 1, _client_guard($scope0_reason, 0) << 1, 0)}</p><button>log</button>${_el_resume($scope0_id, "#button/1")}`);
+	_html(`<p>${_text_resume($scope0_id, "#text/0", o.label, 1, _client_guard($scope0_reason, 0) << 1, 0, 1)}</p><button>log</button>${_el_resume($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/tags/card.marko_0");
 	_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchWrite:o_label", o?.label, 1);
 	_scope($scope0_id, { o_label: o?.label }, "__tests__/tags/card.marko", 0, { o_label: ["o.label", "1:6"] });

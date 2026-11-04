@@ -9,6 +9,7 @@
 ## Change
 ```
 INSERT: button
+UPDATE: button::text " " => "f:b"
 ```
 
 # Update

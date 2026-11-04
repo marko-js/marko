@@ -80,39 +80,27 @@ export function seedsOnly(section: Section, sources: Sources | undefined) {
 }
 
 // A `<let>` at the initial value the server renders as the section's scope is created:
-// from initial values only, created with the scope or never assigned, and unfilled.
+// from initial values only, created with the scope, and unfilled.
 export function holdsInitialValue(state: Binding, section: Section) {
   return (
     state.initReadsInitialValues &&
-    (state.section === section || !state.assignments) &&
+    state.section === section &&
     !fillsInitialValue(state)
   );
 }
 
-// A seed-only hole a `<let>` the client assigns sources: that `<let>`'s signal
-// rewrites the node, so the page keeps its marker whatever the group.
+// The sources take client state: every `<let>` is, assigned or not.
+export function hasClientState(sources: Sources | undefined) {
+  return !!sources?.state;
+}
+
+// A seed-only hole: its `<let>`s' signals rewrite the node, so the page keeps its
+// marker whatever the group.
 export function keepsSeededMarker(
   section: Section,
   extra: t.NodeExtra | undefined,
 ) {
-  const sources = getWriteSources(extra);
-  return seedsOnly(section, sources) && some(sources!.state, isAssigned);
-}
-
-function isAssigned(state: Binding) {
-  return !!state.assignments;
-}
-
-// A `<let>` the client never changes: nothing assigns it, and it holds the
-// initial value the server renders.
-export function keepsInitialValue(state: Binding) {
-  return !state.assignments && holdsInitialValue(state, state.section);
-}
-
-// The sources take client state: a `<let>` that keeps its initial value renders
-// as the server does.
-export function hasClientState(sources: Sources | undefined) {
-  return !every(sources?.state, keepsInitialValue);
+  return seedsOnly(section, getWriteSources(extra));
 }
 
 // A handler written inline merged its references with its control's, so

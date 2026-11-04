@@ -7,7 +7,7 @@ var card_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $cg__input_items = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let items = input.items;
-	_html(`<p>${_text_resume($scope0_id, "a", items.join(","), 1, $cg__input_items << 1, 0)} (${_text_resume($scope0_id, "b", items.length, 2, $cg__input_items << 1, 0)})</p>`);
+	_html(`<p>${_text_resume($scope0_id, "a", items.join(","), 1, $cg__input_items << 1, 0, 1)} (${_text_resume($scope0_id, "b", items.length, 2, $cg__input_items << 1, 0, 1)})</p>`);
 	_scope($scope0_id, {});
 });
 

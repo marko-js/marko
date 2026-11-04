@@ -2,14 +2,16 @@
 const $template$1 = "<span> </span>";
 const $walks$1 = "D l";
 const $setup$1 = [[], []];
-_shells({ "__tests__/tags/counter-box/index.marko": "^__tests__/tags/counter-box/index.marko;D ;<span> </span>" });
+_shells({ "__tests__/tags/counter-box/index.marko": "^__tests__/tags/counter-box/index.marko !;D ;<span> </span>" });
+_stateful_return("__tests__/tags/counter-box/index.marko");
 var counter_box_default = _template("__tests__/tags/counter-box/index.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 1;
-	_html(`<span>${_text_resume($scope0_id, "#text/0", count, 1, 0, 0)}</span>`);
+	_html(`<span>${_text_resume($scope0_id, "#text/0", count)}</span>`);
 	const $return = count;
 	const $valueChange = _patch_bind($scope0_id, "PatchWrite:#TagVariableChange", input.onChange || void 0, $scope0_reason, 0);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/counter-box/index.marko_fill0", count, 1);
 	_scope($scope0_id, {
 		input_onChange: input.onChange,
 		"#TagVariableChange": $valueChange

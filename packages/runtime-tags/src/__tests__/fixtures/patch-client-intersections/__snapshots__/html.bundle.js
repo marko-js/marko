@@ -39,15 +39,18 @@ var promo_tag_default = _template("c", (input) => {
 // tags/site-footer.marko
 const $template = "<footer> </footer>";
 const $setup$1 = [[], []];
-_shells({ d: "d;D ;<footer> </footer>" });
+_shells({ d: "d !;D ;<footer> </footer>" });
 var site_footer_default = _template("d", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_year = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $fg__input_year = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let frozen = 0;
-	_html(`<footer>${_text_resume($scope0_id, "a", input.year + frozen, 1, $scope0_reason, 0)}</footer>`);
-	$cg__input_year && _patch_write($scope0_id, "we", frozen, 1);
-	$cg__input_year && _patch_render($scope0_id, "d0");
-	_scope($scope0_id, { e: _unfilled_if($scope0_reason, 0) && frozen });
+	_html(`<footer>${_text_resume($scope0_id, "a", input.year + frozen)}</footer>`);
+	_patch_render($scope0_id, "d0", $fg__input_year && "d");
+	_patch_fill($scope0_id, "vd1", frozen, 1);
+	_scope($scope0_id, {
+		d: input.year,
+		e: _write_if($scope0_reason, 0) && frozen
+	}) || $fg__input_year && _patch_write($scope0_id, "xd", input.year, !_server_guard($scope0_reason, 0));
 });
 
 // template.marko

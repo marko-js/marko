@@ -3,8 +3,8 @@ const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $setup$1 = [[], []];
 _shells({
-	"__tests__/tags/show-await.marko_1*content": "__tests__/tags/show-await.marko_1*content __tests__/tags/show-await.marko_1_b#5_a#6/setup!__tests__/tags/show-await.marko_1;D%c%l ;<p><!>|<!></p><button class=log>log</button>",
-	"__tests__/tags/show-await.marko_0_#text#0/await": "__tests__/tags/show-await.marko_0_#text#0/await __tests__/tags/show-await.marko_1_b#5_a#6/setup!__tests__/tags/show-await.marko_1;D%c%l ;<p><!>|<!></p><button class=log>log</button>",
+	"__tests__/tags/show-await.marko_1*content": "__tests__/tags/show-await.marko_1*content !__tests__/tags/show-await.marko_1;D%c%l ;<p><!>|<!></p><button class=log>log</button>",
+	"__tests__/tags/show-await.marko_0_#text#0/await": "__tests__/tags/show-await.marko_0_#text#0/await !__tests__/tags/show-await.marko_1;D%c%l ;<p><!>|<!></p><button class=log>log</button>",
 	"__tests__/tags/show-await.marko": "__tests__/tags/show-await.marko;b%;<!><!><!>"
 });
 var show_await_default = _template("__tests__/tags/show-await.marko", (input) => {
@@ -18,11 +18,11 @@ var show_await_default = _template("__tests__/tags/show-await.marko", (input) =>
 			v: b,
 			self: _resume(() => a, "__tests__/tags/show-await.marko_1/a", $scope1_id)
 		};
-		_html(`<p>${_text_resume($scope1_id, "#text/0", b, 1, _client_guard($scope0_reason, 0) << 1, 0)}|${_text_resume($scope1_id, "#text/1", input.label, 2, $scope0_reason, 1)}</p><button class=log>log</button>${_el_resume($scope1_id, "#button/2")}`);
+		_html(`<p>${_text_resume($scope1_id, "#text/0", b)}|${_text_resume($scope1_id, "#text/1", input.label, 2, $scope0_reason, 1)}</p><button class=log>log</button>${_el_resume($scope1_id, "#button/2")}`);
 		_script($scope1_id, "__tests__/tags/show-await.marko_1");
-		$fg__input_promise && _patch_write($scope1_id, "PatchWrite:b", b, 1);
-		$fg__input_promise && _patch_write($scope1_id, "PatchWrite:a_v", a?.v, 1);
 		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "__tests__/tags/show-await.marko_1_input_label#0:4/subscribe", $cg__input_label);
+		$fg__input_promise && _patch_fill($scope1_id, "PatchFill:__tests__/tags/show-await.marko_fill0", b, 1);
+		$fg__input_promise && _patch_fill($scope1_id, "PatchFill:__tests__/tags/show-await.marko_fill1", a, 1);
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_label__closures, _scope($scope1_id, {
 			b,
 			a,

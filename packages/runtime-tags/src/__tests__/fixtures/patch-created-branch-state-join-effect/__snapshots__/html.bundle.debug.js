@@ -4,7 +4,7 @@ const $walks = "b%b b";
 const $setup = [[], ["__tests__/template.marko_0"]];
 _shells({
 	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;b%b ;<!><!><button>+</button>",
-	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell __tests__/template.marko_1_count#0:5/setup __tests__/template.marko_1_count#0:5_n#2/setup;D%c%;<p><!>:<!></p>"
+	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell __tests__/template.marko_1_count#0:5/setup;D%c%;<p><!>:<!></p>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason();
@@ -14,9 +14,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			let n = 0;
-			_html(`<p>${_text_resume($scope1_id, "#text/0", n, 1, 0, 0)}:${_text_resume($scope1_id, "#text/1", count, 2)}</p>`);
+			_html(`<p>${_text_resume($scope1_id, "#text/0", n)}:${_text_resume($scope1_id, "#text/1", count, 2)}</p>`);
 			_script($scope1_id, "__tests__/template.marko_1_count#0:5_n#2");
-			_patch_write($scope1_id, "PatchWrite:n", n, 1);
+			_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill0", n, 1);
 			_scope($scope1_id, {
 				n,
 				_: _scope_with_id($scope0_id)

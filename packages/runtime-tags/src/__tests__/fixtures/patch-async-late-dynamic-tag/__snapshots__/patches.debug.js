@@ -1,5 +1,5 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-async-late-dynamic-tag/template.marko_1*content`, `packages/runtime-tags/src/__tests__/fixtures/patch-async-late-dynamic-tag/template.marko_3*content;D ;<em> </em>`, `packages/runtime-tags/src/__tests__/fixtures/patch-async-late-dynamic-tag/template.marko_4*content;D ;<b> </b>`]
+[`packages/runtime-tags/src/__tests__/fixtures/patch-async-late-dynamic-tag/template.marko_1*content`, `packages/runtime-tags/src/__tests__/fixtures/patch-async-late-dynamic-tag/template.marko_3*content;D ;<em> </em>`]
 {
   "PatchDynamicTag:#text/0": [">div", "packages/runtime-tags/src/__tests__/fixtures/patch-async-late-dynamic-tag/template.marko_1*content", {
     class: "box"
@@ -9,14 +9,15 @@
       "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-async-late-dynamic-tag/template.marko_3*content"
     }
   },
-  "PatchChild:#childScope/1": {
-    "PatchBranch:#section/0": [{
-      "PatchChild:BranchScopes:#text/0": {
-        "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-async-late-dynamic-tag/template.marko_4*content"
-      }
-    }]
-  },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-async-late-dynamic-tag/template.marko_0_input_p#6/subscribers": "input_p"
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-async-late-dynamic-tag/template.marko_0_input_p#6/subscribers": "input_p",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-async-late-dynamic-tag/template.marko_0_input_q#7/subscribers": "input_q",
+  "PatchMarkedWrite:input_q": (p => p = new Promise((f, r) => _.a = {
+    f,
+    r(e) {
+      p.catch(_ => 0);
+      r(e)
+    }
+  }))()
 }
 {
   "PatchChild:BranchScopes:#text/0": {
@@ -27,20 +28,10 @@
     }
   }
 }
-{
-  "PatchChild:#childScope/1": {
-    "PatchChild:BranchScopes:#section/0": {
-      "PatchChild:BranchScopes:#text/0": {
-        "PatchChild:BranchScopes:#text/0": {
-          "PatchText:#text/0": "b"
-        }
-      }
-    }
-  }
-}
-;E4gB
+(_.a.f("b"), 0)
+;DRQ
 
-// PATCH holding E4gB
+// PATCH holding DRQ
 {
   "PatchDynamicTag:#text/0": [">section", "packages/runtime-tags/src/__tests__/fixtures/patch-async-late-dynamic-tag/template.marko_1*content", {
     class: "box"
@@ -50,14 +41,15 @@
       "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-async-late-dynamic-tag/template.marko_3*content"
     }
   },
-  "PatchChild:#childScope/1": {
-    "PatchBranch:#section/0": [{
-      "PatchChild:BranchScopes:#text/0": {
-        "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-async-late-dynamic-tag/template.marko_4*content"
-      }
-    }]
-  },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-async-late-dynamic-tag/template.marko_0_input_p#6/subscribers": "input_p"
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-async-late-dynamic-tag/template.marko_0_input_p#6/subscribers": "input_p",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-async-late-dynamic-tag/template.marko_0_input_q#7/subscribers": "input_q",
+  "PatchMarkedWrite:input_q": (p => p = new Promise((f, r) => _.a = {
+    f,
+    r(e) {
+      p.catch(_ => 0);
+      r(e)
+    }
+  }))()
 }
 {
   "PatchChild:BranchScopes:#text/0": {
@@ -68,14 +60,4 @@
     }
   }
 }
-{
-  "PatchChild:#childScope/1": {
-    "PatchChild:BranchScopes:#section/0": {
-      "PatchChild:BranchScopes:#text/0": {
-        "PatchChild:BranchScopes:#text/0": {
-          "PatchText:#text/0": "c"
-        }
-      }
-    }
-  }
-}
+(_.a.f("c"), 0)

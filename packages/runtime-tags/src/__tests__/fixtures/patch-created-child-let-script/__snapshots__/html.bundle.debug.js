@@ -1,15 +1,15 @@
 // tags/probe.marko
 const $template$1 = "<p>probe</p>";
 const $walks$1 = "b";
-const $setup$1 = [[], ["__tests__/tags/probe.marko_0_count#0"]];
-_shells({ "__tests__/tags/probe.marko": "__tests__/tags/probe.marko !__tests__/tags/probe.marko_0_count#0,<p>probe</p>" });
+const $setup$1 = [[], []];
+_shells({ "__tests__/tags/probe.marko": "__tests__/tags/probe.marko !,<p>probe</p>" });
 var probe_default = _template("__tests__/tags/probe.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 5;
 	_html("<p>probe</p>");
 	_script($scope0_id, "__tests__/tags/probe.marko_0_count#0", 0);
-	_patch_write($scope0_id, "PatchWrite:count", count, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/probe.marko_fill0", count, 1);
 	_scope($scope0_id, { count }, "__tests__/tags/probe.marko", 0, { count: "1:6" });
 	_resume_branch($scope0_id);
 });

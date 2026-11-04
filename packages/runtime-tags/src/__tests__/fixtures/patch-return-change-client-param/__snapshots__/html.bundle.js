@@ -1,14 +1,16 @@
 // tags/counter-box/index.marko
 const $template = "<span> </span>";
 const $setup$1 = [[], []];
-_shells({ b: "b;D ;<span> </span>" });
+_shells({ b: "b !;D ;<span> </span>" });
+_stateful_return("b");
 var counter_box_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 1;
-	_html(`<span>${_text_resume($scope0_id, "a", count, 1, 0, 0)}</span>`);
+	_html(`<span>${_text_resume($scope0_id, "a", count)}</span>`);
 	const $return = count;
 	const $valueChange = _patch_bind($scope0_id, "wU", input.onChange || void 0, $scope0_reason, 0);
+	_patch_fill($scope0_id, "vb0", count, 1);
 	_scope($scope0_id, {
 		d: input.onChange,
 		U: $valueChange

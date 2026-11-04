@@ -18,7 +18,7 @@ const $if_content__input_a = /*@__PURE__*/ _if_closure_patch("__tests__/template
 	$if_content__input_a__OR__x($scope);
 	_text($scope["#text/1"], $scope._.input_a);
 });
-const $if_content__y = _let("y/6", ($scope) => $Body_content__v($scope["#childScope/0"], $scope.y));
+const $if_content__y = _fill_let_resume("__tests__/template.marko_fill1", _let("y/6", ($scope) => $Body_content__v($scope["#childScope/0"], $scope.y)));
 const $if_content__x = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill0", "x/4", ($scope) => {
 	$if_content__y($scope, $scope.x);
 	$if_content__input_a__OR__x($scope);

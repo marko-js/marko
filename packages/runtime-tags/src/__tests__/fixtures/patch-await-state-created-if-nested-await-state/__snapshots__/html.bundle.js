@@ -2,10 +2,10 @@
 _shells({
 	a0: "a0;D ;<b> </b>",
 	a1: "a1;D ;<b> </b>",
-	a2: "a2;D l%;<p> </p><!><!>",
-	a: "a !a5; D l%;<button> </button><!><!>",
-	a3: "a3;D l%;<p> </p><!><!>",
-	a4: "a4 a9;b%;<!><!><!>"
+	a2: "a2 !;D l%;<p> </p><!><!>",
+	a: "a !a6; D l%;<button> </button><!><!>",
+	a3: "a3 !;D l%;<p> </p><!><!>",
+	a4: "a4 a10;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
@@ -21,15 +21,16 @@ var template_default = _template("a", (input) => {
 				_html(`<p>${_text_resume($scope2_id, "a", x)}</p>`);
 				_await($scope2_id, "b", q, (y) => {
 					const $scope3_id = _scope_id();
-					_html(`<b>${_text_resume($scope3_id, "a", y, 1, 0, 0)}</b>`);
+					_html(`<b>${_text_resume($scope3_id, "a", y)}</b>`);
 					_scope($scope3_id, {});
-				}, 1, "a0");
+				}, 1, "a0", 2);
+				_patch_fill($scope2_id, "va5", q, 1);
 				_scope($scope2_id, {});
-			}, 1, "a2", 1);
+			}, 1, "a2", 3);
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
 	}, $scope0_id, "c", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["a4"], $scope0_reason, 0);
-	_script($scope0_id, "a5");
+	_script($scope0_id, "a6");
 	_scope($scope0_id, { g: n });
 }, 1);

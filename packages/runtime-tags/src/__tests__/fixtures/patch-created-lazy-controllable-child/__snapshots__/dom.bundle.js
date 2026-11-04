@@ -1,5 +1,5 @@
 // tags/tab-editor.marko
-const $selected = /*@__PURE__*/ _let_change(6, ($scope) => _text($scope.a, String($scope.g)));
+const $selected = fill("c1", /*@__PURE__*/ _let_change(6, ($scope) => _text($scope.a, String($scope.g))));
 const $input_tab__OR__input_tabChange = /*@__PURE__*/ _or_patch("c0", 5, ($scope) => $selected($scope, $scope.d, $scope.e));
 const $input_tab = /*@__PURE__*/ _const(3, $input_tab__OR__input_tabChange);
 

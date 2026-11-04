@@ -29,10 +29,10 @@
 ## Change
 ```
 INSERT: .swap + :is(.cM_0, .v, p, button)
-UPDATE: .v::text@4 "" => "a"
 REMOVE: .cM_0::text(".cM_0~*{}")
 INSERT: .cM_0::text(".cM_0~*{--M_packages-1bruntime-19tags-1bsrc-1b__tests__-1bfixtures-1bpatch-19await-19caller-19state-19created-19let-19chain-1btags-1bshow-19await-1amarko_0:a;}")
 UPDATE: .v::text@2 "" => "a"
+UPDATE: .v::text@4 "" => "a"
 UPDATE: .v::text@0 "" => "a"
 UPDATE: p:nth-of-type(2)::text " " => "a"
 ```

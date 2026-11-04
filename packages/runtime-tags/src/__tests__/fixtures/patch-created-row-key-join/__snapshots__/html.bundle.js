@@ -2,7 +2,7 @@
 _shells({
 	a: "a; ;<ul></ul>",
 	a2: "a2 !; ;<li></li>",
-	a1: "a1 a6 a7!a0; D ;<button> </button>"
+	a1: "a1 a7 a8!a0; D ;<button> </button>"
 });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 1), $fg__input_show = _filled_guard($scope0_reason, 1), $cg__input_items = _client_guard($scope0_reason, 0);
@@ -23,9 +23,9 @@ var template_default = _template("a", (input) => {
 			}
 		}, $scope1_id, "a", 1, $wg__input_show, 1, 0, 0, ["a1"], $scope0_reason, 1);
 		_html(`</li>${_el_resume($scope1_id, "a", $wg__input_show)}`);
-		_patch_write($scope1_id, "wd", m, 1);
 		_client_guard($scope0_reason, 1) && _patch_render($scope1_id, "a3");
 		_patch_fill($scope1_id, "va4", n, 1);
+		_patch_fill($scope1_id, "va5", m, 1);
 		_scope($scope1_id, {
 			M: item?.id,
 			c: n,

@@ -22,4 +22,5 @@
 INSERT: button + p
 UPDATE: p::text " " => "1"
 INSERT: p + b
+UPDATE: b::text " " => "k"
 ```

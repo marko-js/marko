@@ -37,6 +37,7 @@
 ```
 INSERT: span, em
 UPDATE: span:nth-of-type(1)::text " " => "c"
+UPDATE: em:nth-of-type(1)::text@1 "" => "1"
 ```
 
 # Update
@@ -126,4 +127,5 @@ REMOVE: em
 ```
 INSERT: span, em
 UPDATE: span:nth-of-type(1)::text " " => "o"
+UPDATE: em::text@1 "" => "1"
 ```

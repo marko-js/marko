@@ -14,7 +14,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			let frozen = 1;
-			_html(`<p>Value ${_text_resume($scope1_id, "#text/0", frozen, 2, 0, 0)}</p>`);
+			_html(`<p>Value ${_text_resume($scope1_id, "#text/0", frozen, 2, 0, 0, 1)}</p>`);
 			_scope($scope1_id, {}, "__tests__/template.marko", "3:4");
 			return 0;
 		}

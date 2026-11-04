@@ -1,21 +1,17 @@
 // PATCH
-[`a1 a6 a7!a0; D ;<button> </button>`, `a2 !; ;<li></li>`]
+[`a1 a7 a8!a0; D ;<button> </button>`, `a2 !; ;<li></li>`]
 {
   la: ["a", {
     ba: "a1",
-    s: {
-      wd: 1
-    },
     o: {
-      va4: 0
+      va4: 0,
+      va5: 1
     }
   }, "b", {
     ba: "a1",
-    s: {
-      wd: 1
-    },
     o: {
-      va4: 0
+      va4: 0,
+      va5: 1
     }
   }, "a2"]
 }

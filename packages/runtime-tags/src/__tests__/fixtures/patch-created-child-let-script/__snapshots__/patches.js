@@ -1,10 +1,10 @@
 // PATCH
-`a0 !a>b0;/b&;<p>probe</p>`
+`a0;/b&;<p>probe</p>`
 {
   ba: [{
     ca: {
-      s: {
-        wa: 5
+      o: {
+        vb1: 5
       }
     }
   }, "a0"]

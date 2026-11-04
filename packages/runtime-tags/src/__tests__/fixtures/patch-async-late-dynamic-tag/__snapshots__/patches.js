@@ -1,7 +1,7 @@
 // PATCH
-[`a5`, `a1;D ;<em> </em>`, `a0;D ;<b> </b>`]
+[`a3`, `a1;D ;<em> </em>`]
 {
-  fa: [">div", "a5", {
+  fa: [">div", "a3", {
     class: "box"
   }],
   cAa: {
@@ -9,14 +9,15 @@
       pa: "a1"
     }
   },
-  cb: {
-    ba: [{
-      cAa: {
-        pa: "a0"
-      }
-    }]
-  },
-  Sa9: "g"
+  Sa8: "g",
+  Sa9: "h",
+  xh: (p => p = new Promise((f, r) => _.a = {
+    f,
+    r(e) {
+      p.catch(_ => 0);
+      r(e)
+    }
+  }))()
 }
 {
   cAa: {
@@ -27,22 +28,12 @@
     }
   }
 }
-{
-  cb: {
-    cAa: {
-      cAa: {
-        cAa: {
-          ta: "b"
-        }
-      }
-    }
-  }
-}
-;E0Y
+(_.a.f("b"), 0)
+;DRQ
 
-// PATCH holding E0Y
+// PATCH holding DRQ
 {
-  fa: [">section", "a5", {
+  fa: [">section", "a3", {
     class: "box"
   }],
   cAa: {
@@ -50,14 +41,15 @@
       pa: "a1"
     }
   },
-  cb: {
-    ba: [{
-      cAa: {
-        pa: "a0"
-      }
-    }]
-  },
-  Sa9: "g"
+  Sa8: "g",
+  Sa9: "h",
+  xh: (p => p = new Promise((f, r) => _.a = {
+    f,
+    r(e) {
+      p.catch(_ => 0);
+      r(e)
+    }
+  }))()
 }
 {
   cAa: {
@@ -68,14 +60,4 @@
     }
   }
 }
-{
-  cb: {
-    cAa: {
-      cAa: {
-        cAa: {
-          ta: "c"
-        }
-      }
-    }
-  }
-}
+(_.a.f("c"), 0)

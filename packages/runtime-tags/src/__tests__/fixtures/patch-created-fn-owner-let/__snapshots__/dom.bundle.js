@@ -9,4 +9,10 @@ const $setup__script = _script("b0", ($scope) => _on($scope.a, "click", function
 const $input__OR__open = /*@__PURE__*/ _or_patch("c0", 4, ($scope) => $input_fn($scope.a, function() {
 	return $scope.d ? $scope.c.fn() : "-";
 }));
-const $open = _let(3, $input__OR__open);
+const $open = fill("c1", _let(3, $input__OR__open));
+
+// template.marko
+const $fn = ($scope) => function() {
+	return "f:" + $scope._.e;
+};
+_bind_resume("a0 >e", $fn);

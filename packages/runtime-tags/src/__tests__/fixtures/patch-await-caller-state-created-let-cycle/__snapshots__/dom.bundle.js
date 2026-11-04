@@ -2,18 +2,18 @@
 const $await_content__setup__script = _script("b1", ($scope) => _on($scope.c, "click", function() {
 	console.log($scope.i);
 }));
-const $await_content__a = _let(6, ($scope) => {
-	$await_content__b__OR__a($scope);
+const $await_content__a = fill("b4", _let(6, ($scope) => {
 	$await_content__a_v($scope, $scope.g?.v);
-});
-const $await_content__b__OR__a = /*@__PURE__*/ _or_patch("b6", 7, ($scope) => $await_content__a($scope, {
+	$await_content__b__OR__a($scope);
+}));
+const $await_content__b__OR__a = /*@__PURE__*/ _or(7, ($scope) => $await_content__a($scope, {
 	v: $scope.f,
 	self: $a($scope)
 }));
-const $await_content__x = _let(5, ($scope) => {
-	$await_content__b__OR__a($scope);
+const $await_content__x = fill("b3", _let(5, ($scope) => {
 	_text($scope.a, $scope.f);
-});
+	$await_content__b__OR__a($scope);
+}));
 const $await_content__a_v = /*@__PURE__*/ _const(8);
 const $await_content__$params = ($scope, $params2) => $await_content__x($scope, $params2[0]);
 const $await_promise = /*@__PURE__*/ _await_promise(0, $await_content__$params);

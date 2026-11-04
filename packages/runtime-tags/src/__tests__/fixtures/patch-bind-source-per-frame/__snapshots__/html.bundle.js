@@ -44,7 +44,7 @@ var template_default = _template("a", (input) => {
 			Cl: $wi__input_title && 1
 		}), $cg__input_title && "a10"), $cg__input_title && "a11");
 	}, 1, "a5", _unfilled_if($scope0_reason, 2), 1, 1);
-	_html(`<em>${_text_resume($scope0_id, "c", count, 1, 0, 0)}</em></main>`);
+	_html(`<em>${_text_resume($scope0_id, "c", count)}</em></main>`);
 	_scope($scope0_id, {
 		f: input.title,
 		k: $wi__input_title && $input_title__closures,

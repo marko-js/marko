@@ -15,7 +15,7 @@ var template_default = _template("a", (input) => {
 				},
 				label: input.label
 			};
-			_html(`<p>${_text_resume($scope1_id, "a", o.label, 1, $cg__input_label << 1, 0)}</p>`);
+			_html(`<p>${_text_resume($scope1_id, "a", o.label, 1, $cg__input_label << 1, 0, 1)}</p>`);
 			$cg__input_label && _patch_render($scope1_id, "a0");
 			_scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) });
 			return 0;

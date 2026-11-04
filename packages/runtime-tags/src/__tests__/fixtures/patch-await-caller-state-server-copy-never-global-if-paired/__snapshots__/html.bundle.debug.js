@@ -18,7 +18,7 @@ var show_await_default = _template("__tests__/tags/show-await.marko", (input) =>
 			if (x && $global$1.flag) {
 				const $scope2_id = _scope_id();
 				let n = 3;
-				_html(`<p>${_text_resume($scope2_id, "#text/0", x, 1, $scope0_reason, 0)}:${_text_resume($scope2_id, "#text/1", n, 2, 0, 0)}</p>`);
+				_html(`<p>${_text_resume($scope2_id, "#text/0", x, 1, $scope0_reason, 0)}:${_text_resume($scope2_id, "#text/1", n, 2, 0, 0, 1)}</p>`);
 				$cg__input_promise && _patch_render($scope2_id, "__tests__/tags/show-await.marko_2_x#1:2/setup");
 				_scope($scope2_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope1_id) }, "__tests__/tags/show-await.marko", "2:4");
 				return 0;

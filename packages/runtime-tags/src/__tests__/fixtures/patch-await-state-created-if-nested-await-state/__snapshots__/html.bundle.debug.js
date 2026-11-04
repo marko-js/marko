@@ -5,9 +5,9 @@ const $setup = [[], ["__tests__/template.marko_0"]];
 _shells({
 	"__tests__/template.marko_3*content": "__tests__/template.marko_3*content;D ;<b> </b>",
 	"__tests__/template.marko_2_#text#1/await": "__tests__/template.marko_2_#text#1/await;D ;<b> </b>",
-	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content;D l%;<p> </p><!><!>",
+	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content !;D l%;<p> </p><!><!>",
 	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0; D l%;<button> </button><!><!>",
-	"__tests__/template.marko_1_#text#0/await": "__tests__/template.marko_1_#text#0/await;D l%;<p> </p><!><!>",
+	"__tests__/template.marko_1_#text#0/await": "__tests__/template.marko_1_#text#0/await !;D l%;<p> </p><!><!>",
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell __tests__/template.marko_1_n#0:6/setup;b%;<!><!><!>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
@@ -24,11 +24,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_html(`<p>${_text_resume($scope2_id, "#text/0", x)}</p>`);
 				_await($scope2_id, "#text/1", q, (y) => {
 					const $scope3_id = _scope_id();
-					_html(`<b>${_text_resume($scope3_id, "#text/0", y, 1, 0, 0)}</b>`);
+					_html(`<b>${_text_resume($scope3_id, "#text/0", y)}</b>`);
 					_scope($scope3_id, {}, "__tests__/template.marko", "7:6");
-				}, 1, "__tests__/template.marko_3*content");
+				}, 1, "__tests__/template.marko_3*content", 2);
+				_patch_fill($scope2_id, "PatchFill:__tests__/template.marko_fill0", q, 1);
 				_scope($scope2_id, {}, "__tests__/template.marko", "4:4");
-			}, 1, "__tests__/template.marko_2*content", 1);
+			}, 1, "__tests__/template.marko_2*content", 3);
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:2");
 			return 0;
 		}

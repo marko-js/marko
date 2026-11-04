@@ -3,18 +3,19 @@ const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $setup$1 = [[], []];
 _shells({
-	"__tests__/tags/show-await.marko_1*content": "__tests__/tags/show-await.marko_1*content;D%c%;<p><!>:<!></p>",
-	"__tests__/tags/show-await.marko_0_#text#0/await": "__tests__/tags/show-await.marko_0_#text#0/await;D%c%;<p><!>:<!></p>",
+	"__tests__/tags/show-await.marko_1*content": "__tests__/tags/show-await.marko_1*content !;D%c%;<p><!>:<!></p>",
+	"__tests__/tags/show-await.marko_0_#text#0/await": "__tests__/tags/show-await.marko_0_#text#0/await !;D%c%;<p><!>:<!></p>",
 	"__tests__/tags/show-await.marko": "__tests__/tags/show-await.marko;b%;<!><!><!>"
 });
 var show_await_default = _template("__tests__/tags/show-await.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_promise = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_await($scope0_id, "#text/0", input.promise, (x) => {
 		const $scope1_id = _scope_id();
 		let n = x;
 		let m = n;
-		_html(`<p>${_text_resume($scope1_id, "#text/0", n, 1, $cg__input_promise << 1, 0, 1)}:${_text_resume($scope1_id, "#text/1", m, 2, $cg__input_promise << 1, 0, 1)}</p>`);
+		_html(`<p>${_text_resume($scope1_id, "#text/0", n, 1, _client_guard($scope0_reason, 0) << 1, 0, 1)}:${_text_resume($scope1_id, "#text/1", m, 2)}</p>`);
+		_filled_guard($scope0_reason, 0) && _patch_fill($scope1_id, "PatchFill:__tests__/tags/show-await.marko_fill0", m, 1);
 		_scope($scope1_id, {}, "__tests__/tags/show-await.marko", "1:2");
 	}, 1, "__tests__/tags/show-await.marko_1*content", _unfilled_if($scope0_reason, 0) && 2, 1);
 });

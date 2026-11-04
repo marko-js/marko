@@ -16,6 +16,7 @@
 INSERT: span, button
 UPDATE: button::text " " => "1b"
 UPDATE: span[data-y] null => "1"
+UPDATE: span[data-y] "1" => "1"
 ```
 
 # Update

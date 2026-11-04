@@ -1,7 +1,7 @@
 // template.marko
 _shells({
 	a: "a;E lDb%l%;<main><h1> </h1><p>Last <!></p><!></main>",
-	a3: "a3 !a1;Db%l ;<span>Seen <!></span><button>+</button>"
+	a3: "a3 a5!a1;Db%l ;<span>Seen <!></span><button>+</button>"
 });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
@@ -18,14 +18,16 @@ var template_default = _template("a", (input) => {
 			_html(`<span>Seen ${_text_resume($scope1_id, "a", count, 2)}</span><button>+</button>${_el_resume($scope1_id, "b")}`);
 			_script($scope1_id, "a1");
 			const $countChange = handler || void 0;
-			_patch_let_change($scope1_id, "va2", count, "wd", $countChange);
+			_patch_fill($scope1_id, "va2", count, 1);
+			_patch_bind($scope1_id, "wd", $countChange);
 			_scope($scope1_id, {
 				c: count,
+				_: _scope_with_id($scope0_id),
 				d: $countChange
 			});
 			return 0;
 		}
 	}, $scope0_id, "c", 1, _write_guard($scope0_reason, 1), 1, 0, 0, ["a3"], $scope0_reason, 1);
 	_html("</main>");
-	_scope($scope0_id, { i: _unfilled_if($scope0_reason, 1) && handler });
+	_scope($scope0_id, { i: _write_if($scope0_reason, 1) && handler });
 }, 1);

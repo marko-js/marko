@@ -2,13 +2,14 @@
 const $template$2 = "<p>sel=<!></p>";
 const $walks$2 = "Db%l";
 const $setup$2 = [[], []];
-_shells({ "__tests__/tags/tab-editor.marko": "__tests__/tags/tab-editor.marko;Db%;<p>sel=<!></p>" });
+_shells({ "__tests__/tags/tab-editor.marko": "__tests__/tags/tab-editor.marko !;Db%;<p>sel=<!></p>" });
 var tab_editor_default = _template("__tests__/tags/tab-editor.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $fg__input_tab = _filled_guard($scope0_reason, 1), $fg__input_tabChange = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	let selected = input.tab;
-	_html(`<p>sel=${_text_resume($scope0_id, "#text/0", String(selected), 2, $scope0_reason, 0)}</p>`);
+	_html(`<p>sel=${_text_resume($scope0_id, "#text/0", String(selected), 2)}</p>`);
 	_patch_render($scope0_id, "__tests__/tags/tab-editor.marko_0_input_tab#3_input_tabChange#4/setup", [$fg__input_tab && "input_tab", $fg__input_tabChange && "input_tabChange"], $scope0_reason, 0);
+	_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/tags/tab-editor.marko_fill0", selected, 1);
 	_scope($scope0_id, {
 		input_tab: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.tab,
 		input_tabChange: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.tabChange

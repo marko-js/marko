@@ -2,14 +2,14 @@
 const $template$1 = "<p> </p>";
 const $walks$1 = "D l";
 const $setup$1 = [[], []];
-_shells({ "__tests__/tags/outer.marko": "__tests__/tags/outer.marko;D ;<p> </p>" });
+_shells({ "__tests__/tags/outer.marko": "__tests__/tags/outer.marko !;D ;<p> </p>" });
 var outer_default = _template("__tests__/tags/outer.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $fg__input_label = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	let fns = { f: input.fmt };
 	_html(`<p>${_text_resume($scope0_id, "#text/0", fns.f(input.label))}</p>`);
-	_filled_guard($scope0_reason, 0) && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "PatchWrite:fns", fns, 1);
 	_patch_render($scope0_id, "__tests__/tags/outer.marko_0_input_label#4_fns#5/setup", $fg__input_label && "input_label");
+	_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/tags/outer.marko_fill0", fns, 1);
 	_scope($scope0_id, {
 		input_label: input.label,
 		fns: _write_if($scope0_reason, 1) && fns

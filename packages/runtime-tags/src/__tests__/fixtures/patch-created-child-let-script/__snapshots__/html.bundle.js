@@ -1,14 +1,14 @@
 // tags/probe.marko
 const $template = "<p>probe</p>";
-const $setup = [[], ["b0"]];
-_shells({ b: "b !b0,<p>probe</p>" });
+const $setup = [[], []];
+_shells({ b: "b !,<p>probe</p>" });
 var probe_default = _template("b", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 5;
 	_html("<p>probe</p>");
 	_script($scope0_id, "b0", 0);
-	_patch_write($scope0_id, "wa", count, 1);
+	_patch_fill($scope0_id, "vb1", count, 1);
 	_scope($scope0_id, { a: count });
 	_resume_branch($scope0_id);
 });

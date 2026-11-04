@@ -569,7 +569,8 @@ function resolveBindingSources(binding: Binding) {
       if (aliasRoot !== binding) {
         resolveBindingSources(aliasRoot);
         binding.sources = aliasRoot.sources;
-      } else if (binding.assignments) {
+      } else if (binding.assignments || isPatch()) {
+        // A patch build keeps every `<let>` as client state, assigned or not.
         binding.sources = createSources(binding, undefined);
         if (isPatch()) resolveInitialValue(binding);
       } else {
@@ -601,18 +602,8 @@ function resolveBindingSources(binding: Binding) {
   }
 }
 
-// Fixed at creation from what a later server render computes anew: a patch
-// leaves the value client-held once created, a state root.
 function resolveRootSources(binding: Binding) {
   resolveDerivedSources(binding);
-  if (
-    isPatch() &&
-    !binding.sources &&
-    binding.type === BindingType.let &&
-    resolveInitialValue(binding)
-  ) {
-    binding.sources = createSources(binding, undefined);
-  }
 }
 
 // A `<let>`'s init: what it reads, through the inits of the state it reads, and for an
@@ -625,8 +616,7 @@ function resolveInitialValue(binding: Binding) {
   binding.initReadsInitialValues = every(
     sources?.state,
     (state) =>
-      state.initReadsInitialValues &&
-      (state.section === binding.section || !state.assignments),
+      state.initReadsInitialValues && state.section === binding.section,
   );
   return !!sources;
 }

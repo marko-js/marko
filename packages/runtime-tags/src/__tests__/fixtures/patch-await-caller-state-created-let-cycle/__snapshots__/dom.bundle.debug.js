@@ -9,18 +9,18 @@ const $await_content__setup = ($scope) => {
 	$await_content__input_label($scope);
 	$await_content__setup__script($scope);
 };
-const $await_content__a = _let("a/6", ($scope) => {
-	$await_content__b__OR__a($scope);
+const $await_content__a = _fill_let_resume("__tests__/tags/show-await.marko_fill1", _let("a/6", ($scope) => {
 	$await_content__a_v($scope, $scope.a?.v);
-});
-const $await_content__b__OR__a = /*@__PURE__*/ _or_patch("__tests__/tags/show-await.marko_1_b#5_a#6/setup", 7, ($scope) => $await_content__a($scope, {
+	$await_content__b__OR__a($scope);
+}));
+const $await_content__b__OR__a = /*@__PURE__*/ _or(7, ($scope) => $await_content__a($scope, {
 	v: $scope.b,
 	self: $a($scope)
 }));
-const $await_content__b = _let("b/5", ($scope) => {
-	$await_content__b__OR__a($scope);
+const $await_content__b = _fill_let_resume("__tests__/tags/show-await.marko_fill0", _let("b/5", ($scope) => {
 	_text($scope["#text/0"], $scope.b);
-});
+	$await_content__b__OR__a($scope);
+}));
 const $await_content__x = $await_content__b;
 const $await_content__a_v = /*@__PURE__*/ _const("a_v");
 const $await_content__$params = ($scope, $params2) => $await_content__x($scope, $params2[0]);

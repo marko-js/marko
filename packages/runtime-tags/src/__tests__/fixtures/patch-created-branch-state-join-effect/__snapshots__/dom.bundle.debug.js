@@ -2,15 +2,15 @@
 const $template = "<!><!><button>+</button>";
 const $walks = "b%b b";
 const $if_content__count__OR__n__script = _script("__tests__/template.marko_1_count#0:5_n#2", ($scope) => console.log(`effect ${$scope.n + $scope._.count}`));
-const $if_content__count__OR__n = /*@__PURE__*/ _or_patch("__tests__/template.marko_1_count#0:5_n#2/setup", 3, $if_content__count__OR__n__script);
+const $if_content__count__OR__n = /*@__PURE__*/ _or(3, $if_content__count__OR__n__script);
 const $if_content__count = /*@__PURE__*/ _if_closure_patch("__tests__/template.marko_1_count#0:5/setup", "#text/0", 0, ($scope) => {
 	_text($scope["#text/1"], $scope._.count);
 	$if_content__count__OR__n($scope);
 });
-const $if_content__n = _let("n/2", ($scope) => {
-	$if_content__count__OR__n($scope);
+const $if_content__n = _fill_let_resume("__tests__/template.marko_fill0", _let("n/2", ($scope) => {
 	_text($scope["#text/0"], $scope.n);
-});
+	$if_content__count__OR__n($scope);
+}));
 const $if_content__setup = ($scope) => {
 	$if_content__count._($scope);
 	$if_content__n($scope, 0);
