@@ -26,18 +26,16 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const Box = { content: _content("__tests__/template.marko_1*content", ({ color }) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason(), $wg__color = _write_guard($scope1_reason, 0);
-		_html(`${_style_html(`--M_packages-1bruntime-19tags-1bsrc-1b__tests__-1bfixtures-1bcustom-19tag-19var-19return-19before-19sibling-19setup-1btemplate-1amarko_0:${_escape_style_value(color)};`)}${_el_resume($scope1_id, "#style/0", $wg__color)}<div class=box></div>`);
-		_write_if($scope1_reason, 0) && _scope($scope1_id, {}, "__tests__/template.marko", "1:2");
+		const $scope1_reason = _scope_reason();
+		_html(`${_style_html(`--M_packages-1bruntime-19tags-1bsrc-1b__tests__-1bfixtures-1bcustom-19tag-19var-19return-19before-19sibling-19setup-1btemplate-1amarko_0:${_escape_style_value(color)};`)}${_el_resume($scope1_id, "#style/0", 0)}<div class=box></div>`);
 	}, $scope0_id) };
 	const Later = { content: _content("__tests__/template.marko_3*content", ({ value }) => {
 		const $scope3_id = _scope_id();
-		const $scope3_reason = _scope_reason(), $wg__value = _write_guard($scope3_reason, 0);
+		const $scope3_reason = _scope_reason();
 		_await($scope3_id, "#text/0", value, (v) => {
 			const $scope4_id = _scope_id();
-			_html(`<span>${_text_resume($scope4_id, "#text/0", v, $wg__value)}</span>`);
-			_write_if($scope3_reason, 0) && _scope($scope4_id, {}, "__tests__/template.marko", "9:4");
-		}, $wg__value);
+			_html(`<span>${_text_resume($scope4_id, "#text/0", v, 0)}</span>`);
+		}, 0);
 	}, $scope0_id) };
 	let top = child_default({});
 	swatch_default({ color: top });

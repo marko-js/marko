@@ -55,5 +55,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		$Lazy_withLoadAssets({ value: "catch" });
 		_html(` caught ${_text_resume($scope2_id, "#text/2", err.message, $wg__err_message * 2)}`);
 		_write_if($scope2_reason, 0) && _scope($scope2_id, {}, "__tests__/template.marko", "9:4");
-	}, void 0, "__tests__/template.marko_2*content");
+	}, 0, "__tests__/template.marko_2*content");
 }, 1);

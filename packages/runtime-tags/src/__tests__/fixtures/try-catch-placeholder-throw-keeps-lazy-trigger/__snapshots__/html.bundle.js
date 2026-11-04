@@ -42,6 +42,6 @@ var template_default = _template("b", (input) => {
 		const $scope2_id = _scope_id();
 		_html(`caught ${_text_resume($scope2_id, "a", err.message, $wg__err_message * 2)}`);
 		_write_if($scope2_reason, 0) && _scope($scope2_id, {});
-	}, void 0, "b1");
+	}, 0, "b1");
 	$Child_withLoadAssets({ value: 2 });
 }, 1);

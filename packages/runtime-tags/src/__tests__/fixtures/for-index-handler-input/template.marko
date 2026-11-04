@@ -1,0 +1,8 @@
+<let/items=["a", "b"]/>
+<button.add onClick() { items = [...items, "c"] }>add</button>
+<for|item, i| of=items>
+  <dismiss-button label=item onDismiss() {
+    document.getElementById("log").textContent = i;
+  }/>
+</for>
+<div#log/>

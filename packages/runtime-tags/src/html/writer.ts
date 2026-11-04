@@ -1117,7 +1117,9 @@ export class Chunk {
       // TODO: eventually this should be allowed.
       // Once it's allowed we'll need check if placeholder needs to be disposed once body complete.
       this.boundary.abort(
-        new Error("An @placeholder cannot contain async content."),
+        MARKO_DEBUG
+          ? new Error("An @placeholder cannot contain async content.")
+          : new Error(),
       );
     }
     // An abort here fires the `@catch` that takes this chunk's place, or ends

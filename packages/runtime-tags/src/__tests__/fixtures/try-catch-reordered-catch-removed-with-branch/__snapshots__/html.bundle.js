@@ -32,7 +32,7 @@ var template_default = _template("a", (input) => {
 				_html(`<span>${_text_resume($scope2_id, "a", count)}</span>`);
 				_script($scope2_id, "a0");
 				_subscribe($count__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "a1");
-			}, void 0, "a3");
+			}, 0, "a3");
 			_scope($scope1_id, {});
 			return 0;
 		}

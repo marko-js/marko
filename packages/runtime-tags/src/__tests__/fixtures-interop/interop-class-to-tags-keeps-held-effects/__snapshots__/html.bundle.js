@@ -19,7 +19,7 @@ var tags_child_default = _template("b", (input) => {
 		const $scope3_id = _scope_id();
 		_html(_text_resume($scope3_id, "a", err.message, $wg__err_message));
 		_write_if($scope3_reason, 0) && _scope($scope3_id, {});
-	}, void 0, "b2");
+	}, 0, "b2");
 	_script($scope0_id, "b3", 0);
 	_scope($scope0_id, {
 		d: input.name,

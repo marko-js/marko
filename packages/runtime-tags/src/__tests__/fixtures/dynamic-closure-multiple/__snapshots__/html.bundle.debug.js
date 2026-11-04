@@ -20,7 +20,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope_reason();
 		const $scope3_id = _scope_id();
 		_html("error");
-	}, void 0, "__tests__/template.marko_3*content");
+	}, 0, "__tests__/template.marko_3*content");
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		a,

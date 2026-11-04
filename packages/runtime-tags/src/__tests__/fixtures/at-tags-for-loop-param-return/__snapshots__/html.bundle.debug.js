@@ -5,7 +5,7 @@ var list_default = _template("__tests__/tags/list.marko", (input) => {
 	_for_of(input.item, (item) => {
 		const $scope1_id = _scope_id();
 		const $itemcontent_scope = _peek_scope_id();
-		let value = _dynamic_tag($scope1_id, "#text/0", item.content, {}, void 0, void 0, void 0, 1);
+		let value = _dynamic_tag($scope1_id, "#text/0", item.content, {}, 0, 0, 1, 1);
 		_var($scope1_id, "#scopeOffset/1", $itemcontent_scope, "__tests__/tags/list.marko_1_value#6/var");
 		_html(`<span>${_text_resume($scope1_id, "#text/2", value)}</span>`);
 		_scope($scope1_id, {}, "__tests__/tags/list.marko", "1:2");

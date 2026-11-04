@@ -51,9 +51,7 @@ const $try_content__setup = ($scope) => {
 	$try_content__await_promise($scope, rejectAfter(new Error("ERROR!"), 0));
 };
 const $try = /*@__PURE__*/ _try("#text/0", "<!><!><!><!>", "b%b%", $try_content__setup, 0, $catch_content);
-function $setup($scope) {
-	$try($scope);
-}
+const $setup = $try;
 var tags_page_default = /*@__PURE__*/ _template("__tests__/components/tags-page.marko", $template, "b%c", $setup);
 
 // template.marko

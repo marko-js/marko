@@ -20,7 +20,7 @@ var template_default = _template("a", (input) => {
 			_scope_reason();
 			_scope_id();
 			_html("caught");
-		}, void 0, "a0");
+		}, 0, "a0");
 		_await($scope2_id, "b", resolveAfter("outer", 3), (y) => {
 			_scope_id();
 			_html(`<div>${_escape(y)}</div>`);

@@ -17,7 +17,7 @@ var tags_child_default = _template("__tests__/components/tags-child.marko", (inp
 			const $scope3_id = _scope_id();
 			_html("<div id=caught>CAUGHT</div>");
 		}, 0);
-	}, void 0, "__tests__/components/tags-child.marko_2*content");
+	}, 0, "__tests__/components/tags-child.marko_2*content");
 });
 
 // components/class-wrap.marko

@@ -760,6 +760,10 @@
     ],
     "attribute-groups": ["html-attributes"]
   },
+  "<selectedcontent>": {
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
   "<small>": {
     "html": true,
     "attribute-groups": ["html-attributes"]

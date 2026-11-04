@@ -8,7 +8,5 @@ const $try_content__setup = ($scope) => _text($scope["#text/0"], (() => {
 	throw new Error("ERROR!");
 })());
 const $try = /*@__PURE__*/ _try("#text/0", "b<!>", "b%", $try_content__setup, 0, $catch_content);
-function $setup($scope) {
-	$try($scope);
-}
+const $setup = $try;
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", $setup);

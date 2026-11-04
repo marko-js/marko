@@ -45,7 +45,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope_reason();
 		const $scope2_id = _scope_id();
 		_script($scope2_id, "__tests__/template.marko_2", 0);
-	}, void 0, "__tests__/template.marko_2*content");
+	}, 0, "__tests__/template.marko_2*content");
 	_await($scope0_id, "#text/1", resolveAfter("v", 1), (v) => {
 		const $scope6_id = _scope_id();
 		_dynamic_tag($scope6_id, "#text/0", _marko_template, {}, 0, 0, 0);

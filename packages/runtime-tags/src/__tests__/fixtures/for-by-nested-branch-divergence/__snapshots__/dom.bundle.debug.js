@@ -7,24 +7,22 @@ const $for_content__if = /*@__PURE__*/ _if("#text/0", "<span>A<!></span>", "Db%"
 const $for_content__item_on = ($scope, item_on) => $for_content__if($scope, item_on ? 0 : 1);
 const $for_content__$params = ($scope, $params2) => $for_content__item_on($scope, $params2[0]?.on);
 const $for = /*@__PURE__*/ _for_of("#div/0", "<!><!><!>", "b%", 0, $for_content__$params);
-const $list_2__OR__list_0__OR__list___script = _script("__tests__/template.marko_0_list_2#3_list_0#4_list_1#5", ($scope) => _on($scope["#button/1"], "click", function() {
+const $list = /*@__PURE__*/ _let("list/2", ($scope) => {
+	$list_($scope, $scope.list?.[2]);
+	$list_2($scope, $scope.list?.[0]);
+	$list_3($scope, $scope.list?.[1]);
+	$for($scope, [$scope.list, "id"]);
+});
+const $list_ = /*@__PURE__*/ _const("list_2");
+const $list_2 = /*@__PURE__*/ _const("list_0");
+const $list_3 = /*@__PURE__*/ _const("list_1");
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$list($scope, [
 		$scope.list_2,
 		$scope.list_0,
 		$scope.list_1
 	]);
 }));
-const $list_2__OR__list_0__OR__list_ = $list_2__OR__list_0__OR__list___script;
-const $list = /*@__PURE__*/ _let("list/2", ($scope) => {
-	$list_($scope, $scope.list?.[2]);
-	$list_2($scope, $scope.list?.[0]);
-	$list_3($scope, $scope.list?.[1]);
-	$for($scope, [$scope.list, "id"]);
-	$list_2__OR__list_0__OR__list_($scope);
-});
-const $list_ = /*@__PURE__*/ _const("list_2");
-const $list_2 = /*@__PURE__*/ _const("list_0");
-const $list_3 = /*@__PURE__*/ _const("list_1");
 function $setup($scope) {
 	$list($scope, [
 		{
@@ -40,5 +38,6 @@ function $setup($scope) {
 			on: true
 		}
 	]);
+	$setup__script($scope);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

@@ -9,7 +9,6 @@ import { toAccess } from "../../html/serializer";
 import {
   type Binding,
   BindingType,
-  bindingUtil,
   getCanonicalBinding,
   getDebugName,
   getDebugNames,
@@ -31,12 +30,7 @@ import { getDeclaredBindingExpression } from "./get-declared-binding-expression"
 import { isOptimize, isOutputHTML } from "./marko-config";
 import { forEach, type Opt, push, reduce, some } from "./optional";
 import { getReadReplacement } from "./read-replacement";
-import {
-  getNodeReasons,
-  isConditionalReason,
-  isUnconditionalReason,
-  type Reason,
-} from "./reasons";
+import { getNodeReasons, isGuardedReason, type Reason } from "./reasons";
 import {
   type AssignedBindingExtra,
   getReferencedBindings,
@@ -45,6 +39,10 @@ import {
   isAssignedBindingExtra,
   isRegisteredFnExtra,
 } from "./references";
+import {
+  insertStatementBefore,
+  replaceWithStatements,
+} from "./replace-with-statements";
 import { callRuntime, registerRuntimeValue } from "./runtime";
 import {
   getClosureAccessorLiteral,
@@ -163,10 +161,7 @@ export function setSectionOwnerResumedByMarker(section: Section) {
 // Registered content's closures its owners' scope flushes may lack, by section:
 // one values object per owner down to the content's own.
 export function getContentClosureValues(bodySection: Section) {
-  const contentClosures = bindingUtil.filter(
-    getDynamicTagContentClosures(bodySection),
-    mayBeUnwritten,
-  );
+  const contentClosures = getDynamicTagContentClosures(bodySection);
   if (!contentClosures) return;
   const scope = generateUidIdentifier("scope");
   const closures = Array.isArray(contentClosures)
@@ -199,10 +194,6 @@ export function getContentClosureValues(bodySection: Section) {
     section = section.parent!;
   }
   return { scope, levels: levels.reverse() };
-}
-
-function mayBeUnwritten(closure: Binding) {
-  return !isUnconditionalReason(getWriteReason(closure));
 }
 
 const [getScopeProperties] = createOutputSectionState<
@@ -694,8 +685,8 @@ export function buildSignalFn(signal: Signal): t.Expression {
     signal.storesValue = true;
   }
 
-  if (!signal.storesValue) {
-    const call = isValue && getOnlyCall(signal.render);
+  if (isValue && !signal.storesValue) {
+    const call = getOnlyCall(signal.render);
     if (
       call &&
       call.callee.type === "Identifier" &&
@@ -709,9 +700,7 @@ export function buildSignalFn(signal: Signal): t.Expression {
     }
 
     return t.arrowFunctionExpression(
-      isValue
-        ? [scopeIdentifier, getSignalValueIdentifier(signal)]
-        : [scopeIdentifier],
+      [scopeIdentifier, getSignalValueIdentifier(signal)],
       toOnlyExpressionOrBlock(signal.render),
     );
   }
@@ -893,7 +882,7 @@ export function addTagStatement(
   if (isOutputHTML()) {
     // Buffered markup is deliberately not flushed first: source-order
     // interleaving of a dev statement is not worth splitting the html write.
-    tag.insertBefore(statement);
+    insertStatementBefore(tag, statement);
   } else {
     addStatement(
       "render",
@@ -901,9 +890,8 @@ export function addTagStatement(
       tag.node.attributes[0]?.value.extra,
       statement,
     );
+    replaceWithStatements(tag);
   }
-
-  tag.remove();
 }
 
 export function addValue(
@@ -1144,18 +1132,14 @@ export function writeRegisteredFns() {
   const statements: t.Statement[] = [];
   for (const registeredFn of registeredFns) {
     let fn: t.Statement;
-    if (
-      registeredFn.referencedBindings ||
-      registeredFn.referencesScope ||
-      registeredFn.referencedLocals
-    ) {
+    if (registeredFn.referencesScope || registeredFn.referencedLocals) {
       let params: (t.Identifier | t.Pattern)[];
       let prologue: t.Statement[] | undefined;
       if (registeredFn.referencedLocals) {
         // The scope hop stays inside the returned function: resume may call
         // the factory before its scopes hydrate (stubs fill in place).
         params = [localsIdentifier];
-        if (registeredFn.referencedBindings || registeredFn.referencesScope) {
+        if (registeredFn.referencesScope) {
           prologue = [
             t.variableDeclaration("const", [
               t.variableDeclarator(
@@ -1294,23 +1278,28 @@ export function writeHTMLResumeStatements(
           SlotKind.ClosureScopes,
         )?.reason;
         const subscribeArg =
-          isConditionalReason(closureScopesReason) &&
+          isGuardedReason(closureScopesReason) &&
           !isSameReason(closureScopesReason, sectionReason)
             ? getExprIfWritten(closure.section, closureScopesReason, identifier)
             : identifier;
         const changeable = isChangeableDynamicClosure(section, closure);
-        addWriteScopeBuilder(section, (expr) => {
-          const resumeId =
-            changeable &&
-            t.stringLiteral(getResumeRegisterId(section, closure, "subscribe"));
-          return callRuntime(
-            "_subscribe",
-            subscribeArg,
-            expr,
-            resumeId,
-            resumeId && markerGuard,
-          );
-        });
+        // No call writes the subscriber set: the scope joins none.
+        if (subscribeArg) {
+          addWriteScopeBuilder(section, (expr) => {
+            const resumeId =
+              changeable &&
+              t.stringLiteral(
+                getResumeRegisterId(section, closure, "subscribe"),
+              );
+            return callRuntime(
+              "_subscribe",
+              subscribeArg,
+              expr,
+              resumeId,
+              resumeId && markerGuard,
+            );
+          });
+        }
       }
     }
   });
@@ -1348,12 +1337,8 @@ export function writeHTMLResumeStatements(
     if (!reason) return;
     const accessor = getScopeAccessor(binding);
     pendingProperties.delete(accessor);
-    scopeProperties.push(
-      toObjectProperty(
-        accessor,
-        ifWritten(reason, getDeclaredBindingExpression(binding)),
-      ),
-    );
+    const value = ifWritten(reason, getDeclaredBindingExpression(binding));
+    if (value) scopeProperties.push(toObjectProperty(accessor, value));
 
     if (debug) {
       const { root, access } = getDebugAccess(binding, false, toAccess);
@@ -1384,25 +1369,19 @@ export function writeHTMLResumeStatements(
     const ownerReason = findSectionSlot(section, SlotKind.Owner)?.reason;
     if (ownerReason) {
       pendingProperties.delete(ownerAccessor);
-      if (!getOwnerResumedByMarker(section)) {
-        scopeProperties.push(
-          toObjectProperty(
-            ownerAccessor,
-            ifWritten(
-              ownerReason,
-              callRuntime(
-                "_scope_with_id",
-                getScopeIdIdentifier(section.parent),
-              ),
-            ),
-          ),
+      const owner =
+        !getOwnerResumedByMarker(section) &&
+        ifWritten(
+          ownerReason,
+          callRuntime("_scope_with_id", getScopeIdIdentifier(section.parent)),
         );
-      }
+      if (owner) scopeProperties.push(toObjectProperty(ownerAccessor, owner));
     }
   }
 
   for (const [key, { expression, reason }] of pendingProperties) {
-    scopeProperties.push(toObjectProperty(key, ifWritten(reason, expression)));
+    const value = ifWritten(reason, expression);
+    if (value) scopeProperties.push(toObjectProperty(key, value));
   }
 
   if (sectionReason) {
@@ -1443,11 +1422,8 @@ export function writeHTMLResumeStatements(
     const writeCall = writeScopeBuilder
       ? writeScopeBuilder(callRuntime("_scope", ...writeScopeArgs))
       : callRuntime("_scope", ...writeScopeArgs);
-    body.push(
-      t.expressionStatement(
-        getExprIfWritten(section, sectionReason, writeCall),
-      ),
-    );
+    const write = getExprIfWritten(section, sectionReason, writeCall);
+    if (write) body.push(t.expressionStatement(write));
   }
 
   const resumeClosestBranch =
@@ -1736,7 +1712,6 @@ const [getRegisteredFns] = createOutputState<
     node: t.Function;
     section: Section;
     referencesScope: undefined | boolean;
-    referencedBindings: ReferencedBindings;
     referencedLocals: Opt<Binding>;
   }[]
 >(() => []);
@@ -1768,7 +1743,6 @@ function registerFnExpression(node: t.Function) {
   if (isRegisteredFnExtra(extra)) {
     const id = extra.name;
     const referencesScope = extra.referencesScope;
-    const referencedBindings = getReferencedBindingsInFunction(extra);
     const referencedLocals = extra.referencedLocalBindingsInFunction;
     getRegisteredFns().push({
       id,
@@ -1776,14 +1750,13 @@ function registerFnExpression(node: t.Function) {
       registerId: extra.registerId,
       section: extra.section,
       referencesScope,
-      referencedBindings,
       referencedLocals,
     });
 
     if (referencedLocals) {
       // The argument mirrors the locals scope `_resume_locals` serializes.
       const properties: t.ObjectExpression["properties"] = [];
-      if (referencesScope || referencedBindings) {
+      if (referencesScope) {
         properties.push(
           t.objectProperty(
             t.identifier(getAccessorProp().Owner),
@@ -1802,7 +1775,7 @@ function registerFnExpression(node: t.Function) {
       return t.callExpression(t.identifier(id), [
         t.objectExpression(properties),
       ]);
-    } else if (referencesScope || referencedBindings) {
+    } else if (referencesScope) {
       return t.callExpression(t.identifier(id), [scopeIdentifier]);
     } else {
       return t.identifier(id);

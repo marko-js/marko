@@ -105,31 +105,45 @@ export function mergeSources(
 export function mergeSources(a: undefined | Sources, b: undefined | Sources) {
   if (!a) return b;
   if (!b) return a;
+  const state = bindingUtil.union(a.state, b.state);
+  const param = unionParamSources(a.param, b.param);
+  const global = a.global || b.global;
+  const always = a.always || b.always;
+  // A side the other adds nothing to is the merge itself.
   if (
-    a.state === b.state &&
-    a.param === b.param &&
-    a.global === b.global &&
-    a.always === b.always
+    state === a.state &&
+    param === a.param &&
+    global === a.global &&
+    always === a.always
   ) {
     return a;
   }
-  return createSources(
-    bindingUtil.union(a.state, b.state),
-    unionParamSources(a.param, b.param),
-    a.global || b.global,
-    a.always || b.always,
-  );
+  if (
+    state === b.state &&
+    param === b.param &&
+    global === b.global &&
+    always === b.always
+  ) {
+    return b;
+  }
+  return createSources(state, param, global, always);
 }
 
+// Params treat properties as discrete sources, except a property alias beside
+// its root (eg `input.foo` beside `input`), which the root covers and drops.
 function unionParamSources(a: Sources["param"], b: Sources["param"]) {
   const merged = bindingUtil.union(a, b);
   // Every param list is already filtered, so an input returned as is needs none.
   if (merged === a || merged === b) return merged;
-  // Filter out property aliases already in the merged set (eg drop `input.foo`
-  // when `input` is present); params otherwise treat properties as discrete sources.
+  // A side that covers the other loses nothing, so the union returns it.
+  return bindingUtil.union(dropCovered(a, b), dropCovered(b, a));
+}
+
+// The params with no alias root in `other`.
+function dropCovered(params: Sources["param"], other: Sources["param"]) {
   return bindingUtil.filter(
-    merged,
-    (binding) => !someUpToAliasRoot(binding.aliasOf, isInParams, merged),
+    params,
+    (binding) => !someUpToAliasRoot(binding.aliasOf, isInParams, other),
   );
 }
 
