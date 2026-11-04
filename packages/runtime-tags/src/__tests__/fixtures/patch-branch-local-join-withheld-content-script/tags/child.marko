@@ -1,0 +1,7 @@
+<if=input.show>
+  <const/c=input.b + "!"/>
+  <div/el/>
+  <script>el().textContent = "s:" + c</script>
+  <define/frag><em>${input.a + c}</em></define>
+  <section content=(input.mode ? frag.content : null)/>
+</if>

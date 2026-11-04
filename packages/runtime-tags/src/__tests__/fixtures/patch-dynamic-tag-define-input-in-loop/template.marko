@@ -1,0 +1,11 @@
+<define/Card|{ record }|>
+  <h4>${record.name}</h4>
+</define>
+<define/Other|{ record }|>
+  <h5>${record.name}</h5>
+</define>
+<main>
+  <for|row| of=input.rows by="id">
+    <${row.useA ? Card : Other} record=row.record/>
+  </for>
+</main>
