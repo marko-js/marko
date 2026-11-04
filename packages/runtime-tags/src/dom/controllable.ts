@@ -417,18 +417,33 @@ export function _attr_select_value_script(
   observeControlled(
     scope,
     nodeAccessor,
-    { childList: true, subtree: true },
-    (_) => {
+    {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ["value"],
+    },
+    (records) => {
       const value = scope[AccessorPrefix.ControlledValue + nodeAccessor];
+      const multiple = Array.isArray(value);
       if (
-        Array.isArray(value)
+        multiple
           ? value.length !== el.selectedOptions.length ||
             // Order-independent: the controlled order may differ from document
             // order, which must not count as a change (values are normalized strings).
             value.some((_, i) => !value.includes(el.selectedOptions[i].value))
           : el.value !== value
       ) {
-        onChange();
+        // A batch of nothing but `value` writes is Marko's own keyed update: the
+        // option holding the selection changed its value, so the select has to be
+        // re-asserted. `onChange` would report that as a user edit, handing
+        // `valueChange` a value nobody picked. Structural mutations can come from
+        // outside the render, and those keep the existing report.
+        if (records.every((record) => record.type === "attributes")) {
+          setSelectValue(el, value, multiple);
+        } else {
+          onChange();
+        }
       }
     },
   );
