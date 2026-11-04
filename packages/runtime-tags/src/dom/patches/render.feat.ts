@@ -33,8 +33,8 @@ patchers[PatchKey.Render] = (scope, id, reads) => {
   }
 };
 
-// A closure the owner's change re-runs in each subscribed scope, by the position
-// it stamped; none where no subscriber's code shipped.
+// A closure the owner's change re-runs in each subscribed scope, by the position its code
+// registers: a subscribed scope exists only where that code ran, so no position, no scope.
 patchers[PatchKey.Subscribers] = (scope, id, reads) => {
   const signals = closureSubscribers[id];
   if (signals) {
