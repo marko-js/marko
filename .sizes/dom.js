@@ -1,4 +1,4 @@
-// size: 27386 (min) 10220 (brotli)
+// size: 27477 (min) 10261 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -1637,13 +1637,19 @@ function _attr_select_value_script(scope, nodeAccessor) {
       {
         childList: !0,
         subtree: !0,
+        attributes: !0,
+        attributeFilter: ["value"],
       },
-      (_) => {
-        let value = scope["G" + nodeAccessor];
-        (Array.isArray(value)
+      (records) => {
+        let value = scope["G" + nodeAccessor],
+          multiple = Array.isArray(value);
+        (multiple
           ? value.length !== el.selectedOptions.length ||
             value.some((_, i) => !value.includes(el.selectedOptions[i].value))
-          : el.value !== value) && onChange();
+          : el.value !== value) &&
+          (records.every((record) => record.type === "attributes")
+            ? setSelectValue(el, value, multiple)
+            : onChange());
       },
     ));
 }
