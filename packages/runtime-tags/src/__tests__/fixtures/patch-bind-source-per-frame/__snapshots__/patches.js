@@ -1,0 +1,24 @@
+// PATCH
+{
+  xf: "b",
+  pa: 1,
+  pb: 1,
+  cAa: {
+    ja: {
+      id: "one",
+      title: "b",
+      onClick: _([], "a0")
+    },
+    ea1: ">f"
+  }
+}
+{
+  cAb: {
+    ja: {
+      id: "two",
+      title: "b",
+      onClick: _([], "a0")
+    },
+    ea9: ">f"
+  }
+}

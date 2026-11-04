@@ -1,0 +1,27 @@
+# Render `{"label":"a","promise":{"value":"a"}}`
+```html
+<button
+  class="swap"
+>
+  swap
+</button>
+```
+
+# Update
+```html
+<button
+  class="swap"
+>
+  swap
+</button>
+<p>
+  a
+</p>
+```
+## Change
+```
+INSERT: .swap + p
+UPDATE: p::text " " => "a"
+```
+
+# Update `{"label":"b","promise":{"value":{}}}`

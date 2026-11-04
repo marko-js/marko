@@ -1,0 +1,7 @@
+import Layout from "./layout.marko"
+import NavA from "./nav-a.marko"
+import NavB from "./nav-b.marko"
+<let/alt=false/>
+<Layout nav=(alt ? NavB : NavA) label=input.label>
+  <button onClick() { alt = !alt }>swap</button>
+</Layout>
