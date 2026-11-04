@@ -1,0 +1,9 @@
+<define/Card|{ label, content }|>
+  <p>${label}<if=label><${content}/></if></p>
+</define>
+<let/n=0/>
+<define/Label><em>${input.label} ${n}</em></define>
+<button onClick() { n++ }>${n}</button>
+<for|tag| of=input.tags>
+  <${input.card ? Card : "span"} label=tag content=Label/>
+</for>

@@ -1,0 +1,12 @@
+<define/A|{ label }|>
+  <if=label === "two">
+    <em>${label}</em>
+  </if>
+</define>
+<define/B|{ label }|>
+  <b>${label}</b>
+</define>
+<let/open=false/>
+<button onClick() { open = !open }>toggle</button>
+<${open ? A : B} label="local"/>
+<child renderer=(input.a ? A : B) label=input.label/>

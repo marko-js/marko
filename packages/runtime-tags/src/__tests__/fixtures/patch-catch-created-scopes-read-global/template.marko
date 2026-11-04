@@ -1,0 +1,18 @@
+static function boom(msg: string): never {
+  throw new Error(msg);
+}
+<try>
+  <p>${input.late ? boom("late") : "ok"}</p>
+  <@catch|err|>
+    <define/Label|{ x }: { x: number }|><i>${x}:${$global.label}</i></define>
+    <let/count=0/>
+    <b>${(err as Error).message}</b>
+    <em onClick() { count++ }>${count + ":" + $global.label}</em>
+    <show-label/>
+    <Label x=1/>
+    <if=input.show>
+      <u>${$global.label}</u>
+      <for|i| until=input.n><s>${i}:${$global.label}</s></for>
+    </if>
+  </@catch>
+</try>

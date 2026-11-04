@@ -1,0 +1,8 @@
+<define/Tree|{ n, label, tag }|>
+  <card>
+    <if=n><Tree n=(n - 1) label=label tag=tag/></if>
+  </card>
+  <define/Inner><b onClick() { console.log("tree", n, label) }>${n}${label}</b></define>
+  <${tag} content=Inner/>
+</define>
+<if=input.show><Tree n=1 label=input.label tag=input.tag/></if>

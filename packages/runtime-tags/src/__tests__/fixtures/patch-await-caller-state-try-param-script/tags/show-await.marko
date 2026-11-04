@@ -1,0 +1,7 @@
+<await|x|=input.promise>
+  <p>${x}</p>
+  <try>
+    <script>document.title = x + ":" + input.label;</script>
+    <@catch>failed</@catch>
+  </try>
+</await>

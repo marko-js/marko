@@ -1,0 +1,18 @@
+// PATCH
+a, [`b3 b2!b>a0;b%b/ D%c%l&b;<!><!><button class=child><!>:<!></button><!>`, `b5;b%;<!><!><!>`]
+{
+  bb: [{
+    pa: "b3",
+    cAa: {
+      xd: "b",
+      cb: {
+        o: {
+          va1: 0
+        }
+      },
+      e: "b0",
+      ib1: "d"
+    }
+  }, "b5"]
+}
+;CxQ

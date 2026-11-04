@@ -1,0 +1,6 @@
+import Item from "./tags/item.marko";
+import Frame from "./tags/frame.marko";
+static function pick(framed: boolean) {
+  return framed ? Frame : null;
+}
+<${pick(input.framed)} item=Item label=input.label/>

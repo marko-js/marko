@@ -1,0 +1,37 @@
+// PATCH
+[`packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-render-and-read/tags/card.marko !packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-render-and-read/tags/card.marko_0; bD%l%;<button class=toggle>toggle</button><section><!></section><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-render-and-read/template.marko_1*content`]
+{
+  "PatchDynamicTag:#text/0": ["packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-render-and-read/tags/card.marko", "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-render-and-read/template.marko_1*content"],
+  "PatchChild:BranchScopes:#text/0": {
+    "PatchDynamicTag:#text/1": "^^packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-render-and-read/template.marko_1*content",
+    "PatchChild:BranchScopes:#text/1": {
+      "PatchText:#text/0": "b"
+    },
+    "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-render-and-read/tags/card.marko_1_input_content#0:5/setup": "input_content",
+    "PatchSetupValues:": {
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-render-and-read/tags/card.marko_0_open#6/fill": !0
+    },
+    "PatchBind:input_content": "^packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-render-and-read/template.marko_1*content"
+  },
+  "PatchMarkedWrite:input_note": "b",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-render-and-read/template.marko_0_input_note#4/subscribers": "input_note"
+}
+;BwU
+
+// PATCH holding BwU
+{
+  "PatchDynamicTag:#text/0": ["packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-render-and-read/tags/card.marko", "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-render-and-read/template.marko_1*content"],
+  "PatchChild:BranchScopes:#text/0": {
+    "PatchDynamicTag:#text/1": "^^packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-render-and-read/template.marko_1*content",
+    "PatchChild:BranchScopes:#text/1": {
+      "PatchText:#text/0": "c"
+    },
+    "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-render-and-read/tags/card.marko_1_input_content#0:5/setup": "input_content",
+    "PatchSetupValues:": {
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-render-and-read/tags/card.marko_0_open#6/fill": !0
+    },
+    "PatchBind:input_content": "^packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-render-and-read/template.marko_1*content"
+  },
+  "PatchMarkedWrite:input_note": "c",
+  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-render-and-read/template.marko_0_input_note#4/subscribers": "input_note"
+}

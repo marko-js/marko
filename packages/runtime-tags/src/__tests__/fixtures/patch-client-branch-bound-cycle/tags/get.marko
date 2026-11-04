@@ -1,0 +1,15 @@
+<button onClick=input.a[1][1][0]>array</button>
+<button onClick=[...[...input.s][1]][0]>set</button>
+<button onClick=input.m.get("self").get("f")>map</button>
+<let/res=""/>
+<effect() {
+  const s = [...input.s];
+  res = [
+    input.a[1] === input.a,
+    typeof input.a[1][0],
+    s[1] === input.s,
+    input.m.get("self") === input.m,
+    typeof input.m.get("self").get("f"),
+  ].join();
+}/>
+<p>${res}</p>

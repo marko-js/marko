@@ -1,0 +1,9 @@
+<if=input.show>
+  <card>
+    <list tag=input.tag>
+      <for|item| of=input.items>
+        <@row label=item onSelect() { console.log(item, input.label) }/>
+      </for>
+    </list>
+  </card>
+</if>
