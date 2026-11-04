@@ -16,6 +16,7 @@ import { generateUidIdentifier } from "../util/generate-uid";
 import { getKnownAttrValues } from "../util/get-known-attr-values";
 import { getParentTag } from "../util/get-parent-tag";
 import { addReason } from "../util/reasons";
+import { replaceWithStatements } from "../util/replace-with-statements";
 import { callRuntime } from "../util/runtime";
 import { scopeIdentifier } from "../util/scope-read";
 import { ensureSection, getSection } from "../util/sections";
@@ -126,13 +127,11 @@ export default {
         if (attrs.value) {
           const returnId = generateUidIdentifier("return");
           setReturnValueIdentifier(section, returnId);
-          tag
-            .replaceWith(
-              t.variableDeclaration("const", [
-                t.variableDeclarator(returnId, attrs.value),
-              ]),
-            )[0]
-            .skip();
+          replaceWithStatements(tag, [
+            t.variableDeclaration("const", [
+              t.variableDeclarator(returnId, attrs.value),
+            ]),
+          ]);
         }
       },
     },
@@ -159,7 +158,7 @@ export default {
           );
         }
 
-        tag.remove();
+        replaceWithStatements(tag);
       },
     },
   }),

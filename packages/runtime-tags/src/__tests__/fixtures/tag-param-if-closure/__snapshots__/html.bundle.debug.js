@@ -6,12 +6,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const a = "abc";
 	const Foo = { content: _content("__tests__/template.marko_3*content", (input) => {
 		const $scope3_id = _scope_id();
-		const $scope3_reason = _scope_reason(), $wg__input_content__OR__input_value = _write_guard($scope3_reason, 0);
-		_dynamic_tag($scope3_id, "#text/0", input.content, [input.value], 0, 1, $wg__input_content__OR__input_value);
-		_write_if($scope3_reason, 0) && _scope($scope3_id, {
-			input_content: _write_if($scope3_reason, 2) && input.content,
-			input_value: _write_if($scope3_reason, 1) && input.value
-		}, "__tests__/template.marko", "3:2", {
+		const $scope3_reason = _scope_reason();
+		_dynamic_tag($scope3_id, "#text/0", input.content, [input.value], 0, 1);
+		_scope($scope3_id, { input_content: input.content }, "__tests__/template.marko", "3:2", {
 			input_content: ["input.content", "3:13"],
 			input_value: ["input.value", "3:13"]
 		});

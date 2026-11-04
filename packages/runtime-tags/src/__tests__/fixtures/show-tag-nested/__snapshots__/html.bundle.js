@@ -9,12 +9,12 @@ var template_default = _template("a", (input) => {
 	_html("before ");
 	_show_start(inner, 0);
 	_html("<em>nested</em>");
-	_show_end($scope0_id, "e", inner, 1, 0, 0, 1);
+	_show_end($scope0_id, "d", inner, 1, 0, 0, 1);
 	_html(" after");
-	_show_end($scope0_id, "g", outer);
+	_show_end($scope0_id, "f", outer);
 	_script($scope0_id, "a0");
 	_scope($scope0_id, {
-		h: outer,
-		i: inner
+		g: outer,
+		h: inner
 	});
 }, 1);

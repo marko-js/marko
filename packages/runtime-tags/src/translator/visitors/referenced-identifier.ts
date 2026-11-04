@@ -1,12 +1,10 @@
 import { types as t } from "@marko/compiler";
 
-import { getAccessorProp } from "../util/get-accessor-enums";
 import { getExprRoot } from "../util/get-root";
-import { isOptimize, isOutputHTML } from "../util/marko-config";
+import { isOutputHTML } from "../util/marko-config";
 import {
   assertReferencedInRender,
   getCanonicalExtra,
-  getReferencedBindings,
   setReferencesScope,
   trackGlobalReference,
 } from "../util/references";
@@ -61,21 +59,21 @@ export default {
   analyze(identifier) {
     const { name } = identifier.node;
     if (identifier.scope.hasBinding(name)) return;
-    if (name === "$global") {
+    if (name === "$global" || name === "$signal") {
       assertReferencedInRender(identifier, name);
       setReferencesScope(identifier);
-      trackGlobalReference(identifier);
-    } else if (name === "$signal") {
-      assertReferencedInRender(identifier, name);
       const section = ensureSection(identifier);
-      section.hasAbortSignal = true;
-      setReferencesScope(identifier);
-      // Stamped on the raw (not canonical) extra: ids stay one-per-root
-      // even if this extra later merges with another expression's.
       const rootExtra = (getExprRoot(identifier).node.extra ??= { section });
       (identifier.node.extra ??= {}).exprRoot = rootExtra;
-      if (rootExtra[kAbortId] === undefined) {
-        rootExtra[kAbortId] = section.abortSignalExprs++;
+      if (name === "$global") {
+        trackGlobalReference(identifier);
+      } else {
+        section.hasAbortSignal = true;
+        // Stamped on the raw (not canonical) extra: ids stay one-per-root
+        // even if this extra later merges with another expression's.
+        if (rootExtra[kAbortId] === undefined) {
+          rootExtra[kAbortId] = section.abortSignalExprs++;
+        }
       }
     }
   },
@@ -83,42 +81,9 @@ export default {
     const { name } = identifier.node;
     if (identifier.scope.hasBinding(name)) return;
     switch (name) {
-      case "$global": {
-        // An HTML read resolves to the `$global` const the program declares.
-        if (isOutputHTML()) break;
-
-        const globalRead = t.memberExpression(
-          scopeIdentifier,
-          t.identifier(getAccessorProp().Global),
-        );
-        const key = !isOptimize() && getSignalGlobalKey(identifier);
-        if (key) {
-          identifier.parentPath.replaceWith(
-            callRuntime("_global_read", globalRead, t.stringLiteral(key)),
-          );
-        } else {
-          replaceWithExtra(identifier, globalRead);
-        }
-        break;
-      }
       case "$signal":
         if (isOutputHTML()) {
-          replaceWithExtra(
-            identifier,
-            t.callExpression(
-              t.arrowFunctionExpression(
-                [],
-                t.blockStatement([
-                  t.throwStatement(
-                    t.newExpression(t.identifier("Error"), [
-                      t.stringLiteral("Cannot use $signal in a server render."),
-                    ]),
-                  ),
-                ]),
-              ),
-              [],
-            ),
-          );
+          replaceWithExtra(identifier, callRuntime("_signal_read_error"));
         } else {
           const exprRoot = identifier.node.extra!.exprRoot!;
           const canonicalExtra = getCanonicalExtra(exprRoot);
@@ -153,29 +118,9 @@ export default {
   },
 } satisfies TemplateVisitor<t.Identifier>;
 
-// A bare `$global`/`$signal` can be a tag's whole value, which the tag checks
-// for `dropped` after its children translate, so the replacement must keep it.
+// A bare `$signal` can be a tag's whole value, which the tag checks for
+// `dropped` after its children translate, so the replacement must keep it.
 function replaceWithExtra(path: t.NodePath, replacement: t.Expression) {
   replacement.extra = path.node.extra;
   path.replaceWith(replacement);
-}
-
-// A `$global.x` read with referenced bindings becomes a signal, so it re-runs
-// against the resumed globals, where an unserialized key is missing entirely.
-function getSignalGlobalKey(identifier: t.NodePath<t.Identifier>) {
-  const { parent } = identifier;
-  if (
-    !t.isMemberExpression(parent) ||
-    parent.computed ||
-    !t.isIdentifier(parent.property) ||
-    parent.object !== identifier.node
-  ) {
-    return;
-  }
-
-  const { name } = parent.property;
-  if (name === "runtimeId" || name === "renderId") return;
-  return getReferencedBindings(getExprRoot(identifier).node.extra)
-    ? name
-    : undefined;
 }

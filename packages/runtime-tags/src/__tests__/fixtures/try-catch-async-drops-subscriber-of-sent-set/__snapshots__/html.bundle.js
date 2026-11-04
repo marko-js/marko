@@ -31,7 +31,7 @@ var template_default = _template("a", (input) => {
 		const $scope5_id = _scope_id();
 		_html(`caught ${_text_resume($scope5_id, "a", err.message, $wg__err_message * 2)}`);
 		_write_if($scope5_reason, 0) && _scope($scope5_id, {});
-	}, void 0, "a2");
+	}, 0, "a2");
 	_script($scope0_id, "a3", 0);
 	_scope($scope0_id, { B1: $Item_content__subscribers });
 }, 1);

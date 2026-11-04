@@ -26,5 +26,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			message: "8:12",
 			clicked: "9:10"
 		});
-	}, void 0, "__tests__/template.marko_2*content");
+	}, 0, "__tests__/template.marko_2*content");
 }, 1);

@@ -5,13 +5,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $input_label__closures = new Set();
 	const Box = { content: _content("__tests__/template.marko_2*content", (input) => {
 		const $scope2_id = _scope_id();
-		const $scope2_reason = _scope_reason(), $wg__input_content = _write_guard($scope2_reason, 0);
+		const $scope2_reason = _scope_reason();
 		let open = false;
 		_html(`<button>toggle</button>${_el_resume($scope2_id, "#button/0")}`);
 		_if(() => {
 			if (open) {
 				const $scope3_id = _scope_id();
-				_dynamic_tag($scope3_id, "#text/0", input.content, {}, 0, 0, $wg__input_content);
+				_dynamic_tag($scope3_id, "#text/0", input.content, {}, 0, 0, 0);
 				_scope($scope3_id, {}, "__tests__/template.marko", "4:4");
 				return 0;
 			}

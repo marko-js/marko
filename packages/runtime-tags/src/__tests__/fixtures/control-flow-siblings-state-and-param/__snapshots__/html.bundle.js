@@ -27,10 +27,10 @@ var template_default = _template("a", (input) => {
 	const $show = input.show;
 	_show_start($show, 0);
 	_html("<span>show input</span>");
-	_show_end($scope0_id, "g", $show, $wg__input_show, 0, 0, 1);
+	_show_end($scope0_id, "f", $show, $wg__input_show, 0, 0, 1);
 	_show_start(open, 0);
 	_html("<span>show state</span>");
-	_show_end($scope0_id, "i", open, 1, 0, 0, 1);
+	_show_end($scope0_id, "g", open, 1, 0, 0, 1);
 	_script($scope0_id, "a0");
-	_scope($scope0_id, { n: open });
+	_scope($scope0_id, { l: open });
 }, 1);

@@ -1,4 +1,4 @@
-// size: 27478 (min) 10241 (brotli)
+// size: 27386 (min) 10220 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -84,7 +84,14 @@ let walkInternal = function walkInternal(currentWalkIndex, walkCodes, scope) {
         (scope[decodeAccessor(currentScopeIndex++)] = createScope(scope.$, scope.F)),
       )),
         value === 48 && (scope[decodeAccessor(currentScopeIndex++)] = skipScope()));
-    else if (value < 92) for (value = 25 * currentMultiplier + value - 67; value--;) walkNextNode();
+    else if (value < 92)
+      for (value = 25 * currentMultiplier + value - 67; value--;)
+        if (currentNode.firstChild) currentNode = currentNode.firstChild;
+        else {
+          for (; !currentNode.nextSibling && currentNode.parentNode;)
+            currentNode = currentNode.parentNode;
+          walkNextSibling();
+        }
     else if (value < 107)
       for (value = 10 * currentMultiplier + value - 97; value--;) walkNextSibling();
     else if (value < 117) {
@@ -92,11 +99,6 @@ let walkInternal = function walkInternal(currentWalkIndex, walkCodes, scope) {
         currentNode = currentNode.parentNode || currentNode;
       walkNextSibling();
     } else storedMultiplier = currentMultiplier * 10 + value - 117;
-};
-let walkNextNode = (_) => {
-  if (currentNode.firstChild) return (currentNode = currentNode.firstChild);
-  for (; !currentNode.nextSibling && currentNode.parentNode;) currentNode = currentNode.parentNode;
-  walkNextSibling();
 };
 let walkNextSibling = (_) => (currentNode = currentNode.nextSibling || currentNode);
 let _resumed = {};
@@ -162,12 +164,16 @@ let _show = /*@__PURE__*/ withBranches((nodeAccessor, startNodeAccessor, endNode
       range = scope[rangeAccessor];
     range ||
       ((range = scope[rangeAccessor] = {}),
-      (range.S = onlyChild ? parentNode.firstChild : scope[startNodeAccessor]),
       (range.K = onlyChild
         ? parentNode.lastChild
-        : endNodeAccessor === void 0
-          ? referenceNode.previousSibling
-          : scope[endNodeAccessor]));
+        : endNodeAccessor
+          ? scope[endNodeAccessor]
+          : referenceNode.previousSibling),
+      (range.S = onlyChild
+        ? parentNode.firstChild
+        : startNodeAccessor
+          ? scope[startNodeAccessor]
+          : range.K));
     let startNode = range.S;
     if (range.L && startNode === range.K && startNode.tagName === "T") {
       let wrapper = startNode;
@@ -557,8 +563,7 @@ function push(opt, item) {
   return opt ? (Array.isArray(opt) ? (opt.push(item), opt) : [opt, item]) : item;
 }
 function _on(element, type, handler) {
-  (element[1 + type] === void 0 && delegate(type, handleDelegated),
-    (element[1 + type] = handler || null));
+  (delegate(type, handleDelegated), (element[1 + type] = handler || null));
 }
 function handleDelegated(ev) {
   let target = !rendering && ev.target;
@@ -698,10 +703,9 @@ function _for_closure(ownerLoopNodeAccessor, fn) {
     };
   return ((ownerSignal._ = (scope) => queueRender(scope, fn, -1)), ownerSignal);
 }
-function _for_selector(ownerLoopNodeAccessor, ownerValueAccessor, keyValueAccessor, fn) {
+function _for_selector(ownerLoopNodeAccessor, ownerValueAccessor, fn) {
   ((ownerLoopNodeAccessor = decodeAccessor(ownerLoopNodeAccessor)),
-    (ownerValueAccessor = decodeAccessor(ownerValueAccessor)),
-    keyValueAccessor !== "M" && (keyValueAccessor = decodeAccessor(keyValueAccessor)));
+    (ownerValueAccessor = decodeAccessor(ownerValueAccessor)));
   let scopeAccessor = "A" + ownerLoopNodeAccessor,
     mapAccessor = "O" + ownerLoopNodeAccessor,
     prevKeyProp = `_${ownerValueAccessor}`,
@@ -711,7 +715,7 @@ function _for_selector(ownerLoopNodeAccessor, ownerValueAccessor, keyValueAccess
         queueRender(
           ownerScope,
           (_) => {
-            let map = keyedScopes(ownerScope, scopeAccessor, mapAccessor, keyValueAccessor);
+            let map = keyedScopes(ownerScope, scopeAccessor, mapAccessor);
             if (map && prevKeyProp in map) {
               let prevScope = map.get(map[prevKeyProp]),
                 nextScope = map.get(nextKey);
@@ -726,13 +730,13 @@ function _for_selector(ownerLoopNodeAccessor, ownerValueAccessor, keyValueAccess
     };
   return ((ownerSignal._ = (scope) => queueRender(scope, fn, -1)), ownerSignal);
 }
-function keyedScopes(ownerScope, scopeAccessor, mapAccessor, keyValueAccessor) {
+function keyedScopes(ownerScope, scopeAccessor, mapAccessor) {
   let map = (ownerScope[mapAccessor] ||= /* @__PURE__ */ new Map());
   if (!map.size)
     for (let scope of toArray(ownerScope[scopeAccessor])) {
-      let key = scope.M ?? scope[keyValueAccessor];
+      let key = scope.M;
       if (key === void 0) return (ownerScope[mapAccessor] = null);
-      ((scope.M = key), map.set(key, scope));
+      map.set(key, scope);
     }
   return map;
 }
@@ -753,8 +757,8 @@ function _if_closure(ownerConditionalNodeAccessor, branch, fn) {
     };
   return ((ownerSignal._ = (scope) => queueRender(scope, fn, -1)), ownerSignal);
 }
-function subscribeToScopeSet(ownerScope, accessor, scope) {
-  let subscribers = (ownerScope[accessor] ||= /* @__PURE__ */ new Set()),
+function subscribeToScopeSet(owner, accessor, scope) {
+  let subscribers = (owner[accessor] ||= /* @__PURE__ */ new Set()),
     { size } = subscribers;
   subscribers.add(scope).size !== size && trackCleanup(scope, subscribers);
 }
@@ -778,10 +782,10 @@ function _closure_get(valueAccessor, fn, getOwnerScope, resumeId) {
   let closureSignal = (scope, resumed) => {
     let ownerScope = getOwnerScope ? getOwnerScope(scope) : scope._;
     ((scope[closureSignal.b] = closureSignal.c),
+      subscribeToScopeSet(ownerScope, closureSignal.a, scope),
       resumed
         ? ownerScope[closureSignal.a]._ && queueAsyncRender(scope, fn)
-        : queueRender(scope, fn, -1),
-      subscribeToScopeSet(ownerScope, closureSignal.a, scope));
+        : queueRender(scope, fn, -1));
   };
   return (
     (closureSignal.a = valueAccessor),
@@ -799,13 +803,13 @@ function _return_change(scope, changeHandler) {
   scope.U = changeHandler || void 0;
 }
 function _id(scope, accessor) {
-  let id = accessor !== void 0 && scope[accessor];
+  let id = accessor && scope[accessor];
   if (!id) {
     let $global = scope.$,
       n = tagIdsByGlobal.get($global) || 0;
     (tagIdsByGlobal.set($global, n + 1),
       (id = "c" + $global.runtimeId + $global.renderId + n.toString(36)),
-      accessor !== void 0 && (scope[accessor] = id));
+      accessor && (scope[accessor] = id));
   }
   return id;
 }
@@ -1119,7 +1123,7 @@ function runResumeEffects(render) {
     isResuming = 0;
   }
 }
-function getRegisteredWithScope(id, scope) {
+function getRegisteredWithScope(scope, id) {
   return scope ? _resumed[id](scope) : _resumed[id];
 }
 function _var_resume(id, signal) {
@@ -2112,7 +2116,7 @@ let compat = {
   },
   resolveRegistered(value, $global) {
     return Array.isArray(value) && typeof value[0] == "string"
-      ? getRegisteredWithScope(value[0], getRenderScopes($global)?.[value[1]])
+      ? getRegisteredWithScope(getRenderScopes($global)?.[value[1]], value[0])
       : value;
   },
   createRenderer(params, clone) {
@@ -2257,19 +2261,19 @@ function _load_setup(load) {
     renderer,
     insertCached = (child, marker) => insertLoaded(renderer, child, marker);
   return (owner, child, marker) => {
-    if (renderer) queueRender(child, insertCached, -1, marker);
+    if (((child.X ||= /* @__PURE__ */ new Map()), renderer))
+      queueRender(child, insertCached, -1, marker);
     else {
       let awaitCounter = startAwait(owner);
-      ((child.X ||= /* @__PURE__ */ new Map()),
-        (pending ||= load()).then(
-          (mod) => {
-            ((renderer ||= _content("", ...mod._)()),
-              queueAsyncRender(child, (child) =>
-                insertLoaded(renderer, child, marker, awaitCounter),
-              ));
-          },
-          loadFailed(child, awaitCounter),
-        ));
+      (pending ||= load()).then(
+        (mod) => {
+          ((renderer ||= _content("", ...mod._)()),
+            queueAsyncRender(child, (child) =>
+              insertLoaded(renderer, child, marker, awaitCounter),
+            ));
+        },
+        loadFailed(child, awaitCounter),
+      );
     }
   };
 }

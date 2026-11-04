@@ -93,7 +93,11 @@ export let _dynamic_tag = (
             ),
           );
         } else {
-          if (renderContent && typeof renderContent !== "function") {
+          if (
+            MARKO_DEBUG &&
+            renderContent &&
+            typeof renderContent !== "function"
+          ) {
             throw new Error(
               `Body content is not supported for the \`<${renderer}>\` tag.`,
             );

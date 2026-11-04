@@ -13,7 +13,6 @@ var plain_default = /*@__PURE__*/ _template("__tests__/tags/plain.marko", $templ
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $setup$1 = ($_) => {};
-const $input_type_direct = /*@__PURE__*/ _dynamic_tag_content("#text/0");
 const $item_content__input_text = /*@__PURE__*/ _closure_get("input_text/5", ($scope) => _text($scope["#text/0"], $scope._.input_text), 0, "__tests__/tags/heading.marko_1_input_text#0:4/subscribe");
 const $item_content__setup = $item_content__input_text;
 const $item_content = _content("__tests__/tags/heading.marko_1*content", "text <!>", "b%", $item_content__setup);

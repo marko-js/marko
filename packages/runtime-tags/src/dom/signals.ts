@@ -164,15 +164,11 @@ export function _for_closure(
 export function _for_selector(
   ownerLoopNodeAccessor: EncodedAccessor,
   ownerValueAccessor: EncodedAccessor,
-  keyValueAccessor: EncodedAccessor,
   fn: SignalFn,
 ): SignalFn {
   if (!MARKO_DEBUG) {
     ownerLoopNodeAccessor = decodeAccessor(ownerLoopNodeAccessor as number);
     ownerValueAccessor = decodeAccessor(ownerValueAccessor as number);
-    if (keyValueAccessor !== AccessorProp.LoopKey) {
-      keyValueAccessor = decodeAccessor(keyValueAccessor as number);
-    }
   }
   const scopeAccessor = AccessorPrefix.BranchScopes + ownerLoopNodeAccessor;
   const mapAccessor = AccessorPrefix.KeyedScopes + ownerLoopNodeAccessor;
@@ -183,12 +179,7 @@ export function _for_selector(
       queueRender(
         ownerScope,
         (_) => {
-          const map = keyedScopes(
-            ownerScope,
-            scopeAccessor,
-            mapAccessor,
-            keyValueAccessor,
-          );
+          const map = keyedScopes(ownerScope, scopeAccessor, mapAccessor);
           if (map && prevKeyProp in map) {
             const prevScope = map.get(map[prevKeyProp]);
             const nextScope = map.get(nextKey);
@@ -217,16 +208,14 @@ function keyedScopes(
   ownerScope: Scope,
   scopeAccessor: string,
   mapAccessor: string,
-  keyValueAccessor: EncodedAccessor,
 ): KeyedScopes | null {
   const map = (ownerScope[mapAccessor] ||= new Map()) as KeyedScopes;
   if (!map.size) {
     for (const scope of toArray(ownerScope[scopeAccessor] as BranchScope)) {
-      const key = scope[AccessorProp.LoopKey] ?? scope[keyValueAccessor];
+      const key = scope[AccessorProp.LoopKey];
       if (key === undefined) {
         return (ownerScope[mapAccessor] = null);
       }
-      scope[AccessorProp.LoopKey] = key;
       map.set(key, scope);
     }
   }
@@ -267,11 +256,11 @@ export function _if_closure(
 }
 
 export function subscribeToScopeSet(
-  ownerScope: Scope,
+  owner: Record<Accessor, unknown>,
   accessor: Accessor,
   scope: Scope,
 ) {
-  const subscribers = (ownerScope[accessor] ||= new Set()) as Set<Scope>;
+  const subscribers = (owner[accessor] ||= new Set()) as Set<Scope>;
   // Resume adopts the server's set already holding its subscribers, so those
   // register no unsubscribe: bounded, and `_closure` skips destroyed scopes.
   const { size } = subscribers;
@@ -315,6 +304,11 @@ export function _closure_get(
       : scope[AccessorProp.Owner]!;
     scope[closureSignal[ClosureSignalProp.SignalIndexAccessor]] =
       closureSignal[ClosureSignalProp.Index];
+    subscribeToScopeSet(
+      ownerScope,
+      closureSignal[ClosureSignalProp.ScopeInstancesAccessor],
+      scope,
+    );
     if (!resumed) {
       queueRender(scope, fn, -1);
     } else if (
@@ -328,11 +322,6 @@ export function _closure_get(
       // does it render, in its own run as resumed async content does.
       queueAsyncRender(scope, fn);
     }
-    subscribeToScopeSet(
-      ownerScope,
-      closureSignal[ClosureSignalProp.ScopeInstancesAccessor],
-      scope,
-    );
   }) as ((scope: Scope, resumed?: 1) => void) & {
     [ClosureSignalProp.ScopeInstancesAccessor]: string;
     [ClosureSignalProp.SignalIndexAccessor]: string;
@@ -346,8 +335,8 @@ export function _closure_get(
   closureSignal[ClosureSignalProp.SignalIndexAccessor] =
     AccessorPrefix.ClosureSignalIndex + valueAccessor;
 
-  // A subscriber that resumes after its owner applies what the client changed
-  // since the server render, then subscribes.
+  // A subscriber that resumes after its owner subscribes, then applies what the
+  // client changed since the server render.
   if (resumeId) _resumed[resumeId] = (scope: Scope) => closureSignal(scope, 1);
 
   return closureSignal;
@@ -399,21 +388,21 @@ const tagIdsByGlobal = new WeakMap<Scope[typeof AccessorProp.Global], number>();
 // nullish fallback stays stable across recomputes. The slot is deliberately
 // not serialized: a resumed scope's first recompute simply mints again.
 export function _id(scope: Scope, accessor?: Accessor) {
-  let id = accessor !== undefined && (scope[accessor] as string | undefined);
+  let id = accessor && (scope[accessor] as string | undefined);
   if (!id) {
     const $global = scope[AccessorProp.Global];
     const n = tagIdsByGlobal.get($global) || 0;
     tagIdsByGlobal.set($global, n + 1);
     id = "c" + $global.runtimeId + $global.renderId + n.toString(36);
-    if (accessor !== undefined) scope[accessor] = id;
+    if (accessor) scope[accessor] = id;
   }
   return id;
 }
 
 export function _script(id: string, fn: (scope: Scope) => void) {
   _resumed[id] = fn;
-  // Queued in signal-graph (forward) order; resume runs them in reverse, so
-  // mount-effect order is unspecified across the two paths (see translator).
+  // A client render queues it as its signal runs; resume runs the server's list,
+  // each section's after its body. Neither order is guaranteed, only a final DOM.
   return (scope: Scope) => {
     queueEffect(scope, fn);
   };

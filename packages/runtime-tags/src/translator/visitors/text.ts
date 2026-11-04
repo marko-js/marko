@@ -1,6 +1,7 @@
 import { types as t } from "@marko/compiler";
 
 import { isOutputHTML } from "../util/marko-config";
+import { replaceWithStatements } from "../util/replace-with-statements";
 import { followsStaticText } from "../util/static-text";
 import * as structure from "../util/structure";
 import { isInTextBody } from "../util/tag-facts";
@@ -27,7 +28,7 @@ export default {
       if (isOutputHTML()) {
         writer.writeTo(text)`${text.node.value}`;
       }
-      text.remove();
+      replaceWithStatements(text);
     },
   },
 } satisfies TemplateVisitor<t.MarkoText>;

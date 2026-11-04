@@ -18,6 +18,7 @@ import evaluate from "../util/evaluate";
 import { getAccessorPrefix } from "../util/get-accessor-enums";
 import { isOutputHTML } from "../util/marko-config";
 import { setDerivedFrom, trackVarReferences } from "../util/references";
+import { replaceWithStatements } from "../util/replace-with-statements";
 import { callRuntime } from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
 import { getPrefixedScopeAccessor } from "../util/scope-accessor";
@@ -59,7 +60,7 @@ export default {
 
       // Nothing reads it and its value was dropped, so there is no id to mint.
       if ((valueAttr ? valueAttr.value : node).extra?.dropped) {
-        tag.remove();
+        replaceWithStatements(tag);
         return;
       }
 
@@ -68,14 +69,14 @@ export default {
         : callRuntime("_id", scopeIdentifier);
 
       if (isOutputHTML()) {
-        tag.replaceWith(
+        replaceWithStatements(tag, [
           t.variableDeclaration("const", [
             t.variableDeclarator(
               node.var!,
               valueAttr ? t.logicalExpression("||", valueAttr.value, id) : id,
             ),
           ]),
-        );
+        ]);
       } else {
         const section = getSection(tag);
         const signal = initValue(node.var!.extra!.binding!);
@@ -111,7 +112,7 @@ export default {
           addValue(section, undefined, signal, id);
         }
 
-        tag.remove();
+        replaceWithStatements(tag);
       }
     },
   },

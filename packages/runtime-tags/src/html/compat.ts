@@ -152,9 +152,9 @@ export const compat = {
     }
     if (boundary.aborted) throw boundary.reason;
     if (boundary.count) {
-      throw new Error(
-        "Cannot serialize promise across tags/class compat layer.",
-      );
+      throw MARKO_DEBUG
+        ? new Error("Cannot serialize promise across tags/class compat layer.")
+        : new Error();
     }
     return { html, scripts };
   },

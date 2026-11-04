@@ -5,13 +5,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let x = 1;
 	const MyTag = { content: _content("__tests__/template.marko_1*content", (a, b, c) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason(), $wg__b = _write_guard($scope1_reason, 1), $wg__c = _write_guard($scope1_reason, 2);
-		_html(`<div>${_text_resume($scope1_id, "#text/0", b, $wg__b)}|${_text_resume($scope1_id, "#text/1", c, $wg__c * 2)}</div>`);
-		_write_if($scope1_reason, 0) && _scope($scope1_id, {}, "__tests__/template.marko", "2:2");
+		const $scope1_reason = _scope_reason();
+		_html(`<div>${_text_resume($scope1_id, "#text/0", b, 0)}|${_text_resume($scope1_id, "#text/1", c, 2)}</div>`);
+		_scope($scope1_id, {}, "__tests__/template.marko", "2:2");
 	}, $scope0_id) };
 	_set_scope_reason(34);
 	const $childScope = _peek_scope_id();
-	MyTag.content(void 0, "Hello", x);
+	MyTag.content(0, "Hello", x);
 	_html(`<button>${_text_resume($scope0_id, "#text/2", x)}</button>${_el_resume($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
