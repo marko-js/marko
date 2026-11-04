@@ -1,0 +1,3 @@
+import Reader from "./tags/reader.marko";
+<output id="out"></output>
+<${input.hide ? null : Reader} fn() { document.getElementById("out").textContent = "v:" + input.title }/>

@@ -1,0 +1,7 @@
+static let n = 0;
+<const/{ uid }={ uid: "u" + ++n }/>
+<let/shown=""/>
+<label for=`${uid}-${input.name}`>${input.label}</label>
+<input id=`${uid}-${input.name}` name=input.name value=input.value/>
+<button onClick() { shown = uid }>show</button>
+<output>${shown}</output>

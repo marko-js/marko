@@ -257,6 +257,15 @@ export function _await_content(
   };
 }
 
+// Written only by `patches/try`: a patch page names a boundary's `@catch` and
+// `@placeholder` content by id, which may resolve to a shell.
+let boundaryContentById: undefined | ((content: unknown) => unknown);
+export function withBoundaryContentIds(
+  resolve: NonNullable<typeof boundaryContentById>,
+) {
+  boundaryContentById = resolve;
+}
+
 export function startAwait(
   scope: Scope,
   tryBranch = findTryWithPlaceholder(scope),
@@ -270,6 +279,11 @@ export function startAwait(
   }
   countAwait(awaitCounter, tryBranch, (_) => {
     // Parented beside the try for effects and awaits; the try still catches its errors.
+    if (boundaryContentById) {
+      tryBranch[AccessorProp.PlaceholderContent] = boundaryContentById(
+        tryBranch[AccessorProp.PlaceholderContent],
+      );
+    }
     (tryBranch[AccessorProp.PlaceholderBranch] = createAndSetupBranch(
       tryBranch[AccessorProp.Global],
       (
@@ -425,6 +439,11 @@ export function renderCatch(scope: Scope, error?: unknown) {
       ] = placeholderBranch;
       destroyBranch(tryWithCatch);
     }
+    if (boundaryContentById) {
+      tryWithCatch[AccessorProp.CatchContent] = boundaryContentById(
+        tryWithCatch[AccessorProp.CatchContent],
+      );
+    }
     const catchContent = tryWithCatch[AccessorProp.CatchContent]();
     setBranch(
       owner,
@@ -448,7 +467,7 @@ export function renderCatch(scope: Scope, error?: unknown) {
 
 // `ParentBranch` links a branch to its enclosing one (on resume through the serialized
 // closest branch id and markers), and a `@placeholder` is parented beside its `<try>`.
-function findTryWithPlaceholder(scope: Scope) {
+export function findTryWithPlaceholder(scope: Scope) {
   let branch = scope[AccessorProp.ClosestBranch];
   while (branch && !branch[AccessorProp.PlaceholderContent]) {
     branch = branch[AccessorProp.ParentBranch];
@@ -808,6 +827,17 @@ export function dynamicTagScript(branch: Scope) {
   );
 }
 
+// A patch's entry for the branch a site creates waits at the site, which takes it as
+// it creates the branch (`patches/client-branch`); bundles without one fold this away.
+let takeBranchEntry:
+  | undefined
+  | ((scope: Scope, accessor: Accessor, branch?: BranchScope) => void);
+export function installBranchEntries(
+  take: NonNullable<typeof takeBranchEntry>,
+) {
+  takeBranchEntry = take;
+}
+
 export function setBranch<T>(
   scope: Scope,
   nodeAccessor: Accessor,
@@ -830,6 +860,7 @@ export function setBranch<T>(
   const newBranch = (scope[AccessorPrefix.BranchScopes + nodeAccessor] =
     newRenderer &&
     createBranch(scope[AccessorProp.Global], newRenderer, scope, parentNode));
+  takeBranchEntry?.(scope, nodeAccessor, newBranch);
   if (referenceNode === parentNode) {
     if (prevBranch) {
       destroyBranch(prevBranch);
@@ -860,7 +891,7 @@ export function setBranch<T>(
   }
 }
 
-const loop = /*@__PURE__*/ withBranches(
+export const loop = /*@__PURE__*/ withBranches(
   <T extends unknown[] = unknown[]>(
     forEach: (value: T, cb: (key: unknown, args: unknown[]) => void) => void,
     reorder?: typeof reorderKeyed,
@@ -1003,7 +1034,7 @@ const loop = /*@__PURE__*/ withBranches(
           return;
         }
 
-        // Unreachable for an unkeyed loop: its kept branches never move.
+        // Unreachable for an unkeyed loop: its paired branches never move.
         reorder!(newScopes, start, newEnd, parentNode, afterReference);
       };
     },
@@ -1043,8 +1074,8 @@ export const _for_until = /*@__PURE__*/ loop<
   forUntil(until, from, step, (v) => cb(by(v), [v]));
 }, reorderKeyed);
 
-// Unkeyed loops (no `by=`, counting from 0 by 1) are keyed by index, so their
-// branches never move and they ship without `reorderKeyed`.
+// Unkeyed loops (no `by=`) key rows by index, or by a value constant `from` and
+// `step` keep in place, so their branches never move: no `reorderKeyed` ships.
 export const _for_of_unkeyed = /*@__PURE__*/ loop<[all: unknown[]]>(
   ([all], cb) => forOf(all, (item, i) => cb(i, [item, i])),
 );
@@ -1057,7 +1088,7 @@ export const _for_until_unkeyed = /*@__PURE__*/ loop<
   [until: number, from?: number, step?: number]
 >(([until, from, step], cb) => forUntil(until, from, step, (v) => cb(v, [v])));
 
-function reorderKeyed(
+export function reorderKeyed(
   newScopes: BranchScope[],
   start: number,
   newEnd: number,

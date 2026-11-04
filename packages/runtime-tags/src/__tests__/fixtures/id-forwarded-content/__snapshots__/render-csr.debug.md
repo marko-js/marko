@@ -1,0 +1,202 @@
+# Render `{"show":false}`
+```html
+<section>
+  <label
+    for="cM_0"
+  >
+    direct
+  </label>
+  <input
+    id="cM_0"
+  />
+</section>
+<section>
+  <em>
+    none
+  </em>
+</section>
+<section>
+  <label
+    for="cM_5"
+  >
+    body
+  </label>
+  <input
+    id="cM_5"
+  />
+</section>
+<section>
+  <em>
+    none
+  </em>
+</section>
+<section>
+  <label
+    for="cM_1"
+  >
+    attr
+  </label>
+  <input
+    id="cM_1"
+  />
+</section>
+<section>
+  <label
+    for="cM_3"
+  >
+    defined
+  </label>
+  <input
+    id="cM_3"
+  />
+</section>
+<label
+  for="cM_6"
+>
+  define
+</label>
+<input
+  id="cM_6"
+/>
+<em>
+  none
+</em>
+<label
+  for="cM_4"
+>
+  inner
+</label>
+<input
+  id="cM_4"
+/>
+<em>
+  none
+</em>
+<label
+  for="cM_2"
+>
+  named
+</label>
+<input
+  id="cM_2"
+/>
+```
+
+# Update
+```js
+const ids = new Set();
+for (const input of document.querySelectorAll("input")) {
+  assert(!ids.has(input.id), "duplicate " + input.id);
+  ids.add(input.id);
+  assert.equal(input.labels?.length, 1, "labels of " + input.id);
+}
+```
+
+# Update `{"show":true}`
+```html
+<section>
+  <label
+    for="cM_0"
+  >
+    direct
+  </label>
+  <input
+    id="cM_0"
+  />
+</section>
+<section>
+  <em>
+    none
+  </em>
+</section>
+<section>
+  <label
+    for="cM_5"
+  >
+    body
+  </label>
+  <input
+    id="cM_5"
+  />
+</section>
+<section>
+  <em>
+    none
+  </em>
+</section>
+<section>
+  <label
+    for="cM_1"
+  >
+    attr
+  </label>
+  <input
+    id="cM_1"
+  />
+</section>
+<section>
+  <label
+    for="cM_3"
+  >
+    defined
+  </label>
+  <input
+    id="cM_3"
+  />
+</section>
+<label
+  for="cM_6"
+>
+  define
+</label>
+<input
+  id="cM_6"
+/>
+<em>
+  none
+</em>
+<label
+  for="cM_4"
+>
+  inner
+</label>
+<input
+  id="cM_4"
+/>
+<em>
+  none
+</em>
+<label
+  for="cM_2"
+>
+  named
+</label>
+<input
+  id="cM_2"
+/>
+<section>
+  <label
+    for="cM_7"
+  >
+    created
+  </label>
+  <input
+    id="cM_7"
+  />
+</section>
+```
+## Change
+```
+INSERT: #cM_2 + section
+INSERT: section:nth-of-type(7) > :is(label, #cM_7)
+```
+
+# Update
+```js
+const ids = new Set();
+for (const input of document.querySelectorAll("input")) {
+  assert(!ids.has(input.id), "duplicate " + input.id);
+  ids.add(input.id);
+  assert.equal(input.labels?.length, 1, "labels of " + input.id);
+}
+```

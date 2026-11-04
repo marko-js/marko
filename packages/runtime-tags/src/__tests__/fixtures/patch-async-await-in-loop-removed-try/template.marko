@@ -1,0 +1,6 @@
+<let/items=[{ id: 1 }, { id: 2 }]/>
+<button onClick() { items = items.slice(1) }>drop</button>
+<try>
+  <rows items=items promise=input.promise/>
+  <@placeholder><i>loading</i></@placeholder>
+</try>

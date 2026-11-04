@@ -1,0 +1,15 @@
+<let/on=true/>
+<define/List|{ selected, flag }|>
+  <let/rows=[{ id: 1 }, { id: 2 }, { id: 3 }]/>
+  <ul>
+    <for|row| of=rows by="id">
+      <li/item>${row.id}</li>
+      <script>
+        item().className = flag && selected === row.id ? "sel" : "";
+      </script>
+    </for>
+  </ul>
+  <button.add onClick() { rows = [...rows, { id: rows.length + 1 }] }>+</button>
+</define>
+<List selected=input.sel flag=on/>
+<button.toggle onClick() { on = !on }>toggle</button>

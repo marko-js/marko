@@ -1,0 +1,12 @@
+<card>
+  <if=input.show>
+    <id/uid/>
+    <input id=uid/>
+    <label for=uid>${input.label}</label>
+  </if>
+  <for|item| of=input.items by="id">
+    <id/rid/>
+    <input id=rid/>
+    <label for=rid>${item.id}</label>
+  </for>
+</card>
