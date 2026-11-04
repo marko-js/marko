@@ -1284,9 +1284,10 @@ export class Chunk {
 
     if (readyId && !this.async) {
       const { state } = boundary;
+      const effects = holdEffects ? "" : this.effects;
+      if (effects) flushSerializerGlobals(boundary);
       flushSerializer(boundary, channel);
       const deps = takeChannelDeps(state.serializer);
-      const effects = holdEffects ? "" : this.effects;
       const { resumes } = channel;
       const chunkScripts = this.scripts;
       channel.resumes = this.scripts = "";
@@ -1380,6 +1381,7 @@ export class Chunk {
 
     if (effects) {
       needsWalk = true;
+      flushSerializerGlobals(boundary);
       state.resumes = state.resumes
         ? state.resumes + ',"' + effects + '"'
         : '"' + effects + '"';
@@ -1660,7 +1662,7 @@ function flushSerializer(boundary: Boundary, channel: Channel) {
     }
 
     if (flushes.length || pending) {
-      if (channel.readyId && !state.hasWrittenGlobals) {
+      if (channel.readyId) {
         // Globals serialize before ready data that may reference them.
         flushSerializerGlobals(boundary);
       }
@@ -1677,11 +1679,13 @@ function flushSerializer(boundary: Boundary, channel: Channel) {
   }
 }
 
+// Globals go out once, ahead of the first scopes or effects that may read them.
 function flushSerializerGlobals(boundary: Boundary) {
   const { state } = boundary;
+  if (state.hasWrittenGlobals) return;
+  state.hasWrittenGlobals = true;
   const globals = getFilteredGlobals(state.$global);
   if (globals) {
-    state.hasWrittenGlobals = true;
     state.needsWalkerRuntime = true;
     state.resumes = concatSequence(
       state.resumes,
