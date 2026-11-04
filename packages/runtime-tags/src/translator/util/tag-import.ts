@@ -1,11 +1,5 @@
-import path from "path";
-
 import { types as t } from "@marko/compiler";
-import {
-  getFile,
-  importNamed,
-  resolveTagImport,
-} from "@marko/compiler/babel-utils";
+import { getFile, resolveTagImport } from "@marko/compiler/babel-utils";
 
 import { getEventType, isEventHandler } from "../../common/helpers";
 import type { LoadTrigger } from "../../html/assets";
@@ -24,27 +18,6 @@ export type LoadImportConfig =
   | { render: false; triggers: LoadTrigger[] };
 const triggerRegExp = /\s*([\w-]+)\s*([^?|]+?)?\s*(?:\?([^|]*?))?\s*(?:\||$)/g;
 const derivedImports = new WeakSet<t.ImportDeclaration>();
-
-export function importOrSelfReferenceName(
-  file: t.BabelFile,
-  request: string,
-  name: string,
-  nameHint?: string,
-): t.Identifier {
-  if (isCircularRequest(file, request)) {
-    return t.identifier(name);
-  }
-
-  return importNamed(file, request, name, nameHint);
-}
-
-export function isCircularRequest(file: t.BabelFile, request: string) {
-  const { filename } = file.opts;
-  return (
-    request === filename ||
-    (request[0] === "." && path.resolve(filename, "..", request) === filename)
-  );
-}
 
 // A template importing (or re-exporting) a tag compiles it too.
 export function trackTagImport(tagImport: string) {

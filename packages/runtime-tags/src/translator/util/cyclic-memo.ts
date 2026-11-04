@@ -1,15 +1,19 @@
 import { type Opt, reduce } from "./optional";
 import { createAnalysisState } from "./state";
 
+// Every cyclic memo's computations, numbered together as they start: a cycle
+// may close through another memo, whose computations are then as provisional.
+let computations = 0;
+let provisionalAt = Infinity;
+
 // A memo whose computation may re-ask itself through a cycle: a re-ask
-// answers `cycleAnswer`, and a frame that consumed one does not cache.
+// answers `cycleAnswer`, and a computation that consumed one does not cache.
 export function createCyclicMemo<K extends object, R>(
   compute: (key: K) => R,
   cycleAnswer: R,
 ): (key: K) => R {
   const cache = new WeakMap<K, R>();
   const computing = new Map<K, number>();
-  let provisionalAt = Infinity;
   return (key) => {
     if (cache.has(key)) return cache.get(key)!;
     const at = computing.get(key);
@@ -17,19 +21,19 @@ export function createCyclicMemo<K extends object, R>(
       if (at < provisionalAt) provisionalAt = at;
       return cycleAnswer;
     }
-    const frame = computing.size;
-    computing.set(key, frame);
+    const index = computations++;
+    computing.set(key, index);
     const outerProvisionalAt = provisionalAt;
     provisionalAt = Infinity;
     // The walk state outlives a compile (a diagnostic may throw
     // mid-walk), so every exit restores it.
     try {
       const result = compute(key);
-      if (provisionalAt >= frame) cache.set(key, result);
+      if (provisionalAt >= index) cache.set(key, result);
       return result;
     } finally {
       computing.delete(key);
-      if (provisionalAt >= frame || outerProvisionalAt < provisionalAt) {
+      if (provisionalAt >= index || outerProvisionalAt < provisionalAt) {
         provisionalAt = outerProvisionalAt;
       }
     }
@@ -47,35 +51,49 @@ export function createAnalysisMemo<K extends object, R>(
   return [(key: K) => getMemo()(key), () => setMemo(create())] as const;
 }
 
-// The same memo keyed by an object and a property path (`true` for every
-// property): each path interns one key, so a value's answer per path
-// shares one cycle protocol.
+// Every pass memo's reset, which each solve pass runs.
+const passResets: (() => void)[] = [];
+
+// An analysis memo over the reasons of the moment: each solve pass asks it
+// afresh.
+export function createPassMemo<K extends object, R>(
+  compute: (key: K) => R,
+  cycleAnswer: R,
+) {
+  const [memo, reset] = createAnalysisMemo(compute, cycleAnswer);
+  passResets.push(reset);
+  return memo;
+}
+
+export function resetPassMemos() {
+  for (const reset of passResets) reset();
+}
+
+// A pass memo keyed by an object and a property path (`true` for all):
+// each path interns one key, so a path's answers share one cycle protocol.
 type MemoPath = Opt<string> | true;
 interface PathKeys<K> {
   value?: [K, MemoPath];
   all?: [K, MemoPath];
   props?: Map<string, PathKeys<K>>;
 }
-export function createAnalysisPathMemo<K extends object, R>(
+export function createPassPathMemo<K extends object, R>(
   compute: (key: K, path: MemoPath) => R,
   cycleAnswer: R,
 ) {
   const keys = new WeakMap<K, PathKeys<K>>();
-  const [memo, reset] = createAnalysisMemo(
+  const memo = createPassMemo(
     ([key, path]: [K, MemoPath]) => compute(key, path),
     cycleAnswer,
   );
-  return [
-    (key: K, path: MemoPath) => {
-      let pathKeys: PathKeys<K> | undefined = keys.get(key);
-      if (!pathKeys) keys.set(key, (pathKeys = {}));
-      if (path === true) return memo((pathKeys.all ??= [key, path]));
-      return memo(
-        (reduce(path, ensurePropKeys<K>, pathKeys).value ??= [key, path]),
-      );
-    },
-    reset,
-  ] as const;
+  return (key: K, path: MemoPath) => {
+    let pathKeys: PathKeys<K> | undefined = keys.get(key);
+    if (!pathKeys) keys.set(key, (pathKeys = {}));
+    if (path === true) return memo((pathKeys.all ??= [key, path]));
+    return memo(
+      (reduce(path, ensurePropKeys<K>, pathKeys).value ??= [key, path]),
+    );
+  };
 }
 
 // The keys under `property`, made on first use.

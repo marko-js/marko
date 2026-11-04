@@ -13,7 +13,7 @@ const $try_content2__setup = ($scope) => {
 	$try_content2__await_promise($scope, rejectAfter(new Error("nope"), 2));
 };
 const $await_content2__try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content2__setup, $placeholder_content);
-const $await_content2__setup = ($scope) => $await_content2__try($scope);
+const $await_content2__setup = $await_content2__try;
 const $await_content2__$params = ($scope, $params3) => $await_content2__v($scope, $params3[0]);
 const $await_content2__v = /*@__PURE__*/ _const("v");
 const $await_content2 = /*@__PURE__*/ _await_content("#text/0", "<!><!><!>", "b%", $await_content2__setup);
@@ -28,7 +28,7 @@ const $catch_content__count = /*@__PURE__*/ _closure_get("count/7", ($scope) => 
 const $catch_content__setup = $catch_content__count;
 const $catch_content = _content("__tests__/template.marko_2*content", "<span class=caught> </span>", "D ", $catch_content__setup);
 const $if_content__try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content__setup, 0, $catch_content);
-const $if_content__setup = ($scope) => $if_content__try($scope);
+const $if_content__setup = $if_content__try;
 const $count__closure = /*@__PURE__*/ _closure($catch_content__count, $await_content__count);
 const $count = /*@__PURE__*/ _let("count/5", ($scope) => {
 	_text($scope["#text/1"], $scope.count);

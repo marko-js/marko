@@ -1,0 +1,10 @@
+<let/items=[{ id: "a" }, { id: "b" }]/>
+<let/show=true/>
+<for|item| of=items by="id">
+  <if=show>
+    <dismiss-button label=item.id onDismiss() {
+      document.getElementById("log").textContent = item.id;
+    }/>
+  </if>
+</for>
+<div#log/>

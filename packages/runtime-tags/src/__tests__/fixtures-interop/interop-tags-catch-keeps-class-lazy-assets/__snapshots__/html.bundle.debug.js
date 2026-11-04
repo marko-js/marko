@@ -20,7 +20,7 @@ var import_load_tag = require_load_tag();
 var import_render_tag = /* @__PURE__ */ __toESM(require_render_tag());
 const _marko_componentType$1 = "__tests__/components/class-wrap.marko";
 const _marko_template$1 = (0, import_html.t)(_marko_componentType$1);
-const _marko_load_Child = (0, import_load_tag.withLoadAssets)("__tests__/components/child.marko", _marko_template$2, flush$1, [{
+const _marko_load_Child = (0, import_load_tag.withLoadAssets)("__tests__/components/child.marko", () => _marko_template$2, flush$1, [{
 	type: "on-mouseover",
 	selector: "body"
 }]);
@@ -52,7 +52,7 @@ var tags_try_default = _template("__tests__/components/tags-try.marko", (input) 
 		const $scope2_id = _scope_id();
 		_html(`caught ${_text_resume($scope2_id, "#text/0", err.message, $wg__err_message * 2)}`);
 		_write_if($scope2_reason, 0) && _scope($scope2_id, {}, "__tests__/components/tags-try.marko", "7:4");
-	}, void 0, "__tests__/components/tags-try.marko_2*content");
+	}, 0, "__tests__/components/tags-try.marko_2*content");
 });
 
 // template.marko

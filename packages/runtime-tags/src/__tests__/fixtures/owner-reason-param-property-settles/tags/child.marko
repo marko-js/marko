@@ -1,0 +1,8 @@
+<for|item| of=input.obj.list>
+  <if=input.obj.show>
+    <span>${item}</span>
+    <script>
+      document.body.dataset.seen = JSON.stringify([input.obj, input.count, item]);
+    </script>
+  </if>
+</for>

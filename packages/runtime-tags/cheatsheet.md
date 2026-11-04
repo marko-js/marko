@@ -149,7 +149,8 @@ Rare; prefer state and `<const>`.
 ```marko
 <div/el/>
 <script>
-  // Browser-only. Runs after mount and re-runs when referenced state changes.
+  // Browser-only. Runs after mount and re-runs when referenced state changes,
+  // each time on the final DOM (child tags' too); scripts run in no set order.
   el().focus();                                  // native element refs are getter functions
   const id = setInterval(tick, 1000);
   $signal.onabort = () => clearInterval(id);     // cleanup

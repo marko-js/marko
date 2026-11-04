@@ -1,0 +1,4 @@
+// `x` aliases `input` and is also read only when the handler runs.
+<const/x=input/>
+<div>${JSON.stringify(x)}</div>
+<button.log onClick() { console.log(x) }>log</button>

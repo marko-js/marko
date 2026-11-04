@@ -63,7 +63,9 @@ import {
   trackDomVarReferences,
   isTagVarUsed,
 } from "../../util/references";
+import { replaceWithStatements } from "../../util/replace-with-statements";
 import {
+  absentArg,
   callRuntime,
   importRuntime,
   importRuntimeFeature,
@@ -636,7 +638,8 @@ export default {
               getScopeIdIdentifier(tagSection),
               nodeAccessor,
               ...controllable.attrs.map(
-                (index) => attrAt(attributes, index)?.value,
+                (index, i) =>
+                  attrAt(attributes, index)?.value || (i === 1 && absentArg(0)),
               ),
             )}`;
           }
@@ -671,7 +674,7 @@ export default {
                 attrAt(attributes, controllable.attrs[0])?.value ||
                   t.buildUndefinedNode(),
                 attrAt(attributes, controllable.attrs[1])?.value ||
-                  t.buildUndefinedNode(),
+                  absentArg(0),
               ],
             });
           } else if (spreadExpression) {
@@ -851,13 +854,14 @@ export default {
           writer.flushBefore(tag);
         }
 
+        let statements: t.Statement[] = [];
         if (selectArgs) {
           if (!skipEndTag) {
             write`</${tagName}>`;
           }
 
           writer.flushInto(tag);
-          tag.insertBefore(
+          statements = [
             t.expressionStatement(
               callRuntime(
                 selectArgs.helper,
@@ -870,7 +874,7 @@ export default {
                 ),
               ),
             ),
-          );
+          ];
         } else if (isTextOnly) {
           const rawTextHelper = getRawTextEscapeHelper(tagName);
           if (rawTextHelper) {
@@ -893,7 +897,7 @@ export default {
             }
           }
         } else {
-          tag.insertBefore(tag.node.body.body).forEach((child) => child.skip());
+          statements = tag.node.body.body as t.Statement[];
         }
 
         if (!skipEndTag && !isOpenOnly && !selectArgs) {
@@ -907,7 +911,7 @@ export default {
           writer.markNode(tag, nodeBinding, markerReason, tagName === "html");
         }
 
-        tag.remove();
+        replaceWithStatements(tag, statements);
       },
     },
     dom: {
@@ -1176,33 +1180,26 @@ export default {
       exit(tag) {
         const tagExtra = tag.node.extra!;
         const nodeBinding = tagExtra.nodeBinding;
-        const openTagOnly = getTagDef(tag)?.parseOptions?.openTagOnly;
         const tagName = getCanonicalTagName(tag);
 
-        if (!openTagOnly) {
-          if (tagName !== "textarea" && getTagFacts(tag).textBody) {
-            const textLiteral = bodyToText(tag.node.body, tagName === "title");
-            if (!t.isStringLiteral(textLiteral)) {
-              addStatement(
-                "render",
-                getSection(tag),
-                textLiteral.extra,
-                callRuntime(
-                  "_text_content",
-                  createScopeReadExpression(nodeBinding!),
-                  textLiteral,
-                ),
-                true,
-              );
-            }
-          } else {
-            tag
-              .insertBefore(tag.node.body.body)
-              .forEach((child) => child.skip());
+        if (tagName !== "textarea" && getTagFacts(tag).textBody) {
+          const textLiteral = bodyToText(tag.node.body, tagName === "title");
+          if (!t.isStringLiteral(textLiteral)) {
+            addStatement(
+              "render",
+              getSection(tag),
+              textLiteral.extra,
+              callRuntime(
+                "_text_content",
+                createScopeReadExpression(nodeBinding!),
+                textLiteral,
+              ),
+              true,
+            );
           }
         }
 
-        tag.remove();
+        replaceWithStatements(tag);
       },
     },
   }),

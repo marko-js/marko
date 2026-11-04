@@ -9,7 +9,7 @@ var lazy_child_default = _template("c", (input) => {
 
 // tags/tags-child.marko
 var import_html = require_html();
-const $Lazy_withLoadAssets$1 = withLoadAssets(lazy_child_default, flush$1, "_c");
+const $Lazy_withLoadAssets$1 = withLoadAssets(() => lazy_child_default, "c", flush$1, "_c");
 var tags_child_default = _template("d", (input) => {
 	_scope_reason();
 	_scope_id();
@@ -28,7 +28,7 @@ _marko_template._ = (0, import_renderer.default)(function(input, out, _component
 }, { t: _marko_componentType }, {});
 
 // template.marko
-const $Lazy_withLoadAssets = withLoadAssets(lazy_child_default, flush$1, "_c");
+const $Lazy_withLoadAssets = withLoadAssets(() => lazy_child_default, "c", flush$1, "_c");
 s("b", _marko_template);
 var template_default = _template("a", (input) => {
 	_scope_reason();
@@ -51,5 +51,5 @@ var template_default = _template("a", (input) => {
 		$Lazy_withLoadAssets({ value: "catch" });
 		_html(` caught ${_text_resume($scope2_id, "c", err.message, $wg__err_message * 2)}`);
 		_write_if($scope2_reason, 0) && _scope($scope2_id, {});
-	}, void 0, "a0");
+	}, 0, "a0");
 }, 1);

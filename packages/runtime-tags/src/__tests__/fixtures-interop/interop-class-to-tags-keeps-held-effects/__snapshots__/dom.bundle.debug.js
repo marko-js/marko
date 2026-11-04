@@ -51,8 +51,6 @@ const $input_name = /*@__PURE__*/ _const("input_name", ($scope) => {
 	$input_name__script($scope);
 });
 const $try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content__setup, 0, $catch_content);
-function $setup($scope) {
-	$try($scope);
-}
+const $setup = $try;
 const $input = ($scope, input) => $input_name($scope, input.name);
 var tags_child_default = /*@__PURE__*/ _template("__tests__/components/tags-child.marko", $template, "b%c", $setup, $input);

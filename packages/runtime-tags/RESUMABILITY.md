@@ -11,8 +11,9 @@ template modules, payload, and markers transitively.
 1. `sections.ts` divides the template into independently rendered **sections**.
 2. `bindings.ts` models values as **bindings**; `references.ts` tracks reads, writes,
    aliases, properties, closures, hoists, and what derives from them.
-3. `finalizeReferences()` (`finalize-references.ts`) resolves sources, prunes unused bindings, propagates
-   serialization requirements, canonicalizes intersections, and allocates dense
+3. At program analyze exit, `finalizeReferences()` (`finalize-references.ts`) resolves
+   sources and prunes unused bindings, `solveReasons()` propagates serialization
+   requirements, and `allocateIds()` canonicalizes intersections and allocates dense
    per-section ids.
 4. `signals.ts` groups work by its exact binding set and emits the smallest
    executable **signal**.
@@ -72,10 +73,11 @@ sections marked `Section.dropped`, so reads later recorded in them are not kept.
 
 `finalizeReferences()` is the center of analysis. It resolves each expression to
 canonical bindings, separates constant/live/hoisted/lazy reads, prunes unused
-property paths, computes transitive `Sources`, propagates owner/closure/branch/
-effect/registry requirements, collapses eligible intersections, and finalizes
-known-tag contracts. Safe invoke-only reads avoid subscriptions but set
-`hasLazyReads`: the current scope slot must still survive for later invocation.
+property paths, computes transitive `Sources`, and finalizes known-tag contracts;
+`solveReasons()` then propagates owner/closure/branch/effect/registry
+requirements, and `allocateIds()` collapses eligible intersections. Safe
+invoke-only reads avoid subscriptions but set `hasLazyReads`: the current scope
+slot must still survive for later invocation.
 
 ### Reasons and write reasons
 
@@ -126,7 +128,8 @@ At runtime, `_const` stores on identity change, `_let` distinguishes render-time
 propagation from external writes, `_or` counts intersection arrivals per
 generation, closure helpers notify live child scopes, and `_script` queues
 effects. `dom/queue.ts` orders renders by `scopeId * 1e6 + signalId`, deduplicates
-pending signals in scope slots, runs renders before effects, and uses `runId` as
+pending signals in scope slots, runs renders before effects (so each effect reads
+the final DOM, in no guaranteed order), and uses `runId` as
 the generation boundary (resumed scopes start at 1; normal client work at 2).
 
 ## SSR payload and DOM adoption
@@ -200,7 +203,7 @@ fixed point because one channel can unblock another.
 Async reorders may execute after later main-stream scripts. The server therefore
 reserves each ready-stream position with a numeric gate; the reorder script
 replaces that gate in place. Module registration, scope identity, dependency
-order, DOM arrival, and effect order must remain aligned.
+order, and DOM arrival must remain aligned.
 
 ## Modes and verification
 

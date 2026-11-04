@@ -37,7 +37,7 @@ var tags_page_default = _template("d", (input) => {
 		const $scope2_id = _scope_id();
 		_html(`caught ${_text_resume($scope2_id, "a", err.message, $wg__err_message * 2)}`);
 		_write_if($scope2_reason, 0) && _scope($scope2_id, {});
-	}, void 0, "d0");
+	}, 0, "d0");
 });
 
 // template.marko

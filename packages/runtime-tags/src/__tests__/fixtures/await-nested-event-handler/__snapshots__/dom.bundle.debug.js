@@ -18,7 +18,7 @@ const $try_content2__setup = ($scope) => {
 	$try_content2__await_promise($scope, resolveAfter("inner", 2));
 };
 const $await_content__try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content2__setup, $placeholder_content2);
-const $await_content__setup = ($scope) => $await_content__try($scope);
+const $await_content__setup = $await_content__try;
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<!><!><!>", "b%", $await_content__setup);
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0");
 const $try_content__setup = ($scope) => {

@@ -1,0 +1,8 @@
+<let/items=[{ id: "a" }, { id: "b" }]/>
+<for|item| of=items by="id">
+  <let/count=0 valueChange(next) {
+    document.getElementById("log").textContent = item.id + next;
+  }/>
+  <button onClick() { count++ }>${item.id}</button>
+</for>
+<div#log/>

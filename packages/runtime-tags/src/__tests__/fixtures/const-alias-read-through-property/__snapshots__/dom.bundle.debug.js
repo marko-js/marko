@@ -6,15 +6,13 @@ const $obj = /*@__PURE__*/ _let("obj/6", ($scope) => {
 	$obj_a($scope, $scope.obj?.a);
 });
 const $p = ($scope) => _text($scope["#text/1"], JSON.stringify($scope.obj));
-const $obj_a__script = _script("__tests__/template.marko_0_obj_a#7", ($scope) => _on($scope["#button/3"], "click", function() {
+const $obj_a = /*@__PURE__*/ _const("obj_a", ($scope) => _text($scope["#text/0"], $scope.obj_a));
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/3"], "click", function() {
 	$obj($scope, { a: $scope.obj_a + 1 });
 }));
-const $obj_a = /*@__PURE__*/ _const("obj_a", ($scope) => {
-	_text($scope["#text/0"], $scope.obj_a);
-	$obj_a__script($scope);
-});
 function $setup($scope) {
 	$obj($scope, { a: 1 });
+	$setup__script($scope);
 }
 const $user_name = ($scope, user_name) => _text($scope["#text/2"], user_name);
 const $input = ($scope, input) => $user($scope, input.user);

@@ -6,12 +6,9 @@ var template_default = _template("a", (input) => {
 	const a = "abc";
 	const Foo = { content: _content("a0", (input) => {
 		const $scope3_id = _scope_id();
-		const $scope3_reason = _scope_reason(), $wg__input_content__OR__input_value = _write_guard($scope3_reason, 0);
-		_dynamic_tag($scope3_id, "a", input.content, [input.value], 0, 1, $wg__input_content__OR__input_value);
-		_write_if($scope3_reason, 0) && _scope($scope3_id, {
-			d: _write_if($scope3_reason, 2) && input.content,
-			e: _write_if($scope3_reason, 1) && input.value
-		});
+		_scope_reason();
+		_dynamic_tag($scope3_id, "a", input.content, [input.value], 0, 1);
+		_scope($scope3_id, { d: input.content });
 	}, $scope0_id) };
 	_html(`<button>Increment</button>${_el_resume($scope0_id, "a")}`);
 	_set_scope_reason(34);
