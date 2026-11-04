@@ -1,0 +1,9 @@
+<id/heading/><h1 id=heading>Fields</h1>
+<try>
+ <field name="before" heading=heading/>
+ <await|items|=input.promise>
+  <for|item| of=items by="key"><field name=item.key heading=heading/></for>
+ </await>
+ <@placeholder><field name="loading" heading=heading/></@placeholder>
+ <@catch|error|><field name=error.message heading=heading/></@catch>
+</try>

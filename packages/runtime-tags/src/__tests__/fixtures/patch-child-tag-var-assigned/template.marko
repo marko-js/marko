@@ -1,0 +1,9 @@
+<let/show=true/>
+<main>
+  <if=show>
+    <counter-box/count start=1/>
+    <p>${count}</p>
+    <button.reset onClick() { count = 0 }>r</button>
+  </if>
+  <button.toggle onClick() { show = !show }>t</button>
+</main>
