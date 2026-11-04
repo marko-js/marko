@@ -31,7 +31,7 @@ var template_default = _template("a", (input) => {
 	_scope($scope0_id, {
 		h: count,
 		i: $countChange,
-		k: inc,
+		j: inc,
 		a: _existing_scope($childScope)
 	});
 }, 1);

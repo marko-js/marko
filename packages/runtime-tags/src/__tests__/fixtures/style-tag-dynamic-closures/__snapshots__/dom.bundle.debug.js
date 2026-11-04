@@ -48,7 +48,7 @@ const $if_content__setup = ($scope) => {
 	$if_content__input_color._($scope);
 	$Box_content__setup($scope["#childScope/0"]);
 };
-const $for_content2__input_selected = /*@__PURE__*/ _for_selector("#text/1", "input_selected", "#LoopKey", ($scope) => _style_rule_item($scope["#style/0"], "--M_packages-1bruntime-19tags-1bsrc-1b__tests__-1bfixtures-1bstyle-19tag-19dynamic-19closures-1btemplate-1amarko_2", $scope._.input_selected === $scope["#LoopKey"] ? "red" : "blue"));
+const $for_content2__input_selected = /*@__PURE__*/ _for_selector("#text/1", "input_selected", ($scope) => _style_rule_item($scope["#style/0"], "--M_packages-1bruntime-19tags-1bsrc-1b__tests__-1bfixtures-1bstyle-19tag-19dynamic-19closures-1btemplate-1amarko_2", $scope._.input_selected === $scope["#LoopKey"] ? "red" : "blue"));
 const $for_content2__setup = ($scope) => {
 	$for_content2__input_selected._($scope);
 	_style_shell($scope, "#style/0");

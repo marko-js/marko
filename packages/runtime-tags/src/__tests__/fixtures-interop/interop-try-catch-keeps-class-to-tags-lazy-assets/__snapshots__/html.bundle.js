@@ -51,5 +51,5 @@ var template_default = _template("a", (input) => {
 		$Lazy_withLoadAssets({ value: "catch" });
 		_html(` caught ${_text_resume($scope2_id, "c", err.message, $wg__err_message * 2)}`);
 		_write_if($scope2_reason, 0) && _scope($scope2_id, {});
-	}, void 0, "a0");
+	}, 0, "a0");
 }, 1);

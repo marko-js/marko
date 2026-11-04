@@ -11,5 +11,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope_reason();
 		const $scope2_id = _scope_id();
 		_html("error");
-	}, void 0, "__tests__/template.marko_2*content");
+	}, 0, "__tests__/template.marko_2*content");
 }, 1);

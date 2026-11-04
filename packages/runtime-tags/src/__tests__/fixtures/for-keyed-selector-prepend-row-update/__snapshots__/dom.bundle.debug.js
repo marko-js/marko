@@ -3,7 +3,7 @@ const $template = "<button class=prepend></button><!><!>";
 const $walks = " b%c";
 const $for_content__m__OR__active = /*@__PURE__*/ _or(6, ($scope) => _text($scope["#text/1"], $scope.m + ":" + $scope.active));
 const $for_content__active = /*@__PURE__*/ _const("active", $for_content__m__OR__active);
-const $for_content__selected = /*@__PURE__*/ _for_selector("#text/1", "selected", "#LoopKey", ($scope) => $for_content__active($scope, $scope._.selected === $scope["#LoopKey"]));
+const $for_content__selected = /*@__PURE__*/ _for_selector("#text/1", "selected", ($scope) => $for_content__active($scope, $scope._.selected === $scope["#LoopKey"]));
 const $for_content__m = /*@__PURE__*/ _let("m/4", $for_content__m__OR__active);
 const $for_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/0"], "click", function() {
 	$for_content__m($scope, +$scope.m + 1);

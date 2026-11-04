@@ -46,12 +46,12 @@ var template_default = _template("a", (input) => {
 	}, 0, $scope0_id, "b");
 	const Count = { content: _content("a2", ({ x }) => {
 		const $scope2_id = _scope_id();
-		const $scope2_reason = _scope_reason(), $wg__x = _write_guard($scope2_reason, 0), $wi__x = _write_if($scope2_reason, 0);
+		_scope_reason();
 		const $childScope3 = _peek_scope_id();
 		let v = child_default({ x });
-		$wi__x && _var($scope2_id, "b", $childScope3, "a1");
-		_html(`<p class=define>${_text_resume($scope2_id, "c", v, $wg__x)}</p>`);
-		$wi__x && _scope($scope2_id, { a: _existing_scope($childScope3) });
+		_var($scope2_id, "b", $childScope3, "a1");
+		_html(`<p class=define>${_text_resume($scope2_id, "c", v)}</p>`);
+		_scope($scope2_id, { a: _existing_scope($childScope3) });
 	}, $scope0_id) };
 	_set_scope_reason(2);
 	const $childScope4 = _peek_scope_id();
@@ -85,7 +85,7 @@ var template_default = _template("a", (input) => {
 		$wi__err_message && _var($scope6_id, "b", $childScope6, "a5");
 		_html(`<p class=catch>${_text_resume($scope6_id, "c", v, $wg__err_message)}</p>`);
 		$wi__err_message && _scope($scope6_id, { a: _existing_scope($childScope6) });
-	}, void 0, "a6");
+	}, 0, "a6");
 	_script($scope0_id, "a7");
 	_scope($scope0_id, {
 		g: list,

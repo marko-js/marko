@@ -1,0 +1,5 @@
+// `b` aliases `a` and is also read only when the handler runs.
+<const/{ a }=input/>
+<const/b=a/>
+<div>${b}</div>
+<button.log onClick() { console.log(b) }>log</button>

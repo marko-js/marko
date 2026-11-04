@@ -13,7 +13,7 @@ const $placeholder_content__clicks = /*@__PURE__*/ _closure_get("clicks/4", ($sc
 const $placeholder_content__setup = $placeholder_content__clicks;
 const $placeholder_content = _content("__tests__/template.marko_2*content", "<i>loading <!></i>", "Db%", $placeholder_content__setup);
 const $await_content__try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content__setup, $placeholder_content);
-const $await_content__setup = ($scope) => $await_content__try($scope);
+const $await_content__setup = $await_content__try;
 const $clicks__closure = /*@__PURE__*/ _closure($placeholder_content__clicks, $await_content2__clicks);
 const $clicks = /*@__PURE__*/ _let("clicks/3", ($scope) => {
 	_text($scope["#text/1"], $scope.clicks);

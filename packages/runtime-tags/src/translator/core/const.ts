@@ -20,6 +20,7 @@ import {
   setDerivedFrom,
   trackVarReferences,
 } from "../util/references";
+import { replaceWithStatements } from "../util/replace-with-statements";
 import runtimeInfo from "../util/runtime-info";
 import { ensureSection, getSection } from "../util/sections";
 import { addSetupExpr } from "../util/setup-work";
@@ -85,7 +86,7 @@ export default {
         translateVar(tag, value);
       }
 
-      tag.remove();
+      replaceWithStatements(tag);
     },
   },
   parseOptions: {

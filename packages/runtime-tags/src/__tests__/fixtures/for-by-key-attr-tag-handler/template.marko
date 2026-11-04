@@ -1,0 +1,11 @@
+<let/items=[{ id: "a" }, { id: "b" }]/>
+<for|item| of=items by="id">
+  <menu>
+    <for|n| of=[1, 2]>
+      <@option label=item.id + n onSelect() {
+        document.getElementById("log").textContent = item.id + n;
+      }/>
+    </for>
+  </menu>
+</for>
+<div#log/>

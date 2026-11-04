@@ -7,8 +7,6 @@ const $try_content__setup = ($scope) => {
 	$await_content($scope);
 	$try_content__await_promise($scope, resolveAfter(0, 1));
 };
-const $if_content__try = /*@__PURE__*/ _try(0, "<!><!><!>", "b%", $try_content__setup, $placeholder_content);
-const $if_content__setup = ($scope) => $if_content__try($scope);
-const $if = /*@__PURE__*/ _if(0, "<!><!><!>", "b%", $if_content__setup);
+const $if = /*@__PURE__*/ _if(0, "<!><!><!>", "b%", /* @__PURE__ */ _try(0, "<!><!><!>", "b%", $try_content__setup, $placeholder_content));
 const $show = /*@__PURE__*/ _let(1, ($scope) => $if($scope, $scope.b ? 0 : 1));
 const $setup__script = _script("a2", ($scope) => $show($scope, 0));

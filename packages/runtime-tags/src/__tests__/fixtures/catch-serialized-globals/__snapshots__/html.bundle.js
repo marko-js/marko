@@ -22,5 +22,5 @@ var template_default = _template("a", (input) => {
 			f: message,
 			g: _write_if($scope2_reason, 0) && clicked
 		});
-	}, void 0, "a1");
+	}, 0, "a1");
 }, 1);
