@@ -329,7 +329,8 @@ _Avoid_: partial
 **Shell**:
 A body a patch may create, as its id with setup ids (setup reading nothing a
 patch writes, or all of a `@catch`'s, which no patch pairs), walks and markup
-(`id setup…!scripts…;walks;template`, kept content's led by `|set|`): registered by the server module at
+(`id setup…!scripts…;walks;template`; kept content's id is followed by its section,
+`id|section`): registered by the server module at
 load and shipped in the first flush that creates from it, so the client
 creates the body without bundling its template. Its setup ids lead with
 those of each scope its markup composes, a known child's (a template's
@@ -544,10 +545,10 @@ _Avoid_: withheld content
 Content a known child renders from its state, where plain renders it nowhere on
 the client (`keepsContent`): it creates from its shell, never by registration, and a flush
 renders its holes once per owner under the _client branch entry_
-(`PatchClientBranch:<set>`), which the client applies to each live instance in the
+(`PatchClientBranch:<section>`), which the client applies to each live instance in the
 set its owner holds them in: the section's scopes main keeps for hoisted reads
 (`ClosureScopes:<section>`), which a document fills with `_subscribe` and an
-instance created from its shell joins (the shell leads with `|set|`).
+instance created from its shell joins (its shell names the section, `id|section`).
 
 **Filled intersection**:
 An intersection of two or more params, one a caller passes, whose every read the patch

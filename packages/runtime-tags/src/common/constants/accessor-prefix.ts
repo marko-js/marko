@@ -20,7 +20,7 @@ export const Promise = "L";
 export const TagVariableChange = "M";
 export const TryBranch = "Q";
 // The holes kept content's owner last took from its client branch entry, by the
-// accessor of the set it holds the content's instances in.
+// content's section.
 export const ClientBranchHoles = "S";
 
 type Self = typeof import("./accessor-prefix");
