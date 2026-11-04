@@ -1,0 +1,48 @@
+<button>0<!--M_$1 b--></button><!--M_$1 a--><!--M_[--><!--M_!^b--><!--M_[--><!--M_!^4--><em>outer
+  loading</em><!--M_!4--><!--M_]2 a 4--><!--M_!b--><!--M_]1 c 2-->
+<t hidden M_=4><!--M_#c--></t>
+<script>
+  WALKER_RUNTIME("M")("_").n = "b";
+  REORDER_RUNTIME(M._);
+  M._.r = [_ => [1, {
+    i: 0
+  }, {
+    _: _(1),
+    E: "a3"
+  }, 1, {
+    _: _(2),
+    Q: "a2"
+  }], "a14 1"];
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<t hidden M_=c><!--M_[-->
+  <div id=outer>a<!--M_$6 a-->
+    <!>o<!--M_$6 b-->
+  </div><!--M_[--><!--M_!^8--><em>inner
+    loading</em><!--M_!8--><!--M_]6 c 8--><!--M_]4 a 6-->
+</t>
+<t hidden M_=8><!--M_#d--></t>
+<script>
+  M._.r.push(_ => [8, {
+    _: _(6),
+    Q: "a1"
+  }]);
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<t hidden M_=d><!--M_[-->
+  <div id=inner>a<!--M_$10 a-->
+    <!>i<!--M_$10 b-->
+  </div><!--M_]8 a 10-->
+</t>
+<script>
+  M._.r.push(_ => [10, {
+    Ck: 1
+  }]);
+  M._.w()
+</script>

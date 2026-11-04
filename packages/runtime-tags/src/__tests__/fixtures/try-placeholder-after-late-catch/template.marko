@@ -1,0 +1,21 @@
+<main>
+  <try>
+    <await|v|=input.a>
+      <b>${v}</b>
+    </await>
+    <@catch|err|>
+      <em>${err.message}</em>
+    </@catch>
+  </try>
+  <await|x|=input.x>
+    <await|c|=input.c>
+      <p>${c}</p>
+    </await>
+    <try>
+      <await|d|=input.d>
+        <span>${d}</span>
+      </await>
+      <@placeholder><i>loading</i></@placeholder>
+    </try>
+  </await>
+</main>

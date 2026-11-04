@@ -1,0 +1,64 @@
+// tags/show-await.marko
+const $template$1 = "<!><!><!>";
+const $walks$1 = "b%c";
+const $setup$1 = [[], []];
+_shells({
+	"__tests__/tags/show-await.marko_2*content": "__tests__/tags/show-await.marko_2*content;D%c%;<p><!>:<!></p>",
+	"__tests__/tags/show-await.marko": "__tests__/tags/show-await.marko;b%;<!><!><!>",
+	"__tests__/tags/show-await.marko_1_#text#0/await": "__tests__/tags/show-await.marko_1_#text#0/await;D%c%;<p><!>:<!></p>",
+	"__tests__/tags/show-await.marko_1*shell": "__tests__/tags/show-await.marko_1*shell;b%;<!><!><!>"
+});
+var show_await_default = _template("__tests__/tags/show-await.marko", (input) => {
+	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 4), $wg__input_show = _write_guard($scope0_reason, 2), $ui__input_show = _unfilled_if($scope0_reason, 2), $ui__input_label = _unfilled_if($scope0_reason, 4), $wi__input_show = _write_if($scope0_reason, 2), $fg__input_promise = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 2), $wi__input_label = _write_if($scope0_reason, 4);
+	const $scope0_id = _scope_id();
+	const $input_label__closures = new Set();
+	_if(() => {
+		if (input.show) {
+			const $scope1_id = _scope_id();
+			_await($scope1_id, "#text/0", input.promise, (x) => {
+				const $scope2_id = _scope_id();
+				_html(`<p>${_text_mark($scope2_id, "#text/0", input.label, 1, $scope0_reason, 4)}:${_text_mark($scope2_id, "#text/1", x, 2, $scope0_reason, 3)}</p>`);
+				_unfilled_if($scope0_reason, 4) && _patch_subscribe($scope2_id, "__tests__/tags/show-await.marko_2_input_label#0:5/subscribe", $cg__input_label);
+				_subscribe(_unfilled_if($scope0_reason, 4) && $input_label__closures, _scope($scope2_id, {}, "__tests__/tags/show-await.marko", "2:4"), $cg__input_label && "__tests__/tags/show-await.marko_2_input_label#0:5/subscribe");
+			}, 1, "__tests__/tags/show-await.marko_2*content", _unfilled_if($scope0_reason, 3));
+			_client_guard($scope0_reason, 3) && _patch_render($scope1_id, "__tests__/tags/show-await.marko_1_input_promise#0:4/setup");
+			_write_if($scope0_reason, 1) && _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/show-await.marko", "1:2");
+			return 0;
+		}
+	}, $scope0_id, "#text/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/tags/show-await.marko_1*shell"], $scope0_reason, 2);
+	$fg__input_promise && $cg__input_show && _patch_render($scope0_id, "__tests__/tags/show-await.marko_1_input_promise#0:4/setup", "input_promise");
+	_scope($scope0_id, {
+		input_promise: $wi__input_show && ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.promise,
+		input_label: $wi__input_show && ($ui__input_show || $ui__input_label) && input.label,
+		"ClosureScopes:input_label/7": $wi__input_label && $wi__input_label && ($ui__input_label || $ui__input_show) && $input_label__closures
+	}, "__tests__/tags/show-await.marko", 0, {
+		input_promise: ["input.promise"],
+		input_label: ["input.label"]
+	}) || ($fg__input_promise && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_promise", input.promise, !_server_guard($scope0_reason, 3)), _filled_guard($scope0_reason, 4) && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 4)) && $cg__input_show && _patch_subscribers($scope0_id, "__tests__/tags/show-await.marko_0_input_label#5/subscribers", "input_label"));
+});
+
+// template.marko
+const $template = /*@__PURE__*/ ((_w0) => `<button class=open>pend</button><button class=settle>settle</button>${_w0}<!>`)($template$1);
+const $walks = /*@__PURE__*/ ((_w0) => ` b b/${_w0}&b`)("b%c");
+const $setup = _shell_setup([[], ["__tests__/template.marko_0"]], ["#childScope/2>", $setup$1]);
+_shells({ "__tests__/template.marko": `__tests__/template.marko${_shell_marker($setup)};${((_w0) => ` b b/${_w0}&b`)("b%c")};${((_w0) => `<button class=open>pend</button><button class=settle>settle</button>${_w0}<!>`)($template$1)}` });
+var template_default = _template("__tests__/template.marko", (input) => {
+	const $scope0_reason = _scope_reason();
+	const $scope0_id = _scope_id();
+	let p = Promise.resolve(0);
+	let resolve = void 0;
+	_html(`<button class=open>pend</button>${_el_mark($scope0_id, "#button/0")}<button${_attr("disabled", !resolve)} class=settle>settle</button>${_el_mark($scope0_id, "#button/1")}`);
+	_set_scope_reason(152 | (_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 2) << 5 | _updates_from($scope0_reason, 1) << 9));
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/2", 0);
+	show_await_default({
+		promise: p,
+		label: input.label,
+		show: input.show
+	});
+	_patch_child_end();
+	_script($scope0_id, "__tests__/template.marko_0");
+	_scope($scope0_id, {
+		resolve,
+		"#childScope/2": _existing_scope($childScope)
+	}, "__tests__/template.marko", 0, { resolve: "2:6" });
+}, 1);

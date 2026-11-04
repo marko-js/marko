@@ -1,0 +1,5 @@
+import cardA from "../patch-dynamic-renderer-swap/card-a.marko";
+import cardB from "../patch-dynamic-renderer-swap/card-b.marko";
+<main>
+  <${input.mode === "a" ? cardA : cardB} label=input.label/>
+</main>

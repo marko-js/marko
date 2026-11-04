@@ -1,0 +1,13 @@
+// PATCH
+`packages/runtime-tags/src/__tests__/fixtures/patch-created-child-input-const-script/template.marko_1*shell;/b&;<p>probe</p>`
+{
+  "PatchBranch:#text/0": [{
+    "PatchChild:#childScope/0": {
+      "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-created-child-input-const-script/tags/probe.marko_0_input_label#2_opts_items#4_opts_label#5",
+      "PatchMarkedWrite:input_label": "b",
+      "PatchMarkedWrite:opts_items": [],
+      "PatchMarkedWrite:opts_label": "b"
+    }
+  }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-child-input-const-script/template.marko_1*shell"]
+}
+;BgI
