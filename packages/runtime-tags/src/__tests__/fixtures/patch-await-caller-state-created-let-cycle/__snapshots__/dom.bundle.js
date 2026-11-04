@@ -2,10 +2,10 @@
 const $await_content__setup__script = _script("b1", ($scope) => _on($scope.c, "click", function() {
 	console.log($scope.i);
 }));
-const $await_content__a = fill("b4", _let(6, ($scope) => {
-	$await_content__a_v($scope, $scope.g?.v);
+const $await_content__a = _let(6, ($scope) => {
 	$await_content__b__OR__a($scope);
-}));
+	$await_content__a_v($scope, $scope.g?.v);
+});
 const $await_content__b__OR__a = /*@__PURE__*/ _or(7, ($scope) => $await_content__a($scope, {
 	v: $scope.f,
 	self: $a($scope)

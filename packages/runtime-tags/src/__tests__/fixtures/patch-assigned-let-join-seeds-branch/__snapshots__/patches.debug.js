@@ -4,8 +4,7 @@
   "PatchBranch:#text/0": [{
     "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-assigned-let-join-seeds-branch/template.marko_1_input_b#0:5_x#3/setup": ">input_b",
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-assigned-let-join-seeds-branch/template.marko_fill0": 1,
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-assigned-let-join-seeds-branch/template.marko_fill1": 1
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-assigned-let-join-seeds-branch/template.marko_fill0": 1
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-assigned-let-join-seeds-branch/template.marko_1*shell"],
   "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-assigned-let-join-seeds-branch/template.marko_0_input_a#4/subscribers": "input_a",
@@ -19,8 +18,7 @@
   "PatchBranch:#text/0": [{
     "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-assigned-let-join-seeds-branch/template.marko_1_input_b#0:5_x#3/setup": ">input_b",
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-assigned-let-join-seeds-branch/template.marko_fill0": 1,
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-assigned-let-join-seeds-branch/template.marko_fill1": 1
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-assigned-let-join-seeds-branch/template.marko_fill0": 1
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-assigned-let-join-seeds-branch/template.marko_1*shell"],
   "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-assigned-let-join-seeds-branch/template.marko_0_input_a#4/subscribers": "input_a",

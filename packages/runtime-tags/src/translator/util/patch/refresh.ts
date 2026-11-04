@@ -317,8 +317,22 @@ export function canPatchFill(binding: Binding) {
       // the value, or takes it past the scope's renders and effects (a child, an intersection).
       (binding.type === BindingType.let &&
         mayBeCreated(binding.section) &&
+        !initRunsFromFills(binding) &&
         (!!getWriteReason(binding) || readsPastRenders(binding)))) &&
     bindingUtil.has(binding.sources.state, binding)
+  );
+}
+
+// A `<let>` whose init reads `<let>`s that are filled or read filled ones: their
+// fills run its init on the client, so it takes none.
+function initRunsFromFills(binding: Binding): boolean {
+  const sources = binding.initSources;
+  return (
+    !!sources?.state &&
+    every(
+      sources.state,
+      (state) => !!state.initSources?.state || canPatchFill(state),
+    )
   );
 }
 

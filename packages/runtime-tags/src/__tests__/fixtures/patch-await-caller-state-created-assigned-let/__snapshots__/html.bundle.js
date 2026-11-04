@@ -2,12 +2,12 @@
 const $template = "<!><!><!>";
 const $setup = [[], []];
 _shells({
-	b6: "b6 !b0;D%c%l ;<p class=v><!>|<!></p><button class=e>e</button>",
-	b7: "b7 !b0;D%c%l ;<p class=v><!>|<!></p><button class=e>e</button>",
+	b4: "b4 !b0;D%c%l ;<p class=v><!>|<!></p><button class=e>e</button>",
+	b5: "b5 !b0;D%c%l ;<p class=v><!>|<!></p><button class=e>e</button>",
 	b: "b;b%;<!><!><!>"
 });
 var show_await_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_promise = _filled_guard($scope0_reason, 1), $cg__input_label = _client_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	_await($scope0_id, "a", input.promise, (x) => {
@@ -19,17 +19,15 @@ var show_await_default = _template("b", (input) => {
 		_html(`<p class=v>${_text_resume($scope1_id, "a", e)}|${_text_resume($scope1_id, "b", f, 2)}</p><button class=e>e</button>${_el_resume($scope1_id, "c")}`);
 		_script($scope1_id, "b0");
 		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "b1", $cg__input_label);
-		$fg__input_promise && _patch_fill($scope1_id, "vb2", a, 1);
+		_filled_guard($scope0_reason, 1) && _patch_fill($scope1_id, "vb2", a, 1);
 		_filled_guard($scope0_reason, 2) && _patch_fill($scope1_id, "vb3", l, 1);
-		$fg__input_promise && _patch_fill($scope1_id, "vb4", e, 1);
-		_filled_guard($scope0_reason, 0) && _patch_fill($scope1_id, "vb5", f, 1);
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope1_id, {
 			f: a,
 			g: l,
 			i: e,
 			j: f
 		}), $cg__input_label && "b1");
-	}, 1, "b6", _unfilled_if($scope0_reason, 1) && 3, 1);
+	}, 1, "b4", _unfilled_if($scope0_reason, 1) && 3, 1);
 	_scope($scope0_id, { f: _write_if($scope0_reason, 2) && _unfilled_if($scope0_reason, 2) && $input_label__closures });
 });
 

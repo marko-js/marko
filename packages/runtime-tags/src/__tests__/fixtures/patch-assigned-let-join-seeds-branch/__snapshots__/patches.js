@@ -1,14 +1,13 @@
 // PATCH
-`a5 !a1;b%b D ;<!><!><button> </button>`
+`a4 !a1;b%b D ;<!><!><button> </button>`
 {
   ba: [{
     ia2: ">f",
     o: {
-      va3: 1,
-      va4: 1
+      va3: 1
     }
-  }, "a5"],
-  Sa6: "e",
+  }, "a4"],
+  Sa5: "e",
   xe: "b",
   xf: 2
 }
@@ -19,11 +18,10 @@
   ba: [{
     ia2: ">f",
     o: {
-      va3: 1,
-      va4: 1
+      va3: 1
     }
-  }, "a5"],
-  Sa6: "e",
+  }, "a4"],
+  Sa5: "e",
   xe: "c",
   xf: 3
 }

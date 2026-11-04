@@ -9,10 +9,10 @@ const $await_content__setup = ($scope) => {
 	$await_content__input_label($scope);
 	$await_content__setup__script($scope);
 };
-const $await_content__a = _fill_let_resume("__tests__/tags/show-await.marko_fill1", _let("a/6", ($scope) => {
-	$await_content__a_v($scope, $scope.a?.v);
+const $await_content__a = _let("a/6", ($scope) => {
 	$await_content__b__OR__a($scope);
-}));
+	$await_content__a_v($scope, $scope.a?.v);
+});
 const $await_content__b__OR__a = /*@__PURE__*/ _or(7, ($scope) => $await_content__a($scope, {
 	v: $scope.b,
 	self: $a($scope)
