@@ -1,0 +1,7 @@
+<let/open=true/>
+<let/out="-"/>
+<button.toggle onClick() { open = !open }>toggle</button>
+<if=open>
+  <button.go onClick=(input.mode === "a" ? function () { out = "A" } : function () { out = "B" })>go</button>
+</if>
+<output>${out}</output>
