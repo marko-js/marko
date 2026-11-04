@@ -1,0 +1,11 @@
+<let/picked="none"/>
+<menu>
+  <for|x| of=input.items>
+    <@item>
+      <button class=("b" + x.id) onClick() { picked = x.name }>${x.name}</button>
+      <span/el/>
+      <script>el().textContent = "script:" + x.name</script>
+    </@item>
+  </for>
+</menu>
+<p>${picked}</p>

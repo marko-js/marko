@@ -1,0 +1,9 @@
+// template.marko
+const $Alt_content__$params = ($scope, $params3) => _text($scope.a, $params3[0].user?.name);
+const $Alt_content = _content$1("c1", "<i> </i>", "D ", 0, $Alt_content__$params);
+const $Row_content__$params = ($scope, $params2) => _text($scope.a, $params2[0].user?.name);
+const $Row_content = _content$1("c0", "<p> </p>", "D ", 0, $Row_content__$params);
+const $n = _let(20, ($scope) => _text($scope.b, $scope.u));
+const $setup__script = _script("c2", ($scope) => _on($scope.a, "click", function() {
+	$n($scope, +$scope.u + 1);
+}));

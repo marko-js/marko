@@ -1,0 +1,7 @@
+<let/show=true/>
+<define/Show|{ v }|>
+  <const/f() { return v; }/>
+  <if=input.x><span>${f()}</span></if>
+</define>
+<button class="toggle" onClick() { show = !show }>toggle</button>
+<if=show><Show v=input.a/></if>

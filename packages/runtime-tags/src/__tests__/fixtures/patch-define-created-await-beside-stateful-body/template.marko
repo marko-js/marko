@@ -1,0 +1,15 @@
+<let/open=false/>
+<define/Panel|{ isOpen, label }|>
+  <if=isOpen>
+    <em>${label}</em>
+  </if>
+</define>
+<if=input.show>
+  <await|value|=input.promise>
+    <Panel isOpen=true label=value/>
+    <Panel isOpen=true label=input.label/>
+  </await>
+</if>
+<const/Tag=input.other ? "div" : Panel/>
+<${Tag} isOpen=!open label=input.label + "!"/>
+<button onClick() { open = !open }>toggle</button>

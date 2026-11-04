@@ -1,0 +1,9 @@
+export interface Input { projection: { skill: string } | null; baseXp: number; playerId?: string }
+<let/shown=0>
+<button onClick() { shown++ }>${shown}</button>
+<if=input.projection>
+  <script>
+    document.body.dataset.watch =
+      input.projection!.skill + ":" + input.baseXp + ":" + (input.playerId ?? "anon") + ":" + shown;
+  </script>
+</if>

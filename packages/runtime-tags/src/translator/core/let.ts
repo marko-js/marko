@@ -2,6 +2,7 @@ import { types as t } from "@marko/compiler";
 import {
   assertNoArgs,
   assertNoParams,
+  getProgram,
   type Tag,
 } from "@marko/compiler/babel-utils";
 
@@ -19,7 +20,8 @@ import { BindingType, getDebugAccess, reserveId } from "../util/bindings";
 import evaluate from "../util/evaluate";
 import { hasEmittedAssignment } from "../util/finalize-references";
 import { getKnownAttrValues } from "../util/get-known-attr-values";
-import { isOptimize, isOutputDOM } from "../util/marko-config";
+import { isOptimize, isOutputDOM, isPatch } from "../util/marko-config";
+import { getLetChanges } from "../util/patch/writers";
 import { addReason } from "../util/reasons";
 import {
   mergeReferences,
@@ -77,8 +79,11 @@ export default {
     ]);
 
     setDerivedFrom(binding, tagExtra);
+    // A patch build ships every `<let>` as if a handler assigned it.
+    if (isPatch()) getProgram().node.extra.isInteractive = true;
 
     if (valueChangeAttr) {
+      valueChangeAttr.value.extra!.changeHandler = true;
       const changeSlot = ensureSlot(binding, SlotKind.ChangeHandler);
       // The runtime reads the change handler at the value's reserved id.
       reserveId(binding, ReservedId.ChangeHandler);
@@ -154,10 +159,26 @@ export default {
             replaceWithStatements(tag, [t.expressionStatement(valueChange)]);
           }
         } else if (valueChange) {
+          const handler = t.logicalExpression(
+            "||",
+            valueChange,
+            t.buildUndefinedNode(),
+          );
           const accessor = writeSlot(
             findSlot(binding, SlotKind.ChangeHandler),
-            t.logicalExpression("||", valueChange, t.buildUndefinedNode()),
+            handler,
           );
+          // A patch's fill reads whether the handler is set: a function always is.
+          if (isPatch()) {
+            getLetChanges(section).set(
+              binding,
+              accessor
+                ? handler
+                : t.isFunction(valueChange)
+                  ? t.numericLiteral(1)
+                  : valueChange,
+            );
+          }
           // Named after the author's binding; other slots are described
           // generically by the serializer instead.
           if (accessor && !isOptimize()) {

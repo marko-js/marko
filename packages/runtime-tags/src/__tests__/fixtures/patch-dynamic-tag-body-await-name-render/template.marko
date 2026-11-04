@@ -1,0 +1,7 @@
+import Card from "./tags/card.marko";
+import Keeper from "./tags/keeper.marko";
+<main>
+  <Card p=input.p>
+    <${input.on ? Keeper : "div"}><em>${input.note}</em></>
+  </Card>
+</main>

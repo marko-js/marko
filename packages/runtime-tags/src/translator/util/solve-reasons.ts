@@ -16,20 +16,24 @@ import {
   createPassPathMemo,
   resetPassMemos,
 } from "./cyclic-memo";
-import { addKnownTagReasons } from "./known-tag";
+import { addKnownTagReasons, recordKnownTagPatchFacts } from "./known-tag";
+import { isPatch } from "./marko-config";
 import { addFunctionReasons } from "./module-registrations";
 import {
   concat,
   every,
+  filter,
   first,
   forEach,
   type OneMany,
   type Opt,
-  push,
   reduce,
   rest,
   some,
+  Sorted,
+  type SortedOpt,
 } from "./optional";
+import { ensurePatchReasonGroups } from "./patch/refresh";
 import {
   addOwnerReason,
   addReason,
@@ -44,7 +48,9 @@ import {
   type Read,
   type ReferencedExtra,
   getFunctionReadsByExpression,
+  getConstantBindings,
   getConstantBindingsInFunction,
+  getReferencedBindings,
   getReferencedBindingsInFunction,
   getBindingsDerivedFrom,
 } from "./references";
@@ -84,15 +90,24 @@ export function solveReasons(
     forEachSection(addClosureReasons);
     forEachSection(addCallOwnerReasons);
     addRegisteredFnReasons(getFunctionReadsByExpression());
-    forEachSectionReverse(solveSectionReasons);
+    forEachSectionReverse((section) =>
+      solveSectionReasons(section, intersectionsBySection.get(section)),
+    );
   } while (reasonsVersion !== getReasonsVersion());
   getFunctionReadsByExpression().clear();
 }
 
-function solveSectionReasons(section: Section) {
+function solveSectionReasons(
+  section: Section,
+  intersections: Intersection[] | undefined,
+) {
   addKnownTagReasons(section);
+  if (isPatch()) recordKnownTagPatchFacts(section);
   mergeSlotReasons(section);
+  // Groups lay out the mask callers pack: one per set of params a runtime
+  // question asks of, whether the client reads a write and what sources a patch's.
   ensureSectionReasonGroups(section);
+  if (isPatch()) ensurePatchReasonGroups(section, intersections);
 }
 
 // An intersection member is read when its partners' sources change, unless
@@ -128,20 +143,47 @@ function addIntersectionMemberReason(
   member: Binding,
   partner: Binding,
 ) {
-  if (
+  // A partner a changed `$global` key refreshes re-runs the join wherever the
+  // client holds the member, so the member's own sources say where.
+  addMemberReason(
+    section,
+    member,
     !isSupersetSources(member, partner) ||
-    hasReadIntermediate(member, partner, new Set())
-  ) {
+      hasReadIntermediate(member, partner, new Set())
+      ? partner.sources
+      : partner.sources?.global && member.sources,
+  );
+}
+
+// A changed `$global` key re-runs what reads it wherever the client holds the
+// values it reads, so each value's own sources say where it is read.
+export function addGlobalReadReasons(section: Section) {
+  for (const expr of section.globalReadExprs || []) {
+    forEach(getReferencedBindings(expr), (member) => {
+      addMemberReason(section, member, member.sources);
+    });
+    forEach(getConstantBindings(expr), (key) => {
+      addMemberReason(section, key, key.sources);
+    });
+  }
+}
+
+function addMemberReason(
+  section: Section,
+  member: Binding,
+  reason: Reason | undefined | false,
+) {
+  if (reason) {
     // A member of an ancestor, even one always written, is read through the
-    // owner chain, so its partners' changes need that chain written.
+    // owner chain, so a change that re-runs it needs that chain written.
     if (member.section !== section) {
       addOwnerReason(
         section,
         member.section,
-        mergeSources(member.sources, partner.sources),
+        mergeSources(member.sources, reason),
       );
     }
-    addReason(ensureSlot(member), partner.sources);
+    addReason(ensureSlot(member), reason);
   }
 }
 
@@ -214,7 +256,7 @@ function getBranchExprReason(section: Section) {
 
 // What creates `section`, or a section between it and `ancestor`, anew on the
 // client (always, still with its sources, when anything can).
-function getBranchExprReasonUntil(section: Section, ancestor: Section) {
+export function getBranchExprReasonUntil(section: Section, ancestor: Section) {
   let reason: Sources | undefined;
   for (let cur = section; cur !== ancestor; cur = cur.parent!) {
     reason = mergeSources(reason, getBranchExprReason(cur));
@@ -296,44 +338,45 @@ function addRegisteredFnReasons(
   }
 }
 
-// Who reads a value through its aliases and derives links (a cyclic graph):
-// what rereads it after resume, and the `LANDS_*` bits of the reads it lands in.
-interface Readers {
+// Who reads a value through its aliases and derives links (a cyclic graph): what
+// rereads it after resume, and the reads it lands in (an effect, an input).
+export interface Readers {
   reason: undefined | Reason;
-  lands: number;
-  /** The content sites rendering it, and its deep sites past a further call. */
-  sites?: Opt<t.MarkoTagExtra>;
-  deepSites?: Opt<t.MarkoTagExtra>;
+  reads?: SortedOpt<ReferencedExtra>;
+  /**
+   * Of its reads, those reached directly: not through a tag the value is passed
+   * to (as its input, or back through its tag variable).
+   */
+  directReads?: SortedOpt<ReferencedExtra>;
+  /** Of its reads, those it reaches as more than a dynamic tag's name. */
+  asInput?: SortedOpt<ReferencedExtra>;
 }
 
-// Lands in a retained read, where client code may read it as is.
-const LANDS_RETAINED = 1;
-// Reaches a retained read as more than a dynamic tag's name.
-const LANDS_RETAINED_INPUT = 2;
-// Handed on by a read that derives nothing, so it may render anywhere.
-const LANDS_UNSEEN = 4;
+const kLandingOrder = Symbol("order a read first lands in");
+declare module "@marko/compiler/dist/types" {
+  export interface NodeExtra {
+    [kLandingOrder]?: number;
+  }
+}
+let landings = 0;
+// Reads in the order a value first lands in them: one order for every template a
+// process compiles, as a value's reads cross into its callees'.
+const readUtil = new Sorted(function compareReads(
+  a: ReferencedExtra,
+  b: ReferencedExtra,
+) {
+  return a[kLandingOrder]! - b[kLandingOrder]!;
+});
 
-const UNREAD: Readers = { reason: undefined, lands: 0 };
+const UNREAD: Readers = { reason: undefined };
 
-const ALWAYS_READ: Readers = { reason: ALWAYS, lands: 0 };
+const ALWAYS_READ: Readers = { reason: ALWAYS };
 
-const UNSEEN_READ: Readers = { reason: undefined, lands: LANDS_UNSEEN };
-
-const RETAINED_TAG_NAME_READ: Readers = {
-  reason: undefined,
-  lands: LANDS_RETAINED,
-};
-
-const RETAINED_INPUT_READ: Readers = {
-  reason: undefined,
-  lands: LANDS_RETAINED | LANDS_RETAINED_INPUT,
-};
-
-const exprReaders = createPassMemo(computeExprReaders, UNREAD);
+export const exprReaders = createPassMemo(computeExprReaders, UNREAD);
 
 // A binding's answer is per asked path: the value itself, one of its
 // properties (a destructured part), or the whole with every property.
-const bindingReaders = createPassPathMemo(computeBindingReaders, UNREAD);
+export const bindingReaders = createPassPathMemo(computeBindingReaders, UNREAD);
 
 export function getReasonForBinding(
   binding: Binding,
@@ -354,21 +397,36 @@ export function bindingLandsRetained(
   binding: Binding,
   properties: Opt<string>,
 ) {
-  return !!(bindingReaders(binding, properties).lands & LANDS_RETAINED_INPUT);
+  return some(bindingReaders(binding, properties).asInput, isRetained);
 }
 
-// Where content passed to templates renders: `sites` and `deepSites` (see
-// `Readers`), or `unseen` where a read hands it on.
+// Where content passed to templates renders: the dynamic tags naming it (`sites`,
+// and `deepSites` past a further call), or `unseen` where a read hands it on.
 export function getContentSites({
   binding,
   properties,
 }: NonNullable<Section["derives"]>) {
-  const { lands, sites, deepSites } = reduce(
+  const { reads, directReads, asInput } = reduce(
     binding,
     (readers, part) => mergeReaders(readers, bindingReaders(part, properties)),
     UNREAD,
   );
-  return { unseen: !!(lands & LANDS_UNSEEN), sites, deepSites };
+  const isNamedBy = (read: ReferencedExtra) =>
+    !read.isEffect && !readUtil.has(asInput, read);
+  return {
+    unseen: some(asInput, isHandedOn),
+    sites: filter(directReads, isNamedBy) as Opt<t.MarkoTagExtra>,
+    deepSites: filter(
+      reads,
+      (read) => isNamedBy(read) && !readUtil.has(directReads, read),
+    ) as Opt<t.MarkoTagExtra>,
+  };
+}
+
+// Whether the value lands somewhere retained (itself included) as more than a
+// dynamic tag's name.
+export function landsRetainedAsInput(extra: t.NodeExtra) {
+  return !!extra.retained || some(exprReaders(extra).asInput, isRetained);
 }
 
 // Whether the value lands somewhere retained (itself included), where client
@@ -376,7 +434,37 @@ export function getContentSites({
 export function landsRetained(extra: t.NodeExtra) {
   return (
     !!extra.retained ||
-    (!extra.isEffect && !!(exprReaders(extra).lands & LANDS_RETAINED))
+    (!extra.isEffect && some(exprReaders(extra).reads, isRetained))
+  );
+}
+
+// Whether the value reaches the initial value of an uncontrolled `<let>` that
+// client code reads after resume.
+export function landsInitialValue(extra: t.NodeExtra) {
+  return some(exprReaders(extra).reads, isReadInitialValue);
+}
+
+// Whether a read the value reaches passes `leaf`, given whether it reaches it
+// as more than a dynamic tag's name.
+export function someRead(
+  readers: Readers,
+  leaf: (read: ReferencedExtra, asInput: boolean) => boolean,
+) {
+  return some(readers.reads, (read) =>
+    leaf(read, readUtil.has(readers.asInput, read)),
+  );
+}
+
+// Who reads what content derives: the bindings it passes through, at its path.
+export function getDerivedReaders({
+  binding,
+  properties,
+}: NonNullable<Section["derives"]>) {
+  return reduce(
+    binding,
+    (readers, derived) =>
+      mergeReaders(readers, bindingReaders(derived, properties)),
+    UNREAD,
   );
 }
 
@@ -418,14 +506,16 @@ function readersOfDerived(
     getDerivedPath(extra, binding, part, properties),
   );
   const exprs = extra.callSiteExprs;
-  // Past another call, a template's root edge follows that call's place.
-  return exprs && (linked.reason || linked.sites)
+  if (!exprs) return linked;
+  // A callee's reads are its call site's: past the call.
+  return linked.reason || linked.directReads
     ? {
         reason:
           linked.reason &&
           mapParamReason(binding.section.program, linked.reason, exprs, true),
-        lands: linked.lands,
-        deepSites: mergeSites(linked.deepSites, linked.sites),
+        reads: linked.reads,
+        directReads: undefined,
+        asInput: linked.asInput,
       }
     : linked;
 }
@@ -479,7 +569,7 @@ function computeBindingReaders(
       ? undefined
       : first(properties);
   const reason = findSlot(binding)?.reason;
-  let readers: Readers = reason ? { reason, lands: 0 } : UNREAD;
+  let readers: Readers = reason ? { reason } : UNREAD;
   // A property is read with the value it is read from.
   const aliased = binding.aliasOf;
   if (properties !== true && aliased) {
@@ -504,10 +594,10 @@ function computeBindingReaders(
       ) {
         readers = mergeReaders(readers, ALWAYS_READ);
       }
+      readers = withLandingRead(readers, expr, binding);
       continue;
     }
-    readers = mergeReaders(readers, landingReaders(expr, binding));
-    readers = mergeReaders(readers, renderingReaders(expr, binding));
+    readers = withLandingRead(readers, expr, binding);
     readers = mergeReaders(
       readers,
       readersOfDerives(expr, binding, properties),
@@ -548,65 +638,65 @@ function mergeReaders(a: Readers, b: Readers): Readers {
   if (a === UNREAD) return b;
   if (b === UNREAD) return a;
   const reason = mergeSources(a.reason, b.reason);
-  const lands = a.lands | b.lands;
-  const sites = mergeSites(a.sites, b.sites);
-  const deepSites = mergeSites(a.deepSites, b.deepSites);
-  if (
-    reason === a.reason &&
-    lands === a.lands &&
-    sites === a.sites &&
-    deepSites === a.deepSites
-  ) {
-    return a;
-  }
-  if (
-    reason === b.reason &&
-    lands === b.lands &&
-    sites === b.sites &&
-    deepSites === b.deepSites
-  ) {
-    return b;
-  }
-  return { reason, lands, sites, deepSites };
+  const reads = readUtil.union(a.reads, b.reads);
+  const directReads = readUtil.union(a.directReads, b.directReads);
+  const asInput = readUtil.union(a.asInput, b.asInput);
+  if (isSameReaders(a, reason, reads, directReads, asInput)) return a;
+  if (isSameReaders(b, reason, reads, directReads, asInput)) return b;
+  return { reason, reads, directReads, asInput };
 }
 
-function mergeSites(
-  a: Opt<t.MarkoTagExtra>,
-  b: Opt<t.MarkoTagExtra>,
-): Opt<t.MarkoTagExtra> {
-  return reduce(
-    b,
-    (sites, site) =>
-      some(sites, (held) => held === site) ? sites : push(sites, site),
-    a,
+function isSameReaders(
+  readers: Readers,
+  reason: Readers["reason"],
+  reads: Readers["reads"],
+  directReads: Readers["directReads"],
+  asInput: Readers["asInput"],
+) {
+  return (
+    reason === readers.reason &&
+    reads === readers.reads &&
+    directReads === readers.directReads &&
+    asInput === readers.asInput
   );
 }
 
-// What a read the binding's value lands in adds: only a retained one counts.
-function landingReaders(read: ReferencedExtra, binding: Binding): Readers {
-  return !read.retained
-    ? UNREAD
-    : every(binding.reads.get(read), isTagNameRead)
-      ? RETAINED_TAG_NAME_READ
-      : RETAINED_INPUT_READ;
+// A read the value lands in, reached in the caller itself; adding one already held
+// keeps the identity, as answers are shared across memo keys.
+function withLandingRead(
+  readers: Readers,
+  read: ReferencedExtra,
+  binding: Binding,
+): Readers {
+  read[kLandingOrder] ??= landings++;
+  const reads = readUtil.add(readers.reads, read);
+  const directReads = readUtil.add(readers.directReads, read);
+  const asInput = every(binding.reads.get(read), isTagNameRead)
+    ? readers.asInput
+    : readUtil.add(readers.asInput, read);
+  return isSameReaders(readers, readers.reason, reads, directReads, asInput)
+    ? readers
+    : { reason: readers.reason, reads, directReads, asInput };
+}
+
+function isReadInitialValue(read: ReferencedExtra) {
+  return !!read.initialValue && some(read.derives, isReadAfterResume);
+}
+
+function isReadAfterResume(binding: Binding) {
+  return !!bindingReaders(binding, true).reason;
+}
+
+function isRetained(read: ReferencedExtra) {
+  return !!read.retained;
 }
 
 function isTagNameRead({ extra }: Read) {
   return !!extra.exprRoot?.tagName;
 }
 
-// A dynamic tag naming the value, or what holds it as `content`, renders it; a
-// read deriving nothing may hand it on to render anywhere.
-function renderingReaders(expr: ReferencedExtra, binding: Binding): Readers {
-  const reads = binding.reads.get(expr);
-  if (reads && every(reads, isTagNameRead)) {
-    return {
-      reason: undefined,
-      lands: 0,
-      sites: first(reads).extra.exprRoot!.tagName,
-    };
-  }
-  // So does a spread, a native element's `content=` or a class component's body,
-  // even where it renders the content first inside an element.
-  return expr.derives ? UNREAD : UNSEEN_READ;
+// A read deriving nothing may hand the value on to render anywhere: a spread, a
+// native element's `content=` or a class component's body.
+function isHandedOn(read: ReferencedExtra) {
+  return !read.isEffect && !read.derives;
 }

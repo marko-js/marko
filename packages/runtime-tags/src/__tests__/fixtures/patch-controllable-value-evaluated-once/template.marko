@@ -1,0 +1,9 @@
+static function read(reads, value) {
+  reads.count++;
+  return value;
+}
+<const/reads={ count: 0 }/>
+<main>
+  <input value=read(reads, input.value)>
+  <p>${reads.count}</p>
+</main>

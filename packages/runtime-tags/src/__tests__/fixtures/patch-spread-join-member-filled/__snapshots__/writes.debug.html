@@ -1,0 +1,18 @@
+<div class=one title=a>x</div><!--M_$1 #div/0--><!--M_[-->
+<p>a<!--M_$3 #text/0--></p><!--M_]1 #text/1 3-->
+<script>
+  WALKER_RUNTIME("M")("_").patchBuild = "b";
+  M._.r = [_ => [1, {
+      input_id: "a",
+      "ClosureScopes:input_id/7": new Set
+    }, 1, {
+      _: _(1),
+      "ClosureSignalIndex:input_id/7": 1,
+      "#PlaceholderContent": _._[
+        "packages/runtime-tags/src/__tests__/fixtures/patch-spread-join-member-filled/template.marko_1*content"
+        ]
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/patch-spread-join-member-filled/template.marko_0_input_which#4_input_id#5 1"
+  ];
+  M._.w()
+</script>

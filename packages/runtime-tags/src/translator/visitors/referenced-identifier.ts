@@ -1,10 +1,13 @@
 import { types as t } from "@marko/compiler";
 
 import { getExprRoot } from "../util/get-root";
-import { isOutputHTML } from "../util/marko-config";
+import { isOutputHTML, isPatch } from "../util/marko-config";
+import { some } from "../util/optional";
+import { runsEffectOnPatch } from "../util/patch/refresh";
 import {
   assertReferencedInRender,
   getCanonicalExpr,
+  getReferencedBindings,
   setReferencesScope,
   trackGlobalReference,
 } from "../util/references";
@@ -82,8 +85,11 @@ export default {
 
       if (!resetEmitted.has(exprRoot)) {
         resetEmitted.add(exprRoot);
+        // An effect a patch may queue again resets its `$signal`s as it runs.
         addStatement(
-          "render",
+          isPatch() && some(getReferencedBindings(exprRoot), runsEffectOnPatch)
+            ? "effect"
+            : "render",
           section,
           canonicalExtra,
           t.callExpression(importRuntime("$signalReset"), [

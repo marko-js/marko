@@ -12,6 +12,9 @@ const config = {
   // Specifies whether this is a page or load entry point.
   entry: undefined,
 
+  // Enables the patch protocol: pages patched in place across navigations.
+  patches: false,
+
   /**
    * Provides browser asset resolution and runtime hooks for lazy loading and server entries.
    */
