@@ -14,3 +14,7 @@ export function toOnlyStatementOrBlock(body: t.Statement[]) {
 
   return t.blockStatement(body);
 }
+
+export function toSequenceExpression(exprs: t.Expression[]) {
+  return exprs.length === 1 ? exprs[0] : t.sequenceExpression(exprs);
+}

@@ -1,0 +1,6 @@
+<define/frag><i>${input.b}</i></define>
+<section content=(input.mode ? frag.content : null)/>
+<for|item| of=input.items>
+  <const/d=input.b + item/>
+  <p>${d}</p>
+</for>
