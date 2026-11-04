@@ -1,0 +1,19 @@
+<try>
+  <await|v|=input.slow>
+    <em>${v}</em>
+  </await>
+  <@placeholder>
+    <note label=input.label/>
+  </@placeholder>
+</try>
+<try>
+  <await|v|=input.failing>
+    <em>${v}</em>
+  </await>
+  <@catch>
+    <note label=input.label/>
+    <await|w|=input.other>
+      <b>${w}</b>
+    </await>
+  </@catch>
+</try>

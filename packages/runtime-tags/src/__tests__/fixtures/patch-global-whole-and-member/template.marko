@@ -1,0 +1,9 @@
+<let/n=0/>
+<main/el>
+  <p>${$global.data.title}</p>
+</main>
+<script>
+  const g = $global;
+  el().dataset.runs = String(+(el().dataset.runs || 0) + 1);
+</script>
+<button onClick() { n++ }>${n}</button>

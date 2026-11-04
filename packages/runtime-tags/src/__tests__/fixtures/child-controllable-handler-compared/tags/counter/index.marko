@@ -1,0 +1,12 @@
+<let/open=true/>
+<if=open>
+  <let/count=0 valueChange=input.onCount/>
+  <span>Seen ${count}</span>
+  <button.add onClick() { count++ }>+</button>
+  <script>
+    const log = document.getElementById("log")!;
+    log.textContent += (log as any).fn === input.onCount ? "same;" : "new;";
+    (log as any).fn = input.onCount;
+  </script>
+</if>
+<button.toggle onClick() { open = !open }>t</button>

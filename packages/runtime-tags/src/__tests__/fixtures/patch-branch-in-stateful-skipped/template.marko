@@ -1,0 +1,14 @@
+<panel|{ label, items }| label=input.label items=input.items>
+  <let/open=true/>
+  <if=open>
+    <if=label>
+      <p>${label}</p>
+    </if>
+    <ul>
+      <for|item| of=items>
+        <li>${item}</li>
+      </for>
+    </ul>
+  </if>
+  <button onClick() { open = !open }>toggle</button>
+</panel>

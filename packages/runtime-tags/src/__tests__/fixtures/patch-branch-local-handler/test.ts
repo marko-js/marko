@@ -1,0 +1,10 @@
+import type { TestConfig } from "../../main.test";
+// A handler in a branch captures a patch-written branch local: the flush
+// writes it so the click sees the patched value.
+export const config: TestConfig = {
+  patches: true,
+  steps: [{ show: true, title: "a" }, { show: true, title: "b" }, click],
+};
+function click(document: Document) {
+  document.querySelector<HTMLButtonElement>("button")!.click();
+}

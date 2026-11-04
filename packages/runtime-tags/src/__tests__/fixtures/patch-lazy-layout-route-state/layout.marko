@@ -1,0 +1,9 @@
+import Lazy from "./lazy.marko" with { load: "render" }
+<html>
+  <body>
+    <if=input.open>
+      <Lazy/>
+    </if>
+    <${input.content}/>
+  </body>
+</html>

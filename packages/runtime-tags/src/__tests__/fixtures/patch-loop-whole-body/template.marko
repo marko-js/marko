@@ -1,0 +1,7 @@
+<let/l=["a"]/>
+<main>
+  <for|i| of=l>
+    <li>${input.format(i)}</li>
+  </for>
+  <button onClick() { l = [...l, "b"] }>+</button>
+</main>

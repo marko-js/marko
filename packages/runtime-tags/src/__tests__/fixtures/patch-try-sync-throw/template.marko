@@ -1,0 +1,11 @@
+static function boom(): never {
+  throw new Error("boom");
+}
+<let/count=0/>
+<main>
+  <try>
+    <em>${input.message}${input.boom ? boom() : ""}</em>
+    <@catch|err|><b>${err.message}</b></@catch>
+  </try>
+  <button onClick() { count++ }>${count}</button>
+</main>
