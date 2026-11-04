@@ -1,0 +1,19 @@
+static function check(title: string, fail: boolean) {
+  if (fail) {
+    const err = new Error("boom " + title, { cause: new Error("cause") });
+    (err as any).extra = "extra";
+    throw err;
+  }
+  return title;
+}
+<try>
+  <await|v|=input.slow>
+    <em>${v}</em>
+  </await>
+  <@placeholder>
+    <try>
+      <p>${check(input.title, input.fail)}</p>
+      <@catch|err|><p>${err.message}</p></@catch>
+    </try>
+  </@placeholder>
+</try>

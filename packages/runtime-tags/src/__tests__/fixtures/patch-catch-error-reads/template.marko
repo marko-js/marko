@@ -1,0 +1,15 @@
+static function boom(error: unknown): never {
+  throw error;
+}
+<let/count=0/>
+<main>
+  <try>
+    <await|v|=input.promise><em>${v}</em></await>
+    <@catch|err|><b>${(err as Error).message}</b></@catch>
+  </try>
+  <try>
+    <p>${input.error ? boom(input.error) : "ok"}</p>
+    <@catch|{ cause }|><i>${(cause as { code: string }).code}</i></@catch>
+  </try>
+  <button onClick() { count++ }>${count}</button>
+</main>

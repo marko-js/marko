@@ -1,0 +1,6 @@
+import Keeper from "./keeper.marko";
+<if=input.p>
+  <await|x|=input.p>
+    <${x ? Keeper : "div"} content=input.content/>
+  </await>
+</if>
