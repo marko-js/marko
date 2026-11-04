@@ -323,7 +323,7 @@ function drainClassFunctions(
   pending.length = 0;
 }
 
-function swapReorders(state: State, reorders: Chunk[] | null) {
+function swapReorders(state: State, reorders: State["writeReorders"]) {
   const { writeReorders } = state;
   state.writeReorders = reorders;
   return writeReorders;

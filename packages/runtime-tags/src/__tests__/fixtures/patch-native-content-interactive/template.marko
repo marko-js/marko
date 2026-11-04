@@ -1,0 +1,7 @@
+import fragA from "../patch-native-content-attr/frag-a.marko";
+import fragB from "../patch-native-content-attr/frag-b.marko";
+<let/count=0/>
+<main>
+  <div content=(input.html === "a" ? fragA : fragB)/>
+  <button onClick() { count++ }>${count}</button>
+</main>

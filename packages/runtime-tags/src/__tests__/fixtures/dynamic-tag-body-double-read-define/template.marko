@@ -1,0 +1,9 @@
+<define/Wrap|{ content }|>
+  <let/open=false/>
+  <button.toggle onClick() { open = !open }>t</button>
+  <section><${content}/></section>
+  <if=open><${content}/></if>
+</define>
+<main>
+  <${input.on ? Wrap : "div"}><em>${input.note}</em></>
+</main>
