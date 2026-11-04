@@ -27,6 +27,8 @@ import {
   forEach,
   type OneMany,
   type Opt,
+  push,
+  reduce,
   rest,
   some,
 } from "./optional";
@@ -205,7 +207,7 @@ function getBranchExprReason(section: Section) {
     return reason;
   }
   // An `<await>`'s promise settles into the body its owner made.
-  if (section.branch?.await) return;
+  if (section.branch?.kind === "await") return;
   return branchExpr ? getSourcesForExpr(branchExpr) : ALWAYS;
 }
 
@@ -292,16 +294,23 @@ function addRegisteredFnReasons(
 interface Readers {
   reason: undefined | Reason;
   lands: number;
+  /** The content sites rendering it, and its deep sites past a further call. */
+  sites?: Opt<t.MarkoTagExtra>;
+  deepSites?: Opt<t.MarkoTagExtra>;
 }
 
 // Lands in a retained read, where client code may read it as is.
 const LANDS_RETAINED = 1;
 // Reaches a retained read as more than a dynamic tag's name.
 const LANDS_RETAINED_INPUT = 2;
+// Handed on by a read that derives nothing, so it may render anywhere.
+const LANDS_UNSEEN = 4;
 
 const UNREAD: Readers = { reason: undefined, lands: 0 };
 
 const ALWAYS_READ: Readers = { reason: ALWAYS, lands: 0 };
+
+const UNSEEN_READ: Readers = { reason: undefined, lands: LANDS_UNSEEN };
 
 const RETAINED_TAG_NAME_READ: Readers = {
   reason: undefined,
@@ -339,6 +348,20 @@ export function bindingLandsRetained(
   properties: Opt<string>,
 ) {
   return !!(bindingReaders(binding, properties).lands & LANDS_RETAINED_INPUT);
+}
+
+// Where content passed to templates renders: `sites` and `deepSites` (see
+// `Readers`), or `unseen` where a read hands it on.
+export function getContentSites({
+  binding,
+  properties,
+}: NonNullable<Section["derives"]>) {
+  const { lands, sites, deepSites } = reduce(
+    binding,
+    (readers, part) => mergeReaders(readers, bindingReaders(part, properties)),
+    UNREAD,
+  );
+  return { unseen: !!(lands & LANDS_UNSEEN), sites, deepSites };
 }
 
 // Whether the value lands somewhere retained (itself included), where client
@@ -388,15 +411,14 @@ function readersOfDerived(
     getDerivedPath(extra, binding, part, properties),
   );
   const exprs = extra.callSiteExprs;
-  return linked.reason && exprs
+  // Past another call, a template's root edge follows that call's place.
+  return exprs && (linked.reason || linked.sites)
     ? {
-        reason: mapParamReason(
-          binding.section.program,
-          linked.reason,
-          exprs,
-          true,
-        ),
+        reason:
+          linked.reason &&
+          mapParamReason(binding.section.program, linked.reason, exprs, true),
         lands: linked.lands,
+        deepSites: mergeSites(linked.deepSites, linked.sites),
       }
     : linked;
 }
@@ -478,6 +500,7 @@ function computeBindingReaders(
       continue;
     }
     readers = mergeReaders(readers, landingReaders(expr, binding));
+    readers = mergeReaders(readers, renderingReaders(expr, binding));
     readers = mergeReaders(
       readers,
       readersOfDerives(expr, binding, properties),
@@ -519,9 +542,37 @@ function mergeReaders(a: Readers, b: Readers): Readers {
   if (b === UNREAD) return a;
   const reason = mergeSources(a.reason, b.reason);
   const lands = a.lands | b.lands;
-  if (reason === a.reason && lands === a.lands) return a;
-  if (reason === b.reason && lands === b.lands) return b;
-  return { reason, lands };
+  const sites = mergeSites(a.sites, b.sites);
+  const deepSites = mergeSites(a.deepSites, b.deepSites);
+  if (
+    reason === a.reason &&
+    lands === a.lands &&
+    sites === a.sites &&
+    deepSites === a.deepSites
+  ) {
+    return a;
+  }
+  if (
+    reason === b.reason &&
+    lands === b.lands &&
+    sites === b.sites &&
+    deepSites === b.deepSites
+  ) {
+    return b;
+  }
+  return { reason, lands, sites, deepSites };
+}
+
+function mergeSites(
+  a: Opt<t.MarkoTagExtra>,
+  b: Opt<t.MarkoTagExtra>,
+): Opt<t.MarkoTagExtra> {
+  return reduce(
+    b,
+    (sites, site) =>
+      some(sites, (held) => held === site) ? sites : push(sites, site),
+    a,
+  );
 }
 
 // What a read the binding's value lands in adds: only a retained one counts.
@@ -535,4 +586,20 @@ function landingReaders(read: ReferencedExtra, binding: Binding): Readers {
 
 function isTagNameRead({ extra }: Read) {
   return !!extra.exprRoot?.tagName;
+}
+
+// A dynamic tag naming the value, or what holds it as `content`, renders it; a
+// read deriving nothing may hand it on to render anywhere.
+function renderingReaders(expr: ReferencedExtra, binding: Binding): Readers {
+  const reads = binding.reads.get(expr);
+  if (reads && every(reads, isTagNameRead)) {
+    return {
+      reason: undefined,
+      lands: 0,
+      sites: first(reads).extra.exprRoot!.tagName,
+    };
+  }
+  // So does a spread, a native element's `content=` or a class component's body,
+  // even where it renders the content first inside an element.
+  return expr.derives ? UNREAD : UNSEEN_READ;
 }

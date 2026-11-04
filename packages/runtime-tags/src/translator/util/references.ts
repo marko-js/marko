@@ -113,8 +113,9 @@ declare module "@marko/compiler/dist/types" {
     assignment?: Binding;
     assignmentTo?: Binding;
     read?: ResolvedRead;
-    /** An expression root that is a dynamic tag's name, not one of its inputs. */
-    tagName?: true;
+    /** For an expression root that is a dynamic tag's name, not one of its
+     * inputs: that tag. */
+    tagName?: t.MarkoTagExtra;
     dropped?: true;
     /** The expression this node sits in: dropped or merged as one. */
     exprRoot?: NodeExtra;

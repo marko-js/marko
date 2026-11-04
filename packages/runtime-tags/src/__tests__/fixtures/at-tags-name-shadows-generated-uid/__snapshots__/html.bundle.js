@@ -4,7 +4,7 @@ var child_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	_for_of(input.scope, (s) => {
 		const $scope1_id = _scope_id();
-		_html(_text_mark($scope1_id, "a", s.a, $wg__input_scope));
+		_html(_text_mark($scope1_id, "a", s.a, $wg__input_scope * 2));
 		$wi__input_scope && _scope($scope1_id, {});
 	}, 0, $scope0_id, "a", $wg__input_scope, $wg__input_scope);
 	$wi__input_scope && _scope($scope0_id, {});

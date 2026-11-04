@@ -346,7 +346,10 @@ function addSectionReasons(section: Section) {
         : closureSources,
     );
     addReasonExprs(branchSlot, section.branchExpr);
-    addReasonExprs(ensureSlot(section.branch.nodeBinding), section.branchExpr);
+    addReasonExprs(
+      ensureSlot(section.branch.tag.nodeBinding),
+      section.branchExpr,
+    );
   }
 }
 

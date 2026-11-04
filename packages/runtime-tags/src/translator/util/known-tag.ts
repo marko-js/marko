@@ -71,6 +71,7 @@ import {
   getSection,
   getSectionForBody,
   isSameOrAncestorSection,
+  mayMergeWithText,
   type ParamReasonGroups,
   type Section,
 } from "./sections";
@@ -158,6 +159,7 @@ export function knownTagAnalyze(
   const section = ensureSection(tag);
   const tagBody = tag.get("body");
   const tagExtra = (tag.node.extra ??= {}) as KnownTagExtra;
+  tagExtra.textBefore = mayMergeWithText(tag, true);
   tagExtra.childScopeBinding = createBinding(
     "#childScope",
     BindingType.dom,

@@ -13,12 +13,11 @@ import { getScopeAccessorLiteral } from "../util/scope-accessor";
 import { createScopeReadExpression, scopeIdentifier } from "../util/scope-read";
 import {
   ContentType,
-  getNodeContentType,
   ensureSection,
   getScopeIdIdentifier,
   getSection,
-  getSectionForBody,
-  isKnownChild,
+  getSectionTextBefore,
+  mayMergeWithText,
 } from "../util/sections";
 import { addSetupExpr } from "../util/setup-work";
 import { addStatement } from "../util/signals";
@@ -29,18 +28,16 @@ import {
   getStaticPlaceholderText,
 } from "../util/static-text";
 import * as structure from "../util/structure";
-import { getTagFacts, isInTextBody } from "../util/tag-facts";
+import { isInTextBody } from "../util/tag-facts";
 import type { TemplateVisitor } from "../util/visitors";
 import { getWriteGuard, getWriteReason } from "../util/write-guard";
 import * as writer from "../util/writer";
 
-const kTextBefore = Symbol("text may merge before the placeholder");
 const kTextAfter = Symbol("text may merge after the placeholder");
 declare module "@marko/compiler/dist/types" {
   export interface MarkoPlaceholderExtra {
-    /** Whether text may merge into its text node from that side; `undefined`
-     * where that side is its section's edge (see `isKnownChild`). */
-    [kTextBefore]?: boolean;
+    /** Whether text may merge into its text node from after; `undefined` at its
+     * section's edge. */
     [kTextAfter]?: boolean;
   }
 }
@@ -77,7 +74,7 @@ export default {
       if (contentType === ContentType.Text) {
         structure.writeTextTo(placeholder, getStaticPlaceholderText(node)!);
       } else {
-        const before = extra[kTextBefore];
+        const before = extra.textBefore;
         const after = extra[kTextAfter];
         const { content } = getSection(placeholder);
         structure.text(
@@ -153,7 +150,7 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
           getScopeIdIdentifier(section),
           getScopeAccessorLiteral(nodeBinding!),
           value,
-          (extra[kTextBefore] ?? isKnownChild(section))
+          (extra.textBefore ?? getSectionTextBefore(section) ?? true)
             ? guard
               ? t.binaryExpression("*", guard, t.numericLiteral(2))
               : t.numericLiteral(2)
@@ -234,61 +231,6 @@ function buildEscapedTextExpression(value: t.Expression): t.Expression {
 
 function analyzeSiblingText(placeholder: t.NodePath<t.MarkoPlaceholder>) {
   const extra = placeholder.node.extra!;
-  extra[kTextBefore] = mayMergeWithText(placeholder, true);
+  extra.textBefore = mayMergeWithText(placeholder, true);
   extra[kTextAfter] = mayMergeWithText(placeholder, false);
-}
-
-// Whether text the placeholder's text node may merge with is on one side of it,
-// past what renders nothing and out through bodies rendered in place.
-function mayMergeWithText(
-  placeholder: t.NodePath<t.MarkoPlaceholder>,
-  before: boolean,
-): boolean | undefined {
-  let sibling = getSibling(placeholder, before);
-  let parent: t.NodePath = placeholder.parentPath;
-  for (;;) {
-    if (!sibling.node) {
-      const inlinedTag = getInlinedBodyTag(parent);
-      if (!inlinedTag) {
-        // An element's body ends at the element; beside its section's own edge
-        // renders whatever inlines the section.
-        return getSectionForBody(
-          parent as t.NodePath<t.MarkoTagBody | t.Program>,
-        )
-          ? undefined
-          : false;
-      }
-      sibling = getSibling(inlinedTag, before);
-      parent = inlinedTag.parentPath;
-    } else {
-      const contentType = getNodeContentType(
-        sibling as t.NodePath<t.Statement>,
-        before ? "endType" : "startType",
-      );
-      if (contentType !== null) {
-        return (
-          contentType === ContentType.Text ||
-          contentType === ContentType.Dynamic ||
-          contentType === ContentType.Placeholder
-        );
-      }
-      sibling = getSibling(sibling, before);
-    }
-  }
-}
-
-function getSibling(path: t.NodePath, before: boolean) {
-  return before ? path.getPrevSibling() : path.getNextSibling();
-}
-
-// The tag rendering `parent` in its own place and section, so the body's
-// edges render against the tag's own siblings.
-function getInlinedBodyTag(parent: t.NodePath) {
-  if (parent.isMarkoTagBody()) {
-    const tag = parent.parentPath as t.NodePath<t.MarkoTag>;
-    const facts = getTagFacts(tag);
-    if (facts.controlFlow && facts.inlineBody) {
-      return tag;
-    }
-  }
 }

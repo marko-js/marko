@@ -17,7 +17,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				return 0;
 			} else {
 				const $scope3_id = _scope_id();
-				_html(_text_mark($scope3_id, "#text/0", input.message, $wg__input_message));
+				_html(_text_mark($scope3_id, "#text/0", input.message, $wg__input_message * 2));
 				_write_if($scope1_reason, 0) && _scope($scope3_id, { _: _write_if($scope1_reason, 2) && _scope_with_id($scope1_id) }, "__tests__/template.marko", "6:4");
 				return 1;
 			}

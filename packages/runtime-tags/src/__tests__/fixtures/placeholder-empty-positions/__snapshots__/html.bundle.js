@@ -7,14 +7,14 @@ var template_default = _template("a", (input) => {
 	_if(() => {
 		{
 			const $scope1_id = _scope_id();
-			_html(_text_mark($scope1_id, "a", a));
+			_html(_text_mark($scope1_id, "a", a, 2));
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
 	}, $scope0_id, "b", 1, 0);
 	_for_of([1], (i) => {
 		const $scope2_id = _scope_id();
-		_html(`${_text_mark($scope2_id, "a", a)} tail`);
+		_html(`${_text_mark($scope2_id, "a", a, 2)} tail`);
 		_scope($scope2_id, { _: _scope_with_id($scope0_id) });
 	}, 0, $scope0_id, "c", 1, 0);
 	_html(`<input${_attr_input_value($scope0_id, "d", a, _resume((_new_a) => {

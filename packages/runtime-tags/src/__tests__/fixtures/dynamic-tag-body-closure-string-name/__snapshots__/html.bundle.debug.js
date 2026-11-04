@@ -6,7 +6,7 @@ var heading_default = _template("__tests__/tags/heading.marko", (input) => {
 	_dynamic_tag($scope0_id, "#text/0", input.as || "div", {}, _content_resume("__tests__/tags/heading.marko_1*content", () => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
-		_html(_text_mark($scope1_id, "#text/0", input.text, $wg__input_text));
+		_html(_text_mark($scope1_id, "#text/0", input.text, $wg__input_text * 2));
 		$wi__input_as__OR__input_text && _subscribe($wi__input_text && $input_text__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/heading.marko", "1:4"), "__tests__/tags/heading.marko_1_input_text#0:4/subscribe", $wg__input_text);
 		$wg__input_text || $wi__input_as__OR__input_text && _resume_branch($scope1_id);
 	}, $scope0_id, ($scope) => [{ input_text: input.text }]), 0, $wg__input_as);
