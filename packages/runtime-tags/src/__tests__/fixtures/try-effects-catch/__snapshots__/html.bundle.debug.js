@@ -2,7 +2,7 @@
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<div></div>${_el_resume($scope0_id, "#div/0")}`);
+	_html(`<div></div>${_el_mark($scope0_id, "#div/0")}`);
 	_try($scope0_id, "#text/1", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
@@ -14,10 +14,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, void 0, (err) => {
 		const $scope2_reason = _scope_reason(), $wg__err_message = _write_guard($scope2_reason, 0);
 		const $scope2_id = _scope_id();
-		_html(_text_resume($scope2_id, "#text/0", err.message, $wg__err_message));
+		_html(_text_mark($scope2_id, "#text/0", err.message, $wg__err_message));
 		_write_if($scope2_reason, 0) && _scope($scope2_id, {}, "__tests__/template.marko", "7:4");
 	}, 0, "__tests__/template.marko_2*content");
-	_html(`<div></div>${_el_resume($scope0_id, "#div/2")}`);
+	_html(`<div></div>${_el_mark($scope0_id, "#div/2")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

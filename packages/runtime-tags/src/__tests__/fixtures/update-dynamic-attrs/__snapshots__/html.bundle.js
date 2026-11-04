@@ -5,14 +5,14 @@ var template_default = _template("a", (input) => {
 	let a = 0;
 	_html("<div");
 	_attrs_content(input.value, "a", $scope0_id, "div");
-	_html(`</div>${_el_resume($scope0_id, "a")}<div`);
+	_html(`</div>${_el_mark($scope0_id, "a")}<div`);
 	_attrs_content({
 		a,
 		...input.value
 	}, "b", $scope0_id, "div");
-	_html(`</div>${_el_resume($scope0_id, "b")}<div${_attr("a", a)}`);
+	_html(`</div>${_el_mark($scope0_id, "b")}<div${_attr("a", a)}`);
 	_attrs_partial_content(input.value, { a: 1 }, "c", $scope0_id, "div");
-	_html(`</div>${_el_resume($scope0_id, "c")}`);
+	_html(`</div>${_el_mark($scope0_id, "c")}`);
 	_script($scope0_id, "a0");
 	_script($scope0_id, "a1");
 	_scope($scope0_id, { g: _write_if($scope0_reason, 0) && a });

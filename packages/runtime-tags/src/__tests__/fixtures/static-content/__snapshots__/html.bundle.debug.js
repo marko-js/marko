@@ -14,7 +14,7 @@ var outer_default = _template("__tests__/tags/outer.marko", (input) => {
 	inner_default({ content: _content("__tests__/tags/outer.marko_1*content", () => {
 		const $scope1_reason = _scope_reason();
 		const $scope1_id = _scope_id();
-		_html(`<button>click</button>${_el_resume($scope1_id, "#button/0")}`);
+		_html(`<button>click</button>${_el_mark($scope1_id, "#button/0")}`);
 		_dynamic_tag($scope1_id, "#text/1", input.content, {}, 0, 0, _write_guard($scope0_reason, 0));
 		_script($scope1_id, "__tests__/tags/outer.marko_1");
 		_subscribe($wi__input_content && $input_content__closures, _scope($scope1_id, { _: $wi__input_content && _scope_with_id($scope0_id) }, "__tests__/tags/outer.marko", "1:2"), "__tests__/tags/outer.marko_1_input_content#0:3/subscribe");

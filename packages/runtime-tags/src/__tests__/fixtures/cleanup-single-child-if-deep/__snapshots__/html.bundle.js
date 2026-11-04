@@ -2,7 +2,7 @@
 var child_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_name = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html(`<p>${_text_resume($scope0_id, "a", input.name, $wg__input_name)}</p>`);
+	_html(`<p>${_text_mark($scope0_id, "a", input.name, $wg__input_name)}</p>`);
 	_script($scope0_id, "b0", $wg__input_name);
 	_scope($scope0_id, {
 		d: input.name,
@@ -22,7 +22,7 @@ var template_default = _template("a", (input) => {
 	const write = _resume(function(msg) {
 		((el) => el())(_el_read_error).innerHTML += "\n" + msg;
 	}, "a0", $scope0_id);
-	_html(`<button id=outer>Toggle Outer</button>${_el_resume($scope0_id, "a")}<button id=middle>Toggle Middle</button>${_el_resume($scope0_id, "b")}<button id=inner>Toggle Inner</button>${_el_resume($scope0_id, "c")}<pre></pre>${_el_resume($scope0_id, "d")}`);
+	_html(`<button id=outer>Toggle Outer</button>${_el_mark($scope0_id, "a")}<button id=middle>Toggle Middle</button>${_el_mark($scope0_id, "b")}<button id=inner>Toggle Inner</button>${_el_mark($scope0_id, "c")}<pre></pre>${_el_mark($scope0_id, "d")}`);
 	_if(() => {
 		{
 			const $scope1_id = _scope_id();

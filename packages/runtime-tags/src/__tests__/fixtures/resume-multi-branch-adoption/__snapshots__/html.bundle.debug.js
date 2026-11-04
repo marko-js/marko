@@ -3,14 +3,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let items = ["first", "second"];
-	_html(`<button id=clear>clear</button>${_el_resume($scope0_id, "#button/0")}<div></div>${_el_resume($scope0_id, "#div/1")}`);
+	_html(`<button id=clear>clear</button>${_el_mark($scope0_id, "#button/0")}<div></div>${_el_mark($scope0_id, "#div/1")}`);
 	_for_of(items, (item) => {
 		const $scope1_id = _scope_id();
 		_html("<div>");
 		_if(() => {
 			if (item) {
 				const $scope2_id = _scope_id();
-				_html(`<span>${_text_resume($scope2_id, "#text/0", item)}</span>`);
+				_html(`<span>${_text_mark($scope2_id, "#text/0", item)}</span>`);
 				_script($scope2_id, "__tests__/template.marko_2_item#1:2");
 				_scope($scope2_id, {}, "__tests__/template.marko", "7:6");
 				return 0;

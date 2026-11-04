@@ -240,7 +240,8 @@ _Avoid_: fill, partial, payload chunk
 
 **Resume comment**:
 An SSR HTML comment associating existing nodes or ranges with scopes and
-encoding owners, branches, keys, or await state.
+encoding owners, branches, keys, or await state. `_el_mark`, `_text_mark` and
+`_html_mark` write one beside a node; `_resume` names a registration instead.
 _Avoid_: hydration marker
 
 **Registration**:

@@ -12,7 +12,7 @@ var template_default = _template("a", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "a");
-	_html(`<div id=ref></div><button id=increment>Increment</button>${_el_resume($scope0_id, "b")}<button id=toggle>Toggle</button>${_el_resume($scope0_id, "c")}`);
+	_html(`<div id=ref></div><button id=increment>Increment</button>${_el_mark($scope0_id, "b")}<button id=toggle>Toggle</button>${_el_mark($scope0_id, "c")}`);
 	_script($scope0_id, "a1");
 	_scope($scope0_id, {
 		d: x,

@@ -3,7 +3,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let n = 0;
-	_html(`<button>b</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button>b</button>${_el_mark($scope0_id, "#button/0")}`);
 	_if(() => {
 		if (n % 3 === 0) {
 			const $scope1_id = _scope_id();

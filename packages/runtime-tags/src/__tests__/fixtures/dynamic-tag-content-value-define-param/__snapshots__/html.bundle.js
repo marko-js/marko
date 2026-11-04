@@ -3,7 +3,7 @@ var card_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let open = true;
-	_html(`<button class=toggle>toggle</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button class=toggle>toggle</button>${_el_mark($scope0_id, "a")}`);
 	_if(() => {
 		{
 			const $scope1_id = _scope_id();
@@ -31,7 +31,7 @@ var template_default = _template("a", (input) => {
 		const Label = { content: _content_resume("a0", () => {
 			const $scope2_id = _scope_id();
 			_scope_reason();
-			_html(`<em>${_text_resume($scope2_id, "a", v, $wg__v)}</em>`);
+			_html(`<em>${_text_mark($scope2_id, "a", v, $wg__v)}</em>`);
 			($wi__input_on || $wi__v) && _subscribe($wi__v && $Outer_content__v__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "a1", $wg__v);
 			$wg__v || ($wi__input_on || $wi__v) && _resume_branch($scope2_id);
 		}, $scope1_id, ($scope) => [{ d: v }]) };

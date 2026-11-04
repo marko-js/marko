@@ -7,7 +7,7 @@ var template_default = _template("a", (input) => {
 	const Item = { content: _content("a1", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
-		_html(`<span>x</span>${_el_resume($scope1_id, "a")}`);
+		_html(`<span>x</span>${_el_mark($scope1_id, "a")}`);
 		_subscribe($Item_content__subscribers, _scope($scope1_id, {}));
 	}, $scope0_id) };
 	Item.content({});
@@ -29,7 +29,7 @@ var template_default = _template("a", (input) => {
 	}, void 0, (err) => {
 		const $scope5_reason = _scope_reason(), $wg__err_message = _write_guard($scope5_reason, 0);
 		const $scope5_id = _scope_id();
-		_html(`caught ${_text_resume($scope5_id, "a", err.message, $wg__err_message * 2)}`);
+		_html(`caught ${_text_mark($scope5_id, "a", err.message, $wg__err_message * 2)}`);
 		_write_if($scope5_reason, 0) && _scope($scope5_id, {});
 	}, 0, "a2");
 	_script($scope0_id, "a3", 0);

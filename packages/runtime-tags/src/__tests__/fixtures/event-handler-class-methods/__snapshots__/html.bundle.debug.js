@@ -9,7 +9,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const obj = { go: _resume(function() {}, "__tests__/template.marko_0/obj") };
 	let n = 1;
-	_html(`<button id=a>a ${_text_resume($scope0_id, "#text/1", n, 2)}</button>${_el_resume($scope0_id, "#button/0")}<button id=b>b</button>${_el_resume($scope0_id, "#button/2")}<button id=c>c</button>${_el_resume($scope0_id, "#button/3")}`);
+	_html(`<button id=a>a ${_text_mark($scope0_id, "#text/1", n, 2)}</button>${_el_mark($scope0_id, "#button/0")}<button id=b>b</button>${_el_mark($scope0_id, "#button/2")}<button id=c>c</button>${_el_mark($scope0_id, "#button/3")}`);
 	_script($scope0_id, "__tests__/template.marko_0_obj_go#5");
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {

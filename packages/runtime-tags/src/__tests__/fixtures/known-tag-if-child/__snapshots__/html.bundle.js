@@ -14,7 +14,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	const $on__closures = /* @__PURE__ */ new Set();
 	let on = false;
-	_html(`<button>toggle</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button>toggle</button>${_el_mark($scope0_id, "a")}`);
 	wrapper_default({ content: _content("a1", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();

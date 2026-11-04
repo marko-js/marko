@@ -16,18 +16,18 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let show = true;
 	let items = [{ a: "x" }, {}];
-	_html(`<button id=rename>rename</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button id=rename>rename</button>${_el_mark($scope0_id, "#button/0")}`);
 	_set_scope_reason(2);
 	let $item;
 	forOf(items, ({ a: aa = "default" }, index) => {
 		$item = attrTags($item, { content: _content("__tests__/template.marko_1*content", () => {
 			const $scope1_reason = _scope_reason(), $wg__aa = _write_guard($scope1_reason, 0), $wg__index = _write_guard($scope1_reason, 1);
 			const $scope1_id = _scope_id();
-			_html(`<p>${_text_resume($scope1_id, "#text/0", index, $wg__index)}:${_text_resume($scope1_id, "#text/1", aa, $wg__aa * 2)}</p>`);
+			_html(`<p>${_text_mark($scope1_id, "#text/0", index, $wg__index)}:${_text_mark($scope1_id, "#text/1", aa, $wg__aa * 2)}</p>`);
 			_if(() => {
 				if (show) {
 					const $scope2_id = _scope_id();
-					_html(`<span>${_text_resume($scope2_id, "#text/0", aa, $wg__aa)}</span>`);
+					_html(`<span>${_text_mark($scope2_id, "#text/0", aa, $wg__aa)}</span>`);
 					_write_if($scope1_reason, 0) && _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "9:8");
 					return 0;
 				}
@@ -43,7 +43,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		$item2 = attrTags($item2, { content: _content("__tests__/template.marko_3*content", () => {
 			const $scope3_reason = _scope_reason(), $wg__x = _write_guard($scope3_reason, 1), $wg__y = _write_guard($scope3_reason, 2);
 			const $scope3_id = _scope_id();
-			_html(`<i>${_text_resume($scope3_id, "#text/0", x, $wg__x)}${_text_resume($scope3_id, "#text/1", y, $wg__y * 2)}</i>`);
+			_html(`<i>${_text_mark($scope3_id, "#text/0", x, $wg__x)}${_text_mark($scope3_id, "#text/1", y, $wg__y * 2)}</i>`);
 			_write_if($scope3_reason, 0) && _scope($scope3_id, {}, "__tests__/template.marko", "16:6");
 		}, $scope0_id) });
 	});

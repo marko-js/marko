@@ -12,7 +12,7 @@ var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	_hoist($scope0_id, "a0");
-	_html(`<pre id=root></pre>${_el_resume($scope0_id, "a")}<pre id=outer></pre>${_el_resume($scope0_id, "b")}<pre id=inner></pre>${_el_resume($scope0_id, "c")}`);
+	_html(`<pre id=root></pre>${_el_mark($scope0_id, "a")}<pre id=outer></pre>${_el_mark($scope0_id, "b")}<pre id=inner></pre>${_el_mark($scope0_id, "c")}`);
 	_for_to(2, 0, 1, (i) => {
 		const $scope1_id = _scope_id();
 		_hoist($scope1_id, "a1");

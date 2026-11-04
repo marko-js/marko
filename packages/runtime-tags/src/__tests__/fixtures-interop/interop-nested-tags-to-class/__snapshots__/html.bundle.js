@@ -28,7 +28,7 @@ var template_default = _template("a", (input) => {
 	_dynamic_tag($scope0_id, "a", _marko_template, {}, _content_resume("a0", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
-		_html(`<button id=tags>${_text_resume($scope1_id, "b", count)}</button>${_el_resume($scope1_id, "a")}`);
+		_html(`<button id=tags>${_text_mark($scope1_id, "b", count)}</button>${_el_mark($scope1_id, "a")}`);
 		_script($scope1_id, "a1");
 		_subscribe($count__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a2");
 	}, $scope0_id), 0, 0);

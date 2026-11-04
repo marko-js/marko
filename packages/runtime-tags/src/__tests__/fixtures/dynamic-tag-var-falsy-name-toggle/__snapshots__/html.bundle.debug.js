@@ -21,7 +21,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $labelspan_scope2 = _peek_scope_id();
 	let other = _dynamic_tag($scope0_id, "#text/4", !label && "span", {}, 0, 0, 1, 1);
 	_var($scope0_id, "#scopeOffset/5", $labelspan_scope2, "__tests__/template.marko_0_other#14/var");
-	_html(`<p>${_text_resume($scope0_id, "#text/6", typeof btn)} ${_text_resume($scope0_id, "#text/7", typeof value, 2)} ${_text_resume($scope0_id, "#text/8", typeof other, 2)}</p><input${_attr_input_value($scope0_id, "#input/9", label)}>${_el_resume($scope0_id, "#input/9")}<button id=toggle></button>${_el_resume($scope0_id, "#button/10")}`);
+	_html(`<p>${_text_mark($scope0_id, "#text/6", typeof btn)} ${_text_mark($scope0_id, "#text/7", typeof value, 2)} ${_text_mark($scope0_id, "#text/8", typeof other, 2)}</p><input${_attr_input_value($scope0_id, "#input/9", label)}>${_el_mark($scope0_id, "#input/9")}<button id=toggle></button>${_el_mark($scope0_id, "#button/10")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, { label }, "__tests__/template.marko", 0, { label: "1:6" });
 }, 1);

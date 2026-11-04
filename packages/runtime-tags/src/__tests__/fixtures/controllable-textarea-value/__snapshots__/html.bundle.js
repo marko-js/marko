@@ -5,7 +5,7 @@ var template_default = _template("a", (input) => {
 	let value = "hello";
 	_html(`<textarea>${_attr_textarea_value($scope0_id, "a", value, _resume((_new_value) => {
 		value = _new_value;
-	}, "a0", $scope0_id))}</textarea>${_el_resume($scope0_id, "a")}<span>${_text_resume($scope0_id, "b", value)}</span>`);
+	}, "a0", $scope0_id))}</textarea>${_el_mark($scope0_id, "a")}<span>${_text_mark($scope0_id, "b", value)}</span>`);
 	_script($scope0_id, "a1");
 	_scope($scope0_id, {});
 }, 1);

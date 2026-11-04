@@ -3,7 +3,7 @@ var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 2;
-	_html(`<button class=more>more</button>${_el_resume($scope0_id, "a")}<button class=none>none</button>${_el_resume($scope0_id, "b")}<ul>`);
+	_html(`<button class=more>more</button>${_el_mark($scope0_id, "a")}<button class=none>none</button>${_el_mark($scope0_id, "b")}<ul>`);
 	_for_until(count, 0, 1, (i) => {
 		const $scope1_id = _scope_id();
 		_html(`<li>${_escape(i)}</li>`);

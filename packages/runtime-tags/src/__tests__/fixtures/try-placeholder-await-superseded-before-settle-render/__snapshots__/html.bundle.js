@@ -4,7 +4,7 @@ var child_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	_await($scope0_id, "a", input.value, (value) => {
 		const $scope1_id = _scope_id();
-		_html(_text_resume($scope1_id, "a", value, $wg__input_value));
+		_html(_text_mark($scope1_id, "a", value, $wg__input_value));
 		_write_if($scope0_reason, 0) && _scope($scope1_id, {});
 	}, $wg__input_value);
 });
@@ -15,7 +15,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	const $value__closures = /* @__PURE__ */ new Set();
 	let value = "idle";
-	_html(`<button id=first>first</button>${_el_resume($scope0_id, "a")}<button id=third>third</button>${_el_resume($scope0_id, "b")}`);
+	_html(`<button id=first>first</button>${_el_mark($scope0_id, "a")}<button id=third>third</button>${_el_mark($scope0_id, "b")}`);
 	_try($scope0_id, "c", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();

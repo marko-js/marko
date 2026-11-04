@@ -10,7 +10,7 @@ var template_default = _template("a", (input) => {
 			const $scope3_id = _scope_id();
 			_html("<option");
 			_attrs_content(option, "a", $scope3_id, "option");
-			_html(`</option>${_el_resume($scope3_id, "a")}`);
+			_html(`</option>${_el_mark($scope3_id, "a")}`);
 			_script($scope3_id, "a0");
 			_scope($scope3_id, {});
 		}, 0, $scope1_id, "a", 0, 0, 0, "</select>", 1);

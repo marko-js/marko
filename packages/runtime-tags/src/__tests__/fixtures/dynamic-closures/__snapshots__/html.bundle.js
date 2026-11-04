@@ -16,11 +16,11 @@ var template_default = _template("a", (input) => {
 	const $c__closures = /* @__PURE__ */ new Set();
 	const b = 2;
 	let c = 3;
-	_html(`<button></button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button></button>${_el_mark($scope0_id, "a")}`);
 	custom_tag_default({ content: _content("a1", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
-		_html(`${_escape(a)} ${_escape(b)} ${_text_resume($scope1_id, "c", c, 2)}`);
+		_html(`${_escape(a)} ${_escape(b)} ${_text_mark($scope1_id, "c", c, 2)}`);
 		_subscribe($c__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a0");
 	}, $scope0_id) });
 	_html("<div>");
@@ -28,7 +28,7 @@ var template_default = _template("a", (input) => {
 		const $scope2_id = _scope_id();
 		if (Math.random()) {
 			const $scope3_id = _scope_id();
-			_html(`${_escape(a)} ${_escape(b)} ${_text_resume($scope3_id, "c", c, 2)}`);
+			_html(`${_escape(a)} ${_escape(b)} ${_text_mark($scope3_id, "c", c, 2)}`);
 			_subscribe($c__closures, _scope($scope3_id, {
 				_: _scope_with_id($scope2_id),
 				Cg: 1

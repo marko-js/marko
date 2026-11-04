@@ -13,7 +13,7 @@ var child_default = _template("b", (input) => {
 			const $scope1_id = _scope_id();
 			_html(`<div${_attr("aria-label", input.button.a11yText)}`);
 			_attrs_partial_content(rest, { "aria-label": 1 }, "a", $scope1_id, "div");
-			_html(`</div>${_el_resume($scope1_id, "a")}`);
+			_html(`</div>${_el_mark($scope1_id, "a")}`);
 			_script($scope1_id, "b0");
 			_scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) });
 			return 1;

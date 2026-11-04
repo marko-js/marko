@@ -7,7 +7,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
   .test {
     content: ${_to_text(count)}
   }
-`)}</style>${_el_resume($scope0_id, "#style/0")}`);
+`)}</style>${_el_mark($scope0_id, "#style/0")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, { count }, "__tests__/template.marko", 0, { count: "1:6" });
 }, 1);
