@@ -1,0 +1,254 @@
+# Render `{"keys":["",".",":","=","+","*","!","~","~0020","a_x0020b","_","__","_D","a b","a\tb","a\nb","a\u0000b","🙂","\ud800",1,"1",-1,1.5,9007199254740991,9007199254740992,9007199254740994]}`
+```html
+<h1
+  id="sM_1"
+>
+  Keys
+</h1>
+<label
+  for="sM_2"
+>
+  Key
+</label>
+<input
+  aria-labelledby="sM_1"
+  id="sM_2"
+/>
+<label
+  for="sM_3"
+>
+  Key
+</label>
+<input
+  aria-labelledby="sM_1"
+  id="sM_3"
+/>
+<label
+  for="sM_4"
+>
+  Key
+</label>
+<input
+  aria-labelledby="sM_1"
+  id="sM_4"
+/>
+<label
+  for="sM_5"
+>
+  Key
+</label>
+<input
+  aria-labelledby="sM_1"
+  id="sM_5"
+/>
+<label
+  for="sM_6"
+>
+  Key
+</label>
+<input
+  aria-labelledby="sM_1"
+  id="sM_6"
+/>
+<label
+  for="sM_7"
+>
+  Key
+</label>
+<input
+  aria-labelledby="sM_1"
+  id="sM_7"
+/>
+<label
+  for="sM_8"
+>
+  Key
+</label>
+<input
+  aria-labelledby="sM_1"
+  id="sM_8"
+/>
+<label
+  for="sM_9"
+>
+  Key
+</label>
+<input
+  aria-labelledby="sM_1"
+  id="sM_9"
+/>
+<label
+  for="sM_a"
+>
+  Key
+</label>
+<input
+  aria-labelledby="sM_1"
+  id="sM_a"
+/>
+<label
+  for="sM_b"
+>
+  Key
+</label>
+<input
+  aria-labelledby="sM_1"
+  id="sM_b"
+/>
+<label
+  for="sM_c"
+>
+  Key
+</label>
+<input
+  aria-labelledby="sM_1"
+  id="sM_c"
+/>
+<label
+  for="sM_d"
+>
+  Key
+</label>
+<input
+  aria-labelledby="sM_1"
+  id="sM_d"
+/>
+<label
+  for="sM_e"
+>
+  Key
+</label>
+<input
+  aria-labelledby="sM_1"
+  id="sM_e"
+/>
+<label
+  for="sM_f"
+>
+  Key
+</label>
+<input
+  aria-labelledby="sM_1"
+  id="sM_f"
+/>
+<label
+  for="sM_g"
+>
+  Key
+</label>
+<input
+  aria-labelledby="sM_1"
+  id="sM_g"
+/>
+<label
+  for="sM_h"
+>
+  Key
+</label>
+<input
+  aria-labelledby="sM_1"
+  id="sM_h"
+/>
+<label
+  for="sM_i"
+>
+  Key
+</label>
+<input
+  aria-labelledby="sM_1"
+  id="sM_i"
+/>
+<label
+  for="sM_j"
+>
+  Key
+</label>
+<input
+  aria-labelledby="sM_1"
+  id="sM_j"
+/>
+<label
+  for="sM_k"
+>
+  Key
+</label>
+<input
+  aria-labelledby="sM_1"
+  id="sM_k"
+/>
+<label
+  for="sM_l"
+>
+  Key
+</label>
+<input
+  aria-labelledby="sM_1"
+  id="sM_l"
+/>
+<label
+  for="sM_m"
+>
+  Key
+</label>
+<input
+  aria-labelledby="sM_1"
+  id="sM_m"
+/>
+<label
+  for="sM_n"
+>
+  Key
+</label>
+<input
+  aria-labelledby="sM_1"
+  id="sM_n"
+/>
+<label
+  for="sM_o"
+>
+  Key
+</label>
+<input
+  aria-labelledby="sM_1"
+  id="sM_o"
+/>
+<label
+  for="sM_p"
+>
+  Key
+</label>
+<input
+  aria-labelledby="sM_1"
+  id="sM_p"
+/>
+<label
+  for="sM_q"
+>
+  Key
+</label>
+<input
+  aria-labelledby="sM_1"
+  id="sM_q"
+/>
+<label
+  for="sM_r"
+>
+  Key
+</label>
+<input
+  aria-labelledby="sM_1"
+  id="sM_r"
+/>
+```
+
+# Update
+```js
+const ids = new Set();
+for (const input of document.querySelectorAll("input")) {
+  assert(!ids.has(input.id), "duplicate id: " + input.id);
+  ids.add(input.id);
+  assert(!/\s/.test(input.id), "IDREF whitespace: " + input.id);
+  assert.equal(input.labels?.length, 1);
+  assert.equal(document.getElementById(input.id), input);
+}
+```
