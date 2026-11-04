@@ -1,0 +1,10 @@
+<let/n=0/>
+<list>
+  <for|label| of=input.labels>
+    <@item>
+      <em>${label + n}</em>
+      <if=input.show><b>${label}!</b></if>
+    </@item>
+  </for>
+</list>
+<button onClick() { n++ }>${n}</button>

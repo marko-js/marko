@@ -1,0 +1,10 @@
+static function boom(m: string): never {
+  throw new Error(m);
+}
+<try>
+  <try>
+    <p>${input.err ? boom(input.err) : "ok"}</p>
+    <@placeholder><em>loading</em></@placeholder>
+  </try>
+  <@catch><em>caught</em></@catch>
+</try>

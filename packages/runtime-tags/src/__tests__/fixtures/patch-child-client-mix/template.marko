@@ -1,0 +1,9 @@
+<let/count=0/>
+<let/show=true/>
+<main>
+  <if=show>
+    <label text=(count + input.suffix)/>
+  </if>
+  <button onClick() { count = count + 1 }>+</button>
+  <button.t onClick() { show = !show }>t</button>
+</main>
