@@ -1,4 +1,4 @@
-// size: 27386 (min) 10220 (brotli)
+// size: 27516 (min) 10263 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -183,12 +183,22 @@ let _show = /*@__PURE__*/ withBranches((nodeAccessor, startNodeAccessor, endNode
         (range.K = wrapper.lastChild),
         wrapper.replaceWith(...wrapper.childNodes));
     }
-    let inDom = onlyChild ? !!parentNode.firstChild : startNode.parentNode === parentNode;
-    display
-      ? inDom || insertBranchBefore(range, parentNode, onlyChild ? null : referenceNode)
-      : inDom &&
-        (onlyChild && ((range.S = parentNode.firstChild), (range.K = parentNode.lastChild)),
-        tempDetachBranch(range));
+    let parked = onlyChild ? range.DF : void 0,
+      inDom = onlyChild ? !parked : startNode.parentNode === parentNode;
+    if (display) {
+      if (!inDom) {
+        let first = parked ? parked.firstChild : range.S;
+        first &&
+          (parked && ((range.DF = void 0), (range.S = first), (range.K = parked.lastChild)),
+          insertBranchBefore(range, parentNode, onlyChild ? null : referenceNode));
+      }
+    } else if (inDom) {
+      onlyChild &&
+        parentNode.firstChild &&
+        ((range.S = parentNode.firstChild), (range.K = parentNode.lastChild));
+      let parkedInto = tempDetachBranch(range);
+      onlyChild && (range.DF = parkedInto);
+    }
   };
 });
 let _dynamic_tag = /*@__PURE__*/ withBranches(
@@ -623,8 +633,11 @@ function insertBranchBefore(branch, parentNode, nextSibling) {
 }
 function tempDetachBranch(branch) {
   let fragment = new DocumentFragment();
-  ((fragment.namespaceURI = branch.S.parentNode.namespaceURI),
-    insertChildNodes(fragment, null, branch.S, branch.K));
+  return (
+    (fragment.namespaceURI = branch.S.parentNode.namespaceURI),
+    insertChildNodes(fragment, null, branch.S, branch.K),
+    fragment
+  );
 }
 function schedule() {
   isScheduled || ((isScheduled = 1), queueMicrotask(flushAndWaitFrame));
