@@ -1,0 +1,9 @@
+import ClassLayout from "./components/class-layout.marko";
+
+<let/count=0>
+<${input.useClass ? ClassLayout : "section"}>
+  <button id="tags" onClick() { count++ }>
+    ${count}
+  </button>
+</>
+<class-static/>

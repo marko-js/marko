@@ -1,0 +1,41 @@
+// tags/panel.marko
+const $template = "<!><!><!>";
+const $setup$1 = [[], []];
+_shells({
+	b: "b;b%;<!><!><!>",
+	b1: "b1;D%c%;<em><!>:<!></em>"
+});
+var panel_default = _template("b", (input) => {
+	const $scope0_reason = _scope_reason(), $fg__input_n = _filled_guard($scope0_reason, 1);
+	const $scope0_id = _scope_id();
+	_for_of(input.items, (item) => {
+		const $scope1_id = _scope_id();
+		_html(`<em>${_text_mark($scope1_id, "a", item, 1, $scope0_reason, 0)}:${_text_mark($scope1_id, "b", input.n, 2, $scope0_reason, 1)}</em>`);
+		_client_guard($scope0_reason, 1) && _patch_render($scope1_id, "b0");
+		_scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) });
+	}, 0, $scope0_id, "a", 1, 1, 1, 0, 0, "b1", $scope0_reason, 0);
+	$fg__input_n && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "b0", "e");
+	_scope($scope0_id, { e: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.n }) || $fg__input_n && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xe", input.n, !_server_guard($scope0_reason, 1));
+});
+
+// template.marko
+const $setup = _shell_setup([[], ["a0"]], ["a>", $setup$1]);
+_shells({ a: `a${_shell_marker($setup)};${((_w0) => `b/${_w0}& b`)("b%c")};${((_w0) => `<!>${_w0}<button>+</button>`)($template)}` });
+var template_default = _template("a", (input) => {
+	const $scope0_reason = _scope_reason();
+	const $scope0_id = _scope_id();
+	let count = 0;
+	_set_scope_reason(8 | _updates_from($scope0_reason, 0) << 1);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
+	panel_default({
+		n: count,
+		items: input.items
+	});
+	_patch_child_end();
+	_html(`<button>+</button>${_el_mark($scope0_id, "b")}`);
+	_script($scope0_id, "a0");
+	_scope($scope0_id, {
+		f: count,
+		a: _existing_scope($childScope)
+	});
+}, 1);
