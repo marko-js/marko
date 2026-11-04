@@ -19,7 +19,7 @@ import {
   type ParamReasonGroup,
   type Section,
 } from "../sections";
-import { getDerivedReaders, someRead } from "../solve-reasons";
+import { bindingReaders, getDerivedReaders, someRead } from "../solve-reasons";
 import { hasParamOrGlobalSource, type Sources } from "../sources";
 import { hasClientState, holdsInitialValue } from "./decisions";
 
@@ -56,8 +56,19 @@ export function isStatefulRead(read: ReferencedExtra) {
     (isContentRender(read) || !!read.derives) &&
     (inStatefulStructure(read.section) ||
       // State the client never changes renders as the server does.
-      (!!read.rendersContent && hasClientState(getSourcesForExpr(read))))
+      ((!!read.rendersContent || derivesRenderedContent(read)) &&
+        hasClientState(getSourcesForExpr(read))))
   );
+}
+
+// A read handing the value on to a render of it as content: a call passing it to
+// a child, or a `<const>`.
+function derivesRenderedContent(read: ReferencedExtra) {
+  return some(read.derives, isRenderedContent);
+}
+
+function isRenderedContent(binding: Binding) {
+  return someRead(bindingReaders(binding, true), isContentRender);
 }
 // A read rendering the content where a patch may too: outside stateful structure,
 // or naming a created scope's `<let>` alone, which the patch creates first.
