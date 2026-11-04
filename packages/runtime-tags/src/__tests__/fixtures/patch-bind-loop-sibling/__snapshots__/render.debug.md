@@ -1,0 +1,67 @@
+# Render `{"title":"a","show":false}`
+```html
+<p>
+  x:0
+</p>
+<p>
+  y:0
+</p>
+```
+
+# Update `{"title":"b","show":true}`
+```html
+<p>
+  x:0
+</p>
+<span>
+  Seen 0
+</span>
+<button>
+  +
+</button>
+<p>
+  y:0
+</p>
+<span>
+  Seen 0
+</span>
+<button>
+  +
+</button>
+```
+## Change
+```
+INSERT: p:nth-of-type(1) + span
+INSERT: span:nth-of-type(1) + button
+INSERT: p:nth-of-type(2) + span
+INSERT: span:nth-of-type(2) + button
+```
+
+# Update
+```js
+document.querySelector("button").click();
+```
+```html
+<p>
+  x:1
+</p>
+<span>
+  Seen 0
+</span>
+<button>
+  +
+</button>
+<p>
+  y:0
+</p>
+<span>
+  Seen 0
+</span>
+<button>
+  +
+</button>
+```
+## Change
+```
+UPDATE: p:nth-of-type(1)::text@2 "0" => "1"
+```
