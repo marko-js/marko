@@ -1,0 +1,29 @@
+// PATCH
+`packages/runtime-tags/src/__tests__/fixtures/patch-async-shared-value/template.marko_3*content`
+{
+  "PatchChild:#childScope/0": {
+    "PatchEffect:": _.a = "packages/runtime-tags/src/__tests__/fixtures/patch-async-shared-value/child.marko_0_input_name#3_input_item#4",
+    "PatchMarkedWrite:input_item": _.b = {
+      label: "b"
+    }
+  },
+  "PatchChild:#childScope/1": {
+    "PatchEffect:": _.a,
+    "PatchMarkedWrite:input_item": _.b
+  },
+  "PatchChild:BranchScopes:#text/2": {
+    "PatchPending:#text/0": 1
+  }
+}
+{
+  "PatchChild:BranchScopes:#text/2": {
+    "PatchChild:BranchScopes:#text/0": {
+      "PatchText:#text/0": "y",
+      "PatchChild:#childScope/1": {
+        "PatchEffect:": _.a,
+        "PatchMarkedWrite:input_item": _.b
+      }
+    }
+  }
+}
+;DAU

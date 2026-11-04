@@ -1,0 +1,27 @@
+// PATCH
+`a0;D ;<em> </em>`
+{
+  ca: {
+    cAb: {
+      pa: "a0"
+    }
+  },
+  xd: (p => p = new Promise((f, r) => _.a = {
+    f,
+    r(e) {
+      p.catch(_ => 0);
+      r(e)
+    }
+  }))(),
+  Sa3: "d"
+}
+[{
+  ca: {
+    cAb: {
+      cAa: {
+        ta: "two"
+      }
+    }
+  }
+}, _.a.f("two")][0]
+;BgE

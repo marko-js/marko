@@ -1,0 +1,53 @@
+// template.marko
+const $Wrap_content__walks = "b%c";
+const $Wrap_content__template = "<!><!><!>";
+_shells({
+	a3: "a3; b ;<label>attr</label><input>",
+	a0: "a0; b ;<label>body</label><input>",
+	a: "a;b%;<!><!><!>",
+	a5: `a5;${/*@__PURE__*/ ((_w0) => `b%b/${_w0}&%c`)($Wrap_content__walks)};${/*@__PURE__*/ ((_w0) => `<!><!>${_w0}<!><!>`)($Wrap_content__template)}`
+});
+var template_default = _template("a", (input) => {
+	const $scope0_reason = _scope_reason(), $uf__input_items = _updates_from($scope0_reason, 0), $wg__input_items = _write_guard($scope0_reason, 0), $cg__input_items = _client_guard($scope0_reason, 0);
+	const $scope0_id = _scope_id();
+	const Body = { content: _content_resume("a0", () => {
+		const $scope1_id = _scope_id();
+		_scope_reason();
+		const uid = _id("A");
+		_html(`<label${_attr("for", uid, $scope1_id, "a", 0, 0)}>body</label>${_el_mark($scope1_id, "a", 0)}<input${_attr("id", uid, $scope1_id, "b", 0, 0)}>${_el_mark($scope1_id, "b", 0)}`);
+		_scope($scope1_id, {});
+	}, $scope0_id) };
+	const Wrap = { content: _content("a1", ({ on, content }) => {
+		const $scope3_id = _scope_id();
+		const $scope3_reason = _scope_reason(), $wg__on__OR__content = _write_guard($scope3_reason, 0), $ui__on__OR__content = _unfilled_if($scope3_reason, 0), $fg__content = _filled_guard($scope3_reason, 2);
+		_dynamic_tag($scope3_id, "a", on ? "p" : "div", { content }, 1, 0, 0, $wg__on__OR__content, $scope3_reason, 0);
+		_patch_render($scope3_id, "a2", (($fg__content ? " e" : "") + (_filled_guard($scope3_reason, 1) ? " f" : "")).slice(1), $scope3_reason, 0);
+		_write_if($scope3_reason, 0) && _scope($scope3_id, { e: _write_if($scope3_reason, 1) && $ui__on__OR__content && content }) || $fg__content && _unfilled_if($scope3_reason, 1) && _patch_write($scope3_id, "xe", content, 1);
+	}, $scope0_id) };
+	_for_of(input.items, (item) => {
+		const $scope2_id = _scope_id();
+		const Tag = item.on ? "p" : "div";
+		_dynamic_tag($scope2_id, "a", Tag, {}, 10, _content("a3", () => {
+			const $scope4_id = _scope_id();
+			_scope_reason();
+			const uid = _id("B");
+			_html(`<label${_attr("for", uid, $scope4_id, "a", 0, 0)}>attr</label>${_el_mark($scope4_id, "a", 0)}<input${_attr("id", uid, $scope4_id, "b", 0, 0)}>${_el_mark($scope4_id, "b", 0)}`);
+			_scope($scope4_id, {});
+		}, $scope2_id, 0), 0, $wg__input_items, $scope0_reason, 0);
+		_set_scope_reason($uf__input_items << 1 | $uf__input_items << 3);
+		const $childScope = _peek_scope_id($scope2_id, "b", 2);
+		Wrap.content({
+			on: item.on,
+			content: Body
+		});
+		_patch_child_end();
+		_dynamic_tag($scope2_id, "c", Tag, [{ content: Body }], 25, 0, 1, $wg__input_items, $scope0_reason, 0);
+		!$cg__input_items && _unfilled_if() && _patch_write($scope0_id, "we", Body);
+		$cg__input_items && _patch_render($scope2_id, "a4");
+		_scope($scope2_id, {
+			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id),
+			b: _existing_scope($childScope)
+		});
+	}, 0, $scope0_id, "a", 1, 1, 1, 0, 0, "a5", $scope0_reason, 0);
+	_scope($scope0_id, { e: _unfilled_if($scope0_reason, 0) && Body });
+}, 1);

@@ -23,6 +23,7 @@ import { getExprRoot, getFnParent, getFnRoot, getMarkoRoot } from "./get-root";
 import { isEventOrChangeHandler } from "./is-event-or-change-handler";
 import isInvokedFunction from "./is-invoked-function";
 import isStatic from "./is-static";
+import { isPatch } from "./marko-config";
 import {
   concat,
   forEach,
@@ -71,8 +72,11 @@ export interface ResolvedRead {
 // and read through the accessors below.
 const kReferencedBindings = Symbol("referenced bindings");
 const kLazyBindings = Symbol("lazy bindings");
+const kConstantBindings = Symbol("constant bindings");
+const kGlobalReads = Symbol("global reads");
 const kReferencedBindingsInFunction = Symbol("referenced bindings in function");
 const kConstantBindingsInFunction = Symbol("constant bindings in function");
+const kNameRead = Symbol("name read");
 
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
@@ -82,21 +86,16 @@ declare module "@marko/compiler/dist/types" {
     globalBinding?: Binding;
   }
 
-  export interface MarkoTagExtra {
-    /** The dom binding the tag is addressed by: its node or marker; an only
-     * child control flow tag shares its parent's. */
-    nodeBinding?: Binding;
-  }
-
-  export interface MarkoPlaceholderExtra {
-    /** The dom binding the placeholder's text node is held in. */
-    nodeBinding?: Binding;
-  }
-
   export interface NodeExtra {
+    /** The dom binding a tag or placeholder is addressed by: its node, marker or
+     * text node; an only child control flow tag shares its parent's. */
+    nodeBinding?: Binding;
     section?: Section;
     [kReferencedBindings]?: ReferencedBindings;
     [kLazyBindings]?: ReferencedBindings;
+    [kConstantBindings]?: ReferencedBindings;
+    [kGlobalReads]?: ReferencedBindings;
+    [kNameRead]?: ResolvedRead;
     /** The bindings it derives, in the order it derives them: call sites
      * derive a child template's, so no one template's order sorts them. */
     derives?: Opt<Binding>;
@@ -130,11 +129,17 @@ declare module "@marko/compiler/dist/types" {
     /** Any function it holds is only ever invoked, never read as a value, so
      * the reads inside resolve when it runs. */
     invokeOnly?: true;
+    /** Its tag holds it as a value's change handler: checks it is set and calls
+     * it, never compares it. Unlike `invokeOnly`, its reads stay eager. */
+    changeHandler?: true;
     /** The bindings this expression reads only by spreading them as is. */
     spreadFrom?: SortedOpt<Binding>;
-    /** A `content` it spreads is rendered (as the element's body, or as a
-     * `<meta>`'s attribute), so its effect never reads it. */
+    /** A `content` it spreads or sets, or a dynamic tag name, is rendered (as a
+     * body, or a `<meta>`'s attribute), so its effect never reads it. */
     rendersContent?: true;
+    /** Its value renders into its tag's node (an attribute, a text, a comment's
+     * or a style's), which the node's slot lists among its reason expressions. */
+    rendersValue?: true;
     merged?: NodeExtra;
   }
 
@@ -1349,10 +1354,14 @@ export interface AssignedBindingExtra extends ReferencedExtra {
   fnRoot: ReferencedFunctionExtra | undefined;
 }
 
-// State the client can change after resume: a resumable assignment writes it,
-// or a child's `<return>` computes it from what this template cannot see.
+// State the client can change after resume: a resumable assignment writes it, a child's
+// `<return>` computes it, or it's a `<let>` in a patch build, which keeps every `<let>`'s signal.
 export function hasResumableWriter(source: Binding) {
-  return !!source.returnedBy || hasResumableAssignment(source);
+  return (
+    (isPatch() && source.type === BindingType.let) ||
+    !!source.returnedBy ||
+    hasResumableAssignment(source)
+  );
 }
 
 // A resumed instance runs only its effects and its registered functions, so
@@ -1424,6 +1433,12 @@ export function getLazyBindings(extra: t.NodeExtra | undefined) {
   return extra && getCanonicalExpr(extra)[kLazyBindings];
 }
 
+// Loop keys it reads: constant within their branch, they change only with
+// the collection they key.
+export function getConstantBindings(extra: t.NodeExtra | undefined) {
+  return extra && getCanonicalExpr(extra)[kConstantBindings];
+}
+
 // What a function's body reads when invoked, resolved with its expression.
 export function getReferencedBindingsInFunction(extra: t.FunctionExtra) {
   return extra[kReferencedBindingsInFunction];
@@ -1444,13 +1459,35 @@ export function setResolvedFunctionReads(
   extra.referencesScope ||= !!(referencedBindings || constantBindings);
 }
 
+// The read a dynamic tag's name is, where the name is one read as written.
+export function getNameRead(extra: t.NodeExtra) {
+  return getCanonicalExpr(extra)[kNameRead];
+}
+
+export function setNameRead(
+  extra: ReferencedExtra,
+  read: ResolvedRead | undefined,
+) {
+  extra[kNameRead] = read;
+}
+
 export function setResolvedReads(
   extra: ReferencedExtra,
   referencedBindings: ReferencedBindings,
   lazyBindings: ReferencedBindings,
+  constantBindings: ReferencedBindings,
+  globalBindings: ReferencedBindings,
 ) {
   extra[kReferencedBindings] = referencedBindings;
   extra[kLazyBindings] = lazyBindings;
+  extra[kConstantBindings] = constantBindings;
+  extra[kGlobalReads] = globalBindings;
+}
+
+// The `$global` reads an expression makes as it evaluates, each the deepest
+// alias of `$global` it reads (the whole object is `$global` itself).
+export function getGlobalReads(extra: t.NodeExtra | undefined) {
+  return extra && getCanonicalExpr(extra)[kGlobalReads];
 }
 
 export function getCanonicalExpr<T extends t.NodeExtra>(extra: T): T {

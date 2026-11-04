@@ -1,0 +1,8 @@
+<define/Field>
+  <id/uid/>
+  <input id=uid/>
+  <label for=uid>${input.label}</label>
+</define>
+<let/rows=[Field, Field]/>
+<button onClick() { rows = [] }>x</button>
+<for|field| of=rows><try><card content=field/><@catch>error</@catch></try></for>

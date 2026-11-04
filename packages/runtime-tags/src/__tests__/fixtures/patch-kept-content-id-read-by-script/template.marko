@@ -1,0 +1,8 @@
+<for|row| of=input.rows by="id">
+  <card>
+    <id/uid/>
+    <input/el id=uid/>
+    <label for=uid>${input.label}</label>
+    <script>el().setAttribute("data-self", uid)</script>
+  </card>
+</for>
