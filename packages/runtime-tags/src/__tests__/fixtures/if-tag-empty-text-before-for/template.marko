@@ -1,0 +1,7 @@
+<let/show=true/>
+<if=show>
+  ${false}
+  <for|item| of=[{ id: 1 }, { id: 2 }] by="id"><b>${item.id}</b></for>
+</if>
+<else>none</else>
+<button onClick() { show = !show }>toggle</button>

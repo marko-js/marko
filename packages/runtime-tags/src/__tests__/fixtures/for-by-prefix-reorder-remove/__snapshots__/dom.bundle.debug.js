@@ -3,35 +3,33 @@ const $template = "<ul></ul><button class=reorder>stable prefix, drop tail, swap
 const $walks = " b b b b";
 const $for_content__setup = ($scope) => _text($scope["#text/0"], $scope["#LoopKey"]);
 const $for = /*@__PURE__*/ _for_of("#ul/0", "<li> </li>", "D ", $for_content__setup);
-const $rows_0__OR__rows_1__OR__rows_3__OR__rows___script = _script("__tests__/template.marko_0_rows_0#5_rows_1#6_rows_3#7_rows_2#8", ($scope) => _on($scope["#button/1"], "click", function() {
-	$rows($scope, [
-		$scope.rows_0,
-		$scope.rows_1,
-		$scope.rows_3,
-		$scope.rows_2
-	]);
-}));
-const $rows_0__OR__rows_1__OR__rows_3__OR__rows_ = $rows_0__OR__rows_1__OR__rows_3__OR__rows___script;
-const $rows_0__OR__rows___script = _script("__tests__/template.marko_0_rows_0#5_rows_1#6", ($scope) => _on($scope["#button/2"], "click", function() {
-	$rows($scope, [$scope.rows_1, $scope.rows_0]);
-}));
-const $rows_0__OR__rows_ = $rows_0__OR__rows___script;
 const $rows = /*@__PURE__*/ _let("rows/4", ($scope) => {
 	$rows_($scope, $scope.rows?.[0]);
 	$rows_2($scope, $scope.rows?.[1]);
 	$rows_3($scope, $scope.rows?.[3]);
 	$rows_4($scope, $scope.rows?.[2]);
 	$for($scope, [$scope.rows, "id"]);
-	$rows_0__OR__rows_1__OR__rows_3__OR__rows_($scope);
-	$rows_0__OR__rows_($scope);
 });
 const $rows_ = /*@__PURE__*/ _const("rows_0");
 const $rows_2 = /*@__PURE__*/ _const("rows_1");
 const $rows_3 = /*@__PURE__*/ _const("rows_3");
 const $rows_4 = /*@__PURE__*/ _const("rows_2");
-const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/3"], "click", function() {
-	$rows($scope, [...$scope.rows, { id: 9 }]);
-}));
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	_on($scope["#button/1"], "click", function() {
+		$rows($scope, [
+			$scope.rows_0,
+			$scope.rows_1,
+			$scope.rows_3,
+			$scope.rows_2
+		]);
+	});
+	_on($scope["#button/2"], "click", function() {
+		$rows($scope, [$scope.rows_1, $scope.rows_0]);
+	});
+	_on($scope["#button/3"], "click", function() {
+		$rows($scope, [...$scope.rows, { id: 9 }]);
+	});
+});
 function $setup($scope) {
 	$rows($scope, [
 		{ id: 1 },

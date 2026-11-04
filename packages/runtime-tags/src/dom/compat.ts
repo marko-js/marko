@@ -96,9 +96,9 @@ export const compat = {
   ) {
     if (Array.isArray(value) && typeof value[0] === "string") {
       return getRegisteredWithScope(
-        value[0],
         // Misses naturally for scope-less values (no/null scope id).
         getRenderScopes($global)?.[value[1]],
+        value[0],
       );
     }
 

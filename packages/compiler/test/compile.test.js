@@ -454,6 +454,49 @@ describe("compiler/compile", () => {
     });
   });
 
+  describe("a later babel plugin", () => {
+    const importBindings = (babelConfig) => {
+      const imports = [];
+      const plugin = () => ({
+        visitor: {
+          ImportSpecifier(specifier) {
+            const { name } = specifier.node.local;
+            imports.push([name, specifier.scope.hasOwnBinding(name)]);
+          },
+        },
+      });
+      const config = babelConfig(plugin);
+      // The repo's own babel config would add plugins to every compile here.
+      config.babelrc = config.configFile = false;
+      compileSync("<div>hi</div>", "test.marko", {
+        translator,
+        babelConfig: config,
+      });
+      return imports;
+    };
+    const boundImports = [
+      ["_html", true],
+      ["_scope_id", true],
+      ["_scope_reason", true],
+      ["_template", true],
+    ];
+
+    it("sees the bindings the translator adds", () =>
+      assert.deepEqual(
+        importBindings((plugin) => ({ plugins: [plugin] })),
+        boundImports,
+      ));
+
+    it("sees them from a preset's own pass", () =>
+      assert.deepEqual(
+        importBindings((plugin) => ({
+          passPerPreset: true,
+          presets: [() => ({ plugins: [plugin] })],
+        })),
+        boundImports,
+      ));
+  });
+
   it("keeps the compile error when compiling asynchronously", () =>
     assert.rejects(
       () => compile("<div", template),

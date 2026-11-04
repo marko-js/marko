@@ -1,0 +1,6 @@
+import Card from "./tags/card.marko";
+<define/Outer|{ v }|>
+  <define/Label><em>${v}</em></define>
+  <${input.on ? Card : "div"} content=Label/>
+</define>
+<Outer v=input.note/>

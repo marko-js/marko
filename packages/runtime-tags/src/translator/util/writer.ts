@@ -7,6 +7,7 @@ import buildStringExpression, {
 } from "./build-string-expression";
 import { isOutputHTML } from "./marko-config";
 import type { Reason } from "./reasons";
+import { insertStatementBefore } from "./replace-with-statements";
 import { callRuntime } from "./runtime";
 import { getScopeAccessorLiteral } from "./scope-accessor";
 import { createOutputSectionState } from "./state";
@@ -61,7 +62,7 @@ function consumeHTML(path: t.NodePath<any>) {
 export function flushBefore(path: t.NodePath<any>) {
   const expr = consumeHTML(path);
   if (expr) {
-    path.insertBefore(expr)[0].skip();
+    insertStatementBefore(path, expr);
   }
 }
 

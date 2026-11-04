@@ -14,7 +14,6 @@ export const WALKER_RUNTIME_CODE = /* js */ `((runtimeId) => (self[runtimeId] ||
 ) =>
   doc = (self[runtimeId][renderId] = {
     i: prefix,
-    d: doc,
     l: lookup,
     v: visits,
     x() {},

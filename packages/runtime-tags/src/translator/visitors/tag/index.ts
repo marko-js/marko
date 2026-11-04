@@ -2,6 +2,7 @@ import { types as t } from "@marko/compiler";
 import { getFile, getTagDef, type Plugin } from "@marko/compiler/babel-utils";
 
 import { reportAnalyzeError } from "../../util/analyze-errors";
+import { writeBodyStatements } from "../../util/replace-with-statements";
 import analyzeTagNameType, { TagNameType } from "../../util/tag-name-type";
 import { enterHook, exitHook, type TemplateVisitor } from "../../util/visitors";
 import AttributeTag from "./attribute-tag";
@@ -112,6 +113,8 @@ export default {
     },
 
     exit(tag) {
+      // Every exit reads its body's children as the statements they became.
+      writeBodyStatements(tag.node.body);
       const translator = getTagDef(tag)?.translator;
 
       if (translator) {

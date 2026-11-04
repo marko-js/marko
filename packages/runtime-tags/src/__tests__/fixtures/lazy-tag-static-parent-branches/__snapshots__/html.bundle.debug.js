@@ -18,7 +18,7 @@ var child_default = _template("__tests__/child.marko", (input) => {
 		_scope_reason();
 		const $scope3_id = _scope_id();
 		_html("error");
-	}, void 0, "__tests__/child.marko_3*content");
+	}, 0, "__tests__/child.marko_3*content");
 	_scope($scope0_id, {
 		count,
 		"ClosureScopes:count/2": $count__closures

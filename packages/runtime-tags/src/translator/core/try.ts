@@ -14,7 +14,8 @@ import { initBranchSection } from "../util/branch-tag";
 import { getTagName } from "../util/get-tag-name";
 import { analyzeAttributeTags } from "../util/nested-attribute-tags";
 import { mergeTagReferences } from "../util/references";
-import { callRuntime, importRuntimeFeature } from "../util/runtime";
+import { replaceWithStatements } from "../util/replace-with-statements";
+import { absentArg, callRuntime, importRuntimeFeature } from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
 import { getScopeAccessorLiteral } from "../util/scope-accessor";
 import {
@@ -130,8 +131,11 @@ export default {
             (catchSection
               ? buildContent(catchTag.get("body"))
               : t.arrowFunctionExpression([], t.blockStatement([]))),
-          placeholderSection &&
-            t.stringLiteral(getResumeRegisterId(placeholderSection, "content")),
+          (placeholderSection &&
+            t.stringLiteral(
+              getResumeRegisterId(placeholderSection, "content"),
+            )) ||
+            absentArg(0),
           catchTag &&
             t.stringLiteral(
               catchSection
@@ -140,11 +144,9 @@ export default {
             ),
         ];
 
-        tag
-          .replaceWith(
-            t.expressionStatement(callRuntime("_try", ...tryArgs)),
-          )[0]
-          .skip();
+        replaceWithStatements(tag, [
+          t.expressionStatement(callRuntime("_try", ...tryArgs)),
+        ]);
       },
     },
     dom: {
@@ -193,7 +195,7 @@ export default {
         // Nothing in a try changes, so it renders once, in setup.
         addValue(section, undefined, signal);
 
-        tag.remove();
+        replaceWithStatements(tag);
       },
     },
   }),

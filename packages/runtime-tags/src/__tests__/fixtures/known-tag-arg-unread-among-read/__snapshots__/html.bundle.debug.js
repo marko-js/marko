@@ -10,6 +10,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id) };
 	_set_scope_reason($wg__input_a << 1);
 	const $childScope = _peek_scope_id();
-	Foo.content(input.a, void 0);
+	Foo.content(input.a, 0);
 	_write_if($scope0_reason, 0) && _scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", 0);
 }, 1);

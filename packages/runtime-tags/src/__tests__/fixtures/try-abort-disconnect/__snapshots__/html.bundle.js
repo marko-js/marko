@@ -18,7 +18,7 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		_scope_id();
 		_html("caught-a");
-	}, void 0, "a1");
+	}, 0, "a1");
 	_try($scope0_id, "b", () => {
 		_scope_reason();
 		const $scope2_id = _scope_id();
@@ -33,7 +33,7 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		_scope_id();
 		_html("caught-b");
-	}, void 0, "a3");
+	}, 0, "a3");
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {
 		g: $wi__input_a && $input_a__closures,
 		h: $wi__input_b && $input_b__closures

@@ -1,0 +1,33 @@
+// template.marko
+const $template = "<button class=bump>bump</button><button class=show>show</button><div class=a> </div><div class=log> </div>";
+const $walks = " b bD lD l";
+const $state = /*@__PURE__*/ _let("state/4", ($scope) => {
+	$rest($scope, (({ a, ...rest }) => rest)($scope.state));
+	$state_a($scope, $scope.state.a);
+	$state_b($scope, $scope.state.b);
+});
+const $rest = /*@__PURE__*/ _const("rest");
+const $state_a = /*@__PURE__*/ _const("state_a", ($scope) => $a($scope, $scope.state_a));
+const $a = ($scope) => _text($scope["#text/2"], $scope.state_a);
+const $state_b = /*@__PURE__*/ _const("state_b");
+const $log = /*@__PURE__*/ _let("log/8", ($scope) => _text($scope["#text/3"], $scope.log));
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	_on($scope["#button/0"], "click", function() {
+		$state($scope, {
+			a: $scope.state_a + 1,
+			b: $scope.state_b + 1
+		});
+	});
+	_on($scope["#button/1"], "click", function() {
+		$log($scope, JSON.stringify($scope.rest));
+	});
+});
+function $setup($scope) {
+	$state($scope, {
+		a: 1,
+		b: 2
+	});
+	$log($scope, "");
+	$setup__script($scope);
+}
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

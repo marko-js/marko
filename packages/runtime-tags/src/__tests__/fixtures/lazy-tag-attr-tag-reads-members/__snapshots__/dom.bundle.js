@@ -6,15 +6,11 @@ const $value = /*@__PURE__*/ _let(3, ($scope) => {
 	$value_a($scope, $scope.d?.a);
 	$value_b($scope, $scope.d?.b);
 });
-const $value_a__closure = /*@__PURE__*/ _closure($item_content__value_a);
-const $value_a__script = _script("b3", ($scope) => _on($scope.a, "click", function() {
+const $value_a = /*@__PURE__*/ _const(4, /* @__PURE__ */ _closure($item_content__value_a));
+const $value_b = /*@__PURE__*/ _const(5, /* @__PURE__ */ _closure($item_content__value_b));
+const $setup__script = _script("b3", ($scope) => _on($scope.a, "click", function() {
 	$value($scope, {
 		a: $scope.e + 1,
 		b: 1
 	});
 }));
-const $value_a = /*@__PURE__*/ _const(4, ($scope) => {
-	$value_a__closure($scope);
-	$value_a__script($scope);
-});
-const $value_b = /*@__PURE__*/ _const(5, /* @__PURE__ */ _closure($item_content__value_b));

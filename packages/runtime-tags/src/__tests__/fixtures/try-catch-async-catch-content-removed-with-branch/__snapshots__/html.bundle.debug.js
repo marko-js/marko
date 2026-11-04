@@ -26,7 +26,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					_subscribe($count__closures, _scope($scope3_id, {}, "__tests__/template.marko", "12:8"), "__tests__/template.marko_3_count#0:4/subscribe");
 				});
 				_scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "11:6");
-			}, void 0, "__tests__/template.marko_2*content");
+			}, 0, "__tests__/template.marko_2*content");
 			_scope($scope1_id, {}, "__tests__/template.marko", "8:2");
 			return 0;
 		}

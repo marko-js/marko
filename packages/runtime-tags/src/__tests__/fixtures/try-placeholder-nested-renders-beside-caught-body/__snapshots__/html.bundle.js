@@ -38,5 +38,5 @@ var template_default = _template("a", (input) => {
 		const $scope8_id = _scope_id();
 		_html(`caught ${_text_resume($scope8_id, "a", err.message, $wg__err_message * 2)}`);
 		_write_if($scope8_reason, 0) && _scope($scope8_id, {});
-	}, void 0, "a2");
+	}, 0, "a2");
 }, 1);

@@ -1,0 +1,8 @@
+<let/rows=[{ a: "hello" }, { a: "world" }]/>
+<button.change onClick() { rows = [{ a: "bye" }, { a: "now" }] }>change</button>
+// `b` aliases the row's `a` and is also read only when the handler runs.
+<for|{ a }| of=rows>
+  <const/b=a/>
+  <div>${b}</div>
+  <button.log onClick() { console.log(b) }>log</button>
+</for>

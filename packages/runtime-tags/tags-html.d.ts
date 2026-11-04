@@ -97,6 +97,7 @@ declare global {
       search: NativeTag<Marko.HTML.Search, HTMLElement>;
       section: NativeTag<Marko.HTML.Section, HTMLElement>;
       select: NativeTag<Marko.HTML.Select, HTMLSelectElement>;
+      selectedcontent: NativeTag<Marko.HTML.SelectedContent, HTMLElement>;
       slot: NativeTag<Marko.HTML.Slot, HTMLSlotElement>;
       small: NativeTag<Marko.HTML.Small, HTMLElement>;
       source: NativeTag<Marko.HTML.Source, HTMLSourceElement>;
@@ -2055,6 +2056,8 @@ declare global {
               value: string & string[],
             ) => void);
       }
+
+      interface SelectedContent extends HTMLAttributes<HTMLElement> {}
 
       interface Slot extends HTMLAttributes<HTMLSlotElement> {
         /**
