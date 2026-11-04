@@ -48,8 +48,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					const $scope2_reason = _scope_reason(), $wg__b = _write_guard($scope2_reason, 0), $wi__b = _write_if($scope2_reason, 0);
 					const $scope2_id = _scope_id();
 					_html(`${_text_resume($scope2_id, "#text/0", a.id, $wg__a_id)}-${_text_resume($scope2_id, "#text/1", b, $wg__b * 2)};`);
-					($wi__a_items__OR__a_id || $wi__b) && _subscribe($wi__a_id && $row_content__a_id__closures, _scope($scope2_id, { _: $wi__a_items__OR__a_id && _scope_with_id($scope1_id) }, "__tests__/template.marko", "7:12"), "__tests__/template.marko_2_a_id#1:2/subscribe", $wg__a_id || $wg__b);
-					$wg__a_id || $wg__b || ($wi__a_items__OR__a_id || $wi__b) && _resume_branch($scope2_id);
+					const $scope2_guard = $wg__a_id || $wg__b;
+					($wi__a_items__OR__a_id || $wi__b) && _subscribe($wi__a_id && $row_content__a_id__closures, _scope($scope2_id, { _: $wi__a_items__OR__a_id && _scope_with_id($scope1_id) }, "__tests__/template.marko", "7:12"), "__tests__/template.marko_2_a_id#1:2/subscribe", $scope2_guard);
+					$scope2_guard || ($wi__a_items__OR__a_id || $wi__b) && _resume_branch($scope2_id);
 				}, $scope1_id) });
 			});
 			const $childScope = _peek_scope_id();

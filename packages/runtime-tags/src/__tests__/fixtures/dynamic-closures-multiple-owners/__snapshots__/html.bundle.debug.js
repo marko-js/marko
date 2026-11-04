@@ -26,10 +26,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope_reason();
 			const $scope2_id = _scope_id();
 			_html(`<i>${_text_resume($scope2_id, "#text/0", z)}</i><b>${_text_resume($scope2_id, "#text/1", x)}</b>`);
-			_subscribe($wrap_content__x__closures, _subscribe($x__closures, _scope($scope2_id, {
+			const $scope2_write = _scope($scope2_id, {
 				_: _scope_with_id($scope1_id),
 				"ClosureSignalIndex:x/5": 1
-			}, "__tests__/template.marko", "9:4"), "__tests__/template.marko_2_x#0:4/subscribe"), "__tests__/template.marko_2_x#1:4/subscribe");
+			}, "__tests__/template.marko", "9:4");
+			_subscribe($x__closures, $scope2_write, "__tests__/template.marko_2_x#0:4/subscribe");
+			_subscribe($wrap_content__x__closures, $scope2_write, "__tests__/template.marko_2_x#1:4/subscribe");
 		}, $scope1_id) });
 		wrap_default({ content: _content("__tests__/template.marko_3*content", () => {
 			_scope_reason();
