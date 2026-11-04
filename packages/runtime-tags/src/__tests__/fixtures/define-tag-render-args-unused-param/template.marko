@@ -2,8 +2,12 @@
 <define/MyTag|a, b, c|>
   <div>${b}|${c}</div>
 </define>
+<define/Wrap|a, opts|>
+  <p><${opts.content}/></p>
+</define>
 
 <MyTag(1, "Hello", x) />
+<Wrap(x)>${x}</Wrap>
 <button onClick() { x++; }>
   ${x}
 </button>

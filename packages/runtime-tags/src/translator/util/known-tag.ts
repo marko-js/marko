@@ -262,7 +262,11 @@ function analyzeKnownTagParams(
     paramsTree,
     attrExprs,
   ));
-  setTagContentDerives(tag, paramsTree?.props?.[0]?.binding, exprs);
+  setTagContentDerives(
+    tag,
+    paramsTree?.props?.[tag.node.arguments?.length ?? 0]?.binding,
+    exprs,
+  );
   addReasonExprs(ensureSlot(tagExtra.childScopeBinding!), fromIter(attrExprs));
   return exprs;
 }
@@ -291,15 +295,17 @@ function isChildScopeResumed(section: Section, tagExtra: t.MarkoTagExtra) {
   return isEverWritten(section, findSlot(tagExtra.childScopeBinding!)?.reason);
 }
 
-// Arguments a child reads none of are dropped, so the render call passes
-// none; among ones it reads, a dropped argument holds its place as undefined.
+// Arguments are dropped when a child reads none of them nor the input after
+// them; otherwise a dropped argument holds its place as undefined.
 function getRenderArgs(
   tag: t.NodePath<t.MarkoTag>,
   properties: t.ObjectExpression["properties"],
 ) {
   const args = tag.node.arguments;
   const renderArgs: (t.Expression | t.SpreadElement)[] =
-    args?.length && !args.every(isDroppedNode) ? args.map(toRenderArg) : [];
+    args?.length && (properties.length || !args.every(isDroppedNode))
+      ? args.map(toRenderArg)
+      : [];
   if (!renderArgs.length || properties.length) {
     renderArgs.push(propsToExpression(properties));
   }
