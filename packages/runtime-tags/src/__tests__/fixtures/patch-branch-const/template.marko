@@ -1,0 +1,9 @@
+<let/count=0/>
+<main>
+  <if=input.show>
+    <const/label=(input.title + "!")/>
+    <const/doubled=(count * 2)/>
+    <p>${label} ${doubled}</p>
+  </if>
+  <button onClick() { count++ }>+</button>
+</main>

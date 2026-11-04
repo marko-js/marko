@@ -79,6 +79,30 @@ export {
 } from "./dom/dom";
 export { _on } from "./dom/event";
 export {
+  _fill_global,
+  _fill_global_for,
+  _fill_global_path,
+  _fill_global_path_for,
+  _fill_global_path_script,
+  _fill_global_script,
+} from "./dom/patches/global";
+export { _load_lazy, _load_signal_patch } from "./dom/patches/load";
+export {
+  _bind_resume,
+  _closure_get_patch,
+  _closure_resume,
+  _fill_let,
+  _fill_let_change,
+  _fill_let_change_resume,
+  _fill_mark,
+  _fill_let_resume,
+  _fill_var_resume,
+  _for_closure_patch,
+  _for_selector_patch,
+  _if_closure_patch,
+  _or_patch,
+} from "./dom/patches/signals";
+export {
   _load_event_trigger,
   _load_idle_trigger,
   _load_media_trigger,

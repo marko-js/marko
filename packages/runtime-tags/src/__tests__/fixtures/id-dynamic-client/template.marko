@@ -1,0 +1,8 @@
+import Labeled from "./tags/labeled.marko";
+<let/on=true/>
+<button onClick() { on = !on }>toggle</button>
+<${on ? Labeled : null} name="a"/>
+<${on ? Labeled : null} name="b"/>
+<id/own/>
+<input id=own/>
+<label for=own>own</label>

@@ -1,0 +1,8 @@
+<main>
+  <h1>${input.title}</h1>
+  <if=input.show>
+    <input value=input.value valueChange(next: string) {
+      document.querySelector("main")!.dataset.got = next;
+    }>
+  </if>
+</main>
