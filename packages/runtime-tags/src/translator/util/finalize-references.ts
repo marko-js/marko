@@ -574,7 +574,7 @@ function resolveBindingSources(binding: Binding) {
         binding.sources = createSources(binding, undefined);
         if (isPatch()) resolveInitialValue(binding);
       } else {
-        resolveRootSources(binding);
+        resolveDerivedSources(binding);
       }
       return;
     }
@@ -593,17 +593,13 @@ function resolveBindingSources(binding: Binding) {
   if (aliasRoot !== binding) {
     if (!resolvedSources.has(aliasRoot)) {
       resolvedSources.add(aliasRoot);
-      resolveRootSources(aliasRoot);
+      resolveDerivedSources(aliasRoot);
     }
 
     binding.sources = aliasRoot.sources;
   } else {
-    resolveRootSources(binding);
+    resolveDerivedSources(binding);
   }
-}
-
-function resolveRootSources(binding: Binding) {
-  resolveDerivedSources(binding);
 }
 
 // A `<let>`'s init: what it reads, through the inits of the state it reads, and for an
