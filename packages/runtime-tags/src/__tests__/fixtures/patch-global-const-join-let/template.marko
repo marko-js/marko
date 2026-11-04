@@ -1,0 +1,10 @@
+<let/on=true/>
+<button onClick() { on = !on }>toggle</button>
+<const/flag=$global.flag/>
+<const/off=!flag/>
+<const/{ user }=$global/>
+<const/g=$global/>
+<if=flag && on><b>shown</b></if>
+<if=!off && on><i>chained</i></if>
+<if=g.flag && on><u>whole</u></if>
+<p>${on ? user.name : "-"}</p>
