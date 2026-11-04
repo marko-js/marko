@@ -1,0 +1,19 @@
+import assert from "node:assert/strict";
+
+import type { TestConfig } from "../../main.test";
+
+// The page's own client `<if>` renders kept content, its branch paired with the live
+// one: the instance keeps its `<id>`, and a patch fills its holes only.
+export const config: TestConfig = {
+  patches: true,
+  steps: [{ label: "a" }, check, { label: "b" }, check],
+};
+
+function check(document: Document) {
+  const ids = new Set<string>();
+  for (const input of document.querySelectorAll("input")) {
+    assert(!ids.has(input.id), "duplicate " + input.id);
+    ids.add(input.id);
+    assert.equal(input.labels?.length, 1, "labels of " + input.id);
+  }
+}

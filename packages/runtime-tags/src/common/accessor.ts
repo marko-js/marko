@@ -2,10 +2,17 @@ import * as AccessorPrefix from "./constants/accessor-prefix";
 import * as AccessorProp from "./constants/accessor-prop";
 import * as ClosureScopesProp from "./constants/closure-scopes-prop";
 import * as ClosureSignalProp from "./constants/closure-signal-prop";
+import * as PatchKey from "./constants/patch-key";
+import * as PatchPendingProp from "./constants/patch-pending-prop";
 import * as PendingRenderProp from "./constants/pending-render-prop";
+import * as RenderDataProp from "./constants/render-data-prop";
 import * as RendererProp from "./constants/renderer-prop";
+import * as WaitingFlushProp from "./constants/waiting-flush-prop";
 type AccessorPrefix = AccessorPrefix.Value;
 export { AccessorPrefix };
+
+type PatchKey = PatchKey.Value;
+export { PatchKey };
 
 type AccessorProp = AccessorProp.Value;
 export { AccessorProp };
@@ -21,3 +28,12 @@ export { ClosureSignalProp };
 
 type ClosureScopesProp = ClosureScopesProp.Value;
 export { ClosureScopesProp };
+
+type WaitingFlushProp = WaitingFlushProp.Value;
+export { WaitingFlushProp };
+
+type PatchPendingProp = PatchPendingProp.Value;
+export { PatchPendingProp };
+
+type RenderDataProp = RenderDataProp.Value;
+export { RenderDataProp };

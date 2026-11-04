@@ -1,0 +1,10 @@
+<let/n=0/>
+<define/Row|{ a, b }|>
+  <p>${a + b}</p>
+  <script>
+    document.getElementById("log")!.textContent = String(a + b);
+  </script>
+</define>
+<pre id="log"/>
+<Row a=n + input.x b=n + input.y/>
+<button onClick() { n++ }>+</button>

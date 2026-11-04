@@ -1,0 +1,13 @@
+<if=input.show>
+  <const/b={value: input.b}/>
+  <div>
+    <if=input.show>
+      <em>${JSON.stringify(b)}</em>
+    </if>
+  </div>
+  <span>
+    <if=input.show>
+      <i>${input.a + ":" + JSON.stringify(b)}</i>
+    </if>
+  </span>
+</if>

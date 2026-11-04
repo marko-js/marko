@@ -1,0 +1,6 @@
+import { resolveAfter } from "../../../utils/resolve"
+<await|v|=resolveAfter("v", 1)>
+  <let/c=input.content/>
+  <button onClick() { c = undefined }>clear</button>
+  <${c}/>
+</await>
