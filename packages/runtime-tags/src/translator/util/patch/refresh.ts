@@ -1637,7 +1637,7 @@ export const isPatchWrittenIntersection = createPassMemo(
 // re-run and the calls whose callees keep their inputs, through derived values.
 function leavesReadToPatch(read: ReferencedExtra): boolean {
   return (
-    !rendersAtSite(read) && !some(extraReaders(read).beforeCall, rendersAtSite)
+    !rendersAtSite(read) && !some(extraReaders(read).callerReads, rendersAtSite)
   );
 }
 

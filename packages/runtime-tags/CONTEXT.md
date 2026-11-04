@@ -56,7 +56,7 @@ _Avoid_: upstream, downstream, feed, feeder
 
 **Readers**:
 What reads a value through its aliases and derives links: its _reason_, and
-each read the value reaches, marked if before a call site hands it to a callee,
+each read the value reaches, marked if the caller's own rather than a callee's,
 and if as a dynamic tag's input rather than its name. An alias
 (`<const/b=a/>`) is no read, so `a`'s readers include `b`'s; a computing init
 (`<const/b=a + 1/>`) is a read of `a`, and the walk goes on into `b`'s readers.
