@@ -1,0 +1,7 @@
+<for|item| of=input.items>
+  <const/v=`${item}${input.v}!`/>
+  <define/D|{ on }|>
+    <if=on><span>${v}</span></if>
+  </define>
+  <D on=input.on/>
+</for>

@@ -1,0 +1,12 @@
+<let/count=0/>
+<define/Panel|{ open, body }|>
+  <if=open>
+    <${body}/>
+  </if>
+</define>
+<main>
+  <Panel open=(count % 2 === 0)>
+    <@body><em>${input.title}</em></@body>
+  </Panel>
+  <button onClick() { count++ }>+</button>
+</main>

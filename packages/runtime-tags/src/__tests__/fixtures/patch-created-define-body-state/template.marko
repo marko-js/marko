@@ -1,0 +1,8 @@
+<let/count=0/>
+<define/Info|{ id }|>
+  <p>${id}:${count}</p>
+</define>
+<if=input.show>
+  <Info id=input.id/>
+</if>
+<button onClick() { count++ }>+</button>
