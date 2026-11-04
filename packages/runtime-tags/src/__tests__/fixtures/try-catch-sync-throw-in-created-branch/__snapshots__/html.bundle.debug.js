@@ -4,7 +4,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const $show__closures = new Set();
 	let show = false;
-	_html(`<button>show</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button>show</button>${_el_mark($scope0_id, "#button/0")}`);
 	_try($scope0_id, "#text/1", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
@@ -22,7 +22,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, void 0, (err) => {
 		const $scope5_reason = _scope_reason(), $wg__err_message = _write_guard($scope5_reason, 0);
 		const $scope5_id = _scope_id();
-		_html(`caught ${_text_resume($scope5_id, "#text/0", err.message, $wg__err_message * 2)}`);
+		_html(`caught ${_text_mark($scope5_id, "#text/0", err.message, $wg__err_message * 2)}`);
 		_write_if($scope5_reason, 0) && _scope($scope5_id, {}, "__tests__/template.marko", "8:4");
 	}, 0, "__tests__/template.marko_5*content");
 	_try($scope0_id, "#text/2", () => {
@@ -40,7 +40,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				}, void 0, (err) => {
 					const $scope10_reason = _scope_reason(), $wg__err_message3 = _write_guard($scope10_reason, 0);
 					const $scope10_id = _scope_id();
-					_html(`caught ${_text_resume($scope10_id, "#text/0", err.message, $wg__err_message3 * 2)}`);
+					_html(`caught ${_text_mark($scope10_id, "#text/0", err.message, $wg__err_message3 * 2)}`);
 					_write_if($scope10_reason, 0) && _scope($scope10_id, {}, "__tests__/template.marko", "15:8");
 				}, 0, "__tests__/template.marko_10*content");
 				_scope($scope8_id, {}, "__tests__/template.marko", "12:4");
@@ -54,7 +54,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, void 0, (err) => {
 		const $scope7_reason = _scope_reason(), $wg__err_message2 = _write_guard($scope7_reason, 0);
 		const $scope7_id = _scope_id();
-		_html(`outer caught ${_text_resume($scope7_id, "#text/0", err.message, $wg__err_message2 * 2)}`);
+		_html(`outer caught ${_text_mark($scope7_id, "#text/0", err.message, $wg__err_message2 * 2)}`);
 		_write_if($scope7_reason, 0) && _scope($scope7_id, {}, "__tests__/template.marko", "18:4");
 	}, 0, "__tests__/template.marko_7*content");
 	_try($scope0_id, "#text/3", () => {
@@ -87,7 +87,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, void 0, (err) => {
 		const $scope11_reason = _scope_reason(), $wg__err_message4 = _write_guard($scope11_reason, 0);
 		const $scope11_id = _scope_id();
-		_html(`outer caught ${_text_resume($scope11_id, "#text/0", err.message, $wg__err_message4 * 2)}`);
+		_html(`outer caught ${_text_mark($scope11_id, "#text/0", err.message, $wg__err_message4 * 2)}`);
 		_write_if($scope11_reason, 0) && _scope($scope11_id, {}, "__tests__/template.marko", "30:4");
 	}, 0, "__tests__/template.marko_11*content");
 	_try($scope0_id, "#text/4", () => {
@@ -105,7 +105,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				}, void 0, (err) => {
 					const $scope18_reason = _scope_reason(), $wg__err_message6 = _write_guard($scope18_reason, 0);
 					const $scope18_id = _scope_id();
-					_html(_text_resume($scope18_id, "#text/0", (() => {
+					_html(_text_mark($scope18_id, "#text/0", (() => {
 						throw new Error(`catch of ${err.message}`);
 					})(), $wg__err_message6));
 					_write_if($scope18_reason, 0) && _scope($scope18_id, {}, "__tests__/template.marko", "37:8");
@@ -121,7 +121,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, void 0, (err) => {
 		const $scope15_reason = _scope_reason(), $wg__err_message5 = _write_guard($scope15_reason, 0);
 		const $scope15_id = _scope_id();
-		_html(`outer caught ${_text_resume($scope15_id, "#text/0", err.message, $wg__err_message5 * 2)}`);
+		_html(`outer caught ${_text_mark($scope15_id, "#text/0", err.message, $wg__err_message5 * 2)}`);
 		_write_if($scope15_reason, 0) && _scope($scope15_id, {}, "__tests__/template.marko", "42:4");
 	}, 0, "__tests__/template.marko_15*content");
 	_script($scope0_id, "__tests__/template.marko_0");

@@ -7,7 +7,7 @@ var template_default = _template("a", (input) => {
 		x = newValue + 1;
 	}, "a0", $scope0_id);
 	let y = x;
-	_html(`<button id=inc>${_text_resume($scope0_id, "b", x)}|${_text_resume($scope0_id, "c", y, 2)}</button>${_el_resume($scope0_id, "a")}<button id=toggle>toggle</button>${_el_resume($scope0_id, "d")}`);
+	_html(`<button id=inc>${_text_mark($scope0_id, "b", x)}|${_text_mark($scope0_id, "c", y, 2)}</button>${_el_mark($scope0_id, "a")}<button id=toggle>toggle</button>${_el_mark($scope0_id, "d")}`);
 	_script($scope0_id, "a1");
 	_scope($scope0_id, {
 		e: x,

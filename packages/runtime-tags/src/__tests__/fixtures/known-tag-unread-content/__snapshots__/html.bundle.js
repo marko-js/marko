@@ -9,7 +9,7 @@ var static_child_default = _template("c", (input) => {
 var label_child_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_item_label = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html(`<span>${_text_resume($scope0_id, "a", input.item.label, $wg__input_item_label)}</span>`);
+	_html(`<span>${_text_mark($scope0_id, "a", input.item.label, $wg__input_item_label)}</span>`);
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
@@ -31,7 +31,7 @@ var template_default = _template("a", (input) => {
 		$item2 = attrTags($item2, { label: `for ${i}` });
 	});
 	label_child_default({ item: $item2 });
-	_html(`<span>${_escape(m)}</span><button class=inc>inc</button>${_el_resume($scope0_id, "f")}`);
+	_html(`<span>${_escape(m)}</span><button class=inc>inc</button>${_el_mark($scope0_id, "f")}`);
 	_script($scope0_id, "a0");
 	_scope($scope0_id, {
 		g: n,

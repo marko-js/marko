@@ -5,7 +5,7 @@ var template_default = _template("a", (input) => {
 	_html("<div id=el></div><div>");
 	forOf(["hello"], (_, index) => {
 		const $scope1_id = _scope_id();
-		_html(`<button>Click</button>${_el_resume($scope1_id, "a")}`);
+		_html(`<button>Click</button>${_el_mark($scope1_id, "a")}`);
 		_script($scope1_id, "a0");
 		_scope($scope1_id, { M: index });
 	});

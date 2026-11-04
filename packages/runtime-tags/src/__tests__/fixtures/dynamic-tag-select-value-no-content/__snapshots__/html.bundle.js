@@ -10,6 +10,6 @@ var template_default = _template("a", (input) => {
 			v = _new_v;
 		}, "a0", $scope0_id)
 	});
-	_html(`<output>${_text_resume($scope0_id, "b", v)}</output>`);
+	_html(`<output>${_text_mark($scope0_id, "b", v)}</output>`);
 	_scope($scope0_id, { f: tag });
 }, 1);

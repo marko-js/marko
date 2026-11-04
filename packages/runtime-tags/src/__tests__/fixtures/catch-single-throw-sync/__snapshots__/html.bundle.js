@@ -12,7 +12,7 @@ var template_default = _template("a", (input) => {
 	}, void 0, (error) => {
 		const $scope2_reason = _scope_reason(), $wg__error_message = _write_guard($scope2_reason, 0);
 		const $scope2_id = _scope_id();
-		_html(_text_resume($scope2_id, "a", error.message, $wg__error_message));
+		_html(_text_mark($scope2_id, "a", error.message, $wg__error_message));
 		_write_if($scope2_reason, 0) && _scope($scope2_id, {});
 	}, 0, "a0");
 	_html("d");

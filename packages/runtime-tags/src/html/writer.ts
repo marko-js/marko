@@ -297,7 +297,7 @@ export function _hoist(scopeId: number, id: string) {
   return _resume(getter, id, scopeId);
 }
 
-export function _el_resume(
+export function _el_mark(
   scopeId: number,
   accessor: Accessor,
   markerGuard?: number,
@@ -309,7 +309,7 @@ export function _el_resume(
   return state.mark(ResumeSymbol.Node, scopeId + " " + accessor);
 }
 
-export function _text_resume(
+export function _text_mark(
   scopeId: number,
   accessor: Accessor,
   val: unknown,
@@ -318,7 +318,7 @@ export function _text_resume(
   return markText(scopeId, accessor, _escape(val), markerGuard);
 }
 
-export function _html_resume(
+export function _html_mark(
   scopeId: number,
   accessor: Accessor,
   val: unknown,

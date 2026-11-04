@@ -20,7 +20,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let visible = false;
 	let inner = true;
-	_html(`<button id=t>t</button>${_el_resume($scope0_id, "#button/0")}<button id=i>i</button>${_el_resume($scope0_id, "#button/1")}<div id=c>x `);
+	_html(`<button id=t>t</button>${_el_mark($scope0_id, "#button/0")}<button id=i>i</button>${_el_mark($scope0_id, "#button/1")}<div id=c>x `);
 	_show_start(visible);
 	_set_scope_reason(2);
 	const $childScope = _peek_scope_id();

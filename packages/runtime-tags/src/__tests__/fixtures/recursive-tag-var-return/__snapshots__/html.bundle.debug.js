@@ -10,7 +10,7 @@ const $content = (input) => {
 			const $childScope = _peek_scope_id();
 			let child = $content({ depth: input.depth - 1 });
 			_var($scope1_id, "#scopeOffset/1", $childScope, "__tests__/tags/rec.marko_1_child#3/var");
-			_html(`<span>${_text_resume($scope1_id, "#text/2", child)}</span>`);
+			_html(`<span>${_text_mark($scope1_id, "#text/2", child)}</span>`);
 			_scope($scope1_id, {
 				_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id),
 				"#childScope/0": _existing_scope($childScope)
@@ -18,7 +18,7 @@ const $content = (input) => {
 			return 0;
 		}
 	}, $scope0_id, "#text/0", $wg__input_depth, $wg__input_depth);
-	_html(`<button>${_text_resume($scope0_id, "#text/2", n)}</button>${_el_resume($scope0_id, "#button/1")}`);
+	_html(`<button>${_text_mark($scope0_id, "#text/2", n)}</button>${_el_mark($scope0_id, "#button/1")}`);
 	const $return = n;
 	_script($scope0_id, "__tests__/tags/rec.marko_0");
 	_scope($scope0_id, { n }, "__tests__/tags/rec.marko", 0, { n: "1:6" });

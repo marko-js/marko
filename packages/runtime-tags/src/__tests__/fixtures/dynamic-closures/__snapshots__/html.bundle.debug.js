@@ -16,11 +16,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $c__closures = new Set();
 	const b = 2;
 	let c = 3;
-	_html(`<button></button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button></button>${_el_mark($scope0_id, "#button/0")}`);
 	custom_tag_default({ content: _content("__tests__/template.marko_1*content", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
-		_html(`${_escape(a)} ${_escape(b)} ${_text_resume($scope1_id, "#text/2", c, 2)}`);
+		_html(`${_escape(a)} ${_escape(b)} ${_text_mark($scope1_id, "#text/2", c, 2)}`);
 		_subscribe($c__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "6:2"), "__tests__/template.marko_1_c#0:4/subscribe");
 	}, $scope0_id) });
 	_html("<div>");
@@ -28,7 +28,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope2_id = _scope_id();
 		if (Math.random()) {
 			const $scope3_id = _scope_id();
-			_html(`${_escape(a)} ${_escape(b)} ${_text_resume($scope3_id, "#text/2", c, 2)}`);
+			_html(`${_escape(a)} ${_escape(b)} ${_text_mark($scope3_id, "#text/2", c, 2)}`);
 			_subscribe($c__closures, _scope($scope3_id, {
 				_: _scope_with_id($scope2_id),
 				"ClosureSignalIndex:c/6": 1

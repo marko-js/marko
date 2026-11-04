@@ -3,14 +3,14 @@ var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let items = ["first", "second"];
-	_html(`<button id=clear>clear</button>${_el_resume($scope0_id, "a")}<div></div>${_el_resume($scope0_id, "b")}`);
+	_html(`<button id=clear>clear</button>${_el_mark($scope0_id, "a")}<div></div>${_el_mark($scope0_id, "b")}`);
 	_for_of(items, (item) => {
 		const $scope1_id = _scope_id();
 		_html("<div>");
 		_if(() => {
 			if (item) {
 				const $scope2_id = _scope_id();
-				_html(`<span>${_text_resume($scope2_id, "a", item)}</span>`);
+				_html(`<span>${_text_mark($scope2_id, "a", item)}</span>`);
 				_script($scope2_id, "a0");
 				_scope($scope2_id, {});
 				return 0;

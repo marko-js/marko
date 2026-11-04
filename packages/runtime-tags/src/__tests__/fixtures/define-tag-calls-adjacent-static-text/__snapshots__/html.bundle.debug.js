@@ -10,7 +10,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id) };
 	D.content({});
 	D.content({});
-	_html(`<span>${_text_resume($scope0_id, "#text/2", n)}</span>`);
+	_html(`<span>${_text_mark($scope0_id, "#text/2", n)}</span>`);
 	_if(() => {
 		if (n > 0) {
 			const $scope2_id = _scope_id();
@@ -24,7 +24,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			return 1;
 		}
 	}, $scope0_id, "#text/3");
-	_html(`<button>inc</button>${_el_resume($scope0_id, "#button/4")}`);
+	_html(`<button>inc</button>${_el_mark($scope0_id, "#button/4")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, { n }, "__tests__/template.marko", 0, { n: "1:6" });
 }, 1);

@@ -2,7 +2,7 @@
 var note_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_label = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html(`<span>${_text_resume($scope0_id, "a", input.label, $wg__input_label)}</span>`);
+	_html(`<span>${_text_mark($scope0_id, "a", input.label, $wg__input_label)}</span>`);
 	_script($scope0_id, "b0", $wg__input_label);
 	_scope($scope0_id, { d: input.label });
 	$wg__input_label || _resume_branch($scope0_id);
@@ -29,7 +29,7 @@ var template_default = _template("a", (input) => {
 		}, void 0, (err) => {
 			const $scope4_reason = _scope_reason(), $wg__err_message = _write_guard($scope4_reason, 0);
 			const $scope4_id = _scope_id();
-			_html(`<b>${_text_resume($scope4_id, "a", err.message, $wg__err_message)}</b>`);
+			_html(`<b>${_text_mark($scope4_id, "a", err.message, $wg__err_message)}</b>`);
 			_write_if($scope4_reason, 0) && _scope($scope4_id, {});
 		}, 0, "a0");
 	}, () => {

@@ -9,7 +9,7 @@ var a_default = _template("__tests__/tags/a.marko", (input) => {
 			value = v;
 		}, "__tests__/tags/a.marko_0/_return", $scope0_id)
 	};
-	_html(`<span>a:${_text_resume($scope0_id, "#text/0", value, 2)}</span>`);
+	_html(`<span>a:${_text_mark($scope0_id, "#text/0", value, 2)}</span>`);
 	_scope($scope0_id, {}, "__tests__/tags/a.marko", 0);
 	return $return;
 });
@@ -25,7 +25,7 @@ var b_default = _template("__tests__/tags/b.marko", (input) => {
 			value = v;
 		}, "__tests__/tags/b.marko_0/_return", $scope0_id)
 	};
-	_html(`<span>b:${_text_resume($scope0_id, "#text/0", value, 2)}</span>`);
+	_html(`<span>b:${_text_mark($scope0_id, "#text/0", value, 2)}</span>`);
 	_scope($scope0_id, {}, "__tests__/tags/b.marko", 0);
 	return $return;
 });
@@ -37,7 +37,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $inputaAB_scope = _peek_scope_id();
 	let { valueChange: $valueChange, value } = _dynamic_tag($scope0_id, "#text/0", input.a ? a_default : b_default, {}, 0, 0, 1, 1);
 	_var($scope0_id, "#scopeOffset/1", $inputaAB_scope, "__tests__/template.marko_0_$pattern#7/var");
-	_html(`<button>${_text_resume($scope0_id, "#text/3", value)}</button>${_el_resume($scope0_id, "#button/2")}`);
+	_html(`<button>${_text_mark($scope0_id, "#text/3", value)}</button>${_el_mark($scope0_id, "#button/2")}`);
 	_script($scope0_id, "__tests__/template.marko_0_$valueChange#9");
 	_scope($scope0_id, {
 		value,

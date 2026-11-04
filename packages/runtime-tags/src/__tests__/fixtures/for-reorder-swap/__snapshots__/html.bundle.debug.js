@@ -5,7 +5,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html("<div>");
 	_for_of(input.children, (child) => {
 		const $scope1_id = _scope_id();
-		_html(`<span>${_text_resume($scope1_id, "#text/0", child.text, $wg__input_children)}</span>`);
+		_html(`<span>${_text_mark($scope1_id, "#text/0", child.text, $wg__input_children)}</span>`);
 		$wi__input_children && _scope($scope1_id, {}, "__tests__/template.marko", "2:4");
 	}, "id", $scope0_id, "#div/0", $wg__input_children, $wg__input_children, $wg__input_children, "</div>", 1);
 	$wi__input_children && _scope($scope0_id, {}, "__tests__/template.marko", 0);

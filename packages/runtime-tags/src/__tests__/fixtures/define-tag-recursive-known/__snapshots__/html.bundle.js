@@ -13,7 +13,7 @@ var template_default = _template("a", (input) => {
 				return 0;
 			} else {
 				const $scope3_id = _scope_id();
-				_html(_text_resume($scope3_id, "a", JSON.stringify(input.message), 0));
+				_html(_text_mark($scope3_id, "a", JSON.stringify(input.message), 0));
 				return 1;
 			}
 		}, $scope1_id, "a", 0, 0);

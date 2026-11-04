@@ -7,7 +7,7 @@ var tags_grandchild_default = _template("__tests__/components/tags-grandchild.ma
 		const $scope1_id = _scope_id();
 		console.log("child rendered");
 		let value = v;
-		_html(`<button>${_text_resume($scope1_id, "#text/1", value)}</button>${_el_resume($scope1_id, "#button/0")}`);
+		_html(`<button>${_text_mark($scope1_id, "#text/1", value)}</button>${_el_mark($scope1_id, "#button/0")}`);
 		_script($scope1_id, "__tests__/components/tags-grandchild.marko_1");
 		_scope($scope1_id, { value }, "__tests__/components/tags-grandchild.marko", "4:2", { value: "6:8" });
 	});
@@ -45,7 +45,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, void 0, (err) => {
 		const $scope2_reason = _scope_reason(), $wg__err_message = _write_guard($scope2_reason, 0);
 		const $scope2_id = _scope_id();
-		_html(`caught ${_text_resume($scope2_id, "#text/0", err.message, $wg__err_message * 2)}`);
+		_html(`caught ${_text_mark($scope2_id, "#text/0", err.message, $wg__err_message * 2)}`);
 		_write_if($scope2_reason, 0) && _scope($scope2_id, {}, "__tests__/template.marko", "5:4");
 	}, 0, "__tests__/template.marko_2*content");
 	_await($scope0_id, "#text/1", resolveAfter("done", 3), (done) => {

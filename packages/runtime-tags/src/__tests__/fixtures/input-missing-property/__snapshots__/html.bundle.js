@@ -3,7 +3,7 @@ var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 0;
-	_html(`<button>${_text_resume($scope0_id, "b", count)}</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button>${_text_mark($scope0_id, "b", count)}</button>${_el_mark($scope0_id, "a")}`);
 	const Child = { content: _content("a0", (input) => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
@@ -12,7 +12,7 @@ var template_default = _template("a", (input) => {
 				const $scope2_id = _scope_id();
 				{
 					const $scope3_id = _scope_id();
-					_html(`<div>${_text_resume($scope3_id, "a", input.name || "Fallback", 0)}</div>`);
+					_html(`<div>${_text_mark($scope3_id, "a", input.name || "Fallback", 0)}</div>`);
 					_scope($scope3_id, { _: _scope_with_id($scope2_id) });
 				}
 				_scope($scope2_id, { _: _scope_with_id($scope1_id) });

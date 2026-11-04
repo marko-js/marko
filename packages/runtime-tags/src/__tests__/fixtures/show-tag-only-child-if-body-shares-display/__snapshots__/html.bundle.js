@@ -3,7 +3,7 @@ var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let visible = false;
-	_html(`<button id=t>t</button>${_el_resume($scope0_id, "a")}<section id=c>`);
+	_html(`<button id=t>t</button>${_el_mark($scope0_id, "a")}<section id=c>`);
 	_show_start(visible, 1, 1, "</section>");
 	_if(() => {
 		{

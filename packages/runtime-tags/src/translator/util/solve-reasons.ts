@@ -10,7 +10,7 @@ import {
   getCanonicalBinding,
   isDirectAlias,
   isIndexProperty,
-  propsUtil,
+  propertiesUtil,
   someUpToAliasRoot,
 } from "./bindings";
 import {
@@ -190,7 +190,7 @@ function getBranchExprReason(section: Section) {
     );
     // A direct call renders the body in place, so what creates a section from
     // the call up to the define (or the body, for a recursive call) creates it.
-    forEach(section.calls, (call) => {
+    forEach(section.renderedBy, (call) => {
       const callSection = call.childScopeBinding.section;
       reason = mergeSources(
         reason,
@@ -253,7 +253,7 @@ function addClosureReasons(section: Section) {
 // created, reading the owner chain between them.
 function addCallOwnerReasons(body: Section) {
   if (body.readsOwner) {
-    forEach(body.calls, (call) => {
+    forEach(body.renderedBy, (call) => {
       const callSection = call.childScopeBinding.section;
       addOwnerReason(
         callSection,
@@ -313,7 +313,7 @@ const RETAINED_INPUT_READ: Readers = {
   lands: LANDS_RETAINED | LANDS_RETAINED_INPUT,
 };
 
-const extraReaders = createPassMemo(computeExtraReaders, UNREAD);
+const exprReaders = createPassMemo(computeExprReaders, UNREAD);
 
 // A binding's answer is per asked path: the value itself, one of its
 // properties (a destructured part), or the whole with every property.
@@ -329,7 +329,7 @@ export function getReasonForBinding(
 // An expression's `getReasonForBinding`: what rereads its value after resume,
 // which the server writes it for.
 export function getReasonForExpr(extra: t.NodeExtra): undefined | Reason {
-  return extra.isEffect ? ALWAYS : extraReaders(extra).reason;
+  return extra.isEffect ? ALWAYS : exprReaders(extra).reason;
 }
 
 // Whether a binding's value lands in a retained read as more than a dynamic
@@ -346,11 +346,11 @@ export function bindingLandsRetained(
 export function landsRetained(extra: t.NodeExtra) {
   return (
     !!extra.retained ||
-    (!extra.isEffect && !!(extraReaders(extra).lands & LANDS_RETAINED))
+    (!extra.isEffect && !!(exprReaders(extra).lands & LANDS_RETAINED))
   );
 }
 
-function computeExtraReaders(extra: t.NodeExtra): Readers {
+function computeExprReaders(extra: t.NodeExtra): Readers {
   return readersOfDerives(extra, undefined);
 }
 
@@ -431,7 +431,7 @@ function isReferenceTo(extra: t.NodeExtra, binding: Binding) {
   const { read } = extra;
   return (
     !!read &&
-    read.props === undefined &&
+    read.properties === undefined &&
     getCanonicalBinding(read.binding) === getCanonicalBinding(binding)
   );
 }
@@ -494,7 +494,7 @@ function computeBindingReaders(
     return readers;
   }
   const property = first(properties);
-  if (propsUtil.has(binding.excludeProperties, property)) return UNREAD;
+  if (propertiesUtil.has(binding.excludeProperties, property)) return UNREAD;
   readers = mergePropertyReaders(readers, binding, property, properties);
   for (const alias of binding.aliases) {
     readers = mergePropertyReaders(readers, alias, property, properties);

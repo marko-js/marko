@@ -20,13 +20,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $Tag_scope = _peek_scope_id();
 	let v = _dynamic_tag($scope0_id, "#text/0", Tag, {}, 0, 0, 1, 1);
 	_var($scope0_id, "#scopeOffset/1", $Tag_scope, "__tests__/template.marko_0_v#6/var");
-	_html(`<button class=inc>${_text_resume($scope0_id, "#text/3", v.n)}</button>${_el_resume($scope0_id, "#button/2")}`);
+	_html(`<button class=inc>${_text_mark($scope0_id, "#text/3", v.n)}</button>${_el_mark($scope0_id, "#button/2")}`);
 	forUntil(2, 0, 1, (i) => {
 		const $scope1_id = _scope_id();
 		const $Tag_scope2 = _peek_scope_id();
 		let row = _dynamic_tag($scope1_id, "#text/0", Tag, {}, 0, 0, 1, 1);
 		_var($scope1_id, "#scopeOffset/1", $Tag_scope2, "__tests__/template.marko_1_row#4/var");
-		_html(`<button class=row>${_text_resume($scope1_id, "#text/3", row.n)}</button>${_el_resume($scope1_id, "#button/2")}`);
+		_html(`<button class=row>${_text_mark($scope1_id, "#text/3", row.n)}</button>${_el_mark($scope1_id, "#button/2")}`);
 		_script($scope1_id, "__tests__/template.marko_1");
 		_scope($scope1_id, { row }, "__tests__/template.marko", "5:2", { row: "6:11" });
 	});

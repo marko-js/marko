@@ -5,7 +5,7 @@ var template_default = _template("a", (input) => {
 	let obj = { ab: 1 };
 	_for_in(obj, (key) => {
 		const $scope1_id = _scope_id();
-		_html(`<button>${_escape(key)}:${_escape(key.constructor.name)}</button>${_el_resume($scope1_id, "a")}`);
+		_html(`<button>${_escape(key)}:${_escape(key.constructor.name)}</button>${_el_mark($scope1_id, "a")}`);
 		_script($scope1_id, "a0");
 		_scope($scope1_id, {});
 	}, 0, $scope0_id, "a", 1, 1, 0, 0, 1);

@@ -9,7 +9,7 @@ var child_default = _template("b", (input) => {
 		_if(() => {
 			if (isOpen) {
 				const $scope2_id = _scope_id();
-				_html(`<em>${_text_resume($scope2_id, "a", label, $wg__label)}</em>`);
+				_html(`<em>${_text_mark($scope2_id, "a", label, $wg__label)}</em>`);
 				_write_if($scope1_reason, 0) && _scope($scope2_id, { _: _write_if($scope1_reason, 2) && _scope_with_id($scope1_id) });
 				return 0;
 			}
@@ -27,7 +27,7 @@ var child_default = _template("b", (input) => {
 		isOpen: true,
 		label: input.label + "!"
 	});
-	_html(`<button>toggle</button>${_el_resume($scope0_id, "c")}`);
+	_html(`<button>toggle</button>${_el_mark($scope0_id, "c")}`);
 	_script($scope0_id, "b1");
 	_scope($scope0_id, {
 		f: input.label,

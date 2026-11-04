@@ -2,7 +2,7 @@
 var my_details_default = _template("__tests__/tags/my-details.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<details${_attrs(input, "#details/0", $scope0_id, "details")}><summary>s</summary></details>${_el_resume($scope0_id, "#details/0")}`);
+	_html(`<details${_attrs(input, "#details/0", $scope0_id, "details")}><summary>s</summary></details>${_el_mark($scope0_id, "#details/0")}`);
 	_script($scope0_id, "__tests__/tags/my-details.marko_0_input#2");
 	_scope($scope0_id, {}, "__tests__/tags/my-details.marko", 0, {
 		"ControlledHandler:#details/0": ["...input", "1:13"],
@@ -22,6 +22,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			open = _new_open;
 		}, "__tests__/template.marko_0/openChange", $scope0_id)
 	});
-	_html(`<span>${_text_resume($scope0_id, "#text/1", String(open))}</span>`);
+	_html(`<span>${_text_mark($scope0_id, "#text/1", String(open))}</span>`);
 	_scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", 0);
 }, 1);

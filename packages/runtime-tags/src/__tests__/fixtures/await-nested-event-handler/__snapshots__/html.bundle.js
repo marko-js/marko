@@ -14,7 +14,7 @@ var template_default = _template("a", (input) => {
 				const $scope3_id = _scope_id();
 				_await($scope3_id, "a", resolveAfter("inner", 2), () => {
 					const $scope4_id = _scope_id();
-					_html(`<div>changes: ${_text_resume($scope4_id, "b", changes, 2)}</div>${_el_resume($scope4_id, "a")}`);
+					_html(`<div>changes: ${_text_mark($scope4_id, "b", changes, 2)}</div>${_el_mark($scope4_id, "a")}`);
 					_script($scope4_id, "a0");
 					_subscribe($changes__closures, _scope($scope4_id, {}), "a1");
 				});

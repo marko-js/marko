@@ -3,7 +3,7 @@ var counter_default = _template("b", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let x = 1;
-	_html(`<button class=inc>${_text_resume($scope0_id, "b", x)}</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button class=inc>${_text_mark($scope0_id, "b", x)}</button>${_el_mark($scope0_id, "a")}`);
 	const $return = x;
 	_script($scope0_id, "b1");
 	_scope($scope0_id, {
@@ -25,7 +25,7 @@ var template_default = _template("a", (input) => {
 	const $getCounter_scope = _peek_scope_id();
 	_dynamic_tag($scope0_id, "a", getCounter(), {});
 	_var($scope0_id, "b", $getCounter_scope, "a0", "a");
-	_html(`<button class=reset>reset</button>${_el_resume($scope0_id, "c")}`);
+	_html(`<button class=reset>reset</button>${_el_mark($scope0_id, "c")}`);
 	_script($scope0_id, "a1");
 	_scope($scope0_id, {});
 }, 1);

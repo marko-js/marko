@@ -2,7 +2,7 @@
 var custom_tag_default = _template("__tests__/tags/custom-tag.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_ = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html(`<div>tag ${_text_resume($scope0_id, "#text/0", input[0], $wg__input_ * 2)}</div>`);
+	_html(`<div>tag ${_text_mark($scope0_id, "#text/0", input[0], $wg__input_ * 2)}</div>`);
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/custom-tag.marko", 0);
 });
 
@@ -24,7 +24,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope_reason();
 		_html("Fallback Body");
 	}, $scope0_id), 1);
-	_html(`<button></button>${_el_resume($scope0_id, "#button/1")}`);
+	_html(`<button></button>${_el_mark($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, { x }, "__tests__/template.marko", 0, { x: "2:6" });
 }, 1);

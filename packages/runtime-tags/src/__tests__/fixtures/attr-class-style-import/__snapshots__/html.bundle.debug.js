@@ -9,7 +9,7 @@ const $class$1 = [_attr_class(item), _attr_class(`${item} ${"on"}`)];
 var input_toggle_default = _template("__tests__/tags/input-toggle.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_on = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html(`<div${_assert_class_toggles(item, ["on"]), $class$1[input.on ? 1 : 0]}></div>${_el_resume($scope0_id, "#div/0", $wg__input_on)}`);
+	_html(`<div${_assert_class_toggles(item, ["on"]), $class$1[input.on ? 1 : 0]}></div>${_el_mark($scope0_id, "#div/0", $wg__input_on)}`);
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/input-toggle.marko", 0);
 });
 
@@ -31,7 +31,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let on$1 = false;
-	_html(`<button>toggle</button>${_el_resume($scope0_id, "#button/0")}<div${$class}></div><div${$class2}></div><div${$class3}></div><div${_assert_class_toggles(item, ["on"]), $class4[on$1 ? 1 : 0]}></div>${_el_resume($scope0_id, "#div/1")}<div${_assert_class_toggles(item, ["on", "lit"]), $class5[(on$1 ? 1 : 0) + (!on$1 ? 2 : 0)]}></div>${_el_resume($scope0_id, "#div/2")}<div${_assert_class_toggles("", ["on"]), $class6[on$1 ? 1 : 0]}></div>${_el_resume($scope0_id, "#div/3")}<div${on$1 ? $class7 : $class}></div>${_el_resume($scope0_id, "#div/4")}`);
+	_html(`<button>toggle</button>${_el_mark($scope0_id, "#button/0")}<div${$class}></div><div${$class2}></div><div${$class3}></div><div${_assert_class_toggles(item, ["on"]), $class4[on$1 ? 1 : 0]}></div>${_el_mark($scope0_id, "#div/1")}<div${_assert_class_toggles(item, ["on", "lit"]), $class5[(on$1 ? 1 : 0) + (!on$1 ? 2 : 0)]}></div>${_el_mark($scope0_id, "#div/2")}<div${_assert_class_toggles("", ["on"]), $class6[on$1 ? 1 : 0]}></div>${_el_mark($scope0_id, "#div/3")}<div${on$1 ? $class7 : $class}></div>${_el_mark($scope0_id, "#div/4")}`);
 	_set_scope_reason(2);
 	const $childScope = _peek_scope_id();
 	input_toggle_default({ on: on$1 });

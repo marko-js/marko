@@ -5,10 +5,10 @@ var template_default = _template("a", (input) => {
 	let n = 0;
 	_await($scope0_id, "a", `v${n}`, (value) => {
 		const $scope1_id = _scope_id();
-		_html(`Got: ${_text_resume($scope1_id, "a", value, 2)}`);
+		_html(`Got: ${_text_mark($scope1_id, "a", value, 2)}`);
 		_scope($scope1_id, {});
 	});
-	_html(`<button>inc</button>${_el_resume($scope0_id, "b")}`);
+	_html(`<button>inc</button>${_el_mark($scope0_id, "b")}`);
 	_script($scope0_id, "a0");
 	_scope($scope0_id, { c: n });
 }, 1);

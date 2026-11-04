@@ -2,7 +2,7 @@
 var child_default = _template("b", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<button>go</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button>go</button>${_el_mark($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
 	_scope($scope0_id, { d: input.onClick });
 });

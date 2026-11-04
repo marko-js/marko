@@ -47,7 +47,7 @@ var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let items = [1, 2];
-	_html(`<button id=add>add</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button id=add>add</button>${_el_mark($scope0_id, "a")}`);
 	_set_scope_reason(10);
 	const $childScope = _peek_scope_id();
 	child_default({

@@ -2,7 +2,7 @@
 var a_default = _template("__tests__/tags/a.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_x = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html(`<div>A ${_text_resume($scope0_id, "#text/0", input.x, $wg__input_x * 2)}</div>`);
+	_html(`<div>A ${_text_mark($scope0_id, "#text/0", input.x, $wg__input_x * 2)}</div>`);
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/a.marko", 0);
 });
 
@@ -10,7 +10,7 @@ var a_default = _template("__tests__/tags/a.marko", (input) => {
 var b_default = _template("__tests__/tags/b.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_x = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html(`<span>B ${_text_resume($scope0_id, "#text/0", input.x, $wg__input_x * 2)}</span>`);
+	_html(`<span>B ${_text_mark($scope0_id, "#text/0", input.x, $wg__input_x * 2)}</span>`);
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/b.marko", 0);
 });
 
@@ -24,7 +24,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope_reason();
 		_html("Hello");
 	}, $scope0_id));
-	_html(`<button></button>${_el_resume($scope0_id, "#button/1")}`);
+	_html(`<button></button>${_el_mark($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, { useB }, "__tests__/template.marko", 0, { useB: "4:6" });
 }, 1);

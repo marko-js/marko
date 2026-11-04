@@ -4,7 +4,7 @@ var card_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	let f = input.fn;
 	let c = input.content;
-	_html(`<button>${_text_resume($scope0_id, "b", f())}</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button>${_text_mark($scope0_id, "b", f())}</button>${_el_mark($scope0_id, "a")}`);
 	_dynamic_tag($scope0_id, "c", c, {});
 	_script($scope0_id, "b0");
 	_scope($scope0_id, {});
@@ -23,7 +23,7 @@ var wrap_default = _template("c", (input) => {
 		content: _content("c1", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
-			_html(`<em>${_text_resume($scope1_id, "a", input.label, $wg__input_label)}</em>`);
+			_html(`<em>${_text_mark($scope1_id, "a", input.label, $wg__input_label)}</em>`);
 			$wi__input_label && _subscribe($input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "c0", $wg__input_label);
 			$wg__input_label || $wi__input_label && _resume_branch($scope1_id);
 		}, $scope0_id)

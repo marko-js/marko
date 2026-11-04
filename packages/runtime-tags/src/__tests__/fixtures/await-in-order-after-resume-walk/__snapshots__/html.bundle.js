@@ -9,7 +9,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		_await($scope1_id, "a", resolveAfter(1, 1), (x) => {
 			const $scope2_id = _scope_id();
-			_html(`<button>${_text_resume($scope2_id, "b", value)}</button>${_el_resume($scope2_id, "a")}`);
+			_html(`<button>${_text_mark($scope2_id, "b", value)}</button>${_el_mark($scope2_id, "a")}`);
 			_script($scope2_id, "a0");
 			_subscribe($value__closures, _scope($scope2_id, {}), "a1");
 		});
@@ -21,7 +21,7 @@ var template_default = _template("a", (input) => {
 	}, void 0, "a2");
 	_await($scope0_id, "b", resolveAfter(value, 3), (v) => {
 		const $scope4_id = _scope_id();
-		_html(`<div>${_text_resume($scope4_id, "a", v)}</div>`);
+		_html(`<div>${_text_mark($scope4_id, "a", v)}</div>`);
 		_scope($scope4_id, {});
 	});
 	_scope($scope0_id, {

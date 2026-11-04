@@ -5,7 +5,7 @@ var template_default = _template("a", (input) => {
 	const [first, $second, ...others] = input.list;
 	const second = void 0 !== $second ? $second : "dflt";
 	let n = 1;
-	_html(`<button>inc ${_text_resume($scope0_id, "b", n, 2)}</button>${_el_resume($scope0_id, "a")}<div>${_text_resume($scope0_id, "c", first, $wg__input_list)}|${_text_resume($scope0_id, "d", second, $wg__input_list * 2)}|${_text_resume($scope0_id, "e", others.join(","), $wg__input_list * 2)}</div>`);
+	_html(`<button>inc ${_text_mark($scope0_id, "b", n, 2)}</button>${_el_mark($scope0_id, "a")}<div>${_text_mark($scope0_id, "c", first, $wg__input_list)}|${_text_mark($scope0_id, "d", second, $wg__input_list * 2)}|${_text_mark($scope0_id, "e", others.join(","), $wg__input_list * 2)}</div>`);
 	_script($scope0_id, "a0");
 	_scope($scope0_id, { n });
 }, 1);

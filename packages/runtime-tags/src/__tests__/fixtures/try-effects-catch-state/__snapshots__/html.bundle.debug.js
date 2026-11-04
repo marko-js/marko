@@ -4,11 +4,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const $clickCount__closures = new Set();
 	let clickCount = 0;
-	_html(`<div></div>${_el_resume($scope0_id, "#div/0")}`);
+	_html(`<div></div>${_el_mark($scope0_id, "#div/0")}`);
 	_try($scope0_id, "#text/1", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
-		_html(`<button>inc</button>${_el_resume($scope1_id, "#button/0")} -- ${_text_resume($scope1_id, "#text/1", (() => {
+		_html(`<button>inc</button>${_el_mark($scope1_id, "#button/0")} -- ${_text_mark($scope1_id, "#text/1", (() => {
 			if (clickCount > 1) throw new Error("ERROR!");
 		})(), 2)}`);
 		_script($scope1_id, "__tests__/template.marko_1_clickCount#0:2");
@@ -17,7 +17,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, void 0, (err) => {
 		const $scope2_reason = _scope_reason(), $wg__err = _write_guard($scope2_reason, 0);
 		const $scope2_id = _scope_id();
-		_html(_text_resume($scope2_id, "#text/0", err, $wg__err));
+		_html(_text_mark($scope2_id, "#text/0", err, $wg__err));
 		_write_if($scope2_reason, 0) && _scope($scope2_id, {}, "__tests__/template.marko", "12:4");
 	}, 0, "__tests__/template.marko_2*content");
 	_scope($scope0_id, {

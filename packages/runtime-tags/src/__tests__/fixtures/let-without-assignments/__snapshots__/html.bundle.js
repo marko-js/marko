@@ -8,7 +8,7 @@ var template_default = _template("a", (input) => {
 		_scope_id();
 		_html(`<li>${_escape(i)}</li>`);
 	});
-	_html(`</ul>${_el_resume($scope0_id, "a")}`);
+	_html(`</ul>${_el_mark($scope0_id, "a")}`);
 	_script($scope0_id, "a0");
 	_scope($scope0_id, {});
 }, 1);

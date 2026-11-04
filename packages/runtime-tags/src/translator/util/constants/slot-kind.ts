@@ -20,7 +20,7 @@ export const ReturnChangeHandler = 8;
 // A resumed branch's scope, which its tag's markers carry.
 export const Branch = 9;
 // A section's scopes, which its owner holds so hoisted reads reach them.
-export const Instances = 10;
+export const Scopes = 10;
 
 type Self = typeof import("./slot-kind");
 export type Value = Self[keyof Self];

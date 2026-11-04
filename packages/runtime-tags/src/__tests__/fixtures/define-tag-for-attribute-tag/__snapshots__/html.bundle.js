@@ -4,7 +4,7 @@ var child_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	_html(`<div${input.thing.selected ? " class=selected" : ""}>`);
 	_dynamic_tag($scope0_id, "b", input.thing.content, {}, 0, 0, $wg__input_thing_content);
-	_html(`</div>${_el_resume($scope0_id, "a", $wg__input_thing_selected)}`);
+	_html(`</div>${_el_mark($scope0_id, "a", $wg__input_thing_selected)}`);
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
@@ -24,7 +24,7 @@ var template_default = _template("a", (input) => {
 	_set_scope_reason(42);
 	const $childScope = _peek_scope_id();
 	child_default({ thing: myThing });
-	_html(`<button>Toggle</button>${_el_resume($scope0_id, "b")}`);
+	_html(`<button>Toggle</button>${_el_mark($scope0_id, "b")}`);
 	_script($scope0_id, "a1");
 	_scope($scope0_id, {
 		c: selected,

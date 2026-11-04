@@ -76,7 +76,7 @@ import {
 import {
   addStatement,
   addValue,
-  getResumeRegisterId,
+  getResumeRegistryId,
   getSignal,
   initValue,
   type Signal,
@@ -510,7 +510,7 @@ export default {
                 getScopeOffsetAccessorLiteral(nodeBinding),
                 dynamicScopeIdentifier,
                 t.stringLiteral(
-                  getResumeRegisterId(
+                  getResumeRegistryId(
                     tagSection,
                     node.var.extra?.binding,
                     "var",
@@ -679,7 +679,7 @@ function getDynamicTagInputBindings(tagExtra: t.MarkoTagExtra): Opt<Binding> {
   let inputBindings: Opt<Binding>;
   for (const childExtra of tagExtra.tagNameTemplates || []) {
     if (childExtra.featureType === "class") return;
-    const inputBinding = childExtra.paramsTree?.props?.[0]?.binding;
+    const inputBinding = childExtra.paramsTree?.properties?.[0]?.binding;
     if (inputBinding) inputBindings = concat(inputBindings, inputBinding);
   }
   return inputBindings;

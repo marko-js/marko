@@ -17,17 +17,17 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let out = "";
 	let show = true;
 	let items = ["a", "b"];
-	_html(`<button id=rename>rename</button>${_el_resume($scope0_id, "#button/0")}<div id=out>${_text_resume($scope0_id, "#text/1", out)}</div>`);
+	_html(`<button id=rename>rename</button>${_el_mark($scope0_id, "#button/0")}<div id=out>${_text_mark($scope0_id, "#text/1", out)}</div>`);
 	_set_scope_reason(2);
 	let $item;
 	forOf(items, (item) => {
 		$item = attrTags($item, { content: _content("__tests__/template.marko_1*content", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
-			_html(`<button class=direct>direct</button>${_el_resume($scope1_id, "#button/0")}`);
+			_html(`<button class=direct>direct</button>${_el_mark($scope1_id, "#button/0")}`);
 			if (show) {
 				const $scope2_id = _scope_id();
-				_html(`<button class=nested>nested</button>${_el_resume($scope2_id, "#button/0")}`);
+				_html(`<button class=nested>nested</button>${_el_mark($scope2_id, "#button/0")}`);
 				_script($scope2_id, "__tests__/template.marko_2");
 				_scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "12:8");
 			}

@@ -11,10 +11,10 @@ var template_default = _template("a", (input) => {
 	}];
 	let selected = 1;
 	let nextId = 3;
-	_html(`<button class=add>add</button>${_el_resume($scope0_id, "a")}<ul>`);
+	_html(`<button class=add>add</button>${_el_mark($scope0_id, "a")}<ul>`);
 	_for_of(rows, (row) => {
 		const $scope1_id = _scope_id();
-		_html(`<li${selected === row.id ? " class=danger" : ""}>${_text_resume($scope1_id, "b", row.label)}</li>${_el_resume($scope1_id, "a")}`);
+		_html(`<li${selected === row.id ? " class=danger" : ""}>${_text_mark($scope1_id, "b", row.label)}</li>${_el_mark($scope1_id, "a")}`);
 		_scope($scope1_id, { M: row?.id });
 	}, "id", $scope0_id, "b", 1, 1, 1, "</ul>", 1);
 	_script($scope0_id, "a0");

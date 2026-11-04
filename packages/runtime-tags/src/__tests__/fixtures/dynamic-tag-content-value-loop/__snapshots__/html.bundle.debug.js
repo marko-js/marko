@@ -3,7 +3,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let open = true;
-	_html(`<button class=toggle>toggle</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button class=toggle>toggle</button>${_el_mark($scope0_id, "#button/0")}`);
 	_if(() => {
 		if (open) {
 			const $scope1_id = _scope_id();
@@ -33,7 +33,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const Label = { content: _content_resume("__tests__/template.marko_2*content", () => {
 			const $scope2_id = _scope_id();
 			const $scope2_reason = _scope_reason();
-			_html(`<em>${_text_resume($scope2_id, "#text/0", item, $wg__input_items)} ${_text_resume($scope2_id, "#text/1", input.note, $wg__input_note * 2)}</em>`);
+			_html(`<em>${_text_mark($scope2_id, "#text/0", item, $wg__input_items)} ${_text_mark($scope2_id, "#text/1", input.note, $wg__input_note * 2)}</em>`);
 			$wi__input_items__OR__input_note__OR__input_on && _subscribe($wi__input_items && $for_content__item__closures, _subscribe($wi__input_note && $input_note__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:4"), "__tests__/template.marko_2_input_note#0:4/subscribe", $wg__input_items || $wg__input_note), "__tests__/template.marko_2_item#1:2/subscribe", $wg__input_items || $wg__input_note);
 			$wg__input_items || $wg__input_note || $wi__input_items__OR__input_note__OR__input_on && _resume_branch($scope2_id);
 		}, $scope1_id, ($scope) => [{ input_note: input.note }, {

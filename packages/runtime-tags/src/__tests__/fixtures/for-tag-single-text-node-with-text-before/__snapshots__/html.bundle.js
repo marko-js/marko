@@ -9,7 +9,7 @@ var template_default = _template("a", (input) => {
 		_html("Child");
 		_scope($scope1_id, {});
 	}, 0, $scope0_id, "b");
-	_html(`</div>${_el_resume($scope0_id, "a")}`);
+	_html(`</div>${_el_mark($scope0_id, "a")}`);
 	_script($scope0_id, "a0");
 	_scope($scope0_id, { c: children });
 }, 1);

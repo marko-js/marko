@@ -14,7 +14,7 @@ var outer_default = _template("c", (input) => {
 	inner_default({ content: _content("c2", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
-		_html(`<button>click</button>${_el_resume($scope1_id, "a")}`);
+		_html(`<button>click</button>${_el_mark($scope1_id, "a")}`);
 		_dynamic_tag($scope1_id, "b", input.content, {}, 0, 0, _write_guard($scope0_reason, 0));
 		_script($scope1_id, "c0");
 		_subscribe($wi__input_content && $input_content__closures, _scope($scope1_id, { _: $wi__input_content && _scope_with_id($scope0_id) }), "c1");

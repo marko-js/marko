@@ -11,7 +11,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				if (input.inner) {
 					const $scope2_id = _scope_id();
 					const read = _resume(() => input.label, "__tests__/template.marko_2/read", $scope2_id);
-					_html(`<span></span>${_el_resume($scope2_id, "#span/0")}`);
+					_html(`<span></span>${_el_mark($scope2_id, "#span/0")}`);
 					_script($scope2_id, "__tests__/template.marko_2");
 					_subscribe($wi__input_label && $input_label__closures, _scope($scope2_id, {
 						read,
