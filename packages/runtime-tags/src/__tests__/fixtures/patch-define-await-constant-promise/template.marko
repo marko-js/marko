@@ -1,0 +1,6 @@
+static const p = Promise.resolve("x");
+<define/D|{ promise }|>
+  <await|v|=promise><span>${v}</span></await>
+</define>
+<D promise=p/>
+<if=input.show><D promise=p/></if>

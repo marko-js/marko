@@ -1,0 +1,10 @@
+<if=input.show>
+  <let/m=0/>
+  <const/x=input.a + "!"/>
+  <const/y=input.b + "?"/>
+  <p>${x + y + m}</p>
+  <em>${input.a + input.b}</em>
+  <button.m onClick() { m++ }>m</button>
+</if>
+<div/el/>
+<script>el().textContent = "s:" + input.a</script>

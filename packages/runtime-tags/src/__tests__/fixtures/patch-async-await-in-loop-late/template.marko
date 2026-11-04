@@ -1,0 +1,8 @@
+<main>
+  <for|item| of=input.items by="id">
+    <await|value|=item.promise>
+      <em>${value}</em>
+    </await>
+  </for>
+  <button onClick() {}>interactive</button>
+</main>
