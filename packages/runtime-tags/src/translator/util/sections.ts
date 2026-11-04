@@ -619,10 +619,6 @@ export function isContentRender(read: ReferencedExtra) {
   return !!(read.rendersContent || read.nameOnly);
 }
 
-export function isValueRead(read: ReferencedExtra) {
-  return !isContentRender(read);
-}
-
 // Resume restores an optional branch's scopes into its owner, so a change can
 // remove them; an `<await>` or `<try>` body serializes its owner link instead.
 export function isOptionalBranch(

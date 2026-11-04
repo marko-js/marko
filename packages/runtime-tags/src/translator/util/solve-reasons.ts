@@ -331,8 +331,11 @@ function addRegisteredFnReasons(
 export interface Readers {
   reason: undefined | Reason;
   reads?: SortedOpt<ReferencedExtra>;
-  /** Of its reads, the caller's: none reached in a callee through a call site. */
-  callerReads?: SortedOpt<ReferencedExtra>;
+  /**
+   * Of its reads, those reached directly: not through a tag the value is passed
+   * to (as its input, or back through its tag variable).
+   */
+  directReads?: SortedOpt<ReferencedExtra>;
   /** Of its reads, those it reaches as more than a dynamic tag's name. */
   asInput?: SortedOpt<ReferencedExtra>;
 }
@@ -458,13 +461,13 @@ function readersOfDerived(
   const exprs = extra.callSiteExprs;
   if (!exprs) return linked;
   // A callee's reads are its call site's: past the call.
-  return linked.reason || linked.callerReads
+  return linked.reason || linked.directReads
     ? {
         reason:
           linked.reason &&
           mapParamReason(binding.section.program, linked.reason, exprs, true),
         reads: linked.reads,
-        callerReads: undefined,
+        directReads: undefined,
         asInput: linked.asInput,
       }
     : linked;
@@ -589,24 +592,24 @@ function mergeReaders(a: Readers, b: Readers): Readers {
   if (b === UNREAD) return a;
   const reason = mergeSources(a.reason, b.reason);
   const reads = readUtil.union(a.reads, b.reads);
-  const callerReads = readUtil.union(a.callerReads, b.callerReads);
+  const directReads = readUtil.union(a.directReads, b.directReads);
   const asInput = readUtil.union(a.asInput, b.asInput);
-  if (isSameReaders(a, reason, reads, callerReads, asInput)) return a;
-  if (isSameReaders(b, reason, reads, callerReads, asInput)) return b;
-  return { reason, reads, callerReads, asInput };
+  if (isSameReaders(a, reason, reads, directReads, asInput)) return a;
+  if (isSameReaders(b, reason, reads, directReads, asInput)) return b;
+  return { reason, reads, directReads, asInput };
 }
 
 function isSameReaders(
   readers: Readers,
   reason: Readers["reason"],
   reads: Readers["reads"],
-  callerReads: Readers["callerReads"],
+  directReads: Readers["directReads"],
   asInput: Readers["asInput"],
 ) {
   return (
     reason === readers.reason &&
     reads === readers.reads &&
-    callerReads === readers.callerReads &&
+    directReads === readers.directReads &&
     asInput === readers.asInput
   );
 }
@@ -620,13 +623,13 @@ function withLandingRead(
 ): Readers {
   read[kLandingOrder] ??= landings++;
   const reads = readUtil.add(readers.reads, read);
-  const callerReads = readUtil.add(readers.callerReads, read);
+  const directReads = readUtil.add(readers.directReads, read);
   const asInput = every(binding.reads.get(read), isTagNameRead)
     ? readers.asInput
     : readUtil.add(readers.asInput, read);
-  return isSameReaders(readers, readers.reason, reads, callerReads, asInput)
+  return isSameReaders(readers, readers.reason, reads, directReads, asInput)
     ? readers
-    : { reason: readers.reason, reads, callerReads, asInput };
+    : { reason: readers.reason, reads, directReads, asInput };
 }
 
 function isRetained(read: ReferencedExtra) {
