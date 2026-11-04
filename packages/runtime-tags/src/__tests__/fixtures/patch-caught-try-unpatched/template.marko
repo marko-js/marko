@@ -1,0 +1,13 @@
+static function check(fail?: boolean) {
+  if (fail) throw new Error("down");
+}
+<let/open=true/>
+<main>
+  <if=open>
+    <try>
+      <p>${input.label}${check(input.fail)}</p>
+      <@catch>Unavailable</@catch>
+    </try>
+  </if>
+  <button onClick() { open = !open }>Toggle</button>
+</main>

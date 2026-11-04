@@ -1,0 +1,6 @@
+<let/count=0/>
+<if=input.show>
+  <my-for|i| to=2>
+    <button.r onClick() { count += i + 1 }>${count}</button>
+  </my-for>
+</if>

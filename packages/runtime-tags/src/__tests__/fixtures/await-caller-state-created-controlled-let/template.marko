@@ -1,0 +1,5 @@
+<let/l=input.label/>
+<button.set onClick() { l = "z"; }>set</button>
+<if=input.show>
+  <show-await promise=input.promise label=l/>
+</if>

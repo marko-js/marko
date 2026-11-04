@@ -1,0 +1,12 @@
+<for|name| of=input.keys by=(n) => n>
+  <store/store/>
+  <id/uid/><label for=uid>${name}</label><input id=uid>
+  <p>${name}:${store.last}</p>
+  <for|other| of=input.keys.toReversed() by=(n) => n>
+    <if=(input.show && other === name)>
+      <let/count=0 valueChange=store.set/>
+      <span>Seen ${count}</span>
+      <button onClick() { count++ }>+</button>
+    </if>
+  </for>
+</for>

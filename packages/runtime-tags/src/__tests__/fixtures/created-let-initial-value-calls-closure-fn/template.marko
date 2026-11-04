@@ -1,0 +1,8 @@
+<if=input.show>
+  <let/x=input.v/>
+  <const/f=(v) => v/>
+  <if=input.inner>
+    <let/y=f(x)/>
+    <p>${y + input.w}</p>
+  </if>
+</if>

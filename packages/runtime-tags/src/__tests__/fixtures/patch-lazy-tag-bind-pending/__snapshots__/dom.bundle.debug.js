@@ -1,0 +1,33 @@
+// template.marko
+const $template = "<main><!></main>";
+const $walks = "D%/&l";
+let $load_Child_setup = /*@__PURE__*/ _load_setup(($_) => import("./v:child.marko.setup.mjs"));
+let $load_Child_tag_input_title = /*@__PURE__*/ _load_signal_patch(($_) => import("./v:child.marko.input_title.mjs"), "ready:__tests__/child.marko");
+function $setup($scope) {
+	$load_Child_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
+}
+const $input_title = ($scope, input_title) => $load_Child_tag_input_title($scope["#childScope/1"], input_title);
+const $input = ($scope, input) => $input_title($scope, input.title);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+
+// child.marko
+const $template = "<button>go</button>";
+const $walks = " b";
+const $setup = ($_) => {};
+const $handler2__script = _script("__tests__/child.marko_0_handler#4", ($scope) => _on($scope["#button/0"], "click", $scope.handler));
+const $handler2 = /*@__PURE__*/ _const("handler", $handler2__script);
+const $input_title = /*@__PURE__*/ _const("input_title", ($scope) => {
+	_attr($scope["#button/0"], "title", $scope.input_title);
+	$handler2($scope, $handler($scope));
+});
+const $input = ($scope, input) => $input_title($scope, input.title);
+const $handler = ($scope) => (event) => event.target.dataset.seen = $scope.input_title;
+_bind_resume("__tests__/child.marko_0/handler input_title", $handler);
+var child_default = /*@__PURE__*/ _template("__tests__/child.marko", $template, " b", 0, $input);
+
+// v:child.marko.setup.js
+const _ = [
+	$template,
+	" b",
+	$setup
+];

@@ -1,0 +1,9 @@
+<const/{ fn, label }=input/>
+<span>${label}</span>
+<script>
+  const m = document.querySelector("main")! as HTMLElement & { seen?: Set<unknown> };
+  const seen = (m.seen ||= new Set());
+  m.dataset.last = seen.has(fn) ? "same" : "new";
+  seen.add(fn);
+  fn();
+</script>

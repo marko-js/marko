@@ -1,0 +1,6 @@
+<const/{ content }=input/>
+<const/{ content: kept }=input/>
+<let/open=true/>
+<button.toggle onClick() { open = !open }>toggle</button>
+<section><${content}/></section>
+<if=open><${kept}/></if>

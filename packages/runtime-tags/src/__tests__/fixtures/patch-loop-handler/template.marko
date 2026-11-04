@@ -1,0 +1,12 @@
+<let/items=["a"]/>
+<main>
+  <ul>
+    <for|item, i| of=items>
+      <li>
+        ${item}
+        <button onClick() { items = items.filter((_, j) => j !== i) }>x</button>
+      </li>
+    </for>
+  </ul>
+  <button.add onClick() { items = [...items, "n" + items.length] }>+</button>
+</main>
