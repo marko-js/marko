@@ -1,0 +1,50 @@
+// tags/show-await.marko
+const $template = "<!><!><!>";
+const $setup$1 = [[], []];
+_shells({
+	b0: "b0;D ;<em> </em>",
+	b1: "b1;D ;<em> </em>",
+	b2: "b2;D%c%l%;<p><!>:<!></p><!><!>",
+	b3: "b3;D%c%l%;<p><!>:<!></p><!><!>",
+	b: "b;b%;<!><!><!>"
+});
+var show_await_default = _template("b", (input) => {
+	const $scope0_reason = _scope_reason();
+	const $scope0_id = _scope_id();
+	const $input_label__closures = /* @__PURE__ */ new Set();
+	_await($scope0_id, "a", input.promise, (x) => {
+		const $scope1_id = _scope_id(), $ui__input_label = _unfilled_if($scope0_reason, 1);
+		_html(`<p>${_text_mark($scope1_id, "a", input.label, 1, $scope0_reason, 1)}:${_text_mark($scope1_id, "b", x, 2, $scope0_reason, 0)}</p>`);
+		_await($scope1_id, "c", Promise.resolve(input.label), (y) => {
+			const $scope2_id = _scope_id();
+			_html(`<em>${_text_mark($scope2_id, "a", y, 1, $scope0_reason, 1)}</em>`);
+			_scope($scope2_id, {});
+		}, 1, "b0", $ui__input_label && 2, 1);
+		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "b4", 1);
+		_subscribe($ui__input_label && $input_label__closures, _scope($scope1_id, {}), _client_guard($scope0_reason, 1) && "b4");
+	}, 1, "b2", _unfilled_if($scope0_reason, 0), 1);
+	_scope($scope0_id, { f: _write_if($scope0_reason, 1) && _unfilled_if($scope0_reason, 1) && $input_label__closures });
+});
+
+// template.marko
+const $setup = _shell_setup([[], ["a0"]], ["c>", $setup$1]);
+_shells({ a: `a${_shell_marker($setup)};${((_w0) => ` b b/${_w0}&b`)("b%c")};${((_w0) => `<button class=open>pend</button><button class=settle>settle</button>${_w0}<!>`)($template)}` });
+var template_default = _template("a", (input) => {
+	const $scope0_reason = _scope_reason();
+	const $scope0_id = _scope_id();
+	let p = Promise.resolve(0);
+	let resolve = void 0;
+	_html(`<button class=open>pend</button>${_el_mark($scope0_id, "a")}<button${_attr("disabled", true)} class=settle>settle</button>${_el_mark($scope0_id, "b")}`);
+	_set_scope_reason(2 | _updates_from($scope0_reason, 0) << 3);
+	const $childScope = _peek_scope_id($scope0_id, "c", 0);
+	show_await_default({
+		promise: p,
+		label: input.label
+	});
+	_patch_child_end();
+	_script($scope0_id, "a0");
+	_scope($scope0_id, {
+		h: resolve,
+		c: _existing_scope($childScope)
+	});
+}, 1);

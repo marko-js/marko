@@ -1,0 +1,14 @@
+static function boom(error: unknown): never {
+  throw error;
+}
+<define/D|{ on }|>
+  <const/f() { return "A"; }/>
+  <if=on><span>${f()}</span></if>
+</define>
+<try>
+  <p>${input.error ? boom(input.error) : "ok"}</p>
+  <@catch|err|>
+    <b>${(err as Error).message}</b>
+    <D on=true/>
+  </@catch>
+</try>

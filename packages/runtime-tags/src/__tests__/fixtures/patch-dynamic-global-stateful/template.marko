@@ -1,0 +1,6 @@
+import card from "./card.marko";
+<let/on=true/>
+<main>
+  <${on ? card : null}/>
+  <button onClick() { on = !on }>+</button>
+</main>

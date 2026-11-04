@@ -1,0 +1,31 @@
+// template.marko
+const $Panel_content__walks = "D l";
+const $Panel_content__template = "<em> </em>";
+_shells({ a: `a !a2;${((_w0) => `/${_w0}&%b b`)($Panel_content__walks)};${((_w0) => `${_w0}<!><button>toggle</button>`)($Panel_content__template)}` });
+var template_default = _template("a", (input) => {
+	const $scope0_reason = _scope_reason(), $fg__input_label = _filled_guard($scope0_reason, 0);
+	const $scope0_id = _scope_id();
+	let open = false;
+	const Panel = { content: _content_resume("a0", ({ label }) => {
+		const $scope1_id = _scope_id();
+		const $scope1_reason = _scope_reason(), $fg__label = _filled_guard($scope1_reason, 0);
+		const shout = label + "!";
+		_html(`<em>${_text_mark($scope1_id, "a", shout, 1, $scope1_reason, 0)}</em>`);
+		_script($scope1_id, "a1", 1, $fg__label, "e");
+		_scope($scope1_id, { e: shout }) || $fg__label && _patch_write($scope1_id, "xe", shout, !_server_guard($scope1_reason, 0));
+	}, $scope0_id) };
+	_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0);
+	Panel.content({ label: input.label });
+	_patch_child_end();
+	_dynamic_tag($scope0_id, "b", Panel, { label: input.label }, 8);
+	_html(`<button>toggle</button>${_el_mark($scope0_id, "c")}`);
+	_script($scope0_id, "a2");
+	_patch_render($scope0_id, "a3", $fg__input_label && "f");
+	_scope($scope0_id, {
+		f: input.label,
+		g: open,
+		h: Panel,
+		a: _existing_scope($childScope)
+	}) || $fg__input_label && _patch_write($scope0_id, "xf", input.label, !_server_guard($scope0_reason, 0));
+}, 1);
