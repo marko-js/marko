@@ -1,0 +1,4 @@
+<for|item| of=input.items>
+  <const/active=(item.href === input.path)/>
+  <a class=["link", { active }] href=item.href>${item.label}</a>
+</for>

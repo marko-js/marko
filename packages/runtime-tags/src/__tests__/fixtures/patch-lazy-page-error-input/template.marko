@@ -1,0 +1,5 @@
+import Page1 from "./page1.marko" with { load: "render" }
+import Page2 from "./page2.marko" with { load: "render" }
+
+<if=input.page === 1><Page1/></if>
+<else><Page2 error=input.error/></else>

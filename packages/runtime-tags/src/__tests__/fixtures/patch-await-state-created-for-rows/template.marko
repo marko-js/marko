@@ -1,0 +1,7 @@
+<let/n=0/>
+<button.open onClick() { n++ }>inc</button>
+<for|item| of=input.items>
+  <await|x|=Promise.resolve(n)>
+    <p>${item}:${x}</p>
+  </await>
+</for>

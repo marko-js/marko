@@ -1,0 +1,7 @@
+<plain-let/bounty=1/>
+<for|t| of=input.tally>
+  <if=input.type>
+    <span>${t + bounty + input.settled}</span>
+  </if>
+</for>
+<button onClick() { bounty++ }>+</button>
