@@ -1,0 +1,6 @@
+<let/n=1/>
+<button.toggle onClick() { n = n ? 0 : 1 }>toggle</button>
+<if=input.show>
+  <card promise=Promise.resolve(n)/>
+  <card promise=input.p/>
+</if>

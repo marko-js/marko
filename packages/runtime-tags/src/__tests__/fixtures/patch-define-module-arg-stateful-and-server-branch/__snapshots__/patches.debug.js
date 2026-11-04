@@ -1,0 +1,23 @@
+// PATCH
+`packages/runtime-tags/src/__tests__/fixtures/patch-define-module-arg-stateful-and-server-branch/template.marko_2*shell;/D l&;<em> </em>`
+{
+  "PatchBranch:#text/1": [{
+    "PatchChild:#childScope/0": {
+      "PatchText:#text/0": "BK"
+    }
+  }, "packages/runtime-tags/src/__tests__/fixtures/patch-define-module-arg-stateful-and-server-branch/template.marko_2*shell"],
+  "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-define-module-arg-stateful-and-server-branch/template.marko_1_input_label#0:5/setup": "input_label",
+  "PatchMarkedWrite:input_label": "b"
+}
+;BAE
+
+// PATCH holding BAE
+{
+  "PatchBranch:#text/1": [{
+    "PatchChild:#childScope/0": {
+      "PatchText:#text/0": "CK"
+    }
+  }, "packages/runtime-tags/src/__tests__/fixtures/patch-define-module-arg-stateful-and-server-branch/template.marko_2*shell"],
+  "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-define-module-arg-stateful-and-server-branch/template.marko_1_input_label#0:5/setup": "input_label",
+  "PatchMarkedWrite:input_label": "c"
+}

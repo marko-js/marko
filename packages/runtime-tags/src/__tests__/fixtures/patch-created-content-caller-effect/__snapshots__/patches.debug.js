@@ -1,0 +1,29 @@
+// PATCH
+[`packages/runtime-tags/src/__tests__/fixtures/patch-created-content-caller-effect/tags/child.marko_1*content`, `packages/runtime-tags/src/__tests__/fixtures/patch-created-content-caller-effect/tags/wrap.marko_1*shell;D%;<div><!></div>`]
+{
+  "PatchChild:#childScope/2": {
+    "PatchChild:#childScope/0": {
+      "PatchBranch:#text/0": [{
+        "PatchDynamicTag:#text/0": _.a = "^^^packages/runtime-tags/src/__tests__/fixtures/patch-created-content-caller-effect/tags/child.marko_1*content",
+        "PatchChild:BranchScopes:#text/0": {
+          "PatchSetup:": {
+            "PatchRender:": "packages/runtime-tags/src/__tests__/fixtures/patch-created-content-caller-effect/tags/child.marko_1_input_count#0:4/subscribe"
+          }
+        }
+      }, _.b = "packages/runtime-tags/src/__tests__/fixtures/patch-created-content-caller-effect/tags/wrap.marko_1*shell"]
+    }
+  },
+  "PatchChild:#childScope/3": {
+    "PatchChild:#childScope/0": {
+      "PatchBranch:#text/0": [{
+        "PatchDynamicTag:#text/0": _.a,
+        "PatchChild:BranchScopes:#text/0": {
+          "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-created-content-caller-effect/tags/child.marko_1_input_count#0:4"
+        }
+      }, _.b]
+    },
+    "PatchMarkedWrite:input_count": 10,
+    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-content-caller-effect/tags/child.marko_0_input_count#4/subscribers": "input_count"
+  }
+}
+;Cwo

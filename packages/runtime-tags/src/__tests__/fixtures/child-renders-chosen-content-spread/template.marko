@@ -1,0 +1,7 @@
+<define/A|{ label }|>
+  <em>${label}</em>
+</define>
+<define/B|{ label }|>
+  <b>${label}</b>
+</define>
+<child renderer=(input.a ? A : B) label=input.label/>

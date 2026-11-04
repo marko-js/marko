@@ -1,0 +1,29 @@
+// PATCH
+{
+  cAc: {
+    pa: 1
+  }
+}
+{
+  cAc: {
+    cAa: {
+      ta: "b",
+      tb: "o",
+      cAc: [{
+        pa: 1
+      }, "a9"]
+    }
+  }
+}
+{
+  cAc: {
+    cAa: {
+      cAc: [{
+        cAa: {
+          ta: "b",
+          tb: "i"
+        }
+      }, "a9"]
+    }
+  }
+}

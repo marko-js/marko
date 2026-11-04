@@ -382,14 +382,23 @@ class State {
     if (locals) {
       // Calls the registered factory itself to also pass render-only locals.
       this.buf.push(registered.access + "(_(" + scopeId + ")");
-      for (const local of locals) {
-        this.buf.push(",");
-        writePlainObject(this, local, newArgReference(this, ref, local));
-      }
+      writeLocalArgs(this, ref, locals);
     } else {
       this.buf.push("_(" + scopeId + "," + quoteRegistryId(registered.id));
     }
     this.buf.push(")");
+  }
+}
+
+// Render-only locals as further arguments of a call being written.
+export function writeLocalArgs(
+  state: State,
+  ref: Reference,
+  locals: PartialScope[],
+) {
+  for (const local of locals) {
+    state.buf.push(",");
+    writePlainObject(state, local, newArgReference(state, ref, local));
   }
 }
 
@@ -748,7 +757,7 @@ export function hasMatchingCalls(state: State, readyId: string | undefined) {
   return false;
 }
 
-function writeProp(
+export function writeProp(
   state: State,
   val: unknown,
   parent: Reference | null,
@@ -2143,6 +2152,7 @@ function throwUnserializable(
 // Keep in sync with common/constants/accessor-prefix.debug.ts; the serializer
 // parity test walks every prefix.
 const accessorPrefixDescriptions: Record<string, string> = {
+  BoundFn: "the bound function",
   BranchScopes: "the branch scopes",
   ClosureScopes: "the closure scopes",
   ClosureSignalIndex: "the closure signal index",
@@ -2157,6 +2167,7 @@ const accessorPrefixDescriptions: Record<string, string> = {
   IdFallback: "the generated id",
   KeyedScopes: "the keyed scopes",
   Lifecycle: "the lifecycle handlers",
+  PatchChanged: "the patch change mark",
   Promise: "the pending promise",
   TagVariableChange: "the tag variable change handler",
   TryBranch: "the try branch",

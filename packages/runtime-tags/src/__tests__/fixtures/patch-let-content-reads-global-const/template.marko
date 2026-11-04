@@ -1,0 +1,7 @@
+static function hash(s: string) {
+  let h = 0;
+  for (const c of s) h = (h * 31 + c.charCodeAt(0)) | 0;
+  return h.toString(36);
+}
+<const/h=hash($global.token)/>
+<card><p>${h}</p></card>

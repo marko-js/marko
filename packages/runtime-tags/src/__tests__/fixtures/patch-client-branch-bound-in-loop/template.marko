@@ -1,0 +1,9 @@
+<if=input.show>
+  <card>
+    <ul>
+      <for|r| of=input.rows by="id">
+        <li><${input.tag} onClick() { console.log(r.label, input.label) }>${r.label}</></li>
+      </for>
+    </ul>
+  </card>
+</if>

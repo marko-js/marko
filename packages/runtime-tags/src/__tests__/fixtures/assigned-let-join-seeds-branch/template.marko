@@ -1,0 +1,8 @@
+<if=input.show>
+  <let/x=1/>
+  <let/y=x/>
+  <if=y>
+    <span>${input.a}</span>
+  </if>
+  <button onClick() { x = 2 }>${x + input.b}</button>
+</if>

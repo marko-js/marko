@@ -1,0 +1,17 @@
+// PATCH
+{
+  "PatchChild:#childScope/0": {
+    "PatchBranch:#text/0": [{
+      "PatchText:#text/0": "b"
+    }]
+  }
+}
+
+// PATCH
+{
+  "PatchChild:#childScope/0": {
+    "PatchBranch:#text/0": [{
+      "PatchText:#text/0": "c"
+    }]
+  }
+}
