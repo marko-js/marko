@@ -357,14 +357,14 @@ importing routes statically, as Marko Run does); a template loaded later changes
 the index, so earlier tokens read as holding nothing and their shells ship again.
 _Avoid_: shell cache, shell manifest
 
-**Patch render**:
+**Render entry**:
 A registered signal a patch names for a scope (`_patch_render`, `PatchKey.Render`): a
 created scope's setup id where the client contributes its group, or, on any scope
 where the group mixes, an entry valued by the writes it reads, which re-renders it
 once one changed: a signal's counterpart of a patch's effect entry (`_script`). Its
 registration is a main helper's patch twin taking the id (`_or_patch`,
 `_if_closure_patch`, `_for_closure_patch`, `_closure_get_patch`), kept with its signal.
-_Avoid_: init, init entry
+_Avoid_: init, init entry, patch render (the server's rerender)
 
 **Setup envelope**:
 A patch's `PatchKey.Setup` and `PatchKey.SetupValues` entries: what a created
@@ -532,7 +532,7 @@ leaves to a hole it writes or an effect its entry re-runs, through any `<const>`
 of it (`isPatchWrittenIntersection`); not where each call of a `<define>` body passes a
 member client state, unless a member reads another intersection. Where its group is
 server-sourced on the instance the patch writes its holes; where the group mixes the
-client re-runs it, by the render the patch names on the scope, fresh or existing
+client re-runs it, by the scope's render entry, created or paired
 (`_patch_render`), unless each member it ships re-runs it by its own fill, and a
 member the client's side needs is written in place on its slot.
 
