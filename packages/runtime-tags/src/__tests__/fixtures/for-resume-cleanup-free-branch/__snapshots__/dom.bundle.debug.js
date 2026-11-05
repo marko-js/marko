@@ -4,11 +4,7 @@ const $walks$1 = "b%c";
 const $setup$1 = ($_) => {};
 const $for_content__setup = ($scope) => _text($scope["#text/0"], $scope["#LoopKey"]);
 const $for = /*@__PURE__*/ _for_to_unkeyed("#text/0", "<li>item <!></li>", "Db%", $for_content__setup);
-const $count$1 = ($scope, count) => $for($scope, [
-	count,
-	0,
-	1
-]);
+const $count$1 = ($scope, count) => $for($scope, [count]);
 const $input = ($scope, input) => $count$1($scope, input.count);
 var list_default = /*@__PURE__*/ _template("__tests__/tags/list.marko", $template$1, "b%c", 0, $input);
 

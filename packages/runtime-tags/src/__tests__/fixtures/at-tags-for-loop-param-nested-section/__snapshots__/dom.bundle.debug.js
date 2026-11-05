@@ -38,11 +38,7 @@ const $item_content__show = /*@__PURE__*/ _closure_get("show/8", ($scope) => {
 const $item_content__for = /*@__PURE__*/ _for_until_unkeyed("#text/2", "<span><!>.<!></span>", "D%c%", $for_content__setup);
 const $item_content__setup = ($scope) => {
 	$item_content__show($scope);
-	$item_content__for($scope, [
-		2,
-		0,
-		1
-	]);
+	$item_content__for($scope, [2]);
 };
 const $item_content__i__closure = /*@__PURE__*/ _closure($showbi_content__i);
 const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__tests__/template.marko_1*content", "<!><!><!><!><!>", "b%b%b%", $item_content__setup), { i($scope) {

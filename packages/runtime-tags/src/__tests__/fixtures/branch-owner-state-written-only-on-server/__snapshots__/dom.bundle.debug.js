@@ -26,11 +26,7 @@ const $count = /*@__PURE__*/ _let("count/7", ($scope) => {
 	_attr_class($scope["#section/1"], `c${$scope.count}`);
 	$inc($scope, () => $count($scope, +$scope.count + 1) - 1);
 	$if($scope, $scope.count ? 0 : 1);
-	$for($scope, [
-		$scope.count,
-		0,
-		1
-	]);
+	$for($scope, [$scope.count]);
 	$if_content__count($scope);
 	$if_content2__count($scope);
 });

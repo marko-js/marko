@@ -8,11 +8,7 @@ const $for_content__input_content = /*@__PURE__*/ _for_closure("#text/0", $for_c
 const $for_content__setup = $for_content__input_content;
 const $for_content__args = /*@__PURE__*/ _const("args", $for_content__input_content__OR__args);
 const $for = /*@__PURE__*/ _for_to_unkeyed("#text/0", "<!><!><!>", "b%", $for_content__setup, $for_content__args);
-const $input_to = ($scope, input_to) => $for($scope, [
-	input_to,
-	0,
-	1
-]);
+const $input_to = ($scope, input_to) => $for($scope, [input_to]);
 const $input = ($scope, input) => {
 	$input_to($scope, input.to);
 	$input_content($scope, input.content);

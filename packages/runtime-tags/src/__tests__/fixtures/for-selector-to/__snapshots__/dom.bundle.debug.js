@@ -14,10 +14,6 @@ const $selected = /*@__PURE__*/ _let("selected/1", $for_content__selected);
 const $for = /*@__PURE__*/ _for_to_unkeyed("#tbody/0", "<tr><td><button class=select> </button></td></tr>", " E D ", $for_content__setup);
 function $setup($scope) {
 	$selected($scope, undefined);
-	$for($scope, [
-		4,
-		0,
-		1
-	]);
+	$for($scope, [4]);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "D l", $setup);

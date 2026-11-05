@@ -27,11 +27,7 @@ const $for_content__setup = ($scope) => {
 	$input_content($scope["#childScope/0"], $type_content($scope));
 };
 const $for = /*@__PURE__*/ _for_until_unkeyed("#text/1", /*@__PURE__*/ ((_w0) => `${_w0}<!>`)($template$1), /*@__PURE__*/ ((_w0) => `/${_w0}&b`)($walks$1), $for_content__setup);
-const $count = /*@__PURE__*/ _let("count/2", ($scope) => $for($scope, [
-	$scope.count,
-	0,
-	1
-]));
+const $count = /*@__PURE__*/ _let("count/2", ($scope) => $for($scope, [$scope.count]));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, +$scope.count + 1);
 }));

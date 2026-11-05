@@ -13,11 +13,7 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($sc
 }));
 function $setup($scope) {
 	$selected($scope, 0);
-	$for($scope, [
-		3,
-		0,
-		1
-	]);
+	$for($scope, [3]);
 	$setup__script($scope);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, " b", $setup);

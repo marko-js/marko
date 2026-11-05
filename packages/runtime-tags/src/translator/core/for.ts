@@ -25,6 +25,7 @@ import {
   isSingleNodeContent,
   resumeOwnerByMarkerWhenUnconditional,
 } from "../util/branch-tag";
+import evaluate from "../util/evaluate";
 import { detectForSelector, isForSelectorClosure } from "../util/for-selector";
 import { getAccessorProp } from "../util/get-accessor-enums";
 import { getKnownAttrValues } from "../util/get-known-attr-values";
@@ -277,12 +278,12 @@ export default {
           );
         };
 
-        const loopArgs = getBaseArgsInForTag(forType, forAttrs);
-        if (forAttrs.by) {
-          loopArgs.push(forAttrs.by);
-        }
-
-        addValue(tagSection, tagExtra, signal, t.arrayExpression(loopArgs));
+        addValue(
+          tagSection,
+          tagExtra,
+          signal,
+          t.arrayExpression(getLoopArgs(forType, forAttrs)),
+        );
 
         replaceWithStatements(tag);
       },
@@ -425,6 +426,8 @@ function getMemberChainAlias(
 
 // Without `by=`, `of=` keys by index and `to=`/`until=` by value, which is the
 // index only from 0 in steps of 1; such a loop never moves a branch.
+// A range's rows are keyed by their value, which stays at its position, so no
+// row ever moves, while its `from` and `step` are constants.
 function isKeyedByIndex(type: ForType, attrs: Record<string, t.Expression>) {
   if (attrs.by) return false;
   switch (type) {
@@ -432,12 +435,30 @@ function isKeyedByIndex(type: ForType, attrs: Record<string, t.Expression>) {
       return true;
     case "to":
     case "until":
-      return (
-        isNumberOrOmitted(attrs.from, 0) && isNumberOrOmitted(attrs.step, 1)
-      );
+      return isConstantOrOmitted(attrs.from) && isConstantOrOmitted(attrs.step);
     default:
       return false;
   }
+}
+
+// The client loop reads a falsy `from` as 0 and `step` as 1, so a default
+// argument is dropped from the end and written as 0 before a later one.
+function getLoopArgs(type: ForType, attrs: Record<string, t.Expression>) {
+  const args =
+    type === "to" || type === "until"
+      ? [
+          attrs[type],
+          isNumberOrOmitted(attrs.from, 0) ? undefined : attrs.from,
+          isNumberOrOmitted(attrs.step, 1) ? undefined : attrs.step,
+          attrs.by,
+        ]
+      : [attrs[type], attrs.by];
+  while (!args.at(-1)) args.pop();
+  return args.map((arg) => arg || t.numericLiteral(0));
+}
+
+function isConstantOrOmitted(node: t.Expression | undefined) {
+  return !node || evaluate(node).confident;
 }
 
 function isNumberOrOmitted(node: t.Expression | undefined, value: number) {
