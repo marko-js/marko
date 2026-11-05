@@ -1,12 +1,12 @@
 // template.marko
-const $await_content2__setup__script = _script("a2", ($scope) => $signal($scope, 0).onabort = () => document.querySelector("#two").textContent = "Pass");
+const $await_content2__setup__script = _script("a2", ($scope) => onAbort($scope, 0, () => document.querySelector("#two").textContent = "Pass"));
 const $await_content2__setup = ($scope) => {
 	$signalReset($scope, 0);
 	$await_content2__setup__script($scope);
 };
 const $placeholder_content = _content("a3", "loading...");
 const $await_content__show = /*@__PURE__*/ _closure_get(3, ($scope) => _text($scope.a, $scope._._._.c), ($scope) => $scope._._._, "a1");
-const $await_content__setup__script = _script("a0", ($scope) => $signal($scope, 0).onabort = () => document.querySelector("#one").textContent = "Pass");
+const $await_content__setup__script = _script("a0", ($scope) => onAbort($scope, 0, () => document.querySelector("#one").textContent = "Pass"));
 const $await_content__setup = ($scope) => {
 	$await_content__show($scope);
 	$signalReset($scope, 0);

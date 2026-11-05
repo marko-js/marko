@@ -1,14 +1,14 @@
 // template.marko
 const $template = "<button></button><div id=one>Fail</div><div id=two>Fail</div><!><!>";
 const $walks = " d%c";
-const $await_content2__setup__script = _script("__tests__/template.marko_5", ($scope) => $signal($scope, 0).onabort = () => document.querySelector("#two").textContent = "Pass");
+const $await_content2__setup__script = _script("__tests__/template.marko_5", ($scope) => onAbort($scope, 0, () => document.querySelector("#two").textContent = "Pass"));
 const $await_content2__setup = ($scope) => {
 	$signalReset($scope, 0);
 	$await_content2__setup__script($scope);
 };
 const $placeholder_content = _content("__tests__/template.marko_4*content", "loading...");
 const $await_content__show = /*@__PURE__*/ _closure_get("show/3", ($scope) => _text($scope["#text/0"], $scope._._._.show), ($scope) => $scope._._._, "__tests__/template.marko_3_show#0:2/subscribe");
-const $await_content__setup__script = _script("__tests__/template.marko_3", ($scope) => $signal($scope, 0).onabort = () => document.querySelector("#one").textContent = "Pass");
+const $await_content__setup__script = _script("__tests__/template.marko_3", ($scope) => onAbort($scope, 0, () => document.querySelector("#one").textContent = "Pass"));
 const $await_content__setup = ($scope) => {
 	$await_content__show($scope);
 	$signalReset($scope, 0);

@@ -16,11 +16,14 @@ import { createOutputSectionState } from "../util/state";
 import type { TemplateVisitor } from "../util/visitors";
 
 const kAbortId = Symbol("abort id");
+const kAbortCleanupOnly = Symbol("abort cleanup only");
 declare module "@marko/compiler/dist/types" {
   export interface NodeExtra {
     /** `$signal` abort id for this expression root, allocated in analyze
      * (see below) so every translate reads the same id. */
     [kAbortId]?: number;
+    /** Its every `$signal` only sets `onabort`, so it needs no controller. */
+    [kAbortCleanupOnly]?: boolean;
   }
 }
 
@@ -74,6 +77,9 @@ export default {
         if (rootExtra[kAbortId] === undefined) {
           rootExtra[kAbortId] = section.abortSignalExprs++;
         }
+        rootExtra[kAbortCleanupOnly] =
+          (rootExtra[kAbortCleanupOnly] ?? true) &&
+          isOnabortStatement(identifier);
       }
     }
   },
@@ -107,16 +113,44 @@ export default {
             );
           }
 
-          identifier.replaceWith(
-            t.callExpression(importRuntime("$signal"), [
-              scopeIdentifier,
-              t.numericLiteral(exprId),
-            ]),
-          );
+          if (exprRoot[kAbortCleanupOnly]) {
+            const assignment = identifier.parentPath
+              .parentPath as t.NodePath<t.AssignmentExpression>;
+            assignment.replaceWith(
+              t.callExpression(importRuntime("onAbort"), [
+                scopeIdentifier,
+                t.numericLiteral(exprId),
+                assignment.node.right,
+              ]),
+            );
+          } else {
+            identifier.replaceWith(
+              t.callExpression(importRuntime("$signal"), [
+                scopeIdentifier,
+                t.numericLiteral(exprId),
+              ]),
+            );
+          }
         }
     }
   },
 } satisfies TemplateVisitor<t.Identifier>;
+
+// `$signal.onabort = fn` as a statement only runs `fn` on cleanup.
+function isOnabortStatement(identifier: t.NodePath<t.Identifier>) {
+  const member = identifier.parent;
+  const assignment = identifier.parentPath.parent;
+  return (
+    member.type === "MemberExpression" &&
+    !member.computed &&
+    member.property.type === "Identifier" &&
+    member.property.name === "onabort" &&
+    assignment?.type === "AssignmentExpression" &&
+    assignment.operator === "=" &&
+    assignment.left === member &&
+    identifier.parentPath.parentPath!.parent.type === "ExpressionStatement"
+  );
+}
 
 // A bare `$signal` can be a tag's whole value, which the tag checks for
 // `dropped` after its children translate, so the replacement must keep it.

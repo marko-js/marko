@@ -23,7 +23,7 @@ import {
   RendererProp,
   type Scope,
 } from "../common/types";
-import { trackAbort } from "./abort-signal";
+import { onAbort } from "./abort-signal";
 import { rendererKey, setBranch } from "./control-flow";
 import {
   type ControllableSpreadHelper,
@@ -463,7 +463,7 @@ export function _lifecycle(
     } else {
       Object.assign(thisObj, thisObj.onMount?.());
     }
-    trackAbort(scope, accessor, (_?: never) => thisObj.onDestroy?.());
+    onAbort(scope, accessor, (_?: never) => thisObj.onDestroy?.());
   }
 }
 

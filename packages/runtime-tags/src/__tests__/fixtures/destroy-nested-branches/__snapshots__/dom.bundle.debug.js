@@ -26,7 +26,7 @@ const $name__script = _script("__tests__/tags/child.marko_0_name#3", ($scope) =>
 	_lifecycle($scope, { onDestroy: function() {
 		console.log(`lifecycle ${$scope.name} destroyed`);
 	} });
-	$signal($scope, 0).onabort = () => console.log(`effect ${$scope.name} destroyed`);
+	onAbort($scope, 0, () => console.log(`effect ${$scope.name} destroyed`));
 });
 const $name = /*@__PURE__*/ _const("name", ($scope) => {
 	_text($scope["#text/0"], $scope.name);

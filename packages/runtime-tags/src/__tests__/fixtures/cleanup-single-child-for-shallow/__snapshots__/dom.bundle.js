@@ -2,9 +2,9 @@
 const $template = "<div> </div>";
 const $input_name__OR__input_write__script = _script("b0", ($scope) => {
 	$scope.e(`mounted ${$scope.d}`);
-	$signal($scope, 0).onabort = () => {
+	onAbort($scope, 0, () => {
 		$scope.e(`destroyed ${$scope.d}`);
-	};
+	});
 });
 const $input_name__OR__input_write = /*@__PURE__*/ _or(5, ($scope) => {
 	$signalReset($scope, 0);
