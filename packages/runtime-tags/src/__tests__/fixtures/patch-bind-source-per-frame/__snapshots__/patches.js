@@ -3,15 +3,22 @@
   xf: "b",
   pa: 1,
   pb: 1,
-  dj: "a0",
   cAa: {
-    aa$title: "b",
-    ea1: ">j >f"
+    ja: {
+      id: "one",
+      title: "b",
+      onClick: _([], "a0")
+    },
+    ea1: ">f"
   }
 }
 {
   cAb: {
-    aa$title: "b",
-    ea8: ">j >f"
+    ja: {
+      id: "two",
+      title: "b",
+      onClick: _([], "a0")
+    },
+    ea9: ">f"
   }
 }

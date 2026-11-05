@@ -5,8 +5,8 @@ function boom() {
 }
 const $setup$1 = [[], []];
 _shells({
-	b3: "b3;D ;<p> </p>",
-	b2: "b2",
+	b4: "b4;D ;<p> </p>",
+	b3: "b3 !b0",
 	b: "b;b%;<!><!><!>"
 });
 var error_wrapper_default = _template("b", (input) => {
@@ -18,18 +18,20 @@ var error_wrapper_default = _template("b", (input) => {
 		_scope_reason();
 		const $scope2_id = _scope_id();
 		_html(`<p>${_text_mark($scope2_id, "a", input.fail ? boom() : "ok", 1, $scope0_reason, 1)}</p>`);
-		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope2_id, "b1", $cg__input_fail);
-		_subscribe(_unfilled_if($scope0_reason, 1) && $input_fail__closures, _scope($scope2_id, { _: $wi__input_fail && _scope_with_id($scope0_id) }), $cg__input_fail && "b1");
+		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope2_id, "b2", $cg__input_fail);
+		_subscribe(_unfilled_if($scope0_reason, 1) && $input_fail__closures, _scope($scope2_id, { _: $wi__input_fail && _scope_with_id($scope0_id) }), $cg__input_fail && "b2");
 	}, void 0, (err) => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
-		_html(`<b>${_text_mark($scope1_id, "a", err.message, 1, 4, 0)}</b><div>`);
-		_attr_content("b", $scope1_id, input.fallback, 0, 1, $scope0_reason, 0);
-		_html(`</div>${_el_mark($scope1_id, "b", _updates_from($scope0_reason, 0))}`);
-		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "b0", $cg__input_fallback);
-		_subscribe(_unfilled_if($scope0_reason, 0) && $input_fallback__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), $cg__input_fallback && "b0");
-	}, 0, "b2", "b3", 1, 1, 1);
-	$fg__input_fallback && _patch_subscribers($scope0_id, "b4", "d");
+		const attrs = { content: input.fallback };
+		_html(`<b>${_text_mark($scope1_id, "a", err.message, 1, 4, 0)}</b><div`);
+		_attrs_content(attrs, "b", $scope1_id, "div", 0, 1, 0, $scope0_reason, 0);
+		_html(`</div>${_el_mark($scope1_id, "b")}`);
+		_script($scope1_id, "b0");
+		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "b1", $cg__input_fallback);
+		_subscribe(_unfilled_if($scope0_reason, 0) && $input_fallback__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), $cg__input_fallback && "b1");
+	}, 0, "b3", "b4", 1, 1, 1);
+	$fg__input_fallback && _patch_subscribers($scope0_id, "b5", "d");
 	_scope($scope0_id, {
 		d: input.fallback,
 		f: _write_if($scope0_reason, 0) && $input_fallback__closures,

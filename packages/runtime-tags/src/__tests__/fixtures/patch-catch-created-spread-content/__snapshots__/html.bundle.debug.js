@@ -7,7 +7,7 @@ function boom() {
 const $setup$1 = [[], []];
 _shells({
 	"__tests__/tags/error-wrapper.marko_2*content": "__tests__/tags/error-wrapper.marko_2*content;D ;<p> </p>",
-	"__tests__/tags/error-wrapper.marko_1*content": "__tests__/tags/error-wrapper.marko_1*content",
+	"__tests__/tags/error-wrapper.marko_1*content": "__tests__/tags/error-wrapper.marko_1*content !__tests__/tags/error-wrapper.marko_1_attrs#5",
 	"__tests__/tags/error-wrapper.marko": "__tests__/tags/error-wrapper.marko;b%;<!><!><!>"
 });
 var error_wrapper_default = _template("__tests__/tags/error-wrapper.marko", (input) => {
@@ -24,11 +24,13 @@ var error_wrapper_default = _template("__tests__/tags/error-wrapper.marko", (inp
 	}, void 0, (err) => {
 		const $scope1_reason = _scope_reason();
 		const $scope1_id = _scope_id();
-		_html(`<b>${_text_mark($scope1_id, "#text/0", err.message, 1, 4, 0)}</b><div>`);
-		_attr_content("#div/1", $scope1_id, input.fallback, 0, 1, $scope0_reason, 0);
-		_html(`</div>${_el_mark($scope1_id, "#div/1", _updates_from($scope0_reason, 0))}`);
+		const attrs = { content: input.fallback };
+		_html(`<b>${_text_mark($scope1_id, "#text/0", err.message, 1, 4, 0)}</b><div`);
+		_attrs_content(attrs, "#div/1", $scope1_id, "div", 0, 1, 0, $scope0_reason, 0);
+		_html(`</div>${_el_mark($scope1_id, "#div/1")}`);
+		_script($scope1_id, "__tests__/tags/error-wrapper.marko_1_attrs#5");
 		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "__tests__/tags/error-wrapper.marko_1_input_fallback#0:3/subscribe", $cg__input_fallback);
-		_subscribe(_unfilled_if($scope0_reason, 0) && $input_fallback__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/error-wrapper.marko", "6:4"), $cg__input_fallback && "__tests__/tags/error-wrapper.marko_1_input_fallback#0:3/subscribe");
+		_subscribe(_unfilled_if($scope0_reason, 0) && $input_fallback__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/error-wrapper.marko", "6:4", { "EventAttributes:#div/1": ["...attrs", "6:98"] }), $cg__input_fallback && "__tests__/tags/error-wrapper.marko_1_input_fallback#0:3/subscribe");
 	}, 0, "__tests__/tags/error-wrapper.marko_1*content", "__tests__/tags/error-wrapper.marko_2*content", 1, 1, 1);
 	$fg__input_fallback && _patch_subscribers($scope0_id, "__tests__/tags/error-wrapper.marko_0_input_fallback#3/subscribers", "input_fallback");
 	_scope($scope0_id, {

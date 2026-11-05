@@ -2,13 +2,23 @@
 const $template = "<a>x</a><img>";
 const $walks = " b b";
 const $setup = ($_) => {};
-const $input_url__OR__input_width = /*@__PURE__*/ _or_patch("__tests__/template.marko_0_input_url#4_input_width#7/setup", 8, ($scope) => _attr($scope["#img/1"], "src", `${$scope.input_url}?w=${$scope.input_width}`));
+const $attrs__script = _script("__tests__/template.marko_0_attrs#10", ($scope) => _attrs_script($scope, "#a/0"));
+const $attrs = /*@__PURE__*/ _const("attrs", ($scope) => {
+	$attrs__script($scope);
+	_attrs($scope, "#a/0", $scope.attrs);
+});
+const $input_url__OR__input_title__OR__input_cls = /*@__PURE__*/ _or_patch("__tests__/template.marko_0_input_url#4_input_title#5_input_cls#6/setup", 7, ($scope) => $attrs($scope, {
+	href: $scope.input_url,
+	title: $scope.input_title,
+	class: $scope.input_cls
+}), 2);
+const $input_url__OR__input_width = /*@__PURE__*/ _or_patch("__tests__/template.marko_0_input_url#4_input_width#8/setup", 9, ($scope) => _attr($scope["#img/1"], "src", `${$scope.input_url}?w=${$scope.input_width}`));
 const $input_url = /*@__PURE__*/ _const("input_url", ($scope) => {
-	_attr($scope["#a/0"], "href", $scope.input_url);
+	$input_url__OR__input_title__OR__input_cls($scope);
 	$input_url__OR__input_width($scope);
 });
-const $input_title = ($scope, input_title) => _attr($scope["#a/0"], "title", input_title);
-const $input_cls = ($scope, input_cls) => _attr_class($scope["#a/0"], input_cls);
+const $input_title = /*@__PURE__*/ _const("input_title", $input_url__OR__input_title__OR__input_cls);
+const $input_cls = /*@__PURE__*/ _const("input_cls", $input_url__OR__input_title__OR__input_cls);
 const $input_width = /*@__PURE__*/ _const("input_width", $input_url__OR__input_width);
 const $input = ($scope, input) => {
 	$input_url($scope, input.url);

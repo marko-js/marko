@@ -1,18 +1,19 @@
 // child.marko
 const $template = "<button>go</button>";
-const $setup$1 = [[], []];
-_shells({ a: "a; ;<button>go</button>" });
+const $setup$1 = [[], ["a1"]];
+_shells({ a: "a !a1; ;<button>go</button>" });
 var child_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_title = _filled_guard($scope0_reason, 0), $sg__input_title = _server_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $fg__input_title = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	$fg__input_title && _patch_write($scope0_id, "xd", input.title, !$sg__input_title);
+	$fg__input_title && _patch_write($scope0_id, "xd", input.title, !_server_guard($scope0_reason, 0));
 	const handler = _bind_resume((event) => event.target.dataset.seen = input.title, "a0", $scope0_id);
-	_html(`<button${_attr("title", input.title, $scope0_id, "aa$title", $scope0_reason, 0)}>go</button>${_el_mark($scope0_id, "a")}`);
-	_script($scope0_id, "a1", 1, $fg__input_title, ["e", "d"]);
-	_scope($scope0_id, {
-		d: input.title,
-		e: handler
-	}) || $fg__input_title && _patch_write($scope0_id, "xe", handler, !$sg__input_title);
+	const attrs = {
+		title: input.title,
+		onClick: handler
+	};
+	_html(`<button${_attrs(attrs, "a", $scope0_id, "button", 0, $scope0_reason, 0)}>go</button>${_el_mark($scope0_id, "a")}`);
+	_script($scope0_id, "a1", 1, $fg__input_title, "d");
+	_scope($scope0_id, { d: input.title });
 });
 
 // template.marko

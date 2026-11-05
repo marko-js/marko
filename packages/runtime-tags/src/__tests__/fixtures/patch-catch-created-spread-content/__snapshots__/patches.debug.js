@@ -1,10 +1,13 @@
 // PATCH
-[`packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-spread-content/tags/error-wrapper.marko_1*content`, `packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-spread-content/template.marko_1*content packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-spread-content/template.marko_1_count#0:7/subscribe`]
+[`packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-spread-content/tags/error-wrapper.marko_1*content !packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-spread-content/tags/error-wrapper.marko_1_attrs#5`, `packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-spread-content/template.marko_1*content packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-spread-content/template.marko_1_count#0:7/subscribe`]
 {
   "PatchChild:#childScope/2": {
     "PatchCatch:#text/0": [{
       "PatchText:#text/0": "SHOWN_message",
       "PatchDynamicTag:#div/1": "^^^packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-spread-content/template.marko_1*content",
+      "PatchSetup:": {
+        "PatchAttrs:#div/1": {}
+      },
       "PatchChild:BranchScopes:#div/1": {
         "PatchText:#text/0": "b",
         "PatchSetup:": {
@@ -24,6 +27,9 @@
     "PatchCatch:#text/0": [{
       "PatchText:#text/0": "SHOWN_message",
       "PatchDynamicTag:#div/1": "^^^packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-spread-content/template.marko_1*content",
+      "PatchSetup:": {
+        "PatchAttrs:#div/1": {}
+      },
       "PatchChild:BranchScopes:#div/1": {
         "PatchText:#text/0": "c",
         "PatchSetup:": {
@@ -42,6 +48,9 @@
     "PatchCatch:#text/0": [{
       "PatchText:#text/0": "SHOWN_message",
       "PatchDynamicTag:#div/1": "^^^packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-spread-content/template.marko_1*content",
+      "PatchSetup:": {
+        "PatchAttrs:#div/1": {}
+      },
       "PatchChild:BranchScopes:#div/1": {
         "PatchText:#text/0": "e",
         "PatchSetup:": {

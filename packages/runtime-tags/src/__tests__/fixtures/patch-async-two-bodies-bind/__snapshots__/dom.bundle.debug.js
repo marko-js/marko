@@ -1,12 +1,20 @@
 // template.marko
 const $template = "<main><!><!></main>";
 const $walks = "D%b%l";
-const $await_content2__handler__script = _script("__tests__/template.marko_2_handler#4", ($scope) => _on($scope["#button/0"], "click", $scope.handler));
-const $await_content2__handler = /*@__PURE__*/ _const("handler", $await_content2__handler__script);
+const $await_content2__attrs__script = _script("__tests__/template.marko_2_attrs#6", ($scope) => _attrs_script($scope, "#button/0"));
+const $await_content2__attrs = /*@__PURE__*/ _const("attrs", ($scope) => {
+	$await_content2__attrs__script($scope);
+	_attrs($scope, "#button/0", $scope.attrs);
+});
+const $await_content2__second__OR__handler = /*@__PURE__*/ _or_patch("__tests__/template.marko_2_second#3_handler#4/setup", 5, ($scope) => $await_content2__attrs($scope, {
+	title: $scope.second,
+	onClick: $scope.handler
+}));
+const $await_content2__handler = /*@__PURE__*/ _const("handler", $await_content2__second__OR__handler);
 const $await_content2__second = /*@__PURE__*/ _const("second", ($scope) => {
-	_attr($scope["#button/0"], "title", $scope.second);
 	_text($scope["#text/1"], $scope.second);
 	$await_content2__handler($scope, $handler($scope));
+	$await_content2__second__OR__handler($scope);
 });
 const $await_content2__$params = ($scope, $params3) => $await_content2__second($scope, $params3[0]);
 const $await_content__first = ($scope, first) => _text($scope["#text/0"], first);

@@ -14,12 +14,16 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 const $template = "<button>go</button>";
 const $walks = " b";
 const $setup = ($_) => {};
-const $handler2__script = _script("__tests__/child.marko_0_handler#4", ($scope) => _on($scope["#button/0"], "click", $scope.handler));
-const $handler2 = /*@__PURE__*/ _const("handler", $handler2__script);
-const $input_title = /*@__PURE__*/ _const("input_title", ($scope) => {
-	_attr($scope["#button/0"], "title", $scope.input_title);
-	$handler2($scope, $handler($scope));
+const $attrs__script = _script("__tests__/child.marko_0_attrs#5", ($scope) => _attrs_script($scope, "#button/0"));
+const $attrs = /*@__PURE__*/ _const("attrs", ($scope) => {
+	$attrs__script($scope);
+	_attrs($scope, "#button/0", $scope.attrs);
 });
+const $input_title__OR__handler = ($scope) => $attrs($scope, {
+	title: $scope.input_title,
+	onClick: $handler($scope)
+});
+const $input_title = /*@__PURE__*/ _const("input_title", $input_title__OR__handler);
 const $input = ($scope, input) => $input_title($scope, input.title);
 const $handler = ($scope) => (event) => event.target.dataset.seen = $scope.input_title;
 _bind_resume("__tests__/child.marko_0/handler input_title", $handler);

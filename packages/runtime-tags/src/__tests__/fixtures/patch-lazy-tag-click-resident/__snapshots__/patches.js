@@ -1,12 +1,14 @@
 // PATCH
-a, `b1;D%b/ b&l;<main><!><button>go</button></main>`
+a, `b1 !b>a1;D%b/ b&l;<main><!><button>go</button></main>`
 {
   ba: [{
     cb: {
       xd: "b",
-      aa$title: "b",
-      ea1: "e d",
-      de: "a0"
+      ja: {
+        title: "b",
+        onClick: _(["Aa", "b"], "a0")
+      },
+      ea1: "d"
     }
   }, "b1"]
 }
@@ -22,9 +24,11 @@ a, {
   ba: [{
     cb: {
       xd: "c",
-      aa$title: "c",
-      ea1: "e d",
-      de: "a0"
+      ja: {
+        title: "c",
+        onClick: _(["Aa", "b"], "a0")
+      },
+      ea1: "d"
     }
   }, "b1"]
 }

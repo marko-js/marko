@@ -1,7 +1,7 @@
 <button>toggle</button><!--M_$1 a-->
 <section><strong>two <!>b1<!--M_$2 a--></strong></section><!--M_$1 b-->
 <section class=b1><strong>two <!>b1<!--M_$3 a--></strong></section><!--M_$1 c-->
-<section class=b1 id=partial><strong>two <!>b1<!--M_$4 a--></strong></section>
+<section id=partial class=b1><strong>two <!>b1<!--M_$4 a--></strong></section>
 <!--M_$1 d-->
 <script>
   WALKER_RUNTIME("M")("_").n = "b";
@@ -20,17 +20,17 @@
     j: {
       content: _(1, "a2")
     },
-    l: "b1: 3 content renders",
-    m: new Set([_(2), _(3), _(4)])
+    n: "b1: 3 content renders",
+    o: new Set([_(2), _(3), _(4)])
   }, {
     _: _(1),
-    Cm: 1
+    Co: 1
   }, {
     _: _(1),
-    Cm: 1
+    Co: 1
   }, {
     _: _(1),
-    Cm: 1
-  }], "a4 1 a5 1"];
+    Co: 1
+  }], "a4 1 a5 1 a6 1"];
   M._.w()
 </script>

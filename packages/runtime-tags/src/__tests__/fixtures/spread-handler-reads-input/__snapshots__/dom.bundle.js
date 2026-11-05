@@ -5,11 +5,11 @@ const $count = /*@__PURE__*/ _let(8, ($scope) => {
 	_text($scope.e, $scope.i);
 	$if($scope, $scope.i ? 0 : 1);
 });
-const $setup__script = _script("a0", ($scope) => {
-	_on($scope.b, "click", function() {
-		console.log("clicked " + $scope.h);
-	});
-	_on($scope.d, "click", function() {
-		$count($scope, +$scope.i + 1);
-	});
-});
+const $setup__script = _script("a1", ($scope) => _on($scope.d, "click", function() {
+	$count($scope, +$scope.i + 1);
+}));
+const $attrs2__script = _script("a2", ($scope) => _attrs_script($scope, "b"));
+const $attrs = ($scope) => function() {
+	console.log("clicked " + $scope.h);
+};
+_resumed.a0 = $attrs;

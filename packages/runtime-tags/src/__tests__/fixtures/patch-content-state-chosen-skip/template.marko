@@ -18,7 +18,8 @@ static function takeRenders() {
   <strong>two ${input.b}${rendering()}</strong>
 </define>
 <section content=(mode ? one : two)/>
-<section ...{ class: input.b, content: mode ? one : two }/>
-<section ...{ class: input.b, content: mode ? one : two } id="partial"/>
+<const/attrs={ class: input.b, content: mode ? one : two }/>
+<section ...attrs/>
+<section ...attrs id="partial"/>
 <const/status=`${input.b}: ${takeRenders()} content renders`/>
 <script>console.log(status)</script>

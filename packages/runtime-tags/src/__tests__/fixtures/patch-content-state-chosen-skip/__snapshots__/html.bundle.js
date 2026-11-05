@@ -9,9 +9,9 @@ function takeRenders() {
 	contentRenders = 0;
 	return renders;
 }
-_shells({ a: "a !a5; b b b ;<button>toggle</button><section></section><section></section><section id=partial></section>" });
+_shells({ a: "a !a6; b b b ;<button>toggle</button><section></section><section></section><section id=partial></section>" });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_b = _write_guard($scope0_reason, 0), $cg__input_b = _client_guard($scope0_reason, 0), $wi__input_b = _write_if($scope0_reason, 0), $fg__input_b = _filled_guard($scope0_reason, 0), $sg__input_b = _server_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_b = _write_guard($scope0_reason, 0), $cg__input_b = _client_guard($scope0_reason, 0), $wi__input_b = _write_if($scope0_reason, 0), $sg__input_b = _server_guard($scope0_reason, 0), $fg__input_b = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_b__closures = /* @__PURE__ */ new Set();
 	let mode = false;
@@ -31,27 +31,33 @@ var template_default = _template("a", (input) => {
 		$cg__input_b && _patch_render($scope2_id, "a3");
 		_subscribe($wi__input_b && $input_b__closures, _scope($scope2_id, {
 			_: _scope_with_id($scope0_id),
-			Cm: $wi__input_b && 1
+			Co: $wi__input_b && 1
 		}), $cg__input_b && "a3", $wg__input_b);
 		$wg__input_b || _resume_branch($scope2_id);
 	}, $scope0_id) };
 	_html("<section>");
 	_attr_content("b", $scope0_id, two, 0);
-	_html(`</section>${_el_mark($scope0_id, "b")}<section${_attr_class(input.b, $scope0_id, "ac$class", $scope0_reason, 0)}>`);
-	_attr_content("c", $scope0_id, two, 1);
-	_html(`</section>${_el_mark($scope0_id, "c")}<section${_attr_class(input.b, $scope0_id, "ad$class", $scope0_reason, 0)} id=partial>`);
-	_attr_content("d", $scope0_id, two, 2);
+	const attrs = {
+		class: input.b,
+		content: two
+	};
+	_html(`</section>${_el_mark($scope0_id, "b")}<section`);
+	_attrs_content(attrs, "c", $scope0_id, "section", 1);
+	_html(`</section>${_el_mark($scope0_id, "c")}<section id=partial`);
+	_attrs_partial_content(attrs, { id: 1 }, "d", $scope0_id, "section", 2);
 	const status = `${input.b}: ${takeRenders()} content renders`;
 	_html(`</section>${_el_mark($scope0_id, "d")}`);
-	_script($scope0_id, "a4", 1, $fg__input_b, "l");
-	_script($scope0_id, "a5");
-	$fg__input_b && _patch_subscribers($scope0_id, "a6", "g");
+	_script($scope0_id, "a4", 1, $fg__input_b, "n");
+	_script($scope0_id, "a5", 1, $sg__input_b && 2, "g");
+	_script($scope0_id, "a6");
+	$fg__input_b && _patch_subscribers($scope0_id, "a7", "g");
+	_patch_render($scope0_id, "a8", $fg__input_b && "g");
 	_scope($scope0_id, {
 		g: input.b,
 		h: mode,
 		i: one,
 		j: two,
-		l: status,
-		m: $wi__input_b && $input_b__closures
-	}) || ($fg__input_b && _patch_write($scope0_id, "xg", input.b, !$sg__input_b), $fg__input_b && _patch_write($scope0_id, "xl", status, !$sg__input_b));
+		n: status,
+		o: $wi__input_b && $input_b__closures
+	}) || ($fg__input_b && _patch_write($scope0_id, "xg", input.b, !$sg__input_b), $fg__input_b && _patch_write($scope0_id, "xn", status, !$sg__input_b));
 }, 1);

@@ -6,7 +6,12 @@ function boom() {
 }
 const $try_content__input_fail = /*@__PURE__*/ _closure_get_patch("__tests__/tags/error-wrapper.marko_2_input_fail#0:4/subscribe", "input_fail/6", ($scope) => _text($scope["#text/0"], $scope._.input_fail ? boom() : "ok"));
 const $try_content__setup = $try_content__input_fail;
-const $catch_content__input_fallback = /*@__PURE__*/ _closure_get_patch("__tests__/tags/error-wrapper.marko_1_input_fallback#0:3/subscribe", "input_fallback/5", ($scope) => _attr_content($scope, "#div/1", $scope._.input_fallback), 0, "__tests__/tags/error-wrapper.marko_0_input_fallback#3/subscribers", 0);
+const $catch_content__attrs__script = _script("__tests__/tags/error-wrapper.marko_1_attrs#5", ($scope) => _attrs_script($scope, "#div/1"));
+const $catch_content__attrs = /*@__PURE__*/ _const("attrs", ($scope) => {
+	$catch_content__attrs__script($scope);
+	_attrs_content($scope, "#div/1", $scope.attrs);
+});
+const $catch_content__input_fallback = /*@__PURE__*/ _closure_get_patch("__tests__/tags/error-wrapper.marko_1_input_fallback#0:3/subscribe", "input_fallback/5", ($scope) => $catch_content__attrs($scope, { content: $scope._.input_fallback }), 0, "__tests__/tags/error-wrapper.marko_0_input_fallback#3/subscribers", 0);
 const $catch_content__setup = $catch_content__input_fallback;
 const $catch_content__err_message = ($scope, err_message) => _text($scope["#text/0"], err_message);
 const $catch_content__$params = ($scope, $params2) => $catch_content__err_message($scope, $params2[0]?.message);

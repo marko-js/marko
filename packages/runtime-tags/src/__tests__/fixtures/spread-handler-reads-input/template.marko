@@ -1,6 +1,7 @@
 <let/count=0/>
 <p>${input.label}</p>
-<div ...{ title: input.label, onClick() { console.log("clicked " + input.label) } }/>
+<const/attrs={ title: input.label, onClick() { console.log("clicked " + input.label) } }/>
+<div ...attrs/>
 <if=count>
   <em>${input.label}</em>
 </if>

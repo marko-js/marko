@@ -2,9 +2,11 @@
 a, {
   cb: {
     xd: "b",
-    aa$title: "b",
-    ea1: "e d",
-    de: "a0"
+    ja: {
+      title: "b",
+      onClick: _(["b"], "a0")
+    },
+    ea1: "d"
   }
 }
 
@@ -12,8 +14,10 @@ a, {
 a, {
   cb: {
     xd: "c",
-    aa$title: "c",
-    ea1: "e d",
-    de: "a0"
+    ja: {
+      title: "c",
+      onClick: _(["b"], "a0")
+    },
+    ea1: "d"
   }
 }

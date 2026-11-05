@@ -2,12 +2,22 @@
 const $template$1 = "<section></section><div id=partial></div>";
 const $walks$1 = " b b";
 const $one_content = _content("__tests__/tags/frag-host.marko_2*content", "<em>one</em>");
-const $two_content__input_b = /*@__PURE__*/ _closure_get_patch("__tests__/tags/frag-host.marko_1_input_b#0:4/subscribe", "input_b/9", ($scope) => _text($scope["#text/0"], $scope._.input_b), 0, "__tests__/tags/frag-host.marko_0_input_b#4/subscribers", 0);
+const $two_content__input_b = /*@__PURE__*/ _closure_get_patch("__tests__/tags/frag-host.marko_1_input_b#0:4/subscribe", "input_b/11", ($scope) => _text($scope["#text/0"], $scope._.input_b), 0, "__tests__/tags/frag-host.marko_0_input_b#4/subscribers", 0);
 const $two_content__setup = $two_content__input_b;
 const $two_content = _content("__tests__/tags/frag-host.marko_1*content", "<strong> </strong>", "D ", $two_content__setup);
+const $sectionAttrs__script = _script("__tests__/tags/frag-host.marko_0_sectionAttrs#9", ($scope) => _attrs_script($scope, "#section/0"));
+const $sectionAttrs = /*@__PURE__*/ _const("sectionAttrs", ($scope) => {
+	$sectionAttrs__script($scope);
+	_attrs_content($scope, "#section/0", $scope.sectionAttrs);
+});
+const $divAttrs__script = _script("__tests__/tags/frag-host.marko_0_divAttrs#10", ($scope) => _attrs_script($scope, "#div/1"));
+const $divAttrs = /*@__PURE__*/ _const("divAttrs", ($scope) => {
+	$divAttrs__script($scope);
+	_attrs_partial_content($scope, "#div/1", $scope.divAttrs, { id: 1 });
+});
 const $input_mode__OR__one__OR__two = /*@__PURE__*/ _or_patch("__tests__/tags/frag-host.marko_0_input_mode#5_one#6_two#7/setup", 8, ($scope) => {
-	_attr_content($scope, "#section/0", $scope.input_mode ? $scope.one : $scope.two);
-	_attr_content($scope, "#div/1", $scope.input_mode ? $scope.two : $scope.one);
+	$sectionAttrs($scope, { content: $scope.input_mode ? $scope.one : $scope.two });
+	$divAttrs($scope, { content: $scope.input_mode ? $scope.two : $scope.one });
 }, 2);
 const $one = /*@__PURE__*/ _const("one", $input_mode__OR__one__OR__two);
 const $two = /*@__PURE__*/ _const("two", $input_mode__OR__one__OR__two);

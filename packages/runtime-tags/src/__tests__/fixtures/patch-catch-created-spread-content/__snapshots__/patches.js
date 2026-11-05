@@ -1,17 +1,20 @@
 // PATCH
-[`b2`, `a1 a5`]
+[`b3 !b0`, `a1 a5`]
 {
   cc: {
     ka: [{
       ta: "SHOWN_message",
       fb: "^^^a1",
+      s: {
+        jb: {}
+      },
       cAb: {
         ta: "b",
         s: {
           Sa0: 0
         }
       }
-    }, "b2"]
+    }, "b3"]
   },
   Sa3: "g",
   xg: "b"
@@ -24,13 +27,16 @@
     ka: [{
       ta: "SHOWN_message",
       fb: "^^^a1",
+      s: {
+        jb: {}
+      },
       cAb: {
         ta: "c",
         s: {
           Sa0: 0
         }
       }
-    }, "b2"]
+    }, "b3"]
   },
   Sa3: "g",
   xg: "c"
@@ -42,13 +48,16 @@
     ka: [{
       ta: "SHOWN_message",
       fb: "^^^a1",
+      s: {
+        jb: {}
+      },
       cAb: {
         ta: "e",
         s: {
           Sa0: 0
         }
       }
-    }, "b2"]
+    }, "b3"]
   },
   Sa3: "g",
   xg: "e"
@@ -59,7 +68,7 @@
   cc: {
     cAa: [{
       ta: "ok"
-    }, "b2"]
+    }, "b3"]
   },
   Sa3: "g",
   xg: "d"

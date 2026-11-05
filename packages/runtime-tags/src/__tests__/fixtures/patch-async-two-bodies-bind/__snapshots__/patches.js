@@ -9,9 +9,11 @@
   },
   cAb: {
     xd: "b2",
-    de: "a0",
-    aa$title: "b2",
+    ja: {
+      title: "b2",
+      onClick: _(["Ab"], "a0")
+    },
     tb: "b2",
-    ea5: "e d"
+    ea5: "d"
   }
 }

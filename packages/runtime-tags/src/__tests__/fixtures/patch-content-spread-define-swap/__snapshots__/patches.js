@@ -1,21 +1,25 @@
 // PATCH
-`a2;Db%;<strong>two <!></strong>`
+`a2`
 {
   fa: "^a2",
+  ja: {},
   cAa: {
     ta: "t2"
   },
-  Sa4: "d"
+  Sa5: "d",
+  xd: "t2"
 }
 ;BgI
 
 // PATCH holding BgI
-`a0;Db%;<em>one <!></em>`
+`a0`
 {
   fa: "^a0",
+  ja: {},
   cAa: {
     ta: "t3"
   },
-  Sa4: "d"
+  Sa5: "d",
+  xd: "t3"
 }
 ;BwY

@@ -1,13 +1,13 @@
 // template.marko
 _shells({
-	a1: "a1; D ;<button> </button>",
+	a1: "a1 !a5; D ;<button> </button>",
 	a2: "a2;D ;<em> </em>",
 	a3: "a3;D ;<em> </em>",
-	a4: "a4; D ;<button> </button>",
+	a4: "a4 !a5; D ;<button> </button>",
 	a: "a;D%b%;<main><!><!></main>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_second = _server_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_second = _client_guard($scope0_reason, 1), $sg__input_second = _server_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_html("<main>");
 	_await($scope0_id, "a", input.first, (first) => {
@@ -19,12 +19,16 @@ var template_default = _template("a", (input) => {
 		const $scope2_id = _scope_id();
 		_filled_guard($scope0_reason, 1) && _patch_write($scope2_id, "xd", second, !$sg__input_second);
 		const handler = _bind_resume((event) => event.target.dataset.seen = second, "a0", $scope2_id);
-		_filled_guard($scope0_reason, 1) && _patch_write($scope2_id, "xe", handler, !$sg__input_second);
-		_html(`<button${_attr("title", second, $scope2_id, "aa$title", $scope0_reason, 1)}>${_text_mark($scope2_id, "b", second, 1, $scope0_reason, 1)}</button>${_el_mark($scope2_id, "a")}`);
-		_script($scope2_id, "a5", 1, _filled_guard($scope0_reason, 1), ["e", "d"]);
+		_html(`<button${_attrs({
+			title: second,
+			onClick: handler
+		}, "a", $scope2_id, "button", 0, $scope0_reason, 1)}>${_text_mark($scope2_id, "b", second, 1, $scope0_reason, 1)}</button>${_el_mark($scope2_id, "a")}`);
+		_script($scope2_id, "a5", 1, _filled_guard($scope0_reason, 1), "d");
+		$cg__input_second && _patch_write($scope2_id, "we", handler, 1);
+		$cg__input_second && _patch_render($scope2_id, "a6");
 		_scope($scope2_id, {
 			d: second,
-			e: handler
+			e: _unfilled_if($scope0_reason, 1) && handler
 		});
 	}, 1, "a1", _unfilled_if($scope0_reason, 1) && 2, 1);
 	_html("</main>");

@@ -2,10 +2,12 @@
 <const/handler=(event) => event.target.dataset.seen = input.title/>
 <main>
   <await=input.one>
-    <button id="one" ...{ title: input.title, onClick: handler }>one</button>
+    <const/attrs={ title: input.title, onClick: handler }/>
+    <button id="one" ...attrs>one</button>
   </await>
   <await=input.two>
-    <button id="two" ...{ title: input.title, onClick: handler }>two</button>
+    <const/attrs={ title: input.title, onClick: handler }/>
+    <button id="two" ...attrs>two</button>
   </await>
   <em>${count}</em>
 </main>

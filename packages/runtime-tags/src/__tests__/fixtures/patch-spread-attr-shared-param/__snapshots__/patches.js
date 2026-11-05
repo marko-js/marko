@@ -1,7 +1,10 @@
 // PATCH
 {
-  aa$href: "/b",
-  aa$title: "B",
-  aa$class: "two",
-  ab$src: "/b?w=2"
+  ja: {
+    href: "/b",
+    title: "B",
+    class: "two"
+  },
+  ab$src: "/b?w=2",
+  ea0: "e f g"
 }

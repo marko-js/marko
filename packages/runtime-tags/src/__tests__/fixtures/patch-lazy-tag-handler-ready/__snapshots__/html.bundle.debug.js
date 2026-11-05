@@ -1,22 +1,23 @@
 // child.marko
 const $template$1 = "<button>go</button>";
 const $walks$1 = " b";
-const $setup$1 = [[], []];
-_shells({ "__tests__/child.marko": "__tests__/child.marko; ;<button>go</button>" });
+const $setup$1 = [[], ["__tests__/child.marko_0_attrs#5"]];
+_shells({ "__tests__/child.marko": "__tests__/child.marko !__tests__/child.marko_0_attrs#5; ;<button>go</button>" });
 var child_default = _template("__tests__/child.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_title = _filled_guard($scope0_reason, 0), $sg__input_title = _server_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $fg__input_title = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	$fg__input_title && _patch_write($scope0_id, "PatchMarkedWrite:input_title", input.title, !$sg__input_title);
+	$fg__input_title && _patch_write($scope0_id, "PatchMarkedWrite:input_title", input.title, !_server_guard($scope0_reason, 0));
 	const handler = _bind_resume((event) => event.target.dataset.seen = input.title, "__tests__/child.marko_0/handler", $scope0_id);
-	_html(`<button${_attr("title", input.title, $scope0_id, "PatchAttr:#button/0 title", $scope0_reason, 0)}>go</button>${_el_mark($scope0_id, "#button/0")}`);
-	_script($scope0_id, "__tests__/child.marko_0_handler#4", 1, $fg__input_title, ["handler", "input_title"]);
-	_scope($scope0_id, {
-		input_title: input.title,
-		handler
-	}, "__tests__/child.marko", 0, {
+	const attrs = {
+		title: input.title,
+		onClick: handler
+	};
+	_html(`<button${_attrs(attrs, "#button/0", $scope0_id, "button", 0, $scope0_reason, 0)}>go</button>${_el_mark($scope0_id, "#button/0")}`);
+	_script($scope0_id, "__tests__/child.marko_0_attrs#5", 1, $fg__input_title, "input_title");
+	_scope($scope0_id, { input_title: input.title }, "__tests__/child.marko", 0, {
 		input_title: ["input.title"],
-		handler: "1:8"
-	}) || $fg__input_title && _patch_write($scope0_id, "PatchMarkedWrite:handler", handler, !$sg__input_title);
+		"EventAttributes:#button/0": ["...attrs", "3:12"]
+	});
 });
 
 // template.marko
