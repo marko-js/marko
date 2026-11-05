@@ -22,7 +22,7 @@ const $Lazy_withLoadAssets = withLoadAssets(() => lazy_default, "__tests__/lazy.
 const $setup = [[], ["__tests__/template.marko_0"]];
 _shells({
 	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0; b%b%;<button class=open>open</button><!><!><!>",
-	"__tests__/template.marko_2*shell": `__tests__/template.marko_2*shell${_shell_marker([[], []], [">#childScope/0>", _shell_setup([[], []], ["#childScope/1>", $setup$1])])};${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Row_content__walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Row_content__template)}`
+	"__tests__/template.marko_2*shell": `__tests__/template.marko_2*shell${_shell_marker([[], []], ["#childScope/0>", _shell_setup([[], []], ["#childScope/1>", $setup$1])])};${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Row_content__walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Row_content__template)}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason();

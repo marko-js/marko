@@ -17,7 +17,7 @@ const $Wrap_content__walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks);
 const $Wrap_content__template = $template;
 _shells({
 	a: "a;b%;<!><!><!>",
-	a2: `a2${_shell_marker([[], []], [">a>", _shell_setup([[], []], ["a>", $setup])])};${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Wrap_content__walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Wrap_content__template)}`
+	a2: `a2${_shell_marker([[], []], ["a>", _shell_setup([[], []], ["a>", $setup])])};${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Wrap_content__walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Wrap_content__template)}`
 });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 1), $cg__input_show = _client_guard($scope0_reason, 0);

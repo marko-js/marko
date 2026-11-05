@@ -3,7 +3,7 @@ const $Counter_content__walks = "E%c%l l";
 const $Counter_content__template = "<div class=counter><span><!>: <!></span><button class=inc>+</button></div>";
 _shells({
 	a: "a; ;<main></main>",
-	a5: `a5 !>a>a1;${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Counter_content__walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Counter_content__template)}`
+	a5: `a5 !a>a1;${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Counter_content__walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Counter_content__template)}`
 });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 1), $cg__input_show = _client_guard($scope0_reason, 1), $fg__input_title = _filled_guard($scope0_reason, 2), $fg__input_start = _filled_guard($scope0_reason, 3);

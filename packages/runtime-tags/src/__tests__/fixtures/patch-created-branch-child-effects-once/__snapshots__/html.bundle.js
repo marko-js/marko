@@ -44,7 +44,7 @@ _shells({
 	a4: `a4${_shell_marker([[], ["a15"]], ["a>", $setup$2])}`,
 	a5: "a5 !a12;b%;<em>content</em><!><!>",
 	a: "a !a22; D l%;<button> </button><!><!>",
-	a6: `a6${_shell_marker([["a27"], ["a18"]], ["a>", $setup$1], [">b>", [[], ["a1"]]], ["e>", $setup])};${/*@__PURE__*/ ((_w0, _w1, _w2) => `/${_w0}&/${_w1}&%b%b/${_w2}&%c`)($walks, $Body_content__walks, "D%l")};${/*@__PURE__*/ ((_w0, _w1, _w2) => `${_w0}${_w1}<!><!>${_w2}<!><!>`)($template$1, $Body_content__template, $template)}`,
+	a6: `a6${_shell_marker([["a27"], ["a18"]], ["a>", $setup$1], ["b>", [[], ["a1"]]], ["e>", $setup])};${/*@__PURE__*/ ((_w0, _w1, _w2) => `/${_w0}&/${_w1}&%b%b/${_w2}&%c`)($walks, $Body_content__walks, "D%l")};${/*@__PURE__*/ ((_w0, _w1, _w2) => `${_w0}${_w1}<!><!>${_w2}<!><!>`)($template$1, $Body_content__template, $template)}`,
 	a3: "a3;D ;<i> </i>",
 	a7: "a7 !a10,<u>nested</u>",
 	a8: "a8,",

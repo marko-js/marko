@@ -1,5 +1,5 @@
 // PATCH
-`a5 !>a>a1;b/E%c%l l&b;<!><div class=counter><span><!>: <!></span><button class=inc>+</button></div><!>`
+`a5 !a>a1;b/E%c%l l&b;<!><div class=counter><span><!>: <!></span><button class=inc>+</button></div><!>`
 {
   ba: [{
     ca: {

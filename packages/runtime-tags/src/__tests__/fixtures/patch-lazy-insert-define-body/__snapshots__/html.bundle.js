@@ -19,7 +19,7 @@ const $Row_content__template = /*@__PURE__*/ ((_w0) => `<!><!>${_w0}<!>`)($templ
 const $Lazy_withLoadAssets = withLoadAssets(() => lazy_default, "a", flush, "_a");
 _shells({
 	b: "b !b2; b%b%;<button class=open>open</button><!><!><!>",
-	b1: `b1${_shell_marker([[], []], [">a>", _shell_setup([[], []], ["b>", $setup])])};${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Row_content__walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Row_content__template)}`
+	b1: `b1${_shell_marker([[], []], ["a>", _shell_setup([[], []], ["b>", $setup])])};${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Row_content__walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Row_content__template)}`
 });
 var template_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();

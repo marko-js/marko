@@ -3,7 +3,7 @@ const $Probe_content__walks = "b";
 const $Probe_content__template = "<p>probe</p>";
 _shells({
 	a: "a;b%;<!><!><!>",
-	a2: `a2 !>a>a1;${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Probe_content__walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Probe_content__template)}`
+	a2: `a2 !a>a1;${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Probe_content__walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Probe_content__template)}`
 });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0);

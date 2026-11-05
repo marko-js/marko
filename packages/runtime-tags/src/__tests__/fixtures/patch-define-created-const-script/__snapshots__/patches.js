@@ -1,5 +1,5 @@
 // PATCH
-`a2 !>a>a1;b/b&b;<!><p>probe</p><!>`
+`a2 !a>a1;b/b&b;<!><p>probe</p><!>`
 {
   ba: [{
     ca: {

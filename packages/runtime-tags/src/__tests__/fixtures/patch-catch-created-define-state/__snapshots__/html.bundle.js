@@ -44,7 +44,7 @@ function boom(error) {
 }
 const $LazyChild_withLoadAssets = withLoadAssets(() => lazy_child_default, "b", flush, "_b");
 _shells({
-	c11: `c11${_shell_marker([[], []], [">b>", [[""], []]], [">b>", _shell_setup([[], []], ["b>", $setup$1])], [">c>", [[""], []]], [">c>", _shell_setup([[], []], ["a>", $setup])], [">d>", [[], ["c5"]]], [">e>", [[""], []]], [">e>", _shell_setup([[], []], [">a>", [[""], []]], [">a>", _shell_setup([[], []], ["b>", $setup$1])])])};${/*@__PURE__*/ ((_w0, _w1, _w2, _w3) => `D l/${_w0}&/${_w1}&/${_w2}&/${_w3}&b`)($LazyBody_content__walks, $ChildBody_content__walks, $OwnBody_content__walks, $Outer_content__walks)};${/*@__PURE__*/ ((_w0, _w1, _w2, _w3) => `<b> </b>${_w0}${_w1}${_w2}${_w3}<!>`)($LazyBody_content__template, $ChildBody_content__template, $OwnBody_content__template, $Outer_content__template)}`,
+	c11: `c11${_shell_marker([[], []], [">b>", [[""], []]], [">b>", _shell_setup([[], []], ["b>", $setup$1])], [">c>", [[""], []]], [">c>", _shell_setup([[], []], ["a>", $setup])], ["d>", [[], ["c5"]]], [">e>", [[""], []]], [">e>", _shell_setup([[], []], [">a>", [[""], []]], [">a>", _shell_setup([[], []], ["b>", $setup$1])])])};${/*@__PURE__*/ ((_w0, _w1, _w2, _w3) => `D l/${_w0}&/${_w1}&/${_w2}&/${_w3}&b`)($LazyBody_content__walks, $ChildBody_content__walks, $OwnBody_content__walks, $Outer_content__walks)};${/*@__PURE__*/ ((_w0, _w1, _w2, _w3) => `<b> </b>${_w0}${_w1}${_w2}${_w3}<!>`)($LazyBody_content__template, $ChildBody_content__template, $OwnBody_content__template, $Outer_content__template)}`,
 	c12: "c12;D ;<p> </p>",
 	c: "c;b%;<!><!><!>"
 });

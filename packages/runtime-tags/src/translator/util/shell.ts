@@ -591,8 +591,12 @@ export const [getShellSetup] = createOutputSectionState<
       let hop = getScopeAccessor(op.binding) + ">";
       if (renderer.kind === StructureKind.SectionRef) {
         const body = renderer.section;
-        for (let cur = section; cur !== body.parent; cur = cur.parent!) {
-          hop = ">" + hop;
+        // Only a body reading its owner climbs to it; else the call site owns
+        // it, as its patch link names.
+        if (body.readsOwner) {
+          for (let cur = section; cur !== body.parent; cur = cur.parent!) {
+            hop = ">" + hop;
+          }
         }
         const setup = patchComposes(body) && getShellSetup(body);
         // A body reading its owner gets it from its hop: an id-less one
