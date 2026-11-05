@@ -4,20 +4,12 @@ const $walks = "b%c%c%c";
 const $el3_getter = _hoist_resume("__tests__/template.marko_0_#li#4:0/hoist", "#li/0", "BranchScopes:#ul/0", "BranchScopes:#text/2");
 const $for_content4__setup = ($scope) => _attr($scope["#li/0"], "data-index", $scope._["#LoopKey"] * 4 + $scope["#LoopKey"]);
 const $for_content3__for = /*@__PURE__*/ _for_to_unkeyed("#ul/0", "<li></li>", " ", $for_content4__setup);
-const $for_content3__setup = ($scope) => $for_content3__for($scope, [
-	3,
-	0,
-	1
-]);
+const $for_content3__setup = ($scope) => $for_content3__for($scope, [3]);
 const $el2_getter = /*@__PURE__*/ _hoist("#div/0", "BranchScopes:#text/1");
 const $el_getter = /*@__PURE__*/ _hoist("#div/0", "BranchScopes:#text/0");
 const $for = /*@__PURE__*/ _for_to_unkeyed("#text/0", "<div></div>", " ");
 const $for2 = /*@__PURE__*/ _for_to_unkeyed("#text/1", "<div></div>", " ");
-const $to = /*@__PURE__*/ _let("to/3", ($scope) => $for2($scope, [
-	$scope.to,
-	0,
-	1
-]));
+const $to = /*@__PURE__*/ _let("to/3", ($scope) => $for2($scope, [$scope.to]));
 const $for3 = /*@__PURE__*/ _for_to_unkeyed("#text/2", "<ul></ul>", " ", $for_content3__setup);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	{
@@ -40,17 +32,9 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	}
 });
 function $setup($scope) {
-	$for($scope, [
-		5,
-		0,
-		1
-	]);
+	$for($scope, [5]);
 	$to($scope, 3);
-	$for3($scope, [
-		3,
-		0,
-		1
-	]);
+	$for3($scope, [3]);
 	$setup__script($scope);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

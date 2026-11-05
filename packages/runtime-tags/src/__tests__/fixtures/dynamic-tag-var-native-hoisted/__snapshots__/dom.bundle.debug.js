@@ -24,11 +24,7 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	for (const item of $item_getter($scope)) item.setAttribute("data-mounted", "");
 });
 function $setup($scope) {
-	$for($scope, [
-		2,
-		0,
-		1
-	]);
+	$for($scope, [2]);
 	$setup__script($scope);
 }
 const $input = ($scope, input) => {

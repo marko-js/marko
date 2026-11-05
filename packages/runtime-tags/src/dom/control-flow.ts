@@ -1034,14 +1034,14 @@ export const _for_in = /*@__PURE__*/ loop<
 }, reorderKeyed);
 
 export const _for_to = /*@__PURE__*/ loop<
-  [to: number, from: number, step: number, by?: (v: number) => unknown]
+  [to: number, from?: number, step?: number, by?: (v: number) => unknown]
 >(([to, from, step, by], cb) => {
   by ||= byFirstArg;
   forTo(to, from, step, (v) => cb(by(v), [v]));
 }, reorderKeyed);
 
 export const _for_until = /*@__PURE__*/ loop<
-  [until: number, from: number, step: number, by?: (v: number) => unknown]
+  [until: number, from?: number, step?: number, by?: (v: number) => unknown]
 >(([until, from, step, by], cb) => {
   by ||= byFirstArg;
   forUntil(until, from, step, (v) => cb(by(v), [v]));
@@ -1054,11 +1054,11 @@ export const _for_of_unkeyed = /*@__PURE__*/ loop<[all: unknown[]]>(
 );
 
 export const _for_to_unkeyed = /*@__PURE__*/ loop<
-  [to: number, from: number, step: number]
+  [to: number, from?: number, step?: number]
 >(([to, from, step], cb) => forTo(to, from, step, (v) => cb(v, [v])));
 
 export const _for_until_unkeyed = /*@__PURE__*/ loop<
-  [until: number, from: number, step: number]
+  [until: number, from?: number, step?: number]
 >(([until, from, step], cb) => forUntil(until, from, step, (v) => cb(v, [v])));
 
 function reorderKeyed(

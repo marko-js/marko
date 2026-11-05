@@ -37,11 +37,7 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($sc
 }));
 function $setup($scope) {
 	$Tag($scope, child_default);
-	$for($scope, [
-		2,
-		0,
-		1
-	]);
+	$for($scope, [2]);
 	$setup__script($scope);
 }
 const $v = _var_resume("__tests__/template.marko_0_v#6/var", /*@__PURE__*/ _const("v", ($scope) => $v_n($scope, $scope.v?.n)));

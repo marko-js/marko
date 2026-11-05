@@ -13,11 +13,7 @@ const $for = /*@__PURE__*/ _for_until_unkeyed("#text/4", $template$1, /*@__PURE_
 const $x = _var_resume("__tests__/template.marko_0_x#8/var", /*@__PURE__*/ _const("x", ($scope) => {
 	$input_value($scope["#childScope/2"], $scope.x);
 	$if($scope, $scope.x > 1 ? 0 : 1);
-	$for($scope, [
-		$scope.x,
-		0,
-		1
-	]);
+	$for($scope, [$scope.x]);
 	$if_content__x($scope);
 	$for_content__x($scope);
 }));

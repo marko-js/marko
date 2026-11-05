@@ -29,10 +29,6 @@ const $for_content__try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_
 const $for_content__setup = $for_content__try;
 const $for = /*@__PURE__*/ _for_until_unkeyed("#text/0", "<!><!><!>", "b%", $for_content__setup);
 function $setup($scope) {
-	$for($scope, [
-		55,
-		0,
-		1
-	]);
+	$for($scope, [55]);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", $setup);
