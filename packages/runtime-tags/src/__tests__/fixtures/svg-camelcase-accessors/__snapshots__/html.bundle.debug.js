@@ -4,7 +4,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let gradId = "grad";
 	let show = true;
-	_html(`<svg><linearGradient${_attr("id", gradId)}><stop offset=0% stop-color=gold></stop></linearGradient>${_el_resume($scope0_id, "#lineargradient/0")}<clipPath>`);
+	_html(`<svg><linearGradient${_attr("id", gradId)}><stop offset=0% stop-color=gold></stop></linearGradient>${_el_mark($scope0_id, "#lineargradient/0")}<clipPath>`);
 	_if(() => {
 		if (show) {
 			const $scope1_id = _scope_id();
@@ -13,7 +13,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "#clippath/1", 1, 1, 1, "</clipPath>", 1);
-	_html(`</svg><button>toggle</button>${_el_resume($scope0_id, "#button/2")}`);
+	_html(`</svg><button>toggle</button>${_el_mark($scope0_id, "#button/2")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, { show }, "__tests__/template.marko", 0, { show: "2:6" });
 }, 1);

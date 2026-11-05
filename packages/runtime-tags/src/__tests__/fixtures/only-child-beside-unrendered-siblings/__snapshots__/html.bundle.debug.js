@@ -13,7 +13,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "#div/0", 1, 1, 1, "</div>", 1);
-	_html(`<button>toggle</button>${_el_resume($scope0_id, "#button/1")}`);
+	_html(`<button>toggle</button>${_el_mark($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		open,

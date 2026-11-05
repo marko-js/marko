@@ -16,7 +16,7 @@ var heading_default = _template("b", (input) => {
 	_dynamic_tag($scope0_id, "a", input.type, { item: attrTag({ content: _content_resume("b1", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
-		_html(`text ${_text_resume($scope1_id, "a", input.text, $wg__input_text * 2)}`);
+		_html(`text ${_text_mark($scope1_id, "a", input.text, $wg__input_text * 2)}`);
 		$wi__input_type__OR__input_text && _subscribe($wi__input_text && $input_text__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "b0", $wg__input_text);
 		$wg__input_text || $wi__input_type__OR__input_text && _resume_branch($scope1_id);
 	}, $scope0_id, ($scope) => [{ e: input.text }]) }) }, 0, 0, $wg__input_type);

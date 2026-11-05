@@ -17,7 +17,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_await($scope3_id, "#text/0", resolveAfter(err.message, 2), (message) => {
 				const $scope4_id = _scope_id();
 				let clicks = 0;
-				_html(`<button>${_text_resume($scope4_id, "#text/1", message, _write_guard($scope3_reason, 0))} ${_text_resume($scope4_id, "#text/2", clicks, 2)}</button>${_el_resume($scope4_id, "#button/0")}`);
+				_html(`<button>${_text_mark($scope4_id, "#text/1", message, _write_guard($scope3_reason, 0))} ${_text_mark($scope4_id, "#text/2", clicks, 2)}</button>${_el_mark($scope4_id, "#button/0")}`);
 				_script($scope4_id, "__tests__/template.marko_4");
 				_scope($scope4_id, { clicks }, "__tests__/template.marko", "9:8", { clicks: "10:14" });
 			});

@@ -5,7 +5,7 @@ var radio_default = _template("b", (input) => {
 	_html(`<input${_attrs({
 		type: "radio",
 		...input
-	}, "a", $scope0_id, "input")}>${_el_resume($scope0_id, "a")}`);
+	}, "a", $scope0_id, "input")}>${_el_mark($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
 	_scope($scope0_id, {});
 });
@@ -36,7 +36,7 @@ var template_default = _template("a", (input) => {
 		checkedValueChange: $checkedValueChange,
 		value: "c"
 	});
-	_html(`<span>${_text_resume($scope0_id, "d", checkedValue)}</span>`);
+	_html(`<span>${_text_mark($scope0_id, "d", checkedValue)}</span>`);
 	_scope($scope0_id, {
 		f: $checkedValueChange,
 		a: _existing_scope($childScope),

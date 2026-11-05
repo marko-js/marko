@@ -4,7 +4,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const $tab__closures = new Set();
 	let tab = 0;
-	_html(`<button>next</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button>next</button>${_el_mark($scope0_id, "#button/0")}`);
 	_try($scope0_id, "#text/1", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
@@ -13,7 +13,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope2_id = _scope_id();
 				_await($scope2_id, "#text/0", tab === 1 ? new Promise(() => {}) : "ready", (value) => {
 					const $scope5_id = _scope_id();
-					_html(_text_resume($scope5_id, "#text/0", value));
+					_html(_text_mark($scope5_id, "#text/0", value));
 					_scope($scope5_id, {}, "__tests__/template.marko", "7:6");
 				});
 				_subscribe($tab__closures, _scope($scope2_id, { "ClosureSignalIndex:tab/3": 1 }, "__tests__/template.marko", "6:4"), "__tests__/template.marko_2_tab#0:2/subscribe", 0);

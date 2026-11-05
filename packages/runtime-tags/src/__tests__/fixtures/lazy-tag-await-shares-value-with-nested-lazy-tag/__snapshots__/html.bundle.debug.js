@@ -3,7 +3,7 @@ var nested_default = _template("__tests__/nested.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 0;
-	_html(`<button class=nested>nested:${_text_resume($scope0_id, "#text/1", count, 2)}</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button class=nested>nested:${_text_mark($scope0_id, "#text/1", count, 2)}</button>${_el_mark($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/nested.marko_0");
 	_scope($scope0_id, {
 		input_shared: input.shared,
@@ -23,7 +23,7 @@ var parent_default = _template("__tests__/parent.marko", (input) => {
 		const $scope1_id = _scope_id();
 		const shared = { n: 1 };
 		let count = 0;
-		_html(`<button class=parent>${_escape(v)}:${_text_resume($scope1_id, "#text/2", count, 2)}</button>${_el_resume($scope1_id, "#button/0")}`);
+		_html(`<button class=parent>${_escape(v)}:${_text_mark($scope1_id, "#text/2", count, 2)}</button>${_el_mark($scope1_id, "#button/0")}`);
 		$Nested_withLoadAssets({ shared });
 		_script($scope1_id, "__tests__/parent.marko_1");
 		_scope($scope1_id, {

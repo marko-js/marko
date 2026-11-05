@@ -4,13 +4,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let visible = false;
 	let v = "init";
-	_html(`<button class=show></button>${_el_resume($scope0_id, "#button/0")}<form>`);
+	_html(`<button class=show></button>${_el_mark($scope0_id, "#button/0")}<form>`);
 	_show_start(visible, 0);
 	_html(`<input${_attr_input_value($scope0_id, "#input/1", v, _resume((_new_v) => {
 		v = _new_v;
-	}, "__tests__/template.marko_0/valueChange", $scope0_id))}>${_el_resume($scope0_id, "#input/1")}`);
+	}, "__tests__/template.marko_0/valueChange", $scope0_id))}>${_el_mark($scope0_id, "#input/1")}`);
 	_show_end($scope0_id, "#text/2", visible, 1, 0, 0, 1);
-	_html(`<button type=reset class=reset></button></form><p>${_text_resume($scope0_id, "#text/3", v)}</p>`);
+	_html(`<button type=reset class=reset></button></form><p>${_text_mark($scope0_id, "#text/3", v)}</p>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {}, "__tests__/template.marko", 0, { "ControlledHandler:#input/1": ["valueChange"] });
 }, 1);

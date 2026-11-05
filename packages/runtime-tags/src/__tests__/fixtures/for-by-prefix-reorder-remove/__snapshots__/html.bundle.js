@@ -15,7 +15,7 @@ var template_default = _template("a", (input) => {
 		_html(`<li>${_escape(row.id)}</li>`);
 		_scope($scope1_id, {});
 	}, "id", $scope0_id, "a", 1, 1, 1, "</ul>", 1);
-	_html(`<button class=reorder>stable prefix, drop tail, swap</button>${_el_resume($scope0_id, "b")}<button class=front>reorder from front and shrink</button>${_el_resume($scope0_id, "c")}<button class=append>append</button>${_el_resume($scope0_id, "d")}`);
+	_html(`<button class=reorder>stable prefix, drop tail, swap</button>${_el_mark($scope0_id, "b")}<button class=front>reorder from front and shrink</button>${_el_mark($scope0_id, "c")}<button class=append>append</button>${_el_mark($scope0_id, "d")}`);
 	_script($scope0_id, "a0");
 	_scope($scope0_id, {
 		e: rows,

@@ -106,12 +106,13 @@ when their combined work becomes relevant. Reasons that follow others
 known-tag param groups) are solved together, repeating until none moves; every
 write merges, so they only grow and cycles settle.
 
-Across known tags, `ensureSectionReasonGroups()` groups child parameter
-dependencies. The parent calls `_set_scope_reason(...)`; the child consumes
-and clears it with `_scope_reason()`. HTML runtime encoding is two bits per
+Across known tags, `ensureSectionReasonGroups()` builds each child's param
+reason groups: the param sets its call sites report as two bits. The parent
+calls `_set_scope_reason(...)`; the child consumes and clears it with
+`_scope_reason()`. HTML runtime encoding is two bits per
 group at `1 + 2 * group` (the low bit says the group serializes; a dynamic
 guard shifts into its place), a keyed object of group values past fifteen
-groups, or none. `write-guard.ts` emits/hoists `_write_if` and
+groups, or none. `write-guard.ts` emits/shares `_write_if` and
 `_write_guard` calls.
 
 ### Signal lowering

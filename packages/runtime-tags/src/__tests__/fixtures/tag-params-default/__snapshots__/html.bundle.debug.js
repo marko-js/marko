@@ -13,12 +13,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const $fallback__closures = new Set();
 	let fallback = "default";
-	_html(`<button id=change>change</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button id=change>change</button>${_el_mark($scope0_id, "#button/0")}`);
 	child_default({ content: _content("__tests__/template.marko_1*content", ($y) => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		const y = void 0 !== $y ? $y : fallback;
-		_html(`<p>${_text_resume($scope1_id, "#text/0", y)}</p>`);
+		_html(`<p>${_text_mark($scope1_id, "#text/0", y)}</p>`);
 		_subscribe($fallback__closures, _scope($scope1_id, {
 			$y,
 			_: _scope_with_id($scope0_id)

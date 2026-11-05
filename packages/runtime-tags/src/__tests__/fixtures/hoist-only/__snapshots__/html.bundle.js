@@ -2,23 +2,24 @@
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $wi__input_value = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	const $hoist1_getter = _hoist($scope0_id, "a2");
+	const $hoist1_getter = _hoist($scope0_id, "a3");
 	const $input_value__closures = /* @__PURE__ */ new Set();
 	const x = $hoist1_getter;
-	const hoist1 = _resume(() => input.value, "a0", $scope0_id);
+	const later = _resume(() => $hoist1_getter, "a0", $scope0_id);
+	const hoist1 = _resume(() => input.value, "a1", $scope0_id);
 	{
 		const $scope1_id = _scope_id();
 		_if(() => {
 			{
 				const $scope2_id = _scope_id();
-				const z = _hoist($scope2_id, "a3");
-				const hoist3 = _resume(() => input.value, "a1", $scope2_id);
-				_script($scope2_id, "a4", 0);
+				const z = _hoist($scope2_id, "a4");
+				const hoist3 = _resume(() => input.value, "a2", $scope2_id);
+				_script($scope2_id, "a5", 0);
 				_subscribe($wi__input_value && $input_value__closures, _scope($scope2_id, {
 					a: z,
 					c: hoist3,
 					_: _scope_with_id($scope1_id)
-				}), "a5", 0);
+				}), "a6", 0);
 				return 0;
 			}
 		}, $scope1_id, "a", 1, 0);
@@ -27,7 +28,8 @@ var template_default = _template("a", (input) => {
 	_scope($scope0_id, {
 		d: input.value,
 		e: x,
-		f: hoist1,
-		g: $wi__input_value && $input_value__closures
+		f: later,
+		g: hoist1,
+		h: $wi__input_value && $input_value__closures
 	});
 }, 1);

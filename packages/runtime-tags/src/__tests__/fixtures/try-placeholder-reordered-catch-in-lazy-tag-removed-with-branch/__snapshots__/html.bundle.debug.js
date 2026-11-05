@@ -5,7 +5,7 @@ var child_default = _template("__tests__/child.marko", (input) => {
 	const $count__closures = new Set();
 	let count = 0;
 	let show = true;
-	_html(`<pre id=log></pre><button class=inc>${_text_resume($scope0_id, "#text/1", count)}</button>${_el_resume($scope0_id, "#button/0")}<button class=hide></button>${_el_resume($scope0_id, "#button/2")}`);
+	_html(`<pre id=log></pre><button class=inc>${_text_mark($scope0_id, "#text/1", count)}</button>${_el_mark($scope0_id, "#button/0")}<button class=hide></button>${_el_mark($scope0_id, "#button/2")}`);
 	_if(() => {
 		if (show) {
 			const $scope1_id = _scope_id();
@@ -34,7 +34,7 @@ var child_default = _template("__tests__/child.marko", (input) => {
 			}, (err) => {
 				_scope_reason();
 				const $scope2_id = _scope_id();
-				_html(`<span>${_text_resume($scope2_id, "#text/0", count)}</span>`);
+				_html(`<span>${_text_mark($scope2_id, "#text/0", count)}</span>`);
 				_script($scope2_id, "__tests__/child.marko_2_count#0:4");
 				_subscribe($count__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/child.marko", "17:6"), "__tests__/child.marko_2_count#0:4/subscribe");
 			}, "__tests__/child.marko_4*content", "__tests__/child.marko_2*content");

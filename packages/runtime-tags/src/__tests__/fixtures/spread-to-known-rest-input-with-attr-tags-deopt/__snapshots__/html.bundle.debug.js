@@ -6,7 +6,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_html(`<span${_attrs(item, "#span/0", $scope1_id, "span")}>`);
 		_dynamic_tag($scope1_id, "#text/1", desc, {}, 0, 0, $wg__input_foo);
-		_html(`</span>${_el_resume($scope1_id, "#span/0")}`);
+		_html(`</span>${_el_mark($scope1_id, "#span/0")}`);
 		_script($scope1_id, "__tests__/tags/child.marko_1_item#5");
 		_scope($scope1_id, {}, "__tests__/tags/child.marko", "2:2", { "EventAttributes:#span/0": ["...item", "3:12"] });
 	}, 0, $scope0_id, "#text/0", $wg__input_foo, $wg__input_foo, 0, 0, 1);

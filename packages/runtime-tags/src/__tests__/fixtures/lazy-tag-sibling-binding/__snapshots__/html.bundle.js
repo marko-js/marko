@@ -4,7 +4,7 @@ var child_s_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	const isShared = input.isShared;
 	let holder = input.holder;
-	_html(`<button class=s>s:${_text_resume($scope0_id, "b", "?", 2)}</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button class=s>s:${_text_mark($scope0_id, "b", "?", 2)}</button>${_el_mark($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
 	_scope($scope0_id, {
 		g: isShared,
@@ -18,7 +18,7 @@ var child_b_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	const isInner = input.isInner;
 	let inner = input.inner;
-	_html(`<button class=b>b:${_text_resume($scope0_id, "b", "?", 2)}</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button class=b>b:${_text_mark($scope0_id, "b", "?", 2)}</button>${_el_mark($scope0_id, "a")}`);
 	_script($scope0_id, "a0");
 	_scope($scope0_id, {
 		g: isInner,
@@ -34,7 +34,7 @@ var template_default = _template("c", (input) => {
 	const $scope0_id = _scope_id();
 	let shared = { inner: { value: 1 } };
 	let count = 0;
-	_html(`<button class=main>main:${_text_resume($scope0_id, "b", count, 2)}</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button class=main>main:${_text_mark($scope0_id, "b", count, 2)}</button>${_el_mark($scope0_id, "a")}`);
 	$ChildS_withLoadAssets({
 		holder: shared,
 		isShared: _resume(function(o) {

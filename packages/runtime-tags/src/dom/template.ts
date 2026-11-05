@@ -8,11 +8,10 @@ import {
   type Template,
   type TemplateInput,
 } from "../common/types";
-import { insertChildNodes } from "./dom";
 import { prepareEffects, runEffects } from "./queue";
 import { _content, createBranch, type Renderer } from "./renderer";
 import { _resumed } from "./resume";
-import { removeAndDestroyBranch } from "./scope";
+import { insertBranchBefore, removeAndDestroyBranch } from "./scope";
 import { _var_change, type Signal } from "./signals";
 
 export const _template = (
@@ -119,12 +118,7 @@ function mount(
     args?.(branch, input);
   });
 
-  insertChildNodes(
-    parentNode,
-    nextSibling,
-    branch[AccessorProp.StartNode],
-    branch[AccessorProp.EndNode],
-  );
+  insertBranchBefore(branch, parentNode, nextSibling);
   runEffects(effects);
 
   return {

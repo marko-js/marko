@@ -26,13 +26,13 @@ var template_default = _template("a", (input) => {
 	child_default({ content: _content("a0", (first, ...others) => {
 		const $scope3_reason = _scope_reason(), $wg__first = _write_guard($scope3_reason, 1), $wg__$params4_ = _write_guard($scope3_reason, 2), $wg__$params4_2 = _write_guard($scope3_reason, 3), $wg__others_length = _write_guard($scope3_reason, 4);
 		const $scope3_id = _scope_id();
-		_html(`<div>${_text_resume($scope3_id, "a", first, $wg__first)}|${_text_resume($scope3_id, "b", others[0], $wg__$params4_ * 2)}|${_text_resume($scope3_id, "c", others[1], $wg__$params4_2 * 2)}|${_text_resume($scope3_id, "d", others.length, $wg__others_length * 2)}</div>`);
+		_html(`<div>${_text_mark($scope3_id, "a", first, $wg__first)}|${_text_mark($scope3_id, "b", others[0], $wg__$params4_ * 2)}|${_text_mark($scope3_id, "c", others[1], $wg__$params4_2 * 2)}|${_text_mark($scope3_id, "d", others.length, $wg__others_length * 2)}</div>`);
 		_write_if($scope3_reason, 0) && _scope($scope3_id, {});
 	}, $scope0_id) });
 	child_default({ content: _content("a1", (x, ...[y, z]) => {
 		const $scope4_reason = _scope_reason(), $wg__x = _write_guard($scope4_reason, 1), $wg__y = _write_guard($scope4_reason, 2), $wg__z = _write_guard($scope4_reason, 3);
 		const $scope4_id = _scope_id();
-		_html(`<div>${_text_resume($scope4_id, "a", x, $wg__x)}-${_text_resume($scope4_id, "b", y, $wg__y * 2)}-${_text_resume($scope4_id, "c", z, $wg__z * 2)}</div>`);
+		_html(`<div>${_text_mark($scope4_id, "a", x, $wg__x)}-${_text_mark($scope4_id, "b", y, $wg__y * 2)}-${_text_mark($scope4_id, "c", z, $wg__z * 2)}</div>`);
 		_write_if($scope4_reason, 0) && _scope($scope4_id, {});
 	}, $scope0_id) });
 }, 1);

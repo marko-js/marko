@@ -8,7 +8,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope_reason();
 		_html("<button");
 		_attrs_partial_content(input, { "on-click": 1 }, "#button/0", $scope1_id, "button");
-		_html(`</button>${_el_resume($scope1_id, "#button/0")} `);
+		_html(`</button>${_el_mark($scope1_id, "#button/0")} `);
 		_script($scope1_id, "__tests__/template.marko_1_input#2");
 		_script($scope1_id, "__tests__/template.marko_1");
 		_scope($scope1_id, { input_onClick: input.onClick }, "__tests__/template.marko", "2:2", {

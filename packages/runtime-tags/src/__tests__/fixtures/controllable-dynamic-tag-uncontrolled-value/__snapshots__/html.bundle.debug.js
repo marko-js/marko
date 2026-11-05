@@ -9,7 +9,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope_reason();
 		_html(`<option${_attr_option_value("a")}>A</option><option${_attr_option_value("b")}>B</option><option${_attr_option_value("c")}>C</option>`);
 	}, $scope0_id));
-	_html(`<button>pick c</button>${_el_resume($scope0_id, "#button/1")}`);
+	_html(`<button>pick c</button>${_el_mark($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, { tag }, "__tests__/template.marko", 0, { tag: "1:8" });
 }, 1);

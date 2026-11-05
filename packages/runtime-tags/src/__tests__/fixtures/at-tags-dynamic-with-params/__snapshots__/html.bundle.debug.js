@@ -17,13 +17,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		$item = attrTag({ content: _content("__tests__/template.marko_1*content", (y) => {
 			const $scope1_reason = _scope_reason(), $wg__y = _write_guard($scope1_reason, 0);
 			const $scope1_id = _scope_id();
-			_html(`y: ${_text_resume($scope1_id, "#text/0", y, $wg__y * 2)}`);
+			_html(`y: ${_text_mark($scope1_id, "#text/0", y, $wg__y * 2)}`);
 			_write_if($scope1_reason, 0) && _scope($scope1_id, {}, "__tests__/template.marko", "4:10");
 		}, $scope0_id) });
 	}
 	const $childScope = _peek_scope_id();
 	hello_default({ item: $item });
-	_html(`<button>Toggle</button>${_el_resume($scope0_id, "#button/1")}`);
+	_html(`<button>Toggle</button>${_el_mark($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		x,

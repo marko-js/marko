@@ -14,6 +14,6 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		_html(`<option${_attr_option_value("a")}>A</option><option${_attr_option_value("b")}>B</option><option${_attr_option_value("c")}>C</option>`);
 	}, $scope0_id));
-	_html(`<output>${_text_resume($scope0_id, "b", value)}</output>`);
+	_html(`<output>${_text_mark($scope0_id, "b", value)}</output>`);
 	_scope($scope0_id, { d: tag });
 }, 1);

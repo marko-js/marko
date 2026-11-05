@@ -10,13 +10,13 @@ var template_default = _template("a", (input) => {
 	_dynamic_tag($scope0_id, "a", tag, {}, _content("a1", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
-		_html(`<button id=inc>${_text_resume($scope1_id, "b", count)}</button>${_el_resume($scope1_id, "a")}`);
+		_html(`<button id=inc>${_text_mark($scope1_id, "b", count)}</button>${_el_mark($scope1_id, "a")}`);
 		_if(() => {
 			{
 				const $scope2_id = _scope_id();
 				forOf([1, 2], (i) => {
 					const $scope3_id = _scope_id();
-					_html(`<span class=inner>${_text_resume($scope3_id, "a", count * i)}</span>`);
+					_html(`<span class=inner>${_text_mark($scope3_id, "a", count * i)}</span>`);
 					_subscribe($count__closures, _scope($scope3_id, {
 						c: i,
 						_: _scope_with_id($scope2_id),
@@ -27,7 +27,7 @@ var template_default = _template("a", (input) => {
 				return 0;
 			}
 		}, $scope1_id, "c");
-		_html(`<button id=toggle>toggle</button>${_el_resume($scope1_id, "d")}`);
+		_html(`<button id=toggle>toggle</button>${_el_mark($scope1_id, "d")}`);
 		_script($scope1_id, "a2");
 		_subscribe($show__closures, _subscribe($count__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a3"), "a4");
 	}, $scope0_id), 0, 0);

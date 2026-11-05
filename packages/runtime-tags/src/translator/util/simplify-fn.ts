@@ -39,6 +39,8 @@ export function simplifyFunction(
     case "ArrowFunctionExpression":
       return fn;
     default:
+      // A method reading `super` loses it here; it could never resume anyway,
+      // since its home object cannot be re-created on the client.
       return t.functionExpression(
         null,
         fn.params as t.FunctionDeclaration["params"],

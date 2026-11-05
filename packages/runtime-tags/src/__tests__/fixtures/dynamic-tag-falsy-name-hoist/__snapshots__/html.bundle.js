@@ -9,10 +9,10 @@ var template_default = _template("a", (input) => {
 	_dynamic_tag($scope0_id, "a", tag, {}, _content_resume("a1", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
-		_html(`<input>${_el_resume($scope1_id, "a")}`);
+		_html(`<input>${_el_mark($scope1_id, "a")}`);
 		_subscribe($tag_content__subscribers, _scope($scope1_id, {}));
 	}, $scope0_id));
-	_html(`<button class=check></button>${_el_resume($scope0_id, "b")}<button class=toggle></button>${_el_resume($scope0_id, "c")}<output>${_text_resume($scope0_id, "d", result)}</output>`);
+	_html(`<button class=check></button>${_el_mark($scope0_id, "b")}<button class=toggle></button>${_el_mark($scope0_id, "c")}<output>${_text_mark($scope0_id, "d", result)}</output>`);
 	_script($scope0_id, "a2");
 	_scope($scope0_id, {
 		h: tag,

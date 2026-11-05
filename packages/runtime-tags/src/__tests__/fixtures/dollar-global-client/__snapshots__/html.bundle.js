@@ -14,7 +14,7 @@ var template_default = _template("a", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "b", 1, 1, 0, 0, 1);
-	_html(`<button>Toggle</button>${_el_resume($scope0_id, "c")}</div>`);
+	_html(`<button>Toggle</button>${_el_mark($scope0_id, "c")}</div>`);
 	_script($scope0_id, "a0");
 	_scope($scope0_id, { d: show });
 }, 1);

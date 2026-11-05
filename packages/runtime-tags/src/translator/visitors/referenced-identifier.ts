@@ -4,7 +4,7 @@ import { getExprRoot } from "../util/get-root";
 import { isOutputHTML } from "../util/marko-config";
 import {
   assertReferencedInRender,
-  getCanonicalExtra,
+  getCanonicalExpr,
   setReferencesScope,
   trackGlobalReference,
 } from "../util/references";
@@ -86,7 +86,7 @@ export default {
           replaceWithExtra(identifier, callRuntime("_signal_read_error"));
         } else {
           const exprRoot = identifier.node.extra!.exprRoot!;
-          const canonicalExtra = getCanonicalExtra(exprRoot);
+          const canonicalExtra = getCanonicalExpr(exprRoot);
           // A dropped expression is never emitted, so it needs no signal or reset.
           if (canonicalExtra.dropped) break;
 

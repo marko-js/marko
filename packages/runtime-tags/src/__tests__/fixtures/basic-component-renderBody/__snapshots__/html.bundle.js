@@ -4,7 +4,7 @@ var my_button_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	_html("<button>");
 	_dynamic_tag($scope0_id, "b", input.content, {}, 0, 0, _write_guard($scope0_reason, 0));
-	_html(`</button>${_el_resume($scope0_id, "a")}`);
+	_html(`</button>${_el_mark($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
 	_scope($scope0_id, { e: input.onClick });
 });
@@ -22,7 +22,7 @@ var template_default = _template("a", (input) => {
 		content: _content("a2", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
-			_html(_text_resume($scope1_id, "a", clickCount));
+			_html(_text_mark($scope1_id, "a", clickCount));
 			_subscribe($clickCount__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a1");
 		}, $scope0_id)
 	});

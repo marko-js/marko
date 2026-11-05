@@ -4,7 +4,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let show = false;
 	const obj = show;
-	_html(`<button>toggle</button>${_el_resume($scope0_id, "a")}<div>${_text_resume($scope0_id, "b", (obj.label ?? "none") + 2)}</div>`);
+	_html(`<button>toggle</button>${_el_mark($scope0_id, "a")}<div>${_text_mark($scope0_id, "b", (obj.label ?? "none") + 2)}</div>`);
 	_script($scope0_id, "a0");
 	_scope($scope0_id, { c: show });
 }, 1);

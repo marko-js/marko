@@ -1,0 +1,16 @@
+<let/v="a"/>
+<p>
+  x
+  <if=false>
+    <b/>
+  </if>
+  <else>
+    <if=false>
+      <b/>
+    </if>
+    <else>
+      ${v}
+    </else>
+  </else>
+</p>
+<button onClick() { v += "!" }>add</button>

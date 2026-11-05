@@ -9,7 +9,7 @@ var child_default = _template("__tests__/child.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_await($scope1_id, "#text/0", resolveAfter(10, 1), (value) => {
 			const $scope2_id = _scope_id();
-			_html(`<button>${_text_resume($scope2_id, "#text/1", count)}:${_escape(value)}</button>${_el_resume($scope2_id, "#button/0")}`);
+			_html(`<button>${_text_mark($scope2_id, "#text/1", count)}:${_escape(value)}</button>${_el_mark($scope2_id, "#button/0")}`);
 			_script($scope2_id, "__tests__/child.marko_2");
 			_subscribe($count__closures, _scope($scope2_id, {}, "__tests__/child.marko", "6:4"), "__tests__/child.marko_2_count#0:1/subscribe");
 		});

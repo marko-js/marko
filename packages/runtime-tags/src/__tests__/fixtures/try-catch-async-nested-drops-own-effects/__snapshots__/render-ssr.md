@@ -14,5 +14,5 @@ ERROR!
 ```
 ## Change
 ```
-INSERT: ::text("ERROR!")
+INSERT: #log + ::text("ERROR!")
 ```
