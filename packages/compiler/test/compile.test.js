@@ -188,9 +188,9 @@ describe("compiler/compile", () => {
       ));
   });
 
-  describe("package imports", () => {
-    // A project whose `dep` package ships a tag; the sources compile from a
-    // directory that is missing, or symlinked from outside the project.
+  describe("packages", () => {
+    // A project whose `dep` package ships a tag, imported by path or found
+    // through its taglib; `esm` holds a package.json that only sets a type.
     let project;
     const compileImport = (filename) =>
       compileSync('import Dep from "dep/tag.marko"\n<Dep/>', filename, {
@@ -207,6 +207,19 @@ describe("compiler/compile", () => {
       fs.writeFileSync(
         path.join(project, "node_modules", "dep", "tag.marko"),
         "<span>dep</span>",
+      );
+      fs.writeFileSync(
+        path.join(project, "node_modules", "dep", "marko.json"),
+        JSON.stringify({ "<dep-tag>": { template: "./tag.marko" } }),
+      );
+      fs.writeFileSync(
+        path.join(project, "package.json"),
+        JSON.stringify({ name: "app", dependencies: { dep: "*" } }),
+      );
+      fs.mkdirSync(path.join(project, "esm"));
+      fs.writeFileSync(
+        path.join(project, "esm", "package.json"),
+        JSON.stringify({ type: "module" }),
       );
     });
 
@@ -227,6 +240,15 @@ describe("compiler/compile", () => {
         /dep\/tag\.marko/,
       );
     });
+
+    it("finds a dependency's tags past a package.json that only sets a type", () =>
+      assert.match(
+        compileSync("<dep-tag/>", path.join(project, "esm", "x.marko"), {
+          translator,
+          output: "html",
+        }).code,
+        /dep\/tag\.marko/,
+      ));
   });
 
   describe("template id", () => {
