@@ -1,5 +1,7 @@
 /** File for types only, not actual implementation **/
 
+/* `R` is inferred from what `onMount` returns, so a return value read from `this`
+   is circular; such a tag passes its type explicitly (`<lifecycle<{ … }>>`). */
 export type Input<
   T extends object,
   R extends object = {},
