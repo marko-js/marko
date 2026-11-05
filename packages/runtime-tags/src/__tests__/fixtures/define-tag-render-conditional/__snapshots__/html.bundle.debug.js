@@ -7,7 +7,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const MyTag = { content: _content("__tests__/template.marko_2*content", ({ value }) => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason();
-		_html(`<div>Hello ${_text_resume($scope2_id, "#text/0", value, 2)}</div>`);
+		_html(`<div>Hello ${_text_mark($scope2_id, "#text/0", value, 2)}</div>`);
 		_scope($scope2_id, {}, "__tests__/template.marko", "4:2");
 	}, $scope0_id) };
 	_if(() => {
@@ -20,7 +20,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "#text/0");
-	_html(`<button>${_text_resume($scope0_id, "#text/2", x)}</button>${_el_resume($scope0_id, "#button/1")}`);
+	_html(`<button>${_text_mark($scope0_id, "#text/2", x)}</button>${_el_mark($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, { x }, "__tests__/template.marko", 0, { x: "2:6" });
 }, 1);

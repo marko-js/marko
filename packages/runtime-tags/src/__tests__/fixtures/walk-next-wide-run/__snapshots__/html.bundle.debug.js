@@ -3,7 +3,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let n = 0;
-	_html(`<div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><span>${_text_resume($scope0_id, "#text/0", n)}</span></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div><button>bump</button>${_el_resume($scope0_id, "#button/1")}`);
+	_html(`<div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><div><span>${_text_mark($scope0_id, "#text/0", n)}</span></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div><button>bump</button>${_el_mark($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, { n }, "__tests__/template.marko", 0, { n: "1:6" });
 }, 1);

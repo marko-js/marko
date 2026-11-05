@@ -3,7 +3,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let show = false;
-	_html(`<button>toggle</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button>toggle</button>${_el_mark($scope0_id, "#button/0")}`);
 	_show_start(show, 0);
 	_html("<div>Hello!</div>");
 	_show_end($scope0_id, "#text/1", show, 1, 0, 0, 1);

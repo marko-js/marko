@@ -18,7 +18,7 @@ import {
   _scope_id,
   _script,
   _template,
-  _text_resume,
+  _text_mark,
   withPageAssets,
 } from "../html";
 import * as tagsTranslator from "../translator";
@@ -163,9 +163,9 @@ describe("runtime-tags/html render result", () => {
       );
       const outer = page("nested-outer", () => {
         const scopeId = _scope_id();
-        _html(_text_resume(scopeId, "#text/0", "a"));
+        _html(_text_mark(scopeId, "#text/0", "a"));
         inner({});
-        _html(_text_resume(scopeId, "#text/1", "b"));
+        _html(_text_mark(scopeId, "#text/1", "b"));
         _scope(scopeId, { v: 1 });
         _script(scopeId, "nested-outer-effect");
       });

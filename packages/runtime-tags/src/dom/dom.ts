@@ -408,7 +408,9 @@ export const _html = /*@__PURE__*/ withDynamicHtml(function _html(
     if (branch?.[AccessorProp.EndNode] === lastChild) {
       branch[AccessorProp.EndNode] = newLastChild;
     }
-    insertChildNodes(parentNode, firstChild, newFirstChild, newLastChild);
+    // A foreign namespace parses into an element, not a fragment, so its
+    // children go in one call.
+    firstChild.before(...newContent.childNodes);
     removeChildNodes(firstChild, lastChild);
   }
 });
@@ -465,9 +467,12 @@ export function _lifecycle(
   }
 }
 
-export function removeChildNodes(startNode: ChildNode, endNode: ChildNode) {
-  const stop = endNode.nextSibling;
-  while (startNode !== stop) {
+export function removeChildNodes(
+  startNode: ChildNode,
+  endNode: ChildNode | null,
+) {
+  endNode = endNode!.nextSibling;
+  while (startNode !== endNode) {
     const next = startNode.nextSibling;
     startNode.remove();
     startNode = next!;
@@ -478,25 +483,12 @@ export function insertChildNodes(
   parentNode: ParentNode,
   referenceNode: Node | null,
   startNode: Node,
-  endNode: Node,
+  endNode: Node | null,
 ) {
-  // Branches are assembled into a detached tree, where staging the range in a
-  // DocumentFragment costs an allocation and buys no layout work.
-  if ((parentNode as Node).isConnected) {
-    parentNode.insertBefore(toInsertNode(startNode, endNode), referenceNode);
-  } else {
-    const stop = endNode.nextSibling;
-    while (startNode !== stop) {
-      const next = startNode.nextSibling;
-      parentNode.insertBefore(startNode, referenceNode);
-      startNode = next!;
-    }
+  endNode = endNode!.nextSibling;
+  while (startNode !== endNode) {
+    const next = startNode.nextSibling;
+    parentNode.insertBefore(startNode, referenceNode);
+    startNode = next!;
   }
-  return parentNode;
-}
-
-export function toInsertNode(startNode: Node, endNode: Node) {
-  return startNode === endNode
-    ? startNode
-    : insertChildNodes(new DocumentFragment(), null, startNode, endNode);
 }

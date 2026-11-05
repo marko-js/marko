@@ -9,10 +9,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_dynamic_tag($scope0_id, "#text/0", tag, {}, _content_resume("__tests__/template.marko_1*content", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
-		_html(`<input>${_el_resume($scope1_id, "#input/0")}`);
+		_html(`<input>${_el_mark($scope1_id, "#input/0")}`);
 		_subscribe($tag_content__subscribers, _scope($scope1_id, {}, "__tests__/template.marko", "3:4"));
 	}, $scope0_id));
-	_html(`<button class=check></button>${_el_resume($scope0_id, "#button/1")}<button class=toggle></button>${_el_resume($scope0_id, "#button/2")}<output>${_text_resume($scope0_id, "#text/3", result)}</output>`);
+	_html(`<button class=check></button>${_el_mark($scope0_id, "#button/1")}<button class=toggle></button>${_el_mark($scope0_id, "#button/2")}<output>${_text_mark($scope0_id, "#text/3", result)}</output>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		tag,

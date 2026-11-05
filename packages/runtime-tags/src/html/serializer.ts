@@ -387,7 +387,7 @@ class State {
         writePlainObject(this, local, newArgReference(this, ref, local));
       }
     } else {
-      this.buf.push("_(" + scopeId + "," + quoteRegisterId(registered.id));
+      this.buf.push("_(" + scopeId + "," + quoteRegistryId(registered.id));
     }
     this.buf.push(")");
   }
@@ -853,7 +853,7 @@ function newScopeReference(state: State, val: WeakKey, scopeId: number) {
 
 // An optimized register id is a hashed template id and key in the
 // identifier alphabet; only a debug id (a file path) can need escaping.
-export function quoteRegisterId(id: string) {
+export function quoteRegistryId(id: string) {
   return MARKO_DEBUG ? quote(id, 0) : '"' + id + '"';
 }
 

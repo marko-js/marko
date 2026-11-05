@@ -6,7 +6,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html("<div id=target>");
 	_for_until(3, 0, 1, (i) => {
 		const $scope1_id = _scope_id();
-		_html(`<span${_attr("data-selected", selected === i)}>${_escape(i)}</span>${_el_resume($scope1_id, "#span/0")}`);
+		_html(`<span${_attr("data-selected", selected === i)}>${_escape(i)}</span>${_el_mark($scope1_id, "#span/0")}`);
 		_scope($scope1_id, {
 			"#LoopKey": i,
 			_: _scope_with_id($scope0_id)

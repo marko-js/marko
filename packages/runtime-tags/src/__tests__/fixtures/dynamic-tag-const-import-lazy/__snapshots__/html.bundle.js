@@ -2,7 +2,7 @@
 var child_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<button>${_text_resume($scope0_id, "b", input.value, _write_guard($scope0_reason, 0))}</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button>${_text_mark($scope0_id, "b", input.value, _write_guard($scope0_reason, 0))}</button>${_el_mark($scope0_id, "a")}`);
 	_script($scope0_id, "a0");
 	_scope($scope0_id, {
 		e: input.valueChange,
@@ -24,6 +24,6 @@ var template_default = _template("b", (input) => {
 			value = _new_value;
 		}, "b0", $scope0_id)
 	});
-	_html(`<span>${_text_resume($scope0_id, "c", value)}</span>`);
+	_html(`<span>${_text_mark($scope0_id, "c", value)}</span>`);
 	_scope($scope0_id, { b: _existing_scope($childScope) });
 }, 1);

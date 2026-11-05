@@ -6,7 +6,7 @@ var template_default = _template("a", (input) => {
 	const E = { content: _content("a0", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
-		_html(`<span>${_text_resume($scope1_id, "a", input.x, $wg__input_x)}</span>`);
+		_html(`<span>${_text_mark($scope1_id, "a", input.x, $wg__input_x)}</span>`);
 		$wi__input_x && _subscribe($input_x__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a1", $wg__input_x);
 		$wg__input_x || $wi__input_x && _resume_branch($scope1_id);
 	}, $scope0_id) };

@@ -3,13 +3,13 @@ var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_items = _write_guard($scope0_reason, 0), $wg__input_lists = _write_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	let show = true;
-	_html(`<button id=toggle>toggle</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button id=toggle>toggle</button>${_el_mark($scope0_id, "a")}`);
 	_for_of(input.items, ({ ...all }) => {
 		const $scope1_id = _scope_id();
 		_if(() => {
 			{
 				const $scope3_id = _scope_id();
-				_html(`<i>${_text_resume($scope3_id, "a", JSON.stringify(all), $wg__input_items)}</i>`);
+				_html(`<i>${_text_mark($scope3_id, "a", JSON.stringify(all), $wg__input_items)}</i>`);
 				_scope($scope3_id, {});
 				return 0;
 			}
@@ -24,7 +24,7 @@ var template_default = _template("a", (input) => {
 		_if(() => {
 			{
 				const $scope4_id = _scope_id();
-				_html(`<u>${_text_resume($scope4_id, "a", list.join("+"), $wg__input_lists)}</u>`);
+				_html(`<u>${_text_mark($scope4_id, "a", list.join("+"), $wg__input_lists)}</u>`);
 				_scope($scope4_id, {});
 				return 0;
 			}

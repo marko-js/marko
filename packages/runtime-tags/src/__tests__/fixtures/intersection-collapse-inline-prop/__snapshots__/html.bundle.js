@@ -7,7 +7,7 @@ var template_default = _template("a", (input) => {
 		x: count,
 		y: 2
 	};
-	_html(`<button>inc</button>${_el_resume($scope0_id, "a")}<div>${_text_resume($scope0_id, "b", pos.x + 10)}</div>`);
+	_html(`<button>inc</button>${_el_mark($scope0_id, "a")}<div>${_text_mark($scope0_id, "b", pos.x + 10)}</div>`);
 	_script($scope0_id, "a0");
 	_scope($scope0_id, { c: count });
 }, 1);

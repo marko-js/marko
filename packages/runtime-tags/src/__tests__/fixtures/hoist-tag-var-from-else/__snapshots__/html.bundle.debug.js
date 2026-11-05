@@ -4,7 +4,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const $getLabel_getter = _hoist($scope0_id, "__tests__/template.marko_0_getLabel#2:0/hoist");
 	let a = false;
-	_html(`<button class=toggle>toggle</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button class=toggle>toggle</button>${_el_mark($scope0_id, "#button/0")}`);
 	_if(() => {
 		if (a) {
 			const $scope1_id = _scope_id();
@@ -20,7 +20,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}
 	}, $scope0_id, "#text/1");
 	let label = "none";
-	_html(`<button class=read>${_text_resume($scope0_id, "#text/3", label)}</button>${_el_resume($scope0_id, "#button/2")}`);
+	_html(`<button class=read>${_text_mark($scope0_id, "#text/3", label)}</button>${_el_mark($scope0_id, "#button/2")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, { a }, "__tests__/template.marko", 0, { a: "1:6" });
 }, 1);

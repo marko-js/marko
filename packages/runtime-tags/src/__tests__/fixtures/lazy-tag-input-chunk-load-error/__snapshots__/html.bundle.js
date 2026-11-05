@@ -2,7 +2,7 @@
 var child_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_value = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html(`<span id=child>${_text_resume($scope0_id, "a", input.value, $wg__input_value)}</span>`);
+	_html(`<span id=child>${_text_mark($scope0_id, "a", input.value, $wg__input_value)}</span>`);
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
@@ -12,7 +12,7 @@ var template_default = _template("b", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	const $show__closures = /* @__PURE__ */ new Set();
-	_html(`<button id=toggle>toggle</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button id=toggle>toggle</button>${_el_mark($scope0_id, "a")}`);
 	_try($scope0_id, "b", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
@@ -25,7 +25,7 @@ var template_default = _template("b", (input) => {
 	}, (err) => {
 		const $scope3_reason = _scope_reason(), $wg__err_message = _write_guard($scope3_reason, 0);
 		const $scope3_id = _scope_id();
-		_html(`<div id=error>${_text_resume($scope3_id, "a", err.message, $wg__err_message)}</div>`);
+		_html(`<div id=error>${_text_mark($scope3_id, "a", err.message, $wg__err_message)}</div>`);
 		_write_if($scope3_reason, 0) && _scope($scope3_id, {});
 	}, "b1", "b2");
 	_script($scope0_id, "b3");

@@ -14,7 +14,7 @@ var my_box_default = _template("__tests__/tags/my-box.marko", (input) => {
 	const $scope0_id = _scope_id();
 	_html("<div");
 	_attrs_content(input, "#div/0", $scope0_id, "div");
-	_html(`</div>${_el_resume($scope0_id, "#div/0")}`);
+	_html(`</div>${_el_mark($scope0_id, "#div/0")}`);
 	_set_scope_reason(_write_guard($scope0_reason, 0) << 1);
 	const $childScope = _peek_scope_id();
 	echo_default(input);

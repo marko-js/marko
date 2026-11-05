@@ -6,14 +6,14 @@ var template_default = _template("a", (input) => {
 	const $m__closures = /* @__PURE__ */ new Set();
 	let n = 0;
 	let m = 0;
-	_html(`<button id=load>load</button>${_el_resume($scope0_id, "a")}<button id=inc>inc</button>${_el_resume($scope0_id, "b")}`);
+	_html(`<button id=load>load</button>${_el_mark($scope0_id, "a")}<button id=inc>inc</button>${_el_mark($scope0_id, "b")}`);
 	_try($scope0_id, "c", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
-		_html(`<div>n ${_text_resume($scope1_id, "b", n, 2)}</div>${_el_resume($scope1_id, "a")}`);
+		_html(`<div>n ${_text_mark($scope1_id, "b", n, 2)}</div>${_el_mark($scope1_id, "a")}`);
 		_await($scope1_id, "c", 0, (v) => {
 			const $scope3_id = _scope_id();
-			_html(`value ${_text_resume($scope3_id, "a", v, 2)}`);
+			_html(`value ${_text_mark($scope3_id, "a", v, 2)}`);
 			_scope($scope3_id, {});
 		});
 		_script($scope1_id, "a0");

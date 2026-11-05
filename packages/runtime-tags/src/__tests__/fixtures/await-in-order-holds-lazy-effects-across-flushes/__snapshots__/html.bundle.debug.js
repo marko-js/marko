@@ -3,7 +3,7 @@ var child_default = _template("__tests__/child.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 0;
-	_html(`<button${_attr_class(input.id)}>${_text_resume($scope0_id, "#text/1", input.id, _write_guard($scope0_reason, 0))}:${_text_resume($scope0_id, "#text/2", count, 2)}</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button${_attr_class(input.id)}>${_text_mark($scope0_id, "#text/1", input.id, _write_guard($scope0_reason, 0))}:${_text_mark($scope0_id, "#text/2", count, 2)}</button>${_el_mark($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/child.marko_0_input_id#5");
 	_script($scope0_id, "__tests__/child.marko_0");
 	_scope($scope0_id, {
@@ -20,7 +20,7 @@ var reordered_default = _template("__tests__/reordered.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 0;
-	_html(`<button${_attr_class(input.id)}>${_text_resume($scope0_id, "#text/1", input.id, _write_guard($scope0_reason, 0))}:${_text_resume($scope0_id, "#text/2", count, 2)}</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button${_attr_class(input.id)}>${_text_mark($scope0_id, "#text/1", input.id, _write_guard($scope0_reason, 0))}:${_text_mark($scope0_id, "#text/2", count, 2)}</button>${_el_mark($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/reordered.marko_0_input_id#5");
 	_script($scope0_id, "__tests__/reordered.marko_0");
 	_scope($scope0_id, {

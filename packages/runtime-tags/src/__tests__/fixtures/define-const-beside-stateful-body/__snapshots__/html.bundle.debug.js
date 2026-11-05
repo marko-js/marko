@@ -9,7 +9,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 		_if(() => {
 			if (isOpen) {
 				const $scope2_id = _scope_id();
-				_html(`<em>${_text_resume($scope2_id, "#text/0", label, $wg__label)}</em>`);
+				_html(`<em>${_text_mark($scope2_id, "#text/0", label, $wg__label)}</em>`);
 				_write_if($scope1_reason, 0) && _scope($scope2_id, { _: _write_if($scope1_reason, 2) && _scope_with_id($scope1_id) }, "__tests__/tags/child.marko", "3:4");
 				return 0;
 			}
@@ -27,7 +27,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 		isOpen: !open,
 		label: input.label + "!"
 	});
-	_html(`<button>toggle</button>${_el_resume($scope0_id, "#button/2")}`);
+	_html(`<button>toggle</button>${_el_mark($scope0_id, "#button/2")}`);
 	_script($scope0_id, "__tests__/tags/child.marko_0");
 	_scope($scope0_id, {
 		input_label: input.label,

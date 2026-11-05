@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.42.15
+
+### Patch Changes
+
+- [#4558](https://github.com/marko-js/marko/pull/4558) [`13830ec`](https://github.com/marko-js/marko/commit/13830ec9a16ab29384afa5f5ffb44f0ffc6e1db0) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Compile faster when Marko is the only Babel plugin (the `@marko/vite` default): the translated output is no longer re-crawled for scopes or walked by Babel's own pass when no later plugin reads it.
+
 ## 5.42.14
 
 ### Patch Changes

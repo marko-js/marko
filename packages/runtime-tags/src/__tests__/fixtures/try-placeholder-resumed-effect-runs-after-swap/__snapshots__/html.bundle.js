@@ -7,7 +7,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		_await($scope1_id, "a", resolveAfter("a", 1), (a) => {
 			const $scope3_id = _scope_id();
-			_html(`<span>${_escape(a)}</span>${_el_resume($scope3_id, "a")}`);
+			_html(`<span>${_escape(a)}</span>${_el_mark($scope3_id, "a")}`);
 			_script($scope3_id, "a0");
 			_scope($scope3_id, {});
 		});

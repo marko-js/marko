@@ -17,7 +17,7 @@ var tags_child_default = _template("b", (input) => {
 	}, void 0, (err) => {
 		const $scope3_reason = _scope_reason(), $wg__err_message = _write_guard($scope3_reason, 0);
 		const $scope3_id = _scope_id();
-		_html(_text_resume($scope3_id, "a", err.message, $wg__err_message));
+		_html(_text_mark($scope3_id, "a", err.message, $wg__err_message * 2));
 		_write_if($scope3_reason, 0) && _scope($scope3_id, {});
 	}, 0, "b2");
 	_script($scope0_id, "b3", 0);

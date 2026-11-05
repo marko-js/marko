@@ -4,7 +4,7 @@ var child_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	const doubled = input.n * 2;
 	const tripled = input.n * 3;
-	_html(`<div>${_text_resume($scope0_id, "a", doubled + tripled, $wg__input_n)}</div>`);
+	_html(`<div>${_text_mark($scope0_id, "a", doubled + tripled, $wg__input_n)}</div>`);
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
@@ -16,7 +16,7 @@ var template_default = _template("a", (input) => {
 	_set_scope_reason(2);
 	const $childScope = _peek_scope_id();
 	child_default({ n });
-	_html(`<button>inc</button>${_el_resume($scope0_id, "b")}`);
+	_html(`<button>inc</button>${_el_mark($scope0_id, "b")}`);
 	_script($scope0_id, "a0");
 	_scope($scope0_id, {
 		c: n,

@@ -13,7 +13,7 @@ var template_default = _template("a", (input) => {
 			_if(() => {
 				if (input.b) {
 					const $scope2_id = _scope_id();
-					_html(`<div>${_text_resume($scope2_id, "a", bar(foo), $wg__input_c)}</div>`);
+					_html(`<div>${_text_mark($scope2_id, "a", bar(foo), $wg__input_c)}</div>`);
 					$wi__input_c__OR__input_a__OR__input_b && _subscribe($wi__input_c && $bar2__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "a1", $wg__input_c);
 					return 0;
 				}

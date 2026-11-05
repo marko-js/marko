@@ -3,7 +3,7 @@ var counter_default = _template("b", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 0;
-	_html(`<button class=inc>${_text_resume($scope0_id, "b", count)}</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button class=inc>${_text_mark($scope0_id, "b", count)}</button>${_el_mark($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
 	_scope($scope0_id, { c: count });
 });
@@ -31,7 +31,7 @@ var tags_if_default = _template("d", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "a", 1, 1, 0, 0, 1);
-	_html(`<button class=hide>hide</button>${_el_resume($scope0_id, "b")}`);
+	_html(`<button class=hide>hide</button>${_el_mark($scope0_id, "b")}`);
 	_script($scope0_id, "d0");
 	_scope($scope0_id, {});
 });

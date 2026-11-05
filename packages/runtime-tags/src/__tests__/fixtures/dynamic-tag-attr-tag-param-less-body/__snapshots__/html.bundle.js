@@ -12,11 +12,11 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	const $n__closures = /* @__PURE__ */ new Set();
 	let n = 0;
-	_html(`<button>${_text_resume($scope0_id, "b", n)}</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button>${_text_mark($scope0_id, "b", n)}</button>${_el_mark($scope0_id, "a")}`);
 	child_default({ content: _content("a1", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
-		_html(`<em>hi ${_text_resume($scope1_id, "a", n, 2)}</em>`);
+		_html(`<em>hi ${_text_mark($scope1_id, "a", n, 2)}</em>`);
 		_subscribe($n__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a0");
 	}, $scope0_id) });
 	_script($scope0_id, "a2");

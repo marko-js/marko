@@ -11,7 +11,7 @@ var template_default = _template("a", (input) => {
 			return 0;
 		} else {
 			const $scope2_id = _scope_id();
-			_html(`<button>${_text_resume($scope2_id, "b", "none")}</button>${_el_resume($scope2_id, "a")}`);
+			_html(`<button>${_text_mark($scope2_id, "b", "none")}</button>${_el_mark($scope2_id, "a")}`);
 			_script($scope2_id, "a2");
 			_scope($scope2_id, { _: _scope_with_id($scope0_id) });
 			return 1;

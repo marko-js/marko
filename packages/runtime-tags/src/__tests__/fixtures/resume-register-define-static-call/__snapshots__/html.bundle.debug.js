@@ -3,7 +3,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 0;
-	_html(`<button id=inc>${_text_resume($scope0_id, "#text/1", count)}</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button id=inc>${_text_mark($scope0_id, "#text/1", count)}</button>${_el_mark($scope0_id, "#button/0")}`);
 	const Heading = { content: _content("__tests__/template.marko_1*content", (input) => {
 		const $scope1_id = _scope_id();
 		const $Heading_content__input_content__closures = new Set();

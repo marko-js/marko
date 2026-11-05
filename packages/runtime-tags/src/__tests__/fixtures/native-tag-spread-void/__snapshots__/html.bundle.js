@@ -2,7 +2,7 @@
 var my_img_default = _template("b", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<img${_attrs(input, "a", $scope0_id, "img")}>${_el_resume($scope0_id, "a")}`);
+	_html(`<img${_attrs(input, "a", $scope0_id, "img")}>${_el_mark($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
 	_scope($scope0_id, {});
 });
@@ -12,7 +12,7 @@ var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let cls = "a";
-	_html(`<button>toggle</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button>toggle</button>${_el_mark($scope0_id, "a")}`);
 	const $childScope = _peek_scope_id();
 	my_img_default({
 		class: cls,

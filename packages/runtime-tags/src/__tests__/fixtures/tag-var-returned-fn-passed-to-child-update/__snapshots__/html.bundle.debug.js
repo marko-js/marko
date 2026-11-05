@@ -11,7 +11,7 @@ var make_default = _template("__tests__/tags/make.marko", (input) => {
 var reader_default = _template("__tests__/tags/reader.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<p></p>${_el_resume($scope0_id, "#p/0")}`);
+	_html(`<p></p>${_el_mark($scope0_id, "#p/0")}`);
 	_script($scope0_id, "__tests__/tags/reader.marko_0_input#2");
 	_scope($scope0_id, { input }, "__tests__/tags/reader.marko", 0, { input: 0 });
 });
@@ -36,7 +36,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let v = "a";
-	_html(`<button></button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button></button>${_el_mark($scope0_id, "#button/0")}`);
 	_set_scope_reason(2);
 	const $childScope = _peek_scope_id();
 	pair_default({ v });

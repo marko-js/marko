@@ -11,7 +11,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_if(() => {
 				if (input.value1) {
 					const $scope2_id = _scope_id();
-					_html(`<span>${_text_resume($scope2_id, "#text/0", input.value1, $wg__input_value)}</span>`);
+					_html(`<span>${_text_mark($scope2_id, "#text/0", input.value1, $wg__input_value)}</span>`);
 					_write_if($scope0_reason, 0) && _subscribe($wi__input_value && $value__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "4:6"), "__tests__/template.marko_2_value1#0:4/subscribe", $wg__input_value);
 					return 0;
 				}
@@ -19,7 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_if(() => {
 				if (input.value2) {
 					const $scope3_id = _scope_id();
-					_html(`<span>${_text_resume($scope3_id, "#text/0", input.value2, $wg__input_value2)}</span>`);
+					_html(`<span>${_text_mark($scope3_id, "#text/0", input.value2, $wg__input_value2)}</span>`);
 					_write_if($scope0_reason, 1) && _subscribe($wi__input_value2 && $value2__closures, _scope($scope3_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "5:6"), "__tests__/template.marko_3_value2#0:5/subscribe", $wg__input_value2);
 					return 0;
 				}

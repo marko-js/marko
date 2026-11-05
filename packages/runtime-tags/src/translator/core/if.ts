@@ -34,6 +34,8 @@ import {
   getSection,
   getSectionForBody,
   type Section,
+  mayMergeWithText,
+  type ControlFlowTagExtra,
 } from "../util/sections";
 import {
   addValue,
@@ -73,19 +75,20 @@ export const IfTag = {
       const branches = getBranches(tag);
       const [ifTag] = branches[0];
       const ifTagSection = ensureSection(ifTag);
-      const ifTagExtra = (ifTag.node.extra ??= {});
+      const ifTagExtra = (ifTag.node.extra ??= {}) as ControlFlowTagExtra;
       const mergeReferenceNodes: t.Node[] = [];
       // Recorded at the last branch, once every branch's body exists; nothing
       // records to this section between the branches.
       const nodeBinding = structure.controlFlowNode(ifTag, ifTagSection);
       // TODO: remove all branches if none have body content.
 
+      ifTagExtra.textBefore = mayMergeWithText(ifTag, true);
       for (let index = 0; index < branches.length; index++) {
         const [branchTag, branchBodySection] = branches[index];
         if (branchBodySection) {
           initBranchSection(branchBodySection, ifTagExtra, {
-            nodeBinding,
-            optional: true,
+            kind: "if",
+            tag: ifTagExtra,
             index,
           });
         }
@@ -200,11 +203,7 @@ export const IfTag = {
             const [testAttr] = branchTag.node.attributes;
             const consequent = t.numericLiteral(branchBodySection ? i : -1);
             if (branchBodySection) {
-              setClosureSignalBuilder(branchTag, {
-                kind: "if",
-                nodeBinding,
-                index: i,
-              });
+              setClosureSignalBuilder(branchTag);
             }
 
             replaceWithStatements(branchTag);

@@ -6,7 +6,7 @@ var hello_default = _template("b", (input) => {
 		const $scope1_id = _scope_id();
 		_html(`<div class=item${_attrs_partial(attrs, { class: 1 }, "a", $scope1_id, "div")}>`);
 		_dynamic_tag($scope1_id, "b", content, {}, 0, 0, $wg__input_list_item);
-		_html(`</div>${_el_resume($scope1_id, "a")}`);
+		_html(`</div>${_el_mark($scope1_id, "a")}`);
 		_script($scope1_id, "b0");
 		_scope($scope1_id, {});
 	}, 0, $scope0_id, "a", $wg__input_list_item, $wg__input_list_item, 0, 0, 1);
@@ -14,12 +14,12 @@ var hello_default = _template("b", (input) => {
 		const $scope2_id = _scope_id();
 		_html("<div class=col");
 		_attrs_partial_content(attrs, { class: 1 }, "a", $scope2_id, "div");
-		_html(`</div>${_el_resume($scope2_id, "a")}`);
+		_html(`</div>${_el_mark($scope2_id, "a")}`);
 		_for_of(row, ({ content, ...attrs }) => {
 			const $scope3_id = _scope_id();
 			_html(`<div class=row${_attrs_partial(attrs, { class: 1 }, "a", $scope3_id, "div")}>`);
 			_dynamic_tag($scope3_id, "b", content, {}, 0, 0, $wg__input_col);
-			_html(`</div>${_el_resume($scope3_id, "a")}`);
+			_html(`</div>${_el_mark($scope3_id, "a")}`);
 			_script($scope3_id, "b1");
 			_scope($scope3_id, {});
 		}, 0, $scope2_id, "b", $wg__input_col, $wg__input_col, 0, 0, 1);
@@ -65,7 +65,7 @@ var template_default = _template("a", (input) => {
 				content: _content("a2", () => {
 					const $scope3_reason = _scope_reason(), $wg__row = _write_guard($scope3_reason, 0);
 					const $scope3_id = _scope_id();
-					_html(_text_resume($scope3_id, "a", row, $wg__row));
+					_html(_text_mark($scope3_id, "a", row, $wg__row));
 					_write_if($scope3_reason, 0) && _scope($scope3_id, {});
 				}, $scope0_id)
 			});

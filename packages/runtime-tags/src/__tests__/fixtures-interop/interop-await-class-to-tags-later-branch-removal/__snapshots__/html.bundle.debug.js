@@ -3,7 +3,7 @@ var counter_default = _template("__tests__/components/counter.marko", (input) =>
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 0;
-	_html(`<button class=inc>${_text_resume($scope0_id, "#text/1", count)}</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button class=inc>${_text_mark($scope0_id, "#text/1", count)}</button>${_el_mark($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/components/counter.marko_0");
 	_scope($scope0_id, { count }, "__tests__/components/counter.marko", 0, { count: "2:6" });
 });
@@ -32,7 +32,7 @@ var tags_if_default = _template("__tests__/components/tags-if.marko", (input) =>
 			return 0;
 		}
 	}, $scope0_id, "#text/0", 1, 1, 0, 0, 1);
-	_html(`<button class=hide>hide</button>${_el_resume($scope0_id, "#button/1")}`);
+	_html(`<button class=hide>hide</button>${_el_mark($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/components/tags-if.marko_0");
 	_scope($scope0_id, {}, "__tests__/components/tags-if.marko", 0);
 });

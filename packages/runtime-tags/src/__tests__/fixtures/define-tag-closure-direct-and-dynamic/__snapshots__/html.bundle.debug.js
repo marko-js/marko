@@ -11,7 +11,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:2");
 		_resume_branch($scope1_id);
 	}, $scope0_id) };
-	_html(`<button>toggle</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button>toggle</button>${_el_mark($scope0_id, "#button/0")}`);
 	_if(() => {
 		if (show) {
 			const $scope2_id = _scope_id();

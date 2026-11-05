@@ -6,7 +6,7 @@ var child_default = _template("b", (input) => {
 		{
 			const $scope1_id = _scope_id();
 			const { value: $value2, valueChange: $valueChange3, ...rest } = input;
-			_html(`<button${_attrs_partial(rest, { "on-click": 1 }, "a", $scope1_id, "button")}>${_text_resume($scope1_id, "b", input.value, _write_guard($scope0_reason, 1))}</button>${_el_resume($scope1_id, "a")}`);
+			_html(`<button${_attrs_partial(rest, { "on-click": 1 }, "a", $scope1_id, "button")}>${_text_mark($scope1_id, "b", input.value, _write_guard($scope0_reason, 1))}</button>${_el_mark($scope1_id, "a")}`);
 			_script($scope1_id, "b0");
 			_script($scope1_id, "b1");
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
@@ -33,6 +33,6 @@ var template_default = _template("a", (input) => {
 		}, "a0", $scope0_id),
 		class: "c"
 	});
-	_html(`<em>${_text_resume($scope0_id, "b", v)}</em>`);
+	_html(`<em>${_text_mark($scope0_id, "b", v)}</em>`);
 	_scope($scope0_id, { a: _existing_scope($childScope) });
 }, 1);

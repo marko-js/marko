@@ -26,6 +26,8 @@ import {
   getScopeIdIdentifier,
   getSection,
   getSectionForBody,
+  mayMergeWithText,
+  type ControlFlowTagExtra,
 } from "../util/sections";
 import { addSetupWork } from "../util/setup-work";
 import {
@@ -59,7 +61,7 @@ export default {
     const section = ensureSection(tag);
     const valueAttr = assertOnlyValueAttr(tag, true);
     assertHasBody(tag);
-    const tagExtra = (tag.node.extra ??= {});
+    const tagExtra = (tag.node.extra ??= {}) as ControlFlowTagExtra;
     const nodeBinding = (tagExtra.nodeBinding = createBinding(
       "#text",
       BindingType.dom,
@@ -89,10 +91,10 @@ export default {
       setDerivedFrom(paramsBinding, valueExtra);
     }
 
+    tagExtra.textBefore = mayMergeWithText(tag, true);
     initBranchSection(bodySection, valueExtra, {
-      nodeBinding,
-      optional: false,
-      await: true,
+      kind: "await",
+      tag: tagExtra,
     });
 
     // The content renderer is initialized unconditionally in setup.

@@ -6,13 +6,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $b__closures = new Set();
 	let a = 0;
 	let b = 0;
-	_html(`<button></button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button></button>${_el_mark($scope0_id, "#button/0")}`);
 	_try($scope0_id, "#text/1", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		if (true) {
 			const $scope2_id = _scope_id();
-			_html(`<div>${_text_resume($scope2_id, "#text/0", a)}</div><div>${_text_resume($scope2_id, "#text/1", b)}</div>`);
+			_html(`<div>${_text_mark($scope2_id, "#text/0", a)}</div><div>${_text_mark($scope2_id, "#text/1", b)}</div>`);
 			_subscribe($b__closures, _subscribe($a__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "9:4"), "__tests__/template.marko_2_a#0:2/subscribe"), "__tests__/template.marko_2_b#0:3/subscribe");
 		}
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "7:2");

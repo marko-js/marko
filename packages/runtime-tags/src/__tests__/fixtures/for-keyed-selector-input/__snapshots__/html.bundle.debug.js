@@ -3,10 +3,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_rows = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let enabled = true;
-	_html(`<button class=flip>flip</button>${_el_resume($scope0_id, "#button/0")}<ul>`);
+	_html(`<button class=flip>flip</button>${_el_mark($scope0_id, "#button/0")}<ul>`);
 	_for_of(input.rows, (row) => {
 		const $scope1_id = _scope_id();
-		_html(`<li${enabled && input.selected === row.id ? " class=sel" : ""}>${_text_resume($scope1_id, "#text/1", row.label, $wg__input_rows)}</li>${_el_resume($scope1_id, "#li/0")}`);
+		_html(`<li${enabled && input.selected === row.id ? " class=sel" : ""}>${_text_mark($scope1_id, "#text/1", row.label, $wg__input_rows)}</li>${_el_mark($scope1_id, "#li/0")}`);
 		_scope($scope1_id, {
 			"#LoopKey": row?.id,
 			_: _scope_with_id($scope0_id)

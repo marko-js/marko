@@ -4,7 +4,7 @@ var tags_child_default = _template("b", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 0;
-	_html(`<button id=tags>${_text_resume($scope0_id, "b", count)}</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button id=tags>${_text_mark($scope0_id, "b", count)}</button>${_el_mark($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
 	_scope($scope0_id, { c: count });
 });

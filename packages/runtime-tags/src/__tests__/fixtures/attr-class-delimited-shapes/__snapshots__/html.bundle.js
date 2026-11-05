@@ -7,7 +7,7 @@ var template_default = _template("a", (input) => {
 	const moreStyles = ["display:block"];
 	const obj = { o: true };
 	const k = "computed";
-	_html(`<button>inc</button>${_el_resume($scope0_id, "a")}<div${_attr_class([
+	_html(`<button>inc</button>${_el_mark($scope0_id, "a")}<div${_attr_class([
 		"a",
 		["b", d],
 		...more,
@@ -17,11 +17,11 @@ var template_default = _template("a", (input) => {
 			...obj,
 			"q": d
 		}
-	])}></div>${_el_resume($scope0_id, "b")}<div${_attr_style([
+	])}></div>${_el_mark($scope0_id, "b")}<div${_attr_style([
 		"color:red",
 		["margin:0", "padding:0"],
 		...moreStyles
-	])}></div>${_el_resume($scope0_id, "c")}`);
+	])}></div>${_el_mark($scope0_id, "c")}`);
 	_script($scope0_id, "a0");
 	_scope($scope0_id, {
 		d,

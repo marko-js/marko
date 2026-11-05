@@ -22,7 +22,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, 0);
 		_html("</select>");
 	});
-	_html(`${_el_resume($scope0_id, "#select/0")}<div>${_text_resume($scope0_id, "#text/2", v)}:${_text_resume($scope0_id, "#text/3", calls, 2)}</div>`);
+	_html(`${_el_mark($scope0_id, "#select/0")}<div>${_text_mark($scope0_id, "#text/2", v)}:${_text_mark($scope0_id, "#text/3", calls, 2)}</div>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		v,

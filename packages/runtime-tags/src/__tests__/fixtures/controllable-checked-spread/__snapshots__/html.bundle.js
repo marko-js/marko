@@ -5,7 +5,7 @@ var checkbox_default = _template("b", (input) => {
 	_html(`<input${_attrs({
 		type: "checkbox",
 		...input
-	}, "a", $scope0_id, "input")}>${_el_resume($scope0_id, "a")}`);
+	}, "a", $scope0_id, "input")}>${_el_mark($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
 	_scope($scope0_id, {});
 });
@@ -22,6 +22,6 @@ var template_default = _template("a", (input) => {
 			checked = _new_checked;
 		}, "a0", $scope0_id)
 	});
-	_html(`<span>${_text_resume($scope0_id, "b", String(checked))}</span>`);
+	_html(`<span>${_text_mark($scope0_id, "b", String(checked))}</span>`);
 	_scope($scope0_id, { a: _existing_scope($childScope) });
 }, 1);

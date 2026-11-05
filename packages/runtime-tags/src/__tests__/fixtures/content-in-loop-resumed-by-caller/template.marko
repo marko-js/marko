@@ -1,0 +1,4 @@
+<let/items=[1, 2]/>
+<let/n=0/>
+<div><list items=items><@row>${n}</@row></list></div>
+<button onClick() { n++; items = [...items, items.length + 1] }>inc</button>
