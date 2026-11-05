@@ -11,7 +11,7 @@ var template_default = _template("a", (input) => {
 		}, "a0", $scope0_id),
 		value: "x",
 		...input.rest
-	}, "a", $scope0_id, "input")}>${_el_resume($scope0_id, "a")}`);
+	}, "a", $scope0_id, "input")}>${_el_mark($scope0_id, "a")}`);
 	_script($scope0_id, "a1");
 	_scope($scope0_id, {
 		d: input.rest,

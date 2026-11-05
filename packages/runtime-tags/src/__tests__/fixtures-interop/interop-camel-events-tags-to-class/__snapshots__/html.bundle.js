@@ -22,6 +22,6 @@ var template_default = _template("a", (input) => {
 			received = value;
 		}, "a0", $scope0_id)
 	}, 0, 0, 0);
-	_html(`<div id=tags-api>${_text_resume($scope0_id, "b", received)}</div>`);
+	_html(`<div id=tags-api>${_text_mark($scope0_id, "b", received)}</div>`);
 	_scope($scope0_id, {});
 }, 1);

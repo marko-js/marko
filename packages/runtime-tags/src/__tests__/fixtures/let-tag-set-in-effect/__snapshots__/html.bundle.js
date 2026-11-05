@@ -3,7 +3,7 @@ var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let x = 1;
-	_html(`<span>${_text_resume($scope0_id, "a", x)}</span><span>${_text_resume($scope0_id, "b", 0)}</span>`);
+	_html(`<span>${_text_mark($scope0_id, "a", x)}</span><span>${_text_mark($scope0_id, "b", 0)}</span>`);
 	_script($scope0_id, "a0");
 	_scope($scope0_id, { c: x });
 }, 1);

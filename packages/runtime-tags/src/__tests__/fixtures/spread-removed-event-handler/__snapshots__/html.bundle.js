@@ -14,7 +14,7 @@ var template_default = _template("a", (input) => {
 	} : { onClick: _resume(function() {
 		phase = 0;
 	}, "a2", $scope0_id) };
-	_html(`<div${_attrs(attrs, "a", $scope0_id, "div")}>${_text_resume($scope0_id, "b", phase)}:${_text_resume($scope0_id, "c", log, 2)}</div>${_el_resume($scope0_id, "a")}`);
+	_html(`<div${_attrs(attrs, "a", $scope0_id, "div")}>${_text_mark($scope0_id, "b", phase)}:${_text_mark($scope0_id, "c", log, 2)}</div>${_el_mark($scope0_id, "a")}`);
 	_script($scope0_id, "a3");
 	_scope($scope0_id, {
 		d: phase,

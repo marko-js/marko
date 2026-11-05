@@ -10,7 +10,7 @@ var template_default = _template("a", (input) => {
 		_dynamic_tag($scope3_id, "a", input.content, [input.value], 0, 1);
 		_scope($scope3_id, { d: input.content });
 	}, $scope0_id) };
-	_html(`<button>Increment</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button>Increment</button>${_el_mark($scope0_id, "a")}`);
 	_set_scope_reason(34);
 	const $childScope = _peek_scope_id();
 	Foo.content({

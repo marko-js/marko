@@ -3,7 +3,7 @@ var child_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_value__OR__input_valueChange = _write_guard($scope0_reason, 0), $wi__input_value__OR__input_valueChange = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let local = input.value;
-	_html(`<div>${_text_resume($scope0_id, "a", local == null ? "none" : local, $wg__input_value__OR__input_valueChange)}</div>`);
+	_html(`<div>${_text_mark($scope0_id, "a", local == null ? "none" : local, $wg__input_value__OR__input_valueChange)}</div>`);
 	$wi__input_value__OR__input_valueChange && _scope($scope0_id, {
 		d: _write_if($scope0_reason, 2) && input.value,
 		e: _write_if($scope0_reason, 1) && input.valueChange
@@ -24,7 +24,7 @@ var template_default = _template("a", (input) => {
 			count = _new_count;
 		}, "a0", $scope0_id)
 	});
-	_html(`<button>clear</button>${_el_resume($scope0_id, "b")}`);
+	_html(`<button>clear</button>${_el_mark($scope0_id, "b")}`);
 	_script($scope0_id, "a1");
 	_scope($scope0_id, { a: _existing_scope($childScope) });
 }, 1);

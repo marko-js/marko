@@ -11,9 +11,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let count = 0;
 	_html("<div");
 	_attrs_content(input.attrs, "#div/0", $scope0_id, "div");
-	_html(`</div>${_el_resume($scope0_id, "#div/0")}<div`);
+	_html(`</div>${_el_mark($scope0_id, "#div/0")}<div`);
 	_attrs_content(withCount(input.attrs, count), "#div/1", $scope0_id, "div");
-	_html(`</div>${_el_resume($scope0_id, "#div/1")}<button>+</button>${_el_resume($scope0_id, "#button/2")}`);
+	_html(`</div>${_el_mark($scope0_id, "#div/1")}<button>+</button>${_el_mark($scope0_id, "#button/2")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_script($scope0_id, "__tests__/template.marko_0_input_attrs#5_count#6");
 	_script($scope0_id, "__tests__/template.marko_0_input_attrs#5");

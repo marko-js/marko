@@ -6,7 +6,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const E = { content: _content("__tests__/template.marko_1*content", () => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
-		_html(`<span>${_text_resume($scope1_id, "#text/0", input.x, $wg__input_x)}</span>`);
+		_html(`<span>${_text_mark($scope1_id, "#text/0", input.x, $wg__input_x)}</span>`);
 		_subscribe($wi__input_x && $input_x__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "1:2"), "__tests__/template.marko_1_input_x#0:4/subscribe", $wg__input_x);
 		$wg__input_x || _resume_branch($scope1_id);
 	}, $scope0_id) };
@@ -24,7 +24,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:2");
 	}, $scope0_id) };
 	let on = false;
-	_html(`<button></button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button></button>${_el_mark($scope0_id, "#button/0")}`);
 	_set_scope_reason(2);
 	const $childScope = _peek_scope_id();
 	D.content({ on });

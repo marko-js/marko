@@ -3,7 +3,7 @@ var child_default = _template("b", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let x = 0;
-	_html(`<button class=inc>${_text_resume($scope0_id, "b", x)}</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button class=inc>${_text_mark($scope0_id, "b", x)}</button>${_el_mark($scope0_id, "a")}`);
 	const $return = x + input.extra;
 	_script($scope0_id, "b0");
 	_scope($scope0_id, {
@@ -22,7 +22,7 @@ var template_default = _template("a", (input) => {
 	let data = child_default({ extra: 1 });
 	_var($scope0_id, "b", $childScope, "a0");
 	const message = `${name} ${data}`;
-	_html(`<div>${_text_resume($scope0_id, "c", message)}</div>`);
+	_html(`<div>${_text_mark($scope0_id, "c", message)}</div>`);
 	_scope($scope0_id, {
 		d: name,
 		a: _existing_scope($childScope)

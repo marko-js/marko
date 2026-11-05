@@ -25,7 +25,7 @@ var template_default = _template("a", (input) => {
 	_html(`<b${$class[($global$1.on ? 1 : 0) + 0]}${_attr_style({
 		color: $global$1.color,
 		order: 0
-	})}>${_text_resume($scope0_id, "b", n)}</b>${_el_resume($scope0_id, "a")}<i${$class2[($global$1.on ? 1 : 0) + 0]}></i>${_el_resume($scope0_id, "c")}<u${$class3[($global$1 ? 1 : 0) + 0]}></u>${_el_resume($scope0_id, "d")}<button>inc</button>${_el_resume($scope0_id, "e")}`);
+	})}>${_text_mark($scope0_id, "b", n)}</b>${_el_mark($scope0_id, "a")}<i${$class2[($global$1.on ? 1 : 0) + 0]}></i>${_el_mark($scope0_id, "c")}<u${$class3[($global$1 ? 1 : 0) + 0]}></u>${_el_mark($scope0_id, "d")}<button>inc</button>${_el_mark($scope0_id, "e")}`);
 	_script($scope0_id, "a0");
 	_scope($scope0_id, { f: n });
 }, 1);

@@ -8,7 +8,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 		class: input.class,
 		...rest
 	}, "#p/0", $scope0_id, "p");
-	_html(`</p>${_el_resume($scope0_id, "#p/0")}`);
+	_html(`</p>${_el_mark($scope0_id, "#p/0")}`);
 	_script($scope0_id, "__tests__/tags/child.marko_0_input_class#3_rest#4");
 	_scope($scope0_id, {
 		input_class: _write_if($scope0_reason, 1) && input.class,

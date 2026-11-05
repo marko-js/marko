@@ -10,7 +10,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_dynamic_tag($scope1_id, "#text/0", content, {}, 0, 0, 0);
 		_html("</section>");
 	}, $scope0_id) };
-	_html(`<button id=toggle>toggle</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button id=toggle>toggle</button>${_el_mark($scope0_id, "#button/0")}`);
 	_if(() => {
 		if (show) {
 			const $scope2_id = _scope_id();

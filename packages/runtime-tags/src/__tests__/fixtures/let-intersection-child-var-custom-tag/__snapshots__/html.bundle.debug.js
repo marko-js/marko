@@ -26,7 +26,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let a = let_global_default({ value: "count" });
 	_var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_a#6/var");
 	let b = a + 1;
-	_html(`<div>${_text_resume($scope0_id, "#text/2", a)}</div><div>${_text_resume($scope0_id, "#text/3", b)}</div><button>${_text_resume($scope0_id, "#text/5", `${a},${b}`)}</button>${_el_resume($scope0_id, "#button/4")}`);
+	_html(`<div>${_text_mark($scope0_id, "#text/2", a)}</div><div>${_text_mark($scope0_id, "#text/3", b)}</div><button>${_text_mark($scope0_id, "#text/5", `${a},${b}`)}</button>${_el_mark($scope0_id, "#button/4")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		a,

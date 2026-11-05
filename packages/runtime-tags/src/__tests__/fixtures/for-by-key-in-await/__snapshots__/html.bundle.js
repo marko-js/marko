@@ -3,13 +3,13 @@ var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_value = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let items = [{ id: "a" }, { id: "b" }];
-	_html(`<button>add</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button>add</button>${_el_mark($scope0_id, "a")}`);
 	_for_of(items, (item) => {
 		const $scope1_id = _scope_id();
 		_html("<div>");
 		_await($scope1_id, "a", input.value, (v) => {
 			const $scope2_id = _scope_id();
-			_html(`<em>${_escape(item.id)}:${_text_resume($scope2_id, "b", v, $wg__input_value * 2)}</em>`);
+			_html(`<em>${_escape(item.id)}:${_text_mark($scope2_id, "b", v, $wg__input_value * 2)}</em>`);
 			_scope($scope2_id, {});
 			$wg__input_value || _resume_branch($scope2_id);
 		});

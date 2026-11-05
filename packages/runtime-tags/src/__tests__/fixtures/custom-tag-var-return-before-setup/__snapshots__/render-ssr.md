@@ -112,7 +112,7 @@ INSERT: .await::text("a")
 ```
 ## Change
 ```
-INSERT: .catch
+INSERT: .await + .catch
 INSERT: .catch::text("e")
 ```
 

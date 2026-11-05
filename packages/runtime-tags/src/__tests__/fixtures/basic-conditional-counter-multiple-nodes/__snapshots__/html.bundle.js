@@ -4,11 +4,11 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let show = true;
 	let count = 0;
-	_html(`<button class=inc></button>${_el_resume($scope0_id, "a")}<button class=toggle></button>${_el_resume($scope0_id, "b")}`);
+	_html(`<button class=inc></button>${_el_mark($scope0_id, "a")}<button class=toggle></button>${_el_mark($scope0_id, "b")}`);
 	_if(() => {
 		{
 			const $scope1_id = _scope_id();
-			_html(`The count is ${_text_resume($scope1_id, "a", count, 2)}`);
+			_html(`The count is ${_text_mark($scope1_id, "a", count, 2)}`);
 			_scope($scope1_id, {});
 			return 0;
 		}

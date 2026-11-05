@@ -4,7 +4,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let count = 0;
 	let log = "";
-	_html(`<button class=inc>inc</button>${_el_resume($scope0_id, "#button/0")}<button class=show>show</button>${_el_resume($scope0_id, "#button/1")}<div class=log>${_text_resume($scope0_id, "#text/2", log)}</div>`);
+	_html(`<button class=inc>inc</button>${_el_mark($scope0_id, "#button/0")}<button class=show>show</button>${_el_mark($scope0_id, "#button/1")}<div class=log>${_text_mark($scope0_id, "#text/2", log)}</div>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		count,

@@ -20,7 +20,7 @@ var template_default = _template("a", (input) => {
 	_html("<table><tbody>");
 	_for_of(rows, (row) => {
 		const $scope1_id = _scope_id();
-		_html(`<tr${selected === row.id ? " class=danger" : ""}><td><button class=select>${_escape(row.label)}</button>${_el_resume($scope1_id, "b")}</td></tr>${_el_resume($scope1_id, "a")}`);
+		_html(`<tr${selected === row.id ? " class=danger" : ""}><td><button class=select>${_escape(row.label)}</button>${_el_mark($scope1_id, "b")}</td></tr>${_el_mark($scope1_id, "a")}`);
 		_script($scope1_id, "a0");
 		_scope($scope1_id, {
 			M: row?.id,

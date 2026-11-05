@@ -7,11 +7,11 @@ var template_default = _template("a", (input) => {
 		value: "z",
 		placeholder: "p"
 	};
-	_html(`<button>pick</button>${_el_resume($scope0_id, "a")}<input${_attrs({
+	_html(`<button>pick</button>${_el_mark($scope0_id, "a")}<input${_attrs({
 		type: "radio",
 		checkedValue: v,
 		...rest
-	}, "b", $scope0_id, "input")}>${_el_resume($scope0_id, "b")}<span>${_text_resume($scope0_id, "c", v)}</span>`);
+	}, "b", $scope0_id, "input")}>${_el_mark($scope0_id, "b")}<span>${_text_mark($scope0_id, "c", v)}</span>`);
 	_script($scope0_id, "a0");
 	_script($scope0_id, "a1");
 	_scope($scope0_id, {

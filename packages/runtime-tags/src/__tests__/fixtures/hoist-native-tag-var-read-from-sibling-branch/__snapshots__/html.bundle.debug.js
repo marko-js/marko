@@ -7,14 +7,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_if(() => {
 		if (input.a) {
 			const $scope3_id = _scope_id();
-			_html(`<div>a</div>${_el_resume($scope3_id, "#div/0")}`);
+			_html(`<div>a</div>${_el_mark($scope3_id, "#div/0")}`);
 			_scope($scope3_id, {}, "__tests__/template.marko", "2:2");
 			return 0;
 		} else {
 			const $scope1_id = _scope_id();
 			if (true) {
 				const $scope2_id = _scope_id();
-				_html(`<button>${_text_resume($scope2_id, "#text/1", out)}</button>${_el_resume($scope2_id, "#button/0")}`);
+				_html(`<button>${_text_mark($scope2_id, "#text/1", out)}</button>${_el_mark($scope2_id, "#button/0")}`);
 				_script($scope2_id, "__tests__/template.marko_2");
 				_subscribe($out__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "6:4"), "__tests__/template.marko_2_out#0:4/subscribe");
 			}

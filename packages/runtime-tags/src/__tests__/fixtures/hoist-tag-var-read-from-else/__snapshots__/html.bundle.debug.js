@@ -13,7 +13,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		} else {
 			const $scope2_id = _scope_id();
 			let label = "none";
-			_html(`<button>${_text_resume($scope2_id, "#text/1", label)}</button>${_el_resume($scope2_id, "#button/0")}`);
+			_html(`<button>${_text_mark($scope2_id, "#text/1", label)}</button>${_el_mark($scope2_id, "#button/0")}`);
 			_script($scope2_id, "__tests__/template.marko_2");
 			_scope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:2");
 			return 1;

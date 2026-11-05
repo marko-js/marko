@@ -17,7 +17,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		return $return;
 	}, $scope0_id) };
 	let open = false;
-	_html(`<button>Toggle</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button>Toggle</button>${_el_mark($scope0_id, "#button/0")}`);
 	_if(() => {
 		if (open) {
 			const $scope2_id = _scope_id();

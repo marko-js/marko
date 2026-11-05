@@ -4,7 +4,7 @@ var menu_default = _template("__tests__/tags/menu.marko", (input) => {
 	const $scope0_id = _scope_id();
 	_for_of(input.option, (option) => {
 		const $scope1_id = _scope_id();
-		_html(`<button>${_text_resume($scope1_id, "#text/1", option.label, $wg__input_option)}</button>${_el_resume($scope1_id, "#button/0")}`);
+		_html(`<button>${_text_mark($scope1_id, "#text/1", option.label, $wg__input_option)}</button>${_el_mark($scope1_id, "#button/0")}`);
 		_script($scope1_id, "__tests__/tags/menu.marko_1");
 		_scope($scope1_id, { option_onSelect: option?.onSelect }, "__tests__/tags/menu.marko", "1:2", { option_onSelect: ["option.onSelect", "1:6"] });
 	}, 0, $scope0_id, "#text/0", $wg__input_option, $wg__input_option, 0, 0, 1);

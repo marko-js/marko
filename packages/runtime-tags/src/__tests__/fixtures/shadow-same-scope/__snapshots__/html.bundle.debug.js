@@ -6,7 +6,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let $count = 0;
 	let $count2 = 0;
 	let $count3 = 0;
-	_html(`<div><button>${_text_resume($scope0_id, "#text/1", count)}</button>${_el_resume($scope0_id, "#button/0")}<div><button>${_text_resume($scope0_id, "#text/3", $count)}</button>${_el_resume($scope0_id, "#button/2")}<div><button>${_text_resume($scope0_id, "#text/5", $count2)}</button>${_el_resume($scope0_id, "#button/4")}</div></div></div><div><button>${_text_resume($scope0_id, "#text/7", $count3)}</button>${_el_resume($scope0_id, "#button/6")}</div>`);
+	_html(`<div><button>${_text_mark($scope0_id, "#text/1", count)}</button>${_el_mark($scope0_id, "#button/0")}<div><button>${_text_mark($scope0_id, "#text/3", $count)}</button>${_el_mark($scope0_id, "#button/2")}<div><button>${_text_mark($scope0_id, "#text/5", $count2)}</button>${_el_mark($scope0_id, "#button/4")}</div></div></div><div><button>${_text_mark($scope0_id, "#text/7", $count3)}</button>${_el_mark($scope0_id, "#button/6")}</div>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		count,

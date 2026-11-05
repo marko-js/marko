@@ -2,7 +2,7 @@
 var child_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_a = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html(`<span>${_text_resume($scope0_id, "a", input.a, $wg__input_a)}</span>`);
+	_html(`<span>${_text_mark($scope0_id, "a", input.a, $wg__input_a)}</span>`);
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 

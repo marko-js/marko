@@ -4,7 +4,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const $show__closures = new Set();
 	let show = true;
-	_html(`<button>toggle</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button>toggle</button>${_el_mark($scope0_id, "#button/0")}`);
 	_try($scope0_id, "#text/1", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();

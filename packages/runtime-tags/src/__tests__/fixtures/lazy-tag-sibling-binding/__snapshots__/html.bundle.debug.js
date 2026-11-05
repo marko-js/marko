@@ -5,7 +5,7 @@ var child_s_default = _template("__tests__/child-s.marko", (input) => {
 	const isShared = input.isShared;
 	let holder = input.holder;
 	let verified = "?";
-	_html(`<button class=s>s:${_text_resume($scope0_id, "#text/1", verified, 2)}</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button class=s>s:${_text_mark($scope0_id, "#text/1", verified, 2)}</button>${_el_mark($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/child-s.marko_0");
 	_scope($scope0_id, {
 		isShared,
@@ -23,7 +23,7 @@ var child_b_default = _template("__tests__/child-b.marko", (input) => {
 	const isInner = input.isInner;
 	let inner = input.inner;
 	let verified = "?";
-	_html(`<button class=b>b:${_text_resume($scope0_id, "#text/1", verified, 2)}</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button class=b>b:${_text_mark($scope0_id, "#text/1", verified, 2)}</button>${_el_mark($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/child-b.marko_0");
 	_scope($scope0_id, {
 		isInner,
@@ -42,7 +42,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let shared = { inner: { value: 1 } };
 	let count = 0;
-	_html(`<button class=main>main:${_text_resume($scope0_id, "#text/1", count, 2)}</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button class=main>main:${_text_mark($scope0_id, "#text/1", count, 2)}</button>${_el_mark($scope0_id, "#button/0")}`);
 	$ChildS_withLoadAssets({
 		holder: shared,
 		isShared: _resume(function(o) {

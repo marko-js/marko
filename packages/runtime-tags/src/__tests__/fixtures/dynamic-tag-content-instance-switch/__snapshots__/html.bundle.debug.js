@@ -4,11 +4,11 @@ var provider_default = _template("__tests__/tags/provider.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const $count__closures = new Set();
 	let count = input.n;
-	_html(`<button class=bump>bump</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button class=bump>bump</button>${_el_mark($scope0_id, "#button/0")}`);
 	const body = { content: _content_resume("__tests__/tags/provider.marko_1*content", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
-		_html(`<div>value ${_text_resume($scope1_id, "#text/0", count, 2)}</div>`);
+		_html(`<div>value ${_text_mark($scope1_id, "#text/0", count, 2)}</div>`);
 		_subscribe($count__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/provider.marko", "3:2"), "__tests__/tags/provider.marko_1_count#0:4/subscribe");
 	}, $scope0_id) };
 	const $return = body;
@@ -27,7 +27,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let a = provider_default({ n: 1 });
 	let b = provider_default({ n: 2 });
 	let sel = 0;
-	_html(`<button id=toggle>toggle</button>${_el_resume($scope0_id, "#button/4")}`);
+	_html(`<button id=toggle>toggle</button>${_el_mark($scope0_id, "#button/4")}`);
 	_dynamic_tag($scope0_id, "#text/5", sel ? b : a, {});
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {

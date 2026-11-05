@@ -9,7 +9,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		if (true) {
 			const $scope2_id = _scope_id();
-			_html(`<span>${_text_resume($scope2_id, "#text/0", show)}</span>`);
+			_html(`<span>${_text_mark($scope2_id, "#text/0", show)}</span>`);
 			_subscribe($show__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:4"), "__tests__/template.marko_2_show#0:3/subscribe");
 		}
 		_html(_escape((() => {
@@ -19,10 +19,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, void 0, (err) => {
 		const $scope3_reason = _scope_reason(), $wg__err_message = _write_guard($scope3_reason, 0);
 		const $scope3_id = _scope_id();
-		_html(`<p>${_text_resume($scope3_id, "#text/0", err.message, $wg__err_message)}</p>`);
+		_html(`<p>${_text_mark($scope3_id, "#text/0", err.message, $wg__err_message)}</p>`);
 		_write_if($scope3_reason, 0) && _scope($scope3_id, {}, "__tests__/template.marko", "7:4");
 	}, 0, "__tests__/template.marko_3*content");
-	_html(`<button class=toggle>${_text_resume($scope0_id, "#text/2", show)}</button>${_el_resume($scope0_id, "#button/1")}`);
+	_html(`<button class=toggle>${_text_mark($scope0_id, "#text/2", show)}</button>${_el_mark($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		show,

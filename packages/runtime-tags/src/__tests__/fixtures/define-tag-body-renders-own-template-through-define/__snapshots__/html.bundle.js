@@ -3,11 +3,11 @@ const $content = (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_depth = _write_guard($scope0_reason, 0), $wi__input_depth = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let open = true;
-	_html(`<button>${_text_resume($scope0_id, "b", input.depth, $wg__input_depth)}</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button>${_text_mark($scope0_id, "b", input.depth, $wg__input_depth)}</button>${_el_mark($scope0_id, "a")}`);
 	const Label = { content: _content("b0", ({ depth }) => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason(), $wg__depth = _write_guard($scope2_reason, 0);
-		_html(`<b>${_text_resume($scope2_id, "a", depth, $wg__depth)}</b>`);
+		_html(`<b>${_text_mark($scope2_id, "a", depth, $wg__depth)}</b>`);
 		_write_if($scope2_reason, 0) && _scope($scope2_id, {});
 	}, $scope0_id) };
 	const Child = { content: _content("b1", ({ depth }) => {

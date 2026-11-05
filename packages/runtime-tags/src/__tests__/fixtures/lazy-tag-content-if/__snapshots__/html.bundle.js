@@ -15,7 +15,7 @@ var template_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	const $show__closures = /* @__PURE__ */ new Set();
 	let show = true;
-	_html(`<button>toggle</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button>toggle</button>${_el_mark($scope0_id, "a")}`);
 	$Child_withLoadAssets({ content: _content("b1", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();

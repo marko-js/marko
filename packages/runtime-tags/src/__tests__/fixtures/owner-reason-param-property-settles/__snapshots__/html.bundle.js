@@ -9,7 +9,7 @@ var child_default = _template("b", (input) => {
 		_if(() => {
 			if (input.obj.show) {
 				const $scope2_id = _scope_id();
-				_html(`<span>${_text_resume($scope2_id, "a", item, $wg__input_obj_list)}</span>`);
+				_html(`<span>${_text_mark($scope2_id, "a", item, $wg__input_obj_list)}</span>`);
 				_script($scope2_id, "b0", $wg__input_obj_list);
 				_subscribe($wi__input_count && $input_count__closures, _subscribe($wi__input_obj && $input_obj__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "b1", $wg__input_obj_list), "b2", $wg__input_obj_list);
 				return 0;
@@ -39,7 +39,7 @@ var template_default = _template("a", (input) => {
 		name: "first"
 	};
 	let count = 1;
-	_html(`<button>update</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button>update</button>${_el_mark($scope0_id, "a")}`);
 	_set_scope_reason(682);
 	const $childScope = _peek_scope_id();
 	child_default({

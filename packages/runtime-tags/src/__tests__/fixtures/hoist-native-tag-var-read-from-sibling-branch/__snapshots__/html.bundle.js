@@ -7,14 +7,14 @@ var template_default = _template("a", (input) => {
 	_if(() => {
 		if (input.a) {
 			const $scope3_id = _scope_id();
-			_html(`<div>a</div>${_el_resume($scope3_id, "a")}`);
+			_html(`<div>a</div>${_el_mark($scope3_id, "a")}`);
 			_scope($scope3_id, {});
 			return 0;
 		} else {
 			const $scope1_id = _scope_id();
 			{
 				const $scope2_id = _scope_id();
-				_html(`<button>${_text_resume($scope2_id, "b", out)}</button>${_el_resume($scope2_id, "a")}`);
+				_html(`<button>${_text_mark($scope2_id, "b", out)}</button>${_el_mark($scope2_id, "a")}`);
 				_script($scope2_id, "a0");
 				_subscribe($out__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "a1");
 			}

@@ -47,6 +47,8 @@ import {
   ensureBodySection,
   getSection,
   getSectionForBody,
+  mayMergeWithText,
+  type ControlFlowTagExtra,
 } from "../util/sections";
 import {
   addValue,
@@ -141,7 +143,10 @@ export default {
     }
 
     const nodeBinding = structure.controlFlowNode(tag, tagSection);
-    const tagExtra = mergeTagReferences(tagSection, tag.node);
+    const tagExtra = mergeTagReferences(
+      tagSection,
+      tag.node,
+    ) as ControlFlowTagExtra;
 
     addReasonExprs(ensureSlot(nodeBinding, SlotKind.BranchExpr), tagExtra);
 
@@ -162,10 +167,8 @@ export default {
         onFinalizeReferences(() => detectForSelector(bodySection, keyBinding));
       }
     }
-    initBranchSection(bodySection, tagExtra, {
-      nodeBinding,
-      optional: true,
-    });
+    tagExtra.textBefore = mayMergeWithText(tag, true);
+    initBranchSection(bodySection, tagExtra, { kind: "for", tag: tagExtra });
   },
   translate: translateByTarget({
     html: {
@@ -249,10 +252,9 @@ export default {
         const { node } = tag;
         const tagExtra = node.extra!;
         const nodeBinding = tagExtra.nodeBinding!;
-        const hop = { kind: "for", nodeBinding } as const;
-        setClosureSignalBuilder(tag, hop, (closure, render) => {
+        setClosureSignalBuilder(tag, (closure, render) => {
           if (!isForSelectorClosure(bodySection, closure)) {
-            return buildClosureHop(hop, render);
+            return buildClosureHop(bodySection, render);
           }
           return callRuntime(
             "_for_selector",

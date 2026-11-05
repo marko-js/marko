@@ -10,7 +10,7 @@ var template_default = _template("a", (input) => {
 		const run = _resume(function() {
 			((el) => el())(_el_read_error).innerHTML = text();
 		}, "a1", $scope1_id);
-		_html(`<div></div>${_el_resume($scope1_id, "a")}`);
+		_html(`<div></div>${_el_mark($scope1_id, "a")}`);
 		_script($scope1_id, "a2");
 		_scope($scope1_id, {
 			b: run,

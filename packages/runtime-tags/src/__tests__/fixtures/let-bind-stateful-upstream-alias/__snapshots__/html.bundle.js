@@ -22,10 +22,10 @@ var template_default = _template("a", (input) => {
 	let store = store_default({ value: ["Learn Marko", "Make a Website"] });
 	_var($scope0_id, "b", $childScope, "a0");
 	let list = store.list;
-	_html(`<button>Clear</button>${_el_resume($scope0_id, "c")}<ul>`);
+	_html(`<button>Clear</button>${_el_mark($scope0_id, "c")}<ul>`);
 	_for_of(list, (item) => {
 		const $scope1_id = _scope_id();
-		_html(`<li>${_text_resume($scope1_id, "a", item)}</li>`);
+		_html(`<li>${_text_mark($scope1_id, "a", item)}</li>`);
 		_scope($scope1_id, {});
 	}, 0, $scope0_id, "d", 1, 1, 1, "</ul>", 1);
 	_script($scope0_id, "a1");

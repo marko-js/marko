@@ -4,7 +4,7 @@ var a_default = _template("__tests__/a.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_depth = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let n = 0;
-	_html(`<button>a ${_text_resume($scope0_id, "#text/1", input.depth, $wg__input_depth * 2)}:${_text_resume($scope0_id, "#text/2", n, 2)}</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button>a ${_text_mark($scope0_id, "#text/1", input.depth, $wg__input_depth * 2)}:${_text_mark($scope0_id, "#text/2", n, 2)}</button>${_el_mark($scope0_id, "#button/0")}`);
 	_if(() => {
 		if (input.depth > 0) {
 			const $scope1_id = _scope_id();
@@ -22,7 +22,7 @@ var b_default = _template("__tests__/b.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_depth = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let n = 0;
-	_html(`<button>b ${_text_resume($scope0_id, "#text/1", input.depth, $wg__input_depth * 2)}:${_text_resume($scope0_id, "#text/2", n, 2)}</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button>b ${_text_mark($scope0_id, "#text/1", input.depth, $wg__input_depth * 2)}:${_text_mark($scope0_id, "#text/2", n, 2)}</button>${_el_mark($scope0_id, "#button/0")}`);
 	_if(() => {
 		if (input.depth > 0) {
 			const $scope1_id = _scope_id();

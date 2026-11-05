@@ -4,14 +4,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const $show__closures = new Set();
 	let show = false;
-	_html(`<button id=show>show</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button id=show>show</button>${_el_mark($scope0_id, "#button/0")}`);
 	_try($scope0_id, "#text/1", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		_if(() => {
 			if (show) {
 				const $scope3_id = _scope_id();
-				_html(`<button id=inner>inner</button>${_el_resume($scope3_id, "#button/0")}`);
+				_html(`<button id=inner>inner</button>${_el_mark($scope3_id, "#button/0")}`);
 				_script($scope3_id, "__tests__/template.marko_3");
 				_scope($scope3_id, {}, "__tests__/template.marko", "7:4");
 				return 0;

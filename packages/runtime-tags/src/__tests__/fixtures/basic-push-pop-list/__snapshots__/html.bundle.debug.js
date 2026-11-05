@@ -7,10 +7,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html("<div>");
 	_for_of(items, (item) => {
 		const $scope1_id = _scope_id();
-		_html(_text_resume($scope1_id, "#text/0", item));
+		_html(_text_mark($scope1_id, "#text/0", item));
 		_scope($scope1_id, {}, "__tests__/template.marko", "5:4");
 	}, 0, $scope0_id, "#text/0");
-	_html(`<button id=add>Add</button>${_el_resume($scope0_id, "#button/1")}<button id=remove>Remove</button>${_el_resume($scope0_id, "#button/2")}</div>`);
+	_html(`<button id=add>Add</button>${_el_mark($scope0_id, "#button/1")}<button id=remove>Remove</button>${_el_mark($scope0_id, "#button/2")}</div>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		id,

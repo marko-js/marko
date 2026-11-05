@@ -5,13 +5,13 @@ var template_default = _template("a", (input) => {
 	const $input_value__closures = /* @__PURE__ */ new Set();
 	let Parent = "div";
 	let Child = "a";
-	_html(`<div><svg>${_html_resume($scope0_id, "b", input.value, $wg__input_value)}`);
+	_html(`<div><svg>${_html_mark($scope0_id, "b", input.value, $wg__input_value)}`);
 	_dynamic_tag($scope0_id, "c", Child, { href: "#bar" }, _content_resume("a0", () => {
 		_scope_id();
 		_scope_reason();
 		_html("Hi");
 	}, $scope0_id));
-	_html(`</svg><math>${_html_resume($scope0_id, "d", input.value, $wg__input_value)}`);
+	_html(`</svg><math>${_html_mark($scope0_id, "d", input.value, $wg__input_value)}`);
 	_dynamic_tag($scope0_id, "e", Child, { href: "#bar" }, _content_resume("a1", () => {
 		_scope_id();
 		_scope_reason();
@@ -21,11 +21,11 @@ var template_default = _template("a", (input) => {
 	_dynamic_tag($scope0_id, "f", Parent, {}, _content_resume("a2", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
-		_html(_html_resume($scope1_id, "a", input.value, $wg__input_value));
+		_html(_html_mark($scope1_id, "a", input.value, $wg__input_value * 2));
 		_subscribe($wi__input_value && $input_value__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a3", $wg__input_value);
 		$wg__input_value || _resume_branch($scope1_id);
 	}, $scope0_id));
-	_html(`<button class=toggle-parent>Toggle Parent</button>${_el_resume($scope0_id, "g")}<button class=toggle-child>Toggle Child</button>${_el_resume($scope0_id, "h")}</div>${_el_resume($scope0_id, "a")}`);
+	_html(`<button class=toggle-parent>Toggle Parent</button>${_el_mark($scope0_id, "g")}<button class=toggle-child>Toggle Child</button>${_el_mark($scope0_id, "h")}</div>${_el_mark($scope0_id, "a")}`);
 	_script($scope0_id, "a4");
 	_script($scope0_id, "a5");
 	_scope($scope0_id, {

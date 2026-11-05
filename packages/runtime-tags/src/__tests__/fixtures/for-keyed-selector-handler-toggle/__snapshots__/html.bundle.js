@@ -13,7 +13,7 @@ var template_default = _template("a", (input) => {
 	_html("<ul>");
 	_for_of(rows, (row) => {
 		const $scope1_id = _scope_id();
-		_html(`<li${selected === row.id ? " class=danger" : ""}><button class=toggle>${_escape(row.label)}</button>${_el_resume($scope1_id, "b")}</li>${_el_resume($scope1_id, "a")}`);
+		_html(`<li${selected === row.id ? " class=danger" : ""}><button class=toggle>${_escape(row.label)}</button>${_el_mark($scope1_id, "b")}</li>${_el_mark($scope1_id, "a")}`);
 		_script($scope1_id, "a0");
 		_scope($scope1_id, {
 			M: row?.id,

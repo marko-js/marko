@@ -8,7 +8,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const { onClick: $onClick } = {};
 	const onClick = void 0 !== $onClick ? $onClick : updateText;
-	_html(`<button>before</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button>before</button>${_el_mark($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/template.marko_0_onClick#3");
 	_scope($scope0_id, { onClick }, "__tests__/template.marko", 0, { onClick: "6:3" });
 }, 1);

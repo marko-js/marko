@@ -14,6 +14,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	};
 	const called = track(input.a);
 	const impureIife = (() => track(2))();
-	_html(`<div>${_text_resume($scope0_id, "#text/0", input.a?.b, $wg__input_a_b)}</div>`);
+	_html(`<div>${_text_mark($scope0_id, "#text/0", input.a?.b, $wg__input_a_b)}</div>`);
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

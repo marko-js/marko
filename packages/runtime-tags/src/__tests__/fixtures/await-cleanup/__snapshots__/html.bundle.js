@@ -4,7 +4,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	const $show__closures = /* @__PURE__ */ new Set();
 	let show = 1;
-	_html(`<button></button>${_el_resume($scope0_id, "a")}<div id=one>Fail</div><div id=two>Fail</div>`);
+	_html(`<button></button>${_el_mark($scope0_id, "a")}<div id=one>Fail</div><div id=two>Fail</div>`);
 	_if(() => {
 		{
 			const $scope1_id = _scope_id();
@@ -13,7 +13,7 @@ var template_default = _template("a", (input) => {
 				const $scope2_id = _scope_id();
 				_await($scope2_id, "a", resolveAfter(0, 1), () => {
 					const $scope3_id = _scope_id();
-					_html(_text_resume($scope3_id, "a", show));
+					_html(_text_mark($scope3_id, "a", show));
 					_script($scope3_id, "a0");
 					_subscribe($show__closures, _scope($scope3_id, {}), "a1");
 				});

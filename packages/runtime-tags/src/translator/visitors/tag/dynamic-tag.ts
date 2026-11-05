@@ -69,6 +69,7 @@ import {
   getScopeIdIdentifier,
   getSection,
   getSectionForBody,
+  mayMergeWithText,
   removeDroppedContent,
   type Section,
   StructureKind,
@@ -76,7 +77,7 @@ import {
 import {
   addStatement,
   addValue,
-  getResumeRegisterId,
+  getResumeRegistryId,
   getSignal,
   initValue,
   type Signal,
@@ -168,11 +169,12 @@ export default {
       const tagSection = ensureSection(tag);
       const inputNodes = getAllTagReferenceNodes(node);
       // The tag reads as one; what its name reads is not handed to it as an input.
-      (node.name.extra ??= {}).tagName = true;
+      (node.name.extra ??= {}).tagName = node.extra ??= {};
       const tagExtra = mergeReferences(tagSection, node, [
         node.name,
         ...inputNodes,
       ]);
+      tagExtra.textBefore = mayMergeWithText(tag, true);
       // Name-only tags are left out: flagging them registers sibling attr-tag
       // props through `for` items, so a bare function as the name stays unregistered.
       if (inputNodes.length) tagExtra.retained = true;
@@ -510,7 +512,7 @@ export default {
                 getScopeOffsetAccessorLiteral(nodeBinding),
                 dynamicScopeIdentifier,
                 t.stringLiteral(
-                  getResumeRegisterId(
+                  getResumeRegistryId(
                     tagSection,
                     node.var.extra?.binding,
                     "var",
@@ -679,7 +681,7 @@ function getDynamicTagInputBindings(tagExtra: t.MarkoTagExtra): Opt<Binding> {
   let inputBindings: Opt<Binding>;
   for (const childExtra of tagExtra.tagNameTemplates || []) {
     if (childExtra.featureType === "class") return;
-    const inputBinding = childExtra.paramsTree?.props?.[0]?.binding;
+    const inputBinding = childExtra.paramsTree?.properties?.[0]?.binding;
     if (inputBinding) inputBindings = concat(inputBindings, inputBinding);
   }
   return inputBindings;

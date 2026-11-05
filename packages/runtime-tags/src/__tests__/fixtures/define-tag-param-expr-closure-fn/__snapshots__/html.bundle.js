@@ -3,7 +3,7 @@ var counter_default = _template("b", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let n = 0;
-	_html(`<button>${_text_resume($scope0_id, "b", n)}</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button>${_text_mark($scope0_id, "b", n)}</button>${_el_mark($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
 	_scope($scope0_id, { c: n });
 });
@@ -19,7 +19,7 @@ var template_default = _template("a", (input) => {
 	const D = { content: _content("a1", ({ on }) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $wg__on = _write_guard($scope1_reason, 0), $wi__on = _write_if($scope1_reason, 0);
-		_html(`<span>${_text_resume($scope1_id, "a", on && f(), $wg__input_a || $wg__on)}</span>`);
+		_html(`<span>${_text_mark($scope1_id, "a", on && f(), $wg__input_a || $wg__on)}</span>`);
 		($wi__input_a || $wi__on) && _subscribe($wi__input_a && $f2__closures, _scope($scope1_id, {
 			d: $wi__input_a && on,
 			_: _scope_with_id($scope0_id)

@@ -34,7 +34,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, $scope1_id, "#text/0", 1, 1, 0, 0, 1);
 		_scope($scope1_id, {}, "__tests__/template.marko", "4:4");
 	}, "id", $scope0_id, "#div/0", 1, 1, 1, "</div>");
-	_html(`<button class=rotate>Rotate</button>${_el_resume($scope0_id, "#button/1")}<button class=toggle>Toggle</button>${_el_resume($scope0_id, "#button/2")}<button class=drop>Drop</button>${_el_resume($scope0_id, "#button/3")}`);
+	_html(`<button class=rotate>Rotate</button>${_el_mark($scope0_id, "#button/1")}<button class=toggle>Toggle</button>${_el_mark($scope0_id, "#button/2")}<button class=drop>Drop</button>${_el_mark($scope0_id, "#button/3")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, { items }, "__tests__/template.marko", 0, { items: "1:6" });
 }, 1);

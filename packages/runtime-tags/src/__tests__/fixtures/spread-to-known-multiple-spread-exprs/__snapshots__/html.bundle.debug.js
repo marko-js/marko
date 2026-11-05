@@ -2,7 +2,7 @@
 var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_class__OR__input_value__OR__input_a = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html(`<input${_attr_input_value($scope0_id, "#input/0", input.value)}${_attr_class(input.class)}${_attr("data-a", input.a)}>${_el_resume($scope0_id, "#input/0", $wg__input_class__OR__input_value__OR__input_a)}`);
+	_html(`<input${_attr_input_value($scope0_id, "#input/0", input.value)}${_attr_class(input.class)}${_attr("data-a", input.a)}>${_el_mark($scope0_id, "#input/0", $wg__input_class__OR__input_value__OR__input_a)}`);
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/child.marko", 0);
 });
 

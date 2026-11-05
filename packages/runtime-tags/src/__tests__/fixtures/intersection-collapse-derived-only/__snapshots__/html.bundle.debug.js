@@ -5,7 +5,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let count = 1;
 	const doubled = count * 2;
 	const tripled = count * 3;
-	_html(`<button>inc</button>${_el_resume($scope0_id, "#button/0")}<div>${_text_resume($scope0_id, "#text/1", doubled + tripled)}</div>`);
+	_html(`<button>inc</button>${_el_mark($scope0_id, "#button/0")}<div>${_text_mark($scope0_id, "#text/1", doubled + tripled)}</div>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, { count }, "__tests__/template.marko", 0, { count: "1:6" });
 }, 1);

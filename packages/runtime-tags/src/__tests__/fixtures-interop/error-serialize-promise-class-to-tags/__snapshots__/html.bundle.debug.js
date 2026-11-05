@@ -5,7 +5,7 @@ var tags_child_default = _template("__tests__/components/tags-child.marko", (inp
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let pending = Promise.resolve("hi");
-	_html(`<button id=tags>go</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button id=tags>go</button>${_el_mark($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/components/tags-child.marko_0");
 	_scope($scope0_id, { pending }, "__tests__/components/tags-child.marko", 0, { pending: "2:6" });
 });

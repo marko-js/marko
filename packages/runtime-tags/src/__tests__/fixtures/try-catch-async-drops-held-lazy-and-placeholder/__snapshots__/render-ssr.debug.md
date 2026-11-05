@@ -19,7 +19,7 @@ ERROR!
 ```
 ## Change
 ```
-INSERT: ::text("ERROR!")
+INSERT: #log + ::text("ERROR!")
 REMOVE: span
 INSERT: #log::text("[before]")
 REMOVE: #log::text("[before]")

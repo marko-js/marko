@@ -4,7 +4,7 @@ var my_dialog_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	_html("<dialog");
 	_attrs_content(input, "a", $scope0_id, "dialog");
-	_html(`</dialog>${_el_resume($scope0_id, "a")}`);
+	_html(`</dialog>${_el_mark($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
 	_scope($scope0_id, {});
 });
@@ -21,6 +21,6 @@ var template_default = _template("a", (input) => {
 			open = _new_open;
 		}, "a0", $scope0_id)
 	});
-	_html(`<span>${_text_resume($scope0_id, "b", String(open))}</span>`);
+	_html(`<span>${_text_mark($scope0_id, "b", String(open))}</span>`);
 	_scope($scope0_id, { a: _existing_scope($childScope) });
 }, 1);

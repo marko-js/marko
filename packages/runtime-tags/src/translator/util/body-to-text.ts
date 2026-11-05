@@ -2,7 +2,7 @@ import { types as t } from "@marko/compiler";
 import { decodeHTML } from "@marko/compiler/babel-utils";
 
 import { toTemplateElement } from "./build-string-expression";
-import { getCanonicalExtra } from "./references";
+import { getCanonicalExpr } from "./references";
 import { callRuntime } from "./runtime";
 
 // Marks a flattened `<if>` whose value still holds uncoerced interpolations
@@ -87,7 +87,7 @@ function buildText(
     templateQuasis.push(toTemplateElement(currentQuasi, true));
     const literal = t.templateLiteral(templateQuasis, templateExpressions);
     // Several placeholders render as one, through the group they merged into.
-    literal.extra = placeholderExtra && getCanonicalExtra(placeholderExtra);
+    literal.extra = placeholderExtra && getCanonicalExpr(placeholderExtra);
     return literal;
   }
   return t.stringLiteral(currentQuasi);

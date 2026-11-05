@@ -4,7 +4,7 @@ var menu_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	_for_of(input.option, (option) => {
 		const $scope1_id = _scope_id();
-		_html(`<button>${_text_resume($scope1_id, "b", option.label, $wg__input_option)}</button>${_el_resume($scope1_id, "a")}`);
+		_html(`<button>${_text_mark($scope1_id, "b", option.label, $wg__input_option)}</button>${_el_mark($scope1_id, "a")}`);
 		_script($scope1_id, "b0");
 		_scope($scope1_id, { e: option?.onSelect });
 	}, 0, $scope0_id, "a", $wg__input_option, $wg__input_option, 0, 0, 1);

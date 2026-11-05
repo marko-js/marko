@@ -8,7 +8,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html("<li>");
 		_await($scope1_id, "#text/0", resolveAfter(item.label, 1), (v) => {
 			const $scope2_id = _scope_id();
-			_html(_text_resume($scope2_id, "#text/0", v, $wg__input_items));
+			_html(_text_mark($scope2_id, "#text/0", v, $wg__input_items));
 			$wi__input_items && _scope($scope2_id, {}, "__tests__/template.marko", "6:8");
 		}, $wg__input_items);
 		_html("</li>");

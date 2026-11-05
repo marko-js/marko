@@ -6,7 +6,7 @@ var template_default = _template("a", (input) => {
 	_html(`<div${_attr_class({
 		"": 0,
 		odd: 0
-	})}>x</div>${_el_resume($scope0_id, "a")}<button>b</button>${_el_resume($scope0_id, "b")}`);
+	})}>x</div>${_el_mark($scope0_id, "a")}<button>b</button>${_el_mark($scope0_id, "b")}`);
 	_script($scope0_id, "a0");
 	_scope($scope0_id, { c: count });
 }, 1);

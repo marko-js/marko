@@ -8,7 +8,7 @@ var my_box_default = _template("__tests__/tags/my-box.marko", (input) => {
 		...input,
 		...extra
 	}, "#div/0", $scope0_id, "div");
-	_html(`</div>${_el_resume($scope0_id, "#div/0")}`);
+	_html(`</div>${_el_mark($scope0_id, "#div/0")}`);
 	_script($scope0_id, "__tests__/tags/my-box.marko_0_input#2_extra#3");
 	_scope($scope0_id, { extra: _write_if($scope0_reason, 0) && extra }, "__tests__/tags/my-box.marko", 0, { extra: "1:8" });
 });

@@ -3,7 +3,7 @@ var counter_default = _template("b", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let n = 0;
-	_html(`<button>${_text_resume($scope0_id, "b", n)}</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button>${_text_mark($scope0_id, "b", n)}</button>${_el_mark($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
 	_scope($scope0_id, { c: n });
 });
@@ -23,7 +23,7 @@ var template_default = _template("a", (input) => {
 		_if(() => {
 			if (show) {
 				const $scope3_id = _scope_id();
-				_html(`<span>${_text_resume($scope3_id, "a", f(), $wg__input_a)}</span>`);
+				_html(`<span>${_text_mark($scope3_id, "a", f(), $wg__input_a)}</span>`);
 				($wi__input_a || $wi__show) && _subscribe($wi__input_a && $f2__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }), "a1", $wg__input_a);
 				return 0;
 			}
@@ -36,7 +36,7 @@ var template_default = _template("a", (input) => {
 		_set_scope_reason($wg__on << 1);
 		const $childScope = _peek_scope_id();
 		E.content({ show: on });
-		_html(`<p>${_text_resume($scope1_id, "b", input.a, $wg__input_a)}</p>`);
+		_html(`<p>${_text_mark($scope1_id, "b", input.a, $wg__input_a)}</p>`);
 		($wi__input_a || $wi__on) && _subscribe($wi__input_a && $input_a__closures, _scope($scope1_id, {
 			_: $wi__input_a && _scope_with_id($scope0_id),
 			a: $wi__on && _existing_scope($childScope)

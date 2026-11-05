@@ -209,10 +209,7 @@ function createCloneableHTML(
     firstChild: ChildNode;
     lastChild: ChildNode;
   };
-  const parent = document.createElementNS(ns, "t") as ParentNode & {
-    firstChild: ChildNode;
-    lastChild: ChildNode;
-  };
+  const parent = new DocumentFragment();
   insertChildNodes(parent, null, firstChild, lastChild);
   return firstChild === lastChild && firstChild!.nodeType < NodeType.Comment
     ? (branch, walks) => {
@@ -224,7 +221,12 @@ function createCloneableHTML(
         );
       }
     : (branch, walks) => {
-        const clone = parent.cloneNode(true);
+        // What the branch renders before it is inserted reads its namespace here,
+        // as in the DocumentFragment `detachBranch` parks a branch in.
+        const clone = parent.cloneNode(true) as DocumentFragment & {
+          namespaceURI: string;
+        };
+        clone.namespaceURI = ns;
         walk(clone.firstChild!, walks, branch);
         branch[AccessorProp.StartNode] = clone.firstChild!;
         branch[AccessorProp.EndNode] = clone.lastChild!;

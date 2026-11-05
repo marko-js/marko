@@ -23,7 +23,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_if(() => {
 				if (input.show) {
 					const $scope2_id = _scope_id();
-					_html(`<span>${_text_resume($scope2_id, "#text/0", item, $wg__item)}</span>`);
+					_html(`<span>${_text_mark($scope2_id, "#text/0", item, $wg__item)}</span>`);
 					($wi__input_show || $wi__item) && _scope($scope2_id, { _: $wi__item && _scope_with_id($scope1_id) }, "__tests__/template.marko", "4:13");
 					return 0;
 				}
