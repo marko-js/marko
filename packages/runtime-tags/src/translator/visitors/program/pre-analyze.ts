@@ -127,8 +127,6 @@ function normalizeTag(tag: t.NodePath<t.MarkoTag>) {
       node.name = withPreviousLocation(t.identifier(tagName), name);
     }
   }
-  // Before the body: a child asking for this tag's type would cache the
-  // unrewritten name as an unresolved dynamic tag.
   normalizeBody(tag.get("body").get("body"));
   normalizeBody(tag.get("attributeTags"));
 

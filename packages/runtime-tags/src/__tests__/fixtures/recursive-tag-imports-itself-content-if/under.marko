@@ -1,0 +1,8 @@
+import Self from "./under.marko"
+<p>under ${input.depth}</p>
+<${input.content}/>
+<if=(input.depth > 0)>
+  <Self depth=input.depth - 1>
+    <if=input.depth % 2>odd</if>
+  </Self>
+</if>

@@ -47,7 +47,7 @@ import {
 import { ensureSlot, SlotKind } from "../util/slots";
 import { sourcesUtil } from "../util/sources";
 import * as structure from "../util/structure";
-import analyzeTagNameType, { TagNameType } from "../util/tag-name-type";
+import { isStaticNativeTag } from "../util/tag-name-type";
 import { toOnlyStatementOrBlock } from "../util/to-only-or-block";
 import { translateByTarget } from "../util/visitors";
 import { getBranchWriteReason } from "../util/write-guard";
@@ -282,12 +282,7 @@ export function flattenTextOnlyConditional(rootTag: t.NodePath<t.MarkoTag>) {
   const tagBody = rootTag.parentPath;
   if (!tagBody.isMarkoTagBody()) return;
   const parentTag = tagBody.parentPath;
-  if (
-    !parentTag.isMarkoTag() ||
-    analyzeTagNameType(parentTag) !== TagNameType.NativeTag
-  ) {
-    return;
-  }
+  if (!parentTag.isMarkoTag() || !isStaticNativeTag(parentTag)) return;
 
   const branches: t.NodePath<t.MarkoTag>[] = [];
   let tag: t.NodePath<t.MarkoTag> | undefined = rootTag;

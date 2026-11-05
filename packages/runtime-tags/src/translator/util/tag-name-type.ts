@@ -62,16 +62,14 @@ export default function analyzeTagNameType(tag: t.NodePath<t.MarkoTag>) {
   if (extra.tagNameType === undefined) {
     const name = tag.get("name");
     let load: LoadImportConfig | undefined;
-    if (name.isStringLiteral()) {
+    if (isStaticNativeTag(tag)) {
+      extra.tagNameType = TagNameType.NativeTag;
+      extra.tagNameNullable = extra[kTagNameDynamic] = false;
+    } else if (name.isStringLiteral()) {
       extra.tagNameType =
         name.node.value[0] === "@"
           ? TagNameType.AttributeTag
-          : isNativeTag(tag)
-            ? TagNameType.NativeTag
-            : TagNameType.CustomTag;
-      extra.tagNameNullable = extra[kTagNameDynamic] = false;
-    } else if (name.isTemplateLiteral() && name.node.quasis.length === 1) {
-      extra.tagNameType = TagNameType.NativeTag;
+          : TagNameType.CustomTag;
       extra.tagNameNullable = extra[kTagNameDynamic] = false;
     } else if (name.isIdentifier()) {
       load = analyzeExpressionTagName(name, extra);
@@ -128,6 +126,15 @@ export default function analyzeTagNameType(tag: t.NodePath<t.MarkoTag>) {
   }
 
   return extra[kTagNameDynamic] ? TagNameType.DynamicTag : extra.tagNameType!;
+}
+
+/** A native element by its name alone: the tag lookup's verdict on a string, or
+ * a template literal without expressions. Loads no template, so pre-analyze may ask. */
+export function isStaticNativeTag(tag: t.NodePath<t.MarkoTag>) {
+  const { name } = tag.node;
+  return t.isStringLiteral(name)
+    ? isNativeTag(tag)
+    : t.isTemplateLiteral(name) && name.quasis.length === 1;
 }
 
 // The load import a name resolving to one template names, if any.
