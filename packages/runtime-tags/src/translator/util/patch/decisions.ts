@@ -79,13 +79,14 @@ export function seedsOnly(section: Section, sources: Sources | undefined) {
 }
 
 // A `<let>` at the initial value the server renders as the section's scope is created:
-// from initial values only, created with the scope, and unfilled.
-export function holdsInitialValue(state: Binding, section: Section) {
-  return (
-    state.readsInitialValues &&
-    isCreatedWith(section, state.section) &&
-    !fillsInitialValue(state)
-  );
+// created with it, and unfilled.
+function holdsInitialValue(state: Binding, section: Section) {
+  return isCreatedAtInitialValue(state, section) && !fillsInitialValue(state);
+}
+
+// A `<let>` from initial values only, created with the section's scope.
+export function isCreatedAtInitialValue(state: Binding, section: Section) {
+  return state.readsInitialValues && isCreatedWith(section, state.section);
 }
 
 // The section's scope exists only as `owner`'s is created: the owner's own, or a

@@ -24,9 +24,9 @@
   Sa5: "e",
   xe: "b"
 }
-;CAE
+;DAM
 
-// PATCH holding CAE
+// PATCH holding DAM
 {
   ba: [{
     ca: {
@@ -52,7 +52,7 @@
   xe: "c"
 }
 
-// PATCH holding CAE
+// PATCH holding DAM
 {
   ba: [{
     ca: {

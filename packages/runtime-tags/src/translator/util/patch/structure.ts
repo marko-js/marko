@@ -21,7 +21,7 @@ import {
 } from "../sections";
 import { bindingReaders, getDerivedReaders, someRead } from "../solve-reasons";
 import { hasParamOrGlobalSource, type Sources } from "../sources";
-import { hasClientState, holdsInitialValue } from "./decisions";
+import { hasClientState, isCreatedAtInitialValue } from "./decisions";
 
 // Every render of the section is patch-written: on the branch path, outside
 // stateful structure.
@@ -71,14 +71,14 @@ function isRenderedContent(binding: Binding) {
   return someRead(bindingReaders(binding, true), isContentRender);
 }
 // A read rendering the content where a patch may too: outside stateful structure,
-// or naming a created scope's `<let>` alone, which the patch creates first.
+// or naming a `<let>` alone that a patch creates with the scope, filled or not.
 function isPatchedLeaf(read: ReferencedExtra) {
   return (
     isContentRender(read) &&
     (!isStatefulRead(read) ||
       (!!read.nameOnly &&
         every(getSourcesForExpr(read)?.state, (state) =>
-          holdsInitialValue(state, read.section),
+          isCreatedAtInitialValue(state, read.section),
         )))
   );
 }

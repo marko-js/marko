@@ -45,11 +45,13 @@ var relay_default = _template("c", (input) => {
 
 // template.marko
 _shells({
+	a3: "a3",
+	a1: "a1",
 	a: "a;b%;<!><!><!>",
 	a4: `a4${_shell_marker([[], []], ["a>", $setup$1], ["b>", $setup])};${/*@__PURE__*/ ((_w0, _w1) => `/${_w0}&/${_w1}&`)($walks$1, $walks)};${/*@__PURE__*/ ((_w0, _w1) => `${_w0}${_w1}`)($template$1, $template)}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_label = _write_guard($scope0_reason, 1), $cg__input_label = _client_guard($scope0_reason, 1), $wi__input_label = _write_if($scope0_reason, 1), $wg__input_show = _write_guard($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 1), $wg__input_show = _write_guard($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 1), $wi__input_label = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	_if(() => {
@@ -60,10 +62,9 @@ var template_default = _template("a", (input) => {
 			card_default({ content: _content_resume("a1", () => {
 				_scope_reason();
 				const $scope2_id = _scope_id();
-				_html(`<em>static ${_text_mark($scope2_id, "a", input.label, $wg__input_label * 2)}</em>`);
-				$cg__input_label && _patch_render($scope2_id, "a0");
-				_subscribe($wi__input_label && $input_label__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), $cg__input_label && "a0", $wg__input_label);
-				$wg__input_label || _resume_branch($scope2_id);
+				_html(`<em>static ${_text_mark($scope2_id, "a", input.label, 2, $scope0_reason, 1)}</em>`);
+				_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope2_id, "a0", $cg__input_label);
+				_subscribe(_unfilled_if($scope0_reason, 1) && $input_label__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }));
 			}, $scope1_id) });
 			_patch_child_end();
 			_set_scope_reason(0);
@@ -71,13 +72,12 @@ var template_default = _template("a", (input) => {
 			relay_default({ content: _content_resume("a3", () => {
 				_scope_reason();
 				const $scope3_id = _scope_id();
-				_html(`<em>relayed ${_text_mark($scope3_id, "a", input.label, $wg__input_label * 2)}</em>`);
-				$cg__input_label && _patch_render($scope3_id, "a2");
-				_subscribe($wi__input_label && $input_label__closures, _scope($scope3_id, {
+				_html(`<em>relayed ${_text_mark($scope3_id, "a", input.label, 2, $scope0_reason, 1)}</em>`);
+				_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope3_id, "a2", $cg__input_label);
+				_subscribe(_unfilled_if($scope0_reason, 1) && $input_label__closures, _scope($scope3_id, {
 					_: _scope_with_id($scope1_id),
 					Cf: $wi__input_label && 1
-				}), $cg__input_label && "a2", $wg__input_label);
-				$wg__input_label || _resume_branch($scope3_id);
+				}));
 			}, $scope1_id) });
 			_patch_child_end();
 			_scope($scope1_id, {

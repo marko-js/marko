@@ -24,9 +24,9 @@
   "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-let-init-reads-assigned-let/template.marko_0_input_label#4/subscribers": "input_label",
   "PatchMarkedWrite:input_label": "b"
 }
-;CAM
+;DAM
 
-// PATCH holding CAM
+// PATCH holding DAM
 {
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {
@@ -52,7 +52,7 @@
   "PatchMarkedWrite:input_label": "c"
 }
 
-// PATCH holding CAM
+// PATCH holding DAM
 {
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {
