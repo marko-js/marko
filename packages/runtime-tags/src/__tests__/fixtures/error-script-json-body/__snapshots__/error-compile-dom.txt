@@ -1,0 +1,7 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-script-json-body/template.marko:2:12
+      1 | <script type="application/ld+json">
+    > 2 |   { "@type": "Organization", "name": "Acme" }
+        |            ^ Missing semicolon. For a native html `<script>` tag use the [`html-script` core tag](https://markojs.com/docs/reference/core-tag#html-script--html-style) instead.
+      3 | </script>
+      4 |
