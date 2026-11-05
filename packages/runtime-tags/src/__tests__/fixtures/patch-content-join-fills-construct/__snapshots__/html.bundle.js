@@ -59,7 +59,7 @@ _shells({
 	a5: `a5${_shell_marker([[], []], ["a>", $setup$1])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1)};${$template$1}`
 });
 var page_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_items = _filled_guard($scope0_reason, 0), $wi__input_items = _write_if($scope0_reason, 0), $sg__input_items = _server_guard($scope0_reason, 0), $cg__input_items = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wi__input_items = _write_if($scope0_reason, 0), $sg__input_items = _server_guard($scope0_reason, 0), $cg__input_items = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $bonus__closures = /* @__PURE__ */ new Set();
 	const $global$1 = $global();
@@ -72,7 +72,7 @@ var page_default = _template("a", (input) => {
 	_for_of(input.items, (item) => {
 		const $scope1_id = _scope_id();
 		const $for_content__item_n__closures = /* @__PURE__ */ new Set();
-		$fg__input_items && _patch_write($scope1_id, "xd", item?.n, !$sg__input_items);
+		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "xd", item?.n, !$sg__input_items);
 		_set_scope_reason(0);
 		const $childScope3 = _peek_scope_id($scope1_id, "a", 2);
 		panel_default({ aside: attrTag({ content: _content("a3", () => {
@@ -83,14 +83,14 @@ var page_default = _template("a", (input) => {
 			counter_default({ base: (bonus ?? p.base) + item.n });
 			_patch_child_end();
 			_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope2_id, "a1");
-			_patch_render($scope2_id, "a2", [">>j", $fg__input_items && ">d"]);
+			_patch_render($scope2_id, "a2", [">>j", _filled_guard($scope0_reason, 0) && ">d"]);
 			_subscribe($wi__input_items && $for_content__item_n__closures, _subscribe($bonus__closures, _scope($scope2_id, {
 				_: _scope_with_id($scope1_id),
 				a: _existing_scope($childScope2)
 			})));
 		}, $scope1_id, 0) }) });
 		_patch_child_end();
-		$fg__input_items && $cg__input_items && _patch_subscribers($scope1_id, "a4", "d");
+		_filled_guard($scope0_reason, 0) && $cg__input_items && _patch_subscribers($scope1_id, "a4", "d");
 		_scope($scope1_id, {
 			d: item?.n,
 			_: _scope_with_id($scope0_id),

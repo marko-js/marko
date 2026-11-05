@@ -9,7 +9,7 @@ var template_default = _template("a", (input) => {
 	_for_of(items, (item) => {
 		const $scope1_id = _scope_id();
 		_html(`<li>${_text_mark($scope1_id, "a", input.note + item + count)}</li>`);
-		_patch_render($scope1_id, "a0", $fg__input_note && ">f");
+		_patch_render($scope1_id, "a0", _filled_guard($scope0_reason, 0) && ">f");
 		_scope($scope1_id, { c: item });
 	}, 0, $scope0_id, "a", 1, 1, 1, "</ul>", 1);
 	_html(`<button class=add>+</button>${_el_mark($scope0_id, "b")}<button class=inc>c</button>${_el_mark($scope0_id, "c")}</main>`);

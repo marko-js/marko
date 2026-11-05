@@ -26,7 +26,7 @@ var template_default = _template("a", (input) => {
 			_set_scope_reason(_updates_from($scope0_reason, 1) << 1);
 			const $childScope = _peek_scope_id($scope1_id, "a", 0, $cg__input_label && 1);
 			let r = card_default({ label: input.label });
-			$fg__input_label && _patch_write($scope1_id, "xf", r, !$sg__input_label);
+			_filled_guard($scope0_reason, 1) && _patch_write($scope1_id, "xf", r, !$sg__input_label);
 			$cg__input_label && _var($scope1_id, "b", $childScope, "a0");
 			_patch_child_end();
 			_html(`<p>${_text_mark($scope1_id, "c", r.fn(), 1, $scope0_reason, 1)} ${_text_mark($scope1_id, "d", "-", 2, 0, 0, 1)}</p><button>show</button>${_el_mark($scope1_id, "e")}`);

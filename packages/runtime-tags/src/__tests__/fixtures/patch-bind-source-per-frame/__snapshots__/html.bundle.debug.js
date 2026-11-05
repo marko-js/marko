@@ -10,11 +10,11 @@ _shells({
 	"__tests__/template.marko": "__tests__/template.marko;D%b%bD ;<main><!><!><em> </em></main>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_title = _client_guard($scope0_reason, 0), $fg__input_title = _filled_guard($scope0_reason, 0), $wi__input_title = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_title = _client_guard($scope0_reason, 0), $wi__input_title = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_title__closures = new Set();
 	const $handler2__closures = new Set();
-	$fg__input_title && _patch_write($scope0_id, "PatchMarkedWrite:input_title", input.title, !_server_guard($scope0_reason, 0));
+	_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_title", input.title, !_server_guard($scope0_reason, 0));
 	let count = 0;
 	const handler = _bind_resume((event) => event.target.dataset.seen = input.title, "__tests__/template.marko_0/handler", $scope0_id);
 	_html("<main>");
@@ -27,7 +27,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				onClick: handler
 			}
 		}, "#button/0", $scope1_id, "button", 0, $scope0_reason, 0)}>one</button>${_el_mark($scope1_id, "#button/0")}`);
-		_script($scope1_id, "__tests__/template.marko_1_input_title#0:5_handler#0:9", 1, $fg__input_title, ">input_title");
+		_script($scope1_id, "__tests__/template.marko_1_input_title#0:5_handler#0:9", 1, _filled_guard($scope0_reason, 0), ">input_title");
 		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_title#0:5/subscribe");
 		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_handler#0:9/subscribe");
 		$cg__input_title && _patch_render($scope1_id, "__tests__/template.marko_1_input_title#0:5_handler#0:9/setup");
@@ -42,7 +42,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				onClick: handler
 			}
 		}, "#button/0", $scope2_id, "button", 0, $scope0_reason, 0)}>two</button>${_el_mark($scope2_id, "#button/0")}`);
-		_script($scope2_id, "__tests__/template.marko_2_input_title#0:5_handler#0:9", 1, $fg__input_title, ">input_title");
+		_script($scope2_id, "__tests__/template.marko_2_input_title#0:5_handler#0:9", 1, _filled_guard($scope0_reason, 0), ">input_title");
 		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope2_id, "__tests__/template.marko_2_input_title#0:5/subscribe");
 		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope2_id, "__tests__/template.marko_2_handler#0:9/subscribe");
 		$cg__input_title && _patch_render($scope2_id, "__tests__/template.marko_2_input_title#0:5_handler#0:9/setup");

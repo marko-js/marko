@@ -7,22 +7,22 @@ _shells({
 	b5: "b5 b9;D lD lD ;<p> </p><p> </p><em> </em>"
 });
 var panel_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_x = _filled_guard($scope0_reason, 2), $fg__input_y = _filled_guard($scope0_reason, 3), $wi__input_show = _write_if($scope0_reason, 1), $sg__input_x = _server_guard($scope0_reason, 2), $sg__input_y = _server_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wi__input_show = _write_if($scope0_reason, 1), $sg__input_x = _server_guard($scope0_reason, 2), $sg__input_y = _server_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 1), $fg__input_x = _filled_guard($scope0_reason, 2), $fg__input_y = _filled_guard($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			const a = input.x + "a";
-			$fg__input_x && _patch_write($scope1_id, "xd", a, !$sg__input_x);
+			_filled_guard($scope0_reason, 2) && _patch_write($scope1_id, "xd", a, !$sg__input_x);
 			const b = input.y + "b";
-			$fg__input_y && _patch_write($scope1_id, "xf", b, !$sg__input_y);
+			_filled_guard($scope0_reason, 3) && _patch_write($scope1_id, "xf", b, !$sg__input_y);
 			_html(`<p>${_text_mark($scope1_id, "a", a + count)}</p><p>${_text_mark($scope1_id, "b", b + count)}</p><em>${_text_mark($scope1_id, "c", a + b, 1, $scope0_reason, 0)}</em>`);
 			_client_guard($scope0_reason, 2) && _patch_render($scope1_id, "b0");
 			_client_guard($scope0_reason, 3) && _patch_render($scope1_id, "b1");
-			_patch_render($scope1_id, "b2", $fg__input_x && "d");
-			_patch_render($scope1_id, "b3", $fg__input_y && "f");
-			_patch_render($scope1_id, "b4", [$fg__input_x && "d", $fg__input_y && "f"], $scope0_reason, 0);
+			_patch_render($scope1_id, "b2", _filled_guard($scope0_reason, 2) && "d");
+			_patch_render($scope1_id, "b3", _filled_guard($scope0_reason, 3) && "f");
+			_patch_render($scope1_id, "b4", [_filled_guard($scope0_reason, 2) && "d", _filled_guard($scope0_reason, 3) && "f"], $scope0_reason, 0);
 			_scope($scope1_id, {
 				d: a,
 				f: b,

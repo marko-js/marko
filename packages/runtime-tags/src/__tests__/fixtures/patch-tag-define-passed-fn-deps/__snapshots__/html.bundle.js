@@ -10,9 +10,9 @@ _shells({
 	b: `b !a>b3 a>b4;${((_w0) => `b/${_w0}&/&b`)($TextField_content__walks)};${((_w0) => `<!>${_w0}<!>`)($TextField_content__template)}`
 });
 var field_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_hint = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	$fg__input_hint && _patch_write($scope0_id, "xe", input.hint, !_server_guard($scope0_reason, 1));
+	_filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.hint, !_server_guard($scope0_reason, 1));
 	const TextField = { content: _content("b2", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $fg__value = _filled_guard($scope1_reason, 1), $fg__valueChange = _filled_guard($scope1_reason, 2);
@@ -44,11 +44,11 @@ var field_default = _template("b", (input) => {
 		const $scope2_reason = _scope_reason(), $fg__log = _filled_guard($scope2_reason, 1), $fg__value2 = _filled_guard($scope2_reason, 2);
 		_patch_render($scope2_id, "b8", [
 			$fg__log && "c",
-			$fg__input_hint && ">e",
+			_filled_guard($scope0_reason, 1) && ">e",
 			$fg__value2 && "d"
 		], $scope2_reason, 0) || _script($scope2_id, "b7", 0, ($fg__log || $fg__value2) && (_client_guard($scope2_reason, 1) || _client_guard($scope2_reason, 2) ? 2 : 1), [
 			$fg__log && "c",
-			$fg__input_hint && ">e",
+			_filled_guard($scope0_reason, 1) && ">e",
 			$fg__value2 && "d"
 		]);
 		_scope($scope2_id, {

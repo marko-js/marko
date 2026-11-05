@@ -7,7 +7,7 @@ _shells({
 	b2: "b2 b8;D ;<p> </p>"
 });
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_label__OR__input_other = _filled_guard($scope0_reason, 2), $fg__input_label = _filled_guard($scope0_reason, 4), $fg__input_other = _filled_guard($scope0_reason, 5), $cg__input_show = _client_guard($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $fg__input_label = _filled_guard($scope0_reason, 4), $fg__input_other = _filled_guard($scope0_reason, 5), $cg__input_show = _client_guard($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	let c = 0;
 	_html("<div>");
@@ -15,10 +15,10 @@ var child_default = _template("b", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			const l = input.label + input.other + "!";
-			$fg__input_label__OR__input_other && _patch_write($scope1_id, "xc", l, !_server_guard($scope0_reason, 2));
+			_filled_guard($scope0_reason, 2) && _patch_write($scope1_id, "xc", l, !_server_guard($scope0_reason, 2));
 			_html(`<p>${_text_mark($scope1_id, "a", l + "#0")}</p>`);
-			_patch_render($scope1_id, "b0", [$fg__input_label && ">f", $fg__input_other && ">g"], $scope0_reason, 2);
-			_patch_render($scope1_id, "b1", $fg__input_label__OR__input_other && "c");
+			_patch_render($scope1_id, "b0", [_filled_guard($scope0_reason, 4) && ">f", _filled_guard($scope0_reason, 5) && ">g"], $scope0_reason, 2);
+			_patch_render($scope1_id, "b1", _filled_guard($scope0_reason, 2) && "c");
 			_scope($scope1_id, {
 				c: l,
 				_: _scope_with_id($scope0_id)

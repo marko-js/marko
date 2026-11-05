@@ -28,7 +28,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 			label_default({ text: count + input.suffix });
 			_patch_child_end();
-			_patch_render($scope1_id, "__tests__/template.marko_1_input_suffix#0:5_count#0:6/setup", $fg__input_suffix && ">input_suffix");
+			_patch_render($scope1_id, "__tests__/template.marko_1_input_suffix#0:5_count#0:6/setup", _filled_guard($scope0_reason, 0) && ">input_suffix");
 			_scope($scope1_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "4:4");
 			return 0;
 		}

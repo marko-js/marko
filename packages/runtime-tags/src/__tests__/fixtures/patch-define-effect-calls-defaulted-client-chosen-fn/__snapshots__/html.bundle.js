@@ -3,7 +3,7 @@ const $Show_content__walks = " b";
 const $Show_content__template = "<output></output>";
 _shells({ a: `a !a5;${((_w0) => `b/${_w0}& b`)($Show_content__walks)};${((_w0) => `<!>${_w0}<button>toggle</button>`)($Show_content__template)}` });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_title = _filled_guard($scope0_reason, 0), $sg__input_title = _server_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $sg__input_title = _server_guard($scope0_reason, 0), $fg__input_title = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	$fg__input_title && _patch_write($scope0_id, "xe", input.title, !$sg__input_title);
 	let upper = false;
@@ -14,7 +14,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_reason = _scope_reason(), $sg__get = _server_guard($scope1_reason, 0), $fg__get = _filled_guard($scope1_reason, 0);
 		const g = get ?? _resume(() => "none", "a2");
 		_html(`<output></output>${_el_mark($scope1_id, "a")}`);
-		_script($scope1_id, "a4", 1, $fg__get, ["e", $fg__input_title && ">e"]);
+		_script($scope1_id, "a4", 1, $fg__get, ["e", _filled_guard($scope0_reason, 0) && ">e"]);
 		_scope($scope1_id, { e: g }) || $fg__get && _patch_write($scope1_id, "xe", g, !$sg__get);
 	}, $scope0_id) };
 	_set_scope_reason(6);

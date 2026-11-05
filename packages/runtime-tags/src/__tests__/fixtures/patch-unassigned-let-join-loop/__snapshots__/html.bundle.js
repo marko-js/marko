@@ -4,15 +4,15 @@ _shells({
 	a1: "a1 a4;D ;<li> </li>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_items = _filled_guard($scope0_reason, 2), $sg__input_items = _server_guard($scope0_reason, 2), $fg__input_b = _filled_guard($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $sg__input_items = _server_guard($scope0_reason, 2), $fg__input_b = _filled_guard($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	let x = input.a;
 	_html("<ul>");
 	_for_of(input.items, (i) => {
 		const $scope1_id = _scope_id();
-		$fg__input_items && _patch_write($scope1_id, "xc", i, !$sg__input_items);
+		_filled_guard($scope0_reason, 2) && _patch_write($scope1_id, "xc", i, !$sg__input_items);
 		_html(`<li>${_text_mark($scope1_id, "a", x + input.b + i)}</li>`);
-		_patch_render($scope1_id, "a0", [$fg__input_b && ">f", $fg__input_items && "c"]);
+		_patch_render($scope1_id, "a0", [_filled_guard($scope0_reason, 3) && ">f", _filled_guard($scope0_reason, 2) && "c"]);
 		_scope($scope1_id, {
 			c: i,
 			_: _scope_with_id($scope0_id)

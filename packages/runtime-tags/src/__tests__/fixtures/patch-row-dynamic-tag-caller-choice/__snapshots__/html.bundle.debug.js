@@ -10,7 +10,7 @@ _shells({
 	"__tests__/tags/rowsy.marko_4*shell": "__tests__/tags/rowsy.marko_4*shell;b%;<!><!><!>"
 });
 var rowsy_default = _template("__tests__/tags/rowsy.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_tags__OR__input_card = _write_guard($scope0_reason, 0), $fg__input_tags = _filled_guard($scope0_reason, 2), $cg__input_tags__OR__input_card = _client_guard($scope0_reason, 0), $fg__input_card = _filled_guard($scope0_reason, 3), $fg__input_label = _filled_guard($scope0_reason, 1), $cg__input_tags = _client_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_tags__OR__input_card = _write_guard($scope0_reason, 0), $cg__input_tags__OR__input_card = _client_guard($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 1), $fg__input_card = _filled_guard($scope0_reason, 3), $cg__input_tags = _client_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = new Set();
 	const $n__closures = new Set();
@@ -40,12 +40,12 @@ var rowsy_default = _template("__tests__/tags/rowsy.marko", (input) => {
 	_html(`<button>${_text_mark($scope0_id, "#text/1", n)}</button>${_el_mark($scope0_id, "#button/0")}`);
 	_for_of(input.tags, (tag) => {
 		const $scope2_id = _scope_id();
-		$fg__input_tags && _client_guard($scope0_reason, 3) && _patch_write($scope2_id, "PatchMarkedWrite:tag", tag, !_server_guard($scope0_reason, 2));
+		_filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 3) && _patch_write($scope2_id, "PatchMarkedWrite:tag", tag, !_server_guard($scope0_reason, 2));
 		_dynamic_tag($scope2_id, "#text/0", input.card ? Card : "span", {
 			label: tag,
 			content: Label
 		}, 9, 0, 0, $wg__input_tags__OR__input_card, $scope0_reason, 0, 0, void 0, 0, 0, "__tests__/tags/rowsy.marko_1*content");
-		_patch_render($scope2_id, "__tests__/tags/rowsy.marko_2_input_card#0:7_Card#0:8_Label#0:10_tag#2/setup", [$fg__input_card && ">input_card", $fg__input_tags && "tag"], $scope0_reason, 0);
+		_patch_render($scope2_id, "__tests__/tags/rowsy.marko_2_input_card#0:7_Card#0:8_Label#0:10_tag#2/setup", [_filled_guard($scope0_reason, 3) && ">input_card", _filled_guard($scope0_reason, 2) && "tag"], $scope0_reason, 0);
 		_write_if($scope0_reason, 0) && _scope($scope2_id, {
 			tag: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 0)) && tag,
 			_: _scope_with_id($scope0_id)

@@ -8,7 +8,7 @@ _shells({
 	"__tests__/tags/panel.marko_2*shell": "__tests__/tags/panel.marko_2*shell;D ;<em> </em>"
 });
 var panel_default = _template("__tests__/tags/panel.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 4), $wi__input_show__OR__input_a__OR__input_b = _write_if($scope0_reason, 3), $fg__input_a = _filled_guard($scope0_reason, 5), $fg__input_b = _filled_guard($scope0_reason, 6), $cg__input_show = _client_guard($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 4), $wi__input_show__OR__input_a__OR__input_b = _write_if($scope0_reason, 3), $fg__input_a = _filled_guard($scope0_reason, 5), $cg__input_show = _client_guard($scope0_reason, 4), $fg__input_b = _filled_guard($scope0_reason, 6);
 	const $scope0_id = _scope_id();
 	const $input_a__closures = new Set();
 	const $input_b__closures = new Set();
@@ -22,7 +22,7 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 					_html(`<em>${_text_mark($scope2_id, "#text/0", input.a + ":" + input.b, 1, $scope0_reason, 2)}</em>`);
 					_unfilled_if($scope0_reason, 5) && _patch_subscribe($scope2_id, "__tests__/tags/panel.marko_2_input_a#0:4/subscribe");
 					_unfilled_if($scope0_reason, 6) && _patch_subscribe($scope2_id, "__tests__/tags/panel.marko_2_input_b#0:5/subscribe");
-					_patch_render($scope2_id, "__tests__/tags/panel.marko_2_input_a#0:4_input_b#0:5/setup", [$fg__input_a && ">>input_a", $fg__input_b && ">>input_b"], $scope0_reason, 2);
+					_patch_render($scope2_id, "__tests__/tags/panel.marko_2_input_a#0:4_input_b#0:5/setup", [_filled_guard($scope0_reason, 5) && ">>input_a", _filled_guard($scope0_reason, 6) && ">>input_b"], $scope0_reason, 2);
 					_subscribe(_unfilled_if($scope0_reason, 6) && $input_b__closures, _subscribe(_unfilled_if($scope0_reason, 5) && $input_a__closures, _scope($scope2_id, { _: $wi__input_show__OR__input_a__OR__input_b && _scope_with_id($scope1_id) }, "__tests__/tags/panel.marko", "3:6"), _client_guard($scope0_reason, 5) && "__tests__/tags/panel.marko_2_input_a#0:4/subscribe"), _client_guard($scope0_reason, 6) && "__tests__/tags/panel.marko_2_input_b#0:5/subscribe");
 					return 0;
 				}

@@ -43,7 +43,7 @@ var child_default = _template("b", (input) => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
 			_html("<p>body</p>");
-			_script($scope1_id, "b0", 0, $fg__input_count, ">e");
+			_script($scope1_id, "b0", 0, _filled_guard($scope0_reason, 1), ">e");
 			_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "b1", _client_guard($scope0_reason, 1));
 			_subscribe($wi__input_count && $input_count__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
 			_resume_branch($scope1_id);

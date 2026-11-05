@@ -28,7 +28,7 @@ var list_default = _template("c", (input) => {
 			label: item.label
 		});
 		_html("</li>");
-		_patch_render($scope1_id, "c0", $fg__input_row && ">f");
+		_patch_render($scope1_id, "c0", _filled_guard($scope0_reason, 0) && ">f");
 		_scope($scope1_id, {
 			d: $wi__input_row && item?.id,
 			e: $wi__input_row && item?.label

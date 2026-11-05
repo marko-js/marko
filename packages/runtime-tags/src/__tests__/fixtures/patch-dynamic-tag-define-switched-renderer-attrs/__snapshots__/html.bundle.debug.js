@@ -28,7 +28,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_reason = _scope_reason(), $fg__content = _filled_guard($scope1_reason, 1);
 		_html(`<span>${_text_mark($scope1_id, "#text/0", n, 1, $scope1_reason, 0)}</span>`);
 		_dynamic_tag($scope1_id, "#text/1", content, { title: input.t }, 1, 0, 0, _write_guard($scope0_reason, 0) || _write_guard($scope1_reason, 1), (_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 1)) << 1, 0, 0, 1, $scope1_reason);
-		_patch_render($scope1_id, "__tests__/template.marko_1_input_t#0:3_content#5/setup", [$fg__input_t && ">input_t", $fg__content && "content"], (_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 1)) << 1, 0);
+		_patch_render($scope1_id, "__tests__/template.marko_1_input_t#0:3_content#5/setup", [_filled_guard($scope0_reason, 0) && ">input_t", $fg__content && "content"], (_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 1)) << 1, 0);
 		_subscribe(_unfilled_if((_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 1)) << 1, 0) && $wi__input_t && $input_t__closures, _scope($scope1_id, {
 			content: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope1_reason, 1)) && content,
 			_: ($wi__input_t || _write_if($scope1_reason, 1)) && _scope_with_id($scope0_id)

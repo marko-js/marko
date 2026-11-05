@@ -4,7 +4,7 @@ _shells({
 	a2: "a2;D ;<p> </p>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_decor = _filled_guard($scope0_reason, 4), $wg__input_show = _write_guard($scope0_reason, 5), $fg__input_text = _filled_guard($scope0_reason, 6), $sg__input_decor = _server_guard($scope0_reason, 4), $cg__input_show__OR__input_text = _client_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 5);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 5), $sg__input_decor = _server_guard($scope0_reason, 4), $cg__input_show__OR__input_text = _client_guard($scope0_reason, 2), $fg__input_decor = _filled_guard($scope0_reason, 4), $fg__input_text = _filled_guard($scope0_reason, 6), $cg__input_show = _client_guard($scope0_reason, 5);
 	const $scope0_id = _scope_id();
 	$fg__input_decor && $cg__input_show__OR__input_text && _patch_write($scope0_id, "xd", input.decor, !$sg__input_decor);
 	const fmt = _bind_resume(function(text) {
@@ -15,9 +15,9 @@ var template_default = _template("a", (input) => {
 			const $scope1_id = _scope_id();
 			_html(`<p>${_html_mark($scope1_id, "a", fmt(input.text), 1, $scope0_reason, 1)}</p>`);
 			_patch_render($scope1_id, "a1", [
-				$fg__input_text && ">f",
-				$fg__input_decor && ">g",
-				$fg__input_decor && ">d"
+				_filled_guard($scope0_reason, 6) && ">f",
+				_filled_guard($scope0_reason, 4) && ">g",
+				_filled_guard($scope0_reason, 4) && ">d"
 			], $scope0_reason, 1);
 			_scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) });
 			return 0;

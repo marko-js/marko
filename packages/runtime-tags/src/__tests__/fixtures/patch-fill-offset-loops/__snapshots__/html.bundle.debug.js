@@ -20,7 +20,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope2_id = _scope_id();
 			_html(`<p>${_text_mark($scope2_id, "#text/0", cell + ":" + input.suffix + "@" + count)}</p>`);
 			_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope2_id, "__tests__/template.marko_2_input_suffix#0:7/subscribe");
-			_patch_render($scope2_id, "__tests__/template.marko_2_input_suffix#0:7_count#0:8/setup", $fg__input_suffix && ">>input_suffix");
+			_patch_render($scope2_id, "__tests__/template.marko_2_input_suffix#0:7_count#0:8/setup", _filled_guard($scope0_reason, 2) && ">>input_suffix");
 			_subscribe($count__closures, _subscribe($wi__input_suffix && $input_suffix__closures, _scope($scope2_id, {
 				"#LoopKey": cell,
 				_: _scope_with_id($scope1_id)

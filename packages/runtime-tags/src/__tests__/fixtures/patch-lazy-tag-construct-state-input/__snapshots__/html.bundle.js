@@ -27,7 +27,7 @@ var template_default = _template("b", (input) => {
 			const $childScope = _peek_scope_id($scope1_id, "b", 0);
 			$Child_withLoadAssets({ label: `${input.label}${n}` });
 			_patch_child_end();
-			_patch_render($scope1_id, "b0", $fg__input_label && ">g");
+			_patch_render($scope1_id, "b0", _filled_guard($scope0_reason, 1) && ">g");
 			_scope($scope1_id, {
 				_: _scope_with_id($scope0_id),
 				b: _existing_scope($childScope)

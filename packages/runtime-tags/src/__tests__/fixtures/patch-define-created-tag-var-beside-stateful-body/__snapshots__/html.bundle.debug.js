@@ -10,7 +10,7 @@ _shells({
 	"__tests__/template.marko_3*shell": "__tests__/template.marko_3*shell;D ;<em> </em>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 1), $wg__input_label = _write_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 1), $sg__input_label = _server_guard($scope0_reason, 1), $sg__input_other = _server_guard($scope0_reason, 2), $fg__input_other = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 1), $wg__input_label = _write_guard($scope0_reason, 1), $sg__input_label = _server_guard($scope0_reason, 1), $sg__input_other = _server_guard($scope0_reason, 2), $fg__input_label = _filled_guard($scope0_reason, 1), $fg__input_other = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	let open = false;
 	const Panel = { content: _content_resume("__tests__/template.marko_2*content", ({ isOpen, label }) => {
@@ -46,7 +46,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				isOpen: true,
 				label: input.label
 			});
-			$fg__input_label && _patch_write($scope1_id, "PatchMarkedWrite:ret", ret, !$sg__input_label);
+			_filled_guard($scope0_reason, 1) && _patch_write($scope1_id, "PatchMarkedWrite:ret", ret, !$sg__input_label);
 			$cg__input_label && _var($scope1_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_1_ret#4/var");
 			_patch_child_end();
 			_html(`<b>${_text_mark($scope1_id, "#text/2", ret, 1, $scope0_reason, 1)}</b>`);
@@ -59,7 +59,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					return 0;
 				}
 			}, $scope1_id, "#text/3", 1, 1, 0, 0, 1);
-			$fg__input_label && _patch_render($scope1_id, "__tests__/template.marko_4_ret#1:4/setup", "ret");
+			_filled_guard($scope0_reason, 1) && _patch_render($scope1_id, "__tests__/template.marko_4_ret#1:4/setup", "ret");
 			$cg__input_label && _patch_render($scope1_id, "__tests__/template.marko_1_input_label#0:6/setup");
 			_scope($scope1_id, {
 				ret,

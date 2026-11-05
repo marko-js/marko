@@ -7,7 +7,7 @@ _shells({
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell !__tests__/template.marko_1;b%b D ;<!><!><button> </button>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_a = _write_guard($scope0_reason, 1), $cg__input_a = _client_guard($scope0_reason, 1), $wg__input_show = _write_guard($scope0_reason, 0), $fg__input_b = _filled_guard($scope0_reason, 2), $fg__input_a = _filled_guard($scope0_reason, 1), $wi__input_a = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_a = _write_guard($scope0_reason, 1), $cg__input_a = _client_guard($scope0_reason, 1), $wg__input_show = _write_guard($scope0_reason, 0), $fg__input_a = _filled_guard($scope0_reason, 1), $fg__input_b = _filled_guard($scope0_reason, 2), $wi__input_a = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_a__closures = new Set();
 	_if(() => {
@@ -26,7 +26,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}, $scope1_id, "#text/0", 1, 1, 0, 0, 1);
 			_html(`<button>${_text_mark($scope1_id, "#text/2", x + input.b)}</button>${_el_mark($scope1_id, "#button/1")}`);
 			_script($scope1_id, "__tests__/template.marko_1");
-			_patch_render($scope1_id, "__tests__/template.marko_1_input_b#0:5_x#3/setup", $fg__input_b && ">input_b");
+			_patch_render($scope1_id, "__tests__/template.marko_1_input_b#0:5_x#3/setup", _filled_guard($scope0_reason, 2) && ">input_b");
 			_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill0", x, 1);
 			_scope($scope1_id, {
 				x: _write_if($scope0_reason, 2) && x,

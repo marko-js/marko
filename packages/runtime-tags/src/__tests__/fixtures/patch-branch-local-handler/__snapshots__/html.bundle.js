@@ -11,7 +11,7 @@ var template_default = _template("a", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			const label = input.title + "!";
-			$fg__input_title && _patch_write($scope1_id, "xc", label, !$sg__input_title);
+			_filled_guard($scope0_reason, 1) && _patch_write($scope1_id, "xc", label, !$sg__input_title);
 			_html(`<p>${_text_mark($scope1_id, "a", label, 1, $scope0_reason, 1)}</p><button>c</button>${_el_mark($scope1_id, "b")}`);
 			_script($scope1_id, "a0");
 			_client_guard($scope0_reason, 1) && _patch_render($scope1_id, "a1");

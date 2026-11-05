@@ -159,7 +159,7 @@ var template_default = _template("a", (input) => {
 		const $childScope3 = _peek_scope_id($scope1_id, "c", 2);
 		toggle_default({ on: n });
 		_patch_child_end();
-		_patch_render($scope1_id, "a0", $fg__input_label && ">g");
+		_patch_render($scope1_id, "a0", _filled_guard($scope0_reason, 0) && ">g");
 		_subscribe($n__closures, _subscribe($wi__input_label && $input_label__closures, _scope($scope1_id, {
 			_: _scope_with_id($scope0_id),
 			a: $scope1_page && _existing_scope($childScope),

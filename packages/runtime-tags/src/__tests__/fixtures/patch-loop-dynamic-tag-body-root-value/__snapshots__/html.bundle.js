@@ -30,7 +30,7 @@ _shells({
 	a5: "a5;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_on = _write_guard($scope0_reason, 3), $wi__input_rows__OR__input_on__OR__input_note = _write_if($scope0_reason, 1), $cg__input_on = _client_guard($scope0_reason, 3), $fg__input_rows = _filled_guard($scope0_reason, 2), $sg__input_rows = _server_guard($scope0_reason, 2), $cg__input_rows = _client_guard($scope0_reason, 2), $fg__input_on = _filled_guard($scope0_reason, 3), $fg__input_note = _filled_guard($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_on = _write_guard($scope0_reason, 3), $wi__input_rows__OR__input_on__OR__input_note = _write_if($scope0_reason, 1), $cg__input_on = _client_guard($scope0_reason, 3), $sg__input_rows = _server_guard($scope0_reason, 2), $cg__input_rows = _client_guard($scope0_reason, 2), $fg__input_on = _filled_guard($scope0_reason, 3), $fg__input_note = _filled_guard($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = /* @__PURE__ */ new Set();
 	_html("<main>");
@@ -48,14 +48,14 @@ var template_default = _template("a", (input) => {
 			d: row?.label,
 			_: $scope($scope0_id)
 		}] : []), 0, $wg__input_on, $scope0_reason, 3, 0, void 0, 0, 0, "a0");
-		$fg__input_rows && _patch_subscribers($scope1_id, "a3", "d");
+		_filled_guard($scope0_reason, 2) && _patch_subscribers($scope1_id, "a3", "d");
 		$cg__input_on && _patch_render($scope1_id, "a4");
 		$wi__input_rows__OR__input_on__OR__input_note && _scope($scope1_id, {
 			d: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 2)) && row?.label,
 			_: _scope_with_id($scope0_id),
 			i: _write_if($scope0_reason, 2) && $for_content__row_label__closures
 		});
-		$fg__input_rows && (_client_branch_if("a0", $scope1_id) || $cg__input_on) && _patch_write($scope1_id, "xd", row?.label, !$sg__input_rows);
+		_filled_guard($scope0_reason, 2) && (_client_branch_if("a0", $scope1_id) || $cg__input_on) && _patch_write($scope1_id, "xd", row?.label, !$sg__input_rows);
 	}, "id", $scope0_id, "a", 1, 1, 1, 0, 0, "a5", $scope0_reason, 2);
 	_html(`</main>${_el_mark($scope0_id, "a")}`);
 	$fg__input_on && $cg__input_rows && _patch_render($scope0_id, "a4", "e");

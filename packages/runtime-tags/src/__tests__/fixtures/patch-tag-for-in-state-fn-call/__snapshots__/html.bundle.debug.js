@@ -8,7 +8,7 @@ _shells({
 	"__tests__/tags/card.marko_2*shell": "__tests__/tags/card.marko_2*shell __tests__/tags/card.marko_2_s#0:7/subscribe;D ;<span> </span>"
 });
 var card_default = _template("__tests__/tags/card.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_prefix = _filled_guard($scope0_reason, 1), $wg__input_sel = _write_guard($scope0_reason, 3), $fg__input_obj = _filled_guard($scope0_reason, 2), $cg__input_sel = _client_guard($scope0_reason, 3), $sg__input_obj = _server_guard($scope0_reason, 2), $cg__input_obj = _client_guard($scope0_reason, 2), $sg__input_prefix = _server_guard($scope0_reason, 1), $fg__input_sel = _filled_guard($scope0_reason, 3), $wi__input_prefix = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_sel = _write_guard($scope0_reason, 3), $cg__input_sel = _client_guard($scope0_reason, 3), $sg__input_obj = _server_guard($scope0_reason, 2), $cg__input_obj = _client_guard($scope0_reason, 2), $sg__input_prefix = _server_guard($scope0_reason, 1), $fg__input_prefix = _filled_guard($scope0_reason, 1), $fg__input_sel = _filled_guard($scope0_reason, 3), $wi__input_prefix = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $s__closures = new Set();
 	const $fmt2__closures = new Set();
@@ -17,22 +17,22 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 	const fmt = _bind_resume((v) => input.prefix + v, "__tests__/tags/card.marko_0/fmt", $scope0_id);
 	_for_in(input.obj, (k, v) => {
 		const $scope1_id = _scope_id();
-		$fg__input_obj && _patch_write($scope1_id, "PatchMarkedWrite:v", v, !$sg__input_obj);
+		_filled_guard($scope0_reason, 2) && _patch_write($scope1_id, "PatchMarkedWrite:v", v, !$sg__input_obj);
 		_if(() => {
 			if (k === input.sel) {
 				const $scope2_id = _scope_id();
 				_html(`<span>${_text_mark($scope2_id, "#text/0", fmt(v + s))}</span>`);
 				_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope2_id, "__tests__/tags/card.marko_2_fmt#0:8/subscribe");
 				_patch_render($scope2_id, "__tests__/tags/card.marko_2_s#0:7_fmt#0:8_v#1:4/setup", [
-					$fg__input_prefix && ">>fmt",
-					$fg__input_prefix && ">>input_prefix",
-					$fg__input_obj && ">v"
+					_filled_guard($scope0_reason, 1) && ">>fmt",
+					_filled_guard($scope0_reason, 1) && ">>input_prefix",
+					_filled_guard($scope0_reason, 2) && ">v"
 				]);
 				_subscribe($wi__input_prefix && $fmt2__closures, _subscribe($s__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/card.marko", "3:26"), "__tests__/tags/card.marko_2_s#0:7/subscribe"), _client_guard($scope0_reason, 1) && "__tests__/tags/card.marko_2_fmt#0:8/subscribe");
 				return 0;
 			}
 		}, $scope1_id, "#text/0", 1, $wg__input_sel, 1, 0, 0, ["__tests__/tags/card.marko_2*shell"], $scope0_reason, 0);
-		$fg__input_obj && ($cg__input_obj || $cg__input_sel) && _patch_render($scope1_id, "__tests__/tags/card.marko_2_v#1:4/setup", "v");
+		_filled_guard($scope0_reason, 2) && ($cg__input_obj || $cg__input_sel) && _patch_render($scope1_id, "__tests__/tags/card.marko_2_v#1:4/setup", "v");
 		$cg__input_sel && _patch_render($scope1_id, "__tests__/tags/card.marko_1_input_sel#0:6/setup");
 		_scope($scope1_id, {
 			"#LoopKey": _unfilled_if($scope0_reason, 3) && k,

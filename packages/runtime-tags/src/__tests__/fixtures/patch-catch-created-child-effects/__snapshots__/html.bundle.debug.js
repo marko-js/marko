@@ -35,7 +35,7 @@ _shells({
 	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0; D l%;<button> </button><!><!>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_msg = _client_guard($scope0_reason, 1), $fg__input_msg = _filled_guard($scope0_reason, 1), $fg__input_fail = _filled_guard($scope0_reason, 2), $wi__input_msg = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_msg = _client_guard($scope0_reason, 1), $fg__input_msg = _filled_guard($scope0_reason, 1), $wi__input_msg = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_msg__closures = new Set();
 	const $count__closures = new Set();
@@ -48,7 +48,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html(`<p>${_text_mark($scope2_id, "#text/0", input.fail ? boom(input.msg) : input.msg, 1, $scope0_reason, 0)}</p>`);
 		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope2_id, "__tests__/template.marko_2_input_msg#0:5/subscribe");
 		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope2_id, "__tests__/template.marko_2_input_fail#0:6/subscribe");
-		_patch_render($scope2_id, "__tests__/template.marko_2_input_msg#0:5_input_fail#0:6/setup", [$fg__input_msg && ">input_msg", $fg__input_fail && ">input_fail"], $scope0_reason, 0);
+		_patch_render($scope2_id, "__tests__/template.marko_2_input_msg#0:5_input_fail#0:6/setup", [_filled_guard($scope0_reason, 1) && ">input_msg", _filled_guard($scope0_reason, 2) && ">input_fail"], $scope0_reason, 0);
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_fail__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_msg__closures, _scope($scope2_id, {
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id),
 			"ClosureSignalIndex:input_msg/8": $wi__input_msg && 1
@@ -83,5 +83,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_msg: ["input.msg"],
 		input_fail: ["input.fail"],
 		count: "4:6"
-	}) || ($fg__input_msg && _patch_write($scope0_id, "PatchMarkedWrite:input_msg", input.msg, !_server_guard($scope0_reason, 1)), $fg__input_fail && $cg__input_msg && _patch_write($scope0_id, "PatchMarkedWrite:input_fail", input.fail, !_server_guard($scope0_reason, 2)));
+	}) || ($fg__input_msg && _patch_write($scope0_id, "PatchMarkedWrite:input_msg", input.msg, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && $cg__input_msg && _patch_write($scope0_id, "PatchMarkedWrite:input_fail", input.fail, !_server_guard($scope0_reason, 2)));
 }, 1);

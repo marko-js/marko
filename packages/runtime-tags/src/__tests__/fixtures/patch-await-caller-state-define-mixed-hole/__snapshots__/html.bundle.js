@@ -11,7 +11,7 @@ _shells({
 	b: `b a>;${((_w0) => `b/${_w0}&b`)($Row_content__walks)};${((_w0) => `<!>${_w0}<!>`)($Row_content__template)}`
 });
 var show_await_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_promise = _filled_guard($scope0_reason, 0), $cg__input_promise = _client_guard($scope0_reason, 0), $wi__input_promise = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_promise = _client_guard($scope0_reason, 0), $wi__input_promise = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_promise__closures = /* @__PURE__ */ new Set();
 	const Row = { content: _content("b4", ({ text }) => {
@@ -20,10 +20,10 @@ var show_await_default = _template("b", (input) => {
 		const $scope1_reason = _scope_reason(), $cg__text = _client_guard($scope1_reason, 0), $fg__text = _filled_guard($scope1_reason, 0), $wi__text = _write_if($scope1_reason, 0);
 		_await($scope1_id, "a", input.promise, (x) => {
 			const $scope2_id = _scope_id();
-			$fg__input_promise && $cg__text && _patch_write($scope2_id, "xc", x, !_server_guard($scope0_reason, 0));
+			_filled_guard($scope0_reason, 0) && $cg__text && _patch_write($scope2_id, "xc", x, !_server_guard($scope0_reason, 0));
 			_html(`<p>${_text_mark($scope2_id, "a", x + ":" + text, 1, (_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 0)) << 1, 0)}</p>`);
 			_unfilled_if($scope1_reason, 0) && _patch_subscribe($scope2_id, "b0");
-			_patch_render($scope2_id, "b1", [$fg__text && ">d", $fg__input_promise && "c"], (_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 0)) << 1, 0);
+			_patch_render($scope2_id, "b1", [_filled_guard($scope1_reason, 0) && ">d", _filled_guard($scope0_reason, 0) && "c"], (_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 0)) << 1, 0);
 			_subscribe(_unfilled_if($scope1_reason, 0) && $Row_content__text__closures, _scope($scope2_id, { c: (_unfilled_if($scope1_reason, 0) || _unfilled_if($scope0_reason, 0)) && x }), $cg__text && "b0");
 		}, 1, "b2", _unfilled_if($scope0_reason, 0));
 		$fg__text && _patch_subscribers($scope1_id, "b5", "d");

@@ -13,7 +13,7 @@ var template_default = _template("a", (input) => {
 			const $scope1_id = _scope_id();
 			const mixed = input.title + "@0";
 			_html(`<p>${_text_mark($scope1_id, "a", mixed)}</p>`);
-			_patch_render($scope1_id, "a0", $fg__input_title && ">f");
+			_patch_render($scope1_id, "a0", _filled_guard($scope0_reason, 1) && ">f");
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}

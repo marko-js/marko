@@ -10,7 +10,7 @@ _shells({
 	"__tests__/tags/panel.marko_3*shell": `__tests__/tags/panel.marko_3*shell >#childScope/0>;${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Info_content__walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Info_content__template)}`
 });
 var panel_default = _template("__tests__/tags/panel.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_a = _filled_guard($scope0_reason, 3), $cg__input_a = _client_guard($scope0_reason, 3), $fg__input_b = _filled_guard($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $cg__input_a = _client_guard($scope0_reason, 3), $fg__input_a = _filled_guard($scope0_reason, 3), $fg__input_b = _filled_guard($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	const $input_a__closures = new Set();
 	const $input_b__closures = new Set();
@@ -21,7 +21,7 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 		_html(`<p>${_text_mark($scope1_id, "#text/0", input.a + ":" + input.b, 1, $scope0_reason, 0)}</p>`);
 		_unfilled_if($scope0_reason, 3) && _patch_subscribe($scope1_id, "__tests__/tags/panel.marko_1_input_a#0:5/subscribe");
 		_unfilled_if($scope0_reason, 4) && _patch_subscribe($scope1_id, "__tests__/tags/panel.marko_1_input_b#0:6/subscribe");
-		_patch_render($scope1_id, "__tests__/tags/panel.marko_1_input_a#0:5_input_b#0:6/setup", [$fg__input_a && ">input_a", $fg__input_b && ">input_b"], $scope0_reason, 0);
+		_patch_render($scope1_id, "__tests__/tags/panel.marko_1_input_a#0:5_input_b#0:6/setup", [_filled_guard($scope0_reason, 3) && ">input_a", _filled_guard($scope0_reason, 4) && ">input_b"], $scope0_reason, 0);
 		_subscribe(_unfilled_if($scope0_reason, 4) && $input_b__closures, _subscribe(_unfilled_if($scope0_reason, 3) && $input_a__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id) }, "__tests__/tags/panel.marko", "2:2"), $cg__input_a && "__tests__/tags/panel.marko_1_input_a#0:5/subscribe"), _client_guard($scope0_reason, 4) && "__tests__/tags/panel.marko_1_input_b#0:6/subscribe");
 	}, $scope0_id, 0) };
 	_if(() => {
@@ -41,7 +41,7 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 		if (open) {
 			const $scope2_id = _scope_id();
 			_html(`<div></div>${_el_mark($scope2_id, "#div/0")}`);
-			_script($scope2_id, "__tests__/tags/panel.marko_2_input_a#0:5", 1, $fg__input_a, ">input_a");
+			_script($scope2_id, "__tests__/tags/panel.marko_2_input_a#0:5", 1, _filled_guard($scope0_reason, 3), ">input_a");
 			$cg__input_a && _patch_render($scope2_id, "__tests__/tags/panel.marko_2_input_a#0:5/setup");
 			_scope($scope2_id, {}, "__tests__/tags/panel.marko", "8:2");
 			return 0;

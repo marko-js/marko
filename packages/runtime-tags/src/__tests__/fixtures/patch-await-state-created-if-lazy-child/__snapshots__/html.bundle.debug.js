@@ -41,7 +41,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_patch_child_end();
 				_script($scope2_id, "__tests__/template.marko_2_x#3");
 				_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope2_id, "__tests__/template.marko_2_input_label#0:5/subscribe");
-				_patch_render($scope2_id, "__tests__/template.marko_2_input_label#0:5_x#3/setup", $fg__input_label && ">>input_label");
+				_patch_render($scope2_id, "__tests__/template.marko_2_input_label#0:5_x#3/setup", _filled_guard($scope0_reason, 1) && ">>input_label");
 				_subscribe($wi__input_label && $input_label__closures, _scope($scope2_id, {
 					x,
 					"#childScope/1": _existing_scope($childScope)

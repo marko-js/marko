@@ -7,11 +7,11 @@ _shells({
 	a: "a;/&b%;<pre id=log></pre><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_x = _filled_guard($scope0_reason, 1), $cg__input_x = _client_guard($scope0_reason, 1), $cg__input_promise = _client_guard($scope0_reason, 2), $wi__input_x__OR__input_promise = _write_if($scope0_reason, 0), $sg__input_x = _server_guard($scope0_reason, 1), $wi__input_x = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_x = _client_guard($scope0_reason, 1), $cg__input_promise = _client_guard($scope0_reason, 2), $wi__input_x__OR__input_promise = _write_if($scope0_reason, 0), $sg__input_x = _server_guard($scope0_reason, 1), $wi__input_x = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $fn2__closures = /* @__PURE__ */ new Set();
 	const $input_promise__closures = /* @__PURE__ */ new Set();
-	$fg__input_x && _patch_write($scope0_id, "xe", input.x, !$sg__input_x);
+	_filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.x, !$sg__input_x);
 	const fn = _bind_resume(() => input.x, "a0", $scope0_id);
 	_html("<pre id=log></pre>");
 	const Use = { content: _content("a1", ({ fn, where }) => {
@@ -19,11 +19,11 @@ var template_default = _template("a", (input) => {
 		const $scope3_reason = _scope_reason(), $fg__fn = _filled_guard($scope3_reason, 1), $fg__where = _filled_guard($scope3_reason, 2);
 		_patch_render($scope3_id, "a3", [
 			$fg__fn && "c",
-			$fg__input_x && ">e",
+			_filled_guard($scope0_reason, 1) && ">e",
 			$fg__where && "d"
 		], $scope3_reason, 0) || _script($scope3_id, "a2", 0, ($fg__fn || $fg__where) && (_client_guard($scope3_reason, 1) || _client_guard($scope3_reason, 2) ? 2 : 1), [
 			$fg__fn && "c",
-			$fg__input_x && ">e",
+			_filled_guard($scope0_reason, 1) && ">e",
 			$fg__where && "d"
 		]);
 		_scope($scope3_id, {

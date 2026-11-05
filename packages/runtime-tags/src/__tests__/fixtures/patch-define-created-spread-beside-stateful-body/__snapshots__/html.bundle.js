@@ -7,7 +7,7 @@ _shells({
 	a1: "a1;D ;<em> </em>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_a = _filled_guard($scope0_reason, 4), $fg__input_b = _filled_guard($scope0_reason, 5), $sg__input_other = _server_guard($scope0_reason, 6), $cg__input_show = _client_guard($scope0_reason, 3), $fg__input_other = _filled_guard($scope0_reason, 6), $fg__input_label = _filled_guard($scope0_reason, 7);
+	const $scope0_reason = _scope_reason(), $sg__input_other = _server_guard($scope0_reason, 6), $fg__input_a = _filled_guard($scope0_reason, 4), $fg__input_b = _filled_guard($scope0_reason, 5), $cg__input_show = _client_guard($scope0_reason, 3), $fg__input_other = _filled_guard($scope0_reason, 6), $fg__input_label = _filled_guard($scope0_reason, 7);
 	const $scope0_id = _scope_id();
 	let open = false;
 	const Panel = { content: _content_resume("a3", ({ isOpen, label }) => {
@@ -50,7 +50,7 @@ var template_default = _template("a", (input) => {
 			});
 			_patch_child_end();
 			_client_guard($scope0_reason, 5) && _patch_render($scope1_id, "a4");
-			_patch_render($scope1_id, "a5", [$fg__input_a && ">g", $fg__input_b && ">h"], $scope0_reason, 2);
+			_patch_render($scope1_id, "a5", [_filled_guard($scope0_reason, 4) && ">g", _filled_guard($scope0_reason, 5) && ">h"], $scope0_reason, 2);
 			_scope($scope1_id, {
 				_: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id),
 				a: _existing_scope($childScope),

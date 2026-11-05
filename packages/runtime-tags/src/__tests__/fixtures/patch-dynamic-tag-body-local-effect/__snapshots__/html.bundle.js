@@ -30,7 +30,7 @@ _shells({
 	a6: "a6; b%;<div></div><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_note = _filled_guard($scope0_reason, 2), $cg__input_note = _client_guard($scope0_reason, 2), $wi__input_note__OR__input_on = _write_if($scope0_reason, 0), $wg__input_show = _write_guard($scope0_reason, 1), $sg__input_note = _server_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 1), $fg__input_on = _filled_guard($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $cg__input_note = _client_guard($scope0_reason, 2), $wi__input_note__OR__input_on = _write_if($scope0_reason, 0), $wg__input_show = _write_guard($scope0_reason, 1), $sg__input_note = _server_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 1), $fg__input_note = _filled_guard($scope0_reason, 2), $fg__input_on = _filled_guard($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	_html("<main>");
 	_if(() => {
@@ -38,7 +38,7 @@ var template_default = _template("a", (input) => {
 			const $scope1_id = _scope_id();
 			const $if_content__x__closures = /* @__PURE__ */ new Set();
 			const x = input.note + "!";
-			$fg__input_note && _patch_write($scope1_id, "xc", x, !$sg__input_note);
+			_filled_guard($scope0_reason, 2) && _patch_write($scope1_id, "xc", x, !$sg__input_note);
 			_html(`<div></div>${_el_mark($scope1_id, "a")}`);
 			_dynamic_tag($scope1_id, "b", input.on ? card_default : "div", {}, 2, _content_resume("a0", () => {
 				const $scope2_id = _scope_id();
@@ -47,8 +47,8 @@ var template_default = _template("a", (input) => {
 				_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope2_id, "a1", $cg__input_note);
 				_subscribe(_unfilled_if($scope0_reason, 2) && $if_content__x__closures, _scope($scope2_id, { _: $wi__input_note__OR__input_on && _scope_with_id($scope1_id) }));
 			}, $scope1_id), 0, _write_guard($scope0_reason, 3), $scope0_reason, 3);
-			_script($scope1_id, "a2", 1, $fg__input_note, "c");
-			$fg__input_note && _patch_subscribers($scope1_id, "a3", "c");
+			_script($scope1_id, "a2", 1, _filled_guard($scope0_reason, 2), "c");
+			_filled_guard($scope0_reason, 2) && _patch_subscribers($scope1_id, "a3", "c");
 			$cg__input_note && _patch_render($scope1_id, "a4");
 			_client_guard($scope0_reason, 3) && _patch_render($scope1_id, "a5");
 			_scope($scope1_id, {

@@ -7,7 +7,7 @@ _shells({
 	b2: "b2 b6;D ;<p> </p>"
 });
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_label = _filled_guard($scope0_reason, 1), $sg__input_label = _server_guard($scope0_reason, 1), $cg__input_show = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $sg__input_label = _server_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 1), $cg__input_show = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let c = 0;
 	_html("<div>");
@@ -15,10 +15,10 @@ var child_default = _template("b", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			const l = input.label + "!";
-			$fg__input_label && _patch_write($scope1_id, "xb", l, !$sg__input_label);
+			_filled_guard($scope0_reason, 1) && _patch_write($scope1_id, "xb", l, !$sg__input_label);
 			_html(`<p>${_text_mark($scope1_id, "a", l + "#0")}</p>`);
 			_client_guard($scope0_reason, 1) && _patch_render($scope1_id, "b0");
-			_patch_render($scope1_id, "b1", $fg__input_label && "b");
+			_patch_render($scope1_id, "b1", _filled_guard($scope0_reason, 1) && "b");
 			_scope($scope1_id, {
 				b: l,
 				_: _scope_with_id($scope0_id)

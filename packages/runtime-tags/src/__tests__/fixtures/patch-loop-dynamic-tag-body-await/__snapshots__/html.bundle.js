@@ -32,7 +32,7 @@ _shells({
 	a7: "a7;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $cg__input_rows = _client_guard($scope0_reason, 0), $wg__input_rows = _write_guard($scope0_reason, 0), $wi__input_rows = _write_if($scope0_reason, 0), $fg__input_rows = _filled_guard($scope0_reason, 0), $sg__input_rows = _server_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $cg__input_rows = _client_guard($scope0_reason, 0), $wg__input_rows = _write_guard($scope0_reason, 0), $wi__input_rows = _write_if($scope0_reason, 0), $sg__input_rows = _server_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_for_of(input.rows, (row) => {
 		const $scope1_id = _scope_id();
@@ -52,18 +52,18 @@ var template_default = _template("a", (input) => {
 				c: v,
 				_: $scope($scope1_id)
 			}] : []), 0, $wg__input_rows, $scope0_reason, 0, 0, void 0, 0, 0, "a0");
-			$fg__input_rows && _patch_subscribers($scope2_id, "a3", "c");
+			_filled_guard($scope0_reason, 0) && _patch_subscribers($scope2_id, "a3", "c");
 			_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope2_id, "a4", $cg__input_rows);
 			$wi__input_rows && _subscribe(_unfilled_if($scope0_reason, 0) && $for_content__row_card__closures, _scope($scope2_id, { i: $await_content__v__closures }), $cg__input_rows && "a4", $wg__input_rows);
-			$fg__input_rows && _client_branch_if("a0", $scope2_id) && _patch_write($scope2_id, "xc", v, !$sg__input_rows);
+			_filled_guard($scope0_reason, 0) && _client_branch_if("a0", $scope2_id) && _patch_write($scope2_id, "xc", v, !$sg__input_rows);
 			$wg__input_rows || $wi__input_rows && _resume_branch($scope2_id);
 		}, 1, "a5", _unfilled_if($scope0_reason, 0) && 3, 0, 1);
-		$fg__input_rows && _patch_subscribers($scope1_id, "a8", "f");
+		_filled_guard($scope0_reason, 0) && _patch_subscribers($scope1_id, "a8", "f");
 		$wi__input_rows && _scope($scope1_id, {
 			h: $for_content__row_label__closures,
 			g: _unfilled_if($scope0_reason, 0) && $for_content__row_card__closures
 		});
-		$fg__input_rows && _client_branch_if("a0", $scope1_id) && _patch_write($scope1_id, "xf", row?.label, !$sg__input_rows);
+		_filled_guard($scope0_reason, 0) && _client_branch_if("a0", $scope1_id) && _patch_write($scope1_id, "xf", row?.label, !$sg__input_rows);
 	}, "id", $scope0_id, "a", 1, 1, 1, 0, 0, "a7", $scope0_reason, 0);
 	_scope($scope0_id, {});
 }, 1);

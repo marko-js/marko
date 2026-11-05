@@ -6,16 +6,16 @@ _shells({
 	b2: "b2;D ;<p> </p>"
 });
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_items = _filled_guard($scope0_reason, 2), $fg__input_items__OR__input_b = _filled_guard($scope0_reason, 0), $fg__input_b = _filled_guard($scope0_reason, 3), $fg__input_a = _filled_guard($scope0_reason, 4), $cg__input_items = _client_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $fg__input_b = _filled_guard($scope0_reason, 3), $cg__input_items = _client_guard($scope0_reason, 2), $fg__input_a = _filled_guard($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	_for_of(input.items, (item) => {
 		const $scope1_id = _scope_id();
-		$fg__input_items && _client_guard($scope0_reason, 3) && _patch_write($scope1_id, "xc", item, !_server_guard($scope0_reason, 2));
+		_filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 3) && _patch_write($scope1_id, "xc", item, !_server_guard($scope0_reason, 2));
 		const d = input.b + item;
-		$fg__input_items__OR__input_b && _client_guard($scope0_reason, 4) && _patch_write($scope1_id, "xe", d, !_server_guard($scope0_reason, 0));
+		_filled_guard($scope0_reason, 0) && _client_guard($scope0_reason, 4) && _patch_write($scope1_id, "xe", d, !_server_guard($scope0_reason, 0));
 		_html(`<p>${_text_mark($scope1_id, "a", input.a + d, 1, $scope0_reason, 1)}</p>`);
-		_patch_render($scope1_id, "b0", [$fg__input_b && ">e", $fg__input_items && "c"], $scope0_reason, 0);
-		_patch_render($scope1_id, "b1", [$fg__input_a && ">f", $fg__input_items__OR__input_b && "e"], $scope0_reason, 1);
+		_patch_render($scope1_id, "b0", [_filled_guard($scope0_reason, 3) && ">e", _filled_guard($scope0_reason, 2) && "c"], $scope0_reason, 0);
+		_patch_render($scope1_id, "b1", [_filled_guard($scope0_reason, 4) && ">f", _filled_guard($scope0_reason, 0) && "e"], $scope0_reason, 1);
 		_scope($scope1_id, {
 			c: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 0)) && item,
 			e: (_unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 1)) && d,

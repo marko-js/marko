@@ -18,7 +18,7 @@ _shells({
 	a: "a !a7; D l%;<button> </button><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 1), $cg__input_msg = _client_guard($scope0_reason, 3), $fg__input_fail = _filled_guard($scope0_reason, 2), $cg__input_fail = _client_guard($scope0_reason, 2), $fg__input_msg = _filled_guard($scope0_reason, 3), $fg__input_label = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 1), $cg__input_msg = _client_guard($scope0_reason, 3), $cg__input_fail = _client_guard($scope0_reason, 2), $fg__input_label = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	const $n__closures = /* @__PURE__ */ new Set();
@@ -32,7 +32,7 @@ var template_default = _template("a", (input) => {
 		_html(`<p>${_text_mark($scope2_id, "a", input.fail ? boom(new Error(input.msg)) : "ok", 1, $scope0_reason, 0)}</p>`);
 		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope2_id, "a2");
 		_unfilled_if($scope0_reason, 3) && _patch_subscribe($scope2_id, "a3");
-		_patch_render($scope2_id, "a4", [$fg__input_fail && ">g", $fg__input_msg && ">h"], $scope0_reason, 0);
+		_patch_render($scope2_id, "a4", [_filled_guard($scope0_reason, 2) && ">g", _filled_guard($scope0_reason, 3) && ">h"], $scope0_reason, 0);
 		_subscribe(_unfilled_if($scope0_reason, 3) && $input_msg__closures, _subscribe(_unfilled_if($scope0_reason, 2) && $input_fail__closures, _scope($scope2_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }), $cg__input_fail && "a2"), $cg__input_msg && "a3");
 	}, void 0, (err) => {
 		_scope_reason();
@@ -62,5 +62,5 @@ var template_default = _template("a", (input) => {
 		m: $n__closures,
 		k: _write_if($scope0_reason, 2) && (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && $input_fail__closures,
 		l: _write_if($scope0_reason, 3) && (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 0)) && $input_msg__closures
-	}) || ($fg__input_label && _patch_write($scope0_id, "xf", input.label, !_server_guard($scope0_reason, 1)), $fg__input_fail && $cg__input_msg && _patch_write($scope0_id, "xg", input.fail, !_server_guard($scope0_reason, 2)), $fg__input_msg && $cg__input_fail && _patch_write($scope0_id, "xh", input.msg, !_server_guard($scope0_reason, 3)));
+	}) || ($fg__input_label && _patch_write($scope0_id, "xf", input.label, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && $cg__input_msg && _patch_write($scope0_id, "xg", input.fail, !_server_guard($scope0_reason, 2)), _filled_guard($scope0_reason, 3) && $cg__input_fail && _patch_write($scope0_id, "xh", input.msg, !_server_guard($scope0_reason, 3)));
 }, 1);

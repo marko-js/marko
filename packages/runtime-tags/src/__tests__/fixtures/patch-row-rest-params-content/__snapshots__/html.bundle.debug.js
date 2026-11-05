@@ -7,13 +7,13 @@ _shells({
 	"__tests__/tags/my-for.marko_1*shell": "__tests__/tags/my-for.marko_1*shell;b%;<!><!><!>"
 });
 var my_for_default = _template("__tests__/tags/my-for.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_to__OR__input_content = _write_guard($scope0_reason, 0), $fg__input_to = _filled_guard($scope0_reason, 1), $fg__input_content = _filled_guard($scope0_reason, 2), $cg__input_to = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_to__OR__input_content = _write_guard($scope0_reason, 0), $fg__input_content = _filled_guard($scope0_reason, 2), $cg__input_to = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_for_to(input.to, 0, 1, (...args) => {
 		const $scope1_id = _scope_id();
-		$fg__input_to && _client_guard($scope0_reason, 2) && _patch_write($scope1_id, "PatchMarkedWrite:args", args, !_server_guard($scope0_reason, 1));
+		_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_write($scope1_id, "PatchMarkedWrite:args", args, !_server_guard($scope0_reason, 1));
 		_dynamic_tag($scope1_id, "#text/0", input.content, [...args], 1, 0, 1, $wg__input_to__OR__input_content, $scope0_reason, 0, 0, 2);
-		_patch_render($scope1_id, "__tests__/tags/my-for.marko_1_input_content#0:4_args#1/setup", [$fg__input_content && ">input_content", $fg__input_to && "args"], $scope0_reason, 0);
+		_patch_render($scope1_id, "__tests__/tags/my-for.marko_1_input_content#0:4_args#1/setup", [_filled_guard($scope0_reason, 2) && ">input_content", _filled_guard($scope0_reason, 1) && "args"], $scope0_reason, 0);
 		_write_if($scope0_reason, 0) && _scope($scope1_id, {
 			args: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && args,
 			_: _scope_with_id($scope0_id)

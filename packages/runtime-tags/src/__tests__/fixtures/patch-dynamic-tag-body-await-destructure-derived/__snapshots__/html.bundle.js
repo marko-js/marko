@@ -30,18 +30,18 @@ _shells({
 	b: "b;b%;<!><!><!>"
 });
 var card_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input = _write_guard($scope0_reason, 0), $fg__input_p = _filled_guard($scope0_reason, 1), $fg__input = _filled_guard($scope0_reason, 0), $cg__input = _client_guard($scope0_reason, 0), $wi__input = _write_if($scope0_reason, 0), $cg__input_p = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input = _write_guard($scope0_reason, 0), $cg__input = _client_guard($scope0_reason, 0), $wi__input = _write_if($scope0_reason, 0), $cg__input_p = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input__closures = /* @__PURE__ */ new Set();
 	_await($scope0_id, "a", input.p, (x) => {
 		const $scope1_id = _scope_id();
-		$fg__input_p && $cg__input && _patch_write($scope1_id, "xc", x, !_server_guard($scope0_reason, 1));
+		_filled_guard($scope0_reason, 1) && $cg__input && _patch_write($scope1_id, "xc", x, !_server_guard($scope0_reason, 1));
 		const { content: c } = x ? input : {};
 		_dynamic_tag($scope1_id, "a", x ? keeper_default : "div", { content: c }, 1, 0, 0, $wg__input, $scope0_reason, 0);
 		$cg__input_p && _patch_write($scope1_id, "wf", c, 1);
 		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "b0");
-		_patch_render($scope1_id, "b1", [$fg__input && ">c", $fg__input_p && "c"], $scope0_reason, 0);
-		_patch_render($scope1_id, "b2", [$fg__input_p && "c", $fg__input && "f"], $scope0_reason, 0);
+		_patch_render($scope1_id, "b1", [_filled_guard($scope0_reason, 0) && ">c", _filled_guard($scope0_reason, 1) && "c"], $scope0_reason, 0);
+		_patch_render($scope1_id, "b2", [_filled_guard($scope0_reason, 1) && "c", _filled_guard($scope0_reason, 0) && "f"], $scope0_reason, 0);
 		$wi__input && _subscribe(_unfilled_if($scope0_reason, 0) && $input__closures, _scope($scope1_id, {
 			c: _unfilled_if($scope0_reason, 0) && x,
 			f: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && c

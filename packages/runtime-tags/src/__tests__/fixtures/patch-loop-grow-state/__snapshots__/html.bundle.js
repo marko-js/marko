@@ -11,7 +11,7 @@ var template_default = _template("a", (input) => {
 	_for_of(input.items, (item) => {
 		const $scope1_id = _scope_id();
 		_html(`<p>${_text_mark($scope1_id, "a", input.title + " " + item + " #0")}</p>`);
-		_patch_render($scope1_id, "a0", $fg__input_title && ">f");
+		_patch_render($scope1_id, "a0", _filled_guard($scope0_reason, 1) && ">f");
 		_scope($scope1_id, {
 			M: item,
 			_: _scope_with_id($scope0_id)

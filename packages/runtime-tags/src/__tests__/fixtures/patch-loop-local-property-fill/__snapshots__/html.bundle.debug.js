@@ -19,18 +19,18 @@ _shells({
 	"__tests__/template.marko_1*shell": `__tests__/template.marko_1*shell${_shell_marker([["__tests__/template.marko_1_count#0:5/setup"], []], ["#childScope/0>", $setup$1])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)("D l")};${$template$1}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_rows = _server_guard($scope0_reason, 0), $fg__input_rows = _filled_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $sg__input_rows = _server_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_for_of(input.rows, (row) => {
 		const $scope1_id = _scope_id();
 		const item = row.item;
-		$fg__input_rows && _patch_write($scope1_id, "PatchMarkedWrite:item_id", item?.id, !$sg__input_rows);
+		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "PatchMarkedWrite:item_id", item?.id, !$sg__input_rows);
 		_set_scope_reason(6);
 		const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 		tagged_default({ label: `${item.id}:${count}` });
 		_patch_child_end();
-		_patch_render($scope1_id, "__tests__/template.marko_1_count#0:5_item_id#5/setup", $fg__input_rows && "item_id");
+		_patch_render($scope1_id, "__tests__/template.marko_1_count#0:5_item_id#5/setup", _filled_guard($scope0_reason, 0) && "item_id");
 		_scope($scope1_id, {
 			item_id: item?.id,
 			_: _scope_with_id($scope0_id),

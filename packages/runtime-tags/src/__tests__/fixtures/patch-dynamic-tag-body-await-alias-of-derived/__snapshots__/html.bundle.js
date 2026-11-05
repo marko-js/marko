@@ -30,18 +30,18 @@ _shells({
 	b: "b;b%;<!><!><!>"
 });
 var card_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_p__OR__input_content = _write_guard($scope0_reason, 0), $fg__input_p = _filled_guard($scope0_reason, 1), $fg__input_p__OR__input_content = _filled_guard($scope0_reason, 0), $wi__input_p__OR__input_content = _write_if($scope0_reason, 0), $cg__input_p = _client_guard($scope0_reason, 1), $fg__input_content = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_p__OR__input_content = _write_guard($scope0_reason, 0), $wi__input_p__OR__input_content = _write_if($scope0_reason, 0), $cg__input_p = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_content__closures = /* @__PURE__ */ new Set();
 	_await($scope0_id, "a", input.p, (x) => {
 		const $scope1_id = _scope_id();
-		$fg__input_p && _client_guard($scope0_reason, 0) && _patch_write($scope1_id, "xc", x, !_server_guard($scope0_reason, 1));
+		_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_write($scope1_id, "xc", x, !_server_guard($scope0_reason, 1));
 		const c = x && input.content;
-		$fg__input_p__OR__input_content && $cg__input_p && _patch_write($scope1_id, "xe", c, !_server_guard($scope0_reason, 0));
+		_filled_guard($scope0_reason, 0) && $cg__input_p && _patch_write($scope1_id, "xe", c, !_server_guard($scope0_reason, 0));
 		_dynamic_tag($scope1_id, "a", x ? keeper_default : "div", { content: c }, 1, 0, 0, $wg__input_p__OR__input_content, $scope0_reason, 0);
 		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "b0");
-		_patch_render($scope1_id, "b1", [$fg__input_content && ">e", $fg__input_p && "c"], $scope0_reason, 0);
-		_patch_render($scope1_id, "b2", [$fg__input_p && "c", $fg__input_p__OR__input_content && "e"], $scope0_reason, 0);
+		_patch_render($scope1_id, "b1", [_filled_guard($scope0_reason, 2) && ">e", _filled_guard($scope0_reason, 1) && "c"], $scope0_reason, 0);
+		_patch_render($scope1_id, "b2", [_filled_guard($scope0_reason, 1) && "c", _filled_guard($scope0_reason, 0) && "e"], $scope0_reason, 0);
 		$wi__input_p__OR__input_content && _subscribe(_unfilled_if($scope0_reason, 2) && $input_content__closures, _scope($scope1_id, {
 			c: _unfilled_if($scope0_reason, 0) && x,
 			e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && c
@@ -51,7 +51,7 @@ var card_default = _template("b", (input) => {
 	_scope($scope0_id, {
 		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.content,
 		f: _write_if($scope0_reason, 2) && (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && $input_content__closures
-	}) || $fg__input_content && $cg__input_p && _patch_write($scope0_id, "xe", input.content, !_server_guard($scope0_reason, 2));
+	}) || _filled_guard($scope0_reason, 2) && $cg__input_p && _patch_write($scope0_id, "xe", input.content, !_server_guard($scope0_reason, 2));
 });
 
 // template.marko

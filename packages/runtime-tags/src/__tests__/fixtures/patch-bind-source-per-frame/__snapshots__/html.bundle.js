@@ -7,11 +7,11 @@ _shells({
 	a: "a;D%b%bD ;<main><!><!><em> </em></main>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_title = _client_guard($scope0_reason, 0), $fg__input_title = _filled_guard($scope0_reason, 0), $wi__input_title = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_title = _client_guard($scope0_reason, 0), $wi__input_title = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_title__closures = /* @__PURE__ */ new Set();
 	const $handler2__closures = /* @__PURE__ */ new Set();
-	$fg__input_title && _patch_write($scope0_id, "xf", input.title, !_server_guard($scope0_reason, 0));
+	_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xf", input.title, !_server_guard($scope0_reason, 0));
 	let count = 0;
 	const handler = _bind_resume((event) => event.target.dataset.seen = input.title, "a0", $scope0_id);
 	_html("<main>");
@@ -22,7 +22,7 @@ var template_default = _template("a", (input) => {
 			title: input.title,
 			onClick: handler
 		}, "a", $scope1_id, "button", 0, $scope0_reason, 0)}>one</button>${_el_mark($scope1_id, "a")}`);
-		_script($scope1_id, "a1", 1, $fg__input_title, ">f");
+		_script($scope1_id, "a1", 1, _filled_guard($scope0_reason, 0), ">f");
 		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "a2");
 		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "a3");
 		$cg__input_title && _patch_render($scope1_id, "a4");
@@ -35,7 +35,7 @@ var template_default = _template("a", (input) => {
 			title: input.title,
 			onClick: handler
 		}, "a", $scope2_id, "button", 0, $scope0_reason, 0)}>two</button>${_el_mark($scope2_id, "a")}`);
-		_script($scope2_id, "a9", 1, $fg__input_title, ">f");
+		_script($scope2_id, "a9", 1, _filled_guard($scope0_reason, 0), ">f");
 		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope2_id, "a10");
 		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope2_id, "a11");
 		$cg__input_title && _patch_render($scope2_id, "a12");

@@ -41,7 +41,7 @@ _shells({
 	"__tests__/tags/child.marko_3*shell": "__tests__/tags/child.marko_3*shell,<span>shown</span>"
 });
 var child_default = _template("__tests__/tags/child.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 1), $fg__input_show = _filled_guard($scope0_reason, 1), $cg__input_show = _client_guard($scope0_reason, 1), $wi__input_show = _write_if($scope0_reason, 1), $sg__input_show = _server_guard($scope0_reason, 1), $cg__input_on = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 1), $cg__input_show = _client_guard($scope0_reason, 1), $wi__input_show = _write_if($scope0_reason, 1), $sg__input_show = _server_guard($scope0_reason, 1), $fg__input_show = _filled_guard($scope0_reason, 1), $cg__input_on = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let items = [1, 2];
 	_html(`<button>add</button>${_el_mark($scope0_id, "#button/0")}`);
@@ -50,7 +50,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 			const $scope1_id = _scope_id();
 			const $if_content__s__closures = new Set();
 			const s = input.show;
-			$fg__input_show && _patch_write($scope1_id, "PatchMarkedWrite:s", s, !$sg__input_show);
+			_filled_guard($scope0_reason, 1) && _patch_write($scope1_id, "PatchMarkedWrite:s", s, !$sg__input_show);
 			_set_scope_reason(2);
 			let $item;
 			forOf(items, (item) => {
@@ -79,7 +79,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 				return "s:" + s;
 			}, "__tests__/tags/child.marko_1/get", $scope1_id) });
 			_patch_child_end();
-			$fg__input_show && _patch_subscribers($scope1_id, "__tests__/tags/child.marko_1_s#2/subscribers", "s");
+			_filled_guard($scope0_reason, 1) && _patch_subscribers($scope1_id, "__tests__/tags/child.marko_1_s#2/subscribers", "s");
 			$cg__input_show && _patch_render($scope1_id, "__tests__/tags/child.marko_1_input_show#0:5/setup");
 			_scope($scope1_id, {
 				s,

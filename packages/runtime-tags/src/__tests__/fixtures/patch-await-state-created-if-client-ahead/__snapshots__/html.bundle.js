@@ -38,7 +38,7 @@ var template_default = _template("b", (input) => {
 				_patch_child_end();
 				_script($scope2_id, "b0");
 				_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope2_id, "b1");
-				_patch_render($scope2_id, "b2", $fg__input_label && ">>f");
+				_patch_render($scope2_id, "b2", _filled_guard($scope0_reason, 1) && ">>f");
 				_subscribe($wi__input_label && $input_label__closures, _scope($scope2_id, {
 					d: x,
 					b: _existing_scope($childScope)

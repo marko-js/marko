@@ -20,14 +20,14 @@ _shells({
 	c3: `c3${_shell_marker([["c2"], []], ["a>", $setup$2])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1)};${$template$1}`
 });
 var shape_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_sel = _write_guard($scope0_reason, 2), $fg__input_obj = _filled_guard($scope0_reason, 1), $cg__input_sel = _client_guard($scope0_reason, 2), $fg__input_b = _filled_guard($scope0_reason, 3), $sg__input_obj = _server_guard($scope0_reason, 1), $cg__input_obj = _client_guard($scope0_reason, 1), $fg__input_sel = _filled_guard($scope0_reason, 2), $wi__input_b = _write_if($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $wg__input_sel = _write_guard($scope0_reason, 2), $cg__input_sel = _client_guard($scope0_reason, 2), $sg__input_obj = _server_guard($scope0_reason, 1), $cg__input_obj = _client_guard($scope0_reason, 1), $fg__input_b = _filled_guard($scope0_reason, 3), $fg__input_sel = _filled_guard($scope0_reason, 2), $wi__input_b = _write_if($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	const $input_b__closures = /* @__PURE__ */ new Set();
 	const $s__closures = /* @__PURE__ */ new Set();
 	let s = 0;
 	_for_in(input.obj, (k, v) => {
 		const $scope1_id = _scope_id();
-		$fg__input_obj && _patch_write($scope1_id, "xe", v, !$sg__input_obj);
+		_filled_guard($scope0_reason, 1) && _patch_write($scope1_id, "xe", v, !$sg__input_obj);
 		_if(() => {
 			if (k === input.sel) {
 				const $scope2_id = _scope_id();
@@ -39,7 +39,7 @@ var shape_default = _template("c", (input) => {
 				});
 				_patch_child_end();
 				_unfilled_if($scope0_reason, 3) && _patch_subscribe($scope2_id, "c0");
-				_patch_render($scope2_id, "c1", [$fg__input_b && ">>g", $fg__input_obj && ">e"]);
+				_patch_render($scope2_id, "c1", [_filled_guard($scope0_reason, 3) && ">>g", _filled_guard($scope0_reason, 1) && ">e"]);
 				_subscribe($s__closures, _subscribe($wi__input_b && $input_b__closures, _scope($scope2_id, {
 					_: _scope_with_id($scope1_id),
 					a: _existing_scope($childScope)
@@ -47,7 +47,7 @@ var shape_default = _template("c", (input) => {
 				return 0;
 			}
 		}, $scope1_id, "a", 1, $wg__input_sel, 1, 0, 0, ["c3"], $scope0_reason, 0);
-		$fg__input_obj && ($cg__input_obj || $cg__input_sel) && _patch_render($scope1_id, "c5", "e");
+		_filled_guard($scope0_reason, 1) && ($cg__input_obj || $cg__input_sel) && _patch_render($scope1_id, "c5", "e");
 		$cg__input_sel && _patch_render($scope1_id, "c6");
 		_scope($scope1_id, {
 			M: _unfilled_if($scope0_reason, 2) && k,

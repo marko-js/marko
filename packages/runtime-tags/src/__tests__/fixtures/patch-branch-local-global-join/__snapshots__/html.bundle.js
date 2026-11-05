@@ -6,7 +6,7 @@ _shells({
 	b2: "b2;D ;<p> </p>"
 });
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 2), $fg__input_a = _filled_guard($scope0_reason, 3), $cg__input_show__OR__input_a__OR__input_b = _client_guard($scope0_reason, 1), $fg__input_b = _filled_guard($scope0_reason, 4), $cg__input_show = _client_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 2), $cg__input_show__OR__input_a__OR__input_b = _client_guard($scope0_reason, 1), $fg__input_a = _filled_guard($scope0_reason, 3), $fg__input_b = _filled_guard($scope0_reason, 4), $cg__input_show = _client_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
 	_if(() => {
@@ -17,8 +17,8 @@ var child_default = _template("b", (input) => {
 			_html(`<p>${_text_mark($scope1_id, "a", input.a + input.b + c, 1, (2 | _updates_from($scope0_reason, 0)) << 1, 0)}</p>`);
 			_fill_global_subscribe("b0", $scope1_id);
 			_patch_render($scope1_id, "b1", [
-				$fg__input_a && ">e",
-				$fg__input_b && ">f",
+				_filled_guard($scope0_reason, 3) && ">e",
+				_filled_guard($scope0_reason, 4) && ">f",
 				"b"
 			], (2 | _updates_from($scope0_reason, 0)) << 1, 0);
 			_scope($scope1_id, {

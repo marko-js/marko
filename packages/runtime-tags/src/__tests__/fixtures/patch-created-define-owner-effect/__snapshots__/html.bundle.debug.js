@@ -16,7 +16,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
 		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "__tests__/tags/card.marko_1_input_w#0:5/subscribe");
-		_patch_render($scope1_id, "__tests__/tags/card.marko_1_input_w#0:5_k#0:6/setup", $fg__input_w && ">input_w") || _script($scope1_id, "__tests__/tags/card.marko_1_input_w#0:5_k#0:6", 0, $sg__input_w && 2, ">input_w");
+		_patch_render($scope1_id, "__tests__/tags/card.marko_1_input_w#0:5_k#0:6/setup", _filled_guard($scope0_reason, 1) && ">input_w") || _script($scope1_id, "__tests__/tags/card.marko_1_input_w#0:5_k#0:6", 0, $sg__input_w && 2, ">input_w");
 		_subscribe($k__closures, _subscribe($wi__input_w && $input_w__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/card.marko", "2:2"), _client_guard($scope0_reason, 1) && "__tests__/tags/card.marko_1_input_w#0:5/subscribe", 0), "__tests__/tags/card.marko_1_k#0:6/subscribe", 0);
 		_resume_branch($scope1_id);
 	}, $scope0_id, 0) };

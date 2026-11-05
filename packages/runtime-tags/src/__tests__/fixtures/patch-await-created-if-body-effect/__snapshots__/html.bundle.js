@@ -22,7 +22,7 @@ _shells({
 	b5: "b5;b%;<!><!><!>"
 });
 var template_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_label = _filled_guard($scope0_reason, 1), $sg__input_label = _server_guard($scope0_reason, 1), $cg__input_show = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $sg__input_label = _server_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 1), $cg__input_show = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $n__closures = /* @__PURE__ */ new Set();
 	let n = 0;
@@ -32,13 +32,13 @@ var template_default = _template("b", (input) => {
 			const $scope1_id = _scope_id();
 			_await($scope1_id, "a", Promise.resolve(input.label), (x) => {
 				const $scope2_id = _scope_id();
-				$fg__input_label && _patch_write($scope2_id, "xd", x, !$sg__input_label);
+				_filled_guard($scope0_reason, 1) && _patch_write($scope2_id, "xd", x, !$sg__input_label);
 				_set_scope_reason(6);
 				const $childScope = _peek_scope_id($scope2_id, "b", 0);
 				$Lazy_withLoadAssets({ label: x + n });
 				_patch_child_end();
-				_script($scope2_id, "b0", 1, $fg__input_label, "d");
-				_patch_render($scope2_id, "b1", $fg__input_label && "d");
+				_script($scope2_id, "b0", 1, _filled_guard($scope0_reason, 1), "d");
+				_patch_render($scope2_id, "b1", _filled_guard($scope0_reason, 1) && "d");
 				_subscribe($n__closures, _scope($scope2_id, {
 					d: x,
 					b: _existing_scope($childScope)

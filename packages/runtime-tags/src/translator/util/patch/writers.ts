@@ -96,7 +96,7 @@ import {
   getOrShareSectionGuard,
   getWriteReason,
   isDynamicWriteGuard,
-  isSharedGroupCheck,
+  sharesGroupCheck,
   getSectionWriteReason,
   orGuard,
 } from "../write-guard";
@@ -1027,9 +1027,9 @@ export function getCallerGroupGuard(
   const write = getWriteGroups(section, sources);
   // One caller group's mask-only check is shared, as a write guard is.
   if (
-    isSharedGroupCheck(check) &&
     write?.groups.length === 1 &&
-    !write.global
+    !write.global &&
+    sharesGroupCheck(check, write.groups[0][0], section)
   ) {
     const [groupSection, group] = write.groups[0];
     return getOrShareSectionGuard(groupSection, group, check);
@@ -1062,7 +1062,7 @@ export function orCallerGroupGuards(
     const ownArg = getOwnGroupArg(own, paramSection);
     expr = orGuard(
       expr,
-      !ownArg && isSharedGroupCheck(check)
+      !ownArg && sharesGroupCheck(check, paramSection, section)
         ? getOrShareSectionGuard(paramSection, group, check)
         : callRuntime(
             check,

@@ -8,7 +8,7 @@ _shells({
 	"__tests__/template.marko_2*shell": "__tests__/template.marko_2*shell __tests__/template.marko_2_count#0:9/subscribe;D ;<p> </p>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_inner = _write_guard($scope0_reason, 2), $fg__input_title = _filled_guard($scope0_reason, 3), $fg__input_inner = _filled_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 1), $cg__input_inner = _client_guard($scope0_reason, 2), $wi__input_title = _write_if($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $wg__input_inner = _write_guard($scope0_reason, 2), $fg__input_inner = _filled_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 1), $fg__input_title = _filled_guard($scope0_reason, 3), $cg__input_inner = _client_guard($scope0_reason, 2), $wi__input_title = _write_if($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	const $input_title__closures = new Set();
 	const $count__closures = new Set();
@@ -22,7 +22,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					const $scope2_id = _scope_id();
 					_html(`<p>${_text_mark($scope2_id, "#text/0", input.title + "@" + count)}</p>`);
 					_unfilled_if($scope0_reason, 3) && _patch_subscribe($scope2_id, "__tests__/template.marko_2_input_title#0:8/subscribe");
-					_patch_render($scope2_id, "__tests__/template.marko_2_input_title#0:8_count#0:9/setup", $fg__input_title && ">>input_title");
+					_patch_render($scope2_id, "__tests__/template.marko_2_input_title#0:8_count#0:9/setup", _filled_guard($scope0_reason, 3) && ">>input_title");
 					_subscribe($count__closures, _subscribe($wi__input_title && $input_title__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "5:6"), _client_guard($scope0_reason, 3) && "__tests__/template.marko_2_input_title#0:8/subscribe"), "__tests__/template.marko_2_count#0:9/subscribe");
 					return 0;
 				}

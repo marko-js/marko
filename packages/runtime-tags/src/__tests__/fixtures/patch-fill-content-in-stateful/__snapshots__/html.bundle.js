@@ -27,7 +27,7 @@ var template_default = _template("a", (input) => {
 				_scope_reason();
 				const $scope2_id = _scope_id();
 				_html(`<span>${_text_mark($scope2_id, "a", input.msg + ":0")}</span>`);
-				_patch_render($scope2_id, "a0", $fg__input_msg && ">>e");
+				_patch_render($scope2_id, "a0", _filled_guard($scope0_reason, 0) && ">>e");
 				_subscribe($count__closures, _subscribe($wi__input_msg && $input_msg__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 0) && "a1"), "a2");
 			}, $scope1_id) });
 			_patch_child_end();

@@ -22,7 +22,7 @@ _shells({
 	c: `c${_shell_marker($setup$1)};${((_w0) => `D/${_w0}& l`)("D%l")};${((_w0) => `<main>${_w0}<button>toggle</button></main>`)($template$1)}`
 });
 var inner_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_second = _filled_guard($scope0_reason, 0), $fg__input_first = _filled_guard($scope0_reason, 1), $wi__input_second = _write_if($scope0_reason, 0), $wi__input_first = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wi__input_second = _write_if($scope0_reason, 0), $wi__input_first = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_second__closures = /* @__PURE__ */ new Set();
 	const $input_first__closures = /* @__PURE__ */ new Set();
@@ -41,7 +41,7 @@ var inner_default = _template("c", (input) => {
 		}, 1, "c0", 2);
 		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "c3");
 		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "c4");
-		_patch_render($scope1_id, "c5", [$fg__input_second && ">e", $fg__input_first && ">f"]);
+		_patch_render($scope1_id, "c5", [_filled_guard($scope0_reason, 0) && ">e", _filled_guard($scope0_reason, 1) && ">f"]);
 		_subscribe($showSecond__closures, _subscribe($wi__input_first && $input_first__closures, _subscribe($wi__input_second && $input_second__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }))));
 		_resume_branch($scope1_id);
 	}, $scope0_id, 0) });
@@ -57,7 +57,7 @@ var inner_default = _template("c", (input) => {
 		i: $wi__input_first && $input_first__closures,
 		j: $showSecond__closures,
 		a: _existing_scope($childScope)
-	}) || ($fg__input_second && _patch_write($scope0_id, "xe", input.second, !_server_guard($scope0_reason, 0)), $fg__input_first && _patch_write($scope0_id, "xf", input.first, !_server_guard($scope0_reason, 1)));
+	}) || (_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xe", input.second, !_server_guard($scope0_reason, 0)), _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "xf", input.first, !_server_guard($scope0_reason, 1)));
 });
 
 // template.marko

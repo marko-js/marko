@@ -41,7 +41,7 @@ _shells({
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell;b%;<!><!><!>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $cg__input_rows = _client_guard($scope0_reason, 0), $wg__input_rows = _write_guard($scope0_reason, 0), $wi__input_rows = _write_if($scope0_reason, 0), $fg__input_rows = _filled_guard($scope0_reason, 0), $sg__input_rows = _server_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $cg__input_rows = _client_guard($scope0_reason, 0), $wg__input_rows = _write_guard($scope0_reason, 0), $wi__input_rows = _write_if($scope0_reason, 0), $sg__input_rows = _server_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_for_of(input.rows, (row) => {
 		const $scope1_id = _scope_id();
@@ -61,18 +61,18 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				v,
 				_: $scope($scope1_id)
 			}] : []), 0, $wg__input_rows, $scope0_reason, 0, 0, void 0, 0, 0, "__tests__/template.marko_3*content");
-			$fg__input_rows && _patch_subscribers($scope2_id, "__tests__/template.marko_2_v#2/subscribers", "v");
+			_filled_guard($scope0_reason, 0) && _patch_subscribers($scope2_id, "__tests__/template.marko_2_v#2/subscribers", "v");
 			_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope2_id, "__tests__/template.marko_2_row_card#1:4/subscribe", $cg__input_rows);
 			$wi__input_rows && _subscribe(_unfilled_if($scope0_reason, 0) && $for_content__row_card__closures, _scope($scope2_id, { "ClosureScopes:v/8": $await_content__v__closures }, "__tests__/template.marko", "3:4"), $cg__input_rows && "__tests__/template.marko_2_row_card#1:4/subscribe", $wg__input_rows);
-			$fg__input_rows && _client_branch_if("__tests__/template.marko_3*content", $scope2_id) && _patch_write($scope2_id, "PatchMarkedWrite:v", v, !$sg__input_rows);
+			_filled_guard($scope0_reason, 0) && _client_branch_if("__tests__/template.marko_3*content", $scope2_id) && _patch_write($scope2_id, "PatchMarkedWrite:v", v, !$sg__input_rows);
 			$wg__input_rows || $wi__input_rows && _resume_branch($scope2_id);
 		}, 1, "__tests__/template.marko_2*content", _unfilled_if($scope0_reason, 0) && 3, 0, 1);
-		$fg__input_rows && _patch_subscribers($scope1_id, "__tests__/template.marko_1_row_label#5/subscribers", "row_label");
+		_filled_guard($scope0_reason, 0) && _patch_subscribers($scope1_id, "__tests__/template.marko_1_row_label#5/subscribers", "row_label");
 		$wi__input_rows && _scope($scope1_id, {
 			"ClosureScopes:row_label/7": $for_content__row_label__closures,
 			"ClosureScopes:row_card/6": _unfilled_if($scope0_reason, 0) && $for_content__row_card__closures
 		}, "__tests__/template.marko", "2:2");
-		$fg__input_rows && _client_branch_if("__tests__/template.marko_3*content", $scope1_id) && _patch_write($scope1_id, "PatchMarkedWrite:row_label", row?.label, !$sg__input_rows);
+		_filled_guard($scope0_reason, 0) && _client_branch_if("__tests__/template.marko_3*content", $scope1_id) && _patch_write($scope1_id, "PatchMarkedWrite:row_label", row?.label, !$sg__input_rows);
 	}, "id", $scope0_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/template.marko_1*shell", $scope0_reason, 0);
 	_scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

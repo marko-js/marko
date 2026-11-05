@@ -31,7 +31,7 @@ var template_default = _template("a", (input) => {
 				n: input.n
 			}, $scope1_id, ">e >f") });
 			_patch_child_end();
-			_patch_render($scope1_id, "a0", [$fg__input_label && ">e", $fg__input_n && ">f"], $scope0_reason, 2);
+			_patch_render($scope1_id, "a0", [_filled_guard($scope0_reason, 5) && ">e", _filled_guard($scope0_reason, 6) && ">f"], $scope0_reason, 2);
 			_scope($scope1_id, {
 				_: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id),
 				a: _existing_scope($childScope)

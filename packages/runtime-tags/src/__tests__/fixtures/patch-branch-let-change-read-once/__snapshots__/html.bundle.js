@@ -26,7 +26,7 @@ var template_default = _template("a", (input) => {
 			_html(`<button>${_text_mark($scope1_id, "b", count)}</button>${_el_mark($scope1_id, "a")}`);
 			_fill_global_subscribe("a1", $scope1_id);
 			_script($scope1_id, "a2");
-			_patch_render($scope1_id, "a3", $fg__input_start && ">f", $scope0_reason, 2);
+			_patch_render($scope1_id, "a3", _filled_guard($scope0_reason, 2) && ">f", $scope0_reason, 2);
 			const $countChange = read($global$1, onCount) || void 0;
 			_patch_let_change($scope1_id, "va4", count, "we", $countChange, (2 | _updates_from($scope0_reason, 2)) << 1, 0);
 			_scope($scope1_id, {

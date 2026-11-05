@@ -29,7 +29,7 @@ var wrap_default = _template("__tests__/tags/wrap.marko", (input) => {
 			_set_scope_reason(_updates_from($scope0_reason, 1) << 1);
 			const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0, $cg__input_label && 1);
 			let v = card_default({ x: input.label });
-			$fg__input_label && _patch_write($scope1_id, "PatchMarkedWrite:v", v, !$sg__input_label);
+			_filled_guard($scope0_reason, 1) && _patch_write($scope1_id, "PatchMarkedWrite:v", v, !$sg__input_label);
 			$cg__input_label && _var($scope1_id, "#scopeOffset/1", $childScope, "__tests__/tags/wrap.marko_1_v#4/var");
 			_patch_child_end();
 			_html(`<p>${_text_mark($scope1_id, "#text/2", v, 1, $scope0_reason, 1)}</p><button class=log>log</button>${_el_mark($scope1_id, "#button/3")}`);

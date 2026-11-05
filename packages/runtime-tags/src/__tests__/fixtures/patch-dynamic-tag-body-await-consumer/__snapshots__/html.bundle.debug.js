@@ -8,7 +8,7 @@ _shells({
 	"__tests__/tags/card.marko": "__tests__/tags/card.marko !__tests__/tags/card.marko_0; b%;<button class=toggle>toggle</button><!><!>"
 });
 var card_default = _template("__tests__/tags/card.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_p__OR__input_content = _write_guard($scope0_reason, 0), $wi__input_content = _write_if($scope0_reason, 2), $fg__input_p__OR__input_content = _filled_guard($scope0_reason, 0), $fg__input_p = _filled_guard($scope0_reason, 1), $cg__input_content = _client_guard($scope0_reason, 2), $sg__input_p = _server_guard($scope0_reason, 1), $fg__input_content = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_p__OR__input_content = _write_guard($scope0_reason, 0), $wi__input_content = _write_if($scope0_reason, 2), $cg__input_content = _client_guard($scope0_reason, 2), $sg__input_p = _server_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_content__closures = new Set();
 	const $open__closures = new Set();
@@ -16,9 +16,9 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 	_html(`<button class=toggle>toggle</button>${_el_mark($scope0_id, "#button/0")}`);
 	_await($scope0_id, "#text/1", input.p, (x) => {
 		const $scope1_id = _scope_id();
-		$fg__input_p && $cg__input_content && _patch_write($scope1_id, "PatchMarkedWrite:x", x, !$sg__input_p);
+		_filled_guard($scope0_reason, 1) && $cg__input_content && _patch_write($scope1_id, "PatchMarkedWrite:x", x, !$sg__input_p);
 		const c = x && input.content;
-		$fg__input_p__OR__input_content && _patch_write($scope1_id, "PatchMarkedWrite:c", c, !_server_guard($scope0_reason, 0));
+		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "PatchMarkedWrite:c", c, !_server_guard($scope0_reason, 0));
 		_if(() => {
 			if (open) {
 				const $scope2_id = _scope_id();
@@ -28,9 +28,9 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 				return 0;
 			}
 		}, $scope1_id, "#text/0");
-		$fg__input_p__OR__input_content && _patch_render($scope1_id, "__tests__/tags/card.marko_2_c#1:4/setup", "c");
+		_filled_guard($scope0_reason, 0) && _patch_render($scope1_id, "__tests__/tags/card.marko_2_c#1:4/setup", "c");
 		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "__tests__/tags/card.marko_1_input_content#0:5/subscribe");
-		_patch_render($scope1_id, "__tests__/tags/card.marko_1_input_content#0:5_x#2/setup", [$fg__input_content && ">input_content", $fg__input_p && "x"], $scope0_reason, 0);
+		_patch_render($scope1_id, "__tests__/tags/card.marko_1_input_content#0:5_x#2/setup", [_filled_guard($scope0_reason, 2) && ">input_content", _filled_guard($scope0_reason, 1) && "x"], $scope0_reason, 0);
 		_subscribe($open__closures, _subscribe($wi__input_content && $input_content__closures, _scope($scope1_id, {
 			x: $wi__input_content && x,
 			c
@@ -49,7 +49,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 	}, "__tests__/tags/card.marko", 0, {
 		input_content: ["input.content"],
 		open: "1:6"
-	}) || $fg__input_content && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_content", input.content, !_server_guard($scope0_reason, 2));
+	}) || _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_content", input.content, !_server_guard($scope0_reason, 2));
 });
 
 // template.marko

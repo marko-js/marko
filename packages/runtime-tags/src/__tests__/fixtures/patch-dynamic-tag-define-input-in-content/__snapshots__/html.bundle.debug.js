@@ -22,7 +22,7 @@ _shells({
 	"__tests__/template.marko": `__tests__/template.marko${_shell_marker($setup)};${((_w0) => `/${_w0}&`)("D%l")};${$template$1}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_useA__OR__input_record = _write_guard($scope0_reason, 0), $wi__input_useA__OR__input_record = _write_if($scope0_reason, 0), $cg__input_record = _client_guard($scope0_reason, 2), $fg__input_useA = _filled_guard($scope0_reason, 1), $cg__input_useA = _client_guard($scope0_reason, 1), $fg__input_record = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_useA__OR__input_record = _write_guard($scope0_reason, 0), $wi__input_useA__OR__input_record = _write_if($scope0_reason, 0), $cg__input_record = _client_guard($scope0_reason, 2), $cg__input_useA = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_useA__closures = new Set();
 	const $input_record__closures = new Set();
@@ -44,7 +44,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_reason = _scope_reason();
 		const $scope1_id = _scope_id();
 		_dynamic_tag($scope1_id, "#text/0", input.useA ? Card : Other, { record: input.record }, 1, 0, 0, $wg__input_useA__OR__input_record, $scope0_reason, 0);
-		_patch_render($scope1_id, "__tests__/template.marko_1_input_useA#0:3_input_record#0:4_Card#0:5_Other#0:6/setup", [$fg__input_useA && ">input_useA", $fg__input_record && ">input_record"], $scope0_reason, 0);
+		_patch_render($scope1_id, "__tests__/template.marko_1_input_useA#0:3_input_record#0:4_Card#0:5_Other#0:6/setup", [_filled_guard($scope0_reason, 1) && ">input_useA", _filled_guard($scope0_reason, 2) && ">input_record"], $scope0_reason, 0);
 		$wi__input_useA__OR__input_record && _subscribe(_unfilled_if($scope0_reason, 2) && $input_record__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_useA__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "7:2"), $cg__input_useA && "__tests__/template.marko_1_input_useA#0:3/subscribe", $wg__input_useA__OR__input_record), $cg__input_record && "__tests__/template.marko_1_input_record#0:4/subscribe", $wg__input_useA__OR__input_record);
 		$wg__input_useA__OR__input_record || $wi__input_useA__OR__input_record && _resume_branch($scope1_id);
 	}, $scope0_id) });
@@ -62,5 +62,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_record: ["input.record"],
 		Card: "1:9",
 		Other: "4:9"
-	}) || ($fg__input_useA && $cg__input_record && _patch_write($scope0_id, "PatchMarkedWrite:input_useA", input.useA, !_server_guard($scope0_reason, 1)), $fg__input_record && $cg__input_useA && _patch_write($scope0_id, "PatchMarkedWrite:input_record", input.record, !_server_guard($scope0_reason, 2)));
+	}) || (_filled_guard($scope0_reason, 1) && $cg__input_record && _patch_write($scope0_id, "PatchMarkedWrite:input_useA", input.useA, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && $cg__input_useA && _patch_write($scope0_id, "PatchMarkedWrite:input_record", input.record, !_server_guard($scope0_reason, 2)));
 }, 1);

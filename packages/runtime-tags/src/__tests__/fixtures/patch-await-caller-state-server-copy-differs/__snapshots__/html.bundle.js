@@ -19,12 +19,12 @@ _shells({
 	c0: "c0,<em>long</em>"
 });
 var show_await_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 2), $fg__input_promise = _filled_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	_await($scope0_id, "a", input.promise, (x) => {
 		const $scope1_id = _scope_id();
-		$fg__input_promise && $cg__input_label && _patch_write($scope1_id, "xi", x, !_server_guard($scope0_reason, 1));
+		_filled_guard($scope0_reason, 1) && $cg__input_label && _patch_write($scope1_id, "xi", x, !_server_guard($scope0_reason, 1));
 		const upper = x.toUpperCase();
 		_html(`<p${_attr("title", x, $scope1_id, "aa$title", $scope0_reason, 1)}>${_text_mark($scope1_id, "b", input.label, 1, $scope0_reason, 2)}:${_text_mark($scope1_id, "c", x, 2, $scope0_reason, 1)}:${_text_mark($scope1_id, "d", upper, 2, $scope0_reason, 1)}:${_text_mark($scope1_id, "e", input.label + x, 2, $scope0_reason, 0)}</p>${_el_mark($scope1_id, "a", _updates_from($scope0_reason, 1))}`);
 		_if(() => {
@@ -40,7 +40,7 @@ var show_await_default = _template("c", (input) => {
 		echo_default({ value: x });
 		_patch_child_end();
 		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "c3", $cg__input_label);
-		_patch_render($scope1_id, "c4", [$fg__input_label && ">e", $fg__input_promise && "i"], $scope0_reason, 0);
+		_patch_render($scope1_id, "c4", [_filled_guard($scope0_reason, 2) && ">e", _filled_guard($scope0_reason, 1) && "i"], $scope0_reason, 0);
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope1_id, {
 			i: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && x,
 			g: _existing_scope($childScope)
@@ -49,7 +49,7 @@ var show_await_default = _template("c", (input) => {
 	_scope($scope0_id, {
 		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && input.label,
 		f: _write_if($scope0_reason, 2) && (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && $input_label__closures
-	}) || $fg__input_label && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.label, !_server_guard($scope0_reason, 2));
+	}) || _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.label, !_server_guard($scope0_reason, 2));
 });
 
 // template.marko

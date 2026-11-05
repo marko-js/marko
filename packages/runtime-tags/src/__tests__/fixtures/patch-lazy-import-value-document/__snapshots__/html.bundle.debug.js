@@ -42,7 +42,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_html(`<button>toggle</button>${_el_mark($scope1_id, "#button/0")}`);
 			_dynamic_tag($scope1_id, "#text/1", alt ? $Child_withLoadAssets : other_default, { label: input.label });
 			_script($scope1_id, "__tests__/template.marko_1");
-			_patch_render($scope1_id, "__tests__/template.marko_1_input_label#0:4_alt#2/setup", $fg__input_label && ">input_label");
+			_patch_render($scope1_id, "__tests__/template.marko_1_input_label#0:4_alt#2/setup", _filled_guard($scope0_reason, 1) && ">input_label");
 			_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill0", alt, 1);
 			_scope($scope1_id, {
 				alt,

@@ -14,7 +14,7 @@ var template_default = _template("a", (input) => {
 			let n = 0;
 			_html(`<p>${_text_mark($scope1_id, "a", input.title + "@0")}</p><button id=n>n</button>${_el_mark($scope1_id, "b")}`);
 			_script($scope1_id, "a0");
-			_patch_render($scope1_id, "a1", $fg__input_title && ">g");
+			_patch_render($scope1_id, "a1", _filled_guard($scope0_reason, 1) && ">g");
 			_patch_fill($scope1_id, "va2", n, 1);
 			_scope($scope1_id, {
 				c: n,

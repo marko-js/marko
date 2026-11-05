@@ -33,7 +33,7 @@ var template_default = _template("c", (input) => {
 			_html(`<button>toggle</button>${_el_mark($scope1_id, "a")}`);
 			_dynamic_tag($scope1_id, "b", other_default, { label: input.label });
 			_script($scope1_id, "c0");
-			_patch_render($scope1_id, "c1", $fg__input_label && ">e");
+			_patch_render($scope1_id, "c1", _filled_guard($scope0_reason, 1) && ">e");
 			_patch_fill($scope1_id, "vc2", alt, 1);
 			_scope($scope1_id, {
 				c: alt,

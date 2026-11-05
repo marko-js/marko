@@ -15,7 +15,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_html(`<p>${_text_mark($scope1_id, "#text/0", input.title + " #" + count)}</p>`);
-			_patch_render($scope1_id, "__tests__/template.marko_1_input_title#0:5_count#0:6/setup", $fg__input_title && ">input_title");
+			_patch_render($scope1_id, "__tests__/template.marko_1_input_title#0:5_count#0:6/setup", _filled_guard($scope0_reason, 1) && ">input_title");
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4");
 			return 0;
 		}

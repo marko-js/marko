@@ -31,7 +31,7 @@ var list_default = _template("__tests__/tags/list.marko", (input) => {
 			label: item.label
 		});
 		_html("</li>");
-		_patch_render($scope1_id, "__tests__/tags/list.marko_1_input_row#0:5_item_id#3_item_label#4/setup", $fg__input_row && ">input_row");
+		_patch_render($scope1_id, "__tests__/tags/list.marko_1_input_row#0:5_item_id#3_item_label#4/setup", _filled_guard($scope0_reason, 0) && ">input_row");
 		_scope($scope1_id, {
 			item_id: $wi__input_row && item?.id,
 			item_label: $wi__input_row && item?.label

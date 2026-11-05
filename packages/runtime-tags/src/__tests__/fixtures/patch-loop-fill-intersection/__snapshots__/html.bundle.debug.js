@@ -12,7 +12,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_for_of(items, (item) => {
 		const $scope1_id = _scope_id();
 		_html(`<li>${_text_mark($scope1_id, "#text/0", input.note + item + count)}</li>`);
-		_patch_render($scope1_id, "__tests__/template.marko_1_input_note#0:5_count#0:7_item#2/setup", $fg__input_note && ">input_note");
+		_patch_render($scope1_id, "__tests__/template.marko_1_input_note#0:5_count#0:7_item#2/setup", _filled_guard($scope0_reason, 0) && ">input_note");
 		_scope($scope1_id, { item }, "__tests__/template.marko", "5:6", { item: "5:10" });
 	}, 0, $scope0_id, "#ul/0", 1, 1, 1, "</ul>", 1);
 	_html(`<button class=add>+</button>${_el_mark($scope0_id, "#button/1")}<button class=inc>c</button>${_el_mark($scope0_id, "#button/2")}</main>`);

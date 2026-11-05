@@ -7,7 +7,7 @@ _shells({
 	b: "b;b%;<!><!><!>"
 });
 var show_await_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_promise = _filled_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_await($scope0_id, "a", input.promise, (x) => {
 		const $scope1_id = _scope_id();
@@ -24,9 +24,9 @@ var show_await_default = _template("b", (input) => {
 		const $cChange = _resume(function(v) {
 			s = v;
 		}, "b1", $scope1_id) || void 0;
-		$fg__input_promise && _patch_fill($scope1_id, "vb4", m, 1);
+		_filled_guard($scope0_reason, 0) && _patch_fill($scope1_id, "vb4", m, 1);
 		_patch_let_change($scope1_id, "vb5", n, "wh", $nChange, $scope0_reason, 0);
-		$fg__input_promise && _patch_fill($scope1_id, "vb6", s, 1);
+		_filled_guard($scope0_reason, 0) && _patch_fill($scope1_id, "vb6", s, 1);
 		_patch_fill($scope1_id, "vb7", c, 1, _client_guard($scope0_reason, 0) << 1, 0);
 		_patch_bind($scope1_id, "wk", $cChange);
 		_scope($scope1_id, {

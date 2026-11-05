@@ -28,7 +28,7 @@ var template_default = _template("a", (input) => {
 		($cg__input_suffix || $cg__value) && _var($scope1_id, "b", $childScope, "a0");
 		_patch_child_end();
 		_html(`<p>${_text_mark($scope1_id, "c", label, 1, (1 | _updates_from($scope0_reason, 0)) << 1, 0)}</p>`);
-		_patch_render($scope1_id, "a2", [$fg__input_suffix && ">e", $fg__value && "f"], (1 | _updates_from($scope0_reason, 0)) << 1, 0);
+		_patch_render($scope1_id, "a2", [_filled_guard($scope0_reason, 0) && ">e", $fg__value && "f"], (1 | _updates_from($scope0_reason, 0)) << 1, 0);
 		_subscribe(_unfilled_if((1 | _updates_from($scope0_reason, 0)) << 1, 0) && $wi__input_suffix && $input_suffix__closures, _scope($scope1_id, {
 			f: _unfilled_if($scope0_reason, 0) && value,
 			_: ($wi__input_suffix || _write_if($scope1_reason, 0)) && _scope_with_id($scope0_id),

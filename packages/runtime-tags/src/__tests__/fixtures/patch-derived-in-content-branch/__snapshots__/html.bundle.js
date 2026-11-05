@@ -17,7 +17,7 @@ _shells({ a: `a${_shell_marker($setup)};${((_w0) => `/${_w0}& b`)("D%l")};${((_w
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
 	_write_guard($scope0_reason, 0);
-	const $fg__input_label = _filled_guard($scope0_reason, 0), $cg__input_label = _client_guard($scope0_reason, 0), $sg__input_label = _server_guard($scope0_reason, 0), $wi__input_label = _write_if($scope0_reason, 0);
+	const $cg__input_label = _client_guard($scope0_reason, 0), $sg__input_label = _server_guard($scope0_reason, 0), $wi__input_label = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	const $count__closures = /* @__PURE__ */ new Set();
@@ -28,10 +28,10 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		const label = input.label;
-		$fg__input_label && _patch_write($scope1_id, "xb", label, !$sg__input_label);
+		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "xb", label, !$sg__input_label);
 		_if(() => {}, $scope1_id, "a", 1, 1, 0, 0, 1);
-		$fg__input_label && _patch_render($scope1_id, "a0", "b");
-		_patch_render($scope1_id, "a1", $fg__input_label && "b");
+		_filled_guard($scope0_reason, 0) && _patch_render($scope1_id, "a0", "b");
+		_patch_render($scope1_id, "a1", _filled_guard($scope0_reason, 0) && "b");
 		_subscribe($count__closures, _subscribe($wi__input_label && $input_label__closures, _scope($scope1_id, {
 			b: label,
 			_: _scope_with_id($scope0_id)

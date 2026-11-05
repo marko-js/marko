@@ -21,7 +21,7 @@ const $walks = /*@__PURE__*/ ((_w0, _w1) => `b/${_w0}&/${_w1}&`)($D_content__wal
 const $setup = _shell_setup([[], []], ["#childScope/1>", $setup$1]);
 _shells({ "__tests__/template.marko": `__tests__/template.marko${_shell_marker($setup)};${((_w0, _w1) => `b/${_w0}&/${_w1}&`)($D_content__walks, $walks$1)};${((_w0, _w1) => `<!>${_w0}${_w1}`)($D_content__template, $template$1)}` });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_a = _filled_guard($scope0_reason, 0), $wi__input_a = _write_if($scope0_reason, 0), $sg__input_a = _server_guard($scope0_reason, 0), $cg__input_x = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wi__input_a = _write_if($scope0_reason, 0), $sg__input_a = _server_guard($scope0_reason, 0), $cg__input_x = _client_guard($scope0_reason, 1), $fg__input_a = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $f2__closures = new Set();
 	$fg__input_a && $cg__input_x && _patch_write($scope0_id, "PatchMarkedWrite:input_a", input.a, !$sg__input_a);
@@ -33,8 +33,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_reason = _scope_reason(), $fg__on = _filled_guard($scope1_reason, 0);
 		_html(`<span>${_text_mark($scope1_id, "#text/0", on && f(), 1, (_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 0)) << 1, 0)}</span>`);
 		_patch_render($scope1_id, "__tests__/template.marko_1_f#0:6_on#3/setup", [
-			$fg__input_a && ">f",
-			$fg__input_a && ">input_a",
+			_filled_guard($scope0_reason, 0) && ">f",
+			_filled_guard($scope0_reason, 0) && ">input_a",
 			$fg__on && "on"
 		], (_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 0)) << 1, 0);
 		_subscribe(_unfilled_if((_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 0)) << 1, 0) && $wi__input_a && $f2__closures, _scope($scope1_id, {

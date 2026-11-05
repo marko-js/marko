@@ -18,7 +18,7 @@ const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}& b`)("D%l");
 const $setup = _shell_setup([[], ["__tests__/template.marko_0"]], ["#childScope/0>", $setup$1]);
 _shells({ "__tests__/template.marko": `__tests__/template.marko${_shell_marker($setup)};${((_w0) => `/${_w0}& b`)("D%l")};${((_w0) => `${_w0}<button>+</button>`)($template$1)}` });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_label = _server_guard($scope0_reason, 0), $wg__input_label = _write_guard($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 0), $cg__input_label = _client_guard($scope0_reason, 0), $wi__input_label = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $sg__input_label = _server_guard($scope0_reason, 0), $wg__input_label = _write_guard($scope0_reason, 0), $cg__input_label = _client_guard($scope0_reason, 0), $wi__input_label = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = new Set();
 	const $count__closures = new Set();
@@ -30,7 +30,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		const label = input.label;
 		const shout = label + "!";
-		$fg__input_label && _patch_write($scope1_id, "PatchMarkedWrite:shout", shout, !$sg__input_label);
+		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "PatchMarkedWrite:shout", shout, !$sg__input_label);
 		_if(() => {
 			if (count > 0 && shout) {
 				const $scope2_id = _scope_id();
@@ -40,8 +40,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				return 0;
 			}
 		}, $scope1_id, "#text/0", 1, 1, 0, 0, 1);
-		$fg__input_label && _patch_render($scope1_id, "__tests__/template.marko_2_shout#1:2/setup", "shout");
-		_patch_render($scope1_id, "__tests__/template.marko_1_count#0:5_shout#2/setup", $fg__input_label && "shout");
+		_filled_guard($scope0_reason, 0) && _patch_render($scope1_id, "__tests__/template.marko_2_shout#1:2/setup", "shout");
+		_patch_render($scope1_id, "__tests__/template.marko_1_count#0:5_shout#2/setup", _filled_guard($scope0_reason, 0) && "shout");
 		_subscribe($count__closures, _subscribe($wi__input_label && $input_label__closures, _scope($scope1_id, {
 			shout,
 			_: _scope_with_id($scope0_id)

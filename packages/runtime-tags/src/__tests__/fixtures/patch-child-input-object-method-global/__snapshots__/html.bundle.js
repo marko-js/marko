@@ -7,7 +7,7 @@ _shells({
 	b4: "b4;D ;<span> </span>"
 });
 var code_block_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $fg__input_text = _filled_guard($scope0_reason, 2), $fg__input_cursor = _filled_guard($scope0_reason, 1), $wi__input_cursor__OR__input_text = _write_if($scope0_reason, 0), $wg__input_text_length = _write_guard($scope0_reason, 3), $cg__input_cursor = _client_guard($scope0_reason, 1), $cg__input_text_length = _client_guard($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wi__input_cursor__OR__input_text = _write_if($scope0_reason, 0), $wg__input_text_length = _write_guard($scope0_reason, 3), $cg__input_cursor = _client_guard($scope0_reason, 1), $fg__input_text = _filled_guard($scope0_reason, 2), $cg__input_text_length = _client_guard($scope0_reason, 3), $fg__input_cursor = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
 	$fg__input_cursor && _client_guard($scope0_reason, 0) && _patch_write($scope0_id, "xd", input.cursor, !_server_guard($scope0_reason, 1));
@@ -19,9 +19,9 @@ var code_block_default = _template("b", (input) => {
 			const $scope1_id = _scope_id();
 			_html(`<div>${_html_mark($scope1_id, "a", highlight(input.text), 1, (2 | _updates_from($scope0_reason, 0)) << 1, 0)}</div>`);
 			_patch_render($scope1_id, "b1", [
-				$fg__input_text && ">e",
+				_filled_guard($scope0_reason, 2) && ">e",
 				_filled_guard((2 | _updates_from($scope0_reason, 1)) << 1, 0) && ">g",
-				$fg__input_cursor && ">d"
+				_filled_guard($scope0_reason, 1) && ">d"
 			], (2 | _updates_from($scope0_reason, 0)) << 1, 0);
 			_scope($scope1_id, { _: ($scope0_page || $wi__input_cursor__OR__input_text) && _scope_with_id($scope0_id) });
 			return 0;
@@ -29,9 +29,9 @@ var code_block_default = _template("b", (input) => {
 			const $scope2_id = _scope_id();
 			_html(`<span>${_html_mark($scope2_id, "a", highlight(input.text), 1, (2 | _updates_from($scope0_reason, 0)) << 1, 0)}</span>`);
 			_patch_render($scope2_id, "b2", [
-				$fg__input_text && ">e",
+				_filled_guard($scope0_reason, 2) && ">e",
 				_filled_guard((2 | _updates_from($scope0_reason, 1)) << 1, 0) && ">g",
-				$fg__input_cursor && ">d"
+				_filled_guard($scope0_reason, 1) && ">d"
 			], (2 | _updates_from($scope0_reason, 0)) << 1, 0);
 			_scope($scope2_id, { _: ($scope0_page || $wi__input_cursor__OR__input_text) && _scope_with_id($scope0_id) });
 			return 1;

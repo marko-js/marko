@@ -7,7 +7,7 @@ _shells({
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell __tests__/template.marko_1_count#0:6/setup;D ;<p> </p>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_title = _filled_guard($scope0_reason, 1), $sg__input_title = _server_guard($scope0_reason, 1), $cg__input_show = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $sg__input_title = _server_guard($scope0_reason, 1), $fg__input_title = _filled_guard($scope0_reason, 1), $cg__input_show = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_html("<main>");
@@ -15,10 +15,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			const label = "[" + input.title + "]";
-			$fg__input_title && _patch_write($scope1_id, "PatchMarkedWrite:label", label, !$sg__input_title);
+			_filled_guard($scope0_reason, 1) && _patch_write($scope1_id, "PatchMarkedWrite:label", label, !$sg__input_title);
 			_html(`<p>${_text_mark($scope1_id, "#text/0", label + " #" + count)}</p>`);
 			_client_guard($scope0_reason, 1) && _patch_render($scope1_id, "__tests__/template.marko_1_input_title#0:5/setup");
-			_patch_render($scope1_id, "__tests__/template.marko_1_count#0:6_label#1/setup", $fg__input_title && "label");
+			_patch_render($scope1_id, "__tests__/template.marko_1_count#0:6_label#1/setup", _filled_guard($scope0_reason, 1) && "label");
 			_scope($scope1_id, {
 				label,
 				_: _scope_with_id($scope0_id)

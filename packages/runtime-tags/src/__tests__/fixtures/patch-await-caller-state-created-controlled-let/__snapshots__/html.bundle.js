@@ -7,7 +7,7 @@ _shells({
 	b: "b;b%;<!><!><!>"
 });
 var show_await_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_label = _write_if($scope0_reason, 2), $fg__input_label = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wi__input_label = _write_if($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	_await($scope0_id, "a", input.promise, (x) => {
@@ -17,7 +17,7 @@ var show_await_default = _template("b", (input) => {
 		_html(`<p>${_text_mark($scope1_id, "a", g)}</p><button class=g>g</button>${_el_mark($scope1_id, "b")}`);
 		_script($scope1_id, "b1");
 		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "b2");
-		_patch_render($scope1_id, "b3", $fg__input_label && ">e");
+		_patch_render($scope1_id, "b3", _filled_guard($scope0_reason, 2) && ">e");
 		const $gChange = _resume(function(v) {
 			a = v;
 		}, "b0", $scope1_id) || void 0;
@@ -32,7 +32,7 @@ var show_await_default = _template("b", (input) => {
 	_scope($scope0_id, {
 		e: input.label,
 		f: $wi__input_label && $input_label__closures
-	}) || $fg__input_label && _patch_write($scope0_id, "xe", input.label, !_server_guard($scope0_reason, 2));
+	}) || _filled_guard($scope0_reason, 2) && _patch_write($scope0_id, "xe", input.label, !_server_guard($scope0_reason, 2));
 });
 
 // template.marko

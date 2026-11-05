@@ -4,15 +4,15 @@ _shells({
 	a1: "a1 a4;D ;<p> </p>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_items = _filled_guard($scope0_reason, 0), $sg__input_items = _server_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $sg__input_items = _server_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_html("<main>");
 	_for_of(input.items, ({ id, ...rest }) => {
 		const $scope1_id = _scope_id();
-		$fg__input_items && _patch_write($scope1_id, "xe", rest, !$sg__input_items);
+		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "xe", rest, !$sg__input_items);
 		_html(`<p>${_text_mark($scope1_id, "a", id + ":" + Object.keys(rest).join("+") + "#0")}</p>`);
-		_patch_render($scope1_id, "a0", $fg__input_items && "e");
+		_patch_render($scope1_id, "a0", _filled_guard($scope0_reason, 0) && "e");
 		_scope($scope1_id, {
 			M: id,
 			e: rest,

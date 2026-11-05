@@ -29,7 +29,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_reason = _scope_reason();
 		const $scope1_id = _scope_id();
 		_html(`<em>loading ${_text_mark($scope1_id, "#text/0", input.title, $wg__input_title * 2)}</em>`);
-		_script($scope1_id, "__tests__/template.marko_1_input_title#0:4", $wg__input_title, $fg__input_title, ">input_title");
+		_script($scope1_id, "__tests__/template.marko_1_input_title#0:4", $wg__input_title, _filled_guard($scope0_reason, 0), ">input_title");
 		$cg__input_title && _patch_render($scope1_id, "__tests__/template.marko_1_input_title#0:4/subscribe");
 		_subscribe($wi__input_title && $input_title__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "7:6"), $cg__input_title && "__tests__/template.marko_1_input_title#0:4/subscribe", $wg__input_title);
 		$wg__input_title || _resume_branch($scope1_id);

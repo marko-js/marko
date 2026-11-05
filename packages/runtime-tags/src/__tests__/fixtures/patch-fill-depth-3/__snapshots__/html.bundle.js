@@ -6,7 +6,7 @@ _shells({
 	a3: "a3 a2;D ;<p> </p>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_items = _client_guard($scope0_reason, 3), $wg__input_inner = _write_guard($scope0_reason, 2), $fg__input_suffix = _filled_guard($scope0_reason, 4), $fg__input_inner = _filled_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 1), $fg__input_items = _filled_guard($scope0_reason, 3), $cg__input_inner = _client_guard($scope0_reason, 2), $wi__input_suffix = _write_if($scope0_reason, 4), $wi__input_items = _write_if($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $cg__input_items = _client_guard($scope0_reason, 3), $wg__input_inner = _write_guard($scope0_reason, 2), $fg__input_inner = _filled_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 1), $fg__input_items = _filled_guard($scope0_reason, 3), $cg__input_inner = _client_guard($scope0_reason, 2), $fg__input_suffix = _filled_guard($scope0_reason, 4), $wi__input_suffix = _write_if($scope0_reason, 4), $wi__input_items = _write_if($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	const $input_suffix__closures = /* @__PURE__ */ new Set();
 	const $count__closures = /* @__PURE__ */ new Set();
@@ -23,7 +23,7 @@ var template_default = _template("a", (input) => {
 						const $scope3_id = _scope_id();
 						_html(`<p>${_text_mark($scope3_id, "a", item + ":" + input.suffix + "@0")}</p>`);
 						_unfilled_if($scope0_reason, 4) && _patch_subscribe($scope3_id, "a0");
-						_patch_render($scope3_id, "a1", $fg__input_suffix && ">>>h");
+						_patch_render($scope3_id, "a1", _filled_guard($scope0_reason, 4) && ">>>h");
 						_subscribe($count__closures, _subscribe($wi__input_suffix && $input_suffix__closures, _scope($scope3_id, {
 							M: item,
 							_: _scope_with_id($scope2_id)

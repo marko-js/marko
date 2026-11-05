@@ -18,7 +18,7 @@ _shells({
 	a3: "a3 a2;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_label = _write_guard($scope0_reason, 0), $cg__input_label = _client_guard($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 0), $wi__input_label = _write_if($scope0_reason, 0), $sg__input_label = _server_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_label = _write_guard($scope0_reason, 0), $cg__input_label = _client_guard($scope0_reason, 0), $wi__input_label = _write_if($scope0_reason, 0), $sg__input_label = _server_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $count__closures = /* @__PURE__ */ new Set();
 	const $input_label__closures = /* @__PURE__ */ new Set();
@@ -30,18 +30,18 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		const $wrapper_content__label__closures = /* @__PURE__ */ new Set();
 		const label = input.label;
-		$fg__input_label && _patch_write($scope1_id, "xb", label, !$sg__input_label);
+		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "xb", label, !$sg__input_label);
 		_if(() => {
 			if (input.label) {
 				const $scope2_id = _scope_id();
 				_if(() => {}, $scope2_id, "a", 1, 1, 0, 0, 1);
-				_patch_render($scope2_id, "a1", $fg__input_label && ">b");
+				_patch_render($scope2_id, "a1", _filled_guard($scope0_reason, 0) && ">b");
 				_subscribe($count__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "a2");
 				return 0;
 			}
 		}, $scope1_id, "a", 1, $wg__input_label, 1, 0, 0, ["a3"], $scope0_reason, 0);
-		$fg__input_label && _patch_subscribers($scope1_id, "a4", "b");
-		$fg__input_label && $cg__input_label && _patch_render($scope1_id, "a5", "b");
+		_filled_guard($scope0_reason, 0) && _patch_subscribers($scope1_id, "a4", "b");
+		_filled_guard($scope0_reason, 0) && $cg__input_label && _patch_render($scope1_id, "a5", "b");
 		_subscribe($wi__input_label && $input_label__closures, _scope($scope1_id, {
 			b: label,
 			_: _scope_with_id($scope0_id),

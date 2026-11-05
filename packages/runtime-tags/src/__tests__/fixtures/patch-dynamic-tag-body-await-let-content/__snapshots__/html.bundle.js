@@ -30,16 +30,16 @@ _shells({
 	b: "b;b%;<!><!><!>"
 });
 var card_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_p = _filled_guard($scope0_reason, 0), $cg__input_content = _client_guard($scope0_reason, 1), $sg__input_p = _server_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_content = _client_guard($scope0_reason, 1), $sg__input_p = _server_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_content__closures = /* @__PURE__ */ new Set();
 	_await($scope0_id, "a", input.p, (x) => {
 		const $scope1_id = _scope_id();
-		$fg__input_p && _patch_write($scope1_id, "xc", x, !$sg__input_p);
+		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "xc", x, !$sg__input_p);
 		let c = input.content;
 		_dynamic_tag($scope1_id, "a", x ? keeper_default : "div", { content: c });
 		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "b0", $cg__input_content);
-		_patch_render($scope1_id, "b1", $fg__input_p && "c");
+		_patch_render($scope1_id, "b1", _filled_guard($scope0_reason, 0) && "c");
 		_filled_guard($scope0_reason, 1) && _patch_fill($scope1_id, "vb2", c, 1);
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_content__closures, _scope($scope1_id, {
 			c: x,

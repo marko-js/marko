@@ -56,6 +56,19 @@ export function isSharedGroupCheck(check: string): check is GroupCheck {
   return check in groupCheckPrefixes;
 }
 
+// Whether a check in `section` shares its group section's guard: `_filled_guard`
+// also reads whether the render may create the scope, fixed only for that body.
+export function sharesGroupCheck(
+  check: string,
+  groupSection: Section,
+  section: Section,
+): check is GroupCheck {
+  return (
+    isSharedGroupCheck(check) &&
+    (check !== "_filled_guard" || groupSection === section)
+  );
+}
+
 interface SectionGuards {
   shares: Map<GroupCheck, GuardShares>;
   declarators: t.VariableDeclarator[];

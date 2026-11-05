@@ -170,7 +170,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $childScope3 = _peek_scope_id($scope1_id, "#childScope/2", 2);
 		toggle_default({ on: n });
 		_patch_child_end();
-		_patch_render($scope1_id, "__tests__/template.marko_1_input_label#0:6_n#0:11/setup", $fg__input_label && ">input_label");
+		_patch_render($scope1_id, "__tests__/template.marko_1_input_label#0:6_n#0:11/setup", _filled_guard($scope0_reason, 0) && ">input_label");
 		_subscribe($n__closures, _subscribe($wi__input_label && $input_label__closures, _scope($scope1_id, {
 			_: _scope_with_id($scope0_id),
 			"#childScope/0": $scope1_page && _existing_scope($childScope),

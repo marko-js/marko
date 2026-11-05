@@ -26,7 +26,7 @@ _shells({
 	a: "a !a7; D l%;<button> </button><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_msg = _client_guard($scope0_reason, 1), $fg__input_msg = _filled_guard($scope0_reason, 1), $fg__input_fail = _filled_guard($scope0_reason, 2), $wi__input_msg = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_msg = _client_guard($scope0_reason, 1), $fg__input_msg = _filled_guard($scope0_reason, 1), $wi__input_msg = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_msg__closures = /* @__PURE__ */ new Set();
 	const $count__closures = /* @__PURE__ */ new Set();
@@ -39,7 +39,7 @@ var template_default = _template("a", (input) => {
 		_html(`<p>${_text_mark($scope2_id, "a", input.fail ? boom(input.msg) : input.msg, 1, $scope0_reason, 0)}</p>`);
 		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope2_id, "a2");
 		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope2_id, "a3");
-		_patch_render($scope2_id, "a4", [$fg__input_msg && ">f", $fg__input_fail && ">g"], $scope0_reason, 0);
+		_patch_render($scope2_id, "a4", [_filled_guard($scope0_reason, 1) && ">f", _filled_guard($scope0_reason, 2) && ">g"], $scope0_reason, 0);
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_fail__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_msg__closures, _scope($scope2_id, {
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id),
 			Ci: $wi__input_msg && 1
@@ -70,5 +70,5 @@ var template_default = _template("a", (input) => {
 		i: $wi__input_msg && $input_msg__closures,
 		k: $count__closures,
 		j: _write_if($scope0_reason, 2) && (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && $input_fail__closures
-	}) || ($fg__input_msg && _patch_write($scope0_id, "xf", input.msg, !_server_guard($scope0_reason, 1)), $fg__input_fail && $cg__input_msg && _patch_write($scope0_id, "xg", input.fail, !_server_guard($scope0_reason, 2)));
+	}) || ($fg__input_msg && _patch_write($scope0_id, "xf", input.msg, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && $cg__input_msg && _patch_write($scope0_id, "xg", input.fail, !_server_guard($scope0_reason, 2)));
 }, 1);

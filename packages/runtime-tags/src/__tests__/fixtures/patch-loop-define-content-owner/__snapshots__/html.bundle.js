@@ -12,7 +12,7 @@ _shells({
 	a0: "a0;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $cg__input_rows = _client_guard($scope0_reason, 0), $wi__input_rows = _write_if($scope0_reason, 0), $wg__input_rows = _write_guard($scope0_reason, 0), $fg__input_rows = _filled_guard($scope0_reason, 0), $sg__input_rows = _server_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $cg__input_rows = _client_guard($scope0_reason, 0), $wi__input_rows = _write_if($scope0_reason, 0), $wg__input_rows = _write_guard($scope0_reason, 0), $sg__input_rows = _server_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const Card = { content: _content_resume("a4", ({ label, content }) => {
 		const $scope1_id = _scope_id();
@@ -83,7 +83,7 @@ var template_default = _template("a", (input) => {
 		_html("</section>");
 		_script($scope2_id, "a11");
 		$cg__input_rows && _patch_write($scope2_id, "wm", Label, 1);
-		$fg__input_rows && _patch_subscribers($scope2_id, "a12", "h");
+		_filled_guard($scope0_reason, 0) && _patch_subscribers($scope2_id, "a12", "h");
 		$cg__input_rows && _patch_render($scope2_id, "a13");
 		_patch_fill($scope2_id, "va14", n, 1);
 		_scope($scope2_id, {
@@ -94,7 +94,7 @@ var template_default = _template("a", (input) => {
 			p: $for_content__n__closures,
 			c: _existing_scope($childScope)
 		});
-		$fg__input_rows && (_client_branch_if("a3", $scope2_id) || $cg__input_rows || _client_branch_if("a1", $scope2_id)) && _patch_write($scope2_id, "xh", row?.label, !$sg__input_rows);
+		_filled_guard($scope0_reason, 0) && (_client_branch_if("a3", $scope2_id) || $cg__input_rows || _client_branch_if("a1", $scope2_id)) && _patch_write($scope2_id, "xh", row?.label, !$sg__input_rows);
 	}, "id", $scope0_id, "a", 1, 1, 1, 0, 0, "a5", $scope0_reason, 0);
 	_scope($scope0_id, { e: _unfilled_if($scope0_reason, 0) && Card });
 }, 1);

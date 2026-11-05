@@ -6,13 +6,13 @@ _shells({
 	b1: "b1;D ;<p> </p>"
 });
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_b = _write_guard($scope0_reason, 1), $fg__input_b = _filled_guard($scope0_reason, 1), $fg__input_a = _filled_guard($scope0_reason, 2), $cg__input_b = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_b = _write_guard($scope0_reason, 1), $fg__input_b = _filled_guard($scope0_reason, 1), $cg__input_b = _client_guard($scope0_reason, 1), $fg__input_a = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.b) {
 			const $scope1_id = _scope_id();
 			_html(`<p>${_text_mark($scope1_id, "a", input.a + input.b, 1, $scope0_reason, 0)}</p>`);
-			_patch_render($scope1_id, "b0", [$fg__input_b && ">d", $fg__input_a && ">e"], $scope0_reason, 0);
+			_patch_render($scope1_id, "b0", [_filled_guard($scope0_reason, 1) && ">d", _filled_guard($scope0_reason, 2) && ">e"], $scope0_reason, 0);
 			_scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) });
 			return 0;
 		}

@@ -17,7 +17,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			let y = f(x);
 			_html(`<p>${_text_mark($scope1_id, "#text/0", y + input.w)}</p>`);
 			_patch_write($scope1_id, "PatchWrite:f", f, 1);
-			_patch_render($scope1_id, "__tests__/template.marko_1_input_w#0:4_y#4/setup", $fg__input_w && ">input_w");
+			_patch_render($scope1_id, "__tests__/template.marko_1_input_w#0:4_y#4/setup", _filled_guard($scope0_reason, 1) && ">input_w");
 			_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill0", y, 1);
 			_scope($scope1_id, {
 				f,

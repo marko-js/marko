@@ -7,7 +7,7 @@ _shells({
 	"__tests__/tags/level-watch.marko_1*shell": "__tests__/tags/level-watch.marko_1*shell __tests__/tags/level-watch.marko_1_shown#0:9/setup,"
 });
 var level_watch_default = _template("__tests__/tags/level-watch.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_projection_skill = _server_guard($scope0_reason, 1), $sg__input_baseXp = _server_guard($scope0_reason, 2), $sg__input_playerId = _server_guard($scope0_reason, 3), $fg__input_projection_skill = _filled_guard($scope0_reason, 1), $fg__input_baseXp = _filled_guard($scope0_reason, 2), $fg__input_playerId = _filled_guard($scope0_reason, 3), $cg__input_projection = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $sg__input_projection_skill = _server_guard($scope0_reason, 1), $sg__input_baseXp = _server_guard($scope0_reason, 2), $sg__input_playerId = _server_guard($scope0_reason, 3), $fg__input_projection_skill = _filled_guard($scope0_reason, 1), $fg__input_baseXp = _filled_guard($scope0_reason, 2), $cg__input_projection = _client_guard($scope0_reason, 0), $fg__input_playerId = _filled_guard($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	let shown = 0;
 	_html(`<button>${_text_mark($scope0_id, "#text/1", shown)}</button>${_el_mark($scope0_id, "#button/0")}`);
@@ -15,9 +15,9 @@ var level_watch_default = _template("__tests__/tags/level-watch.marko", (input) 
 		if (input.projection) {
 			const $scope1_id = _scope_id();
 			_patch_render($scope1_id, "__tests__/tags/level-watch.marko_1_input_projection_skill#0:6_input_baseXp#0:7_input_playerId#0:8_shown#0:9/setup", [
-				$fg__input_projection_skill && ">input_projection_skill",
-				$fg__input_baseXp && ">input_baseXp",
-				$fg__input_playerId && ">input_playerId"
+				_filled_guard($scope0_reason, 1) && ">input_projection_skill",
+				_filled_guard($scope0_reason, 2) && ">input_baseXp",
+				_filled_guard($scope0_reason, 3) && ">input_playerId"
 			]) || _script($scope1_id, "__tests__/tags/level-watch.marko_1_input_projection_skill#0:6_input_baseXp#0:7_input_playerId#0:8_shown#0:9", 0, ($sg__input_projection_skill || $sg__input_baseXp || $sg__input_playerId) && 2, [
 				$sg__input_projection_skill && ">input_projection_skill",
 				$sg__input_baseXp && ">input_baseXp",

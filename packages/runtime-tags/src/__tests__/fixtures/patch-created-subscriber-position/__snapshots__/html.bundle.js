@@ -37,7 +37,7 @@ var template_default = _template("a", (input) => {
 				const $scope2_id = _scope_id();
 				_html(`<p class=a>${_text_mark($scope2_id, "a", input.label + ":0")}</p>`);
 				_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope2_id, "a0");
-				_patch_render($scope2_id, "a1", $fg__input_label && ">>g");
+				_patch_render($scope2_id, "a1", _filled_guard($scope0_reason, 1) && ">>g");
 				_subscribe($a__closures, _subscribe($wi__input_label && $input_label__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) })));
 			}, $scope1_id, 0) });
 			_patch_child_end();
@@ -48,7 +48,7 @@ var template_default = _template("a", (input) => {
 				const $scope3_id = _scope_id();
 				_html(`<p class=b>${_text_mark($scope3_id, "a", b)} ${_text_mark($scope3_id, "b", input.label + ":0", 2)}</p>`);
 				_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope3_id, "a3");
-				_patch_render($scope3_id, "a4", $fg__input_label && ">>g");
+				_patch_render($scope3_id, "a4", _filled_guard($scope0_reason, 1) && ">>g");
 				_subscribe($b__closures, _subscribe($wi__input_label && $input_label__closures, _scope($scope3_id, {
 					_: _scope_with_id($scope1_id),
 					Cj: $wi__input_label && 1

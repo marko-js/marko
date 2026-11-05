@@ -26,7 +26,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_html(`<p>${_text_mark($scope1_id, "#text/0", input.a + input.b, 1, $scope0_reason, 2)}</p>`);
-			_patch_render($scope1_id, "__tests__/tags/child.marko_1_input_a#0:4_input_b#0:8/setup", [$fg__input_a && ">input_a", $fg__input_b && ">input_b"], $scope0_reason, 2);
+			_patch_render($scope1_id, "__tests__/tags/child.marko_1_input_a#0:4_input_b#0:8/setup", [_filled_guard($scope0_reason, 4) && ">input_a", _filled_guard($scope0_reason, 7) && ">input_b"], $scope0_reason, 2);
 			_scope($scope1_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id) }, "__tests__/tags/child.marko", "2:2");
 			return 0;
 		}

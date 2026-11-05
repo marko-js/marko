@@ -15,7 +15,7 @@ var template_default = _template("a", (input) => {
 			_script($scope1_id, "a0");
 			_script($scope1_id, "a1");
 			_client_guard($scope0_reason, 1) && _patch_render($scope1_id, "a2");
-			_patch_render($scope1_id, "a3", $fg__input_a && ">e");
+			_patch_render($scope1_id, "a3", _filled_guard($scope0_reason, 1) && ">e");
 			_patch_fill($scope1_id, "va4", x, 1);
 			_scope($scope1_id, {
 				e: x,

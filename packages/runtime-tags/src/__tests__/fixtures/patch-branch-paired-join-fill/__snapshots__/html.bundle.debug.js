@@ -7,22 +7,22 @@ _shells({
 	"__tests__/tags/panel.marko_1*shell": "__tests__/tags/panel.marko_1*shell __tests__/tags/panel.marko_1_count#0:7/setup;D lD lD ;<p> </p><p> </p><em> </em>"
 });
 var panel_default = _template("__tests__/tags/panel.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_x = _filled_guard($scope0_reason, 2), $fg__input_y = _filled_guard($scope0_reason, 3), $wi__input_show = _write_if($scope0_reason, 1), $sg__input_x = _server_guard($scope0_reason, 2), $sg__input_y = _server_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wi__input_show = _write_if($scope0_reason, 1), $sg__input_x = _server_guard($scope0_reason, 2), $sg__input_y = _server_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 1), $fg__input_x = _filled_guard($scope0_reason, 2), $fg__input_y = _filled_guard($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			const a = input.x + "a";
-			$fg__input_x && _patch_write($scope1_id, "PatchMarkedWrite:a", a, !$sg__input_x);
+			_filled_guard($scope0_reason, 2) && _patch_write($scope1_id, "PatchMarkedWrite:a", a, !$sg__input_x);
 			const b = input.y + "b";
-			$fg__input_y && _patch_write($scope1_id, "PatchMarkedWrite:b", b, !$sg__input_y);
+			_filled_guard($scope0_reason, 3) && _patch_write($scope1_id, "PatchMarkedWrite:b", b, !$sg__input_y);
 			_html(`<p>${_text_mark($scope1_id, "#text/0", a + count)}</p><p>${_text_mark($scope1_id, "#text/1", b + count)}</p><em>${_text_mark($scope1_id, "#text/2", a + b, 1, $scope0_reason, 0)}</em>`);
 			_client_guard($scope0_reason, 2) && _patch_render($scope1_id, "__tests__/tags/panel.marko_1_input_x#0:5/setup");
 			_client_guard($scope0_reason, 3) && _patch_render($scope1_id, "__tests__/tags/panel.marko_1_input_y#0:6/setup");
-			_patch_render($scope1_id, "__tests__/tags/panel.marko_1_count#0:7_a#3/setup", $fg__input_x && "a");
-			_patch_render($scope1_id, "__tests__/tags/panel.marko_1_count#0:7_b#5/setup", $fg__input_y && "b");
-			_patch_render($scope1_id, "__tests__/tags/panel.marko_1_a#3_b#5/setup", [$fg__input_x && "a", $fg__input_y && "b"], $scope0_reason, 0);
+			_patch_render($scope1_id, "__tests__/tags/panel.marko_1_count#0:7_a#3/setup", _filled_guard($scope0_reason, 2) && "a");
+			_patch_render($scope1_id, "__tests__/tags/panel.marko_1_count#0:7_b#5/setup", _filled_guard($scope0_reason, 3) && "b");
+			_patch_render($scope1_id, "__tests__/tags/panel.marko_1_a#3_b#5/setup", [_filled_guard($scope0_reason, 2) && "a", _filled_guard($scope0_reason, 3) && "b"], $scope0_reason, 0);
 			_scope($scope1_id, {
 				a,
 				b,

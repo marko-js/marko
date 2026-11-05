@@ -35,7 +35,7 @@ var template_default = _template("a", (input) => {
 			_html(`<button>x</button>${_el_mark($scope1_id, "b")}`);
 			_script($scope1_id, "a2");
 			_client_guard($scope0_reason, 2) && _patch_render($scope1_id, "a3");
-			$fg__input_n && _patch_fill($scope1_id, "va4", k, 1);
+			_filled_guard($scope0_reason, 2) && _patch_fill($scope1_id, "va4", k, 1);
 			_scope($scope1_id, {
 				_: _scope_with_id($scope0_id),
 				a: _existing_scope($childScope)

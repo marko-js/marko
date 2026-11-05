@@ -31,7 +31,7 @@ var template_default = _template("a", (input) => {
 				_scope_reason();
 				const $scope2_id = _scope_id();
 				const label = input.label;
-				$fg__input_label && _patch_write($scope2_id, "xb", label, !$sg__input_label);
+				_filled_guard($scope0_reason, 1) && _patch_write($scope2_id, "xb", label, !$sg__input_label);
 				_html(`<button>show</button>${_el_mark($scope2_id, "a")}`);
 				_script($scope2_id, "a0");
 				_client_guard($scope0_reason, 1) && _patch_render($scope2_id, "a1");

@@ -31,7 +31,7 @@ _shells({
 	a: "a;D%;<main><!></main>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_on = _write_guard($scope0_reason, 3), $cg__input_on = _client_guard($scope0_reason, 3), $wi__input_v__OR__input_on__OR__input_note = _write_if($scope0_reason, 1), $fg__input_v = _filled_guard($scope0_reason, 2), $sg__input_v = _server_guard($scope0_reason, 2), $fg__input_note = _filled_guard($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_on = _write_guard($scope0_reason, 3), $cg__input_on = _client_guard($scope0_reason, 3), $wi__input_v__OR__input_on__OR__input_note = _write_if($scope0_reason, 1), $sg__input_v = _server_guard($scope0_reason, 2), $fg__input_note = _filled_guard($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = /* @__PURE__ */ new Set();
 	const $input_on__closures = /* @__PURE__ */ new Set();
@@ -50,13 +50,13 @@ var template_default = _template("a", (input) => {
 			c: v,
 			_: $scope($scope0_id)
 		}] : []), 0, $wg__input_on, $scope0_reason, 3, 0, void 0, 0, 0, "a0");
-		$fg__input_v && _patch_subscribers($scope1_id, "a3", "c");
+		_filled_guard($scope0_reason, 2) && _patch_subscribers($scope1_id, "a3", "c");
 		_unfilled_if($scope0_reason, 3) && _patch_subscribe($scope1_id, "a4", $cg__input_on);
 		$wi__input_v__OR__input_on__OR__input_note && _subscribe(_unfilled_if($scope0_reason, 3) && $input_on__closures, _scope($scope1_id, {
 			c: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 2)) && v,
 			i: _write_if($scope0_reason, 2) && $await_content__v__closures
 		}), $cg__input_on && "a4", $wg__input_on);
-		$fg__input_v && (_client_branch_if("a0", $scope1_id) || $cg__input_on) && _patch_write($scope1_id, "xc", v, !$sg__input_v);
+		_filled_guard($scope0_reason, 2) && (_client_branch_if("a0", $scope1_id) || $cg__input_on) && _patch_write($scope1_id, "xc", v, !$sg__input_v);
 		$wg__input_on || $wi__input_v__OR__input_on__OR__input_note && _resume_branch($scope1_id);
 	}, 1, "a5", _unfilled_if($scope0_reason, 2), 1, 1);
 	_html("</main>");

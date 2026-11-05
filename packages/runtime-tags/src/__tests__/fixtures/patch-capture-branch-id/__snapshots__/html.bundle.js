@@ -22,7 +22,7 @@ var template_default = _template("a", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			const uid = input.v || _id("A");
-			$fg__input_v && _patch_write($scope1_id, "xb", uid, !$sg__input_v);
+			_filled_guard($scope0_reason, 1) && _patch_write($scope1_id, "xb", uid, !$sg__input_v);
 			_set_scope_reason(_updates_from($scope0_reason, 1) << 1);
 			const $childScope = _peek_scope_id($scope1_id, "a", 0);
 			label_default({ get: _bind_resume(function() {

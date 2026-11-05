@@ -7,7 +7,7 @@ _shells({
 	b2: "b2 b9,"
 });
 var level_watch_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_projection_skill = _server_guard($scope0_reason, 1), $sg__input_baseXp = _server_guard($scope0_reason, 2), $sg__input_playerId = _server_guard($scope0_reason, 3), $fg__input_projection_skill = _filled_guard($scope0_reason, 1), $fg__input_baseXp = _filled_guard($scope0_reason, 2), $fg__input_playerId = _filled_guard($scope0_reason, 3), $cg__input_projection = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $sg__input_projection_skill = _server_guard($scope0_reason, 1), $sg__input_baseXp = _server_guard($scope0_reason, 2), $sg__input_playerId = _server_guard($scope0_reason, 3), $fg__input_projection_skill = _filled_guard($scope0_reason, 1), $fg__input_baseXp = _filled_guard($scope0_reason, 2), $cg__input_projection = _client_guard($scope0_reason, 0), $fg__input_playerId = _filled_guard($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	let shown = 0;
 	_html(`<button>${_text_mark($scope0_id, "b", shown)}</button>${_el_mark($scope0_id, "a")}`);
@@ -15,9 +15,9 @@ var level_watch_default = _template("b", (input) => {
 		if (input.projection) {
 			const $scope1_id = _scope_id();
 			_patch_render($scope1_id, "b1", [
-				$fg__input_projection_skill && ">g",
-				$fg__input_baseXp && ">h",
-				$fg__input_playerId && ">i"
+				_filled_guard($scope0_reason, 1) && ">g",
+				_filled_guard($scope0_reason, 2) && ">h",
+				_filled_guard($scope0_reason, 3) && ">i"
 			]) || _script($scope1_id, "b0", 0, ($sg__input_projection_skill || $sg__input_baseXp || $sg__input_playerId) && 2, [
 				$sg__input_projection_skill && ">g",
 				$sg__input_baseXp && ">h",

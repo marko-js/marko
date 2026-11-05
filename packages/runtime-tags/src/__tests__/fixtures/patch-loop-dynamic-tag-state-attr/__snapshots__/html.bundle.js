@@ -4,13 +4,13 @@ _shells({
 	a4: "a4 a7;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_items = _write_guard($scope0_reason, 0), $cg__input_items = _client_guard($scope0_reason, 0), $fg__input_items = _filled_guard($scope0_reason, 0), $wi__input_items = _write_if($scope0_reason, 0), $sg__input_items = _server_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_items = _write_guard($scope0_reason, 0), $cg__input_items = _client_guard($scope0_reason, 0), $wi__input_items = _write_if($scope0_reason, 0), $sg__input_items = _server_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_for_of(input.items, (i) => {
 		const $scope1_id = _scope_id();
 		const $for_content__i__closures = /* @__PURE__ */ new Set();
-		$fg__input_items && _patch_write($scope1_id, "xc", i, !$sg__input_items);
+		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "xc", i, !$sg__input_items);
 		_dynamic_tag($scope1_id, "a", i % 2 ? "p" : "div", { "data-n": count }, 0, _content("a0", () => {
 			const $scope2_id = _scope_id();
 			_scope_reason();
@@ -19,8 +19,8 @@ var template_default = _template("a", (input) => {
 			_subscribe($wi__input_items && $for_content__i__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), $cg__input_items && "a1", $wg__input_items);
 			$wg__input_items || _resume_branch($scope2_id);
 		}, $scope1_id));
-		$fg__input_items && _patch_subscribers($scope1_id, "a2", "c");
-		_patch_render($scope1_id, "a3", $fg__input_items && "c");
+		_filled_guard($scope0_reason, 0) && _patch_subscribers($scope1_id, "a2", "c");
+		_patch_render($scope1_id, "a3", _filled_guard($scope0_reason, 0) && "c");
 		_scope($scope1_id, {
 			c: i,
 			_: _scope_with_id($scope0_id),

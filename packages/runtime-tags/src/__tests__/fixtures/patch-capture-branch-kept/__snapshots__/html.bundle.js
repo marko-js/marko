@@ -39,7 +39,7 @@ _shells({
 	b1: "b1,<span>shown</span>"
 });
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 1), $fg__input_show = _filled_guard($scope0_reason, 1), $cg__input_show = _client_guard($scope0_reason, 1), $wi__input_show = _write_if($scope0_reason, 1), $sg__input_show = _server_guard($scope0_reason, 1), $cg__input_on = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 1), $cg__input_show = _client_guard($scope0_reason, 1), $wi__input_show = _write_if($scope0_reason, 1), $sg__input_show = _server_guard($scope0_reason, 1), $fg__input_show = _filled_guard($scope0_reason, 1), $cg__input_on = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let items = [1, 2];
 	_html(`<button>add</button>${_el_mark($scope0_id, "a")}`);
@@ -48,7 +48,7 @@ var child_default = _template("b", (input) => {
 			const $scope1_id = _scope_id();
 			const $if_content__s__closures = /* @__PURE__ */ new Set();
 			const s = input.show;
-			$fg__input_show && _patch_write($scope1_id, "xc", s, !$sg__input_show);
+			_filled_guard($scope0_reason, 1) && _patch_write($scope1_id, "xc", s, !$sg__input_show);
 			_set_scope_reason(2);
 			let $item;
 			forOf(items, (item) => {
@@ -77,7 +77,7 @@ var child_default = _template("b", (input) => {
 				return "s:" + s;
 			}, "b0", $scope1_id) });
 			_patch_child_end();
-			$fg__input_show && _patch_subscribers($scope1_id, "b5", "c");
+			_filled_guard($scope0_reason, 1) && _patch_subscribers($scope1_id, "b5", "c");
 			$cg__input_show && _patch_render($scope1_id, "b6");
 			_scope($scope1_id, {
 				c: s,

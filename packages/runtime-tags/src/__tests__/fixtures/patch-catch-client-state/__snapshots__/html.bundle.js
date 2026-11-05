@@ -29,7 +29,7 @@ var panel_default = _template("b", (input) => {
 		_html(`<button class=inc>${_text_mark($scope1_id, "b", text, 1, $scope0_reason, 0)} ${_text_mark($scope1_id, "c", n, 2)}</button>${_el_mark($scope1_id, "a")}`);
 		_script($scope1_id, "b0");
 		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "b1");
-		_patch_render($scope1_id, "b2", [$fg__input_label && ">d", "f"], $scope0_reason, 0);
+		_patch_render($scope1_id, "b2", [_filled_guard($scope0_reason, 0) && ">d", "f"], $scope0_reason, 0);
 		_patch_fill($scope1_id, "vb3", n, 1);
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope1_id, {
 			f: _unfilled_if($scope0_reason, 0) && err?.message,

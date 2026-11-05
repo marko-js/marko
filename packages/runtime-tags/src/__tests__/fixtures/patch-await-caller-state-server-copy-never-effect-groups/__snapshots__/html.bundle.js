@@ -21,11 +21,11 @@ var show_await_default = _template("b", (input) => {
 			const $scope2_id = _scope_id();
 			_filled_guard((_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 0)) << 1, 0) && _patch_write($scope2_id, "xc", x, !_server_guard((_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 0)) << 1, 0));
 			_html(`<p>${_text_mark($scope2_id, "a", x, 1, (_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 0)) << 1, 0)}</p>`);
-			_script($scope2_id, "b0", 1, ($fg__input_promise || $fg__text) && ($cg__input_promise || _client_guard($scope1_reason, 0) ? 2 : 1), _filled_guard((_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 0)) << 1, 0) && "c");
+			_script($scope2_id, "b0", 1, (_filled_guard($scope0_reason, 0) || _filled_guard($scope1_reason, 0)) && ($cg__input_promise || _client_guard($scope1_reason, 0) ? 2 : 1), _filled_guard((_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 0)) << 1, 0) && "c");
 			_scope($scope2_id, { c: x });
 		}, 1, "b1", _unfilled_if((_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 0)) << 1, 0) && 2);
 		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "b4");
-		_patch_render($scope1_id, "b5", [$fg__input_promise && ">d", $fg__text && "d"], (_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 0)) << 1, 0);
+		_patch_render($scope1_id, "b5", [_filled_guard($scope0_reason, 0) && ">d", $fg__text && "d"], (_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 0)) << 1, 0);
 		($wi__input_promise || $wi__text) && _subscribe($wi__input_promise && $input_promise__closures, _scope($scope1_id, {
 			d: $wi__input_promise && text,
 			_: _scope_with_id($scope0_id)

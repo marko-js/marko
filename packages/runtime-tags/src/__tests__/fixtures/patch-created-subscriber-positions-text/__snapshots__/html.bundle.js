@@ -8,7 +8,7 @@ _shells({
 	b3: "b3;D ;<i> </i>"
 });
 var panel_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_b = _client_guard($scope0_reason, 5), $wg__input_show = _write_guard($scope0_reason, 4), $wi__input_show__OR__input_b__OR__input_a = _write_if($scope0_reason, 3), $fg__input_b = _filled_guard($scope0_reason, 5), $fg__input_a = _filled_guard($scope0_reason, 6), $cg__input_show = _client_guard($scope0_reason, 4), $wi__input_b = _write_if($scope0_reason, 5);
+	const $scope0_reason = _scope_reason(), $cg__input_b = _client_guard($scope0_reason, 5), $wg__input_show = _write_guard($scope0_reason, 4), $wi__input_show__OR__input_b__OR__input_a = _write_if($scope0_reason, 3), $fg__input_b = _filled_guard($scope0_reason, 5), $cg__input_show = _client_guard($scope0_reason, 4), $fg__input_a = _filled_guard($scope0_reason, 6), $wi__input_b = _write_if($scope0_reason, 5);
 	const $scope0_id = _scope_id();
 	const $input_b__closures = /* @__PURE__ */ new Set();
 	const $input_a__closures = /* @__PURE__ */ new Set();
@@ -32,7 +32,7 @@ var panel_default = _template("b", (input) => {
 					_html(`<i>${_text_mark($scope3_id, "a", input.a + ":" + input.b, 1, $scope0_reason, 2)}</i>`);
 					_unfilled_if($scope0_reason, 5) && _patch_subscribe($scope3_id, "b4");
 					_unfilled_if($scope0_reason, 6) && _patch_subscribe($scope3_id, "b5");
-					_patch_render($scope3_id, "b6", [$fg__input_b && ">>e", $fg__input_a && ">>f"], $scope0_reason, 2);
+					_patch_render($scope3_id, "b6", [_filled_guard($scope0_reason, 5) && ">>e", _filled_guard($scope0_reason, 6) && ">>f"], $scope0_reason, 2);
 					_subscribe(_unfilled_if($scope0_reason, 6) && $input_a__closures, _subscribe(_unfilled_if($scope0_reason, 5) && $input_b__closures, _scope($scope3_id, {
 						_: $wi__input_show__OR__input_b__OR__input_a && _scope_with_id($scope1_id),
 						Ch: $wi__input_b && 1

@@ -7,22 +7,22 @@ _shells({
 	b6: "b6 !b0;D lD l ;<p> </p><em> </em><button class=m>m</button>"
 });
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_a = _filled_guard($scope0_reason, 3), $fg__input_b = _filled_guard($scope0_reason, 4), $sg__input_a = _server_guard($scope0_reason, 3), $sg__input_b = _server_guard($scope0_reason, 4), $cg__input_show = _client_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $sg__input_a = _server_guard($scope0_reason, 3), $fg__input_a = _filled_guard($scope0_reason, 3), $sg__input_b = _server_guard($scope0_reason, 4), $fg__input_b = _filled_guard($scope0_reason, 4), $cg__input_show = _client_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			let m = 0;
 			const x = input.a + "!";
-			$fg__input_a && _patch_write($scope1_id, "xf", x, !$sg__input_a);
+			_filled_guard($scope0_reason, 3) && _patch_write($scope1_id, "xf", x, !$sg__input_a);
 			const y = input.b + "?";
-			$fg__input_b && _patch_write($scope1_id, "xg", y, !$sg__input_b);
+			_filled_guard($scope0_reason, 4) && _patch_write($scope1_id, "xg", y, !$sg__input_b);
 			_html(`<p>${_text_mark($scope1_id, "a", x + y + m)}</p><em>${_text_mark($scope1_id, "b", input.a + input.b, 1, $scope0_reason, 1)}</em><button class=m>m</button>${_el_mark($scope1_id, "c")}`);
 			_script($scope1_id, "b0");
 			_client_guard($scope0_reason, 3) && _patch_render($scope1_id, "b1");
 			_client_guard($scope0_reason, 4) && _patch_render($scope1_id, "b2");
-			_patch_render($scope1_id, "b3", [$fg__input_a && ">f", $fg__input_b && ">g"], $scope0_reason, 1);
-			_patch_render($scope1_id, "b4", [$fg__input_a && "f", $fg__input_b && "g"]);
+			_patch_render($scope1_id, "b3", [_filled_guard($scope0_reason, 3) && ">f", _filled_guard($scope0_reason, 4) && ">g"], $scope0_reason, 1);
+			_patch_render($scope1_id, "b4", [_filled_guard($scope0_reason, 3) && "f", _filled_guard($scope0_reason, 4) && "g"]);
 			_patch_fill($scope1_id, "vb5", m, 1);
 			_scope($scope1_id, {
 				e: m,

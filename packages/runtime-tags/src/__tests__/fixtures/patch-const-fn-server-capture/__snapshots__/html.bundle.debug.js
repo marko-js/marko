@@ -7,7 +7,7 @@ _shells({
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell;D ;<p> </p>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_decor = _filled_guard($scope0_reason, 4), $wg__input_show = _write_guard($scope0_reason, 5), $fg__input_text = _filled_guard($scope0_reason, 6), $sg__input_decor = _server_guard($scope0_reason, 4), $cg__input_show__OR__input_text = _client_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 5);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 5), $sg__input_decor = _server_guard($scope0_reason, 4), $cg__input_show__OR__input_text = _client_guard($scope0_reason, 2), $fg__input_decor = _filled_guard($scope0_reason, 4), $fg__input_text = _filled_guard($scope0_reason, 6), $cg__input_show = _client_guard($scope0_reason, 5);
 	const $scope0_id = _scope_id();
 	$fg__input_decor && $cg__input_show__OR__input_text && _patch_write($scope0_id, "PatchMarkedWrite:input_decor", input.decor, !$sg__input_decor);
 	const fmt = _bind_resume(function(text) {
@@ -18,9 +18,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope1_id = _scope_id();
 			_html(`<p>${_html_mark($scope1_id, "#text/0", fmt(input.text), 1, $scope0_reason, 1)}</p>`);
 			_patch_render($scope1_id, "__tests__/template.marko_1_input_text#0:5_fmt#0:6/setup", [
-				$fg__input_text && ">input_text",
-				$fg__input_decor && ">fmt",
-				$fg__input_decor && ">input_decor"
+				_filled_guard($scope0_reason, 6) && ">input_text",
+				_filled_guard($scope0_reason, 4) && ">fmt",
+				_filled_guard($scope0_reason, 4) && ">input_decor"
 			], $scope0_reason, 1);
 			_scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:2");
 			return 0;

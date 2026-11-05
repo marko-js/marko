@@ -8,7 +8,7 @@ _shells({
 	"__tests__/tags/code-block.marko_2*shell": "__tests__/tags/code-block.marko_2*shell;D ;<span> </span>"
 });
 var code_block_default = _template("__tests__/tags/code-block.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $fg__input_text = _filled_guard($scope0_reason, 2), $fg__input_cursor = _filled_guard($scope0_reason, 1), $wi__input_cursor__OR__input_text = _write_if($scope0_reason, 0), $wg__input_text_length = _write_guard($scope0_reason, 3), $cg__input_cursor = _client_guard($scope0_reason, 1), $cg__input_text_length = _client_guard($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wi__input_cursor__OR__input_text = _write_if($scope0_reason, 0), $wg__input_text_length = _write_guard($scope0_reason, 3), $cg__input_cursor = _client_guard($scope0_reason, 1), $fg__input_text = _filled_guard($scope0_reason, 2), $cg__input_text_length = _client_guard($scope0_reason, 3), $fg__input_cursor = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
 	$fg__input_cursor && _client_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_cursor", input.cursor, !_server_guard($scope0_reason, 1));
@@ -20,9 +20,9 @@ var code_block_default = _template("__tests__/tags/code-block.marko", (input) =>
 			const $scope1_id = _scope_id();
 			_html(`<div>${_html_mark($scope1_id, "#text/0", highlight(input.text), 1, (2 | _updates_from($scope0_reason, 0)) << 1, 0)}</div>`);
 			_patch_render($scope1_id, "__tests__/tags/code-block.marko_1_input_text#0:4_highlight#0:6/setup", [
-				$fg__input_text && ">input_text",
+				_filled_guard($scope0_reason, 2) && ">input_text",
 				_filled_guard((2 | _updates_from($scope0_reason, 1)) << 1, 0) && ">highlight",
-				$fg__input_cursor && ">input_cursor"
+				_filled_guard($scope0_reason, 1) && ">input_cursor"
 			], (2 | _updates_from($scope0_reason, 0)) << 1, 0);
 			_scope($scope1_id, { _: ($scope0_page || $wi__input_cursor__OR__input_text) && _scope_with_id($scope0_id) }, "__tests__/tags/code-block.marko", "4:2");
 			return 0;
@@ -30,9 +30,9 @@ var code_block_default = _template("__tests__/tags/code-block.marko", (input) =>
 			const $scope2_id = _scope_id();
 			_html(`<span>${_html_mark($scope2_id, "#text/0", highlight(input.text), 1, (2 | _updates_from($scope0_reason, 0)) << 1, 0)}</span>`);
 			_patch_render($scope2_id, "__tests__/tags/code-block.marko_2_input_text#0:4_highlight#0:6/setup", [
-				$fg__input_text && ">input_text",
+				_filled_guard($scope0_reason, 2) && ">input_text",
 				_filled_guard((2 | _updates_from($scope0_reason, 1)) << 1, 0) && ">highlight",
-				$fg__input_cursor && ">input_cursor"
+				_filled_guard($scope0_reason, 1) && ">input_cursor"
 			], (2 | _updates_from($scope0_reason, 0)) << 1, 0);
 			_scope($scope2_id, { _: ($scope0_page || $wi__input_cursor__OR__input_text) && _scope_with_id($scope0_id) }, "__tests__/tags/code-block.marko", "7:2");
 			return 1;

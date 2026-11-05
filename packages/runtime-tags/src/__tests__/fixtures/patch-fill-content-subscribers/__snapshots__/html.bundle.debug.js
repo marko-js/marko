@@ -18,7 +18,7 @@ const $walks = /*@__PURE__*/ ((_w0, _w1) => `D/${_w0}&/${_w1}& b l`)("D%l", "D%l
 const $setup = _shell_setup([[], ["__tests__/template.marko_0"]], ["#childScope/0>", $setup$1], ["#childScope/1>", $setup$1]);
 _shells({ "__tests__/template.marko": `__tests__/template.marko${_shell_marker($setup)};${((_w0, _w1) => `D/${_w0}&/${_w1}& b l`)("D%l", "D%l")};${((_w0, _w1) => `<main>${_w0}${_w1}<button class=a>a</button><button class=b>b</button></main>`)($template$1, $template$1)}` });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_label = _write_if($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 0), $cg__input_label = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wi__input_label = _write_if($scope0_reason, 0), $cg__input_label = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = new Set();
 	const $a__closures = new Set();
@@ -32,7 +32,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_reason = _scope_reason();
 		const $scope1_id = _scope_id();
 		_html(`<p class=a>${_text_mark($scope1_id, "#text/0", input.label + ":" + a)}</p>`);
-		_patch_render($scope1_id, "__tests__/template.marko_1_input_label#0:6_a#0:7/setup", $fg__input_label && ">input_label");
+		_patch_render($scope1_id, "__tests__/template.marko_1_input_label#0:6_a#0:7/setup", _filled_guard($scope0_reason, 0) && ">input_label");
 		_subscribe($a__closures, _subscribe($wi__input_label && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:4"), $cg__input_label && "__tests__/template.marko_1_input_label#0:6/subscribe"), "__tests__/template.marko_1_a#0:7/subscribe");
 	}, $scope0_id) });
 	_patch_child_end();
@@ -42,7 +42,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope2_reason = _scope_reason();
 		const $scope2_id = _scope_id();
 		_html(`<p class=b>${_text_mark($scope2_id, "#text/0", input.label + ":" + b)}</p>`);
-		_patch_render($scope2_id, "__tests__/template.marko_2_input_label#0:6_b#0:8/setup", $fg__input_label && ">input_label");
+		_patch_render($scope2_id, "__tests__/template.marko_2_input_label#0:6_b#0:8/setup", _filled_guard($scope0_reason, 0) && ">input_label");
 		_subscribe($b__closures, _subscribe($wi__input_label && $input_label__closures, _scope($scope2_id, {
 			_: _scope_with_id($scope0_id),
 			"ClosureSignalIndex:input_label/9": $wi__input_label && 1
@@ -64,5 +64,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_label: ["input.label"],
 		a: "1:6",
 		b: "2:6"
-	}) || $fg__input_label && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 0));
+	}) || _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 0));
 }, 1);

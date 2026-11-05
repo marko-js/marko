@@ -52,8 +52,8 @@ var template_default = _template("a", (input) => {
 		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "a0");
 		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "a1");
 		_patch_render($scope1_id, "a2", [
-			$fg__input_large && ">f",
-			$fg__input_label && ">g",
+			_filled_guard($scope0_reason, 0) && ">f",
+			_filled_guard($scope0_reason, 1) && ">g",
 			"d"
 		]);
 		_subscribe($count__closures, _subscribe($wi__input_label && $input_label__closures, _subscribe($wi__input_large && $input_large__closures, _scope($scope1_id, {

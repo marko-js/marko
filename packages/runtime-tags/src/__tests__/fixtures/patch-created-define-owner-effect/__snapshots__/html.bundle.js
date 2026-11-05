@@ -16,7 +16,7 @@ var card_default = _template("b", (input) => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "b2");
-		_patch_render($scope1_id, "b3", $fg__input_w && ">f") || _script($scope1_id, "b1", 0, $sg__input_w && 2, ">f");
+		_patch_render($scope1_id, "b3", _filled_guard($scope0_reason, 1) && ">f") || _script($scope1_id, "b1", 0, $sg__input_w && 2, ">f");
 		_subscribe($k__closures, _subscribe($wi__input_w && $input_w__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 1) && "b2", 0), "b4", 0);
 		_resume_branch($scope1_id);
 	}, $scope0_id, 0) };

@@ -19,7 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				class: on ? "on" : "off"
 			}, "#a/0", $scope1_id, "a")}>go</a>${_el_mark($scope1_id, "#a/0")}`);
 			_script($scope1_id, "__tests__/template.marko_1_input_attrs#0:5_on#0:6");
-			_patch_render($scope1_id, "__tests__/template.marko_1_input_attrs#0:5_on#0:6/setup", $fg__input_attrs && ">input_attrs");
+			_patch_render($scope1_id, "__tests__/template.marko_1_input_attrs#0:5_on#0:6/setup", _filled_guard($scope0_reason, 1) && ">input_attrs");
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4", { "EventAttributes:#a/0": ["...{ ...input.attrs, class: on ? \"on\" : \"off\" }", "4:11"] });
 			return 0;
 		}

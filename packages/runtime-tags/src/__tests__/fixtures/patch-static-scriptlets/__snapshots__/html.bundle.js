@@ -14,7 +14,7 @@ var template_default = _template("a", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_html(`<span>${_text_mark($scope1_id, "a", shout(input.title) + " #0")}</span>`);
-			_patch_render($scope1_id, "a0", $fg__input_title && ">g");
+			_patch_render($scope1_id, "a0", _filled_guard($scope0_reason, 0) && ">g");
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}

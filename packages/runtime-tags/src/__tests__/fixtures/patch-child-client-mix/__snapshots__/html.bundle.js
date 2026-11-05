@@ -22,7 +22,7 @@ var template_default = _template("a", (input) => {
 			const $childScope = _peek_scope_id($scope1_id, "a", 0);
 			label_default({ text: count + input.suffix });
 			_patch_child_end();
-			_patch_render($scope1_id, "a0", $fg__input_suffix && ">f");
+			_patch_render($scope1_id, "a0", _filled_guard($scope0_reason, 0) && ">f");
 			_scope($scope1_id, { a: _existing_scope($childScope) });
 			return 0;
 		}

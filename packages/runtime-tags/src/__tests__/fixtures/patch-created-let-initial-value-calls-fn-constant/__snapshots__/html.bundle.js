@@ -14,7 +14,7 @@ var template_default = _template("a", (input) => {
 			let y = f(x);
 			_html(`<p>${_text_mark($scope1_id, "a", y + input.w)}</p>`);
 			_patch_write($scope1_id, "wc", f, 1);
-			_patch_render($scope1_id, "a1", $fg__input_w && ">e");
+			_patch_render($scope1_id, "a1", _filled_guard($scope0_reason, 1) && ">e");
 			_patch_fill($scope1_id, "va2", y, 1);
 			_scope($scope1_id, {
 				c: f,

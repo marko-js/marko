@@ -3,7 +3,7 @@ _shells({ a: "a !a3;D%b ;<main><!><button>+</button></main>" });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
 	_write_guard($scope0_reason, 0);
-	const $fg__input_a = _filled_guard($scope0_reason, 1), $fg__input_b = _filled_guard($scope0_reason, 2), $sg__input_a = _server_guard($scope0_reason, 1), $sg__input_b = _server_guard($scope0_reason, 2);
+	const $sg__input_a = _server_guard($scope0_reason, 1), $fg__input_a = _filled_guard($scope0_reason, 1), $sg__input_b = _server_guard($scope0_reason, 2), $fg__input_b = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	$fg__input_a && _patch_write($scope0_id, "xe", input.a, !$sg__input_a);
 	$fg__input_b && _patch_write($scope0_id, "xf", input.b, !$sg__input_b);

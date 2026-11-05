@@ -21,7 +21,7 @@ var template_default = _template("a", (input) => {
 				}
 			}, $scope1_id, "a", 1, 1, 0, 0, 1);
 			_client_guard($scope0_reason, 1) && _patch_render($scope1_id, "a1");
-			$fg__input_open && _patch_fill($scope1_id, "va2", open, 1);
+			_filled_guard($scope0_reason, 1) && _patch_fill($scope1_id, "va2", open, 1);
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}

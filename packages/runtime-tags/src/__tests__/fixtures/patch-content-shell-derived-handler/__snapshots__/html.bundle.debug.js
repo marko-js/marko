@@ -35,7 +35,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope2_reason = _scope_reason();
 				const $scope2_id = _scope_id();
 				const label = input.label;
-				$fg__input_label && _patch_write($scope2_id, "PatchMarkedWrite:label", label, !$sg__input_label);
+				_filled_guard($scope0_reason, 1) && _patch_write($scope2_id, "PatchMarkedWrite:label", label, !$sg__input_label);
 				_html(`<button>show</button>${_el_mark($scope2_id, "#button/0")}`);
 				_script($scope2_id, "__tests__/template.marko_2");
 				_client_guard($scope0_reason, 1) && _patch_render($scope2_id, "__tests__/template.marko_2_input_label#0:5/subscribe");

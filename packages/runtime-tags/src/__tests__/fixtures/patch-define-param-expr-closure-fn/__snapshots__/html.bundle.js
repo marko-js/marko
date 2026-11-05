@@ -19,7 +19,7 @@ const $D_content__template = "<span> </span>";
 const $setup = _shell_setup([[], []], ["b>", $setup$1]);
 _shells({ a: `a${_shell_marker($setup)};${((_w0, _w1) => `b/${_w0}&/${_w1}&`)($D_content__walks, $walks)};${((_w0, _w1) => `<!>${_w0}${_w1}`)($D_content__template, $template)}` });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_a = _filled_guard($scope0_reason, 0), $wi__input_a = _write_if($scope0_reason, 0), $sg__input_a = _server_guard($scope0_reason, 0), $cg__input_x = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wi__input_a = _write_if($scope0_reason, 0), $sg__input_a = _server_guard($scope0_reason, 0), $cg__input_x = _client_guard($scope0_reason, 1), $fg__input_a = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $f2__closures = /* @__PURE__ */ new Set();
 	$fg__input_a && $cg__input_x && _patch_write($scope0_id, "xe", input.a, !$sg__input_a);
@@ -31,8 +31,8 @@ var template_default = _template("a", (input) => {
 		const $scope1_reason = _scope_reason(), $fg__on = _filled_guard($scope1_reason, 0);
 		_html(`<span>${_text_mark($scope1_id, "a", on && f(), 1, (_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 0)) << 1, 0)}</span>`);
 		_patch_render($scope1_id, "a2", [
-			$fg__input_a && ">g",
-			$fg__input_a && ">e",
+			_filled_guard($scope0_reason, 0) && ">g",
+			_filled_guard($scope0_reason, 0) && ">e",
 			$fg__on && "d"
 		], (_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 0)) << 1, 0);
 		_subscribe(_unfilled_if((_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 0)) << 1, 0) && $wi__input_a && $f2__closures, _scope($scope1_id, {

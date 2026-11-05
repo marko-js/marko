@@ -7,7 +7,7 @@ _shells({
 	"__tests__/tags/view.marko_1*shell": "__tests__/tags/view.marko_1*shell __tests__/tags/view.marko_1_a#2_c#4/setup!__tests__/tags/view.marko_1;D l ;<span> </span><button>+</button>"
 });
 var view_default = _template("__tests__/tags/view.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 1), $fg__input_x = _filled_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 1), $fg__input_y = _filled_guard($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 1), $cg__input_show = _client_guard($scope0_reason, 1), $fg__input_x = _filled_guard($scope0_reason, 2), $fg__input_y = _filled_guard($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.show) {
@@ -17,10 +17,10 @@ var view_default = _template("__tests__/tags/view.marko", (input) => {
 			const c = b * 2;
 			_html(`<span>${_text_mark($scope1_id, "#text/0", a + c)}</span><button>+</button>${_el_mark($scope1_id, "#button/1")}`);
 			_script($scope1_id, "__tests__/tags/view.marko_1");
-			$fg__input_y && _patch_write($scope1_id, "PatchWrite:c", c, 1);
+			_filled_guard($scope0_reason, 3) && _patch_write($scope1_id, "PatchWrite:c", c, 1);
 			_client_guard($scope0_reason, 2) && _patch_render($scope1_id, "__tests__/tags/view.marko_1_input_x#0:4/setup");
 			_client_guard($scope0_reason, 3) && _patch_render($scope1_id, "__tests__/tags/view.marko_1_input_y#0:5/setup");
-			$fg__input_x && _patch_fill($scope1_id, "PatchFill:__tests__/tags/view.marko_fill0", a, 1);
+			_filled_guard($scope0_reason, 2) && _patch_fill($scope1_id, "PatchFill:__tests__/tags/view.marko_fill0", a, 1);
 			_scope($scope1_id, {
 				a,
 				c,

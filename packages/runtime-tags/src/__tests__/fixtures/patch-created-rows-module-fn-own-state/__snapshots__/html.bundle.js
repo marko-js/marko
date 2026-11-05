@@ -21,7 +21,7 @@ _shells({
 	b1: "b1;D ;<em> </em>"
 });
 var rowsx_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_items = _filled_guard($scope0_reason, 0), $sg__input_items = _server_guard($scope0_reason, 0), $fg__input_open = _filled_guard($scope0_reason, 1), $cg__input_items = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $sg__input_items = _server_guard($scope0_reason, 0), $fg__input_open = _filled_guard($scope0_reason, 1), $cg__input_items = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let suffix = "s";
 	const Panel = { content: _content("b2", ({ isOpen, fmt, label }) => {
@@ -31,7 +31,7 @@ var rowsx_default = _template("b", (input) => {
 			if (isOpen) {
 				const $scope3_id = _scope_id();
 				_html(`<em>${_text_mark($scope3_id, "a", fmt(label), 1, $scope2_reason, 2)}</em>`);
-				_patch_render($scope3_id, "b0", [$fg__fmt && ">e", $fg__label && ">f"], $scope2_reason, 2);
+				_patch_render($scope3_id, "b0", [_filled_guard($scope2_reason, 5) && ">e", _filled_guard($scope2_reason, 6) && ">f"], $scope2_reason, 2);
 				_scope($scope3_id, { _: _write_if($scope2_reason, 2) && _scope_with_id($scope2_id) });
 				return 0;
 			}
@@ -45,7 +45,7 @@ var rowsx_default = _template("b", (input) => {
 	}, $scope0_id, 0) };
 	_for_of(input.items, (x) => {
 		const $scope1_id = _scope_id();
-		$fg__input_items && _patch_write($scope1_id, "xc", x, !$sg__input_items);
+		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "xc", x, !$sg__input_items);
 		_set_scope_reason(25080 | (_updates_from($scope0_reason, 1) << 1 | _updates_from($scope0_reason, 1) << 9));
 		const $childScope = _peek_scope_id($scope1_id, "a", 0);
 		Panel.content({
@@ -55,7 +55,7 @@ var rowsx_default = _template("b", (input) => {
 		});
 		_patch_child_end();
 		_client_guard($scope0_reason, 1) && _patch_render($scope1_id, "b6");
-		_patch_render($scope1_id, "b7", $fg__input_items && "c");
+		_patch_render($scope1_id, "b7", _filled_guard($scope0_reason, 0) && "c");
 		_scope($scope1_id, {
 			c: x,
 			_: _scope_with_id($scope0_id),

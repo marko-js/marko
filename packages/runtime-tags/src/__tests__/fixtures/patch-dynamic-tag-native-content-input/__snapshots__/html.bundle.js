@@ -7,7 +7,7 @@ _shells({
 	a0: "a0;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_tags__OR__input_card = _write_guard($scope0_reason, 0), $fg__input_tags = _filled_guard($scope0_reason, 2), $cg__input_tags__OR__input_card = _client_guard($scope0_reason, 0), $fg__input_card = _filled_guard($scope0_reason, 3), $fg__input_label = _filled_guard($scope0_reason, 1), $cg__input_tags = _client_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_tags__OR__input_card = _write_guard($scope0_reason, 0), $cg__input_tags__OR__input_card = _client_guard($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 1), $fg__input_card = _filled_guard($scope0_reason, 3), $cg__input_tags = _client_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	const $n__closures = /* @__PURE__ */ new Set();
@@ -37,12 +37,12 @@ var template_default = _template("a", (input) => {
 	_html(`<button>${_text_mark($scope0_id, "b", n)}</button>${_el_mark($scope0_id, "a")}`);
 	_for_of(input.tags, (tag) => {
 		const $scope2_id = _scope_id();
-		$fg__input_tags && _client_guard($scope0_reason, 3) && _patch_write($scope2_id, "xc", tag, !_server_guard($scope0_reason, 2));
+		_filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 3) && _patch_write($scope2_id, "xc", tag, !_server_guard($scope0_reason, 2));
 		_dynamic_tag($scope2_id, "a", input.card ? Card : "span", {
 			label: tag,
 			content: Label
 		}, 9, 0, 0, $wg__input_tags__OR__input_card, $scope0_reason, 0, 0, void 0, 0, 0, "a2");
-		_patch_render($scope2_id, "a5", [$fg__input_card && ">h", $fg__input_tags && "c"], $scope0_reason, 0);
+		_patch_render($scope2_id, "a5", [_filled_guard($scope0_reason, 3) && ">h", _filled_guard($scope0_reason, 2) && "c"], $scope0_reason, 0);
 		_write_if($scope0_reason, 0) && _scope($scope2_id, {
 			c: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 0)) && tag,
 			_: _scope_with_id($scope0_id)

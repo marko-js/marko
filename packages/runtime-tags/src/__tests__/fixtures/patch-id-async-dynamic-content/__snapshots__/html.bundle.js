@@ -35,7 +35,7 @@ _shells({
 	a6: "a6;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_items__OR__input_loaded = _write_guard($scope0_reason, 0), $fg__input_items = _filled_guard($scope0_reason, 1), $cg__input_loaded = _client_guard($scope0_reason, 2), $wi__input_items__OR__input_loaded = _write_if($scope0_reason, 0), $cg__input_items = _client_guard($scope0_reason, 1), $sg__input_items = _server_guard($scope0_reason, 1), $fg__input_loaded = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_items__OR__input_loaded = _write_guard($scope0_reason, 0), $cg__input_loaded = _client_guard($scope0_reason, 2), $wi__input_items__OR__input_loaded = _write_if($scope0_reason, 0), $cg__input_items = _client_guard($scope0_reason, 1), $sg__input_items = _server_guard($scope0_reason, 1), $fg__input_loaded = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_loaded__closures = /* @__PURE__ */ new Set();
 	_for_of(input.items, (item) => {
@@ -46,7 +46,7 @@ var template_default = _template("a", (input) => {
 			const $scope2_id = _scope_id();
 			_await($scope2_id, "a", item.promise, (ready) => {
 				const $scope3_id = _scope_id();
-				$fg__input_items && $cg__input_loaded && _patch_write($scope3_id, "xc", ready, !$sg__input_items);
+				_filled_guard($scope0_reason, 1) && $cg__input_loaded && _patch_write($scope3_id, "xc", ready, !$sg__input_items);
 				_dynamic_tag($scope3_id, "a", input.loaded ? loaded_default : "section", { name: ready }, 17, _content_resume("a0", () => {
 					const $scope4_id = _scope_id();
 					_scope_reason();
@@ -64,7 +64,7 @@ var template_default = _template("a", (input) => {
 					{ _: $scope($scope2_id) }
 				]), 0, $wg__input_items__OR__input_loaded, $scope0_reason, 0);
 				_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope3_id, "a1");
-				_patch_render($scope3_id, "a2", [$fg__input_loaded && ">>>e", $fg__input_items && "c"], $scope0_reason, 0);
+				_patch_render($scope3_id, "a2", [_filled_guard($scope0_reason, 2) && ">>>e", _filled_guard($scope0_reason, 1) && "c"], $scope0_reason, 0);
 				$wi__input_items__OR__input_loaded && _subscribe(_unfilled_if($scope0_reason, 2) && $input_loaded__closures, _scope($scope3_id, { c: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && ready }), $cg__input_loaded && "a1", $wg__input_items__OR__input_loaded);
 				$wg__input_items__OR__input_loaded || $wi__input_items__OR__input_loaded && _resume_branch($scope3_id);
 			}, 1, "a3", _unfilled_if($scope0_reason, 1), 0, 1);

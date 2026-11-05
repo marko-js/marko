@@ -15,7 +15,7 @@ _shells({
 	"__tests__/template.marko_4*shell": "__tests__/template.marko_4*shell;b%;<!><!><!>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $cg__input_rows = _client_guard($scope0_reason, 0), $wi__input_rows = _write_if($scope0_reason, 0), $wg__input_rows = _write_guard($scope0_reason, 0), $fg__input_rows = _filled_guard($scope0_reason, 0), $sg__input_rows = _server_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $cg__input_rows = _client_guard($scope0_reason, 0), $wi__input_rows = _write_if($scope0_reason, 0), $wg__input_rows = _write_guard($scope0_reason, 0), $sg__input_rows = _server_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const Card = { content: _content_resume("__tests__/template.marko_1*content", ({ label, content }) => {
 		const $scope1_id = _scope_id();
@@ -86,7 +86,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html("</section>");
 		_script($scope2_id, "__tests__/template.marko_2");
 		$cg__input_rows && _patch_write($scope2_id, "PatchWrite:Label", Label, 1);
-		$fg__input_rows && _patch_subscribers($scope2_id, "__tests__/template.marko_2_row_label#7/subscribers", "row_label");
+		_filled_guard($scope0_reason, 0) && _patch_subscribers($scope2_id, "__tests__/template.marko_2_row_label#7/subscribers", "row_label");
 		$cg__input_rows && _patch_render($scope2_id, "__tests__/template.marko_2_Card#0:4_row_card#8/setup");
 		_patch_fill($scope2_id, "PatchFill:__tests__/template.marko_fill0", n, 1);
 		_scope($scope2_id, {
@@ -100,7 +100,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			n: "5:8",
 			Label: "6:11"
 		});
-		$fg__input_rows && (_client_branch_if("__tests__/template.marko_5*content", $scope2_id) || $cg__input_rows || _client_branch_if("__tests__/template.marko_7*content", $scope2_id)) && _patch_write($scope2_id, "PatchMarkedWrite:row_label", row?.label, !$sg__input_rows);
+		_filled_guard($scope0_reason, 0) && (_client_branch_if("__tests__/template.marko_5*content", $scope2_id) || $cg__input_rows || _client_branch_if("__tests__/template.marko_7*content", $scope2_id)) && _patch_write($scope2_id, "PatchMarkedWrite:row_label", row?.label, !$sg__input_rows);
 	}, "id", $scope0_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/template.marko_2*shell", $scope0_reason, 0);
 	_scope($scope0_id, { Card: _unfilled_if($scope0_reason, 0) && Card }, "__tests__/template.marko", 0, { Card: "1:9" });
 }, 1);

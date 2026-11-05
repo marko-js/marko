@@ -20,7 +20,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_html("x");
 			}, $scope1_id));
 			_html("</section>");
-			_patch_render($scope1_id, "__tests__/template.marko_1_input_on#0:5_count#0:6/setup", $fg__input_on && ">input_on");
+			_patch_render($scope1_id, "__tests__/template.marko_1_input_on#0:5_count#0:6/setup", _filled_guard($scope0_reason, 1) && ">input_on");
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:2");
 			return 0;
 		}

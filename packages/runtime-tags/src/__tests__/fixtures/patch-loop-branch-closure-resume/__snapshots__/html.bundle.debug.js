@@ -20,7 +20,7 @@ var sub_default = _template("__tests__/tags/sub.marko", (input) => {
 				const $scope2_id = _scope_id();
 				_html(`<span class=v>${_text_mark($scope2_id, "#text/0", g - input.n)}</span>`);
 				_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope2_id, "__tests__/tags/sub.marko_2_input_n#0:5/subscribe");
-				_patch_render($scope2_id, "__tests__/tags/sub.marko_2_input_n#0:5_g#0:6/setup", $fg__input_n && ">>input_n");
+				_patch_render($scope2_id, "__tests__/tags/sub.marko_2_input_n#0:5_g#0:6/setup", _filled_guard($scope0_reason, 1) && ">>input_n");
 				_subscribe($g__closures, _subscribe($wi__input_n && $input_n__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/sub.marko", "4:4"), _client_guard($scope0_reason, 1) && "__tests__/tags/sub.marko_2_input_n#0:5/subscribe"), "__tests__/tags/sub.marko_2_g#0:6/subscribe");
 				return 0;
 			}

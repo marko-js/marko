@@ -32,7 +32,7 @@ _shells({
 	a7: "a7; b%;<div></div><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_on = _write_guard($scope0_reason, 7), $cg__input_on = _client_guard($scope0_reason, 7), $fg__input_v = _filled_guard($scope0_reason, 6), $wi__input_show__OR__input_note__OR__input_v__OR__input_on = _write_if($scope0_reason, 3), $fg__input_note = _filled_guard($scope0_reason, 5), $cg__input_note = _client_guard($scope0_reason, 5), $cg__input_v = _client_guard($scope0_reason, 6), $wg__input_show = _write_guard($scope0_reason, 4), $wi__input_show = _write_if($scope0_reason, 4), $sg__input_note = _server_guard($scope0_reason, 5), $sg__input_v = _server_guard($scope0_reason, 6), $cg__input_show = _client_guard($scope0_reason, 4), $fg__input_on = _filled_guard($scope0_reason, 7);
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_on = _write_guard($scope0_reason, 7), $cg__input_on = _client_guard($scope0_reason, 7), $wi__input_show__OR__input_note__OR__input_v__OR__input_on = _write_if($scope0_reason, 3), $cg__input_note = _client_guard($scope0_reason, 5), $cg__input_v = _client_guard($scope0_reason, 6), $wg__input_show = _write_guard($scope0_reason, 4), $wi__input_show = _write_if($scope0_reason, 4), $sg__input_note = _server_guard($scope0_reason, 5), $sg__input_v = _server_guard($scope0_reason, 6), $cg__input_show = _client_guard($scope0_reason, 4), $fg__input_note = _filled_guard($scope0_reason, 5), $fg__input_v = _filled_guard($scope0_reason, 6), $fg__input_on = _filled_guard($scope0_reason, 7);
 	const $scope0_id = _scope_id();
 	const $input_on__closures = /* @__PURE__ */ new Set();
 	_html("<main>");
@@ -41,7 +41,7 @@ var template_default = _template("a", (input) => {
 			const $scope1_id = _scope_id();
 			const $if_content__x__closures = /* @__PURE__ */ new Set();
 			const x = input.note + "!";
-			$fg__input_note && _patch_write($scope1_id, "xc", x, !$sg__input_note);
+			_filled_guard($scope0_reason, 5) && _patch_write($scope1_id, "xc", x, !$sg__input_note);
 			_html(`<div></div>${_el_mark($scope1_id, "a")}`);
 			_await($scope1_id, "b", input.v, (v) => {
 				const $scope2_id = _scope_id();
@@ -54,17 +54,17 @@ var template_default = _template("a", (input) => {
 					_unfilled_if($scope0_reason, 6) && _patch_subscribe($scope3_id, "a2", $cg__input_v);
 					_subscribe(_unfilled_if($scope0_reason, 6) && $await_content__v__closures, _subscribe(_unfilled_if($scope0_reason, 5) && $if_content__x__closures, _scope($scope3_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope2_id) })));
 				}, $scope2_id, ($scope) => $scope0_page ? [{ c: v }] : []), 0, $wg__input_on, $scope0_reason, 7, 0, void 0, 0, 0, "a0");
-				$fg__input_v && _patch_subscribers($scope2_id, "a3", "c");
+				_filled_guard($scope0_reason, 6) && _patch_subscribers($scope2_id, "a3", "c");
 				_unfilled_if($scope0_reason, 7) && _patch_subscribe($scope2_id, "a4", $cg__input_on);
 				$wi__input_show__OR__input_note__OR__input_v__OR__input_on && _subscribe(_unfilled_if($scope0_reason, 7) && $input_on__closures, _scope($scope2_id, {
 					c: (_unfilled_if($scope0_reason, 7) || _unfilled_if($scope0_reason, 6)) && v,
 					l: _write_if($scope0_reason, 6) && $await_content__v__closures
 				}), $cg__input_on && "a4", $wg__input_on);
-				$fg__input_v && (_client_branch_if("a0", $scope2_id) || $cg__input_on) && _patch_write($scope2_id, "xc", v, !$sg__input_v);
+				_filled_guard($scope0_reason, 6) && (_client_branch_if("a0", $scope2_id) || $cg__input_on) && _patch_write($scope2_id, "xc", v, !$sg__input_v);
 				$wg__input_on || $wi__input_show__OR__input_note__OR__input_v__OR__input_on && _resume_branch($scope2_id);
 			}, 1, "a5", _unfilled_if($scope0_reason, 6), 0, 1);
-			_script($scope1_id, "a8", 1, $fg__input_note, "c");
-			$fg__input_note && _patch_subscribers($scope1_id, "a9", "c");
+			_script($scope1_id, "a8", 1, _filled_guard($scope0_reason, 5), "c");
+			_filled_guard($scope0_reason, 5) && _patch_subscribers($scope1_id, "a9", "c");
 			$cg__input_note && _patch_render($scope1_id, "a10");
 			$cg__input_v && _patch_render($scope1_id, "a11");
 			_scope($scope1_id, {

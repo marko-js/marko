@@ -7,7 +7,7 @@ _shells({
 	"__tests__/tags/child.marko_1*shell": "__tests__/tags/child.marko_1*shell;D ;<p> </p>"
 });
 var child_default = _template("__tests__/tags/child.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 2), $fg__input_a = _filled_guard($scope0_reason, 3), $cg__input_show__OR__input_a__OR__input_b = _client_guard($scope0_reason, 1), $fg__input_b = _filled_guard($scope0_reason, 4), $cg__input_show = _client_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 2), $cg__input_show__OR__input_a__OR__input_b = _client_guard($scope0_reason, 1), $fg__input_a = _filled_guard($scope0_reason, 3), $fg__input_b = _filled_guard($scope0_reason, 4), $cg__input_show = _client_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
 	_if(() => {
@@ -18,8 +18,8 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 			_html(`<p>${_text_mark($scope1_id, "#text/0", input.a + input.b + c, 1, (2 | _updates_from($scope0_reason, 0)) << 1, 0)}</p>`);
 			_fill_global_subscribe("__tests__/tags/child.marko_1_$global_g#0:8", $scope1_id);
 			_patch_render($scope1_id, "__tests__/tags/child.marko_1_input_a#0:4_input_b#0:5_c#1/setup", [
-				$fg__input_a && ">input_a",
-				$fg__input_b && ">input_b",
+				_filled_guard($scope0_reason, 3) && ">input_a",
+				_filled_guard($scope0_reason, 4) && ">input_b",
 				"c"
 			], (2 | _updates_from($scope0_reason, 0)) << 1, 0);
 			_scope($scope1_id, {

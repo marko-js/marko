@@ -19,7 +19,7 @@ var template_default = _template("a", (input) => {
 			const $scope2_id = _scope_id();
 			_html(`<p>${_text_mark($scope2_id, "a", cell + ":" + input.suffix + "@0")}</p>`);
 			_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope2_id, "a0");
-			_patch_render($scope2_id, "a1", $fg__input_suffix && ">>h");
+			_patch_render($scope2_id, "a1", _filled_guard($scope0_reason, 2) && ">>h");
 			_subscribe($count__closures, _subscribe($wi__input_suffix && $input_suffix__closures, _scope($scope2_id, {
 				M: cell,
 				_: _scope_with_id($scope1_id)

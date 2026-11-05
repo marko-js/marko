@@ -16,7 +16,7 @@ var template_default = _template("a", (input) => {
 				class: "off"
 			}, "a", $scope1_id, "a")}>go</a>${_el_mark($scope1_id, "a")}`);
 			_script($scope1_id, "a0");
-			_patch_render($scope1_id, "a1", $fg__input_attrs && ">f");
+			_patch_render($scope1_id, "a1", _filled_guard($scope0_reason, 1) && ">f");
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}

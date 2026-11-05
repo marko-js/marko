@@ -25,8 +25,8 @@ var template_default = _template("a", (input) => {
 			_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope2_id, "a1");
 			_unfilled_if($scope1_reason, 1) && _patch_subscribe($scope2_id, "a2");
 			_patch_render($scope2_id, "a3", [
-				$fg__input_label && ">>e",
-				$fg__x && ">d",
+				_filled_guard($scope0_reason, 0) && ">>e",
+				_filled_guard($scope1_reason, 1) && ">d",
 				$fg__z && "d"
 			], (_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 1) | _updates_from($scope2_reason, 0)) << 1, 0);
 			_subscribe(_unfilled_if((_updates_from($scope1_reason, 1) | _updates_from($scope2_reason, 0)) << 1, 0) && $wi__x && $Outer_content__x__closures, _subscribe(_unfilled_if((_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 1) | _updates_from($scope2_reason, 0)) << 1, 0) && $wi__input_label && $input_label__closures, _scope($scope2_id, {

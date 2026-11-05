@@ -11,7 +11,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $fg__b = _filled_guard($scope1_reason, 5), $fg__a = _filled_guard($scope1_reason, 4), $fg__c = _filled_guard($scope1_reason, 6);
 		_html(`<p>${_text_mark($scope1_id, "a", a + b + c, 1, $scope1_reason, 3)}</p><em>${_text_mark($scope1_id, "b", input.y + b, 1, (_updates_from($scope0_reason, 1) | _updates_from($scope1_reason, 5)) << 1, 0)}</em>`);
-		_patch_render($scope1_id, "a1", [$fg__input_y && ">e", $fg__b && "f"], (_updates_from($scope0_reason, 1) | _updates_from($scope1_reason, 5)) << 1, 0);
+		_patch_render($scope1_id, "a1", [_filled_guard($scope0_reason, 1) && ">e", $fg__b && "f"], (_updates_from($scope0_reason, 1) | _updates_from($scope1_reason, 5)) << 1, 0);
 		_patch_render($scope1_id, "a2", [
 			$fg__a && "e",
 			$fg__b && "f",

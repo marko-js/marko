@@ -64,7 +64,7 @@ _shells({
 	"__tests__/page.marko_1*shell": `__tests__/page.marko_1*shell${_shell_marker([[], []], ["#childScope/0>", $setup$2])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$2)};${$template$2}`
 });
 var page_default = _template("__tests__/page.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_items = _filled_guard($scope0_reason, 0), $wi__input_items = _write_if($scope0_reason, 0), $sg__input_items = _server_guard($scope0_reason, 0), $cg__input_items = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wi__input_items = _write_if($scope0_reason, 0), $sg__input_items = _server_guard($scope0_reason, 0), $cg__input_items = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $bonus__closures = new Set();
 	const $global$1 = $global();
@@ -77,7 +77,7 @@ var page_default = _template("__tests__/page.marko", (input) => {
 	_for_of(input.items, (item) => {
 		const $scope1_id = _scope_id();
 		const $for_content__item_n__closures = new Set();
-		$fg__input_items && _patch_write($scope1_id, "PatchMarkedWrite:item_n", item?.n, !$sg__input_items);
+		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "PatchMarkedWrite:item_n", item?.n, !$sg__input_items);
 		_set_scope_reason(0);
 		const $childScope3 = _peek_scope_id($scope1_id, "#childScope/0", 2);
 		panel_default({ aside: attrTag({ content: _content("__tests__/page.marko_2*content", () => {
@@ -88,14 +88,14 @@ var page_default = _template("__tests__/page.marko", (input) => {
 			counter_default({ base: (bonus ?? p.base) + item.n });
 			_patch_child_end();
 			_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope2_id, "__tests__/page.marko_2_item_n#1:3/subscribe");
-			_patch_render($scope2_id, "__tests__/page.marko_2_bonus#0:7_p_base#0:9_item_n#1:3/setup", [">>p_base", $fg__input_items && ">item_n"]);
+			_patch_render($scope2_id, "__tests__/page.marko_2_bonus#0:7_p_base#0:9_item_n#1:3/setup", [">>p_base", _filled_guard($scope0_reason, 0) && ">item_n"]);
 			_subscribe($wi__input_items && $for_content__item_n__closures, _subscribe($bonus__closures, _scope($scope2_id, {
 				_: _scope_with_id($scope1_id),
 				"#childScope/0": _existing_scope($childScope2)
 			}, "__tests__/page.marko", "6:6")));
 		}, $scope1_id, 0) }) });
 		_patch_child_end();
-		$fg__input_items && $cg__input_items && _patch_subscribers($scope1_id, "__tests__/page.marko_1_item_n#3/subscribers", "item_n");
+		_filled_guard($scope0_reason, 0) && $cg__input_items && _patch_subscribers($scope1_id, "__tests__/page.marko_1_item_n#3/subscribers", "item_n");
 		_scope($scope1_id, {
 			item_n: item?.n,
 			_: _scope_with_id($scope0_id),

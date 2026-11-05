@@ -8,7 +8,7 @@ _shells({
 	b4: "b4 b3;D ;<span> </span>"
 });
 var card_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_prefix = _filled_guard($scope0_reason, 1), $wg__input_sel = _write_guard($scope0_reason, 3), $fg__input_obj = _filled_guard($scope0_reason, 2), $cg__input_sel = _client_guard($scope0_reason, 3), $sg__input_obj = _server_guard($scope0_reason, 2), $cg__input_obj = _client_guard($scope0_reason, 2), $sg__input_prefix = _server_guard($scope0_reason, 1), $fg__input_sel = _filled_guard($scope0_reason, 3), $wi__input_prefix = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_sel = _write_guard($scope0_reason, 3), $cg__input_sel = _client_guard($scope0_reason, 3), $sg__input_obj = _server_guard($scope0_reason, 2), $cg__input_obj = _client_guard($scope0_reason, 2), $sg__input_prefix = _server_guard($scope0_reason, 1), $fg__input_prefix = _filled_guard($scope0_reason, 1), $fg__input_sel = _filled_guard($scope0_reason, 3), $wi__input_prefix = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $s__closures = /* @__PURE__ */ new Set();
 	const $fmt2__closures = /* @__PURE__ */ new Set();
@@ -17,22 +17,22 @@ var card_default = _template("b", (input) => {
 	const fmt = _bind_resume((v) => input.prefix + v, "b0", $scope0_id);
 	_for_in(input.obj, (k, v) => {
 		const $scope1_id = _scope_id();
-		$fg__input_obj && _patch_write($scope1_id, "xe", v, !$sg__input_obj);
+		_filled_guard($scope0_reason, 2) && _patch_write($scope1_id, "xe", v, !$sg__input_obj);
 		_if(() => {
 			if (k === input.sel) {
 				const $scope2_id = _scope_id();
 				_html(`<span>${_text_mark($scope2_id, "a", fmt(v + s))}</span>`);
 				_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope2_id, "b1");
 				_patch_render($scope2_id, "b2", [
-					$fg__input_prefix && ">>i",
-					$fg__input_prefix && ">>e",
-					$fg__input_obj && ">e"
+					_filled_guard($scope0_reason, 1) && ">>i",
+					_filled_guard($scope0_reason, 1) && ">>e",
+					_filled_guard($scope0_reason, 2) && ">e"
 				]);
 				_subscribe($wi__input_prefix && $fmt2__closures, _subscribe($s__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "b3"), _client_guard($scope0_reason, 1) && "b1");
 				return 0;
 			}
 		}, $scope1_id, "a", 1, $wg__input_sel, 1, 0, 0, ["b4"], $scope0_reason, 0);
-		$fg__input_obj && ($cg__input_obj || $cg__input_sel) && _patch_render($scope1_id, "b6", "e");
+		_filled_guard($scope0_reason, 2) && ($cg__input_obj || $cg__input_sel) && _patch_render($scope1_id, "b6", "e");
 		$cg__input_sel && _patch_render($scope1_id, "b7");
 		_scope($scope1_id, {
 			M: _unfilled_if($scope0_reason, 3) && k,

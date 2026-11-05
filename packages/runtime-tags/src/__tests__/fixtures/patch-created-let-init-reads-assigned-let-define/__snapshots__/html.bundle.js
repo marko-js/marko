@@ -36,7 +36,7 @@ var template_default = _template("a", (input) => {
 			_html(`<p>${_text_mark($scope1_id, "b", input.a, 1, $scope0_reason, 1)}</p><button>${_text_mark($scope1_id, "d", x + input.a)}</button>${_el_mark($scope1_id, "c")}`);
 			_script($scope1_id, "a2");
 			_client_guard($scope0_reason, 1) && _patch_render($scope1_id, "a3");
-			_patch_render($scope1_id, "a4", $fg__input_a && ">e");
+			_patch_render($scope1_id, "a4", _filled_guard($scope0_reason, 1) && ">e");
 			_patch_fill($scope1_id, "va5", x, 1);
 			_scope($scope1_id, {
 				e: _write_if($scope0_reason, 1) && x,

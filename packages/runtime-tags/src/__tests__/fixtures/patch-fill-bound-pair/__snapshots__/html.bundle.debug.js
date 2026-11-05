@@ -4,7 +4,7 @@ const $walks = "D%b l";
 const $setup = [[], ["__tests__/template.marko_0"]];
 _shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;D%b ;<main><!><button>+</button></main>" });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_a__OR__input_b = _write_guard($scope0_reason, 0), $fg__input_a = _filled_guard($scope0_reason, 1), $fg__input_b = _filled_guard($scope0_reason, 2), $sg__input_a = _server_guard($scope0_reason, 1), $sg__input_b = _server_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_a__OR__input_b = _write_guard($scope0_reason, 0), $sg__input_a = _server_guard($scope0_reason, 1), $fg__input_a = _filled_guard($scope0_reason, 1), $sg__input_b = _server_guard($scope0_reason, 2), $fg__input_b = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	$fg__input_a && _patch_write($scope0_id, "PatchMarkedWrite:input_a", input.a, !$sg__input_a);
 	$fg__input_b && _patch_write($scope0_id, "PatchMarkedWrite:input_b", input.b, !$sg__input_b);
@@ -17,10 +17,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope1_id = _scope_id();
 			_html(`<p>${_text_mark($scope1_id, "#text/0", fa() + ":" + fb(), $wg__input_a__OR__input_b)}</p>`);
 			_patch_render($scope1_id, "__tests__/template.marko_1_fa#0:6_fb#0:7/setup", [
-				$fg__input_a && ">fa",
-				$fg__input_a && ">input_a",
-				$fg__input_b && ">fb",
-				$fg__input_b && ">input_b"
+				_filled_guard($scope0_reason, 1) && ">fa",
+				_filled_guard($scope0_reason, 1) && ">input_a",
+				_filled_guard($scope0_reason, 2) && ">fb",
+				_filled_guard($scope0_reason, 2) && ">input_b"
 			], $scope0_reason, 0);
 			_scope($scope1_id, {}, "__tests__/template.marko", "5:4");
 			return 0;

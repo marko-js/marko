@@ -19,18 +19,18 @@ _shells({
 	c2: `c2${_shell_marker([[], []], ["a>", $setup$2])};${/*@__PURE__*/ ((_w0) => `0${_w0}&D l`)("D l")};${/*@__PURE__*/ ((_w0) => `${_w0}<p> </p>`)($template$1)}`
 });
 var list_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_items__OR__input_suffix = _client_guard($scope0_reason, 0), $fg__input_items = _filled_guard($scope0_reason, 1), $fg__input_suffix = _filled_guard($scope0_reason, 2), $cg__input_items = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_items__OR__input_suffix = _client_guard($scope0_reason, 0), $fg__input_suffix = _filled_guard($scope0_reason, 2), $cg__input_items = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_for_of(input.items, (item) => {
 		const $scope1_id = _scope_id();
-		$fg__input_items && _client_guard($scope0_reason, 2) && _patch_write($scope1_id, "xe", item, !_server_guard($scope0_reason, 1));
+		_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_write($scope1_id, "xe", item, !_server_guard($scope0_reason, 1));
 		_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
 		const $childScope = _peek_scope_id($scope1_id, "a", 0, $cg__input_items__OR__input_suffix && 1);
 		let label = labeler_default({ title: item + input.suffix });
 		$cg__input_items__OR__input_suffix && _var($scope1_id, "b", $childScope, "c0");
 		_patch_child_end();
 		_html(`<p>${_text_mark($scope1_id, "c", label, 1, $scope0_reason, 0)}</p>`);
-		_patch_render($scope1_id, "c1", [$fg__input_suffix && ">e", $fg__input_items && "e"], $scope0_reason, 0);
+		_patch_render($scope1_id, "c1", [_filled_guard($scope0_reason, 2) && ">e", _filled_guard($scope0_reason, 1) && "e"], $scope0_reason, 0);
 		_scope($scope1_id, {
 			e: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && item,
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id),

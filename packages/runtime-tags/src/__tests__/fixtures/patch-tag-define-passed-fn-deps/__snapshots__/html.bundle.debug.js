@@ -10,9 +10,9 @@ _shells({
 	"__tests__/tags/field.marko": `__tests__/tags/field.marko !#childScope/0>__tests__/tags/field.marko_1_attrs#6 #childScope/0>__tests__/tags/field.marko_1;${((_w0) => `b/${_w0}&/&b`)($TextField_content__walks)};${((_w0) => `<!>${_w0}<!>`)($TextField_content__template)}`
 });
 var field_default = _template("__tests__/tags/field.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_hint = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	$fg__input_hint && _patch_write($scope0_id, "PatchMarkedWrite:input_hint", input.hint, !_server_guard($scope0_reason, 1));
+	_filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_hint", input.hint, !_server_guard($scope0_reason, 1));
 	const TextField = { content: _content("__tests__/tags/field.marko_1*content", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $fg__value = _filled_guard($scope1_reason, 1), $fg__valueChange = _filled_guard($scope1_reason, 2);
@@ -48,11 +48,11 @@ var field_default = _template("__tests__/tags/field.marko", (input) => {
 		const $scope2_reason = _scope_reason(), $fg__log = _filled_guard($scope2_reason, 1), $fg__value2 = _filled_guard($scope2_reason, 2);
 		_patch_render($scope2_id, "__tests__/tags/field.marko_2_log#2_value#3/setup", [
 			$fg__log && "log",
-			$fg__input_hint && ">input_hint",
+			_filled_guard($scope0_reason, 1) && ">input_hint",
 			$fg__value2 && "value"
 		], $scope2_reason, 0) || _script($scope2_id, "__tests__/tags/field.marko_2_log#2_value#3", 0, ($fg__log || $fg__value2) && (_client_guard($scope2_reason, 1) || _client_guard($scope2_reason, 2) ? 2 : 1), [
 			$fg__log && "log",
-			$fg__input_hint && ">input_hint",
+			_filled_guard($scope0_reason, 1) && ">input_hint",
 			$fg__value2 && "value"
 		]);
 		_scope($scope2_id, {

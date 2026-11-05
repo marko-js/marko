@@ -30,7 +30,7 @@ _shells({
 	a3: "a3;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_rows = _write_guard($scope0_reason, 0), $wi__input_rows = _write_if($scope0_reason, 0), $fg__input_rows = _filled_guard($scope0_reason, 0), $sg__input_rows = _server_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_rows = _write_guard($scope0_reason, 0), $wi__input_rows = _write_if($scope0_reason, 0), $sg__input_rows = _server_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_for_of(input.rows, (row) => {
 		const $scope1_id = _scope_id();
@@ -42,9 +42,9 @@ var template_default = _template("a", (input) => {
 			_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope2_id, "a1", _client_guard($scope0_reason, 0));
 			_subscribe(_unfilled_if($scope0_reason, 0) && $for_content__row_label__closures, _scope($scope2_id, { _: $wi__input_rows && _scope_with_id($scope1_id) }));
 		}, $scope1_id, ($scope) => $scope0_page ? [{ e: row?.label }] : []), 0, $wg__input_rows, $scope0_reason, 0, 0, void 0, 0, 0, "a0");
-		$fg__input_rows && _patch_subscribers($scope1_id, "a2", "e");
+		_filled_guard($scope0_reason, 0) && _patch_subscribers($scope1_id, "a2", "e");
 		$wi__input_rows && _scope($scope1_id, { f: $for_content__row_label__closures });
-		$fg__input_rows && _client_branch_if("a0", $scope1_id) && _patch_write($scope1_id, "xe", row?.label, !$sg__input_rows);
+		_filled_guard($scope0_reason, 0) && _client_branch_if("a0", $scope1_id) && _patch_write($scope1_id, "xe", row?.label, !$sg__input_rows);
 	}, "id", $scope0_id, "a", 1, 1, 1, 0, 0, "a3", $scope0_reason, 0);
 	_scope($scope0_id, {});
 }, 1);
