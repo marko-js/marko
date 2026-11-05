@@ -34,7 +34,7 @@ var template_default = _template("a", (input) => {
 		}, $scope1_id, "a", 1, 1, 0, 0, 1);
 		_scope($scope1_id, {});
 	}, "id", $scope0_id, "a", 1, 1, 1, "</div>");
-	_html(`<button>rot</button>${_el_resume($scope0_id, "b")}`);
+	_html(`<button>rot</button>${_el_mark($scope0_id, "b")}`);
 	_script($scope0_id, "a0");
 	_scope($scope0_id, {
 		d: list?.[2],

@@ -12,7 +12,7 @@ var row_default = _template("c", (input) => {
 	const $childScope = _peek_scope_id();
 	let v = child_default({ x: input.x });
 	$wi__input_x && _var($scope0_id, "b", $childScope, "c0");
-	_html(`<p class=row>${_text_resume($scope0_id, "c", v, $wg__input_x)}</p>`);
+	_html(`<p class=row>${_text_mark($scope0_id, "c", v, $wg__input_x)}</p>`);
 	$wi__input_x && _scope($scope0_id, { a: _existing_scope($childScope) });
 });
 
@@ -29,13 +29,13 @@ var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let list = ["a", "b"];
-	_html(`<button></button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button></button>${_el_mark($scope0_id, "a")}`);
 	_for_of(list, (item) => {
 		const $scope1_id = _scope_id();
 		const $childScope = _peek_scope_id();
 		let v = child_default({ x: item });
 		_var($scope1_id, "b", $childScope, "a0");
-		_html(`<p>${_text_resume($scope1_id, "c", v)}</p>`);
+		_html(`<p>${_text_mark($scope1_id, "c", v)}</p>`);
 		_set_scope_reason(2);
 		const $childScope2 = _peek_scope_id();
 		row_default({ x: item });
@@ -50,7 +50,7 @@ var template_default = _template("a", (input) => {
 		const $childScope3 = _peek_scope_id();
 		let v = child_default({ x });
 		_var($scope2_id, "b", $childScope3, "a1");
-		_html(`<p class=define>${_text_resume($scope2_id, "c", v)}</p>`);
+		_html(`<p class=define>${_text_mark($scope2_id, "c", v)}</p>`);
 		_scope($scope2_id, { a: _existing_scope($childScope3) });
 	}, $scope0_id) };
 	_set_scope_reason(2);
@@ -62,7 +62,7 @@ var template_default = _template("a", (input) => {
 		const $childScope5 = _peek_scope_id();
 		let v = child_default({ x: value });
 		$wi__value && _var($scope3_id, "b", $childScope5, "a3");
-		_html(`<p class=wrap>${_text_resume($scope3_id, "c", v, $wg__value)}</p>`);
+		_html(`<p class=wrap>${_text_mark($scope3_id, "c", v, $wg__value)}</p>`);
 		$wi__value && _scope($scope3_id, { a: _existing_scope($childScope5) });
 	}, $scope0_id) });
 	_await($scope0_id, "e", resolveAfter("a", 1), (value) => {
@@ -83,7 +83,7 @@ var template_default = _template("a", (input) => {
 		const $childScope6 = _peek_scope_id();
 		let v = child_default({ x: err.message });
 		$wi__err_message && _var($scope6_id, "b", $childScope6, "a5");
-		_html(`<p class=catch>${_text_resume($scope6_id, "c", v, $wg__err_message)}</p>`);
+		_html(`<p class=catch>${_text_mark($scope6_id, "c", v, $wg__err_message)}</p>`);
 		$wi__err_message && _scope($scope6_id, { a: _existing_scope($childScope6) });
 	}, 0, "a6");
 	_script($scope0_id, "a7");

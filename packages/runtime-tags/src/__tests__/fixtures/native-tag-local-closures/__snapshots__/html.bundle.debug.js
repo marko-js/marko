@@ -10,7 +10,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope2_id = _scope_id();
 			_html("<div");
 			_attrs_content(item, "#div/0", $scope2_id, "div");
-			_html(`</div>${_el_resume($scope2_id, "#div/0")}`);
+			_html(`</div>${_el_mark($scope2_id, "#div/0")}`);
 			_script($scope2_id, "__tests__/template.marko_2_item#2");
 			_scope($scope2_id, {}, "__tests__/template.marko", "4:4", { "EventAttributes:#div/0": ["...item", "5:13"] });
 		}, 0, $scope1_id, "#text/0", 1, 1, 0, 0, 1);
@@ -22,13 +22,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		$item = attrTags($item, { content: _content("__tests__/template.marko_3*content", () => {
 			const $scope3_reason = _scope_reason(), $wg__i = _write_guard($scope3_reason, 0);
 			const $scope3_id = _scope_id();
-			_html(_text_resume($scope3_id, "#text/0", i, $wg__i));
+			_html(_text_mark($scope3_id, "#text/0", i, $wg__i));
 			_write_if($scope3_reason, 0) && _scope($scope3_id, {}, "__tests__/template.marko", "11:6");
 		}, $scope0_id) });
 	});
 	const $childScope = _peek_scope_id();
 	Child.content({ item: $item });
-	_html(`<button>Add</button>${_el_resume($scope0_id, "#button/1")}`);
+	_html(`<button>Add</button>${_el_mark($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		size,

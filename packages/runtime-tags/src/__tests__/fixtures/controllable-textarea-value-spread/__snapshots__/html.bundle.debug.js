@@ -3,7 +3,7 @@ var my_textarea_default = _template("__tests__/tags/my-textarea.marko", (input) 
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	const $textarea_input = input;
-	_html(`<textarea${_attrs($textarea_input, "#textarea/0", $scope0_id, "textarea")}>${_attrs_textarea_value($scope0_id, "#textarea/0", $textarea_input)}</textarea>${_el_resume($scope0_id, "#textarea/0")}`);
+	_html(`<textarea${_attrs($textarea_input, "#textarea/0", $scope0_id, "textarea")}>${_attrs_textarea_value($scope0_id, "#textarea/0", $textarea_input)}</textarea>${_el_mark($scope0_id, "#textarea/0")}`);
 	_script($scope0_id, "__tests__/tags/my-textarea.marko_0_input#2");
 	_scope($scope0_id, {}, "__tests__/tags/my-textarea.marko", 0, {
 		"ControlledHandler:#textarea/0": ["...input", "1:14"],
@@ -23,6 +23,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			value = _new_value;
 		}, "__tests__/template.marko_0/valueChange", $scope0_id)
 	});
-	_html(`<span>${_text_resume($scope0_id, "#text/1", value)}</span>`);
+	_html(`<span>${_text_mark($scope0_id, "#text/1", value)}</span>`);
 	_scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", 0);
 }, 1);

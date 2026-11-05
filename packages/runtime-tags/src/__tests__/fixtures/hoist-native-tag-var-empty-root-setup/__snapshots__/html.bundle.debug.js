@@ -5,7 +5,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_html(`<div>shown</div>${_el_resume($scope1_id, "#div/0")}`);
+			_html(`<div>shown</div>${_el_mark($scope1_id, "#div/0")}`);
 			_scope($scope1_id, {}, "__tests__/template.marko", "1:2");
 			return 0;
 		}
@@ -13,7 +13,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_if(() => {
 		if (input.editable) {
 			const $scope2_id = _scope_id();
-			_html(`<button>click</button>${_el_resume($scope2_id, "#button/0")}`);
+			_html(`<button>click</button>${_el_mark($scope2_id, "#button/0")}`);
 			_script($scope2_id, "__tests__/template.marko_2");
 			_scope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:2");
 			return 0;

@@ -10,7 +10,7 @@ import { forEach } from "../../util/optional";
 import { callRuntime, registerRuntimeValue } from "../../util/runtime";
 import {
   getScopeAccessor,
-  getSectionInstancesAccessorLiteral,
+  getSectionScopesAccessorLiteral,
 } from "../../util/scope-accessor";
 import { scopeIdentifier } from "../../util/scope-read";
 import { isSectionRendererElided } from "../../util/section-renderer";
@@ -26,7 +26,7 @@ import {
 import {
   addStatement,
   buildSignalFn,
-  getResumeRegisterId,
+  getResumeRegistryId,
   getSetup,
   getSignal,
   initValue,
@@ -121,7 +121,7 @@ export default {
               ]);
             } else {
               const registerReason = getRendererReason(childSection);
-              const registerId = getResumeRegisterId(childSection, "content");
+              const registryId = getResumeRegistryId(childSection, "content");
               const objProps: t.ObjectExpression["properties"] = [];
               forEach(childSection.localClosures, (closure) => {
                 const closureSignal = getSignal(childSection, closure);
@@ -147,7 +147,7 @@ export default {
               const registerWrapper = !!(registerReason && objProps.length);
               let renderer: t.Expression = callRuntime(
                 "_content",
-                t.stringLiteral(registerId),
+                t.stringLiteral(registryId),
                 ...trimEmptyArgs([
                   writes,
                   walks,
@@ -157,7 +157,7 @@ export default {
                     tagParamsIdentifier,
                   ),
                   childSection.hoisted || childSection.isHoistThrough
-                    ? getSectionInstancesAccessorLiteral(childSection)
+                    ? getSectionScopesAccessorLiteral(childSection)
                     : undefined,
                 ]),
               );
@@ -204,7 +204,7 @@ export default {
                 program.node.body.push(
                   t.expressionStatement(
                     registerRuntimeValue(
-                      registerId,
+                      registryId,
                       t.identifier(childSection.name),
                     ),
                   ),

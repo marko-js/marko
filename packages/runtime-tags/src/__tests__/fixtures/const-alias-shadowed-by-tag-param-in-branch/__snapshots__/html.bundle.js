@@ -8,7 +8,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		forOf([1], (input) => {
 			const $scope2_id = _scope_id();
-			_html(`<span>${_text_resume($scope2_id, "a", value, $wg__input_value)}${_escape(input)}</span>`);
+			_html(`<span>${_text_mark($scope2_id, "a", value, $wg__input_value)}${_escape(input)}</span>`);
 			$wi__input_value && _subscribe($value__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "a0", $wg__input_value);
 		});
 		$wi__input_value && _scope($scope1_id, { _: _scope_with_id($scope0_id) });

@@ -13,10 +13,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html("</div><div>hello");
 	_for_of(list, (x) => {
 		const $scope2_id = _scope_id();
-		_html(_text_resume($scope2_id, "#text/0", x));
+		_html(_text_mark($scope2_id, "#text/0", x));
 		_scope($scope2_id, {}, "__tests__/template.marko", "4:12");
 	}, 0, $scope0_id, "#text/1");
-	_html(`</div><button>drop</button>${_el_resume($scope0_id, "#button/2")}`);
+	_html(`</div><button>drop</button>${_el_mark($scope0_id, "#button/2")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		list,

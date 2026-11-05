@@ -24,10 +24,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			label: "c"
 		}
 	];
-	_html(`<button class=select>select</button>${_el_resume($scope0_id, "#button/0")}<button class=hover>hover</button>${_el_resume($scope0_id, "#button/1")}<ul>`);
+	_html(`<button class=select>select</button>${_el_mark($scope0_id, "#button/0")}<button class=hover>hover</button>${_el_mark($scope0_id, "#button/1")}<ul>`);
 	_for_of(rows, (row) => {
 		const $scope1_id = _scope_id();
-		_html(`<li${$class[(selected === row.id ? 1 : 0) + (hovered === row.id ? 2 : 0)]}>${_escape(row.label)}</li>${_el_resume($scope1_id, "#li/0")}`);
+		_html(`<li${$class[(selected === row.id ? 1 : 0) + (hovered === row.id ? 2 : 0)]}>${_escape(row.label)}</li>${_el_mark($scope1_id, "#li/0")}`);
 		_scope($scope1_id, {
 			"#LoopKey": row?.id,
 			_: _scope_with_id($scope0_id)

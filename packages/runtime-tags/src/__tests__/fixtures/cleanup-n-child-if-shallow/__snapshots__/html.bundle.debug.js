@@ -13,7 +13,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let show = true;
-	_html(`<button>Toggle</button>${_el_resume($scope0_id, "#button/0")}<div></div>${_el_resume($scope0_id, "#div/1")}`);
+	_html(`<button>Toggle</button>${_el_mark($scope0_id, "#button/0")}<div></div>${_el_mark($scope0_id, "#div/1")}`);
 	_if(() => {
 		if (show) {
 			const $scope1_id = _scope_id();

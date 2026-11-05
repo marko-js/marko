@@ -26,7 +26,7 @@ var ui_select_default = _template("__tests__/tags/ui-select.marko", (input) => {
 				const $scope2_id = _scope_id();
 				_html(`<span${_attrs(c, "#span/0", $scope2_id, "span")}>`);
 				_dynamic_tag($scope2_id, "#text/1", o.content, {}, 0, 0, $wg__input_option);
-				_html(`</span>${_el_resume($scope2_id, "#span/0")}`);
+				_html(`</span>${_el_mark($scope2_id, "#span/0")}`);
 				_script($scope2_id, "__tests__/tags/ui-select.marko_2_c#1:2");
 				_scope($scope2_id, { _: _write_if($scope1_reason, 0) && _scope_with_id($scope1_id) }, "__tests__/tags/ui-select.marko", "2:4", { "EventAttributes:#span/0": ["...c", "3:14"] });
 			}, 0, $scope1_id, "#text/0", $wg__input_option || _write_guard($scope1_reason, 0), $wg__input_option, 0, 0, 1);

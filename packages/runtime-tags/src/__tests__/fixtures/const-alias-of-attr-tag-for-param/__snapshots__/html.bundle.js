@@ -20,7 +20,7 @@ var template_default = _template("a", (input) => {
 		$row = attrTags($row, { content: _content("a0", () => {
 			const $scope1_reason = _scope_reason(), $wg__x = _write_guard($scope1_reason, 0);
 			const $scope1_id = _scope_id();
-			_html(`<span>${_text_resume($scope1_id, "a", item, $wg__x)}</span>`);
+			_html(`<span>${_text_mark($scope1_id, "a", item, $wg__x)}</span>`);
 			_write_if($scope1_reason, 0) && _scope($scope1_id, {});
 		}, $scope0_id) });
 	});

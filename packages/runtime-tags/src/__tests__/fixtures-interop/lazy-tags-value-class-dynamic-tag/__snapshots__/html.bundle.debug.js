@@ -3,7 +3,7 @@ var lazy_default = _template("__tests__/tags/lazy.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let n = 0;
-	_html(`<button>${_text_resume($scope0_id, "#text/1", input.value, _write_guard($scope0_reason, 0))} ${_text_resume($scope0_id, "#text/2", n, 2)}</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button>${_text_mark($scope0_id, "#text/1", input.value, _write_guard($scope0_reason, 0))} ${_text_mark($scope0_id, "#text/2", n, 2)}</button>${_el_mark($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/tags/lazy.marko_0");
 	_scope($scope0_id, { n }, "__tests__/tags/lazy.marko", 0, { n: "2:6" });
 });

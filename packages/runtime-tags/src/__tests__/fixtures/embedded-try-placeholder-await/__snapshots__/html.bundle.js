@@ -4,11 +4,11 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	const $value__closures = /* @__PURE__ */ new Set();
 	let value = 1;
-	_html(`<button>inc</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button>inc</button>${_el_mark($scope0_id, "a")}`);
 	_try($scope0_id, "b", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
-		_html(`<p>b ${_text_resume($scope1_id, "a", value, 2)}</p>`);
+		_html(`<p>b ${_text_mark($scope1_id, "a", value, 2)}</p>`);
 		_await($scope1_id, "b", resolveAfter("x", 1), (v) => {
 			_scope_id();
 			_html(_escape(v));

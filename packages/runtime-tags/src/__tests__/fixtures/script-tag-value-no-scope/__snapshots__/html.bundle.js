@@ -6,7 +6,7 @@ var template_default = _template("a", (input) => {
 		if (arg) throw new Error(`Expected no argument to be passed, but received "${typeof arg}".`);
 		((el) => el())(_el_read_error).textContent = typeof arg;
 	}, "a0", $scope0_id);
-	_html(`<div></div>${_el_resume($scope0_id, "a")}`);
+	_html(`<div></div>${_el_mark($scope0_id, "a")}`);
 	_script($scope0_id, "a1");
 	_scope($scope0_id, { b: setText });
 }, 1);

@@ -18,7 +18,7 @@ var template_default = _template("a", (input) => {
 				return 0;
 			}
 		}, $scope1_id, "a", $wg__depth, $wg__depth);
-		_html(`<button>${_text_resume($scope1_id, "c", depth, $wg__depth)}</button>${_el_resume($scope1_id, "b")}`);
+		_html(`<button>${_text_mark($scope1_id, "c", depth, $wg__depth)}</button>${_el_mark($scope1_id, "b")}`);
 		_script($scope1_id, "a1");
 		_scope($scope1_id, { f: depth });
 	}, $scope0_id) };

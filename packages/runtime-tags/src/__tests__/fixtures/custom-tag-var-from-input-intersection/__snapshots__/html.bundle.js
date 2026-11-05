@@ -24,7 +24,7 @@ var template_default = _template("a", (input) => {
 		y
 	});
 	_var($scope0_id, "b", $childScope, "a0");
-	_html(`<button>${_text_resume($scope0_id, "d", v + ":0")}</button>${_el_resume($scope0_id, "c")}`);
+	_html(`<button>${_text_mark($scope0_id, "d", v + ":0")}</button>${_el_mark($scope0_id, "c")}`);
 	_script($scope0_id, "a1");
 	_scope($scope0_id, {
 		e: x,

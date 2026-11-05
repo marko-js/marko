@@ -1,0 +1,18 @@
+<button id=add>add</button><!--M_$1 a--><button
+  id=grow>grow</button><!--M_$1 b-->
+<ul><!--M_[-->
+  <t hidden>
+    <li>a<!--M_$2 a--></li>
+  </t><!--M_|2 b 3--><!--M_[2-->
+  <li>bb<!--M_$4 a--></li><!--M_|4 b 5--><!--M_[4-->
+  <t hidden>
+    <li>c<!--M_$6 a--></li>
+  </t><!--M_|6 b 7--><!--M_)1 c 6-->
+</ul>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+    d: ["a", "bb", "c"]
+  }], "a0 1"];
+  M._.w()
+</script>

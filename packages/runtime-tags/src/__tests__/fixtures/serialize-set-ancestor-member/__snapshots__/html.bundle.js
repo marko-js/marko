@@ -10,7 +10,7 @@ var template_default = _template("a", (input) => {
 		root.set = set;
 		return root;
 	})();
-	_html(`<button>${_text_resume($scope0_id, "b", checked)}</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button>${_text_mark($scope0_id, "b", checked)}</button>${_el_mark($scope0_id, "a")}`);
 	_script($scope0_id, "a0");
 	_scope($scope0_id, { d: root });
 }, 1);

@@ -6,7 +6,7 @@ var tabs_default = _template("b", (input) => {
 	const tabs = [...input.tab ?? []];
 	_for_of(tabs, (tab, j) => {
 		const $scope1_id = _scope_id();
-		_html(`<button${_attr("data-tab", j)}>${_text_resume($scope1_id, "b", tab.title, $wg__input_tab)}</button>${_el_resume($scope1_id, "a")}`);
+		_html(`<button${_attr("data-tab", j)}>${_text_mark($scope1_id, "b", tab.title, $wg__input_tab)}</button>${_el_mark($scope1_id, "a")}`);
 		_script($scope1_id, "b0");
 		_scope($scope1_id, {
 			M: j,
@@ -34,7 +34,7 @@ var template_default = _template("a", (input) => {
 				const $scope1_reason = _scope_reason();
 				const $scope1_id = _scope_id();
 				let count = 0;
-				_html(`<button class=inc>${_text_resume($scope1_id, "b", t, _write_guard($scope1_reason, 0))}: ${_text_resume($scope1_id, "c", count, 2)}</button>${_el_resume($scope1_id, "a")}`);
+				_html(`<button class=inc>${_text_mark($scope1_id, "b", t, _write_guard($scope1_reason, 0))}: ${_text_mark($scope1_id, "c", count, 2)}</button>${_el_mark($scope1_id, "a")}`);
 				_script($scope1_id, "a0");
 				_scope($scope1_id, { e: count });
 			}, $scope0_id, () => [{ 3: t }])

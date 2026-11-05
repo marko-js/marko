@@ -109,23 +109,25 @@ export function removeAndDestroyBranch(branch: BranchScope) {
   );
 }
 
+// Inserts a detached branch: alone in the DocumentFragment it was cloned or
+// parked in, or a single node with no parent.
 export function insertBranchBefore(
   branch: BranchScope,
   parentNode: ParentNode,
   nextSibling: Node | null,
 ) {
-  insertChildNodes(
-    parentNode,
+  parentNode.insertBefore(
+    branch[AccessorProp.StartNode].parentNode || branch[AccessorProp.StartNode],
     nextSibling,
-    branch[AccessorProp.StartNode],
-    branch[AccessorProp.EndNode],
   );
 }
 
-export function tempDetachBranch(branch: BranchScope) {
-  // Park the range in a DocumentFragment; the namespaceURI shim preserves the
-  // namespace for branches created while it is detached.
-  const fragment = new DocumentFragment() as any;
+// Parks the range in a DocumentFragment, to insert at once. Its namespaceURI
+// shim keeps the namespace for branches created while it is detached.
+export function detachBranch(branch: BranchScope) {
+  const fragment = new DocumentFragment() as DocumentFragment & {
+    namespaceURI: string | null;
+  };
   fragment.namespaceURI = (
     branch[AccessorProp.StartNode].parentNode as Element
   ).namespaceURI;

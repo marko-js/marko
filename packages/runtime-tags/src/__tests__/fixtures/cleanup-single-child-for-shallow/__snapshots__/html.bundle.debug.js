@@ -2,7 +2,7 @@
 var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_name = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html(`<div>${_text_resume($scope0_id, "#text/0", input.name, $wg__input_name)}</div>`);
+	_html(`<div>${_text_mark($scope0_id, "#text/0", input.name, $wg__input_name)}</div>`);
 	_script($scope0_id, "__tests__/tags/child.marko_0_name#3_write#4", $wg__input_name);
 	_scope($scope0_id, {
 		name: input.name,
@@ -26,7 +26,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const write = _resume(function(msg) {
 		((el) => el())(_el_read_error).innerHTML += "\n" + msg;
 	}, "__tests__/template.marko_0/write", $scope0_id);
-	_html(`<button>Toggle</button>${_el_resume($scope0_id, "#button/0")}<div></div>${_el_resume($scope0_id, "#div/1")}`);
+	_html(`<button>Toggle</button>${_el_mark($scope0_id, "#button/0")}<div></div>${_el_mark($scope0_id, "#div/1")}`);
 	_for_of(items, (item) => {
 		const $scope1_id = _scope_id();
 		_set_scope_reason(2);

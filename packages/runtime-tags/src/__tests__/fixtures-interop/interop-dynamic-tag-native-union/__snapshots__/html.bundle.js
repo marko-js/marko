@@ -3,7 +3,7 @@ var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 0;
-	_html(`<button id=tags>${_text_resume($scope0_id, "b", count)}</button>${_el_resume($scope0_id, "a")}<section>static: not registered</section>`);
+	_html(`<button id=tags>${_text_mark($scope0_id, "b", count)}</button>${_el_mark($scope0_id, "a")}<section>static: not registered</section>`);
 	_dynamic_tag($scope0_id, "c", "h1", {}, _content("a0", () => {
 		_scope_id();
 		_scope_reason();

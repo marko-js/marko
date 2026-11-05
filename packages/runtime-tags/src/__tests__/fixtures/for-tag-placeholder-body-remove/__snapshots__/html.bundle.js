@@ -13,10 +13,10 @@ var template_default = _template("a", (input) => {
 	_html("</div><div>hello");
 	_for_of(list, (x) => {
 		const $scope2_id = _scope_id();
-		_html(_text_resume($scope2_id, "a", x));
+		_html(_text_mark($scope2_id, "a", x));
 		_scope($scope2_id, {});
 	}, 0, $scope0_id, "b");
-	_html(`</div><button>drop</button>${_el_resume($scope0_id, "c")}`);
+	_html(`</div><button>drop</button>${_el_mark($scope0_id, "c")}`);
 	_script($scope0_id, "a0");
 	_scope($scope0_id, {
 		d: list,

@@ -10,7 +10,7 @@ var template_default = _template("a", (input) => {
 			const $scope2_id = _scope_id();
 			_html("<div");
 			_attrs_content(item, "a", $scope2_id, "div");
-			_html(`</div>${_el_resume($scope2_id, "a")}`);
+			_html(`</div>${_el_mark($scope2_id, "a")}`);
 			_script($scope2_id, "a0");
 			_scope($scope2_id, {});
 		}, 0, $scope1_id, "a", 1, 1, 0, 0, 1);
@@ -22,13 +22,13 @@ var template_default = _template("a", (input) => {
 		$item = attrTags($item, { content: _content("a2", () => {
 			const $scope3_reason = _scope_reason(), $wg__i = _write_guard($scope3_reason, 0);
 			const $scope3_id = _scope_id();
-			_html(_text_resume($scope3_id, "a", i, $wg__i));
+			_html(_text_mark($scope3_id, "a", i, $wg__i));
 			_write_if($scope3_reason, 0) && _scope($scope3_id, {});
 		}, $scope0_id) });
 	});
 	const $childScope = _peek_scope_id();
 	Child.content({ item: $item });
-	_html(`<button>Add</button>${_el_resume($scope0_id, "b")}`);
+	_html(`<button>Add</button>${_el_mark($scope0_id, "b")}`);
 	_script($scope0_id, "a3");
 	_scope($scope0_id, {
 		c: size,

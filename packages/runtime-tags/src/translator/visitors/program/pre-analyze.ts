@@ -216,7 +216,7 @@ function buildChangeHandlerAttr(
 ): t.MarkoAttribute {
   const attrName = attr.name;
   const changeAttrName = attrName + "Change";
-  let modifier: undefined | t.Identifier;
+  let refiningFn: undefined | t.Identifier;
   if (attr.modifier != null) {
     if (!t.isValidIdentifier(attr.modifier)) {
       throw tag.hub.buildError(
@@ -236,7 +236,7 @@ function buildChangeHandlerAttr(
         "Bound attribute refinement shorthand must be a valid JavaScript identifier.",
       );
     }
-    modifier = withPreviousLocation(t.identifier(attr.modifier), attr);
+    refiningFn = withPreviousLocation(t.identifier(attr.modifier), attr);
   }
 
   if (t.isIdentifier(attr.value)) {
@@ -244,24 +244,24 @@ function buildChangeHandlerAttr(
     if (!binding)
       return t.markoAttribute(
         changeAttrName,
-        buildChangeHandlerFunction(attr.value, modifier),
+        buildChangeHandlerFunction(attr.value, refiningFn),
       );
 
-    const modifierKey = modifier?.name ?? "";
-    let handlerByModifier = BINDING_CHANGE_HANDLER.get(binding.identifier);
-    if (!handlerByModifier) {
+    const refiningFnKey = refiningFn?.name ?? "";
+    let handlerByRefiningFn = BINDING_CHANGE_HANDLER.get(binding.identifier);
+    if (!handlerByRefiningFn) {
       BINDING_CHANGE_HANDLER.set(
         binding.identifier,
-        (handlerByModifier = new Map()),
+        (handlerByRefiningFn = new Map()),
       );
     }
-    const existingChangedAttr = handlerByModifier.get(modifierKey);
+    const existingChangedAttr = handlerByRefiningFn.get(refiningFnKey);
     if (!existingChangedAttr) {
       const bindingIdentifierPath =
         binding.path.getOuterBindingIdentifierPaths()[binding.identifier.name];
       let changeAttrExpr: undefined | t.Expression = bindingIdentifierPath
         ? bindingIdentifierPath.parentPath === binding.path
-          ? buildChangeHandlerFunction(attr.value, modifier)
+          ? buildChangeHandlerFunction(attr.value, refiningFn)
           : bindingIdentifierPath.parentPath!.isObjectProperty()
             ? ensureDestructuredChangeHandler(bindingIdentifierPath.parentPath!)
             : undefined
@@ -280,11 +280,11 @@ function buildChangeHandlerAttr(
         );
       }
 
-      if (modifier && t.isIdentifier(changeAttrExpr)) {
+      if (refiningFn && t.isIdentifier(changeAttrExpr)) {
         changeAttrExpr = t.logicalExpression(
           "&&",
           changeAttrExpr,
-          buildModifierForwarder(t.cloneNode(changeAttrExpr), modifier),
+          buildRefiningFnForwarder(t.cloneNode(changeAttrExpr), refiningFn),
         );
       }
 
@@ -292,7 +292,7 @@ function buildChangeHandlerAttr(
         changeAttrName,
         changeAttrExpr,
       );
-      handlerByModifier.set(modifierKey, changeHandlerAttr);
+      handlerByRefiningFn.set(refiningFnKey, changeHandlerAttr);
       return changeHandlerAttr;
     }
 
@@ -319,8 +319,8 @@ function buildChangeHandlerAttr(
       t.identifier(changeHandlerId),
       existingChangedAttr.value,
     );
-    handlerByModifier.set(
-      modifierKey,
+    handlerByRefiningFn.set(
+      refiningFnKey,
       (existingChangedAttr.value = t.identifier(changeHandlerId)),
     );
 
@@ -354,13 +354,13 @@ function buildChangeHandlerAttr(
         ? t.optionalMemberExpression(memberObj, memberProp, computed, true)
         : t.memberExpression(memberObj, memberProp, computed);
 
-      if (modifier) {
+      if (refiningFn) {
         changeAttrExpr = t.logicalExpression(
           "&&",
           changeAttrExpr,
-          buildModifierForwarder(
+          buildRefiningFnForwarder(
             t.memberExpression(memberObj, memberProp, computed),
-            modifier,
+            refiningFn,
           ),
         );
       }
@@ -374,9 +374,9 @@ function buildChangeHandlerAttr(
   );
 }
 
-function buildModifierForwarder(
+function buildRefiningFnForwarder(
   changeHandler: t.Expression,
-  modifier: t.Identifier,
+  refiningFn: t.Identifier,
 ) {
   const newValueId = generateUid("next");
   return t.arrowFunctionExpression(
@@ -384,7 +384,7 @@ function buildModifierForwarder(
     t.blockStatement([
       t.expressionStatement(
         t.callExpression(changeHandler, [
-          t.callExpression(t.cloneNode(modifier), [t.identifier(newValueId)]),
+          t.callExpression(t.cloneNode(refiningFn), [t.identifier(newValueId)]),
         ]),
       ),
     ]),
@@ -393,12 +393,12 @@ function buildModifierForwarder(
 
 function buildChangeHandlerFunction(
   id: t.Identifier,
-  modifier: undefined | t.Identifier,
+  refiningFn: undefined | t.Identifier,
 ) {
   const newId = "_new_" + id.name;
   let newValue: t.Expression = withPreviousLocation(t.identifier(newId), id);
-  if (modifier) {
-    newValue = t.callExpression(modifier, [newValue]);
+  if (refiningFn) {
+    newValue = t.callExpression(refiningFn, [newValue]);
   }
   return t.arrowFunctionExpression(
     [withPreviousLocation(t.identifier(newId), id)],

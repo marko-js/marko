@@ -20,7 +20,7 @@ var template_default = _template("a", (input) => {
 	const $labelspan_scope2 = _peek_scope_id();
 	let other = _dynamic_tag($scope0_id, "e", false, {});
 	_var($scope0_id, "f", $labelspan_scope2, "a4");
-	_html(`<p>${_text_resume($scope0_id, "g", typeof btn)} ${_text_resume($scope0_id, "h", typeof value, 2)} ${_text_resume($scope0_id, "i", typeof other, 2)}</p><input${_attr_input_value($scope0_id, "j", label)}>${_el_resume($scope0_id, "j")}<button id=toggle></button>${_el_resume($scope0_id, "k")}`);
+	_html(`<p>${_text_mark($scope0_id, "g", typeof btn)} ${_text_mark($scope0_id, "h", typeof value, 2)} ${_text_mark($scope0_id, "i", typeof other, 2)}</p><input${_attr_input_value($scope0_id, "j", label)}>${_el_mark($scope0_id, "j")}<button id=toggle></button>${_el_mark($scope0_id, "k")}`);
 	_script($scope0_id, "a5");
 	_scope($scope0_id, { l: label });
 }, 1);

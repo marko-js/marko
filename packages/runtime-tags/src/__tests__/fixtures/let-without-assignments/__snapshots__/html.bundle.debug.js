@@ -8,7 +8,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_html(`<li>${_escape(i)}</li>`);
 	});
-	_html(`</ul>${_el_resume($scope0_id, "#ul/0")}`);
+	_html(`</ul>${_el_mark($scope0_id, "#ul/0")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

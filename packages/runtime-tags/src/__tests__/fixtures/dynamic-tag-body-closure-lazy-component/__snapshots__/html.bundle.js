@@ -4,7 +4,7 @@ var card_default = _template("b", (input) => {
 	_write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let open = false;
-	_html(`<button id=toggle>toggle</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button id=toggle>toggle</button>${_el_mark($scope0_id, "a")}`);
 	_if(() => {}, $scope0_id, "b");
 	_script($scope0_id, "b0");
 	_scope($scope0_id, {
@@ -21,7 +21,7 @@ var heading_default = _template("c", (input) => {
 	_dynamic_tag($scope0_id, "a", input.type, {}, _content_resume("c0", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
-		_html(`depth ${_text_resume($scope1_id, "a", input.depth, $wg__input_depth * 2)}`);
+		_html(`depth ${_text_mark($scope1_id, "a", input.depth, $wg__input_depth * 2)}`);
 		$wi__input_type__OR__input_depth && _subscribe($wi__input_depth && $input_depth__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "c1", $wg__input_depth);
 		$wg__input_depth || $wi__input_type__OR__input_depth && _resume_branch($scope1_id);
 	}, $scope0_id, ($scope) => [{ e: input.depth }]), 0, $wg__input_type);
@@ -37,7 +37,7 @@ var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let depth = 0;
-	_html(`<button id=inc>inc</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button id=inc>inc</button>${_el_mark($scope0_id, "a")}`);
 	_set_scope_reason(34);
 	const $childScope = _peek_scope_id();
 	heading_default({

@@ -3,7 +3,7 @@ var grand_child_default = _template("b", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let copy = input.obj;
-	_html(`<button class=grand>grand:${_text_resume($scope0_id, "b", copy.name, 2)}</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button class=grand>grand:${_text_mark($scope0_id, "b", copy.name, 2)}</button>${_el_mark($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
 	_scope($scope0_id, { f: copy });
 });
@@ -14,7 +14,7 @@ var child_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let obj = { name: "shared" };
-	_html(`<button class=child>child:${_text_resume($scope0_id, "b", obj.name, 2)}</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button class=child>child:${_text_mark($scope0_id, "b", obj.name, 2)}</button>${_el_mark($scope0_id, "a")}`);
 	const $childScope = _peek_scope_id();
 	$GrandChild_withLoadAssets({ obj });
 	_script($scope0_id, "a0");

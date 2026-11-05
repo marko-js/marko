@@ -24,17 +24,17 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const $n__closures = new Set();
 	let n = 1;
-	_html(`<button>inc</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button>inc</button>${_el_mark($scope0_id, "#button/0")}`);
 	title_default({ content: _content("__tests__/template.marko_1*content", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
-		_html(`title ${_text_resume($scope1_id, "#text/0", n, 2)}`);
+		_html(`title ${_text_mark($scope1_id, "#text/0", n, 2)}`);
 		_subscribe($n__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:2"), "__tests__/template.marko_1_n#0:3/subscribe");
 	}, $scope0_id) });
 	textarea_default({ content: _content("__tests__/template.marko_2*content", () => {
 		_scope_reason();
 		const $scope2_id = _scope_id();
-		_html(`textarea ${_text_resume($scope2_id, "#text/0", n, 2)}`);
+		_html(`textarea ${_text_mark($scope2_id, "#text/0", n, 2)}`);
 		_subscribe($n__closures, _scope($scope2_id, {
 			_: _scope_with_id($scope0_id),
 			"ClosureSignalIndex:n/4": 1

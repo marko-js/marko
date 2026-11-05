@@ -4,14 +4,14 @@ var my_div_default = _template("__tests__/tags/my-div.marko", (input) => {
 	const $scope0_id = _scope_id();
 	_html("<div");
 	_attrs_content(input, "#div/0", $scope0_id, "div");
-	_html(`</div>${_el_resume($scope0_id, "#div/0")}<button`);
+	_html(`</div>${_el_mark($scope0_id, "#div/0")}<button`);
 	_attrs_content({
 		foo: 1,
 		...input
 	}, "#button/1", $scope0_id, "button");
-	_html(`</button>${_el_resume($scope0_id, "#button/1")}<span${_attrs(input, "#span/2", $scope0_id, "span")}>Overridden</span>${_el_resume($scope0_id, "#span/2")}<output${_attrs(input, "#output/3", $scope0_id, "output")}>`);
+	_html(`</button>${_el_mark($scope0_id, "#button/1")}<span${_attrs(input, "#span/2", $scope0_id, "span")}>Overridden</span>${_el_mark($scope0_id, "#span/2")}<output${_attrs(input, "#output/3", $scope0_id, "output")}>`);
 	_attr_content("#output/3", $scope0_id, undefined);
-	_html(`</output>${_el_resume($scope0_id, "#output/3")}`);
+	_html(`</output>${_el_mark($scope0_id, "#output/3")}`);
 	const CustomContent = { content: _content_resume("__tests__/tags/my-div.marko_1*content", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
@@ -19,12 +19,12 @@ var my_div_default = _template("__tests__/tags/my-div.marko", (input) => {
 	}, $scope0_id) };
 	_html(`<strong${_attrs(input, "#strong/4", $scope0_id, "strong")}>`);
 	_attr_content("#strong/4", $scope0_id, CustomContent.content);
-	_html(`</strong>${_el_resume($scope0_id, "#strong/4")}<p`);
+	_html(`</strong>${_el_mark($scope0_id, "#strong/4")}<p`);
 	_attrs_content({
 		content: CustomContent.content,
 		...input
 	}, "#p/5", $scope0_id, "p");
-	_html(`</p>${_el_resume($scope0_id, "#p/5")}<em>`);
+	_html(`</p>${_el_mark($scope0_id, "#p/5")}<em>`);
 	_attr_content("#em/6", $scope0_id, CustomContent, 0);
 	_html("</em>");
 	_script($scope0_id, "__tests__/tags/my-div.marko_0_input#8_CustomContent_content#10");

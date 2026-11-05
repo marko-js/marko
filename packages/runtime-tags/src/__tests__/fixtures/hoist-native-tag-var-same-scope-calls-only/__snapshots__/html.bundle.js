@@ -13,7 +13,7 @@ var template_default = _template("a", (input) => {
 	child_default({ action: _resume(function() {
 		(($el) => $el())(_el_read_error).classList.add("child1");
 	}, "a0", $scope0_id) });
-	_html(`<div></div>${_el_resume($scope0_id, "b")}`);
+	_html(`<div></div>${_el_mark($scope0_id, "b")}`);
 	child_default({ action: _resume(function() {
 		(($el) => $el())(_el_read_error).classList.add("child2");
 	}, "a1", $scope0_id) });

@@ -19,7 +19,7 @@ var template_default = _template("a", (input) => {
 	child_default({ content: _content("a3", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
-		_html(`<span></span>${_el_resume($scope1_id, "a")}`);
+		_html(`<span></span>${_el_mark($scope1_id, "a")}`);
 		_subscribe($child_content__subscribers, _scope($scope1_id, {}));
 	}, $scope0_id) });
 	_dynamic_tag($scope0_id, "b", input.show ? child_default : null, {}, _content("a5", () => {
@@ -30,7 +30,7 @@ var template_default = _template("a", (input) => {
 		child_default({ content: _content("a4", () => {
 			_scope_reason();
 			const $scope3_id = _scope_id();
-			_html(`<div></div>${_el_resume($scope3_id, "a")}`);
+			_html(`<div></div>${_el_mark($scope3_id, "a")}`);
 			_subscribe($child_content2__subscribers, _scope($scope3_id, {}));
 		}, $scope2_id) });
 		_script($scope2_id, "a6", 0);
@@ -39,7 +39,7 @@ var template_default = _template("a", (input) => {
 	_dynamic_tag($scope0_id, "c", input.show ? "section" : null, {}, _content("a7", () => {
 		const $scope4_id = _scope_id();
 		_scope_reason();
-		_html(`<p></p>${_el_resume($scope4_id, "a")}`);
+		_html(`<p></p>${_el_mark($scope4_id, "a")}`);
 		_subscribe($inputshowsectionnull_content__subscribers, _scope($scope4_id, {}));
 	}, $scope0_id), 0, $wg__input_show);
 	_script($scope0_id, "a8", $wg__input_show);

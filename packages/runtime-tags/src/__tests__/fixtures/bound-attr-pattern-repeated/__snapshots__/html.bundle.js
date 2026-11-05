@@ -5,7 +5,7 @@ var template_default = _template("a", (input) => {
 	const Wrap = { content: _content("a0", ({ "aChange": $aChange, a }) => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
-		_html(`<input${_attr_input_value($scope1_id, "a", a, $aChange)}>${_el_resume($scope1_id, "a")}<input${_attr_input_value($scope1_id, "b", a, $aChange)}>${_el_resume($scope1_id, "b")}<input${_attr_input_value($scope1_id, "c", a, $aChange)}>${_el_resume($scope1_id, "c")}`);
+		_html(`<input${_attr_input_value($scope1_id, "a", a, $aChange)}>${_el_mark($scope1_id, "a")}<input${_attr_input_value($scope1_id, "b", a, $aChange)}>${_el_mark($scope1_id, "b")}<input${_attr_input_value($scope1_id, "c", a, $aChange)}>${_el_mark($scope1_id, "c")}`);
 		_script($scope1_id, "a1");
 		_scope($scope1_id, {
 			f: $aChange,
@@ -13,7 +13,7 @@ var template_default = _template("a", (input) => {
 		});
 	}, $scope0_id) };
 	let n = 1;
-	_html(`<button>inc ${_text_resume($scope0_id, "b", n, 2)}</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button>inc ${_text_mark($scope0_id, "b", n, 2)}</button>${_el_mark($scope0_id, "a")}`);
 	_set_scope_reason(10);
 	const $childScope = _peek_scope_id();
 	Wrap.content({ a: "z1" });

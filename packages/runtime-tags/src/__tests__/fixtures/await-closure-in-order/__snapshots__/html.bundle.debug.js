@@ -3,7 +3,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let value = 1;
-	_html(`<button>${_text_resume($scope0_id, "#text/1", value)}</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button>${_text_mark($scope0_id, "#text/1", value)}</button>${_el_mark($scope0_id, "#button/0")}`);
 	_await($scope0_id, "#text/2", resolveAfter(0, 4), () => {
 		const $scope2_id = _scope_id();
 		_html("<span>Hello</span>");
@@ -11,7 +11,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_if(() => {
 		if (value) {
 			const $scope1_id = _scope_id();
-			_html(`<span>${_text_resume($scope1_id, "#text/0", value)}</span>`);
+			_html(`<span>${_text_mark($scope1_id, "#text/0", value)}</span>`);
 			_scope($scope1_id, {}, "__tests__/template.marko", "6:1");
 			return 0;
 		}

@@ -8,7 +8,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 		_dynamic_tag($scope1_id, "#text/0", it.content, {}, 0, 0, $wg__input_item);
 		_write_if($scope0_reason, 1) && _scope($scope1_id, {}, "__tests__/tags/child.marko", "2:2");
 	}, 0, $scope0_id, "#text/0", $wg__input_item, $wg__input_item);
-	_html(`<p>${_text_resume($scope0_id, "#text/1", Object.keys(rest).join(), $wg__rest)}</p>`);
+	_html(`<p>${_text_mark($scope0_id, "#text/1", Object.keys(rest).join(), $wg__rest)}</p>`);
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/child.marko", 0);
 });
 
@@ -17,7 +17,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let mode = 0;
-	_html(`<button id=toggle>toggle</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button id=toggle>toggle</button>${_el_mark($scope0_id, "#button/0")}`);
 	_set_scope_reason(42);
 	let $item;
 	let $other;

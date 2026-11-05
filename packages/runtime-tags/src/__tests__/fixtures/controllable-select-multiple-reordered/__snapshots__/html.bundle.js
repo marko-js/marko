@@ -18,7 +18,7 @@ var template_default = _template("a", (input) => {
 			_scope($scope1_id, {});
 		}, (v) => v, $scope0_id, "a", 1, 1, 1, "</select>", 1);
 	});
-	_html(`<span>sel:${_text_resume($scope0_id, "b", selected.join(","), 2)}</span><button>Add</button>${_el_resume($scope0_id, "c")}`);
+	_html(`<span>sel:${_text_mark($scope0_id, "b", selected.join(","), 2)}</span><button>Add</button>${_el_mark($scope0_id, "c")}`);
 	_script($scope0_id, "a1");
 	_scope($scope0_id, { d: options });
 }, 1);

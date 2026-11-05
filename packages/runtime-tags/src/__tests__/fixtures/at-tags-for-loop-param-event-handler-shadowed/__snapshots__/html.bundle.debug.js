@@ -6,7 +6,7 @@ var my_menu_default = _template("__tests__/tags/my-menu/index.marko", (input) =>
 		const $scope1_id = _scope_id();
 		_html("<button");
 		_attrs_content(item, "#button/0", $scope1_id, "button");
-		_html(`</button>${_el_resume($scope1_id, "#button/0")}`);
+		_html(`</button>${_el_mark($scope1_id, "#button/0")}`);
 		_script($scope1_id, "__tests__/tags/my-menu/index.marko_1_item#2");
 		_scope($scope1_id, {}, "__tests__/tags/my-menu/index.marko", "1:2", { "EventAttributes:#button/0": ["...item", "2:14"] });
 	}, 0, $scope0_id, "#text/0", $wg__input_item, $wg__input_item, 0, 0, 1);
@@ -27,7 +27,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			content: _content("__tests__/template.marko_1*content", () => {
 				const $scope1_reason = _scope_reason(), $wg__foo = _write_guard($scope1_reason, 0);
 				const $scope1_id = _scope_id();
-				_html(_text_resume($scope1_id, "#text/0", foo, $wg__foo));
+				_html(_text_mark($scope1_id, "#text/0", foo, $wg__foo));
 				_write_if($scope1_reason, 0) && _scope($scope1_id, {}, "__tests__/template.marko", "4:6");
 			}, $scope0_id)
 		});

@@ -48,17 +48,17 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const Box = { content: _content("__tests__/template.marko_5*content", ({ color }) => {
 		const $scope5_id = _scope_id();
 		const $scope5_reason = _scope_reason(), $wg__color = _write_guard($scope5_reason, 0);
-		_html(`${_style_html(`--M_packages-1bruntime-19tags-1bsrc-1b__tests__-1bfixtures-1bstyle-19tag-19dynamic-19closures-1btemplate-1amarko_0:${_escape_style_value(color)};`)}${_el_resume($scope5_id, "#style/0", $wg__color)}<div class=box></div>`);
+		_html(`${_style_html(`--M_packages-1bruntime-19tags-1bsrc-1b__tests__-1bfixtures-1bstyle-19tag-19dynamic-19closures-1btemplate-1amarko_0:${_escape_style_value(color)};`)}${_el_mark($scope5_id, "#style/0", $wg__color)}<div class=box></div>`);
 		_write_if($scope5_reason, 0) && _scope($scope5_id, {}, "__tests__/template.marko", "1:2");
 	}, $scope0_id) };
 	_for_of(input.rows, () => {
 		const $scope1_id = _scope_id();
-		_html(`${_style_html(`--M_packages-1bruntime-19tags-1bsrc-1b__tests__-1bfixtures-1bstyle-19tag-19dynamic-19closures-1btemplate-1amarko_1:${_escape_style_value(input.color)};`)}${_el_resume($scope1_id, "#style/0", $wg__input_color)}<div class=row></div>`);
+		_html(`${_style_html(`--M_packages-1bruntime-19tags-1bsrc-1b__tests__-1bfixtures-1bstyle-19tag-19dynamic-19closures-1btemplate-1amarko_1:${_escape_style_value(input.color)};`)}${_el_mark($scope1_id, "#style/0", $wg__input_color)}<div class=row></div>`);
 		_write_if($scope0_reason, 0) && _scope($scope1_id, { _: $wi__input_color && _scope_with_id($scope0_id) }, "__tests__/template.marko", "8:2");
 	}, 0, $scope0_id, "#text/0", _write_guard($scope0_reason, 0), $wg__input_rows);
 	_for_of(input.items, (item) => {
 		const $scope2_id = _scope_id();
-		_html(`${_style_html(`--M_packages-1bruntime-19tags-1bsrc-1b__tests__-1bfixtures-1bstyle-19tag-19dynamic-19closures-1btemplate-1amarko_2:${_escape_style_value(input.selected === item.id ? "red" : "blue")};`)}${_el_resume($scope2_id, "#style/0", $wg__input_selected)}<div class=selected></div>`);
+		_html(`${_style_html(`--M_packages-1bruntime-19tags-1bsrc-1b__tests__-1bfixtures-1bstyle-19tag-19dynamic-19closures-1btemplate-1amarko_2:${_escape_style_value(input.selected === item.id ? "red" : "blue")};`)}${_el_mark($scope2_id, "#style/0", $wg__input_selected)}<div class=selected></div>`);
 		_write_if($scope0_reason, 3) && _scope($scope2_id, {
 			"#LoopKey": _write_if($scope0_reason, 8) && item?.id,
 			_: _scope_with_id($scope0_id)
@@ -84,7 +84,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		content: _content_resume("__tests__/template.marko_4*content", () => {
 			const $scope4_reason = _scope_reason();
 			const $scope4_id = _scope_id();
-			_html(`${_style_html(`--M_packages-1bruntime-19tags-1bsrc-1b__tests__-1bfixtures-1bstyle-19tag-19dynamic-19closures-1btemplate-1amarko_3:${_escape_style_value(input.color)};`)}${_el_resume($scope4_id, "#style/0", $wg__input_color)}<div class=content></div>`);
+			_html(`${_style_html(`--M_packages-1bruntime-19tags-1bsrc-1b__tests__-1bfixtures-1bstyle-19tag-19dynamic-19closures-1btemplate-1amarko_3:${_escape_style_value(input.color)};`)}${_el_mark($scope4_id, "#style/0", $wg__input_color)}<div class=content></div>`);
 			$wi__input_color__OR__input_show && _subscribe($wi__input_color && $input_color__closures, _scope($scope4_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "26:2"), "__tests__/template.marko_4_input_color#0:8/subscribe", $wg__input_color);
 			$wg__input_color || $wi__input_color__OR__input_show && _resume_branch($scope4_id);
 		}, $scope0_id)
@@ -95,7 +95,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		$item = attrTags($item, { content: _content("__tests__/template.marko_6*content", () => {
 			const $scope6_reason = _scope_reason(), $wg__color2 = _write_guard($scope6_reason, 0);
 			const $scope6_id = _scope_id();
-			_html(`${_style_html(`--M_packages-1bruntime-19tags-1bsrc-1b__tests__-1bfixtures-1bstyle-19tag-19dynamic-19closures-1btemplate-1amarko_4:${_escape_style_value(color)};`)}${_el_resume($scope6_id, "#style/0", $wg__color2)}<div class=item></div>`);
+			_html(`${_style_html(`--M_packages-1bruntime-19tags-1bsrc-1b__tests__-1bfixtures-1bstyle-19tag-19dynamic-19closures-1btemplate-1amarko_4:${_escape_style_value(color)};`)}${_el_mark($scope6_id, "#style/0", $wg__color2)}<div class=item></div>`);
 			_write_if($scope6_reason, 0) && _scope($scope6_id, {}, "__tests__/template.marko", "35:6");
 		}, $scope0_id) });
 	});

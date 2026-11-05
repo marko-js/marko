@@ -6,7 +6,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_html("<button");
 		_attrs_content(item, "#button/0", $scope1_id, "button");
-		_html(`</button>${_el_resume($scope1_id, "#button/0")}`);
+		_html(`</button>${_el_mark($scope1_id, "#button/0")}`);
 		_script($scope1_id, "__tests__/tags/child.marko_1_item#2");
 		_scope($scope1_id, {}, "__tests__/tags/child.marko", "1:2", { "EventAttributes:#button/0": ["...item", "1:37"] });
 	}, 0, $scope0_id, "#text/0", $wg__input_list, $wg__input_list, 0, 0, 1);
@@ -38,7 +38,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		content: _content("__tests__/template.marko_1*content", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
-			_html(`One ${_text_resume($scope1_id, "#text/0", count, 2)}`);
+			_html(`One ${_text_mark($scope1_id, "#text/0", count, 2)}`);
 			_subscribe($count__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4"), "__tests__/template.marko_1_count#0:1/subscribe");
 		}, $scope0_id)
 	}), { content: _content("__tests__/template.marko_2*content", () => {

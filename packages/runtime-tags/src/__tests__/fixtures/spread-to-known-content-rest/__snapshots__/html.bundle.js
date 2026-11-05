@@ -8,7 +8,7 @@ var child_default = _template("b", (input) => {
 		class: input.class,
 		...rest
 	}, "a", $scope0_id, "p");
-	_html(`</p>${_el_resume($scope0_id, "a")}`);
+	_html(`</p>${_el_mark($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
 	_scope($scope0_id, {
 		d: _write_if($scope0_reason, 1) && input.class,

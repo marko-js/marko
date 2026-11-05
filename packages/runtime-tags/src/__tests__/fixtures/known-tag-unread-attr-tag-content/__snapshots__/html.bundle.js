@@ -2,7 +2,7 @@
 var child_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_a = _write_guard($scope0_reason, 1), $wg__input_item_content = _write_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
-	_html(`<span>${_text_resume($scope0_id, "a", input.a, $wg__input_a)}</span>`);
+	_html(`<span>${_text_mark($scope0_id, "a", input.a, $wg__input_a)}</span>`);
 	_dynamic_tag($scope0_id, "b", input.item?.content, {}, 0, 0, $wg__input_item_content);
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
@@ -32,7 +32,7 @@ var template_default = _template("a", (input) => {
 		item: $item
 	});
 	static_child_default({});
-	_html(`<button class=inc>inc</button>${_el_resume($scope0_id, "c")}`);
+	_html(`<button class=inc>inc</button>${_el_mark($scope0_id, "c")}`);
 	_script($scope0_id, "a1");
 	_scope($scope0_id, {
 		d: n,
