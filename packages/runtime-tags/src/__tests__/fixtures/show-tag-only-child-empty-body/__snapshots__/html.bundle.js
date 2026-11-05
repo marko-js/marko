@@ -1,0 +1,10 @@
+// template.marko
+var template_default = _template("a", (input) => {
+	const $scope0_reason = _scope_reason(), $wg__input_open = _write_guard($scope0_reason, 0);
+	const $scope0_id = _scope_id();
+	_html("<section>");
+	const $show = input.open;
+	_show_start($show, $wg__input_open, $wg__input_open, "</section>");
+	_show_end($scope0_id, "a", $show, $wg__input_open, $wg__input_open, "</section>");
+	_write_if($scope0_reason, 0) && _scope($scope0_id, {});
+}, 1);
