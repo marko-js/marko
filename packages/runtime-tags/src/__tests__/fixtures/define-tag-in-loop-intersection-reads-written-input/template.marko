@@ -1,0 +1,11 @@
+<let/v=0/>
+<define/D|{ q }|>
+  ${input.p1 + q}
+</define>
+<for|i| of=[1, 2]>
+  <D q=v + i/>
+</for>
+<script>
+  console.log(input.p1);
+  v = 9;
+</script>

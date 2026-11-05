@@ -130,10 +130,11 @@ function addIntersectionMemberReason(
   partner: Binding,
 ) {
   if (
-    !findSlot(member)?.reason?.always &&
-    (!isSupersetSources(member, partner) ||
-      hasReadIntermediate(member, partner, new Set()))
+    !isSupersetSources(member, partner) ||
+    hasReadIntermediate(member, partner, new Set())
   ) {
+    // A member of an ancestor, even one always written, is read through the
+    // owner chain, so its partners' changes need that chain written.
     if (member.section !== section) {
       addOwnerReason(
         section,
