@@ -5,7 +5,6 @@ require("../__util__/test-init");
 const fs = require("fs");
 const path = require("path");
 const assert = require("assert/strict");
-const toDiffableHtml = require("diffable-html");
 const marko = require("marko");
 const autotest = require("mocha-autotest").default;
 const createBrowserWithMarko = require("../__util__/create-marko-jsdom-module");
@@ -160,10 +159,7 @@ async function runRenderTest(fixture) {
           });
           main.checkHtml(html);
         } else {
-          snapshot(html, {
-            ext: ".html",
-            format: toDiffableHtml,
-          });
+          snapshot(html, { ext: ".html" });
         }
 
         (fixture.context || (fixture.context = {})).html = normalizeHtml(html);
