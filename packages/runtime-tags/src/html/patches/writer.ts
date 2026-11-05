@@ -905,12 +905,13 @@ export function _patch_bind<T>(
 }
 
 // A controllable `<let>`: its value fills a paired scope while the handler
-// controls it and the group updates from the server, else seeds a created one.
+// controls it and the group updates from the server, else seeds a created one;
+// a handler the client calls binds.
 export function _patch_let_change(
   scopeId: number,
   valueKey: string,
   value: unknown,
-  changeKey: string,
+  changeKey: string | 0,
   change: unknown,
   mask?: GroupMask,
   group?: number,
@@ -920,7 +921,9 @@ export function _patch_let_change(
   if (getState() instanceof PatchRenderState) {
     const filled = change && _filled_guard(mask, group!);
     _patch_fill(scopeId, valueKey, value, filled ? undefined : 1, mask, group);
-    _patch_bind(scopeId, changeKey, change, changeMask, changeGroup);
+    if (changeKey) {
+      _patch_bind(scopeId, changeKey, change, changeMask, changeGroup);
+    }
   }
 }
 

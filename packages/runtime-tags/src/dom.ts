@@ -93,6 +93,7 @@ export {
   _closure_resume,
   _fill_let,
   _fill_let_change,
+  _fill_let_change_resume,
   _fill_mark,
   _fill_let_resume,
   _fill_var_resume,

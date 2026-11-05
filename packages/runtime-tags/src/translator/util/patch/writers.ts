@@ -85,6 +85,7 @@ import {
 import { findSlot } from "../slots";
 import { bindingReaders, someRead } from "../solve-reasons";
 import { type Sources } from "../sources";
+import { createOutputSectionState } from "../state";
 import { TagNameType } from "../tag-name-type";
 import { withLeadingComment } from "../with-comment";
 import {
@@ -239,6 +240,12 @@ export function getEffectEntryArgs(section: Section, signal: Signal) {
     getReads(section, reads, check, group),
   ];
 }
+
+// Each controlled `<let>`'s handler, which a patch's fill reads whether or not
+// it serializes.
+export const [getLetChanges] = createOutputSectionState<
+  Map<Binding, t.Expression>
+>(() => new Map());
 
 // A section's patch entries beside its resume data: the setup a created scope
 // gets, and the intersection renders that run an effect or else its `_script`.
@@ -461,30 +468,27 @@ export function writePatchResumeStatements(
     change.expression = local;
   }
 
-  // A controlled `<let>`'s handler is hoisted: its scope slot, value write and
-  // bind share one read.
+  // A controlled `<let>`'s handler, hoisted where it serializes so its scope slot,
+  // value write and bind share one read.
   const letChanges = new Map<
     Binding,
-    { expression: t.Expression; reason: Reason }
+    { expression: t.Expression; reason?: Reason }
   >();
   forEach(getPatchFillBindings(section), (binding) => {
-    const change =
-      binding.reserveSize &&
-      pendingProperties.get(
-        getPrefixedScopeAccessor(
-          binding,
-          getAccessorPrefix().TagVariableChange,
-        ),
-      );
-    if (change) {
+    const handler = getLetChanges(section).get(binding);
+    if (!handler) return;
+    const property = pendingProperties.get(
+      getPrefixedScopeAccessor(binding, getAccessorPrefix().TagVariableChange),
+    );
+    if (property) {
       const local = generateUidIdentifier(binding.name + "Change");
       body.push(
-        t.variableDeclaration("const", [
-          t.variableDeclarator(local, change.expression),
-        ]),
+        t.variableDeclaration("const", [t.variableDeclarator(local, handler)]),
       );
-      change.expression = local;
-      letChanges.set(binding, change);
+      property.expression = local;
+      letChanges.set(binding, { expression: local, reason: property.reason });
+    } else {
+      letChanges.set(binding, { expression: handler });
     }
   });
 
@@ -533,36 +537,43 @@ export function writePatchResumeStatements(
 }
 
 // A controlled `<let>`'s value, a fill while its handler controls it and the
-// controller updates from the server, else a seed; then its handler binds.
+// controller updates from the server, else a seed; then its handler binds where it serializes.
 function buildLetChangeWrites(
   section: Section,
   binding: Binding,
-  change: { expression: t.Expression; reason: Reason },
+  { expression, reason }: { expression: t.Expression; reason?: Reason },
 ) {
   // A param-sourced handler binds only where its group updates from the server.
-  const bindGroupArgs = change.reason.always
-    ? []
-    : getRootGroupArgs(section, change.reason);
-  const changeKey =
-    getPatchKey().Write +
-    getPrefixedScopeAccessor(binding, getAccessorPrefix().TagVariableChange);
+  const bindGroupArgs =
+    !reason || reason.always ? [] : getRootGroupArgs(section, reason);
+  const changeKey = reason
+    ? t.stringLiteral(
+        getPatchKey().Write +
+          getPrefixedScopeAccessor(
+            binding,
+            getAccessorPrefix().TagVariableChange,
+          ),
+      )
+    : absentArg(0);
   const controller = getSourcesForExpr(binding.derivedFrom as t.NodeExtra);
   if (controller?.state) {
     // A state-sourced controller is the client's: the value only seeds, but
     // where its initial value reads a caller group, in that group.
     const seedGroup = getSeedOnlyGroupArgs(section, binding);
+    const seed = buildPatchFill(
+      section,
+      binding,
+      t.numericLiteral(1),
+      ...(t.isNumericLiteral(seedGroup[0]) ? [] : seedGroup),
+    );
+    if (!reason) return [seed];
     return [
-      buildPatchFill(
-        section,
-        binding,
-        t.numericLiteral(1),
-        ...(t.isNumericLiteral(seedGroup[0]) ? [] : seedGroup),
-      ),
+      seed,
       callRuntime(
         "_patch_bind",
         getScopeIdIdentifier(section),
-        t.stringLiteral(changeKey),
-        t.cloneNode(change.expression),
+        changeKey,
+        t.cloneNode(expression),
         ...bindGroupArgs,
       ),
     ];
@@ -574,8 +585,8 @@ function buildLetChangeWrites(
       getScopeIdIdentifier(section),
       t.stringLiteral(getPatchKey().Fill + getPatchFillKey(binding)),
       getDeclaredBindingExpression(binding),
-      t.stringLiteral(changeKey),
-      t.cloneNode(change.expression),
+      changeKey,
+      t.cloneNode(expression),
       groupArgs[0],
       groupArgs[1],
       ...bindGroupArgs,

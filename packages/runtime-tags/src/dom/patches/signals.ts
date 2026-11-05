@@ -91,6 +91,8 @@ export function _fill_let_change<T>(
     fillFn ?? fn ?? 0,
   );
 }
+// The same, for a `<let>` only a patch's key reaches.
+export { _fill_let_change as _fill_let_change_resume };
 
 // Per registration of a function with filled references: whether a patch changed one on its owner.
 export const filledReferences: Record<string, (owner: Scope) => unknown> = {};

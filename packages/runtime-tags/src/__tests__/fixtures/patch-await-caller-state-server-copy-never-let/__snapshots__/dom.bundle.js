@@ -1,5 +1,5 @@
 // tags/show-await.marko
-const $await_content__m = fill("b1", /*@__PURE__*/ _let_change(5, ($scope) => _text($scope.b, $scope.f)));
+const $await_content__m = _fill_let_change("b1", 5, ($scope) => _text($scope.b, $scope.f));
 const $await_content__n = _let(4, ($scope) => {
 	_text($scope.a, $scope.e);
 	$await_content__m($scope, $scope.e, $valueChange($scope));

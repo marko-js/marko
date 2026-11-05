@@ -34,7 +34,7 @@ var show_await_default = _template("c", (input) => {
 		const $childScope = _peek_scope_id($scope1_id, "e", 0);
 		card_default({ label: x });
 		_patch_child_end();
-		_filled_guard($scope0_reason, 0) && _patch_fill($scope1_id, "vc2", d, 1);
+		_patch_fill($scope1_id, "vc2", d, 1, $cg__input_promise << 1, 0);
 		_scope($scope1_id, { e: _existing_scope($childScope) });
 	}, 1, "c3", _unfilled_if($scope0_reason, 0), 1);
 });

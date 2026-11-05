@@ -9,7 +9,7 @@ var tab_editor_default = _template("__tests__/tags/tab-editor.marko", (input) =>
 	let selected = input.tab;
 	_html(`<p>sel=${_text_mark($scope0_id, "#text/0", String(selected), 2)}</p>`);
 	_patch_render($scope0_id, "__tests__/tags/tab-editor.marko_0_input_tab#3_input_tabChange#4/setup", [$fg__input_tab && "input_tab", $fg__input_tabChange && "input_tabChange"], $scope0_reason, 0);
-	_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/tags/tab-editor.marko_fill0", selected, 1);
+	_patch_let_change($scope0_id, "PatchFill:__tests__/tags/tab-editor.marko_fill0", selected, 0, input.tabChange, $scope0_reason, 0);
 	_scope($scope0_id, {
 		input_tab: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.tab,
 		input_tabChange: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.tabChange

@@ -20,6 +20,7 @@ import { BindingType, getDebugAccess, reserveId } from "../util/bindings";
 import evaluate from "../util/evaluate";
 import { hasEmittedAssignment } from "../util/finalize-references";
 import { isOptimize, isOutputDOM, isPatch } from "../util/marko-config";
+import { getLetChanges } from "../util/patch/writers";
 import { addReason } from "../util/reasons";
 import {
   mergeReferences,
@@ -190,14 +191,26 @@ export default {
             ]);
           }
         } else if (valueChangeAttr) {
+          const handler = t.logicalExpression(
+            "||",
+            valueChangeAttr.value,
+            t.buildUndefinedNode(),
+          );
           const accessor = writeSlot(
             findSlot(binding, SlotKind.ChangeHandler),
-            t.logicalExpression(
-              "||",
-              valueChangeAttr.value,
-              t.buildUndefinedNode(),
-            ),
+            handler,
           );
+          // A patch's fill reads whether the handler is set: a function always is.
+          if (isPatch()) {
+            getLetChanges(section).set(
+              binding,
+              accessor
+                ? handler
+                : t.isFunction(valueChangeAttr.value)
+                  ? t.numericLiteral(1)
+                  : valueChangeAttr.value,
+            );
+          }
           // Named after the author's binding; other slots are described
           // generically by the serializer instead.
           if (accessor && !isOptimize()) {

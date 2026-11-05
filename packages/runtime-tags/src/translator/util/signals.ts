@@ -756,8 +756,15 @@ export function initValue(binding: Binding, isLet = false) {
       // Where only the key reaches it, the fill's registration ships it and
       // its value signal stays pure; elsewhere what reaches the signal does.
       const fillFn = signal.fillFn && markFill(signal, signal.fillFn);
-      if (!ownRegistration) {
-        return callRuntime(`_fill${letHelper}`, key, accessor, fn, fillFn);
+      // A controlled one's fill sets the value it follows, never an assignment.
+      if (!ownRegistration || signal.extraArgs) {
+        return callRuntime(
+          `_fill${letHelper}${ownRegistration ? "_resume" : ""}`,
+          key,
+          accessor,
+          fn,
+          fillFn,
+        );
       }
       // Only the patch's key reaches it: the registration keeps the signal.
       return callRuntime(

@@ -9,7 +9,7 @@ var tab_editor_default = _template("c", (input) => {
 	let selected = input.tab;
 	_html(`<p>sel=${_text_mark($scope0_id, "a", String(selected), 2)}</p>`);
 	_patch_render($scope0_id, "c0", [$fg__input_tab && "d", $fg__input_tabChange && "e"], $scope0_reason, 0);
-	_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "vc1", selected, 1);
+	_patch_let_change($scope0_id, "vc1", selected, 0, input.tabChange, $scope0_reason, 0);
 	_scope($scope0_id, {
 		d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.tab,
 		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.tabChange
