@@ -1,5 +1,29 @@
 # @marko/runtime-tags
 
+## 6.4.10
+
+### Patch Changes
+
+- [#4588](https://github.com/marko-js/marko/pull/4588) [`f843c14`](https://github.com/marko-js/marko/commit/f843c1419ab9fcab48469c0455c0092d4d353b37) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix a rest or renamed destructured value declared inside an attribute tag under `<if>` or `<for>` never being declared in the server output, which threw a ReferenceError when the template serialized it.
+
+- [#4601](https://github.com/marko-js/marko/pull/4601) [`f79a9b9`](https://github.com/marko-js/marko/commit/f79a9b93c8b305e2a6045d100b8f9dea4d3e9817) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Report a repeated `value=` attribute on a core tag (`<let>`, `<return>`, `<script>`, `<const>`, `<if>`, …), or a repeated `valueChange=` on `<let>` or `<return>`, with one error that names the tag and links its docs, in place of `Invalid duplicate value attribute.` or an error calling the attribute unsupported.
+
+- [#4593](https://github.com/marko-js/marko/pull/4593) [`b5b57c9`](https://github.com/marko-js/marko/commit/b5b57c95db452c14de12819441890ee1198775ff) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Name the `html-script` tag when a `<script>` body fails to parse as JavaScript (such as a JSON-LD block), and link that suggestion to the `html-script` reference.
+
+- [#4586](https://github.com/marko-js/marko/pull/4586) [`d8060f6`](https://github.com/marko-js/marko/commit/d8060f63620b0ee90a45f884a63ed30ec46fa81b) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix a `<define>` tag called with fewer arguments than it has params rendering differently in the browser: the params past the arguments are now `undefined` there too, so their defaults apply, rather than the first holding an empty input object.
+
+- [#4583](https://github.com/marko-js/marko/pull/4583) [`60841bc`](https://github.com/marko-js/marko/commit/60841bcdc24e0452669b9745f0e82066e84440bd) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Update dependencies: the bundled Babel to 7.29.12, `htmljs-parser` 5.20, `@luxass/strip-json-comments` 2.0.2 and the bundled `entities` 9 in the compiler, `minimatch` 11 in `markoc`, and `magic-string` 1. `magic-string` 1 ships only ESM, so `engines.node` rises to `>=22.12.0`, the first Node 22 release that can `require()` it.
+
+- [#4594](https://github.com/marko-js/marko/pull/4594) [`e9f7e74`](https://github.com/marko-js/marko/commit/e9f7e74ca52da0335246c47ab85d4f94077f6c28) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix a `<script>`, `<lifecycle>`, event handler or function passed to a child that reads several values computed from one source, such as `input.items.length` and a `<const>` computed from `input.items`: on a resumed page it recomputed the `<const>` from a source the server never wrote, throwing or reading `NaN`. It now reads the values the server wrote.
+
+- [#4585](https://github.com/marko-js/marko/pull/4585) [`ceeb985`](https://github.com/marko-js/marko/commit/ceeb98572e70975fac218935eab4c0b7e61f8cdb) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix a client crash when an expression reads a `<const>` both whole and through a member beside another value computed from the same source, as in `${input.list.length + list.filter(fn).length + list.length}` with `<const/list=input.list/>`.
+
+- [#4600](https://github.com/marko-js/marko/pull/4600) [`b73626b`](https://github.com/marko-js/marko/commit/b73626b1fd863abd2d435d21f0b8de54d3067d0c) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Share one precomputed `class` table between elements whose toggles produce the same markup in server output, rather than declaring a copy per element. A spread on an element named by a template literal now enables only that element's control kind: a custom element no longer pulls in every controllable, and `<input>` stays controlled when a custom tag shares its name.
+
+- [#4599](https://github.com/marko-js/marko/pull/4599) [`88b13c4`](https://github.com/marko-js/marko/commit/88b13c483c72725d74aee0a719b84d53ce8650fa) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix compiling a call with an `<if>` directly in its content when the called tag leads back to the calling template: a tag calling itself overflowed the stack, and a cycle through another tag could build client code that threw as it loaded.
+- Updated dependencies [[`df57ab1`](https://github.com/marko-js/marko/commit/df57ab19908ee90a1be821d885ad72d11ba83823), [`60841bc`](https://github.com/marko-js/marko/commit/60841bcdc24e0452669b9745f0e82066e84440bd), [`7546ef9`](https://github.com/marko-js/marko/commit/7546ef9966afaccc90ea7c4c6526dd4df99d97b4)]:
+  - @marko/compiler@5.42.16
+
 ## 6.4.9
 
 ### Patch Changes
