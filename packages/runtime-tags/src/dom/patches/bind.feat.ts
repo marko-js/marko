@@ -44,7 +44,7 @@ patchers[PatchKey.BindFill] = setupPatchers[PatchKey.BindFill] = (
 
 // Any other bound registration is its scope's path from the page root, walked on use
 // (the flush may not have created it yet); one over render-only locals takes those.
-installBindRef((root, path, id, bound) => {
+installBindRef((root, path, id, bound, locals) => {
   const resolve = (_?: never) => {
     let scope = root;
     for (const hop of path) {
@@ -57,7 +57,12 @@ installBindRef((root, path, id, bound) => {
   };
   return bound === 1
     ? Object.defineProperty(
-        (_resumed[id] as (owner?: Scope) => Renderer)(),
+        locals
+          ? (_resumed[id] as (owner: undefined, locals: Scope) => Renderer)(
+              undefined,
+              locals,
+            )
+          : (_resumed[id] as () => Renderer)(),
         RendererProp.Owner,
         { get: resolve },
       )

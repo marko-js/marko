@@ -90,7 +90,8 @@ export class PatchSerializerState extends SerializerState {
     );
     if ((val as { [RendererProp.Id]?: string })[RendererProp.Id]) {
       this.buf.push(",1");
-    } else if (registered.locals) {
+    }
+    if (registered.locals) {
       writeLocalArgs(
         this,
         new Reference(parent, accessor, this.flushId, this.buf.length),

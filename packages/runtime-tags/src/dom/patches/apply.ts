@@ -113,7 +113,13 @@ export type LoopItemAt = number | [index: number, key: unknown];
 // `_(path, id, content or locals?)` in a flush: a registration bound to the
 // scope `path` reaches from the page root, resolved by `patches/bind`.
 let bindRef:
-  | ((root: Scope, path: PatchHop[], id: string, bound?: 1 | Scope) => unknown)
+  | ((
+      root: Scope,
+      path: PatchHop[],
+      id: string,
+      bound?: 1 | Scope,
+      locals?: Scope,
+    ) => unknown)
   | undefined;
 export function installBindRef(resolve: NonNullable<typeof bindRef>) {
   bindRef = resolve;
@@ -167,9 +173,10 @@ export function patch(
     data: number | PatchHop[],
     id?: string,
     bound?: 1 | Scope,
+    locals?: Scope,
   ) =>
     id
-      ? bindRef!(root, data as PatchHop[], id, bound)
+      ? bindRef!(root, data as PatchHop[], id, bound, locals)
       : trees[data as number]) as SerializeContext;
   responseCtx._ = _resumed;
   // The signal, a failure or the next `patch()` stops the response at once:
