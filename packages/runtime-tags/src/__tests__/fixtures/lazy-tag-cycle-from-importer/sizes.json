@@ -13,16 +13,16 @@
       "brotli": 1138
     },
     "b.mjs": {
-      "min": 458,
-      "brotli": 288
+      "min": 463,
+      "brotli": 294
     },
     "v:b.marko.setup.mjs": {
       "min": 91,
       "brotli": 95
     },
     "shared": {
-      "min": 10376,
-      "brotli": 4469
+      "min": 10352,
+      "brotli": 4457
     }
   },
   "html": {

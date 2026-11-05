@@ -191,8 +191,9 @@ export function _content_closures(
       setClosures(branch);
     };
     if (MARKO_DEBUG) {
-      instance[RendererProp.Setup][RendererProp.Returns] = (setup ||
-        instance[RendererProp.Params])?.[RendererProp.Returns];
+      instance[RendererProp.Setup][RendererProp.Returns] = (
+        setup || instance[RendererProp.Params]
+      )?.[RendererProp.Returns];
     }
     return instance;
   };

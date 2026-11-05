@@ -6,11 +6,11 @@
         "brotli": 1299
       },
       "files": {
-        "tags/chain-b.marko": 92,
-        "tags/chain-a.marko": 92,
-        "tags/v:chain-b.marko.register-bFn.js": 79,
-        "tags/v:chain-a.marko.register-aFn.js": 79,
-        "template.marko": 256
+        "tags/chain-b.marko": 50,
+        "tags/chain-a.marko": 50,
+        "tags/v:chain-b.marko.register-bFn.js": 19,
+        "tags/v:chain-a.marko.register-aFn.js": 19,
+        "template.marko": 218
       }
     }
   },

@@ -1,0 +1,145 @@
+diff --git a/dist/parser/index.js b/dist/parser/index.js
+index 8f642324fb75fc25b2c657ffb089618728441caf..e64c30a98f86bb4e8039bb40d53f013f0a7cfb05 100644
+--- a/dist/parser/index.js
++++ b/dist/parser/index.js
+@@ -109,6 +109,8 @@ export class Parser {
+         this.fragmentContextID = fragmentContext ? getTagID(this.treeAdapter.getTagName(fragmentContext)) : $.UNKNOWN;
+         this._setContextModes(fragmentContext !== null && fragmentContext !== void 0 ? fragmentContext : this.document, this.fragmentContextID);
+         this.openElements = new OpenElementStack(this.document, this.treeAdapter, this);
++        // Contiguous character tokens for one insertion location, inserted as one run (whatwg/html#13199).
++        this.pendingText = null;
+     }
+     // API
+     static parse(html, options) {
+@@ -302,6 +304,7 @@ export class Parser {
+     /** @protected */
+     _createElement(tagName, namespaceURI, attrs, intendedParent) {
+         var _a, _b;
++        this._flushPendingText();
+         const element = this.treeAdapter.createElement(tagName, namespaceURI, attrs);
+         (_b = (_a = this.treeAdapter).onElementCreated) === null || _b === void 0 ? void 0 : _b.call(_a, element, {
+             intendedParent,
+@@ -364,21 +367,39 @@ export class Parser {
+     /** @protected */
+     _insertCharacters(token) {
+         let parent;
+-        let beforeElement;
++        let beforeElement = null;
+         if (this._shouldFosterParentOnInsertion()) {
+             ({ parent, beforeElement } = this._findFosterParentingLocation());
+-            if (beforeElement) {
+-                this.treeAdapter.insertTextBefore(parent, token.chars, beforeElement);
+-            }
+-            else {
+-                this.treeAdapter.insertText(parent, token.chars);
+-            }
+         }
+         else {
+             parent = this.openElements.currentTmplContentOrNode;
+-            this.treeAdapter.insertText(parent, token.chars);
+         }
+-        if (!token.location)
++        const pending = this.pendingText;
++        if (pending !== null && pending.parent === parent && pending.beforeElement === beforeElement) {
++            pending.chars += token.chars;
++            if (token.location) {
++                const { endLine, endCol, endOffset } = token.location;
++                pending.location = { ...pending.location, endLine, endCol, endOffset };
++            }
++            return;
++        }
++        this._flushPendingText();
++        this.pendingText = { parent, beforeElement, chars: token.chars, location: token.location };
++    }
++    /** @internal */
++    _flushPendingText() {
++        const pending = this.pendingText;
++        if (pending === null)
++            return;
++        this.pendingText = null;
++        const { parent, beforeElement, chars, location } = pending;
++        if (beforeElement) {
++            this.treeAdapter.insertTextBefore(parent, chars, beforeElement);
++        }
++        else {
++            this.treeAdapter.insertText(parent, chars);
++        }
++        if (!location)
+             return;
+         const siblings = this.treeAdapter.getChildNodes(parent);
+         const textNodeIdx = beforeElement ? siblings.lastIndexOf(beforeElement) : siblings.length;
+@@ -386,11 +407,11 @@ export class Parser {
+         //NOTE: if we have a location assigned by another token, then just update the end position
+         const tnLoc = this.treeAdapter.getNodeSourceCodeLocation(textNode);
+         if (tnLoc) {
+-            const { endLine, endCol, endOffset } = token.location;
++            const { endLine, endCol, endOffset } = location;
+             this.treeAdapter.updateNodeSourceCodeLocation(textNode, { endLine, endCol, endOffset });
+         }
+         else if (this.options.sourceCodeLocationInfo) {
+-            this.treeAdapter.setNodeSourceCodeLocation(textNode, token.location);
++            this.treeAdapter.setNodeSourceCodeLocation(textNode, location);
+         }
+     }
+     /** @protected */
+@@ -787,6 +808,7 @@ export class Parser {
+     }
+     /** @internal */
+     onComment(token) {
++        this._flushPendingText();
+         this.skipNextNewLine = false;
+         if (this.currentNotInHTML) {
+             appendComment(this, token);
+@@ -833,6 +855,7 @@ export class Parser {
+     }
+     /** @internal */
+     onDoctype(token) {
++        this._flushPendingText();
+         this.skipNextNewLine = false;
+         switch (this.insertionMode) {
+             case InsertionMode.INITIAL: {
+@@ -856,6 +879,7 @@ export class Parser {
+     }
+     /** @internal */
+     onStartTag(token) {
++        this._flushPendingText();
+         this.skipNextNewLine = false;
+         this.currentToken = token;
+         this._processStartTag(token);
+@@ -979,6 +1003,7 @@ export class Parser {
+     }
+     /** @internal */
+     onEndTag(token) {
++        this._flushPendingText();
+         this.skipNextNewLine = false;
+         this.currentToken = token;
+         if (this.currentNotInHTML) {
+@@ -1085,6 +1110,7 @@ export class Parser {
+     }
+     /** @internal */
+     onEof(token) {
++        this._flushPendingText();
+         switch (this.insertionMode) {
+             case InsertionMode.INITIAL: {
+                 tokenInInitialMode(this, token);
+@@ -2577,6 +2603,7 @@ function tokenInTableText(p, token) {
+             p._insertCharacters(p.pendingCharacterTokens[i]);
+         }
+     }
++    p._flushPendingText();
+     p.insertionMode = p.originalInsertionMode;
+     p._processToken(token);
+ }
+diff --git a/dist/tokenizer/index.js b/dist/tokenizer/index.js
+index 0ae80a13b0083a29c04f871171a0c17bc30595c4..bd94725b4259d6871222a1a5c976daba363b16a2 100644
+--- a/dist/tokenizer/index.js
++++ b/dist/tokenizer/index.js
+@@ -250,6 +250,8 @@ export class Tokenizer {
+             this.inLoop = false;
+         }
+         this._runParsingLoop();
++        // Insert the text a parser still holds, so it is in the tree when `document.write()` returns.
++        this.handler._flushPendingText?.();
+     }
+     getCharacterTokenEndLocation(location) {
+         const endOffset = this.getCharacterTokenEndOffset();

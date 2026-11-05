@@ -6,17 +6,17 @@
     },
     "template.marko.page.mjs": {
       "total": {
-        "min": 592,
-        "brotli": 287
+        "min": 587,
+        "brotli": 283
       },
       "files": {
-        "v:template.marko.hydrate-6.js": 110,
-        "v:template.marko.hydrate-5.js": 104
+        "v:template.marko.hydrate-6.js": 57,
+        "v:template.marko.hydrate-5.js": 51
       }
     },
     "counter.mjs": {
-      "min": 1083,
-      "brotli": 575
+      "min": 1052,
+      "brotli": 568
     },
     "shared": {
       "min": 2126,

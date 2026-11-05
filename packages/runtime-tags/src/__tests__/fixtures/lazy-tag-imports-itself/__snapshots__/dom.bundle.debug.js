@@ -8,13 +8,7 @@ function $setup($scope) {
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
 
 // under.marko
-var under_exports = /* @__PURE__ */ __exportAll({
-	$input: () => $input,
-	$input_depth: () => $input_depth,
-	$setup: () => $setup,
-	$template: () => $template,
-	$walks: () => $walks
-});
+var under_exports = /* @__PURE__ */ __exportAll({});
 const $template = "<button>under <!>:<!></button><!><!>";
 const $walks = " Db%c%l%c";
 let $load_Self_setup = /*@__PURE__*/ _load_setup(($_) => import("./v:under.marko.setup.mjs"));

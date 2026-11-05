@@ -1,5 +1,5 @@
-// size: 5750 (min) 2546 (brotli)
-//#region packages/runtime-tags/dist/dom.mjs
+// size: 5738 (min) 2546 (brotli)
+// packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36);
 let branchesEnabled;
 let rendering;
@@ -20,7 +20,7 @@ let runEffects = (effects) => {
   for (let i = 0; i < effects.length;) effects[i++](effects[i++]);
 };
 let runRender = (render) => {
-  (!branchesEnabled || render.b.F?.H !== 0) && render.c(render.b, render.d);
+  (branchesEnabled && render.b.F?.H === 0) || render.c(render.b, render.d);
 };
 let catchEnabled;
 let delegate = (type, handler) =>
@@ -151,21 +151,19 @@ let _for_of_unkeyed = /*@__PURE__*/ /* @__PURE__ */ withBranches(
           (oldScopes.forEach(hasSiblings ? removeAndDestroyBranch : destroyBranch),
           hasSiblings || (parentNode.textContent = ""));
         for (let newScope of newScopes) insertBranchBefore(newScope, parentNode, afterReference);
-        return;
+      } else {
+        if (oldScopesByKey) oldScopesByKey.forEach(removeAndDestroyBranch);
+        else for (let i = newLen; i < oldLen; i++) removeAndDestroyBranch(oldScopes[i]);
+        for (; oldEnd >= start && newEnd >= start && oldScopes[oldEnd] === newScopes[newEnd];)
+          (oldEnd--, newEnd--);
+        if (
+          (oldEnd + 1 < oldLen && (afterReference = oldScopes[oldEnd + 1].S),
+          start > oldEnd || start > newEnd)
+        )
+          for (let i = start; i <= newEnd; i++)
+            insertBranchBefore(newScopes[i], parentNode, afterReference);
+        else reorder(newScopes, start, newEnd, parentNode, afterReference);
       }
-      if (oldScopesByKey) oldScopesByKey.forEach(removeAndDestroyBranch);
-      else for (let i = newLen; i < oldLen; i++) removeAndDestroyBranch(oldScopes[i]);
-      for (; oldEnd >= start && newEnd >= start && oldScopes[oldEnd] === newScopes[newEnd];)
-        (oldEnd--, newEnd--);
-      if (
-        (oldEnd + 1 < oldLen && (afterReference = oldScopes[oldEnd + 1].S),
-        start > oldEnd || start > newEnd)
-      ) {
-        for (let i = start; i <= newEnd; i++)
-          insertBranchBefore(newScopes[i], parentNode, afterReference);
-        return;
-      }
-      reorder(newScopes, start, newEnd, parentNode, afterReference);
     };
   },
 )(([all], cb) => forOf(all, (item, i) => cb(i, [item, i])));
@@ -312,7 +310,7 @@ function _const(valueAccessor, fn) {
   return (
     (valueAccessor = decodeAccessor(valueAccessor)),
     (scope, value) => {
-      (scope[valueAccessor] !== value || !(valueAccessor in scope)) &&
+      (scope[valueAccessor] === value && valueAccessor in scope) ||
         ((scope[valueAccessor] = value), fn?.(scope));
     }
   );
@@ -466,8 +464,7 @@ function setBranch(scope, nodeAccessor, newRenderer, createBranch) {
       : newBranch &&
         (insertBranchBefore(newBranch, parentNode, referenceNode), referenceNode.remove());
 }
-//#endregion
-//#region packages/runtime-tags/dist/dom.mjs
+// packages/runtime-tags/dist/dom.mjs
 let _template = (id, template, walks, setup, inputSignal) => {
   let renderer = _content(id, template, walks, setup, inputSignal)();
   return ((renderer.mount = mount), (renderer._ = renderer), (_resumed[id] = renderer));
@@ -535,4 +532,3 @@ function mount(input = {}, reference, position) {
     }
   );
 }
-//#endregion

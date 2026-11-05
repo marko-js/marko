@@ -1,10 +1,10 @@
-diff --git a/lib/nodejs/esm-utils.js b/lib/nodejs/esm-utils.js
-index d1bbb95f06689e16a866bdb304cad55b9f3b99a0..c4de4e616a09bcfd128d16f8a3e4676990a38fe4 100644
---- a/lib/nodejs/esm-utils.js
-+++ b/lib/nodejs/esm-utils.js
-@@ -99,6 +99,9 @@ const requireModule = async (file, esmDecorator) => {
-   } catch (requireErr) {
-     debug("requireModule caught err: %O", requireErr.message);
+diff --git a/lib/nodejs/esm-utils.cjs b/lib/nodejs/esm-utils.cjs
+index 34b2e09a447dd601685e11c31f177ace1f1ab5ff..2b8c1910e76246e4692307f338f8c787cc0c4179 100644
+--- a/lib/nodejs/esm-utils.cjs
++++ b/lib/nodejs/esm-utils.cjs
+@@ -103,6 +103,9 @@ const requireModule = async (file, esmDecorator) => {
+       throw requireErr;
+     }
      try {
 +      // A require() failure that import() then rescues would otherwise vanish,
 +      // hiding module-scope compile and syntax errors. Keep this print.

@@ -871,12 +871,12 @@ Each lifecycle event has a corresponding component lifecycle method that can lis
 
 ```js
 class {
-  onCreate(input, out) { }
-  onInput(input, out) { }
-  onRender(out) { }
-  onMount() { }
-  onUpdate() { }
-  onDestroy() { }
+  onCreate(input, out) {}
+  onInput(input, out) {}
+  onRender(out) {}
+  onMount() {}
+  onUpdate() {}
+  onDestroy() {}
 }
 ```
 

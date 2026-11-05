@@ -1,5 +1,5 @@
-// size: 27189 (min) 10160 (brotli)
-//#region packages/runtime-tags/dist/dom.mjs
+// size: 27176 (min) 10167 (brotli)
+// packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
 let toDelimitedString = function toDelimitedString(val, delimiter, stringify) {
@@ -39,7 +39,7 @@ let runEffects = (effects) => {
   for (let i = 0; i < effects.length;) effects[i++](effects[i++]);
 };
 let runRender = (render) => {
-  (!branchesEnabled || render.b.F?.H !== 0) && render.c(render.b, render.d);
+  (branchesEnabled && render.b.F?.H === 0) || render.c(render.b, render.d);
 };
 let catchEnabled;
 let abortsEnabled;
@@ -332,21 +332,19 @@ let loop = /*@__PURE__*/ withBranches(
           (oldScopes.forEach(hasSiblings ? removeAndDestroyBranch : destroyBranch),
           hasSiblings || (parentNode.textContent = ""));
         for (let newScope of newScopes) insertBranchBefore(newScope, parentNode, afterReference);
-        return;
+      } else {
+        if (oldScopesByKey) oldScopesByKey.forEach(removeAndDestroyBranch);
+        else for (let i = newLen; i < oldLen; i++) removeAndDestroyBranch(oldScopes[i]);
+        for (; oldEnd >= start && newEnd >= start && oldScopes[oldEnd] === newScopes[newEnd];)
+          (oldEnd--, newEnd--);
+        if (
+          (oldEnd + 1 < oldLen && (afterReference = oldScopes[oldEnd + 1].S),
+          start > oldEnd || start > newEnd)
+        )
+          for (let i = start; i <= newEnd; i++)
+            insertBranchBefore(newScopes[i], parentNode, afterReference);
+        else reorder(newScopes, start, newEnd, parentNode, afterReference);
       }
-      if (oldScopesByKey) oldScopesByKey.forEach(removeAndDestroyBranch);
-      else for (let i = newLen; i < oldLen; i++) removeAndDestroyBranch(oldScopes[i]);
-      for (; oldEnd >= start && newEnd >= start && oldScopes[oldEnd] === newScopes[newEnd];)
-        (oldEnd--, newEnd--);
-      if (
-        (oldEnd + 1 < oldLen && (afterReference = oldScopes[oldEnd + 1].S),
-        start > oldEnd || start > newEnd)
-      ) {
-        for (let i = start; i <= newEnd; i++)
-          insertBranchBefore(newScopes[i], parentNode, afterReference);
-        return;
-      }
-      reorder(newScopes, start, newEnd, parentNode, afterReference);
     };
   },
 );
@@ -659,7 +657,7 @@ function _const(valueAccessor, fn) {
   return (
     (valueAccessor = decodeAccessor(valueAccessor)),
     (scope, value) => {
-      (scope[valueAccessor] !== value || !(valueAccessor in scope)) &&
+      (scope[valueAccessor] === value && valueAccessor in scope) ||
         ((scope[valueAccessor] = value), fn?.(scope));
     }
   );
@@ -942,59 +940,59 @@ function init(runtimeId = "M") {
                     adopt(pending.pop(), reorderBranch);
                   (reorderBranch = +lastToken && visitScope) &&
                     (reorderDepth = pending.push(reorderBranch));
-                  return;
-                }
-                for (
-                  visitType !== "[" &&
-                  ((visitScope[nextToken()] =
-                    visitType === ")" || visitType === "}" ? parent : visit),
-                  (accessor = "A" + (nodeAccessor = lastToken)),
-                  (singleNode = visitType !== "]" && visitType !== ")"),
-                  nextToken());
-                  (branchId = +lastToken);
-                ) {
-                  if (
-                    ((endedBranches ||= []).push((branch = getScope(branchId))),
-                    setParentBranch(branch, branch.F),
-                    (branch.O = render.p?.[branchId]) && (branch.O.m = render.m),
-                    singleNode)
+                } else {
+                  for (
+                    visitType !== "[" &&
+                    ((visitScope[nextToken()] =
+                      visitType === ")" || visitType === "}" ? parent : visit),
+                    (accessor = "A" + (nodeAccessor = lastToken)),
+                    (singleNode = visitType !== "]" && visitType !== ")"),
+                    nextToken());
+                    (branchId = +lastToken);
                   ) {
-                    for (
-                      ;
-                      startVisit.previousSibling &&
-                      (startVisit = startVisit.previousSibling).nodeType > 1;
-                    );
-                    ((branch._ ??= visitScope),
-                      (branch.K = branch.S = startVisit),
-                      visitType === "(" && (branch.a = startVisit));
-                  } else
-                    ((branch.C = nodeAccessor),
-                      (curBranchScopes = push(curBranchScopes, branch)),
-                      accessor &&
-                        ((visitScope[accessor] = curBranchScopes),
-                        forEach(curBranchScopes, (scope) => (scope._ ??= visitScope)),
-                        (curBranchScopes = branchScopesStack.pop())),
-                      (startVisit = branchStarts.pop()),
-                      parent !== startVisit.parentNode && parent.prepend(startVisit),
-                      (branch.S = startVisit),
-                      (branch.K =
-                        visit.previousSibling === startVisit
-                          ? startVisit
-                          : parent.insertBefore(new Text(), visit)));
-                  for (; pending.at(-1)?.L >= branchId;) adopt(pending.pop(), branch);
-                  nextToken();
+                    if (
+                      ((endedBranches ||= []).push((branch = getScope(branchId))),
+                      setParentBranch(branch, branch.F),
+                      (branch.O = render.p?.[branchId]) && (branch.O.m = render.m),
+                      singleNode)
+                    ) {
+                      for (
+                        ;
+                        startVisit.previousSibling &&
+                        (startVisit = startVisit.previousSibling).nodeType > 1;
+                      );
+                      ((branch._ ??= visitScope),
+                        (branch.K = branch.S = startVisit),
+                        visitType === "(" && (branch.a = startVisit));
+                    } else
+                      ((branch.C = nodeAccessor),
+                        (curBranchScopes = push(curBranchScopes, branch)),
+                        accessor &&
+                          ((visitScope[accessor] = curBranchScopes),
+                          forEach(curBranchScopes, (scope) => (scope._ ??= visitScope)),
+                          (curBranchScopes = branchScopesStack.pop())),
+                        (startVisit = branchStarts.pop()),
+                        parent !== startVisit.parentNode && parent.prepend(startVisit),
+                        (branch.S = startVisit),
+                        (branch.K =
+                          visit.previousSibling === startVisit
+                            ? startVisit
+                            : parent.insertBefore(new Text(), visit)));
+                    for (; pending.at(-1)?.L >= branchId;) adopt(pending.pop(), branch);
+                    nextToken();
+                  }
+                  if (endedBranches) {
+                    for (let ended of endedBranches) pending.push(ended);
+                    singleNode &&
+                      (visitScope[accessor] =
+                        endedBranches.length > 1 ? endedBranches.reverse() : endedBranches[0]);
+                  }
+                  visitType === "["
+                    ? (endedBranches ||
+                        (branchScopesStack.push(curBranchScopes), (curBranchScopes = void 0)),
+                      branchStarts.push(visit))
+                    : pending.push(visitScope);
                 }
-                if (endedBranches) {
-                  for (let ended of endedBranches) pending.push(ended);
-                  singleNode &&
-                    (visitScope[accessor] =
-                      endedBranches.length > 1 ? endedBranches.reverse() : endedBranches[0]);
-                }
-                visitType === "["
-                  ? (endedBranches ||
-                      (branchScopesStack.push(curBranchScopes), (curBranchScopes = void 0)),
-                    branchStarts.push(visit))
-                  : pending.push(visitScope);
               },
             nextToken = (_) =>
               (lastToken = visitText.slice(
@@ -2032,8 +2030,7 @@ function bySecondArg(_item, index) {
 function byFirstArg(name) {
   return name;
 }
-//#endregion
-//#region packages/runtime-tags/dist/dom.mjs
+// packages/runtime-tags/dist/dom.mjs
 let empty = [];
 let rest = Symbol();
 let classIdToBranch = /* @__PURE__ */ new Map();
@@ -2345,4 +2342,3 @@ function _load_race_trigger(...triggers) {
 function getSelectorOrResolve(selector, resolve) {
   return document.querySelector(selector) || resolve();
 }
-//#endregion

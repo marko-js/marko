@@ -15,11 +15,7 @@ const $placeholder_content__setup = ($scope) => {
 const $placeholder_content = _content("b0", "<!><!><!>", "b%", $placeholder_content__setup);
 
 // child.marko
-var child_exports = /* @__PURE__ */ __exportAll({
-	$setup: () => $setup,
-	$template: () => $template,
-	$walks: () => "b"
-});
+var child_exports = /* @__PURE__ */ __exportAll({});
 const $template = "<div id=ref>0</div>";
 const $promise__script = _script("a0", ($scope) => (async () => {
 	document.getElementById("ref").textContent = await $scope.a;

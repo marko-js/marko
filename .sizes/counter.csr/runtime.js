@@ -1,5 +1,5 @@
 // size: 3732 (min) 1690 (brotli)
-//#region packages/runtime-tags/dist/dom.mjs
+// packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36);
 let rendering;
 let runId = 2;
@@ -288,8 +288,7 @@ function insertChildNodes(parentNode, referenceNode, startNode, endNode) {
     (parentNode.insertBefore(startNode, referenceNode), (startNode = next));
   }
 }
-//#endregion
-//#region packages/runtime-tags/dist/dom.mjs
+// packages/runtime-tags/dist/dom.mjs
 let _template = (id, template, walks, setup, inputSignal) => {
   let renderer = _content(id, template, walks, setup, inputSignal)();
   return ((renderer.mount = mount), (renderer._ = renderer), (_resumed[id] = renderer));
@@ -357,4 +356,3 @@ function mount(input = {}, reference, position) {
     }
   );
 }
-//#endregion

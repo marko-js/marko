@@ -14,12 +14,7 @@ const $catch_content__$params = ($scope, $params2) => $catch_content__err_messag
 const $catch_content = _content("b2", "<!><!> caught <!>", "b%/&c%", $catch_content__setup, $catch_content__$params);
 
 // child.marko
-var child_exports = /* @__PURE__ */ __exportAll({
-	$input_value: () => $input_value,
-	$setup: () => $setup,
-	$template: () => $template,
-	$walks: () => "D l"
-});
+var child_exports = /* @__PURE__ */ __exportAll({});
 const $template = "<span> </span>";
 const $setup = ($_) => {};
 const $input_value__script = _script("a0", ($scope) => console.log("loaded " + $scope.d));

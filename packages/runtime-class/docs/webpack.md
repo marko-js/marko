@@ -127,6 +127,7 @@ For example, with the Webpack internationalization plugin, you might have a conf
 ```js
 import MarkoPlugin from "@marko/webpack/plugin";
 import I18nPlugin from "i18n-webpack-plugin";
+
 import germanTranslations from "./de.json";
 
 const languages = {

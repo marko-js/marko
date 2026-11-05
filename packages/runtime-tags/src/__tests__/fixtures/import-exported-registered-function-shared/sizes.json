@@ -6,10 +6,10 @@
         "brotli": 1323
       },
       "files": {
-        "tags/greeting.marko": 190,
-        "tags/v:greeting.marko.register-shout.js": 84,
-        "tags/panel.marko": 263,
-        "template.marko": 255
+        "tags/greeting.marko": 147,
+        "tags/v:greeting.marko.register-shout.js": 21,
+        "tags/panel.marko": 223,
+        "template.marko": 217
       }
     }
   },

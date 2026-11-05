@@ -180,9 +180,10 @@ function normalizeHtml(htmlOrNode) {
   let document = browser.window.document;
 
   if (typeof htmlOrNode === "string") {
-    document.open();
-    document.write(htmlOrNode);
-    document.close();
+    document = new browser.window.DOMParser().parseFromString(
+      htmlOrNode,
+      "text/html",
+    );
   } else {
     document.documentElement.innerHTML = "";
     document.body.appendChild(htmlOrNode);
