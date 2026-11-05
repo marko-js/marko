@@ -7,16 +7,13 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	_on($scope["#button/0"], "click", function() {
 		$count($scope, +$scope.count + 1);
 	});
-	_attrs_script($scope, "#button/1");
+	_on($scope["#button/1"], "click", function() {
+		$log($scope, `${$scope.log}[${$scope.count}]`);
+	});
 });
 function $setup($scope) {
-	_attrs_partial($scope, "#button/1", { onClick: $onClick($scope) }, { class: 1 });
 	$count($scope, 0);
 	$log($scope, "");
 	$setup__script($scope);
 }
-const $onClick = ($scope) => function() {
-	$log($scope, `${$scope.log}[${$scope.count}]`);
-};
-_resumed["__tests__/template.marko_0/onClick"] = $onClick;
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

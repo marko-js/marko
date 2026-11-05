@@ -1,0 +1,6 @@
+<define/One><em>one ${input.title}</em></define>
+<define/Two><strong>two ${input.title}</strong></define>
+<div ...{ "data-kind": "pick", content: input.which ? One : Two }/>
+<b ...{ [input.key]: "computed" }/>
+<s ...{ __proto__: null, id: "proto" }/>
+<em ...{ get id() { return "getter"; } }/>

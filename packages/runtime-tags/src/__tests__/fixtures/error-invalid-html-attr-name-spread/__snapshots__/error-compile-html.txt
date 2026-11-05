@@ -1,0 +1,5 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-invalid-html-attr-name-spread/template.marko:1:21
+    > 1 | <div ...{ id: "ok", "@invalid@attr": "value" }/>
+        |                     ^^^^^^^^^^^^^ Invalid attribute name.
+      2 |
