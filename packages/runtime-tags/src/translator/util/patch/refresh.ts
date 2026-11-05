@@ -992,26 +992,24 @@ function rendersIntersectionByWrite(
   intersection: Intersection,
   member: Binding,
 ) {
+  if (!hasGuardedSources(member)) return false;
   const sources = getSourcesForReferencedBindings(intersection);
+  const others = getOtherInputs(sources, member);
   // One the client runs beside a server value: with client state, where its group mixes,
   // where another member a caller may pass client state, or not deriving only what the patch writes.
-  if (hasGuardedSources(member)) {
-    const others = getOtherInputs(sources, member);
-    return (
-      !!sources?.state ||
-      isFilledIntersection(intersection) ||
-      (!!others && hasTagCallerParamAt(others, member.section)) ||
-      someBindingRead(
-        member,
-        (read) =>
-          getReferencedBindings(read) === intersection &&
-          patchFillsSection(read.section) &&
-          !leavesReadToPatch(read) &&
-          !(read.derives && every(read.derives, isServerSourced)),
-      )
-    );
-  }
-  return holdsRegisteredFn(member) && !!sources?.state;
+  return (
+    !!sources?.state ||
+    isFilledIntersection(intersection) ||
+    (!!others && hasTagCallerParamAt(others, member.section)) ||
+    someBindingRead(
+      member,
+      (read) =>
+        getReferencedBindings(read) === intersection &&
+        patchFillsSection(read.section) &&
+        !leavesReadToPatch(read) &&
+        !(read.derives && every(read.derives, isServerSourced)),
+    )
+  );
 }
 
 // A member such an intersection reads, which the patch writes for the intersection's render (its
@@ -1453,8 +1451,8 @@ function getNamedSetup(
   return named.setup || named.subscribe ? named : undefined;
 }
 
-// An intersection's created setup: a state intersection sets itself up unless every member
-// arrives by its signal; one of caller params where the client passes them.
+// An intersection's created setup: a state one's unless each member arrives by its signal (only
+// where the client sets its states, if the patch seeds its reads); caller params' where passed.
 function getIntersectionSetup(
   section: Section,
   intersection: Intersection,
@@ -1469,15 +1467,43 @@ function getIntersectionSetup(
   }
   const sources = getSourcesForReferencedBindings(intersection);
   if (sources?.state) {
-    return !every(intersection, (member) => arrivesBySignal(member, section)) &&
-      mayBeCreated(section)
-      ? { setup: "always" }
+    if (
+      every(intersection, (member) => arrivesBySignal(member, section)) ||
+      !mayBeCreated(section)
+    ) {
+      return;
+    }
+    if (!seedsIntersectionReads(section, intersection)) {
+      return { setup: "always" };
+    }
+    return hasTagCallerParamAt(getSetupSources(intersection), section)
+      ? { setup: "client" }
       : undefined;
   }
   if (!hasTagCallerParamAt(sources, section)) return;
   // A filled intersection no member's fill re-runs: a patch names it on any scope.
   if (rendersFilledIntersection(intersection)) return { setup: "mixed" };
   return { setup: "client" };
+}
+
+// The sources a client contributes an intersection's setup by: a state one's
+// states' initial values, as a created scope seeds what it computes from them.
+export function getSetupSources(intersection: Intersection) {
+  const sources = getSourcesForReferencedBindings(intersection);
+  return sources?.state ? getStateInitialValueSources(sources.state) : sources;
+}
+
+// A state intersection only holes a patch writes and initial values of `<let>`s
+// it fills read: a created scope takes those from the patch.
+function seedsIntersectionReads(section: Section, intersection: Intersection) {
+  return !someReadIn(
+    intersection[0],
+    section,
+    (read) =>
+      getReferencedBindings(read) === intersection &&
+      !isFilledHole(read) &&
+      !(read.initialValue && every(read.derives, canPatchFill)),
+  );
 }
 
 // A created scope gets the member by its signal, which runs a state intersection: state by

@@ -119,6 +119,7 @@ import {
   someReturnedFnValue,
   someReturnedFnValueOf,
   getCreatedSetup,
+  getSetupSources,
   getFilledReferences,
   getPatchFill,
   getPatchFillBindings,
@@ -418,7 +419,7 @@ export function writePatchResumeStatements(
           t.expressionStatement(
             buildClientSetup(
               section,
-              getSourcesForReferencedBindings(ref),
+              getSetupSources(ref),
               getCreatedSetupId(section, ref),
             ),
           ),
