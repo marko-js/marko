@@ -39,32 +39,7 @@ export default {
     assertNoParams(tag);
     assertNoBodyContent(tag);
     assertNoSpreadAttrs(tag);
-
-    let valueAttr: t.MarkoAttribute | undefined;
-    let valueChangeAttr: t.MarkoAttribute | undefined;
-    for (const attr of tag.node.attributes) {
-      if (t.isMarkoAttribute(attr)) {
-        if (attr.name === "value") {
-          if (valueAttr) {
-            throw tag.hub.buildError(
-              attr,
-              "Invalid duplicate value attribute.",
-            );
-          }
-          valueAttr = attr;
-        } else if (attr.name === "valueChange") {
-          if (valueChangeAttr) {
-            throw tag.hub.buildError(
-              attr,
-              "Invalid duplicate valueChange attribute.",
-            );
-          }
-          valueChangeAttr = attr;
-        }
-      }
-    }
-
-    assertOnlyValueAttr(tag, true, true);
+    const { valueAttr, valueChangeAttr } = assertOnlyValueAttr(tag, true, true);
 
     const parentTag = getParentTag(tag);
     if (parentTag) {
@@ -92,10 +67,9 @@ export default {
         );
     }
 
-    const attrs = getKnownAttrValues(tag.node);
-    if (attrs.valueChange) {
-      (attrs.valueChange.extra ??= {}).isEffect = true;
-      addSetupExpr(section, attrs.valueChange);
+    if (valueChangeAttr) {
+      (valueChangeAttr.value.extra ??= {}).isEffect = true;
+      addSetupExpr(section, valueChangeAttr.value);
       // TODO: this should be based on the parent actually mutating the tag variable.
       addReason(
         ensureSectionSlot(section, SlotKind.ReturnChangeHandler),
@@ -103,8 +77,8 @@ export default {
       );
     }
 
-    addSetupExpr(section, attrs.value);
-    section.returnValueExpr = attrs.value.extra ??= {};
+    addSetupExpr(section, valueAttr.value);
+    section.returnValueExpr = valueAttr.value.extra ??= {};
   },
   translate: translateByTarget({
     html: {

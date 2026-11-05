@@ -59,7 +59,7 @@ export default {
     const { node } = tag;
     const tagBody = tag.get("body");
     const section = ensureSection(tag);
-    const valueAttr = assertOnlyValueAttr(tag, true);
+    const { valueAttr } = assertOnlyValueAttr(tag, true);
     assertHasBody(tag);
     const tagExtra = (tag.node.extra ??= {}) as ControlFlowTagExtra;
     const nodeBinding = (tagExtra.nodeBinding = createBinding(

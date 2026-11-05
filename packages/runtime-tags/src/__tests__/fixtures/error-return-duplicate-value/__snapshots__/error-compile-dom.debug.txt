@@ -1,5 +1,5 @@
 
     at packages/runtime-tags/src/__tests__/fixtures/error-return-duplicate-value/template.marko:1:17
     > 1 | <return=input.a value=input.b/>
-        |                 ^^^^^^^^^^^^^ Invalid duplicate value attribute.
+        |                 ^^^^^^^^^^^^^ The [`<return>` tag](https://markojs.com/docs/reference/core-tag#return) takes a single [`value=` attribute](https://markojs.com/docs/reference/language#shorthand-value).
       2 |

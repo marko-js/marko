@@ -10,7 +10,7 @@ import {
   type Tag,
 } from "@marko/compiler/babel-utils";
 
-import { assertNoBodyContent } from "../util/assert";
+import { assertNoBodyContent, buildDuplicateAttrError } from "../util/assert";
 import { isOutputDOM } from "../util/marko-config";
 import { dropNodes, getAllTagReferenceNodes } from "../util/references";
 import { replaceWithStatements } from "../util/replace-with-statements";
@@ -82,7 +82,7 @@ export default {
     for (const attr of node.attributes) {
       if (attr.type === "MarkoAttribute" && attr.name === "value") {
         if (seenValueAttr) {
-          throw tag.hub.buildError(attr, "Invalid duplicate value attribute.");
+          throw buildDuplicateAttrError(tag, attr);
         }
         seenValueAttr = true;
         // A function without statements, such as a body of only comments, runs nothing.
