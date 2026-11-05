@@ -1,5 +1,15 @@
 # Change Log
 
+## 5.42.16
+
+### Patch Changes
+
+- [#4598](https://github.com/marko-js/marko/pull/4598) [`df57ab1`](https://github.com/marko-js/marko/commit/df57ab19908ee90a1be821d885ad72d11ba83823) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Find a template's package root with a cached directory walk instead of `lasso-package-root`, dropping it and `lasso-caching-fs` from the dependencies. The lookup is `getRootPackage` on `@marko/compiler/modules`, beside `resolve` and `tryResolve`, so an environment without a real file system can replace it the same way.
+
+- [#4583](https://github.com/marko-js/marko/pull/4583) [`60841bc`](https://github.com/marko-js/marko/commit/60841bcdc24e0452669b9745f0e82066e84440bd) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Update dependencies: the bundled Babel to 7.29.12, `htmljs-parser` 5.20, `@luxass/strip-json-comments` 2.0.2 and the bundled `entities` 9 in the compiler, `minimatch` 11 in `markoc`, and `magic-string` 1. `magic-string` 1 ships only ESM, so `engines.node` rises to `>=22.12.0`, the first Node 22 release that can `require()` it.
+
+- [#4596](https://github.com/marko-js/marko/pull/4596) [`7546ef9`](https://github.com/marko-js/marko/commit/7546ef9966afaccc90ea7c4c6526dd4df99d97b4) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Drop dependencies that Node now covers. The compiler resolves modules with `createRequire`, caching one per directory, instead of `resolve-from`; the require hook maps stack traces through Node's own source maps instead of `source-map-support`; and the `raptor-regexp` wildcard helper is inlined. The compiler also stops depending on `complain` and `self-closing-tags`, which it never imported, and `marko` resolves with `createRequire` instead of `resolve-from`.
+
 ## 5.42.15
 
 ### Patch Changes
