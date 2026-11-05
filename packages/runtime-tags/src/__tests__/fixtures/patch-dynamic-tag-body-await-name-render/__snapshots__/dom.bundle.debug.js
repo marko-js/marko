@@ -52,8 +52,8 @@ function $setup($scope) {
 }
 const $input_p = ($scope, input_p) => $input_p$1($scope["#childScope/0"], input_p);
 const $input = ($scope, input) => {
-	$input_on($scope, input.on);
 	$input_p($scope, input.p);
+	$input_on($scope, input.on);
 	$input_note($scope, input.note);
 };
 const $input_on__closure = /*@__PURE__*/ _closure($Card_content__input_on);

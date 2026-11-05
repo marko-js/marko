@@ -23,9 +23,9 @@ function $setup($scope) {
 const $if = /*@__PURE__*/ _if("#text/0", "<!><!><!>", "b%", $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input = ($scope, input) => {
+	$input_items($scope, input.items);
 	$input_suffix($scope, input.suffix);
 	$input_show($scope, input.show);
-	$input_items($scope, input.items);
 };
 const $input_items = /*@__PURE__*/ _const("input_items", $if_content__input_items);
 const $input_suffix__closure = /*@__PURE__*/ _closure($for_content__input_suffix);

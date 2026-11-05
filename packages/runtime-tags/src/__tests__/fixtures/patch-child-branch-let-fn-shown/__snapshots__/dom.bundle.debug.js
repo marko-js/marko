@@ -30,8 +30,8 @@ const $if_content__setup = ($scope) => {
 const $if = /*@__PURE__*/ _if("#text/0", "<button> </button>", " D ", $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input = ($scope, input) => {
-	$input_show($scope, input.show);
 	$input_fn($scope, input.fn);
+	$input_show($scope, input.show);
 };
 const $input_fn = /*@__PURE__*/ _const("input_fn", $if_content__input_fn);
 var card_default = /*@__PURE__*/ _template("__tests__/tags/card.marko", $template, "b%c", 0, $input);

@@ -16,8 +16,8 @@ const $Panel_content__tag_input_label__closure = /*@__PURE__*/ _closure($for_con
 const $Panel_content__tag_input_label = /*@__PURE__*/ _const("label", $Panel_content__tag_input_label__closure);
 const $Panel_content__$params = ($scope, $params2) => $Panel_content__$temp($scope, $params2[0]);
 const $Panel_content__$temp = ($scope, $temp) => {
-	$Panel_content__tag_input_label($scope, $temp.label);
 	$Panel_content__isOpen($scope, $temp.isOpen);
+	$Panel_content__tag_input_label($scope, $temp.label);
 };
 const $input_open = ($scope, input_open) => $Panel_content__isOpen($scope["#childScope/0"], input_open);
 const $input_label = ($scope, input_label) => $Panel_content__tag_input_label($scope["#childScope/0"], input_label);

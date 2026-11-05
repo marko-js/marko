@@ -11,9 +11,9 @@ const $await_content2__second__OR__handler = /*@__PURE__*/ _or_patch("__tests__/
 });
 const $await_content2__handler = /*@__PURE__*/ _const("handler", $await_content2__second__OR__handler);
 const $await_content2__second = /*@__PURE__*/ _const("second", ($scope) => {
+	_text($scope["#text/1"], $scope.second);
 	$await_content2__handler($scope, $handler($scope));
 	$await_content2__second__OR__handler($scope);
-	_text($scope["#text/1"], $scope.second);
 });
 const $await_content2__$params = ($scope, $params3) => $await_content2__second($scope, $params3[0]);
 const $await_content__first = ($scope, first) => _text($scope["#text/0"], first);

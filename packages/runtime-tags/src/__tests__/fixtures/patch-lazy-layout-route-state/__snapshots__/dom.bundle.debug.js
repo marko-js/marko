@@ -16,8 +16,8 @@ const $input_open = ($scope, input_open) => $if($scope, input_open ? 0 : 1);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
 const $input_content = $dynamicTag;
 const $input = ($scope, input) => {
-	$input_content($scope, input.content);
 	$input_open($scope, input.open);
+	$input_content($scope, input.content);
 };
 var layout_default = /*@__PURE__*/ _template("__tests__/layout.marko", $template$1, $walks$1, 0, $input);
 

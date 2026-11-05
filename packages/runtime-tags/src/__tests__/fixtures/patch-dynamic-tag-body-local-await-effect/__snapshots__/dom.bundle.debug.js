@@ -53,10 +53,10 @@ const $if_content__input_v = /*@__PURE__*/ _if_closure_patch("__tests__/template
 const $if = /*@__PURE__*/ _if("#main/0", "<div></div><!><!>", " b%", $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input = ($scope, input) => {
+	$input_show($scope, input.show);
 	$input_note($scope, input.note);
 	$input_v($scope, input.v);
 	$input_on($scope, input.on);
-	$input_show($scope, input.show);
 };
 const $input_note = /*@__PURE__*/ _const("input_note", $if_content__input_note);
 const $input_v = /*@__PURE__*/ _const("input_v", $if_content__input_v);

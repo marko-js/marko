@@ -26,10 +26,10 @@ function $setup($scope) {
 const $if = /*@__PURE__*/ _if("#text/0", "<!><!><!>", "b%", $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input = ($scope, input) => {
+	$input_items($scope, input.items);
 	$input_suffix($scope, input.suffix);
 	$input_show($scope, input.show);
 	$input_inner($scope, input.inner);
-	$input_items($scope, input.items);
 };
 const $input_inner = /*@__PURE__*/ _const("input_inner", $if_content__input_inner);
 const $input_items__closure = /*@__PURE__*/ _closure($if_content2__input_items);

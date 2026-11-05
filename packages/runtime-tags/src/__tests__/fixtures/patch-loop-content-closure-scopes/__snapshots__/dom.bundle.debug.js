@@ -7,8 +7,8 @@ const $input_label = ($scope, input_label) => _text($scope["#text/0"], input_lab
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
 const $input_content = $dynamicTag;
 const $input$1 = ($scope, input) => {
-	$input_content($scope, input.content);
 	$input_label($scope, input.label);
+	$input_content($scope, input.content);
 };
 var panel_default = /*@__PURE__*/ _template("__tests__/tags/panel.marko", $template$1, $walks$1, 0, $input$1);
 

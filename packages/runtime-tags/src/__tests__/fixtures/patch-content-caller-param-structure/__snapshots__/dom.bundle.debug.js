@@ -8,8 +8,8 @@ const $if_content__setup = $if_content__input_content;
 const $if = /*@__PURE__*/ _if("#text/0", "<!><!><!>", "b%", $if_content__setup);
 const $input_open$4 = ($scope, input_open) => $if($scope, input_open ? 0 : 1);
 const $input$5 = ($scope, input) => {
-	$input_content$2($scope, input.content);
 	$input_open$4($scope, input.open);
+	$input_content$2($scope, input.content);
 };
 const $input_content$2 = /*@__PURE__*/ _const("input_content", $if_content__input_content);
 var toggle_if_default = /*@__PURE__*/ _template("__tests__/tags/toggle-if.marko", $template$5, "b%c", 0, $input$5);
@@ -28,8 +28,8 @@ const $input_open$3 = ($scope, input_open) => $for($scope, [
 	1
 ]);
 const $input$4 = ($scope, input) => {
-	$input_content$1($scope, input.content);
 	$input_open$3($scope, input.open);
+	$input_content$1($scope, input.content);
 };
 const $input_content$1 = /*@__PURE__*/ _const("input_content", $for_content__input_content);
 var toggle_for_default = /*@__PURE__*/ _template("__tests__/tags/toggle-for.marko", $template$4, "b%c", 0, $input$4);

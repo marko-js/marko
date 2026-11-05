@@ -39,8 +39,8 @@ const $setup = $await_content;
 const $input_v = $await_promise;
 const $input = ($scope, input) => {
 	$input_on($scope, input.on);
-	$input_v($scope, input.v);
 	$input_note($scope, input.note);
+	$input_v($scope, input.v);
 };
 const $input_on__closure = /*@__PURE__*/ _closure($Body_content__input_on);
 const $input_on = /*@__PURE__*/ _const("input_on", $input_on__closure);

@@ -41,8 +41,8 @@ function $setup($scope) {
 }
 const $input = ($scope, input) => {
 	$input_outer($scope, input.outer);
-	$input_inner($scope, input.inner);
 	$input_msg($scope, input.msg);
+	$input_inner($scope, input.inner);
 };
 const $input_outer__closure = /*@__PURE__*/ _closure($try_content__input_outer);
 const $input_outer = /*@__PURE__*/ _const("input_outer", $input_outer__closure);

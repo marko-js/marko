@@ -6,9 +6,6 @@ const $mode = /*@__PURE__*/ _fill_let("__tests__/tags/counter-box/index.marko_fi
 	_text($scope["#text/0"], $scope.mode);
 	_return($scope, $scope.mode);
 	$input_onA__OR__input_onB__OR__mode($scope);
-}, ($scope) => {
-	_text($scope["#text/0"], $scope.mode);
-	_return($scope, $scope.mode);
 });
 const $setup__script$1 = _script("__tests__/tags/counter-box/index.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$mode($scope, "b");

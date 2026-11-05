@@ -7,8 +7,8 @@ const $x = _fill_let_change_resume("__tests__/template.marko_fill0", "x/5", $inp
 const $input_v = ($scope, input_v) => $x($scope, input_v, $valueChange);
 const $input_w = /*@__PURE__*/ _const("input_w", $input_w__OR__x);
 const $input = ($scope, input) => {
-	$input_w($scope, input.w);
 	$input_v($scope, input.v);
+	$input_w($scope, input.w);
 };
 function $valueChange(v) {
 	console.log(v);

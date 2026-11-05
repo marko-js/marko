@@ -23,8 +23,8 @@ function $setup($scope) {
 const $for = /*@__PURE__*/ _for_of("#text/0", "<!><!><!>", "b%", $for_content__setup);
 const $input_items = ($scope, input_items) => $for($scope, [input_items, (item) => item]);
 const $input = ($scope, input) => {
-	$input_suffix($scope, input.suffix);
 	$input_items($scope, input.items);
+	$input_suffix($scope, input.suffix);
 	$input_flag($scope, input.flag);
 };
 const $input_flag = /*@__PURE__*/ _const("input_flag", $for_content__input_flag);

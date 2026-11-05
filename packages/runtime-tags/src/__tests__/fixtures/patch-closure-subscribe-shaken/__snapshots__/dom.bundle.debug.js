@@ -57,8 +57,8 @@ const $for_content__setup = $for_content__p_owned;
 const $for_content__u_id = /*@__PURE__*/ _const("u_id", $for_content__p_owned__OR__u_id);
 const $for_content__u_parts = /*@__PURE__*/ _const("u_parts", $for_content__u_parts__OR__owned);
 const $for_content__$params = ($scope, $params2) => {
-	$for_content__u_id($scope, $params2[0]?.id);
 	$for_content__u_parts($scope, $params2[0]?.parts);
+	$for_content__u_id($scope, $params2[0]?.id);
 };
 const $p__closure = /*@__PURE__*/ _closure($for_content2__p);
 const $p = /*@__PURE__*/ _const("p", ($scope) => {

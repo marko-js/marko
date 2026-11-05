@@ -30,8 +30,8 @@ function $setup($scope) {
 }
 const $input_mode__closure = /*@__PURE__*/ _closure($one_content__input_mode);
 const $input_mode = /*@__PURE__*/ _const("input_mode", ($scope) => {
-	$input_mode__OR__one($scope);
 	$input_mode__closure($scope);
+	$input_mode__OR__one($scope);
 });
 const $input = ($scope, input) => {
 	$input_mode($scope, input.mode);

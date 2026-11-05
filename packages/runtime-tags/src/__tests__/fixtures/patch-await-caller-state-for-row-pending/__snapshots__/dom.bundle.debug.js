@@ -23,8 +23,8 @@ const $for_content__item = /*@__PURE__*/ _const("item", $for_content__item__clos
 const $for = /*@__PURE__*/ _for_of_unkeyed("#text/0", "<!><!><!>", "b%", $for_content__setup, $for_content__$params);
 const $input_items$1 = ($scope, input_items) => $for($scope, [input_items]);
 const $input$1 = ($scope, input) => {
-	$input_promise($scope, input.promise);
 	$input_items$1($scope, input.items);
+	$input_promise($scope, input.promise);
 	$input_label$1($scope, input.label);
 };
 const $input_promise = /*@__PURE__*/ _const("input_promise", $for_content__input_promise);

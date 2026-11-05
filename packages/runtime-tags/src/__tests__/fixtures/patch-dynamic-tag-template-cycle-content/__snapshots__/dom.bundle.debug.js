@@ -8,8 +8,8 @@ const $if_content__setup = $if_content__input_content;
 const $if = /*@__PURE__*/ _if("#text/0", "<ul><!></ul>", "D%", $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input$3 = ($scope, input) => {
-	$input_content($scope, input.content);
 	$input_show($scope, input.show);
+	$input_content($scope, input.content);
 };
 const $input_content = /*@__PURE__*/ _const("input_content", $if_content__input_content);
 var wrap_default = /*@__PURE__*/ _template("__tests__/tags/wrap.marko", $template$3, "b%c", 0, $input$3);
@@ -57,8 +57,8 @@ const $input_node_kid = /*@__PURE__*/ _const("input_node_kid", ($scope) => {
 });
 const $input$1 = ($scope, input) => $input_node$1($scope, input.node);
 const $input_node$1 = ($scope, input_node) => {
-	$input_node_kid($scope, input_node?.kid);
 	$input_node_name($scope, input_node?.name);
+	$input_node_kid($scope, input_node?.kid);
 };
 var tree_a_default = /*@__PURE__*/ _template("__tests__/tags/tree-a.marko", $template$1, $walks$1, $setup$1, $input$1);
 

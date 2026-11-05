@@ -34,8 +34,8 @@ const $setup = $await_content;
 const $input_p = $await_promise;
 const $input = ($scope, input) => {
 	$input_on($scope, input.on);
-	$input_p($scope, input.p);
 	$input_note($scope, input.note);
+	$input_p($scope, input.p);
 };
 const $input_note__closure = /*@__PURE__*/ _closure($inputonCarddiv_content__input_note);
 const $input_note = /*@__PURE__*/ _const("input_note", $input_note__closure);

@@ -33,8 +33,8 @@ const $if_content__input_label = /*@__PURE__*/ _if_closure_patch("__tests__/temp
 const $if = /*@__PURE__*/ _if("#main/0", "<div>x</div><!><!>", " b%/&", $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input = ($scope, input) => {
-	$input_attrs($scope, input.attrs);
 	$input_show($scope, input.show);
+	$input_attrs($scope, input.attrs);
 	$input_label($scope, input.label);
 };
 const $input_attrs = /*@__PURE__*/ _const("input_attrs", $if_content__input_attrs);

@@ -26,8 +26,8 @@ const $if_content__frag_content = /*@__PURE__*/ _const("frag_content", $if_conte
 const $if = /*@__PURE__*/ _if("#text/0", "<p> </p><section></section>", "D l ", $if_content__setup);
 const $input_show$1 = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input$1 = ($scope, input) => {
-	$input_b($scope, input.b);
 	$input_show$1($scope, input.show);
+	$input_b($scope, input.b);
 	$input_a($scope, input.a);
 	$input_mode($scope, input.mode);
 };

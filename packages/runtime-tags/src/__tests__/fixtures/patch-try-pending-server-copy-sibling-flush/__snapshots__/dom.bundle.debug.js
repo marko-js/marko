@@ -46,7 +46,7 @@ const $await_promise = /*@__PURE__*/ _await_promise("#text/2", $await_content__$
 const $input_other = $await_promise;
 const $input = ($scope, input) => {
 	$input_promise($scope, input.promise);
-	$input_other($scope, input.other);
 	$input_label($scope, input.label);
+	$input_other($scope, input.other);
 };
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

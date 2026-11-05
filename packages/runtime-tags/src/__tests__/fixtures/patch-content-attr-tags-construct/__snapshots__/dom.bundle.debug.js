@@ -11,8 +11,8 @@ const $dynamicTag2 = /*@__PURE__*/ _dynamic_tag("#text/2");
 const $input_content = $dynamicTag2;
 const $input$1 = ($scope, input) => {
 	$input_header($scope, input.header);
-	$input_content($scope, input.content);
 	$input_title$1($scope, input.title);
+	$input_content($scope, input.content);
 };
 var card_default = /*@__PURE__*/ _template("__tests__/tags/card/index.marko", $template$1, $walks$1, 0, $input$1);
 

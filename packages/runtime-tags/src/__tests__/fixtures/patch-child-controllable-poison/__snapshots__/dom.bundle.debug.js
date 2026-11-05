@@ -14,9 +14,9 @@ const $if_content__setup = ($scope) => {
 const $if = /*@__PURE__*/ _if("#text/0", "<span>Seen <!></span><button>+</button>", "Db%l ", $if_content__setup);
 const $input_show$1 = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input$1 = ($scope, input) => {
+	$input_onCount($scope, input.onCount);
 	$input_step($scope, input.step);
 	$input_show$1($scope, input.show);
-	$input_onCount($scope, input.onCount);
 };
 const $input_onCount = /*@__PURE__*/ _const("input_onCount", $if_content__input_onCount);
 const $input_step = /*@__PURE__*/ _const("input_step");

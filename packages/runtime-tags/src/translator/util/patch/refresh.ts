@@ -1643,7 +1643,7 @@ export const isFilledIntersection = createPassMemo(
 
 // A read the patch leaves to the holes it writes, the effects its entries
 // re-run and the calls whose callees keep their inputs, through derived values.
-function leavesReadToPatch(read: ReferencedExtra): boolean {
+export function leavesReadToPatch(read: ReferencedExtra): boolean {
   return (
     !rendersAtSite(read) && !some(exprReaders(read).directReads, rendersAtSite)
   );
@@ -1654,7 +1654,7 @@ function leavesReadToPatch(read: ReferencedExtra): boolean {
 function rendersAtSite(read: ReferencedExtra) {
   return (
     !isFilledHole(read) &&
-    !readsValuesOnResume(read) &&
+    !(read.isEffect && runsByEntry(getReferencedBindings(read))) &&
     (!read.derives ||
       !every(read.derives, (derived) =>
         isCalleeParam(derived, read.section)

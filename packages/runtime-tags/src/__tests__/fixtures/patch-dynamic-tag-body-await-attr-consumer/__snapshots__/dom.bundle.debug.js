@@ -36,8 +36,8 @@ const $if_content__setup = ($scope) => {
 };
 const $if = /*@__PURE__*/ _if("#text/0", "<!><!><!>", "b%", $if_content__setup);
 const $input_p$1 = /*@__PURE__*/ _const("input_p", ($scope) => {
-	$if_content__input_p($scope);
 	$if($scope, $scope.input_p ? 0 : 1);
+	$if_content__input_p($scope);
 });
 const $input$1 = ($scope, input) => {
 	$input_p$1($scope, input.p);

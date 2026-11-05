@@ -26,9 +26,9 @@ const $if_content__input_inner = /*@__PURE__*/ _if_closure_patch("__tests__/temp
 const $if = /*@__PURE__*/ _if("#text/0", "<!><!><!>", "b%", $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input = ($scope, input) => {
+	$input_v($scope, input.v);
 	$input_w($scope, input.w);
 	$input_show($scope, input.show);
-	$input_v($scope, input.v);
 	$input_inner($scope, input.inner);
 };
 const $input_v = /*@__PURE__*/ _const("input_v", $if_content__input_v);

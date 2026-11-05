@@ -28,11 +28,11 @@ const $input_rows$1 = ($scope, input_rows) => {
 	$for2($scope, [input_rows]);
 };
 const $input$1 = ($scope, input) => {
+	$input_title$1($scope, input.title);
 	$input_content($scope, input.content);
 	$input_header($scope, input.header);
-	$input_row($scope, input.row);
-	$input_title$1($scope, input.title);
 	$input_rows$1($scope, input.rows);
+	$input_row($scope, input.row);
 };
 const $input_row = /*@__PURE__*/ _const("input_row", $for_content__input_row);
 var layout_default = /*@__PURE__*/ _template("__tests__/tags/layout.marko", $template$1, $walks$1, 0, $input$1);

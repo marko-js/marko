@@ -22,8 +22,8 @@ const $input_onPick = /*@__PURE__*/ _const("input_onPick", $input_onPick__script
 const $for = /*@__PURE__*/ _for_of_unkeyed("#text/2", "<!><!><!>", "b%", $for_content__setup, $for_content__$params);
 const $input_item = ($scope, input_item) => $for($scope, [input_item]);
 const $input$1 = ($scope, input) => {
-	$input_onPick($scope, input.onPick);
 	$input_item($scope, input.item);
+	$input_onPick($scope, input.onPick);
 };
 var list_default = /*@__PURE__*/ _template("__tests__/tags/list.marko", $template$1, $walks$1, $setup$1, $input$1);
 

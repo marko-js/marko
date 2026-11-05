@@ -25,8 +25,8 @@ const $setup$1 = $await_content;
 const $input_promise = $await_promise;
 const $input$1 = ($scope, input) => {
 	$input_promise($scope, input.promise);
-	$input_inner$1($scope, input.inner);
 	$input_label$1($scope, input.label);
+	$input_inner$1($scope, input.inner);
 };
 const $input_label__closure = /*@__PURE__*/ _closure($await_content__input_label);
 const $input_label$1 = /*@__PURE__*/ _const("input_label", $input_label__closure);

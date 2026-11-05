@@ -24,8 +24,8 @@ const $if_content__setup = ($scope) => {
 const $if = /*@__PURE__*/ _if("#text/0", /*@__PURE__*/ ((_w0) => `<button>x</button>${_w0}`)($template$2), /*@__PURE__*/ ((_w0) => ` b/${_w0}&`)("D%l"), $if_content__setup);
 const $input_show$1 = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input$1 = ($scope, input) => {
-	$input_show$1($scope, input.show);
 	$input_content($scope, input.content);
+	$input_show$1($scope, input.show);
 };
 const $input_content = /*@__PURE__*/ _const("input_content", $if_content__input_content);
 var outer_default = /*@__PURE__*/ _template("__tests__/tags/outer.marko", $template$1, "b%c", 0, $input$1);

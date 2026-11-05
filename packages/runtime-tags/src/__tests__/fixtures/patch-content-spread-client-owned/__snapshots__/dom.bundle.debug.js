@@ -22,8 +22,8 @@ function $setup$1($scope) {
 }
 const $input_mode = /*@__PURE__*/ _const("input_mode", $input_mode__OR__one__OR__two);
 const $input$1 = ($scope, input) => {
-	$input_mode($scope, input.mode);
 	$input_b$1($scope, input.b);
+	$input_mode($scope, input.mode);
 };
 const $input_b__closure = /*@__PURE__*/ _closure($two_content__input_b);
 const $input_b$1 = /*@__PURE__*/ _const("input_b", $input_b__closure);

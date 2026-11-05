@@ -50,9 +50,9 @@ const $await_promise = /*@__PURE__*/ _await_promise("#text/3", $await_content3__
 const $input_last = $await_promise;
 const $input = ($scope, input) => {
 	$input_outer($scope, input.outer);
+	$input_msg($scope, input.msg);
 	$input_inner($scope, input.inner);
 	$input_last($scope, input.last);
-	$input_msg($scope, input.msg);
 };
 const $input_outer__closure = /*@__PURE__*/ _closure($try_content__input_outer);
 const $input_outer = /*@__PURE__*/ _const("input_outer", $input_outer__closure);

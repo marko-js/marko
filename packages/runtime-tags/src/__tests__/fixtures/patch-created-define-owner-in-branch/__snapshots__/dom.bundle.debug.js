@@ -23,9 +23,9 @@ const $if_content__setup = ($scope) => {
 const $if = /*@__PURE__*/ _if("#text/0", /*@__PURE__*/ ((_w0) => `<!>${_w0}<button>x</button>`)($Panel_content__template), /*@__PURE__*/ ((_w0) => `b/${_w0}& b`)($Panel_content__walks), $if_content__setup);
 const $input_on = ($scope, input_on) => $if($scope, input_on ? 0 : 1);
 const $input = ($scope, input) => {
+	$input_n($scope, input.n);
 	$input_w($scope, input.w);
 	$input_on($scope, input.on);
-	$input_n($scope, input.n);
 };
 const $input_n = /*@__PURE__*/ _const("input_n", $if_content__input_n);
 const $input_w__closure = /*@__PURE__*/ _closure($if_content2__input_w);

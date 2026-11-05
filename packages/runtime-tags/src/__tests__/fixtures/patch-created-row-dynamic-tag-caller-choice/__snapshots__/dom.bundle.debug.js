@@ -10,8 +10,8 @@ const $Card_content__label = ($scope, label) => {
 	$Card_content__if($scope, label ? 0 : 1);
 };
 const $Card_content__$params = ($scope, $params2) => {
-	$Card_content__content($scope, $params2[0].content);
 	$Card_content__label($scope, $params2[0].label);
+	$Card_content__content($scope, $params2[0].content);
 };
 const $Card_content__content = /*@__PURE__*/ _const("content", $if_content__content);
 const $Card_content = _content("__tests__/tags/rowsy.marko_3*content", "<p><!><!></p>", "D%b%", 0, $Card_content__$params);

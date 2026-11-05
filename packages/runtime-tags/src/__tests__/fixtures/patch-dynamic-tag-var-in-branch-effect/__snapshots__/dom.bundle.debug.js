@@ -13,8 +13,8 @@ const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => $el_getter($scope)()?.setAttribute("data-mounted", ""));
 const $setup = $setup__script;
 const $input = ($scope, input) => {
-	$input_type($scope, input.type);
 	$input_show($scope, input.show);
+	$input_type($scope, input.type);
 };
 const $input_type = /*@__PURE__*/ _const("input_type", $if_content__input_type);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", $setup, $input);

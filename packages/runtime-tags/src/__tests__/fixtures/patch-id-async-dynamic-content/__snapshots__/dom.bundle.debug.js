@@ -28,8 +28,8 @@ function $setup$1($scope) {
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
 const $input_content = $dynamicTag;
 const $input$1 = ($scope, input) => {
-	$input_content($scope, input.content);
 	$input_name($scope, input.name);
+	$input_content($scope, input.content);
 };
 var loaded_default = /*@__PURE__*/ _template("__tests__/tags/loaded.marko", $template$1, $walks$1, $setup$1, $input$1);
 

@@ -30,8 +30,8 @@ const $for_content__hovered__OR__item_id = /*@__PURE__*/ _or_patch("__tests__/te
 const $for_content__hovered = /*@__PURE__*/ _for_closure_patch("__tests__/template.marko_1_hovered#0:3/setup", "#ul/0", $for_content__hovered__OR__item_id);
 const $for_content__item_id = /*@__PURE__*/ _const("item_id", ($scope) => {
 	$for_content__hovered__OR__item_id($scope);
-	$input_label($scope["#childScope/1"], $scope.item_id);
 	$for_content__data__OR__item_id($scope);
+	$input_label($scope["#childScope/1"], $scope.item_id);
 });
 const $for_content__$params = ($scope, $params2) => $for_content__item_id($scope, $params2[0]?.id);
 const $data = /*@__PURE__*/ _const("data", ($scope) => {

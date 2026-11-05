@@ -57,8 +57,8 @@ const $if_content__v = _var_resume("__tests__/template.marko_1_v#3/var", /*@__PU
 const $if = /*@__PURE__*/ _if("#main/0", /*@__PURE__*/ ((_w0) => `${_w0}<!><!>`)($template$1), /*@__PURE__*/ ((_w0) => `0${_w0}&%c`)($walks$1), $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input = ($scope, input) => {
-	$input_on($scope, input.on);
 	$input_show($scope, input.show);
+	$input_on($scope, input.on);
 	$input_note($scope, input.note);
 };
 const $input_on = /*@__PURE__*/ _const("input_on", $if_content__input_on);

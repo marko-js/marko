@@ -11,7 +11,7 @@ const $setup__$global__script = _fill_global_script("__tests__/template.marko_0_
 }, "");
 const $setup__$global = $setup__$global__script;
 function $setup($scope) {
-	$setup__$global($scope);
 	$setup__$global_other($scope);
+	$setup__$global($scope);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "E m", $setup);

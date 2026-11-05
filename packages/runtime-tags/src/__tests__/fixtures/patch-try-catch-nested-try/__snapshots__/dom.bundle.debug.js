@@ -25,8 +25,8 @@ const $try = /*@__PURE__*/ _try("#text/0", "<em> </em><!><!>", "D l%", $try_cont
 const $setup = $try;
 const $input__closure = /*@__PURE__*/ _closure($try_content__input);
 const $input = /*@__PURE__*/ _const("input", ($scope) => {
-	$input_promise($scope, $scope.input.promise);
 	$input__closure($scope);
+	$input_promise($scope, $scope.input.promise);
 });
 const $input_promise__closure = /*@__PURE__*/ _closure($try_content2__input_promise);
 const $input_promise = /*@__PURE__*/ _const("input_promise", $input_promise__closure);

@@ -10,8 +10,8 @@ const $for_content__$params = ($scope, $params2) => $for_content__i($scope, $par
 const $for = /*@__PURE__*/ _for_of_unkeyed("#ul/0", "<li><!><!></li>", "D%b%", $for_content__setup, $for_content__$params);
 const $input_count$1 = ($scope, input_count) => $for($scope, [input_count]);
 const $input$1 = ($scope, input) => {
-	$input_content($scope, input.content);
 	$input_count$1($scope, input.count);
+	$input_content($scope, input.content);
 };
 const $input_content = /*@__PURE__*/ _const("input_content", $for_content__input_content);
 var card_default = /*@__PURE__*/ _template("__tests__/tags/card/index.marko", $template$1, " b", 0, $input$1);

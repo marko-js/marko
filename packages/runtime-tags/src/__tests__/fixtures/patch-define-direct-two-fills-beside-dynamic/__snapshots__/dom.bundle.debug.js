@@ -42,8 +42,8 @@ const $input_show__OR__input_label__OR__input_rest = /*@__PURE__*/ _or_patch("__
 }, 2);
 const $input_show = /*@__PURE__*/ _const("input_show", $input_show__OR__input_label__OR__input_rest);
 const $input_label = /*@__PURE__*/ _const("input_label", ($scope) => {
-	$input_label__OR__open__OR__Tag($scope);
 	$input_show__OR__input_label__OR__input_rest($scope);
+	$input_label__OR__open__OR__Tag($scope);
 });
 const $input_rest = /*@__PURE__*/ _const("input_rest", $input_show__OR__input_label__OR__input_rest);
 const $input_other = /*@__PURE__*/ _const("input_other", $input_other__OR__Panel);

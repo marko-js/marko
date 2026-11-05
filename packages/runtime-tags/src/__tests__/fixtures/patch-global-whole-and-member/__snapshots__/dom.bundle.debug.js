@@ -15,8 +15,8 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($sc
 }));
 function $setup($scope) {
 	$n($scope, 0);
+	$setup__$global_data($scope);
 	$setup__$global($scope);
 	$setup__script($scope);
-	$setup__$global_data($scope);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

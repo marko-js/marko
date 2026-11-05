@@ -11,8 +11,8 @@ const $for_content__setup = ($scope) => {
 	$for_content__setup__script($scope);
 };
 const $for_content__item_href = /*@__PURE__*/ _const(4, ($scope) => {
-	_attr($scope.a, "href", $scope.e);
 	$for_content__input_path__OR__item_href($scope);
+	_attr($scope.a, "href", $scope.e);
 });
 const $for_content__item_label = ($scope, item_label) => _text($scope.b, item_label);
 const $for_content__$params = ($scope, $params2) => {

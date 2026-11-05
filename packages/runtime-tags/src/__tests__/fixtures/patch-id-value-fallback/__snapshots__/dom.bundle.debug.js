@@ -51,7 +51,7 @@ function $setup($scope) {
 const $for = /*@__PURE__*/ _for_of("#text/3", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1), $for_content__setup, $for_content__$params);
 const $input_items = ($scope, input_items) => $for($scope, [input_items, "key"]);
 const $input = ($scope, input) => {
-	$input_heading($scope, input.heading);
 	$input_items($scope, input.items);
+	$input_heading($scope, input.heading);
 };
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

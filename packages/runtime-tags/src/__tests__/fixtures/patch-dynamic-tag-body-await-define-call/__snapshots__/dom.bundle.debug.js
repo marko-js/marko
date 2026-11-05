@@ -44,10 +44,10 @@ const $Body_content__setup = $Body_content__input_note;
 const $if = /*@__PURE__*/ _if("#main/0", "<!><!><!>", "b%", $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input = ($scope, input) => {
-	$input_v($scope, input.v);
-	$input_on($scope, input.on);
 	$input_note($scope, input.note);
 	$input_show($scope, input.show);
+	$input_v($scope, input.v);
+	$input_on($scope, input.on);
 };
 const $input_note__closure = /*@__PURE__*/ _closure($Body_content__input_note);
 const $input_note = /*@__PURE__*/ _const("input_note", $input_note__closure);

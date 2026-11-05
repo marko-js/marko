@@ -33,9 +33,9 @@ const $if_content__input_y = /*@__PURE__*/ _if_closure_patch("__tests__/tags/vie
 const $if = /*@__PURE__*/ _if("#text/0", "<span> </span><button>+</button>", "D l ", $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input = ($scope, input) => {
+	$input_x($scope, input.x);
 	$input_y($scope, input.y);
 	$input_show($scope, input.show);
-	$input_x($scope, input.x);
 };
 const $input_x = /*@__PURE__*/ _const("input_x", $if_content__input_x);
 const $input_y = /*@__PURE__*/ _const("input_y", $if_content__input_y);

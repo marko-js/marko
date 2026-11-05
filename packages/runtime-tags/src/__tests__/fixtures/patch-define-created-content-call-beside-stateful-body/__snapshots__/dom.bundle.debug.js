@@ -13,8 +13,8 @@ const $Wrap_content2__show = ($scope, show) => $Wrap_content2__if($scope, show ?
 const $Wrap_content2__tag_input_content = /*@__PURE__*/ _const("content", $if_content2__content);
 const $Wrap_content2__$params = ($scope, $params3) => $Wrap_content2__$temp($scope, $params3[0]);
 const $Wrap_content2__$temp = ($scope, $temp2) => {
-	$Wrap_content2__tag_input_content($scope, $temp2.content);
 	$Wrap_content2__show($scope, $temp2.show);
+	$Wrap_content2__tag_input_content($scope, $temp2.content);
 };
 const $if_content__label = /*@__PURE__*/ _if_closure_patch("__tests__/template.marko_3_label#2:4/setup", "#text/0", 0, ($scope) => _text($scope["#text/0"], $scope._.label));
 const $if_content__setup = $if_content__label;

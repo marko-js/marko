@@ -20,8 +20,8 @@ const $input_b = /*@__PURE__*/ _const("input_b", ($scope) => {
 });
 const $input_a = /*@__PURE__*/ _const("input_a", $input_b__OR__input_a);
 const $input$1 = ($scope, input) => {
-	$input_b($scope, input.b);
 	$input_show$1($scope, input.show);
+	$input_b($scope, input.b);
 	$input_a($scope, input.a);
 };
 var panel_default = /*@__PURE__*/ _template("__tests__/tags/panel.marko", $template$1, $walks$1, 0, $input$1);

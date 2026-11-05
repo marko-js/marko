@@ -47,7 +47,7 @@ function $setup($scope) {
 	$Repeat_content__setup($scope["#childScope/3"]);
 }
 const $input = ($scope, input) => {
-	$input_right($scope, input.right);
 	$input_left($scope, input.left);
+	$input_right($scope, input.right);
 };
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

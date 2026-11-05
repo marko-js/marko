@@ -14,8 +14,8 @@ const $Panel_content__label = /*@__PURE__*/ _const("label", ($scope) => {
 });
 const $Panel_content__$params = ($scope, $params2) => $Panel_content__$temp($scope, $params2[0]);
 const $Panel_content__$temp = ($scope, $temp) => {
-	$Panel_content__isOpen($scope, $temp.isOpen);
 	$Panel_content__label($scope, $temp.label);
+	$Panel_content__isOpen($scope, $temp.isOpen);
 };
 const $if_content__input_label = /*@__PURE__*/ _if_closure_patch("__tests__/template.marko_1_input_label#0:5/setup", "#text/0", 0, ($scope) => $Panel_content__label($scope["#childScope/0"], $scope._.input_label));
 const $if_content__setup = ($scope) => {

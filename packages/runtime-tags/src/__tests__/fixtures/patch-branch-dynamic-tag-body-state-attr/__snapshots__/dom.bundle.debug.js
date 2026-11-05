@@ -19,8 +19,8 @@ function $setup($scope) {
 const $if = /*@__PURE__*/ _if("#text/0", "<!><!><!>", "b%", $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input = ($scope, input) => {
-	$input_tag($scope, input.tag);
 	$input_show($scope, input.show);
+	$input_tag($scope, input.tag);
 };
 const $input_tag = /*@__PURE__*/ _const("input_tag", $if_content__input_tag);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

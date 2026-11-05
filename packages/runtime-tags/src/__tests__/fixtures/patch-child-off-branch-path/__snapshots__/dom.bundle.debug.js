@@ -59,8 +59,8 @@ function $setup$1($scope) {
 }
 const $input$1 = ($scope, input) => {
 	$input_label$1($scope, input.label);
-	$input_slow$1($scope, input.slow);
 	$input_other$1($scope, input.other);
+	$input_slow$1($scope, input.slow);
 	$input_failing$1($scope, input.failing);
 };
 const $input_label__closure$1 = /*@__PURE__*/ _closure($placeholder_content__input_label$1, $catch_content__input_label);

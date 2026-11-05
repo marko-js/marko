@@ -38,8 +38,8 @@ const $for_content__row_label = /*@__PURE__*/ _const("row_label", $for_content__
 const $for = /*@__PURE__*/ _for_of("#main/0", "<!><!><!>", "b%", $for_content__setup, $for_content__$params);
 const $input_rows = ($scope, input_rows) => $for($scope, [input_rows, "id"]);
 const $input = ($scope, input) => {
-	$input_on($scope, input.on);
 	$input_rows($scope, input.rows);
+	$input_on($scope, input.on);
 	$input_note($scope, input.note);
 };
 const $input_on = /*@__PURE__*/ _const("input_on", $for_content__input_on);

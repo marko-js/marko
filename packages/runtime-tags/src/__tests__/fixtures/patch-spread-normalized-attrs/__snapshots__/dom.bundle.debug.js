@@ -29,9 +29,9 @@ const $input_field = /*@__PURE__*/ _const("input_field", ($scope) => {
 });
 const $input = ($scope, input) => {
 	$input_attrs($scope, input.attrs);
+	$input_show($scope, input.show);
 	$input_link($scope, input.link);
 	$input_field($scope, input.field);
-	$input_show($scope, input.show);
 };
 const $input_link = /*@__PURE__*/ _const("input_link", $if_content__input_link);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

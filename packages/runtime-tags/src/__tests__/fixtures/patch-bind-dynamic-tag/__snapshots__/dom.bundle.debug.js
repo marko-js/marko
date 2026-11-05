@@ -14,8 +14,8 @@ const $if_content__setup = ($scope) => {
 const $if = /*@__PURE__*/ _if("#text/0", "<span>Seen <!></span><button>+</button>", "Db%l ", $if_content__setup);
 const $input_show$1 = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input$1 = ($scope, input) => {
-	$input_show$1($scope, input.show);
 	$input_on($scope, input.on);
+	$input_show$1($scope, input.show);
 };
 const $input_on = /*@__PURE__*/ _const("input_on", $if_content__input_on);
 var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$2, "b%c", 0, $input$1);

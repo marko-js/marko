@@ -8,8 +8,8 @@ const $if_content__setup = $if_content__input_c;
 const $if = /*@__PURE__*/ _if("#text/0", "<!><!><!>", "b%", $if_content__setup);
 const $input_show$1 = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input$2 = ($scope, input) => {
-	$input_c($scope, input.c);
 	$input_show$1($scope, input.show);
+	$input_c($scope, input.c);
 };
 const $input_c = /*@__PURE__*/ _const("input_c", $if_content__input_c);
 var card_default = /*@__PURE__*/ _template("__tests__/tags/card.marko", $template$2, "b%c", 0, $input$2);

@@ -20,8 +20,8 @@ const $Inner_content__open = ($scope, open) => $Inner_content__if($scope, open ?
 const $Inner_content__tag_input_body = /*@__PURE__*/ _const("body", $if_content__body);
 const $Inner_content__$params = ($scope, $params2) => $Inner_content__$temp($scope, $params2[0]);
 const $Inner_content__$temp = ($scope, $temp) => {
-	$Inner_content__tag_input_body($scope, $temp.body);
 	$Inner_content__open($scope, $temp.open);
+	$Inner_content__tag_input_body($scope, $temp.body);
 };
 const $body_content__input_title = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_1_input_title#0:4/subscribe", "input_title/6", ($scope) => _text($scope["#text/0"], $scope._.input_title), 0, "__tests__/template.marko_0_input_title#4/subscribers", 0);
 const $body_content__setup = $body_content__input_title;

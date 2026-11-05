@@ -18,8 +18,8 @@ const $for_content__hovered__OR__item_id = /*@__PURE__*/ _or_patch("__tests__/ta
 const $for_content__hovered = /*@__PURE__*/ _for_closure_patch("__tests__/tags/feed-list.marko_1_hovered#0:5/setup", "#ul/0", $for_content__hovered__OR__item_id);
 const $for_content__item_id = /*@__PURE__*/ _const("item_id", ($scope) => {
 	$for_content__hovered__OR__item_id($scope);
-	_text($scope["#text/2"], $scope.item_id);
 	$for_content__input_data__OR__item_id($scope);
+	_text($scope["#text/2"], $scope.item_id);
 });
 const $for_content__$params = ($scope, $params2) => $for_content__item_id($scope, $params2[0]?.id);
 const $hovered = /*@__PURE__*/ _fill_let("__tests__/tags/feed-list.marko_fill0", "hovered/5", $for_content__hovered);

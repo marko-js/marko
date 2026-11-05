@@ -8,8 +8,8 @@ const $Panel_content2__isOpen = ($scope, isOpen) => $Panel_content2__if($scope, 
 const $Panel_content2__tag_input_content = /*@__PURE__*/ _const(4, $if_content2__content);
 const $Panel_content2__$params = ($scope, $params2) => $Panel_content2__$temp($scope, $params2[0]);
 const $Panel_content2__$temp = ($scope, $temp) => {
-	$Panel_content2__tag_input_content($scope, $temp.content);
 	$Panel_content2__isOpen($scope, $temp.isOpen);
+	$Panel_content2__tag_input_content($scope, $temp.content);
 };
 const $Panel_content2 = _content$1("a3", $Panel_content2__template, $Panel_content2__walks, 0, $Panel_content2__$params);
 const $Tag_content__input_label = /*@__PURE__*/ _closure_get_patch("a8", 15, ($scope) => _text($scope.a, $scope._.h), 0, "a10", 1);

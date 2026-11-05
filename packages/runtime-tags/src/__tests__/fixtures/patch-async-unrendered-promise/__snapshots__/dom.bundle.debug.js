@@ -59,11 +59,11 @@ const $input_show = ($scope, input_show) => {
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/4", $inputtag_content);
 const $input_tag = ($scope, input_tag) => $dynamicTag($scope, input_tag, ($_) => ({ class: "box" }));
 const $input = ($scope, input) => {
+	$input_show($scope, input.show);
 	$input_user($scope, input.user);
 	$input_card($scope, input.card);
 	$input_tag($scope, input.tag);
 	$input_boxed($scope, input.boxed);
-	$input_show($scope, input.show);
 };
 const $input_user = /*@__PURE__*/ _const("input_user", $if_content__input_user);
 const $input_card__closure = /*@__PURE__*/ _closure($try_content__input_card);

@@ -17,8 +17,8 @@ function $setup($scope) {
 const $if = /*@__PURE__*/ _if("#text/1", "<span>Seen <!></span><button>+</button>", "Db%l ", $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input = ($scope, input) => {
-	$input_show($scope, input.show);
 	$input_start($scope, input.start);
+	$input_show($scope, input.show);
 };
 const $input_start = /*@__PURE__*/ _const("input_start", $if_content__input_start);
 const $valueChange = ($scope) => function(next) {

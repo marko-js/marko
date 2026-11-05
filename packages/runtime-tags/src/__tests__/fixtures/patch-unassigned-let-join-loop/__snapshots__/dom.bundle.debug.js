@@ -17,8 +17,8 @@ const $for = /*@__PURE__*/ _for_of_unkeyed("#ul/0", "<li> </li>", "D ", $for_con
 const $input_items = ($scope, input_items) => $for($scope, [input_items]);
 const $input = ($scope, input) => {
 	$input_a($scope, input.a);
-	$input_b($scope, input.b);
 	$input_items($scope, input.items);
+	$input_b($scope, input.b);
 };
 const $input_b = /*@__PURE__*/ _const("input_b", $for_content__input_b);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, " b", 0, $input);

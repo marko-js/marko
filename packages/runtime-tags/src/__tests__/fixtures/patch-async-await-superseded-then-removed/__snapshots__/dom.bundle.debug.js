@@ -21,8 +21,8 @@ const $try_content__input_label = /*@__PURE__*/ _closure_get_patch("__tests__/te
 const $try = /*@__PURE__*/ _try("#text/0", "<!><!><span> </span>", "b%bD ", $try_content__setup, $placeholder_content);
 const $setup = $try;
 const $input = ($scope, input) => {
-	$input_a($scope, input.a);
 	$input_show($scope, input.show);
+	$input_a($scope, input.a);
 	$input_label($scope, input.label);
 };
 const $input_show__closure = /*@__PURE__*/ _closure($try_content__input_show);

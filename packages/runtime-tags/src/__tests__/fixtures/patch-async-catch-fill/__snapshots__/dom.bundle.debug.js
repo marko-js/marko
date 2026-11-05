@@ -26,8 +26,8 @@ function $setup($scope) {
 	$setup__script($scope);
 }
 const $input = ($scope, input) => {
-	$input_promise($scope, input.promise);
 	$input_title($scope, input.title);
+	$input_promise($scope, input.promise);
 };
 const $input_title__closure = /*@__PURE__*/ _closure($catch_content__input_title);
 const $input_title = /*@__PURE__*/ _const("input_title", $input_title__closure);

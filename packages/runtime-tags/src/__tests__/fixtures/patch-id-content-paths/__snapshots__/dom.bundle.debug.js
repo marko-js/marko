@@ -13,10 +13,10 @@ const $input_heading = ($scope, input_heading) => _attr($scope["#input/2"], "ari
 const $dynamicTag$2 = /*@__PURE__*/ _dynamic_tag("#text/3");
 const $input_content$1 = $dynamicTag$2;
 const $input$2 = ($scope, input) => {
-	$input_content$1($scope, input.content);
 	$input_uid($scope, input.uid);
 	$input_name($scope, input.name);
 	$input_heading($scope, input.heading);
+	$input_content$1($scope, input.content);
 };
 var field_default = /*@__PURE__*/ _template("__tests__/tags/field.marko", $template$4, $walks$4, 0, $input$2);
 

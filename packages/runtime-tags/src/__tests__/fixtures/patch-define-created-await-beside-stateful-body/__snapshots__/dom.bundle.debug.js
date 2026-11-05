@@ -55,10 +55,10 @@ const $input_label = /*@__PURE__*/ _const("input_label", ($scope) => {
 	$input_label__closure($scope);
 });
 const $input = ($scope, input) => {
-	$input_promise($scope, input.promise);
 	$input_label($scope, input.label);
 	$input_other($scope, input.other);
 	$input_show($scope, input.show);
+	$input_promise($scope, input.promise);
 };
 const $input_promise = /*@__PURE__*/ _const("input_promise", $if_content__input_promise);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

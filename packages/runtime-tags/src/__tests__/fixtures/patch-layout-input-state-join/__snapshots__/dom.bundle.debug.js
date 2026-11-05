@@ -15,10 +15,10 @@ const $input_show$1 = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
 const $input_content = $dynamicTag;
 const $input$1 = ($scope, input) => {
-	$input_content($scope, input.content);
 	$input_show$1($scope, input.show);
 	$input_a($scope, input.a);
 	$input_b$1($scope, input.b);
+	$input_content($scope, input.content);
 };
 const $input_a = /*@__PURE__*/ _const("input_a", $if_content__input_a);
 const $input_b$1 = /*@__PURE__*/ _const("input_b", $if_content__input_b);

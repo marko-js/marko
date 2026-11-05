@@ -21,15 +21,15 @@ const $input_page = ($scope, input_page) => {
 };
 const $input_attrs__script = _script("__tests__/template.marko_0_input_attrs#5", ($scope) => _attrs_script($scope, "#style/1"));
 const $input_attrs = /*@__PURE__*/ _const("input_attrs", ($scope) => {
-	$else_content__input_attrs($scope);
 	$input_attrs__script($scope);
 	_attrs($scope, "#style/1", {
 		nonce: $scope.$global.cspNonce,
 		...$scope.input_attrs
 	});
+	$else_content__input_attrs($scope);
 });
 const $input = ($scope, input) => {
-	$input_attrs($scope, input.attrs);
 	$input_page($scope, input.page);
+	$input_attrs($scope, input.attrs);
 };
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, 0, $input);

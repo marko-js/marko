@@ -10,7 +10,7 @@ const $setup__$global_brand__OR__$global_locale__script = _fill_global_script("_
 }, "brand", "locale");
 const $setup__$global_brand__OR__$global_locale = $setup__$global_brand__OR__$global_locale__script;
 function $setup($scope) {
-	$setup__$global_brand__OR__$global_locale($scope);
 	$setup__$global_other($scope);
+	$setup__$global_brand__OR__$global_locale($scope);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "E m", $setup);

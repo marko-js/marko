@@ -22,9 +22,9 @@ const $if_content__setup$1 = $if_content__input_admin;
 const $if$1 = /*@__PURE__*/ _if("#text/0", "<!><!><!>", "b%", $if_content__setup$1, "<!><!><!>", "b%", $else_content__setup);
 const $input_show$1 = ($scope, input_show) => $if$1($scope, input_show ? 0 : 1);
 const $input$2 = ($scope, input) => {
+	$input_show$1($scope, input.show);
 	$input_admin$1($scope, input.admin);
 	$input_guest($scope, input.guest);
-	$input_show$1($scope, input.show);
 };
 const $input_admin$1 = /*@__PURE__*/ _const("input_admin", $if_content__input_admin);
 const $input_guest = /*@__PURE__*/ _const("input_guest", $else_content__input_guest);
@@ -40,8 +40,8 @@ const $if_content__setup = $if_content__input_content;
 const $if = /*@__PURE__*/ _if("#div/0", "<!><!><!>", "b%", $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input$1 = ($scope, input) => {
-	$input_content($scope, input.content);
 	$input_show($scope, input.show);
+	$input_content($scope, input.content);
 };
 const $input_content = /*@__PURE__*/ _const("input_content", $if_content__input_content);
 var wrapper_default = /*@__PURE__*/ _template("__tests__/tags/wrapper.marko", $template$1, " b", 0, $input$1);

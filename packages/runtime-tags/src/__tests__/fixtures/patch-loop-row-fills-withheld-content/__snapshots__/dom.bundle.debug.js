@@ -8,8 +8,8 @@ const $if_content__setup = $if_content__input_content;
 const $if = /*@__PURE__*/ _if("#div/0", "<!><!><!>", "b%", $if_content__setup);
 const $input_open = ($scope, input_open) => $if($scope, input_open ? 0 : 1);
 const $input$1 = ($scope, input) => {
-	$input_content($scope, input.content);
 	$input_open($scope, input.open);
+	$input_content($scope, input.content);
 };
 const $input_content = /*@__PURE__*/ _const("input_content", $if_content__input_content);
 var panel_default = /*@__PURE__*/ _template("__tests__/tags/panel.marko", $template$1, " b", 0, $input$1);

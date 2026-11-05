@@ -24,9 +24,9 @@ const $input_heading = ($scope, input_heading) => _text($scope["#text/0"], input
 const $for = /*@__PURE__*/ _for_of("#text/1", "<!><!><!>", "b%", 0, $for_content__$params);
 const $input_rows = ($scope, input_rows) => $for($scope, [input_rows, (row) => row.id]);
 const $input = ($scope, input) => {
+	$input_rows($scope, input.rows);
 	$input_suffix($scope, input.suffix);
 	$input_heading($scope, input.heading);
-	$input_rows($scope, input.rows);
 };
 const $input_suffix__closure = /*@__PURE__*/ _closure($for_content2__input_suffix);
 const $input_suffix = /*@__PURE__*/ _const("input_suffix", $input_suffix__closure);

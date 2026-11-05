@@ -44,8 +44,8 @@ const $for_content__row_label = /*@__PURE__*/ _const("row_label", $for_content__
 const $for = /*@__PURE__*/ _for_of("#text/0", "<!><!><!>", "b%", $for_content__setup, $for_content__$params);
 const $input_rows = ($scope, input_rows) => $for($scope, [input_rows, "id"]);
 const $input = ($scope, input) => {
-	$input_wrap($scope, input.wrap);
 	$input_rows($scope, input.rows);
+	$input_wrap($scope, input.wrap);
 };
 const $input_wrap = /*@__PURE__*/ _const("input_wrap", $for_content__input_wrap);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", 0, $input);

@@ -34,8 +34,8 @@ const $if_content__setup = $if_content__try;
 const $if = /*@__PURE__*/ _if("#main/0", "<!><!><!>", "b%", $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input = ($scope, input) => {
-	$input_promise($scope, input.promise);
 	$input_show($scope, input.show);
+	$input_promise($scope, input.promise);
 };
 const $input_promise__closure = /*@__PURE__*/ _closure($try_content__input_promise);
 const $input_promise = /*@__PURE__*/ _const("input_promise", $input_promise__closure);

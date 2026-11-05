@@ -17,9 +17,9 @@ const $if_content__input_w = /*@__PURE__*/ _if_closure_patch("__tests__/tags/chi
 const $if = /*@__PURE__*/ _if("#text/0", "<p> </p>", "D ", $if_content__setup);
 const $input_show$1 = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input$1 = ($scope, input) => {
+	$input_v$1($scope, input.v);
 	$input_w$1($scope, input.w);
 	$input_show$1($scope, input.show);
-	$input_v$1($scope, input.v);
 };
 const $input_v$1 = /*@__PURE__*/ _const("input_v", $if_content__input_v);
 const $input_w$1 = /*@__PURE__*/ _const("input_w", $if_content__input_w);

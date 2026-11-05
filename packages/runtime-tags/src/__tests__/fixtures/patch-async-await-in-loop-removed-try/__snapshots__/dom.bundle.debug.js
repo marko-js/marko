@@ -15,8 +15,8 @@ const $for_content__setup = ($scope) => {
 const $for = /*@__PURE__*/ _for_of("#text/0", "<div><!></div>", "D%", $for_content__setup);
 const $input_items = ($scope, input_items) => $for($scope, [input_items, "id"]);
 const $input$1 = ($scope, input) => {
-	$input_promise$1($scope, input.promise);
 	$input_items($scope, input.items);
+	$input_promise$1($scope, input.promise);
 };
 const $input_promise$1 = /*@__PURE__*/ _const("input_promise", $for_content__input_promise);
 var rows_default = /*@__PURE__*/ _template("__tests__/tags/rows.marko", $template$1, "b%c", 0, $input$1);

@@ -15,8 +15,8 @@ const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {}));
 const $setup = $setup__script;
 const $input = ($scope, input) => {
-	$input_promise($scope, input.promise);
 	$input_show($scope, input.show);
+	$input_promise($scope, input.promise);
 };
 const $input_promise = /*@__PURE__*/ _const("input_promise", $if_content__input_promise);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

@@ -7,8 +7,8 @@ const $if_content__setup = $if_content__content;
 const $Box_content__if = /*@__PURE__*/ _if("#text/0", "<!><!><!>", "b%", $if_content__setup);
 const $Box_content__show = ($scope, show) => $Box_content__if($scope, show ? 0 : 1);
 const $Box_content__$params = ($scope, $params2) => {
-	$Box_content__content($scope, $params2[0].content);
 	$Box_content__show($scope, $params2[0].show);
+	$Box_content__content($scope, $params2[0].content);
 };
 const $Box_content__content = /*@__PURE__*/ _const("content", $if_content__content);
 const $Box_content = _content("__tests__/template.marko_2*content", "<!><!><!>", "b%", 0, $Box_content__$params);

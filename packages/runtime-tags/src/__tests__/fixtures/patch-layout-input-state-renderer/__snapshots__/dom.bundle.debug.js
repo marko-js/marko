@@ -10,9 +10,9 @@ const $input_label$3 = /*@__PURE__*/ _const("input_label", $input_nav__OR__input
 const $dynamicTag2 = /*@__PURE__*/ _dynamic_tag("#text/1");
 const $input_content = $dynamicTag2;
 const $input$3 = ($scope, input) => {
-	$input_content($scope, input.content);
 	$input_nav($scope, input.nav);
 	$input_label$3($scope, input.label);
+	$input_content($scope, input.content);
 };
 var layout_default = /*@__PURE__*/ _template("__tests__/layout.marko", $template$3, $walks$3, 0, $input$3);
 

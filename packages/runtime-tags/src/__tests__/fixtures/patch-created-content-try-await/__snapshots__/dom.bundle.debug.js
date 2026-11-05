@@ -8,8 +8,8 @@ const $if_content__setup = $if_content__input_content;
 const $if = /*@__PURE__*/ _if("#text/0", "<section><!></section>", "D%", $if_content__setup);
 const $input_show$1 = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input$1 = ($scope, input) => {
-	$input_content($scope, input.content);
 	$input_show$1($scope, input.show);
+	$input_content($scope, input.content);
 };
 const $input_content = /*@__PURE__*/ _const("input_content", $if_content__input_content);
 var wrap_default = /*@__PURE__*/ _template("__tests__/tags/wrap.marko", $template$1, "b%c", 0, $input$1);
@@ -40,8 +40,8 @@ function $setup($scope) {
 const $input_show = ($scope, input_show) => $input_show$1($scope["#childScope/0"], input_show);
 const $input = ($scope, input) => {
 	$input_id($scope, input.id);
-	$input_value($scope, input.value);
 	$input_show($scope, input.show);
+	$input_value($scope, input.value);
 };
 const $input_id__closure = /*@__PURE__*/ _closure($placeholder_content__input_id, $await_content__input_id);
 const $input_id = /*@__PURE__*/ _const("input_id", $input_id__closure);

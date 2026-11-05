@@ -28,7 +28,7 @@ const $try = /*@__PURE__*/ _try("#text/1", "<!><!><!>", "b%", $try_content__setu
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {}));
 function $setup($scope) {
 	$try($scope);
-	$setup__script($scope);
 	$setup__$global_data($scope);
+	$setup__script($scope);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

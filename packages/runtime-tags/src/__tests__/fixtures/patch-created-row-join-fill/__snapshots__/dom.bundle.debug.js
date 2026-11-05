@@ -60,8 +60,8 @@ function $setup($scope) {
 const $for = /*@__PURE__*/ _for_of_unkeyed("#text/2", "<!><!><!>", "b%", $for_content__setup, $for_content__$params);
 const $input_tally = ($scope, input_tally) => $for($scope, [input_tally]);
 const $input = ($scope, input) => {
-	$input_settled($scope, input.settled);
 	$input_tally($scope, input.tally);
+	$input_settled($scope, input.settled);
 	$input_type($scope, input.type);
 };
 const $input_type = /*@__PURE__*/ _const("input_type", $for_content__input_type);

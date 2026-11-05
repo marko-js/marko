@@ -31,8 +31,8 @@ const $input_c = /*@__PURE__*/ _const("input_c", ($scope) => {
 });
 const $input = ($scope, input) => {
 	$input_a($scope, input.a);
-	$input_c($scope, input.c);
 	$input_label($scope, input.label);
+	$input_c($scope, input.c);
 };
 const $valueChange = ($scope) => (_new_v) => {
 	$v($scope, _new_v);

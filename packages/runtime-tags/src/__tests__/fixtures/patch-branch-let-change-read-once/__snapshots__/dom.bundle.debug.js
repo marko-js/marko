@@ -32,8 +32,8 @@ function $setup($scope) {
 const $if = /*@__PURE__*/ _if("#text/1", "<button> </button>", " D ", $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input = ($scope, input) => {
-	$input_show($scope, input.show);
 	$input_start($scope, input.start);
+	$input_show($scope, input.show);
 };
 const $input_start = /*@__PURE__*/ _const("input_start", $if_content__input_start);
 const $onCount = ($scope) => (next) => {

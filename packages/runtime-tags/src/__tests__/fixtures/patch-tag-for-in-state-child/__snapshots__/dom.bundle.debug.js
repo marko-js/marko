@@ -59,8 +59,8 @@ function $setup($scope) {
 const $for = /*@__PURE__*/ _for_in("#text/0", "<!><!><!>", "b%", $for_content__setup, $for_content__$params);
 const $input_obj = ($scope, input_obj) => $for($scope, [input_obj]);
 const $input = ($scope, input) => {
-	$input_b($scope, input.b);
 	$input_obj($scope, input.obj);
+	$input_b($scope, input.b);
 	$input_sel($scope, input.sel);
 };
 const $input_sel = /*@__PURE__*/ _const("input_sel", $for_content__input_sel);

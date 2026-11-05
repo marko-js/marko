@@ -8,8 +8,8 @@ const $if_content__setup = $if_content__input_body;
 const $if = /*@__PURE__*/ _if("#text/0", "<div><!></div>", "D%", $if_content__setup);
 const $input_show$2 = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input$2 = ($scope, input) => {
-	$input_body($scope, input.body);
 	$input_show$2($scope, input.show);
+	$input_body($scope, input.body);
 };
 const $input_body = /*@__PURE__*/ _const("input_body", $if_content__input_body);
 var wrap_default = /*@__PURE__*/ _template("__tests__/tags/wrap.marko", $template$2, "b%c", 0, $input$2);

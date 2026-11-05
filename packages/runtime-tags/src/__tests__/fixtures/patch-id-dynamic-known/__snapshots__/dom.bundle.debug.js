@@ -39,8 +39,8 @@ const $for_content3__item_on__OR__item_key = /*@__PURE__*/ _or_patch("__tests__/
 const $for_content3__item_on = /*@__PURE__*/ _const("item_on", $for_content3__item_on__OR__item_key);
 const $for_content3__item_key__closure = /*@__PURE__*/ _closure($itemonPlainnull_content__item_key);
 const $for_content3__item_key = /*@__PURE__*/ _const("item_key", ($scope) => {
-	$for_content3__item_on__OR__item_key($scope);
 	$for_content3__item_key__closure($scope);
+	$for_content3__item_on__OR__item_key($scope);
 });
 const $for_content3__$params = ($scope, $params4) => {
 	$for_content3__item_on($scope, $params4[0]?.on);

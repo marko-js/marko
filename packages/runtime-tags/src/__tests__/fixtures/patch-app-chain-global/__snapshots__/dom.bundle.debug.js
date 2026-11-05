@@ -26,9 +26,9 @@ const $setup__script = _script("__tests__/page-b.marko_0", ($scope) => _on($scop
 	$count($scope, +$scope.count + 1);
 }));
 function $setup($scope) {
+	$setup__$global_search($scope);
 	$setup__script($scope);
 	$count($scope, 0);
-	$setup__$global_search($scope);
 }
 var page_b_default = /*@__PURE__*/ _template("__tests__/page-b.marko", $template, $walks, $setup);
 

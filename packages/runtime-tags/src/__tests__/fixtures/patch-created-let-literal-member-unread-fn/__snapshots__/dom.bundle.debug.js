@@ -14,8 +14,8 @@ const $if_content__o_label = /*@__PURE__*/ _const("o_label", ($scope) => _text($
 const $if = /*@__PURE__*/ _if("#text/0", "<p> </p>", "D ", $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input = ($scope, input) => {
-	$input_show($scope, input.show);
 	$input_label($scope, input.label);
+	$input_show($scope, input.show);
 };
 const $input_label = /*@__PURE__*/ _const("input_label", $if_content__input_label);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", 0, $input);

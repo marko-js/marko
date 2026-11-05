@@ -25,8 +25,8 @@ const $Panel_content__label = /*@__PURE__*/ _const("label", ($scope) => {
 });
 const $Panel_content__$params = ($scope, $params2) => $Panel_content__$temp($scope, $params2[0]);
 const $Panel_content__$temp = ($scope, $temp) => {
-	$Panel_content__label($scope, $temp.label);
 	$Panel_content__isOpen($scope, $temp.isOpen);
+	$Panel_content__label($scope, $temp.label);
 };
 const $Panel_content = _content("__tests__/template.marko_1*content", $Panel_content__template, $Panel_content__walks, 0, /*@__PURE__*/ _return_setup($Panel_content__$params));
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");

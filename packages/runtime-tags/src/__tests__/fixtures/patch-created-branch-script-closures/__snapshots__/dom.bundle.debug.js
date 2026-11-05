@@ -36,7 +36,7 @@ const $if_content__shown = /*@__PURE__*/ _if_closure_patch("__tests__/tags/level
 const $shown = /*@__PURE__*/ _fill_let("__tests__/tags/level-watch.marko_fill0", "shown/9", ($scope) => {
 	_text($scope["#text/1"], $scope.shown);
 	$if_content__shown($scope);
-}, ($scope) => _text($scope["#text/1"], $scope.shown));
+});
 const $setup__script = _script("__tests__/tags/level-watch.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$shown($scope, +$scope.shown + 1);
 }));

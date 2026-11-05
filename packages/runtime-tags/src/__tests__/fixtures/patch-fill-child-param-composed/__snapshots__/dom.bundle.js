@@ -23,8 +23,8 @@ const $for_content__hovered__OR__item_id = /*@__PURE__*/ _or_patch("c2", 6, ($sc
 const $for_content__hovered = /*@__PURE__*/ _for_closure_patch("c7", 0, $for_content__hovered__OR__item_id);
 const $for_content__item_id = /*@__PURE__*/ _const(4, ($scope) => {
 	$for_content__hovered__OR__item_id($scope);
-	$input_label($scope.b, $scope.e);
 	$for_content__input_data__OR__item_id($scope);
+	$input_label($scope.b, $scope.e);
 });
 const $for_content__$params = ($scope, $params2) => $for_content__item_id($scope, $params2[0]?.id);
 const $hovered = /*@__PURE__*/ _fill_let("c5", 5, $for_content__hovered);

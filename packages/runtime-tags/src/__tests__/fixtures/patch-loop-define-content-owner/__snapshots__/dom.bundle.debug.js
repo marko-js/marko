@@ -60,9 +60,9 @@ const $for_content__setup = ($scope) => {
 	$for_content__Card._($scope);
 	$Card_content__tag_input_content($scope["#childScope/2"], $Card_content2($scope));
 	$Card_content__label($scope["#childScope/2"], "direct");
-	$for_content__Label($scope, { content: $Label_content($scope) });
 	$for_content__setup__script($scope);
 	$for_content__n($scope, 0);
+	$for_content__Label($scope, { content: $Label_content($scope) });
 };
 const $for_content__row_card = /*@__PURE__*/ _const("row_card", ($scope) => {
 	$for_content__Card__OR__row_card($scope);
@@ -71,8 +71,8 @@ const $for_content__row_card = /*@__PURE__*/ _const("row_card", ($scope) => {
 const $for_content__for = /*@__PURE__*/ _for_of_unkeyed("#text/4", "<!><!><!>", "b%", $for_content2__setup, $for_content2__$params);
 const $for_content__row_tags = ($scope, row_tags) => $for_content__for($scope, [row_tags]);
 const $for_content__$params = ($scope, $params3) => {
-	$for_content__row_card($scope, $params3[0]?.card);
 	$for_content__row_label($scope, $params3[0]?.label);
+	$for_content__row_card($scope, $params3[0]?.card);
 	$for_content__row_tags($scope, $params3[0]?.tags);
 };
 const $for_content__row_label__closure = /*@__PURE__*/ _closure($Label_content__row_label, $Card_content2__row_label, $rowcardCardspan_content__row_label);
@@ -85,8 +85,8 @@ const $Card_content__label = ($scope, label) => {
 const $Card_content__tag_input_content = /*@__PURE__*/ _const("content", $if_content__content);
 const $Card_content__$params = ($scope, $params2) => $Card_content__$temp($scope, $params2[0]);
 const $Card_content__$temp = ($scope, $temp) => {
-	$Card_content__tag_input_content($scope, $temp.content);
 	$Card_content__label($scope, $temp.label);
+	$Card_content__tag_input_content($scope, $temp.content);
 };
 const $Card_content = _content("__tests__/template.marko_1*content", $Card_content__template, $Card_content__walks, 0, $Card_content__$params);
 const $Card = /*@__PURE__*/ _const("Card");

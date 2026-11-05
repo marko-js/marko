@@ -65,8 +65,8 @@ const $input_b = /*@__PURE__*/ _const("input_b", ($scope) => {
 	$input_b__script($scope);
 });
 const $input = ($scope, input) => {
-	$input_b($scope, input.b);
 	$input_obj($scope, input.obj);
+	$input_b($scope, input.b);
 	$input_sel($scope, input.sel);
 };
 const $input_sel = /*@__PURE__*/ _const("input_sel", $for_content__input_sel);

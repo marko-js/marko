@@ -5,7 +5,7 @@ const $if_content__shown = /*@__PURE__*/ _if_closure_patch("b9", 2, 0, $if_conte
 const $shown = /*@__PURE__*/ _fill_let("b7", 9, ($scope) => {
 	_text($scope.b, $scope.j);
 	$if_content__shown($scope);
-}, ($scope) => _text($scope.b, $scope.j));
+});
 const $setup__script = _script("b3", ($scope) => _on($scope.a, "click", function() {
 	$shown($scope, +$scope.j + 1);
 }));

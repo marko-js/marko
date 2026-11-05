@@ -11,8 +11,8 @@ const $Card_content2__show = ($scope, show) => $Card_content2__if($scope, show ?
 const $Card_content2__tag_input_content = /*@__PURE__*/ _const("content", $if_content__content);
 const $Card_content2__$params = ($scope, $params2) => $Card_content2__$temp($scope, $params2[0]);
 const $Card_content2__$temp = ($scope, $temp) => {
-	$Card_content2__tag_input_content($scope, $temp.content);
 	$Card_content2__show($scope, $temp.show);
+	$Card_content2__tag_input_content($scope, $temp.content);
 };
 const $Card_content__input_note = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_1_input_note#0:4/subscribe", "input_note/5", ($scope) => _text($scope["#text/0"], $scope._.input_note), 0, "__tests__/template.marko_0_input_note#4/subscribers", 0);
 const $Card_content__setup = $Card_content__input_note;

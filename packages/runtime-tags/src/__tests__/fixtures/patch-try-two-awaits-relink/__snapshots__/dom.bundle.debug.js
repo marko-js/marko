@@ -30,9 +30,9 @@ function $setup($scope) {
 	$setup__script($scope);
 }
 const $input = ($scope, input) => {
+	$input_show($scope, input.show);
 	$input_fast($scope, input.fast);
 	$input_slow($scope, input.slow);
-	$input_show($scope, input.show);
 };
 const $input_show__closure = /*@__PURE__*/ _closure($try_content__input_show);
 const $input_show = /*@__PURE__*/ _const("input_show", $input_show__closure);

@@ -14,8 +14,8 @@ const $input_n$1 = ($scope, input_n) => _text($scope["#text/0"], input_n);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
 const $input_tag = ($scope, input_tag) => $dynamicTag($scope, input_tag, ($_) => ({ n: 1 }));
 const $input$1 = ($scope, input) => {
-	$input_tag($scope, input.tag);
 	$input_n$1($scope, input.n);
+	$input_tag($scope, input.tag);
 };
 var card_default = /*@__PURE__*/ _template("__tests__/tags/card.marko", $template$1, $walks$1, 0, $input$1);
 

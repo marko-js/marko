@@ -23,9 +23,9 @@ const $input_cls = /*@__PURE__*/ _const("input_cls", $input_tag__OR__input_cls);
 const $dynamicTag2 = /*@__PURE__*/ _dynamic_tag("#text/1", $inputwrapwrapnull_content);
 const $input_wrap = ($scope, input_wrap) => $dynamicTag2($scope, input_wrap ? wrap_default : null);
 const $input = ($scope, input) => {
-	$input_wrap($scope, input.wrap);
 	$input_tag($scope, input.tag);
 	$input_cls($scope, input.cls);
+	$input_wrap($scope, input.wrap);
 	$input_note($scope, input.note);
 };
 const $input_note__closure = /*@__PURE__*/ _closure($inputwrapwrapnull_content__input_note);

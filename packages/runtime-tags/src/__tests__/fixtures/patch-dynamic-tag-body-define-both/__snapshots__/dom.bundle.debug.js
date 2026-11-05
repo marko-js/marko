@@ -38,9 +38,9 @@ function $setup($scope) {
 const $input_x = /*@__PURE__*/ _const("input_x", $input_x__OR__Label);
 const $input_on = /*@__PURE__*/ _const("input_on", $input_on__OR__Label);
 const $input = ($scope, input) => {
+	$input_note($scope, input.note);
 	$input_x($scope, input.x);
 	$input_on($scope, input.on);
-	$input_note($scope, input.note);
 };
 const $input_note__closure = /*@__PURE__*/ _closure($Label_content__input_note);
 const $input_note = /*@__PURE__*/ _const("input_note", $input_note__closure);

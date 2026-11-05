@@ -97,10 +97,10 @@ function $setup($scope) {
 const $if = /*@__PURE__*/ _if("#text/2", /*@__PURE__*/ ((_w0, _w1, _w2) => `${_w0}${_w1}<!><!>${_w2}<!><!>`)($template$2, $Body_content__template, $template$1), /*@__PURE__*/ ((_w0, _w1, _w2) => `/${_w0}&/${_w1}&%b%b/${_w2}&%c`)($walks$2, $Body_content__walks, "D%l"), $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input = ($scope, input) => {
-	$input_tag($scope, input.tag);
 	$input_show($scope, input.show);
 	$input_items($scope, input.items);
 	$input_nested($scope, input.nested);
+	$input_tag($scope, input.tag);
 };
 const $input_items__closure = /*@__PURE__*/ _closure($body_content__input_items, $inputtag_content__input_items);
 const $input_items = /*@__PURE__*/ _const("input_items", ($scope) => {

@@ -51,8 +51,8 @@ function $setup($scope) {
 }
 const $input_on = /*@__PURE__*/ _const("input_on", $input_on__OR__H);
 const $input = ($scope, input) => {
-	$input_on($scope, input.on);
 	$input_note($scope, input.note);
+	$input_on($scope, input.on);
 };
 const $input_note__closure = /*@__PURE__*/ _closure($H_content__input_note);
 const $input_note = /*@__PURE__*/ _const("input_note", $input_note__closure);

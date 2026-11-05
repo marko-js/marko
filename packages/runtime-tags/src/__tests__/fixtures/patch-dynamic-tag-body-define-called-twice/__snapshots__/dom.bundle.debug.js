@@ -42,8 +42,8 @@ function $setup($scope) {
 	$Wrap_content__setup($scope["#childScope/1"]);
 }
 const $input = ($scope, input) => {
-	$input_on($scope, input.on);
 	$input_note($scope, input.note);
+	$input_on($scope, input.on);
 };
 const $input_note__closure = /*@__PURE__*/ _closure($Note_content__input_note);
 const $input_note = /*@__PURE__*/ _const("input_note", $input_note__closure);

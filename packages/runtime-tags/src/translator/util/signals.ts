@@ -23,6 +23,7 @@ import {
   isRest,
   type ReferencedBindings,
   someAlias,
+  someBindingRead,
   someReadIn,
 } from "./bindings";
 import { createAnalysisMemo } from "./cyclic-memo";
@@ -60,6 +61,7 @@ import {
   hasTagCallerParamAt,
   effectEntryNamesFill,
   runsByEntry,
+  leavesReadToPatch,
 } from "./patch/refresh";
 import { patchesBranchesAt } from "./patch/structure";
 import {
@@ -92,6 +94,7 @@ import {
   hasResumableAssignment,
   isAssignedBindingExtra,
   isRegisteredFnExtra,
+  type ReferencedExtra,
 } from "./references";
 import {
   insertStatementBefore,
@@ -184,8 +187,6 @@ export interface Signal {
   /** Renders a patch does itself (its hole writes, forwards into work it
    * renders): a client render needs them, a fill's run does not. */
   patch: t.Statement[];
-  /** Whether a patch renders every render of this signal (`patchRenders`). */
-  patchRendered?: boolean;
   /** A fill's run when it differs from the render (`render` without `patch`). */
   fillFn: t.Expression | undefined;
   effect: t.Statement[];
@@ -889,110 +890,53 @@ function markFill(signal: Signal, fillFn: t.Expression) {
 }
 
 function getForwardStatements(signal: Signal, target: Signal) {
-  return isPatch() && patchRendersInto(target) ? signal.patch : signal.render;
+  return isPatch() && leavesToPatch(target) ? signal.patch : signal.render;
 }
 
-// A patch render runs a signal when every render is a hole it writes or a
-// forward it runs (a cycle resolves as the client's).
-function patchRenders(signal: Signal): boolean {
-  if (signal.patchRendered === undefined) {
-    signal.patchRendered = false;
-    signal.patchRendered =
-      patchesStructure(signal) ||
-      rendersFilledIntersection(signal) ||
-      !hasClientRender(signal);
-  }
-  return signal.patchRendered;
-}
-
-// An intersection whose reads the patch writes: its members' fills leave it to the patch.
-function rendersFilledIntersection({ referencedBindings }: Signal) {
-  return (
-    Array.isArray(referencedBindings) &&
-    isFilledIntersection(referencedBindings)
-  );
-}
-
-// A loop or branch chain a patch renders whenever it writes the scope: the
-// signal's binding is the node its optional bodies render at.
-function patchesStructure({ referencedBindings }: Signal) {
-  return (
-    !!referencedBindings &&
-    !Array.isArray(referencedBindings) &&
-    some(referencedBindings.branchBodies, isOptionalBranch) &&
-    patchesBranchesAt(referencedBindings)
-  );
-}
-
-// A patch renders a forward into a value it fills itself as well.
-function patchRendersInto(target: Signal) {
-  const binding = target.referencedBindings;
-  return (
-    patchRenders(target) ||
-    (!!binding &&
-      !target.globalReads &&
-      !Array.isArray(binding) &&
-      binding.section === target.section &&
-      getPatchFill(binding).fill)
-  );
-}
-
-function hasClientRender(signal: Signal): boolean {
+// A fill's run leaves a forward to the patch when the patch fills the value, or does
+// every read the target runs: all of a value's, or its bindings' in its section.
+function leavesToPatch({
+  referencedBindings,
+  section,
+  globalReads,
+}: Signal): boolean {
+  if (!referencedBindings) return false;
   if (
-    signal.extraArgs ||
-    signal.register ||
-    (signal.effect.length &&
-      !(isPatch() && runsByEntry(signal.referencedBindings))) ||
-    signal.hasHTMLEffect ||
-    // Client code reads the stored value: a collapsed intersection, or lazy reads.
-    signal.forceStore ||
-    signal.render.length ||
-    signal.values.some(isClientRenderedValue) ||
-    !every(signal.intersections, patchRenders) ||
-    !every(signal.globalSignals, patchRenders)
+    Array.isArray(referencedBindings) ||
+    globalReads ||
+    referencedBindings.section !== section
   ) {
-    return true;
-  }
-  const binding = signal.referencedBindings;
-  if (binding) {
-    return (
-      !Array.isArray(binding) &&
-      (binding.type === BindingType.dom ||
-        // Only the binding's own signal runs its closure signals; a closure
-        // signal is itself one of them, so checking there would find itself.
-        (binding.section === signal.section &&
-          (some(
-            binding.closureSections,
-            (closureSection) =>
-              !patchRenders(getSignal(closureSection, binding)),
-          ) ||
-            !!binding.hoists ||
-            hasClientRenderedAlias(binding))))
+    return every(
+      referencedBindings,
+      (binding) => !someReadIn(binding, section, runsInFill),
     );
   }
-  return !!signal.section.referencedClosures;
+  // A node's own work: a loop or branch chain the patch renders wherever it writes the scope.
+  if (referencedBindings.type === BindingType.dom) {
+    return (
+      some(referencedBindings.branchBodies, isOptionalBranch) &&
+      patchesBranchesAt(referencedBindings)
+    );
+  }
+  return (
+    getPatchFill(referencedBindings).fill ||
+    (!someBindingRead(referencedBindings, runsInFill) &&
+      everyAlias(referencedBindings))
+  );
 }
 
-function isClientRenderedValue({ signal }: Signal["values"][number]) {
-  return !signal.inline && !patchRendersInto(signal);
+function runsInFill(read: ReferencedExtra) {
+  return !leavesReadToPatch(read);
 }
 
-// A whole or property alias a client render reaches (not a constant).
-function hasClientRenderedAlias(binding: Binding) {
+function everyAlias(binding: Binding) {
   for (const alias of binding.aliases) {
-    if (isClientRenderedAlias(alias)) return true;
+    if (!leavesToPatch(getSignal(alias.section, alias))) return false;
   }
   for (const alias of binding.propertyAliases.values()) {
-    if (isClientRenderedAlias(alias)) return true;
+    if (!leavesToPatch(getSignal(alias.section, alias))) return false;
   }
-  return false;
-}
-
-function isClientRenderedAlias(alias: Binding) {
-  return (
-    alias.type !== BindingType.constant &&
-    !patchRendersInto(getSignal(alias.section, alias))
-  );
+  return true;
 }
 
 function pushMemberForwards(

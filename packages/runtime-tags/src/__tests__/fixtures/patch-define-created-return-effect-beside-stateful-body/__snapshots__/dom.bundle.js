@@ -17,8 +17,8 @@ const $Panel_content__label = /*@__PURE__*/ _const(4, ($scope) => {
 });
 const $Panel_content__$params = ($scope, $params2) => $Panel_content__$temp($scope, $params2[0]);
 const $Panel_content__$temp = ($scope, $temp) => {
-	$Panel_content__label($scope, $temp.label);
 	$Panel_content__isOpen($scope, $temp.isOpen);
+	$Panel_content__label($scope, $temp.label);
 };
 const $Panel_content = _content$1("a2", $Panel_content__template, $Panel_content__walks, 0, $Panel_content__$params);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag(1);

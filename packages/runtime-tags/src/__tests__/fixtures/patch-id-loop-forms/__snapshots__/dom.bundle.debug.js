@@ -118,9 +118,9 @@ const $input_end__OR__input_start = /*@__PURE__*/ _or_patch("__tests__/template.
 const $input_end = /*@__PURE__*/ _const("input_end", $input_end__OR__input_start);
 const $input_start = /*@__PURE__*/ _const("input_start", $input_end__OR__input_start);
 const $input = ($scope, input) => {
-	$input_items($scope, input.items);
 	$input_record($scope, input.record);
 	$input_end($scope, input.end);
 	$input_start($scope, input.start);
+	$input_items($scope, input.items);
 };
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

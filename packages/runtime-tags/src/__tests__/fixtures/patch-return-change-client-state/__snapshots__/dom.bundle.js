@@ -4,9 +4,6 @@ const $mode = /*@__PURE__*/ _fill_let("b2", 6, ($scope) => {
 	_text($scope.a, $scope.g);
 	_return($scope, $scope.g);
 	$input_onA__OR__input_onB__OR__mode($scope);
-}, ($scope) => {
-	_text($scope.a, $scope.g);
-	_return($scope, $scope.g);
 });
 const $setup__script$1 = _script("b0", ($scope) => _on($scope.b, "click", function() {
 	$mode($scope, "b");

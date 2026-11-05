@@ -14,26 +14,26 @@ const $input_attrs__OR__extra = /*@__PURE__*/ _or(10, ($scope) => {
 	});
 });
 const $extra = /*@__PURE__*/ _const("extra", ($scope) => {
-	$input_attrs__OR__extra($scope);
 	_attr_content($scope, "#div/0", $scope.extra);
+	$input_attrs__OR__extra($scope);
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
 	$count($scope, +$scope.count + 1);
 }));
 function $setup($scope) {
 	$count($scope, 0);
-	$extra($scope, { content: $extra_content($scope) });
 	$setup__script($scope);
+	$extra($scope, { content: $extra_content($scope) });
 }
 const $input_attrs__script = _script("__tests__/template.marko_0_input_attrs#7", ($scope) => _attrs_script($scope, "#div/0"));
 const $input_attrs = /*@__PURE__*/ _const("input_attrs", ($scope) => {
-	$input_attrs__OR__extra($scope);
 	$input_attrs__script($scope);
 	_attrs($scope, "#div/0", $scope.input_attrs);
+	$input_attrs__OR__extra($scope);
 });
 const $input = ($scope, input) => {
-	$input_attrs($scope, input.attrs);
 	$input_title($scope, input.title);
+	$input_attrs($scope, input.attrs);
 };
 const $input_title__closure = /*@__PURE__*/ _closure($extra_content__input_title);
 const $input_title = /*@__PURE__*/ _const("input_title", $input_title__closure);

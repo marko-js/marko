@@ -14,8 +14,8 @@ const $if_content__setup = ($scope) => {
 const $if = /*@__PURE__*/ _if("#text/0", "<span>Seen <!></span><button>+</button>", "Db%l ", $if_content__setup);
 const $input_show$2 = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input$2 = ($scope, input) => {
-	$input_show$2($scope, input.show);
 	$input_onCount$1($scope, input.onCount);
+	$input_show$2($scope, input.show);
 };
 const $input_onCount$1 = /*@__PURE__*/ _const("input_onCount", $if_content__input_onCount);
 var counter_default = /*@__PURE__*/ _template("__tests__/tags/counter/index.marko", $template$2, "b%c", 0, $input$2);

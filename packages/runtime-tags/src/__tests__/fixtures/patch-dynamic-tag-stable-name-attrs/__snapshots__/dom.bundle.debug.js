@@ -14,8 +14,8 @@ function $setup($scope) {
 	$Row($scope, { content: $Row_content($scope) });
 }
 const $input_y = /*@__PURE__*/ _const("input_y", ($scope) => {
-	$input_y__OR__Tag($scope);
 	$Row_content__label($scope["#childScope/1"], $scope.input_y);
+	$input_y__OR__Tag($scope);
 });
 const $input = ($scope, input) => $input_y($scope, input.y);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

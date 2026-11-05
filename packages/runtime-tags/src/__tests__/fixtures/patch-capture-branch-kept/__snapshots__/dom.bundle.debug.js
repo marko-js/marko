@@ -71,8 +71,8 @@ function $setup($scope) {
 const $if = /*@__PURE__*/ _if("#text/1", /*@__PURE__*/ ((_w0, _w1) => `<!>${_w0}${_w1}`)($template$2, $template$1), /*@__PURE__*/ ((_w0, _w1) => `b/${_w0}&/${_w1}&`)("b%c", " b"), $if_content__setup);
 const $input_on = ($scope, input_on) => $if($scope, input_on ? 0 : 1);
 const $input = ($scope, input) => {
-	$input_show($scope, input.show);
 	$input_on($scope, input.on);
+	$input_show($scope, input.show);
 };
 const $input_show = /*@__PURE__*/ _const("input_show", $if_content__input_show);
 const $get = ($scope) => function() {

@@ -23,8 +23,8 @@ function $setup($scope) {
 const $for = /*@__PURE__*/ _for_of("#text/0", "<!><!><!>", "b%", 0, $for_content__$params);
 const $input_rows = ($scope, input_rows) => $for($scope, [input_rows, (row) => row.id]);
 const $input = ($scope, input) => {
-	$input_suffix($scope, input.suffix);
 	$input_rows($scope, input.rows);
+	$input_suffix($scope, input.suffix);
 };
 const $input_suffix__closure = /*@__PURE__*/ _closure($for_content2__input_suffix);
 const $input_suffix = /*@__PURE__*/ _const("input_suffix", $input_suffix__closure);

@@ -11,9 +11,9 @@ const $if_content__setup = $if_content__input_open;
 const $if = /*@__PURE__*/ _if("#text/0", "<!><!><!>", "b%", $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input = ($scope, input) => {
+	$input_open($scope, input.open);
 	$input_label($scope, input.label);
 	$input_show($scope, input.show);
-	$input_open($scope, input.open);
 };
 const $input_open = /*@__PURE__*/ _const("input_open", $if_content__input_open);
 const $input_label__closure = /*@__PURE__*/ _closure($if_content2__input_label);

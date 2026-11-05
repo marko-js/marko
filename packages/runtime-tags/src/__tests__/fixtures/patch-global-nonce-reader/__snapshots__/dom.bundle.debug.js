@@ -8,7 +8,7 @@ const $setup__$global_cspNonce__script = _fill_global_script("__tests__/template
 }, "cspNonce");
 const $setup__$global_cspNonce = $setup__$global_cspNonce__script;
 function $setup($scope) {
-	$setup__$global_cspNonce($scope);
 	$setup__$global_x($scope);
+	$setup__$global_cspNonce($scope);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

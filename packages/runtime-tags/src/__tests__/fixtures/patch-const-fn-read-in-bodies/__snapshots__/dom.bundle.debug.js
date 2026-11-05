@@ -51,8 +51,8 @@ const $f2 = /*@__PURE__*/ _const("f", ($scope) => {
 	$for_content__f($scope);
 });
 const $input_a = /*@__PURE__*/ _const("input_a", ($scope) => {
-	$f2($scope, $f($scope));
 	$Show_content__v($scope["#childScope/2"], $scope.input_a);
+	$f2($scope, $f($scope));
 	$for_content__input_a($scope);
 });
 const $for = /*@__PURE__*/ _for_of_unkeyed("#text/0", "<span> </span><!><!>", "D l%", $for_content__setup, $for_content__$params);
@@ -68,9 +68,9 @@ function $setup($scope) {
 const $input_value = $await_promise;
 const $input = ($scope, input) => {
 	$input_a($scope, input.a);
-	$input_value($scope, input.value);
 	$input_items($scope, input.items);
 	$input_x($scope, input.x);
+	$input_value($scope, input.value);
 };
 const $input_x__closure = /*@__PURE__*/ _closure($Show_content__input_x);
 const $input_x = /*@__PURE__*/ _const("input_x", ($scope) => {

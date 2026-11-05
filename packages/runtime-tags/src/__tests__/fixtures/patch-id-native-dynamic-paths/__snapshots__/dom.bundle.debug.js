@@ -32,8 +32,8 @@ const $for_content__Tag = /*@__PURE__*/ _const("Tag", ($scope) => {
 	$for_content__Body__OR__Tag($scope);
 });
 const $for_content__item_on = ($scope, item_on) => {
-	$for_content__Tag($scope, item_on ? "p" : "div");
 	$Wrap_content__on($scope["#childScope/1"], item_on);
+	$for_content__Tag($scope, item_on ? "p" : "div");
 };
 const $for_content__$params = ($scope, $params3) => $for_content__item_on($scope, $params3[0]?.on);
 const $Body_content__uid = ($scope, uid) => {

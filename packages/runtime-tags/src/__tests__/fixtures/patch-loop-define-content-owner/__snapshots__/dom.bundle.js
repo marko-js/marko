@@ -37,7 +37,7 @@ const $Card_content__label = ($scope, label) => {
 const $Card_content__tag_input_content = /*@__PURE__*/ _const(5, $if_content__content);
 const $Card_content__$params = ($scope, $params2) => $Card_content__$temp($scope, $params2[0]);
 const $Card_content__$temp = ($scope, $temp) => {
-	$Card_content__tag_input_content($scope, $temp.content);
 	$Card_content__label($scope, $temp.label);
+	$Card_content__tag_input_content($scope, $temp.content);
 };
 const $Card_content = _content$1("a4", $Card_content__template, $Card_content__walks, 0, $Card_content__$params);

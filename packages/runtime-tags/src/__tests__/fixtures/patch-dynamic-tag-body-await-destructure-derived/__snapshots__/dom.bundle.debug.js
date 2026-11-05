@@ -38,8 +38,8 @@ const $setup$1 = $await_content;
 const $input_p$1 = $await_promise;
 const $input__closure = /*@__PURE__*/ _closure($await_content__input);
 const $input$1 = /*@__PURE__*/ _const("input", ($scope) => {
-	$input_p$1($scope, $scope.input.p);
 	$input__closure($scope);
+	$input_p$1($scope, $scope.input.p);
 });
 var card_default = /*@__PURE__*/ _template("__tests__/tags/card.marko", $template$1, "b%c", $setup$1, $input$1);
 

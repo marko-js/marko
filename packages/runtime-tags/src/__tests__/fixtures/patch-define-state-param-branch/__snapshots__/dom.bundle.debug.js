@@ -10,8 +10,8 @@ const $Panel_content__isOpen = ($scope, isOpen) => $Panel_content__if($scope, is
 const $Panel_content__tag_input_label = /*@__PURE__*/ _const("label", $if_content__label);
 const $Panel_content__$params = ($scope, $params2) => $Panel_content__$temp($scope, $params2[0]);
 const $Panel_content__$temp = ($scope, $temp) => {
-	$Panel_content__isOpen($scope, $temp.isOpen);
 	$Panel_content__tag_input_label($scope, $temp.label);
+	$Panel_content__isOpen($scope, $temp.isOpen);
 };
 const $open = _let("open/5", ($scope) => $Panel_content__isOpen($scope["#childScope/0"], $scope.open));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
