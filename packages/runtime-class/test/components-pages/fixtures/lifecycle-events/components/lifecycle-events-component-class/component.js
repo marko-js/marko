@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 function Component() {}
 
@@ -44,13 +44,13 @@ Component.prototype = {
   },
 
   test: function () {
-    expect(this.state.events).to.deep.equal([
+    assert.deepEqual(this.state.events, [
       "onCreate",
       "onInput[Frank]",
       "onRender",
     ]);
-    expect(this.onCreateInputName).to.equal("Frank");
-    expect(this.onCreateOutName).to.equal("FrankGlobal");
+    assert.equal(this.onCreateInputName, "Frank");
+    assert.equal(this.onCreateOutName, "FrankGlobal");
   },
 };
 

@@ -1,33 +1,33 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), {});
 
-  expect(component.buttonClickCalls.length).to.equal(0);
+  assert.equal(component.buttonClickCalls.length, 0);
 
   // First button
   helpers.triggerClick(component.getEl("ok"));
 
-  expect(component.buttonClickCalls.length).to.equal(1);
+  assert.equal(component.buttonClickCalls.length, 1);
 
-  expect(component.buttonClickCalls[0][0]).to.equal("ok");
-  expect(component.buttonClickCalls[0][1].stopPropagation).to.be.a("function");
-  expect(component.buttonClickCalls[0][2].innerHTML).to.equal("OK");
+  assert.equal(component.buttonClickCalls[0][0], "ok");
+  assert.equal(typeof component.buttonClickCalls[0][1].stopPropagation, "function");
+  assert.equal(component.buttonClickCalls[0][2].innerHTML, "OK");
 
   helpers.triggerClick(component.getEl("ok"));
 
-  expect(component.buttonClickCalls.length).to.equal(1);
+  assert.equal(component.buttonClickCalls.length, 1);
 
   // Second button
   helpers.triggerClick(component.getEl("cancel"));
 
-  expect(component.buttonClickCalls.length).to.equal(2);
+  assert.equal(component.buttonClickCalls.length, 2);
 
-  expect(component.buttonClickCalls[1][0]).to.equal("cancel");
-  expect(component.buttonClickCalls[1][1].stopPropagation).to.be.a("function");
-  expect(component.buttonClickCalls[1][2].innerHTML).to.equal("Cancel");
+  assert.equal(component.buttonClickCalls[1][0], "cancel");
+  assert.equal(typeof component.buttonClickCalls[1][1].stopPropagation, "function");
+  assert.equal(component.buttonClickCalls[1][2].innerHTML, "Cancel");
 
   helpers.triggerClick(component.getEl("cancel"));
 
-  expect(component.buttonClickCalls.length).to.equal(2);
+  assert.equal(component.buttonClickCalls.length, 2);
 };

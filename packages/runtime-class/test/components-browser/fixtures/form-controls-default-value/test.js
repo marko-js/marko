@@ -1,14 +1,14 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index.marko"));
 
-  expect(component.getEl("a")).has.property("defaultValue", "abc");
-  expect(component.getEl("a")).has.property("defaultChecked", true);
+  assert.equal(component.getEl("a").defaultValue, "abc");
+  assert.equal(component.getEl("a").defaultChecked, true);
 
-  expect(component.getEl("b")).has.property("defaultValue", "abc");
-  expect(component.getEl("b")).has.property("defaultChecked", false);
+  assert.equal(component.getEl("b").defaultValue, "abc");
+  assert.equal(component.getEl("b").defaultChecked, false);
 
-  expect(component.getEl("c")).has.property("defaultValue", "abc");
-  expect(component.getEl("d")).has.property("defaultValue", "abc");
+  assert.equal(component.getEl("c").defaultValue, "abc");
+  assert.equal(component.getEl("d").defaultValue, "abc");
 };

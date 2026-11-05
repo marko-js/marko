@@ -1,11 +1,11 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 it("should allow diffing html", function () {
   var app = window.app;
-  expect(document.body.querySelector("span.count").innerHTML).to.equal("0");
+  assert.equal(document.body.querySelector("span.count").innerHTML, "0");
 
   app.increment();
   app.update();
 
-  expect(document.body.querySelector("span.count").innerHTML).to.equal("1");
+  assert.equal(document.body.querySelector("span.count").innerHTML, "1");
 });

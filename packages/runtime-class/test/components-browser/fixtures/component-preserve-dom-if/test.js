@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), {});
@@ -36,33 +36,33 @@ module.exports = function (helpers) {
   component.update();
 
   var timestamps = getTimestamps();
-  expect(timestamps.preserveId).to.equal("0");
-  expect(timestamps.preserveIdBody).to.equal("0");
-  expect(timestamps.preserveBodyId).to.equal("10");
-  expect(timestamps.preserveBodyIdBody).to.equal("0");
-  expect(timestamps.componentId).to.equal("0");
-  expect(timestamps.preserveClass).to.equal("0");
-  expect(timestamps.preserveClassBody).to.equal("0");
-  expect(timestamps.preserveBodyClass).to.equal("10");
-  expect(timestamps.preserveBodyClassBody).to.equal("0");
-  expect(timestamps.componentClass).to.equal("0");
+  assert.equal(timestamps.preserveId, "0");
+  assert.equal(timestamps.preserveIdBody, "0");
+  assert.equal(timestamps.preserveBodyId, "10");
+  assert.equal(timestamps.preserveBodyIdBody, "0");
+  assert.equal(timestamps.componentId, "0");
+  assert.equal(timestamps.preserveClass, "0");
+  assert.equal(timestamps.preserveClassBody, "0");
+  assert.equal(timestamps.preserveBodyClass, "10");
+  assert.equal(timestamps.preserveBodyClassBody, "0");
+  assert.equal(timestamps.componentClass, "0");
 
-  // expect(newEls1.el != null).to.equal(true);
-  // expect(newEls1.el).to.equal(origEls.el);
-  // expect(newEls1.preserveEl1).to.equal(origEls.preserveEl1);
-  // expect(newEls1.preserveEl2).to.equal(origEls.preserveEl2);
-  // expect(newEls1.preserveEl1).to.equal(origEls.preserveEl1);
-  // expect(newEls1.preserveEl2).to.equal(origEls.preserveEl2);
+  // assert.equal(newEls1.el != null, true);
+  // assert.equal(newEls1.el, origEls.el);
+  // assert.equal(newEls1.preserveEl1, origEls.preserveEl1);
+  // assert.equal(newEls1.preserveEl2, origEls.preserveEl2);
+  // assert.equal(newEls1.preserveEl1, origEls.preserveEl1);
+  // assert.equal(newEls1.preserveEl2, origEls.preserveEl2);
   //
   //
-  // expect(newEls1.preserveBodyEl1).to.equal(origEls.preserveBodyEl1);
-  // expect(newEls1.preserveBodyEl2).to.equal(origEls.preserveBodyEl2);
+  // assert.equal(newEls1.preserveBodyEl1, origEls.preserveBodyEl1);
+  // assert.equal(newEls1.preserveBodyEl2, origEls.preserveBodyEl2);
   //
   // checkChildrenMatch(newEls1.preserveBodyEl1Children, origEls.preserveBodyEl1Children);
   // checkChildrenMatch(newEls1.preserveBodyEl2Children, origEls.preserveBodyEl2Children);
   //
-  // expect(newEls1.helloEl1).to.equal(origEls.helloEl1);
-  // expect(newEls1.helloEl2).to.equal(origEls.helloEl2);
+  // assert.equal(newEls1.helloEl1, origEls.helloEl1);
+  // assert.equal(newEls1.helloEl2, origEls.helloEl2);
 
   renderId = 100;
 
@@ -74,14 +74,14 @@ module.exports = function (helpers) {
   component.update();
 
   timestamps = getTimestamps();
-  expect(timestamps.preserveId).to.equal("100");
-  expect(timestamps.preserveIdBody).to.equal("100");
-  expect(timestamps.preserveBodyId).to.equal("100");
-  expect(timestamps.preserveBodyIdBody).to.equal("100");
-  expect(timestamps.componentId).to.equal("100");
-  expect(timestamps.preserveClass).to.equal("100");
-  expect(timestamps.preserveClassBody).to.equal("100");
-  expect(timestamps.preserveBodyClass).to.equal("100");
-  expect(timestamps.preserveBodyClassBody).to.equal("100");
-  expect(timestamps.componentClass).to.equal("100");
+  assert.equal(timestamps.preserveId, "100");
+  assert.equal(timestamps.preserveIdBody, "100");
+  assert.equal(timestamps.preserveBodyId, "100");
+  assert.equal(timestamps.preserveBodyIdBody, "100");
+  assert.equal(timestamps.componentId, "100");
+  assert.equal(timestamps.preserveClass, "100");
+  assert.equal(timestamps.preserveClassBody, "100");
+  assert.equal(timestamps.preserveBodyClass, "100");
+  assert.equal(timestamps.preserveBodyClassBody, "100");
+  assert.equal(timestamps.componentClass, "100");
 };

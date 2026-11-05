@@ -2,10 +2,7 @@
 
 require("../__util__/test-init");
 
-const chai = require("chai");
-chai.config.includeStack = true;
-require("chai").should();
-const expect = require("chai").expect;
+const assert = require("assert/strict");
 
 var nodeRequire = require("../../node-require");
 
@@ -20,13 +17,13 @@ function testNodeRequireInstall(options, expected) {
 
   for (let i = 0; i < expected.length; i++) {
     let ext = expected[i];
-    expect(requireObj.extensions[ext]).to.be.a("function");
+    assert.equal(typeof requireObj.extensions[ext], "function");
   }
 
   expected.sort();
 
   var actualKeys = Object.keys(requireObj.extensions).sort();
-  expect(expected).to.deep.equal(actualKeys);
+  assert.deepEqual(expected, actualKeys);
 }
 
 describe("node-require", function () {

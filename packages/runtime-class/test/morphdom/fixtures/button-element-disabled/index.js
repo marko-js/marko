@@ -1,5 +1,7 @@
-exports.verify = function (context, expect) {
+const assert = require("assert/strict");
+
+exports.verify = function (context) {
   var rootNode = context.rootNode;
   var button = rootNode.querySelector("button");
-  expect(button.disabled).to.equal(true);
+  assert.equal(button.disabled, true);
 };

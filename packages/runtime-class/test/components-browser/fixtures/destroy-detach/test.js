@@ -1,11 +1,11 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), {});
   var el = component.el;
 
-  expect(component.el.parentNode).to.equal(helpers.targetEl);
+  assert.equal(component.el.parentNode, helpers.targetEl);
   component.destroy();
-  expect(component.el == null).to.equal(true);
-  expect(el.parentNode == null).to.equal(true);
+  assert.equal(component.el == null, true);
+  assert.equal(el.parentNode == null, true);
 };

@@ -1,11 +1,11 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 it("should serialize component input down to the browser", function () {
-  expect(window.fooComponent.input.color).to.equal("#800");
-  expect(window.fooComponent.el.textContent).to.equal("The current count is 0");
-  expect(window.fooComponent.el.getAttribute("style")).to.equal("color:#800");
+  assert.equal(window.fooComponent.input.color, "#800");
+  assert.equal(window.fooComponent.el.textContent, "The current count is 0");
+  assert.equal(window.fooComponent.el.getAttribute("style"), "color:#800");
   window.fooComponent.increment();
   window.fooComponent.update();
-  expect(window.fooComponent.el.textContent).to.equal("The current count is 1");
-  expect(window.fooComponent.el.getAttribute("style")).to.equal("color:#800");
+  assert.equal(window.fooComponent.el.textContent, "The current count is 1");
+  assert.equal(window.fooComponent.el.getAttribute("style"), "color:#800");
 });

@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 var pubsub = require("../../../__util__/pubsub");
 
 module.exports = function (helpers) {
@@ -8,17 +8,15 @@ module.exports = function (helpers) {
   window.received2 = [];
 
   component.getComponent("customEvents").emitTestEvent1();
-  expect(window.received1.length).to.equal(1);
-  expect(window.received1[0].args.length).to.equal(3); // ['a', 'b', sourceComponent]
-  expect(window.received1[0].component).to.equal(
-    component.getComponent("customEvents"),
-  );
+  assert.equal(window.received1.length, 1);
+  assert.equal(window.received1[0].args.length, 3); // ['a', 'b', sourceComponent]
+  assert.equal(window.received1[0].component, component.getComponent("customEvents"));
 
   pubsub.channel("customEvents-" + component.id).emit("emitTestEvent2");
 
-  expect(window.received1.length).to.equal(1);
-  expect(window.received2.length).to.equal(1);
+  assert.equal(window.received1.length, 1);
+  assert.equal(window.received2.length, 1);
 
-  expect(window.received2[0].args.length).to.equal(1); // [sourceComponent]
-  expect(window.received2[0].component).to.be.an("object");
+  assert.equal(window.received2[0].args.length, 1); // [sourceComponent]
+  assert.ok(typeof window.received2[0].component === "object" && window.received2[0].component !== null);
 };

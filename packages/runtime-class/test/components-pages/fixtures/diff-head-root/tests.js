@@ -1,11 +1,11 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 it("should allow diffing head at the root", function () {
   var app = window.app;
-  expect(document.head.getAttribute("count")).to.equal("0");
+  assert.equal(document.head.getAttribute("count"), "0");
 
   app.increment();
   app.update();
 
-  expect(document.head.getAttribute("count")).to.equal("1");
+  assert.equal(document.head.getAttribute("count"), "1");
 });

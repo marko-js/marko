@@ -2,9 +2,7 @@
 
 require("../__util__/test-init");
 
-var chai = require("chai");
-chai.config.includeStack = true;
-var expect = chai.expect;
+var assert = require("assert/strict");
 
 var ServerComponent = require("marko/src/runtime/components/ServerComponent");
 
@@ -32,16 +30,12 @@ describe("ServerComponent", function () {
           },
         },
       );
-      expect(calls).to.deep.equal([
-        ["onCreate", 1],
-        ["onInput", 1],
-        ["onRender"],
-      ]);
+      assert.deepEqual(calls, [["onCreate", 1], ["onInput", 1], ["onRender"]]);
     });
 
     it("keeps the original input when onInput returns nothing", function () {
       var input = { a: 1 };
-      expect(create(input).input).to.equal(input);
+      assert.equal(create(input).input, input);
     });
 
     it("takes the input onInput returns instead", function () {
@@ -54,7 +48,7 @@ describe("ServerComponent", function () {
           },
         },
       );
-      expect(component.input).to.equal(replaced);
+      assert.equal(component.input, replaced);
     });
 
     it("leaves an input assigned during onInput alone", function () {
@@ -68,37 +62,37 @@ describe("ServerComponent", function () {
           },
         },
       );
-      expect(component.input).to.equal(assigned);
+      assert.equal(component.input, assigned);
     });
 
     it("is never destroyed", function () {
-      expect(create().isDestroyed()).to.equal(false);
+      assert.equal(create().isDestroyed(), false);
     });
   });
 
   describe("elId", function () {
     it("is the component id on its own", function () {
-      expect(create().elId()).to.equal("c1");
-      expect(create().elId(null)).to.equal("c1");
+      assert.equal(create().elId(), "c1");
+      assert.equal(create().elId(null), "c1");
     });
 
     it("appends a nested id", function () {
-      expect(create().elId("body")).to.equal("c1-body");
+      assert.equal(create().elId("body"), "c1-body");
     });
 
     it("moves a leading # in front of the component id", function () {
-      expect(create().elId("#body")).to.equal("#c1-body");
+      assert.equal(create().elId("#body"), "#c1-body");
     });
 
     it("stringifies a non-string nested id", function () {
-      expect(create().elId(0)).to.equal("c1-0");
-      expect(create().elId(1)).to.equal("c1-1");
+      assert.equal(create().elId(0), "c1-0");
+      assert.equal(create().elId(1), "c1-1");
     });
 
     it("is also reachable as getElId", function () {
       var component = create();
-      expect(component.getElId).to.equal(component.elId);
-      expect(component.getElId("body")).to.equal("c1-body");
+      assert.equal(component.getElId, component.elId);
+      assert.equal(component.getElId("body"), "c1-body");
     });
   });
 
@@ -107,42 +101,42 @@ describe("ServerComponent", function () {
       var component = create();
       var state = { a: 1 };
       component.state = state;
-      expect(component.state).to.equal(state);
-      expect(component.___rawState).to.equal(state);
+      assert.equal(component.state, state);
+      assert.equal(component.___rawState, state);
     });
 
     it("adopts an object when there is no state yet", function () {
       var component = create();
       var next = { a: 1 };
       component.setState(next);
-      expect(component.state).to.equal(next);
+      assert.equal(component.state, next);
     });
 
     it("merges an object into existing state", function () {
       var component = create();
       component.state = { a: 1 };
       component.setState({ b: 2 });
-      expect(component.state).to.deep.equal({ a: 1, b: 2 });
+      assert.deepEqual(component.state, { a: 1, b: 2 });
     });
 
     it("assigns a single key", function () {
       var component = create();
       component.state = { a: 1 };
       component.setState("b", 2);
-      expect(component.state).to.deep.equal({ a: 1, b: 2 });
+      assert.deepEqual(component.state, { a: 1, b: 2 });
     });
 
     it("treats setStateDirty the same way", function () {
       var adopted = create();
       var next = { a: 1 };
       adopted.setStateDirty(next);
-      expect(adopted.state).to.equal(next);
+      assert.equal(adopted.state, next);
 
       var merged = create();
       merged.state = { a: 1 };
       merged.setStateDirty({ b: 2 });
       merged.setStateDirty("c", 3);
-      expect(merged.state).to.deep.equal({ a: 1, b: 2, c: 3 });
+      assert.deepEqual(merged.state, { a: 1, b: 2, c: 3 });
     });
 
     it("replaces the whole state", function () {
@@ -150,7 +144,7 @@ describe("ServerComponent", function () {
       component.state = { a: 1 };
       var next = { b: 2 };
       component.replaceState(next);
-      expect(component.state).to.equal(next);
+      assert.equal(component.state, next);
     });
   });
 
@@ -166,9 +160,12 @@ describe("ServerComponent", function () {
       "update",
     ].forEach(function (name) {
       it(name + " reports that it is unavailable during SSR", function () {
-        expect(function () {
-          create()[name]();
-        }).to.throw(name + " method not supported during SSR.");
+        assert.throws(
+          function () {
+            create()[name]();
+          },
+          { message: name + " method not supported during SSR." },
+        );
       });
     });
   });

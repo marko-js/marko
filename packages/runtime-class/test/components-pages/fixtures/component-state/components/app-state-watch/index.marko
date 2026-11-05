@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import assert from 'assert/strict';
 
 class {
     onInput(input) {
@@ -13,16 +13,16 @@ class {
     }
 
     test() {
-        expect(this.state.nameNull).to.equal(null);
-        expect(this.state.nameUndefined).to.equal(undefined);
+        assert.equal(this.state.nameNull, null);
+        assert.equal(this.state.nameUndefined, undefined);
 
         this.state.nameNull = 'Frank';
         this.update();
-        expect(this.el.innerHTML).to.contain('nameNull:Frank');
+        assert.match(this.el.innerHTML, /nameNull:Frank/);
 
         this.state.nameUndefined = 'Frank';
         this.update();
-        expect(this.el.innerHTML).to.contain('nameUndefined:Frank');
+        assert.match(this.el.innerHTML, /nameUndefined:Frank/);
     }
 }
 

@@ -1,14 +1,14 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 it("should render correctly", function () {
   var root = window.root;
   var child = window.child;
   var nestedChild = window.nestedChild;
 
-  expect(root.getComponent("child")).to.eql(child);
+  assert.deepEqual(root.getComponent("child"), child);
 
-  expect(child.getComponent("nested")).to.eql(nestedChild);
-  expect(child.getEl("div")).has.property("textContent", "Child");
+  assert.deepEqual(child.getComponent("nested"), nestedChild);
+  assert.equal(child.getEl("div").textContent, "Child");
 
-  expect(nestedChild.getEl("div")).has.property("textContent", "Nested Child");
+  assert.equal(nestedChild.getEl("div").textContent, "Nested Child");
 });

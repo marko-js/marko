@@ -1,13 +1,13 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 it("should should have mounted the component", function () {
-  expect(window.counterComponent).to.not.equal(undefined);
+  assert.notEqual(window.counterComponent, undefined);
 });
 
 it("should be interactive", function () {
   var btn = window.counterComponent.getEl("button");
-  expect(btn.textContent).to.equal("Count: 0");
+  assert.equal(btn.textContent, "Count: 0");
   btn.click();
   window.counterComponent.update();
-  expect(btn.textContent).to.equal("Count: 1");
+  assert.equal(btn.textContent, "Count: 1");
 });

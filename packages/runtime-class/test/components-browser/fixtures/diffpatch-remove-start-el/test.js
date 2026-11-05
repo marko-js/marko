@@ -1,14 +1,14 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), {});
 
-  expect(helpers.targetEl.querySelector("h1") != null).to.equal(true);
-  expect(helpers.targetEl.querySelector("div") != null).to.equal(true);
+  assert.equal(helpers.targetEl.querySelector("h1") != null, true);
+  assert.equal(helpers.targetEl.querySelector("div") != null, true);
 
   component.state.showHeader = false;
   component.update();
 
-  expect(helpers.targetEl.querySelector("h1") == null).to.equal(true);
-  expect(helpers.targetEl.querySelector("div") != null).to.equal(true);
+  assert.equal(helpers.targetEl.querySelector("h1") == null, true);
+  assert.equal(helpers.targetEl.querySelector("div") != null, true);
 };

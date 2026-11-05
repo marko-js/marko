@@ -1,19 +1,19 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), {});
 
-  expect(component.mouseMoveEvent).to.equal(undefined);
+  assert.equal(component.mouseMoveEvent, undefined);
 
   helpers.triggerMouseMove(component.getEl("ok"));
 
-  expect(component.mouseMoveEvent[0]).to.equal("ok");
-  expect(component.mouseMoveEvent[1].stopPropagation).to.be.a("function");
-  expect(component.mouseMoveEvent[2].innerHTML).to.equal("OK");
+  assert.equal(component.mouseMoveEvent[0], "ok");
+  assert.equal(typeof component.mouseMoveEvent[1].stopPropagation, "function");
+  assert.equal(component.mouseMoveEvent[2].innerHTML, "OK");
 
   helpers.triggerMouseMove(component.getEl("cancel"));
 
-  expect(component.mouseMoveEvent[0]).to.equal("cancel");
-  expect(component.mouseMoveEvent[1].stopPropagation).to.be.a("function");
-  expect(component.mouseMoveEvent[2].innerHTML).to.equal("Cancel");
+  assert.equal(component.mouseMoveEvent[0], "cancel");
+  assert.equal(typeof component.mouseMoveEvent[1].stopPropagation, "function");
+  assert.equal(component.mouseMoveEvent[2].innerHTML, "Cancel");
 };

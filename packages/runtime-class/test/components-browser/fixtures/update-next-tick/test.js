@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers, done) {
   var component = helpers.mount(require.resolve("./index.marko"), {
@@ -7,11 +7,11 @@ module.exports = function (helpers, done) {
   });
 
   component.onUpdate = function () {
-    expect(component.el.className).to.contain("small");
+    assert.match(component.el.className, /small/);
     done();
   };
 
-  expect(component.el.className).to.contain("large");
+  assert.match(component.el.className, /large/);
   component.setSize("small");
-  expect(component.el.className).to.not.contain("small");
+  assert.doesNotMatch(component.el.className, /small/);
 };

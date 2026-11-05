@@ -1,10 +1,10 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers, done) {
   var component = helpers.mount(require.resolve("./index"));
   // Queued behind the update Marko schedules with setImmediate in onMount.
   setImmediate(function () {
-    expect(component.getEl("root").innerHTML).to.contain("Mounted: true");
+    assert.match(component.getEl("root").innerHTML, /Mounted: true/);
     done();
   });
 };

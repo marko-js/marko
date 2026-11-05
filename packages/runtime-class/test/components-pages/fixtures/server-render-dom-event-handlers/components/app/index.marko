@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import assert from 'assert/strict';
 
 static function triggerMouseEvent(el, type) {
     var ev = document.createEvent("MouseEvent");
@@ -36,14 +36,14 @@ class {
 
     test() {
         // Test a DOM event
-        expect(this.buttonClicked).to.equal(false);
+        assert.equal(this.buttonClicked, false);
         triggerClick(this.el.querySelector('.click-me'));
-        expect(this.buttonClicked).to.equal(true);
+        assert.equal(this.buttonClicked, true);
 
         // Test a custom event (and a DOM event)
-        expect(this.counterValue).to.equal(undefined);
+        assert.equal(this.counterValue, undefined);
         triggerClick(this.el.querySelector('.counter button'));
-        expect(this.counterValue).to.equal(1);
+        assert.equal(this.counterValue, 1);
     }
 }
 

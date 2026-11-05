@@ -1,9 +1,9 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 it("should have initialized both components", function () {
   var component = window.testComponent;
-  expect(component.clicks).to.equal(0);
+  assert.equal(component.clicks, 0);
   document.getElementById("a").click();
-  expect(component.clicks).to.equal(1);
+  assert.equal(component.clicks, 1);
   document.getElementById("b").click();
 });

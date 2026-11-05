@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), {
@@ -12,7 +12,7 @@ module.exports = function (helpers) {
 
   var out2 = component.renderArg;
 
-  expect(out1).to.not.equal(out2);
-  expect(out1.element).to.be.a("function");
-  expect(out2.element).to.be.a("function");
+  assert.notEqual(out1, out2);
+  assert.equal(typeof out1.element, "function");
+  assert.equal(typeof out2.element, "function");
 };

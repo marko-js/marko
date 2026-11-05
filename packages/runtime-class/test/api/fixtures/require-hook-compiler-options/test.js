@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 var requireHook = require("../../../../node-require");
 
 function compileAndCheck(path, shouldHaveErrored) {
@@ -12,13 +12,13 @@ function compileAndCheck(path, shouldHaveErrored) {
   }
 
   if (shouldHaveErrored) {
-    expect(err).is.an.instanceOf(Error);
+    assert.ok(err instanceof Error);
   } else {
-    expect(err).to.equal(undefined);
+    assert.equal(err, undefined);
   }
 }
 
-exports.check = function (marko, markoCompiler, expect, helpers, done) {
+exports.check = function (marko, markoCompiler, helpers, done) {
   try {
     requireHook.install({
       compilerOptions: {
@@ -26,7 +26,7 @@ exports.check = function (marko, markoCompiler, expect, helpers, done) {
       },
     }); // Reconfigure for testing
 
-    expect(markoCompiler.config.ignoreUnrecognizedTags).to.equal(false);
+    assert.equal(markoCompiler.config.ignoreUnrecognizedTags, false);
 
     compileAndCheck("./invalid.marko", true /* should error */);
 
@@ -36,12 +36,12 @@ exports.check = function (marko, markoCompiler, expect, helpers, done) {
       },
     });
 
-    expect(markoCompiler.config.ignoreUnrecognizedTags).to.equal(true);
+    assert.equal(markoCompiler.config.ignoreUnrecognizedTags, true);
 
     compileAndCheck("./invalid.marko", false /* should not error */);
   } finally {
     markoCompiler.configure(); // Reset to defaults
-    expect(markoCompiler.config.ignoreUnrecognizedTags).to.equal(false);
+    assert.equal(markoCompiler.config.ignoreUnrecognizedTags, false);
     done();
   }
 };

@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), {
@@ -6,18 +6,18 @@ module.exports = function (helpers) {
   });
 
   var buttonComponent = component.getComponent("button");
-  expect(buttonComponent.el.innerHTML).to.contain("Frank");
-  expect(buttonComponent.el.className).to.equal("app-button app-button-small");
+  assert.match(buttonComponent.el.innerHTML, /Frank/);
+  assert.equal(buttonComponent.el.className, "app-button app-button-small");
 
   // Button component will not rerender since it's state did not change and that means that the
   // button content will remain as 'John' instead of 'Frank'
   component.input = { name: "John " };
   component.update();
 
-  expect(buttonComponent.el.innerHTML).to.contain("John");
+  assert.match(buttonComponent.el.innerHTML, /John/);
 
   buttonComponent.setSize("large");
   buttonComponent.update();
-  expect(buttonComponent.el.innerHTML).to.contain("John");
-  expect(buttonComponent.el.className).to.equal("app-button app-button-large");
+  assert.match(buttonComponent.el.innerHTML, /John/);
+  assert.equal(buttonComponent.el.className, "app-button app-button-large");
 };

@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), {});
@@ -6,13 +6,13 @@ module.exports = function (helpers) {
   var fooEl = component.getEl("foo");
   var barEl = component.getEl("bar");
 
-  expect(fooEl.nextSibling).to.equal(barEl);
+  assert.equal(fooEl.nextSibling, barEl);
 
   component.state.swapped = true;
   component.update();
 
-  expect(component.getEl("foo")).to.equal(fooEl);
-  expect(component.getEl("bar")).to.equal(barEl);
+  assert.equal(component.getEl("foo"), fooEl);
+  assert.equal(component.getEl("bar"), barEl);
 
-  expect(barEl.nextSibling).to.equal(fooEl);
+  assert.equal(barEl.nextSibling, fooEl);
 };

@@ -2,11 +2,6 @@
 
 require("../__util__/test-init");
 
-var chai = require("chai");
-chai.config.includeStack = true;
-
-var expect = require("chai").expect;
-
 var marko = require("marko");
 var hotReload = require("marko/src/node-require/hot-reload");
 var autotest = require("mocha-autotest").default;
@@ -25,7 +20,7 @@ autotest("fixtures", (fixture) => {
     const { log } = console;
     try {
       console.log = () => {};
-      main.check(marko, hotReload, expect, snapshot);
+      main.check(marko, hotReload, snapshot);
     } finally {
       console.log = log;
     }

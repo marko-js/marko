@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./"), {});
@@ -6,9 +6,9 @@ module.exports = function (helpers) {
   var oldState = component.state.toJSON();
   component.setState("foo", "bar");
 
-  expect(component.state.toJSON()).to.not.equal(oldState);
+  assert.notEqual(component.state.toJSON(), oldState);
 
   oldState = component.state.toJSON();
   component.setState("hello", "world");
-  expect(component.state.toJSON()).to.equal(oldState);
+  assert.equal(component.state.toJSON(), oldState);
 };

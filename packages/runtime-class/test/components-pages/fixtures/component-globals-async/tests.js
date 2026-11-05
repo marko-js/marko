@@ -1,19 +1,15 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 it("should allow attributes to not be updated", function () {
   function testHelloComponent(helloComponent) {
-    expect(helloComponent.el.querySelector(".name").innerHTML).to.equal(
-      "Frank",
-    );
-    expect(helloComponent.el.querySelector(".count").innerHTML).to.equal("1");
+    assert.equal(helloComponent.el.querySelector(".name").innerHTML, "Frank");
+    assert.equal(helloComponent.el.querySelector(".count").innerHTML, "1");
 
     helloComponent.state.count++;
     helloComponent.update();
 
-    expect(helloComponent.el.querySelector(".name").innerHTML).to.equal(
-      "Frank",
-    );
-    expect(helloComponent.el.querySelector(".count").innerHTML).to.equal("2");
+    assert.equal(helloComponent.el.querySelector(".name").innerHTML, "Frank");
+    assert.equal(helloComponent.el.querySelector(".count").innerHTML, "2");
   }
 
   testHelloComponent(window.hello1);

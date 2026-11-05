@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), { show: false });
@@ -15,5 +15,5 @@ module.exports = function (helpers) {
   });
 
   eventTarget.focus();
-  expect(eventFired).to.equal(true);
+  assert.equal(eventFired, true);
 };

@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var fields = [
@@ -19,14 +19,14 @@ module.exports = function (helpers) {
   var inputs = component.getEl("root").querySelectorAll("input");
   var labels = component.getEl("root").querySelectorAll("label");
 
-  expect(inputs.length).to.equal(fields.length);
+  assert.equal(inputs.length, fields.length);
 
   for (var i = 0; i < fields.length; i++) {
     var input = inputs[i];
     var label = labels[i];
-    expect(input.id).to.equal(component.id + "-field_" + i);
-    expect(label.getAttribute("for")).to.equal(input.id);
-    expect(input.value).to.equal(fields[i].value);
-    expect(label.innerHTML).to.equal(fields[i].label);
+    assert.equal(input.id, component.id + "-field_" + i);
+    assert.equal(label.getAttribute("for"), input.id);
+    assert.equal(input.value, fields[i].value);
+    assert.equal(label.innerHTML, fields[i].label);
   }
 };

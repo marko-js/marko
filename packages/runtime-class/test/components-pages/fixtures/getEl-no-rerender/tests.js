@@ -1,7 +1,7 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 it("should allow getEl() with a split component", function () {
   var hello = window.hello;
-  expect(hello.getEl("button") != null).to.equal(true);
-  expect(hello.getEl("button").nodeName).to.equal("BUTTON");
+  assert.equal(hello.getEl("button") != null, true);
+  assert.equal(hello.getEl("button").nodeName, "BUTTON");
 });

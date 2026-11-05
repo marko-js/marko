@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 var markoComponents = require("marko/components");
 
 module.exports = function (helpers, done) {
@@ -10,15 +10,15 @@ module.exports = function (helpers, done) {
     }
 
     var renderedComponents = markoComponents.getRenderedComponents(out);
-    expect(renderedComponents).to.be.an("object");
+    assert.ok(typeof renderedComponents === "object" && renderedComponents !== null);
 
     // console.log('HTML', html);
 
-    expect(Object.keys(renderedComponents).length).to.equal(3);
+    assert.equal(Object.keys(renderedComponents).length, 3);
     var componentDefs = renderedComponents.w;
-    expect(componentDefs.length).to.equal(1);
+    assert.equal(componentDefs.length, 1);
 
-    expect(componentDefs[0][0]).to.equal("s0");
+    assert.equal(componentDefs[0][0], "s0");
 
     done();
   });

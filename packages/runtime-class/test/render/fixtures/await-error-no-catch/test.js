@@ -1,10 +1,10 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 exports.templateData = {};
 
 exports.checkError = function (e) {
   var message = e.toString();
-  expect(message).to.contain("Something went wrong");
+  assert.match(message, /Something went wrong/);
 };
 
 exports.skip_vdom = true;

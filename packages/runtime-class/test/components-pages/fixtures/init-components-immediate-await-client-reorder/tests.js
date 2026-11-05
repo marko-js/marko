@@ -1,12 +1,12 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 it("should initialize components before ready", function () {
-  expect(window.afterInitComponents_foo != null).to.equal(true);
-  expect(window.afterInitComponents_bar == null).to.equal(true);
+  assert.equal(window.afterInitComponents_foo != null, true);
+  assert.equal(window.afterInitComponents_bar == null, true);
 
-  expect(window.fooComponent != null).to.equal(true);
-  expect(window.barComponent != null).to.equal(true);
+  assert.equal(window.fooComponent != null, true);
+  assert.equal(window.barComponent != null, true);
 
-  expect(window.fooComponent.id).to.be.a("string");
-  expect(window.barComponent.id).to.be.a("string");
+  assert.equal(typeof window.fooComponent.id, "string");
+  assert.equal(typeof window.barComponent.id, "string");
 });

@@ -1,9 +1,14 @@
+const assert = require("assert/strict");
+
 var nodePath = require("path");
 
-exports.check = function (taglibLoader, expect) {
+exports.check = function (taglibLoader) {
   var taglibPath = nodePath.join(__dirname, "marko.json");
 
-  expect(function () {
-    taglibLoader.loadTaglibFromFile(taglibPath);
-  }).to.throw(`Invalid option: INVALID ([${taglibPath} → <test-hello>])`);
+  assert.throws(
+    function () {
+      taglibLoader.loadTaglibFromFile(taglibPath);
+    },
+    (err) => err.message.includes(`Invalid option: INVALID ([${taglibPath} → <test-hello>])`),
+  );
 };

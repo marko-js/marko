@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 var appFooComponent = require("./components/app-foo").default;
 
 it("should generate a unique ID that is different for a UI component rendered on the server and browser", function () {
@@ -7,7 +7,7 @@ it("should generate a unique ID that is different for a UI component rendered on
     .renderSync({})
     .appendTo(document.body)
     .getComponent();
-  expect(browserFooComponent.id).to.be.a("string");
-  expect(serverFooComponent.id).to.be.a("string");
-  expect(serverFooComponent.id).to.not.equal(browserFooComponent.id);
+  assert.equal(typeof browserFooComponent.id, "string");
+  assert.equal(typeof serverFooComponent.id, "string");
+  assert.notEqual(serverFooComponent.id, browserFooComponent.id);
 });

@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   function renderComponent(rootTagName) {
@@ -11,6 +11,6 @@ module.exports = function (helpers) {
   var componentDiv = renderComponent("div");
   var componentSpan = renderComponent("span");
 
-  expect(componentDiv.el.nodeName).to.equal("DIV");
-  expect(componentSpan.el.nodeName).to.equal("SPAN");
+  assert.equal(componentDiv.el.nodeName, "DIV");
+  assert.equal(componentSpan.el.nodeName, "SPAN");
 };

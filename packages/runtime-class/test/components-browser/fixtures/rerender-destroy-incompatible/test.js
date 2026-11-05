@@ -1,22 +1,22 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index.marko"), {});
 
-  expect(component.el.innerHTML).to.contain("foo");
-  expect(component.el.innerHTML).to.not.contain("bar");
+  assert.match(component.el.innerHTML, /foo/);
+  assert.doesNotMatch(component.el.innerHTML, /bar/);
 
   var foo = component.getComponent("child");
-  expect(foo.isDestroyed()).to.equal(false);
+  assert.equal(foo.isDestroyed(), false);
 
   component.state.target = "bar";
   component.update();
 
-  expect(foo.isDestroyed()).to.equal(true);
+  assert.equal(foo.isDestroyed(), true);
 
   var bar = component.getComponent("child");
-  expect(bar.isDestroyed()).to.equal(false);
+  assert.equal(bar.isDestroyed(), false);
 
-  expect(component.el.innerHTML).to.not.contain("foo");
-  expect(component.el.innerHTML).to.contain("bar");
+  assert.doesNotMatch(component.el.innerHTML, /foo/);
+  assert.match(component.el.innerHTML, /bar/);
 };

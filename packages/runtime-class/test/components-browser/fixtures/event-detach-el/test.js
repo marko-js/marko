@@ -1,11 +1,11 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), {
     colors: ["red", "green", "blue"],
   });
 
-  expect(component.events.length).to.equal(0);
+  assert.equal(component.events.length, 0);
 
   component.input = {
     colors: ["red", "blue"],
@@ -13,9 +13,9 @@ module.exports = function (helpers) {
 
   component.update();
 
-  expect(component.events.length).to.equal(1);
-  expect(component.events[0].color).to.equal("green");
-  expect(component.events[0].node.innerHTML).to.contain("green");
+  assert.equal(component.events.length, 1);
+  assert.equal(component.events[0].color, "green");
+  assert.match(component.events[0].node.innerHTML, /green/);
 
   component.input = {
     colors: ["red"],
@@ -23,7 +23,7 @@ module.exports = function (helpers) {
 
   component.update();
 
-  expect(component.events.length).to.equal(2);
-  expect(component.events[1].color).to.equal("blue");
-  expect(component.events[1].node.innerHTML).to.contain("blue");
+  assert.equal(component.events.length, 2);
+  assert.equal(component.events[1].color, "blue");
+  assert.match(component.events[1].node.innerHTML, /blue/);
 };

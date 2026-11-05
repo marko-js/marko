@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 var iframeContentComponent = require("./components/app-iframe-content").default;
 
 module.exports = {
@@ -12,11 +12,9 @@ module.exports = {
 
   test: function (helpers) {
     var contentComponent = this.renderIntoIframe();
-    expect(contentComponent.el.ownerDocument).to.equal(
-      this.getEl("frame").contentWindow.document,
-    );
-    expect(contentComponent.getEl("input").value).to.equal("test");
-    expect(contentComponent.getComponent("more").getValue()).to.equal("hello");
+    assert.equal(contentComponent.el.ownerDocument, this.getEl("frame").contentWindow.document);
+    assert.equal(contentComponent.getEl("input").value, "test");
+    assert.equal(contentComponent.getComponent("more").getValue(), "hello");
 
     var buttonClick = false;
 
@@ -26,6 +24,6 @@ module.exports = {
 
     helpers.triggerMouseEvent(contentComponent.getEl("button"), "click");
 
-    expect(buttonClick).to.equal(true);
+    assert.equal(buttonClick, true);
   },
 };

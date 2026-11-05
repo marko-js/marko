@@ -1,18 +1,20 @@
+const assert = require("assert/strict");
+
 var nodePath = require("path");
 
-exports.check = function (taglibLoader, expect) {
+exports.check = function (taglibLoader) {
   var taglib = taglibLoader.loadTaglibFromFile(
     nodePath.join(__dirname, "marko.json"),
   );
 
-  expect(taglib != null).to.equal(true);
+  assert.equal(taglib != null, true);
 
   var tagNames = Object.keys(taglib.tags).sort();
 
   // Tags directly in `tags/`, in tag directories, and grouped one level
   // deep beneath a non-tag directory should all be discovered. Only a
   // *leading* dot is ignored, so a name like `legacy.v1` is still crawled.
-  expect(tagNames).to.eql([
+  assert.deepEqual(tagNames, [
     "icon-chevron",
     "icon-plus",
     "my-button",
@@ -22,27 +24,25 @@ exports.check = function (taglibLoader, expect) {
   ]);
 
   // Grouping directories themselves are not tags.
-  expect(taglib.tags).to.not.have.property("icons");
+  assert.ok(!("icons" in taglib.tags));
 
   // Discovery stops at directories that are themselves tags, so files
   // nested inside a tag directory are never picked up.
-  expect(taglib.tags).to.not.have.property("example-usage");
-  expect(taglib.tags).to.not.have.property("ignored");
+  assert.ok(!("example-usage" in taglib.tags));
+  assert.ok(!("ignored" in taglib.tags));
 
   // Grouping only goes one level deep, so a directory nested inside a
   // group is not crawled.
-  expect(taglib.tags).to.not.have.property("deep-icon");
+  assert.ok(!("deep-icon" in taglib.tags));
 
   // `tags` and `components` folders are never crawled; they stay private to
   // their location (resolved via the finder's directory walk-up instead).
-  expect(taglib.tags).to.not.have.property("private-global");
-  expect(taglib.tags).to.not.have.property("private-comp");
+  assert.ok(!("private-global" in taglib.tags));
+  assert.ok(!("private-comp" in taglib.tags));
 
   // Dot-directories are skipped.
-  expect(taglib.tags).to.not.have.property("hidden-thing");
+  assert.ok(!("hidden-thing" in taglib.tags));
 
   // The grouped tag resolves to the correct template path.
-  expect(taglib.tags["icon-chevron"].template).to.equal(
-    nodePath.join(__dirname, "tags/icons/icon-chevron.marko"),
-  );
+  assert.equal(taglib.tags["icon-chevron"].template, nodePath.join(__dirname, "tags/icons/icon-chevron.marko"));
 };

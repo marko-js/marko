@@ -1,12 +1,12 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index.marko"), {
     name: "Frank",
   });
 
-  expect(component.el.querySelector(".render-count").innerHTML).to.equal("0");
-  expect(component.el.querySelector(".name").innerHTML).to.equal("Frank");
+  assert.equal(component.el.querySelector(".render-count").innerHTML, "0");
+  assert.equal(component.el.querySelector(".name").innerHTML, "Frank");
 
   // Rerender with a new props object that has the shallow properties
   component.input = {
@@ -15,8 +15,8 @@ module.exports = function (helpers) {
 
   component.update();
 
-  expect(component.el.querySelector(".render-count").innerHTML).to.equal("0");
-  expect(component.el.querySelector(".name").innerHTML).to.equal("Frank");
+  assert.equal(component.el.querySelector(".render-count").innerHTML, "0");
+  assert.equal(component.el.querySelector(".name").innerHTML, "Frank");
 
   // Rerender with a new props object that has the shallow properties
   component.input = {
@@ -25,6 +25,6 @@ module.exports = function (helpers) {
 
   component.update();
 
-  expect(component.el.querySelector(".render-count").innerHTML).to.equal("1");
-  expect(component.el.querySelector(".name").innerHTML).to.equal("John");
+  assert.equal(component.el.querySelector(".render-count").innerHTML, "1");
+  assert.equal(component.el.querySelector(".name").innerHTML, "John");
 };

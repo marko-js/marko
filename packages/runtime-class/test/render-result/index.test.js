@@ -2,9 +2,7 @@
 
 require("../__util__/test-init");
 
-var chai = require("chai");
-chai.config.includeStack = true;
-var expect = chai.expect;
+var assert = require("assert/strict");
 
 var AsyncStream = require("marko/src/runtime/html/AsyncStream");
 var RenderResult = require("marko/src/runtime/RenderResult");
@@ -18,39 +16,39 @@ function rendered(html) {
 describe("RenderResult", function () {
   it("reads the output through the out it wraps", function () {
     var result = rendered("<p>hi</p>");
-    expect(result.toString()).to.equal("<p>hi</p>");
-    expect(result.getOutput()).to.equal("<p>hi</p>");
+    assert.equal(result.toString(), "<p>hi</p>");
+    assert.equal(result.getOutput(), "<p>hi</p>");
   });
 
   it("refuses to list components before it is inserted", function () {
-    expect(function () {
+    assert.throws(function () {
       rendered().getComponents();
-    }).to.throw("Not added to DOM");
+    }, /Not added to DOM/);
   });
 
   it("reports no component once inserted without one", function () {
     var result = rendered("<p>hi</p>").afterInsert();
-    expect(result.___components).to.equal(null);
-    expect(function () {
+    assert.equal(result.___components, null);
+    assert.throws(function () {
       result.getComponents();
-    }).to.throw("No component");
+    }, /No component/);
   });
 
   it("returns itself from afterInsert so it can be chained", function () {
     var result = rendered();
-    expect(result.afterInsert()).to.equal(result);
+    assert.equal(result.afterInsert(), result);
   });
 
   describe("deprecated accessors", function () {
     // `complain` prints once per call site, so both getters are read here.
     it("html returns the same string toString does", function () {
       var result = rendered("<p>hi</p>");
-      expect(result.html).to.equal(result.toString());
+      assert.equal(result.html, result.toString());
     });
 
     it("context returns the out", function () {
       var result = rendered();
-      expect(result.context).to.equal(result.out);
+      assert.equal(result.context, result.out);
     });
   });
 });

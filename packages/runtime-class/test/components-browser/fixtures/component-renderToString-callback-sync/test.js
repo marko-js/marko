@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers, done) {
   var component = helpers.mount(require.resolve("./index"), {
@@ -6,7 +6,7 @@ module.exports = function (helpers, done) {
   });
 
   component.on("html", function (renderedHtml) {
-    expect(renderedHtml).to.equal("<div>[async] john</div>");
+    assert.equal(renderedHtml, "<div>[async] john</div>");
     done();
   });
 

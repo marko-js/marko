@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), {
@@ -12,5 +12,5 @@ module.exports = function (helpers) {
   };
   component.update();
 
-  expect(component.getEl("root")).to.equal(rootEl);
+  assert.equal(component.getEl("root"), rootEl);
 };

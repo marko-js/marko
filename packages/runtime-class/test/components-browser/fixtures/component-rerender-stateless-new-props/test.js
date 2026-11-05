@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var targetEl = helpers.targetEl;
@@ -8,9 +8,7 @@ module.exports = function (helpers) {
     messageCount: 10,
   });
 
-  expect(targetEl.innerHTML).to.contain(
-    "Hello Frank! You have 10 new messages.",
-  );
+  assert.match(targetEl.innerHTML, /Hello Frank! You have 10 new messages\./);
 
   component.input = {
     name: "John",
@@ -19,22 +17,16 @@ module.exports = function (helpers) {
 
   component.update();
 
-  expect(targetEl.innerHTML).to.contain(
-    "Hello John! You have 20 new messages.",
-  );
+  assert.match(targetEl.innerHTML, /Hello John! You have 20 new messages\./);
 
   component.input = {
     name: "Jane",
     messageCount: 30,
   };
 
-  expect(targetEl.innerHTML).to.contain(
-    "Hello John! You have 20 new messages.",
-  );
+  assert.match(targetEl.innerHTML, /Hello John! You have 20 new messages\./);
 
   component.update();
 
-  expect(targetEl.innerHTML).to.contain(
-    "Hello Jane! You have 30 new messages.",
-  );
+  assert.match(targetEl.innerHTML, /Hello Jane! You have 30 new messages\./);
 };

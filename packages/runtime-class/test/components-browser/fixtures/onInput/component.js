@@ -1,16 +1,16 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = {
   onInput: function (input) {
-    expect(input.name).to.eql("Frank");
+    assert.deepEqual(input.name, "Frank");
     this.state = { count: 0 };
     this.setUpTest();
   },
 
   onMount: function () {
-    expect(this.state.count).to.eql(0);
-    expect(this.foo).to.eql("bar");
-    expect(this.array).to.eql([1, 2, 3]);
+    assert.deepEqual(this.state.count, 0);
+    assert.deepEqual(this.foo, "bar");
+    assert.deepEqual(this.array, [1, 2, 3]);
     this.onMountCalled = true;
   },
 

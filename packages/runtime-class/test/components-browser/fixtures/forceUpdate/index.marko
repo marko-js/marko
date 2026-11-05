@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import assert from 'assert/strict';
 
 static var counter = 0;
 
@@ -6,10 +6,10 @@ class {
     test(done) {
         var el = this.el;
 
-        expect(el.innerHTML).to.equal('0');
+        assert.equal(el.innerHTML, '0');
 
         this.onUpdate = function() {
-            expect(el.innerHTML).to.equal('1');
+            assert.equal(el.innerHTML, '1');
             done();
         }
 

@@ -1,24 +1,24 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), {});
 
-  expect(component.helloReceived).to.equal(false);
-  expect(component.goodByeReceived).to.equal(false);
+  assert.equal(component.helloReceived, false);
+  assert.equal(component.goodByeReceived, false);
 
   helpers.targetEl.querySelector("button").click();
 
-  expect(component.helloReceived).to.equal(true);
-  expect(component.goodByeReceived).to.equal(false);
+  assert.equal(component.helloReceived, true);
+  assert.equal(component.goodByeReceived, false);
 
   component.toggle();
   component.update();
 
-  expect(component.helloReceived).to.equal(true);
-  expect(component.goodByeReceived).to.equal(false);
+  assert.equal(component.helloReceived, true);
+  assert.equal(component.goodByeReceived, false);
 
   helpers.targetEl.querySelector("button").click();
 
-  expect(component.helloReceived).to.equal(true);
-  expect(component.goodByeReceived).to.equal(true);
+  assert.equal(component.helloReceived, true);
+  assert.equal(component.goodByeReceived, true);
 };

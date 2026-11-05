@@ -1,21 +1,21 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), {
     name: "Frank",
   });
-  expect(component.el.querySelector(".name").innerHTML).to.equal("Frank");
-  expect(component.onInputCalls).to.deep.equal([
+  assert.equal(component.el.querySelector(".name").innerHTML, "Frank");
+  assert.deepEqual(component.onInputCalls, [
     {
       name: "INITIAL",
     },
   ]);
-  expect(component.name).to.equal("Frank");
+  assert.equal(component.name, "Frank");
 
   component.input = { name: "John" };
   component.update();
 
-  expect(component.onInputCalls).to.deep.equal([
+  assert.deepEqual(component.onInputCalls, [
     {
       name: "INITIAL",
     },
@@ -24,6 +24,6 @@ module.exports = function (helpers) {
     },
   ]);
 
-  expect(component.el.querySelector(".name").innerHTML).to.equal("John");
-  expect(component.name).to.equal("John");
+  assert.equal(component.el.querySelector(".name").innerHTML, "John");
+  assert.equal(component.name, "John");
 };

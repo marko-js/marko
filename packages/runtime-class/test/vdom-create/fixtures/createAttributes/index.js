@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var attributes = {
@@ -19,7 +19,7 @@ module.exports = function (helpers) {
     .t("eBay")
     .e("footer", null, null /* key */, null /* component */, 0);
 
-  expect(el.___firstChild.___firstChild.___attributes.id).to.equal("link");
+  assert.equal(el.___firstChild.___firstChild.___attributes.id, "link");
 
   return el;
 };

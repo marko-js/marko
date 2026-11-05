@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var counter = 0;
@@ -7,5 +7,5 @@ module.exports = function (helpers) {
     counter: counter,
   });
 
-  expect(component.getEl("list").textContent).to.equal("123");
+  assert.equal(component.getEl("list").textContent, "123");
 };

@@ -1,4 +1,4 @@
-const expect = require("chai").expect;
+const assert = require("assert/strict");
 
 module.exports = function (helpers) {
   function check(tag, isFirst) {
@@ -8,9 +8,7 @@ module.exports = function (helpers) {
     }
     const openTag = tag ? `<${tag}>` : "";
     const closeTag = tag ? `</${tag}>` : "";
-    expect(helpers.targetEl.innerHTML).to.contain(
-      `<div>${openTag}${innerHTML}${closeTag}</div>`,
-    );
+    assert.ok(helpers.targetEl.innerHTML.includes(`<div>${openTag}${innerHTML}${closeTag}</div>`));
   }
 
   const component = helpers.mount(require.resolve("./index"), {

@@ -1,10 +1,10 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), {});
-  expect(helpers.targetEl.querySelector(".hello") != null).to.equal(true);
+  assert.equal(helpers.targetEl.querySelector(".hello") != null, true);
   component.destroy();
-  expect(helpers.targetEl.querySelector(".hello") == null).to.equal(true);
+  assert.equal(helpers.targetEl.querySelector(".hello") == null, true);
 };
 
 module.exports.skip_hydrate = "Implicit components do not get hydrated";

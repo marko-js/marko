@@ -1,8 +1,8 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 it("should allow fixed IDs for components", function () {
   var component = window.appFixedId;
-  expect(document.getElementById("appFixedId") != null).to.equal(true);
+  assert.equal(document.getElementById("appFixedId") != null, true);
   component.testGetComponent();
   component.testGetEl();
 });
