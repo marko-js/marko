@@ -36,6 +36,8 @@ export default {
     for (const attr of node.attributes) {
       (attr.value.extra ??= {}).consumed = true;
     }
+    // The tag, and so `onUpdate`, re-runs for what any attribute reads,
+    // inside the hooks and the functions they create included.
     const tagExtra = mergeTagReferences(section, tag.node);
     tagExtra.isEffect = true;
     // `_lifecycle` registers cleanup via `$signal` at runtime, so the scope
