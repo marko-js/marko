@@ -28,7 +28,7 @@ var template_default = _template("a", (input) => {
 			const $scope1_id = _scope_id();
 			const $childScope = _peek_scope_id();
 			child_default({ x: item });
-			_html(`<p>${_text_resume($scope1_id, "b", item, $wg__item)}</p>`);
+			_html(`<p>${_text_mark($scope1_id, "b", item, $wg__item)}</p>`);
 			_write_if($scope1_reason, 0) && _scope($scope1_id, { a: _existing_scope($childScope) });
 		}, $scope0_id) });
 	});

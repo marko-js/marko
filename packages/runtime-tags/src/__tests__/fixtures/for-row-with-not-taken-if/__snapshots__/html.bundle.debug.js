@@ -3,10 +3,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let items = [1, 2];
-	_html(`<button>drop</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button>drop</button>${_el_mark($scope0_id, "#button/0")}`);
 	_for_of(items, (i) => {
 		const $scope1_id = _scope_id();
-		_html(`<div>item ${_text_resume($scope1_id, "#text/0", i, 2)}</div>`);
+		_html(`<div>item ${_text_mark($scope1_id, "#text/0", i, 2)}</div>`);
 		_if(() => {
 			if (i > 9) {
 				const $scope2_id = _scope_id();

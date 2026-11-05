@@ -20,7 +20,7 @@
 ```
 INSERT: .inc
 INSERT: .inc::text("0")
-INSERT: span
+INSERT: .inc + span
 INSERT: span::text("shown")
 INSERT: span + .hide
 INSERT: .hide::text("hide")

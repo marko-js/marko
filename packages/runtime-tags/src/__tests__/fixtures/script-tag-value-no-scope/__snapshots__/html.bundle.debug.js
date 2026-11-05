@@ -8,7 +8,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}
 		((el) => el())(_el_read_error).textContent = typeof arg;
 	}, "__tests__/template.marko_0/setText", $scope0_id);
-	_html(`<div></div>${_el_resume($scope0_id, "#div/0")}`);
+	_html(`<div></div>${_el_mark($scope0_id, "#div/0")}`);
 	_script($scope0_id, "__tests__/template.marko_0_setText#1");
 	_scope($scope0_id, { setText }, "__tests__/template.marko", 0, { setText: "2:8" });
 }, 1);

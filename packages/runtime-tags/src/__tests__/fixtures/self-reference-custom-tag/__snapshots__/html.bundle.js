@@ -6,7 +6,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		const $el = _el($scope1_id, "a1");
 		_scope_reason();
-		_html(`<button></button>${_el_resume($scope1_id, "a")}`);
+		_html(`<button></button>${_el_mark($scope1_id, "a")}`);
 		const $return = $el;
 		_script($scope1_id, "a3");
 		_scope($scope1_id, { d: input.onClick });

@@ -50,7 +50,7 @@ import {
   getScopeAccessor,
   getScopeAccessorLiteral,
   getScopeOffsetAccessorLiteral,
-  getSectionInstancesAccessorLiteral,
+  getSectionScopesAccessorLiteral,
   getSlotAccessor,
 } from "./scope-accessor";
 import {
@@ -124,11 +124,6 @@ type closureSignalBuilder = (
   closure: Binding,
   render: t.Expression,
 ) => t.Expression;
-// Structured facts about a branch section's closure hop: what kind of
-// branch it is and which node binding (plus branch index) addresses it.
-export type ClosureHop =
-  | { kind: "if"; nodeBinding: Binding; index: number }
-  | { kind: "for"; nodeBinding: Binding };
 export const [getSignals] = createOutputSectionState<Map<unknown, Signal>>(
   () => new Map(),
 );
@@ -136,17 +131,26 @@ const [getClosureSignalBuilder, _setClosureSignalBuilder] =
   createOutputSectionState<closureSignalBuilder | undefined>();
 export function setClosureSignalBuilder(
   tag: t.NodePath<t.MarkoTag>,
-  hop: ClosureHop,
-  build: closureSignalBuilder = (_closure, render) =>
-    buildClosureHop(hop, render),
+  build?: closureSignalBuilder,
 ) {
-  _setClosureSignalBuilder(getSectionForBody(tag.get("body"))!, build);
+  const section = getSectionForBody(tag.get("body"))!;
+  _setClosureSignalBuilder(
+    section,
+    build || ((_closure, render) => buildClosureHop(section, render)),
+  );
 }
 
-export function buildClosureHop(hop: ClosureHop, render: t.Expression) {
-  const accessor = getScopeAccessorLiteral(hop.nodeBinding, true);
-  return hop.kind === "if"
-    ? callRuntime("_if_closure", accessor, t.numericLiteral(hop.index), render)
+// The hop from a branch of an `<if>` or `<for>` to the scope its closure is in.
+export function buildClosureHop(section: Section, render: t.Expression) {
+  const branch = section.branch!;
+  const accessor = getScopeAccessorLiteral(branch.tag.nodeBinding, true);
+  return branch.kind === "if"
+    ? callRuntime(
+        "_if_closure",
+        accessor,
+        t.numericLiteral(branch.index),
+        render,
+      )
     : callRuntime("_for_closure", accessor, render);
 }
 
@@ -406,7 +410,7 @@ export function getSignal(
           // section would ship a subscribe id that nothing looks up.
           isChangeableDynamicClosure(section, closure)
             ? t.stringLiteral(
-                getResumeRegisterId(section, closure, "subscribe"),
+                getResumeRegistryId(section, closure, "subscribe"),
               )
             : undefined,
         );
@@ -786,7 +790,7 @@ function isOwnValueRead(node: t.Node, binding: Binding) {
     !!read &&
     !extra!.assignment &&
     read.binding === binding &&
-    read.props === undefined &&
+    read.properties === undefined &&
     !read.getter?.invoked
   );
 }
@@ -937,7 +941,7 @@ function buildResumeRegisterKey(
   return `${section.id}${name}${type ? "/" + type : ""}`;
 }
 
-export function getResumeRegisterId(
+export function getResumeRegistryId(
   section: Section,
   referencedBindings: string | ReferencedBindings,
   type?: string,
@@ -983,7 +987,7 @@ export function writeSignals(section: Section) {
         callRuntime(
           "_script",
           t.stringLiteral(
-            getResumeRegisterId(section, signal.referencedBindings),
+            getResumeRegistryId(section, signal.referencedBindings),
           ),
           effectFn,
         ),
@@ -1018,7 +1022,7 @@ export function writeSignals(section: Section) {
         value = callRuntime(
           "_var_resume",
           t.stringLiteral(
-            getResumeRegisterId(section, signal.referencedBindings, "var"),
+            getResumeRegistryId(section, signal.referencedBindings, "var"),
           ),
           value,
         );
@@ -1091,14 +1095,14 @@ function writeGetters(section: Section) {
                 ? callRuntime(
                     "_hoist_resume",
                     t.stringLiteral(
-                      getResumeRegisterId(hoistSection, binding, "hoist"),
+                      getResumeRegistryId(hoistSection, binding, "hoist"),
                     ),
                     ...accessors,
                   )
                 : callRuntime("_hoist", ...accessors)
               : callRuntime(
                   "_el",
-                  t.stringLiteral(getResumeRegisterId(section, binding)),
+                  t.stringLiteral(getResumeRegistryId(section, binding)),
                   ...accessors,
                 ),
           ),
@@ -1109,17 +1113,16 @@ function writeGetters(section: Section) {
 }
 
 function pushInstancesAccessor(section: Section, accessors: t.Expression[]) {
-  const instancesAccessor = getSectionInstancesAccessorLiteral(section);
+  const instancesAccessor = getSectionScopesAccessorLiteral(section);
   const { branch } = section;
   // The branches of an `<if>` chain share one slot, so the read checks which renders.
   accessors.push(
-    branch?.index !== undefined &&
-      Array.isArray(branch.nodeBinding.branchBodies)
+    branch?.kind === "if" && Array.isArray(branch.tag.nodeBinding.branchBodies)
       ? t.arrayExpression([
           instancesAccessor,
           t.stringLiteral(
             getAccessorPrefix().ConditionalRenderer +
-              getScopeAccessor(branch.nodeBinding),
+              getScopeAccessor(branch.tag.nodeBinding),
           ),
           t.numericLiteral(branch.index),
         ])
@@ -1137,7 +1140,7 @@ export function writeRegisteredFns() {
       let prologue: t.Statement[] | undefined;
       if (registeredFn.referencedLocals) {
         // The scope hop stays inside the returned function: resume may call
-        // the factory before its scopes hydrate (stubs fill in place).
+        // the factory before its scopes resume (stubs fill in place).
         params = [localsIdentifier];
         if (registeredFn.referencesScope) {
           prologue = [
@@ -1193,7 +1196,7 @@ export function writeRegisteredFns() {
     statements.push(
       t.expressionStatement(
         registerRuntimeValue(
-          registeredFn.registerId,
+          registeredFn.registryId,
           t.identifier(registeredFn.id),
         ),
       ),
@@ -1289,7 +1292,7 @@ export function writeHTMLResumeStatements(
             const resumeId =
               changeable &&
               t.stringLiteral(
-                getResumeRegisterId(section, closure, "subscribe"),
+                getResumeRegistryId(section, closure, "subscribe"),
               );
             return callRuntime(
               "_subscribe",
@@ -1314,7 +1317,7 @@ export function writeHTMLResumeStatements(
           callRuntime(
             "_script",
             scopeIdIdentifier,
-            t.stringLiteral(getResumeRegisterId(section, signalRefs)),
+            t.stringLiteral(getResumeRegistryId(section, signalRefs)),
             markerGuard,
           ),
         ),
@@ -1708,7 +1711,7 @@ function getBuildAssignment(extra: AssignedBindingExtra) {
 const [getRegisteredFns] = createOutputState<
   {
     id: string;
-    registerId: string;
+    registryId: string;
     node: t.Function;
     section: Section;
     referencesScope: undefined | boolean;
@@ -1747,7 +1750,7 @@ function registerFnExpression(node: t.Function) {
     getRegisteredFns().push({
       id,
       node,
-      registerId: extra.registerId,
+      registryId: extra.registryId,
       section: extra.section,
       referencesScope,
       referencedLocals,

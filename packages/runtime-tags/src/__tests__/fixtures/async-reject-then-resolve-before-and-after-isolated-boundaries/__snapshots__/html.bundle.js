@@ -31,7 +31,7 @@ var template_default = _template("a", (input) => {
 		const $scope7_id = _scope_id();
 		_await($scope7_id, "a", resolveAfter("C Value", 2), (v) => {
 			const $scope9_id = _scope_id();
-			_html(`<div>Resolved C: ${_escape(v)}</div><button>Before</button>${_el_resume($scope9_id, "b")}`);
+			_html(`<div>Resolved C: ${_escape(v)}</div><button>Before</button>${_el_mark($scope9_id, "b")}`);
 			_script($scope9_id, "a2");
 			_scope($scope9_id, {});
 		});

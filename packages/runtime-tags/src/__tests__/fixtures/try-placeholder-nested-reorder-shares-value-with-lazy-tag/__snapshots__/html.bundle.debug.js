@@ -3,7 +3,7 @@ var child_default = _template("__tests__/child.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 0;
-	_html(`<button class=child>${_text_resume($scope0_id, "#text/1", count)}</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button class=child>${_text_mark($scope0_id, "#text/1", count)}</button>${_el_mark($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/child.marko_0");
 	_scope($scope0_id, {
 		input_shared: input.shared,
@@ -44,7 +44,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 						const shared = { n: 1 };
 						$Child_withLoadAssets({ shared });
 						let count = 0;
-						_html(`<button class=placeholder>${_text_resume($scope8_id, "#text/3", count)}</button>${_el_resume($scope8_id, "#button/2")}`);
+						_html(`<button class=placeholder>${_text_mark($scope8_id, "#text/3", count)}</button>${_el_mark($scope8_id, "#button/2")}`);
 						_script($scope8_id, "__tests__/template.marko_8");
 						_scope($scope8_id, {
 							shared,

@@ -5,7 +5,7 @@ var tags_child_default = _template("c", (input) => {
 	const $scope0_id = _scope_id();
 	let n = 0;
 	const doubled = 0;
-	_html(`<button>${_text_resume($scope0_id, "b", input.value + ":0")}</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button>${_text_mark($scope0_id, "b", input.value + ":0")}</button>${_el_mark($scope0_id, "a")}`);
 	_script($scope0_id, "c0");
 	_scope($scope0_id, {
 		e: input.value,
@@ -31,7 +31,7 @@ var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let y = 1;
-	_html(`<button></button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button></button>${_el_mark($scope0_id, "a")}`);
 	_dynamic_tag($scope0_id, "b", _marko_template, { value: y });
 	_script($scope0_id, "a0");
 	_scope($scope0_id, { c: y });

@@ -5,7 +5,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const Foo = { content: _content("__tests__/template.marko_1*content", (a, b) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $wg__a = _write_guard($scope1_reason, 0);
-		_html(`<span>${_text_resume($scope1_id, "#text/0", a, $wg__a)}</span>`);
+		_html(`<span>${_text_mark($scope1_id, "#text/0", a, $wg__a)}</span>`);
 		_write_if($scope1_reason, 0) && _scope($scope1_id, {}, "__tests__/template.marko", "1:2");
 	}, $scope0_id) };
 	_set_scope_reason($wg__input_a << 1);

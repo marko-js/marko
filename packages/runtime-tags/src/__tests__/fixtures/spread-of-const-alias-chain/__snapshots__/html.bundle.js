@@ -5,7 +5,7 @@ var template_default = _template("a", (input) => {
 	const o = input.attrs;
 	_html("<div");
 	_attrs_content(o, "a", $scope0_id, "div");
-	_html(`</div>${_el_resume($scope0_id, "a")}`);
+	_html(`</div>${_el_mark($scope0_id, "a")}`);
 	_script($scope0_id, "a0");
 	_scope($scope0_id, {});
 }, 1);

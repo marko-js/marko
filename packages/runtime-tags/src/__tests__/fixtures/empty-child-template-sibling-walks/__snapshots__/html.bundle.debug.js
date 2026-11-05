@@ -34,21 +34,21 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html("<div>");
 	const $childScope = _peek_scope_id();
 	effect_only_default({ n });
-	_html(`</div><span>${_text_resume($scope0_id, "#text/1", n)}</span><p>`);
+	_html(`</div><span>${_text_mark($scope0_id, "#text/1", n)}</span><p>`);
 	text_end_default({});
 	const $childScope2 = _peek_scope_id();
 	effect_only_default({ n });
-	_html(` more <span>${_text_resume($scope0_id, "#text/4", n)}</span><i>${_text_resume($scope0_id, "#text/5", n)}</i></p><p>lead `);
+	_html(` more <span>${_text_mark($scope0_id, "#text/4", n)}</span><i>${_text_mark($scope0_id, "#text/5", n)}</i></p><p>lead `);
 	const $childScope3 = _peek_scope_id();
 	effect_only_default({ n });
 	text_start_default({});
-	_html(`<span>${_text_resume($scope0_id, "#text/8", n)}</span><i>${_text_resume($scope0_id, "#text/9", n)}</i></p><p>lead `);
+	_html(`<span>${_text_mark($scope0_id, "#text/8", n)}</span><i>${_text_mark($scope0_id, "#text/9", n)}</i></p><p>lead `);
 	const $childScope4 = _peek_scope_id();
 	effect_only_default({ n });
-	_html(` more <span>${_text_resume($scope0_id, "#text/11", n)}</span><i>${_text_resume($scope0_id, "#text/12", n)}</i></p><p>lead `);
+	_html(` more <span>${_text_mark($scope0_id, "#text/11", n)}</span><i>${_text_mark($scope0_id, "#text/12", n)}</i></p><p>lead `);
 	const $childScope5 = _peek_scope_id();
 	Foo.content({ n });
-	_html(` more <span>${_text_resume($scope0_id, "#text/14", n)}</span><i>${_text_resume($scope0_id, "#text/15", n)}</i></p><button></button>${_el_resume($scope0_id, "#button/16")}`);
+	_html(` more <span>${_text_mark($scope0_id, "#text/14", n)}</span><i>${_text_mark($scope0_id, "#text/15", n)}</i></p><button></button>${_el_mark($scope0_id, "#button/16")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		n,

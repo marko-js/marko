@@ -36,7 +36,7 @@ export function getSlotAccessor(slot: PlaceSlot) {
       return getAccessorProp().Owner;
     case SlotKind.ReturnChangeHandler:
       return getAccessorProp().TagVariableChange;
-    case SlotKind.Instances:
+    case SlotKind.Scopes:
       return getSectionInstancesAccessor(slot.owner);
   }
 }
@@ -164,10 +164,10 @@ function getSectionInstancesAccessor(section: Section) {
   // would be a byte shorter, but hoists are too rare for that to pay.
   return isOptionalBranch(section)
     ? getAccessorPrefix().BranchScopes +
-        getScopeAccessor(section.branch.nodeBinding)
+        getScopeAccessor(section.branch.tag.nodeBinding)
     : getAccessorPrefix().ClosureScopes + section.id;
 }
 
-export function getSectionInstancesAccessorLiteral(section: Section) {
+export function getSectionScopesAccessorLiteral(section: Section) {
   return t.stringLiteral(getSectionInstancesAccessor(section));
 }

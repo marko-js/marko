@@ -14,7 +14,7 @@ var tags_child_default = _template("b", (input) => {
 	const $childScope = _peek_scope_id();
 	let v = tags_return_default({ x: input.x });
 	$wi__input_x && _var($scope0_id, "b", $childScope, "b0");
-	_html(`<p>${_text_resume($scope0_id, "c", v, $wg__input_x)}</p>`);
+	_html(`<p>${_text_mark($scope0_id, "c", v, $wg__input_x)}</p>`);
 	$wi__input_x && _scope($scope0_id, { a: _existing_scope($childScope) });
 });
 

@@ -18,7 +18,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope1_id, {}, "__tests__/template.marko", "4:4");
 		}, (v) => v, $scope0_id, "#select/0", 1, 1, 1, "</select>", 1);
 	});
-	_html(`<span>sel:${_text_resume($scope0_id, "#text/1", selected.join(","), 2)}</span><button>Add</button>${_el_resume($scope0_id, "#button/2")}`);
+	_html(`<span>sel:${_text_mark($scope0_id, "#text/1", selected.join(","), 2)}</span><button>Add</button>${_el_mark($scope0_id, "#button/2")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, { options }, "__tests__/template.marko", 0, {
 		options: "1:6",

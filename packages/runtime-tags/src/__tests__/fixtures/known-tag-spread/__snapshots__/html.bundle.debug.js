@@ -2,7 +2,7 @@
 var child_a_default = _template("__tests__/tags/child-a/index.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_a = _write_guard($scope0_reason, 1), $wg__input_b = _write_guard($scope0_reason, 2), $wg__input_c = _write_guard($scope0_reason, 3);
 	const $scope0_id = _scope_id();
-	_html(`<div>${_text_resume($scope0_id, "#text/0", input.a, $wg__input_a)} ${_text_resume($scope0_id, "#text/1", input.b, $wg__input_b * 2)} ${_text_resume($scope0_id, "#text/2", input.c, $wg__input_c * 2)}</div>`);
+	_html(`<div>${_text_mark($scope0_id, "#text/0", input.a, $wg__input_a)} ${_text_mark($scope0_id, "#text/1", input.b, $wg__input_b * 2)} ${_text_mark($scope0_id, "#text/2", input.c, $wg__input_c * 2)}</div>`);
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/child-a/index.marko", 0);
 });
 
@@ -10,7 +10,7 @@ var child_a_default = _template("__tests__/tags/child-a/index.marko", (input) =>
 var child_c_default = _template("__tests__/tags/child-c/index.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_a = _write_guard($scope0_reason, 1), $wg__input_b = _write_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
-	_html(`<div>${_text_resume($scope0_id, "#text/0", input.a, $wg__input_a)} ${_text_resume($scope0_id, "#text/1", input.b, $wg__input_b * 2)}</div>`);
+	_html(`<div>${_text_mark($scope0_id, "#text/0", input.a, $wg__input_a)} ${_text_mark($scope0_id, "#text/1", input.b, $wg__input_b * 2)}</div>`);
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/child-c/index.marko", 0);
 });
 
@@ -23,7 +23,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		c: 3
 	};
 	let n = 1;
-	_html(`<button>inc ${_text_resume($scope0_id, "#text/1", n, 2)}</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button>inc ${_text_mark($scope0_id, "#text/1", n, 2)}</button>${_el_mark($scope0_id, "#button/0")}`);
 	_set_scope_reason(170);
 	const $childScope = _peek_scope_id();
 	child_a_default({

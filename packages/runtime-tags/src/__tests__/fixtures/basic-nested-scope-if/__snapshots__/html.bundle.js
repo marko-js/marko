@@ -7,7 +7,7 @@ var template_default = _template("a", (input) => {
 	_if(() => {
 		{
 			const $scope1_id = _scope_id();
-			_html(`<button>${_text_resume($scope1_id, "b", clickCount)}</button>${_el_resume($scope1_id, "a")}`);
+			_html(`<button>${_text_mark($scope1_id, "b", clickCount)}</button>${_el_mark($scope1_id, "a")}`);
 			_script($scope1_id, "a0");
 			_scope($scope1_id, {});
 			return 0;

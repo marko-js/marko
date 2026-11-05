@@ -17,7 +17,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let outer = true;
 	let count = 0;
-	_html(`<div id=ref>init</div><button id=o>O</button>${_el_resume($scope0_id, "#button/0")}<button id=a>A</button>${_el_resume($scope0_id, "#button/1")}`);
+	_html(`<div id=ref>init</div><button id=o>O</button>${_el_mark($scope0_id, "#button/0")}<button id=a>A</button>${_el_mark($scope0_id, "#button/1")}`);
 	_if(() => {
 		if (outer) {
 			const $scope1_id = _scope_id();

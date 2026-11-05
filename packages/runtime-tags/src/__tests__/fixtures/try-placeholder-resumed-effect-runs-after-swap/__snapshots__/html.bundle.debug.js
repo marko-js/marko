@@ -7,7 +7,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_await($scope1_id, "#text/0", resolveAfter("a", 1), (a) => {
 			const $scope3_id = _scope_id();
-			_html(`<span>${_escape(a)}</span>${_el_resume($scope3_id, "#span/0")}`);
+			_html(`<span>${_escape(a)}</span>${_el_mark($scope3_id, "#span/0")}`);
 			_script($scope3_id, "__tests__/template.marko_3");
 			_scope($scope3_id, {}, "__tests__/template.marko", "5:4");
 		});

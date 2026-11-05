@@ -2,7 +2,7 @@
 var n2_default = _template("c", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_label = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html(`<div class=n2>${_text_resume($scope0_id, "a", input.label, $wg__input_label)}</div>`);
+	_html(`<div class=n2>${_text_mark($scope0_id, "a", input.label, $wg__input_label)}</div>`);
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
@@ -11,7 +11,7 @@ var n5_default = _template("f", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let n = 0;
-	_html(`<button class=n5>${_text_resume($scope0_id, "b", input.label, _write_guard($scope0_reason, 0))} ${_text_resume($scope0_id, "c", n, 2)}</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button class=n5>${_text_mark($scope0_id, "b", input.label, _write_guard($scope0_reason, 0))} ${_text_mark($scope0_id, "c", n, 2)}</button>${_el_mark($scope0_id, "a")}`);
 	_script($scope0_id, "f0");
 	_scope($scope0_id, { g: n });
 });
@@ -21,7 +21,7 @@ var n1_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let n = 0;
-	_html(`<button class=n1>${_text_resume($scope0_id, "b", input.label, _write_guard($scope0_reason, 0))} ${_text_resume($scope0_id, "c", n, 2)}</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button class=n1>${_text_mark($scope0_id, "b", input.label, _write_guard($scope0_reason, 0))} ${_text_mark($scope0_id, "c", n, 2)}</button>${_el_mark($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
 	_scope($scope0_id, { g: n });
 });
@@ -34,7 +34,7 @@ var template_default = _template("a", (input) => {
 	const $tag__closures = /* @__PURE__ */ new Set();
 	let clicks = 0;
 	let tag = n5_default;
-	_html(`<button>clicks ${_text_resume($scope0_id, "b", clicks, 2)}</button>${_el_resume($scope0_id, "a")}<button class=swap>swap</button>${_el_resume($scope0_id, "c")}`);
+	_html(`<button>clicks ${_text_mark($scope0_id, "b", clicks, 2)}</button>${_el_mark($scope0_id, "a")}<button class=swap>swap</button>${_el_mark($scope0_id, "c")}`);
 	_try($scope0_id, "d", () => {
 		_scope_reason();
 		const $scope2_id = _scope_id();

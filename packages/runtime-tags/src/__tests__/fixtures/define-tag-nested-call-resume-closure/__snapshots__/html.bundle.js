@@ -6,7 +6,7 @@ var template_default = _template("a", (input) => {
 	const E = { content: _content("a0", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
-		_html(`<span>${_text_resume($scope1_id, "a", input.x, $wg__input_x)}</span>`);
+		_html(`<span>${_text_mark($scope1_id, "a", input.x, $wg__input_x)}</span>`);
 		_subscribe($wi__input_x && $input_x__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a1", $wg__input_x);
 		$wg__input_x || _resume_branch($scope1_id);
 	}, $scope0_id) };
@@ -24,7 +24,7 @@ var template_default = _template("a", (input) => {
 		_scope($scope2_id, { _: _scope_with_id($scope0_id) });
 	}, $scope0_id) };
 	let on = false;
-	_html(`<button></button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button></button>${_el_mark($scope0_id, "a")}`);
 	_set_scope_reason(2);
 	const $childScope = _peek_scope_id();
 	D.content({ on });

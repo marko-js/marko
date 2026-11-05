@@ -9,7 +9,7 @@ var template_default = _template("a", (input) => {
 			bar = v;
 		}, "a0", $scope0_id)
 	};
-	_html(`<button>${_escape(value)}:${_text_resume($scope0_id, "c", bar, 2)}</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button>${_escape(value)}:${_text_mark($scope0_id, "c", bar, 2)}</button>${_el_mark($scope0_id, "a")}`);
 	_script($scope0_id, "a1");
 	_scope($scope0_id, {
 		d: bar,

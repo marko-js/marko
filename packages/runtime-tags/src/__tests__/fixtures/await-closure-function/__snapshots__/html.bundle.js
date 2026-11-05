@@ -9,7 +9,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		_await($scope1_id, "a", resolveAfter(0, 4), () => {
 			const $scope2_id = _scope_id();
-			_html(_text_resume($scope2_id, "a", value));
+			_html(_text_mark($scope2_id, "a", value));
 			_script($scope2_id, "a0");
 			_subscribe($value__closures, _scope($scope2_id, {}), "a1");
 		});

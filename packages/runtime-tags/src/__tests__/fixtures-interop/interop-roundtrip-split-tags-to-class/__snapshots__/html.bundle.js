@@ -24,6 +24,6 @@ var template_default = _template("a", (input) => {
 			count++;
 		}, "a0", $scope0_id)
 	});
-	_html(`<div id=tags-api>${_text_resume($scope0_id, "b", count)}</div>`);
+	_html(`<div id=tags-api>${_text_mark($scope0_id, "b", count)}</div>`);
 	_scope($scope0_id, { c: count });
 }, 1);

@@ -12,7 +12,7 @@ var child_default = _template("b", (input) => {
 			count = value;
 		}, "b1", $scope0_id)
 	};
-	_html(`<span>child:${_text_resume($scope0_id, "a", count, 2)}</span>`);
+	_html(`<span>child:${_text_mark($scope0_id, "a", count, 2)}</span>`);
 	_scope($scope0_id, { b: count });
 	return $return;
 });
@@ -25,7 +25,7 @@ var template_default = _template("a", (input) => {
 	let { countChange: $countChange, count, inc, missing: $missing } = child_default({});
 	_var($scope0_id, "b", $childScope, "a0");
 	const missing = void 0 !== $missing ? $missing : "fallback";
-	_html(`<button class=inc>inc</button>${_el_resume($scope0_id, "c")}<button class=assign>assign</button>${_el_resume($scope0_id, "d")}<div>${_text_resume($scope0_id, "e", count)}:${_text_resume($scope0_id, "f", missing, 2)}</div>`);
+	_html(`<button class=inc>inc</button>${_el_mark($scope0_id, "c")}<button class=assign>assign</button>${_el_mark($scope0_id, "d")}<div>${_text_mark($scope0_id, "e", count)}:${_text_mark($scope0_id, "f", missing, 2)}</div>`);
 	_script($scope0_id, "a1");
 	_script($scope0_id, "a2");
 	_scope($scope0_id, {

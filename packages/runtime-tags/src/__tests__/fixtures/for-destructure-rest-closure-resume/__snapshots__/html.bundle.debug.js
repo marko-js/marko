@@ -3,13 +3,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_items = _write_guard($scope0_reason, 0), $wg__input_lists = _write_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	let show = true;
-	_html(`<button id=toggle>toggle</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button id=toggle>toggle</button>${_el_mark($scope0_id, "#button/0")}`);
 	_for_of(input.items, ({ id, ...rest }) => {
 		const $scope1_id = _scope_id();
 		_if(() => {
 			if (show) {
 				const $scope3_id = _scope_id();
-				_html(`<span>${_text_resume($scope3_id, "#text/0", id, $wg__input_items)}:${_text_resume($scope3_id, "#text/1", rest.extra, $wg__input_items * 2)}</span>`);
+				_html(`<span>${_text_mark($scope3_id, "#text/0", id, $wg__input_items)}:${_text_mark($scope3_id, "#text/1", rest.extra, $wg__input_items * 2)}</span>`);
 				_scope($scope3_id, {}, "__tests__/template.marko", "4:4");
 				return 0;
 			}
@@ -28,7 +28,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_if(() => {
 			if (show) {
 				const $scope4_id = _scope_id();
-				_html(`<b>${_text_resume($scope4_id, "#text/0", first, $wg__input_lists)}${_text_resume($scope4_id, "#text/1", others[0], $wg__input_lists * 2)}</b>`);
+				_html(`<b>${_text_mark($scope4_id, "#text/0", first, $wg__input_lists)}${_text_mark($scope4_id, "#text/1", others[0], $wg__input_lists * 2)}</b>`);
 				_scope($scope4_id, {}, "__tests__/template.marko", "7:4");
 				return 0;
 			}

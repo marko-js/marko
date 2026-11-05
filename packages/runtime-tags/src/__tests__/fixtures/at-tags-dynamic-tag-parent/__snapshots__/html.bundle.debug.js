@@ -4,11 +4,11 @@ var hello_default = _template("__tests__/tags/hello/index.marko", (input) => {
 	const $scope0_id = _scope_id();
 	_html(`<header${_attr_class(input.header.class)}>`);
 	_dynamic_tag($scope0_id, "#text/1", input.header.content, {}, 0, 0, $wg__input_header_content);
-	_html(`</header>${_el_resume($scope0_id, "#header/0", $wg__input_header_class)}<main>`);
+	_html(`</header>${_el_mark($scope0_id, "#header/0", $wg__input_header_class)}<main>`);
 	_dynamic_tag($scope0_id, "#text/2", input.content, {}, 0, 0, $wg__input_content);
 	_html(`</main><footer${_attr_class(input.footer.class)}>`);
 	_dynamic_tag($scope0_id, "#text/4", input.footer.content, {}, 0, 0, $wg__input_footer_content);
-	_html(`</footer>${_el_resume($scope0_id, "#footer/3", $wg__input_footer_class)}`);
+	_html(`</footer>${_el_mark($scope0_id, "#footer/3", $wg__input_footer_class)}`);
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/hello/index.marko", 0);
 });
 

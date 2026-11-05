@@ -2,7 +2,7 @@
 var child_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_name = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html(`<div>${_text_resume($scope0_id, "a", input.name, $wg__input_name)}</div>`);
+	_html(`<div>${_text_mark($scope0_id, "a", input.name, $wg__input_name)}</div>`);
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
@@ -11,7 +11,7 @@ var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let items = [0, 1];
-	_html(`<button>Push</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button>Push</button>${_el_mark($scope0_id, "a")}`);
 	_for_of(items, (outer) => {
 		const $scope1_id = _scope_id();
 		_for_of(items, (inner) => {

@@ -297,7 +297,7 @@ export function _hoist(scopeId: number, id: string) {
   return _resume(getter, id, scopeId);
 }
 
-export function _el_resume(
+export function _el_mark(
   scopeId: number,
   accessor: Accessor,
   markerGuard?: number,
@@ -309,7 +309,7 @@ export function _el_resume(
   return state.mark(ResumeSymbol.Node, scopeId + " " + accessor);
 }
 
-export function _text_resume(
+export function _text_mark(
   scopeId: number,
   accessor: Accessor,
   val: unknown,
@@ -318,7 +318,7 @@ export function _text_resume(
   return markText(scopeId, accessor, _escape(val), markerGuard);
 }
 
-export function _html_resume(
+export function _html_mark(
   scopeId: number,
   accessor: Accessor,
   val: unknown,
@@ -1284,9 +1284,10 @@ export class Chunk {
 
     if (readyId && !this.async) {
       const { state } = boundary;
+      const effects = holdEffects ? "" : this.effects;
+      if (effects) flushSerializerGlobals(boundary);
       flushSerializer(boundary, channel);
       const deps = takeChannelDeps(state.serializer);
-      const effects = holdEffects ? "" : this.effects;
       const { resumes } = channel;
       const chunkScripts = this.scripts;
       channel.resumes = this.scripts = "";
@@ -1387,6 +1388,7 @@ export class Chunk {
 
     if (effects) {
       needsWalk = true;
+      flushSerializerGlobals(boundary);
       state.resumes = state.resumes
         ? state.resumes + ',"' + effects + '"'
         : '"' + effects + '"';
@@ -1667,7 +1669,7 @@ function flushSerializer(boundary: Boundary, channel: Channel) {
     }
 
     if (flushes.length || pending) {
-      if (channel.readyId && !state.hasWrittenGlobals) {
+      if (channel.readyId) {
         // Globals serialize before ready data that may reference them.
         flushSerializerGlobals(boundary);
       }
@@ -1684,11 +1686,13 @@ function flushSerializer(boundary: Boundary, channel: Channel) {
   }
 }
 
+// Globals go out once, ahead of the first scopes or effects that may read them.
 function flushSerializerGlobals(boundary: Boundary) {
   const { state } = boundary;
+  if (state.hasWrittenGlobals) return;
+  state.hasWrittenGlobals = true;
   const globals = getFilteredGlobals(state.$global);
   if (globals) {
-    state.hasWrittenGlobals = true;
     state.needsWalkerRuntime = true;
     state.resumes = concatSequence(
       state.resumes,

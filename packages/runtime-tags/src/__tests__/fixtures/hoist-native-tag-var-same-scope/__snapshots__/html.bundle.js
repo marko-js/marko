@@ -12,7 +12,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	const $el_getter = _hoist($scope0_id, "a0");
 	child_default({ value: $el_getter });
-	_html(`<div></div>${_el_resume($scope0_id, "b")}`);
+	_html(`<div></div>${_el_mark($scope0_id, "b")}`);
 	child_default({ value: $el_getter });
 	_scope($scope0_id, {});
 }, 1);

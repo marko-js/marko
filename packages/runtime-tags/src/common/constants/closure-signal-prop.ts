@@ -1,4 +1,4 @@
-export const ScopeInstancesAccessor = "a";
+export const ScopesAccessor = "a";
 export const SignalIndexAccessor = "b";
 export const Index = "c";
 

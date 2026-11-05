@@ -3,11 +3,11 @@ var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let message = { text: "hi" };
-	_html(`<button>hide</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button>hide</button>${_el_mark($scope0_id, "a")}`);
 	_if(() => {
 		{
 			const $scope1_id = _scope_id();
-			_html(_text_resume($scope1_id, "a", message.text));
+			_html(_text_mark($scope1_id, "a", message.text));
 			_scope($scope1_id, {});
 			return 0;
 		}

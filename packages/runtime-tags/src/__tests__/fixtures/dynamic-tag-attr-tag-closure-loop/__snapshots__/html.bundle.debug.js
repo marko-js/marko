@@ -3,7 +3,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_item = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let open = false;
-	_html(`<button id=toggle>toggle</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button id=toggle>toggle</button>${_el_mark($scope0_id, "#button/0")}`);
 	_if(() => {
 		if (open) {
 			const $scope1_id = _scope_id();
@@ -36,7 +36,7 @@ var heading_default = _template("__tests__/tags/heading.marko", (input) => {
 		$item = attrTags($item, { content: _content_resume("__tests__/tags/heading.marko_1*content", () => {
 			const $scope1_reason = _scope_reason(), $wg__i = _write_guard($scope1_reason, 0), $wi__i = _write_if($scope1_reason, 0);
 			const $scope1_id = _scope_id();
-			_html(`item ${_text_resume($scope1_id, "#text/0", i, $wg__i * 2)} ${_text_resume($scope1_id, "#text/1", input.text, $wg__input_text * 2)}`);
+			_html(`item ${_text_mark($scope1_id, "#text/0", i, $wg__i * 2)} ${_text_mark($scope1_id, "#text/1", input.text, $wg__input_text * 2)}`);
 			($wi__input_type__OR__input_text || $wi__i) && _subscribe($wi__input_text && $input_text__closures, _scope($scope1_id, { _: $wi__input_type__OR__input_text && _scope_with_id($scope0_id) }, "__tests__/tags/heading.marko", "3:6"), "__tests__/tags/heading.marko_1_input_text#0:4/subscribe", $wg__input_text || $wg__i);
 			$wg__input_text || $wg__i || ($wi__input_type__OR__input_text || $wi__i) && _resume_branch($scope1_id);
 		}, $scope0_id, ($scope) => [{ i }, { input_text: input.text }]) });

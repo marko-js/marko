@@ -26,7 +26,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		let m = 0;
 		const label = "m" + m;
 		const c = v.n + item;
-		_html(`<button${_attr_class("row" + item)}>${_text_resume($scope1_id, "#text/1", c + ":" + label)}</button>${_el_resume($scope1_id, "#button/0")}`);
+		_html(`<button${_attr_class("row" + item)}>${_text_mark($scope1_id, "#text/1", c + ":" + label)}</button>${_el_mark($scope1_id, "#button/0")}`);
 		_script($scope1_id, "__tests__/template.marko_1");
 		_scope($scope1_id, {
 			item,

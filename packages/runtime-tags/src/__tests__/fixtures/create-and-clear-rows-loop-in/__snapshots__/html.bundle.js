@@ -5,7 +5,7 @@ var template_default = _template("a", (input) => {
 	_html("<div>");
 	_for_in(input.children, (key, text) => {
 		const $scope1_id = _scope_id();
-		_html(`<p>${_escape(key)}: ${_text_resume($scope1_id, "b", text, $wg__input_children * 2)}</p>`);
+		_html(`<p>${_escape(key)}: ${_text_mark($scope1_id, "b", text, $wg__input_children * 2)}</p>`);
 		$wi__input_children && _scope($scope1_id, {});
 	}, 0, $scope0_id, "a", $wg__input_children, $wg__input_children, 0, 0, 1);
 	_for_in(input.children, (key) => {

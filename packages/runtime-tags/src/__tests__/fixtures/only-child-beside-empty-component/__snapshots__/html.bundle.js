@@ -28,10 +28,10 @@ var template_default = _template("a", (input) => {
 	Nothing.content({ v: open });
 	_for_of([1], (item) => {
 		const $scope3_id = _scope_id();
-		_html(`<li>${_text_resume($scope3_id, "a", item)}</li>`);
+		_html(`<li>${_text_mark($scope3_id, "a", item)}</li>`);
 		_scope($scope3_id, {});
 	}, 0, $scope0_id, "d", 1, 1, 1, "</ul>", 1);
-	_html(`<button>toggle</button>${_el_resume($scope0_id, "f")}`);
+	_html(`<button>toggle</button>${_el_mark($scope0_id, "f")}`);
 	_script($scope0_id, "a2");
 	_scope($scope0_id, {
 		g: open,

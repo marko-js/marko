@@ -18,7 +18,7 @@ var template_default = _template("a", (input) => {
 	}, (err) => {
 		const $scope3_reason = _scope_reason(), $wg__err_message = _write_guard($scope3_reason, 0);
 		const $scope3_id = _scope_id();
-		_html(`caught ${_text_resume($scope3_id, "a", err.message, $wg__err_message * 2)}`);
+		_html(`caught ${_text_mark($scope3_id, "a", err.message, $wg__err_message * 2)}`);
 		_write_if($scope3_reason, 0) && _scope($scope3_id, {});
 	}, "a0", "a1");
 }, 1);

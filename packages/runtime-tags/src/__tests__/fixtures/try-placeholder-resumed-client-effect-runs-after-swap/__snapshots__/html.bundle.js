@@ -3,7 +3,7 @@ var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	const $show__closures = /* @__PURE__ */ new Set();
-	_html(`<button id=show>show</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button id=show>show</button>${_el_mark($scope0_id, "a")}`);
 	_try($scope0_id, "b", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();

@@ -6,7 +6,7 @@ var template_default = _template("a", (input) => {
 	_if(() => {
 		if (input.value) {
 			const $scope1_id = _scope_id();
-			_html(`<span>${_text_resume($scope1_id, "a", input.value, $wg__input_value)}</span>`);
+			_html(`<span>${_text_mark($scope1_id, "a", input.value, $wg__input_value)}</span>`);
 			$wi__input_value && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}

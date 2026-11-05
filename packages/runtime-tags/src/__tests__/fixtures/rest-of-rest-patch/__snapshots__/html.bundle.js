@@ -3,7 +3,7 @@ var echo_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_skip = _write_guard($scope0_reason, 1), $wg__input_label = _write_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const { skip, ...r } = input;
-	_html(`<em>${_text_resume($scope0_id, "a", skip, $wg__input_skip)}${_text_resume($scope0_id, "b", input.label, $wg__input_label * 2)}</em>`);
+	_html(`<em>${_text_mark($scope0_id, "a", skip, $wg__input_skip)}${_text_mark($scope0_id, "b", input.label, $wg__input_label * 2)}</em>`);
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
@@ -19,7 +19,7 @@ var template_default = _template("a", (input) => {
 		skip: "k",
 		label
 	});
-	_html(`<button>+</button>${_el_resume($scope0_id, "b")}</main>`);
+	_html(`<button>+</button>${_el_mark($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a0");
 	_scope($scope0_id, {
 		c: label,

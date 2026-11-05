@@ -5,7 +5,7 @@ var template_default = _template("a", (input) => {
 	const key = "id";
 	_for_of(input.items, (key) => {
 		const $scope1_id = _scope_id();
-		_html(`<span>${_text_resume($scope1_id, "a", key.id, $wg__input_items)}</span>`);
+		_html(`<span>${_text_mark($scope1_id, "a", key.id, $wg__input_items)}</span>`);
 		$wi__input_items && _scope($scope1_id, {});
 	}, key, $scope0_id, "a", $wg__input_items, $wg__input_items, 0, 0, 1);
 	$wi__input_items && _scope($scope0_id, { e: key });

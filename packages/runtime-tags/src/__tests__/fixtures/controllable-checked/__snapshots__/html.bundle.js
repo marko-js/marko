@@ -5,7 +5,7 @@ var template_default = _template("a", (input) => {
 	let checked = false;
 	_html(`<input${_attr_input_checked($scope0_id, "a", checked, _resume((_new_checked) => {
 		checked = _new_checked;
-	}, "a0", $scope0_id))} type=checkbox>${_el_resume($scope0_id, "a")}<span>${_text_resume($scope0_id, "b", String(checked))}</span>`);
+	}, "a0", $scope0_id))} type=checkbox>${_el_mark($scope0_id, "a")}<span>${_text_mark($scope0_id, "b", String(checked))}</span>`);
 	_script($scope0_id, "a1");
 	_scope($scope0_id, {});
 }, 1);

@@ -232,7 +232,7 @@ export function addAssignedProperty(
   if (binding.assignedProperties !== true) {
     binding.assignedProperties =
       property === undefined ||
-      propsUtil.add(binding.assignedProperties, property);
+      propertiesUtil.add(binding.assignedProperties, property);
   }
 }
 
@@ -249,7 +249,7 @@ export function getAssignedObject(binding: Binding) {
       const parent = getCanonicalBinding(alias.aliasOf);
       if (
         parent.assignedProperties === true ||
-        propsUtil.has(parent.assignedProperties, alias.property)
+        propertiesUtil.has(parent.assignedProperties, alias.property)
       ) {
         object = alias.aliasOf;
       }
@@ -346,7 +346,7 @@ export const bindingUtil = new Sorted(function compareBindings(
         a.uid - b.uid;
 });
 
-export const propsUtil = new Sorted(function compareProps(
+export const propertiesUtil = new Sorted(function compareProperties(
   a: string,
   b: string,
 ) {
@@ -467,12 +467,12 @@ export function getDebugName(binding: Binding) {
   return root.name + access;
 }
 
-export function getDebugNames(refs: ReferencedBindings) {
-  return mapToString(refs, ", ", getDebugName);
+export function getDebugNames(bindings: ReferencedBindings) {
+  return mapToString(bindings, ", ", getDebugName);
 }
 
-export function getDebugNamesAsIdentifier(refs: ReferencedBindings) {
-  return mapToString(refs, "__OR__", getDebugNameAsIdentifier);
+export function getDebugNamesAsIdentifier(bindings: ReferencedBindings) {
+  return mapToString(bindings, "__OR__", getDebugNameAsIdentifier);
 }
 
 function getDebugNameAsIdentifier(binding: Binding) {
@@ -516,8 +516,8 @@ export function isOwnBinding(binding: Binding) {
   return binding.section.program === getProgram().node.extra.section;
 }
 
-export function hasNonConstantPropertyAlias(ref: Binding) {
-  for (const alias of ref.propertyAliases.values()) {
+export function hasNonConstantPropertyAlias(binding: Binding) {
+  for (const alias of binding.propertyAliases.values()) {
     if (alias.type !== BindingType.constant) {
       return true;
     }

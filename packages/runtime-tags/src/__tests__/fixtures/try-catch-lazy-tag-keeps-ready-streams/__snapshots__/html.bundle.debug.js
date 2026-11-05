@@ -3,7 +3,7 @@ var child_default = _template("__tests__/child.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 0;
-	_html(`<button id=child>${_text_resume($scope0_id, "#text/1", count)}</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button id=child>${_text_mark($scope0_id, "#text/1", count)}</button>${_el_mark($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/child.marko_0");
 	_scope($scope0_id, { count }, "__tests__/child.marko", 0, { count: "1:6" });
 });
@@ -13,7 +13,7 @@ var other_default = _template("__tests__/other.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 0;
-	_html(`<button id=other>${_text_resume($scope0_id, "#text/1", count)}</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button id=other>${_text_mark($scope0_id, "#text/1", count)}</button>${_el_mark($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/other.marko_0");
 	_scope($scope0_id, { count }, "__tests__/other.marko", 0, { count: "1:6" });
 });
@@ -40,7 +40,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, (err) => {
 		const $scope3_reason = _scope_reason(), $wg__err_message = _write_guard($scope3_reason, 0);
 		const $scope3_id = _scope_id();
-		_html(_text_resume($scope3_id, "#text/0", err.message, $wg__err_message));
+		_html(_text_mark($scope3_id, "#text/0", err.message, $wg__err_message * 2));
 		_write_if($scope3_reason, 0) && _scope($scope3_id, {}, "__tests__/template.marko", "12:4");
 	}, "__tests__/template.marko_2*content", "__tests__/template.marko_3*content");
 	_await($scope0_id, "#text/3", resolveAfter("done", 2), (v) => {

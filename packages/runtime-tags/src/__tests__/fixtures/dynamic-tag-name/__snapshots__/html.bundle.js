@@ -4,7 +4,7 @@ var tag_a_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	_html(`<div${_attr_class(input.class)}${_attr("data-other", input.other)}>A `);
 	_dynamic_tag($scope0_id, "b", input.content, {}, 0, 0, $wg__input_content);
-	_html(`</div>${_el_resume($scope0_id, "a", $wg__input_class__OR__input_other)}`);
+	_html(`</div>${_el_mark($scope0_id, "a", $wg__input_class__OR__input_other)}`);
 	_write_if($scope0_reason, 1) && _scope($scope0_id, {});
 });
 
@@ -14,7 +14,7 @@ var tag_b_default = _template("c", (input) => {
 	const $scope0_id = _scope_id();
 	_html(`<div${_attr_class(input.class)}${_attr("data-other", input.other)}>B `);
 	_dynamic_tag($scope0_id, "b", input.content, {}, 0, 0, $wg__input_content);
-	_html(`</div>${_el_resume($scope0_id, "a", $wg__input_class__OR__input_other)}`);
+	_html(`</div>${_el_mark($scope0_id, "a", $wg__input_class__OR__input_other)}`);
 	_write_if($scope0_reason, 1) && _scope($scope0_id, {});
 });
 

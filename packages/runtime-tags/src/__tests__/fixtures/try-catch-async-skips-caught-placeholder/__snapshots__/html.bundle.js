@@ -3,7 +3,7 @@ var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 5;
-	_html(`<button>count ${_text_resume($scope0_id, "b", count, 2)}</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button>count ${_text_mark($scope0_id, "b", count, 2)}</button>${_el_mark($scope0_id, "a")}`);
 	_try($scope0_id, "c", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
@@ -23,7 +23,7 @@ var template_default = _template("a", (input) => {
 					_scope_reason();
 					const $scope7_id = _scope_id();
 					let count = 0;
-					_html(`<button>placeholder ${_text_resume($scope7_id, "b", count, 2)}</button>${_el_resume($scope7_id, "a")}`);
+					_html(`<button>placeholder ${_text_mark($scope7_id, "b", count, 2)}</button>${_el_mark($scope7_id, "a")}`);
 					_script($scope7_id, "a0");
 					_scope($scope7_id, { c: count });
 				}, void 0, "a1");
@@ -34,7 +34,7 @@ var template_default = _template("a", (input) => {
 		}, void 0, (err) => {
 			const $scope4_reason = _scope_reason(), $wg__err_message = _write_guard($scope4_reason, 0);
 			const $scope4_id = _scope_id();
-			_html(`caught ${_text_resume($scope4_id, "a", err.message, $wg__err_message * 2)}`);
+			_html(`caught ${_text_mark($scope4_id, "a", err.message, $wg__err_message * 2)}`);
 			_write_if($scope4_reason, 0) && _scope($scope4_id, {});
 		}, 0, "a2");
 	}, () => {
