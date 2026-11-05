@@ -14,6 +14,8 @@ export const EventAttributes = "I";
 export const IdFallback = "J";
 export const KeyedScopes = "O";
 export const Lifecycle = "K";
+// The rows a loop's patch placed so far: its scope owns them once every row rendered.
+export const PlacedRows = "P";
 // A patch's change mark of a value an entry depends on, by its response.
 export const PatchChanged = "T";
 export const Promise = "L";

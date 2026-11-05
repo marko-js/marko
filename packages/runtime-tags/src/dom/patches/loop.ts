@@ -1,5 +1,5 @@
 import { encodeAccessor } from "../../common/helpers";
-import { PatchKey, type Scope } from "../../common/types";
+import { AccessorPrefix, PatchKey, type Scope } from "../../common/types";
 import type { _for_of } from "../control-flow";
 import { type Patcher, patchScope, withCreating } from "./apply";
 import { getShell } from "./shells";
@@ -21,6 +21,8 @@ export const createLoopPatcher =
       shellId = value[--len] as string;
     }
     const patches: Scope[] = [];
+    // A row's patch can name a row placed before the loop owns it.
+    const rows: Scope[] = (scope[AccessorPrefix.PlacedRows + accessor] = []);
     const keys = len && typeof value[0] !== "object" ? ([] as unknown[]) : 0;
     // A loop with a shell creates additions; one whose items pair only
     // (a stateful body) ships none and never adds.
@@ -33,8 +35,10 @@ export const createLoopPatcher =
         template,
         walks,
         setup || 0,
-        ((branch: Scope, [patch]: [Scope]) =>
-          patchScope(patch, branch)) as never,
+        ((branch: Scope, [patch]: [Scope]) => (
+          rows.push(branch),
+          patchScope(patch, branch)
+        )) as never,
       )(
         scope,
         keys ? [patches, (_patch: unknown, i: number) => keys[i]] : [patches],
@@ -45,4 +49,6 @@ export const createLoopPatcher =
     }
     if (shellId) withCreating(apply);
     else apply();
+    // A flush that throws navigates, so only an applied one clears them.
+    scope[AccessorPrefix.PlacedRows + accessor] = 0;
   };
