@@ -42,15 +42,16 @@ INSERT: div:nth-of-type(1) + :is(button, div)
 UPDATE: div:nth-of-type(1)::text@2 "a" => "b"
 ```
 
-# Update
-```js
-for (const b of document.querySelectorAll(".reset")) {
-b.click();
-}
-```
-
-# Update `{"bs":[2],"note":"c"}`
+# Update `{"bs":[1,2],"note":"c"}`
 ```html
+<button
+  class="reset"
+>
+  reset
+</button>
+<div>
+  1:c
+</div>
 <button
   class="reset"
 >
@@ -62,8 +63,32 @@ b.click();
 ```
 ## Change
 ```
+UPDATE: div:nth-of-type(1)::text@2 "b" => "c"
+UPDATE: div:nth-of-type(2)::text@2 "b" => "c"
+```
+
+# Update
+```js
+for (const b of document.querySelectorAll(".reset")) {
+b.click();
+}
+```
+
+# Update `{"bs":[2],"note":"d"}`
+```html
+<button
+  class="reset"
+>
+  reset
+</button>
+<div>
+  2:d
+</div>
+```
+## Change
+```
 REMOVE: div + .reset
 REMOVE: div + div
-UPDATE: div::text@2 "b" => "c"
+UPDATE: div::text@2 "c" => "d"
 UPDATE: div::text@0 "1" => "2"
 ```

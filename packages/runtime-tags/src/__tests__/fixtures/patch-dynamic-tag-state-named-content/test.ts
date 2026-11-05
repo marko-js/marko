@@ -6,15 +6,16 @@ const reset = (document: Document) => {
   }
 };
 
-// A tag client state names renders its content as the client's on the page too,
-// so the content subscribes to what it reads and a patch's fill reaches it.
+// A tag client state names renders its content as the client's on the page and in a
+// created row, so the content subscribes to what it reads and a patch's fill reaches it.
 export const config: TestConfig = {
   patches: true,
   steps: [
     { bs: [1], note: "a" },
     reset,
     { bs: [1, 2], note: "b" },
+    { bs: [1, 2], note: "c" },
     reset,
-    { bs: [2], note: "c" },
+    { bs: [2], note: "d" },
   ],
 };
