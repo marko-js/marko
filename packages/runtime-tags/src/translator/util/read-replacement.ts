@@ -116,10 +116,8 @@ function getDOMReadBase(
       : t.identifier(binding.name);
   }
 
-  if (properties === undefined) {
-    const inlined = getSignals(section!).get(binding)?.inline?.value;
-    if (inlined) return t.cloneNode(inlined, true);
-  }
+  const inlined = getSignals(section!).get(binding)?.inline?.value;
+  if (inlined) return t.cloneNode(inlined, true);
 
   if (signal?.referencedBindings === binding && !signal.storesValue) {
     return getSignalValueIdentifier(signal);
