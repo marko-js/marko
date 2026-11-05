@@ -96,7 +96,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope1_id = _scope_id();
 			_html(`<span>${_text_mark($scope1_id, "#text/0", item.text, $wg__item_text)}:${_text_mark($scope1_id, "#text/1", item === items[0], $wg__item * 2)}</span>`);
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "5:6");
-			$wg__item_text || $wg__item || _resume_branch($scope1_id);
 		}, $scope0_id, () => [{
 			item_text: item?.text,
 			item
@@ -128,5 +127,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	});
 	last_default({ item: $item2 });
 	_scope($scope0_id, { items_0: items?.[0] }, "__tests__/template.marko", 0, { items_0: ["items[0]", "2:6"] });
-	_resume_branch($scope0_id);
 }, 1);

@@ -33,7 +33,6 @@ var template_default = _template("a", (input) => {
 				}
 			}, $scope1_id, "c", $wg__aa, 0, 0, 0, 1);
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
-			$wg__aa || $wg__index || _resume_branch($scope1_id);
 		}, $scope0_id) });
 	});
 	const $childScope = _peek_scope_id();

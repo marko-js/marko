@@ -33,4 +33,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		"ClosureScopes:clickCount/2": $clickCount__closures,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, { clickCount: "1:6" });
+	_resume_branch($scope0_id);
 }, 1);

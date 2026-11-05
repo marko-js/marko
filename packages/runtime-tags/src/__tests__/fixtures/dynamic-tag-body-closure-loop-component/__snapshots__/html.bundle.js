@@ -27,7 +27,7 @@ var list_default = _template("d", (input) => {
 
 // tags/heading.marko
 var heading_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_type = _write_if($scope0_reason, 0), $wg__input_type = _write_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_type = _write_guard($scope0_reason, 0), $wi__input_type = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_type__closures = /* @__PURE__ */ new Set();
 	let $item;
@@ -41,14 +41,12 @@ var heading_default = _template("c", (input) => {
 				_scope_reason();
 				_html(`item ${_text_mark($scope2_id, "a", i, $wg__i * 2)}`);
 				($wi__input_type || $wi__i) && _subscribe($wi__i && $item_content__i__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "c1", $wg__i);
-				$wg__i || ($wi__input_type || $wi__i) && _resume_branch($scope2_id);
 			}, $scope1_id, ($scope) => [{ b: i }]), 0, $wg__input_type);
 			($wi__input_type || $wi__i) && _subscribe($wi__input_type && $input_type__closures, _scope($scope1_id, {
 				b: $wi__input_type && i,
 				_: $wi__input_type && _scope_with_id($scope0_id),
 				f: $wi__i && $item_content__i__closures
 			}), "c2", $wg__input_type);
-			$wg__input_type || ($wi__input_type || $wi__i) && _resume_branch($scope1_id);
 		}, $scope0_id) });
 	});
 	list_default({ item: $item });

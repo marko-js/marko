@@ -33,7 +33,6 @@ var row_default = _template("b", (input) => {
 		h: input.inc?.pending,
 		i: sfx
 	});
-	$wg__input_inc || $wi__input_inc && _resume_branch($scope0_id);
 });
 
 // template.marko

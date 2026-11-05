@@ -23,12 +23,11 @@ var template_default = _template("a", (input) => {
 	let $item;
 	forUntil(count, 0, 1, (n) => {
 		$item = attrTags($item, { content: _content("a0", () => {
-			const $scope1_reason = _scope_reason(), $wi__n = _write_if($scope1_reason, 0);
+			const $scope1_reason = _scope_reason();
 			const $scope1_id = _scope_id();
 			let x = 10;
 			const $return = n * x;
-			$wi__n && _scope($scope1_id, { b: x });
-			$wi__n && _resume_branch($scope1_id);
+			_write_if($scope1_reason, 0) && _scope($scope1_id, { b: x });
 			return $return;
 		}, $scope0_id) });
 	});

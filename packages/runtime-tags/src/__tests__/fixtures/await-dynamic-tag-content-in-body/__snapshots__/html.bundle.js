@@ -11,7 +11,6 @@ var card_default = _template("b", (input) => {
 			_html("<i>x</i>");
 		}, $scope1_id), 0, $wg__input_content);
 		$wi__input_content && _subscribe($input_content__closures, _scope($scope1_id, {}), "b1", $wg__input_content);
-		$wg__input_content || $wi__input_content && _resume_branch($scope1_id);
 	}, $wg__input_content);
 	$wi__input_content && _scope($scope0_id, { f: $input_content__closures });
 });
@@ -39,7 +38,7 @@ var keeper_default = _template("c", (input) => {
 
 // template.marko
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_note = _write_guard($scope0_reason, 4), $wi__input_on__OR__input_note = _write_if($scope0_reason, 0), $wg__input_on = _write_guard($scope0_reason, 3), $wi__input_on = _write_if($scope0_reason, 3), $wi__input_note = _write_if($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $wg__input_note = _write_guard($scope0_reason, 4), $wg__input_on = _write_guard($scope0_reason, 3), $wi__input_on__OR__input_note = _write_if($scope0_reason, 0), $wi__input_on = _write_if($scope0_reason, 3), $wi__input_note = _write_if($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = /* @__PURE__ */ new Set();
 	const $input_on__closures = /* @__PURE__ */ new Set();
@@ -55,10 +54,8 @@ var template_default = _template("a", (input) => {
 				_scope_reason();
 				_html(`<em>${_text_mark($scope2_id, "a", input.note, $wg__input_note)}</em>`);
 				$wi__input_on__OR__input_note && _subscribe($wi__input_note && $input_note__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "a1", $wg__input_note);
-				$wg__input_note || $wi__input_on__OR__input_note && _resume_branch($scope2_id);
 			}, $scope1_id, ($scope) => [{ f: input.note }, { _: $scope($scope0_id) }]), 0, $wg__input_on);
 			$wi__input_on__OR__input_note && _subscribe($wi__input_on && $input_on__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a2", $wg__input_on);
-			$wg__input_on || $wi__input_on__OR__input_note && _resume_branch($scope1_id);
 		}, $scope0_id)
 	});
 	_html("</main>");

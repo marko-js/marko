@@ -12,10 +12,10 @@ var list_default = _template("c", (input) => {
 
 // tags/child.marko
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 2), $wi__input_show = _write_if($scope0_reason, 2), $wi__input_items__OR__input_show = _write_if($scope0_reason, 0), $wg__input_items = _write_guard($scope0_reason, 1), $wi__input_items = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 2), $wi__input_show = _write_if($scope0_reason, 2), $wi__input_items = _write_if($scope0_reason, 1), $wi__input_items__OR__input_show = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_show__closures = /* @__PURE__ */ new Set();
-	_set_scope_reason($wg__input_items << 1);
+	_set_scope_reason(_write_guard($scope0_reason, 1) << 1);
 	let $item;
 	forOf(input.items, (item) => {
 		$item = attrTags($item, { content: _content("b1", () => {
@@ -30,7 +30,6 @@ var child_default = _template("b", (input) => {
 				}
 			}, $scope1_id, "a", $wg__input_show, $wg__input_show, 0, 0, 1);
 			$wi__input_items__OR__input_show && _subscribe($wi__input_show && $input_show__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "b0", $wg__input_show);
-			$wg__input_show || $wi__input_items__OR__input_show && _resume_branch($scope1_id);
 		}, $scope0_id) });
 	});
 	const $childScope = _peek_scope_id();

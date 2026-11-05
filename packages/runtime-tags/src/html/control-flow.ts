@@ -322,7 +322,10 @@ export function forBranches<A, B = void>(
       }
     }
 
-    withBranchId(branchId, cb, a, b);
+    // A row without a marker is never removed alone, so it resumes as part of
+    // the enclosing branch.
+    if (resumeMarker) withBranchId(branchId, cb, a, b);
+    else cb(a, b);
     // Empty for an unkeyed branch, but the scope it returns is what the
     // parent's branch list holds and what passive props flush through.
     const branchScope = writeScope(
@@ -374,7 +377,10 @@ export function _if(
       ? deferBranchStart(chunk)
       : undefined;
 
-  const branchIndex = resumeBranch ? withBranchId(branchId, cb) : cb();
+  // A branch without a marker is never swapped, so it resumes as part of the
+  // enclosing branch.
+  const branchIndex =
+    resumeBranch && resumeMarker ? withBranchId(branchId, cb) : cb();
   const shouldWriteBranch = resumeBranch && branchIndex !== undefined;
 
   if (beforeBranch !== undefined) {

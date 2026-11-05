@@ -17,6 +17,7 @@ import {
 import { callRuntime, type HTMLRuntimeHelpers } from "./runtime";
 import {
   getParamReasonGroupIndex,
+  isOptionalBranch,
   isSameOrAncestorSection,
   type ParamReasonGroup,
   reduceParamGroups,
@@ -132,6 +133,18 @@ export function getWriteReason(binding: Binding) {
 // A branch's write reason: whether the server writes the scope it resumes.
 export function getBranchWriteReason(section: Section) {
   return findSectionSlot(section, SlotKind.Branch)?.reason;
+}
+
+// Resume joins a branch to its parent at the marker its tag writes wherever the
+// client reads its node, which also resumes the branch.
+export function isBranchAlwaysMarked(section: Section) {
+  return (
+    isOptionalBranch(section) &&
+    getWriteBit(
+      section.parent!,
+      getWriteReason(section.branch.tag.nodeBinding),
+    ) === 1
+  );
 }
 
 export function getWriteGuard(

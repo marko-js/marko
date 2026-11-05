@@ -8,7 +8,6 @@ var boundary_default = _template("__tests__/tags/boundary.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_dynamic_tag($scope1_id, "#text/0", input.content, {}, 0, 0, $wg__input_content);
 		$wi__input_content && _subscribe($input_content__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/boundary.marko", "1:2"), "__tests__/tags/boundary.marko_1_input_content#0:3/subscribe", $wg__input_content);
-		$wg__input_content || $wi__input_content && _resume_branch($scope1_id);
 	}, () => {
 		_scope_reason();
 		const $scope2_id = _scope_id();

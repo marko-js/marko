@@ -34,7 +34,6 @@ var ui_select_default = _template("__tests__/tags/ui-select.marko", (input) => {
 				c,
 				_: _scope_with_id($scope0_id)
 			}, "__tests__/tags/ui-select.marko", "1:2", { c: "1:11" }), "__tests__/tags/ui-select.marko_1_input_option#0:3/subscribe", $wg__input_option);
-			$wg__input_option || $wi__input_option && _resume_branch($scope1_id);
 		}, $scope0_id)
 	});
 	$wi__input_option && _scope($scope0_id, { "ClosureScopes:input_option/4": $input_option__closures }, "__tests__/tags/ui-select.marko", 0);

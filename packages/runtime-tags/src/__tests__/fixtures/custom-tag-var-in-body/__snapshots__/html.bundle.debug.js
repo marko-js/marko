@@ -18,7 +18,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_script($scope1_id, "__tests__/template.marko_1_setHtml#0:2", 0);
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "1:2");
-		_resume_branch($scope1_id);
 	}, $scope0_id) });
 	_scope($scope0_id, { setHtml }, "__tests__/template.marko", 0, { setHtml: "1:8" });
 }, 1);

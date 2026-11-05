@@ -8,6 +8,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 			_html("<p>inner</p>");
 			_script($scope1_id, "__tests__/tags/child.marko_1", 0);
 			$wi__input_show && _scope($scope1_id, {}, "__tests__/tags/child.marko", "2:2");
+			_resume_branch($scope1_id);
 			return 0;
 		}
 	}, $scope0_id, "#text/0", $wg__input_show, $wg__input_show, 0, 0, 1);

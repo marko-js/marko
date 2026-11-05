@@ -1,6 +1,6 @@
 // tags/recurse.marko
 const $content = (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_level = _write_guard($scope0_reason, 0), $wi__input_level = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wi__input_level = _write_if($scope0_reason, 0), $wg__input_level = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_level__closures = new Set();
 	_if(() => {
@@ -15,8 +15,8 @@ const $content = (input) => {
 					_set_scope_reason($wg__input_level << 1);
 					const $childScope = _peek_scope_id();
 					$content({ level: input.level - 1 });
-					$wi__input_level && _subscribe($input_level__closures, _scope($scope3_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/tags/recurse.marko", "7:7"), "__tests__/tags/recurse.marko_3_input_level#0:3/subscribe", $wg__input_level);
-					$wg__input_level || $wi__input_level && _resume_branch($scope3_id);
+					$wi__input_level && _subscribe($input_level__closures, _scope($scope3_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/tags/recurse.marko", "7:7"), "__tests__/tags/recurse.marko_3_input_level#0:3/subscribe", 0);
+					$wi__input_level && _resume_branch($scope3_id);
 				}, $wg__input_level);
 				$wi__input_level && _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/recurse.marko", "5:5");
 			}, () => {

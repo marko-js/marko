@@ -34,8 +34,8 @@ const $content = (input) => {
 	const $scope0_id = _scope_id();
 	const Level = { content: _content("b0", ({ depth }) => {
 		const $scope2_id = _scope_id();
-		const $scope2_reason = _scope_reason(), $wg__depth = _write_guard($scope2_reason, 0);
-		_set_scope_reason($wg__depth << 1);
+		const $scope2_reason = _scope_reason();
+		_set_scope_reason(_write_guard($scope2_reason, 0) << 1);
 		const $childScope = _peek_scope_id();
 		$content({ depth: depth - 1 });
 		_write_if($scope2_reason, 0) && _scope($scope2_id, { a: _existing_scope($childScope) });

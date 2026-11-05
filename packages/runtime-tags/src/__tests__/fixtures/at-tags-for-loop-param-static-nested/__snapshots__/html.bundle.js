@@ -32,7 +32,6 @@ var template_default = _template("a", (input) => {
 				b: item,
 				_: _scope_with_id($scope0_id)
 			}), "a0", $wg__input_show);
-			$wg__input_show || $wi__input_show && _resume_branch($scope1_id);
 		}, $scope0_id) });
 	});
 	list_default({ item: $item });

@@ -19,7 +19,6 @@ var row_default = _template("b", (input) => {
 		i: item?.status,
 		j: _write_if($scope0_reason, 1) && upper
 	});
-	$wg__input_inc || _resume_branch($scope0_id);
 });
 
 // template.marko

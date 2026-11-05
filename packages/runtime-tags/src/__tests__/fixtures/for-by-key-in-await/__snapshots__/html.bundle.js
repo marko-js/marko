@@ -11,7 +11,6 @@ var template_default = _template("a", (input) => {
 			const $scope2_id = _scope_id();
 			_html(`<em>${_escape(item.id)}:${_text_mark($scope2_id, "b", v, $wg__input_value * 2)}</em>`);
 			_scope($scope2_id, {});
-			$wg__input_value || _resume_branch($scope2_id);
 		});
 		_html("</div>");
 		_scope($scope1_id, {});
