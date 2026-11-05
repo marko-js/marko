@@ -19,6 +19,7 @@ import {
   getSourcesForExpr,
   getSourcesForReferencedBindings,
   isGuardedReason,
+  mapParamReason,
 } from "../reasons";
 import {
   getConstantBindings,
@@ -38,6 +39,7 @@ import { hasOwnSetupWork } from "../setup-work";
 import { inCreatedCatch } from "../shell";
 import { getSignals, type Signal } from "../signals";
 import { findSlot, SlotKind, type Slot } from "../slots";
+import { getContentSites } from "../solve-reasons";
 import { mergeSources, type Sources, withSources } from "../sources";
 import { createAnalysisState } from "../state";
 import {
@@ -89,15 +91,36 @@ export function isCreatedAtInitialValue(state: Binding, section: Section) {
   return state.readsInitialValues && isCreatedWith(section, state.section);
 }
 
-// The section's scope exists only as `owner`'s is created: the owner's own, or a
-// body every call renders in such a scope.
+// The section's scope exists only as `owner`'s is created: the owner's own, a body
+// every call renders in such a scope, or content its callee renders as it is created.
 function isCreatedWith(section: Section, owner: Section): boolean {
   return (
     section === owner ||
-    (!!section.renderedBy &&
-      every(section.renderedBy, (call) =>
-        isCreatedWith(call.childScopeBinding.section, owner),
-      ))
+    (section.renderedBy
+      ? every(section.renderedBy, (call) =>
+          isCreatedWith(call.childScopeBinding.section, owner),
+        )
+      : !!section.derives &&
+        isCreatedWithCallee(section.derives) &&
+        isCreatedWith(section.parent!, owner))
+  );
+}
+
+function isCreatedWithCallee(derives: NonNullable<Section["derives"]>) {
+  const { unseen, sites, deepSites } = getContentSites(derives);
+  return (
+    !unseen &&
+    !deepSites &&
+    !!sites &&
+    every(sites, (site) => {
+      const siteSection = site.nodeBinding!.section;
+      const sources = getSourcesForExpr(site);
+      return (
+        (!sources ||
+          !mapParamReason(siteSection.program, sources, derives.exprs, true)) &&
+        isCreatedWith(siteSection, siteSection.program)
+      );
+    })
   );
 }
 
