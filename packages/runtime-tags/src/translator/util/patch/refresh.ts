@@ -51,6 +51,7 @@ import {
   getReferencedBindingsInFunction,
   getReferencedBindings,
   getValueReferences,
+  hasResumableAssignment,
   isReferencedExtra,
   type Read,
   type ReferencedExtra,
@@ -297,8 +298,8 @@ function computePatchFill(binding: Binding): PatchFill {
         objectSource ||
         writesForIntersectionRender(binding) ||
         (guarded && !!kind)),
-    // Only the patch's key reaches the declaration: a `<let>` nothing assigns.
-    ownRegistration: fill && !binding.assignments,
+    // Only the patch's key reaches the declaration: a `<let>` no shipped code assigns.
+    ownRegistration: fill && !hasResumableAssignment(binding),
     filledMembers: fill ? members : undefined,
   };
 }
