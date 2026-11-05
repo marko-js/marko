@@ -20,6 +20,7 @@ var template_default = _template("a", (input) => {
 	_set_scope_reason(2);
 	const $childScope2 = _peek_scope_id();
 	B.content({ value });
-	_script($scope0_id, "a2");
+	_script($scope0_id, "a2", 0);
 	_scope($scope0_id, { a: _existing_scope($childScope2) });
+	_resume_branch($scope0_id);
 }, 1);

@@ -7,6 +7,7 @@ var child_default = _template("b", (input) => {
 		_html(`<p>item ${_escape(i)}</p>`);
 		_script($scope1_id, "b0", 0);
 		$wi__input_count && _scope($scope1_id, {});
+		_resume_branch($scope1_id);
 	}, 0, $scope0_id, "a", $wg__input_count, $wg__input_count, 0, 0, 1);
 	$wi__input_count && _scope($scope0_id, {});
 });

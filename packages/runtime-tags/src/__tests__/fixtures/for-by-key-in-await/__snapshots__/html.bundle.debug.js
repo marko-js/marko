@@ -11,7 +11,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope2_id = _scope_id();
 			_html(`<em>${_escape(item.id)}:${_text_mark($scope2_id, "#text/1", v, $wg__input_value * 2)}</em>`);
 			_scope($scope2_id, {}, "__tests__/template.marko", "4:9");
-			$wg__input_value || _resume_branch($scope2_id);
 		});
 		_html("</div>");
 		_scope($scope1_id, {}, "__tests__/template.marko", "3:2");

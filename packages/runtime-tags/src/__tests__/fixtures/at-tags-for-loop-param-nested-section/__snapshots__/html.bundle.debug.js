@@ -39,7 +39,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope4_reason = _scope_reason();
 				_html(`tag ${_text_mark($scope4_id, "#text/0", i, $wg__i * 2)}`);
 				_subscribe($wi__i && $item_content__i__closures, _scope($scope4_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "13:10"), "__tests__/template.marko_4_i#1:3/subscribe", $wg__i);
-				$wg__i || _resume_branch($scope4_id);
 			}, $scope1_id));
 			_for_until(2, 0, 1, (j) => {
 				const $scope5_id = _scope_id();

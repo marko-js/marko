@@ -8,7 +8,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_reason = _scope_reason();
 		_html(`<span>${_text_mark($scope1_id, "#text/0", input.x, $wg__input_x)}</span>`);
 		_subscribe($wi__input_x && $input_x__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "1:2"), "__tests__/template.marko_1_input_x#0:4/subscribe", $wg__input_x);
-		$wg__input_x || _resume_branch($scope1_id);
 	}, $scope0_id) };
 	const D = { content: _content("__tests__/template.marko_2*content", ({ on }) => {
 		const $scope2_id = _scope_id();

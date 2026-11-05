@@ -10,7 +10,7 @@ var counter_default = _template("b", (input) => {
 
 // template.marko
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_a = _write_guard($scope0_reason, 1), $wi__input_a = _write_if($scope0_reason, 1), $wg__input_x = _write_guard($scope0_reason, 2), $wi__input_x = _write_if($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_a = _write_guard($scope0_reason, 1), $wi__input_a = _write_if($scope0_reason, 1), $wi__input_x = _write_if($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $f2__closures = /* @__PURE__ */ new Set();
 	const f = _resume(function() {
@@ -29,7 +29,7 @@ var template_default = _template("a", (input) => {
 		}, $scope1_id, "a", $wg__on, $wg__on, 0, 0, 1);
 		($wi__input_a || $wi__on) && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
 	}, $scope0_id) };
-	_set_scope_reason($wg__input_x << 1);
+	_set_scope_reason(_write_guard($scope0_reason, 2) << 1);
 	const $childScope = _peek_scope_id();
 	D.content({ on: input.x });
 	counter_default({});

@@ -2,7 +2,6 @@ import { types as t } from "@marko/compiler";
 
 import {
   type Binding,
-  BindingType,
   bindingUtil,
   getDeepestPropertyAlias,
   isOwnBinding,
@@ -29,8 +28,16 @@ import {
   isSameOrAncestorSection,
   type ParamReasonGroups,
   type Section,
+  StructureKind,
+  type StructureOp,
 } from "./sections";
-import { ensureSectionSlot, ensureSlot, type Slot, SlotKind } from "./slots";
+import {
+  ensureSectionSlot,
+  ensureSlot,
+  findSlot,
+  type Slot,
+  SlotKind,
+} from "./slots";
 import {
   ALWAYS,
   mergeSources,
@@ -294,15 +301,19 @@ function mergeSlotReason(sectionReason: Reason | undefined, slot: Slot) {
 // Each reason a node of the section resumes for, kept apart so each one's guard
 // stays buildable.
 export function getNodeReasons(section: Section) {
-  return section.slots.reduce<Reasons | undefined>(addNodeReason, undefined);
+  return section.structure?.reduce<Reasons | undefined>(
+    addNodeReason,
+    undefined,
+  );
 }
 
-function addNodeReason(reasons: Reasons | undefined, slot: Slot) {
-  return slot.reason &&
-    slot.kind === SlotKind.Value &&
-    slot.owner.type === BindingType.dom
-    ? sourcesUtil.add(reasons, slot.reason)
-    : reasons;
+function addNodeReason(reasons: Reasons | undefined, op: StructureOp) {
+  const reason =
+    typeof op === "object" &&
+    op.kind === StructureKind.Node &&
+    op.binding &&
+    findSlot(op.binding)?.reason;
+  return reason ? sourcesUtil.add(reasons, reason) : reasons;
 }
 
 // Moves when a slot's reason gains a source or a section gains a param reason

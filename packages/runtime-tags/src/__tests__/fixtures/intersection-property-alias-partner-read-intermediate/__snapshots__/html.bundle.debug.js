@@ -24,7 +24,6 @@ var row_default = _template("__tests__/tags/row.marko", (input) => {
 		item_status: ["item.status", "6:8"],
 		upper: "7:8"
 	});
-	$wg__input_inc || _resume_branch($scope0_id);
 });
 
 // template.marko

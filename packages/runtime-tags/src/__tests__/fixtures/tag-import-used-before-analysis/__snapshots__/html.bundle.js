@@ -18,7 +18,6 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		_html(`<span>${_text_mark($scope1_id, "a", input.value, $wg__input_value)}</span>`);
 		$wi__input_value && _subscribe($input_value__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a0", $wg__input_value);
-		$wg__input_value || $wi__input_value && _resume_branch($scope1_id);
 	}, $scope0_id) });
 	$wi__input_value && _scope($scope0_id, { e: $input_value__closures });
 }, 1);

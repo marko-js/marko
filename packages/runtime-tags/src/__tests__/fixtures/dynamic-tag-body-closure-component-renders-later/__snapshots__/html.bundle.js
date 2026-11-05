@@ -15,7 +15,7 @@ var card_default = _template("b", (input) => {
 
 // tags/heading.marko
 var heading_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_depth = _write_guard($scope0_reason, 2), $wi__input_type__OR__input_depth = _write_if($scope0_reason, 0), $wg__input_type = _write_guard($scope0_reason, 1), $wi__input_depth = _write_if($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_depth = _write_guard($scope0_reason, 2), $wg__input_type = _write_guard($scope0_reason, 1), $wi__input_depth = _write_if($scope0_reason, 2), $wi__input_type__OR__input_depth = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_depth__closures = /* @__PURE__ */ new Set();
 	_dynamic_tag($scope0_id, "a", input.type, {}, _content_resume("c0", () => {
@@ -23,7 +23,6 @@ var heading_default = _template("c", (input) => {
 		_scope_reason();
 		_html(`depth ${_text_mark($scope1_id, "a", input.depth, $wg__input_depth * 2)}`);
 		$wi__input_type__OR__input_depth && _subscribe($wi__input_depth && $input_depth__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "c1", $wg__input_depth);
-		$wg__input_depth || $wi__input_type__OR__input_depth && _resume_branch($scope1_id);
 	}, $scope0_id, ($scope) => [{ e: input.depth }]), 0, $wg__input_type);
 	$wi__input_type__OR__input_depth && _scope($scope0_id, {
 		e: _write_if($scope0_reason, 1) && input.depth,

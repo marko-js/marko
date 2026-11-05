@@ -41,9 +41,9 @@ var template_default = _template("a", (input) => {
 	let $item;
 	forOf(items, (item) => {
 		$item = attrTags($item, { content: _content("a1", () => {
-			const $scope1_reason = _scope_reason(), $wg__item_text = _write_guard($scope1_reason, 2), $wg__item_title__OR__item_text = _write_guard($scope1_reason, 0), $wi__item_text = _write_if($scope1_reason, 2);
+			const $scope1_reason = _scope_reason(), $wg__item_text = _write_guard($scope1_reason, 2), $wi__item_text = _write_if($scope1_reason, 2);
 			const $scope1_id = _scope_id();
-			_set_scope_reason($wg__item_title__OR__item_text << 1 | _write_guard($scope1_reason, 1) << 3 | $wg__item_text << 5);
+			_set_scope_reason(_write_guard($scope1_reason, 0) << 1 | _write_guard($scope1_reason, 1) << 3 | $wg__item_text << 5);
 			const $childScope = _peek_scope_id();
 			child_default(item);
 			_set_scope_reason($wg__item_text << 1);
@@ -70,7 +70,6 @@ var template_default = _template("a", (input) => {
 				a: _write_if($scope1_reason, 0) && _existing_scope($childScope),
 				b: $wi__item_text && _existing_scope($childScope2)
 			});
-			$wg__item_title__OR__item_text || $wg__item_text || _resume_branch($scope1_id);
 		}, $scope0_id) });
 	});
 	const $childScope4 = _peek_scope_id();

@@ -33,7 +33,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 						inner,
 						"#childScope/0": _existing_scope($childScope),
 						"ClosureSignalIndex:clicks/4": 1
-					}, "__tests__/template.marko", "11:8", { inner: "11:14" }), "__tests__/template.marko_4_clicks#0:3/subscribe");
+					}, "__tests__/template.marko", "11:8", { inner: "11:14" }), "__tests__/template.marko_4_clicks#0:3/subscribe", 0);
+					_resume_branch($scope4_id);
 				});
 				_scope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "9:6");
 			}, () => {

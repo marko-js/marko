@@ -12,10 +12,10 @@ var list_default = _template("__tests__/tags/list.marko", (input) => {
 
 // tags/child.marko
 var child_default = _template("__tests__/tags/child.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 2), $wi__input_show = _write_if($scope0_reason, 2), $wi__input_items__OR__input_show = _write_if($scope0_reason, 0), $wg__input_items = _write_guard($scope0_reason, 1), $wi__input_items = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 2), $wi__input_show = _write_if($scope0_reason, 2), $wi__input_items = _write_if($scope0_reason, 1), $wi__input_items__OR__input_show = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_show__closures = new Set();
-	_set_scope_reason($wg__input_items << 1);
+	_set_scope_reason(_write_guard($scope0_reason, 1) << 1);
 	let $item;
 	forOf(input.items, (item) => {
 		$item = attrTags($item, { content: _content("__tests__/tags/child.marko_1*content", () => {
@@ -30,7 +30,6 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 				}
 			}, $scope1_id, "#text/0", $wg__input_show, $wg__input_show, 0, 0, 1);
 			$wi__input_items__OR__input_show && _subscribe($wi__input_show && $input_show__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/child.marko", "3:6"), "__tests__/tags/child.marko_1_input_show#0:4/subscribe", $wg__input_show);
-			$wg__input_show || $wi__input_items__OR__input_show && _resume_branch($scope1_id);
 		}, $scope0_id) });
 	});
 	const $childScope = _peek_scope_id();

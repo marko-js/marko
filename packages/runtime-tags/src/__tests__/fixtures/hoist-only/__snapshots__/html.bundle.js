@@ -20,6 +20,7 @@ var template_default = _template("a", (input) => {
 					c: hoist3,
 					_: _scope_with_id($scope1_id)
 				}), "a6", 0);
+				_write_guard($scope0_reason, 0) && _resume_branch($scope2_id);
 				return 0;
 			}
 		}, $scope1_id, "a", 1, 0);

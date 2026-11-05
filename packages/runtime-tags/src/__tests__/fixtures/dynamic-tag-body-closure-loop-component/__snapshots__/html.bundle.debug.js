@@ -36,7 +36,7 @@ var list_default = _template("__tests__/tags/list.marko", (input) => {
 
 // tags/heading.marko
 var heading_default = _template("__tests__/tags/heading.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_type = _write_if($scope0_reason, 0), $wg__input_type = _write_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_type = _write_guard($scope0_reason, 0), $wi__input_type = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_type__closures = new Set();
 	let $item;
@@ -50,14 +50,12 @@ var heading_default = _template("__tests__/tags/heading.marko", (input) => {
 				const $scope2_reason = _scope_reason();
 				_html(`item ${_text_mark($scope2_id, "#text/0", i, $wg__i * 2)}`);
 				($wi__input_type || $wi__i) && _subscribe($wi__i && $item_content__i__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/heading.marko", "3:15"), "__tests__/tags/heading.marko_2_i#1:1/subscribe", $wg__i);
-				$wg__i || ($wi__input_type || $wi__i) && _resume_branch($scope2_id);
 			}, $scope1_id, ($scope) => [{ i }]), 0, $wg__input_type);
 			($wi__input_type || $wi__i) && _subscribe($wi__input_type && $input_type__closures, _scope($scope1_id, {
 				i: $wi__input_type && i,
 				_: $wi__input_type && _scope_with_id($scope0_id),
 				"ClosureScopes:i/5": $wi__i && $item_content__i__closures
 			}, "__tests__/tags/heading.marko", "3:6", { i: "2:8" }), "__tests__/tags/heading.marko_1_input_type#0:3/subscribe", $wg__input_type);
-			$wg__input_type || ($wi__input_type || $wi__i) && _resume_branch($scope1_id);
 		}, $scope0_id) });
 	});
 	list_default({ item: $item });

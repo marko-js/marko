@@ -30,7 +30,12 @@ import { getDeclaredBindingExpression } from "./get-declared-binding-expression"
 import { isOptimize, isOutputHTML } from "./marko-config";
 import { forEach, type Opt, push, reduce, some } from "./optional";
 import { getReadReplacement } from "./read-replacement";
-import { getNodeReasons, isGuardedReason, type Reason } from "./reasons";
+import {
+  getNodeReasons,
+  isGuardedReason,
+  type Reason,
+  type Reasons,
+} from "./reasons";
 import {
   type AssignedBindingExtra,
   getReferencedBindings,
@@ -68,12 +73,12 @@ import {
   getSectionForBody,
   isDynamicClosure,
   isInParentSection,
-  isOptionalBranch,
   type Section,
   sectionUtil,
 } from "./sections";
 import { replaceMethodNode, simplifyFunction } from "./simplify-fn";
 import { findSectionSlot, findSlot, type PlaceSlot, SlotKind } from "./slots";
+import { sourcesUtil } from "./sources";
 import { createOutputState, createOutputSectionState } from "./state";
 import { toOnlyExpressionOrBlock } from "./to-only-or-block";
 import { toMemberExpression, toObjectProperty } from "./to-property-name";
@@ -84,6 +89,7 @@ import {
   getExprIfWritten,
   getWriteGuardForAny,
   getWriteReason,
+  isBranchAlwaysMarked,
   isSameReason,
 } from "./write-guard";
 import { flushInto } from "./writer";
@@ -1237,12 +1243,14 @@ export function writeHTMLResumeStatements(
   const scopeIdIdentifier = getScopeIdIdentifier(section);
   // Whether any node of the section writes a marker, as the same argument
   // shape `_if` and `_await` take: absent when always, `0` when never.
-  const markerGuard = getWriteGuardForAny(
-    section,
-    getNodeReasons(section),
-    true,
-  );
+  const nodeReasons = getNodeReasons(section);
+  const markerGuard = getWriteGuardForAny(section, nodeReasons, true);
   const sectionReason = section.reason;
+  // The client reads the scope's closest branch wherever the server writes
+  // state its handlers assign or a subscription for it: with the scope, or with
+  // subscriber sets written only for some renders.
+  let linkedWithScope = some(section.bindings, isClientAssignedLet);
+  let linkReasons: Reasons | undefined;
   forEach(section.referencedClosures, (closure) => {
     // A constant never changes, so nothing subscribes to it.
     if (closure.sources && closure.type !== BindingType.constant) {
@@ -1289,6 +1297,11 @@ export function writeHTMLResumeStatements(
         const changeable = isChangeableDynamicClosure(section, closure);
         // No call writes the subscriber set: the scope joins none.
         if (subscribeArg) {
+          if (subscribeArg === identifier) {
+            linkedWithScope = true;
+          } else {
+            linkReasons = sourcesUtil.add(linkReasons, closureScopesReason!);
+          }
           addWriteScopeBuilder(section, (expr) => {
             const resumeId =
               changeable &&
@@ -1430,21 +1443,32 @@ export function writeHTMLResumeStatements(
     if (write) body.push(t.expressionStatement(write));
   }
 
-  const resumeClosestBranch =
-    !isOptionalBranch(section) &&
-    (section.hasAbortSignal ||
-      !!section.referencedClosures ||
-      (sectionReason && some(section.bindings, isLetBinding)));
-
   // The walker places a scope whose marker it visits, so a section that always
   // writes one needs no link; a dynamic marker guards it, none writes it plain.
-  if (resumeClosestBranch && markerGuard) {
-    // An abort signal's effect always ships; a closure subscription only with
-    // the scope write, so the link borrows that guard.
-    const call = callRuntime("_resume_branch", scopeIdIdentifier);
-    const link = section.hasAbortSignal
-      ? call
-      : getExprIfWritten(section, sectionReason, call);
+  if (markerGuard && !isBranchAlwaysMarked(section)) {
+    let link: t.Expression | undefined;
+    if (section.hasAbortSignal) {
+      // An abort signal's effect always ships.
+      link = callRuntime("_resume_branch", scopeIdIdentifier);
+    } else if (sectionReason && !sourcesUtil.has(nodeReasons, sectionReason)) {
+      // The rest ship with the scope write, but where a marker written for the
+      // same reason places the scope.
+      const guard = linkedWithScope
+        ? undefined
+        : getWriteGuardForAny(
+            section,
+            sourcesUtil.difference(linkReasons, nodeReasons),
+            true,
+          );
+      if (guard?.type !== "NumericLiteral") {
+        const call = callRuntime("_resume_branch", scopeIdIdentifier);
+        link = getExprIfWritten(
+          section,
+          sectionReason,
+          guard ? t.logicalExpression("&&", guard, call) : call,
+        );
+      }
+    }
     if (link) {
       body.push(
         t.expressionStatement(
@@ -1791,8 +1815,9 @@ function appendBindingKey(name: string, binding: Binding, section: Section) {
   return `${name}_${binding.name}#${binding.section === section ? "" : binding.section.id + ":"}${binding.id}`;
 }
 
-function isLetBinding(binding: Binding) {
-  return binding.type === BindingType.let;
+// State a resumed handler or effect can assign, which queues the scope's render.
+function isClientAssignedLet(binding: Binding) {
+  return binding.type === BindingType.let && hasResumableAssignment(binding);
 }
 
 function getDebugLoc({ start }: t.SourceLocation) {

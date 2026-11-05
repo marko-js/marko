@@ -33,7 +33,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				}
 			}, $scope1_id, "#text/2", $wg__aa, 0, 0, 0, 1);
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "7:6");
-			$wg__aa || $wg__index || _resume_branch($scope1_id);
 		}, $scope0_id) });
 	});
 	const $childScope = _peek_scope_id();

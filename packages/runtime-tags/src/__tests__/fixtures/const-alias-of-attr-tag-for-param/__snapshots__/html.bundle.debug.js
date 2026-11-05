@@ -12,9 +12,9 @@ var list_default = _template("__tests__/tags/list/index.marko", (input) => {
 
 // template.marko
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_items = _write_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_set_scope_reason($wg__input_items << 1);
+	_set_scope_reason(_write_guard($scope0_reason, 0) << 1);
 	let $row;
 	forOf(input.items, (item) => {
 		$row = attrTags($row, { content: _content("__tests__/template.marko_1*content", () => {

@@ -73,7 +73,6 @@ var template_default = _template("a", (input) => {
 			const $scope1_id = _scope_id();
 			_html(`<span>${_text_mark($scope1_id, "a", item.text, $wg__item_text)}:${_text_mark($scope1_id, "b", item === items[0], $wg__item * 2)}</span>`);
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
-			$wg__item_text || $wg__item || _resume_branch($scope1_id);
 		}, $scope0_id, () => [{
 			2: item?.text,
 			3: item
@@ -105,5 +104,4 @@ var template_default = _template("a", (input) => {
 	});
 	last_default({ item: $item2 });
 	_scope($scope0_id, { e: items?.[0] });
-	_resume_branch($scope0_id);
 }, 1);

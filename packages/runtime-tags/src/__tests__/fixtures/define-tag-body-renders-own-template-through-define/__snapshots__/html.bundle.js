@@ -12,16 +12,16 @@ const $content = (input) => {
 	}, $scope0_id) };
 	const Child = { content: _content("b1", ({ depth }) => {
 		const $scope3_id = _scope_id();
-		const $scope3_reason = _scope_reason(), $wg__depth2 = _write_guard($scope3_reason, 0);
-		_set_scope_reason($wg__depth2 << 1);
+		const $scope3_reason = _scope_reason();
+		_set_scope_reason(_write_guard($scope3_reason, 0) << 1);
 		const $childScope = _peek_scope_id();
 		$content({ depth: depth - 1 });
 		_write_if($scope3_reason, 0) && _scope($scope3_id, { a: _existing_scope($childScope) });
 	}, $scope0_id) };
 	const Level = { content: _content("b2", ({ depth }) => {
 		const $scope4_id = _scope_id();
-		const $scope4_reason = _scope_reason(), $wg__depth3 = _write_guard($scope4_reason, 0);
-		_set_scope_reason($wg__depth3 << 1);
+		const $scope4_reason = _scope_reason();
+		_set_scope_reason(_write_guard($scope4_reason, 0) << 1);
 		const $childScope2 = _peek_scope_id();
 		Child.content({ depth });
 		_write_if($scope4_reason, 0) && _scope($scope4_id, { a: _existing_scope($childScope2) });

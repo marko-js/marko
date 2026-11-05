@@ -36,7 +36,6 @@ var row_default = _template("__tests__/tags/row.marko", (input) => {
 		input_inc_pending: ["input.inc.pending"],
 		sfx: "5:6"
 	});
-	$wg__input_inc || $wi__input_inc && _resume_branch($scope0_id);
 });
 
 // template.marko

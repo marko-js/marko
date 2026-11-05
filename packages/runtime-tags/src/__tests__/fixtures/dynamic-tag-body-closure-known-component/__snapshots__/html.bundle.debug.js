@@ -32,7 +32,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_html(`depth ${_text_mark($scope1_id, "#text/0", input.depth, $wg__input_depth * 2)}`);
 		_subscribe($wi__input_depth && $input_depth__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4"), "__tests__/template.marko_1_input_depth#0:3/subscribe", $wg__input_depth);
-		$wg__input_depth || _resume_branch($scope1_id);
 	}, $scope0_id) });
 	_scope($scope0_id, {
 		input_depth: input.depth,
