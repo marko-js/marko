@@ -5,11 +5,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let checked = [1];
 	_html(`<input${_attr_input_checkedValue($scope0_id, "#input/0", checked, _resume(function(v) {
 		checked = v.map((it) => Number(it));
-	}, "__tests__/template.marko_0/checkedValueChange", $scope0_id), 0)} type=checkbox>${_el_resume($scope0_id, "#input/0")}<input${_attr_input_checkedValue($scope0_id, "#input/1", checked, _resume(function(v) {
+	}, "__tests__/template.marko_0/checkedValueChange", $scope0_id), 0)} type=checkbox>${_el_mark($scope0_id, "#input/0")}<input${_attr_input_checkedValue($scope0_id, "#input/1", checked, _resume(function(v) {
 		checked = v.map((it) => Number(it));
-	}, "__tests__/template.marko_0/checkedValueChange2", $scope0_id), "1")} type=checkbox>${_el_resume($scope0_id, "#input/1")}<input${_attr_input_checkedValue($scope0_id, "#input/2", checked, _resume(function(v) {
+	}, "__tests__/template.marko_0/checkedValueChange2", $scope0_id), "1")} type=checkbox>${_el_mark($scope0_id, "#input/1")}<input${_attr_input_checkedValue($scope0_id, "#input/2", checked, _resume(function(v) {
 		checked = v.map((it) => Number(it));
-	}, "__tests__/template.marko_0/checkedValueChange3", $scope0_id), 2)} type=checkbox>${_el_resume($scope0_id, "#input/2")}<span>${_text_resume($scope0_id, "#text/3", checked)}</span><button>Reset</button>${_el_resume($scope0_id, "#button/4")}`);
+	}, "__tests__/template.marko_0/checkedValueChange3", $scope0_id), 2)} type=checkbox>${_el_mark($scope0_id, "#input/2")}<span>${_text_mark($scope0_id, "#text/3", checked)}</span><button>Reset</button>${_el_mark($scope0_id, "#button/4")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {}, "__tests__/template.marko", 0, {
 		"ControlledHandler:#input/0": ["checkedValueChange", "3:53"],

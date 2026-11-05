@@ -19,7 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	child_default({ content: _content("__tests__/template.marko_1*content", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
-		_html(`<span></span>${_el_resume($scope1_id, "#span/0")}`);
+		_html(`<span></span>${_el_mark($scope1_id, "#span/0")}`);
 		_subscribe($child_content__subscribers, _scope($scope1_id, {}, "__tests__/template.marko", "3:2"));
 	}, $scope0_id) });
 	_dynamic_tag($scope0_id, "#text/1", input.show ? child_default : null, {}, _content("__tests__/template.marko_2*content", () => {
@@ -30,7 +30,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		child_default({ content: _content("__tests__/template.marko_3*content", () => {
 			_scope_reason();
 			const $scope3_id = _scope_id();
-			_html(`<div></div>${_el_resume($scope3_id, "#div/0")}`);
+			_html(`<div></div>${_el_mark($scope3_id, "#div/0")}`);
 			_subscribe($child_content2__subscribers, _scope($scope3_id, {}, "__tests__/template.marko", "16:4"));
 		}, $scope2_id) });
 		_script($scope2_id, "__tests__/template.marko_2", 0);
@@ -39,7 +39,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_dynamic_tag($scope0_id, "#text/2", input.show ? "section" : null, {}, _content("__tests__/template.marko_4*content", () => {
 		const $scope4_id = _scope_id();
 		_scope_reason();
-		_html(`<p></p>${_el_resume($scope4_id, "#p/0")}`);
+		_html(`<p></p>${_el_mark($scope4_id, "#p/0")}`);
 		_subscribe($inputshowsectionnull_content__subscribers, _scope($scope4_id, {}, "__tests__/template.marko", "34:4"));
 	}, $scope0_id), 0, $wg__input_show);
 	_script($scope0_id, "__tests__/template.marko_0", $wg__input_show);

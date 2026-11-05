@@ -8,7 +8,7 @@ var child_default = _template("b", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_html(`<div>${_text_resume($scope1_id, "a", bar("foo"), $wg__input_c)}</div>`);
+			_html(`<div>${_text_mark($scope1_id, "a", bar("foo"), $wg__input_c)}</div>`);
 			_write_if($scope0_reason, 0) && _scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) });
 			return 0;
 		}
@@ -30,7 +30,7 @@ var template_default = _template("a", (input) => {
 		show,
 		c: "c"
 	});
-	_html(`<button>toggle</button>${_el_resume($scope0_id, "b")}`);
+	_html(`<button>toggle</button>${_el_mark($scope0_id, "b")}`);
 	_script($scope0_id, "a0");
 	_scope($scope0_id, {
 		c: show,

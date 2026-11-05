@@ -7,7 +7,7 @@ var list_default = _template("b", (input) => {
 		const $itemcontent_scope = _peek_scope_id();
 		let value = _dynamic_tag($scope1_id, "a", item.content, {});
 		_var($scope1_id, "b", $itemcontent_scope, "b0");
-		_html(`<span>${_text_resume($scope1_id, "c", value)}</span>`);
+		_html(`<span>${_text_mark($scope1_id, "c", value)}</span>`);
 		_scope($scope1_id, {});
 	}, 0, $scope0_id, "a", $wg__input_item, $wg__input_item);
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {});
@@ -18,7 +18,7 @@ var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 1;
-	_html(`<button>more</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button>more</button>${_el_mark($scope0_id, "a")}`);
 	_set_scope_reason(2);
 	let $item;
 	forUntil(count, 0, 1, (n) => {

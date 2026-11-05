@@ -19,7 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				if (input.show) {
 					const $scope2_id = _scope_id();
 					const $el = _el($scope2_id, "__tests__/template.marko_2_#div#0");
-					_html(`<div></div>${_el_resume($scope2_id, "#div/0")}`);
+					_html(`<div></div>${_el_mark($scope2_id, "#div/0")}`);
 					child_default({ value: $el });
 					_scope($scope2_id, {}, "__tests__/template.marko", "2:4");
 					return 0;
@@ -34,7 +34,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_if(() => {
 		if (true) {
 			const $scope3_id = _scope_id();
-			_html(`<div></div>${_el_resume($scope3_id, "#div/0")}`);
+			_html(`<div></div>${_el_mark($scope3_id, "#div/0")}`);
 			_scope($scope3_id, {}, "__tests__/template.marko", "19:2");
 			return 0;
 		}

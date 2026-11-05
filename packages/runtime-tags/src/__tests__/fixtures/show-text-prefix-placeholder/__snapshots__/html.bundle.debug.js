@@ -5,16 +5,16 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let count = 3;
 	let vis = true;
 	_html("<strong>+ ");
-	_html(_text_resume($scope0_id, "#text/0", count, 2));
+	_html(_text_mark($scope0_id, "#text/0", count, 2));
 	_html("</strong><span>");
-	_html(_text_resume($scope0_id, "#text/1", count));
+	_html(_text_mark($scope0_id, "#text/1", count));
 	_html(" dmg</span><em>+ ");
 	_show_start(vis);
-	_html(_text_resume($scope0_id, "#text/3", count, 2));
-	_show_end($scope0_id, "#text/5", vis);
+	_html(_text_mark($scope0_id, "#text/3", count, 2));
+	_show_end($scope0_id, "#text/4", vis);
 	_html("</em><b>+ ");
-	_html(_text_resume($scope0_id, "#text/6", count, 2));
-	_html(`</b><button>inc</button>${_el_resume($scope0_id, "#button/7")}`);
+	_html(_text_mark($scope0_id, "#text/5", count, 2));
+	_html(`</b><button>inc</button>${_el_mark($scope0_id, "#button/6")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		count,

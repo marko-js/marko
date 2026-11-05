@@ -4,7 +4,7 @@ var my_button_default = _template("__tests__/tags/my-button.marko", (input) => {
 	const $scope0_id = _scope_id();
 	_html("<button");
 	_attrs_content(input, "#button/0", $scope0_id, "button");
-	_html(`</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`</button>${_el_mark($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/tags/my-button.marko_0_input#2");
 	_scope($scope0_id, {}, "__tests__/tags/my-button.marko", 0, { "EventAttributes:#button/0": ["...input", "1:11"] });
 });

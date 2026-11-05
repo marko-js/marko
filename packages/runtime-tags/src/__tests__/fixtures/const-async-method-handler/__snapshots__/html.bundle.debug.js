@@ -6,7 +6,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const handlers = { load: _resume(async function() {
 		loaded = await Promise.resolve("yes");
 	}, "__tests__/template.marko_0/handlers", $scope0_id) };
-	_html(`<button>${_text_resume($scope0_id, "#text/1", loaded)}</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button>${_text_mark($scope0_id, "#text/1", loaded)}</button>${_el_mark($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/template.marko_0_handlers_load#4");
 	_scope($scope0_id, { handlers_load: handlers.load }, "__tests__/template.marko", 0, { handlers_load: ["handlers.load", "4:8"] });
 }, 1);

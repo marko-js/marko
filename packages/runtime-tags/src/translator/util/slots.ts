@@ -30,7 +30,7 @@ export type PlaceSlotKind =
   | typeof SlotKind.ClosureSignalIndex
   | typeof SlotKind.Owner
   | typeof SlotKind.ReturnChangeHandler
-  | typeof SlotKind.Instances;
+  | typeof SlotKind.Scopes;
 
 /** A place in a scope that client code may read after resume, or a fact about
  * one a guard decides on (a condition changing, a branch or group resuming). */

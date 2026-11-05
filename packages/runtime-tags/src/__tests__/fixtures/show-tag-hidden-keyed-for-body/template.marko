@@ -1,0 +1,5 @@
+<let/visible=false/>
+<let/items=[1]/>
+<button id="t" onClick() { visible = !visible }>t</button>
+<button id="i" onClick() { items = [0, 1] }>i</button>
+<div id="c">x <show=visible><for|n| of=items by=(n) => n><b>${n}</b></for><i>tail</i></show> y</div>

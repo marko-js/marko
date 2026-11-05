@@ -16,7 +16,7 @@ var template_default = _template("a", (input) => {
 	layout_default({ content: _content("a1", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
-		_html(`<h1>Hello ${_text_resume($scope1_id, "a", input.name, $wg__input_name * 2)}</h1>`);
+		_html(`<h1>Hello ${_text_mark($scope1_id, "a", input.name, $wg__input_name * 2)}</h1>`);
 		$wi__input_name && _subscribe($name__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a0", $wg__input_name);
 		$wg__input_name || $wi__input_name && _resume_branch($scope1_id);
 	}, $scope0_id) });

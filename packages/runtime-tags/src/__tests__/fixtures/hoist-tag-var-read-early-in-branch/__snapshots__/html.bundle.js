@@ -6,14 +6,14 @@ var template_default = _template("a", (input) => {
 	_if(() => {
 		{
 			const $scope1_id = _scope_id();
-			_html(`<button>${_text_resume($scope1_id, "b", out)}</button>${_el_resume($scope1_id, "a")}`);
+			_html(`<button>${_text_mark($scope1_id, "b", out)}</button>${_el_mark($scope1_id, "a")}`);
 			_script($scope1_id, "a1");
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
 	}, $scope0_id, "a", 1, 0, 0, 0, 1);
 	const read = _resume(() => input.x, "a0", $scope0_id);
-	_html(`<div>${_text_resume($scope0_id, "b", read(), $wg__input_x)}</div>`);
+	_html(`<div>${_text_mark($scope0_id, "b", read(), $wg__input_x)}</div>`);
 	_scope($scope0_id, {
 		e: input.x,
 		g: read

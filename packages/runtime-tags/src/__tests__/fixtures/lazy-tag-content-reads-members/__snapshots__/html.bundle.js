@@ -19,11 +19,11 @@ var template_default = _template("b", (input) => {
 		a: 1,
 		b: 1
 	};
-	_html(`<button>inc</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button>inc</button>${_el_mark($scope0_id, "a")}`);
 	$Child_withLoadAssets({ content: _content("b2", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
-		_html(_text_resume($scope1_id, "a", value.a + value.b));
+		_html(_text_mark($scope1_id, "a", value.a + value.b));
 		_subscribe($value_b__closures, _subscribe($value_a__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "b0"), "b1");
 	}, $scope0_id) });
 	_script($scope0_id, "b3");

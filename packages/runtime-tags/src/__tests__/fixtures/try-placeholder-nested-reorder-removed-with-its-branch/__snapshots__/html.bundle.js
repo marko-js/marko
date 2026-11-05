@@ -5,7 +5,7 @@ var template_default = _template("a", (input) => {
 	const $count__closures = /* @__PURE__ */ new Set();
 	const $inner__closures = /* @__PURE__ */ new Set();
 	let count = 0;
-	_html(`<pre id=log></pre><button class=inc>${_text_resume($scope0_id, "b", count)}</button>${_el_resume($scope0_id, "a")}<button class=hide></button>${_el_resume($scope0_id, "c")}`);
+	_html(`<pre id=log></pre><button class=inc>${_text_mark($scope0_id, "b", count)}</button>${_el_mark($scope0_id, "a")}<button class=hide></button>${_el_mark($scope0_id, "c")}`);
 	_try($scope0_id, "d", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
@@ -14,7 +14,7 @@ var template_default = _template("a", (input) => {
 				const $scope2_id = _scope_id();
 				_await($scope2_id, "a", resolveAfter(1, 1), (w) => {
 					const $scope3_id = _scope_id();
-					_html(`<span>${_text_resume($scope3_id, "a", count)}</span>`);
+					_html(`<span>${_text_mark($scope3_id, "a", count)}</span>`);
 					_script($scope3_id, "a0");
 					_subscribe($count__closures, _scope($scope3_id, {}), "a1");
 				});

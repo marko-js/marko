@@ -3,7 +3,7 @@ var list_default = _template("__tests__/tags/list.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_item = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let open = false;
-	_html(`<button id=open>open</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button id=open>open</button>${_el_mark($scope0_id, "#button/0")}`);
 	_if(() => {
 		if (open) {
 			const $scope1_id = _scope_id();
@@ -31,7 +31,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		$item = attrTags($item, { content: _content_resume("__tests__/template.marko_2*content", () => {
 			const $scope2_reason = _scope_reason(), $wg__item = _write_guard($scope2_reason, 0);
 			const $scope2_id = _scope_id();
-			_html(`<span>${_text_resume($scope2_id, "#text/0", JSON.stringify(item), $wg__item)}</span>`);
+			_html(`<span>${_text_mark($scope2_id, "#text/0", JSON.stringify(item), $wg__item)}</span>`);
 			_write_if($scope2_reason, 0) && _scope($scope2_id, {}, "__tests__/template.marko", "5:6");
 		}, $scope0_id, () => [{ item }]) });
 	});
@@ -39,10 +39,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	list_default({ item: $item });
 	_await($scope0_id, "#text/1", resolveAfter(input.items[1]), (v) => {
 		const $scope1_id = _scope_id();
-		_html(`<button id=pick>pick</button>${_el_resume($scope1_id, "#button/0")}`);
+		_html(`<button id=pick>pick</button>${_el_mark($scope1_id, "#button/0")}`);
 		_script($scope1_id, "__tests__/template.marko_1");
 		_scope($scope1_id, { v }, "__tests__/template.marko", "10:2", { v: "10:8" });
 	});
-	_html(`<div>${_text_resume($scope0_id, "#text/2", picked && picked.text)}</div>`);
+	_html(`<div>${_text_mark($scope0_id, "#text/2", picked && picked.text)}</div>`);
 	_scope($scope0_id, { "#childScope/0": _write_if($scope0_reason, 0) && _existing_scope($childScope) }, "__tests__/template.marko", 0);
 }, 1);

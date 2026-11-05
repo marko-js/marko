@@ -2,7 +2,7 @@
 var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_name = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html(`<div>${_text_resume($scope0_id, "#text/0", input.name, $wg__input_name)} a</div><span>${_text_resume($scope0_id, "#text/1", input.name, $wg__input_name)} a</span><p>${_text_resume($scope0_id, "#text/2", input.name, $wg__input_name)} a</p>`);
+	_html(`<div>${_text_mark($scope0_id, "#text/0", input.name, $wg__input_name)} a</div><span>${_text_mark($scope0_id, "#text/1", input.name, $wg__input_name)} a</span><p>${_text_mark($scope0_id, "#text/2", input.name, $wg__input_name)} a</p>`);
 	_script($scope0_id, "__tests__/tags/child.marko_0_name#5_write#6", $wg__input_name);
 	_scope($scope0_id, {
 		name: input.name,
@@ -25,7 +25,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const write = _resume(function(msg) {
 		((el) => el())(_el_read_error).innerHTML += "\n" + msg;
 	}, "__tests__/template.marko_0/write", $scope0_id);
-	_html(`<button id=outer>Toggle Outer</button>${_el_resume($scope0_id, "#button/0")}<button id=middle>Toggle Middle</button>${_el_resume($scope0_id, "#button/1")}<button id=inner>Toggle Inner</button>${_el_resume($scope0_id, "#button/2")}<pre></pre>${_el_resume($scope0_id, "#pre/3")}`);
+	_html(`<button id=outer>Toggle Outer</button>${_el_mark($scope0_id, "#button/0")}<button id=middle>Toggle Middle</button>${_el_mark($scope0_id, "#button/1")}<button id=inner>Toggle Inner</button>${_el_mark($scope0_id, "#button/2")}<pre></pre>${_el_mark($scope0_id, "#pre/3")}`);
 	_if(() => {
 		if (showOuter) {
 			const $scope1_id = _scope_id();

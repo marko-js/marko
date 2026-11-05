@@ -6,7 +6,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html("<table><tbody>");
 	_for_to(4, 0, 1, (i) => {
 		const $scope1_id = _scope_id();
-		_html(`<tr${selected === i ? " class=danger" : ""}><td><button class=select>${_escape(i)}</button>${_el_resume($scope1_id, "#button/1")}</td></tr>${_el_resume($scope1_id, "#tr/0")}`);
+		_html(`<tr${selected === i ? " class=danger" : ""}><td><button class=select>${_escape(i)}</button>${_el_mark($scope1_id, "#button/1")}</td></tr>${_el_mark($scope1_id, "#tr/0")}`);
 		_script($scope1_id, "__tests__/template.marko_1");
 		_scope($scope1_id, {
 			"#LoopKey": i,

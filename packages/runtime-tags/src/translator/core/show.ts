@@ -25,7 +25,6 @@ import { callRuntime } from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
 import { getScopeAccessorLiteral } from "../util/scope-accessor";
 import {
-  ContentType,
   ensureSection,
   getContentInfo,
   getScopeIdIdentifier,
@@ -41,7 +40,6 @@ import { translateByTarget } from "../util/visitors";
 import * as writer from "../util/writer";
 
 const kStartBinding = Symbol("<show> range start binding");
-const kEndBinding = Symbol("<show> range end binding");
 const kStaticDisplay = Symbol("<show> static display");
 const kBodyContent = Symbol("<show> body content");
 const htmlDisplayRefs = new WeakMap<t.MarkoTag, t.Identifier>();
@@ -49,7 +47,6 @@ const htmlDisplayRefs = new WeakMap<t.MarkoTag, t.Identifier>();
 declare module "@marko/compiler/dist/types" {
   export interface MarkoTagExtra {
     [kStartBinding]?: Binding;
-    [kEndBinding]?: Binding;
     [kStaticDisplay]?: boolean;
     [kBodyContent]?: Section["content"];
   }
@@ -114,26 +111,13 @@ export default {
       const tagSection = getSection(tag);
 
       if (!getOnlyChildParentTagName(tag)) {
-        // Unless a static element or the start marker ends the range, its end
-        // is a marker that travels with the body when hidden.
-        const content = tagExtra[kBodyContent];
-        if (content && content.endType !== ContentType.Tag) {
-          tagExtra[kEndBinding] = createBinding(
-            "#text",
-            BindingType.dom,
-            tagSection,
-          );
-          structure.marker(tag, tagExtra[kEndBinding]);
-          structure.enterShallow(tag);
-        }
-
-        // The reference node the display signal anchors to, after the markers.
+        // The reference node the display signal anchors to, just after the body.
         structure.controlFlowNode(tag, tagSection);
       }
 
       const nodeBinding = tagExtra.nodeBinding!;
 
-      // The node binding settles here, where a range gets its markers.
+      // The node binding settles here, after the body.
       if (tagExtra[kStaticDisplay] === undefined) {
         addReasonExprs(ensureSlot(nodeBinding), tagExtra);
         addReasonExprs(ensureSlot(nodeBinding, SlotKind.BranchExpr), tagExtra);
@@ -239,7 +223,6 @@ export default {
         }
 
         const tagSection = getSection(tag);
-        const endBinding = tagExtra[kEndBinding];
         const nodeBinding = tagExtra.nodeBinding!;
         const startBinding = tagExtra[kStartBinding];
         const display =
@@ -252,10 +235,7 @@ export default {
           return callRuntime(
             "_show",
             getScopeAccessorLiteral(nodeBinding, true),
-            startBinding
-              ? getScopeAccessorLiteral(startBinding, true)
-              : undefined,
-            endBinding ? getScopeAccessorLiteral(endBinding, true) : undefined,
+            startBinding && getScopeAccessorLiteral(startBinding, true),
           );
         };
         addValue(tagSection, tagExtra, signal, display);

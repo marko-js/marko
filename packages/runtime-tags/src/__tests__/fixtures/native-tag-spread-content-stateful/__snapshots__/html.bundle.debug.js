@@ -4,7 +4,7 @@ var my_box_default = _template("__tests__/tags/my-box.marko", (input) => {
 	const $scope0_id = _scope_id();
 	_html("<div");
 	_attrs_content(input, "#div/0", $scope0_id, "div");
-	_html(`</div>${_el_resume($scope0_id, "#div/0")}`);
+	_html(`</div>${_el_mark($scope0_id, "#div/0")}`);
 	_script($scope0_id, "__tests__/tags/my-box.marko_0_input#2");
 	_scope($scope0_id, {}, "__tests__/tags/my-box.marko", 0, { "EventAttributes:#div/0": ["...input", "1:9"] });
 });
@@ -19,7 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
 			let count = 0;
-			_html(`<button type=button class=inc>increment</button>${_el_resume($scope1_id, "#button/0")}<span class=count>${_text_resume($scope1_id, "#text/1", count)}</span>`);
+			_html(`<button type=button class=inc>increment</button>${_el_mark($scope1_id, "#button/0")}<span class=count>${_text_mark($scope1_id, "#text/1", count)}</span>`);
 			_script($scope1_id, "__tests__/template.marko_1");
 			_scope($scope1_id, { count }, "__tests__/template.marko", "1:1", { count: "2:8" });
 		}, $scope0_id)

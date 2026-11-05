@@ -7,7 +7,7 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		_html("<div");
 		_attrs_content(input, "a", $scope3_id, "div");
-		_html(`</div>${_el_resume($scope3_id, "a")}`);
+		_html(`</div>${_el_mark($scope3_id, "a")}`);
 		_script($scope3_id, "a1");
 		_scope($scope3_id, {});
 	}, $scope0_id) }).content({ content: _content("a2", () => {

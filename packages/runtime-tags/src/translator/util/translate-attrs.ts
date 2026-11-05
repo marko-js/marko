@@ -1,7 +1,7 @@
 import { types as t } from "@marko/compiler";
 import { isAttributeTag } from "@marko/compiler/babel-utils";
 
-import { type Binding, getCanonicalBinding, propsUtil } from "./bindings";
+import { type Binding, getCanonicalBinding, propertiesUtil } from "./bindings";
 import { buildForRuntimeCall, getForType } from "./branch-tag";
 import { getDeclaredBindingExpression } from "./get-declared-binding-expression";
 import { getKnownAttrValues } from "./get-known-attr-values";
@@ -18,7 +18,7 @@ import { type SortedOpt, toArray, toSet } from "./optional";
 import {
   type ParamsTree,
   getParamsTreeAt,
-  hasAllKnownProps,
+  hasAllKnownProperties,
 } from "./params-tree";
 import { callRuntime } from "./runtime";
 import { getScopeAccessor } from "./scope-accessor";
@@ -30,7 +30,7 @@ import {
   getRendererReason,
   type Section,
 } from "./sections";
-import { getContentClosureValues, getResumeRegisterId } from "./signals";
+import { getContentClosureValues, getResumeRegistryId } from "./signals";
 import { toObjectProperty } from "./to-property-name";
 import { getScopeReasonStatement } from "./write-guard";
 
@@ -78,7 +78,7 @@ export function translateAttrs(
         if (isAttributeTag(child)) {
           const attrTagMeta = attrTagLookup[getTagName(child)];
 
-          if (propsUtil.has(skip, attrTagMeta.name)) continue;
+          if (propertiesUtil.has(skip, attrTagMeta.name)) continue;
 
           if (attrTagMeta.dynamic) {
             i = addDynamicAttrTagStatements(
@@ -421,7 +421,7 @@ function buildContent(body: t.NodePath<t.MarkoTagBody>) {
 
       return callRuntime(
         serialized ? "_content_resume" : "_content",
-        t.stringLiteral(getResumeRegisterId(bodySection, "content")),
+        t.stringLiteral(getResumeRegistryId(bodySection, "content")),
         t.arrowFunctionExpression(
           body.node.params,
           t.blockStatement(body.node.body),
@@ -484,7 +484,7 @@ export function getSingleKnownSpread(
   paramsTree: ParamsTree | true,
   attributes: (t.MarkoAttribute | t.MarkoSpreadAttribute)[],
 ) {
-  if (paramsTree === true || !hasAllKnownProps(paramsTree)) return;
+  if (paramsTree === true || !hasAllKnownProperties(paramsTree)) return;
   let binding: Binding | undefined;
   for (let i = attributes.length; i--;) {
     const attr = attributes[i];
@@ -494,7 +494,7 @@ export function getSingleKnownSpread(
       binding = spreadFrom;
     } else if (
       binding &&
-      !propsUtil.has(binding.excludeProperties, attr.name)
+      !propertiesUtil.has(binding.excludeProperties, attr.name)
     ) {
       return;
     }

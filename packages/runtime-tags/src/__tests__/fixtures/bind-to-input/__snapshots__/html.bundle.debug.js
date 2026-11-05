@@ -5,7 +5,7 @@ var counter_default = _template("__tests__/tags/counter.marko", (input) => {
 	let x = input.count;
 	_html(`<button${_attr("id", input.id)}${_attr("data-internal", x)}>`);
 	_dynamic_tag($scope0_id, "#text/1", input.content, {}, 0, 0, _write_guard($scope0_reason, 0));
-	_html(`</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`</button>${_el_mark($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/tags/counter.marko_0");
 	_scope($scope0_id, {
 		$countChange: _write_if($scope0_reason, 2) && input.countChange,
@@ -37,7 +37,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		content: _content("__tests__/template.marko_1*content", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
-			_html(_text_resume($scope1_id, "#text/0", x));
+			_html(_text_mark($scope1_id, "#text/0", x));
 			_subscribe($x__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:2"), "__tests__/template.marko_1_x#0:2/subscribe");
 		}, $scope0_id)
 	});
@@ -49,7 +49,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		content: _content("__tests__/template.marko_2*content", () => {
 			_scope_reason();
 			const $scope2_id = _scope_id();
-			_html(_text_resume($scope2_id, "#text/0", x));
+			_html(_text_mark($scope2_id, "#text/0", x));
 			_subscribe($x__closures, _scope($scope2_id, {
 				_: _scope_with_id($scope0_id),
 				"ClosureSignalIndex:x/3": 1

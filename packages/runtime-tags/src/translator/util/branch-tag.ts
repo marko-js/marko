@@ -32,10 +32,8 @@ export function initBranchSection(
 ) {
   bodySection.branchExpr = branchExpr;
   bodySection.branch = branch;
-  branch.nodeBinding.branchBodies = push(
-    branch.nodeBinding.branchBodies,
-    bodySection,
-  );
+  const { nodeBinding } = branch.tag;
+  nodeBinding.branchBodies = push(nodeBinding.branchBodies, bodySection);
 }
 
 // The branch id rides the always-rendered resume marker, which resume decodes

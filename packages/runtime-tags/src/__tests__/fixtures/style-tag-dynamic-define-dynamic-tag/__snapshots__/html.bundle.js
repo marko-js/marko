@@ -5,7 +5,7 @@ var template_default = _template("a", (input) => {
 	const Box = { content: _content_resume("a1", ({ color }) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $wg__color = _write_guard($scope1_reason, 0);
-		_html(`${_style_html(`--M_a0:${_escape_style_value(color)};`)}${_el_resume($scope1_id, "a", $wg__color)}<div class=box>Hi</div>`);
+		_html(`${_style_html(`--M_a0:${_escape_style_value(color)};`)}${_el_mark($scope1_id, "a", $wg__color)}<div class=box>Hi</div>`);
 		_write_if($scope1_reason, 0) && _scope($scope1_id, {});
 	}, $scope0_id) };
 	_dynamic_tag($scope0_id, "a", input.show ? Box : null, { color: input.color }, 0, 0, $wg__input_show__OR__input_color);

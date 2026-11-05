@@ -6,10 +6,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html("<div>");
 	_for_of(items, () => {
 		const $scope1_id = _scope_id();
-		_html(`<button>Test</button>${_el_resume($scope1_id, "#button/0")}`);
+		_html(`<button>Test</button>${_el_mark($scope1_id, "#button/0")}`);
 		_script($scope1_id, "__tests__/template.marko_1");
 		_scope($scope1_id, {}, "__tests__/template.marko", "4:4");
 	}, 0, $scope0_id, "#text/0", 1, 1, 0, 0, 1);
-	_html(`<div></div>${_el_resume($scope0_id, "#div/1")}</div>`);
+	_html(`<div></div>${_el_mark($scope0_id, "#div/1")}</div>`);
 	_scope($scope0_id, { items }, "__tests__/template.marko", 0, { items: "1:6" });
 }, 1);

@@ -18,7 +18,7 @@ var template_default = _template("a", (input) => {
 				if (input.show) {
 					const $scope2_id = _scope_id();
 					const $el = _el($scope2_id, "a1");
-					_html(`<div></div>${_el_resume($scope2_id, "a")}`);
+					_html(`<div></div>${_el_mark($scope2_id, "a")}`);
 					child_default({ value: $el });
 					_scope($scope2_id, {});
 					return 0;
@@ -33,7 +33,7 @@ var template_default = _template("a", (input) => {
 	_if(() => {
 		{
 			const $scope3_id = _scope_id();
-			_html(`<div></div>${_el_resume($scope3_id, "a")}`);
+			_html(`<div></div>${_el_mark($scope3_id, "a")}`);
 			_scope($scope3_id, {});
 			return 0;
 		}

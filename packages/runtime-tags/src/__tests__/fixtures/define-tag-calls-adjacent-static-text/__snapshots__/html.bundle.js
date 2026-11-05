@@ -10,7 +10,7 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id) };
 	D.content({});
 	D.content({});
-	_html(`<span>${_text_resume($scope0_id, "c", n)}</span>`);
+	_html(`<span>${_text_mark($scope0_id, "c", n)}</span>`);
 	_if(() => {
 		{
 			const $scope3_id = _scope_id();
@@ -19,7 +19,7 @@ var template_default = _template("a", (input) => {
 			return 1;
 		}
 	}, $scope0_id, "d");
-	_html(`<button>inc</button>${_el_resume($scope0_id, "e")}`);
+	_html(`<button>inc</button>${_el_mark($scope0_id, "e")}`);
 	_script($scope0_id, "a1");
 	_scope($scope0_id, { f: n });
 }, 1);

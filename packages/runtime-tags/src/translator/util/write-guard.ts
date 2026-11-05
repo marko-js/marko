@@ -38,7 +38,7 @@ export function isSameReason(a: Reason | undefined, b: Reason | undefined) {
 }
 
 // The runtime checks a section's guard for a param reason group calls, by the
-// prefix their hoisted guards are named with.
+// prefix their shared guards are named with.
 const groupCheckPrefixes = {
   _write_guard: "wg",
   _write_if: "wi",
@@ -46,20 +46,20 @@ const groupCheckPrefixes = {
 type GroupCheck = keyof typeof groupCheckPrefixes;
 
 interface SectionGuards {
-  hoists: Map<GroupCheck, GuardHoists>;
+  shares: Map<GroupCheck, GuardShares>;
   declarators: t.VariableDeclarator[];
 }
 
 // Keyed by param reason group: a section's guard for a set of params is
 // that group's check, whatever else the reason reads.
-interface GuardHoists {
+interface GuardShares {
   names: Map<number, string>;
   pending: Map<number, t.ParenthesizedExpression>;
 }
 
 const [getSectionGuards] = createOutputSectionState<SectionGuards>(
   (section) => ({
-    hoists: new Map(),
+    shares: new Map(),
     declarators: [
       t.variableDeclarator(
         scopeReasonIdentifier(section),
@@ -116,7 +116,7 @@ export function buildGroupMask(
 }
 
 // Every section body consumes (and clears) its caller's reason; it binds it,
-// with its hoisted guards, only when a guard is dynamic.
+// with its shared guards, only when a guard is dynamic.
 export function getScopeReasonStatement(section: Section): t.Statement {
   return hasGuardedReason(section)
     ? t.variableDeclaration("const", getSectionGuards(section).declarators)
@@ -167,7 +167,7 @@ export function getWriteGuardForAny(
   }
 
   // A member always written decides before any dynamic guard is built (and
-  // hoisted); one never written adds nothing.
+  // shared); one never written adds nothing.
   for (const reason of reasons) {
     if (getWriteBit(section, reason) === 1) {
       return omitUnconditional
@@ -211,7 +211,41 @@ export function isEverWritten(section: Section, reason: undefined | Reason) {
 }
 
 // The constant a reason's guard folds to: `0` unwritten, `1` always written.
-function getWriteBit(section: Section, reason: undefined | Reason) {
+// Whether a guard on `reason` in a known tag's template writes for every render
+// of `call` (in `callSection`): always there, or by a param group it always passes.
+export function isWrittenForCall(
+  section: Section,
+  reason: undefined | Reason,
+  call: t.MarkoTagExtra,
+  callSection: Section,
+) {
+  if (getWriteBit(section, reason) === 1) return true;
+  const { childScopeBinding, childSection } = call;
+  return (
+    !!childScopeBinding &&
+    isDynamicWriteGuard(section, reason) &&
+    reduceParamGroups(
+      reason.param,
+      (written, groupSection, group) =>
+        written ||
+        (groupSection === childSection &&
+          getWriteBit(
+            callSection,
+            findSlot(
+              childScopeBinding,
+              SlotKind.ParamGroup,
+              callSection,
+              childSection.paramReasonGroups![
+                getParamReasonGroupIndex(childSection, group)
+              ],
+            )?.reason,
+          ) === 1),
+      false,
+    )
+  );
+}
+
+export function getWriteBit(section: Section, reason: undefined | Reason) {
   return isDynamicWriteGuard(section, reason)
     ? getGroupsBit(reason.param)
     : reason
@@ -255,7 +289,7 @@ function orGroupCheck(check: GroupCheck) {
   ) =>
     getStaticGroupBit(section, group) === 0
       ? expr
-      : orGuard(expr, getOrHoistSectionGuard(section, group, check));
+      : orGuard(expr, getOrShareSectionGuard(section, group, check));
 }
 
 function orGuard(guard: t.Expression | undefined, other: t.Expression) {
@@ -266,8 +300,8 @@ function andGuard(guard: t.Expression | undefined | false, expr: t.Expression) {
   return guard ? t.logicalExpression("&&", guard, expr) : expr;
 }
 
-// The first use stays inline; a second hoists it into a shared declarator.
-function getOrHoistSectionGuard(
+// The first use stays inline; a second shares it through a declarator.
+function getOrShareSectionGuard(
   section: Section,
   params: ParamReasonGroup,
   check: GroupCheck,
@@ -275,8 +309,8 @@ function getOrHoistSectionGuard(
   if (!section.paramReasonGroups) return scopeReasonIdentifier(section);
 
   const state = getSectionGuards(section);
-  let tracking = state.hoists.get(check);
-  if (!tracking) state.hoists.set(check, (tracking = createGuardHoists()));
+  let tracking = state.shares.get(check);
+  if (!tracking) state.shares.set(check, (tracking = createGuardShares()));
   const index = getParamReasonGroupIndex(section, params);
   const name = tracking.names.get(index);
   if (name) return t.identifier(name);
@@ -293,14 +327,14 @@ function getOrHoistSectionGuard(
     return expr;
   }
 
-  const hoisted = generateUid(
+  const shared = generateUid(
     `${groupCheckPrefixes[check]}__${getDebugNamesAsIdentifier(params)}`,
   );
-  tracking.names.set(index, hoisted);
+  tracking.names.set(index, shared);
   tracking.pending.delete(index);
-  state.declarators.push(t.variableDeclarator(t.identifier(hoisted), guard));
-  pending.expression = t.identifier(hoisted);
-  return t.parenthesizedExpression(t.identifier(hoisted));
+  state.declarators.push(t.variableDeclarator(t.identifier(shared), guard));
+  pending.expression = t.identifier(shared);
+  return t.parenthesizedExpression(t.identifier(shared));
 }
 
 // Whether the guard for a reason is a runtime mask rather than a constant.
@@ -332,9 +366,9 @@ const [getBodyGroupBit] = createAnalysisMemo((group: ParamReasonGroup) => {
 }, undefined);
 
 function getCallsBit(body: Section, group: ParamReasonGroup) {
-  const calls = body.calls!;
+  const renderedBy = body.renderedBy!;
   let bit: number | undefined;
-  for (const call of Array.isArray(calls) ? calls : [calls]) {
+  for (const call of Array.isArray(renderedBy) ? renderedBy : [renderedBy]) {
     const callSection = call.childScopeBinding.section;
     const callBit = getWriteBit(
       callSection,
@@ -351,7 +385,9 @@ function getCallsBit(body: Section, group: ParamReasonGroup) {
 
 // A `<define>` body its known calls alone render: its var is read nowhere else.
 function isOnlyCalled(body: Section) {
-  return !!body.calls && !!body.derives && !some(body.derives.binding, isUsed);
+  return (
+    !!body.renderedBy && !!body.derives && !some(body.derives.binding, isUsed)
+  );
 }
 
 function isUsed(binding: Binding) {
@@ -362,7 +398,7 @@ function isUsed(binding: Binding) {
   );
 }
 
-function createGuardHoists(): GuardHoists {
+function createGuardShares(): GuardShares {
   return {
     names: new Map(),
     pending: new Map(),

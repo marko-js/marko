@@ -13,7 +13,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		} else {
 			const $scope1_id = _scope_id();
 			let count = 0;
-			_html(`<button>${_text_resume($scope1_id, "#text/1", count)}</button>${_el_resume($scope1_id, "#button/0")}`);
+			_html(`<button>${_text_mark($scope1_id, "#text/1", count)}</button>${_el_mark($scope1_id, "#button/0")}`);
 			_dynamic_tag($scope1_id, "#text/2", input.dyn, { count }, _content_resume("__tests__/template.marko_3*content", () => {
 				const $scope3_id = _scope_id();
 				_scope_reason();

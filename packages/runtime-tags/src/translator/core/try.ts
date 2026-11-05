@@ -25,10 +25,12 @@ import {
   getScopeIdIdentifier,
   getSection,
   getSectionForBody,
+  mayMergeWithText,
+  type ControlFlowTagExtra,
 } from "../util/sections";
 import {
   addValue,
-  getResumeRegisterId,
+  getResumeRegistryId,
   getSignal,
   trimEmptyArgs,
   writeHTMLResumeStatements,
@@ -84,7 +86,10 @@ export default {
       }
     }
     const section = ensureSection(tag);
-    const tagExtra = mergeTagReferences(section, tag.node);
+    const tagExtra = mergeTagReferences(
+      section,
+      tag.node,
+    ) as ControlFlowTagExtra;
     const nodeBinding = (tagExtra.nodeBinding = createBinding(
       "#text",
       BindingType.dom,
@@ -101,9 +106,10 @@ export default {
         );
     }
 
+    tagExtra.textBefore = mayMergeWithText(tag, true);
     initBranchSection(ensureBodySection(tag.get("body"))!, tagExtra, {
-      nodeBinding,
-      optional: false,
+      kind: "try",
+      tag: tagExtra,
     });
     structure.marker(tag, nodeBinding);
     structure.enterShallow(tag);
@@ -133,14 +139,14 @@ export default {
               : t.arrowFunctionExpression([], t.blockStatement([]))),
           (placeholderSection &&
             t.stringLiteral(
-              getResumeRegisterId(placeholderSection, "content"),
+              getResumeRegistryId(placeholderSection, "content"),
             )) ||
             absentArg(0),
           catchTag &&
             t.stringLiteral(
               catchSection
-                ? getResumeRegisterId(catchSection, "content")
-                : getResumeRegisterId(section, nodeBinding, "catch"),
+                ? getResumeRegistryId(catchSection, "content")
+                : getResumeRegistryId(section, nodeBinding, "catch"),
             ),
         ];
 
@@ -159,7 +165,7 @@ export default {
         const emptyCatchId =
           catchTag &&
           !catchSection &&
-          getResumeRegisterId(section, nodeBinding, "catch");
+          getResumeRegistryId(section, nodeBinding, "catch");
         const signal = getSignal(section, nodeBinding, "try");
 
         signal.build = () => {

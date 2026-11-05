@@ -2,7 +2,7 @@
 var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_value = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html(`<span>${_text_resume($scope0_id, "#text/0", input.value, $wg__input_value)}</span>`);
+	_html(`<span>${_text_mark($scope0_id, "#text/0", input.value, $wg__input_value)}</span>`);
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/child.marko", 0);
 });
 
@@ -31,7 +31,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		type: child_default,
 		value: count
 	});
-	_html(`<button>inc</button>${_el_resume($scope0_id, "#button/1")}`);
+	_html(`<button>inc</button>${_el_mark($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		count,

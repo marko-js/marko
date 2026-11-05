@@ -17,17 +17,17 @@ var template_default = _template("a", (input) => {
 	let out = "";
 	let show = true;
 	let items = ["a", "b"];
-	_html(`<button id=rename>rename</button>${_el_resume($scope0_id, "a")}<div id=out>${_text_resume($scope0_id, "b", out)}</div>`);
+	_html(`<button id=rename>rename</button>${_el_mark($scope0_id, "a")}<div id=out>${_text_mark($scope0_id, "b", out)}</div>`);
 	_set_scope_reason(2);
 	let $item;
 	forOf(items, (item) => {
 		$item = attrTags($item, { content: _content("a2", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
-			_html(`<button class=direct>direct</button>${_el_resume($scope1_id, "a")}`);
+			_html(`<button class=direct>direct</button>${_el_mark($scope1_id, "a")}`);
 			{
 				const $scope2_id = _scope_id();
-				_html(`<button class=nested>nested</button>${_el_resume($scope2_id, "a")}`);
+				_html(`<button class=nested>nested</button>${_el_mark($scope2_id, "a")}`);
 				_script($scope2_id, "a0");
 				_scope($scope2_id, { _: _scope_with_id($scope1_id) });
 			}

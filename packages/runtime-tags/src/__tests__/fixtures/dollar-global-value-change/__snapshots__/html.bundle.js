@@ -18,7 +18,7 @@ var template_default = _template("a", (input) => {
 	const $childScope = _peek_scope_id();
 	let v = g_default({});
 	_var($scope0_id, "b", $childScope, "a0");
-	_html(`<button>${_escape(v)}</button>${_el_resume($scope0_id, "c")}`);
+	_html(`<button>${_escape(v)}</button>${_el_mark($scope0_id, "c")}`);
 	_script($scope0_id, "a1");
 	_scope($scope0_id, { a: _existing_scope($childScope) });
 }, 1);

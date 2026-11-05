@@ -7,7 +7,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const obj = { get bad() {
 			throw new Error("getter failed");
 		} };
-		_html(`<button>${_escape(value)}</button>${_el_resume($scope1_id, "#button/0")}`);
+		_html(`<button>${_escape(value)}</button>${_el_mark($scope1_id, "#button/0")}`);
 		_script($scope1_id, "__tests__/template.marko_1");
 		_scope($scope1_id, { obj }, "__tests__/template.marko", "3:2", { obj: "4:10" });
 	});

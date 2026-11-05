@@ -3,7 +3,7 @@ var counter_default = _template("__tests__/tags/counter.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let n = 0;
-	_html(`<button>${_text_resume($scope0_id, "#text/1", n)}</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button>${_text_mark($scope0_id, "#text/1", n)}</button>${_el_mark($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/tags/counter.marko_0");
 	_scope($scope0_id, { n }, "__tests__/tags/counter.marko", 0, { n: "1:6" });
 });
@@ -22,7 +22,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_if(() => {
 			if (on) {
 				const $scope2_id = _scope_id();
-				_html(`<span>${_text_resume($scope2_id, "#text/0", f(), $wg__input_a)}</span>`);
+				_html(`<span>${_text_mark($scope2_id, "#text/0", f(), $wg__input_a)}</span>`);
 				($wi__input_a || $wi__on) && _subscribe($wi__input_a && $f2__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:4"), "__tests__/template.marko_2_f#0:8/subscribe", $wg__input_a);
 				return 0;
 			}

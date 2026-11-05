@@ -8,7 +8,7 @@ var my_select_default = _template("b", (input) => {
 		_attrs_content($select_input, "a", $scope0_id, "select");
 		_html("</select>");
 	});
-	_html(_el_resume($scope0_id, "a"));
+	_html(_el_mark($scope0_id, "a"));
 	_script($scope0_id, "b0");
 	_scope($scope0_id, {});
 });
@@ -30,6 +30,6 @@ var template_default = _template("a", (input) => {
 			_html(`<option${_attr_option_value("a")}>A</option><option${_attr_option_value("b")}>B</option><option${_attr_option_value("c")}>C</option>`);
 		}, $scope0_id)
 	});
-	_html(`<span>${_text_resume($scope0_id, "b", value)}</span>`);
+	_html(`<span>${_text_mark($scope0_id, "b", value)}</span>`);
 	_scope($scope0_id, { a: _existing_scope($childScope) });
 }, 1);

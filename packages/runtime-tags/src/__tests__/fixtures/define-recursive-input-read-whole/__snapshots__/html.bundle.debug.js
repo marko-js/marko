@@ -21,7 +21,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				return 0;
 			}
 		}, $scope1_id, "#text/0", $wg__input_depth__OR__input_label, $wg__input_depth);
-		_html(`<span>${_text_resume($scope1_id, "#text/1", input.label, $wg__input_label)}</span>`);
+		_html(`<span>${_text_mark($scope1_id, "#text/1", input.label, $wg__input_label)}</span>`);
 		$wi__input_depth__OR__input_label && _scope($scope1_id, { input_label: _write_if($scope1_reason, 1) && input.label }, "__tests__/template.marko", "1:2", { input_label: ["input.label", "1:14"] });
 	}, $scope0_id) };
 	let depth = 1;
@@ -31,7 +31,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		depth,
 		label: "x"
 	});
-	_html(`<button>deeper</button>${_el_resume($scope0_id, "#button/1")}`);
+	_html(`<button>deeper</button>${_el_mark($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		depth,

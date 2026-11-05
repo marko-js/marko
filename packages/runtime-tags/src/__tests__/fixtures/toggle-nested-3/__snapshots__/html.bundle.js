@@ -6,15 +6,15 @@ var template_default = _template("a", (input) => {
 	let outer = true;
 	let inner = true;
 	let count = 0;
-	_html(`<div><button id=outer></button>${_el_resume($scope0_id, "a")}`);
+	_html(`<div><button id=outer></button>${_el_mark($scope0_id, "a")}`);
 	_if(() => {
 		{
 			const $scope1_id = _scope_id();
-			_html(`<button id=inner></button>${_el_resume($scope1_id, "a")}`);
+			_html(`<button id=inner></button>${_el_mark($scope1_id, "a")}`);
 			_if(() => {
 				{
 					const $scope2_id = _scope_id();
-					_html(`<button id=count>${_text_resume($scope2_id, "b", count)}</button>${_el_resume($scope2_id, "a")}`);
+					_html(`<button id=count>${_text_mark($scope2_id, "b", count)}</button>${_el_mark($scope2_id, "a")}`);
 					_script($scope2_id, "a0");
 					_subscribe($count__closures, _scope($scope2_id, {}), "a1");
 					return 0;

@@ -7,7 +7,7 @@ const $content = (input) => {
 		const $scope1_id = _scope_id();
 		const id = `${input.path || "c"}-${i}`;
 		let open = true;
-		_html(`<li${_attr("id", id)}${_attr("hidden", !open)}><span>${_text_resume($scope1_id, "#text/1", comment.text, $wg__input_comments)}</span><button>${_text_resume($scope1_id, "#text/3", open ? "[-]" : "[+]")}</button>${_el_resume($scope1_id, "#button/2")}`);
+		_html(`<li${_attr("id", id)}${_attr("hidden", !open)}><span>${_text_mark($scope1_id, "#text/1", comment.text, $wg__input_comments)}</span><button>${_text_mark($scope1_id, "#text/3", open ? "[-]" : "[+]")}</button>${_el_mark($scope1_id, "#button/2")}`);
 		_if(() => {
 			if (comment.comments) {
 				const $scope2_id = _scope_id();
@@ -24,7 +24,7 @@ const $content = (input) => {
 				return 0;
 			}
 		}, $scope1_id, "#text/4", $wg__input_comments__OR__input_path, $wg__input_comments, 0, 0, 1);
-		_html(`</li>${_el_resume($scope1_id, "#li/0")}`);
+		_html(`</li>${_el_mark($scope1_id, "#li/0")}`);
 		_script($scope1_id, "__tests__/tags/comments.marko_1");
 		_scope($scope1_id, {
 			"#LoopKey": _write_if($scope0_reason, 2) && i,

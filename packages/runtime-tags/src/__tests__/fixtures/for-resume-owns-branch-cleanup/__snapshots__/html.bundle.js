@@ -17,7 +17,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let outer = true;
 	let count = 0;
-	_html(`<div id=ref>init</div><button id=o>O</button>${_el_resume($scope0_id, "a")}<button id=a>A</button>${_el_resume($scope0_id, "b")}`);
+	_html(`<div id=ref>init</div><button id=o>O</button>${_el_mark($scope0_id, "a")}<button id=a>A</button>${_el_mark($scope0_id, "b")}`);
 	_if(() => {
 		{
 			const $scope1_id = _scope_id();
