@@ -7,7 +7,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $wg__input_content = _write_guard($scope1_reason, 0);
 		let open = false;
-		_html(`<button id=open>open</button>${_el_resume($scope1_id, "#button/0")}`);
+		_html(`<button id=open>open</button>${_el_mark($scope1_id, "#button/0")}`);
 		_if(() => {
 			if (open) {
 				const $scope2_id = _scope_id();

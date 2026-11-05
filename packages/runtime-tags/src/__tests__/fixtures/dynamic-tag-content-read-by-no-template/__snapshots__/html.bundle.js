@@ -2,7 +2,7 @@
 var a_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_x = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html(`<div>A ${_text_resume($scope0_id, "a", input.x, $wg__input_x * 2)}</div>`);
+	_html(`<div>A ${_text_mark($scope0_id, "a", input.x, $wg__input_x * 2)}</div>`);
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
@@ -10,7 +10,7 @@ var a_default = _template("b", (input) => {
 var b_default = _template("c", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_x = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html(`<span>B ${_text_resume($scope0_id, "a", input.x, $wg__input_x * 2)}</span>`);
+	_html(`<span>B ${_text_mark($scope0_id, "a", input.x, $wg__input_x * 2)}</span>`);
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {});
 });
 
@@ -24,7 +24,7 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		_html("Hello");
 	}, $scope0_id));
-	_html(`<button></button>${_el_resume($scope0_id, "b")}`);
+	_html(`<button></button>${_el_mark($scope0_id, "b")}`);
 	_script($scope0_id, "a1");
 	_scope($scope0_id, { c: useB });
 }, 1);

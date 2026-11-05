@@ -7,7 +7,7 @@ var template_default = _template("a", (input) => {
 		nested: { depth: 1 }
 	};
 	let box = { count: 0 };
-	_html(`<button class=write>write</button>${_el_resume($scope0_id, "a")}<button class=read>read</button>${_el_resume($scope0_id, "b")}<p>${_text_resume($scope0_id, "c", "")}</p>`);
+	_html(`<button class=write>write</button>${_el_mark($scope0_id, "a")}<button class=read>read</button>${_el_mark($scope0_id, "b")}<p>${_text_mark($scope0_id, "c", "")}</p>`);
 	_script($scope0_id, "a0");
 	_scope($scope0_id, {
 		d: live,

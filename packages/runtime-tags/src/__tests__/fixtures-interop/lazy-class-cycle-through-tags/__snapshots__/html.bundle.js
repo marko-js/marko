@@ -16,7 +16,7 @@ s("a", _marko_template$2);
 var t_default = _template("c", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_depth = _write_guard($scope0_reason, 0), $wi__input_depth = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html(`<span>t ${_text_resume($scope0_id, "a", input.depth, $wg__input_depth * 2)}</span>`);
+	_html(`<span>t ${_text_mark($scope0_id, "a", input.depth, $wg__input_depth * 2)}</span>`);
 	_if(() => {
 		if (input.depth > 0) {
 			const $scope1_id = _scope_id();

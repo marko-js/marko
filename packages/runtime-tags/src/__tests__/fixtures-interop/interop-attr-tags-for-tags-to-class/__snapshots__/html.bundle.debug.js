@@ -29,13 +29,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let labels = ["one", "two"];
-	_html(`<button>translate</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button>translate</button>${_el_mark($scope0_id, "#button/0")}`);
 	let $item;
 	forOf(labels, (label) => {
 		$item = attrTags($item, { renderBody: _content_resume("__tests__/template.marko_1*content", () => {
 			const $scope1_reason = _scope_reason(), $wg__label = _write_guard($scope1_reason, 0);
 			const $scope1_id = _scope_id();
-			_html(`<em>${_text_resume($scope1_id, "#text/0", label, $wg__label)}</em>`);
+			_html(`<em>${_text_mark($scope1_id, "#text/0", label, $wg__label)}</em>`);
 			_write_if($scope1_reason, 0) && _scope($scope1_id, {}, "__tests__/template.marko", "5:6");
 		}, $scope0_id, () => [{ label }]) });
 	});

@@ -4,7 +4,7 @@ var custom_input_default = _template("__tests__/tags/custom-input.marko", (input
 	const $scope0_id = _scope_id();
 	_html(`<input${_attr_input_value($scope0_id, "#input/0", input.value, input.valueChange && _resume(($next) => {
 		input.valueChange(parseInt($next));
-	}, "__tests__/tags/custom-input.marko_0/valueChange", $scope0_id))} type=number>${_el_resume($scope0_id, "#input/0")}`);
+	}, "__tests__/tags/custom-input.marko_0/valueChange", $scope0_id))} type=number>${_el_mark($scope0_id, "#input/0")}`);
 	_script($scope0_id, "__tests__/tags/custom-input.marko_0");
 	_scope($scope0_id, {
 		input_value: _write_if($scope0_reason, 0) && input.value,
@@ -28,6 +28,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			value = _new_value;
 		}, "__tests__/template.marko_0/valueChange", $scope0_id)
 	});
-	_html(`<span>${_text_resume($scope0_id, "#text/1", value)} ${_text_resume($scope0_id, "#text/2", typeof value, 2)}</span>`);
+	_html(`<span>${_text_mark($scope0_id, "#text/1", value)} ${_text_mark($scope0_id, "#text/2", typeof value, 2)}</span>`);
 	_scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", 0);
 }, 1);

@@ -15,17 +15,17 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $x__closures = new Set();
 	let x = 1;
 	const z = x;
-	_html(`<button class=x>${_text_resume($scope0_id, "#text/1", x)}</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button class=x>${_text_mark($scope0_id, "#text/1", x)}</button>${_el_mark($scope0_id, "#button/0")}`);
 	wrap_default({ content: _content("__tests__/template.marko_1*content", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		const $wrap_content__x2__closures = new Set();
 		let x = 10;
-		_html(`<button class=y></button>${_el_resume($scope1_id, "#button/0")}<em>${_text_resume($scope1_id, "#text/1", x)}</em>`);
+		_html(`<button class=y></button>${_el_mark($scope1_id, "#button/0")}<em>${_text_mark($scope1_id, "#text/1", x)}</em>`);
 		wrap_default({ content: _content("__tests__/template.marko_2*content", () => {
 			_scope_reason();
 			const $scope2_id = _scope_id();
-			_html(`<s>${_text_resume($scope2_id, "#text/0", x)}</s>`);
+			_html(`<s>${_text_mark($scope2_id, "#text/0", x)}</s>`);
 			_subscribe($wrap_content__x2__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "10:4"), "__tests__/template.marko_2_x#1:3/subscribe");
 		}, $scope1_id) });
 		_script($scope1_id, "__tests__/template.marko_1_x#3");

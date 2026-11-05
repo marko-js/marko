@@ -220,7 +220,7 @@ export function assertVisited<S>(
 ): asserts state is S {
   if (!state) {
     throw entryFile.path.buildCodeFrameError(
-      "Unable to build hydrate code, no files were visited before finalizing the build",
+      "Unable to build resume code, no files were visited before finalizing the build",
     );
   }
 }

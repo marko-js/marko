@@ -3,7 +3,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let open = false;
-	_html(`<button id=toggle>toggle</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button id=toggle>toggle</button>${_el_mark($scope0_id, "#button/0")}`);
 	_if(() => {
 		if (open) {
 			const $scope1_id = _scope_id();
@@ -48,7 +48,7 @@ var heading_default = _template("__tests__/tags/heading.marko", (input) => {
 			_dynamic_tag($scope1_id, "#text/0", input.type, {}, _content_resume("__tests__/tags/heading.marko_2*content", () => {
 				const $scope2_id = _scope_id();
 				const $scope2_reason = _scope_reason();
-				_html(`item ${_text_resume($scope2_id, "#text/0", i, $wg__i * 2)}`);
+				_html(`item ${_text_mark($scope2_id, "#text/0", i, $wg__i * 2)}`);
 				($wi__input_type || $wi__i) && _subscribe($wi__i && $item_content__i__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/heading.marko", "3:15"), "__tests__/tags/heading.marko_2_i#1:1/subscribe", $wg__i);
 				$wg__i || ($wi__input_type || $wi__i) && _resume_branch($scope2_id);
 			}, $scope1_id, ($scope) => [{ i }]), 0, $wg__input_type);

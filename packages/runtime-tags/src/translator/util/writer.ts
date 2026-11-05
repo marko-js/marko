@@ -97,7 +97,7 @@ export function markNode(
       // Deferred markers ride the stream trailer alongside a deferred end tag
       // (html/body), keeping the marker adjacent to the element it resumes.
       writeTo(path, deferred)`${callRuntime(
-        "_el_resume",
+        "_el_mark",
         getScopeIdIdentifier(section),
         getScopeAccessorLiteral(nodeBinding),
         getWriteGuard(section, reason, true),

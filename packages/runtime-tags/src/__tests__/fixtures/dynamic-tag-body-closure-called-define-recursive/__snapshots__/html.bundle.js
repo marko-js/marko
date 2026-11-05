@@ -3,7 +3,7 @@ var card_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let open = true;
-	_html(`<button class=toggle>toggle</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button class=toggle>toggle</button>${_el_mark($scope0_id, "a")}`);
 	_if(() => {
 		{
 			const $scope1_id = _scope_id();
@@ -27,7 +27,7 @@ var template_default = _template("a", (input) => {
 	const Tree = { content: _content("a0", ({ n }) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $wg__n = _write_guard($scope1_reason, 0), $wi__n = _write_if($scope1_reason, 0);
-		_html(`<em>${_text_resume($scope1_id, "a", input.note, $wg__input_note)}</em>`);
+		_html(`<em>${_text_mark($scope1_id, "a", input.note, $wg__input_note)}</em>`);
 		_if(() => {
 			if (n) {
 				const $scope2_id = _scope_id();

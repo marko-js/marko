@@ -7,7 +7,7 @@ var my_btn_default = _template("b", (input) => {
 			const $scope1_id = _scope_id();
 			_html("<a");
 			_attrs_content(input, "a", $scope1_id, "a");
-			_html(`</a>${_el_resume($scope1_id, "a")}`);
+			_html(`</a>${_el_mark($scope1_id, "a")}`);
 			_script($scope1_id, "b0");
 			_scope($scope1_id, { _: $wi__input && _scope_with_id($scope0_id) });
 			return 0;
@@ -15,7 +15,7 @@ var my_btn_default = _template("b", (input) => {
 			const $scope2_id = _scope_id();
 			_html("<button");
 			_attrs_content(input, "a", $scope2_id, "button");
-			_html(`</button>${_el_resume($scope2_id, "a")}`);
+			_html(`</button>${_el_mark($scope2_id, "a")}`);
 			_script($scope2_id, "b1");
 			_scope($scope2_id, { _: $wi__input && _scope_with_id($scope0_id) });
 			return 1;
@@ -31,7 +31,7 @@ var template_default = _template("a", (input) => {
 	const $count__closures = /* @__PURE__ */ new Set();
 	let href = void 0;
 	let count = 0;
-	_html(`<button class=link>link</button>${_el_resume($scope0_id, "a")}<button class=inc>inc</button>${_el_resume($scope0_id, "b")}`);
+	_html(`<button class=link>link</button>${_el_mark($scope0_id, "a")}<button class=inc>inc</button>${_el_mark($scope0_id, "b")}`);
 	_set_scope_reason(10);
 	const $childScope = _peek_scope_id();
 	my_btn_default({
@@ -40,7 +40,7 @@ var template_default = _template("a", (input) => {
 		content: _content("a1", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
-			_html(`Label ${_text_resume($scope1_id, "a", count, 2)}`);
+			_html(`Label ${_text_mark($scope1_id, "a", count, 2)}`);
 			_subscribe($count__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a0");
 		}, $scope0_id)
 	});

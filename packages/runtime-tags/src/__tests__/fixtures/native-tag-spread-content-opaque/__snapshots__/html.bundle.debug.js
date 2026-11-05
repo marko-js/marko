@@ -13,7 +13,7 @@ var my_box_default = _template("__tests__/tags/my-box.marko", (input) => {
 	let show = false;
 	_html("<div");
 	_attrs_content(input, "#div/0", $scope0_id, "div");
-	_html(`</div>${_el_resume($scope0_id, "#div/0")}<button type=button class=toggle>toggle</button>${_el_resume($scope0_id, "#button/1")}<div class=echo>`);
+	_html(`</div>${_el_mark($scope0_id, "#div/0")}<button type=button class=toggle>toggle</button>${_el_mark($scope0_id, "#button/1")}<div class=echo>`);
 	_if(() => {
 		if (show) {
 			const $scope1_id = _scope_id();

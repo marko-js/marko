@@ -4,11 +4,11 @@ var provider_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	const $count__closures = /* @__PURE__ */ new Set();
 	let count = input.n;
-	_html(`<button class=bump>bump</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button class=bump>bump</button>${_el_mark($scope0_id, "a")}`);
 	const $return = { content: _content_resume("b0", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
-		_html(`<div>value ${_text_resume($scope1_id, "a", count, 2)}</div>`);
+		_html(`<div>value ${_text_mark($scope1_id, "a", count, 2)}</div>`);
 		_subscribe($count__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "b1");
 	}, $scope0_id) };
 	_script($scope0_id, "b2");
@@ -26,7 +26,7 @@ var template_default = _template("a", (input) => {
 	let a = provider_default({ n: 1 });
 	let b = provider_default({ n: 2 });
 	let sel = 0;
-	_html(`<button id=toggle>toggle</button>${_el_resume($scope0_id, "e")}`);
+	_html(`<button id=toggle>toggle</button>${_el_mark($scope0_id, "e")}`);
 	_dynamic_tag($scope0_id, "f", a, {});
 	_script($scope0_id, "a0");
 	_scope($scope0_id, {

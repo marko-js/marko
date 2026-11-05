@@ -15,7 +15,7 @@ var tags_child_default = _template("__tests__/components/tags-child.marko", (inp
 	const $childScope = _peek_scope_id();
 	let v = tags_return_default({ x: input.x });
 	$wi__input_x && _var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/components/tags-child.marko_0_v#6/var");
-	_html(`<p>${_text_resume($scope0_id, "#text/2", v, $wg__input_x)}</p>`);
+	_html(`<p>${_text_mark($scope0_id, "#text/2", v, $wg__input_x)}</p>`);
 	$wi__input_x && _scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/components/tags-child.marko", 0);
 });
 

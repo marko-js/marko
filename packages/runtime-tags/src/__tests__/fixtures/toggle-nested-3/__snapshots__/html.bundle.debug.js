@@ -6,15 +6,15 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let outer = true;
 	let inner = true;
 	let count = 0;
-	_html(`<div><button id=outer></button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<div><button id=outer></button>${_el_mark($scope0_id, "#button/0")}`);
 	_if(() => {
 		if (outer) {
 			const $scope1_id = _scope_id();
-			_html(`<button id=inner></button>${_el_resume($scope1_id, "#button/0")}`);
+			_html(`<button id=inner></button>${_el_mark($scope1_id, "#button/0")}`);
 			_if(() => {
 				if (inner) {
 					const $scope2_id = _scope_id();
-					_html(`<button id=count>${_text_resume($scope2_id, "#text/1", count)}</button>${_el_resume($scope2_id, "#button/0")}`);
+					_html(`<button id=count>${_text_mark($scope2_id, "#text/1", count)}</button>${_el_mark($scope2_id, "#button/0")}`);
 					_script($scope2_id, "__tests__/template.marko_2");
 					_subscribe($count__closures, _scope($scope2_id, {}, "__tests__/template.marko", "8:6"), "__tests__/template.marko_2_count#0:4/subscribe");
 					return 0;

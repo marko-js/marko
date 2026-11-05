@@ -4,7 +4,7 @@ var tag_a_default = _template("__tests__/tags/tag-a/index.marko", (input) => {
 	const $scope0_id = _scope_id();
 	_html(`<div${_attr_class(input.class)}${_attr("data-other", input.other)}>A `);
 	_dynamic_tag($scope0_id, "#text/1", input.content, {}, 0, 0, $wg__input_content);
-	_html(`</div>${_el_resume($scope0_id, "#div/0", $wg__input_class__OR__input_other)}`);
+	_html(`</div>${_el_mark($scope0_id, "#div/0", $wg__input_class__OR__input_other)}`);
 	_write_if($scope0_reason, 1) && _scope($scope0_id, {}, "__tests__/tags/tag-a/index.marko", 0);
 });
 
@@ -14,7 +14,7 @@ var tag_b_default = _template("__tests__/tags/tag-b/index.marko", (input) => {
 	const $scope0_id = _scope_id();
 	_html(`<div${_attr_class(input.class)}${_attr("data-other", input.other)}>B `);
 	_dynamic_tag($scope0_id, "#text/1", input.content, {}, 0, 0, $wg__input_content);
-	_html(`</div>${_el_resume($scope0_id, "#div/0", $wg__input_class__OR__input_other)}`);
+	_html(`</div>${_el_mark($scope0_id, "#div/0", $wg__input_class__OR__input_other)}`);
 	_write_if($scope0_reason, 1) && _scope($scope0_id, {}, "__tests__/tags/tag-b/index.marko", 0);
 });
 

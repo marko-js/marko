@@ -14,7 +14,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		...spreadAttrs
 	}, "#script/1", $scope0_id, "script")}>
   C
-<\/script>${_el_resume($scope0_id, "#script/1")}`);
+<\/script>${_el_mark($scope0_id, "#script/1")}`);
 	_if(() => {
 		if (mounted) {
 			const $scope1_id = _scope_id();

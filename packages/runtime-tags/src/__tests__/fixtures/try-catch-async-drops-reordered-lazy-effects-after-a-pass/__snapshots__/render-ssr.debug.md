@@ -29,7 +29,7 @@ ERROR!
 ```
 ## Change
 ```
-INSERT: ::text("ERROR!")
+INSERT: #log + ::text("ERROR!")
 REMOVE: ::text("loading")
 REMOVE: ::text("mid")
 INSERT: #log::text("[before]")

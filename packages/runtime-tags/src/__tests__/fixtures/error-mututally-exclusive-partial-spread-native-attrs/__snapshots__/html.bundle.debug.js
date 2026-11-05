@@ -6,7 +6,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		type: "checkbox",
 		checkedValue: 1,
 		...{ checkedChange: _resume(function() {}, "__tests__/template.marko_0/checkedChange") }
-	}, "#input/0", $scope0_id, "input")}>${_el_resume($scope0_id, "#input/0")}`);
+	}, "#input/0", $scope0_id, "input")}>${_el_mark($scope0_id, "#input/0")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {}, "__tests__/template.marko", 0, {
 		"ControlledHandler:#input/0": ["...{ checkedChange() {} }", "1:42"],

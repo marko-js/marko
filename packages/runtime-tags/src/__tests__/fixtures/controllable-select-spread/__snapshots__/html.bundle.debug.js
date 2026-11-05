@@ -8,7 +8,7 @@ var my_select_default = _template("__tests__/tags/my-select.marko", (input) => {
 		_attrs_content($select_input, "#select/0", $scope0_id, "select");
 		_html("</select>");
 	});
-	_html(_el_resume($scope0_id, "#select/0"));
+	_html(_el_mark($scope0_id, "#select/0"));
 	_script($scope0_id, "__tests__/tags/my-select.marko_0_input#2");
 	_scope($scope0_id, {}, "__tests__/tags/my-select.marko", 0, {
 		"ControlledHandler:#select/0": ["...input", "1:12"],
@@ -33,6 +33,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_html(`<option${_attr_option_value("a")}>A</option><option${_attr_option_value("b")}>B</option><option${_attr_option_value("c")}>C</option>`);
 		}, $scope0_id)
 	});
-	_html(`<span>${_text_resume($scope0_id, "#text/1", value)}</span>`);
+	_html(`<span>${_text_mark($scope0_id, "#text/1", value)}</span>`);
 	_scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", 0);
 }, 1);

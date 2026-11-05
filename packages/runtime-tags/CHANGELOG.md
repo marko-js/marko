@@ -1,5 +1,48 @@
 # @marko/runtime-tags
 
+## 6.4.9
+
+### Patch Changes
+
+- [#4582](https://github.com/marko-js/marko/pull/4582) [`aef305c`](https://github.com/marko-js/marko/commit/aef305c975ac7b138f916ce04a36afd7ad44365a) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix "too much recursion" on resume when several async Marko 5 components rendered inside a tags template settled together and shared a branch id.
+
+- [#4575](https://github.com/marko-js/marko/pull/4575) [`60b9944`](https://github.com/marko-js/marko/commit/60b994452008c86638a05dac253a1b17f7229b1d) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Insert a newly rendered branch (an `<if>` branch, a `<for>` row, a dynamic tag's content) with one DOM call instead of one per node, and move keyed `<for>` rows the same way. Rows of several nodes render faster, and the runtime is smaller.
+
+- [#4576](https://github.com/marko-js/marko/pull/4576) [`9511d2c`](https://github.com/marko-js/marko/commit/9511d2c7da04b853451dac3b001f6058f1be9d03) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix a `<define>` tag called with arguments it never reads, whose body is read through the param after them (`<X(n)>hi</X>` with `|a, opts|`): the client compile no longer crashes, and the server render no longer passes the body as the first argument.
+
+- [#4561](https://github.com/marko-js/marko/pull/4561) [`8404a9d`](https://github.com/marko-js/marko/commit/8404a9deb611501249fe85b36c15f616b465aa46) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix a `$global` read used as one value of a class or style object (or a class array) whose other values change, which the client read as an undefined `$global` and threw on.
+
+- [#4578](https://github.com/marko-js/marko/pull/4578) [`13a8c8f`](https://github.com/marko-js/marko/commit/13a8c8fde9089cc4443b6eef964736ea9f5e73fe) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix `serializedGlobals` not reaching the client on a page, or in lazy content, whose only client code is an effect (such as a `<script>` reading `$global`), which read `undefined` after resume.
+
+- [#4574](https://github.com/marko-js/marko/pull/4574) [`f6d0fa0`](https://github.com/marko-js/marko/commit/f6d0fa090bc94fd791587e32dfc5fea64ff7b631) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix a function that reads a tag variable declared below it without calling it (such as `() => later`) compiling without its scope and throwing `$scope is not defined` when called.
+
+- [#4559](https://github.com/marko-js/marko/pull/4559) [`e13d47f`](https://github.com/marko-js/marko/commit/e13d47f3fe57fe1e6981b825ee9050dc41047024) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix a `<const>` alias of `input` or a tag parameter (or a value destructured from one) not rendering when an event handler also reads it, and let handlers read any alias without re-attaching on every change.
+
+- [#4571](https://github.com/marko-js/marko/pull/4571) [`b0d049c`](https://github.com/marko-js/marko/commit/b0d049c52cfc673e8bc56c7188a7bb9217d53b71) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Stop reserving a client scope slot for a `<for>` key that is only read through a `<const>` alias of it.
+
+- [#4555](https://github.com/marko-js/marko/pull/4555) [`778b834`](https://github.com/marko-js/marko/commit/778b834da98312a14b0b6f47d388e16b496b27f0) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix a function resumed from inside a `<for>` (a handler passed to a tag, a `<const>` function, a `valueChange`) that reads only the loop key, such as `item.id` with `by="id"` or the index, compiling without its scope and throwing `$scope is not defined` when called.
+
+- [#4564](https://github.com/marko-js/marko/pull/4564) [`906c516`](https://github.com/marko-js/marko/commit/906c516beb43e63106c88b3cfaf3a5bf1b99c8aa) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Render a template that imports itself (`import Self from "./self.marko"`) on the server by calling its own content, as it already does when the tag is used by its file name, instead of through its import of itself.
+
+- [#4570](https://github.com/marko-js/marko/pull/4570) [`b966ecb`](https://github.com/marko-js/marko/commit/b966ecb8c0d413330fcbe3ad83f68057756245e1) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Render a class read from a `server` stylesheet import on the client as the `undefined` the import is there, as for any other `server` value, instead of dropping the client write depending on translation order.
+
+- [#4557](https://github.com/marko-js/marko/pull/4557) [`70165d4`](https://github.com/marko-js/marko/commit/70165d443b4606e51530e1a72007914fb9c3084f) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Pass a short literal instead of `void 0` for skipped runtime arguments in compiled output.
+
+- [#4572](https://github.com/marko-js/marko/pull/4572) [`e9eb4b7`](https://github.com/marko-js/marko/commit/e9eb4b71ce34cd78e57598b967964c75c809c346) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix `<show>` when its body starts or ends with control flow (an `<if>`, a `<for>`, a nested `<show>`, or a tag whose template starts or ends with one): hiding a `<show>` the server rendered hidden could leave its body visible or also remove the content after it, and showing a body that changed while hidden, or a `<show>` that is its element's only child and the client rendered hidden, could insert stale nodes or nothing. A body the server rendered hidden now stays hidden where it is until first shown, instead of being inserted and removed again on its first update. A body that does not end in a static element no longer gets an end marker: each such template loses a `<!>`, a walk step and an argument, and each instance a cloned node and a scope slot.
+
+- [#4565](https://github.com/marko-js/marko/pull/4565) [`57373f5`](https://github.com/marko-js/marko/commit/57373f50dd5c678c36bb8cc7edff8f5426a06899) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix a resumed `<show>` whose body renders no node (only a `<script>` or a static `<style>`) removing the node before it when hidden.
+
+- [#4565](https://github.com/marko-js/marko/pull/4565) [`57373f5`](https://github.com/marko-js/marko/commit/57373f50dd5c678c36bb8cc7edff8f5426a06899) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Drop the range markers a client-rendered `<show>` does not need: a body of one element gets no start marker, and a body ending in a static element no end marker. Each such template loses a `<!>`, a walk step and an argument per marker, and each instance a cloned comment.
+
+- [#4567](https://github.com/marko-js/marko/pull/4567) [`8512ee1`](https://github.com/marko-js/marko/commit/8512ee1da1f60dc56f6f67e4b8f18ed69dcf97bb) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix a `<define>` whose body starts or ends with a placeholder of a constant value (`${"Z"}`), called beside text such as another call of itself, which merged the two texts in the client template and made the client render throw.
+
+- [#4563](https://github.com/marko-js/marko/pull/4563) [`81f555d`](https://github.com/marko-js/marko/commit/81f555dc9ac2f8222c64021266dc20136776a50a) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix text beside a `<define>` call merging with text at the edge of its body, which left the client updating or reading the wrong text node, and a placeholder that renders nothing (`${false}`) at the edge of a loop row, a branch or passed content making the client lose track of that content's first or last node.
+
+- [#4581](https://github.com/marko-js/marko/pull/4581) [`d430524`](https://github.com/marko-js/marko/commit/d43052456f01655fbf356b615870d60874d9b47d) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix resumed text leading passed content, a loop row or a branch that the server wrote right after other text with no marker between them, which merged the two text nodes so a client update overwrote the text before it (`${input.label}<${input.content}/>` with content `${count}`).
+
+- Updated dependencies [[`13830ec`](https://github.com/marko-js/marko/commit/13830ec9a16ab29384afa5f5ffb44f0ffc6e1db0)]:
+  - @marko/compiler@5.42.15
+
 ## 6.4.8
 
 ### Patch Changes

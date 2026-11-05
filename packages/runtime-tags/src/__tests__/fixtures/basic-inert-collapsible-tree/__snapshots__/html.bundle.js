@@ -7,7 +7,7 @@ const $content = (input) => {
 		const $scope1_id = _scope_id();
 		const id = `${input.path || "c"}-${i}`;
 		let open = true;
-		_html(`<li${_attr("id", id)}${_attr("hidden", false)}><span>${_text_resume($scope1_id, "b", comment.text, $wg__input_comments)}</span><button>${_text_resume($scope1_id, "d", "[-]")}</button>${_el_resume($scope1_id, "c")}`);
+		_html(`<li${_attr("id", id)}${_attr("hidden", false)}><span>${_text_mark($scope1_id, "b", comment.text, $wg__input_comments)}</span><button>${_text_mark($scope1_id, "d", "[-]")}</button>${_el_mark($scope1_id, "c")}`);
 		_if(() => {
 			if (comment.comments) {
 				const $scope2_id = _scope_id();
@@ -24,7 +24,7 @@ const $content = (input) => {
 				return 0;
 			}
 		}, $scope1_id, "e", $wg__input_comments__OR__input_path, $wg__input_comments, 0, 0, 1);
-		_html(`</li>${_el_resume($scope1_id, "a")}`);
+		_html(`</li>${_el_mark($scope1_id, "a")}`);
 		_script($scope1_id, "b0");
 		_scope($scope1_id, {
 			M: _write_if($scope0_reason, 2) && i,

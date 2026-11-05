@@ -9,7 +9,7 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		_html("body content");
 	}, $scope0_id));
-	_html(`<button></button>${_el_resume($scope0_id, "b")}`);
+	_html(`<button></button>${_el_mark($scope0_id, "b")}`);
 	_script($scope0_id, "a1");
 	_scope($scope0_id, {
 		c: tagName,

@@ -11,7 +11,7 @@ var template_default = _template("a", (input) => {
 				if (input.inner) {
 					const $scope2_id = _scope_id();
 					const read = _resume(() => input.label, "a0", $scope2_id);
-					_html(`<span></span>${_el_resume($scope2_id, "a")}`);
+					_html(`<span></span>${_el_mark($scope2_id, "a")}`);
 					_script($scope2_id, "a1");
 					_subscribe($wi__input_label && $input_label__closures, _scope($scope2_id, {
 						b: read,

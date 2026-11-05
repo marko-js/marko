@@ -3,6 +3,9 @@
 <div>
   Hello|1
 </div>
+<p>
+  1
+</p>
 <button>
   1
 </button>
@@ -16,6 +19,9 @@ document.querySelector("button").click();
 <div>
   Hello|2
 </div>
+<p>
+  2
+</p>
 <button>
   2
 </button>
@@ -24,6 +30,7 @@ document.querySelector("button").click();
 ```
 UPDATE: div::text@6 "1" => "2"
 UPDATE: button::text "1" => "2"
+UPDATE: p::text "1" => "2"
 ```
 
 # Update
@@ -34,6 +41,9 @@ document.querySelector("button").click();
 <div>
   Hello|3
 </div>
+<p>
+  3
+</p>
 <button>
   3
 </button>
@@ -42,6 +52,7 @@ document.querySelector("button").click();
 ```
 UPDATE: div::text@6 "2" => "3"
 UPDATE: button::text "2" => "3"
+UPDATE: p::text "2" => "3"
 ```
 
 # Update
@@ -52,6 +63,9 @@ document.querySelector("button").click();
 <div>
   Hello|4
 </div>
+<p>
+  4
+</p>
 <button>
   4
 </button>
@@ -60,4 +74,5 @@ document.querySelector("button").click();
 ```
 UPDATE: div::text@6 "3" => "4"
 UPDATE: button::text "3" => "4"
+UPDATE: p::text "3" => "4"
 ```

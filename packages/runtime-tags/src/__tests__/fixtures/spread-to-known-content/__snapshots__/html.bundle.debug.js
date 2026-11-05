@@ -4,7 +4,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const $scope0_id = _scope_id();
 	_html(`<p${_attr_class(input.class)}>`);
 	_dynamic_tag($scope0_id, "#text/1", input.content, {}, 0, 0, $wg__input_content);
-	_html(`</p>${_el_resume($scope0_id, "#p/0", $wg__input_class)}`);
+	_html(`</p>${_el_mark($scope0_id, "#p/0", $wg__input_class)}`);
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/child.marko", 0);
 });
 

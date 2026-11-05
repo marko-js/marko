@@ -7,7 +7,7 @@ var template_default = _template("a", (input) => {
   .test {
     content: ${_to_text(count)}
   }
-`)}</style>${_el_resume($scope0_id, "a")}`);
+`)}</style>${_el_mark($scope0_id, "a")}`);
 	_script($scope0_id, "a0");
 	_scope($scope0_id, { b: count });
 }, 1);

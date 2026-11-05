@@ -5,7 +5,7 @@ var template_default = _template("a", (input) => {
 	let count = 1;
 	const y = 2;
 	const z = 3;
-	_html(`<button>inc</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button>inc</button>${_el_mark($scope0_id, "a")}`);
 	_script($scope0_id, "a0");
 	_script($scope0_id, "a1");
 	_scope($scope0_id, {

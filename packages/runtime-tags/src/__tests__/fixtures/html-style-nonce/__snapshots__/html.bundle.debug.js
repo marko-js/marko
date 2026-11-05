@@ -13,7 +13,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		...spreadAttrs
 	}, "#style/1", $scope0_id, "style")}>
   C {}
-</style>${_el_resume($scope0_id, "#style/1")}`);
+</style>${_el_mark($scope0_id, "#style/1")}`);
 	_if(() => {
 		if (mounted) {
 			const $scope1_id = _scope_id();

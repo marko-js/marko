@@ -6,7 +6,7 @@ var template_default = _template("a", (input) => {
 	const MyTag = { content: _content("a0", ({ value }) => {
 		const $scope2_id = _scope_id();
 		_scope_reason();
-		_html(`<div>Hello ${_text_resume($scope2_id, "a", value, 2)}</div>`);
+		_html(`<div>Hello ${_text_mark($scope2_id, "a", value, 2)}</div>`);
 		_scope($scope2_id, {});
 	}, $scope0_id) };
 	_if(() => {
@@ -19,7 +19,7 @@ var template_default = _template("a", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "a");
-	_html(`<button>${_text_resume($scope0_id, "c", x)}</button>${_el_resume($scope0_id, "b")}`);
+	_html(`<button>${_text_mark($scope0_id, "c", x)}</button>${_el_mark($scope0_id, "b")}`);
 	_script($scope0_id, "a1");
 	_scope($scope0_id, { e: x });
 }, 1);

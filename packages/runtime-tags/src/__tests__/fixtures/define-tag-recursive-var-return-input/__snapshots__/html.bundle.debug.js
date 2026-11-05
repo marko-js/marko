@@ -15,7 +15,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					label: input.label
 				});
 				$wi__input_depth__OR__input_label && _var($scope2_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_2_child#3/var");
-				_html(`<span>${_text_resume($scope2_id, "#text/2", child, $wg__input_label)}</span>`);
+				_html(`<span>${_text_mark($scope2_id, "#text/2", child, $wg__input_label)}</span>`);
 				$wi__input_depth__OR__input_label && _scope($scope2_id, {
 					_: _scope_with_id($scope1_id),
 					"#childScope/0": _existing_scope($childScope)
@@ -38,7 +38,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		depth: 1,
 		label
 	});
-	_html(`<button>${_text_resume($scope0_id, "#text/3", label)}</button>${_el_resume($scope0_id, "#button/2")}`);
+	_html(`<button>${_text_mark($scope0_id, "#text/3", label)}</button>${_el_mark($scope0_id, "#button/2")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		label,

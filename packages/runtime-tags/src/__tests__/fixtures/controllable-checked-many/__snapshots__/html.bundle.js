@@ -12,7 +12,7 @@ var template_default = _template("a", (input) => {
 		let checked = state;
 		_html(`<input${_attr_input_checked($scope1_id, "a", checked, _resume((_new_checked) => {
 			checked = _new_checked;
-		}, "a1", $scope1_id))} type=checkbox>${_el_resume($scope1_id, "a")}`);
+		}, "a1", $scope1_id))} type=checkbox>${_el_mark($scope1_id, "a")}`);
 		_script($scope1_id, "a2");
 		_scope($scope1_id, {
 			M: i,
@@ -24,6 +24,6 @@ var template_default = _template("a", (input) => {
 			}, "a0", $scope1_id) || void 0
 		});
 	}, 0, $scope0_id, "a", 1, 1, 0, 0, 1);
-	_html(`<div>${_text_resume($scope0_id, "b", states.join(","))}</div>`);
+	_html(`<div>${_text_mark($scope0_id, "b", states.join(","))}</div>`);
 	_scope($scope0_id, { c: states });
 }, 1);

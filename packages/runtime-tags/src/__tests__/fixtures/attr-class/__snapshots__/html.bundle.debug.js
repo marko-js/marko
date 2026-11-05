@@ -2,13 +2,13 @@
 var custom_tag_default = _template("__tests__/tags/custom-tag.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_test_class = _write_guard($scope0_reason, 4), $wg__input_test_content = _write_guard($scope0_reason, 5), $wg__input_test = _write_guard($scope0_reason, 3), $wg__input_class = _write_guard($scope0_reason, 2), $wi__input_test = _write_if($scope0_reason, 3);
 	const $scope0_id = _scope_id();
-	_html(`<div${_attr_class(input.class)}></div>${_el_resume($scope0_id, "#div/0", $wg__input_class)}`);
+	_html(`<div${_attr_class(input.class)}></div>${_el_mark($scope0_id, "#div/0", $wg__input_class)}`);
 	_if(() => {
 		if (input.test) {
 			const $scope1_id = _scope_id();
 			_html(`<div${_attr_class(input.test.class)} id=test>`);
 			_dynamic_tag($scope1_id, "#text/1", input.test.content, {}, 0, 0, $wg__input_test_content);
-			_html(`</div>${_el_resume($scope1_id, "#div/0", $wg__input_test_class)}`);
+			_html(`</div>${_el_mark($scope1_id, "#div/0", $wg__input_test_class)}`);
 			$wi__input_test && _scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }, "__tests__/tags/custom-tag.marko", "3:2");
 			return 0;
 		}
@@ -33,7 +33,7 @@ const $class = [
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_c__OR__input_d = _write_guard($scope0_reason, 0), $wg__input_c__OR__input_d__OR__input_e__OR__input_f__OR__input_g__OR__input_h = _write_guard($scope0_reason, 7), $wg__input_c = _write_guard($scope0_reason, 8);
 	const $scope0_id = _scope_id();
-	_html(`<div class=${$class[(input.c ? 1 : 0) + (input.d ? 2 : 0)]}></div>${_el_resume($scope0_id, "#div/0", $wg__input_c__OR__input_d)}<div class="a b"></div><div class="a b c"></div><div${input.c ? " class=active" : ""}></div>${_el_resume($scope0_id, "#div/1", $wg__input_c)}<div${_attr_class(`base${input.c ? " c" : ""}${input.d ? " d" : ""}${input.e ? " e" : ""}${input.f ? " f" : ""}${input.g ? " g" : ""}${input.h ? " h" : ""}`)}></div>${_el_resume($scope0_id, "#div/2", $wg__input_c__OR__input_d__OR__input_e__OR__input_f__OR__input_g__OR__input_h)}`);
+	_html(`<div class=${$class[(input.c ? 1 : 0) + (input.d ? 2 : 0)]}></div>${_el_mark($scope0_id, "#div/0", $wg__input_c__OR__input_d)}<div class="a b"></div><div class="a b c"></div><div${input.c ? " class=active" : ""}></div>${_el_mark($scope0_id, "#div/1", $wg__input_c)}<div${_attr_class(`base${input.c ? " c" : ""}${input.d ? " d" : ""}${input.e ? " e" : ""}${input.f ? " f" : ""}${input.g ? " g" : ""}${input.h ? " h" : ""}`)}></div>${_el_mark($scope0_id, "#div/2", $wg__input_c__OR__input_d__OR__input_e__OR__input_f__OR__input_g__OR__input_h)}`);
 	_set_scope_reason($wg__input_c__OR__input_d << 1 | $wg__input_c__OR__input_d << 5);
 	const $childScope = _peek_scope_id();
 	custom_tag_default({ class: ["a", {

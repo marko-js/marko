@@ -44,7 +44,8 @@ _Avoid_: refs, dependencies
 **Sources**:
 The transitive roots that can make a binding browser-relevant, split into
 non-parameter `state` and template- or body-parameter `param` roots. `state`
-does not mean only `<let>` values.
+does not mean only `<let>` values. The record also carries `global` (a `$global`
+read) and `always` (read whatever changes).
 _Avoid_: dependencies, referenced bindings, provenance
 
 **Derives from**:
@@ -163,7 +164,7 @@ _Avoid_: component state, context
 A scope property's key; the property itself is a _scope slot_. Debug builds use
 readable strings and optimized builds use compact encodings from the lockstep
 `src/common/constants/*[.debug].ts` pairs.
-_Avoid_: slot (the property it names), value
+_Avoid_: slot (the analysis record; see Slot), value
 
 **Generation**:
 `Scope[AccessorProp.Gen]`, the run a scope belongs to, compared against the
@@ -184,6 +185,12 @@ _Avoid_: parent scope, DOM parent
 Renderable children passed to a tag. The Tags API calls this _content_; syntax
 and ASTs say _body_, while the Class API says `renderBody`.
 _Avoid_: children, renderBody, body outside syntax or AST discussion
+
+**Content site**:
+A dynamic tag rendering content in a template the content is passed to: one
+naming it, or naming what holds it as `content`. A deep site is one past a
+further call, whose template's root edge follows that call, unseen from the first.
+_Avoid_: render target, consumer
 
 **Client renderer (`Renderer`)**:
 A descriptor for creating a branch, carrying clone/setup/parameter work and
@@ -234,13 +241,14 @@ shared values, and registrations. It is neither JSON nor every server value.
 _Avoid_: component state, JSON payload
 
 **Scope flush**:
-A resume-payload batch of scope ids and partial properties, merged into or
+A resume-payload batch of scope ids and the properties it adds, merged into or
 adopted as live scopes.
 _Avoid_: fill, partial, payload chunk
 
 **Resume comment**:
 An SSR HTML comment associating existing nodes or ranges with scopes and
-encoding owners, branches, keys, or await state.
+encoding owners, branches, keys, or await state. `_el_mark`, `_text_mark` and
+`_html_mark` write one beside a node; `_resume` names a registration instead.
 _Avoid_: hydration marker
 
 **Registration**:

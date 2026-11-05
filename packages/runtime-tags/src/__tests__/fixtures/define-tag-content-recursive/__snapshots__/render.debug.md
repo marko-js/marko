@@ -20,7 +20,7 @@ leaf x
 ```
 ## Change
 ```
-INSERT: button
+INSERT: ::text@5 + button
 INSERT: button:nth-of-type(1) + :is(::text("leaf "), ::text("x"))
 UPDATE: button:nth-of-type(2)::text " " => "1"
 UPDATE: ::text@5 "" => "x"
@@ -45,7 +45,7 @@ leaf x
 ```
 ## Change
 ```
-INSERT: button
+INSERT: ::text@14 + button
 INSERT: button:nth-of-type(2) + :is(::text("2"), ::text(": "))
 UPDATE: button:nth-of-type(3)::text " " => "0"
 INSERT: ::text@7 + :is(::text("leaf "), ::text("x"))

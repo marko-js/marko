@@ -13,13 +13,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_if(() => {
 			if (editing) {
 				const $scope2_id = _scope_id();
-				_html(`<button>Confirm ${_text_resume($scope2_id, "#text/1", count + 1, 2)}</button>${_el_resume($scope2_id, "#button/0")}`);
+				_html(`<button>Confirm ${_text_mark($scope2_id, "#text/1", count + 1, 2)}</button>${_el_mark($scope2_id, "#button/0")}`);
 				_script($scope2_id, "__tests__/template.marko_2");
 				_scope($scope2_id, {}, "__tests__/template.marko", "4:4");
 				return 0;
 			} else {
 				const $scope3_id = _scope_id();
-				_html(`<button>Increment ${_text_resume($scope3_id, "#text/1", count, 2)}</button>${_el_resume($scope3_id, "#button/0")}`);
+				_html(`<button>Increment ${_text_mark($scope3_id, "#text/1", count, 2)}</button>${_el_mark($scope3_id, "#button/0")}`);
 				_script($scope3_id, "__tests__/template.marko_3");
 				_scope($scope3_id, {}, "__tests__/template.marko", "12:4");
 				return 1;

@@ -5,7 +5,7 @@ var leaf_default = _template("__tests__/tags/leaf.marko", (input) => {
 	_if(() => {
 		if (input.n) {
 			const $scope1_id = _scope_id();
-			_html(`<div>n is ${_text_resume($scope1_id, "#text/0", input.n, $wg__input_n * 2)}</div>`);
+			_html(`<div>n is ${_text_mark($scope1_id, "#text/0", input.n, $wg__input_n * 2)}</div>`);
 			$wi__input_n && _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/leaf.marko", "2:2");
 			return 0;
 		}
@@ -19,7 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let outer = true;
 	let n = 0;
-	_html(`<button id=o>O</button>${_el_resume($scope0_id, "#button/0")}<button id=n>N</button>${_el_resume($scope0_id, "#button/1")}`);
+	_html(`<button id=o>O</button>${_el_mark($scope0_id, "#button/0")}<button id=n>N</button>${_el_mark($scope0_id, "#button/1")}`);
 	_if(() => {
 		if (outer) {
 			const $scope1_id = _scope_id();

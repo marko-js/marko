@@ -3,26 +3,31 @@ const $template = "<!><!><!>";
 const $walks = "b%c";
 const $if_content2__hoist3_getter = _hoist_resume("__tests__/template.marko_2_hoist3#2/hoist", "hoist3");
 const $if_content2__hoist = /*@__PURE__*/ _const("hoist3", ($scope) => _assert_hoist($scope.hoist3));
-const $if_content2__input_value = /*@__PURE__*/ _closure_get("input_value/6", ($scope) => $if_content2__hoist($scope, $hoist2($scope)), ($scope) => $scope._._, "__tests__/template.marko_2_input_value#0:3/subscribe");
-const $if_content2__x__OR__z__script = _script("__tests__/template.marko_2_x#0:4_z#0", ($scope) => {
+const $if_content2__input_value = /*@__PURE__*/ _closure_get("input_value/7", ($scope) => $if_content2__hoist($scope, $hoist2($scope)), ($scope) => $scope._._, "__tests__/template.marko_2_input_value#0:3/subscribe");
+const $if_content2__x__OR__later__OR__z__script = _script("__tests__/template.marko_2_x#0:4_later#0:5_z#0", ($scope) => {
 	$scope._._.x();
 	$scope.z();
+	$scope._._.later()();
 });
-const $if_content2__x__OR__z = /*@__PURE__*/ _or(1, $if_content2__x__OR__z__script);
-const $if_content2__z = /*@__PURE__*/ _const("z", $if_content2__x__OR__z);
+const $if_content2__x__OR__later__OR__z = /*@__PURE__*/ _or(1, $if_content2__x__OR__later__OR__z__script, 2);
+const $if_content2__z = /*@__PURE__*/ _const("z", $if_content2__x__OR__later__OR__z);
 const $if_content2__setup = ($scope) => {
 	$if_content2__input_value($scope);
 	$if_content2__x($scope);
+	$if_content2__later($scope);
 	$if_content2__z($scope, $if_content2__hoist3_getter($scope));
 };
-const $if_content2__x = /*@__PURE__*/ _closure_get("x/7", $if_content2__x__OR__z, ($scope) => $scope._._);
+const $if_content2__x = /*@__PURE__*/ _closure_get("x/8", $if_content2__x__OR__later__OR__z, ($scope) => $scope._._);
+const $if_content2__later = /*@__PURE__*/ _closure_get("later/9", $if_content2__x__OR__later__OR__z, ($scope) => $scope._._);
 const $if_content__if = /*@__PURE__*/ _if("#text/0", 0, 0, $if_content2__setup);
 const $if_content__setup = ($scope) => $if_content__if($scope, 1 ? 0 : 1);
-const $hoist1_getter = _hoist_resume("__tests__/template.marko_0_hoist1#5/hoist", "hoist1");
+const $hoist1_getter = _hoist_resume("__tests__/template.marko_0_hoist1#6/hoist", "hoist1");
 const $x = /*@__PURE__*/ _const("x");
+const $later2 = /*@__PURE__*/ _const("later");
 const $if = /*@__PURE__*/ _if("#text/0", "<!><!><!>", "b%", $if_content__setup);
 function $setup($scope) {
 	$x($scope, $hoist1_getter($scope));
+	$later2($scope, $later($scope));
 	$if($scope, 1 ? 0 : 1);
 }
 const $hoist3 = /*@__PURE__*/ _const("hoist1", ($scope) => _assert_hoist($scope.hoist1));
@@ -33,7 +38,9 @@ const $input_value = /*@__PURE__*/ _const("input_value", ($scope) => {
 });
 const $input = ($scope, input) => $input_value($scope, input.value);
 const $hoist2 = ($scope) => () => $scope._._.input_value;
+const $later = ($scope) => () => $hoist1_getter($scope);
 const $hoist = ($scope) => () => $scope.input_value;
 _resumed["__tests__/template.marko_2/hoist2"] = $hoist2;
+_resumed["__tests__/template.marko_0/later"] = $later;
 _resumed["__tests__/template.marko_0/hoist"] = $hoist;
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", $setup, $input);

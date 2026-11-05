@@ -22,7 +22,7 @@ import isStatic from "./is-static";
 import { getMarkoOpts, isOutputHTML } from "./marko-config";
 import { isGuardedReason, type Reason } from "./reasons";
 import {
-  getCanonicalExtra,
+  getCanonicalExpr,
   isRegisteredFnExtra,
   type RegisteredFnExtra,
 } from "./references";
@@ -49,7 +49,7 @@ declare module "@marko/compiler/dist/types" {
  * canonical name it is exported under.
  */
 export interface RegisteredExport {
-  registerId: string;
+  registryId: string;
   exportName: string;
   filename: string;
 }
@@ -78,12 +78,12 @@ export function trackFunction(
   fnExtra: RegisteredFnExtra,
   markoRoot: MarkoRootPath,
 ) {
-  reserveExportRegisterId(fnExtra, fn, markoRoot);
+  reserveExportRegistryId(fnExtra, fn, markoRoot);
 
   if (isStatic(markoRoot)) {
-    const refs = getStaticDeclRefs(fn);
-    if (refs.size) {
-      getReferencesByFn().set(fnExtra, refs);
+    const exprs = getStaticDeclExprs(fn);
+    if (exprs.size) {
+      getReferencesByFn().set(fnExtra, exprs);
     }
   } else {
     getReferencesByFn().set(fnExtra, new Set([fnExtra.exprRoot]));
@@ -156,7 +156,7 @@ export function trackImportedTemplate(
     importDecl,
     local,
     {
-      registerId: templateFile.metadata.marko.id,
+      registryId: templateFile.metadata.marko.id,
       exportName: "default",
       filename: templateFile.opts.filename,
     },
@@ -178,12 +178,12 @@ export function trackImport(
   const binding = registered && importDecl.scope.getBinding(local);
   if (!binding) return;
 
-  const refs = new Set<t.NodeExtra>();
-  addBindingRefs(binding, refs, new Set(), fnRoots);
-  if (refs.size) {
+  const exprs = new Set<t.NodeExtra>();
+  addBindingExprs(binding, exprs, new Set(), fnRoots);
+  if (exprs.size) {
     getReferencesByImport().set(
       { node: importDecl.node, local, registered, fnRoots },
-      refs,
+      exprs,
     );
   }
 }
@@ -261,8 +261,8 @@ export function writeModuleRegistrations(program: t.NodePath<t.Program>) {
       t.isImportDeclaration(child) && child.extra?.registeredImports;
     if (registeredImports) {
       for (const [local, registered] of registeredImports) {
-        if (seen.has(registered.registerId)) continue;
-        seen.add(registered.registerId);
+        if (seen.has(registered.registryId)) continue;
+        seen.add(registered.registryId);
 
         // The dom output shares a module per export, so templates that import
         // the same one do not each carry a copy of its registration into the
@@ -270,7 +270,7 @@ export function writeModuleRegistrations(program: t.NodePath<t.Program>) {
         // template registers itself.
         if (isOutputHTML()) {
           if (registered.exportName !== "default") {
-            statements.push(buildRegistration(local, registered.registerId));
+            statements.push(buildRegistration(local, registered.registryId));
           }
         } else {
           importDefault(file, resolveRegisterModule(file, registered));
@@ -287,7 +287,7 @@ export function writeModuleRegistrations(program: t.NodePath<t.Program>) {
 function resolveReason(exprExtras: Set<t.NodeExtra>) {
   let reason: undefined | Reason;
   for (const exprExtra of exprExtras) {
-    const extra = getCanonicalExtra(exprExtra);
+    const extra = getCanonicalExpr(exprExtra);
     if (!exprExtra.consumed || extra.retained) {
       reason = mergeSources(
         reason,
@@ -304,7 +304,7 @@ function resolveReason(exprExtras: Set<t.NodeExtra>) {
 function resolveTemplateReason(exprExtras: Set<t.NodeExtra>) {
   let reason: undefined | Reason;
   for (const exprExtra of exprExtras) {
-    const extra = getCanonicalExtra(exprExtra);
+    const extra = getCanonicalExpr(exprExtra);
     if (!extra.isEffect) {
       reason = mergeSources(reason, getReasonForExpr(extra));
     }
@@ -324,7 +324,7 @@ function isTemplateShipped(
   }
 
   for (const exprExtra of exprExtras) {
-    if (getCanonicalExtra(exprExtra).isEffect) return true;
+    if (getCanonicalExpr(exprExtra).isEffect) return true;
   }
 
   return false;
@@ -333,7 +333,7 @@ function isTemplateShipped(
 // An exported function is always module scoped, so any template that imports it
 // can register it as is; the id is reserved here so every one of them agrees.
 // A function exported under several names still gets one id, keyed by the first.
-function reserveExportRegisterId(
+function reserveExportRegistryId(
   fnExtra: RegisteredFnExtra,
   fn: t.NodePath<t.Function>,
   markoRoot: MarkoRootPath,
@@ -350,18 +350,18 @@ function reserveExportRegisterId(
     opts: { filename },
   } = getFile();
   const programExtra = getProgram().node.extra;
-  const registerId = getTemplateId(
+  const registryId = getTemplateId(
     markoOpts,
     filename,
     `${fnExtra.section.id}/export/${exportName}`,
   );
 
   const registered: RegisteredExport = {
-    registerId,
+    registryId,
     exportName,
     filename,
   };
-  fnExtra.exportRegisterId = registerId;
+  fnExtra.exportRegistryId = registryId;
   programExtra[kRegisteredExports] ??= new Map();
   for (const name of exportNames!) {
     programExtra[kRegisteredExports].set(name, registered);
@@ -420,9 +420,9 @@ function getExportableName(fn: t.NodePath<t.Function>) {
   }
 }
 
-function getStaticDeclRefs(
+function getStaticDeclExprs(
   path: t.NodePath<t.Node>,
-  refs = new Set<t.NodeExtra>(),
+  exprs = new Set<t.NodeExtra>(),
   seen = new Set<t.Node>(),
   fnRoots?: Set<t.NodeExtra>,
 ): Set<t.NodeExtra> {
@@ -435,17 +435,17 @@ function getStaticDeclRefs(
     if (ids) {
       for (const name in ids) {
         const binding = decl.scope.getBinding(name);
-        if (binding) addBindingRefs(binding, refs, seen, fnRoots);
+        if (binding) addBindingExprs(binding, exprs, seen, fnRoots);
       }
     }
   }
 
-  return refs;
+  return exprs;
 }
 
-function addBindingRefs(
+function addBindingExprs(
   binding: NonNullable<ReturnType<t.Scope["getBinding"]>>,
-  refs: Set<t.NodeExtra>,
+  exprs: Set<t.NodeExtra>,
   seen: Set<t.Node>,
   fnRoots?: Set<t.NodeExtra>,
 ) {
@@ -459,9 +459,9 @@ function addBindingRefs(
       if (fnRoot) fnRoots.add((fnRoot.node.extra ??= {}));
     }
     if (isStatic(markoRoot)) {
-      getStaticDeclRefs(ref, refs, seen, fnRoots);
+      getStaticDeclExprs(ref, exprs, seen, fnRoots);
     } else {
-      refs.add((exprRoot.node.extra ??= {}));
+      exprs.add((exprRoot.node.extra ??= {}));
     }
   }
 }
@@ -472,8 +472,8 @@ function registerFunction(fnExtra: RegisteredFnExtra) {
     opts: { filename },
   } = getFile();
   fnExtra.name = generateUid(fnExtra.name);
-  fnExtra.registerId =
-    fnExtra.exportRegisterId ??
+  fnExtra.registryId =
+    fnExtra.exportRegistryId ??
     getTemplateId(
       markoOpts,
       filename,
@@ -492,15 +492,15 @@ function addExportRegistrations(
   const { declaration } = node;
   if (!declaration) return;
 
-  const add = (local: string, registerId: string) => {
-    if (seen.has(registerId)) return;
-    seen.add(registerId);
-    statements.push(buildRegistration(local, registerId));
+  const add = (local: string, registryId: string) => {
+    if (seen.has(registryId)) return;
+    seen.add(registryId);
+    statements.push(buildRegistration(local, registryId));
   };
 
   if (declaration.type === "FunctionDeclaration") {
     if (isRegisteredFnExtra(declaration.extra)) {
-      add(declaration.id!.name, declaration.extra.registerId);
+      add(declaration.id!.name, declaration.extra.registryId);
     }
     return;
   }
@@ -512,16 +512,16 @@ function addExportRegistrations(
   for (const declarator of declaration.declarations) {
     const extra = declarator.init?.extra;
     if (isRegisteredFnExtra(extra) && t.isIdentifier(declarator.id)) {
-      add(declarator.id.name, extra.registerId);
+      add(declarator.id.name, extra.registryId);
     }
   }
 }
 
-function buildRegistration(local: string, registerId: string) {
+function buildRegistration(local: string, registryId: string) {
   return t.expressionStatement(
     isOutputHTML()
-      ? callRuntime("_resume", t.identifier(local), t.stringLiteral(registerId))
-      : registerRuntimeValue(registerId, t.identifier(local)),
+      ? callRuntime("_resume", t.identifier(local), t.stringLiteral(registryId))
+      : registerRuntimeValue(registryId, t.identifier(local)),
   );
 }
 
@@ -529,7 +529,7 @@ function buildRegistration(local: string, registerId: string) {
 // template that imports the function resolves to the same module.
 function resolveRegisterModule(
   file: t.BabelFile,
-  { filename, exportName, registerId }: RegisteredExport,
+  { filename, exportName, registryId }: RegisteredExport,
 ) {
   const importer = file.opts.filename;
   return getMarkoOpts().resolveVirtualDependency!(importer, {
@@ -537,7 +537,7 @@ function resolveRegisterModule(
     code:
       `import { ${exportName} as value } from "./${path.basename(filename)}";\n` +
       `import { _resumed } from "${getRuntimePath("dom")}";\n` +
-      `_resumed${isValidPropertyIdentifier(registerId) ? `.${registerId}` : `[${JSON.stringify(registerId)}]`} = value;\n`,
+      `_resumed${isValidPropertyIdentifier(registryId) ? `.${registryId}` : `[${JSON.stringify(registryId)}]`} = value;\n`,
   })!;
 }
 

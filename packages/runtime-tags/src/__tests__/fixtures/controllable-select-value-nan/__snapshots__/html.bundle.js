@@ -8,7 +8,7 @@ var template_default = _template("a", (input) => {
 	}, "a0", $scope0_id), () => {
 		_html(`<select><option${_attr_option_value("")}>empty</option><option${_attr_option_value(NaN)}>nan</option><option${_attr_option_value(0)}>zero</option></select>`);
 	});
-	_html(_el_resume($scope0_id, "a"));
+	_html(_el_mark($scope0_id, "a"));
 	_script($scope0_id, "a1");
 	_scope($scope0_id, {});
 }, 1);

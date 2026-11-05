@@ -19,7 +19,7 @@ var template_default = _template("a", (input) => {
 			_scope($scope1_id, {});
 		}, (v) => v, $scope0_id, "a", 1, 1, 1, "</select>", 1);
 	});
-	_html(`<button type=reset>reset</button></form><div>${_text_resume($scope0_id, "b", value)}</div><button class=remove>Remove option</button>${_el_resume($scope0_id, "c")}<button class=add>Add option</button>${_el_resume($scope0_id, "d")}`);
+	_html(`<button type=reset>reset</button></form><div>${_text_mark($scope0_id, "b", value)}</div><button class=remove>Remove option</button>${_el_mark($scope0_id, "c")}<button class=add>Add option</button>${_el_mark($scope0_id, "d")}`);
 	_script($scope0_id, "a1");
 	_scope($scope0_id, { e: options });
 }, 1);

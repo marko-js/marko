@@ -86,28 +86,28 @@ export function getReadReplacement(
     : getHTMLReadBase(node, read);
   if (!base) return;
 
-  const expr = reduce(read.props, addMember, base);
+  const expr = reduce(read.properties, addMember, base);
   if (node.type === "Identifier" && expr.type === "Identifier") {
     node.name = expr.name;
     return;
   }
 
   // HTML's base mirrors the author's chain, so any member of it may match; a
-  // DOM base is a scope slot, so only the props read through it can.
+  // DOM base is a scope slot, so only the properties read through it can.
   return getChainReplacement(
     node,
     expr,
-    isOutputDOM() ? size(read.props) : Infinity,
+    isOutputDOM() ? size(read.properties) : Infinity,
   );
 }
 
-// What a DOM read stands for before its props: a value from its scope.
+// What a DOM read stands for before its properties: a value from its scope.
 function getDOMReadBase(
   read: ResolvedRead,
   section: Section | undefined,
   signal: Signal | undefined,
 ) {
-  const { binding, props, getter } = read;
+  const { binding, properties, getter } = read;
   if (read.localFn) {
     // A registered function receives its serialized locals scope; an inline
     // one keeps the lexical reference (following renames).
@@ -116,7 +116,7 @@ function getDOMReadBase(
       : t.identifier(binding.name);
   }
 
-  if (props === undefined) {
+  if (properties === undefined) {
     const inlined = getSignals(section!).get(binding)?.inline?.value;
     if (inlined) return t.cloneNode(inlined, true);
   }
@@ -134,7 +134,7 @@ function getDOMReadBase(
         ]);
   }
 
-  if (props === undefined && binding.type === BindingType.dom) {
+  if (properties === undefined && binding.type === BindingType.dom) {
     return (
       getter &&
       t.callExpression(getBindingGetterIdentifier(binding, binding.section), [
@@ -159,7 +159,7 @@ function isChildReturnVar(binding: Binding) {
   return !!getAliasRoot(binding).returnedBy;
 }
 
-// What an HTML read stands for before its props: the expression its binding
+// What an HTML read stands for before its properties: the expression its binding
 // is declared as. HTML runs the author's code in order, so a read rooted at a
 // name declared in scope reads as written.
 function getHTMLReadBase(

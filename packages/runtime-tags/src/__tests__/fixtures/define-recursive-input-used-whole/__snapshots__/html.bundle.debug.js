@@ -21,7 +21,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				return 0;
 			}
 		}, $scope1_id, "#text/0", $wg__input_depth__OR__input_label, $wg__input_depth);
-		_html(`<span>${_text_resume($scope1_id, "#text/1", input.label, $wg__input_label)}:${_text_resume($scope1_id, "#text/2", Object.keys(input).join(","), $wg__input * 2)}</span>`);
+		_html(`<span>${_text_mark($scope1_id, "#text/1", input.label, $wg__input_label)}:${_text_mark($scope1_id, "#text/2", Object.keys(input).join(","), $wg__input * 2)}</span>`);
 		_write_if($scope1_reason, 1) && _scope($scope1_id, {
 			input_depth: _write_if($scope1_reason, 3) && input.depth,
 			input_label: _write_if($scope1_reason, 2) && input.label
@@ -37,7 +37,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		depth,
 		label: "x"
 	});
-	_html(`<button>deeper</button>${_el_resume($scope0_id, "#button/1")}`);
+	_html(`<button>deeper</button>${_el_mark($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		depth,

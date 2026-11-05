@@ -2,7 +2,7 @@
 var cyc_b_default = _template("__tests__/tags/cyc-b/index.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_depth = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html(`<span>b ${_text_resume($scope0_id, "#text/0", input.depth, $wg__input_depth * 2)}</span>`);
+	_html(`<span>b ${_text_mark($scope0_id, "#text/0", input.depth, $wg__input_depth * 2)}</span>`);
 	_dynamic_tag($scope0_id, "#text/1", cyc_a_default, { depth: input.depth + 1 }, 0, 0, $wg__input_depth);
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/cyc-b/index.marko", 0);
 });
@@ -11,7 +11,7 @@ var cyc_b_default = _template("__tests__/tags/cyc-b/index.marko", (input) => {
 var cyc_a_default = _template("__tests__/tags/cyc-a/index.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_depth = _write_guard($scope0_reason, 0), $wi__input_depth = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html(`<div>a ${_text_resume($scope0_id, "#text/0", input.depth, $wg__input_depth * 2)}</div>`);
+	_html(`<div>a ${_text_mark($scope0_id, "#text/0", input.depth, $wg__input_depth * 2)}</div>`);
 	_if(() => {
 		if (input.depth < 2) {
 			const $scope1_id = _scope_id();
@@ -33,7 +33,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let n = 0;
-	_html(`<button>inc ${_text_resume($scope0_id, "#text/1", n, 2)}</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button>inc ${_text_mark($scope0_id, "#text/1", n, 2)}</button>${_el_mark($scope0_id, "#button/0")}`);
 	_set_scope_reason(2);
 	const $childScope = _peek_scope_id();
 	cyc_a_default({ depth: n });

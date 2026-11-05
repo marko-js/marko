@@ -26,7 +26,7 @@ var template_default = _template("a", (input) => {
 		let m = 0;
 		const label = "m0";
 		const c = v.n + item;
-		_html(`<button${_attr_class("row" + item)}>${_text_resume($scope1_id, "b", c + ":m0")}</button>${_el_resume($scope1_id, "a")}`);
+		_html(`<button${_attr_class("row" + item)}>${_text_mark($scope1_id, "b", c + ":m0")}</button>${_el_mark($scope1_id, "a")}`);
 		_script($scope1_id, "a1");
 		_scope($scope1_id, {
 			d: item,

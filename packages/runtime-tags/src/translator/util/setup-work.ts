@@ -2,7 +2,7 @@ import type { types as t } from "@marko/compiler";
 
 import { callsOtherTemplateSetup } from "./known-tag";
 import { forEach } from "./optional";
-import { getCanonicalExtra, getReferencedBindings } from "./references";
+import { getCanonicalExpr, getReferencedBindings } from "./references";
 import { forEachSection, type Section } from "./sections";
 import { createAnalysisSectionState } from "./state";
 
@@ -41,7 +41,7 @@ export function finalizeSetupWork() {
 // A direct call of a `<define>` body or of the template itself sets up the
 // called scope, or its owner, in the calling section's setup.
 function setCallSectionsSetup(body: Section) {
-  forEach(body.calls, (call) => {
+  forEach(body.renderedBy, (call) => {
     const callSection = call.childScopeBinding.section;
     if (!callSection.hasSetupWork) {
       callSection.hasSetupWork = true;
@@ -62,7 +62,7 @@ function hasOwnSetupWork(section: Section) {
     return true;
   }
   for (const expr of info.exprs) {
-    const extra = getCanonicalExtra(expr);
+    const extra = getCanonicalExpr(expr);
     if (!extra.dropped && !getReferencedBindings(extra)) {
       return true;
     }
