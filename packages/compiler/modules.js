@@ -9,6 +9,7 @@ if (process.env.BUNDLE || typeof document === "object") {
   exports.require = null;
   exports.resolve = null;
   exports.tryResolve = null;
+  exports.getRootPackage = null;
 } else {
   const fs = require("fs");
   const path = require("path");
@@ -16,6 +17,9 @@ if (process.env.BUNDLE || typeof document === "object") {
   // One `require` per directory, so its realpath is looked up once; Node caches
   // the resolutions themselves.
   const requireFrom = new Map();
+  // Every directory a package lookup passes caches its answer, so a sibling
+  // reuses its parent's instead of reading the same files again.
+  const rootPackages = new Map();
   let cwd = "/";
   let root = cwd;
   let pkg = null;
@@ -23,7 +27,7 @@ if (process.env.BUNDLE || typeof document === "object") {
   if (typeof process === "object" && typeof process.cwd === "function") {
     try {
       cwd = process.cwd();
-      pkg = require("lasso-package-root").getRootPackage(cwd);
+      pkg = getRootPackage(cwd);
       if (pkg) root = pkg.__dirname;
     } catch {
       // ignore
@@ -33,6 +37,7 @@ if (process.env.BUNDLE || typeof document === "object") {
   exports.root = root;
   exports.pkg = pkg;
   exports.require = require;
+  exports.getRootPackage = getRootPackage;
   exports.resolve = (id, from) => getRequire(from || root).resolve(id);
   exports.tryResolve = (id, from) => {
     try {
@@ -51,6 +56,41 @@ if (process.env.BUNDLE || typeof document === "object") {
       );
     }
     return req;
+  }
+
+  // The nearest package.json at or above `dir` that names a package or its
+  // dependencies, with its directory as `__dirname`.
+  function getRootPackage(dir) {
+    let found = rootPackages.get(dir);
+    if (found === undefined) {
+      const parent = path.dirname(dir);
+      found =
+        readPackage(dir) || (parent === dir ? null : getRootPackage(parent));
+      rootPackages.set(dir, found);
+    }
+    return found;
+  }
+
+  // Skips a package.json that only marks a module type, as `{"type":"module"}` does.
+  function readPackage(dir) {
+    let source;
+    try {
+      source = fs.readFileSync(path.join(dir, "package.json"), "utf8");
+    } catch {
+      return null;
+    }
+    const found = JSON.parse(source);
+    if (
+      found.name ||
+      found.version ||
+      found.dependencies ||
+      found.devDependencies ||
+      found.peerDependencies
+    ) {
+      found.__dirname = dir;
+      return found;
+    }
+    return null;
   }
 
   // Resolves from where a symlinked directory really lives, as Node does for a

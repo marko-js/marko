@@ -160,9 +160,6 @@ importers:
       kleur:
         specifier: ^4.1.5
         version: 4.1.5
-      lasso-package-root:
-        specifier: ^1.0.1
-        version: 1.0.1
       magic-string:
         specifier: ^1.4.5
         version: 1.4.5
@@ -1906,9 +1903,6 @@ packages:
 
   lasso-caching-fs@1.0.2:
     resolution: {integrity: sha512-mudop0s8U3tLm3Fn9lhiZsiELpLeJToEo6RlDLdph7vWRxL9Sz0o+9WUw1IwlpCYXv/P0CLsMYWFgPwIKWEYvg==}
-
-  lasso-package-root@1.0.1:
-    resolution: {integrity: sha512-j6LnauNCldqSDvOxoKpD6sTzudPGMiwcZQbySoF9KvJ0lD9Dp2t6QZF8kC0jbUDHuQPiAo5RuQ/mC3AGXscUYA==}
 
   launch-editor@2.14.2:
     resolution: {integrity: sha512-NHJEb30MGBCkmZXLZwz25t37QR4aY03ZzPYUJXOJaOa92uWwExI9SBQUuIznBYc1xkD7cJNGX7oc3Nl3sq2kQQ==}
@@ -3908,10 +3902,6 @@ snapshots:
   lasso-caching-fs@1.0.2:
     dependencies:
       raptor-async: 1.1.3
-
-  lasso-package-root@1.0.1:
-    dependencies:
-      lasso-caching-fs: 1.0.2
 
   launch-editor@2.14.2:
     dependencies:
