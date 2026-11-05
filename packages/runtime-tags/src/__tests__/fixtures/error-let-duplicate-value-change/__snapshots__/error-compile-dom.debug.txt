@@ -1,0 +1,6 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-let-duplicate-value-change/template.marko:1:36
+    > 1 | <let/x=input.a valueChange=input.b valueChange=input.c/>
+        |                                    ^^^^^^^^^^^^^^^^^^^ The [`<let>` tag](https://markojs.com/docs/reference/core-tag#let) takes a single `valueChange=` attribute.
+      2 | <div>${x}</div>
+      3 |
