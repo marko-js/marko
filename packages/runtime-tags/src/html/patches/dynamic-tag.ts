@@ -163,39 +163,39 @@ function renderDynamicTag(
   if (site !== undefined) {
     pushIdHop(IdHop.Site, MARKO_DEBUG ? [accessor, site] : site);
   }
-  if (!pairs) {
-    const unpatched = withUnpatched(() =>
-      _base_dynamic_tag(
-        scopeId,
-        accessor,
-        tag,
-        inputOrArgs,
-        content,
-        inputIsArgs,
-        markerGuard,
-        tagVar ? 1 : undefined,
-        pairing,
-        reason,
-        renderDynamicTag,
-      ),
-    );
-    if (site !== undefined) popIdHop();
-    return unpatched;
-  }
-  const value = _base_dynamic_tag(
-    scopeId,
-    accessor,
-    tag,
-    inputOrArgs,
-    content,
-    inputIsArgs,
-    markerGuard,
-    tagVar ? 1 : undefined,
-    pairing === PatchPairing.Setup ? PatchPairing.Render : pairing,
-    reason,
-    renderDynamicTag,
-  );
+  // A tag no patch pairs again, as one only a created scope takes, renders unpatched.
+  const value =
+    !pairs || pairing === PatchPairing.Setup
+      ? withUnpatched(() =>
+          _base_dynamic_tag(
+            scopeId,
+            accessor,
+            tag,
+            inputOrArgs,
+            content,
+            inputIsArgs,
+            markerGuard,
+            tagVar ? 1 : undefined,
+            pairing === PatchPairing.Setup ? PatchPairing.Render : pairing,
+            reason,
+            renderDynamicTag,
+          ),
+        )
+      : _base_dynamic_tag(
+          scopeId,
+          accessor,
+          tag,
+          inputOrArgs,
+          content,
+          inputIsArgs,
+          markerGuard,
+          tagVar ? 1 : undefined,
+          pairing,
+          reason,
+          renderDynamicTag,
+        );
   if (site !== undefined) popIdHop();
+  if (!pairs) return value;
   // A template whose own state drives its return keeps the client's value.
   if (
     typeof tagVar === "string" &&
