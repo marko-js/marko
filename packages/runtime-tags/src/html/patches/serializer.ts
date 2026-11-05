@@ -80,6 +80,10 @@ export class PatchSerializerState extends SerializerState {
     accessor: string,
     registered: Registered,
   ) {
+    const ref = new Reference(parent, accessor, this.flushId, this.buf.length);
+    const content = (val as { [RendererProp.Id]?: string })[RendererProp.Id];
+    // Content keeps one identity, as main's write does; a bind makes its function anew.
+    if (content) this.refs.set(val, ref);
     this.buf.push("_([");
     this.writeScopePath(
       (registered.scope as ScopeInternals)[K_SCOPE_ID]!,
@@ -88,15 +92,9 @@ export class PatchSerializerState extends SerializerState {
     this.buf.push(
       "]," + quoteRegistryId(shipNamedShell(this.render, registered.id)),
     );
-    if ((val as { [RendererProp.Id]?: string })[RendererProp.Id]) {
-      this.buf.push(",1");
-    }
+    if (content) this.buf.push(",1");
     if (registered.locals) {
-      writeLocalArgs(
-        this,
-        new Reference(parent, accessor, this.flushId, this.buf.length),
-        registered.locals(this.boundary.state.scope),
-      );
+      writeLocalArgs(this, ref, registered.locals(this.boundary.state.scope));
     }
     this.buf.push(")");
   }
