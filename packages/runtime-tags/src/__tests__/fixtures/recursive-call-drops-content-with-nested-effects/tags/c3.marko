@@ -1,0 +1,9 @@
+<let/n=0/>
+<if=(input.depth > 0)>
+  <c3 depth=(input.depth - 1)>
+    <script>console.log("x", n)</script>
+    <button onClick() { n++ }>${n}</button>
+    <const/k=n * 2/>
+    <for|i| of=[1, 2]><lifecycle onMount() { console.log(i, k) }/></for>
+  </c3>
+</if>

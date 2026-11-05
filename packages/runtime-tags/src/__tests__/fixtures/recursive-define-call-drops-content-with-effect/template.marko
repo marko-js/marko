@@ -1,0 +1,9 @@
+<define/E|{ depth }|>
+  <if=(depth > 0)>
+    <E depth=(depth - 1)>
+      <lifecycle v=depth/>
+      <script>console.log(depth)</script>
+    </E>
+  </if>
+</define>
+<E depth=2/>

@@ -1,0 +1,7 @@
+<define/D|{ depth }|>
+  <${input.content}(depth)/>
+  <if=(depth > 0)>
+    <D depth=(depth - 1)/>
+  </if>
+</define>
+<D depth=1/>
