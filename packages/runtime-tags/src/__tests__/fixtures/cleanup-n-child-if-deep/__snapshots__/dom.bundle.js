@@ -3,9 +3,9 @@ const $template = "<div><!> a</div><span><!> a</span><p><!> a</p>";
 const $walks = "D%lD%lD%l";
 const $input_name__OR__input_write__script = _script("b0", ($scope) => {
 	$scope.g(`${$scope.f} mounted`);
-	$signal($scope, 0).onabort = () => {
+	onAbort($scope, 0, () => {
 		$scope.g(`${$scope.f} destroyed`);
-	};
+	});
 });
 const $input_name__OR__input_write = /*@__PURE__*/ _or(7, ($scope) => {
 	$signalReset($scope, 0);

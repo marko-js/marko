@@ -1,8 +1,8 @@
 // tags/child.marko
 const $template = "<div> </div>";
-const $input_name__OR__input_write__script = _script("b0", ($scope) => $signal($scope, 0).onabort = () => {
+const $input_name__OR__input_write__script = _script("b0", ($scope) => onAbort($scope, 0, () => {
 	$scope.e(`destroyed ${$scope.d}`);
-});
+}));
 const $input_name__OR__input_write = /*@__PURE__*/ _or(5, ($scope) => {
 	$signalReset($scope, 0);
 	$input_name__OR__input_write__script($scope);

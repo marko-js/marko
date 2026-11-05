@@ -19,7 +19,7 @@ import {
   ReservedId,
   type Scope,
 } from "../common/types";
-import { trackAbort } from "./abort-signal";
+import { onAbort } from "./abort-signal";
 import { controllableSpreadHelpers } from "./controllable";
 import { _attrs, _attrs_content, _attrs_script } from "./dom";
 import {
@@ -120,7 +120,7 @@ export function _await_promise(
       scope[tryAccessor] = tryBranch;
       // Destroying the await drops its value and releases its count after the
       // flush's renders, so an await swapped in keeps the `@placeholder` up.
-      trackAbort(scope, promiseAccessor, (_?: never) => {
+      onAbort(scope, promiseAccessor, (_?: never) => {
         scope[promiseAccessor] = 0;
         if (scope[tryAccessor]) {
           queueAsyncRender(

@@ -10,11 +10,13 @@ function $setup($scope) {
 const $input_value__script = _script("__tests__/template.marko_0_input_value#4", ($scope) => {
 	{
 		const previousValue = $a($scope, $scope.input_value + 1);
-		$signal($scope, 0).onabort = () => $b($scope, previousValue);
+		onAbort($scope, 0, () => $b($scope, previousValue));
 	}
+	$signal($scope, 1).label = `run ${$scope.input_value}`;
 });
 const $input_value = /*@__PURE__*/ _const("input_value", ($scope) => {
 	$signalReset($scope, 0);
+	$signalReset($scope, 1);
 	$input_value__script($scope);
 });
 const $input = ($scope, input) => $input_value($scope, input.value);

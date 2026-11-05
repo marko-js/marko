@@ -2,9 +2,9 @@
 const $template = "<div>a</div><span>b</span><p>c</p>";
 const $input__script = _script("b0", ($scope) => {
 	$scope.b.write("mounted");
-	$signal($scope, 0).onabort = () => {
+	onAbort($scope, 0, () => {
 		$scope.b.write("destroyed");
-	};
+	});
 });
 const $input = /*@__PURE__*/ _const(1, ($scope) => {
 	$signalReset($scope, 0);

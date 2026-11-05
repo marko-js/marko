@@ -524,7 +524,7 @@ function $signal(scope, id) {
   );
 }
 /** Runs `abort` as a destroyed scope's `$signal` would fire, without creating one. */
-function trackAbort(scope, id, abort) {
+function onAbort(scope, id, abort) {
   ((abortsEnabled = 1), trackCleanup(scope), ((scope.A ||= {})[id] = { abort }));
 }
 /** Enrols `scope` with its branch so destroying the branch cleans it up. */
@@ -1373,7 +1373,7 @@ function _lifecycle(scope, thisObj, index = 0) {
     ? (Object.assign(instance, thisObj), instance.onUpdate?.())
     : ((scope[accessor] = thisObj),
       Object.assign(thisObj, thisObj.onMount?.()),
-      trackAbort(scope, accessor, (_) => thisObj.onDestroy?.()));
+      onAbort(scope, accessor, (_) => thisObj.onDestroy?.()));
 }
 function removeChildNodes(startNode, endNode) {
   for (endNode = endNode.nextSibling; startNode !== endNode;) {
@@ -1782,7 +1782,7 @@ function _await_promise(nodeAccessor, params) {
       let awaitCounter = tryBranch.O;
       scope[tryAccessor] ||
         ((scope[tryAccessor] = tryBranch),
-        trackAbort(scope, promiseAccessor, (_) => {
+        onAbort(scope, promiseAccessor, (_) => {
           ((scope[promiseAccessor] = 0),
             scope[tryAccessor] &&
               queueAsyncRender(scope[tryAccessor], completeAwaitCounter, awaitCounter));

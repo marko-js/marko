@@ -5,7 +5,7 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	{
 		const el = document.getElementById("foo");
 		el.innerHTML = "foo";
-		$signal($scope, 0).onabort = () => el.innerHTML = "";
+		onAbort($scope, 0, () => el.innerHTML = "");
 	}
 });
 function $setup($scope) {

@@ -8,7 +8,7 @@ const $input_value__script = _script("__tests__/tags/let-global.marko_0_input_va
 	{
 		const subs = subsByKey[$scope.input_value] ??= new Set();
 		const sub = () => $value($scope, $scope.$global[$scope.input_value]);
-		$signal($scope, 0).onabort = () => subs.delete(sub);
+		onAbort($scope, 0, () => subs.delete(sub));
 		subs.add(sub);
 	}
 });

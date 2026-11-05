@@ -21,11 +21,7 @@ export function $signal(scope: Scope, id: string | number) {
 }
 
 /** Runs `abort` as a destroyed scope's `$signal` would fire, without creating one. */
-export function trackAbort(
-  scope: Scope,
-  id: string | number,
-  abort: () => void,
-) {
+export function onAbort(scope: Scope, id: string | number, abort: () => void) {
   abortsEnabled = 1;
   trackCleanup(scope);
   (scope[AccessorProp.AbortControllers] ||= {})[id] = { abort };

@@ -2,9 +2,9 @@
 const $template$1 = "<div> </div>";
 const $walks$1 = "D l";
 const $setup$1 = ($_) => {};
-const $input_name__OR__input_write__script = _script("__tests__/tags/child.marko_0_name#3_write#4", ($scope) => $signal($scope, 0).onabort = () => {
+const $input_name__OR__input_write__script = _script("__tests__/tags/child.marko_0_name#3_write#4", ($scope) => onAbort($scope, 0, () => {
 	$scope.write(`destroyed ${$scope.name}`);
-});
+}));
 const $input_name__OR__input_write = /*@__PURE__*/ _or(5, ($scope) => {
 	$signalReset($scope, 0);
 	$input_name__OR__input_write__script($scope);
