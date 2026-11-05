@@ -920,16 +920,13 @@ function leavesToPatch({
   }
   return (
     getPatchFill(referencedBindings).fill ||
-    (!someBindingRead(referencedBindings, runsInFill) &&
-      everyAlias(referencedBindings))
+    leavesValueToPatch(referencedBindings)
   );
 }
 
-function runsInFill(read: ReferencedExtra) {
-  return !leavesReadToPatch(read);
-}
-
-function everyAlias(binding: Binding) {
+// Every read of the value, and of each alias a forward reaches, leaves its work to the patch.
+function leavesValueToPatch(binding: Binding) {
+  if (someBindingRead(binding, runsInFill)) return false;
   for (const alias of binding.aliases) {
     if (!leavesToPatch(getSignal(alias.section, alias))) return false;
   }
@@ -937,6 +934,10 @@ function everyAlias(binding: Binding) {
     if (!leavesToPatch(getSignal(alias.section, alias))) return false;
   }
   return true;
+}
+
+function runsInFill(read: ReferencedExtra) {
+  return !leavesReadToPatch(read);
 }
 
 function pushMemberForwards(
