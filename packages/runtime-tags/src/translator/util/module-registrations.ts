@@ -128,10 +128,10 @@ export function addFunctionReasons() {
 
 export function finalizeRegistrations() {
   const programExtra = getProgram().node.extra;
-  for (const [fnExtra, exprExtras] of getReferencesByFn()) {
+  for (const fnExtra of getReferencesByFn().keys()) {
     if (fnExtra.reason) {
       registerFunction(fnExtra);
-      programExtra.isInteractive ||= isLoadedReason(fnExtra.reason, exprExtras);
+      programExtra.isInteractive ||= !isGuardedReason(fnExtra.reason);
     }
   }
 
@@ -148,7 +148,7 @@ export function finalizeRegistrations() {
         extra.registeredImports ??= new Map();
         extra.registeredImports.set(local, registered);
       }
-      programExtra.isInteractive ||= isLoadedReason(reason, exprExtras);
+      programExtra.isInteractive ||= !isGuardedReason(reason);
     }
   }
 }
@@ -294,26 +294,18 @@ export function writeModuleRegistrations(program: t.NodePath<t.Program>) {
   program.node.body.push(...statements);
 }
 
-// Whether the page loads the registration: a caller changing the params loads
-// it otherwise, but a patch build writes a `<let>`'s initial value in place.
-function isLoadedReason(reason: Reason, exprExtras: Set<t.NodeExtra>) {
-  if (!isGuardedReason(reason)) return true;
-  if (isPatch()) {
-    for (const exprExtra of exprExtras) {
-      if (landsInitialValue(getCanonicalExpr(exprExtra))) return true;
-    }
-  }
-  return false;
-}
-
 function resolveReason(exprExtras: Set<t.NodeExtra>) {
   let reason: undefined | Reason;
   for (const exprExtra of exprExtras) {
     const extra = getCanonicalExpr(exprExtra);
     if (!exprExtra.consumed || extra.retained) {
+      // A patch writes a `<let>`'s initial value in place, so code landing in one is
+      // read whenever a patch changes what joins it.
       reason = mergeSources(
         reason,
-        landsRetained(extra) ? ALWAYS : getReasonForExpr(extra),
+        landsRetained(extra) || (isPatch() && landsInitialValue(extra))
+          ? ALWAYS
+          : getReasonForExpr(extra),
       );
     }
   }
@@ -322,7 +314,7 @@ function resolveReason(exprExtras: Set<t.NodeExtra>) {
 }
 
 // When the server writes a template: an effect reading it runs on the client
-// instead, and a patch may write one passed in an unknown tag's input.
+// instead; a patch may write one in an unknown tag's input or a `<let>`'s initial value.
 function resolveTemplateReason(exprExtras: Set<t.NodeExtra>) {
   let reason: undefined | Reason;
   for (const exprExtra of exprExtras) {
@@ -330,7 +322,7 @@ function resolveTemplateReason(exprExtras: Set<t.NodeExtra>) {
     if (!extra.isEffect) {
       reason = mergeSources(
         reason,
-        isPatch() && landsRetainedAsInput(extra)
+        isPatch() && (landsRetainedAsInput(extra) || landsInitialValue(extra))
           ? ALWAYS
           : getReasonForExpr(extra),
       );
