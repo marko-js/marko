@@ -117,8 +117,8 @@ export default {
         }
       });
     } else {
-      // An uncontrolled `<let>` is not reactive to its initial value; an
-      // unread let drops it.
+      // An uncontrolled `<let>` keeps its state, yet its initializer re-runs and
+      // keeps its reads (serialized) as any value does; an unread let drops it.
       tagExtra.initialValue = true;
       tagExtra.pure = !valueAttr || evaluate(valueAttr.value).pure;
     }
