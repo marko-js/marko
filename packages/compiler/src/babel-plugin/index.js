@@ -309,6 +309,7 @@ function getMarkoFile(code, fileOpts, markoOpts) {
       return file;
     }
 
+    file.path.scope.crawl(); // Migrators may have changed bindings.
     file.___compileStage = "transform";
 
     const rootTransformers = [];

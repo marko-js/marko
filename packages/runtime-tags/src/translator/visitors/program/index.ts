@@ -71,14 +71,6 @@ declare module "@marko/compiler/dist/types" {
 }
 
 export default {
-  migrate: {
-    enter(program) {
-      program.node.params = [t.identifier("input")];
-    },
-    exit(program) {
-      program.scope.crawl();
-    },
-  },
   transform: {
     exit: preAnalyze,
   },

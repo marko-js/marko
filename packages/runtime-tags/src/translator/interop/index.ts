@@ -18,6 +18,7 @@ import {
 } from "../util/entry-builder";
 import { getCompatRuntimeFile } from "../util/runtime";
 import { isTagsAPI } from "./feature-detection";
+import migrateOutGlobal from "./out-global";
 
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
@@ -52,7 +53,9 @@ export function createInteropTranslator(translate5: any) {
       taglib
         .resolveOptionalTaglibs(translate5.optionalTaglibs)
         .concat(translate5.taglibs) as Taglibs,
-      translate6.taglibs as Taglibs,
+      (translate6.taglibs as Taglibs).concat([
+        ["marko-interop", { migrate: migrateOutGlobal }],
+      ]),
     ),
     getRuntimeEntryFiles(output: Config["output"], optimize: boolean) {
       return [
