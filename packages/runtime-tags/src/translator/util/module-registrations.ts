@@ -299,8 +299,8 @@ function resolveReason(exprExtras: Set<t.NodeExtra>) {
   for (const exprExtra of exprExtras) {
     const extra = getCanonicalExpr(exprExtra);
     if (!exprExtra.consumed || extra.retained) {
-      // A patch writes a `<let>`'s initial value in place, so code landing in one is
-      // read whenever a patch changes what joins it.
+      // A patch may re-run any intersection reading a `<let>`, so code in its initial
+      // value is read whatever its caller passes.
       reason = mergeSources(
         reason,
         landsRetained(extra) || (isPatch() && landsInitialValue(extra))
