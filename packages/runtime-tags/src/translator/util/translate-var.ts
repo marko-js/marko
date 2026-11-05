@@ -260,11 +260,14 @@ export function withRestFallback(
 }
 
 // Before the tag holding this one in `section`, where a declaration of that
-// section goes.
+// section goes; attribute tags and their control flow place no statements.
 function getSectionTarget(tag: t.NodePath<t.MarkoTag>, section: Section) {
   let target: t.NodePath = tag;
   let cur = tag.parentPath;
-  while (cur.node.extra?.section !== section) {
+  while (
+    cur.node.extra?.section !== section ||
+    cur.listKey === "attributeTags"
+  ) {
     target = cur;
     cur = cur.parentPath!;
   }
