@@ -65,7 +65,7 @@ Guard tests:
 Pre-ship:
 
 - `pnpm test`.
-- Runtime changes: `pnpm run build && pnpm run build:sizes`. Bundle size is a feature; report each non-zero delta before committing as how it scales: what each rendered instance pays and what client code it newly keeps reachable, not as fixture counts. Then `git checkout -- .sizes*`; the pre-commit hook regenerates them.
+- Runtime changes: `pnpm run build && pnpm run build:sizes`. Bundle size is a feature; report each non-zero delta before committing as how it scales: what each rendered instance pays, what client code it newly keeps reachable, and what it costs on every other axis, not as fixture counts. Then `git checkout -- .sizes*`; the pre-commit hook regenerates them.
 - Pre-commit is slow by design (lint-staged, full build, tsc, sizes). On hook failure grep its output for `error TS`.
 - Changeset only for user-facing changes: `pnpm run change --patch <pkg> -m "<summary>"`, naming the package that owns the change (`AGENTS.md` › Commands). It rejects a name that is no workspace package, not the wrong package.
 
