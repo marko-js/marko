@@ -188,6 +188,47 @@ describe("compiler/compile", () => {
       ));
   });
 
+  describe("package imports", () => {
+    // A project whose `dep` package ships a tag; the sources compile from a
+    // directory that is missing, or symlinked from outside the project.
+    let project;
+    const compileImport = (filename) =>
+      compileSync('import Dep from "dep/tag.marko"\n<Dep/>', filename, {
+        translator,
+        output: "html",
+      }).code;
+
+    before(() => {
+      project = fs.mkdtempSync(path.join(os.tmpdir(), "marko-imports-"));
+      fs.mkdirSync(path.join(project, "node_modules", "dep"), {
+        recursive: true,
+      });
+      fs.mkdirSync(path.join(project, "pkg"));
+      fs.writeFileSync(
+        path.join(project, "node_modules", "dep", "tag.marko"),
+        "<span>dep</span>",
+      );
+    });
+
+    it("resolves from a source directory that does not exist", () =>
+      assert.match(
+        compileImport(path.join(project, "missing", "x.marko")),
+        /dep\/tag\.marko/,
+      ));
+
+    it("resolves from where a symlinked source directory lives", () => {
+      const link = path.join(
+        fs.mkdtempSync(path.join(os.tmpdir(), "marko-link-")),
+        "pkg",
+      );
+      fs.symlinkSync(path.join(project, "pkg"), link, "dir");
+      assert.match(
+        compileImport(path.join(link, "x.marko")),
+        /dep\/tag\.marko/,
+      );
+    });
+  });
+
   describe("template id", () => {
     it("keeps paths with unusual characters distinct", () => {
       const dir = fs.mkdtempSync(path.join(os.tmpdir(), "marko-id-"));

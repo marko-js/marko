@@ -95,13 +95,13 @@ var args = require("argly")
   })
   .parse();
 var Minimatch = require("minimatch").Minimatch;
-var resolveFrom = require("resolve-from").silent;
+var cwdRequire = require("module").createRequire(nodePath.join(cwd, "_"));
 
 // Try to use the Marko compiler installed with the project
-var markoCompilerPath = resolveFrom(process.cwd(), "marko/compiler");
+var markoCompilerPath = tryResolve("marko/compiler");
 const markocPkgVersion = require("../package.json").version;
 
-var markoPkgPath = resolveFrom(process.cwd(), "marko/package.json");
+var markoPkgPath = tryResolve("marko/package.json");
 var markoPkgVersion = markoPkgPath && require(markoPkgPath).version;
 
 var markoCompiler = markoCompilerPath
@@ -437,5 +437,13 @@ if (args.clean) {
         }
       },
     );
+  }
+}
+
+function tryResolve(id) {
+  try {
+    return cwdRequire.resolve(id);
+  } catch {
+    return undefined;
   }
 }

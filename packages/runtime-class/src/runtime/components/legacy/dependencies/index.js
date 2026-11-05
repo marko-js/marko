@@ -1,5 +1,5 @@
 var nodePath = require("path");
-var defaultResolveFrom = require("resolve-from");
+var createRequire = require("module").createRequire;
 var env = process.env.NODE_ENV;
 var production = !env || env !== "development";
 
@@ -175,3 +175,7 @@ function patch(Template) {
 exports.getDeps = getRootDeps;
 exports.resolveDep = resolveDep;
 exports.patch = patch;
+
+function defaultResolveFrom(dir, id) {
+  return createRequire(nodePath.join(dir, "_")).resolve(id);
+}

@@ -3,6 +3,7 @@
 require("../__util__/test-init");
 var fs = require("fs");
 var nodePath = require("path");
+var PassThrough = require("stream").PassThrough;
 
 var assert = require("assert/strict");
 var fsReadOptions = { encoding: "utf8" };
@@ -324,15 +325,17 @@ describe("AsyncStream", function () {
     out.write("3").end();
   });
 
-  it("should support writing to a through stream", function (done) {
+  it("should support writing to a passthrough stream", function (done) {
     var output = "";
-    var through = require("through")(function write(data) {
-      output += data;
-      this.queue(data);
-    });
+    var passthrough = new PassThrough({ encoding: "utf8" }).on(
+      "data",
+      function (data) {
+        output += data;
+      },
+    );
 
     var errors = [];
-    var out = createAsyncStream(through)
+    var out = createAsyncStream(passthrough)
       .on("error", function (e) {
         errors.push(e);
       })
@@ -403,18 +406,18 @@ describe("AsyncStream", function () {
   });
 
   it("should support a writer being piped to another stream", function (done) {
-    var through = require("through")();
+    var passthrough = new PassThrough();
     var outStr = "";
 
-    var out = require("through")(function write(str) {
+    var out = new PassThrough({ encoding: "utf8" }).on("data", function (str) {
       outStr += str;
     });
 
-    through.pipe(out).on("error", function (e) {
+    passthrough.pipe(out).on("error", function (e) {
       done(e);
     });
 
-    out = createAsyncStream(through);
+    out = createAsyncStream(passthrough);
     out.write("1");
 
     var asyncOut = out.beginAsync();
@@ -483,8 +486,6 @@ describe("AsyncStream", function () {
   });
 
   it("should not crash the program if the underlying stream has an error listener", function (done) {
-    var stream = require("stream");
-    var PassThrough = stream.PassThrough;
     var passthrough = new PassThrough();
 
     passthrough.on("error", function () {
@@ -497,8 +498,6 @@ describe("AsyncStream", function () {
   });
 
   it("should crash the program if the underlying stream does *not* have an error listener", function (done) {
-    var stream = require("stream");
-    var PassThrough = stream.PassThrough;
     var passthrough = new PassThrough();
 
     var out = createAsyncStream(passthrough);
@@ -557,9 +556,10 @@ describe("AsyncStream", function () {
     var output = "";
     var errors = [];
 
-    var through = require("through")(function write(data) {
-      output += data;
-    })
+    var passthrough = new PassThrough({ encoding: "utf8" })
+      .on("data", function (data) {
+        output += data;
+      })
       .on("error", function (err) {
         errors.push(err);
       })
@@ -570,7 +570,7 @@ describe("AsyncStream", function () {
         done();
       });
 
-    var out = createAsyncStream(through);
+    var out = createAsyncStream(passthrough);
     out.write("1");
 
     var asyncOut1 = out.beginAsync();
@@ -589,10 +589,11 @@ describe("AsyncStream", function () {
     var errors = [];
     var ended = false;
 
-    var through = require("through")(function write(data) {
-      assert.equal(ended, false);
-      output += data;
-    })
+    var passthrough = new PassThrough({ encoding: "utf8" })
+      .on("data", function (data) {
+        assert.equal(ended, false);
+        output += data;
+      })
       .on("error", function (err) {
         errors.push(err);
       })
@@ -602,7 +603,7 @@ describe("AsyncStream", function () {
         done();
       });
 
-    var out = createAsyncStream(through);
+    var out = createAsyncStream(passthrough);
     out.write("1");
 
     var asyncOut1 = out.beginAsync({ timeout: 50 });
@@ -626,10 +627,11 @@ describe("AsyncStream", function () {
     var errors = [];
     var ended = false;
 
-    var through = require("through")(function write(data) {
-      assert.equal(ended, false);
-      output += data;
-    })
+    var passthrough = new PassThrough({ encoding: "utf8" })
+      .on("data", function (data) {
+        assert.equal(ended, false);
+        output += data;
+      })
       .on("error", function (err) {
         errors.push(err);
       })
@@ -639,7 +641,7 @@ describe("AsyncStream", function () {
         done();
       });
 
-    var out = createAsyncStream(through);
+    var out = createAsyncStream(passthrough);
     out.write("1");
 
     var asyncOut1 = out.beginAsync();
@@ -665,10 +667,11 @@ describe("AsyncStream", function () {
     var errors = [];
     var ended = false;
 
-    var through = require("through")(function write(data) {
-      assert.equal(ended, false);
-      output += data;
-    })
+    var passthrough = new PassThrough({ encoding: "utf8" })
+      .on("data", function (data) {
+        assert.equal(ended, false);
+        output += data;
+      })
       .on("error", function (err) {
         errors.push(err);
       })
@@ -679,7 +682,7 @@ describe("AsyncStream", function () {
         done();
       });
 
-    var out = createAsyncStream(through);
+    var out = createAsyncStream(passthrough);
     out.write("1");
 
     var asyncOut1 = out.beginAsync();
@@ -788,8 +791,7 @@ describe("AsyncStream", function () {
   });
 
   it("should support out.stream for accessing the original stream", function (done) {
-    var through = require("through");
-    var stream = through(function write() {});
+    var stream = new PassThrough().resume();
 
     var out = createAsyncStream(stream);
     assert.equal(out.stream, stream);

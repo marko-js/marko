@@ -4,5 +4,7 @@
 // fixtures then failed with `vm.SourceTextModule is not a constructor`).
 module.exports = {
   ...require("./.mocharc.json"),
-  spec: ["packages/*/@(src|test)/**/*.test.@(js|ts)"],
+  // Spec files sit at these three depths, so a lookup never walks the fixture
+  // trees beneath them.
+  spec: ["packages/*/{src/__tests__,test,test/*}/*.test.{js,ts}"],
 };
