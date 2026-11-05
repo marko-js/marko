@@ -455,11 +455,7 @@ export default {
               attrAt(attributes, content),
               isTextOnly,
             ) && "patches/dynamic-tag",
-            // A spread owning the element's controllable (no static one
-            // survives the merge) re-claims it at run time.
-            !controllable &&
-              controllableElements.has(tagName) &&
-              "controllable",
+            spreadClaimsControllable(tagName, !!controllable) && "controllable",
           );
 
           spreadExtra.rendersContent = true;
@@ -954,9 +950,7 @@ export default {
             markerGuard || absentArg(1),
             ...(patches
               ? [
-                  !controllable && controllableElements.has(tagName)
-                    ? t.numericLiteral(1)
-                    : absentArg(0),
+                  getPatchSpreadFlag(tagName, !!controllable, false),
                   ...getPatchHoleGroupArgs(tagSection, tagExtra),
                 ]
               : []),
@@ -1531,11 +1525,17 @@ function getPatchSpreadFlag(
   controllable: boolean,
   injectsNonce: boolean,
 ) {
-  return !controllable && controllableElements.has(tagName)
+  return spreadClaimsControllable(tagName, controllable)
     ? t.numericLiteral(1)
     : injectsNonce
       ? t.numericLiteral(2)
       : absentArg(0);
+}
+
+// A spread owning the element's controllable (no static one survives the merge)
+// re-claims it at run time.
+function spreadClaimsControllable(tagName: string, controllable: boolean) {
+  return !controllable && controllableElements.has(tagName);
 }
 
 // The spread object both outputs write: the spreads and the attributes among
