@@ -23,7 +23,6 @@ import {
   isRest,
   type ReferencedBindings,
   someAlias,
-  someBindingRead,
   someReadIn,
 } from "./bindings";
 import { createAnalysisMemo } from "./cyclic-memo";
@@ -94,7 +93,6 @@ import {
   hasResumableAssignment,
   isAssignedBindingExtra,
   isRegisteredFnExtra,
-  type ReferencedExtra,
 } from "./references";
 import {
   insertStatementBefore,
@@ -890,12 +888,14 @@ function markFill(signal: Signal, fillFn: t.Expression) {
 }
 
 function getForwardStatements(signal: Signal, target: Signal) {
-  return isPatch() && leavesToPatch(target) ? signal.patch : signal.render;
+  return isPatch() && leavesForwardToPatch(target)
+    ? signal.patch
+    : signal.render;
 }
 
 // A fill's run leaves a forward to the patch when the patch fills the value, or does
 // every read the target runs: all of a value's, or its bindings' in its section.
-function leavesToPatch({
+function leavesForwardToPatch({
   referencedBindings,
   section,
   globalReads,
@@ -906,10 +906,12 @@ function leavesToPatch({
     globalReads ||
     referencedBindings.section !== section
   ) {
-    return every(
-      referencedBindings,
-      (binding) => !someReadIn(binding, section, runsInFill),
-    );
+    return every(referencedBindings, (binding) => {
+      for (const read of binding.reads.keys()) {
+        if (read.section === section && !leavesReadToPatch(read)) return false;
+      }
+      return true;
+    });
   }
   // A node's own work: a loop or branch chain the patch renders wherever it writes the scope.
   if (referencedBindings.type === BindingType.dom) {
@@ -926,18 +928,16 @@ function leavesToPatch({
 
 // Every read of the value, and of each alias a forward reaches, leaves its work to the patch.
 function leavesValueToPatch(binding: Binding) {
-  if (someBindingRead(binding, runsInFill)) return false;
+  for (const read of binding.reads.keys()) {
+    if (!leavesReadToPatch(read)) return false;
+  }
   for (const alias of binding.aliases) {
-    if (!leavesToPatch(getSignal(alias.section, alias))) return false;
+    if (!leavesForwardToPatch(getSignal(alias.section, alias))) return false;
   }
   for (const alias of binding.propertyAliases.values()) {
-    if (!leavesToPatch(getSignal(alias.section, alias))) return false;
+    if (!leavesForwardToPatch(getSignal(alias.section, alias))) return false;
   }
   return true;
-}
-
-function runsInFill(read: ReferencedExtra) {
-  return !leavesReadToPatch(read);
 }
 
 function pushMemberForwards(
