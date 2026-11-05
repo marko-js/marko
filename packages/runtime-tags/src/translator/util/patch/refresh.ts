@@ -1473,12 +1473,8 @@ function getIntersectionSetup(
     ) {
       return;
     }
-    if (!seedsIntersectionReads(section, intersection)) {
-      return { setup: "always" };
-    }
-    return hasTagCallerParamAt(getSetupSources(intersection), section)
-      ? { setup: "client" }
-      : undefined;
+    const setup = getStateSetup(section, intersection);
+    return setup && { setup };
   }
   if (!hasTagCallerParamAt(sources, section)) return;
   // A filled intersection no member's fill re-runs: a patch names it on any scope.
@@ -1486,21 +1482,32 @@ function getIntersectionSetup(
   return { setup: "client" };
 }
 
-// The sources a client contributes an intersection's setup by: a state one's
-// states' initial values, as a created scope seeds what it computes from them.
-export function getSetupSources(intersection: Intersection) {
-  const sources = getSourcesForReferencedBindings(intersection);
+// Client state renders, and subscribes, by its own setup; where the patch seeds its
+// reads, only where a caller sets its initial values.
+function getStateSetup(
+  section: Section,
+  ref: Binding | Intersection,
+): CreatedSetup["setup"] {
+  if (!seedsReads(section, ref)) return "always";
+  if (hasTagCallerParamAt(getSetupSources(ref), section)) return "client";
+}
+
+// The sources a client contributes a setup by: client state's initial values,
+// as a created scope seeds what it computes from them.
+export function getSetupSources(ref: Binding | Intersection) {
+  const sources = getSourcesForReferencedBindings(ref);
   return sources?.state ? getStateInitialValueSources(sources.state) : sources;
 }
 
-// A state intersection only holes a patch writes and initial values of `<let>`s
-// it fills read: a created scope takes those from the patch.
-function seedsIntersectionReads(section: Section, intersection: Intersection) {
+// Client state only holes a patch writes and initial values of `<let>`s it fills
+// read in the section: a created scope takes those from the patch.
+function seedsReads(section: Section, ref: Binding | Intersection) {
+  const intersection = Array.isArray(ref);
   return !someReadIn(
-    intersection[0],
+    intersection ? ref[0] : ref,
     section,
     (read) =>
-      getReferencedBindings(read) === intersection &&
+      (!intersection || getReferencedBindings(read) === ref) &&
       !isFilledHole(read) &&
       !(read.initialValue && every(read.derives, canPatchFill)),
   );
@@ -1536,8 +1543,7 @@ function getClosureSetup(
   closure: Binding,
 ): CreatedSetup["setup"] {
   if (closure.type === BindingType.constant) return;
-  // Client state renders, and subscribes, by its own setup.
-  if (closure.sources?.state) return "always";
+  if (closure.sources?.state) return getStateSetup(section, closure);
   if (hasGuardedSources(closure) && clientMayRender(section)) return "mixed";
   if (isClientRenderedClosure(closure, section)) return "client";
 }

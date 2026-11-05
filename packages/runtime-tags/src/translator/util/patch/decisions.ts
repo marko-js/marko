@@ -83,8 +83,20 @@ export function seedsOnly(section: Section, sources: Sources | undefined) {
 export function holdsInitialValue(state: Binding, section: Section) {
   return (
     state.readsInitialValues &&
-    state.section === section &&
+    isCreatedWith(section, state.section) &&
     !fillsInitialValue(state)
+  );
+}
+
+// The section's scope exists only as `owner`'s is created: the owner's own, or a
+// body every call renders in such a scope.
+function isCreatedWith(section: Section, owner: Section): boolean {
+  return (
+    section === owner ||
+    (!!section.renderedBy &&
+      every(section.renderedBy, (call) =>
+        isCreatedWith(call.childScopeBinding.section, owner),
+      ))
   );
 }
 

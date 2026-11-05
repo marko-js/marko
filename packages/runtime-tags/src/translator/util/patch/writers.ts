@@ -440,7 +440,7 @@ export function writePatchResumeStatements(
         t.expressionStatement(
           buildClientSetup(
             section,
-            ref.sources,
+            getSetupSources(ref),
             getCreatedSetupId(section, ref),
           ),
         ),
