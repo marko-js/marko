@@ -21,7 +21,7 @@ import { addHTMLEffectCall, addStatement } from "../util/signals";
 import { skip, traverseContains, traverseFindAwait } from "../util/traverse";
 
 const htmlScriptTagAlternateMsg =
-  " For a native html [`<script>` tag](https://markojs.com/docs/reference/core-tag#script) use the `html-script` core tag instead.";
+  " For a native html `<script>` tag use the [`html-script` core tag](https://markojs.com/docs/reference/core-tag#html-script--html-style) instead.";
 
 export default {
   parse(tag) {
@@ -45,6 +45,10 @@ export default {
       const start = body[0]?.start;
       const end = body[body.length - 1]?.end;
       const block = parseBlock(getFile(), code, start, end);
+      const [parseError] = block.body;
+      if (parseError?.type === "MarkoParseError") {
+        parseError.label += htmlScriptTagAlternateMsg;
+      }
       if (block.body.length || block.innerComments) {
         const valueFn = t.arrowFunctionExpression(
           [],
@@ -171,7 +175,8 @@ export default {
   },
   autocomplete: [
     {
-      description: "Use to create side effects.",
+      description:
+        "Use to create side effects. For a native `<script>` element, use `<html-script>`.",
       descriptionMoreURL: "https://markojs.com/docs/reference/core-tag#script",
     },
   ],
