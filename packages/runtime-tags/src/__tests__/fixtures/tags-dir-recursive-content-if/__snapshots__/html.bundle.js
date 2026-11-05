@@ -24,7 +24,6 @@ const $content = (input) => {
 						}
 					}, $scope2_id, "a", $wg__input_depth, $wg__input_depth);
 					$wi__input_depth && _subscribe($input_depth__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "b0", $wg__input_depth);
-					$wg__input_depth || $wi__input_depth && _resume_branch($scope2_id);
 				}, $scope1_id)
 			});
 			$wi__input_depth && _scope($scope1_id, {

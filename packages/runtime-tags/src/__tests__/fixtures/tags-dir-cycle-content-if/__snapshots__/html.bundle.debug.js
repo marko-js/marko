@@ -33,7 +33,6 @@ var cyc_a_default = _template("__tests__/tags/cyc-a/index.marko", (input) => {
 						}
 					}, $scope2_id, "#text/0", $wg__input_depth, $wg__input_depth);
 					$wi__input_depth && _subscribe($input_depth__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/cyc-a/index.marko", "3:4"), "__tests__/tags/cyc-a/index.marko_2_input_depth#0:4/subscribe", $wg__input_depth);
-					$wg__input_depth || $wi__input_depth && _resume_branch($scope2_id);
 				}, $scope1_id)
 			});
 			$wi__input_depth && _scope($scope1_id, {
