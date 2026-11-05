@@ -1107,16 +1107,9 @@ export default {
             contentAttr,
             getTagFacts(tag).textBody,
           );
-          const name = tag.get("name");
-          const staticName = name.isStringLiteral()
-            ? name.node.value
-            : undefined;
           // A spread claims its controlled attrs during render, unless a
           // static attr owns the controllable and so the slots it wrote.
-          const element =
-            staticName === undefined
-              ? undefined
-              : controllableElements.get(staticName);
+          const element = controllableElements.get(tagName);
           const spreadHelper = !controllable && element?.spreadHelper;
           if (skipExpression) {
             addStatement(
@@ -1147,11 +1140,7 @@ export default {
             );
           }
 
-          // `_attrs_script` resolves the control kind at run time, and a
-          // run-time tag name can be any of them.
-          if (staticName === undefined) {
-            importRuntimeFeature("controllable");
-          } else if (element) {
+          if (element) {
             importRuntimeFeature(element.feature);
           }
           addStatement(
@@ -1822,7 +1811,14 @@ function buildClassMarkup({ staticParts, toggles = [] }: DelimitedAttrMeta) {
     );
   }
 
-  const table = ensureModuleClassMarkup(combos);
+  const table = ensureModuleClassMarkup(JSON.stringify(combos), () => {
+    const markups = combos.map((parts) =>
+      parts.length
+        ? callRuntime("_attr_class", buildClassString(parts, []))
+        : t.stringLiteral(""),
+    );
+    return markups.length === 1 ? markups[0] : t.arrayExpression(markups);
+  });
   return toggles.length
     ? t.memberExpression(table, buildToggleIndex(toggles), true)
     : table;
@@ -1846,57 +1842,30 @@ function buildPrecomputedClass(
 
   // Hoist the shared `class=` prefix; the table holds only the value parts.
   const end = commonAttrPrefixEnd(combos);
-  const table = generateUidIdentifier("class");
-  getProgram().node.body.push(
-    t.markoScriptlet(
-      [
-        t.variableDeclaration("const", [
-          t.variableDeclarator(
-            table,
-            t.arrayExpression(
-              combos.map((combo) => t.stringLiteral(combo.slice(end))),
-            ),
-          ),
-        ]),
-      ],
-      true,
-    ),
-  );
-
+  const values = combos.map((combo) => combo.slice(end));
   const lookup = t.memberExpression(
-    t.cloneNode(table),
+    ensureModuleClassMarkup(JSON.stringify(values), () =>
+      t.arrayExpression(values.map((value) => t.stringLiteral(value))),
+    ),
     buildToggleIndex(toggles),
     true,
   );
   return buildStringExpression([combos[0].slice(0, end), lookup])!;
 }
 
-// A class with style import reads renders as the module loads: one markup, or a
-// table of every toggle combination, shared by each element writing the same parts.
+// Class markup declared once per output for each distinct value, shared by every
+// element writing it: a precomputed table, or markup computed as the module loads.
 const [getModuleClassMarkups] = createOutputState(
   () => new Map<string, t.Identifier>(),
 );
-function ensureModuleClassMarkup(combos: DelimitedAttrPart[][]) {
-  const key = JSON.stringify(combos);
+function ensureModuleClassMarkup(key: string, build: () => t.Expression) {
   const moduleClassMarkups = getModuleClassMarkups();
   let id = moduleClassMarkups.get(key);
   if (!id) {
-    const markups = combos.map((parts) =>
-      parts.length
-        ? callRuntime("_attr_class", buildClassString(parts, []))
-        : t.stringLiteral(""),
-    );
     moduleClassMarkups.set(key, (id = generateUidIdentifier("class")));
     getProgram().node.body.push(
       t.markoScriptlet(
-        [
-          t.variableDeclaration("const", [
-            t.variableDeclarator(
-              id,
-              markups.length === 1 ? markups[0] : t.arrayExpression(markups),
-            ),
-          ]),
-        ],
+        [t.variableDeclaration("const", [t.variableDeclarator(id, build())])],
         true,
       ),
     );
