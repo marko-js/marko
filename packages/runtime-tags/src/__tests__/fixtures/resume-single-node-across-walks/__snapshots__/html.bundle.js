@@ -8,7 +8,7 @@ var template_default = _template("a", (input) => {
 		const $scope2_id = _scope_id();
 		_await($scope2_id, "a", resolveAfter("done", 1), (x) => {
 			const $scope4_id = _scope_id();
-			_html(`<span>${_escape(x)}</span>${_el_resume($scope4_id, "a")}`);
+			_html(`<span>${_escape(x)}</span>${_el_mark($scope4_id, "a")}`);
 			_script($scope4_id, "a0");
 			_scope($scope4_id, { d: x });
 		});
@@ -24,7 +24,7 @@ var template_default = _template("a", (input) => {
 			_scope_id();
 			_html(_escape(v));
 		}, 0);
-		_html(`</button>${_el_resume($scope1_id, "a")}`);
+		_html(`</button>${_el_mark($scope1_id, "a")}`);
 		_script($scope1_id, "a2");
 		_scope($scope1_id, { M: item });
 	}, (x) => x, $scope0_id, "b", 1, 1, 0, 0, 1);

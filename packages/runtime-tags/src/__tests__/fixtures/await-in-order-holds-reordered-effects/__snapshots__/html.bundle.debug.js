@@ -9,7 +9,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_await($scope1_id, "#text/0", resolveAfter(1, 1), (x) => {
 			const $scope2_id = _scope_id();
-			_html(`<button>${_text_resume($scope2_id, "#text/1", value)}</button>${_el_resume($scope2_id, "#button/0")}`);
+			_html(`<button>${_text_mark($scope2_id, "#text/1", value)}</button>${_el_mark($scope2_id, "#button/0")}`);
 			_script($scope2_id, "__tests__/template.marko_2");
 			_subscribe($value__closures, _scope($scope2_id, {}, "__tests__/template.marko", "5:4"), "__tests__/template.marko_2_value#0:2/subscribe");
 		});
@@ -21,7 +21,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, void 0, "__tests__/template.marko_3*content");
 	_await($scope0_id, "#text/1", value ? value : resolveAfter(value, 3), (v) => {
 		const $scope4_id = _scope_id();
-		_html(`<div>${_text_resume($scope4_id, "#text/0", v)}</div>`);
+		_html(`<div>${_text_mark($scope4_id, "#text/0", v)}</div>`);
 		_script($scope4_id, "__tests__/template.marko_4_v#2");
 		_scope($scope4_id, { v }, "__tests__/template.marko", "10:2", { v: "10:8" });
 	});

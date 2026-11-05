@@ -9,7 +9,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_await($scope1_id, "#text/0", input.a, (v) => {
 			const $scope4_id = _scope_id();
-			_html(`<p>A:${_text_resume($scope4_id, "#text/0", (console.log("body-ran:a", v), v), $wg__input_a * 2)}</p>`);
+			_html(`<p>A:${_text_mark($scope4_id, "#text/0", (console.log("body-ran:a", v), v), $wg__input_a * 2)}</p>`);
 			$wi__input_a && _scope($scope4_id, {}, "__tests__/template.marko", "2:4");
 		}, $wg__input_a);
 		$wi__input_a && _subscribe($input_a__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "1:2"), "__tests__/template.marko_1_input_a#0:4/subscribe", 0);
@@ -24,7 +24,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope2_id = _scope_id();
 		_await($scope2_id, "#text/0", input.b, (v) => {
 			const $scope6_id = _scope_id();
-			_html(`<p>B:${_text_resume($scope6_id, "#text/0", (console.log("body-ran:b", v), v), $wg__input_b * 2)}</p>`);
+			_html(`<p>B:${_text_mark($scope6_id, "#text/0", (console.log("body-ran:b", v), v), $wg__input_b * 2)}</p>`);
 			$wi__input_b && _scope($scope6_id, {}, "__tests__/template.marko", "8:4");
 		}, $wg__input_b);
 		$wi__input_b && _subscribe($input_b__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "7:2"), "__tests__/template.marko_2_input_b#0:5/subscribe", 0);

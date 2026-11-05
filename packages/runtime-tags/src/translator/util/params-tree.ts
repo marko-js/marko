@@ -1,12 +1,12 @@
 import { getProgram } from "@marko/compiler/babel-utils";
 
-import { type Binding, isTemplateParam, propsUtil } from "./bindings";
+import { type Binding, isTemplateParam, propertiesUtil } from "./bindings";
 import { generateUid } from "./generate-uid";
 import { forEach, type SortedOpt } from "./optional";
 
 export type ParamsTree = {
   binding: Binding;
-  props: { [prop: string]: ParamsTree } | undefined; // TODO: change to "known"
+  properties: { [prop: string]: ParamsTree } | undefined; // TODO: change to "known"
   rest: ParamsTree | undefined;
 };
 
@@ -26,9 +26,9 @@ export function exposeParamsTree(
 ): ParamsTree {
   binding.exposed = true;
 
-  const props: ParamsTree = {
+  const tree: ParamsTree = {
     binding,
-    props: undefined,
+    properties: undefined,
     rest: undefined,
   };
 
@@ -42,21 +42,24 @@ export function exposeParamsTree(
       }
     }
     if (!restAlias) {
-      props.props = Object.create(null) as { [prop: string]: ParamsTree };
+      tree.properties = Object.create(null) as { [prop: string]: ParamsTree };
       for (const [property, alias] of binding.propertyAliases) {
-        props.props[property] = exposeParamsTree(alias, bodyAnalyzed)!;
+        tree.properties[property] = exposeParamsTree(alias, bodyAnalyzed)!;
       }
     } else if (aliasCount === 1) {
       if (hasSupersetExcludeProperties(binding, restAlias.excludeProperties)) {
-        props.rest = exposeParamsTree(restAlias, bodyAnalyzed);
-        props.props = Object.create(null) as {
+        tree.rest = exposeParamsTree(restAlias, bodyAnalyzed);
+        tree.properties = Object.create(null) as {
           [prop: string]: ParamsTree;
         };
 
         forEach(restAlias.excludeProperties, (property) => {
           const propAlias = binding.propertyAliases.get(property);
           if (propAlias) {
-            props.props![property] = exposeParamsTree(propAlias, bodyAnalyzed)!;
+            tree.properties![property] = exposeParamsTree(
+              propAlias,
+              bodyAnalyzed,
+            )!;
           }
         });
       }
@@ -78,7 +81,7 @@ export function exposeParamsTree(
     );
   }
 
-  return props;
+  return tree;
 }
 
 // A binding read only by a name-only `<${binding}/>` is always a `_content(...)` renderer
@@ -114,7 +117,7 @@ function hasSupersetExcludeProperties(
   }
 
   for (const prop of binding.propertyAliases.keys()) {
-    if (!propsUtil.has(excludeProperties, prop)) {
+    if (!propertiesUtil.has(excludeProperties, prop)) {
       return false;
     }
   }
@@ -127,15 +130,15 @@ export function getSettledParamsTree(
   paramsTree: ParamsTree | undefined,
 ): ParamsTree | undefined {
   if (!paramsTree || paramsTree.binding.pruned) return;
-  if (!paramsTree.props) return paramsTree;
-  const props = Object.create(null) as { [prop: string]: ParamsTree };
-  for (const name in paramsTree.props) {
-    const prop = getSettledParamsTree(paramsTree.props[name]);
-    if (prop) props[name] = prop;
+  if (!paramsTree.properties) return paramsTree;
+  const properties = Object.create(null) as { [prop: string]: ParamsTree };
+  for (const name in paramsTree.properties) {
+    const prop = getSettledParamsTree(paramsTree.properties[name]);
+    if (prop) properties[name] = prop;
   }
   return {
     binding: paramsTree.binding,
-    props,
+    properties,
     rest: getSettledParamsTree(paramsTree.rest),
   };
 }
@@ -148,25 +151,27 @@ export function getParamsTreeAt(
 ): ParamsTree | true | undefined {
   return paramsTree === true
     ? true
-    : paramsTree.props
-      ? paramsTree.props[name] ||
+    : paramsTree.properties
+      ? paramsTree.properties[name] ||
         (paramsTree.rest ? getParamsTreeAt(paramsTree.rest, name) : undefined)
-      : propsUtil.has(paramsTree.binding.excludeProperties, name)
+      : propertiesUtil.has(paramsTree.binding.excludeProperties, name)
         ? undefined
         : true;
 }
 
-export function getAllKnownPropNames(paramsTree: ParamsTree) {
-  const keys = paramsTree.props ? Object.keys(paramsTree.props) : [];
+export function getAllKnownPropertyNames(paramsTree: ParamsTree) {
+  const keys = paramsTree.properties ? Object.keys(paramsTree.properties) : [];
   // Intentionally shallow: own prop names plus the immediate `rest`'s.
-  if (paramsTree.rest?.props) {
-    for (const key of Object.keys(paramsTree.rest.props)) {
+  if (paramsTree.rest?.properties) {
+    for (const key of Object.keys(paramsTree.rest.properties)) {
       keys.push(key);
     }
   }
   return keys;
 }
 
-export function hasAllKnownProps(paramsTree: ParamsTree) {
-  return paramsTree.props && (!paramsTree.rest || !!paramsTree.rest.props);
+export function hasAllKnownProperties(paramsTree: ParamsTree) {
+  return (
+    paramsTree.properties && (!paramsTree.rest || !!paramsTree.rest.properties)
+  );
 }

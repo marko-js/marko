@@ -30,7 +30,7 @@ var template_default = _template("b", (input) => {
 	}, (err) => {
 		const $scope4_reason = _scope_reason(), $wg__err_message = _write_guard($scope4_reason, 0);
 		const $scope4_id = _scope_id();
-		_html(`caught ${_text_resume($scope4_id, "a", err.message, $wg__err_message * 2)}`);
+		_html(`caught ${_text_mark($scope4_id, "a", err.message, $wg__err_message * 2)}`);
 		$Child_withLoadAssets({});
 		_write_if($scope4_reason, 0) && _scope($scope4_id, {});
 	}, "b0", "b1");

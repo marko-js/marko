@@ -8,7 +8,7 @@ var my_box_default = _template("b", (input) => {
 		...input,
 		...extra
 	}, "a", $scope0_id, "div");
-	_html(`</div>${_el_resume($scope0_id, "a")}`);
+	_html(`</div>${_el_mark($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
 	_scope($scope0_id, { d: _write_if($scope0_reason, 0) && extra });
 });

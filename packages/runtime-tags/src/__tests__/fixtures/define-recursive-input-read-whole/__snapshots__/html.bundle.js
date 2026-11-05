@@ -21,7 +21,7 @@ var template_default = _template("a", (input) => {
 				return 0;
 			}
 		}, $scope1_id, "a", $wg__input_depth__OR__input_label, $wg__input_depth);
-		_html(`<span>${_text_resume($scope1_id, "b", input.label, $wg__input_label)}</span>`);
+		_html(`<span>${_text_mark($scope1_id, "b", input.label, $wg__input_label)}</span>`);
 		$wi__input_depth__OR__input_label && _scope($scope1_id, { f: _write_if($scope1_reason, 1) && input.label });
 	}, $scope0_id) };
 	let depth = 1;
@@ -31,7 +31,7 @@ var template_default = _template("a", (input) => {
 		depth,
 		label: "x"
 	});
-	_html(`<button>deeper</button>${_el_resume($scope0_id, "b")}`);
+	_html(`<button>deeper</button>${_el_mark($scope0_id, "b")}`);
 	_script($scope0_id, "a1");
 	_scope($scope0_id, {
 		c: depth,

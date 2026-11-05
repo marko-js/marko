@@ -4,11 +4,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const $value__closures = new Set();
 	let value = 1;
-	_html(`<button>inc</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button>inc</button>${_el_mark($scope0_id, "#button/0")}`);
 	_try($scope0_id, "#text/1", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
-		_html(`<p>b ${_text_resume($scope1_id, "#text/0", value, 2)}</p>`);
+		_html(`<p>b ${_text_mark($scope1_id, "#text/0", value, 2)}</p>`);
 		_await($scope1_id, "#text/1", resolveAfter("x", 1), (v) => {
 			const $scope3_id = _scope_id();
 			_html(_escape(v));

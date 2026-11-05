@@ -20,7 +20,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html("<table><tbody>");
 	_for_of(rows, (row) => {
 		const $scope1_id = _scope_id();
-		_html(`<tr${selected === row.user.id ? " class=danger" : ""}><td><button class=select>${_escape(row.label)}</button>${_el_resume($scope1_id, "#button/1")}</td></tr>${_el_resume($scope1_id, "#tr/0")}`);
+		_html(`<tr${selected === row.user.id ? " class=danger" : ""}><td><button class=select>${_escape(row.label)}</button>${_el_mark($scope1_id, "#button/1")}</td></tr>${_el_mark($scope1_id, "#tr/0")}`);
 		_script($scope1_id, "__tests__/template.marko_1");
 		_scope($scope1_id, {
 			"#LoopKey": row?.user?.id,

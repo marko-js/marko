@@ -6,7 +6,7 @@ var child_default = _template("b", (input) => {
 		const $scope1_id = _scope_id();
 		_html(`<span${_attrs(item, "a", $scope1_id, "span")}>`);
 		_dynamic_tag($scope1_id, "b", desc, {}, 0, 0, $wg__input_foo);
-		_html(`</span>${_el_resume($scope1_id, "a")}`);
+		_html(`</span>${_el_mark($scope1_id, "a")}`);
 		_script($scope1_id, "b0");
 		_scope($scope1_id, {});
 	}, 0, $scope0_id, "a", $wg__input_foo, $wg__input_foo, 0, 0, 1);

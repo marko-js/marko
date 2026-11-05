@@ -4,11 +4,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let show = true;
 	let message = "hi";
-	_html(`<button></button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button></button>${_el_mark($scope0_id, "#button/0")}`);
 	_if(() => {
 		if (show) {
 			const $scope1_id = _scope_id();
-			_html(`<span>${_text_resume($scope1_id, "#text/0", message)}</span>`);
+			_html(`<span>${_text_mark($scope1_id, "#text/0", message)}</span>`);
 			_scope($scope1_id, {}, "__tests__/template.marko", "4:2");
 			return 0;
 		}

@@ -1,0 +1,10 @@
+<let/labels=["a", "bb", "c"]/>
+<button id="add" onClick() { labels = [...labels, "dd"] }>add</button>
+<button id="grow" onClick() { labels = labels.map((label) => label + label) }>grow</button>
+<ul>
+  <for|label| of=labels>
+    <show=(label.length > 1)>
+      <li>${label}</li>
+    </show>
+  </for>
+</ul>

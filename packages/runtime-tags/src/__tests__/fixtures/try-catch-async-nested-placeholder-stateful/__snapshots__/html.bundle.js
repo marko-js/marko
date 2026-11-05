@@ -13,7 +13,7 @@ var template_default = _template("a", (input) => {
 				_await($scope4_id, "a", resolveAfter("inner", 2), (value) => {
 					const $scope6_id = _scope_id();
 					let n = 0;
-					_html(`<button>${_escape(value)} ${_text_resume($scope6_id, "c", n, 2)}</button>${_el_resume($scope6_id, "a")}`);
+					_html(`<button>${_escape(value)} ${_text_mark($scope6_id, "c", n, 2)}</button>${_el_mark($scope6_id, "a")}`);
 					_script($scope6_id, "a0");
 					_scope($scope6_id, { f: n });
 				});
@@ -26,7 +26,7 @@ var template_default = _template("a", (input) => {
 	}, void 0, (err) => {
 		const $scope2_reason = _scope_reason(), $wg__err_message = _write_guard($scope2_reason, 0);
 		const $scope2_id = _scope_id();
-		_html(`caught ${_text_resume($scope2_id, "a", err.message, $wg__err_message * 2)}`);
+		_html(`caught ${_text_mark($scope2_id, "a", err.message, $wg__err_message * 2)}`);
 		_write_if($scope2_reason, 0) && _scope($scope2_id, {});
 	}, 0, "a2");
 }, 1);

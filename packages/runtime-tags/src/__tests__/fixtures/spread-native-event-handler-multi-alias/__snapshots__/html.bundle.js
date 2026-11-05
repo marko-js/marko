@@ -8,7 +8,7 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		_html("<button");
 		_attrs_partial_content(input, { "on-click": 1 }, "a", $scope1_id, "button");
-		_html(`</button>${_el_resume($scope1_id, "a")} `);
+		_html(`</button>${_el_mark($scope1_id, "a")} `);
 		_script($scope1_id, "a3");
 		_script($scope1_id, "a4");
 		_scope($scope1_id, { d: input.onClick });

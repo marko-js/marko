@@ -5,7 +5,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(`<input${_attrs({
 		...input.attrs,
 		...input.more
-	}, "#input/0", $scope0_id, "input")}>${_el_resume($scope0_id, "#input/0")}`);
+	}, "#input/0", $scope0_id, "input")}>${_el_mark($scope0_id, "#input/0")}`);
 	_script($scope0_id, "__tests__/template.marko_0_input_attrs#3_input_more#4");
 	_scope($scope0_id, {
 		input_attrs: _write_if($scope0_reason, 1) && input.attrs,

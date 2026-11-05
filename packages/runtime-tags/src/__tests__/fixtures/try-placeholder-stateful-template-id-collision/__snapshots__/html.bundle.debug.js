@@ -2,7 +2,7 @@
 var n2_default = _template("__tests__/tags/n2.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_label = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html(`<div class=n2>${_text_resume($scope0_id, "#text/0", input.label, $wg__input_label)}</div>`);
+	_html(`<div class=n2>${_text_mark($scope0_id, "#text/0", input.label, $wg__input_label)}</div>`);
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/tags/n2.marko", 0);
 });
 
@@ -11,7 +11,7 @@ var n5_default = _template("__tests__/tags/n5.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let n = 0;
-	_html(`<button class=n5>${_text_resume($scope0_id, "#text/1", input.label, _write_guard($scope0_reason, 0))} ${_text_resume($scope0_id, "#text/2", n, 2)}</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button class=n5>${_text_mark($scope0_id, "#text/1", input.label, _write_guard($scope0_reason, 0))} ${_text_mark($scope0_id, "#text/2", n, 2)}</button>${_el_mark($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/tags/n5.marko_0");
 	_scope($scope0_id, { n }, "__tests__/tags/n5.marko", 0, { n: "1:6" });
 });
@@ -21,7 +21,7 @@ var n1_default = _template("__tests__/tags/n1.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let n = 0;
-	_html(`<button class=n1>${_text_resume($scope0_id, "#text/1", input.label, _write_guard($scope0_reason, 0))} ${_text_resume($scope0_id, "#text/2", n, 2)}</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button class=n1>${_text_mark($scope0_id, "#text/1", input.label, _write_guard($scope0_reason, 0))} ${_text_mark($scope0_id, "#text/2", n, 2)}</button>${_el_mark($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/tags/n1.marko_0");
 	_scope($scope0_id, { n }, "__tests__/tags/n1.marko", 0, { n: "1:6" });
 });
@@ -34,7 +34,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $tag__closures = new Set();
 	let clicks = 0;
 	let tag = n5_default;
-	_html(`<button>clicks ${_text_resume($scope0_id, "#text/1", clicks, 2)}</button>${_el_resume($scope0_id, "#button/0")}<button class=swap>swap</button>${_el_resume($scope0_id, "#button/2")}`);
+	_html(`<button>clicks ${_text_mark($scope0_id, "#text/1", clicks, 2)}</button>${_el_mark($scope0_id, "#button/0")}<button class=swap>swap</button>${_el_mark($scope0_id, "#button/2")}`);
 	_try($scope0_id, "#text/3", () => {
 		_scope_reason();
 		const $scope2_id = _scope_id();

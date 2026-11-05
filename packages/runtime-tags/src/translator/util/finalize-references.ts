@@ -16,7 +16,7 @@ import {
   getAssignedObject,
   getPropertyPath,
   isDirectAlias,
-  propsUtil,
+  propertiesUtil,
 } from "./bindings";
 import { finalizeContentDerives } from "./content-derives";
 import { generateUid } from "./generate-uid";
@@ -40,7 +40,7 @@ import {
   addReasonExprs,
   addReason,
   applyReasonExprs,
-  getSourcesForRef,
+  getSourcesForReferencedBindings,
   mapParamBindingToExpr,
 } from "./reasons";
 import {
@@ -50,9 +50,9 @@ import {
   type ResolvedRead,
   createResolvedGetterRead,
   createResolvedRead,
-  dropExtra,
+  dropExpr,
   getAssignments,
-  getCanonicalExtra,
+  getCanonicalExpr,
   getFunctionReadsByExpression,
   getReadsByExpression,
   getReferenceFinalizers,
@@ -147,8 +147,8 @@ function excludeAssignedChangeHandlers() {
     ) {
       excluded.add(binding);
       for (const alias of binding.aliasOf.aliases) {
-        if (propsUtil.has(alias.excludeProperties, binding.property)) {
-          alias.excludeProperties = propsUtil.add(
+        if (propertiesUtil.has(alias.excludeProperties, binding.property)) {
+          alias.excludeProperties = propertiesUtil.add(
             alias.excludeProperties,
             binding.property + "Change",
           );
@@ -292,7 +292,7 @@ function resolveBindings() {
       ) {
         if (!isOptionalBranch(section)) {
           addReason(
-            ensureSectionSlot(section, SlotKind.Instances, section.parent!),
+            ensureSectionSlot(section, SlotKind.Scopes, section.parent!),
             ALWAYS,
           );
         }
@@ -319,7 +319,7 @@ function addSectionReasons(section: Section) {
   // A call links the body's scope to its owner through the calling scopes;
   // sections run in order, so a body's own calls come after it.
   if (section.readsOwner) {
-    forEach(section.calls, (call) => {
+    forEach(section.renderedBy, (call) => {
       setReadsOwner(call.childScopeBinding.section, section.parent!);
     });
   }
@@ -335,7 +335,9 @@ function addSectionReasons(section: Section) {
   });
 
   if (isOptionalBranch(section)) {
-    const closureSources = getSourcesForRef(getDirectClosures(section));
+    const closureSources = getSourcesForReferencedBindings(
+      getDirectClosures(section),
+    );
     const branchSlot = ensureSectionSlot(section, SlotKind.Branch);
     addReason(
       branchSlot,
@@ -344,7 +346,10 @@ function addSectionReasons(section: Section) {
         : closureSources,
     );
     addReasonExprs(branchSlot, section.branchExpr);
-    addReasonExprs(ensureSlot(section.branch.nodeBinding), section.branchExpr);
+    addReasonExprs(
+      ensureSlot(section.branch.tag.nodeBinding),
+      section.branchExpr,
+    );
   }
 }
 
@@ -646,7 +651,7 @@ export function readsValuesOnResume(expr: t.NodeExtra) {
 
 // Whether an expression (or the one a node's extra sits in) is emitted.
 function isEmitted(exprExtra: t.NodeExtra) {
-  return !getCanonicalExtra(exprExtra).dropped;
+  return !getCanonicalExpr(exprExtra).dropped;
 }
 
 function inEmittedExpr({ exprRoot, section }: AssignedBindingExtra) {
@@ -663,7 +668,7 @@ function isDroppableValue(expr: t.NodeExtra) {
 // attribute expression) stays while any of them is read.
 function dropUnreadValue(expr: t.NodeExtra) {
   if (isDroppableValue(expr) && every(expr.derives, isPrunedBinding)) {
-    dropExtra(expr as ReferencedExtra);
+    dropExpr(expr as ReferencedExtra);
   }
 }
 

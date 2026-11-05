@@ -19,13 +19,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let x = child_default({ content: _content("__tests__/template.marko_1*content", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
-		_html(`<span>${_text_resume($scope1_id, "#text/0", x)}</span>`);
+		_html(`<span>${_text_mark($scope1_id, "#text/0", x)}</span>`);
 		const $return = 1;
 		_subscribe($x__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "1:2"));
 		return $return;
 	}, $scope0_id) });
 	_var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_x#3/var");
-	_html(`<div>${_text_resume($scope0_id, "#text/2", x)}</div>`);
+	_html(`<div>${_text_mark($scope0_id, "#text/2", x)}</div>`);
 	_scope($scope0_id, {
 		"ClosureScopes:x/4": $x__closures,
 		"#childScope/0": _existing_scope($childScope)

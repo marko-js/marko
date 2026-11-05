@@ -13,7 +13,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			input_value: ["input.value", "3:13"]
 		});
 	}, $scope0_id) };
-	_html(`<button>Increment</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button>Increment</button>${_el_mark($scope0_id, "#button/0")}`);
 	_set_scope_reason(34);
 	const $childScope = _peek_scope_id();
 	Foo.content({

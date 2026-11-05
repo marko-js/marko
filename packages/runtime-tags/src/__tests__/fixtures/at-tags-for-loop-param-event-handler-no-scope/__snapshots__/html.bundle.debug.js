@@ -6,7 +6,7 @@ var my_menu_default = _template("__tests__/tags/my-menu/index.marko", (input) =>
 		const $scope1_id = _scope_id();
 		_html("<button");
 		_attrs_content(item, "#button/0", $scope1_id, "button");
-		_html(`</button>${_el_resume($scope1_id, "#button/0")}`);
+		_html(`</button>${_el_mark($scope1_id, "#button/0")}`);
 		_script($scope1_id, "__tests__/tags/my-menu/index.marko_1_item#2");
 		_scope($scope1_id, {}, "__tests__/tags/my-menu/index.marko", "1:2", { "EventAttributes:#button/0": ["...item", "2:14"] });
 	}, 0, $scope0_id, "#text/0", $wg__input_item, $wg__input_item, 0, 0, 1);

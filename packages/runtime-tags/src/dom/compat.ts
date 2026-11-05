@@ -6,7 +6,6 @@ import {
   type Scope,
 } from "../common/types";
 import { patchDynamicTag } from "./control-flow";
-import { toInsertNode } from "./dom";
 import { prepareEffects, queueEffect, rendering, runEffects } from "./queue";
 import { _content, createAndSetupBranch, type Renderer } from "./renderer";
 import { _resumed, getRegisteredWithScope, init } from "./resume";
@@ -162,9 +161,9 @@ export const compat = {
       : prepareEffects(renderBranch);
 
     if (created) {
-      return toInsertNode(
-        branch[AccessorProp.StartNode],
-        branch[AccessorProp.EndNode],
+      return (
+        branch[AccessorProp.StartNode].parentNode ||
+        branch[AccessorProp.StartNode]
       );
     }
   },

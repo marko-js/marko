@@ -27,7 +27,7 @@ var template_default = _template("a", (input) => {
 		b: 1
 	});
 	$wi__input_b && _var($scope0_id, "d", $childScope2, "a2");
-	_html(`<div>${_text_resume($scope0_id, "e", x)}|${_text_resume($scope0_id, "f", y, $wg__input_b * 2)}</div><button>+</button>${_el_resume($scope0_id, "g")}`);
+	_html(`<div>${_text_mark($scope0_id, "e", x)}|${_text_mark($scope0_id, "f", y, $wg__input_b * 2)}</div><button>+</button>${_el_mark($scope0_id, "g")}`);
 	_script($scope0_id, "a3");
 	_scope($scope0_id, {
 		k: n,

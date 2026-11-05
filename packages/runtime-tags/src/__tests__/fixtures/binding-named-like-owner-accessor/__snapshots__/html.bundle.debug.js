@@ -6,11 +6,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let count = 1;
 	_for_of([count], (_) => {
 		const $scope1_id = _scope_id();
-		_html(`<button class=inc>${_text_resume($scope1_id, "#text/1", _)}</button>${_el_resume($scope1_id, "#button/0")}`);
+		_html(`<button class=inc>${_text_mark($scope1_id, "#text/1", _)}</button>${_el_mark($scope1_id, "#button/0")}`);
 		_if(() => {
 			if (_) {
 				const $scope2_id = _scope_id();
-				_html(`<span>${_text_resume($scope2_id, "#text/0", _ + count)}</span>`);
+				_html(`<span>${_text_mark($scope2_id, "#text/0", _ + count)}</span>`);
 				_subscribe($count__closures, _scope($scope2_id, {}, "__tests__/template.marko", "4:4"), "__tests__/template.marko_2_count#0:2/subscribe");
 				return 0;
 			}
@@ -22,7 +22,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (count) {
 			const $scope3_id = _scope_id();
 			let _ = count;
-			_html(`<button class=mul>${_text_resume($scope3_id, "#text/1", _)}</button>${_el_resume($scope3_id, "#button/0")}`);
+			_html(`<button class=mul>${_text_mark($scope3_id, "#text/1", _)}</button>${_el_mark($scope3_id, "#button/0")}`);
 			_script($scope3_id, "__tests__/template.marko_3");
 			_scope($scope3_id, { "_/2": _ }, "__tests__/template.marko", "8:2", { "_/2": "9:8" });
 			return 0;

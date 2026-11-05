@@ -5,11 +5,11 @@ var template_default = _template("a", (input) => {
 	const Wrap = { content: _content("a0", ([$a, b]) => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
-		_html(`<div>${_text_resume($scope1_id, "a", void 0 !== $a ? $a : 1)}|${_text_resume($scope1_id, "b", b, 2)}</div>`);
+		_html(`<div>${_text_mark($scope1_id, "a", void 0 !== $a ? $a : 1)}|${_text_mark($scope1_id, "b", b, 2)}</div>`);
 		_scope($scope1_id, {});
 	}, $scope0_id) };
 	let n = 2;
-	_html(`<button>inc</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button>inc</button>${_el_mark($scope0_id, "a")}`);
 	_set_scope_reason(42);
 	const $childScope = _peek_scope_id();
 	Wrap.content([void 0, n]);

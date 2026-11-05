@@ -2,7 +2,7 @@
 var child_default = _template("__tests__/tags/child.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<div></div>${_el_resume($scope0_id, "#div/0")}`);
+	_html(`<div></div>${_el_mark($scope0_id, "#div/0")}`);
 	_script($scope0_id, "__tests__/tags/child.marko_0_input_option#3");
 	_scope($scope0_id, { input_option: input.option }, "__tests__/tags/child.marko", 0, { input_option: ["input.option"] });
 });

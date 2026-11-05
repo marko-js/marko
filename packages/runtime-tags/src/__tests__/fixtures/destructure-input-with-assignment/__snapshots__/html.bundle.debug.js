@@ -5,7 +5,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const { valueChange: $valueChange, value, ...rest } = input;
 	_html("<div");
 	_attrs_content(rest, "#div/0", $scope0_id, "div");
-	_html(`</div>${_el_resume($scope0_id, "#div/0")}`);
+	_html(`</div>${_el_mark($scope0_id, "#div/0")}`);
 	_script($scope0_id, "__tests__/tags/child.marko_0_rest#4");
 	_script($scope0_id, "__tests__/tags/child.marko_0_$valueChange#3");
 	_scope($scope0_id, { $valueChange }, "__tests__/tags/child.marko", 0, {
@@ -27,7 +27,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		content: _content("__tests__/template.marko_1*content", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
-			_html(_text_resume($scope1_id, "#text/0", value));
+			_html(_text_mark($scope1_id, "#text/0", value));
 			_subscribe($value__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:1"), "__tests__/template.marko_1_value#0:1/subscribe");
 		}, $scope0_id)
 	});

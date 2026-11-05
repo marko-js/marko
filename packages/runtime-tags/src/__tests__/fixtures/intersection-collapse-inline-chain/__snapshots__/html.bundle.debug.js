@@ -6,7 +6,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const y = count + 1;
 	const z = count + 2;
 	const sum = y + z;
-	_html(`<button>inc</button>${_el_resume($scope0_id, "#button/0")}<div>${_text_resume($scope0_id, "#text/1", sum)}</div>`);
+	_html(`<button>inc</button>${_el_mark($scope0_id, "#button/0")}<div>${_text_mark($scope0_id, "#text/1", sum)}</div>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, { count }, "__tests__/template.marko", 0, { count: "1:6" });
 }, 1);

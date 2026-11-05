@@ -6,7 +6,7 @@ import {
   getDeclaredAlias,
   getNearestDeclared,
   isRest,
-  propsUtil,
+  propertiesUtil,
 } from "./bindings";
 import { toMemberExpression } from "./to-property-name";
 
@@ -46,7 +46,7 @@ export function getDeclaredBindingExpression(
 
   if (property !== undefined) {
     const alias = getDeclaredAlias(aliased);
-    if (alias && !propsUtil.has(alias.excludeProperties, property)) {
+    if (alias && !propertiesUtil.has(alias.excludeProperties, property)) {
       return toMemberExpression(
         t.identifier(alias.name),
         alias.restOffset ? `${+property - alias.restOffset}` : property,

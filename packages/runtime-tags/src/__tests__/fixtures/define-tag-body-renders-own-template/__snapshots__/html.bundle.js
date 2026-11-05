@@ -5,7 +5,7 @@ const $content$1 = (input) => {
 	const Level = { content: _content("c0", ({ depth }) => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason(), $wg__depth = _write_guard($scope2_reason, 0);
-		_html(`<span>${_text_resume($scope2_id, "a", depth, $wg__depth)}</span>`);
+		_html(`<span>${_text_mark($scope2_id, "a", depth, $wg__depth)}</span>`);
 		_set_scope_reason($wg__depth << 1);
 		const $childScope = _peek_scope_id();
 		$content$1({ depth: depth - 1 });
@@ -40,7 +40,7 @@ const $content = (input) => {
 		$content({ depth: depth - 1 });
 		_write_if($scope2_reason, 0) && _scope($scope2_id, { a: _existing_scope($childScope) });
 	}, $scope0_id) };
-	_html(`<button>${_text_resume($scope0_id, "b", input.depth, $wg__input_depth)}</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button>${_text_mark($scope0_id, "b", input.depth, $wg__input_depth)}</button>${_el_mark($scope0_id, "a")}`);
 	_if(() => {
 		if (input.depth) {
 			const $scope1_id = _scope_id();

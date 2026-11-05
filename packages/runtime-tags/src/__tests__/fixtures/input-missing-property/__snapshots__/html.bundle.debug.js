@@ -3,7 +3,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 0;
-	_html(`<button>${_text_resume($scope0_id, "#text/1", count)}</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button>${_text_mark($scope0_id, "#text/1", count)}</button>${_el_mark($scope0_id, "#button/0")}`);
 	const Child = { content: _content("__tests__/template.marko_1*content", (input) => {
 		const $scope1_id = _scope_id();
 		const $Child_content__input_name__closures = new Set();
@@ -13,7 +13,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope2_id = _scope_id();
 				if (true) {
 					const $scope3_id = _scope_id();
-					_html(`<div>${_text_resume($scope3_id, "#text/0", input.name || "Fallback", 0)}</div>`);
+					_html(`<div>${_text_mark($scope3_id, "#text/0", input.name || "Fallback", 0)}</div>`);
 					_scope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "8:6");
 				}
 				_scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "7:4");

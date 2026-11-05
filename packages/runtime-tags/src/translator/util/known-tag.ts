@@ -28,7 +28,7 @@ import {
 import { forEach, fromIter, push, type SortedOpt } from "./optional";
 import {
   type ParamsTree,
-  getAllKnownPropNames,
+  getAllKnownPropertyNames,
   exposeParamsTree,
   getParamsTreeAt,
   getSettledParamsTree,
@@ -71,13 +71,14 @@ import {
   getSection,
   getSectionForBody,
   isSameOrAncestorSection,
+  mayMergeWithText,
   type ParamReasonGroups,
   type Section,
 } from "./sections";
 import { addSetupExpr, addSetupWork } from "./setup-work";
 import {
   addStatement,
-  getResumeRegisterId,
+  getResumeRegistryId,
   initValue,
   writeHTMLResumeStatements,
   writeSlot,
@@ -158,6 +159,7 @@ export function knownTagAnalyze(
   const section = ensureSection(tag);
   const tagBody = tag.get("body");
   const tagExtra = (tag.node.extra ??= {}) as KnownTagExtra;
+  tagExtra.textBefore = mayMergeWithText(tag, true);
   tagExtra.childScopeBinding = createBinding(
     "#childScope",
     BindingType.dom,
@@ -173,7 +175,7 @@ export function knownTagAnalyze(
   // A `<define>` body, or the template rendering itself, renders in place of
   // this call.
   if (childSection.program === section.program) {
-    childSection.calls = push(childSection.calls, tagExtra);
+    childSection.renderedBy = push(childSection.renderedBy, tagExtra);
     if (recursive) {
       getRecursiveTags().push(tag);
     } else {
@@ -236,7 +238,7 @@ function assertTerminates(tag: t.NodePath<t.MarkoTag>, childSection: Section) {
           `A ${childSection === getProgram().node.extra.section ? "template" : "`<define>`"} that renders itself outside a branch never terminates. Render \`<${getTagNameHint(tag.node)}>\` inside a branch that eventually stops, such as \`<if>\`.`,
         );
     }
-    forEach(caller.calls, (call) => {
+    forEach(caller.renderedBy, (call) => {
       callers.add(call.childScopeBinding.section);
     });
   }
@@ -262,7 +264,11 @@ function analyzeKnownTagParams(
     paramsTree,
     attrExprs,
   ));
-  setTagContentDerives(tag, paramsTree?.props?.[0]?.binding, exprs);
+  setTagContentDerives(
+    tag,
+    paramsTree?.properties?.[tag.node.arguments?.length ?? 0]?.binding,
+    exprs,
+  );
   addReasonExprs(ensureSlot(tagExtra.childScopeBinding!), fromIter(attrExprs));
   return exprs;
 }
@@ -291,15 +297,17 @@ function isChildScopeResumed(section: Section, tagExtra: t.MarkoTagExtra) {
   return isEverWritten(section, findSlot(tagExtra.childScopeBinding!)?.reason);
 }
 
-// Arguments a child reads none of are dropped, so the render call passes
-// none; among ones it reads, a dropped argument holds its place as undefined.
+// Arguments are dropped when a child reads none of them nor the input after
+// them; otherwise a dropped argument holds its place as undefined.
 function getRenderArgs(
   tag: t.NodePath<t.MarkoTag>,
   properties: t.ObjectExpression["properties"],
 ) {
   const args = tag.node.arguments;
   const renderArgs: (t.Expression | t.SpreadElement)[] =
-    args?.length && !args.every(isDroppedNode) ? args.map(toRenderArg) : [];
+    args?.length && (properties.length || !args.every(isDroppedNode))
+      ? args.map(toRenderArg)
+      : [];
   if (!renderArgs.length || properties.length) {
     renderArgs.push(propsToExpression(properties));
   }
@@ -328,9 +336,9 @@ export function knownTagTranslateHTML(
   const tagVar = node.var;
   const section = getSection(tag);
 
-  const attrsTree = paramsTree?.props?.[tag.node.arguments?.length || 0];
+  const attrsTree = paramsTree?.properties?.[tag.node.arguments?.length || 0];
   const { properties, statements } =
-    (paramsTree && !paramsTree.props) || attrsTree
+    (paramsTree && !paramsTree.properties) || attrsTree
       ? translateAttrs(tag, attrsTree)
       : {
           properties: [],
@@ -366,7 +374,7 @@ export function knownTagTranslateHTML(
             getScopeOffsetAccessorLiteral(childScopeBinding),
             peekScopeId,
             t.stringLiteral(
-              getResumeRegisterId(section, tagVar.extra?.binding, "var"),
+              getResumeRegistryId(section, tagVar.extra?.binding, "var"),
             ),
           ),
         )!,
@@ -466,7 +474,7 @@ export function getCallSiteSources(param: ParamBinding) {
   if (sourcesByParam.has(param)) return sourcesByParam.get(param);
   const body = param.section;
   let sources: Sources | undefined;
-  forEach(body.calls, (call) => {
+  forEach(body.renderedBy, (call) => {
     sources = mergeSources(
       sources,
       getSourcesForExprs(mapParamBindingToExpr(call[kKnownExprs]!, param)),
@@ -576,7 +584,7 @@ function analyzeParams(
   let i = 0;
   if (tag.node.arguments) {
     for (const arg of tag.node.arguments) {
-      const argTree = paramsTree.props[i];
+      const argTree = paramsTree.properties[i];
       if (argTree) {
         const argValueExtra = (arg.extra ??= {});
         known[i] = { value: argValueExtra };
@@ -591,7 +599,7 @@ function analyzeParams(
     }
   }
 
-  const attrsTree = paramsTree.props[i];
+  const attrsTree = paramsTree.properties[i];
   if (attrsTree) {
     known[i] = analyzeAttrs(
       rootTagExtra,
@@ -620,7 +628,7 @@ function analyzeAttrs(
   rootExprs: KnownExprs,
 ): KnownExprs {
   const inputExpr: KnownExprs = {};
-  if (!paramsTree.props) {
+  if (!paramsTree.properties) {
     inputExpr.value = setDerivedFromTag(
       section,
       tag,
@@ -633,7 +641,7 @@ function analyzeAttrs(
   const known: NonNullable<KnownExprs["known"]> = (inputExpr.known = {});
   const attrTagLookup = analyzeAttributeTags(tag);
   const seen = new Set<string>();
-  const remaining = new Set(getAllKnownPropNames(paramsTree));
+  const remaining = new Set(getAllKnownPropertyNames(paramsTree));
   const dropReferenceNodes: t.Node[] = [];
   let restReferenceNodes: t.Node[] | undefined;
 
@@ -695,7 +703,7 @@ function analyzeAttrs(
               value: rootTagExtra as ReferencedExtra,
             };
           } else if (
-            childAttrTree.props &&
+            childAttrTree.properties &&
             !(attrTagMeta.repeated && childAttrTree.rest)
           ) {
             // Members read the first occurrence; only a whole read or a rest
@@ -871,7 +879,7 @@ function analyzeAttrs(
       );
     }
   } else if (spreadReferenceNodes) {
-    if (remaining.size || (paramsTree.rest && !paramsTree.rest.props)) {
+    if (remaining.size || (paramsTree.rest && !paramsTree.rest.properties)) {
       inputExpr.value = mergeReferences(
         section,
         tag.node,
@@ -896,7 +904,7 @@ function analyzeAttrs(
       addSetupWork(section);
     }
 
-    if (paramsTree.rest && !paramsTree.rest.props) {
+    if (paramsTree.rest && !paramsTree.rest.properties) {
       // The rest signal call is keyed by the tag's merged references.
       addSetupExpr(section, tag.node);
     }
@@ -913,10 +921,10 @@ function readsParamsByName(
   tag: t.NodePath<t.MarkoTag>,
   paramsTree: ParamsTree,
 ): paramsTree is ParamsTree & {
-  props: NonNullable<ParamsTree["props"]>;
+  properties: NonNullable<ParamsTree["properties"]>;
 } {
   return (
-    !!paramsTree.props &&
+    !!paramsTree.properties &&
     !paramsTree.rest &&
     !tag.node.arguments?.some(isSpreadArgument)
   );
@@ -1037,7 +1045,7 @@ function writeParamsToSignals(
   let i = 0;
   if (tag.node.arguments) {
     for (const arg of tag.node.arguments) {
-      const argTree = paramsTree.props[i];
+      const argTree = paramsTree.properties[i];
       if (argTree) {
         writeToSignal(
           info,
@@ -1052,7 +1060,7 @@ function writeParamsToSignals(
     }
   }
 
-  const attrsTree = paramsTree.props[i];
+  const attrsTree = paramsTree.properties[i];
   if (attrsTree) {
     writeAttrsToSignals(tag, attrsTree, `${hint}_input`, info);
   }
@@ -1104,7 +1112,7 @@ function writeAttrsToSignals(
   hint: string,
   info: TranslateDOMInfo,
 ) {
-  if (!paramsTree.props) {
+  if (!paramsTree.properties) {
     applyAttrObject(
       tag,
       paramsTree,
@@ -1118,7 +1126,7 @@ function writeAttrsToSignals(
   const attrTagLookup = analyzeAttributeTags(tag);
   const seen = new Set<string>();
   const tagExtra = tag.node.extra;
-  const remaining = new Set(getAllKnownPropNames(paramsTree));
+  const remaining = new Set(getAllKnownPropertyNames(paramsTree));
   const contentProps: t.ObjectExpression["properties"] = [];
 
   if (attrTagLookup) {
@@ -1197,7 +1205,7 @@ function writeAttrsToSignals(
             );
           } else if (
             attrTagMeta.repeated &&
-            (!childAttrTree.props || childAttrTree.rest)
+            (!childAttrTree.properties || childAttrTree.rest)
           ) {
             // Like HTML, the first occurrence passes the whole `attrTags` value,
             // since a whole read or a rest reaches the others.
@@ -1369,7 +1377,7 @@ function writeAttrsToSignals(
     }
   } else if (
     hasSpread &&
-    (remaining.size || (paramsTree.rest && !paramsTree.rest.props))
+    (remaining.size || (paramsTree.rest && !paramsTree.rest.properties))
   ) {
     const spreadExpr = propsToExpression(inputProps);
     let spreadId = spreadExpr;
@@ -1392,7 +1400,7 @@ function writeAttrsToSignals(
       );
     }
 
-    if (paramsTree.rest && !paramsTree.rest.props) {
+    if (paramsTree.rest && !paramsTree.rest.properties) {
       const props: t.ObjectPattern["properties"] = [];
       const restId = t.identifier(paramsTree.rest.binding.name);
       forEach(paramsTree.rest.binding.excludeProperties, (name) => {
@@ -1430,7 +1438,7 @@ function writeAttrsToSignals(
       );
     }
 
-    if (paramsTree.rest && !paramsTree.rest.props) {
+    if (paramsTree.rest && !paramsTree.rest.properties) {
       writeToSignal(
         info,
         info.getBindingIdentifier(paramsTree.rest.binding, hint + "_$rest"),

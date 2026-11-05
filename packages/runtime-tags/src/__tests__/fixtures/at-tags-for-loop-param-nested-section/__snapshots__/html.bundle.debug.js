@@ -18,7 +18,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let count = 2;
 	let show = true;
 	let items = [{ text: "a" }, { text: "b" }];
-	_html(`<button id=add>add</button>${_el_resume($scope0_id, "#button/0")}<button id=toggle>toggle</button>${_el_resume($scope0_id, "#button/1")}<button id=rename>rename</button>${_el_resume($scope0_id, "#button/2")}`);
+	_html(`<button id=add>add</button>${_el_mark($scope0_id, "#button/0")}<button id=toggle>toggle</button>${_el_mark($scope0_id, "#button/1")}<button id=rename>rename</button>${_el_mark($scope0_id, "#button/2")}`);
 	_set_scope_reason(2);
 	let $item;
 	forUntil(count, 0, 1, (i) => {
@@ -29,7 +29,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_if(() => {
 				if (show) {
 					const $scope3_id = _scope_id();
-					_html(`<em>if ${_text_resume($scope3_id, "#text/0", i, $wg__i * 2)}</em>`);
+					_html(`<em>if ${_text_mark($scope3_id, "#text/0", i, $wg__i * 2)}</em>`);
 					_scope($scope3_id, {}, "__tests__/template.marko", "12:8");
 					return 0;
 				}
@@ -37,13 +37,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_dynamic_tag($scope1_id, "#text/1", show ? "b" : "i", {}, _content("__tests__/template.marko_4*content", () => {
 				const $scope4_id = _scope_id();
 				const $scope4_reason = _scope_reason();
-				_html(`tag ${_text_resume($scope4_id, "#text/0", i, $wg__i * 2)}`);
+				_html(`tag ${_text_mark($scope4_id, "#text/0", i, $wg__i * 2)}`);
 				_subscribe($wi__i && $item_content__i__closures, _scope($scope4_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "13:10"), "__tests__/template.marko_4_i#1:3/subscribe", $wg__i);
 				$wg__i || _resume_branch($scope4_id);
 			}, $scope1_id));
 			_for_until(2, 0, 1, (j) => {
 				const $scope5_id = _scope_id();
-				_html(`<span>${_text_resume($scope5_id, "#text/0", i, $wg__i)}.${_escape(j)}</span>`);
+				_html(`<span>${_text_mark($scope5_id, "#text/0", i, $wg__i)}.${_escape(j)}</span>`);
 				$wi__i && _scope($scope5_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "14:8");
 			}, 0, $scope1_id, "#text/2", $wg__i, 0, 0, 0, 1);
 			_subscribe($show__closures, _scope($scope1_id, {
@@ -64,7 +64,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_if(() => {
 				if (show) {
 					const $scope6_id = _scope_id();
-					_html(`<strong>${_text_resume($scope6_id, "#text/0", item.text, $wg__item_text)}</strong>`);
+					_html(`<strong>${_text_mark($scope6_id, "#text/0", item.text, $wg__item_text)}</strong>`);
 					_scope($scope6_id, {}, "__tests__/template.marko", "21:13");
 					return 0;
 				}

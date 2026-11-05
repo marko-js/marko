@@ -5,6 +5,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const x = _id();
 	const z = input.z || _id();
 	const y = _id();
-	_html(`<div${_attr("id", z)}>${_escape(x)} ${_escape(y)} ${_text_resume($scope0_id, "#text/3", z, $wg__input_z * 2)}</div>${_el_resume($scope0_id, "#div/0", $wg__input_z)}`);
+	_html(`<div${_attr("id", z)}>${_escape(x)} ${_escape(y)} ${_text_mark($scope0_id, "#text/3", z, $wg__input_z * 2)}</div>${_el_mark($scope0_id, "#div/0", $wg__input_z)}`);
 	_write_if($scope0_reason, 0) && _scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

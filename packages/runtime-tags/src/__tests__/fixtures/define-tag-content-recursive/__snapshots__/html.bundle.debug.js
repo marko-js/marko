@@ -9,7 +9,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $Tree_content2__input_content__closures = new Set();
 		const $scope2_reason = _scope_reason(), $wg__input_depth = _write_guard($scope2_reason, 0), $wi__input_depth = _write_if($scope2_reason, 0);
 		let open = false;
-		_html(`<button>${_text_resume($scope2_id, "#text/1", input.depth, $wg__input_depth)}</button>${_el_resume($scope2_id, "#button/0")}`);
+		_html(`<button>${_text_mark($scope2_id, "#text/1", input.depth, $wg__input_depth)}</button>${_el_mark($scope2_id, "#button/0")}`);
 		_if(() => {
 			if (open) {
 				const $scope3_id = _scope_id();
@@ -24,7 +24,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 							content: _content_resume("__tests__/template.marko_5*content", () => {
 								const $scope5_reason = _scope_reason();
 								const $scope5_id = _scope_id();
-								_html(`${_text_resume($scope5_id, "#text/0", input.depth, $wg__input_depth)}: `);
+								_html(`${_text_mark($scope5_id, "#text/0", input.depth, $wg__input_depth * 2)}: `);
 								_dynamic_tag($scope5_id, "#text/1", input.content, {}, 0, 0, 0);
 								_subscribe($wi__input_depth && $Tree_content2__input_depth__closures, _scope($scope5_id, {
 									_: _scope_with_id($scope4_id),
@@ -61,7 +61,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		content: _content_resume("__tests__/template.marko_1*content", () => {
 			const $scope1_reason = _scope_reason();
 			const $scope1_id = _scope_id();
-			_html(`leaf ${_text_resume($scope1_id, "#text/0", input.label, $wg__input_label * 2)}`);
+			_html(`leaf ${_text_mark($scope1_id, "#text/0", input.label, $wg__input_label * 2)}`);
 			_subscribe($wi__input_label && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "12:2"), "__tests__/template.marko_1_input_label#0:3/subscribe", $wg__input_label);
 			$wg__input_label || _resume_branch($scope1_id);
 		}, $scope0_id)

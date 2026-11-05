@@ -14,7 +14,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope3_id = _scope_id();
 				_await($scope3_id, "#text/0", resolveAfter("inner", 2), () => {
 					const $scope4_id = _scope_id();
-					_html(`<div>changes: ${_text_resume($scope4_id, "#text/1", changes, 2)}</div>${_el_resume($scope4_id, "#div/0")}`);
+					_html(`<div>changes: ${_text_mark($scope4_id, "#text/1", changes, 2)}</div>${_el_mark($scope4_id, "#div/0")}`);
 					_script($scope4_id, "__tests__/template.marko_4");
 					_subscribe($changes__closures, _scope($scope4_id, {}, "__tests__/template.marko", "9:8"), "__tests__/template.marko_4_changes#0:1/subscribe");
 				});

@@ -27,7 +27,7 @@ import {
   addWriteScopeBuilder,
   getBindingGetterIdentifier,
   getHTMLSectionStatements,
-  getResumeRegisterId,
+  getResumeRegistryId,
   writeHTMLResumeStatements,
   writeSlot,
 } from "../../util/signals";
@@ -55,7 +55,7 @@ export default {
                           "_hoist",
                           getScopeIdIdentifier(hoistSection),
                           t.stringLiteral(
-                            getResumeRegisterId(hoistSection, binding, "hoist"),
+                            getResumeRegistryId(hoistSection, binding, "hoist"),
                           ),
                         ),
                       )
@@ -65,7 +65,7 @@ export default {
                           "_el",
                           getScopeIdIdentifier(section),
                           t.stringLiteral(
-                            getResumeRegisterId(section, binding),
+                            getResumeRegistryId(section, binding),
                           ),
                         ),
                       ),
@@ -103,11 +103,7 @@ export default {
                 callRuntime("_subscribe", subscribersIdentifier, expr),
               );
               writeSlot(
-                findSectionSlot(
-                  currentSection,
-                  SlotKind.Instances,
-                  parentSection,
-                ),
+                findSectionSlot(currentSection, SlotKind.Scopes, parentSection),
                 subscribersIdentifier,
               );
             }
@@ -250,7 +246,7 @@ function registerFunctionDeclarations(body: t.Statement[]) {
           callRuntime(
             "_resume",
             t.identifier(child.id!.name!),
-            t.stringLiteral(child.extra!.registerId),
+            t.stringLiteral(child.extra!.registryId),
           ),
         ),
       );
@@ -279,7 +275,7 @@ function buildResumeCall(node: Exclude<t.Function, t.FunctionDeclaration>) {
         simplifyFunction(node) as
           | t.FunctionExpression
           | t.ArrowFunctionExpression,
-        t.stringLiteral(extra.registerId),
+        t.stringLiteral(extra.registryId),
         t.objectExpression(localProperties),
         extra.referencesScope && getScopeIdIdentifier(extra.section),
       );
@@ -290,7 +286,7 @@ function buildResumeCall(node: Exclude<t.Function, t.FunctionDeclaration>) {
       simplifyFunction(node) as
         | t.FunctionExpression
         | t.ArrowFunctionExpression,
-      t.stringLiteral(extra.registerId),
+      t.stringLiteral(extra.registryId),
       extra.referencesScope && getScopeIdIdentifier(extra.section),
     );
   }
