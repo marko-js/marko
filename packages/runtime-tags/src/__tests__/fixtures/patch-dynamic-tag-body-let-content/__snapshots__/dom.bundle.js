@@ -19,7 +19,7 @@ var keeper_default = /*@__PURE__*/ _template("c", $template, $walks, $setup, $in
 // tags/card.marko
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag(0);
 const $input_p__OR__c = /*@__PURE__*/ _or_patch("b0", 6, ($scope) => $dynamicTag($scope, $scope.e ? keeper_default : "div", ($_) => ({ content: $scope.f })));
-const $c = fill("b1", _let(5, $input_p__OR__c));
+const $c = _fill_let("b1", 5, $input_p__OR__c);
 
 // template.marko
 const $inputonCarddiv_content__input_note = /*@__PURE__*/ _closure_get_patch("a1", 7, ($scope) => _text($scope.a, $scope._.g), 0, "a2", 0);

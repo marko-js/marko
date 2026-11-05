@@ -7,4 +7,4 @@ const $setup__script = _script("b0", ($scope) => _on($scope.a, "click", function
 }));
 
 // tags/outer.marko
-const $o = fill("c0", _let(4, ($scope) => $input_content($scope.a, $scope.e)));
+const $o = _fill_let("c0", 4, ($scope) => $input_content($scope.a, $scope.e));

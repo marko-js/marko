@@ -3,7 +3,7 @@ const $template = "<!><!><span> </span>";
 const $walks = "b%bD l";
 const $if_content__input_value$1 = /*@__PURE__*/ _if_closure_patch("b0", 0, 0, ($scope) => _text($scope.a, $scope._.e));
 const $if$1 = /*@__PURE__*/ _if(0, "<p> </p>", "D ", $if_content__input_value$1);
-const $open = fill("b2", _let(5, ($scope) => $if$1($scope, $scope.f ? 0 : 1)));
+const $open = _fill_let("b2", 5, ($scope) => $if$1($scope, $scope.f ? 0 : 1));
 function $setup($scope) {
 	$open($scope, true);
 }

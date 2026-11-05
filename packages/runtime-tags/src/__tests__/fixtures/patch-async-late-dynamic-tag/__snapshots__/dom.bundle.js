@@ -2,7 +2,7 @@
 const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag(0);
 const $if_content__input_content = /*@__PURE__*/ _if_closure_patch("b0", 0, 0, ($scope) => $if_content__dynamicTag($scope, $scope._.d));
 const $if = /*@__PURE__*/ _if(0, "<!><!><!>", "b%", $if_content__input_content);
-const $open = fill("b1", _let(4, ($scope) => $if($scope, $scope.e ? 0 : 1)));
+const $open = _fill_let("b1", 4, ($scope) => $if($scope, $scope.e ? 0 : 1));
 
 // template.marko
 const $await_content2__w = ($scope, w) => _text($scope.a, w);

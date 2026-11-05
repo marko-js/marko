@@ -1,8 +1,8 @@
 // tags/counter-box/index.marko
-const $count$1 = fill("b0", _let(4, ($scope) => {
+const $count$1 = _fill_let("b0", 4, ($scope) => {
 	_text($scope.a, $scope.e);
 	_return($scope, $scope.e);
-}));
+});
 const $input_onChange = /*@__PURE__*/ _const(3, ($scope) => _return_change($scope, $scope.d));
 
 // template.marko

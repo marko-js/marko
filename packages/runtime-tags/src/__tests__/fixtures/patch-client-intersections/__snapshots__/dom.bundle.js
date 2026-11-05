@@ -14,4 +14,4 @@ const $setup__script = _script("c0", ($scope) => _on($scope.b, "click", function
 
 // tags/site-footer.marko
 const $input_year__OR__frozen = /*@__PURE__*/ _or_patch("d0", 5, ($scope) => _text($scope.a, $scope.d + $scope.e));
-const $frozen = fill("d1", _let(4, $input_year__OR__frozen));
+const $frozen = _fill_let("d1", 4, $input_year__OR__frozen);

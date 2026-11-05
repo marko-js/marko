@@ -8,7 +8,7 @@ const $if_content2__setup = ($scope) => {
 };
 const $if_content2__n = /*@__PURE__*/ _if_closure_patch("a11", 1, 0, ($scope) => _text($scope.b, $scope._.g));
 const $Panel_content__open = /*@__PURE__*/ _closure_get_patch("a5", 14, ($scope) => _text($scope.a, $scope._.i ? "o" : "c"));
-const $Panel_content__n = fill("a4", _let(6, $if_content2__n));
+const $Panel_content__n = _fill_let("a4", 6, $if_content2__n);
 const $Panel_content__setup = ($scope) => {
 	$Panel_content__open($scope);
 	$Panel_content__n($scope, 1);

@@ -10,10 +10,10 @@ const $await_content__b__OR__a = /*@__PURE__*/ _or(7, ($scope) => $await_content
 	v: $scope.f,
 	self: $a($scope)
 }));
-const $await_content__x = fill("b3", _let(5, ($scope) => {
+const $await_content__x = _fill_let("b3", 5, ($scope) => {
 	_text($scope.a, $scope.f);
 	$await_content__b__OR__a($scope);
-}));
+});
 const $await_content__a_v = /*@__PURE__*/ _const(8);
 const $await_content__$params = ($scope, $params2) => $await_content__x($scope, $params2[0]);
 const $await_promise = /*@__PURE__*/ _await_promise(0, $await_content__$params);

@@ -22,7 +22,7 @@ const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $await_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $await_content__x__OR__c = /*@__PURE__*/ _or_patch("__tests__/tags/card.marko_1_x#2_c#3/setup", 4, ($scope) => $await_content__dynamicTag($scope, $scope.x ? keeper_default : "div", ($_) => ({ content: $scope.c })));
-const $await_content__c = _fill_let_resume("__tests__/tags/card.marko_fill0", _let("c/3", $await_content__x__OR__c));
+const $await_content__c = _fill_let_resume("__tests__/tags/card.marko_fill0", "c/3", $await_content__x__OR__c);
 const $await_content__input_content = /*@__PURE__*/ _closure_get_patch("__tests__/tags/card.marko_1_input_content#0:4/subscribe", "input_content/5", ($scope) => $await_content__c($scope, $scope._.input_content));
 const $await_content__setup = $await_content__input_content;
 const $await_content__x = /*@__PURE__*/ _const("x", $await_content__x__OR__c);

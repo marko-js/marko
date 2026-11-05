@@ -51,9 +51,6 @@ function fill<T extends Signal<any>>(
     fillFn === undefined ? signal : _const(id, fillFn || undefined);
   return signal;
 }
-// Registers a `<let>`'s fill only a patch's key reaches, keeping the fill and the
-// value signal it wraps.
-export { fill as _fill_let_resume };
 
 // A dynamic tag's variable a patch writes takes the value through its own
 // resume registration, under the same id.
@@ -91,8 +88,12 @@ export function _fill_let_change<T>(
     fillFn ?? fn ?? 0,
   );
 }
-// The same, for a `<let>` only a patch's key reaches.
-export { _fill_let_change as _fill_let_change_resume };
+// Registers a `<let>`'s fill only a patch's key reaches, keeping it and its
+// value signal.
+export {
+  _fill_let as _fill_let_resume,
+  _fill_let_change as _fill_let_change_resume,
+};
 
 // Per registration of a function with filled references: whether a patch changed one on its owner.
 export const filledReferences: Record<string, (owner: Scope) => unknown> = {};

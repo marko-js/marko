@@ -5,7 +5,7 @@ const $g2 = /*@__PURE__*/ _const(6, ($scope) => {
 	$g2__script($scope);
 });
 const $input_fn__OR__open = /*@__PURE__*/ _or_patch("b2", 5, ($scope) => $g2($scope, $scope.e ? $scope.d : $g));
-const $open = fill("b3", _let(4, $input_fn__OR__open));
+const $open = _fill_let("b3", 4, $input_fn__OR__open);
 const $input_fn = /*@__PURE__*/ _const(3, $input_fn__OR__open);
 function $g() {
 	return "-";
