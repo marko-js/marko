@@ -1,6 +1,6 @@
 // template.marko
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_title = _write_guard($scope0_reason, 1), $wi__input_title__OR__input_which = _write_if($scope0_reason, 0), $wi__input_title = _write_if($scope0_reason, 1), $wg__input_which = _write_guard($scope0_reason, 2), $wi__input_which = _write_if($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_title = _write_guard($scope0_reason, 1), $wi__input_title = _write_if($scope0_reason, 1), $wi__input_title__OR__input_which = _write_if($scope0_reason, 0), $wg__input_which = _write_guard($scope0_reason, 2), $wi__input_which = _write_if($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_title__closures = new Set();
 	const One = { content: _content_resume("__tests__/template.marko_1*content", () => {
@@ -8,7 +8,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_reason = _scope_reason();
 		_html(`<em>one ${_text_mark($scope1_id, "#text/0", input.title, $wg__input_title * 2)}</em>`);
 		$wi__input_title__OR__input_which && _subscribe($wi__input_title && $input_title__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "1:2"), "__tests__/template.marko_1_input_title#0:6/subscribe", $wg__input_title);
-		$wg__input_title || $wi__input_title__OR__input_which && _resume_branch($scope1_id);
 	}, $scope0_id) };
 	const Two = { content: _content_resume("__tests__/template.marko_2*content", () => {
 		const $scope2_id = _scope_id();
@@ -18,7 +17,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_: _scope_with_id($scope0_id),
 			"ClosureSignalIndex:input_title/12": $wi__input_title && 1
 		}, "__tests__/template.marko", "2:2"), "__tests__/template.marko_2_input_title#0:6/subscribe", $wg__input_title);
-		$wg__input_title || $wi__input_title__OR__input_which && _resume_branch($scope2_id);
 	}, $scope0_id) };
 	_html("<div data-kind=pick>");
 	_attr_content("#div/0", $scope0_id, input.which ? One : Two, $wg__input_which);

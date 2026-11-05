@@ -56,7 +56,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_subscribe($clicks__closures, _scope($scope1_id, {
 			_: _scope_with_id($scope0_id),
 			"#childScope/0": _existing_scope($childScope)
-		}, "__tests__/template.marko", "10:4"), "__tests__/template.marko_1_clicks#0:4/subscribe");
+		}, "__tests__/template.marko", "10:4"), "__tests__/template.marko_1_clicks#0:4/subscribe", 0);
+		_resume_branch($scope1_id);
 	}, void 0, "__tests__/template.marko_1*content");
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {

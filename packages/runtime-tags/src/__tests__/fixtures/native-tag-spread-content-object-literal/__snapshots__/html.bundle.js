@@ -1,6 +1,6 @@
 // template.marko
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_title = _write_guard($scope0_reason, 1), $wi__input_title__OR__input_which = _write_if($scope0_reason, 0), $wi__input_title = _write_if($scope0_reason, 1), $wg__input_which = _write_guard($scope0_reason, 2), $wi__input_which = _write_if($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_title = _write_guard($scope0_reason, 1), $wi__input_title = _write_if($scope0_reason, 1), $wi__input_title__OR__input_which = _write_if($scope0_reason, 0), $wg__input_which = _write_guard($scope0_reason, 2), $wi__input_which = _write_if($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_title__closures = /* @__PURE__ */ new Set();
 	const One = { content: _content_resume("a0", () => {
@@ -8,7 +8,6 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		_html(`<em>one ${_text_mark($scope1_id, "a", input.title, $wg__input_title * 2)}</em>`);
 		$wi__input_title__OR__input_which && _subscribe($wi__input_title && $input_title__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a1", $wg__input_title);
-		$wg__input_title || $wi__input_title__OR__input_which && _resume_branch($scope1_id);
 	}, $scope0_id) };
 	const Two = { content: _content_resume("a2", () => {
 		const $scope2_id = _scope_id();
@@ -18,7 +17,6 @@ var template_default = _template("a", (input) => {
 			_: _scope_with_id($scope0_id),
 			Cm: $wi__input_title && 1
 		}), "a3", $wg__input_title);
-		$wg__input_title || $wi__input_title__OR__input_which && _resume_branch($scope2_id);
 	}, $scope0_id) };
 	_html("<div data-kind=pick>");
 	_attr_content("a", $scope0_id, input.which ? One : Two, $wg__input_which);

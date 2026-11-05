@@ -25,7 +25,6 @@ var template_default = _template("a", (input) => {
 			_html(`outer ${_text_mark($scope5_id, "a", outer.label, $wg__outer_label * 2)}: `);
 			_dynamic_tag($scope5_id, "b", outer.content, {}, 0, 0, 0);
 			_subscribe($wi__outer_label && $Outer_content2__outer_label__closures, _scope($scope5_id, { _: _scope_with_id($scope3_id) }), "a2", $wg__outer_label);
-			$wg__outer_label || _resume_branch($scope5_id);
 		}, $scope3_id) });
 		_scope($scope3_id, {
 			d: outer.label,
@@ -42,7 +41,6 @@ var template_default = _template("a", (input) => {
 			const $scope1_id = _scope_id();
 			_html(`label: ${_text_mark($scope1_id, "a", input.label, $wg__input_label * 2)}`);
 			_subscribe($wi__input_label && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a5", $wg__input_label);
-			$wg__input_label || _resume_branch($scope1_id);
 		}, $scope0_id)
 	});
 	_scope($scope0_id, {

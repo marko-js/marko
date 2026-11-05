@@ -56,7 +56,8 @@ var template_default = _template("a", (input) => {
 		_subscribe($clicks__closures, _scope($scope1_id, {
 			_: _scope_with_id($scope0_id),
 			a: _existing_scope($childScope)
-		}), "a0");
+		}), "a0", 0);
+		_resume_branch($scope1_id);
 	}, void 0, "a3");
 	_script($scope0_id, "a4");
 	_scope($scope0_id, {

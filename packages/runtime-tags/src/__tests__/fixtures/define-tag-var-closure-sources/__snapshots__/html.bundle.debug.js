@@ -11,7 +11,7 @@ var sum_with_default = _template("__tests__/tags/sum-with.marko", (input) => {
 			a: $wi__input_n && a,
 			_: _scope_with_id($scope0_id)
 		}, "__tests__/tags/sum-with.marko", "1:2", { a: "1:15" }), "__tests__/tags/sum-with.marko_1_input_n#0:5/subscribe", 0);
-		$wi__input_n && _resume_branch($scope1_id);
+		$wi__input_n && $wg__input_n && _resume_branch($scope1_id);
 		return $return;
 	}, $scope0_id) };
 	const $childScope = _peek_scope_id();

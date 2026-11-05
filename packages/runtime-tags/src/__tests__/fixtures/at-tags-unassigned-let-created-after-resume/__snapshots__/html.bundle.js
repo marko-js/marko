@@ -12,10 +12,10 @@ var list_default = _template("c", (input) => {
 
 // tags/child.marko
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_items = _write_if($scope0_reason, 0), $wg__input_items = _write_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wi__input_items = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let show = true;
-	_set_scope_reason($wg__input_items << 1);
+	_set_scope_reason(_write_guard($scope0_reason, 0) << 1);
 	let $item;
 	forOf(input.items, (item) => {
 		$item = attrTags($item, { content: _content("b0", () => {
@@ -24,7 +24,6 @@ var child_default = _template("b", (input) => {
 			_scope_id();
 			_html("<span>shown</span>");
 			$wi__input_items && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
-			$wi__input_items && _resume_branch($scope1_id);
 		}, $scope0_id) });
 	});
 	const $childScope = _peek_scope_id();
@@ -33,7 +32,6 @@ var child_default = _template("b", (input) => {
 		e: show,
 		a: _existing_scope($childScope)
 	});
-	$wg__input_items || $wi__input_items && _resume_branch($scope0_id);
 });
 
 // template.marko

@@ -39,7 +39,6 @@ var template_default = _template("a", (input) => {
 				_scope_reason();
 				_html(`tag ${_text_mark($scope4_id, "a", i, $wg__i * 2)}`);
 				_subscribe($wi__i && $item_content__i__closures, _scope($scope4_id, { _: _scope_with_id($scope1_id) }), "a1", $wg__i);
-				$wg__i || _resume_branch($scope4_id);
 			}, $scope1_id));
 			_for_until(2, 0, 1, (j) => {
 				const $scope5_id = _scope_id();

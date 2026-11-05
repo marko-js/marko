@@ -8,7 +8,7 @@ var child_default = _template("b", (input) => {
 
 // template.marko
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_foo = _write_guard($scope0_reason, 2), $wi__input_foo = _write_if($scope0_reason, 2), $wi__input_tag__OR__input_foo = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wi__input_foo = _write_if($scope0_reason, 2), $wg__input_foo = _write_guard($scope0_reason, 2), $wi__input_tag__OR__input_foo = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_foo__closures = /* @__PURE__ */ new Set();
 	let tag = "div";
@@ -21,8 +21,8 @@ var template_default = _template("a", (input) => {
 		$wi__input_tag__OR__input_foo && _subscribe($wi__input_foo && $input_foo__closures, _scope($scope1_id, {
 			_: _scope_with_id($scope0_id),
 			a: $wi__input_foo && _existing_scope($childScope)
-		}), "a1", $wg__input_foo);
-		$wg__input_foo || $wi__input_tag__OR__input_foo && _resume_branch($scope1_id);
+		}), "a1", 0);
+		$wi__input_tag__OR__input_foo && $wg__input_foo && _resume_branch($scope1_id);
 	}, $scope0_id), 0, _write_guard($scope0_reason, 1));
 	_dynamic_tag($scope0_id, "b", tag, {}, _content_resume("a2", () => {
 		const $scope2_id = _scope_id();
@@ -34,8 +34,8 @@ var template_default = _template("a", (input) => {
 			_: _scope_with_id($scope0_id),
 			a: $wi__input_foo && _existing_scope($childScope2),
 			Ci: $wi__input_foo && 1
-		}), "a3", $wg__input_foo);
-		$wg__input_foo || _resume_branch($scope2_id);
+		}), "a3", 0);
+		$wg__input_foo && _resume_branch($scope2_id);
 	}, $scope0_id));
 	_html(`<button>toggle</button>${_el_mark($scope0_id, "c")}`);
 	_script($scope0_id, "a4");

@@ -9,7 +9,6 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		_html(`<div${_attr_class(attrs.class)}></div>`);
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) });
-		_resume_branch($scope1_id);
 	}, $scope0_id) };
 	_html(`<button>toggle</button>${_el_mark($scope0_id, "a")}`);
 	_if(() => {

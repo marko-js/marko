@@ -18,7 +18,7 @@ var template_default = _template("a", (input) => {
 	}, "a0", $scope0_id);
 	const D = { content: _content("a2", ({ on, depth }) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason(), $wg__on = _write_guard($scope1_reason, 1), $wg__on__OR__depth = _write_guard($scope1_reason, 0), $wi__on__OR__depth = _write_if($scope1_reason, 0), $wg__depth = _write_guard($scope1_reason, 2);
+		const $scope1_reason = _scope_reason(), $wg__on = _write_guard($scope1_reason, 1), $wi__on__OR__depth = _write_if($scope1_reason, 0), $wg__depth = _write_guard($scope1_reason, 2), $wg__on__OR__depth = _write_guard($scope1_reason, 0);
 		_if(() => {
 			if (depth) {
 				const $scope2_id = _scope_id();
@@ -32,7 +32,8 @@ var template_default = _template("a", (input) => {
 				($wi__input_a || $wi__on__OR__depth) && _subscribe($wi__input_a && $f2__closures, _scope($scope2_id, {
 					_: _scope_with_id($scope1_id),
 					b: $wi__on__OR__depth && _existing_scope($childScope)
-				}), "a1", $wg__input_a || $wg__on || $wg__on__OR__depth);
+				}), "a1", $wg__input_a || $wg__on);
+				$wg__input_a || $wg__on || ($wi__input_a || $wi__on__OR__depth) && $wg__input_a && _resume_branch($scope2_id);
 				return 0;
 			}
 		}, $scope1_id, "a", $wg__on__OR__depth, $wg__depth);

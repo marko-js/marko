@@ -33,7 +33,8 @@ var template_default = _template("a", (input) => {
 						c: inner,
 						a: _existing_scope($childScope),
 						Ce: 1
-					}), "a0");
+					}), "a0", 0);
+					_resume_branch($scope4_id);
 				});
 				_scope($scope3_id, { _: _scope_with_id($scope2_id) });
 			}, () => {

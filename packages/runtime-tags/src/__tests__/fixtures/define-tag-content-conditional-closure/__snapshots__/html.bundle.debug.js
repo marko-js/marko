@@ -30,7 +30,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_html(`label: ${_text_mark($scope1_id, "#text/0", input.label, $wg__input_label * 2)}`);
 		_subscribe($wi__input_label && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "9:2"), "__tests__/template.marko_1_input_label#0:3/subscribe", $wg__input_label);
-		$wg__input_label || _resume_branch($scope1_id);
 	}, $scope0_id) });
 	_scope($scope0_id, {
 		input_label: input.label,

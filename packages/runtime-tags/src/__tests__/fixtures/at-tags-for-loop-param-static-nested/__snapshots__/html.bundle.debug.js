@@ -32,7 +32,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				item,
 				_: _scope_with_id($scope0_id)
 			}, "__tests__/template.marko", "4:6", { item: "3:8" }), "__tests__/template.marko_1_input_show#0:3/subscribe", $wg__input_show);
-			$wg__input_show || $wi__input_show && _resume_branch($scope1_id);
 		}, $scope0_id) });
 	});
 	list_default({ item: $item });

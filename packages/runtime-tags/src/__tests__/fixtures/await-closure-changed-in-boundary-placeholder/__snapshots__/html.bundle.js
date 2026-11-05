@@ -8,7 +8,6 @@ var boundary_default = _template("b", (input) => {
 		const $scope1_id = _scope_id();
 		_dynamic_tag($scope1_id, "a", input.content, {}, 0, 0, $wg__input_content);
 		$wi__input_content && _subscribe($input_content__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "b0", $wg__input_content);
-		$wg__input_content || $wi__input_content && _resume_branch($scope1_id);
 	}, () => {
 		_scope_reason();
 		_scope_id();

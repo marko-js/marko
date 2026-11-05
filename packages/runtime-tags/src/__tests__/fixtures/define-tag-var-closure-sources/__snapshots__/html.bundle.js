@@ -11,7 +11,7 @@ var sum_with_default = _template("b", (input) => {
 			c: $wi__input_n && a,
 			_: _scope_with_id($scope0_id)
 		}), "b1", 0);
-		$wi__input_n && _resume_branch($scope1_id);
+		$wi__input_n && $wg__input_n && _resume_branch($scope1_id);
 		return $return;
 	}, $scope0_id) };
 	const $childScope = _peek_scope_id();

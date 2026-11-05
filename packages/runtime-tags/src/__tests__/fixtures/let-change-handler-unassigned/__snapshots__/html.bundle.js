@@ -1,14 +1,13 @@
 // tags/child.marko
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_initial__OR__input_onValue = _write_guard($scope0_reason, 0), $wi__input_initial__OR__input_onValue = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_initial__OR__input_onValue = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let value = input.initial;
 	_html(`<span>${_text_mark($scope0_id, "a", value, $wg__input_initial__OR__input_onValue)}</span>`);
-	$wi__input_initial__OR__input_onValue && _scope($scope0_id, {
+	_write_if($scope0_reason, 0) && _scope($scope0_id, {
 		d: _write_if($scope0_reason, 2) && input.initial,
 		e: _write_if($scope0_reason, 1) && input.onValue
 	});
-	$wg__input_initial__OR__input_onValue || $wi__input_initial__OR__input_onValue && _resume_branch($scope0_id);
 });
 
 // template.marko
