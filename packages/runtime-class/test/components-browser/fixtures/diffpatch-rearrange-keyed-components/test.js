@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), {});
@@ -11,7 +11,7 @@ module.exports = function (helpers) {
 
     var divs = component.getEl("root").querySelectorAll("div");
 
-    expect(divs.length).to.equal(letters.length);
+    assert.equal(divs.length, letters.length);
 
     var newComponents = {};
 
@@ -19,20 +19,20 @@ module.exports = function (helpers) {
       var letter = letters[i];
 
       var componentForValue = component.getComponent(letter);
-      expect(componentForValue != null).to.equal(true);
+      assert.equal(componentForValue != null, true);
       newComponents[letter] = componentForValue;
 
       if (previousComponents[letter]) {
-        expect(previousComponents[letter]).to.equal(componentForValue);
+        assert.equal(previousComponents[letter], componentForValue);
       }
 
-      expect(divs[i].id).to.equal(letter);
-      expect(divs[i].innerHTML).to.equal(letter);
+      assert.equal(divs[i].id, letter);
+      assert.equal(divs[i].innerHTML, letter);
     }
 
     Object.keys(previousComponents).forEach(function (letter) {
       if (!(letter in newComponents)) {
-        expect(previousComponents[letter].isDestroyed()).to.equal(true);
+        assert.equal(previousComponents[letter].isDestroyed(), true);
       }
     });
 

@@ -1,9 +1,11 @@
+const assert = require("assert/strict");
+
 var nodePath = require("path");
 
-exports.check = function (marko, markoCompiler, expect, helpers, done) {
+exports.check = function (marko, markoCompiler, helpers, done) {
   var template = marko.load(nodePath.join(__dirname, "template.marko"));
-  expect(function () {
+  assert.throws(function () {
     template.renderToString({ name: "John" });
-  }).to.throw("beginAsync() not allowed when using renderSync()");
+  }, /beginAsync\(\) not allowed when using renderSync\(\)/);
   done();
 };

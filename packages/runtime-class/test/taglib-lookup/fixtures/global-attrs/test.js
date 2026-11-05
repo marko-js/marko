@@ -1,4 +1,6 @@
-exports.check = function (markoCompiler, expect) {
+const assert = require("assert/strict");
+
+exports.check = function (markoCompiler) {
   var taglibLookup = markoCompiler.taglibLookup;
   var lookup = taglibLookup.buildLookup(__dirname);
   // console.log('LOOKUP: ', Object.keys(lookup.attributes));
@@ -6,6 +8,6 @@ exports.check = function (markoCompiler, expect) {
     "test-dynamic-attributes",
     "global-attribute",
   );
-  expect(attrDef != null).to.equal(true);
-  expect(attrDef.type).to.equal("boolean");
+  assert.equal(attrDef != null, true);
+  assert.equal(attrDef.type, "boolean");
 };

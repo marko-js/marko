@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 var pubsub = require("../../../__util__/pubsub");
 
 module.exports = function (helpers) {
@@ -22,17 +22,15 @@ module.exports = function (helpers) {
   };
 
   component.getComponent("customEvents").emitTestEvent1();
-  expect(received1.length).to.equal(1);
-  expect(received1[0].args.length).to.equal(3); // ['a', 'b', sourceComponent]
-  expect(received1[0].component).to.equal(
-    component.getComponent("customEvents"),
-  );
+  assert.equal(received1.length, 1);
+  assert.equal(received1[0].args.length, 3); // ['a', 'b', sourceComponent]
+  assert.equal(received1[0].component, component.getComponent("customEvents"));
 
   pubsub.channel("customEvents-" + component.id).emit("emitTestEvent2");
 
-  expect(received1.length).to.equal(1);
-  expect(received2.length).to.equal(1);
+  assert.equal(received1.length, 1);
+  assert.equal(received2.length, 1);
 
-  expect(received2[0].args.length).to.equal(1); // [sourceComponent]
-  expect(received2[0].component).to.be.an("object");
+  assert.equal(received2[0].args.length, 1); // [sourceComponent]
+  assert.ok(typeof received2[0].component === "object" && received2[0].component !== null);
 };

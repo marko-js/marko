@@ -1,5 +1,5 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 it("should initialize all components", function () {
-  expect(window.fooComponents.length).to.equal(2);
+  assert.equal(window.fooComponents.length, 2);
 });

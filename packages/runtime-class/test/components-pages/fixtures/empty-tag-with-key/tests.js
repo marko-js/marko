@@ -1,6 +1,6 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 it("should allow getEl() with a dynamic component", function () {
-  expect(window.dynamic.getEl("test") !== undefined).to.equal(true);
-  expect(window.splitDynamic.getEl("test") !== undefined).to.equal(true);
+  assert.equal(window.dynamic.getEl("test") !== undefined, true);
+  assert.equal(window.splitDynamic.getEl("test") !== undefined, true);
 });

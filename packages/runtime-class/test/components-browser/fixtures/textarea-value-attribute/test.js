@@ -1,28 +1,28 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index.marko"));
   var textarea = component.getEl("textarea");
 
-  expect(textarea.value).to.equal("Hello");
+  assert.equal(textarea.value, "Hello");
 
   component.state.value = "World";
   component.update();
 
-  expect(textarea.value).to.equal("World");
+  assert.equal(textarea.value, "World");
 
   component.state.value = undefined;
   component.update();
 
-  expect(textarea.value).to.equal("");
+  assert.equal(textarea.value, "");
 
   component.state.value = null;
   component.update();
 
-  expect(textarea.value).to.equal("");
+  assert.equal(textarea.value, "");
 
   component.state.value = 0;
   component.update();
 
-  expect(textarea.value).to.equal("0");
+  assert.equal(textarea.value, "0");
 };

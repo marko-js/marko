@@ -1,11 +1,11 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 var hooks = require("./hooks");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), {
     name: "Frank",
   });
-  expect(hooks.getHookNames()).deep.equal([
+  assert.deepEqual(hooks.getHookNames(), [
     "root:create",
     "root:render",
     "foo:create",
@@ -19,7 +19,7 @@ module.exports = function (helpers) {
   component.input = { name: "John" };
   component.update();
 
-  expect(hooks.getHookNames()).deep.equal([
+  assert.deepEqual(hooks.getHookNames(), [
     "root:render",
     "foo:render",
     "foo:update",

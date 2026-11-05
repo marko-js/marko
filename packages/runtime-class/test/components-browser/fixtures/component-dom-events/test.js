@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), {});
@@ -7,44 +7,44 @@ module.exports = function (helpers) {
 
   // Trigger a click event on the root element
   helpers.triggerMouseEvent(component.el, "click");
-  expect(component.logOutput).to.deep.equal(["el:click"]);
+  assert.deepEqual(component.logOutput, ["el:click"]);
 
   component.clearLog();
   helpers.triggerMouseEvent(component.getEl("button"), "click");
-  expect(component.logOutput).to.deep.equal(["button:click", "el:click"]);
+  assert.deepEqual(component.logOutput, ["button:click", "el:click"]);
 
   component.clearLog();
   helpers.triggerMouseEvent(
     component.getEl("button").firstElementChild,
     "click",
   );
-  expect(component.logOutput).to.deep.equal(["button:click", "el:click"]);
+  assert.deepEqual(component.logOutput, ["button:click", "el:click"]);
 
   component.clearLog();
   helpers.triggerMouseEvent(component.el, "mousemove");
-  expect(component.logOutput).to.deep.equal(["el:mousemove"]);
+  assert.deepEqual(component.logOutput, ["el:mousemove"]);
 
   component.clearLog();
   helpers.triggerMouseEvent(
     component.getEl("button").firstElementChild,
     "mousemove",
   );
-  expect(component.logOutput).to.deep.equal([
+  assert.deepEqual(component.logOutput, [
     "button>span:mousemove",
     "el:mousemove",
   ]);
 
   component.clearLog();
   helpers.triggerMouseEvent(document.getElementById("fooLink"), "dblclick");
-  expect(component.logOutput).to.deep.equal(["#fooLink:dblclick"]);
+  assert.deepEqual(component.logOutput, ["#fooLink:dblclick"]);
 
   component.clearLog();
   helpers.triggerMouseEvent(document.getElementById("fooLink"), "mouseout");
-  expect(component.logOutput).to.deep.equal(["#fooLink:mouseout"]);
+  assert.deepEqual(component.logOutput, ["#fooLink:mouseout"]);
 
   component.clearLog();
-  expect(component.getComponent("appButton").clicked).to.equal(false);
+  assert.equal(component.getComponent("appButton").clicked, false);
   helpers.triggerMouseEvent(component.getEl("helloWorld"), "mousedown");
-  expect(component.logOutput).to.deep.equal(["#helloWorld:mousedown"]);
-  expect(component.getComponent("appButton").clicked).to.equal(true);
+  assert.deepEqual(component.logOutput, ["#helloWorld:mousedown"]);
+  assert.equal(component.getComponent("appButton").clicked, true);
 };

@@ -2,9 +2,6 @@
 
 require("../__util__/test-init");
 
-var chai = require("chai");
-chai.config.includeStack = true;
-require("chai").should();
 require("marko/compiler");
 var taglibFinder = require("marko/src/taglib").finder;
 var autotest = require("mocha-autotest").default;

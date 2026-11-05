@@ -1,15 +1,15 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), {});
-  expect(component.fooClicked).to.equal(false);
-  expect(component.barClicked).to.equal(false);
+  assert.equal(component.fooClicked, false);
+  assert.equal(component.barClicked, false);
 
   helpers.triggerClick(component.getEl("foo"));
-  expect(component.fooClicked).to.equal(true);
-  expect(component.barClicked).to.equal(false);
+  assert.equal(component.fooClicked, true);
+  assert.equal(component.barClicked, false);
 
   helpers.triggerClick(component.getEl("bar"));
-  expect(component.fooClicked).to.equal(true);
-  expect(component.barClicked).to.equal(true);
+  assert.equal(component.fooClicked, true);
+  assert.equal(component.barClicked, true);
 };

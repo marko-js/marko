@@ -1,11 +1,11 @@
 "use strict";
 
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), {});
 
-  expect(component.state).to.equal(null);
+  assert.equal(component.state, null);
   helpers.triggerEvent(component.getEl("button"), "click");
-  expect(component.state.initNull).to.equal(true);
+  assert.equal(component.state.initNull, true);
 };

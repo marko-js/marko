@@ -1,8 +1,10 @@
+const assert = require("assert/strict");
+
 var nodePath = require("path");
 var promiseProvider =
   require("../../../__util__/async-helpers").promiseProvider;
 
-exports.check = function (marko, markoCompiler, expect, snapshot, done) {
+exports.check = function (marko, markoCompiler, snapshot, done) {
   var template = marko.load(nodePath.join(__dirname, "template.marko"));
   var out = template.createOut();
 
@@ -14,9 +16,7 @@ exports.check = function (marko, markoCompiler, expect, snapshot, done) {
   );
 
   out.on("error", (err) => {
-    expect(err.message.indexOf("User Promise Rejected Error") !== -1).to.equal(
-      true,
-    );
+    assert.equal(err.message.indexOf("User Promise Rejected Error") !== -1, true);
     done();
   });
 };

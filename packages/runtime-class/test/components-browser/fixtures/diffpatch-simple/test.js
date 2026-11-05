@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), {});
@@ -8,7 +8,7 @@ module.exports = function (helpers) {
   component.state.count = 1;
   component.update();
 
-  expect(component.el).to.equal(rootEl);
-  expect(rootEl.querySelector("span").innerHTML).to.equal("1");
-  expect(rootEl.querySelector("span")).to.equal(spanEl);
+  assert.equal(component.el, rootEl);
+  assert.equal(rootEl.querySelector("span").innerHTML, "1");
+  assert.equal(rootEl.querySelector("span"), spanEl);
 };

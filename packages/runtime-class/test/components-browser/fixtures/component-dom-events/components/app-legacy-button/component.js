@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = {
   onMount: function () {
@@ -16,8 +16,8 @@ module.exports = {
 
   handleRootMouseDown: function (event, el) {
     this.clicked = true;
-    expect(el.getAttribute("class")).to.equal("app-legacy-button");
+    assert.equal(el.getAttribute("class"), "app-legacy-button");
     this.log("click");
-    expect(this.name).to.equal("app-legacy-button");
+    assert.equal(this.name, "app-legacy-button");
   },
 };

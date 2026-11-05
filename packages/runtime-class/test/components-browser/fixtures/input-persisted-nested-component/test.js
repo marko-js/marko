@@ -1,43 +1,31 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index.marko"), {
     color: "red",
   });
 
-  expect(component.el.getAttribute("style")).to.equal("color:red");
-  expect(component.getComponent("counter").el.getAttribute("style")).to.equal(
-    "color:red",
-  );
-  expect(
-    component.getComponent("counter").el.querySelector(".count").innerHTML,
-  ).to.equal("0");
+  assert.equal(component.el.getAttribute("style"), "color:red");
+  assert.equal(component.getComponent("counter").el.getAttribute("style"), "color:red");
+  assert.equal(component.getComponent("counter").el.querySelector(".count").innerHTML, "0");
 
   component.getComponent("counter").increment();
   component.getComponent("counter").update();
 
-  expect(component.el.getAttribute("style")).to.equal("color:red");
-  expect(component.getComponent("counter").el.getAttribute("style")).to.equal(
-    "color:red",
-  );
-  expect(
-    component.getComponent("counter").el.querySelector(".count").innerHTML,
-  ).to.equal("1");
+  assert.equal(component.el.getAttribute("style"), "color:red");
+  assert.equal(component.getComponent("counter").el.getAttribute("style"), "color:red");
+  assert.equal(component.getComponent("counter").el.querySelector(".count").innerHTML, "1");
 
   component.updateColor("green");
   component.update();
 
-  expect(component.el.getAttribute("style")).to.equal("color: green;");
-  expect(component.getComponent("counter").el.getAttribute("style")).to.equal(
-    "color: green;",
-  );
-  expect(
-    component.getComponent("counter").el.querySelector(".count").innerHTML,
-  ).to.equal("1");
+  assert.equal(component.el.getAttribute("style"), "color: green;");
+  assert.equal(component.getComponent("counter").el.getAttribute("style"), "color: green;");
+  assert.equal(component.getComponent("counter").el.querySelector(".count").innerHTML, "1");
 
   //
-  // expect(component.el.style.color).to.equal('#09c;');
-  // expect(component.getComponent('counter').el.style.color).to.equal('#09c;');
+  // assert.equal(component.el.style.color, '#09c;');
+  // assert.equal(component.getComponent('counter').el.style.color, '#09c;');
   //
-  // expect(component.getEl('current').getAttribute('style')).to.equal('color:#09c;');
+  // assert.equal(component.getEl('current').getAttribute('style'), 'color:#09c;');
 };

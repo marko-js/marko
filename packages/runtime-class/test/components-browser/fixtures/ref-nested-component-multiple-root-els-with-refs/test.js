@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), {
@@ -6,7 +6,7 @@ module.exports = function (helpers) {
     age: 30,
   });
   var fooComponent = component.getComponent("foo");
-  expect(fooComponent != null).to.equal(true);
-  expect(fooComponent.getName()).to.equal("Frank");
-  expect(fooComponent.getAge()).to.equal("30");
+  assert.equal(fooComponent != null, true);
+  assert.equal(fooComponent.getName(), "Frank");
+  assert.equal(fooComponent.getAge(), "30");
 };

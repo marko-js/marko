@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 function triggerMouseEvent(el, type) {
   var ev = document.createEvent("MouseEvent");
@@ -29,12 +29,10 @@ function triggerClick(el) {
 it("should invoke event handler method for non-bubbling events", function () {
   window.fooComponent.mouseMoveEvent = null;
   triggerMouseEvent(window.fooComponent.getEl("button"), "mousemove");
-  expect(window.fooComponent.mouseMoveEvent != null).to.equal(true);
+  assert.equal(window.fooComponent.mouseMoveEvent != null, true);
 
-  expect(window.fooComponent.mouseMoveEvent[0].type).to.equal("mousemove");
-  expect(window.fooComponent.mouseMoveEvent[1]).to.equal(
-    window.fooComponent.getEl("button"),
-  );
+  assert.equal(window.fooComponent.mouseMoveEvent[0].type, "mousemove");
+  assert.equal(window.fooComponent.mouseMoveEvent[1], window.fooComponent.getEl("button"));
 });
 
 it("should invoke event handler method for non-bubbling events with extra args", function () {
@@ -42,31 +40,25 @@ it("should invoke event handler method for non-bubbling events with extra args",
 
   triggerMouseEvent(window.fooComponent.getEl("ok"), "mousemove");
 
-  expect(window.fooComponent.mouseMoveEvent != null).to.equal(true);
-  expect(window.fooComponent.mouseMoveEvent[0].type).to.equal("ok");
-  expect(window.fooComponent.mouseMoveEvent[1].type).to.equal("mousemove");
-  expect(window.fooComponent.mouseMoveEvent[2]).to.equal(
-    window.fooComponent.getEl("ok"),
-  );
+  assert.equal(window.fooComponent.mouseMoveEvent != null, true);
+  assert.equal(window.fooComponent.mouseMoveEvent[0].type, "ok");
+  assert.equal(window.fooComponent.mouseMoveEvent[1].type, "mousemove");
+  assert.equal(window.fooComponent.mouseMoveEvent[2], window.fooComponent.getEl("ok"));
 
   triggerMouseEvent(window.fooComponent.getEl("cancel"), "mousemove");
 
-  expect(window.fooComponent.mouseMoveEvent != null).to.equal(true);
-  expect(window.fooComponent.mouseMoveEvent[0].type).to.equal("cancel");
-  expect(window.fooComponent.mouseMoveEvent[1].type).to.equal("mousemove");
-  expect(window.fooComponent.mouseMoveEvent[2]).to.equal(
-    window.fooComponent.getEl("cancel"),
-  );
+  assert.equal(window.fooComponent.mouseMoveEvent != null, true);
+  assert.equal(window.fooComponent.mouseMoveEvent[0].type, "cancel");
+  assert.equal(window.fooComponent.mouseMoveEvent[1].type, "mousemove");
+  assert.equal(window.fooComponent.mouseMoveEvent[2], window.fooComponent.getEl("cancel"));
 });
 
 it("should invoke event handler method for bubbling events", function () {
   window.fooComponent.clickEvent = null;
   triggerMouseEvent(window.fooComponent.getEl("button"), "click");
-  expect(window.fooComponent.clickEvent != null).to.equal(true);
-  expect(window.fooComponent.clickEvent[0].type).to.equal("click");
-  expect(window.fooComponent.clickEvent[1]).to.equal(
-    window.fooComponent.getEl("button"),
-  );
+  assert.equal(window.fooComponent.clickEvent != null, true);
+  assert.equal(window.fooComponent.clickEvent[0].type, "click");
+  assert.equal(window.fooComponent.clickEvent[1], window.fooComponent.getEl("button"));
 });
 
 it("should invoke event handler method for bubbling events with extra args", function () {
@@ -76,13 +68,13 @@ it("should invoke event handler method for bubbling events with extra args", fun
 
   triggerClick(component.getEl("ok"));
 
-  expect(component.clickEvent[0].type).to.equal("ok");
-  expect(component.clickEvent[1].stopPropagation).to.be.a("function");
-  expect(component.clickEvent[2].innerHTML).to.equal("OK");
+  assert.equal(component.clickEvent[0].type, "ok");
+  assert.equal(typeof component.clickEvent[1].stopPropagation, "function");
+  assert.equal(component.clickEvent[2].innerHTML, "OK");
 
   triggerClick(component.getEl("cancel"));
 
-  expect(component.clickEvent[0].type).to.equal("cancel");
-  expect(component.clickEvent[1].stopPropagation).to.be.a("function");
-  expect(component.clickEvent[2].innerHTML).to.equal("Cancel");
+  assert.equal(component.clickEvent[0].type, "cancel");
+  assert.equal(typeof component.clickEvent[1].stopPropagation, "function");
+  assert.equal(component.clickEvent[2].innerHTML, "Cancel");
 });

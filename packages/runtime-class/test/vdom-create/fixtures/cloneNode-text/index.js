@@ -1,10 +1,10 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var text = helpers.vdom.createText("Hello World");
   var textClone = text.___cloneNode();
-  expect(textClone).to.not.equal(text);
-  expect(text.___nodeValue).to.equal("Hello World");
-  expect(textClone.___nodeValue).to.equal("Hello World");
+  assert.notEqual(textClone, text);
+  assert.equal(text.___nodeValue, "Hello World");
+  assert.equal(textClone.___nodeValue, "Hello World");
   return text;
 };

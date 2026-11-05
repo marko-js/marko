@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 // `template.mount` is the public entry the browser helpers bypass; each
 // position lands the rendered nodes somewhere different relative to the target.
@@ -12,20 +12,20 @@ module.exports = function (helpers) {
   };
 
   var inside = template.mount({ label: "beforeend" }, target);
-  expect(textOf(target)).to.contain("beforeend");
+  assert.match(textOf(target), /beforeend/);
 
   template.mount({ label: "afterbegin" }, target, "afterbegin");
-  expect(textOf(target).indexOf("afterbegin")).to.equal(0);
+  assert.equal(textOf(target).indexOf("afterbegin"), 0);
 
   template.mount({ label: "beforebegin" }, target, "beforebegin");
   template.mount({ label: "afterend" }, target, "afterend");
-  expect(textOf(target.parentNode)).to.contain("beforebegin");
-  expect(textOf(target.parentNode)).to.contain("afterend");
+  assert.match(textOf(target.parentNode), /beforebegin/);
+  assert.match(textOf(target.parentNode), /afterend/);
 
   // The handle it returns drives the mounted component.
   inside.update({ label: "updated" });
-  expect(textOf(target)).to.contain("updated");
+  assert.match(textOf(target), /updated/);
 
   inside.destroy();
-  expect(textOf(target)).to.not.contain("updated");
+  assert.doesNotMatch(textOf(target), /updated/);
 };

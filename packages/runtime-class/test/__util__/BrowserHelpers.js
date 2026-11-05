@@ -1,5 +1,4 @@
-var assert = require("assert");
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 var markoComponents = require("marko/components");
 var getComponentsFromMeta = require("./components-from-meta");
 
@@ -101,7 +100,7 @@ BrowserHelpers.prototype = {
   },
 
   checkChildrenMatch: function (children1, children2) {
-    expect(children1.length).to.equal(children2.length);
+    assert.equal(children1.length, children2.length);
 
     for (var i = 0; i < children1.length; i++) {
       var child1 = children1[i];

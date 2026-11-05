@@ -1,13 +1,13 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index.marko"), {
     name: "Frank",
   });
 
-  expect(component.el.innerHTML).to.contain("FRANK");
+  assert.match(component.el.innerHTML, /FRANK/);
 
   component.setName("Jane");
 
-  expect(component.el.innerHTML).to.contain("Jane");
+  assert.match(component.el.innerHTML, /Jane/);
 };

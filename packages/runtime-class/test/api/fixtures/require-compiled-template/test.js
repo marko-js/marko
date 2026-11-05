@@ -1,6 +1,6 @@
 var nodePath = require("path");
 
-exports.check = function (marko, markoCompiler, expect, snapshot, done) {
+exports.check = function (marko, markoCompiler, snapshot, done) {
   // Load the JS file to ensure the hello.marko.js file is created
   marko.load(nodePath.join(__dirname, "template.marko"));
 

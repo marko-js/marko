@@ -1,8 +1,8 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), {});
-  expect(helpers.targetEl.querySelectorAll("div").length).to.equal(0);
+  assert.equal(helpers.targetEl.querySelectorAll("div").length, 0);
 
   function checkOrder(letters) {
     component.input = { letters: letters };
@@ -10,11 +10,11 @@ module.exports = function (helpers) {
 
     var divs = helpers.targetEl.querySelectorAll("div");
 
-    expect(divs.length).to.equal(letters.length);
+    assert.equal(divs.length, letters.length);
 
     for (var i = 0; i < letters.length; i++) {
-      expect(divs[i].id).to.equal(letters[i]);
-      expect(divs[i].innerHTML).to.equal(letters[i]);
+      assert.equal(divs[i].id, letters[i]);
+      assert.equal(divs[i].innerHTML, letters[i]);
     }
   }
 

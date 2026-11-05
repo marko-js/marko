@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 var domData = require("../../../../src/runtime/components/dom-data");
 var vElementByDOMNode = domData.___vElementByDOMNode;
 
@@ -31,19 +31,19 @@ module.exports = function (helpers) {
   );
 
   var divClone = div.___cloneNode();
-  // expect(div.___isSameNode(divClone)).to.equal(true);
-  // expect(divClone.___isSameNode(div)).to.equal(true);
+  // assert.equal(div.___isSameNode(divClone), true);
+  // assert.equal(divClone.___isSameNode(div), true);
   //
-  // expect(div.___isSameNode(span)).to.equal(false);
-  // expect(span.___isSameNode(div)).to.equal(false);
+  // assert.equal(div.___isSameNode(span), false);
+  // assert.equal(span.___isSameNode(div), false);
 
   var realDiv = divClone.___actualize(helpers.document);
 
-  expect(isSameNode(div, realDiv)).to.equal(true);
-  expect(isSameNode(divClone, realDiv)).to.equal(true);
+  assert.equal(isSameNode(div, realDiv), true);
+  assert.equal(isSameNode(divClone, realDiv), true);
 
   var realSpan = span.___actualize(helpers.document);
-  expect(isSameNode(div, realSpan)).to.equal(false);
+  assert.equal(isSameNode(div, realSpan), false);
 
   return div;
 };

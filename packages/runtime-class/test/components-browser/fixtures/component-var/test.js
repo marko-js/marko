@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index.marko"), {
@@ -6,7 +6,7 @@ module.exports = function (helpers) {
     lastName: "Doe",
   });
 
-  expect(component.el.innerHTML).to.contain("Hello John Doe!");
+  assert.match(component.el.innerHTML, /Hello John Doe!/);
 
   component.input = {
     firstName: "Jane",
@@ -15,5 +15,5 @@ module.exports = function (helpers) {
 
   component.update();
 
-  expect(component.el.innerHTML).to.contain("Hello Jane Doe!");
+  assert.match(component.el.innerHTML, /Hello Jane Doe!/);
 };

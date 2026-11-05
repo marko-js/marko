@@ -1,7 +1,7 @@
 var nodePath = require("path");
 var through = require("through");
 
-exports.check = function (marko, markoCompiler, expect, snapshot, done) {
+exports.check = function (marko, markoCompiler, snapshot, done) {
   var output = "";
 
   var stream = through(function write(data) {

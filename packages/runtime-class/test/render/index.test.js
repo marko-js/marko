@@ -4,7 +4,7 @@ require("../__util__/test-init");
 
 const fs = require("fs");
 const path = require("path");
-const expect = require("chai").expect;
+const assert = require("assert/strict");
 const toDiffableHtml = require("diffable-html");
 const marko = require("marko");
 const autotest = require("mocha-autotest").default;
@@ -29,7 +29,7 @@ function testRunner(fixture) {
 function compareNormalized({ test, context }) {
   if ("html" in context && "vdom" in context) {
     test(function () {
-      expect(context.html).to.equal(context.vdom);
+      assert.equal(context.html, context.vdom);
     });
   }
 }
@@ -273,7 +273,7 @@ function createAsyncVerifier(main, snapshot, out, isVDOM) {
       // Make sure all of the await instances were correctly ended
       Object.keys(eventsByAwaitInstance).forEach(function (name) {
         var events = eventsByAwaitInstance[name];
-        expect(events).to.deep.equal([
+        assert.deepEqual(events, [
           "await:begin",
           "await:beforeRender",
           "await:finish",

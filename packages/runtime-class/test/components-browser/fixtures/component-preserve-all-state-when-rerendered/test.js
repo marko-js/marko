@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), {
@@ -8,22 +8,18 @@ module.exports = function (helpers) {
 
   var targetEl = component.el;
 
-  expect(targetEl.innerHTML).to.contain(
-    "Hello Frank! You have 30 new messages.",
-  );
-  expect(targetEl.innerHTML).to.contain("foo: bar");
-  expect(targetEl.innerHTML).to.contain("hello: world");
-  expect(component.state.name).to.equal("Frank");
-  expect(component.state.count).to.equal(30);
+  assert.match(targetEl.innerHTML, /Hello Frank! You have 30 new messages\./);
+  assert.match(targetEl.innerHTML, /foo: bar/);
+  assert.match(targetEl.innerHTML, /hello: world/);
+  assert.equal(component.state.name, "Frank");
+  assert.equal(component.state.count, 30);
 
   component.setState("name", "John");
   component.update();
 
-  expect(targetEl.innerHTML).to.contain(
-    "Hello John! You have 30 new messages.",
-  );
-  expect(targetEl.innerHTML).to.contain("foo: bar");
-  expect(targetEl.innerHTML).to.contain("hello: world");
-  expect(component.state.name).to.equal("John");
-  expect(component.state.count).to.equal(30);
+  assert.match(targetEl.innerHTML, /Hello John! You have 30 new messages\./);
+  assert.match(targetEl.innerHTML, /foo: bar/);
+  assert.match(targetEl.innerHTML, /hello: world/);
+  assert.equal(component.state.name, "John");
+  assert.equal(component.state.count, 30);
 };

@@ -1,14 +1,16 @@
+const assert = require("assert/strict");
+
 var fs = require("fs");
 var nodePath = require("path");
 
-exports.check = function (marko, markoCompiler, expect, snapshot, done) {
+exports.check = function (marko, markoCompiler, snapshot, done) {
   markoCompiler.defaultOptions.writeToDisk = false;
   try {
     var templatePath = nodePath.join(__dirname, "template.marko");
     var compiledPath = nodePath.join(__dirname, "template.marko.js");
     var template = require(templatePath).default;
-    expect(fs.existsSync(compiledPath)).to.equal(false);
-    expect(template.render).to.be.a("function");
+    assert.equal(fs.existsSync(compiledPath), false);
+    assert.equal(typeof template.render, "function");
     snapshot(template.renderSync({ name: "Frank" }).toString());
   } finally {
     markoCompiler.defaultOptions.writeToDisk = true;

@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 var Component = require("./components/a/index.marko").default;
 
 it("should allow diffing html", function () {
@@ -6,8 +6,8 @@ it("should allow diffing html", function () {
   var app = window.app;
   app.forceUpdate();
   app.update();
-  expect(app.getEl().parentNode).to.equal(parentNode);
-  expect(parentNode.querySelectorAll(".d").length).to.equal(2);
+  assert.equal(app.getEl().parentNode, parentNode);
+  assert.equal(parentNode.querySelectorAll(".d").length, 2);
   // Ensure it produces the same output as rendering in the browser.
-  expect(Component.renderSync().toString(), parentNode.innerHTML);
+  assert.equal(Component.renderSync().toString(), parentNode.innerHTML);
 });

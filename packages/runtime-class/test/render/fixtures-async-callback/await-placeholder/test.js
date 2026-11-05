@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 const { callbackProvider } = require("../../../__util__/async-helpers");
 
 exports.templateData = {
@@ -6,8 +6,8 @@ exports.templateData = {
 };
 
 exports.checkHtml = function (html) {
-  expect(html).to.contain("Loading main...");
-  expect(html).to.contain("Hello Frank");
+  assert.match(html, /Loading main\.\.\./);
+  assert.match(html, /Hello Frank/);
 };
 
 exports.skip_vdom = "client-reorder/placeholders are not supported in vdom";

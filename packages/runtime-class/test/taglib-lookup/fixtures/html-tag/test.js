@@ -1,6 +1,8 @@
-exports.check = function (markoCompiler, expect) {
+const assert = require("assert/strict");
+
+exports.check = function (markoCompiler) {
   var lookup = markoCompiler.buildTaglibLookup(__dirname);
 
-  expect(lookup.getTag("div").html).to.equal(true);
-  expect(lookup.getAttribute("div", "id").html).to.equal(true);
+  assert.equal(lookup.getTag("div").html, true);
+  assert.equal(lookup.getAttribute("div", "id").html, true);
 };

@@ -1,27 +1,27 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"));
   var buttonComponent = component.getComponent("button");
   var countComponent = component.getComponent("count");
 
-  expect(buttonComponent).to.exist;
-  expect(countComponent).to.exist;
+  assert.ok(buttonComponent != null);
+  assert.ok(countComponent != null);
 
-  expect(buttonComponent.el.innerHTML).to.contain("0");
-  expect(buttonComponent.el.className).to.equal("app-button app-button-small");
+  assert.match(buttonComponent.el.innerHTML, /0/);
+  assert.equal(buttonComponent.el.className, "app-button app-button-small");
 
   buttonComponent.setSize("large");
   buttonComponent.update();
-  expect(buttonComponent.el.innerHTML).to.contain("0");
-  expect(buttonComponent.el.className).to.equal("app-button app-button-large");
+  assert.match(buttonComponent.el.innerHTML, /0/);
+  assert.equal(buttonComponent.el.className, "app-button app-button-large");
 
   countComponent.increment();
   countComponent.update();
-  expect(buttonComponent.el.innerHTML).to.contain("1");
+  assert.match(buttonComponent.el.innerHTML, /1/);
 
   buttonComponent.setSize("small");
   buttonComponent.update();
-  expect(buttonComponent.el.innerHTML).to.contain("1");
-  expect(buttonComponent.el.className).to.equal("app-button app-button-small");
+  assert.match(buttonComponent.el.innerHTML, /1/);
+  assert.equal(buttonComponent.el.className, "app-button app-button-small");
 };

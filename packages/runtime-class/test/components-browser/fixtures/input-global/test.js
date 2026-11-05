@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index.marko"), {
@@ -7,7 +7,7 @@ module.exports = function (helpers) {
     },
   });
 
-  expect(component.getEl("current").innerHTML).to.equal("Pathname: /");
+  assert.equal(component.getEl("current").innerHTML, "Pathname: /");
 
   component.input = {
     $global: {
@@ -16,7 +16,7 @@ module.exports = function (helpers) {
   };
   component.update();
 
-  expect(component.getEl("current").innerHTML).to.equal("Pathname: /test");
+  assert.equal(component.getEl("current").innerHTML, "Pathname: /test");
 };
 
 module.exports.skip_hydrate =

@@ -1,29 +1,23 @@
+const assert = require("assert/strict");
+
 var nodePath = require("path");
 
-exports.check = function (taglibLoader, expect) {
+exports.check = function (taglibLoader) {
   var taglib = taglibLoader.loadTaglibFromFile(
     nodePath.join(__dirname, "marko.json"),
   );
 
-  expect(taglib != null).to.equal(true);
+  assert.equal(taglib != null, true);
 
-  expect(taglib.filePath).to.equal(nodePath.join(__dirname, "marko.json"));
+  assert.equal(taglib.filePath, nodePath.join(__dirname, "marko.json"));
 
   var helloTagScanned = taglib.tags["test-hello-scanned"];
-  expect(helloTagScanned.filePath).to.equal(
-    nodePath.join(__dirname, "tags/test-hello-scanned/marko-tag.json"),
-  );
-  expect(helloTagScanned.dir).to.equal(
-    nodePath.join(__dirname, "tags/test-hello-scanned"),
-  );
-  expect(helloTagScanned.attributes.name.filePath).to.equal(
-    nodePath.join(__dirname, "tags/test-hello-scanned/marko-tag.json"),
-  );
+  assert.equal(helloTagScanned.filePath, nodePath.join(__dirname, "tags/test-hello-scanned/marko-tag.json"));
+  assert.equal(helloTagScanned.dir, nodePath.join(__dirname, "tags/test-hello-scanned"));
+  assert.equal(helloTagScanned.attributes.name.filePath, nodePath.join(__dirname, "tags/test-hello-scanned/marko-tag.json"));
 
   var helloTag = taglib.tags["test-hello"];
-  expect(helloTag.filePath).to.equal(nodePath.join(__dirname, "marko.json"));
-  expect(helloTag.dir).to.equal(__dirname);
-  expect(helloTag.attributes.name.filePath).to.equal(
-    nodePath.join(__dirname, "marko.json"),
-  );
+  assert.equal(helloTag.filePath, nodePath.join(__dirname, "marko.json"));
+  assert.equal(helloTag.dir, __dirname);
+  assert.equal(helloTag.attributes.name.filePath, nodePath.join(__dirname, "marko.json"));
 };

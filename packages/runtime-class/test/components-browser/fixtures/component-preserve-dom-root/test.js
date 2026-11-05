@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), {
@@ -6,13 +6,13 @@ module.exports = function (helpers) {
     messageCount: 30,
   });
 
-  expect(component.el.innerHTML).to.contain("Frank");
-  expect(component.el.innerHTML).to.contain("30");
+  assert.match(component.el.innerHTML, /Frank/);
+  assert.match(component.el.innerHTML, /30/);
 
   component.setName("John");
   component.update();
 
-  expect(component.el.innerHTML).to.not.contain("John");
-  expect(component.el.innerHTML).to.contain("Frank");
-  expect(component.el.innerHTML).to.contain("30");
+  assert.doesNotMatch(component.el.innerHTML, /John/);
+  assert.match(component.el.innerHTML, /Frank/);
+  assert.match(component.el.innerHTML, /30/);
 };

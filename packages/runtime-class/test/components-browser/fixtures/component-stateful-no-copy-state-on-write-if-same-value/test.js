@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), {
@@ -8,5 +8,5 @@ module.exports = function (helpers) {
 
   var oldState = component.state;
   component.setState("size", "large");
-  expect(component.state).to.equal(oldState);
+  assert.equal(component.state, oldState);
 };

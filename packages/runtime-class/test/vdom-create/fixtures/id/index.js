@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var el = helpers.vdom.createElement(
@@ -8,6 +8,6 @@ module.exports = function (helpers) {
     null /* component */,
     0 /* childCount */,
   );
-  expect(el.___attributes.id).to.equal("foo");
+  assert.equal(el.___attributes.id, "foo");
   return el;
 };

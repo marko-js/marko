@@ -1,32 +1,32 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), {});
 
-  expect(component.el.childNodes.length).to.equal(1);
-  expect(component.el.firstChild.nodeName).to.equal("INPUT");
-  expect(component.el.firstChild.value).to.equal("x");
+  assert.equal(component.el.childNodes.length, 1);
+  assert.equal(component.el.firstChild.nodeName, "INPUT");
+  assert.equal(component.el.firstChild.value, "x");
 
   component.state.html = "<textarea>HELLO WORLD!</textarea>";
   component.update();
 
-  expect(component.el.childNodes.length).to.equal(1);
-  expect(component.el.firstChild.nodeName).to.equal("TEXTAREA");
-  expect(component.el.firstChild.value).to.equal("HELLO WORLD!");
+  assert.equal(component.el.childNodes.length, 1);
+  assert.equal(component.el.firstChild.nodeName, "TEXTAREA");
+  assert.equal(component.el.firstChild.value, "HELLO WORLD!");
 
   component.state.html =
     '<select><option value="1">One</option><option value="2" selected>Two</option></select>';
   component.update();
 
-  expect(component.el.childNodes.length).to.equal(1);
-  expect(component.el.firstChild.nodeName).to.equal("SELECT");
-  expect(component.el.firstChild.selectedIndex).to.equal(1);
+  assert.equal(component.el.childNodes.length, 1);
+  assert.equal(component.el.firstChild.nodeName, "SELECT");
+  assert.equal(component.el.firstChild.selectedIndex, 1);
 
   component.state.html =
     '<!-- A comment -->';
   component.update();
 
-  expect(component.el.childNodes.length).to.equal(1);
-  expect(component.el.firstChild.nodeType).to.equal(Node.COMMENT_NODE);
-  expect(component.el.firstChild.data).to.equal(" A comment ");
+  assert.equal(component.el.childNodes.length, 1);
+  assert.equal(component.el.firstChild.nodeType, Node.COMMENT_NODE);
+  assert.equal(component.el.firstChild.data, " A comment ");
 };

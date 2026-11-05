@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 var template = require("../../../components-browser/fixtures/lifecycle-errors/index.marko").default;
 
 module.exports = function () {
@@ -13,20 +13,22 @@ module.exports = function () {
   try {
     ["onCreate", "onInput", "onRender"].forEach(function (hook) {
       [error, "lifecycle failed", null].forEach(function (cause) {
-        expect(function () {
-          template.renderSync({ fail: { hook: hook, error: cause } });
-        })
-          .to.throw(
-            new RegExp(
+        assert.throws(
+          function () {
+            template.renderSync({ fail: { hook: hook, error: cause } });
+          },
+          {
+            message: new RegExp(
               "Error in " + hook +
                 ' for component ".*lifecycle-errors/index.marko.*" \\(id: .+\\)\\.',
             ),
-          )
-          .and.have.property("cause", cause);
+            cause: cause,
+          },
+        );
       });
     });
-    expect(logged).to.equal(false);
-    expect(error.stack).to.equal(stack);
+    assert.equal(logged, false);
+    assert.equal(error.stack, stack);
   } finally {
     console.error = consoleError;
   }

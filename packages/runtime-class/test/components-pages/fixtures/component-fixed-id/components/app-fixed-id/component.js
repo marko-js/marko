@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = {
   onInput: function (input) {
@@ -11,10 +11,10 @@ module.exports = {
   },
   testGetComponent: function () {
     var helloComponent = this.getComponent("hello");
-    expect(helloComponent != null).to.equal(true);
+    assert.equal(helloComponent != null, true);
   },
   testGetEl: function () {
     var wrapperEl = this.getEl("wrapper");
-    expect(wrapperEl != null).to.equal(true);
+    assert.equal(wrapperEl != null, true);
   },
 };

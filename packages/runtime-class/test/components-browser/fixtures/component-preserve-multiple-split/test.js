@@ -1,6 +1,6 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   helpers.mount(require.resolve("./index"), {});
-  expect(window.mountCount).to.equal(3);
+  assert.equal(window.mountCount, 3);
 };

@@ -1,3 +1,5 @@
+const assert = require("assert/strict");
+
 var fs = require("fs");
 var path = require("path");
 var markoVersion = require("../../../../package.json").version;
@@ -6,7 +8,7 @@ function getMarkoVersionComment() {
   return "Compiled using marko@" + markoVersion + " - DO NOT EDIT";
 }
 
-exports.check = function (marko, markoCompiler, expect, helpers, done) {
+exports.check = function (marko, markoCompiler, helpers, done) {
   var compiler = require("marko/compiler");
   var templatePath = path.join(__dirname, "template.marko");
 
@@ -14,7 +16,7 @@ exports.check = function (marko, markoCompiler, expect, helpers, done) {
 
   var compiledTemplate = compiler.compileForBrowser(templateSrc, templatePath);
 
-  expect(compiledTemplate.code).to.include(getMarkoVersionComment());
+  assert.ok(compiledTemplate.code.includes(getMarkoVersionComment()));
 
   done();
 };

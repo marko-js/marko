@@ -1,13 +1,13 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), {});
 
-  expect(component.getEl("nameInput").parentNode.nodeName).to.equal("DIV");
+  assert.equal(component.getEl("nameInput").parentNode.nodeName, "DIV");
 
   component.state.renderCount++;
   component.update();
 
-  expect(component.getEl("nameInput").parentNode.nodeName).to.equal("P");
-  expect(component.getEl("nameInput").value).to.equal("2");
+  assert.equal(component.getEl("nameInput").parentNode.nodeName, "P");
+  assert.equal(component.getEl("nameInput").value, "2");
 };

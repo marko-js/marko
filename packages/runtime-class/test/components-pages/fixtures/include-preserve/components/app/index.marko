@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import assert from 'assert/strict';
 
 class {
     onMount() {
@@ -6,15 +6,15 @@ class {
     }
 
     test() {
-        expect(this.el.querySelector('.foo section.input').innerHTML).to.equal('Hello Frank');
-        expect(this.el.querySelector('.foo section.renderBody').innerHTML).to.equal('Hello Frank');
+        assert.equal(this.el.querySelector('.foo section.input').innerHTML, 'Hello Frank');
+        assert.equal(this.el.querySelector('.foo section.renderBody').innerHTML, 'Hello Frank');
 
         var foo = window.app.getComponent('foo');
         foo.forceUpdate();
         foo.update();
 
-        expect(this.el.querySelector('.foo section.input').innerHTML).to.equal('Hello Frank');
-        expect(this.el.querySelector('.foo section.renderBody').innerHTML).to.equal('Hello Frank');
+        assert.equal(this.el.querySelector('.foo section.input').innerHTML, 'Hello Frank');
+        assert.equal(this.el.querySelector('.foo section.renderBody').innerHTML, 'Hello Frank');
 
         this.input = {
             name: 'John'
@@ -22,8 +22,8 @@ class {
 
         this.update();
 
-        expect(this.el.querySelector('.foo section.input').innerHTML).to.equal('Hello John');
-        expect(this.el.querySelector('.foo section.renderBody').innerHTML).to.equal('Hello John');
+        assert.equal(this.el.querySelector('.foo section.input').innerHTML, 'Hello John');
+        assert.equal(this.el.querySelector('.foo section.renderBody').innerHTML, 'Hello John');
     }
 }
 

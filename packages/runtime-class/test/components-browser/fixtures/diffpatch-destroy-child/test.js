@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), {});
@@ -9,13 +9,13 @@ module.exports = function (helpers) {
   component.state.count = 1;
   component.update();
 
-  expect(component.el).to.equal(rootEl);
-  expect(rootEl.querySelector("span.hello-count").innerHTML).to.equal("1");
-  expect(rootEl.querySelector("span.hello-count")).to.equal(helloCountEl);
+  assert.equal(component.el, rootEl);
+  assert.equal(rootEl.querySelector("span.hello-count").innerHTML, "1");
+  assert.equal(rootEl.querySelector("span.hello-count"), helloCountEl);
 
   component.state.renderHello = false;
   component.update();
 
-  expect(helloComponent.isDestroyed()).to.equal(true);
-  expect(helloComponent.el == null).to.equal(true);
+  assert.equal(helloComponent.isDestroyed(), true);
+  assert.equal(helloComponent.el == null, true);
 };

@@ -1,29 +1,29 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 it("should initialize components after ready", function (done) {
-  expect(window.beforeInitComponentsFooComponent).to.equal(undefined);
-  expect(window.afterInitComponentsBarComponent).to.equal(undefined);
+  assert.equal(window.beforeInitComponentsFooComponent, undefined);
+  assert.equal(window.afterInitComponentsBarComponent, undefined);
 
-  expect(window.fooComponent != null).to.equal(true);
-  expect(window.barComponent != null).to.equal(true);
+  assert.equal(window.fooComponent != null, true);
+  assert.equal(window.barComponent != null, true);
 
-  expect(window.fooComponent.id).to.be.a("string");
-  expect(window.barComponent.id).to.be.a("string");
-  expect(window.fooComponent.id).to.not.equal(window.barComponent.id);
+  assert.equal(typeof window.fooComponent.id, "string");
+  assert.equal(typeof window.barComponent.id, "string");
+  assert.notEqual(window.fooComponent.id, window.barComponent.id);
   done();
 });
 
 it("should assign unique IDs to each component", function (done) {
-  expect(window.fooComponent.id).to.be.a("string");
-  expect(window.barComponent.id).to.be.a("string");
-  expect(window.bazComponent.id).to.be.a("string");
-  expect(window.fooComponent.id).to.not.equal(window.barComponent.id);
-  expect(window.fooComponent.id).to.not.equal(window.bazComponent.id);
-  expect(window.bazComponent.id).to.contain(window.fooComponent.id);
+  assert.equal(typeof window.fooComponent.id, "string");
+  assert.equal(typeof window.barComponent.id, "string");
+  assert.equal(typeof window.bazComponent.id, "string");
+  assert.notEqual(window.fooComponent.id, window.barComponent.id);
+  assert.notEqual(window.fooComponent.id, window.bazComponent.id);
+  assert.ok(window.bazComponent.id.includes(window.fooComponent.id));
   done();
 });
 
 it("should assign a unique ID to a nested component based on the parent ID", function (done) {
-  expect(window.bazComponent.id).to.contain(window.fooComponent.id + "-");
+  assert.ok(window.bazComponent.id.includes(window.fooComponent.id + "-"));
   done();
 });

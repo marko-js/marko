@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import assert from 'assert/strict';
 
 class {
     onCreate() {
@@ -7,14 +7,14 @@ class {
 
     }
     handleTestEvent1(arg1, arg2) {
-        expect(arg1).to.equal('a');
-        expect(arg2).to.equal('b');
+        assert.equal(arg1, 'a');
+        assert.equal(arg2, 'b');
         this.testEvent1Fired++;
     }
 
     handleTestEvent2(arg1, arg2) {
-        expect(arg1).to.equal('c');
-        expect(arg2).to.equal('d');
+        assert.equal(arg1, 'c');
+        assert.equal(arg2, 'd');
         this.testEvent2Fired++;
     }
 }

@@ -1,11 +1,11 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), {
     version: 0,
   });
 
-  expect(window.rerenderInitOrder).to.deep.equal([
+  assert.deepEqual(window.rerenderInitOrder, [
     "childB",
     "childA",
     "parent",
@@ -17,7 +17,7 @@ module.exports = function (helpers) {
   component.update();
 
   // console.log('ACTUAL ORDER: ', window.rerenderInitOrder);
-  expect(window.rerenderInitOrder).to.deep.equal([
+  assert.deepEqual(window.rerenderInitOrder, [
     "childB",
     "childA",
     "parent",

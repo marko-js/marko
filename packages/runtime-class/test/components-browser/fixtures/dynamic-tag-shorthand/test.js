@@ -1,6 +1,6 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), {});
-  expect(component.getEl("root").textContent).to.equal("HelloAgain");
+  assert.equal(component.getEl("root").textContent, "HelloAgain");
 };

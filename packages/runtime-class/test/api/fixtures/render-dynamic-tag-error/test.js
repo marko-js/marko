@@ -1,6 +1,8 @@
+const assert = require("assert/strict");
+
 var nodePath = require("path");
 
-exports.check = function (marko, markoCompiler, expect, snapshot, done) {
+exports.check = function (marko, markoCompiler, snapshot, done) {
   var template = marko.load(nodePath.join(__dirname, "template.marko"));
   var calls = [];
 
@@ -22,7 +24,7 @@ exports.check = function (marko, markoCompiler, expect, snapshot, done) {
     )
     .then(function () {
       setImmediate(function () {
-        expect(calls).to.deep.equal([
+        assert.deepEqual(calls, [
           "render error",
           "renderToString error",
           "promise error",

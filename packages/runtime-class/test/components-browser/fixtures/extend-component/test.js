@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   helpers.mount(require.resolve("./components/app-checkbox"), {
@@ -7,9 +7,9 @@ module.exports = function (helpers) {
     data: 123,
   });
 
-  expect(helpers.targetEl.children.length).to.equal(1);
-  expect(helpers.targetEl.children[0].nodeName).to.equal("BUTTON");
+  assert.equal(helpers.targetEl.children.length, 1);
+  assert.equal(helpers.targetEl.children[0].nodeName, "BUTTON");
 
   var el = helpers.targetEl.querySelector(".my-checkbox");
-  expect(el != null).to.equal(true);
+  assert.equal(el != null, true);
 };

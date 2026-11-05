@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), {});
@@ -6,7 +6,7 @@ module.exports = function (helpers) {
   component.clearLog();
   helpers.triggerMouseEvent(document.getElementById("dom-button"), "click");
   helpers.triggerMouseEvent(document.getElementById("custom-button"), "click");
-  expect(component.logOutput).to.deep.equal(["dom:click", "custom:click"]);
+  assert.deepEqual(component.logOutput, ["dom:click", "custom:click"]);
 
   helpers.triggerMouseEvent(document.getElementById("toggle"), "click");
   component.update();
@@ -14,5 +14,5 @@ module.exports = function (helpers) {
   component.clearLog();
   helpers.triggerMouseEvent(document.getElementById("dom-button"), "click");
   helpers.triggerMouseEvent(document.getElementById("custom-button"), "click");
-  expect(component.logOutput).to.deep.equal([]);
+  assert.deepEqual(component.logOutput, []);
 };

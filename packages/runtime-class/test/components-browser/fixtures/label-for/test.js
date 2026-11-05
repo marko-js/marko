@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), {});
@@ -6,7 +6,7 @@ module.exports = function (helpers) {
   var forElId = label.getAttribute("for");
   var inputEl = document.getElementById(forElId);
 
-  expect(!!forElId).to.equal(true);
-  expect(inputEl.value).to.equal("test");
-  expect(label.getAttribute("for:scoped")).to.equal(null);
+  assert.equal(!!forElId, true);
+  assert.equal(inputEl.value, "test");
+  assert.equal(label.getAttribute("for:scoped"), null);
 };

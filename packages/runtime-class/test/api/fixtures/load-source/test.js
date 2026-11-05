@@ -1,6 +1,8 @@
+const assert = require("assert/strict");
+
 var nodePath = require("path");
 
-exports.check = function (marko, markoCompiler, expect, snapshot, done) {
+exports.check = function (marko, markoCompiler, snapshot, done) {
   var template;
   var templatePath;
 
@@ -22,7 +24,7 @@ exports.check = function (marko, markoCompiler, expect, snapshot, done) {
   templatePath = nodePath.join(__dirname, "invalid-template.marko");
 
   template = marko.load(templatePath, { ignoreUnrecognizedTags: true });
-  expect(template.render).to.be.a("function");
+  assert.equal(typeof template.render, "function");
   snapshot(template.renderSync({}).toString(), { name: "custom-options" });
   done();
 };

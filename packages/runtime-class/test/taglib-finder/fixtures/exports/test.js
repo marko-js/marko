@@ -1,11 +1,11 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 exports.check = function (taglibFinder) {
   const discoveredTags = taglibFinder
     .find(__dirname, [], ["components"])
     .flatMap((taglib) => Object.keys(taglib.tags));
 
-  expect(discoveredTags).to.include("included-tag");
-  expect(discoveredTags).to.include("dev-tag");
-  expect(discoveredTags).to.not.include("dist-tag");
+  assert.ok(discoveredTags.includes("included-tag"));
+  assert.ok(discoveredTags.includes("dev-tag"));
+  assert.ok(!discoveredTags.includes("dist-tag"));
 };

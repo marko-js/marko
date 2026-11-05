@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var link = helpers.vdom
@@ -24,12 +24,12 @@ module.exports = function (helpers) {
 
   var linkClone = el.___firstChild;
 
-  expect(linkClone).to.not.equal(link);
-  expect(link.___parentNode).to.equal(null);
-  expect(link.___nextSibling).to.equal(null);
+  assert.notEqual(linkClone, link);
+  assert.equal(link.___parentNode, null);
+  assert.equal(link.___nextSibling, null);
 
-  expect(linkClone.___nextSibling.___nodeName).to.equal("span");
-  expect(linkClone.___parentNode.___nodeName).to.equal("div");
+  assert.equal(linkClone.___nextSibling.___nodeName, "span");
+  assert.equal(linkClone.___parentNode.___nodeName, "div");
 
   return el;
 };

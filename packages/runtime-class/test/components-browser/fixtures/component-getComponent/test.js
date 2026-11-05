@@ -1,6 +1,6 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), {});
-  expect(component.getComponent("bar").name).to.equal("app-foo");
+  assert.equal(component.getComponent("bar").name, "app-foo");
 };

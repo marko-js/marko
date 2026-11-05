@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 var extend = require("raptor-util/extend");
 
 exports.templateData = {
@@ -11,7 +11,7 @@ exports.templateData = {
 exports.checkEvents = function (events, snapshot, out) {
   events = events.map(function (eventInfo) {
     var arg = extend({}, eventInfo.arg);
-    expect(arg.out != null).to.equal(true);
+    assert.equal(arg.out != null, true);
 
     delete arg.out; // Not serializable
     delete arg.parent; // Not serializable

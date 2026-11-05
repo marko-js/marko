@@ -1,10 +1,10 @@
 // see https://github.com/marko-js/marko/issues/556
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), {});
 
-  expect(component.el.innerHTML).to.not.contain("FATAL ERROR");
+  assert.doesNotMatch(component.el.innerHTML, /FATAL ERROR/);
 
   helpers.triggerEvent(component.getEl(), "submit");
 
@@ -17,7 +17,7 @@ module.exports = function (helpers) {
         resolve();
       } else if (Date.now() > deadline) {
         try {
-          expect(component.el.innerHTML).to.contain("FATAL ERROR");
+          assert.match(component.el.innerHTML, /FATAL ERROR/);
           resolve();
         } catch (err) {
           reject(err);

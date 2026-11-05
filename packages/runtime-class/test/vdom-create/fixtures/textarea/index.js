@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var FLAGS = 2; // TEXTAREA
@@ -15,7 +15,7 @@ module.exports = function (helpers) {
     .t("foo")
     .t("bar");
 
-  expect(textarea.___textContent).to.equal("foobar");
+  assert.equal(textarea.___textContent, "foobar");
 
   return textarea;
 };

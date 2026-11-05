@@ -1,15 +1,15 @@
+const assert = require("assert/strict");
+
 var nodePath = require("path");
 
-exports.check = function (taglibLoader, expect) {
+exports.check = function (taglibLoader) {
   var taglib = taglibLoader.loadTaglibFromFile(
     nodePath.join(__dirname, "marko.json"),
   );
 
   var tag = taglib.tags.info;
 
-  expect(tag).to.have.property("openTagOnly").to.equal(true);
-  expect(tag)
-    .to.have.property("description")
-    .to.equal("Documented for tooling only.");
-  expect(tag).to.have.property("deprecated").to.equal("Use <details> instead.");
+  assert.equal(tag.openTagOnly, true);
+  assert.equal(tag.description, "Documented for tooling only.");
+  assert.equal(tag.deprecated, "Use <details> instead.");
 };

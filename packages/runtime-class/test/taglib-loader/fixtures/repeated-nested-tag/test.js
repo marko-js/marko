@@ -1,18 +1,17 @@
+const assert = require("assert/strict");
+
 var nodePath = require("path");
 
-exports.check = function (taglibLoader, expect) {
+exports.check = function (taglibLoader) {
   var taglib = taglibLoader.loadTaglibFromFile(
     nodePath.join(__dirname, "marko.json"),
   );
-  expect(taglib != null).to.equal(true);
+  assert.equal(taglib != null, true);
 
-  expect(taglib.tags)
-    .has.property("longhand-tabs")
-    .with.property("nestedTags")
-    .with.property("tab");
+  assert.ok("tab" in taglib.tags["longhand-tabs"].nestedTags);
 
   const tab = taglib.tags["longhand-tabs"].nestedTags.tab;
-  expect(tab).has.property("isRepeated", true);
-  expect(tab).has.property("targetProperty", "tabs");
-  expect(tab).has.property("attributes").with.property("label");
+  assert.equal(tab.isRepeated, true);
+  assert.equal(tab.targetProperty, "tabs");
+  assert.ok("label" in tab.attributes);
 };

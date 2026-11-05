@@ -1,12 +1,12 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 it("should allow getEl() with a split component", function () {
   var splitComponent = window.splitComponent;
-  expect(splitComponent.getEl("button") != null).to.equal(true);
-  expect(splitComponent.getEl("button").nodeName).to.equal("BUTTON");
+  assert.equal(splitComponent.getEl("button") != null, true);
+  assert.equal(splitComponent.getEl("button").nodeName, "BUTTON");
 
-  expect(splitComponent.getEls("li").length).to.equal(3);
-  expect(splitComponent.getEls("li").map((el) => el.textContent)).to.eql([
+  assert.equal(splitComponent.getEls("li").length, 3);
+  assert.deepEqual(splitComponent.getEls("li").map((el) => el.textContent), [
     "1",
     "2",
     "3",

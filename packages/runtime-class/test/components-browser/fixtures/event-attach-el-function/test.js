@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var events = (window.events = []);
@@ -10,9 +10,9 @@ module.exports = function (helpers) {
   // server so there is no corresponding attach event fired
   var OFFSET = helpers.isHydrate ? -1 : 0;
   if (!helpers.isHydrate) {
-    expect(events.length).to.equal(1);
-    expect(events[0].color).to.equal("red");
-    expect(events[0].node).to.equal(component.el.querySelectorAll("li")[0]);
+    assert.equal(events.length, 1);
+    assert.equal(events[0].color, "red");
+    assert.equal(events[0].node, component.el.querySelectorAll("li")[0]);
   }
 
   component.input = {
@@ -21,11 +21,9 @@ module.exports = function (helpers) {
 
   component.update();
 
-  expect(events.length).to.equal(OFFSET + 2);
-  expect(events[OFFSET + 1].color).to.equal("blue");
-  expect(events[OFFSET + 1].node).to.equal(
-    component.el.querySelectorAll("li")[1],
-  );
+  assert.equal(events.length, OFFSET + 2);
+  assert.equal(events[OFFSET + 1].color, "blue");
+  assert.equal(events[OFFSET + 1].node, component.el.querySelectorAll("li")[1]);
 
   component.input = {
     colors: ["red", "green", "blue"],
@@ -33,9 +31,7 @@ module.exports = function (helpers) {
 
   component.update();
 
-  expect(events.length).to.equal(OFFSET + 3);
-  expect(events[OFFSET + 2].color).to.equal("green");
-  expect(events[OFFSET + 2].node).to.equal(
-    component.el.querySelectorAll("li")[1],
-  );
+  assert.equal(events.length, OFFSET + 3);
+  assert.equal(events[OFFSET + 2].color, "green");
+  assert.equal(events[OFFSET + 2].node, component.el.querySelectorAll("li")[1]);
 };

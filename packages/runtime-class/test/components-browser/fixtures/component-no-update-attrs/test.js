@@ -1,12 +1,12 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"));
 
   var span = component.el.querySelector("span");
-  expect(span.className).to.equal("test");
+  assert.equal(span.className, "test");
 
   component.update();
 
-  expect(span.className).to.equal("test");
+  assert.equal(span.className, "test");
 };

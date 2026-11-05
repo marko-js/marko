@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), {});
@@ -6,12 +6,12 @@ module.exports = function (helpers) {
   var testEventFired = false;
 
   component.getComponent("bar").on("testEvent", function (a, b) {
-    expect(a).to.equal("a");
-    expect(b).to.equal("b");
+    assert.equal(a, "a");
+    assert.equal(b, "b");
     testEventFired = true;
   });
 
   component.getComponent("bar").emitTestEvent();
 
-  expect(testEventFired).to.equal(true);
+  assert.equal(testEventFired, true);
 };

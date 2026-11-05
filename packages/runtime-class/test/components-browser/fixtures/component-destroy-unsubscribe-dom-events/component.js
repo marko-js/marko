@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = {
   onMount: function () {
@@ -25,7 +25,7 @@ module.exports = {
   },
 
   handleFooLinkMouseOut: function (event, el) {
-    expect(event.target).to.equal(el);
+    assert.equal(event.target, el);
     this.log("#fooLink:mouseout");
   },
 };
