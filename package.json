@@ -51,7 +51,6 @@
     "@types/node": "^26.6.6",
     "@zcov/cli": "^0.1.4",
     "babel-plugin-minprops": "^2.0.1",
-    "diffable-html": "^6.0.1",
     "husky": "^9.1.7",
     "js-beautify": "^2.0.3",
     "jsdom": "^31.0.0",
