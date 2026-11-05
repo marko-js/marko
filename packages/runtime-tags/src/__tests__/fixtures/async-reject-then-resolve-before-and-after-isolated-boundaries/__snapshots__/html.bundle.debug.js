@@ -31,7 +31,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope7_id = _scope_id();
 		_await($scope7_id, "#text/0", resolveAfter("C Value", 2), (v) => {
 			const $scope9_id = _scope_id();
-			_html(`<div>Resolved C: ${_escape(v)}</div><button>Before</button>${_el_resume($scope9_id, "#button/1")}`);
+			_html(`<div>Resolved C: ${_escape(v)}</div><button>Before</button>${_el_mark($scope9_id, "#button/1")}`);
 			_script($scope9_id, "__tests__/template.marko_9");
 			_scope($scope9_id, {}, "__tests__/template.marko", "24:4");
 		});

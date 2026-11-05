@@ -3,7 +3,7 @@ var custom_tag_default = _template("__tests__/tags/custom-tag.marko", (input) =>
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let x = 1;
-	_html(`<button class=inc>${_text_resume($scope0_id, "#text/1", x)}</button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button class=inc>${_text_mark($scope0_id, "#text/1", x)}</button>${_el_mark($scope0_id, "#button/0")}`);
 	_dynamic_tag($scope0_id, "#text/2", input.content, [x], 0, 1);
 	_script($scope0_id, "__tests__/tags/custom-tag.marko_0");
 	_scope($scope0_id, {
@@ -22,7 +22,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	custom_tag_default({ content: _content_resume("__tests__/template.marko_1*content", (count) => {
 		const $scope1_reason = _scope_reason(), $wg__count = _write_guard($scope1_reason, 0);
 		const $scope1_id = _scope_id();
-		_html(`<div>Count: ${_text_resume($scope1_id, "#text/0", count, $wg__count * 2)}</div>`);
+		_html(`<div>Count: ${_text_mark($scope1_id, "#text/0", count, $wg__count * 2)}</div>`);
 		_write_if($scope1_reason, 0) && _scope($scope1_id, {}, "__tests__/template.marko", "1:2");
 	}, $scope0_id) });
 }, 1);

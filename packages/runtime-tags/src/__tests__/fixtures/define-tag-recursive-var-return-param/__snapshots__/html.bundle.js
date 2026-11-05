@@ -17,7 +17,7 @@ var template_default = _template("a", (input) => {
 					label: s
 				});
 				_var($scope2_id, "b", $childScope, "a0");
-				_html(`<span>${_text_resume($scope2_id, "c", child)}</span>`);
+				_html(`<span>${_text_mark($scope2_id, "c", child)}</span>`);
 				_scope($scope2_id, {
 					_: _scope_with_id($scope1_id),
 					a: _existing_scope($childScope)
@@ -25,7 +25,7 @@ var template_default = _template("a", (input) => {
 				return 0;
 			}
 		}, $scope1_id, "a", 1, $wg__input_depth);
-		_html(`<button>${_text_resume($scope1_id, "c", s)}</button>${_el_resume($scope1_id, "b")}`);
+		_html(`<button>${_text_mark($scope1_id, "c", s)}</button>${_el_mark($scope1_id, "b")}`);
 		_script($scope1_id, "a2");
 		_scope($scope1_id, { h: s });
 		return $return;

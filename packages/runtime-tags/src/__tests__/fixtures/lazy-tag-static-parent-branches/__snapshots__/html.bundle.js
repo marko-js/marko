@@ -9,7 +9,7 @@ var child_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		_await($scope1_id, "a", resolveAfter(10, 1), (value) => {
 			const $scope2_id = _scope_id();
-			_html(`<button>${_text_resume($scope2_id, "b", count)}:${_escape(value)}</button>${_el_resume($scope2_id, "a")}`);
+			_html(`<button>${_text_mark($scope2_id, "b", count)}:${_escape(value)}</button>${_el_mark($scope2_id, "a")}`);
 			_script($scope2_id, "a0");
 			_subscribe($count__closures, _scope($scope2_id, {}), "a1");
 		});

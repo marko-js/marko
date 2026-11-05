@@ -9,7 +9,7 @@ var a_default = _template("b", (input) => {
 			value = v;
 		}, "b0", $scope0_id)
 	};
-	_html(`<span>a:${_text_resume($scope0_id, "a", value, 2)}</span>`);
+	_html(`<span>a:${_text_mark($scope0_id, "a", value, 2)}</span>`);
 	_scope($scope0_id, {});
 	return $return;
 });
@@ -25,7 +25,7 @@ var b_default = _template("c", (input) => {
 			value = v;
 		}, "c0", $scope0_id)
 	};
-	_html(`<span>b:${_text_resume($scope0_id, "a", value, 2)}</span>`);
+	_html(`<span>b:${_text_mark($scope0_id, "a", value, 2)}</span>`);
 	_scope($scope0_id, {});
 	return $return;
 });
@@ -37,7 +37,7 @@ var template_default = _template("a", (input) => {
 	const $inputaAB_scope = _peek_scope_id();
 	let { valueChange: $valueChange, value } = _dynamic_tag($scope0_id, "a", input.a ? a_default : b_default, {});
 	_var($scope0_id, "b", $inputaAB_scope, "a0");
-	_html(`<button>${_text_resume($scope0_id, "d", value)}</button>${_el_resume($scope0_id, "c")}`);
+	_html(`<button>${_text_mark($scope0_id, "d", value)}</button>${_el_mark($scope0_id, "c")}`);
 	_script($scope0_id, "a1");
 	_scope($scope0_id, {
 		i: value,

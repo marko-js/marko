@@ -24,7 +24,7 @@ const $content = (input) => {
 				_scope_id();
 				_html("LOADING...");
 			}, void 0, "b1");
-			_html(`</div>${_el_resume($scope1_id, "a", $wg__input_level)}`);
+			_html(`</div>${_el_mark($scope1_id, "a", $wg__input_level)}`);
 			$wi__input_level && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}

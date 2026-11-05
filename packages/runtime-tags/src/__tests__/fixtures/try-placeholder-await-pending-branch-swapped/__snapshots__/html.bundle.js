@@ -4,7 +4,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	const $tab__closures = /* @__PURE__ */ new Set();
 	let tab = 0;
-	_html(`<button>next</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button>next</button>${_el_mark($scope0_id, "a")}`);
 	_try($scope0_id, "b", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
@@ -13,7 +13,7 @@ var template_default = _template("a", (input) => {
 				const $scope2_id = _scope_id();
 				_await($scope2_id, "a", "ready", (value) => {
 					const $scope5_id = _scope_id();
-					_html(_text_resume($scope5_id, "a", value));
+					_html(_text_mark($scope5_id, "a", value));
 					_scope($scope5_id, {});
 				});
 				_subscribe($tab__closures, _scope($scope2_id, { Cd: 1 }), "a0", 0);

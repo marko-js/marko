@@ -31,7 +31,7 @@ var template_default = _template("a", (input) => {
 			}, void 0, (err) => {
 				const $scope5_reason = _scope_reason(), $wg__err_message = _write_guard($scope5_reason, 0);
 				const $scope5_id = _scope_id();
-				_html(`caught ${_text_resume($scope5_id, "a", err.message, $wg__err_message * 2)}`);
+				_html(`caught ${_text_mark($scope5_id, "a", err.message, $wg__err_message * 2)}`);
 				_write_if($scope5_reason, 0) && _scope($scope5_id, {});
 			}, 0, "a3");
 			_scope($scope2_id, {});
@@ -42,7 +42,7 @@ var template_default = _template("a", (input) => {
 		_scope_id();
 		_html("loading");
 	}, void 0, "a4");
-	_html(`<button class=toggle>${_text_resume($scope0_id, "c", show)}</button>${_el_resume($scope0_id, "b")}`);
+	_html(`<button class=toggle>${_text_mark($scope0_id, "c", show)}</button>${_el_mark($scope0_id, "b")}`);
 	_script($scope0_id, "a5");
 	_scope($scope0_id, {
 		d: show,

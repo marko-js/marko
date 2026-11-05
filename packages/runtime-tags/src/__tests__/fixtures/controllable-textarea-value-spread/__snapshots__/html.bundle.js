@@ -3,7 +3,7 @@ var my_textarea_default = _template("b", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	const $textarea_input = input;
-	_html(`<textarea${_attrs($textarea_input, "a", $scope0_id, "textarea")}>${_attrs_textarea_value($scope0_id, "a", $textarea_input)}</textarea>${_el_resume($scope0_id, "a")}`);
+	_html(`<textarea${_attrs($textarea_input, "a", $scope0_id, "textarea")}>${_attrs_textarea_value($scope0_id, "a", $textarea_input)}</textarea>${_el_mark($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
 	_scope($scope0_id, {});
 });
@@ -20,6 +20,6 @@ var template_default = _template("a", (input) => {
 			value = _new_value;
 		}, "a0", $scope0_id)
 	});
-	_html(`<span>${_text_resume($scope0_id, "b", value)}</span>`);
+	_html(`<span>${_text_mark($scope0_id, "b", value)}</span>`);
 	_scope($scope0_id, { a: _existing_scope($childScope) });
 }, 1);

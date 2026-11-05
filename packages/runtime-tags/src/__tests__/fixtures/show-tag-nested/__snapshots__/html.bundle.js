@@ -4,17 +4,17 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let outer = true;
 	let inner = false;
-	_html(`<button id=o>outer</button>${_el_resume($scope0_id, "a")}<button id=i>inner</button>${_el_resume($scope0_id, "b")}`);
+	_html(`<button id=o>outer</button>${_el_mark($scope0_id, "a")}<button id=i>inner</button>${_el_mark($scope0_id, "b")}`);
 	_show_start(outer);
 	_html("before ");
 	_show_start(inner, 0);
 	_html("<em>nested</em>");
 	_show_end($scope0_id, "d", inner, 1, 0, 0, 1);
 	_html(" after");
-	_show_end($scope0_id, "f", outer);
+	_show_end($scope0_id, "e", outer);
 	_script($scope0_id, "a0");
 	_scope($scope0_id, {
-		g: outer,
-		h: inner
+		f: outer,
+		g: inner
 	});
 }, 1);

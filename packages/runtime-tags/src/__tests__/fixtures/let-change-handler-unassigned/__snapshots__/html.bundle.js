@@ -3,7 +3,7 @@ var child_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_initial__OR__input_onValue = _write_guard($scope0_reason, 0), $wi__input_initial__OR__input_onValue = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let value = input.initial;
-	_html(`<span>${_text_resume($scope0_id, "a", value, $wg__input_initial__OR__input_onValue)}</span>`);
+	_html(`<span>${_text_mark($scope0_id, "a", value, $wg__input_initial__OR__input_onValue)}</span>`);
 	$wi__input_initial__OR__input_onValue && _scope($scope0_id, {
 		d: _write_if($scope0_reason, 2) && input.initial,
 		e: _write_if($scope0_reason, 1) && input.onValue
@@ -22,7 +22,7 @@ var template_default = _template("a", (input) => {
 		initial,
 		onValue: _resume(() => {}, "a0")
 	});
-	_html(`<button>inc</button>${_el_resume($scope0_id, "b")}`);
+	_html(`<button>inc</button>${_el_mark($scope0_id, "b")}`);
 	_script($scope0_id, "a1");
 	_scope($scope0_id, {
 		c: initial,

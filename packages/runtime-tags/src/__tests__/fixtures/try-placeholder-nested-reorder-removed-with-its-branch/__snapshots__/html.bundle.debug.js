@@ -6,7 +6,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $inner__closures = new Set();
 	let count = 0;
 	let inner = true;
-	_html(`<pre id=log></pre><button class=inc>${_text_resume($scope0_id, "#text/1", count)}</button>${_el_resume($scope0_id, "#button/0")}<button class=hide></button>${_el_resume($scope0_id, "#button/2")}`);
+	_html(`<pre id=log></pre><button class=inc>${_text_mark($scope0_id, "#text/1", count)}</button>${_el_mark($scope0_id, "#button/0")}<button class=hide></button>${_el_mark($scope0_id, "#button/2")}`);
 	_try($scope0_id, "#text/3", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
@@ -15,7 +15,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope2_id = _scope_id();
 				_await($scope2_id, "#text/0", resolveAfter(1, 1), (w) => {
 					const $scope3_id = _scope_id();
-					_html(`<span>${_text_resume($scope3_id, "#text/0", count)}</span>`);
+					_html(`<span>${_text_mark($scope3_id, "#text/0", count)}</span>`);
 					_script($scope3_id, "__tests__/template.marko_3_count#0:4");
 					_subscribe($count__closures, _scope($scope3_id, {}, "__tests__/template.marko", "10:6"), "__tests__/template.marko_3_count#0:4/subscribe");
 				});

@@ -7,7 +7,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason();
 		let open = false;
-		_html(`<button>toggle</button>${_el_resume($scope2_id, "#button/0")}`);
+		_html(`<button>toggle</button>${_el_mark($scope2_id, "#button/0")}`);
 		_if(() => {
 			if (open) {
 				const $scope3_id = _scope_id();
@@ -28,7 +28,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	Box.content({ content: _content_resume("__tests__/template.marko_1*content", () => {
 		const $scope1_reason = _scope_reason();
 		const $scope1_id = _scope_id();
-		_html(`label: ${_text_resume($scope1_id, "#text/0", input.label, $wg__input_label * 2)}`);
+		_html(`label: ${_text_mark($scope1_id, "#text/0", input.label, $wg__input_label * 2)}`);
 		_subscribe($wi__input_label && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "9:2"), "__tests__/template.marko_1_input_label#0:3/subscribe", $wg__input_label);
 		$wg__input_label || _resume_branch($scope1_id);
 	}, $scope0_id) });

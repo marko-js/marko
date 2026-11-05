@@ -2,7 +2,7 @@
 var show_value_default = _template("__tests__/tags/show-value.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<span>${_text_resume($scope0_id, "#text/1", input.value, _write_guard($scope0_reason, 0))}</span>${_el_resume($scope0_id, "#span/0")}`);
+	_html(`<span>${_text_mark($scope0_id, "#text/1", input.value, _write_guard($scope0_reason, 0))}</span>${_el_mark($scope0_id, "#span/0")}`);
 	_script($scope0_id, "__tests__/tags/show-value.marko_0_input_value#4");
 	_scope($scope0_id, { input_value: input.value }, "__tests__/tags/show-value.marko", 0, { input_value: ["input.value"] });
 });

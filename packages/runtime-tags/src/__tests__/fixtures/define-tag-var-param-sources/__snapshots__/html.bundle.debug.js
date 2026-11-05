@@ -30,7 +30,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		b: 1
 	});
 	$wi__input_b && _var($scope0_id, "#scopeOffset/3", $childScope2, "__tests__/template.marko_0_y#12/var");
-	_html(`<div>${_text_resume($scope0_id, "#text/4", x)}|${_text_resume($scope0_id, "#text/5", y, $wg__input_b * 2)}</div><button>+</button>${_el_resume($scope0_id, "#button/6")}`);
+	_html(`<div>${_text_mark($scope0_id, "#text/4", x)}|${_text_mark($scope0_id, "#text/5", y, $wg__input_b * 2)}</div><button>+</button>${_el_mark($scope0_id, "#button/6")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		n,

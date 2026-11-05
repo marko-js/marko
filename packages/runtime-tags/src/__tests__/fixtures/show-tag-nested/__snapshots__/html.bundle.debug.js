@@ -4,14 +4,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let outer = true;
 	let inner = false;
-	_html(`<button id=o>outer</button>${_el_resume($scope0_id, "#button/0")}<button id=i>inner</button>${_el_resume($scope0_id, "#button/1")}`);
+	_html(`<button id=o>outer</button>${_el_mark($scope0_id, "#button/0")}<button id=i>inner</button>${_el_mark($scope0_id, "#button/1")}`);
 	_show_start(outer);
 	_html("before ");
 	_show_start(inner, 0);
 	_html("<em>nested</em>");
 	_show_end($scope0_id, "#text/3", inner, 1, 0, 0, 1);
 	_html(" after");
-	_show_end($scope0_id, "#text/5", outer);
+	_show_end($scope0_id, "#text/4", outer);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		outer,

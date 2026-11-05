@@ -12,7 +12,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, _content_resume("__tests__/template.marko_1*content", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
-		_html(`<option${_attrs({ value: "a" }, "#option/0", $scope1_id, "option")}>A</option>${_el_resume($scope1_id, "#option/0")}<option${_attrs({ value: "b" }, "#option/1", $scope1_id, "option")}>B</option>${_el_resume($scope1_id, "#option/1")}<option${_attrs({ value: "c" }, "#option/2", $scope1_id, "option")}>C</option>${_el_resume($scope1_id, "#option/2")}`);
+		_html(`<option${_attrs({ value: "a" }, "#option/0", $scope1_id, "option")}>A</option>${_el_mark($scope1_id, "#option/0")}<option${_attrs({ value: "b" }, "#option/1", $scope1_id, "option")}>B</option>${_el_mark($scope1_id, "#option/1")}<option${_attrs({ value: "c" }, "#option/2", $scope1_id, "option")}>C</option>${_el_mark($scope1_id, "#option/2")}`);
 		_script($scope1_id, "__tests__/template.marko_1");
 		_scope($scope1_id, {}, "__tests__/template.marko", "3:4", {
 			"EventAttributes:#option/0": ["...{ value:\"a\" }", "4:14"],
@@ -20,6 +20,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			"EventAttributes:#option/2": ["...{ value:\"c\" }", "6:14"]
 		});
 	}, $scope0_id));
-	_html(`<span>${_text_resume($scope0_id, "#text/1", value)}</span>`);
+	_html(`<span>${_text_mark($scope0_id, "#text/1", value)}</span>`);
 	_scope($scope0_id, { tag }, "__tests__/template.marko", 0, { tag: "2:8" });
 }, 1);

@@ -8,12 +8,12 @@ var template_default = _template("a", (input) => {
 	const MyThing = { content: _content_resume("a0", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
-		_html(`${_text_resume($scope1_id, "a", count)} ${_escape(sideEffect++)}`);
+		_html(`${_text_mark($scope1_id, "a", count, 2)} ${_escape(sideEffect++)}`);
 		_subscribe($count__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a1");
 	}, $scope0_id) };
 	_html("<button>");
 	_attr_content("a", $scope0_id, MyThing);
-	_html(`</button>${_el_resume($scope0_id, "a")}`);
+	_html(`</button>${_el_mark($scope0_id, "a")}`);
 	_script($scope0_id, "a2");
 	_scope($scope0_id, {
 		b: count,

@@ -3,7 +3,7 @@ var child_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 0;
-	_html(`<button${_attr_class(input.id)}>${_text_resume($scope0_id, "b", input.id, _write_guard($scope0_reason, 0))}:${_text_resume($scope0_id, "c", count, 2)}</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button${_attr_class(input.id)}>${_text_mark($scope0_id, "b", input.id, _write_guard($scope0_reason, 0))}:${_text_mark($scope0_id, "c", count, 2)}</button>${_el_mark($scope0_id, "a")}`);
 	_script($scope0_id, "a0");
 	_script($scope0_id, "a1");
 	_scope($scope0_id, {
@@ -17,7 +17,7 @@ var reordered_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 0;
-	_html(`<button${_attr_class(input.id)}>${_text_resume($scope0_id, "b", input.id, _write_guard($scope0_reason, 0))}:${_text_resume($scope0_id, "c", count, 2)}</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button${_attr_class(input.id)}>${_text_mark($scope0_id, "b", input.id, _write_guard($scope0_reason, 0))}:${_text_mark($scope0_id, "c", count, 2)}</button>${_el_mark($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
 	_script($scope0_id, "b1");
 	_scope($scope0_id, {

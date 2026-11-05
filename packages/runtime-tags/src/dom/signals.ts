@@ -269,7 +269,7 @@ export function subscribeToScopeSet(
 
 export function _closure(...closureSignals: ReturnType<typeof _closure_get>[]) {
   const [firstSignal] = closureSignals;
-  const scopeInstances = firstSignal[ClosureSignalProp.ScopeInstancesAccessor];
+  const scopeInstances = firstSignal[ClosureSignalProp.ScopesAccessor];
   const signalIndex = firstSignal[ClosureSignalProp.SignalIndexAccessor];
   for (let i = closureSignals.length; i--;) {
     closureSignals[i][ClosureSignalProp.Index] = i;
@@ -306,7 +306,7 @@ export function _closure_get(
       closureSignal[ClosureSignalProp.Index];
     subscribeToScopeSet(
       ownerScope,
-      closureSignal[ClosureSignalProp.ScopeInstancesAccessor],
+      closureSignal[ClosureSignalProp.ScopesAccessor],
       scope,
     );
     if (!resumed) {
@@ -314,7 +314,7 @@ export function _closure_get(
     } else if (
       (
         ownerScope[
-          closureSignal[ClosureSignalProp.ScopeInstancesAccessor]
+          closureSignal[ClosureSignalProp.ScopesAccessor]
         ] as ClosureScopes
       )[ClosureScopesProp.Changed]
     ) {
@@ -323,13 +323,13 @@ export function _closure_get(
       queueAsyncRender(scope, fn);
     }
   }) as ((scope: Scope, resumed?: 1) => void) & {
-    [ClosureSignalProp.ScopeInstancesAccessor]: string;
+    [ClosureSignalProp.ScopesAccessor]: string;
     [ClosureSignalProp.SignalIndexAccessor]: string;
     [ClosureSignalProp.Index]: number;
   };
   // The closure accessor id is the scope instances key itself; the signal
   // index key keeps its letter to avoid colliding with the closing scopes.
-  closureSignal[ClosureSignalProp.ScopeInstancesAccessor] = MARKO_DEBUG
+  closureSignal[ClosureSignalProp.ScopesAccessor] = MARKO_DEBUG
     ? AccessorPrefix.ClosureScopes + valueAccessor
     : (valueAccessor as string);
   closureSignal[ClosureSignalProp.SignalIndexAccessor] =

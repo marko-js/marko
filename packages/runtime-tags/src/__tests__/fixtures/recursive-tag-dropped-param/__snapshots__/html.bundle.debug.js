@@ -9,7 +9,7 @@ var leaf_default = _template("__tests__/tags/leaf.marko", (input) => {
 const $content = (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_depth = _write_guard($scope0_reason, 0), $wi__input_depth = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html(`<div>${_text_resume($scope0_id, "#text/0", input.depth, $wg__input_depth)}</div>`);
+	_html(`<div>${_text_mark($scope0_id, "#text/0", input.depth, $wg__input_depth)}</div>`);
 	_if(() => {
 		if (input.depth) {
 			const $scope1_id = _scope_id();
@@ -34,7 +34,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let n = 1;
 	tree_default({ depth: 2 });
-	_html(`<button>${_text_resume($scope0_id, "#text/2", n)}</button>${_el_resume($scope0_id, "#button/1")}`);
+	_html(`<button>${_text_mark($scope0_id, "#text/2", n)}</button>${_el_mark($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, { n }, "__tests__/template.marko", 0, { n: "1:6" });
 }, 1);

@@ -6,14 +6,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $m__closures = new Set();
 	let n = 1;
 	let m = 2;
-	_html(`<button></button>${_el_resume($scope0_id, "#button/0")}`);
+	_html(`<button></button>${_el_mark($scope0_id, "#button/0")}`);
 	_try($scope0_id, "#text/1", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		_await($scope1_id, "#text/0", resolveAfter(0, 1), (v) => {
 			const $scope2_id = _scope_id();
 			let local = n;
-			_html(`<p>${_text_resume($scope2_id, "#text/0", n + m)}</p><span>${_escape(local)}</span>`);
+			_html(`<p>${_text_mark($scope2_id, "#text/0", n + m)}</p><span>${_escape(local)}</span>`);
 			_script($scope2_id, "__tests__/template.marko_2_n#0:2");
 			_subscribe($m__closures, _subscribe($n__closures, _scope($scope2_id, {}, "__tests__/template.marko", "7:4"), "__tests__/template.marko_2_n#0:2/subscribe"), "__tests__/template.marko_2_m#0:3/subscribe");
 		});

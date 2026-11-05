@@ -12,7 +12,7 @@ var template_default = _template("a", (input) => {
 		nonce: "override-spread"
 	}, "b", $scope0_id, "script")}>
   C
-<\/script>${_el_resume($scope0_id, "b")}`);
+<\/script>${_el_mark($scope0_id, "b")}`);
 	_if(() => {}, $scope0_id, "c", 1, 1, 0, 0, 1);
 	_script($scope0_id, "a0");
 	_script($scope0_id, "a1");

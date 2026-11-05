@@ -3,7 +3,7 @@ var tags_child_default = _template("c", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 0;
-	_html(`<button>${_text_resume($scope0_id, "b", count)}</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button>${_text_mark($scope0_id, "b", count)}</button>${_el_mark($scope0_id, "a")}`);
 	_script($scope0_id, "c0");
 	_scope($scope0_id, { c: count });
 });
@@ -35,7 +35,7 @@ var tags_page_default = _template("d", (input) => {
 	}, void 0, (err) => {
 		const $scope2_reason = _scope_reason(), $wg__err_message = _write_guard($scope2_reason, 0);
 		const $scope2_id = _scope_id();
-		_html(`caught ${_text_resume($scope2_id, "a", err.message, $wg__err_message * 2)}`);
+		_html(`caught ${_text_mark($scope2_id, "a", err.message, $wg__err_message * 2)}`);
 		_write_if($scope2_reason, 0) && _scope($scope2_id, {});
 	}, 0, "d0");
 });

@@ -1,0 +1,5 @@
+<let/open=false/>
+<let/results=["a", "b"]/>
+<button id="t" onClick() { open = !open }>t</button>
+<button id="i" onClick() { results = results.length > 1 ? ["c"] : ["d", "e"] }>i</button>
+<ul id="c"><show=open><for|r| of=results><li>${r}</li></for></show></ul>

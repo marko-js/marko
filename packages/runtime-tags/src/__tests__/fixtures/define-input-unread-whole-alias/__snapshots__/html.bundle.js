@@ -6,7 +6,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		const { title, ...rest } = input;
-		_html(`<h1>${_text_resume($scope1_id, "a", title)}</h1><p>${_text_resume($scope1_id, "b", input.body, 0)}</p>`);
+		_html(`<h1>${_text_mark($scope1_id, "a", title)}</h1><p>${_text_mark($scope1_id, "b", input.body, 0)}</p>`);
 		_scope($scope1_id, {});
 	}, $scope0_id) };
 	let t = "a";
@@ -16,7 +16,7 @@ var template_default = _template("a", (input) => {
 		title: t,
 		body: "static"
 	});
-	_html(`<button></button>${_el_resume($scope0_id, "b")}`);
+	_html(`<button></button>${_el_mark($scope0_id, "b")}`);
 	_script($scope0_id, "a1");
 	_scope($scope0_id, {
 		c: t,

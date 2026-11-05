@@ -15,11 +15,11 @@ var row_default = _template("__tests__/tags/row.marko", (input) => {
 		"row",
 		item.status,
 		input.inc.pending && "pending"
-	])}><span class=badge>${_text_resume($scope0_id, "#text/1", item.label, $wg__input_inc)}</span><span${_attr_class([
+	])}><span class=badge>${_text_mark($scope0_id, "#text/1", item.label, $wg__input_inc)}</span><span${_attr_class([
 		"state",
 		upper,
 		input.inc.pending && "pending"
-	])}></span>${_el_resume($scope0_id, "#span/2", $wg__input_inc)}`);
+	])}></span>${_el_mark($scope0_id, "#span/2", $wg__input_inc)}`);
 	_if(() => {
 		if (item.status !== "resolved" && !input.inc.pending) {
 			const $scope1_id = _scope_id();
@@ -28,7 +28,7 @@ var row_default = _template("__tests__/tags/row.marko", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "#text/3", $wg__input_inc, $wg__input_inc, 0, 0, 1);
-	_html(`</div>${_el_resume($scope0_id, "#div/0", $wg__input_inc)}`);
+	_html(`</div>${_el_mark($scope0_id, "#div/0", $wg__input_inc)}`);
 	$wi__input_inc && _scope($scope0_id, {
 		input_inc_pending: input.inc?.pending,
 		sfx,
@@ -49,11 +49,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let inc = { status: "open" };
 	const flag = inc.status + (inc.pending ? "?" : "");
-	_html(`<button>resolve</button>${_el_resume($scope0_id, "#button/0")}<span${_attr_class([
+	_html(`<button>resolve</button>${_el_mark($scope0_id, "#button/0")}<span${_attr_class([
 		"flag",
 		flag,
 		inc.status
-	])}></span>${_el_resume($scope0_id, "#span/1")}`);
+	])}></span>${_el_mark($scope0_id, "#span/1")}`);
 	_set_scope_reason(10);
 	const $childScope = _peek_scope_id();
 	row_default({ inc });

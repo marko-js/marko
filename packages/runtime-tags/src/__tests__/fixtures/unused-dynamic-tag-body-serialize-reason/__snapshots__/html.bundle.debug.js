@@ -21,7 +21,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const Message = { content: _content("__tests__/template.marko_2*content", (input) => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason();
-		_html(_text_resume($scope2_id, "#text/0", input.before + input.after, 0 * 2));
+		_html(_text_mark($scope2_id, "#text/0", input.before + input.after, 0 * 2));
 	}, $scope0_id) };
 	let x = 1;
 	_set_scope_reason(162);

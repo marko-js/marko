@@ -19,10 +19,10 @@ var template_default = _template("a", (input) => {
 	_html("<ul>");
 	_for_of(items, (item, index) => {
 		const $scope1_id = _scope_id();
-		_html(`<li>${_text_resume($scope1_id, "a", index)}:${_escape(item.id)}=${_text_resume($scope1_id, "c", item.n, 2)}</li>`);
+		_html(`<li>${_text_mark($scope1_id, "a", index)}:${_escape(item.id)}=${_text_mark($scope1_id, "c", item.n, 2)}</li>`);
 		_scope($scope1_id, {});
 	}, "id", $scope0_id, "a", 1, 1, 1, "</ul>", 1);
-	_html(`<button class=rotate>Rotate</button>${_el_resume($scope0_id, "b")}<button class=bump>Bump b</button>${_el_resume($scope0_id, "c")}<button class=resettle>Same items</button>${_el_resume($scope0_id, "d")}`);
+	_html(`<button class=rotate>Rotate</button>${_el_mark($scope0_id, "b")}<button class=bump>Bump b</button>${_el_mark($scope0_id, "c")}<button class=resettle>Same items</button>${_el_mark($scope0_id, "d")}`);
 	_script($scope0_id, "a0");
 	_scope($scope0_id, { e: items });
 }, 1);

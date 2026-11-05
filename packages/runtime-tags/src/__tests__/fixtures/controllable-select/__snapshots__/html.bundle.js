@@ -8,7 +8,7 @@ var template_default = _template("a", (input) => {
 	}, "a0", $scope0_id), () => {
 		_html(`<select><option${_attr_option_value("a")}>A</option><option${_attr_option_value("b")}>B</option><option${_attr_option_value("c")}>C</option></select>`);
 	});
-	_html(`${_el_resume($scope0_id, "a")}<span>${_text_resume($scope0_id, "b", value)}</span>`);
+	_html(`${_el_mark($scope0_id, "a")}<span>${_text_mark($scope0_id, "b", value)}</span>`);
 	_script($scope0_id, "a1");
 	_scope($scope0_id, {});
 }, 1);

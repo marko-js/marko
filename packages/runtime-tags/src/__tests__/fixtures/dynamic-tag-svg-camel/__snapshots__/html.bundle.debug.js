@@ -15,6 +15,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope_reason();
 		_html("<stop offset=0%></stop>");
 	}, $scope0_id), 0, _write_guard($scope0_reason, 0));
-	_html(`</svg><div>${_text_resume($scope0_id, "#text/1", n)}</div>`);
+	_html(`</svg><div>${_text_mark($scope0_id, "#text/1", n)}</div>`);
 	_scope($scope0_id, { attrs: _write_if($scope0_reason, 0) && attrs }, "__tests__/template.marko", 0, { attrs: "2:8" });
 }, 1);

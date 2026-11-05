@@ -6,7 +6,7 @@ var my_menu_default = _template("b", (input) => {
 		const $scope1_id = _scope_id();
 		_html("<button");
 		_attrs_content(item, "a", $scope1_id, "button");
-		_html(`</button>${_el_resume($scope1_id, "a")}`);
+		_html(`</button>${_el_mark($scope1_id, "a")}`);
 		_script($scope1_id, "b0");
 		_scope($scope1_id, {});
 	}, 0, $scope0_id, "a", $wg__input_item, $wg__input_item, 0, 0, 1);
@@ -28,14 +28,14 @@ var template_default = _template("a", (input) => {
 			content: _content("a1", () => {
 				const $scope1_reason = _scope_reason(), $wg__foo = _write_guard($scope1_reason, 0);
 				const $scope1_id = _scope_id();
-				_html(`Click ${_text_resume($scope1_id, "a", foo, $wg__foo * 2)}`);
+				_html(`Click ${_text_mark($scope1_id, "a", foo, $wg__foo * 2)}`);
 				_write_if($scope1_reason, 0) && _scope($scope1_id, {});
 			}, $scope0_id)
 		});
 	});
 	const $childScope = _peek_scope_id();
 	my_menu_default({ item: $item });
-	_html(`<div>${_text_resume($scope0_id, "b", clicked)}</div>`);
+	_html(`<div>${_text_mark($scope0_id, "b", clicked)}</div>`);
 	_scope($scope0_id, {
 		c: clicked,
 		a: _existing_scope($childScope)

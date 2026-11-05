@@ -10,7 +10,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope3_id = _scope_id();
 			_html("<option");
 			_attrs_content(option, "#option/0", $scope3_id, "option");
-			_html(`</option>${_el_resume($scope3_id, "#option/0")}`);
+			_html(`</option>${_el_mark($scope3_id, "#option/0")}`);
 			_script($scope3_id, "__tests__/template.marko_3_option#2");
 			_scope($scope3_id, {}, "__tests__/template.marko", "3:6", { "EventAttributes:#option/0": ["...option", "4:18"] });
 		}, 0, $scope1_id, "#select/0", 0, 0, 0, "</select>", 1);
