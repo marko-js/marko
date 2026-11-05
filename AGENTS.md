@@ -32,7 +32,7 @@ Tests run from TS source and never catch a type error; `pnpm run build` does (a 
 
 `pnpm run compile` is the fastest way to inspect what the translator generates. It writes nothing: each compiled module, and then any module the translator generates for it, prints to stdout under a `// <resolved path>` header. (Pass `-t class` for the Marko 5 translator; `-t` also accepts a full translator module id.)
 
-`pnpm run change` prompts, so write `.changeset/<name>.md` directly, naming the package that owns the changed code: `packages/compiler` is `@marko/compiler`, `packages/runtime-tags` is `@marko/runtime-tags`, `packages/runtime-class` is `marko`. `pnpm exec changeset status` catches a name that is no workspace package (it would break the release on `main`), not the wrong one. Restricting behavior that was already broken is a `patch` fix, never a breaking change.
+Add a changeset with `pnpm run change --patch <pkg> -m "<summary>"` (`--minor` and `--major` likewise; comma-separate several packages), naming the package that owns the changed code: `packages/compiler` is `@marko/compiler`, `packages/runtime-tags` is `@marko/runtime-tags`, `packages/runtime-class` is `marko`. It rejects a name that is no workspace package (which would break the release on `main`), not the wrong one; `pnpm exec changeset status` checks the same after editing a changeset by hand. Restricting behavior that was already broken is a `patch` fix, never a breaking change.
 
 ## Repo invariants
 
