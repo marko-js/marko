@@ -2,11 +2,12 @@
 const $template = "<button class=toggle>toggle</button><button class=bump>bump</button><button class=a>a</button><button class=b>b</button><div class=state><!>:<!></div><div class=log> </div>";
 const $walks = " b b b bD%c%lD l";
 const $enabled__script = _script("__tests__/template.marko_0_enabled#7", ($scope) => {
-	_attrs_script($scope, "#button/2");
+	_on($scope["#button/2"], "click", $scope.enabled && (() => {
+		$log($scope, `${$scope.log}a(${$scope.count})`);
+	}));
 	_attrs_script($scope, "#button/3");
 });
 const $enabled = /*@__PURE__*/ _let("enabled/7", ($scope) => {
-	_attrs_partial($scope, "#button/2", { onClick: $scope.enabled && $anonymous($scope) }, { class: 1 });
 	_attrs_partial($scope, "#button/3", $scope.enabled && { onClick: $onClick($scope) }, { class: 1 });
 	_text($scope["#text/4"], $scope.enabled);
 	$enabled__script($scope);
@@ -30,9 +31,5 @@ function $setup($scope) {
 const $onClick = ($scope) => function() {
 	$log($scope, `${$scope.log}b(${$scope.count})`);
 };
-const $anonymous = ($scope) => () => {
-	$log($scope, `${$scope.log}a(${$scope.count})`);
-};
 _resumed["__tests__/template.marko_0/onClick"] = $onClick;
-_resumed["__tests__/template.marko_0/anonymous"] = $anonymous;
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

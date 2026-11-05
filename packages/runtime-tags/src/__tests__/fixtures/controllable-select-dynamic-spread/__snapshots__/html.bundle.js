@@ -9,12 +9,19 @@ var template_default = _template("a", (input) => {
 		valueChange: _resume(function(v) {
 			value = v;
 		}, "a0", $scope0_id)
-	}, _content_resume("a1", () => {
-		const $scope1_id = _scope_id();
+	}, _content_resume("a2", () => {
+		_scope_id();
 		_scope_reason();
-		_html(`<option${_attrs({ value: "a" }, "a", $scope1_id, "option")}>A</option>${_el_mark($scope1_id, "a")}<option${_attrs({ value: "b" }, "b", $scope1_id, "option")}>B</option>${_el_mark($scope1_id, "b")}<option${_attrs({ value: "c" }, "c", $scope1_id, "option")}>C</option>${_el_mark($scope1_id, "c")}`);
-		_script($scope1_id, "a2");
-		_scope($scope1_id, {});
+		forOf([
+			{ value: "a" },
+			{ value: "b" },
+			{ value: "c" }
+		], (option) => {
+			const $scope2_id = _scope_id();
+			_html(`<option${_attrs(option, "a", $scope2_id, "option")}>${_escape(option.value.toUpperCase())}</option>${_el_mark($scope2_id, "a")}`);
+			_script($scope2_id, "a1");
+			_scope($scope2_id, {});
+		});
 	}, $scope0_id));
 	_html(`<span>${_text_mark($scope0_id, "b", value)}</span>`);
 	_scope($scope0_id, { d: tag });

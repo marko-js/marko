@@ -178,14 +178,64 @@ function normalizeTag(tag: t.NodePath<t.MarkoTag>) {
         attr.name += ":" + attr.modifier;
       }
 
-      if (invalidNameReg.test(attr.name)) {
-        if (isUnresolvedKnownWrongTag(tag)) throw tagNotFoundError(tag);
-        throw buildAttrNameError(tag, attr, "Invalid attribute name.");
-      }
-
+      assertAttrName(tag, attr, invalidNameReg);
       attr.modifier = null;
+    } else if (nativeTagDef) {
+      const spreadAttrs = getObjectSpreadAttrs(tag, attr, invalidNameReg);
+      if (spreadAttrs) {
+        attributes.splice(i, 1, ...spreadAttrs);
+        i += spreadAttrs.length - 1;
+      }
     }
   }
+}
+
+function assertAttrName(
+  tag: t.NodePath<t.MarkoTag>,
+  attr: t.MarkoAttribute,
+  invalidNameReg: RegExp,
+) {
+  if (invalidNameReg.test(attr.name)) {
+    if (isUnresolvedKnownWrongTag(tag)) throw tagNotFoundError(tag);
+    throw buildAttrNameError(tag, attr, "Invalid attribute name.");
+  }
+}
+
+// An object literal names each attribute it spreads, so each property is written
+// as that attribute in place, where a later attribute still overrides it.
+function getObjectSpreadAttrs(
+  tag: t.NodePath<t.MarkoTag>,
+  spread: t.MarkoSpreadAttribute,
+  invalidNameReg: RegExp,
+) {
+  const { value } = spread;
+  if (value.type !== "ObjectExpression") return;
+  const attrs: t.MarkoAttribute[] = [];
+  for (const prop of value.properties) {
+    const name = prop.type !== "SpreadElement" && getStaticKeyName(prop);
+    if (!name || name === "__proto__") return;
+    let attrValue: t.Expression;
+    if (prop.type === "ObjectProperty") {
+      attrValue = prop.value as t.Expression;
+    } else if (prop.kind === "method") {
+      attrValue = withPreviousLocation(
+        t.functionExpression(
+          undefined,
+          prop.params,
+          prop.body,
+          prop.generator,
+          prop.async,
+        ),
+        prop,
+      );
+    } else {
+      return;
+    }
+    const attr = withPreviousLocation(t.markoAttribute(name, attrValue), prop);
+    assertAttrName(tag, attr, invalidNameReg);
+    attrs.push(attr);
+  }
+  return attrs;
 }
 
 function getStaticNativeTagDef(tag: t.NodePath<t.MarkoTag>) {
@@ -446,7 +496,7 @@ function ensureDestructuredChangeHandler(parent: t.NodePath<t.ObjectProperty>) {
   return changeKey;
 }
 
-function getStaticKeyName(prop: t.ObjectProperty) {
+function getStaticKeyName(prop: t.ObjectMember) {
   return prop.computed && !t.isStringLiteral(prop.key)
     ? undefined
     : getLiteralName(prop.key);

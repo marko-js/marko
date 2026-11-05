@@ -1,8 +1,8 @@
 <let/value = "b"/>
 <const/tag = "select"/>
 <${tag ? "select" : {}} ...{ value, valueChange(v) { value=v } }>
-  <option ...{ value:"a" }>A</option>
-  <option ...{ value:"b" }>B</option>
-  <option ...{ value:"c" }>C</option>
+  <for|option| of=[{ value: "a" }, { value: "b" }, { value: "c" }]>
+    <option ...option>${option.value.toUpperCase()}</option>
+  </for>
 </>
 <span>${value}</span>

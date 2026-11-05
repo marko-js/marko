@@ -4,16 +4,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let count = 0;
 	let log = "";
-	_html(`<button class=inc>inc</button>${_el_mark($scope0_id, "#button/0")}<button class=act${_attrs_partial({ onClick: _resume(function() {
-		log = `${log}[${count}]`;
-	}, "__tests__/template.marko_0/onClick", $scope0_id) }, { class: 1 }, "#button/1", $scope0_id, "button")}>act</button>${_el_mark($scope0_id, "#button/1")}<div class=log>${_text_mark($scope0_id, "#text/2", log)}</div>`);
+	_html(`<button class=inc>inc</button>${_el_mark($scope0_id, "#button/0")}<button class=act>act</button>${_el_mark($scope0_id, "#button/1")}<div class=log>${_text_mark($scope0_id, "#text/2", log)}</div>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		count,
 		log
 	}, "__tests__/template.marko", 0, {
 		count: "2:6",
-		log: "3:6",
-		"EventAttributes:#button/1": ["...{ onClick() { log = `${log}[${count}]`; } }", "6:16"]
+		log: "3:6"
 	});
 }, 1);

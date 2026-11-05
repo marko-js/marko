@@ -12,12 +12,15 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, _content_resume("__tests__/template.marko_1*content", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
-		_html(`<option${_attrs({ value: "a" }, "#option/0", $scope1_id, "option")}>A</option>${_el_mark($scope1_id, "#option/0")}<option${_attrs({ value: "b" }, "#option/1", $scope1_id, "option")}>B</option>${_el_mark($scope1_id, "#option/1")}<option${_attrs({ value: "c" }, "#option/2", $scope1_id, "option")}>C</option>${_el_mark($scope1_id, "#option/2")}`);
-		_script($scope1_id, "__tests__/template.marko_1");
-		_scope($scope1_id, {}, "__tests__/template.marko", "3:4", {
-			"EventAttributes:#option/0": ["...{ value:\"a\" }", "4:14"],
-			"EventAttributes:#option/1": ["...{ value:\"b\" }", "5:14"],
-			"EventAttributes:#option/2": ["...{ value:\"c\" }", "6:14"]
+		forOf([
+			{ value: "a" },
+			{ value: "b" },
+			{ value: "c" }
+		], (option) => {
+			const $scope2_id = _scope_id();
+			_html(`<option${_attrs(option, "#option/0", $scope2_id, "option")}>${_escape(option.value.toUpperCase())}</option>${_el_mark($scope2_id, "#option/0")}`);
+			_script($scope2_id, "__tests__/template.marko_2_option#3");
+			_scope($scope2_id, {}, "__tests__/template.marko", "4:4", { "EventAttributes:#option/0": ["...option", "5:16"] });
 		});
 	}, $scope0_id));
 	_html(`<span>${_text_mark($scope0_id, "#text/1", value)}</span>`);
