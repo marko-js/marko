@@ -9,7 +9,7 @@ const $for_content2__if = /*@__PURE__*/ _if("#text/0", "<u> </u>", "D ", $if_con
 const $for_content2__show = /*@__PURE__*/ _for_closure("#text/2", ($scope) => $for_content2__if($scope, $scope._.show ? 0 : 1));
 const $for_content2__setup = $for_content2__show;
 const $for_content2__$params = ($scope, $params3) => $for_content2__$temp($scope, $params3[0]);
-const $for_content2__$temp = ($scope, $temp2) => $for_content2__list($scope, (([ ...list]) => list)($temp2));
+const $for_content2__$temp = ($scope, $temp2) => $for_content2__list($scope, (([...list]) => list)($temp2));
 const $for_content2__list = /*@__PURE__*/ _const("list", $if_content2__list);
 const $for_content__if = /*@__PURE__*/ _if("#text/0", "<i> </i>", "D ", $if_content__setup);
 const $for_content__show = /*@__PURE__*/ _for_closure("#text/1", ($scope) => $for_content__if($scope, $scope._.show ? 0 : 1));

@@ -14,7 +14,7 @@ import {
   importStar,
   type Tag,
 } from "@marko/compiler/babel-utils";
-import MagicString, { type SourceMap } from "magic-string";
+import { MagicString, type SourceMap } from "magic-string";
 
 import { addAssetImport } from "../util/asset-imports";
 import { BindingType, createBinding } from "../util/bindings";

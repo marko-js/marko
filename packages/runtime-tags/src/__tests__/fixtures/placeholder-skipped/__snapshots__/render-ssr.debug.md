@@ -9,5 +9,5 @@ abcde
 ```
 ## Change
 ```
-INSERT: ::text@0 + ::text("de")
+UPDATE: ::text "abc" => "abcde"
 ```

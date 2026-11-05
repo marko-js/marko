@@ -6,8 +6,8 @@
         "brotli": 940
       },
       "files": {
-        "components/child.marko": 138,
-        "template.marko": 118
+        "components/child.marko": 92,
+        "template.marko": 80
       }
     }
   },

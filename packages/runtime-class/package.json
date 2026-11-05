@@ -79,8 +79,8 @@
     "csstype": "^3.2.3",
     "events-light": "^1.0.5",
     "listener-tracker": "^2.0.0",
-    "magic-string": "^0.30.21",
-    "minimatch": "^10.2.5",
+    "magic-string": "^1.4.5",
+    "minimatch": "^11.0.4",
     "raptor-util": "^3.2.0",
     "resolve-from": "^5.0.0",
     "self-closing-tags": "^1.0.1",
@@ -90,7 +90,7 @@
     "marko": "workspace:*"
   },
   "engines": {
-    "node": ">=22"
+    "node": ">=22.12.0"
   },
   "logo": {
     "url": "https://raw.githubusercontent.com/marko-js/branding/master/marko-logo-small.png"

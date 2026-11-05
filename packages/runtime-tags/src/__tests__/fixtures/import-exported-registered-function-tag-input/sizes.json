@@ -6,9 +6,9 @@
         "brotli": 1297
       },
       "files": {
-        "tags/handlers.marko": 108,
-        "tags/press.marko": 251,
-        "tags/v:handlers.marko.register-shout.js": 84
+        "tags/handlers.marko": 65,
+        "tags/press.marko": 211,
+        "tags/v:handlers.marko.register-shout.js": 21
       }
     }
   },

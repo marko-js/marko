@@ -168,7 +168,7 @@ function createBuilds(
     ...(csrEntryId ? { input: { csr: csrEntryId } } : {}),
     platform: "browser",
     treeshake: optimize,
-    experimental: { nativeMagicString: true },
+    experimental: { nativeMagicString: true, attachDebugInfo: "none" },
     transform: { define: { MARKO_DEBUG: String(!optimize) } },
     moduleTypes: { ".css": "text" },
     plugins: [
@@ -250,7 +250,7 @@ export function run() { _run(); Object.values(___componentLookup).forEach((c) =>
     treeshake: optimize,
     transform: { define: { MARKO_DEBUG: String(!optimize) } },
     moduleTypes: { ".css": "text" },
-    experimental: { nativeMagicString: true },
+    experimental: { nativeMagicString: true, attachDebugInfo: "none" },
     plugins: [
       virtual.plugin,
       externalRuntimePlugin(optimize),
@@ -703,7 +703,6 @@ function stripModuleCode(code: string | null) {
   return (
     code &&
     code
-      .replace(/\/\/#(?:region|endregion)[^\n]*/g, "")
       .replace(
         /\b(?:export\s*\{[^}]*\}|import\s*(?:(?:\{[^}]*\}|[^"'\n{]*)\s*from\s*)?(?:"(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'));?/gm,
         "",

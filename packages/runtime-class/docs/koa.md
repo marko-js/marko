@@ -13,6 +13,7 @@ npm install koa marko --save
 
 ```javascript
 import Koa from "koa";
+
 import Template from "./index.marko";
 
 const app = new Koa();

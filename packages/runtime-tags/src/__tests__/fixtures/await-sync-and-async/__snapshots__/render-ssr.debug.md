@@ -9,5 +9,5 @@ Sync: nowAsync: async
 ```
 ## Change
 ```
-INSERT: ::text@0 + ::text("Async: async")
+UPDATE: ::text "Sync: now" => "Sync: nowAsync: async"
 ```

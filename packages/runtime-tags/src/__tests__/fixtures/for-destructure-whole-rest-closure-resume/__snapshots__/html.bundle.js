@@ -19,7 +19,7 @@ var template_default = _template("a", (input) => {
 			_: _scope_with_id($scope0_id)
 		});
 	}, 0, $scope0_id, "b", 1, $wg__input_items);
-	_for_of(input.lists, ([ ...list]) => {
+	_for_of(input.lists, ([...list]) => {
 		const $scope2_id = _scope_id();
 		_if(() => {
 			{

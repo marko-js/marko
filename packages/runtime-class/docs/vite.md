@@ -9,8 +9,8 @@ npm install @marko/vite vite
 # Example config
 
 ```javascript
-import { defineConfig } from "vite";
 import marko from "@marko/vite";
+import { defineConfig } from "vite";
 export default defineConfig({
   plugins: [marko()],
 });

@@ -1,5 +1,5 @@
 // size: 2339 (min) 1194 (brotli)
-//#region packages/runtime-tags/dist/dom.mjs
+// packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36);
 let rendering;
 let runId = 2;
@@ -242,4 +242,3 @@ function _text(node, value) {
   let normalizedValue = _to_text(value);
   node.data !== normalizedValue && (node.data = normalizedValue);
 }
-//#endregion

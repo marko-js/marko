@@ -23,13 +23,13 @@ const path = require("node:path");
 const { createInterface } = require("node:readline");
 const { setTimeout: sleep } = require("node:timers/promises");
 
-const { aliases, types } = require("mocha/lib/cli/run-option-metadata");
+const { aliases, types } = require("mocha/lib/cli/run-option-metadata.cjs");
 const glob = require("tiny-glob");
 
 const ROOT = path.resolve(__dirname, "..");
-// `bin/_mocha` is the runner; `bin/mocha.js` only re-execs it with the config's
-// node flags, doubling the process per worker.
-const MOCHA = require.resolve("mocha/bin/_mocha");
+// `lib/cli/cli.js` is the runner; `bin/mocha.js` only re-execs it with the
+// config's node flags, doubling the process per worker.
+const MOCHA = require.resolve("mocha/lib/cli/cli.js");
 const CONFIG = path.join(ROOT, ".mocharc.parallel.cjs");
 const NODE_ARGS = require(CONFIG)["node-option"].map((flag) => `--${flag}`);
 // Exit code a worker uses when it handed its remaining suites off.
@@ -397,13 +397,7 @@ function runProcess(bin, index, slicedFiles, mochaArgs, skipped) {
       clearInterval(idle);
       workers.delete(child);
       const passing = Number(/(\d+) passing/.exec(output)?.[1] ?? 0);
-      // `mocha-autotest` pulls in `it-fails`, which rewrites mocha's epilogue:
-      // real failures print as "N unexpectedly failing" (while "N failing as
-      // expected" is *not* a failure), so accept both spellings here.
-      const failing = Number(
-        /(\d+) (?:unexpectedly )?failing(?! as expected)/.exec(output)?.[1] ??
-          0,
-      );
+      const failing = Number(/(\d+) failing/.exec(output)?.[1] ?? 0);
       // The worker stopped after this many suites and left the rest for a
       // fresh process (see test-parallel-worker.cjs); its exit code says so.
       const recycleAt = Number(/^MARKO_TEST_RECYCLE (\d+)$/m.exec(output)?.[1]);

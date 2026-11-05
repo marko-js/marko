@@ -41,14 +41,7 @@ var v_template_marko_hydrate_5_default = () => {};
 var v_counter_marko_default = "\n  .count { color: green }\n";
 
 // tags/counter.marko
-var counter_exports = /* @__PURE__ */ __exportAll({
-	$input: () => $input,
-	$input_value: () => $input_value,
-	$setup: () => $setup,
-	$template: () => $template,
-	$walks: () => $walks,
-	default: () => counter_default
-});
+var counter_exports = /* @__PURE__ */ __exportAll({});
 const $template = "<button class=count> </button>";
 const $walks = " D l";
 const $count = /*@__PURE__*/ _let("count/5", ($scope) => _text($scope["#text/1"], $scope.count));

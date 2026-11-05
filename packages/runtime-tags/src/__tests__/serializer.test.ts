@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import { inspect } from "node:util";
+import { runInThisContext } from "node:vm";
 
 import type { ScopeFlush } from "../html/serializer";
 import {
@@ -3019,9 +3020,9 @@ describe("serializer", () => {
     // A data-only payload returns its scopes as an array literal (no call
     // arguments involved), so even huge flushes stay within engine
     // argument limits.
-    const partials = (0, eval)(stringifyScopes(serializer, flushes, boundary))(
-      () => {},
-    );
+    const partials = runInThisContext(
+      stringifyScopes(serializer, flushes, boundary),
+    )(() => {});
     assert.ok(Array.isArray(partials));
     assert.equal(partials[0], 1);
     assert.equal(partials.length, 25001);
@@ -3128,7 +3129,7 @@ function createSerializeContext(ctx: Record<PropertyKey, unknown> = {}) {
       if (!payload) return;
       // Call-form payloads end in `,0`, so only return-form payloads can
       // produce an array here.
-      const result = (0, eval)(payload)(context);
+      const result = runInThisContext(payload)(context);
       if (Array.isArray(result)) context(result);
       return result;
     },

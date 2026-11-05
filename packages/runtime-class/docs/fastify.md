@@ -24,8 +24,9 @@ The [`@marko/fastify`](https://github.com/marko-js/fastify/) adds a `reply.marko
 By using `reply.marko` you'll automatically have access to `app.locals`, and `reply.locals` from within your Marko template and custom tags. These values are added to `$global`.
 
 ```javascript
-import fastify from "fastify";
 import markoPlugin from "@marko/fastify";
+import fastify from "fastify";
+
 import Template from "./template.marko";
 
 const app = fastify();

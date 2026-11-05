@@ -6,8 +6,8 @@
         "brotli": 1278
       },
       "files": {
-        "tags/echo/index.marko": 121,
-        "template.marko": 245
+        "tags/echo/index.marko": 76,
+        "template.marko": 207
       }
     }
   },
