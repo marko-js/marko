@@ -367,11 +367,12 @@ export function getSignal(
         const sourceSignal = getSignal(section, meta.source);
         forEach(referencedBindings, (member) => {
           const memberSignal = getSignal(section, member);
+          // A member only its intersection reads is computed there from the source,
+          // unless client code reads it after resume: then it reads what the server wrote.
           const inline =
-            member.type === BindingType.derived &&
-            !member.aliasOf &&
             !member.propertyAliases.size &&
             member.reads.size === 1 &&
+            !findSlot(member)?.reason &&
             sourceSignal.values.find((v) => v.signal === memberSignal);
           if (inline) {
             memberSignal.inline = inline;

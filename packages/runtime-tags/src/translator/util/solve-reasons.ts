@@ -11,7 +11,6 @@ import {
   isDirectAlias,
   isIndexProperty,
   propertiesUtil,
-  someUpToAliasRoot,
 } from "./bindings";
 import {
   createPassMemo,
@@ -64,7 +63,7 @@ import { findSlot, ensureSlot, SlotKind } from "./slots";
 import {
   ALWAYS,
   type Sources,
-  isInParams,
+  isCoveredParam,
   isSupersetSources,
   mergeSources,
   sharesSources,
@@ -158,7 +157,9 @@ function hasReadIntermediate(
     seen.add(from);
     if (
       bindingUtil.has(partner.sources!.state, from) ||
-      bindingUtil.has(partner.sources!.param, from as ParamBinding)
+      some(partner.sources!.param, (param) =>
+        isCoveredParam(param, from as ParamBinding),
+      )
     ) {
       return false;
     }
@@ -176,7 +177,7 @@ function withoutOwnSources(closure: Binding, sources: Sources | undefined) {
   const state = bindingUtil.difference(sources.state, own.state);
   const param = bindingUtil.filter(
     sources.param,
-    (binding) => !someUpToAliasRoot(binding, isInParams, own.param),
+    (binding) => !isCoveredParam(binding, own.param),
   );
   return withSources(sources, state, param);
 }
