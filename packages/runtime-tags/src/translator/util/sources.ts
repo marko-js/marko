@@ -5,7 +5,7 @@ import {
   compareReferences,
   someUpToAliasRoot,
 } from "./bindings";
-import { Sorted, type SortedOpt } from "./optional";
+import { every, Sorted, some, type SortedOpt } from "./optional";
 
 export interface Sources {
   state: SortedOpt<Binding>;
@@ -39,7 +39,10 @@ export function sharesSources(a: Binding, b: Binding) {
     !!a.sources &&
     !!b.sources &&
     (bindingUtil.intersects(a.sources.state, b.sources.state) ||
-      bindingUtil.intersects(a.sources.param, b.sources.param))
+      some(a.sources.param, (param) =>
+        isCoveredParam(param, b.sources!.param),
+      ) ||
+      some(b.sources.param, (param) => isCoveredParam(param, a.sources!.param)))
   );
 }
 
@@ -143,11 +146,11 @@ function unionParamSources(a: Sources["param"], b: Sources["param"]) {
 function dropCovered(params: Sources["param"], other: Sources["param"]) {
   return bindingUtil.filter(
     params,
-    (binding) => !someUpToAliasRoot(binding.aliasOf, isInParams, other),
+    (binding) => !isCoveredParam(binding.aliasOf, other),
   );
 }
 
-export function isInParams(binding: Binding, params: Sources["param"]) {
+function isInParams(binding: Binding, params: Sources["param"]) {
   return bindingUtil.has(params, binding as ParamBinding);
 }
 
@@ -156,6 +159,14 @@ export function isSupersetSources(a: Binding, b: Binding) {
   if (!a.sources) return false;
   return (
     bindingUtil.isSuperset(a.sources.state, b.sources.state) &&
-    bindingUtil.isSuperset(a.sources.param, b.sources.param)
+    every(b.sources.param, (param) => isCoveredParam(param, a.sources!.param))
   );
+}
+
+// A property alias param changes only with its alias root, so the root covers it.
+export function isCoveredParam(
+  binding: Binding | undefined,
+  params: Sources["param"],
+) {
+  return someUpToAliasRoot(binding, isInParams, params);
 }
