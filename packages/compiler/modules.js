@@ -10,7 +10,12 @@ if (process.env.BUNDLE || typeof document === "object") {
   exports.resolve = null;
   exports.tryResolve = null;
 } else {
-  const resolveFrom = require("resolve-from");
+  const fs = require("fs");
+  const path = require("path");
+  const { createRequire } = require("module");
+  // One `require` per directory, so its realpath is looked up once; Node caches
+  // the resolutions themselves.
+  const requireFrom = new Map();
   let cwd = "/";
   let root = cwd;
   let pkg = null;
@@ -28,10 +33,34 @@ if (process.env.BUNDLE || typeof document === "object") {
   exports.root = root;
   exports.pkg = pkg;
   exports.require = require;
-  exports.resolve = (id, from) => {
-    return resolveFrom(from || root, id);
-  };
+  exports.resolve = (id, from) => getRequire(from || root).resolve(id);
   exports.tryResolve = (id, from) => {
-    return resolveFrom.silent(from || root, id);
+    try {
+      return getRequire(from || root).resolve(id);
+    } catch {
+      return undefined;
+    }
   };
+
+  function getRequire(dir) {
+    let req = requireFrom.get(dir);
+    if (!req) {
+      requireFrom.set(
+        dir,
+        (req = createRequire(path.join(realpath(dir), "_"))),
+      );
+    }
+    return req;
+  }
+
+  // Resolves from where a symlinked directory really lives, as Node does for a
+  // module's own requires; a directory not on disk resolves as written.
+  function realpath(dir) {
+    try {
+      return fs.realpathSync(dir);
+    } catch (err) {
+      if (err.code !== "ENOENT") throw err;
+      return path.resolve(dir);
+    }
+  }
 }

@@ -82,7 +82,6 @@
     "magic-string": "^1.4.5",
     "minimatch": "^11.0.4",
     "raptor-util": "^3.2.0",
-    "resolve-from": "^5.0.0",
     "self-closing-tags": "^1.0.1",
     "warp10": "^2.1.0"
   },

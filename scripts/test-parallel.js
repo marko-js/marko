@@ -24,7 +24,6 @@ const { createInterface } = require("node:readline");
 const { setTimeout: sleep } = require("node:timers/promises");
 
 const { aliases, types } = require("mocha/lib/cli/run-option-metadata.cjs");
-const glob = require("tiny-glob");
 
 const ROOT = path.resolve(__dirname, "..");
 // `lib/cli/cli.js` is the runner; `bin/mocha.js` only re-execs it with the
@@ -34,7 +33,7 @@ const CONFIG = path.join(ROOT, ".mocharc.parallel.cjs");
 const NODE_ARGS = require(CONFIG)["node-option"].map((flag) => `--${flag}`);
 // Exit code a worker uses when it handed its remaining suites off.
 const RECYCLE_EXIT_CODE = 75;
-const SPEC_GLOB = "packages/*/@(src|test)/**/*.test.@(js|ts)";
+const [SPEC_GLOB] = require("../.mocharc.all.cjs").spec;
 // Mocha flags whose value may be the next argument; any other bare argument is
 // a spec, as mocha itself reads it.
 const VALUE_FLAGS = new Set(
@@ -90,6 +89,18 @@ const WORKER_IDLE_SECONDS = 120;
 // makes the balance finer-grained.
 const SLOT_TOTAL = WORKERS * 16;
 
+const heldSlots = new Set();
+// Workers stop with the runner, signalled or not, or a hung one spins on as an
+// orphan; the signal is then re-raised so the caller still sees it.
+const workers = new Set();
+process.on("exit", stopAll);
+for (const signal of ["SIGHUP", "SIGINT", "SIGTERM"]) {
+  process.once(signal, () => {
+    stopAll();
+    process.kill(process.pid, signal);
+  });
+}
+
 main(process.argv.slice(2)).catch((err) => {
   console.error(err);
   process.exit(1);
@@ -97,7 +108,7 @@ main(process.argv.slice(2)).catch((err) => {
 
 async function main(args) {
   const { specs, mochaArgs } = splitArgs(args);
-  const files = await findSpecFiles(specs);
+  const files = findSpecFiles(specs);
   const slicedFiles = [];
   let slicedTotalMs = 0;
   for (const [file, costMs] of SLICED_FILES) {
@@ -165,16 +176,14 @@ function splitArgs(args) {
   return { specs, mochaArgs };
 }
 
-async function findSpecFiles(specs) {
-  const all = (
-    await glob(SPEC_GLOB, { cwd: ROOT, absolute: true, filesOnly: true })
-  ).filter((f) => !f.includes("node_modules"));
+function findSpecFiles(specs) {
+  const all = globFiles(SPEC_GLOB);
   if (!specs.length) return all;
 
   const files = new Set();
   for (const spec of specs) {
     const matched = [];
-    for (const match of await glob(spec, { cwd: ROOT, absolute: true })) {
+    for (const match of globFiles(spec)) {
       if (fs.statSync(match).isDirectory()) {
         matched.push(...all.filter((f) => f.startsWith(match + path.sep)));
       } else {
@@ -185,6 +194,12 @@ async function findSpecFiles(specs) {
     for (const file of matched) files.add(file);
   }
   return [...files];
+}
+
+function globFiles(pattern) {
+  return fs.globSync(path.resolve(ROOT, pattern), {
+    exclude: (file) => path.basename(file) === "node_modules",
+  });
 }
 
 // Longest-processing-time bin packing: sort the tasks (sliced-suite slots +
@@ -229,18 +244,6 @@ async function runBins(bins, slicedFiles, mochaArgs) {
   }
   await Promise.all(running);
   return results;
-}
-
-const heldSlots = new Set();
-// Workers stop with the runner, signalled or not, or a hung one spins on as an
-// orphan; the signal is then re-raised so the caller still sees it.
-const workers = new Set();
-process.on("exit", stopAll);
-for (const signal of ["SIGHUP", "SIGINT", "SIGTERM"]) {
-  process.once(signal, () => {
-    stopAll();
-    process.kill(process.pid, signal);
-  });
 }
 
 // SIGKILL: rolldown's bundled signal-exit listens for the catchable signals, and
