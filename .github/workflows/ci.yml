@@ -112,3 +112,12 @@ jobs:
           # Pushes the annotated tags changesets creates; the GitHub API would
           # create lightweight ones.
           push-with-git-cli: true
+      - name: Show Marko 6 as the latest marko release
+        # Marko 6 is published as both @marko/runtime-tags and marko; its release
+        # takes the marko name and the Latest badge the last release made would get.
+        if: steps.changesets.outputs.published == 'true'
+        run: |
+          version=$(node -p 'require("./packages/runtime-tags/package.json").version')
+          gh release edit "@marko/runtime-tags@$version" --title "marko@$version" --latest
+        env:
+          GH_TOKEN: ${{ github.token }}

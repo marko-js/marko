@@ -1,6 +1,6 @@
 {
   "$schema": "https://unpkg.com/@changesets/config@4.0.1/schema.json",
   "changelog": ["@changesets/changelog-github", { "repo": "marko-js/marko" }],
-  "privatePackages": { "version": true },
+  "privatePackages": true,
   "access": "public"
 }
