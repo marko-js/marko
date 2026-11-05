@@ -276,15 +276,15 @@ export function writePatchResumeStatements(
       orCallerGroupGuards(section, undefined, "_client_guard", filledMembers);
     const inPlace =
       othersClient && andGuard(getFilledGuard(section, binding), othersClient);
-    // A seed writes what plain's document would: a group-gated value only
-    // where the group is the client's.
+    // A seed writes a group-gated value only where the group is the client's, as
+    // plain's document would; client state always, since no later patch writes it.
     const entry =
       seeds || inPlace
         ? seeds
           ? andGuard(
               getStateInitialValueGuard(section, binding),
               andGuard(
-                isDynamicWriteGuard(section, seeds)
+                isDynamicWriteGuard(section, seeds) && !isStateSourced(binding)
                   ? getCallerGroupGuard(section, "_client_guard", seeds)
                   : undefined,
                 buildPatchWrite(

@@ -7,7 +7,7 @@ var outer_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	const obj2 = { obj: { f: input.fmt } };
 	_html(`<p>${_text_mark($scope0_id, "a", obj2.obj.f(input.label))}</p>`);
-	_filled_guard($scope0_reason, 0) && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "wi", obj2.obj, 1);
+	_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "wi", obj2.obj, 1);
 	_patch_render($scope0_id, "b0", $fg__input_label && "e");
 	_scope($scope0_id, {
 		e: input.label,

@@ -10,7 +10,7 @@ var outer_default = _template("__tests__/tags/outer.marko", (input) => {
 	const obj = { f };
 	const obj2 = { obj };
 	_html(`<p>${_text_mark($scope0_id, "#text/0", obj2.obj.f(input.label))}</p>`);
-	_filled_guard($scope0_reason, 0) && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "PatchWrite:obj2_obj", obj2.obj, 1);
+	_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchWrite:obj2_obj", obj2.obj, 1);
 	_patch_render($scope0_id, "__tests__/tags/outer.marko_0_input_label#4_obj2_obj#8/setup", $fg__input_label && "input_label");
 	_scope($scope0_id, {
 		input_label: input.label,
