@@ -49,6 +49,7 @@ import {
   type Read,
   type ReferencedExtra,
   getFunctionReadsByExpression,
+  getConstantBindings,
   getConstantBindingsInFunction,
   getReferencedBindings,
   getReferencedBindingsInFunction,
@@ -161,6 +162,9 @@ export function addGlobalReadReasons(section: Section) {
   for (const expr of section.globalReadExprs || []) {
     forEach(getReferencedBindings(expr), (member) => {
       addMemberReason(section, member, member.sources);
+    });
+    forEach(getConstantBindings(expr), (key) => {
+      addMemberReason(section, key, key.sources);
     });
   }
 }
