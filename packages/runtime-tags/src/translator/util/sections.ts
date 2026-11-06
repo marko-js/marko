@@ -240,7 +240,7 @@ export function ensureBodySection(
   const extra = (path.node.extra ??= {});
   let section = extra.section;
 
-  if (!section && (path.type === "Program" || path.get("body").length)) {
+  if (!section && (path.type === "Program" || path.node.body.length)) {
     const parentTag = path.parentPath?.isMarkoTag()
       ? path.parentPath
       : undefined;
@@ -255,7 +255,7 @@ export function ensureBodySection(
             : parentTag.get("name").toString()) + "_content",
         )
       : "";
-    const programExtra = (getProgram().node.extra ??= {});
+    const programExtra = getProgram().node.extra;
     const sections = (programExtra.sections ??= []);
     section = extra.section = {
       id: sections.length,
@@ -333,9 +333,9 @@ export function removeDroppedContent(tag: t.NodePath<t.MarkoTag>) {
 }
 
 export function getSection(path: t.NodePath) {
-  let section: Section;
+  let section: Section | undefined;
   let currentPath = path;
-  while ((section = currentPath.node.extra?.section as Section) === undefined) {
+  while ((section = currentPath.node.extra?.section) === undefined) {
     currentPath = currentPath.parentPath!;
   }
 
@@ -358,7 +358,7 @@ export const [getBranchRendererArgs, setBranchRendererArgs] =
 
 export function forEachSection(fn: (section: Section) => void) {
   const { sections } = getProgram().node.extra;
-  sections?.forEach(fn);
+  sections!.forEach(fn);
 }
 
 // For content code the analysis cannot see may render later (a body or value a
@@ -562,8 +562,12 @@ function mayContentFollowText(section: Section) {
       sites,
       (site) => getSiteTextBefore(site, section) ?? tagFollowsText(),
     ) ||
-    some(deepSites, (site) => getSiteTextBefore(site, undefined) ?? true)
+    some(deepSites, mayDeepSiteFollowText)
   );
+}
+
+function mayDeepSiteFollowText(site: t.MarkoTagExtra) {
+  return getSiteTextBefore(site, undefined) ?? true;
 }
 
 // What may come before a dynamic tag rendering content, `undefined` at its
@@ -606,7 +610,7 @@ function isAlwaysWritten(
 }
 
 // Whether the section's content may end with text.
-export function mayEndWithText(section: Section) {
+function mayEndWithText(section: Section) {
   return !!section.content && mayRenderText(section.content.endType);
 }
 
@@ -734,7 +738,7 @@ export function isInParentSection(binding: Binding, section: Section) {
 }
 
 export function isDirectClosure(section: Section, closure: Binding) {
-  return !!isOptionalBranch(section) && isInParentSection(closure, section);
+  return isOptionalBranch(section) && isInParentSection(closure, section);
 }
 
 export function isDynamicClosure(section: Section, closure: Binding) {

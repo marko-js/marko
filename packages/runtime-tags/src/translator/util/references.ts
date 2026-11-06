@@ -241,8 +241,6 @@ export function trackDomVarReferences(
       addOwnerReason(refSection, section, ALWAYS);
     }
   }
-
-  return binding;
 }
 
 export function trackVarReferences(
@@ -598,7 +596,7 @@ export function setReferencesScope(path: t.NodePath<any>) {
 export function trackGlobalReference(path: t.NodePath<t.Identifier>) {
   trackReference(
     path,
-    (getProgram().node.extra!.globalBinding ??= createBinding(
+    (getProgram().node.extra.globalBinding ??= createBinding(
       "$global",
       BindingType.global,
       ensureSection(getProgram()),
@@ -982,7 +980,7 @@ function mergeInto(
           );
         }
       }
-    } else if (extra?.dropped) {
+    } else if (extra.dropped) {
       /* v8 ignore next -- a dropped reference is never merged into another */
       throw new Error("Cannot merged a dropped reference.");
     }

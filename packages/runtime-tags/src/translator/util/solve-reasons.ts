@@ -391,7 +391,7 @@ function readersOfDerives(
   part: Binding | undefined,
   properties?: Opt<string> | true,
 ): Readers {
-  if (extra === getProgram().node.extra?.section!.returnValueExpr) {
+  if (extra === getProgram().node.extra.section!.returnValueExpr) {
     return ALWAYS_READ;
   }
   let readers = UNREAD;
@@ -489,7 +489,7 @@ function computeBindingReaders(
         aliased,
         properties === undefined
           ? binding.property
-          : concat(binding.property, properties as Opt<string>),
+          : concat(binding.property, properties),
       ),
     );
   }

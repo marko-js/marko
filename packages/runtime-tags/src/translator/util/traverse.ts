@@ -22,9 +22,7 @@ export function traverseReplace<T, K extends VisitKeys<T>, S>(
         traverseReplace(node, i, exit, state);
       }
     } else {
-      const keys = (t as any).VISITOR_KEYS[node.type] as VisitKeys<
-        typeof node
-      >[];
+      const keys = t.VISITOR_KEYS[node.type] as VisitKeys<typeof node>[];
       for (let i = keys.length; i--;) {
         traverseReplace(node, keys[i], exit, state);
       }
@@ -60,9 +58,7 @@ function traverseFind(
           return;
       }
 
-      for (const key of (t as any).VISITOR_KEYS[node.type] as VisitKeys<
-        typeof node
-      >[]) {
+      for (const key of t.VISITOR_KEYS[node.type] as VisitKeys<typeof node>[]) {
         const found = traverseFind((node as any)[key], check);
         if (found) return found;
       }
@@ -71,21 +67,23 @@ function traverseFind(
 }
 
 export function traverseFindAwait(node: undefined | null | t.Node | t.Node[]) {
-  return traverseFind(node, (child) => {
-    switch (child.type) {
-      case "ForOfStatement":
-        return child.await;
-      case "FunctionDeclaration":
-      case "FunctionExpression":
-      case "ArrowFunctionExpression":
-      case "ClassMethod":
-      case "ObjectMethod":
-      case "ClassPrivateMethod":
-        return skip;
-      case "AwaitExpression":
-        return true;
-    }
-  });
+  return traverseFind(node, isAwait);
+}
+
+function isAwait(child: t.Node) {
+  switch (child.type) {
+    case "ForOfStatement":
+      return child.await;
+    case "FunctionDeclaration":
+    case "FunctionExpression":
+    case "ArrowFunctionExpression":
+    case "ClassMethod":
+    case "ObjectMethod":
+    case "ClassPrivateMethod":
+      return skip;
+    case "AwaitExpression":
+      return true;
+  }
 }
 
 export function traverse(
@@ -104,9 +102,7 @@ export function traverse(
         traverse(visit, item, parent, grandParent);
       }
     } else if (visit(node, parent, grandParent) !== skip) {
-      for (const key of (t as any).VISITOR_KEYS[node.type] as VisitKeys<
-        typeof node
-      >[]) {
+      for (const key of t.VISITOR_KEYS[node.type] as VisitKeys<typeof node>[]) {
         traverse(visit, (node as any)[key], node, parent);
       }
     }

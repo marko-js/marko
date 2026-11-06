@@ -105,10 +105,7 @@ function resolvesThrough(
 }
 
 function readsKey(read: t.NodeExtra["read"], keyBinding: Binding): boolean {
-  if (!read || read.getter) return false;
-  const binding = getPropertyAlias(read.binding, read.properties);
   return (
-    !!binding &&
-    getCanonicalBinding(binding) === getCanonicalBinding(keyBinding)
+    !!read && !read.getter && resolvesTo(read, getCanonicalBinding(keyBinding))
   );
 }
