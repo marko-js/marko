@@ -11,11 +11,12 @@
               fb: "^^a4"
             }
           },
+          wc: _.a = {
+            content: _(["Aa", "a", "Ab"], "a0", 1)
+          },
           W4: {
             fa: [">span", 0, {
-              content: _.a = {
-                content: _(["Aa", "a", "Ab"], "a0", 1)
-              }
+              content: _.a
             }],
             cAa: {
               cAa: {
@@ -49,6 +50,9 @@
             s: {
               Sa5: 0
             }
+          },
+          s: {
+            wc: _.a
           }
         }
       }
@@ -73,11 +77,12 @@
               fb: "^^a4"
             }
           },
+          wc: _.a = {
+            content: _(["Aa", "a", "Ab"], "a0", 1)
+          },
           W4: {
             fa: [">i", 0, {
-              content: _.a = {
-                content: _(["Aa", "a", "Ab"], "a0", 1)
-              }
+              content: _.a
             }],
             cAa: {
               cAa: {
@@ -111,6 +116,9 @@
             s: {
               Sa5: 0
             }
+          },
+          s: {
+            wc: _.a
           }
         }
       }

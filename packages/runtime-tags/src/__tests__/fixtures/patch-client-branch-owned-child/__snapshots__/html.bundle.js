@@ -18,7 +18,7 @@ _shells({
 	d: "d;b%;<!><!><!>"
 });
 var defn_default = _template("d", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_tag = _write_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 0), $cg__input_tag = _client_guard($scope0_reason, 1), $wi__input_label = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_tag = _write_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 0), $wi__input_label = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	const Inner = { content: _content_resume("d0", () => {
@@ -30,9 +30,9 @@ var defn_default = _template("d", (input) => {
 		_subscribe($wi__input_label && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
 	}, $scope0_id) };
 	_dynamic_tag($scope0_id, "a", input.tag, { content: Inner }, 1, 0, 0, $wg__input_tag, $scope0_reason, 1);
-	$cg__input_tag && _patch_write($scope0_id, "wf", Inner, 1);
+	_unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "wf", Inner, 1);
 	$fg__input_label && _patch_subscribers($scope0_id, "d3", "d");
-	$cg__input_tag && _patch_render($scope0_id, "d4");
+	_client_guard($scope0_reason, 1) && _patch_render($scope0_id, "d4");
 	_scope($scope0_id, {
 		d: input.label,
 		f: _unfilled_if($scope0_reason, 1) && Inner,

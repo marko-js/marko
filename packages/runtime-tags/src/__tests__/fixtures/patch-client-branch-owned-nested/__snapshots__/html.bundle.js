@@ -62,7 +62,7 @@ var template_default = _template("a", (input) => {
 					}, $scope3_id) };
 					_dynamic_tag($scope3_id, "a", input.tag, { content: Inner }, 1, 0, 0, $wg__input_tag, $scope0_reason, 2);
 					_dynamic_tag($scope3_id, "b", input.tag, { content: Inner2 }, 9, 0, 0, $wg__input_tag, $scope0_reason, 2);
-					$cg__input_tag && _patch_write($scope3_id, "wd", Inner2, 1);
+					_unfilled_if($scope0_reason, 2) && _patch_write($scope3_id, "wd", Inner2, 1);
 					_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope3_id, "a4");
 					$cg__input_tag && _patch_render($scope3_id, "a5");
 					$cg__input_tag && _patch_render($scope3_id, "a6");

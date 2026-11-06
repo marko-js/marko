@@ -23,7 +23,7 @@ _shells({
 	a5: `a5${_shell_marker([[], []], ["a>", $setup])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks)};${$template}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_tag = _write_guard($scope0_reason, 2), $cg__input_tag = _client_guard($scope0_reason, 2), $wg__input_show = _write_guard($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 1), $fg__input_tag = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_tag = _write_guard($scope0_reason, 2), $wg__input_show = _write_guard($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 1), $fg__input_tag = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	const $input_tag__closures = /* @__PURE__ */ new Set();
@@ -43,9 +43,9 @@ var template_default = _template("a", (input) => {
 					_subscribe(_unfilled_if($scope0_reason, 1) && $input_label__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }));
 				}, $scope2_id) };
 				_dynamic_tag($scope2_id, "a", input.tag, { content: Inner }, 1, 0, 0, $wg__input_tag, $scope0_reason, 2);
-				$cg__input_tag && _patch_write($scope2_id, "wb", Inner, 1);
+				_unfilled_if($scope0_reason, 2) && _patch_write($scope2_id, "wb", Inner, 1);
 				_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope2_id, "a2");
-				$cg__input_tag && _patch_render($scope2_id, "a3");
+				_client_guard($scope0_reason, 2) && _patch_render($scope2_id, "a3");
 				_subscribe(_unfilled_if($scope0_reason, 2) && $input_tag__closures, _scope($scope2_id, {
 					b: _unfilled_if($scope0_reason, 2) && Inner,
 					_: _scope_with_id($scope1_id)

@@ -5,10 +5,10 @@
     "PatchMarkedWrite:r_label": "r1",
     "PatchChild:#childScope/0": {
       "PatchSetup:": {
-        "PatchDynamicTag:#text/1": _.a = "^^packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-owned-keyed-rows/template.marko_2*content",
+        "PatchDynamicTag:#text/1": _.b = "^^packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-owned-keyed-rows/template.marko_2*content",
         "PatchChild:BranchScopes:#text/1": {
           "PatchDynamicTag:#text/0": [">span", 0, {
-            content: {
+            content: _.a = {
               content: _([
                 ["#text/0", [0, 1]], "#childScope/0", "BranchScopes:#text/1"
               ], "packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-owned-keyed-rows/template.marko_3*content", 1)
@@ -24,7 +24,7 @@
               }
             }
           },
-          "PatchDynamicTag:#text/1": [">span", _.b = "packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-owned-keyed-rows/template.marko_4*content", {
+          "PatchDynamicTag:#text/1": [">span", _.c = "packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-owned-keyed-rows/template.marko_4*content", {
             onClick: _([
               ["#text/0", [0, 1]], "#childScope/0", "BranchScopes:#text/1"
             ], "packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-owned-keyed-rows/template.marko_2/onClick")
@@ -38,6 +38,7 @@
             }
           },
           "PatchSetup:": {
+            "PatchWrite:Inner": _.a,
             "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-owned-keyed-rows/template.marko_2_input_tag#0:5/subscribe": 0,
             "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-owned-keyed-rows/template.marko_2_r_label#1:3/subscribe": 0
           }
@@ -49,10 +50,10 @@
     "PatchMarkedWrite:r_label": "r2",
     "PatchChild:#childScope/0": {
       "PatchSetup:": {
-        "PatchDynamicTag:#text/1": _.a,
+        "PatchDynamicTag:#text/1": _.b,
         "PatchChild:BranchScopes:#text/1": {
           "PatchDynamicTag:#text/0": [">span", 0, {
-            content: {
+            content: _.d = {
               content: _([
                 ["#text/0", [1, 2]], "#childScope/0", "BranchScopes:#text/1"
               ], "packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-owned-keyed-rows/template.marko_3*content", 1)
@@ -68,7 +69,7 @@
               }
             }
           },
-          "PatchDynamicTag:#text/1": [">span", _.b, {
+          "PatchDynamicTag:#text/1": [">span", _.c, {
             onClick: _([
               ["#text/0", [1, 2]], "#childScope/0", "BranchScopes:#text/1"
             ], "packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-owned-keyed-rows/template.marko_2/onClick")
@@ -82,6 +83,7 @@
             }
           },
           "PatchSetup:": {
+            "PatchWrite:Inner": _.d,
             "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-owned-keyed-rows/template.marko_2_input_tag#0:5/subscribe": 0,
             "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-owned-keyed-rows/template.marko_2_r_label#1:3/subscribe": 0
           }
@@ -93,10 +95,10 @@
     "PatchMarkedWrite:r_label": "r3",
     "PatchChild:#childScope/0": {
       "PatchSetup:": {
-        "PatchDynamicTag:#text/1": _.a,
+        "PatchDynamicTag:#text/1": _.b,
         "PatchChild:BranchScopes:#text/1": {
           "PatchDynamicTag:#text/0": [">span", 0, {
-            content: {
+            content: _.e = {
               content: _([
                 ["#text/0", [2, 3]], "#childScope/0", "BranchScopes:#text/1"
               ], "packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-owned-keyed-rows/template.marko_3*content", 1)
@@ -112,7 +114,7 @@
               }
             }
           },
-          "PatchDynamicTag:#text/1": [">span", _.b, {
+          "PatchDynamicTag:#text/1": [">span", _.c, {
             onClick: _([
               ["#text/0", [2, 3]], "#childScope/0", "BranchScopes:#text/1"
             ], "packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-owned-keyed-rows/template.marko_2/onClick")
@@ -126,6 +128,7 @@
             }
           },
           "PatchSetup:": {
+            "PatchWrite:Inner": _.e,
             "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-owned-keyed-rows/template.marko_2_input_tag#0:5/subscribe": 0,
             "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-owned-keyed-rows/template.marko_2_r_label#1:3/subscribe": 0
           }
@@ -147,10 +150,10 @@
     "PatchMarkedWrite:r_label": "r3",
     "PatchChild:#childScope/0": {
       "PatchSetup:": {
-        "PatchDynamicTag:#text/1": _.a = "^^packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-owned-keyed-rows/template.marko_2*content",
+        "PatchDynamicTag:#text/1": _.b = "^^packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-owned-keyed-rows/template.marko_2*content",
         "PatchChild:BranchScopes:#text/1": {
           "PatchDynamicTag:#text/0": [">i", 0, {
-            content: {
+            content: _.a = {
               content: _([
                 ["#text/0", [0, 3]], "#childScope/0", "BranchScopes:#text/1"
               ], "packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-owned-keyed-rows/template.marko_3*content", 1)
@@ -166,7 +169,7 @@
               }
             }
           },
-          "PatchDynamicTag:#text/1": [">i", _.b = "packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-owned-keyed-rows/template.marko_4*content", {
+          "PatchDynamicTag:#text/1": [">i", _.c = "packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-owned-keyed-rows/template.marko_4*content", {
             onClick: _([
               ["#text/0", [0, 3]], "#childScope/0", "BranchScopes:#text/1"
             ], "packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-owned-keyed-rows/template.marko_2/onClick")
@@ -180,6 +183,7 @@
             }
           },
           "PatchSetup:": {
+            "PatchWrite:Inner": _.a,
             "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-owned-keyed-rows/template.marko_2_input_tag#0:5/subscribe": 0,
             "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-owned-keyed-rows/template.marko_2_r_label#1:3/subscribe": 0
           }
@@ -191,10 +195,10 @@
     "PatchMarkedWrite:r_label": "r1",
     "PatchChild:#childScope/0": {
       "PatchSetup:": {
-        "PatchDynamicTag:#text/1": _.a,
+        "PatchDynamicTag:#text/1": _.b,
         "PatchChild:BranchScopes:#text/1": {
           "PatchDynamicTag:#text/0": [">i", 0, {
-            content: {
+            content: _.d = {
               content: _([
                 ["#text/0", 1], "#childScope/0", "BranchScopes:#text/1"
               ], "packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-owned-keyed-rows/template.marko_3*content", 1)
@@ -210,7 +214,7 @@
               }
             }
           },
-          "PatchDynamicTag:#text/1": [">i", _.b, {
+          "PatchDynamicTag:#text/1": [">i", _.c, {
             onClick: _([
               ["#text/0", 1], "#childScope/0", "BranchScopes:#text/1"
             ], "packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-owned-keyed-rows/template.marko_2/onClick")
@@ -224,6 +228,7 @@
             }
           },
           "PatchSetup:": {
+            "PatchWrite:Inner": _.d,
             "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-owned-keyed-rows/template.marko_2_input_tag#0:5/subscribe": 0,
             "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-owned-keyed-rows/template.marko_2_r_label#1:3/subscribe": 0
           }
@@ -244,10 +249,10 @@
     "PatchMarkedWrite:r_label": "r2",
     "PatchChild:#childScope/0": {
       "PatchSetup:": {
-        "PatchDynamicTag:#text/1": _.a = "^^packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-owned-keyed-rows/template.marko_2*content",
+        "PatchDynamicTag:#text/1": _.b = "^^packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-owned-keyed-rows/template.marko_2*content",
         "PatchChild:BranchScopes:#text/1": {
           "PatchDynamicTag:#text/0": [">i", 0, {
-            content: {
+            content: _.a = {
               content: _([
                 ["#text/0", [0, 2]], "#childScope/0", "BranchScopes:#text/1"
               ], "packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-owned-keyed-rows/template.marko_3*content", 1)
@@ -263,7 +268,7 @@
               }
             }
           },
-          "PatchDynamicTag:#text/1": [">i", _.b = "packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-owned-keyed-rows/template.marko_4*content", {
+          "PatchDynamicTag:#text/1": [">i", _.c = "packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-owned-keyed-rows/template.marko_4*content", {
             onClick: _([
               ["#text/0", [0, 2]], "#childScope/0", "BranchScopes:#text/1"
             ], "packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-owned-keyed-rows/template.marko_2/onClick")
@@ -277,6 +282,7 @@
             }
           },
           "PatchSetup:": {
+            "PatchWrite:Inner": _.a,
             "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-owned-keyed-rows/template.marko_2_input_tag#0:5/subscribe": 0,
             "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-owned-keyed-rows/template.marko_2_r_label#1:3/subscribe": 0
           }
@@ -288,10 +294,10 @@
     "PatchMarkedWrite:r_label": "r3",
     "PatchChild:#childScope/0": {
       "PatchSetup:": {
-        "PatchDynamicTag:#text/1": _.a,
+        "PatchDynamicTag:#text/1": _.b,
         "PatchChild:BranchScopes:#text/1": {
           "PatchDynamicTag:#text/0": [">i", 0, {
-            content: {
+            content: _.d = {
               content: _([
                 ["#text/0", [1, 3]], "#childScope/0", "BranchScopes:#text/1"
               ], "packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-owned-keyed-rows/template.marko_3*content", 1)
@@ -307,7 +313,7 @@
               }
             }
           },
-          "PatchDynamicTag:#text/1": [">i", _.b, {
+          "PatchDynamicTag:#text/1": [">i", _.c, {
             onClick: _([
               ["#text/0", [1, 3]], "#childScope/0", "BranchScopes:#text/1"
             ], "packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-owned-keyed-rows/template.marko_2/onClick")
@@ -321,6 +327,7 @@
             }
           },
           "PatchSetup:": {
+            "PatchWrite:Inner": _.d,
             "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-owned-keyed-rows/template.marko_2_input_tag#0:5/subscribe": 0,
             "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-owned-keyed-rows/template.marko_2_r_label#1:3/subscribe": 0
           }
@@ -332,10 +339,10 @@
     "PatchMarkedWrite:r_label": "r1",
     "PatchChild:#childScope/0": {
       "PatchSetup:": {
-        "PatchDynamicTag:#text/1": _.a,
+        "PatchDynamicTag:#text/1": _.b,
         "PatchChild:BranchScopes:#text/1": {
           "PatchDynamicTag:#text/0": [">i", 0, {
-            content: {
+            content: _.e = {
               content: _([
                 ["#text/0", [2, 1]], "#childScope/0", "BranchScopes:#text/1"
               ], "packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-owned-keyed-rows/template.marko_3*content", 1)
@@ -351,7 +358,7 @@
               }
             }
           },
-          "PatchDynamicTag:#text/1": [">i", _.b, {
+          "PatchDynamicTag:#text/1": [">i", _.c, {
             onClick: _([
               ["#text/0", [2, 1]], "#childScope/0", "BranchScopes:#text/1"
             ], "packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-owned-keyed-rows/template.marko_2/onClick")
@@ -365,6 +372,7 @@
             }
           },
           "PatchSetup:": {
+            "PatchWrite:Inner": _.e,
             "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-owned-keyed-rows/template.marko_2_input_tag#0:5/subscribe": 0,
             "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-owned-keyed-rows/template.marko_2_r_label#1:3/subscribe": 0
           }
@@ -376,10 +384,10 @@
     "PatchMarkedWrite:r_label": "r4",
     "PatchChild:#childScope/0": {
       "PatchSetup:": {
-        "PatchDynamicTag:#text/1": _.a,
+        "PatchDynamicTag:#text/1": _.b,
         "PatchChild:BranchScopes:#text/1": {
           "PatchDynamicTag:#text/0": [">i", 0, {
-            content: {
+            content: _.f = {
               content: _([
                 ["#text/0", [3, 4]], "#childScope/0", "BranchScopes:#text/1"
               ], "packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-owned-keyed-rows/template.marko_3*content", 1)
@@ -395,7 +403,7 @@
               }
             }
           },
-          "PatchDynamicTag:#text/1": [">i", _.b, {
+          "PatchDynamicTag:#text/1": [">i", _.c, {
             onClick: _([
               ["#text/0", [3, 4]], "#childScope/0", "BranchScopes:#text/1"
             ], "packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-owned-keyed-rows/template.marko_2/onClick")
@@ -409,6 +417,7 @@
             }
           },
           "PatchSetup:": {
+            "PatchWrite:Inner": _.f,
             "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-owned-keyed-rows/template.marko_2_input_tag#0:5/subscribe": 0,
             "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-owned-keyed-rows/template.marko_2_r_label#1:3/subscribe": 0
           }
@@ -441,7 +450,7 @@
         "PatchDynamicTag:#text/1": "^^packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-owned-keyed-rows/template.marko_2*content",
         "PatchChild:BranchScopes:#text/1": {
           "PatchDynamicTag:#text/0": [">b", 0, {
-            content: {
+            content: _.a = {
               content: _([
                 ["#text/0", [0, 5]], "#childScope/0", "BranchScopes:#text/1"
               ], "packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-owned-keyed-rows/template.marko_3*content", 1)
@@ -471,6 +480,7 @@
             }
           },
           "PatchSetup:": {
+            "PatchWrite:Inner": _.a,
             "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-owned-keyed-rows/template.marko_2_input_tag#0:5/subscribe": 0,
             "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-owned-keyed-rows/template.marko_2_r_label#1:3/subscribe": 0
           }

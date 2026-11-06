@@ -23,7 +23,7 @@ _shells({
 	a4: "a4;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_tag = _write_guard($scope0_reason, 3), $cg__input_tag = _client_guard($scope0_reason, 3), $wg__input_inner = _write_guard($scope0_reason, 1), $wg__input_show = _write_guard($scope0_reason, 0), $fg__input_inner = _filled_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 2), $fg__input_tag = _filled_guard($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $wg__input_tag = _write_guard($scope0_reason, 3), $wg__input_inner = _write_guard($scope0_reason, 1), $wg__input_show = _write_guard($scope0_reason, 0), $fg__input_inner = _filled_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 2), $fg__input_tag = _filled_guard($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	const $input_tag__closures = /* @__PURE__ */ new Set();
@@ -47,9 +47,9 @@ var template_default = _template("a", (input) => {
 							_subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope4_id, { _: _scope_with_id($scope3_id) }));
 						}, $scope3_id) };
 						_dynamic_tag($scope3_id, "a", input.tag, { content: Inner }, 1, 0, 0, $wg__input_tag, $scope0_reason, 3);
-						$cg__input_tag && _patch_write($scope3_id, "wb", Inner, 1);
+						_unfilled_if($scope0_reason, 3) && _patch_write($scope3_id, "wb", Inner, 1);
 						_unfilled_if($scope0_reason, 3) && _patch_subscribe($scope3_id, "a2");
-						$cg__input_tag && _patch_render($scope3_id, "a3");
+						_client_guard($scope0_reason, 3) && _patch_render($scope3_id, "a3");
 						_subscribe(_unfilled_if($scope0_reason, 3) && $input_tag__closures, _scope($scope3_id, {
 							b: _unfilled_if($scope0_reason, 3) && Inner,
 							_: _scope_with_id($scope2_id)

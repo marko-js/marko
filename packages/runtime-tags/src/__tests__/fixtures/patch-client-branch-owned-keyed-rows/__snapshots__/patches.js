@@ -8,7 +8,7 @@
         fb: "^^a11",
         cAb: {
           fa: [">span", 0, {
-            content: {
+            content: _.a = {
               content: _([
                 ["a", [0, 1]], "a", "Ab"
               ], "a1", 1)
@@ -38,6 +38,7 @@
             }
           },
           s: {
+            wd: _.a,
             Sa7: 0,
             Sa8: 0
           }
@@ -52,7 +53,7 @@
         fb: "^^a11",
         cAb: {
           fa: [">span", 0, {
-            content: {
+            content: _.b = {
               content: _([
                 ["a", [1, 2]], "a", "Ab"
               ], "a1", 1)
@@ -82,6 +83,7 @@
             }
           },
           s: {
+            wd: _.b,
             Sa7: 0,
             Sa8: 0
           }
@@ -96,7 +98,7 @@
         fb: "^^a11",
         cAb: {
           fa: [">span", 0, {
-            content: {
+            content: _.c = {
               content: _([
                 ["a", [2, 3]], "a", "Ab"
               ], "a1", 1)
@@ -126,6 +128,7 @@
             }
           },
           s: {
+            wd: _.c,
             Sa7: 0,
             Sa8: 0
           }
@@ -150,7 +153,7 @@
         fb: "^^a11",
         cAb: {
           fa: [">i", 0, {
-            content: {
+            content: _.a = {
               content: _([
                 ["a", [0, 3]], "a", "Ab"
               ], "a1", 1)
@@ -180,6 +183,7 @@
             }
           },
           s: {
+            wd: _.a,
             Sa7: 0,
             Sa8: 0
           }
@@ -194,7 +198,7 @@
         fb: "^^a11",
         cAb: {
           fa: [">i", 0, {
-            content: {
+            content: _.b = {
               content: _([
                 ["a", 1], "a", "Ab"
               ], "a1", 1)
@@ -224,6 +228,7 @@
             }
           },
           s: {
+            wd: _.b,
             Sa7: 0,
             Sa8: 0
           }
@@ -247,7 +252,7 @@
         fb: "^^a11",
         cAb: {
           fa: [">i", 0, {
-            content: {
+            content: _.a = {
               content: _([
                 ["a", [0, 2]], "a", "Ab"
               ], "a1", 1)
@@ -277,6 +282,7 @@
             }
           },
           s: {
+            wd: _.a,
             Sa7: 0,
             Sa8: 0
           }
@@ -291,7 +297,7 @@
         fb: "^^a11",
         cAb: {
           fa: [">i", 0, {
-            content: {
+            content: _.b = {
               content: _([
                 ["a", [1, 3]], "a", "Ab"
               ], "a1", 1)
@@ -321,6 +327,7 @@
             }
           },
           s: {
+            wd: _.b,
             Sa7: 0,
             Sa8: 0
           }
@@ -335,7 +342,7 @@
         fb: "^^a11",
         cAb: {
           fa: [">i", 0, {
-            content: {
+            content: _.c = {
               content: _([
                 ["a", [2, 1]], "a", "Ab"
               ], "a1", 1)
@@ -365,6 +372,7 @@
             }
           },
           s: {
+            wd: _.c,
             Sa7: 0,
             Sa8: 0
           }
@@ -379,7 +387,7 @@
         fb: "^^a11",
         cAb: {
           fa: [">i", 0, {
-            content: {
+            content: _.d = {
               content: _([
                 ["a", [3, 4]], "a", "Ab"
               ], "a1", 1)
@@ -409,6 +417,7 @@
             }
           },
           s: {
+            wd: _.d,
             Sa7: 0,
             Sa8: 0
           }
@@ -441,7 +450,7 @@
         fb: "^^a11",
         cAb: {
           fa: [">b", 0, {
-            content: {
+            content: _.a = {
               content: _([
                 ["a", [0, 5]], "a", "Ab"
               ], "a1", 1)
@@ -471,6 +480,7 @@
             }
           },
           s: {
+            wd: _.a,
             Sa7: 0,
             Sa8: 0
           }

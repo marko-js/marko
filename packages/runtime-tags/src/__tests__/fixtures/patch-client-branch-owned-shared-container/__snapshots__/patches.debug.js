@@ -11,11 +11,12 @@
               "PatchDynamicTag:#text/1": "^^packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-owned-shared-container/template.marko_4*content"
             }
           },
+          "PatchWrite:A": _.a = {
+            content: _(["BranchScopes:#text/0", "#childScope/0", "BranchScopes:#text/1"], "packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-owned-shared-container/template.marko_3*content", 1)
+          },
           "PatchClientBranch:4": {
             "PatchDynamicTag:#text/0": [">span", 0, {
-              content: _.a = {
-                content: _(["BranchScopes:#text/0", "#childScope/0", "BranchScopes:#text/1"], "packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-owned-shared-container/template.marko_3*content", 1)
-              }
+              content: _.a
             }],
             "PatchChild:BranchScopes:#text/0": {
               "PatchChild:BranchScopes:#span/0": {
@@ -49,6 +50,9 @@
             "PatchSetup:": {
               "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-owned-shared-container/template.marko_5_input_tag#0:5/subscribe": 0
             }
+          },
+          "PatchSetup:": {
+            "PatchWrite:A": _.a
           }
         }
       }
@@ -73,11 +77,12 @@
               "PatchDynamicTag:#text/1": "^^packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-owned-shared-container/template.marko_4*content"
             }
           },
+          "PatchWrite:A": _.a = {
+            content: _(["BranchScopes:#text/0", "#childScope/0", "BranchScopes:#text/1"], "packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-owned-shared-container/template.marko_3*content", 1)
+          },
           "PatchClientBranch:4": {
             "PatchDynamicTag:#text/0": [">i", 0, {
-              content: _.a = {
-                content: _(["BranchScopes:#text/0", "#childScope/0", "BranchScopes:#text/1"], "packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-owned-shared-container/template.marko_3*content", 1)
-              }
+              content: _.a
             }],
             "PatchChild:BranchScopes:#text/0": {
               "PatchChild:BranchScopes:#i/0": {
@@ -111,6 +116,9 @@
             "PatchSetup:": {
               "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-owned-shared-container/template.marko_5_input_tag#0:5/subscribe": 0
             }
+          },
+          "PatchSetup:": {
+            "PatchWrite:A": _.a
           }
         }
       }

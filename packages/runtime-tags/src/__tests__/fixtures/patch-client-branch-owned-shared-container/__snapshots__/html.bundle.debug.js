@@ -52,6 +52,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					const $scope4_reason = _scope_reason();
 					const $scope4_id = _scope_id();
 					_dynamic_tag($scope4_id, "#text/0", input.tag, { content: A }, 1, 0, 0, $wg__input_tag, $scope0_reason, 2);
+					!$cg__input_tag && _unfilled_if() && _patch_write($scope2_id, "PatchWrite:A", A);
 					_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope4_id, "__tests__/template.marko_4_input_tag#0:5/subscribe");
 					$cg__input_tag && _patch_render($scope4_id, "__tests__/template.marko_4_input_tag#0:5_A#2:2/setup");
 					_subscribe(_unfilled_if($scope0_reason, 2) && $input_tag__closures, _scope($scope4_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "1:63"));
@@ -64,6 +65,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					const $scope5_reason = _scope_reason();
 					const $scope5_id = _scope_id();
 					_dynamic_tag($scope5_id, "#text/0", input.tag, { content: A }, 17, 0, 0, $wg__input_tag, $scope0_reason, 2);
+					!$cg__input_tag && _unfilled_if() && _patch_write($scope2_id, "PatchWrite:A", A);
 					_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope5_id, "__tests__/template.marko_5_input_tag#0:5/subscribe");
 					$cg__input_tag && _patch_render($scope5_id, "__tests__/template.marko_5_input_tag#0:5_A#2:2/setup");
 					_subscribe(_unfilled_if($scope0_reason, 2) && $input_tag__closures, _scope($scope5_id, {
@@ -73,7 +75,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					$wg__input_tag || _resume_branch($scope5_id);
 				}, $scope2_id, 5) });
 				_patch_child_end();
-				$cg__input_tag && _patch_write($scope2_id, "PatchWrite:A", A, 1);
+				_unfilled_if($scope0_reason, 2) && _patch_write($scope2_id, "PatchWrite:A", A, 1);
 				_scope($scope2_id, {
 					A: _unfilled_if($scope0_reason, 2) && A,
 					_: _scope_with_id($scope1_id),

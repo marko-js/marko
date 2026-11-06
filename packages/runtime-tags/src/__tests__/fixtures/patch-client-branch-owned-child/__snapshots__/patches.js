@@ -14,7 +14,7 @@
           },
           cb: {
             fa: [">span", 0, {
-              content: {
+              content: _.a = {
                 content: _(["Aa", "a", "Ab", "b"], "d0", 1)
               }
             }],
@@ -25,6 +25,9 @@
                   Sd2: 0
                 }
               }
+            },
+            s: {
+              wf: _.a
             },
             Sd3: "d",
             xd: "b"
@@ -59,7 +62,7 @@
           },
           cb: {
             fa: [">i", 0, {
-              content: {
+              content: _.a = {
                 content: _(["Aa", "a", "Ab", "b"], "d0", 1)
               }
             }],
@@ -70,6 +73,9 @@
                   Sd2: 0
                 }
               }
+            },
+            s: {
+              wf: _.a
             },
             Sd3: "d",
             xd: "c"

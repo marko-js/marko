@@ -65,7 +65,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					}, $scope3_id) };
 					_dynamic_tag($scope3_id, "#text/0", input.tag, { content: Inner }, 1, 0, 0, $wg__input_tag, $scope0_reason, 2);
 					_dynamic_tag($scope3_id, "#text/1", input.tag, { content: Inner2 }, 9, 0, 0, $wg__input_tag, $scope0_reason, 2);
-					$cg__input_tag && _patch_write($scope3_id, "PatchWrite:Inner2", Inner2, 1);
+					_unfilled_if($scope0_reason, 2) && _patch_write($scope3_id, "PatchWrite:Inner2", Inner2, 1);
 					_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope3_id, "__tests__/template.marko_3_input_tag#0:5/subscribe");
 					$cg__input_tag && _patch_render($scope3_id, "__tests__/template.marko_3_input_tag#0:5_Inner#2:2/setup");
 					$cg__input_tag && _patch_render($scope3_id, "__tests__/template.marko_3_input_tag#0:5_Inner2#3/setup");

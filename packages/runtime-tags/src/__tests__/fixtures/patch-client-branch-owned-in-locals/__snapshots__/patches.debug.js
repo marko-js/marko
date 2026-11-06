@@ -7,14 +7,14 @@
         "PatchDynamicTag:#text/1": "^^packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-owned-in-locals/template.marko_2*content",
         "PatchChild:BranchScopes:#text/1": {
           "PatchDynamicTag:#text/0": [">span", 0, {
-            content: {
+            content: _.b = {
               content: _(["BranchScopes:#text/0", "#childScope/0", "BranchScopes:#text/1"], "packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-owned-in-locals/template.marko_3*content", 1)
             }
           }],
           "PatchChild:BranchScopes:#text/0": {
             "PatchChild:BranchScopes:#span/0": {
               "PatchDynamicTag:#text/0": [">span", 0, {
-                content: {
+                content: _.a = {
                   content: _(["BranchScopes:#text/0", "#childScope/0", "BranchScopes:#text/1", "BranchScopes:#text/0", "BranchScopes:#span/0"], "packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-owned-in-locals/template.marko_4*content", 1)
                 }
               }],
@@ -27,11 +27,13 @@
                 }
               },
               "PatchSetup:": {
+                "PatchWrite:Inn": _.a,
                 "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-owned-in-locals/template.marko_3_input_tag#0:5/subscribe": 0
               }
             }
           },
           "PatchSetup:": {
+            "PatchWrite:Outer": _.b,
             "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-owned-in-locals/template.marko_2_input_tag#0:5/subscribe": 0
           }
         }
@@ -53,14 +55,14 @@
         "PatchDynamicTag:#text/1": "^^packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-owned-in-locals/template.marko_2*content",
         "PatchChild:BranchScopes:#text/1": {
           "PatchDynamicTag:#text/0": [">i", 0, {
-            content: {
+            content: _.b = {
               content: _(["BranchScopes:#text/0", "#childScope/0", "BranchScopes:#text/1"], "packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-owned-in-locals/template.marko_3*content", 1)
             }
           }],
           "PatchChild:BranchScopes:#text/0": {
             "PatchChild:BranchScopes:#i/0": {
               "PatchDynamicTag:#text/0": [">i", 0, {
-                content: {
+                content: _.a = {
                   content: _(["BranchScopes:#text/0", "#childScope/0", "BranchScopes:#text/1", "BranchScopes:#text/0", "BranchScopes:#i/0"], "packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-owned-in-locals/template.marko_4*content", 1)
                 }
               }],
@@ -73,11 +75,13 @@
                 }
               },
               "PatchSetup:": {
+                "PatchWrite:Inn": _.a,
                 "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-owned-in-locals/template.marko_3_input_tag#0:5/subscribe": 0
               }
             }
           },
           "PatchSetup:": {
+            "PatchWrite:Outer": _.b,
             "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-client-branch-owned-in-locals/template.marko_2_input_tag#0:5/subscribe": 0
           }
         }

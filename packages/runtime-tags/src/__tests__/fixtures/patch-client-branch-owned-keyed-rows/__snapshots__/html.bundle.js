@@ -23,7 +23,7 @@ _shells({
 	a13: `a13${_shell_marker([[], []], ["a>", $setup])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks)};${$template}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_rows = _write_if($scope0_reason, 1), $cg__input_rows = _client_guard($scope0_reason, 1), $wg__input_rows__OR__input_tag = _write_guard($scope0_reason, 0), $wg__input_tag = _write_guard($scope0_reason, 3), $cg__input_tag = _client_guard($scope0_reason, 3), $sg__input_rows = _server_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 2), $fg__input_tag = _filled_guard($scope0_reason, 3), $wi__input_label = _write_if($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wi__input_rows = _write_if($scope0_reason, 1), $cg__input_rows = _client_guard($scope0_reason, 1), $wg__input_rows__OR__input_tag = _write_guard($scope0_reason, 0), $wg__input_tag = _write_guard($scope0_reason, 3), $sg__input_rows = _server_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 2), $fg__input_tag = _filled_guard($scope0_reason, 3), $wi__input_label = _write_if($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	const $input_tag__closures = /* @__PURE__ */ new Set();
@@ -61,11 +61,11 @@ var template_default = _template("a", (input) => {
 					Ci: $wi__input_rows && 2
 				}));
 			}, $scope2_id), 0, $wg__input_rows__OR__input_tag, $scope0_reason, 0, 0, 3);
-			$cg__input_tag && _patch_write($scope2_id, "wd", Inner, 1);
+			_unfilled_if($scope0_reason, 3) && _patch_write($scope2_id, "wd", Inner, 1);
 			_unfilled_if($scope0_reason, 3) && _patch_subscribe($scope2_id, "a7");
 			_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope2_id, "a8");
 			_patch_render($scope2_id, "a9", [_filled_guard($scope0_reason, 3) && ">>f", _filled_guard($scope0_reason, 1) && ">d"], $scope0_reason, 0);
-			$cg__input_tag && _patch_render($scope2_id, "a10");
+			_client_guard($scope0_reason, 3) && _patch_render($scope2_id, "a10");
 			_subscribe(_unfilled_if($scope0_reason, 1) && $for_content__r_label__closures, _subscribe(_unfilled_if($scope0_reason, 3) && $input_tag__closures, _scope($scope2_id, {
 				d: _unfilled_if($scope0_reason, 3) && Inner,
 				_: _scope_with_id($scope1_id)

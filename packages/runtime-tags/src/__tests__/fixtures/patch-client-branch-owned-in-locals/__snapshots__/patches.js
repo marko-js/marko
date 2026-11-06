@@ -7,14 +7,14 @@
         fb: "^^a8",
         cAb: {
           fa: [">span", 0, {
-            content: {
+            content: _.b = {
               content: _(["Aa", "a", "Ab"], "a3", 1)
             }
           }],
           cAa: {
             cAa: {
               fa: [">span", 0, {
-                content: {
+                content: _.a = {
                   content: _(["Aa", "a", "Ab", "Aa", "Aa"], "a0", 1)
                 }
               }],
@@ -27,11 +27,13 @@
                 }
               },
               s: {
+                wb: _.a,
                 Sa4: 0
               }
             }
           },
           s: {
+            wb: _.b,
             Sa6: 0
           }
         }
@@ -53,14 +55,14 @@
         fb: "^^a8",
         cAb: {
           fa: [">i", 0, {
-            content: {
+            content: _.b = {
               content: _(["Aa", "a", "Ab"], "a3", 1)
             }
           }],
           cAa: {
             cAa: {
               fa: [">i", 0, {
-                content: {
+                content: _.a = {
                   content: _(["Aa", "a", "Ab", "Aa", "Aa"], "a0", 1)
                 }
               }],
@@ -73,11 +75,13 @@
                 }
               },
               s: {
+                wb: _.a,
                 Sa4: 0
               }
             }
           },
           s: {
+            wb: _.b,
             Sa6: 0
           }
         }

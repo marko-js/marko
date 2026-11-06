@@ -1,99 +1,119 @@
 // PATCH
-[`a10|2 !a>b0;/D b%l&;<section><button>clear</button><!></section>`, `a7|3;b%b%;<!><!><!><!>`, `a11 !a>b0;/D b%l&;<section><button>clear</button><!></section>`]
+[`a9 !a>b0`, `a7`, `a10 !a>b0;/D b%l&;<section><button>clear</button><!></section>`]
 {
   ba: [{
     ca: {
       s: {
-        fb: "^^a10"
-      }
-    },
-    W2: [{
-      ca: {
-        s: {
-          fb: "^^a7"
-        }
-      },
-      W3: [{
-        fa: [">span", 0, {
-          content: {
-            content: _.b = [
-              [], "a0", 1
-            ]
-          }
-        }],
-        cAa: {
-          cAa: {
-            ta: "b!"
-          }
-        },
-        fb: [">span", 0, {
-          content: {
-            content: _.a = [
-              [], "a2", 1
-            ]
-          }
-        }],
+        fb: "^^a9",
         cAb: {
-          cAa: {
-            ta: "b"
+          ca: {
+            s: {
+              fb: "^^a7",
+              cAb: {
+                fa: [">span", 0, {
+                  content: _.b = {
+                    content: _(["Aa", "a", "Ab"], "a0", 1)
+                  }
+                }],
+                cAa: {
+                  cAa: {
+                    ta: "b!",
+                    s: {
+                      Sa1: 0
+                    }
+                  }
+                },
+                fb: [">span", 0, {
+                  content: _.a = {
+                    content: _(["Aa", "a", "Ab", "a", "Ab"], "a2", 1)
+                  }
+                }],
+                cAb: {
+                  cAa: {
+                    ta: "b",
+                    s: {
+                      Sa3: 0
+                    }
+                  }
+                },
+                s: {
+                  wd: _.a,
+                  Sa4: 0
+                }
+              }
+            }
+          },
+          s: {
+            wb: "b!",
+            wc: _.b,
+            Sa8: 0
           }
         }
-      }, _.a],
-      Sa8: "b",
-      xb: "b!"
-    }, _.b]
-  }, "a11"],
-  Sa12: "e",
+      }
+    }
+  }, "a10"],
+  Sa11: "e",
+  Sa12: "f",
   xe: "b",
   xf: "span"
 }
-;Dyw
+;DzQ
 
-// PATCH holding Dyw
+// PATCH holding DzQ
 {
   ba: [{
     ca: {
       s: {
-        fb: "^^a10"
-      }
-    },
-    W2: [{
-      ca: {
-        s: {
-          fb: "^^a7"
-        }
-      },
-      W3: [{
-        fa: [">i", 0, {
-          content: {
-            content: _.b = [
-              [], "a0", 1
-            ]
-          }
-        }],
-        cAa: {
-          cAa: {
-            ta: "c!"
-          }
-        },
-        fb: [">i", 0, {
-          content: {
-            content: _.a = [
-              [], "a2", 1
-            ]
-          }
-        }],
+        fb: "^^a9",
         cAb: {
-          cAa: {
-            ta: "c"
+          ca: {
+            s: {
+              fb: "^^a7",
+              cAb: {
+                fa: [">i", 0, {
+                  content: _.b = {
+                    content: _(["Aa", "a", "Ab"], "a0", 1)
+                  }
+                }],
+                cAa: {
+                  cAa: {
+                    ta: "c!",
+                    s: {
+                      Sa1: 0
+                    }
+                  }
+                },
+                fb: [">i", 0, {
+                  content: _.a = {
+                    content: _(["Aa", "a", "Ab", "a", "Ab"], "a2", 1)
+                  }
+                }],
+                cAb: {
+                  cAa: {
+                    ta: "c",
+                    s: {
+                      Sa3: 0
+                    }
+                  }
+                },
+                s: {
+                  wd: _.a,
+                  Sa4: 0
+                }
+              }
+            }
+          },
+          s: {
+            wb: "c!",
+            wc: _.b,
+            Sa8: 0
           }
         }
-      }, _.a],
-      Sa8: "b",
-      xb: "c!"
-    }, _.b]
-  }, "a11"],
-  Sa12: "e",
+      }
+    }
+  }, "a10"],
+  Sa11: "e",
+  Sa12: "f",
   xe: "c",
   xf: "i"
 }

@@ -50,7 +50,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 						_subscribe($wi__input_label && $input_label__closures, _scope($scope4_id, { _: _scope_with_id($scope3_id) }, "__tests__/template.marko", "1:37"));
 					}, $scope3_id) };
 					_dynamic_tag($scope3_id, "#text/0", input.tag, { content: Inn }, 1, 0, 0, $wg__input_tag, $scope0_reason, 2);
-					$cg__input_tag && _patch_write($scope3_id, "PatchWrite:Inn", Inn, 1);
+					_unfilled_if($scope0_reason, 2) && _patch_write($scope3_id, "PatchWrite:Inn", Inn, 1);
 					_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope3_id, "__tests__/template.marko_3_input_tag#0:5/subscribe");
 					$cg__input_tag && _patch_render($scope3_id, "__tests__/template.marko_3_input_tag#0:5_Inn#1/setup");
 					_subscribe(_unfilled_if($scope0_reason, 2) && $input_tag__closures, _scope($scope3_id, {
@@ -61,7 +61,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					$wg__input_tag || _resume_branch($scope3_id);
 				}, $scope2_id) };
 				_dynamic_tag($scope2_id, "#text/0", input.tag, { content: Outer }, 9, 0, 0, $wg__input_tag, $scope0_reason, 2);
-				$cg__input_tag && _patch_write($scope2_id, "PatchWrite:Outer", Outer, 1);
+				_unfilled_if($scope0_reason, 2) && _patch_write($scope2_id, "PatchWrite:Outer", Outer, 1);
 				_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope2_id, "__tests__/template.marko_2_input_tag#0:5/subscribe");
 				$cg__input_tag && _patch_render($scope2_id, "__tests__/template.marko_2_input_tag#0:5_Outer#1/setup");
 				_subscribe(_unfilled_if($scope0_reason, 2) && $input_tag__closures, _scope($scope2_id, {

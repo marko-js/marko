@@ -47,7 +47,7 @@ var template_default = _template("a", (input) => {
 						_subscribe($wi__input_label && $input_label__closures, _scope($scope4_id, { _: _scope_with_id($scope3_id) }));
 					}, $scope3_id) };
 					_dynamic_tag($scope3_id, "a", input.tag, { content: Inn }, 1, 0, 0, $wg__input_tag, $scope0_reason, 2);
-					$cg__input_tag && _patch_write($scope3_id, "wb", Inn, 1);
+					_unfilled_if($scope0_reason, 2) && _patch_write($scope3_id, "wb", Inn, 1);
 					_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope3_id, "a4");
 					$cg__input_tag && _patch_render($scope3_id, "a5");
 					_subscribe(_unfilled_if($scope0_reason, 2) && $input_tag__closures, _scope($scope3_id, {
@@ -58,7 +58,7 @@ var template_default = _template("a", (input) => {
 					$wg__input_tag || _resume_branch($scope3_id);
 				}, $scope2_id) };
 				_dynamic_tag($scope2_id, "a", input.tag, { content: Outer }, 9, 0, 0, $wg__input_tag, $scope0_reason, 2);
-				$cg__input_tag && _patch_write($scope2_id, "wb", Outer, 1);
+				_unfilled_if($scope0_reason, 2) && _patch_write($scope2_id, "wb", Outer, 1);
 				_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope2_id, "a6");
 				$cg__input_tag && _patch_render($scope2_id, "a7");
 				_subscribe(_unfilled_if($scope0_reason, 2) && $input_tag__closures, _scope($scope2_id, {

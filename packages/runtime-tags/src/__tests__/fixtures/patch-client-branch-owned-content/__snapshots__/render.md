@@ -46,9 +46,9 @@ INSERT: section
 INSERT: section > button + i
 REMOVE: section > i:nth-of-type(1) + span
 INSERT: section > i:nth-of-type(1) > b
-UPDATE: section > i:nth-of-type(1) > b::text " " => "c"
 INSERT: section > i:nth-of-type(1) + i
 REMOVE: section > i:nth-of-type(2) + span
 INSERT: section > i:nth-of-type(2) > b
+UPDATE: section > i:nth-of-type(1) > b::text " " => "c"
 UPDATE: section > i:nth-of-type(2) > b::text " " => "c"
 ```

@@ -86,7 +86,11 @@ LOG "direct" "r3"
   <button>
     clear
   </button>
-  <i />
+  <i>
+    <b>
+      r3c
+    </b>
+  </i>
   <i>
     r3
   </i>
@@ -95,7 +99,11 @@ LOG "direct" "r3"
   <button>
     clear
   </button>
-  <i />
+  <i>
+    <b>
+      r1c
+    </b>
+  </i>
   <i>
     r1
   </i>
@@ -110,12 +118,18 @@ INSERT: section:nth-of-type(2) > i:nth-of-type(1) + i
 REMOVE: section:nth-of-type(2) > i:nth-of-type(2) + span
 INSERT: section:nth-of-type(2) > button + i
 REMOVE: section:nth-of-type(2) > i:nth-of-type(1) + span
+INSERT: section:nth-of-type(2) > i:nth-of-type(1) > b
 INSERT: section:nth-of-type(1) > i:nth-of-type(1) + i
 REMOVE: section:nth-of-type(1) > i:nth-of-type(2) + span
 INSERT: section:nth-of-type(1) > button + i
 REMOVE: section:nth-of-type(1) > i:nth-of-type(1) + span
+INSERT: section:nth-of-type(1) > i:nth-of-type(1) > b
 UPDATE: section:nth-of-type(2) > i:nth-of-type(2)::text " " => "r1"
+UPDATE: section:nth-of-type(2) > i:nth-of-type(1) > b::text@2 "" => "c"
+UPDATE: section:nth-of-type(2) > i:nth-of-type(1) > b::text@0 "" => "r1"
 UPDATE: section:nth-of-type(1) > i:nth-of-type(2)::text " " => "r3"
+UPDATE: section:nth-of-type(1) > i:nth-of-type(1) > b::text@2 "" => "c"
+UPDATE: section:nth-of-type(1) > i:nth-of-type(1) > b::text@0 "" => "r3"
 ```
 
 # Update
@@ -149,7 +163,11 @@ LOG "direct" "r1"
   <button>
     clear
   </button>
-  <i />
+  <i>
+    <b>
+      r3d
+    </b>
+  </i>
   <i>
     r3
   </i>
@@ -158,7 +176,11 @@ LOG "direct" "r1"
   <button>
     clear
   </button>
-  <i />
+  <i>
+    <b>
+      r1d
+    </b>
+  </i>
   <i>
     r1
   </i>
@@ -193,6 +215,8 @@ UPDATE: section:nth-of-type(4) > i:nth-of-type(1) > b::text@0 "" => "r4"
 UPDATE: section:nth-of-type(4) > i:nth-of-type(1) > b::text@2 "" => "d"
 INSERT: section:nth-of-type(4) > i:nth-of-type(1) + i
 UPDATE: section:nth-of-type(4) > i:nth-of-type(2)::text " " => "r4"
+UPDATE: section:nth-of-type(3) > i:nth-of-type(1) > b::text@2 "c" => "d"
+UPDATE: section:nth-of-type(2) > i:nth-of-type(1) > b::text@2 "c" => "d"
 ```
 
 # Update
