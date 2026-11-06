@@ -14,7 +14,7 @@ import {
 import { _escape } from "../../../html/content";
 import { flattenTextOnlyConditional } from "../../core/if";
 import { preAnalyze as preAnalyzeTextarea } from "../../core/textarea";
-import { buildAttrNameError } from "../../util/assert";
+import { buildAttrError, buildAttrNameError } from "../../util/assert";
 import buildStringExpression from "../../util/build-string-expression";
 import { generateUid, generateUidIdentifier } from "../../util/generate-uid";
 import { getMarkoRoot, isMarkoRoot } from "../../util/get-root";
@@ -267,22 +267,26 @@ function buildChangeHandlerAttr(
   let refiningFn: undefined | t.Identifier;
   if (attr.modifier != null) {
     if (!t.isValidIdentifier(attr.modifier)) {
-      throw tag.hub.buildError(
-        attr.value.loc?.end &&
-          ({
-            loc: {
-              start: {
-                line: attr.value.loc.start.line,
-                column: attr.value.loc.start.column - attr.modifier.length - 2,
+      const msg =
+        "Bound attribute refinement shorthand must be a valid JavaScript identifier.";
+      throw attr.value.loc
+        ? tag.hub.buildError(
+            {
+              loc: {
+                start: {
+                  line: attr.value.loc.start.line,
+                  column:
+                    attr.value.loc.start.column - attr.modifier.length - 2,
+                },
+                end: {
+                  line: attr.value.loc.start.line,
+                  column: attr.value.loc.start.column - 2,
+                },
               },
-              end: {
-                line: attr.value.loc.start.line,
-                column: attr.value.loc.start.column - 2,
-              },
-            },
-          } as any),
-        "Bound attribute refinement shorthand must be a valid JavaScript identifier.",
-      );
+            } as any,
+            msg,
+          )
+        : buildAttrError(tag, attr, msg);
     }
     refiningFn = withPreviousLocation(t.identifier(attr.modifier), attr);
   }

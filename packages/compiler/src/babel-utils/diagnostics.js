@@ -26,7 +26,7 @@ export function diagnosticSuggest(path, options) {
 function add(type, path, options) {
   const { file } = path.hub;
   const { diagnostics } = file.metadata.marko;
-  const { label, fix: rawFix, loc = path.node.loc } = options;
+  const { label, fix: rawFix, loc = getNearestLoc(path) } = options;
   let fix = false;
 
   if (rawFix) {
@@ -62,4 +62,14 @@ function add(type, path, options) {
   }
 
   diagnostics.push({ type, label, loc, fix });
+}
+
+// A node a migrator or transform builds has no loc, so mark what contains it,
+// short of the program: its loc is the whole file.
+function getNearestLoc(path) {
+  let cur = path;
+  while (!cur.node.loc && cur.parentPath && cur.parentPath.type !== "Program") {
+    cur = cur.parentPath;
+  }
+  return cur.node.loc;
 }

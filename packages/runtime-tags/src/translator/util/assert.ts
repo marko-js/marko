@@ -159,6 +159,15 @@ export function buildAttrsError(
   );
 }
 
+// An error at `attr`, or at the tag name when it has no location.
+export function buildAttrError(
+  tag: t.NodePath<t.MarkoTag>,
+  attr: t.MarkoTag["attributes"][number],
+  msg: string,
+) {
+  return buildRangeError(tag, attr.loc?.start, attr.loc?.end, msg);
+}
+
 // An error at an attribute's name, or at the tag name when it has no location.
 export function buildAttrNameError(
   tag: t.NodePath<t.MarkoTag>,
@@ -179,9 +188,9 @@ export function buildDuplicateAttrError(
   tag: t.NodePath<t.MarkoTag>,
   attr: t.MarkoAttribute,
 ) {
-  return buildAttrsError(
+  return buildAttrError(
     tag,
-    [attr],
+    attr,
     `The ${coreTagLink(tag)} takes a single ${isValueAttr(attr) ? valueAttrLink : "`valueChange=` attribute"}.`,
   );
 }

@@ -10,14 +10,13 @@ export function enter(path) {
         'You must provide a promise argument to the "<await>" tag, eg: "<await(promise)>".',
       );
   } else if (args.length > 1) {
-    const {
-      loc: { start },
-    } = args[1].node;
-    const {
-      loc: { end },
-    } = args[args.length - 1].node;
+    // A built argument has no loc, so the error then marks the tag.
+    const first = args[1].node;
+    const last = args[args.length - 1].node;
     throw path.hub.file.buildCodeFrameError(
-      { loc: { start, end } },
+      first.loc && last.loc
+        ? { loc: { start: first.loc.start, end: last.loc.end } }
+        : path.node,
       'You can only pass one argument to the "<await>" tag.',
     );
   }

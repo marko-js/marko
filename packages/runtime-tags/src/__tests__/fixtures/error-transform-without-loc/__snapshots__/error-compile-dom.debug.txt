@@ -1,0 +1,66 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-transform-without-loc/template.marko:1:1
+    > 1 | <debug(built)/>
+        | ^^^^^^^^^^^^^^^ Tag does not support arguments.
+      2 | <debug(1, built)/>
+      3 | <debug(built, 1)/>
+      4 | <debug|built|/>
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-transform-without-loc/template.marko:2:1
+      1 | <debug(built)/>
+    > 2 | <debug(1, built)/>
+        | ^^^^^^^^^^^^^^^^^^ Tag does not support arguments.
+      3 | <debug(built, 1)/>
+      4 | <debug|built|/>
+      5 | <try built=1>hi</try>
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-transform-without-loc/template.marko:3:1
+      1 | <debug(built)/>
+      2 | <debug(1, built)/>
+    > 3 | <debug(built, 1)/>
+        | ^^^^^^^^^^^^^^^^^^ Tag does not support arguments.
+      4 | <debug|built|/>
+      5 | <try built=1>hi</try>
+      6 | <custom-tag(built) x=2/>
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-transform-without-loc/template.marko:4:1
+      2 | <debug(1, built)/>
+      3 | <debug(built, 1)/>
+    > 4 | <debug|built|/>
+        | ^^^^^^^^^^^^^^^ Tag does not support parameters.
+      5 | <try built=1>hi</try>
+      6 | <custom-tag(built) x=2/>
+      7 | <custom-tag(built)>hi</custom-tag>
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-transform-without-loc/template.marko:5:1
+      3 | <debug(built, 1)/>
+      4 | <debug|built|/>
+    > 5 | <try built=1>hi</try>
+        | ^^^^^^^^^^^^^^^^^^^^^ Tag does not support attributes.
+      6 | <custom-tag(built) x=2/>
+      7 | <custom-tag(built)>hi</custom-tag>
+      8 | <custom-tag(1, built)/>
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-transform-without-loc/template.marko:6:1
+      4 | <debug|built|/>
+      5 | <try built=1>hi</try>
+    > 6 | <custom-tag(built) x=2/>
+        | ^^^^^^^^^^^^^^^^^^^^^^^^ Tag does not support arguments when attributes or body present.
+      7 | <custom-tag(built)>hi</custom-tag>
+      8 | <custom-tag(1, built)/>
+      9 |
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-transform-without-loc/template.marko:7:1
+      5 | <try built=1>hi</try>
+      6 | <custom-tag(built) x=2/>
+    > 7 | <custom-tag(built)>hi</custom-tag>
+        | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Tag does not support arguments when attributes or body present.
+      8 | <custom-tag(1, built)/>
+      9 |
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-transform-without-loc/template.marko:8:1
+      6 | <custom-tag(built) x=2/>
+      7 | <custom-tag(built)>hi</custom-tag>
+    > 8 | <custom-tag(1, built)/>
+        | ^^^^^^^^^^^^^^^^^^^^^^^ Tag does not support multiple arguments.
+      9 |
