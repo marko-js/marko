@@ -25,13 +25,24 @@ const template = path.join(
   "template.marko",
 );
 
-// Enough of an fs to read one template, standing in for the virtual one a
-// bundler hands over.
-const fromMemory = (src) => ({
-  ...fs,
-  readFile: (_file, _encoding, cb) => cb(null, src),
-  readFileSync: () => src,
-});
+// Serves `files` over the disk, standing in for the virtual file system a
+// bundler hands over; it takes no options object for an encoding.
+const fromMemory = (files) => {
+  const readFileSync = (file, encoding) => {
+    if (typeof encoding === "object") {
+      throw new TypeError("Expected a string encoding");
+    }
+    return Object.hasOwn(files, file)
+      ? files[file]
+      : fs.readFileSync(file, encoding);
+  };
+  return {
+    statSync: fs.statSync,
+    readdirSync: fs.readdirSync,
+    readFileSync,
+    readFile: (file, encoding, cb) => cb(null, readFileSync(file, encoding)),
+  };
+};
 
 const failing = (src, babelConfig) => {
   try {
@@ -51,7 +62,7 @@ describe("compiler/compile", () => {
 
     it("reads through a file system from the config", async () => {
       const { code } = await compileFile(template, {
-        fileSystem: fromMemory("<div>from config</div>"),
+        fileSystem: fromMemory({ [template]: "<div>from config</div>" }),
       });
       assert.match(code, /from config/);
     });
@@ -69,7 +80,7 @@ describe("compiler/compile", () => {
     it("reads through a file system from the config", () =>
       assert.match(
         compileFileSync(template, {
-          fileSystem: fromMemory("<div>from config</div>"),
+          fileSystem: fromMemory({ [template]: "<div>from config</div>" }),
         }).code,
         /from config/,
       ));
@@ -257,6 +268,52 @@ describe("compiler/compile", () => {
         }).code,
         /dep\/tag\.marko/,
       ));
+
+    describe("through a file system from the config", () => {
+      // `app` has `dep` installed, but only `files` holds a package.json naming it.
+      let app;
+      const files = {};
+      const setDependencies = (dependencies) => {
+        files[path.join(app, "package.json")] = JSON.stringify({
+          name: "app",
+          dependencies,
+        });
+      };
+      const compileTag = () =>
+        compileSync("<dep-tag/>", path.join(app, "x.marko"), {
+          translator,
+          output: "html",
+          cache: new Map(),
+          fileSystem: fromMemory(files),
+        }).code;
+
+      before(() => {
+        app = fs.mkdtempSync(path.join(os.tmpdir(), "marko-fs-"));
+        fs.mkdirSync(path.join(app, "node_modules"));
+        fs.symlinkSync(
+          path.join(project, "node_modules", "dep"),
+          path.join(app, "node_modules", "dep"),
+          "dir",
+        );
+      });
+
+      // Clears `dep`'s taglib, which earlier compiles cached, so these read it
+      // through the config's file system.
+      beforeEach(() => taglib.clearCaches());
+
+      it("finds the root package and taglibs there", () => {
+        setDependencies({ dep: "*" });
+        assert.match(compileTag(), /dep\/tag\.marko/);
+      });
+
+      it("reads the root package again once the taglib caches are cleared", () => {
+        setDependencies({});
+        assert.throws(compileTag, /Unable to find entry point/);
+        setDependencies({ dep: "*" });
+        taglib.clearCaches();
+        assert.match(compileTag(), /dep\/tag\.marko/);
+      });
+    });
   });
 
   describe("template id", () => {

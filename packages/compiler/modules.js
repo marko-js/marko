@@ -17,9 +17,6 @@ if (process.env.BUNDLE || typeof document === "object") {
   // One `require` per directory, so its realpath is looked up once; Node caches
   // the resolutions themselves.
   const requireFrom = new Map();
-  // Every directory a package lookup passes caches its answer, so a sibling
-  // reuses its parent's instead of reading the same files again.
-  const rootPackages = new Map();
   let cwd = "/";
   let root = cwd;
   let pkg = null;
@@ -27,7 +24,7 @@ if (process.env.BUNDLE || typeof document === "object") {
   if (typeof process === "object" && typeof process.cwd === "function") {
     try {
       cwd = process.cwd();
-      pkg = getRootPackage(cwd);
+      pkg = getRootPackage(cwd, fs);
       if (pkg) root = pkg.__dirname;
     } catch {
       // ignore
@@ -59,23 +56,22 @@ if (process.env.BUNDLE || typeof document === "object") {
   }
 
   // The nearest package.json at or above `dir` that names a package or its
-  // dependencies, with its directory as `__dirname`.
-  function getRootPackage(dir) {
-    let found = rootPackages.get(dir);
-    if (found === undefined) {
+  // dependencies, read through `fileSystem`, with its directory as `__dirname`.
+  function getRootPackage(dir, fileSystem) {
+    while (true) {
+      const found = readPackage(dir, fileSystem);
+      if (found) return found;
       const parent = path.dirname(dir);
-      found =
-        readPackage(dir) || (parent === dir ? null : getRootPackage(parent));
-      rootPackages.set(dir, found);
+      if (parent === dir) return null;
+      dir = parent;
     }
-    return found;
   }
 
   // Skips a package.json that only marks a module type, as `{"type":"module"}` does.
-  function readPackage(dir) {
+  function readPackage(dir, fileSystem) {
     let source;
     try {
-      source = fs.readFileSync(path.join(dir, "package.json"), "utf8");
+      source = fileSystem.readFileSync(path.join(dir, "package.json"), "utf8");
     } catch {
       return null;
     }
