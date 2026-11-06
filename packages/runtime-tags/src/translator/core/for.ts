@@ -54,6 +54,7 @@ import {
 import {
   addValue,
   buildClosureHop,
+  getLoopRenderOrder,
   getSignal,
   setClosureSignalBuilder,
   trimEmptyArgs,
@@ -262,6 +263,7 @@ export default {
             getScopeAccessorLiteral(nodeBinding, true),
             getScopeAccessorLiteral(closure, true),
             render,
+            getLoopRenderOrder(bodySection),
           );
         });
 

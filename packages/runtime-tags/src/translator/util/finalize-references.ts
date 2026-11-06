@@ -472,9 +472,12 @@ function getWalkedBinding(op: StructureOp) {
     : undefined;
 }
 
-// The last tag in this section whose child returns a value the intersection
-// reads or derives from, whose scope offset the intersection renders after.
-function getLastOwnSourceReturn(intersection: Intersection, section: Section) {
+// The last tag in this section whose child returns a value the bindings read or
+// derive from, whose scope offset a render of them waits for.
+export function getLastOwnSourceReturn(
+  bindings: ReferencedBindings,
+  section: Section,
+) {
   let last: Binding | undefined;
   const seen = new Set<Binding>();
   // Another section's tag has no scope offset on this scope.
@@ -492,7 +495,7 @@ function getLastOwnSourceReturn(intersection: Intersection, section: Section) {
       forEach(binding.sources?.param, track);
     }
   };
-  forEach(intersection, track);
+  forEach(bindings, track);
   return last;
 }
 

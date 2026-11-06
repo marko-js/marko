@@ -22,6 +22,7 @@ import {
   type ReferencedBindings,
   someAlias,
 } from "./bindings";
+import { getLastOwnSourceReturn } from "./finalize-references";
 import { forEachIdentifier } from "./for-each-identifier";
 import { isForSelectorValue } from "./for-selector";
 import { generateUid, generateUidIdentifier } from "./generate-uid";
@@ -159,7 +160,22 @@ export function buildClosureHop(section: Section, render: t.Expression) {
         t.numericLiteral(branch.index),
         render,
       )
-    : callRuntime("_for_closure", accessor, render);
+    : callRuntime(
+        "_for_closure",
+        accessor,
+        render,
+        getLoopRenderOrder(section),
+      );
+}
+
+// A loop settles its rows in its value's render, which waits for the scope offset
+// of the last child whose returned value that value reads.
+export function getLoopRenderOrder(bodySection: Section) {
+  const returnedBy = getLastOwnSourceReturn(
+    getReferencedBindings(bodySection.branch!.tag),
+    bodySection.parent!,
+  );
+  return returnedBy && getScopeOffsetAccessorLiteral(returnedBy, true);
 }
 
 // A branch section whose scope ids ride a resume marker carrying the parent scope

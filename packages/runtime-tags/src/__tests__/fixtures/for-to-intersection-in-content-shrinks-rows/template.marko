@@ -1,0 +1,8 @@
+<wrapper>
+  <let/l=[{ name: "a" }, { name: "b" }, { name: "c" }]/>
+  <let/short=false/>
+  <for|i| from=0 to=(short ? 0 : l.length - 1)>
+    <span>${l[i].name}</span>
+  </for>
+  <button onClick() { short = true; l = [{ name: "z" }] }>go</button>
+</wrapper>

@@ -1,4 +1,4 @@
-// size: 5738 (min) 2546 (brotli)
+// size: 5750 (min) 2556 (brotli)
 // packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36);
 let branchesEnabled;
@@ -315,19 +315,15 @@ function _const(valueAccessor, fn) {
     }
   );
 }
-function _for_closure(ownerLoopNodeAccessor, fn) {
-  ownerLoopNodeAccessor = decodeAccessor(ownerLoopNodeAccessor);
+function _for_closure(ownerLoopNodeAccessor, fn, scopeIdAccessor) {
+  ((ownerLoopNodeAccessor = decodeAccessor(ownerLoopNodeAccessor)),
+    (scopeIdAccessor = scopeIdAccessor ? decodeAccessor(scopeIdAccessor) : "L"));
   let scopeAccessor = "A" + ownerLoopNodeAccessor,
-    ownerSignal = (ownerScope) => {
-      let scopes = toArray(ownerScope[scopeAccessor]);
-      queueRender(
-        ownerScope,
-        (_) => {
-          for (let scope of scopes) scope.H > 0 && scope.H < runId && fn(scope);
-        },
-        -1,
-      );
-    };
+    render = (ownerScope) => {
+      for (let scope of toArray(ownerScope[scopeAccessor])) scope.H < runId && fn(scope);
+    },
+    ownerSignal = (ownerScope) =>
+      queueRender(ownerScope, render, -1, 0, ownerScope[scopeIdAccessor] + 0.5);
   return ((ownerSignal._ = (scope) => queueRender(scope, fn, -1)), ownerSignal);
 }
 function _if_closure(ownerConditionalNodeAccessor, branch, fn) {
