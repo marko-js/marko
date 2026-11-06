@@ -13,7 +13,11 @@ import {
   coreTagLink,
 } from "../util/assert";
 import { type Binding, BindingType, createBinding } from "../util/bindings";
-import { buildBranchEndArgs, isSingleNodeContent } from "../util/branch-tag";
+import {
+  addBranchExpr,
+  buildBranchEndArgs,
+  isSingleNodeContent,
+} from "../util/branch-tag";
 import evaluate from "../util/evaluate";
 import { declareConstBefore } from "../util/generate-uid";
 import { getParentTag } from "../util/get-parent-tag";
@@ -34,7 +38,7 @@ import {
 } from "../util/sections";
 import { addSetupWork } from "../util/setup-work";
 import { addValue, getSignal } from "../util/signals";
-import { ensureSlot, SlotKind } from "../util/slots";
+import { ensureSlot } from "../util/slots";
 import * as structure from "../util/structure";
 import { getTagFacts } from "../util/tag-facts";
 import { translateByTarget } from "../util/visitors";
@@ -121,7 +125,7 @@ export default {
       // The node binding settles here, after the body.
       if (tagExtra[kStaticDisplay] === undefined) {
         addReasonExprs(ensureSlot(nodeBinding), tagExtra);
-        addReasonExprs(ensureSlot(nodeBinding, SlotKind.BranchExpr), tagExtra);
+        addBranchExpr(nodeBinding, tagExtra);
       }
     },
   },

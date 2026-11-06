@@ -16,6 +16,7 @@ import {
 } from "../util/assert";
 import { bodyToUncoercedText } from "../util/body-to-text";
 import {
+  addBranchExpr,
   getBranchResumeArgs,
   initBranchSection,
   isSingleNodeContent,
@@ -23,7 +24,7 @@ import {
 } from "../util/branch-tag";
 import { getTagName } from "../util/get-tag-name";
 import { isConditionTag, isCoreTagName } from "../util/is-core-tag";
-import { addReasonExprs, type Reasons } from "../util/reasons";
+import { type Reasons } from "../util/reasons";
 import { mergeReferences } from "../util/references";
 import { replaceWithStatements } from "../util/replace-with-statements";
 import { callRuntime } from "../util/runtime";
@@ -45,7 +46,6 @@ import {
   trimEmptyArgs,
   writeHTMLResumeStatements,
 } from "../util/signals";
-import { ensureSlot, SlotKind } from "../util/slots";
 import { sourcesUtil } from "../util/sources";
 import * as structure from "../util/structure";
 import { isStaticNativeTag } from "../util/tag-name-type";
@@ -100,7 +100,7 @@ export const IfTag = {
       }
 
       mergeReferences(ifTagSection, ifTag.node, mergeReferenceNodes);
-      addReasonExprs(ensureSlot(nodeBinding, SlotKind.BranchExpr), ifTagExtra);
+      addBranchExpr(nodeBinding, ifTagExtra);
     }
   },
   translate: translateByTarget({

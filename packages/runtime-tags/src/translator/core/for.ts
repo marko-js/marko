@@ -15,6 +15,7 @@ import {
 } from "../util/assert";
 import { type Binding, BindingType, getPropertyAlias } from "../util/bindings";
 import {
+  addBranchExpr,
   type ForType,
   forTypeToBranchRuntime,
   forTypeToRuntime,
@@ -31,7 +32,6 @@ import { detectForSelector, isForSelectorClosure } from "../util/for-selector";
 import { getAccessorProp } from "../util/get-accessor-enums";
 import { getKnownAttrValues } from "../util/get-known-attr-values";
 import { fromIter } from "../util/optional";
-import { addReasonExprs } from "../util/reasons";
 import {
   dropNodes,
   getAllTagReferenceNodes,
@@ -62,7 +62,6 @@ import {
   trimEmptyArgs,
   writeHTMLResumeStatements,
 } from "../util/signals";
-import { ensureSlot, SlotKind } from "../util/slots";
 import * as structure from "../util/structure";
 import { getMemberExpressionPropString } from "../util/to-property-name";
 import { translateByTarget } from "../util/visitors";
@@ -149,7 +148,7 @@ export default {
       tag.node,
     ) as ControlFlowTagExtra;
 
-    addReasonExprs(ensureSlot(nodeBinding, SlotKind.BranchExpr), tagExtra);
+    addBranchExpr(nodeBinding, tagExtra);
 
     if (paramsBinding) {
       setDerivedFrom(paramsBinding, tagExtra);

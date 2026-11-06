@@ -1,0 +1,18 @@
+<let/count=1/>
+<div class=`c${count}`>
+  <if=input.show>
+    <button onClick() { count++ }>${count}</button>
+  </if>
+</div>
+<section class=`c${count}`>
+  <if=input.show>
+    <b>${count}</b>
+    <i>${count}</i>
+  </if>
+</section>
+<ul class=`c${count}`>
+  <for|item| of=input.items>
+    <li>${item} ${count}</li>
+  </for>
+</ul>
+<for|x| until=count>${x}</for>

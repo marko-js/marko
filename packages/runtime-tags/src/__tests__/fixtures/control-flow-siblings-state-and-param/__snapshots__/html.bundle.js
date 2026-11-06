@@ -11,7 +11,7 @@ var template_default = _template("a", (input) => {
 			_write_if($scope0_reason, 0) && _scope($scope1_id, {});
 			return 0;
 		}
-	}, $scope0_id, "b", $wg__input_show, $wg__input_show, $wg__input_show, "</div>", 1);
+	}, $scope0_id, "b", $wg__input_show, $wg__input_show, 1, "</div>", 1);
 	_html("<div>");
 	_if(() => {}, $scope0_id, "c", 1, 1, 1, "</div>", 1);
 	_for_of(input.items, (item) => {

@@ -3,7 +3,12 @@ import { types as t } from "@marko/compiler";
 import { type Binding } from "./bindings";
 import { getOnlyChildParentTagName } from "./is-only-child-in-parent";
 import { push, some } from "./optional";
-import { isGuardedReason, isStateReason, type Reasons } from "./reasons";
+import {
+  addReasonExprs,
+  isGuardedReason,
+  isStateReason,
+  type Reasons,
+} from "./reasons";
 import { hasResumableAssignment } from "./references";
 import { callRuntime } from "./runtime";
 import { getScopeAccessorLiteral } from "./scope-accessor";
@@ -14,10 +19,12 @@ import {
   type Section,
 } from "./sections";
 import { setSectionOwnerResumedByMarker } from "./signals";
-import { findSlot, SlotKind } from "./slots";
-import { createOutputState } from "./state";
+import { ensureSlot, findSlot, type Slot, SlotKind } from "./slots";
+import { ALWAYS } from "./sources";
+import { createAnalysisState, createOutputState } from "./state";
 import {
   getBranchWriteReason,
+  getWriteBit,
   getWriteGuard,
   getWriteGuardForAny,
   getWriteReason,
@@ -36,15 +43,32 @@ export function initBranchSection(
   nodeBinding.branchBodies = push(nodeBinding.branchBodies, bodySection);
 }
 
-// The branch id rides the always-rendered resume marker, which resume decodes
-// in a bundle with branches: a branch whose state has a resumable writer keeps
-// its runtime there.
+// What a control flow tag branches on, which client code reads again as it
+// changes; whether it can decides if the tag keeps its runtime.
+export function addBranchExpr(nodeBinding: Binding, expr: t.NodeExtra) {
+  const slot = ensureSlot(nodeBinding, SlotKind.BranchExpr);
+  addReasonExprs(slot, expr);
+  getBranchExprSlots().push(slot);
+}
+
+const [getBranchExprSlots] = createAnalysisState((): Slot[] => []);
+
+// Resume decodes branch markers in a bundle that enables branches, as a template
+// does once one of its branch expressions reads state a resumed instance assigns.
+const [enablesBranches] = createAnalysisState(() =>
+  getBranchExprSlots().some(isAssignedOnResume),
+);
+
+function isAssignedOnResume({ reason }: Slot) {
+  return isStateReason(reason) && some(reason.state, hasResumableAssignment);
+}
+
+// The branch id rides its always-written branch marker, which resume decodes
+// where the template enables branches.
 export function resumeOwnerByMarkerWhenUnconditional(
   bodySection: Section,
   nodeBinding: Binding,
 ) {
-  const branchExprReason = findSlot(nodeBinding, SlotKind.BranchExpr)?.reason;
-  if (!isStateReason(branchExprReason)) return;
   const branchReason = getBranchWriteReason(bodySection);
   const nodeReason = getWriteReason(nodeBinding);
   if (
@@ -52,10 +76,25 @@ export function resumeOwnerByMarkerWhenUnconditional(
     !isGuardedReason(branchReason) &&
     nodeReason &&
     !isGuardedReason(nodeReason) &&
-    some(branchExprReason.state, hasResumableAssignment)
+    enablesBranches() &&
+    getWriteBit(nodeBinding.section, getBranchMarkerReason(nodeBinding)) === 1
   ) {
     setSectionOwnerResumedByMarker(bodySection);
   }
+}
+
+// When an element's only child ends with its branch marker rather than the
+// element's: as its expression changes, or for an `<if>` wherever resume decodes it.
+function getBranchMarkerReason(nodeBinding: Binding) {
+  return some(nodeBinding.branchBodies, isIfBranch) && enablesBranches()
+    ? ALWAYS
+    : findSlot(nodeBinding, SlotKind.BranchExpr)?.reason;
+}
+
+// An `<if>` marks one branch; a loop's markers carry every row's id, which over
+// many rows compress worse than the payload's links to them.
+function isIfBranch(body: Section) {
+  return body.branch!.kind === "if";
 }
 
 export function getBranchResumeArgs(
@@ -97,11 +136,7 @@ export function buildBranchEndArgs(
   // Only an element's only child reads it: otherwise the end always writes
   // its branch marker when it writes one at all.
   const branchExprGuard = skipParentEnd
-    ? getWriteGuard(
-        tagSection,
-        findSlot(nodeBinding, SlotKind.BranchExpr)?.reason,
-        false,
-      )
+    ? getWriteGuard(tagSection, getBranchMarkerReason(nodeBinding), false)
     : singleNode
       ? t.numericLiteral(0)
       : undefined;
