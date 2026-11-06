@@ -9,24 +9,27 @@
       }
     },
     "PatchClientBranch:2": [{
-        "PatchDynamicTag:#text/0": [">span", 0, {
+      "PatchDynamicTag:#text/0": [">span", 0, {
+        content: {
+          content: 0
+        }
+      }],
+      "PatchChild:BranchScopes:#text/0": {
+        "PatchChild:BranchScopes:#span/0": {
+          "PatchText:#text/0": "a"
+        }
+      }
+    }, {
+      "PatchDynamicTag:#text/0": {
+        2: {
           content: {
-            content: 0
-          }
-        }],
-        "PatchChild:BranchScopes:#text/0": {
-          "PatchChild:BranchScopes:#span/0": {
-            "PatchText:#text/0": "a"
+            content: [
+              [], "packages/runtime-tags/src/__tests__/fixtures/patch-zz-kco-rows/template.marko_3*content", 1
+            ]
           }
         }
-      },
-      [
-        [
-          ["PatchDynamicTag:#text/0", 2, "content", "content"],
-          [], "packages/runtime-tags/src/__tests__/fixtures/patch-zz-kco-rows/template.marko_3*content", 1
-        ]
-      ]
-    ],
+      }
+    }],
     "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-zz-kco-rows/template.marko_1_row_label#3/subscribers": "row_label"
   }, 2, {
     "PatchMarkedWrite:row_label": "b",
@@ -36,24 +39,27 @@
       }
     },
     "PatchClientBranch:2": [{
-        "PatchDynamicTag:#text/0": [">span", 0, {
+      "PatchDynamicTag:#text/0": [">span", 0, {
+        content: {
+          content: 0
+        }
+      }],
+      "PatchChild:BranchScopes:#text/0": {
+        "PatchChild:BranchScopes:#span/0": {
+          "PatchText:#text/0": "b"
+        }
+      }
+    }, {
+      "PatchDynamicTag:#text/0": {
+        2: {
           content: {
-            content: 0
-          }
-        }],
-        "PatchChild:BranchScopes:#text/0": {
-          "PatchChild:BranchScopes:#span/0": {
-            "PatchText:#text/0": "b"
+            content: [
+              [], "packages/runtime-tags/src/__tests__/fixtures/patch-zz-kco-rows/template.marko_3*content", 1
+            ]
           }
         }
-      },
-      [
-        [
-          ["PatchDynamicTag:#text/0", 2, "content", "content"],
-          [], "packages/runtime-tags/src/__tests__/fixtures/patch-zz-kco-rows/template.marko_3*content", 1
-        ]
-      ]
-    ],
+      }
+    }],
     "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-zz-kco-rows/template.marko_1_row_label#3/subscribers": "row_label"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-zz-kco-rows/template.marko_1*shell"],
   "PatchMarkedWrite:input_tag": "span"
@@ -70,24 +76,27 @@
       }
     },
     "PatchClientBranch:2": [{
-        "PatchDynamicTag:#text/0": [">i", 0, {
+      "PatchDynamicTag:#text/0": [">i", 0, {
+        content: {
+          content: 0
+        }
+      }],
+      "PatchChild:BranchScopes:#text/0": {
+        "PatchChild:BranchScopes:#i/0": {
+          "PatchText:#text/0": "c"
+        }
+      }
+    }, {
+      "PatchDynamicTag:#text/0": {
+        2: {
           content: {
-            content: 0
-          }
-        }],
-        "PatchChild:BranchScopes:#text/0": {
-          "PatchChild:BranchScopes:#i/0": {
-            "PatchText:#text/0": "c"
+            content: [
+              [], "packages/runtime-tags/src/__tests__/fixtures/patch-zz-kco-rows/template.marko_3*content", 1
+            ]
           }
         }
-      },
-      [
-        [
-          ["PatchDynamicTag:#text/0", 2, "content", "content"],
-          [], "packages/runtime-tags/src/__tests__/fixtures/patch-zz-kco-rows/template.marko_3*content", 1
-        ]
-      ]
-    ],
+      }
+    }],
     "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-zz-kco-rows/template.marko_1_row_label#3/subscribers": "row_label"
   }, 3, {
     "PatchMarkedWrite:row_label": "d",
@@ -97,24 +106,27 @@
       }
     },
     "PatchClientBranch:2": [{
-        "PatchDynamicTag:#text/0": [">i", 0, {
+      "PatchDynamicTag:#text/0": [">i", 0, {
+        content: {
+          content: 0
+        }
+      }],
+      "PatchChild:BranchScopes:#text/0": {
+        "PatchChild:BranchScopes:#i/0": {
+          "PatchText:#text/0": "d"
+        }
+      }
+    }, {
+      "PatchDynamicTag:#text/0": {
+        2: {
           content: {
-            content: 0
-          }
-        }],
-        "PatchChild:BranchScopes:#text/0": {
-          "PatchChild:BranchScopes:#i/0": {
-            "PatchText:#text/0": "d"
+            content: [
+              [], "packages/runtime-tags/src/__tests__/fixtures/patch-zz-kco-rows/template.marko_3*content", 1
+            ]
           }
         }
-      },
-      [
-        [
-          ["PatchDynamicTag:#text/0", 2, "content", "content"],
-          [], "packages/runtime-tags/src/__tests__/fixtures/patch-zz-kco-rows/template.marko_3*content", 1
-        ]
-      ]
-    ],
+      }
+    }],
     "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-zz-kco-rows/template.marko_1_row_label#3/subscribers": "row_label"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-zz-kco-rows/template.marko_1*shell"],
   "PatchMarkedWrite:input_tag": "i"

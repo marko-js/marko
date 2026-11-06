@@ -9,24 +9,27 @@
       }
     },
     W2: [{
-        fa: [">span", 0, {
-          content: {
-            content: 0
-          }
-        }],
+      fa: [">span", 0, {
+        content: {
+          content: 0
+        }
+      }],
+      cAa: {
         cAa: {
-          cAa: {
-            ta: "a"
+          ta: "a"
+        }
+      }
+    }, {
+      fa: {
+        2: {
+          content: {
+            content: [
+              [], "a0", 1
+            ]
           }
         }
-      },
-      [
-        [
-          ["fa", 2, "content", "content"],
-          [], "a0", 1
-        ]
-      ]
-    ],
+      }
+    }],
     Sa5: "d"
   }, 2, {
     xd: "b",
@@ -36,24 +39,27 @@
       }
     },
     W2: [{
-        fa: [">span", 0, {
-          content: {
-            content: 0
-          }
-        }],
+      fa: [">span", 0, {
+        content: {
+          content: 0
+        }
+      }],
+      cAa: {
         cAa: {
-          cAa: {
-            ta: "b"
+          ta: "b"
+        }
+      }
+    }, {
+      fa: {
+        2: {
+          content: {
+            content: [
+              [], "a0", 1
+            ]
           }
         }
-      },
-      [
-        [
-          ["fa", 2, "content", "content"],
-          [], "a0", 1
-        ]
-      ]
-    ],
+      }
+    }],
     Sa5: "d"
   }, "a6"],
   xe: "span"
@@ -70,24 +76,27 @@
       }
     },
     W2: [{
-        fa: [">i", 0, {
-          content: {
-            content: 0
-          }
-        }],
+      fa: [">i", 0, {
+        content: {
+          content: 0
+        }
+      }],
+      cAa: {
         cAa: {
-          cAa: {
-            ta: "c"
+          ta: "c"
+        }
+      }
+    }, {
+      fa: {
+        2: {
+          content: {
+            content: [
+              [], "a0", 1
+            ]
           }
         }
-      },
-      [
-        [
-          ["fa", 2, "content", "content"],
-          [], "a0", 1
-        ]
-      ]
-    ],
+      }
+    }],
     Sa5: "d"
   }, 3, {
     xd: "d",
@@ -97,24 +106,27 @@
       }
     },
     W2: [{
-        fa: [">i", 0, {
-          content: {
-            content: 0
-          }
-        }],
+      fa: [">i", 0, {
+        content: {
+          content: 0
+        }
+      }],
+      cAa: {
         cAa: {
-          cAa: {
-            ta: "d"
+          ta: "d"
+        }
+      }
+    }, {
+      fa: {
+        2: {
+          content: {
+            content: [
+              [], "a0", 1
+            ]
           }
         }
-      },
-      [
-        [
-          ["fa", 2, "content", "content"],
-          [], "a0", 1
-        ]
-      ]
-    ],
+      }
+    }],
     Sa5: "d"
   }, "a6"],
   xe: "i"

@@ -9,24 +9,27 @@
       }
     },
     W2: [{
-        fa: [">span", 0, {
-          content: {
-            content: 0
-          }
-        }],
+      fa: [">span", 0, {
+        content: {
+          content: 0
+        }
+      }],
+      cAa: {
         cAa: {
-          cAa: {
-            ta: "b"
+          ta: "b"
+        }
+      }
+    }, {
+      fa: {
+        2: {
+          content: {
+            content: [
+              [], "a0", 1
+            ]
           }
         }
-      },
-      [
-        [
-          ["fa", 2, "content", "content"],
-          [], "a0", 1
-        ]
-      ]
-    ]
+      }
+    }]
   }, "a5"],
   Sa6: "e",
   xe: "b",
@@ -44,24 +47,27 @@
       }
     },
     W2: [{
-        fa: [">i", 0, {
-          content: {
-            content: 0
-          }
-        }],
+      fa: [">i", 0, {
+        content: {
+          content: 0
+        }
+      }],
+      cAa: {
         cAa: {
-          cAa: {
-            ta: "c"
+          ta: "c"
+        }
+      }
+    }, {
+      fa: {
+        2: {
+          content: {
+            content: [
+              [], "a0", 1
+            ]
           }
         }
-      },
-      [
-        [
-          ["fa", 2, "content", "content"],
-          [], "a0", 1
-        ]
-      ]
-    ]
+      }
+    }]
   }, "a5"],
   Sa6: "e",
   xe: "c",

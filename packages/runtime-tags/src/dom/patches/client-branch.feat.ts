@@ -60,39 +60,22 @@ installKeptInstances((branch, id) => {
 });
 
 // The holes every instance shares, with the binds of values each one owns: a
-// bind's path (its place) and `_`'s args from the instance.
-type KeptHoles =
-  | Scope
-  | [
-      holes: Scope,
-      binds: [path: string[], ...args: [PatchHop[], string, 0 | 1]][],
-    ];
+// tree mirroring the holes down to each, whose leaves are `_`'s args from the instance.
+type KeptHoles = Scope | [holes: Scope, binds: BindTree];
+type BindTree = { [key: string]: BindTree | [PatchHop[], string, 1?] };
 
-// Each instance takes the holes with its own values bound in, each on a copy of
-// the containers along its path, which hold its render-only locals until then.
+// Each instance takes the holes with its own values bound in, on copies of the
+// containers above them, whose places hold their render-only locals until then.
 function patchInstance(holes: KeptHoles, instance: Scope) {
-  if (Array.isArray(holes)) {
-    const copies = new Set<object>();
-    const copy = (node: any) => {
-      if (!copies.has(node)) {
-        copies.add((node = Array.isArray(node) ? [...node] : { ...node }));
-      }
-      return node;
-    };
-    const [shared, binds] = holes;
-    holes = copy(shared) as Scope;
-    for (const [path, scopePath, id, content] of binds) {
-      let node: any = holes;
-      const last = path.length - 1;
-      for (let i = 0; i < last; i++) node = node[path[i]] = copy(node[path[i]]);
-      node[path[last]] = bindRef!(
-        instance,
-        scopePath,
-        id,
-        content || node[path[last]] || undefined,
-        node[path[last]] || undefined,
-      );
+  const bind = (node: any, binds: BindTree) => {
+    node = Array.isArray(node) ? [...node] : { ...node };
+    for (const key in binds) {
+      const value = binds[key];
+      node[key] = Array.isArray(value)
+        ? bindRef!(instance, ...value, node[key])
+        : bind(node[key], value);
     }
-  }
-  patchScope(holes, instance);
+    return node;
+  };
+  patchScope(Array.isArray(holes) ? bind(...holes) : holes, instance);
 }

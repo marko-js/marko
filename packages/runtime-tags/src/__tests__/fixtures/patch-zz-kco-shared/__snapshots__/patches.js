@@ -8,24 +8,27 @@
       }
     },
     W2: [{
-        fa: [">span", 0, {
-          content: {
-            content: 0
-          }
-        }],
+      fa: [">span", 0, {
+        content: {
+          content: 0
+        }
+      }],
+      cAa: {
         cAa: {
-          cAa: {
-            ta: _.a = "a label long enough to share"
+          ta: _.a = "a label long enough to share"
+        }
+      }
+    }, {
+      fa: {
+        2: {
+          content: {
+            content: [
+              [], "a0", 1
+            ]
           }
         }
-      },
-      [
-        [
-          ["fa", 2, "content", "content"],
-          [], "a0", 1
-        ]
-      ]
-    ]
+      }
+    }]
   }, "a5"],
   tb: _.a,
   Sa6: "f",
@@ -43,24 +46,27 @@
       }
     },
     W2: [{
-        fa: [">i", 0, {
-          content: {
-            content: 0
-          }
-        }],
+      fa: [">i", 0, {
+        content: {
+          content: 0
+        }
+      }],
+      cAa: {
         cAa: {
-          cAa: {
-            ta: _.a = "another label long enough"
+          ta: _.a = "another label long enough"
+        }
+      }
+    }, {
+      fa: {
+        2: {
+          content: {
+            content: [
+              [], "a0", 1
+            ]
           }
         }
-      },
-      [
-        [
-          ["fa", 2, "content", "content"],
-          [], "a0", 1
-        ]
-      ]
-    ]
+      }
+    }]
   }, "a5"],
   tb: _.a,
   Sa6: "f",

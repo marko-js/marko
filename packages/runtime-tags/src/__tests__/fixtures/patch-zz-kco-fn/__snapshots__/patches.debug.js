@@ -9,22 +9,23 @@
       }
     },
     "PatchClientBranch:2": [{
-        "PatchDynamicTag:#text/0": [">span", "packages/runtime-tags/src/__tests__/fixtures/patch-zz-kco-fn/template.marko_3*content", {
-          onClick: 0
-        }],
-        "PatchChild:BranchScopes:#text/0": {
-          "PatchChild:BranchScopes:#span/0": {
-            "PatchText:#text/0": "b"
-          }
+      "PatchDynamicTag:#text/0": [">span", "packages/runtime-tags/src/__tests__/fixtures/patch-zz-kco-fn/template.marko_3*content", {
+        onClick: 0
+      }],
+      "PatchChild:BranchScopes:#text/0": {
+        "PatchChild:BranchScopes:#span/0": {
+          "PatchText:#text/0": "b"
         }
-      },
-      [
-        [
-          ["PatchDynamicTag:#text/0", 2, "onClick"],
-          [], "packages/runtime-tags/src/__tests__/fixtures/patch-zz-kco-fn/template.marko_2/onClick", 0
-        ]
-      ]
-    ]
+      }
+    }, {
+      "PatchDynamicTag:#text/0": {
+        2: {
+          onClick: [
+            [], "packages/runtime-tags/src/__tests__/fixtures/patch-zz-kco-fn/template.marko_2/onClick"
+          ]
+        }
+      }
+    }]
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-zz-kco-fn/template.marko_1*shell"],
   "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-zz-kco-fn/template.marko_0_input_label#5/subscribers": "input_label",
   "PatchMarkedWrite:input_tag": "span"
@@ -41,22 +42,23 @@
       }
     },
     "PatchClientBranch:2": [{
-        "PatchDynamicTag:#text/0": [">i", "packages/runtime-tags/src/__tests__/fixtures/patch-zz-kco-fn/template.marko_3*content", {
-          onClick: 0
-        }],
-        "PatchChild:BranchScopes:#text/0": {
-          "PatchChild:BranchScopes:#i/0": {
-            "PatchText:#text/0": "c"
-          }
+      "PatchDynamicTag:#text/0": [">i", "packages/runtime-tags/src/__tests__/fixtures/patch-zz-kco-fn/template.marko_3*content", {
+        onClick: 0
+      }],
+      "PatchChild:BranchScopes:#text/0": {
+        "PatchChild:BranchScopes:#i/0": {
+          "PatchText:#text/0": "c"
         }
-      },
-      [
-        [
-          ["PatchDynamicTag:#text/0", 2, "onClick"],
-          [], "packages/runtime-tags/src/__tests__/fixtures/patch-zz-kco-fn/template.marko_2/onClick", 0
-        ]
-      ]
-    ]
+      }
+    }, {
+      "PatchDynamicTag:#text/0": {
+        2: {
+          onClick: [
+            [], "packages/runtime-tags/src/__tests__/fixtures/patch-zz-kco-fn/template.marko_2/onClick"
+          ]
+        }
+      }
+    }]
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-zz-kco-fn/template.marko_1*shell"],
   "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-zz-kco-fn/template.marko_0_input_label#5/subscribers": "input_label",
   "PatchMarkedWrite:input_tag": "i"

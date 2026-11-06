@@ -35,7 +35,7 @@ export class PatchSerializerState extends SerializerState {
 
   // Kept content's holes are shared by every instance the client holds, so a
   // value owned inside one is a bind each instance resolves (`patchInstance`):
-  // its place in the holes (written at their end), then `_`'s args from the instance.
+  // its place in the holes, with `_`'s args from the instance.
   keptBinds = new Map<
     object,
     { parent: Reference | null; accessor: string; args: string }[]
@@ -108,7 +108,7 @@ export class PatchSerializerState extends SerializerState {
       this.buf.splice(at).join("") +
       "]," +
       quoteRegistryId(shipNamedShell(this.render, registered.id)) +
-      (content ? ",1" : ",0");
+      (content ? ",1" : "");
     const locals = registered.locals?.(this.boundary.state.scope);
     if (kept !== ROOT_SCOPE_ID) {
       // Its place holds its render-only locals (one scope), else `0`.
@@ -126,7 +126,7 @@ export class PatchSerializerState extends SerializerState {
     }
     // Content keeps one identity, as main's write does; a bind makes its function anew.
     if (content) this.refs.set(val, ref);
-    this.buf.push("_(" + (content ? args : args.slice(0, -2)));
+    this.buf.push("_(" + args);
     if (locals) writeLocalArgs(this, ref, locals);
     this.buf.push(")");
   }
@@ -263,53 +263,56 @@ function writePatchTreeNode(
     state.buf.push("}");
     const binds = state.keptBinds.get(node);
     if (binds) {
+      // Written as a tree mirroring the holes down to each bind.
+      const tree: BindTree = new Map();
+      for (const bind of binds) {
+        let place = tree;
+        for (const step of bindSteps(state, bind.parent, ref)) {
+          let next = place.get(step);
+          if (!next) place.set(step, (next = new Map()));
+          place = next as BindTree;
+        }
+        place.set(bind.accessor, bind.args);
+      }
       state.boundKept.add(ref);
       state.buf[start] = "[" + state.buf[start];
-      let sep = ",[";
-      for (const bind of binds) {
-        state.buf.push(
-          sep +
-            "[[" +
-            bindPath(state, bind.parent, bind.accessor, ref) +
-            "]," +
-            bind.args +
-            "]",
-        );
-        sep = ",";
-      }
-      state.buf.push("]]");
+      state.buf.push("," + writeBindTree(tree) + "]");
     }
   }
 }
 
-// A bind's place, from its kept holes: each step a key (an array's as its index).
-function bindPath(
+type BindTree = Map<string, BindTree | string>;
+
+// The keys from kept holes down to a bind's container, as written (`toObjectKey`'s,
+// or an index); held holes are `[holes, binds]`, so a step into them takes `0`.
+function bindSteps(
   state: PatchSerializerState,
   parent: Reference | null,
-  accessor: string,
   holes: Reference,
 ) {
-  let path = toPathKey(accessor);
+  const steps: string[] = [];
   for (; parent !== holes; parent = parent.parent) {
     if (!parent?.accessor) {
       throw new Error(
         "A patch cannot send a value its kept content owns here.",
       );
     }
-    path =
-      toPathKey(parent.accessor) +
-      (state.boundKept.has(parent) ? ",0," : ",") +
-      path;
+    if (state.boundKept.has(parent)) steps.push("0");
+    steps.push(parent.accessor);
   }
-  return path;
+  return steps.reverse();
 }
 
-// A written key (`toObjectKey`'s) as a value.
-function toPathKey(accessor: string) {
-  const start = accessor[0];
-  return start === "["
-    ? accessor.slice(1, -1)
-    : start === '"' || (start >= "0" && start <= "9")
-      ? accessor
-      : '"' + accessor + '"';
+function writeBindTree(tree: BindTree): string {
+  let sep = "{";
+  let out = "";
+  for (const [key, value] of tree) {
+    out +=
+      sep +
+      key +
+      ":" +
+      (typeof value === "string" ? "[" + value + "]" : writeBindTree(value));
+    sep = ",";
+  }
+  return out + "}";
 }

@@ -8,24 +8,27 @@
       }
     },
     "PatchClientBranch:2": [{
-        "PatchDynamicTag:#text/0": [">span", 0, {
+      "PatchDynamicTag:#text/0": [">span", 0, {
+        content: {
+          content: 0
+        }
+      }],
+      "PatchChild:BranchScopes:#text/0": {
+        "PatchChild:BranchScopes:#span/0": {
+          "PatchText:#text/0": _.a = "a label long enough to share"
+        }
+      }
+    }, {
+      "PatchDynamicTag:#text/0": {
+        2: {
           content: {
-            content: 0
-          }
-        }],
-        "PatchChild:BranchScopes:#text/0": {
-          "PatchChild:BranchScopes:#span/0": {
-            "PatchText:#text/0": _.a = "a label long enough to share"
+            content: [
+              [], "packages/runtime-tags/src/__tests__/fixtures/patch-zz-kco-shared/template.marko_3*content", 1
+            ]
           }
         }
-      },
-      [
-        [
-          ["PatchDynamicTag:#text/0", 2, "content", "content"],
-          [], "packages/runtime-tags/src/__tests__/fixtures/patch-zz-kco-shared/template.marko_3*content", 1
-        ]
-      ]
-    ]
+      }
+    }]
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-zz-kco-shared/template.marko_1*shell"],
   "PatchText:#text/1": _.a,
   "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-zz-kco-shared/template.marko_0_input_label#5/subscribers": "input_label",
@@ -43,24 +46,27 @@
       }
     },
     "PatchClientBranch:2": [{
-        "PatchDynamicTag:#text/0": [">i", 0, {
+      "PatchDynamicTag:#text/0": [">i", 0, {
+        content: {
+          content: 0
+        }
+      }],
+      "PatchChild:BranchScopes:#text/0": {
+        "PatchChild:BranchScopes:#i/0": {
+          "PatchText:#text/0": _.a = "another label long enough"
+        }
+      }
+    }, {
+      "PatchDynamicTag:#text/0": {
+        2: {
           content: {
-            content: 0
-          }
-        }],
-        "PatchChild:BranchScopes:#text/0": {
-          "PatchChild:BranchScopes:#i/0": {
-            "PatchText:#text/0": _.a = "another label long enough"
+            content: [
+              [], "packages/runtime-tags/src/__tests__/fixtures/patch-zz-kco-shared/template.marko_3*content", 1
+            ]
           }
         }
-      },
-      [
-        [
-          ["PatchDynamicTag:#text/0", 2, "content", "content"],
-          [], "packages/runtime-tags/src/__tests__/fixtures/patch-zz-kco-shared/template.marko_3*content", 1
-        ]
-      ]
-    ]
+      }
+    }]
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-zz-kco-shared/template.marko_1*shell"],
   "PatchText:#text/1": _.a,
   "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-zz-kco-shared/template.marko_0_input_label#5/subscribers": "input_label",

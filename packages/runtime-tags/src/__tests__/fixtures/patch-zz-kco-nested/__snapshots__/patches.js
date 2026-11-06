@@ -8,50 +8,60 @@
       }
     },
     W2: [{
-        ca: {
-          s: {
-            fb: "^^a7"
+      ca: {
+        s: {
+          fb: "^^a7"
+        }
+      },
+      W3: [{
+        fa: [">span", 0, {
+          content: {
+            content: 0
+          }
+        }],
+        cAa: {
+          cAa: {
+            ta: "b!"
           }
         },
-        W3: [{
-            fa: [">span", 0, {
+        fb: [">span", 0, {
+          content: {
+            content: 0
+          }
+        }],
+        cAb: {
+          cAa: {
+            ta: "b"
+          }
+        }
+      }, {
+        fb: {
+          2: {
+            content: {
+              content: [
+                [], "a2", 1
+              ]
+            }
+          }
+        }
+      }],
+      Sa8: "b",
+      xb: "b!"
+    }, {
+      W3: {
+        0: {
+          fa: {
+            2: {
               content: {
-                content: 0
-              }
-            }],
-            cAa: {
-              cAa: {
-                ta: "b!"
-              }
-            },
-            fb: [">span", 0, {
-              content: {
-                content: 0
-              }
-            }],
-            cAb: {
-              cAa: {
-                ta: "b"
+                content: [
+                  [], "a0", 1
+                ]
               }
             }
-          },
-          [
-            [
-              ["fb", 2, "content", "content"],
-              [], "a2", 1
-            ]
-          ]
-        ],
-        Sa8: "b",
-        xb: "b!"
-      },
-      [
-        [
-          ["W3", 0, "fa", 2, "content", "content"],
-          [], "a0", 1
-        ]
-      ]
-    ]
+          }
+        }
+      }
+    }]
   }, "a11"],
   Sa12: "e",
   xe: "b",
@@ -68,50 +78,60 @@
       }
     },
     W2: [{
-        ca: {
-          s: {
-            fb: "^^a7"
+      ca: {
+        s: {
+          fb: "^^a7"
+        }
+      },
+      W3: [{
+        fa: [">i", 0, {
+          content: {
+            content: 0
+          }
+        }],
+        cAa: {
+          cAa: {
+            ta: "c!"
           }
         },
-        W3: [{
-            fa: [">i", 0, {
+        fb: [">i", 0, {
+          content: {
+            content: 0
+          }
+        }],
+        cAb: {
+          cAa: {
+            ta: "c"
+          }
+        }
+      }, {
+        fb: {
+          2: {
+            content: {
+              content: [
+                [], "a2", 1
+              ]
+            }
+          }
+        }
+      }],
+      Sa8: "b",
+      xb: "c!"
+    }, {
+      W3: {
+        0: {
+          fa: {
+            2: {
               content: {
-                content: 0
-              }
-            }],
-            cAa: {
-              cAa: {
-                ta: "c!"
-              }
-            },
-            fb: [">i", 0, {
-              content: {
-                content: 0
-              }
-            }],
-            cAb: {
-              cAa: {
-                ta: "c"
+                content: [
+                  [], "a0", 1
+                ]
               }
             }
-          },
-          [
-            [
-              ["fb", 2, "content", "content"],
-              [], "a2", 1
-            ]
-          ]
-        ],
-        Sa8: "b",
-        xb: "c!"
-      },
-      [
-        [
-          ["W3", 0, "fa", 2, "content", "content"],
-          [], "a0", 1
-        ]
-      ]
-    ]
+          }
+        }
+      }
+    }]
   }, "a11"],
   Sa12: "e",
   xe: "c",
