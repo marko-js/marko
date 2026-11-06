@@ -1293,6 +1293,13 @@ export function keepsHoles(section: Section) {
   return !!section.bindings && keepsContent(section);
 }
 
+// In kept content, its branch bodies included: no client code of it ships, and
+// each flush refills its holes.
+export function inKeptContent(section: Section) {
+  while (section.branch) section = section.parent!;
+  return keepsContent(section);
+}
+
 // Content a known child renders from its state, where plain renders it nowhere
 // on the client: a patch creates its instances from their shells alone.
 export function keepsContent(section: Section) {

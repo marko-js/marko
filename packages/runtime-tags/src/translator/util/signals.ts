@@ -44,6 +44,7 @@ import {
 } from "./optional";
 import { getEffectWrites, fillsHole } from "./patch/decisions";
 import {
+  inKeptContent,
   keepsClosureFills,
   hasGuardedSources,
   getCreatedSetup,
@@ -638,6 +639,8 @@ function inShellChain(section: Section) {
 // re-runs: `true` if resumed code renders the read, else the sources the client may own.
 const [getGlobalSignals] = createAnalysisMemo((section: Section) => {
   const signals = new Map<string, true | Sources | undefined>();
+  // Kept content's scopes never subscribe: no client code reads for them.
+  if (inKeptContent(section)) return signals;
   const effects = new Set<string>();
   for (const expr of section.globalReadExprs || []) {
     const referencedBindings = getReferencedBindings(expr);
