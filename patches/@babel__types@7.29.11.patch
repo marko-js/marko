@@ -120,9 +120,9 @@ new file mode 100644
 index 0000000..de98f69
 --- /dev/null
 +++ b/lib/builders/generated/marko.js
-@@ -0,0 +1,132 @@
+@@ -0,0 +1,139 @@
 +exports.markoParseError = exports.MarkoParseError = markoParseError;
-+function markoParseError(source, label, errorLoc) {
++function markoParseError(source, label, errorLoc = null) {
 +  return {
 +    type: "MarkoParseError",
 +    source,
@@ -156,7 +156,7 @@ index 0000000..de98f69
 +}
 +
 +exports.markoComment = exports.MarkoComment = markoComment;
-+function markoComment(value, kind) {
++function markoComment(value, kind = null) {
 +  return {
 +    type: "MarkoComment",
 +    value,
@@ -173,7 +173,7 @@ index 0000000..de98f69
 +}
 +
 +exports.markoPlaceholder = exports.MarkoPlaceholder = markoPlaceholder;
-+function markoPlaceholder(value, escape = false) {
++function markoPlaceholder(value, escape = true) {
 +  return {
 +    type: "MarkoPlaceholder",
 +    value,
@@ -182,7 +182,7 @@ index 0000000..de98f69
 +}
 +
 +exports.markoScriptlet = exports.MarkoScriptlet = markoScriptlet;
-+function markoScriptlet(body, _static = false, target) {
++function markoScriptlet(body, _static = false, target = null) {
 +  return {
 +    type: "MarkoScriptlet",
 +    body,
@@ -200,7 +200,14 @@ index 0000000..de98f69
 +}
 +
 +exports.markoAttribute = exports.MarkoAttribute = markoAttribute;
-+function markoAttribute(name, value, modifier, _arguments, _default, bound) {
++function markoAttribute(
++  name,
++  value,
++  modifier = null,
++  _arguments = null,
++  _default = null,
++  bound = null,
++) {
 +  return {
 +    type: "MarkoAttribute",
 +    name,
@@ -227,7 +234,7 @@ index 0000000..de98f69
 +    type: "MarkoTagBody",
 +    body,
 +    params,
-+    typeParameters: undefined,
++    typeParameters: null,
 +    attributeTags: false,
 +  };
 +}
@@ -237,8 +244,8 @@ index 0000000..de98f69
 +  name,
 +  attributes = [],
 +  body,
-+  _arguments,
-+  _var,
++  _arguments = null,
++  _var = null,
 +  attributeTags = [],
 +) {
 +  return {
@@ -247,8 +254,8 @@ index 0000000..de98f69
 +    attributes,
 +    body,
 +    arguments: _arguments,
-+    typeArguments: undefined,
-+    rawValue: undefined,
++    typeArguments: null,
++    rawValue: null,
 +    var: _var,
 +    attributeTags,
 +  };
