@@ -164,6 +164,12 @@ describe("compiler/compile", () => {
         "// line\n/* block */\n<!-- html -->\n<div>\n  // line\n  /* block */\n  <!-- html -->\n</div>\n<pre>a // line\n</pre>";
       assert.equal(print(src), src);
     });
+
+    it("keeps a sourceMappingURL comment", () => {
+      const src =
+        "<button onClick() {\n  //# sourceMappingURL=save.js.map\n  save();\n}/>";
+      assert.equal(print(src), src);
+    });
   });
 
   describe("synthetic filenames", () => {
@@ -531,15 +537,29 @@ describe("compiler/compile", () => {
     });
     afterEach(() => fs.rmSync(dir, { recursive: true, force: true }));
 
-    const mappedSource = (file, cache) => {
+    const mappedSource = (file, cache, fileSystem = fs) => {
       const { map } = compileFileSync(file, {
         translator,
         cache,
+        fileSystem,
         output: "dom",
         sourceMaps: true,
       });
       return map.sourceRoot + map.sources[0];
     };
+    const inputMap = (source) => ({
+      version: 3,
+      sources: [source],
+      names: [],
+      mappings: "AAAA",
+    });
+    // From memory, so only a read that bypasses `fileSystem` finds a map file.
+    const mappedSourceOf = (src) =>
+      mappedSource(
+        path.join(dir, "template.marko"),
+        new Map(),
+        fromMemory(src),
+      );
 
     it("maps a template to its own path", () => {
       const file = path.join(dir, "template.marko");
@@ -555,6 +575,42 @@ describe("compiler/compile", () => {
       });
       const child = path.join(dir, "tags", "my-child.marko");
       assert.equal(mappedSource(child, cache), child);
+    });
+
+    it("keeps an inline map in a comment out of the template's map", () => {
+      const data = Buffer.from(JSON.stringify(inputMap("inline.ts"))).toString(
+        "base64",
+      );
+      assert.equal(
+        mappedSourceOf(
+          `<button onClick() {\n  //# sourceMappingURL=data:application/json;base64,${data}\n  save();\n}/>\n`,
+        ),
+        path.join(dir, "template.marko"),
+      );
+    });
+
+    it("never reads the map file a comment names", () => {
+      fs.writeFileSync(
+        path.join(dir, "side.map"),
+        JSON.stringify(inputMap("side.ts")),
+      );
+      assert.equal(
+        mappedSourceOf(
+          `import x from "./x.js"; //# sourceMappingURL=side.map\n<div>\${x}</div>\n`,
+        ),
+        path.join(dir, "template.marko"),
+      );
+    });
+
+    it("remaps through an input map the caller passes", () => {
+      const { map } = compileFileSync(path.join(dir, "template.marko"), {
+        translator,
+        cache: new Map(),
+        output: "dom",
+        sourceMaps: true,
+        babelConfig: { inputSourceMap: inputMap("pre.ts") },
+      });
+      assert.deepEqual(map.sources, ["pre.ts"]);
     });
   });
 
