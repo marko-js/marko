@@ -121,8 +121,8 @@ UPDATE: p:nth-of-type(3)::text " " => "xr"
 ```
 ## Change
 ```
-UPDATE: p:nth-of-type(4)::text "xs" => "yu"
 REMOVE: p:nth-of-type(4) + p
+UPDATE: p:nth-of-type(4)::text "xs" => "yu"
 UPDATE: p:nth-of-type(1)::text "xp" => "yp"
 UPDATE: p:nth-of-type(2)::text "xq" => "yq"
 UPDATE: p:nth-of-type(3)::text "xr" => "yr"
@@ -173,8 +173,9 @@ INSERT: div:nth-of-type(2)::text("s:y")
 ```
 ## Change
 ```
-UPDATE: p:nth-of-type(4)::text "yu" => "zu"
 INSERT: p:nth-of-type(4) + p
+UPDATE: p:nth-of-type(4)::text "yu" => "zu"
+UPDATE: p:nth-of-type(5)::text " " => "zv"
 UPDATE: p:nth-of-type(1)::text "yp" => "zp"
 UPDATE: p:nth-of-type(2)::text "yq" => "zq"
 UPDATE: p:nth-of-type(3)::text "yr" => "zr"

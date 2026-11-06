@@ -94,6 +94,7 @@ UPDATE: main > ul > li:nth-of-type(1)::text "Apples" => "Apples!"
 ## Change
 ```
 INSERT: main > ul > li:nth-of-type(2) + li
+UPDATE: main > ul > li:nth-of-type(3)::text " " => "Milk"
 ```
 
 # Update
@@ -212,4 +213,6 @@ UPDATE: main > button::text@6 "2" => "3"
 ```
 INSERT: main > ul > li
 INSERT: main > ul > li:nth-of-type(1) + li
+UPDATE: main > ul > li:nth-of-type(1)::text " " => "Rye"
+UPDATE: main > ul > li:nth-of-type(2)::text " " => "Milk"
 ```

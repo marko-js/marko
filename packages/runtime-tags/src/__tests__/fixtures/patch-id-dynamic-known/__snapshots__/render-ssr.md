@@ -157,13 +157,13 @@ for (const input of document.querySelectorAll(
 ```
 ## Change
 ```
-UPDATE: label::text "b" => "c"
 REMOVE: #sM_0UA + span
-UPDATE: p > label::text "b" => "c"
+UPDATE: label::text "b" => "c"
 REMOVE: p + div
-UPDATE: span::text "b" => "c"
+UPDATE: p > label::text "b" => "c"
 REMOVE: span + label
 REMOVE: span + #sM_1WB
+UPDATE: span::text "b" => "c"
 ```
 
 # Update

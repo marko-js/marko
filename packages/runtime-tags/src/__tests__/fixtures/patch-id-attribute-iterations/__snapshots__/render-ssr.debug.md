@@ -145,7 +145,13 @@ UPDATE: label:nth-of-type(6)[for] null => "sM_.#childScope/0@5[5].#text/0@0.#chi
 UPDATE: #sM_.#childScope/0@5[5].#text/0@0.#childScope/0@3.uid[id] null => "sM_.#childScope/0@5[5].#text/0@0.#childScope/0@3.uid"
 UPDATE: label:nth-of-type(6)::text " " => "2"
 INSERT: #sM_.#childScope/0@5[5].#text/0@0.#childScope/0@3.uid + :is(label, #sM_.#childScope/0@5[6].#text/0@0.#childScope/0@4.uid)
+UPDATE: label:nth-of-type(7)[for] null => "sM_.#childScope/0@5[6].#text/0@0.#childScope/0@4.uid"
+UPDATE: #sM_.#childScope/0@5[6].#text/0@0.#childScope/0@4.uid[id] null => "sM_.#childScope/0@5[6].#text/0@0.#childScope/0@4.uid"
+UPDATE: label:nth-of-type(7)::text " " => "0"
 INSERT: #sM_.#childScope/0@5[6].#text/0@0.#childScope/0@4.uid + :is(label, #sM_.#childScope/0@5[7].#text/0@0.#childScope/0@4.uid)
+UPDATE: label:nth-of-type(8)[for] null => "sM_.#childScope/0@5[7].#text/0@0.#childScope/0@4.uid"
+UPDATE: #sM_.#childScope/0@5[7].#text/0@0.#childScope/0@4.uid[id] null => "sM_.#childScope/0@5[7].#text/0@0.#childScope/0@4.uid"
+UPDATE: label:nth-of-type(8)::text " " => "1"
 ```
 
 # Update

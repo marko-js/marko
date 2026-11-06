@@ -62,8 +62,12 @@
 ```
 ## Change
 ```
-UPDATE: nav > a:nth-of-type(1)[class] "link active" => "link"
 INSERT: nav > a:nth-of-type(1) + .link.active
+UPDATE: nav > a:nth-of-type(1)[class] "link active" => "link"
+UPDATE: .link.active[class] "link" => "link active"
+UPDATE: .link.active[href] null => "/b"
+INSERT: .link.active > svg > title::text("b")
+UPDATE: .link.active > span::text " " => "B"
 INSERT: main > p
 ```
 
@@ -90,11 +94,11 @@ INSERT: main > p
 ```
 ## Change
 ```
+REMOVE: .link.active + .link.active
 UPDATE: .link.active[class] "link" => "link active"
 UPDATE: .link.active[href] "/a" => "/b"
 REMOVE: .link.active > svg > title::text("a")
 INSERT: .link.active > svg > title::text("b")
 UPDATE: .link.active > span::text "A" => "B"
-REMOVE: .link.active + .link.active
 REMOVE: main > p
 ```

@@ -60,6 +60,9 @@ UPDATE: span:nth-of-type(1)[label] null => "x"
 INSERT: span:nth-of-type(1) > em
 UPDATE: span:nth-of-type(1) > em::text@0 "" => "b"
 INSERT: span:nth-of-type(1) + span
+UPDATE: span:nth-of-type(2)[label] null => "y"
+INSERT: span:nth-of-type(2) > em
+UPDATE: span:nth-of-type(2) > em::text@0 "" => "b"
 UPDATE: span:nth-of-type(1) > em::text@2 "" => "1"
 UPDATE: span:nth-of-type(2) > em::text@2 "" => "1"
 ```
@@ -109,7 +112,7 @@ UPDATE: span:nth-of-type(2) > em::text@2 "1" => "2"
 ```
 ## Change
 ```
+REMOVE: span + span
 UPDATE: span[label] "x" => "y"
 UPDATE: span > em::text@0 "b" => "c"
-REMOVE: span + span
 ```

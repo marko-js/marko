@@ -94,6 +94,14 @@ REMOVE: #sM_A + #sM_gaUA
 REMOVE: #sM_A + label
 REMOVE: #sM_A + #sM_gaVA
 INSERT: #sM_gbVA + :is(label, #sM_gcUA, label, #sM_gcVA)
+UPDATE: label:nth-of-type(3)[for] null => "sM_gcUA"
+UPDATE: label:nth-of-type(3)::text " " => "c"
+UPDATE: #sM_gcUA[id] null => "sM_gcUA"
+UPDATE: #sM_gcUA[aria-describedby] null => "sM_A"
+UPDATE: label:nth-of-type(4)[for] null => "sM_gcVA"
+UPDATE: label:nth-of-type(4)::text " " => "c"
+UPDATE: #sM_gcVA[id] null => "sM_gcVA"
+UPDATE: #sM_gcVA[aria-describedby] null => "sM_A"
 ```
 
 # Update

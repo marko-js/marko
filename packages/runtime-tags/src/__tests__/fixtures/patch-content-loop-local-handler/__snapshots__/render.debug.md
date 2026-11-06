@@ -82,6 +82,8 @@ UPDATE: p::text "none" => "B"
 ```
 UPDATE: .b1::text "B" => "C"
 INSERT: span:nth-of-type(1) + :is(.b2, span)
+UPDATE: .b2[class] null => "b2"
+UPDATE: .b2::text " " => "D"
 REMOVE: span:nth-of-type(1)::text("script:B")
 INSERT: span:nth-of-type(1)::text("script:C")
 INSERT: span:nth-of-type(2)::text("script:D")

@@ -94,6 +94,14 @@ REMOVE: #sM_.headingId + #sM_["a"].#childScope/0@0.uid
 REMOVE: #sM_.headingId + label
 REMOVE: #sM_.headingId + #sM_["a"].#childScope/1@1.uid
 INSERT: #sM_["b"].#childScope/1@1.uid + :is(label, #sM_["c"].#childScope/0@0.uid, label, #sM_["c"].#childScope/1@1.uid)
+UPDATE: label:nth-of-type(3)[for] null => "sM_[\"c\"].#childScope/0@0.uid"
+UPDATE: label:nth-of-type(3)::text " " => "c"
+UPDATE: #sM_["c"].#childScope/0@0.uid[id] null => "sM_[\"c\"].#childScope/0@0.uid"
+UPDATE: #sM_["c"].#childScope/0@0.uid[aria-describedby] null => "sM_.headingId"
+UPDATE: label:nth-of-type(4)[for] null => "sM_[\"c\"].#childScope/1@1.uid"
+UPDATE: label:nth-of-type(4)::text " " => "c"
+UPDATE: #sM_["c"].#childScope/1@1.uid[id] null => "sM_[\"c\"].#childScope/1@1.uid"
+UPDATE: #sM_["c"].#childScope/1@1.uid[aria-describedby] null => "sM_.headingId"
 ```
 
 # Update

@@ -42,9 +42,11 @@
 ```
 ## Change
 ```
+INSERT: section > ul > li:nth-of-type(2) + li
 UPDATE: section > ul > li:nth-of-type(1)::text@2 "one" => "two"
 UPDATE: section > ul > li:nth-of-type(2)::text@2 "one" => "two"
-INSERT: section > ul > li:nth-of-type(2) + li
+UPDATE: section > ul > li:nth-of-type(3)::text@0 "" => "c"
+UPDATE: section > ul > li:nth-of-type(3)::text@2 "" => "two"
 ```
 
 # Update

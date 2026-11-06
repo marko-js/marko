@@ -77,7 +77,13 @@ assert.equal(ids.size, document.querySelectorAll("input").length);
 ```
 ## Change
 ```
-INSERT: label:nth-of-type(2) + :is(#sM_2UA, label, button, #sM_2UTha0A, label)
+INSERT: label:nth-of-type(2) + :is(#sM_2UA, label, button)
+UPDATE: #sM_2UA[id] null => "sM_2UA"
+UPDATE: label:nth-of-type(3)[for] null => "sM_2UA"
+INSERT: button:nth-of-type(2) + :is(#sM_2UTha0A, label)
+UPDATE: #sM_2UTha0A[id] null => "sM_2UTha0A"
+UPDATE: label:nth-of-type(4)[for] null => "sM_2UTha0A"
+UPDATE: label:nth-of-type(4)::text " " => "2"
 ```
 
 # Update

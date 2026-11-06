@@ -157,13 +157,13 @@ for (const input of document.querySelectorAll(
 ```
 ## Change
 ```
-UPDATE: label::text "b" => "c"
 REMOVE: #sM_[0].#text/0@0.uid + span
-UPDATE: p > label::text "b" => "c"
+UPDATE: label::text "b" => "c"
 REMOVE: p + div
-UPDATE: span::text "b" => "c"
+UPDATE: p > label::text "b" => "c"
 REMOVE: span + label
 REMOVE: span + #sM_[1].#text/0@2.nullId
+UPDATE: span::text "b" => "c"
 ```
 
 # Update

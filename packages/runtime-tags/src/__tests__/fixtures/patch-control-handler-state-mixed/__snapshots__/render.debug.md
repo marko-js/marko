@@ -27,6 +27,7 @@
 ## Change
 ```
 INSERT: span:nth-of-type(1) + :is(input, span)
+UPDATE: span:nth-of-type(2)::text " " => ""
 UPDATE: input:nth-of-type(2)[value] null => "za1:0"
 ```
 

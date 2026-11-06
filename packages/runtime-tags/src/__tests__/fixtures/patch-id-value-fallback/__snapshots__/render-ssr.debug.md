@@ -108,10 +108,14 @@ for (const input of document.querySelectorAll(
 ## Change
 ```
 UPDATE: #sM_.heading[id] "provided-heading" => "sM_.heading"
-UPDATE: #sM_["b"].#childScope/0@0.uid[aria-describedby] "provided-heading" => "sM_.heading"
 REMOVE: #sM_.second + label
 REMOVE: #sM_.second + #provided-a
 INSERT: #sM_["b"].#childScope/0@0.uid + :is(label, #provided-c)
+UPDATE: #sM_["b"].#childScope/0@0.uid[aria-describedby] "provided-heading" => "sM_.heading"
+UPDATE: label:nth-of-type(3)[for] null => "provided-c"
+UPDATE: label:nth-of-type(3)::text " " => "c"
+UPDATE: #provided-c[id] null => "provided-c"
+UPDATE: #provided-c[aria-describedby] null => "sM_.heading"
 ```
 
 # Update
@@ -387,10 +391,14 @@ for (const input of document.querySelectorAll(
 ## Change
 ```
 UPDATE: #provided-heading[id] "sM_.heading" => "provided-heading"
-UPDATE: #sM_["c"].#childScope/0@0.uid[aria-describedby] "sM_.heading" => "provided-heading"
 REMOVE: #sM_.second + label
 REMOVE: #sM_.second + #provided-b
 INSERT: #sM_["c"].#childScope/0@0.uid + :is(label, #sM_["d"].#childScope/0@0.uid)
+UPDATE: #sM_["c"].#childScope/0@0.uid[aria-describedby] "sM_.heading" => "provided-heading"
+UPDATE: label:nth-of-type(3)[for] null => "sM_[\"d\"].#childScope/0@0.uid"
+UPDATE: label:nth-of-type(3)::text " " => "d"
+UPDATE: #sM_["d"].#childScope/0@0.uid[id] null => "sM_[\"d\"].#childScope/0@0.uid"
+UPDATE: #sM_["d"].#childScope/0@0.uid[aria-describedby] null => "provided-heading"
 ```
 
 # Update

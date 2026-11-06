@@ -87,8 +87,10 @@ UPDATE: main > footer > span::text@5 "0" => "1"
 ```
 ## Change
 ```
-REMOVE: main > ul > li:nth-of-type(3)::text + em
 INSERT: main > ul > li
+UPDATE: main > ul > li:nth-of-type(1)::text "" => "Milk"
+INSERT: main > ul > li:nth-of-type(1)::text + em
+REMOVE: main > ul > li:nth-of-type(3)::text + em
 INSERT: main > ul + section
 UPDATE: main > footer > span::text@0 "new" => "hot"
 ```
@@ -125,9 +127,9 @@ UPDATE: main > footer > span::text@0 "new" => "hot"
 ```
 ## Change
 ```
+REMOVE: main > ul > li:nth-of-type(1) + li
 REMOVE: main > ul > li:nth-of-type(1)::text + em
 INSERT: main > ul > li:nth-of-type(2)::text + em
-REMOVE: main > ul > li:nth-of-type(1) + li
 UPDATE: main > section::text "2 deals" => "1 deal"
 INSERT: main > section::text + small
 ```

@@ -56,8 +56,8 @@ UPDATE: main > ul > li:nth-of-type(2)::text@7 "0" => "1"
 ```
 ## Change
 ```
-UPDATE: main > ul > li::text@0 "Bread" => "Rye"
 REMOVE: main > ul > li
+UPDATE: main > ul > li::text@0 "Bread" => "Rye"
 ```
 
 # Update `{"items":[{"id":2,"label":"Rye"},{"id":3,"label":"Milk"}]}`
@@ -79,5 +79,6 @@ REMOVE: main > ul > li
 ## Change
 ```
 INSERT: main > ul > li:nth-of-type(1) + li
+UPDATE: main > ul > li:nth-of-type(2)::text@0 "" => "Milk"
 UPDATE: main > ul > li:nth-of-type(2)::text@6 "" => "1"
 ```

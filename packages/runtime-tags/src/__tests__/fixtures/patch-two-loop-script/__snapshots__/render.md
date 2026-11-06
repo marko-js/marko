@@ -20,7 +20,7 @@
 ```
 ## Change
 ```
-UPDATE: main > p::text "a" => "b"
 REMOVE: main > p + p
+UPDATE: main > p::text "a" => "b"
 UPDATE: body[data-label] "a" => "b"
 ```

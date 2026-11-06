@@ -108,10 +108,14 @@ for (const input of document.querySelectorAll(
 ## Change
 ```
 UPDATE: #sM_A[id] "provided-heading" => "sM_A"
-UPDATE: #sM_gbUA[aria-describedby] "provided-heading" => "sM_A"
 REMOVE: #sM_B + label
 REMOVE: #sM_B + #provided-a
 INSERT: #sM_gbUA + :is(label, #provided-c)
+UPDATE: #sM_gbUA[aria-describedby] "provided-heading" => "sM_A"
+UPDATE: label:nth-of-type(3)[for] null => "provided-c"
+UPDATE: label:nth-of-type(3)::text " " => "c"
+UPDATE: #provided-c[id] null => "provided-c"
+UPDATE: #provided-c[aria-describedby] null => "sM_A"
 ```
 
 # Update
@@ -387,10 +391,14 @@ for (const input of document.querySelectorAll(
 ## Change
 ```
 UPDATE: #provided-heading[id] "sM_A" => "provided-heading"
-UPDATE: #sM_gcUA[aria-describedby] "sM_A" => "provided-heading"
 REMOVE: #sM_B + label
 REMOVE: #sM_B + #provided-b
 INSERT: #sM_gcUA + :is(label, #sM_gdUA)
+UPDATE: #sM_gcUA[aria-describedby] "sM_A" => "provided-heading"
+UPDATE: label:nth-of-type(3)[for] null => "sM_gdUA"
+UPDATE: label:nth-of-type(3)::text " " => "d"
+UPDATE: #sM_gdUA[id] null => "sM_gdUA"
+UPDATE: #sM_gdUA[aria-describedby] null => "provided-heading"
 ```
 
 # Update

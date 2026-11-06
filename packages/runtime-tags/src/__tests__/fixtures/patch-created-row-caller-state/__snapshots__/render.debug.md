@@ -17,6 +17,7 @@
 ## Change
 ```
 INSERT: em
+UPDATE: em::text@0 "" => "a"
 UPDATE: em::text@2 "" => "0"
 ```
 
@@ -52,6 +53,7 @@ UPDATE: em::text@2 "0" => "1"
 ## Change
 ```
 INSERT: em:nth-of-type(1) + em
+UPDATE: em:nth-of-type(2)::text@0 "" => "b"
 UPDATE: em:nth-of-type(2)::text@2 "" => "1"
 ```
 
@@ -87,6 +89,6 @@ UPDATE: em:nth-of-type(2)::text@2 "1" => "2"
 ```
 ## Change
 ```
-UPDATE: em::text@0 "a" => "c"
 REMOVE: em + em
+UPDATE: em::text@0 "a" => "c"
 ```

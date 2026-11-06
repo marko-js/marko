@@ -78,9 +78,10 @@ UPDATE: main > button::text@6 "0" => "1"
 ```
 ## Change
 ```
+INSERT: main > ul > li
+UPDATE: main > ul > li:nth-of-type(1)::text " " => "Milk"
 UPDATE: main > ul > li:nth-of-type(2)::text "Apples" => "Apples!"
 UPDATE: main > ul > li:nth-of-type(3)::text "Bread" => "Bread!"
-INSERT: main > ul > li
 UPDATE: main > aside::text "Sale" => "Big Sale"
 UPDATE: main > p::text "hi" => "hello"
 ```
@@ -167,6 +168,7 @@ UPDATE: main > p::text "hello" => "bye"
 ## Change
 ```
 INSERT: main > ul > li:nth-of-type(1) + li
+UPDATE: main > ul > li:nth-of-type(2)::text " " => "Eggs"
 INSERT: main > ul + aside
 UPDATE: main > p::text "bye" => "again"
 ```

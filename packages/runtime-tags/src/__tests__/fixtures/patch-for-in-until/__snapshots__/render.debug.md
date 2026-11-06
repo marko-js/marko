@@ -143,5 +143,6 @@ UPDATE: ul > li:nth-of-type(2)::text@2 "1" => "2"
 ## Change
 ```
 INSERT: ul > li:nth-of-type(3) + li
+UPDATE: ul > li:nth-of-type(4)::text " " => "1"
 UPDATE: ul > li:nth-of-type(1)::text@2 "three" => "four"
 ```

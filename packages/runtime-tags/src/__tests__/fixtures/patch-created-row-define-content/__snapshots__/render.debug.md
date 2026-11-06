@@ -126,6 +126,9 @@
 ```
 ## Change
 ```
+INSERT: section
+REMOVE: section:nth-of-type(3) + section
+INSERT: section
 UPDATE: section:nth-of-type(1) > p > i::text@0 "c" => "d"
 INSERT: section:nth-of-type(1) > p + span
 REMOVE: section:nth-of-type(1) > span:nth-of-type(1) + p
@@ -136,12 +139,19 @@ REMOVE: section:nth-of-type(1) > span:nth-of-type(2) + p
 UPDATE: section:nth-of-type(1) > span:nth-of-type(2)[label] null => "z"
 INSERT: section:nth-of-type(1) > span:nth-of-type(2) > em
 UPDATE: section:nth-of-type(1) > span:nth-of-type(2) > em::text@0 "" => "d"
+UPDATE: section:nth-of-type(2) > p::text "" => "direct"
+INSERT: section:nth-of-type(2) > p::text + i
+INSERT: section:nth-of-type(2) > p + span
+UPDATE: section:nth-of-type(2) > span:nth-of-type(1)[label] null => "dynamic"
+UPDATE: section:nth-of-type(2) > span:nth-of-type(1) > b::text@0 "" => "n"
+INSERT: section:nth-of-type(2) > span:nth-of-type(1) + span
+UPDATE: section:nth-of-type(2) > span:nth-of-type(2)[label] null => "q"
+INSERT: section:nth-of-type(2) > span:nth-of-type(2) > em
+UPDATE: section:nth-of-type(2) > span:nth-of-type(2) > em::text@0 "" => "n"
+UPDATE: section:nth-of-type(2) > button::text " " => "0"
 UPDATE: section:nth-of-type(3) > p:nth-of-type(1) > i::text@0 "a" => "e"
 UPDATE: section:nth-of-type(3) > p:nth-of-type(2) > b::text@0 "a" => "e"
 UPDATE: section:nth-of-type(3) > p:nth-of-type(3) > em::text@0 "a" => "e"
-INSERT: section
-REMOVE: section:nth-of-type(3) + section
-INSERT: section
 UPDATE: section:nth-of-type(1) > span:nth-of-type(1) > b::text@2 "" => "0"
 UPDATE: section:nth-of-type(1) > span:nth-of-type(2) > em::text@2 "" => "0"
 UPDATE: section:nth-of-type(2) > p > i::text@2 "" => "0"
@@ -237,9 +247,9 @@ UPDATE: section:nth-of-type(3) > p:nth-of-type(2) > b::text@2 "0" => "1"
 UPDATE: section:nth-of-type(3) > p:nth-of-type(3) > em::text@2 "0" => "1"
 UPDATE: section:nth-of-type(1) > button::text "0" => "1"
 UPDATE: section:nth-of-type(1) > p > i::text@2 "0" => "1"
+UPDATE: section:nth-of-type(2) > button::text "0" => "1"
 UPDATE: section:nth-of-type(1) > span:nth-of-type(1) > b::text@2 "0" => "1"
 UPDATE: section:nth-of-type(1) > span:nth-of-type(2) > em::text@2 "0" => "1"
-UPDATE: section:nth-of-type(2) > button::text "0" => "1"
 UPDATE: section:nth-of-type(2) > p > i::text@2 "0" => "1"
 UPDATE: section:nth-of-type(2) > span:nth-of-type(1) > b::text@2 "0" => "1"
 UPDATE: section:nth-of-type(2) > span:nth-of-type(2) > em::text@2 "0" => "1"
@@ -314,17 +324,23 @@ UPDATE: section:nth-of-type(2) > span:nth-of-type(2) > em::text@2 "0" => "1"
 ```
 ## Change
 ```
+REMOVE: section:nth-of-type(1) + section
+REMOVE: section:nth-of-type(2) + section
+INSERT: section
 UPDATE: section:nth-of-type(1) > p > i::text@0 "n" => "m"
 UPDATE: section:nth-of-type(1) > span:nth-of-type(1) > b::text@0 "n" => "m"
 UPDATE: section:nth-of-type(1) > span:nth-of-type(2) > em::text@0 "n" => "m"
 INSERT: section:nth-of-type(1) > span:nth-of-type(2) + span
+UPDATE: section:nth-of-type(1) > span:nth-of-type(3)[label] null => "r"
+INSERT: section:nth-of-type(1) > span:nth-of-type(3) > em
+UPDATE: section:nth-of-type(1) > span:nth-of-type(3) > em::text@0 "" => "m"
 UPDATE: section:nth-of-type(2) > p > i::text@0 "d" => "f"
 UPDATE: section:nth-of-type(2) > span:nth-of-type(1) > b::text@0 "d" => "f"
 UPDATE: section:nth-of-type(2) > span:nth-of-type(2) > em::text@0 "d" => "f"
 INSERT: section:nth-of-type(2) > span:nth-of-type(2) + span
-REMOVE: section:nth-of-type(1) + section
-REMOVE: section:nth-of-type(2) + section
-INSERT: section
+UPDATE: section:nth-of-type(2) > span:nth-of-type(3)[label] null => "w"
+INSERT: section:nth-of-type(2) > span:nth-of-type(3) > em
+UPDATE: section:nth-of-type(2) > span:nth-of-type(3) > em::text@0 "" => "f"
 UPDATE: section:nth-of-type(1) > span:nth-of-type(3) > em::text@2 "" => "1"
 UPDATE: section:nth-of-type(2) > span:nth-of-type(3) > em::text@2 "" => "1"
 ```
@@ -404,9 +420,9 @@ b.click();
 ```
 UPDATE: section:nth-of-type(2) > button::text "1" => "2"
 UPDATE: section:nth-of-type(2) > p > i::text@2 "1" => "2"
+UPDATE: section:nth-of-type(1) > button::text "1" => "2"
 UPDATE: section:nth-of-type(2) > span:nth-of-type(1) > b::text@2 "1" => "2"
 UPDATE: section:nth-of-type(2) > span:nth-of-type(2) > em::text@2 "1" => "2"
-UPDATE: section:nth-of-type(1) > button::text "1" => "2"
 UPDATE: section:nth-of-type(1) > p > i::text@2 "1" => "2"
 UPDATE: section:nth-of-type(1) > span:nth-of-type(1) > b::text@2 "1" => "2"
 UPDATE: section:nth-of-type(1) > span:nth-of-type(2) > em::text@2 "1" => "2"

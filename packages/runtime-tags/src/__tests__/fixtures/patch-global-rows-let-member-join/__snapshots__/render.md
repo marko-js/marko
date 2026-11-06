@@ -190,6 +190,8 @@ UPDATE: article:nth-of-type(1) > form > button:nth-of-type(3)::text@5 "6" => "9"
 ```
 REMOVE: article
 INSERT: article:nth-of-type(1) + article
+UPDATE: article:nth-of-type(2) > strong::text " " => "C"
+UPDATE: article:nth-of-type(2) > form > span::text " " => "1"
 UPDATE: article:nth-of-type(2) > form > button:nth-of-type(3)::text@5 "" => "7"
 ```
 

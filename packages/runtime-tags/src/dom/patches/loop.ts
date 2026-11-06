@@ -21,29 +21,26 @@ export const createLoopPatcher =
       shellId = value[--len] as string;
     }
     const patches: Scope[] = [];
-    const rows: Scope[] = [];
     const keys = len && typeof value[0] !== "object" ? ([] as unknown[]) : 0;
     // A loop with a shell creates additions; one whose items pair only
     // (a stateful body) ships none and never adds.
     const [template, walks, setup] = getShell(shellId!) || [];
-    // The reconciler applies the patch: `params` walks each patch into its
-    // paired/created branch, and setup attaches effects to fresh ones.
-    const apply = (_?: never) =>
+    // The reconciler pairs and creates the rows (setup attaches effects to fresh
+    // ones); each row's patch applies once the loop owns every row, in its order.
+    const apply = (_?: never) => {
       reconcile(
         (MARKO_DEBUG ? accessor : encodeAccessor(accessor)) as never,
         template,
         walks,
         setup || 0,
-        // The loop owns the rows placed so far while it places them, so a row's
-        // patch can name one; a flush that throws navigates, so no old row need stay.
-        ((branch: Scope, [patch]: [Scope]) => (
-          (scope[AccessorPrefix.BranchScopes + accessor] = rows).push(branch),
-          patchScope(patch, branch)
-        )) as never,
       )(
         scope,
         keys ? [patches, (_patch: unknown, i: number) => keys[i]] : [patches],
       );
+      (scope[AccessorPrefix.BranchScopes + accessor] as Scope[]).forEach(
+        (row, i) => patchScope(patches[i], row),
+      );
+    };
     for (let i = 0; i < len;) {
       if (keys) keys.push(value[i++]);
       patches.push(value[i++] as Scope);

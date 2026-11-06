@@ -37,8 +37,10 @@
 ## Change
 ```
 UPDATE: ul:nth-of-type(1) > li::text@1 "1" => "2"
-UPDATE: ul:nth-of-type(2) > li:nth-of-type(1)::text@1 "1" => "2"
 INSERT: ul:nth-of-type(2) > li:nth-of-type(1) + li
+UPDATE: ul:nth-of-type(2) > li:nth-of-type(1)::text@1 "1" => "2"
+UPDATE: ul:nth-of-type(2) > li:nth-of-type(2)::text@0 "" => "y"
+UPDATE: ul:nth-of-type(2) > li:nth-of-type(2)::text@1 "" => "2"
 ```
 
 # Update
@@ -94,9 +96,9 @@ UPDATE: ul:nth-of-type(1) > li:nth-of-type(2)::text@1 "" => "2"
 ## Change
 ```
 UPDATE: ul:nth-of-type(1) > li:nth-of-type(1)::text@1 "2" => "3"
+REMOVE: ul:nth-of-type(2) > li + li
 UPDATE: ul:nth-of-type(2) > li::text@0 "x" => "y"
 UPDATE: ul:nth-of-type(2) > li::text@1 "2" => "3"
-REMOVE: ul:nth-of-type(2) > li + li
 UPDATE: ul:nth-of-type(1) > li:nth-of-type(2)::text@1 "2" => "3"
 ```
 

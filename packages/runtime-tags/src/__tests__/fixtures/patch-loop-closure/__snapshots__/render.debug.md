@@ -58,6 +58,7 @@ UPDATE: ul > li > span::text "0" => "1"
 ## Change
 ```
 INSERT: ul > li:nth-of-type(1) + li
+UPDATE: ul > li:nth-of-type(2)::text " " => "Bread"
 UPDATE: ul > li:nth-of-type(2) > span::text " " => "1"
 ```
 
@@ -119,5 +120,6 @@ UPDATE: ul > li:nth-of-type(2) > span::text "1" => "2"
 ## Change
 ```
 INSERT: ul > li:nth-of-type(2) + li
+UPDATE: ul > li:nth-of-type(3)::text " " => "Milk"
 UPDATE: ul > li:nth-of-type(3) > span::text " " => "2"
 ```

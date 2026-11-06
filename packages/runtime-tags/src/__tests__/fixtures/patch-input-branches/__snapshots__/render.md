@@ -44,6 +44,7 @@
 ```
 UPDATE: .wrap > h1::text@6 "world" => "marko"
 INSERT: .wrap > li:nth-of-type(2) + li
+UPDATE: .wrap > li:nth-of-type(3)::text " " => "3"
 ```
 
 # Update `{"name":"marko","show":false,"items":[3]}`
@@ -62,9 +63,9 @@ INSERT: .wrap > li:nth-of-type(2) + li
 ## Change
 ```
 REMOVE: .wrap > h1 + p
+REMOVE: .wrap > li + li
+REMOVE: .wrap > li + li
 UPDATE: .wrap > li::text "1" => "3"
-REMOVE: .wrap > li + li
-REMOVE: .wrap > li + li
 ```
 
 # Update `{"name":"mark","show":true,"items":[3]}`

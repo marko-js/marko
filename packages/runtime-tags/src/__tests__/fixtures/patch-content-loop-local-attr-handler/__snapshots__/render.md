@@ -63,8 +63,10 @@ UPDATE: p::text "none" => "B"
 ```
 ## Change
 ```
-UPDATE: .b1::text "B" => "C"
 INSERT: .b1 + .b2
+UPDATE: .b1::text "B" => "C"
+UPDATE: .b2[class] null => "b2"
+UPDATE: .b2::text " " => "D"
 ```
 
 # Update

@@ -78,7 +78,16 @@ caught
 ```
 ## Change
 ```
-INSERT: #sM_[1].#childScope/1@1.uid + :is(span, label, #sM_[2].#childScope/0@0.#childScope/1@1.uid, ::text("caught"), label, #sM_[2].#childScope/1@1.uid)
+INSERT: #sM_[1].#childScope/1@1.uid + :is(span, label, #sM_[2].#childScope/0@0.#childScope/1@1.uid, label, #sM_[2].#childScope/1@1.uid)
+UPDATE: label:nth-of-type(3)[for] null => "sM_[2].#childScope/0@0.#childScope/1@1.uid"
+UPDATE: label:nth-of-type(3)::text " " => "2"
+UPDATE: #sM_[2].#childScope/0@0.#childScope/1@1.uid[id] null => "sM_[2].#childScope/0@0.#childScope/1@1.uid"
+INSERT: #sM_[2].#childScope/0@0.#childScope/1@1.uid + p
+INSERT: #sM_[2].#childScope/0@0.#childScope/1@1.uid + ::text("caught")
+REMOVE: ::text@6 + p
+UPDATE: label:nth-of-type(4)[for] null => "sM_[2].#childScope/1@1.uid"
+UPDATE: label:nth-of-type(4)::text " " => "row 2"
+UPDATE: #sM_[2].#childScope/1@1.uid[id] null => "sM_[2].#childScope/1@1.uid"
 ```
 
 # Update

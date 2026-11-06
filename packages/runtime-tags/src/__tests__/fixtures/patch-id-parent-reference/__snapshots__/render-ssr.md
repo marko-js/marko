@@ -56,6 +56,10 @@
 REMOVE: #sM_A + label
 REMOVE: #sM_A + #sM_gaB
 INSERT: #sM_gbB + :is(label, #sM_gcB)
+UPDATE: label:nth-of-type(2)[for] null => "sM_gcB"
+UPDATE: #sM_gcB[id] null => "sM_gcB"
+UPDATE: #sM_gcB[aria-describedby] null => "sM_A"
+UPDATE: label:nth-of-type(2)::text " " => "c"
 ```
 
 # Update

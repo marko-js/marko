@@ -117,6 +117,8 @@ INSERT: ul > li
 ## Change
 ```
 INSERT: ul > li:nth-of-type(1) + li
+UPDATE: ul > li:nth-of-type(2)::text " " => "Milk"
+UPDATE: ul > li:nth-of-type(2) > span::text " " => "5"
 ```
 
 # Update
@@ -222,4 +224,6 @@ REMOVE: ul > li:nth-of-type(1) + li
 ## Change
 ```
 INSERT: ul > li:nth-of-type(1) + li
+UPDATE: ul > li:nth-of-type(2)::text " " => "Milk"
+UPDATE: ul > li:nth-of-type(2) > span::text " " => "5"
 ```

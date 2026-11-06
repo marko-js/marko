@@ -63,9 +63,9 @@ UPDATE: main > p:nth-of-type(3)::text "c:x@0" => "c:x@1"
 ## Change
 ```
 REMOVE: main > p:nth-of-type(3) + p
-INSERT: main > p:nth-of-type(1) + p
-REMOVE: main > p:nth-of-type(3) + p
 INSERT: main > p
+REMOVE: main > p:nth-of-type(3) + p
+INSERT: main > p:nth-of-type(1) + p
 UPDATE: main > p:nth-of-type(3)::text "a:x@1" => "a:y@1"
 UPDATE: main > p:nth-of-type(2)::text "b:x@1" => "b:y@1"
 UPDATE: main > p:nth-of-type(1)::text "c:x@1" => "c:y@1"

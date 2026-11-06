@@ -37,7 +37,8 @@
 ```
 ## Change
 ```
-INSERT: em:nth-of-type(2) + :is(em, em)
+INSERT: em:nth-of-type(2) + em
+INSERT: em:nth-of-type(3) + em
 UPDATE: em:nth-of-type(5)::text "a!" => "b!"
 ```
 

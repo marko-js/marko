@@ -23,6 +23,10 @@
 ## Change
 ```
 INSERT: b:nth-of-type(1) + :is(.cM_0, b)
+UPDATE: .cM_0[class] null => "cM_0"
+INSERT: .cM_0::text(".cM_0~*{}")
+REMOVE: .cM_0::text(".cM_0~*{}")
+INSERT: .cM_0::text(".cM_0~*{--M_packages-1bruntime-19tags-1bsrc-1b__tests__-1bfixtures-1bpatch-19style-19in-19loop-19item-1btemplate-1amarko_0:blue;}")
 ```
 
 # Update `{"items":[{"id":"b","color":"green"}]}`
@@ -35,8 +39,8 @@ INSERT: b:nth-of-type(1) + :is(.cM_0, b)
 ```
 ## Change
 ```
-REMOVE: .cM_0::text(".cM_0~*{--M_packages-1bruntime-19tags-1bsrc-1b__tests__-1bfixtures-1bpatch-19style-19in-19loop-19item-1btemplate-1amarko_0:blue;}")
-INSERT: .cM_0::text(".cM_0~*{--M_packages-1bruntime-19tags-1bsrc-1b__tests__-1bfixtures-1bpatch-19style-19in-19loop-19item-1btemplate-1amarko_0:green;}")
 REMOVE: style
 REMOVE: .k
+REMOVE: .cM_0::text(".cM_0~*{--M_packages-1bruntime-19tags-1bsrc-1b__tests__-1bfixtures-1bpatch-19style-19in-19loop-19item-1btemplate-1amarko_0:blue;}")
+INSERT: .cM_0::text(".cM_0~*{--M_packages-1bruntime-19tags-1bsrc-1b__tests__-1bfixtures-1bpatch-19style-19in-19loop-19item-1btemplate-1amarko_0:green;}")
 ```

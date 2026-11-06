@@ -32,8 +32,10 @@
 ```
 ## Change
 ```
-UPDATE: .b[class] "a" => "b"
 INSERT: .b + li
+UPDATE: .b[class] "a" => "b"
+UPDATE: ul > li:nth-of-type(2)[title] null => "two"
+UPDATE: ul > li:nth-of-type(2)::text " " => "2"
 ```
 
 # Update `{"items":[{"id":2,"attrs":{}}]}`
@@ -49,6 +51,6 @@ INSERT: .b + li
 ```
 ## Change
 ```
-UPDATE: ul > li[title] "two" => null
 REMOVE: ul > li
+UPDATE: ul > li[title] "two" => null
 ```

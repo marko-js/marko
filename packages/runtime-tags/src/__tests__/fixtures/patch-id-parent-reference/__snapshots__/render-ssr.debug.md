@@ -56,6 +56,10 @@
 REMOVE: #sM_.headingId + label
 REMOVE: #sM_.headingId + #sM_["a"].uid
 INSERT: #sM_["b"].uid + :is(label, #sM_["c"].uid)
+UPDATE: label:nth-of-type(2)[for] null => "sM_[\"c\"].uid"
+UPDATE: #sM_["c"].uid[id] null => "sM_[\"c\"].uid"
+UPDATE: #sM_["c"].uid[aria-describedby] null => "sM_.headingId"
+UPDATE: label:nth-of-type(2)::text " " => "c"
 ```
 
 # Update

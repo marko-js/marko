@@ -389,6 +389,9 @@ INSERT: #sM_A + :is(label, #sM_g1B)
 REMOVE: #sM_R6a_00wbB + label
 REMOVE: #sM_R6a_00wbB + #sM_Sag9007199254740994B
 INSERT: #sM_A + :is(label, #sM_Sag9007199254740994B)
+UPDATE: label:nth-of-type(8)[for] null => "sM_Raanew_00xkeyB"
+UPDATE: #sM_Raanew_00xkeyB[id] null => "sM_Raanew_00xkeyB"
+UPDATE: #sM_Raanew_00xkeyB[aria-labelledby] null => "sM_A"
 ```
 
 # Update

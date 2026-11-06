@@ -57,8 +57,12 @@ UPDATE: main > section:nth-of-type(2) > i::text@5 "p" => "q"
 ```
 ## Change
 ```
+INSERT: main > section:nth-of-type(2) + section
 UPDATE: main > section:nth-of-type(1) > i::text@0 "Acme" => "Zed"
 UPDATE: main > section:nth-of-type(2) > i::text@0 "Acme" => "Zed"
 UPDATE: main > section:nth-of-type(2) > i::text@6 "b" => "c"
-INSERT: main > section:nth-of-type(2) + section
+INSERT: main > section:nth-of-type(3) > i
+UPDATE: main > section:nth-of-type(3) > i::text@0 "" => "Zed"
+UPDATE: main > section:nth-of-type(3) > i::text@4 "" => "q"
+UPDATE: main > section:nth-of-type(3) > i::text@6 "" => "d"
 ```

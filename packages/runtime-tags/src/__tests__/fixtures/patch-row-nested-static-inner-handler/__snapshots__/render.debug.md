@@ -43,7 +43,8 @@
 ```
 ## Change
 ```
-INSERT: button:nth-of-type(2) + :is(button, button)
+INSERT: button:nth-of-type(2) + button
+INSERT: button:nth-of-type(3) + button
 ```
 
 # Update
