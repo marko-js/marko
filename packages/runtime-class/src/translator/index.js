@@ -773,7 +773,8 @@ function getClassHydrationMode(file, visited = new Set()) {
 
   visited.add(fileName);
 
-  if (meta.component) {
+  // A legacy `w-bind` widget can register through a dependency instead of `component`.
+  if (meta.component || meta.widgetBind) {
     return (meta.classHydration = CLASS_HYDRATION_SELF);
   }
 
