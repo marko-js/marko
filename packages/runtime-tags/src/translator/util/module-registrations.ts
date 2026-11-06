@@ -78,9 +78,8 @@ export function trackFunction(
   fnExtra: RegisteredFnExtra,
   markoRoot: MarkoRootPath,
 ) {
-  reserveExportRegistryId(fnExtra, fn, markoRoot);
-
   if (isStatic(markoRoot)) {
+    reserveExportRegistryId(fnExtra, fn, markoRoot);
     const exprs = getStaticDeclExprs(fn);
     if (exprs.size) {
       getReferencesByFn().set(fnExtra, exprs);
@@ -338,7 +337,6 @@ function reserveExportRegistryId(
   fn: t.NodePath<t.Function>,
   markoRoot: MarkoRootPath,
 ) {
-  if (!isStatic(markoRoot)) return;
   const exportNames = getExportNames(fn, markoRoot);
   // The generated module imports the function by name, so the id is keyed by a
   // name that can be spelled in an import.
@@ -386,7 +384,7 @@ function getExportNames(fn: t.NodePath<t.Function>, markoRoot: MarkoRootPath) {
     for (const ref of binding.referencePaths) {
       const specifier = ref.parent;
       if (
-        specifier?.type === "ExportSpecifier" &&
+        specifier.type === "ExportSpecifier" &&
         (specifier.exportKind || "value") === "value" &&
         !(ref.parentPath!.parent as t.ExportNamedDeclaration).source
       ) {
@@ -431,12 +429,9 @@ function getStaticDeclExprs(
   // a declaration already being walked; skip it so the recursion terminates.
   if (decl && !seen.has(decl.node)) {
     seen.add(decl.node);
-    const ids = decl.getOuterBindingIdentifiers();
-    if (ids) {
-      for (const name in ids) {
-        const binding = decl.scope.getBinding(name);
-        if (binding) addBindingExprs(binding, exprs, seen, fnRoots);
-      }
+    for (const name in decl.getOuterBindingIdentifiers()) {
+      const binding = decl.scope.getBinding(name);
+      if (binding) addBindingExprs(binding, exprs, seen, fnRoots);
     }
   }
 

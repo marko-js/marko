@@ -31,7 +31,7 @@ declare module "@marko/compiler/dist/types" {
   export interface NodeExtra {
     tagNameType?: TagNameType;
   }
-  // Written by `analyzeExpressionTagName`, on the tag whose name it types.
+  // Written by `analyzeTagNameType`, on the tag whose name it types.
   export interface MarkoTagExtra {
     // Incomplete when `tagNameType` is `DynamicTag`, since that ends the
     // analysis early.
@@ -99,7 +99,7 @@ export default function analyzeTagNameType(tag: t.NodePath<t.MarkoTag>) {
           (childFile?.metadata.marko.classHydration === ClassHydration.Self &&
             (tag.node.attributes.length || tag.node.body.body.length))
         ) {
-          getProgram().node.extra!.isInteractive = true;
+          getProgram().node.extra.isInteractive = true;
         }
       } else if (!childFile) {
         extra.tagNameType = TagNameType.DynamicTag;
@@ -142,7 +142,7 @@ function analyzeExpressionTagName(
   name: t.NodePath<t.Expression>,
   extra: t.MarkoTagExtra,
 ): LoadImportConfig | undefined {
-  const pending = [name] as t.NodePath<t.Expression>[];
+  const pending = [name];
   const seen = new Set<t.Node>();
   let path: (typeof pending)[0] | undefined;
   let type: TagNameType | undefined;
@@ -207,7 +207,7 @@ function analyzeExpressionTagName(
         const decl = declPath.node;
         if (
           MARKO_FILE_REG.test(decl.source.value) &&
-          decl.specifiers.some((it) => t.isImportDefaultSpecifier(it))
+          decl.specifiers.some(t.isImportDefaultSpecifier)
         ) {
           const { tagImport, loadImport } = getImportFacts(declPath);
           const resolvedImport = tagImport!;

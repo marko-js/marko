@@ -20,7 +20,7 @@ export function bodyToText(body: t.MarkoTagBody, decodeEntities = false) {
   return buildText(body, toText, decodeEntities);
 }
 
-// Pre-analyze variant: interpolations stay uncoerced (the output-specific `_to_text` import
+// Before translate: interpolations stay uncoerced (the output-specific `_to_text` import
 // can't precede translate); a lone interpolation stays bare so the placeholder coerces it.
 export function bodyToUncoercedText(body: t.MarkoTagBody) {
   return buildText(body, identity);

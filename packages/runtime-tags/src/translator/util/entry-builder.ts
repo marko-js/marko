@@ -50,7 +50,7 @@ export type Reach = 0 | 1 | 2;
 type EntryFile = t.BabelFile & {
   [kState]?: EntryState;
 };
-type VisitChild = (id: string, reach?: Reach) => void;
+export type VisitChild = (id: string, reach?: Reach) => void;
 const kState: unique symbol = Symbol();
 
 const builder = {
@@ -175,9 +175,9 @@ const builder = {
       !state.bundledDepth &&
       (init || hasClientStatement || !!programExtra.hasResumes);
 
-    if (init) state.init = true;
-    if (hasClientStatement) state.hasClientStatement = true;
-    if (loadImports) state.lazy = true;
+    state.init ||= init;
+    state.hasClientStatement ||= hasClientStatement;
+    state.lazy ||= !!loadImports;
     if (isRoot) {
       state.roots.push(
         resolveRelativePath(entryFile, file.opts.filename as string),
