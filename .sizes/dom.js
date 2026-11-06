@@ -1,4 +1,4 @@
-// size: 27176 (min) 10167 (brotli)
+// size: 27191 (min) 10178 (brotli)
 // packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -662,9 +662,9 @@ function _const(valueAccessor, fn) {
     }
   );
 }
-function _or(id, fn, defaultPending = 1, scopeIdAccessor = "L") {
+function _or(id, fn, defaultPending = 1, scopeIdAccessor) {
   return (
-    scopeIdAccessor !== "L" && (scopeIdAccessor = decodeAccessor(scopeIdAccessor)),
+    (scopeIdAccessor = scopeIdAccessor ? decodeAccessor(scopeIdAccessor) : "L"),
     (scope) => {
       scope.H === runId
         ? (~id) in scope
@@ -674,45 +674,37 @@ function _or(id, fn, defaultPending = 1, scopeIdAccessor = "L") {
     }
   );
 }
-function _for_closure(ownerLoopNodeAccessor, fn) {
-  ownerLoopNodeAccessor = decodeAccessor(ownerLoopNodeAccessor);
+function _for_closure(ownerLoopNodeAccessor, fn, scopeIdAccessor) {
+  ((ownerLoopNodeAccessor = decodeAccessor(ownerLoopNodeAccessor)),
+    (scopeIdAccessor = scopeIdAccessor ? decodeAccessor(scopeIdAccessor) : "L"));
   let scopeAccessor = "A" + ownerLoopNodeAccessor,
-    ownerSignal = (ownerScope) => {
-      let scopes = toArray(ownerScope[scopeAccessor]);
-      queueRender(
-        ownerScope,
-        (_) => {
-          for (let scope of scopes) scope.H > 0 && scope.H < runId && fn(scope);
-        },
-        -1,
-      );
-    };
+    render = (ownerScope) => {
+      for (let scope of toArray(ownerScope[scopeAccessor])) scope.H < runId && fn(scope);
+    },
+    ownerSignal = (ownerScope) =>
+      queueRender(ownerScope, render, -1, 0, ownerScope[scopeIdAccessor] + 0.5);
   return ((ownerSignal._ = (scope) => queueRender(scope, fn, -1)), ownerSignal);
 }
-function _for_selector(ownerLoopNodeAccessor, ownerValueAccessor, fn) {
+function _for_selector(ownerLoopNodeAccessor, ownerValueAccessor, fn, scopeIdAccessor) {
   ((ownerLoopNodeAccessor = decodeAccessor(ownerLoopNodeAccessor)),
-    (ownerValueAccessor = decodeAccessor(ownerValueAccessor)));
+    (ownerValueAccessor = decodeAccessor(ownerValueAccessor)),
+    (scopeIdAccessor = scopeIdAccessor ? decodeAccessor(scopeIdAccessor) : "L"));
   let scopeAccessor = "A" + ownerLoopNodeAccessor,
     mapAccessor = "O" + ownerLoopNodeAccessor,
     prevKeyProp = `_${ownerValueAccessor}`,
+    render = (ownerScope) => {
+      let nextKey = ownerScope[ownerValueAccessor],
+        map = keyedScopes(ownerScope, scopeAccessor, mapAccessor);
+      if (map && prevKeyProp in map) {
+        let prevScope = map.get(map[prevKeyProp]),
+          nextScope = map.get(nextKey);
+        prevScope !== nextScope && (runLiveBranch(prevScope, fn), runLiveBranch(nextScope, fn));
+      } else for (let scope of toArray(ownerScope[scopeAccessor])) runLiveBranch(scope, fn);
+      map && (map[prevKeyProp] = nextKey);
+    },
     ownerSignal = (ownerScope) => {
-      if (ownerScope.H < runId) {
-        let nextKey = ownerScope[ownerValueAccessor];
-        queueRender(
-          ownerScope,
-          (_) => {
-            let map = keyedScopes(ownerScope, scopeAccessor, mapAccessor);
-            if (map && prevKeyProp in map) {
-              let prevScope = map.get(map[prevKeyProp]),
-                nextScope = map.get(nextKey);
-              prevScope !== nextScope &&
-                (runLiveBranch(prevScope, fn), runLiveBranch(nextScope, fn));
-            } else for (let scope of toArray(ownerScope[scopeAccessor])) runLiveBranch(scope, fn);
-            map && (map[prevKeyProp] = nextKey);
-          },
-          -1,
-        );
-      }
+      ownerScope.H < runId &&
+        queueRender(ownerScope, render, -1, 0, ownerScope[scopeIdAccessor] + 0.5);
     };
   return ((ownerSignal._ = (scope) => queueRender(scope, fn, -1)), ownerSignal);
 }
@@ -727,7 +719,7 @@ function keyedScopes(ownerScope, scopeAccessor, mapAccessor) {
   return map;
 }
 function runLiveBranch(scope, fn) {
-  scope && scope.H > 0 && scope.H < runId && fn(scope);
+  scope?.H < runId && fn(scope);
 }
 function _if_closure(ownerConditionalNodeAccessor, branch, fn) {
   ownerConditionalNodeAccessor = decodeAccessor(ownerConditionalNodeAccessor);
