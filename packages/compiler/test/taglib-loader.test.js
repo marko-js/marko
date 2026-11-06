@@ -130,7 +130,7 @@ describe("compiler/taglib-loader", () => {
     it("reports a template that does not exist", () =>
       assert.match(
         message(() => loadTag({ template: "./nope.marko" }, "/x/marko.json")),
-        /Template at path "[^"]*nope\.marko" does not exist/,
+        /Cause: Error: Template at path "[^"]*nope\.marko" does not exist\. \(\[\/x\/marko\.json\]\)$/,
       ));
 
     it("resolves a relative types path and leaves a bare one alone", () => {
