@@ -15,6 +15,7 @@ import {
   taglib,
   types as t,
 } from "@marko/compiler";
+import { diagnosticError } from "@marko/compiler/babel-utils";
 import * as translator from "@marko/runtime-tags/translator";
 
 const template = path.join(
@@ -32,9 +33,9 @@ const fromMemory = (src) => ({
   readFileSync: () => src,
 });
 
-const failing = (src) => {
+const failing = (src, babelConfig) => {
   try {
-    compileSync(src, "test.marko", { translator, code: false });
+    compileSync(src, "test.marko", { translator, code: false, babelConfig });
   } catch (err) {
     return err;
   }
@@ -315,6 +316,43 @@ describe("compiler/compile", () => {
       const err = failing("<if>a</if>\n<if>b</if>");
       assert.equal(err.toJSON(), String(err));
       assert.equal(JSON.parse(JSON.stringify({ err })).err, String(err));
+    });
+
+    // Some engines keep only the frames in `stack`, without V8's message header.
+    it("keeps each error's text when `stack` holds only frames", () => {
+      const report = () => ({
+        visitor: {
+          Program(path) {
+            diagnosticError(path, {
+              label: "Located",
+              loc: {
+                start: { line: 1, column: 1 },
+                end: { line: 1, column: 4 },
+              },
+            });
+            diagnosticError(path, { label: "Unlocated", loc: false });
+          },
+        },
+      });
+      const { prepareStackTrace } = Error;
+      Error.prepareStackTrace = (_err, frames) =>
+        frames.map((frame) => `    at ${frame}\n`).join("");
+      try {
+        assert.equal(
+          stripVTControlCharacters(
+            failing("<div>hi</div>", { plugins: [report] }).message,
+          ),
+          `
+    at test.marko:1:2
+    > 1 | <div>hi</div>
+        |  ^^^ Located
+
+    CompileError: Unlocated
+        at test.marko`,
+        );
+      } finally {
+        Error.prepareStackTrace = prepareStackTrace;
+      }
     });
   });
 
