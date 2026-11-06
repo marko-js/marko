@@ -57,6 +57,8 @@ installBindRef((root, path, id, bound, locals) => {
   };
   return bound === 1
     ? Object.defineProperty(
+        // No owner yet (its scope may not exist): the getter walks to it on use. The
+        // factory counts its values as closure levels, so a missing local passes none.
         locals
           ? (_resumed[id] as (owner: undefined, locals: Scope) => Renderer)(
               undefined,

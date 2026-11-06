@@ -2,8 +2,8 @@
   "dom": {
     "template.marko.page.mjs": {
       "total": {
-        "min": 11625,
-        "brotli": 5097
+        "min": 11648,
+        "brotli": 5108
       },
       "files": {
         "tags/number-stepper.marko": 309,
