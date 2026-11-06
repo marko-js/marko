@@ -17,10 +17,8 @@ _marko_template$1.Component = (0, import_defineComponent.default)(_marko_compone
 // components/tags-try.marko
 const $template = "<!><!><!>";
 const $walks = "b%c";
-const $await_content__v = ($scope, v) => _text($scope.a, v);
-const $await_content__$params = ($scope, $params3) => $await_content__v($scope, $params3[0]);
-const $catch_content__err_message = ($scope, err_message) => _text($scope.a, err_message);
-const $catch_content__$params = ($scope, $params2) => $catch_content__err_message($scope, $params2[0]?.message);
+const $await_content__$params = ($scope, $params3) => _text($scope.a, $params3[0]);
+const $catch_content__$params = ($scope, $params2) => _text($scope.a, $params2[0]?.message);
 const $catch_content = _content("d0", "caught <!>", "b%", 0, $catch_content__$params);
 const $try_content__dynamicTag = /*@__PURE__*/ _dynamic_tag(0);
 const $await_content = /*@__PURE__*/ _await_content(1, " ", " ");

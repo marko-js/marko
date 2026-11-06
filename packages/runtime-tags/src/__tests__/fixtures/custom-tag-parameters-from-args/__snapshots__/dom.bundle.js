@@ -15,10 +15,8 @@ const $setup__script = _script("b0", ($scope) => _on($scope.a, "click", function
 }));
 
 // template.marko
-const $customtag_content__count = ($scope, count) => _text($scope.a, count);
-const $customtag_content__count2 = ($scope, count2) => _text($scope.b, count2);
 const $customtag_content__$params = ($scope, $params2) => {
-	$customtag_content__count($scope, $params2[0]);
-	$customtag_content__count2($scope, $params2[1]);
+	_text($scope.a, $params2[0]);
+	_text($scope.b, $params2[1]);
 };
 const $customtag_content = _content("a0", "<div>Counts: <!>,<!></div>", "Db%c%", 0, $customtag_content__$params);

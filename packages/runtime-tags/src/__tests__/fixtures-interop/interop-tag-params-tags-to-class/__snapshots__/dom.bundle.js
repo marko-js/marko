@@ -38,14 +38,13 @@ const $classlayout_content__setup = ($scope) => {
 	$classlayout_content__multiplier($scope);
 	$classlayout_content__setup__script($scope);
 };
-const $classlayout_content__message = ($scope, message) => _text($scope.a, message);
 const $classlayout_content__baseCount = /*@__PURE__*/ _const(6, ($scope) => {
 	_text($scope.d, $scope.g);
 	$classlayout_content__multiplier__OR__baseCount($scope);
 });
 const $classlayout_content__$params = ($scope, $params2) => {
 	$classlayout_content__baseCount($scope, $params2[0]);
-	$classlayout_content__message($scope, $params2[1]);
+	_text($scope.a, $params2[1]);
 };
 const $classlayout_content = _content("a0", "<h1> </h1><button id=tags><!> * <!> = <!></button>", "D l D%c%c%", $classlayout_content__setup, $classlayout_content__$params);
 const $multiplier = /*@__PURE__*/ _let(1, /* @__PURE__ */ _closure($classlayout_content__multiplier));

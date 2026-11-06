@@ -1,13 +1,13 @@
 // tags/inner.marko
 const $template = "<!><!><!>";
-const $for_content__cell_content = /* @__PURE__ */ _dynamic_tag(0);
-const $for_content__$params$1 = ($scope, $params2) => $for_content__cell_content($scope, $params2[0]?.content);
+const $for_content__dynamicTag$1 = /*@__PURE__*/ _dynamic_tag(0);
+const $for_content__$params$1 = ($scope, $params2) => $for_content__dynamicTag$1($scope, $params2[0]?.content);
 const $for$1 = /*@__PURE__*/ _for_of_unkeyed(0, "<span><!></span>", "D%", 0, $for_content__$params$1);
 const $input_cell = ($scope, input_cell) => $for$1($scope, [input_cell]);
 
 // tags/outer.marko
-const $for_content__row_content = /* @__PURE__ */ _dynamic_tag(0);
-const $for_content__$params = ($scope, $params2) => $for_content__row_content($scope, $params2[0]?.content);
+const $for_content__dynamicTag = /*@__PURE__*/ _dynamic_tag(0);
+const $for_content__$params = ($scope, $params2) => $for_content__dynamicTag($scope, $params2[0]?.content);
 const $for = /*@__PURE__*/ _for_of_unkeyed(0, "<div><!></div>", "D%", 0, $for_content__$params);
 const $input_row = ($scope, input_row) => $for($scope, [input_row]);
 

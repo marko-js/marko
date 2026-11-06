@@ -1,6 +1,5 @@
 // template.marko
-const $await_content__v = ($scope, v) => _text($scope.a, v);
-const $await_content__$params = ($scope, $params2) => $await_content__v($scope, $params2[0]);
+const $await_content__$params = ($scope, $params2) => _text($scope.a, $params2[0]);
 const $if_content__if = /*@__PURE__*/ _if(1, "never");
 const $if_content__x = /*@__PURE__*/ _if_closure(2, 0, ($scope) => $if_content__if($scope, $scope._.d > 9 ? 0 : 1));
 const $await_content = /*@__PURE__*/ _await_content(0, "<i> </i>", "D ");

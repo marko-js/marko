@@ -14,10 +14,8 @@ var counter_default = /*@__PURE__*/ _template("__tests__/tags/counter.marko", $t
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<!><!><!>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&%b%c`)($walks$1);
-const $await_content2__v = ($scope, v) => _text($scope["#text/0"], v);
-const $await_content2__$params = ($scope, $params4) => $await_content2__v($scope, $params4[0]);
-const $catch_content__err_message = ($scope, err_message) => _text($scope["#text/0"], err_message);
-const $catch_content__$params = ($scope, $params3) => $catch_content__err_message($scope, $params3[0]?.message);
+const $await_content2__$params = ($scope, $params4) => _text($scope["#text/0"], $params4[0]);
+const $catch_content__$params = ($scope, $params3) => _text($scope["#text/0"], $params3[0]?.message);
 const $catch_content = _content("__tests__/template.marko_5*content", " ", " ", 0, $catch_content__$params);
 const $await_content2 = /*@__PURE__*/ _await_content("#text/0", " ", " ");
 const $try_content2__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content2__$params);

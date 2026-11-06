@@ -9,8 +9,7 @@ const $for_content__setup = ($scope) => {
 	$for_content__selected._($scope);
 	$for_content__setup__script($scope);
 };
-const $for_content__label = ($scope, label) => _text($scope["#text/2"], label);
-const $for_content__$params = ($scope, $params2) => $for_content__label($scope, $params2[0]);
+const $for_content__$params = ($scope, $params2) => _text($scope["#text/2"], $params2[0]);
 const $selected = /*@__PURE__*/ _let("selected/1", $for_content__selected);
 const $for = /*@__PURE__*/ _for_of_unkeyed("#tbody/0", "<tr><td><button class=select> </button></td></tr>", " E D ", $for_content__setup, $for_content__$params);
 const $rows = /*@__PURE__*/ _let("rows/2", ($scope) => $for($scope, [$scope.rows]));

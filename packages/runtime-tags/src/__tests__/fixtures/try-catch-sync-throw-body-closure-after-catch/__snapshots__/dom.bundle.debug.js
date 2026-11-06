@@ -1,8 +1,7 @@
 // template.marko
 const $template = "<!><!><button class=toggle> </button>";
 const $walks = "b%b D l";
-const $catch_content__err_message = ($scope, err_message) => _text($scope["#text/0"], err_message);
-const $catch_content__$params = ($scope, $params2) => $catch_content__err_message($scope, $params2[0]?.message);
+const $catch_content__$params = ($scope, $params2) => _text($scope["#text/0"], $params2[0]?.message);
 const $catch_content = _content("__tests__/template.marko_3*content", "<p> </p>", "D ", 0, $catch_content__$params);
 const $if_content__show = /*@__PURE__*/ _closure_get("show/4", ($scope) => _text($scope["#text/0"], $scope._._.show), ($scope) => $scope._._, "__tests__/template.marko_2_show#0:3/subscribe");
 const $if_content__setup = $if_content__show;

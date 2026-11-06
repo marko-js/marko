@@ -1,12 +1,10 @@
 // template.marko
 const $template = "<ul></ul><button class=rotate>Rotate</button><button class=bump>Bump b</button><button class=resettle>Same items</button>";
 const $walks = " b b b b";
-const $for_content__index = ($scope, index) => _text($scope["#text/0"], index);
 const $for_content__setup = ($scope) => _text($scope["#text/1"], $scope["#LoopKey"]);
-const $for_content__item_n = ($scope, item_n) => _text($scope["#text/2"], item_n);
 const $for_content__$params = ($scope, $params2) => {
-	$for_content__item_n($scope, $params2[0]?.n);
-	$for_content__index($scope, $params2[1]);
+	_text($scope["#text/2"], $params2[0]?.n);
+	_text($scope["#text/0"], $params2[1]);
 };
 const $for = /*@__PURE__*/ _for_of("#ul/0", "<li><!>:<!>=<!></li>", "D%c%c%", $for_content__setup, $for_content__$params);
 const $items = /*@__PURE__*/ _let("items/4", ($scope) => $for($scope, [$scope.items, "id"]));

@@ -14,8 +14,7 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 // awaiter.marko
 const $template = /*@__PURE__*/ ((_w0, _w1) => `<!>${_w0}<!>${_w1}<!>`)("", "");
 const $walks = /*@__PURE__*/ ((_w0, _w1) => `/${_w0}&b%/${_w1}&c`)("", "");
-const $await_content__v = ($scope, v) => $input_id($scope["#childScope/0"], v);
-const $await_content__$params = ($scope, $params2) => $await_content__v($scope, $params2[0]);
+const $await_content__$params = ($scope, $params2) => $input_id($scope["#childScope/0"], $params2[0]);
 const $await_content = /*@__PURE__*/ _await_content("#text/1", "", /*@__PURE__*/ ((_w0) => `/${_w0}&`)(""));
 const $await_promise = /*@__PURE__*/ _await_promise("#text/1", $await_content__$params);
 function $setup($scope) {

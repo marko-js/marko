@@ -2,18 +2,18 @@
 const $template$1 = "";
 const $walks$1 = "";
 const $setup$1 = ($_) => {};
-const $list$1 = /*@__PURE__*/ _let("list/3", ($scope) => _return($scope, {
+const $list = /*@__PURE__*/ _let("list/3", ($scope) => _return($scope, {
 	list: $scope.list,
 	listChange: $_return($scope),
 	clear: $_return2($scope)
 }));
-const $input_value = $list$1;
+const $input_value = $list;
 const $input = ($scope, input) => $input_value($scope, input.value);
 const $_return2 = ($scope) => function() {
-	$list$1($scope, []);
+	$list($scope, []);
 };
 const $_return = ($scope) => function(v) {
-	$list$1($scope, v);
+	$list($scope, v);
 };
 _resumed["__tests__/tags/store.marko_0/_return2"] = $_return2;
 _resumed["__tests__/tags/store.marko_0/_return"] = $_return;
@@ -22,14 +22,12 @@ var store_default = /*@__PURE__*/ _template("__tests__/tags/store.marko", "", ""
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<button>Clear</button><ul></ul>`)("");
 const $walks = /*@__PURE__*/ ((_w0) => `0${_w0}& b b`)("");
-const $for_content__item = ($scope, item) => _text($scope["#text/0"], item);
-const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);
+const $for_content__$params = ($scope, $params2) => _text($scope["#text/0"], $params2[0]);
 const $store = _var_resume("__tests__/template.marko_0_store#4/var", ($scope, store) => {
-	$list($scope, store.list);
+	$for($scope, [store.list]);
 	$clear($scope, store.clear);
 });
 const $for = /*@__PURE__*/ _for_of_unkeyed("#ul/3", "<li> </li>", "D ", 0, $for_content__$params);
-const $list = ($scope, list) => $for($scope, [list]);
 const $clear__script = _script("__tests__/template.marko_0_clear#6", ($scope) => _on($scope["#button/2"], "click", $scope.clear));
 const $clear = /*@__PURE__*/ _const("clear", $clear__script);
 function $setup($scope) {

@@ -20,8 +20,7 @@ var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $templ
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<div> </div>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `0${_w0}&D l`)($walks$1);
-const $message = ($scope, message) => _text($scope["#text/2"], message);
-const $name__OR__data = /*@__PURE__*/ _or(5, ($scope) => $message($scope, `${$scope.name} ${$scope.data}`), 1, "#scopeOffset/1");
+const $name__OR__data = /*@__PURE__*/ _or(5, ($scope) => _text($scope["#text/2"], `${$scope.name} ${$scope.data}`), 1, "#scopeOffset/1");
 const $name = /*@__PURE__*/ _let("name/3", $name__OR__data);
 function $setup($scope) {
 	$setup$1($scope["#childScope/0"]);

@@ -28,7 +28,7 @@ import { generateUid, generateUidIdentifier } from "./generate-uid";
 import { getAccessorPrefix, getAccessorProp } from "./get-accessor-enums";
 import { getDeclaredBindingExpression } from "./get-declared-binding-expression";
 import { isOptimize, isOutputHTML } from "./marko-config";
-import { forEach, type Opt, push, reduce, some } from "./optional";
+import { every, forEach, type Opt, push, reduce, some } from "./optional";
 import { getReadReplacement } from "./read-replacement";
 import {
   getNodeReasons,
@@ -38,10 +38,12 @@ import {
 } from "./reasons";
 import {
   type AssignedBindingExtra,
+  getBindingsDerivedFrom,
   getReferencedBindings,
   getReferencedBindingsInFunction,
   hasResumableAssignment,
   isAssignedBindingExtra,
+  isPureExpr,
   isRegisteredFnExtra,
 } from "./references";
 import {
@@ -352,7 +354,8 @@ export function getSignal(
             referencedBindings.section !== section ||
             referencedBindings.closureSections ||
             referencedBindings.hoists ||
-            referencedBindings.localOf)
+            referencedBindings.localOf ||
+            findSlot(referencedBindings)?.reason)
         ),
         forceStore: false,
         inline: undefined,
@@ -549,16 +552,70 @@ function pushMemberForwards(
 }
 
 function pushForward(signal: Signal, target: Signal, value: t.Expression) {
-  signal.forwards = push(signal.forwards, target);
+  if (pushSignalCall(signal, target, value)) {
+    signal.forwards = push(signal.forwards, target);
+  }
+}
+
+// Calls `target` with `value`, or runs its statements in place when it is
+// inlined; true for a call.
+function pushSignalCall(
+  signal: Signal,
+  target: Signal,
+  value: t.Expression | undefined,
+) {
+  if (isInlinedValue(target)) {
+    // Its one read, now in the caller, reads the value as the caller reads it.
+    target.inline = { value };
+    traverseReplace(target.inline, "value", replaceRenderNode, signal);
+    buildSignalFn(target);
+    signal.render.push(...target.render);
+    return false;
+  }
+
   signal.render.push(
     t.expressionStatement(
       t.callExpression(target.identifier, [
         scopeIdentifier,
-        value,
+        ...(value ? [value] : []),
         ...getTranslatedExtraArgs(target),
       ]),
     ),
   );
+  return true;
+}
+
+// A derived value or property alias read once has one caller, the signal
+// computing it, so its read runs there with its value in place.
+function isInlinedValue(signal: Signal) {
+  const binding = signal.referencedBindings;
+  if (
+    !binding ||
+    Array.isArray(binding) ||
+    binding.reads.size !== 1 ||
+    signal.storesValue ||
+    signal.referenced ||
+    binding.exposed ||
+    binding.assignments ||
+    binding.aliases.size ||
+    binding.propertyAliases.size ||
+    (binding.property === undefined &&
+      (binding.type !== BindingType.derived ||
+        binding.aliasOf ||
+        // Moved into its read, it must not depend on running first.
+        !every(binding.derivedFrom || undefined, isPureExpr)))
+  ) {
+    return false;
+  }
+
+  // A read in a function names the value lexically, so it needs the param.
+  const [read] = binding.reads.values();
+  if (Array.isArray(read) || read!.fnRoot) return false;
+
+  // A local closure's signal is built after its reads resolve, too late to
+  // take in what it computes.
+  const from = getBindingsDerivedFrom(binding);
+  return Array.isArray(from) || !from?.localOf;
 }
 
 // A source intersection runs in its source's pass, so it needs no `_or`.
@@ -634,20 +691,18 @@ export function buildSignalFn(signal: Signal): t.Expression {
     if (value.signal.inline) {
       continue;
     }
-    signal.render.push(
-      t.expressionStatement(
-        signalHasWork(value.signal)
-          ? t.callExpression(value.signal.identifier, [
-              scopeIdentifier,
-              ...(value.value ? [value.value] : []),
-              ...getTranslatedExtraArgs(value.signal),
-            ])
-          : withLeadingComment(
-              value.value!,
-              getDebugNames(value.signal.referencedBindings),
-            ),
-      ),
-    );
+    if (signalHasWork(value.signal)) {
+      pushSignalCall(signal, value.signal, value.value);
+    } else {
+      signal.render.push(
+        t.expressionStatement(
+          withLeadingComment(
+            value.value!,
+            getDebugNames(value.signal.referencedBindings),
+          ),
+        ),
+      );
+    }
   }
 
   forEach(signal.intersections, (intersection) => {
@@ -690,10 +745,6 @@ export function buildSignalFn(signal: Signal): t.Expression {
 
   if (signal.effect.length) {
     pushScopeCall(signal.render, getSignalEffectIdentifier(signal));
-  }
-
-  if (isValue && findSlot(binding)?.reason) {
-    signal.storesValue = true;
   }
 
   if (isValue && !signal.storesValue) {
@@ -980,6 +1031,9 @@ export function writeSignals(section: Section) {
     }
 
     forEach(signal.intersections, writeSignal);
+
+    // Its caller writes its reads in place.
+    if (isInlinedValue(signal)) return;
 
     let effectDeclarator: t.VariableDeclarator | undefined;
     if (signal.effect.length) {

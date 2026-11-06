@@ -1,6 +1,5 @@
 // template.marko
-const $await_content__v = ($scope, v) => _text($scope.a, v);
-const $await_content__$params = ($scope, $params2) => $await_content__v($scope, $params2[0]);
+const $await_content__$params = ($scope, $params2) => _text($scope.a, $params2[0]);
 const $if_content__setup = _script("a0", ($scope) => console.log("if script ran"));
 const $placeholder_content = _content("a2", "loading");
 const $try_content__if = /*@__PURE__*/ _if(0, "<span>shown</span>", 0, $if_content__setup);

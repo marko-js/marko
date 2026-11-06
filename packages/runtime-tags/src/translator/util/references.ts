@@ -103,8 +103,9 @@ declare module "@marko/compiler/dist/types" {
     /** The initial value of the binding it derives, which keeps it rather than
      * following it, so the binding derives no sources from it. */
     initialValue?: true;
-    /** Its value has no side effect to evaluate, so an unread one can go: an
-     * expression's from `evaluate`, a tag's from its value attributes. */
+    /** Its value has no side effect to evaluate, so an unread one can go and
+     * a read one can move: an expression's from `evaluate`, a tag's from its
+     * value attributes. */
     pure?: boolean;
     /** The tag-root `KnownExprs` of the call site that linked this expression
      * to a derives template's binding, for dereferencing its reasons. */
@@ -1371,6 +1372,10 @@ export function getValueReferences(
   exprs: Opt<t.NodeExtra>,
 ): ReferencedBindings {
   return reduce(exprs, addValueReferences);
+}
+
+export function isPureExpr(expr: t.NodeExtra) {
+  return !!expr.pure;
 }
 
 function addValueReferences(refs: ReferencedBindings, expr: t.NodeExtra) {

@@ -37,8 +37,7 @@ _marko_template._ = (0, import_renderer$1.default)(function(input, out, _compone
 _marko_template.Component = (0, import_defineComponent.default)(_marko_component, _marko_template._);
 
 // template.marko
-const $catch_content__err_message = ($scope, err_message) => _text($scope.a, err_message);
-const $catch_content__$params = ($scope, $params2) => $catch_content__err_message($scope, $params2[0]?.message);
+const $catch_content__$params = ($scope, $params2) => _text($scope.a, $params2[0]?.message);
 const $catch_content = _content("a0", "caught <!>", "b%", 0, $catch_content__$params);
 
 // v:template.marko.hydrate-6.js

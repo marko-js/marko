@@ -31,11 +31,9 @@ var child_rest_default = /*@__PURE__*/ _template("__tests__/tags/child-rest/inde
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $setup$1 = ($_) => {};
-const $for_content__item_foo = ($scope, item_foo) => _text($scope["#text/0"], item_foo);
-const $for_content__item_sub_x = ($scope, item_sub_x) => _text($scope["#text/1"], item_sub_x);
 const $for_content__$params = ($scope, $params2) => {
-	$for_content__item_foo($scope, $params2[0]?.foo);
-	$for_content__item_sub_x($scope, $params2[0]?.sub?.x);
+	_text($scope["#text/0"], $params2[0]?.foo);
+	_text($scope["#text/1"], $params2[0]?.sub?.x);
 };
 const $for = /*@__PURE__*/ _for_of_unkeyed("#text/0", "<span><!> <!></span>", "D%c%", 0, $for_content__$params);
 const $input_item = ($scope, input_item) => $for($scope, [input_item]);

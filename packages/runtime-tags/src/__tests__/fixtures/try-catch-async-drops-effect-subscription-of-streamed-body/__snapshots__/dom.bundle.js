@@ -1,7 +1,6 @@
 // template.marko
 const $placeholder_content2 = _content("a0", "inner loading");
-const $catch_content__err_message = ($scope, err_message) => _text($scope.a, err_message);
-const $catch_content__$params = ($scope, $params3) => $catch_content__err_message($scope, $params3[0]?.message);
+const $catch_content__$params = ($scope, $params3) => _text($scope.a, $params3[0]?.message);
 const $catch_content = _content("a3", "caught <!>", "b%", 0, $catch_content__$params);
 const $placeholder_content = _content("a4", "loading");
 const $try_content2__show__script = _script("a1", ($scope) => document.getElementById("log").textContent += "[" + $scope._._._.d + "]");

@@ -1,7 +1,7 @@
 // tags/c2.marko
 const $template$1 = "<!><!><!>";
-const $for_content__t_content = /* @__PURE__ */ _dynamic_tag(0);
-const $for_content__$params = ($scope, $params2) => $for_content__t_content($scope, $params2[0]?.content);
+const $for_content__dynamicTag = /*@__PURE__*/ _dynamic_tag(0);
+const $for_content__$params = ($scope, $params2) => $for_content__dynamicTag($scope, $params2[0]?.content);
 const $for = /*@__PURE__*/ _for_of_unkeyed(0, "<!><!><!>", "b%", 0, $for_content__$params);
 const $input_tab = ($scope, input_tab) => $for($scope, [input_tab]);
 

@@ -8,8 +8,7 @@ const $for_content__setup = ($scope) => {
 	_attr($scope["#button/0"], "data-tab", $scope["#LoopKey"]);
 	$for_content__setup__script($scope);
 };
-const $for_content__tab_title = ($scope, tab_title) => _text($scope["#text/1"], tab_title);
-const $for_content__$params = ($scope, $params2) => $for_content__tab_title($scope, $params2[0]?.title);
+const $for_content__$params = ($scope, $params2) => _text($scope["#text/1"], $params2[0]?.title);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
 const $i__OR__tabs = /*@__PURE__*/ _or(7, ($scope) => $dynamicTag($scope, $scope.tabs[$scope.i].content));
 const $i = /*@__PURE__*/ _let("i/5", $i__OR__tabs);

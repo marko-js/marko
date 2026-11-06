@@ -5,8 +5,7 @@ const $await_content__value = ($scope, value) => _text($scope["#text/0"], value 
 	throw new Error("ERROR!");
 })() : value);
 const $await_content__$params = ($scope, $params3) => $await_content__value($scope, $params3[0]);
-const $catch_content__err = ($scope, err) => _text($scope["#text/0"], err);
-const $catch_content__$params = ($scope, $params2) => $catch_content__err($scope, $params2[0]);
+const $catch_content__$params = ($scope, $params2) => _text($scope["#text/0"], $params2[0]);
 const $catch_content = _content("__tests__/template.marko_3*content", " ", " ", 0, $catch_content__$params);
 const $placeholder_content = _content("__tests__/template.marko_2*content", "LOADING...");
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "Async: <!>", "b%");

@@ -6,10 +6,9 @@ const $for_content__setup__script = _script("__tests__/tags/menu.marko_1", ($sco
 	$scope.option_onSelect();
 }));
 const $for_content__setup$1 = $for_content__setup__script;
-const $for_content__option_label = ($scope, option_label) => _text($scope["#text/1"], option_label);
 const $for_content__$params = ($scope, $params2) => {
 	$for_content__option_onSelect($scope, $params2[0]?.onSelect);
-	$for_content__option_label($scope, $params2[0]?.label);
+	_text($scope["#text/1"], $params2[0]?.label);
 };
 const $for_content__option_onSelect = /*@__PURE__*/ _const("option_onSelect");
 const $for$1 = /*@__PURE__*/ _for_of_unkeyed("#text/0", "<button> </button>", " D ", $for_content__setup$1, $for_content__$params);

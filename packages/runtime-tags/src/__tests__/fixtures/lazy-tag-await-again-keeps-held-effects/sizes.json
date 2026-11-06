@@ -10,12 +10,12 @@
     },
     "child.mjs": {
       "total": {
-        "min": 1174,
-        "brotli": 647
+        "min": 1152,
+        "brotli": 638
       },
       "files": {
         "tags/log-effect.marko": 121,
-        "child.marko": 281
+        "child.marko": 170
       }
     },
     "shared": {

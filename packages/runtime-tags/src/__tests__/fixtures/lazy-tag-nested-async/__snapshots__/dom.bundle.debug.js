@@ -20,8 +20,7 @@ const $await_content__setup = ($scope) => {
 	$await_content__count($scope);
 	$load_GrandChild_setup($scope, $scope["#childScope/2"], $scope["#text/1"]);
 };
-const $await_content__value = ($scope, value) => _text($scope["#text/0"], value);
-const $await_content__$params = ($scope, $params2) => $await_content__value($scope, $params2[0]);
+const $await_content__$params = ($scope, $params2) => _text($scope["#text/0"], $params2[0]);
 const $count__closure = /*@__PURE__*/ _closure($await_content__count);
 const $count = /*@__PURE__*/ _let("count/6", ($scope) => {
 	_text($scope["#text/1"], $scope.count);
@@ -44,8 +43,7 @@ var child_default = /*@__PURE__*/ _template("__tests__/child.marko", $template, 
 // grand-child.marko
 const $template = "<button id=grand>grand:<!>:<!></button><!><!>";
 const $walks = " Db%c%l%c";
-const $await_content__v = ($scope, v) => _text($scope["#text/0"], v);
-const $await_content__$params = ($scope, $params2) => $await_content__v($scope, $params2[0]);
+const $await_content__$params = ($scope, $params2) => _text($scope["#text/0"], $params2[0]);
 const $n = /*@__PURE__*/ _let("n/7", ($scope) => _text($scope["#text/1"], $scope.n));
 const $input_value = ($scope, input_value) => {
 	_text($scope["#text/2"], input_value);

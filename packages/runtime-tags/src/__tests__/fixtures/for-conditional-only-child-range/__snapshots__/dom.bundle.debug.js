@@ -4,8 +4,7 @@ const $walks = " b b b b";
 const $else_content__setup = ($scope) => _text($scope["#text/0"], $scope._["#LoopKey"]);
 const $if_content__setup = ($scope) => _text($scope["#text/0"], $scope._["#LoopKey"]);
 const $for_content__if = /*@__PURE__*/ _if("#text/0", "<pre>code <!></pre>", "Db%", $if_content__setup, "<p>text <!></p>", "Db%", $else_content__setup);
-const $for_content__item_code = ($scope, item_code) => $for_content__if($scope, item_code ? 0 : 1);
-const $for_content__$params = ($scope, $params2) => $for_content__item_code($scope, $params2[0]?.code);
+const $for_content__$params = ($scope, $params2) => $for_content__if($scope, $params2[0]?.code ? 0 : 1);
 const $for = /*@__PURE__*/ _for_of("#div/0", "<!><!><!>", "b%", 0, $for_content__$params);
 const $items = /*@__PURE__*/ _let("items/4", ($scope) => $for($scope, [$scope.items, "id"]));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {

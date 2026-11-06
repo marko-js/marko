@@ -4,10 +4,9 @@ const $walks = "b%bD l";
 const $for_content__option__script = _script("__tests__/template.marko_2_option#3", ($scope) => _attrs_script($scope, "#option/0"));
 const $for_content__option = /*@__PURE__*/ _const("option", ($scope) => {
 	_attrs($scope, "#option/0", $scope.option);
-	$for_content__option_value($scope, $scope.option?.value);
+	_text($scope["#text/1"], ($scope.option?.value).toUpperCase());
 	$for_content__option__script($scope);
 });
-const $for_content__option_value = ($scope, option_value) => _text($scope["#text/1"], option_value.toUpperCase());
 const $for_content__$params = ($scope, $params2) => $for_content__option($scope, $params2[0]);
 const $tagselect_content__for = /*@__PURE__*/ _for_of_unkeyed("#text/0", "<option> </option>", " D ", 0, $for_content__$params);
 const $tagselect_content__setup = ($scope) => $tagselect_content__for($scope, [[

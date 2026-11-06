@@ -2,14 +2,12 @@
 const $setup__script = _script("b0", ($scope) => _on($scope.a, "click", function() {
 	$scope.f();
 }));
-const $input_label = ($scope, input_label) => _text($scope.b, input_label);
 const $input = ($scope, input) => {
 	_attr($scope.c, "href", input.hrefFor("x"));
 	$input_onToggle$1($scope, input.onToggle);
-	$input_label($scope, input.label);
-	$input_count$1($scope, input.count);
+	_text($scope.b, input.label);
+	_attr_class($scope.c, input.count % 2 ? "odd" : "even");
 };
-const $input_count$1 = ($scope, input_count) => _attr_class($scope.c, input_count % 2 ? "odd" : "even");
 const $input_onToggle$1 = /*@__PURE__*/ _const(5);
 
 // tags/parent.marko

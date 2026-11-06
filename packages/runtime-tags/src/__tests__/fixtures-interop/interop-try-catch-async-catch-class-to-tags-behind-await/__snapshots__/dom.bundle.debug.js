@@ -5,8 +5,7 @@ var import_renderer = /* @__PURE__ */ __toESM(require_renderer());
 var import_render_tag = /* @__PURE__ */ __toESM(require_render_tag());
 const $template = "<!><!><!>";
 const $walks = "b%c";
-const $await_content2__value = ($scope, value) => _text($scope["#text/0"], value);
-const $await_content2__$params = ($scope, $params3) => $await_content2__value($scope, $params3[0]);
+const $await_content2__$params = ($scope, $params3) => _text($scope["#text/0"], $params3[0]);
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<div id=caught>CAUGHT</div>");
 const $catch_content__await_promise = /*@__PURE__*/ _await_promise("#text/0");
 const $catch_content__setup = ($scope) => {

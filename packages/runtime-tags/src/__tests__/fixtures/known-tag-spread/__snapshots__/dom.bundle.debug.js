@@ -37,12 +37,10 @@ const $extras__OR__n = /*@__PURE__*/ _or(10, ($scope) => {
 	$input_c($scope["#childScope/2"], $childa_input_spread.c);
 });
 const $extras = /*@__PURE__*/ _const("extras", ($scope) => {
-	$extras_b($scope, $scope.extras.b);
-	$extras_c($scope, $scope.extras.c);
+	$input_b$1($scope["#childScope/3"], $scope.extras.b);
+	$input_c($scope["#childScope/3"], $scope.extras.c);
 	$extras__OR__n($scope);
 });
-const $extras_b = ($scope, extras_b) => $input_b$1($scope["#childScope/3"], extras_b);
-const $extras_c = ($scope, extras_c) => $input_c($scope["#childScope/3"], extras_c);
 const $n = /*@__PURE__*/ _let("n/9", ($scope) => {
 	_text($scope["#text/1"], $scope.n);
 	$input_a$1($scope["#childScope/3"], $scope.n);

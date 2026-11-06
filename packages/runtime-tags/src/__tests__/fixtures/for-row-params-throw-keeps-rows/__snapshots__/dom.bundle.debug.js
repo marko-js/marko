@@ -5,8 +5,7 @@ function check(item) {
 	if (item.bad) throw new Error("row params");
 	return item.id;
 }
-const $for_content__item = ($scope, item) => _text($scope["#text/0"], check(item));
-const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);
+const $for_content__$params = ($scope, $params2) => _text($scope["#text/0"], check($params2[0]));
 const $for = /*@__PURE__*/ _for_of("#text/2", "<li> </li>", "D ", 0, $for_content__$params);
 const $items = /*@__PURE__*/ _let("items/3", ($scope) => $for($scope, [$scope.items, "id"]));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {

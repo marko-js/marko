@@ -12,11 +12,10 @@ const $rest = /*@__PURE__*/ _const("rest", ($scope) => {
 	_attrs($scope, "#span/2", $scope.rest);
 	$rest__script($scope);
 });
-const $input_button_label = ($scope, label) => _text($scope["#text/3"], label);
 const $input = ($scope, input) => $button($scope, input.button);
 const $button = ($scope, button) => {
 	$rest($scope, (({ label, ...rest }) => rest)(button));
 	$input_button_id($scope, button.id);
-	$input_button_label($scope, button.label);
+	_text($scope["#text/3"], button.label);
 };
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, 0, $input);
