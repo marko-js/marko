@@ -112,7 +112,7 @@ export type LoopItemAt = number | [index: number, key: unknown];
 
 // `_(path, id, content or locals?)` in a flush: a registration bound to the
 // scope `path` reaches from the page root, resolved by `patches/bind`.
-export let bindRef:
+let bindRef:
   | ((
       root: Scope,
       path: PatchHop[],

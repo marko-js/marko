@@ -2,7 +2,6 @@ import { ROOT_SCOPE_ID } from "../../common/meta";
 import { PatchKey, RendererProp } from "../../common/types";
 import {
   K_SCOPE_ID,
-  ensureRefAccess,
   Reference,
   type Registered,
   SerializerState,
@@ -15,7 +14,6 @@ import {
 } from "../serializer";
 import type { ScopeInternals } from "../writer";
 import {
-  type PatchLink,
   type PatchRenderState,
   resolveEntryReads,
   shipNamedShell,
@@ -34,11 +32,6 @@ export class PatchSerializerState extends SerializerState {
   // A flush's tree is no live scope, so a later flush references it by its
   // index here, which the client's response context counts the same way.
   trees = 0;
-
-  // Kept content's holes are shared by every instance the client holds, so a
-  // value owned inside one is written as `_`'s args from the instance, which
-  // its holes list for each instance to bind (`patchInstance`).
-  keptBinds = new Map<object, { val: WeakKey; ref: Reference }[]>();
 
   // Each flush is its own tree (the scope object is shared).
   override scopeRef() {
@@ -75,12 +68,6 @@ export class PatchSerializerState extends SerializerState {
   }
 
   override wrapPayload(result: string) {
-    // Each bind was written with the kept holes it is in.
-    if (this.keptBinds.size) {
-      throw new Error(
-        "A patch cannot send a value kept content owns outside it.",
-      );
-    }
     this.wroteUndefined = false;
     return result;
   }
@@ -95,71 +82,61 @@ export class PatchSerializerState extends SerializerState {
   ) {
     const ref = new Reference(parent, accessor, this.flushId, this.buf.length);
     const content = (val as { [RendererProp.Id]?: string })[RendererProp.Id];
-    const [kept, path] = this.scopePath(
+    // Content keeps one identity, as main's write does; a bind makes its function anew.
+    if (content) this.refs.set(val, ref);
+    this.buf.push("_([");
+    this.writeScopePath(
       (registered.scope as ScopeInternals)[K_SCOPE_ID]!,
       registered.id,
     );
-    const args =
-      "[" +
-      path +
-      "]," +
-      quoteRegistryId(shipNamedShell(this.render, registered.id)) +
-      (content ? ",1" : "");
-    const locals = registered.locals?.(this.boundary.state.scope);
-    if (kept !== ROOT_SCOPE_ID) {
-      // One value is one set of args, which each instance binds once.
-      const node = this.render.patchTree![kept]!;
-      let binds = this.keptBinds.get(node);
-      if (!binds) this.keptBinds.set(node, (binds = []));
-      binds.push({ val, ref });
-      this.refs.set(val, ref);
-      this.buf.push("[" + args);
-      if (locals) writeLocalArgs(this, ref, locals);
-      this.buf.push("]");
-      return;
+    this.buf.push(
+      "]," + quoteRegistryId(shipNamedShell(this.render, registered.id)),
+    );
+    if (content) this.buf.push(",1");
+    if (registered.locals) {
+      writeLocalArgs(this, ref, registered.locals(this.boundary.state.scope));
     }
-    // Content keeps one identity, as main's write does; a bind makes its function anew.
-    if (content) this.refs.set(val, ref);
-    this.buf.push("_(" + args);
-    if (locals) writeLocalArgs(this, ref, locals);
     this.buf.push(")");
   }
 
-  // Patch scope ids have no client-side map, so a bound registration names its
-  // scope by the links down to it from the page root, or from the kept instance
-  // it is owned in, which each instance resolves as a bind: that scope and the path.
-  scopePath(scopeId: number, id: string): [from: number, path: string] {
-    let path = "";
-    for (; scopeId !== ROOT_SCOPE_ID;) {
-      const link = this.render.patchLinks[scopeId];
-      if (MARKO_DEBUG && !link) {
-        throw new Error(`A patch cannot send the scoped registration "${id}".`);
-      }
-      if (link.key?.startsWith(PatchKey.ClientBranch)) break;
-      path = toHop(link.hop) + (path && "," + path);
-      scopeId = link.parent;
+  // Patch scope ids have no client-side map, so a bound registration names
+  // its scope by the links down from the page root (written root first).
+  writeScopePath(scopeId: number, id: string) {
+    if (scopeId === ROOT_SCOPE_ID) return;
+    if (MARKO_DEBUG && !this.render.patchLinks[scopeId]) {
+      throw new Error(`A patch cannot send the scoped registration "${id}".`);
     }
-    return [scopeId, path];
+    const link = this.render.patchLinks[scopeId];
+    // Kept content's holes serve every instance, so the compiler renders content
+    // on the client instead wherever they would carry a value one instance owns.
+    if (MARKO_DEBUG && link.key?.startsWith(PatchKey.ClientBranch)) {
+      throw new Error(
+        `Kept content cannot send "${id}", which each of its instances owns.`,
+      );
+    }
+    this.writeScopePath(link.parent, id);
+    if (link.parent !== ROOT_SCOPE_ID) this.buf.push(",");
+    // Accessors are compiler-made (nothing to escape); a loop key is data.
+    const hop = link.hop;
+    if (typeof hop === "string") {
+      this.buf.push('"' + hop + '"');
+    } else {
+      const [accessor, at] = hop;
+      this.buf.push(
+        '["' +
+          accessor +
+          '",' +
+          (typeof at === "number"
+            ? at
+            : "[" +
+              at[0] +
+              "," +
+              (typeof at[1] === "number" ? at[1] : quote(at[1], 0)) +
+              "]") +
+          "]",
+      );
+    }
   }
-}
-
-// Accessors are compiler-made (nothing to escape); a loop key is data.
-function toHop(hop: PatchLink["hop"]) {
-  if (typeof hop === "string") return '"' + hop + '"';
-  const [accessor, at] = hop;
-  return (
-    '["' +
-    accessor +
-    '",' +
-    (typeof at === "number"
-      ? at
-      : "[" +
-        at[0] +
-        "," +
-        (typeof at[1] === "number" ? at[1] : quote(at[1], 0)) +
-        "]") +
-    "]"
-  );
 }
 
 function writePatchProps(
@@ -255,19 +232,8 @@ function writePatchTreeNode(
     }
     state.buf.push(sep === "[" ? "[]" : "]");
   } else {
-    const start = state.buf.push("{") - 1;
+    state.buf.push("{");
     writePatchProps(state, node, ref, patchTreeNodes);
     state.buf.push("}");
-    const binds = state.keptBinds.get(node);
-    if (binds) {
-      // `[holes, ...args]`; a later write outside reaches no instance to bind it.
-      state.keptBinds.delete(node);
-      state.buf[start] = "[" + state.buf[start];
-      for (const { val, ref } of binds) {
-        state.buf.push("," + ensureRefAccess(state, ref));
-        state.refs.delete(val);
-      }
-      state.buf.push("]");
-    }
   }
 }

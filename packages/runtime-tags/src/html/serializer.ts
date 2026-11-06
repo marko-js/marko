@@ -2399,7 +2399,7 @@ function writeRef(state: State, ref: Reference) {
   }
 }
 
-export function ensureRefAccess(state: State, ref: Reference): string {
+function ensureRefAccess(state: State, ref: Reference): string {
   if (ref.scopeId !== undefined) {
     trackChannel(state, ref);
     return "_(" + ref.scopeId + ")";
