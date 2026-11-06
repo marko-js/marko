@@ -12,9 +12,9 @@ const $if_content__setup = ($scope) => {
 };
 const $if_content__$temp_extra = /*@__PURE__*/ _if_closure(0, 0, ($scope) => _text($scope.b, $scope._.e));
 const $for_content2__if = /*@__PURE__*/ _if(0, "<b><!><!></b>", "D%b%", $if_content2__setup);
-const $for_content2__show = /*@__PURE__*/ _for_closure(2, ($scope) => $for_content2__if($scope, $scope._.h ? 0 : 1));
+const $for_content2__show = /*@__PURE__*/ _for_closure(2, ($scope) => $for_content2__if($scope, $scope._.h ? 0 : 1), 9);
 const $for_content__if = /*@__PURE__*/ _if(0, "<span><!>:<!></span>", "D%c%", $if_content__setup);
-const $for_content__show = /*@__PURE__*/ _for_closure(1, ($scope) => $for_content__if($scope, $scope._.h ? 0 : 1));
+const $for_content__show = /*@__PURE__*/ _for_closure(1, ($scope) => $for_content__if($scope, $scope._.h ? 0 : 1), 8);
 const $show = /*@__PURE__*/ _let(7, ($scope) => {
 	$for_content__show($scope);
 	$for_content2__show($scope);

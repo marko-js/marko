@@ -1,5 +1,5 @@
 // template.marko
-const $for_content2__l = /*@__PURE__*/ _for_closure(0, ($scope) => _text($scope.a, $scope._.e[$scope.M].name));
+const $for_content2__l = /*@__PURE__*/ _for_closure(0, ($scope) => _text($scope.a, $scope._.e[$scope.M].name), 8);
 const $for_content2__setup = $for_content2__l;
 const $for_content__l = /*@__PURE__*/ _let(4, ($scope) => {
 	$for_content__l_length($scope, $scope.e?.length);

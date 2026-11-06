@@ -9,7 +9,7 @@ var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", "", ""
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!><button>go</button>`)("");
 const $walks = /*@__PURE__*/ ((_w0) => `0${_w0}&b%b b`)("");
-const $for_content__list = /*@__PURE__*/ _for_closure("#text/2", ($scope) => _text($scope["#text/0"], $scope._.list[$scope["#LoopKey"]].name), "#scopeOffset/1");
+const $for_content__list = /*@__PURE__*/ _for_closure("#text/2", ($scope) => _text($scope["#text/0"], $scope._.list[$scope["#LoopKey"]].name), 9, "#scopeOffset/1");
 const $for_content__setup = $for_content__list;
 const $list = /*@__PURE__*/ _let("list/4", ($scope) => {
 	$list_length($scope, $scope.list?.length);

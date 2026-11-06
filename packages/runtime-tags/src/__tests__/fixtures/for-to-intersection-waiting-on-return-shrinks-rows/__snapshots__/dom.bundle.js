@@ -2,7 +2,7 @@
 const $input_v = /*@__PURE__*/ _const(2, ($scope) => _return($scope, $scope.c));
 
 // template.marko
-const $for_content__list = /*@__PURE__*/ _for_closure(2, ($scope) => _text($scope.a, $scope._.e[$scope.M].name), 1);
+const $for_content__list = /*@__PURE__*/ _for_closure(2, ($scope) => _text($scope.a, $scope._.e[$scope.M].name), 9, 1);
 const $for_content__setup = $for_content__list;
 const $list = /*@__PURE__*/ _let(4, ($scope) => {
 	$list_length($scope, $scope.e?.length);

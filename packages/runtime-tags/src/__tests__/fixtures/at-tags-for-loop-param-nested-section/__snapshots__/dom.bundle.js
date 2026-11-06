@@ -7,7 +7,7 @@ const $input_item = ($scope, input_item) => $for($scope, [input_item]);
 // template.marko
 const $if_content2__item_text = /*@__PURE__*/ _if_closure(0, 0, ($scope) => _text($scope.a, $scope._.b));
 const $if_content2__setup = $if_content2__item_text;
-const $for_content__i = /*@__PURE__*/ _for_closure(2, ($scope) => _text($scope.a, $scope._.d));
+const $for_content__i = /*@__PURE__*/ _for_closure(2, ($scope) => _text($scope.a, $scope._.d), 9);
 const $for_content__setup = ($scope) => {
 	$for_content__i._($scope);
 	_text($scope.b, $scope.M);

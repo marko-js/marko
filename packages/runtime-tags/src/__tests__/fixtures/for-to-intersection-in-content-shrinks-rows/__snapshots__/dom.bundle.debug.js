@@ -11,7 +11,7 @@ var wrapper_default = /*@__PURE__*/ _template("__tests__/tags/wrapper.marko", $t
 // template.marko
 const $template = $template$1;
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l");
-const $for_content__l = /*@__PURE__*/ _for_closure("#text/0", ($scope) => _text($scope["#text/0"], $scope._.l[$scope["#LoopKey"]].name));
+const $for_content__l = /*@__PURE__*/ _for_closure("#text/0", ($scope) => _text($scope["#text/0"], $scope._.l[$scope["#LoopKey"]].name), 6);
 const $for_content__setup = $for_content__l;
 const $wrapper_content__l = /*@__PURE__*/ _let("l/2", ($scope) => {
 	$wrapper_content__l_length($scope, $scope.l?.length);

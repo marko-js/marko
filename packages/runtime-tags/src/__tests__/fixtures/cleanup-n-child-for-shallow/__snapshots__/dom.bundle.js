@@ -20,7 +20,7 @@ const $name = /*@__PURE__*/ _const(5, ($scope) => {
 const $write$1 = /*@__PURE__*/ _const(6, $input_name__OR__input_write);
 
 // template.marko
-const $for_content__setup = /* @__PURE__ */ _for_closure(2, ($scope) => $write$1($scope.a, $scope._.e));
+const $for_content__setup = /* @__PURE__ */ _for_closure(2, ($scope) => $write$1($scope.a, $scope._.e), 5);
 const $for_content__$params = ($scope, $params2) => $name($scope.a, $params2[0]);
 const $for = /*@__PURE__*/ _for_of_unkeyed(2, $template, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks), $for_content__setup, $for_content__$params);
 const $items = /*@__PURE__*/ _let(3, ($scope) => $for($scope, [$scope.d]));

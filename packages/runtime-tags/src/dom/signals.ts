@@ -140,6 +140,7 @@ export function _or(
 export function _for_closure(
   ownerLoopNodeAccessor: EncodedAccessor,
   fn: SignalFn,
+  id: number,
   scopeIdAccessor?: EncodedAccessor,
 ): SignalFn {
   if (!MARKO_DEBUG)
@@ -150,10 +151,8 @@ export function _for_closure(
       : decodeAccessor(scopeIdAccessor as number)
     : AccessorProp.Id;
   const scopeAccessor = AccessorPrefix.BranchScopes + ownerLoopNodeAccessor;
-  // Reads the rows when it runs, after the loop settles them, so each is live: a
-  // row is destroyed only by its loop, which drops it from the rows, or with its
-  // owner, whose renders then do not run. A row the loop created this update
-  // rendered with current values.
+  // Reads the rows once the loop settles them, so each is live; one created this
+  // update already rendered with current values.
   const render = (ownerScope: Scope) => {
     for (const scope of toArray(ownerScope[scopeAccessor] as BranchScope)) {
       if (scope[AccessorProp.Gen] < runId) {
@@ -161,15 +160,15 @@ export function _for_closure(
       }
     }
   };
-  // After the renders of the scope the loop's value renders in, which settle
-  // its rows, and before any later scope's, such as a row's own.
+  // Its slot follows the owner's ids, so it runs once the loop settles its rows;
+  // an unwritten child offset leaves it keyed by the owner.
   const ownerSignal = (ownerScope: Scope) =>
     queueRender(
       ownerScope,
       render,
-      -1,
+      id,
       0,
-      ownerScope[scopeIdAccessor as Accessor] + 0.5,
+      ownerScope[scopeIdAccessor as Accessor],
     );
   ownerSignal._ = (scope: Scope) => queueRender(scope, fn, -1);
   return ownerSignal;
@@ -179,6 +178,7 @@ export function _for_selector(
   ownerLoopNodeAccessor: EncodedAccessor,
   ownerValueAccessor: EncodedAccessor,
   fn: SignalFn,
+  id: number,
   scopeIdAccessor?: EncodedAccessor,
 ): SignalFn {
   if (!MARKO_DEBUG) {
@@ -216,9 +216,9 @@ export function _for_selector(
       queueRender(
         ownerScope,
         render,
-        -1,
+        id,
         0,
-        ownerScope[scopeIdAccessor as Accessor] + 0.5,
+        ownerScope[scopeIdAccessor as Accessor],
       );
     }
   };
@@ -244,9 +244,8 @@ function keyedScopes(
   return map;
 }
 
-// A row read after its loop settles, from its rows or the keyed map the loop
-// resets as it does, is live as `_for_closure`'s are; this skips one created this
-// update.
+// Rows and the keyed map are read once the loop settles them, so each is live;
+// this skips one created this update.
 function runLiveBranch(scope: BranchScope | undefined, fn: SignalFn) {
   if ((scope?.[AccessorProp.Gen] as number) < runId) {
     fn(scope!);

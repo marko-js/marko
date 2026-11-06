@@ -2,7 +2,7 @@
 const $template = "<div><span>S</span><!></div><div>hello<!></div><button>drop</button>";
 const $walks = "Db%lDb%l b";
 const $for_content2__$params = ($scope, $params3) => _text($scope["#text/0"], $params3[0]);
-const $for_content__empty = /*@__PURE__*/ _for_closure("#text/0", ($scope) => _text($scope["#text/0"], $scope._.empty));
+const $for_content__empty = /*@__PURE__*/ _for_closure("#text/0", ($scope) => _text($scope["#text/0"], $scope._.empty), 5);
 const $for_content__setup = $for_content__empty;
 const $for = /*@__PURE__*/ _for_of_unkeyed("#text/0", " ", " ", $for_content__setup);
 const $for2 = /*@__PURE__*/ _for_of_unkeyed("#text/1", " ", " ", 0, $for_content2__$params);

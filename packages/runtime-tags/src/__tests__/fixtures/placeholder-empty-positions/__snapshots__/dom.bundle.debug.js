@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<div>d</div><!><!><!><input> <button>set</button>";
 const $walks = "b%b%b%b b b b";
-const $for_content__a = /*@__PURE__*/ _for_closure("#text/2", ($scope) => _text($scope["#text/0"], $scope._.a));
+const $for_content__a = /*@__PURE__*/ _for_closure("#text/2", ($scope) => _text($scope["#text/0"], $scope._.a), 7);
 const $for_content__setup = $for_content__a;
 const $if_content__a = /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => _text($scope["#text/0"], $scope._.a));
 const $if_content__setup = $if_content__a;

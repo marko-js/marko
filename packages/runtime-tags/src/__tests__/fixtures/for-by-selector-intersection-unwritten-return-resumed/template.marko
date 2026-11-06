@@ -1,0 +1,8 @@
+<let/items=[{ id: 1 }, { id: 2 }, { id: 3 }]/>
+<let/selected=1/>
+<child/r v=input.short/>
+<for|item| of=(r ? items.slice(0, 1) : items) by="id">
+  <span class=item.id === selected && "on">${item.id}</span>
+</for>
+<button#shrink onClick() { items = items.slice(0, 2); selected = 3 }>shrink</button>
+<button#grow onClick() { items = [...items, { id: 3 }] }>grow</button>

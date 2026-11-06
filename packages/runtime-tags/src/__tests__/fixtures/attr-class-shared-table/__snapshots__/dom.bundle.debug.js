@@ -5,12 +5,12 @@ const $for_content__input_a__OR__input_b = /*@__PURE__*/ _or(1, ($scope) => _att
 	on: $scope._.a,
 	off: $scope._.b
 }));
-const $for_content__input_a = /*@__PURE__*/ _for_closure("#text/3", $for_content__input_a__OR__input_b);
+const $for_content__input_a = /*@__PURE__*/ _for_closure("#text/3", $for_content__input_a__OR__input_b, 11);
 const $for_content__setup = ($scope) => {
 	$for_content__input_a._($scope);
 	$for_content__input_b._($scope);
 };
-const $for_content__input_b = /*@__PURE__*/ _for_closure("#text/3", $for_content__input_a__OR__input_b);
+const $for_content__input_b = /*@__PURE__*/ _for_closure("#text/3", $for_content__input_a__OR__input_b, 12);
 const $input_a__OR__input_b = /*@__PURE__*/ _or(10, ($scope) => {
 	_attr_class_items($scope["#div/0"], {
 		on: $scope.a,

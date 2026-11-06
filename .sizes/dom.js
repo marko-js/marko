@@ -1,4 +1,4 @@
-// size: 27146 (min) 10128 (brotli)
+// size: 27142 (min) 10127 (brotli)
 // packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -632,7 +632,7 @@ function _or(id, fn, defaultPending = 1, scopeIdAccessor) {
     }
   );
 }
-function _for_closure(ownerLoopNodeAccessor, fn, scopeIdAccessor) {
+function _for_closure(ownerLoopNodeAccessor, fn, id, scopeIdAccessor) {
   ((ownerLoopNodeAccessor = decodeAccessor(ownerLoopNodeAccessor)),
     (scopeIdAccessor = scopeIdAccessor ? decodeAccessor(scopeIdAccessor) : "L"));
   let scopeAccessor = "A" + ownerLoopNodeAccessor,
@@ -640,10 +640,10 @@ function _for_closure(ownerLoopNodeAccessor, fn, scopeIdAccessor) {
       for (let scope of toArray(ownerScope[scopeAccessor])) scope.H < runId && fn(scope);
     },
     ownerSignal = (ownerScope) =>
-      queueRender(ownerScope, render, -1, 0, ownerScope[scopeIdAccessor] + 0.5);
+      queueRender(ownerScope, render, id, 0, ownerScope[scopeIdAccessor]);
   return ((ownerSignal._ = (scope) => queueRender(scope, fn, -1)), ownerSignal);
 }
-function _for_selector(ownerLoopNodeAccessor, ownerValueAccessor, fn, scopeIdAccessor) {
+function _for_selector(ownerLoopNodeAccessor, ownerValueAccessor, fn, id, scopeIdAccessor) {
   ((ownerLoopNodeAccessor = decodeAccessor(ownerLoopNodeAccessor)),
     (ownerValueAccessor = decodeAccessor(ownerValueAccessor)),
     (scopeIdAccessor = scopeIdAccessor ? decodeAccessor(scopeIdAccessor) : "L"));
@@ -661,8 +661,7 @@ function _for_selector(ownerLoopNodeAccessor, ownerValueAccessor, fn, scopeIdAcc
       map && (map[prevKeyProp] = nextKey);
     },
     ownerSignal = (ownerScope) => {
-      ownerScope.H < runId &&
-        queueRender(ownerScope, render, -1, 0, ownerScope[scopeIdAccessor] + 0.5);
+      ownerScope.H < runId && queueRender(ownerScope, render, id, 0, ownerScope[scopeIdAccessor]);
     };
   return ((ownerSignal._ = (scope) => queueRender(scope, fn, -1)), ownerSignal);
 }

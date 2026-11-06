@@ -72,6 +72,7 @@ import {
   forEachAncestorSection,
   getDynamicTagContentClosures,
   getDynamicClosureIndex,
+  getForClosureIndex,
   getScopeIdIdentifier,
   getSection,
   getSectionForBody,
@@ -148,12 +149,16 @@ export function setClosureSignalBuilder(
   const section = getSectionForBody(tag.get("body"))!;
   _setClosureSignalBuilder(
     section,
-    build || ((_closure, render) => buildClosureHop(section, render)),
+    build || ((closure, render) => buildClosureHop(section, closure, render)),
   );
 }
 
 // The hop from a branch of an `<if>` or `<for>` to the scope its closure is in.
-export function buildClosureHop(section: Section, render: t.Expression) {
+export function buildClosureHop(
+  section: Section,
+  closure: Binding,
+  render: t.Expression,
+) {
   const branch = section.branch!;
   const accessor = getScopeAccessorLiteral(branch.tag.nodeBinding, true);
   return branch.kind === "if"
@@ -167,6 +172,9 @@ export function buildClosureHop(section: Section, render: t.Expression) {
         "_for_closure",
         accessor,
         render,
+        t.numericLiteral(
+          closure.closureId! + getForClosureIndex(closure, section),
+        ),
         getLoopRenderOrder(section),
       );
 }

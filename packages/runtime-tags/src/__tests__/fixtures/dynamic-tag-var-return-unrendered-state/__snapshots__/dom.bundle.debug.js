@@ -19,7 +19,7 @@ const $template = "<!><!><button class=inc> </button><!><!>";
 const $walks = "b1b D l%c";
 _dynamic_tag_var_resume("#text/0");
 const $for_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", 0, ($_) => $for_content__row);
-const $for_content__Tag = /*@__PURE__*/ _for_closure("#text/4", ($scope) => $for_content__dynamicTag($scope, $scope._.Tag));
+const $for_content__Tag = /*@__PURE__*/ _for_closure("#text/4", ($scope) => $for_content__dynamicTag($scope, $scope._.Tag), 8);
 const $for_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/2"], "click", function() {
 	$scope.row.set($scope.row.n + 1);
 }));

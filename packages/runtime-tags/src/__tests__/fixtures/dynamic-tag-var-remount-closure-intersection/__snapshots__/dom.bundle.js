@@ -17,7 +17,7 @@ var child_default = /*@__PURE__*/ _template("b", "", "", $setup);
 // template.marko
 _dynamic_tag_var_resume(0);
 const $for_content__c__OR__m = /*@__PURE__*/ _or(5, ($scope) => _text($scope.b, $scope.e + ":" + $scope._.j));
-const $for_content__c = /*@__PURE__*/ _for_closure(2, $for_content__c__OR__m);
+const $for_content__c = /*@__PURE__*/ _for_closure(2, $for_content__c__OR__m, 10);
 const $for_content__m = /*@__PURE__*/ _let(4, $for_content__c__OR__m);
 const $for_content__setup__script = _script("a1", ($scope) => _on($scope.a, "click", function() {
 	$for_content__m($scope, +$scope.e + 1);

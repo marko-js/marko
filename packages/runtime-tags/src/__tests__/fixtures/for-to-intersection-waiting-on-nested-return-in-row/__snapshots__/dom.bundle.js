@@ -6,7 +6,7 @@ const $g = _var_resume("b0", /*@__PURE__*/ _const(5, ($scope) => _return($scope,
 const $input_v = ($scope, input_v) => $input_v$1($scope.a, input_v);
 
 // template.marko
-const $for_content2__l = /*@__PURE__*/ _for_closure(2, ($scope) => _text($scope.a, $scope._.e[$scope.M].name), 1);
+const $for_content2__l = /*@__PURE__*/ _for_closure(2, ($scope) => _text($scope.a, $scope._.e[$scope.M].name), 9, 1);
 const $for_content2__setup = $for_content2__l;
 const $for_content__l = /*@__PURE__*/ _let(4, ($scope) => {
 	$for_content__l_length($scope, $scope.e?.length);

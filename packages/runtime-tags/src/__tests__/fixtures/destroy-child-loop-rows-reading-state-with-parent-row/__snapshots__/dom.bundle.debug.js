@@ -4,7 +4,7 @@ const $walks$1 = "b%b b";
 const $for_content__n__script = _script("__tests__/tags/c2.marko_1_n#0:2", ($scope) => _lifecycle($scope, { onDestroy: function() {
 	console.log("destroy", $scope._.n);
 } }));
-const $for_content__n = /*@__PURE__*/ _for_closure("#text/0", $for_content__n__script);
+const $for_content__n = /*@__PURE__*/ _for_closure("#text/0", $for_content__n__script, 3);
 const $for_content__setup$1 = $for_content__n;
 const $n = /*@__PURE__*/ _let("n/2", $for_content__n);
 const $for$1 = /*@__PURE__*/ _for_of("#text/0", 0, 0, $for_content__setup$1);
