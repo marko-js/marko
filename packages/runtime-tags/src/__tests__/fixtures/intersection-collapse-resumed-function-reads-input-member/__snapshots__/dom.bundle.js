@@ -1,6 +1,6 @@
 // tags/log-count.marko
 const $setup__script = _script("b0", ($scope) => _on($scope.a, "click", function() {
-	console.log($scope.c.count());
+	console.log($scope.e());
 }));
 
 // template.marko

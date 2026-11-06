@@ -2,9 +2,10 @@
 var log_count_default = _template("__tests__/tags/log-count.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
+	const count = input.count;
 	_html(`<button>log</button>${_el_mark($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/tags/log-count.marko_0");
-	_scope($scope0_id, { input }, "__tests__/tags/log-count.marko", 0, { input: 0 });
+	_scope($scope0_id, { count }, "__tests__/tags/log-count.marko", 0, { count: "2:8" });
 });
 
 // template.marko

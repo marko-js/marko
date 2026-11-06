@@ -49,12 +49,12 @@ import {
   dropContent,
   dropNodes,
   getAllTagReferenceNodes,
+  getChildTagReferenceNodes,
   mergeReferences,
   type ReferencedExtra,
   setDerivedFrom,
   trackParamsReferences,
   trackVarReferences,
-  mergeTagReferences,
 } from "./references";
 import { replaceWithStatements } from "./replace-with-statements";
 import { absentArg, callRuntime } from "./runtime";
@@ -854,14 +854,7 @@ function analyzeAttrs(
         rootAttrExprs.add(attrExtra);
         addSetupExpr(section, attr.value);
         setDerivedFrom(attrTree.binding, attrExtra, rootExprs);
-        // A cross template child that only ever invokes this input makes the attribute
-        // `invokeOnly`; same-program params trees may be mid-analysis with incomplete reads, so skipped.
-        if (
-          !isOwnBinding(attrTree.binding) &&
-          isInvokeOnlyBinding(attrTree.binding)
-        ) {
-          attrExtra.invokeOnly = true;
-        }
+        if (isInvokeOnlyInput(attrTree.binding)) attrExtra.invokeOnly = true;
       }
     } else if (spreadReferenceNodes) {
       spreadReferenceNodes.push(attr.value);
@@ -885,7 +878,7 @@ function analyzeAttrs(
 
       known[prop] = { value: propExtra };
       rootAttrExprs.add(propExtra);
-      addRead(propExtra, propExtra, propBinding, section, undefined);
+      addRead(propExtra, propExtra, propExtra, propBinding, section, undefined);
       setDerivedFrom(
         attrTree === true ? paramsTree.rest!.binding : attrTree.binding,
         propExtra,
@@ -954,9 +947,39 @@ function setDerivedFromTag(
   binding: Binding,
   rootExprs: KnownExprs,
 ) {
-  const extra = mergeTagReferences(section, tag.node);
+  const extra = mergeReferences(
+    section,
+    tag.node,
+    isInvokeOnlyInput(binding)
+      ? collectInvokeOnlyInputNodes(tag.node)
+      : getAllTagReferenceNodes(tag.node),
+  );
   setDerivedFrom(binding, extra, rootExprs);
   return extra;
+}
+
+// A child in another template that only ever invokes this input; same-program
+// params trees may be mid-analysis with incomplete reads, so are skipped.
+function isInvokeOnlyInput(binding: Binding) {
+  return !isOwnBinding(binding) && isInvokeOnlyBinding(binding);
+}
+
+// Collects a tag's reference nodes, making the input it passes `invokeOnly`:
+// its attributes and its attribute tags', never what its control flow reads.
+function collectInvokeOnlyInputNodes(
+  tag: t.MarkoTag,
+  referenceNodes: t.Node[] = [],
+) {
+  if (tag.arguments) {
+    for (const arg of tag.arguments) referenceNodes.push(arg);
+  }
+  for (const attr of tag.attributes) {
+    (attr.value.extra ??= {}).invokeOnly = true;
+    referenceNodes.push(attr.value);
+  }
+  return getChildTagReferenceNodes(tag, referenceNodes, (attrTag) =>
+    collectInvokeOnlyInputNodes(attrTag, referenceNodes),
+  );
 }
 
 // A child reading no attribute of a tag leaves every expression, attribute tag
@@ -988,15 +1011,20 @@ function collectAttrTagReferenceNodes(
     if (!getParamsTreeAt(attrTagTree, "content")) {
       dropContent(attrTag.body);
     }
-    getAllTagReferenceNodes(attrTag, referenceNodes, (nestedAttrTag) =>
-      collectAttrTagReferenceNodes(
-        nestedAttrTag,
-        attrTag.extra!.attrTagLookup!,
-        attrTagTree,
-        referenceNodes,
-        dropReferenceNodes,
-      ),
-    );
+    // Read whole, so the child reads every attribute tag nested in it.
+    if (attrTagTree !== true && isInvokeOnlyInput(attrTagTree.binding)) {
+      collectInvokeOnlyInputNodes(attrTag, referenceNodes);
+    } else {
+      getAllTagReferenceNodes(attrTag, referenceNodes, (nestedAttrTag) =>
+        collectAttrTagReferenceNodes(
+          nestedAttrTag,
+          attrTag.extra!.attrTagLookup!,
+          attrTagTree,
+          referenceNodes,
+          dropReferenceNodes,
+        ),
+      );
+    }
   } else {
     dropAttrTag(attrTag, dropReferenceNodes);
   }
