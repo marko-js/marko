@@ -120,8 +120,7 @@ export function installBindRef(resolve: NonNullable<typeof bindRef>) {
 }
 
 // A loop's live item: the one where it rendered while its key still matches
-// there (the reconciler's own check), else found by key, also among the rows
-// its patch is placing.
+// there (the reconciler's own check), else found by key.
 export function getLoopItem(
   scope: Scope,
   accessor: string,
@@ -129,7 +128,7 @@ export function getLoopItem(
 ): Scope | undefined {
   const items = toArray(
     scope[AccessorPrefix.BranchScopes + accessor] as Opt<Scope>,
-  ).concat((scope[AccessorPrefix.PlacedRows + accessor] as Scope[]) || []);
+  );
   let index = at as number;
   let key: unknown = at;
   if (typeof at === "object") [index, key] = at;

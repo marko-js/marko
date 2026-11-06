@@ -13,7 +13,6 @@ export const EventAttributes = "EventAttributes:";
 export const IdFallback = "IdFallback:";
 export const KeyedScopes = "KeyedScopes:";
 export const Lifecycle = "Lifecycle:";
-export const PlacedRows = "PlacedRows:";
 export const PatchChanged = "PatchChanged:";
 export const Promise = "Promise:";
 export const TagVariableChange = "TagVariableChange:";

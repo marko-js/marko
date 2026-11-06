@@ -21,8 +21,7 @@ export const createLoopPatcher =
       shellId = value[--len] as string;
     }
     const patches: Scope[] = [];
-    // A row's patch can name a row placed before the loop owns it.
-    const rows: Scope[] = (scope[AccessorPrefix.PlacedRows + accessor] = []);
+    const rows: Scope[] = [];
     const keys = len && typeof value[0] !== "object" ? ([] as unknown[]) : 0;
     // A loop with a shell creates additions; one whose items pair only
     // (a stateful body) ships none and never adds.
@@ -35,8 +34,10 @@ export const createLoopPatcher =
         template,
         walks,
         setup || 0,
+        // The loop owns the rows placed so far while it places them, so a row's
+        // patch can name one; a flush that throws navigates, so no old row need stay.
         ((branch: Scope, [patch]: [Scope]) => (
-          rows.push(branch),
+          (scope[AccessorPrefix.BranchScopes + accessor] = rows).push(branch),
           patchScope(patch, branch)
         )) as never,
       )(
@@ -49,6 +50,4 @@ export const createLoopPatcher =
     }
     if (shellId) withCreating(apply);
     else apply();
-    // A flush that throws navigates, so only an applied one clears them.
-    scope[AccessorPrefix.PlacedRows + accessor] = 0;
   };
