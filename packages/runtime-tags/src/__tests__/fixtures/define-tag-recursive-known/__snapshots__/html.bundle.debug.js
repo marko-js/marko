@@ -12,8 +12,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				Foo.content({ message: input.bar });
 				return 0;
 			} else {
-				const $scope3_id = _scope_id();
-				_html(_text_mark($scope3_id, "#text/0", JSON.stringify(input.message), 0 * 2));
+				const $scope4_id = _scope_id();
+				_html(_text_mark($scope4_id, "#text/0", JSON.stringify(input.message), 0 * 2));
 				return 1;
 			}
 		}, $scope1_id, "#text/0", 0, 0);

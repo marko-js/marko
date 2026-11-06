@@ -1106,8 +1106,14 @@ export function dropNodes(node: t.Node | t.Node[]) {
   forEachNodeExtra(node, dropExpr);
 }
 
+// Dropping content drops each expression a part of it merged into, which is
+// always in the same content.
 function untrackNodes(node: t.Node | t.Node[]) {
-  forEachNodeExtra(node, untrackExpr);
+  forEachNodeExtra(node, untrackCanonicalExpr);
+}
+
+function untrackCanonicalExpr(extra: ReferencedExtra) {
+  untrackExpr(getCanonicalExpr(extra));
 }
 
 function forEachNodeExtra(

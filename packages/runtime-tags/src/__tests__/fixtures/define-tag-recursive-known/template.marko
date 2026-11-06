@@ -1,6 +1,11 @@
 define/Foo|input|
   if=input.bar
     Foo message=input.bar
+      // Content the callee never renders, dropped after its control flow merged.
+      if=input.bar
+        -- unrendered
+      for|c| of=[input.bar]
+        -- ${c}
   else
     -- ${JSON.stringify(input.message)}
 
