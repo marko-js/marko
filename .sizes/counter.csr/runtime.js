@@ -1,4 +1,4 @@
-// size: 3732 (min) 1690 (brotli)
+// size: 3723 (min) 1685 (brotli)
 // packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36);
 let rendering;
@@ -26,55 +26,10 @@ let delegate = (type, handler) =>
   (handler[1 + type] ||= (document.addEventListener(type, handler, !0), 1));
 let parsers = {};
 let nextScopeId = 1e6;
-let destroyNestedScopes = function destroyNestedScopes(scope) {
-  ((scope.H = 0), scope.D?.forEach(destroyNestedScopes), scope.B?.forEach(cleanupScope));
-};
 let isScheduled;
 let channel;
 let _var_change = (scope, value) => scope.U?.(value);
 let currentNode;
-let walkInternal = function walkInternal(currentWalkIndex, walkCodes, scope) {
-  let value,
-    currentMultiplier,
-    storedMultiplier = 0,
-    currentScopeIndex = 0;
-  for (; currentWalkIndex < walkCodes.length;)
-    if (
-      ((value = walkCodes.charCodeAt(currentWalkIndex++)),
-      (currentMultiplier = storedMultiplier),
-      (storedMultiplier = 0),
-      value === 32)
-    )
-      scope[decodeAccessor(currentScopeIndex++)] = currentNode;
-    else if (value === 37 || value === 49)
-      (currentNode.replaceWith(
-        (currentNode = scope[decodeAccessor(currentScopeIndex++)] = new Text()),
-      ),
-        value === 49 && (scope[decodeAccessor(currentScopeIndex++)] = skipScope()));
-    else if (value === 38) return currentWalkIndex;
-    else if (value === 47 || value === 48)
-      ((currentWalkIndex = walkInternal(
-        currentWalkIndex,
-        walkCodes,
-        (scope[decodeAccessor(currentScopeIndex++)] = createScope(scope.$, scope.F)),
-      )),
-        value === 48 && (scope[decodeAccessor(currentScopeIndex++)] = skipScope()));
-    else if (value < 92)
-      for (value = 25 * currentMultiplier + value - 67; value--;)
-        if (currentNode.firstChild) currentNode = currentNode.firstChild;
-        else {
-          for (; !currentNode.nextSibling && currentNode.parentNode;)
-            currentNode = currentNode.parentNode;
-          walkNextSibling();
-        }
-    else if (value < 107)
-      for (value = 10 * currentMultiplier + value - 97; value--;) walkNextSibling();
-    else if (value < 117) {
-      for (value = 10 * currentMultiplier + value - 107; value--;)
-        currentNode = currentNode.parentNode || currentNode;
-      walkNextSibling();
-    } else storedMultiplier = currentMultiplier * 10 + value - 117;
-};
 let walkNextSibling = (_) => (currentNode = currentNode.nextSibling || currentNode);
 let _resumed = {};
 let cloneCache = {};
@@ -168,7 +123,10 @@ function skipScope() {
   return nextScopeId++;
 }
 function destroyBranch(branch) {
-  (branch.N?.D?.delete(branch), destroyNestedScopes(branch));
+  (branch.N?.D.delete(branch), destroyNestedScopes(branch));
+}
+function destroyNestedScopes(scope) {
+  ((scope.H = 0), scope.D?.forEach(destroyNestedScopes), scope.B?.forEach(cleanupScope));
 }
 function cleanupScope(scope) {}
 function removeAndDestroyBranch(branch) {
@@ -213,6 +171,48 @@ function _script(id, fn) {
 /** Cloned templates are small, where a TreeWalker's per-step cost dominates. */
 function walk(startNode, walkCodes, branch) {
   ((currentNode = startNode), walkInternal(0, walkCodes, branch));
+}
+function walkInternal(currentWalkIndex, walkCodes, scope) {
+  let value,
+    currentMultiplier,
+    storedMultiplier = 0,
+    currentScopeIndex = 0;
+  for (; currentWalkIndex < walkCodes.length;)
+    if (
+      ((value = walkCodes.charCodeAt(currentWalkIndex++)),
+      (currentMultiplier = storedMultiplier),
+      (storedMultiplier = 0),
+      value === 32)
+    )
+      scope[decodeAccessor(currentScopeIndex++)] = currentNode;
+    else if (value === 37 || value === 49)
+      (currentNode.replaceWith(
+        (currentNode = scope[decodeAccessor(currentScopeIndex++)] = new Text()),
+      ),
+        value === 49 && (scope[decodeAccessor(currentScopeIndex++)] = skipScope()));
+    else if (value === 38) return currentWalkIndex;
+    else if (value === 47 || value === 48)
+      ((currentWalkIndex = walkInternal(
+        currentWalkIndex,
+        walkCodes,
+        (scope[decodeAccessor(currentScopeIndex++)] = createScope(scope.$, scope.F)),
+      )),
+        value === 48 && (scope[decodeAccessor(currentScopeIndex++)] = skipScope()));
+    else if (value < 92)
+      for (value = 25 * currentMultiplier + value - 67; value--;)
+        if (currentNode.firstChild) currentNode = currentNode.firstChild;
+        else {
+          for (; !currentNode.nextSibling && currentNode.parentNode;)
+            currentNode = currentNode.parentNode;
+          walkNextSibling();
+        }
+    else if (value < 107)
+      for (value = 10 * currentMultiplier + value - 97; value--;) walkNextSibling();
+    else if (value < 117) {
+      for (value = 10 * currentMultiplier + value - 107; value--;)
+        currentNode = currentNode.parentNode || currentNode;
+      walkNextSibling();
+    } else storedMultiplier = currentMultiplier * 10 + value - 117;
 }
 function createBranch($global, renderer, parentScope, parentNode) {
   let branch = createScope($global);

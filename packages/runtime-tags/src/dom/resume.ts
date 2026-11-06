@@ -590,8 +590,7 @@ export function _dynamic_tag_var_resume(accessor: EncodedAccessor) {
   _resumed[DYNAMIC_TAG_VAR_REGISTER_ID + accessor] =
     (scope: Scope) => (_?: never) => {
       const node = scope[accessor] as ChildNode;
-      const el =
-        node.nodeType === NodeType.Comment ? node.previousSibling : node;
+      const el = node.nodeType > NodeType.Element ? node.previousSibling : node;
       return MARKO_DEBUG ? _el_read(el) : el;
     };
 }

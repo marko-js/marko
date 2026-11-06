@@ -112,8 +112,7 @@ export function escapeStyleValue(str: string) {
   return result + closers;
 }
 
-// TODO: turn into normal function declaration when resolved: https://github.com/oxc-project/oxc/issues/17364?issue=rolldown%7Crolldown%7C7666
-export const toDelimitedString = function toDelimitedString(
+export function toDelimitedString(
   val: unknown,
   delimiter: string,
   stringify: (n: string, v: unknown) => string | undefined,
@@ -143,7 +142,7 @@ export const toDelimitedString = function toDelimitedString(
     }
   }
   return str;
-};
+}
 
 // The runtime lowercases event names, but the types accept only the exact DOM
 // camelCase spelling (eg `onKeyDown`) — deliberate; type-check flags the rest.
