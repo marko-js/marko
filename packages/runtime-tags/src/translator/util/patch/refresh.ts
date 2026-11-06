@@ -28,6 +28,7 @@ import {
   isKnownTagExtra,
   someCallPasses,
 } from "../known-tag";
+import type { KnownTagExtra } from "../known-tag";
 import { isPatch } from "../marko-config";
 import { isTrackedFunction } from "../module-registrations";
 import {
@@ -1353,9 +1354,13 @@ const [ownsData] = createAnalysisMemo((root: Section): boolean => {
             (!(whole && holdsOnlyRegisteredFns(extra)) &&
               someFnValue(extra, ownsFn)) ||
             holdsOneOf(extra, owned),
-        ) || !!section.knownTags?.some((call) => ownsData(call.childSection)),
+        ) || !!section.knownTags?.some(callsOwningData),
   );
 }, false);
+
+function callsOwningData(call: KnownTagExtra) {
+  return ownsData(call.childSection);
+}
 
 function isWithin(section: Section | undefined, ancestor: Section) {
   for (; section; section = section.parent) {
