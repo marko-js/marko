@@ -35,6 +35,7 @@ export function getFnRoot(path: t.NodePath<t.Node>) {
         | t.ArrowFunctionExpression
         | t.ObjectMember
       >;
+  let child: t.NodePath | null = null;
   for (
     let curPath: t.NodePath | null = path;
     curPath && !isMarkoRoot(curPath);
@@ -47,10 +48,14 @@ export function getFnRoot(path: t.NodePath<t.Node>) {
         case "OptionalCallExpression":
         case "CallExpression":
         case "NewExpression":
-          fnPath = undefined;
+          // A call invokes a function handed to it as is, so that one never
+          // reaches the browser. A function inside a value it receives can
+          // land there, so it keeps holding its own reads.
+          if (child && child.node === fnPath?.node) fnPath = undefined;
           break;
       }
     }
+    child = curPath;
   }
 
   return fnPath;

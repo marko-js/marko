@@ -1,0 +1,15 @@
+<let/n=0/>
+<span/output>${n}</span>
+<for|fn| of=[() => n++].concat([])>
+  <button#concat onClick=fn/>
+</for>
+<for|fn| of=Object.values({
+  counted() {
+    n++;
+  },
+})>
+  <button#values onClick=fn/>
+</for>
+<for|fn| of=[() => n++]>
+  <button#direct onClick=fn/>
+</for>
