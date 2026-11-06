@@ -47,6 +47,7 @@ var template_default = _template("a", (input) => {
 			const $childScope = _peek_scope_id($scope3_id, "a", 0);
 			card_default({ content: Body.content });
 			_patch_child_end();
+			!_client_guard($scope0_reason, 5) && _unfilled_if() && _patch_write($scope0_id, "wh", Body?.content);
 			_scope($scope3_id, { a: _existing_scope($childScope) });
 			return 0;
 		}
