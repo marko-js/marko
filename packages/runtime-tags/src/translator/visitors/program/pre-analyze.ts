@@ -19,6 +19,7 @@ import buildStringExpression from "../../util/build-string-expression";
 import { generateUid, generateUidIdentifier } from "../../util/generate-uid";
 import { getMarkoRoot, isMarkoRoot } from "../../util/get-root";
 import {
+  getTagNameBinding,
   isUnresolvedKnownWrongTag,
   tagNotFoundError,
 } from "../../util/tag-name-type";
@@ -31,7 +32,6 @@ declare module "@marko/compiler/dist/types" {
   }
 }
 
-const TAG_NAME_IDENTIFIER_REG = /^[A-Z][a-zA-Z0-9_$]*$/;
 // Keyed per refining modifier (`value:parseInt:=x` vs `value:=x`), since the
 // modifier is baked into the built handler.
 const BINDING_CHANGE_HANDLER = new WeakMap<
@@ -118,10 +118,7 @@ function normalizeTag(tag: t.NodePath<t.MarkoTag>) {
   let invalidNameReg = invalidAttrNameReg;
   if (name.type === "StringLiteral") {
     const tagName = name.value;
-    if (
-      tag.scope.getBinding(tagName) &&
-      TAG_NAME_IDENTIFIER_REG.test(tagName)
-    ) {
+    if (getTagNameBinding(tag)) {
       // Convert tags which have an associated binding to an identifier.
       // <MyTag> --> <${MyTag}>
       node.name = withPreviousLocation(t.identifier(tagName), name);
