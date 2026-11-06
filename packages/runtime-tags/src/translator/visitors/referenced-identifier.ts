@@ -59,9 +59,7 @@ export default {
       section.hasAbortSignal = true;
       // Stamped on the raw (not canonical) extra: ids stay one-per-root
       // even if this extra later merges with another expression's.
-      if (rootExtra[kAbortId] === undefined) {
-        rootExtra[kAbortId] = section.abortSignalExprs++;
-      }
+      rootExtra[kAbortId] ??= section.abortSignalExprs++;
       rootExtra[kAbortCleanupOnly] =
         (rootExtra[kAbortCleanupOnly] ?? true) &&
         isOnabortStatement(identifier);

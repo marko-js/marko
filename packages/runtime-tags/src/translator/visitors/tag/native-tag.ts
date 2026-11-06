@@ -492,7 +492,7 @@ export default {
           } else if (name === "class" || name === "style") {
             const meta = delimitedAttrMetas[name]!;
             const { staticParts } = meta;
-            if (getDelimitedAttrItems(name, meta) && staticParts.length) {
+            if (staticParts.length && getDelimitedAttrItems(name, meta)) {
               if (staticParts.every(isLiteralPart)) {
                 write`${getStaticAttrMarkup(name, staticParts)}`;
               } else {
@@ -1520,12 +1520,7 @@ function warnCamelCaseStyleKeys(
       if (prop.type !== "ObjectProperty" || prop.computed) continue;
       const { key } = prop;
       const name = getLiteralName(key);
-      if (
-        name &&
-        !name.startsWith("--") &&
-        !name.includes("-") &&
-        /[A-Z]/.test(name)
-      ) {
+      if (name && !name.includes("-") && /[A-Z]/.test(name)) {
         const kebab = name
           .replace(/[A-Z]/g, (m) => "-" + m.toLowerCase())
           // The lowercase `ms` prefix needs a leading dash: `-ms-…`.
