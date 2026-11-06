@@ -1,0 +1,5 @@
+{
+  "<add-imports>": {
+    "migrator": "./add-imports.migrator.js"
+  }
+}

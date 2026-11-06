@@ -57,8 +57,7 @@ export default function (path, isNullable) {
       }
     }
 
-    let binding = !relativePath && path.scope.getBinding(tagName);
-    if (binding && !binding.identifier.loc) binding = null;
+    const binding = !relativePath && path.scope.getBinding(tagName);
 
     if (relativePath) {
       tagIdentifier = node.extra?.tagNameLoad
