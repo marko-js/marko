@@ -70,40 +70,35 @@ type BoundArgs = [path: PatchHop[], id: string, ...rest: unknown[]];
 function patchInstance(holes: KeptHoles, instance: Scope) {
   if (Array.isArray(holes)) {
     const [shared, ...own] = holes;
-    const copies = new Map<unknown, unknown>();
+    const copies = new Map<unknown, any>();
     const bind = (value: any) => {
-      if (value && typeof value === "object" && !copies.has(value)) {
+      let copy = copies.get(value);
+      if (!copy) {
         // Taken as is where it is reached again while copied (a cycle).
-        copies.set(value, value);
-        let copy = value;
+        copies.set(value, (copy = value));
+        const isArray = Array.isArray(value);
         // Content is no data (its owner a getter into live scopes).
         if (
-          Array.isArray(value) ||
-          (value.constructor === Object && !value[RendererProp.Id])
+          isArray ||
+          (value?.constructor === Object && !value[RendererProp.Id])
         ) {
           for (const key in value) {
             const item = bind(value[key]);
             if (item !== value[key]) {
-              if (copy === value) {
-                copy = Array.isArray(value) ? [...value] : { ...value };
-              }
+              if (copy === value) copy = isArray ? [...value] : { ...value };
               copy[key] = item;
             }
           }
-          if (own.includes(value)) {
+          if (own.includes(value))
             copy = bindRef!(instance, ...(copy as [PatchHop[], string]));
-          }
         } else if (value instanceof Map || value instanceof Set) {
           const items = [...value];
-          if (bind(items) !== items) {
-            copy = new (value.constructor as new (items: unknown) => unknown)(
-              bind(items),
-            );
-          }
+          if (bind(items) !== items)
+            copy = new (value.constructor as any)(bind(items));
         }
         copies.set(value, copy);
       }
-      return copies.get(value) ?? value;
+      return copy;
     };
     holes = bind(shared);
   }
