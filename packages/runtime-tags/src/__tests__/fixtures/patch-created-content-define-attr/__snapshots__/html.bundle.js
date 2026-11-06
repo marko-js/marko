@@ -38,7 +38,7 @@ var template_default = _template("a", (input) => {
 		const $scope2_id = _scope_id();
 		_scope_reason();
 		_dynamic_tag($scope2_id, "a", input.tag, { content: Inner }, 1, 0, 0, $wg__input_tag, $scope0_reason, 4, 0, void 0, 0, 0, "a0");
-		(_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 4)) && _patch_write($scope0_id, "wg", Inner);
+		!$cg__input_tag__OR__input_show && _unfilled_if() && _patch_write($scope0_id, "wg", Inner);
 		_unfilled_if($scope0_reason, 4) && _patch_subscribe($scope2_id, "a3");
 		_client_guard($scope0_reason, 4) && _patch_render($scope2_id, "a4");
 		$wi__input_tag__OR__input_show && _subscribe(_unfilled_if($scope0_reason, 4) && $input_tag__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }));
@@ -51,7 +51,7 @@ var template_default = _template("a", (input) => {
 			const $childScope = _peek_scope_id($scope3_id, "a", 1);
 			card_default({ content: Body.content });
 			_patch_child_end();
-			_unfilled_if($scope0_reason, 5) && _patch_write($scope0_id, "wi", Body?.content);
+			!_client_guard($scope0_reason, 5) && _unfilled_if() && _patch_write($scope0_id, "wi", Body?.content);
 			_scope($scope3_id, { a: _existing_scope($childScope) });
 			return 0;
 		}

@@ -27,6 +27,7 @@
       }
     },
     "PatchSetup:": {
+      "PatchWrite:w": 10,
       "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-nested-effects/template.marko_1_input_v#0:3/subscribe": 0,
       "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-nested-effects/template.marko_1_input_show#0:4/subscribe": 0,
       "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-nested-effects/template.marko_1_input_items#0:5/subscribe": 0
@@ -75,6 +76,7 @@
       }
     },
     "PatchSetup:": {
+      "PatchWrite:w": 20,
       "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-nested-effects/template.marko_1_input_v#0:3/subscribe": 0,
       "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-nested-effects/template.marko_1_input_show#0:4/subscribe": 0,
       "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-nested-effects/template.marko_1_input_items#0:5/subscribe": 0

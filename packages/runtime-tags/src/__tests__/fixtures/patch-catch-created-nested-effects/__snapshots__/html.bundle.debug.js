@@ -92,7 +92,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, $scope1_id, 0) });
 		_patch_child_end();
 		_script($scope1_id, "__tests__/template.marko_1_input_v#0:3");
-		$cg__input_show && _patch_write($scope1_id, "PatchWrite:w", w, 1);
+		_unfilled_if($scope0_reason, 3) && _patch_write($scope1_id, "PatchWrite:w", w, 1);
 		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_v#0:3/subscribe", $cg__input_v);
 		_unfilled_if($scope0_reason, 3) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_show#0:4/subscribe", $cg__input_show);
 		_unfilled_if($scope0_reason, 4) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_items#0:5/subscribe", $cg__input_items);

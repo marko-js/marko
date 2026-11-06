@@ -45,6 +45,8 @@ var rowsy_default = _template("b", (input) => {
 			label: tag,
 			content: Label
 		}, 9, 0, 0, $wg__input_tags__OR__input_card, $scope0_reason, 0, 0, void 0, 0, 0, "b2");
+		!$cg__input_tags__OR__input_card && _unfilled_if() && _patch_write($scope0_id, "wi", Card);
+		!$cg__input_tags__OR__input_card && _unfilled_if() && _patch_write($scope0_id, "wk", Label);
 		_patch_render($scope2_id, "b5", [_filled_guard($scope0_reason, 3) && ">h", _filled_guard($scope0_reason, 2) && "c"], $scope0_reason, 0);
 		_write_if($scope0_reason, 0) && _scope($scope2_id, {
 			c: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 0)) && tag,
@@ -52,8 +54,8 @@ var rowsy_default = _template("b", (input) => {
 		});
 	}, 0, $scope0_id, "c", 1, 1, 1, 0, 0, "b3", $scope0_reason, 2);
 	_script($scope0_id, "b6");
-	$cg__input_tags__OR__input_card && _patch_write($scope0_id, "wi", Card, 1);
-	$cg__input_tags__OR__input_card && _patch_write($scope0_id, "wk", Label, 1);
+	_unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "wi", Card, 1);
+	_unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "wk", Label, 1);
 	$fg__input_label && _patch_subscribers($scope0_id, "b7", "f");
 	$fg__input_card && $cg__input_tags && _patch_render($scope0_id, "b8", "h");
 	_patch_fill($scope0_id, "vb9", n, 1);

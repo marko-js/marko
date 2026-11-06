@@ -314,16 +314,30 @@ export function writePatchResumeStatements(
     if (entry) body.push(t.expressionStatement(entry));
   });
 
-  // An enclosing scope's constant this scope's client code reads, where it renders unfilled.
+  // An enclosing scope's constant this scope's client code reads, which the page ships
+  // only for a client group: written there where this scope renders unpatched.
   forEach(section.referencedClosures, (closure) => {
-    if (seedsOwnerConstant(section, closure)) {
-      const write = getExprIfUnfilled(
+    const reason = getWriteReason(closure);
+    if (
+      seedsOwnerConstant(section, closure) &&
+      isDynamicWriteGuard(closure.section, reason)
+    ) {
+      const client = getCallerGroupGuard(
         closure.section,
-        closure,
-        getWriteReason(closure),
-        buildPatchWrite(closure.section, closure),
+        "_client_guard",
+        reason,
       );
-      if (write) body.push(t.expressionStatement(write));
+      body.push(
+        t.expressionStatement(
+          andGuard(
+            client && t.unaryExpression("!", client),
+            andGuard(
+              callRuntime("_unfilled_if"),
+              buildPatchWrite(closure.section, closure),
+            ),
+          ),
+        ),
+      );
     }
   });
 
