@@ -94,7 +94,7 @@ export function checkStyleInterpolations(tag: t.NodePath<t.MarkoTag>) {
       } else if (!groupDepth) {
         switch (c) {
           case ":":
-            if (blockDepth) valueColon = true;
+            valueColon ||= blockDepth > 0;
             break;
           case "{":
             endRun(true);

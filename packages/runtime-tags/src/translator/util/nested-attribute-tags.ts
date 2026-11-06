@@ -101,9 +101,7 @@ export function analyzeAttributeTags(tag: t.NodePath<t.MarkoTag>) {
           }
 
           attrTagMeta.dynamic = true;
-          if (isRepeated) {
-            attrTagMeta.repeated = true;
-          }
+          attrTagMeta.repeated ||= isRepeated;
 
           sampleAttrTagsForControlFlow.set(child, name);
         }
