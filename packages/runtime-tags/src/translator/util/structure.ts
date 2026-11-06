@@ -179,8 +179,8 @@ interface ResolvedStructure {
   steps: Step.Value[];
 }
 
-// Resolves a section's structure stream into its inert template markup and the
-// walk string claiming each visited node, including dynamic content edges.
+// Resolves a section's structure stream into its inert template markup and walks, as
+// written: ancestors the HTML parser implies (a <tbody> around a <tr>) are not walked.
 function resolveStructure(section: Section) {
   const resolved: ResolvedStructure = {
     writes: [""],
