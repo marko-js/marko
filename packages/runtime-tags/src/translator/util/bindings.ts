@@ -12,6 +12,7 @@ import {
   push,
   Sorted,
   reduceWhile,
+  some,
 } from "./optional";
 import { type KnownExprs } from "./reasons";
 import {
@@ -505,10 +506,14 @@ function isReadBeyondInvoking(binding: Binding) {
   ) {
     return true;
   }
-  for (const expr of binding.reads.keys()) {
-    if (!expr.invokeOnly) return true;
+  for (const reads of binding.reads.values()) {
+    if (some(reads, isReadOutsideInvokeOnly)) return true;
   }
   return false;
+}
+
+function isReadOutsideInvokeOnly(read: Read) {
+  return !read.extra.exprRoot.invokeOnly;
 }
 
 // Declared by the template this compiles, not one it calls.

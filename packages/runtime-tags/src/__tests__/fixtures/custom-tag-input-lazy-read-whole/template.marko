@@ -1,0 +1,12 @@
+// Each child reads its input whole but only spreads or invokes it, so the
+// handlers read `count` lazily and no child input updates when it changes.
+<let/count=0/>
+<spread-attr-tag>
+  <@button onClick() { count++; }>${count}</@button>
+</spread-attr-tag>
+<spread-input onClick() { count--; }>${count}</spread-input>
+<run-menu>
+  <@menu>
+    <@item run() { count += 10; }/>
+  </@menu>
+</run-menu>

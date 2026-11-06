@@ -49,7 +49,7 @@ interface ReferencedFunctionExtra extends t.FunctionExtra, ReferencedExtra {}
 
 export interface Read {
   binding: Binding;
-  extra: t.NodeExtra;
+  extra: ReadExtra;
   inOwnBody: boolean;
   getter: Getter | undefined;
   comparedTo: t.Node | undefined;
@@ -1074,14 +1074,17 @@ export function onFinalizeReferences(finalize: () => void) {
 export function addRead(
   exprExtra: ReferencedExtra,
   extra: t.NodeExtra,
+  exprRoot: t.NodeExtra,
   binding: Binding,
   section: Section,
   getter: Getter | undefined,
 ) {
+  // Every read records the expression it sits in, before any merge.
+  (extra as ReadExtra).exprRoot = exprRoot;
   const readsByExpression = getReadsByExpression();
   const read: Read = {
     binding,
-    extra,
+    extra: extra as ReadExtra,
     getter,
     inOwnBody: false,
     comparedTo: undefined,
@@ -1215,8 +1218,7 @@ function addReadToExpression(
   // reference) must not keep the binding alive.
   if (exprExtra.dropped) return;
   const extra = (node.extra ??= {});
-  extra.exprRoot = rootExtra;
-  const read = addRead(exprExtra, extra, binding, section, getter);
+  const read = addRead(exprExtra, extra, rootExtra, binding, section, getter);
 
   const { parent } = root;
   if (
@@ -1274,6 +1276,16 @@ export function getAllTagReferenceNodes(
     referenceNodes.push(attr.value);
   }
 
+  return getChildTagReferenceNodes(tag, referenceNodes, collectAttrTag);
+}
+
+// The references of a tag's child tags: attribute tags through `collectAttrTag`
+// when given, the rest (control flow, scriptlets) in place.
+export function getChildTagReferenceNodes(
+  tag: t.MarkoTag,
+  referenceNodes: t.Node[],
+  collectAttrTag?: (attrTag: t.MarkoTag) => void,
+) {
   for (const child of tag.body.attributeTags
     ? tag.body.body
     : tag.attributeTags) {
@@ -1324,6 +1336,10 @@ export function isReferencedExtra(
   extra: t.NodeExtra | undefined,
 ): extra is ReferencedExtra {
   return !!(extra && !extra.dropped && extra.section);
+}
+
+export interface ReadExtra extends t.NodeExtra {
+  exprRoot: t.NodeExtra;
 }
 
 export interface AssignedBindingExtra extends ReferencedExtra {

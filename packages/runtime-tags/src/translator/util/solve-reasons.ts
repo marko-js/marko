@@ -603,7 +603,7 @@ function renderingReaders(expr: ReferencedExtra, binding: Binding): Readers {
     return {
       reason: undefined,
       lands: 0,
-      sites: first(reads).extra.exprRoot!.tagName,
+      sites: first(reads).extra.exprRoot.tagName,
     };
   }
   // So does a spread, a native element's `content=` or a class component's body,

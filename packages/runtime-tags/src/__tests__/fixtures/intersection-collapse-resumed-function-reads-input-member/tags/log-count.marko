@@ -1,1 +1,3 @@
-<button onClick() { console.log(input.count()) }>log</button>
+// Read as a value, not only invoked, so the parent passes it on each change.
+<const/count=input.count/>
+<button onClick() { console.log(count()) }>log</button>

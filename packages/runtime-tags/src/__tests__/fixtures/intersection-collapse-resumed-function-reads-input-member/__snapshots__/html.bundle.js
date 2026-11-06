@@ -2,9 +2,10 @@
 var log_count_default = _template("b", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
+	const count = input.count;
 	_html(`<button>log</button>${_el_mark($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
-	_scope($scope0_id, { c: input });
+	_scope($scope0_id, { e: count });
 });
 
 // template.marko

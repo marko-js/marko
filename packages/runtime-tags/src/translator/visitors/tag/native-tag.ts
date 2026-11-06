@@ -423,7 +423,9 @@ export default {
           spreadExtra.rendersContent = true;
           // Functions in native tag attrs are only ever invoked (handlers)
           // or stringified from static source, so reads inside can be lazy.
-          spreadExtra.invokeOnly = true;
+          for (const index of spread) {
+            attributes[index].value.extra!.invokeOnly = true;
+          }
         }
 
         let exprExtras: Opt<t.NodeExtra>;

@@ -820,16 +820,15 @@ function addBindingGetter(binding: Binding, { invoked, hoisted }: Getter) {
 // A lazy read is excluded from `referencedBindings` and instead reads the
 // binding's scope slot on invocation, which its slot owner then stores.
 function isLazyRead(
-  expr: { section: Section; invokeOnly?: true },
   read: Read,
   binding: Binding,
   isChangeHandlerRead: boolean,
 ) {
-  return !!(
-    expr.invokeOnly &&
+  return (
     read.deferred &&
     !isChangeHandlerRead &&
-    binding.type !== BindingType.constant
+    binding.type !== BindingType.constant &&
+    !!read.extra.exprRoot.invokeOnly
   );
 }
 
@@ -885,7 +884,7 @@ function resolveReferencedBindings(
         const closure =
           binding.section !== expr.section &&
           (getConstantRoot(binding) ?? getCanonicalBinding(binding));
-        if (isLazyRead(expr, read, binding, isChangeHandlerRead)) {
+        if (isLazyRead(read, binding, isChangeHandlerRead)) {
           // A lazy read subscribes to nothing.
           lazyBindings = bindingUtil.add(lazyBindings, binding);
         } else if (binding.type === BindingType.constant) {
