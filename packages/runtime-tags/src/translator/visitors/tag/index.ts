@@ -1,5 +1,5 @@
 import { types as t } from "@marko/compiler";
-import { getFile, getTagDef, type Plugin } from "@marko/compiler/babel-utils";
+import { getFile, getTagDef } from "@marko/compiler/babel-utils";
 
 import { reportAnalyzeError } from "../../util/analyze-errors";
 import { writeBodyStatements } from "../../util/replace-with-statements";
@@ -25,7 +25,7 @@ export default {
       try {
         const tagDef = getTagDef(tag);
         const type = analyzeTagNameType(tag);
-        const hook = tagDef?.analyzer?.hook as Plugin;
+        const hook = tagDef?.analyzer?.hook;
 
         if (hook) {
           enterHook(hook, tag);
@@ -57,7 +57,7 @@ export default {
     exit(tag) {
       if (tag.node.extra?.[kAnalyzeFailed]) return;
       try {
-        const hook = getTagDef(tag)?.analyzer?.hook as Plugin;
+        const hook = getTagDef(tag)?.analyzer?.hook;
 
         if (hook) {
           exitHook(hook, tag);

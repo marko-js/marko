@@ -30,7 +30,6 @@ import {
   getSetup,
   getSignal,
   initValue,
-  type Signal,
   signalHasWork,
   trimEmptyArgs,
   writeRegisteredFns,
@@ -102,9 +101,10 @@ export default {
             tagParamsSignal && signalHasWork(tagParamsSignal)
               ? tagParamsSignal.identifier
               : undefined;
-          const { writes } = getSectionMeta(childSection);
+          const meta = getSectionMeta(childSection);
+          const { writes } = meta;
           // Reaches the runtime through `_content`, which strips these.
-          const walks = trimTrailingExits(getSectionMeta(childSection).walks);
+          const walks = trimTrailingExits(meta.walks);
           addTagVarBindings(childSection);
           const written = writeSignals(childSection);
           const setup = getSetup(childSection);
@@ -222,7 +222,11 @@ export default {
       const setup = getSetup(section);
       const setupWritten = !!setup && written.has(setup);
       // Parents skip calling this setup export when analysis found no setup work.
-      assertSetupWorkFound(program, section, written);
+      if (setupWritten && !section.hasSetupWork) {
+        throw program.buildCodeFrameError(
+          "Marko internal error: analysis found no setup work for a section whose translation produced setup statements. Please open an issue with a reproduction.",
+        );
+      }
 
       if (!setupWritten) {
         program.node.body.unshift(
@@ -263,21 +267,6 @@ export default {
     },
   },
 } satisfies TemplateVisitor<t.Program>;
-
-// Callers skip a setup analysis found no work for, so translate writing one
-// means analysis missed work.
-function assertSetupWorkFound(
-  program: t.NodePath<t.Program>,
-  section: Section,
-  written: Set<Signal>,
-) {
-  const setup = getSetup(section);
-  if (!section.hasSetupWork && setup && written.has(setup)) {
-    throw program.buildCodeFrameError(
-      "Marko internal error: analysis found no setup work for a section whose translation produced setup statements. Please open an issue with a reproduction.",
-    );
-  }
-}
 
 // A debug build marks content with a `<return>` on its setup, or its params if
 // it has no setup, to check a dynamic tag's variable over it.

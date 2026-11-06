@@ -28,9 +28,6 @@ export default {
       );
     }
 
-    // bail on closures
-    if (fn !== getFnRoot(fn)) return;
-
     const { node } = fn;
 
     // Accessors stay exactly as written; they are never registered.
@@ -40,6 +37,9 @@ export default {
     ) {
       return;
     }
+
+    // bail on closures
+    if (fn !== getFnRoot(fn)) return;
 
     const exprRoot = getExprRoot(fn);
     const markoRoot = getMarkoRoot(exprRoot);
