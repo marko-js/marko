@@ -17,8 +17,8 @@ import { toArray } from "./optional";
 import { insertStatementBefore } from "./replace-with-statements";
 import { importRuntime } from "./runtime";
 import { getSection, type Section } from "./sections";
-import { findSlot } from "./slots";
 import { toMemberExpression, toPropertyName } from "./to-property-name";
+import { getWriteReason } from "./write-guard";
 
 export default function translateVar(
   tag: t.NodePath<t.MarkoTag>,
@@ -195,7 +195,7 @@ function translateRest(
   const from = getDeclaredAlias(source) || source;
   let target: t.NodePath = tag;
   let inPlace = true;
-  if (rest.section !== getSection(tag) && findSlot(rest)?.reason) {
+  if (rest.section !== getSection(tag) && getWriteReason(rest)) {
     // Its own section serializes it, so declares it whether or not this tag
     // renders.
     target = getSectionTarget(tag, rest.section);
