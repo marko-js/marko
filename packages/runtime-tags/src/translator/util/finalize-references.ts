@@ -72,6 +72,7 @@ import {
   getForClosureIndex,
   forEachSection,
   getDirectClosures,
+  isLoopBody,
   isOptionalBranch,
   type Section,
   sectionUtil,
@@ -375,6 +376,8 @@ export function allocateIds(
   intersectionsBySection: Map<Section, Intersection[]>,
 ) {
   const closureIdEnds = new Map<Section, number>();
+  const idEnds = new Map<Section, number>();
+  const rowsIdEnds = new Map<Section, number>();
   forEachSection((section) => {
     const { bindings } = section;
     const intersectionSources = new Map<Intersection, Binding | undefined>();
@@ -480,6 +483,18 @@ export function allocateIds(
       }
     });
     closureIdEnds.set(section, closureId);
+    // A loop's `$global` signals take slots in its owner after the owner's ids
+    // and closures.
+    idEnds.set(section, Math.max(closureId, nextId));
+    if (section.globalReadExprs && isLoopBody(section)) {
+      const ownerEnd =
+        rowsIdEnds.get(section.parent!) ?? idEnds.get(section.parent!)!;
+      section.globalRowsId = ownerEnd;
+      rowsIdEnds.set(
+        section.parent!,
+        ownerEnd + section.globalReadExprs.length,
+      );
+    }
   });
 }
 

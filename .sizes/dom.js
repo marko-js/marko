@@ -1,4 +1,4 @@
-// size: 28577 (min) 10586 (brotli)
+// size: 28590 (min) 10587 (brotli)
 // packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -2159,9 +2159,9 @@ function _fill_global(id, signal, ...keys) {
     ])[0]
   );
 }
-function _fill_global_for(id, ownerLoopNodeAccessor, signal, ...keys) {
+function _fill_global_for(id, ownerLoopNodeAccessor, signal, slot, scopeIdAccessor, ...keys) {
   return (
-    _fill_global(id, _for_closure(ownerLoopNodeAccessor, signal, -1), ...keys),
+    _fill_global(id, _for_closure(ownerLoopNodeAccessor, signal, slot, scopeIdAccessor), ...keys),
     (scope) => {
       (signal(scope), subscribeToScopeSet(globalScopes, id, scope._));
     }
@@ -2177,10 +2177,10 @@ function _fill_global_script(id, fn, ...keys) {
 function _fill_global_path(id, signal, ...keys) {
   return ((changesMember = membersChanged), _fill_global(id, signal, ...keys, 0));
 }
-function _fill_global_path_for(id, ownerLoopNodeAccessor, signal, ...keys) {
+function _fill_global_path_for(id, ownerLoopNodeAccessor, signal, slot, scopeIdAccessor, ...keys) {
   return (
     (changesMember = membersChanged),
-    _fill_global_for(id, ownerLoopNodeAccessor, signal, ...keys, 0)
+    _fill_global_for(id, ownerLoopNodeAccessor, signal, slot, scopeIdAccessor, ...keys, 0)
   );
 }
 function _fill_global_path_script(id, fn, ...keys) {

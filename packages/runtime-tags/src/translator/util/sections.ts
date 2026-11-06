@@ -196,6 +196,8 @@ export interface Section {
   abortSignalExprs: number;
   /** Its expressions that read `$global` keys as they evaluate. */
   globalReadExprs: ReferencedExtra[] | undefined;
+  /** The owner's first queue slot for its rows' `$global` signals, once ids allocate. */
+  globalRowsId: number | undefined;
   readsOwner: boolean;
   /** Whether analysis found work keyed by setup in the section, or in a
    * `<define>` body or template it calls in place. */
@@ -322,6 +324,7 @@ export function ensureBodySection(
       hasAbortSignal: false,
       abortSignalExprs: 0,
       globalReadExprs: undefined,
+      globalRowsId: undefined,
       readsOwner: false,
       hasSetupWork: false,
       branch: undefined,

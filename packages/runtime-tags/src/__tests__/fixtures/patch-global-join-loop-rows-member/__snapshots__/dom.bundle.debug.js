@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<button class=dec>-</button><button class=inc>+</button><ul></ul>";
 const $walks = " b b b";
-const $for_content__setup__$global_o = /*@__PURE__*/ _fill_global_path_for("__tests__/template.marko_1_$global_o#0:11", "#ul/2", ($scope) => _text($scope["#text/1"], $scope.$global.o.x), "o", "x");
+const $for_content__setup__$global_o = /*@__PURE__*/ _fill_global_path_for("__tests__/template.marko_1_$global_o#0:11", "#ul/2", ($scope) => _text($scope["#text/1"], $scope.$global.o.x), 4, 0, "o", "x");
 const $for_content__setup = ($scope) => {
 	_text($scope["#text/0"], $scope["#LoopKey"]);
 	$for_content__setup__$global_o($scope);

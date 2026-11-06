@@ -47,10 +47,15 @@ export function _fill_global_for(
   id: string,
   ownerLoopNodeAccessor: EncodedAccessor,
   signal: SignalFn,
+  slot: number,
+  scopeIdAccessor: EncodedAccessor,
   ...keys: (string | 0)[]
 ): SignalFn {
-  // A negative id takes no slot on the owner and sorts with the global renders.
-  _fill_global(id, _for_closure(ownerLoopNodeAccessor, signal, -1), ...keys);
+  _fill_global(
+    id,
+    _for_closure(ownerLoopNodeAccessor, signal, slot, scopeIdAccessor),
+    ...keys,
+  );
   return (scope: Scope) => {
     signal(scope);
     subscribeToScopeSet(globalScopes, id, scope[AccessorProp.Owner]!);
@@ -87,10 +92,20 @@ export function _fill_global_path_for(
   id: string,
   ownerLoopNodeAccessor: EncodedAccessor,
   signal: SignalFn,
+  slot: number,
+  scopeIdAccessor: EncodedAccessor,
   ...keys: (string | 0)[]
 ): SignalFn {
   changesMember = membersChanged;
-  return _fill_global_for(id, ownerLoopNodeAccessor, signal, ...keys, 0);
+  return _fill_global_for(
+    id,
+    ownerLoopNodeAccessor,
+    signal,
+    slot,
+    scopeIdAccessor,
+    ...keys,
+    0,
+  );
 }
 export function _fill_global_path_script(
   id: string,

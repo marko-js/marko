@@ -2,7 +2,7 @@
 const $template$1 = "<ul></ul>";
 const $walks$1 = " b";
 const $setup$1 = ($_) => {};
-const $for_content__setup__$global_x = /*@__PURE__*/ _fill_global_for("__tests__/tags/rows.marko_1_$global_x#0:8", "#ul/0", ($scope) => _text($scope["#text/0"], $scope["#LoopKey"] + ":" + $scope.$global.x), "x");
+const $for_content__setup__$global_x = /*@__PURE__*/ _fill_global_for("__tests__/tags/rows.marko_1_$global_x#0:8", "#ul/0", ($scope) => _text($scope["#text/0"], $scope["#LoopKey"] + ":" + $scope.$global.x), 4, 0, "x");
 const $for_content__setup = $for_content__setup__$global_x;
 const $for = /*@__PURE__*/ _for_until_unkeyed("#ul/0", "<li> </li>", "D ", $for_content__setup);
 const $input_n = ($scope, input_n) => $for($scope, [input_n]);

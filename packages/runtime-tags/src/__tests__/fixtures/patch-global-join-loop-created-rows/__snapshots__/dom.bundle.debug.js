@@ -2,7 +2,7 @@
 const $template = "<button> </button><ul></ul>";
 const $walks = " D l b";
 const $for_content__n = /*@__PURE__*/ _for_closure_patch("__tests__/template.marko_1_n#0:6/setup", "#ul/2", ($scope) => _text($scope["#text/2"], $scope._.n), 7);
-const $for_content__setup__$global_x = /*@__PURE__*/ _fill_global_for("__tests__/template.marko_1_$global_x#0:12", "#ul/2", ($scope) => _text($scope["#text/1"], $scope.$global.x), "x");
+const $for_content__setup__$global_x = /*@__PURE__*/ _fill_global_for("__tests__/template.marko_1_$global_x#0:12", "#ul/2", ($scope) => _text($scope["#text/1"], $scope.$global.x), 8, 0, "x");
 const $for_content__setup = ($scope) => {
 	$for_content__n._($scope);
 	$for_content__setup__$global_x($scope);

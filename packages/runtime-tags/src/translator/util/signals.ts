@@ -689,6 +689,11 @@ function wrapGlobalSignals(signal: Signal, value: t.Expression): t.Expression {
         id,
         getScopeAccessorLiteral(signal.section.branch!.tag.nodeBinding, true),
         value,
+        t.numericLiteral(
+          signal.section.globalRowsId! +
+            [...getGlobalSignals(signal.section).keys()].indexOf(id.value),
+        ),
+        getLoopRenderOrder(signal.section) || t.numericLiteral(0),
         ...args,
       )
     : callRuntime(

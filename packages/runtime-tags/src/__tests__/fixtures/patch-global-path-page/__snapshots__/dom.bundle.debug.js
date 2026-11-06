@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<button>t</button><!><ul></ul><div></div><div></div><div></div><div></div><div></div>";
 const $walks = " b%b b b b b b b";
-const $for_content__setup__$global_a__OR__$global_c = /*@__PURE__*/ _fill_global_for("__tests__/template.marko_2_$global_a#0:7_$global_c#0:8", "#ul/2", ($scope) => _text($scope["#text/0"], $scope.$global.a + $scope.$global.c), "a", "c");
+const $for_content__setup__$global_a__OR__$global_c = /*@__PURE__*/ _fill_global_for("__tests__/template.marko_2_$global_a#0:7_$global_c#0:8", "#ul/2", ($scope) => _text($scope["#text/0"], $scope.$global.a + $scope.$global.c), 9, 0, "a", "c");
 const $for_content__setup = $for_content__setup__$global_a__OR__$global_c;
 const $if_content__setup__$global_a__OR__$global_c = /*@__PURE__*/ _fill_global("__tests__/template.marko_1_$global_a#0:7_$global_c#0:8", ($scope) => _text($scope["#text/0"], $scope.$global.a + $scope.$global.c), "a", "c");
 const $if_content__setup = $if_content__setup__$global_a__OR__$global_c;
