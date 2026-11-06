@@ -1,0 +1,10 @@
+<let/o={}/>
+<const/{ a, ...rest }={ a: 1, b: 2, c: 3 }/>
+<const/key=input.key/>
+<div>${a}-${o[rest] ?? "-"}-${o[rest.b] ?? "-"}-${o[key.name] ?? "-"}</div>
+<button.mutate onClick() {
+  o[rest] = 1;
+  o[rest.b] = 2;
+  o[key] = 3;
+  o = { ...o };
+}>mutate</button>
