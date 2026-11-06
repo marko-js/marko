@@ -36,7 +36,6 @@ const $card_content2 = /*@__PURE__*/ _content("__tests__/template.marko_4*conten
 const $A_content__input_label = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_3_input_label#0:4/subscribe", "input_label/6", ($scope) => _text($scope["#text/0"], $scope._._._.input_label), ($scope) => $scope._._._, "__tests__/template.marko_0_input_label#4/subscribers", 0);
 const $A_content__setup = $A_content__input_label;
 const $A_content = _content("__tests__/template.marko_3*content", "<b> </b>", "D ", $A_content__setup);
-_content_resume($A_content);
 const $card_content__A = /*@__PURE__*/ _const("A");
 const $card_content__setup = ($scope) => {
 	$setup$1($scope["#childScope/0"]);
@@ -45,7 +44,7 @@ const $card_content__setup = ($scope) => {
 	$input_content($scope["#childScope/1"], $card_content3($scope));
 	$card_content__A($scope, { content: $A_content($scope) });
 };
-const $card_content = /*@__PURE__*/ _content("__tests__/template.marko_2*content", /*@__PURE__*/ ((_w0, _w1) => `${_w0}${_w1}`)($template$1, $template$1), /*@__PURE__*/ ((_w0, _w1) => `/${_w0}&/${_w1}&`)($walks$1, $walks$1), $card_content__setup);
+const $card_content = _content("__tests__/template.marko_2*content", /*@__PURE__*/ ((_w0, _w1) => `${_w0}${_w1}`)($template$1, $template$1), /*@__PURE__*/ ((_w0, _w1) => `/${_w0}&/${_w1}&`)($walks$1, $walks$1), $card_content__setup);
 const $if_content__setup = ($scope) => {
 	$setup$1($scope["#childScope/0"]);
 	$input_content($scope["#childScope/0"], $card_content($scope));

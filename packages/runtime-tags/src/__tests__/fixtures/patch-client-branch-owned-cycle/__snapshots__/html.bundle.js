@@ -1,6 +1,4 @@
 // tags/get.marko
-const $template$1 = "<button>array</button><button>set</button><button>map</button><p> </p>";
-const $walks$1 = " b b bD l";
 const $setup$1 = [[], []];
 _shells({ c: "c; b b bD ;<button>array</button><button>set</button><button>map</button><p> </p>" });
 var get_default = _template("c", (input) => {
@@ -60,7 +58,7 @@ function mkMap(f) {
 	return m;
 }
 _shells({
-	a2: `a2|2${_shell_marker([[], []], ["a>", $setup$1])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1)};${$template$1}`,
+	a2: `a2${_shell_marker([[], []], ["a>", $setup$1])}`,
 	a: "a;b%;<!><!><!>",
 	a3: `a3${_shell_marker([[], []], ["a>", $setup])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks)};${$template}`
 });
@@ -74,7 +72,7 @@ var template_default = _template("a", (input) => {
 			const $scope1_id = _scope_id();
 			_set_scope_reason(0);
 			const $childScope2 = _peek_scope_id($scope1_id, "a", 1);
-			card_default({ content: _content("a2", () => {
+			card_default({ content: _content_resume("a2", () => {
 				_scope_reason();
 				const $scope2_id = _scope_id();
 				const f = _bind_resume(function() {
@@ -88,13 +86,13 @@ var template_default = _template("a", (input) => {
 					m: mkMap(f)
 				});
 				_patch_child_end();
-				_client_guard($scope0_reason, 1) && _patch_render($scope2_id, "a1");
+				_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope2_id, "a1", _client_guard($scope0_reason, 1));
 				_subscribe(_unfilled_if($scope0_reason, 1) && $input_label__closures, _scope($scope2_id, {
 					_: _scope_with_id($scope1_id),
 					a: _existing_scope($childScope)
 				}));
 				_resume_branch($scope2_id);
-			}, $scope1_id, 2) });
+			}, $scope1_id) });
 			_patch_child_end();
 			_scope($scope1_id, {
 				_: _scope_with_id($scope0_id),
@@ -103,7 +101,7 @@ var template_default = _template("a", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["a3"], $scope0_reason, 0);
-	$fg__input_label && _client_guard($scope0_reason, 0) && _patch_subscribers($scope0_id, "a4", "e");
+	$fg__input_label && _patch_subscribers($scope0_id, "a4", "e");
 	_scope($scope0_id, {
 		e: input.label,
 		f: _write_if($scope0_reason, 1) && $input_label__closures

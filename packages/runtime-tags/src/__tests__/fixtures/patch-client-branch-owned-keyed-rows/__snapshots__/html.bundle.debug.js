@@ -21,7 +21,7 @@ const $setup = [[], []];
 _shells({
 	"__tests__/template.marko_4*content": "__tests__/template.marko_4*content",
 	"__tests__/template.marko_3*content": "__tests__/template.marko_3*content !__tests__/template.marko_3",
-	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content|2;b%b%;<!><!><!><!>",
+	"__tests__/template.marko_2*content": "__tests__/template.marko_2*content",
 	"__tests__/template.marko": "__tests__/template.marko;b%;<!><!><!>",
 	"__tests__/template.marko_1*shell": `__tests__/template.marko_1*shell${_shell_marker([[], []], ["#childScope/0>", $setup$1])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1)};${$template$1}`
 });
@@ -36,7 +36,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_filled_guard($scope0_reason, 1) && _patch_write($scope1_id, "PatchMarkedWrite:r_label", r?.label, !$sg__input_rows);
 		_set_scope_reason(0);
 		const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 2);
-		card_default({ content: _content("__tests__/template.marko_2*content", () => {
+		card_default({ content: _content_resume("__tests__/template.marko_2*content", () => {
 			const $scope2_reason = _scope_reason();
 			const $scope2_id = _scope_id();
 			const Inner = { content: _content_resume("__tests__/template.marko_3*content", () => {
@@ -60,7 +60,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_html(_text_mark($scope4_id, "#text/0", r.label, 2, $scope0_reason, 1));
 				_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope4_id, "__tests__/template.marko_4_r_label#1:3/subscribe", $cg__input_rows);
 				_subscribe(_unfilled_if($scope0_reason, 1) && $for_content__r_label__closures, _scope($scope4_id, {
-					_: _write_if($scope0_reason, 0) && _scope_with_id($scope2_id),
+					_: _scope_with_id($scope2_id),
 					"ClosureSignalIndex:r_label/8": $wi__input_rows && 2
 				}, "__tests__/template.marko", "5:8"));
 			}, $scope2_id), 0, $wg__input_rows__OR__input_tag, $scope0_reason, 0, 0, 3);
@@ -74,7 +74,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_: _scope_with_id($scope1_id)
 			}, "__tests__/template.marko", "2:4", { Inner: "3:13" })));
 			$wg__input_rows__OR__input_tag || $wg__input_tag || _resume_branch($scope2_id);
-		}, $scope1_id, 2) });
+		}, $scope1_id) });
 		_patch_child_end();
 		_filled_guard($scope0_reason, 1) && _patch_subscribers($scope1_id, "__tests__/template.marko_1_r_label#3/subscribers", "r_label");
 		_scope($scope1_id, {
@@ -85,12 +85,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, "__tests__/template.marko", "1:2", { r_label: ["r.label", "1:6"] });
 	}, "id", $scope0_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/template.marko_1*shell", $scope0_reason, 1);
 	$fg__input_label && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_label#4/subscribers", "input_label");
-	$fg__input_tag && $cg__input_rows && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_tag#5/subscribers", "input_tag");
+	$fg__input_tag && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_tag#5/subscribers", "input_tag");
 	_scope($scope0_id, {
 		input_label: input.label,
-		input_tag: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.tag,
+		input_tag: input.tag,
 		"ClosureScopes:input_label/6": $wi__input_label && $input_label__closures,
-		"ClosureScopes:input_tag/7": _write_if($scope0_reason, 3) && (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && $input_tag__closures
+		"ClosureScopes:input_tag/7": _write_if($scope0_reason, 3) && $input_tag__closures
 	}, "__tests__/template.marko", 0, {
 		input_label: ["input.label"],
 		input_tag: ["input.tag"]

@@ -110,6 +110,7 @@ import {
   isPassedStateByEveryCall,
   isStatefulRead,
 } from "./structure";
+import { isScopeBoundFn } from "./writers";
 
 // Stable wire/registry key for a fill: a register id for a template-wide fill
 // ordinal, built once per analysis in section order, which every output reads.
@@ -1298,6 +1299,92 @@ export function keepsHoles(section: Section) {
 export function inKeptContent(section: Section) {
   while (section.branch) section = section.parent!;
   return keepsContent(section);
+}
+
+// What tags hand on as data, by the section holding them: a dynamic tag's input,
+// a known child's attributes (`whole` where the attribute is that expression).
+const dataSites = new WeakMap<
+  Section,
+  { extra: t.NodeExtra; whole: boolean }[]
+>();
+export function recordDataSite(
+  section: Section,
+  extra: t.NodeExtra,
+  whole: boolean,
+) {
+  let sites = dataSites.get(section);
+  if (!sites) dataSites.set(section, (sites = []));
+  sites.push({ extra, whole });
+}
+
+// Kept content serves its holes to every instance, and data names one scope: content
+// whose holes would carry, as data, a function or content its instance owns renders
+// on the client instead, as main does (a known child's whole attribute binds per scope).
+export function carriesOwnedData(section: Section) {
+  return (
+    !!section.derives &&
+    sendsOwnedData(section) &&
+    rendersFromChildState(section)
+  );
+}
+
+const [sendsOwnedData] = createAnalysisMemo((content: Section) => {
+  const owned = new Set<Binding>();
+  const inside: Section[] = [];
+  forEachSection((section) => {
+    if (isWithin(section, content)) {
+      inside.push(section);
+      if (section !== content) {
+        forEach(section.derives?.binding, (binding) => owned.add(binding));
+      }
+    }
+  });
+  const ownsFn = (expr: t.NodeExtra) =>
+    isTrackedFunction(expr) &&
+    isScopeBoundFn(expr) &&
+    isWithin((expr as ReferencedExtra).section, content);
+  return inside.some((section) =>
+    dataSites
+      .get(section)
+      ?.some(
+        ({ extra, whole }) =>
+          (!(whole && holdsOnlyRegisteredFns(extra)) &&
+            someFnValue(extra, ownsFn)) ||
+          holdsOneOf(extra, owned),
+      ),
+  );
+}, false);
+
+function isWithin(section: Section | undefined, ancestor: Section) {
+  for (; section; section = section.parent) {
+    if (section === ancestor) return true;
+  }
+  return false;
+}
+
+// A function, or a binding holding only such: a call passes it whole as a bind.
+function holdsOnlyRegisteredFns(extra: t.NodeExtra) {
+  return (
+    isTrackedFunction(extra) ||
+    every(getReferencedBindings(extra), holdsRegisteredFn)
+  );
+}
+
+// A value the expression may evaluate to, or hold, derives from one of `bindings`.
+function holdsOneOf(
+  exprs: Opt<t.NodeExtra>,
+  bindings: Set<Binding>,
+  seen = new Set<Binding>(),
+): boolean {
+  return some(exprs, (expr) =>
+    some(getReferencedBindings(expr), (ref) => {
+      const binding = getCanonicalBinding(ref);
+      if (bindings.has(binding)) return true;
+      if (seen.has(binding)) return false;
+      seen.add(binding);
+      return holdsOneOf(binding.derivedFrom || undefined, bindings, seen);
+    }),
+  );
 }
 
 // Content a known child renders from its state, where plain renders it nowhere

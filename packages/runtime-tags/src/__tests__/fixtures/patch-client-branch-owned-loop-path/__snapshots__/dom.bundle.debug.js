@@ -35,7 +35,7 @@ const $for_content__$params = ($scope, $params2) => $for_content__r_label($scope
 const $card_content__for = /*@__PURE__*/ _for_of("#ul/0", "<li><!></li>", "D%", $for_content__setup, $for_content__$params);
 const $card_content__input_rows = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_2_input_rows#0:4/subscribe", "input_rows/7", ($scope) => $card_content__for($scope, [$scope._._.input_rows, "id"]), ($scope) => $scope._._, "__tests__/template.marko_0_input_rows#4/subscribers", 0);
 const $card_content__setup = $card_content__input_rows;
-const $card_content = /*@__PURE__*/ _content("__tests__/template.marko_2*content", "<ul></ul>", " ", $card_content__setup);
+const $card_content = _content("__tests__/template.marko_2*content", "<ul></ul>", " ", $card_content__setup);
 const $if_content__setup = ($scope) => {
 	$setup$1($scope["#childScope/0"]);
 	$input_content($scope["#childScope/0"], $card_content($scope));

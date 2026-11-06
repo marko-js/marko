@@ -24,4 +24,12 @@ const $Outer_content__setup = ($scope) => {
 	$Outer_content__Inn($scope, { content: $Inn_content($scope) });
 };
 const $Outer_content = _content$1("a3", "<!><!><!>", "b%", $Outer_content__setup);
-_content_resume($Outer_content);
+const $card_content__dynamicTag = /*@__PURE__*/ _dynamic_tag(0);
+const $card_content__input_tag__OR__Outer = /*@__PURE__*/ _or_patch("a7", 2, ($scope) => $card_content__dynamicTag($scope, $scope._._.f, ($_) => ({ content: $scope.b })));
+const $card_content__input_tag = /*@__PURE__*/ _closure_get_patch("a6", 7, $card_content__input_tag__OR__Outer, ($scope) => $scope._._, "a11", 0);
+const $card_content__Outer = /*@__PURE__*/ _const(1, $card_content__input_tag__OR__Outer);
+const $card_content__setup = ($scope) => {
+	$card_content__input_tag($scope);
+	$card_content__Outer($scope, { content: $Outer_content($scope) });
+};
+const $card_content = _content$1("a8", "<!><!><!>", "b%", $card_content__setup);

@@ -1,37 +1,42 @@
 // PATCH
-[`a8|2;b%;<!><!><!>`, `a9 !a>b0;/D b%l&;<section><button>clear</button><!></section>`]
+[`a8`, `a9 !a>b0;/D b%l&;<section><button>clear</button><!></section>`]
 {
   ba: [{
     ca: {
       s: {
-        fb: "^^a8"
-      }
-    },
-    W2: [{
-      fa: [">span", 0, {
-        content: {
-          content: _.a = [
-            [], "a3", 1
-          ]
-        }
-      }],
-      cAa: {
-        cAa: {
+        fb: "^^a8",
+        cAb: {
           fa: [">span", 0, {
             content: {
-              content: _.b = [
-                ["Aa", "Aa"], "a0", 1
-              ]
+              content: _(["Aa", "a", "Ab"], "a3", 1)
             }
           }],
           cAa: {
             cAa: {
-              tb: "b"
+              fa: [">span", 0, {
+                content: {
+                  content: _(["Aa", "a", "Ab", "Aa", "Aa"], "a0", 1)
+                }
+              }],
+              cAa: {
+                cAa: {
+                  tb: "b",
+                  s: {
+                    Sa2: 0
+                  }
+                }
+              },
+              s: {
+                Sa4: 0
+              }
             }
+          },
+          s: {
+            Sa6: 0
           }
         }
       }
-    }, _.a, _.b]
+    }
   }, "a9"],
   Sa10: "e",
   Sa11: "f",
@@ -45,34 +50,39 @@
   ba: [{
     ca: {
       s: {
-        fb: "^^a8"
-      }
-    },
-    W2: [{
-      fa: [">i", 0, {
-        content: {
-          content: _.a = [
-            [], "a3", 1
-          ]
-        }
-      }],
-      cAa: {
-        cAa: {
+        fb: "^^a8",
+        cAb: {
           fa: [">i", 0, {
             content: {
-              content: _.b = [
-                ["Aa", "Aa"], "a0", 1
-              ]
+              content: _(["Aa", "a", "Ab"], "a3", 1)
             }
           }],
           cAa: {
             cAa: {
-              tb: "c"
+              fa: [">i", 0, {
+                content: {
+                  content: _(["Aa", "a", "Ab", "Aa", "Aa"], "a0", 1)
+                }
+              }],
+              cAa: {
+                cAa: {
+                  tb: "c",
+                  s: {
+                    Sa2: 0
+                  }
+                }
+              },
+              s: {
+                Sa4: 0
+              }
             }
+          },
+          s: {
+            Sa6: 0
           }
         }
       }
-    }, _.a, _.b]
+    }
   }, "a9"],
   Sa10: "e",
   Sa11: "f",

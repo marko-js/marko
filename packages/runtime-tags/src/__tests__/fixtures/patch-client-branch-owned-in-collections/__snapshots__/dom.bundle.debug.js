@@ -39,7 +39,7 @@ const $card_content__f = ($scope, f) => {
 };
 const $card_content__input_label = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_2_input_label#0:4/subscribe", "input_label/5", ($scope) => $card_content__f($scope, $f($scope)), ($scope) => $scope._._, "__tests__/template.marko_0_input_label#4/subscribers", 0);
 const $card_content__setup = $card_content__input_label;
-const $card_content = /*@__PURE__*/ _content("__tests__/template.marko_2*content", $template$2, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$2), $card_content__setup);
+const $card_content = _content("__tests__/template.marko_2*content", $template$2, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$2), $card_content__setup);
 const $if_content__setup = ($scope) => {
 	$setup$1($scope["#childScope/0"]);
 	$input_content($scope["#childScope/0"], $card_content($scope));

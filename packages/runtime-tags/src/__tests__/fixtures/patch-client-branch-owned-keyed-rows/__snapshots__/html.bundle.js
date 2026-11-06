@@ -18,7 +18,7 @@ var card_default = _template("b", (input) => {
 _shells({
 	a5: "a5",
 	a1: "a1 !a2",
-	a11: "a11|2;b%b%;<!><!><!><!>",
+	a11: "a11",
 	a: "a;b%;<!><!><!>",
 	a13: `a13${_shell_marker([[], []], ["a>", $setup])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks)};${$template}`
 });
@@ -33,7 +33,7 @@ var template_default = _template("a", (input) => {
 		_filled_guard($scope0_reason, 1) && _patch_write($scope1_id, "xd", r?.label, !$sg__input_rows);
 		_set_scope_reason(0);
 		const $childScope = _peek_scope_id($scope1_id, "a", 2);
-		card_default({ content: _content("a11", () => {
+		card_default({ content: _content_resume("a11", () => {
 			_scope_reason();
 			const $scope2_id = _scope_id();
 			const Inner = { content: _content_resume("a1", () => {
@@ -57,7 +57,7 @@ var template_default = _template("a", (input) => {
 				_html(_text_mark($scope4_id, "a", r.label, 2, $scope0_reason, 1));
 				_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope4_id, "a6", $cg__input_rows);
 				_subscribe(_unfilled_if($scope0_reason, 1) && $for_content__r_label__closures, _scope($scope4_id, {
-					_: _write_if($scope0_reason, 0) && _scope_with_id($scope2_id),
+					_: _scope_with_id($scope2_id),
 					Ci: $wi__input_rows && 2
 				}));
 			}, $scope2_id), 0, $wg__input_rows__OR__input_tag, $scope0_reason, 0, 0, 3);
@@ -71,7 +71,7 @@ var template_default = _template("a", (input) => {
 				_: _scope_with_id($scope1_id)
 			})));
 			$wg__input_rows__OR__input_tag || $wg__input_tag || _resume_branch($scope2_id);
-		}, $scope1_id, 2) });
+		}, $scope1_id) });
 		_patch_child_end();
 		_filled_guard($scope0_reason, 1) && _patch_subscribers($scope1_id, "a12", "d");
 		_scope($scope1_id, {
@@ -82,11 +82,11 @@ var template_default = _template("a", (input) => {
 		});
 	}, "id", $scope0_id, "a", 1, 1, 1, 0, 0, "a13", $scope0_reason, 1);
 	$fg__input_label && _patch_subscribers($scope0_id, "a14", "e");
-	$fg__input_tag && $cg__input_rows && _patch_subscribers($scope0_id, "a15", "f");
+	$fg__input_tag && _patch_subscribers($scope0_id, "a15", "f");
 	_scope($scope0_id, {
 		e: input.label,
-		f: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.tag,
+		f: input.tag,
 		g: $wi__input_label && $input_label__closures,
-		h: _write_if($scope0_reason, 3) && (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && $input_tag__closures
+		h: _write_if($scope0_reason, 3) && $input_tag__closures
 	}) || ($fg__input_label && _patch_write($scope0_id, "xe", input.label, !_server_guard($scope0_reason, 2)), $fg__input_tag && _patch_write($scope0_id, "xf", input.tag, !_server_guard($scope0_reason, 3)));
 }, 1);

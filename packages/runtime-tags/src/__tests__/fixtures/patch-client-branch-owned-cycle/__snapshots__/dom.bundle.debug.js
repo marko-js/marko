@@ -83,7 +83,7 @@ const $card_content__setup = ($scope) => {
 	$card_content__input_label($scope);
 	$setup$2($scope["#childScope/0"]);
 };
-const $card_content = /*@__PURE__*/ _content("__tests__/template.marko_2*content", $template$2, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$2), $card_content__setup);
+const $card_content = _content("__tests__/template.marko_2*content", $template$2, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$2), $card_content__setup);
 const $if_content__setup = ($scope) => {
 	$setup$1($scope["#childScope/0"]);
 	$input_content($scope["#childScope/0"], $card_content($scope));

@@ -18,7 +18,7 @@ var card_default = _template("b", (input) => {
 _shells({
 	a0: "a0 !a1",
 	a3: "a3",
-	a8: "a8|2;b%;<!><!><!>",
+	a8: "a8",
 	a: "a;b%;<!><!><!>",
 	a9: `a9${_shell_marker([[], []], ["a>", $setup])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks)};${$template}`
 });
@@ -32,9 +32,8 @@ var template_default = _template("a", (input) => {
 			const $scope1_id = _scope_id();
 			_set_scope_reason(0);
 			const $childScope = _peek_scope_id($scope1_id, "a", 2);
-			card_default({ content: _content("a8", () => {
+			card_default({ content: _content_resume("a8", () => {
 				_scope_reason();
-				const $scope2_page = _page_render();
 				const $scope2_id = _scope_id();
 				const Outer = { content: _content_resume("a3", () => {
 					const $scope3_id = _scope_id();
@@ -57,11 +56,7 @@ var template_default = _template("a", (input) => {
 						Ch: $wi__input_tag && 1
 					}));
 					$wg__input_tag || _resume_branch($scope3_id);
-				}, $scope2_id, ($scope) => $scope2_page ? [
-					{ f: input.tag },
-					{ _: $scope($scope0_id) },
-					{ _: $scope($scope1_id) }
-				] : []) };
+				}, $scope2_id) };
 				_dynamic_tag($scope2_id, "a", input.tag, { content: Outer }, 9, 0, 0, $wg__input_tag, $scope0_reason, 2);
 				$cg__input_tag && _patch_write($scope2_id, "wb", Outer, 1);
 				_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope2_id, "a6");
@@ -71,7 +66,7 @@ var template_default = _template("a", (input) => {
 					_: _scope_with_id($scope1_id)
 				}));
 				$wg__input_tag || _resume_branch($scope2_id);
-			}, $scope1_id, 2) });
+			}, $scope1_id) });
 			_patch_child_end();
 			_scope($scope1_id, {
 				_: _scope_with_id($scope0_id),
@@ -84,7 +79,7 @@ var template_default = _template("a", (input) => {
 	$fg__input_tag && _patch_subscribers($scope0_id, "a11", "f");
 	_scope($scope0_id, {
 		e: input.label,
-		f: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && input.tag,
+		f: input.tag,
 		g: $wi__input_label && $input_label__closures,
 		h: $wi__input_tag && $input_tag__closures
 	}) || ($fg__input_label && _patch_write($scope0_id, "xe", input.label, !_server_guard($scope0_reason, 1)), $fg__input_tag && _patch_write($scope0_id, "xf", input.tag, !_server_guard($scope0_reason, 2)));

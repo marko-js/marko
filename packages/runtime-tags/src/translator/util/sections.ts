@@ -30,6 +30,7 @@ import {
   some,
 } from "./optional";
 import { getStatefulConsumers } from "./patch/structure";
+import { carriesOwnedData } from "./patch/refresh";
 import {
   isGuardedReason,
   type KnownExprs,
@@ -780,6 +781,9 @@ export function getRendererReason(section: Section) {
   // Content every consumer renders with client state renders on the client,
   // which a patch creating its scope leaves to it: its renderer registers.
   if (isPatch() && getStatefulConsumers(section) === "every") return ALWAYS;
+
+  // Kept content can't carry a value one of its instances owns (`carriesOwnedData`).
+  if (isPatch() && carriesOwnedData(section)) return ALWAYS;
 
   const { derives } = section;
 

@@ -19,6 +19,22 @@ const $Inner_content__setup = ($scope) => {
 };
 const $Inner_content__r_label = /*@__PURE__*/ _closure_get_patch("a4", 8, ($scope) => _text($scope.b, $scope._._.d), ($scope) => $scope._._, "a12", 1);
 const $Inner_content = _content$1("a1", "<b><!><!></b>", " D%b%", $Inner_content__setup);
+const $card_content__dynamicTag = /*@__PURE__*/ _dynamic_tag(0);
+const $card_content__input_tag__OR__Inner = /*@__PURE__*/ _or_patch("a10", 4, ($scope) => $card_content__dynamicTag($scope, $scope._._.f, ($_) => ({ content: $scope.d })));
+const $card_content__dynamicTag2 = /*@__PURE__*/ _dynamic_tag(1, $inputtag_content);
+const $card_content__input_tag__OR__r_label = /*@__PURE__*/ _or_patch("a9", 2, ($scope) => $card_content__dynamicTag2($scope, $scope._._.f, ($_) => ({ onClick: $onClick($scope) })));
+const $card_content__input_tag = /*@__PURE__*/ _closure_get_patch("a7", 7, ($scope) => {
+	$card_content__input_tag__OR__Inner($scope);
+	$card_content__input_tag__OR__r_label($scope);
+}, ($scope) => $scope._._, "a15", 0);
+const $card_content__Inner = /*@__PURE__*/ _const(3, $card_content__input_tag__OR__Inner);
+const $card_content__setup = ($scope) => {
+	$card_content__input_tag($scope);
+	$card_content__r_label($scope);
+	$card_content__Inner($scope, { content: $Inner_content($scope) });
+};
+const $card_content__r_label = /*@__PURE__*/ _closure_get_patch("a8", 8, $card_content__input_tag__OR__r_label, 0, "a12", 0);
+const $card_content = _content$1("a11", "<!><!><!><!>", "b%b%", $card_content__setup);
 const $onClick = ($scope) => function() {
 	console.log("direct", $scope._.d);
 };

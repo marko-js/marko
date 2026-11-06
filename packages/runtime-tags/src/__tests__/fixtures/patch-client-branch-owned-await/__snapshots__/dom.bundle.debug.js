@@ -26,7 +26,6 @@ const $Inner_content__setup = ($scope) => {
 };
 const $Inner_content__v = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_4_v#3:2/subscribe", "v/10", ($scope) => _text($scope["#text/1"], $scope._.v), 0, "__tests__/template.marko_3_v#2/subscribers", 0);
 const $Inner_content = _content("__tests__/template.marko_4*content", "<b><!><!></b>", " D%b%", $Inner_content__setup);
-_content_resume($Inner_content);
 const $await_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $await_content__input_tag__OR__Inner = /*@__PURE__*/ _or_patch("__tests__/template.marko_3_input_tag#0:6_Inner#3/setup", 4, ($scope) => $await_content__dynamicTag($scope, $scope._._._.input_tag, ($_) => ({ content: $scope.Inner })));
 const $await_content__input_tag = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_3_input_tag#0:6/subscribe", "input_tag/9", $await_content__input_tag__OR__Inner, ($scope) => $scope._._._, "__tests__/template.marko_0_input_tag#6/subscribers", 0);
@@ -45,7 +44,7 @@ const $card_content__setup = ($scope) => {
 	$card_content__input_p($scope);
 	$await_content($scope);
 };
-const $card_content = /*@__PURE__*/ _content("__tests__/template.marko_2*content", "<!><!><!>", "b%", $card_content__setup);
+const $card_content = _content("__tests__/template.marko_2*content", "<!><!><!>", "b%", $card_content__setup);
 const $if_content__setup = ($scope) => {
 	$setup$1($scope["#childScope/0"]);
 	$input_content($scope["#childScope/0"], $card_content($scope));

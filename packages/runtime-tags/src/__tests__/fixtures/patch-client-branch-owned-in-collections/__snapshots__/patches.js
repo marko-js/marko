@@ -1,30 +1,32 @@
 // PATCH
-[`a2|2;/ b b b&;<button>map value</button><button>set member</button><button>map key</button>`, `a3 !a>b0;/D b%l&;<section><button>clear</button><!></section>`]
+[`a2`, `a3 !a>b0;/D b%l&;<section><button>clear</button><!></section>`]
 {
   xe: "b",
   ba: [{
     ca: {
       s: {
-        fb: "^^a2"
+        fb: "^^a2",
+        cAb: {
+          ca: {
+            ec0: "h",
+            ec1: "g",
+            ec2: "f",
+            xf: new Map(_.a = [
+              ["k", _(["Aa", "a", "Ab"], "a0")]
+            ]),
+            xg: new Set(_.b = [_(["Aa", "a", "Ab"], "a0")]),
+            xh: new Map(_.c = [
+              [_(["Aa", "a", "Ab"], "a0"), 1]
+            ])
+          },
+          s: {
+            Sa1: 0
+          }
+        }
       }
-    },
-    W2: [{
-      ca: {
-        ec0: "h",
-        ec1: "g",
-        ec2: "f",
-        xf: new Map(_.a = [
-          ["k", _.c = [
-            [], "a0"
-          ]]
-        ]),
-        xg: new Set(_.b = [_.c]),
-        xh: new Map(_.d = [
-          [_.c, 1]
-        ])
-      }
-    }, _.c]
-  }, "a3"]
+    }
+  }, "a3"],
+  Sa4: "e"
 }
 ;CwY
 
@@ -34,24 +36,26 @@
   ba: [{
     ca: {
       s: {
-        fb: "^^a2"
+        fb: "^^a2",
+        cAb: {
+          ca: {
+            ec0: "h",
+            ec1: "g",
+            ec2: "f",
+            xf: new Map(_.a = [
+              ["k", _(["Aa", "a", "Ab"], "a0")]
+            ]),
+            xg: new Set(_.b = [_(["Aa", "a", "Ab"], "a0")]),
+            xh: new Map(_.c = [
+              [_(["Aa", "a", "Ab"], "a0"), 1]
+            ])
+          },
+          s: {
+            Sa1: 0
+          }
+        }
       }
-    },
-    W2: [{
-      ca: {
-        ec0: "h",
-        ec1: "g",
-        ec2: "f",
-        xf: new Map(_.a = [
-          ["k", _.c = [
-            [], "a0"
-          ]]
-        ]),
-        xg: new Set(_.b = [_.c]),
-        xh: new Map(_.d = [
-          [_.c, 1]
-        ])
-      }
-    }, _.c]
-  }, "a3"]
+    }
+  }, "a3"],
+  Sa4: "e"
 }
