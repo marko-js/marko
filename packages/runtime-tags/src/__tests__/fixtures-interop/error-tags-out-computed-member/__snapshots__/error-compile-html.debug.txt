@@ -1,0 +1,6 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures-interop/error-tags-out-computed-member/template.marko:2:8
+      1 | <const/global="x"/>
+    > 2 | <div>${out[global]}</div>
+        |        ^^^ Only `out.global` is supported for compatibility.
+      3 |

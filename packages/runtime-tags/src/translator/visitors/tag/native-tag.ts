@@ -1231,7 +1231,7 @@ function getRelatedControllable(
         const valueMode = getInputValueMode(
           attrAt(attributes, indexByName.type),
         );
-        if (valueMode === "attribute" && !indexByName.valueChange) {
+        if (valueMode === "attribute" && !("valueChange" in indexByName)) {
           break;
         }
 
