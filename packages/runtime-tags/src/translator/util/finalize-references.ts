@@ -57,6 +57,7 @@ import {
   getReadsByExpression,
   getReferenceFinalizers,
   getValueReferences,
+  isPureExpr,
   isReferencedExtra,
   setResolvedFunctionReads,
   setResolvedReads,
@@ -661,7 +662,9 @@ function inEmittedExpr({ exprRoot, section }: AssignedBindingExtra) {
 // A value with no side effects, or a call site's value, which only the child
 // bindings derived from it observe.
 function isDroppableValue(expr: t.NodeExtra) {
-  return (!!expr.pure || !!expr.callSiteExprs) && !expr.merged && !expr.dropped;
+  return (
+    (isPureExpr(expr) || !!expr.callSiteExprs) && !expr.merged && !expr.dropped
+  );
 }
 
 // A value several bindings derive from (each child reading one call site's

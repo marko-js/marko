@@ -5,10 +5,9 @@ const $setup$1 = ($_) => {};
 const $input__script = _script("__tests__/tags/my-input.marko_0_input#3", ($scope) => _attrs_script($scope, "#input/0"));
 const $input = /*@__PURE__*/ _const("input", ($scope) => {
 	_attrs($scope, "#input/0", $scope.input, _controllable_input);
-	$input_value($scope, $scope.input.value);
+	_text($scope["#text/1"], $scope.input.value);
 	$input__script($scope);
 });
-const $input_value = ($scope, input_value) => _text($scope["#text/1"], input_value);
 var my_input_default = /*@__PURE__*/ _template("__tests__/tags/my-input.marko", $template$1, $walks$1, 0, $input);
 
 // template.marko

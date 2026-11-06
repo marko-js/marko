@@ -2,7 +2,6 @@
 const $template = "<button class=child>child:<!></button>";
 const $walks = " Db%l";
 const $data = /*@__PURE__*/ _let("data/5");
-const $input_data = $data;
 const $verified = /*@__PURE__*/ _let("verified/6", ($scope) => _text($scope["#text/1"], $scope.verified));
 const $setup__script = _script("__tests__/child.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$verified($scope, String($scope.input.report($scope.data)));
@@ -11,7 +10,7 @@ function $setup($scope) {
 	$verified($scope, "?");
 	$setup__script($scope);
 }
-const $input = /*@__PURE__*/ _const("input", ($scope) => $input_data($scope, $scope.input.data));
+const $input = /*@__PURE__*/ _const("input", ($scope) => $data($scope, $scope.input.data));
 var child_default = /*@__PURE__*/ _template("__tests__/child.marko", $template, $walks, $setup, $input);
 
 // template.marko

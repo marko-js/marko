@@ -14,8 +14,7 @@ _resumed.b1 = $_return2;
 _resumed.b0 = $_return;
 
 // template.marko
-const $for_content__item = ($scope, item) => _text($scope.a, item);
-const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);
+const $for_content__$params = ($scope, $params2) => _text($scope.a, $params2[0]);
 const $store = _var_resume("a0", ($scope, store) => {
 	$store_list($scope, store?.list);
 	$store_listChange($scope, store?.listChange);

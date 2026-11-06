@@ -1,11 +1,9 @@
 // template.marko
 const $template = "<div><!> <!> <!></div>";
 const $walks = " D%c%c%l";
-const $x = ($scope, x) => _text($scope["#text/1"], x);
-const $y = ($scope, y) => _text($scope["#text/2"], y);
 function $setup($scope) {
-	$x($scope, _id($scope));
-	$y($scope, _id($scope));
+	_text($scope["#text/1"], _id($scope));
+	_text($scope["#text/2"], _id($scope));
 }
 const $z = ($scope, z) => {
 	_attr($scope["#div/0"], "id", z);

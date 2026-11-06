@@ -1,8 +1,7 @@
 // template.marko
 const never = new Promise(() => {});
 const $catch_content2 = _content("a0", "inner caught");
-const $catch_content__err_message = ($scope, err_message) => _text($scope.a, err_message);
-const $catch_content__$params = ($scope, $params2) => $catch_content__err_message($scope, $params2[0]?.message);
+const $catch_content__$params = ($scope, $params2) => _text($scope.a, $params2[0]?.message);
 const $catch_content = _content("a1", "caught: <!>", "b%", 0, $catch_content__$params);
 const $placeholder_content = _content("a4", "loading outer...");
 const $await_content__changes = /*@__PURE__*/ _closure_get(2, ($scope) => _text($scope.c, $scope._._.b), ($scope) => $scope._._, "a3");

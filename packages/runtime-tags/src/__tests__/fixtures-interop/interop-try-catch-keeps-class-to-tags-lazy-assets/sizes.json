@@ -6,13 +6,13 @@
     },
     "template.marko.page.mjs": {
       "total": {
-        "min": 57268,
-        "brotli": 17486
+        "min": 57238,
+        "brotli": 17469
       },
       "files": {
         "tags/tags-child.marko": 519,
         "components/class-wrap.marko": 904,
-        "template.marko": 681,
+        "template.marko": 570,
         "v:template.marko.hydrate-6.js": 59,
         "v:template.marko.hydrate-5.js": 124
       }

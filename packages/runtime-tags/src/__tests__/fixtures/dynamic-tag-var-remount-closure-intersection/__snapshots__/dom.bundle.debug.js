@@ -31,8 +31,7 @@ const $for_content__setup = ($scope) => {
 	$for_content__m($scope, 0);
 	$for_content__setup__script($scope);
 };
-const $for_content__item = ($scope, item) => _attr_class($scope["#button/0"], "row" + item);
-const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);
+const $for_content__$params = ($scope, $params2) => _attr_class($scope["#button/0"], "row" + $params2[0]);
 const $c = /*@__PURE__*/ _const("c", $for_content__c);
 const $b__OR__v = /*@__PURE__*/ _or(8, ($scope) => $c($scope, ($scope.v ? $scope.v.n : 0) + $scope.b), 1, "#scopeOffset/1");
 const $b = /*@__PURE__*/ _let("b/4", $b__OR__v);

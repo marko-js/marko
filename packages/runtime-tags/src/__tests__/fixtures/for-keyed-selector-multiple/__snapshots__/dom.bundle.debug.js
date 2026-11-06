@@ -11,8 +11,7 @@ const $for_content__setup = ($scope) => {
 	$for_content__hovered._($scope);
 };
 const $for_content__hovered = /*@__PURE__*/ _for_selector("#ul/2", "hovered", $for_content__selected__OR__hovered);
-const $for_content__row_label = ($scope, row_label) => _text($scope["#text/1"], row_label);
-const $for_content__$params = ($scope, $params2) => $for_content__row_label($scope, $params2[0]?.label);
+const $for_content__$params = ($scope, $params2) => _text($scope["#text/1"], $params2[0]?.label);
 const $selected = /*@__PURE__*/ _let("selected/3", $for_content__selected);
 const $hovered = /*@__PURE__*/ _let("hovered/4", $for_content__hovered);
 const $for = /*@__PURE__*/ _for_of("#ul/2", "<li> </li>", " D ", $for_content__setup, $for_content__$params);

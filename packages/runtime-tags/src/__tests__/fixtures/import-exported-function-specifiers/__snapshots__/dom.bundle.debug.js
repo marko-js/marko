@@ -19,7 +19,6 @@ const $loud = /*@__PURE__*/ _let("loud/3");
 const $quiet = /*@__PURE__*/ _let("quiet/4");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/2");
 const $message = /*@__PURE__*/ _let("message/5", ($scope) => $dynamicTag($scope, handlers_default, ($_) => ({ message: $scope.message })));
-const $label = ($scope, label) => _text($scope["#text/1"], label);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$message($scope, $scope.loud($scope.quiet($scope.message)));
 }));
@@ -27,7 +26,7 @@ function $setup($scope) {
 	$loud($scope, shout);
 	$quiet($scope, shout);
 	$message($scope, "Hello");
-	$label($scope, "static");
+	_text($scope["#text/1"], "static");
 	$setup__script($scope);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

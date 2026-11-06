@@ -1,7 +1,6 @@
 // template.marko
 const $Outer_content__v = ($scope, v) => $MyTag_content__a($scope.a, v);
-const $MyTag_content__c = ($scope, c) => _text($scope.c, c);
-const $MyTag_content__a__OR__$c = /*@__PURE__*/ _or(7, ($scope) => $MyTag_content__c($scope, void 0 !== $scope.g ? $scope.g : $scope.e + 1));
+const $MyTag_content__a__OR__$c = /*@__PURE__*/ _or(7, ($scope) => _text($scope.c, void 0 !== $scope.g ? $scope.g : $scope.e + 1));
 const $MyTag_content__a = /*@__PURE__*/ _const(4, ($scope) => {
 	_text($scope.a, $scope.e);
 	$MyTag_content__a__OR__$c($scope);

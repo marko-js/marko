@@ -5,18 +5,16 @@ function subscribeCartState(callback) {
 	});
 	return () => {};
 }
-const $cart$1 = /*@__PURE__*/ _let(0, ($scope) => _return($scope, { cart: $scope.a }));
+const $cart = /*@__PURE__*/ _let(0, ($scope) => _return($scope, { cart: $scope.a }));
 const $setup__script = _script("b0", ($scope) => {
 	{
 		const unsubscribe = subscribeCartState((state) => {
-			$cart$1($scope, state);
+			$cart($scope, state);
 		});
 		$signal($scope, 0).addEventListener("abort", unsubscribe);
 	}
 });
 
 // template.marko
-const $pattern2 = _var_resume("a0", ($scope, $pattern) => $cart($scope, $pattern.cart));
+const $pattern2 = _var_resume("a0", ($scope, $pattern) => $if($scope, !($pattern.cart !== null) ? 0 : 1));
 const $if = /*@__PURE__*/ _if(3, "<a href=/go-to>Go</a>", 0, 0, "<button>Go to</button>");
-const $hasHydrate = ($scope, hasHydrate) => $if($scope, !hasHydrate ? 0 : 1);
-const $cart = ($scope, cart) => $hasHydrate($scope, cart !== null);

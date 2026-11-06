@@ -16,8 +16,7 @@ const $await_content__setup = ($scope) => {
 	$load_Child_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
 	$await_content__setup__script($scope);
 };
-const $await_content__v = ($scope, v) => $load_Child_tag_input_value($scope["#childScope/1"], v);
-const $await_content__$params = ($scope, $params2) => $await_content__v($scope, $params2[0]);
+const $await_content__$params = ($scope, $params2) => $load_Child_tag_input_value($scope["#childScope/1"], $params2[0]);
 const $placeholder_content__setup = ($scope) => {
 	$load_Child_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
 	$load_Child_tag_input_value($scope["#childScope/1"], "p");

@@ -26,13 +26,12 @@ const $tag_content__if = /*@__PURE__*/ _if("#text/2", "<!><!><!>", "b%", $if_con
 const $tag_content__show = /*@__PURE__*/ _closure_get("show/5", ($scope) => $tag_content__if($scope, $scope._.show ? 0 : 1), 0, "__tests__/template.marko_1_show#0:3/subscribe");
 const $tag_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "<button id=inc> </button><!><button id=toggle>toggle</button>", " D l%b ", $tag_content__setup);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $tag_content);
-const $tag = $dynamicTag;
 const $count__closure = /*@__PURE__*/ _closure($tag_content__count, $for_content__count);
 const $count = /*@__PURE__*/ _let("count/2", $count__closure);
 const $show__closure = /*@__PURE__*/ _closure($tag_content__show);
 const $show = /*@__PURE__*/ _let("show/3", $show__closure);
 function $setup($scope) {
-	$tag($scope, "section");
+	$dynamicTag($scope, "section");
 	$count($scope, 0);
 	$show($scope, true);
 }

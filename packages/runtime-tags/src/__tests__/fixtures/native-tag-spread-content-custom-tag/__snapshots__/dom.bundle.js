@@ -7,11 +7,10 @@ const $input = /*@__PURE__*/ _const(2, ($scope) => {
 });
 
 // tags/child.marko
-const $for_content__item = ($scope, item) => $input($scope.a, {
-	...item,
+const $for_content__$params = ($scope, $params2) => $input($scope.a, {
+	...$params2[0],
 	class: "item"
 });
-const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);
 const $for = /*@__PURE__*/ _for_of_unkeyed(0, $template, /*@__PURE__*/ ((_w0) => `/${_w0}&`)(" b"), 0, $for_content__$params);
 const $input_item = ($scope, input_item) => $for($scope, [input_item]);
 

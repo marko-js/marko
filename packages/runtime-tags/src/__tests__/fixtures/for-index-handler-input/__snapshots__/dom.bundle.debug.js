@@ -20,8 +20,7 @@ const $for_content__setup = ($scope) => {
 	$setup$1($scope["#childScope/0"]);
 	$input_onDismiss($scope["#childScope/0"], $onDismiss($scope));
 };
-const $for_content__item = ($scope, item) => $input_label($scope["#childScope/0"], item);
-const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);
+const $for_content__$params = ($scope, $params2) => $input_label($scope["#childScope/0"], $params2[0]);
 const $for = /*@__PURE__*/ _for_of_unkeyed("#text/1", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1), $for_content__setup, $for_content__$params);
 const $items = /*@__PURE__*/ _let("items/2", ($scope) => $for($scope, [$scope.items]));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {

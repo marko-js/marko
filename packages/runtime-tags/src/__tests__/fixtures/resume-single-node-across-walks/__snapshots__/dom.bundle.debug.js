@@ -1,8 +1,7 @@
 // template.marko
 const $template = "<!><!><!><!>";
 const $walks = "b%b%c";
-const $await_content2__v = ($scope, v) => _text($scope["#text/0"], v);
-const $await_content2__$params = ($scope, $params4) => $await_content2__v($scope, $params4[0]);
+const $await_content2__$params = ($scope, $params4) => _text($scope["#text/0"], $params4[0]);
 const $await_content__setup__script = _script("__tests__/template.marko_4", ($scope) => _on($scope["#span/0"], "click", function() {
 	console.log($scope.x);
 }));

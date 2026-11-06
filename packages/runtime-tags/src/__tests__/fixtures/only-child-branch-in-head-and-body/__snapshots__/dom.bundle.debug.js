@@ -1,8 +1,7 @@
 // template.marko
 const $template = "<!><html><head><!></head><body><!></body></html>";
 const $walks = "bE%lD%m";
-const $for_content__href = ($scope, href) => _attr($scope["#link/0"], "href", href);
-const $for_content__$params = ($scope, $params2) => $for_content__href($scope, $params2[0]);
+const $for_content__$params = ($scope, $params2) => _attr($scope["#link/0"], "href", $params2[0]);
 const $if_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/0"], "click", function() {
 	$show($scope._, false);
 }));

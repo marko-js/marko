@@ -22,10 +22,9 @@ const $for_content__setup = $for_content__input_obj_show;
 const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);
 const $for_content__item = /*@__PURE__*/ _const(2, $if_content__item);
 const $for = /*@__PURE__*/ _for_of_unkeyed(0, "<!><!><!>", "b%", $for_content__setup, $for_content__$params);
-const $input_obj_list = ($scope, input_obj_list) => $for($scope, [input_obj_list]);
 const $input_obj__closure = /*@__PURE__*/ _closure($if_content__input_obj);
 const $input_obj = /*@__PURE__*/ _const(3, ($scope) => {
-	$input_obj_list($scope, $scope.d?.list);
+	$for($scope, [$scope.d?.list]);
 	$input_obj_show($scope, $scope.d?.show);
 	$input_obj__closure($scope);
 });

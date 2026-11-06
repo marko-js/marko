@@ -9,8 +9,8 @@ const $obj = /*@__PURE__*/ _let("obj/7", ($scope) => {
 const $outer = /*@__PURE__*/ _const("outer", ($scope) => _text($scope["#text/2"], JSON.stringify($scope.outer)));
 const $pattern2 = ($scope, $pattern) => {
 	$last($scope, (([, , ...last]) => last)($pattern));
-	$first($scope, $pattern[0]);
-	$second($scope, $pattern[1]);
+	_text($scope["#text/3"], $pattern[0]);
+	_text($scope["#text/4"], $pattern[1]);
 };
 const $obj_d = /*@__PURE__*/ _const("obj_d", ($scope) => $pattern2($scope, [
 	$scope.obj_d,
@@ -44,6 +44,4 @@ function $setup($scope) {
 	$setup__script($scope);
 }
 const $last = ($scope, last) => _text($scope["#text/5"], last.join("+"));
-const $first = ($scope, first) => _text($scope["#text/3"], first);
-const $second = ($scope, second) => _text($scope["#text/4"], second);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

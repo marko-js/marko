@@ -5,8 +5,7 @@ const $catch_content__setup = ($scope) => {
 	$load_Child_setup($scope, $scope.b, $scope.a);
 	$load_Child_tag_input_value($scope.b, "catch");
 };
-const $catch_content__err_message = ($scope, err_message) => _text($scope.c, err_message);
-const $catch_content__$params = ($scope, $params2) => $catch_content__err_message($scope, $params2[0]?.message);
+const $catch_content__$params = ($scope, $params2) => _text($scope.c, $params2[0]?.message);
 const $catch_content = _content("b1", "<!><!> caught <!>", "b%/&c%", $catch_content__setup, $catch_content__$params);
 const $placeholder_content = _content("b0", "loading");
 

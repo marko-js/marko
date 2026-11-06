@@ -1,8 +1,7 @@
 // template.marko
 const $template = "<pre id=log></pre><button class=inc> </button><button class=hide></button><!><!>";
 const $walks = "b D l b%c";
-const $await_content2__v = ($scope, v) => _text($scope["#text/0"], v);
-const $await_content2__$params = ($scope, $params4) => $await_content2__v($scope, $params4[0]);
+const $await_content2__$params = ($scope, $params4) => _text($scope["#text/0"], $params4[0]);
 const $await_content2 = /*@__PURE__*/ _await_content("#text/0", " ", " ");
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content2__$params);
 const $try_content__setup = ($scope) => {

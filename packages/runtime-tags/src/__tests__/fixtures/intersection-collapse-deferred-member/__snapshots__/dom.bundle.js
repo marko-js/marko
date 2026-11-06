@@ -7,7 +7,7 @@ function feed(inc, sfx) {
 }
 const $item = ($scope, item) => {
 	$item_status($scope, item?.status);
-	$item_label($scope, item?.label);
+	_text($scope.b, item?.label);
 };
 const $input_inc__OR__sfx = /*@__PURE__*/ _or(9, ($scope) => $item($scope, feed($scope.g, $scope.i)));
 const $input_inc_pending__OR__upper = /*@__PURE__*/ _or(15, ($scope) => _attr_class($scope.c, [
@@ -29,7 +29,6 @@ const $item_status = /*@__PURE__*/ _const(11, ($scope) => {
 	$upper($scope, $scope.l.toUpperCase());
 	$input_inc_pending__OR__item_status($scope);
 });
-const $item_label = ($scope, item_label) => _text($scope.b, item_label);
 const $input_inc = /*@__PURE__*/ _const(6, ($scope) => {
 	$input_inc_pending($scope, $scope.g?.pending);
 	$input_inc__OR__sfx($scope);

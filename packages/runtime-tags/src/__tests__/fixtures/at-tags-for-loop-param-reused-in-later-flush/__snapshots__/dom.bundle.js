@@ -1,6 +1,6 @@
 // tags/list.marko
-const $for_content__item_content = /* @__PURE__ */ _dynamic_tag(0);
-const $for_content__$params = ($scope, $params2) => $for_content__item_content($scope, $params2[0]?.content);
+const $for_content__dynamicTag = /*@__PURE__*/ _dynamic_tag(0);
+const $for_content__$params = ($scope, $params2) => $for_content__dynamicTag($scope, $params2[0]?.content);
 const $if_content__for = /*@__PURE__*/ _for_of_unkeyed(0, "<!><!><!>", "b%", 0, $for_content__$params);
 const $if_content__input_item = /*@__PURE__*/ _if_closure(1, 0, ($scope) => $if_content__for($scope, [$scope._.e]));
 const $if = /*@__PURE__*/ _if(1, "<!><!><!>", "b%", $if_content__input_item);

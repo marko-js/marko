@@ -13,8 +13,7 @@ const $for_content__setup = ($scope) => {
 	$setup($scope.a);
 	$input_onDismiss($scope.a, $onDismiss($scope));
 };
-const $for_content__item = ($scope, item) => $input_label($scope.a, item);
-const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);
+const $for_content__$params = ($scope, $params2) => $input_label($scope.a, $params2[0]);
 const $for = /*@__PURE__*/ _for_of_unkeyed(1, $template, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks), $for_content__setup, $for_content__$params);
 const $items = /*@__PURE__*/ _let(2, ($scope) => $for($scope, [$scope.c]));
 const $setup__script = _script("a1", ($scope) => _on($scope.a, "click", function() {

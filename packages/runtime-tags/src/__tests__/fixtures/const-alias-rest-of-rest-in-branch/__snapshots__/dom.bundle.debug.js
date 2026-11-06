@@ -14,11 +14,10 @@ const $if_content__r = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => {
 });
 const $pattern2 = ($scope, $pattern) => {
 	$r($scope, (({ a, b, ...r2 }) => r2)($pattern));
-	$a($scope, $pattern.a);
+	_text($scope["#text/1"], $pattern.a);
 	$b($scope, $pattern.b);
 };
 const $r = /*@__PURE__*/ _const("r2", $if_content__r);
-const $a = ($scope, a) => _text($scope["#text/1"], a);
 const $b = /*@__PURE__*/ _const("b", $if_content__b);
 const $input_o = $pattern2;
 const $if = /*@__PURE__*/ _if("#text/0", "<span> </span>", " D ", $if_content__setup);

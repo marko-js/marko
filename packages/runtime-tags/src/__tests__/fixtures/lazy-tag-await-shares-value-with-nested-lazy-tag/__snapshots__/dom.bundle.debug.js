@@ -38,8 +38,7 @@ const $await_content__setup = ($scope) => {
 	$await_content__count($scope, 0);
 	$await_content__setup__script($scope);
 };
-const $await_content__v = ($scope, v) => _text($scope["#text/1"], v);
-const $await_content__$params = ($scope, $params2) => $await_content__v($scope, $params2[0]);
+const $await_content__$params = ($scope, $params2) => _text($scope["#text/1"], $params2[0]);
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<button class=parent><!>:<!></button><!><!>", " D%c%l%/&", $await_content__setup);
 const $await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
 function $setup($scope) {

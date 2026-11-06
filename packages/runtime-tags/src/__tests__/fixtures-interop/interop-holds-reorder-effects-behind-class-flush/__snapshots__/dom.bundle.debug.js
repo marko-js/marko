@@ -34,12 +34,10 @@ _marko_template.Component = (0, import_defineComponent.default)(_marko_component
 // template.marko
 const $template = "<!><!><!><!><!>";
 const $walks = "b%b%b%c";
-const $await_content3__v = ($scope, v) => _text($scope["#text/0"], v);
-const $await_content3__$params = ($scope, $params4) => $await_content3__v($scope, $params4[0]);
+const $await_content3__$params = ($scope, $params4) => _text($scope["#text/0"], $params4[0]);
 const $await_content2__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $await_content2__setup = ($scope) => $await_content2__dynamicTag($scope, _marko_template);
-const $await_content__v = ($scope, v) => _text($scope["#text/0"], v);
-const $await_content__$params = ($scope, $params2) => $await_content__v($scope, $params2[0]);
+const $await_content__$params = ($scope, $params2) => _text($scope["#text/0"], $params2[0]);
 const $placeholder_content = _content("__tests__/template.marko_4*content", "loading");
 const $await_content = /*@__PURE__*/ _await_content("#text/0", " ", " ");
 const $try_content2__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);

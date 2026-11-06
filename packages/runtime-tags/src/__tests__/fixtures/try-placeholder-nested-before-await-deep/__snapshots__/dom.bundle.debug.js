@@ -1,12 +1,9 @@
 // template.marko
 const $template = "<!><!><!>";
 const $walks = "b%c";
-const $await_content3__x = ($scope, x) => _text($scope["#text/0"], x);
-const $await_content3__$params = ($scope, $params4) => $await_content3__x($scope, $params4[0]);
-const $await_content2__x = ($scope, x) => _text($scope["#text/0"], x);
-const $await_content2__$params = ($scope, $params3) => $await_content2__x($scope, $params3[0]);
-const $await_content__x = ($scope, x) => _text($scope["#text/0"], x);
-const $await_content__$params = ($scope, $params2) => $await_content__x($scope, $params2[0]);
+const $await_content3__$params = ($scope, $params4) => _text($scope["#text/0"], $params4[0]);
+const $await_content2__$params = ($scope, $params3) => _text($scope["#text/0"], $params3[0]);
+const $await_content__$params = ($scope, $params2) => _text($scope["#text/0"], $params2[0]);
 const $placeholder_content3 = _content("__tests__/template.marko_6*content", "3 loading");
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<span> </span>", "D ");
 const $try_content3__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);

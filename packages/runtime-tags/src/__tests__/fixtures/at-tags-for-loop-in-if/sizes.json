@@ -6,8 +6,8 @@
         "brotli": 4660
       },
       "files": {
-        "tags/list.marko": 356,
-        "tags/labeled-list.marko": 525,
+        "tags/list.marko": 350,
+        "tags/labeled-list.marko": 519,
         "template.marko": 2195
       }
     }

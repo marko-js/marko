@@ -1,8 +1,7 @@
 // template.marko
 const $template = "<button>show</button><!><!>";
 const $walks = " b%c";
-const $await_content__v = ($scope, v) => _text($scope["#text/0"], v);
-const $await_content__$params = ($scope, $params2) => $await_content__v($scope, $params2[0]);
+const $await_content__$params = ($scope, $params2) => _text($scope["#text/0"], $params2[0]);
 const $if_content__setup__script = _script("__tests__/template.marko_3", ($scope) => console.log("if script ran"));
 const $if_content__setup = $if_content__setup__script;
 const $placeholder_content = _content("__tests__/template.marko_2*content", "loading");

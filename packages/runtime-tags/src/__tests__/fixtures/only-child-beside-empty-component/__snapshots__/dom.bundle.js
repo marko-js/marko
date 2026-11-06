@@ -3,8 +3,7 @@ const $input_v__script = _script("b0", ($scope) => void $scope.c);
 const $input_v = /*@__PURE__*/ _const(2, $input_v__script);
 
 // template.marko
-const $for_content__item = ($scope, item) => _text($scope.a, item);
-const $for_content__$params = ($scope, $params3) => $for_content__item($scope, $params3[0]);
+const $for_content__$params = ($scope, $params3) => _text($scope.a, $params3[0]);
 const $Nothing_content__v__script = _script("a1", ($scope) => void $scope.c);
 const $Nothing_content__v = /*@__PURE__*/ _const(2, $Nothing_content__v__script);
 const $if = /*@__PURE__*/ _if(0, "<span>on</span>");

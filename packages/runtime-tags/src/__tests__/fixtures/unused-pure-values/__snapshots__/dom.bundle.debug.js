@@ -15,9 +15,8 @@ function $setup($scope) {
 	(() => track(2))();
 }
 const $input_a = ($scope, input_a) => {
-	$input_a_b($scope, input_a?.b);
+	_text($scope["#text/0"], input_a?.b);
 	track(input_a);
 };
-const $input_a_b = ($scope, input_a_b) => _text($scope["#text/0"], input_a_b);
 const $input = ($scope, input) => $input_a($scope, input.a);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "D l", $setup, $input);

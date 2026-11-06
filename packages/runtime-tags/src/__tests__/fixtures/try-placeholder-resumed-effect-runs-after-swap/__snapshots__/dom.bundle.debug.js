@@ -1,14 +1,11 @@
 // template.marko
 const $template = "<!><!><!><!>";
 const $walks = "b%b%c";
-const $await_content3__c = ($scope, c) => _text($scope["#text/0"], c);
-const $await_content3__$params = ($scope, $params4) => $await_content3__c($scope, $params4[0]);
-const $await_content2__b = ($scope, b) => _text($scope["#text/0"], b);
-const $await_content2__$params = ($scope, $params3) => $await_content2__b($scope, $params3[0]);
-const $await_content__a = ($scope, a) => _text($scope["#text/1"], a);
+const $await_content3__$params = ($scope, $params4) => _text($scope["#text/0"], $params4[0]);
+const $await_content2__$params = ($scope, $params3) => _text($scope["#text/0"], $params3[0]);
 const $await_content__setup__script = _script("__tests__/template.marko_3", ($scope) => console.log("connected " + _el_read($scope["#span/0"]).isConnected));
 const $await_content__setup = $await_content__setup__script;
-const $await_content__$params = ($scope, $params2) => $await_content__a($scope, $params2[0]);
+const $await_content__$params = ($scope, $params2) => _text($scope["#text/1"], $params2[0]);
 const $placeholder_content = _content("__tests__/template.marko_2*content", "loading");
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<span> </span>", " D ", $await_content__setup);
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);

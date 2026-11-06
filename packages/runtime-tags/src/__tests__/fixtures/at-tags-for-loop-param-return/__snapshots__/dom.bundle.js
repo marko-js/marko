@@ -2,8 +2,7 @@
 _dynamic_tag_var_resume(0);
 const $for_content__dynamicTag = /*@__PURE__*/ _dynamic_tag(0, 0, ($_) => $for_content__value);
 const $for_content__value = _var_resume("b0", ($scope, value) => _text($scope.c, value));
-const $for_content__item_content = $for_content__dynamicTag;
-const $for_content__$params = ($scope, $params2) => $for_content__item_content($scope, $params2[0]?.content);
+const $for_content__$params = ($scope, $params2) => $for_content__dynamicTag($scope, $params2[0]?.content);
 const $for = /*@__PURE__*/ _for_of_unkeyed(0, "<!><!><span> </span>", "b1bD ", 0, $for_content__$params);
 const $input_item = ($scope, input_item) => $for($scope, [input_item]);
 

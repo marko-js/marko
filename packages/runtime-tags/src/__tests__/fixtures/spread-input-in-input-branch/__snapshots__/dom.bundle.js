@@ -11,9 +11,8 @@ const $if_content__input = /*@__PURE__*/ _if_closure(0, 0, ($scope) => {
 	$if_content__input__script($scope);
 });
 const $if = /*@__PURE__*/ _if(0, "<a></a>", " ", $if_content__input, "<button></button>", " ", $else_content__setup);
-const $input_href = ($scope, input_href) => $if($scope, input_href ? 0 : 1);
 const $input = /*@__PURE__*/ _const(2, ($scope) => {
-	$input_href($scope, $scope.c.href);
+	$if($scope, $scope.c.href ? 0 : 1);
 	$if_content__input($scope);
 	$else_content__input($scope);
 });

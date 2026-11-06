@@ -11,8 +11,7 @@ const $Outer_content__setup = ($scope) => {
 	$MyTag_content__$c($scope["#childScope/0"]);
 };
 const $Outer_content__$params = ($scope, $params3) => $Outer_content__v($scope, $params3[0]);
-const $MyTag_content__c = ($scope, c) => _text($scope["#text/2"], c);
-const $MyTag_content__a__OR__$c = /*@__PURE__*/ _or(7, ($scope) => $MyTag_content__c($scope, void 0 !== $scope.$c ? $scope.$c : $scope.a + 1));
+const $MyTag_content__a__OR__$c = /*@__PURE__*/ _or(7, ($scope) => _text($scope["#text/2"], void 0 !== $scope.$c ? $scope.$c : $scope.a + 1));
 const $MyTag_content__a = /*@__PURE__*/ _const("a", ($scope) => {
 	_text($scope["#text/0"], $scope.a);
 	$MyTag_content__a__OR__$c($scope);

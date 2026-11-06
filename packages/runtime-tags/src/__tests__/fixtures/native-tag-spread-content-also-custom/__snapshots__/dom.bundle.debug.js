@@ -16,8 +16,8 @@ const $walks$1 = "D%l";
 const $setup$1 = ($_) => {};
 const $input_content_direct = /*@__PURE__*/ _dynamic_tag_content("#text/0");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $input_content$1 = $dynamicTag;
-const $input$1 = ($scope, input) => $input_content$1($scope, input.content);
+const $input_content = $dynamicTag;
+const $input$1 = ($scope, input) => $input_content($scope, input.content);
 var echo_default = /*@__PURE__*/ _template("__tests__/tags/echo.marko", $template$1, "D%l", 0, $input$1);
 
 // tags/my-box.marko
@@ -27,8 +27,7 @@ const $setup = ($_) => {};
 const $input__script = _script("__tests__/tags/my-box.marko_0_input#3", ($scope) => _attrs_script($scope, "#div/0"));
 const $input = /*@__PURE__*/ _const("input", ($scope) => {
 	_attrs_content($scope, "#div/0", $scope.input);
-	$input_content($scope, $scope.input.content);
+	$input_content($scope["#childScope/1"], $scope.input.content);
 	$input__script($scope);
 });
-const $input_content = ($scope, input_content) => $input_content$1($scope["#childScope/1"], input_content);
 var my_box_default = /*@__PURE__*/ _template("__tests__/tags/my-box.marko", $template, $walks, 0, $input);

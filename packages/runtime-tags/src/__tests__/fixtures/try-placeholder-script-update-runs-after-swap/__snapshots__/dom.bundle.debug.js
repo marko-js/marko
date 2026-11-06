@@ -1,8 +1,7 @@
 // template.marko
 const $template = "<button id=load>load</button><button id=inc>inc</button><!><!>";
 const $walks = " b b%c";
-const $await_content__v = ($scope, v) => _text($scope["#text/0"], v);
-const $await_content__$params = ($scope, $params2) => $await_content__v($scope, $params2[0]);
+const $await_content__$params = ($scope, $params2) => _text($scope["#text/0"], $params2[0]);
 const $placeholder_content = _content("__tests__/template.marko_2*content", "LOADING");
 const $try_content__n__script = _script("__tests__/template.marko_1_n#0:3", ($scope) => console.log("script n=" + $scope._.n + " connected=" + _el_read($scope["#div/0"]).isConnected));
 const $try_content__n = /*@__PURE__*/ _closure_get("n/5", ($scope) => {

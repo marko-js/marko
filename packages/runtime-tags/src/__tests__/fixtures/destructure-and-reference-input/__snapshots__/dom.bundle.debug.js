@@ -21,10 +21,9 @@ const $rest = /*@__PURE__*/ _const("rest", ($scope) => {
 	$rest__script($scope);
 });
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
-const $input_content = $dynamicTag;
 const $input = ($scope, input) => {
 	_text($scope["#text/2"], Object.keys(input));
 	$rest($scope, (({ content, ...rest }) => rest)(input));
-	$input_content($scope, input.content);
+	$dynamicTag($scope, input.content);
 };
 var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template, $walks, 0, $input);

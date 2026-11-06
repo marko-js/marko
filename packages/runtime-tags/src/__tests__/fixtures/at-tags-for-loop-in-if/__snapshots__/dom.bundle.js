@@ -1,12 +1,12 @@
 // tags/list.marko
-const $for_content__item_content$1 = /* @__PURE__ */ _dynamic_tag(0);
-const $for_content__$params$1 = ($scope, $params2) => $for_content__item_content$1($scope, $params2[0]?.content);
+const $for_content__dynamicTag$1 = /*@__PURE__*/ _dynamic_tag(0);
+const $for_content__$params$1 = ($scope, $params2) => $for_content__dynamicTag$1($scope, $params2[0]?.content);
 const $for$1 = /*@__PURE__*/ _for_of_unkeyed(0, "<!><!><!>", "b%", 0, $for_content__$params$1);
 const $input_item$1 = ($scope, input_item) => $for$1($scope, [input_item]);
 
 // tags/labeled-list.marko
-const $for_content__item_content = /* @__PURE__ */ _dynamic_tag(0);
-const $for_content__$params = ($scope, $params2) => $for_content__item_content($scope, $params2[0]?.content);
+const $for_content__dynamicTag = /*@__PURE__*/ _dynamic_tag(0);
+const $for_content__$params = ($scope, $params2) => $for_content__dynamicTag($scope, $params2[0]?.content);
 const $input_label_text = ($scope, input_label_text) => _text($scope.a, input_label_text);
 const $for = /*@__PURE__*/ _for_of_unkeyed(1, "<!><!><!>", "b%", 0, $for_content__$params);
 const $input_item = ($scope, input_item) => $for($scope, [input_item]);
