@@ -991,7 +991,7 @@ function mergeInto(
       }
     } else if (extra.dropped) {
       /* v8 ignore next -- a dropped reference is never merged into another */
-      throw new Error("Cannot merged a dropped reference.");
+      throw new Error("Cannot merge a dropped reference.");
     }
   }
 

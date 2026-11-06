@@ -299,14 +299,22 @@ function testFixtures(interop?: true) {
                     for (const f of Array.isArray(config.error_compiler)
                       ? config.error_compiler.map(resolve)
                       : [templateFile]) {
-                      compiler.compileFileSync(f, {
+                      const opts: compiler.Config = {
                         ...getModeOpts(),
                         ...(config.fix_guide && {
                           translator: "@marko/runtime-tags/translator",
                         }),
                         linkAssets: { runtime: "asset-runtime", onAsset() {} },
                         output,
+                      };
+                      // Recovery returns analyze errors as diagnostics, so anything it
+                      // throws must be the snapshot's error (own cache: a setting differs).
+                      compiler.compileFileSync(f, {
+                        ...opts,
+                        errorRecovery: true,
+                        cache: new Map(),
                       });
+                      compiler.compileFileSync(f, opts);
                     }
                   } finally {
                     restore();

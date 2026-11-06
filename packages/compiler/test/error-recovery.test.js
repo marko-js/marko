@@ -74,6 +74,18 @@ describe("compiler/error recovery", () => {
     assert.equal(typeof compile("$ const x = ;").code, "string");
   });
 
+  it("returns an analyze error as a diagnostic with no code", () => {
+    const { code, meta } = compile("<const/x/>", { output: "dom" });
+    assert.match(meta.diagnostics[0].label, /requires a \[`value=` attribute/);
+    assert.equal(code, "");
+  });
+
+  it("returns a parse error as a diagnostic with no code", () => {
+    const { code, meta } = compile("$ const x = ;", { output: "dom" });
+    assert.match(meta.diagnostics[0].label, /Unexpected token/);
+    assert.equal(code, "");
+  });
+
   it("aggregates the recorded errors when one still escapes", () => {
     // The attribute value fails to parse and is recorded, then the tag itself
     // cannot be built, so both come back together rather than only the last.

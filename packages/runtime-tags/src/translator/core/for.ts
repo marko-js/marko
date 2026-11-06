@@ -129,7 +129,7 @@ export default {
       throw tag.hub.buildError(
         byAttr,
         `The ${coreTagLink(tag)} only supports a string \`by\` key with \`of\`; use a \`by=(${
-          forType === "in" ? "key, value" : "index"
+          forType === "in" ? "key, value" : "num"
         }) => ...\` function for \`<for ${forType}>\`.`,
       );
     }

@@ -1,7 +1,7 @@
 import { types as t } from "@marko/compiler";
 
 export const htmlStyleTagAlternateMsg =
-  " For a native html [`<style>` tag](https://markojs.com/docs/reference/core-tag#style) use the `html-style` core tag instead.";
+  " For a native html `<style>` tag use the [`html-style` core tag](https://markojs.com/docs/reference/core-tag#html-script--html-style) instead.";
 
 export function checkStyleInterpolations(tag: t.NodePath<t.MarkoTag>) {
   const { body } = tag.node.body;
