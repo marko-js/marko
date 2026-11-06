@@ -65,42 +65,70 @@ installKeptInstances((branch, id) => {
 type KeptHoles = Scope | [holes: Scope, ...own: BoundArgs[]];
 type BoundArgs = [path: PatchHop[], id: string, ...rest: unknown[]];
 
-// Each instance binds its own values, on copies of what holds them (arrays,
-// objects, maps and sets), one per original, so all else keeps its identity.
+// Each instance binds its own values on copies of what holds them (arrays,
+// objects, maps and sets, cycles included), one per original; all else keeps
+// its identity.
 function patchInstance(holes: KeptHoles, instance: Scope) {
   if (Array.isArray(holes)) {
     const [shared, ...own] = holes;
-    const copies = new Map<unknown, any>();
-    const bind = (value: any) => {
-      let copy = copies.get(value);
-      if (!copy) {
-        // Taken as is where it is reached again while copied (a cycle).
-        copies.set(value, (copy = value));
-        const isArray = Array.isArray(value);
-        // Content is no data (its owner a getter into live scopes).
-        if (
-          isArray ||
-          (value?.constructor === Object && !value[RendererProp.Id])
-        ) {
-          for (const key in value) {
-            const item = bind(value[key]);
-            if (item !== value[key]) {
-              if (copy === value) copy = isArray ? [...value] : { ...value };
-              copy[key] = item;
-            }
+    const holders = new Map<any, any[]>([[shared, []]]);
+    const copies = new Map<any, any>();
+    const filled = new Set<unknown>();
+    // Content is no data (its owner a getter into live scopes).
+    const members = (value: any): any[] =>
+      value instanceof Map
+        ? [...value.keys(), ...value.values()]
+        : value instanceof Set
+          ? [...value]
+          : Array.isArray(value) ||
+              (value.constructor === Object && !value[RendererProp.Id])
+            ? Object.values(value)
+            : [];
+    const visit = (value: any) => {
+      for (const item of members(value)) {
+        if (item && typeof item === "object") {
+          const seen = holders.get(item);
+          if (seen) {
+            seen.push(value);
+          } else {
+            holders.set(item, [value]);
+            visit(item);
           }
-          if (own.includes(value))
-            copy = bindRef!(instance, ...(copy as [PatchHop[], string]));
-        } else if (value instanceof Map || value instanceof Set) {
-          const items = [...value];
-          if (bind(items) !== items)
-            copy = new (value.constructor as any)(bind(items));
         }
-        copies.set(value, copy);
       }
-      return copy;
     };
-    holes = bind(shared);
+    // What holds an owned value, directly or not, takes a copy.
+    const copy = (value: any) => {
+      if (!copies.has(value)) {
+        copies.set(value, new value.constructor());
+        holders.get(value)?.forEach(copy);
+      }
+    };
+    const get = (value: any) => {
+      let to = copies.get(value);
+      if (to && !filled.has(value)) {
+        filled.add(value);
+        if (own.includes(value)) {
+          copies.set(
+            value,
+            (to = bindRef!(
+              instance,
+              ...(value.map(get) as [PatchHop[], string]),
+            )),
+          );
+        } else if (value instanceof Map) {
+          value.forEach((item, key) => to.set(get(key), get(item)));
+        } else if (value instanceof Set) {
+          value.forEach((item) => to.add(get(item)));
+        } else {
+          for (const key in value) to[key] = get(value[key]);
+        }
+      }
+      return to || value;
+    };
+    visit(shared);
+    own.forEach(copy);
+    holes = get(shared);
   }
   patchScope(holes as Scope, instance);
 }
