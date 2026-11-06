@@ -398,8 +398,13 @@ export function writeLocalArgs(
 ) {
   for (const local of locals) {
     state.buf.push(",");
-    writePlainObject(state, local, newArgReference(state, ref, local));
+    writeLocals(state, ref, local);
   }
+}
+
+// One scope of render-only locals, for the call `ref` is.
+export function writeLocals(state: State, ref: Reference, local: PartialScope) {
+  writePlainObject(state, local, newArgReference(state, ref, local));
 }
 
 export class Reference {
