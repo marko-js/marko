@@ -22,8 +22,8 @@ import {
   _html,
   _id,
   _scope,
-  getChunk,
   getContext,
+  getState,
   withContext,
 } from "./writer";
 
@@ -277,7 +277,7 @@ export function _attr_details_or_dialog_open(
 }
 
 export function _attr_nonce() {
-  return getChunk()!.boundary.state.nonceAttr;
+  return getState().nonceAttr;
 }
 
 export function _style_html(decls: string) {
@@ -398,8 +398,8 @@ export function _attrs(
           name &&
           !(
             isNullishOrFalse(value) ||
-            skip.test(name) ||
-            (name === "content" && tagName !== "meta")
+            (name === "content" && tagName !== "meta") ||
+            skip.test(name)
           )
         ) {
           if (isEventHandler(name)) {
