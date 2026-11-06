@@ -398,13 +398,8 @@ export function writeLocalArgs(
 ) {
   for (const local of locals) {
     state.buf.push(",");
-    writeLocals(state, ref, local);
+    writePlainObject(state, local, newArgReference(state, ref, local));
   }
-}
-
-// One scope of render-only locals, for the call `ref` is.
-export function writeLocals(state: State, ref: Reference, local: PartialScope) {
-  writePlainObject(state, local, newArgReference(state, ref, local));
 }
 
 export class Reference {
@@ -2404,7 +2399,7 @@ function writeRef(state: State, ref: Reference) {
   }
 }
 
-function ensureRefAccess(state: State, ref: Reference): string {
+export function ensureRefAccess(state: State, ref: Reference): string {
   if (ref.scopeId !== undefined) {
     trackChannel(state, ref);
     return "_(" + ref.scopeId + ")";

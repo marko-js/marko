@@ -2,6 +2,7 @@ import {
   AccessorPrefix,
   AccessorProp,
   PatchKey,
+  RendererProp,
   type Scope,
 } from "../../common/types";
 import { subscribeToScopeSet } from "../signals";
@@ -59,23 +60,52 @@ installKeptInstances((branch, id) => {
   }
 });
 
-// The holes every instance shares, with the binds of values each one owns: a
-// tree mirroring the holes down to each, whose leaves are `_`'s args from the instance.
-type KeptHoles = Scope | [holes: Scope, binds: BindTree];
-type BindTree = { [key: string]: BindTree | [PatchHop[], string, 1?] };
+// The holes every instance shares, with the values each one owns written in
+// them as `_`'s args from the instance (listed after the holes).
+type KeptHoles = Scope | [holes: Scope, ...own: BoundArgs[]];
+type BoundArgs = [path: PatchHop[], id: string, ...rest: unknown[]];
 
-// Each instance takes the holes with its own values bound in, on copies of the
-// containers above them, whose places hold their render-only locals until then.
+// Each instance binds its own values, on copies of what holds them (arrays,
+// objects, maps and sets), one per original, so all else keeps its identity.
 function patchInstance(holes: KeptHoles, instance: Scope) {
-  const bind = (node: any, binds: BindTree) => {
-    node = Array.isArray(node) ? [...node] : { ...node };
-    for (const key in binds) {
-      const value = binds[key];
-      node[key] = Array.isArray(value)
-        ? bindRef!(instance, ...value, node[key])
-        : bind(node[key], value);
-    }
-    return node;
-  };
-  patchScope(Array.isArray(holes) ? bind(...holes) : holes, instance);
+  if (Array.isArray(holes)) {
+    const [shared, ...own] = holes;
+    const copies = new Map<unknown, unknown>();
+    const bind = (value: any) => {
+      if (value && typeof value === "object" && !copies.has(value)) {
+        // Taken as is where it is reached again while copied (a cycle).
+        copies.set(value, value);
+        let copy = value;
+        // Content is no data (its owner a getter into live scopes).
+        if (
+          Array.isArray(value) ||
+          (value.constructor === Object && !value[RendererProp.Id])
+        ) {
+          for (const key in value) {
+            const item = bind(value[key]);
+            if (item !== value[key]) {
+              if (copy === value) {
+                copy = Array.isArray(value) ? [...value] : { ...value };
+              }
+              copy[key] = item;
+            }
+          }
+          if (own.includes(value)) {
+            copy = bindRef!(instance, ...(copy as [PatchHop[], string]));
+          }
+        } else if (value instanceof Map || value instanceof Set) {
+          const items = [...value];
+          if (bind(items) !== items) {
+            copy = new (value.constructor as new (items: unknown) => unknown)(
+              bind(items),
+            );
+          }
+        }
+        copies.set(value, copy);
+      }
+      return copies.get(value) ?? value;
+    };
+    holes = bind(shared);
+  }
+  patchScope(holes as Scope, instance);
 }

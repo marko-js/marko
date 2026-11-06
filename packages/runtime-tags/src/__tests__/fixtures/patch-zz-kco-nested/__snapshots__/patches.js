@@ -16,7 +16,9 @@
       W3: [{
         fa: [">span", 0, {
           content: {
-            content: 0
+            content: _.b = [
+              [], "a0", 1
+            ]
           }
         }],
         cAa: {
@@ -26,7 +28,9 @@
         },
         fb: [">span", 0, {
           content: {
-            content: 0
+            content: _.a = [
+              [], "a2", 1
+            ]
           }
         }],
         cAb: {
@@ -34,34 +38,10 @@
             ta: "b"
           }
         }
-      }, {
-        fb: {
-          2: {
-            content: {
-              content: [
-                [], "a2", 1
-              ]
-            }
-          }
-        }
-      }],
+      }, _.a],
       Sa8: "b",
       xb: "b!"
-    }, {
-      W3: {
-        0: {
-          fa: {
-            2: {
-              content: {
-                content: [
-                  [], "a0", 1
-                ]
-              }
-            }
-          }
-        }
-      }
-    }]
+    }, _.b]
   }, "a11"],
   Sa12: "e",
   xe: "b",
@@ -86,7 +66,9 @@
       W3: [{
         fa: [">i", 0, {
           content: {
-            content: 0
+            content: _.b = [
+              [], "a0", 1
+            ]
           }
         }],
         cAa: {
@@ -96,7 +78,9 @@
         },
         fb: [">i", 0, {
           content: {
-            content: 0
+            content: _.a = [
+              [], "a2", 1
+            ]
           }
         }],
         cAb: {
@@ -104,34 +88,10 @@
             ta: "c"
           }
         }
-      }, {
-        fb: {
-          2: {
-            content: {
-              content: [
-                [], "a2", 1
-              ]
-            }
-          }
-        }
-      }],
+      }, _.a],
       Sa8: "b",
       xb: "c!"
-    }, {
-      W3: {
-        0: {
-          fa: {
-            2: {
-              content: {
-                content: [
-                  [], "a0", 1
-                ]
-              }
-            }
-          }
-        }
-      }
-    }]
+    }, _.b]
   }, "a11"],
   Sa12: "e",
   xe: "c",

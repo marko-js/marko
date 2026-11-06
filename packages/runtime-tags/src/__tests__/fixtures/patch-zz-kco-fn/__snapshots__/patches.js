@@ -10,22 +10,16 @@
     },
     W2: [{
       fa: [">span", "a1", {
-        onClick: 0
+        onClick: _.a = [
+          [], "a0"
+        ]
       }],
       cAa: {
         cAa: {
           ta: "b"
         }
       }
-    }, {
-      fa: {
-        2: {
-          onClick: [
-            [], "a0"
-          ]
-        }
-      }
-    }]
+    }, _.a]
   }, "a7"],
   Sa9: "f",
   xe: "span"
@@ -43,22 +37,16 @@
     },
     W2: [{
       fa: [">i", "a1", {
-        onClick: 0
+        onClick: _.a = [
+          [], "a0"
+        ]
       }],
       cAa: {
         cAa: {
           ta: "c"
         }
       }
-    }, {
-      fa: {
-        2: {
-          onClick: [
-            [], "a0"
-          ]
-        }
-      }
-    }]
+    }, _.a]
   }, "a7"],
   Sa9: "f",
   xe: "i"

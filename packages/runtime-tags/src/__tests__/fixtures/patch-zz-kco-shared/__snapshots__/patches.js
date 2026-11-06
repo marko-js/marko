@@ -10,29 +10,21 @@
     W2: [{
       fa: [">span", 0, {
         content: {
-          content: 0
+          content: _.a = [
+            [], "a0", 1
+          ]
         }
       }],
       cAa: {
         cAa: {
-          ta: _.a = "a label long enough to share"
+          ta: _.b = "a label long enough to share"
         }
       }
-    }, {
-      fa: {
-        2: {
-          content: {
-            content: [
-              [], "a0", 1
-            ]
-          }
-        }
-      }
-    }]
+    }, _.a]
   }, "a5"],
-  tb: _.a,
+  tb: _.b,
   Sa6: "f",
-  xf: _.a,
+  xf: _.b,
   xg: "span"
 }
 ;Cww
@@ -48,28 +40,20 @@
     W2: [{
       fa: [">i", 0, {
         content: {
-          content: 0
+          content: _.a = [
+            [], "a0", 1
+          ]
         }
       }],
       cAa: {
         cAa: {
-          ta: _.a = "another label long enough"
+          ta: _.b = "another label long enough"
         }
       }
-    }, {
-      fa: {
-        2: {
-          content: {
-            content: [
-              [], "a0", 1
-            ]
-          }
-        }
-      }
-    }]
+    }, _.a]
   }, "a5"],
-  tb: _.a,
+  tb: _.b,
   Sa6: "f",
-  xf: _.a,
+  xf: _.b,
   xg: "i"
 }

@@ -1,0 +1,6 @@
+<if=input.show>
+  <card>
+    <const/f=function() { console.log("fn", input.label) }/>
+    <get m=new Map([[f, 1]])/>
+  </card>
+</if>
