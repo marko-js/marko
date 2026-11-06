@@ -212,7 +212,7 @@ function createCloneableHTML(
   };
   const parent = new DocumentFragment();
   insertChildNodes(parent, null, firstChild, lastChild);
-  return firstChild === lastChild && firstChild!.nodeType < NodeType.Comment
+  return firstChild === lastChild && firstChild.nodeType < NodeType.Comment
     ? (branch, walks) => {
         walk(
           (branch[AccessorProp.StartNode] = branch[AccessorProp.EndNode] =

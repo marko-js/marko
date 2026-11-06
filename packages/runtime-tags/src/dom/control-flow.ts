@@ -322,7 +322,7 @@ function completeAwaitCounter(_scope: Scope, awaitCounter: AwaitCounter) {
     const fnScopes = new Map<unknown, Set<Scope>>();
     const effects = awaitCounter.m([]);
     for (let i = 0; i < pendingEffects.length;) {
-      const fn = pendingEffects[i++] as any;
+      const fn = pendingEffects[i++];
       let scopes = fnScopes.get(fn);
       if (!scopes) {
         fnScopes.set(fn, (scopes = new Set()));
@@ -412,12 +412,10 @@ export function renderCatch(scope: Scope, error?: unknown) {
     throw error;
   } else {
     const owner = tryWithCatch[AccessorProp.Owner]!;
-    const placeholderBranch = tryWithCatch[
-      AccessorProp.PlaceholderBranch
-    ] as BranchScope;
+    const placeholderBranch = tryWithCatch[AccessorProp.PlaceholderBranch];
     if (placeholderBranch) {
       if (tryWithCatch[AccessorProp.AwaitCounter])
-        (tryWithCatch[AccessorProp.AwaitCounter] as AwaitCounter).i = 0;
+        tryWithCatch[AccessorProp.AwaitCounter].i = 0;
       owner[
         AccessorPrefix.BranchScopes + tryWithCatch[AccessorProp.BranchAccessor]
       ] = placeholderBranch;
@@ -517,7 +515,7 @@ export const _show = /*@__PURE__*/ withBranches(
       // The reference node is the parent element when the `<show>` is its only
       // child, otherwise a marker node just after the body.
       const referenceNode = scope[nodeAccessor] as ChildNode;
-      const onlyChild = referenceNode.nodeType === NodeType.Element;
+      const onlyChild = referenceNode.nodeType < NodeType.Text;
       const parentNode = onlyChild
         ? (referenceNode as unknown as ParentNode & Element)
         : referenceNode.parentNode!;
@@ -893,7 +891,7 @@ const loop = /*@__PURE__*/ withBranches(
             : referenceNode
         ) as Element;
         let oldScopesByKey: Map<unknown, BranchScope> | undefined;
-        let hasPotentialMoves: boolean | undefined;
+        let hasPotentialMoves: undefined | 1;
         let start = 0;
 
         if (MARKO_DEBUG) {
@@ -921,7 +919,7 @@ const loop = /*@__PURE__*/ withBranches(
                 )).get(key)
               : oldScope && (start++, oldScope));
           if (branch) {
-            hasPotentialMoves = true;
+            hasPotentialMoves = 1;
             oldScopesByKey?.delete(key);
             branch[AccessorProp.LoopKey] = key;
           } else {

@@ -65,7 +65,7 @@ export function skipScope() {
 }
 
 export function destroyBranch(branch: BranchScope) {
-  branch[AccessorProp.ParentBranch]?.[AccessorProp.BranchScopes]?.delete(
+  branch[AccessorProp.ParentBranch]?.[AccessorProp.BranchScopes]!.delete(
     branch,
   );
   destroyNestedScopes(branch);
@@ -78,12 +78,11 @@ export function destroyScope(scope: Scope) {
   }
 }
 
-// TODO: turn into normal function declaration when resolved: https://github.com/oxc-project/oxc/issues/17364?issue=rolldown%7Crolldown%7C7666
-const destroyNestedScopes = function destroyNestedScopes(scope: Scope) {
+function destroyNestedScopes(scope: Scope) {
   scope[AccessorProp.Gen] = 0;
   scope[AccessorProp.BranchScopes]?.forEach(destroyNestedScopes);
   scope[AccessorProp.AbortScopes]?.forEach(cleanupScope);
-};
+}
 
 function cleanupScope(scope: Scope) {
   if (subscriptionsEnabled) {

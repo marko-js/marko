@@ -1,4 +1,4 @@
-// size: 2544 (min) 1268 (brotli)
+// size: 2542 (min) 1264 (brotli)
 // packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36);
 let rendering;

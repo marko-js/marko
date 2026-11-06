@@ -450,11 +450,9 @@ export function _el_read<T>(value: T): T {
   return value;
 }
 
-type Hoistable<T> = (...args: unknown[]) => T;
-type Hoisted<T> = Hoistable<T> & Iterable<T>;
 // An `<if>` branch: the slot its chain's scope is in, the slot naming which
 // branch renders, and its own index.
-type HoistStep = Accessor | [Accessor, Accessor, number];
+type HoistStep = EncodedAccessor | [Accessor, Accessor, number];
 
 function* traverse<T>(
   scope: Scope,
@@ -495,7 +493,7 @@ export function _hoist<T>(...path: HoistStep[]) {
   return (scope: Scope) => {
     // Single reads intentionally share the iterable traversal: a dedicated
     // fast path costs more runtime bytes than its latency savings justify.
-    const fn: Hoisted<T> = (...args) =>
+    const fn: ((...args: unknown[]) => T) & Iterable<T> = (...args) =>
       traverse<T>(scope, path, args).next().value as T;
     fn[Symbol.iterator] = (_?: never) => traverse<T>(scope, path, []);
     return fn;

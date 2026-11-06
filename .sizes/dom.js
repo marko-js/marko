@@ -1,23 +1,7 @@
-// size: 27191 (min) 10178 (brotli)
+// size: 27146 (min) 10128 (brotli)
 // packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
-let toDelimitedString = function toDelimitedString(val, delimiter, stringify) {
-  let str = "",
-    sep = "",
-    part;
-  if (val) {
-    if (typeof val != "object") str += val;
-    else if (Array.isArray(val))
-      for (let v of val)
-        ((part = toDelimitedString(v, delimiter, stringify)),
-          part && ((str += sep + part), (sep = delimiter)));
-    else
-      for (let name in val)
-        ((part = stringify(name, val[name])), part && ((str += sep + part), (sep = delimiter)));
-  }
-  return str;
-};
 let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36);
 let branchesEnabled;
 let dynamicHtmlEnabled;
@@ -49,57 +33,12 @@ let delegate = (type, handler) =>
 let parsers = {};
 let nextScopeId = 1e6;
 let collectingScopes;
-let destroyNestedScopes = function destroyNestedScopes(scope) {
-  ((scope.H = 0), scope.D?.forEach(destroyNestedScopes), scope.B?.forEach(cleanupScope));
-};
 let isScheduled;
 let channel;
 let _return = (scope, value) => (scope.T ? scope.T(value) : (scope.RV = value));
 let _var_change = (scope, value) => scope.U?.(value);
 let tagIdsByGlobal = /* @__PURE__ */ new WeakMap();
 let currentNode;
-let walkInternal = function walkInternal(currentWalkIndex, walkCodes, scope) {
-  let value,
-    currentMultiplier,
-    storedMultiplier = 0,
-    currentScopeIndex = 0;
-  for (; currentWalkIndex < walkCodes.length;)
-    if (
-      ((value = walkCodes.charCodeAt(currentWalkIndex++)),
-      (currentMultiplier = storedMultiplier),
-      (storedMultiplier = 0),
-      value === 32)
-    )
-      scope[decodeAccessor(currentScopeIndex++)] = currentNode;
-    else if (value === 37 || value === 49)
-      (currentNode.replaceWith(
-        (currentNode = scope[decodeAccessor(currentScopeIndex++)] = new Text()),
-      ),
-        value === 49 && (scope[decodeAccessor(currentScopeIndex++)] = skipScope()));
-    else if (value === 38) return currentWalkIndex;
-    else if (value === 47 || value === 48)
-      ((currentWalkIndex = walkInternal(
-        currentWalkIndex,
-        walkCodes,
-        (scope[decodeAccessor(currentScopeIndex++)] = createScope(scope.$, scope.F)),
-      )),
-        value === 48 && (scope[decodeAccessor(currentScopeIndex++)] = skipScope()));
-    else if (value < 92)
-      for (value = 25 * currentMultiplier + value - 67; value--;)
-        if (currentNode.firstChild) currentNode = currentNode.firstChild;
-        else {
-          for (; !currentNode.nextSibling && currentNode.parentNode;)
-            currentNode = currentNode.parentNode;
-          walkNextSibling();
-        }
-    else if (value < 107)
-      for (value = 10 * currentMultiplier + value - 97; value--;) walkNextSibling();
-    else if (value < 117) {
-      for (value = 10 * currentMultiplier + value - 107; value--;)
-        currentNode = currentNode.parentNode || currentNode;
-      walkNextSibling();
-    } else storedMultiplier = currentMultiplier * 10 + value - 117;
-};
 let walkNextSibling = (_) => (currentNode = currentNode.nextSibling || currentNode);
 let _resumed = {};
 let curRenders;
@@ -158,7 +97,7 @@ let _show = /*@__PURE__*/ withBranches((nodeAccessor, startNodeAccessor) => {
   let rangeAccessor = "A" + nodeAccessor;
   return (scope, display) => {
     let referenceNode = scope[nodeAccessor],
-      onlyChild = referenceNode.nodeType === 1,
+      onlyChild = referenceNode.nodeType < 3,
       parentNode = onlyChild ? referenceNode : referenceNode.parentNode,
       range = scope[rangeAccessor];
     range ||
@@ -308,7 +247,7 @@ let loop = /*@__PURE__*/ withBranches(
                 )).get(key)
               : oldScope && (start++, oldScope));
         (branch
-          ? ((hasPotentialMoves = !0), oldScopesByKey?.delete(key), (branch.M = key))
+          ? ((hasPotentialMoves = 1), oldScopesByKey?.delete(key), (branch.M = key))
           : (((branch = createBranch(scope.$, renderer, scope, parentNode)).M = key),
             setupBranch(renderer, branch)),
           newScopes.push(branch),
@@ -396,6 +335,22 @@ function escapeStyleValue(str) {
         ? (closers = "]" + closers)
         : c === closers[0] && (closers = closers.slice(1));
   return result + closers;
+}
+function toDelimitedString(val, delimiter, stringify) {
+  let str = "",
+    sep = "",
+    part;
+  if (val) {
+    if (typeof val != "object") str += val;
+    else if (Array.isArray(val))
+      for (let v of val)
+        ((part = toDelimitedString(v, delimiter, stringify)),
+          part && ((str += sep + part), (sep = delimiter)));
+    else
+      for (let name in val)
+        ((part = stringify(name, val[name])), part && ((str += sep + part), (sep = delimiter)));
+  }
+  return str;
 }
 function isEventHandler(name) {
   return /^on[A-Z-]/.test(name);
@@ -589,10 +544,13 @@ function skipScope() {
   return nextScopeId++;
 }
 function destroyBranch(branch) {
-  (branch.N?.D?.delete(branch), destroyNestedScopes(branch));
+  (branch.N?.D.delete(branch), destroyNestedScopes(branch));
 }
 function destroyScope(scope) {
   scope.H && (destroyNestedScopes(scope), cleanupScope(scope));
+}
+function destroyNestedScopes(scope) {
+  ((scope.H = 0), scope.D?.forEach(destroyNestedScopes), scope.B?.forEach(cleanupScope));
 }
 function cleanupScope(scope) {
   if ((subscriptionsEnabled && scope.Z?.forEach(unsubscribe, scope), abortsEnabled))
@@ -836,6 +794,48 @@ function _hoist_resume(id, ...path) {
 /** Cloned templates are small, where a TreeWalker's per-step cost dominates. */
 function walk(startNode, walkCodes, branch) {
   ((currentNode = startNode), walkInternal(0, walkCodes, branch));
+}
+function walkInternal(currentWalkIndex, walkCodes, scope) {
+  let value,
+    currentMultiplier,
+    storedMultiplier = 0,
+    currentScopeIndex = 0;
+  for (; currentWalkIndex < walkCodes.length;)
+    if (
+      ((value = walkCodes.charCodeAt(currentWalkIndex++)),
+      (currentMultiplier = storedMultiplier),
+      (storedMultiplier = 0),
+      value === 32)
+    )
+      scope[decodeAccessor(currentScopeIndex++)] = currentNode;
+    else if (value === 37 || value === 49)
+      (currentNode.replaceWith(
+        (currentNode = scope[decodeAccessor(currentScopeIndex++)] = new Text()),
+      ),
+        value === 49 && (scope[decodeAccessor(currentScopeIndex++)] = skipScope()));
+    else if (value === 38) return currentWalkIndex;
+    else if (value === 47 || value === 48)
+      ((currentWalkIndex = walkInternal(
+        currentWalkIndex,
+        walkCodes,
+        (scope[decodeAccessor(currentScopeIndex++)] = createScope(scope.$, scope.F)),
+      )),
+        value === 48 && (scope[decodeAccessor(currentScopeIndex++)] = skipScope()));
+    else if (value < 92)
+      for (value = 25 * currentMultiplier + value - 67; value--;)
+        if (currentNode.firstChild) currentNode = currentNode.firstChild;
+        else {
+          for (; !currentNode.nextSibling && currentNode.parentNode;)
+            currentNode = currentNode.parentNode;
+          walkNextSibling();
+        }
+    else if (value < 107)
+      for (value = 10 * currentMultiplier + value - 97; value--;) walkNextSibling();
+    else if (value < 117) {
+      for (value = 10 * currentMultiplier + value - 107; value--;)
+        currentNode = currentNode.parentNode || currentNode;
+      walkNextSibling();
+    } else storedMultiplier = currentMultiplier * 10 + value - 117;
 }
 function ready(readyId) {
   (readyIds ||= /* @__PURE__ */ new Set()).add(readyId);
@@ -1116,7 +1116,7 @@ function _dynamic_tag_var_resume(accessor) {
   ((accessor = decodeAccessor(accessor)),
     (_resumed["-" + accessor] = (scope) => (_) => {
       let node = scope[accessor];
-      return node.nodeType === 8 ? node.previousSibling : node;
+      return node.nodeType > 1 ? node.previousSibling : node;
     }));
 }
 function createBranch($global, renderer, parentScope, parentNode) {
@@ -1339,10 +1339,12 @@ function attrsInternal(scope, nodeAccessor, nextAttrs, controllable) {
   }
 }
 function _attr_content(scope, nodeAccessor, value) {
-  let content = normalizeClientRender(value);
-  (scope["D" + nodeAccessor] !== (scope["D" + nodeAccessor] = rendererKey(content)) &&
-    (setBranch(scope, nodeAccessor, content, createAndSetupBranch),
-    content?.f && subscribeToScopeSet(content.e, content.f, scope["A" + nodeAccessor])),
+  let renderer = normalizeDynamicRenderer(value),
+    content;
+  (renderer && renderer.a && (content = renderer),
+    scope["D" + nodeAccessor] !== (scope["D" + nodeAccessor] = rendererKey(content)) &&
+      (setBranch(scope, nodeAccessor, content, createAndSetupBranch),
+      content?.f && subscribeToScopeSet(content.e, content.f, scope["A" + nodeAccessor])),
     content?.g?.(scope["A" + nodeAccessor]));
 }
 function _attrs_script(scope, nodeAccessor) {
@@ -1350,10 +1352,6 @@ function _attrs_script(scope, nodeAccessor) {
     events = scope["I" + nodeAccessor];
   controllableScripts[scope["F" + nodeAccessor]]?.(scope, nodeAccessor);
   for (let name in events) _on(el, name, events[name]);
-}
-function normalizeClientRender(value) {
-  let renderer = normalizeDynamicRenderer(value);
-  if (renderer && renderer.a) return renderer;
 }
 function normalizeAttrValue(value) {
   if (isNotNullishOrFalse(value)) return value === !0 ? "" : value + "";
@@ -2257,7 +2255,7 @@ function insertLoaded(renderer, branch, marker, awaitCounter) {
       (insertBranchBefore(branch, parent(), marker), marker.remove(), awaitCounter?.c());
     },
     remaining;
-  if ((remaining = values?.size)) {
+  if ((remaining = values.size)) {
     awaitCounter ||= startAwait(branch);
     let fail = loadFailed(branch, awaitCounter);
     values.forEach(([, apply], promise) =>
