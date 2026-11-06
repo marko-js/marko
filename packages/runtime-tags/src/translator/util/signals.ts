@@ -55,6 +55,7 @@ import { callRuntime, registerRuntimeValue } from "./runtime";
 import {
   getClosureAccessorLiteral,
   getLocalsScopeAccessor,
+  getPrefixedScopeAccessor,
   getScopeAccessor,
   getScopeAccessorLiteral,
   getScopeOffsetAccessorLiteral,
@@ -74,6 +75,7 @@ import {
   getScopeIdIdentifier,
   getSection,
   getSectionForBody,
+  isDirectClosure,
   isDynamicClosure,
   isInParentSection,
   type Section,
@@ -89,6 +91,7 @@ import { getRestPattern, withRestFallback } from "./translate-var";
 import { traverseReplace } from "./traverse";
 import { withLeadingComment } from "./with-comment";
 import {
+  andGuard,
   getExprIfWritten,
   getWriteGuardForAny,
   getWriteReason,
@@ -371,7 +374,7 @@ export function getSignal(
             referencedBindings.closureSections ||
             referencedBindings.hoists ||
             referencedBindings.localOf ||
-            findSlot(referencedBindings)?.reason)
+            getWriteReason(referencedBindings))
         ),
         forceStore: false,
         inline: undefined,
@@ -397,7 +400,7 @@ export function getSignal(
           const inline =
             !member.propertyAliases.size &&
             member.reads.size === 1 &&
-            !findSlot(member)?.reason &&
+            !getWriteReason(member) &&
             sourceSignal.values.find((v) => v.signal === memberSignal);
           if (inline) {
             memberSignal.inline = inline;
@@ -417,7 +420,7 @@ export function getSignal(
         const render = buildSignalFn(signal);
         const closureSignalBuilder = getClosureSignalBuilder(section);
 
-        if (closureSignalBuilder && !isDynamicClosure(section, closure)) {
+        if (closureSignalBuilder && isDirectClosure(section, closure)) {
           return closureSignalBuilder(closure, render);
         }
 
@@ -461,7 +464,7 @@ export function initValue(binding: Binding, isLet = false) {
   const section = binding.section;
   const signal = getSignal(section, binding);
   // Lazy reads read the value from its scope slot.
-  if (binding.hasLazyReads) signal.forceStore = true;
+  signal.forceStore ||= binding.hasLazyReads;
   signal.build = () => {
     if (isPureMemberForwarder(binding)) {
       return undefined;
@@ -538,7 +541,7 @@ function isPureMemberForwarder(binding: Binding): boolean {
     binding.aliases.size ||
     binding.assignments ||
     isForSelectorValue(binding) ||
-    findSlot(binding)?.reason ||
+    getWriteReason(binding) ||
     getSignal(binding.section, binding).storesValue
   ) {
     return false;
@@ -936,7 +939,7 @@ export function addStatement(
   isPure?: boolean,
 ): void {
   const signal = getSignal(targetSection, getReferencedBindings(expr));
-  const statements = (signal[type] ??= []);
+  const statements = signal[type];
 
   if (Array.isArray(statement)) {
     statements.push(...statement);
@@ -946,9 +949,7 @@ export function addStatement(
     );
   }
 
-  if (!isPure || type === "effect") {
-    signal.storesValue = true;
-  }
+  signal.storesValue ||= !isPure || type === "effect";
 }
 
 // Runs a `<log>` or `<debug>` statement where the tag is: in place on the
@@ -984,13 +985,11 @@ export function addValue(
     value,
   });
 
-  if (
+  parentSignal.storesValue ||= !!(
     t.isFunction(value) &&
     value.extra &&
     getReferencedBindingsInFunction(value.extra)
-  ) {
-    parentSignal.storesValue = true;
-  }
+  );
 }
 
 function buildResumeRegisterKey(
@@ -1198,8 +1197,10 @@ function pushInstancesAccessor(section: Section, accessors: t.Expression[]) {
       ? t.arrayExpression([
           instancesAccessor,
           t.stringLiteral(
-            getAccessorPrefix().ConditionalRenderer +
-              getScopeAccessor(branch.tag.nodeBinding),
+            getPrefixedScopeAccessor(
+              branch.tag.nodeBinding,
+              getAccessorPrefix().ConditionalRenderer,
+            ),
           ),
           t.numericLiteral(branch.index),
         ])
@@ -1363,9 +1364,9 @@ export function writeHTMLResumeStatements(
           !isSameReason(closureScopesReason, sectionReason)
             ? getExprIfWritten(closure.section, closureScopesReason, identifier)
             : identifier;
-        const changeable = isChangeableDynamicClosure(section, closure);
         // No call writes the subscriber set: the scope joins none.
         if (subscribeArg) {
+          const changeable = isChangeableDynamicClosure(section, closure);
           if (subscribeArg === identifier) {
             linkedWithScope = true;
           } else {
@@ -1531,11 +1532,7 @@ export function writeHTMLResumeStatements(
           );
       if (guard?.type !== "NumericLiteral") {
         const call = callRuntime("_resume_branch", scopeIdIdentifier);
-        link = getExprIfWritten(
-          section,
-          sectionReason,
-          guard ? t.logicalExpression("&&", guard, call) : call,
-        );
+        link = getExprIfWritten(section, sectionReason, andGuard(guard, call));
       }
     }
     if (link) {
@@ -1608,10 +1605,7 @@ function replaceBindingReadNode(node: t.Node, signal?: Signal) {
         const { binding, getter } = extra.read;
 
         if (binding.type === BindingType.dom && !getter) {
-          const replacement = createScopeReadExpression(
-            binding,
-            extra!.section,
-          );
+          const replacement = createScopeReadExpression(binding, extra.section);
           return isOptimize()
             ? replacement
             : callRuntime("_el_read", replacement);

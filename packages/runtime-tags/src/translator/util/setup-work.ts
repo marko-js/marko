@@ -1,6 +1,6 @@
 import type { types as t } from "@marko/compiler";
 
-import { callsOtherTemplateSetup } from "./known-tag";
+import { callsOtherTemplateSetup, type KnownTagExtra } from "./known-tag";
 import { forEach } from "./optional";
 import { getCanonicalExpr, getReferencedBindings } from "./references";
 import { forEachSection, type Section } from "./sections";
@@ -25,29 +25,28 @@ export function addSetupWork(section: Section) {
 }
 
 export function finalizeSetupWork() {
-  forEachSection((section) => {
-    if (hasOwnSetupWork(section)) {
-      section.hasSetupWork = true;
-    }
-  });
+  forEachSection(setSetupWork);
+}
 
-  forEachSection((section) => {
-    if (section.hasSetupWork || section.readsOwner) {
-      setCallSectionsSetup(section);
-    }
-  });
+function setSetupWork(section: Section) {
+  section.hasSetupWork ||= hasOwnSetupWork(section);
+  setCallSectionsSetup(section);
 }
 
 // A direct call of a `<define>` body or of the template itself sets up the
 // called scope, or its owner, in the calling section's setup.
 function setCallSectionsSetup(body: Section) {
-  forEach(body.renderedBy, (call) => {
-    const callSection = call.childScopeBinding.section;
-    if (!callSection.hasSetupWork) {
-      callSection.hasSetupWork = true;
-      setCallSectionsSetup(callSection);
-    }
-  });
+  if (body.hasSetupWork || body.readsOwner) {
+    forEach(body.renderedBy, setCallSectionSetup);
+  }
+}
+
+function setCallSectionSetup(call: KnownTagExtra) {
+  const callSection = call.childScopeBinding.section;
+  if (!callSection.hasSetupWork) {
+    callSection.hasSetupWork = true;
+    setCallSectionsSetup(callSection);
+  }
 }
 
 function hasOwnSetupWork(section: Section) {

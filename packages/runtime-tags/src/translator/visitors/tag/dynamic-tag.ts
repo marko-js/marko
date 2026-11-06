@@ -54,7 +54,7 @@ import {
   registerRuntimeValue,
 } from "../../util/runtime";
 import {
-  getScopeAccessor,
+  getPrefixedScopeAccessor,
   getScopeAccessorLiteral,
   getScopeOffsetAccessorLiteral,
 } from "../../util/scope-accessor";
@@ -548,8 +548,10 @@ export default {
               t.memberExpression(
                 getScopeExpression(tagVarSignal!.section, valueSection),
                 t.stringLiteral(
-                  getAccessorPrefix().BranchScopes +
-                    getScopeAccessor(nodeBinding),
+                  getPrefixedScopeAccessor(
+                    nodeBinding,
+                    getAccessorPrefix().BranchScopes,
+                  ),
                 ),
                 true,
               ),

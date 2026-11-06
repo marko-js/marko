@@ -45,9 +45,7 @@ export function createScopeReadExpression(
   );
 
   if (section === reference.section && reference.type !== BindingType.dom) {
-    const exprExtra = (expr.extra ??= {});
-    exprExtra.read = createResolvedRead(reference, undefined);
-    exprExtra.section = section;
+    expr.extra = { read: createResolvedRead(reference, undefined), section };
   }
   return expr;
 }

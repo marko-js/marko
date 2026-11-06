@@ -107,6 +107,7 @@ import {
   buildGroupMask,
   getExprIfWritten,
   getWriteGuard,
+  getWriteReason,
   isEverWritten,
 } from "./write-guard";
 
@@ -304,7 +305,7 @@ function assertReturns(tag: t.NodePath<t.MarkoTag>, childSection: Section) {
 // The child's scope resumes, and with it any tag variable, which HTML wires
 // with `_var` and DOM registers for.
 function isChildScopeResumed(section: Section, tagExtra: t.MarkoTagExtra) {
-  return isEverWritten(section, findSlot(tagExtra.childScopeBinding!)?.reason);
+  return isEverWritten(section, getWriteReason(tagExtra.childScopeBinding!));
 }
 
 // Arguments are dropped when a child reads none of them nor the input after
@@ -428,11 +429,7 @@ export function knownTagTranslateHTML(
 
 export function knownTagTranslateDOM(
   tag: t.NodePath<t.MarkoTag>,
-  getBindingIdentifier: (
-    binding: Binding,
-    preferredName?: string,
-    directContent?: boolean,
-  ) => t.Identifier,
+  getBindingIdentifier: TranslateDOMInfo["getBindingIdentifier"],
   callSetup: ((section: Section, childBinding: Binding) => void) | undefined,
 ) {
   const tagSection = getSection(tag);
@@ -1286,15 +1283,10 @@ function writeAttrsToSignals(
 
     for (const [group, { expr, statements }] of statementsByGroup) {
       const trees = getGroupParamsTrees(group, attrTagLookup, paramsTree);
-      const hasRest = trees.some(([, tree]) => tree === true);
+      const hasRest = trees.some(isRestTree);
 
       addStatement("render", info.tagSection, hasRest ? tagExtra : expr, [
-        t.variableDeclaration(
-          "let",
-          trees.map(([attrTagMeta]) =>
-            t.variableDeclarator(getAttrTagIdentifier(attrTagMeta)),
-          ),
-        ),
+        t.variableDeclaration("let", trees.map(toAttrTagDeclarator)),
         ...statements,
       ]);
 
@@ -1553,4 +1545,12 @@ function getGroupParamsTrees(
     if (tree) trees.push([attrTagMeta, tree]);
   }
   return trees;
+}
+
+function isRestTree([, tree]: [AttrTagMeta, ParamsTree | true]) {
+  return tree === true;
+}
+
+function toAttrTagDeclarator([attrTagMeta]: [AttrTagMeta, ParamsTree | true]) {
+  return t.variableDeclarator(getAttrTagIdentifier(attrTagMeta));
 }
