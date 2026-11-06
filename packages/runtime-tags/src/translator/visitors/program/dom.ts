@@ -229,13 +229,7 @@ export default {
         program.node.body.unshift(
           t.exportNamedDeclaration(
             t.variableDeclaration("const", [
-              t.variableDeclarator(
-                setupIdentifier,
-                t.arrowFunctionExpression(
-                  [getUnusedParamIdentifier()],
-                  t.blockStatement([]),
-                ),
-              ),
+              t.variableDeclarator(setupIdentifier, emptySetup()),
             ]),
           ),
         );
@@ -265,16 +259,23 @@ export default {
   },
 } satisfies TemplateVisitor<t.Program>;
 
-// A debug build marks content with a `<return>` on its setup, or its params if
-// it has no setup, to check a dynamic tag's variable over it.
+// A debug build marks content with a `<return>` on its setup, else its params,
+// else an empty setup, to check a dynamic tag's variable over it.
 function markReturn(
   section: Section,
   setup: t.Expression | undefined,
   params: t.Expression | undefined,
 ) {
   return section.returnValueExpr && !isOptimize()
-    ? setup
-      ? [callRuntime("_return_setup", setup), params]
-      : [setup, callRuntime("_return_setup", params!)]
+    ? setup || !params
+      ? [callRuntime("_return_setup", setup || emptySetup()), params]
+      : [setup, callRuntime("_return_setup", params)]
     : [setup, params];
+}
+
+function emptySetup() {
+  return t.arrowFunctionExpression(
+    [getUnusedParamIdentifier()],
+    t.blockStatement([]),
+  );
 }
