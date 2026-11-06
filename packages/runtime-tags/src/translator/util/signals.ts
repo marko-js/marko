@@ -287,48 +287,33 @@ export function getContentClosureValues(bodySection: Section) {
     : [contentClosures];
   const ownerAccessor = getAccessorProp().Owner;
   const levels: t.Expression[] = [];
-  // Where the flush fills or writes a closure, a patch render keeps the levels up to
-  // the outermost with values it doesn't send and the client lacks.
-  const patchProps: t.ObjectProperty[][] = [];
-  let patchDepth = 0;
-  let filled = false;
+  let written = false;
   for (let i = closures.length, section = bodySection.parent!; i;) {
     const props: t.ObjectProperty[] = [];
-    const kept: t.ObjectProperty[] = [];
     while (i && closures[i - 1].section === section) {
       const closure = closures[--i];
-      const prop = toObjectProperty(
-        getScopeAccessor(closure),
-        getDeclaredBindingExpression(closure),
+      props.push(
+        toObjectProperty(
+          getScopeAccessor(closure),
+          getDeclaredBindingExpression(closure),
+        ),
       );
-      props.push(prop);
-      if (isPatch() && getPatchWrite(closure).write) {
-        filled = true;
-      }
+      written ||= isPatch() && !!getPatchWrite(closure).write;
     }
-    if (kept.length) patchDepth = patchProps.length + 1;
-    patchProps.push(kept);
     // Resume walks up through each owner while the payload evaluates, before
     // any scope flush could link it, so every level below another links its owner.
     if (i) {
-      const link = toObjectProperty(
-        ownerAccessor,
-        t.callExpression(scope, [getScopeIdIdentifier(section.parent!)]),
+      props.push(
+        toObjectProperty(
+          ownerAccessor,
+          t.callExpression(scope, [getScopeIdIdentifier(section.parent!)]),
+        ),
       );
-      props.push(link);
-      kept.push(link);
     }
     levels.push(t.objectExpression(props));
     section = section.parent!;
   }
-  let patchLevels: t.Expression[] | undefined;
-  if (filled) {
-    patchLevels = [];
-    for (let depth = patchDepth; depth--;) {
-      patchLevels.push(t.objectExpression(patchProps[depth]));
-    }
-  }
-  return { scope, levels: levels.reverse(), patchLevels };
+  return { scope, levels: levels.reverse(), written };
 }
 
 export const [getScopeProperties] = createOutputSectionState<

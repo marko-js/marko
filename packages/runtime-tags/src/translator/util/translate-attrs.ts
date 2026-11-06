@@ -478,14 +478,14 @@ function getRegisteredLocals(bodySection: Section) {
       ...locals,
       ...(contentClosureValues?.levels || []),
     ]);
-    const patchLevels = contentClosureValues?.patchLevels;
+    // A patch render writes each closure the client reads, so it sends none.
     return t.arrowFunctionExpression(
       contentClosureValues ? [contentClosureValues.scope] : [],
-      patchLevels
+      contentClosureValues?.written
         ? t.conditionalExpression(
             scopePageIdentifier(getReasonSection(bodySection.parent!)),
             values,
-            t.arrayExpression([...locals, ...patchLevels]),
+            t.arrayExpression(locals),
           )
         : values,
     );
