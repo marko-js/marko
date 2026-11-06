@@ -814,13 +814,7 @@ function getDefineCallSources(sources: Sources | undefined, section: Section) {
 }
 
 function addNestedMemberFill(fills: SortedOpt<Sources>, member: Binding) {
-  const { fill, effectRead, fnReference, objectSource } = getPatchFill(member);
-  // A member written only for the intersection's render re-runs it where its group mixes,
-  // as its own arm covers; one an effect, function reference or built object reads re-runs kept code.
-  return !isKnownChild(member.section) &&
-    (fill ||
-      (writesForIntersectionRender(member) &&
-        (effectRead || fnReference || objectSource)))
+  return !isKnownChild(member.section) && getPatchFill(member).fill
     ? sourcesUtil.add(fills, getSourcesForReferencedBindings(member)!)
     : fills;
 }
