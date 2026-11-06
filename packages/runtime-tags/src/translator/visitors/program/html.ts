@@ -107,7 +107,7 @@ export default {
                 subscribersIdentifier,
               );
             }
-            currentSection = parentSection!;
+            currentSection = parentSection;
           }
         });
       });
@@ -158,7 +158,7 @@ export default {
           contentId ? t.identifier(contentId) : contentFn,
           // A non-page template gets a randomized render id ("embed") so several
           // can share a document without colliding; without linkAssets, use a fixed page id.
-          program.node.extra!.page || !getMarkoOpts().linkAssets
+          program.node.extra.page || !getMarkoOpts().linkAssets
             ? t.numericLiteral(1)
             : undefined,
         ),
