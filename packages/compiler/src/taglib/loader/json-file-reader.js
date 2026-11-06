@@ -2,10 +2,8 @@ import { strip as stripJsonComments } from "@luxass/strip-json-comments";
 
 import taglibConfig from "../config";
 
-var fsReadOptions = { encoding: "utf8" };
-
 export function readFileSync(path) {
-  var json = String(taglibConfig.fs.readFileSync(path, fsReadOptions));
+  var json = taglibConfig.fs.readFileSync(path, "utf8");
 
   try {
     var taglibProps = JSON.parse(stripJsonComments(json));

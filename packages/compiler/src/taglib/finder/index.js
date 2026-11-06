@@ -21,7 +21,7 @@ function reset() {
 
 function getModuleRootPackage(dirname) {
   try {
-    return markoModules.getRootPackage(dirname);
+    return markoModules.getRootPackage(dirname, taglibConfig.fs);
   } catch (e) {
     return undefined;
   }
