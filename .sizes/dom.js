@@ -1,4 +1,4 @@
-// size: 28612 (min) 10621 (brotli)
+// size: 28577 (min) 10586 (brotli)
 // packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -2160,15 +2160,8 @@ function _fill_global(id, signal, ...keys) {
   );
 }
 function _fill_global_for(id, ownerLoopNodeAccessor, signal, ...keys) {
-  let rows = "A" + decodeAccessor(ownerLoopNodeAccessor);
   return (
-    _fill_global(
-      id,
-      (owner) => {
-        for (let row of toArray(owner[rows])) signal(row);
-      },
-      ...keys,
-    ),
+    _fill_global(id, _for_closure(ownerLoopNodeAccessor, signal, -1), ...keys),
     (scope) => {
       (signal(scope), subscribeToScopeSet(globalScopes, id, scope._));
     }

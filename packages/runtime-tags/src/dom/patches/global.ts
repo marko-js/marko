@@ -1,7 +1,4 @@
-import { decodeAccessor } from "../../common/helpers";
-import { toArray } from "../../common/opt";
 import {
-  AccessorPrefix,
   AccessorProp,
   type EncodedAccessor,
   PatchKey,
@@ -9,7 +6,7 @@ import {
 } from "../../common/types";
 import { queueEffect, queueRender } from "../queue";
 import { _resumed } from "../resume";
-import { type SignalFn, subscribeToScopeSet } from "../signals";
+import { _for_closure, type SignalFn, subscribeToScopeSet } from "../signals";
 import { patchers } from "./apply";
 
 declare module "./apply" {
@@ -45,26 +42,15 @@ export function _fill_global(
 }
 
 // A signal a loop's rows read: the loop's owner subscribes once and a changed member
-// walks its rows, as a loop closure does, so a row the client creates subscribes to none.
+// walks its rows as a loop closure does, so a row the client creates subscribes to none.
 export function _fill_global_for(
   id: string,
   ownerLoopNodeAccessor: EncodedAccessor,
   signal: SignalFn,
   ...keys: (string | 0)[]
 ): SignalFn {
-  const rows =
-    AccessorPrefix.BranchScopes +
-    (MARKO_DEBUG
-      ? ownerLoopNodeAccessor
-      : decodeAccessor(ownerLoopNodeAccessor as number));
-  _fill_global(
-    id,
-    (owner: Scope) => {
-      for (const row of toArray(owner[rows as keyof Scope] as Scope))
-        signal(row);
-    },
-    ...keys,
-  );
+  // A negative id takes no slot on the owner and sorts with the global renders.
+  _fill_global(id, _for_closure(ownerLoopNodeAccessor, signal, -1), ...keys);
   return (scope: Scope) => {
     signal(scope);
     subscribeToScopeSet(globalScopes, id, scope[AccessorProp.Owner]!);
