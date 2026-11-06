@@ -125,6 +125,17 @@ export default (api, markoOpts) => {
           return;
         }
 
+        // Recovery reports every error as a diagnostic, but, as without it, a
+        // template with errors is not translated: its module is empty.
+        if (
+          markoOpts.errorRecovery &&
+          metadata.marko.diagnostics.some(isErrorDiagnostic)
+        ) {
+          file.path.node.body = [];
+          finalizeMeta(metadata.marko);
+          return;
+        }
+
         const taglibLookup = sourceFile.___taglibLookup;
         const rootTranslators = [];
         file.buildCodeFrameError = MarkoFile.prototype.buildCodeFrameError;
@@ -386,6 +397,10 @@ function getMarkoFile(code, fileOpts, markoOpts) {
     taglibConfig.fs = prevFs;
     setFileInternal(prevFile);
   }
+}
+
+function isErrorDiagnostic(diag) {
+  return diag.type === DiagnosticType.Error;
 }
 
 function hasStaleDependency(cached, markoOpts) {

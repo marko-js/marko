@@ -16,6 +16,7 @@ import {
 import { generateUidIdentifier } from "../util/generate-uid";
 import { getKnownAttrValues } from "../util/get-known-attr-values";
 import { getParentTag } from "../util/get-parent-tag";
+import { getTagName } from "../util/get-tag-name";
 import { addReason } from "../util/reasons";
 import { replaceWithStatements } from "../util/replace-with-statements";
 import { callRuntime } from "../util/runtime";
@@ -54,7 +55,7 @@ export default {
         throw tag
           .get("name")
           .buildCodeFrameError(
-            `The ${coreTagLink(tag)} can not be used under the \`<${parentTag.get("name").toString()}>\` tag.`,
+            `The ${coreTagLink(tag)} can not be used under the \`<${getTagName(parentTag)}>\` tag.`,
           );
       }
     }
@@ -99,16 +100,13 @@ export default {
           );
         }
 
-        // Error recovery still translates a `<return>` analyze rejected for no value.
-        if (attrs.value) {
-          const returnId = generateUidIdentifier("return");
-          setReturnValueIdentifier(section, returnId);
-          replaceWithStatements(tag, [
-            t.variableDeclaration("const", [
-              t.variableDeclarator(returnId, attrs.value),
-            ]),
-          ]);
-        }
+        const returnId = generateUidIdentifier("return");
+        setReturnValueIdentifier(section, returnId);
+        replaceWithStatements(tag, [
+          t.variableDeclaration("const", [
+            t.variableDeclarator(returnId, attrs.value),
+          ]),
+        ]);
       },
     },
     dom: {
@@ -116,15 +114,12 @@ export default {
         const section = getSection(tag);
         const attrs = getKnownAttrValues(tag.node);
 
-        // Error recovery still translates a `<return>` analyze rejected for no value.
-        if (attrs.value) {
-          addStatement(
-            "render",
-            section,
-            attrs.value.extra,
-            callRuntime("_return", scopeIdentifier, attrs.value),
-          );
-        }
+        addStatement(
+          "render",
+          section,
+          attrs.value.extra,
+          callRuntime("_return", scopeIdentifier, attrs.value),
+        );
 
         if (attrs.valueChange) {
           addStatement(

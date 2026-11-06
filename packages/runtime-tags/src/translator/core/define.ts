@@ -105,9 +105,8 @@ export default {
   },
   translate: {
     enter(tag) {
-      // An unreferenced `<define>`'s content was dropped in analyze; error
-      // recovery still translates one analyze rejected for no tag variable.
-      if (!tag.node.var || tag.node.body.extra?.dropped) {
+      // An unreferenced `<define>`'s content was dropped in analyze.
+      if (tag.node.body.extra?.dropped) {
         replaceWithStatements(tag);
         return;
       }

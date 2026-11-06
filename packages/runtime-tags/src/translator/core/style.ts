@@ -206,7 +206,7 @@ function assertNoStyleAttributes(tag: t.NodePath<t.MarkoTag>) {
 
     throw tag.hub.buildError(
       attr.value,
-      "The `style` does not support html attributes." +
+      `The ${coreTagLink(tag)} does not support html attributes.` +
         htmlStyleTagAlternateMsg,
     );
   }
