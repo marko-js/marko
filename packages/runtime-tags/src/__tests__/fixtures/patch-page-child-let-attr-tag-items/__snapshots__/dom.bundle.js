@@ -8,5 +8,7 @@ const $setup__script = _script("b0", ($scope) => _on($scope.a, "click", function
 }));
 
 // template.marko
-const $item_content2__input_label = _closure_get_patch("a1", 4, ($scope) => _text($scope.a, $scope._.d), 0, "a4", 1);
-const $item_content__input_label = _closure_get_patch("a0", 4, ($scope) => _text($scope.a, $scope._.d), 0, "a4", 0);
+const $item_content2__input_label = /*@__PURE__*/ _closure_get_patch("a1", 4, ($scope) => _text($scope.a, $scope._.d), 0, "a4", 1);
+const $item_content2 = _content("a3", "<em>two <!></em>", "Db%", $item_content2__input_label);
+const $item_content__input_label = /*@__PURE__*/ _closure_get_patch("a0", 4, ($scope) => _text($scope.a, $scope._.d), 0, "a4", 0);
+const $item_content = _content("a2", "<em>one <!></em>", "Db%", $item_content__input_label);

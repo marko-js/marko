@@ -16,12 +16,12 @@ var card_default = /*@__PURE__*/ _template("__tests__/tags/card.marko", $templat
 // template.marko
 const $template = $template$1;
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1);
-const $item_content2__input_label = _closure_resume("__tests__/template.marko_2_input_label#0:3/subscribe", "input_label/4", ($scope) => _text($scope["#text/0"], $scope._.input_label), 0, "__tests__/template.marko_0_input_label#3/subscribers", 1);
+const $item_content2__input_label = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_2_input_label#0:3/subscribe", "input_label/4", ($scope) => _text($scope["#text/0"], $scope._.input_label), 0, "__tests__/template.marko_0_input_label#3/subscribers", 1);
 const $item_content2__setup = $item_content2__input_label;
-const $item_content2 = /*@__PURE__*/ _content("__tests__/template.marko_2*content", "<em>two <!></em>", "Db%", $item_content2__setup);
-const $item_content__input_label = _closure_resume("__tests__/template.marko_1_input_label#0:3/subscribe", "input_label/4", ($scope) => _text($scope["#text/0"], $scope._.input_label), 0, "__tests__/template.marko_0_input_label#3/subscribers", 0);
+const $item_content2 = _content("__tests__/template.marko_2*content", "<em>two <!></em>", "Db%", $item_content2__setup);
+const $item_content__input_label = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_1_input_label#0:3/subscribe", "input_label/4", ($scope) => _text($scope["#text/0"], $scope._.input_label), 0, "__tests__/template.marko_0_input_label#3/subscribers", 0);
 const $item_content__setup = $item_content__input_label;
-const $item_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "<em>one <!></em>", "Db%", $item_content__setup);
+const $item_content = _content("__tests__/template.marko_1*content", "<em>one <!></em>", "Db%", $item_content__setup);
 function $setup($scope) {
 	$setup$1($scope["#childScope/0"]);
 	$input_item($scope["#childScope/0"], attrTags(attrTag({ content: $item_content($scope) }), { content: $item_content2($scope) }));

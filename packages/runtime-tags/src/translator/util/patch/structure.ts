@@ -71,29 +71,16 @@ function isRenderedContent(binding: Binding) {
   return someRead(bindingReaders(binding, true), isContentRender);
 }
 // A read rendering the content where a patch may too: outside stateful structure,
-// or naming a `<let>` alone (or a loop's item over one) that a patch creates with
-// the scope, filled or not.
+// or naming a `<let>` alone that a patch creates with the scope, filled or not.
 function isPatchedLeaf(read: ReferencedExtra) {
   return (
     isContentRender(read) &&
     (!isStatefulRead(read) ||
       (!!read.nameOnly &&
         every(getSourcesForExpr(read)?.state, (state) =>
-          isCreatedAtInitialValue(state, outsideLoopsOver(read.section, state)),
+          isCreatedAtInitialValue(state, read.section),
         )))
   );
-}
-
-// The rows a loop over `state` makes from its initial value are created with the
-// scope; the client builds any it adds later from the content's shell.
-function outsideLoopsOver(section: Section, state: Binding) {
-  while (
-    section.branch?.kind === "for" &&
-    bindingUtil.has(getSourcesForExpr(section.branchExpr!)?.state, state)
-  ) {
-    section = section.parent!;
-  }
-  return section;
 }
 
 // Which consumers render a tag body with client state (as its prop renders in the child):

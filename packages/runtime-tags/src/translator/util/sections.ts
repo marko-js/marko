@@ -17,6 +17,7 @@ import { createAnalysisMemo } from "./cyclic-memo";
 import { generateUid, generateUidIdentifier } from "./generate-uid";
 import { isCoreTag, isCoreTagName } from "./is-core-tag";
 import type { KnownTagExtra } from "./known-tag";
+import { isPatch } from "./marko-config";
 import {
   addSorted,
   find,
@@ -28,6 +29,7 @@ import {
   reduce,
   some,
 } from "./optional";
+import { getStatefulConsumers } from "./patch/structure";
 import {
   isGuardedReason,
   type KnownExprs,
@@ -774,6 +776,10 @@ export function getRendererReason(section: Section) {
   if (section.branchExpr?.tagNameType === TagNameType.NativeTag) {
     return false;
   }
+
+  // Content every consumer renders with client state renders on the client,
+  // which a patch creating its scope leaves to it: its renderer registers.
+  if (isPatch() && getStatefulConsumers(section) === "every") return ALWAYS;
 
   const { derives } = section;
 

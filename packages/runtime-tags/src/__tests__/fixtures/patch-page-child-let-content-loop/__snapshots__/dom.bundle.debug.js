@@ -15,9 +15,9 @@ var card_default = /*@__PURE__*/ _template("__tests__/tags/card.marko", $templat
 // template.marko
 const $template = $template$1;
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1);
-const $card_content__input_label = _closure_resume("__tests__/template.marko_1_input_label#0:3/subscribe", "input_label/4", ($scope) => _text($scope["#text/0"], $scope._.input_label), 0, "__tests__/template.marko_0_input_label#3/subscribers", 0);
+const $card_content__input_label = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_1_input_label#0:3/subscribe", "input_label/4", ($scope) => _text($scope["#text/0"], $scope._.input_label), 0, "__tests__/template.marko_0_input_label#3/subscribers", 0);
 const $card_content__setup = $card_content__input_label;
-const $card_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "<em>one <!></em>", "Db%", $card_content__setup);
+const $card_content = _content("__tests__/template.marko_1*content", "<em>one <!></em>", "Db%", $card_content__setup);
 function $setup($scope) {
 	$setup$1($scope["#childScope/0"]);
 	$input$1($scope["#childScope/0"], { content: $card_content($scope) });

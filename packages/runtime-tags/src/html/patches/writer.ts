@@ -1,4 +1,3 @@
-import { isAttrTag } from "../../common/attr-tag";
 import { ROOT_SCOPE_ID } from "../../common/meta";
 import {
   encodeIdKey,
@@ -204,23 +203,12 @@ function pairBranch<T, U, V>(cb: (a: U, b: V) => T, a: U, b: V): T {
 }
 
 // A consumer keeps content for the resumed page to render: the values inside fill
-// (`_client_branch_if`). Only a renderer is content, not a value carrying its keys;
-// an attribute tag's items each keep their own.
+// (`_client_branch_if`). Only a renderer is content, not a value carrying its keys.
 export function _client_branch(value: unknown) {
   const state = getState();
-  if (state instanceof PatchRenderState) {
-    if (isAttrTag(value)) {
-      for (const item of value as Iterable<unknown>) keepContent(state, item);
-    } else {
-      keepContent(state, value);
-    }
-  }
-}
-
-function keepContent(state: PatchRenderState, value: unknown) {
   const content =
     (value as { content?: unknown } | undefined)?.content || value;
-  if (typeof content === "function") {
+  if (state instanceof PatchRenderState && typeof content === "function") {
     const id = (content as ServerRenderer)[RendererProp.Id];
     const owner = (content as ServerRenderer)[RendererProp.Owner]!;
     if (id) addClientBranch(state, id, owner);
