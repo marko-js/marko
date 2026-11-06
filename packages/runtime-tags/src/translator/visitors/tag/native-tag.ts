@@ -388,14 +388,15 @@ export default {
         }
       }
 
+      const usesVar = isTagVarUsed(tag);
       if (
-        (node.var && isTagVarUsed(tag)) ||
         hasDynamicAttributes ||
         hasEventHandlers ||
         textPlaceholders ||
         injectsNonce ||
         content !== undefined ||
-        controllable
+        controllable ||
+        usesVar
       ) {
         const nodeBinding = (tagExtra.nodeBinding = createBinding(
           "#" + tagName.toLowerCase(),
@@ -467,7 +468,7 @@ export default {
           addSetupWork(tagSection);
         }
 
-        if (hasEventHandlers || isTagVarUsed(tag)) {
+        if (hasEventHandlers || usesVar) {
           addAlwaysReason(nodeBinding);
         }
 

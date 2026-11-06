@@ -182,10 +182,16 @@ function ensureLocalClosure(local: Binding, section: Section) {
 
 // Whether anything reads or assigns a tag's variable.
 export function isTagVarUsed(tag: t.NodePath<t.MarkoTag>) {
-  for (const name in t.getBindingIdentifiers(tag.node.var!)) {
-    const binding = tag.scope.getBinding(name);
-    if (binding?.referencePaths.length || binding?.constantViolations.length) {
-      return true;
+  const tagVar = tag.node.var;
+  if (tagVar) {
+    for (const name in t.getBindingIdentifiers(tagVar)) {
+      const binding = tag.scope.getBinding(name);
+      if (
+        binding?.referencePaths.length ||
+        binding?.constantViolations.length
+      ) {
+        return true;
+      }
     }
   }
   return false;

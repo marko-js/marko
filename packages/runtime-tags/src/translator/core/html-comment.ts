@@ -38,7 +38,7 @@ export default {
     assertIdentifierVar(tag);
 
     const tagVar = tag.node.var;
-    const varUsed = !!tagVar && isTagVarUsed(tag);
+    const varUsed = isTagVarUsed(tag);
     let needsBinding = varUsed;
 
     let nodeBinding: Binding | undefined;
