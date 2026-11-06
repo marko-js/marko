@@ -52,6 +52,7 @@ var template_default = _template("a", (input) => {
 			const $childScope = _peek_scope_id($scope1_id, "a", 0);
 			counter_default({ onCount });
 			_patch_child_end();
+			!_client_guard($scope0_reason, 1) && _unfilled_if() && _patch_write($scope0_id, "wi", onCount);
 			_scope($scope1_id, { a: _existing_scope($childScope) });
 			return 0;
 		}

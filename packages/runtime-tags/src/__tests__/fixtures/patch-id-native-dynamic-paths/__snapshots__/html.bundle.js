@@ -8,7 +8,7 @@ _shells({
 	a5: `a5;${/*@__PURE__*/ ((_w0) => `b%b/${_w0}&%c`)($Wrap_content__walks)};${/*@__PURE__*/ ((_w0) => `<!><!>${_w0}<!><!>`)($Wrap_content__template)}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_items = _write_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_items = _write_guard($scope0_reason, 0), $cg__input_items = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const Body = { content: _content_resume("a0", () => {
 		const $scope1_id = _scope_id();
@@ -46,7 +46,8 @@ var template_default = _template("a", (input) => {
 		});
 		_patch_child_end();
 		_dynamic_tag($scope2_id, "c", Tag, [{ content: Body }], 25, 0, 1, $wg__input_items, $scope0_reason, 0);
-		_client_guard($scope0_reason, 0) && _patch_render($scope2_id, "a4");
+		!$cg__input_items && _unfilled_if() && _patch_write($scope0_id, "we", Body);
+		$cg__input_items && _patch_render($scope2_id, "a4");
 		_scope($scope2_id, {
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id),
 			b: _existing_scope($childScope)

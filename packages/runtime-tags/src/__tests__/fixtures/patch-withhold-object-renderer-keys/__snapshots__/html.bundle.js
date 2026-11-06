@@ -31,7 +31,7 @@ _shells({
 	c: "c; ;<section></section>"
 });
 var holder_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_mode = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const frag = { content: _content_resume("c0", () => {
 		_scope_id();
@@ -41,8 +41,8 @@ var holder_default = _template("c", (input) => {
 	_html("<section>");
 	_attr_content("a", $scope0_id, input.mode ? frag.content : null, 0, 1, $scope0_reason, 0);
 	_html(`</section>${_el_mark($scope0_id, "a", _updates_from($scope0_reason, 0))}`);
-	$cg__input_mode && _patch_write($scope0_id, "wf", frag?.content, 1);
-	$cg__input_mode && _patch_render($scope0_id, "c1");
+	_unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "wf", frag?.content, 1);
+	_client_guard($scope0_reason, 0) && _patch_render($scope0_id, "c1");
 	_scope($scope0_id, { f: _unfilled_if($scope0_reason, 0) && frag?.content });
 });
 

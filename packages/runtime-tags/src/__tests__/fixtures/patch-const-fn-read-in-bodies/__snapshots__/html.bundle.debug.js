@@ -54,7 +54,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				return 0;
 			}
 		}, $scope1_id, "#text/1", 1, $wg__input_x, 1, 0, 0, ["__tests__/template.marko_4*shell"], $scope0_reason, 4);
-		$cg__input_x && _patch_write($scope1_id, "PatchWrite:g", g, 1);
+		_unfilled_if($scope0_reason, 4) && _patch_write($scope1_id, "PatchWrite:g", g, 1);
 		$cg__input_x && _patch_render($scope1_id, "__tests__/template.marko_1_input_x#0:8/setup");
 		$cg__input_a && _patch_render($scope1_id, "__tests__/template.marko_1_f#0:10/setup");
 		_patch_render($scope1_id, "__tests__/template.marko_1_input_a#0:6_item#3/setup", [_filled_guard($scope0_reason, 2) && ">input_a", _filled_guard($scope0_reason, 3) && "item"], $scope0_reason, 0);

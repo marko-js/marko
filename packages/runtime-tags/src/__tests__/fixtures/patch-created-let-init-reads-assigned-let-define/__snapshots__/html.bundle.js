@@ -19,7 +19,7 @@ var template_default = _template("a", (input) => {
 				const $scope2_id = _scope_id();
 				const $scope2_reason = _scope_reason(), $fg__w = _filled_guard($scope2_reason, 2);
 				_html(`<span>${_text_mark($scope2_id, "a", v + w, 1, $scope2_reason, 0)}</span>`);
-				_client_guard($scope2_reason, 2) && _patch_write($scope2_id, "wd", v, 1);
+				_unfilled_if($scope2_reason, 2) && _patch_write($scope2_id, "wd", v, 1);
 				_patch_render($scope2_id, "a1", [_filled_guard($scope2_reason, 1) && "d", $fg__w && "e"], $scope2_reason, 0);
 				_scope($scope2_id, {
 					d: (_unfilled_if($scope2_reason, 2) || _unfilled_if($scope2_reason, 0)) && v,

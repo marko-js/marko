@@ -27,7 +27,7 @@ _shells({
 	"__tests__/template.marko_8*shell": `__tests__/template.marko_8*shell${_shell_marker([[], []], ["#childScope/0>", $setup$1])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1)};${$template$1}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_end = _filled_guard($scope0_reason, 4), $fg__input_start = _filled_guard($scope0_reason, 5);
+	const $scope0_reason = _scope_reason(), $cg__input_items__OR__input_record__OR__input_end__OR__input_start = _client_guard($scope0_reason, 1), $fg__input_end = _filled_guard($scope0_reason, 4), $fg__input_start = _filled_guard($scope0_reason, 5);
 	const $scope0_id = _scope_id();
 	const heading = _id("heading");
 	_html(`<h1${_attr("id", heading, $scope0_id, "PatchAttr:#h1/0 id", 0, 0)}>Fields</h1>${_el_mark($scope0_id, "#h1/0", 0)}`);
@@ -40,6 +40,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			heading
 		});
 		_patch_child_end();
+		!$cg__input_items__OR__input_record__OR__input_end__OR__input_start && _unfilled_if() && _patch_write($scope0_id, "PatchWrite:heading", heading);
 		_scope($scope1_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "2:2");
 	}, 0, $scope0_id, "#text/1", 1, 1, 1, 0, 0, "__tests__/template.marko_1*shell", $scope0_reason, 2);
 	_for_of(input.items, (item) => {
@@ -51,6 +52,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			heading
 		});
 		_patch_child_end();
+		!$cg__input_items__OR__input_record__OR__input_end__OR__input_start && _unfilled_if() && _patch_write($scope0_id, "PatchWrite:heading", heading);
 		_scope($scope2_id, { "#childScope/0": _existing_scope($childScope2) }, "__tests__/template.marko", "3:2");
 	}, "key", $scope0_id, "#text/2", 1, 1, 1, 0, 0, "__tests__/template.marko_2*shell", $scope0_reason, 2);
 	_for_in(input.record, (key, value) => {
@@ -62,6 +64,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			heading
 		});
 		_patch_child_end();
+		!$cg__input_items__OR__input_record__OR__input_end__OR__input_start && _unfilled_if() && _patch_write($scope0_id, "PatchWrite:heading", heading);
 		_scope($scope3_id, { "#childScope/0": _existing_scope($childScope3) }, "__tests__/template.marko", "4:2");
 	}, 0, $scope0_id, "#text/3", 1, 1, 1, 0, 0, "__tests__/template.marko_3*shell", $scope0_reason, 3);
 	_for_in(input.record, (key, value) => {
@@ -73,6 +76,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			heading
 		});
 		_patch_child_end();
+		!$cg__input_items__OR__input_record__OR__input_end__OR__input_start && _unfilled_if() && _patch_write($scope0_id, "PatchWrite:heading", heading);
 		_scope($scope4_id, { "#childScope/0": _existing_scope($childScope4) }, "__tests__/template.marko", "5:2");
 	}, (key) => "key-" + key, $scope0_id, "#text/4", 1, 1, 1, 0, 0, "__tests__/template.marko_4*shell", $scope0_reason, 3);
 	_for_to(input.end, input.start, 1, (i) => {
@@ -84,6 +88,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			heading
 		});
 		_patch_child_end();
+		!$cg__input_items__OR__input_record__OR__input_end__OR__input_start && _unfilled_if() && _patch_write($scope0_id, "PatchWrite:heading", heading);
 		_scope($scope5_id, { "#childScope/0": _existing_scope($childScope5) }, "__tests__/template.marko", "6:2");
 	}, 0, $scope0_id, "#text/5", 1, 1, 1, 0, 0, "__tests__/template.marko_5*shell", $scope0_reason, 0);
 	_for_to(input.end, input.start, 1, (i) => {
@@ -95,6 +100,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			heading
 		});
 		_patch_child_end();
+		!$cg__input_items__OR__input_record__OR__input_end__OR__input_start && _unfilled_if() && _patch_write($scope0_id, "PatchWrite:heading", heading);
 		_scope($scope6_id, { "#childScope/0": _existing_scope($childScope6) }, "__tests__/template.marko", "7:2");
 	}, (i) => "to-" + i, $scope0_id, "#text/6", 1, 1, 1, 0, 0, "__tests__/template.marko_6*shell", $scope0_reason, 0);
 	_for_until(input.end, input.start, 2, (i) => {
@@ -106,6 +112,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			heading
 		});
 		_patch_child_end();
+		!$cg__input_items__OR__input_record__OR__input_end__OR__input_start && _unfilled_if() && _patch_write($scope0_id, "PatchWrite:heading", heading);
 		_scope($scope7_id, { "#childScope/0": _existing_scope($childScope7) }, "__tests__/template.marko", "8:2");
 	}, 0, $scope0_id, "#text/7", 1, 1, 1, 0, 0, "__tests__/template.marko_7*shell", $scope0_reason, 0);
 	_for_until(input.end, input.start, 2, (i) => {
@@ -117,6 +124,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			heading
 		});
 		_patch_child_end();
+		!$cg__input_items__OR__input_record__OR__input_end__OR__input_start && _unfilled_if() && _patch_write($scope0_id, "PatchWrite:heading", heading);
 		_scope($scope8_id, { "#childScope/0": _existing_scope($childScope8) }, "__tests__/template.marko", "9:2");
 	}, (i) => "until-" + i, $scope0_id, "#text/8", 1, 1, 1, 0, 0, "__tests__/template.marko_8*shell", $scope0_reason, 0);
 	_patch_render($scope0_id, "__tests__/template.marko_0_input_end#13_input_start#14/setup", [$fg__input_end && "input_end", $fg__input_start && "input_start"], $scope0_reason, 0);

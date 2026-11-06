@@ -52,7 +52,7 @@ var template_default = _template("a", (input) => {
 				return 0;
 			}
 		}, $scope1_id, "b", 1, $wg__input_x, 1, 0, 0, ["a4"], $scope0_reason, 4);
-		$cg__input_x && _patch_write($scope1_id, "wg", g, 1);
+		_unfilled_if($scope0_reason, 4) && _patch_write($scope1_id, "wg", g, 1);
 		$cg__input_x && _patch_render($scope1_id, "a9");
 		$cg__input_a && _patch_render($scope1_id, "a10");
 		_patch_render($scope1_id, "a11", [_filled_guard($scope0_reason, 2) && ">g", _filled_guard($scope0_reason, 3) && "d"], $scope0_reason, 0);

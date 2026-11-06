@@ -10,7 +10,7 @@ var template_default = _template("a", (input) => {
 	_html(`<button>toggle</button>${_el_mark($scope0_id, "a")}`);
 	const Show = { content: _content("a0", ({ v }) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason(), $scope1_page = _page_render(), $wg__v = _write_guard($scope1_reason, 0), $cg__v = _client_guard($scope1_reason, 0);
+		const $scope1_reason = _scope_reason(), $scope1_page = _page_render(), $wg__v = _write_guard($scope1_reason, 0);
 		const flag = $global$1.flag;
 		_if(() => {
 			if (flag && v) {
@@ -21,12 +21,12 @@ var template_default = _template("a", (input) => {
 			}
 		}, $scope1_id, "a", $scope1_page || $wg__v, $scope1_page || $wg__v, 0, 0, 1);
 		_fill_global_subscribe("a1", $scope1_id);
-		$cg__v && _patch_write($scope1_id, "wd", v, 1);
+		_unfilled_if($scope1_reason, 0) && _patch_write($scope1_id, "wd", v, 1);
 		_patch_render($scope1_id, "a2", [_filled_guard($scope1_reason, 0) && "d", "e"], 6, 0);
 		_scope($scope1_id, {
 			d: _unfilled_if($scope1_reason, 0) && v,
 			e: _unfilled_if($scope1_reason, 0) && flag
-		}) || $cg__v && _patch_write($scope1_id, "xe", flag);
+		}) || _client_guard($scope1_reason, 0) && _patch_write($scope1_id, "xe", flag);
 	}, $scope0_id) };
 	_set_scope_reason(2);
 	const $childScope = _peek_scope_id($scope0_id, "b", 0);

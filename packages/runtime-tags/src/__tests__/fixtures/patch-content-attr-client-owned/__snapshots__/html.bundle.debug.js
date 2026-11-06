@@ -8,7 +8,7 @@ _shells({
 	"__tests__/tags/frag-host.marko": "__tests__/tags/frag-host.marko; ;<section></section>"
 });
 var frag_host_default = _template("__tests__/tags/frag-host.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_mode = _client_guard($scope0_reason, 2), $fg__input_b = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $fg__input_b = _filled_guard($scope0_reason, 1), $cg__input_mode = _client_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_b__closures = new Set();
 	const one = { content: _content_resume("__tests__/tags/frag-host.marko_2*content", () => {
@@ -26,8 +26,8 @@ var frag_host_default = _template("__tests__/tags/frag-host.marko", (input) => {
 	_html("<section>");
 	_attr_content("#section/0", $scope0_id, input.mode ? one : two, 0, 1, $scope0_reason, 2);
 	_html(`</section>${_el_mark($scope0_id, "#section/0", _updates_from($scope0_reason, 2))}`);
-	$cg__input_mode && _patch_write($scope0_id, "PatchWrite:one", one, 1);
-	$cg__input_mode && _patch_write($scope0_id, "PatchWrite:two", two, 1);
+	_unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchWrite:one", one, 1);
+	_unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchWrite:two", two, 1);
 	$fg__input_b && _patch_subscribers($scope0_id, "__tests__/tags/frag-host.marko_0_input_b#3/subscribers", "input_b");
 	$cg__input_mode && _patch_render($scope0_id, "__tests__/tags/frag-host.marko_0_input_mode#4_one#5_two#6/setup");
 	_scope($scope0_id, {

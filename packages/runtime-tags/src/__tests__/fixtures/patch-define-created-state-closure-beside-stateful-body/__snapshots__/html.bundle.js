@@ -25,7 +25,7 @@ var template_default = _template("a", (input) => {
 				return 0;
 			}
 		}, $scope2_id, "b", 1, _write_guard($scope2_reason, 0), 1, 0, 0, ["a1"], $scope2_reason, 0);
-		_client_guard($scope2_reason, 0) && _patch_write($scope2_id, "wf", label, 1);
+		_unfilled_if($scope2_reason, 0) && _patch_write($scope2_id, "wf", label, 1);
 		_patch_fill($scope2_id, "va4", n, 1);
 		_subscribe($open__closures, _scope($scope2_id, {
 			f: (_unfilled_if($scope2_reason, 0) || _unfilled_if($scope2_reason, 1)) && label,

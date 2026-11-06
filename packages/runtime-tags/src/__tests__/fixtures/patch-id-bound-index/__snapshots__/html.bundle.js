@@ -55,7 +55,8 @@ var template_default = _template("a", (input) => {
 					return 0;
 				}
 			}, $scope2_id, "a", 1, $wg__input_show, 1, 0, 0, ["a3"], $scope0_reason, 0);
-			$cg__input_show && _patch_write($scope2_id, "wc", other, 1);
+			_unfilled_if($scope0_reason, 0) && _patch_write($scope2_id, "wc", other, 1);
+			!$cg__input_show && _unfilled_if() && _patch_write($scope1_id, "wj", name);
 			_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope2_id, "a6");
 			$cg__input_show && _patch_render($scope2_id, "a7");
 			_subscribe(_unfilled_if($scope0_reason, 0) && $input_show__closures, _scope($scope2_id, {
@@ -63,7 +64,7 @@ var template_default = _template("a", (input) => {
 				_: _scope_with_id($scope1_id)
 			}), $cg__input_show && "a6", $wg__input_show);
 		}, 0, $scope1_id, "h", 1, 1, 1, 0, 0, "a5", 0, 0);
-		$cg__input_show && _patch_write($scope1_id, "wj", name, 1);
+		_unfilled_if($scope0_reason, 0) && _patch_write($scope1_id, "wj", name, 1);
 		_scope($scope1_id, {
 			j: _unfilled_if($scope0_reason, 0) && name,
 			m: $wi__input_show && store?.set,

@@ -9,7 +9,7 @@ _shells({
 	"__tests__/template.marko_2*shell": "__tests__/template.marko_2*shell;b%;<!><!><!>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_rows = _write_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_rows = _write_guard($scope0_reason, 0), $cg__input_rows = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const Card = { content: _content_resume("__tests__/template.marko_1*content", ({ record }) => {
 		const $scope1_id = _scope_id();
@@ -27,7 +27,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_for_of(input.rows, (row) => {
 		const $scope2_id = _scope_id();
 		_dynamic_tag($scope2_id, "#text/0", row.useA ? Card : Other, { record: row.record }, 1, 0, 0, $wg__input_rows, $scope0_reason, 0);
-		_client_guard($scope0_reason, 0) && _patch_render($scope2_id, "__tests__/template.marko_2_Card#0:4_Other#0:5_row_useA#3_row_record#4/setup");
+		!$cg__input_rows && _unfilled_if() && _patch_write($scope0_id, "PatchWrite:Card", Card);
+		!$cg__input_rows && _unfilled_if() && _patch_write($scope0_id, "PatchWrite:Other", Other);
+		$cg__input_rows && _patch_render($scope2_id, "__tests__/template.marko_2_Card#0:4_Other#0:5_row_useA#3_row_record#4/setup");
 		_write_if($scope0_reason, 0) && _scope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "8:4");
 	}, "id", $scope0_id, "#main/0", 1, 1, 1, 0, 0, "__tests__/template.marko_2*shell", $scope0_reason, 0);
 	_html(`</main>${_el_mark($scope0_id, "#main/0")}`);

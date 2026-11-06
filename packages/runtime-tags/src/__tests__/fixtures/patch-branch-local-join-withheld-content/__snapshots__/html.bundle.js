@@ -7,7 +7,7 @@ _shells({
 	b6: "b6;D l ;<p> </p><section></section>"
 });
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_b = _client_guard($scope0_reason, 6), $cg__input_mode = _client_guard($scope0_reason, 8), $wg__input_show = _write_guard($scope0_reason, 5), $sg__input_b = _server_guard($scope0_reason, 6), $cg__input_show = _client_guard($scope0_reason, 5), $fg__input_b = _filled_guard($scope0_reason, 6), $fg__input_a = _filled_guard($scope0_reason, 7), $fg__input_mode = _filled_guard($scope0_reason, 8);
+	const $scope0_reason = _scope_reason(), $cg__input_b = _client_guard($scope0_reason, 6), $wg__input_show = _write_guard($scope0_reason, 5), $sg__input_b = _server_guard($scope0_reason, 6), $cg__input_show = _client_guard($scope0_reason, 5), $fg__input_b = _filled_guard($scope0_reason, 6), $fg__input_a = _filled_guard($scope0_reason, 7), $fg__input_mode = _filled_guard($scope0_reason, 8);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.show) {
@@ -26,11 +26,11 @@ var child_default = _template("b", (input) => {
 			_html("<section>");
 			_attr_content("b", $scope1_id, input.mode ? frag.content : null, 0, 1, $scope0_reason, 8);
 			_html(`</section>${_el_mark($scope1_id, "b", _updates_from($scope0_reason, 8))}`);
-			$cg__input_mode && _patch_write($scope1_id, "wf", frag?.content, 1);
+			_unfilled_if($scope0_reason, 8) && _patch_write($scope1_id, "wf", frag?.content, 1);
 			_filled_guard($scope0_reason, 6) && _patch_subscribers($scope1_id, "b2", "c");
 			$cg__input_b && _patch_render($scope1_id, "b3");
 			_patch_render($scope1_id, "b4", [_filled_guard($scope0_reason, 7) && ">f", _filled_guard($scope0_reason, 6) && "c"], $scope0_reason, 1);
-			$cg__input_mode && _patch_render($scope1_id, "b5");
+			_client_guard($scope0_reason, 8) && _patch_render($scope1_id, "b5");
 			_scope($scope1_id, {
 				c: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 6)) && c,
 				f: _unfilled_if($scope0_reason, 8) && frag?.content,

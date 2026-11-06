@@ -7,7 +7,7 @@ _shells({
 	b: "b;b%;<!><!><!>"
 });
 var picker_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_useA__OR__input_record = _write_guard($scope0_reason, 0), $cg__input_useA__OR__input_record = _client_guard($scope0_reason, 0), $fg__input_useA = _filled_guard($scope0_reason, 1), $fg__input_record = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_useA__OR__input_record = _write_guard($scope0_reason, 0), $fg__input_useA = _filled_guard($scope0_reason, 1), $fg__input_record = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const Card = { content: _content_resume("b0", ({ record }) => {
 		const $scope1_id = _scope_id();
@@ -22,8 +22,8 @@ var picker_default = _template("b", (input) => {
 		_scope($scope2_id, {});
 	}, $scope0_id) };
 	_dynamic_tag($scope0_id, "a", input.useA ? Card : Other, { record: input.record }, 1, 0, 0, $wg__input_useA__OR__input_record, $scope0_reason, 0);
-	$cg__input_useA__OR__input_record && _patch_write($scope0_id, "wf", Card, 1);
-	$cg__input_useA__OR__input_record && _patch_write($scope0_id, "wg", Other, 1);
+	_unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "wf", Card, 1);
+	_unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "wg", Other, 1);
 	_patch_render($scope0_id, "b2", [$fg__input_useA && "d", $fg__input_record && "e"], $scope0_reason, 0);
 	_scope($scope0_id, {
 		d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.useA,

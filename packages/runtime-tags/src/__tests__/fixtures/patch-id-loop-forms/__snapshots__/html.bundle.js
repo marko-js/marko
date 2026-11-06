@@ -24,7 +24,7 @@ _shells({
 	a7: `a7${_shell_marker([[], []], ["a>", $setup])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks)};${$template}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_end = _filled_guard($scope0_reason, 4), $fg__input_start = _filled_guard($scope0_reason, 5);
+	const $scope0_reason = _scope_reason(), $cg__input_items__OR__input_record__OR__input_end__OR__input_start = _client_guard($scope0_reason, 1), $fg__input_end = _filled_guard($scope0_reason, 4), $fg__input_start = _filled_guard($scope0_reason, 5);
 	const $scope0_id = _scope_id();
 	const heading = _id("A");
 	_html(`<h1${_attr("id", heading, $scope0_id, "aa$id", 0, 0)}>Fields</h1>${_el_mark($scope0_id, "a", 0)}`);
@@ -37,6 +37,7 @@ var template_default = _template("a", (input) => {
 			heading
 		});
 		_patch_child_end();
+		!$cg__input_items__OR__input_record__OR__input_end__OR__input_start && _unfilled_if() && _patch_write($scope0_id, "wq", heading);
 		_scope($scope1_id, { a: _existing_scope($childScope) });
 	}, 0, $scope0_id, "b", 1, 1, 1, 0, 0, "a0", $scope0_reason, 2);
 	_for_of(input.items, (item) => {
@@ -48,6 +49,7 @@ var template_default = _template("a", (input) => {
 			heading
 		});
 		_patch_child_end();
+		!$cg__input_items__OR__input_record__OR__input_end__OR__input_start && _unfilled_if() && _patch_write($scope0_id, "wq", heading);
 		_scope($scope2_id, { a: _existing_scope($childScope2) });
 	}, "key", $scope0_id, "c", 1, 1, 1, 0, 0, "a1", $scope0_reason, 2);
 	_for_in(input.record, (key, value) => {
@@ -59,6 +61,7 @@ var template_default = _template("a", (input) => {
 			heading
 		});
 		_patch_child_end();
+		!$cg__input_items__OR__input_record__OR__input_end__OR__input_start && _unfilled_if() && _patch_write($scope0_id, "wq", heading);
 		_scope($scope3_id, { a: _existing_scope($childScope3) });
 	}, 0, $scope0_id, "d", 1, 1, 1, 0, 0, "a2", $scope0_reason, 3);
 	_for_in(input.record, (key, value) => {
@@ -70,6 +73,7 @@ var template_default = _template("a", (input) => {
 			heading
 		});
 		_patch_child_end();
+		!$cg__input_items__OR__input_record__OR__input_end__OR__input_start && _unfilled_if() && _patch_write($scope0_id, "wq", heading);
 		_scope($scope4_id, { a: _existing_scope($childScope4) });
 	}, (key) => "key-" + key, $scope0_id, "e", 1, 1, 1, 0, 0, "a3", $scope0_reason, 3);
 	_for_to(input.end, input.start, 1, (i) => {
@@ -81,6 +85,7 @@ var template_default = _template("a", (input) => {
 			heading
 		});
 		_patch_child_end();
+		!$cg__input_items__OR__input_record__OR__input_end__OR__input_start && _unfilled_if() && _patch_write($scope0_id, "wq", heading);
 		_scope($scope5_id, { a: _existing_scope($childScope5) });
 	}, 0, $scope0_id, "f", 1, 1, 1, 0, 0, "a4", $scope0_reason, 0);
 	_for_to(input.end, input.start, 1, (i) => {
@@ -92,6 +97,7 @@ var template_default = _template("a", (input) => {
 			heading
 		});
 		_patch_child_end();
+		!$cg__input_items__OR__input_record__OR__input_end__OR__input_start && _unfilled_if() && _patch_write($scope0_id, "wq", heading);
 		_scope($scope6_id, { a: _existing_scope($childScope6) });
 	}, (i) => "to-" + i, $scope0_id, "g", 1, 1, 1, 0, 0, "a5", $scope0_reason, 0);
 	_for_until(input.end, input.start, 2, (i) => {
@@ -103,6 +109,7 @@ var template_default = _template("a", (input) => {
 			heading
 		});
 		_patch_child_end();
+		!$cg__input_items__OR__input_record__OR__input_end__OR__input_start && _unfilled_if() && _patch_write($scope0_id, "wq", heading);
 		_scope($scope7_id, { a: _existing_scope($childScope7) });
 	}, 0, $scope0_id, "h", 1, 1, 1, 0, 0, "a6", $scope0_reason, 0);
 	_for_until(input.end, input.start, 2, (i) => {
@@ -114,6 +121,7 @@ var template_default = _template("a", (input) => {
 			heading
 		});
 		_patch_child_end();
+		!$cg__input_items__OR__input_record__OR__input_end__OR__input_start && _unfilled_if() && _patch_write($scope0_id, "wq", heading);
 		_scope($scope8_id, { a: _existing_scope($childScope8) });
 	}, (i) => "until-" + i, $scope0_id, "i", 1, 1, 1, 0, 0, "a7", $scope0_reason, 0);
 	_patch_render($scope0_id, "a8", [$fg__input_end && "n", $fg__input_start && "o"], $scope0_reason, 0);

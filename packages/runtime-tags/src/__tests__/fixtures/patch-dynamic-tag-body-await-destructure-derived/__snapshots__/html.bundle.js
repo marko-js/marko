@@ -38,7 +38,7 @@ var card_default = _template("b", (input) => {
 		_filled_guard($scope0_reason, 1) && $cg__input && _patch_write($scope1_id, "xc", x, !_server_guard($scope0_reason, 1));
 		const { content: c } = x ? input : {};
 		_dynamic_tag($scope1_id, "a", x ? keeper_default : "div", { content: c }, 1, 0, 0, $wg__input, $scope0_reason, 0);
-		_client_guard($scope0_reason, 1) && _patch_write($scope1_id, "wf", c, 1);
+		_unfilled_if($scope0_reason, 1) && _patch_write($scope1_id, "wf", c, 1);
 		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "b0");
 		_patch_render($scope1_id, "b1", [_filled_guard($scope0_reason, 0) && ">c", _filled_guard($scope0_reason, 1) && "c"], $scope0_reason, 0);
 		_patch_render($scope1_id, "b2", [_filled_guard($scope0_reason, 1) && "c", _filled_guard($scope0_reason, 0) && "f"], $scope0_reason, 0);

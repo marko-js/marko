@@ -15,6 +15,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		const uid = _id("uid");
 		_html(`<label${_attr("for", uid, $scope1_id, "PatchAttr:#label/0 for", 0, 0)}>${_text_mark($scope1_id, "#text/1", item.key, 1, $scope0_reason, 0)}</label>${_el_mark($scope1_id, "#label/0", 0)}<input${_attr("id", uid, $scope1_id, "PatchAttr:#input/2 id", 0, 0)}${_attr("aria-describedby", headingId, $scope1_id, "PatchAttr:#input/2 aria-describedby", 0, 0)}>${_el_mark($scope1_id, "#input/2", 0)}`);
+		!_client_guard($scope0_reason, 0) && _unfilled_if() && _patch_write($scope0_id, "PatchWrite:headingId", headingId);
 		_scope($scope1_id, {}, "__tests__/template.marko", "3:2");
 	}, "key", $scope0_id, "#text/1", 1, 1, 1, 0, 0, "__tests__/template.marko_1*shell", $scope0_reason, 0);
 	_scope($scope0_id, { headingId: _unfilled_if($scope0_reason, 0) && headingId }, "__tests__/template.marko", 0, { headingId: "1:5" });

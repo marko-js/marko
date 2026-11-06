@@ -9,7 +9,7 @@ _shells({
 	b4: "b4 !b6; ;<button>b</button>"
 });
 var w_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 2), $wi__input_show__OR__input_flag__OR__input_x = _write_if($scope0_reason, 1), $wg__input_flag__OR__input_x = _write_guard($scope0_reason, 0), $cg__input_flag__OR__input_x = _client_guard($scope0_reason, 0), $fg__input_show = _filled_guard($scope0_reason, 2), $fg__input_flag = _filled_guard($scope0_reason, 3), $fg__input_x = _filled_guard($scope0_reason, 4), $wi__input_show = _write_if($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 2), $wi__input_show__OR__input_flag__OR__input_x = _write_if($scope0_reason, 1), $wg__input_flag__OR__input_x = _write_guard($scope0_reason, 0), $fg__input_show = _filled_guard($scope0_reason, 2), $fg__input_flag = _filled_guard($scope0_reason, 3), $fg__input_x = _filled_guard($scope0_reason, 4), $wi__input_show = _write_if($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_show__closures = /* @__PURE__ */ new Set();
 	const A = { content: _content_resume("b3", ({ x }) => {
@@ -56,8 +56,8 @@ var w_default = _template("b", (input) => {
 		$wg__input_show || _resume_branch($scope2_id);
 	}, $scope0_id) };
 	_dynamic_tag($scope0_id, "a", input.flag ? A : B, { x: input.x }, 1, 0, 0, $wg__input_flag__OR__input_x, $scope0_reason, 0);
-	$cg__input_flag__OR__input_x && _patch_write($scope0_id, "wg", A, 1);
-	$cg__input_flag__OR__input_x && _patch_write($scope0_id, "wh", B, 1);
+	_unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "wg", A, 1);
+	_unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "wh", B, 1);
 	$fg__input_show && _patch_subscribers($scope0_id, "b8", "d");
 	_patch_render($scope0_id, "b9", [$fg__input_flag && "e", $fg__input_x && "f"], $scope0_reason, 0);
 	_scope($scope0_id, {
@@ -67,7 +67,7 @@ var w_default = _template("b", (input) => {
 		g: _unfilled_if($scope0_reason, 0) && A,
 		h: _unfilled_if($scope0_reason, 0) && B,
 		j: $wi__input_show && $input_show__closures
-	}) || ($fg__input_show && $cg__input_flag__OR__input_x && _patch_write($scope0_id, "xd", input.show, !_server_guard($scope0_reason, 2)), $fg__input_flag && _client_guard($scope0_reason, 4) && _patch_write($scope0_id, "xe", input.flag, !_server_guard($scope0_reason, 3)), $fg__input_x && _client_guard($scope0_reason, 3) && _patch_write($scope0_id, "xf", input.x, !_server_guard($scope0_reason, 4)));
+	}) || ($fg__input_show && _client_guard($scope0_reason, 0) && _patch_write($scope0_id, "xd", input.show, !_server_guard($scope0_reason, 2)), $fg__input_flag && _client_guard($scope0_reason, 4) && _patch_write($scope0_id, "xe", input.flag, !_server_guard($scope0_reason, 3)), $fg__input_x && _client_guard($scope0_reason, 3) && _patch_write($scope0_id, "xf", input.x, !_server_guard($scope0_reason, 4)));
 });
 
 // template.marko

@@ -27,7 +27,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				return 0;
 			}
 		}, $scope2_id, "#text/0", 1, $wg__isOpen, 1, 0, 0, ["__tests__/template.marko_3*shell"], $scope2_reason, 0);
-		_client_guard($scope2_reason, 0) && _patch_write($scope2_id, "PatchWrite:label", label, 1);
+		_unfilled_if($scope2_reason, 0) && _patch_write($scope2_id, "PatchWrite:label", label, 1);
 		_write_if($scope2_reason, 0) && _scope($scope2_id, { label: (_unfilled_if($scope2_reason, 0) || _unfilled_if($scope2_reason, 1)) && label }, "__tests__/template.marko", "2:2", { label: "2:25" });
 	}, $scope0_id) };
 	const Wrap = { content: _content("__tests__/template.marko_4*content", ({ show, content }) => {

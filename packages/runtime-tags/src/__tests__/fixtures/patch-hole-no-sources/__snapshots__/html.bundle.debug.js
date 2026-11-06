@@ -29,6 +29,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_html(`<b>${_text_mark($scope3_id, "#text/0", name, 1, 0, 0)}</b>`);
 				_scope($scope3_id, {}, "__tests__/template.marko", "10:6");
 			}, 0, $scope1_id, "#text/2", 1, 1, 1, 0, 0, "__tests__/template.marko_3*shell", 0, 0);
+			!_client_guard($scope0_reason, 1) && _unfilled_if() && _patch_write($scope0_id, "PatchWrite:label", label);
 			_scope($scope1_id, {}, "__tests__/template.marko", "8:4");
 			return 0;
 		}

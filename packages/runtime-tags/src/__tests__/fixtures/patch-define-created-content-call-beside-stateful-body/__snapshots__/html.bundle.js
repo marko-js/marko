@@ -24,7 +24,7 @@ var template_default = _template("a", (input) => {
 				return 0;
 			}
 		}, $scope2_id, "a", 1, $wg__isOpen, 1, 0, 0, ["a1"], $scope2_reason, 0);
-		_client_guard($scope2_reason, 0) && _patch_write($scope2_id, "we", label, 1);
+		_unfilled_if($scope2_reason, 0) && _patch_write($scope2_id, "we", label, 1);
 		_write_if($scope2_reason, 0) && _scope($scope2_id, { e: (_unfilled_if($scope2_reason, 0) || _unfilled_if($scope2_reason, 1)) && label });
 	}, $scope0_id) };
 	const Wrap = { content: _content("a5", ({ show, content }) => {

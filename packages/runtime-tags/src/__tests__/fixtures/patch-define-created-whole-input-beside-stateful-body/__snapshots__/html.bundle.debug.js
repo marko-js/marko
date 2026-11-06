@@ -30,7 +30,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				return 0;
 			}
 		}, $scope1_id, "#text/0", 1, $wg__attrs_isOpen, 1, 0, 0, ["__tests__/template.marko_3*shell"], $scope1_reason, 1);
-		_client_guard($scope1_reason, 1) && _patch_write($scope1_id, "PatchWrite:attrs_item", attrs?.item, 1);
+		_unfilled_if($scope1_reason, 1) && _patch_write($scope1_id, "PatchWrite:attrs_item", attrs?.item, 1);
 		_write_if($scope1_reason, 1) && _scope($scope1_id, { attrs_item: _unfilled_if($scope1_reason, 1) && attrs?.item }, "__tests__/template.marko", "2:2", { attrs_item: ["attrs.item", "2:15"] });
 	}, $scope0_id) };
 	_if(() => {

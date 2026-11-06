@@ -42,6 +42,8 @@ var template_default = _template("a", (input) => {
 			label: tag,
 			content: Label
 		}, 9, 0, 0, $wg__input_tags__OR__input_card, $scope0_reason, 0, 0, void 0, 0, 0, "a2");
+		!$cg__input_tags__OR__input_card && _unfilled_if() && _patch_write($scope0_id, "wi", Card);
+		!$cg__input_tags__OR__input_card && _unfilled_if() && _patch_write($scope0_id, "wk", Label);
 		_patch_render($scope2_id, "a5", [_filled_guard($scope0_reason, 3) && ">h", _filled_guard($scope0_reason, 2) && "c"], $scope0_reason, 0);
 		_write_if($scope0_reason, 0) && _scope($scope2_id, {
 			c: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 0)) && tag,

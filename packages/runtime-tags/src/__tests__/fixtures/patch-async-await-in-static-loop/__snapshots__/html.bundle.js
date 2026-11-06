@@ -14,10 +14,11 @@ var template_default = _template("a", (input) => {
 		_await($scope1_id, "a", input.p, (value) => {
 			const $scope2_id = _scope_id();
 			_html(`<em>${_text_mark($scope2_id, "a", value + n, 1, $scope0_reason, 0)}</em>`);
+			!$cg__input_p && _unfilled_if() && _patch_write($scope1_id, "wc", n);
 			$cg__input_p && _patch_render($scope2_id, "a0");
 			_scope($scope2_id, {});
 		}, 1, "a1", _unfilled_if($scope0_reason, 0) && 3);
-		$cg__input_p && _patch_write($scope1_id, "wc", n, 1);
+		_unfilled_if($scope0_reason, 0) && _patch_write($scope1_id, "wc", n, 1);
 		$cg__input_p && _patch_render($scope1_id, "a4");
 		_write_if($scope0_reason, 0) && _scope($scope1_id, {
 			c: _unfilled_if($scope0_reason, 0) && n,

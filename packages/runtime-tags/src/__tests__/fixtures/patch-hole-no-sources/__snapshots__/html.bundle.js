@@ -26,6 +26,7 @@ var template_default = _template("a", (input) => {
 				_html(`<b>${_text_mark($scope3_id, "a", name, 1, 0, 0)}</b>`);
 				_scope($scope3_id, {});
 			}, 0, $scope1_id, "c", 1, 1, 1, 0, 0, "a2", 0, 0);
+			!_client_guard($scope0_reason, 1) && _unfilled_if() && _patch_write($scope0_id, "wj", label);
 			_scope($scope1_id, {});
 			return 0;
 		}

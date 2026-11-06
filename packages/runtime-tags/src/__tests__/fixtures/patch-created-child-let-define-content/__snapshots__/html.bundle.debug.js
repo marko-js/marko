@@ -41,6 +41,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $childScope = _peek_scope_id($scope2_id, "#childScope/0", 0);
 			card_default({ content: Body.content });
 			_patch_child_end();
+			!_client_guard($scope0_reason, 2) && _unfilled_if() && _patch_write($scope0_id, "PatchWrite:Body_content", Body?.content);
 			_scope($scope2_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "2:2");
 			return 0;
 		}

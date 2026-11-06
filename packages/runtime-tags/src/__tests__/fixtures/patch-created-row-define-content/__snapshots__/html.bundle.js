@@ -27,7 +27,7 @@ var template_default = _template("a", (input) => {
 			}
 		}, $scope1_id, "b", 1, _write_guard($scope1_reason, 1), 1, 0, 0, ["a0"], $scope1_reason, 1);
 		_html("</p>");
-		_client_guard($scope1_reason, 1) && _patch_write($scope1_id, "wf", content, 1);
+		_unfilled_if($scope1_reason, 1) && _patch_write($scope1_id, "wf", content, 1);
 		_scope($scope1_id, { f: _unfilled_if($scope1_reason, 1) && content });
 	}, $scope0_id) };
 	_for_of(input.rows, (row) => {
@@ -77,12 +77,15 @@ var template_default = _template("a", (input) => {
 				label: tag,
 				content: Label
 			}, 25, 0, 0, $wg__input_rows, $scope0_reason, 0, 0, void 0, 0, 0, "a3");
+			!$cg__input_rows && _unfilled_if() && _patch_write($scope0_id, "we", Card);
+			!$cg__input_rows && _unfilled_if() && _patch_write($scope2_id, "wm", Label);
 			$cg__input_rows && _patch_render($scope3_id, "a10");
 			$wi__input_rows && _scope($scope3_id, { _: _scope_with_id($scope2_id) });
 		}, 0, $scope2_id, "e", 1, 1, 1, 0, 0, "a6", $scope0_reason, 0);
 		_html("</section>");
 		_script($scope2_id, "a11");
-		$cg__input_rows && _patch_write($scope2_id, "wm", Label, 1);
+		_unfilled_if($scope0_reason, 0) && _patch_write($scope2_id, "wm", Label, 1);
+		!$cg__input_rows && _unfilled_if() && _patch_write($scope0_id, "we", Card);
 		_filled_guard($scope0_reason, 0) && _patch_subscribers($scope2_id, "a12", "h");
 		$cg__input_rows && _patch_render($scope2_id, "a13");
 		_patch_fill($scope2_id, "va14", n, 1);

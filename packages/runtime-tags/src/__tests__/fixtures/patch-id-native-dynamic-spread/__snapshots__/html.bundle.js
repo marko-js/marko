@@ -5,7 +5,7 @@ _shells({
 	a2: "a2;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_items = _write_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_items = _write_guard($scope0_reason, 0), $cg__input_items = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const Body = { content: _content_resume("a0", () => {
 		const $scope1_id = _scope_id();
@@ -18,7 +18,8 @@ var template_default = _template("a", (input) => {
 		const $scope2_id = _scope_id();
 		const Tag = item.on ? "p" : "div";
 		_dynamic_tag($scope2_id, "a", Tag, { content: Body }, 1, 0, 0, $wg__input_items, $scope0_reason, 0);
-		_client_guard($scope0_reason, 0) && _patch_render($scope2_id, "a1");
+		!$cg__input_items && _unfilled_if() && _patch_write($scope0_id, "we", Body);
+		$cg__input_items && _patch_render($scope2_id, "a1");
 		_write_if($scope0_reason, 0) && _scope($scope2_id, { _: _scope_with_id($scope0_id) });
 	}, 0, $scope0_id, "a", 1, 1, 1, 0, 0, "a2", $scope0_reason, 0);
 	_scope($scope0_id, { e: _unfilled_if($scope0_reason, 0) && Body });

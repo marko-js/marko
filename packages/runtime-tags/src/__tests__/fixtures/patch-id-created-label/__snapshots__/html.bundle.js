@@ -34,11 +34,12 @@ var template_default = _template("a", (input) => {
 			if (input.show) {
 				const $scope2_id = _scope_id();
 				_html(`<label${_attr("for", uid, $scope2_id, "aa$for", 0, 0)}>${_text_mark($scope2_id, "b", item.key, 1, $scope0_reason, 2)}</label>${_el_mark($scope2_id, "a", 0)}`);
+				!$cg__input_show && _unfilled_if() && _patch_write($scope1_id, "wd", uid);
 				_scope($scope2_id, {});
 				return 0;
 			}
 		}, $scope1_id, "b", 1, _write_guard($scope0_reason, 3), 1, 0, 0, ["a0"], $scope0_reason, 3);
-		$cg__input_show && _patch_write($scope1_id, "wd", uid, 1);
+		_unfilled_if($scope0_reason, 3) && _patch_write($scope1_id, "wd", uid, 1);
 		$cg__input_show && _patch_render($scope1_id, "a6");
 		_scope($scope1_id, {
 			M: _unfilled_if($scope0_reason, 3) && item?.key,
@@ -55,6 +56,7 @@ var template_default = _template("a", (input) => {
 			if (show) {
 				const $scope4_id = _scope_id();
 				_html(`<label${_attr("for", uid, $scope4_id, "aa$for", 0, 0)}>field</label>${_el_mark($scope4_id, "a", 0)}`);
+				_unfilled_if() && _patch_write($scope3_id, "wf", uid);
 				_scope($scope4_id, {});
 				return 0;
 			}

@@ -30,6 +30,7 @@ var template_default = _template("a", (input) => {
 				label: input.label
 			});
 			_patch_child_end();
+			!_client_guard($scope0_reason, 0) && _unfilled_if() && _patch_write($scope0_id, "wf", k);
 			_client_guard($scope0_reason, 2) && _patch_render($scope1_id, "a0");
 			_scope($scope1_id, {
 				_: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id),

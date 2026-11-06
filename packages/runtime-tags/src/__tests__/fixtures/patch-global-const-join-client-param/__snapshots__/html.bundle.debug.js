@@ -7,7 +7,7 @@ _shells({
 	"__tests__/tags/gate.marko_1*shell": "__tests__/tags/gate.marko_1*shell,<b>shown</b>"
 });
 var gate_default = _template("__tests__/tags/gate.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $cg__input_on = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
 	const flag = $global$1.flag;
@@ -21,7 +21,7 @@ var gate_default = _template("__tests__/tags/gate.marko", (input) => {
 	}, $scope0_id, "#text/0", 1, $scope0_page || _write_guard($scope0_reason, 0), 1, 0, 0, ["__tests__/tags/gate.marko_1*shell"], (2 | _updates_from($scope0_reason, 0)) << 1, 0);
 	_html(`<p>${_text_mark($scope0_id, "#text/1", flag && input.on ? "on" : "off", 1, (2 | _updates_from($scope0_reason, 0)) << 1, 0)}</p>`);
 	_fill_global_subscribe("__tests__/tags/gate.marko_0_$global_flag#5", $scope0_id);
-	$cg__input_on && _patch_write($scope0_id, "PatchWrite:input_on", input.on, 1);
+	_unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "PatchWrite:input_on", input.on, 1);
 	_patch_render($scope0_id, "__tests__/tags/gate.marko_0_input_on#4_flag#5/setup", [_filled_guard($scope0_reason, 0) && "input_on", "flag"], (2 | _updates_from($scope0_reason, 0)) << 1, 0);
 	_scope($scope0_id, {
 		input_on: _unfilled_if($scope0_reason, 0) && input.on,
@@ -29,7 +29,7 @@ var gate_default = _template("__tests__/tags/gate.marko", (input) => {
 	}, "__tests__/tags/gate.marko", 0, {
 		input_on: ["input.on"],
 		flag: "1:8"
-	}) || $cg__input_on && _patch_write($scope0_id, "PatchMarkedWrite:flag", flag);
+	}) || _client_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:flag", flag);
 });
 
 // template.marko

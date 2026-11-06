@@ -8,7 +8,7 @@ _shells({
 	"__tests__/tags/child.marko_1*shell": "__tests__/tags/child.marko_1*shell; ;<section></section>"
 });
 var child_default = _template("__tests__/tags/child.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_mode = _client_guard($scope0_reason, 7), $wi__input_show__OR__input_a__OR__input_b__OR__input_mode = _write_if($scope0_reason, 3), $wg__input_show = _write_guard($scope0_reason, 4), $fg__input_a = _filled_guard($scope0_reason, 5), $fg__input_b = _filled_guard($scope0_reason, 6), $fg__input_mode = _filled_guard($scope0_reason, 7), $cg__input_show = _client_guard($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $wi__input_show__OR__input_a__OR__input_b__OR__input_mode = _write_if($scope0_reason, 3), $wg__input_show = _write_guard($scope0_reason, 4), $fg__input_a = _filled_guard($scope0_reason, 5), $fg__input_b = _filled_guard($scope0_reason, 6), $fg__input_mode = _filled_guard($scope0_reason, 7), $cg__input_show = _client_guard($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	const $input_a__closures = new Set();
 	const $input_b__closures = new Set();
@@ -27,8 +27,8 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 			_html("<section>");
 			_attr_content("#section/0", $scope1_id, input.mode ? frag.content : null, 0, 1, $scope0_reason, 7);
 			_html(`</section>${_el_mark($scope1_id, "#section/0", _updates_from($scope0_reason, 7))}`);
-			$cg__input_mode && _patch_write($scope1_id, "PatchWrite:frag_content", frag?.content, 1);
-			$cg__input_mode && _patch_render($scope1_id, "__tests__/tags/child.marko_1_input_mode#0:6_frag_content#2/setup");
+			_unfilled_if($scope0_reason, 7) && _patch_write($scope1_id, "PatchWrite:frag_content", frag?.content, 1);
+			_client_guard($scope0_reason, 7) && _patch_render($scope1_id, "__tests__/tags/child.marko_1_input_mode#0:6_frag_content#2/setup");
 			_scope($scope1_id, {
 				frag_content: _unfilled_if($scope0_reason, 7) && frag?.content,
 				_: $wi__input_show__OR__input_a__OR__input_b__OR__input_mode && _scope_with_id($scope0_id)

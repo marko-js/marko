@@ -47,7 +47,7 @@ _shells({
 	a5: `a5${_shell_marker([["a12"], []], ["a>", $setup])};${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c")};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template)}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 1), $fg__input_alt = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 2), $wi__input_label = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 1), $cg__input_show__OR__input_alt = _client_guard($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 1), $fg__input_alt = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 2), $wi__input_label = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	let count = 0;
@@ -79,6 +79,8 @@ var template_default = _template("a", (input) => {
 				content: input.alt ? A : B
 			});
 			_patch_child_end();
+			!$cg__input_show__OR__input_alt && _unfilled_if() && _patch_write($scope0_id, "wj", A);
+			!$cg__input_show__OR__input_alt && _unfilled_if() && _patch_write($scope0_id, "wk", B);
 			_client_guard($scope0_reason, 3) && _patch_render($scope3_id, "a4");
 			_scope($scope3_id, {
 				_: _scope_with_id($scope0_id),

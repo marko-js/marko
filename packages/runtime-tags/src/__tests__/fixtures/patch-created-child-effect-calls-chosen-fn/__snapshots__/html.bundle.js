@@ -16,7 +16,7 @@ _shells({
 	a4: `a4${_shell_marker([[], []], ["a>", $setup])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)("D l")};${$template}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_show = _client_guard($scope0_reason, 2), $fg__input_x = _filled_guard($scope0_reason, 3), $fg__input_pick = _filled_guard($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $cg__input_show__OR__input_pick = _client_guard($scope0_reason, 0), $cg__input_show = _client_guard($scope0_reason, 2), $fg__input_x = _filled_guard($scope0_reason, 3), $fg__input_pick = _filled_guard($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	let flag = 0;
 	const fa = _resume(function() {
@@ -40,6 +40,8 @@ var template_default = _template("a", (input) => {
 				fn: input.pick ? fa : fb
 			});
 			_patch_child_end();
+			!$cg__input_show__OR__input_pick && _unfilled_if() && _patch_write($scope0_id, "wi", fa);
+			!$cg__input_show__OR__input_pick && _unfilled_if() && _patch_write($scope0_id, "wj", fb);
 			_client_guard($scope0_reason, 3) && _patch_render($scope1_id, "a2");
 			_client_guard($scope0_reason, 4) && _patch_render($scope1_id, "a3");
 			_scope($scope1_id, {

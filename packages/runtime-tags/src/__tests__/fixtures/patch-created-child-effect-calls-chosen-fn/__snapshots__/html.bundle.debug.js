@@ -20,7 +20,7 @@ _shells({
 	"__tests__/template.marko_1*shell": `__tests__/template.marko_1*shell${_shell_marker([[], []], ["#childScope/0>", $setup$1])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)("D l")};${$template$1}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_show = _client_guard($scope0_reason, 2), $fg__input_x = _filled_guard($scope0_reason, 3), $fg__input_pick = _filled_guard($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $cg__input_show__OR__input_pick = _client_guard($scope0_reason, 0), $cg__input_show = _client_guard($scope0_reason, 2), $fg__input_x = _filled_guard($scope0_reason, 3), $fg__input_pick = _filled_guard($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	let flag = 0;
 	const fa = _resume(function() {
@@ -44,6 +44,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				fn: input.pick ? fa : fb
 			});
 			_patch_child_end();
+			!$cg__input_show__OR__input_pick && _unfilled_if() && _patch_write($scope0_id, "PatchWrite:fa", fa);
+			!$cg__input_show__OR__input_pick && _unfilled_if() && _patch_write($scope0_id, "PatchWrite:fb", fb);
 			_client_guard($scope0_reason, 3) && _patch_render($scope1_id, "__tests__/template.marko_1_input_x#0:5/setup");
 			_client_guard($scope0_reason, 4) && _patch_render($scope1_id, "__tests__/template.marko_1_input_pick#0:6_fa#0:8_fb#0:9/setup");
 			_scope($scope1_id, {

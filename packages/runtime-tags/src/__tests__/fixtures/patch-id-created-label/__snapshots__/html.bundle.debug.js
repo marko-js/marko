@@ -37,11 +37,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			if (input.show) {
 				const $scope2_id = _scope_id();
 				_html(`<label${_attr("for", uid, $scope2_id, "PatchAttr:#label/0 for", 0, 0)}>${_text_mark($scope2_id, "#text/1", item.key, 1, $scope0_reason, 2)}</label>${_el_mark($scope2_id, "#label/0", 0)}`);
+				!$cg__input_show && _unfilled_if() && _patch_write($scope1_id, "PatchWrite:uid", uid);
 				_scope($scope2_id, {}, "__tests__/template.marko", "4:4");
 				return 0;
 			}
 		}, $scope1_id, "#text/1", 1, _write_guard($scope0_reason, 3), 1, 0, 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 3);
-		$cg__input_show && _patch_write($scope1_id, "PatchWrite:uid", uid, 1);
+		_unfilled_if($scope0_reason, 3) && _patch_write($scope1_id, "PatchWrite:uid", uid, 1);
 		$cg__input_show && _patch_render($scope1_id, "__tests__/template.marko_1_input_show#0:7/setup");
 		_scope($scope1_id, {
 			"#LoopKey": _unfilled_if($scope0_reason, 3) && item?.key,
@@ -61,6 +62,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			if (show) {
 				const $scope4_id = _scope_id();
 				_html(`<label${_attr("for", uid, $scope4_id, "PatchAttr:#label/0 for", 0, 0)}>field</label>${_el_mark($scope4_id, "#label/0", 0)}`);
+				_unfilled_if() && _patch_write($scope3_id, "PatchWrite:uid", uid);
 				_scope($scope4_id, {}, "__tests__/template.marko", "9:4");
 				return 0;
 			}

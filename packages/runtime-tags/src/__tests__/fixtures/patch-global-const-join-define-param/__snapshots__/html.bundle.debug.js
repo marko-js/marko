@@ -13,7 +13,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(`<button>toggle</button>${_el_mark($scope0_id, "#button/0")}`);
 	const Show = { content: _content("__tests__/template.marko_1*content", ({ v }) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason(), $scope1_page = _page_render(), $wg__v = _write_guard($scope1_reason, 0), $cg__v = _client_guard($scope1_reason, 0);
+		const $scope1_reason = _scope_reason(), $scope1_page = _page_render(), $wg__v = _write_guard($scope1_reason, 0);
 		const flag = $global$1.flag;
 		_if(() => {
 			if (flag && v) {
@@ -24,7 +24,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}
 		}, $scope1_id, "#text/0", $scope1_page || $wg__v, $scope1_page || $wg__v, 0, 0, 1);
 		_fill_global_subscribe("__tests__/template.marko_1_$global_flag#0:10", $scope1_id);
-		$cg__v && _patch_write($scope1_id, "PatchWrite:v", v, 1);
+		_unfilled_if($scope1_reason, 0) && _patch_write($scope1_id, "PatchWrite:v", v, 1);
 		_patch_render($scope1_id, "__tests__/template.marko_1_v#3_flag#4/setup", [_filled_guard($scope1_reason, 0) && "v", "flag"], 6, 0);
 		_scope($scope1_id, {
 			v: _unfilled_if($scope1_reason, 0) && v,
@@ -32,7 +32,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, "__tests__/template.marko", "3:2", {
 			v: "3:16",
 			flag: "4:10"
-		}) || $cg__v && _patch_write($scope1_id, "PatchMarkedWrite:flag", flag);
+		}) || _client_guard($scope1_reason, 0) && _patch_write($scope1_id, "PatchMarkedWrite:flag", flag);
 	}, $scope0_id) };
 	_set_scope_reason(2);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/1", 0);

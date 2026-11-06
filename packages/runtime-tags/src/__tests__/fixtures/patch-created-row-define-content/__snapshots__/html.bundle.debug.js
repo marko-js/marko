@@ -30,7 +30,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}
 		}, $scope1_id, "#text/1", 1, _write_guard($scope1_reason, 1), 1, 0, 0, ["__tests__/template.marko_4*shell"], $scope1_reason, 1);
 		_html("</p>");
-		_client_guard($scope1_reason, 1) && _patch_write($scope1_id, "PatchWrite:content", content, 1);
+		_unfilled_if($scope1_reason, 1) && _patch_write($scope1_id, "PatchWrite:content", content, 1);
 		_scope($scope1_id, { content: _unfilled_if($scope1_reason, 1) && content }, "__tests__/template.marko", "1:2", { content: "1:23" });
 	}, $scope0_id) };
 	_for_of(input.rows, (row) => {
@@ -80,12 +80,15 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				label: tag,
 				content: Label
 			}, 25, 0, 0, $wg__input_rows, $scope0_reason, 0, 0, void 0, 0, 0, "__tests__/template.marko_5*content");
+			!$cg__input_rows && _unfilled_if() && _patch_write($scope0_id, "PatchWrite:Card", Card);
+			!$cg__input_rows && _unfilled_if() && _patch_write($scope2_id, "PatchWrite:Label", Label);
 			$cg__input_rows && _patch_render($scope3_id, "__tests__/template.marko_3_Card#0:4_row_card#2:8_Label#2:12_tag#2/setup");
 			$wi__input_rows && _scope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "11:6");
 		}, 0, $scope2_id, "#text/4", 1, 1, 1, 0, 0, "__tests__/template.marko_3*shell", $scope0_reason, 0);
 		_html("</section>");
 		_script($scope2_id, "__tests__/template.marko_2");
-		$cg__input_rows && _patch_write($scope2_id, "PatchWrite:Label", Label, 1);
+		_unfilled_if($scope0_reason, 0) && _patch_write($scope2_id, "PatchWrite:Label", Label, 1);
+		!$cg__input_rows && _unfilled_if() && _patch_write($scope0_id, "PatchWrite:Card", Card);
 		_filled_guard($scope0_reason, 0) && _patch_subscribers($scope2_id, "__tests__/template.marko_2_row_label#7/subscribers", "row_label");
 		$cg__input_rows && _patch_render($scope2_id, "__tests__/template.marko_2_Card#0:4_row_card#8/setup");
 		_patch_fill($scope2_id, "PatchFill:__tests__/template.marko_fill0", n, 1);

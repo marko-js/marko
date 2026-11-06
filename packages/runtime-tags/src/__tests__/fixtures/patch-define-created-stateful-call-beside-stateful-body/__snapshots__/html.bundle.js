@@ -54,7 +54,7 @@ var template_default = _template("a", (input) => {
 				return 0;
 			}
 		}, $scope3_id, "b", 1, $wg__on, 1, 0, 0, ["a3"], $scope3_reason, 0);
-		_client_guard($scope3_reason, 0) && _patch_write($scope3_id, "wf", label, 1);
+		_unfilled_if($scope3_reason, 0) && _patch_write($scope3_id, "wf", label, 1);
 		_scope($scope3_id, {
 			f: (_unfilled_if($scope3_reason, 0) || _unfilled_if($scope3_reason, 1)) && label,
 			a: _existing_scope($childScope)

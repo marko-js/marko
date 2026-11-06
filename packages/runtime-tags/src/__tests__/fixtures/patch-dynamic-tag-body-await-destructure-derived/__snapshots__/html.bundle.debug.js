@@ -47,7 +47,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 		_filled_guard($scope0_reason, 1) && $cg__input && _patch_write($scope1_id, "PatchMarkedWrite:x", x, !_server_guard($scope0_reason, 1));
 		const { content: c } = x ? input : {};
 		_dynamic_tag($scope1_id, "#text/0", x ? keeper_default : "div", { content: c }, 1, 0, 0, $wg__input, $scope0_reason, 0);
-		_client_guard($scope0_reason, 1) && _patch_write($scope1_id, "PatchWrite:c", c, 1);
+		_unfilled_if($scope0_reason, 1) && _patch_write($scope1_id, "PatchWrite:c", c, 1);
 		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "__tests__/tags/card.marko_1_input#0:2/subscribe");
 		_patch_render($scope1_id, "__tests__/tags/card.marko_1_input#0:2_x#2/setup", [_filled_guard($scope0_reason, 0) && ">input", _filled_guard($scope0_reason, 1) && "x"], $scope0_reason, 0);
 		_patch_render($scope1_id, "__tests__/tags/card.marko_1_x#2_c#5/setup", [_filled_guard($scope0_reason, 1) && "x", _filled_guard($scope0_reason, 0) && "c"], $scope0_reason, 0);

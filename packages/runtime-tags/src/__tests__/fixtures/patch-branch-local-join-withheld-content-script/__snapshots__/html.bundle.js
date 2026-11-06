@@ -7,7 +7,7 @@ _shells({
 	b8: "b8; b ;<div></div><section></section>"
 });
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_mode = _client_guard($scope0_reason, 6), $wi__input_show__OR__input_b__OR__input_a__OR__input_mode = _write_if($scope0_reason, 2), $wg__input_show = _write_guard($scope0_reason, 3), $sg__input_b = _server_guard($scope0_reason, 4), $cg__input_show = _client_guard($scope0_reason, 3), $fg__input_b = _filled_guard($scope0_reason, 4), $fg__input_a = _filled_guard($scope0_reason, 5), $fg__input_mode = _filled_guard($scope0_reason, 6);
+	const $scope0_reason = _scope_reason(), $wi__input_show__OR__input_b__OR__input_a__OR__input_mode = _write_if($scope0_reason, 2), $wg__input_show = _write_guard($scope0_reason, 3), $sg__input_b = _server_guard($scope0_reason, 4), $cg__input_show = _client_guard($scope0_reason, 3), $fg__input_b = _filled_guard($scope0_reason, 4), $fg__input_a = _filled_guard($scope0_reason, 5), $fg__input_mode = _filled_guard($scope0_reason, 6);
 	const $scope0_id = _scope_id();
 	const $input_a__closures = /* @__PURE__ */ new Set();
 	_if(() => {
@@ -30,10 +30,10 @@ var child_default = _template("b", (input) => {
 			_attr_content("b", $scope1_id, input.mode ? frag.content : null, 0, 1, $scope0_reason, 6);
 			_html(`</section>${_el_mark($scope1_id, "b", _updates_from($scope0_reason, 6))}`);
 			_script($scope1_id, "b4", 1, _filled_guard($scope0_reason, 4), "c");
-			$cg__input_mode && _patch_write($scope1_id, "we", frag?.content, 1);
+			_unfilled_if($scope0_reason, 6) && _patch_write($scope1_id, "we", frag?.content, 1);
 			_filled_guard($scope0_reason, 4) && _patch_subscribers($scope1_id, "b5", "c");
 			_client_guard($scope0_reason, 4) && _patch_render($scope1_id, "b6");
-			$cg__input_mode && _patch_render($scope1_id, "b7");
+			_client_guard($scope0_reason, 6) && _patch_render($scope1_id, "b7");
 			_scope($scope1_id, {
 				c,
 				e: _unfilled_if($scope0_reason, 6) && frag?.content,

@@ -6,13 +6,13 @@ _shells({
 	b1: "b1;D ;<em> </em>"
 });
 var rows_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_for_of([1, 2], (x) => {
 		const $scope1_id = _scope_id();
 		_html(`<em>${_text_mark($scope1_id, "a", input.label + x, 1, $scope0_reason, 0)}</em>`);
-		$cg__input_label && _patch_write($scope1_id, "wc", x, 1);
-		$cg__input_label && _patch_render($scope1_id, "b0");
+		_unfilled_if($scope0_reason, 0) && _patch_write($scope1_id, "wc", x, 1);
+		_client_guard($scope0_reason, 0) && _patch_render($scope1_id, "b0");
 		_scope($scope1_id, {
 			c: _unfilled_if($scope0_reason, 0) && x,
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id)

@@ -60,7 +60,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				return 0;
 			}
 		}, $scope3_id, "#text/1", 1, $wg__on, 1, 0, 0, ["__tests__/template.marko_5*shell"], $scope3_reason, 0);
-		_client_guard($scope3_reason, 0) && _patch_write($scope3_id, "PatchWrite:label", label, 1);
+		_unfilled_if($scope3_reason, 0) && _patch_write($scope3_id, "PatchWrite:label", label, 1);
 		_scope($scope3_id, {
 			label: (_unfilled_if($scope3_reason, 0) || _unfilled_if($scope3_reason, 1)) && label,
 			"#childScope/0": _existing_scope($childScope)

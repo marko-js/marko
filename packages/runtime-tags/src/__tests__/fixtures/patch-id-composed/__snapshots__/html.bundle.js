@@ -41,6 +41,7 @@ var template_default = _template("a", (input) => {
 					headingId
 				});
 				_patch_child_end();
+				!_client_guard($scope0_reason, 0) && _unfilled_if() && _patch_write($scope0_id, "wg", headingId);
 				_scope($scope2_id, {
 					_: $wi__input_visible__OR__input_items && _scope_with_id($scope1_id),
 					a: _existing_scope($childScope),

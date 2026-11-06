@@ -17,7 +17,7 @@ _shells({
 	a1: "a1;D ;<em> </em>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 2), $wg__input_label = _write_guard($scope0_reason, 2), $fg__input_label = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_label = _write_guard($scope0_reason, 2), $cg__input_label = _client_guard($scope0_reason, 2), $fg__input_label = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	let open = true;
 	const Panel = { content: _content("a3", ({ isOpen, fmt, label }) => {
@@ -49,7 +49,7 @@ var template_default = _template("a", (input) => {
 			label: input.label + x
 		});
 		_patch_child_end();
-		$cg__input_label && _patch_write($scope1_id, "wc", x, 1);
+		_unfilled_if($scope0_reason, 2) && _patch_write($scope1_id, "wc", x, 1);
 		_client_guard($scope0_reason, 1) && _patch_render($scope1_id, "a6");
 		$cg__input_label && _patch_render($scope1_id, "a7");
 		_scope($scope1_id, {

@@ -27,7 +27,7 @@ var template_default = _template("a", (input) => {
 				return 0;
 			}
 		}, $scope1_id, "a", 1, $wg__attrs_isOpen, 1, 0, 0, ["a2"], $scope1_reason, 1);
-		_client_guard($scope1_reason, 1) && _patch_write($scope1_id, "we", attrs?.item, 1);
+		_unfilled_if($scope1_reason, 1) && _patch_write($scope1_id, "we", attrs?.item, 1);
 		_write_if($scope1_reason, 1) && _scope($scope1_id, { e: _unfilled_if($scope1_reason, 1) && attrs?.item });
 	}, $scope0_id) };
 	_if(() => {

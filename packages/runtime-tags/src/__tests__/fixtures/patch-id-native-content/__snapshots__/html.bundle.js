@@ -6,7 +6,7 @@ _shells({
 	a2: "a2; ;<section></section>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $cg__input_items = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const Body = { content: _content_resume("a0", () => {
 		const $scope1_id = _scope_id();
@@ -20,6 +20,7 @@ var template_default = _template("a", (input) => {
 		_html("<div>");
 		_attr_content("a", $scope2_id, Body, 0, 1, 0, 0);
 		_html(`</div>${_el_mark($scope2_id, "a", 0)}`);
+		!$cg__input_items && _unfilled_if() && _patch_write($scope0_id, "wf", Body);
 		_scope($scope2_id, {});
 	}, 0, $scope0_id, "a", 1, 1, 1, 0, 0, "a1", $scope0_reason, 0);
 	_for_of(input.items, (item) => {
@@ -27,6 +28,7 @@ var template_default = _template("a", (input) => {
 		_html("<section>");
 		_attr_content("a", $scope3_id, Body, 1, 1, 0, 0);
 		_html(`</section>${_el_mark($scope3_id, "a", 0)}`);
+		!$cg__input_items && _unfilled_if() && _patch_write($scope0_id, "wf", Body);
 		_scope($scope3_id, {});
 	}, 0, $scope0_id, "b", 1, 1, 1, 0, 0, "a2", $scope0_reason, 0);
 	_scope($scope0_id, { f: _unfilled_if($scope0_reason, 0) && Body });

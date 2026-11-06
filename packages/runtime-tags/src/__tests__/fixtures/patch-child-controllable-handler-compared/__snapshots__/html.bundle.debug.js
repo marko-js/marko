@@ -61,6 +61,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 			counter_default({ onCount });
 			_patch_child_end();
+			!_client_guard($scope0_reason, 1) && _unfilled_if() && _patch_write($scope0_id, "PatchWrite:onCount", onCount);
 			_scope($scope1_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "9:4");
 			return 0;
 		}

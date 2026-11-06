@@ -23,7 +23,7 @@ var template_default = _template("a", (input) => {
 				return 0;
 			}
 		}, $scope3_id, "a", 1, $wg__isOpen, 1, 0, 0, ["a1"], $scope3_reason, 0);
-		_client_guard($scope3_reason, 0) && _patch_write($scope3_id, "we", label, 1);
+		_unfilled_if($scope3_reason, 0) && _patch_write($scope3_id, "we", label, 1);
 		_write_if($scope3_reason, 0) && _scope($scope3_id, { e: (_unfilled_if($scope3_reason, 0) || _unfilled_if($scope3_reason, 1)) && label });
 	}, $scope0_id) };
 	_try($scope0_id, "a", () => {

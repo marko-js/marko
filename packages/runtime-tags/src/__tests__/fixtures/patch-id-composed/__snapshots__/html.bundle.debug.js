@@ -44,6 +44,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					headingId
 				});
 				_patch_child_end();
+				!_client_guard($scope0_reason, 0) && _unfilled_if() && _patch_write($scope0_id, "PatchWrite:headingId", headingId);
 				_scope($scope2_id, {
 					_: $wi__input_visible__OR__input_items && _scope_with_id($scope1_id),
 					"#childScope/0": _existing_scope($childScope),

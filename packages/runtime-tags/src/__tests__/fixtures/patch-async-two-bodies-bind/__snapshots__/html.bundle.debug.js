@@ -10,7 +10,7 @@ _shells({
 	"__tests__/template.marko": "__tests__/template.marko;D%b%;<main><!><!></main>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_second = _client_guard($scope0_reason, 1), $sg__input_second = _server_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $sg__input_second = _server_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_html("<main>");
 	_await($scope0_id, "#text/0", input.first, (first) => {
@@ -28,8 +28,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		};
 		_html(`<button${_attrs(attrs, "#button/0", $scope2_id, "button", 0, $scope0_reason, 1)}>${_text_mark($scope2_id, "#text/1", second, 1, $scope0_reason, 1)}</button>${_el_mark($scope2_id, "#button/0")}`);
 		_script($scope2_id, "__tests__/template.marko_2_attrs#6", 1, _filled_guard($scope0_reason, 1), "second");
-		$cg__input_second && _patch_write($scope2_id, "PatchWrite:handler", handler, 1);
-		$cg__input_second && _patch_render($scope2_id, "__tests__/template.marko_2_second#3_handler#4/setup");
+		_unfilled_if($scope0_reason, 1) && _patch_write($scope2_id, "PatchWrite:handler", handler, 1);
+		_client_guard($scope0_reason, 1) && _patch_render($scope2_id, "__tests__/template.marko_2_second#3_handler#4/setup");
 		_scope($scope2_id, {
 			second,
 			handler: _unfilled_if($scope0_reason, 1) && handler

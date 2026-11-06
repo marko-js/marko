@@ -20,7 +20,7 @@ _shells({
 	"__tests__/template.marko_4*shell": "__tests__/template.marko_4*shell;D ;<em> </em>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 2), $wg__input_label = _write_guard($scope0_reason, 2), $fg__input_label = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_label = _write_guard($scope0_reason, 2), $cg__input_label = _client_guard($scope0_reason, 2), $fg__input_label = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	let open = true;
 	const Panel = { content: _content("__tests__/template.marko_3*content", ({ isOpen, fmt, label }) => {
@@ -55,7 +55,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			label: input.label + x
 		});
 		_patch_child_end();
-		$cg__input_label && _patch_write($scope1_id, "PatchWrite:x", x, 1);
+		_unfilled_if($scope0_reason, 2) && _patch_write($scope1_id, "PatchWrite:x", x, 1);
 		_client_guard($scope0_reason, 1) && _patch_render($scope1_id, "__tests__/template.marko_1_input_open#0:5/setup");
 		$cg__input_label && _patch_render($scope1_id, "__tests__/template.marko_1_input_label#0:6_x#2/setup");
 		_scope($scope1_id, {
