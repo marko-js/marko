@@ -761,6 +761,20 @@ export function getDynamicClosureIndex(
   return index;
 }
 
+// The `<for>` bodies of its own section reading the closure before
+// `closureSection`, each rendering its rows in the slot after the last's.
+export function getForClosureIndex(closure: Binding, closureSection?: Section) {
+  let index = 0;
+  find(closure.closureSections, (section) => {
+    if (section === closureSection) return true;
+    if (section.branch?.kind === "for" && section.parent === closure.section) {
+      index++;
+    }
+    return false;
+  });
+  return index;
+}
+
 export function getDirectClosures(section: Section) {
   if (isOptionalBranch(section)) {
     return bindingUtil.range(

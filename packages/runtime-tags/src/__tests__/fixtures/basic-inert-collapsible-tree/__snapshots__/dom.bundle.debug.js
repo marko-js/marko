@@ -24,7 +24,7 @@ const $for_content__id = /*@__PURE__*/ _const("id", ($scope) => {
 	_attr($scope["#li/0"], "id", $scope.id);
 	$if_content__id($scope);
 });
-const $for_content__input_path = /*@__PURE__*/ _for_closure("#ul/0", ($scope) => $for_content__id($scope, `${$scope._.input_path || "c"}-${$scope["#LoopKey"]}`));
+const $for_content__input_path = /*@__PURE__*/ _for_closure("#ul/0", ($scope) => $for_content__id($scope, `${$scope._.input_path || "c"}-${$scope["#LoopKey"]}`), 5);
 const $for_content__open = /*@__PURE__*/ _let("open/12", ($scope) => {
 	_attr($scope["#li/0"], "hidden", !$scope.open);
 	_text($scope["#text/3"], $scope.open ? "[-]" : "[+]");

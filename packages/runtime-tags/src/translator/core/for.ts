@@ -44,6 +44,7 @@ import { replaceWithStatements } from "../util/replace-with-statements";
 import { callRuntime } from "../util/runtime";
 import { getScopeAccessorLiteral } from "../util/scope-accessor";
 import {
+  getForClosureIndex,
   getBranchRendererArgs,
   ensureSection,
   ensureBodySection,
@@ -251,13 +252,16 @@ export default {
         const nodeBinding = tagExtra.nodeBinding!;
         setClosureSignalBuilder(tag, (closure, render) => {
           if (!isForSelectorClosure(bodySection, closure)) {
-            return buildClosureHop(bodySection, render);
+            return buildClosureHop(bodySection, closure, render);
           }
           return callRuntime(
             "_for_selector",
             getScopeAccessorLiteral(nodeBinding, true),
             getScopeAccessorLiteral(closure, true),
             render,
+            t.numericLiteral(
+              closure.closureId! + getForClosureIndex(closure, bodySection),
+            ),
             getLoopRenderOrder(bodySection),
           );
         });

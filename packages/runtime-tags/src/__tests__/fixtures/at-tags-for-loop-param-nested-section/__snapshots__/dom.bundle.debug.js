@@ -14,7 +14,7 @@ const $template = /*@__PURE__*/ ((_w0, _w1) => `<button id=add>add</button><butt
 const $walks = /*@__PURE__*/ ((_w0, _w1) => ` b b b/${_w0}&/${_w1}&b`)("b%c", "b%c");
 const $if_content2__item_text = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => _text($scope["#text/0"], $scope._.item_text));
 const $if_content2__setup = $if_content2__item_text;
-const $for_content__i = /*@__PURE__*/ _for_closure("#text/2", ($scope) => _text($scope["#text/0"], $scope._.i));
+const $for_content__i = /*@__PURE__*/ _for_closure("#text/2", ($scope) => _text($scope["#text/0"], $scope._.i), 9);
 const $for_content__setup = ($scope) => {
 	$for_content__i._($scope);
 	_text($scope["#text/1"], $scope["#LoopKey"]);

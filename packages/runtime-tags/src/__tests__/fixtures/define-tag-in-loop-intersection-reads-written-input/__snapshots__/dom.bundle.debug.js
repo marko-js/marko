@@ -4,7 +4,7 @@ const $D_content__template = "<!>";
 const $template = "<!><!><!>";
 const $walks = "b%c";
 const $for_content__v__OR__i = /*@__PURE__*/ _or(3, ($scope) => $D_content__q($scope["#childScope/0"], $scope._.v + $scope.i));
-const $for_content__v = /*@__PURE__*/ _for_closure("#text/0", $for_content__v__OR__i);
+const $for_content__v = /*@__PURE__*/ _for_closure("#text/0", $for_content__v__OR__i, 6);
 const $for_content__setup = ($scope) => {
 	$for_content__v._($scope);
 	$scope["#childScope/0"]._ = $scope._;

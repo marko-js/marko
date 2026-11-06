@@ -17,11 +17,11 @@ var other_default = /*@__PURE__*/ _template("__tests__/tags/other.marko", "", ""
 // template.marko
 const $template = "<!><!><!>";
 const $walks = "b%c";
-const $for_content2__l = /*@__PURE__*/ _for_closure("#text/2", ($scope) => _text($scope["#text/0"], $scope._.l[$scope["#LoopKey"]].name), "#scopeOffset/1");
+const $for_content2__l = /*@__PURE__*/ _for_closure("#text/2", ($scope) => _text($scope["#text/0"], $scope._.l[$scope["#LoopKey"]].name), 10, "#scopeOffset/1");
 const $for_content2__setup = $for_content2__l;
 const $for_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", 0, ($_) => $for_content__r);
 const $for_content__useChild__OR__short = /*@__PURE__*/ _or(7, ($scope) => $for_content__dynamicTag($scope, $scope._.useChild ? child_default : other_default, ($_) => ({ v: $scope.short })));
-const $for_content__useChild = /*@__PURE__*/ _for_closure("#text/0", $for_content__useChild__OR__short);
+const $for_content__useChild = /*@__PURE__*/ _for_closure("#text/0", $for_content__useChild__OR__short, 2);
 const $for_content__l = /*@__PURE__*/ _let("l/4", ($scope) => {
 	$for_content__l_length($scope, $scope.l?.length);
 	$for_content2__l($scope);

@@ -33,7 +33,7 @@ const $for_content__c__script = _script("__tests__/tags/ui-select.marko_2_c#1:2"
 const $for_content__c = /*@__PURE__*/ _for_closure("#text/0", ($scope) => {
 	_attrs($scope, "#span/0", $scope._.c);
 	$for_content__c__script($scope);
-});
+}, 5);
 const $for_content__setup = $for_content__c;
 const $for_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
 const $for_content__$params = ($scope, $params3) => $for_content__dynamicTag($scope, $params3[0]?.content);

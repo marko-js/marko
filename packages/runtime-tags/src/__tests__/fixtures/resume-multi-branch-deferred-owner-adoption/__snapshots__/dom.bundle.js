@@ -23,7 +23,7 @@ const $for_content__show__OR__item = /*@__PURE__*/ _or(3, ($scope) => $input($sc
 	show: $scope._.f,
 	log: $log_getter($scope._)
 }));
-const $for_content__show = /*@__PURE__*/ _for_closure(3, $for_content__show__OR__item);
+const $for_content__show = /*@__PURE__*/ _for_closure(3, $for_content__show__OR__item, 6);
 const $for_content__setup = $for_content__show;
 const $for_content__item = /*@__PURE__*/ _const(2, $for_content__show__OR__item);
 const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);

@@ -26,7 +26,7 @@ var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $templ
 // template.marko
 const $template = "<button>Toggle</button><div></div><!><!>";
 const $walks = " b b%c";
-const $for_content__write = /*@__PURE__*/ _for_closure("#text/2", ($scope) => $write$1($scope["#childScope/0"], $scope._.write));
+const $for_content__write = /*@__PURE__*/ _for_closure("#text/2", ($scope) => $write$1($scope["#childScope/0"], $scope._.write), 5);
 const $for_content__setup = $for_content__write;
 const $for_content__$params = ($scope, $params2) => $name($scope["#childScope/0"], $params2[0]);
 const $for = /*@__PURE__*/ _for_of_unkeyed("#text/2", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D l"), $for_content__setup, $for_content__$params);

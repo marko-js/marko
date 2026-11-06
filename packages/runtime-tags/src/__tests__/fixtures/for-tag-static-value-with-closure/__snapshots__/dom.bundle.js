@@ -1,5 +1,5 @@
 // template.marko
-const $for_content__count = /*@__PURE__*/ _for_closure(0, ($scope) => _text($scope.b, $scope._.d));
+const $for_content__count = /*@__PURE__*/ _for_closure(0, ($scope) => _text($scope.b, $scope._.d), 4);
 const $count = /*@__PURE__*/ _let(3, ($scope) => {
 	_text($scope.c, $scope.d);
 	$for_content__count($scope);

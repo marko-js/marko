@@ -31,7 +31,7 @@ const $Label_content = _content("__tests__/template.marko_2*content", "<em><!> <
 _content_resume($Label_content);
 const $for_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $for_content__input_on__OR__Label = /*@__PURE__*/ _or(4, ($scope) => $for_content__dynamicTag($scope, $scope._.input_on ? card_default : "div", ($_) => ({ content: $scope.Label })));
-const $for_content__input_on = /*@__PURE__*/ _for_closure("#text/0", $for_content__input_on__OR__Label);
+const $for_content__input_on = /*@__PURE__*/ _for_closure("#text/0", $for_content__input_on__OR__Label, 7);
 const $for_content__Label = /*@__PURE__*/ _const("Label", $for_content__input_on__OR__Label);
 const $for_content__setup = ($scope) => {
 	$for_content__input_on._($scope);

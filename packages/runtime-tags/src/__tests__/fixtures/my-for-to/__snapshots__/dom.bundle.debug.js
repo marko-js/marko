@@ -4,7 +4,7 @@ const $walks$1 = "b%c";
 const $setup$1 = ($_) => {};
 const $for_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", 0, 0, 1);
 const $for_content__input_content__OR__args = /*@__PURE__*/ _or(2, ($scope) => $for_content__dynamicTag($scope, $scope._.input_content, ($_) => [...$scope.args]));
-const $for_content__input_content = /*@__PURE__*/ _for_closure("#text/0", $for_content__input_content__OR__args);
+const $for_content__input_content = /*@__PURE__*/ _for_closure("#text/0", $for_content__input_content__OR__args, 5);
 const $for_content__setup = $for_content__input_content;
 const $for_content__args = /*@__PURE__*/ _const("args", $for_content__input_content__OR__args);
 const $for = /*@__PURE__*/ _for_to_unkeyed("#text/0", "<!><!><!>", "b%", $for_content__setup, $for_content__args);

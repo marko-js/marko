@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<!><!><!>";
 const $walks = "b%c";
-const $for_content2__l = /*@__PURE__*/ _for_closure("#text/0", ($scope) => _text($scope["#text/0"], $scope._.l[$scope["#LoopKey"]].name));
+const $for_content2__l = /*@__PURE__*/ _for_closure("#text/0", ($scope) => _text($scope["#text/0"], $scope._.l[$scope["#LoopKey"]].name), 8);
 const $for_content2__setup = $for_content2__l;
 const $for_content__l = /*@__PURE__*/ _let("l/4", ($scope) => {
 	$for_content__l_length($scope, $scope.l?.length);

@@ -5,7 +5,7 @@ const $for_content__selected__OR__num = /*@__PURE__*/ _or(4, ($scope) => {
 	_attr($scope["#button/0"], "data-selected", $scope._.selected === $scope.num);
 	_attr($scope["#button/0"], "data-multiple", $scope.num % $scope._.selected === 0);
 });
-const $for_content__selected = /*@__PURE__*/ _for_closure("#text/0", $for_content__selected__OR__num);
+const $for_content__selected = /*@__PURE__*/ _for_closure("#text/0", $for_content__selected__OR__num, 2);
 const $for_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/0"], "click", function() {
 	$selected($scope._, $scope.num);
 }));

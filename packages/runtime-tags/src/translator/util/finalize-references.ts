@@ -63,6 +63,7 @@ import {
   setResolvedReads,
 } from "./references";
 import {
+  getForClosureIndex,
   forEachSection,
   getDirectClosures,
   isOptionalBranch,
@@ -460,7 +461,9 @@ export function allocateIds(
     forEach(bindings, (binding) => {
       if (binding.closureSections) {
         closureId = Math.max(closureId, nextId);
-        binding.closureId = closureId++;
+        binding.closureId = closureId;
+        // Each `<for>` body reading it renders its rows in one of these slots.
+        closureId += getForClosureIndex(binding) || 1;
       }
     });
     closureIdEnds.set(section, closureId);

@@ -2,7 +2,7 @@
 const $template = "<!><!><button>More</button>";
 const $walks = "b%b b";
 const $for_content__if = /*@__PURE__*/ _if("#text/0", "<div>b</div>");
-const $for_content__items_length = /*@__PURE__*/ _for_closure("#text/0", ($scope) => $for_content__if($scope, $scope._.items_length > 1 ? 0 : 1));
+const $for_content__items_length = /*@__PURE__*/ _for_closure("#text/0", ($scope) => $for_content__if($scope, $scope._.items_length > 1 ? 0 : 1), 5);
 const $for_content__setup = $for_content__items_length;
 const $itemId = /*@__PURE__*/ _let("itemId/2");
 const $for = /*@__PURE__*/ _for_of_unkeyed("#text/0", "<div>a</div><!><!>", "b%", $for_content__setup);
