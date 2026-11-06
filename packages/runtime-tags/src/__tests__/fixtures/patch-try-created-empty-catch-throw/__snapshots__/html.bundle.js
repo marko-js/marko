@@ -22,7 +22,7 @@ _shells({
 	a3: "a3;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_promise = _client_guard($scope0_reason, 2), $wi__input_show__OR__input_promise = _write_if($scope0_reason, 0), $wg__input_show = _write_guard($scope0_reason, 1), $fg__input_promise = _filled_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wi__input_show__OR__input_promise = _write_if($scope0_reason, 0), $wg__input_show = _write_guard($scope0_reason, 1), $fg__input_promise = _filled_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_promise__closures = /* @__PURE__ */ new Set();
 	_html("<main>");
@@ -40,11 +40,11 @@ var template_default = _template("a", (input) => {
 				const $childScope = _peek_scope_id($scope2_id, "b", 0);
 				counter_default({});
 				_patch_child_end();
-				_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope2_id, "a4", $cg__input_promise);
+				_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope2_id, "a4", 1);
 				_subscribe(_unfilled_if($scope0_reason, 2) && $input_promise__closures, _scope($scope2_id, {
 					_: $wi__input_show__OR__input_promise && _scope_with_id($scope1_id),
 					b: _existing_scope($childScope)
-				}), $cg__input_promise && "a4", 0);
+				}), _client_guard($scope0_reason, 2) && "a4", 0);
 				_resume_branch($scope2_id);
 			}, void 0, () => {}, 0, "a5", "a2");
 			$wi__input_show__OR__input_promise && _scope($scope1_id, { _: _scope_with_id($scope0_id) });

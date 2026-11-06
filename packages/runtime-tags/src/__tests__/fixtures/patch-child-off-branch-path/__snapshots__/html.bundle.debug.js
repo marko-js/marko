@@ -47,7 +47,7 @@ _shells({
 	"__tests__/tags/card.marko": "__tests__/tags/card.marko;b%b%;<!><!><!><!>"
 });
 var card_default = _template("__tests__/tags/card.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_label = _write_if($scope0_reason, 0), $cg__input_label = _client_guard($scope0_reason, 0), $cg__input_slow = _client_guard($scope0_reason, 1), $wi__input_slow = _write_if($scope0_reason, 1), $wg__input_other = _write_guard($scope0_reason, 2), $wi__input_other = _write_if($scope0_reason, 2), $cg__input_other = _client_guard($scope0_reason, 2), $wg__input_label = _write_guard($scope0_reason, 0), $cg__input_failing = _client_guard($scope0_reason, 3), $wi__input_failing = _write_if($scope0_reason, 3), $fg__input_label = _filled_guard($scope0_reason, 0), $fg__input_other = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wi__input_label = _write_if($scope0_reason, 0), $cg__input_label = _client_guard($scope0_reason, 0), $wi__input_slow = _write_if($scope0_reason, 1), $wg__input_other = _write_guard($scope0_reason, 2), $wi__input_other = _write_if($scope0_reason, 2), $cg__input_other = _client_guard($scope0_reason, 2), $wg__input_label = _write_guard($scope0_reason, 0), $wi__input_failing = _write_if($scope0_reason, 3), $fg__input_label = _filled_guard($scope0_reason, 0), $fg__input_other = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = new Set();
 	const $input_slow__closures = new Set();
@@ -61,8 +61,8 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 			_html(`<em>${_text_mark($scope5_id, "#text/0", v, 1, $scope0_reason, 1)}</em>`);
 			_scope($scope5_id, {}, "__tests__/tags/card.marko", "2:4");
 		}, 1, "__tests__/tags/card.marko_5*content", _unfilled_if($scope0_reason, 1) && 2, 1);
-		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope2_id, "__tests__/tags/card.marko_2_input_slow#0:5/subscribe", $cg__input_slow);
-		$wi__input_slow && _subscribe(_unfilled_if($scope0_reason, 1) && $input_slow__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/card.marko", "1:2"), $cg__input_slow && "__tests__/tags/card.marko_2_input_slow#0:5/subscribe", 0);
+		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope2_id, "__tests__/tags/card.marko_2_input_slow#0:5/subscribe", 1);
+		$wi__input_slow && _subscribe(_unfilled_if($scope0_reason, 1) && $input_slow__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/card.marko", "1:2"), _client_guard($scope0_reason, 1) && "__tests__/tags/card.marko_2_input_slow#0:5/subscribe", 0);
 		$wi__input_slow && _resume_branch($scope2_id);
 	}, () => {
 		const $scope1_reason = _scope_reason();
@@ -86,8 +86,8 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 			_html(`<em>${_text_mark($scope7_id, "#text/0", v, 1, $scope0_reason, 3)}</em>`);
 			_scope($scope7_id, {}, "__tests__/tags/card.marko", "10:4");
 		}, 1, "__tests__/tags/card.marko_7*content", _unfilled_if($scope0_reason, 3) && 2, 1);
-		_unfilled_if($scope0_reason, 3) && _patch_subscribe($scope4_id, "__tests__/tags/card.marko_4_input_failing#0:7/subscribe", $cg__input_failing);
-		$wi__input_failing && _subscribe(_unfilled_if($scope0_reason, 3) && $input_failing__closures, _scope($scope4_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/card.marko", "9:2"), $cg__input_failing && "__tests__/tags/card.marko_4_input_failing#0:7/subscribe", 0);
+		_unfilled_if($scope0_reason, 3) && _patch_subscribe($scope4_id, "__tests__/tags/card.marko_4_input_failing#0:7/subscribe", 1);
+		$wi__input_failing && _subscribe(_unfilled_if($scope0_reason, 3) && $input_failing__closures, _scope($scope4_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/card.marko", "9:2"), _client_guard($scope0_reason, 3) && "__tests__/tags/card.marko_4_input_failing#0:7/subscribe", 0);
 		$wi__input_failing && _resume_branch($scope4_id);
 	}, void 0, () => {
 		const $scope3_reason = _scope_reason();
@@ -136,7 +136,7 @@ _shells({
 	"__tests__/template.marko": `__tests__/template.marko${_shell_marker($setup)};${((_w0) => ` D l%b/${_w0}&b`)($walks$1)};${((_w0) => `<button> </button><!>${_w0}<!>`)($template$1)}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_slow = _client_guard($scope0_reason, 1), $wi__input_slow = _write_if($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 0), $wi__input_label = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wi__input_slow = _write_if($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 0), $wi__input_label = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = new Set();
 	const $n__closures = new Set();
@@ -153,8 +153,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_html(`<em>${_text_mark($scope3_id, "#text/0", v, 1, $scope0_reason, 1)}</em>`);
 			_scope($scope3_id, {}, "__tests__/template.marko", "5:4");
 		}, 1, "__tests__/template.marko_3*content", _unfilled_if($scope0_reason, 1) && 2, 1);
-		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope2_id, "__tests__/template.marko_2_input_slow#0:7/subscribe", $cg__input_slow);
-		$wi__input_slow && _subscribe(_unfilled_if($scope0_reason, 1) && $input_slow__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:2"), $cg__input_slow && "__tests__/template.marko_2_input_slow#0:7/subscribe", 0);
+		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope2_id, "__tests__/template.marko_2_input_slow#0:7/subscribe", 1);
+		$wi__input_slow && _subscribe(_unfilled_if($scope0_reason, 1) && $input_slow__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:2"), _client_guard($scope0_reason, 1) && "__tests__/template.marko_2_input_slow#0:7/subscribe", 0);
 		$wi__input_slow && _resume_branch($scope2_id);
 	}, () => {
 		const $scope1_reason = _scope_reason(), $scope1_page = _page_render();

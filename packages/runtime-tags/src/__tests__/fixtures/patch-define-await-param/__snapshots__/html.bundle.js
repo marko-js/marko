@@ -16,7 +16,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		const $Info_content__id__closures = /* @__PURE__ */ new Set();
 		const $Info_content__value__closures = /* @__PURE__ */ new Set();
-		const $scope1_reason = _scope_reason(), $wg__id = _write_guard($scope1_reason, 0), $wi__id = _write_if($scope1_reason, 0), $cg__id = _client_guard($scope1_reason, 0), $cg__value = _client_guard($scope1_reason, 1), $fg__id = _filled_guard($scope1_reason, 0);
+		const $scope1_reason = _scope_reason(), $wg__id = _write_guard($scope1_reason, 0), $wi__id = _write_if($scope1_reason, 0), $cg__id = _client_guard($scope1_reason, 0), $fg__id = _filled_guard($scope1_reason, 0);
 		_try($scope1_id, "a", () => {
 			_scope_reason();
 			const $scope2_id = _scope_id();
@@ -26,8 +26,8 @@ var template_default = _template("a", (input) => {
 				_unfilled_if($scope1_reason, 0) && _patch_subscribe($scope3_id, "a1", $cg__id);
 				_subscribe(_unfilled_if($scope1_reason, 0) && $Info_content__id__closures, _subscribe($count__closures, _scope($scope3_id, {}), "a2"), $cg__id && "a1");
 			}, 1, "a3", _unfilled_if($scope1_reason, 1));
-			_unfilled_if($scope1_reason, 1) && _patch_subscribe($scope2_id, "a6", $cg__value);
-			_subscribe(_unfilled_if($scope1_reason, 1) && $Info_content__value__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), $cg__value && "a6", 0);
+			_unfilled_if($scope1_reason, 1) && _patch_subscribe($scope2_id, "a6", 1);
+			_subscribe(_unfilled_if($scope1_reason, 1) && $Info_content__value__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), _client_guard($scope1_reason, 1) && "a6", 0);
 			_resume_branch($scope2_id);
 		}, () => {
 			_scope_reason();

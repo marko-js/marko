@@ -7,7 +7,7 @@ _shells({
 	a: "a !a8; D l%;<button> </button><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_promise = _client_guard($scope0_reason, 0), $wi__input_label = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wi__input_label = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	const $n__closures = /* @__PURE__ */ new Set();
@@ -24,8 +24,8 @@ var template_default = _template("a", (input) => {
 			_patch_render($scope2_id, "a1", _filled_guard($scope0_reason, 1) && ">>g");
 			_subscribe($n__closures, _subscribe($wi__input_label && $input_label__closures, _scope($scope2_id, {}), _client_guard($scope0_reason, 1) && "a0"), "a2");
 		}, 1, "a4", _unfilled_if($scope0_reason, 0) && 3, 1);
-		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "a7", $cg__input_promise);
-		_subscribe(_unfilled_if($scope0_reason, 0) && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), $cg__input_promise && "a7", 0);
+		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "a7", 1);
+		_subscribe(_unfilled_if($scope0_reason, 0) && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 0) && "a7", 0);
 		_resume_branch($scope1_id);
 	}, () => {
 		_scope_reason();

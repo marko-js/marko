@@ -9,7 +9,7 @@ _shells({
 	a: "a !a8;D%b ;<main><!><button>x</button></main>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_fast = _client_guard($scope0_reason, 1), $cg__input_slow = _client_guard($scope0_reason, 2), $wi__input_fast__OR__input_slow = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wi__input_fast__OR__input_slow = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_fast__closures = /* @__PURE__ */ new Set();
 	const $input_slow__closures = /* @__PURE__ */ new Set();
@@ -29,9 +29,9 @@ var template_default = _template("a", (input) => {
 			_scope($scope4_id, {});
 		}, 1, "a0", _unfilled_if($scope0_reason, 2) && 2, 1);
 		_html("</div>");
-		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "a6", $cg__input_fast);
-		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "a7", $cg__input_slow);
-		$wi__input_fast__OR__input_slow && _subscribe(_unfilled_if($scope0_reason, 2) && $input_slow__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_fast__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), $cg__input_fast && "a6", 0), $cg__input_slow && "a7", 0);
+		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "a6", 1);
+		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "a7", 1);
+		$wi__input_fast__OR__input_slow && _subscribe(_unfilled_if($scope0_reason, 2) && $input_slow__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_fast__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 1) && "a6", 0), _client_guard($scope0_reason, 2) && "a7", 0);
 		$wi__input_fast__OR__input_slow && _resume_branch($scope1_id);
 	}, () => {
 		_scope_reason();

@@ -12,7 +12,7 @@ _shells({
 	"__tests__/tags/show-await.marko": "__tests__/tags/show-await.marko;b%;<!><!><!>"
 });
 var show_await_default = _template("__tests__/tags/show-await.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_promise = _client_guard($scope0_reason, 1), $cg__input_other = _client_guard($scope0_reason, 2), $wi__input_promise__OR__input_other = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_promise = _client_guard($scope0_reason, 1), $wi__input_promise__OR__input_other = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_other__closures = new Set();
 	_await($scope0_id, "#text/0", input.promise, (x) => {
@@ -28,8 +28,8 @@ var show_await_default = _template("__tests__/tags/show-await.marko", (input) =>
 				_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope3_id, "__tests__/tags/show-await.marko_3_x#1:3/subscribe", $cg__input_promise);
 				_subscribe(_unfilled_if($scope0_reason, 1) && $await_content__x__closures, _scope($scope3_id, {}, "__tests__/tags/show-await.marko", "4:6"), $cg__input_promise && "__tests__/tags/show-await.marko_3_x#1:3/subscribe");
 			}, 1, "__tests__/tags/show-await.marko_3*content", _unfilled_if($scope0_reason, 2), 1);
-			_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope2_id, "__tests__/tags/show-await.marko_2_input_other#0:4/subscribe", $cg__input_other);
-			$wi__input_promise__OR__input_other && _subscribe(_unfilled_if($scope0_reason, 2) && $input_other__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/show-await.marko", "3:4"), $cg__input_other && "__tests__/tags/show-await.marko_2_input_other#0:4/subscribe", 0);
+			_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope2_id, "__tests__/tags/show-await.marko_2_input_other#0:4/subscribe", 1);
+			$wi__input_promise__OR__input_other && _subscribe(_unfilled_if($scope0_reason, 2) && $input_other__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/show-await.marko", "3:4"), _client_guard($scope0_reason, 2) && "__tests__/tags/show-await.marko_2_input_other#0:4/subscribe", 0);
 			$wi__input_promise__OR__input_other && _resume_branch($scope2_id);
 		}, void 0, () => {
 			const $scope4_reason = _scope_reason();

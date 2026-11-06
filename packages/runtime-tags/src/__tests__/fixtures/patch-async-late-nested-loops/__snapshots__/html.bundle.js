@@ -9,7 +9,7 @@ _shells({
 	a5: "a5;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_groups = _client_guard($scope0_reason, 0), $wi__input_groups = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wi__input_groups = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_html("<main>");
 	_for_of(input.groups, (group) => {
@@ -26,8 +26,8 @@ var template_default = _template("a", (input) => {
 					_html(`<em>${_text_mark($scope4_id, "a", group.id, 1, $scope0_reason, 0)}.${_text_mark($scope4_id, "b", v, 2, $scope0_reason, 0)}</em>`);
 					_scope($scope4_id, {});
 				}, 1, "a1", _unfilled_if($scope0_reason, 0) && 3);
-				_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope3_id, "a6", $cg__input_groups);
-				$wi__input_groups && _subscribe(_unfilled_if($scope0_reason, 0) && $for_content2__item_promise__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }), $cg__input_groups && "a6", 0);
+				_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope3_id, "a6", 1);
+				$wi__input_groups && _subscribe(_unfilled_if($scope0_reason, 0) && $for_content2__item_promise__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }), _client_guard($scope0_reason, 0) && "a6", 0);
 				$wi__input_groups && _resume_branch($scope3_id);
 			}, void 0, (err) => {
 				_scope_reason();

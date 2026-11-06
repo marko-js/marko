@@ -59,7 +59,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 			_patch_render($scope2_id, "__tests__/tags/card.marko_2_c#1:4_y#2/setup", [_filled_guard($scope0_reason, 0) && ">c", _filled_guard($scope0_reason, 1) && "y"], $scope0_reason, 0);
 			$wi__input_p__OR__input_content && _subscribe(_unfilled_if($scope0_reason, 0) && $await_content__c__closures, _scope($scope2_id, { y: _unfilled_if($scope0_reason, 0) && y }, "__tests__/tags/card.marko", "4:4", { y: "4:10" }), $cg__input_p__OR__input_content && "__tests__/tags/card.marko_2_c#1:4/subscribe", $wg__input_p__OR__input_content);
 		}, 1, "__tests__/tags/card.marko_2*content", _unfilled_if($scope0_reason, 1), 1, 1);
-		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "__tests__/tags/card.marko_1_input_p#0:3/subscribe", $cg__input_p);
+		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "__tests__/tags/card.marko_1_input_p#0:3/subscribe", 1);
 		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "__tests__/tags/card.marko_1_input_content#0:4/subscribe");
 		_patch_render($scope1_id, "__tests__/tags/card.marko_1_input_content#0:4_x#2/setup", [_filled_guard($scope0_reason, 2) && ">input_content", _filled_guard($scope0_reason, 1) && "x"], $scope0_reason, 0);
 		$wi__input_p__OR__input_content && _subscribe(_unfilled_if($scope0_reason, 2) && $input_content__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_p__closures, _scope($scope1_id, {

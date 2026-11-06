@@ -14,7 +14,7 @@ _shells({
 	a: "a !a16; D l%b%;<button> </button><!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_msg = _client_guard($scope0_reason, 3), $cg__input_inner = _client_guard($scope0_reason, 4), $wi__input_msg__OR__input_inner = _write_if($scope0_reason, 0), $cg__input_outer = _client_guard($scope0_reason, 2), $wi__input_outer__OR__input_msg__OR__input_inner = _write_if($scope0_reason, 1), $wi__input_msg = _write_if($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $cg__input_msg = _client_guard($scope0_reason, 3), $wi__input_msg__OR__input_inner = _write_if($scope0_reason, 0), $wi__input_outer__OR__input_msg__OR__input_inner = _write_if($scope0_reason, 1), $wi__input_msg = _write_if($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	const $input_msg__closures = /* @__PURE__ */ new Set();
 	const $input_inner__closures = /* @__PURE__ */ new Set();
@@ -36,8 +36,8 @@ var template_default = _template("a", (input) => {
 					_unfilled_if($scope0_reason, 3) && _patch_subscribe($scope4_id, "a0", $cg__input_msg);
 					_subscribe(_unfilled_if($scope0_reason, 3) && $input_msg__closures, _scope($scope4_id, { Cm: $wi__input_msg && 1 }), $cg__input_msg && "a0");
 				}, 1, "a5", _unfilled_if($scope0_reason, 4), 1);
-				_unfilled_if($scope0_reason, 4) && _patch_subscribe($scope3_id, "a12", $cg__input_inner);
-				$wi__input_msg__OR__input_inner && _subscribe(_unfilled_if($scope0_reason, 4) && $input_inner__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }), $cg__input_inner && "a12", 0);
+				_unfilled_if($scope0_reason, 4) && _patch_subscribe($scope3_id, "a12", 1);
+				$wi__input_msg__OR__input_inner && _subscribe(_unfilled_if($scope0_reason, 4) && $input_inner__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }), _client_guard($scope0_reason, 4) && "a12", 0);
 				$wi__input_msg__OR__input_inner && _resume_branch($scope3_id);
 			}, () => {
 				_scope_reason();
@@ -51,8 +51,8 @@ var template_default = _template("a", (input) => {
 			_unfilled_if($scope0_reason, 3) && _patch_subscribe($scope2_id, "a13", $cg__input_msg);
 			_subscribe(_unfilled_if($scope0_reason, 3) && $input_msg__closures, _scope($scope2_id, {}), $cg__input_msg && "a13");
 		}, 1, "a8", _unfilled_if($scope0_reason, 2), 1);
-		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "a14", $cg__input_outer);
-		$wi__input_outer__OR__input_msg__OR__input_inner && _subscribe(_unfilled_if($scope0_reason, 2) && $input_outer__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), $cg__input_outer && "a14", 0);
+		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "a14", 1);
+		$wi__input_outer__OR__input_msg__OR__input_inner && _subscribe(_unfilled_if($scope0_reason, 2) && $input_outer__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 2) && "a14", 0);
 		$wi__input_outer__OR__input_msg__OR__input_inner && _resume_branch($scope1_id);
 	}, () => {
 		_scope_reason();

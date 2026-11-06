@@ -26,8 +26,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_html(`<em>${_text_mark($scope3_id, "#text/0", related, 1, $scope0_reason, 0)}</em>`);
 			_scope($scope3_id, {}, "__tests__/template.marko", "9:8");
 		}, 1, "__tests__/template.marko_3*content", _unfilled_if($scope0_reason, 0) && 2, 1);
-		_unfilled_if($scope0_reason, 4) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_related#0:8/subscribe");
-		_unfilled_if($scope0_reason, 5) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_slow#0:9/subscribe");
+		_unfilled_if($scope0_reason, 4) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_related#0:8/subscribe", 1);
+		_unfilled_if($scope0_reason, 5) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_slow#0:9/subscribe", 1);
 		_patch_render($scope1_id, "__tests__/template.marko_1_input_related#0:8_input_slow#0:9/setup", [_filled_guard($scope0_reason, 4) && ">input_related", _filled_guard($scope0_reason, 5) && ">input_slow"], $scope0_reason, 0);
 		$wi__input_related__OR__input_slow && _subscribe(_unfilled_if($scope0_reason, 5) && $input_slow__closures, _subscribe(_unfilled_if($scope0_reason, 4) && $input_related__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "7:6"), _client_guard($scope0_reason, 4) && "__tests__/template.marko_1_input_related#0:8/subscribe", 0), $cg__input_slow && "__tests__/template.marko_1_input_slow#0:9/subscribe", 0);
 		$wi__input_related__OR__input_slow && _resume_branch($scope1_id);

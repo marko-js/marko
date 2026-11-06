@@ -11,7 +11,7 @@ _shells({
 	b: "b;b%;<!><!><!>"
 });
 var show_await_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_promise = _client_guard($scope0_reason, 1), $cg__input_other = _client_guard($scope0_reason, 2), $wi__input_promise__OR__input_other = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_promise = _client_guard($scope0_reason, 1), $wi__input_promise__OR__input_other = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_other__closures = /* @__PURE__ */ new Set();
 	_await($scope0_id, "a", input.promise, (x) => {
@@ -27,8 +27,8 @@ var show_await_default = _template("b", (input) => {
 				_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope3_id, "b0", $cg__input_promise);
 				_subscribe(_unfilled_if($scope0_reason, 1) && $await_content__x__closures, _scope($scope3_id, {}), $cg__input_promise && "b0");
 			}, 1, "b2", _unfilled_if($scope0_reason, 2), 1);
-			_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope2_id, "b7", $cg__input_other);
-			$wi__input_promise__OR__input_other && _subscribe(_unfilled_if($scope0_reason, 2) && $input_other__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), $cg__input_other && "b7", 0);
+			_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope2_id, "b7", 1);
+			$wi__input_promise__OR__input_other && _subscribe(_unfilled_if($scope0_reason, 2) && $input_other__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 2) && "b7", 0);
 			$wi__input_promise__OR__input_other && _resume_branch($scope2_id);
 		}, void 0, () => {
 			_scope_reason();

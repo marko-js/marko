@@ -30,7 +30,7 @@ _shells({
 	"__tests__/template.marko": `__tests__/template.marko${_shell_marker($setup)};${((_w0) => `D%b/${_w0}&%l`)(" b")};${((_w0) => `<main><!>${_w0}<!></main>`)($template$1)}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 1), $cg__input_promise = _client_guard($scope0_reason, 2), $wi__input_label__OR__input_promise = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 1), $wi__input_label__OR__input_promise = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $item__closures = new Set();
 	const $input_promise__closures = new Set();
@@ -59,8 +59,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope2_id, "__tests__/template.marko_2_item#0:7/subscribe", $cg__input_label);
 			_subscribe(_unfilled_if($scope0_reason, 1) && $item__closures, _scope($scope2_id, { "#childScope/2": _existing_scope($childScope2) }, "__tests__/template.marko", "8:6"), $cg__input_label && "__tests__/template.marko_2_item#0:7/subscribe");
 		}, 1, "__tests__/template.marko_2*content", _unfilled_if($scope0_reason, 2), 1);
-		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_promise#0:6/subscribe", $cg__input_promise);
-		$wi__input_label__OR__input_promise && _subscribe(_unfilled_if($scope0_reason, 2) && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "6:4"), $cg__input_promise && "__tests__/template.marko_1_input_promise#0:6/subscribe", 0);
+		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_promise#0:6/subscribe", 1);
+		$wi__input_label__OR__input_promise && _subscribe(_unfilled_if($scope0_reason, 2) && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "6:4"), _client_guard($scope0_reason, 2) && "__tests__/template.marko_1_input_promise#0:6/subscribe", 0);
 		$wi__input_label__OR__input_promise && _resume_branch($scope1_id);
 	}, () => {
 		const $scope3_reason = _scope_reason();

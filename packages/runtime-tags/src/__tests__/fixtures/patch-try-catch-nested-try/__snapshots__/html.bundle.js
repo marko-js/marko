@@ -9,7 +9,7 @@ _shells({
 	a: "a;D%;<main><!></main>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_promise = _client_guard($scope0_reason, 1), $wi__input_promise = _write_if($scope0_reason, 1), $cg__input = _client_guard($scope0_reason, 0), $wi__input = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wi__input_promise = _write_if($scope0_reason, 1), $cg__input = _client_guard($scope0_reason, 0), $wi__input = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_promise__closures = /* @__PURE__ */ new Set();
 	const $input__closures = /* @__PURE__ */ new Set();
@@ -27,8 +27,8 @@ var template_default = _template("a", (input) => {
 				_html(`<strong>${_text_mark($scope5_id, "a", value, 1, $scope0_reason, 1)}</strong>`);
 				_scope($scope5_id, {});
 			}, 1, "a0", _unfilled_if($scope0_reason, 1) && 2, 1);
-			_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope2_id, "a6", $cg__input_promise);
-			$wi__input_promise && _subscribe(_unfilled_if($scope0_reason, 1) && $input_promise__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), $cg__input_promise && "a6", 0);
+			_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope2_id, "a6", 1);
+			$wi__input_promise && _subscribe(_unfilled_if($scope0_reason, 1) && $input_promise__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 1) && "a6", 0);
 			$wi__input_promise && _resume_branch($scope2_id);
 		}, void 0, () => {
 			_scope_reason();

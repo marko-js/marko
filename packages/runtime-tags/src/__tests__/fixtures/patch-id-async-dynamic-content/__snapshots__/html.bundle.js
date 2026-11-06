@@ -35,7 +35,7 @@ _shells({
 	a6: "a6;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_items__OR__input_loaded = _write_guard($scope0_reason, 0), $cg__input_loaded = _client_guard($scope0_reason, 2), $wi__input_items__OR__input_loaded = _write_if($scope0_reason, 0), $cg__input_items = _client_guard($scope0_reason, 1), $sg__input_items = _server_guard($scope0_reason, 1), $fg__input_loaded = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_items__OR__input_loaded = _write_guard($scope0_reason, 0), $cg__input_loaded = _client_guard($scope0_reason, 2), $wi__input_items__OR__input_loaded = _write_if($scope0_reason, 0), $sg__input_items = _server_guard($scope0_reason, 1), $cg__input_items = _client_guard($scope0_reason, 1), $fg__input_loaded = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_loaded__closures = /* @__PURE__ */ new Set();
 	_for_of(input.items, (item) => {
@@ -67,7 +67,7 @@ var template_default = _template("a", (input) => {
 				_patch_render($scope3_id, "a2", [_filled_guard($scope0_reason, 2) && ">>>e", _filled_guard($scope0_reason, 1) && "c"], $scope0_reason, 0);
 				$wi__input_items__OR__input_loaded && _subscribe(_unfilled_if($scope0_reason, 2) && $input_loaded__closures, _scope($scope3_id, { c: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && ready }), $cg__input_loaded && "a1", $wg__input_items__OR__input_loaded);
 			}, 1, "a3", _unfilled_if($scope0_reason, 1), 0, 1);
-			_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope2_id, "a7", $cg__input_items);
+			_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope2_id, "a7", 1);
 			$wi__input_items__OR__input_loaded && _subscribe(_unfilled_if($scope0_reason, 1) && $for_content__item_promise__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), $cg__input_items && "a7", 0);
 			$wi__input_items__OR__input_loaded && _resume_branch($scope2_id);
 		}, () => {

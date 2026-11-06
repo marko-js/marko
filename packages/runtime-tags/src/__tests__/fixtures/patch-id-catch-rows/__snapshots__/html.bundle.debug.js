@@ -24,7 +24,7 @@ _shells({
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell;b%;<!><!><!>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_rows = _client_guard($scope0_reason, 0), $wi__input_rows = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wi__input_rows = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const heading = _id("heading");
 	_html(`<h1${_attr("id", heading, $scope0_id, "PatchAttr:#h1/0 id", 0, 0)}>Fields</h1>${_el_mark($scope0_id, "#h1/0", 0)}`);
@@ -39,8 +39,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_html(`<p>${_text_mark($scope4_id, "#text/0", v, 1, $scope0_reason, 0)}</p>`);
 				_scope($scope4_id, {}, "__tests__/template.marko", "4:4");
 			}, 1, "__tests__/template.marko_4*content", _unfilled_if($scope0_reason, 0) && 2);
-			_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope3_id, "__tests__/template.marko_3_row_promise#1:3/subscribe", $cg__input_rows);
-			$wi__input_rows && _subscribe(_unfilled_if($scope0_reason, 0) && $for_content__row_promise__closures, _scope($scope3_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:3"), $cg__input_rows && "__tests__/template.marko_3_row_promise#1:3/subscribe", 0);
+			_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope3_id, "__tests__/template.marko_3_row_promise#1:3/subscribe", 1);
+			$wi__input_rows && _subscribe(_unfilled_if($scope0_reason, 0) && $for_content__row_promise__closures, _scope($scope3_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:3"), _client_guard($scope0_reason, 0) && "__tests__/template.marko_3_row_promise#1:3/subscribe", 0);
 			$wi__input_rows && _resume_branch($scope3_id);
 		}, void 0, (error) => {
 			const $scope2_reason = _scope_reason();

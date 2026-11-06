@@ -45,7 +45,7 @@ var template_default = _template("a", (input) => {
 			_unfilled_if($scope0_reason, 4) && _patch_subscribe($scope2_id, "a0", _client_guard($scope0_reason, 4));
 			_subscribe(_unfilled_if($scope0_reason, 4) && $input_note__closures, _scope($scope2_id, {}));
 		}, 1, "a1", _unfilled_if($scope0_reason, 3));
-		_unfilled_if($scope0_reason, 3) && _patch_subscribe($scope1_id, "a4", _client_guard($scope0_reason, 3));
+		_unfilled_if($scope0_reason, 3) && _patch_subscribe($scope1_id, "a4", 1);
 		$wi__input_on__OR__input_w__OR__input_note && _subscribe(_unfilled_if($scope0_reason, 3) && $input_w__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
 		$wi__input_on__OR__input_w__OR__input_note && _resume_branch($scope1_id);
 	}, $scope0_id, ($scope) => $scope0_page ? [{

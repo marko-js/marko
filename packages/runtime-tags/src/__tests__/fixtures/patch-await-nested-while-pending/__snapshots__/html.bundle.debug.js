@@ -14,7 +14,7 @@ _shells({
 	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0; D l%;<button> </button><!><!>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_msg = _client_guard($scope0_reason, 3), $cg__input_inner = _client_guard($scope0_reason, 4), $wi__input_msg__OR__input_inner = _write_if($scope0_reason, 0), $cg__input_outer = _client_guard($scope0_reason, 2), $wi__input_outer__OR__input_msg__OR__input_inner = _write_if($scope0_reason, 1), $wi__input_msg = _write_if($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $cg__input_msg = _client_guard($scope0_reason, 3), $wi__input_msg__OR__input_inner = _write_if($scope0_reason, 0), $wi__input_outer__OR__input_msg__OR__input_inner = _write_if($scope0_reason, 1), $wi__input_msg = _write_if($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	const $input_msg__closures = new Set();
 	const $input_inner__closures = new Set();
@@ -36,8 +36,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					_unfilled_if($scope0_reason, 3) && _patch_subscribe($scope4_id, "__tests__/template.marko_4_input_msg#0:6/subscribe", $cg__input_msg);
 					_subscribe(_unfilled_if($scope0_reason, 3) && $input_msg__closures, _scope($scope4_id, { "ClosureSignalIndex:input_msg/10": $wi__input_msg && 1 }, "__tests__/template.marko", "7:8"), $cg__input_msg && "__tests__/template.marko_4_input_msg#0:6/subscribe");
 				}, 1, "__tests__/template.marko_4*content", _unfilled_if($scope0_reason, 4), 1);
-				_unfilled_if($scope0_reason, 4) && _patch_subscribe($scope3_id, "__tests__/template.marko_3_input_inner#0:7/subscribe", $cg__input_inner);
-				$wi__input_msg__OR__input_inner && _subscribe(_unfilled_if($scope0_reason, 4) && $input_inner__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "6:6"), $cg__input_inner && "__tests__/template.marko_3_input_inner#0:7/subscribe", 0);
+				_unfilled_if($scope0_reason, 4) && _patch_subscribe($scope3_id, "__tests__/template.marko_3_input_inner#0:7/subscribe", 1);
+				$wi__input_msg__OR__input_inner && _subscribe(_unfilled_if($scope0_reason, 4) && $input_inner__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "6:6"), _client_guard($scope0_reason, 4) && "__tests__/template.marko_3_input_inner#0:7/subscribe", 0);
 				$wi__input_msg__OR__input_inner && _resume_branch($scope3_id);
 			}, () => {
 				const $scope6_reason = _scope_reason();
@@ -47,8 +47,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_unfilled_if($scope0_reason, 3) && _patch_subscribe($scope2_id, "__tests__/template.marko_2_input_msg#0:6/subscribe", $cg__input_msg);
 			_subscribe(_unfilled_if($scope0_reason, 3) && $input_msg__closures, _scope($scope2_id, {}, "__tests__/template.marko", "4:4"), $cg__input_msg && "__tests__/template.marko_2_input_msg#0:6/subscribe");
 		}, 1, "__tests__/template.marko_2*content", _unfilled_if($scope0_reason, 2), 1);
-		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_outer#0:5/subscribe", $cg__input_outer);
-		$wi__input_outer__OR__input_msg__OR__input_inner && _subscribe(_unfilled_if($scope0_reason, 2) && $input_outer__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:2"), $cg__input_outer && "__tests__/template.marko_1_input_outer#0:5/subscribe", 0);
+		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_outer#0:5/subscribe", 1);
+		$wi__input_outer__OR__input_msg__OR__input_inner && _subscribe(_unfilled_if($scope0_reason, 2) && $input_outer__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:2"), _client_guard($scope0_reason, 2) && "__tests__/template.marko_1_input_outer#0:5/subscribe", 0);
 		$wi__input_outer__OR__input_msg__OR__input_inner && _resume_branch($scope1_id);
 	}, () => {
 		const $scope5_reason = _scope_reason();

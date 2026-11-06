@@ -10,7 +10,7 @@ _shells({
 	a6: "a6;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_fast = _client_guard($scope0_reason, 3), $wi__input_show__OR__input_fast = _write_if($scope0_reason, 0), $wg__input_show = _write_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 2), $cg__input_slow = _client_guard($scope0_reason, 4), $wi__input_show__OR__input_fast__OR__input_slow = _write_if($scope0_reason, 1), $fg__input_fast = _filled_guard($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $wi__input_show__OR__input_fast = _write_if($scope0_reason, 0), $wg__input_show = _write_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 2), $wi__input_show__OR__input_fast__OR__input_slow = _write_if($scope0_reason, 1), $fg__input_fast = _filled_guard($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	const $input_fast__closures = /* @__PURE__ */ new Set();
 	const $input_show__closures = /* @__PURE__ */ new Set();
@@ -28,8 +28,8 @@ var template_default = _template("a", (input) => {
 					_html(`<b>${_text_mark($scope4_id, "a", a, 1, $scope0_reason, 3)}</b>`);
 					_scope($scope4_id, {});
 				}, 1, "a1", _unfilled_if($scope0_reason, 3) && 2);
-				_unfilled_if($scope0_reason, 3) && _patch_subscribe($scope2_id, "a7", $cg__input_fast);
-				$wi__input_show__OR__input_fast && _subscribe(_unfilled_if($scope0_reason, 3) && $input_fast__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), $cg__input_fast && "a7", 0);
+				_unfilled_if($scope0_reason, 3) && _patch_subscribe($scope2_id, "a7", 1);
+				$wi__input_show__OR__input_fast && _subscribe(_unfilled_if($scope0_reason, 3) && $input_fast__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 3) && "a7", 0);
 				$wi__input_show__OR__input_fast && _resume_branch($scope2_id);
 				return 0;
 			}
@@ -41,8 +41,8 @@ var template_default = _template("a", (input) => {
 		}, 1, "a0", _unfilled_if($scope0_reason, 4) && 2, 1);
 		_html("</div>");
 		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "a8", $cg__input_show);
-		_unfilled_if($scope0_reason, 4) && _patch_subscribe($scope1_id, "a9", $cg__input_slow);
-		$wi__input_show__OR__input_fast__OR__input_slow && _subscribe(_unfilled_if($scope0_reason, 4) && $input_slow__closures, _subscribe(_unfilled_if($scope0_reason, 2) && $input_show__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), $cg__input_show && "a8", $wg__input_show), $cg__input_slow && "a9", $wg__input_show);
+		_unfilled_if($scope0_reason, 4) && _patch_subscribe($scope1_id, "a9", 1);
+		$wi__input_show__OR__input_fast__OR__input_slow && _subscribe(_unfilled_if($scope0_reason, 4) && $input_slow__closures, _subscribe(_unfilled_if($scope0_reason, 2) && $input_show__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), $cg__input_show && "a8", $wg__input_show), _client_guard($scope0_reason, 4) && "a9", $wg__input_show);
 		$wg__input_show || $wi__input_show__OR__input_fast__OR__input_slow && _resume_branch($scope1_id);
 	}, () => {
 		_scope_reason();

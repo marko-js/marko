@@ -11,7 +11,7 @@ _shells({
 	"__tests__/template.marko_2*shell": "__tests__/template.marko_2*shell;b%;<!><!><!>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_a = _client_guard($scope0_reason, 3), $wi__input_show__OR__input_a = _write_if($scope0_reason, 0), $cg__input_show = _client_guard($scope0_reason, 2), $cg__input_label = _client_guard($scope0_reason, 4), $fg__input_a = _filled_guard($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $wi__input_show__OR__input_a = _write_if($scope0_reason, 0), $cg__input_show = _client_guard($scope0_reason, 2), $cg__input_label = _client_guard($scope0_reason, 4), $fg__input_a = _filled_guard($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	const $input_a__closures = new Set();
 	const $input_show__closures = new Set();
@@ -28,8 +28,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					_html(`<b>${_text_mark($scope4_id, "#text/0", a, 1, $scope0_reason, 3)}</b>`);
 					_scope($scope4_id, {}, "__tests__/template.marko", "4:8");
 				}, 1, "__tests__/template.marko_4*content", _unfilled_if($scope0_reason, 3) && 2);
-				_unfilled_if($scope0_reason, 3) && _patch_subscribe($scope2_id, "__tests__/template.marko_2_input_a#0:4/subscribe", $cg__input_a);
-				$wi__input_show__OR__input_a && _subscribe(_unfilled_if($scope0_reason, 3) && $input_a__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:6"), $cg__input_a && "__tests__/template.marko_2_input_a#0:4/subscribe", 0);
+				_unfilled_if($scope0_reason, 3) && _patch_subscribe($scope2_id, "__tests__/template.marko_2_input_a#0:4/subscribe", 1);
+				$wi__input_show__OR__input_a && _subscribe(_unfilled_if($scope0_reason, 3) && $input_a__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:6"), _client_guard($scope0_reason, 3) && "__tests__/template.marko_2_input_a#0:4/subscribe", 0);
 				$wi__input_show__OR__input_a && _resume_branch($scope2_id);
 				return 0;
 			}

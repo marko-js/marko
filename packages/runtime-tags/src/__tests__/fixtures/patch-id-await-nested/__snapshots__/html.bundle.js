@@ -21,7 +21,7 @@ _shells({
 	a4: "a4;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_items = _client_guard($scope0_reason, 0), $wi__input_items = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wi__input_items = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_for_of(input.items, (item) => {
 		const $scope1_id = _scope_id();
@@ -36,8 +36,8 @@ var template_default = _template("a", (input) => {
 				_patch_child_end();
 				_scope($scope3_id, { a: _existing_scope($childScope) });
 			}, 1, "a0", _unfilled_if($scope0_reason, 0));
-			_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope2_id, "a5", $cg__input_items);
-			$wi__input_items && _subscribe(_unfilled_if($scope0_reason, 0) && $for_content__item_inner__closures, _scope($scope2_id, {}), $cg__input_items && "a5", 0);
+			_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope2_id, "a5", 1);
+			$wi__input_items && _subscribe(_unfilled_if($scope0_reason, 0) && $for_content__item_inner__closures, _scope($scope2_id, {}), _client_guard($scope0_reason, 0) && "a5", 0);
 			$wi__input_items && _resume_branch($scope2_id);
 		}, 1, "a2", _unfilled_if($scope0_reason, 0));
 		$wi__input_items && _scope($scope1_id, { f: _unfilled_if($scope0_reason, 0) && $for_content__item_inner__closures });

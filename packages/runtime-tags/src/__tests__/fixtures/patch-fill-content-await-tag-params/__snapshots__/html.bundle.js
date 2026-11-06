@@ -39,8 +39,8 @@ var inner_default = _template("c", (input) => {
 			_html(`<p>${_text_mark($scope2_id, "a", value)}</p>`);
 			_scope($scope2_id, {});
 		}, 1, "c0", 2);
-		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "c3");
-		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "c4");
+		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "c3", 1);
+		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "c4", 1);
 		_patch_render($scope1_id, "c5", [_filled_guard($scope0_reason, 0) && ">e", _filled_guard($scope0_reason, 1) && ">f"]);
 		_subscribe($showSecond__closures, _subscribe($wi__input_first && $input_first__closures, _subscribe($wi__input_second && $input_second__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }))));
 		_resume_branch($scope1_id);

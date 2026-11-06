@@ -21,7 +21,7 @@ _shells({
 	a0: `a0${_shell_marker([[], []], ["a>", $setup])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks)};${$template}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_promise = _write_if($scope0_reason, 0), $cg__input_promise = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wi__input_promise = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_promise__closures = /* @__PURE__ */ new Set();
 	const heading = _id("A");
@@ -54,11 +54,11 @@ var template_default = _template("a", (input) => {
 			}, "key", $scope4_id, "a", 1, 1, 1, 0, 0, "a0", $scope0_reason, 0);
 			_scope($scope4_id, {});
 		}, 1, "a1", _unfilled_if($scope0_reason, 0), 1);
-		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "a5", $cg__input_promise);
+		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "a5", 1);
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_promise__closures, _scope($scope1_id, {
 			_: $wi__input_promise && _scope_with_id($scope0_id),
 			a: _existing_scope($childScope2)
-		}), $cg__input_promise && "a5", 0);
+		}), _client_guard($scope0_reason, 0) && "a5", 0);
 		_resume_branch($scope1_id);
 	}, () => {
 		_scope_reason();

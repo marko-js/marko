@@ -23,8 +23,8 @@ var template_default = _template("a", (input) => {
 			_html(`<em>${_text_mark($scope3_id, "a", related, 1, $scope0_reason, 0)}</em>`);
 			_scope($scope3_id, {});
 		}, 1, "a1", _unfilled_if($scope0_reason, 0) && 2, 1);
-		_unfilled_if($scope0_reason, 4) && _patch_subscribe($scope1_id, "a6");
-		_unfilled_if($scope0_reason, 5) && _patch_subscribe($scope1_id, "a7");
+		_unfilled_if($scope0_reason, 4) && _patch_subscribe($scope1_id, "a6", 1);
+		_unfilled_if($scope0_reason, 5) && _patch_subscribe($scope1_id, "a7", 1);
 		_patch_render($scope1_id, "a8", [_filled_guard($scope0_reason, 4) && ">i", _filled_guard($scope0_reason, 5) && ">j"], $scope0_reason, 0);
 		$wi__input_related__OR__input_slow && _subscribe(_unfilled_if($scope0_reason, 5) && $input_slow__closures, _subscribe(_unfilled_if($scope0_reason, 4) && $input_related__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 4) && "a6", 0), $cg__input_slow && "a7", 0);
 		$wi__input_related__OR__input_slow && _resume_branch($scope1_id);

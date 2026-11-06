@@ -50,7 +50,7 @@ var card_default = _template("b", (input) => {
 			_patch_render($scope2_id, "b1", [_filled_guard($scope0_reason, 0) && ">e", _filled_guard($scope0_reason, 1) && "c"], $scope0_reason, 0);
 			$wi__input_p__OR__input_content && _subscribe(_unfilled_if($scope0_reason, 0) && $await_content__c__closures, _scope($scope2_id, { c: _unfilled_if($scope0_reason, 0) && y }), $cg__input_p__OR__input_content && "b0", $wg__input_p__OR__input_content);
 		}, 1, "b2", _unfilled_if($scope0_reason, 1), 1, 1);
-		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "b6", $cg__input_p);
+		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "b6", 1);
 		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "b7");
 		_patch_render($scope1_id, "b8", [_filled_guard($scope0_reason, 2) && ">e", _filled_guard($scope0_reason, 1) && "c"], $scope0_reason, 0);
 		$wi__input_p__OR__input_content && _subscribe(_unfilled_if($scope0_reason, 2) && $input_content__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_p__closures, _scope($scope1_id, {
