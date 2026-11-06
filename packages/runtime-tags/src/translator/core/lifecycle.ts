@@ -3,7 +3,6 @@ import {
   assertNoArgs,
   assertNoParams,
   assertNoVar,
-  getProgram,
   type Tag,
 } from "@marko/compiler/babel-utils";
 
@@ -12,6 +11,7 @@ import {
   assertNoSpreadAttrs,
   coreTagLink,
 } from "../util/assert";
+import { addResumeWork } from "../util/entry-builder";
 import { isOutputDOM } from "../util/marko-config";
 import { mergeTagReferences } from "../util/references";
 import { replaceWithStatements } from "../util/replace-with-statements";
@@ -55,8 +55,7 @@ export default {
     // `_lifecycle` registers cleanup via `$signal` at runtime, so the scope
     // must resume with its closest branch linked.
     section.hasAbortSignal = true;
-
-    getProgram().node.extra.isInteractive = true;
+    addResumeWork(section);
   },
   translate: {
     exit(tag) {

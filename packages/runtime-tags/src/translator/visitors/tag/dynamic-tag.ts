@@ -18,6 +18,7 @@ import {
   reserveId,
 } from "../../util/bindings";
 import { setTagContentDerives } from "../../util/content-derives";
+import { addResumeWork } from "../../util/entry-builder";
 import {
   generateUidIdentifier,
   getUnusedParamIdentifier,
@@ -133,6 +134,10 @@ declare module "@marko/compiler" {
 }
 
 declare module "@marko/compiler/dist/types" {
+  export interface ProgramExtra {
+    /** Set by the Class API translator when Tags content resumes below here. */
+    hydratesTags?: boolean;
+  }
   export interface MarkoTagExtra {
     defineBodySection?: Section;
   }
@@ -181,7 +186,8 @@ export default {
       const tagBody = tag.get("body");
       const hasVar = !!tag.node.var;
       const usesVar = isTagVarUsed(tag);
-      let isInteractive = usesVar;
+      let isInteractive =
+        usesVar || (tagExtra.featureType === "class" && hydratesClass(tag));
       for (const attr of node.attributes) {
         if (t.isMarkoSpreadAttribute(attr)) {
           isInteractive = true;
@@ -193,7 +199,7 @@ export default {
           }
         }
       }
-      if (isInteractive) getProgram().node.extra.isInteractive = true;
+      if (isInteractive) addResumeWork(tagSection);
       const nodeBinding = (tagExtra.nodeBinding = createBinding(
         "#text",
         BindingType.dom,
@@ -657,6 +663,17 @@ function enableDynamicTagVar(tag: t.NodePath<t.MarkoTag>) {
       t.expressionStatement(callRuntime("_dynamic_tag_var_resume", accessor)),
     );
   }
+}
+
+// Client work of its own: Tags descendants resume through the boundary, or a
+// Class component hydrates on the input this template sends it.
+function hydratesClass(tag: t.NodePath<t.MarkoTag>) {
+  const childFile = loadFileForTag(tag);
+  return !!(
+    childFile?.ast.program.extra?.hydratesTags ||
+    (childFile?.metadata.marko.classHydration === ClassHydration.Self &&
+      (tag.node.attributes.length || tag.node.body.body.length))
+  );
 }
 
 // Whether a native element the name may resolve to gets a spread, or an

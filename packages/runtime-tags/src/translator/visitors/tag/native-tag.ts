@@ -34,6 +34,7 @@ import { BindingType, createBinding } from "../../util/bindings";
 import { bodyToText, bodyToUncoercedText } from "../../util/body-to-text";
 import { isEndTagWrittenByBranch } from "../../util/branch-tag";
 import buildStringExpression from "../../util/build-string-expression";
+import { addResumeWork } from "../../util/entry-builder";
 import evaluate from "../../util/evaluate";
 import {
   generateUidIdentifier,
@@ -409,9 +410,7 @@ export default {
           !!node.var,
         ));
 
-        if (hasEventHandlers) {
-          getProgram().node.extra.isInteractive = true;
-        }
+        if (hasEventHandlers) addResumeWork(tagSection);
 
         if (spread) {
           const spreadExtra = mergeReferences(

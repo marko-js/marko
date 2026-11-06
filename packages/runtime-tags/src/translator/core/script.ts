@@ -5,7 +5,6 @@ import {
   assertNoParams,
   diagnosticWarn,
   getFile,
-  getProgram,
   parseBlock,
   type Tag,
 } from "@marko/compiler/babel-utils";
@@ -16,6 +15,7 @@ import {
   coreTagLink,
   isValueAttr,
 } from "../util/assert";
+import { addResumeWork } from "../util/entry-builder";
 import { isOutputDOM } from "../util/marko-config";
 import { dropNodes, getAllTagReferenceNodes } from "../util/references";
 import { replaceWithStatements } from "../util/replace-with-statements";
@@ -92,11 +92,12 @@ export default {
         seenValueAttr = true;
         // A function without statements, such as a body of only comments, runs nothing.
         if (!isEmptyFunction(attr.value)) {
+          const section = ensureSection(tag);
           const valueExtra = (attr.value.extra ??= {});
           valueExtra.isEffect = true;
           valueExtra.consumed = true;
-          addSetupExpr(ensureSection(tag), attr.value);
-          getProgram().node.extra.isInteractive = true;
+          addSetupExpr(section, attr.value);
+          addResumeWork(section);
         }
       } else {
         throw tag.hub.buildError(

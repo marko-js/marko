@@ -1,7 +1,6 @@
 import { types as t } from "@marko/compiler";
 import {
   getFile,
-  getProgram,
   getTagDef,
   getTaglibLookup,
   getTagTemplate,
@@ -12,7 +11,6 @@ import {
 } from "@marko/compiler/babel-utils";
 import { distance } from "fastest-levenshtein";
 
-import * as ClassHydration from "../visitors/tag/constants/class-hydration";
 import * as TagNameType from "./constants/tag-name-type";
 import { isAnalyzing } from "./get-compile-stage";
 import { getTagName, getTagNameHint } from "./get-tag-name";
@@ -23,8 +21,6 @@ const kTagNameDynamic = Symbol("tag name dynamic");
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
     featureType?: "class" | "tags";
-    /** Set by the Class API translator when Tags content resumes below here. */
-    hydratesTags?: boolean;
   }
   // A tag's extra is the expression root its attributes merge into, so what
   // reads that root (a read, a section's branch expression) reads this.
@@ -100,15 +96,6 @@ export default function analyzeTagNameType(tag: t.NodePath<t.MarkoTag>) {
         extra.tagNameType = TagNameType.DynamicTag;
         extra[kTagNameDynamic] = true;
         extra.featureType = "class";
-        // Client work of its own: Tags descendants resume through the boundary,
-        // or a Class component hydrates on the input this template sends it.
-        if (
-          childFile?.ast.program.extra?.hydratesTags ||
-          (childFile?.metadata.marko.classHydration === ClassHydration.Self &&
-            (tag.node.attributes.length || tag.node.body.body.length))
-        ) {
-          getProgram().node.extra.isInteractive = true;
-        }
       } else if (!childFile) {
         extra.tagNameType = TagNameType.DynamicTag;
         extra[kTagNameDynamic] = true;

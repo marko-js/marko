@@ -2,17 +2,20 @@ import path from "path";
 
 import { types as t } from "@marko/compiler";
 import {
+  getProgram,
   getTemplateId,
   loadFileForImport,
   resolveRelativePath,
 } from "@marko/compiler/babel-utils";
 
 import { getUnusedParamIdentifier } from "./generate-uid";
+import { onFinalizeReferences } from "./references";
 import {
   type DOMRuntimeHelpers,
   getRuntimeFeatureImport,
   getRuntimePath,
 } from "./runtime";
+import type { Section } from "./sections";
 
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
@@ -213,6 +216,14 @@ const builder = {
 };
 
 export default builder;
+
+// Client work a section runs once resumed (an effect, a handler it attaches)
+// initializes the page unless no output renders it, settled at program exit.
+export function addResumeWork(section: Section) {
+  onFinalizeReferences(() => {
+    getProgram().node.extra.isInteractive ||= !section.dropped;
+  });
+}
 
 export function assertVisited<S>(
   entryFile: t.BabelFile,

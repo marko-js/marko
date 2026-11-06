@@ -108,6 +108,8 @@ export function canIgnoreRegister(
 // this only widens them and registration waits until they settle.
 export function addFunctionReasons() {
   for (const [fnExtra, exprExtras] of getReferencesByFn()) {
+    // A function in content no output renders is never emitted.
+    if (fnExtra.section.dropped) continue;
     const reason = resolveReason(exprExtras);
     if (reason) {
       fnExtra.reason = mergeSources(fnExtra.reason, reason);

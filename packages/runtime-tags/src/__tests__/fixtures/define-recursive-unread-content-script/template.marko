@@ -1,0 +1,9 @@
+<define/Countdown|{ n }: { n: number }|>
+  <span>${n}</span>
+  <if=n>
+    <Countdown n=n - 1>
+      <script>document.body.focus()</script>
+    </Countdown>
+  </if>
+</define>
+<Countdown n=2/>
