@@ -51,7 +51,7 @@ import {
   insertStatementBefore,
   replaceWithStatements,
 } from "./replace-with-statements";
-import { callRuntime, registerRuntimeValue } from "./runtime";
+import { callRuntime, registerRuntimeValue, trimFalsyArgs } from "./runtime";
 import {
   getClosureAccessorLiteral,
   getLocalsScopeAccessor,
@@ -594,11 +594,14 @@ function pushSignalCall(
 
   signal.render.push(
     t.expressionStatement(
-      t.callExpression(target.identifier, [
-        scopeIdentifier,
-        ...(value ? [value] : []),
-        ...getTranslatedExtraArgs(target),
-      ]),
+      t.callExpression(
+        target.identifier,
+        trimFalsyArgs([
+          scopeIdentifier,
+          value,
+          ...getTranslatedExtraArgs(target),
+        ]),
+      ),
     ),
   );
   return true;
