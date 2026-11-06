@@ -54,7 +54,7 @@ export {
   _try,
 } from "./html/control-flow";
 export { _content, _content_resume, _dynamic_tag } from "./html/dynamic-tag";
-export { forIn, forOf, forTo, forUntil } from "./html/for";
+export { forIn, forOf, forTo, forUntil } from "./common/for";
 export { _template } from "./html/template";
 export {
   _attr_content,
