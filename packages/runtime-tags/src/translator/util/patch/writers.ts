@@ -136,6 +136,7 @@ import {
   getWriteHop,
   runsEffectOnPatch,
   runsSubscribersByWrite,
+  seedsOwnerConstant,
 } from "./refresh";
 import { getParamSelectedStructure } from "./structure";
 
@@ -292,7 +293,7 @@ export function writePatchResumeStatements(
               getStateInitialValueGuard(section, binding),
               andGuard(
                 isDynamicWriteGuard(section, seeds) && !isStateSourced(binding)
-                  ? getCallerGroupGuard(section, "_client_guard", seeds)
+                  ? getCallerGroupGuard(section, "_unfilled_if", seeds)
                   : undefined,
                 buildPatchWrite(
                   section,
@@ -311,6 +312,19 @@ export function writePatchResumeStatements(
             )
         : undefined;
     if (entry) body.push(t.expressionStatement(entry));
+  });
+
+  // An enclosing scope's constant this scope's client code reads, where it renders unfilled.
+  forEach(section.referencedClosures, (closure) => {
+    if (seedsOwnerConstant(section, closure)) {
+      const write = getExprIfUnfilled(
+        closure.section,
+        closure,
+        getWriteReason(closure),
+        buildPatchWrite(closure.section, closure),
+      );
+      if (write) body.push(t.expressionStatement(write));
+    }
   });
 
   // A closure over a patch-written slot (a value or a function with filled references' new bind)

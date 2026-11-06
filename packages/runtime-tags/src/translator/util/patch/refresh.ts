@@ -373,6 +373,17 @@ function mayBeCreated(section: Section) {
   return !!section.parent || !section.template!.page;
 }
 
+// A constant client code in `section` reads from an enclosing scope, which a page
+// ships only where it renders unfilled: a scope created there gets it from no other channel.
+export function seedsOwnerConstant(section: Section, closure: Binding) {
+  return (
+    !closure.sources &&
+    closure.type !== BindingType.dom &&
+    mayBeCreated(section) &&
+    !!getWriteReason(closure)
+  );
+}
+
 // A value a created scope gets from no other channel (a resumed one reads it
 // from the document), unlike fills, writes, a loop's sourced items and others' state.
 function seedsCreatedScope(binding: Binding) {
