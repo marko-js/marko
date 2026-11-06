@@ -13,6 +13,7 @@ import {
   getRuntimeEntryFiles,
   getRuntimeVersion,
   taglib,
+  types as t,
 } from "@marko/compiler";
 import * as translator from "@marko/runtime-tags/translator";
 
@@ -332,6 +333,46 @@ describe("compiler/compile", () => {
       assert.match(above, /^  1 \| <div>x+…$/);
       assert.equal(source, "> 2 | <if>a</if>");
       assert.equal(marker.indexOf("^"), source.indexOf("if>"));
+    });
+  });
+
+  // Matches Babel's `File.buildCodeFrameError`, for nodes a transform builds.
+  describe("buildCodeFrameError", () => {
+    const buildError = (getNode) => {
+      try {
+        compileSync("<div x=1/>", "test.marko", {
+          code: false,
+          translator: {
+            transform: {
+              MarkoTag(tag) {
+                throw tag.hub.buildError(getNode(tag), "msg");
+              },
+            },
+            translate: {},
+            taglibs: [],
+            tagDiscoveryDirs: [],
+          },
+        });
+      } catch (err) {
+        assert.equal(err.label, "msg");
+        return err;
+      }
+      assert.fail("expected a compile error");
+    };
+
+    it("frames a node without a loc at its first descendant with one", () => {
+      const err = buildError((tag) =>
+        t.markoTag(
+          t.stringLiteral("div"),
+          tag.node.attributes,
+          t.markoTagBody(),
+        ),
+      );
+      assert.equal(err.loc.start.column, "<div ".length);
+    });
+
+    it("reports a missing node without a frame", () => {
+      assert.equal(buildError(() => null).loc, undefined);
     });
   });
 

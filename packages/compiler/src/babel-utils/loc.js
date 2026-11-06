@@ -1,14 +1,16 @@
 const LINE_INDEX_KEY = Symbol();
 
+// A position that is not a number (the `start` of a built node) has no loc.
 export function getLoc(file, index) {
-  return findLoc(getLineIndexes(file), 0, index);
+  if (Number.isFinite(index)) {
+    return findLoc(getLineIndexes(file), 0, index);
+  }
 }
 
 export function getLocRange(file, start, end) {
-  const lineIndexes = getLineIndexes(file);
-  const startLoc = findLoc(lineIndexes, 0, start);
-
-  if (startLoc) {
+  if (Number.isFinite(start) && Number.isFinite(end)) {
+    const lineIndexes = getLineIndexes(file);
+    const startLoc = findLoc(lineIndexes, 0, start);
     const endLoc =
       start === end ? startLoc : findLoc(lineIndexes, startLoc.line - 1, end);
 
@@ -20,9 +22,12 @@ export function getLocRange(file, start, end) {
 }
 
 export function withLoc(file, node, start, end) {
-  node.loc = getLocRange(file, start, end);
-  node.start = start;
-  node.end = end;
+  const loc = getLocRange(file, start, end);
+  if (loc) {
+    node.loc = loc;
+    node.start = start;
+    node.end = end;
+  }
   return node;
 }
 
