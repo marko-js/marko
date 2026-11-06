@@ -8,6 +8,6 @@ const $if_content__setup = $if_content__setup__script;
 const $if = /*@__PURE__*/ _if("#text/0", "<button></button>", " ", $if_content__setup);
 const $hide = /*@__PURE__*/ _let("hide/1", ($scope) => $if($scope, !$scope.hide ? 0 : 1));
 function $setup($scope) {
-	$hide($scope, undefined);
+	$hide($scope, void 0);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", $setup);

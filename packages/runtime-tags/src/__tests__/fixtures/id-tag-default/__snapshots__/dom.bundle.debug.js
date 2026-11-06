@@ -8,7 +8,7 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($sc
 	$baz($scope, $scope.baz ? null : "baz");
 }));
 function $setup($scope) {
-	$bar($scope, undefined);
+	$bar($scope, void 0);
 	$baz($scope, "baz");
 	_attr($scope["#div/1"], "id", "foo" || _id($scope));
 	$setup__script($scope);

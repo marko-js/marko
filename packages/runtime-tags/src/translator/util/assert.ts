@@ -260,7 +260,7 @@ export function assertForParams(tag: t.NodePath<t.MarkoTag>, type: ForType) {
   }
 }
 
-function coreTagLink(tag: t.NodePath<t.MarkoTag>) {
+export function coreTagLink(tag: t.NodePath<t.MarkoTag>) {
   const tagName = getTagName(tag)!;
   const anchor = docsAnchors[tagName] ?? tagName;
   return `[\`<${tagName}>\` tag](https://markojs.com/docs/reference/core-tag${anchor && "#" + anchor})`;
@@ -270,13 +270,13 @@ function withHint(msg: string, hint: string | undefined) {
   return hint ? `${msg} ${hint}` : msg;
 }
 
-function isValueAttr(
+export function isValueAttr(
   attr: t.MarkoTag["attributes"][number],
 ): attr is t.MarkoAttribute {
   return attr.type === "MarkoAttribute" && attr.name === "value";
 }
 
-function isValueChangeAttr(
+export function isValueChangeAttr(
   attr: t.MarkoTag["attributes"][number],
 ): attr is t.MarkoAttribute {
   return attr.type === "MarkoAttribute" && attr.name === "valueChange";

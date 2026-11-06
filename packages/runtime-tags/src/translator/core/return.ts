@@ -11,6 +11,7 @@ import {
   assertNoBodyContent,
   assertNoSpreadAttrs,
   assertOnlyValueAttr,
+  coreTagLink,
 } from "../util/assert";
 import { generateUidIdentifier } from "../util/generate-uid";
 import { getKnownAttrValues } from "../util/get-known-attr-values";
@@ -47,13 +48,13 @@ export default {
         throw tag
           .get("name")
           .buildCodeFrameError(
-            "The [`<return>` tag](https://markojs.com/docs/reference/core-tag#return) can not be used in a [native tag](https://markojs.com/docs/reference/native-tag).",
+            `The ${coreTagLink(tag)} can not be used in a [native tag](https://markojs.com/docs/reference/native-tag).`,
           );
       } else if (getTagFacts(parentTag).controlFlow) {
         throw tag
           .get("name")
           .buildCodeFrameError(
-            `The [\`<return>\` tag](https://markojs.com/docs/reference/core-tag#return) can not be used under the \`<${parentTag.get("name").toString()}>\` tag.`,
+            `The ${coreTagLink(tag)} can not be used under the \`<${parentTag.get("name").toString()}>\` tag.`,
           );
       }
     }
@@ -98,6 +99,7 @@ export default {
           );
         }
 
+        // Error recovery still translates a `<return>` analyze rejected for no value.
         if (attrs.value) {
           const returnId = generateUidIdentifier("return");
           setReturnValueIdentifier(section, returnId);
@@ -114,6 +116,7 @@ export default {
         const section = getSection(tag);
         const attrs = getKnownAttrValues(tag.node);
 
+        // Error recovery still translates a `<return>` analyze rejected for no value.
         if (attrs.value) {
           addStatement(
             "render",

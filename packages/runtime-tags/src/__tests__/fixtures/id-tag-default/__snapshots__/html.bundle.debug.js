@@ -2,7 +2,7 @@
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	let bar = undefined;
+	let bar = void 0;
 	let baz = "baz";
 	const alwaysFoo = "foo" || _id();
 	const sometimesBar = bar || _id();
