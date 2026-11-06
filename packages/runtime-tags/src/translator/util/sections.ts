@@ -136,7 +136,12 @@ export interface Section {
   /** The attribute tag `<for>` params this content reads, held as its own
    * bindings that the loop binds as it creates it. */
   localClosures: ReferencedBindings;
+  /** The closures it reads from enclosing sections, each notifying it through
+   * its signal, which its setup subscribes to. */
   referencedClosures: ReferencedBindings;
+  /** The loop keys it reads from enclosing sections, in place through its owner
+   * chain: a key never changes, so it is no closure. */
+  referencedConstants: ReferencedBindings;
   bindings: ReferencedBindings;
   hoisted: ReferencedBindings;
   /** The closures its `<for>` rows read only by comparing them to the row's
@@ -263,6 +268,7 @@ export function ensureBodySection(
       params: undefined,
       localClosures: undefined,
       referencedClosures: undefined,
+      referencedConstants: undefined,
       bindings: undefined,
       hoisted: undefined,
       selector: undefined,
@@ -356,7 +362,8 @@ export function forEachSection(fn: (section: Section) => void) {
 }
 
 // For content code the analysis cannot see may render later (a body or value a
-// tag it cannot resolve receives), the closures it reads that its owners may not write.
+// tag it cannot resolve receives), the closures and loop keys it reads that its
+// owners may not write.
 export function getDynamicTagContentClosures(section: Section) {
   const { derives } = section;
   if (
@@ -379,18 +386,27 @@ function mayBeUnwritten(closure: Binding) {
 }
 
 // What a render of `section` reads from above `top`: its own and its nested
-// sections' closures, and those of each `<define>` body a direct call renders.
+// sections' closures and loop keys, and those of each `<define>` body a direct
+// call renders.
 function getClosuresFromAbove(
   section: Section,
   top: Section,
   seen: Set<Section>,
 ): ReferencedBindings {
   // Closures are of ancestors, so those above `top` sort before it.
-  let closures = bindingUtil.leadingRun(
-    section.referencedClosures,
-    bindingToSection,
-    sectionUtil.compare,
-    top,
+  let closures = bindingUtil.union(
+    bindingUtil.leadingRun(
+      section.referencedClosures,
+      bindingToSection,
+      sectionUtil.compare,
+      top,
+    ),
+    bindingUtil.leadingRun(
+      section.referencedConstants,
+      bindingToSection,
+      sectionUtil.compare,
+      top,
+    ),
   );
   for (const child of section.children) {
     closures = bindingUtil.union(

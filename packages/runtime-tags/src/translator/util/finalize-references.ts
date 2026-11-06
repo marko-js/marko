@@ -182,12 +182,14 @@ function resolveReads(intersectionsBySection: Map<Section, Intersection[]>) {
         addSetupWork(expr.section);
       }
       forEach(exprBindings.lazyBindings, markLazyRead);
-      if (exprBindings.closureBindings) {
-        expr.section.referencedClosures = bindingUtil.union(
-          expr.section.referencedClosures,
-          exprBindings.closureBindings,
-        );
-      }
+      expr.section.referencedClosures = bindingUtil.union(
+        expr.section.referencedClosures,
+        exprBindings.referencedClosures,
+      );
+      expr.section.referencedConstants = bindingUtil.union(
+        expr.section.referencedConstants,
+        exprBindings.referencedConstants,
+      );
       if (exprBindings.closureSection) {
         setReadsOwner(expr.section, exprBindings.closureSection);
         if (readsValuesOnResume(expr)) {
@@ -838,7 +840,8 @@ function resolveReferencedBindings(
   let allBindings: ReferencedBindings;
   let lazyBindings: ReferencedBindings;
   let globalBindings: ReferencedBindings;
-  let closureBindings: ReferencedBindings;
+  let referencedClosures: ReferencedBindings;
+  let referencedConstants: ReferencedBindings;
   let closureSection: Section | undefined;
   let hoistedSection: Section | undefined;
 
@@ -875,25 +878,32 @@ function resolveReferencedBindings(
         // no signal, no register-id participation.
         globalBindings = bindingUtil.add(globalBindings, binding);
       } else if (binding.type !== BindingType.dom) {
-        const isLazy = isLazyRead(expr, read, binding, isChangeHandlerRead);
-        if (isLazy) {
+        // A read outside a getter is from this section or an enclosing one.
+        const closure =
+          binding.section !== expr.section &&
+          (getConstantRoot(binding) ?? getCanonicalBinding(binding));
+        if (isLazyRead(expr, read, binding, isChangeHandlerRead)) {
+          // A lazy read subscribes to nothing.
           lazyBindings = bindingUtil.add(lazyBindings, binding);
         } else if (binding.type === BindingType.constant) {
+          // A constant never changes, so even from an enclosing section it is
+          // read in place rather than as a closure.
           constantBindings = bindingUtil.add(constantBindings, binding);
+          if (closure) {
+            referencedConstants = bindingUtil.add(referencedConstants, closure);
+          }
         } else {
           referencedBindings = bindingUtil.add(referencedBindings, binding);
+          if (closure) {
+            referencedClosures = bindingUtil.add(referencedClosures, closure);
+          }
         }
-        // A read outside a getter is from this section or an enclosing one; the
-        // outermost bounds the owner chain, and a lazy read subscribes to nothing.
-        if (binding.section !== expr.section) {
-          const closure =
-            getConstantRoot(binding) ?? getCanonicalBinding(binding);
-          if (!isLazy) {
-            closureBindings = bindingUtil.add(closureBindings, closure);
-          }
-          if (!closureSection || closure.section.depth < closureSection.depth) {
-            closureSection = closure.section;
-          }
+        // The outermost read bounds the owner chain.
+        if (
+          closure &&
+          (!closureSection || closure.section.depth < closureSection.depth)
+        ) {
+          closureSection = closure.section;
         }
       }
     }
@@ -925,7 +935,8 @@ function resolveReferencedBindings(
     allBindings,
     lazyBindings,
     globalBindings,
-    closureBindings,
+    referencedClosures,
+    referencedConstants,
     closureSection,
     hoistedSection,
   };

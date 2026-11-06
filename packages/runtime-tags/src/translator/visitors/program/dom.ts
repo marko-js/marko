@@ -1,7 +1,6 @@
 import { types as t } from "@marko/compiler";
 import { getFile, importDefault } from "@marko/compiler/babel-utils";
 
-import { BindingType } from "../../util/bindings";
 import { getUnusedParamIdentifier } from "../../util/generate-uid";
 import { addTagVarBindings } from "../../util/known-tag";
 import { isOptimize } from "../../util/marko-config";
@@ -50,22 +49,20 @@ export default {
       forEachSectionReverse((childSection) => {
         if (childSection !== section) {
           forEach(childSection.referencedClosures, (closure) => {
-            if (closure.type !== BindingType.constant) {
-              const closureSignal = getSignal(childSection, closure);
-              if (signalHasWork(closureSignal)) {
-                const invocation = t.expressionStatement(
-                  t.callExpression(
-                    isDynamicClosure(childSection, closure)
-                      ? closureSignal.identifier
-                      : t.memberExpression(
-                          closureSignal.identifier,
-                          t.identifier("_"),
-                        ),
-                    [scopeIdentifier],
-                  ),
-                );
-                addStatement("render", childSection, undefined, invocation);
-              }
+            const closureSignal = getSignal(childSection, closure);
+            if (signalHasWork(closureSignal)) {
+              const invocation = t.expressionStatement(
+                t.callExpression(
+                  isDynamicClosure(childSection, closure)
+                    ? closureSignal.identifier
+                    : t.memberExpression(
+                        closureSignal.identifier,
+                        t.identifier("_"),
+                      ),
+                  [scopeIdentifier],
+                ),
+              );
+              addStatement("render", childSection, undefined, invocation);
             }
           });
         }
