@@ -8,7 +8,7 @@ import {
 } from "@marko/compiler/babel-utils";
 
 import type { Falsy } from "../../common/types";
-import { assertHasBody } from "../util/assert";
+import { assertHasBody, coreTagLink } from "../util/assert";
 import { BindingType, createBinding } from "../util/bindings";
 import { initBranchSection } from "../util/branch-tag";
 import { getTagName } from "../util/get-tag-name";
@@ -55,7 +55,7 @@ export default {
           const suggestion =
             name[1] === "p" ? "`<@placeholder>`" : "`<@catch>`";
           throw tag.buildCodeFrameError(
-            `The [\`<try>\` tag](https://markojs.com/docs/reference/core-tag#try) only supports the \`<@placeholder>\` and \`<@catch>\` attribute tags, but received \`<${name}>\`. Did you mean ${suggestion}?`,
+            `The ${coreTagLink(tag)} only supports the \`<@placeholder>\` and \`<@catch>\` attribute tags, but received \`<${name}>\`. Did you mean ${suggestion}?`,
           );
         }
 
@@ -66,8 +66,8 @@ export default {
             .get("name")
             .buildCodeFrameError(
               dynamic
-                ? `The [\`<try>\` tag](https://markojs.com/docs/reference/core-tag#try) needs its \`<${name}>\` written directly inside it, not within control flow such as \`<if>\` or \`<for>\`.`
-                : `The [\`<try>\` tag](https://markojs.com/docs/reference/core-tag#try) takes a single \`<${name}>\`.`,
+                ? `The ${coreTagLink(tag)} needs its \`<${name}>\` written directly inside it, not within control flow such as \`<if>\` or \`<for>\`.`
+                : `The ${coreTagLink(tag)} takes a single \`<${name}>\`.`,
             );
         }
       }
@@ -80,11 +80,21 @@ export default {
           throw child
             .get("name")
             .buildCodeFrameError(
-              `The [\`<try>\` tag](https://markojs.com/docs/reference/core-tag#try)'s \`<${getTagName(child)}>\` takes no attributes, only content.`,
+              `The ${coreTagLink(tag)}'s \`<${getTagName(child)}>\` takes no attributes, only content.`,
             );
         }
       }
     }
+    assertHasBody(tag);
+
+    if (!attrTags) {
+      throw tag
+        .get("name")
+        .buildCodeFrameError(
+          `The ${coreTagLink(tag)} needs a \`<@catch>\` to handle errors or a \`<@placeholder>\` to show while its content is pending. Without either it has no effect, so render its content directly.`,
+        );
+    }
+
     const section = ensureSection(tag);
     const tagExtra = mergeTagReferences(
       section,
@@ -95,16 +105,6 @@ export default {
       BindingType.dom,
       section,
     ));
-
-    assertHasBody(tag);
-
-    if (!attrTags) {
-      throw tag
-        .get("name")
-        .buildCodeFrameError(
-          "The [`<try>` tag](https://markojs.com/docs/reference/core-tag#try) needs a `<@catch>` to handle errors or a `<@placeholder>` to show while its content is pending. Without either it has no effect, so render its content directly.",
-        );
-    }
 
     tagExtra.textBefore = mayMergeWithText(tag, true);
     initBranchSection(ensureBodySection(tag.get("body"))!, tagExtra, {

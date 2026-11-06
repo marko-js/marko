@@ -10,6 +10,7 @@ import {
   assertForParams,
   assertForType,
   assertNoSpreadAttrs,
+  coreTagLink,
   getForAttrs,
 } from "../util/assert";
 import { type Binding, BindingType, getPropertyAlias } from "../util/bindings";
@@ -88,13 +89,11 @@ export default {
     }
 
     // Redirect the React/Vue `key=` habit to `by=` before the generic error.
-    const keyAttr = tag.node.attributes.find(
-      (attr) => attr.type === "MarkoAttribute" && attr.name === "key",
-    );
+    const keyAttr = tag.node.attributes.find(isKeyAttr);
     if (keyAttr) {
       throw tag.hub.buildError(
         keyAttr,
-        `The [\`<for>\` tag](https://markojs.com/docs/reference/core-tag#for) keys items with the \`by=\` attribute, not \`key=\`. ${
+        `The ${coreTagLink(tag)} keys items with the \`by=\` attribute, not \`key=\`. ${
           forType === "of"
             ? 'Use `by="propName"` or `by=(item, index) => key`'
             : forType === "in"
@@ -113,15 +112,14 @@ export default {
       if (paramsBinding) {
         setDerivedFrom(
           paramsBinding,
-          fromIter(
-            tag.node.attributes.map((attr) => (attr.value.extra ??= {})),
-          ),
+          fromIter(tag.node.attributes.map(getAttrValueExtra)),
         );
       }
       return;
     }
 
-    const byAttr = getKnownAttrValues(tag.node).by;
+    const forAttrs = getKnownAttrValues(tag.node);
+    const byAttr = forAttrs.by;
     if (byAttr) (byAttr.extra ??= {}).consumed = true;
 
     // Only `<for of>` accepts a string `by` (property-name shorthand); `in`/`to`/`until`
@@ -129,7 +127,7 @@ export default {
     if (forType !== "of" && byAttr?.type === "StringLiteral") {
       throw tag.hub.buildError(
         byAttr,
-        `The [\`<for>\` tag](https://markojs.com/docs/reference/core-tag#for) only supports a string \`by\` key with \`of\`; use a \`by=(${
+        `The ${coreTagLink(tag)} only supports a string \`by\` key with \`of\`; use a \`by=(${
           forType === "in" ? "key, value" : "index"
         }) => ...\` function for \`<for ${forType}>\`.`,
       );
@@ -156,12 +154,12 @@ export default {
       setDerivedFrom(paramsBinding, tagExtra);
       if (forType === "of" || forType === "in") {
         paramsBinding.iterates = {
-          expr: (getKnownAttrValues(tag.node)[forType]!.extra ??= {}),
+          expr: (forAttrs[forType].extra ??= {}),
           type: forType,
         };
       }
 
-      const keyBinding = getLoopKeyBinding(byAttr, paramsBinding, forType!);
+      const keyBinding = getLoopKeyBinding(byAttr, paramsBinding, forType);
       if (keyBinding) {
         // A branch is keyed by its key, so the key never changes within it.
         keyBinding.type = BindingType.constant;
@@ -197,8 +195,7 @@ export default {
         const forAttrs = getKnownAttrValues(node);
         const forType = getForType(node)!;
         const params = node.body.params;
-        const statements: t.Statement[] = [];
-        const bodyStatements = node.body.body as t.Statement[];
+        const bodyStatements = node.body.body;
         const branchReason = getBranchWriteReason(bodySection);
 
         resumeOwnerByMarkerWhenUnconditional(bodySection, nodeBinding);
@@ -222,16 +219,14 @@ export default {
             ...getBranchResumeArgs(
               tag,
               branchReason,
-              isSingleNodeContent(bodySection?.content),
+              isSingleNodeContent(bodySection.content),
             ),
           );
         }
 
-        statements.push(
+        replaceWithStatements(tag, [
           t.expressionStatement(callRuntime(forTagHTMLRuntime, ...forTagArgs)),
-        );
-
-        replaceWithStatements(tag, statements);
+        ]);
       },
     },
     dom: {
@@ -367,10 +362,9 @@ export default {
 
 function getLoopKeyBinding(
   byAttr: t.Expression | undefined,
-  paramsBinding: Binding | undefined,
+  paramsBinding: Binding,
   forType: ForType,
 ): Binding | undefined {
-  if (!paramsBinding) return;
   if (byAttr) {
     const item = paramsBinding.propertyAliases.get("0");
     return item && getKeyAlias(byAttr, item);
@@ -456,7 +450,11 @@ function getLoopArgs(type: ForType, attrs: Record<string, t.Expression>) {
         ]
       : [attrs[type], attrs.by];
   while (!args.at(-1)) args.pop();
-  return args.map((arg) => arg || t.numericLiteral(0));
+  return args.map(zeroIfOmitted);
+}
+
+function zeroIfOmitted(arg: t.Expression | undefined) {
+  return arg || t.numericLiteral(0);
 }
 
 function isConstantOrOmitted(node: t.Expression | undefined) {
@@ -465,4 +463,12 @@ function isConstantOrOmitted(node: t.Expression | undefined) {
 
 function isNumberOrOmitted(node: t.Expression | undefined, value: number) {
   return !node || (node.type === "NumericLiteral" && node.value === value);
+}
+
+function isKeyAttr(attr: t.MarkoTag["attributes"][number]) {
+  return attr.type === "MarkoAttribute" && attr.name === "key";
+}
+
+function getAttrValueExtra(attr: t.MarkoTag["attributes"][number]) {
+  return (attr.value.extra ??= {});
 }

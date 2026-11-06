@@ -12,6 +12,7 @@ import {
   assertNoSpreadAttrs,
   assertOnlyValueAttr,
   buildAttrsError,
+  coreTagLink,
 } from "../util/assert";
 import { bodyToUncoercedText } from "../util/body-to-text";
 import {
@@ -132,14 +133,12 @@ export const IfTag = {
 
           for (let i = branches.length; i--;) {
             const [branchTag, branchBodySection] = branches[i];
-            const bodyStatements = branchTag.node.body.body;
+            const bodyStatements: t.Statement[] = branchTag.node.body.body;
             if (branchBodySection) {
               const branchReason = getBranchWriteReason(branchBodySection);
               if (branchReason) {
                 branchReasons = sourcesUtil.add(branchReasons, branchReason);
-                bodyStatements.push(
-                  t.returnStatement(t.numericLiteral(i)) as any,
-                );
+                bodyStatements.push(t.returnStatement(t.numericLiteral(i)));
               }
             }
 
@@ -170,9 +169,7 @@ export const IfTag = {
                 ...getBranchResumeArgs(
                   ifTag,
                   branchReasons,
-                  branches.every(([, branchBody]) =>
-                    isSingleNodeContent(branchBody?.content),
-                  ),
+                  branches.every(isSingleNodeBranch),
                 ),
               ),
             );
@@ -193,7 +190,7 @@ export const IfTag = {
           const branches = getBranches(tag);
           const [ifTag] = branches[0];
           const ifTagSection = getSection(ifTag);
-          const ifTagExtra = branches[0][0].node.extra!;
+          const ifTagExtra = ifTag.node.extra!;
           const nodeBinding = ifTagExtra.nodeBinding!;
 
           let expr: t.Expression = t.numericLiteral(branches.length);
@@ -352,7 +349,7 @@ function assertValidCondition(tag: t.NodePath<t.MarkoTag>) {
   assertHasBody(tag);
   assertNoSpreadAttrs(tag);
 
-  switch (getTagName(tag)) {
+  switch (conditionTagName) {
     case "if":
       assertOnlyValueAttr(tag, true);
       break;
@@ -376,7 +373,7 @@ function assertHasPrecedingCondition(tag: t.NodePath<t.MarkoTag>) {
     (getTagName(prev) === "else" && !prev.node.attributes.length)
   ) {
     throw tag.buildCodeFrameError(
-      `The [\`<${getTagName(tag)}>\` tag](https://markojs.com/docs/reference/core-tag#if--else) must have a preceding \`<if=cond>\` or \`<else if=cond>\`.`,
+      `The ${coreTagLink(tag)} must have a preceding \`<if=cond>\` or \`<else if=cond>\`.`,
     );
   }
 }
@@ -391,7 +388,7 @@ function assertOptionalIfAttribute(tag: t.NodePath<t.MarkoTag>) {
     throw buildAttrsError(
       tag,
       attributes.filter((attr) => attr !== ifAttr),
-      "The [`<else>` tag](https://markojs.com/docs/reference/core-tag#if--else) only supports the `if=` attribute.",
+      `The ${coreTagLink(tag)} only supports the \`if=\` attribute.`,
     );
   }
 }
@@ -424,6 +421,13 @@ function getNextBranchTag(tag: t.NodePath<t.MarkoTag>) {
 function isLastBranch(tag: t.NodePath<t.MarkoTag>) {
   const branches = getBranches(tag);
   return branches[branches.length - 1][0] === tag;
+}
+
+function isSingleNodeBranch([, bodySection]: [
+  t.NodePath<t.MarkoTag>,
+  Section | undefined,
+]) {
+  return isSingleNodeContent(bodySection?.content);
 }
 
 function isIfAttr(attr: t.MarkoTag["attributes"][number]) {

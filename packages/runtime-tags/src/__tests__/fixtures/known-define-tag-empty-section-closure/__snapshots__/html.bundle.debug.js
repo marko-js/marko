@@ -22,7 +22,7 @@ var test_default = _template("__tests__/tags/test.marko", (input) => {
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	let m = undefined;
+	let m = void 0;
 	_html("<div>");
 	_if(() => {
 		if (m) {

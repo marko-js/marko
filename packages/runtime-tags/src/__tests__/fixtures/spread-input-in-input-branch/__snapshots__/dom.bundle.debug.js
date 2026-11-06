@@ -44,7 +44,7 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	});
 });
 function $setup($scope) {
-	$href($scope, undefined);
+	$href($scope, void 0);
 	$count($scope, 0);
 	$setup__script($scope);
 }

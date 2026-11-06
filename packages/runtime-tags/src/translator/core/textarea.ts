@@ -1,6 +1,7 @@
 import { types as t } from "@marko/compiler";
 import { decodeHTML, getFile } from "@marko/compiler/babel-utils";
 
+import { isValueAttr } from "../util/assert";
 import buildStringExpression from "../util/build-string-expression";
 
 export function preAnalyze(tag: t.NodePath<t.MarkoTag>) {
@@ -32,9 +33,7 @@ export function preAnalyze(tag: t.NodePath<t.MarkoTag>) {
 
     const textValue = buildStringExpression(parts);
     if (textValue) {
-      const valueAttr = tag.node.attributes.find(
-        (attr) => t.isMarkoAttribute(attr) && attr.name === "value",
-      );
+      const valueAttr = tag.node.attributes.find(isValueAttr);
       if (valueAttr) {
         throw getFile().hub.buildError(
           valueAttr,
