@@ -10,6 +10,7 @@ import {
   Boundary,
   Chunk,
   FlushStatus,
+  NOOP,
   offTick,
   queueTick,
   State,
@@ -33,7 +34,7 @@ export const _template = (
   page?: 1,
 ) => {
   (renderer as unknown as Template).render = render;
-  (renderer as unknown as ServerRenderer)[RendererProp.Embed] = !page;
+  renderer[RendererProp.Embed] = !page;
   (renderer as unknown as any)._ = renderer; // This is added exclusively for the compat layer, maybe someday it can be removed.
 
   if (MARKO_DEBUG) {
@@ -437,5 +438,3 @@ function settle(boundary: Boundary) {
   boundary.onNext = NOOP;
   boundary.state.$global.signal?.removeEventListener("abort", boundary);
 }
-
-function NOOP() {}

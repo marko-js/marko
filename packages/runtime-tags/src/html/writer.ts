@@ -2,7 +2,7 @@ import { _el_read_error, _hoist_read_error } from "../common/errors";
 import { hasKeys, normalizeDynamicRenderer } from "../common/helpers";
 import { PLACEHOLDER_DISMISS_REGISTER_ID } from "../common/meta";
 /* eslint-disable @typescript-eslint/no-this-alias */
-import { concat, type Opt, push, reduce } from "../common/opt";
+import { concat, type Opt, push, reduce, toArray } from "../common/opt";
 import {
   type $Global,
   type Accessor,
@@ -93,10 +93,8 @@ export function getScopeId(scope: unknown): number | undefined {
   return (scope as ScopeInternals)[K_SCOPE_ID];
 }
 
-export function getScopeById(scopeId: number | undefined) {
-  if (scopeId !== undefined) {
-    return $chunk.boundary.state.scopes.get(scopeId);
-  }
+export function getScopeById(scopeId: number) {
+  return $chunk.boundary.state.scopes.get(scopeId);
 }
 
 export function $global() {
@@ -248,7 +246,7 @@ export function _script(
 ) {
   if (
     markerGuard === 0 &&
-    ($chunk.channel.readyId || $chunk.context?.[kAsyncContent])
+    ($chunk.channel.readyId || getAsyncContent($chunk))
   ) {
     _resume_branch(scopeId);
   }
@@ -360,7 +358,7 @@ function markText(
 }
 
 export function _resume_branch(scopeId: number) {
-  const branchId = $chunk.context?.[kBranchId];
+  const branchId = getContext(kBranchId);
   if (branchId !== undefined && branchId !== scopeId) {
     writeScope(scopeId, { [AccessorProp.ClosestBranchId]: branchId });
   }
@@ -634,8 +632,6 @@ function unsubscribe(subscribed: unknown[], serializer: SerializerState) {
   }
 }
 
-const NOOP = () => {};
-
 // Counted up the parent chain so an enclosing `<try>` sees writes from nested
 // bodies, including ones reordered out of its own chunk chain.
 function countResumeWrite(chunk: Chunk) {
@@ -846,6 +842,8 @@ export class State implements Channel {
 
 type FlushStatus = FlushStatus.Value;
 export { FlushStatus };
+
+export function NOOP() {}
 
 export class Boundary {
   public onNext = NOOP;
@@ -1268,7 +1266,7 @@ export class Chunk {
     let scripts = "";
     const held = this.takeDeferredReady();
     if (held) {
-      for (const chunk of Array.isArray(held) ? held : [held]) {
+      for (const chunk of toArray(held)) {
         // A caught body's lazy content writes nothing.
         if (chunk.boundary.aborted) continue;
         scripts = concatScripts(
@@ -1382,9 +1380,7 @@ export class Chunk {
     if (effects) {
       needsWalk = true;
       flushSerializerGlobals(boundary);
-      state.resumes = state.resumes
-        ? state.resumes + ',"' + effects + '"'
-        : '"' + effects + '"';
+      state.resumes = concatSequence(state.resumes, '"' + effects + '"');
     }
 
     let reordered = "";
@@ -1706,8 +1702,6 @@ function depsMarker(deps: Set<string> | null) {
 }
 
 function getFilteredGlobals($global: Record<string, unknown>) {
-  if (!$global) return 0;
-
   const serializedGlobals = $global.serializedGlobals as
     | string[]
     | Record<string, boolean>
@@ -1721,11 +1715,7 @@ function getFilteredGlobals($global: Record<string, unknown>) {
     for (const key of serializedGlobals) {
       const value = $global[key];
       if (value !== undefined) {
-        if (filtered) {
-          filtered[key] = value;
-        } else {
-          filtered = { [key]: value };
-        }
+        (filtered ||= {})[key] = value;
       }
     }
   } else {
@@ -1733,11 +1723,7 @@ function getFilteredGlobals($global: Record<string, unknown>) {
       if (serializedGlobals[key]) {
         const value = $global[key];
         if (value !== undefined) {
-          if (filtered) {
-            filtered[key] = value;
-          } else {
-            filtered = { [key]: value };
-          }
+          (filtered ||= {})[key] = value;
         }
       }
     }
