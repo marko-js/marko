@@ -107,7 +107,7 @@ export let flushWait: () => (applied: unknown) => void;
 
 // A scope's link from its parent: a child accessor, or a loop item's index
 // with its key when that differs.
-export type PatchHop = string | [accessor: string, at: LoopItemAt];
+export type PatchHop = string | [accessor: string, at: LoopItemAt] | Scope;
 export type LoopItemAt = number | [index: number, key: unknown];
 
 // `_(path, id, content or locals?)` in a flush: a registration bound to the

@@ -10,7 +10,7 @@ import { installKeptInstances, registerShell } from "./shells";
 
 declare module "./apply" {
   interface PatchValues {
-    [PatchKey.ClientBranch]: Scope;
+    [PatchKey.ClientBranch]: Scope | ((instance: Scope) => Scope);
   }
 }
 
@@ -24,7 +24,7 @@ patchers[PatchKey.ClientBranch] = (scope, section, value) => {
   for (const instance of (scope[AccessorPrefix.ClosureScopes + section] as
     | Set<Scope>
     | undefined) || []) {
-    if (instance[AccessorProp.Gen] > 0) patchScope(value, instance);
+    if (instance[AccessorProp.Gen] > 0) patchInstance(value, instance);
   }
 };
 
@@ -47,8 +47,17 @@ installKeptInstances((branch, id) => {
     const owner = branch[AccessorProp.Owner]!;
     const holes = owner[AccessorPrefix.ClientBranchHoles + section] as
       | Scope
+      | ((instance: Scope) => Scope)
       | undefined;
     subscribeToScopeSet(owner, AccessorPrefix.ClosureScopes + section, branch);
-    if (holes) patchScope(holes, branch);
+    if (holes) patchInstance(holes, branch);
   }
 });
+
+// Holes naming the instance's own scopes (`s=>(…)`) bind to each instance they apply to.
+function patchInstance(
+  holes: Scope | ((instance: Scope) => Scope),
+  instance: Scope,
+) {
+  patchScope(typeof holes === "function" ? holes(instance) : holes, instance);
+}

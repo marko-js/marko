@@ -1,5 +1,5 @@
 import { ROOT_SCOPE_ID } from "../../common/meta";
-import { RendererProp } from "../../common/types";
+import { PatchKey, RendererProp } from "../../common/types";
 import {
   K_SCOPE_ID,
   Reference,
@@ -32,6 +32,10 @@ export class PatchSerializerState extends SerializerState {
   // A flush's tree is no live scope, so a later flush references it by its
   // index here, which the client's response context counts the same way.
   trees = 0;
+
+  // Kept content's holes the client applies to each instance it holds: written as
+  // `s=>(…)`, where a reference owned inside names its scope from the instance.
+  perInstance = new Map<object, string>();
 
   // Each flush is its own tree (the scope object is shared).
   override scopeRef() {
@@ -84,11 +88,17 @@ export class PatchSerializerState extends SerializerState {
     const content = (val as { [RendererProp.Id]?: string })[RendererProp.Id];
     // Content keeps one identity, as main's write does; a bind makes its function anew.
     if (content) this.refs.set(val, ref);
+    const scopeId = (registered.scope as ScopeInternals)[K_SCOPE_ID]!;
+    let start = scopeId;
+    while (
+      start !== ROOT_SCOPE_ID &&
+      !this.render.patchLinks[start].key?.startsWith(PatchKey.ClientBranch)
+    ) {
+      start = this.render.patchLinks[start].parent;
+    }
     this.buf.push("_([");
-    this.writeScopePath(
-      (registered.scope as ScopeInternals)[K_SCOPE_ID]!,
-      registered.id,
-    );
+    if (start !== ROOT_SCOPE_ID) this.buf.push(this.instanceParam(start));
+    this.writeScopePath(scopeId, registered.id, start);
     this.buf.push(
       "]," + quoteRegistryId(shipNamedShell(this.render, registered.id)),
     );
@@ -99,15 +109,32 @@ export class PatchSerializerState extends SerializerState {
     this.buf.push(")");
   }
 
+  // The holes' parameter for kept content rendered at `scopeId`, one name per
+  // nesting depth so holes inside other kept content can name either instance.
+  instanceParam(scopeId: number) {
+    const node = this.render.patchTree![scopeId]!;
+    let param = this.perInstance.get(node);
+    if (!param) {
+      let depth = 0;
+      for (let id = scopeId; id !== ROOT_SCOPE_ID;) {
+        const link = this.render.patchLinks[id];
+        if (link.key?.startsWith(PatchKey.ClientBranch)) depth++;
+        id = link.parent;
+      }
+      this.perInstance.set(node, (param = "s" + (depth > 1 ? depth : "")));
+    }
+    return param;
+  }
+
   // Patch scope ids have no client-side map, so a bound registration names
   // its scope by the links down from the page root (written root first).
-  writeScopePath(scopeId: number, id: string) {
-    if (scopeId === ROOT_SCOPE_ID) return;
+  writeScopePath(scopeId: number, id: string, start: number) {
+    if (scopeId === start) return;
     if (MARKO_DEBUG && !this.render.patchLinks[scopeId]) {
       throw new Error(`A patch cannot send the scoped registration "${id}".`);
     }
     const link = this.render.patchLinks[scopeId];
-    this.writeScopePath(link.parent, id);
+    this.writeScopePath(link.parent, id, start);
     if (link.parent !== ROOT_SCOPE_ID) this.buf.push(",");
     // Accessors are compiler-made (nothing to escape); a loop key is data.
     const hop = link.hop;
@@ -225,8 +252,13 @@ function writePatchTreeNode(
     }
     state.buf.push(sep === "[" ? "[]" : "]");
   } else {
-    state.buf.push("{");
+    const start = state.buf.push("{") - 1;
     writePatchProps(state, node, ref, patchTreeNodes);
     state.buf.push("}");
+    const param = state.perInstance.get(node);
+    if (param) {
+      state.buf[start] = param + "=>(" + state.buf[start];
+      state.buf.push(")");
+    }
   }
 }
