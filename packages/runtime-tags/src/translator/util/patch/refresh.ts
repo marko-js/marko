@@ -1319,39 +1319,41 @@ export function recordDataSite(
 
 // Kept content serves its holes to every instance, and data names one scope: content
 // whose holes would carry, as data, a function or content its instance owns renders
-// on the client instead, as main does (a known child's whole attribute binds per scope).
+// on the client instead, as main does (a known child's whole function attribute binds
+// per scope already).
 export function carriesOwnedData(section: Section) {
   return (
-    !!section.derives &&
-    sendsOwnedData(section) &&
-    rendersFromChildState(section)
+    !!section.derives && ownsData(section) && rendersFromChildState(section)
   );
 }
 
-const [sendsOwnedData] = createAnalysisMemo((content: Section) => {
+// Data in `root` or a body it calls (another template's, or a `<define>`'s, rendered
+// in its instance) that may hold a function or content created there.
+const [ownsData] = createAnalysisMemo((root: Section): boolean => {
   const owned = new Set<Binding>();
   const inside: Section[] = [];
-  forEachSection((section) => {
-    if (isWithin(section, content)) {
-      inside.push(section);
-      if (section !== content) {
-        forEach(section.derives?.binding, (binding) => owned.add(binding));
-      }
+  const walk = (section: Section) => {
+    inside.push(section);
+    if (section !== root) {
+      forEach(section.derives?.binding, (binding) => owned.add(binding));
     }
-  });
+    for (const child of section.children) walk(child);
+  };
+  walk(root);
   const ownsFn = (expr: t.NodeExtra) =>
     isTrackedFunction(expr) &&
     isScopeBoundFn(expr) &&
-    isWithin((expr as ReferencedExtra).section, content);
-  return inside.some((section) =>
-    dataSites
-      .get(section)
-      ?.some(
-        ({ extra, whole }) =>
-          (!(whole && holdsOnlyRegisteredFns(extra)) &&
-            someFnValue(extra, ownsFn)) ||
-          holdsOneOf(extra, owned),
-      ),
+    isWithin((expr as ReferencedExtra).section, root);
+  return inside.some(
+    (section) =>
+      dataSites
+        .get(section)
+        ?.some(
+          ({ extra, whole }) =>
+            (!(whole && holdsOnlyRegisteredFns(extra)) &&
+              someFnValue(extra, ownsFn)) ||
+            holdsOneOf(extra, owned),
+        ) || !!section.knownTags?.some((call) => ownsData(call.childSection)),
   );
 }, false);
 
