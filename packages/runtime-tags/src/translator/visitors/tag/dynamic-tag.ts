@@ -180,7 +180,7 @@ export default {
       if (inputNodes.length) tagExtra.retained = true;
       const tagBody = tag.get("body");
       const hasVar = !!tag.node.var;
-      const usesVar = hasVar && isTagVarUsed(tag);
+      const usesVar = isTagVarUsed(tag);
       let isInteractive = usesVar;
       for (const attr of node.attributes) {
         if (t.isMarkoSpreadAttribute(attr)) {
