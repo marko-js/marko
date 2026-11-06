@@ -453,8 +453,6 @@ function seedsParam(binding: Binding) {
 export interface FillConditions {
   structure?: SortedOpt<Sources>;
   intersections?: SortedOpt<Sources>;
-  // A nested member's fill re-runs the intersection: it fills under that member's group.
-  fills?: SortedOpt<Sources>;
   // What its section's end sees.
   contents?: SortedOpt<Section>;
   // The `<await>` bodies a read crosses handing it on to what may keep it.
@@ -622,15 +620,7 @@ function getReadKind(
         getExprBranch(read)?.kind !== "await" &&
         getOtherInputs(sources, binding);
       if (others && hasTagCallerParamAt(others, binding.section)) {
-        // A nested member's own fill (a loop row's, intersecting state) also re-runs
-        // the intersection, unless it is a hole the flush fills itself.
-        const fills = isFilledHole(read)
-          ? undefined
-          : reduce(refs, addNestedMemberFill);
-        conditions = mergeConditions(conditions, {
-          intersections: others,
-          fills,
-        });
+        conditions = mergeConditions(conditions, { intersections: others });
       }
     }
     // An intersection with a param of a body outside the binding's is computed where
@@ -813,12 +803,6 @@ function getDefineCallSources(sources: Sources | undefined, section: Section) {
   return passed;
 }
 
-function addNestedMemberFill(fills: SortedOpt<Sources>, member: Binding) {
-  return !isKnownChild(member.section) && getPatchFill(member).fill
-    ? sourcesUtil.add(fills, getSourcesForReferencedBindings(member)!)
-    : fills;
-}
-
 // The params a read intersects besides the binding's own that a write in its
 // section gates on: a caller passes each.
 function getOtherInputs(sources: Sources | undefined, binding: Binding) {
@@ -887,7 +871,6 @@ function mergeConditions(
   return {
     structure: sourcesUtil.union(a?.structure, b.structure),
     intersections: sourcesUtil.union(a?.intersections, b.intersections),
-    fills: sourcesUtil.union(a?.fills, b.fills),
     contents: sectionUtil.union(a?.contents, b.contents),
     passedUnder: sectionUtil.union(a?.passedUnder, b.passedUnder),
     members: sourcesUtil.union(a?.members, b.members),
@@ -1693,7 +1676,7 @@ export const rendersFilledIntersection = createPassMemo(
 function getFilledMembers(kind: true | FillConditions | undefined) {
   return kind !== true &&
     kind?.members &&
-    !(kind.structure || kind.intersections || kind.fills || kind.contents)
+    !(kind.structure || kind.intersections || kind.contents)
     ? kind.members
     : undefined;
 }
