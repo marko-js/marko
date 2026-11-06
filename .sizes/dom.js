@@ -1,4 +1,4 @@
-// size: 27142 (min) 10127 (brotli)
+// size: 27130 (min) 10113 (brotli)
 // packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -2204,7 +2204,7 @@ function _load_template(id, load) {
       0,
       0,
       (branch) => {
-        let awaitCounter = startAwait(branch);
+        let awaitCounter = void 0;
         ((branch.X ||= /* @__PURE__ */ new Map()),
           (pending ||= load()).then(
             (renderer) => {
@@ -2228,7 +2228,7 @@ function _load_setup(load) {
     if (((child.X ||= /* @__PURE__ */ new Map()), renderer))
       queueRender(child, insertCached, -1, marker);
     else {
-      let awaitCounter = startAwait(owner);
+      let awaitCounter = void 0;
       (pending ||= load()).then(
         (mod) => {
           ((renderer ||= _content("", ...mod._)()),
@@ -2255,7 +2255,7 @@ function insertLoaded(renderer, branch, marker, awaitCounter) {
     },
     remaining;
   if ((remaining = values.size)) {
-    awaitCounter ||= startAwait(branch);
+    awaitCounter ||= void 0;
     let fail = loadFailed(branch, awaitCounter);
     values.forEach(([, apply], promise) =>
       promise.then(

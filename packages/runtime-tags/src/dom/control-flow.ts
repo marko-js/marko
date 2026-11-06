@@ -286,6 +286,20 @@ export function startAwait(
   return awaitCounter;
 }
 
+// Placeholder support latch, set by `placeholder.feat`: only a page with a
+// `@placeholder` has a `<try>` for a load to count toward.
+let placeholderEnabled: undefined | 1;
+
+export function withPlaceholder() {
+  placeholderEnabled = 1;
+}
+
+// Checked beside `startAwait`, not in `load`: a split build folds a latch only
+// within a chunk, so the check must share one with the code it drops.
+export function startLoadAwait(scope: Scope) {
+  return placeholderEnabled && startAwait(scope);
+}
+
 function countAwait(
   awaitCounter: AwaitCounter,
   scope: Scope,

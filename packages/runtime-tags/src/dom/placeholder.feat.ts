@@ -1,5 +1,6 @@
 import { PLACEHOLDER_DISMISS_REGISTER_ID } from "../common/meta";
 import { AccessorProp, type BranchScope } from "../common/types";
+import { withPlaceholder } from "./control-flow";
 import { _resumed } from "./resume";
 import { destroyBranch } from "./scope";
 
@@ -11,3 +12,5 @@ _resumed[PLACEHOLDER_DISMISS_REGISTER_ID] = (tryBranch: BranchScope) => {
     tryBranch[AccessorProp.PlaceholderBranch] = 0;
   }
 };
+
+withPlaceholder();
