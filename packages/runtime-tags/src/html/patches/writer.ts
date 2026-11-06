@@ -352,7 +352,7 @@ export function linkScopePatch(
       if (contentId) shipShell(state, contentId);
       const entry = slotIds && patchTreeNode(state, [patch, ...slotIds]);
       const key = link.key || PatchKey.Child + hop;
-      if (link.setup) {
+      if (link.setup === state.flushes) {
         ensurePatchSetup(state, ensureScopePatch(state, parent))[key] =
           entry || patch;
       } else {
@@ -422,8 +422,9 @@ export interface PatchLink {
   slotIds?: (string | undefined)[];
   // A content body's owner (its client `_`) when not the rendering scope.
   owner?: number;
-  // Linked into the parent's setup: only a created parent takes it.
-  setup?: boolean;
+  // Linked into the parent's setup by the flush creating it (its count): only
+  // a created parent takes it, so a later flush links as a child.
+  setup?: number;
   // The parent's entry key, where not a child entry's.
   key?: string;
 }
@@ -544,6 +545,8 @@ export class PatchRenderState extends PatchPageState {
   // none leaves the page's token as it is.
   public heldCount = 0;
   public pendingShells = "";
+  // Flushes joined so far: a setup link holds the one that made it.
+  public flushes = 0;
   override serializer = new PatchSerializerState(this);
   // A flush carries every entry rendered so far, so a patch never reorders: the
   // client creates a shown `@placeholder` from the shell its render ships.
@@ -618,6 +621,7 @@ export class PatchRenderState extends PatchPageState {
       out += ";" + encodeHeld(this.heldShells) + "\n";
     }
     this.patchTree = this.patchTreeNodes = this.setupIds = undefined;
+    this.flushes++;
     return out;
   }
 
@@ -684,7 +688,7 @@ export function linkBranch(
     contentId,
     slotIds,
     owner: ownerScopeId,
-    setup,
+    setup: setup ? state.flushes : undefined,
   };
 }
 

@@ -1538,6 +1538,19 @@ export function isClientRenderedClosure(closure: Binding, section: Section) {
   );
 }
 
+// A closure an `<await>` here takes its promise from: where no patch fills the
+// promise, a created scope's client settles it, so its subscriber renders at setup.
+export function settlesAwaitFrom(section: Section, closure: Binding) {
+  return section.children.some(
+    (body) =>
+      body.branch?.kind === "await" &&
+      some(
+        getReferencedBindings(body.branchExpr!),
+        (ref) => getCanonicalBinding(ref) === closure,
+      ),
+  );
+}
+
 // A created scope's closure sets up from the value a caller's client contributes,
 // a mixed one's too where the server's own value renders it otherwise.
 export function setupFromClient(

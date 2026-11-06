@@ -137,6 +137,7 @@ import {
   runsEffectOnPatch,
   runsSubscribersByWrite,
   seedsOwnerConstant,
+  settlesAwaitFrom,
 } from "./refresh";
 import { getParamSelectedStructure } from "./structure";
 
@@ -467,6 +468,7 @@ export function writePatchResumeStatements(
             section,
             ref,
             setupFromClient(section, ref, setup.setup),
+            settlesAwaitFrom(section, ref),
           ),
         ),
       );
@@ -927,11 +929,13 @@ function buildClientSetup(
 }
 
 // A created subscriber enters its owner's set where no patch fills the closure,
-// running its setup where the client contributes, else resuming.
+// running its setup where the client contributes or settles an `<await>` from it,
+// else resuming.
 function buildSubscribe(
   section: Section,
   closure: Binding,
   fromClient: boolean,
+  settlesAwait: boolean,
 ) {
   return andGuard(
     getCallerGroupGuard(section, "_unfilled_if", closure.sources),
@@ -939,8 +943,10 @@ function buildSubscribe(
       "_patch_subscribe",
       getScopeIdIdentifier(section),
       t.stringLiteral(getResumeRegistryId(section, closure, "subscribe")),
-      fromClient &&
-        getCallerGroupGuard(section, "_client_guard", closure.sources),
+      settlesAwait
+        ? t.numericLiteral(1)
+        : fromClient &&
+            getCallerGroupGuard(section, "_client_guard", closure.sources),
     ),
   );
 }
