@@ -1,8 +1,9 @@
 <let/x=1/>
 <let/yChange(newValue) { x = newValue + 1; }/>
 <let/y=x valueChange=yChange/>
+<let/z valueChange=yChange/>
 <button id="inc" onClick() { y++; }>
-  ${x}|${y}
+  ${x}|${y}|${z}
 </button>
 <button id="toggle" onClick() { yChange = null; }>
   toggle

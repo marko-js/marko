@@ -170,7 +170,7 @@ export function absentArg(value: 0 | 1) {
 
 const absentArgs = new WeakSet<t.Node>();
 
-function trimFalsyArgs<A extends t.Node>(args: (A | Falsy)[]) {
+export function trimFalsyArgs<A extends t.Node>(args: (A | Falsy)[]) {
   const filteredArgs = [];
   for (let i = args.length; i--;) {
     const arg = args[i];

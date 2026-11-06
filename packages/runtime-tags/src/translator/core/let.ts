@@ -109,8 +109,7 @@ export default {
         return;
       }
       const tagVar = node.var!;
-      const { value = t.buildUndefinedNode(), valueChange } =
-        getKnownAttrValues(node);
+      const { value, valueChange } = getKnownAttrValues(node);
       const section = getSection(tag);
       const binding = tagVar.extra!.binding!;
 
@@ -148,7 +147,7 @@ export default {
           }
         };
       } else {
-        translateVar(tag, value, "let");
+        translateVar(tag, value || t.buildUndefinedNode(), "let");
 
         if (unused) {
           if (valueChange && !evaluate(valueChange).pure) {
