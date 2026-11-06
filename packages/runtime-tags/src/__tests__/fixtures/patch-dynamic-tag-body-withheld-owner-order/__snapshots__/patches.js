@@ -2,6 +2,7 @@
 `b !b1; b%;<button class=toggle>t</button><!><!>`
 {
   ca: {
+    O: 1,
     fa: "b",
     cAa: {
       ib0: "e",
@@ -9,7 +10,7 @@
         vb2: !0
       },
       xe: _.a = {
-        content: _(["a"], "a0", 1)
+        content: _([1], "a0", 1)
       }
     },
     fb: "b",
@@ -24,6 +25,7 @@
     xe: "a2"
   },
   cc: {
+    O: 2,
     fa: "b",
     cAa: {
       ib0: "e",
@@ -31,7 +33,7 @@
         vb2: !0
       },
       xe: {
-        content: _(["c"], "a0", 1)
+        content: _([2], "a0", 1)
       }
     },
     fb: "b",

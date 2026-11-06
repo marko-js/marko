@@ -3,10 +3,11 @@ a, `b1 !b>a1;D%b/ b&l;<main><!><button>go</button></main>`
 {
   ba: [{
     cb: {
+      O: 1,
       xd: "b",
       ja: {
         title: "b",
-        onClick: _(["Aa", "b"], "a0")
+        onClick: _([1], "a0")
       },
       ea1: "d"
     }
@@ -23,10 +24,11 @@ a, `b1 !b>a1;D%b/ b&l;<main><!><button>go</button></main>`
 a, {
   ba: [{
     cb: {
+      O: 1,
       xd: "c",
       ja: {
         title: "c",
-        onClick: _(["Aa", "b"], "a0")
+        onClick: _([1], "a0")
       },
       ea1: "d"
     }

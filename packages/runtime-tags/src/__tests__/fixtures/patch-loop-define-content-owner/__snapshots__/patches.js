@@ -83,6 +83,7 @@
 // PATCH holding Ef4
 {
   la: [2, {
+    O: 1,
     cc: {
       s: {
         ta: "direct"
@@ -106,9 +107,7 @@
       fa: [">span", 0, {
         label: "z",
         content: {
-          content: _([
-            ["a", [0, 2]]
-          ], "a3", 1)
+          content: _([1], "a3", 1)
         }
       }],
       cAa: {

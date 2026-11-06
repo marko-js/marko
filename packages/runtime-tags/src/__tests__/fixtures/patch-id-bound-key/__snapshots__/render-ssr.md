@@ -283,62 +283,107 @@
 ```
 ## Change
 ```
-REMOVE: button:nth-of-type(10) + label
-REMOVE: button:nth-of-type(10) + #sM_g0A
-REMOVE: button:nth-of-type(10) + p
-INSERT: label, #sM_g0A, p
-REMOVE: button:nth-of-type(10) + label
-REMOVE: button:nth-of-type(10) + #sM_R6a_00wbA
-REMOVE: button:nth-of-type(10) + p
-INSERT: label, #sM_R6a_00wbA, p
-REMOVE: button:nth-of-type(10) + label
-REMOVE: button:nth-of-type(10) + #sM_ia_bA
-REMOVE: button:nth-of-type(10) + p
-INSERT: label, #sM_ia_bA, p
-REMOVE: button:nth-of-type(10) + label
-REMOVE: button:nth-of-type(10) + #sM_R8_dwZ_dOwA
-REMOVE: button:nth-of-type(10) + p
-INSERT: label, #sM_R8_dwZ_dOwA, p
-REMOVE: button:nth-of-type(10) + label
-REMOVE: button:nth-of-type(10) + #sM_fA
-REMOVE: button:nth-of-type(10) + p
-INSERT: label, #sM_fA, p
-REMOVE: button:nth-of-type(10) + label
-REMOVE: button:nth-of-type(10) + #sM_m1Sa2Da0A
-REMOVE: button:nth-of-type(10) + p
-INSERT: label, #sM_m1Sa2Da0A, p
-REMOVE: button:nth-of-type(10) + label
-REMOVE: button:nth-of-type(10) + #sM_PaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaA
-REMOVE: button:nth-of-type(10) + p
-INSERT: label, #sM_PaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaA, p
-REMOVE: button:nth-of-type(10) + label
-REMOVE: button:nth-of-type(10) + #sM_S2-1A
-REMOVE: button:nth-of-type(10) + p
-INSERT: label, #sM_S2-1A, p
-REMOVE: button:nth-of-type(10) + label
-REMOVE: button:nth-of-type(10) + #sM_S61_00K5A
-REMOVE: button:nth-of-type(10) + p
-INSERT: label, #sM_S61_00K5A, p
 INSERT: p:nth-of-type(1) + span
 INSERT: span:nth-of-type(1) + button
 INSERT: p:nth-of-type(2) + span
 INSERT: span:nth-of-type(2) + button
+REMOVE: button:nth-of-type(2) + span
+REMOVE: button:nth-of-type(2) + button
+INSERT: p:nth-of-type(2) + :is(span, button)
 INSERT: p:nth-of-type(3) + span
 INSERT: span:nth-of-type(3) + button
+REMOVE: button:nth-of-type(3) + span
+REMOVE: button:nth-of-type(3) + button
+INSERT: p:nth-of-type(3) + :is(span, button)
 INSERT: p:nth-of-type(4) + span
 INSERT: span:nth-of-type(4) + button
+REMOVE: button:nth-of-type(4) + span
+REMOVE: button:nth-of-type(4) + button
+INSERT: p:nth-of-type(4) + :is(span, button)
 INSERT: p:nth-of-type(5) + span
 INSERT: span:nth-of-type(5) + button
+REMOVE: button:nth-of-type(5) + span
+REMOVE: button:nth-of-type(5) + button
+INSERT: p:nth-of-type(5) + :is(span, button)
 INSERT: p:nth-of-type(6) + span
 INSERT: span:nth-of-type(6) + button
+REMOVE: button:nth-of-type(6) + span
+REMOVE: button:nth-of-type(6) + button
+INSERT: p:nth-of-type(6) + :is(span, button)
 INSERT: p:nth-of-type(7) + span
 INSERT: span:nth-of-type(7) + button
+REMOVE: button:nth-of-type(7) + span
+REMOVE: button:nth-of-type(7) + button
+INSERT: p:nth-of-type(7) + :is(span, button)
 INSERT: p:nth-of-type(8) + span
 INSERT: span:nth-of-type(8) + button
+REMOVE: button:nth-of-type(8) + span
+REMOVE: button:nth-of-type(8) + button
+INSERT: p:nth-of-type(8) + :is(span, button)
 INSERT: p:nth-of-type(9) + span
 INSERT: span:nth-of-type(9) + button
+REMOVE: button:nth-of-type(9) + span
+REMOVE: button:nth-of-type(9) + button
+INSERT: p:nth-of-type(9) + :is(span, button)
 INSERT: p:nth-of-type(10) + span
 INSERT: span:nth-of-type(10) + button
+REMOVE: button:nth-of-type(10) + span
+REMOVE: button:nth-of-type(10) + button
+INSERT: p:nth-of-type(10) + :is(span, button)
+REMOVE: button:nth-of-type(10) + label
+REMOVE: button:nth-of-type(10) + #sM_g0A
+REMOVE: button:nth-of-type(10) + p
+REMOVE: button:nth-of-type(10) + span
+REMOVE: button:nth-of-type(10) + button
+INSERT: label, #sM_g0A, p, span, button
+REMOVE: button:nth-of-type(10) + label
+REMOVE: button:nth-of-type(10) + #sM_R6a_00wbA
+REMOVE: button:nth-of-type(10) + p
+REMOVE: button:nth-of-type(10) + span
+REMOVE: button:nth-of-type(10) + button
+INSERT: label, #sM_R6a_00wbA, p, span, button
+REMOVE: button:nth-of-type(10) + label
+REMOVE: button:nth-of-type(10) + #sM_ia_bA
+REMOVE: button:nth-of-type(10) + p
+REMOVE: button:nth-of-type(10) + span
+REMOVE: button:nth-of-type(10) + button
+INSERT: label, #sM_ia_bA, p, span, button
+REMOVE: button:nth-of-type(10) + label
+REMOVE: button:nth-of-type(10) + #sM_R8_dwZ_dOwA
+REMOVE: button:nth-of-type(10) + p
+REMOVE: button:nth-of-type(10) + span
+REMOVE: button:nth-of-type(10) + button
+INSERT: label, #sM_R8_dwZ_dOwA, p, span, button
+REMOVE: button:nth-of-type(10) + label
+REMOVE: button:nth-of-type(10) + #sM_fA
+REMOVE: button:nth-of-type(10) + p
+REMOVE: button:nth-of-type(10) + span
+REMOVE: button:nth-of-type(10) + button
+INSERT: label, #sM_fA, p, span, button
+REMOVE: button:nth-of-type(10) + label
+REMOVE: button:nth-of-type(10) + #sM_m1Sa2Da0A
+REMOVE: button:nth-of-type(10) + p
+REMOVE: button:nth-of-type(10) + span
+REMOVE: button:nth-of-type(10) + button
+INSERT: label, #sM_m1Sa2Da0A, p, span, button
+REMOVE: button:nth-of-type(10) + label
+REMOVE: button:nth-of-type(10) + #sM_PaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaA
+REMOVE: button:nth-of-type(10) + p
+REMOVE: button:nth-of-type(10) + span
+REMOVE: button:nth-of-type(10) + button
+INSERT: label, #sM_PaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaA, p, span, button
+REMOVE: button:nth-of-type(10) + label
+REMOVE: button:nth-of-type(10) + #sM_S2-1A
+REMOVE: button:nth-of-type(10) + p
+REMOVE: button:nth-of-type(10) + span
+REMOVE: button:nth-of-type(10) + button
+INSERT: label, #sM_S2-1A, p, span, button
+REMOVE: button:nth-of-type(10) + label
+REMOVE: button:nth-of-type(10) + #sM_S61_00K5A
+REMOVE: button:nth-of-type(10) + p
+REMOVE: button:nth-of-type(10) + span
+REMOVE: button:nth-of-type(10) + button
+INSERT: label, #sM_S61_00K5A, p, span, button
 ```
 
 # Update

@@ -17,7 +17,6 @@
 ## Change
 ```
 INSERT: main::text + p
-UPDATE: main > p::text "" => "2"
 ```
 
 # Update `{"rows":[{"key":1,"fail":true},{"key":3,"fail":true}]}`
@@ -29,9 +28,7 @@ UPDATE: main > p::text "" => "2"
 ## Change
 ```
 REMOVE: main::text@0 + p
-INSERT: main::text@0 + p
 INSERT: main::text@0 + :is(::text("Unavailable "), ::text("3"))
-REMOVE: main::text@25 + p
 UPDATE: main::text@25 "" => "3"
 ```
 

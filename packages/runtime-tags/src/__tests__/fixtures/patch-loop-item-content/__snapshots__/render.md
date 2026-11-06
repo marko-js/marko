@@ -63,9 +63,9 @@ UPDATE: ul > li:nth-of-type(2) > em::text "2" => "4"
 ```
 ## Change
 ```
-REMOVE: ul > li + li
 UPDATE: ul > li > b::text "c" => "f"
 UPDATE: ul > li > em::text "3" => "6"
+REMOVE: ul > li + li
 ```
 
 # Update `{"items":[{"t":"c","n":"3"},{"t":"b","n":"4"},{"t":"e","n":"5"}]}`
@@ -99,14 +99,8 @@ UPDATE: ul > li > em::text "3" => "6"
 ```
 ## Change
 ```
-INSERT: ul > li:nth-of-type(1) + li
-INSERT: ul > li:nth-of-type(2) + li
 UPDATE: ul > li:nth-of-type(1) > b::text "f" => "c"
 UPDATE: ul > li:nth-of-type(1) > em::text "6" => "3"
-UPDATE: ul > li:nth-of-type(2) > b::text " " => "b"
-INSERT: ul > li:nth-of-type(2) > b + em
-UPDATE: ul > li:nth-of-type(2) > em::text " " => "4"
-UPDATE: ul > li:nth-of-type(3) > b::text " " => "e"
-INSERT: ul > li:nth-of-type(3) > b + em
-UPDATE: ul > li:nth-of-type(3) > em::text " " => "5"
+INSERT: ul > li:nth-of-type(1) + li
+INSERT: ul > li:nth-of-type(2) + li
 ```

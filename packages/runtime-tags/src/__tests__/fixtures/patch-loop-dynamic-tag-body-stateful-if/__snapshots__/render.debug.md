@@ -31,8 +31,7 @@
 ```
 ## Change
 ```
-INSERT: section:nth-of-type(1) + button
-INSERT: button:nth-of-type(2) + section
+INSERT: section:nth-of-type(1) + :is(button, section)
 INSERT: section:nth-of-type(2) > b
 UPDATE: section:nth-of-type(2) > b::text " " => "b"
 ```

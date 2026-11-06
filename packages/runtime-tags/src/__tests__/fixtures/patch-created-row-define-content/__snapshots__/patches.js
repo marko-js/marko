@@ -2,6 +2,7 @@
 [`a2 a18;D%c%;<i><!> <!></i>`, `a0;b%;<!><!><!>`, `a1 a16`, `a6;b%;<!><!><!>`, `a4`, `a3 a20`, `a5 !a11;D D l/D%b%l&%b%l;<section><button> </button><p><!><!></p><!><!></section>`]
 {
   la: [2, {
+    O: 1,
     cc: {
       s: {
         ta: "direct"
@@ -25,9 +26,7 @@
       fa: [">span", 0, {
         label: "z",
         content: {
-          content: _([
-            ["a", [0, 2]]
-          ], "a3", 1)
+          content: _([1], "a3", 1)
         }
       }],
       cAa: {
@@ -42,6 +41,7 @@
     },
     xh: "d"
   }, 3, {
+    O: 2,
     cc: {
       s: {
         ta: "direct"
@@ -65,9 +65,7 @@
       fa: [">span", 0, {
         label: "q",
         content: {
-          content: _([
-            ["a", [1, 3]]
-          ], "a3", 1)
+          content: _([2], "a3", 1)
         }
       }],
       cAa: {
@@ -127,6 +125,7 @@
 // PATCH holding Ef4
 {
   la: [3, {
+    O: 1,
     cc: {
       s: {
         ta: "direct"
@@ -150,9 +149,7 @@
       fa: [">span", 0, {
         label: "q",
         content: _.a = {
-          content: _([
-            ["a", [0, 3]]
-          ], "a3", 1)
+          content: _([1], "a3", 1)
         }
       }],
       cAa: {
@@ -177,6 +174,7 @@
     },
     xh: "m"
   }, 2, {
+    O: 2,
     cc: {
       s: {
         ta: "direct"
@@ -200,9 +198,7 @@
       fa: [">span", 0, {
         label: "z",
         content: _.b = {
-          content: _([
-            ["a", [1, 2]]
-          ], "a3", 1)
+          content: _([2], "a3", 1)
         }
       }],
       cAa: {

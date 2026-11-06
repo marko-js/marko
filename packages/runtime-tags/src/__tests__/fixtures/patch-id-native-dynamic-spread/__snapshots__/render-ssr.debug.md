@@ -106,12 +106,12 @@ for (const input of document.querySelectorAll(
 ```
 ## Change
 ```
-REMOVE: p + p
 INSERT: p
 REMOVE: p + div
 INSERT: p > :is(label, #sM_[0].#text/0@0.uid)
 UPDATE: p > label[for] "cM_2" => "sM_[0].#text/0@0.uid"
 UPDATE: #sM_[0].#text/0@0.uid[id] "cM_2" => "sM_[0].#text/0@0.uid"
+REMOVE: p + p
 ```
 
 # Update

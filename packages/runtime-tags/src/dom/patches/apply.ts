@@ -110,17 +110,21 @@ export let flushWait: () => (applied: unknown) => void;
 export type PatchHop = string | [accessor: string, at: LoopItemAt];
 export type LoopItemAt = number | [index: number, key: unknown];
 
-// `_(path, id, content or locals?)` in a flush: a registration bound to the
-// scope `path` reaches from the page root, resolved by `patches/bind`.
+// `_(scope, id, content or locals?, locals?)` in a flush: a registration bound to a
+// scope, named by the id a patch declares for it or above it, then the links down;
+// resolved by `patches/bind`.
 let bindRef:
   | ((
-      root: Scope,
-      path: PatchHop[],
+      owners: Scope[],
+      path: (number | PatchHop)[],
       id: string,
       bound?: 1 | Scope,
       locals?: Scope,
     ) => unknown)
   | undefined;
+// The applying flush's content owners by id: the page root, then each one a patch
+// declares (`PatchKey.Owner`).
+export let patchOwners: Scope[];
 export function installBindRef(resolve: NonNullable<typeof bindRef>) {
   bindRef = resolve;
 }
@@ -164,19 +168,19 @@ export function patch(
   // Indexed as the server counts trees, so a later flush can reference an
   // earlier one's; with an id, `data` is the path to a bound registration.
   const trees: unknown[] = [];
-  let root: Scope;
+  const owners: Scope[] = [];
   let commit: (() => void | Promise<unknown>) | undefined;
   // What the caller's commit returned: a promise when the browser commits later.
   let committing: void | Promise<unknown>;
   let reader: ReadableStreamDefaultReader<Uint8Array> | undefined;
   const responseCtx = ((
-    data: number | PatchHop[],
+    data: number | (number | PatchHop)[],
     id?: string,
     bound?: 1 | Scope,
     locals?: Scope,
   ) =>
     id
-      ? bindRef!(root, data as PatchHop[], id, bound, locals)
+      ? bindRef!(owners, data as (number | PatchHop)[], id, bound, locals)
       : trees[data as number]) as SerializeContext;
   responseCtx._ = _resumed;
   // The signal, a failure or the next `patch()` stops the response at once:
@@ -238,7 +242,7 @@ export function patch(
         }
         render.r = [
           (ctx: SerializeContext) => {
-            root = ctx(ROOT_SCOPE_ID) as Scope;
+            (patchOwners = owners)[0] = ctx(ROOT_SCOPE_ID) as Scope;
             // `[...shells]` or a tree; a flush the page's CSP refused has no
             // thunk, so this throws and the flush rejects.
             for (const item of toArray(script.f!(responseCtx))) {
@@ -246,7 +250,7 @@ export function patch(
                 onPatchShell!(item);
               } else {
                 trees.push(item);
-                patchScope(item, root);
+                patchScope(item, owners[0]);
               }
             }
           },

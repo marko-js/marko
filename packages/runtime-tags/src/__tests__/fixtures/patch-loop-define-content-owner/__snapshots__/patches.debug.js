@@ -83,6 +83,7 @@
 // PATCH holding Ef4
 {
   "PatchLoop:#text/0": [2, {
+    "PatchOwner:": 1,
     "PatchChild:#childScope/2": {
       "PatchSetup:": {
         "PatchText:#text/0": "direct"
@@ -106,9 +107,7 @@
       "PatchDynamicTag:#text/0": [">span", 0, {
         label: "z",
         content: {
-          content: _([
-            ["#text/0", [0, 2]]
-          ], "packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_5*content", 1)
+          content: _([1], "packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_5*content", 1)
         }
       }],
       "PatchChild:BranchScopes:#text/0": {

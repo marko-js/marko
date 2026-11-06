@@ -51,13 +51,11 @@
 ```
 ## Change
 ```
-INSERT: ul > li:nth-of-type(2) + li
 INSERT: ul > li:nth-of-type(1) > b + em
 REMOVE: ul > li:nth-of-type(1) > em + span
 INSERT: ul > li:nth-of-type(2) > b + span
 REMOVE: ul > li:nth-of-type(2) > span + em
-UPDATE: ul > li:nth-of-type(3) > b::text " " => "c"
-INSERT: ul > li:nth-of-type(3) > b + span
+INSERT: ul > li:nth-of-type(2) + li
 ```
 
 # Update `{"items":[{"t":"c","n":"33","alt":true}]}`
@@ -75,10 +73,10 @@ INSERT: ul > li:nth-of-type(3) > b + span
 ```
 ## Change
 ```
-REMOVE: ul > li + li
-REMOVE: ul > li + li
 UPDATE: ul > li > b::text "a" => "c"
 UPDATE: ul > li > em::text "11" => "33"
+REMOVE: ul > li + li
+REMOVE: ul > li + li
 ```
 
 # Update `{"items":[{"t":"x","n":"9","alt":false},{"t":"y","n":"8","alt":true}]}`
@@ -104,10 +102,8 @@ UPDATE: ul > li > em::text "11" => "33"
 ```
 ## Change
 ```
-INSERT: ul > li:nth-of-type(1) + li
 UPDATE: ul > li:nth-of-type(1) > b::text "c" => "x"
 INSERT: ul > li:nth-of-type(1) > b + span
 REMOVE: ul > li:nth-of-type(1) > span + em
-UPDATE: ul > li:nth-of-type(2) > b::text " " => "y"
-INSERT: ul > li:nth-of-type(2) > b + em
+INSERT: ul > li:nth-of-type(1) + li
 ```

@@ -1,5 +1,5 @@
 import { encodeAccessor } from "../../common/helpers";
-import { AccessorPrefix, PatchKey, type Scope } from "../../common/types";
+import { PatchKey, type Scope } from "../../common/types";
 import type { _for_of } from "../control-flow";
 import { type Patcher, patchScope, withCreating } from "./apply";
 import { getShell } from "./shells";
@@ -25,22 +25,20 @@ export const createLoopPatcher =
     // A loop with a shell creates additions; one whose items pair only
     // (a stateful body) ships none and never adds.
     const [template, walks, setup] = getShell(shellId!) || [];
-    // The reconciler pairs and creates the rows (setup attaches effects to fresh
-    // ones); each row's patch applies once the loop owns every row, in its order.
-    const apply = (_?: never) => {
+    // The reconciler applies the patch: `params` walks each patch into its
+    // paired/created branch, and setup attaches effects to fresh ones.
+    const apply = (_?: never) =>
       reconcile(
         (MARKO_DEBUG ? accessor : encodeAccessor(accessor)) as never,
         template,
         walks,
         setup || 0,
+        ((branch: Scope, [patch]: [Scope]) =>
+          patchScope(patch, branch)) as never,
       )(
         scope,
         keys ? [patches, (_patch: unknown, i: number) => keys[i]] : [patches],
       );
-      (scope[AccessorPrefix.BranchScopes + accessor] as Scope[]).forEach(
-        (row, i) => patchScope(patches[i], row),
-      );
-    };
     for (let i = 0; i < len;) {
       if (keys) keys.push(value[i++]);
       patches.push(value[i++] as Scope);

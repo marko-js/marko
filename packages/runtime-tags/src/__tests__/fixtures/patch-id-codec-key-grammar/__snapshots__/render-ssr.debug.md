@@ -389,9 +389,6 @@ INSERT: #sM_.heading + :is(label, #sM_["1"].uid)
 REMOVE: #sM_["a\u0020b"].uid + label
 REMOVE: #sM_["a\u0020b"].uid + #sM_[9007199254740994].uid
 INSERT: #sM_.heading + :is(label, #sM_[9007199254740994].uid)
-UPDATE: label:nth-of-type(8)[for] null => "sM_[\"new!key\"].uid"
-UPDATE: #sM_["new!key"].uid[id] null => "sM_[\"new!key\"].uid"
-UPDATE: #sM_["new!key"].uid[aria-labelledby] null => "sM_.heading"
 ```
 
 # Update

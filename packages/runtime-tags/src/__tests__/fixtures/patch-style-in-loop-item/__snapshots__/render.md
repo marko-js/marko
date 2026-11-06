@@ -23,10 +23,6 @@
 ## Change
 ```
 INSERT: b:nth-of-type(1) + :is(.cM_0, b)
-UPDATE: .cM_0[class] null => "cM_0"
-INSERT: .cM_0::text(".cM_0~*{}")
-REMOVE: .cM_0::text(".cM_0~*{}")
-INSERT: .cM_0::text(".cM_0~*{--M_a0:blue;}")
 ```
 
 # Update `{"items":[{"id":"b","color":"green"}]}`
@@ -39,8 +35,8 @@ INSERT: .cM_0::text(".cM_0~*{--M_a0:blue;}")
 ```
 ## Change
 ```
-REMOVE: style
-REMOVE: .k
 REMOVE: .cM_0::text(".cM_0~*{--M_a0:blue;}")
 INSERT: .cM_0::text(".cM_0~*{--M_a0:green;}")
+REMOVE: style
+REMOVE: .k
 ```

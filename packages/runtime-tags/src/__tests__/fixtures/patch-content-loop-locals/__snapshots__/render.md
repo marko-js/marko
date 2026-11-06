@@ -39,8 +39,7 @@
 ```
 INSERT: em:nth-of-type(1) + b
 INSERT: em:nth-of-type(2) + b
-INSERT: b:nth-of-type(2) + em
-INSERT: em:nth-of-type(3) + b
+INSERT: b:nth-of-type(2) + :is(em, b)
 UPDATE: em:nth-of-type(3)::text " " => "c0"
 ```
 
@@ -90,10 +89,10 @@ UPDATE: em:nth-of-type(3)::text "c0" => "c1"
 ```
 ## Change
 ```
-REMOVE: em + em
 REMOVE: em + b
 REMOVE: em + em
 REMOVE: em + b
+REMOVE: em + em
 REMOVE: em + b
 UPDATE: em::text "a1" => "c1"
 ```

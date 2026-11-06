@@ -3,10 +3,11 @@
 {
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {
+      "PatchOwner:": 1,
       "PatchText:#text/1": "b"
     },
     "PatchSetup:": {
-      "PatchWrite:el": _(["BranchScopes:#text/0", "#childScope/0"], "packages/runtime-tags/src/__tests__/fixtures/patch-branch-child-var/tags/box.marko_0_#div#0")
+      "PatchWrite:el": _([1], "packages/runtime-tags/src/__tests__/fixtures/patch-branch-child-var/tags/box.marko_0_#div#0")
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-child-var/template.marko_1*shell"]
 }

@@ -81,10 +81,10 @@ UPDATE: .inc::text "0" => "1"
 ```
 ## Change
 ```
-REMOVE: em + span
-REMOVE: em + em
 UPDATE: span::text "A" => "B"
 UPDATE: em::text "A1" => "B3"
+REMOVE: em + span
+REMOVE: em + em
 UPDATE: i::text "A" => "B"
 UPDATE: b::text@0 "v" => "w"
 UPDATE: b::text@1 "A" => "B"

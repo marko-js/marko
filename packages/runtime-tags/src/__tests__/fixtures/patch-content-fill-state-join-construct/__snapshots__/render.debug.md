@@ -48,10 +48,6 @@
 ## Change
 ```
 INSERT: main > section:nth-of-type(1) + section
-UPDATE: main > section:nth-of-type(2) > h2::text " " => "b"
-INSERT: main > section:nth-of-type(2) > div > span
-UPDATE: main > section:nth-of-type(2) > div > span::text@0 "" => "n"
-UPDATE: main > section:nth-of-type(2) > div > span::text@4 "" => "2"
 UPDATE: main > section:nth-of-type(2) > div > span::text@2 "" => "0"
 ```
 
@@ -112,8 +108,8 @@ UPDATE: main > section:nth-of-type(2) > div > span::text@2 "0" => "1"
 ```
 ## Change
 ```
-REMOVE: main > section + section
 UPDATE: main > section > h2::text "a" => "b"
 UPDATE: main > section > div > span::text@0 "n" => "m"
 UPDATE: main > section > div > span::text@4 "1" => "2"
+REMOVE: main > section + section
 ```

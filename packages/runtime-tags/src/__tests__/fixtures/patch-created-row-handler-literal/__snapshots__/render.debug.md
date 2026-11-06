@@ -41,9 +41,8 @@
 ```
 ## Change
 ```
-INSERT: ul > li:nth-of-type(1) + li
 UPDATE: ul > li:nth-of-type(1) > span::text "N0a" => "N0b"
-UPDATE: ul > li:nth-of-type(2) > span::text " " => "N1b"
+INSERT: ul > li:nth-of-type(1) + li
 ```
 
 # Update

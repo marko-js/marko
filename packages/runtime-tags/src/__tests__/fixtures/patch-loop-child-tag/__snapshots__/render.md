@@ -27,8 +27,6 @@
 ## Change
 ```
 INSERT: ul > li:nth-of-type(1) + li
-UPDATE: ul > li:nth-of-type(2)::text@0 "" => "two"
-UPDATE: ul > li:nth-of-type(2)::text@3 "" => " 🔥"
 ```
 
 # Update `{"items":[{"id":2,"name":"two!"}]}`
@@ -44,7 +42,7 @@ UPDATE: ul > li:nth-of-type(2)::text@3 "" => " 🔥"
 ```
 ## Change
 ```
-REMOVE: ul > li
 UPDATE: ul > li::text "two" => "two!"
 UPDATE: ul > li::text " 🔥" => ""
+REMOVE: ul > li
 ```

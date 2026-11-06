@@ -2,10 +2,11 @@
 [`a2 !a>c0;/ b/D%l&&;<button>x</button><section><!></section>`, `a1|2;Db%;<em>static <!></em>`]
 {
   ba: [{
+    O: 1,
     ca: {
       o: {
         vc1: {
-          content: _(["Aa"], "=a1", 1)
+          content: _([1], "=a1", 1)
         }
       }
     },
@@ -20,10 +21,11 @@
 // PATCH holding CwY
 {
   ba: [{
+    O: 1,
     ca: {
       o: {
         vc1: {
-          content: _(["Aa"], "=a1", 1)
+          content: _([1], "=a1", 1)
         }
       }
     },
@@ -37,10 +39,11 @@
 // PATCH holding CwY
 {
   ba: [{
+    O: 1,
     ca: {
       o: {
         vc1: {
-          content: _(["Aa"], "=a1", 1)
+          content: _([1], "=a1", 1)
         }
       }
     },

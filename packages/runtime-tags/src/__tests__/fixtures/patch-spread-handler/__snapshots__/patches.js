@@ -2,9 +2,10 @@
 `a3 !a1; ;<a>go</a>`
 {
   ba: [{
+    O: 1,
     ja: {
       href: "/b",
-      onClick: _(["Aa"], "a0")
+      onClick: _([1], "a0")
     }
   }, "a3"]
 }
@@ -18,9 +19,10 @@
 // PATCH holding BAE
 {
   ba: [{
+    O: 1,
     ja: {
       href: "/c",
-      onClick: _(["Aa"], "a0")
+      onClick: _([1], "a0")
     }
   }, "a3"]
 }

@@ -186,6 +186,6 @@ UPDATE: .hovered[class] null => "hovered"
 ```
 ## Change
 ```
-REMOVE: ul > li + li
 UPDATE: ul > li > a[href] "/?q=cafe&sel=1" => "/?q=park&sel=1"
+REMOVE: ul > li + li
 ```

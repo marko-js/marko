@@ -55,8 +55,6 @@ UPDATE: p > em::text@2 "0" => "1"
 UPDATE: p:nth-of-type(1)::text "x" => "y"
 UPDATE: p:nth-of-type(1) > em::text@0 "a" => "c"
 INSERT: p:nth-of-type(1) + p
-UPDATE: p:nth-of-type(2)::text "" => "z"
-INSERT: p:nth-of-type(2)::text + em
 UPDATE: p:nth-of-type(2) > em::text@2 "" => "1"
 ```
 
@@ -103,12 +101,12 @@ UPDATE: p:nth-of-type(2) > em::text@2 "1" => "2"
 ```
 ## Change
 ```
-REMOVE: span + p
 INSERT: button + span
 REMOVE: span + p
 UPDATE: span[label] null => "z"
 INSERT: span > em
 UPDATE: span > em::text@0 "" => "d"
+REMOVE: span + p
 UPDATE: span > em::text@2 "" => "2"
 ```
 

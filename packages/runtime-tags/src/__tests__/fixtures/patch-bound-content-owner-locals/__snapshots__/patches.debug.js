@@ -3,14 +3,15 @@
 {
   "PatchChild:#childScope/0": {
     "PatchBranch:#text/0": [{
+      "PatchOwner:": 1,
       "PatchDynamicTag:#text/0": "^^^packages/runtime-tags/src/__tests__/fixtures/patch-bound-content-owner-locals/template.marko_1*content",
       "PatchChild:BranchScopes:#text/0": {
         "PatchMarkedWrite:item": {
-          content: _(["#childScope/0", "BranchScopes:#text/0"], "packages/runtime-tags/src/__tests__/fixtures/patch-bound-content-owner-locals/tags/host.marko_2*content", 1, {
+          content: _([1], "packages/runtime-tags/src/__tests__/fixtures/patch-bound-content-owner-locals/tags/host.marko_2*content", 1, {
             entry_text: "two"
           }),
           *[(_.a = [{
-            content: _(["#childScope/0", "BranchScopes:#text/0"], "packages/runtime-tags/src/__tests__/fixtures/patch-bound-content-owner-locals/tags/host.marko_2*content", 1, {
+            content: _([1], "packages/runtime-tags/src/__tests__/fixtures/patch-bound-content-owner-locals/tags/host.marko_2*content", 1, {
               entry_text: "three"
             })
           }], Symbol.iterator)]() {
@@ -34,10 +35,11 @@
 {
   "PatchChild:#childScope/0": {
     "PatchBranch:#text/0": [{
+      "PatchOwner:": 1,
       "PatchDynamicTag:#text/0": "^^^packages/runtime-tags/src/__tests__/fixtures/patch-bound-content-owner-locals/template.marko_1*content",
       "PatchChild:BranchScopes:#text/0": {
         "PatchMarkedWrite:item": {
-          content: _(["#childScope/0", "BranchScopes:#text/0"], "packages/runtime-tags/src/__tests__/fixtures/patch-bound-content-owner-locals/tags/host.marko_2*content", 1, {
+          content: _([1], "packages/runtime-tags/src/__tests__/fixtures/patch-bound-content-owner-locals/tags/host.marko_2*content", 1, {
             entry_text: "four"
           }),
           *[Symbol.iterator]() {
@@ -59,14 +61,15 @@
 {
   "PatchChild:#childScope/0": {
     "PatchBranch:#text/0": [{
+      "PatchOwner:": 1,
       "PatchDynamicTag:#text/0": "^^^packages/runtime-tags/src/__tests__/fixtures/patch-bound-content-owner-locals/template.marko_1*content",
       "PatchChild:BranchScopes:#text/0": {
         "PatchMarkedWrite:item": {
-          content: _(["#childScope/0", "BranchScopes:#text/0"], "packages/runtime-tags/src/__tests__/fixtures/patch-bound-content-owner-locals/tags/host.marko_2*content", 1, {
+          content: _([1], "packages/runtime-tags/src/__tests__/fixtures/patch-bound-content-owner-locals/tags/host.marko_2*content", 1, {
             entry_text: "five"
           }),
           *[(_.a = [{
-            content: _(["#childScope/0", "BranchScopes:#text/0"], "packages/runtime-tags/src/__tests__/fixtures/patch-bound-content-owner-locals/tags/host.marko_2*content", 1, {
+            content: _([1], "packages/runtime-tags/src/__tests__/fixtures/patch-bound-content-owner-locals/tags/host.marko_2*content", 1, {
               entry_text: "six"
             })
           }], Symbol.iterator)]() {

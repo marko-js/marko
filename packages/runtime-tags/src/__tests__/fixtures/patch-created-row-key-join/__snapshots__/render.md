@@ -27,6 +27,5 @@
 ## Change
 ```
 INSERT: ul > li:nth-of-type(1) + li
-INSERT: ul > li:nth-of-type(2) > button
 UPDATE: ul > li:nth-of-type(2) > button::text " " => "b01"
 ```

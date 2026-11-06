@@ -120,10 +120,9 @@ UPDATE: .total::text " " => "2"
 ```
 ## Change
 ```
-INSERT: p:nth-of-type(4) + p
 UPDATE: p:nth-of-type(3)::text@0 "A2" => "A3"
 UPDATE: p:nth-of-type(4)::text@0 "B2" => "B3"
-UPDATE: p:nth-of-type(5)::text@0 "" => "C3"
+INSERT: p:nth-of-type(4) + p
 UPDATE: .summary::text "{\"n\":2}" => "{\"n\":3}"
 UPDATE: .total::text "2" => "3"
 UPDATE: p:nth-of-type(5)::text@3 "" => "1"

@@ -3,14 +3,15 @@
 {
   ca: {
     ba: [{
+      O: 1,
       fa: "^^^a3",
       cAa: {
         xe: {
-          content: _(["a", "Aa"], "b1", 1, {
+          content: _([1], "b1", 1, {
             2: "two"
           }),
           *[(_.a = [{
-            content: _(["a", "Aa"], "b1", 1, {
+            content: _([1], "b1", 1, {
               2: "three"
             })
           }], Symbol.iterator)]() {
@@ -34,10 +35,11 @@
 {
   ca: {
     ba: [{
+      O: 1,
       fa: "^^^a3",
       cAa: {
         xe: {
-          content: _(["a", "Aa"], "b1", 1, {
+          content: _([1], "b1", 1, {
             2: "four"
           }),
           *[Symbol.iterator]() {
@@ -59,14 +61,15 @@
 {
   ca: {
     ba: [{
+      O: 1,
       fa: "^^^a3",
       cAa: {
         xe: {
-          content: _(["a", "Aa"], "b1", 1, {
+          content: _([1], "b1", 1, {
             2: "five"
           }),
           *[(_.a = [{
-            content: _(["a", "Aa"], "b1", 1, {
+            content: _([1], "b1", 1, {
               2: "six"
             })
           }], Symbol.iterator)]() {

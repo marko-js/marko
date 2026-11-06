@@ -34,9 +34,7 @@ UPDATE: button::text "0" => "1"
 ## Change
 ```
 INSERT: button + p
-UPDATE: p:nth-of-type(1)::text " " => "a"
 INSERT: p:nth-of-type(1) + p
-UPDATE: p:nth-of-type(2)::text " " => "a"
 ```
 ## Console
 ```

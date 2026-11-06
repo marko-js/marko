@@ -29,6 +29,4 @@
 ## Change
 ```
 INSERT: ul > li:nth-of-type(2) + li
-UPDATE: ul > li:nth-of-type(3)::text@0 "" => "c"
-UPDATE: ul > li:nth-of-type(3)::text@2 "" => "7"
 ```

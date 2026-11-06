@@ -2,6 +2,7 @@
 [`packages/runtime-tags/src/__tests__/fixtures/patch-created-row-define-content/template.marko_6*content packages/runtime-tags/src/__tests__/fixtures/patch-created-row-define-content/template.marko_6_n#2:11/subscribe;D%c%;<i><!> <!></i>`, `packages/runtime-tags/src/__tests__/fixtures/patch-created-row-define-content/template.marko_4*shell;b%;<!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-created-row-define-content/template.marko_7*content packages/runtime-tags/src/__tests__/fixtures/patch-created-row-define-content/template.marko_7_n#2:11/subscribe`, `packages/runtime-tags/src/__tests__/fixtures/patch-created-row-define-content/template.marko_3*shell;b%;<!><!><!>`, `packages/runtime-tags/src/__tests__/fixtures/patch-created-row-define-content/template.marko_1*content`, `packages/runtime-tags/src/__tests__/fixtures/patch-created-row-define-content/template.marko_5*content packages/runtime-tags/src/__tests__/fixtures/patch-created-row-define-content/template.marko_5_n#2:11/subscribe`, `packages/runtime-tags/src/__tests__/fixtures/patch-created-row-define-content/template.marko_2*shell !packages/runtime-tags/src/__tests__/fixtures/patch-created-row-define-content/template.marko_2;D D l/D%b%l&%b%l;<section><button> </button><p><!><!></p><!><!></section>`]
 {
   "PatchLoop:#text/0": [2, {
+    "PatchOwner:": 1,
     "PatchChild:#childScope/2": {
       "PatchSetup:": {
         "PatchText:#text/0": "direct"
@@ -25,9 +26,7 @@
       "PatchDynamicTag:#text/0": [">span", 0, {
         label: "z",
         content: {
-          content: _([
-            ["#text/0", [0, 2]]
-          ], "packages/runtime-tags/src/__tests__/fixtures/patch-created-row-define-content/template.marko_5*content", 1)
+          content: _([1], "packages/runtime-tags/src/__tests__/fixtures/patch-created-row-define-content/template.marko_5*content", 1)
         }
       }],
       "PatchChild:BranchScopes:#text/0": {
@@ -42,6 +41,7 @@
     },
     "PatchMarkedWrite:row_label": "d"
   }, 3, {
+    "PatchOwner:": 2,
     "PatchChild:#childScope/2": {
       "PatchSetup:": {
         "PatchText:#text/0": "direct"
@@ -65,9 +65,7 @@
       "PatchDynamicTag:#text/0": [">span", 0, {
         label: "q",
         content: {
-          content: _([
-            ["#text/0", [1, 3]]
-          ], "packages/runtime-tags/src/__tests__/fixtures/patch-created-row-define-content/template.marko_5*content", 1)
+          content: _([2], "packages/runtime-tags/src/__tests__/fixtures/patch-created-row-define-content/template.marko_5*content", 1)
         }
       }],
       "PatchChild:BranchScopes:#text/0": {
@@ -127,6 +125,7 @@
 // PATCH holding Ef4
 {
   "PatchLoop:#text/0": [3, {
+    "PatchOwner:": 1,
     "PatchChild:#childScope/2": {
       "PatchSetup:": {
         "PatchText:#text/0": "direct"
@@ -150,9 +149,7 @@
       "PatchDynamicTag:#text/0": [">span", 0, {
         label: "q",
         content: _.a = {
-          content: _([
-            ["#text/0", [0, 3]]
-          ], "packages/runtime-tags/src/__tests__/fixtures/patch-created-row-define-content/template.marko_5*content", 1)
+          content: _([1], "packages/runtime-tags/src/__tests__/fixtures/patch-created-row-define-content/template.marko_5*content", 1)
         }
       }],
       "PatchChild:BranchScopes:#text/0": {
@@ -177,6 +174,7 @@
     },
     "PatchMarkedWrite:row_label": "m"
   }, 2, {
+    "PatchOwner:": 2,
     "PatchChild:#childScope/2": {
       "PatchSetup:": {
         "PatchText:#text/0": "direct"
@@ -200,9 +198,7 @@
       "PatchDynamicTag:#text/0": [">span", 0, {
         label: "z",
         content: _.e = {
-          content: _([
-            ["#text/0", [1, 2]]
-          ], "packages/runtime-tags/src/__tests__/fixtures/patch-created-row-define-content/template.marko_5*content", 1)
+          content: _([2], "packages/runtime-tags/src/__tests__/fixtures/patch-created-row-define-content/template.marko_5*content", 1)
         }
       }],
       "PatchChild:BranchScopes:#text/0": {

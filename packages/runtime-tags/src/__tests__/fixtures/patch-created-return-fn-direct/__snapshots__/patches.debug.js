@@ -3,10 +3,11 @@
 {
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {
+      "PatchOwner:": 1,
       "PatchMarkedWrite:input_label": "b"
     },
     "PatchMarkedWrite:r": {
-      fn: _(["BranchScopes:#text/0", "#childScope/0"], "packages/runtime-tags/src/__tests__/fixtures/patch-created-return-fn-direct/tags/card.marko_0/_return")
+      fn: _([1], "packages/runtime-tags/src/__tests__/fixtures/patch-created-return-fn-direct/tags/card.marko_0/_return")
     },
     "PatchText:#text/2": "f:b",
     "PatchSetup:": {

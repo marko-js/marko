@@ -37,6 +37,8 @@ export const Text = "t";
 // A text-only element (or comment) body: the client rewrites its content.
 export const TextContent = "m";
 export const Fill = "v";
+// Declares the scope a patch applies to as the owner its content names by this id.
+export const Owner = "O";
 export const LoopItem = "r";
 // Setup-only: a child's tag-variable wiring, registered at its owner.
 export const Var = "z";

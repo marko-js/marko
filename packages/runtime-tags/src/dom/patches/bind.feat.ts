@@ -13,6 +13,7 @@ import {
   type PatchHop,
   patchers,
   patchFills,
+  patchOwners,
   setupPatchers,
 } from "./apply";
 
@@ -42,16 +43,23 @@ patchers[PatchKey.BindFill] = setupPatchers[PatchKey.BindFill] = (
   entry,
 ) => patchFills[key](scope, makeBoundFn(scope, entry));
 
-// Any other bound registration is its scope's path from the page root, walked on use
-// (the flush may not have created it yet); one over render-only locals takes those.
-installBindRef((root, path, id, bound, locals) => {
+// The scope a patch applies to, as the owner its content names by this id.
+patchers[PatchKey.Owner] = (scope, _accessor, id) => {
+  patchOwners[id as number] = scope;
+};
+
+// Any other bound registration names its scope by the links down from the page root
+// or from one a patch declares, walked on use; one over render-only locals takes those.
+installBindRef((owners, path, id, bound, locals) => {
   const resolve = (_?: never) => {
-    let scope = root;
+    let scope = owners[0];
     for (const hop of path) {
       scope =
-        typeof hop === "string"
-          ? (scope[hop] as Scope)
-          : getLoopItem(scope, hop[0], hop[1])!;
+        typeof hop === "number"
+          ? owners[hop]
+          : typeof hop === "string"
+            ? (scope[hop] as Scope)
+            : getLoopItem(scope, hop[0], hop[1])!;
     }
     return scope;
   };

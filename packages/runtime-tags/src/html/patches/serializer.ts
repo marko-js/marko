@@ -1,5 +1,5 @@
 import { ROOT_SCOPE_ID } from "../../common/meta";
-import { RendererProp } from "../../common/types";
+import { PatchKey, RendererProp } from "../../common/types";
 import {
   K_SCOPE_ID,
   Reference,
@@ -54,8 +54,14 @@ export class PatchSerializerState extends SerializerState {
   // empty one is never keyed.
   override scopesCursor() {
     this.trees++;
+    this.nodeStarts.clear();
     return "";
   }
+
+  // Each content owner's id in this response, declared by its patch; the root's is 0.
+  ownerIds = new Map<number, number>();
+  // Where each node of the flush's tree opens, so an owner's patch can declare its id.
+  nodeStarts = new Map<object, number>();
 
   // The assignments run on the built tree, which stays the flush's value:
   // `[{…},_.b.c=_.b][0]`.
@@ -84,13 +90,33 @@ export class PatchSerializerState extends SerializerState {
     const content = (val as { [RendererProp.Id]?: string })[RendererProp.Id];
     // Content keeps one identity, as main's write does; a bind makes its function anew.
     if (content) this.refs.set(val, ref);
-    this.buf.push("_([");
-    this.writeScopePath(
-      (registered.scope as ScopeInternals)[K_SCOPE_ID]!,
-      registered.id,
-    );
+    // Named from the nearest scope a patch of this response declares (the root, unnamed),
+    // so no walk crosses structure the flush is still placing.
+    const scopeId = (registered.scope as ScopeInternals)[K_SCOPE_ID]!;
+    let start = scopeId;
+    let owner: number | undefined;
+    while (
+      (owner = start === ROOT_SCOPE_ID ? 0 : this.ownerIds.get(start)) ===
+      undefined
+    ) {
+      const at = this.nodeStarts.get(this.render.patchTree![start]!);
+      if (at !== undefined) {
+        this.ownerIds.set(start, (owner = this.ownerIds.size + 1));
+        this.buf[at] += toObjectKey(PatchKey.Owner) + ":" + owner + ",";
+        break;
+      }
+      if (MARKO_DEBUG && !this.render.patchLinks[start]) {
+        throw new Error(
+          `A patch cannot send the scoped registration "${registered.id}".`,
+        );
+      }
+      start = this.render.patchLinks[start].parent;
+    }
+    this.buf.push(owner ? "_([" + owner : "_([");
+    this.writeScopePath(scopeId, start, !owner);
+    this.buf.push("]");
     this.buf.push(
-      "]," + quoteRegistryId(shipNamedShell(this.render, registered.id)),
+      "," + quoteRegistryId(shipNamedShell(this.render, registered.id)),
     );
     if (content) this.buf.push(",1");
     if (registered.locals) {
@@ -99,16 +125,12 @@ export class PatchSerializerState extends SerializerState {
     this.buf.push(")");
   }
 
-  // Patch scope ids have no client-side map, so a bound registration names
-  // its scope by the links down from the page root (written root first).
-  writeScopePath(scopeId: number, id: string) {
-    if (scopeId === ROOT_SCOPE_ID) return;
-    if (MARKO_DEBUG && !this.render.patchLinks[scopeId]) {
-      throw new Error(`A patch cannot send the scoped registration "${id}".`);
-    }
+  // The links down to a scope from one its owner id names.
+  writeScopePath(scopeId: number, start: number, first: boolean) {
+    if (scopeId === start) return;
     const link = this.render.patchLinks[scopeId];
-    this.writeScopePath(link.parent, id);
-    if (link.parent !== ROOT_SCOPE_ID) this.buf.push(",");
+    this.writeScopePath(link.parent, start, first);
+    if (!first || link.parent !== start) this.buf.push(",");
     // Accessors are compiler-made (nothing to escape); a loop key is data.
     const hop = link.hop;
     if (typeof hop === "string") {
@@ -225,7 +247,7 @@ function writePatchTreeNode(
     }
     state.buf.push(sep === "[" ? "[]" : "]");
   } else {
-    state.buf.push("{");
+    state.nodeStarts.set(node, state.buf.push("{") - 1);
     writePatchProps(state, node, ref, patchTreeNodes);
     state.buf.push("}");
   }

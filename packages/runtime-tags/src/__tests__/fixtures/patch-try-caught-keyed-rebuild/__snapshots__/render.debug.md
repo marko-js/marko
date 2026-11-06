@@ -38,9 +38,6 @@ REMOVE: main::text + button
 ```
 REMOVE: main::text("caught")
 INSERT: main > :is(p, button)
-UPDATE: main > p::text@0 "" => "Shop"
-UPDATE: main > p::text@5 "" => "d"
-UPDATE: main > button::text " " => "0"
 ```
 
 # Update
@@ -71,10 +68,7 @@ UPDATE: main > button::text "0" => "1"
 ## Change
 ```
 REMOVE: main > :is(p, button)
-INSERT: main > :is(p, button)
 INSERT: main::text("caught")
-REMOVE: main::text + p
-REMOVE: main::text + button
 ```
 
 # Update `{"pages":[{"key":3,"title":"f","fail":true}]}`

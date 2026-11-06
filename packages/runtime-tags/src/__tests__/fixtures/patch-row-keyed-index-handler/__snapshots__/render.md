@@ -29,7 +29,6 @@
 ## Change
 ```
 INSERT: button
-UPDATE: button:nth-of-type(1)::text " " => "b"
 ```
 
 # Update

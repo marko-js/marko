@@ -88,9 +88,6 @@ UPDATE: .link.active[class] "link" => "link active"
 ## Change
 ```
 INSERT: .link.active + a
-UPDATE: nav > a:nth-of-type(2)[href] null => "/b"
-INSERT: nav > a:nth-of-type(2) > svg > title::text("b")
-UPDATE: nav > a:nth-of-type(2) > span::text " " => "B"
 INSERT: main > p
 ```
 

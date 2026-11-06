@@ -29,7 +29,6 @@ REMOVE: div + p
 UPDATE: b::text " " => "b"
 INSERT: b + i
 INSERT: i + u
-UPDATE: u::text " " => "1"
 INSERT: div > s
 UPDATE: div > s::text " " => "10"
 ```

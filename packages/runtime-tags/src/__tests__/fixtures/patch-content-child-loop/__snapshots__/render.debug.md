@@ -58,8 +58,8 @@ UPDATE: main > ul > li:nth-of-type(2) > em::text "x" => "y"
 ```
 ## Change
 ```
-REMOVE: main > ul > li + li
 UPDATE: main > ul > li > em::text "y" => "z"
+REMOVE: main > ul > li + li
 ```
 
 # Update `{"count":[1,2,3],"note":"w"}`
@@ -89,13 +89,7 @@ UPDATE: main > ul > li > em::text "y" => "z"
 ```
 ## Change
 ```
+UPDATE: main > ul > li:nth-of-type(1) > em::text "z" => "w"
 INSERT: main > ul > li:nth-of-type(1) + li
 INSERT: main > ul > li:nth-of-type(2) + li
-UPDATE: main > ul > li:nth-of-type(1) > em::text "z" => "w"
-UPDATE: main > ul > li:nth-of-type(2)::text "" => "2"
-INSERT: main > ul > li:nth-of-type(2)::text + em
-UPDATE: main > ul > li:nth-of-type(2) > em::text " " => "w"
-UPDATE: main > ul > li:nth-of-type(3)::text "" => "3"
-INSERT: main > ul > li:nth-of-type(3)::text + em
-UPDATE: main > ul > li:nth-of-type(3) > em::text " " => "w"
 ```

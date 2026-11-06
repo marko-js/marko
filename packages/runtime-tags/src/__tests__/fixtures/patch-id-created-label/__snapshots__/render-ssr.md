@@ -96,17 +96,14 @@ for (const label of document.querySelectorAll("label")) {
 ```
 ## Change
 ```
-REMOVE: label:nth-of-type(2) + #sM_gbA
-INSERT: #sM_gbA
 INSERT: #sM_gbA + label
 INSERT: #sM_gaA + label
+REMOVE: label:nth-of-type(2) + #sM_gbA
+REMOVE: label:nth-of-type(2) + label
+INSERT: #sM_gbA, label
 INSERT: #sM_UB + label
 INSERT: #sM_VB + label
-INSERT: label:nth-of-type(5) + button
-INSERT: button:nth-of-type(2) + :is(#sM_2WTha1C, label)
-UPDATE: #sM_2WTha1C[id] null => "sM_2WTha1C"
-UPDATE: label:nth-of-type(6)[for] null => "sM_2WTha1C"
-UPDATE: label:nth-of-type(6)::text " " => "2"
+INSERT: label:nth-of-type(5) + :is(button, #sM_2WTha1C, label)
 ```
 
 # Update

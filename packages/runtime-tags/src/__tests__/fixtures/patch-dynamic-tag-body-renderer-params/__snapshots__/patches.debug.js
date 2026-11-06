@@ -3,9 +3,10 @@
 {
   "PatchChild:#childScope/0": {
     "PatchBranch:#text/2": [{
+      "PatchOwner:": 1,
       "PatchDynamicTag:#text/0": ["^^^packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-renderer-params/template.marko_1*content", "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-renderer-params/tags/host.marko_3*content"],
       "PatchChild:BranchScopes:#text/0": {
-        "PatchMarkedWrite:content": _(["#childScope/0", "BranchScopes:#text/2"], "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-renderer-params/tags/host.marko_3*content", 1),
+        "PatchMarkedWrite:content": _([1], "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-renderer-params/tags/host.marko_3*content", 1),
         "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-renderer-params/template.marko_2_content#1:4/setup": "content",
         "PatchSetupValues:": {
           "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-renderer-params/template.marko_fill0": !0
@@ -22,9 +23,10 @@
 {
   "PatchChild:#childScope/0": {
     "PatchBranch:#text/2": [{
+      "PatchOwner:": 1,
       "PatchDynamicTag:#text/0": ["^^^packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-renderer-params/template.marko_1*content", "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-renderer-params/tags/host.marko_3*content"],
       "PatchChild:BranchScopes:#text/0": {
-        "PatchMarkedWrite:content": _(["#childScope/0", "BranchScopes:#text/2"], "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-renderer-params/tags/host.marko_3*content", 1),
+        "PatchMarkedWrite:content": _([1], "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-renderer-params/tags/host.marko_3*content", 1),
         "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-renderer-params/template.marko_2_content#1:4/setup": "content",
         "PatchSetupValues:": {
           "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-renderer-params/template.marko_fill0": !0
@@ -55,9 +57,10 @@
 {
   "PatchChild:#childScope/0": {
     "PatchBranch:#text/2": [{
+      "PatchOwner:": 1,
       "PatchDynamicTag:#text/0": ["^^^packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-renderer-params/template.marko_1*content", "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-renderer-params/tags/host.marko_3*content"],
       "PatchChild:BranchScopes:#text/0": {
-        "PatchMarkedWrite:content": _(["#childScope/0", "BranchScopes:#text/2"], "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-renderer-params/tags/host.marko_3*content", 1),
+        "PatchMarkedWrite:content": _([1], "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-renderer-params/tags/host.marko_3*content", 1),
         "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-renderer-params/template.marko_2_content#1:4/setup": "content",
         "PatchSetupValues:": {
           "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-renderer-params/template.marko_fill0": !0

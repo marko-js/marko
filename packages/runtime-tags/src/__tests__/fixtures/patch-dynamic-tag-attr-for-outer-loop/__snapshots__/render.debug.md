@@ -59,14 +59,9 @@ UPDATE: .inc::text "0" => "1"
 ```
 ## Change
 ```
-REMOVE: ul:nth-of-type(1) > li + li
 UPDATE: ul:nth-of-type(1) > li::text@4 "n" => "m"
+REMOVE: ul:nth-of-type(1) > li + li
 INSERT: ul:nth-of-type(1) + ul
-INSERT: ul:nth-of-type(2) > li
-INSERT: ul:nth-of-type(2) > li > :is(::text("y"), ::text(":"), ::text("1"), ::text(":"), ::text("m"))
-UPDATE: ul:nth-of-type(2) > li::text@0 "" => "y"
-UPDATE: ul:nth-of-type(2) > li::text@2 "" => "1"
-UPDATE: ul:nth-of-type(2) > li::text@4 "" => "m"
 ```
 
 # Update `{"on":false,"as":["y"],"bs":[2],"note":"o"}`
@@ -84,14 +79,10 @@ UPDATE: ul:nth-of-type(2) > li::text@4 "" => "m"
 ```
 ## Change
 ```
-REMOVE: ol + ul
 INSERT: .inc + ol
 REMOVE: ol + ul
 INSERT: ol > li
-INSERT: ol > li > :is(::text("y"), ::text(":"), ::text("2"), ::text(":"), ::text("o"))
-UPDATE: ol > li::text@0 "" => "y"
-UPDATE: ol > li::text@2 "" => "2"
-UPDATE: ol > li::text@4 "" => "o"
+REMOVE: ol + ul
 ```
 
 # Update `{"on":true,"as":["z"],"bs":[3],"note":"p"}`
@@ -112,8 +103,4 @@ UPDATE: ol > li::text@4 "" => "o"
 INSERT: .inc + ul
 REMOVE: ul + ol
 INSERT: ul > li
-INSERT: ul > li > :is(::text("z"), ::text(":"), ::text("3"), ::text(":"), ::text("p"))
-UPDATE: ul > li::text@0 "" => "z"
-UPDATE: ul > li::text@2 "" => "3"
-UPDATE: ul > li::text@4 "" => "p"
 ```

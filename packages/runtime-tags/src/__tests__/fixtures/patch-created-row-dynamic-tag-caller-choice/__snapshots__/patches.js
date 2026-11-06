@@ -3,6 +3,7 @@
 {
   ba: [{
     ca: {
+      O: 1,
       lc: [{
         xc: "x",
         ib5: "c"
@@ -12,10 +13,10 @@
       }, "b3"],
       s: {
         wi: {
-          content: _(["Aa", "a"], "b1", 1)
+          content: _([1], "b1", 1)
         },
         wk: {
-          content: _(["Aa", "a"], "b2", 1)
+          content: _([1], "b2", 1)
         }
       },
       Sb7: "f",
@@ -32,6 +33,7 @@
 {
   ba: [{
     ca: {
+      O: 1,
       lc: [{
         xc: "y",
         ib5: "c"
@@ -41,10 +43,10 @@
       }, "b3"],
       s: {
         wi: {
-          content: _(["Aa", "a"], "b1", 1)
+          content: _([1], "b1", 1)
         },
         wk: {
-          content: _(["Aa", "a"], "b2", 1)
+          content: _([1], "b2", 1)
         }
       },
       Sb7: "f",

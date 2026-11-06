@@ -114,7 +114,4 @@ INSERT: ul > li > span + button
 ## Change
 ```
 INSERT: ul > li
-UPDATE: ul > li:nth-of-type(1)::text "" => "Milk"
-INSERT: ul > li:nth-of-type(1)::text + span
-INSERT: ul > li:nth-of-type(1) > span + button
 ```

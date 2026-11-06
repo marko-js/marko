@@ -23,6 +23,7 @@ export const Style = "PatchStyle:";
 export const Text = "PatchText:";
 export const TextContent = "PatchTextContent:";
 export const Fill = "PatchFill:";
+export const Owner = "PatchOwner:";
 export const LoopItem = "PatchLoopItem:";
 export const Var = "PatchVar:";
 export const Write = "PatchWrite:";

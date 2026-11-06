@@ -77,13 +77,7 @@ assert.equal(ids.size, document.querySelectorAll("input").length);
 ```
 ## Change
 ```
-INSERT: label:nth-of-type(2) + :is(#sM_[2].#childScope/0@0.own, label, button)
-UPDATE: #sM_[2].#childScope/0@0.own[id] null => "sM_[2].#childScope/0@0.own"
-UPDATE: label:nth-of-type(3)[for] null => "sM_[2].#childScope/0@0.own"
-INSERT: button:nth-of-type(2) + :is(#sM_[2].#childScope/0@0^["packages/runtime-tags/src/__tests__/fixtures/patch-id-withheld-consumer/template.marko_2*content"].uid, label)
-UPDATE: #sM_[2].#childScope/0@0^["packages/runtime-tags/src/__tests__/fixtures/patch-id-withheld-consumer/template.marko_2*content"].uid[id] null => "sM_[2].#childScope/0@0^[\"packages/runtime-tags/src/__tests__/fixtures/patch-id-withheld-consumer/template.marko_2*content\"].uid"
-UPDATE: label:nth-of-type(4)[for] null => "sM_[2].#childScope/0@0^[\"packages/runtime-tags/src/__tests__/fixtures/patch-id-withheld-consumer/template.marko_2*content\"].uid"
-UPDATE: label:nth-of-type(4)::text " " => "2"
+INSERT: label:nth-of-type(2) + :is(#sM_[2].#childScope/0@0.own, label, button, #sM_[2].#childScope/0@0^["packages/runtime-tags/src/__tests__/fixtures/patch-id-withheld-consumer/template.marko_2*content"].uid, label)
 ```
 
 # Update

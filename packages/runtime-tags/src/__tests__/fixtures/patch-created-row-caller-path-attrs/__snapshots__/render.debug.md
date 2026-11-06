@@ -50,8 +50,6 @@ UPDATE: .link.active[class] "link" => "link active"
 ## Change
 ```
 INSERT: .link.active + a
-UPDATE: a:nth-of-type(2)[href] null => "/b"
-UPDATE: a:nth-of-type(2)::text " " => "B"
 ```
 
 # Update

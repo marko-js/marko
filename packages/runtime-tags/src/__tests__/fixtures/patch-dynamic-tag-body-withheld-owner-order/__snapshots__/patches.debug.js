@@ -2,6 +2,7 @@
 `packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-withheld-owner-order/tags/keeper.marko !packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-withheld-owner-order/tags/keeper.marko_0; b%;<button class=toggle>t</button><!><!>`
 {
   "PatchChild:#childScope/0": {
+    "PatchOwner:": 1,
     "PatchDynamicTag:#text/0": _.a = "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-withheld-owner-order/tags/keeper.marko",
     "PatchChild:BranchScopes:#text/0": {
       "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-withheld-owner-order/tags/keeper.marko_1_input_content#0:4/setup": _.b = "input_content",
@@ -9,7 +10,7 @@
         "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-withheld-owner-order/tags/keeper.marko_fill0": !0
       },
       "PatchMarkedWrite:input_content": _.c = {
-        content: _(["#childScope/0"], "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-withheld-owner-order/template.marko_2*content", 1)
+        content: _([1], "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-withheld-owner-order/template.marko_2*content", 1)
       }
     },
     "PatchDynamicTag:#text/1": _.a,
@@ -24,6 +25,7 @@
     "PatchMarkedWrite:label": "a2"
   },
   "PatchChild:#childScope/2": {
+    "PatchOwner:": 2,
     "PatchDynamicTag:#text/0": _.a,
     "PatchChild:BranchScopes:#text/0": {
       "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-withheld-owner-order/tags/keeper.marko_1_input_content#0:4/setup": _.b,
@@ -31,7 +33,7 @@
         "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-withheld-owner-order/tags/keeper.marko_fill0": !0
       },
       "PatchMarkedWrite:input_content": {
-        content: _(["#childScope/2"], "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-withheld-owner-order/template.marko_2*content", 1)
+        content: _([2], "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-withheld-owner-order/template.marko_2*content", 1)
       }
     },
     "PatchDynamicTag:#text/1": _.a,

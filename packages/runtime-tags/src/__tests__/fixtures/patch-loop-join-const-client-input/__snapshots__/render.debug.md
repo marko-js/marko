@@ -41,11 +41,9 @@
 ```
 ## Change
 ```
+UPDATE: p:nth-of-type(1)::text "ap" => "cr"
 INSERT: p:nth-of-type(1) + p
 INSERT: p:nth-of-type(2) + p
-UPDATE: p:nth-of-type(1)::text "ap" => "cr"
-UPDATE: p:nth-of-type(2)::text " " => "cq"
-UPDATE: p:nth-of-type(3)::text " " => "cs"
 INSERT: p:nth-of-type(4) + p
 INSERT: p:nth-of-type(5) + p
 UPDATE: p:nth-of-type(4)::text "m0p" => "m0r"
@@ -123,11 +121,10 @@ UPDATE: p:nth-of-type(6)::text "m0s" => "m1s"
 ```
 ## Change
 ```
-INSERT: p:nth-of-type(3) + p
 UPDATE: p:nth-of-type(1)::text "cr" => "eu"
 UPDATE: p:nth-of-type(2)::text "cq" => "eq"
 UPDATE: p:nth-of-type(3)::text "cs" => "es"
-UPDATE: p:nth-of-type(4)::text " " => "et"
+INSERT: p:nth-of-type(3) + p
 INSERT: p:nth-of-type(7) + p
 UPDATE: p:nth-of-type(5)::text "m1r" => "m1u"
 UPDATE: p:nth-of-type(8)::text " " => "m1t"

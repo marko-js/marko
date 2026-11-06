@@ -17,9 +17,6 @@
 INSERT: i
 INSERT: i:nth-of-type(1) + i
 INSERT: i:nth-of-type(2) + i
-UPDATE: i:nth-of-type(1)::text " " => "a"
-UPDATE: i:nth-of-type(2)::text " " => "b"
-UPDATE: i:nth-of-type(3)::text " " => "c"
 ```
 ## Console
 ```

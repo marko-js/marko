@@ -36,10 +36,8 @@
 ```
 ## Change
 ```
-INSERT: ul > li:nth-of-type(2) + li
 UPDATE: ul > li:nth-of-type(1) > b::text "a" => "c"
-INSERT: ul > li:nth-of-type(3) > b
-UPDATE: ul > li:nth-of-type(3) > b::text " " => "d"
+INSERT: ul > li:nth-of-type(2) + li
 ```
 
 # Update `{"items":[{"text":"e"}]}`
@@ -54,9 +52,9 @@ UPDATE: ul > li:nth-of-type(3) > b::text " " => "d"
 ```
 ## Change
 ```
-REMOVE: ul > li + li
-REMOVE: ul > li + li
 UPDATE: ul > li > b::text "c" => "e"
+REMOVE: ul > li + li
+REMOVE: ul > li + li
 ```
 
 # Update `{"items":[]}`
@@ -87,8 +85,4 @@ REMOVE: ul > li
 ```
 INSERT: ul > li
 INSERT: ul > li:nth-of-type(1) + li
-INSERT: ul > li:nth-of-type(1) > b
-UPDATE: ul > li:nth-of-type(1) > b::text " " => "f"
-INSERT: ul > li:nth-of-type(2) > b
-UPDATE: ul > li:nth-of-type(2) > b::text " " => "g"
 ```

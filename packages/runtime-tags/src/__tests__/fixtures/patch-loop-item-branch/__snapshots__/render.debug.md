@@ -26,8 +26,6 @@
 ## Change
 ```
 INSERT: ul > li:nth-of-type(1) + li
-UPDATE: ul > li:nth-of-type(2)::text "" => "b"
-INSERT: ul > li:nth-of-type(2)::text + ul
 ```
 
 # Update `{"items":[{"id":"b","children":["x","y"]},{"id":"c","children":[]}]}`
@@ -51,9 +49,7 @@ INSERT: ul > li:nth-of-type(2)::text + ul
 ```
 ## Change
 ```
+INSERT: ul > li:nth-of-type(1) > ul > li:nth-of-type(1) + li
 REMOVE: ul > li
 INSERT: ul > li:nth-of-type(1) + li
-INSERT: ul > li:nth-of-type(1) > ul > li:nth-of-type(1) + li
-UPDATE: ul > li:nth-of-type(1) > ul > li:nth-of-type(2)::text " " => "y"
-UPDATE: ul > li:nth-of-type(2)::text "" => "c"
 ```

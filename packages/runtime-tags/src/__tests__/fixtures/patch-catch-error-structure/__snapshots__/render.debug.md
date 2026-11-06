@@ -33,8 +33,6 @@ REMOVE: main > span:nth-of-type(2) + p
 INSERT: main > b
 INSERT: main > b + span
 INSERT: main > span:nth-of-type(1) + span
-UPDATE: main > span:nth-of-type(1)::text " " => "SHOWN_x"
-UPDATE: main > span:nth-of-type(2)::text " " => "SHOWN_y"
 ```
 ## Console
 ```

@@ -3,13 +3,14 @@
 {
   "PatchMarkedWrite:input_label": "b",
   "PatchBranch:#text/0": [{
+    "PatchOwner:": 1,
     "PatchChild:#childScope/0": {
       "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-whole-input-fn/tags/card.marko_1_input#0:3/setup": "input",
       "PatchSetupValues:": {
         "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-whole-input-fn/tags/card.marko_fill0": !0
       },
       "PatchMarkedWrite:input": {
-        fn: _(["BranchScopes:#text/0"], "packages/runtime-tags/src/__tests__/fixtures/patch-created-child-whole-input-fn/template.marko_1/fn")
+        fn: _([1], "packages/runtime-tags/src/__tests__/fixtures/patch-created-child-whole-input-fn/template.marko_1/fn")
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-child-whole-input-fn/template.marko_1*shell"]
@@ -20,13 +21,14 @@
 {
   "PatchMarkedWrite:input_label": "c",
   "PatchBranch:#text/0": [{
+    "PatchOwner:": 1,
     "PatchChild:#childScope/0": {
       "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-whole-input-fn/tags/card.marko_1_input#0:3/setup": "input",
       "PatchSetupValues:": {
         "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-whole-input-fn/tags/card.marko_fill0": !0
       },
       "PatchMarkedWrite:input": {
-        fn: _(["BranchScopes:#text/0"], "packages/runtime-tags/src/__tests__/fixtures/patch-created-child-whole-input-fn/template.marko_1/fn")
+        fn: _([1], "packages/runtime-tags/src/__tests__/fixtures/patch-created-child-whole-input-fn/template.marko_1/fn")
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-child-whole-input-fn/template.marko_1*shell"]

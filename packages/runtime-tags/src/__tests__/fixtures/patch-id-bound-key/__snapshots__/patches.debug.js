@@ -3,6 +3,7 @@
 {
   "PatchLoop:#text/0": [1.5, {
     "PatchChild:#childScope/0": {
+      "PatchOwner:": 1,
       "PatchSetup:": {
         "PatchVar:": _.a = "packages/runtime-tags/src/__tests__/fixtures/patch-id-bound-key/template.marko_1_store#9/var"
       },
@@ -39,13 +40,12 @@
         "PatchSetupValues:": {
           "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-id-bound-key/template.marko_fill0": 0
         },
-        "PatchWrite:TagVariableChange:count": _([
-          ["#text/0", [0, 1.5]], "#childScope/0"
-        ], "packages/runtime-tags/src/__tests__/fixtures/patch-id-bound-key/tags/store.marko_0/_return")
+        "PatchWrite:TagVariableChange:count": _([1], "packages/runtime-tags/src/__tests__/fixtures/patch-id-bound-key/tags/store.marko_0/_return")
       }, _.c = "packages/runtime-tags/src/__tests__/fixtures/patch-id-bound-key/template.marko_3*shell"]
     }, _.d = "packages/runtime-tags/src/__tests__/fixtures/patch-id-bound-key/template.marko_2*shell"]
   }, -1, {
     "PatchChild:#childScope/0": {
+      "PatchOwner:": 2,
       "PatchSetup:": {
         "PatchVar:": _.a
       },
@@ -80,15 +80,14 @@
         "PatchSetupValues:": {
           "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-id-bound-key/template.marko_fill0": 0
         },
-        "PatchWrite:TagVariableChange:count": _([
-          ["#text/0", [1, -1]], "#childScope/0"
-        ], "packages/runtime-tags/src/__tests__/fixtures/patch-id-bound-key/tags/store.marko_0/_return")
+        "PatchWrite:TagVariableChange:count": _([2], "packages/runtime-tags/src/__tests__/fixtures/patch-id-bound-key/tags/store.marko_0/_return")
       }, _.c]
     }, 1.5, {
       "PatchBranch:#text/0": 0
     }, _.d]
   }, _.b, {
     "PatchChild:#childScope/0": {
+      "PatchOwner:": 3,
       "PatchSetup:": {
         "PatchVar:": _.a
       },
@@ -121,9 +120,7 @@
         "PatchSetupValues:": {
           "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-id-bound-key/template.marko_fill0": 0
         },
-        "PatchWrite:TagVariableChange:count": _([
-          ["#text/0", [2, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"]], "#childScope/0"
-        ], "packages/runtime-tags/src/__tests__/fixtures/patch-id-bound-key/tags/store.marko_0/_return")
+        "PatchWrite:TagVariableChange:count": _([3], "packages/runtime-tags/src/__tests__/fixtures/patch-id-bound-key/tags/store.marko_0/_return")
       }, _.c]
     }, -1, {
       "PatchBranch:#text/0": 0
@@ -132,6 +129,7 @@
     }, _.d]
   }, "1Sa2Da0", {
     "PatchChild:#childScope/0": {
+      "PatchOwner:": 4,
       "PatchSetup:": {
         "PatchVar:": _.a
       },
@@ -162,9 +160,7 @@
         "PatchSetupValues:": {
           "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-id-bound-key/template.marko_fill0": 0
         },
-        "PatchWrite:TagVariableChange:count": _([
-          ["#text/0", [3, "1Sa2Da0"]], "#childScope/0"
-        ], "packages/runtime-tags/src/__tests__/fixtures/patch-id-bound-key/tags/store.marko_0/_return")
+        "PatchWrite:TagVariableChange:count": _([4], "packages/runtime-tags/src/__tests__/fixtures/patch-id-bound-key/tags/store.marko_0/_return")
       }, _.c]
     }, _.b, {
       "PatchBranch:#text/0": 0
@@ -175,6 +171,7 @@
     }, _.d]
   }, "", {
     "PatchChild:#childScope/0": {
+      "PatchOwner:": 5,
       "PatchSetup:": {
         "PatchVar:": _.a
       },
@@ -203,9 +200,7 @@
         "PatchSetupValues:": {
           "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-id-bound-key/template.marko_fill0": 0
         },
-        "PatchWrite:TagVariableChange:count": _([
-          ["#text/0", [4, ""]], "#childScope/0"
-        ], "packages/runtime-tags/src/__tests__/fixtures/patch-id-bound-key/tags/store.marko_0/_return")
+        "PatchWrite:TagVariableChange:count": _([5], "packages/runtime-tags/src/__tests__/fixtures/patch-id-bound-key/tags/store.marko_0/_return")
       }, _.c]
     }, "1Sa2Da0", {
       "PatchBranch:#text/0": 0
@@ -218,6 +213,7 @@
     }, _.d]
   }, "💠", {
     "PatchChild:#childScope/0": {
+      "PatchOwner:": 6,
       "PatchSetup:": {
         "PatchVar:": _.a
       },
@@ -244,9 +240,7 @@
         "PatchSetupValues:": {
           "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-id-bound-key/template.marko_fill0": 0
         },
-        "PatchWrite:TagVariableChange:count": _([
-          ["#text/0", [5, "💠"]], "#childScope/0"
-        ], "packages/runtime-tags/src/__tests__/fixtures/patch-id-bound-key/tags/store.marko_0/_return")
+        "PatchWrite:TagVariableChange:count": _([6], "packages/runtime-tags/src/__tests__/fixtures/patch-id-bound-key/tags/store.marko_0/_return")
       }, _.c]
     }, "", {
       "PatchBranch:#text/0": 0
@@ -261,6 +255,7 @@
     }, _.d]
   }, "a_b", {
     "PatchChild:#childScope/0": {
+      "PatchOwner:": 7,
       "PatchSetup:": {
         "PatchVar:": _.a
       },
@@ -285,9 +280,7 @@
         "PatchSetupValues:": {
           "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-id-bound-key/template.marko_fill0": 0
         },
-        "PatchWrite:TagVariableChange:count": _([
-          ["#text/0", [6, "a_b"]], "#childScope/0"
-        ], "packages/runtime-tags/src/__tests__/fixtures/patch-id-bound-key/tags/store.marko_0/_return")
+        "PatchWrite:TagVariableChange:count": _([7], "packages/runtime-tags/src/__tests__/fixtures/patch-id-bound-key/tags/store.marko_0/_return")
       }, _.c]
     }, "💠", {
       "PatchBranch:#text/0": 0
@@ -304,6 +297,7 @@
     }, _.d]
   }, "a b", {
     "PatchChild:#childScope/0": {
+      "PatchOwner:": 8,
       "PatchSetup:": {
         "PatchVar:": _.a
       },
@@ -326,9 +320,7 @@
         "PatchSetupValues:": {
           "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-id-bound-key/template.marko_fill0": 0
         },
-        "PatchWrite:TagVariableChange:count": _([
-          ["#text/0", [7, "a b"]], "#childScope/0"
-        ], "packages/runtime-tags/src/__tests__/fixtures/patch-id-bound-key/tags/store.marko_0/_return")
+        "PatchWrite:TagVariableChange:count": _([8], "packages/runtime-tags/src/__tests__/fixtures/patch-id-bound-key/tags/store.marko_0/_return")
       }, _.c]
     }, "a_b", {
       "PatchBranch:#text/0": 0
@@ -347,6 +339,7 @@
     }, _.d]
   }, "0", {
     "PatchChild:#childScope/0": {
+      "PatchOwner:": 9,
       "PatchSetup:": {
         "PatchVar:": _.a
       },
@@ -367,9 +360,7 @@
         "PatchSetupValues:": {
           "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-id-bound-key/template.marko_fill0": 0
         },
-        "PatchWrite:TagVariableChange:count": _([
-          ["#text/0", [8, "0"]], "#childScope/0"
-        ], "packages/runtime-tags/src/__tests__/fixtures/patch-id-bound-key/tags/store.marko_0/_return")
+        "PatchWrite:TagVariableChange:count": _([9], "packages/runtime-tags/src/__tests__/fixtures/patch-id-bound-key/tags/store.marko_0/_return")
       }, _.c]
     }, "a b", {
       "PatchBranch:#text/0": 0
@@ -390,6 +381,7 @@
     }, _.d]
   }, 0, {
     "PatchChild:#childScope/0": {
+      "PatchOwner:": 10,
       "PatchSetup:": {
         "PatchVar:": _.a
       },
@@ -408,9 +400,7 @@
         "PatchSetupValues:": {
           "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-id-bound-key/template.marko_fill0": 0
         },
-        "PatchWrite:TagVariableChange:count": _([
-          ["#text/0", [9, 0]], "#childScope/0"
-        ], "packages/runtime-tags/src/__tests__/fixtures/patch-id-bound-key/tags/store.marko_0/_return")
+        "PatchWrite:TagVariableChange:count": _([10], "packages/runtime-tags/src/__tests__/fixtures/patch-id-bound-key/tags/store.marko_0/_return")
       }, _.c]
     }, "0", {
       "PatchBranch:#text/0": 0

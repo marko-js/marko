@@ -8,10 +8,11 @@
     "PatchText:#text/0": "a2"
   },
   "PatchChild:BranchScopes:#text/1": {
+    "PatchOwner:": 1,
     "PatchMarkedWrite:second": "b2",
     "PatchAttrs:#button/0": {
       title: "b2",
-      onClick: _(["BranchScopes:#text/1"], "packages/runtime-tags/src/__tests__/fixtures/patch-async-two-bodies-bind/template.marko_2/handler")
+      onClick: _([1], "packages/runtime-tags/src/__tests__/fixtures/patch-async-two-bodies-bind/template.marko_2/handler")
     },
     "PatchText:#text/1": "b2",
     "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-async-two-bodies-bind/template.marko_2_attrs#6": "second"

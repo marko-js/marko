@@ -37,8 +37,8 @@ REMOVE: main > em:nth-of-type(1) + div
 INSERT: main > em:nth-of-type(1) + button
 INSERT: main > button:nth-of-type(1) + em
 INSERT: main > button:nth-of-type(2) + em
-UPDATE: main > em:nth-of-type(1)::text@2 "" => "y"
 UPDATE: main > em:nth-of-type(1)::text@0 "" => "b"
+UPDATE: main > em:nth-of-type(1)::text@2 "" => "y"
 UPDATE: main > em:nth-of-type(2)::text@0 "" => "b"
 UPDATE: main > em:nth-of-type(2)::text@2 "" => "z"
 ```

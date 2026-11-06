@@ -78,16 +78,7 @@ caught
 ```
 ## Change
 ```
-INSERT: #sM_1VA + :is(span, label, #sM_2UVA, label, #sM_2VA)
-UPDATE: label:nth-of-type(3)[for] null => "sM_2UVA"
-UPDATE: label:nth-of-type(3)::text " " => "2"
-UPDATE: #sM_2UVA[id] null => "sM_2UVA"
-INSERT: #sM_2UVA + p
-INSERT: #sM_2UVA + ::text("caught")
-REMOVE: ::text@6 + p
-UPDATE: label:nth-of-type(4)[for] null => "sM_2VA"
-UPDATE: label:nth-of-type(4)::text " " => "row 2"
-UPDATE: #sM_2VA[id] null => "sM_2VA"
+INSERT: #sM_1VA + :is(span, label, #sM_2UVA, ::text("caught"), label, #sM_2VA)
 ```
 
 # Update

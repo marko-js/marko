@@ -24,5 +24,4 @@ INSERT: main > h5
 REMOVE: main > h5 + h4
 UPDATE: main > h5::text " " => "SHOWN_name1"
 INSERT: main > h5 + h4
-UPDATE: main > h4::text " " => "SHOWN_name2"
 ```

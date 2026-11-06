@@ -145,13 +145,7 @@ UPDATE: label:nth-of-type(6)[for] null => "sM_Z5UXA"
 UPDATE: #sM_Z5UXA[id] null => "sM_Z5UXA"
 UPDATE: label:nth-of-type(6)::text " " => "2"
 INSERT: #sM_Z5UXA + :is(label, #sM_Z6UYA)
-UPDATE: label:nth-of-type(7)[for] null => "sM_Z6UYA"
-UPDATE: #sM_Z6UYA[id] null => "sM_Z6UYA"
-UPDATE: label:nth-of-type(7)::text " " => "0"
 INSERT: #sM_Z6UYA + :is(label, #sM_Z7UYA)
-UPDATE: label:nth-of-type(8)[for] null => "sM_Z7UYA"
-UPDATE: #sM_Z7UYA[id] null => "sM_Z7UYA"
-UPDATE: label:nth-of-type(8)::text " " => "1"
 ```
 
 # Update

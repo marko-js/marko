@@ -75,7 +75,6 @@ UPDATE: main > li > p::text "n1" => "n2"
 ## Change
 ```
 INSERT: main > li:nth-of-type(1) + li
-UPDATE: main > li:nth-of-type(2)::text "" => "y"
 INSERT: main > li:nth-of-type(2)::text + p
 UPDATE: main > li:nth-of-type(2) > p::text " " => "n2"
 ```
