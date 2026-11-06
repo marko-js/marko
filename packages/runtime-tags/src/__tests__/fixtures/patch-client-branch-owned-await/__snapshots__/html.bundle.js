@@ -24,7 +24,7 @@ _shells({
 	a10: `a10${_shell_marker([[], []], ["a>", $setup])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks)};${$template}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_tag = _write_guard($scope0_reason, 3), $wi__input_p = _write_if($scope0_reason, 1), $cg__input_p = _client_guard($scope0_reason, 1), $wg__input_show = _write_guard($scope0_reason, 0), $sg__input_p = _server_guard($scope0_reason, 1), $fg__input_p = _filled_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 2), $fg__input_tag = _filled_guard($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $wg__input_tag = _write_guard($scope0_reason, 3), $wi__input_p = _write_if($scope0_reason, 1), $wg__input_show = _write_guard($scope0_reason, 0), $sg__input_p = _server_guard($scope0_reason, 1), $fg__input_p = _filled_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 2), $fg__input_tag = _filled_guard($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	const $input_tag__closures = /* @__PURE__ */ new Set();
@@ -47,7 +47,7 @@ var template_default = _template("a", (input) => {
 						_html(`<b>${_text_mark($scope4_id, "b", v, 1, $scope0_reason, 1)}${_text_mark($scope4_id, "c", input.label, 2, $scope0_reason, 2)}</b>${_el_mark($scope4_id, "a")}`);
 						_script($scope4_id, "a1");
 						_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope4_id, "a2", _client_guard($scope0_reason, 2));
-						_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope4_id, "a3", $cg__input_p);
+						_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope4_id, "a3", _client_guard($scope0_reason, 1));
 						_subscribe($wi__input_p && $await_content__v__closures, _subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope4_id, { _: _scope_with_id($scope3_id) })));
 					}, $scope3_id) };
 					_dynamic_tag($scope3_id, "a", input.tag, { content: Inner }, 1, 0, 0, $wg__input_tag, $scope0_reason, 3);
@@ -62,7 +62,7 @@ var template_default = _template("a", (input) => {
 					}));
 					$wg__input_tag || _resume_branch($scope3_id);
 				}, 1, "a7", _unfilled_if($scope0_reason, 1));
-				_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope2_id, "a11", $cg__input_p);
+				_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope2_id, "a11", 1);
 				_subscribe($wi__input_p && $input_p__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }));
 				_write_guard($scope0_reason, 1) && _resume_branch($scope2_id);
 			}, $scope1_id) });
