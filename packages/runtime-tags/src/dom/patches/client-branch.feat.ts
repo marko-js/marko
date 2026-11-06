@@ -5,12 +5,18 @@ import {
   type Scope,
 } from "../../common/types";
 import { subscribeToScopeSet } from "../signals";
-import { installPatchShells, patchers, patchScope } from "./apply";
+import {
+  bindRef,
+  installPatchShells,
+  type PatchHop,
+  patchers,
+  patchScope,
+} from "./apply";
 import { installKeptInstances, registerShell } from "./shells";
 
 declare module "./apply" {
   interface PatchValues {
-    [PatchKey.ClientBranch]: Scope | ((instance: Scope) => Scope);
+    [PatchKey.ClientBranch]: KeptHoles;
   }
 }
 
@@ -46,18 +52,47 @@ installKeptInstances((branch, id) => {
   if (section) {
     const owner = branch[AccessorProp.Owner]!;
     const holes = owner[AccessorPrefix.ClientBranchHoles + section] as
-      | Scope
-      | ((instance: Scope) => Scope)
+      | KeptHoles
       | undefined;
     subscribeToScopeSet(owner, AccessorPrefix.ClosureScopes + section, branch);
     if (holes) patchInstance(holes, branch);
   }
 });
 
-// Holes naming the instance's own scopes (`s=>(…)`) bind to each instance they apply to.
-function patchInstance(
-  holes: Scope | ((instance: Scope) => Scope),
-  instance: Scope,
-) {
-  patchScope(typeof holes === "function" ? holes(instance) : holes, instance);
+// The holes every instance shares, with the binds of values each one owns: a
+// bind's path (its place) and `_`'s args from the instance.
+type KeptHoles =
+  | Scope
+  | [
+      holes: Scope,
+      binds: [path: string[], ...args: [PatchHop[], string, 0 | 1]][],
+    ];
+
+// Each instance takes the holes with its own values bound in, each on a copy of
+// the containers along its path, which hold its render-only locals until then.
+function patchInstance(holes: KeptHoles, instance: Scope) {
+  if (Array.isArray(holes)) {
+    const copies = new Set<object>();
+    const copy = (node: any) => {
+      if (!copies.has(node)) {
+        copies.add((node = Array.isArray(node) ? [...node] : { ...node }));
+      }
+      return node;
+    };
+    const [shared, binds] = holes;
+    holes = copy(shared) as Scope;
+    for (const [path, scopePath, id, content] of binds) {
+      let node: any = holes;
+      const last = path.length - 1;
+      for (let i = 0; i < last; i++) node = node[path[i]] = copy(node[path[i]]);
+      node[path[last]] = bindRef!(
+        instance,
+        scopePath,
+        id,
+        content || node[path[last]] || undefined,
+        node[path[last]] || undefined,
+      );
+    }
+  }
+  patchScope(holes, instance);
 }

@@ -51,9 +51,7 @@ installBindRef((root, path, id, bound, locals) => {
       scope =
         typeof hop === "string"
           ? (scope[hop] as Scope)
-          : Array.isArray(hop)
-            ? getLoopItem(scope, hop[0], hop[1])!
-            : hop;
+          : getLoopItem(scope, hop[0], hop[1])!;
     }
     return scope;
   };

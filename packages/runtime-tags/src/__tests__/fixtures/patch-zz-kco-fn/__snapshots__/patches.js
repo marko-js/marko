@@ -8,16 +8,23 @@
         fb: "^^a6"
       }
     },
-    W2: s => ({
-      fa: [">span", "a1", {
-        onClick: _([s], "a0")
-      }],
-      cAa: {
+    W2: [{
+        fa: [">span", "a1", {
+          onClick: 0
+        }],
         cAa: {
-          ta: "b"
+          cAa: {
+            ta: "b"
+          }
         }
-      }
-    })
+      },
+      [
+        [
+          ["fa", 2, "onClick"],
+          [], "a0", 0
+        ]
+      ]
+    ]
   }, "a7"],
   Sa9: "f",
   xe: "span"
@@ -33,16 +40,23 @@
         fb: "^^a6"
       }
     },
-    W2: s => ({
-      fa: [">i", "a1", {
-        onClick: _([s], "a0")
-      }],
-      cAa: {
+    W2: [{
+        fa: [">i", "a1", {
+          onClick: 0
+        }],
         cAa: {
-          ta: "c"
+          cAa: {
+            ta: "c"
+          }
         }
-      }
-    })
+      },
+      [
+        [
+          ["fa", 2, "onClick"],
+          [], "a0", 0
+        ]
+      ]
+    ]
   }, "a7"],
   Sa9: "f",
   xe: "i"

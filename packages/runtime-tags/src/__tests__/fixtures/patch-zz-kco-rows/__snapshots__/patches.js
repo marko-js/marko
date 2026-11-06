@@ -8,18 +8,25 @@
         fb: "^^a4"
       }
     },
-    W2: s => ({
-      fa: [">span", 0, {
-        content: {
-          content: _([s], "a0", 1)
-        }
-      }],
-      cAa: {
+    W2: [{
+        fa: [">span", 0, {
+          content: {
+            content: 0
+          }
+        }],
         cAa: {
-          ta: "a"
+          cAa: {
+            ta: "a"
+          }
         }
-      }
-    }),
+      },
+      [
+        [
+          ["fa", 2, "content", "content"],
+          [], "a0", 1
+        ]
+      ]
+    ],
     Sa5: "d"
   }, 2, {
     xd: "b",
@@ -28,18 +35,25 @@
         fb: "^^a4"
       }
     },
-    W2: s => ({
-      fa: [">span", 0, {
-        content: {
-          content: _([s], "a0", 1)
-        }
-      }],
-      cAa: {
+    W2: [{
+        fa: [">span", 0, {
+          content: {
+            content: 0
+          }
+        }],
         cAa: {
-          ta: "b"
+          cAa: {
+            ta: "b"
+          }
         }
-      }
-    }),
+      },
+      [
+        [
+          ["fa", 2, "content", "content"],
+          [], "a0", 1
+        ]
+      ]
+    ],
     Sa5: "d"
   }, "a6"],
   xe: "span"
@@ -55,18 +69,25 @@
         fb: "^^a4"
       }
     },
-    W2: s => ({
-      fa: [">i", 0, {
-        content: {
-          content: _([s], "a0", 1)
-        }
-      }],
-      cAa: {
+    W2: [{
+        fa: [">i", 0, {
+          content: {
+            content: 0
+          }
+        }],
         cAa: {
-          ta: "c"
+          cAa: {
+            ta: "c"
+          }
         }
-      }
-    }),
+      },
+      [
+        [
+          ["fa", 2, "content", "content"],
+          [], "a0", 1
+        ]
+      ]
+    ],
     Sa5: "d"
   }, 3, {
     xd: "d",
@@ -75,18 +96,25 @@
         fb: "^^a4"
       }
     },
-    W2: s => ({
-      fa: [">i", 0, {
-        content: {
-          content: _([s], "a0", 1)
-        }
-      }],
-      cAa: {
+    W2: [{
+        fa: [">i", 0, {
+          content: {
+            content: 0
+          }
+        }],
         cAa: {
-          ta: "d"
+          cAa: {
+            ta: "d"
+          }
         }
-      }
-    }),
+      },
+      [
+        [
+          ["fa", 2, "content", "content"],
+          [], "a0", 1
+        ]
+      ]
+    ],
     Sa5: "d"
   }, "a6"],
   xe: "i"

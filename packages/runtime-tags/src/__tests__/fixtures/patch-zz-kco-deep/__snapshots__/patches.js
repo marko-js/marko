@@ -7,20 +7,27 @@
         fb: "^^a5"
       }
     },
-    W2: s => ({
-      ba: [{
-        fa: [">span", 0, {
-          content: {
-            content: _([s, "Aa"], "a0", 1)
-          }
-        }],
-        cAa: {
+    W2: [{
+        ba: [{
+          fa: [">span", 0, {
+            content: {
+              content: 0
+            }
+          }],
           cAa: {
-            ta: "b"
+            cAa: {
+              ta: "b"
+            }
           }
-        }
-      }, "a4"]
-    })
+        }, "a4"]
+      },
+      [
+        [
+          ["ba", 0, "fa", 2, "content", "content"],
+          ["Aa"], "a0", 1
+        ]
+      ]
+    ]
   }, "a6"],
   Sa9: "f",
   xe: !0,
@@ -37,20 +44,27 @@
         fb: "^^a5"
       }
     },
-    W2: s => ({
-      ba: [{
-        fa: [">i", 0, {
-          content: {
-            content: _([s, "Aa"], "a0", 1)
-          }
-        }],
-        cAa: {
+    W2: [{
+        ba: [{
+          fa: [">i", 0, {
+            content: {
+              content: 0
+            }
+          }],
           cAa: {
-            ta: "c"
+            cAa: {
+              ta: "c"
+            }
           }
-        }
-      }, "a4"]
-    })
+        }, "a4"]
+      },
+      [
+        [
+          ["ba", 0, "fa", 2, "content", "content"],
+          ["Aa"], "a0", 1
+        ]
+      ]
+    ]
   }, "a6"],
   Sa9: "f",
   xe: !0,

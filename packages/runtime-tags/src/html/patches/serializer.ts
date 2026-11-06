@@ -33,9 +33,16 @@ export class PatchSerializerState extends SerializerState {
   // index here, which the client's response context counts the same way.
   trees = 0;
 
-  // Kept content's holes the client applies to each instance it holds: written as
-  // `s=>(…)`, where a reference owned inside names its scope from the instance.
-  perInstance = new Map<object, string>();
+  // Kept content's holes are shared by every instance the client holds, so a
+  // value owned inside one is a bind each instance resolves (`patchInstance`):
+  // its place in the holes (written at their end), then `_`'s args from the instance.
+  keptBinds = new Map<
+    object,
+    { parent: Reference | null; accessor: string; args: string }[]
+  >();
+  // The kept holes written with binds (`[holes, binds]`): a path into them steps
+  // through the array.
+  boundKept = new Set<Reference>();
 
   // Each flush is its own tree (the scope object is shared).
   override scopeRef() {
@@ -86,56 +93,55 @@ export class PatchSerializerState extends SerializerState {
   ) {
     const ref = new Reference(parent, accessor, this.flushId, this.buf.length);
     const content = (val as { [RendererProp.Id]?: string })[RendererProp.Id];
+    const scopeId = (registered.scope as ScopeInternals)[K_SCOPE_ID]!;
+    let kept = scopeId;
+    while (
+      kept !== ROOT_SCOPE_ID &&
+      !this.render.patchLinks[kept].key?.startsWith(PatchKey.ClientBranch)
+    ) {
+      kept = this.render.patchLinks[kept].parent;
+    }
+    const at = this.buf.length;
+    this.writeScopePath(scopeId, registered.id, kept);
+    const args =
+      "[" +
+      this.buf.splice(at).join("") +
+      "]," +
+      quoteRegistryId(shipNamedShell(this.render, registered.id)) +
+      (content ? ",1" : ",0");
+    const locals = registered.locals?.(this.boundary.state.scope);
+    if (kept !== ROOT_SCOPE_ID) {
+      // Its place holds its render-only locals (one scope), else `0`.
+      const node = this.render.patchTree![kept]!;
+      let binds = this.keptBinds.get(node);
+      if (!binds) this.keptBinds.set(node, (binds = []));
+      binds.push({ parent, accessor, args });
+      if (locals?.length) {
+        writeLocalArgs(this, ref, locals);
+        this.buf[at] = "";
+      } else {
+        this.buf.push("0");
+      }
+      return;
+    }
     // Content keeps one identity, as main's write does; a bind makes its function anew.
     if (content) this.refs.set(val, ref);
-    const scopeId = (registered.scope as ScopeInternals)[K_SCOPE_ID]!;
-    let start = scopeId;
-    while (
-      start !== ROOT_SCOPE_ID &&
-      !this.render.patchLinks[start].key?.startsWith(PatchKey.ClientBranch)
-    ) {
-      start = this.render.patchLinks[start].parent;
-    }
-    this.buf.push("_([");
-    if (start !== ROOT_SCOPE_ID) this.buf.push(this.instanceParam(start));
-    this.writeScopePath(scopeId, registered.id, start);
-    this.buf.push(
-      "]," + quoteRegistryId(shipNamedShell(this.render, registered.id)),
-    );
-    if (content) this.buf.push(",1");
-    if (registered.locals) {
-      writeLocalArgs(this, ref, registered.locals(this.boundary.state.scope));
-    }
+    this.buf.push("_(" + (content ? args : args.slice(0, -2)));
+    if (locals) writeLocalArgs(this, ref, locals);
     this.buf.push(")");
   }
 
-  // The holes' parameter for kept content rendered at `scopeId`, one name per
-  // nesting depth so holes inside other kept content can name either instance.
-  instanceParam(scopeId: number) {
-    const node = this.render.patchTree![scopeId]!;
-    let param = this.perInstance.get(node);
-    if (!param) {
-      let depth = 0;
-      for (let id = scopeId; id !== ROOT_SCOPE_ID;) {
-        const link = this.render.patchLinks[id];
-        if (link.key?.startsWith(PatchKey.ClientBranch)) depth++;
-        id = link.parent;
-      }
-      this.perInstance.set(node, (param = "s" + (depth > 1 ? depth : "")));
-    }
-    return param;
-  }
-
   // Patch scope ids have no client-side map, so a bound registration names
-  // its scope by the links down from the page root (written root first).
-  writeScopePath(scopeId: number, id: string, start: number) {
-    if (scopeId === start) return;
+  // its scope by the links down from the page root, or from the kept instance
+  // its bind resolves on (written outermost first).
+  writeScopePath(scopeId: number, id: string, from: number) {
+    if (scopeId === from) return;
     if (MARKO_DEBUG && !this.render.patchLinks[scopeId]) {
       throw new Error(`A patch cannot send the scoped registration "${id}".`);
     }
     const link = this.render.patchLinks[scopeId];
-    this.writeScopePath(link.parent, id, start);
-    if (link.parent !== ROOT_SCOPE_ID) this.buf.push(",");
+    this.writeScopePath(link.parent, id, from);
+    if (link.parent !== from) this.buf.push(",");
     // Accessors are compiler-made (nothing to escape); a loop key is data.
     const hop = link.hop;
     if (typeof hop === "string") {
@@ -255,10 +261,55 @@ function writePatchTreeNode(
     const start = state.buf.push("{") - 1;
     writePatchProps(state, node, ref, patchTreeNodes);
     state.buf.push("}");
-    const param = state.perInstance.get(node);
-    if (param) {
-      state.buf[start] = param + "=>(" + state.buf[start];
-      state.buf.push(")");
+    const binds = state.keptBinds.get(node);
+    if (binds) {
+      state.boundKept.add(ref);
+      state.buf[start] = "[" + state.buf[start];
+      let sep = ",[";
+      for (const bind of binds) {
+        state.buf.push(
+          sep +
+            "[[" +
+            bindPath(state, bind.parent, bind.accessor, ref) +
+            "]," +
+            bind.args +
+            "]",
+        );
+        sep = ",";
+      }
+      state.buf.push("]]");
     }
   }
+}
+
+// A bind's place, from its kept holes: each step a key (an array's as its index).
+function bindPath(
+  state: PatchSerializerState,
+  parent: Reference | null,
+  accessor: string,
+  holes: Reference,
+) {
+  let path = toPathKey(accessor);
+  for (; parent !== holes; parent = parent.parent) {
+    if (!parent?.accessor) {
+      throw new Error(
+        "A patch cannot send a value its kept content owns here.",
+      );
+    }
+    path =
+      toPathKey(parent.accessor) +
+      (state.boundKept.has(parent) ? ",0," : ",") +
+      path;
+  }
+  return path;
+}
+
+// A written key (`toObjectKey`'s) as a value.
+function toPathKey(accessor: string) {
+  const start = accessor[0];
+  return start === "["
+    ? accessor.slice(1, -1)
+    : start === '"' || (start >= "0" && start <= "9")
+      ? accessor
+      : '"' + accessor + '"';
 }
