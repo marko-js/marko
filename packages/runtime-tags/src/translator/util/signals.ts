@@ -2212,12 +2212,11 @@ export function writeHTMLResumeStatements(
       !(isGuardedReason(sectionReason) && sectionReason.global)
         ? getExprIfWritten(section, sectionReason, writeCall)
         : writeCall;
-    // A known child's fills take its write's place in a patch render, where
+    // A section's fills take its write's place in a patch render, where
     // `_scope` writes nothing.
-    const fills =
-      fillCalls.length && isKnownChild(section)
-        ? toSequenceExpression(fillCalls)
-        : undefined;
+    const fills = fillCalls.length
+      ? toSequenceExpression(fillCalls)
+      : undefined;
     const statement =
       write && fills ? t.logicalExpression("||", write, fills) : write || fills;
     if (statement) body.push(t.expressionStatement(statement));
