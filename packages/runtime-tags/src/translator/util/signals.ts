@@ -1322,8 +1322,7 @@ export function writeHTMLResumeStatements(
   let linkedWithScope = some(section.bindings, isClientAssignedLet);
   let linkReasons: Reasons | undefined;
   forEach(section.referencedClosures, (closure) => {
-    // A constant never changes, so nothing subscribes to it.
-    if (closure.sources && closure.type !== BindingType.constant) {
+    if (closure.sources) {
       if (isDynamicClosure(section, closure)) {
         const closureSignal = getSignal(closure.section, closure);
         let identifier =

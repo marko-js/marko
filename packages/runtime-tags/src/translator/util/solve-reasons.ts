@@ -3,7 +3,6 @@ import { getProgram } from "@marko/compiler/babel-utils";
 
 import {
   type Binding,
-  BindingType,
   type Intersection,
   type ParamBinding,
   bindingUtil,
@@ -223,34 +222,40 @@ function getBranchExprReasonUntil(section: Section, ancestor: Section) {
   return reason;
 }
 
-// A closure a section reads is read whenever a branch or content between the
-// read and the closure's own section is created, unless that recomputes it.
+// A loop key a section reads in place takes a closure's reasons, and a closure's
+// signal also reaches the section through subscriber sets where no branch links them.
 function addClosureReasons(section: Section) {
+  forEach(section.referencedConstants, (constant) =>
+    addClosureReason(section, constant),
+  );
   forEach(section.referencedClosures, (closure) => {
-    const sourceSection = closure.section;
-    const branchesReason = getBranchExprReasonUntil(section, sourceSection);
-    addReason(
-      ensureSlot(closure),
-      branchesReason?.always
-        ? branchesReason
-        : withoutOwnSources(closure, branchesReason),
-    );
-
-    if (isDynamicClosure(section, closure)) {
-      addOwnerReason(section, sourceSection, branchesReason);
-
-      // A constant never changes, so no signal subscribes to it.
-      if (closure.sources && closure.type !== BindingType.constant) {
-        addReason(ensureSlot(closure, SlotKind.ClosureScopes), closure.sources);
-        if (getDynamicClosureIndex(closure, section)) {
-          addReason(
-            ensureSlot(closure, SlotKind.ClosureSignalIndex, section),
-            closure.sources,
-          );
-        }
+    addClosureReason(section, closure);
+    if (closure.sources && isDynamicClosure(section, closure)) {
+      addReason(ensureSlot(closure, SlotKind.ClosureScopes), closure.sources);
+      if (getDynamicClosureIndex(closure, section)) {
+        addReason(
+          ensureSlot(closure, SlotKind.ClosureSignalIndex, section),
+          closure.sources,
+        );
       }
     }
   });
+}
+
+// A closure a section reads is read whenever a branch or content between the
+// read and the closure's own section is created, unless that recomputes it.
+function addClosureReason(section: Section, binding: Binding) {
+  const sourceSection = binding.section;
+  const branchesReason = getBranchExprReasonUntil(section, sourceSection);
+  addReason(
+    ensureSlot(binding),
+    branchesReason?.always
+      ? branchesReason
+      : withoutOwnSources(binding, branchesReason),
+  );
+  if (isDynamicClosure(section, binding)) {
+    addOwnerReason(section, sourceSection, branchesReason);
+  }
 }
 
 // A call links its body's scope to the body's owner as the calling scope is
