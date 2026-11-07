@@ -8,12 +8,12 @@ import type { Renderer } from "../renderer";
 import "./write.feat";
 import { _resumed, getRegisteredWithScope } from "../resume";
 import {
-  getLoopItem,
   installBindRef,
   type PatchHop,
   patchers,
   patchFills,
   setupPatchers,
+  walkPath,
 } from "./apply";
 
 declare module "./apply" {
@@ -45,16 +45,7 @@ patchers[PatchKey.BindFill] = setupPatchers[PatchKey.BindFill] = (
 // Any other bound registration is its scope's path from the page root, walked on use
 // (the flush may not have created it yet); one over render-only locals takes those.
 installBindRef((root, path, id, bound, locals) => {
-  const resolve = (_?: never) => {
-    let scope = root;
-    for (const hop of path) {
-      scope =
-        typeof hop === "string"
-          ? (scope[hop] as Scope)
-          : getLoopItem(scope, hop[0], hop[1])!;
-    }
-    return scope;
-  };
+  const resolve = (_?: never) => walkPath(root, path);
   return bound === 1
     ? Object.defineProperty(
         // No owner yet (its scope may not exist): the getter walks to it on use. The

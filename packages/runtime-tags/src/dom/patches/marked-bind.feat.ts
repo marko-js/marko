@@ -6,7 +6,7 @@ import {
   type Scope,
 } from "../../common/types";
 import { _resumed, installBoundFnRevive } from "../resume";
-import { getLoopItem, patchers, renderData } from "./apply";
+import { patchers, renderData, walkPath } from "./apply";
 import { installBoundFnResolver, type OwnerBound } from "./bind.feat";
 import { filledReferences, reviveBoundFn } from "./signals";
 
@@ -32,12 +32,7 @@ function resolveBoundFn(owner: Scope, entry: OwnerBound) {
   for (; id[up] === "^"; up++) owner = owner[AccessorProp.Owner]!;
   // The hops down to an owner below (a `<return>`), else content's locals.
   if (Array.isArray(local)) {
-    for (const hop of local) {
-      owner =
-        typeof hop === "string"
-          ? (owner[hop] as Scope)
-          : getLoopItem(owner, hop[0], hop[1])!;
-    }
+    owner = walkPath(owner, local);
     local = false;
   }
   const registryId = id.slice(up);

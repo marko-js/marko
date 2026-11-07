@@ -146,6 +146,17 @@ export function getLoopItem(
       ) as Scope | undefined);
 }
 
+// The scope hops from `scope` reach: a child's accessor, or a loop's item.
+export function walkPath(scope: Scope, path: PatchHop[]) {
+  for (const hop of path) {
+    scope =
+      typeof hop === "string"
+        ? (scope[hop] as Scope)
+        : getLoopItem(scope, hop[0], hop[1])!;
+  }
+  return scope;
+}
+
 /** The live page's `$global`: names its render and holds its document's nonce. */
 export type PatchGlobal = { renderId: string; cspNonce?: string };
 
