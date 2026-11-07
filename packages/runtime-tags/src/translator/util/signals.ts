@@ -76,7 +76,6 @@ import {
   getRootGroupArgs,
   hasCallerGroupsAt,
   isFilledReference,
-  isScopeBoundFn,
   writePatchResumeStatements,
 } from "./patch/writers";
 import { getReadReplacement } from "./read-replacement";
@@ -1195,9 +1194,7 @@ export function buildSignalFn(signal: Signal): t.Expression {
         // client, which no patch writes there.
         const closureSignal = getSignal(closureSection, binding);
         pushScopeCall(
-          !isPatch()
-            ? signal.render
-            : getForwardStatements(signal, closureSignal),
+          getForwardStatements(signal, closureSignal),
           closureSignal.identifier,
         );
       }
@@ -1792,7 +1789,7 @@ export function writeRegisteredFns() {
   const statements: t.Statement[] = [];
   for (const registeredFn of registeredFns) {
     let fn: t.Statement;
-    if (isScopeBoundFn(registeredFn.node.extra!)) {
+    if (registeredFn.referencesScope || registeredFn.referencedLocals) {
       // A scope-bound registration reaches any patched value derived from it: its module
       // links the bind patchers.
       if (isPatch()) {

@@ -171,9 +171,7 @@ function recordPatchEntries(binding: Binding) {
   }
   // A live write marks its change; a created scope's seed only sets it.
   const marked = !!getPatchWrite(binding).write;
-  const groups = getCallerParamGroups(
-    getSourcesForReferencedBindings(binding)?.param,
-  );
+  const groups = getCallerParamGroups(binding.sources?.param);
   for (const [section, params] of groups) {
     const entries = getParamEntries(section);
     if (fill) addParamFill(section, { params, client: true });

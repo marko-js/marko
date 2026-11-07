@@ -859,7 +859,7 @@ export function getForClosureIndex(closure: Binding, closureSection?: Section) {
   let index = 0;
   find(closure.closureSections, (section) => {
     if (section === closureSection) return true;
-    if (section.branch?.kind === "for" && section.parent === closure.section) {
+    if (isLoopBody(section) && section.parent === closure.section) {
       index++;
     }
     return false;
