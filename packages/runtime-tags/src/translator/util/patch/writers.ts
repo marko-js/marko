@@ -1288,19 +1288,19 @@ export const [comparesBoundFn] = createAnalysisMemo(
     // judge it); a `<return>`'s caller links the record where it compares.
     getFilledReferences(fn)
       ? reachesBoundHolder(fn, bindsLive)
-      : reachesBoundHolder(fn, comparesHeld, readsAsValue),
+      : reachesBoundHolder(fn, comparesIdentity, readsAsValue),
   false,
 );
 
 // A holder that compares a function by identity: a marked slot or a fill in its
 // template, an effect or a fill in a call's.
-function comparesHeld(held: Binding, own: boolean) {
+function comparesIdentity(holder: Binding, own: boolean) {
   return (
-    someAlias(held, hasValueRead, undefined, true) &&
-    !isInvokeOnlyBinding(held) &&
+    someAlias(holder, hasValueRead, undefined, true) &&
+    !isInvokeOnlyBinding(holder) &&
     (own
-      ? !!getPatchWrite(held).write || !!getPatchFill(held).fill
-      : runsEffectOnPatch(held) || !!getPatchFill(held).fill)
+      ? !!getPatchWrite(holder).write || !!getPatchFill(holder).fill
+      : runsEffectOnPatch(holder) || !!getPatchFill(holder).fill)
   );
 }
 
@@ -1323,12 +1323,12 @@ function isValueRead(read: Read) {
 
 // A holder of a function with filled references a patch binds: one this template writes or fills, or
 // another template's its entries or fill read.
-function bindsLive(held: Binding, own: boolean, expr?: t.NodeExtra) {
+function bindsLive(holder: Binding, own: boolean, expr?: t.NodeExtra) {
   return own
-    ? getPatchWrite(held).write || !!getPatchFill(held).fill
-    : runsEffectOnPatch(held) ||
-        !!getPatchFill(held).fill ||
-        intersectsClientState(held, expr!.callSiteExprs);
+    ? getPatchWrite(holder).write || !!getPatchFill(holder).fill
+    : runsEffectOnPatch(holder) ||
+        !!getPatchFill(holder).fill ||
+        intersectsClientState(holder, expr!.callSiteExprs);
 }
 
 // A read of the binding lands in a function with filled references its template registers.
@@ -1347,16 +1347,16 @@ function isFilledReferenceRead({ fnRoot }: Read) {
 // call's), or a dynamic tag's input, a template this one cannot see.
 function reachesBoundHolder(
   fn: t.NodeExtra,
-  test: (held: Binding, own: boolean, expr?: t.NodeExtra) => boolean,
+  test: (holder: Binding, own: boolean, expr?: t.NodeExtra) => boolean,
   carries?: (binding: Binding, expr: ReferencedExtra) => boolean,
 ) {
   const { program } = fn.section!;
   const reaches = (holder: Binding) =>
     someReached(
       holder,
-      (held, expr) =>
-        test(held, held.section.program === program, expr) ||
-        readsAsDynamicTagInput(held),
+      (reached, expr) =>
+        test(reached, reached.section.program === program, expr) ||
+        readsAsDynamicTagInput(reached),
       fn,
       carries,
     );
@@ -1416,8 +1416,8 @@ export function runsClosureByWrite(closure: Binding, section: Section) {
 }
 
 // A holder a dynamic tag's input reads as it is.
-function readsAsDynamicTagInput(held: Binding) {
-  return someBindingRead(held, isDynamicTagInput);
+function readsAsDynamicTagInput(holder: Binding) {
+  return someBindingRead(holder, isDynamicTagInput);
 }
 
 function isDynamicTagInput(expr: t.NodeExtra) {
