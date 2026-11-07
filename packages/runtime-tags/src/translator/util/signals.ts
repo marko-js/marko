@@ -2221,7 +2221,9 @@ export function writeHTMLResumeStatements(
     body.splice(reason ? body.indexOf(reason) + 1 : 0, 0, ...paramWrites);
   }
   const additionalStatements = getHTMLSectionStatements(section);
-  if (body.length || additionalStatements.length) {
+  // A patch page names each scope by the id its caller peeks (a marker, a patch
+  // link, a child scope ref) whatever it writes, so every section claims its id.
+  if (body.length || additionalStatements.length || isPatch()) {
     body.unshift(
       t.variableDeclaration("const", [
         t.variableDeclarator(scopeIdIdentifier, callRuntime("_scope_id")),
