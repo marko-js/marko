@@ -42,6 +42,7 @@ import {
   findOwnerDepth,
   getUpdatesFrom,
   inCreatable,
+  isFilledEntry,
   addClientBranch,
   linkBranch,
   patchWait,
@@ -406,12 +407,6 @@ export function _content_resume(
 }
 
 const clientInputRenderers = new WeakSet<ServerRenderer>();
-
-// The flush writes the entry: a server value changed it, or it seeds a scope
-// the flush may create.
-function isFilledEntry(sources: number) {
-  return sources === UpdatesFrom.Server || (!sources && inCreatable());
-}
 
 // Content's owner as an id prefix: a `^` per scope up the tag's owner chain (its
 // own first), then accessor hops down from it or the root, or up to a row.

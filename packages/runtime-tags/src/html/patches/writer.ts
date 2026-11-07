@@ -757,11 +757,12 @@ export function writeFill(
 // On when a patch fills the group here: server-sourced, or constant (`0`, a
 // call-site constant) where a fresh scope may need the seed.
 export function _filled_guard(mask: GroupMask, group: number) {
-  const updatesFrom = getUpdatesFrom(mask, group);
-  return updatesFrom === UpdatesFrom.Server ||
-    (updatesFrom === 0 && inCreatable())
-    ? 1
-    : 0;
+  return isFilledEntry(getUpdatesFrom(mask, group)) ? 1 : 0;
+}
+
+// `_filled_guard`'s answer for where a group updates from.
+export function isFilledEntry(updatesFrom: number) {
+  return updatesFrom === UpdatesFrom.Server || (!updatesFrom && inCreatable());
 }
 
 // On where the server alone sources the group: a patch writes its values in
@@ -887,10 +888,7 @@ export function _patch_bind<T>(
     // A constant group's handler is a paired scope's already: it goes only where a
     // scope may be created, which a paired one there takes again.
     const updatesFrom = getUpdatesFrom(mask, group!);
-    if (
-      updatesFrom === UpdatesFrom.Server ||
-      (updatesFrom === 0 && inCreatable())
-    ) {
+    if (isFilledEntry(updatesFrom)) {
       const patch = ensureScopePatch(state, scopeId);
       const bind = bindEntry(state, scopeId, value);
       // A plain value is a write a created scope takes as a paired one does.
