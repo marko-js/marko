@@ -72,7 +72,7 @@ import {
   sectionUtil,
 } from "../sections";
 import { inCreatedCatch, shipsContentShell } from "../shell";
-import { getResumeRegistryId } from "../signals";
+import { getResumeRegistryId, shipsClosureScopes } from "../signals";
 import { findSlot, type Slot, SlotKind } from "../slots";
 import {
   bindingReaders,
@@ -265,6 +265,12 @@ export function ensurePatchReasonGroups(
   if (section.branch?.kind === "await") {
     ensureCallerParamGroups(getSourcesForExpr(section.branchExpr!));
   }
+  // A scope subscribes to a closure, and resumes that subscriber, by its reads' sources.
+  forEach(section.referencedClosures, (closure) => {
+    if (shipsClosureScopes(closure)) {
+      ensureCallerParamGroups(getClosureReadSources(closure, section));
+    }
+  });
   ensureKnownTagPatchGroups(section);
 }
 

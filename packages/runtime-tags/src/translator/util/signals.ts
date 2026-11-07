@@ -616,7 +616,7 @@ function isChangeableDynamicClosure(section: Section, closure: Binding) {
 
 // A resumed subscriber enters its owner's set, which a patch page ships only
 // where analysis gave it a reason (never for a value read for `$global` alone).
-function shipsClosureScopes(closure: Binding) {
+export function shipsClosureScopes(closure: Binding) {
   return !!findSlot(closure, SlotKind.ClosureScopes)?.reason;
 }
 
