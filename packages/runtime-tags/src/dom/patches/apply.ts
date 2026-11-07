@@ -21,7 +21,7 @@ import {
   _resumed,
   type SerializeContext,
 } from "../resume";
-import type { Signal, SignalFn } from "../signals";
+import type { Signal } from "../signals";
 
 // What a patch of each kind carries, declared beside the patcher that
 // reads it.
@@ -32,10 +32,9 @@ export type Patcher<K extends PatchKind = PatchKind> = (
   accessor: string,
   value: K extends keyof PatchValues ? PatchValues[K] : unknown,
 ) => void;
-// Fills keyed by `templateId:ordinal`. A key's signals chain, and its declaration's fill
-// replaces them whichever registers first: what derives from it reaches what they would.
-export const patchFills: Record<string, Signal<unknown> & { _?: SignalFn }> =
-  {};
+// The signal each fill key runs: a fill's (its `<let>`'s, or its own run) or a tag
+// variable's; the last to register wins.
+export const patchFills: Record<string, Signal<unknown>> = {};
 export const patchers: { [K in PatchKind]?: Patcher<K> } = {};
 // The patchers of a setup envelope (`PatchKey.Setup`), which applies only to a
 // scope its flush created.
@@ -68,7 +67,7 @@ export const patchScope = <P extends Scope | 0>(
 // The render a flush is applying against (set by `runFlush`); its response
 // marks a change, which counts for all of that response's flushes.
 export let renderData!: RenderData;
-// Set while a patch applies to a tree a shell's walk just created: fresh
+// Set while a patch applies to a tree a shell's walk just created: created
 // scopes met then have no renderer to set them up (see `PatchKey.Setup`).
 export let creating = 0;
 export function withCreating<A, B>(fn: (a: A, b: B) => unknown, a?: A, b?: B) {
@@ -410,7 +409,7 @@ function runFlush(render: RenderData, apply: () => void): Applied {
     // branches needs the walked links, so finish the resume before patching.
     render.w();
     // Entries apply as a render does: a live `<let>` keeps its value, and a
-    // fresh one takes its seed.
+    // created one takes its seed.
     startRun();
     apply();
     const effects = render.m!([]);
