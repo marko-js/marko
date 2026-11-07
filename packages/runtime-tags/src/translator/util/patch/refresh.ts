@@ -36,6 +36,7 @@ import {
   forEach,
   type Opt,
   reduce,
+  reduceWhile,
   some,
   type SortedOpt,
 } from "../optional";
@@ -1054,24 +1055,38 @@ export function clientMayRenderInAnyCall(section: Section, upTo?: Section) {
 // The references of a function a patch may write, as hops from its section,
 // which its `_bind_resume` names. One reading client state is the client's.
 export const [getFilledReferences] = createAnalysisMemo(
-  (fn: t.FunctionExtra & t.NodeExtra): string | undefined => {
-    const references: string[] = [];
-    let clientState = false;
-    forEach(getReferencedBindingsInFunction(fn), (ref) => {
-      const reference = getCanonicalBinding(ref);
-      clientState ||= isStateSourced(reference);
-      const hop = getWriteHop(fn.section!, reference);
-      if (hop) references.push(hop);
-    });
-    return references.length && !clientState ? references.join(" ") : undefined;
-  },
+  (fn: t.FunctionExtra & t.NodeExtra): string | undefined =>
+    getFilledReferenceBindings(fn)
+      ?.map((reference) => getWriteHop(fn.section!, reference))
+      .join(" "),
   undefined,
 );
 
 export function hasFilledReferences(
   expr: t.NodeExtra,
 ): expr is t.FunctionExtra & t.NodeExtra {
-  return !!getFilledReferences(expr);
+  return !!getFilledReferenceBindings(expr);
+}
+
+// The canonical references of a function a patch may write: none where one is
+// client state.
+const [getFilledReferenceBindings] = createAnalysisMemo(
+  (fn: t.FunctionExtra & t.NodeExtra): Binding[] | undefined => {
+    const references = reduceWhile(
+      getReferencedBindingsInFunction(fn),
+      addFilledReference,
+      [],
+    );
+    return references?.length ? references : undefined;
+  },
+  undefined,
+);
+
+function addFilledReference(references: Binding[], ref: Binding) {
+  const reference = getCanonicalBinding(ref);
+  if (isStateSourced(reference)) return;
+  if (hasParamOrGlobalSource(reference.sources)) references.push(reference);
+  return references;
 }
 
 // A function a value the expressions may evaluate to passes `test`, following each
@@ -1171,11 +1186,8 @@ const [getFnValueReferences] = createAnalysisMemo(
     const references = new Set<Binding>();
     // Visits every function it may hold.
     someFnValueOf(holder, (fn) => {
-      if (hasFilledReferences(fn)) {
-        forEach(getReferencedBindingsInFunction(fn), (ref) => {
-          const reference = getCanonicalBinding(ref);
-          if (getWriteHop(fn.section!, reference)) references.add(reference);
-        });
+      for (const reference of getFilledReferenceBindings(fn) || []) {
+        references.add(reference);
       }
       return false;
     });
