@@ -1925,6 +1925,7 @@ export function writeHTMLResumeStatements(
   forEach(section.referencedClosures, (closure) => {
     if (closure.sources) {
       if (isDynamicClosure(section, closure) && shipsClosureScopes(closure)) {
+        const scopesSlot = findSlot(closure, SlotKind.ClosureScopes)!;
         const closureSignal = getSignal(closure.section, closure);
         let identifier =
           htmlDynamicClosureInstancesIdentifier.get(closureSignal);
@@ -1944,7 +1945,6 @@ export function writeHTMLResumeStatements(
               ),
             ]),
           );
-          const scopesSlot = findSlot(closure, SlotKind.ClosureScopes);
           // Only an unfilled read subscribes; a set none enters still ships, as
           // writing it at its first entry costs more runtime than it saves.
           writeSlot(
@@ -1952,7 +1952,7 @@ export function writeHTMLResumeStatements(
             (isPatch() &&
               getClosureScopesIfWritten(
                 closure,
-                scopesSlot?.reason,
+                scopesSlot.reason,
                 identifier,
               )) ||
               identifier,
@@ -1967,10 +1967,7 @@ export function writeHTMLResumeStatements(
           );
         }
 
-        const closureScopesReason = findSlot(
-          closure,
-          SlotKind.ClosureScopes,
-        )?.reason;
+        const closureScopesReason = scopesSlot.reason;
         const readSources =
           isPatch() && !closure.sources.state
             ? getClosureReadSources(closure, section)

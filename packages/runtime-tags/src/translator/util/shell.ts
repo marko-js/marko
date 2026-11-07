@@ -89,7 +89,8 @@ declare module "@marko/compiler/dist/types" {
 
 // The id a section ships its shell under (an await body may be kept as
 // boundary content or through its enclosing shell's chain).
-export function findShellId(section: Section, shells = getShells()) {
+export function findShellId(section: Section) {
+  const shells = getShells();
   for (const id in shells) if (shells[id] === section) return id;
 }
 
@@ -529,15 +530,12 @@ export function isQueuedOnCreate(
 
 // The section's mount effects' register ids, in resume order, for its shell
 // to ship.
-export function getSectionEffectRegistryIds(
-  section: Section,
-  skip: (referencedBindings: ReferencedBindings) => boolean,
-) {
+export function getSectionEffectRegistryIds(section: Section) {
   const ids: string[] = [];
   const allSignals = Array.from(getSignals(section).values());
   for (let i = allSignals.length; i--;) {
     const { hasHTMLEffect, referencedBindings } = allSignals[i];
-    if (hasHTMLEffect && !skip(referencedBindings)) {
+    if (hasHTMLEffect && !isEffectOutsideShell(section, referencedBindings)) {
       ids.push(getSignalRegistryId(allSignals[i]));
     }
   }
@@ -630,9 +628,7 @@ export const [getShellSetup] = createOutputSectionState<
   }
   const own: ShellSetup = [
     getShellSetupIds(section),
-    getSectionEffectRegistryIds(section, (refs) =>
-      isEffectOutsideShell(section, refs),
-    ),
+    getSectionEffectRegistryIds(section),
   ];
   const setup: ShellSetup = [[], []];
   for (const [hop, ids] of composed) {
