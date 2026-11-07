@@ -168,9 +168,9 @@ function inContentReachedByData(section: Section) {
 function getClientRenderedContents(section: Section, upTo?: Section) {
   let contents: SortedOpt<Section>;
   for (
-    let cur: Section | undefined = section;
-    cur !== upTo && cur?.enclosing.inContentSection;
-    cur = cur.parent
+    let cur = section;
+    cur !== upTo && cur.enclosing.inContentSection;
+    cur = cur.parent!
   ) {
     if (
       !cur.branch &&
@@ -474,11 +474,6 @@ const getFillReadKind = createPassMemo(computeFillReadKind, {
   contentKind: undefined,
   filledIntersections: undefined,
   keptInLet: false,
-} as {
-  kind: true | FillConditions | undefined;
-  contentKind: true | FillConditions | undefined;
-  filledIntersections: Map<Intersection, Section> | undefined;
-  keptInLet: boolean;
 });
 
 function computeFillReadKind(binding: Binding) {
@@ -545,7 +540,7 @@ function computeFillReadKind(binding: Binding) {
     if (rendersContent) {
       contentKind = mergeKinds(
         contentKind,
-        mergeKinds(readKind || {}, { passedUnder: handOff?.under }),
+        mergeKinds(readKind || {}, { passedUnder: handOff!.under }),
       );
     }
     if (written && readKind !== true && readKind?.members) {
@@ -1181,7 +1176,7 @@ export const [getFilledReads] = createAnalysisMemo(
             : []),
         ];
   },
-  [] as Binding[],
+  [],
 );
 
 // What the functions with filled references a value may hold read from the scope when called, where a
@@ -1201,7 +1196,7 @@ export const [getFnValueReferences] = createAnalysisMemo(
     });
     return Array.from(references);
   },
-  [] as Binding[],
+  [],
 );
 
 export function addFilledReads(reads: Set<Binding>, binding: Binding) {
