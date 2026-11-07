@@ -1129,8 +1129,7 @@ export function resolveEntryReads(
     while (name[up] === ">") up++;
     let owner: number | undefined = scopeId;
     for (let hop = up; hop-- && owner !== undefined;) {
-      const link: PatchLink | undefined = state.patchLinks[owner];
-      owner = link && (link.owner ?? link.parent);
+      owner = getOwnerId(state, owner);
     }
     const referenced =
       owner !== undefined && state.filledReads?.[owner]?.[name.slice(up)];
@@ -1214,8 +1213,7 @@ function findOwnerPath(
   let up = 0;
   for (let cur: number | undefined = scopeId; cur !== undefined; up++) {
     ups.set(cur, up);
-    const link: PatchLink | undefined = state.patchLinks[cur];
-    cur = link && (link.owner ?? link.parent);
+    cur = getOwnerId(state, cur);
   }
   const down: PatchLink["hop"][] = [];
   for (let cur: number | undefined = ownerId; cur !== undefined;) {
@@ -1233,14 +1231,19 @@ function findOwnerPath(
 export function findOwnerDepth(
   state: PatchRenderState,
   scopeId: number,
-  ownerId?: number,
+  ownerId: number,
 ) {
   let up = 0;
   for (let cur: number | undefined = scopeId; cur !== undefined; up++) {
     if (cur === ownerId) return up;
-    const link: PatchLink | undefined = state.patchLinks[cur];
-    cur = link && (link.owner ?? link.parent);
+    cur = getOwnerId(state, cur);
   }
+}
+
+// A scope's client `_`: a content body's owner, else its parent; none at the root.
+function getOwnerId(state: PatchRenderState, scopeId: number) {
+  const link: PatchLink | undefined = state.patchLinks[scopeId];
+  return link && (link.owner ?? link.parent);
 }
 
 // A flush's scopes are live already (paired) or subscribe as they render
