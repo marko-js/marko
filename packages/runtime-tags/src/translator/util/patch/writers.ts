@@ -137,6 +137,7 @@ import {
   getWriteHop,
   runsEffectOnPatch,
   runsSubscribersByWrite,
+  seedsCreatedScope,
   seedsOwnerConstant,
 } from "./refresh";
 import { getParamSelectedStructure } from "./structure";
@@ -273,8 +274,8 @@ export function writePatchResumeStatements(
   }
   // Beside fills: a created scope's seeds and filled intersection members' slot writes.
   forEach(section.bindings, (binding) => {
-    const { seed, write } = getPatchWrite(binding);
-    const seeds = seed && getWriteReason(binding);
+    const { write } = getPatchWrite(binding);
+    const seeds = seedsCreatedScope(binding) && getWriteReason(binding);
     // A value written in place wherever its group is the server's needs no more; in place
     // where an intersection the patch writes runs on the client (another member is the client's).
     const filledMembers = write

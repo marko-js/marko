@@ -232,11 +232,10 @@ export interface PatchFill {
   filledMembers?: SortedOpt<Sources>;
 }
 
-// What a patch writes and seeds, derived afresh each solve pass.
+// What a patch writes, derived afresh each solve pass.
 export interface PatchWrite {
   write?: boolean;
   effect?: boolean;
-  seed?: boolean;
   unfillable?: boolean;
 }
 
@@ -384,9 +383,9 @@ export function seedsOwnerConstant(section: Section, closure: Binding) {
   );
 }
 
-// A value a created scope gets from no other channel (a resumed one reads it
-// from the document), unlike fills, writes, a loop's sourced items and others' state.
-function seedsCreatedScope(binding: Binding) {
+// A value a created scope gets from no other channel (a resumed one reads it from the document),
+// unlike fills, writes, a loop's sourced items and others' state; asked once ids allocate.
+export const [seedsCreatedScope] = createAnalysisMemo((binding: Binding) => {
   const { section } = binding;
   return (
     mayBeCreated(section) &&
@@ -405,7 +404,7 @@ function seedsCreatedScope(binding: Binding) {
     // the intersection's first run unchanged, so what reads the value never runs.
     !derivesByCreatedSetup(binding)
   );
-}
+}, false);
 
 // Read in `section` past renders, effects, setup, name-only dynamic tags and (never
 // assigned) control flow and call arguments: by a child, intersection or return.
@@ -2247,10 +2246,10 @@ function ensureExprWriteGroups(expr: t.NodeExtra) {
 // A created scope's seed a flush writes; a registration it carries binds by
 // what its own module imports.
 export function writesSeed(binding: Binding) {
-  return !!getPatchWrite(binding).seed && !!findSlot(binding)?.reason;
+  return seedsCreatedScope(binding) && !!findSlot(binding)?.reason;
 }
 
-// Each write (content's once its shell ships), seed and unfillable read.
+// Each write (content's once its shell ships) and unfillable read.
 function computePatchWrite(binding: Binding): PatchWrite {
   const write = isPatchWritten(binding) && leavesReadUnfilled(binding);
   const sources = getSourcesForReferencedBindings(binding);
@@ -2265,7 +2264,6 @@ function computePatchWrite(binding: Binding): PatchWrite {
         (fill === true &&
           !sources?.state &&
           someAlias(binding, readsOwnEffect, undefined, true))),
-    seed: seedsCreatedScope(binding),
     unfillable: !!sources?.param && !sources.global && !patchRefreshes(binding),
   };
 }
