@@ -7,7 +7,7 @@ _shells({
 	"__tests__/tags/card.marko": "__tests__/tags/card.marko #childScope/0>__tests__/tags/card.marko_1_k#0:6/subscribe!__tests__/tags/card.marko_0;/&b ;<!><button>x</button>"
 });
 var card_default = _template("__tests__/tags/card.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_w = _filled_guard($scope0_reason, 1), $wi__input_w = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $fg__input_w = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_w__closures = new Set();
 	const $k__closures = new Set();
@@ -17,7 +17,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 		const $scope1_reason = _scope_reason();
 		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "__tests__/tags/card.marko_1_input_w#0:5/subscribe");
 		_script($scope1_id, "__tests__/tags/card.marko_1_input_w#0:5_k#0:6", 0, 0, _filled_guard($scope0_reason, 1) && ">input_w", "__tests__/tags/card.marko_1_input_w#0:5_k#0:6/setup");
-		_subscribe($k__closures, _subscribe($wi__input_w && $input_w__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/card.marko", "2:2"), _client_guard($scope0_reason, 1) && "__tests__/tags/card.marko_1_input_w#0:5/subscribe", 0), "__tests__/tags/card.marko_1_k#0:6/subscribe", 0);
+		_subscribe($k__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_w__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/card.marko", "2:2"), _client_guard($scope0_reason, 1) && "__tests__/tags/card.marko_1_input_w#0:5/subscribe", 0), "__tests__/tags/card.marko_1_k#0:6/subscribe", 0);
 		_resume_branch($scope1_id);
 	}, $scope0_id, 0) };
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
@@ -30,7 +30,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 	_scope($scope0_id, {
 		input_w: input.w,
 		k,
-		"ClosureScopes:input_w/7": $wi__input_w && $input_w__closures,
+		"ClosureScopes:input_w/7": _write_if($scope0_reason, 1) && $input_w__closures,
 		"ClosureScopes:k/8": $k__closures,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/tags/card.marko", 0, {

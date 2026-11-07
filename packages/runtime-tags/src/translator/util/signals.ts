@@ -50,6 +50,7 @@ import {
   fillSubscribes,
   getClosureReadSources,
   isResumedRead,
+  readsBySubscription,
   runsSubscribersByWrite,
   runsByEntry,
   leavesReadToPatch,
@@ -1942,10 +1943,10 @@ export function writeHTMLResumeStatements(
             ? getClosureReadSources(closure, section)
             : undefined;
         const groupArgs = readSources && getRootGroupArgs(section, readSources);
-        // A patch-filled reader needs no dispatch unless the client can change
-        // the owner value (`_unfilled_if`).
+        // A reader a patch fills, or re-runs by an entry, needs no subscription unless
+        // the client can change the owner value (`_unfilled_if`).
         const unfilledGroupArgs =
-          isPatch() && !someReadIn(closure, section, isResumedRead)
+          isPatch() && !someReadIn(closure, section, readsBySubscription)
             ? groupArgs
             : undefined;
         const subscribeArg =

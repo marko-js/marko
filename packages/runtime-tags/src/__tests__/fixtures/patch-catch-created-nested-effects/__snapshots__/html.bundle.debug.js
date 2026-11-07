@@ -56,7 +56,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_script($scope2_id, "__tests__/template.marko_2_input_v#0:3");
 				_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope2_id, "__tests__/template.marko_2_input_v#0:3/subscribe", $cg__input_v);
 				$cg__input_v && _patch_render($scope2_id, "__tests__/template.marko_2_w#1:7/setup");
-				_subscribe($wi__input_v && $input_v__closures, _scope($scope2_id, {
+				_subscribe(_unfilled_if($scope0_reason, 2) && $input_v__closures, _scope($scope2_id, {
 					_: _scope_with_id($scope1_id),
 					"ClosureSignalIndex:input_v/8": $wi__input_v && 1
 				}, "__tests__/template.marko", "10:6"), $cg__input_v && "__tests__/template.marko_2_input_v#0:3/subscribe");
@@ -70,7 +70,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_script($scope3_id, "__tests__/template.marko_3_input_v#0:3_x#2");
 			_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope3_id, "__tests__/template.marko_3_input_v#0:3/subscribe");
 			_patch_render($scope3_id, "__tests__/template.marko_3_input_v#0:3_x#2/setup", [_filled_guard($scope0_reason, 2) && ">>input_v", _filled_guard($scope0_reason, 4) && "x"], $scope0_reason, 0);
-			_subscribe($wi__input_v && $input_v__closures, _scope($scope3_id, {
+			_subscribe(_unfilled_if($scope0_reason, 2) && $input_v__closures, _scope($scope3_id, {
 				x,
 				_: _scope_with_id($scope1_id),
 				"ClosureSignalIndex:input_v/8": $wi__input_v && 2
@@ -85,7 +85,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_script($scope4_id, "__tests__/template.marko_4_input_v#0:3");
 			_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope4_id, "__tests__/template.marko_4_input_v#0:3/subscribe", $cg__input_v);
 			_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope4_id, "__tests__/template.marko_4_w#1:7/subscribe", $cg__input_v);
-			_subscribe(_unfilled_if($scope0_reason, 2) && $catch_content__w__closures, _subscribe($wi__input_v && $input_v__closures, _scope($scope4_id, {
+			_subscribe(_unfilled_if($scope0_reason, 2) && $catch_content__w__closures, _subscribe(_unfilled_if($scope0_reason, 2) && $input_v__closures, _scope($scope4_id, {
 				_: _scope_with_id($scope1_id),
 				"ClosureSignalIndex:input_v/8": $wi__input_v && 3
 			}, "__tests__/template.marko", "18:6")));
@@ -96,7 +96,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_v#0:3/subscribe", $cg__input_v);
 		_unfilled_if($scope0_reason, 3) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_show#0:4/subscribe", $cg__input_show);
 		_unfilled_if($scope0_reason, 4) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_items#0:5/subscribe", $cg__input_items);
-		_subscribe($wi__input_items && $input_items__closures, _subscribe(_unfilled_if($scope0_reason, 3) && $input_show__closures, _subscribe($wi__input_v && $input_v__closures, _scope($scope1_id, {
+		_subscribe($wi__input_items && $input_items__closures, _subscribe(_unfilled_if($scope0_reason, 3) && $input_show__closures, _subscribe(_unfilled_if($scope0_reason, 2) && $input_v__closures, _scope($scope1_id, {
 			w: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 2)) && w,
 			_: _scope_with_id($scope0_id),
 			"ClosureScopes:w/13": $wi__input_v && (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && $catch_content__w__closures,

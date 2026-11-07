@@ -8,7 +8,7 @@ _shells({
 	b3: "b3 !b1; D ;<button class=read> </button>"
 });
 var panel_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_a = _client_guard($scope0_reason, 0), $sg__input_a = _server_guard($scope0_reason, 0), $fg__input_a = _filled_guard($scope0_reason, 0), $wi__input_a = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_a = _client_guard($scope0_reason, 0), $sg__input_a = _server_guard($scope0_reason, 0), $fg__input_a = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $f2__closures = /* @__PURE__ */ new Set();
 	$fg__input_a && _patch_write($scope0_id, "xe", input.a, !$sg__input_a);
@@ -24,7 +24,7 @@ var panel_default = _template("b", (input) => {
 				_html(`<button class=read>${_text_mark($scope2_id, "b", f(), 1, $scope0_reason, 0)}</button>${_el_mark($scope2_id, "a")}`);
 				_script($scope2_id, "b1");
 				_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope2_id, "b2", $cg__input_a);
-				_subscribe($wi__input_a && $f2__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), $cg__input_a && "b2");
+				_subscribe(_unfilled_if($scope0_reason, 0) && $f2__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), $cg__input_a && "b2");
 			}, 0, $scope1_id, "a", 1, 1, 1, 0, 0, "b3", 0, 0);
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
@@ -35,7 +35,7 @@ var panel_default = _template("b", (input) => {
 	_scope($scope0_id, {
 		e: input.a,
 		g: f,
-		i: $wi__input_a && $f2__closures
+		i: _write_if($scope0_reason, 0) && $f2__closures
 	}) || $fg__input_a && _patch_write($scope0_id, "xg", f, !$sg__input_a);
 });
 

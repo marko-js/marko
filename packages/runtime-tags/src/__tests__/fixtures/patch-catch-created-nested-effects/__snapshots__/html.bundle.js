@@ -51,7 +51,7 @@ var template_default = _template("a", (input) => {
 				_script($scope2_id, "a0");
 				_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope2_id, "a1", $cg__input_v);
 				$cg__input_v && _patch_render($scope2_id, "a2");
-				_subscribe($wi__input_v && $input_v__closures, _scope($scope2_id, {
+				_subscribe(_unfilled_if($scope0_reason, 2) && $input_v__closures, _scope($scope2_id, {
 					_: _scope_with_id($scope1_id),
 					Ci: $wi__input_v && 1
 				}), $cg__input_v && "a1");
@@ -65,7 +65,7 @@ var template_default = _template("a", (input) => {
 			_script($scope3_id, "a8");
 			_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope3_id, "a9");
 			_patch_render($scope3_id, "a10", [_filled_guard($scope0_reason, 2) && ">>d", _filled_guard($scope0_reason, 4) && "c"], $scope0_reason, 0);
-			_subscribe($wi__input_v && $input_v__closures, _scope($scope3_id, {
+			_subscribe(_unfilled_if($scope0_reason, 2) && $input_v__closures, _scope($scope3_id, {
 				c: x,
 				_: _scope_with_id($scope1_id),
 				Ci: $wi__input_v && 2
@@ -80,7 +80,7 @@ var template_default = _template("a", (input) => {
 			_script($scope4_id, "a11");
 			_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope4_id, "a12", $cg__input_v);
 			_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope4_id, "a13", $cg__input_v);
-			_subscribe(_unfilled_if($scope0_reason, 2) && $catch_content__w__closures, _subscribe($wi__input_v && $input_v__closures, _scope($scope4_id, {
+			_subscribe(_unfilled_if($scope0_reason, 2) && $catch_content__w__closures, _subscribe(_unfilled_if($scope0_reason, 2) && $input_v__closures, _scope($scope4_id, {
 				_: _scope_with_id($scope1_id),
 				Ci: $wi__input_v && 3
 			})));
@@ -91,7 +91,7 @@ var template_default = _template("a", (input) => {
 		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "a15", $cg__input_v);
 		_unfilled_if($scope0_reason, 3) && _patch_subscribe($scope1_id, "a16", $cg__input_show);
 		_unfilled_if($scope0_reason, 4) && _patch_subscribe($scope1_id, "a17", $cg__input_items);
-		_subscribe($wi__input_items && $input_items__closures, _subscribe(_unfilled_if($scope0_reason, 3) && $input_show__closures, _subscribe($wi__input_v && $input_v__closures, _scope($scope1_id, {
+		_subscribe($wi__input_items && $input_items__closures, _subscribe(_unfilled_if($scope0_reason, 3) && $input_show__closures, _subscribe(_unfilled_if($scope0_reason, 2) && $input_v__closures, _scope($scope1_id, {
 			h: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 2)) && w,
 			_: _scope_with_id($scope0_id),
 			n: $wi__input_v && (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && $catch_content__w__closures,

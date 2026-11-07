@@ -24,7 +24,7 @@ var show_await_default = _template("b", (input) => {
 		_filled_guard($scope0_reason, 1) && _patch_fill($scope1_id, "vb4", a, 1);
 		_patch_fill($scope1_id, "vb5", g, 1, _client_guard($scope0_reason, 0) << 1, 0);
 		_patch_bind($scope1_id, "wh", $gChange);
-		_subscribe($wi__input_label && $input_label__closures, _scope($scope1_id, {
+		_subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope1_id, {
 			e: $wi__input_label && a,
 			h: $gChange
 		}), _client_guard($scope0_reason, 2) && "b2");

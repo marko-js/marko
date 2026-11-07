@@ -8,7 +8,7 @@ _shells({
 	c3: "c3 c2;D ;<span class=v> </span>"
 });
 var sub_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_items = _write_guard($scope0_reason, 0), $fg__input_n = _filled_guard($scope0_reason, 1), $wi__input_n = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_items = _write_guard($scope0_reason, 0), $fg__input_n = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_n__closures = /* @__PURE__ */ new Set();
 	const $g__closures = /* @__PURE__ */ new Set();
@@ -21,7 +21,7 @@ var sub_default = _template("c", (input) => {
 				_html(`<span class=v>${_text_mark($scope2_id, "a", g - input.n)}</span>`);
 				_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope2_id, "c0");
 				_patch_render($scope2_id, "c1", _filled_guard($scope0_reason, 1) && ">>f");
-				_subscribe($g__closures, _subscribe($wi__input_n && $input_n__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 1) && "c0"), "c2");
+				_subscribe($g__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_n__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 1) && "c0"), "c2");
 				return 0;
 			}
 		}, $scope1_id, "a", 1, $wg__input_items, 1, 0, 0, ["c3"], $scope0_reason, 0);
@@ -34,7 +34,7 @@ var sub_default = _template("c", (input) => {
 	_scope($scope0_id, {
 		f: input.n,
 		g,
-		h: $wi__input_n && $input_n__closures,
+		h: _write_if($scope0_reason, 1) && $input_n__closures,
 		i: $g__closures
 	}) || $fg__input_n && _patch_write($scope0_id, "xf", input.n, !_server_guard($scope0_reason, 1));
 });

@@ -8,7 +8,7 @@ _shells({
 	"__tests__/tags/panel.marko_2*shell": "__tests__/tags/panel.marko_2*shell !__tests__/tags/panel.marko_2; D ;<button class=read> </button>"
 });
 var panel_default = _template("__tests__/tags/panel.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_a = _client_guard($scope0_reason, 0), $sg__input_a = _server_guard($scope0_reason, 0), $fg__input_a = _filled_guard($scope0_reason, 0), $wi__input_a = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_a = _client_guard($scope0_reason, 0), $sg__input_a = _server_guard($scope0_reason, 0), $fg__input_a = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $f2__closures = new Set();
 	$fg__input_a && _patch_write($scope0_id, "PatchMarkedWrite:input_a", input.a, !$sg__input_a);
@@ -24,7 +24,7 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 				_html(`<button class=read>${_text_mark($scope2_id, "#text/1", f(), 1, $scope0_reason, 0)}</button>${_el_mark($scope2_id, "#button/0")}`);
 				_script($scope2_id, "__tests__/tags/panel.marko_2");
 				_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope2_id, "__tests__/tags/panel.marko_2_f#0:6/subscribe", $cg__input_a);
-				_subscribe($wi__input_a && $f2__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/panel.marko", "4:4"), $cg__input_a && "__tests__/tags/panel.marko_2_f#0:6/subscribe");
+				_subscribe(_unfilled_if($scope0_reason, 0) && $f2__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/panel.marko", "4:4"), $cg__input_a && "__tests__/tags/panel.marko_2_f#0:6/subscribe");
 			}, 0, $scope1_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/tags/panel.marko_2*shell", 0, 0);
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/panel.marko", "3:2");
 			return 0;
@@ -35,7 +35,7 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 	_scope($scope0_id, {
 		input_a: input.a,
 		f,
-		"ClosureScopes:f/8": $wi__input_a && $f2__closures
+		"ClosureScopes:f/8": _write_if($scope0_reason, 0) && $f2__closures
 	}, "__tests__/tags/panel.marko", 0, {
 		input_a: ["input.a"],
 		f: "1:8"

@@ -59,7 +59,7 @@ _shells({
 	a5: `a5${_shell_marker([[], []], ["a>", $setup$1])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1)};${$template$1}`
 });
 var page_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_items = _write_if($scope0_reason, 0), $cg__input_items = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_items = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $bonus__closures = /* @__PURE__ */ new Set();
 	const $global$1 = $global();
@@ -84,7 +84,7 @@ var page_default = _template("a", (input) => {
 			_patch_child_end();
 			_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope2_id, "a1");
 			_patch_render($scope2_id, "a2", [">>j", _filled_guard($scope0_reason, 0) && ">d"]);
-			_subscribe($wi__input_items && $for_content__item_n__closures, _subscribe($bonus__closures, _scope($scope2_id, {
+			_subscribe(_unfilled_if($scope0_reason, 0) && $for_content__item_n__closures, _subscribe($bonus__closures, _scope($scope2_id, {
 				_: _scope_with_id($scope1_id),
 				a: _existing_scope($childScope2)
 			})));
@@ -95,7 +95,7 @@ var page_default = _template("a", (input) => {
 		_scope($scope1_id, {
 			d: item?.n,
 			_: _scope_with_id($scope0_id),
-			m: $wi__input_items && $for_content__item_n__closures,
+			m: _write_if($scope0_reason, 0) && $for_content__item_n__closures,
 			a: _existing_scope($childScope3)
 		});
 	}, 0, $scope0_id, "d", 1, 1, 1, 0, 0, "a5", $scope0_reason, 0);

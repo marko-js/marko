@@ -12,7 +12,7 @@ _shells({
 	"__tests__/tags/detail-view.marko_2*shell": "__tests__/tags/detail-view.marko_2*shell !__tests__/tags/detail-view.marko_2_input_detail#0:3;D ;<i> </i>"
 });
 var detail_view_default = _template("__tests__/tags/detail-view.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_detail = _write_if($scope0_reason, 0), $cg__input_detail = _client_guard($scope0_reason, 0), $cg__input_error = _client_guard($scope0_reason, 1), $fg__input_detail = _filled_guard($scope0_reason, 0), $wi__input_error = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_detail = _client_guard($scope0_reason, 0), $cg__input_error = _client_guard($scope0_reason, 1), $fg__input_detail = _filled_guard($scope0_reason, 0), $wi__input_detail = _write_if($scope0_reason, 0), $wi__input_error = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_detail__closures = new Set();
 	const $input_error__closures = new Set();
@@ -32,7 +32,7 @@ var detail_view_default = _template("__tests__/tags/detail-view.marko", (input) 
 				_html(`<i>${_text_mark($scope2_id, "#text/0", input.detail, 1, $scope0_reason, 0)}</i>`);
 				_script($scope2_id, "__tests__/tags/detail-view.marko_2_input_detail#0:3");
 				_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope2_id, "__tests__/tags/detail-view.marko_2_input_detail#0:3/subscribe", $cg__input_detail);
-				_subscribe($wi__input_detail && $input_detail__closures, _scope($scope2_id, {
+				_subscribe(_unfilled_if($scope0_reason, 0) && $input_detail__closures, _scope($scope2_id, {
 					_: _scope_with_id($scope1_id),
 					"ClosureSignalIndex:input_detail/5": $wi__input_detail && 1
 				}, "__tests__/tags/detail-view.marko", "8:6"), $cg__input_detail && "__tests__/tags/detail-view.marko_2_input_detail#0:3/subscribe");

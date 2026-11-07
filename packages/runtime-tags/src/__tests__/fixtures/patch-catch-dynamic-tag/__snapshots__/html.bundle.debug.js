@@ -35,7 +35,7 @@ _shells({
 	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0; D l%;<button> </button><!><!>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_error = _client_guard($scope0_reason, 2), $fg__input_large = _filled_guard($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 1), $wi__input_large = _write_if($scope0_reason, 0), $wi__input_label = _write_if($scope0_reason, 1), $wi__input_error = _write_if($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $cg__input_error = _client_guard($scope0_reason, 2), $fg__input_large = _filled_guard($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 1), $wi__input_error = _write_if($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_large__closures = new Set();
 	const $input_label__closures = new Set();
@@ -65,7 +65,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_filled_guard($scope0_reason, 1) && ">input_label",
 			"err_message"
 		]);
-		_subscribe($count__closures, _subscribe($wi__input_label && $input_label__closures, _subscribe($wi__input_large && $input_large__closures, _scope($scope1_id, {
+		_subscribe($count__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_label__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $input_large__closures, _scope($scope1_id, {
 			err_message: err?.message,
 			_: _scope_with_id($scope0_id)
 		}, "__tests__/template.marko", "11:4", { err_message: ["err.message", "11:11"] }), _client_guard($scope0_reason, 0) && "__tests__/template.marko_1_input_large#0:5/subscribe"), _client_guard($scope0_reason, 1) && "__tests__/template.marko_1_input_label#0:6/subscribe"), "__tests__/template.marko_1_count#0:8/subscribe");
@@ -77,8 +77,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_large: input.large,
 		input_label: input.label,
 		count,
-		"ClosureScopes:input_large/9": $wi__input_large && $input_large__closures,
-		"ClosureScopes:input_label/10": $wi__input_label && $input_label__closures,
+		"ClosureScopes:input_large/9": _write_if($scope0_reason, 0) && $input_large__closures,
+		"ClosureScopes:input_label/10": _write_if($scope0_reason, 1) && $input_label__closures,
 		"ClosureScopes:count/12": $count__closures,
 		"ClosureScopes:input_error/11": $wi__input_error && _unfilled_if($scope0_reason, 2) && $input_error__closures
 	}, "__tests__/template.marko", 0, {

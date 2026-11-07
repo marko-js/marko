@@ -16,7 +16,7 @@ var card_default = _template("b", (input) => {
 const $setup = _shell_setup([[], ["c6"]], ["a>", $setup$1]);
 _shells({ c: `c${_shell_marker($setup)};${((_w0) => `/${_w0}& b`)($walks)};${((_w0) => `${_w0}<button>+</button>`)($template)}` });
 var template_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_label = _write_guard($scope0_reason, 1), $cg__input_label = _client_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 1), $wi__input_label = _write_if($scope0_reason, 1), $wi__input_on = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_label = _write_guard($scope0_reason, 1), $cg__input_label = _client_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 1), $wi__input_label = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	const $input_on__closures = /* @__PURE__ */ new Set();
@@ -37,7 +37,7 @@ var template_default = _template("c", (input) => {
 				_subscribe($wi__input_label && $input_label__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), $cg__input_label && "c1", $wg__input_label);
 			}, $scope1_id));
 			_patch_render($scope1_id, "c2", _filled_guard($scope0_reason, 0) && ">e");
-			_subscribe($count__closures, _subscribe($wi__input_on && $input_on__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 0) && "c3"), "c4");
+			_subscribe($count__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $input_on__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 0) && "c3"), "c4");
 		}, $scope0_id)
 	});
 	_patch_child_end();
@@ -49,7 +49,7 @@ var template_default = _template("c", (input) => {
 		f: input.label,
 		g: count,
 		i: $wi__input_label && $input_label__closures,
-		h: $wi__input_on && $input_on__closures,
+		h: _write_if($scope0_reason, 0) && $input_on__closures,
 		j: $count__closures,
 		a: _existing_scope($childScope)
 	}) || (_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xe", input.on, !_server_guard($scope0_reason, 0)), $fg__input_label && _patch_write($scope0_id, "xf", input.label, !_server_guard($scope0_reason, 1)));

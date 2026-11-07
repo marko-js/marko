@@ -18,7 +18,7 @@ const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l");
 const $setup = _shell_setup([[], []], ["#childScope/0>", $setup$1]);
 _shells({ "__tests__/template.marko": `__tests__/template.marko${_shell_marker($setup)};${((_w0) => `/${_w0}&`)("D%l")};${$template$1}` });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_label = _write_guard($scope0_reason, 1), $cg__input_label = _client_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 1), $wi__input_label = _write_if($scope0_reason, 1), $wi__input_on = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_label = _write_guard($scope0_reason, 1), $cg__input_label = _client_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 1), $wi__input_label = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = new Set();
 	const $input_on__closures = new Set();
@@ -38,7 +38,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html(`<button>${_text_mark($scope1_id, "#text/2", n)}</button>${_el_mark($scope1_id, "#button/1")}`);
 		_script($scope1_id, "__tests__/template.marko_1");
 		_patch_render($scope1_id, "__tests__/template.marko_1_input_on#0:3_n#3/setup", _filled_guard($scope0_reason, 0) && ">input_on");
-		_subscribe($wi__input_on && $input_on__closures, _scope($scope1_id, {
+		_subscribe(_unfilled_if($scope0_reason, 0) && $input_on__closures, _scope($scope1_id, {
 			n,
 			_: _scope_with_id($scope0_id)
 		}, "__tests__/template.marko", "2:4", { n: "3:8" }), _client_guard($scope0_reason, 0) && "__tests__/template.marko_1_input_on#0:3/subscribe");
@@ -49,7 +49,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_on: input.on,
 		input_label: input.label,
 		"ClosureScopes:input_label/6": $wi__input_label && $input_label__closures,
-		"ClosureScopes:input_on/5": $wi__input_on && $input_on__closures,
+		"ClosureScopes:input_on/5": _write_if($scope0_reason, 0) && $input_on__closures,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, {
 		input_on: ["input.on"],

@@ -8,7 +8,7 @@ _shells({
 	"__tests__/tags/card.marko_2*shell": "__tests__/tags/card.marko_2*shell __tests__/tags/card.marko_2_s#0:7/subscribe;D ;<span> </span>"
 });
 var card_default = _template("__tests__/tags/card.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_sel = _write_guard($scope0_reason, 3), $cg__input_sel = _client_guard($scope0_reason, 3), $cg__input_obj = _client_guard($scope0_reason, 2), $sg__input_prefix = _server_guard($scope0_reason, 1), $fg__input_prefix = _filled_guard($scope0_reason, 1), $fg__input_sel = _filled_guard($scope0_reason, 3), $wi__input_prefix = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_sel = _write_guard($scope0_reason, 3), $cg__input_sel = _client_guard($scope0_reason, 3), $cg__input_obj = _client_guard($scope0_reason, 2), $sg__input_prefix = _server_guard($scope0_reason, 1), $fg__input_prefix = _filled_guard($scope0_reason, 1), $fg__input_sel = _filled_guard($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	const $s__closures = new Set();
 	const $fmt2__closures = new Set();
@@ -28,7 +28,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 					_filled_guard($scope0_reason, 1) && ">>input_prefix",
 					_filled_guard($scope0_reason, 2) && ">v"
 				]);
-				_subscribe($wi__input_prefix && $fmt2__closures, _subscribe($s__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/card.marko", "3:26"), "__tests__/tags/card.marko_2_s#0:7/subscribe"), _client_guard($scope0_reason, 1) && "__tests__/tags/card.marko_2_fmt#0:8/subscribe");
+				_subscribe(_unfilled_if($scope0_reason, 1) && $fmt2__closures, _subscribe($s__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/card.marko", "3:26"), "__tests__/tags/card.marko_2_s#0:7/subscribe"), _client_guard($scope0_reason, 1) && "__tests__/tags/card.marko_2_fmt#0:8/subscribe");
 				return 0;
 			}
 		}, $scope1_id, "#text/0", 1, $wg__input_sel, 1, 0, 0, ["__tests__/tags/card.marko_2*shell"], $scope0_reason, 0);
@@ -54,7 +54,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 		s,
 		fmt,
 		"ClosureScopes:s/10": $s__closures,
-		"ClosureScopes:fmt/11": $wi__input_prefix && $fmt2__closures
+		"ClosureScopes:fmt/11": _write_if($scope0_reason, 1) && $fmt2__closures
 	}, "__tests__/tags/card.marko", 0, {
 		input_prefix: ["input.prefix"],
 		input_sel: ["input.sel"],

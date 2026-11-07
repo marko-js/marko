@@ -23,7 +23,7 @@ _shells({
 	"__tests__/template.marko_1*shell": `__tests__/template.marko_1*shell${_shell_marker([[], []], ["#childScope/0>", $setup$1], ["#childScope/1>", $setup$1])};${/*@__PURE__*/ ((_w0, _w1) => `D/${_w0}&/${_w1}&l`)("D%l", "D%l")};${/*@__PURE__*/ ((_w0, _w1) => `<main>${_w0}${_w1}</main>`)($template$1, $template$1)}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_label = _write_if($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $fg__input_label = _filled_guard($scope0_reason, 1), $wi__input_label = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = new Set();
 	const $a__closures = new Set();
@@ -42,7 +42,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_html(`<p class=a>${_text_mark($scope2_id, "#text/0", input.label + ":" + a)}</p>`);
 				_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope2_id, "__tests__/template.marko_2_input_label#0:6/subscribe");
 				_patch_render($scope2_id, "__tests__/template.marko_2_input_label#0:6_a#0:7/setup", _filled_guard($scope0_reason, 1) && ">>input_label");
-				_subscribe($a__closures, _subscribe($wi__input_label && $input_label__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "5:6")));
+				_subscribe($a__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_label__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "5:6")));
 			}, $scope1_id, 0) });
 			_patch_child_end();
 			_set_scope_reason(0);
@@ -53,7 +53,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_html(`<p class=b>${_text_mark($scope3_id, "#text/0", b)} ${_text_mark($scope3_id, "#text/1", input.label + ":" + b, 2)}</p>`);
 				_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope3_id, "__tests__/template.marko_3_input_label#0:6/subscribe");
 				_patch_render($scope3_id, "__tests__/template.marko_3_input_label#0:6_b#0:8/setup", _filled_guard($scope0_reason, 1) && ">>input_label");
-				_subscribe($b__closures, _subscribe($wi__input_label && $input_label__closures, _scope($scope3_id, {
+				_subscribe($b__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_label__closures, _scope($scope3_id, {
 					_: _scope_with_id($scope1_id),
 					"ClosureSignalIndex:input_label/9": $wi__input_label && 1
 				}, "__tests__/template.marko", "6:6")));

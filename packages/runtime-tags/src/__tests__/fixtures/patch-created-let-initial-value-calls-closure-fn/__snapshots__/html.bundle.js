@@ -5,7 +5,7 @@ _shells({
 	a3: "a3 a10;D ;<p> </p>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_w = _write_if($scope0_reason, 3), $wg__input_inner = _write_guard($scope0_reason, 2), $wg__input_show = _write_guard($scope0_reason, 0), $cg__input_show = _client_guard($scope0_reason, 0), $fg__input_v = _filled_guard($scope0_reason, 1), $fg__input_inner = _filled_guard($scope0_reason, 2), $fg__input_w = _filled_guard($scope0_reason, 3), $cg__input_inner = _client_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_inner = _write_guard($scope0_reason, 2), $wg__input_show = _write_guard($scope0_reason, 0), $cg__input_show = _client_guard($scope0_reason, 0), $fg__input_v = _filled_guard($scope0_reason, 1), $fg__input_inner = _filled_guard($scope0_reason, 2), $fg__input_w = _filled_guard($scope0_reason, 3), $cg__input_inner = _client_guard($scope0_reason, 2), $wi__input_w = _write_if($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	const $input_w__closures = /* @__PURE__ */ new Set();
 	_if(() => {
@@ -20,7 +20,7 @@ var template_default = _template("a", (input) => {
 					_html(`<p>${_text_mark($scope2_id, "a", y + input.w)}</p>`);
 					_unfilled_if($scope0_reason, 3) && _patch_subscribe($scope2_id, "a1");
 					_patch_render($scope2_id, "a2", _filled_guard($scope0_reason, 3) && ">>g");
-					_subscribe($wi__input_w && $input_w__closures, _scope($scope2_id, {
+					_subscribe(_unfilled_if($scope0_reason, 3) && $input_w__closures, _scope($scope2_id, {
 						c: $wi__input_w && y,
 						_: _scope_with_id($scope1_id)
 					}), _client_guard($scope0_reason, 3) && "a1");

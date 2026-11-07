@@ -20,7 +20,7 @@ _shells({
 	c3: `c3${_shell_marker([["c2"], []], ["a>", $setup$2])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1)};${$template$1}`
 });
 var shape_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_sel = _write_guard($scope0_reason, 2), $cg__input_sel = _client_guard($scope0_reason, 2), $cg__input_obj = _client_guard($scope0_reason, 1), $fg__input_sel = _filled_guard($scope0_reason, 2), $fg__input_b = _filled_guard($scope0_reason, 3), $wi__input_b = _write_if($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $wg__input_sel = _write_guard($scope0_reason, 2), $cg__input_sel = _client_guard($scope0_reason, 2), $cg__input_obj = _client_guard($scope0_reason, 1), $fg__input_sel = _filled_guard($scope0_reason, 2), $fg__input_b = _filled_guard($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	const $input_b__closures = /* @__PURE__ */ new Set();
 	const $s__closures = /* @__PURE__ */ new Set();
@@ -40,7 +40,7 @@ var shape_default = _template("c", (input) => {
 				_patch_child_end();
 				_unfilled_if($scope0_reason, 3) && _patch_subscribe($scope2_id, "c0");
 				_patch_render($scope2_id, "c1", [_filled_guard($scope0_reason, 3) && ">>g", _filled_guard($scope0_reason, 1) && ">e"]);
-				_subscribe($s__closures, _subscribe($wi__input_b && $input_b__closures, _scope($scope2_id, {
+				_subscribe($s__closures, _subscribe(_unfilled_if($scope0_reason, 3) && $input_b__closures, _scope($scope2_id, {
 					_: _scope_with_id($scope1_id),
 					a: _existing_scope($childScope)
 				}), _client_guard($scope0_reason, 3) && "c0", 0), "c2", 0);
@@ -65,7 +65,7 @@ var shape_default = _template("c", (input) => {
 		f: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.sel,
 		g: input.b,
 		h: s,
-		j: $wi__input_b && $input_b__closures,
+		j: _write_if($scope0_reason, 3) && $input_b__closures,
 		k: $s__closures
 	}) || ($fg__input_sel && $cg__input_obj && _patch_write($scope0_id, "xf", input.sel, !_server_guard($scope0_reason, 2)), $fg__input_b && _patch_write($scope0_id, "xg", input.b, !_server_guard($scope0_reason, 3)));
 });

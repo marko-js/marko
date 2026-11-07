@@ -20,7 +20,7 @@ _shells({
 	"__tests__/tags/shape.marko_2*shell": `__tests__/tags/shape.marko_2*shell${_shell_marker([["__tests__/tags/shape.marko_2_s#0:7/subscribe"], []], ["#childScope/0>", $setup$2])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$2)};${$template$2}`
 });
 var shape_default = _template("__tests__/tags/shape.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_sel = _write_guard($scope0_reason, 2), $cg__input_sel = _client_guard($scope0_reason, 2), $cg__input_obj = _client_guard($scope0_reason, 1), $fg__input_b = _filled_guard($scope0_reason, 3), $fg__input_sel = _filled_guard($scope0_reason, 2), $wi__input_b = _write_if($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $wg__input_sel = _write_guard($scope0_reason, 2), $cg__input_sel = _client_guard($scope0_reason, 2), $cg__input_obj = _client_guard($scope0_reason, 1), $fg__input_b = _filled_guard($scope0_reason, 3), $fg__input_sel = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_b__closures = new Set();
 	const $s__closures = new Set();
@@ -40,7 +40,7 @@ var shape_default = _template("__tests__/tags/shape.marko", (input) => {
 				_patch_child_end();
 				_unfilled_if($scope0_reason, 3) && _patch_subscribe($scope2_id, "__tests__/tags/shape.marko_2_input_b#0:6/subscribe");
 				_patch_render($scope2_id, "__tests__/tags/shape.marko_2_input_b#0:6_s#0:7_v#1:4/setup", [_filled_guard($scope0_reason, 3) && ">>input_b", _filled_guard($scope0_reason, 1) && ">v"]);
-				_subscribe($s__closures, _subscribe($wi__input_b && $input_b__closures, _scope($scope2_id, {
+				_subscribe($s__closures, _subscribe(_unfilled_if($scope0_reason, 3) && $input_b__closures, _scope($scope2_id, {
 					_: _scope_with_id($scope1_id),
 					"#childScope/0": _existing_scope($childScope)
 				}, "__tests__/tags/shape.marko", "1:36"), _client_guard($scope0_reason, 3) && "__tests__/tags/shape.marko_2_input_b#0:6/subscribe", 0), "__tests__/tags/shape.marko_2_s#0:7/subscribe", 0);
@@ -69,7 +69,7 @@ var shape_default = _template("__tests__/tags/shape.marko", (input) => {
 		input_sel: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.sel,
 		input_b: input.b,
 		s,
-		"ClosureScopes:input_b/9": $wi__input_b && $input_b__closures,
+		"ClosureScopes:input_b/9": _write_if($scope0_reason, 3) && $input_b__closures,
 		"ClosureScopes:s/10": $s__closures
 	}, "__tests__/tags/shape.marko", 0, {
 		input_sel: ["input.sel"],

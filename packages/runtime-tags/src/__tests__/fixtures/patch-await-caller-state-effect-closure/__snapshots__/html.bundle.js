@@ -7,7 +7,7 @@ _shells({
 	b: "b;b%;<!><!><!>"
 });
 var show_await_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 1), $wi__input_label = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	_await($scope0_id, "a", input.promise, (x) => {
@@ -15,11 +15,11 @@ var show_await_default = _template("b", (input) => {
 		_html(`<p>${_text_mark($scope1_id, "a", x, 1, $scope0_reason, 0)}</p>`);
 		_script($scope1_id, "b0", 1, _filled_guard($scope0_reason, 1), ">e");
 		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "b1", $cg__input_label);
-		_subscribe($wi__input_label && $input_label__closures, _scope($scope1_id, {}), $cg__input_label && "b1");
+		_subscribe(_unfilled_if($scope0_reason, 1) && $input_label__closures, _scope($scope1_id, {}), $cg__input_label && "b1");
 	}, 1, "b2", _unfilled_if($scope0_reason, 0), 1);
 	_scope($scope0_id, {
 		e: input.label,
-		f: $wi__input_label && $input_label__closures
+		f: _write_if($scope0_reason, 1) && $input_label__closures
 	}) || _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.label, !_server_guard($scope0_reason, 1));
 });
 

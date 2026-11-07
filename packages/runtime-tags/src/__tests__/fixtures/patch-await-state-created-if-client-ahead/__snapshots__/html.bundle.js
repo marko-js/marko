@@ -22,7 +22,7 @@ _shells({
 	b5: "b5 b10;b%;<!><!><!>"
 });
 var template_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_label = _filled_guard($scope0_reason, 1), $wi__input_label = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $fg__input_label = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	let n = 0;
@@ -39,11 +39,11 @@ var template_default = _template("b", (input) => {
 				_script($scope2_id, "b0", 0);
 				_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope2_id, "b1");
 				_patch_render($scope2_id, "b2", _filled_guard($scope0_reason, 1) && ">>f");
-				_subscribe($wi__input_label && $input_label__closures, _scope($scope2_id, {
+				_subscribe(_unfilled_if($scope0_reason, 1) && $input_label__closures, _scope($scope2_id, {
 					d: x,
 					b: _existing_scope($childScope)
 				}), _client_guard($scope0_reason, 1) && "b1", 0);
-				_write_guard($scope0_reason, 1) && _resume_branch($scope2_id);
+				_resume_branch($scope2_id);
 			}, 1, "b3", 1);
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
@@ -54,6 +54,6 @@ var template_default = _template("b", (input) => {
 	_scope($scope0_id, {
 		f: input.label,
 		g: n,
-		h: $wi__input_label && $input_label__closures
+		h: _write_if($scope0_reason, 1) && $input_label__closures
 	}) || $fg__input_label && _patch_write($scope0_id, "xf", input.label, !_server_guard($scope0_reason, 1));
 }, 1);

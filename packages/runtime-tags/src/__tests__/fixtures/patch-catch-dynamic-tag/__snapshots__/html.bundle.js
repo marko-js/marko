@@ -26,7 +26,7 @@ _shells({
 	a: "a !a7; D l%;<button> </button><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_error = _client_guard($scope0_reason, 2), $fg__input_large = _filled_guard($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 1), $wi__input_large = _write_if($scope0_reason, 0), $wi__input_label = _write_if($scope0_reason, 1), $wi__input_error = _write_if($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $cg__input_error = _client_guard($scope0_reason, 2), $fg__input_large = _filled_guard($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 1), $wi__input_error = _write_if($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_large__closures = /* @__PURE__ */ new Set();
 	const $input_label__closures = /* @__PURE__ */ new Set();
@@ -56,7 +56,7 @@ var template_default = _template("a", (input) => {
 			_filled_guard($scope0_reason, 1) && ">g",
 			"d"
 		]);
-		_subscribe($count__closures, _subscribe($wi__input_label && $input_label__closures, _subscribe($wi__input_large && $input_large__closures, _scope($scope1_id, {
+		_subscribe($count__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_label__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $input_large__closures, _scope($scope1_id, {
 			d: err?.message,
 			_: _scope_with_id($scope0_id)
 		}), _client_guard($scope0_reason, 0) && "a0"), _client_guard($scope0_reason, 1) && "a1"), "a3");
@@ -68,8 +68,8 @@ var template_default = _template("a", (input) => {
 		f: input.large,
 		g: input.label,
 		i: count,
-		j: $wi__input_large && $input_large__closures,
-		k: $wi__input_label && $input_label__closures,
+		j: _write_if($scope0_reason, 0) && $input_large__closures,
+		k: _write_if($scope0_reason, 1) && $input_label__closures,
 		m: $count__closures,
 		l: $wi__input_error && _unfilled_if($scope0_reason, 2) && $input_error__closures
 	}) || ($fg__input_large && _patch_write($scope0_id, "xf", input.large, !_server_guard($scope0_reason, 0)), $fg__input_label && _patch_write($scope0_id, "xg", input.label, !_server_guard($scope0_reason, 1)));

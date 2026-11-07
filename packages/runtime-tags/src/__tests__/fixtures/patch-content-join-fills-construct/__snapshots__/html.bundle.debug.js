@@ -64,7 +64,7 @@ _shells({
 	"__tests__/page.marko_1*shell": `__tests__/page.marko_1*shell${_shell_marker([[], []], ["#childScope/0>", $setup$2])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$2)};${$template$2}`
 });
 var page_default = _template("__tests__/page.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_items = _write_if($scope0_reason, 0), $cg__input_items = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_items = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $bonus__closures = new Set();
 	const $global$1 = $global();
@@ -89,7 +89,7 @@ var page_default = _template("__tests__/page.marko", (input) => {
 			_patch_child_end();
 			_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope2_id, "__tests__/page.marko_2_item_n#1:3/subscribe");
 			_patch_render($scope2_id, "__tests__/page.marko_2_bonus#0:7_p_base#0:9_item_n#1:3/setup", [">>p_base", _filled_guard($scope0_reason, 0) && ">item_n"]);
-			_subscribe($wi__input_items && $for_content__item_n__closures, _subscribe($bonus__closures, _scope($scope2_id, {
+			_subscribe(_unfilled_if($scope0_reason, 0) && $for_content__item_n__closures, _subscribe($bonus__closures, _scope($scope2_id, {
 				_: _scope_with_id($scope1_id),
 				"#childScope/0": _existing_scope($childScope2)
 			}, "__tests__/page.marko", "6:6")));
@@ -100,7 +100,7 @@ var page_default = _template("__tests__/page.marko", (input) => {
 		_scope($scope1_id, {
 			item_n: item?.n,
 			_: _scope_with_id($scope0_id),
-			"ClosureScopes:item_n/12": $wi__input_items && $for_content__item_n__closures,
+			"ClosureScopes:item_n/12": _write_if($scope0_reason, 0) && $for_content__item_n__closures,
 			"#childScope/0": _existing_scope($childScope3)
 		}, "__tests__/page.marko", "4:2", { item_n: ["item.n", "4:6"] });
 	}, 0, $scope0_id, "#text/3", 1, 1, 1, 0, 0, "__tests__/page.marko_1*shell", $scope0_reason, 0);

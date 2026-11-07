@@ -33,7 +33,7 @@ _shells({
 	"__tests__/tags/child.marko": `__tests__/tags/child.marko${_shell_marker($setup$1)};${((_w0) => `b/${_w0}&b`)("b%c")};${((_w0) => `<!>${_w0}<!>`)($template$2)}`
 });
 var child_default = _template("__tests__/tags/child.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_count = _filled_guard($scope0_reason, 1), $wi__input_count = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $fg__input_count = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_count__closures = new Set();
 	_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 0) << 3);
@@ -46,15 +46,15 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 			_html("<p>body</p>");
 			_script($scope1_id, "__tests__/tags/child.marko_1_input_count#0:4", 0, _filled_guard($scope0_reason, 1), ">input_count");
 			_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "__tests__/tags/child.marko_1_input_count#0:4/subscribe", _client_guard($scope0_reason, 1));
-			_subscribe($wi__input_count && $input_count__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/child.marko", "2:4"));
-			_write_guard($scope0_reason, 1) && _resume_branch($scope1_id);
+			_subscribe(_unfilled_if($scope0_reason, 1) && $input_count__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/child.marko", "2:4"));
+			_resume_branch($scope1_id);
 		}, $scope0_id) })
 	});
 	_patch_child_end();
 	$fg__input_count && _patch_subscribers($scope0_id, "__tests__/tags/child.marko_0_input_count#4/subscribers", "input_count");
 	_scope($scope0_id, {
 		input_count: input.count,
-		"ClosureScopes:input_count/5": $wi__input_count && $input_count__closures,
+		"ClosureScopes:input_count/5": _write_if($scope0_reason, 1) && $input_count__closures,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/tags/child.marko", 0, { input_count: ["input.count"] }) || $fg__input_count && _patch_write($scope0_id, "PatchMarkedWrite:input_count", input.count, !_server_guard($scope0_reason, 1));
 });

@@ -8,7 +8,7 @@ _shells({
 	"__tests__/template.marko_2*shell": "__tests__/template.marko_2*shell __tests__/template.marko_2_count#0:6/subscribe;D ;<p> </p>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_suffix = _filled_guard($scope0_reason, 1), $wi__input_suffix = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $fg__input_suffix = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_suffix__closures = new Set();
 	const $count__closures = new Set();
@@ -21,7 +21,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_html(`<p>${_text_mark($scope2_id, "#text/0", cell + ":" + input.suffix + "@" + count)}</p>`);
 			_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope2_id, "__tests__/template.marko_2_input_suffix#0:5/subscribe");
 			_patch_render($scope2_id, "__tests__/template.marko_2_input_suffix#0:5_count#0:6/setup", _filled_guard($scope0_reason, 1) && ">>input_suffix");
-			_subscribe($count__closures, _subscribe($wi__input_suffix && $input_suffix__closures, _scope($scope2_id, {
+			_subscribe($count__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_suffix__closures, _scope($scope2_id, {
 				"#LoopKey": cell,
 				_: _scope_with_id($scope1_id)
 			}, "__tests__/template.marko", "4:6", { "#LoopKey": "4:10" }), _client_guard($scope0_reason, 1) && "__tests__/template.marko_2_input_suffix#0:5/subscribe"), "__tests__/template.marko_2_count#0:6/subscribe");
@@ -34,7 +34,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope($scope0_id, {
 		input_suffix: input.suffix,
 		count,
-		"ClosureScopes:input_suffix/7": $wi__input_suffix && $input_suffix__closures,
+		"ClosureScopes:input_suffix/7": _write_if($scope0_reason, 1) && $input_suffix__closures,
 		"ClosureScopes:count/8": $count__closures
 	}, "__tests__/template.marko", 0, {
 		input_suffix: ["input.suffix"],

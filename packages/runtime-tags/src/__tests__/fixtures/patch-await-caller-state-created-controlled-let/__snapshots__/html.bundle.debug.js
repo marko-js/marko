@@ -25,7 +25,7 @@ var show_await_default = _template("__tests__/tags/show-await.marko", (input) =>
 		_filled_guard($scope0_reason, 1) && _patch_fill($scope1_id, "PatchFill:__tests__/tags/show-await.marko_1_a#4/fill", a, 1);
 		_patch_fill($scope1_id, "PatchFill:__tests__/tags/show-await.marko_1_g#6/fill", g, 1, _client_guard($scope0_reason, 0) << 1, 0);
 		_patch_bind($scope1_id, "PatchWrite:TagVariableChange:g", $gChange);
-		_subscribe($wi__input_label && $input_label__closures, _scope($scope1_id, {
+		_subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope1_id, {
 			a: $wi__input_label && a,
 			"TagVariableChange:g": $gChange
 		}, "__tests__/tags/show-await.marko", "1:2", {

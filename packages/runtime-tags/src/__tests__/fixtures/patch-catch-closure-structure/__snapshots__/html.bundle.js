@@ -9,7 +9,7 @@ _shells({
 	a2: "a2 !a0;D ;<i> </i>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_detail = _write_if($scope0_reason, 0), $cg__input_detail = _client_guard($scope0_reason, 0), $cg__input_error = _client_guard($scope0_reason, 1), $fg__input_detail = _filled_guard($scope0_reason, 0), $wi__input_error = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_detail = _client_guard($scope0_reason, 0), $cg__input_error = _client_guard($scope0_reason, 1), $fg__input_detail = _filled_guard($scope0_reason, 0), $wi__input_detail = _write_if($scope0_reason, 0), $wi__input_error = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_detail__closures = /* @__PURE__ */ new Set();
 	const $input_error__closures = /* @__PURE__ */ new Set();
@@ -31,7 +31,7 @@ var template_default = _template("a", (input) => {
 				_html(`<i>${_text_mark($scope2_id, "a", input.detail, 1, $scope0_reason, 0)}</i>`);
 				_script($scope2_id, "a0");
 				_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope2_id, "a1", $cg__input_detail);
-				_subscribe($wi__input_detail && $input_detail__closures, _scope($scope2_id, {
+				_subscribe(_unfilled_if($scope0_reason, 0) && $input_detail__closures, _scope($scope2_id, {
 					_: _scope_with_id($scope1_id),
 					Ci: $wi__input_detail && 1
 				}), $cg__input_detail && "a1");

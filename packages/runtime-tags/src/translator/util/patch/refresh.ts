@@ -2151,15 +2151,19 @@ function addSources(all: SortedOpt<Sources>, sources: Sources) {
   return sourcesUtil.add(all, sources);
 }
 
-// A read resumed code renders wherever its scope sits, so no patch fills it
-// and a change to the owner value must dispatch to it.
+// A read resumed code renders wherever its scope sits, so no patch fills it.
 export function isResumedRead(read: ReferencedExtra) {
   return (
     readsValuesOnResume(read) ||
     !!getSourcesForExpr(read)?.state ||
-    !patchFillsSection(read.section) ||
-    !!getDerivedNeeds(read)
+    readsBySubscription(read)
   );
+}
+
+// A read only its scope's subscription reaches as a patch writes the owner value: one no
+// patch pairs, or deriving what no patch fills. A patch fills, or re-runs by an entry, the rest.
+export function readsBySubscription(read: ReferencedExtra) {
+  return !patchFillsSection(read.section) || !!getDerivedNeeds(read);
 }
 
 // Its group is the server's on every instance: guarded sources (a page's input,

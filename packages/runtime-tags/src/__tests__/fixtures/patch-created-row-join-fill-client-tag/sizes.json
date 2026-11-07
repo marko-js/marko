@@ -13,8 +13,8 @@
     }
   },
   "html": {
-    "min": 679,
-    "brotli": 395
+    "min": 666,
+    "brotli": 390
   },
   "patch": {
     "min": 289,

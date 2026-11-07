@@ -8,7 +8,7 @@ _shells({
 	"__tests__/template.marko_2*shell": "__tests__/template.marko_2*shell __tests__/template.marko_2_x#1:1_f#1:2/setup;D ;<p> </p>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_w = _write_if($scope0_reason, 3), $wg__input_inner = _write_guard($scope0_reason, 2), $wg__input_show = _write_guard($scope0_reason, 0), $cg__input_show = _client_guard($scope0_reason, 0), $fg__input_v = _filled_guard($scope0_reason, 1), $fg__input_inner = _filled_guard($scope0_reason, 2), $fg__input_w = _filled_guard($scope0_reason, 3), $cg__input_inner = _client_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_inner = _write_guard($scope0_reason, 2), $wg__input_show = _write_guard($scope0_reason, 0), $cg__input_show = _client_guard($scope0_reason, 0), $fg__input_v = _filled_guard($scope0_reason, 1), $fg__input_inner = _filled_guard($scope0_reason, 2), $fg__input_w = _filled_guard($scope0_reason, 3), $cg__input_inner = _client_guard($scope0_reason, 2), $wi__input_w = _write_if($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	const $input_w__closures = new Set();
 	_if(() => {
@@ -23,7 +23,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					_html(`<p>${_text_mark($scope2_id, "#text/0", y + input.w)}</p>`);
 					_unfilled_if($scope0_reason, 3) && _patch_subscribe($scope2_id, "__tests__/template.marko_2_input_w#0:6/subscribe");
 					_patch_render($scope2_id, "__tests__/template.marko_2_input_w#0:6_y#2/setup", _filled_guard($scope0_reason, 3) && ">>input_w");
-					_subscribe($wi__input_w && $input_w__closures, _scope($scope2_id, {
+					_subscribe(_unfilled_if($scope0_reason, 3) && $input_w__closures, _scope($scope2_id, {
 						y: $wi__input_w && y,
 						_: _scope_with_id($scope1_id)
 					}, "__tests__/template.marko", "4:4", { y: "5:10" }), _client_guard($scope0_reason, 3) && "__tests__/template.marko_2_input_w#0:6/subscribe");

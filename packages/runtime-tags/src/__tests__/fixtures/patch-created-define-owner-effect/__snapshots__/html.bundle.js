@@ -7,7 +7,7 @@ _shells({
 	b: "b a>b4!b5;/&b ;<!><button>x</button>"
 });
 var card_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_w = _filled_guard($scope0_reason, 1), $wi__input_w = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $fg__input_w = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_w__closures = /* @__PURE__ */ new Set();
 	const $k__closures = /* @__PURE__ */ new Set();
@@ -17,7 +17,7 @@ var card_default = _template("b", (input) => {
 		_scope_reason();
 		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "b2");
 		_script($scope1_id, "b1", 0, 0, _filled_guard($scope0_reason, 1) && ">f", "b3");
-		_subscribe($k__closures, _subscribe($wi__input_w && $input_w__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 1) && "b2", 0), "b4", 0);
+		_subscribe($k__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_w__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 1) && "b2", 0), "b4", 0);
 		_resume_branch($scope1_id);
 	}, $scope0_id, 0) };
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
@@ -30,7 +30,7 @@ var card_default = _template("b", (input) => {
 	_scope($scope0_id, {
 		f: input.w,
 		g: k,
-		h: $wi__input_w && $input_w__closures,
+		h: _write_if($scope0_reason, 1) && $input_w__closures,
 		i: $k__closures,
 		a: _existing_scope($childScope)
 	}) || $fg__input_w && _patch_write($scope0_id, "xf", input.w, !_server_guard($scope0_reason, 1));
