@@ -422,9 +422,9 @@ export interface PatchLink {
   slotIds?: (string | undefined)[];
   // A content body's owner (its client `_`) when not the rendering scope.
   owner?: number;
-  // Linked into the parent's setup by the flush creating it (that flush's
-  // tree): only a created parent takes it, so a later flush links as a child.
-  setup?: object;
+  // The tree of the flush creating it, which links it into the parent's setup:
+  // only a created parent takes it, so a later flush links it as a child.
+  setup?: PatchRenderState["patchTree"];
   // The parent's entry key, where not a child entry's.
   key?: string;
 }
