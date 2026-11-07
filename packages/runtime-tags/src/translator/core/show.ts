@@ -215,16 +215,19 @@ export default {
               ),
             );
 
-        // A patched display's entry names the encoded accessors a created
-        // scope finds the range's markers by.
-        const start = tagExtra[kStartBinding];
-        const patchArgs = fillsHole(tagSection, tagExtra)
-          ? [
-              getScopeAccessorLiteral(nodeBinding, true),
-              start && getScopeAccessorLiteral(start, true),
-              ...getExprRootGroupArgs(tagSection, tagExtra),
-            ]
-          : [];
+        // A patched display's entry is keyed by the node's accessor and names
+        // the start marker's: a created scope finds the range by the two.
+        let patchArgs: (t.Expression | undefined)[] = [];
+        if (fillsHole(tagSection, tagExtra)) {
+          const start = tagExtra[kStartBinding];
+          const [mask, group] = getExprRootGroupArgs(tagSection, tagExtra);
+          patchArgs = [
+            t.numericLiteral(1),
+            mask,
+            group,
+            start && getScopeAccessorLiteral(start, true),
+          ];
+        }
         // The runtime calls bracket the body's statements (rather than taking a
         // callback) so declarations in them stay readable by later statements.
         const statements = [

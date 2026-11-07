@@ -29,7 +29,8 @@ export const Setup = "s";
 // A created scope's setup values, which its child entries precede: a value's
 // renders may read what they write.
 export const SetupValues = "o";
-// A `<show>` over request data, by its accessor: `[display, node, start?]`.
+// A `<show>` over request data, by its accessor: the display bit, or
+// `[display, start]` where its body has a start marker.
 export const Show = "g";
 // A `<style>` interpolation: `accessor name`, the client rewrites the rule.
 export const Style = "y";
