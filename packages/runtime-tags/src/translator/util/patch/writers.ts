@@ -177,21 +177,12 @@ function pushKnownChildCalls(
   paramWrites: t.Statement[],
 ) {
   if (!isFilledReference(binding)) {
-    scopeCalls.push(...buildPatchCalls(section, binding));
+    const write = buildLocalWrite(section, binding);
+    if (write) scopeCalls.push(write);
   } else if (isSectionParam(binding) && !isNamedWhereHidden(binding)) {
-    const write = buildDeclarationWrite(binding);
+    const write = buildLocalWrite(section, binding);
     if (write) paramWrites.push(t.expressionStatement(write));
   }
-}
-
-// A binding's write, where it has no fill.
-function buildPatchCalls(section: Section, binding: Binding) {
-  const calls: t.Expression[] = [];
-  if (!getPatchFill(binding).fill && getPatchWrite(binding).write) {
-    const write = getUnfilledPatchWrite(section, binding);
-    if (write) calls.push(andGuard(getFilledGuard(section, binding), write));
-  }
-  return calls;
 }
 
 // The patch side of an effect's `_script`: its entry (`1`, or `2` queued) where
@@ -640,18 +631,14 @@ function isNamedWhereHidden(binding: Binding) {
   return !!named?.aliasOf && !!getNearestDeclared(named.aliasOf);
 }
 
-// A known child's filled reference's calls, else a branch local's write, unless
-// its section's end decides it.
+// The write where a value is declared: a branch local's, or a known child's filled
+// reference's (its other values write in `_scope`'s place).
 function buildDeclarationWrite(binding: Binding) {
   const { section } = binding;
-  if (isKnownChild(section)) {
-    if (isFilledReference(binding)) {
-      const calls = buildPatchCalls(section, binding);
-      if (calls.length) return toSequenceExpression(calls);
-    }
-  } else if (!isStateSourced(binding) && getPatchWrite(binding).write) {
-    return buildLocalWrite(section, binding);
-  }
+  return (
+    (!isKnownChild(section) || isFilledReference(binding)) &&
+    buildLocalWrite(section, binding)
+  );
 }
 
 // Content the value holds stays live where a read rendering it may be the
@@ -669,10 +656,10 @@ function getClientBranchCall(section: Section, binding: Binding) {
   return contents && t.logicalExpression("&&", contents, call);
 }
 
-// Plain write of a branch local with no state source that effects or handlers
-// read, gated like the root's writes.
-export function buildLocalWrite(section: Section, binding: Binding) {
-  const write = getUnfilledPatchWrite(section, binding);
+// The marked write of a value a patch writes, gated like the root's writes.
+function buildLocalWrite(section: Section, binding: Binding) {
+  const write =
+    getPatchWrite(binding).write && getUnfilledPatchWrite(section, binding);
   return write && andGuard(getFilledGuard(section, binding), write);
 }
 
