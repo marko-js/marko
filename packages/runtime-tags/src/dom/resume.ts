@@ -116,10 +116,7 @@ export function installReady(
 // A channel module that never arrives can never drain its data: the
 // patch feature settles pending flushes and rejects later ones.
 export function readyFailed(readyId: string) {
-  // A module a patch loaded itself outlives its document loader's failure.
-  if (readyIds?.has(readyId)) return;
-  // Repeat reports fold in debug.
-  if (MARKO_DEBUG && !failedIds?.has(readyId)) {
+  if (MARKO_DEBUG && !failedIds?.has(readyId) && !readyIds?.has(readyId)) {
     (failedIds ||= new Set()).add(readyId);
     console.error(
       `The lazy module for "${readyId}" failed to load; its server-rendered content cannot become interactive.`,
