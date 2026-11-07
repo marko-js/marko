@@ -447,7 +447,8 @@ export class PatchPageState extends State {
     built: 1,
   };
   // A patch page's render data names the server's build, which its patch
-  // requests lead with.
+  // requests lead with, so even a page with nothing to resume writes it.
+  override needsWalkerRuntime = true;
   override runtimeScript() {
     return (
       super.runtimeScript() +
