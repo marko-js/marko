@@ -23,6 +23,7 @@ import {
   isRest,
   type ReferencedBindings,
   someAlias,
+  someBindingRead,
   someReadIn,
 } from "./bindings";
 import { createAnalysisMemo } from "./cyclic-memo";
@@ -87,6 +88,7 @@ import {
   isAssignedBindingExtra,
   isPureExpr,
   isRegisteredFnExtra,
+  type ReferencedExtra,
 } from "./references";
 import {
   insertStatementBefore,
@@ -889,12 +891,10 @@ function leavesForwardToPatch({
     globalReads ||
     referencedBindings.section !== section
   ) {
-    return every(referencedBindings, (binding) => {
-      for (const read of binding.reads.keys()) {
-        if (read.section === section && !leavesReadToPatch(read)) return false;
-      }
-      return true;
-    });
+    return every(
+      referencedBindings,
+      (binding) => !someReadIn(binding, section, fillRunsRead),
+    );
   }
   // A node's own work: a loop or branch chain the patch renders wherever it writes the scope.
   if (referencedBindings.type === BindingType.dom) {
@@ -911,9 +911,7 @@ function leavesForwardToPatch({
 
 // Every read of the value, and of each alias a forward reaches, leaves its work to the patch.
 function leavesValueToPatch(binding: Binding) {
-  for (const read of binding.reads.keys()) {
-    if (!leavesReadToPatch(read)) return false;
-  }
+  if (someBindingRead(binding, fillRunsRead)) return false;
   for (const alias of binding.aliases) {
     if (!leavesForwardToPatch(getSignal(alias.section, alias))) return false;
   }
@@ -921,6 +919,11 @@ function leavesValueToPatch(binding: Binding) {
     if (!leavesForwardToPatch(getSignal(alias.section, alias))) return false;
   }
   return true;
+}
+
+// The fill's run does the read's work itself.
+function fillRunsRead(read: ReferencedExtra) {
+  return !leavesReadToPatch(read);
 }
 
 function pushMemberForwards(
