@@ -49,7 +49,7 @@ var template_default = _template("a", (input) => {
 			const $scope3_id = _scope_id();
 			_set_scope_reason(0);
 			const $childScope = _peek_scope_id($scope3_id, "a", 0);
-			outer_default({ data: _patch_live($childScope, { content: Body.content }, $scope3_id, "") });
+			outer_default({ data: { content: Body.content } });
 			_patch_child_end();
 			!_client_guard($scope0_reason, 2) && _unfilled_if() && _patch_write($scope0_id, "wg", Body?.content);
 			_scope($scope3_id, { a: _existing_scope($childScope) });

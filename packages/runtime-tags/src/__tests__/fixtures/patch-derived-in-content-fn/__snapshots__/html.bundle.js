@@ -38,12 +38,12 @@ var template_default = _template("a", (input) => {
 		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "xb", label, !$sg__input_label);
 		_set_scope_reason(0);
 		const $childScope = _peek_scope_id($scope1_id, "a", 0);
-		reader_default(_patch_live($childScope, {
+		reader_default({
 			read: _bind_resume(() => label, "a0", $scope1_id),
 			onRead: _resume(function(value) {
 				shown = value;
 			}, "a1", $scope1_id)
-		}, $scope1_id, ""));
+		});
 		_patch_child_end();
 		_subscribe($wi__input_label && $input_label__closures, _scope($scope1_id, {
 			b: label,
