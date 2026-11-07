@@ -59,7 +59,6 @@ import { getScopeAccessor } from "../scope-accessor";
 import {
   ensureCallerParamGroups,
   forEachSection,
-  getConditionalCallerGroupsAt,
   getRendererReason,
   isCallerParamAt,
   isContentRender,
@@ -451,7 +450,7 @@ function seedsParam(binding: Binding) {
     isKnownChild(section) ||
     (isLoopBody(section) && !binding.sources?.param) ||
     (section.boundaryContent === "catch" &&
-      hasCallerParamSourceAt(findSlot(binding)?.reason, section))
+      hasCallerParamSourceAt(getWriteReason(binding), section))
   );
 }
 
@@ -751,7 +750,7 @@ export function getClosureReadSources(closure: Binding, section: Section) {
   for (const read of closure.reads.keys()) {
     if (read.section === section) {
       const params = bindingUtil.filter(
-        getSourcesForReferencedBindings(getReferencedBindings(read))?.param,
+        getSourcesForExpr(read)?.param,
         (param) =>
           isCallerParamAt(param, section) &&
           !isSameOrAncestorSection(param.section, closure.section),
@@ -913,8 +912,7 @@ export function getPassedReads(section: Section, extra: t.NodeExtra) {
 // A value a patch may fill, as `>` hops from `section` up to its own (what the
 // runtime's `readChanged` reads); client state and constants it never fills.
 export function getWriteHop(section: Section, binding: Binding) {
-  const sources = getSourcesForReferencedBindings(binding);
-  if (sources?.param || sources?.global) {
+  if (hasParamOrGlobalSource(binding.sources)) {
     return (
       ">".repeat(section.depth - binding.section.depth) +
       getScopeAccessor(binding)
@@ -1018,7 +1016,7 @@ function readsInEffect(alias: Binding) {
     if (
       expr.isEffect &&
       !inCreatedCatch(expr.section!) &&
-      some(getReferencedBindings(expr), (ref) => ref === alias)
+      bindingUtil.has(getReferencedBindings(expr), alias)
     ) {
       return true;
     }
@@ -1081,7 +1079,7 @@ export const [getFilledReferences] = createAnalysisMemo(
     let clientState = false;
     forEach(getReferencedBindingsInFunction(fn), (ref) => {
       const reference = getCanonicalBinding(ref);
-      clientState ||= !!getSourcesForReferencedBindings(reference)?.state;
+      clientState ||= isStateSourced(reference);
       const hop = getWriteHop(fn.section!, reference);
       if (hop) references.push(hop);
     });
@@ -1852,7 +1850,7 @@ export function readsKeptInputOnClient(section: Section) {
 
 // A param the document writes for client code: rendered, an effect's, a function's.
 function isClientReadParam(binding: Binding) {
-  return isSectionParam(binding) && !!findSlot(binding)?.reason;
+  return isSectionParam(binding) && !!getWriteReason(binding);
 }
 
 function keepsWithInput(read: ReferencedExtra) {
@@ -2137,7 +2135,7 @@ function isFnRead(read: Read) {
 export function isResumedRead(read: ReferencedExtra) {
   return (
     readsValuesOnResume(read) ||
-    !!getSourcesForReferencedBindings(getReferencedBindings(read))?.state ||
+    !!getSourcesForExpr(read)?.state ||
     !patchFillsSection(read.section) ||
     !!getDerivedNeeds(read)
   );
@@ -2222,7 +2220,7 @@ function ensureExprWriteGroups(expr: t.NodeExtra) {
 // A created scope's seed a flush writes; a registration it carries binds by
 // what its own module imports.
 export function writesSeed(binding: Binding) {
-  return seedsCreatedScope(binding) && !!findSlot(binding)?.reason;
+  return seedsCreatedScope(binding) && !!getWriteReason(binding);
 }
 
 // Each write (content's once its shell ships) and unfillable read.
@@ -2244,10 +2242,8 @@ function leavesReadUnfilled(binding: Binding) {
     getUnfilledSubscribedSources(binding);
   return (
     structure === false ||
-    some(
-      structure,
-      (sources) =>
-        getConditionalCallerGroupsAt(sources, binding.section).length > 0,
+    some(structure, (sources) =>
+      hasCallerParamSourceAt(sources, binding.section),
     )
   );
 }
