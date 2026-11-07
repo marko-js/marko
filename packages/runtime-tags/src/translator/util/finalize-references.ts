@@ -974,7 +974,7 @@ function resolveReferencedBindings(
       }
     }
     // The first step of main's tag-name analysis TODO.
-    if (isPatch() && isNameRead(extra)) setNameRead(expr, extra.read);
+    if (isNameRead(extra)) setNameRead(expr, extra.read);
     allBindings = bindingUtil.add(allBindings, binding);
   });
 
