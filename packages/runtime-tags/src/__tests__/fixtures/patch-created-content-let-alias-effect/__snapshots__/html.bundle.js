@@ -13,9 +13,9 @@ var wrap_default = _template("b", (input) => {
 
 // template.marko
 _shells({
-	a1: "a1 a5; ;<div></div>",
-	a: "a !a3; b%;<button>+</button><!><!>",
-	a2: `a2${_shell_marker([[], []], ["a>", $setup])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l")};${$template}`
+	a2: "a2 a1; ;<div></div>",
+	a: "a !a4; b%;<button>+</button><!><!>",
+	a3: `a3${_shell_marker([[], []], ["a>", $setup])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l")};${$template}`
 });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
@@ -28,12 +28,12 @@ var template_default = _template("a", (input) => {
 			const $scope1_id = _scope_id();
 			_set_scope_reason(0);
 			const $childScope = _peek_scope_id($scope1_id, "a", 0);
-			wrap_default({ content: _content("a1", () => {
+			wrap_default({ content: _content("a2", () => {
 				_scope_reason();
 				const $scope2_id = _scope_id();
 				_html(`<div></div>${_el_mark($scope2_id, "a")}`);
 				_script($scope2_id, "a0");
-				_subscribe($text__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }));
+				_subscribe($text__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "a1");
 			}, $scope1_id, 0) });
 			_patch_child_end();
 			_scope($scope1_id, {
@@ -42,8 +42,8 @@ var template_default = _template("a", (input) => {
 			});
 			return 0;
 		}
-	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 1), 1, 0, 0, ["a2"], $scope0_reason, 1);
-	_script($scope0_id, "a3");
+	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 1), 1, 0, 0, ["a3"], $scope0_reason, 1);
+	_script($scope0_id, "a4");
 	_scope($scope0_id, {
 		g: text,
 		h: $text__closures

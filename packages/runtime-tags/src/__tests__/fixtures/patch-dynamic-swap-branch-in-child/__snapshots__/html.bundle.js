@@ -11,7 +11,7 @@ _shells({
 	b6: "b6,<i>no</i>"
 });
 var w_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 2), $wi__input_show = _write_if($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 2), $wi__input_show__OR__input_flag__OR__input_x = _write_if($scope0_reason, 1), $wg__input_flag__OR__input_x = _write_guard($scope0_reason, 0), $fg__input_show = _filled_guard($scope0_reason, 2), $fg__input_flag = _filled_guard($scope0_reason, 3), $fg__input_x = _filled_guard($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 2), $wi__input_show = _write_if($scope0_reason, 2), $wi__input_show__OR__input_flag__OR__input_x = _write_if($scope0_reason, 1), $wg__input_flag__OR__input_x = _write_guard($scope0_reason, 0), $fg__input_show = _filled_guard($scope0_reason, 2), $fg__input_flag = _filled_guard($scope0_reason, 3), $fg__input_x = _filled_guard($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	const $input_show__closures = /* @__PURE__ */ new Set();
 	const A = { content: _content_resume("b3", ({ x }) => {
@@ -37,7 +37,7 @@ var w_default = _template("b", (input) => {
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_show__closures, _scope($scope1_id, {
 			d: x,
 			_: $wi__input_show__OR__input_flag__OR__input_x && _scope_with_id($scope0_id)
-		}));
+		}), $cg__input_show && "b7", $wg__input_show);
 		$wg__input_show || _resume_branch($scope1_id);
 	}, $scope0_id) };
 	const B = { content: _content_resume("b2", ({ x }) => {
@@ -64,7 +64,7 @@ var w_default = _template("b", (input) => {
 			d: x,
 			_: $wi__input_show__OR__input_flag__OR__input_x && _scope_with_id($scope0_id),
 			Cj: $wi__input_show && 1
-		}));
+		}), $cg__input_show && "b9", $wg__input_show);
 		$wg__input_show || _resume_branch($scope2_id);
 	}, $scope0_id) };
 	_dynamic_tag($scope0_id, "a", input.flag ? A : B, { x: input.x }, 1, 0, 0, $wg__input_flag__OR__input_x, $scope0_reason, 0);

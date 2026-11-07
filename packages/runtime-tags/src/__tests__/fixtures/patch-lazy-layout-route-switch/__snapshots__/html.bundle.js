@@ -60,7 +60,7 @@ _shells({
 	d4: `d4${_shell_marker([[], []], ["b>", $setup])};${/*@__PURE__*/ ((_w0) => `b%b/${_w0}&b`)("b")};${/*@__PURE__*/ ((_w0) => `<!><!>${_w0}<!>`)($template)}`
 });
 var template_default = _template("d", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_page = _write_guard($scope0_reason, 1), $wi__input_page = _write_if($scope0_reason, 1), $fg__input_list = _filled_guard($scope0_reason, 2), $cg__input_page = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_page = _write_guard($scope0_reason, 1), $cg__input_page = _client_guard($scope0_reason, 1), $wi__input_page = _write_if($scope0_reason, 1), $fg__input_list = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_page__closures = /* @__PURE__ */ new Set();
 	_html(`<html>${_flush_head()}<body>`);
@@ -97,7 +97,7 @@ var template_default = _template("d", (input) => {
 						}
 					}, $scope2_id, "a", 1, $wg__input_page, 1, 0, 0, ["d0", "d4"], $scope0_reason, 1);
 					$cg__input_page && _patch_render($scope2_id, "d5");
-					$wi__input_page && _subscribe(_unfilled_if($scope0_reason, 1) && $input_page__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }));
+					$wi__input_page && _subscribe(_unfilled_if($scope0_reason, 1) && $input_page__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), $cg__input_page && "d5", $wg__input_page);
 				}, $scope1_id, 0)
 			});
 			_patch_child_end();

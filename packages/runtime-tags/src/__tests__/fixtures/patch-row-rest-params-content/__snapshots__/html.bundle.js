@@ -25,7 +25,7 @@ var my_for_default = _template("b", (input) => {
 // template.marko
 const $setup = _shell_setup([[], []], ["a>", $setup$1]);
 _shells({
-	a1: "a1 a3!a0",
+	a2: "a2 a1!a0",
 	a: `a${_shell_marker($setup)};${((_w0) => `b/${_w0}&b`)("b%c")};${((_w0) => `<!>${_w0}<!>`)($template)}`
 });
 var template_default = _template("a", (input) => {
@@ -37,7 +37,7 @@ var template_default = _template("a", (input) => {
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	my_for_default({
 		to: input.to,
-		content: _content_resume("a1", (i) => {
+		content: _content_resume("a2", (i) => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
 			_patch_write($scope1_id, "xd", i);
@@ -46,7 +46,7 @@ var template_default = _template("a", (input) => {
 			_subscribe($n__closures, _scope($scope1_id, {
 				d: i,
 				_: _scope_with_id($scope0_id)
-			}));
+			}), "a1");
 		}, $scope0_id)
 	});
 	_patch_child_end();

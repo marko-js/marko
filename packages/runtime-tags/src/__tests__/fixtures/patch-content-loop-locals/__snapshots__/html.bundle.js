@@ -17,9 +17,9 @@ var list_default = _template("b", (input) => {
 });
 
 // template.marko
-const $setup = _shell_setup([[], ["a5"]], ["a>", $setup$1]);
+const $setup = _shell_setup([[], ["a6"]], ["a>", $setup$1]);
 _shells({
-	a1: "a1 a8;D l%;<em> </em><!><!>",
+	a1: "a1 a5;D l%;<em> </em><!><!>",
 	a: `a${_shell_marker($setup)};${((_w0) => `b/${_w0}& D l`)("b%c")};${((_w0) => `<!>${_w0}<button> </button>`)($template)}`,
 	a0: "a0;D%;<b><!>!</b>"
 });
@@ -51,15 +51,15 @@ var template_default = _template("a", (input) => {
 			_subscribe($n__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_show__closures, _scope($scope1_id, {
 				c: label,
 				_: _scope_with_id($scope0_id)
-			})));
+			}), $cg__input_show && "a3"), "a5");
 		}, $scope0_id, 0) });
 	});
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	list_default({ item: $item });
 	_patch_child_end();
 	_html(`<button>${_text_mark($scope0_id, "c", n)}</button>${_el_mark($scope0_id, "b")}`);
-	_script($scope0_id, "a5");
-	$fg__input_show && $cg__input_labels && _patch_subscribers($scope0_id, "a6", "g");
+	_script($scope0_id, "a6");
+	$fg__input_show && $cg__input_labels && _patch_subscribers($scope0_id, "a7", "g");
 	_scope($scope0_id, {
 		g: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.show,
 		h: n,

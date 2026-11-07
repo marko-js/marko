@@ -83,7 +83,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope8_id, {}, "__tests__/template.marko", "13:4");
 		}, 1, "__tests__/template.marko_8*content", _unfilled_if($scope0_reason, 7) && 2);
 		_unfilled_if($scope0_reason, 7) && _patch_subscribe($scope4_id, "__tests__/template.marko_4_input_boxed#0:11/subscribe", 1);
-		$wi__input_tag__OR__input_boxed && _subscribe(_unfilled_if($scope0_reason, 7) && $input_boxed__closures, _scope($scope4_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "12:4"));
+		$wi__input_tag__OR__input_boxed && _subscribe(_unfilled_if($scope0_reason, 7) && $input_boxed__closures, _scope($scope4_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "12:4"), _client_guard($scope0_reason, 7) && "__tests__/template.marko_4_input_boxed#0:11/subscribe", 0);
 		$wi__input_tag__OR__input_boxed && _resume_branch($scope4_id);
 	}, $scope0_id, ($scope) => $scope0_page ? [{ input_boxed: input.boxed }] : []), 0, _write_guard($scope0_reason, 6), $scope0_reason, 6, 0, void 0, 0, 0, "__tests__/template.marko_4*content");
 	_html("<p>end</p>");

@@ -41,10 +41,10 @@ var template_default = _template("a", (input) => {
 						const $scope4_id = _scope_id();
 						_html(`<em>${_text_mark($scope4_id, "a", input.value, 1, $scope0_reason, 2)}</em>`);
 						$cg__input_value && _patch_render($scope4_id, "a0");
-						_subscribe(_unfilled_if($scope0_reason, 2) && $input_value__closures, _scope($scope4_id, { Cf: $wi__input_value && 1 }));
+						_subscribe(_unfilled_if($scope0_reason, 2) && $input_value__closures, _scope($scope4_id, { Cf: $wi__input_value && 1 }), $cg__input_value && "a0");
 					}, 1, "a2", _unfilled_if($scope0_reason, 2) && 3);
 					$cg__input_value && _patch_render($scope3_id, "a7");
-					$wi__input_show__OR__input_value && _subscribe(_unfilled_if($scope0_reason, 2) && $input_value__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }));
+					$wi__input_show__OR__input_value && _subscribe(_unfilled_if($scope0_reason, 2) && $input_value__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }), $cg__input_value && "a7", 0);
 					$wi__input_show__OR__input_value && _resume_branch($scope3_id);
 				}, () => {
 					_scope_reason();

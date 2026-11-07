@@ -1,7 +1,7 @@
 // template.marko
 _shells({
-	a0: "a0 a6!a1",
-	a: "a !a3;b%b D ;<!><!><button> </button>"
+	a0: "a0 a3!a1",
+	a: "a !a4;b%b D ;<!><!><button> </button>"
 });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $fg__input_show = _filled_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 2);
@@ -18,12 +18,12 @@ var template_default = _template("a", (input) => {
 		_subscribe($n__closures, _scope($scope1_id, {
 			h: count,
 			_: _scope_with_id($scope0_id)
-		}));
+		}), "a3");
 	}, $scope0_id) };
 	_dynamic_tag($scope0_id, "a", input.show ? Content : "span", { label: input.label }, 1, 0, 0, _write_guard($scope0_reason, 0), $scope0_reason, 0);
 	_html(`<button>${_text_mark($scope0_id, "c", n)}</button>${_el_mark($scope0_id, "b")}`);
-	_script($scope0_id, "a3");
-	_patch_render($scope0_id, "a4", [$fg__input_show && "f", $fg__input_label && "g"], $scope0_reason, 0);
+	_script($scope0_id, "a4");
+	_patch_render($scope0_id, "a5", [$fg__input_show && "f", $fg__input_label && "g"], $scope0_reason, 0);
 	_scope($scope0_id, {
 		f: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.show,
 		g: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.label,

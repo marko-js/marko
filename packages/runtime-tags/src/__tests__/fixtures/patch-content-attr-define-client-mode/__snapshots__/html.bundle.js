@@ -6,15 +6,15 @@ _shells({
 	b: "b; ;<section></section>"
 });
 var frag_host_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_note = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_note = _client_guard($scope0_reason, 1), $fg__input_note = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = /* @__PURE__ */ new Set();
 	const frag = { content: _content_resume("b0", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_html(`<em>${_text_mark($scope1_id, "a", input.note, 1, $scope0_reason, 1)}</em>`);
-		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "b1", _client_guard($scope0_reason, 1));
-		_subscribe(_unfilled_if($scope0_reason, 1) && $input_note__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }));
+		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "b1", $cg__input_note);
+		_subscribe(_unfilled_if($scope0_reason, 1) && $input_note__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }), $cg__input_note && "b1");
 	}, $scope0_id) };
 	_html("<section>");
 	_attr_content("a", $scope0_id, input.mode ? frag.content : null, 0, 1, $scope0_reason, 2);

@@ -45,7 +45,7 @@ _shells({
 	b: `b${_shell_marker($setup)};${((_w0) => `D/${_w0}&l`)(" b")};${((_w0) => `<main>${_w0}</main>`)($template)}`
 });
 var template_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_show__OR__input_note = _write_if($scope0_reason, 0), $fg__input_note = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $cg__input_note = _client_guard($scope0_reason, 2), $wi__input_show__OR__input_note = _write_if($scope0_reason, 0), $fg__input_note = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = /* @__PURE__ */ new Set();
 	_html("<main>");
@@ -62,8 +62,8 @@ var template_default = _template("b", (input) => {
 				_scope_reason();
 				const $scope2_id = _scope_id();
 				_html(`<em>${_text_mark($scope2_id, "a", input.note, 1, $scope0_reason, 2)}</em>`);
-				_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope2_id, "b0", _client_guard($scope0_reason, 2));
-				_subscribe(_unfilled_if($scope0_reason, 2) && $input_note__closures, _scope($scope2_id, { _: $wi__input_show__OR__input_note && _scope_with_id($scope1_id) }));
+				_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope2_id, "b0", $cg__input_note);
+				_subscribe(_unfilled_if($scope0_reason, 2) && $input_note__closures, _scope($scope2_id, { _: $wi__input_show__OR__input_note && _scope_with_id($scope1_id) }), $cg__input_note && "b0");
 			}, $scope1_id, 0) });
 			_patch_child_end();
 			_scope($scope1_id, {

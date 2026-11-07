@@ -53,7 +53,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const bodyId = _id("bodyId");
 			_html(`<label${_attr("for", bodyId, $scope3_id, "#label/0", 0, 0)}>${_text_mark($scope3_id, "#text/1", item.key, 1, $scope0_reason, 0)}</label>${_el_mark($scope3_id, "#label/0", 0)}<input${_attr("id", bodyId, $scope3_id, "#input/2", 0, 0)}>${_el_mark($scope3_id, "#input/2", 0)}`);
 			_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope3_id, "__tests__/template.marko_3_item_key#2:4/subscribe", $cg__input_items);
-			_subscribe(_unfilled_if($scope0_reason, 0) && $for_content2__item_key__closures, _scope($scope3_id, { _: $wi__input_items && _scope_with_id($scope2_id) }, "__tests__/template.marko", "5:6"));
+			_subscribe(_unfilled_if($scope0_reason, 0) && $for_content2__item_key__closures, _scope($scope3_id, { _: $wi__input_items && _scope_with_id($scope2_id) }, "__tests__/template.marko", "5:6"), $cg__input_items && "__tests__/template.marko_3_item_key#2:4/subscribe");
 		}, $scope2_id, 0), 0, $wg__input_items, $scope0_reason, 0);
 		$wi__input_items && _scope($scope2_id, { "ClosureScopes:item_key/5": $for_content2__item_key__closures }, "__tests__/template.marko", "4:2");
 	}, 0, $scope0_id, "#text/1", 1, 1, 1, 0, 0, "__tests__/template.marko_2*shell", $scope0_reason, 0);
@@ -66,7 +66,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const nullId = _id("nullId");
 			_html(`<label${_attr("for", nullId, $scope5_id, "#label/0", 0, 0)}>${_text_mark($scope5_id, "#text/1", item.key, 1, $scope0_reason, 0)}</label>${_el_mark($scope5_id, "#label/0", 0)}<input${_attr("id", nullId, $scope5_id, "#input/2", 0, 0)}>${_el_mark($scope5_id, "#input/2", 0)}`);
 			$cg__input_items && _patch_render($scope5_id, "__tests__/template.marko_5_item_key#4:4/subscribe");
-			_subscribe(_unfilled_if($scope0_reason, 0) && $for_content3__item_key__closures, _scope($scope5_id, { _: $wi__input_items && _scope_with_id($scope4_id) }, "__tests__/template.marko", "8:6"));
+			_subscribe(_unfilled_if($scope0_reason, 0) && $for_content3__item_key__closures, _scope($scope5_id, { _: $wi__input_items && _scope_with_id($scope4_id) }, "__tests__/template.marko", "8:6"), $cg__input_items && "__tests__/template.marko_5_item_key#4:4/subscribe");
 		}, $scope4_id, 0), 0, $wg__input_items, $scope0_reason, 0);
 		$cg__input_items && _patch_render($scope4_id, "__tests__/template.marko_4_item_on#3_item_key#4/setup");
 		$wi__input_items && _scope($scope4_id, { "ClosureScopes:item_key/6": $for_content3__item_key__closures }, "__tests__/template.marko", "7:2");

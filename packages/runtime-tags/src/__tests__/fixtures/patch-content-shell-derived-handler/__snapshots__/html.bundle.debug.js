@@ -22,7 +22,7 @@ _shells({
 	"__tests__/template.marko_1*shell": `__tests__/template.marko_1*shell${_shell_marker([[], []], ["#childScope/0>", $setup$1])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l")};${$template$1}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_label = _server_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 1), $wi__input_label = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 1), $sg__input_label = _server_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 1), $wi__input_label = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = new Set();
 	let shown = "";
@@ -38,11 +38,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_filled_guard($scope0_reason, 1) && _patch_write($scope2_id, "PatchMarkedWrite:label", label, !$sg__input_label);
 				_html(`<button>show</button>${_el_mark($scope2_id, "#button/0")}`);
 				_script($scope2_id, "__tests__/template.marko_2");
-				_client_guard($scope0_reason, 1) && _patch_render($scope2_id, "__tests__/template.marko_2_input_label#0:5/subscribe");
+				$cg__input_label && _patch_render($scope2_id, "__tests__/template.marko_2_input_label#0:5/subscribe");
 				_subscribe($wi__input_label && $input_label__closures, _scope($scope2_id, {
 					label,
 					_: _scope_with_id($scope1_id)
-				}, "__tests__/template.marko", "3:4", { label: "4:12" }));
+				}, "__tests__/template.marko", "3:4", { label: "4:12" }), $cg__input_label && "__tests__/template.marko_2_input_label#0:5/subscribe");
 			}, $scope1_id, 0) });
 			_patch_child_end();
 			_scope($scope1_id, {

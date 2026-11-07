@@ -38,7 +38,7 @@ _shells({
 	b1: "b1,<span>shown</span>"
 });
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0), $fg__input_show = _filled_guard($scope0_reason, 0), $wi__input_show = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0), $cg__input_show = _client_guard($scope0_reason, 0), $fg__input_show = _filled_guard($scope0_reason, 0), $wi__input_show = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_show__closures = /* @__PURE__ */ new Set();
 	$fg__input_show && _patch_write($scope0_id, "xf", input.show, !_server_guard($scope0_reason, 0));
@@ -58,8 +58,8 @@ var child_default = _template("b", (input) => {
 					return 0;
 				}
 			}, $scope1_id, "a", 1, $wg__input_show, 1, 0, 0, ["b1"], $scope0_reason, 0);
-			_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "b3", _client_guard($scope0_reason, 0));
-			_subscribe(_unfilled_if($scope0_reason, 0) && $input_show__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
+			_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "b3", $cg__input_show);
+			_subscribe(_unfilled_if($scope0_reason, 0) && $input_show__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), $cg__input_show && "b3", $wg__input_show);
 			$wg__input_show || _resume_branch($scope1_id);
 		}, $scope0_id, 0) });
 	});

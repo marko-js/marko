@@ -34,7 +34,7 @@ _shells({
 	"__tests__/template.marko_1*shell": `__tests__/template.marko_1*shell${_shell_marker([["__tests__/template.marko_1_open#0:5/setup"], []], ["#childScope/0>", $setup$1])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)(" b")};${$template$1}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $cg__input_panels = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let open = true;
 	_html(`<button>toggle</button>${_el_mark($scope0_id, "#button/0")}`);
@@ -50,8 +50,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope2_reason = _scope_reason();
 				const $scope2_id = _scope_id();
 				_html(`<p>${_text_mark($scope2_id, "#text/0", p.text, 1, $scope0_reason, 0)}</p>`);
-				_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope2_id, "__tests__/template.marko_2_p_text#1:3/subscribe", _client_guard($scope0_reason, 0));
-				_subscribe(_unfilled_if($scope0_reason, 0) && $for_content__p_text__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "4:4"));
+				_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope2_id, "__tests__/template.marko_2_p_text#1:3/subscribe", $cg__input_panels);
+				_subscribe(_unfilled_if($scope0_reason, 0) && $for_content__p_text__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "4:4"), $cg__input_panels && "__tests__/template.marko_2_p_text#1:3/subscribe");
 			}, $scope1_id)
 		});
 		_patch_child_end();

@@ -8,7 +8,7 @@ _shells({
 	"__tests__/tags/host.marko_2*shell": "__tests__/tags/host.marko_2*shell;b%;<!><!><!>"
 });
 var host_default = _template("__tests__/tags/host.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_wrap = _write_guard($scope0_reason, 4), $scope0_page = _page_render(), $wg__input_wrap__OR__input_native = _write_guard($scope0_reason, 1), $wi__input_wrap__OR__input_show__OR__input_native__OR__input_label = _write_if($scope0_reason, 3), $fg__input_wrap = _filled_guard($scope0_reason, 4), $fg__input_native = _filled_guard($scope0_reason, 6), $cg__input_show = _client_guard($scope0_reason, 5), $fg__input_label = _filled_guard($scope0_reason, 7);
+	const $scope0_reason = _scope_reason(), $wg__input_wrap = _write_guard($scope0_reason, 4), $scope0_page = _page_render(), $cg__input_label = _client_guard($scope0_reason, 7), $wg__input_wrap__OR__input_native = _write_guard($scope0_reason, 1), $wi__input_wrap__OR__input_show__OR__input_native__OR__input_label = _write_if($scope0_reason, 3), $fg__input_wrap = _filled_guard($scope0_reason, 4), $fg__input_native = _filled_guard($scope0_reason, 6), $cg__input_show = _client_guard($scope0_reason, 5), $fg__input_label = _filled_guard($scope0_reason, 7);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = new Set();
 	let flag = false;
@@ -29,8 +29,8 @@ var host_default = _template("__tests__/tags/host.marko", (input) => {
 				const $scope3_id = _scope_id();
 				const $scope3_reason = _scope_reason();
 				_html(`<i>${_text_mark($scope3_id, "#text/0", input.label, 1, $scope0_reason, 7)}</i>`);
-				_unfilled_if($scope0_reason, 7) && _patch_subscribe($scope3_id, "__tests__/tags/host.marko_3_input_label#0:8/subscribe", _client_guard($scope0_reason, 7));
-				_subscribe(_unfilled_if($scope0_reason, 7) && $input_label__closures, _scope($scope3_id, { _: $wi__input_wrap__OR__input_show__OR__input_native__OR__input_label && _scope_with_id($scope2_id) }, "__tests__/tags/host.marko", "5:6"));
+				_unfilled_if($scope0_reason, 7) && _patch_subscribe($scope3_id, "__tests__/tags/host.marko_3_input_label#0:8/subscribe", $cg__input_label);
+				_subscribe(_unfilled_if($scope0_reason, 7) && $input_label__closures, _scope($scope3_id, { _: $wi__input_wrap__OR__input_show__OR__input_native__OR__input_label && _scope_with_id($scope2_id) }, "__tests__/tags/host.marko", "5:6"), $cg__input_label && "__tests__/tags/host.marko_3_input_label#0:8/subscribe");
 			}, $scope2_id, ($scope) => $scope0_page ? [{ input_label: input.label }, { _: $scope($scope0_id) }] : []), 0, $wg__input_wrap__OR__input_native, $scope0_reason, 1, 0, void 0, 0, 0, "__tests__/tags/host.marko_3*content");
 			_patch_render($scope2_id, "__tests__/tags/host.marko_2_input_wrap#0:5_input_native#0:7/setup", [_filled_guard($scope0_reason, 4) && ">input_wrap", _filled_guard($scope0_reason, 6) && ">input_native"], $scope0_reason, 1);
 			$wi__input_wrap__OR__input_show__OR__input_native__OR__input_label && _scope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/host.marko", "4:2");

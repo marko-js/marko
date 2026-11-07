@@ -44,7 +44,7 @@ var w_default = _template("c", (input) => {
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_show__closures, _scope($scope1_id, {
 			d: x,
 			_: $wi__input_show__OR__input_flag__OR__input_x && _scope_with_id($scope0_id)
-		}));
+		}), $cg__input_show && "c6", $wg__input_show);
 		$wg__input_show || _resume_branch($scope1_id);
 	}, $scope0_id) };
 	const B = { content: _content_resume("c3", ({ x }) => {
@@ -66,7 +66,7 @@ var w_default = _template("c", (input) => {
 			d: x,
 			_: $wi__input_show__OR__input_flag__OR__input_x && _scope_with_id($scope0_id),
 			Ck: $wi__input_show && 1
-		}));
+		}), $cg__input_show && "c8", $wg__input_show);
 		$wg__input_show || _resume_branch($scope2_id);
 	}, $scope0_id) };
 	_dynamic_tag($scope0_id, "a", input.flag ? A : B, { x: input.x }, 1, 0, 0, $wg__input_flag__OR__input_x, $scope0_reason, 0);

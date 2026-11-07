@@ -11,7 +11,7 @@ _shells({
 	"__tests__/template.marko_5*shell": "__tests__/template.marko_5*shell;b%;<!><!><!>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_show__OR__input_open__OR__input_label = _write_if($scope0_reason, 1), $wg__input_label = _write_guard($scope0_reason, 4), $cg__input_label = _client_guard($scope0_reason, 4), $wi__input_label = _write_if($scope0_reason, 4), $fg__input_open = _filled_guard($scope0_reason, 3), $fg__input_label = _filled_guard($scope0_reason, 4), $fg__input_other = _filled_guard($scope0_reason, 5);
+	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 4), $wi__input_show__OR__input_open__OR__input_label = _write_if($scope0_reason, 1), $wg__input_label = _write_guard($scope0_reason, 4), $wi__input_label = _write_if($scope0_reason, 4), $fg__input_open = _filled_guard($scope0_reason, 3), $fg__input_label = _filled_guard($scope0_reason, 4), $fg__input_other = _filled_guard($scope0_reason, 5);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = new Set();
 	let open = false;
@@ -41,7 +41,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					const $scope2_id = _scope_id();
 					_html(`<em>${_text_mark($scope2_id, "#text/0", input.label, 1, $scope0_reason, 4)}</em>`);
 					_unfilled_if($scope0_reason, 4) && _patch_subscribe($scope2_id, "__tests__/template.marko_2_input_label#0:7/subscribe", $cg__input_label);
-					_subscribe(_unfilled_if($scope0_reason, 4) && $input_label__closures, _scope($scope2_id, { _: $wi__input_show__OR__input_open__OR__input_label && _scope_with_id($scope1_id) }, "__tests__/template.marko", "8:4"));
+					_subscribe(_unfilled_if($scope0_reason, 4) && $input_label__closures, _scope($scope2_id, { _: $wi__input_show__OR__input_open__OR__input_label && _scope_with_id($scope1_id) }, "__tests__/template.marko", "8:4"), $cg__input_label && "__tests__/template.marko_2_input_label#0:7/subscribe");
 				}, $scope1_id)
 			});
 			_patch_child_end();

@@ -1,20 +1,20 @@
 // PATCH
-`a2 a6;b%;B<!>`
+`a3 a1;b%;B<!>`
 {
   cb: {
     ca: {
-      fa: "^^^a2"
+      fa: "^^^a3"
     }
   }
 }
 ;CgI
 
 // PATCH holding CgI
-`a1;b%;A<!>`
+`a2;b%;A<!>`
 {
   cb: {
     ca: {
-      fa: "^^^a1",
+      fa: "^^^a2",
       cAa: {
         ta: "z"
       }
@@ -27,7 +27,7 @@
 {
   cb: {
     ca: {
-      fa: "^^^a2"
+      fa: "^^^a3"
     }
   }
 }

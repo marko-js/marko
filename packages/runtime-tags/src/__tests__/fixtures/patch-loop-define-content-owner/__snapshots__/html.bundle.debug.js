@@ -43,7 +43,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope5_reason = _scope_reason();
 			_html(`<em>${_text_mark($scope5_id, "#text/0", row.label, 1, $scope0_reason, 0)} ${_text_mark($scope5_id, "#text/1", n, 2)}</em>`);
 			_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope5_id, "__tests__/template.marko_5_row_label#2:7/subscribe", $cg__input_rows);
-			_subscribe($for_content__n__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $for_content__row_label__closures, _scope($scope5_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "6:4")));
+			_subscribe($for_content__n__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $for_content__row_label__closures, _scope($scope5_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "6:4"), $cg__input_rows && "__tests__/template.marko_5_row_label#2:7/subscribe"), "__tests__/template.marko_5_n#2:11/subscribe");
 		}, $scope2_id, ($scope) => $scope0_page ? [{ row_label: row?.label }] : []) };
 		_html(`<section><button>${_text_mark($scope2_id, "#text/1", n)}</button>${_el_mark($scope2_id, "#button/0")}`);
 		_set_scope_reason(0);
@@ -59,7 +59,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					_: _scope_with_id($scope2_id),
 					"ClosureSignalIndex:row_label/13": $wi__input_rows && 1,
 					"ClosureSignalIndex:n/15": 1
-				}, "__tests__/template.marko", "9:6")));
+				}, "__tests__/template.marko", "9:6"), $cg__input_rows && "__tests__/template.marko_6_row_label#2:7/subscribe"), "__tests__/template.marko_6_n#2:11/subscribe");
 			}, $scope2_id, 0)
 		});
 		_patch_child_end();
@@ -72,7 +72,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_: _scope_with_id($scope2_id),
 				"ClosureSignalIndex:row_label/13": $wi__input_rows && 2,
 				"ClosureSignalIndex:n/15": 2
-			}, "__tests__/template.marko", "10:8")));
+			}, "__tests__/template.marko", "10:8"), $cg__input_rows && "__tests__/template.marko_7_row_label#2:7/subscribe"), "__tests__/template.marko_7_n#2:11/subscribe");
 		}, $scope2_id, ($scope2) => $scope0_page ? [{ row_label: row?.label }] : []), 0, $wg__input_rows, $scope0_reason, 0, 0, void 0, 0, 0, "__tests__/template.marko_7*content");
 		_for_of(row.tags, (tag) => {
 			const $scope3_id = _scope_id();

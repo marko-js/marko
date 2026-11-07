@@ -55,7 +55,7 @@ var template_default = _template("a", (input) => {
 					_subscribe(_unfilled_if($scope1_reason, 0) && $Tree_content__depth__closures, _scope($scope3_id, {
 						_: ($wi__input_on || $wi__depth) && _scope_with_id($scope2_id),
 						a: _existing_scope($childScope)
-					}));
+					}), _client_guard($scope1_reason, 0) && "a1", 0);
 					_resume_branch($scope3_id);
 				}, $scope2_id, ($scope) => $scope1_page ? [
 					{

@@ -13,7 +13,7 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		_html(`<em>one ${_text_mark($scope1_id, "a", input.title, 2, $scope0_reason, 0)}</em>`);
 		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "a1", $cg__input_title);
-		_subscribe(_unfilled_if($scope0_reason, 0) && $input_title__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
+		_subscribe(_unfilled_if($scope0_reason, 0) && $input_title__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), $cg__input_title && "a1");
 	}, $scope0_id) };
 	const two = { content: _content_resume("a2", () => {
 		const $scope2_id = _scope_id();
@@ -23,7 +23,7 @@ var template_default = _template("a", (input) => {
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_title__closures, _scope($scope2_id, {
 			_: _scope_with_id($scope0_id),
 			Cj: $wi__input_title && 1
-		}));
+		}), $cg__input_title && "a3");
 	}, $scope0_id) };
 	const attrs = { content: input.which ? one : two };
 	_html("<div");

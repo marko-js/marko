@@ -43,7 +43,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 						const $scope3_id = _scope_id();
 						_html(`<em>${_text_mark($scope3_id, "#text/0", item.n, 1, $scope0_reason, 0)}</em>`);
 						$cg__input_items && _patch_render($scope3_id, "__tests__/template.marko_3_item_n#1:5/subscribe");
-						_subscribe(_unfilled_if($scope0_reason, 0) && $for_content__item_n__closures, _scope($scope3_id, { _: $wi__input_items && _scope_with_id($scope2_id) }, "__tests__/template.marko", "4:8"));
+						_subscribe(_unfilled_if($scope0_reason, 0) && $for_content__item_n__closures, _scope($scope3_id, { _: $wi__input_items && _scope_with_id($scope2_id) }, "__tests__/template.marko", "4:8"), $cg__input_items && "__tests__/template.marko_3_item_n#1:5/subscribe");
 						return 0;
 					} else {
 						const $scope4_id = _scope_id();
@@ -52,12 +52,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 						_subscribe(_unfilled_if($scope0_reason, 0) && $for_content__item_n__closures, _scope($scope4_id, {
 							_: $wi__input_items && _scope_with_id($scope2_id),
 							"ClosureSignalIndex:item_n/7": $wi__input_items && 1
-						}, "__tests__/template.marko", "7:8"));
+						}, "__tests__/template.marko", "7:8"), $cg__input_items && "__tests__/template.marko_4_item_n#1:5/subscribe");
 						return 1;
 					}
 				}, $scope2_id, "#text/0", 1, $wg__input_items, 1, 0, 0, ["__tests__/template.marko_3*shell", "__tests__/template.marko_4*shell"], $scope0_reason, 0);
 				$cg__input_items && _patch_render($scope2_id, "__tests__/template.marko_2_item_alt#1:4/subscribe");
-				$wi__input_items && _subscribe(_unfilled_if($scope0_reason, 0) && $for_content__item_alt__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:6"));
+				$wi__input_items && _subscribe(_unfilled_if($scope0_reason, 0) && $for_content__item_alt__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:6"), $cg__input_items && "__tests__/template.marko_2_item_alt#1:4/subscribe", $wg__input_items);
 			}, $scope1_id, 0)
 		});
 		_patch_child_end();

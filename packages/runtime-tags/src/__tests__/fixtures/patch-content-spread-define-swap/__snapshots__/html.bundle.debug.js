@@ -16,7 +16,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_reason = _scope_reason();
 		_html(`<em>one ${_text_mark($scope1_id, "#text/0", input.title, 2, $scope0_reason, 0)}</em>`);
 		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_title#0:3/subscribe", $cg__input_title);
-		_subscribe(_unfilled_if($scope0_reason, 0) && $input_title__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "1:2"));
+		_subscribe(_unfilled_if($scope0_reason, 0) && $input_title__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "1:2"), $cg__input_title && "__tests__/template.marko_1_input_title#0:3/subscribe");
 	}, $scope0_id) };
 	const two = { content: _content_resume("__tests__/template.marko_2*content", () => {
 		const $scope2_id = _scope_id();
@@ -26,7 +26,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_title__closures, _scope($scope2_id, {
 			_: _scope_with_id($scope0_id),
 			"ClosureSignalIndex:input_title/9": $wi__input_title && 1
-		}, "__tests__/template.marko", "2:2"));
+		}, "__tests__/template.marko", "2:2"), $cg__input_title && "__tests__/template.marko_2_input_title#0:3/subscribe");
 	}, $scope0_id) };
 	const attrs = { content: input.which ? one : two };
 	_html("<div");

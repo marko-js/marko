@@ -53,7 +53,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					_subscribe(_unfilled_if($scope0_reason, 3) && $input_note__closures, _scope($scope3_id, {
 						_: _write_if($scope0_reason, 0) && _scope_with_id($scope2_id),
 						"ClosureSignalIndex:input_note/8": $wi__input_note && 1
-					}, "__tests__/template.marko", "6:6"));
+					}, "__tests__/template.marko", "6:6"), $cg__input_note && "__tests__/template.marko_3_input_note#0:5/subscribe");
 				}, $scope2_id, 0)
 			});
 			_patch_child_end();

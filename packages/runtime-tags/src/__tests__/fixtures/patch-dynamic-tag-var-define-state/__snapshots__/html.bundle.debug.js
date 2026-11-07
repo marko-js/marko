@@ -24,7 +24,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_label__closures, _scope($scope1_id, {
 			n,
 			_: $wi__input_label__OR__input_which && _scope_with_id($scope0_id)
-		}, "__tests__/template.marko", "1:2", { n: "2:8" }));
+		}, "__tests__/template.marko", "1:2", { n: "2:8" }), $cg__input_label && "__tests__/template.marko_1_input_label#0:5/subscribe");
 		return $return;
 	}, $scope0_id) };
 	const Other = { content: _content_resume("__tests__/template.marko_2*content", () => {
@@ -36,7 +36,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_label__closures, _scope($scope2_id, {
 			_: $wi__input_label__OR__input_which && _scope_with_id($scope0_id),
 			"ClosureSignalIndex:input_label/11": $wi__input_label && 1
-		}, "__tests__/template.marko", "6:2"));
+		}, "__tests__/template.marko", "6:2"), $cg__input_label && "__tests__/template.marko_2_input_label#0:5/subscribe");
 		return $return2;
 	}, $scope0_id) };
 	const $inputwhichCounterOther_scope = _peek_scope_id();

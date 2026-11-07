@@ -52,9 +52,9 @@ var panel_default = _template("e", (input) => {
 // page.marko
 const $template = /*@__PURE__*/ ((_w0, _w1) => `${_w0}<button class=bonus>bonus</button>${_w1}`)("", $template$1);
 const $walks = /*@__PURE__*/ ((_w0, _w1) => `0${_w0}& b/${_w1}&`)("", $walks$1);
-const $setup = _shell_setup([[], ["a2"]], ["a>", $setup$3], ["d>", $setup$1]);
+const $setup = _shell_setup([[], ["a3"]], ["a>", $setup$3], ["d>", $setup$1]);
 _shells({
-	a1: `a1${_shell_marker([["a5"], []], ["a>", $setup$2])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$2)};${$template$2}`,
+	a2: `a2${_shell_marker([["a1"], []], ["a>", $setup$2])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$2)};${$template$2}`,
 	a: `a${_shell_marker($setup)};${((_w0, _w1) => `0${_w0}& b/${_w1}&`)("", $walks$1)};${((_w0, _w1) => `${_w0}<button class=bonus>bonus</button>${_w1}`)("", $template$1)}`
 });
 var page_default = _template("a", (input) => {
@@ -69,7 +69,7 @@ var page_default = _template("a", (input) => {
 	_html(`<button class=bonus>bonus</button>${_el_mark($scope0_id, "c")}`);
 	_set_scope_reason(0);
 	const $childScope3 = _peek_scope_id($scope0_id, "d", 2);
-	panel_default({ aside: attrTag({ content: _content("a1", () => {
+	panel_default({ aside: attrTag({ content: _content("a2", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		_set_scope_reason(6);
@@ -79,12 +79,12 @@ var page_default = _template("a", (input) => {
 		_subscribe($live__closures, _scope($scope1_id, {
 			_: _scope_with_id($scope0_id),
 			a: _existing_scope($childScope2)
-		}));
+		}), "a1", 0);
 		_resume_branch($scope1_id);
 	}, $scope0_id, 0) }) });
 	_patch_child_end();
-	_script($scope0_id, "a2");
-	_patch_render($scope0_id, "a3", $fg__input_base && "g");
+	_script($scope0_id, "a3");
+	_patch_render($scope0_id, "a4", $fg__input_base && "g");
 	_scope($scope0_id, {
 		g: input.base,
 		h: _write_if($scope0_reason, 0) && bonus,

@@ -22,7 +22,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope2_reason = _scope_reason();
 				_html(`<p>${_text_mark($scope2_id, "#text/0", x, 1, $cg__input_v << 1, 0, 1)}</p>`);
 				$cg__input_v && _patch_render($scope2_id, "__tests__/template.marko_2_x#1:1/subscribe");
-				_subscribe($if_content__x__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:4"));
+				_subscribe($if_content__x__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:4"), "__tests__/template.marko_2_x#1:1/subscribe");
 			}, $scope1_id, 0) };
 			const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 			Show.content({});

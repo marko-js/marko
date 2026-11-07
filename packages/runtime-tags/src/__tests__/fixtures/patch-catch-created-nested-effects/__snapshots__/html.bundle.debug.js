@@ -88,7 +88,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_subscribe(_unfilled_if($scope0_reason, 2) && $catch_content__w__closures, _subscribe(_unfilled_if($scope0_reason, 2) && $input_v__closures, _scope($scope4_id, {
 				_: _scope_with_id($scope1_id),
 				"ClosureSignalIndex:input_v/8": $wi__input_v && 3
-			}, "__tests__/template.marko", "18:6")));
+			}, "__tests__/template.marko", "18:6"), $cg__input_v && "__tests__/template.marko_4_input_v#0:3/subscribe"), $cg__input_v && "__tests__/template.marko_4_w#1:7/subscribe");
 		}, $scope1_id, 0) });
 		_patch_child_end();
 		_script($scope1_id, "__tests__/template.marko_1_input_v#0:3");

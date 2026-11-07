@@ -21,7 +21,7 @@ _shells({
 	b: `b${_shell_marker($setup$1)};${((_w0) => `/${_w0}&`)("D%l")};${$template$1}`
 });
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_a11yText = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_a11yText = _client_guard($scope0_reason, 0), $wi__input_a11yText = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $btn_getter = _hoist($scope0_id, "b0");
 	const $wrapper_content__subscribers = /* @__PURE__ */ new Set();
@@ -38,11 +38,11 @@ var child_default = _template("b", (input) => {
 			_html("content");
 		}, $scope1_id, 0), 0, 1, $scope0_reason, 0, 0, void 0, 0, "b2");
 		_var($scope1_id, "b", $inputa11yTextbutton_scope, "b2");
-		_client_guard($scope0_reason, 0) && _patch_render($scope1_id, "b3");
+		$cg__input_a11yText && _patch_render($scope1_id, "b3");
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_a11yText__closures, _subscribe($wrapper_content__subscribers, _scope($scope1_id, {
 			c: $btn,
 			_: $wi__input_a11yText && _scope_with_id($scope0_id)
-		})));
+		})), $cg__input_a11yText && "b3");
 	}, $scope0_id, 0) });
 	_patch_child_end();
 	const $return = { btn: $btn_getter };

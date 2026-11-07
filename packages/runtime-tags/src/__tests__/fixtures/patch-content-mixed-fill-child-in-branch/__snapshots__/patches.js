@@ -1,5 +1,5 @@
 // PATCH
-[`a1 a5!a>d0;/ D l&;<button class=tick> </button>`, `b1 !a>a2;/0& b/DbD%m&&;<button class=bonus>bonus</button><section><h2>Panel</h2><div class=aside><!></div></section>`]
+[`a2 a1!a>d0;/ D l&;<button class=tick> </button>`, `b1 !a>a3;/0& b/DbD%m&&;<button class=bonus>bonus</button><section><h2>Panel</h2><div class=aside><!></div></section>`]
 {
   ba: [{
     ca: {
@@ -13,7 +13,7 @@
         }
       },
       cd: {
-        fa: "^^a1",
+        fa: "^^a2",
         cAa: {
           ca: {
             id1: "",
@@ -23,7 +23,7 @@
           }
         }
       },
-      ia3: "g",
+      ia4: "g",
       xg: 0
     }
   }, "b1"]
@@ -44,7 +44,7 @@
         }
       },
       cd: {
-        fa: "^^a1",
+        fa: "^^a2",
         cAa: {
           ca: {
             id1: "",
@@ -54,7 +54,7 @@
           }
         }
       },
-      ia3: "g",
+      ia4: "g",
       xg: 2
     }
   }, "b1"]

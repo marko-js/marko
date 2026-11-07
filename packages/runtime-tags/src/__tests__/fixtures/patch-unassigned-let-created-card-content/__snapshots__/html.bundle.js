@@ -29,7 +29,7 @@ var card_default = _template("b", (input) => {
 		const $scope1_id = _scope_id();
 		_html(`<b>${_text_mark($scope1_id, "a", n, 1, $cg__input_n << 1, 0, 1)}</b>`);
 		$cg__input_n && _patch_render($scope1_id, "b0");
-		_subscribe($n__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
+		_subscribe($n__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "b0");
 	}, $scope0_id, 0) });
 	_patch_child_end();
 	_scope($scope0_id, {

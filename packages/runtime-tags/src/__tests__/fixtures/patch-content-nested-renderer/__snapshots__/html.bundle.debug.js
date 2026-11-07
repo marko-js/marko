@@ -22,7 +22,7 @@ _shells({
 	"__tests__/template.marko_1*shell": `__tests__/template.marko_1*shell${_shell_marker([[], []], ["#childScope/0>", $setup$1])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l")};${$template$1}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_show__OR__input_note__OR__input_inner = _write_if($scope0_reason, 0), $wg__input_show = _write_guard($scope0_reason, 1), $fg__input_note = _filled_guard($scope0_reason, 2), $fg__input_inner = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_note = _client_guard($scope0_reason, 2), $cg__input_inner = _client_guard($scope0_reason, 3), $wi__input_show__OR__input_note__OR__input_inner = _write_if($scope0_reason, 0), $wg__input_show = _write_guard($scope0_reason, 1), $fg__input_note = _filled_guard($scope0_reason, 2), $fg__input_inner = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = new Set();
 	const $input_inner__closures = new Set();
@@ -37,9 +37,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope2_id = _scope_id();
 				_html(`<p>${_text_mark($scope2_id, "#text/0", input.note, 1, $scope0_reason, 2)}</p>`);
 				_dynamic_tag($scope2_id, "#text/1", input.inner, {}, 2, 0, 0, _write_guard($scope0_reason, 3), $scope0_reason, 3);
-				_client_guard($scope0_reason, 2) && _patch_render($scope2_id, "__tests__/template.marko_2_input_note#0:4/subscribe");
-				_client_guard($scope0_reason, 3) && _patch_render($scope2_id, "__tests__/template.marko_2_input_inner#0:5/subscribe");
-				_subscribe(_unfilled_if($scope0_reason, 3) && $input_inner__closures, _subscribe(_unfilled_if($scope0_reason, 2) && $input_note__closures, _scope($scope2_id, { _: $wi__input_show__OR__input_note__OR__input_inner && _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:6")));
+				$cg__input_note && _patch_render($scope2_id, "__tests__/template.marko_2_input_note#0:4/subscribe");
+				$cg__input_inner && _patch_render($scope2_id, "__tests__/template.marko_2_input_inner#0:5/subscribe");
+				_subscribe(_unfilled_if($scope0_reason, 3) && $input_inner__closures, _subscribe(_unfilled_if($scope0_reason, 2) && $input_note__closures, _scope($scope2_id, { _: $wi__input_show__OR__input_note__OR__input_inner && _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:6"), $cg__input_note && "__tests__/template.marko_2_input_note#0:4/subscribe"), $cg__input_inner && "__tests__/template.marko_2_input_inner#0:5/subscribe");
 			}, $scope1_id, 0) });
 			_patch_child_end();
 			_scope($scope1_id, {

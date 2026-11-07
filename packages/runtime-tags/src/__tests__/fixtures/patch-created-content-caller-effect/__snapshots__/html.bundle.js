@@ -32,7 +32,7 @@ _shells({
 	b: `b${_shell_marker($setup$1)};${((_w0) => `b/${_w0}&b`)("b%c")};${((_w0) => `<!>${_w0}<!>`)($template$1)}`
 });
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_count = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_count = _client_guard($scope0_reason, 1), $fg__input_count = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_count__closures = /* @__PURE__ */ new Set();
 	_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 0) << 3);
@@ -44,8 +44,8 @@ var child_default = _template("b", (input) => {
 			const $scope1_id = _scope_id();
 			_html("<p>body</p>");
 			_script($scope1_id, "b0", 0, _filled_guard($scope0_reason, 1), ">e");
-			_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "b1", _client_guard($scope0_reason, 1));
-			_subscribe(_unfilled_if($scope0_reason, 1) && $input_count__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
+			_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "b1", $cg__input_count);
+			_subscribe(_unfilled_if($scope0_reason, 1) && $input_count__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), $cg__input_count && "b1", 0);
 			_resume_branch($scope1_id);
 		}, $scope0_id) })
 	});

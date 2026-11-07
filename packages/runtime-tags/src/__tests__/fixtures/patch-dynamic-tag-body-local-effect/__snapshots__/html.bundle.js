@@ -45,7 +45,7 @@ var template_default = _template("a", (input) => {
 				_scope_reason();
 				_html(`<em>${_text_mark($scope2_id, "a", x, 1, $scope0_reason, 2)}</em>`);
 				_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope2_id, "a1", $cg__input_note);
-				_subscribe(_unfilled_if($scope0_reason, 2) && $if_content__x__closures, _scope($scope2_id, { _: $wi__input_note__OR__input_on && _scope_with_id($scope1_id) }));
+				_subscribe(_unfilled_if($scope0_reason, 2) && $if_content__x__closures, _scope($scope2_id, { _: $wi__input_note__OR__input_on && _scope_with_id($scope1_id) }), $cg__input_note && "a1");
 			}, $scope1_id), 0, _write_guard($scope0_reason, 3), $scope0_reason, 3);
 			_script($scope1_id, "a2", 1, _filled_guard($scope0_reason, 2), "c");
 			_filled_guard($scope0_reason, 2) && _patch_subscribers($scope1_id, "a3", "c");

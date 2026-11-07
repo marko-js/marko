@@ -19,7 +19,7 @@ _shells({
 	a3: `a3${_shell_marker([[], []], ["a>", $setup])};${/*@__PURE__*/ ((_w0) => `/${_w0}&b`)($walks)};${/*@__PURE__*/ ((_w0) => `${_w0}<!>`)($template)}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 5), $wg__input_b = _write_guard($scope0_reason, 4), $wi__input_a__OR__input_b__OR__input_label__OR__input_text = _write_if($scope0_reason, 2), $wg__input_a = _write_guard($scope0_reason, 3), $fg__input_b = _filled_guard($scope0_reason, 4), $fg__input_label = _filled_guard($scope0_reason, 5), $cg__input_a = _client_guard($scope0_reason, 3), $cg__input_b = _client_guard($scope0_reason, 4), $fg__input_text = _filled_guard($scope0_reason, 6);
+	const $scope0_reason = _scope_reason(), $cg__input_text = _client_guard($scope0_reason, 6), $cg__input_label = _client_guard($scope0_reason, 5), $wg__input_b = _write_guard($scope0_reason, 4), $wi__input_a__OR__input_b__OR__input_label__OR__input_text = _write_if($scope0_reason, 2), $wg__input_a = _write_guard($scope0_reason, 3), $fg__input_b = _filled_guard($scope0_reason, 4), $fg__input_label = _filled_guard($scope0_reason, 5), $cg__input_a = _client_guard($scope0_reason, 3), $cg__input_b = _client_guard($scope0_reason, 4), $fg__input_text = _filled_guard($scope0_reason, 6);
 	const $scope0_id = _scope_id();
 	const $input_text__closures = /* @__PURE__ */ new Set();
 	const $input_label__closures = /* @__PURE__ */ new Set();
@@ -39,8 +39,8 @@ var template_default = _template("a", (input) => {
 							_scope_reason();
 							const $scope3_id = _scope_id();
 							_html(`<em>${_text_mark($scope3_id, "a", input.text, 1, $scope0_reason, 6)}</em>`);
-							_client_guard($scope0_reason, 6) && _patch_render($scope3_id, "a0");
-							_subscribe(_unfilled_if($scope0_reason, 6) && $input_text__closures, _scope($scope3_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope2_id) }));
+							$cg__input_text && _patch_render($scope3_id, "a0");
+							_subscribe(_unfilled_if($scope0_reason, 6) && $input_text__closures, _scope($scope3_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope2_id) }), $cg__input_text && "a0");
 						}, $scope2_id, 0)
 					});
 					_patch_child_end();

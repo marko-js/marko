@@ -92,7 +92,7 @@ var page_default = _template("__tests__/page.marko", (input) => {
 			_subscribe(_unfilled_if($scope0_reason, 0) && $for_content__item_n__closures, _subscribe($bonus__closures, _scope($scope2_id, {
 				_: _scope_with_id($scope1_id),
 				"#childScope/0": _existing_scope($childScope2)
-			}, "__tests__/page.marko", "6:6")));
+			}, "__tests__/page.marko", "6:6"), "__tests__/page.marko_2_bonus#0:7/subscribe", 0), $cg__input_items && "__tests__/page.marko_2_item_n#1:3/subscribe", 0);
 			_resume_branch($scope2_id);
 		}, $scope1_id, 0) }) });
 		_patch_child_end();

@@ -69,7 +69,7 @@ var template_default = _template("a", (input) => {
 				_subscribe(_unfilled_if($scope0_reason, 4) && $input_id__closures, _scope($scope3_id, {
 					_: _write_if($scope0_reason, 0) && _scope_with_id($scope1_id),
 					Ch: $wi__input_id && 2
-				}));
+				}), $cg__input_id && "a1");
 			}, () => {
 				_scope_reason();
 				const $scope2_id = _scope_id();
@@ -78,12 +78,12 @@ var template_default = _template("a", (input) => {
 				_subscribe($wi__input_id && $input_id__closures, _scope($scope2_id, {
 					_: _scope_with_id($scope1_id),
 					Ch: $wi__input_id && 1
-				}));
+				}), $cg__input_id && "a0", $wg__input_id);
 			}, void 0, "a2", void 0, "a3");
 			_unfilled_if($scope0_reason, 3) && _patch_subscribe($scope1_id, "a4");
 			_unfilled_if($scope0_reason, 4) && _patch_subscribe($scope1_id, "a5");
 			_patch_render($scope1_id, "a6", [_filled_guard($scope0_reason, 3) && ">e", _filled_guard($scope0_reason, 4) && ">f"], $scope0_reason, 1);
-			_subscribe(_unfilled_if($scope0_reason, 4) && $input_id__closures, _subscribe(_unfilled_if($scope0_reason, 3) && $input_which__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) })));
+			_subscribe(_unfilled_if($scope0_reason, 4) && $input_id__closures, _subscribe(_unfilled_if($scope0_reason, 3) && $input_which__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 3) && "a4", $wg__input_which__OR__input_id), $cg__input_id && "a5", $wg__input_which__OR__input_id);
 			$wg__input_which__OR__input_id || _resume_branch($scope1_id);
 		}, $scope0_id)
 	});

@@ -59,7 +59,7 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 			_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "__tests__/tags/panel.marko_1_input_a#0:4/subscribe");
 			_unfilled_if($scope0_reason, 3) && _patch_subscribe($scope1_id, "__tests__/tags/panel.marko_1_input_b#0:5/subscribe");
 			_patch_render($scope1_id, "__tests__/tags/panel.marko_1_input_a#0:4_input_b#0:5/setup", [_filled_guard($scope0_reason, 2) && ">input_a", _filled_guard($scope0_reason, 3) && ">input_b"], $scope0_reason, 0);
-			_subscribe(_unfilled_if($scope0_reason, 3) && $input_b__closures, _subscribe(_unfilled_if($scope0_reason, 2) && $input_a__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/panel.marko", "2:4")));
+			_subscribe(_unfilled_if($scope0_reason, 3) && $input_b__closures, _subscribe(_unfilled_if($scope0_reason, 2) && $input_a__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/panel.marko", "2:4"), _client_guard($scope0_reason, 2) && "__tests__/tags/panel.marko_1_input_a#0:4/subscribe"), _client_guard($scope0_reason, 3) && "__tests__/tags/panel.marko_1_input_b#0:5/subscribe");
 		}, $scope0_id) })
 	});
 	_patch_child_end();

@@ -8,7 +8,7 @@ _shells({
 	a4: "a4;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_on = _write_guard($scope0_reason, 3), $fg__input_a = _filled_guard($scope0_reason, 4), $fg__input_b = _filled_guard($scope0_reason, 5);
+	const $scope0_reason = _scope_reason(), $cg__input_a = _client_guard($scope0_reason, 4), $cg__input_b = _client_guard($scope0_reason, 5), $scope0_page = _page_render(), $wg__input_on = _write_guard($scope0_reason, 3), $fg__input_a = _filled_guard($scope0_reason, 4), $fg__input_b = _filled_guard($scope0_reason, 5);
 	const $scope0_id = _scope_id();
 	const $input_a__closures = /* @__PURE__ */ new Set();
 	const $input_b__closures = /* @__PURE__ */ new Set();
@@ -53,14 +53,14 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		_html(`<em>${_text_mark($scope1_id, "a", input.a, 1, $scope0_reason, 4)}</em>`);
-		_unfilled_if($scope0_reason, 4) && _patch_subscribe($scope1_id, "a8", _client_guard($scope0_reason, 4));
-		_subscribe(_unfilled_if($scope0_reason, 4) && $input_a__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }));
+		_unfilled_if($scope0_reason, 4) && _patch_subscribe($scope1_id, "a8", $cg__input_a);
+		_subscribe(_unfilled_if($scope0_reason, 4) && $input_a__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }), $cg__input_a && "a8");
 	}, $scope0_id, ($scope) => $scope0_page ? [{ e: input.a }] : []) }), { content: _content_resume("a6", () => {
 		_scope_reason();
 		const $scope2_id = _scope_id();
 		_html(`<b>${_text_mark($scope2_id, "a", input.b, 1, $scope0_reason, 5)}</b>`);
-		_unfilled_if($scope0_reason, 5) && _patch_subscribe($scope2_id, "a9", _client_guard($scope0_reason, 5));
-		_subscribe(_unfilled_if($scope0_reason, 5) && $input_b__closures, _scope($scope2_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }));
+		_unfilled_if($scope0_reason, 5) && _patch_subscribe($scope2_id, "a9", $cg__input_b);
+		_subscribe(_unfilled_if($scope0_reason, 5) && $input_b__closures, _scope($scope2_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }), $cg__input_b && "a9");
 	}, $scope0_id, ($scope2) => $scope0_page ? [{ f: input.b }] : []) }) }, 17, 0, 0, $wg__input_on, $scope0_reason, 3, 0, void 0, 0, 0, ["a7", "a6"]);
 	_html("</main>");
 	$fg__input_a && _patch_subscribers($scope0_id, "a10", "e");

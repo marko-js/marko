@@ -19,7 +19,7 @@ var template_default = _template("a", (input) => {
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_label__closures, _scope($scope1_id, {
 			d: n,
 			_: $wi__input_label__OR__input_which && _scope_with_id($scope0_id)
-		}));
+		}), $cg__input_label && "a2");
 	}, $scope0_id) };
 	const Other = { content: _content_resume("a4", () => {
 		const $scope2_id = _scope_id();
@@ -29,7 +29,7 @@ var template_default = _template("a", (input) => {
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_label__closures, _scope($scope2_id, {
 			_: $wi__input_label__OR__input_which && _scope_with_id($scope0_id),
 			Ci: $wi__input_label && 1
-		}));
+		}), $cg__input_label && "a5");
 	}, $scope0_id) };
 	_dynamic_tag($scope0_id, "a", input.which ? Counter : Other, { label: input.label }, 1, 0, 0, $wg__input_label__OR__input_which, $scope0_reason, 0);
 	$fg__input_label && _patch_subscribers($scope0_id, "a6", "d");

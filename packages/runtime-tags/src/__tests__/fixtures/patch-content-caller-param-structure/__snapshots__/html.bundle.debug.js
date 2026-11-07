@@ -52,15 +52,15 @@ _shells({
 	"__tests__/tags/toggle-tag.marko": "__tests__/tags/toggle-tag.marko;b%;<!><!><!>"
 });
 var toggle_tag_default = _template("__tests__/tags/toggle-tag.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 2), $wi__input_open__OR__input_content = _write_if($scope0_reason, 0), $wg__input_open = _write_guard($scope0_reason, 1), $fg__input_content = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 2), $cg__input_content = _client_guard($scope0_reason, 2), $wi__input_open__OR__input_content = _write_if($scope0_reason, 0), $wg__input_open = _write_guard($scope0_reason, 1), $fg__input_content = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_content__closures = new Set();
 	_dynamic_tag($scope0_id, "#text/0", input.open ? "div" : "section", {}, 10, _content("__tests__/tags/toggle-tag.marko_1*content", () => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
 		_dynamic_tag($scope1_id, "#text/0", input.content, {}, 2, 0, 0, $wg__input_content, $scope0_reason, 2);
-		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "__tests__/tags/toggle-tag.marko_1_input_content#0:4/subscribe", _client_guard($scope0_reason, 2));
-		$wi__input_open__OR__input_content && _subscribe(_unfilled_if($scope0_reason, 2) && $input_content__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/toggle-tag.marko", "1:4"));
+		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "__tests__/tags/toggle-tag.marko_1_input_content#0:4/subscribe", $cg__input_content);
+		$wi__input_open__OR__input_content && _subscribe(_unfilled_if($scope0_reason, 2) && $input_content__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/toggle-tag.marko", "1:4"), $cg__input_content && "__tests__/tags/toggle-tag.marko_1_input_content#0:4/subscribe", $wg__input_content);
 		$wg__input_content || $wi__input_open__OR__input_content && _resume_branch($scope1_id);
 	}, $scope0_id, 0), 0, $wg__input_open, $scope0_reason, 1);
 	$fg__input_content && _patch_subscribers($scope0_id, "__tests__/tags/toggle-tag.marko_0_input_content#4/subscribers", "input_content");
@@ -94,7 +94,7 @@ var param_host_default = _template("__tests__/tags/param-host.marko", (input) =>
 			const $scope1_id = _scope_id();
 			_html(`<p>if ${_text_mark($scope1_id, "#text/0", input.label, 2, $scope0_reason, 2)}</p>`);
 			_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "__tests__/tags/param-host.marko_1_input_label#0:7/subscribe", $cg__input_label);
-			_subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope1_id, { _: $wi__input_open__OR__input_label && _scope_with_id($scope0_id) }, "__tests__/tags/param-host.marko", "1:2"));
+			_subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope1_id, { _: $wi__input_open__OR__input_label && _scope_with_id($scope0_id) }, "__tests__/tags/param-host.marko", "1:2"), $cg__input_label && "__tests__/tags/param-host.marko_1_input_label#0:7/subscribe");
 		}, $scope0_id)
 	});
 	_patch_child_end();
@@ -110,7 +110,7 @@ var param_host_default = _template("__tests__/tags/param-host.marko", (input) =>
 			_subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope2_id, {
 				_: $wi__input_open__OR__input_label && _scope_with_id($scope0_id),
 				"ClosureSignalIndex:input_label/8": $wi__input_label && 1
-			}, "__tests__/tags/param-host.marko", "4:2"));
+			}, "__tests__/tags/param-host.marko", "4:2"), $cg__input_label && "__tests__/tags/param-host.marko_2_input_label#0:7/subscribe");
 		}, $scope0_id)
 	});
 	_patch_child_end();
@@ -126,7 +126,7 @@ var param_host_default = _template("__tests__/tags/param-host.marko", (input) =>
 			_subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope3_id, {
 				_: $wi__input_open__OR__input_label && _scope_with_id($scope0_id),
 				"ClosureSignalIndex:input_label/8": $wi__input_label && 2
-			}, "__tests__/tags/param-host.marko", "7:2"));
+			}, "__tests__/tags/param-host.marko", "7:2"), $cg__input_label && "__tests__/tags/param-host.marko_3_input_label#0:7/subscribe");
 		}, $scope0_id)
 	});
 	_patch_child_end();
@@ -138,7 +138,7 @@ var param_host_default = _template("__tests__/tags/param-host.marko", (input) =>
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope4_id, {
 			_: $wi__input_open__OR__input_label && _scope_with_id($scope0_id),
 			"ClosureSignalIndex:input_label/8": $wi__input_label && 3
-		}, "__tests__/tags/param-host.marko", "10:4"));
+		}, "__tests__/tags/param-host.marko", "10:4"), $cg__input_label && "__tests__/tags/param-host.marko_4_input_label#0:7/subscribe");
 	}, $scope0_id, 0), 0, $wg__input_open, $scope0_reason, 1);
 	$fg__input_label && _patch_subscribers($scope0_id, "__tests__/tags/param-host.marko_0_input_label#7/subscribers", "input_label");
 	_scope($scope0_id, {
@@ -175,7 +175,7 @@ var const_host_default = _template("__tests__/tags/const-host.marko", (input) =>
 			const $scope1_id = _scope_id();
 			_html(`<p>if ${_text_mark($scope1_id, "#text/0", input.label, 2, $scope0_reason, 2)}</p>`);
 			_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "__tests__/tags/const-host.marko_1_input_label#0:7/subscribe", $cg__input_label);
-			_subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope1_id, { _: $wi__input_open__OR__input_label && _scope_with_id($scope0_id) }, "__tests__/tags/const-host.marko", "2:2"));
+			_subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope1_id, { _: $wi__input_open__OR__input_label && _scope_with_id($scope0_id) }, "__tests__/tags/const-host.marko", "2:2"), $cg__input_label && "__tests__/tags/const-host.marko_1_input_label#0:7/subscribe");
 		}, $scope0_id)
 	});
 	_patch_child_end();
@@ -191,7 +191,7 @@ var const_host_default = _template("__tests__/tags/const-host.marko", (input) =>
 			_subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope2_id, {
 				_: $wi__input_open__OR__input_label && _scope_with_id($scope0_id),
 				"ClosureSignalIndex:input_label/9": $wi__input_label && 1
-			}, "__tests__/tags/const-host.marko", "5:2"));
+			}, "__tests__/tags/const-host.marko", "5:2"), $cg__input_label && "__tests__/tags/const-host.marko_2_input_label#0:7/subscribe");
 		}, $scope0_id)
 	});
 	_patch_child_end();
@@ -207,7 +207,7 @@ var const_host_default = _template("__tests__/tags/const-host.marko", (input) =>
 			_subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope3_id, {
 				_: $wi__input_open__OR__input_label && _scope_with_id($scope0_id),
 				"ClosureSignalIndex:input_label/9": $wi__input_label && 2
-			}, "__tests__/tags/const-host.marko", "8:2"));
+			}, "__tests__/tags/const-host.marko", "8:2"), $cg__input_label && "__tests__/tags/const-host.marko_3_input_label#0:7/subscribe");
 		}, $scope0_id)
 	});
 	_patch_child_end();
@@ -219,7 +219,7 @@ var const_host_default = _template("__tests__/tags/const-host.marko", (input) =>
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope4_id, {
 			_: $wi__input_open__OR__input_label && _scope_with_id($scope0_id),
 			"ClosureSignalIndex:input_label/9": $wi__input_label && 3
-		}, "__tests__/tags/const-host.marko", "11:4"));
+		}, "__tests__/tags/const-host.marko", "11:4"), $cg__input_label && "__tests__/tags/const-host.marko_4_input_label#0:7/subscribe");
 	}, $scope0_id, 0), 0, $wg__input_open, $scope0_reason, 1);
 	$fg__input_label && _patch_subscribers($scope0_id, "__tests__/tags/const-host.marko_0_input_label#7/subscribers", "input_label");
 	_scope($scope0_id, {

@@ -73,9 +73,9 @@ var error_wrapper_default = _template("b", (input) => {
 });
 
 // template.marko
-const $setup = _shell_setup([[], ["a5"]], ["c>", $setup$2], ["d>", $setup$1]);
+const $setup = _shell_setup([[], ["a6"]], ["c>", $setup$2], ["d>", $setup$1]);
 _shells({
-	a4: "a4 a8",
+	a5: "a5 a4",
 	a: `a${_shell_marker($setup)};${((_w0, _w1) => ` D l/${_w0}&/${_w1}&b`)("b%c", "b%c")};${((_w0, _w1) => `<button> </button>${_w0}${_w1}<!>`)($template$1, $template)}`
 });
 var template_default = _template("a", (input) => {
@@ -102,7 +102,7 @@ var template_default = _template("a", (input) => {
 	const $childScope2 = _peek_scope_id($scope0_id, "d", 1);
 	error_wrapper_default({
 		fail: input.fail,
-		fallback: attrTag({ content: _content_resume("a4", () => {
+		fallback: attrTag({ content: _content_resume("a5", () => {
 			_scope_reason();
 			const $scope2_id = _scope_id();
 			_html(`<i>${_text_mark($scope2_id, "a", input.label, 1, $scope0_reason, 1)} ${_text_mark($scope2_id, "b", count, 2)}</i>`);
@@ -111,12 +111,12 @@ var template_default = _template("a", (input) => {
 				_: _scope_with_id($scope0_id),
 				Cj: $wi__input_label && 1,
 				Ck: 1
-			})));
+			}), $cg__input_label && "a3"), "a4");
 		}, $scope0_id) })
 	});
 	_patch_child_end();
-	_script($scope0_id, "a5");
-	$fg__input_label && _patch_subscribers($scope0_id, "a6", "h");
+	_script($scope0_id, "a6");
+	$fg__input_label && _patch_subscribers($scope0_id, "a7", "h");
 	_scope($scope0_id, {
 		h: input.label,
 		i: count,

@@ -19,7 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope2_id = _scope_id();
 				const $scope2_reason = _scope_reason();
 				_html(`<span${_attr("data-n", count)}>x</span>${_el_mark($scope2_id, "#span/0")}`);
-				_subscribe($count__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:6"));
+				_subscribe($count__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:6"), "__tests__/template.marko_2_count#0:6/subscribe");
 			}, $scope1_id), 0, $wg__input_tag, $scope0_reason, 1);
 			_client_guard($scope0_reason, 1) && _patch_render($scope1_id, "__tests__/template.marko_1_input_tag#0:5/setup");
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:2");

@@ -10,7 +10,7 @@ _shells({
 	"__tests__/tags/rowsy.marko_4*shell": "__tests__/tags/rowsy.marko_4*shell;b%;<!><!><!>"
 });
 var rowsy_default = _template("__tests__/tags/rowsy.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_tags__OR__input_card = _write_guard($scope0_reason, 0), $cg__input_tags__OR__input_card = _client_guard($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 1), $fg__input_card = _filled_guard($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $cg__input_label = _client_guard($scope0_reason, 1), $wg__input_tags__OR__input_card = _write_guard($scope0_reason, 0), $cg__input_tags__OR__input_card = _client_guard($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 1), $fg__input_card = _filled_guard($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = new Set();
 	const $n__closures = new Set();
@@ -34,8 +34,8 @@ var rowsy_default = _template("__tests__/tags/rowsy.marko", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
 		_html(`<em>${_text_mark($scope1_id, "#text/0", input.label, 1, $scope0_reason, 1)} ${_text_mark($scope1_id, "#text/1", n, 2)}</em>`);
-		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "__tests__/tags/rowsy.marko_1_input_label#0:5/subscribe", _client_guard($scope0_reason, 1));
-		_subscribe($n__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/rowsy.marko", "5:2")));
+		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "__tests__/tags/rowsy.marko_1_input_label#0:5/subscribe", $cg__input_label);
+		_subscribe($n__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/rowsy.marko", "5:2"), $cg__input_label && "__tests__/tags/rowsy.marko_1_input_label#0:5/subscribe"), "__tests__/tags/rowsy.marko_1_n#0:9/subscribe");
 	}, $scope0_id, ($scope) => $scope0_page ? [{ input_label: input.label }] : []) };
 	_html(`<button>${_text_mark($scope0_id, "#text/1", n)}</button>${_el_mark($scope0_id, "#button/0")}`);
 	_for_of(input.tags, (tag) => {

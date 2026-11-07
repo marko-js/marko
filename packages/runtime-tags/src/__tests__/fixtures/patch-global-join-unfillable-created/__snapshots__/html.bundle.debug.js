@@ -33,7 +33,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}, "__tests__/template.marko", "3:4", {
 				y: "3:19",
 				b: "4:12"
-			}));
+			}), _client_guard(6, 0) && "__tests__/template.marko_2_value#1:4/subscribe");
 		}, $scope1_id, 0) };
 		_set_scope_reason(2);
 		const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);

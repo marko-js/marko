@@ -14,10 +14,10 @@ const $setup__script$1 = _script("d0", ($scope) => _on($scope.a, "click", functi
 const $input_base = /*@__PURE__*/ _const(4, $input_base__OR__tick);
 
 // page.marko
-const $aside_content__live = /*@__PURE__*/ _closure_get_patch("a5", 10, ($scope) => $input_base($scope.a, $scope._.j));
+const $aside_content__live = /*@__PURE__*/ _closure_get_patch("a1", 10, ($scope) => $input_base($scope.a, $scope._.j));
 const $live = /*@__PURE__*/ _const(9, /* @__PURE__ */ _closure($aside_content__live));
-const $input_base__OR__bonus = /*@__PURE__*/ _or_patch("a3", 8, ($scope) => $live($scope, $scope.h ?? $scope.g), 1, 1);
+const $input_base__OR__bonus = /*@__PURE__*/ _or_patch("a4", 8, ($scope) => $live($scope, $scope.h ?? $scope.g), 1, 1);
 const $bonus = _var_resume("a0", /*@__PURE__*/ _const(7, $input_base__OR__bonus));
-const $setup__script = _script("a2", ($scope) => _on($scope.c, "click", function() {
+const $setup__script = _script("a3", ($scope) => _on($scope.c, "click", function() {
 	_var_change($scope.a, 5);
 }));

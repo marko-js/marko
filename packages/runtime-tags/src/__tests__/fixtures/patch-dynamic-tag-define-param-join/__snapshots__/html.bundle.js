@@ -24,7 +24,7 @@ var template_default = _template("a", (input) => {
 			_subscribe(_unfilled_if(6, 0) && $wi__value && $Outer_content__value__closures, _scope($scope2_id, {
 				d: _unfilled_if($scope1_reason, 0) && y,
 				_: ($wi__value || _write_if($scope2_reason, 0)) && _scope_with_id($scope1_id)
-			}));
+			}), _client_guard(6, 0) && "a1");
 		}, $scope1_id, 0) };
 		_set_scope_reason(2);
 		const $childScope = _peek_scope_id($scope1_id, "a", 0);

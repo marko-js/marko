@@ -1,30 +1,30 @@
 // PATCH
-`a2 a6`
+`a3 a1`
 {
   cb: {
-    fa: "^^a2"
+    fa: "^^a3"
   },
-  Sa4: "f"
+  Sa5: "f"
 }
 ;CAI
 
 // PATCH holding CAI
-`a1`
+`a2`
 {
   cb: {
-    fa: "^^a1",
+    fa: "^^a2",
     cAa: {
       ta: "z"
     }
   },
-  Sa4: "f"
+  Sa5: "f"
 }
 ;CQY
 
 // PATCH holding CQY
 {
   cb: {
-    fa: "^^a2"
+    fa: "^^a3"
   },
-  Sa4: "f"
+  Sa5: "f"
 }

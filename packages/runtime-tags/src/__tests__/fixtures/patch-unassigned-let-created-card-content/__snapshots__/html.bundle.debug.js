@@ -32,7 +32,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_html(`<b>${_text_mark($scope1_id, "#text/0", n, 1, $cg__input_n << 1, 0, 1)}</b>`);
 		$cg__input_n && _patch_render($scope1_id, "__tests__/tags/card.marko_1_n#0:4/subscribe");
-		_subscribe($n__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/card.marko", "2:2"));
+		_subscribe($n__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/card.marko", "2:2"), "__tests__/tags/card.marko_1_n#0:4/subscribe");
 	}, $scope0_id, 0) });
 	_patch_child_end();
 	_scope($scope0_id, {

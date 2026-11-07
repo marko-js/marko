@@ -21,7 +21,7 @@ _shells({
 	"__tests__/template.marko_1*shell": `__tests__/template.marko_1*shell${_shell_marker([[], []], ["#childScope/0>", $setup$1])};${/*@__PURE__*/ ((_w0) => `D/${_w0}&l`)($walks$1)};${/*@__PURE__*/ ((_w0) => `<li>${_w0}</li>`)($template$1)}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_items = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_items = _client_guard($scope0_reason, 0), $wi__input_items = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_html("<ul>");
 	_for_of(input.items, (item) => {
@@ -36,8 +36,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope2_reason = _scope_reason();
 				const $scope2_id = _scope_id();
 				_html(`<em>${_text_mark($scope2_id, "#text/0", item.n, 1, $scope0_reason, 0)}</em>`);
-				_client_guard($scope0_reason, 0) && _patch_render($scope2_id, "__tests__/template.marko_2_item_n#1:4/subscribe");
-				_subscribe(_unfilled_if($scope0_reason, 0) && $for_content__item_n__closures, _scope($scope2_id, { _: $wi__input_items && _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:10"));
+				$cg__input_items && _patch_render($scope2_id, "__tests__/template.marko_2_item_n#1:4/subscribe");
+				_subscribe(_unfilled_if($scope0_reason, 0) && $for_content__item_n__closures, _scope($scope2_id, { _: $wi__input_items && _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:10"), $cg__input_items && "__tests__/template.marko_2_item_n#1:4/subscribe");
 			}, $scope1_id, 0)
 		});
 		_patch_child_end();

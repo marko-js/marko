@@ -21,7 +21,7 @@ _shells({
 	a3: `a3${_shell_marker([[], []], ["a>", $setup])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks)};${$template}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_rows__OR__input_label = _write_if($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 2), $cg__input_rows = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 2), $cg__input_rows = _client_guard($scope0_reason, 1), $wi__input_rows__OR__input_label = _write_if($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	_for_of(input.rows, (row) => {
@@ -35,9 +35,9 @@ var template_default = _template("a", (input) => {
 				_scope_reason();
 				const $scope2_id = _scope_id();
 				_html(`<em>${_text_mark($scope2_id, "a", row.id, 1, $scope0_reason, 1)} ${_text_mark($scope2_id, "b", input.label, 2, $scope0_reason, 2)}</em>`);
-				_client_guard($scope0_reason, 2) && _patch_render($scope2_id, "a0");
+				$cg__input_label && _patch_render($scope2_id, "a0");
 				$cg__input_rows && _patch_render($scope2_id, "a1");
-				_subscribe(_unfilled_if($scope0_reason, 1) && $for_content__row_id__closures, _subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope2_id, { _: $wi__input_rows__OR__input_label && _scope_with_id($scope1_id) })));
+				_subscribe(_unfilled_if($scope0_reason, 1) && $for_content__row_id__closures, _subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope2_id, { _: $wi__input_rows__OR__input_label && _scope_with_id($scope1_id) }), $cg__input_label && "a0"), $cg__input_rows && "a1");
 			}, $scope1_id, 2)
 		});
 		_patch_child_end();

@@ -79,7 +79,7 @@ var template_default = _template("a", (input) => {
 			_scope($scope8_id, {});
 		}, 1, "a0", _unfilled_if($scope0_reason, 7) && 2);
 		_unfilled_if($scope0_reason, 7) && _patch_subscribe($scope4_id, "a13", 1);
-		$wi__input_tag__OR__input_boxed && _subscribe(_unfilled_if($scope0_reason, 7) && $input_boxed__closures, _scope($scope4_id, { _: _scope_with_id($scope0_id) }));
+		$wi__input_tag__OR__input_boxed && _subscribe(_unfilled_if($scope0_reason, 7) && $input_boxed__closures, _scope($scope4_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 7) && "a13", 0);
 		$wi__input_tag__OR__input_boxed && _resume_branch($scope4_id);
 	}, $scope0_id, ($scope) => $scope0_page ? [{ l: input.boxed }] : []), 0, _write_guard($scope0_reason, 6), $scope0_reason, 6, 0, void 0, 0, 0, "a5");
 	_html("<p>end</p>");

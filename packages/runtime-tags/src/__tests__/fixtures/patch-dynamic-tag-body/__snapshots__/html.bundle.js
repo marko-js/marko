@@ -16,7 +16,7 @@ _shells({
 	a: "a;b%b%;<!><!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_tag__OR__input_cls = _write_guard($scope0_reason, 0), $wg__input_wrap = _write_guard($scope0_reason, 5), $fg__input_note = _filled_guard($scope0_reason, 6), $fg__input_tag = _filled_guard($scope0_reason, 3), $fg__input_cls = _filled_guard($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $cg__input_note = _client_guard($scope0_reason, 6), $wg__input_tag__OR__input_cls = _write_guard($scope0_reason, 0), $wg__input_wrap = _write_guard($scope0_reason, 5), $fg__input_note = _filled_guard($scope0_reason, 6), $fg__input_tag = _filled_guard($scope0_reason, 3), $fg__input_cls = _filled_guard($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = /* @__PURE__ */ new Set();
 	_dynamic_tag($scope0_id, "a", input.tag, { class: input.cls }, 1, _content_resume("a0", () => {
@@ -28,8 +28,8 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_html(_text_mark($scope1_id, "a", input.note, 2, $scope0_reason, 6));
-		_client_guard($scope0_reason, 6) && _patch_render($scope1_id, "a2");
-		_subscribe(_unfilled_if($scope0_reason, 6) && $input_note__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }));
+		$cg__input_note && _patch_render($scope1_id, "a2");
+		_subscribe(_unfilled_if($scope0_reason, 6) && $input_note__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }), $cg__input_note && "a2");
 	}, $scope0_id, 0), 0, $wg__input_wrap, $scope0_reason, 5);
 	$fg__input_note && _client_guard($scope0_reason, 5) && _patch_subscribers($scope0_id, "a3", "i");
 	_patch_render($scope0_id, "a4", [$fg__input_tag && "e", $fg__input_cls && "f"], $scope0_reason, 0);

@@ -45,7 +45,7 @@ _shells({
 	a5: "a5;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_on__OR__input_bs = _write_guard($scope0_reason, 2), $wi__input_as__OR__input_on__OR__input_bs__OR__input_note = _write_if($scope0_reason, 4), $fg__input_on = _filled_guard($scope0_reason, 6), $cg__input_as = _client_guard($scope0_reason, 5), $fg__input_bs = _filled_guard($scope0_reason, 7), $fg__input_note = _filled_guard($scope0_reason, 8);
+	const $scope0_reason = _scope_reason(), $cg__input_note = _client_guard($scope0_reason, 8), $cg__input_as = _client_guard($scope0_reason, 5), $wg__input_on__OR__input_bs = _write_guard($scope0_reason, 2), $wi__input_as__OR__input_on__OR__input_bs__OR__input_note = _write_if($scope0_reason, 4), $fg__input_on = _filled_guard($scope0_reason, 6), $fg__input_bs = _filled_guard($scope0_reason, 7), $fg__input_note = _filled_guard($scope0_reason, 8);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = /* @__PURE__ */ new Set();
 	let n = 0;
@@ -60,9 +60,9 @@ var template_default = _template("a", (input) => {
 				_scope_reason();
 				const $scope2_id = _scope_id();
 				_html(`${_text_mark($scope2_id, "a", a, 2, $scope0_reason, 5)}:${_text_mark($scope2_id, "b", b, 2, 4, 0)}:${_text_mark($scope2_id, "c", input.note, 2, $scope0_reason, 8)}`);
-				_unfilled_if($scope0_reason, 8) && _patch_subscribe($scope2_id, "a0", _client_guard($scope0_reason, 8));
+				_unfilled_if($scope0_reason, 8) && _patch_subscribe($scope2_id, "a0", $cg__input_note);
 				_unfilled_if($scope0_reason, 5) && _patch_subscribe($scope2_id, "a1", $cg__input_as);
-				_subscribe(_unfilled_if($scope0_reason, 5) && $for_content__a__closures, _subscribe(_unfilled_if($scope0_reason, 8) && $input_note__closures, _scope($scope2_id, { _: $wi__input_as__OR__input_on__OR__input_bs__OR__input_note && _scope_with_id($scope1_id) })));
+				_subscribe(_unfilled_if($scope0_reason, 5) && $for_content__a__closures, _subscribe(_unfilled_if($scope0_reason, 8) && $input_note__closures, _scope($scope2_id, { _: $wi__input_as__OR__input_on__OR__input_bs__OR__input_note && _scope_with_id($scope1_id) }), $cg__input_note && "a0"), $cg__input_as && "a1");
 			}, $scope1_id, () => [{ 3: b }]) });
 		});
 		_dynamic_tag($scope1_id, "a", input.on ? list_default : list2_default, { item: $item }, 1, 0, 0, $wg__input_on__OR__input_bs, $scope0_reason, 2);

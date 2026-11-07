@@ -52,11 +52,11 @@ var panel_default = _template("e", (input) => {
 // page.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<button class=bonus>bonus</button><!><!>`)("");
 const $walks = /*@__PURE__*/ ((_w0) => `0${_w0}& b%c`)("");
-const $setup = _shell_setup([[], ["a7"]], ["a>", $setup$3]);
+const $setup = _shell_setup([[], ["a8"]], ["a>", $setup$3]);
 _shells({
-	a3: `a3${_shell_marker([["a10"], []], ["a>", $setup$2])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$2)};${$template$2}`,
+	a4: `a4${_shell_marker([["a3"], []], ["a>", $setup$2])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$2)};${$template$2}`,
 	a: `a${_shell_marker($setup)};${((_w0) => `0${_w0}& b%c`)("")};${((_w0) => `${_w0}<button class=bonus>bonus</button><!><!>`)("")}`,
-	a5: `a5${_shell_marker([[], []], ["a>", $setup$1])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1)};${$template$1}`
+	a6: `a6${_shell_marker([[], []], ["a>", $setup$1])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1)};${$template$1}`
 });
 var page_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $cg__input_items = _client_guard($scope0_reason, 0);
@@ -75,7 +75,7 @@ var page_default = _template("a", (input) => {
 		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "xd", item?.n, !_server_guard($scope0_reason, 0));
 		_set_scope_reason(0);
 		const $childScope3 = _peek_scope_id($scope1_id, "a", 2);
-		panel_default({ aside: attrTag({ content: _content("a3", () => {
+		panel_default({ aside: attrTag({ content: _content("a4", () => {
 			_scope_reason();
 			const $scope2_id = _scope_id();
 			_set_scope_reason(6);
@@ -87,21 +87,21 @@ var page_default = _template("a", (input) => {
 			_subscribe(_unfilled_if($scope0_reason, 0) && $for_content__item_n__closures, _subscribe($bonus__closures, _scope($scope2_id, {
 				_: _scope_with_id($scope1_id),
 				a: _existing_scope($childScope2)
-			})));
+			}), "a3", 0), $cg__input_items && "a1", 0);
 			_resume_branch($scope2_id);
 		}, $scope1_id, 0) }) });
 		_patch_child_end();
-		_filled_guard($scope0_reason, 0) && $cg__input_items && _patch_subscribers($scope1_id, "a4", "d");
+		_filled_guard($scope0_reason, 0) && $cg__input_items && _patch_subscribers($scope1_id, "a5", "d");
 		_scope($scope1_id, {
 			d: item?.n,
 			_: _scope_with_id($scope0_id),
 			m: _write_if($scope0_reason, 0) && $for_content__item_n__closures,
 			a: _existing_scope($childScope3)
 		});
-	}, 0, $scope0_id, "d", 1, 1, 1, 0, 0, "a5", $scope0_reason, 0);
-	_fill_global_subscribe("a6", $scope0_id);
-	_script($scope0_id, "a7");
-	$cg__input_items && _patch_subscribers($scope0_id, "a8", "j");
+	}, 0, $scope0_id, "d", 1, 1, 1, 0, 0, "a6", $scope0_reason, 0);
+	_fill_global_subscribe("a7", $scope0_id);
+	_script($scope0_id, "a8");
+	$cg__input_items && _patch_subscribers($scope0_id, "a9", "j");
 	_scope($scope0_id, {
 		h: bonus,
 		j: p?.base,

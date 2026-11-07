@@ -30,7 +30,7 @@ _shells({
 	a5: "a5;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_wrap = _write_guard($scope0_reason, 3), $wi__input_rows__OR__input_wrap__OR__input_suffix = _write_if($scope0_reason, 1), $fg__input_wrap = _filled_guard($scope0_reason, 3), $cg__input_rows = _client_guard($scope0_reason, 2), $fg__input_suffix = _filled_guard($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $cg__input_suffix = _client_guard($scope0_reason, 4), $cg__input_rows = _client_guard($scope0_reason, 2), $wg__input_wrap = _write_guard($scope0_reason, 3), $wi__input_rows__OR__input_wrap__OR__input_suffix = _write_if($scope0_reason, 1), $fg__input_wrap = _filled_guard($scope0_reason, 3), $fg__input_suffix = _filled_guard($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	const $input_suffix__closures = /* @__PURE__ */ new Set();
 	_for_of(input.rows, (row) => {
@@ -40,9 +40,9 @@ var template_default = _template("a", (input) => {
 			const $scope2_id = _scope_id();
 			_scope_reason();
 			_html(`<b>${_text_mark($scope2_id, "a", row.label, 1, $scope0_reason, 2)}${_text_mark($scope2_id, "b", input.suffix, 2, $scope0_reason, 4)}</b>`);
-			_unfilled_if($scope0_reason, 4) && _patch_subscribe($scope2_id, "a1", _client_guard($scope0_reason, 4));
+			_unfilled_if($scope0_reason, 4) && _patch_subscribe($scope2_id, "a1", $cg__input_suffix);
 			_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope2_id, "a2", $cg__input_rows);
-			_subscribe(_unfilled_if($scope0_reason, 2) && $for_content__row_label__closures, _subscribe(_unfilled_if($scope0_reason, 4) && $input_suffix__closures, _scope($scope2_id, { _: $wi__input_rows__OR__input_wrap__OR__input_suffix && _scope_with_id($scope1_id) })));
+			_subscribe(_unfilled_if($scope0_reason, 2) && $for_content__row_label__closures, _subscribe(_unfilled_if($scope0_reason, 4) && $input_suffix__closures, _scope($scope2_id, { _: $wi__input_rows__OR__input_wrap__OR__input_suffix && _scope_with_id($scope1_id) }), $cg__input_suffix && "a1"), $cg__input_rows && "a2");
 		}, $scope1_id, ($scope) => $scope0_page ? [{ f: input.suffix }, {
 			d: row?.label,
 			_: $scope($scope0_id)

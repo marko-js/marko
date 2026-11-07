@@ -32,7 +32,7 @@ _shells({
 	b: `b${_shell_marker($setup)};${((_w0) => `D%b/${_w0}&l`)("b%c")};${((_w0) => `<li><!>${_w0}</li>`)($template$1)}`
 });
 const $content = (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_node_kid = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_node_kid = _client_guard($scope0_reason, 1), $wi__input_node_kid = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_node_kid__closures = /* @__PURE__ */ new Set();
 	_html(`<li>${_text_mark($scope0_id, "a", input.node.name, 1, $scope0_reason, 0)}`);
@@ -47,11 +47,11 @@ const $content = (input) => {
 			const $childScope = _peek_scope_id($scope1_id, "a", 0);
 			$content({ node: input.node.kid });
 			_patch_child_end();
-			_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "b0", _client_guard($scope0_reason, 1));
+			_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "b0", $cg__input_node_kid);
 			_subscribe(_unfilled_if($scope0_reason, 1) && $input_node_kid__closures, _scope($scope1_id, {
 				_: $wi__input_node_kid && _scope_with_id($scope0_id),
 				a: _existing_scope($childScope)
-			}));
+			}), $cg__input_node_kid && "b0", 0);
 			_resume_branch($scope1_id);
 		}, $scope0_id)
 	});

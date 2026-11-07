@@ -58,7 +58,7 @@ _shells({
 	"__tests__/tags/heading.marko": `__tests__/tags/heading.marko${_shell_marker($setup$1)};${((_w0) => `b/${_w0}&b`)("b%c")};${((_w0) => `<!>${_w0}<!>`)($template$2)}`
 });
 var heading_default = _template("__tests__/tags/heading.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_type = _write_guard($scope0_reason, 2), $wi__input_n__OR__input_type = _write_if($scope0_reason, 0), $fg__input_n = _filled_guard($scope0_reason, 1), $fg__input_type = _filled_guard($scope0_reason, 2), $cg__input_n = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_n = _client_guard($scope0_reason, 1), $wg__input_type = _write_guard($scope0_reason, 2), $wi__input_n__OR__input_type = _write_if($scope0_reason, 0), $cg__input_type = _client_guard($scope0_reason, 2), $fg__input_n = _filled_guard($scope0_reason, 1), $fg__input_type = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_n__closures = new Set();
 	const $input_type__closures = new Set();
@@ -75,18 +75,18 @@ var heading_default = _template("__tests__/tags/heading.marko", (input) => {
 				_html(`item ${_text_mark($scope2_id, "#text/0", i, 2, 4, 0)} of ${_text_mark($scope2_id, "#text/1", input.n, 2, $scope0_reason, 1)}`);
 				_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope2_id, "__tests__/tags/heading.marko_2_input_n#0:3/subscribe", $cg__input_n);
 				_unfilled_if() && _patch_subscribe($scope2_id, "__tests__/tags/heading.marko_2_i#1:1/subscribe");
-				_subscribe(_unfilled_if() && $wi__i && $item_content__i__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_n__closures, _scope($scope2_id, { _: ($wi__input_n__OR__input_type || $wi__i) && _scope_with_id($scope1_id) }, "__tests__/tags/heading.marko", "3:15")));
+				_subscribe(_unfilled_if() && $wi__i && $item_content__i__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_n__closures, _scope($scope2_id, { _: ($wi__input_n__OR__input_type || $wi__i) && _scope_with_id($scope1_id) }, "__tests__/tags/heading.marko", "3:15"), $cg__input_n && "__tests__/tags/heading.marko_2_input_n#0:3/subscribe"), "__tests__/tags/heading.marko_2_i#1:1/subscribe");
 			}, $scope1_id, ($scope) => $scope1_page ? [{ input_n: input.n }, {
 				i,
 				_: $scope($scope0_id)
 			}] : []), 0, $wg__input_type, $scope0_reason, 2, 0, void 0, 0, 0, "__tests__/tags/heading.marko_2*content");
 			_patch_subscribers($scope1_id, "__tests__/tags/heading.marko_1_i#1/subscribers", "i");
-			_client_guard($scope0_reason, 2) && _patch_render($scope1_id, "__tests__/tags/heading.marko_1_input_type#0:4/subscribe");
+			$cg__input_type && _patch_render($scope1_id, "__tests__/tags/heading.marko_1_input_type#0:4/subscribe");
 			($wi__input_n__OR__input_type || $wi__i) && _subscribe(_unfilled_if($scope0_reason, 2) && $input_type__closures, _scope($scope1_id, {
 				i: _unfilled_if($scope0_reason, 2) && i,
 				_: $wi__input_n__OR__input_type && _scope_with_id($scope0_id),
 				"ClosureScopes:i/7": $wi__i && $item_content__i__closures
-			}, "__tests__/tags/heading.marko", "3:6", { i: "2:8" }));
+			}, "__tests__/tags/heading.marko", "3:6", { i: "2:8" }), $cg__input_type && "__tests__/tags/heading.marko_1_input_type#0:4/subscribe", $wg__input_type);
 			(_client_branch_if("__tests__/tags/heading.marko_2*content", $scope1_id) || _unfilled_if($scope0_reason, 2)) && _patch_write($scope1_id, "PatchMarkedWrite:i", i);
 			$wg__input_type || ($wi__input_n__OR__input_type || $wi__i) && _resume_branch($scope1_id);
 		}, $scope0_id, 0) });

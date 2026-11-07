@@ -22,7 +22,7 @@ _shells({
 	"__tests__/template.marko_1*shell": `__tests__/template.marko_1*shell${_shell_marker([[], []], ["#childScope/0>", $setup$1])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1)};${$template$1}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_panels = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_panels = _client_guard($scope0_reason, 0), $wi__input_panels = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_for_of(input.panels, (p) => {
 		const $scope1_id = _scope_id();
@@ -35,8 +35,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope2_reason = _scope_reason();
 				const $scope2_id = _scope_id();
 				_html(`<p>${_text_mark($scope2_id, "#text/0", p.text, 1, $scope0_reason, 0)}</p>`);
-				_client_guard($scope0_reason, 0) && _patch_render($scope2_id, "__tests__/template.marko_2_p_text#1:4/subscribe");
-				_subscribe(_unfilled_if($scope0_reason, 0) && $for_content__p_text__closures, _scope($scope2_id, { _: $wi__input_panels && _scope_with_id($scope1_id) }, "__tests__/template.marko", "2:4"));
+				$cg__input_panels && _patch_render($scope2_id, "__tests__/template.marko_2_p_text#1:4/subscribe");
+				_subscribe(_unfilled_if($scope0_reason, 0) && $for_content__p_text__closures, _scope($scope2_id, { _: $wi__input_panels && _scope_with_id($scope1_id) }, "__tests__/template.marko", "2:4"), $cg__input_panels && "__tests__/template.marko_2_p_text#1:4/subscribe");
 			}, $scope1_id, 0)
 		});
 		_patch_child_end();

@@ -18,7 +18,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 		_unfilled_if($scope0_reason, 4) && _patch_subscribe($scope1_id, "__tests__/tags/child.marko_1_input_a#0:3/subscribe");
 		_unfilled_if($scope0_reason, 5) && _patch_subscribe($scope1_id, "__tests__/tags/child.marko_1_input_b#0:4/subscribe");
 		_patch_render($scope1_id, "__tests__/tags/child.marko_1_input_a#0:3_input_b#0:4/setup", [_filled_guard($scope0_reason, 4) && ">input_a", _filled_guard($scope0_reason, 5) && ">input_b"], $scope0_reason, 0);
-		_subscribe(_unfilled_if($scope0_reason, 5) && $input_b__closures, _subscribe(_unfilled_if($scope0_reason, 4) && $input_a__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 3) && _scope_with_id($scope0_id) }, "__tests__/tags/child.marko", "1:2")));
+		_subscribe(_unfilled_if($scope0_reason, 5) && $input_b__closures, _subscribe(_unfilled_if($scope0_reason, 4) && $input_a__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 3) && _scope_with_id($scope0_id) }, "__tests__/tags/child.marko", "1:2"), _client_guard($scope0_reason, 4) && "__tests__/tags/child.marko_1_input_a#0:3/subscribe"), _client_guard($scope0_reason, 5) && "__tests__/tags/child.marko_1_input_b#0:4/subscribe");
 	}, $scope0_id) };
 	_html("<section>");
 	_attr_content("#section/0", $scope0_id, input.mode ? frag.content : null, 0, 1, $scope0_reason, 6);

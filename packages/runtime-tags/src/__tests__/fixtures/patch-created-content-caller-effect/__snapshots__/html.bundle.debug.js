@@ -33,7 +33,7 @@ _shells({
 	"__tests__/tags/child.marko": `__tests__/tags/child.marko${_shell_marker($setup$1)};${((_w0) => `b/${_w0}&b`)("b%c")};${((_w0) => `<!>${_w0}<!>`)($template$2)}`
 });
 var child_default = _template("__tests__/tags/child.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_count = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_count = _client_guard($scope0_reason, 1), $fg__input_count = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_count__closures = new Set();
 	_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 0) << 3);
@@ -45,8 +45,8 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 			const $scope1_id = _scope_id();
 			_html("<p>body</p>");
 			_script($scope1_id, "__tests__/tags/child.marko_1_input_count#0:4", 0, _filled_guard($scope0_reason, 1), ">input_count");
-			_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "__tests__/tags/child.marko_1_input_count#0:4/subscribe", _client_guard($scope0_reason, 1));
-			_subscribe(_unfilled_if($scope0_reason, 1) && $input_count__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/child.marko", "2:4"));
+			_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "__tests__/tags/child.marko_1_input_count#0:4/subscribe", $cg__input_count);
+			_subscribe(_unfilled_if($scope0_reason, 1) && $input_count__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/child.marko", "2:4"), $cg__input_count && "__tests__/tags/child.marko_1_input_count#0:4/subscribe", 0);
 			_resume_branch($scope1_id);
 		}, $scope0_id) })
 	});

@@ -94,7 +94,7 @@ _shells({
 	"__tests__/template.marko": `__tests__/template.marko${_shell_marker($setup)};${((_w0, _w1) => ` D l/${_w0}&/${_w1}&`)("b%c", " b")};${((_w0, _w1) => `<button class=inc> </button>${_w0}${_w1}`)($template$2, $template$1)}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_rows = _filled_guard($scope0_reason, 4), $fg__input_guestText = _filled_guard($scope0_reason, 5), $fg__input_bodyText = _filled_guard($scope0_reason, 7);
+	const $scope0_reason = _scope_reason(), $cg__input_rows = _client_guard($scope0_reason, 4), $cg__input_guestText = _client_guard($scope0_reason, 5), $cg__input_bodyText = _client_guard($scope0_reason, 7), $fg__input_rows = _filled_guard($scope0_reason, 4), $fg__input_guestText = _filled_guard($scope0_reason, 5), $fg__input_bodyText = _filled_guard($scope0_reason, 7);
 	const $scope0_id = _scope_id();
 	const $input_rows__closures = new Set();
 	const $input_guestText__closures = new Set();
@@ -112,19 +112,19 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 			panel_default({ rows: input.rows });
 			_patch_child_end();
-			_unfilled_if($scope0_reason, 4) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_rows#0:7/subscribe", _client_guard($scope0_reason, 4));
+			_unfilled_if($scope0_reason, 4) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_rows#0:7/subscribe", $cg__input_rows);
 			_subscribe(_unfilled_if($scope0_reason, 4) && $input_rows__closures, _scope($scope1_id, {
 				_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id),
 				"#childScope/0": _existing_scope($childScope)
-			}, "__tests__/template.marko", "4:4"));
+			}, "__tests__/template.marko", "4:4"), $cg__input_rows && "__tests__/template.marko_1_input_rows#0:7/subscribe", 0);
 			_resume_branch($scope1_id);
 		}, $scope0_id) }),
 		guest: attrTag({ content: _content_resume("__tests__/template.marko_2*content", () => {
 			const $scope2_reason = _scope_reason();
 			const $scope2_id = _scope_id();
 			_html(`<p>${_text_mark($scope2_id, "#text/0", input.guestText, 1, $scope0_reason, 5)}</p>`);
-			_unfilled_if($scope0_reason, 5) && _patch_subscribe($scope2_id, "__tests__/template.marko_2_input_guestText#0:8/subscribe", _client_guard($scope0_reason, 5));
-			_subscribe(_unfilled_if($scope0_reason, 5) && $input_guestText__closures, _scope($scope2_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "5:4"));
+			_unfilled_if($scope0_reason, 5) && _patch_subscribe($scope2_id, "__tests__/template.marko_2_input_guestText#0:8/subscribe", $cg__input_guestText);
+			_subscribe(_unfilled_if($scope0_reason, 5) && $input_guestText__closures, _scope($scope2_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "5:4"), $cg__input_guestText && "__tests__/template.marko_2_input_guestText#0:8/subscribe");
 		}, $scope0_id) })
 	});
 	_patch_child_end();
@@ -136,8 +136,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope3_reason = _scope_reason();
 			const $scope3_id = _scope_id();
 			_html(`<p>${_text_mark($scope3_id, "#text/0", input.bodyText, 1, $scope0_reason, 7)}</p>`);
-			_unfilled_if($scope0_reason, 7) && _patch_subscribe($scope3_id, "__tests__/template.marko_3_input_bodyText#0:10/subscribe", _client_guard($scope0_reason, 7));
-			_subscribe(_unfilled_if($scope0_reason, 7) && $input_bodyText__closures, _scope($scope3_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "7:2"));
+			_unfilled_if($scope0_reason, 7) && _patch_subscribe($scope3_id, "__tests__/template.marko_3_input_bodyText#0:10/subscribe", $cg__input_bodyText);
+			_subscribe(_unfilled_if($scope0_reason, 7) && $input_bodyText__closures, _scope($scope3_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "7:2"), $cg__input_bodyText && "__tests__/template.marko_3_input_bodyText#0:10/subscribe");
 		}, $scope0_id)
 	});
 	_patch_child_end();

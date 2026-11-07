@@ -45,7 +45,7 @@ var owner_default = _template("__tests__/tags/owner.marko", (input) => {
 					_html(`<p>${_text_mark($scope2_id, "#text/0", input.a + x, 1, (2 | _updates_from($scope0_reason, 5)) << 1, 0)}</p>`);
 					_unfilled_if($scope0_reason, 5) && _patch_subscribe($scope2_id, "__tests__/tags/owner.marko_2_input_a#0:5/subscribe");
 					_patch_render($scope2_id, "__tests__/tags/owner.marko_2_input_a#0:5_x#1:2/setup", [_filled_guard($scope0_reason, 5) && ">>input_a", ">x"], (2 | _updates_from($scope0_reason, 5)) << 1, 0);
-					_subscribe(_unfilled_if($scope0_reason, 5) && $input_a__closures, _scope($scope2_id, { _: ($wi__input_x__OR__input_show__OR__input_a || $wi__x) && _scope_with_id($scope1_id) }, "__tests__/tags/owner.marko", "2:4"));
+					_subscribe(_unfilled_if($scope0_reason, 5) && $input_a__closures, _scope($scope2_id, { _: ($wi__input_x__OR__input_show__OR__input_a || $wi__x) && _scope_with_id($scope1_id) }, "__tests__/tags/owner.marko", "2:4"), _client_guard($scope0_reason, 5) && "__tests__/tags/owner.marko_2_input_a#0:5/subscribe");
 					return 0;
 				}
 			}, $scope1_id, "#text/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/tags/owner.marko_2*shell"], $scope0_reason, 4);
@@ -54,7 +54,7 @@ var owner_default = _template("__tests__/tags/owner.marko", (input) => {
 			($wi__input_x__OR__input_show__OR__input_a || $wi__x) && _subscribe(_unfilled_if($scope0_reason, 4) && $input_show__closures, _scope($scope1_id, {
 				x: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 5)) && x,
 				_: _scope_with_id($scope0_id)
-			}, "__tests__/tags/owner.marko", "1:2", { x: "1:10" }));
+			}, "__tests__/tags/owner.marko", "1:2", { x: "1:10" }), $cg__input_show && "__tests__/tags/owner.marko_1_input_show#0:4/subscribe", $wg__input_show);
 			$wg__input_show || ($wi__input_x__OR__input_show__OR__input_a || $wi__x) && _resume_branch($scope1_id);
 		}, $scope0_id)
 	});

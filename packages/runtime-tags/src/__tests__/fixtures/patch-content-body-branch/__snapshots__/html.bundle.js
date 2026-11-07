@@ -21,7 +21,7 @@ _shells({
 	a5: "a5;Db%;<strong>B:<!></strong>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_note = _client_guard($scope0_reason, 6), $wi__input_show__OR__input_alt__OR__input_note = _write_if($scope0_reason, 1), $wg__input_alt = _write_guard($scope0_reason, 5), $wg__input_show = _write_guard($scope0_reason, 3), $fg__input_title = _filled_guard($scope0_reason, 4), $fg__input_alt = _filled_guard($scope0_reason, 5), $cg__input_show = _client_guard($scope0_reason, 3), $fg__input_note = _filled_guard($scope0_reason, 6), $cg__input_alt = _client_guard($scope0_reason, 5), $wi__input_note = _write_if($scope0_reason, 6);
+	const $scope0_reason = _scope_reason(), $cg__input_note = _client_guard($scope0_reason, 6), $wi__input_show__OR__input_alt__OR__input_note = _write_if($scope0_reason, 1), $wg__input_alt = _write_guard($scope0_reason, 5), $cg__input_alt = _client_guard($scope0_reason, 5), $wg__input_show = _write_guard($scope0_reason, 3), $fg__input_title = _filled_guard($scope0_reason, 4), $fg__input_alt = _filled_guard($scope0_reason, 5), $cg__input_show = _client_guard($scope0_reason, 3), $fg__input_note = _filled_guard($scope0_reason, 6), $wi__input_note = _write_if($scope0_reason, 6);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = /* @__PURE__ */ new Set();
 	const $input_alt__closures = /* @__PURE__ */ new Set();
@@ -41,7 +41,7 @@ var template_default = _template("a", (input) => {
 							const $scope3_id = _scope_id();
 							_html(`<em>A:${_text_mark($scope3_id, "a", input.note, 2, $scope0_reason, 6)}</em>`);
 							$cg__input_note && _patch_render($scope3_id, "a0");
-							_subscribe(_unfilled_if($scope0_reason, 6) && $input_note__closures, _scope($scope3_id, { _: $wi__input_show__OR__input_alt__OR__input_note && _scope_with_id($scope2_id) }));
+							_subscribe(_unfilled_if($scope0_reason, 6) && $input_note__closures, _scope($scope3_id, { _: $wi__input_show__OR__input_alt__OR__input_note && _scope_with_id($scope2_id) }), $cg__input_note && "a0");
 							return 0;
 						} else {
 							const $scope4_id = _scope_id();
@@ -50,12 +50,12 @@ var template_default = _template("a", (input) => {
 							_subscribe(_unfilled_if($scope0_reason, 6) && $input_note__closures, _scope($scope4_id, {
 								_: $wi__input_show__OR__input_alt__OR__input_note && _scope_with_id($scope2_id),
 								Cj: $wi__input_note && 1
-							}));
+							}), $cg__input_note && "a1");
 							return 1;
 						}
 					}, $scope2_id, "a", 1, $wg__input_alt, 1, 0, 0, ["a2", "a5"], $scope0_reason, 5);
 					$cg__input_alt && _patch_render($scope2_id, "a6");
-					$wi__input_show__OR__input_alt__OR__input_note && _subscribe(_unfilled_if($scope0_reason, 5) && $input_alt__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }));
+					$wi__input_show__OR__input_alt__OR__input_note && _subscribe(_unfilled_if($scope0_reason, 5) && $input_alt__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), $cg__input_alt && "a6", $wg__input_alt);
 					$wg__input_alt || $wi__input_show__OR__input_alt__OR__input_note && _resume_branch($scope2_id);
 				}, $scope1_id, 0)
 			});

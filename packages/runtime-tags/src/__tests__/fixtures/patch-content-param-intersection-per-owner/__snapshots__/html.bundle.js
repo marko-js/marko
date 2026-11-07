@@ -39,7 +39,7 @@ var owner_default = _template("b", (input) => {
 			_subscribe(_unfilled_if($scope0_reason, 2) && $input_a__closures, _scope($scope1_id, {
 				c: _unfilled_if($scope0_reason, 2) && x,
 				_: (_write_if($scope0_reason, 0) || _write_if($scope1_reason, 0)) && _scope_with_id($scope0_id)
-			}));
+			}), _client_guard($scope0_reason, 2) && "b0");
 		}, $scope0_id)
 	});
 	_patch_child_end();

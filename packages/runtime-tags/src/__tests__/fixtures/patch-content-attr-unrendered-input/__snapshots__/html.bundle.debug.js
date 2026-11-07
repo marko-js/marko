@@ -7,7 +7,7 @@ _shells({
 	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0; D l ;<button class=inc> </button><section></section>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_rec_name = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_rec_name = _client_guard($scope0_reason, 1), $fg__input_rec_name = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_rec_name__closures = new Set();
 	let n = 0;
@@ -16,8 +16,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
 		_html(`<em>${_text_mark($scope1_id, "#text/0", input.rec.name, 1, $scope0_reason, 1)}</em>`);
-		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_rec_name#0:6/subscribe", _client_guard($scope0_reason, 1));
-		_subscribe(_unfilled_if($scope0_reason, 1) && $input_rec_name__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:2"));
+		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_rec_name#0:6/subscribe", $cg__input_rec_name);
+		_subscribe(_unfilled_if($scope0_reason, 1) && $input_rec_name__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:2"), $cg__input_rec_name && "__tests__/template.marko_1_input_rec_name#0:6/subscribe");
 	}, $scope0_id) };
 	_html("<section>");
 	_attr_content("#section/2", $scope0_id, input.on ? frag.content : null, 0, 1, $scope0_reason, 2);

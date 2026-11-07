@@ -115,7 +115,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_: _scope_with_id($scope0_id),
 				"ClosureSignalIndex:input_label/9": $wi__input_label && 1,
 				"ClosureSignalIndex:count/10": 1
-			}, "__tests__/template.marko", "7:4")));
+			}, "__tests__/template.marko", "7:4"), $cg__input_label && "__tests__/template.marko_2_input_label#0:7/subscribe"), "__tests__/template.marko_2_count#0:8/subscribe");
 		}, $scope0_id) })
 	});
 	_patch_child_end();

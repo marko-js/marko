@@ -39,7 +39,7 @@ _shells({
 	a: `a${_shell_marker($setup)};${((_w0) => `/${_w0}& b`)("D%l")};${((_w0) => `${_w0}<button>+</button>`)($template)}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_label = _write_if($scope0_reason, 0), $cg__input_label = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 0), $wi__input_label = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	const $open__closures = /* @__PURE__ */ new Set();
@@ -61,7 +61,7 @@ var template_default = _template("a", (input) => {
 				const $scope2_id = _scope_id();
 				_html(`<p>${_text_mark($scope2_id, "a", label, 1, $scope0_reason, 0)}</p>`);
 				_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope2_id, "a0", $cg__input_label);
-				_subscribe(_unfilled_if($scope0_reason, 0) && $wrapper_content__label__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }));
+				_subscribe(_unfilled_if($scope0_reason, 0) && $wrapper_content__label__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), $cg__input_label && "a0");
 			}, $scope1_id)
 		});
 		_patch_child_end();

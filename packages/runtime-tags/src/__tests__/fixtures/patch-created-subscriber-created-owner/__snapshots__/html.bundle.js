@@ -17,13 +17,13 @@ function boom(error) {
 }
 const $setup = [[], []];
 _shells({
-	c4: "c4;D ;<p> </p>",
-	c1: "c1",
-	c3: `c3${_shell_marker([[], []], ["a>", $setup$1])}`,
+	c5: "c5;D ;<p> </p>",
+	c2: "c2",
+	c4: `c4${_shell_marker([[], []], ["a>", $setup$1])}`,
 	c: "c;b%;<!><!><!>"
 });
 var child_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_error = _client_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 0), $wi__input_error = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 0), $cg__input_error = _client_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 0), $wi__input_error = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	const $input_error__closures = /* @__PURE__ */ new Set();
@@ -31,20 +31,20 @@ var child_default = _template("c", (input) => {
 		_scope_reason();
 		const $scope3_id = _scope_id();
 		_html(`<p>${_text_mark($scope3_id, "a", input.error ? boom(input.error) : "ok", 1, $scope0_reason, 1)}</p>`);
-		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope3_id, "c2", $cg__input_error);
-		_subscribe(_unfilled_if($scope0_reason, 1) && $input_error__closures, _scope($scope3_id, { _: $wi__input_error && _scope_with_id($scope0_id) }), $cg__input_error && "c2");
+		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope3_id, "c3", $cg__input_error);
+		_subscribe(_unfilled_if($scope0_reason, 1) && $input_error__closures, _scope($scope3_id, { _: $wi__input_error && _scope_with_id($scope0_id) }), $cg__input_error && "c3");
 	}, void 0, (err) => {
 		const $scope1_reason = _scope_reason(), $wi__err_message = _write_if($scope1_reason, 0);
 		const $scope1_id = _scope_id();
 		const $catch_content__err_message__closures = /* @__PURE__ */ new Set();
 		_set_scope_reason(0);
 		const $childScope = _peek_scope_id($scope1_id, "a", 0);
-		box_default({ content: _content("c1", () => {
+		box_default({ content: _content("c2", () => {
 			_scope_reason();
 			const $scope2_id = _scope_id();
 			_html(`<span>${_text_mark($scope2_id, "a", err.message, 1, 4, 0)} ${_text_mark($scope2_id, "b", input.label, 2, $scope0_reason, 0)}</span>`);
-			_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope2_id, "c0", _client_guard($scope0_reason, 0));
-			_subscribe(_unfilled_if() && $wi__err_message && $catch_content__err_message__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) })));
+			_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope2_id, "c0", $cg__input_label);
+			_subscribe(_unfilled_if() && $wi__err_message && $catch_content__err_message__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), $cg__input_label && "c0"), "c1");
 		}, $scope1_id, 0) });
 		_patch_child_end();
 		_scope($scope1_id, {
@@ -52,8 +52,8 @@ var child_default = _template("c", (input) => {
 			h: $wi__err_message && _unfilled_if($scope1_reason, 0) && $catch_content__err_message__closures,
 			a: _existing_scope($childScope)
 		});
-	}, 0, "c3", "c4", 1, 1, 1);
-	$fg__input_label && _patch_subscribers($scope0_id, "c5", "d");
+	}, 0, "c4", "c5", 1, 1, 1);
+	$fg__input_label && _patch_subscribers($scope0_id, "c6", "d");
 	_scope($scope0_id, {
 		d: input.label,
 		f: _write_if($scope0_reason, 0) && $input_label__closures,

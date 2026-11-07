@@ -56,7 +56,7 @@ _shells({
 	"__tests__/template.marko_8*shell": "__tests__/template.marko_8*shell,"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_items = _server_guard($scope0_reason, 4), $scope0_page = _page_render(), $wi__input_items = _write_if($scope0_reason, 4), $cg__input_items = _client_guard($scope0_reason, 4), $fg__input_items = _filled_guard($scope0_reason, 4), $fg__input_nested = _filled_guard($scope0_reason, 5), $cg__input_show = _client_guard($scope0_reason, 3), $fg__input_tag = _filled_guard($scope0_reason, 6);
+	const $scope0_reason = _scope_reason(), $sg__input_items = _server_guard($scope0_reason, 4), $cg__input_items = _client_guard($scope0_reason, 4), $scope0_page = _page_render(), $wi__input_items = _write_if($scope0_reason, 4), $fg__input_items = _filled_guard($scope0_reason, 4), $fg__input_nested = _filled_guard($scope0_reason, 5), $cg__input_show = _client_guard($scope0_reason, 3), $fg__input_tag = _filled_guard($scope0_reason, 6);
 	const $scope0_id = _scope_id();
 	const $input_items__closures = new Set();
 	let count = 0;
@@ -106,7 +106,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				}, 0, $scope2_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/template.marko_7*shell", $scope0_reason, 4);
 				_script($scope2_id, "__tests__/template.marko_2");
 				$cg__input_items && _patch_render($scope2_id, "__tests__/template.marko_2_input_items#0:6/subscribe");
-				_subscribe($wi__input_items && $input_items__closures, _scope($scope2_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope1_id) }, "__tests__/template.marko", "20:6"));
+				_subscribe($wi__input_items && $input_items__closures, _scope($scope2_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope1_id) }, "__tests__/template.marko", "20:6"), $cg__input_items && "__tests__/template.marko_2_input_items#0:6/subscribe");
 			}, $scope1_id, 0) }) });
 			_patch_child_end();
 			_dynamic_tag($scope1_id, "#text/5", input.tag, {}, 34, _content_resume("__tests__/template.marko_3*content", () => {
@@ -127,7 +127,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					_: _write_if($scope0_reason, 2) && _scope_with_id($scope1_id),
 					"#childScope/0": _existing_scope($childScope4),
 					"ClosureSignalIndex:input_items/10": $wi__input_items && 1
-				}, "__tests__/template.marko", "28:6"));
+				}, "__tests__/template.marko", "28:6"), $cg__input_items && "__tests__/template.marko_3_input_items#0:6/subscribe");
 			}, $scope1_id, ($scope) => $scope0_page ? [{ input_items: input.items }, { _: $scope($scope0_id) }] : []), 0, _write_guard($scope0_reason, 6), $scope0_reason, 6, 0, void 0, 0, 0, "__tests__/template.marko_3*content");
 			_script($scope1_id, "__tests__/template.marko_1_count#0:9");
 			_script($scope1_id, "__tests__/template.marko_1");

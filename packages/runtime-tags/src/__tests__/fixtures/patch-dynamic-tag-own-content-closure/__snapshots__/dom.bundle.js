@@ -1,5 +1,5 @@
 // template.marko
-const $Content_content__n = /*@__PURE__*/ _closure_get_patch("a6", 10, ($scope) => _text($scope.d, $scope._.h));
+const $Content_content__n = /*@__PURE__*/ _closure_get_patch("a3", 10, ($scope) => _text($scope.d, $scope._.h));
 const $Content_content__count = /*@__PURE__*/ _fill_let("a2", 7, ($scope) => _text($scope.c, $scope.h));
 const $Content_content__setup__script = _script("a1", ($scope) => _on($scope.a, "click", function() {
 	$Content_content__count($scope, +$scope.h + 1);
@@ -16,6 +16,6 @@ const $n = _let(7, ($scope) => {
 	_text($scope.c, $scope.h);
 	$n__closure($scope);
 });
-const $setup__script = _script("a3", ($scope) => _on($scope.b, "click", function() {
+const $setup__script = _script("a4", ($scope) => _on($scope.b, "click", function() {
 	$n($scope, +$scope.h + 1);
 }));

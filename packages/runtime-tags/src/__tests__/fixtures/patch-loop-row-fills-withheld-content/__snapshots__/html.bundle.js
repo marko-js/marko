@@ -30,7 +30,7 @@ _shells({
 	a3: `a3${_shell_marker([["a7"], []], ["a>", $setup])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)(" b")};${$template}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $cg__input_panels = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let open = true;
 	_html(`<button>toggle</button>${_el_mark($scope0_id, "a")}`);
@@ -46,8 +46,8 @@ var template_default = _template("a", (input) => {
 				_scope_reason();
 				const $scope2_id = _scope_id();
 				_html(`<p>${_text_mark($scope2_id, "a", p.text, 1, $scope0_reason, 0)}</p>`);
-				_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope2_id, "a0", _client_guard($scope0_reason, 0));
-				_subscribe(_unfilled_if($scope0_reason, 0) && $for_content__p_text__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }));
+				_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope2_id, "a0", $cg__input_panels);
+				_subscribe(_unfilled_if($scope0_reason, 0) && $for_content__p_text__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), $cg__input_panels && "a0");
 			}, $scope1_id)
 		});
 		_patch_child_end();

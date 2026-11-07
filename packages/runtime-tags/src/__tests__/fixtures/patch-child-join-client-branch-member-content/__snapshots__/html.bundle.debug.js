@@ -8,7 +8,7 @@ _shells({
 	"__tests__/tags/child.marko_1*shell": "__tests__/tags/child.marko_1*shell;D ;<p> </p>"
 });
 var child_default = _template("__tests__/tags/child.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_a = _filled_guard($scope0_reason, 5), $fg__input_b = _filled_guard($scope0_reason, 6), $cg__input_show = _client_guard($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $cg__input_a = _client_guard($scope0_reason, 5), $fg__input_a = _filled_guard($scope0_reason, 5), $fg__input_b = _filled_guard($scope0_reason, 6), $cg__input_show = _client_guard($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	const $input_a__closures = new Set();
 	_if(() => {
@@ -24,8 +24,8 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason();
 		_html(`<em>${_text_mark($scope2_id, "#text/0", input.a, 1, $scope0_reason, 5)}</em>`);
-		_unfilled_if($scope0_reason, 5) && _patch_subscribe($scope2_id, "__tests__/tags/child.marko_2_input_a#0:5/subscribe", _client_guard($scope0_reason, 5));
-		_subscribe(_unfilled_if($scope0_reason, 5) && $input_a__closures, _scope($scope2_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id) }, "__tests__/tags/child.marko", "4:2"));
+		_unfilled_if($scope0_reason, 5) && _patch_subscribe($scope2_id, "__tests__/tags/child.marko_2_input_a#0:5/subscribe", $cg__input_a);
+		_subscribe(_unfilled_if($scope0_reason, 5) && $input_a__closures, _scope($scope2_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id) }, "__tests__/tags/child.marko", "4:2"), $cg__input_a && "__tests__/tags/child.marko_2_input_a#0:5/subscribe");
 	}, $scope0_id) };
 	_html("<section>");
 	_attr_content("#section/1", $scope0_id, input.mode ? frag.content : null, 0, 1, $scope0_reason, 7);

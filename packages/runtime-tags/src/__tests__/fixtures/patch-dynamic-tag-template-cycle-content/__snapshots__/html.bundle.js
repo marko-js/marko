@@ -32,7 +32,7 @@ _shells({
 	c: `c${_shell_marker($setup$1)};${((_w0) => `D%b/${_w0}&l`)("b%c")};${((_w0) => `<div><!>${_w0}</div>`)($template$1)}`
 });
 var tree_b_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_node_kid = _write_guard($scope0_reason, 1), $wi__input_node_kid = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_node_kid = _write_guard($scope0_reason, 1), $cg__input_node_kid = _client_guard($scope0_reason, 1), $wi__input_node_kid = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_node_kid__closures = /* @__PURE__ */ new Set();
 	_html(`<div>${_text_mark($scope0_id, "a", input.node.name, 1, $scope0_reason, 0)}`);
@@ -44,8 +44,8 @@ var tree_b_default = _template("c", (input) => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
 			_dynamic_tag($scope1_id, "a", tree_a_default, { node: input.node.kid }, 1, 0, 0, $wg__input_node_kid, $scope0_reason, 1);
-			_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "c0", _client_guard($scope0_reason, 1));
-			$wi__input_node_kid && _subscribe(_unfilled_if($scope0_reason, 1) && $input_node_kid__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
+			_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "c0", $cg__input_node_kid);
+			$wi__input_node_kid && _subscribe(_unfilled_if($scope0_reason, 1) && $input_node_kid__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), $cg__input_node_kid && "c0", $wg__input_node_kid);
 		}, $scope0_id)
 	});
 	_patch_child_end();
@@ -63,7 +63,7 @@ _shells({
 	b: `b${_shell_marker($setup)};${((_w0) => `D%b/${_w0}&l`)("b%c")};${((_w0) => `<li><!>${_w0}</li>`)($template$1)}`
 });
 var tree_a_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_node_kid = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_node_kid = _client_guard($scope0_reason, 1), $wi__input_node_kid = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_node_kid__closures = /* @__PURE__ */ new Set();
 	_html(`<li>${_text_mark($scope0_id, "a", input.node.name, 1, $scope0_reason, 0)}`);
@@ -78,11 +78,11 @@ var tree_a_default = _template("b", (input) => {
 			const $childScope = _peek_scope_id($scope1_id, "a", 0);
 			tree_b_default({ node: input.node.kid });
 			_patch_child_end();
-			_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "b0", _client_guard($scope0_reason, 1));
+			_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "b0", $cg__input_node_kid);
 			_subscribe(_unfilled_if($scope0_reason, 1) && $input_node_kid__closures, _scope($scope1_id, {
 				_: $wi__input_node_kid && _scope_with_id($scope0_id),
 				a: _existing_scope($childScope)
-			}));
+			}), $cg__input_node_kid && "b0", 0);
 			_resume_branch($scope1_id);
 		}, $scope0_id)
 	});

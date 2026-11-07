@@ -66,7 +66,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 						}
 					}, $scope2_id, "#text/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/tags/child.marko_3*shell"], $scope0_reason, 1);
 					_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope2_id, "__tests__/tags/child.marko_2_s#1:2/subscribe", $cg__input_show);
-					_subscribe(_unfilled_if($scope0_reason, 1) && $if_content__s__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/child.marko", "7:8"));
+					_subscribe(_unfilled_if($scope0_reason, 1) && $if_content__s__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/child.marko", "7:8"), $cg__input_show && "__tests__/tags/child.marko_2_s#1:2/subscribe", $wg__input_show);
 					$wg__input_show || _resume_branch($scope2_id);
 				}, $scope1_id, 0) });
 			});

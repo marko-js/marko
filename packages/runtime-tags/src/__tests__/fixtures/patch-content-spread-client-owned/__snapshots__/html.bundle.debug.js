@@ -8,7 +8,7 @@ _shells({
 	"__tests__/tags/frag-host.marko": "__tests__/tags/frag-host.marko !__tests__/tags/frag-host.marko_0_divAttrs#10 __tests__/tags/frag-host.marko_0_sectionAttrs#9; b ;<section></section><div id=partial></div>"
 });
 var frag_host_default = _template("__tests__/tags/frag-host.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_b = _filled_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_b = _client_guard($scope0_reason, 0), $fg__input_b = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_b__closures = new Set();
 	const one = { content: _content_resume("__tests__/tags/frag-host.marko_2*content", () => {
@@ -20,8 +20,8 @@ var frag_host_default = _template("__tests__/tags/frag-host.marko", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
 		_html(`<strong>${_text_mark($scope1_id, "#text/0", input.b, 1, $scope0_reason, 0)}</strong>`);
-		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "__tests__/tags/frag-host.marko_1_input_b#0:4/subscribe", _client_guard($scope0_reason, 0));
-		_subscribe(_unfilled_if($scope0_reason, 0) && $input_b__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/frag-host.marko", "2:2"));
+		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "__tests__/tags/frag-host.marko_1_input_b#0:4/subscribe", $cg__input_b);
+		_subscribe(_unfilled_if($scope0_reason, 0) && $input_b__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/frag-host.marko", "2:2"), $cg__input_b && "__tests__/tags/frag-host.marko_1_input_b#0:4/subscribe");
 	}, $scope0_id) };
 	const sectionAttrs = { content: input.mode ? one : two };
 	_html("<section");

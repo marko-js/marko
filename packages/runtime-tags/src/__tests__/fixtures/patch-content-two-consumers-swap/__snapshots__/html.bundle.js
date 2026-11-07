@@ -51,7 +51,7 @@ var template_default = _template("a", (input) => {
 					_subscribe(_unfilled_if($scope0_reason, 3) && $input_note__closures, _scope($scope3_id, {
 						_: _write_if($scope0_reason, 0) && _scope_with_id($scope2_id),
 						Ci: $wi__input_note && 1
-					}));
+					}), $cg__input_note && "a2");
 				}, $scope2_id, 0)
 			});
 			_patch_child_end();

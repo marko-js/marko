@@ -21,15 +21,15 @@ _shells({
 	"__tests__/template.marko": "__tests__/template.marko;b%;<!><!><!>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_wrap = _write_guard($scope0_reason, 1), $fg__input_x = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $cg__input_x = _client_guard($scope0_reason, 2), $wg__input_wrap = _write_guard($scope0_reason, 1), $fg__input_x = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_x__closures = new Set();
 	_dynamic_tag($scope0_id, "#text/0", input.wrap ? outer_default : "div", {}, 2, _content_resume("__tests__/template.marko_1*content", () => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
 		_html(`body ${_text_mark($scope1_id, "#text/0", input.x, 2, $scope0_reason, 2)}`);
-		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_x#0:4/subscribe", _client_guard($scope0_reason, 2));
-		_subscribe(_unfilled_if($scope0_reason, 2) && $input_x__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4"));
+		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_x#0:4/subscribe", $cg__input_x);
+		_subscribe(_unfilled_if($scope0_reason, 2) && $input_x__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4"), $cg__input_x && "__tests__/template.marko_1_input_x#0:4/subscribe");
 	}, $scope0_id, ($scope) => $scope0_page ? [{ input_x: input.x }] : []), 0, $wg__input_wrap, $scope0_reason, 1, 0, void 0, 0, 0, "__tests__/template.marko_1*content");
 	$fg__input_x && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_x#4/subscribers", "input_x");
 	_scope($scope0_id, {

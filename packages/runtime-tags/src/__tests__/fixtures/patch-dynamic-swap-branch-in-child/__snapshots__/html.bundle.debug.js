@@ -12,7 +12,7 @@ _shells({
 	"__tests__/tags/w.marko_6*shell": "__tests__/tags/w.marko_6*shell,<i>no</i>"
 });
 var w_default = _template("__tests__/tags/w.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 2), $wi__input_show = _write_if($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 2), $wi__input_show__OR__input_flag__OR__input_x = _write_if($scope0_reason, 1), $wg__input_flag__OR__input_x = _write_guard($scope0_reason, 0), $fg__input_show = _filled_guard($scope0_reason, 2), $fg__input_flag = _filled_guard($scope0_reason, 3), $fg__input_x = _filled_guard($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 2), $wi__input_show = _write_if($scope0_reason, 2), $wi__input_show__OR__input_flag__OR__input_x = _write_if($scope0_reason, 1), $wg__input_flag__OR__input_x = _write_guard($scope0_reason, 0), $fg__input_show = _filled_guard($scope0_reason, 2), $fg__input_flag = _filled_guard($scope0_reason, 3), $fg__input_x = _filled_guard($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	const $input_show__closures = new Set();
 	const A = { content: _content_resume("__tests__/tags/w.marko_1*content", ({ x }) => {
@@ -38,7 +38,7 @@ var w_default = _template("__tests__/tags/w.marko", (input) => {
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_show__closures, _scope($scope1_id, {
 			x,
 			_: $wi__input_show__OR__input_flag__OR__input_x && _scope_with_id($scope0_id)
-		}, "__tests__/tags/w.marko", "1:2", { x: "1:13" }));
+		}, "__tests__/tags/w.marko", "1:2", { x: "1:13" }), $cg__input_show && "__tests__/tags/w.marko_1_input_show#0:3/subscribe", $wg__input_show);
 		$wg__input_show || _resume_branch($scope1_id);
 	}, $scope0_id) };
 	const B = { content: _content_resume("__tests__/tags/w.marko_2*content", ({ x }) => {
@@ -65,7 +65,7 @@ var w_default = _template("__tests__/tags/w.marko", (input) => {
 			x,
 			_: $wi__input_show__OR__input_flag__OR__input_x && _scope_with_id($scope0_id),
 			"ClosureSignalIndex:input_show/9": $wi__input_show && 1
-		}, "__tests__/tags/w.marko", "8:2", { x: "8:13" }));
+		}, "__tests__/tags/w.marko", "8:2", { x: "8:13" }), $cg__input_show && "__tests__/tags/w.marko_2_input_show#0:3/subscribe", $wg__input_show);
 		$wg__input_show || _resume_branch($scope2_id);
 	}, $scope0_id) };
 	_dynamic_tag($scope0_id, "#text/0", input.flag ? A : B, { x: input.x }, 1, 0, 0, $wg__input_flag__OR__input_x, $scope0_reason, 0);

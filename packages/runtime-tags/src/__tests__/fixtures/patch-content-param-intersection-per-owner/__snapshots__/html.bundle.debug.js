@@ -43,7 +43,7 @@ var owner_default = _template("__tests__/tags/owner.marko", (input) => {
 			_subscribe(_unfilled_if($scope0_reason, 2) && $input_a__closures, _scope($scope1_id, {
 				x: _unfilled_if($scope0_reason, 2) && x,
 				_: (_write_if($scope0_reason, 0) || _write_if($scope1_reason, 0)) && _scope_with_id($scope0_id)
-			}, "__tests__/tags/owner.marko", "1:2", { x: "1:10" }));
+			}, "__tests__/tags/owner.marko", "1:2", { x: "1:10" }), _client_guard($scope0_reason, 2) && "__tests__/tags/owner.marko_1_input_a#0:4/subscribe");
 		}, $scope0_id)
 	});
 	_patch_child_end();

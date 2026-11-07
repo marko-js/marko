@@ -71,7 +71,7 @@ var template_default = _template("a", (input) => {
 			_subscribe(_unfilled_if($scope0_reason, 3) && $input_text__closures, _scope($scope2_id, {
 				_: $wi__input_rows__OR__input_text && _scope_with_id($scope0_id),
 				Cg: $wi__input_text && 1
-			}));
+			}), $cg__input_text && "a1");
 		}, $scope0_id) }),
 		content: _content_resume("a5", () => {
 			_scope_reason();
@@ -81,7 +81,7 @@ var template_default = _template("a", (input) => {
 			_subscribe(_unfilled_if($scope0_reason, 3) && $input_text__closures, _scope($scope3_id, {
 				_: $wi__input_rows__OR__input_text && _scope_with_id($scope0_id),
 				Cg: $wi__input_text && 2
-			}));
+			}), $cg__input_text && "a2");
 		}, $scope0_id)
 	});
 	_patch_child_end();

@@ -45,10 +45,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 						const $scope4_id = _scope_id();
 						_html(`<em>${_text_mark($scope4_id, "#text/0", input.value, 1, $scope0_reason, 2)}</em>`);
 						$cg__input_value && _patch_render($scope4_id, "__tests__/template.marko_4_input_value#0:4/subscribe");
-						_subscribe(_unfilled_if($scope0_reason, 2) && $input_value__closures, _scope($scope4_id, { "ClosureSignalIndex:input_value/5": $wi__input_value && 1 }, "__tests__/template.marko", "5:10"));
+						_subscribe(_unfilled_if($scope0_reason, 2) && $input_value__closures, _scope($scope4_id, { "ClosureSignalIndex:input_value/5": $wi__input_value && 1 }, "__tests__/template.marko", "5:10"), $cg__input_value && "__tests__/template.marko_4_input_value#0:4/subscribe");
 					}, 1, "__tests__/template.marko_4*content", _unfilled_if($scope0_reason, 2) && 3);
 					$cg__input_value && _patch_render($scope3_id, "__tests__/template.marko_3_input_value#0:4/subscribe");
-					$wi__input_show__OR__input_value && _subscribe(_unfilled_if($scope0_reason, 2) && $input_value__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "4:8"));
+					$wi__input_show__OR__input_value && _subscribe(_unfilled_if($scope0_reason, 2) && $input_value__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "4:8"), $cg__input_value && "__tests__/template.marko_3_input_value#0:4/subscribe", 0);
 					$wi__input_show__OR__input_value && _resume_branch($scope3_id);
 				}, () => {
 					const $scope5_reason = _scope_reason();

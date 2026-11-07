@@ -1,5 +1,5 @@
 // PATCH
-[`b2 b10;b%;<!><!><!>`, `b0;D ;<p> </p>`, `a2 !a>b6;/D/D%l& l&;<main><section><!></section><button>toggle</button></main>`]
+[`b2 b6;b%;<!><!><!>`, `b0;D ;<p> </p>`, `a2 !a>b7;/D/D%l& l&;<main><section><!></section><button>toggle</button></main>`]
 {
   ba: [{
     ca: {
@@ -13,7 +13,7 @@
         }
       },
       o: {
-        vb7: !1
+        vb8: !1
       },
       xe: "a2",
       xf: "a1"
@@ -36,7 +36,7 @@
         }
       },
       o: {
-        vb7: !1
+        vb8: !1
       },
       xe: "b2",
       xf: "b1"

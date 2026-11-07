@@ -11,7 +11,7 @@ _shells({
 	"__tests__/template.marko_7*shell": "__tests__/template.marko_7*shell;b%;<!><!><!>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_on = _write_guard($scope0_reason, 3), $fg__input_a = _filled_guard($scope0_reason, 4), $fg__input_b = _filled_guard($scope0_reason, 5);
+	const $scope0_reason = _scope_reason(), $cg__input_a = _client_guard($scope0_reason, 4), $cg__input_b = _client_guard($scope0_reason, 5), $scope0_page = _page_render(), $wg__input_on = _write_guard($scope0_reason, 3), $fg__input_a = _filled_guard($scope0_reason, 4), $fg__input_b = _filled_guard($scope0_reason, 5);
 	const $scope0_id = _scope_id();
 	const $input_a__closures = new Set();
 	const $input_b__closures = new Set();
@@ -59,14 +59,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_reason = _scope_reason();
 		const $scope1_id = _scope_id();
 		_html(`<em>${_text_mark($scope1_id, "#text/0", input.a, 1, $scope0_reason, 4)}</em>`);
-		_unfilled_if($scope0_reason, 4) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_a#0:4/subscribe", _client_guard($scope0_reason, 4));
-		_subscribe(_unfilled_if($scope0_reason, 4) && $input_a__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "11:6"));
+		_unfilled_if($scope0_reason, 4) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_a#0:4/subscribe", $cg__input_a);
+		_subscribe(_unfilled_if($scope0_reason, 4) && $input_a__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "11:6"), $cg__input_a && "__tests__/template.marko_1_input_a#0:4/subscribe");
 	}, $scope0_id, ($scope) => $scope0_page ? [{ input_a: input.a }] : []) }), { content: _content_resume("__tests__/template.marko_2*content", () => {
 		const $scope2_reason = _scope_reason();
 		const $scope2_id = _scope_id();
 		_html(`<b>${_text_mark($scope2_id, "#text/0", input.b, 1, $scope0_reason, 5)}</b>`);
-		_unfilled_if($scope0_reason, 5) && _patch_subscribe($scope2_id, "__tests__/template.marko_2_input_b#0:5/subscribe", _client_guard($scope0_reason, 5));
-		_subscribe(_unfilled_if($scope0_reason, 5) && $input_b__closures, _scope($scope2_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "12:6"));
+		_unfilled_if($scope0_reason, 5) && _patch_subscribe($scope2_id, "__tests__/template.marko_2_input_b#0:5/subscribe", $cg__input_b);
+		_subscribe(_unfilled_if($scope0_reason, 5) && $input_b__closures, _scope($scope2_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "12:6"), $cg__input_b && "__tests__/template.marko_2_input_b#0:5/subscribe");
 	}, $scope0_id, ($scope2) => $scope0_page ? [{ input_b: input.b }] : []) }) }, 17, 0, 0, $wg__input_on, $scope0_reason, 3, 0, void 0, 0, 0, ["__tests__/template.marko_1*content", "__tests__/template.marko_2*content"]);
 	_html("</main>");
 	$fg__input_a && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_a#4/subscribers", "input_a");

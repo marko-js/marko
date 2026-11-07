@@ -40,7 +40,7 @@ _shells({
 	"__tests__/tags/card.marko": "__tests__/tags/card.marko;b%;<!><!><!>"
 });
 var card_default = _template("__tests__/tags/card.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_on = _write_guard($scope0_reason, 3), $cg__input_on = _client_guard($scope0_reason, 3), $wi__input_v__OR__input_on__OR__input_note = _write_if($scope0_reason, 1), $fg__input_note = _filled_guard($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $cg__input_note = _client_guard($scope0_reason, 4), $cg__input_v = _client_guard($scope0_reason, 2), $wg__input_on = _write_guard($scope0_reason, 3), $cg__input_on = _client_guard($scope0_reason, 3), $wi__input_v__OR__input_on__OR__input_note = _write_if($scope0_reason, 1), $fg__input_note = _filled_guard($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = new Set();
 	const $input_on__closures = new Set();
@@ -51,9 +51,9 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 			const $scope2_id = _scope_id();
 			const $scope2_reason = _scope_reason();
 			_html(`<em>${_text_mark($scope2_id, "#text/0", input.note, 1, $scope0_reason, 4)} ${_text_mark($scope2_id, "#text/1", v, 2, $scope0_reason, 2)}</em>`);
-			_unfilled_if($scope0_reason, 4) && _patch_subscribe($scope2_id, "__tests__/tags/card.marko_2_input_note#0:5/subscribe", _client_guard($scope0_reason, 4));
-			_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope2_id, "__tests__/tags/card.marko_2_v#1:2/subscribe", _client_guard($scope0_reason, 2));
-			_subscribe(_unfilled_if($scope0_reason, 2) && $await_content__v__closures, _subscribe(_unfilled_if($scope0_reason, 4) && $input_note__closures, _scope($scope2_id, { _: $wi__input_v__OR__input_on__OR__input_note && _scope_with_id($scope1_id) }, "__tests__/tags/card.marko", "3:6")));
+			_unfilled_if($scope0_reason, 4) && _patch_subscribe($scope2_id, "__tests__/tags/card.marko_2_input_note#0:5/subscribe", $cg__input_note);
+			_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope2_id, "__tests__/tags/card.marko_2_v#1:2/subscribe", $cg__input_v);
+			_subscribe(_unfilled_if($scope0_reason, 2) && $await_content__v__closures, _subscribe(_unfilled_if($scope0_reason, 4) && $input_note__closures, _scope($scope2_id, { _: $wi__input_v__OR__input_on__OR__input_note && _scope_with_id($scope1_id) }, "__tests__/tags/card.marko", "3:6"), $cg__input_note && "__tests__/tags/card.marko_2_input_note#0:5/subscribe"), $cg__input_v && "__tests__/tags/card.marko_2_v#1:2/subscribe");
 		}, $scope1_id, ($scope) => $scope0_page ? [{ input_note: input.note }, {
 			v,
 			_: $scope($scope0_id)

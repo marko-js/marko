@@ -57,7 +57,7 @@ _shells({
 	"__tests__/template.marko_1*shell": `__tests__/template.marko_1*shell${_shell_marker([[], []], ["#childScope/0>", $setup$1])};${/*@__PURE__*/ ((_w0) => `0${_w0}&%c`)($walks$1)};${/*@__PURE__*/ ((_w0) => `${_w0}<!><!>`)($template$1)}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_on = _write_guard($scope0_reason, 3), $wg__input_show = _write_guard($scope0_reason, 2), $fg__input_on = _filled_guard($scope0_reason, 3), $fg__input_note = _filled_guard($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $cg__input_note = _client_guard($scope0_reason, 4), $wg__input_on = _write_guard($scope0_reason, 3), $wg__input_show = _write_guard($scope0_reason, 2), $fg__input_on = _filled_guard($scope0_reason, 3), $fg__input_note = _filled_guard($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = new Set();
 	_html("<main>");
@@ -73,8 +73,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope2_id = _scope_id();
 				const $scope2_reason = _scope_reason();
 				_html(`<em>${_text_mark($scope2_id, "#text/0", input.note, 1, $scope0_reason, 4)} ${_text_mark($scope2_id, "#text/1", v, 2)}</em>`);
-				_unfilled_if($scope0_reason, 4) && _patch_subscribe($scope2_id, "__tests__/template.marko_2_input_note#0:5/subscribe", _client_guard($scope0_reason, 4));
-				_subscribe($if_content__v__closures, _subscribe(_unfilled_if($scope0_reason, 4) && $input_note__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "5:8")));
+				_unfilled_if($scope0_reason, 4) && _patch_subscribe($scope2_id, "__tests__/template.marko_2_input_note#0:5/subscribe", $cg__input_note);
+				_subscribe($if_content__v__closures, _subscribe(_unfilled_if($scope0_reason, 4) && $input_note__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "5:8"), $cg__input_note && "__tests__/template.marko_2_input_note#0:5/subscribe"));
 			}, $scope1_id, ($scope) => $scope0_page ? [{ input_note: input.note }, {
 				v,
 				_: $scope($scope0_id)

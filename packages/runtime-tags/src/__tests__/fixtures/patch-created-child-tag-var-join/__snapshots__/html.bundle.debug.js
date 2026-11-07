@@ -72,7 +72,7 @@ _shells({
 	"__tests__/tags/file-host.marko": `__tests__/tags/file-host.marko${_shell_marker($setup$2)};${((_w0) => `/${_w0}&`)("D%l")};${$template$3}`
 });
 var file_host_default = _template("__tests__/tags/file-host.marko", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $cg__input_files = _client_guard($scope0_reason, 1), $cg__input_filesChange = _client_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_files__closures = new Set();
 	const $input_filesChange__closures = new Set();
@@ -88,12 +88,12 @@ var file_host_default = _template("__tests__/tags/file-host.marko", (input) => {
 			filesChange: input.filesChange
 		});
 		_patch_child_end();
-		_client_guard($scope0_reason, 1) && _patch_render($scope1_id, "__tests__/tags/file-host.marko_1_input_files#0:3/subscribe");
-		_client_guard($scope0_reason, 2) && _patch_render($scope1_id, "__tests__/tags/file-host.marko_1_input_filesChange#0:4/subscribe");
+		$cg__input_files && _patch_render($scope1_id, "__tests__/tags/file-host.marko_1_input_files#0:3/subscribe");
+		$cg__input_filesChange && _patch_render($scope1_id, "__tests__/tags/file-host.marko_1_input_filesChange#0:4/subscribe");
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_filesChange__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_files__closures, _scope($scope1_id, {
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id),
 			"#childScope/0": _existing_scope($childScope)
-		}, "__tests__/tags/file-host.marko", "2:4")));
+		}, "__tests__/tags/file-host.marko", "2:4"), $cg__input_files && "__tests__/tags/file-host.marko_1_input_files#0:3/subscribe", 0), $cg__input_filesChange && "__tests__/tags/file-host.marko_1_input_filesChange#0:4/subscribe", 0);
 		_resume_branch($scope1_id);
 	}, $scope0_id, 0) }) });
 	_patch_child_end();

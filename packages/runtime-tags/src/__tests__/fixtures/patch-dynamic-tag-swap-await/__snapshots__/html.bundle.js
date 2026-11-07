@@ -19,7 +19,7 @@ var template_default = _template("a", (input) => {
 			_scope($scope2_id, {});
 		}, 1, "a0", _unfilled_if($scope0_reason, 2) && 2);
 		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "a3", 1);
-		$wi__input_as__OR__input_p && _subscribe(_unfilled_if($scope0_reason, 2) && $input_p__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
+		$wi__input_as__OR__input_p && _subscribe(_unfilled_if($scope0_reason, 2) && $input_p__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 2) && "a3", 0);
 		$wi__input_as__OR__input_p && _resume_branch($scope1_id);
 	}, $scope0_id, ($scope) => $scope0_page ? [{ f: input.p }] : []), 0, _write_guard($scope0_reason, 1), $scope0_reason, 1, 0, void 0, 0, 0, "a2");
 	_html(`<button>interactive</button>${_el_mark($scope0_id, "b")}</main>`);

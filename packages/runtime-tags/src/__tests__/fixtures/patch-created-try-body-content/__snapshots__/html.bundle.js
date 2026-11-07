@@ -57,7 +57,7 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		_html(`<em>A ${_text_mark($scope1_id, "a", input.label, 2, $scope0_reason, 1)}</em>`);
 		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "a1", $cg__input_label);
-		_subscribe(_unfilled_if($scope0_reason, 1) && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
+		_subscribe(_unfilled_if($scope0_reason, 1) && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), $cg__input_label && "a1");
 	}, $scope0_id) };
 	const B = { content: _content_resume("a2", () => {
 		const $scope2_id = _scope_id();
@@ -67,7 +67,7 @@ var template_default = _template("a", (input) => {
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_label__closures, _scope($scope2_id, {
 			_: _scope_with_id($scope0_id),
 			Cl: $wi__input_label && 1
-		}));
+		}), $cg__input_label && "a3");
 	}, $scope0_id) };
 	_if(() => {
 		if (input.show) {

@@ -20,7 +20,7 @@ _shells({
 	b: `b${_shell_marker($setup)};${((_w0) => ` D l/${_w0}&`)("D%l")};${((_w0) => `<button> </button>${_w0}`)($template$1)}`
 });
 var card_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_note = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_note = _client_guard($scope0_reason, 0), $wi__input_note = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = /* @__PURE__ */ new Set();
 	let n = 0;
@@ -31,8 +31,8 @@ var card_default = _template("b", (input) => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		_html(`<em>${_text_mark($scope1_id, "a", input.note, 1, $scope0_reason, 0)}</em>`);
-		_client_guard($scope0_reason, 0) && _patch_render($scope1_id, "b0");
-		_subscribe(_unfilled_if($scope0_reason, 0) && $input_note__closures, _scope($scope1_id, { _: $wi__input_note && _scope_with_id($scope0_id) }));
+		$cg__input_note && _patch_render($scope1_id, "b0");
+		_subscribe(_unfilled_if($scope0_reason, 0) && $input_note__closures, _scope($scope1_id, { _: $wi__input_note && _scope_with_id($scope0_id) }), $cg__input_note && "b0");
 	}, $scope0_id, 0) });
 	_patch_child_end();
 	_script($scope0_id, "b2");

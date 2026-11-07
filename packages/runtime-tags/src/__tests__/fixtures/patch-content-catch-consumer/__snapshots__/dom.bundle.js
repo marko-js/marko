@@ -11,14 +11,14 @@ const $catch_content__$params = ($scope, $params2) => _text($scope.a, $params2[0
 const $catch_content = _content$1("b2", "<b> </b><!><!>", "D l%", $catch_content__setup, $catch_content__$params);
 
 // template.marko
-const $fallback_content2__input_label = /*@__PURE__*/ _closure_get_patch("a3", 9, ($scope) => _text($scope.a, $scope._.h), 0, "a6", 1);
+const $fallback_content2__input_label = /*@__PURE__*/ _closure_get_patch("a3", 9, ($scope) => _text($scope.a, $scope._.h), 0, "a7", 1);
 const $fallback_content2__setup = ($scope) => {
 	$fallback_content2__input_label($scope);
 	$fallback_content2__count($scope);
 };
-const $fallback_content2__count = /*@__PURE__*/ _closure_get_patch("a8", 10, ($scope) => _text($scope.b, $scope._.i));
-const $fallback_content2 = _content$1("a4", "<i><!> <!></i>", "D%c%", $fallback_content2__setup);
-const $fallback_content__input_label = /*@__PURE__*/ _closure_get_patch("a0", 9, ($scope) => _text($scope.a, $scope._.h), 0, "a6", 0);
+const $fallback_content2__count = /*@__PURE__*/ _closure_get_patch("a4", 10, ($scope) => _text($scope.b, $scope._.i));
+const $fallback_content2 = _content$1("a5", "<i><!> <!></i>", "D%c%", $fallback_content2__setup);
+const $fallback_content__input_label = /*@__PURE__*/ _closure_get_patch("a0", 9, ($scope) => _text($scope.a, $scope._.h), 0, "a7", 0);
 const $fallback_content__setup = ($scope) => {
 	$fallback_content__input_label($scope);
 	$fallback_content__count($scope);
@@ -30,6 +30,6 @@ const $count = _let(8, ($scope) => {
 	_text($scope.b, $scope.i);
 	$count__closure($scope);
 });
-const $setup__script = _script("a5", ($scope) => _on($scope.a, "click", function() {
+const $setup__script = _script("a6", ($scope) => _on($scope.a, "click", function() {
 	$count($scope, +$scope.i + 1);
 }));

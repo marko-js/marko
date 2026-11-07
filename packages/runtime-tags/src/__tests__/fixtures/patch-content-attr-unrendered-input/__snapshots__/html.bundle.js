@@ -4,7 +4,7 @@ _shells({
 	a: "a !a2; D l ;<button class=inc> </button><section></section>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_rec_name = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_rec_name = _client_guard($scope0_reason, 1), $fg__input_rec_name = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_rec_name__closures = /* @__PURE__ */ new Set();
 	let n = 0;
@@ -13,8 +13,8 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_html(`<em>${_text_mark($scope1_id, "a", input.rec.name, 1, $scope0_reason, 1)}</em>`);
-		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "a1", _client_guard($scope0_reason, 1));
-		_subscribe(_unfilled_if($scope0_reason, 1) && $input_rec_name__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }));
+		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "a1", $cg__input_rec_name);
+		_subscribe(_unfilled_if($scope0_reason, 1) && $input_rec_name__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }), $cg__input_rec_name && "a1");
 	}, $scope0_id) };
 	_html("<section>");
 	_attr_content("c", $scope0_id, input.on ? frag.content : null, 0, 1, $scope0_reason, 2);

@@ -48,7 +48,7 @@ _shells({
 	a: `a${_shell_marker($setup)};${((_w0) => `D0${_w0}&%l`)($walks)};${((_w0) => `<main>${_w0}<!></main>`)($template)}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_on = _write_guard($scope0_reason, 0), $fg__input_note = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $cg__input_note = _client_guard($scope0_reason, 1), $wg__input_on = _write_guard($scope0_reason, 0), $fg__input_note = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = /* @__PURE__ */ new Set();
 	const $v__closures = /* @__PURE__ */ new Set();
@@ -61,8 +61,8 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_html(`<em>${_text_mark($scope1_id, "a", input.note, 1, $scope0_reason, 1)} ${_text_mark($scope1_id, "b", v, 2)}</em>`);
-		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "a2", _client_guard($scope0_reason, 1));
-		_subscribe($v__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_note__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) })));
+		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "a2", $cg__input_note);
+		_subscribe($v__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_note__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), $cg__input_note && "a2"));
 	}, $scope0_id, ($scope) => $scope0_page ? [{
 		h: v,
 		g: input.note

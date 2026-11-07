@@ -20,7 +20,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 		_html("<section>");
 		_dynamic_tag($scope1_id, "#text/0", c, {}, 8);
 		_html("</section>");
-		_subscribe($c__closures, _scope($scope1_id, {}, "__tests__/tags/card.marko", "5:2"));
+		_subscribe($c__closures, _scope($scope1_id, {}, "__tests__/tags/card.marko", "5:2"), "__tests__/tags/card.marko_1_c#0:5/subscribe");
 	}, 1, "__tests__/tags/card.marko_1*content", void 0, 1);
 	_scope($scope0_id, { "ClosureScopes:c/6": $c__closures }, "__tests__/tags/card.marko", 0) || _client_branch(input.content);
 });

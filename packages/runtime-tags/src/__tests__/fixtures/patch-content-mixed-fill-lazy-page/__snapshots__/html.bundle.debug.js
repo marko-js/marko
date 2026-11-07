@@ -84,7 +84,7 @@ var page_default = _template("__tests__/page.marko", (input) => {
 		_subscribe($live__closures, _scope($scope1_id, {
 			_: _scope_with_id($scope0_id),
 			"#childScope/0": _existing_scope($childScope2)
-		}, "__tests__/page.marko", "5:4"));
+		}, "__tests__/page.marko", "5:4"), "__tests__/page.marko_1_live#0:9/subscribe", 0);
 		_resume_branch($scope1_id);
 	}, $scope0_id, 0) }) });
 	_patch_child_end();

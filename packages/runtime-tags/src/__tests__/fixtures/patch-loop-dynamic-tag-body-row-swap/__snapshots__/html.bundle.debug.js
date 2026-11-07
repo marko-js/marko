@@ -39,7 +39,7 @@ _shells({
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell;b%;<!><!><!>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_wrap = _write_guard($scope0_reason, 2), $wi__input_rows__OR__input_wrap = _write_if($scope0_reason, 0), $fg__input_wrap = _filled_guard($scope0_reason, 2), $cg__input_rows = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $cg__input_rows = _client_guard($scope0_reason, 1), $wg__input_wrap = _write_guard($scope0_reason, 2), $wi__input_rows__OR__input_wrap = _write_if($scope0_reason, 0), $fg__input_wrap = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	_for_of(input.rows, (row) => {
 		const $scope1_id = _scope_id();
@@ -49,7 +49,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope2_reason = _scope_reason();
 			_html(`<b>${_text_mark($scope2_id, "#text/0", row.label, 1, $scope0_reason, 1)}</b>`);
 			_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope2_id, "__tests__/template.marko_2_row_label#1:3/subscribe", $cg__input_rows);
-			_subscribe(_unfilled_if($scope0_reason, 1) && $for_content__row_label__closures, _scope($scope2_id, { _: $wi__input_rows__OR__input_wrap && _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:6"));
+			_subscribe(_unfilled_if($scope0_reason, 1) && $for_content__row_label__closures, _scope($scope2_id, { _: $wi__input_rows__OR__input_wrap && _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:6"), $cg__input_rows && "__tests__/template.marko_2_row_label#1:3/subscribe");
 		}, $scope1_id, ($scope) => $scope0_page ? [{ row_label: row?.label }] : []), 0, $wg__input_wrap, $scope0_reason, 2, 0, void 0, 0, 0, "__tests__/template.marko_2*content");
 		_filled_guard($scope0_reason, 1) && _patch_subscribers($scope1_id, "__tests__/template.marko_1_row_label#3/subscribers", "row_label");
 		_client_guard($scope0_reason, 2) && _patch_render($scope1_id, "__tests__/template.marko_1_input_wrap#0:4/setup");

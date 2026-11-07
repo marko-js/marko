@@ -3,7 +3,7 @@
     "template.marko.page.mjs": {
       "total": {
         "min": 14621,
-        "brotli": 6228
+        "brotli": 6224
       },
       "files": {
         "tags/error-wrapper.marko": 421,
@@ -17,6 +17,6 @@
   },
   "patch": {
     "min": 324,
-    "brotli": 128
+    "brotli": 125
   }
 }

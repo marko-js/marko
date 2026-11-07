@@ -46,13 +46,13 @@ var template_default = _template("a", (input) => {
 	const D = { content: _content("a2", ({ label, prev }) => {
 		const $scope1_id = _scope_id();
 		const $D_content__label__closures = /* @__PURE__ */ new Set();
-		const $scope1_reason = _scope_reason(), $scope1_page = _page_render(), $wg__prev = _write_guard($scope1_reason, 2), $fg__label = _filled_guard($scope1_reason, 1), $fg__prev = _filled_guard($scope1_reason, 2), $wi__label = _write_if($scope1_reason, 1);
+		const $scope1_reason = _scope_reason(), $scope1_page = _page_render(), $cg__label = _client_guard($scope1_reason, 1), $wg__prev = _write_guard($scope1_reason, 2), $fg__label = _filled_guard($scope1_reason, 1), $fg__prev = _filled_guard($scope1_reason, 2), $wi__label = _write_if($scope1_reason, 1);
 		const X = { content: _content_resume("a0", () => {
 			const $scope2_id = _scope_id();
 			_scope_reason();
 			_html(`<em>${_text_mark($scope2_id, "a", label, 1, $scope1_reason, 1)}</em>`);
-			_unfilled_if($scope1_reason, 1) && _patch_subscribe($scope2_id, "a1", _client_guard($scope1_reason, 1));
-			_subscribe(_unfilled_if($scope1_reason, 1) && $D_content__label__closures, _scope($scope2_id, { _: ($wi__input_on || $wi__label) && _scope_with_id($scope1_id) }));
+			_unfilled_if($scope1_reason, 1) && _patch_subscribe($scope2_id, "a1", $cg__label);
+			_subscribe(_unfilled_if($scope1_reason, 1) && $D_content__label__closures, _scope($scope2_id, { _: ($wi__input_on || $wi__label) && _scope_with_id($scope1_id) }), $cg__label && "a1");
 		}, $scope1_id, ($scope) => $scope1_page ? [{ e: label }] : []) };
 		_dynamic_tag($scope1_id, "a", input.on ? keeper_default : plain_default, { content: X }, 1, 0, 0, $wg__input_on, $scope0_reason, 0, 0, void 0, 0, 0, "a0");
 		_dynamic_tag($scope1_id, "b", input.on ? keeper_default : plain_default, { content: prev }, 9, 0, 0, $wg__input_on || $wg__prev, _updates_from($scope0_reason, 0) << 1, 0, 0, void 0, 0, 0, "a0");

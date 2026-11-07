@@ -21,7 +21,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_subscribe($n__closures, _scope($scope1_id, {
 			count,
 			_: _scope_with_id($scope0_id)
-		}, "__tests__/template.marko", "2:2", { count: "3:8" }));
+		}, "__tests__/template.marko", "2:2", { count: "3:8" }), "__tests__/template.marko_1_n#0:7/subscribe");
 	}, $scope0_id) };
 	_dynamic_tag($scope0_id, "#text/0", input.show ? Content : "span", { label: input.label }, 1, 0, 0, _write_guard($scope0_reason, 0), $scope0_reason, 0);
 	_html(`<button>${_text_mark($scope0_id, "#text/2", n)}</button>${_el_mark($scope0_id, "#button/1")}`);

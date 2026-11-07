@@ -83,7 +83,7 @@ var template_default = _template("a", (input) => {
 			_subscribe(_unfilled_if($scope0_reason, 2) && $catch_content__w__closures, _subscribe(_unfilled_if($scope0_reason, 2) && $input_v__closures, _scope($scope4_id, {
 				_: _scope_with_id($scope1_id),
 				Ci: $wi__input_v && 3
-			})));
+			}), $cg__input_v && "a12"), $cg__input_v && "a13");
 		}, $scope1_id, 0) });
 		_patch_child_end();
 		_script($scope1_id, "a14");

@@ -36,7 +36,7 @@ _shells({
 	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;b%b ;<!><!><button>+</button>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_label = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 2), $fg__input_label = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = new Set();
 	const $count__closures = new Set();
@@ -52,15 +52,15 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope2_reason = _scope_reason();
 				const $scope2_id = _scope_id();
 				_html(_text_mark($scope2_id, "#text/0", input.label, 1, $scope0_reason, 2));
-				_client_guard($scope0_reason, 2) && _patch_render($scope2_id, "__tests__/template.marko_2_input_label#0:5/subscribe");
-				_subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope2_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope1_id) }, "__tests__/template.marko", "5:6"));
+				$cg__input_label && _patch_render($scope2_id, "__tests__/template.marko_2_input_label#0:5/subscribe");
+				_subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope2_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope1_id) }, "__tests__/template.marko", "5:6"), $cg__input_label && "__tests__/template.marko_2_input_label#0:5/subscribe");
 			}, $scope1_id, 0)
 		});
 		_patch_child_end();
 		_subscribe($count__closures, _scope($scope1_id, {
 			_: _scope_with_id($scope0_id),
 			"#childScope/0": _existing_scope($childScope)
-		}, "__tests__/template.marko", "4:4"));
+		}, "__tests__/template.marko", "4:4"), "__tests__/template.marko_1_count#0:6/subscribe", 0);
 		_resume_branch($scope1_id);
 	}, $scope0_id, 0), 0, _write_guard($scope0_reason, 1), $scope0_reason, 1);
 	_html(`<button>+</button>${_el_mark($scope0_id, "#button/1")}`);

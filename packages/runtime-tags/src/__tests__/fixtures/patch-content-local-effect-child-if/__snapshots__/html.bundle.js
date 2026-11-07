@@ -30,7 +30,7 @@ _shells({
 	a: `a${_shell_marker($setup)};${((_w0) => `b/${_w0}&b`)("b%c")};${((_w0) => `<!>${_w0}<!>`)($template)}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_prefix = _server_guard($scope0_reason, 2), $fg__input_prefix = _filled_guard($scope0_reason, 2), $wi__input_prefix = _write_if($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $cg__input_prefix = _client_guard($scope0_reason, 2), $sg__input_prefix = _server_guard($scope0_reason, 2), $fg__input_prefix = _filled_guard($scope0_reason, 2), $wi__input_prefix = _write_if($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_prefix__closures = /* @__PURE__ */ new Set();
 	_set_scope_reason(_updates_from($scope0_reason, 1) << 1 | _updates_from($scope0_reason, 1) << 3);
@@ -44,11 +44,11 @@ var template_default = _template("a", (input) => {
 			_filled_guard($scope0_reason, 2) && _patch_write($scope1_id, "xb", inner, !$sg__input_prefix);
 			_html(`<div></div>${_el_mark($scope1_id, "a")}`);
 			_script($scope1_id, "a0", 1, _filled_guard($scope0_reason, 2), "b");
-			_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "a1", _client_guard($scope0_reason, 2));
+			_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "a1", $cg__input_prefix);
 			_subscribe($wi__input_prefix && $input_prefix__closures, _scope($scope1_id, {
 				b: inner,
 				_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id)
-			}));
+			}), $cg__input_prefix && "a1");
 		}, $scope0_id)
 	});
 	_patch_child_end();

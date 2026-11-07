@@ -40,13 +40,13 @@ var error_wrapper_default = _template("b", (input) => {
 });
 
 // template.marko
-const $setup = _shell_setup([[], ["a2"]], ["c>", $setup$1]);
+const $setup = _shell_setup([[], ["a3"]], ["c>", $setup$1]);
 _shells({
-	a1: "a1 a5",
+	a2: "a2 a1",
 	a: `a${_shell_marker($setup)};${((_w0) => ` D l/${_w0}&b`)("b%c")};${((_w0) => `<button> </button>${_w0}<!>`)($template)}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_label = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	const $count__closures = /* @__PURE__ */ new Set();
@@ -56,17 +56,17 @@ var template_default = _template("a", (input) => {
 	const $childScope = _peek_scope_id($scope0_id, "c", 0);
 	error_wrapper_default({
 		fail: input.fail,
-		fallback: attrTag({ content: _content_resume("a1", () => {
+		fallback: attrTag({ content: _content_resume("a2", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
 			_html(`<i>${_text_mark($scope1_id, "a", input.label, 1, $scope0_reason, 1)} ${_text_mark($scope1_id, "b", count, 2)}</i>`);
-			_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "a0", _client_guard($scope0_reason, 1));
-			_subscribe($count__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) })));
+			_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "a0", $cg__input_label);
+			_subscribe($count__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), $cg__input_label && "a0"), "a1");
 		}, $scope0_id) })
 	});
 	_patch_child_end();
-	_script($scope0_id, "a2");
-	$fg__input_label && _patch_subscribers($scope0_id, "a3", "g");
+	_script($scope0_id, "a3");
+	$fg__input_label && _patch_subscribers($scope0_id, "a4", "g");
 	_scope($scope0_id, {
 		g: input.label,
 		h: count,

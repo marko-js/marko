@@ -18,7 +18,7 @@ _shells({
 	a4: `a4${_shell_marker([[], []], ["a>", $setup])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l")};${$template}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_show__OR__input_label = _write_if($scope0_reason, 0), $wg__input_show = _write_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 2), $wi__input_show__OR__input_label = _write_if($scope0_reason, 0), $wg__input_show = _write_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	_if(() => {
@@ -32,12 +32,12 @@ var template_default = _template("a", (input) => {
 				let n = 0;
 				_html(`<button>${_text_mark($scope2_id, "b", input.label, 1, $scope0_reason, 2)} ${_text_mark($scope2_id, "c", n, 2)}</button>${_el_mark($scope2_id, "a")}`);
 				_script($scope2_id, "a0");
-				_client_guard($scope0_reason, 2) && _patch_render($scope2_id, "a1");
+				$cg__input_label && _patch_render($scope2_id, "a1");
 				_patch_fill($scope2_id, "va2", n, 1);
 				_subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope2_id, {
 					d: n,
 					_: $wi__input_show__OR__input_label && _scope_with_id($scope1_id)
-				}));
+				}), $cg__input_label && "a1");
 			}, $scope1_id, 0) });
 			_patch_child_end();
 			_scope($scope1_id, {

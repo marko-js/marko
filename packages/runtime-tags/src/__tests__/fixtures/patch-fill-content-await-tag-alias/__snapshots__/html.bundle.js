@@ -14,11 +14,11 @@ var frame_default = _template("b", (input) => {
 // tags/inner.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}<button>toggle</button></main>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `D/${_w0}& l`)("D%l");
-const $setup$1 = _shell_setup([[], ["c6"]], ["a>", $setup$2]);
+const $setup$1 = _shell_setup([[], ["c7"]], ["a>", $setup$2]);
 _shells({
 	c0: "c0;D ;<p> </p>",
 	c1: "c1;D ;<p> </p>",
-	c2: "c2 c10;b%;<!><!><!>",
+	c2: "c2 c6;b%;<!><!><!>",
 	c: `c${_shell_marker($setup$1)};${((_w0) => `D/${_w0}& l`)("D%l")};${((_w0) => `<main>${_w0}<button>toggle</button></main>`)($template$1)}`
 });
 var inner_default = _template("c", (input) => {
@@ -42,13 +42,13 @@ var inner_default = _template("c", (input) => {
 		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "c3", 1);
 		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "c4", 1);
 		_patch_render($scope1_id, "c5", [_filled_guard($scope0_reason, 0) && ">e", _filled_guard($scope0_reason, 1) && ">f"]);
-		_subscribe($showSecond__closures, _subscribe($wi__input_first && $input_first__closures, _subscribe($wi__input_second && $input_second__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }))));
+		_subscribe($showSecond__closures, _subscribe($wi__input_first && $input_first__closures, _subscribe($wi__input_second && $input_second__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 0) && "c3", 0), _client_guard($scope0_reason, 1) && "c4", 0), "c6", 0);
 		_resume_branch($scope1_id);
 	}, $scope0_id, 0) });
 	_patch_child_end();
 	_html(`<button>toggle</button>${_el_mark($scope0_id, "b")}</main>`);
-	_script($scope0_id, "c6");
-	_patch_fill($scope0_id, "vc7", showSecond, 1);
+	_script($scope0_id, "c7");
+	_patch_fill($scope0_id, "vc8", showSecond, 1);
 	_scope($scope0_id, {
 		e: input.second,
 		f: input.first,

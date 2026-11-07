@@ -25,7 +25,7 @@ _shells({
 	"__tests__/template.marko_3*shell": `__tests__/template.marko_3*shell${_shell_marker([[], []], ["#childScope/0>", $setup$1])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1)};${$template$1}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_label = _write_guard($scope0_reason, 1), $cg__input_label = _client_guard($scope0_reason, 1), $wi__input_label__OR__input_show = _write_if($scope0_reason, 0), $wg__input_show = _write_guard($scope0_reason, 2), $fg__input_label = _filled_guard($scope0_reason, 1), $wi__input_label = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 1), $wg__input_label = _write_guard($scope0_reason, 1), $wi__input_label__OR__input_show = _write_if($scope0_reason, 0), $wg__input_show = _write_guard($scope0_reason, 2), $fg__input_label = _filled_guard($scope0_reason, 1), $wi__input_label = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = new Set();
 	const Body = { content: _content_resume("__tests__/template.marko_1*content", () => {
@@ -39,12 +39,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_subscribe(_unfilled_if($scope0_reason, 1) && $input_label__closures, _scope($scope2_id, {
 					_: $wi__input_label__OR__input_show && _scope_with_id($scope1_id),
 					"ClosureSignalIndex:input_label/7": $wi__input_label && 1
-				}, "__tests__/template.marko", "1:15"));
+				}, "__tests__/template.marko", "1:15"), $cg__input_label && "__tests__/template.marko_2_input_label#0:3/subscribe");
 				return 0;
 			}
 		}, $scope1_id, "#text/0", 1, $wg__input_label, 1, 0, 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 1);
 		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_label#0:3/subscribe", $cg__input_label);
-		$wi__input_label__OR__input_show && _subscribe(_unfilled_if($scope0_reason, 1) && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "1:2"));
+		$wi__input_label__OR__input_show && _subscribe(_unfilled_if($scope0_reason, 1) && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "1:2"), $cg__input_label && "__tests__/template.marko_1_input_label#0:3/subscribe", $wg__input_label);
 		$wg__input_label || $wi__input_label__OR__input_show && _resume_branch($scope1_id);
 	}, $scope0_id) };
 	_if(() => {

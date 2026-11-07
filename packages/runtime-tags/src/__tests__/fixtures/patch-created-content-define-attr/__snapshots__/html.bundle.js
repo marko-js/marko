@@ -23,7 +23,7 @@ _shells({
 	a5: `a5${_shell_marker([[], []], ["a>", $setup])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks)};${$template}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_tag = _write_guard($scope0_reason, 4), $wi__input_tag__OR__input_show = _write_if($scope0_reason, 1), $wg__input_show = _write_guard($scope0_reason, 5), $cg__input_tag__OR__input_show = _client_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 3), $fg__input_tag = _filled_guard($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $cg__input_label = _client_guard($scope0_reason, 3), $wg__input_tag = _write_guard($scope0_reason, 4), $cg__input_tag = _client_guard($scope0_reason, 4), $wi__input_tag__OR__input_show = _write_if($scope0_reason, 1), $wg__input_show = _write_guard($scope0_reason, 5), $cg__input_tag__OR__input_show = _client_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 3), $fg__input_tag = _filled_guard($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	const $input_tag__closures = /* @__PURE__ */ new Set();
@@ -31,8 +31,8 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_html(`<b>${_text_mark($scope1_id, "a", input.label, 1, $scope0_reason, 3)}</b>`);
-		_unfilled_if($scope0_reason, 3) && _patch_subscribe($scope1_id, "a1", _client_guard($scope0_reason, 3));
-		_subscribe(_unfilled_if($scope0_reason, 3) && $input_label__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id) }));
+		_unfilled_if($scope0_reason, 3) && _patch_subscribe($scope1_id, "a1", $cg__input_label);
+		_subscribe(_unfilled_if($scope0_reason, 3) && $input_label__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id) }), $cg__input_label && "a1");
 	}, $scope0_id, ($scope) => $scope0_page ? [{ d: input.label }] : []) };
 	const Body = { content: _content_resume("a2", () => {
 		const $scope2_id = _scope_id();
@@ -40,8 +40,8 @@ var template_default = _template("a", (input) => {
 		_dynamic_tag($scope2_id, "a", input.tag, { content: Inner }, 1, 0, 0, $wg__input_tag, $scope0_reason, 4, 0, void 0, 0, 0, "a0");
 		!$cg__input_tag__OR__input_show && _unfilled_if() && _patch_write($scope0_id, "wg", Inner);
 		_unfilled_if($scope0_reason, 4) && _patch_subscribe($scope2_id, "a3");
-		_client_guard($scope0_reason, 4) && _patch_render($scope2_id, "a4");
-		$wi__input_tag__OR__input_show && _subscribe(_unfilled_if($scope0_reason, 4) && $input_tag__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }));
+		$cg__input_tag && _patch_render($scope2_id, "a4");
+		$wi__input_tag__OR__input_show && _subscribe(_unfilled_if($scope0_reason, 4) && $input_tag__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }), $cg__input_tag && "a3", $wg__input_tag);
 		$wg__input_tag || $wi__input_tag__OR__input_show && _resume_branch($scope2_id);
 	}, $scope0_id) };
 	_if(() => {

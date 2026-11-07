@@ -29,7 +29,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope3_id = _scope_id();
 		const $scope3_reason = _scope_reason();
 		_html(`count ${_text_mark($scope3_id, "#text/0", count, 2)}`);
-		_subscribe($count__closures, _scope($scope3_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "8:4"));
+		_subscribe($count__closures, _scope($scope3_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "8:4"), "__tests__/template.marko_3_count#0:4/subscribe");
 	}, $scope0_id));
 	_scope($scope0_id, {
 		Foo,

@@ -64,7 +64,7 @@ var template_default = _template("a", (input) => {
 				const $scope2_id = _scope_id();
 				_html(`<em>static ${_text_mark($scope2_id, "a", input.label, 2, $scope0_reason, 1)}</em>`);
 				_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope2_id, "a0", $cg__input_label);
-				_subscribe(_unfilled_if($scope0_reason, 1) && $input_label__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }));
+				_subscribe(_unfilled_if($scope0_reason, 1) && $input_label__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), $cg__input_label && "a0");
 			}, $scope1_id) });
 			_patch_child_end();
 			_set_scope_reason(0);
@@ -77,7 +77,7 @@ var template_default = _template("a", (input) => {
 				_subscribe(_unfilled_if($scope0_reason, 1) && $input_label__closures, _scope($scope3_id, {
 					_: _scope_with_id($scope1_id),
 					Cf: $wi__input_label && 1
-				}));
+				}), $cg__input_label && "a2");
 			}, $scope1_id) });
 			_patch_child_end();
 			_scope($scope1_id, {

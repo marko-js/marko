@@ -3,8 +3,8 @@ const $template = "<div><!></div><!><!>";
 const $walks = "D%l%c";
 const $setup$1 = [[], []];
 _shells({
-	b0: "b0 b3;D%;<section><!></section>",
-	b1: "b1 b3;D%;<section><!></section>",
+	b1: "b1 b0;D%;<section><!></section>",
+	b2: "b2 b0;D%;<section><!></section>",
 	b: "b;D%l%;<div><!></div><!><!>"
 });
 var card_default = _template("b", (input) => {
@@ -20,8 +20,8 @@ var card_default = _template("b", (input) => {
 		_html("<section>");
 		_dynamic_tag($scope1_id, "a", c, {}, 8);
 		_html("</section>");
-		_subscribe($c__closures, _scope($scope1_id, {}));
-	}, 1, "b0", void 0, 1);
+		_subscribe($c__closures, _scope($scope1_id, {}), "b0");
+	}, 1, "b1", void 0, 1);
 	_scope($scope0_id, { g: $c__closures }) || _client_branch(input.content);
 });
 

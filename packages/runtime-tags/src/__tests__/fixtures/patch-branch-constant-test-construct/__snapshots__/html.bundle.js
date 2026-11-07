@@ -25,7 +25,7 @@ _shells({
 	a4: "a4,<p>up</p>"
 });
 var page_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_down = _write_if($scope0_reason, 0), $wg__input_down = _write_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wi__input_down = _write_if($scope0_reason, 0), $wg__input_down = _write_guard($scope0_reason, 0), $cg__input_down = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_down__closures = /* @__PURE__ */ new Set();
 	_for_of(ITEMS, (m) => {
@@ -52,8 +52,8 @@ var page_default = _template("a", (input) => {
 							return 1;
 						}
 					}, $scope3_id, "a", 1, $wg__input_down, 1, 0, 0, ["a0", "a4"], $scope0_reason, 0);
-					_client_guard($scope0_reason, 0) && _patch_render($scope3_id, "a5");
-					$wi__input_down && _subscribe(_unfilled_if($scope0_reason, 0) && $input_down__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }));
+					$cg__input_down && _patch_render($scope3_id, "a5");
+					$wi__input_down && _subscribe(_unfilled_if($scope0_reason, 0) && $input_down__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }), $cg__input_down && "a5", $wg__input_down);
 					return 0;
 				}
 			}, $scope2_id, "b", 1, 0, 1, 0, 0, ["a3"], 0, 0);

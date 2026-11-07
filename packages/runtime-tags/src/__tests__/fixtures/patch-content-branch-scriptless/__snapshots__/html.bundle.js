@@ -18,7 +18,7 @@ _shells({
 	a2: `a2${_shell_marker([[], []], ["a>", $setup])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l")};${$template}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_show__OR__input_text = _write_if($scope0_reason, 0), $wg__input_show = _write_guard($scope0_reason, 1), $fg__input_text = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $cg__input_text = _client_guard($scope0_reason, 2), $wi__input_show__OR__input_text = _write_if($scope0_reason, 0), $wg__input_show = _write_guard($scope0_reason, 1), $fg__input_text = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_text__closures = /* @__PURE__ */ new Set();
 	_html("<main>");
@@ -31,8 +31,8 @@ var template_default = _template("a", (input) => {
 				_scope_reason();
 				const $scope2_id = _scope_id();
 				_html(`<em>${_text_mark($scope2_id, "a", input.text, 1, $scope0_reason, 2)}</em>`);
-				_client_guard($scope0_reason, 2) && _patch_render($scope2_id, "a0");
-				_subscribe(_unfilled_if($scope0_reason, 2) && $input_text__closures, _scope($scope2_id, { _: $wi__input_show__OR__input_text && _scope_with_id($scope1_id) }));
+				$cg__input_text && _patch_render($scope2_id, "a0");
+				_subscribe(_unfilled_if($scope0_reason, 2) && $input_text__closures, _scope($scope2_id, { _: $wi__input_show__OR__input_text && _scope_with_id($scope1_id) }), $cg__input_text && "a0");
 			}, $scope1_id, 0) });
 			_patch_child_end();
 			_scope($scope1_id, {

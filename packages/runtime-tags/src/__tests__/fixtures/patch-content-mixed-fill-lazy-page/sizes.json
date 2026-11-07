@@ -11,7 +11,7 @@
     "page.mjs": {
       "total": {
         "min": 1884,
-        "brotli": 958
+        "brotli": 957
       },
       "files": {
         "tags/box.marko": 192,
@@ -30,6 +30,6 @@
   },
   "patch": {
     "min": 417,
-    "brotli": 213
+    "brotli": 212
   }
 }

@@ -49,7 +49,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_subscribe($n__closures, _scope($scope1_id, {
 				i,
 				_: _scope_with_id($scope0_id)
-			}, "__tests__/template.marko", "2:2", { i: "2:9" }));
+			}, "__tests__/template.marko", "2:2", { i: "2:9" }), "__tests__/template.marko_1_n#0:4/subscribe");
 		}, $scope0_id)
 	});
 	_patch_child_end();

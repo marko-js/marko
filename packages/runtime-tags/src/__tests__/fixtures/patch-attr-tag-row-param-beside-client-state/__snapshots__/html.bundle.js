@@ -43,7 +43,7 @@ var wrap_default = _template("c", (input) => {
 			_subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope1_id, {
 				b: _unfilled_if($scope0_reason, 2) && item,
 				_: (_write_if($scope0_reason, 0) || _write_if($scope1_reason, 0)) && _scope_with_id($scope0_id)
-			}));
+			}), _client_guard($scope0_reason, 2) && "c0");
 		}, $scope0_id, 0) });
 	});
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);

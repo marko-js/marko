@@ -26,7 +26,7 @@ _shells({
 	"__tests__/tags/child.marko": "__tests__/tags/child.marko;b%;<!><!><!>"
 });
 var child_default = _template("__tests__/tags/child.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_error = _client_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 0), $wi__input_error = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 0), $cg__input_error = _client_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 0), $wi__input_error = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = new Set();
 	const $input_error__closures = new Set();
@@ -46,8 +46,8 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 			const $scope2_reason = _scope_reason();
 			const $scope2_id = _scope_id();
 			_html(`<span>${_text_mark($scope2_id, "#text/0", err.message, 1, 4, 0)} ${_text_mark($scope2_id, "#text/1", input.label, 2, $scope0_reason, 0)}</span>`);
-			_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope2_id, "__tests__/tags/child.marko_2_input_label#0:3/subscribe", _client_guard($scope0_reason, 0));
-			_subscribe(_unfilled_if() && $wi__err_message && $catch_content__err_message__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/child.marko", "7:6")));
+			_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope2_id, "__tests__/tags/child.marko_2_input_label#0:3/subscribe", $cg__input_label);
+			_subscribe(_unfilled_if() && $wi__err_message && $catch_content__err_message__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/child.marko", "7:6"), $cg__input_label && "__tests__/tags/child.marko_2_input_label#0:3/subscribe"), "__tests__/tags/child.marko_2_err_message#1:3/subscribe");
 		}, $scope1_id, 0) });
 		_patch_child_end();
 		_scope($scope1_id, {

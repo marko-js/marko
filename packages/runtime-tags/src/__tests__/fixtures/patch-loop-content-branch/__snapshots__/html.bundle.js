@@ -40,7 +40,7 @@ var template_default = _template("a", (input) => {
 						const $scope3_id = _scope_id();
 						_html(`<em>${_text_mark($scope3_id, "a", item.n, 1, $scope0_reason, 0)}</em>`);
 						$cg__input_items && _patch_render($scope3_id, "a0");
-						_subscribe(_unfilled_if($scope0_reason, 0) && $for_content__item_n__closures, _scope($scope3_id, { _: $wi__input_items && _scope_with_id($scope2_id) }));
+						_subscribe(_unfilled_if($scope0_reason, 0) && $for_content__item_n__closures, _scope($scope3_id, { _: $wi__input_items && _scope_with_id($scope2_id) }), $cg__input_items && "a0");
 						return 0;
 					} else {
 						const $scope4_id = _scope_id();
@@ -49,12 +49,12 @@ var template_default = _template("a", (input) => {
 						_subscribe(_unfilled_if($scope0_reason, 0) && $for_content__item_n__closures, _scope($scope4_id, {
 							_: $wi__input_items && _scope_with_id($scope2_id),
 							Ch: $wi__input_items && 1
-						}));
+						}), $cg__input_items && "a1");
 						return 1;
 					}
 				}, $scope2_id, "a", 1, $wg__input_items, 1, 0, 0, ["a2", "a5"], $scope0_reason, 0);
 				$cg__input_items && _patch_render($scope2_id, "a6");
-				$wi__input_items && _subscribe(_unfilled_if($scope0_reason, 0) && $for_content__item_alt__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }));
+				$wi__input_items && _subscribe(_unfilled_if($scope0_reason, 0) && $for_content__item_alt__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), $cg__input_items && "a6", $wg__input_items);
 			}, $scope1_id, 0)
 		});
 		_patch_child_end();

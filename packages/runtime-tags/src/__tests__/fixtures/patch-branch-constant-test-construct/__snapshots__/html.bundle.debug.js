@@ -26,7 +26,7 @@ _shells({
 	"__tests__/page.marko_5*shell": "__tests__/page.marko_5*shell,<p>up</p>"
 });
 var page_default = _template("__tests__/page.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_down = _write_if($scope0_reason, 0), $wg__input_down = _write_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wi__input_down = _write_if($scope0_reason, 0), $wg__input_down = _write_guard($scope0_reason, 0), $cg__input_down = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_down__closures = new Set();
 	_for_of(ITEMS, (m) => {
@@ -53,8 +53,8 @@ var page_default = _template("__tests__/page.marko", (input) => {
 							return 1;
 						}
 					}, $scope3_id, "#text/0", 1, $wg__input_down, 1, 0, 0, ["__tests__/page.marko_4*shell", "__tests__/page.marko_5*shell"], $scope0_reason, 0);
-					_client_guard($scope0_reason, 0) && _patch_render($scope3_id, "__tests__/page.marko_3_input_down#0:3/subscribe");
-					$wi__input_down && _subscribe(_unfilled_if($scope0_reason, 0) && $input_down__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/page.marko", "6:8"));
+					$cg__input_down && _patch_render($scope3_id, "__tests__/page.marko_3_input_down#0:3/subscribe");
+					$wi__input_down && _subscribe(_unfilled_if($scope0_reason, 0) && $input_down__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/page.marko", "6:8"), $cg__input_down && "__tests__/page.marko_3_input_down#0:3/subscribe", $wg__input_down);
 					return 0;
 				}
 			}, $scope2_id, "#text/1", 1, 0, 1, 0, 0, ["__tests__/page.marko_3*shell"], 0, 0);

@@ -1,5 +1,5 @@
 // template.marko
-const $showFoodiv_content__count = /*@__PURE__*/ _closure_get(5, ($scope) => _text($scope.a, $scope._.e));
+const $showFoodiv_content__count = /*@__PURE__*/ _closure_get(5, ($scope) => _text($scope.a, $scope._.e), 0, "a3");
 const $showFoodiv_content = _content("a2", "count <!>", "b%", $showFoodiv_content__count);
 const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag(0);
 const $if_content__input_content = /*@__PURE__*/ _if_closure_patch("a5", 1, 0, ($scope) => $if_content__dynamicTag($scope, $scope._.e));

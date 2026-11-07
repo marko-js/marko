@@ -7,7 +7,7 @@ _shells({
 	"__tests__/tags/child.marko": "^__tests__/tags/child.marko !,"
 });
 var child_default = _template("__tests__/tags/child.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_label = _filled_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = new Set();
 	const $count__closures = new Set();
@@ -17,8 +17,8 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 		const $scope1_reason = _scope_reason();
 		_html(`<em>${_text_mark($scope1_id, "#text/1", input.label, 1, $scope0_reason, 0)} ${_text_mark($scope1_id, "#text/2", count, 2)}</em>${_el_mark($scope1_id, "#em/0")}`);
 		_script($scope1_id, "__tests__/tags/child.marko_1");
-		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "__tests__/tags/child.marko_1_input_label#0:2/subscribe", _client_guard($scope0_reason, 0));
-		_subscribe($count__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/child.marko", "2:2")));
+		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "__tests__/tags/child.marko_1_input_label#0:2/subscribe", $cg__input_label);
+		_subscribe($count__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/child.marko", "2:2"), $cg__input_label && "__tests__/tags/child.marko_1_input_label#0:2/subscribe"), "__tests__/tags/child.marko_1_count#0:3/subscribe");
 	}, $scope0_id) };
 	const $return = Content;
 	$fg__input_label && _patch_subscribers($scope0_id, "__tests__/tags/child.marko_0_input_label#2/subscribers", "input_label");

@@ -15,15 +15,15 @@ _shells({
 	b: "b;b%;<!><!><!>"
 });
 var template_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_wrap = _write_guard($scope0_reason, 1), $fg__input_x = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $cg__input_x = _client_guard($scope0_reason, 2), $wg__input_wrap = _write_guard($scope0_reason, 1), $fg__input_x = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_x__closures = /* @__PURE__ */ new Set();
 	_dynamic_tag($scope0_id, "a", input.wrap ? outer_default : "div", {}, 2, _content_resume("b0", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_html(`body ${_text_mark($scope1_id, "a", input.x, 2, $scope0_reason, 2)}`);
-		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "b1", _client_guard($scope0_reason, 2));
-		_subscribe(_unfilled_if($scope0_reason, 2) && $input_x__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }));
+		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "b1", $cg__input_x);
+		_subscribe(_unfilled_if($scope0_reason, 2) && $input_x__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }), $cg__input_x && "b1");
 	}, $scope0_id, ($scope) => $scope0_page ? [{ e: input.x }] : []), 0, $wg__input_wrap, $scope0_reason, 1, 0, void 0, 0, 0, "b0");
 	$fg__input_x && _patch_subscribers($scope0_id, "b2", "e");
 	_scope($scope0_id, {

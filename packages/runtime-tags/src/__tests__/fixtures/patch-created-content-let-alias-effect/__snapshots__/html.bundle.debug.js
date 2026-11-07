@@ -37,7 +37,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope2_id = _scope_id();
 				_html(`<div></div>${_el_mark($scope2_id, "#div/0")}`);
 				_script($scope2_id, "__tests__/template.marko_2_text#0:6");
-				_subscribe($text__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "4:4"));
+				_subscribe($text__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "4:4"), "__tests__/template.marko_2_text#0:6/subscribe");
 			}, $scope1_id, 0) });
 			_patch_child_end();
 			_scope($scope1_id, {

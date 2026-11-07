@@ -1,11 +1,11 @@
 // tags/child.marko
 const $setup$1 = [[], []];
 _shells({
-	b0: "b0 b6!b1",
+	b0: "b0 b3!b1",
 	b: "b !,"
 });
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_label = _filled_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	const $count__closures = /* @__PURE__ */ new Set();
@@ -15,11 +15,11 @@ var child_default = _template("b", (input) => {
 		_scope_reason();
 		_html(`<em>${_text_mark($scope1_id, "b", input.label, 1, $scope0_reason, 0)} ${_text_mark($scope1_id, "c", count, 2)}</em>${_el_mark($scope1_id, "a")}`);
 		_script($scope1_id, "b1");
-		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "b2", _client_guard($scope0_reason, 0));
-		_subscribe($count__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) })));
+		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "b2", $cg__input_label);
+		_subscribe($count__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), $cg__input_label && "b2"), "b3");
 	}, $scope0_id) };
-	$fg__input_label && _patch_subscribers($scope0_id, "b3", "c");
-	_patch_fill($scope0_id, "vb4", count, 1);
+	$fg__input_label && _patch_subscribers($scope0_id, "b4", "c");
+	_patch_fill($scope0_id, "vb5", count, 1);
 	_scope($scope0_id, {
 		c: input.label,
 		d: count,

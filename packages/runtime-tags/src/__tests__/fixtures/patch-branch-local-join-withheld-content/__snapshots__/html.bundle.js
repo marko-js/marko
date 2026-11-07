@@ -21,7 +21,7 @@ var child_default = _template("b", (input) => {
 				_scope_reason();
 				_html(`<em>${_text_mark($scope2_id, "a", c, 1, $scope0_reason, 6)}</em>`);
 				_unfilled_if($scope0_reason, 6) && _patch_subscribe($scope2_id, "b1", $cg__input_b);
-				_subscribe(_unfilled_if($scope0_reason, 6) && $if_content__c__closures, _scope($scope2_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope1_id) }));
+				_subscribe(_unfilled_if($scope0_reason, 6) && $if_content__c__closures, _scope($scope2_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope1_id) }), $cg__input_b && "b1");
 			}, $scope1_id) };
 			_html("<section>");
 			_attr_content("b", $scope1_id, input.mode ? frag.content : null, 0, 1, $scope0_reason, 8);

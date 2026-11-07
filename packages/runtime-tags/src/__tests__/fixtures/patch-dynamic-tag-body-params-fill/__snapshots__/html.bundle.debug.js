@@ -8,7 +8,7 @@ _shells({
 	"__tests__/template.marko": "__tests__/template.marko;b%;<!><!><!>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_card__OR__input_tag = _write_guard($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 2), $fg__input_card = _filled_guard($scope0_reason, 3), $fg__input_tag = _filled_guard($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $cg__input_label = _client_guard($scope0_reason, 2), $wg__input_card__OR__input_tag = _write_guard($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 2), $fg__input_card = _filled_guard($scope0_reason, 3), $fg__input_tag = _filled_guard($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = new Set();
 	const Card = { content: _content_resume("__tests__/template.marko_2*content", ({ label, content }) => {
@@ -41,8 +41,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
 		_html(`<em>${_text_mark($scope1_id, "#text/0", input.label, 1, $scope0_reason, 2)}</em>`);
-		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_label#0:3/subscribe", _client_guard($scope0_reason, 2));
-		_subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "6:2"));
+		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_label#0:3/subscribe", $cg__input_label);
+		_subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "6:2"), $cg__input_label && "__tests__/template.marko_1_input_label#0:3/subscribe");
 	}, $scope0_id, ($scope) => $scope0_page ? [{ input_label: input.label }] : []) };
 	_dynamic_tag($scope0_id, "#text/0", input.card ? Card : "span", {
 		label: input.tag,

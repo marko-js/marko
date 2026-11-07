@@ -7,7 +7,7 @@ _shells({
 	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0; D l%;<button> </button><!><!>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $fg__input_a = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $cg__input_a = _client_guard($scope0_reason, 2), $fg__input_a = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_a__closures = new Set();
 	let n = 0;
@@ -16,8 +16,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
 		_html(_text_mark($scope1_id, "#text/0", input.a.toUpperCase(), 2, $scope0_reason, 2));
-		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_a#0:6/subscribe", _client_guard($scope0_reason, 2));
-		_subscribe(_unfilled_if($scope0_reason, 2) && $input_a__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4"));
+		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_a#0:6/subscribe", $cg__input_a);
+		_subscribe(_unfilled_if($scope0_reason, 2) && $input_a__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4"), $cg__input_a && "__tests__/template.marko_1_input_a#0:6/subscribe");
 	}, $scope0_id, ($scope) => $scope0_page ? [{ input_a: input.a }] : []), 0, _write_guard($scope0_reason, 1), $scope0_reason, 1, 0, void 0, 0, 0, "__tests__/template.marko_1*content");
 	_script($scope0_id, "__tests__/template.marko_0");
 	$fg__input_a && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_a#6/subscribers", "input_a");

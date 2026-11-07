@@ -9,7 +9,7 @@ _shells({
 	a0: "a0;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_title = _filled_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_title = _client_guard($scope0_reason, 0), $fg__input_title = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_title__closures = /* @__PURE__ */ new Set();
 	let count = 0;
@@ -50,8 +50,8 @@ var template_default = _template("a", (input) => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
 			_html(`<em>${_text_mark($scope1_id, "a", input.title, 1, $scope0_reason, 0)}</em>`);
-			_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "a5", _client_guard($scope0_reason, 0));
-			_subscribe(_unfilled_if($scope0_reason, 0) && $input_title__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
+			_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "a5", $cg__input_title);
+			_subscribe(_unfilled_if($scope0_reason, 0) && $input_title__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), $cg__input_title && "a5");
 		}, $scope0_id) })
 	});
 	_patch_child_end();

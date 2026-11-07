@@ -3,7 +3,7 @@
     "template.marko.page.mjs": {
       "total": {
         "min": 15998,
-        "brotli": 6806
+        "brotli": 6799
       },
       "files": {
         "tags/rowsy.marko": 2020,
@@ -16,7 +16,7 @@
     "brotli": 261
   },
   "patch": {
-    "min": 396,
-    "brotli": 171
+    "min": 398,
+    "brotli": 170
   }
 }

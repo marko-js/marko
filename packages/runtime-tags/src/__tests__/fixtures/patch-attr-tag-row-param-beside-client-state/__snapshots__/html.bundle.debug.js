@@ -44,7 +44,7 @@ var wrap_default = _template("__tests__/tags/wrap.marko", (input) => {
 			_subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope1_id, {
 				item: _unfilled_if($scope0_reason, 2) && item,
 				_: (_write_if($scope0_reason, 0) || _write_if($scope1_reason, 0)) && _scope_with_id($scope0_id)
-			}, "__tests__/tags/wrap.marko", "3:6", { item: "2:8" }));
+			}, "__tests__/tags/wrap.marko", "3:6", { item: "2:8" }), _client_guard($scope0_reason, 2) && "__tests__/tags/wrap.marko_1_input_label#0:4/subscribe");
 		}, $scope0_id, 0) });
 	});
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);

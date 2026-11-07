@@ -33,7 +33,7 @@ _shells({
 	"__tests__/tags/tree-b.marko": `__tests__/tags/tree-b.marko${_shell_marker($setup$2)};${((_w0) => `D%b/${_w0}&l`)("b%c")};${((_w0) => `<div><!>${_w0}</div>`)($template$3)}`
 });
 var tree_b_default = _template("__tests__/tags/tree-b.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_node_kid = _write_guard($scope0_reason, 1), $wi__input_node_kid = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_node_kid = _write_guard($scope0_reason, 1), $cg__input_node_kid = _client_guard($scope0_reason, 1), $wi__input_node_kid = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_node_kid__closures = new Set();
 	_html(`<div>${_text_mark($scope0_id, "#text/0", input.node.name, 1, $scope0_reason, 0)}`);
@@ -45,8 +45,8 @@ var tree_b_default = _template("__tests__/tags/tree-b.marko", (input) => {
 			const $scope1_reason = _scope_reason();
 			const $scope1_id = _scope_id();
 			_dynamic_tag($scope1_id, "#text/0", tree_a_default, { node: input.node.kid }, 1, 0, 0, $wg__input_node_kid, $scope0_reason, 1);
-			_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "__tests__/tags/tree-b.marko_1_input_node_kid#0:6/subscribe", _client_guard($scope0_reason, 1));
-			$wi__input_node_kid && _subscribe(_unfilled_if($scope0_reason, 1) && $input_node_kid__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/tree-b.marko", "2:4"));
+			_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "__tests__/tags/tree-b.marko_1_input_node_kid#0:6/subscribe", $cg__input_node_kid);
+			$wi__input_node_kid && _subscribe(_unfilled_if($scope0_reason, 1) && $input_node_kid__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/tree-b.marko", "2:4"), $cg__input_node_kid && "__tests__/tags/tree-b.marko_1_input_node_kid#0:6/subscribe", $wg__input_node_kid);
 		}, $scope0_id)
 	});
 	_patch_child_end();
@@ -66,7 +66,7 @@ _shells({
 	"__tests__/tags/tree-a.marko": `__tests__/tags/tree-a.marko${_shell_marker($setup$1)};${((_w0) => `D%b/${_w0}&l`)("b%c")};${((_w0) => `<li><!>${_w0}</li>`)($template$3)}`
 });
 var tree_a_default = _template("__tests__/tags/tree-a.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_node_kid = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_node_kid = _client_guard($scope0_reason, 1), $wi__input_node_kid = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_node_kid__closures = new Set();
 	_html(`<li>${_text_mark($scope0_id, "#text/0", input.node.name, 1, $scope0_reason, 0)}`);
@@ -81,11 +81,11 @@ var tree_a_default = _template("__tests__/tags/tree-a.marko", (input) => {
 			const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 			tree_b_default({ node: input.node.kid });
 			_patch_child_end();
-			_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "__tests__/tags/tree-a.marko_1_input_node_kid#0:6/subscribe", _client_guard($scope0_reason, 1));
+			_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "__tests__/tags/tree-a.marko_1_input_node_kid#0:6/subscribe", $cg__input_node_kid);
 			_subscribe(_unfilled_if($scope0_reason, 1) && $input_node_kid__closures, _scope($scope1_id, {
 				_: $wi__input_node_kid && _scope_with_id($scope0_id),
 				"#childScope/0": _existing_scope($childScope)
-			}, "__tests__/tags/tree-a.marko", "2:4"));
+			}, "__tests__/tags/tree-a.marko", "2:4"), $cg__input_node_kid && "__tests__/tags/tree-a.marko_1_input_node_kid#0:6/subscribe", 0);
 			_resume_branch($scope1_id);
 		}, $scope0_id)
 	});

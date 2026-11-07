@@ -45,7 +45,7 @@ _shells({
 	"__tests__/template.marko": `__tests__/template.marko${_shell_marker($setup)};${((_w0) => `b/${_w0}&b`)("b%c")};${((_w0) => `<!>${_w0}<!>`)($template$1)}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_wrap = _filled_guard($scope0_reason, 4), $wi__input_wrap = _write_if($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $cg__input_wrap = _client_guard($scope0_reason, 4), $fg__input_wrap = _filled_guard($scope0_reason, 4), $wi__input_wrap = _write_if($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	const $input_wrap__closures = new Set();
 	_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 3) << 3 | _updates_from($scope0_reason, 2) << 5);
@@ -61,15 +61,15 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope2_reason = _scope_reason();
 				_html(_text_mark($scope2_id, "#text/0", t, 2, 4, 0));
 				_unfilled_if() && _patch_subscribe($scope2_id, "__tests__/template.marko_2_t#1:2/subscribe");
-				_subscribe(_unfilled_if() && $wi__t && $tab_content__t__closures, _scope($scope2_id, { _: ($wi__input_wrap || $wi__t) && _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:25"));
+				_subscribe(_unfilled_if() && $wi__t && $tab_content__t__closures, _scope($scope2_id, { _: ($wi__input_wrap || $wi__t) && _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:25"), "__tests__/template.marko_2_t#1:2/subscribe");
 			}, $scope1_id, ($scope) => $scope1_page ? [{ t }] : []), 0, _write_guard($scope0_reason, 4), $scope0_reason, 4, 0, void 0, 0, 0, "__tests__/template.marko_2*content");
 			_patch_subscribers($scope1_id, "__tests__/template.marko_1_t#2/subscribers", "t");
-			_unfilled_if($scope0_reason, 4) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_wrap#0:5/subscribe", _client_guard($scope0_reason, 4));
+			_unfilled_if($scope0_reason, 4) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_wrap#0:5/subscribe", $cg__input_wrap);
 			_subscribe(_unfilled_if($scope0_reason, 4) && $input_wrap__closures, _scope($scope1_id, {
 				t: _unfilled_if($scope0_reason, 4) && t,
 				_: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id),
 				"ClosureScopes:t/7": $wi__t && $tab_content__t__closures
-			}, "__tests__/template.marko", "3:6", { t: "2:8" }));
+			}, "__tests__/template.marko", "3:6", { t: "2:8" }), $cg__input_wrap && "__tests__/template.marko_1_input_wrap#0:5/subscribe");
 			(_client_branch_if("__tests__/template.marko_2*content", $scope1_id) || _unfilled_if($scope0_reason, 4)) && _patch_write($scope1_id, "PatchMarkedWrite:t", t);
 		}, $scope0_id, () => [{ t }]) });
 	});

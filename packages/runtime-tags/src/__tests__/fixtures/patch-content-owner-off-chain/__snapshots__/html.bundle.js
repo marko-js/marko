@@ -12,7 +12,7 @@ const $template$1 = "";
 const $walks = /*@__PURE__*/ ((_w0) => `0${_w0}&`)("");
 const $setup$2 = _shell_setup([[], []], ["a>", $setup$3]);
 _shells({
-	c1: "c1 c5!c0; D%c%;<button><!> <!></button>",
+	c2: "c2 c1!c0; D%c%;<button><!> <!></button>",
 	c: `c${_shell_marker($setup$2)};${((_w0) => `0${_w0}&`)("")};${""}`
 });
 var src_default = _template("c", (input) => {
@@ -22,20 +22,20 @@ var src_default = _template("c", (input) => {
 	let count = 0;
 	let $tab;
 	forOf(input.items, (t) => {
-		$tab = attrTags($tab, { content: _content("c1", () => {
+		$tab = attrTags($tab, { content: _content("c2", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
 			_html(`<button>${_text_mark($scope1_id, "b", t, 1, 4, 0)} ${_text_mark($scope1_id, "c", count, 2)}</button>${_el_mark($scope1_id, "a")}`);
 			_script($scope1_id, "c0");
-			_subscribe($count__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
+			_subscribe($count__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "c1");
 		}, $scope0_id, 0) });
 	});
 	const $childScope = _peek_scope_id($scope0_id, "a", 0, _unfilled_if($scope0_reason, 0) && 1);
 	let h = holder_default({ tab: $tab });
-	_unfilled_if($scope0_reason, 0) && _var($scope0_id, "b", $childScope, "c2");
+	_unfilled_if($scope0_reason, 0) && _var($scope0_id, "b", $childScope, "c3");
 	_patch_child_end();
 	const $return = h;
-	_patch_fill($scope0_id, "vc3", count, 1);
+	_patch_fill($scope0_id, "vc4", count, 1);
 	_scope($scope0_id, {
 		f: count,
 		h: $count__closures,

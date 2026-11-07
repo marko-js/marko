@@ -21,7 +21,7 @@ var child_default = _template("b", (input) => {
 				_unfilled_if($scope0_reason, 5) && _patch_subscribe($scope2_id, "b1");
 				_unfilled_if($scope0_reason, 6) && _patch_subscribe($scope2_id, "b2");
 				_patch_render($scope2_id, "b3", [_filled_guard($scope0_reason, 5) && ">>e", _filled_guard($scope0_reason, 6) && ">>f"], $scope0_reason, 0);
-				_subscribe(_unfilled_if($scope0_reason, 6) && $input_b__closures, _subscribe(_unfilled_if($scope0_reason, 5) && $input_a__closures, _scope($scope2_id, { _: $wi__input_show__OR__input_a__OR__input_b__OR__input_mode && _scope_with_id($scope1_id) })));
+				_subscribe(_unfilled_if($scope0_reason, 6) && $input_b__closures, _subscribe(_unfilled_if($scope0_reason, 5) && $input_a__closures, _scope($scope2_id, { _: $wi__input_show__OR__input_a__OR__input_b__OR__input_mode && _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 5) && "b1"), _client_guard($scope0_reason, 6) && "b2");
 			}, $scope1_id) };
 			_html("<section>");
 			_attr_content("a", $scope1_id, input.mode ? frag.content : null, 0, 1, $scope0_reason, 7);

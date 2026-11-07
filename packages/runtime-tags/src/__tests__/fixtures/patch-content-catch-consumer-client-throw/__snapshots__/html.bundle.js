@@ -109,7 +109,7 @@ var template_default = _template("a", (input) => {
 			_subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope2_id, {
 				_: _scope_with_id($scope0_id),
 				Ci: $wi__input_label && 1
-			}));
+			}), $cg__input_label && "a2");
 		}, $scope0_id) })
 	});
 	_patch_child_end();

@@ -21,7 +21,7 @@ _shells({
 	a4: `a4${_shell_marker([[], []], ["a>", $setup])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks)};${$template}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_note = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_note = _client_guard($scope0_reason, 1), $cg__input_bs = _client_guard($scope0_reason, 0), $fg__input_note = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = /* @__PURE__ */ new Set();
 	_for_of(input.bs, (b) => {
@@ -34,9 +34,9 @@ var template_default = _template("a", (input) => {
 			_scope_reason();
 			const $scope2_id = _scope_id();
 			_html(`${_text_mark($scope2_id, "a", b, 1, $scope0_reason, 0)}:${_text_mark($scope2_id, "b", input.note, 2, $scope0_reason, 1)}`);
-			_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope2_id, "a0", _client_guard($scope0_reason, 1));
-			_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope2_id, "a1", _client_guard($scope0_reason, 0));
-			_subscribe(_unfilled_if($scope0_reason, 0) && $for_content__b__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_note__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) })));
+			_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope2_id, "a0", $cg__input_note);
+			_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope2_id, "a1", $cg__input_bs);
+			_subscribe(_unfilled_if($scope0_reason, 0) && $for_content__b__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_note__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), $cg__input_note && "a0"), $cg__input_bs && "a1");
 		}, $scope1_id) });
 		_patch_child_end();
 		_filled_guard($scope0_reason, 0) && _patch_subscribers($scope1_id, "a3", "c");

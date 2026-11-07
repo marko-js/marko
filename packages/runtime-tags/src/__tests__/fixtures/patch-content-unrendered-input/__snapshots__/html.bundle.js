@@ -85,7 +85,7 @@ _shells({
 	a: `a${_shell_marker($setup)};${((_w0, _w1) => ` D l/${_w0}&/${_w1}&`)("b%c", " b")};${((_w0, _w1) => `<button class=inc> </button>${_w0}${_w1}`)($template$1, $template)}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_rows = _filled_guard($scope0_reason, 4), $fg__input_guestText = _filled_guard($scope0_reason, 5), $fg__input_bodyText = _filled_guard($scope0_reason, 7);
+	const $scope0_reason = _scope_reason(), $cg__input_rows = _client_guard($scope0_reason, 4), $cg__input_guestText = _client_guard($scope0_reason, 5), $cg__input_bodyText = _client_guard($scope0_reason, 7), $fg__input_rows = _filled_guard($scope0_reason, 4), $fg__input_guestText = _filled_guard($scope0_reason, 5), $fg__input_bodyText = _filled_guard($scope0_reason, 7);
 	const $scope0_id = _scope_id();
 	const $input_rows__closures = /* @__PURE__ */ new Set();
 	const $input_guestText__closures = /* @__PURE__ */ new Set();
@@ -103,19 +103,19 @@ var template_default = _template("a", (input) => {
 			const $childScope = _peek_scope_id($scope1_id, "a", 0);
 			panel_default({ rows: input.rows });
 			_patch_child_end();
-			_unfilled_if($scope0_reason, 4) && _patch_subscribe($scope1_id, "a0", _client_guard($scope0_reason, 4));
+			_unfilled_if($scope0_reason, 4) && _patch_subscribe($scope1_id, "a0", $cg__input_rows);
 			_subscribe(_unfilled_if($scope0_reason, 4) && $input_rows__closures, _scope($scope1_id, {
 				_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id),
 				a: _existing_scope($childScope)
-			}));
+			}), $cg__input_rows && "a0", 0);
 			_resume_branch($scope1_id);
 		}, $scope0_id) }),
 		guest: attrTag({ content: _content_resume("a3", () => {
 			_scope_reason();
 			const $scope2_id = _scope_id();
 			_html(`<p>${_text_mark($scope2_id, "a", input.guestText, 1, $scope0_reason, 5)}</p>`);
-			_unfilled_if($scope0_reason, 5) && _patch_subscribe($scope2_id, "a1", _client_guard($scope0_reason, 5));
-			_subscribe(_unfilled_if($scope0_reason, 5) && $input_guestText__closures, _scope($scope2_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }));
+			_unfilled_if($scope0_reason, 5) && _patch_subscribe($scope2_id, "a1", $cg__input_guestText);
+			_subscribe(_unfilled_if($scope0_reason, 5) && $input_guestText__closures, _scope($scope2_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }), $cg__input_guestText && "a1");
 		}, $scope0_id) })
 	});
 	_patch_child_end();
@@ -127,8 +127,8 @@ var template_default = _template("a", (input) => {
 			_scope_reason();
 			const $scope3_id = _scope_id();
 			_html(`<p>${_text_mark($scope3_id, "a", input.bodyText, 1, $scope0_reason, 7)}</p>`);
-			_unfilled_if($scope0_reason, 7) && _patch_subscribe($scope3_id, "a4", _client_guard($scope0_reason, 7));
-			_subscribe(_unfilled_if($scope0_reason, 7) && $input_bodyText__closures, _scope($scope3_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id) }));
+			_unfilled_if($scope0_reason, 7) && _patch_subscribe($scope3_id, "a4", $cg__input_bodyText);
+			_subscribe(_unfilled_if($scope0_reason, 7) && $input_bodyText__closures, _scope($scope3_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id) }), $cg__input_bodyText && "a4");
 		}, $scope0_id)
 	});
 	_patch_child_end();

@@ -30,7 +30,7 @@ _shells({
 	a5: "a5;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_on = _write_guard($scope0_reason, 3), $wi__input_rows__OR__input_on__OR__input_note = _write_if($scope0_reason, 1), $fg__input_on = _filled_guard($scope0_reason, 3), $cg__input_rows = _client_guard($scope0_reason, 2), $fg__input_note = _filled_guard($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $cg__input_note = _client_guard($scope0_reason, 4), $cg__input_rows = _client_guard($scope0_reason, 2), $wg__input_on = _write_guard($scope0_reason, 3), $wi__input_rows__OR__input_on__OR__input_note = _write_if($scope0_reason, 1), $fg__input_on = _filled_guard($scope0_reason, 3), $fg__input_note = _filled_guard($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = /* @__PURE__ */ new Set();
 	_html("<main>");
@@ -41,9 +41,9 @@ var template_default = _template("a", (input) => {
 			const $scope2_id = _scope_id();
 			_scope_reason();
 			_html(`<em>${_text_mark($scope2_id, "a", input.note, 1, $scope0_reason, 4)} ${_text_mark($scope2_id, "b", row.label, 2, $scope0_reason, 2)}</em>`);
-			_unfilled_if($scope0_reason, 4) && _patch_subscribe($scope2_id, "a1", _client_guard($scope0_reason, 4));
+			_unfilled_if($scope0_reason, 4) && _patch_subscribe($scope2_id, "a1", $cg__input_note);
 			_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope2_id, "a2", $cg__input_rows);
-			_subscribe(_unfilled_if($scope0_reason, 2) && $for_content__row_label__closures, _subscribe(_unfilled_if($scope0_reason, 4) && $input_note__closures, _scope($scope2_id, { _: $wi__input_rows__OR__input_on__OR__input_note && _scope_with_id($scope1_id) })));
+			_subscribe(_unfilled_if($scope0_reason, 2) && $for_content__row_label__closures, _subscribe(_unfilled_if($scope0_reason, 4) && $input_note__closures, _scope($scope2_id, { _: $wi__input_rows__OR__input_on__OR__input_note && _scope_with_id($scope1_id) }), $cg__input_note && "a1"), $cg__input_rows && "a2");
 		}, $scope1_id, ($scope) => $scope0_page ? [{ f: input.note }, {
 			d: row?.label,
 			_: $scope($scope0_id)

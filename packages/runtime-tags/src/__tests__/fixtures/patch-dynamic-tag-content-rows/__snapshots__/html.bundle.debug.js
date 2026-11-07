@@ -76,7 +76,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_subscribe(_unfilled_if($scope0_reason, 3) && $input_text__closures, _scope($scope2_id, {
 				_: $wi__input_rows__OR__input_text && _scope_with_id($scope0_id),
 				"ClosureSignalIndex:input_text/6": $wi__input_text && 1
-			}, "__tests__/template.marko", "4:4"));
+			}, "__tests__/template.marko", "4:4"), $cg__input_text && "__tests__/template.marko_2_input_text#0:5/subscribe");
 		}, $scope0_id) }),
 		content: _content_resume("__tests__/template.marko_3*content", () => {
 			const $scope3_reason = _scope_reason();
@@ -86,7 +86,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_subscribe(_unfilled_if($scope0_reason, 3) && $input_text__closures, _scope($scope3_id, {
 				_: $wi__input_rows__OR__input_text && _scope_with_id($scope0_id),
 				"ClosureSignalIndex:input_text/6": $wi__input_text && 2
-			}, "__tests__/template.marko", "1:2"));
+			}, "__tests__/template.marko", "1:2"), $cg__input_text && "__tests__/template.marko_3_input_text#0:5/subscribe");
 		}, $scope0_id)
 	});
 	_patch_child_end();

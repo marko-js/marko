@@ -54,7 +54,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_subscribe($n__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_show__closures, _scope($scope1_id, {
 				label,
 				_: _scope_with_id($scope0_id)
-			}, "__tests__/template.marko", "4:6", { label: "3:8" })));
+			}, "__tests__/template.marko", "4:6", { label: "3:8" }), $cg__input_show && "__tests__/template.marko_1_input_show#0:6/subscribe"), "__tests__/template.marko_1_n#0:7/subscribe");
 		}, $scope0_id, 0) });
 	});
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);

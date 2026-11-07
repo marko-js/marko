@@ -64,7 +64,7 @@ var child_default = _template("b", (input) => {
 						}
 					}, $scope2_id, "a", 1, $wg__input_show, 1, 0, 0, ["b1"], $scope0_reason, 1);
 					_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope2_id, "b4", $cg__input_show);
-					_subscribe(_unfilled_if($scope0_reason, 1) && $if_content__s__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }));
+					_subscribe(_unfilled_if($scope0_reason, 1) && $if_content__s__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), $cg__input_show && "b4", $wg__input_show);
 					$wg__input_show || _resume_branch($scope2_id);
 				}, $scope1_id, 0) });
 			});

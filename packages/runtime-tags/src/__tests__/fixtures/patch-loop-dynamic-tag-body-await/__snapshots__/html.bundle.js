@@ -47,7 +47,7 @@ var template_default = _template("a", (input) => {
 				_html(`<b>${_text_mark($scope3_id, "a", row.label, 1, $scope0_reason, 0)} ${_text_mark($scope3_id, "b", v, 2, $scope0_reason, 0)}</b>`);
 				_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope3_id, "a1", $cg__input_rows);
 				_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope3_id, "a2", $cg__input_rows);
-				_subscribe(_unfilled_if($scope0_reason, 0) && $await_content__v__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $for_content__row_label__closures, _scope($scope3_id, { _: $wi__input_rows && _scope_with_id($scope2_id) })));
+				_subscribe(_unfilled_if($scope0_reason, 0) && $await_content__v__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $for_content__row_label__closures, _scope($scope3_id, { _: $wi__input_rows && _scope_with_id($scope2_id) }), $cg__input_rows && "a1"), $cg__input_rows && "a2");
 			}, $scope2_id, ($scope) => $scope0_page ? [{ f: row?.label }, {
 				c: v,
 				_: $scope($scope1_id)

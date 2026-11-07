@@ -7,7 +7,7 @@ _shells({
 	"__tests__/tags/host.marko": "__tests__/tags/host.marko !__tests__/tags/host.marko_0_extra#4; ;<div></div>"
 });
 var host_default = _template("__tests__/tags/host.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_label = _filled_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = new Set();
 	const extra = { content: _content_resume("__tests__/tags/host.marko_1*content", () => {
@@ -15,8 +15,8 @@ var host_default = _template("__tests__/tags/host.marko", (input) => {
 		const $scope1_reason = _scope_reason();
 		_html(`<em>${_text_mark($scope1_id, "#text/0", input.label, 1, $scope0_reason, 0)}</em>`);
 		_script($scope1_id, "__tests__/tags/host.marko_1");
-		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "__tests__/tags/host.marko_1_input_label#0:3/subscribe", _client_guard($scope0_reason, 0));
-		_subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/host.marko", "1:2"));
+		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "__tests__/tags/host.marko_1_input_label#0:3/subscribe", $cg__input_label);
+		_subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/host.marko", "1:2"), $cg__input_label && "__tests__/tags/host.marko_1_input_label#0:3/subscribe");
 	}, $scope0_id) };
 	_html("<div>");
 	_attr_content("#div/0", $scope0_id, extra, 0, 1, 0, 0);

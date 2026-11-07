@@ -39,7 +39,7 @@ _shells({
 	a: `a${_shell_marker($setup)};${((_w0) => `b/${_w0}&b`)("b%c")};${((_w0) => `<!>${_w0}<!>`)($template)}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_wrap = _filled_guard($scope0_reason, 4), $wi__input_wrap = _write_if($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $cg__input_wrap = _client_guard($scope0_reason, 4), $fg__input_wrap = _filled_guard($scope0_reason, 4), $wi__input_wrap = _write_if($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	const $input_wrap__closures = /* @__PURE__ */ new Set();
 	_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 3) << 3 | _updates_from($scope0_reason, 2) << 5);
@@ -55,15 +55,15 @@ var template_default = _template("a", (input) => {
 				_scope_reason();
 				_html(_text_mark($scope2_id, "a", t, 2, 4, 0));
 				_unfilled_if() && _patch_subscribe($scope2_id, "a1");
-				_subscribe(_unfilled_if() && $wi__t && $tab_content__t__closures, _scope($scope2_id, { _: ($wi__input_wrap || $wi__t) && _scope_with_id($scope1_id) }));
+				_subscribe(_unfilled_if() && $wi__t && $tab_content__t__closures, _scope($scope2_id, { _: ($wi__input_wrap || $wi__t) && _scope_with_id($scope1_id) }), "a1");
 			}, $scope1_id, ($scope) => $scope1_page ? [{ c: t }] : []), 0, _write_guard($scope0_reason, 4), $scope0_reason, 4, 0, void 0, 0, 0, "a0");
 			_patch_subscribers($scope1_id, "a2", "c");
-			_unfilled_if($scope0_reason, 4) && _patch_subscribe($scope1_id, "a3", _client_guard($scope0_reason, 4));
+			_unfilled_if($scope0_reason, 4) && _patch_subscribe($scope1_id, "a3", $cg__input_wrap);
 			_subscribe(_unfilled_if($scope0_reason, 4) && $input_wrap__closures, _scope($scope1_id, {
 				c: _unfilled_if($scope0_reason, 4) && t,
 				_: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id),
 				h: $wi__t && $tab_content__t__closures
-			}));
+			}), $cg__input_wrap && "a3");
 			(_client_branch_if("a0", $scope1_id) || _unfilled_if($scope0_reason, 4)) && _patch_write($scope1_id, "xc", t);
 		}, $scope0_id, () => [{ 2: t }]) });
 	});

@@ -27,7 +27,7 @@ _shells({
 	"__tests__/template.marko": `__tests__/template.marko${_shell_marker($setup)};${((_w0) => ` b/${_w0}&b`)("b%c")};${((_w0) => `<button class=s>s</button>${_w0}<!>`)($template$1)}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_y = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $cg__input_y = _client_guard($scope0_reason, 2), $fg__input_y = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_y__closures = new Set();
 	const $s__closures = new Set();
@@ -43,8 +43,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope1_reason = _scope_reason();
 				const $scope1_id = _scope_id();
 				_html(`A${_text_mark($scope1_id, "#text/0", input.y, 2, $scope0_reason, 2)}`);
-				_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_y#0:5/subscribe", _client_guard($scope0_reason, 2));
-				_subscribe(_unfilled_if($scope0_reason, 2) && $input_y__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:4"));
+				_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_y#0:5/subscribe", $cg__input_y);
+				_subscribe(_unfilled_if($scope0_reason, 2) && $input_y__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:4"), $cg__input_y && "__tests__/template.marko_1_input_y#0:5/subscribe");
 			}, $scope0_id)
 		}), {
 			id: 2,
@@ -52,7 +52,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope2_reason = _scope_reason();
 				const $scope2_id = _scope_id();
 				_html(`B${_text_mark($scope2_id, "#text/0", s, 2)}`);
-				_subscribe($s__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "5:4"));
+				_subscribe($s__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "5:4"), "__tests__/template.marko_2_s#0:6/subscribe");
 			}, $scope0_id)
 		})
 	});

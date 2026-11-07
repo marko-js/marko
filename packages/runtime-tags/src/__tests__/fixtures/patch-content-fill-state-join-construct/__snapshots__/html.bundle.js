@@ -30,12 +30,12 @@ var card_default = _template("b", (input) => {
 
 // template.marko
 _shells({
-	a2: "a2 a7;D%c%c%;<span><!>/<!>/<!></span>",
-	a: "a !a4;D%b ;<main><!><button>+</button></main>",
-	a3: `a3${_shell_marker([[], []], ["a>", $setup])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks)};${$template}`
+	a3: "a3 a2;D%c%c%;<span><!>/<!>/<!></span>",
+	a: "a !a5;D%b ;<main><!><button>+</button></main>",
+	a4: `a4${_shell_marker([[], []], ["a>", $setup])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks)};${$template}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_p = _filled_guard($scope0_reason, 0), $cg__input_items = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_p = _client_guard($scope0_reason, 0), $cg__input_items = _client_guard($scope0_reason, 1), $fg__input_p = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $count__closures = /* @__PURE__ */ new Set();
 	const $p_name__closures = /* @__PURE__ */ new Set();
@@ -49,13 +49,13 @@ var template_default = _template("a", (input) => {
 		const $childScope = _peek_scope_id($scope1_id, "a", 0);
 		card_default({
 			title: item.title,
-			content: _content("a2", () => {
+			content: _content("a3", () => {
 				_scope_reason();
 				const $scope2_id = _scope_id();
 				_html(`<span>${_text_mark($scope2_id, "a", p.name, 1, $scope0_reason, 0)}/${_text_mark($scope2_id, "b", count, 2)}/${_text_mark($scope2_id, "c", item.id, 2, $scope0_reason, 1)}</span>`);
-				_client_guard($scope0_reason, 0) && _patch_render($scope2_id, "a0");
+				$cg__input_p && _patch_render($scope2_id, "a0");
 				$cg__input_items && _patch_render($scope2_id, "a1");
-				_subscribe(_unfilled_if($scope0_reason, 1) && $for_content__item_id__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $p_name__closures, _subscribe($count__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }))));
+				_subscribe(_unfilled_if($scope0_reason, 1) && $for_content__item_id__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $p_name__closures, _subscribe($count__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "a2"), $cg__input_p && "a0"), $cg__input_items && "a1");
 			}, $scope1_id, 0)
 		});
 		_patch_child_end();
@@ -64,10 +64,10 @@ var template_default = _template("a", (input) => {
 			l: _write_if($scope0_reason, 1) && _unfilled_if($scope0_reason, 1) && $for_content__item_id__closures,
 			a: _existing_scope($childScope)
 		});
-	}, 0, $scope0_id, "a", 1, 1, 1, 0, 0, "a3", $scope0_reason, 1);
+	}, 0, $scope0_id, "a", 1, 1, 1, 0, 0, "a4", $scope0_reason, 1);
 	_html(`<button>+</button>${_el_mark($scope0_id, "b")}</main>`);
-	_script($scope0_id, "a4");
-	$fg__input_p && $cg__input_items && _patch_subscribers($scope0_id, "a5", "i");
+	_script($scope0_id, "a5");
+	$fg__input_p && $cg__input_items && _patch_subscribers($scope0_id, "a6", "i");
 	_scope($scope0_id, {
 		g: count,
 		i: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && p?.name,

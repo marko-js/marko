@@ -7,7 +7,7 @@ _shells({
 	"__tests__/tags/frag-host.marko": "__tests__/tags/frag-host.marko !__tests__/tags/frag-host.marko_0_attrs#7; ;<section></section>"
 });
 var frag_host_default = _template("__tests__/tags/frag-host.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_mode = _filled_guard($scope0_reason, 0), $fg__input_b = _filled_guard($scope0_reason, 1), $cg__input_mode = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_mode = _client_guard($scope0_reason, 0), $cg__input_b = _client_guard($scope0_reason, 1), $fg__input_mode = _filled_guard($scope0_reason, 0), $fg__input_b = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_mode__closures = new Set();
 	const $input_b__closures = new Set();
@@ -16,8 +16,8 @@ var frag_host_default = _template("__tests__/tags/frag-host.marko", (input) => {
 		const $scope1_reason = _scope_reason();
 		_html(`<em>${_text_mark($scope1_id, "#text/0", input.mode ? "x" : "y", 1, $scope0_reason, 0)} ${_text_mark($scope1_id, "#text/1", input.b, 2, $scope0_reason, 1)}</em>`);
 		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "__tests__/tags/frag-host.marko_1_input_mode#0:3/subscribe", $cg__input_mode);
-		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "__tests__/tags/frag-host.marko_1_input_b#0:4/subscribe", _client_guard($scope0_reason, 1));
-		_subscribe(_unfilled_if($scope0_reason, 1) && $input_b__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $input_mode__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/frag-host.marko", "1:2")));
+		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "__tests__/tags/frag-host.marko_1_input_b#0:4/subscribe", $cg__input_b);
+		_subscribe(_unfilled_if($scope0_reason, 1) && $input_b__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $input_mode__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/frag-host.marko", "1:2"), $cg__input_mode && "__tests__/tags/frag-host.marko_1_input_mode#0:3/subscribe"), $cg__input_b && "__tests__/tags/frag-host.marko_1_input_b#0:4/subscribe");
 	}, $scope0_id) };
 	const attrs = { content: input.mode ? one : null };
 	_html("<section");
