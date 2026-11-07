@@ -570,12 +570,11 @@ export function _try(
   const renderers = (): void =>
     writeTryRenderers(
       branchId,
-      catchContent &&
-        (shellContent! & 1 ? catchId : _resume(catchContent, catchId!)),
-      placeholderContent &&
-        (shellContent! & 2
-          ? placeholderId
-          : _resume(placeholderContent, placeholderId!)),
+      catchContent,
+      placeholderContent,
+      catchId,
+      placeholderId,
+      shellContent,
     );
   // Whether `tryBoundary` writes the renderers itself once the body settles,
   // or not at all once its `@catch` rendered.
@@ -784,13 +783,24 @@ function clearTryRenderers(branchId: number) {
   });
 }
 
+// Each content's renderer, or its id where a patch page creates it from its
+// shell (`shellContent`: 1 the catch, 2 the placeholder).
 export function writeTryRenderers(
   branchId: number,
-  catchContent: unknown,
-  placeholderContent: unknown,
+  catchContent: ServerRenderer | undefined,
+  placeholderContent: ServerRenderer | undefined,
+  catchId: string | undefined,
+  placeholderId: string | undefined,
+  shellContent = 0,
 ) {
   writeScope(branchId, {
-    [AccessorProp.CatchContent]: catchContent,
-    [AccessorProp.PlaceholderContent]: placeholderContent,
+    [AccessorProp.CatchContent]:
+      catchContent &&
+      (shellContent & 1 ? catchId : _resume(catchContent, catchId!)),
+    [AccessorProp.PlaceholderContent]:
+      placeholderContent &&
+      (shellContent & 2
+        ? placeholderId
+        : _resume(placeholderContent, placeholderId!)),
   });
 }

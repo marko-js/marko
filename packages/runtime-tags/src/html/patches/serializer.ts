@@ -84,10 +84,7 @@ export class PatchSerializerState extends SerializerState {
     // Content keeps one identity, as main's write does; a bind makes its function anew.
     if (content) this.refs.set(val, ref);
     this.buf.push("_([");
-    this.writeScopePath(
-      getScopeId(registered.scope)!,
-      registered.id,
-    );
+    this.writeScopePath(getScopeId(registered.scope)!, registered.id);
     this.buf.push(
       "]," + quoteRegistryId(shipNamedShell(this.render, registered.id)),
     );

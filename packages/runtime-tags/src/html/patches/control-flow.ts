@@ -594,7 +594,7 @@ export function _try(
   // Set where a flush creates the catch.
   createsCatch?: 1,
   // Content created from its shell, by id: 1 the catch, 2 the placeholder.
-  shellContent?: number,
+  shellContent = 0,
 ) {
   const state = getState();
   // Its catch renders at its depth: a throw skips the pops of the calls it
@@ -659,12 +659,11 @@ export function _try(
   const renderers = (): void =>
     writeTryRenderers(
       branchId,
-      catchContent &&
-        (shellContent! & 1 ? catchId : _resume(catchContent, catchId!)),
-      placeholderContent &&
-        (shellContent! & 2
-          ? placeholderId
-          : _resume(placeholderContent, placeholderId!)),
+      catchContent,
+      placeholderContent,
+      catchId,
+      placeholderId,
+      shellContent,
     );
   // A patch shows `@placeholder` from received client state and creates
   // `@catch` in its entry, so no document reorder rides the flush stream.
@@ -704,7 +703,7 @@ export function _try(
         }
         // The client renders a catch no flush creates; one reading its error
         // sits where no patch renders its try (stateful or off the branch path).
-        if (shellContent! & 1) shipShell(state, catchId);
+        if (shellContent & 1) shipShell(state, catchId);
         writePatchEntry(
           state,
           scopeId,
