@@ -58,8 +58,8 @@ import {
   patchFillsSection,
 } from "./structure";
 
-// A hole a patch writes (a value, a control's, a site it renders): in
-// patch-written structure, not state-sourced.
+// A hole a patch writes (a value, a control's, a site it renders): in patch-written
+// structure, not state-sourced unless it only seeds a created scope.
 export function fillsHole(section: Section, extra: t.NodeExtra | undefined) {
   if (!patchFillsSection(section)) return false;
   const sources = getFillSources(extra);
@@ -148,8 +148,8 @@ export function fillsHandler(tagSection: Section, value: t.Expression) {
   }
 }
 
-// A read rendering a hole a patch fills: its value or content renders into its node,
-// or it picks its tag's branch, in patch-written structure with no state source.
+// A read rendering a hole a patch fills (`fillsHole`): its value or content renders
+// into its node, or it picks its tag's branch.
 export function isFilledHole(read: ReferencedExtra) {
   return (
     !!(read.rendersValue || read.rendersContent || picksBranch(read)) &&
