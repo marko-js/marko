@@ -1012,20 +1012,6 @@ export function runsByEntry(refs: ReferencedBindings) {
   return !!refs && every(refs, runsEffectOnPatch);
 }
 
-// A filled value such an effect's entry names, so its fill marks its change.
-export function effectEntryNamesFill(binding: Binding) {
-  return someAlias(binding, readsInEntryEffect, undefined, true);
-}
-
-function readsInEntryEffect(alias: Binding) {
-  for (const expr of alias.reads.keys()) {
-    if (expr.isEffect && runsByEntry(getReferencedBindings(expr))) {
-      return true;
-    }
-  }
-  return false;
-}
-
 // A binding holding only functions its template may register, each reading its
 // references from the live scope.
 export function holdsRegisteredFn(binding: Binding) {
