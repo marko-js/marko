@@ -1441,14 +1441,14 @@ function getCallerSelectedStructure(closure: Binding, section: Section) {
     : getParamSelectedStructure(section);
 }
 
-// A closure a created scope sets up, over a slot a patch writes but no fill re-runs:
-// the write re-renders it on a live scope too.
+// A closure over a slot a patch writes, in structure the client may render (a `mixed`
+// setup): the write re-renders it there, where no entry of the flush reaches.
 export function runsClosureByWrite(closure: Binding, section: Section) {
   const root = getCanonicalBinding(closure);
   return (
     !isDynamicClosure(section, closure) &&
     getPatchWrite(root).write &&
-    !!getCreatedSetup(section).get(closure)?.setup
+    getCreatedSetup(section).get(closure)?.setup === "mixed"
   );
 }
 

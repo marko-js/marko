@@ -43,7 +43,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}
 	}, $scope0_id, "#text/2", 1, _write_guard($scope0_reason, 2), 1, 0, 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 2);
 	$fg__input_note && $cg__input_show && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_note#5/subscribers", "input_note");
-	$fg__input_note && _patch_render($scope0_id, "__tests__/template.marko_1_input_note#0:5/setup", "input_note");
 	_scope($scope0_id, {
 		input_note: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1)) && input.note,
 		"ClosureScopes:input_note/7": $wi__input_note && (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && $input_note__closures

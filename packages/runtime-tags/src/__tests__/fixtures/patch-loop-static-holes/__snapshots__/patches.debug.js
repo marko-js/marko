@@ -18,8 +18,7 @@
       },
       "PatchText:#text/1": "b"
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-static-holes/template.marko_3*shell"]
-  }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-static-holes/template.marko_2*shell"],
-  "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-loop-static-holes/template.marko_1_input_note#0:5/setup": "input_note"
+  }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-static-holes/template.marko_2*shell"]
 }
 ;Cww
 
@@ -42,8 +41,7 @@
       },
       "PatchText:#text/1": "c"
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-static-holes/template.marko_3*shell"]
-  }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-static-holes/template.marko_2*shell"],
-  "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-loop-static-holes/template.marko_1_input_note#0:5/setup": "input_note"
+  }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-static-holes/template.marko_2*shell"]
 }
 
 // PATCH holding Cww
@@ -53,8 +51,7 @@
   }, {
     "PatchText:#text/1": "d"
   }],
-  "PatchBranch:#text/2": 0,
-  "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-loop-static-holes/template.marko_1_input_note#0:5/setup": "input_note"
+  "PatchBranch:#text/2": 0
 }
 
 // PATCH holding Cww
@@ -76,6 +73,5 @@
       },
       "PatchText:#text/1": "e"
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-static-holes/template.marko_3*shell"]
-  }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-static-holes/template.marko_2*shell"],
-  "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-loop-static-holes/template.marko_1_input_note#0:5/setup": "input_note"
+  }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-static-holes/template.marko_2*shell"]
 }

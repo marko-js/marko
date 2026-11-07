@@ -40,7 +40,6 @@ var template_default = _template("a", (input) => {
 		}
 	}, $scope0_id, "c", 1, _write_guard($scope0_reason, 2), 1, 0, 0, ["a2"], $scope0_reason, 2);
 	$fg__input_note && $cg__input_show && _patch_subscribers($scope0_id, "a6", "f");
-	$fg__input_note && _patch_render($scope0_id, "a0", "f");
 	_scope($scope0_id, {
 		f: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1)) && input.note,
 		h: $wi__input_note && (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && $input_note__closures
