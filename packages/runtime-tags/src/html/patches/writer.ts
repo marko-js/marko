@@ -1,4 +1,5 @@
 import { ROOT_SCOPE_ID } from "../../common/meta";
+import { toArray } from "../../common/opt";
 import {
   encodeIdKey,
   encodeIdSite,
@@ -251,18 +252,23 @@ function renderClientBranch(
   section: number,
 ) {
   const rendered = (state.clientBranchRendered ??= new Map());
-  const key = PatchKey.ClientBranch + section;
-  if (rendered.has(key + " " + ownerId)) return;
+  const ownerKey = clientBranchKey(section, ownerId);
+  if (rendered.has(ownerKey)) return;
   const scopeId = _base_peek_scope_id();
-  rendered.set(key + " " + ownerId, scopeId);
+  rendered.set(ownerKey, scopeId);
   state.patchLinks[scopeId] = {
     parent: ownerId,
     hop: "",
-    key,
+    key: PatchKey.ClientBranch + section,
   };
   pushIdHop(IdHop.ClientBranch, id);
   renderer({});
   popIdHop();
+}
+
+// Kept content's client branch entry for one owner.
+export function clientBranchKey(section: number, ownerId: number) {
+  return PatchKey.ClientBranch + section + " " + ownerId;
 }
 
 // The setup ids a setup envelope names, each written once: several locals may
@@ -1114,11 +1120,7 @@ function writeReadsEntry(
   key: string,
   reads: EntryReads,
 ) {
-  const names = Array.isArray(reads)
-    ? reads.filter(Boolean)
-    : reads
-      ? [reads]
-      : [];
+  const names = toArray(reads).filter(Boolean);
   (state.entryReads ??= new Map()).set(names, scopeId);
   writePatchEntry(state, scopeId, key, names);
 }

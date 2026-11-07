@@ -41,6 +41,7 @@ import {
   ensureScopePatch,
   findOwnerDepth,
   getUpdatesFrom,
+  clientBranchKey,
   inCreatable,
   isFilledEntry,
   addClientBranch,
@@ -287,7 +288,7 @@ function keepHoles(fn: ServerRenderer, scopeId: number, section: number) {
       const patch = state.patchTree![instanceId];
       if (patch) {
         (patch as { [kKeptInstance]?: string })[kKeptInstance] =
-          PatchKey.ClientBranch + section + " " + scopeId;
+          clientBranchKey(section, scopeId);
       }
     }
     if (!(state instanceof PatchRenderState)) {
