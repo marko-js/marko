@@ -15,6 +15,7 @@ import {
   isStateSourced,
   type ReferencedBindings,
   someAlias,
+  someBindingRead,
   somePart,
 } from "../bindings";
 import { createAnalysisMemo } from "../cyclic-memo";
@@ -1523,10 +1524,7 @@ export function runsClosureByWrite(closure: Binding, section: Section) {
 
 // A holder a dynamic tag's input reads as it is.
 function readsAsDynamicTagInput(held: Binding) {
-  for (const read of held.reads.keys()) {
-    if (isDynamicTagInput(read)) return true;
-  }
-  return false;
+  return someBindingRead(held, isDynamicTagInput);
 }
 
 function isDynamicTagInput(expr: t.NodeExtra) {
