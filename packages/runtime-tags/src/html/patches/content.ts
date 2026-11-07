@@ -10,8 +10,8 @@ import {
 } from "../content";
 import {
   type GroupMask,
-  _html_mark as _base_html_resume,
-  _text_mark as _base_text_resume,
+  _html_mark as _base_html_mark,
+  _text_mark as _base_text_mark,
 } from "../writer";
 import {
   _client_guard,
@@ -35,7 +35,7 @@ export function _text_mark(
   const fills =
     group === undefined ? undefined : ensureFills(scopeId, mask, group);
   return fills === undefined
-    ? _base_text_resume(
+    ? _base_text_mark(
         scopeId,
         accessor,
         value,
@@ -63,7 +63,7 @@ export function _html_mark(
   const fills =
     group === undefined ? undefined : ensureFills(scopeId, mask, group);
   return fills === undefined
-    ? _base_html_resume(
+    ? _base_html_mark(
         scopeId,
         accessor,
         value,

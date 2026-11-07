@@ -852,8 +852,7 @@ export function _patch_subscribe(
   }
 }
 
-// Emitted as the scope reason's complement, so only a patch (the falsy
-// patch reason) ever reaches here.
+// Writes the fill into its scope's patch in a patch render; a page render passes through.
 export function _patch_fill(
   scopeId: number,
   key: string,
@@ -913,9 +912,8 @@ export function _patch_bind<T>(
   return value;
 }
 
-// A controllable `<let>`: its value fills a paired scope while the handler
-// controls it and the group updates from the server, else seeds a created one;
-// a handler the client calls binds.
+// A controllable `<let>`: its value fills a paired scope its handler controls from the
+// server, else seeds a created one; a handler the client calls binds.
 export function _patch_let_change(
   scopeId: number,
   valueKey: string,
@@ -948,7 +946,7 @@ function bindEntry(state: PatchRenderState, scopeId: number, value: unknown) {
   if (
     up === undefined &&
     boundId &&
-    WRITTEN_REFERENCE_FNS.has(value as WeakKey)
+    FILLED_REFERENCE_FNS.has(value as WeakKey)
   ) {
     const path = findOwnerPath(state, scopeId, boundId);
     return (
@@ -1105,11 +1103,11 @@ export function _patch_subscribers(
   }
 }
 
-// An entry valued by the writes it re-runs on, resolved once the flush's are in: a
-// slot holding a built object a call passed stands for that object's sources.
 // What an entry depends on: one read, several, or none (falsy).
 type EntryReads = string | Falsy | (string | Falsy)[];
 
+// An entry valued by the writes it re-runs on, resolved once the flush's are in: a
+// slot holding a built object a call passed stands for that object's sources.
 function writeReadsEntry(
   state: PatchRenderState,
   scopeId: number,
@@ -1160,14 +1158,14 @@ function addRead(seen: Set<string>, reads: string, read: string) {
 }
 
 // Functions with filled references: their registrations name them (`patches/marked-bind`).
-const WRITTEN_REFERENCE_FNS = new WeakSet<WeakKey>();
+const FILLED_REFERENCE_FNS = new WeakSet<WeakKey>();
 
 export function _bind_resume<T extends WeakKey>(
   val: T,
   id: string,
   scopeId: number,
 ) {
-  WRITTEN_REFERENCE_FNS.add(val);
+  FILLED_REFERENCE_FNS.add(val);
   return _resume(val, id, scopeId);
 }
 
