@@ -368,10 +368,12 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
                 !(
                   readyIds &&
                   serialized.every(
-                    // A dep's data is flushed before any marker naming it, so
-                    // its resumes are present once its module has loaded.
+                    // A leading 0 lists modules registering code the data names;
+                    // others, channels whose data (flushed first) must drain.
                     (dep) =>
-                      readyIds!.has(dep as string) && !render.b![dep].length,
+                      !dep ||
+                      (readyIds!.has(dep as string) &&
+                        (!serialized[0] || !render.b![dep].length)),
                   )
                 )
               ) {

@@ -1,4 +1,4 @@
-// size: 27142 (min) 10127 (brotli)
+// size: 27155 (min) 10136 (brotli)
 // packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -1004,7 +1004,10 @@ function init(runtimeId = "M") {
                   if (
                     !(
                       readyIds &&
-                      serialized.every((dep) => readyIds.has(dep) && !render.b[dep].length)
+                      serialized.every(
+                        (dep) =>
+                          !dep || (readyIds.has(dep) && (!serialized[0] || !render.b[dep].length)),
+                      )
                     )
                   )
                     break;

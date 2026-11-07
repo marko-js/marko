@@ -6,6 +6,7 @@ import {
   type TemplateInput,
 } from "../common/types";
 import { _content_resume } from "./dynamic-tag";
+import type { SerializeChannel } from "./serializer";
 import {
   Boundary,
   Chunk,
@@ -26,6 +27,8 @@ export type ServerRenderer = ((...args: unknown[]) => unknown) & {
   [RendererProp.Embed]?: boolean;
   // A debug build marks a lazily loaded template, for a dynamic tag variable check.
   [RendererProp.Lazy]?: 1;
+  // The channel rendering as it was made; unset for a template's own renderer.
+  [RendererProp.Channel]?: SerializeChannel;
 };
 
 export const _template = (

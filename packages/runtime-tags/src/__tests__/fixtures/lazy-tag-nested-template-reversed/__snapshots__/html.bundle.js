@@ -1,0 +1,34 @@
+// grand-child.marko
+var grand_child_default = _template("c", (input) => {
+	const $scope0_reason = _scope_reason(), $wg__input_tag = _write_guard($scope0_reason, 0);
+	const $scope0_id = _scope_id();
+	_dynamic_tag($scope0_id, "a", input.tag, {}, 0, 0, $wg__input_tag);
+	_script($scope0_id, "c0", $wg__input_tag);
+	_write_if($scope0_reason, 0) && _scope($scope0_id, {});
+});
+
+// counter.marko
+var counter_default = _template("b", (input) => {
+	_scope_reason();
+	const $scope0_id = _scope_id();
+	let count = 0;
+	_html(`<button>count:${_text_mark($scope0_id, "b", count, 2)}</button>${_el_mark($scope0_id, "a")}`);
+	_script($scope0_id, "b0");
+	_scope($scope0_id, { c: count });
+});
+
+// child.marko
+const $GrandChild_withLoadAssets = withLoadAssets(() => grand_child_default, "c", flush, "_c");
+var child_default = _template("a", (input) => {
+	_scope_reason();
+	_scope_id();
+	$GrandChild_withLoadAssets({ tag: counter_default });
+});
+
+// template.marko
+const $Child_withLoadAssets = withLoadAssets(() => child_default, "a", flush, "_a");
+var template_default = _template("d", (input) => {
+	_scope_reason();
+	_scope_id();
+	$Child_withLoadAssets({});
+}, 1);

@@ -1,0 +1,8 @@
+// counter.marko
+const $count = /*@__PURE__*/ _let(2, ($scope) => _text($scope.b, $scope.c));
+const $setup__script = _script("b0", ($scope) => _on($scope.a, "click", function() {
+	$count($scope, +$scope.c + 1);
+}));
+
+// grand-child.marko
+const $setup__script = _script("c0", ($scope) => console.log("grand-child"));

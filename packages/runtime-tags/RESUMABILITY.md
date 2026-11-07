@@ -198,7 +198,11 @@ resume keeps the lazy content's markers until its module walks them.
 Lazy state cannot enter the main stream before its registered code exists.
 `writeWaitReady()` renders into `render.b[readyId]`; the serializer records
 ancestor-channel dependencies. Dependency arrays block a channel until named
-modules are ready and their earlier data is drained. `ready()` processes to a
+modules are ready and their earlier data is drained. Content, templates and
+registered functions from an enclosing lazy module need its code too, so a
+channel rendering or writing one records that module (`trackCode`), and a
+`[0, …]` array blocks until those modules are ready, without draining: a lazy
+import cycle would otherwise wait on itself. `ready()` processes to a
 fixed point because one channel can unblock another.
 
 Async reorders may execute after later main-stream scripts. The server therefore

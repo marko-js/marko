@@ -1,0 +1,14 @@
+import type { TestConfig } from "../../main.test";
+import { wait } from "../../utils/resolve";
+
+// Content the page forwards through a lazy tag to its nested lazy child is in
+// the page's bundle, so the child's resume data waits for no lazy module.
+export const config: TestConfig = {
+  steps: [{}, wait, wait, click],
+  equivalent: false,
+  load_order: ["grand-child.marko.load.mjs", "child.marko.load.mjs"],
+};
+
+function click(document: Document) {
+  document.querySelector("button")!.click();
+}

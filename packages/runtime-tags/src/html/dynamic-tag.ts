@@ -12,7 +12,7 @@ import {
   ResumeSymbol,
 } from "../common/types";
 import { _attr_select_value, _attrs, _attrs_textarea_value } from "./attrs";
-import type { Locals } from "./serializer";
+import { type Locals, trackCode } from "./serializer";
 import type { ServerRenderer } from "./template";
 import {
   $chunk,
@@ -28,6 +28,7 @@ import {
   ALL_GROUPS,
   applyBranchStart,
   deferBranchStart,
+  getChunk,
   getScopeById,
   getState,
   rendererKey,
@@ -192,6 +193,7 @@ export let _dynamic_tag = (
 
     const render = () => {
       if (renderer) {
+        trackCode(chunk.channel, renderer[RendererProp.Channel]);
         try {
           _set_scope_reason(shouldResume ? ALL_GROUPS : 0);
           return inputIsArgs
@@ -245,6 +247,7 @@ export function _content(id: string, fn: ServerRenderer, scopeId?: number) {
   // The owner id the client derives from `RendererProp.Owner`; both sides key a
   // content instance by it, so they must be written from the same scope.
   fn[RendererProp.Owner] = scopeId;
+  fn[RendererProp.Channel] = getChunk()?.channel;
   return fn;
 }
 

@@ -18,6 +18,8 @@ export interface Registered {
   access: string;
   scope: unknown;
   locals: Locals | undefined;
+  // The channel rendering as it registered; unset if its module was loading.
+  channel: SerializeChannel | undefined;
 }
 
 // What registered content reads that its scopes may lack, computed only once
@@ -36,8 +38,10 @@ export type ScopeFlush = [scopeId: number, scope: object, props: object];
 export interface SerializeChannel {
   readyId?: string;
   parent?: SerializeChannel;
-  // Ancestor channels whose data its next batch reads.
+  // What its next batch waits on: ancestor channels whose data it reads, and
+  // lazy modules registering code it names.
   deps?: Set<string> | null;
+  codeDeps?: Set<string> | null;
 }
 // A `Map`'s or `Set`'s first member that references an ancestor (a `Map`'s as
 // its entry), and the live iteration past it.
@@ -531,9 +535,10 @@ export function register<T extends WeakKey>(
   val: T,
   scope?: unknown,
   locals?: Locals,
+  channel?: SerializeChannel,
   access = "_._" + toAccess(toObjectKey(id)),
 ) {
-  REGISTRY.set(val, { id, scope, locals, access });
+  REGISTRY.set(val, { id, scope, locals, access, channel });
   return val;
 }
 
@@ -858,6 +863,7 @@ function writeRegistered(
   accessor: string,
   registered: Registered,
 ) {
+  trackCode(state.channel, registered.channel);
   const { scope } = registered;
   if (scope) {
     state.writeScopedRegistration(val, parent, accessor, registered);
@@ -2199,6 +2205,21 @@ function trackChannel(state: State, ref: Reference) {
     cur = cur.parent;
   }
   return false;
+}
+
+// A ready stream naming code made elsewhere waits on each lazy module from the
+// channel it was made in up, or every enclosing one if made as its module loaded.
+export function trackCode(
+  channel: SerializeChannel | undefined,
+  madeIn: SerializeChannel | undefined,
+) {
+  if (channel?.readyId && madeIn !== channel) {
+    for (let cur = madeIn || channel.parent!; cur.readyId; cur = cur.parent!) {
+      if (cur.readyId !== channel.readyId) {
+        (channel.codeDeps ||= new Set()).add(cur.readyId);
+      }
+    }
+  }
 }
 
 // A value main or an ancestor channel wrote, which a ready stream reads back by

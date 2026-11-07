@@ -267,6 +267,7 @@ export function _resume<T extends WeakKey>(
     val,
     scopeId === undefined ? undefined : _scope_with_id(scopeId),
     locals,
+    getChunk()?.channel,
   );
 }
 
@@ -281,7 +282,13 @@ export function _resume_locals<T extends WeakKey>(
   if (ownerScopeId !== undefined) {
     locals[AccessorProp.Owner] = _scope_with_id(ownerScopeId);
   }
-  return serializerRegister(id, val, writeScope(_scope_id(), locals));
+  return serializerRegister(
+    id,
+    val,
+    writeScope(_scope_id(), locals),
+    undefined,
+    $chunk.channel,
+  );
 }
 
 export function _el(scopeId: number, id: string) {
@@ -575,6 +582,7 @@ export function writeWaitReady(
     writeScopes: {},
     flushScopes: false,
     deps: null,
+    codeDeps: null,
   });
   const bodyEnd = body.render(renderer, input);
   // A throw in the body ends the render around it too, instead of letting it
@@ -1688,17 +1696,29 @@ function flushSerializerGlobals(boundary: Boundary) {
   }
 }
 
+// A batch waits for the lazy modules registering code it names (`[0,…]`) and for
+// channels whose earlier data it reads to drain (`[…]`), which implies loaded.
 function depsMarker(channel: SerializeChannel) {
-  const { deps } = channel;
-  let marker = "";
-  if (deps) {
-    channel.deps = null;
-    for (const dep of deps) {
-      marker += (marker ? "," : "[") + quote(dep, 0);
+  const { deps, codeDeps } = channel;
+  channel.deps = channel.codeDeps = null;
+  return concatSequence(
+    readyIdList("[0,", codeDeps, deps),
+    readyIdList("[", deps),
+  );
+}
+
+function readyIdList(
+  open: string,
+  readyIds: Set<string> | null | undefined,
+  skip?: Set<string> | null,
+) {
+  let list = "";
+  if (readyIds) {
+    for (const readyId of readyIds) {
+      if (!skip?.has(readyId)) list += (list ? "," : open) + quote(readyId, 0);
     }
-    marker += "]";
   }
-  return marker;
+  return list && list + "]";
 }
 
 function getFilteredGlobals($global: Record<string, unknown>) {
