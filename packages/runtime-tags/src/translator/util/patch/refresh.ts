@@ -305,7 +305,6 @@ function computePatchFill(binding: Binding): PatchFill {
 export function canPatchFill(binding: Binding) {
   return (
     !!binding.sources?.state &&
-    patchFillsValues(binding.section) &&
     getCanonicalBinding(binding) === binding &&
     patchFillsScope(binding.section) &&
     (!!findSlot(binding, SlotKind.ChangeHandler) ||
@@ -2077,7 +2076,7 @@ function findUnfilledStructure(
       for (const ref of refs) {
         const partner = getCanonicalBinding(ref);
         if (partner === binding) continue;
-        const { fill, filledMembers } = getPatchFill(partner);
+        const { fill } = getPatchFill(partner);
         // A partner's fill re-runs the intersection client side, unless the flush
         // fills the intersection's hole itself.
         if (fill && !filledHole) return false;
@@ -2087,9 +2086,7 @@ function findUnfilledStructure(
           structure = sourcesUtil.add(
             structure,
             getSourcesForReferencedBindings(
-              fill || filledMembers || writesForIntersectionRender(partner)
-                ? refs
-                : partner,
+              fill || writesForIntersectionRender(partner) ? refs : partner,
             )!,
           );
         }
@@ -2174,12 +2171,8 @@ function ensureSlotGroups(slot: Slot) {
 }
 
 function ensureBindingGroups(binding: Binding) {
-  const { fill, writeReads, filledMembers } = getPatchFill(binding);
-  if (
-    fill ||
-    filledMembers ||
-    (writeReads && patchFillsScope(binding.section))
-  ) {
+  const { writeReads, filledMembers } = getPatchFill(binding);
+  if (writeReads && patchFillsScope(binding.section)) {
     ensureCallerParamGroups(getSourcesForReferencedBindings(binding));
   }
   // Its write in place gates on each filled intersection's other members.
@@ -2260,10 +2253,11 @@ function leavesReadUnfilled(binding: Binding) {
 }
 
 // A filled value effects, function references, built objects or an intersection a write's render reads,
-// in a scope a flush writes, that no fill always renders.
+// in a scope a flush writes.
 function isPatchWritten(binding: Binding) {
-  const { fill, writeReads } = getPatchFill(binding);
-  return fill !== true && !!writeReads && patchFillsValues(binding.section);
+  return (
+    !!getPatchFill(binding).writeReads && patchFillsValues(binding.section)
+  );
 }
 
 // Its group is the server's on every instance: guarded sources (a page's input,
