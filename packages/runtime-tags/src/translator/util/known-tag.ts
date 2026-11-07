@@ -55,10 +55,12 @@ import {
 import {
   getPassedReads,
   getFilledReferences,
+  hasFilledReferences,
   holdsBuiltObject,
   runsEffectOnPatch,
   holdsRegisteredFn,
   namesBodyOwner,
+  someReturnedFnValue,
 } from "./patch/refresh";
 import {
   calleeKeepsInput,
@@ -67,10 +69,7 @@ import {
   hasStructuralParam,
   recordStructuralParams,
 } from "./patch/structure";
-import {
-  mayHoldReturnedFnWithFilledReferences,
-  mayHoldScopeBoundFn,
-} from "./patch/writers";
+import { mayHoldScopeBoundFn } from "./patch/writers";
 import {
   addAlwaysReason,
   addReasonExprs,
@@ -756,7 +755,7 @@ export function linkKnownTagPatchEntries() {
             linkRuntimeFeature("patches/marked-bind");
           }
           // A child's returned function it passes on binds where that child isn't.
-          if (mayHoldReturnedFnWithFilledReferences(exprs)) {
+          if (someReturnedFnValue(exprs, hasFilledReferences)) {
             linkRuntimeFeature("patches/marked-bind");
           }
         }

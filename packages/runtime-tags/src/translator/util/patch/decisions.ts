@@ -70,7 +70,7 @@ export function fillsHole(section: Section, extra: t.NodeExtra | undefined) {
 
 // Read only from `<let>`s at the initial value the server renders where the scope
 // is created: the hole seeds a created scope alone.
-export function seedsOnly(section: Section, sources: Sources | undefined) {
+function seedsOnly(section: Section, sources: Sources | undefined) {
   return (
     patchCreatesOrComposes(section) &&
     !!sources?.state &&

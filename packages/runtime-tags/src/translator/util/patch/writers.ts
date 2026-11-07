@@ -119,10 +119,7 @@ import {
   setupFromClient,
   clientMayRenderInAnyCall,
   addFilledReads,
-  hasFilledReferences,
   someFnValue,
-  someReturnedFnValue,
-  someReturnedFnValueOf,
   type CreatedSetup,
   getCreatedSetup,
   getSetupSources,
@@ -540,7 +537,7 @@ function buildLetChangeWrites(
   if (controller?.state) {
     // A state-sourced controller is the client's: the value only seeds, but
     // where its initial value reads a caller group, in that group.
-    const seedGroup = getSeedOnlyGroupArgs(section, binding);
+    const seedGroup = buildWriteGroupArgs(getSeedWriteGroups(section, binding));
     const seed = buildPatchFill(
       section,
       binding,
@@ -767,7 +764,7 @@ export function getValueNodeMarkerGuard(section: Section, binding: Binding) {
 }
 
 // A fill's patch write; a `setup` applies it only to a scope the flush creates.
-export function buildPatchFill(
+function buildPatchFill(
   section: Section,
   binding: Binding,
   setup?: t.Expression,
@@ -785,7 +782,7 @@ export function buildPatchFill(
 
 // A value's patch write under `key` (`MarkedWrite` where entries read its change mark);
 // a `setup` applies it only to a scope the flush creates.
-export function buildPatchWrite(
+function buildPatchWrite(
   section: Section,
   binding: Binding,
   key: string,
@@ -937,12 +934,6 @@ export function getRendererGroupArgs(
     : [args[1], args[0]];
 }
 
-// A hole of initial values seeds a created scope alone (a group mask of `0`), and
-// is the client's where it holds a caller group their initial values read.
-function getSeedOnlyGroupArgs(section: Section, states: Sources["state"]) {
-  return buildWriteGroupArgs(getSeedWriteGroups(section, states));
-}
-
 // Whether a value's group args come from the caller groups of `section` (a call
 // passes their bits), as `getRootGroupArgs` builds them.
 export function hasCallerGroupsAt(
@@ -1030,7 +1021,7 @@ function getFilledGuard(section: Section, binding: Binding) {
 
 // Each caller group a write in `section` gates on, its `check` once, or'd
 // onto `guard`, which already checks the groups in `checked`.
-export function orCallerGroupGuards(
+function orCallerGroupGuards(
   section: Section,
   guard: t.Expression | undefined,
   check: HTMLRuntimeHelpers,
@@ -1080,7 +1071,7 @@ function forEachCallerGroup(
 
 // Where a value a patch fills is still read unfilled: a client-sourced group,
 // or (`unpatched`, a server-only source) a scope under unpatched structure.
-export function getUnfilledGuard(
+function getUnfilledGuard(
   section: Section,
   params: Sources["param"],
   structure: SortedOpt<Sources>,
@@ -1373,16 +1364,6 @@ function reachesBoundHolder(
     isDynamicTagInput(fn) ||
     some((fn.exprRoot || fn).derives, (holder) => somePart(holder, reaches))
   );
-}
-
-// A value that may hold a function with filled references a known child's `<return>` registers:
-// the child leaves its record to the caller, which sees the holder.
-export function mayHoldReturnedFnWithFilledReferencesIn(binding: Binding) {
-  return someReturnedFnValueOf(binding, hasFilledReferences);
-}
-
-export function mayHoldReturnedFnWithFilledReferences(exprs: Opt<t.NodeExtra>) {
-  return someReturnedFnValue(exprs, hasFilledReferences);
 }
 
 // A value that may be or hold a function its template registers with a scope,

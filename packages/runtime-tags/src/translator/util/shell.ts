@@ -21,8 +21,10 @@ import {
   patchMayCreate,
   getCreatedSetup,
   getPatchFill,
+  hasFilledReferences,
   runsByEntry,
   namesBodyOwner,
+  someReturnedFnValueOf,
   patchComposes,
   patchCreates,
   getPatchWrite,
@@ -42,7 +44,6 @@ import {
   getClosureContents,
   getClosureRenderGroups,
   hasCallerGroupsAt,
-  mayHoldReturnedFnWithFilledReferencesIn,
   runsClosureByWrite,
 } from "./patch/writers";
 import { getSourcesForReferencedBindings } from "./reasons";
@@ -188,7 +189,7 @@ function recordPatchEntries(binding: Binding) {
       linkRuntimeFeature(marked ? "patches/marked-write" : "patches/write");
   }
   // A function with filled references a known child returns that it holds binds by its record.
-  if (write && mayHoldReturnedFnWithFilledReferencesIn(binding)) {
+  if (write && someReturnedFnValueOf(binding, hasFilledReferences)) {
     linkRuntimeFeature("patches/marked-bind");
   }
 }
