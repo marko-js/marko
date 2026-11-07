@@ -16,7 +16,7 @@ import {
   _content_resume as _base_content_resume,
   _dynamic_tag as _base_dynamic_tag,
 } from "../dynamic-tag";
-import { K_SCOPE_ID, type Locals, REGISTRY, register } from "../serializer";
+import { type Locals, REGISTRY, register } from "../serializer";
 import type { ServerRenderer } from "../template";
 import {
   type GroupMask,
@@ -25,6 +25,7 @@ import {
   _peek_scope_id,
   _scope,
   _subscribe,
+  getScopeId,
   getState,
   scopeWithId,
 } from "../writer";
@@ -343,9 +344,8 @@ export function writeDynamicTagEntry(
       // and args ride as array input.
       const registered =
         typeof renderer === "function" ? REGISTRY.get(renderer) : undefined;
-      const boundScope = registered?.scope as ScopeInternals | undefined;
-      const ownerId = boundScope
-        ? boundScope[K_SCOPE_ID]
+      const ownerId = registered?.scope
+        ? getScopeId(registered.scope)
         : id
           ? (renderer as ServerRenderer)[RendererProp.Owner]
           : undefined;

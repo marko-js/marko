@@ -1,7 +1,6 @@
 import { ROOT_SCOPE_ID } from "../../common/meta";
 import { RendererProp } from "../../common/types";
 import {
-  K_SCOPE_ID,
   Reference,
   type Registered,
   SerializerState,
@@ -12,7 +11,7 @@ import {
   writeLocalArgs,
   writeProp,
 } from "../serializer";
-import type { ScopeInternals } from "../writer";
+import { getScopeId } from "../writer";
 import {
   type PatchRenderState,
   resolveEntryReads,
@@ -86,7 +85,7 @@ export class PatchSerializerState extends SerializerState {
     if (content) this.refs.set(val, ref);
     this.buf.push("_([");
     this.writeScopePath(
-      (registered.scope as ScopeInternals)[K_SCOPE_ID]!,
+      getScopeId(registered.scope)!,
       registered.id,
     );
     this.buf.push(

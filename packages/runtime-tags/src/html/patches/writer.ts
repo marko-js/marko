@@ -14,7 +14,7 @@ import {
   RenderDataProp,
   RendererProp,
 } from "../../common/types";
-import { K_SCOPE_ID, REGISTRY, setDebugInfo } from "../serializer";
+import { REGISTRY, setDebugInfo } from "../serializer";
 import type { ServerRenderer } from "../template";
 import {
   type Boundary,
@@ -34,6 +34,7 @@ import {
   _script as _base_script,
   $chunk,
   getContext,
+  getScopeId,
   getState,
   kBranchId,
   getGroupReason,
@@ -934,16 +935,16 @@ export function _patch_let_change(
 function bindEntry(state: PatchRenderState, scopeId: number, value: unknown) {
   const registered =
     typeof value === "function" ? REGISTRY.get(value) : undefined;
-  const bound = registered?.scope as ScopeInternals | undefined;
-  const up = bound && findOwnerDepth(state, scopeId, bound[K_SCOPE_ID]!);
+  const boundId = registered?.scope ? getScopeId(registered.scope) : undefined;
+  const up = boundId && findOwnerDepth(state, scopeId, boundId);
   // A function with filled references' owner may be below the scope (a child's `<return>`): up to
   // the scope both reach, then down.
   if (
     up === undefined &&
-    bound &&
+    boundId &&
     WRITTEN_REFERENCE_FNS.has(value as WeakKey)
   ) {
-    const path = findOwnerPath(state, scopeId, bound[K_SCOPE_ID]!);
+    const path = findOwnerPath(state, scopeId, boundId);
     return (
       path && [withOwnerHops("^".repeat(path[0]), registered!.id), path[1]]
     );
