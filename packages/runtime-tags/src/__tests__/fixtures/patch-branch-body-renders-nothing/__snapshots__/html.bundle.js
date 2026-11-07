@@ -11,7 +11,7 @@ _shells({
 	a7: "a7,"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_n = _client_guard($scope0_reason, 1), $wi__input_n = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_n = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_n__closures = /* @__PURE__ */ new Set();
 	_await($scope0_id, "a", input.p, (a) => {
@@ -36,11 +36,11 @@ var template_default = _template("a", (input) => {
 		const $scope5_id = _scope_id();
 		_script($scope5_id, "a8", 0, _filled_guard($scope0_reason, 1), ">h");
 		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope5_id, "a9", $cg__input_n);
-		_subscribe($wi__input_n && $input_n__closures, _scope($scope5_id, {}), $cg__input_n && "a9", 0);
-		_write_guard($scope0_reason, 1) && _resume_branch($scope5_id);
+		_subscribe(_unfilled_if($scope0_reason, 1) && $input_n__closures, _scope($scope5_id, {}), $cg__input_n && "a9", 0);
+		_resume_branch($scope5_id);
 	}, 1, "a1", _unfilled_if($scope0_reason, 0), 1);
 	_scope($scope0_id, {
 		h: input.n,
-		i: $wi__input_n && $input_n__closures
+		i: _write_if($scope0_reason, 1) && $input_n__closures
 	}) || _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "xh", input.n, !_server_guard($scope0_reason, 1));
 }, 1);

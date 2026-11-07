@@ -678,8 +678,6 @@ export function _try(
       (err) => {
         getIds().depth = depth;
         settled = true;
-        // A body that threw before claiming its id keeps it paired.
-        if (_peek_scope_id() === branchId) _scope_id();
         if (!entry) {
           if (create) linkScopePatch(state, branchId, body)![0] = 0;
         } else if (peekScopePatch(state, branchId) === body) {
