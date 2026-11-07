@@ -187,7 +187,7 @@ export default {
       onReasonsSettled(() => {
         if (patchesBranchesAt(nodeBinding)) {
           linkRuntimeFeature(
-            isKeyedByIndex(forType, forAttrs)
+            isUnkeyed(forType, forAttrs)
               ? "patches/loop"
               : "patches/loop-keyed",
           );
@@ -329,7 +329,7 @@ export default {
         const signal = getSignal(tagSection, nodeBinding, "for");
         signal.build = () => {
           return callRuntime(
-            isKeyedByIndex(forType, forAttrs)
+            isUnkeyed(forType, forAttrs)
               ? forTypeToUnkeyedBranchRuntime(forType)
               : forTypeToBranchRuntime(forType),
             getScopeAccessorLiteral(nodeBinding, true),
@@ -482,11 +482,9 @@ function getMemberChainAlias(
   }
 }
 
-// Without `by=`, `of=` keys by index and `to=`/`until=` by value, which is the
-// index only from 0 in steps of 1; such a loop never moves a branch.
-// A range's rows are keyed by their value, which stays at its position, so no
-// row ever moves, while its `from` and `step` are constants.
-function isKeyedByIndex(type: ForType, attrs: Record<string, t.Expression>) {
+// Without `by=`, `of=` keys rows by index and `to=`/`until=` by value, which
+// keeps its row's position while `from` and `step` are constants: no row moves.
+function isUnkeyed(type: ForType, attrs: Record<string, t.Expression>) {
   if (attrs.by) return false;
   switch (type) {
     case "of":

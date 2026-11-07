@@ -1064,8 +1064,8 @@ export const _for_until = /*@__PURE__*/ loop<
   forUntil(until, from, step, (v) => cb(by(v), [v]));
 }, reorderKeyed);
 
-// Unkeyed loops (no `by=`, counting from 0 by 1) are keyed by index, so their
-// branches never move and they ship without `reorderKeyed`.
+// Unkeyed loops (no `by=`) key rows by index, or by a value constant `from` and
+// `step` keep in place, so their branches never move: no `reorderKeyed` ships.
 export const _for_of_unkeyed = /*@__PURE__*/ loop<[all: unknown[]]>(
   ([all], cb) => forOf(all, (item, i) => cb(i, [item, i])),
 );
