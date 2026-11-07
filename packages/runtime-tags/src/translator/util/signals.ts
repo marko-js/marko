@@ -598,8 +598,16 @@ function isChangeableDynamicClosure(section: Section, closure: Binding) {
   return (
     !!sources &&
     isDynamicClosure(section, closure) &&
-    (!sources.state || some(sources.state, hasResumableAssignment)) &&
+    (!sources.state || some(sources.state, hasResumableWriter)) &&
     shipsClosureScopes(closure)
+  );
+}
+
+// A patch build keeps every `<let>`'s signal, as a handler assigning it would.
+function hasResumableWriter(state: Binding) {
+  return (
+    (isPatch() && state.type === BindingType.let) ||
+    hasResumableAssignment(state)
   );
 }
 
