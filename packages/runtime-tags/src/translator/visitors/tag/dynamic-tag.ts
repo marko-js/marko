@@ -523,71 +523,63 @@ export default {
           input.type === "ObjectExpression" &&
           !input.properties.length;
         let patched = 0;
-        let patchArgs: (t.Expression | false)[] = [];
+        let groupArgs: t.Expression[] = [];
+        let rendererArgs: t.Expression[] = [];
+        let createdOnly: t.NumericLiteral | undefined;
         if (fillsHole(tagSection, tag.node.extra)) {
-          const groupArgs = getExprRootGroupArgs(tagSection, tagExtra);
+          groupArgs = getExprRootGroupArgs(tagSection, tagExtra);
           // A renderer the name hands unchanged pairs while its input changes.
-          const rendererArgs = groupArgs.length
-            ? getRendererGroupArgs(tagSection, tagExtra, groupArgs)
-            : [];
-          const createdOnly = keepsSeededMarker(tagSection, tagExtra);
+          if (groupArgs.length) {
+            rendererArgs = getRendererGroupArgs(
+              tagSection,
+              tagExtra,
+              groupArgs,
+            );
+          }
+          createdOnly = keepsSeededMarker(tagSection, tagExtra)
+            ? t.numericLiteral(1)
+            : absentArg(0);
           patched =
             (emptyInput ? 2 : 1) |
             (namesRegisteredTemplates(tagSection, tagExtra) ? 4 : 0);
-          patchArgs = [
-            groupArgs[0],
-            groupArgs[1],
-            createdOnly ? t.numericLiteral(1) : absentArg(0),
-            rendererArgs[0],
-            rendererArgs[1],
-          ];
         }
         const tagVarArg =
           patched && varId ? t.stringLiteral(varId) : debugTagVar;
-        const callArgs = hasTagArgs
-          ? [
-              getScopeIdIdentifier(tagSection),
-              getScopeAccessorLiteral(nodeBinding),
-              tagExpression,
-              t.arrayExpression(args),
-              // Fallback body for a null/string renderer; the DOM side already
-              // passes it, so a hardcoded 0 here was an SSR/CSR mismatch.
-              contentProp ? contentProp.value : t.numericLiteral(0),
-              t.numericLiteral(1),
-              markerGuard || absentArg(1),
-            ]
-          : [
-              getScopeIdIdentifier(tagSection),
-              getScopeAccessorLiteral(nodeBinding),
-              tagExpression,
-              args[0],
-              args[1] || absentArg(0),
-              absentArg(0),
-              markerGuard || absentArg(1),
-            ];
+        const scopeIdArg = getScopeIdIdentifier(tagSection);
+        const accessorArg = getScopeAccessorLiteral(nodeBinding);
+        const inputArg = hasTagArgs ? t.arrayExpression(args) : input;
+        // Fallback body for a null/string renderer; the DOM side already
+        // passes it, so a hardcoded 0 here was an SSR/CSR mismatch.
+        const contentArg = hasTagArgs
+          ? contentProp
+            ? contentProp.value
+            : t.numericLiteral(0)
+          : args[1] || absentArg(0);
+        const inputIsArgs = hasTagArgs ? t.numericLiteral(1) : absentArg(0);
+        const markerArg = markerGuard || absentArg(1);
         let dynamicTagExpr: t.Expression;
         if (isPatch()) {
           // `patched` (its flags, with the call site an `<id>` names above
           // them) follows the input: the order a patch build's calls are smallest in.
           patched |= nextIdSite() << 3;
-          const [content, inputIsArgs, markerGuard] = callArgs.slice(4);
-          const [mask, group, createdOnly, rendererGroup, rendererMask] =
-            patchArgs;
           const branches = getClientBranchContents().get(nodeBinding);
           const clientBranchIds =
             branches && toArray(branches, getContentIdLiteral);
           dynamicTagExpr = callRuntime(
             "_dynamic_tag",
-            ...callArgs.slice(0, 4),
+            scopeIdArg,
+            accessorArg,
+            tagExpression,
+            inputArg,
             patched ? t.numericLiteral(patched) : absentArg(0),
-            content || absentArg(0),
-            inputIsArgs || absentArg(0),
-            markerGuard || absentArg(1),
-            mask,
-            group,
+            contentArg,
+            inputIsArgs,
+            markerArg,
+            groupArgs[0],
+            groupArgs[1],
             createdOnly,
-            rendererGroup,
-            rendererMask || (!rendererGroup && absentArg(0)),
+            rendererArgs[0],
+            rendererArgs[1] || (!rendererArgs[0] && absentArg(0)),
             tagVarArg || (clientBranchIds && absentArg(0)),
             clientBranchIds &&
               (clientBranchIds.length === 1
@@ -595,7 +587,17 @@ export default {
                 : t.arrayExpression(clientBranchIds)),
           );
         } else {
-          dynamicTagExpr = callRuntime("_dynamic_tag", ...callArgs, tagVarArg);
+          dynamicTagExpr = callRuntime(
+            "_dynamic_tag",
+            scopeIdArg,
+            accessorArg,
+            tagExpression,
+            inputArg,
+            contentArg,
+            inputIsArgs,
+            markerArg,
+            tagVarArg,
+          );
         }
 
         if (varId) {
