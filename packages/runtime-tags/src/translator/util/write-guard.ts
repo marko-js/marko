@@ -51,10 +51,6 @@ const groupCheckPrefixes = {
 } satisfies Partial<Record<HTMLRuntimeHelpers, string>>;
 type GroupCheck = keyof typeof groupCheckPrefixes;
 
-export function isSharedGroupCheck(check: string): check is GroupCheck {
-  return check in groupCheckPrefixes;
-}
-
 // Whether a check in `section` shares its group section's guard: `_filled_guard`
 // also reads whether the render may create the scope, fixed only for that body.
 export function sharesGroupCheck(
@@ -63,7 +59,7 @@ export function sharesGroupCheck(
   section: Section,
 ): check is GroupCheck {
   return (
-    isSharedGroupCheck(check) &&
+    check in groupCheckPrefixes &&
     (check !== "_filled_guard" || groupSection === section)
   );
 }

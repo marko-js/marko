@@ -187,7 +187,7 @@ export default {
       onReasonsSettled(() => {
         if (patchesBranchesAt(nodeBinding)) {
           linkRuntimeFeature(
-            isKeyedByIndex(forType!, getKnownAttrValues(tag.node))
+            isKeyedByIndex(forType, forAttrs)
               ? "patches/loop"
               : "patches/loop-keyed",
           );

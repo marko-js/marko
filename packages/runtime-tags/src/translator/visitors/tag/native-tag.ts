@@ -840,7 +840,7 @@ export default {
             const { confident, computed } = evaluate(value);
 
             if (
-              value.extra?.rendersValue &&
+              value.extra!.rendersValue &&
               fillsHole(tagSection, value.extra)
             ) {
               // The attribute's helper also writes its patch entry (the
