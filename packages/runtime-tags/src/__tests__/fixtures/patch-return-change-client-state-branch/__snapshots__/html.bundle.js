@@ -5,13 +5,13 @@ const $setup = [[], ["b1"]];
 _shells({ b: "b !b1;D l b ;<span> </span><button class=mode>b</button><button class=go>go</button>" });
 _stateful_return("b");
 var counter_box_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_onA = _server_guard($scope0_reason, 0), $sg__input_onB = _server_guard($scope0_reason, 1), $fg__input_onA = _filled_guard($scope0_reason, 0), $fg__input_onB = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $fg__input_onA = _filled_guard($scope0_reason, 0), $fg__input_onB = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	let mode = "a";
 	_html(`<span>${_text_mark($scope0_id, "a", mode)}</span><button class=mode>b</button>${_el_mark($scope0_id, "b")}<button class=go>go</button>${_el_mark($scope0_id, "c")}`);
 	const $return = mode;
 	_script($scope0_id, "b1");
-	_patch_render($scope0_id, "b2", [$fg__input_onA && "f", $fg__input_onB && "g"]) || _script($scope0_id, "b0", 1, ($sg__input_onA || $sg__input_onB) && 2, [$sg__input_onA && "f", $sg__input_onB && "g"]);
+	_script($scope0_id, "b0", 1, 0, [$fg__input_onA && "f", $fg__input_onB && "g"], "b2");
 	const $valueChange = _patch_bind($scope0_id, "wU", input.onA || void 0, 0, 0);
 	_patch_fill($scope0_id, "vb3", mode, 1);
 	_scope($scope0_id, {
@@ -19,7 +19,7 @@ var counter_box_default = _template("b", (input) => {
 		g: input.onB,
 		h: mode,
 		U: $valueChange
-	}) || ($fg__input_onA && _patch_write($scope0_id, "xf", input.onA, !$sg__input_onA), $fg__input_onB && _patch_write($scope0_id, "xg", input.onB, !$sg__input_onB));
+	}) || ($fg__input_onA && _patch_write($scope0_id, "xf", input.onA, !_server_guard($scope0_reason, 0)), $fg__input_onB && _patch_write($scope0_id, "xg", input.onB, !_server_guard($scope0_reason, 1)));
 	return $return;
 });
 

@@ -20,7 +20,7 @@ var template_default = _template("a", (input) => {
 					const $scope2_id = _scope_id();
 					_html("<span>inner</span>");
 					_unfilled_if($scope0_reason, 4) && _patch_subscribe($scope2_id, "a1");
-					_patch_render($scope2_id, "a2", [_filled_guard($scope0_reason, 4) && ">>g", _filled_guard($scope0_reason, 2) && ">c"], $scope0_reason, 0) || _script($scope2_id, "a0", 0, (_filled_guard($scope0_reason, 4) || _filled_guard($scope0_reason, 2)) && ($cg__input_suffix || $cg__input_title ? 2 : 1), [_filled_guard($scope0_reason, 4) && ">>g", _filled_guard($scope0_reason, 2) && ">c"]);
+					_script($scope2_id, "a0", 0, (_filled_guard($scope0_reason, 4) || _filled_guard($scope0_reason, 2)) && ($cg__input_suffix || $cg__input_title ? 2 : 1), [_filled_guard($scope0_reason, 4) && ">>g", _filled_guard($scope0_reason, 2) && ">c"], "a2", $scope0_reason, 0);
 					_subscribe($wi__input_suffix && $input_suffix__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), $cg__input_suffix && "a1", 0);
 					_write_guard($scope0_reason, 4) && _resume_branch($scope2_id);
 					return 0;

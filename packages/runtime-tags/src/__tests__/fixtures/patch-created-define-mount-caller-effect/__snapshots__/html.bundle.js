@@ -16,7 +16,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_reason = _scope_reason(), $fg__label = _filled_guard($scope1_reason, 0);
 		_html("<p>info</p>");
 		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "a2");
-		_patch_render($scope1_id, "a3", [_filled_guard($scope0_reason, 1) && ">g", $fg__label && "c"], (_updates_from($scope0_reason, 1) | _updates_from($scope1_reason, 0)) << 1, 0) || _script($scope1_id, "a1", 0, (_filled_guard($scope0_reason, 1) || $fg__label) && (_client_guard($scope0_reason, 1) || _client_guard($scope1_reason, 0) ? 2 : 1), [_filled_guard($scope0_reason, 1) && ">g", $fg__label && "c"]);
+		_script($scope1_id, "a1", 0, (_filled_guard($scope0_reason, 1) || $fg__label) && (_client_guard($scope0_reason, 1) || _client_guard($scope1_reason, 0) ? 2 : 1), [_filled_guard($scope0_reason, 1) && ">g", $fg__label && "c"], "a3", (_updates_from($scope0_reason, 1) | _updates_from($scope1_reason, 0)) << 1, 0);
 		_subscribe($wi__input_page && $input_page__closures, _scope($scope1_id, {
 			c: label,
 			_: _scope_with_id($scope0_id)

@@ -7,22 +7,18 @@ _shells({
 	b2: "b2 b9,"
 });
 var level_watch_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_projection_skill = _server_guard($scope0_reason, 1), $sg__input_baseXp = _server_guard($scope0_reason, 2), $sg__input_playerId = _server_guard($scope0_reason, 3), $fg__input_projection_skill = _filled_guard($scope0_reason, 1), $fg__input_baseXp = _filled_guard($scope0_reason, 2), $cg__input_projection = _client_guard($scope0_reason, 0), $fg__input_playerId = _filled_guard($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $fg__input_projection_skill = _filled_guard($scope0_reason, 1), $fg__input_baseXp = _filled_guard($scope0_reason, 2), $cg__input_projection = _client_guard($scope0_reason, 0), $fg__input_playerId = _filled_guard($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	let shown = 0;
 	_html(`<button>${_text_mark($scope0_id, "b", shown)}</button>${_el_mark($scope0_id, "a")}`);
 	_if(() => {
 		if (input.projection) {
 			const $scope1_id = _scope_id();
-			_patch_render($scope1_id, "b1", [
+			_script($scope1_id, "b0", 0, 0, [
 				_filled_guard($scope0_reason, 1) && ">g",
 				_filled_guard($scope0_reason, 2) && ">h",
 				_filled_guard($scope0_reason, 3) && ">i"
-			]) || _script($scope1_id, "b0", 0, ($sg__input_projection_skill || $sg__input_baseXp || $sg__input_playerId) && 2, [
-				$sg__input_projection_skill && ">g",
-				$sg__input_baseXp && ">h",
-				$sg__input_playerId && ">i"
-			]);
+			], "b1");
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
@@ -37,7 +33,7 @@ var level_watch_default = _template("b", (input) => {
 		h: input.baseXp,
 		i: input.playerId,
 		j: shown
-	}) || ($fg__input_projection_skill && _patch_write($scope0_id, "xg", input.projection?.skill, !$sg__input_projection_skill), $fg__input_baseXp && _patch_write($scope0_id, "xh", input.baseXp, !$sg__input_baseXp), $fg__input_playerId && _patch_write($scope0_id, "xi", input.playerId, !$sg__input_playerId));
+	}) || ($fg__input_projection_skill && _patch_write($scope0_id, "xg", input.projection?.skill, !_server_guard($scope0_reason, 1)), $fg__input_baseXp && _patch_write($scope0_id, "xh", input.baseXp, !_server_guard($scope0_reason, 2)), $fg__input_playerId && _patch_write($scope0_id, "xi", input.playerId, !_server_guard($scope0_reason, 3)));
 });
 
 // tags/route-play.marko

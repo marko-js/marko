@@ -4,17 +4,17 @@ const $walks = " D l";
 const $setup = [[], ["b0"]];
 _shells({ b: "b !b0; D ;<button> </button>" });
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_x = _server_guard($scope0_reason, 0), $fg__input_x = _filled_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $fg__input_x = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let n = 0;
 	_html(`<button>${_text_mark($scope0_id, "b", n)}</button>${_el_mark($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
-	_patch_render($scope0_id, "b2", $fg__input_x && "e") || _script($scope0_id, "b1", 1, $sg__input_x && 2, "e");
+	_script($scope0_id, "b1", 1, 0, $fg__input_x && "e", "b2");
 	_patch_fill($scope0_id, "vb3", n, 1);
 	_scope($scope0_id, {
 		e: input.x,
 		f: n
-	}) || $fg__input_x && _patch_write($scope0_id, "xe", input.x, !$sg__input_x);
+	}) || $fg__input_x && _patch_write($scope0_id, "xe", input.x, !_server_guard($scope0_reason, 0));
 });
 
 // template.marko

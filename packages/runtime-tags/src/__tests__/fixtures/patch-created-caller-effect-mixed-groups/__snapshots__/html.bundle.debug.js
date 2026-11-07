@@ -7,7 +7,7 @@ var probe_default = _template("__tests__/tags/probe.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $fg__input_label = _filled_guard($scope0_reason, 1), $fg__input_count = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	_html("<p>probe</p>");
-	_patch_render($scope0_id, "__tests__/tags/probe.marko_0_input_label#2_input_count#3/setup", [$fg__input_label && "input_label", $fg__input_count && "input_count"], $scope0_reason, 0) || _script($scope0_id, "__tests__/tags/probe.marko_0_input_label#2_input_count#3", 0, ($fg__input_label || $fg__input_count) && (_client_guard($scope0_reason, 1) || _client_guard($scope0_reason, 2) ? 2 : 1), [$fg__input_label && "input_label", $fg__input_count && "input_count"]);
+	_script($scope0_id, "__tests__/tags/probe.marko_0_input_label#2_input_count#3", 0, ($fg__input_label || $fg__input_count) && (_client_guard($scope0_reason, 1) || _client_guard($scope0_reason, 2) ? 2 : 1), [$fg__input_label && "input_label", $fg__input_count && "input_count"], "__tests__/tags/probe.marko_0_input_label#2_input_count#3/setup", $scope0_reason, 0);
 	_scope($scope0_id, {
 		input_label: input.label,
 		input_count: input.count

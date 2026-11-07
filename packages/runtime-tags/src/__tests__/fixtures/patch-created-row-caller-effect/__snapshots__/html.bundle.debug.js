@@ -13,7 +13,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_filled_guard($scope0_reason, 1) && _patch_write($scope1_id, "PatchMarkedWrite:item", item, !_server_guard($scope0_reason, 1));
 		_html(`<p>${_text_mark($scope1_id, "#text/0", item, 1, $scope0_reason, 1)}</p>`);
-		_patch_render($scope1_id, "__tests__/tags/child.marko_1_input_count#0:4_item#2/setup", [_filled_guard($scope0_reason, 2) && ">input_count", _filled_guard($scope0_reason, 1) && "item"], $scope0_reason, 0) || _script($scope1_id, "__tests__/tags/child.marko_1_input_count#0:4_item#2", 1, (_filled_guard($scope0_reason, 2) || _filled_guard($scope0_reason, 1)) && (_client_guard($scope0_reason, 2) || $cg__input_items ? 2 : 1), [_filled_guard($scope0_reason, 2) && ">input_count", _filled_guard($scope0_reason, 1) && "item"]);
+		_script($scope1_id, "__tests__/tags/child.marko_1_input_count#0:4_item#2", 1, (_filled_guard($scope0_reason, 2) || _filled_guard($scope0_reason, 1)) && (_client_guard($scope0_reason, 2) || $cg__input_items ? 2 : 1), [_filled_guard($scope0_reason, 2) && ">input_count", _filled_guard($scope0_reason, 1) && "item"], "__tests__/tags/child.marko_1_input_count#0:4_item#2/setup", $scope0_reason, 0);
 		_scope($scope1_id, {
 			item,
 			_: _scope_with_id($scope0_id)

@@ -4,12 +4,12 @@ const $walks$1 = "D l b";
 const $setup$1 = [[], ["__tests__/tags/child/index.marko_0"]];
 _shells({ "__tests__/tags/child/index.marko": "__tests__/tags/child/index.marko !__tests__/tags/child/index.marko_0;D l ;<p> </p><button>+</button>" });
 var child_default = _template("__tests__/tags/child/index.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_x = _server_guard($scope0_reason, 0), $fg__input_x = _filled_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $fg__input_x = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let n = 0;
 	_html(`<p>${_text_mark($scope0_id, "#text/0", input.x, 1, $scope0_reason, 0)}</p><button>+</button>${_el_mark($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/tags/child/index.marko_0");
-	_patch_render($scope0_id, "__tests__/tags/child/index.marko_0_input_x#4_n#5/setup", $fg__input_x && "input_x") || _script($scope0_id, "__tests__/tags/child/index.marko_0_input_x#4_n#5", 1, $sg__input_x && 2, "input_x");
+	_script($scope0_id, "__tests__/tags/child/index.marko_0_input_x#4_n#5", 1, 0, $fg__input_x && "input_x", "__tests__/tags/child/index.marko_0_input_x#4_n#5/setup");
 	_patch_fill($scope0_id, "PatchFill:__tests__/tags/child/index.marko_0_n#5/fill", n, 1);
 	_scope($scope0_id, {
 		input_x: input.x,
@@ -17,7 +17,7 @@ var child_default = _template("__tests__/tags/child/index.marko", (input) => {
 	}, "__tests__/tags/child/index.marko", 0, {
 		input_x: ["input.x"],
 		n: "1:6"
-	}) || $fg__input_x && _patch_write($scope0_id, "PatchMarkedWrite:input_x", input.x, !$sg__input_x);
+	}) || $fg__input_x && _patch_write($scope0_id, "PatchMarkedWrite:input_x", input.x, !_server_guard($scope0_reason, 0));
 });
 
 // template.marko

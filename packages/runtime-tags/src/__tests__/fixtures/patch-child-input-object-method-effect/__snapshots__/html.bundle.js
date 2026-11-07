@@ -6,7 +6,7 @@ var probe_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $fg__input_opts = _filled_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	_html(`<p>${_text_mark($scope0_id, "a", "", 1, 0, 0, 1)}</p>`);
-	_patch_render($scope0_id, "b1", [$fg__input_opts && "d", $fg__input_label && "e"], $scope0_reason, 0) || _script($scope0_id, "b0", 1, ($fg__input_opts || $fg__input_label) && (_client_guard($scope0_reason, 1) || _client_guard($scope0_reason, 2) ? 2 : 1), [$fg__input_opts && "d", $fg__input_label && "e"]);
+	_script($scope0_id, "b0", 1, ($fg__input_opts || $fg__input_label) && (_client_guard($scope0_reason, 1) || _client_guard($scope0_reason, 2) ? 2 : 1), [$fg__input_opts && "d", $fg__input_label && "e"], "b1", $scope0_reason, 0);
 	_scope($scope0_id, {
 		d: input.opts,
 		e: input.label

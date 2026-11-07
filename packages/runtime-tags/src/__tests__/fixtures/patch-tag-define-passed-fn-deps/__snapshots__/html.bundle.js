@@ -42,15 +42,11 @@ var field_default = _template("b", (input) => {
 	const Log = { content: _content("b6", ({ log, value }) => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason(), $fg__log = _filled_guard($scope2_reason, 1), $fg__value2 = _filled_guard($scope2_reason, 2);
-		_patch_render($scope2_id, "b8", [
+		_script($scope2_id, "b7", 0, ($fg__log || $fg__value2) && (_client_guard($scope2_reason, 1) || _client_guard($scope2_reason, 2) ? 2 : 1), [
 			$fg__log && "c",
 			_filled_guard($scope0_reason, 1) && ">e",
 			$fg__value2 && "d"
-		], $scope2_reason, 0) || _script($scope2_id, "b7", 0, ($fg__log || $fg__value2) && (_client_guard($scope2_reason, 1) || _client_guard($scope2_reason, 2) ? 2 : 1), [
-			$fg__log && "c",
-			_filled_guard($scope0_reason, 1) && ">e",
-			$fg__value2 && "d"
-		]);
+		], "b8", $scope2_reason, 0);
 		_scope($scope2_id, {
 			c: log,
 			d: value

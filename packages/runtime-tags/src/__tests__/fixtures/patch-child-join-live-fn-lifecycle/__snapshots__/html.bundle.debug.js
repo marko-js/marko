@@ -4,20 +4,16 @@ const $walks$1 = "D l";
 const $setup$1 = [[], []];
 _shells({ "__tests__/tags/child.marko": "__tests__/tags/child.marko;D ;<p> </p>" });
 var child_default = _template("__tests__/tags/child.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_b = _filled_guard($scope0_reason, 2), $fg__input_a = _filled_guard($scope0_reason, 1), $sg__input_a = _server_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $fg__input_a = _filled_guard($scope0_reason, 1), $fg__input_b = _filled_guard($scope0_reason, 2), $sg__input_a = _server_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	$fg__input_a && _patch_write($scope0_id, "PatchMarkedWrite:input_a", input.a, !$sg__input_a);
 	const fmt = _bind_resume(() => input.a + "!", "__tests__/tags/child.marko_0/fmt", $scope0_id);
 	_html(`<p>${_text_mark($scope0_id, "#text/0", fmt() + input.b, 1, $scope0_reason, 0)}</p>`);
-	_patch_render($scope0_id, "__tests__/tags/child.marko_0_input_b#4_fmt#5/setup", [
+	_script($scope0_id, "__tests__/tags/child.marko_0_input_b#4_fmt#5", 1, ($fg__input_b || $fg__input_a) && (_client_guard($scope0_reason, 2) || _client_guard($scope0_reason, 1) ? 2 : 1), [
 		$fg__input_b && "input_b",
 		$fg__input_a && "fmt",
 		$fg__input_a && "input_a"
-	], $scope0_reason, 0) || _script($scope0_id, "__tests__/tags/child.marko_0_input_b#4_fmt#5", 1, ($fg__input_b || $fg__input_a) && (_client_guard($scope0_reason, 2) || _client_guard($scope0_reason, 1) ? 2 : 1), [
-		$fg__input_b && "input_b",
-		$fg__input_a && "fmt",
-		$fg__input_a && "input_a"
-	]);
+	], "__tests__/tags/child.marko_0_input_b#4_fmt#5/setup", $scope0_reason, 0);
 	_scope($scope0_id, {
 		input_a: input.a,
 		input_b: input.b,

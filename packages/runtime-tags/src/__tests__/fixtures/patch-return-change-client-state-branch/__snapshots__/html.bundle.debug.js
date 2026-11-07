@@ -5,13 +5,13 @@ const $setup$1 = [[], ["__tests__/tags/counter-box/index.marko_0"]];
 _shells({ "__tests__/tags/counter-box/index.marko": "^__tests__/tags/counter-box/index.marko !__tests__/tags/counter-box/index.marko_0;D l b ;<span> </span><button class=mode>b</button><button class=go>go</button>" });
 _stateful_return("__tests__/tags/counter-box/index.marko");
 var counter_box_default = _template("__tests__/tags/counter-box/index.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_onA = _server_guard($scope0_reason, 0), $sg__input_onB = _server_guard($scope0_reason, 1), $fg__input_onA = _filled_guard($scope0_reason, 0), $fg__input_onB = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $fg__input_onA = _filled_guard($scope0_reason, 0), $fg__input_onB = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	let mode = "a";
 	_html(`<span>${_text_mark($scope0_id, "#text/0", mode)}</span><button class=mode>b</button>${_el_mark($scope0_id, "#button/1")}<button class=go>go</button>${_el_mark($scope0_id, "#button/2")}`);
 	const $return = mode;
 	_script($scope0_id, "__tests__/tags/counter-box/index.marko_0");
-	_patch_render($scope0_id, "__tests__/tags/counter-box/index.marko_0_input_onA#5_input_onB#6_mode#7/setup", [$fg__input_onA && "input_onA", $fg__input_onB && "input_onB"]) || _script($scope0_id, "__tests__/tags/counter-box/index.marko_0_input_onA#5_input_onB#6_mode#7", 1, ($sg__input_onA || $sg__input_onB) && 2, [$sg__input_onA && "input_onA", $sg__input_onB && "input_onB"]);
+	_script($scope0_id, "__tests__/tags/counter-box/index.marko_0_input_onA#5_input_onB#6_mode#7", 1, 0, [$fg__input_onA && "input_onA", $fg__input_onB && "input_onB"], "__tests__/tags/counter-box/index.marko_0_input_onA#5_input_onB#6_mode#7/setup");
 	const $valueChange = _patch_bind($scope0_id, "PatchWrite:#TagVariableChange", (mode === "a" ? input.onA : input.onB) || void 0, 0, 0);
 	_patch_fill($scope0_id, "PatchFill:__tests__/tags/counter-box/index.marko_0_mode#7/fill", mode, 1);
 	_scope($scope0_id, {
@@ -23,7 +23,7 @@ var counter_box_default = _template("__tests__/tags/counter-box/index.marko", (i
 		input_onA: ["input.onA"],
 		input_onB: ["input.onB"],
 		mode: "1:6"
-	}) || ($fg__input_onA && _patch_write($scope0_id, "PatchMarkedWrite:input_onA", input.onA, !$sg__input_onA), $fg__input_onB && _patch_write($scope0_id, "PatchMarkedWrite:input_onB", input.onB, !$sg__input_onB));
+	}) || ($fg__input_onA && _patch_write($scope0_id, "PatchMarkedWrite:input_onA", input.onA, !_server_guard($scope0_reason, 0)), $fg__input_onB && _patch_write($scope0_id, "PatchMarkedWrite:input_onB", input.onB, !_server_guard($scope0_reason, 1)));
 	return $return;
 });
 

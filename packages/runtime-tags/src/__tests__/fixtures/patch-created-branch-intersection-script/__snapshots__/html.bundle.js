@@ -12,7 +12,7 @@ var template_default = _template("a", (input) => {
 			const inner = input.prefix + input.x;
 			_filled_guard($scope0_reason, 2) && _patch_write($scope1_id, "xb", inner, !_server_guard($scope0_reason, 2));
 			_patch_render($scope1_id, "a1", [_filled_guard($scope0_reason, 5) && ">e", _filled_guard($scope0_reason, 6) && ">f"], $scope0_reason, 2);
-			_patch_render($scope1_id, "a2", [_filled_guard($scope0_reason, 7) && ">g", _filled_guard($scope0_reason, 2) && "b"], $scope0_reason, 3) || _script($scope1_id, "a0", 0, (_filled_guard($scope0_reason, 7) || _filled_guard($scope0_reason, 2)) && (_client_guard($scope0_reason, 7) || _client_guard($scope0_reason, 2) ? 2 : 1), [_filled_guard($scope0_reason, 7) && ">g", _filled_guard($scope0_reason, 2) && "b"]);
+			_script($scope1_id, "a0", 0, (_filled_guard($scope0_reason, 7) || _filled_guard($scope0_reason, 2)) && (_client_guard($scope0_reason, 7) || _client_guard($scope0_reason, 2) ? 2 : 1), [_filled_guard($scope0_reason, 7) && ">g", _filled_guard($scope0_reason, 2) && "b"], "a2", $scope0_reason, 3);
 			_scope($scope1_id, {
 				b: inner,
 				_: _scope_with_id($scope0_id)

@@ -7,7 +7,7 @@ _shells({
 	b: "b a>b4!b5;/&b ;<!><button>x</button>"
 });
 var card_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_w = _server_guard($scope0_reason, 1), $fg__input_w = _filled_guard($scope0_reason, 1), $wi__input_w = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $fg__input_w = _filled_guard($scope0_reason, 1), $wi__input_w = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_w__closures = /* @__PURE__ */ new Set();
 	const $k__closures = /* @__PURE__ */ new Set();
@@ -16,7 +16,7 @@ var card_default = _template("b", (input) => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "b2");
-		_patch_render($scope1_id, "b3", _filled_guard($scope0_reason, 1) && ">f") || _script($scope1_id, "b1", 0, $sg__input_w && 2, ">f");
+		_script($scope1_id, "b1", 0, 0, _filled_guard($scope0_reason, 1) && ">f", "b3");
 		_subscribe($k__closures, _subscribe($wi__input_w && $input_w__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 1) && "b2", 0), "b4", 0);
 		_resume_branch($scope1_id);
 	}, $scope0_id, 0) };
@@ -33,7 +33,7 @@ var card_default = _template("b", (input) => {
 		h: $wi__input_w && $input_w__closures,
 		i: $k__closures,
 		a: _existing_scope($childScope)
-	}) || $fg__input_w && _patch_write($scope0_id, "xf", input.w, !$sg__input_w);
+	}) || $fg__input_w && _patch_write($scope0_id, "xf", input.w, !_server_guard($scope0_reason, 1));
 });
 
 // template.marko

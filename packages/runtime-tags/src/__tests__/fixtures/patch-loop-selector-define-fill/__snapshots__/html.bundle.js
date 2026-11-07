@@ -18,7 +18,7 @@ var template_default = _template("a", (input) => {
 		_for_of(rows, (row) => {
 			const $scope2_id = _scope_id();
 			_html(`<li>${_escape(row.id)}</li>${_el_mark($scope2_id, "a")}`);
-			_patch_render($scope2_id, "a1", [_filled_guard($scope1_reason, 1) && ">e", _filled_guard($scope1_reason, 2) && ">f"], $scope1_reason, 0) || _script($scope2_id, "a0", 1, (_filled_guard($scope1_reason, 1) || _filled_guard($scope1_reason, 2)) && (_client_guard($scope1_reason, 1) || _client_guard($scope1_reason, 2) ? 2 : 1), [_filled_guard($scope1_reason, 1) && ">e", _filled_guard($scope1_reason, 2) && ">f"]);
+			_script($scope2_id, "a0", 1, (_filled_guard($scope1_reason, 1) || _filled_guard($scope1_reason, 2)) && (_client_guard($scope1_reason, 1) || _client_guard($scope1_reason, 2) ? 2 : 1), [_filled_guard($scope1_reason, 1) && ">e", _filled_guard($scope1_reason, 2) && ">f"], "a1", $scope1_reason, 0);
 			_scope($scope2_id, { M: row?.id });
 		}, "id", $scope1_id, "a", 1, 1, 1, "</ul>", 1);
 		_html(`<button class=add>+</button>${_el_mark($scope1_id, "b")}`);

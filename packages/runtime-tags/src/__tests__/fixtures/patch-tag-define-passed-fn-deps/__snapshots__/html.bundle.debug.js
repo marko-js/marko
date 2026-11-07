@@ -46,15 +46,11 @@ var field_default = _template("__tests__/tags/field.marko", (input) => {
 	const Log = { content: _content("__tests__/tags/field.marko_2*content", ({ log, value }) => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason(), $fg__log = _filled_guard($scope2_reason, 1), $fg__value2 = _filled_guard($scope2_reason, 2);
-		_patch_render($scope2_id, "__tests__/tags/field.marko_2_log#2_value#3/setup", [
+		_script($scope2_id, "__tests__/tags/field.marko_2_log#2_value#3", 0, ($fg__log || $fg__value2) && (_client_guard($scope2_reason, 1) || _client_guard($scope2_reason, 2) ? 2 : 1), [
 			$fg__log && "log",
 			_filled_guard($scope0_reason, 1) && ">input_hint",
 			$fg__value2 && "value"
-		], $scope2_reason, 0) || _script($scope2_id, "__tests__/tags/field.marko_2_log#2_value#3", 0, ($fg__log || $fg__value2) && (_client_guard($scope2_reason, 1) || _client_guard($scope2_reason, 2) ? 2 : 1), [
-			$fg__log && "log",
-			_filled_guard($scope0_reason, 1) && ">input_hint",
-			$fg__value2 && "value"
-		]);
+		], "__tests__/tags/field.marko_2_log#2_value#3/setup", $scope2_reason, 0);
 		_scope($scope2_id, {
 			log,
 			value

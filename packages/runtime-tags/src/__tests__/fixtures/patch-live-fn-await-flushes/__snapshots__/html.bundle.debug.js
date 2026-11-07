@@ -20,15 +20,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const Use = { content: _content("__tests__/template.marko_3*content", ({ fn, where }) => {
 		const $scope3_id = _scope_id();
 		const $scope3_reason = _scope_reason(), $fg__fn = _filled_guard($scope3_reason, 1), $fg__where = _filled_guard($scope3_reason, 2);
-		_patch_render($scope3_id, "__tests__/template.marko_3_fn#2_where#3/setup", [
+		_script($scope3_id, "__tests__/template.marko_3_fn#2_where#3", 0, ($fg__fn || $fg__where) && (_client_guard($scope3_reason, 1) || _client_guard($scope3_reason, 2) ? 2 : 1), [
 			$fg__fn && "fn",
 			_filled_guard($scope0_reason, 1) && ">input_x",
 			$fg__where && "where"
-		], $scope3_reason, 0) || _script($scope3_id, "__tests__/template.marko_3_fn#2_where#3", 0, ($fg__fn || $fg__where) && (_client_guard($scope3_reason, 1) || _client_guard($scope3_reason, 2) ? 2 : 1), [
-			$fg__fn && "fn",
-			_filled_guard($scope0_reason, 1) && ">input_x",
-			$fg__where && "where"
-		]);
+		], "__tests__/template.marko_3_fn#2_where#3/setup", $scope3_reason, 0);
 		_scope($scope3_id, {
 			fn,
 			where

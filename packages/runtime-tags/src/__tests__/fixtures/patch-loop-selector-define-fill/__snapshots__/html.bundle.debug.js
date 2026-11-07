@@ -21,7 +21,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_for_of(rows, (row) => {
 			const $scope2_id = _scope_id();
 			_html(`<li>${_escape(row.id)}</li>${_el_mark($scope2_id, "#li/0")}`);
-			_patch_render($scope2_id, "__tests__/template.marko_2_selected#1:4_flag#1:5/setup", [_filled_guard($scope1_reason, 1) && ">selected", _filled_guard($scope1_reason, 2) && ">flag"], $scope1_reason, 0) || _script($scope2_id, "__tests__/template.marko_2_selected#1:4_flag#1:5", 1, (_filled_guard($scope1_reason, 1) || _filled_guard($scope1_reason, 2)) && (_client_guard($scope1_reason, 1) || _client_guard($scope1_reason, 2) ? 2 : 1), [_filled_guard($scope1_reason, 1) && ">selected", _filled_guard($scope1_reason, 2) && ">flag"]);
+			_script($scope2_id, "__tests__/template.marko_2_selected#1:4_flag#1:5", 1, (_filled_guard($scope1_reason, 1) || _filled_guard($scope1_reason, 2)) && (_client_guard($scope1_reason, 1) || _client_guard($scope1_reason, 2) ? 2 : 1), [_filled_guard($scope1_reason, 1) && ">selected", _filled_guard($scope1_reason, 2) && ">flag"], "__tests__/template.marko_2_selected#1:4_flag#1:5/setup", $scope1_reason, 0);
 			_scope($scope2_id, { "#LoopKey": row?.id }, "__tests__/template.marko", "5:6", { "#LoopKey": ["row.id", "5:10"] });
 		}, "id", $scope1_id, "#ul/0", 1, 1, 1, "</ul>", 1);
 		_html(`<button class=add>+</button>${_el_mark($scope1_id, "#button/1")}`);
