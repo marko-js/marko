@@ -1,3 +1,5 @@
-<if=input.show>
+<let/show=true/>
+<button onClick() { show = !show }>t</button>
+<if=show>
   <p>${$global.meta.title + ":" + $global.meta.flag}</p>
 </if>
