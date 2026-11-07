@@ -902,8 +902,8 @@ export function getCommonSection(section: Section, other: Section) {
   return a;
 }
 
-// A group gates what a write reason leaves conditional; a write reason is
-// conditional only where the reason is (patch keying adds `always`).
+// A group gates what a write reason leaves guarded; a write reason is
+// guarded only where the reason is (patch keying adds `always`).
 export function ensureSectionReasonGroups(section: Section) {
   if (isGuardedReason(section.reason)) {
     ensureReasonGroups(section, getSectionWriteReason(section));
@@ -938,13 +938,10 @@ export function ensureCallerParamGroups(sources: Sources | undefined) {
 
 // The caller groups a patch guard asks of a set at `section`, those
 // `ensureCallerParamGroups` records: client state or `always` answers it statically.
-export function getConditionalCallerGroupsAt(
-  sources: Sources,
-  section: Section,
-) {
+export function getGuardedCallerGroupsAt(sources: Sources, section: Section) {
   if (!isGuardedReason(sources)) {
     throw new Error(
-      "Invalid compiler state, a patch guard cannot ask the caller groups of an unconditional set (client state or `always`).",
+      "Invalid compiler state, a patch guard cannot ask the caller groups of an unguarded set (client state or `always`).",
     );
   }
   return getCallerParamGroupsAt(sources.param, section);

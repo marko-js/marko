@@ -59,8 +59,8 @@ import {
   findParamReasonGroupIndex,
   forEachParamGroup,
   getCallerParamGroupsAt,
-  getConditionalCallerGroupsAt,
   getDynamicTagContentClosures,
+  getGuardedCallerGroupsAt,
   getParamReasonGroupIndex,
   getRendererReason,
   getScopeIdIdentifier,
@@ -1120,7 +1120,7 @@ function forEachCallerGroup(
   fn: (paramSection: Section, group: ParamReasonGroup, index: number) => void,
 ) {
   forEach(list, (sources) => {
-    for (const [paramSection, group] of getConditionalCallerGroupsAt(
+    for (const [paramSection, group] of getGuardedCallerGroupsAt(
       sources,
       section,
     )) {

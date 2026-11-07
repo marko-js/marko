@@ -508,18 +508,24 @@ export function getShellIdArg(section: Section | undefined) {
 
 // An effect a created scope's own renders queue (a setup, seed, or item write cascades into
 // it; its own `<let>` only where seeded whole): its setup ids leave it to those renders.
-export function isQueuedOnCreate(section: Section, refs: ReferencedBindings) {
+export function isQueuedOnCreate(
+  section: Section,
+  referencedBindings: ReferencedBindings,
+) {
   return (
     some(
-      getSourcesForReferencedBindings(refs)?.state,
+      getSourcesForReferencedBindings(referencedBindings)?.state,
       (state) =>
         state.section !== section ||
         !!getPatchFill(state).fill ||
         !!getWriteReason(state),
     ) ||
     // A fill's run leaves out an effect its entry re-runs.
-    (some(refs, (ref) => ref.section === section && !!getPatchFill(ref).fill) &&
-      !runsByEntry(refs))
+    (some(
+      referencedBindings,
+      (binding) => binding.section === section && !!getPatchFill(binding).fill,
+    ) &&
+      !runsByEntry(referencedBindings))
   );
 }
 

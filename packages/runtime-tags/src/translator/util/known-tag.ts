@@ -1156,7 +1156,7 @@ function getPatchGroupValue<R>(
   exprs: Opt<t.NodeExtra>,
   combine: (groups: [Section, ParamReasonGroup][], bits: number) => R,
 ) {
-  return some(exprs, isLiveArg)
+  return some(exprs, passesFilledReferences)
     ? getGroupSourcesValue(
         section,
         {
@@ -1177,7 +1177,7 @@ function passesOneValue(
   sources: Sources | undefined,
   exprs: Opt<t.NodeExtra>,
 ) {
-  if (!sources?.state && some(exprs, isLiveArg)) return true;
+  if (!sources?.state && some(exprs, passesFilledReferences)) return true;
   const value = getGroupSourcesValue(section, sources, getGroupsConstant);
   return (
     value !== undefined &&
@@ -1590,7 +1590,7 @@ function isBuiltObjectExpr(extra: t.NodeExtra) {
 
 // A function with filled references as the call passes it: a literal reading a reference a patch
 // writes, or a binding holding one.
-function isLiveArg(extra: t.NodeExtra | undefined) {
+function passesFilledReferences(extra: t.NodeExtra | undefined) {
   if (!extra) return false;
   if (isRegisteredFnExtra(extra)) return !!getFilledReferences(extra);
   const ref = getReferencedBindings(extra);
@@ -2266,18 +2266,18 @@ function pushDerivedConstants(
   expr: t.NodeExtra | undefined,
   param: Binding,
 ) {
-  const refs = expr && getReferencedBindings(expr);
-  if (!refs) return;
+  const referencedBindings = expr && getReferencedBindings(expr);
+  if (!referencedBindings) return;
   for (const constant of constants) {
     if (
-      !constant.signals.has(refs) &&
+      !constant.signals.has(referencedBindings) &&
       param.section.paramReasonGroups?.some(
         (group) =>
           bindingUtil.has(group, constant.binding) &&
           bindingUtil.has(group, param),
       )
     ) {
-      constant.signals.add(refs);
+      constant.signals.add(referencedBindings);
       writeToSignal(
         info,
         info.getBindingIdentifier(constant.binding, constant.name),
