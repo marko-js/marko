@@ -11,7 +11,7 @@ var show_await_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	_await($scope0_id, "a", input.promise, (x) => {
 		const $scope1_id = _scope_id();
-		_html(`<a${_attr("href", x, $scope1_id, "aa$href", $scope0_reason, 0)}${_attr_class(x, $scope1_id, "aa$class", $scope0_reason, 0)}${_attr("data-x", x, $scope1_id, "aa$data-x", $scope0_reason, 0)}>${_text_mark($scope1_id, "b", x, 1, $scope0_reason, 0)}</a>${_el_mark($scope1_id, "a", _updates_from($scope0_reason, 0))}`);
+		_html(`<a${_attr("href", x, $scope1_id, "a", $scope0_reason, 0)}${_attr_class(x, $scope1_id, "a", $scope0_reason, 0)}${_attr("data-x", x, $scope1_id, "a", $scope0_reason, 0)}>${_text_mark($scope1_id, "b", x, 1, $scope0_reason, 0)}</a>${_el_mark($scope1_id, "a", _updates_from($scope0_reason, 0))}`);
 		_scope($scope1_id, {});
 	}, 1, "b0", _unfilled_if($scope0_reason, 0) && 2, 1);
 });

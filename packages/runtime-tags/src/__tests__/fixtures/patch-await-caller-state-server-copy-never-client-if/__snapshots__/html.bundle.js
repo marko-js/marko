@@ -17,7 +17,7 @@ var show_await_default = _template("b", (input) => {
 		_if(() => {
 			if (x) {
 				const $scope2_id = _scope_id();
-				_html(`${_style_html(`--M_b0:${_escape_style_value("red", $scope2_id, "ya$--M_b0", 0, 0)};`)}${_el_mark($scope2_id, "a", 0)}<b class=b>${_text_mark($scope2_id, "b", x, 1, $scope0_reason, 1)}:${_text_mark($scope2_id, "c", 1, 2, 0, 0, 1)}:${_text_mark($scope2_id, "d", input.label, 2, $scope0_reason, 2)}</b>`);
+				_html(`${_style_html(`${_escape_style_value("red", $scope2_id, "a", "--M_b0", 0, 0)};`)}${_el_mark($scope2_id, "a", 0)}<b class=b>${_text_mark($scope2_id, "b", x, 1, $scope0_reason, 1)}:${_text_mark($scope2_id, "c", 1, 2, 0, 0, 1)}:${_text_mark($scope2_id, "d", input.label, 2, $scope0_reason, 2)}</b>`);
 				_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope2_id, "b1", $cg__input_label);
 				$cg__input_promise && _patch_render($scope2_id, "b2");
 				_subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope2_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope1_id) }), $cg__input_label && "b1");

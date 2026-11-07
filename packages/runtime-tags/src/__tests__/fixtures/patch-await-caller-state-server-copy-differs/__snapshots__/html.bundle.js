@@ -26,7 +26,7 @@ var show_await_default = _template("c", (input) => {
 		const $scope1_id = _scope_id();
 		_filled_guard($scope0_reason, 1) && $cg__input_label && _patch_write($scope1_id, "xi", x, !_server_guard($scope0_reason, 1));
 		const upper = x.toUpperCase();
-		_html(`<p${_attr("title", x, $scope1_id, "aa$title", $scope0_reason, 1)}>${_text_mark($scope1_id, "b", input.label, 1, $scope0_reason, 2)}:${_text_mark($scope1_id, "c", x, 2, $scope0_reason, 1)}:${_text_mark($scope1_id, "d", upper, 2, $scope0_reason, 1)}:${_text_mark($scope1_id, "e", input.label + x, 2, $scope0_reason, 0)}</p>${_el_mark($scope1_id, "a", _updates_from($scope0_reason, 1))}`);
+		_html(`<p${_attr("title", x, $scope1_id, "a", $scope0_reason, 1)}>${_text_mark($scope1_id, "b", input.label, 1, $scope0_reason, 2)}:${_text_mark($scope1_id, "c", x, 2, $scope0_reason, 1)}:${_text_mark($scope1_id, "d", upper, 2, $scope0_reason, 1)}:${_text_mark($scope1_id, "e", input.label + x, 2, $scope0_reason, 0)}</p>${_el_mark($scope1_id, "a", _updates_from($scope0_reason, 1))}`);
 		_if(() => {
 			if (x.length > 6) {
 				const $scope2_id = _scope_id();

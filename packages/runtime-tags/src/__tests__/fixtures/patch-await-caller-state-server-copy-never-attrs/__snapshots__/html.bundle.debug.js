@@ -12,7 +12,7 @@ var show_await_default = _template("__tests__/tags/show-await.marko", (input) =>
 	const $scope0_id = _scope_id();
 	_await($scope0_id, "#text/0", input.promise, (x) => {
 		const $scope1_id = _scope_id();
-		_html(`<a${_attr("href", x, $scope1_id, "PatchAttr:#a/0 href", $scope0_reason, 0)}${_attr_class(x, $scope1_id, "PatchAttr:#a/0 class", $scope0_reason, 0)}${_attr("data-x", x, $scope1_id, "PatchAttr:#a/0 data-x", $scope0_reason, 0)}>${_text_mark($scope1_id, "#text/1", x, 1, $scope0_reason, 0)}</a>${_el_mark($scope1_id, "#a/0", _updates_from($scope0_reason, 0))}`);
+		_html(`<a${_attr("href", x, $scope1_id, "#a/0", $scope0_reason, 0)}${_attr_class(x, $scope1_id, "#a/0", $scope0_reason, 0)}${_attr("data-x", x, $scope1_id, "#a/0", $scope0_reason, 0)}>${_text_mark($scope1_id, "#text/1", x, 1, $scope0_reason, 0)}</a>${_el_mark($scope1_id, "#a/0", _updates_from($scope0_reason, 0))}`);
 		_scope($scope1_id, {}, "__tests__/tags/show-await.marko", "1:2");
 	}, 1, "__tests__/tags/show-await.marko_1*content", _unfilled_if($scope0_reason, 0) && 2, 1);
 });

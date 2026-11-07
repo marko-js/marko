@@ -6,7 +6,7 @@ _shells({ b: "b;D D ;<section><h2> </h2></section>" });
 var card_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<section><h2${_attr_class(input.title, $scope0_id, "aa$class", $scope0_reason, 0)}>${_text_mark($scope0_id, "b", input.title, 1, $scope0_reason, 0)}</h2>${_el_mark($scope0_id, "a", _updates_from($scope0_reason, 0))}</section>`);
+	_html(`<section><h2${_attr_class(input.title, $scope0_id, "a", $scope0_reason, 0)}>${_text_mark($scope0_id, "b", input.title, 1, $scope0_reason, 0)}</h2>${_el_mark($scope0_id, "a", _updates_from($scope0_reason, 0))}</section>`);
 	_scope($scope0_id, {});
 });
 

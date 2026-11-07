@@ -72,7 +72,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
-	_html(`<main><h1>${_text_mark($scope0_id, "#text/0", input.title, 1, $scope0_reason, 0)}</h1><p${_attr("title", $global$1.locale, $scope0_id, "PatchAttr:#p/1 title")}>${_text_mark($scope0_id, "#text/2", $global$1.brand, 1, 4, 0)}</p>${_el_mark($scope0_id, "#p/1")}`);
+	_html(`<main><h1>${_text_mark($scope0_id, "#text/0", input.title, 1, $scope0_reason, 0)}</h1><p${_attr("title", $global$1.locale, $scope0_id, "#p/1")}>${_text_mark($scope0_id, "#text/2", $global$1.brand, 1, 4, 0)}</p>${_el_mark($scope0_id, "#p/1")}`);
 	_set_scope_reason(_updates_from($scope0_reason, 1) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/3", 0);
 	price_card_default({ label: input.label });

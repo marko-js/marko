@@ -23,7 +23,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		_html(`<b>${_text_mark($scope1_id, "a", err.message, 1, 4, 0)}</b><input${_attr_input_value($scope1_id, "b", input.label, _resume(function(v) {
 			console.log("changed", v);
-		}, "a0"), "n2b", $scope0_reason, 0, "wEb", $scope0_reason, 0)}>${_el_mark($scope1_id, "b")}`);
+		}, "a0"), 3, $scope0_reason, 0)}>${_el_mark($scope1_id, "b")}`);
 		_script($scope1_id, "a1");
 		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "a2", $cg__input_label);
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), $cg__input_label && "a2");

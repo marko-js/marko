@@ -29,7 +29,7 @@ var show_await_default = _template("c", (input) => {
 		let b = x;
 		let c = b;
 		let d = c;
-		_html(`${_style_html(`--M_c0:${_escape_style_value(c, $scope1_id, "ya$--M_c0", $cg__input_promise << 1, 0)};`)}${_el_mark($scope1_id, "a")}<p class=v>${_text_mark($scope1_id, "b", b, 1, $cg__input_promise << 1, 0, 1)}|${_text_mark($scope1_id, "c", c, 2, $cg__input_promise << 1, 0, 1)}|${_text_mark($scope1_id, "d", d, 2)}</p>`);
+		_html(`${_style_html(`${_escape_style_value(c, $scope1_id, "a", "--M_c0", $cg__input_promise << 1, 0)};`)}${_el_mark($scope1_id, "a")}<p class=v>${_text_mark($scope1_id, "b", b, 1, $cg__input_promise << 1, 0, 1)}|${_text_mark($scope1_id, "c", c, 2, $cg__input_promise << 1, 0, 1)}|${_text_mark($scope1_id, "d", d, 2)}</p>`);
 		_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
 		const $childScope = _peek_scope_id($scope1_id, "e", 0);
 		card_default({ label: x });

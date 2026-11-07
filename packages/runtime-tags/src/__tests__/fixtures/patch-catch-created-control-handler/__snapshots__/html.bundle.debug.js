@@ -26,7 +26,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_html(`<b>${_text_mark($scope1_id, "#text/0", err.message, 1, 4, 0)}</b><input${_attr_input_value($scope1_id, "#input/1", input.label, _resume(function(v) {
 			console.log("changed", v);
-		}, "__tests__/template.marko_1/valueChange"), "PatchControl:2#input/1", $scope0_reason, 0, "PatchWrite:ControlledHandler:#input/1", $scope0_reason, 0)}>${_el_mark($scope1_id, "#input/1")}`);
+		}, "__tests__/template.marko_1/valueChange"), 3, $scope0_reason, 0)}>${_el_mark($scope1_id, "#input/1")}`);
 		_script($scope1_id, "__tests__/template.marko_1");
 		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_label#0:3/subscribe", $cg__input_label);
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "6:4", { "ControlledHandler:#input/1": ["valueChange", "8:30"] }), $cg__input_label && "__tests__/template.marko_1_input_label#0:3/subscribe");

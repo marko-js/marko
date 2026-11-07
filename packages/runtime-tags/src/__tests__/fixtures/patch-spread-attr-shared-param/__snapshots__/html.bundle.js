@@ -8,7 +8,7 @@ var template_default = _template("a", (input) => {
 		title: input.title,
 		class: input.cls
 	};
-	_html(`<a${_attrs(attrs, "a", $scope0_id, "a", 0, $scope0_reason, 3)}>x</a>${_el_mark($scope0_id, "a")}<img${_attr("src", `${input.url}?w=${input.width}`, $scope0_id, "ab$src", $scope0_reason, 2)}>${_el_mark($scope0_id, "b", _updates_from($scope0_reason, 2))}`);
+	_html(`<a${_attrs(attrs, "a", $scope0_id, "a", 0, $scope0_reason, 3)}>x</a>${_el_mark($scope0_id, "a")}<img${_attr("src", `${input.url}?w=${input.width}`, $scope0_id, "b", $scope0_reason, 2)}>${_el_mark($scope0_id, "b", _updates_from($scope0_reason, 2))}`);
 	_script($scope0_id, "a0", 1, $fg__input_url || $fg__input_title || $fg__input_cls, [
 		$fg__input_url && "e",
 		$fg__input_title && "f",

@@ -5,7 +5,7 @@ _shells({ a: "a; ;<div></div>" });
 var child_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $fg__input_name = _filled_guard($scope0_reason, 1), $fg__input_item = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
-	_html(`<div${_attr_class(input.name, $scope0_id, "aa$class", $scope0_reason, 1)}></div>${_el_mark($scope0_id, "a", _updates_from($scope0_reason, 1))}`);
+	_html(`<div${_attr_class(input.name, $scope0_id, "a", $scope0_reason, 1)}></div>${_el_mark($scope0_id, "a", _updates_from($scope0_reason, 1))}`);
 	_patch_render($scope0_id, "a1", [$fg__input_name && "d", $fg__input_item && "e"], $scope0_reason, 0) || _script($scope0_id, "a0", 1, ($fg__input_name || $fg__input_item) && (_client_guard($scope0_reason, 1) || _client_guard($scope0_reason, 2) ? 2 : 1), [$fg__input_name && "d", $fg__input_item && "e"]);
 	_scope($scope0_id, {
 		d: input.name,

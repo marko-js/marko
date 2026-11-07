@@ -35,7 +35,7 @@ var show_await_default = _template("__tests__/tags/show-await.marko", (input) =>
 		let b = a;
 		let c = b;
 		let d = c;
-		_html(`${_style_html(`--M_packages-1bruntime-19tags-1bsrc-1b__tests__-1bfixtures-1bpatch-19await-19caller-19state-19created-19let-19chain-1btags-1bshow-19await-1amarko_0:${_escape_style_value(c, $scope1_id, "PatchStyle:#style/0 --M_packages-1bruntime-19tags-1bsrc-1b__tests__-1bfixtures-1bpatch-19await-19caller-19state-19created-19let-19chain-1btags-1bshow-19await-1amarko_0", $cg__input_promise << 1, 0)};`)}${_el_mark($scope1_id, "#style/0")}<p class=v>${_text_mark($scope1_id, "#text/1", b, 1, $cg__input_promise << 1, 0, 1)}|${_text_mark($scope1_id, "#text/2", c, 2, $cg__input_promise << 1, 0, 1)}|${_text_mark($scope1_id, "#text/3", d, 2)}</p>`);
+		_html(`${_style_html(`${_escape_style_value(c, $scope1_id, "#style/0", "--M_packages-1bruntime-19tags-1bsrc-1b__tests__-1bfixtures-1bpatch-19await-19caller-19state-19created-19let-19chain-1btags-1bshow-19await-1amarko_0", $cg__input_promise << 1, 0)};`)}${_el_mark($scope1_id, "#style/0")}<p class=v>${_text_mark($scope1_id, "#text/1", b, 1, $cg__input_promise << 1, 0, 1)}|${_text_mark($scope1_id, "#text/2", c, 2, $cg__input_promise << 1, 0, 1)}|${_text_mark($scope1_id, "#text/3", d, 2)}</p>`);
 		_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
 		const $childScope = _peek_scope_id($scope1_id, "#childScope/4", 0);
 		card_default({ label: x });

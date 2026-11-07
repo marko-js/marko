@@ -27,7 +27,7 @@ var navx_default = _template("__tests__/tags/navx.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 2) && _patch_write($scope1_id, "PatchMarkedWrite:item_href", item?.href, !_server_guard($scope0_reason, 1));
 		const active = item.href === input.path;
-		_html(`<a${_attr_class(["link", { active }], $scope1_id, "PatchAttr:#a/0 class", $scope0_reason, 0)}${_attr("href", item.href, $scope1_id, "PatchAttr:#a/0 href", $scope0_reason, 1)}>`);
+		_html(`<a${_attr_class(["link", { active }], $scope1_id, "#a/0", $scope0_reason, 0)}${_attr("href", item.href, $scope1_id, "#a/0", $scope0_reason, 1)}>`);
 		_set_scope_reason(_updates_from($scope0_reason, 1) << 1);
 		const $childScope = _peek_scope_id($scope1_id, "#childScope/1", 0);
 		icon_default({ name: item.icon });

@@ -28,7 +28,7 @@ var show_await_default = _template("__tests__/tags/show-await.marko", (input) =>
 		const $scope1_id = _scope_id();
 		_filled_guard($scope0_reason, 1) && $cg__input_label && _patch_write($scope1_id, "PatchMarkedWrite:x", x, !_server_guard($scope0_reason, 1));
 		const upper = x.toUpperCase();
-		_html(`<p${_attr("title", x, $scope1_id, "PatchAttr:#p/0 title", $scope0_reason, 1)}>${_text_mark($scope1_id, "#text/1", input.label, 1, $scope0_reason, 2)}:${_text_mark($scope1_id, "#text/2", x, 2, $scope0_reason, 1)}:${_text_mark($scope1_id, "#text/3", upper, 2, $scope0_reason, 1)}:${_text_mark($scope1_id, "#text/4", input.label + x, 2, $scope0_reason, 0)}</p>${_el_mark($scope1_id, "#p/0", _updates_from($scope0_reason, 1))}`);
+		_html(`<p${_attr("title", x, $scope1_id, "#p/0", $scope0_reason, 1)}>${_text_mark($scope1_id, "#text/1", input.label, 1, $scope0_reason, 2)}:${_text_mark($scope1_id, "#text/2", x, 2, $scope0_reason, 1)}:${_text_mark($scope1_id, "#text/3", upper, 2, $scope0_reason, 1)}:${_text_mark($scope1_id, "#text/4", input.label + x, 2, $scope0_reason, 0)}</p>${_el_mark($scope1_id, "#p/0", _updates_from($scope0_reason, 1))}`);
 		_if(() => {
 			if (x.length > 6) {
 				const $scope2_id = _scope_id();

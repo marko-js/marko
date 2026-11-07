@@ -12,7 +12,7 @@ var show_await_default = _template("b", (input) => {
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	_await($scope0_id, "a", input.promise, (x) => {
 		const $scope1_id = _scope_id();
-		_html(`${_style_html(`--M_b0:${_escape_style_value(x, $scope1_id, "ya$--M_b0", $scope0_reason, 0)};--M_b1:${_escape_style_value(input.label, $scope1_id, "ya$--M_b1", $scope0_reason, 1)};--M_b2:${_escape_style_value(x, $scope1_id, "ya$--M_b2", $scope0_reason, 0)};`)}${_el_mark($scope1_id, "a", _updates_from($scope0_reason, 0) || _updates_from($scope0_reason, 1))}<p>${_text_mark($scope1_id, "b", x, 1, $scope0_reason, 0)}</p>`);
+		_html(`${_style_html(`${_escape_style_value(x, $scope1_id, "a", "--M_b0", $scope0_reason, 0)};${_escape_style_value(input.label, $scope1_id, "a", "--M_b1", $scope0_reason, 1)};${_escape_style_value(x, $scope1_id, "a", "--M_b2", $scope0_reason, 0)};`)}${_el_mark($scope1_id, "a", _updates_from($scope0_reason, 0) || _updates_from($scope0_reason, 1))}<p>${_text_mark($scope1_id, "b", x, 1, $scope0_reason, 0)}</p>`);
 		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "b3", $cg__input_label);
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_label__closures, _scope($scope1_id, {}), $cg__input_label && "b3");
 	}, 1, "b4", _unfilled_if($scope0_reason, 0), 1);

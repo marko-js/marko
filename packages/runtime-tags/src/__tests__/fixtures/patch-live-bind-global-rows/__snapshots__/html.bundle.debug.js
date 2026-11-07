@@ -12,7 +12,7 @@ var stepper_default = _template("__tests__/tags/stepper.marko", (input) => {
 	let current = input.value;
 	_html(`<input${_attr_input_value($scope0_id, "#input/0", current, _bind_resume((_new_current) => {
 		current = clamp(_new_current);
-	}, "__tests__/tags/stepper.marko_0/valueChange", $scope0_id), 0, 0, 0, "PatchWrite:ControlledHandler:#input/0")} type=number>${_el_mark($scope0_id, "#input/0")}`);
+	}, "__tests__/tags/stepper.marko_0/valueChange", $scope0_id), 2)} type=number>${_el_mark($scope0_id, "#input/0")}`);
 	_script($scope0_id, "__tests__/tags/stepper.marko_0");
 	_patch_render($scope0_id, "__tests__/tags/stepper.marko_0_input_value#4_input_valueChange#5/setup", [$fg__input_value && "input_value", $fg__input_valueChange && "input_valueChange"], $scope0_reason, 0);
 	_patch_render($scope0_id, "__tests__/tags/stepper.marko_0_clamp#7_current#8/setup", [

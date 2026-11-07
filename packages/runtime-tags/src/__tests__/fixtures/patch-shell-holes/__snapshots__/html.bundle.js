@@ -10,7 +10,7 @@ var template_default = _template("a", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_html(`<a${_attr("href", input.href, $scope1_id, "aa$href", $scope0_reason, 3)}${_attr("hidden", input.hidden, $scope1_id, "aa$hidden", $scope0_reason, 4)}>${_text_mark($scope1_id, "b", input.label, 1, $scope0_reason, 5)}</a>${_el_mark($scope1_id, "a", _updates_from($scope0_reason, 3) || _updates_from($scope0_reason, 4))}`);
+			_html(`<a${_attr("href", input.href, $scope1_id, "a", $scope0_reason, 3)}${_attr("hidden", input.hidden, $scope1_id, "a", $scope0_reason, 4)}>${_text_mark($scope1_id, "b", input.label, 1, $scope0_reason, 5)}</a>${_el_mark($scope1_id, "a", _updates_from($scope0_reason, 3) || _updates_from($scope0_reason, 4))}`);
 			_client_guard($scope0_reason, 3) && _patch_render($scope1_id, "a0");
 			_client_guard($scope0_reason, 4) && _patch_render($scope1_id, "a1");
 			_client_guard($scope0_reason, 5) && _patch_render($scope1_id, "a2");
