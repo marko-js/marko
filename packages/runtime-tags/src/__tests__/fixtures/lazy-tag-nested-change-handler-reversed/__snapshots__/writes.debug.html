@@ -1,0 +1,38 @@
+<script async type=module src="child.marko.load.mjs"></script>
+<script async type=module src="grand-child.marko.load.mjs"></script><button
+  class=page>page:<!>
+    0<!--M_$1 #text/1--></button><!--M_$1 #button/0--><span>child:<!>
+    0<!--M_$2 #text/0-->:<!>0<!--M_$2 #text/1--></span><button
+  class=grand-child>grand-child:<!>
+    0<!--M_$3 #text/1--></button><!--M_$3 #button/0-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.b = {
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-change-handler-reversed/child.marko": [
+      _ => [2, {
+        "#childScope/3": _(3)
+      }]
+    ]
+  };
+  M._.b[
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-change-handler-reversed/grand-child.marko"
+    ] = [
+    [0,
+      "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-change-handler-reversed/child.marko"
+    ], _ => [3, {
+      input_valueChange: _.a = _(2,
+        "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-change-handler-reversed/child.marko_0/valueChange"
+        ),
+      value: 0,
+      "TagVariableChange:value": _.a
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-change-handler-reversed/grand-child.marko_0 3"
+  ];
+  M._.r = [_ => [1, {
+      count: 0,
+      "#childScope/3": _(2)
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-change-handler-reversed/template.marko_0 1"
+  ];
+  M._.w()
+</script>
