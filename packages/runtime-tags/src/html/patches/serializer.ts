@@ -11,7 +11,7 @@ import {
   writeLocalArgs,
   writeProp,
 } from "../serializer";
-import { getScopeId } from "../writer";
+import { type Boundary, getScopeId } from "../writer";
 import {
   type PatchRenderState,
   resolveEntryReads,
@@ -21,12 +21,8 @@ import {
 // A patch flush is one flat entry tree per line: no fn wrapper, no list
 // brackets, and no scope ids, since the live page maps none to its scopes.
 export class PatchSerializerState extends SerializerState {
-  // The response whose links a bound registration's path walks.
-  declare render: PatchRenderState;
-  constructor(render: PatchRenderState) {
-    super();
-    this.render = render;
-  }
+  // Every boundary a patch render serializes is its own.
+  declare boundary: Boundary & { state: PatchRenderState };
 
   // A flush's tree is no live scope, so a later flush references it by its
   // index here, which the client's response context counts the same way.
@@ -46,7 +42,12 @@ export class PatchSerializerState extends SerializerState {
   // The flush's tree, written as `writeObjectProps` would, without tracking
   // the identity of nodes the patch writers built (each appears once).
   override writeScopeProps(props: object, ref: Reference) {
-    return writePatchProps(this, props, ref, this.render.patchTreeNodes!);
+    return writePatchProps(
+      this,
+      props,
+      ref,
+      this.boundary.state.patchTreeNodes!,
+    );
   }
 
   // A patch run has no cursor: its single flush is the page root, and an
@@ -86,7 +87,8 @@ export class PatchSerializerState extends SerializerState {
     this.buf.push("_([");
     this.writeScopePath(getScopeId(registered.scope)!, registered.id);
     this.buf.push(
-      "]," + quoteRegistryId(shipNamedShell(this.render, registered.id)),
+      "]," +
+        quoteRegistryId(shipNamedShell(this.boundary.state, registered.id)),
     );
     if (content) this.buf.push(",1");
     if (registered.locals) {
@@ -99,10 +101,10 @@ export class PatchSerializerState extends SerializerState {
   // its scope by the links down from the page root (written root first).
   writeScopePath(scopeId: number, id: string) {
     if (scopeId === ROOT_SCOPE_ID) return;
-    if (MARKO_DEBUG && !this.render.patchLinks[scopeId]) {
+    if (MARKO_DEBUG && !this.boundary.state.patchLinks[scopeId]) {
       throw new Error(`A patch cannot send the scoped registration "${id}".`);
     }
-    const link = this.render.patchLinks[scopeId];
+    const link = this.boundary.state.patchLinks[scopeId];
     this.writeScopePath(link.parent, id);
     if (link.parent !== ROOT_SCOPE_ID) this.buf.push(",");
     // Accessors are compiler-made (nothing to escape); a loop key is data.
@@ -157,17 +159,21 @@ function writePatchProp(
     kKeptInstance
   ];
   const clientBranchId = kept
-    ? state.render.clientBranchRendered?.get(kept)
+    ? state.boundary.state.clientBranchRendered?.get(kept)
     : undefined;
   if (
     clientBranchId !== undefined &&
-    patchTreeNodes.has(state.render.patchTree![clientBranchId]!)
+    patchTreeNodes.has(state.boundary.state.patchTree![clientBranchId]!)
   ) {
     return sep;
   }
-  const readsScope = state.render.entryReads?.get(member as string[]);
+  const readsScope = state.boundary.state.entryReads?.get(member as string[]);
   if (readsScope !== undefined) {
-    member = resolveEntryReads(state.render, readsScope, member as string[]);
+    member = resolveEntryReads(
+      state.boundary.state,
+      readsScope,
+      member as string[],
+    );
   }
   if (member === undefined) {
     state.wroteUndefined = true;
