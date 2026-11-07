@@ -33,7 +33,14 @@ function fill<T extends Signal<any>>(
   fillFn: SignalFn | 0 | undefined,
 ) {
   patchFills[key] =
-    fillFn === undefined ? signal : _const(id, fillFn || undefined);
+    fillFn === undefined
+      ? signal
+      : _const(
+          MARKO_DEBUG
+            ? (id as string).slice(0, (id as string).lastIndexOf("/"))
+            : id,
+          fillFn || undefined,
+        );
   return signal;
 }
 
@@ -52,12 +59,7 @@ export function _fill_let<T>(
   fn?: SignalFn,
   fillFn?: SignalFn | 0,
 ) {
-  return fill(
-    key,
-    _let<T>(id, fn),
-    MARKO_DEBUG ? (id as string).slice(0, (id as string).lastIndexOf("/")) : id,
-    fillFn,
-  );
+  return fill(key, _let<T>(id, fn), id, fillFn);
 }
 // A fill is the controller's value, never an assignment the handler takes.
 export function _fill_let_change<T>(
@@ -66,12 +68,7 @@ export function _fill_let_change<T>(
   fn?: SignalFn,
   fillFn?: SignalFn | 0,
 ) {
-  return fill(
-    key,
-    _let_change<T>(id, fn),
-    MARKO_DEBUG ? (id as string).slice(0, (id as string).lastIndexOf("/")) : id,
-    fillFn ?? fn ?? 0,
-  );
+  return fill(key, _let_change<T>(id, fn), id, fillFn ?? fn ?? 0);
 }
 // Registers a `<let>`'s fill only a patch's key reaches, keeping it and its
 // value signal.

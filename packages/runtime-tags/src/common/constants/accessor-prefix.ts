@@ -1,6 +1,9 @@
 // A bound registration's function for its owner, and the run last binding it.
 export const BoundFn = "U";
 export const BranchScopes = "A";
+// The holes kept content's owner last took from its client branch entry, by the
+// content's section.
+export const ClientBranchHoles = "S";
 export const ClosureScopes = "B";
 export const ClosureSignalIndex = "C";
 export const ConditionalRenderer = "D";
@@ -19,9 +22,6 @@ export const PatchChanged = "T";
 export const Promise = "L";
 export const TagVariableChange = "M";
 export const TryBranch = "Q";
-// The holes kept content's owner last took from its client branch entry, by the
-// content's section.
-export const ClientBranchHoles = "S";
 
 type Self = typeof import("./accessor-prefix");
 export type Value = Self[keyof Self];

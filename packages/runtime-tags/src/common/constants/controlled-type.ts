@@ -1,4 +1,4 @@
-// Values ride patch wire keys as ONE digit (`n<type><accessor>`), so
+// Values ride patch wire keys as one digit (`n<type><accessor>`), so
 // kinds must stay in 0-9.
 export const InputChecked = 0;
 export const InputCheckedValue = 1;

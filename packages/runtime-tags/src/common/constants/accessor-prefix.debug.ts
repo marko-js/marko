@@ -1,5 +1,6 @@
 export const BoundFn = "BoundFn:";
 export const BranchScopes = "BranchScopes:";
+export const ClientBranchHoles = "ClientBranchHoles:";
 export const ClosureScopes = "ClosureScopes:";
 export const ClosureSignalIndex = "ClosureSignalIndex:";
 export const ConditionalRenderer = "ConditionalRenderer:";
@@ -17,7 +18,6 @@ export const PatchChanged = "PatchChanged:";
 export const Promise = "Promise:";
 export const TagVariableChange = "TagVariableChange:";
 export const TryBranch = "TryBranch:";
-export const ClientBranchHoles = "ClientBranchHoles:";
 
 type Self = typeof import("./accessor-prefix.debug");
 export type Value = Self[keyof Self];
