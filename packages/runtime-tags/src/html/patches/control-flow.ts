@@ -187,12 +187,8 @@ export function writeBranch(
           ? patchTreeNode(
               state,
               shellId
-                ? [
-                    branchIndex,
-                    branchPatch || patchTreeNode(state, {}),
-                    shellId,
-                  ]
-                : [branchIndex, branchPatch || patchTreeNode(state, {})],
+                ? [branchIndex, branchPatch || 0, shellId]
+                : [branchIndex, branchPatch],
             )
           : branchIndex + 1
         : branchPatch

@@ -24,18 +24,18 @@ declare module "./apply" {
 }
 
 // Shape-typed conditional entry: bare number = index + 1 (`0` hides),
-// bare string = a static branch's shell id, else `[index?, patch, shellId?]`.
+// bare string = a static branch's shell id, else `[index?, patch (0: none), shellId?]`.
 patchers[PatchKey.Branch] = (scope, accessor, entry) => {
   const branchKey = AccessorPrefix.BranchScopes + accessor;
   const liveBranch = scope[branchKey] as BranchScope | undefined;
   const rendererKey = AccessorPrefix.ConditionalRenderer + accessor;
   const current = liveBranch ? ((scope[rendererKey] as number) ?? 0) : -1;
   let index = 0;
-  let branchPatch: Scope | undefined;
+  let branchPatch: Scope | 0 | undefined;
   let shellId: string | undefined;
   if (typeof entry === "object") {
     if (typeof entry[0] === "number") {
-      [index, branchPatch, shellId] = entry as [number, Scope, string?];
+      [index, branchPatch, shellId] = entry as [number, Scope | 0, string?];
     } else {
       [branchPatch, shellId] = entry as [Scope, string?];
     }
@@ -46,7 +46,6 @@ patchers[PatchKey.Branch] = (scope, accessor, entry) => {
   }
   scope[rendererKey] = index as never;
   if (~index) {
-    branchPatch ||= {} as Scope;
     if (index === current) {
       // Linked like one this created, for entries walking up through it.
       liveBranch![AccessorProp.Owner] = scope;
@@ -64,7 +63,7 @@ patchers[PatchKey.Branch] = (scope, accessor, entry) => {
 function create(
   scope: Scope,
   branchKey: Accessor,
-  branchPatch: Scope,
+  branchPatch: Scope | 0 | undefined,
   shellId: string,
 ) {
   // Anchored as `setBranch` does: in an only-child conditional's container,
