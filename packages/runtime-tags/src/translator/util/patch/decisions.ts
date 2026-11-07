@@ -53,7 +53,7 @@ import {
 } from "./refresh";
 import {
   isKnownChildNode,
-  settlesOnClient,
+  hasStatefulBranchExpr,
   patchesBranchesAt,
   patchFillsSection,
 } from "./structure";
@@ -205,11 +205,8 @@ export function getUnwrittenBodies(
       writes &&
       writes.reads.some(
         (read) =>
-          getSourcesUpdatesFrom(
-            section,
-            getSourcesForReferencedBindings(read),
-            groups,
-          ) === UpdatesFrom.Server,
+          getSourcesUpdatesFrom(section, read.sources, groups) ===
+          UpdatesFrom.Server,
       )
     ) {
       return;
@@ -229,7 +226,7 @@ export function getUnwrittenBodies(
     if (branch?.kind === "await") {
       // `_await` writes nothing for a body that settles by `_await_promise`, and
       // its Pending entry where a patch fills its promise.
-      if (settlesOnClient(child)) continue;
+      if (hasStatefulBranchExpr(child)) continue;
       if (
         !(
           getSourcesUpdatesFrom(

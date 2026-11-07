@@ -221,11 +221,7 @@ export function getEffectEntryArgs(section: Section, signal: Signal) {
         )
       : undefined;
   return [
-    guard
-      ? entry
-        ? t.logicalExpression("&&", guard, entry)
-        : guard
-      : entry || t.numericLiteral(1),
+    entry ? andGuard(guard, entry) : guard || t.numericLiteral(1),
     getReads(section, reads, check, group),
   ];
 }
@@ -351,7 +347,7 @@ export function writePatchResumeStatements(
       }
     });
     if (walks) {
-      const sources = getSourcesForReferencedBindings(binding);
+      const { sources } = binding;
       body.push(
         t.expressionStatement(
           andGuard(
@@ -383,7 +379,7 @@ export function writePatchResumeStatements(
     }
     forEach(binding.closureSections, (closureSection) => {
       if (runsClosureByWrite(binding, closureSection)) {
-        const sources = getSourcesForReferencedBindings(binding);
+        const { sources } = binding;
         body.push(
           t.expressionStatement(
             andGuard(
@@ -727,10 +723,7 @@ function getOwnGroupArg(own: OwnParamGroup | undefined, section: Section) {
 function getOwnParamGroup(binding: Binding): OwnParamGroup | undefined {
   const { section } = binding;
   const index = derivesConstantInput(binding)
-    ? findParamReasonGroupIndex(
-        section,
-        getSourcesForReferencedBindings(binding)!.param!,
-      )
+    ? findParamReasonGroupIndex(section, binding.sources!.param!)
     : -1;
   if (index !== -1) return { section, index };
 }
@@ -1032,11 +1025,7 @@ export function getCallerGroupGuard(
 
 // Where a patch fills the binding: its caller groups are the server's.
 function getFilledGuard(section: Section, binding: Binding) {
-  return getCallerGroupGuard(
-    section,
-    "_filled_guard",
-    getSourcesForReferencedBindings(binding),
-  );
+  return getCallerGroupGuard(section, "_filled_guard", binding.sources);
 }
 
 // Each caller group a write in `section` gates on, its `check` once, or'd
@@ -1168,7 +1157,7 @@ function getUnfilledPatchWrite(section: Section, binding: Binding) {
   if (contents === true) return write;
   // Content taking the value as a closure needs it where the client keeps an instance.
   const guard = contents && getClientBranchGuard(section, contents);
-  const reason = mapBodyParams(section, findSlot(binding)?.reason);
+  const reason = mapBodyParams(section, getWriteReason(binding));
   if (!isDynamicWriteGuard(section, reason)) {
     return reason ? write : guard && andGuard(guard, write);
   }
@@ -1245,11 +1234,7 @@ function isLet(binding: Binding) {
 
 // A constant group's value seeds a created scope alone: a live one holds it.
 function getConstantSetup(section: Section, binding: Binding) {
-  const guard = getCallerGroupGuard(
-    section,
-    "_server_guard",
-    getSourcesForReferencedBindings(binding),
-  );
+  const guard = getCallerGroupGuard(section, "_server_guard", binding.sources);
   if (guard) return t.unaryExpression("!", guard);
 }
 
@@ -1265,7 +1250,7 @@ function getReads(
   for (const root of roots.reduce(addFilledReads, new Set<Binding>())) {
     const hop = getWriteHop(section, root);
     if (hop) {
-      const sources = getSourcesForReferencedBindings(root)!;
+      const sources = root.sources!;
       reads.push(
         entryGroup &&
           !sources.global &&
@@ -1421,10 +1406,7 @@ export function isScopeBoundFn(expr: t.NodeExtra) {
 export function getClosureRenderGroups(closure: Binding, section: Section) {
   const { section: own } = closure;
   return {
-    own: getCallerParamGroupsAt(
-      getSourcesForReferencedBindings(closure)?.param,
-      own,
-    ),
+    own: getCallerParamGroupsAt(closure.sources?.param, own),
     structure: (getCallerSelectedStructure(closure, section) || []).flatMap(
       (sources) => getCallerParamGroupsAt(sources.param, own),
     ),

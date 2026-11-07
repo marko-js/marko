@@ -105,27 +105,20 @@ function isPatchedCall(call: KnownTagExtra) {
 // A branch body whose branch expression has a state reason (or nested in one), or
 // that every consumer or call makes stateful.
 export const isStatefulStructure = createPassMemo((section: Section) => {
-  // An optional branch or a dynamic tag body: the client renders one whose
-  // expression derives from client state or that every call passes it.
-  const expr =
-    isPatch() && (!section.branch || isOptionalBranch(section))
-      ? section.branchExpr
-      : undefined;
-  const sources = expr && getSourcesForExpr(expr);
-  // A body every consumer renders stateful, or one whose own branch
-  // expression derives from state.
+  // A body every consumer renders stateful, or an optional branch or a dynamic tag
+  // body the client renders by its branch expression.
   return (
     getStatefulConsumers(section) === "every" ||
-    (!!expr &&
-      (hasClientState(sources) ||
-        inStatefulStructure(section.parent!) ||
-        isPassedStateByEveryCall(sources)))
+    (isPatch() &&
+      (!section.branch || isOptionalBranch(section)) &&
+      !!section.branchExpr &&
+      hasStatefulBranchExpr(section))
   );
 }, false);
 
-// An `<await>` body is its owner's branch; the client settles its promise where that
-// derives from client state, structure updating from the client holds it, or every call passes state.
-export function settlesOnClient(body: Section) {
+// The client renders the body, or settles an `<await>` body's promise, by its branch
+// expression: client state or every call passing state picks it, or stateful structure holds it.
+export function hasStatefulBranchExpr(body: Section) {
   const sources = getSourcesForExpr(body.branchExpr!);
   return (
     hasClientState(sources) ||
@@ -145,15 +138,11 @@ export function isPassedStateByEveryCall(
     const { derives } = body;
     const groupPasses =
       !!derives &&
-      !someRead(getDerivedReaders(derives), isAnyRead) &&
+      !getDerivedReaders(derives).reads &&
       everyCallPasses(body, params, hasClientState);
     passes = anyGroup ? passes || groupPasses : passes && groupPasses;
   });
   return passes;
-}
-
-function isAnyRead() {
-  return true;
 }
 
 // What selects the section: a branch's expression, or the call site

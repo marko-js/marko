@@ -23,7 +23,7 @@ import {
 } from "../util/patch/decisions";
 import { awaitMayRenderClientBranch } from "../util/patch/refresh";
 import {
-  settlesOnClient,
+  hasStatefulBranchExpr,
   patchFillsSection,
   patchMayFillSection,
 } from "../util/patch/structure";
@@ -234,7 +234,7 @@ function getPendingArgs(bodySection: Section): Array<t.Expression | Falsy> {
   const sources = getFillSources(bodySection.branchExpr);
   // The client settles a promise of its own state, and one a caller passes where
   // no patch fills it: the server's copy renders only the body's holes as data.
-  const unfilled = settlesOnClient(bodySection)
+  const unfilled = hasStatefulBranchExpr(bodySection)
     ? t.numericLiteral(1)
     : getCallerGroupGuard(bodySection.parent!, "_unfilled_if", sources);
   const unwritten =
