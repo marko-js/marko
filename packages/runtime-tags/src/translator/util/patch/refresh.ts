@@ -1322,10 +1322,16 @@ export function recordDataSite(
 // whose holes would carry, as data, a function or content its instance owns renders
 // on the client instead, as main does (a known child's whole function attribute binds
 // per scope already).
-export function carriesOwnedData(section: Section) {
+function carriesOwnedData(section: Section) {
   return (
     !!section.derives && ownsData(section) && rendersFromChildState(section)
   );
+}
+
+// Content only the client can render in a patch: every consumer renders it with
+// client state, or, kept, it would carry a value one instance owns.
+export function rendersOnClient(section: Section) {
+  return getStatefulConsumers(section) === "every" || carriesOwnedData(section);
 }
 
 // Data in `root` or a body it calls (another template's, or a `<define>`'s, rendered
