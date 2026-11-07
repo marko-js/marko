@@ -30,7 +30,7 @@
 `packages/runtime-tags/src/__tests__/fixtures/patch-async-await-in-branch/template.marko_2*shell,<em>closed</em>`
 {
   "PatchText:#text/0": "Store!",
-  "PatchBranch:#text/1": [1, {}, "packages/runtime-tags/src/__tests__/fixtures/patch-async-await-in-branch/template.marko_2*shell"]
+  "PatchBranch:#text/1": [1, 0, "packages/runtime-tags/src/__tests__/fixtures/patch-async-await-in-branch/template.marko_2*shell"]
 }
 ;Cxo
 

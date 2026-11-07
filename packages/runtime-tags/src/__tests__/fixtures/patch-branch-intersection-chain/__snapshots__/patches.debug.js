@@ -32,7 +32,7 @@
 // PATCH holding CQY
 `packages/runtime-tags/src/__tests__/fixtures/patch-branch-intersection-chain/template.marko_3*shell packages/runtime-tags/src/__tests__/fixtures/patch-branch-intersection-chain/template.marko_3_count#0:7/setup;Db%;<p>None <!></p>`
 {
-  "PatchBranch:#div/0": [2, {}, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-intersection-chain/template.marko_3*shell"],
+  "PatchBranch:#div/0": [2, 0, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-intersection-chain/template.marko_3*shell"],
   "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-branch-intersection-chain/template.marko_0_input_title#6_count#7/setup": "input_title",
   "PatchMarkedWrite:input_title": "Plaza"
 }
@@ -40,7 +40,7 @@
 
 // PATCH holding CQ4
 {
-  "PatchBranch:#div/0": [2, {}, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-intersection-chain/template.marko_3*shell"],
+  "PatchBranch:#div/0": [2, 0, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-intersection-chain/template.marko_3*shell"],
   "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-branch-intersection-chain/template.marko_0_input_title#6_count#7/setup": "input_title",
   "PatchMarkedWrite:input_title": "Plaza!"
 }

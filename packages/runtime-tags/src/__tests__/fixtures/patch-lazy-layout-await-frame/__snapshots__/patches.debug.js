@@ -53,7 +53,7 @@
           "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-await-frame/docs.marko_1*content",
           "PatchDynamicTag:#text/1": "^^packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-await-frame/template.marko_3*content",
           "PatchChild:BranchScopes:#text/1": {
-            "PatchBranch:#text/0": [1, {}, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-await-frame/template.marko_6*shell"]
+            "PatchBranch:#text/0": [1, 0, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-await-frame/template.marko_6*shell"]
           },
           "PatchChild:BranchScopes:#text/0": {
             "PatchLoop:#text/0": [{

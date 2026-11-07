@@ -35,7 +35,7 @@
       "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-route-switch/layout.marko_1*content",
       "PatchDynamicTag:#text/1": "^^packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-route-switch/template.marko_2*content",
       "PatchChild:BranchScopes:#text/1": {
-        "PatchBranch:#text/0": [1, {}, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-route-switch/template.marko_5*shell"]
+        "PatchBranch:#text/0": [1, 0, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-route-switch/template.marko_5*shell"]
       },
       "PatchChild:BranchScopes:#text/0": {
         "PatchLoop:#text/0": [{

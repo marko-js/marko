@@ -23,6 +23,6 @@
 // PATCH holding CAI
 `packages/runtime-tags/src/__tests__/fixtures/patch-branch-child-tag/template.marko_2*shell,<em>closed</em>`
 {
-  "PatchBranch:#text/0": [1, {}, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-child-tag/template.marko_2*shell"]
+  "PatchBranch:#text/0": [1, 0, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-child-tag/template.marko_2*shell"]
 }
 ;CQw
