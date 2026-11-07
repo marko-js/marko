@@ -352,7 +352,7 @@ export function linkScopePatch(
       if (contentId) shipShell(state, contentId);
       const entry = slotIds && patchTreeNode(state, [patch, ...slotIds]);
       const key = link.key || PatchKey.Child + hop;
-      if (link.setup === ensurePatchTree(state)) {
+      if (state.setupLinks?.has(scopeId)) {
         ensurePatchSetup(state, ensureScopePatch(state, parent))[key] =
           entry || patch;
       } else {
@@ -422,9 +422,6 @@ export interface PatchLink {
   slotIds?: (string | undefined)[];
   // A content body's owner (its client `_`) when not the rendering scope.
   owner?: number;
-  // The tree of the flush creating it, which links it into the parent's setup:
-  // only a created parent takes it, so a later flush links it as a child.
-  setup?: PatchRenderState["patchTree"];
   // The parent's entry key, where not a child entry's.
   key?: string;
 }
@@ -567,6 +564,9 @@ export class PatchRenderState extends PatchPageState {
   pendingAwaits = new Set<number>();
   // Each setup envelope's ids.
   setupIds?: Map<object, Set<string>>;
+  // The branches linked into their parent's setup: only the flush creating the
+  // parent applies it, so a later flush links them as children.
+  setupLinks?: Set<number>;
   // Each owner's client branch entry the response renders, with the scope it is in.
   clientBranchRendered?: Map<string, number>;
   // What each scope's slots holding built objects depend on, by accessor.
@@ -618,7 +618,11 @@ export class PatchRenderState extends PatchPageState {
     ) {
       out += ";" + encodeHeld(this.heldShells) + "\n";
     }
-    this.patchTree = this.patchTreeNodes = this.setupIds = undefined;
+    this.patchTree =
+      this.patchTreeNodes =
+      this.setupIds =
+      this.setupLinks =
+        undefined;
     return out;
   }
 
@@ -685,8 +689,8 @@ export function linkBranch(
     contentId,
     slotIds,
     owner: ownerScopeId,
-    setup: setup ? ensurePatchTree(state) : undefined,
   };
+  if (setup) (state.setupLinks ||= new Set()).add(branchId);
 }
 
 // A read a patch fills needs no subscription; one in unpatched structure or
