@@ -1145,44 +1145,42 @@ export function someReturnedFnValueOf(
   return someFnValue(returned, test) || someReturnedFnValue(returned, test);
 }
 
+const NO_READS = new Set<never>();
+
 // What an entry reading `binding` depends on: what an object is built from, else
 // a value's own change and the filled references of the functions it may hold.
 export const [getFilledReads] = createAnalysisMemo(
-  (binding: Binding): Binding[] => {
+  (binding: Binding): Set<Binding> => {
     const root = getCanonicalBinding(binding);
     // What the object reads, even as a param's property a call passes.
-    return holdsBuiltObject(root)
-      ? Array.from(
-          reduce(
-            getValueReferences(root.derivedFrom || undefined),
-            addFilledReads,
-            new Set<Binding>(),
-          ),
-        )
-      : [
-          root,
-          ...getFnValueReferences(root),
-          // A value client state derives changes as what it derives from in scope does.
-          ...(root.sources?.state
-            ? Array.from(
-                reduce(
-                  getValueReferences(root.derivedFrom || undefined),
-                  addFilledReads,
-                  new Set<Binding>(),
-                ),
-              ).filter((read) =>
-                isSameOrAncestorSection(read.section, root.section),
-              )
-            : []),
-        ];
+    if (holdsBuiltObject(root)) {
+      return reduce(
+        getValueReferences(root.derivedFrom || undefined),
+        addFilledReads,
+        new Set<Binding>(),
+      );
+    }
+    const reads = new Set<Binding>().add(root);
+    for (const reference of getFnValueReferences(root)) reads.add(reference);
+    // A value client state derives changes as what it derives from in scope does.
+    if (root.sources?.state) {
+      forEach(getValueReferences(root.derivedFrom || undefined), (ref) => {
+        for (const read of getFilledReads(ref)) {
+          if (isSameOrAncestorSection(read.section, root.section)) {
+            reads.add(read);
+          }
+        }
+      });
+    }
+    return reads;
   },
-  [],
+  NO_READS,
 );
 
 // What the functions with filled references a value may hold read from the scope when called, where a
 // patch writes it: a call sees each change with no new function.
 const [getFnValueReferences] = createAnalysisMemo(
-  (holder: Binding): Binding[] => {
+  (holder: Binding): Set<Binding> => {
     const references = new Set<Binding>();
     // Visits every function it may hold.
     someFnValueOf(holder, (fn) => {
@@ -1191,17 +1189,14 @@ const [getFnValueReferences] = createAnalysisMemo(
       }
       return false;
     });
-    return Array.from(references);
+    return references;
   },
-  [],
+  NO_READS,
 );
 
 export function addFilledReads(reads: Set<Binding>, binding: Binding) {
-  return getFilledReads(binding).reduce(addFilledRead, reads);
-}
-
-function addFilledRead(reads: Set<Binding>, binding: Binding) {
-  return reads.add(binding);
+  for (const read of getFilledReads(binding)) reads.add(read);
+  return reads;
 }
 
 // Whether a function's value reaches a binding `test` accepts (with the read reaching it)

@@ -338,19 +338,17 @@ export function getEffectWrites(section: Section, signal: Signal) {
   const byEntry = runsByEntry(signal.referencedBindings);
   forEach(signal.referencedBindings, (binding) => {
     const root = getCanonicalBinding(binding);
+    const own = runsEffectOnPatch(root) || (byEntry && getPatchFill(root).fill);
     // A function with filled references it may hold re-runs it as each reference a patch writes changes.
-    for (const read of runsEffectOnPatch(root) ||
-    (byEntry && getPatchFill(root).fill)
-      ? [root]
-      : getFilledReads(root).filter(
-          (read) => read !== root && !!getPatchWrite(read).write,
-        )) {
-      reads.push(read);
-      const sources = getSourcesForReferencedBindings(read);
-      if (getWriteGroups(section, sources)) {
-        written = push(written, sources!);
-      } else {
-        always = true;
+    for (const read of own ? [root] : getFilledReads(root)) {
+      if (own || (read !== root && getPatchWrite(read).write)) {
+        reads.push(read);
+        const sources = getSourcesForReferencedBindings(read);
+        if (getWriteGroups(section, sources)) {
+          written = push(written, sources!);
+        } else {
+          always = true;
+        }
       }
     }
   });
