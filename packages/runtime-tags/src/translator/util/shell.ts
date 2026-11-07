@@ -699,5 +699,10 @@ function getShellSetupIds(section: Section) {
       ids.push(getCreatedSetupId(section, ref));
     }
   }
+  // No later patch pairs a created `@catch`: it subscribes its `$global` reads by
+  // their ids, as a document's does on resume.
+  if (inCreatedCatch(section)) {
+    for (const id of getGlobalSignals(section).keys()) ids.push(id);
+  }
   return ids;
 }

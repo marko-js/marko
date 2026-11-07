@@ -701,8 +701,8 @@ export function _fill_global_subscribe(
   unfilled?: 0 | 1,
 ) {
   if (!unfilled && !inUnpatched()) return;
-  // A flush's scopes are live already (paired) or subscribe as they render
-  // (created); the flush re-ships every global they could read.
+  // A flush's scopes are live already (paired) or subscribe as they render or by
+  // their shell's setup ids (created); the flush re-ships every global they could read.
   if (getState() instanceof PatchRenderState) return;
   // The scope subscribes on resume, as a late closure subscriber does.
   _script(scopeId, id);

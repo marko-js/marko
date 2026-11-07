@@ -45,6 +45,7 @@ import {
   isGuardedReason,
 } from "../reasons";
 import {
+  getGlobalReads,
   getLazyBindings,
   getNameRead,
   getReferencedBindingsInFunction,
@@ -447,16 +448,25 @@ function derivesByCreatedSetup(binding: Binding) {
   );
 }
 
-// A param a created scope gets as a seed, as no structure brings it: a known
-// child's, a loop row's static one, or a `@catch` error member intersecting a caller's.
+// A param a created scope gets as a seed, as no structure brings it: a known child's, a
+// loop row's static one, or a `@catch` error member intersecting a caller's or `$global`.
 function seedsParam(binding: Binding) {
   const { section } = binding;
   return (
     isKnownChild(section) ||
     (isLoopBody(section) && !binding.sources?.param) ||
     (section.boundaryContent === "catch" &&
-      hasCallerParamSourceAt(findSlot(binding)?.reason, section))
+      (hasCallerParamSourceAt(findSlot(binding)?.reason, section) ||
+        someAlias(binding, readsWithGlobal, undefined)))
   );
+}
+
+// A read beside `$global`, which a changed key re-runs on the client.
+function readsWithGlobal(alias: Binding) {
+  for (const expr of alias.reads.keys()) {
+    if (getGlobalReads(expr)) return true;
+  }
+  return false;
 }
 
 // Why a binding fills: `true` unconditionally, or the run-time conditions
