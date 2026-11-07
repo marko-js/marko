@@ -44,6 +44,7 @@ import {
   addReason,
   applyReasonExprs,
   getSourcesForExpr,
+  getSourcesForReferencedBindings,
   mapParamBindingToExpr,
 } from "./reasons";
 import {
@@ -350,11 +351,8 @@ function addSectionReasons(section: Section) {
   });
 
   if (isOptionalBranch(section)) {
-    const closureSources = reduce(
+    const closureSources = getSourcesForReferencedBindings(
       getDirectClosures(section),
-      (reason, closure) =>
-        mergeSources(reason, getClosureChangeReason(section, closure)),
-      undefined as Sources | undefined,
     );
     const branchSlot = ensureSectionSlot(section, SlotKind.Branch);
     addReason(
@@ -934,8 +932,7 @@ function resolveReferencedBindings(
       if (binding.type === BindingType.global) {
         // `$global` reads stay verbatim member chains, with no read slot.
         getProgram().node.extra.hasGlobalRead = true;
-        isReference =
-          isPatch() && !isLazyRead(read, binding, isChangeHandlerRead);
+        isReference = isPatch();
         // Setup renders the member, entering its readers.
         if (isReference) addSetupWork(binding.section);
       }
@@ -981,10 +978,6 @@ function resolveReferencedBindings(
     // A `$global` member read beside one it is part of runs with that one.
     referencedBindings = bindingUtil.filter(
       referencedBindings,
-      (ref) => !isPartOfRead(ref, referencedBindings),
-    );
-    referencedClosures = bindingUtil.filter(
-      referencedClosures,
       (ref) => !isPartOfRead(ref, referencedBindings),
     );
   }
