@@ -30,7 +30,10 @@ import {
 } from "../known-tag";
 import type { KnownTagExtra } from "../known-tag";
 import { isPatch } from "../marko-config";
-import { isTrackedFunction } from "../module-registrations";
+import {
+  isTrackedFunction,
+  someTrackedFunction,
+} from "../module-registrations";
 import {
   every,
   forEach,
@@ -46,6 +49,7 @@ import {
   isGuardedReason,
 } from "../reasons";
 import {
+  getCanonicalExpr,
   getLazyBindings,
   getNameRead,
   getReferencedBindingsInFunction,
@@ -55,6 +59,7 @@ import {
   isReferencedExtra,
   type Read,
   type ReferencedExtra,
+  type RegisteredFnExtra,
 } from "../references";
 import { getScopeAccessor } from "../scope-accessor";
 import {
@@ -1302,29 +1307,13 @@ export function inKeptContent(section: Section) {
   return keepsContent(section);
 }
 
-// What tags hand on as data, by the section holding them: a dynamic tag's input,
-// a known child's attributes (`whole` where the attribute is that expression).
-const dataSites = new WeakMap<
-  Section,
-  { extra: t.NodeExtra; whole: boolean }[]
->();
-export function recordDataSite(
-  section: Section,
-  extra: t.NodeExtra,
-  whole: boolean,
-) {
-  let sites = dataSites.get(section);
-  if (!sites) dataSites.set(section, (sites = []));
-  sites.push({ extra, whole });
-}
-
 // Kept content serves its holes to every instance, and data names one scope: content
-// whose holes would carry, as data, a function or content its instance owns renders
-// on the client instead, as main does (a known child's whole function attribute binds
-// per scope already).
+// a patch would write such a value in as data renders on the client, as main does.
 function carriesOwnedData(section: Section) {
   return (
-    !!section.derives && ownsData(section) && rendersFromChildState(section)
+    !!section.derives &&
+    rendersFromChildState(section) &&
+    writesOwnedData(section)
   );
 }
 
@@ -1334,69 +1323,58 @@ export function rendersOnClient(section: Section) {
   return getStatefulConsumers(section) === "every" || carriesOwnedData(section);
 }
 
-// Data in `root` or a body it calls (another template's, or a `<define>`'s, rendered
-// in its instance) that may hold a function or content created there.
-const [ownsData] = createAnalysisMemo((root: Section): boolean => {
-  const owned = new Set<Binding>();
-  const inside: Section[] = [];
-  const walk = (section: Section) => {
-    inside.push(section);
-    if (section !== root) {
-      forEach(section.derives?.binding, (binding) => owned.add(binding));
-    }
-    for (const child of section.children) walk(child);
-  };
-  walk(root);
-  const ownsFn = (expr: t.NodeExtra) =>
-    isTrackedFunction(expr) &&
-    isScopeBoundFn(expr) &&
-    isWithin((expr as ReferencedExtra).section, root);
-  return inside.some(
-    (section) =>
-      dataSites
-        .get(section)
-        ?.some(
-          ({ extra, whole }) =>
-            (!(whole && holdsOnlyRegisteredFns(extra)) &&
-              someFnValue(extra, ownsFn)) ||
-            holdsOneOf(extra, owned),
-        ) || !!section.knownTags?.some(callsOwningData),
-  );
-}, false);
+// Content or a scope-bound function created in `root`'s instance (in it, or in a body
+// it calls) that lands where a patch there writes it as data.
+const [writesOwnedData] = createAnalysisMemo(
+  (root: Section): boolean =>
+    someTrackedFunction(
+      (fn) =>
+        isScopeBoundFn(fn) &&
+        isSameOrAncestorSection(root, fn.section) &&
+        landsAsData(fn),
+    ) || someSectionIn(root, root),
+  false,
+);
 
-function callsOwningData(call: KnownTagExtra) {
-  return ownsData(call.childSection);
-}
-
-function isWithin(section: Section | undefined, ancestor: Section) {
-  for (; section; section = section.parent) {
-    if (section === ancestor) return true;
-  }
-  return false;
-}
-
-// A function, or a binding holding only such: a call passes it whole as a bind.
-function holdsOnlyRegisteredFns(extra: t.NodeExtra) {
+function someSectionIn(section: Section, root: Section): boolean {
   return (
-    isTrackedFunction(extra) ||
-    every(getReferencedBindings(extra), holdsRegisteredFn)
+    (section !== root &&
+      !!section.derives &&
+      someRead(getDerivedReaders(section.derives), isDataRead)) ||
+    !!section.knownTags?.some(callsWritingOwnedData) ||
+    section.children.some((child) => someSectionIn(child, root))
   );
 }
 
-// A value the expression may evaluate to, or hold, derives from one of `bindings`.
-function holdsOneOf(
-  exprs: Opt<t.NodeExtra>,
-  bindings: Set<Binding>,
-  seen = new Set<Binding>(),
-): boolean {
-  return some(exprs, (expr) =>
-    some(getReferencedBindings(expr), (ref) => {
-      const binding = getCanonicalBinding(ref);
-      if (bindings.has(binding)) return true;
-      if (seen.has(binding)) return false;
-      seen.add(binding);
-      return holdsOneOf(binding.derivedFrom || undefined, bindings, seen);
-    }),
+function callsWritingOwnedData(call: KnownTagExtra) {
+  return writesOwnedData(call.childSection);
+}
+
+// A function lands as data where main would register it as client code reads it.
+function landsAsData(fn: RegisteredFnExtra) {
+  const extra = getCanonicalExpr(fn.exprRoot);
+  return (
+    (!fn.exprRoot.consumed || !!extra.retained) &&
+    (isDataRead(extra, true) ||
+      (!extra.isEffect && someRead(exprReaders(extra), isDataRead)))
+  );
+}
+
+// A read a patch writes the value in as data: retained, or a known call's argument
+// the child's fill takes whole only where it is a function it registers (a bind).
+function isDataRead(read: t.NodeExtra, asInput: boolean) {
+  return (
+    asInput &&
+    (!!read.retained || (!!read.callSiteExprs && !passesRegisteredFn(read)))
+  );
+}
+
+function passesRegisteredFn(read: t.NodeExtra) {
+  return (
+    isTrackedFunction(read) ||
+    (read.read?.properties === undefined &&
+      !!read.read &&
+      holdsRegisteredFn(read.read.binding))
   );
 }
 

@@ -43,7 +43,6 @@ import {
   fillsHole,
   onReasonsSettled,
 } from "../../util/patch/decisions";
-import { recordDataSite } from "../../util/patch/refresh";
 import {
   getExprRootGroupArgs,
   getRendererGroupArgs,
@@ -194,12 +193,6 @@ export default {
 
       const tagSection = ensureSection(tag);
       const inputNodes = getAllTagReferenceNodes(node);
-      // Its input is data a patch writes whole.
-      if (isPatch() && node.name.type !== "StringLiteral") {
-        for (const input of inputNodes) {
-          recordDataSite(tagSection, (input.extra ??= {}), false);
-        }
-      }
       // The tag reads as one; what its name reads is not handed to it as an input.
       (node.name.extra ??= {}).tagName = node.extra ??= {};
       const tagExtra = mergeReferences(tagSection, node, [

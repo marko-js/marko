@@ -60,7 +60,6 @@ import {
   runsEffectOnPatch,
   holdsRegisteredFn,
   namesBodyOwner,
-  recordDataSite,
 } from "./patch/refresh";
 import {
   calleeKeepsInput,
@@ -337,17 +336,6 @@ function analyzeKnownTagParams(
   const { node } = tag;
   const tagExtra = node.extra!;
   const attrExprs = new Set([tagExtra]);
-  // A patch fills the child's params with what its attributes hold.
-  if (isPatch()) {
-    for (const attr of node.attributes) {
-      recordDataSite(
-        getSection(tag),
-        (attr.value.extra ??= {}),
-        !t.isMarkoSpreadAttribute(attr) &&
-          (t.isFunction(attr.value) || t.isIdentifier(attr.value)),
-      );
-    }
-  }
   tagExtra[kParamsTree] = paramsTree;
   // Attributes beside arguments are an error, so a call with arguments passes
   // its input only to carry a body or attribute tags.
