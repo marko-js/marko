@@ -31,7 +31,7 @@ var template_default = _template("a", (input) => {
 	_set_scope_reason(2 | _updates_from($scope0_reason, 0) << 3);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	list_default({
-		items: _patch_live($childScope, ["a"], $scope0_id, ""),
+		items: ["a"],
 		suffix: input.s
 	});
 	_patch_child_end();

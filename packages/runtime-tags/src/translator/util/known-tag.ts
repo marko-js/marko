@@ -486,7 +486,8 @@ export function knownTagTranslateHTML(
 
     writeSlot(childScopeSlot, callRuntime("_existing_scope", peekScopeId));
 
-    // An object the call builds anew: the child's readers depend on its sources.
+    // An object the call builds anew from what a patch fills: the child's readers
+    // depend on its sources.
     if (isPatch() && patchFillsSection(section)) {
       const inputReads = new Set<string>();
       for (const prop of properties) {
@@ -495,7 +496,7 @@ export function knownTagTranslateHTML(
           if (!extra) continue;
           const reads = getPassedReads(section, extra);
           for (const read of reads) inputReads.add(read);
-          if (isBuiltObjectExpr(extra)) {
+          if (reads.size && isBuiltObjectExpr(extra)) {
             prop.value = callRuntime(
               "_patch_live",
               peekScopeId,
@@ -507,7 +508,7 @@ export function knownTagTranslateHTML(
         }
       }
       // A child reading its whole input: the object the call builds anew.
-      if (some(tagExtra.derives, runsEffectOnPatch)) {
+      if (inputReads.size && some(tagExtra.derives, runsEffectOnPatch)) {
         liveInput = (input) =>
           callRuntime(
             "_patch_live",
