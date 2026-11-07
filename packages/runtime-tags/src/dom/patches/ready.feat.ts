@@ -1,5 +1,5 @@
 import { WaitingFlushProp, RenderDataProp } from "../../common/types";
-import { curRenders, installReady } from "../resume";
+import { curRenders, installReady, isReady } from "../resume";
 import { type Applied, type FlushDone, installWaitFlush } from "./apply";
 import { isLoaded, startLoad } from "./load";
 
@@ -118,9 +118,12 @@ function applyWaitingFlushes(readyId: string) {
 // A module dead at page load can never make its server content whole: later
 // flushes naming it reject too.
 const failed = new Set<string>();
+// A module a patch loaded itself outlives its document loader's failure.
 function recordFailed(readyId: string) {
-  failed.add(readyId);
-  rejectWaitingFlushes(readyId);
+  if (!isReady(readyId)) {
+    failed.add(readyId);
+    rejectWaitingFlushes(readyId);
+  }
 }
 
 // The flushes waiting on a module that failed to load reject (their caller
