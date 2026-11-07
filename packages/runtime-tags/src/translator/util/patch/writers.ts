@@ -119,6 +119,7 @@ import {
   someFnValue,
   someReturnedFnValue,
   someReturnedFnValueOf,
+  type CreatedSetup,
   getCreatedSetup,
   getSetupSources,
   getFilledReferences,
@@ -137,7 +138,6 @@ import {
   runsEffectOnPatch,
   runsSubscribersByWrite,
   seedsOwnerConstant,
-  settlesAwaitFrom,
 } from "./refresh";
 import { getParamSelectedStructure } from "./structure";
 
@@ -463,14 +463,7 @@ export function writePatchResumeStatements(
       }
     } else if (setup.subscribe) {
       body.push(
-        t.expressionStatement(
-          buildSubscribe(
-            section,
-            ref,
-            setupFromClient(section, ref, setup.setup),
-            settlesAwaitFrom(section, ref),
-          ),
-        ),
+        t.expressionStatement(buildSubscribe(section, ref, setup.subscribe)),
       );
     } else if (setupFromClient(section, ref, setup.setup)) {
       body.push(
@@ -929,13 +922,11 @@ function buildClientSetup(
 }
 
 // A created subscriber enters its owner's set where no patch fills the closure,
-// running its setup where the client contributes or settles an `<await>` from it,
-// else resuming.
+// rendering at once as its setup says, else resuming.
 function buildSubscribe(
   section: Section,
   closure: Binding,
-  fromClient: boolean,
-  settlesAwait: boolean,
+  subscribe: NonNullable<CreatedSetup["subscribe"]>,
 ) {
   return andGuard(
     getCallerGroupGuard(section, "_unfilled_if", closure.sources),
@@ -943,9 +934,9 @@ function buildSubscribe(
       "_patch_subscribe",
       getScopeIdIdentifier(section),
       t.stringLiteral(getResumeRegistryId(section, closure, "subscribe")),
-      settlesAwait
+      subscribe === "render"
         ? t.numericLiteral(1)
-        : fromClient &&
+        : subscribe === "client" &&
             getCallerGroupGuard(section, "_client_guard", closure.sources),
     ),
   );

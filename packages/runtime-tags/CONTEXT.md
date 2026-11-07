@@ -369,7 +369,8 @@ _Avoid_: shell cache, shell manifest
 
 **Render entry**:
 A registered signal a patch names for a scope (`_patch_render`, `PatchKey.Render`): a
-created scope's setup id where the client contributes its group, or, on any scope
+created scope's setup id where the client contributes its group or settles an
+`<await>` from it, or, on any scope
 where the group mixes, an entry valued by the writes it reads, which re-renders it
 once one changed: a signal's counterpart of a patch's effect entry (`_script`). Its
 registration is a main helper's patch twin taking the id (`_or_patch`,

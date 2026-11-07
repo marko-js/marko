@@ -1327,8 +1327,9 @@ export interface CreatedSetup {
   // Its setup runs on every created scope, or where the client contributes the
   // group (`mixed`: a render on any scope).
   setup?: "always" | "client" | "mixed";
-  // It subscribes the closure, where no patch fills it, so its owner's changes reach it.
-  subscribe?: true;
+  // It subscribes the closure where no patch fills it: resuming, or rendering at once
+  // where the client contributes it (`client`) or wherever an `<await>` settles from it.
+  subscribe?: "resume" | "client" | "render";
 }
 
 // The intersections the section's signals render, once ids allocate: one with a constant
@@ -1538,9 +1539,8 @@ export function isClientRenderedClosure(closure: Binding, section: Section) {
   );
 }
 
-// A closure an `<await>` here takes its promise from: where no patch fills the
-// promise, a created scope's client settles it, so its subscriber renders at setup.
-export function settlesAwaitFrom(section: Section, closure: Binding) {
+// A closure an `<await>` here takes its promise from.
+function settlesAwaitFrom(section: Section, closure: Binding) {
   return section.children.some(
     (body) =>
       body.branch?.kind === "await" &&
@@ -1582,7 +1582,11 @@ function getClosureSubscribe(
       inContentReachedByData(section) && !isReadInIntersection(section, closure)
     )
   ) {
-    return true;
+    return settlesAwaitFrom(section, closure)
+      ? "render"
+      : setupFromClient(section, closure, setup)
+        ? "client"
+        : "resume";
   }
 }
 
