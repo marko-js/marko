@@ -861,7 +861,11 @@ function testFixtures(interop?: true) {
                     // one, has no client render to replay.
                     if (betweenFlushes || !applied) client = undefined;
                     // A client render keeps the `$global` it mounted with.
-                    if (input.$global) client = undefined;
+                    if (
+                      input.$global &&
+                      !equalByValue(input.$global, client?.$global)
+                    )
+                      client = undefined;
                     if (held.length) {
                       if (client) {
                         await client.update(input);
@@ -1381,6 +1385,7 @@ async function mountClient(
   return {
     browser,
     settle,
+    $global: input.$global,
     async update(input: Input) {
       instance.update(input);
       await settle();
@@ -1396,6 +1401,26 @@ async function mountClient(
       await settle();
     },
   };
+}
+
+// Plain objects and arrays compare by value; anything else, such as a promise
+// or a function, only by identity.
+function equalByValue(a: unknown, b: unknown): boolean {
+  if (a === b) return true;
+  if (!isPlain(a) || !isPlain(b) || Array.isArray(a) !== Array.isArray(b)) {
+    return false;
+  }
+  const keys = Object.keys(a);
+  return (
+    keys.length === Object.keys(b).length &&
+    keys.every((key) => Object.hasOwn(b, key) && equalByValue(a[key], b[key]))
+  );
+}
+
+function isPlain(value: unknown): value is Record<string, unknown> {
+  if (!value || typeof value !== "object") return false;
+  const proto = Object.getPrototypeOf(value);
+  return proto === Object.prototype || proto === Array.prototype;
 }
 
 function assertionsOnly(err: unknown) {
