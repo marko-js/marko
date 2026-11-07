@@ -33,11 +33,6 @@ export function getModuleRead(
   );
 }
 
-/** A module read `getModuleRead` resolved, read from the extra alone. */
-export function isResolvedModuleRead(extra: t.NodeExtra | undefined) {
-  return !!extra?.[kModuleRead];
-}
-
 /** A module read of a stylesheet module, whose reads are class name strings. */
 export function getStyleImportRead(path: t.NodePath, expr: t.Expression) {
   const moduleRead = getModuleRead(path, expr);
