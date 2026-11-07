@@ -38,9 +38,7 @@ function $setup($scope) {
 }
 const $input_items = /*@__PURE__*/ _const("input_items", ($scope) => {
 	let $item;
-	forOf($scope.input_items, (item) => {
-		$item = attrTags($item, { content: $item_content($scope, { item }) });
-	});
+	forOf($scope.input_items, (item) => $item = attrTags($item, { content: $item_content($scope, { item }) }));
 	$input_item($scope["#childScope/0"], $item);
 	$await_promise($scope, resolveAfter($scope.input_items?.[1]));
 });

@@ -30,9 +30,7 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($sc
 function $setup($scope) {
 	$input_item_label($scope["#childScope/1"], "item");
 	let $item2;
-	forTo(1, 0, 1, (i) => {
-		$item2 = attrTags($item2, { label: `for ${i}` });
-	});
+	forTo(1, 0, 1, (i) => $item2 = attrTags($item2, { label: `for ${i}` }));
 	$input_item($scope["#childScope/3"], $item2);
 	$n($scope, 1);
 	$m($scope, 1);

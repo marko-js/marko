@@ -16,6 +16,7 @@ import {
 import { setSectionOwnerResumedByMarker } from "./signals";
 import { findSlot, SlotKind } from "./slots";
 import { createOutputState } from "./state";
+import { toOnlyExpressionOrBlock } from "./to-only-or-block";
 import {
   getBranchWriteReason,
   getWriteGuard,
@@ -142,7 +143,7 @@ export function buildForRuntimeCall(
     callRuntime(
       forTypeToRuntime(type),
       ...getBaseArgsInForTag(type, attrs),
-      t.arrowFunctionExpression(params, t.blockStatement(statements)),
+      t.arrowFunctionExpression(params, toOnlyExpressionOrBlock(statements)),
     ),
   );
 }

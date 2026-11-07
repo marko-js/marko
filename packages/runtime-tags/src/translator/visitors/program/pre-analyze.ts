@@ -430,12 +430,8 @@ function buildRefiningFnForwarder(
   const newValueId = generateUid("next");
   return t.arrowFunctionExpression(
     [t.identifier(newValueId)],
-    t.blockStatement([
-      t.expressionStatement(
-        t.callExpression(changeHandler, [
-          t.callExpression(t.cloneNode(refiningFn), [t.identifier(newValueId)]),
-        ]),
-      ),
+    t.callExpression(changeHandler, [
+      t.callExpression(t.cloneNode(refiningFn), [t.identifier(newValueId)]),
     ]),
   );
 }
@@ -451,15 +447,11 @@ function buildChangeHandlerFunction(
   }
   return t.arrowFunctionExpression(
     [withPreviousLocation(t.identifier(newId), id)],
-    t.blockStatement([
-      t.expressionStatement(
-        t.assignmentExpression(
-          "=",
-          withPreviousLocation(t.identifier(id.name), id),
-          newValue,
-        ),
-      ),
-    ]),
+    t.assignmentExpression(
+      "=",
+      withPreviousLocation(t.identifier(id.name), id),
+      newValue,
+    ),
   );
 }
 

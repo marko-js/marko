@@ -21,15 +21,13 @@ const $template = "<!><!><div id=log></div>";
 const $walks = "b%c";
 const $for_content__setup = ($scope) => {
 	let $option;
-	forOf([1, 2], (n) => {
-		$option = attrTags($option, {
-			label: $scope["#LoopKey"] + n,
-			onSelect: $onSelect({
-				_: $scope,
-				"n/9": n
-			})
-		});
-	});
+	forOf([1, 2], (n) => $option = attrTags($option, {
+		label: $scope["#LoopKey"] + n,
+		onSelect: $onSelect({
+			_: $scope,
+			"n/9": n
+		})
+	}));
 	$input_option($scope["#childScope/0"], $option);
 };
 const $for = /*@__PURE__*/ _for_of("#text/0", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c"), $for_content__setup);

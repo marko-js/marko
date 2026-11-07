@@ -18,9 +18,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let checkedValue = "a";
-	const $checkedValueChange = _resume((_new_checkedValue) => {
-		checkedValue = _new_checkedValue;
-	}, "__tests__/template.marko_0/checkedValueChange2", $scope0_id);
+	const $checkedValueChange = _resume((_new_checkedValue) => checkedValue = _new_checkedValue, "__tests__/template.marko_0/checkedValueChange2", $scope0_id);
 	const $childScope = _peek_scope_id();
 	radio_default({
 		checkedValue,

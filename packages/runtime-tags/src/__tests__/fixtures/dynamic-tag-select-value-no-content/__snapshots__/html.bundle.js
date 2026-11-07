@@ -6,9 +6,7 @@ var template_default = _template("a", (input) => {
 	let v = "";
 	_dynamic_tag($scope0_id, "a", tag, {
 		value: v,
-		valueChange: _resume((_new_v) => {
-			v = _new_v;
-		}, "a0", $scope0_id)
+		valueChange: _resume((_new_v) => v = _new_v, "a0", $scope0_id)
 	});
 	_html(`<output>${_text_mark($scope0_id, "b", v)}</output>`);
 	_scope($scope0_id, { f: tag });

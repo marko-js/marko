@@ -427,9 +427,7 @@ export function _script(id: string, fn: (scope: Scope) => void) {
   _resumed[id] = fn;
   // A client render queues it as its signal runs; resume runs the server's list,
   // each section's after its body. Neither order is guaranteed, only a final DOM.
-  return (scope: Scope) => {
-    queueEffect(scope, fn);
-  };
+  return (scope: Scope) => queueEffect(scope, fn);
 }
 
 // Emitted only for a debug build, around a client-reactive `$global` read.

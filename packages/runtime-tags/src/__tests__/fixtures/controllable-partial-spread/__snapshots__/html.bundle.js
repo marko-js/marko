@@ -10,9 +10,7 @@ var template_default = _template("a", (input) => {
 	}, "b", $scope0_id, "input")}>${_el_mark($scope0_id, "b")}<input${_attrs({
 		...rest,
 		checkedValue: v
-	}, "c", $scope0_id, "input")}>${_el_mark($scope0_id, "c")}<input${_attr_input_value($scope0_id, "d", v, _resume((_new_v) => {
-		v = _new_v;
-	}, "a0", $scope0_id))}${_attrs_partial(rest, {
+	}, "c", $scope0_id, "input")}>${_el_mark($scope0_id, "c")}<input${_attr_input_value($scope0_id, "d", v, _resume((_new_v) => v = _new_v, "a0", $scope0_id))}${_attrs_partial(rest, {
 		value: 1,
 		valueChange: 1
 	}, "d", $scope0_id, "input")}>${_el_mark($scope0_id, "d")}`);

@@ -24,9 +24,7 @@ function $setup($scope) {
 		false
 	]);
 }
-const $checkedChange = ($scope) => (_new_checked) => {
-	$for_content__checked($scope, _new_checked);
-};
+const $checkedChange = ($scope) => (_new_checked) => $for_content__checked($scope, _new_checked);
 const $valueChange = ($scope) => function(value) {
 	if ($scope["#LoopKey"] === undefined) {
 		throw new Error("LoopKey is undefined");

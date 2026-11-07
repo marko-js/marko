@@ -17,17 +17,15 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	let show = true;
 	_set_scope_reason(_write_guard($scope0_reason, 0) << 1);
 	let $item;
-	forOf(input.items, (item) => {
-		$item = attrTags($item, { content: _content("__tests__/tags/child.marko_1*content", () => {
-			const $scope1_reason = _scope_reason();
-			const $scope1_id = _scope_id();
-			if (show) {
-				const $scope2_id = _scope_id();
-				_html("<span>shown</span>");
-			}
-			$wi__input_items && _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/child.marko", "4:6");
-		}, $scope0_id) });
-	});
+	forOf(input.items, (item) => $item = attrTags($item, { content: _content("__tests__/tags/child.marko_1*content", () => {
+		const $scope1_reason = _scope_reason();
+		const $scope1_id = _scope_id();
+		if (show) {
+			const $scope2_id = _scope_id();
+			_html("<span>shown</span>");
+		}
+		$wi__input_items && _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/child.marko", "4:6");
+	}, $scope0_id) }));
 	const $childScope = _peek_scope_id();
 	list_default({ item: $item });
 	$wi__input_items && _scope($scope0_id, {

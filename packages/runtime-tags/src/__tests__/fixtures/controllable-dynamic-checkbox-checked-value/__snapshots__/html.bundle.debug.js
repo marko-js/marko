@@ -4,9 +4,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let show = true;
 	let checkedValue = "a";
-	const $checkedValueChange = _resume((_new_checkedValue) => {
-		checkedValue = _new_checkedValue;
-	}, "__tests__/template.marko_0/checkedValueChange2", $scope0_id);
+	const $checkedValueChange = _resume((_new_checkedValue) => checkedValue = _new_checkedValue, "__tests__/template.marko_0/checkedValueChange2", $scope0_id);
 	_html(`<input${_attr_input_checkedValue($scope0_id, "#input/0", checkedValue, $checkedValueChange, "a")} type=radio>${_el_mark($scope0_id, "#input/0")}`);
 	_if(() => {
 		if (show) {

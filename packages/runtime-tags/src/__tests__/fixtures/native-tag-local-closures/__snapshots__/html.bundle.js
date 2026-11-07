@@ -18,14 +18,12 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id) };
 	_set_scope_reason(2);
 	let $item;
-	forUntil(size, 0, 1, (i) => {
-		$item = attrTags($item, { content: _content("a2", () => {
-			const $scope3_reason = _scope_reason(), $wg__i = _write_guard($scope3_reason, 0);
-			const $scope3_id = _scope_id();
-			_html(_text_mark($scope3_id, "a", i, $wg__i));
-			_write_if($scope3_reason, 0) && _scope($scope3_id, {});
-		}, $scope0_id) });
-	});
+	forUntil(size, 0, 1, (i) => $item = attrTags($item, { content: _content("a2", () => {
+		const $scope3_reason = _scope_reason(), $wg__i = _write_guard($scope3_reason, 0);
+		const $scope3_id = _scope_id();
+		_html(_text_mark($scope3_id, "a", i, $wg__i));
+		_write_if($scope3_reason, 0) && _scope($scope3_id, {});
+	}, $scope0_id) }));
 	const $childScope = _peek_scope_id();
 	Child.content({ item: $item });
 	_html(`<button>Add</button>${_el_mark($scope0_id, "b")}`);

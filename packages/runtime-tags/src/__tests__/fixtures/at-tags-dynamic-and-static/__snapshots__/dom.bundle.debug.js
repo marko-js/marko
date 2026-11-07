@@ -29,12 +29,10 @@ function $setup($scope) {
 	forIn({
 		a: 1,
 		b: 2
-	}, (a, v) => {
-		$item = attrTags($item, { content: $item_content($scope, {
-			a,
-			v
-		}) });
-	});
+	}, (a, v) => $item = attrTags($item, { content: $item_content($scope, {
+		a,
+		v
+	}) }));
 	$input_item($scope["#childScope/0"], $item);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

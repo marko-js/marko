@@ -44,12 +44,8 @@ function $setup($scope) {
 	$count($scope, 0);
 	$count2($scope, 0);
 }
-const $count2Change = ($scope) => (_new_count2) => {
-	$count2($scope, _new_count2);
-};
-const $count1Change = ($scope) => (_new_count1) => {
-	$count($scope, _new_count1);
-};
+const $count2Change = ($scope) => (_new_count2) => $count2($scope, _new_count2);
+const $count1Change = ($scope) => (_new_count1) => $count($scope, _new_count1);
 _resumed["__tests__/template.marko_0/count2Change"] = $count2Change;
 _resumed["__tests__/template.marko_0/count1Change"] = $count1Change;
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

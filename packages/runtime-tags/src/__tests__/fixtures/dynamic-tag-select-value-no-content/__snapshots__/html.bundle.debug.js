@@ -6,9 +6,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let v = "";
 	_dynamic_tag($scope0_id, "#text/0", tag, {
 		value: v,
-		valueChange: _resume((_new_v) => {
-			v = _new_v;
-		}, "__tests__/template.marko_0/valueChange", $scope0_id)
+		valueChange: _resume((_new_v) => v = _new_v, "__tests__/template.marko_0/valueChange", $scope0_id)
 	});
 	_html(`<output>${_text_mark($scope0_id, "#text/1", v)}</output>`);
 	_scope($scope0_id, { tag }, "__tests__/template.marko", 0, { tag: "1:6" });

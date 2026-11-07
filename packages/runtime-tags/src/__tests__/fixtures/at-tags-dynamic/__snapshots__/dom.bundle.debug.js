@@ -28,12 +28,10 @@ function $setup($scope) {
 	let $col;
 	forOf([["a", "b"], ["c", "d"]], (col, i) => {
 		let $row;
-		forOf(col, (row) => {
-			$row = attrTags($row, {
-				row,
-				content: $row_content($scope, { row })
-			});
-		});
+		forOf(col, (row) => $row = attrTags($row, {
+			row,
+			content: $row_content($scope, { row })
+		}));
 		$col = attrTags($col, {
 			x: i,
 			row: $row

@@ -23,9 +23,7 @@ function $setup($scope) {
 		1,
 		2,
 		3
-	], (zzz) => {
-		$item = attrTags($item, { content: $item_content($scope, { zzz }) });
-	});
+	], (zzz) => $item = attrTags($item, { content: $item_content($scope, { zzz }) }));
 	$input_item($scope["#childScope/0"], $item);
 	$input_item($scope["#childScope/1"]);
 }

@@ -27,18 +27,16 @@ var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let $tab;
-	forOf(["a", "b"], (t) => {
-		$tab = attrTags($tab, {
-			title: t,
-			content: _content_resume("a1", () => {
-				const $scope1_reason = _scope_reason();
-				const $scope1_id = _scope_id();
-				let count = 0;
-				_html(`<button class=inc>${_text_mark($scope1_id, "b", t, _write_guard($scope1_reason, 0))}: ${_text_mark($scope1_id, "c", count, 2)}</button>${_el_mark($scope1_id, "a")}`);
-				_script($scope1_id, "a0");
-				_scope($scope1_id, { e: count });
-			}, $scope0_id, () => [{ 3: t }])
-		});
-	});
+	forOf(["a", "b"], (t) => $tab = attrTags($tab, {
+		title: t,
+		content: _content_resume("a1", () => {
+			const $scope1_reason = _scope_reason();
+			const $scope1_id = _scope_id();
+			let count = 0;
+			_html(`<button class=inc>${_text_mark($scope1_id, "b", t, _write_guard($scope1_reason, 0))}: ${_text_mark($scope1_id, "c", count, 2)}</button>${_el_mark($scope1_id, "a")}`);
+			_script($scope1_id, "a0");
+			_scope($scope1_id, { e: count });
+		}, $scope0_id, () => [{ 3: t }])
+	}));
 	tabs_default({ tab: $tab });
 }, 1);

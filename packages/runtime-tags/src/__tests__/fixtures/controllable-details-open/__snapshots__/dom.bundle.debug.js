@@ -10,8 +10,6 @@ function $setup($scope) {
 	$open($scope, false);
 	$setup__script($scope);
 }
-const $openChange = ($scope) => (_new_open) => {
-	$open($scope, _new_open);
-};
+const $openChange = ($scope) => (_new_open) => $open($scope, _new_open);
 _resumed["__tests__/template.marko_0/openChange"] = $openChange;
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

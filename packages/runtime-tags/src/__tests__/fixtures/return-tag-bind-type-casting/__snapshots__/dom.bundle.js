@@ -1,8 +1,6 @@
 // tags/my-let.marko
 const $value = /*@__PURE__*/ _let(3, ($scope) => _return($scope, $scope.d));
-const $valueChange = ($scope) => (_new_value) => {
-	$value($scope, _new_value);
-};
+const $valueChange = ($scope) => (_new_value) => $value($scope, _new_value);
 _resumed.b0 = $valueChange;
 
 // template.marko

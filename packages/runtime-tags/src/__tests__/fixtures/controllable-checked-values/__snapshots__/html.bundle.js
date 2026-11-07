@@ -3,9 +3,7 @@ var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let checkedValue = ["a", "b"];
-	const $checkedValueChange = _resume((_new_checkedValue) => {
-		checkedValue = _new_checkedValue;
-	}, "a0", $scope0_id);
+	const $checkedValueChange = _resume((_new_checkedValue) => checkedValue = _new_checkedValue, "a0", $scope0_id);
 	_html(`<input${_attr_input_checkedValue($scope0_id, "a", checkedValue, $checkedValueChange, "a")} type=checkbox>${_el_mark($scope0_id, "a")}<input${_attr_input_checkedValue($scope0_id, "b", checkedValue, $checkedValueChange, "b")} type=checkbox>${_el_mark($scope0_id, "b")}<input${_attr_input_checkedValue($scope0_id, "c", checkedValue, $checkedValueChange, "c")} type=checkbox>${_el_mark($scope0_id, "c")}<span>${_text_mark($scope0_id, "d", checkedValue)}</span>`);
 	_script($scope0_id, "a1");
 	_scope($scope0_id, { f: $checkedValueChange });

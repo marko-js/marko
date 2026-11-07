@@ -10,9 +10,7 @@ const $item_content__input_show = /*@__PURE__*/ _closure_get(5, ($scope) => $ite
 const $item_content = /*@__PURE__*/ _content("b1", "<!><!><!>", "b%", $item_content__input_show);
 const $input_items = /*@__PURE__*/ _const(3, ($scope) => {
 	let $item;
-	forOf($scope.d, (item) => {
-		$item = attrTags($item, { content: $item_content($scope) });
-	});
+	forOf($scope.d, (item) => $item = attrTags($item, { content: $item_content($scope) }));
 	$input_item($scope.a, $item);
 });
 

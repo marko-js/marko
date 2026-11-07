@@ -20,9 +20,7 @@ var template_default = _template("b", (input) => {
 	const $childScope = _peek_scope_id();
 	$Child_withLoadAssets({
 		value,
-		valueChange: _resume((_new_value) => {
-			value = _new_value;
-		}, "b0", $scope0_id)
+		valueChange: _resume((_new_value) => value = _new_value, "b0", $scope0_id)
 	});
 	_html(`<span>${_text_mark($scope0_id, "c", value)}</span>`);
 	_scope($scope0_id, { b: _existing_scope($childScope) });

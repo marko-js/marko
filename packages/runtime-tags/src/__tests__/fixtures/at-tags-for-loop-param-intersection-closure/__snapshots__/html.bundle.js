@@ -21,17 +21,15 @@ var template_default = _template("a", (input) => {
 		1,
 		2,
 		3
-	], (item) => {
-		$item = attrTags($item, { content: _content("a1", () => {
-			_scope_reason();
-			const $scope1_id = _scope_id();
-			_html(_text_mark($scope1_id, "a", item * mult, 2));
-			_subscribe($mult__closures, _scope($scope1_id, {
-				b: item,
-				_: _scope_with_id($scope0_id)
-			}), "a0");
-		}, $scope0_id) });
-	});
+	], (item) => $item = attrTags($item, { content: _content("a1", () => {
+		_scope_reason();
+		const $scope1_id = _scope_id();
+		_html(_text_mark($scope1_id, "a", item * mult, 2));
+		_subscribe($mult__closures, _scope($scope1_id, {
+			b: item,
+			_: _scope_with_id($scope0_id)
+		}), "a0");
+	}, $scope0_id) }));
 	list_default({ item: $item });
 	_html(`<button>Multiplier: ${_text_mark($scope0_id, "c", mult, 2)}</button>${_el_mark($scope0_id, "b")}`);
 	_script($scope0_id, "a2");

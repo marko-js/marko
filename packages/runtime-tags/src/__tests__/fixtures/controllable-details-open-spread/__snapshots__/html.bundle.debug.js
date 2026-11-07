@@ -18,9 +18,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $childScope = _peek_scope_id();
 	my_details_default({
 		open,
-		openChange: _resume((_new_open) => {
-			open = _new_open;
-		}, "__tests__/template.marko_0/openChange", $scope0_id)
+		openChange: _resume((_new_open) => open = _new_open, "__tests__/template.marko_0/openChange", $scope0_id)
 	});
 	_html(`<span>${_text_mark($scope0_id, "#text/1", String(open))}</span>`);
 	_scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", 0);

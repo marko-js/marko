@@ -11,12 +11,10 @@ const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a0
 });
 const $items = /*@__PURE__*/ _let(2, ($scope) => {
 	let $item;
-	forOf($scope.c, (item) => {
-		$item = attrTags($item, { content: $item_content($scope, {
-			2: item?.text,
-			3: item
-		}) });
-	});
+	forOf($scope.c, (item) => $item = attrTags($item, { content: $item_content($scope, {
+		2: item?.text,
+		3: item
+	}) }));
 	$input_item($scope.b, $item);
 });
 const $setup__script = _script("a1", ($scope) => _on($scope.a, "click", function() {

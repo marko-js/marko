@@ -20,9 +20,7 @@ var template_default = _template("b", (input) => {
 	const $childScope = _peek_scope_id();
 	$Child_withLoadAssets({
 		value,
-		valueChange: _resume((_new_value) => {
-			value = _new_value;
-		}, "b0", $scope0_id)
+		valueChange: _resume((_new_value) => value = _new_value, "b0", $scope0_id)
 	});
 	_await($scope0_id, "c", value ? value : resolveAfter(value, 3), (v) => {
 		const $scope1_id = _scope_id();

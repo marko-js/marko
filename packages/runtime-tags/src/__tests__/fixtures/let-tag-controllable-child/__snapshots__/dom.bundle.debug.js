@@ -48,8 +48,6 @@ function $setup($scope) {
 	$setup$1($scope["#childScope/0"]);
 	$source($scope, 1);
 }
-const $valueChange = ($scope) => (_new_source) => {
-	$source($scope, _new_source);
-};
+const $valueChange = ($scope) => (_new_source) => $source($scope, _new_source);
 _resumed["__tests__/template.marko_0/valueChange"] = $valueChange;
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

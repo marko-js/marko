@@ -19,12 +19,10 @@ const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c");
 const $item_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "Click");
 function $setup($scope) {
 	let $item;
-	forOf(["a", "b"], (foo) => {
-		$item = attrTags($item, {
-			onClick: $onClick({ "foo/4": foo }),
-			content: $item_content($scope)
-		});
-	});
+	forOf(["a", "b"], (foo) => $item = attrTags($item, {
+		onClick: $onClick({ "foo/4": foo }),
+		content: $item_content($scope)
+	}));
 	$input_item($scope["#childScope/0"], $item);
 }
 const $onClick = ($locals) => function(ev) {

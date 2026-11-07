@@ -20,8 +20,6 @@ const $value = /*@__PURE__*/ _let("value/1", ($scope) => $input($scope["#childSc
 function $setup($scope) {
 	$value($scope, "hi");
 }
-const $valueChange = ($scope) => (_new_value) => {
-	$value($scope, _new_value);
-};
+const $valueChange = ($scope) => (_new_value) => $value($scope, _new_value);
 _resumed["__tests__/template.marko_0/valueChange"] = $valueChange;
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

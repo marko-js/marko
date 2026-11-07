@@ -17,9 +17,7 @@ const $walks = /*@__PURE__*/ ((_w0) => ` b/${_w0}&b`)("b%c");
 const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__tests__/template.marko_1*content", 0, 0, /*@__PURE__*/ _return_setup(($_) => {})), { n: ($scope) => _return($scope, $scope.n * 10) });
 const $count = /*@__PURE__*/ _let("count/2", ($scope) => {
 	let $item;
-	forUntil($scope.count, 0, 1, (n) => {
-		$item = attrTags($item, { content: $item_content($scope, { n }) });
-	});
+	forUntil($scope.count, 0, 1, (n) => $item = attrTags($item, { content: $item_content($scope, { n }) }));
 	$input_item($scope["#childScope/1"], $item);
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {

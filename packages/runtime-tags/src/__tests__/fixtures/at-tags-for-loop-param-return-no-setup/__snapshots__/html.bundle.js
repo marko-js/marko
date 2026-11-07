@@ -21,13 +21,11 @@ var template_default = _template("a", (input) => {
 	_html(`<button>more</button>${_el_mark($scope0_id, "a")}`);
 	_set_scope_reason(2);
 	let $item;
-	forUntil(count, 0, 1, (n) => {
-		$item = attrTags($item, { content: _content("a0", () => {
-			_scope_reason();
-			_scope_id();
-			return n * 10;
-		}, $scope0_id) });
-	});
+	forUntil(count, 0, 1, (n) => $item = attrTags($item, { content: _content("a0", () => {
+		_scope_reason();
+		_scope_id();
+		return n * 10;
+	}, $scope0_id) }));
 	const $childScope = _peek_scope_id();
 	list_default({ item: $item });
 	_script($scope0_id, "a1");

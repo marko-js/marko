@@ -4,9 +4,7 @@ const $value = /*@__PURE__*/ _let(3, ($scope) => {
 	$load_type_tag_input_value($scope.b, $scope.d);
 	_text($scope.c, $scope.d);
 });
-const $valueChange = ($scope) => (_new_value) => {
-	$value($scope, _new_value);
-};
+const $valueChange = ($scope) => (_new_value) => $value($scope, _new_value);
 _resumed.b0 = $valueChange;
 
 // child.marko

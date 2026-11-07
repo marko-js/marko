@@ -28,9 +28,7 @@ var template_default = _template("a", (input) => {
 	const $childScope = _peek_scope_id();
 	child_default({
 		value: source,
-		valueChange: _resume((_new_source) => {
-			source = _new_source;
-		}, "a0", $scope0_id)
+		valueChange: _resume((_new_source) => source = _new_source, "a0", $scope0_id)
 	});
 	_html(`source=${_text_mark($scope0_id, "b", source, 2)}`);
 	_scope($scope0_id, { a: _existing_scope($childScope) });

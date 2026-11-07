@@ -17,9 +17,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html(`${_text_mark($scope2_id, "#text/0", a, 2)} tail`);
 		_scope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "5:2");
 	}, 0, $scope0_id, "#text/2", 1, 0);
-	_html(`<input${_attr_input_value($scope0_id, "#input/3", a, _resume((_new_a) => {
-		a = _new_a;
-	}, "__tests__/template.marko_0/valueChange", $scope0_id))}>${_el_mark($scope0_id, "#input/3")}${_text_mark($scope0_id, "#text/4", a)}<button>set</button>${_el_mark($scope0_id, "#button/5")}`);
+	_html(`<input${_attr_input_value($scope0_id, "#input/3", a, _resume((_new_a) => a = _new_a, "__tests__/template.marko_0/valueChange", $scope0_id))}>${_el_mark($scope0_id, "#input/3")}${_text_mark($scope0_id, "#text/4", a)}<button>set</button>${_el_mark($scope0_id, "#button/5")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {}, "__tests__/template.marko", 0, { "ControlledHandler:#input/3": ["valueChange"] });
 }, 1);

@@ -37,9 +37,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $childScope = _peek_scope_id();
 	child_default({
 		value: source,
-		valueChange: _resume((_new_source) => {
-			source = _new_source;
-		}, "__tests__/template.marko_0/valueChange", $scope0_id)
+		valueChange: _resume((_new_source) => source = _new_source, "__tests__/template.marko_0/valueChange", $scope0_id)
 	});
 	_html(`source=${_text_mark($scope0_id, "#text/1", source, 2)}`);
 	_scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", 0);

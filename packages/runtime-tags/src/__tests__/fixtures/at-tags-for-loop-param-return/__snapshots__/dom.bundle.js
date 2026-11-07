@@ -13,9 +13,7 @@ const $item_content__setup = ($scope) => $item_content__x($scope, 10);
 const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a0", 0, 0, $item_content__setup), { 0: $item_content__n__OR__x });
 const $count = /*@__PURE__*/ _let(2, ($scope) => {
 	let $item;
-	forUntil($scope.c, 0, 1, (n) => {
-		$item = attrTags($item, { content: $item_content($scope, { 0: n }) });
-	});
+	forUntil($scope.c, 0, 1, (n) => $item = attrTags($item, { content: $item_content($scope, { 0: n }) }));
 	$input_item($scope.b, $item);
 });
 const $setup__script = _script("a1", ($scope) => _on($scope.a, "click", function() {

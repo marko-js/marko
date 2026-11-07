@@ -19,9 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $childScope = _peek_scope_id();
 	my_input_default({
 		value,
-		valueChange: _resume((_new_value) => {
-			value = _new_value;
-		}, "__tests__/template.marko_0/valueChange", $scope0_id)
+		valueChange: _resume((_new_value) => value = _new_value, "__tests__/template.marko_0/valueChange", $scope0_id)
 	});
 	_scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", 0);
 	_resume_branch($scope0_id);

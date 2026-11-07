@@ -16,9 +16,7 @@ var template_default = _template("a", (input) => {
 	my_input_default({
 		type: "text",
 		value,
-		valueChange: _resume((_new_value) => {
-			value = _new_value;
-		}, "a0", $scope0_id)
+		valueChange: _resume((_new_value) => value = _new_value, "a0", $scope0_id)
 	});
 	_html(`<span>${_text_mark($scope0_id, "b", value)}</span>`);
 	_scope($scope0_id, { a: _existing_scope($childScope) });

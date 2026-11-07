@@ -37,24 +37,18 @@ const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__
 const $count__OR__mode = /*@__PURE__*/ _or(10, ($scope) => {
 	let $item2;
 	if ($scope.mode === 0) {
-		forUntil($scope.count, 0, 1, (i) => {
-			$item2 = attrTags($item2, { content: $item_content2($scope, { i }) });
-		});
+		forUntil($scope.count, 0, 1, (i) => $item2 = attrTags($item2, { content: $item_content2($scope, { i }) }));
 	}
 	$input_item$1($scope["#childScope/3"], $item2);
 	let $item3;
 	if ($scope.mode === 0) {} else if ($scope.mode === 1) {
-		forUntil($scope.count, 0, 1, (i) => {
-			$item3 = attrTags($item3, { content: $item_content3($scope, { i }) });
-		});
+		forUntil($scope.count, 0, 1, (i) => $item3 = attrTags($item3, { content: $item_content3($scope, { i }) }));
 	}
 	$input_item$1($scope["#childScope/4"], $item3);
 	let $item4;
 	if ($scope.mode !== 2) {} else {
 		if ($scope.count) {
-			forUntil($scope.count, 0, 1, (i) => {
-				$item4 = attrTags($item4, { content: $item_content4($scope, { i }) });
-			});
+			forUntil($scope.count, 0, 1, (i) => $item4 = attrTags($item4, { content: $item_content4($scope, { i }) }));
 		}
 	}
 	$input_item$1($scope["#childScope/5"], $item4);
@@ -69,9 +63,7 @@ const $count__OR__mode = /*@__PURE__*/ _or(10, ($scope) => {
 	if ($scope.mode === 0) {
 		$label = attrTag({ text: "zero" });
 	} else {
-		forUntil($scope.count, 0, 1, (i) => {
-			$item6 = attrTags($item6, { content: $item_content6($scope, { i }) });
-		});
+		forUntil($scope.count, 0, 1, (i) => $item6 = attrTags($item6, { content: $item_content6($scope, { i }) }));
 	}
 	$input_label($scope["#childScope/7"], $label);
 	$input_item($scope["#childScope/7"], $item6);
@@ -89,9 +81,7 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 function $setup($scope) {
 	let $item;
 	if (true) {
-		forUntil(3, 0, 1, (i) => {
-			$item = attrTags($item, { content: $item_content($scope, { i }) });
-		});
+		forUntil(3, 0, 1, (i) => $item = attrTags($item, { content: $item_content($scope, { i }) }));
 	}
 	$input_item$1($scope["#childScope/2"], $item);
 	$count($scope, 2);

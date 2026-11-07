@@ -9,9 +9,7 @@ var template_default = _template("a", (input) => {
 	];
 	let value = options[0];
 	_html("<form>");
-	_attr_select_value($scope0_id, "a", value, _resume((_new_value) => {
-		value = _new_value;
-	}, "a0", $scope0_id), () => {
+	_attr_select_value($scope0_id, "a", value, _resume((_new_value) => value = _new_value, "a0", $scope0_id), () => {
 		_html("<select>");
 		_for_of(options, (opt) => {
 			const $scope1_id = _scope_id();

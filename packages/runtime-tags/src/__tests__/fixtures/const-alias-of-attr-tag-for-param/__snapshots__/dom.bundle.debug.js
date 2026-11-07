@@ -16,9 +16,7 @@ const $setup = ($_) => {};
 const $row_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__tests__/template.marko_1*content", "<span> </span>", "D "), { x: ($scope) => _text($scope["#text/0"], $scope.x) });
 const $input_items = /*@__PURE__*/ _const("input_items", ($scope) => {
 	let $row;
-	forOf($scope.input_items, (item) => {
-		$row = attrTags($row, { content: $row_content($scope, { x: item }) });
-	});
+	forOf($scope.input_items, (item) => $row = attrTags($row, { content: $row_content($scope, { x: item }) }));
 	$input_row($scope["#childScope/0"], $row);
 });
 const $input = ($scope, input) => $input_items($scope, input.items);

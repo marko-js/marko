@@ -1,4 +1,4 @@
-// size: 2337 (min) 1191 (brotli)
+// size: 2333 (min) 1189 (brotli)
 // packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36);
 let rendering;
@@ -117,18 +117,13 @@ function _let(id, fn) {
   );
 }
 function _script(id, fn) {
-  return (
-    (_resumed[id] = fn),
-    (scope) => {
-      queueEffect(scope, fn);
-    }
-  );
+  return ((_resumed[id] = fn), (scope) => queueEffect(scope, fn));
 }
 function init(runtimeId = "M") {
   if (curRenders) return;
   let renders = self[runtimeId],
     defineRuntime = (desc) => Object.defineProperty(self, runtimeId, desc),
-    initRuntime = (renders) => {
+    initRuntime = (renders) =>
       defineRuntime({
         value: (curRenders = (renderId) => {
           let render = (curRenders[renderId] = renders[renderId] || renders(renderId)),
@@ -219,7 +214,6 @@ function init(runtimeId = "M") {
           );
         }),
       });
-    };
   if (renders) {
     initRuntime(renders);
     for (let renderId in renders) runResumeEffects(curRenders(renderId));

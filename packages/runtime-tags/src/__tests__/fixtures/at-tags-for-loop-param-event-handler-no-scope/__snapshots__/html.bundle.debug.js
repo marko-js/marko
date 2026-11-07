@@ -18,17 +18,15 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let $item;
-	forOf(["a", "b"], (foo) => {
-		$item = attrTags($item, {
-			onClick: _resume_locals(function(ev) {
-				ev.target.textContent = foo;
-			}, "__tests__/template.marko_0/onClick", { "foo/4": foo }),
-			content: _content("__tests__/template.marko_1*content", () => {
-				_scope_reason();
-				const $scope1_id = _scope_id();
-				_html("Click");
-			}, $scope0_id)
-		});
-	});
+	forOf(["a", "b"], (foo) => $item = attrTags($item, {
+		onClick: _resume_locals(function(ev) {
+			ev.target.textContent = foo;
+		}, "__tests__/template.marko_0/onClick", { "foo/4": foo }),
+		content: _content("__tests__/template.marko_1*content", () => {
+			_scope_reason();
+			const $scope1_id = _scope_id();
+			_html("Click");
+		}, $scope0_id)
+	}));
 	my_menu_default({ item: $item });
 }, 1);

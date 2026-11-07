@@ -51,9 +51,7 @@ const $item_content__i__closure = /*@__PURE__*/ _closure($inputtype_content__i);
 const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__tests__/tags/heading.marko_1*content", "<!><!><!>", "b%", $item_content__setup), { i: $item_content__i__closure });
 function $setup($scope) {
 	let $item;
-	forUntil(2, 0, 1, (i) => {
-		$item = attrTags($item, { content: $item_content($scope, { i }) });
-	});
+	forUntil(2, 0, 1, (i) => $item = attrTags($item, { content: $item_content($scope, { i }) }));
 	$input_item($scope["#childScope/0"], $item);
 }
 const $input = ($scope, input) => $input_type($scope, input.type);

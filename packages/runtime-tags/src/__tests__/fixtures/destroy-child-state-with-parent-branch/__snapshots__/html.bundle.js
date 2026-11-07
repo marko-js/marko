@@ -17,9 +17,7 @@ var counter_default = _template("c", (input) => {
 	const $childScope = _peek_scope_id();
 	child_default({
 		value: count,
-		valueChange: _resume((_new_count) => {
-			count = _new_count;
-		}, "c0", $scope0_id)
+		valueChange: _resume((_new_count) => count = _new_count, "c0", $scope0_id)
 	});
 	_scope($scope0_id, { a: _existing_scope($childScope) });
 	_resume_branch($scope0_id);

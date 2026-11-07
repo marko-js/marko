@@ -11,7 +11,5 @@ const $input_rest__OR__checked = /*@__PURE__*/ _or(5, ($scope) => {
 	$input_rest__OR__checked__script($scope);
 });
 const $checked = /*@__PURE__*/ _let(4, $input_rest__OR__checked);
-const $checkedChange = ($scope) => (_new_checked) => {
-	$checked($scope, _new_checked);
-};
+const $checkedChange = ($scope) => (_new_checked) => $checked($scope, _new_checked);
 _resumed.a0 = $checkedChange;

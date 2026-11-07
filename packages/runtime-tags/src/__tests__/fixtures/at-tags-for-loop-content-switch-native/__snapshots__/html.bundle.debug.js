@@ -32,18 +32,16 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let $tab;
-	forOf(["a", "b"], (t) => {
-		$tab = attrTags($tab, {
-			title: t,
-			content: _content_resume("__tests__/template.marko_1*content", () => {
-				const $scope1_reason = _scope_reason();
-				const $scope1_id = _scope_id();
-				let count = 0;
-				_html(`<button class=inc>${_text_mark($scope1_id, "#text/1", t, _write_guard($scope1_reason, 0))}: ${_text_mark($scope1_id, "#text/2", count, 2)}</button>${_el_mark($scope1_id, "#button/0")}`);
-				_script($scope1_id, "__tests__/template.marko_1");
-				_scope($scope1_id, { count }, "__tests__/template.marko", "3:6", { count: "4:12" });
-			}, $scope0_id, () => [{ t }])
-		});
-	});
+	forOf(["a", "b"], (t) => $tab = attrTags($tab, {
+		title: t,
+		content: _content_resume("__tests__/template.marko_1*content", () => {
+			const $scope1_reason = _scope_reason();
+			const $scope1_id = _scope_id();
+			let count = 0;
+			_html(`<button class=inc>${_text_mark($scope1_id, "#text/1", t, _write_guard($scope1_reason, 0))}: ${_text_mark($scope1_id, "#text/2", count, 2)}</button>${_el_mark($scope1_id, "#button/0")}`);
+			_script($scope1_id, "__tests__/template.marko_1");
+			_scope($scope1_id, { count }, "__tests__/template.marko", "3:6", { count: "4:12" });
+		}, $scope0_id, () => [{ t }])
+	}));
 	tabs_default({ tab: $tab });
 }, 1);

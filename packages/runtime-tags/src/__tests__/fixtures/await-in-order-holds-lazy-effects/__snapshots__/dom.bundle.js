@@ -6,9 +6,7 @@ const $value = /*@__PURE__*/ _let(3, ($scope) => {
 	$load_Child_tag_input_value($scope.b, $scope.d);
 	$await_promise($scope, $scope.d ? $scope.d : resolveAfter($scope.d, 3));
 });
-const $valueChange = ($scope) => (_new_value) => {
-	$value($scope, _new_value);
-};
+const $valueChange = ($scope) => (_new_value) => $value($scope, _new_value);
 _resumed.b0 = $valueChange;
 
 // child.marko

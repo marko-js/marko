@@ -12,9 +12,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	_set_scope_reason(_write_guard($scope0_reason, 0) << 1);
 	let $item;
-	forUntil(1, 0, 1, (i) => {
-		$item = attrTags($item, { value: i });
-	});
+	forUntil(1, 0, 1, (i) => $item = attrTags($item, { value: i }));
 	const $childScope = _peek_scope_id();
 	child_default({
 		...input,

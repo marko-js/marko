@@ -20,19 +20,13 @@ const $item_content3 = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a
 const $item_content2 = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a1", "if <!>", "b%"), { 1: ($scope) => _text($scope.a, $scope.b) });
 const $count__OR__mode = /*@__PURE__*/ _or(10, ($scope) => {
 	let $item2;
-	if ($scope.j === 0) forUntil($scope.i, 0, 1, (i) => {
-		$item2 = attrTags($item2, { content: $item_content2($scope, { 1: i }) });
-	});
+	if ($scope.j === 0) forUntil($scope.i, 0, 1, (i) => $item2 = attrTags($item2, { content: $item_content2($scope, { 1: i }) }));
 	$input_item$1($scope.d, $item2);
 	let $item3;
-	if ($scope.j === 0) {} else if ($scope.j === 1) forUntil($scope.i, 0, 1, (i) => {
-		$item3 = attrTags($item3, { content: $item_content3($scope, { 1: i }) });
-	});
+	if ($scope.j === 0) {} else if ($scope.j === 1) forUntil($scope.i, 0, 1, (i) => $item3 = attrTags($item3, { content: $item_content3($scope, { 1: i }) }));
 	$input_item$1($scope.e, $item3);
 	let $item4;
-	if ($scope.j !== 2) {} else if ($scope.i) forUntil($scope.i, 0, 1, (i) => {
-		$item4 = attrTags($item4, { content: $item_content4($scope, { 1: i }) });
-	});
+	if ($scope.j !== 2) {} else if ($scope.i) forUntil($scope.i, 0, 1, (i) => $item4 = attrTags($item4, { content: $item_content4($scope, { 1: i }) }));
 	$input_item$1($scope.f, $item4);
 	let $item5;
 	forUntil($scope.i, 0, 1, (j) => {
@@ -41,9 +35,7 @@ const $count__OR__mode = /*@__PURE__*/ _or(10, ($scope) => {
 	$input_item$1($scope.g, $item5);
 	let $label, $item6;
 	if ($scope.j === 0) $label = attrTag({ text: "zero" });
-	else forUntil($scope.i, 0, 1, (i) => {
-		$item6 = attrTags($item6, { content: $item_content6($scope, { 1: i }) });
-	});
+	else forUntil($scope.i, 0, 1, (i) => $item6 = attrTags($item6, { content: $item_content6($scope, { 1: i }) }));
 	$input_label($scope.h, $label);
 	$input_item($scope.h, $item6);
 });

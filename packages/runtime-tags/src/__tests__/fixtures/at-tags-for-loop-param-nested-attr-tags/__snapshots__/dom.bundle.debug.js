@@ -30,21 +30,17 @@ const $row_content__a_id__closure = /*@__PURE__*/ _closure($cell_content__a_id);
 const $row_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__tests__/template.marko_1*content", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$2), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c")), {
 	a_items($scope) {
 		let $cell;
-		forOf($scope.a_items, (b) => {
-			$cell = attrTags($cell, { content: $cell_content($scope, { b }) });
-		});
+		forOf($scope.a_items, (b) => $cell = attrTags($cell, { content: $cell_content($scope, { b }) }));
 		$input_cell($scope["#childScope/0"], $cell);
 	},
 	a_id: $row_content__a_id__closure
 });
 const $rows = /*@__PURE__*/ _let("rows/2", ($scope) => {
 	let $row;
-	forOf($scope.rows, (a) => {
-		$row = attrTags($row, { content: $row_content($scope, {
-			a_items: a?.items,
-			a_id: a?.id
-		}) });
-	});
+	forOf($scope.rows, (a) => $row = attrTags($row, { content: $row_content($scope, {
+		a_items: a?.items,
+		a_id: a?.id
+	}) }));
 	$input_row($scope["#childScope/0"], $row);
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {

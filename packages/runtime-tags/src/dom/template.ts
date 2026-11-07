@@ -111,9 +111,8 @@ function mount(
       parentNode,
     );
 
-    branch[AccessorProp.TagVariable] = (newValue: unknown) => {
-      curValue = newValue;
-    };
+    branch[AccessorProp.TagVariable] = (newValue: unknown) =>
+      (curValue = newValue);
     this[RendererProp.Setup]?.(branch);
     args?.(branch, input);
   });
@@ -133,11 +132,7 @@ function mount(
         // The branch's global is fixed at mount, so this one is dropped rather
         // than reaching the input signal as an ordinary property.
         if (newInput.$global) ({ $global, ...newInput } = newInput);
-        runEffects(
-          prepareEffects((_?: never) => {
-            args(branch, newInput);
-          }),
-        );
+        runEffects(prepareEffects((_?: never) => args(branch, newInput)));
       }
     },
     destroy() {

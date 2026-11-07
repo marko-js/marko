@@ -31,24 +31,22 @@ var heading_default = _template("c", (input) => {
 	const $scope0_id = _scope_id();
 	const $input_type__closures = /* @__PURE__ */ new Set();
 	let $item;
-	forUntil(2, 0, 1, (i) => {
-		$item = attrTags($item, { content: _content("c3", () => {
-			const $scope1_reason = _scope_reason(), $wg__i = _write_guard($scope1_reason, 0), $wi__i = _write_if($scope1_reason, 0);
-			const $scope1_id = _scope_id();
-			const $item_content__i__closures = /* @__PURE__ */ new Set();
-			_dynamic_tag($scope1_id, "a", input.type, {}, _content_resume("c0", () => {
-				const $scope2_id = _scope_id();
-				_scope_reason();
-				_html(`item ${_text_mark($scope2_id, "a", i, $wg__i * 2)}`);
-				($wi__input_type || $wi__i) && _subscribe($wi__i && $item_content__i__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "c1", $wg__i);
-			}, $scope1_id, ($scope) => [{ b: i }]), 0, $wg__input_type);
-			($wi__input_type || $wi__i) && _subscribe($wi__input_type && $input_type__closures, _scope($scope1_id, {
-				b: $wi__input_type && i,
-				_: $wi__input_type && _scope_with_id($scope0_id),
-				f: $wi__i && $item_content__i__closures
-			}), "c2", $wg__input_type);
-		}, $scope0_id) });
-	});
+	forUntil(2, 0, 1, (i) => $item = attrTags($item, { content: _content("c3", () => {
+		const $scope1_reason = _scope_reason(), $wg__i = _write_guard($scope1_reason, 0), $wi__i = _write_if($scope1_reason, 0);
+		const $scope1_id = _scope_id();
+		const $item_content__i__closures = /* @__PURE__ */ new Set();
+		_dynamic_tag($scope1_id, "a", input.type, {}, _content_resume("c0", () => {
+			const $scope2_id = _scope_id();
+			_scope_reason();
+			_html(`item ${_text_mark($scope2_id, "a", i, $wg__i * 2)}`);
+			($wi__input_type || $wi__i) && _subscribe($wi__i && $item_content__i__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "c1", $wg__i);
+		}, $scope1_id, ($scope) => [{ b: i }]), 0, $wg__input_type);
+		($wi__input_type || $wi__i) && _subscribe($wi__input_type && $input_type__closures, _scope($scope1_id, {
+			b: $wi__input_type && i,
+			_: $wi__input_type && _scope_with_id($scope0_id),
+			f: $wi__i && $item_content__i__closures
+		}), "c2", $wg__input_type);
+	}, $scope0_id) }));
 	list_default({ item: $item });
 	$wi__input_type && _scope($scope0_id, { e: $input_type__closures });
 });

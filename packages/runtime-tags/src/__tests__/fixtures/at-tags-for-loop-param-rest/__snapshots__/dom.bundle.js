@@ -13,12 +13,10 @@ const $item_content2 = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a
 });
 const $items = /*@__PURE__*/ _let(9, ($scope) => {
 	let $item;
-	forOf($scope.j, ({ id, ...rest }) => {
-		$item = attrTags($item, { content: $item_content2($scope, {
-			2: id,
-			3: rest.extra
-		}) });
-	});
+	forOf($scope.j, ({ id, ...rest }) => $item = attrTags($item, { content: $item_content2($scope, {
+		2: id,
+		3: rest.extra
+	}) }));
 	$input_item($scope.b, $item);
 	$temp4($scope, $scope.j?.[0]);
 });

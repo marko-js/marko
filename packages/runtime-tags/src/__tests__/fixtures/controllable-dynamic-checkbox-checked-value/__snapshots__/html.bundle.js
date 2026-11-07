@@ -4,9 +4,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let show = true;
 	let checkedValue = "a";
-	const $checkedValueChange = _resume((_new_checkedValue) => {
-		checkedValue = _new_checkedValue;
-	}, "a0", $scope0_id);
+	const $checkedValueChange = _resume((_new_checkedValue) => checkedValue = _new_checkedValue, "a0", $scope0_id);
 	_html(`<input${_attr_input_checkedValue($scope0_id, "a", checkedValue, $checkedValueChange, "a")} type=radio>${_el_mark($scope0_id, "a")}`);
 	_if(() => {
 		{

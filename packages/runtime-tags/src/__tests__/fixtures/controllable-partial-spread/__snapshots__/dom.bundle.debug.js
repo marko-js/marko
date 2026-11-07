@@ -40,8 +40,6 @@ function $setup($scope) {
 	$rest($scope, { placeholder: "p" });
 	$setup__script($scope);
 }
-const $valueChange = ($scope) => (_new_v) => {
-	$v($scope, _new_v);
-};
+const $valueChange = ($scope) => (_new_v) => $v($scope, _new_v);
 _resumed["__tests__/template.marko_0/valueChange"] = $valueChange;
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

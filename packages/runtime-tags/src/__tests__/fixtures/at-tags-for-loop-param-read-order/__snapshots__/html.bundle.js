@@ -18,14 +18,12 @@ var template_default = _template("a", (input) => {
 	_html(`<button id=rename>rename</button>${_el_mark($scope0_id, "a")}`);
 	_set_scope_reason(2);
 	let $item;
-	forOf(items, (item) => {
-		$item = attrTags($item, { content: _content("a0", () => {
-			const $scope1_reason = _scope_reason(), $wg__item_text = _write_guard($scope1_reason, 1), $wg__item = _write_guard($scope1_reason, 2);
-			const $scope1_id = _scope_id();
-			_html(`<p>${_text_mark($scope1_id, "a", item.text, $wg__item_text)}|${_text_mark($scope1_id, "b", JSON.stringify(item), $wg__item * 2)}</p>`);
-			_write_if($scope1_reason, 0) && _scope($scope1_id, {});
-		}, $scope0_id) });
-	});
+	forOf(items, (item) => $item = attrTags($item, { content: _content("a0", () => {
+		const $scope1_reason = _scope_reason(), $wg__item_text = _write_guard($scope1_reason, 1), $wg__item = _write_guard($scope1_reason, 2);
+		const $scope1_id = _scope_id();
+		_html(`<p>${_text_mark($scope1_id, "a", item.text, $wg__item_text)}|${_text_mark($scope1_id, "b", JSON.stringify(item), $wg__item * 2)}</p>`);
+		_write_if($scope1_reason, 0) && _scope($scope1_id, {});
+	}, $scope0_id) }));
 	const $childScope = _peek_scope_id();
 	list_default({ item: $item });
 	_script($scope0_id, "a1");

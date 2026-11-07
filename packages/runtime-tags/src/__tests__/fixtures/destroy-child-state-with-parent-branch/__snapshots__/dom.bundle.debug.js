@@ -25,9 +25,7 @@ function $setup$1($scope) {
 	$valueChange2($scope["#childScope/0"], $valueChange($scope));
 	$count($scope, 0);
 }
-const $valueChange = ($scope) => (_new_count) => {
-	$count($scope, _new_count);
-};
+const $valueChange = ($scope) => (_new_count) => $count($scope, _new_count);
 _resumed["__tests__/tags/counter.marko_0/valueChange"] = $valueChange;
 var counter_default = /*@__PURE__*/ _template("__tests__/tags/counter.marko", $template$1, $walks$1, $setup$1);
 

@@ -16,12 +16,10 @@ const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a0
 });
 const $items = /*@__PURE__*/ _let(4, ($scope) => {
 	let $item;
-	forOf($scope.e, ({ a: aa = "default" }, index) => {
-		$item = attrTags($item, { content: $item_content($scope, {
-			3: aa,
-			4: index
-		}) });
-	});
+	forOf($scope.e, ({ a: aa = "default" }, index) => $item = attrTags($item, { content: $item_content($scope, {
+		3: aa,
+		4: index
+	}) }));
 	$input_item($scope.b, $item);
 });
 const $setup__script = _script("a2", ($scope) => _on($scope.a, "click", function() {

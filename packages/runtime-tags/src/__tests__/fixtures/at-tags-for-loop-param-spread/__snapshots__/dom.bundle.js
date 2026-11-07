@@ -33,9 +33,7 @@ const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a1
 } });
 const $items = /*@__PURE__*/ _let(3, ($scope) => {
 	let $item;
-	forOf($scope.d, (item) => {
-		$item = attrTags($item, { content: $item_content($scope, { 3: item }) });
-	});
+	forOf($scope.d, (item) => $item = attrTags($item, { content: $item_content($scope, { 3: item }) }));
 	$input_item($scope.b, $item);
 });
 const $setup__script = _script("a2", ($scope) => _on($scope.a, "click", function() {

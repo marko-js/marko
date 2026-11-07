@@ -17,21 +17,17 @@ const $cell_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a1
 const $row_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a2", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c")), {
 	1($scope) {
 		let $cell;
-		forOf($scope.b, (b) => {
-			$cell = attrTags($cell, { content: $cell_content($scope, { 2: b }) });
-		});
+		forOf($scope.b, (b) => $cell = attrTags($cell, { content: $cell_content($scope, { 2: b }) }));
 		$input_cell($scope.a, $cell);
 	},
 	2: /* @__PURE__ */ _closure($cell_content__a_id)
 });
 const $rows = /*@__PURE__*/ _let(2, ($scope) => {
 	let $row;
-	forOf($scope.c, (a) => {
-		$row = attrTags($row, { content: $row_content($scope, {
-			1: a?.items,
-			2: a?.id
-		}) });
-	});
+	forOf($scope.c, (a) => $row = attrTags($row, { content: $row_content($scope, {
+		1: a?.items,
+		2: a?.id
+	}) }));
 	$input_row($scope.a, $row);
 });
 const $setup__script = _script("a3", ($scope) => _on($scope.b, "click", function() {

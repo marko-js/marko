@@ -1,4 +1,4 @@
-// size: 5712 (min) 2540 (brotli)
+// size: 5706 (min) 2542 (brotli)
 // packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36);
 let branchesEnabled;
@@ -298,12 +298,7 @@ function _if_closure(ownerConditionalNodeAccessor, branch, fn) {
   return ((ownerSignal._ = (scope) => queueRender(scope, fn, -1)), ownerSignal);
 }
 function _script(id, fn) {
-  return (
-    (_resumed[id] = fn),
-    (scope) => {
-      queueEffect(scope, fn);
-    }
-  );
+  return ((_resumed[id] = fn), (scope) => queueEffect(scope, fn));
 }
 /** Cloned templates are small, where a TreeWalker's per-step cost dominates. */
 function walk(startNode, walkCodes, branch) {
@@ -488,9 +483,7 @@ function mount(input = {}, reference, position) {
     args = this.d,
     effects = prepareEffects((_) => {
       ((branch = createBranch($global, this, void 0, parentNode)),
-        (branch.T = (newValue) => {
-          curValue = newValue;
-        }),
+        (branch.T = (newValue) => (curValue = newValue)),
         this.c?.(branch),
         args?.(branch, input));
     });
@@ -507,11 +500,7 @@ function mount(input = {}, reference, position) {
       update(newInput = {}) {
         args &&
           (newInput.$global && ({ $global, ...newInput } = newInput),
-          runEffects(
-            prepareEffects((_) => {
-              args(branch, newInput);
-            }),
-          ));
+          runEffects(prepareEffects((_) => args(branch, newInput))));
       },
       destroy() {
         removeAndDestroyBranch(branch);

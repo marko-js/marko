@@ -19,9 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	my_input_default({
 		type: "text",
 		value,
-		valueChange: _resume((_new_value) => {
-			value = _new_value;
-		}, "__tests__/template.marko_0/valueChange", $scope0_id)
+		valueChange: _resume((_new_value) => value = _new_value, "__tests__/template.marko_0/valueChange", $scope0_id)
 	});
 	_html(`<span>${_text_mark($scope0_id, "#text/1", value)}</span>`);
 	_scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", 0);

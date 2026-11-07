@@ -19,14 +19,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	forOf(items, (item) => {
 		const $scope1_id = _scope_id();
 		let $option;
-		forOf([1, 2], (n) => {
-			$option = attrTags($option, {
-				label: item.id + n,
-				onSelect: _resume_locals(function() {
-					document.getElementById("log").textContent = item.id + n;
-				}, "__tests__/template.marko_1/onSelect", { "n/9": n }, $scope1_id)
-			});
-		});
+		forOf([1, 2], (n) => $option = attrTags($option, {
+			label: item.id + n,
+			onSelect: _resume_locals(function() {
+				document.getElementById("log").textContent = item.id + n;
+			}, "__tests__/template.marko_1/onSelect", { "n/9": n }, $scope1_id)
+		}));
 		menu_default({ option: $option });
 		_scope($scope1_id, { "#LoopKey": item?.id }, "__tests__/template.marko", "2:2", { "#LoopKey": ["item.id", "2:6"] });
 	});

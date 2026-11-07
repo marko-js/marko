@@ -19,9 +19,7 @@ var template_default = _template("a", (input) => {
 	const $childScope = _peek_scope_id();
 	child_default({
 		value: count,
-		valueChange: _resume((_new_count) => {
-			count = _new_count;
-		}, "a0", $scope0_id)
+		valueChange: _resume((_new_count) => count = _new_count, "a0", $scope0_id)
 	});
 	_html(`<button>clear</button>${_el_mark($scope0_id, "b")}`);
 	_script($scope0_id, "a1");

@@ -33,25 +33,21 @@ var template_default = _template("a", (input) => {
 	let mode = 0;
 	_html(`<button id=add>add</button>${_el_mark($scope0_id, "a")}<button id=mode>mode</button>${_el_mark($scope0_id, "b")}`);
 	let $item;
-	forUntil(3, 0, 1, (i) => {
-		$item = attrTags($item, { content: _content("a0", () => {
-			const $scope1_reason = _scope_reason(), $wg__i = _write_guard($scope1_reason, 0);
-			const $scope1_id = _scope_id();
-			_html(`static ${_text_mark($scope1_id, "a", i, $wg__i * 2)}`);
-			_write_if($scope1_reason, 0) && _scope($scope1_id, {});
-		}, $scope0_id) });
-	});
+	forUntil(3, 0, 1, (i) => $item = attrTags($item, { content: _content("a0", () => {
+		const $scope1_reason = _scope_reason(), $wg__i = _write_guard($scope1_reason, 0);
+		const $scope1_id = _scope_id();
+		_html(`static ${_text_mark($scope1_id, "a", i, $wg__i * 2)}`);
+		_write_if($scope1_reason, 0) && _scope($scope1_id, {});
+	}, $scope0_id) }));
 	list_default({ item: $item });
 	_set_scope_reason(2);
 	let $item2;
-	forUntil(count, 0, 1, (i) => {
-		$item2 = attrTags($item2, { content: _content("a1", () => {
-			const $scope2_reason = _scope_reason(), $wg__i2 = _write_guard($scope2_reason, 0);
-			const $scope2_id = _scope_id();
-			_html(`if ${_text_mark($scope2_id, "a", i, $wg__i2 * 2)}`);
-			_write_if($scope2_reason, 0) && _scope($scope2_id, {});
-		}, $scope0_id) });
-	});
+	forUntil(count, 0, 1, (i) => $item2 = attrTags($item2, { content: _content("a1", () => {
+		const $scope2_reason = _scope_reason(), $wg__i2 = _write_guard($scope2_reason, 0);
+		const $scope2_id = _scope_id();
+		_html(`if ${_text_mark($scope2_id, "a", i, $wg__i2 * 2)}`);
+		_write_if($scope2_reason, 0) && _scope($scope2_id, {});
+	}, $scope0_id) }));
 	const $childScope = _peek_scope_id();
 	list_default({ item: $item2 });
 	_set_scope_reason(2);

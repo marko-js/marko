@@ -43,17 +43,13 @@ _resumed["__tests__/template.marko_1*content"] = $tab_content;
 function $setup($scope) {
 	$setup$1($scope["#childScope/0"]);
 	let $tab;
-	forOf(["x", "y"], (...row) => {
-		forUntil(2, 0, 1, (col) => {
-			$tab = attrTags($tab, {
-				title: row[0] + col,
-				content: $tab_content($scope, {
-					row_0: row[0],
-					col
-				})
-			});
-		});
-	});
+	forOf(["x", "y"], (...row) => forUntil(2, 0, 1, (col) => $tab = attrTags($tab, {
+		title: row[0] + col,
+		content: $tab_content($scope, {
+			row_0: row[0],
+			col
+		})
+	})));
 	$input_tab($scope["#childScope/0"], $tab);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

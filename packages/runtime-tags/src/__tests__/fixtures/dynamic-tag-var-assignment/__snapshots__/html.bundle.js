@@ -8,9 +8,7 @@ var counter_default = _template("b", (input) => {
 	_script($scope0_id, "b1");
 	_scope($scope0_id, {
 		c: x,
-		U: _resume((_new_x) => {
-			x = _new_x;
-		}, "b0", $scope0_id) || void 0
+		U: _resume((_new_x) => x = _new_x, "b0", $scope0_id) || void 0
 	});
 	return $return;
 });

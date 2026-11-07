@@ -14,7 +14,5 @@ const $setup__script = _script("a1", ($scope) => {
 		$a($scope, "filled");
 	});
 });
-const $valueChange = ($scope) => (_new_a) => {
-	$a($scope, _new_a);
-};
+const $valueChange = ($scope) => (_new_a) => $a($scope, _new_a);
 _resumed.a0 = $valueChange;

@@ -18,9 +18,7 @@ var template_default = _template("a", (input) => {
 	const $childScope = _peek_scope_id();
 	checkbox_default({
 		checked,
-		checkedChange: _resume((_new_checked) => {
-			checked = _new_checked;
-		}, "a0", $scope0_id)
+		checkedChange: _resume((_new_checked) => checked = _new_checked, "a0", $scope0_id)
 	});
 	_html(`<span>${_text_mark($scope0_id, "b", String(checked))}</span>`);
 	_scope($scope0_id, { a: _existing_scope($childScope) });

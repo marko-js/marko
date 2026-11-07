@@ -26,9 +26,7 @@ const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__
 } });
 function $setup($scope) {
 	let $item;
-	forOf(["a", "b"], (item) => {
-		$item = attrTags($item, { content: $item_content($scope, { item }) });
-	});
+	forOf(["a", "b"], (item) => $item = attrTags($item, { content: $item_content($scope, { item }) }));
 	$input_item($scope["#childScope/0"], $item);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

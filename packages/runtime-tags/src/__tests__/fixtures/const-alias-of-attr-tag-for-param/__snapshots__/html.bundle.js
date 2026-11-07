@@ -16,14 +16,12 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	_set_scope_reason(_write_guard($scope0_reason, 0) << 1);
 	let $row;
-	forOf(input.items, (item) => {
-		$row = attrTags($row, { content: _content("a0", () => {
-			const $scope1_reason = _scope_reason(), $wg__x = _write_guard($scope1_reason, 0);
-			const $scope1_id = _scope_id();
-			_html(`<span>${_text_mark($scope1_id, "a", item, $wg__x)}</span>`);
-			_write_if($scope1_reason, 0) && _scope($scope1_id, {});
-		}, $scope0_id) });
-	});
+	forOf(input.items, (item) => $row = attrTags($row, { content: _content("a0", () => {
+		const $scope1_reason = _scope_reason(), $wg__x = _write_guard($scope1_reason, 0);
+		const $scope1_id = _scope_id();
+		_html(`<span>${_text_mark($scope1_id, "a", item, $wg__x)}</span>`);
+		_write_if($scope1_reason, 0) && _scope($scope1_id, {});
+	}, $scope0_id) }));
 	const $childScope = _peek_scope_id();
 	list_default({ row: $row });
 	_write_if($scope0_reason, 0) && _scope($scope0_id, { a: _existing_scope($childScope) });

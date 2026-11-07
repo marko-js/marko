@@ -10,9 +10,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, "#input/1", $scope0_id, "input")}>${_el_mark($scope0_id, "#input/1")}<input${_attrs({
 		...rest,
 		checkedValue: v
-	}, "#input/2", $scope0_id, "input")}>${_el_mark($scope0_id, "#input/2")}<input${_attr_input_value($scope0_id, "#input/3", v, _resume((_new_v) => {
-		v = _new_v;
-	}, "__tests__/template.marko_0/valueChange", $scope0_id))}${_attrs_partial(rest, {
+	}, "#input/2", $scope0_id, "input")}>${_el_mark($scope0_id, "#input/2")}<input${_attr_input_value($scope0_id, "#input/3", v, _resume((_new_v) => v = _new_v, "__tests__/template.marko_0/valueChange", $scope0_id))}${_attrs_partial(rest, {
 		value: 1,
 		valueChange: 1
 	}, "#input/3", $scope0_id, "input")}>${_el_mark($scope0_id, "#input/3")}`);
