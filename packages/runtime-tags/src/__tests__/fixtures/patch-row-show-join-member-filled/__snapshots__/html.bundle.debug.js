@@ -18,7 +18,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $show = item.on ? input.id : "";
 		_show_start($show, 1, $wg__input_items__OR__input_id, "</div>");
 		_html("shown");
-		_show_end($scope1_id, "#div/0", $show, 1, $wg__input_items__OR__input_id, "</div>", 0, "#div/0", void 0, $scope0_reason, 0);
+		_show_end($scope1_id, "#div/0", $show, 1, $wg__input_items__OR__input_id, "</div>", 0, 1, $scope0_reason, 0);
 		_patch_render($scope1_id, "__tests__/template.marko_1_input_id#0:5_item_on#3/setup", [_filled_guard($scope0_reason, 2) && ">input_id", _filled_guard($scope0_reason, 1) && "item_on"], $scope0_reason, 0);
 		_scope($scope1_id, {
 			item_on: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && item?.on,

@@ -2,7 +2,7 @@
 `packages/runtime-tags/src/__tests__/fixtures/patch-row-show-join-member-filled/template.marko_1*shell; ;<div>shown</div>`
 {
   "PatchLoop:#text/0": [1, {
-    "PatchShow:#div/0": [1, "#div/0"]
+    "PatchShow:#div/0": 1
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-row-show-join-member-filled/template.marko_1*shell"],
   "PatchChild:BranchScopes:#text/1": {
     "PatchText:#text/0": "b"
@@ -15,7 +15,7 @@
 // PATCH holding BgE
 {
   "PatchLoop:#text/0": [1, {
-    "PatchShow:#div/0": [0, "#div/0"]
+    "PatchShow:#div/0": 0
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-row-show-join-member-filled/template.marko_1*shell"],
   "PatchChild:BranchScopes:#text/1": {
     "PatchText:#text/0": "c"
@@ -27,7 +27,7 @@
 // PATCH holding BgE
 {
   "PatchLoop:#text/0": [1, {
-    "PatchShow:#div/0": [1, "#div/0"]
+    "PatchShow:#div/0": 1
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-row-show-join-member-filled/template.marko_1*shell"],
   "PatchChild:BranchScopes:#text/1": {
     "PatchText:#text/0": "d"

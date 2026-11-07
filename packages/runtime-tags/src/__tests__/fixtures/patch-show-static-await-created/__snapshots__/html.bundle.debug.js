@@ -15,7 +15,7 @@ var show_await_default = _template("__tests__/tags/show-await.marko", (input) =>
 		_html(`<p>${_text_mark($scope1_id, "#text/0", x, 1, $scope0_reason, 0)}</p>`);
 		_show_start(false, 0);
 		_html(`<b>${_text_mark($scope1_id, "#text/1", x, 1, $scope0_reason, 0)}</b>`);
-		_show_end($scope1_id, "#text/2", false, 0, 0, 0, 1, "#text/2", void 0, 0, 0);
+		_show_end($scope1_id, "#text/2", false, 0, 0, 0, 1, 1, 0, 0);
 		_scope($scope1_id, {}, "__tests__/tags/show-await.marko", "1:2");
 	}, 1, "__tests__/tags/show-await.marko_1*content", _unfilled_if($scope0_reason, 0) && 3, 1);
 });

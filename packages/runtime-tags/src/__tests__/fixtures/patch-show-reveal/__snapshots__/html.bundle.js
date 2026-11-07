@@ -7,7 +7,7 @@ var template_default = _template("a", (input) => {
 	const $show = input.on;
 	_show_start($show, 0);
 	_html(`<p>${_text_mark($scope0_id, "a", input.label, 1, $scope0_reason, 1)}</p>`);
-	_show_end($scope0_id, "b", $show, 1, 0, 0, 1, 1, void 0, $scope0_reason, 0);
+	_show_end($scope0_id, "b", $show, 1, 0, 0, 1, 1, $scope0_reason, 0);
 	_html(`<button>${_text_mark($scope0_id, "d", count)}</button>${_el_mark($scope0_id, "c")}`);
 	_script($scope0_id, "a0");
 	_scope($scope0_id, { i: count });

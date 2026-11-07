@@ -8,7 +8,7 @@
       },
       "PatchChild:BranchScopes:#text/0": {
         "PatchSetup:": {
-          "PatchShow:#text/2": [0, "#text/2"]
+          "PatchShow:#text/2": 0
         }
       }
     }
