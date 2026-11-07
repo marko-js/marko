@@ -152,7 +152,7 @@ function isPatchFilled(binding: Binding) {
 
 // Content plain renders on the client derives its locals from its closures
 // there: a patch fills none of them.
-export function derivesLocals(section: Section) {
+function derivesLocals(section: Section) {
   return isContentScope(section) && !!getRendererReason(section);
 }
 
@@ -213,7 +213,7 @@ function isPatchFillBinding(binding: Binding) {
 
 // A value's fill, derived once per analysis (afresh each solve pass): what its reads
 // need, how a patch fills them, and what deriving it needs of its inputs.
-export interface PatchFill {
+interface PatchFill {
   contentKind?: true | FillConditions;
   keptInLet?: boolean;
   /** A `<let>` a patch fills. */
@@ -230,7 +230,7 @@ export interface PatchFill {
 }
 
 // What a patch writes, derived afresh each solve pass.
-export interface PatchWrite {
+interface PatchWrite {
   write?: boolean;
   effect?: boolean;
   unfillable?: boolean;
@@ -300,7 +300,7 @@ function computePatchFill(binding: Binding): PatchFill {
 
 // A `<let>` a patch fills: where a server value keeps reaching it (a controlled
 // `<let>`'s controller); a created scope's arrives as resume values.
-export function canPatchFill(binding: Binding) {
+function canPatchFill(binding: Binding) {
   return (
     !!binding.sources?.state &&
     getCanonicalBinding(binding) === binding &&
@@ -415,7 +415,7 @@ function readsPastRenders(binding: Binding) {
 
 // A `<let>` the created scope starts from its render's value, as a resumed
 // one does: its own, with no server value reaching it or state its initial value reads.
-export function isFirstState(state: Binding, section: Section) {
+function isFirstState(state: Binding, section: Section) {
   return (
     state.type === BindingType.let &&
     state.section === section &&
@@ -455,7 +455,7 @@ function seedsParam(binding: Binding) {
 
 // Why a binding fills: `true` unconditionally, or the run-time conditions
 // its reads sit under (param-selected structure, client branch content).
-export interface FillConditions {
+interface FillConditions {
   structure?: SortedOpt<Sources>;
   intersections?: SortedOpt<Sources>;
   // What its section's end sees.
@@ -879,7 +879,7 @@ function mergeConditions(
 
 // An effect read of a written value re-runs by register id when a patch
 // changes what it saw; ask through `someAlias` (direct aliases only).
-export function hasEffectRead(binding: Binding) {
+function hasEffectRead(binding: Binding) {
   return someBindingRead(binding, readsValuesOnResume);
 }
 
@@ -1001,7 +1001,7 @@ function isFilledForEffect(reached: Binding) {
 }
 
 // An effect, outside a created `@catch`, references the value itself.
-export function isEffectRead(root: Binding) {
+function isEffectRead(root: Binding) {
   return someAlias(root, readsInEffect, undefined, true);
 }
 
@@ -1020,11 +1020,7 @@ function readsInEffect(alias: Binding) {
 
 // The object a value goes into that is built anew each time it runs: one its
 // reading expression builds or derives here, or another template's call input.
-export function getBuiltObject(
-  derived: Binding,
-  from: Binding,
-  expr: t.NodeExtra,
-) {
+function getBuiltObject(derived: Binding, from: Binding, expr: t.NodeExtra) {
   if (expr.buildsObject || holdsBuiltObject(derived)) return derived;
   if (derived.section.program !== from.section.program) {
     // The input object (an alias of the template's params), where an effect's
@@ -1048,7 +1044,7 @@ function isBuiltObject(expr: t.NodeExtra) {
 
 // Structure the client may render: content, unpatched structure, or
 // param-selected structure a caller may hand the client.
-export function clientMayRender(section: Section) {
+function clientMayRender(section: Section) {
   return (
     clientMayRenderInAnyCall(section) ||
     !!getParamSelectedStructure(section)?.some((sources) =>
@@ -1180,7 +1176,7 @@ export const [getFilledReads] = createAnalysisMemo(
 
 // What the functions with filled references a value may hold read from the scope when called, where a
 // patch writes it: a call sees each change with no new function.
-export const [getFnValueReferences] = createAnalysisMemo(
+const [getFnValueReferences] = createAnalysisMemo(
   (holder: Binding): Binding[] => {
     const references = new Set<Binding>();
     // Visits every function it may hold.
@@ -1328,7 +1324,7 @@ function isConstant(member: Binding) {
 }
 
 // Whether an intersection the section renders reads the closure.
-export function isReadInIntersection(section: Section, closure: Binding) {
+function isReadInIntersection(section: Section, closure: Binding) {
   return getRenderedIntersections(section).some((intersection) =>
     bindingUtil.has(intersection, closure),
   );
@@ -1337,7 +1333,7 @@ export function isReadInIntersection(section: Section, closure: Binding) {
 const NO_SETUP = new Map<never, never>();
 
 // Each section's closure setups, from the fills of the moment.
-export const getClosureSetups = createPassMemo(computeClosureSetups, NO_SETUP);
+const getClosureSetups = createPassMemo(computeClosureSetups, NO_SETUP);
 
 // The setup the server names for the section's scopes, its closures' and
 // intersections', asked once ids allocate the intersections.
@@ -1513,7 +1509,7 @@ function getClosureSetup(
 
 // A caller's other closures render where the client contributes them; an intersection
 // of them sets itself up.
-export function isClientRenderedClosure(closure: Binding, section: Section) {
+function isClientRenderedClosure(closure: Binding, section: Section) {
   return (
     hasTagCallerParamAt(closure.sources, section) &&
     someReadIn(closure, section, isLoneRead)
@@ -1657,7 +1653,7 @@ function readsOtherIntersection(binding: Binding, intersection: Intersection) {
 
 // A filled intersection the scope renders: some shipped member has no fill to re-run it
 // (written for its render, below the root, over subscribers, in two, filled for others).
-export const rendersFilledIntersection = createPassMemo(
+const rendersFilledIntersection = createPassMemo(
   (intersection: Intersection) =>
     isFilledIntersection(intersection) &&
     some(intersection, (ref) => {
@@ -1921,7 +1917,7 @@ export function fillSubscribes(closure: Binding, section: Section) {
 
 // The closure's own signal carries a fill to the section's reads: a lone
 // read, or an intersection inside stateful structure, which no intersection dispatch reaches.
-export function closureCarriesFill(closure: Binding, section: Section) {
+function closureCarriesFill(closure: Binding, section: Section) {
   return (
     hasLoneRead(closure, section) ||
     (inStatefulStructure(section) && hasClosureSignalRead(closure, section))
