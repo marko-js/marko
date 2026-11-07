@@ -23,7 +23,6 @@ import { getExprRoot, getFnParent, getFnRoot, getMarkoRoot } from "./get-root";
 import { isEventOrChangeHandler } from "./is-event-or-change-handler";
 import isInvokedFunction from "./is-invoked-function";
 import isStatic from "./is-static";
-import { isPatch } from "./marko-config";
 import {
   concat,
   forEach,
@@ -935,26 +934,6 @@ export function mergeReferences<T extends t.Node>(
     ReferencedExtra;
 }
 
-// A dynamic tag reads as one; a patch build keeps apart a name that is one read
-// as written. The first step of main's tag-name analysis TODO.
-export function mergeDynamicTagReferences(
-  section: Section,
-  tag: t.MarkoTag,
-  nodes: (t.Node | undefined)[],
-) {
-  const nameReads =
-    isPatch() && getReadsByExpression().get(tag.name.extra as ReferencedExtra);
-  const extra = mergeReferences(section, tag, nodes);
-  if (
-    nameReads &&
-    !Array.isArray(nameReads) &&
-    nameReads.extra === tag.name.extra
-  ) {
-    getNameReadByExpression().set(extra, nameReads);
-  }
-  return extra;
-}
-
 // Every expression in a tag, read as one.
 export function mergeTagReferences(section: Section, tag: t.MarkoTag) {
   return mergeReferences(section, tag, getAllTagReferenceNodes(tag));
@@ -1087,10 +1066,6 @@ export const [getReadsByExpression] = createAnalysisState(
 
 export const [getFunctionReadsByExpression] = createAnalysisState(
   () => new Map<ReferencedExtra, Map<ReferencedFunctionExtra, OneMany<Read>>>(),
-);
-
-export const [getNameReadByExpression] = createAnalysisState(
-  () => new Map<ReferencedExtra, Read>(),
 );
 
 export const [getReferenceFinalizers] = createAnalysisState<(() => void)[]>(
@@ -1496,12 +1471,15 @@ export function setResolvedFunctionReads(
   extra.referencesScope ||= !!(referencedBindings || constantBindings);
 }
 
-// The read a dynamic tag's name is, as written (`mergeDynamicTagReferences`).
+// The read a dynamic tag's name is, where the name is one read as written.
 export function getNameRead(extra: t.NodeExtra) {
   return getCanonicalExpr(extra)[kNameRead];
 }
 
-export function setNameRead(extra: ReferencedExtra, read: ResolvedRead) {
+export function setNameRead(
+  extra: ReferencedExtra,
+  read: ResolvedRead | undefined,
+) {
   extra[kNameRead] = read;
 }
 

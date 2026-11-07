@@ -51,7 +51,7 @@ import { addAlwaysReason, addReasonExprs } from "../../util/reasons";
 import {
   getAllTagReferenceNodes,
   isTagVarUsed,
-  mergeDynamicTagReferences,
+  mergeReferences,
   trackParamsReferences,
   trackVarReferences,
   getReferencedBindings,
@@ -195,7 +195,7 @@ export default {
       const inputNodes = getAllTagReferenceNodes(node);
       // The tag reads as one; what its name reads is not handed to it as an input.
       (node.name.extra ??= {}).tagName = node.extra ??= {};
-      const tagExtra = mergeDynamicTagReferences(tagSection, node, [
+      const tagExtra = mergeReferences(tagSection, node, [
         node.name,
         ...inputNodes,
       ]);

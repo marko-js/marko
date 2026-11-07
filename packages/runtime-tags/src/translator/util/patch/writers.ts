@@ -1392,7 +1392,7 @@ function readsAsValue(binding: Binding, expr: ReferencedExtra) {
 }
 
 function isValueRead(read: Read) {
-  return !(read.extra.exprRoot || read.extra).changeHandler;
+  return !read.extra.exprRoot.changeHandler;
 }
 
 // A holder of a function with filled references a patch binds: one this template writes or fills, or

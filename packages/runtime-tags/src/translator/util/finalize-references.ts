@@ -48,6 +48,7 @@ import {
 import {
   type AssignedBindingExtra,
   type Read,
+  type ReadExtra,
   type ReferencedExtra,
   type ResolvedRead,
   createResolvedGetterRead,
@@ -57,7 +58,6 @@ import {
   getCanonicalExpr,
   getFunctionReadsByExpression,
   getGlobalReads,
-  getNameReadByExpression,
   getReadsByExpression,
   getReferencedBindings,
   getReferenceFinalizers,
@@ -171,7 +171,6 @@ function excludeAssignedChangeHandlers() {
 
 function resolveReads(intersectionsBySection: Map<Section, Intersection[]>) {
   const fnReadsByExpression = getFunctionReadsByExpression();
-  const nameReadByExpression = getNameReadByExpression();
   for (const [expr, reads] of getReadsByExpression()) {
     if (isReferencedExtra(expr)) {
       const exprBindings = resolveReferencedBindings(
@@ -186,8 +185,6 @@ function resolveReads(intersectionsBySection: Map<Section, Intersection[]>) {
         exprBindings.constantBindings,
         exprBindings.globalBindings,
       );
-      const nameRead = nameReadByExpression.get(expr)?.extra.read;
-      if (nameRead) setNameRead(expr, nameRead);
       if (exprBindings.globalBindings) {
         (expr.section.globalReadExprs ||= []).push(expr);
       }
@@ -976,6 +973,8 @@ function resolveReferencedBindings(
         }
       }
     }
+    // The first step of main's tag-name analysis TODO.
+    if (isPatch() && isNameRead(extra)) setNameRead(expr, extra.read);
     allBindings = bindingUtil.add(allBindings, binding);
   });
 
@@ -1009,6 +1008,11 @@ function resolveReferencedBindings(
     closureSection,
     hoistedSection,
   };
+}
+
+// A dynamic tag's name that is one read as written.
+function isNameRead(extra: ReadExtra) {
+  return extra === extra.exprRoot && !!extra.tagName;
 }
 
 // The section's one array equal to `intersection`, recorded when new, so equal
