@@ -637,7 +637,7 @@ function inShellChain(section: Section) {
 
 // The `$global` signals whose scopes a document subscribes, which a changed member
 // re-runs: `true` if resumed code renders the read, else the sources the client may own.
-const [getGlobalSignals] = createAnalysisMemo((section: Section) => {
+export const [getGlobalSignals] = createAnalysisMemo((section: Section) => {
   const signals = new Map<string, true | Sources | undefined>();
   // Kept content's scopes never subscribe: no client code reads for them.
   if (inKeptContent(section)) return signals;

@@ -63,6 +63,7 @@ import {
 } from "./sections";
 import {
   getCreatedSetupId,
+  getGlobalSignals,
   getResumeRegistryId,
   getSignalRegistryId,
   getSignals,
@@ -135,9 +136,10 @@ export function linkPatchFills() {
       // module registers.
       (section.boundaryContent && !createsFromShell(section)) ||
       // No patch pairs a shown `@catch`, which client state lower in the tree shows: its
-      // reads of what a patch fills or writes update through what its module registers.
+      // reads of what a patch fills or writes, `$global`'s too, update through its module.
       (inCreatedCatch(section) &&
-        some(section.referencedClosures, isPatchUpdated))
+        (some(section.referencedClosures, isPatchUpdated) ||
+          getGlobalSignals(section).size > 0))
     ) {
       programExtra.registersBoundaryContent = true;
     }
