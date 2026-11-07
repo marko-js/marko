@@ -21,7 +21,7 @@ import { createPassMemo } from "./cyclic-memo";
 import { generateUidIdentifier } from "./generate-uid";
 import { getTagName, getTagNameHint } from "./get-tag-name";
 import { isOptimize, isPage, isPatch } from "./marko-config";
-import { getModuleRead, isResolvedModuleRead } from "./module-read";
+import { getModuleRead } from "./module-read";
 import {
   analyzeAttributeTags,
   type AttrTagLookup,
@@ -193,8 +193,13 @@ const [getCallSiteSourcesByParam] = createAnalysisState(
 const kParamsTree = Symbol("known tag params tree");
 const kKnownExprs = Symbol("known tag exprs");
 const kPassesInput = Symbol("known tag passes input");
+const kModuleReadInput = Symbol("known tag module read input");
 
 declare module "@marko/compiler/dist/types" {
+  export interface NodeExtra {
+    /** An argument or attribute value the call passes that is a module read. */
+    [kModuleReadInput]?: true;
+  }
   export interface MarkoTagExtra {
     /** The dom binding a known tag holds its child's scope in. */
     childScopeBinding?: Binding;
@@ -1029,11 +1034,15 @@ const derivesConstantParam = createPassMemo((param: ParamBinding): boolean => {
         return false;
       }
       derives = true;
-      return !exprs || !every(exprs, isResolvedModuleRead);
+      return !exprs || !every(exprs, isModuleReadInput);
     }) &&
     derives
   );
 }, false);
+
+function isModuleReadInput(extra: t.NodeExtra | undefined) {
+  return !!extra?.[kModuleReadInput];
+}
 
 // The instance's sources mask (2 bits per group at `1 + 2i`; keyed when
 // dynamic), or undefined when the all-server default is equivalent.
@@ -1196,7 +1205,9 @@ function analyzeParams(
         known[i] = { value: argValueExtra };
         rootAttrExprs.add(argValueExtra);
         addSetupExpr(section, arg);
-        getModuleRead(tag, arg as t.Expression);
+        if (getModuleRead(tag, arg as t.Expression)) {
+          argValueExtra[kModuleReadInput] = true;
+        }
         setDerivedFrom(argTree.binding, argValueExtra, paramsExpr);
       } else {
         dropNodes(arg);
@@ -1454,7 +1465,7 @@ function analyzeAttrs(
         known[attr.name] = { value: attrExtra };
         rootAttrExprs.add(attrExtra);
         addSetupExpr(section, attr.value);
-        getModuleRead(tag, attr.value);
+        if (getModuleRead(tag, attr.value)) attrExtra[kModuleReadInput] = true;
         setDerivedFrom(attrTree.binding, attrExtra, rootExprs);
         if (isInvokeOnlyInput(attrTree.binding)) attrExtra.invokeOnly = true;
       }
@@ -2199,7 +2210,7 @@ function getDerivedConstants(
     for (const [binding, name, value] of inputs) {
       if (
         binding &&
-        isResolvedModuleRead(value.extra) &&
+        isModuleReadInput(value.extra) &&
         derivesConstantInput(binding) &&
         findSlot(binding)?.reason
       ) {
