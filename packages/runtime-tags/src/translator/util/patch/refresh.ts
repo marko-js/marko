@@ -331,16 +331,8 @@ function isPatchFilled(binding: Binding) {
     getCanonicalBinding(binding) === binding &&
     hasParamOrGlobalSource(binding.sources) &&
     !binding.sources!.state &&
-    (binding.type === BindingType.param ||
-      binding.type === BindingType.derived) &&
-    !derivesLocals(binding.section)
+    (binding.type === BindingType.param || binding.type === BindingType.derived)
   );
-}
-
-// Content plain renders on the client derives its locals from its closures
-// there: a patch fills none of them.
-function derivesLocals(section: Section) {
-  return isContentScope(section) && !!getRendererReason(section);
 }
 
 // Inside content a flush reaches only by data.
@@ -374,18 +366,6 @@ function reachedByData(section: Section) {
     !section.renderedBy &&
     !getSourcesForDerived(section.derives)?.state &&
     !getRendererReason(section)
-  );
-}
-
-// Content with no params or local closures.
-function isContentScope(section: Section) {
-  return (
-    !section.params &&
-    !section.localClosures &&
-    !!section.parent &&
-    !section.branch &&
-    !section.boundaryContent &&
-    !isKnownChild(section)
   );
 }
 
