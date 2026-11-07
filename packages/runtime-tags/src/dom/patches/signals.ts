@@ -6,7 +6,6 @@ import {
   ClosureSignalProp,
   type EncodedAccessor,
   PatchKey,
-  RenderDataProp,
   type Scope,
 } from "../../common/types";
 import { queueRender } from "../queue";
@@ -23,22 +22,7 @@ import {
   type Signal,
   type SignalFn,
 } from "../signals";
-import { readChanged, patchFills, renderData, setupPatchers } from "./apply";
-
-// A declaration's fill run that leaves out a signal its scope renders marks its
-// change for that render, as a write marks it.
-export function _fill_mark(
-  valueAccessor: EncodedAccessor,
-  fillFn: SignalFn | 0,
-) {
-  return (scope: Scope) => {
-    scope[
-      AccessorPrefix.PatchChanged +
-        (MARKO_DEBUG ? valueAccessor : decodeAccessor(valueAccessor as number))
-    ] = renderData[RenderDataProp.PatchStop];
-    if (fillFn) fillFn(scope);
-  };
-}
+import { readChanged, patchFills, setupPatchers } from "./apply";
 
 // A declaration doubles as its fill; `fillFn` (renders minus what the
 // flush does itself) is the fill's run when it differs, `0` when nothing is left.
