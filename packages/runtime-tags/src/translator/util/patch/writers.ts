@@ -277,45 +277,36 @@ export function writePatchResumeStatements(
   }
   // Beside fills: a created scope's seeds and filled intersection members' slot writes.
   forEach(section.bindings, (binding) => {
-    const { write } = getPatchWrite(binding);
     const seeds = seedsCreatedScope(binding) && getWriteReason(binding);
-    // A value written in place wherever its group is the server's needs no more; in place
-    // where an intersection the patch writes runs on the client (another member is the client's).
-    const filledMembers = write
-      ? undefined
-      : getPatchFill(binding).filledMembers;
-    const othersClient =
+    // In place where an intersection the patch writes runs on the client (another
+    // member is the client's).
+    const { filledMembers } = getPatchFill(binding);
+    const inPlace =
       filledMembers &&
       orCallerGroupGuards(section, undefined, "_client_guard", filledMembers);
-    const inPlace =
-      othersClient && andGuard(getFilledGuard(section, binding), othersClient);
     // A seed writes a group-gated value only where the group is the client's, as
     // plain's document would; client state always, since no later patch writes it.
-    const entry =
-      seeds || inPlace
-        ? seeds
-          ? andGuard(
-              getStateInitialValueGuard(section, binding),
-              andGuard(
-                isDynamicWriteGuard(section, seeds) && !isStateSourced(binding)
-                  ? getCallerGroupGuard(section, "_unfilled_if", seeds)
-                  : undefined,
-                buildPatchWrite(
-                  section,
-                  binding,
-                  undefined,
-                  inPlace
-                    ? t.unaryExpression("!", inPlace)
-                    : t.numericLiteral(1),
-                ),
-              ),
-            )
-          : t.logicalExpression(
-              "&&",
-              inPlace!,
-              buildPatchWrite(section, binding),
-            )
-        : undefined;
+    const entry = seeds
+      ? andGuard(
+          getStateInitialValueGuard(section, binding),
+          andGuard(
+            isDynamicWriteGuard(section, seeds) && !isStateSourced(binding)
+              ? getCallerGroupGuard(section, "_unfilled_if", seeds)
+              : undefined,
+            buildPatchWrite(
+              section,
+              binding,
+              getPatchKey().Write,
+              t.numericLiteral(1),
+            ),
+          ),
+        )
+      : inPlace &&
+        t.logicalExpression(
+          "&&",
+          inPlace,
+          buildPatchWrite(section, binding, getPatchKey().Write),
+        );
     if (entry) body.push(t.expressionStatement(entry));
   });
 
@@ -338,7 +329,7 @@ export function writePatchResumeStatements(
             client && t.unaryExpression("!", client),
             andGuard(
               callRuntime("_unfilled_if"),
-              buildPatchWrite(closure.section, closure),
+              buildPatchWrite(closure.section, closure, getPatchKey().Write),
             ),
           ),
         ),
@@ -539,8 +530,7 @@ function buildLetChangeWrites(
   { expression, reason }: { expression: t.Expression; reason?: Reason },
 ) {
   // A param-sourced handler binds only where its group updates from the server.
-  const bindGroupArgs =
-    !reason || reason.always ? [] : getRootGroupArgs(section, reason);
+  const bindGroupArgs = getRootGroupArgs(section, reason);
   const changeKey = reason
     ? t.stringLiteral(
         getPatchKey().Write +
@@ -800,21 +790,19 @@ export function buildPatchFill(
   );
 }
 
+// A value's patch write under `key` (`MarkedWrite` where entries read its change mark);
+// a `setup` applies it only to a scope the flush creates.
 export function buildPatchWrite(
   section: Section,
   binding: Binding,
-  value: t.Expression = getDeclaredBindingExpression(binding),
+  key: string,
   setup?: t.Expression,
 ) {
-  const marked = getPatchWrite(binding).write;
   return callRuntime(
     "_patch_write",
     getScopeIdIdentifier(section),
-    t.stringLiteral(
-      (marked ? getPatchKey().MarkedWrite : getPatchKey().Write) +
-        getScopeAccessor(binding),
-    ),
-    value,
+    t.stringLiteral(key + getScopeAccessor(binding)),
+    getDeclaredBindingExpression(binding),
     setup,
   );
 }
@@ -1138,11 +1126,7 @@ export function getUnfilledGuard(
 
 // Where content is live on the client: `true` where something renders it
 // unconditionally (a `@catch` or `@placeholder` may, at any time).
-function getClientBranchGuard(
-  section: Section,
-  contents: Opt<Section>,
-  scopeSection = section,
-) {
+function getClientBranchGuard(section: Section, contents: Opt<Section>) {
   let guard: t.Expression | undefined;
   const clientGroups = new Set<ParamReasonGroup>();
   forEach(contents, (content) => {
@@ -1150,7 +1134,7 @@ function getClientBranchGuard(
     const check = callRuntime(
       "_client_branch_if",
       t.stringLiteral(id),
-      getScopeIdIdentifier(scopeSection),
+      getScopeIdIdentifier(section),
     );
     guard = orGuard(guard, check);
     // Live too where what picks it updates from the client, which a patch never
@@ -1175,17 +1159,16 @@ function getUnfilledPatchWrite(section: Section, binding: Binding) {
   const write = buildPatchWrite(
     section,
     binding,
-    undefined,
+    getPatchKey().MarkedWrite,
     getConstantSetup(section, binding),
   );
   // A built object's source rides its readers' entries, where a patch fills them.
   if (getPatchFill(binding).objectSource) return write;
-  const canonical = getCanonicalBinding(binding);
-  const contents = getClosureContents(canonical);
+  const contents = getClosureContents(binding);
   if (contents === true) return write;
   // Content taking the value as a closure needs it where the client keeps an instance.
   const guard = contents && getClientBranchGuard(section, contents);
-  const reason = mapBodyParams(section, findSlot(canonical)?.reason);
+  const reason = mapBodyParams(section, findSlot(binding)?.reason);
   if (!isDynamicWriteGuard(section, reason)) {
     return reason ? write : guard && andGuard(guard, write);
   }
@@ -1463,7 +1446,6 @@ export function runsClosureByWrite(closure: Binding, section: Section) {
   return (
     !isDynamicClosure(section, closure) &&
     getPatchWrite(root).write &&
-    !getPatchFill(root).fill &&
     !!getCreatedSetup(section).get(closure)?.setup
   );
 }
