@@ -11,6 +11,7 @@ import {
   BindingType,
   forEachGlobalMember,
   getCanonicalBinding,
+  isGlobalBinding,
   getDebugName,
   getDebugNames,
   getDebugNamesAsIdentifier,
@@ -131,6 +132,7 @@ import {
   getScopeIdIdentifier,
   getSection,
   getSectionForBody,
+  isCallerParamAt,
   isDirectClosure,
   isKnownChild,
   isDynamicClosure,
@@ -1786,8 +1788,10 @@ export function writeHTMLResumeStatements(
           closure,
           SlotKind.ClosureScopes,
         )?.reason;
+        // The client changes state; a `$global` member's reason says where a patch
+        // leaves the reads to the client.
         const readSources =
-          isPatch() && !closure.sources.state
+          isPatch() && !closure.sources.state && !isGlobalBinding(closure)
             ? getClosureReadSources(closure, section)
             : undefined;
         const groupArgs = readSources && getRootGroupArgs(section, readSources);
@@ -1862,7 +1866,14 @@ export function writeHTMLResumeStatements(
                 getResumeRegistryId(section, member, "subscribe"),
               ),
               scopeIdIdentifier,
-              reason && (reason.always || reason.state)
+              // A body's param the template's groups cannot guard by: its readers
+              // guard their own subscriptions.
+              reason &&
+                (reason.always ||
+                  reason.state ||
+                  !every(reason.param, (param) =>
+                    isCallerParamAt(param, section),
+                  ))
                 ? t.numericLiteral(1)
                 : reason?.param &&
                     getCallerGroupGuard(section, "_client_guard", reason),

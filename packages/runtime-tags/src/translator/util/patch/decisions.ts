@@ -9,6 +9,7 @@ import {
   bindingUtil,
   compareReferences,
   getCanonicalBinding,
+  isGlobalBinding,
   isStateSourced,
 } from "../bindings";
 import { createPassMemo } from "../cyclic-memo";
@@ -192,8 +193,13 @@ export function getUnwrittenBodies(
 ): "all" | "paired" | undefined {
   // `_peek_scope_id` links each known child's patch.
   if (section.knownTags) return;
-  // An effect reading nothing rides its shell (`isEffectOutsideShell`).
-  let unwritten: "all" | "paired" = hasOwnSetupWork(section, isEffect)
+  // An effect reading nothing rides its shell (`isEffectOutsideShell`), and a
+  // `$global` member's subscription the client's own render of the body.
+  let unwritten: "all" | "paired" = hasOwnSetupWork(
+    section,
+    isEffect,
+    isGlobalBinding,
+  )
     ? "paired"
     : "all";
   if (section.slots.some((slot) => isSlotWritten(slot, groups))) return;

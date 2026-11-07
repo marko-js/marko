@@ -1,7 +1,8 @@
 import type { types as t } from "@marko/compiler";
 
+import type { Binding } from "./bindings";
 import { callsOtherTemplateSetup, type KnownTagExtra } from "./known-tag";
-import { forEach } from "./optional";
+import { every, forEach } from "./optional";
 import { getCanonicalExpr, getReferencedBindings } from "./references";
 import { forEachSection, type Section } from "./sections";
 import { createAnalysisSectionState } from "./state";
@@ -54,13 +55,16 @@ function setCallSectionSetup(call: KnownTagExtra) {
 export function hasOwnSetupWork(
   section: Section,
   skip?: (extra: t.NodeExtra) => boolean | undefined,
+  skipClosure?: (closure: Binding) => boolean,
 ) {
   const info = getSetupInfo(section);
   // Setup subscribes the section to the closures it reads, and sets up another
   // template it renders.
   if (
     info.always ||
-    section.referencedClosures ||
+    (skipClosure
+      ? !every(section.referencedClosures, skipClosure)
+      : section.referencedClosures) ||
     callsOtherTemplateSetup(section)
   ) {
     return true;
