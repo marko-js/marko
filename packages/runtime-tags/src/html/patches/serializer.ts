@@ -153,27 +153,25 @@ function writePatchProp(
 ) {
   const escapedKey = toObjectKey(key);
   let member = (node as Record<string, unknown>)[key];
-  // A created instance takes the holes from its owner's client branch entry instead,
-  // where this flush writes that entry.
-  const kept = (member as { [kKeptInstance]?: string } | undefined)?.[
-    kKeptInstance
-  ];
-  const clientBranchId = kept
-    ? state.boundary.state.clientBranchRendered?.get(kept)
-    : undefined;
-  if (
-    clientBranchId !== undefined &&
-    patchTreeNodes.has(state.boundary.state.patchTree![clientBranchId]!)
-  ) {
-    return sep;
-  }
-  const readsScope = state.boundary.state.entryReads?.get(member as string[]);
-  if (readsScope !== undefined) {
-    member = resolveEntryReads(
-      state.boundary.state,
-      readsScope,
-      member as string[],
-    );
+  // Kept instances and entry reads are objects: a primitive skips both lookups.
+  if (member && typeof member === "object") {
+    const render = state.boundary.state;
+    // A created instance takes the holes from its owner's client branch entry instead,
+    // where this flush writes that entry.
+    const kept = (member as { [kKeptInstance]?: string })[kKeptInstance];
+    const clientBranchId = kept
+      ? render.clientBranchRendered?.get(kept)
+      : undefined;
+    if (
+      clientBranchId !== undefined &&
+      patchTreeNodes.has(render.patchTree![clientBranchId]!)
+    ) {
+      return sep;
+    }
+    const readsScope = render.entryReads?.get(member as string[]);
+    if (readsScope !== undefined) {
+      member = resolveEntryReads(render, readsScope, member as string[]);
+    }
   }
   if (member === undefined) {
     state.wroteUndefined = true;
