@@ -577,6 +577,7 @@ function computeBindingReaders(
     );
   }
   for (const expr of binding.reads.keys()) {
+    readers = withLandingRead(readers, expr, binding);
     if (expr.isEffect) {
       if (
         !(
@@ -587,10 +588,8 @@ function computeBindingReaders(
       ) {
         readers = mergeReaders(readers, ALWAYS_READ);
       }
-      readers = withLandingRead(readers, expr, binding);
       continue;
     }
-    readers = withLandingRead(readers, expr, binding);
     readers = mergeReaders(
       readers,
       readersOfDerives(expr, binding, properties),

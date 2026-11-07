@@ -28,6 +28,7 @@ import {
   getPatchWrite,
   keepsHoles,
   readsKeptInputOnClient,
+  runsEffectOnPatch,
   writesSeed,
   runsSubscribersByWrite,
 } from "./patch/refresh";
@@ -66,7 +67,6 @@ import {
   getResumeRegistryId,
   getSignalRegistryId,
   getSignals,
-  isEffectOutsideShell,
 } from "./signals";
 import { bindingReaders } from "./solve-reasons";
 import { type Sources } from "./sources";
@@ -357,7 +357,7 @@ export function inCreatedCatch(section: Section) {
 
 // Content the page's bundle registers wherever this template renders: a page
 // with it links the module, which registers it.
-export function clientRegisters(section: Section) {
+function clientRegisters(section: Section) {
   return (
     !!getProgram().node.extra.includesClientWork &&
     registersOnClient(section) &&
@@ -530,7 +530,7 @@ export function isQueuedOnCreate(
 
 // The section's mount effects' register ids, in resume order, for its shell
 // to ship.
-export function getSectionEffectRegistryIds(section: Section) {
+function getSectionEffectRegistryIds(section: Section) {
   const ids: string[] = [];
   const allSignals = Array.from(getSignals(section).values());
   for (let i = allSignals.length; i--;) {
@@ -540,6 +540,18 @@ export function getSectionEffectRegistryIds(section: Section) {
     }
   }
   return ids;
+}
+
+// Left out of a created scope's shell: an effect its render queues, or one its
+// entry re-runs, which nothing a created `@catch` holds has (no patch pairs it).
+function isEffectOutsideShell(
+  section: Section,
+  referencedBindings: ReferencedBindings,
+) {
+  return (
+    isQueuedOnCreate(section, referencedBindings) ||
+    (!inCreatedCatch(section) && some(referencedBindings, runsEffectOnPatch))
+  );
 }
 
 // The shell `id[|section] setupIds;walks;template` (`,` for `;walks;` when the walk
