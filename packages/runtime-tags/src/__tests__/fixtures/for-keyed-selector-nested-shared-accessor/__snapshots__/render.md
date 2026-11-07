@@ -1,0 +1,269 @@
+# Render
+```html
+<ul>
+  <li
+    class="sel"
+  >
+    <button
+      class="select"
+    >
+      a
+    </button>
+    <button
+      class="hover"
+    >
+      h
+    </button>
+  </li>
+  <li
+    class="hov"
+  >
+    <button
+      class="select"
+    >
+      b
+    </button>
+    <button
+      class="hover"
+    >
+      h
+    </button>
+  </li>
+  <li>
+    <button
+      class="select"
+    >
+      c
+    </button>
+    <button
+      class="hover"
+    >
+      h
+    </button>
+  </li>
+</ul>
+```
+
+# Update
+```js
+(document.querySelectorAll(`button.${name}`)[n]).click();
+```
+```html
+<ul>
+  <li
+    class=""
+  >
+    <button
+      class="select"
+    >
+      a
+    </button>
+    <button
+      class="hover"
+    >
+      h
+    </button>
+  </li>
+  <li
+    class="hov"
+  >
+    <button
+      class="select"
+    >
+      b
+    </button>
+    <button
+      class="hover"
+    >
+      h
+    </button>
+  </li>
+  <li
+    class="sel"
+  >
+    <button
+      class="select"
+    >
+      c
+    </button>
+    <button
+      class="hover"
+    >
+      h
+    </button>
+  </li>
+</ul>
+```
+## Change
+```
+UPDATE: ul > li:nth-of-type(1)[class] "sel" => ""
+UPDATE: .sel[class] null => "sel"
+```
+
+# Update
+```js
+(document.querySelectorAll(`button.${name}`)[n]).click();
+```
+```html
+<ul>
+  <li
+    class="hov"
+  >
+    <button
+      class="select"
+    >
+      a
+    </button>
+    <button
+      class="hover"
+    >
+      h
+    </button>
+  </li>
+  <li
+    class=""
+  >
+    <button
+      class="select"
+    >
+      b
+    </button>
+    <button
+      class="hover"
+    >
+      h
+    </button>
+  </li>
+  <li
+    class="sel"
+  >
+    <button
+      class="select"
+    >
+      c
+    </button>
+    <button
+      class="hover"
+    >
+      h
+    </button>
+  </li>
+</ul>
+```
+## Change
+```
+UPDATE: .hov[class] "" => "hov"
+UPDATE: ul > li:nth-of-type(2)[class] "hov" => ""
+```
+
+# Update
+```js
+(document.querySelectorAll(`button.${name}`)[n]).click();
+```
+```html
+<ul>
+  <li
+    class="hov"
+  >
+    <button
+      class="select"
+    >
+      a
+    </button>
+    <button
+      class="hover"
+    >
+      h
+    </button>
+  </li>
+  <li
+    class="sel"
+  >
+    <button
+      class="select"
+    >
+      b
+    </button>
+    <button
+      class="hover"
+    >
+      h
+    </button>
+  </li>
+  <li
+    class=""
+  >
+    <button
+      class="select"
+    >
+      c
+    </button>
+    <button
+      class="hover"
+    >
+      h
+    </button>
+  </li>
+</ul>
+```
+## Change
+```
+UPDATE: .sel[class] "" => "sel"
+UPDATE: ul > li:nth-of-type(3)[class] "sel" => ""
+```
+
+# Update
+```js
+(document.querySelectorAll(`button.${name}`)[n]).click();
+```
+```html
+<ul>
+  <li
+    class=""
+  >
+    <button
+      class="select"
+    >
+      a
+    </button>
+    <button
+      class="hover"
+    >
+      h
+    </button>
+  </li>
+  <li
+    class="sel"
+  >
+    <button
+      class="select"
+    >
+      b
+    </button>
+    <button
+      class="hover"
+    >
+      h
+    </button>
+  </li>
+  <li
+    class="hov"
+  >
+    <button
+      class="select"
+    >
+      c
+    </button>
+    <button
+      class="hover"
+    >
+      h
+    </button>
+  </li>
+</ul>
+```
+## Change
+```
+UPDATE: ul > li:nth-of-type(1)[class] "hov" => ""
+UPDATE: .hov[class] "" => "hov"
+```

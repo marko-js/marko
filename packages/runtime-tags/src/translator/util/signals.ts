@@ -739,11 +739,19 @@ export function buildSignalFn(signal: Signal): t.Expression {
     pushScopeCall(signal.render, intersection.identifier);
   });
 
-  if (isValue && binding.sources) {
+  if (isBinding && binding.sources) {
     let dynamicClosureArgs: t.Expression[] | undefined;
     let dynamicClosureSignalIdentifier: t.Identifier | undefined;
     forEach(binding.closureSections, (closureSection) => {
-      if (isDynamicClosure(closureSection, binding)) {
+      if (!isDynamicClosure(closureSection, binding)) {
+        // An optional branch's direct closure comes from its parent's signal.
+        if (closureSection.parent === section) {
+          pushScopeCall(
+            signal.render,
+            getSignal(closureSection, binding).identifier,
+          );
+        }
+      } else if (isValue) {
         if (!dynamicClosureArgs) {
           dynamicClosureArgs = [];
           dynamicClosureSignalIdentifier = generateUidIdentifier(
@@ -753,11 +761,6 @@ export function buildSignalFn(signal: Signal): t.Expression {
         }
 
         dynamicClosureArgs.push(getSignal(closureSection, binding).identifier);
-      } else {
-        pushScopeCall(
-          signal.render,
-          getSignal(closureSection, binding).identifier,
-        );
       }
     });
 

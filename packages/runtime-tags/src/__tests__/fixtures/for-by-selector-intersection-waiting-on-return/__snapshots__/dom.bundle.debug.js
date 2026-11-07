@@ -9,7 +9,7 @@ var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", "", ""
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!><button>go</button>`)("");
 const $walks = /*@__PURE__*/ ((_w0) => `0${_w0}&b%b b`)("");
-const $for_content__selected = /*@__PURE__*/ _for_selector("#text/2", "selected", ($scope) => _attr_class_item($scope["#span/0"], "on", $scope["#LoopKey"] === $scope._.selected), 9, "#scopeOffset/1");
+const $for_content__selected = /*@__PURE__*/ _for_selector("#text/2", "selected", ($scope) => _attr_class_item($scope["#span/0"], "on", $scope["#LoopKey"] === $scope._.selected));
 const $for_content__setup = ($scope) => {
 	$for_content__selected._($scope);
 	_text($scope["#text/1"], $scope["#LoopKey"]);

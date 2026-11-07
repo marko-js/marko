@@ -167,6 +167,6 @@ UPDATE: .danger[class] null => "danger"
 ```
 ## Change
 ```
-UPDATE: table > tbody > tr:nth-of-type(3)[class] "danger" => ""
 UPDATE: .danger[class] "" => "danger"
+UPDATE: table > tbody > tr:nth-of-type(3)[class] "danger" => ""
 ```

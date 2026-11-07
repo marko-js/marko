@@ -41,6 +41,7 @@ export interface Scope {
   [AccessorProp.Subscriptions]: Set<Scope>[] | undefined;
   [x: `___${string}`]: never;
   [x: string | number]: any;
+  [x: symbol]: unknown;
 }
 
 type ResumeSymbol = ResumeSymbol.Value;
@@ -57,7 +58,6 @@ export {
   AccessorProp,
   ClosureScopesProp,
   ClosureSignalProp,
-  KeyedScopesProp,
   PendingRenderProp,
   RendererProp,
 } from "./accessor.debug";

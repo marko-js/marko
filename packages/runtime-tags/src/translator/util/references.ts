@@ -1065,8 +1065,8 @@ export const [getReferenceFinalizers] = createAnalysisState<(() => void)[]>(
   () => [],
 );
 
-// Runs once reads, assignments, pruning and sources settle, before reasons
-// propagate: a finalizer may add them, but reads none, nor facts on them.
+// Runs once reads, assignments, pruning and sources settle, before sections
+// link their closures and reasons propagate: a finalizer may add either.
 export function onFinalizeReferences(finalize: () => void) {
   getReferenceFinalizers().push(finalize);
 }

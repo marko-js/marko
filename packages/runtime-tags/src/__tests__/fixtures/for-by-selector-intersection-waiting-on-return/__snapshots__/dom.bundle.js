@@ -2,7 +2,7 @@
 const $input_v = /*@__PURE__*/ _const(2, ($scope) => _return($scope, $scope.c));
 
 // template.marko
-const $for_content__selected = /*@__PURE__*/ _for_selector(2, 5, ($scope) => _attr_class_item($scope.a, "on", $scope.M === $scope._.f), 9, 1);
+const $for_content__selected = /*@__PURE__*/ _for_selector(2, 5, ($scope) => _attr_class_item($scope.a, "on", $scope.M === $scope._.f));
 const $for_content__setup = ($scope) => {
 	$for_content__selected._($scope);
 	_text($scope.b, $scope.M);

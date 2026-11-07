@@ -1,4 +1,4 @@
-// size: 27106 (min) 10108 (brotli)
+// size: 27082 (min) 10128 (brotli)
 // packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -642,25 +642,24 @@ function _for_closure(ownerLoopNodeAccessor, fn, id, scopeIdAccessor) {
       queueRender(ownerScope, render, id, 0, ownerScope[scopeIdAccessor]);
   return ((ownerSignal._ = (scope) => queueRender(scope, fn, -1)), ownerSignal);
 }
-function _for_selector(ownerLoopNodeAccessor, ownerValueAccessor, fn, id, scopeIdAccessor) {
+function _for_selector(ownerLoopNodeAccessor, ownerValueAccessor, fn, getValueScope) {
   ((ownerLoopNodeAccessor = decodeAccessor(ownerLoopNodeAccessor)),
-    (ownerValueAccessor = decodeAccessor(ownerValueAccessor)),
-    (scopeIdAccessor = scopeIdAccessor ? decodeAccessor(scopeIdAccessor) : "L"));
+    (ownerValueAccessor = decodeAccessor(ownerValueAccessor)));
   let scopeAccessor = "A" + ownerLoopNodeAccessor,
     mapAccessor = "O" + ownerLoopNodeAccessor,
-    prevKeyProp = `_${ownerValueAccessor}`,
-    render = (ownerScope) => {
-      let nextKey = ownerScope[ownerValueAccessor],
-        map = keyedScopes(ownerScope, scopeAccessor, mapAccessor);
-      if (map && prevKeyProp in map) {
-        let prevScope = map.get(map[prevKeyProp]),
-          nextScope = map.get(nextKey);
-        prevScope !== nextScope && (runLiveBranch(prevScope, fn), runLiveBranch(nextScope, fn));
-      } else for (let scope of toArray(ownerScope[scopeAccessor])) runLiveBranch(scope, fn);
-      map && (map[prevKeyProp] = nextKey);
-    },
+    prevKey = Symbol(),
     ownerSignal = (ownerScope) => {
-      ownerScope.H < runId && queueRender(ownerScope, render, id, 0, ownerScope[scopeIdAccessor]);
+      if (ownerScope.H < runId) {
+        let nextKey = (getValueScope ? getValueScope(ownerScope) : ownerScope)[ownerValueAccessor],
+          map = keyedScopes(ownerScope, scopeAccessor, mapAccessor);
+        if (map && prevKey in ownerScope) {
+          let prevScope = map.get(ownerScope[prevKey]),
+            nextScope = map.get(nextKey);
+          prevScope !== nextScope &&
+            (queueLiveBranch(prevScope, fn), queueLiveBranch(nextScope, fn));
+        } else for (let scope of toArray(ownerScope[scopeAccessor])) queueLiveBranch(scope, fn);
+        ownerScope[prevKey] = nextKey;
+      }
     };
   return ((ownerSignal._ = (scope) => queueRender(scope, fn, -1)), ownerSignal);
 }
@@ -674,8 +673,8 @@ function keyedScopes(ownerScope, scopeAccessor, mapAccessor) {
     }
   return map;
 }
-function runLiveBranch(scope, fn) {
-  scope?.H < runId && fn(scope);
+function queueLiveBranch(scope, fn) {
+  scope?.H < runId && queueRender(scope, fn, -1);
 }
 function _if_closure(ownerConditionalNodeAccessor, branch, fn) {
   ownerConditionalNodeAccessor = decodeAccessor(ownerConditionalNodeAccessor);

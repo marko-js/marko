@@ -14,6 +14,7 @@ import * as ContentType from "./constants/content-type";
 import type * as Step from "./constants/step";
 import * as StructureKind from "./constants/structure-kind";
 import { createAnalysisMemo } from "./cyclic-memo";
+import { isForSelectorClosure } from "./for-selector";
 import { generateUid, generateUidIdentifier } from "./generate-uid";
 import { isCoreTag, isCoreTagName } from "./is-core-tag";
 import type { KnownTagExtra } from "./known-tag";
@@ -737,8 +738,14 @@ export function isInParentSection(binding: Binding, section: Section) {
   return section.parent?.id === binding.section.id;
 }
 
+// A closure an optional branch's owner passes to its scopes: the owner's own,
+// or one its loop's selector reads in the owner's scope.
 export function isDirectClosure(section: Section, closure: Binding) {
-  return isOptionalBranch(section) && isInParentSection(closure, section);
+  return (
+    isOptionalBranch(section) &&
+    (isInParentSection(closure, section) ||
+      isForSelectorClosure(section, closure))
+  );
 }
 
 export function isDynamicClosure(section: Section, closure: Binding) {
@@ -762,12 +769,16 @@ export function getDynamicClosureIndex(
 }
 
 // The `<for>` bodies of its own section reading the closure before
-// `closureSection`, each rendering its rows in the slot after the last's.
+// `closureSection`, but for selectors, each rendering its rows in the next slot.
 export function getForClosureIndex(closure: Binding, closureSection?: Section) {
   let index = 0;
   find(closure.closureSections, (section) => {
     if (section === closureSection) return true;
-    if (section.branch?.kind === "for" && section.parent === closure.section) {
+    if (
+      section.branch?.kind === "for" &&
+      section.parent === closure.section &&
+      !isForSelectorClosure(section, closure)
+    ) {
       index++;
     }
     return false;
@@ -776,14 +787,9 @@ export function getForClosureIndex(closure: Binding, closureSection?: Section) {
 }
 
 export function getDirectClosures(section: Section) {
-  if (isOptionalBranch(section)) {
-    return bindingUtil.range(
-      section.referencedClosures,
-      bindingToSection,
-      sectionUtil.compare,
-      section.parent!,
-    );
-  }
+  return bindingUtil.filter(section.referencedClosures, (closure) =>
+    isDirectClosure(section, closure),
+  );
 }
 
 export function isSameOrAncestorSection(section: Section, other: Section) {
