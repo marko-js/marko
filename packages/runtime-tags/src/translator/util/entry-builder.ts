@@ -105,7 +105,7 @@ const builder = {
       }
 
       // Only a patch page collects lazy loads (a flush can reveal a lazy
-      // child the client never rendered). A plain page's output is unchanged.
+      // child the client never rendered).
       const { lazyLoads } = state;
       if (lazyLoads.size) {
         body.push(

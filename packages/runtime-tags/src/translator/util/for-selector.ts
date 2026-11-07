@@ -19,8 +19,8 @@ export function isForSelectorClosure(
   const canonical = getCanonicalBinding(closure);
   return (
     !!bodySection.selector?.has(canonical) &&
-    // A fill refreshes through the plain scan join; the keyed selector dispatch
-    // has no fill channel. Asked at translate, once the solve decides fills.
+    // A fill refreshes each row's intersection of the value and its key; the keyed
+    // selector dispatch has no fill channel. Asked at translate, once fills settle.
     !(inStatefulStructure(bodySection) && getPatchFill(canonical).fill)
   );
 }

@@ -553,9 +553,8 @@ export function buildShell(
   section: Section,
   setupIds?: t.Expression,
 ) {
-  // A debug build marks content with a `<return>` for the client's check of
-  // a dynamic tag variable over it; kept content names its section after `|`,
-  // whose scopes its owner holds (main's `ClosureScopes` key).
+  // `^` marks content with a `<return>` for a debug build's tag variable check;
+  // kept content names its section after `|`, whose scopes its owner holds.
   const parts: (string | t.Expression)[] = [
     (section.returnValueExpr && !isOptimize() ? "^" : "") +
       id +

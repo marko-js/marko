@@ -465,7 +465,7 @@ export function knownTagTranslateHTML(
                   getScopeIdIdentifier(section),
                   getScopeAccessorLiteral(childScopeBinding),
                   t.numericLiteral(nextIdSite()),
-                  // Only a patch render of a section patches write reads these two.
+                  // Only a patch render of a section the patch fills reads these two.
                   (patchFillsSection(section) &&
                     varId &&
                     guardVar(t.numericLiteral(1))) ||
@@ -967,8 +967,7 @@ function buildChildGroupMask(
 export interface ParamGroupSources {
   /** The child params this group covers. */
   params: ParamReasonGroup;
-  /** The call site's sources for this group (fn-body reads included;
-   * survives any force on the key). */
+  /** The call site's sources for this group, function-body reads included. */
   sources: Sources | undefined;
   /** The call site's expressions for this group. */
   exprs: Opt<t.NodeExtra>;
@@ -1010,7 +1009,7 @@ export function getParamGroupSources(
   }
 }
 
-// The binding is such a param.
+// A param every call derives from a module read (`derivesConstantParam`).
 export function derivesConstantInput(binding: Binding) {
   const params = getSourcesForReferencedBindings(binding)?.param;
   return (

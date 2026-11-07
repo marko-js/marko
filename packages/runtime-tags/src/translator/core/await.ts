@@ -257,7 +257,7 @@ function getPendingArgs(bodySection: Section): Array<t.Expression | Falsy> {
           )
       : unfilled,
     // An always-pairing body's Pending entry drops its creation id outside
-    // divergent contexts.
+    // structure a flush may create.
     alwaysPairs(bodySection) ? t.numericLiteral(1) : absentArg(0),
     // Pending, its body may yet keep content made before it.
     awaitMayRenderClientBranch(bodySection) && t.numericLiteral(1),

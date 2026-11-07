@@ -185,7 +185,7 @@ export default {
         ];
         if (isPatch()) {
           // A patch creates from the body's shell; an always-pairing body
-          // drops it outside divergent contexts.
+          // drops it outside structure a flush may create.
           tryArgs.push(
             t.stringLiteral(getResumeRegistryId(bodySection, "content")),
             alwaysPairs(bodySection) ? t.numericLiteral(1) : absentArg(0),
