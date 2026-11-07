@@ -14,10 +14,10 @@ var label_default = _template("b", (input) => {
 const $setup = _shell_setup([[], []], ["a>", $setup$1]);
 _shells({ a: `a${_shell_marker($setup)};${((_w0) => `/${_w0}&`)(" b")};${$template}` });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_title = _server_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const title = input.title + "!";
-	_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xe", title, !$sg__input_title);
+	_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xe", title, !_server_guard($scope0_reason, 0));
 	_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	label_default({ get: _bind_resume(function() {

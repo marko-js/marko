@@ -5,7 +5,7 @@ _shells({
 	b: "b !b6; b%;<button class=toggle>toggle</button><!><!>"
 });
 var card_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_p__OR__input_content = _write_guard($scope0_reason, 0), $wi__input_content = _write_if($scope0_reason, 2), $cg__input_content = _client_guard($scope0_reason, 2), $sg__input_p = _server_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_p__OR__input_content = _write_guard($scope0_reason, 0), $wi__input_content = _write_if($scope0_reason, 2), $cg__input_content = _client_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_content__closures = /* @__PURE__ */ new Set();
 	const $open__closures = /* @__PURE__ */ new Set();
@@ -13,7 +13,7 @@ var card_default = _template("b", (input) => {
 	_html(`<button class=toggle>toggle</button>${_el_mark($scope0_id, "a")}`);
 	_await($scope0_id, "b", input.p, (x) => {
 		const $scope1_id = _scope_id();
-		_filled_guard($scope0_reason, 1) && $cg__input_content && _patch_write($scope1_id, "xc", x, !$sg__input_p);
+		_filled_guard($scope0_reason, 1) && $cg__input_content && _patch_write($scope1_id, "xc", x, !_server_guard($scope0_reason, 1));
 		const c = x && input.content;
 		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "xe", c, !_server_guard($scope0_reason, 0));
 		_if(() => {

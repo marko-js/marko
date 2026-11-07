@@ -11,11 +11,11 @@ var template_default = _template("a", (input) => {
 	const low = _bind_resume(() => "l" + input.title, "a1", $scope0_id);
 	const Show = { content: _content("a3", ({ get }) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason(), $sg__get = _server_guard($scope1_reason, 0), $fg__get = _filled_guard($scope1_reason, 0);
+		const $scope1_reason = _scope_reason(), $fg__get = _filled_guard($scope1_reason, 0);
 		const g = get ?? _resume(() => "none", "a2");
 		_html(`<output></output>${_el_mark($scope1_id, "a")}`);
 		_script($scope1_id, "a4", 1, $fg__get, ["e", _filled_guard($scope0_reason, 0) && ">e"]);
-		_scope($scope1_id, { e: g }) || $fg__get && _patch_write($scope1_id, "xe", g, !$sg__get);
+		_scope($scope1_id, { e: g }) || $fg__get && _patch_write($scope1_id, "xe", g, !_server_guard($scope1_reason, 0));
 	}, $scope0_id) };
 	_set_scope_reason(6);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);

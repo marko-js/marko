@@ -4,7 +4,7 @@ const $walks = "D lD l b";
 const $setup = [[], ["__tests__/template.marko_0"]];
 _shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;D lD l ;<p> </p><p> </p><button>+</button>" });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_item_price = _server_guard($scope0_reason, 0), $fg__input_item_price = _filled_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $fg__input_item_price = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let qty = 1;
 	const price = input.item.price;
@@ -18,5 +18,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, "__tests__/template.marko", 0, {
 		qty: "1:6",
 		price: "2:8"
-	}) || $fg__input_item_price && _patch_write($scope0_id, "PatchMarkedWrite:price", price, !$sg__input_item_price);
+	}) || $fg__input_item_price && _patch_write($scope0_id, "PatchMarkedWrite:price", price, !_server_guard($scope0_reason, 0));
 }, 1);

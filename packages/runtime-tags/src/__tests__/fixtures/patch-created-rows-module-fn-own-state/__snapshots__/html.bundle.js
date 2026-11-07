@@ -21,7 +21,7 @@ _shells({
 	b1: "b1;D ;<em> </em>"
 });
 var rowsx_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_items = _server_guard($scope0_reason, 0), $fg__input_open = _filled_guard($scope0_reason, 1), $cg__input_items = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $fg__input_open = _filled_guard($scope0_reason, 1), $cg__input_items = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let suffix = "s";
 	const Panel = { content: _content("b2", ({ isOpen, fmt, label }) => {
@@ -45,7 +45,7 @@ var rowsx_default = _template("b", (input) => {
 	}, $scope0_id, 0) };
 	_for_of(input.items, (x) => {
 		const $scope1_id = _scope_id();
-		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "xc", x, !$sg__input_items);
+		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "xc", x, !_server_guard($scope0_reason, 0));
 		_set_scope_reason(25080 | (_updates_from($scope0_reason, 1) << 1 | _updates_from($scope0_reason, 1) << 9));
 		const $childScope = _peek_scope_id($scope1_id, "a", 0);
 		Panel.content({

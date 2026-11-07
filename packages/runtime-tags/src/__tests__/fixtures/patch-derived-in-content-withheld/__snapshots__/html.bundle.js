@@ -39,7 +39,7 @@ _shells({
 	a: `a${_shell_marker($setup)};${((_w0) => `/${_w0}& b`)("D%l")};${((_w0) => `${_w0}<button>+</button>`)($template)}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_label = _write_if($scope0_reason, 0), $cg__input_label = _client_guard($scope0_reason, 0), $sg__input_label = _server_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wi__input_label = _write_if($scope0_reason, 0), $cg__input_label = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	const $open__closures = /* @__PURE__ */ new Set();
@@ -51,7 +51,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		const $wrapper_content__label__closures = /* @__PURE__ */ new Set();
 		const label = input.label;
-		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "xb", label, !$sg__input_label);
+		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "xb", label, !_server_guard($scope0_reason, 0));
 		_set_scope_reason(10);
 		const $childScope = _peek_scope_id($scope1_id, "a", 0);
 		toggle_default({

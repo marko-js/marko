@@ -21,11 +21,11 @@ _shells({
 	"__tests__/template.marko": "__tests__/template.marko;b%;<!><!><!>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_v = _server_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_await($scope0_id, "#text/0", input.v, (value) => {
 		const $scope1_id = _scope_id();
-		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "PatchMarkedWrite:value", value, !$sg__input_v);
+		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "PatchMarkedWrite:value", value, !_server_guard($scope0_reason, 0));
 		_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
 		const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 		label_default({ get: _bind_resume(function() {

@@ -64,7 +64,7 @@ _shells({
 	"__tests__/page.marko_1*shell": `__tests__/page.marko_1*shell${_shell_marker([[], []], ["#childScope/0>", $setup$2])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$2)};${$template$2}`
 });
 var page_default = _template("__tests__/page.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_items = _write_if($scope0_reason, 0), $sg__input_items = _server_guard($scope0_reason, 0), $cg__input_items = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wi__input_items = _write_if($scope0_reason, 0), $cg__input_items = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $bonus__closures = new Set();
 	const $global$1 = $global();
@@ -77,7 +77,7 @@ var page_default = _template("__tests__/page.marko", (input) => {
 	_for_of(input.items, (item) => {
 		const $scope1_id = _scope_id();
 		const $for_content__item_n__closures = new Set();
-		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "PatchMarkedWrite:item_n", item?.n, !$sg__input_items);
+		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "PatchMarkedWrite:item_n", item?.n, !_server_guard($scope0_reason, 0));
 		_set_scope_reason(0);
 		const $childScope3 = _peek_scope_id($scope1_id, "#childScope/0", 2);
 		panel_default({ aside: attrTag({ content: _content("__tests__/page.marko_2*content", () => {

@@ -35,7 +35,7 @@ _shells({
 	a3: `a3${_shell_marker([[], []], ["a>", $setup])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks)};${$template}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_p = _server_guard($scope0_reason, 0), $cg__input_items = _client_guard($scope0_reason, 1), $fg__input_p = _filled_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_items = _client_guard($scope0_reason, 1), $fg__input_p = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $count__closures = /* @__PURE__ */ new Set();
 	const $p_name__closures = /* @__PURE__ */ new Set();
@@ -73,5 +73,5 @@ var template_default = _template("a", (input) => {
 		i: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && p?.name,
 		j: $count__closures,
 		k: _write_if($scope0_reason, 0) && (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && $p_name__closures
-	}) || $fg__input_p && $cg__input_items && _patch_write($scope0_id, "xi", p?.name, !$sg__input_p);
+	}) || $fg__input_p && $cg__input_items && _patch_write($scope0_id, "xi", p?.name, !_server_guard($scope0_reason, 0));
 }, 1);

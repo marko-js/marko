@@ -10,7 +10,7 @@ _shells({
 	"__tests__/template.marko": "__tests__/template.marko;D%;<main><!></main>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_promise = _write_if($scope0_reason, 0), $sg__input_promise = _server_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wi__input_promise = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_promise__closures = new Set();
 	_html("<main>");
@@ -19,7 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_await($scope1_id, "#text/0", input.promise, (value) => {
 			const $scope3_id = _scope_id();
-			_filled_guard($scope0_reason, 0) && _patch_write($scope3_id, "PatchMarkedWrite:value", value, !$sg__input_promise);
+			_filled_guard($scope0_reason, 0) && _patch_write($scope3_id, "PatchMarkedWrite:value", value, !_server_guard($scope0_reason, 0));
 			_html(`<span id=v>${_text_mark($scope3_id, "#text/0", value, 1, $scope0_reason, 0)}</span>`);
 			_script($scope3_id, "__tests__/template.marko_3_value#2", 1, _filled_guard($scope0_reason, 0), "value");
 			_scope($scope3_id, { value }, "__tests__/template.marko", "4:6", { value: "4:12" });

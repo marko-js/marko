@@ -20,7 +20,7 @@ const $walks = /*@__PURE__*/ ((_w0) => `0${_w0}&b b b`)("");
 const $setup = _shell_setup([[], []], ["#childScope/0>", $setup$1]);
 _shells({ "__tests__/template.marko": `__tests__/template.marko${_shell_marker($setup)};${((_w0) => `0${_w0}&b b b`)("")};${((_w0) => `<output id=out></output>${_w0}<button class=call>call</button><pre></pre>`)("")}` });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_title = _client_guard($scope0_reason, 0), $sg__input_title = _server_guard($scope0_reason, 0), $fg__input_title = _filled_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_title = _client_guard($scope0_reason, 0), $fg__input_title = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_html("<output id=out></output>");
 	_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
@@ -33,5 +33,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope($scope0_id, {
 		fn,
 		"#childScope/0": _existing_scope($childScope)
-	}, "__tests__/template.marko", 0, { fn: "2:7" }) || $fg__input_title && _patch_write($scope0_id, "PatchMarkedWrite:fn", fn, !$sg__input_title);
+	}, "__tests__/template.marko", 0, { fn: "2:7" }) || $fg__input_title && _patch_write($scope0_id, "PatchMarkedWrite:fn", fn, !_server_guard($scope0_reason, 0));
 }, 1);

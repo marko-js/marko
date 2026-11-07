@@ -8,7 +8,7 @@ _shells({
 	a3: "a3;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_other = _server_guard($scope0_reason, 3), $fg__input_label = _filled_guard($scope0_reason, 2), $fg__input_other = _filled_guard($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $fg__input_label = _filled_guard($scope0_reason, 2), $fg__input_other = _filled_guard($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	let open = false;
@@ -81,5 +81,5 @@ var template_default = _template("a", (input) => {
 		l: Tag,
 		n: _write_if($scope0_reason, 2) && $input_label__closures,
 		a: _existing_scope($childScope2)
-	}) || ($fg__input_label && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "xg", input.label, !_server_guard($scope0_reason, 2)), $fg__input_other && _patch_write($scope0_id, "xl", Tag, !$sg__input_other));
+	}) || ($fg__input_label && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "xg", input.label, !_server_guard($scope0_reason, 2)), $fg__input_other && _patch_write($scope0_id, "xl", Tag, !_server_guard($scope0_reason, 3)));
 }, 1);

@@ -10,7 +10,7 @@ _shells({
 	"__tests__/tags/wrap.marko_2*shell": "__tests__/tags/wrap.marko_2*shell;D ;<p> </p>"
 });
 var wrap_default = _template("__tests__/tags/wrap.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 2), $cg__input_label = _client_guard($scope0_reason, 1), $cg__input_show = _client_guard($scope0_reason, 2), $sg__input_label = _server_guard($scope0_reason, 1), $wi__input_label = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 2), $cg__input_label = _client_guard($scope0_reason, 1), $cg__input_show = _client_guard($scope0_reason, 2), $wi__input_label = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = new Set();
 	const $input_show__closures = new Set();
@@ -34,7 +34,7 @@ var wrap_default = _template("__tests__/tags/wrap.marko", (input) => {
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_show__closures, _subscribe($wi__input_label && $input_label__closures, _scope($scope1_id, {
 			x,
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id)
-		}, "__tests__/tags/wrap.marko", "1:2", { x: "2:10" }), $cg__input_label && "__tests__/tags/wrap.marko_1_input_label#0:3/subscribe", $wg__input_show), $cg__input_show && "__tests__/tags/wrap.marko_1_input_show#0:4/subscribe", $wg__input_show) || _filled_guard($scope0_reason, 1) && _patch_write($scope1_id, "PatchMarkedWrite:x", x, !$sg__input_label);
+		}, "__tests__/tags/wrap.marko", "1:2", { x: "2:10" }), $cg__input_label && "__tests__/tags/wrap.marko_1_input_label#0:3/subscribe", $wg__input_show), $cg__input_show && "__tests__/tags/wrap.marko_1_input_show#0:4/subscribe", $wg__input_show) || _filled_guard($scope0_reason, 1) && _patch_write($scope1_id, "PatchMarkedWrite:x", x, !_server_guard($scope0_reason, 1));
 		$wg__input_show || _resume_branch($scope1_id);
 	}, $scope0_id, 0) };
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);

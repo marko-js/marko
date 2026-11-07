@@ -12,7 +12,7 @@ _shells({
 	"__tests__/template.marko_1*shell": `__tests__/template.marko_1*shell >#childScope/0>;${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Info_content__walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Info_content__template)}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_items = _server_guard($scope0_reason, 1), $fg__input_value = _filled_guard($scope0_reason, 2), $cg__input_items = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $fg__input_value = _filled_guard($scope0_reason, 2), $cg__input_items = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $count__closures = new Set();
 	let count = 0;

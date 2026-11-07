@@ -10,7 +10,7 @@ _shells({
 	"__tests__/template.marko_3*shell": "__tests__/template.marko_3*shell __tests__/template.marko_3_n#2:6/setup;D%b%;<em><!><!></em>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_other = _server_guard($scope0_reason, 3), $fg__input_label = _filled_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 1), $fg__input_other = _filled_guard($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $fg__input_label = _filled_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 1), $fg__input_other = _filled_guard($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	const $open__closures = new Set();
 	let open = false;
@@ -78,5 +78,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		open: "1:6",
 		Panel: "2:9",
 		Tag: "10:8"
-	}) || ($fg__input_label && $cg__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 2)), $fg__input_other && _patch_write($scope0_id, "PatchMarkedWrite:Tag", Tag, !$sg__input_other));
+	}) || ($fg__input_label && $cg__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 2)), $fg__input_other && _patch_write($scope0_id, "PatchMarkedWrite:Tag", Tag, !_server_guard($scope0_reason, 3)));
 }, 1);

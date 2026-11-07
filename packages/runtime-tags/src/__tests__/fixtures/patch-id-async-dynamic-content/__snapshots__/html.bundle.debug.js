@@ -40,7 +40,7 @@ _shells({
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell;b%;<!><!><!>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_items__OR__input_loaded = _write_guard($scope0_reason, 0), $cg__input_loaded = _client_guard($scope0_reason, 2), $wi__input_items__OR__input_loaded = _write_if($scope0_reason, 0), $sg__input_items = _server_guard($scope0_reason, 1), $cg__input_items = _client_guard($scope0_reason, 1), $fg__input_loaded = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_items__OR__input_loaded = _write_guard($scope0_reason, 0), $cg__input_loaded = _client_guard($scope0_reason, 2), $wi__input_items__OR__input_loaded = _write_if($scope0_reason, 0), $cg__input_items = _client_guard($scope0_reason, 1), $fg__input_loaded = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_loaded__closures = new Set();
 	_for_of(input.items, (item) => {
@@ -51,7 +51,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope2_id = _scope_id();
 			_await($scope2_id, "#text/0", item.promise, (ready) => {
 				const $scope3_id = _scope_id();
-				_filled_guard($scope0_reason, 1) && $cg__input_loaded && _patch_write($scope3_id, "PatchMarkedWrite:ready", ready, !$sg__input_items);
+				_filled_guard($scope0_reason, 1) && $cg__input_loaded && _patch_write($scope3_id, "PatchMarkedWrite:ready", ready, !_server_guard($scope0_reason, 1));
 				_dynamic_tag($scope3_id, "#text/0", input.loaded ? loaded_default : "section", { name: ready }, 17, _content_resume("__tests__/template.marko_4*content", () => {
 					const $scope4_id = _scope_id();
 					const $scope4_reason = _scope_reason();

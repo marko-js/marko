@@ -22,13 +22,13 @@ _shells({
 	"__tests__/tags/feed-list.marko_1*shell": `__tests__/tags/feed-list.marko_1*shell${_shell_marker([["__tests__/tags/feed-list.marko_1_hovered#0:5/setup"], ["__tests__/tags/feed-list.marko_1"]], ["#childScope/1>", $setup$2])};${/*@__PURE__*/ ((_w0) => ` D/${_w0}&l`)($walks$2)};${/*@__PURE__*/ ((_w0) => `<li>${_w0}</li>`)($template$2)}`
 });
 var feed_list_default = _template("__tests__/tags/feed-list.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_items = _server_guard($scope0_reason, 1), $fg__input_data = _filled_guard($scope0_reason, 2), $cg__input_items = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $fg__input_data = _filled_guard($scope0_reason, 2), $cg__input_items = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	let hovered = undefined;
 	_html("<ul>");
 	_for_of(input.items, (item) => {
 		const $scope1_id = _scope_id();
-		_filled_guard($scope0_reason, 1) && _patch_write($scope1_id, "PatchMarkedWrite:item_id", item?.id, !$sg__input_items);
+		_filled_guard($scope0_reason, 1) && _patch_write($scope1_id, "PatchMarkedWrite:item_id", item?.id, !_server_guard($scope0_reason, 1));
 		_html(`<li${hovered === item.id ? " class=hovered" : ""}>`);
 		_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 1) << 3);
 		const $childScope = _peek_scope_id($scope1_id, "#childScope/1", 0);

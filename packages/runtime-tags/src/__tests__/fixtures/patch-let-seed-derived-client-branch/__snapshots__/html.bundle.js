@@ -1,7 +1,7 @@
 // template.marko
 _shells({ a: "a !a2; b%;<button>toggle</button><!><!>" });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_v = _server_guard($scope0_reason, 1), $fg__input_w = _filled_guard($scope0_reason, 2), $fg__input_v = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $fg__input_w = _filled_guard($scope0_reason, 2), $fg__input_v = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const d = input.v + "!";
 	let on = true;
@@ -23,5 +23,5 @@ var template_default = _template("a", (input) => {
 		f: input.w,
 		g: d,
 		h: on
-	}) || ($fg__input_w && _patch_write($scope0_id, "xf", input.w, !_server_guard($scope0_reason, 2)), $fg__input_v && _patch_write($scope0_id, "xg", d, !$sg__input_v));
+	}) || ($fg__input_w && _patch_write($scope0_id, "xf", input.w, !_server_guard($scope0_reason, 2)), $fg__input_v && _patch_write($scope0_id, "xg", d, !_server_guard($scope0_reason, 1)));
 }, 1);

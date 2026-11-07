@@ -7,11 +7,11 @@ _shells({
 	"__tests__/tags/list.marko_1*shell": "__tests__/tags/list.marko_1*shell;D ;<i> </i>"
 });
 var list_default = _template("__tests__/tags/list.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_item = _server_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_for_of(input.item, (it) => {
 		const $scope1_id = _scope_id();
-		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "PatchMarkedWrite:it_label", it?.label, !$sg__input_item);
+		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "PatchMarkedWrite:it_label", it?.label, !_server_guard($scope0_reason, 0));
 		_html(`<i>${_text_mark($scope1_id, "#text/0", it.label, 1, $scope0_reason, 0)}</i>`);
 		_script($scope1_id, "__tests__/tags/list.marko_1_it_label#3", 1, _filled_guard($scope0_reason, 0), "it_label");
 		_scope($scope1_id, { it_label: it?.label }, "__tests__/tags/list.marko", "1:2", { it_label: ["it.label", "1:6"] });

@@ -3,12 +3,12 @@ const $template = "<output></output>";
 const $setup$1 = [[], []];
 _shells({ b: "b; ;<output></output>" });
 var label_view_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_fmt = _server_guard($scope0_reason, 0), $fg__input_fmt = _filled_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $fg__input_fmt = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const fmt = input.fmt ?? _resume(() => "none", "b0");
 	_html(`<output></output>${_el_mark($scope0_id, "a")}`);
 	_script($scope0_id, "b1", 1, $fg__input_fmt, "e");
-	_scope($scope0_id, { e: fmt }) || $fg__input_fmt && _patch_write($scope0_id, "xe", fmt, !$sg__input_fmt);
+	_scope($scope0_id, { e: fmt }) || $fg__input_fmt && _patch_write($scope0_id, "xe", fmt, !_server_guard($scope0_reason, 0));
 });
 
 // template.marko

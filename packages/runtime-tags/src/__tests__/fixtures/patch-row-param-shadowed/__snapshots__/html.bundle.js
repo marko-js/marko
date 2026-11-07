@@ -16,12 +16,12 @@ _shells({
 	a1: `a1${_shell_marker([[], []], ["a>", $setup])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)(" b")};${$template}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_items = _server_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_for_of(input.items, (item) => {
 		const $scope1_id = _scope_id();
 		const { v } = item;
-		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "xd", v, !$sg__input_items);
+		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "xd", v, !_server_guard($scope0_reason, 0));
 		_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
 		const $childScope = _peek_scope_id($scope1_id, "a", 0);
 		label_default({ get: _bind_resume(function() {

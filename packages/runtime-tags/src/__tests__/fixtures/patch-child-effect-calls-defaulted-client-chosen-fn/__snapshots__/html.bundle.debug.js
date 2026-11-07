@@ -4,12 +4,12 @@ const $walks$1 = " b";
 const $setup$1 = [[], []];
 _shells({ "__tests__/tags/label-view.marko": "__tests__/tags/label-view.marko; ;<output></output>" });
 var label_view_default = _template("__tests__/tags/label-view.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_fmt = _server_guard($scope0_reason, 0), $fg__input_fmt = _filled_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $fg__input_fmt = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const fmt = input.fmt ?? _resume(() => "none", "__tests__/tags/label-view.marko_0/fmt");
 	_html(`<output></output>${_el_mark($scope0_id, "#output/0")}`);
 	_script($scope0_id, "__tests__/tags/label-view.marko_0_fmt#4", 1, $fg__input_fmt, "fmt");
-	_scope($scope0_id, { fmt }, "__tests__/tags/label-view.marko", 0, { fmt: "1:8" }) || $fg__input_fmt && _patch_write($scope0_id, "PatchMarkedWrite:fmt", fmt, !$sg__input_fmt);
+	_scope($scope0_id, { fmt }, "__tests__/tags/label-view.marko", 0, { fmt: "1:8" }) || $fg__input_fmt && _patch_write($scope0_id, "PatchMarkedWrite:fmt", fmt, !_server_guard($scope0_reason, 0));
 });
 
 // template.marko

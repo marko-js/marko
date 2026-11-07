@@ -4,7 +4,7 @@ const $walks$1 = " b";
 const $setup$1 = [[], []];
 _shells({ "__tests__/tags/label-view.marko": "__tests__/tags/label-view.marko; ;<output></output>" });
 var label_view_default = _template("__tests__/tags/label-view.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_flag__OR__input_a__OR__input_b = _server_guard($scope0_reason, 3), $fg__input_flag__OR__input_a__OR__input_b = _filled_guard($scope0_reason, 3), $fg__input_flag = _filled_guard($scope0_reason, 4), $fg__input_a = _filled_guard($scope0_reason, 5), $fg__input_b = _filled_guard($scope0_reason, 6);
+	const $scope0_reason = _scope_reason(), $fg__input_flag__OR__input_a__OR__input_b = _filled_guard($scope0_reason, 3), $fg__input_flag = _filled_guard($scope0_reason, 4), $fg__input_a = _filled_guard($scope0_reason, 5), $fg__input_b = _filled_guard($scope0_reason, 6);
 	const $scope0_id = _scope_id();
 	const get = input.flag ? input.a : input.b;
 	const h = get ?? _resume(() => "none", "__tests__/tags/label-view.marko_0/h");
@@ -25,7 +25,7 @@ var label_view_default = _template("__tests__/tags/label-view.marko", (input) =>
 		input_a: ["input.a"],
 		input_b: ["input.b"],
 		h: "2:8"
-	}) || ($fg__input_flag && _client_guard($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_flag", input.flag, !_server_guard($scope0_reason, 4)), $fg__input_a && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_a", input.a, !_server_guard($scope0_reason, 5)), $fg__input_b && _client_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_b", input.b, !_server_guard($scope0_reason, 6)), $fg__input_flag__OR__input_a__OR__input_b && _patch_write($scope0_id, "PatchMarkedWrite:h", h, !$sg__input_flag__OR__input_a__OR__input_b));
+	}) || ($fg__input_flag && _client_guard($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_flag", input.flag, !_server_guard($scope0_reason, 4)), $fg__input_a && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_a", input.a, !_server_guard($scope0_reason, 5)), $fg__input_b && _client_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_b", input.b, !_server_guard($scope0_reason, 6)), $fg__input_flag__OR__input_a__OR__input_b && _patch_write($scope0_id, "PatchMarkedWrite:h", h, !_server_guard($scope0_reason, 3)));
 });
 
 // template.marko

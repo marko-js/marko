@@ -4,13 +4,13 @@ _shells({
 	a4: "a4 a7;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_items = _write_guard($scope0_reason, 0), $cg__input_items = _client_guard($scope0_reason, 0), $wi__input_items = _write_if($scope0_reason, 0), $sg__input_items = _server_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_items = _write_guard($scope0_reason, 0), $cg__input_items = _client_guard($scope0_reason, 0), $wi__input_items = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_for_of(input.items, (i) => {
 		const $scope1_id = _scope_id();
 		const $for_content__i__closures = /* @__PURE__ */ new Set();
-		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "xc", i, !$sg__input_items);
+		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "xc", i, !_server_guard($scope0_reason, 0));
 		_dynamic_tag($scope1_id, "a", i % 2 ? "p" : "div", { "data-n": count }, 0, _content("a0", () => {
 			const $scope2_id = _scope_id();
 			_scope_reason();

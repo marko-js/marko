@@ -45,7 +45,7 @@ _shells({
 	a5: "a5;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_on__OR__input_bs = _write_guard($scope0_reason, 2), $wi__input_as__OR__input_on__OR__input_bs__OR__input_note = _write_if($scope0_reason, 4), $sg__input_as = _server_guard($scope0_reason, 5), $fg__input_on = _filled_guard($scope0_reason, 6), $cg__input_as = _client_guard($scope0_reason, 5), $fg__input_bs = _filled_guard($scope0_reason, 7), $fg__input_note = _filled_guard($scope0_reason, 8);
+	const $scope0_reason = _scope_reason(), $wg__input_on__OR__input_bs = _write_guard($scope0_reason, 2), $wi__input_as__OR__input_on__OR__input_bs__OR__input_note = _write_if($scope0_reason, 4), $fg__input_on = _filled_guard($scope0_reason, 6), $cg__input_as = _client_guard($scope0_reason, 5), $fg__input_bs = _filled_guard($scope0_reason, 7), $fg__input_note = _filled_guard($scope0_reason, 8);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = /* @__PURE__ */ new Set();
 	let n = 0;
@@ -53,7 +53,7 @@ var template_default = _template("a", (input) => {
 	_for_of(input.as, (a) => {
 		const $scope1_id = _scope_id();
 		const $for_content__a__closures = /* @__PURE__ */ new Set();
-		_filled_guard($scope0_reason, 5) && _client_guard($scope0_reason, 2) && _patch_write($scope1_id, "xd", a, !$sg__input_as);
+		_filled_guard($scope0_reason, 5) && _client_guard($scope0_reason, 2) && _patch_write($scope1_id, "xd", a, !_server_guard($scope0_reason, 5));
 		let $item;
 		forOf(input.bs, (b) => {
 			$item = attrTags($item, { content: _content_resume("a2", () => {

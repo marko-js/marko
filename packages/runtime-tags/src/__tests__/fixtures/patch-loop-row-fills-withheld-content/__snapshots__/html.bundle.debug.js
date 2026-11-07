@@ -34,14 +34,14 @@ _shells({
 	"__tests__/template.marko_1*shell": `__tests__/template.marko_1*shell${_shell_marker([["__tests__/template.marko_1_open#0:5/setup"], []], ["#childScope/0>", $setup$1])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)(" b")};${$template$1}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_panels = _server_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let open = true;
 	_html(`<button>toggle</button>${_el_mark($scope0_id, "#button/0")}`);
 	_for_of(input.panels, (p) => {
 		const $scope1_id = _scope_id();
 		const $for_content__p_text__closures = new Set();
-		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "PatchMarkedWrite:p_text", p?.text, !$sg__input_panels);
+		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "PatchMarkedWrite:p_text", p?.text, !_server_guard($scope0_reason, 0));
 		_set_scope_reason(10);
 		const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 		panel_default({

@@ -21,13 +21,13 @@ _shells({
 	c3: `c3${_shell_marker([["c7"], ["c0"]], ["b>", $setup$2])};${/*@__PURE__*/ ((_w0) => ` D/${_w0}&l`)($walks)};${/*@__PURE__*/ ((_w0) => `<li>${_w0}</li>`)($template$1)}`
 });
 var feed_list_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_items = _server_guard($scope0_reason, 1), $fg__input_data = _filled_guard($scope0_reason, 2), $cg__input_items = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $fg__input_data = _filled_guard($scope0_reason, 2), $cg__input_items = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	let hovered = void 0;
 	_html("<ul>");
 	_for_of(input.items, (item) => {
 		const $scope1_id = _scope_id();
-		_filled_guard($scope0_reason, 1) && _patch_write($scope1_id, "xe", item?.id, !$sg__input_items);
+		_filled_guard($scope0_reason, 1) && _patch_write($scope1_id, "xe", item?.id, !_server_guard($scope0_reason, 1));
 		_html(`<li${hovered === item.id ? " class=hovered" : ""}>`);
 		_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 1) << 3);
 		const $childScope = _peek_scope_id($scope1_id, "b", 0);

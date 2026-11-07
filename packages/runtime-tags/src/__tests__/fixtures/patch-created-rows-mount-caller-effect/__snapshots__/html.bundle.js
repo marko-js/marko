@@ -6,11 +6,11 @@ _shells({
 	b1: "b1;D ;<i> </i>"
 });
 var list_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_item = _server_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_for_of(input.item, (it) => {
 		const $scope1_id = _scope_id();
-		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "xd", it?.label, !$sg__input_item);
+		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "xd", it?.label, !_server_guard($scope0_reason, 0));
 		_html(`<i>${_text_mark($scope1_id, "a", it.label, 1, $scope0_reason, 0)}</i>`);
 		_script($scope1_id, "b0", 1, _filled_guard($scope0_reason, 0), "d");
 		_scope($scope1_id, { d: it?.label });

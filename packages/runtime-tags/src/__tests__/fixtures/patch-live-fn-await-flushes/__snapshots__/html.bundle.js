@@ -7,11 +7,11 @@ _shells({
 	a: "a;/&b%;<pre id=log></pre><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_x = _client_guard($scope0_reason, 1), $wi__input_x__OR__input_promise = _write_if($scope0_reason, 0), $sg__input_x = _server_guard($scope0_reason, 1), $wi__input_x = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_x = _client_guard($scope0_reason, 1), $wi__input_x__OR__input_promise = _write_if($scope0_reason, 0), $wi__input_x = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $fn2__closures = /* @__PURE__ */ new Set();
 	const $input_promise__closures = /* @__PURE__ */ new Set();
-	_filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.x, !$sg__input_x);
+	_filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.x, !_server_guard($scope0_reason, 1));
 	const fn = _bind_resume(() => input.x, "a0", $scope0_id);
 	_html("<pre id=log></pre>");
 	const Use = { content: _content("a1", ({ fn, where }) => {

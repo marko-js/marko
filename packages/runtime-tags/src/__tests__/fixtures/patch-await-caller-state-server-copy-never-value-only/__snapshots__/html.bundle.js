@@ -7,11 +7,11 @@ _shells({
 	b: "b;b%;<!><!><!>"
 });
 var show_await_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_promise = _server_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_await($scope0_id, "a", input.promise, (x) => {
 		const $scope1_id = _scope_id();
-		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "xc", x, !$sg__input_promise);
+		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "xc", x, !_server_guard($scope0_reason, 0));
 		_html(`<p>${_text_mark($scope1_id, "a", x, 1, $scope0_reason, 0)}</p>`);
 		_script($scope1_id, "b0", 1, _filled_guard($scope0_reason, 0), "c");
 		_scope($scope1_id, { c: x });

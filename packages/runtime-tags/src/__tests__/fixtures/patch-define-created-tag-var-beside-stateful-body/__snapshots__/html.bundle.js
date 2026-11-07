@@ -9,7 +9,7 @@ _shells({
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 1);
 	_write_guard($scope0_reason, 1);
-	const $sg__input_label = _server_guard($scope0_reason, 1), $sg__input_other = _server_guard($scope0_reason, 2), $fg__input_label = _filled_guard($scope0_reason, 1), $fg__input_other = _filled_guard($scope0_reason, 2);
+	const $sg__input_label = _server_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 1), $fg__input_other = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	let open = false;
 	const Panel = { content: _content_resume("a3", ({ isOpen, label }) => {
@@ -72,5 +72,5 @@ var template_default = _template("a", (input) => {
 		i: open,
 		j: _write_if($scope0_reason, 2) && Panel,
 		l: Tag
-	}) || ($fg__input_label && _patch_write($scope0_id, "xg", input.label, !$sg__input_label), $fg__input_other && _patch_write($scope0_id, "xl", Tag, !$sg__input_other));
+	}) || ($fg__input_label && _patch_write($scope0_id, "xg", input.label, !$sg__input_label), $fg__input_other && _patch_write($scope0_id, "xl", Tag, !_server_guard($scope0_reason, 2)));
 }, 1);

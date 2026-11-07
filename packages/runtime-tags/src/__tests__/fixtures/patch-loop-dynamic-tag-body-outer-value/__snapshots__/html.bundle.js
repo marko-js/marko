@@ -30,7 +30,7 @@ _shells({
 	a5: "a5;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_wrap = _write_guard($scope0_reason, 3), $wi__input_rows__OR__input_wrap__OR__input_suffix = _write_if($scope0_reason, 1), $cg__input_wrap = _client_guard($scope0_reason, 3), $sg__input_rows = _server_guard($scope0_reason, 2), $cg__input_rows = _client_guard($scope0_reason, 2), $fg__input_wrap = _filled_guard($scope0_reason, 3), $fg__input_suffix = _filled_guard($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_wrap = _write_guard($scope0_reason, 3), $wi__input_rows__OR__input_wrap__OR__input_suffix = _write_if($scope0_reason, 1), $cg__input_wrap = _client_guard($scope0_reason, 3), $cg__input_rows = _client_guard($scope0_reason, 2), $fg__input_wrap = _filled_guard($scope0_reason, 3), $fg__input_suffix = _filled_guard($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	const $input_suffix__closures = /* @__PURE__ */ new Set();
 	_for_of(input.rows, (row) => {
@@ -54,7 +54,7 @@ var template_default = _template("a", (input) => {
 			_: _scope_with_id($scope0_id),
 			i: _write_if($scope0_reason, 2) && $for_content__row_label__closures
 		});
-		_filled_guard($scope0_reason, 2) && (_client_branch_if("a0", $scope1_id) || $cg__input_wrap) && _patch_write($scope1_id, "xd", row?.label, !$sg__input_rows);
+		_filled_guard($scope0_reason, 2) && (_client_branch_if("a0", $scope1_id) || $cg__input_wrap) && _patch_write($scope1_id, "xd", row?.label, !_server_guard($scope0_reason, 2));
 	}, "id", $scope0_id, "a", 1, 1, 1, 0, 0, "a5", $scope0_reason, 2);
 	$fg__input_wrap && $cg__input_rows && _patch_render($scope0_id, "a4", "e");
 	$fg__input_suffix && _patch_subscribers($scope0_id, "a6", "f");

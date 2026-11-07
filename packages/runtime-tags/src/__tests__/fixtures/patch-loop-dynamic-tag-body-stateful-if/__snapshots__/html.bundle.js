@@ -32,7 +32,7 @@ _shells({
 	a4: "a4;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_wrap = _write_guard($scope0_reason, 2), $wi__input_rows__OR__input_wrap = _write_if($scope0_reason, 0), $cg__input_wrap = _client_guard($scope0_reason, 2), $sg__input_rows = _server_guard($scope0_reason, 1), $cg__input_rows = _client_guard($scope0_reason, 1), $fg__input_wrap = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_wrap = _write_guard($scope0_reason, 2), $wi__input_rows__OR__input_wrap = _write_if($scope0_reason, 0), $cg__input_wrap = _client_guard($scope0_reason, 2), $cg__input_rows = _client_guard($scope0_reason, 1), $fg__input_wrap = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	_for_of(input.rows, (row) => {
 		const $scope1_id = _scope_id();
@@ -51,7 +51,7 @@ var template_default = _template("a", (input) => {
 			_: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id),
 			g: _write_if($scope0_reason, 1) && $for_content__row_label__closures
 		});
-		_filled_guard($scope0_reason, 1) && (_client_branch_if("a0", $scope1_id) || $cg__input_wrap) && _patch_write($scope1_id, "xd", row?.label, !$sg__input_rows);
+		_filled_guard($scope0_reason, 1) && (_client_branch_if("a0", $scope1_id) || $cg__input_wrap) && _patch_write($scope1_id, "xd", row?.label, !_server_guard($scope0_reason, 1));
 	}, "id", $scope0_id, "a", 1, 1, 1, 0, 0, "a4", $scope0_reason, 1);
 	$fg__input_wrap && $cg__input_rows && _patch_render($scope0_id, "a3", "e");
 	_scope($scope0_id, { e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.wrap }) || $fg__input_wrap && $cg__input_rows && _patch_write($scope0_id, "xe", input.wrap, !_server_guard($scope0_reason, 2));

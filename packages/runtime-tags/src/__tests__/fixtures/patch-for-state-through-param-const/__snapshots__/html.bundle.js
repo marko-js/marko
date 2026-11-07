@@ -1,7 +1,7 @@
 // template.marko
 _shells({ a: "a !a0; b%;<button>load</button><!><!>" });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_workspace = _server_guard($scope0_reason, 0), $fg__input_workspace = _filled_guard($scope0_reason, 0), $fg__input_active = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $fg__input_workspace = _filled_guard($scope0_reason, 0), $fg__input_active = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	let sessions = null;
 	const ws = input.workspace;
@@ -20,5 +20,5 @@ var template_default = _template("a", (input) => {
 		g: _write_if($scope0_reason, 0) && sessions,
 		h: ws,
 		j: _write_if($scope0_reason, 1) && shown
-	}) || ($fg__input_active && _patch_write($scope0_id, "xf", input.active, !_server_guard($scope0_reason, 1)), $fg__input_workspace && _patch_write($scope0_id, "xh", ws, !$sg__input_workspace));
+	}) || ($fg__input_active && _patch_write($scope0_id, "xf", input.active, !_server_guard($scope0_reason, 1)), $fg__input_workspace && _patch_write($scope0_id, "xh", ws, !_server_guard($scope0_reason, 0)));
 }, 1);

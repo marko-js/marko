@@ -4,7 +4,7 @@ const $walks = "E l%b l";
 const $setup = [[], ["__tests__/template.marko_0"]];
 _shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;E l%b ;<main><h2> </h2><!><button>toggle</button></main>" });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_yes = _write_guard($scope0_reason, 1), $wg__input_no = _write_guard($scope0_reason, 0), $sg__input_no = _server_guard($scope0_reason, 0), $fg__input_yes = _filled_guard($scope0_reason, 1), $fg__input_no = _filled_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_yes = _write_guard($scope0_reason, 1), $wg__input_no = _write_guard($scope0_reason, 0), $fg__input_yes = _filled_guard($scope0_reason, 1), $fg__input_no = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let on = false;
 	const label = input.no + "!";
@@ -36,5 +36,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_yes: ["input.yes"],
 		on: "1:6",
 		label: "2:8"
-	}) || ($fg__input_yes && _patch_write($scope0_id, "PatchMarkedWrite:input_yes", input.yes, !_server_guard($scope0_reason, 1)), $fg__input_no && _patch_write($scope0_id, "PatchMarkedWrite:label", label, !$sg__input_no));
+	}) || ($fg__input_yes && _patch_write($scope0_id, "PatchMarkedWrite:input_yes", input.yes, !_server_guard($scope0_reason, 1)), $fg__input_no && _patch_write($scope0_id, "PatchMarkedWrite:label", label, !_server_guard($scope0_reason, 0)));
 }, 1);

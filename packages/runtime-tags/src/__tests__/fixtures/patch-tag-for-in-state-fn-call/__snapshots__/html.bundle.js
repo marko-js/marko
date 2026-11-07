@@ -8,7 +8,7 @@ _shells({
 	b4: "b4 b3;D ;<span> </span>"
 });
 var card_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_sel = _write_guard($scope0_reason, 3), $cg__input_sel = _client_guard($scope0_reason, 3), $sg__input_obj = _server_guard($scope0_reason, 2), $cg__input_obj = _client_guard($scope0_reason, 2), $sg__input_prefix = _server_guard($scope0_reason, 1), $fg__input_prefix = _filled_guard($scope0_reason, 1), $fg__input_sel = _filled_guard($scope0_reason, 3), $wi__input_prefix = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_sel = _write_guard($scope0_reason, 3), $cg__input_sel = _client_guard($scope0_reason, 3), $cg__input_obj = _client_guard($scope0_reason, 2), $sg__input_prefix = _server_guard($scope0_reason, 1), $fg__input_prefix = _filled_guard($scope0_reason, 1), $fg__input_sel = _filled_guard($scope0_reason, 3), $wi__input_prefix = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $s__closures = /* @__PURE__ */ new Set();
 	const $fmt2__closures = /* @__PURE__ */ new Set();
@@ -17,7 +17,7 @@ var card_default = _template("b", (input) => {
 	const fmt = _bind_resume((v) => input.prefix + v, "b0", $scope0_id);
 	_for_in(input.obj, (k, v) => {
 		const $scope1_id = _scope_id();
-		_filled_guard($scope0_reason, 2) && _patch_write($scope1_id, "xe", v, !$sg__input_obj);
+		_filled_guard($scope0_reason, 2) && _patch_write($scope1_id, "xe", v, !_server_guard($scope0_reason, 2));
 		_if(() => {
 			if (k === input.sel) {
 				const $scope2_id = _scope_id();

@@ -5,12 +5,12 @@ _shells({
 	a1: "a1 !a0; ;<button class=r>x</button>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_rows = _server_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_for_of(input.rows, (row) => {
 		const $scope1_id = _scope_id();
-		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "xc", row, !$sg__input_rows);
+		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "xc", row, !_server_guard($scope0_reason, 0));
 		_for_of([1, 2], (c) => {
 			const $scope2_id = _scope_id();
 			_html(`<button class=r>x</button>${_el_mark($scope2_id, "a")}`);

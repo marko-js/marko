@@ -9,7 +9,7 @@ _shells({
 	a1: "a1;D ;<em> </em>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_other = _server_guard($scope0_reason, 4), $fg__input_other = _filled_guard($scope0_reason, 4), $fg__input_label = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $fg__input_other = _filled_guard($scope0_reason, 4), $fg__input_label = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	let open = false;
 	const Inner = { content: _content_resume("a3", ({ isOpen, label }) => {
@@ -79,5 +79,5 @@ var template_default = _template("a", (input) => {
 		k: _write_if($scope0_reason, 4) && Inner,
 		m: Tag,
 		a: _existing_scope($childScope2)
-	}) || ($fg__input_label && _patch_write($scope0_id, "xg", input.label, !_server_guard($scope0_reason, 2)), $fg__input_other && _patch_write($scope0_id, "xm", Tag, !$sg__input_other));
+	}) || ($fg__input_label && _patch_write($scope0_id, "xg", input.label, !_server_guard($scope0_reason, 2)), $fg__input_other && _patch_write($scope0_id, "xm", Tag, !_server_guard($scope0_reason, 4)));
 }, 1);

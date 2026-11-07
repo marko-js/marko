@@ -3,7 +3,7 @@ const $template = "<output></output>";
 const $setup$1 = [[], []];
 _shells({ b: "b; ;<output></output>" });
 var label_view_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_flag__OR__input_a__OR__input_b = _server_guard($scope0_reason, 3), $fg__input_flag__OR__input_a__OR__input_b = _filled_guard($scope0_reason, 3), $fg__input_flag = _filled_guard($scope0_reason, 4), $fg__input_a = _filled_guard($scope0_reason, 5), $fg__input_b = _filled_guard($scope0_reason, 6);
+	const $scope0_reason = _scope_reason(), $fg__input_flag__OR__input_a__OR__input_b = _filled_guard($scope0_reason, 3), $fg__input_flag = _filled_guard($scope0_reason, 4), $fg__input_a = _filled_guard($scope0_reason, 5), $fg__input_b = _filled_guard($scope0_reason, 6);
 	const $scope0_id = _scope_id();
 	const h = (input.flag ? input.a : input.b) ?? _resume(() => "none", "b0");
 	_html(`<output></output>${_el_mark($scope0_id, "a")}`);
@@ -18,7 +18,7 @@ var label_view_default = _template("b", (input) => {
 		e: _write_if($scope0_reason, 1) && input.a,
 		f: _write_if($scope0_reason, 0) && input.b,
 		i: h
-	}) || ($fg__input_flag && _client_guard($scope0_reason, 2) && _patch_write($scope0_id, "xd", input.flag, !_server_guard($scope0_reason, 4)), $fg__input_a && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.a, !_server_guard($scope0_reason, 5)), $fg__input_b && _client_guard($scope0_reason, 0) && _patch_write($scope0_id, "xf", input.b, !_server_guard($scope0_reason, 6)), $fg__input_flag__OR__input_a__OR__input_b && _patch_write($scope0_id, "xi", h, !$sg__input_flag__OR__input_a__OR__input_b));
+	}) || ($fg__input_flag && _client_guard($scope0_reason, 2) && _patch_write($scope0_id, "xd", input.flag, !_server_guard($scope0_reason, 4)), $fg__input_a && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.a, !_server_guard($scope0_reason, 5)), $fg__input_b && _client_guard($scope0_reason, 0) && _patch_write($scope0_id, "xf", input.b, !_server_guard($scope0_reason, 6)), $fg__input_flag__OR__input_a__OR__input_b && _patch_write($scope0_id, "xi", h, !_server_guard($scope0_reason, 3)));
 });
 
 // template.marko

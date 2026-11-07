@@ -20,14 +20,14 @@ _shells({
 	c3: `c3${_shell_marker([["c2"], []], ["a>", $setup$2])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1)};${$template$1}`
 });
 var shape_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_sel = _write_guard($scope0_reason, 2), $cg__input_sel = _client_guard($scope0_reason, 2), $sg__input_obj = _server_guard($scope0_reason, 1), $cg__input_obj = _client_guard($scope0_reason, 1), $fg__input_b = _filled_guard($scope0_reason, 3), $fg__input_sel = _filled_guard($scope0_reason, 2), $wi__input_b = _write_if($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $wg__input_sel = _write_guard($scope0_reason, 2), $cg__input_sel = _client_guard($scope0_reason, 2), $cg__input_obj = _client_guard($scope0_reason, 1), $fg__input_b = _filled_guard($scope0_reason, 3), $fg__input_sel = _filled_guard($scope0_reason, 2), $wi__input_b = _write_if($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	const $input_b__closures = /* @__PURE__ */ new Set();
 	const $s__closures = /* @__PURE__ */ new Set();
 	let s = 0;
 	_for_in(input.obj, (k, v) => {
 		const $scope1_id = _scope_id();
-		_filled_guard($scope0_reason, 1) && _patch_write($scope1_id, "xe", v, !$sg__input_obj);
+		_filled_guard($scope0_reason, 1) && _patch_write($scope1_id, "xe", v, !_server_guard($scope0_reason, 1));
 		_if(() => {
 			if (k === input.sel) {
 				const $scope2_id = _scope_id();

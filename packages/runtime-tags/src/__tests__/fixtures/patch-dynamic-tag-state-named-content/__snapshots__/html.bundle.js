@@ -21,13 +21,13 @@ _shells({
 	a4: `a4${_shell_marker([[], []], ["a>", $setup])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks)};${$template}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_bs = _server_guard($scope0_reason, 0), $fg__input_note = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $fg__input_note = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = /* @__PURE__ */ new Set();
 	_for_of(input.bs, (b) => {
 		const $scope1_id = _scope_id();
 		const $for_content__b__closures = /* @__PURE__ */ new Set();
-		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "xc", b, !$sg__input_bs);
+		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "xc", b, !_server_guard($scope0_reason, 0));
 		_set_scope_reason(0);
 		const $childScope = _peek_scope_id($scope1_id, "a", 0);
 		keep_default({ content: _content_resume("a2", () => {

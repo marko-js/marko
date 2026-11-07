@@ -1,7 +1,7 @@
 // template.marko
 _shells({ a: "a !a0;D lD l ;<p> </p><p> </p><button>+</button>" });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_item_price = _server_guard($scope0_reason, 0), $fg__input_item_price = _filled_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $fg__input_item_price = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let qty = 1;
 	const price = input.item.price;
@@ -12,5 +12,5 @@ var template_default = _template("a", (input) => {
 	_scope($scope0_id, {
 		h: qty,
 		i: price
-	}) || $fg__input_item_price && _patch_write($scope0_id, "xi", price, !$sg__input_item_price);
+	}) || $fg__input_item_price && _patch_write($scope0_id, "xi", price, !_server_guard($scope0_reason, 0));
 }, 1);

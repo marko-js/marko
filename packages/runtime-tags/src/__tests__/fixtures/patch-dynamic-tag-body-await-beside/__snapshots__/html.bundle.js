@@ -32,7 +32,7 @@ _shells({
 	a: "a;D%b%;<main><!><!></main>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_on = _write_guard($scope0_reason, 3), $cg__input_on = _client_guard($scope0_reason, 3), $wi__input_v__OR__input_on__OR__input_note = _write_if($scope0_reason, 1), $cg__input_note = _client_guard($scope0_reason, 4), $sg__input_v = _server_guard($scope0_reason, 2), $fg__input_note = _filled_guard($scope0_reason, 4), $wi__input_note = _write_if($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_on = _write_guard($scope0_reason, 3), $cg__input_on = _client_guard($scope0_reason, 3), $wi__input_v__OR__input_on__OR__input_note = _write_if($scope0_reason, 1), $cg__input_note = _client_guard($scope0_reason, 4), $fg__input_note = _filled_guard($scope0_reason, 4), $wi__input_note = _write_if($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = /* @__PURE__ */ new Set();
 	const $input_on__closures = /* @__PURE__ */ new Set();
@@ -57,7 +57,7 @@ var template_default = _template("a", (input) => {
 			c: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 2)) && v,
 			j: _write_if($scope0_reason, 2) && $await_content__v__closures
 		}), $cg__input_on && "a4", $wg__input_on);
-		_filled_guard($scope0_reason, 2) && (_client_branch_if("a0", $scope1_id) || $cg__input_on) && _patch_write($scope1_id, "xc", v, !$sg__input_v);
+		_filled_guard($scope0_reason, 2) && (_client_branch_if("a0", $scope1_id) || $cg__input_on) && _patch_write($scope1_id, "xc", v, !_server_guard($scope0_reason, 2));
 		$wg__input_on || $wi__input_v__OR__input_on__OR__input_note && _resume_branch($scope1_id);
 	}, 1, "a6", _unfilled_if($scope0_reason, 2), 1, 1);
 	_dynamic_tag($scope0_id, "b", input.on ? card_default : "div", {}, 10, _content_resume("a5", () => {

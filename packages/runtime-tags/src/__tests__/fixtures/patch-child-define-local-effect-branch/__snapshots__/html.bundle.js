@@ -10,7 +10,7 @@ _shells({
 	b2: "b2;D ;<p> </p>"
 });
 var wrap_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 2), $cg__input_label = _client_guard($scope0_reason, 1), $cg__input_show = _client_guard($scope0_reason, 2), $sg__input_label = _server_guard($scope0_reason, 1), $wi__input_label = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 2), $cg__input_label = _client_guard($scope0_reason, 1), $cg__input_show = _client_guard($scope0_reason, 2), $wi__input_label = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	const $input_show__closures = /* @__PURE__ */ new Set();
@@ -34,7 +34,7 @@ var wrap_default = _template("b", (input) => {
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_show__closures, _subscribe($wi__input_label && $input_label__closures, _scope($scope1_id, {
 			b: x,
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id)
-		}), $cg__input_label && "b4", $wg__input_show), $cg__input_show && "b5", $wg__input_show) || _filled_guard($scope0_reason, 1) && _patch_write($scope1_id, "xb", x, !$sg__input_label);
+		}), $cg__input_label && "b4", $wg__input_show), $cg__input_show && "b5", $wg__input_show) || _filled_guard($scope0_reason, 1) && _patch_write($scope1_id, "xb", x, !_server_guard($scope0_reason, 1));
 		$wg__input_show || _resume_branch($scope1_id);
 	}, $scope0_id, 0) };
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);

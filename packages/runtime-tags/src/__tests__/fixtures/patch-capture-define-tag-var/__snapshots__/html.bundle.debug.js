@@ -17,7 +17,7 @@ const $walks = /*@__PURE__*/ ((_w0) => `0&b/${_w0}&`)(" b");
 const $setup = _shell_setup([[], []], ["#childScope/2>", $setup$1]);
 _shells({ "__tests__/template.marko": `__tests__/template.marko${_shell_marker($setup)};${((_w0) => `0&b/${_w0}&`)(" b")};${((_w0) => `<!>${_w0}`)($template$1)}` });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_v = _client_guard($scope0_reason, 0), $sg__input_v = _server_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_v = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const Row = { content: _content("__tests__/template.marko_1*content", ({ text }) => {
 		const $scope1_id = _scope_id();
@@ -28,7 +28,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0, $cg__input_v && 1);
 	let row = Row.content({ text: input.v });
-	_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:row", row, !$sg__input_v);
+	_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:row", row, !_server_guard($scope0_reason, 0));
 	$cg__input_v && _var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_row#6/var");
 	_patch_child_end();
 	_set_scope_reason(_updates_from($scope0_reason, 0) << 1);

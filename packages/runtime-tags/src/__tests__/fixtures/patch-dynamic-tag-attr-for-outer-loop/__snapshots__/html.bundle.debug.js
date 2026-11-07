@@ -54,7 +54,7 @@ _shells({
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell;b%;<!><!><!>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_on__OR__input_bs = _write_guard($scope0_reason, 2), $wi__input_as__OR__input_on__OR__input_bs__OR__input_note = _write_if($scope0_reason, 4), $sg__input_as = _server_guard($scope0_reason, 5), $fg__input_on = _filled_guard($scope0_reason, 6), $cg__input_as = _client_guard($scope0_reason, 5), $fg__input_bs = _filled_guard($scope0_reason, 7), $fg__input_note = _filled_guard($scope0_reason, 8);
+	const $scope0_reason = _scope_reason(), $wg__input_on__OR__input_bs = _write_guard($scope0_reason, 2), $wi__input_as__OR__input_on__OR__input_bs__OR__input_note = _write_if($scope0_reason, 4), $fg__input_on = _filled_guard($scope0_reason, 6), $cg__input_as = _client_guard($scope0_reason, 5), $fg__input_bs = _filled_guard($scope0_reason, 7), $fg__input_note = _filled_guard($scope0_reason, 8);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = new Set();
 	let n = 0;
@@ -62,7 +62,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_for_of(input.as, (a) => {
 		const $scope1_id = _scope_id();
 		const $for_content__a__closures = new Set();
-		_filled_guard($scope0_reason, 5) && _client_guard($scope0_reason, 2) && _patch_write($scope1_id, "PatchMarkedWrite:a", a, !$sg__input_as);
+		_filled_guard($scope0_reason, 5) && _client_guard($scope0_reason, 2) && _patch_write($scope1_id, "PatchMarkedWrite:a", a, !_server_guard($scope0_reason, 5));
 		let $item;
 		forOf(input.bs, (b) => {
 			$item = attrTags($item, { content: _content_resume("__tests__/template.marko_2*content", () => {

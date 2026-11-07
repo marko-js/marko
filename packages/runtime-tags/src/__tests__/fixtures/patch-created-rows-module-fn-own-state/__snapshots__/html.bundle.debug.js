@@ -21,7 +21,7 @@ _shells({
 	"__tests__/tags/rowsx.marko_3*shell": "__tests__/tags/rowsx.marko_3*shell;D ;<em> </em>"
 });
 var rowsx_default = _template("__tests__/tags/rowsx.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_items = _server_guard($scope0_reason, 0), $fg__input_open = _filled_guard($scope0_reason, 1), $cg__input_items = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $fg__input_open = _filled_guard($scope0_reason, 1), $cg__input_items = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let suffix = "s";
 	const Panel = { content: _content("__tests__/tags/rowsx.marko_2*content", ({ isOpen, fmt, label }) => {
@@ -48,7 +48,7 @@ var rowsx_default = _template("__tests__/tags/rowsx.marko", (input) => {
 	}, $scope0_id, 0) };
 	_for_of(input.items, (x) => {
 		const $scope1_id = _scope_id();
-		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "PatchMarkedWrite:x", x, !$sg__input_items);
+		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "PatchMarkedWrite:x", x, !_server_guard($scope0_reason, 0));
 		_set_scope_reason(25080 | (_updates_from($scope0_reason, 1) << 1 | _updates_from($scope0_reason, 1) << 9));
 		const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 		Panel.content({

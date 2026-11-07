@@ -1,7 +1,7 @@
 // template.marko
 _shells({ a: "a !a0;D%b ;<main><!><button>+</button></main>" });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_min = _server_guard($scope0_reason, 0), $fg__input_min = _filled_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $fg__input_min = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let count = 0;
 	const limit = input.min + 1;
@@ -20,5 +20,5 @@ var template_default = _template("a", (input) => {
 	_scope($scope0_id, {
 		f: count,
 		g: limit
-	}) || $fg__input_min && _patch_write($scope0_id, "xg", limit, !$sg__input_min);
+	}) || $fg__input_min && _patch_write($scope0_id, "xg", limit, !_server_guard($scope0_reason, 0));
 }, 1);

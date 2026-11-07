@@ -4,7 +4,7 @@ const $walks = " b%c";
 const $setup = [[], ["__tests__/template.marko_0"]];
 _shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0; b%;<button>toggle</button><!><!>" });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_v = _server_guard($scope0_reason, 1), $fg__input_w = _filled_guard($scope0_reason, 2), $fg__input_v = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $fg__input_w = _filled_guard($scope0_reason, 2), $fg__input_v = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const d = input.v + "!";
 	let on = true;
@@ -31,5 +31,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_w: ["input.w"],
 		d: "1:8",
 		on: "2:6"
-	}) || ($fg__input_w && _patch_write($scope0_id, "PatchMarkedWrite:input_w", input.w, !_server_guard($scope0_reason, 2)), $fg__input_v && _patch_write($scope0_id, "PatchMarkedWrite:d", d, !$sg__input_v));
+	}) || ($fg__input_w && _patch_write($scope0_id, "PatchMarkedWrite:input_w", input.w, !_server_guard($scope0_reason, 2)), $fg__input_v && _patch_write($scope0_id, "PatchMarkedWrite:d", d, !_server_guard($scope0_reason, 1)));
 }, 1);

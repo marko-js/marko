@@ -7,13 +7,13 @@ _shells({
 	b1: "b1 b6;b%;<!><!><!>"
 });
 var list_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_item = _write_guard($scope0_reason, 1), $fg__input_onPick = _filled_guard($scope0_reason, 0), $sg__input_item = _server_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_item = _write_guard($scope0_reason, 1), $fg__input_onPick = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let open = true;
 	_html(`<button>toggle</button>${_el_mark($scope0_id, "a")}<button>pick</button>${_el_mark($scope0_id, "b")}`);
 	_for_of(input.item, (item) => {
 		const $scope1_id = _scope_id();
-		_filled_guard($scope0_reason, 1) && _patch_write($scope1_id, "xd", item?.content, !$sg__input_item);
+		_filled_guard($scope0_reason, 1) && _patch_write($scope1_id, "xd", item?.content, !_server_guard($scope0_reason, 1));
 		_if(() => {
 			{
 				const $scope2_id = _scope_id();

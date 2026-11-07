@@ -6,11 +6,11 @@ _shells({
 	b2: "b2;D l ;<p> </p><div></div>"
 });
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_items = _server_guard($scope0_reason, 1), $fg__input_a = _filled_guard($scope0_reason, 2), $cg__input_items = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $fg__input_a = _filled_guard($scope0_reason, 2), $cg__input_items = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_for_of(input.items, (item) => {
 		const $scope1_id = _scope_id();
-		_filled_guard($scope0_reason, 1) && _patch_write($scope1_id, "xd", item, !$sg__input_items);
+		_filled_guard($scope0_reason, 1) && _patch_write($scope1_id, "xd", item, !_server_guard($scope0_reason, 1));
 		_html(`<p>${_text_mark($scope1_id, "a", input.a + item, 1, $scope0_reason, 0)}</p><div></div>${_el_mark($scope1_id, "b")}`);
 		_script($scope1_id, "b0", 1, _filled_guard($scope0_reason, 1), "d");
 		_patch_render($scope1_id, "b1", [_filled_guard($scope0_reason, 2) && ">e", _filled_guard($scope0_reason, 1) && "d"], $scope0_reason, 0);

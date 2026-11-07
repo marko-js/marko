@@ -3,7 +3,7 @@ _shells({ a: "a !a2;E l%b ;<main><h2> </h2><!><button>toggle</button></main>" })
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
 	_write_guard($scope0_reason, 1);
-	const $wg__input_no = _write_guard($scope0_reason, 0), $sg__input_no = _server_guard($scope0_reason, 0), $fg__input_yes = _filled_guard($scope0_reason, 1), $fg__input_no = _filled_guard($scope0_reason, 0);
+	const $wg__input_no = _write_guard($scope0_reason, 0), $fg__input_yes = _filled_guard($scope0_reason, 1), $fg__input_no = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let on = false;
 	const label = input.no + "!";
@@ -25,5 +25,5 @@ var template_default = _template("a", (input) => {
 		g: input.yes,
 		h: on,
 		i: label
-	}) || ($fg__input_yes && _patch_write($scope0_id, "xg", input.yes, !_server_guard($scope0_reason, 1)), $fg__input_no && _patch_write($scope0_id, "xi", label, !$sg__input_no));
+	}) || ($fg__input_yes && _patch_write($scope0_id, "xg", input.yes, !_server_guard($scope0_reason, 1)), $fg__input_no && _patch_write($scope0_id, "xi", label, !_server_guard($scope0_reason, 0)));
 }, 1);

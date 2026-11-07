@@ -7,13 +7,13 @@ _shells({
 	"__tests__/tags/list.marko_1*shell": "__tests__/tags/list.marko_1*shell __tests__/tags/list.marko_1_open#0:5/setup;b%;<!><!><!>"
 });
 var list_default = _template("__tests__/tags/list.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_item = _write_guard($scope0_reason, 0), $sg__input_item = _server_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_item = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let open = true;
 	_html(`<button>toggle</button>${_el_mark($scope0_id, "#button/0")}`);
 	_for_of(input.item, (item) => {
 		const $scope1_id = _scope_id();
-		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "PatchMarkedWrite:item_content", item?.content, !$sg__input_item);
+		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "PatchMarkedWrite:item_content", item?.content, !_server_guard($scope0_reason, 0));
 		_if(() => {
 			if (open) {
 				const $scope2_id = _scope_id();

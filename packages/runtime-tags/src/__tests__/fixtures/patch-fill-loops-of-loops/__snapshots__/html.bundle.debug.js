@@ -8,7 +8,7 @@ _shells({
 	"__tests__/template.marko_2*shell": "__tests__/template.marko_2*shell __tests__/template.marko_2_count#0:6/subscribe;D ;<p> </p>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_rows = _server_guard($scope0_reason, 0), $fg__input_suffix = _filled_guard($scope0_reason, 1), $wi__input_suffix = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $fg__input_suffix = _filled_guard($scope0_reason, 1), $wi__input_suffix = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_suffix__closures = new Set();
 	const $count__closures = new Set();

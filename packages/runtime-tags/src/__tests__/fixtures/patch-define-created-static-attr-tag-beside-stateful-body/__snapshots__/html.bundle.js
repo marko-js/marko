@@ -7,7 +7,7 @@ _shells({
 	a0: "a0;D ;<em> </em>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_other = _server_guard($scope0_reason, 2), $fg__input_open = _filled_guard($scope0_reason, 1), $cg__input_show = _client_guard($scope0_reason, 0), $fg__input_other = _filled_guard($scope0_reason, 2), $fg__input_label = _filled_guard($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $fg__input_open = _filled_guard($scope0_reason, 1), $cg__input_show = _client_guard($scope0_reason, 0), $fg__input_other = _filled_guard($scope0_reason, 2), $fg__input_label = _filled_guard($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	let open = false;
 	const Panel = { content: _content_resume("a2", ({ isOpen, item }) => {
@@ -58,5 +58,5 @@ var template_default = _template("a", (input) => {
 		j: open,
 		k: _write_if($scope0_reason, 2) && Panel,
 		m: Tag
-	}) || ($fg__input_open && $cg__input_show && _patch_write($scope0_id, "xg", input.open, !_server_guard($scope0_reason, 1)), $fg__input_label && _patch_write($scope0_id, "xi", input.label, !_server_guard($scope0_reason, 3)), $fg__input_other && _patch_write($scope0_id, "xm", Tag, !$sg__input_other));
+	}) || ($fg__input_open && $cg__input_show && _patch_write($scope0_id, "xg", input.open, !_server_guard($scope0_reason, 1)), $fg__input_label && _patch_write($scope0_id, "xi", input.label, !_server_guard($scope0_reason, 3)), $fg__input_other && _patch_write($scope0_id, "xm", Tag, !_server_guard($scope0_reason, 2)));
 }, 1);

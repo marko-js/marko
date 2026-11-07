@@ -1136,24 +1136,31 @@ function getClientBranchGuard(section: Section, contents: Opt<Section>) {
 // A patch writes a value where main serializes it: where client code may read it
 // after resume (its write reason), a caller's client bit deciding a guarded one.
 function getUnfilledPatchWrite(section: Section, binding: Binding) {
+  // A built object's source rides its readers' entries, where a patch fills them.
+  const contents =
+    getPatchFill(binding).objectSource || getClosureContents(binding);
+  const reason = mapBodyParams(section, getWriteReason(binding));
+  if (!contents && !reason) return;
   const write = buildPatchWrite(
     section,
     binding,
     getPatchKey().MarkedWrite,
     getConstantSetup(section, binding),
   );
-  // A built object's source rides its readers' entries, where a patch fills them.
-  if (getPatchFill(binding).objectSource) return write;
-  const contents = getClosureContents(binding);
   if (contents === true) return write;
   // Content taking the value as a closure needs it where the client keeps an instance.
-  const guard = contents && getClientBranchGuard(section, contents);
-  const reason = mapBodyParams(section, getWriteReason(binding));
   if (!isDynamicWriteGuard(section, reason)) {
-    return reason ? write : guard && andGuard(guard, write);
+    return reason
+      ? write
+      : andGuard(getClientBranchGuard(section, contents), write);
   }
   return andGuard(
-    orCallerGroupGuards(section, guard, "_client_guard", reason),
+    orCallerGroupGuards(
+      section,
+      contents && getClientBranchGuard(section, contents),
+      "_client_guard",
+      reason,
+    ),
     write,
   );
 }

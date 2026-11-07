@@ -15,7 +15,7 @@ var wrapper_default = _template("b", (input) => {
 const $setup = _shell_setup([[], ["a5"]], ["a>", $setup$1]);
 _shells({ a: `a${_shell_marker($setup)};${((_w0) => `/${_w0}& b`)("D%l")};${((_w0) => `${_w0}<button>+</button>`)($template)}` });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_label = _server_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason();
 	_write_guard($scope0_reason, 0);
 	const $cg__input_label = _client_guard($scope0_reason, 0), $wi__input_label = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
@@ -28,7 +28,7 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		const shout = input.label + "!";
-		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "xc", shout, !$sg__input_label);
+		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "xc", shout, !_server_guard($scope0_reason, 0));
 		_if(() => {}, $scope1_id, "a", 1, 1, 0, 0, 1);
 		_filled_guard($scope0_reason, 0) && _patch_render($scope1_id, "a0", "c");
 		_patch_render($scope1_id, "a1", _filled_guard($scope0_reason, 0) && "c");

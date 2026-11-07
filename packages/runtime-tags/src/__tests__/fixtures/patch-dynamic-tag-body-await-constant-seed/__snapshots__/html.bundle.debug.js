@@ -40,7 +40,7 @@ _shells({
 	"__tests__/tags/card.marko": "__tests__/tags/card.marko;b%;<!><!><!>"
 });
 var card_default = _template("__tests__/tags/card.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_on = _write_guard($scope0_reason, 3), $cg__input_on = _client_guard($scope0_reason, 3), $wi__input_v__OR__input_on__OR__input_note = _write_if($scope0_reason, 1), $sg__input_v = _server_guard($scope0_reason, 2), $fg__input_note = _filled_guard($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_on = _write_guard($scope0_reason, 3), $cg__input_on = _client_guard($scope0_reason, 3), $wi__input_v__OR__input_on__OR__input_note = _write_if($scope0_reason, 1), $fg__input_note = _filled_guard($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = new Set();
 	const $input_on__closures = new Set();
@@ -64,7 +64,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 			v: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 2)) && v,
 			"ClosureScopes:v/8": _write_if($scope0_reason, 2) && $await_content__v__closures
 		}, "__tests__/tags/card.marko", "2:2", { v: "2:8" }), $cg__input_on && "__tests__/tags/card.marko_1_input_on#0:4/subscribe", $wg__input_on);
-		_filled_guard($scope0_reason, 2) && (_client_branch_if("__tests__/tags/card.marko_2*content", $scope1_id) || $cg__input_on) && _patch_write($scope1_id, "PatchMarkedWrite:v", v, !$sg__input_v);
+		_filled_guard($scope0_reason, 2) && (_client_branch_if("__tests__/tags/card.marko_2*content", $scope1_id) || $cg__input_on) && _patch_write($scope1_id, "PatchMarkedWrite:v", v, !_server_guard($scope0_reason, 2));
 		$wg__input_on || $wi__input_v__OR__input_on__OR__input_note && _resume_branch($scope1_id);
 	}, 1, "__tests__/tags/card.marko_1*content", _unfilled_if($scope0_reason, 2), 1, 1);
 	$fg__input_note && _patch_subscribers($scope0_id, "__tests__/tags/card.marko_0_input_note#5/subscribers", "input_note");

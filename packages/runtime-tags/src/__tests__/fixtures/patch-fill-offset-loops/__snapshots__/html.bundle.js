@@ -5,9 +5,7 @@ _shells({
 	a3: "a3 a2;D ;<p> </p>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason();
-	_server_guard($scope0_reason, 1);
-	const $fg__input_suffix = _filled_guard($scope0_reason, 2), $wi__input_suffix = _write_if($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $fg__input_suffix = _filled_guard($scope0_reason, 2), $wi__input_suffix = _write_if($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_suffix__closures = /* @__PURE__ */ new Set();
 	const $count__closures = /* @__PURE__ */ new Set();

@@ -11,11 +11,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let open = false;
 	const Panel = { content: _content_resume("__tests__/template.marko_1*content", ({ label }) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason(), $sg__label = _server_guard($scope1_reason, 0), $fg__label = _filled_guard($scope1_reason, 0);
+		const $scope1_reason = _scope_reason(), $fg__label = _filled_guard($scope1_reason, 0);
 		const shout = label + "!";
 		_html(`<em>${_text_mark($scope1_id, "#text/0", shout, 1, $scope1_reason, 0)}</em>`);
 		_script($scope1_id, "__tests__/template.marko_1_shout#4", 1, $fg__label, "shout");
-		_scope($scope1_id, { shout }, "__tests__/template.marko", "2:2", { shout: "3:10" }) || $fg__label && _patch_write($scope1_id, "PatchMarkedWrite:shout", shout, !$sg__label);
+		_scope($scope1_id, { shout }, "__tests__/template.marko", "2:2", { shout: "3:10" }) || $fg__label && _patch_write($scope1_id, "PatchMarkedWrite:shout", shout, !_server_guard($scope1_reason, 0));
 	}, $scope0_id) };
 	_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);

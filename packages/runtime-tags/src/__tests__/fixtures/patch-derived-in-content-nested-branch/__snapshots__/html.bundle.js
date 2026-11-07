@@ -18,7 +18,7 @@ _shells({
 	a3: "a3 a2;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_label = _write_guard($scope0_reason, 0), $cg__input_label = _client_guard($scope0_reason, 0), $wi__input_label = _write_if($scope0_reason, 0), $sg__input_label = _server_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_label = _write_guard($scope0_reason, 0), $cg__input_label = _client_guard($scope0_reason, 0), $wi__input_label = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $count__closures = /* @__PURE__ */ new Set();
 	const $input_label__closures = /* @__PURE__ */ new Set();
@@ -30,7 +30,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		const $wrapper_content__label__closures = /* @__PURE__ */ new Set();
 		const label = input.label;
-		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "xb", label, !$sg__input_label);
+		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "xb", label, !_server_guard($scope0_reason, 0));
 		_if(() => {
 			if (input.label) {
 				const $scope2_id = _scope_id();

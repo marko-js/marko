@@ -23,11 +23,11 @@ var label_default = _template("b", (input) => {
 const $setup = _shell_setup([[], []], ["a>", $setup$2], ["c>", $setup$1]);
 _shells({ a: `a${_shell_marker($setup)};${((_w0, _w1) => `0${_w0}&/${_w1}&`)("", " b")};${((_w0, _w1) => `${_w0}${_w1}`)("", $template)}` });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_v = _client_guard($scope0_reason, 0), $sg__input_v = _server_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_v = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $childScope = _peek_scope_id($scope0_id, "a", 0, $cg__input_v && 1);
 	let picked = pick_default({ value: input.v });
-	_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xg", picked, !$sg__input_v);
+	_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xg", picked, !_server_guard($scope0_reason, 0));
 	$cg__input_v && _var($scope0_id, "b", $childScope, "a1");
 	_patch_child_end();
 	_set_scope_reason(_updates_from($scope0_reason, 0) << 1);

@@ -6,11 +6,11 @@ _shells({
 	b2: "b2 !b0; D ;<a class=link> </a>"
 });
 var navlist_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_items = _server_guard($scope0_reason, 1), $fg__input_path = _filled_guard($scope0_reason, 2), $cg__input_items = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $fg__input_path = _filled_guard($scope0_reason, 2), $cg__input_items = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_for_of(input.items, (item) => {
 		const $scope1_id = _scope_id();
-		_filled_guard($scope0_reason, 1) && _patch_write($scope1_id, "xe", item?.href, !$sg__input_items);
+		_filled_guard($scope0_reason, 1) && _patch_write($scope1_id, "xe", item?.href, !_server_guard($scope0_reason, 1));
 		const active = item.href === input.path;
 		_html(`<a${_attr_class(["link", { active }], $scope1_id, "aa$class", $scope0_reason, 0)}${_attr("href", item.href, $scope1_id, "aa$href", $scope0_reason, 1)}>${_text_mark($scope1_id, "b", item.label, 1, $scope0_reason, 1)}</a>${_el_mark($scope1_id, "a")}`);
 		_script($scope1_id, "b0");

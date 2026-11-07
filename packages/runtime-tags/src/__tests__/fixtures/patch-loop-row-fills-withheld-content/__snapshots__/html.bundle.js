@@ -30,14 +30,14 @@ _shells({
 	a3: `a3${_shell_marker([["a7"], []], ["a>", $setup])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)(" b")};${$template}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_panels = _server_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let open = true;
 	_html(`<button>toggle</button>${_el_mark($scope0_id, "a")}`);
 	_for_of(input.panels, (p) => {
 		const $scope1_id = _scope_id();
 		const $for_content__p_text__closures = /* @__PURE__ */ new Set();
-		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "xd", p?.text, !$sg__input_panels);
+		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "xd", p?.text, !_server_guard($scope0_reason, 0));
 		_set_scope_reason(10);
 		const $childScope = _peek_scope_id($scope1_id, "a", 0);
 		panel_default({

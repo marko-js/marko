@@ -4,7 +4,7 @@ const $walks = "b%b b";
 const $setup = [[], ["__tests__/template.marko_0"]];
 _shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;b%b ;<!><!><button>+</button>" });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_label = _write_guard($scope0_reason, 0), $sg__input_label = _server_guard($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_label = _write_guard($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let count = 0;
 	const label = input.label;
@@ -27,5 +27,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, "__tests__/template.marko", 0, {
 		count: "1:6",
 		label: "2:8"
-	}) || $fg__input_label && _patch_write($scope0_id, "PatchMarkedWrite:label", label, !$sg__input_label);
+	}) || $fg__input_label && _patch_write($scope0_id, "PatchMarkedWrite:label", label, !_server_guard($scope0_reason, 0));
 }, 1);

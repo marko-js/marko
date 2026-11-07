@@ -33,7 +33,7 @@ _shells({
 	b: "b;b%;<!><!><!>"
 });
 var card_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_on = _write_guard($scope0_reason, 3), $cg__input_on = _client_guard($scope0_reason, 3), $wi__input_v__OR__input_on__OR__input_note = _write_if($scope0_reason, 1), $sg__input_v = _server_guard($scope0_reason, 2), $fg__input_note = _filled_guard($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_on = _write_guard($scope0_reason, 3), $cg__input_on = _client_guard($scope0_reason, 3), $wi__input_v__OR__input_on__OR__input_note = _write_if($scope0_reason, 1), $fg__input_note = _filled_guard($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = /* @__PURE__ */ new Set();
 	const $input_on__closures = /* @__PURE__ */ new Set();
@@ -57,7 +57,7 @@ var card_default = _template("b", (input) => {
 			c: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 2)) && v,
 			i: _write_if($scope0_reason, 2) && $await_content__v__closures
 		}), $cg__input_on && "b4", $wg__input_on);
-		_filled_guard($scope0_reason, 2) && (_client_branch_if("b0", $scope1_id) || $cg__input_on) && _patch_write($scope1_id, "xc", v, !$sg__input_v);
+		_filled_guard($scope0_reason, 2) && (_client_branch_if("b0", $scope1_id) || $cg__input_on) && _patch_write($scope1_id, "xc", v, !_server_guard($scope0_reason, 2));
 		$wg__input_on || $wi__input_v__OR__input_on__OR__input_note && _resume_branch($scope1_id);
 	}, 1, "b5", _unfilled_if($scope0_reason, 2), 1, 1);
 	$fg__input_note && _patch_subscribers($scope0_id, "b7", "f");

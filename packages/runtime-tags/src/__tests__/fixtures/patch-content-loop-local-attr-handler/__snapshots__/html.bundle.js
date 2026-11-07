@@ -6,11 +6,11 @@ _shells({
 	b1: "b1; D ;<button> </button>"
 });
 var menu_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_item = _server_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_for_of(input.item, (it) => {
 		const $scope1_id = _scope_id();
-		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "xf", it?.onPick, !$sg__input_item);
+		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "xf", it?.onPick, !_server_guard($scope0_reason, 0));
 		_html(`<button${_attr_class("b" + it.id, $scope1_id, "aa$class", $scope0_reason, 0)}>${_text_mark($scope1_id, "b", it.label, 1, $scope0_reason, 0)}</button>${_el_mark($scope1_id, "a")}`);
 		_script($scope1_id, "b0", 1, _filled_guard($scope0_reason, 0), "f");
 		_scope($scope1_id, { f: it?.onPick });
