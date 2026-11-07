@@ -23,8 +23,9 @@ var pass_default = _template("__tests__/tags/pass.marko", (input) => {
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	label_text_default({ v: input.x + $global$1.suffix });
 	_patch_child_end();
-	_fill_global_subscribe("__tests__/tags/pass.marko_0_input_x#3_$global_suffix#5", $scope0_id, _client_guard($scope0_reason, 0));
+	_fill_global_subscribe("__tests__/tags/pass.marko_0_$global_suffix#5/subscribe", $scope0_id, _client_guard($scope0_reason, 0));
 	_unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "PatchWrite:input_x", input.x, 1);
+	_patch_render($scope0_id, "__tests__/tags/pass.marko_0_input_x#3_$global_suffix#5/setup", [_filled_guard($scope0_reason, 0) && "input_x", "$global_suffix"], (2 | _updates_from($scope0_reason, 0)) << 1, 0);
 	_scope($scope0_id, {
 		input_x: _unfilled_if($scope0_reason, 0) && input.x,
 		"#childScope/0": _existing_scope($childScope)

@@ -24,12 +24,13 @@ var panel_default = _template("b", (input) => {
 // template.marko
 const $setup = _shell_setup([[], ["a2"]], ["a>", $setup$1]);
 _shells({
-	a1: "a1",
+	a0: "a0",
 	a: `a${_shell_marker($setup)};${((_w0) => `D/${_w0}& l`)("b%c")};${((_w0) => `<main>${_w0}<button>+</button></main>`)($template)}`
 });
 var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
+	const $global_brand__closures = /* @__PURE__ */ new Set();
 	const $global$1 = $global();
 	let count = 0;
 	_html("<main>");
@@ -37,19 +38,20 @@ var template_default = _template("a", (input) => {
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	panel_default({
 		open: true,
-		body: attrTag({ content: _content_resume("a1", () => {
+		body: attrTag({ content: _content_resume("a0", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
 			_html(`<em>${_text_mark($scope1_id, "a", $global$1.brand, 1, 4, 0)}</em>`);
-			_fill_global_subscribe("a0", $scope1_id);
-			_scope($scope1_id, {});
+			_subscribe($global_brand__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
 		}, $scope0_id) })
 	});
 	_patch_child_end();
 	_html(`<button>+</button>${_el_mark($scope0_id, "b")}</main>`);
+	_fill_global_subscribe("a1", $scope0_id, 1);
 	_script($scope0_id, "a2");
 	_scope($scope0_id, {
 		c: count,
+		d: $global_brand__closures,
 		a: _existing_scope($childScope)
 	});
 }, 1);

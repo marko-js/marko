@@ -22,7 +22,8 @@ var code_block_default = _template("__tests__/tags/code-block.marko", (input) =>
 			_patch_render($scope1_id, "__tests__/tags/code-block.marko_1_input_text#0:4_highlight#0:6/setup", [
 				_filled_guard($scope0_reason, 2) && ">input_text",
 				_filled_guard((2 | _updates_from($scope0_reason, 1)) << 1, 0) && ">highlight",
-				_filled_guard($scope0_reason, 1) && ">input_cursor"
+				_filled_guard($scope0_reason, 1) && ">input_cursor",
+				">$global_theme"
 			], (2 | _updates_from($scope0_reason, 0)) << 1, 0);
 			_scope($scope1_id, { _: ($scope0_page || $wi__input_cursor__OR__input_text) && _scope_with_id($scope0_id) }, "__tests__/tags/code-block.marko", "4:2");
 			return 0;
@@ -32,17 +33,27 @@ var code_block_default = _template("__tests__/tags/code-block.marko", (input) =>
 			_patch_render($scope2_id, "__tests__/tags/code-block.marko_2_input_text#0:4_highlight#0:6/setup", [
 				_filled_guard($scope0_reason, 2) && ">input_text",
 				_filled_guard((2 | _updates_from($scope0_reason, 1)) << 1, 0) && ">highlight",
-				_filled_guard($scope0_reason, 1) && ">input_cursor"
+				_filled_guard($scope0_reason, 1) && ">input_cursor",
+				">$global_theme"
 			], (2 | _updates_from($scope0_reason, 0)) << 1, 0);
 			_scope($scope2_id, { _: ($scope0_page || $wi__input_cursor__OR__input_text) && _scope_with_id($scope0_id) }, "__tests__/tags/code-block.marko", "7:2");
 			return 1;
 		}
 	}, $scope0_id, "#text/0", 1, $wg__input_text_length, 1, 0, 0, ["__tests__/tags/code-block.marko_1*shell", "__tests__/tags/code-block.marko_2*shell"], $scope0_reason, 3);
-	_fill_global_subscribe("__tests__/tags/code-block.marko_0_input_cursor#3_$global_theme#8", $scope0_id, $cg__input_cursor);
+	_fill_global_subscribe("__tests__/tags/code-block.marko_0_$global_theme#8/subscribe", $scope0_id, $cg__input_cursor);
 	$fg__input_text && $cg__input_text_length && _patch_render($scope0_id, "__tests__/tags/code-block.marko_1_input_text#0:4/setup", "input_text");
 	$fg__input_text && $cg__input_text_length && _patch_render($scope0_id, "__tests__/tags/code-block.marko_2_input_text#0:4/setup", "input_text");
-	_filled_guard((2 | _updates_from($scope0_reason, 1)) << 1, 0) && $cg__input_text_length && _patch_render($scope0_id, "__tests__/tags/code-block.marko_1_highlight#0:6/setup", [_filled_guard((2 | _updates_from($scope0_reason, 1)) << 1, 0) && "highlight", $fg__input_cursor && "input_cursor"]);
-	_filled_guard((2 | _updates_from($scope0_reason, 1)) << 1, 0) && $cg__input_text_length && _patch_render($scope0_id, "__tests__/tags/code-block.marko_2_highlight#0:6/setup", [_filled_guard((2 | _updates_from($scope0_reason, 1)) << 1, 0) && "highlight", $fg__input_cursor && "input_cursor"]);
+	_filled_guard((2 | _updates_from($scope0_reason, 1)) << 1, 0) && $cg__input_text_length && _patch_render($scope0_id, "__tests__/tags/code-block.marko_1_highlight#0:6/setup", [
+		_filled_guard((2 | _updates_from($scope0_reason, 1)) << 1, 0) && "highlight",
+		$fg__input_cursor && "input_cursor",
+		"$global_theme"
+	]);
+	_filled_guard((2 | _updates_from($scope0_reason, 1)) << 1, 0) && $cg__input_text_length && _patch_render($scope0_id, "__tests__/tags/code-block.marko_2_highlight#0:6/setup", [
+		_filled_guard((2 | _updates_from($scope0_reason, 1)) << 1, 0) && "highlight",
+		$fg__input_cursor && "input_cursor",
+		"$global_theme"
+	]);
+	_patch_render($scope0_id, "__tests__/tags/code-block.marko_0_input_cursor#3_$global_theme#8/setup", [$fg__input_cursor && "input_cursor", "$global_theme"], (2 | _updates_from($scope0_reason, 1)) << 1, 0);
 	_scope($scope0_id, {
 		input_cursor: _unfilled_if($scope0_reason, 0) && input.cursor,
 		input_text: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0) || _unfilled_if()) && input.text,

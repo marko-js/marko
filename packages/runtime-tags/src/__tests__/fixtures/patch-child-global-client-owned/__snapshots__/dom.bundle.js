@@ -5,8 +5,10 @@ const $if = /*@__PURE__*/ _if(0, "<!><!><!>", "b%", $if_content__input_body);
 const $input_open = ($scope, input_open) => $if($scope, input_open ? 0 : 1);
 
 // template.marko
-const $body_content = _content$1("a1", "<em> </em>", "D ", /* @__PURE__ */ _fill_global("a0", ($scope) => _text($scope.a, $scope.$.brand), "brand"));
+const $body_content__$global_brand = /*@__PURE__*/ _closure_get_patch("a5", 3, ($scope) => _text($scope.a, $scope.$.brand));
+const $body_content = _content$1("a0", "<em> </em>", "D ", $body_content__$global_brand);
 const $count = _let(2, ($scope) => $input_open($scope.a, $scope.c % 2 === 0));
+const $global_brand = _fill_global("a1", /* @__PURE__ */ _closure($body_content__$global_brand), "brand");
 const $setup__script = _script("a2", ($scope) => _on($scope.b, "click", function() {
 	$count($scope, +$scope.c + 1);
 }));

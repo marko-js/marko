@@ -7,9 +7,10 @@ var gm_default = _template("b", (input) => {
 	const z = input.v + $global$1.flag;
 	_html(`<p>${_text_mark($scope0_id, "a", z + $global$1.mark, 1, (2 | _updates_from($scope0_reason, 0)) << 1, 0)}</p>`);
 	_fill_global_subscribe("b0", $scope0_id, _client_guard($scope0_reason, 0));
-	_fill_global_subscribe("b1", $scope0_id);
+	_fill_global_subscribe("b1", $scope0_id, _client_guard((2 | _updates_from($scope0_reason, 0)) << 1, 0));
 	_unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "wd", input.v, 1);
-	_unfilled_if((2 | _updates_from($scope0_reason, 0)) << 1, 0) && _patch_write($scope0_id, "we", z, 1);
+	_patch_render($scope0_id, "b2", [_filled_guard($scope0_reason, 0) && "d", "f"], (2 | _updates_from($scope0_reason, 0)) << 1, 0);
+	_patch_render($scope0_id, "b3", [_filled_guard((2 | _updates_from($scope0_reason, 0)) << 1, 0) && "e", "h"], (2 | _updates_from($scope0_reason, 0)) << 1, 0);
 	_scope($scope0_id, {
 		d: _unfilled_if($scope0_reason, 0) && input.v,
 		e: (_unfilled_if($scope0_reason, 0) || _unfilled_if()) && z

@@ -25,9 +25,9 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-UPDATE: p::text "0a" => "1a"
 INSERT: p + b
 UPDATE: button::text "0a" => "1a"
+UPDATE: p::text "0a" => "1a"
 UPDATE: b::text " " => "1a"
 ```
 
@@ -45,8 +45,8 @@ UPDATE: b::text " " => "1a"
 ```
 ## Change
 ```
-UPDATE: p::text "1a" => "1b"
 UPDATE: button::text "1a" => "1b"
+UPDATE: p::text "1a" => "1b"
 UPDATE: b::text "1a" => "1b"
 ```
 
@@ -67,7 +67,7 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-UPDATE: p::text "1b" => "2b"
 UPDATE: button::text "1b" => "2b"
+UPDATE: p::text "1b" => "2b"
 UPDATE: b::text "1b" => "2b"
 ```

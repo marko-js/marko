@@ -12,20 +12,23 @@ const $template = "<!><!><!>";
 const tags = [brand_default];
 const $setup = [[], []];
 _shells({
-	c1: "c1;b%;<!><!><!>",
 	c2: "c2;b%;<!><!><!>",
+	c3: "c3;b%;<!><!><!>",
 	c: "c;b%;<!><!><!>"
 });
 var show_await_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_promise = _write_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_promise = _write_guard($scope0_reason, 0), $wi__input_promise = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
+	const $global_flag__closures = /* @__PURE__ */ new Set();
 	const $global$1 = $global();
 	_await($scope0_id, "a", input.promise, (x) => {
 		const $scope1_id = _scope_id();
 		_dynamic_tag($scope1_id, "a", x && $global$1.flag ? tags[0] : null, { label: x }, 1, 0, 0, $scope0_page || $wg__input_promise, (2 | _updates_from($scope0_reason, 0)) << 1, 0);
-		_fill_global_subscribe("c0", $scope1_id, _client_guard($scope0_reason, 0));
-		_scope($scope1_id, { c: _unfilled_if($scope0_reason, 0) && x });
-	}, 1, "c1", _unfilled_if($scope0_reason, 0) && 2, 1);
+		_patch_render($scope1_id, "c0", [">i", _filled_guard($scope0_reason, 0) && "c"], (2 | _updates_from($scope0_reason, 0)) << 1, 0);
+		_subscribe($wi__input_promise && $global_flag__closures, _scope($scope1_id, { c: _unfilled_if($scope0_reason, 0) && x }), "c1", $scope0_page || $wg__input_promise);
+	}, 1, "c2", _unfilled_if($scope0_reason, 0) && 2, 1);
+	_fill_global_subscribe("c4", $scope0_id, _client_guard($scope0_reason, 0));
+	_scope($scope0_id, { e: $wi__input_promise && _unfilled_if($scope0_reason, 0) && $global_flag__closures });
 });
 
 // template.marko

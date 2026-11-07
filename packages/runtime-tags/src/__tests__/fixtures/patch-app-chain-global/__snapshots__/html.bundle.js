@@ -50,11 +50,11 @@ var page_b_default = _template("c", (input) => {
 // template.marko
 const $PageA_withLoadAssets = withLoadAssets(() => page_a_default, "b", flush, "_b");
 const $PageB_withLoadAssets = withLoadAssets(() => page_b_default, "c", flush, "_c");
-const $setup = _shell_setup([[], ["d0"]], ["a>", $setup$3]);
+const $setup = _shell_setup([[], ["d5"]], ["a>", $setup$3]);
 _shells({
 	d: `d${_shell_marker($setup)};${((_w0) => `/${_w0}&`)($walks$2)};${$template$2}`,
-	d1: `d1${_shell_marker([[], []], ["b>", $setup$2])};${/*@__PURE__*/ ((_w0) => `b%b/${_w0}&b`)($walks$1)};${/*@__PURE__*/ ((_w0) => `<!><!>${_w0}<!>`)($template$1)}`,
-	d2: `d2${_shell_marker([[], []], ["b>", $setup$1])};${/*@__PURE__*/ ((_w0) => `b%b/${_w0}&b`)($walks)};${/*@__PURE__*/ ((_w0) => `<!><!>${_w0}<!>`)($template)}`
+	d0: `d0${_shell_marker([[], []], ["b>", $setup$2])};${/*@__PURE__*/ ((_w0) => `b%b/${_w0}&b`)($walks$1)};${/*@__PURE__*/ ((_w0) => `<!><!>${_w0}<!>`)($template$1)}`,
+	d1: `d1${_shell_marker([[], []], ["b>", $setup$1])};${/*@__PURE__*/ ((_w0) => `b%b/${_w0}&b`)($walks)};${/*@__PURE__*/ ((_w0) => `<!><!>${_w0}<!>`)($template)}`
 });
 var template_default = _template("d", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_page = _write_guard($scope0_reason, 0), $wi__input_page = _write_if($scope0_reason, 0);
@@ -63,7 +63,7 @@ var template_default = _template("d", (input) => {
 	$global();
 	_set_scope_reason(0);
 	const $childScope3 = _peek_scope_id($scope0_id, "a", 1);
-	layout_default({ content: _content("d4", () => {
+	layout_default({ content: _content("d3", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		_if(() => {
@@ -82,11 +82,12 @@ var template_default = _template("d", (input) => {
 				_scope($scope3_id, { b: _existing_scope($childScope2) });
 				return 1;
 			}
-		}, $scope1_id, "a", 1, $wg__input_page, 1, 0, 0, ["d1", "d2"], $scope0_reason, 0);
-		$wi__input_page && _subscribe(_unfilled_if($scope0_reason, 0) && $input_page__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 0) && "d3", $wg__input_page);
+		}, $scope1_id, "a", 1, $wg__input_page, 1, 0, 0, ["d0", "d1"], $scope0_reason, 0);
+		$wi__input_page && _subscribe(_unfilled_if($scope0_reason, 0) && $input_page__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 0) && "d2", $wg__input_page);
 	}, $scope0_id) });
 	_patch_child_end();
-	_script($scope0_id, "d0", 0);
+	_fill_global_subscribe("d4", $scope0_id, 1);
+	_script($scope0_id, "d5", 0);
 	_scope($scope0_id, {
 		e: $wi__input_page && _unfilled_if($scope0_reason, 0) && $input_page__closures,
 		a: _existing_scope($childScope3)

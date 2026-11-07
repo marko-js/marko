@@ -12,6 +12,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wi__input_promise = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $n__closures = new Set();
+	const $global_brand__closures = new Set();
 	const $input_promise__closures = new Set();
 	const $global$1 = $global();
 	let n = 0;
@@ -31,14 +32,16 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope2_reason = _scope_reason();
 		const $scope2_id = _scope_id();
 		_html(`<p>${_text_mark($scope2_id, "#text/0", n + $global$1.brand)}</p>`);
-		_fill_global_subscribe("__tests__/template.marko_2_n#0:6_$global_brand#0:7", $scope2_id, 1);
-		_subscribe($n__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "7:6"), "__tests__/template.marko_2_n#0:6/subscribe");
+		_patch_render($scope2_id, "__tests__/template.marko_2_n#0:6_$global_brand#0:7/setup", ">$global_brand");
+		_subscribe($global_brand__closures, _subscribe($n__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "7:6"), "__tests__/template.marko_2_n#0:6/subscribe"), "__tests__/template.marko_2_$global_brand#0:7/subscribe");
 	}, void 0, "__tests__/template.marko_2*content", void 0, "__tests__/template.marko_1*content", 1);
 	_html(`<button>${_text_mark($scope0_id, "#text/2", n)}</button>${_el_mark($scope0_id, "#button/1")}</main>`);
+	_fill_global_subscribe("__tests__/template.marko_0_$global_brand#7/subscribe", $scope0_id, 1);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		n,
 		"ClosureScopes:n/8": $n__closures,
+		"ClosureScopes:$global_brand/9": $global_brand__closures,
 		"ClosureScopes:input_promise/7": $wi__input_promise && _unfilled_if($scope0_reason, 0) && $input_promise__closures
 	}, "__tests__/template.marko", 0, { n: "1:6" });
 }, 1);

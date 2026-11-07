@@ -9,10 +9,11 @@ var gm_default = _template("__tests__/tags/gm/index.marko", (input) => {
 	const $global$1 = $global();
 	const z = input.v + $global$1.flag;
 	_html(`<p>${_text_mark($scope0_id, "#text/0", z + $global$1.mark, 1, (2 | _updates_from($scope0_reason, 0)) << 1, 0)}</p>`);
-	_fill_global_subscribe("__tests__/tags/gm/index.marko_0_input_v#3_$global_flag#5", $scope0_id, _client_guard($scope0_reason, 0));
-	_fill_global_subscribe("__tests__/tags/gm/index.marko_0_z#4_$global_mark#7", $scope0_id);
+	_fill_global_subscribe("__tests__/tags/gm/index.marko_0_$global_flag#5/subscribe", $scope0_id, _client_guard($scope0_reason, 0));
+	_fill_global_subscribe("__tests__/tags/gm/index.marko_0_$global_mark#7/subscribe", $scope0_id, _client_guard((2 | _updates_from($scope0_reason, 0)) << 1, 0));
 	_unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "PatchWrite:input_v", input.v, 1);
-	_unfilled_if((2 | _updates_from($scope0_reason, 0)) << 1, 0) && _patch_write($scope0_id, "PatchWrite:z", z, 1);
+	_patch_render($scope0_id, "__tests__/tags/gm/index.marko_0_input_v#3_$global_flag#5/setup", [_filled_guard($scope0_reason, 0) && "input_v", "$global_flag"], (2 | _updates_from($scope0_reason, 0)) << 1, 0);
+	_patch_render($scope0_id, "__tests__/tags/gm/index.marko_0_z#4_$global_mark#7/setup", [_filled_guard((2 | _updates_from($scope0_reason, 0)) << 1, 0) && "z", "$global_mark"], (2 | _updates_from($scope0_reason, 0)) << 1, 0);
 	_scope($scope0_id, {
 		input_v: _unfilled_if($scope0_reason, 0) && input.v,
 		z: (_unfilled_if($scope0_reason, 0) || _unfilled_if()) && z

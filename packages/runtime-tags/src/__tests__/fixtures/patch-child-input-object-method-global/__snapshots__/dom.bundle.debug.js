@@ -1,7 +1,6 @@
 // tags/code-block.marko
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
-const $setup$1 = ($_) => {};
 const $else_content__input_text__OR__highlight = /*@__PURE__*/ _or_patch("__tests__/tags/code-block.marko_2_input_text#0:4_highlight#0:6/setup", 1, ($scope) => _html($scope, $scope._.highlight($scope._.input_text), "#text/0"));
 const $else_content__input_text = /*@__PURE__*/ _if_closure_patch("__tests__/tags/code-block.marko_2_input_text#0:4/setup", "#text/0", 1, $else_content__input_text__OR__highlight);
 const $else_content__setup = ($scope) => {
@@ -20,8 +19,10 @@ const $highlight2 = /*@__PURE__*/ _const("highlight", ($scope) => {
 	$if_content__highlight($scope);
 	$else_content__highlight($scope);
 });
-const $input_cursor__$global_theme = /*@__PURE__*/ _fill_global("__tests__/tags/code-block.marko_0_input_cursor#3_$global_theme#8", ($scope) => $highlight2($scope, $highlight($scope)), "theme");
-const $input_cursor = /*@__PURE__*/ _const("input_cursor", $input_cursor__$global_theme);
+const $input_cursor__OR__$global_theme = /*@__PURE__*/ _or_patch("__tests__/tags/code-block.marko_0_input_cursor#3_$global_theme#8/setup", 7, ($scope) => $highlight2($scope, $highlight($scope)));
+const $input_cursor = /*@__PURE__*/ _const("input_cursor", $input_cursor__OR__$global_theme);
+const $global_theme = _fill_global_resume("__tests__/tags/code-block.marko_0_$global_theme#8/subscribe", $input_cursor__OR__$global_theme, "theme");
+const $setup$1 = $global_theme;
 const $if = /*@__PURE__*/ _if("#text/0", "<div> </div>", "D ", $if_content__setup, "<span> </span>", "D ", $else_content__setup);
 const $input$1 = ($scope, input) => {
 	$input_cursor($scope, input.cursor);
@@ -35,19 +36,20 @@ const $input_text$1 = /*@__PURE__*/ _const("input_text", ($scope) => {
 const $highlight = ($scope) => function(text) {
 	return text.replace($scope.input_cursor.test, (m) => `<b class=${_global_read($scope.$global, "theme")}>${$scope.input_cursor.content((s) => s)}</b>`);
 };
-_bind_resume("__tests__/tags/code-block.marko_0/highlight input_cursor", $highlight);
-var code_block_default = /*@__PURE__*/ _template("__tests__/tags/code-block.marko", $template$1, "b%c", 0, $input$1);
+_bind_resume("__tests__/tags/code-block.marko_0/highlight input_cursor $global_theme", $highlight);
+var code_block_default = /*@__PURE__*/ _template("__tests__/tags/code-block.marko", $template$1, "b%c", $setup$1, $input$1);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c");
-const $input_text = ($scope, input_text) => $input_text$1($scope["#childScope/0"], input_text);
 function $setup($scope) {
+	$setup$1($scope["#childScope/0"]);
 	$input_cursor($scope["#childScope/0"], {
 		test: /x/g,
 		content: $cursor
 	});
 }
+const $input_text = ($scope, input_text) => $input_text$1($scope["#childScope/0"], input_text);
 const $input = ($scope, input) => $input_text($scope, input.text);
 function $cursor(h) {
 	return h("cursor");

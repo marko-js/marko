@@ -15,18 +15,21 @@ var card_default = /*@__PURE__*/ _template("__tests__/tags/card/index.marko", $t
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<main>${_w0}<!></main>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `D/${_w0}&%l`)($walks$1);
-const $card_content2__setup__$global_brand = /*@__PURE__*/ _fill_global("__tests__/template.marko_3_$global_brand#0:7", ($scope) => _text($scope["#text/0"], $scope.$global.brand), "brand");
-const $card_content2__setup = $card_content2__setup__$global_brand;
+const $card_content2__$global_brand = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_3_$global_brand#0:7/subscribe", "$global_brand/6", ($scope) => _text($scope["#text/0"], $scope.$global.brand), ($scope) => $scope._._);
+const $card_content2__setup = $card_content2__$global_brand;
 const $card_content2 = /*@__PURE__*/ _content("__tests__/template.marko_3*content", "<i> </i>", "D ", $card_content2__setup);
 const $if_content__setup = ($scope) => {
 	$input_content_direct($scope["#childScope/0"], $card_content2($scope));
 	$input_title$1($scope["#childScope/0"], "x");
 };
-const $card_content__setup__$global_brand = /*@__PURE__*/ _fill_global("__tests__/template.marko_1_$global_brand#0:7", ($scope) => _text($scope["#text/0"], $scope.$global.brand), "brand");
-const $card_content__setup = $card_content__setup__$global_brand;
+const $card_content__$global_brand = /*@__PURE__*/ _closure_get("$global_brand/6", ($scope) => _text($scope["#text/0"], $scope.$global.brand), 0, "__tests__/template.marko_1_$global_brand#0:7/subscribe");
+const $card_content__setup = $card_content__$global_brand;
 const $card_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "<em> </em>", "D ", $card_content__setup);
+const $global_brand__closure = /*@__PURE__*/ _closure($card_content__$global_brand, $card_content2__$global_brand);
+const $global_brand = _fill_global_resume("__tests__/template.marko_0_$global_brand#7/subscribe", $global_brand__closure, "brand");
 function $setup($scope) {
 	$input_content_direct($scope["#childScope/0"], $card_content($scope));
+	$global_brand($scope);
 }
 const $input_title = ($scope, input_title) => $input_title$1($scope["#childScope/0"], input_title);
 const $if = /*@__PURE__*/ _if("#text/1", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1), $if_content__setup);

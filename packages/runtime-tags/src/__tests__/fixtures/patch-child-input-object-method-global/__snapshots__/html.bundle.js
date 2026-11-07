@@ -21,7 +21,8 @@ var code_block_default = _template("b", (input) => {
 			_patch_render($scope1_id, "b1", [
 				_filled_guard($scope0_reason, 2) && ">e",
 				_filled_guard((2 | _updates_from($scope0_reason, 1)) << 1, 0) && ">g",
-				_filled_guard($scope0_reason, 1) && ">d"
+				_filled_guard($scope0_reason, 1) && ">d",
+				">i"
 			], (2 | _updates_from($scope0_reason, 0)) << 1, 0);
 			_scope($scope1_id, { _: ($scope0_page || $wi__input_cursor__OR__input_text) && _scope_with_id($scope0_id) });
 			return 0;
@@ -31,7 +32,8 @@ var code_block_default = _template("b", (input) => {
 			_patch_render($scope2_id, "b2", [
 				_filled_guard($scope0_reason, 2) && ">e",
 				_filled_guard((2 | _updates_from($scope0_reason, 1)) << 1, 0) && ">g",
-				_filled_guard($scope0_reason, 1) && ">d"
+				_filled_guard($scope0_reason, 1) && ">d",
+				">i"
 			], (2 | _updates_from($scope0_reason, 0)) << 1, 0);
 			_scope($scope2_id, { _: ($scope0_page || $wi__input_cursor__OR__input_text) && _scope_with_id($scope0_id) });
 			return 1;
@@ -40,8 +42,17 @@ var code_block_default = _template("b", (input) => {
 	_fill_global_subscribe("b5", $scope0_id, $cg__input_cursor);
 	$fg__input_text && $cg__input_text_length && _patch_render($scope0_id, "b6", "e");
 	$fg__input_text && $cg__input_text_length && _patch_render($scope0_id, "b7", "e");
-	_filled_guard((2 | _updates_from($scope0_reason, 1)) << 1, 0) && $cg__input_text_length && _patch_render($scope0_id, "b8", [_filled_guard((2 | _updates_from($scope0_reason, 1)) << 1, 0) && "g", $fg__input_cursor && "d"]);
-	_filled_guard((2 | _updates_from($scope0_reason, 1)) << 1, 0) && $cg__input_text_length && _patch_render($scope0_id, "b9", [_filled_guard((2 | _updates_from($scope0_reason, 1)) << 1, 0) && "g", $fg__input_cursor && "d"]);
+	_filled_guard((2 | _updates_from($scope0_reason, 1)) << 1, 0) && $cg__input_text_length && _patch_render($scope0_id, "b8", [
+		_filled_guard((2 | _updates_from($scope0_reason, 1)) << 1, 0) && "g",
+		$fg__input_cursor && "d",
+		"i"
+	]);
+	_filled_guard((2 | _updates_from($scope0_reason, 1)) << 1, 0) && $cg__input_text_length && _patch_render($scope0_id, "b9", [
+		_filled_guard((2 | _updates_from($scope0_reason, 1)) << 1, 0) && "g",
+		$fg__input_cursor && "d",
+		"i"
+	]);
+	_patch_render($scope0_id, "b10", [$fg__input_cursor && "d", "i"], (2 | _updates_from($scope0_reason, 1)) << 1, 0);
 	_scope($scope0_id, {
 		d: _unfilled_if($scope0_reason, 0) && input.cursor,
 		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0) || _unfilled_if()) && input.text,

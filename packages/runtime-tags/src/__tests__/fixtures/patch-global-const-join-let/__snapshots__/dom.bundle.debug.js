@@ -19,10 +19,10 @@ const $flag = /*@__PURE__*/ _const("flag", ($scope) => {
 	$off($scope, !$scope.flag);
 	$on__OR__flag($scope);
 });
-const $setup__$global_flag = /*@__PURE__*/ _fill_global("__tests__/template.marko_0_$global_flag#6", ($scope) => $flag($scope, $scope.$global.flag), "flag");
+const $global_flag = /*@__PURE__*/ _fill_global("__tests__/template.marko_0_$global_flag#6/subscribe", ($scope) => $flag($scope, $scope.$global.flag), "flag");
 const $pattern2 = ($scope, $pattern) => $user_name($scope, $pattern.user?.name);
 const $g = ($scope, g) => $g_flag($scope, g?.flag);
-const $setup__$global = /*@__PURE__*/ _fill_global("__tests__/template.marko_0_$global#5", ($scope) => {
+const $global2 = /*@__PURE__*/ _fill_global("__tests__/template.marko_0_$global#5/subscribe", ($scope) => {
 	$pattern2($scope, $scope.$global);
 	$g($scope, $scope.$global);
 }, "");
@@ -31,8 +31,8 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($sc
 }));
 function $setup($scope) {
 	$on($scope, true);
-	$setup__$global_flag($scope);
-	$setup__$global($scope);
+	$global_flag($scope);
+	$global2($scope);
 	$setup__script($scope);
 }
 const $user_name = /*@__PURE__*/ _const("user_name", $on__OR__user_name);

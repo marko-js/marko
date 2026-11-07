@@ -8,8 +8,9 @@ var gm_badge_default = _template("__tests__/tags/gm-badge/index.marko", (input) 
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
 	_html(`<p>${_text_mark($scope0_id, "#text/0", input.value + $global$1.flag, 1, (2 | _updates_from($scope0_reason, 0)) << 1, 0)}</p>`);
-	_fill_global_subscribe("__tests__/tags/gm-badge/index.marko_0_input_value#3_$global_flag#5", $scope0_id, _client_guard($scope0_reason, 0));
+	_fill_global_subscribe("__tests__/tags/gm-badge/index.marko_0_$global_flag#5/subscribe", $scope0_id, _client_guard($scope0_reason, 0));
 	_unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "PatchWrite:input_value", input.value, 1);
+	_patch_render($scope0_id, "__tests__/tags/gm-badge/index.marko_0_input_value#3_$global_flag#5/setup", [_filled_guard($scope0_reason, 0) && "input_value", "$global_flag"], (2 | _updates_from($scope0_reason, 0)) << 1, 0);
 	_scope($scope0_id, { input_value: _unfilled_if($scope0_reason, 0) && input.value }, "__tests__/tags/gm-badge/index.marko", 0, { input_value: ["input.value"] });
 });
 

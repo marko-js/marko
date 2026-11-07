@@ -8,6 +8,7 @@ var badge_default = _template("__tests__/tags/badge/index.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
 	_html(`<span>${_text_mark($scope0_id, "#text/0", $global$1.brand, 1, 4, 0)}</span>`);
+	_fill_global_subscribe("__tests__/tags/badge/index.marko_0_$global_brand#4/subscribe", $scope0_id, 1);
 	_script($scope0_id, "__tests__/tags/badge/index.marko_0_$global_brand#4");
 	_scope($scope0_id, {}, "__tests__/tags/badge/index.marko", 0);
 });

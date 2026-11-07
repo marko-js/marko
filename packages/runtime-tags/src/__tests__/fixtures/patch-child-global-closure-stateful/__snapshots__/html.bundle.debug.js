@@ -7,7 +7,7 @@ _shells({
 	"__tests__/tags/gm/index.marko_1*shell": "__tests__/tags/gm/index.marko_1*shell; ;<i></i>"
 });
 var gm_default = _template("__tests__/tags/gm/index.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wi__input_v = _write_if($scope0_reason, 0), $cg__input_v = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wi__input_v = _write_if($scope0_reason, 0), $cg__input_v = _client_guard($scope0_reason, 0), $fg__input_v = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
 	const z = input.v + $global$1.flag;
@@ -16,21 +16,22 @@ var gm_default = _template("__tests__/tags/gm/index.marko", (input) => {
 		if (input.v) {
 			const $scope1_id = _scope_id();
 			_html(`<i${_attr("data-z", z + $global$1.mark, $scope1_id, "PatchAttr:#i/0 data-z", (2 | _updates_from($scope0_reason, 0)) << 1, 0)}></i>${_el_mark($scope1_id, "#i/0")}`);
-			_fill_global_subscribe("__tests__/tags/gm/index.marko_1_z#0:6_$global_mark#0:10", $scope1_id);
-			_client_guard((2 | _updates_from($scope0_reason, 0)) << 1, 0) && _patch_render($scope1_id, "__tests__/tags/gm/index.marko_1_z#0:6/setup");
+			_patch_render($scope1_id, "__tests__/tags/gm/index.marko_1_z#0:6_$global_mark#0:10/setup", [_filled_guard((2 | _updates_from($scope0_reason, 0)) << 1, 0) && ">z", ">$global_mark"], (2 | _updates_from($scope0_reason, 0)) << 1, 0);
 			_scope($scope1_id, { _: ($scope0_page || $wi__input_v) && _scope_with_id($scope0_id) }, "__tests__/tags/gm/index.marko", "3:2");
 			return 0;
 		}
 	}, $scope0_id, "#text/1", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["__tests__/tags/gm/index.marko_1*shell"], $scope0_reason, 0);
-	_fill_global_subscribe("__tests__/tags/gm/index.marko_0_input_v#4_$global_flag#6", $scope0_id, $cg__input_v);
+	_fill_global_subscribe("__tests__/tags/gm/index.marko_0_$global_flag#6/subscribe", $scope0_id, $cg__input_v);
+	_fill_global_subscribe("__tests__/tags/gm/index.marko_0_$global_mark#10/subscribe", $scope0_id, _client_guard((2 | _updates_from($scope0_reason, 0)) << 1, 0));
 	_filled_guard((2 | _updates_from($scope0_reason, 0)) << 1, 0) && $cg__input_v && _patch_render($scope0_id, "__tests__/tags/gm/index.marko_1_z#0:6/setup", _filled_guard((2 | _updates_from($scope0_reason, 0)) << 1, 0) && "z");
+	_patch_render($scope0_id, "__tests__/tags/gm/index.marko_0_input_v#4_$global_flag#6/setup", [$fg__input_v && "input_v", "$global_flag"], (2 | _updates_from($scope0_reason, 0)) << 1, 0);
 	_scope($scope0_id, {
 		input_v: $wi__input_v && input.v,
 		z: (_unfilled_if($scope0_reason, 0) || _unfilled_if()) && z
 	}, "__tests__/tags/gm/index.marko", 0, {
 		input_v: ["input.v"],
 		z: "1:8"
-	}) || (_filled_guard($scope0_reason, 0) && $cg__input_v && _patch_write($scope0_id, "PatchMarkedWrite:input_v", input.v, !_server_guard($scope0_reason, 0)), _filled_guard((2 | _updates_from($scope0_reason, 0)) << 1, 0) && $cg__input_v && _patch_write($scope0_id, "PatchMarkedWrite:z", z, !_server_guard((2 | _updates_from($scope0_reason, 0)) << 1, 0)));
+	}) || ($fg__input_v && $cg__input_v && _patch_write($scope0_id, "PatchMarkedWrite:input_v", input.v, !_server_guard($scope0_reason, 0)), _filled_guard((2 | _updates_from($scope0_reason, 0)) << 1, 0) && $cg__input_v && _patch_write($scope0_id, "PatchMarkedWrite:z", z, !_server_guard((2 | _updates_from($scope0_reason, 0)) << 1, 0)));
 });
 
 // template.marko

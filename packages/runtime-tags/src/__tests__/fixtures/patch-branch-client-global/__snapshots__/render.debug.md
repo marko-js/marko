@@ -31,4 +31,5 @@ document.querySelector("button").click();
 ## Change
 ```
 INSERT: main > p
+UPDATE: main > p::text " " => "bmce"
 ```

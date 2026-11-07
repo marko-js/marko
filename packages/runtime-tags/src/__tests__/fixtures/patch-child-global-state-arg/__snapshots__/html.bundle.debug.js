@@ -25,8 +25,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	label_text_default({ v: count + $global$1.suffix });
 	_patch_child_end();
 	_html(`<button>${_text_mark($scope0_id, "#text/2", count)}</button>${_el_mark($scope0_id, "#button/1")}`);
-	_fill_global_subscribe("__tests__/template.marko_0_count#3_$global_suffix#5", $scope0_id);
+	_fill_global_subscribe("__tests__/template.marko_0_$global_suffix#5/subscribe", $scope0_id, 1);
 	_script($scope0_id, "__tests__/template.marko_0");
+	_patch_render($scope0_id, "__tests__/template.marko_0_count#3_$global_suffix#5/setup", "$global_suffix");
 	_scope($scope0_id, {
 		count,
 		"#childScope/0": _existing_scope($childScope)

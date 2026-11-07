@@ -26,8 +26,8 @@ document.querySelector("button").click();
 ```
 ## Change
 ```
-UPDATE: main > p::text "01x" => "11x"
 UPDATE: main > button::text "0" => "1"
+UPDATE: main > p::text "01x" => "11x"
 ```
 
 # Update

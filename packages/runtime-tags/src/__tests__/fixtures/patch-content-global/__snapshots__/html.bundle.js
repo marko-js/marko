@@ -25,16 +25,16 @@ var template_default = _template("a", (input) => {
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	widget_default({
 		value: count,
-		content: _content("a1", () => {
+		content: _content("a0", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
 			_html(`<div>${_text_mark($scope1_id, "a", $global$1.brand, 1, 4, 0)}</div>`);
-			_fill_global_subscribe("a0", $scope1_id);
 			_scope($scope1_id, {});
 		}, $scope0_id)
 	});
 	_patch_child_end();
 	_html(`<button>+</button>${_el_mark($scope0_id, "b")}</main>`);
+	_fill_global_subscribe("a1", $scope0_id);
 	_script($scope0_id, "a2");
 	_scope($scope0_id, {
 		c: count,

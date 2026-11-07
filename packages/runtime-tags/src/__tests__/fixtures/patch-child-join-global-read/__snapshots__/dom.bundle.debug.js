@@ -1,16 +1,16 @@
 // tags/child.marko
 const $template$1 = "<p> </p>";
 const $walks$1 = "D l";
-const $setup$1 = ($_) => {};
-const $input_a__OR__input_b__$global_g = /*@__PURE__*/ _fill_global("__tests__/tags/child.marko_0_input_a#3_input_b#4_$global_g#6", ($scope) => _text($scope["#text/0"], $scope.input_a + $scope.input_b + _global_read($scope.$global, "g")), "g");
-const $input_a__OR__input_b = /*@__PURE__*/ _or_patch("__tests__/tags/child.marko_0_input_a#3_input_b#4/setup", 5, $input_a__OR__input_b__$global_g);
-const $input_a = /*@__PURE__*/ _const("input_a", $input_a__OR__input_b);
-const $input_b = /*@__PURE__*/ _const("input_b", $input_a__OR__input_b);
+const $input_a__OR__input_b__OR__$global_g = /*@__PURE__*/ _or_patch("__tests__/tags/child.marko_0_input_a#3_input_b#4_$global_g#6/setup", 5, ($scope) => _text($scope["#text/0"], $scope.input_a + $scope.input_b + _global_read($scope.$global, "g")), 2);
+const $input_a = /*@__PURE__*/ _const("input_a", $input_a__OR__input_b__OR__$global_g);
+const $input_b = /*@__PURE__*/ _const("input_b", $input_a__OR__input_b__OR__$global_g);
+const $global_g = _fill_global_resume("__tests__/tags/child.marko_0_$global_g#6/subscribe", $input_a__OR__input_b__OR__$global_g, "g");
+const $setup$1 = $global_g;
 const $input$1 = ($scope, input) => {
 	$input_a($scope, input.a);
 	$input_b($scope, input.b);
 };
-var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, "D l", 0, $input$1);
+var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, "D l", $setup$1, $input$1);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0, _w1) => `${_w0}${_w1}<button class=n>+</button>`)($template$1, $template$1);
@@ -23,6 +23,8 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($sc
 	$n($scope, +$scope.n + 1);
 }));
 function $setup($scope) {
+	$setup$1($scope["#childScope/0"]);
+	$setup$1($scope["#childScope/1"]);
 	$n($scope, 0);
 	$setup__script($scope);
 }

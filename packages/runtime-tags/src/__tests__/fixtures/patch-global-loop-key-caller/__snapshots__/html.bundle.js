@@ -3,20 +3,23 @@ const $template = "<ul></ul>";
 const $setup$1 = [[], []];
 _shells({
 	b: "b; ;<ul></ul>",
-	b1: "b1;D ;<li> </li>"
+	b0: "b0;D ;<li> </li>"
 });
 var rows_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
 	_html("<ul>");
 	_for_until(input.n, 0, 1, (i) => {
 		const $scope1_id = _scope_id();
 		_html(`<li>${_text_mark($scope1_id, "a", i + ":" + $global$1.x, 1, (2 | _updates_from($scope0_reason, 0)) << 1, 0)}</li>`);
-		_fill_global_subscribe("b0", $scope0_id);
-		_scope($scope1_id, { M: _unfilled_if($scope0_reason, 0) && i });
-	}, 0, $scope0_id, "a", 1, 1, 1, 0, 0, "b1", $scope0_reason, 0);
+		_scope($scope1_id, {
+			M: _unfilled_if($scope0_reason, 0) && i,
+			_: ($scope0_page || _write_if($scope0_reason, 0)) && _scope_with_id($scope0_id)
+		});
+	}, 0, $scope0_id, "a", 1, 1, 1, 0, 0, "b0", $scope0_reason, 0);
 	_html(`</ul>${_el_mark($scope0_id, "a")}`);
+	_fill_global_subscribe("b1", $scope0_id, _client_guard($scope0_reason, 0));
 	_scope($scope0_id, {});
 });
 

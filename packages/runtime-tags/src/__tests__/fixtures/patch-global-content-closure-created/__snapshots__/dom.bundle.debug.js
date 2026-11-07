@@ -17,10 +17,12 @@ var panel_default = /*@__PURE__*/ _template("__tests__/tags/panel/index.marko", 
 // tags/card.marko
 const $template$1 = /*@__PURE__*/ ((_w0) => `<!>${_w0}<button class=b>+</button>`)($template$2);
 const $walks$1 = /*@__PURE__*/ ((_w0) => `b/${_w0}& b`)("b%c");
-const $body_content__setup__$global_brand = /*@__PURE__*/ _fill_global("__tests__/tags/card.marko_1_$global_brand#0:6", ($scope) => _text($scope["#text/0"], $scope.$global.brand), "brand");
-const $body_content__setup = $body_content__setup__$global_brand;
+const $body_content__$global_brand = /*@__PURE__*/ _closure_get_patch("__tests__/tags/card.marko_1_$global_brand#0:6/subscribe", "$global_brand/3", ($scope) => _text($scope["#text/0"], $scope.$global.brand));
+const $body_content__setup = $body_content__$global_brand;
 const $body_content = _content("__tests__/tags/card.marko_1*content", "<em> </em>", "D ", $body_content__setup);
 const $count = /*@__PURE__*/ _fill_let("__tests__/tags/card.marko_fill0", "count/2", ($scope) => $input_open($scope["#childScope/0"], $scope.count % 2 === 0));
+const $global_brand__closure = /*@__PURE__*/ _closure($body_content__$global_brand);
+const $global_brand = _fill_global_resume("__tests__/tags/card.marko_0_$global_brand#6/subscribe", $global_brand__closure, "brand");
 const $setup__script$1 = _script("__tests__/tags/card.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$count($scope, +$scope.count + 1);
 }));
@@ -28,6 +30,7 @@ function $setup$1($scope) {
 	$input_body($scope["#childScope/0"], attrTag({ content: $body_content($scope) }));
 	$setup__script$1($scope);
 	$count($scope, 0);
+	$global_brand($scope);
 }
 var card_default = /*@__PURE__*/ _template("__tests__/tags/card.marko", $template$1, $walks$1, $setup$1);
 

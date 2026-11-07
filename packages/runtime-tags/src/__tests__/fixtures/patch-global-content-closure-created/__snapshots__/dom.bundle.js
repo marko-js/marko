@@ -9,8 +9,10 @@ const $input_body = /*@__PURE__*/ _const(4, $if_content__input_body);
 // tags/card.marko
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<button class=b>+</button>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}& b`)("b%c");
-const $body_content = _content$1("b1", "<em> </em>", "D ", /* @__PURE__ */ _fill_global("b0", ($scope) => _text($scope.a, $scope.$.brand), "brand"));
+const $body_content__$global_brand = /*@__PURE__*/ _closure_get_patch("b6", 3, ($scope) => _text($scope.a, $scope.$.brand));
+const $body_content = _content$1("b0", "<em> </em>", "D ", $body_content__$global_brand);
 const $count = /*@__PURE__*/ _fill_let("b3", 2, ($scope) => $input_open($scope.a, $scope.c % 2 === 0));
+const $global_brand = _fill_global("b1", /* @__PURE__ */ _closure($body_content__$global_brand), "brand");
 const $setup__script$1 = _script("b2", ($scope) => _on($scope.b, "click", function() {
 	$count($scope, +$scope.c + 1);
 }));
@@ -18,6 +20,7 @@ function $setup($scope) {
 	$input_body($scope.a, attrTag({ content: $body_content($scope) }));
 	$setup__script$1($scope);
 	$count($scope, 0);
+	$global_brand($scope);
 }
 
 // template.marko

@@ -9,6 +9,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $global$1 = $global();
 	let x = input.a;
 	_html(`<p>${_text_mark($scope0_id, "#text/0", x + $global$1.flag)}</p>`);
-	_fill_global_subscribe("__tests__/template.marko_0_x#4_$global_flag#6", $scope0_id, 1);
+	_fill_global_subscribe("__tests__/template.marko_0_$global_flag#6/subscribe", $scope0_id, 1);
+	_patch_render($scope0_id, "__tests__/template.marko_0_x#4_$global_flag#6/setup", "$global_flag");
 	_scope($scope0_id, { x }, "__tests__/template.marko", 0, { x: "1:6" });
 }, 1);

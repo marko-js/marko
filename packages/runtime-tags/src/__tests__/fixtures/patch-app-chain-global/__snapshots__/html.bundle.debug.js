@@ -42,7 +42,7 @@ var page_b_default = _template("__tests__/page-b.marko", (input) => {
 	const [q, issues] = $global$2.search;
 	let count = 0;
 	_html(`<button class=b>b:${_text_mark($scope0_id, "#text/1", q, 2, 4, 0)}:${_text_mark($scope0_id, "#text/2", issues ? "!" : "", 2, 4, 0)}:${_text_mark($scope0_id, "#text/3", count, 2)}</button>${_el_mark($scope0_id, "#button/0")}`);
-	_fill_global_subscribe("__tests__/page-b.marko_0_$global_search#6", $scope0_id);
+	_fill_global_subscribe("__tests__/page-b.marko_0_$global_search#6/subscribe", $scope0_id);
 	_script($scope0_id, "__tests__/page-b.marko_0");
 	_patch_fill($scope0_id, "PatchFill:__tests__/page-b.marko_fill0", count, 1);
 	_scope($scope0_id, { count }, "__tests__/page-b.marko", 0, { count: "2:6" });
@@ -89,6 +89,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		$wi__input_page && _subscribe(_unfilled_if($scope0_reason, 0) && $input_page__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "6:4"), _client_guard($scope0_reason, 0) && "__tests__/template.marko_1_input_page#0:3/subscribe", $wg__input_page);
 	}, $scope0_id) });
 	_patch_child_end();
+	_fill_global_subscribe("__tests__/template.marko_0_$global#3/subscribe", $scope0_id, 1);
 	_script($scope0_id, "__tests__/template.marko_0_$global#3", 0);
 	_scope($scope0_id, {
 		"ClosureScopes:input_page/4": $wi__input_page && _unfilled_if($scope0_reason, 0) && $input_page__closures,

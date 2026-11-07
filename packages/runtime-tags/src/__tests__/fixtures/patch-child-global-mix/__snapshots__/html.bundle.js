@@ -9,6 +9,7 @@ var gm_badge_default = _template("b", (input) => {
 	_html(`<p>${_text_mark($scope0_id, "a", input.value + $global$1.flag, 1, (2 | _updates_from($scope0_reason, 0)) << 1, 0)}</p>`);
 	_fill_global_subscribe("b0", $scope0_id, _client_guard($scope0_reason, 0));
 	_unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "wd", input.value, 1);
+	_patch_render($scope0_id, "b1", [_filled_guard($scope0_reason, 0) && "d", "f"], (2 | _updates_from($scope0_reason, 0)) << 1, 0);
 	_scope($scope0_id, { d: _unfilled_if($scope0_reason, 0) && input.value });
 });
 

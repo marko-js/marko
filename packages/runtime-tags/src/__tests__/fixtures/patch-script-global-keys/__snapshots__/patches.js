@@ -5,7 +5,8 @@
     locale: "en",
     other: "y"
   },
-  ta: "y"
+  ta: "y",
+  ia4: "f g"
 }
 
 // PATCH
@@ -15,7 +16,8 @@
     locale: "fr",
     other: "y"
   },
-  ta: "y"
+  ta: "y",
+  ia4: "f g"
 }
 
 // PATCH
@@ -25,5 +27,6 @@
     locale: "fr",
     other: "y"
   },
-  ta: "y"
+  ta: "y",
+  ia4: "f g"
 }

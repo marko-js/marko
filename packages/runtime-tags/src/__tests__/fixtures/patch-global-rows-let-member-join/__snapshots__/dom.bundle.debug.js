@@ -47,8 +47,8 @@ const $for_content__$params = ($scope, $params2) => {
 };
 const $p = ($scope, p) => $for($scope, [p?.entries, (row) => row.item.id]);
 const $for = /*@__PURE__*/ _for_of("#text/0", /*@__PURE__*/ ((_w0) => `<article><strong> </strong><form>${_w0}<button class=sell>Sell <!></button></form></article>`)($template$1), /*@__PURE__*/ ((_w0) => `E lD/${_w0}&Db%n`)($walks$1), $for_content__setup, $for_content__$params);
-const $setup__$global_data = /*@__PURE__*/ _fill_global_path("__tests__/template.marko_0_$global_data#5", ($scope) => $p($scope, $scope.$global.data.player), "data", "player");
-const $setup = $setup__$global_data;
+const $global_data_player = /*@__PURE__*/ _fill_global_path("__tests__/template.marko_0_$global_data_player#6/subscribe", ($scope) => $p($scope, $scope.$global.data.player), "data", "player");
+const $setup = $global_data_player;
 const $valueChange = ($scope) => (_new_qty) => {
 	$for_content__qty($scope, _new_qty);
 };

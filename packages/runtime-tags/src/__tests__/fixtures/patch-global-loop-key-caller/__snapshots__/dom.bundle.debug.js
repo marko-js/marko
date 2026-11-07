@@ -1,13 +1,14 @@
 // tags/rows.marko
 const $template$1 = "<ul></ul>";
 const $walks$1 = " b";
-const $setup$1 = ($_) => {};
-const $for_content__setup__$global_x = /*@__PURE__*/ _fill_global_for("__tests__/tags/rows.marko_1_$global_x#0:8", "#ul/0", ($scope) => _text($scope["#text/0"], $scope["#LoopKey"] + ":" + $scope.$global.x), "x");
-const $for_content__setup = $for_content__setup__$global_x;
+const $for_content__$global_x = /*@__PURE__*/ _for_closure_patch("__tests__/tags/rows.marko_1_$global_x#0:8/setup", "#ul/0", ($scope) => _text($scope["#text/0"], $scope["#LoopKey"] + ":" + $scope.$global.x), 4);
+const $for_content__setup = $for_content__$global_x;
 const $for = /*@__PURE__*/ _for_until_unkeyed("#ul/0", "<li> </li>", "D ", $for_content__setup);
 const $input_n = ($scope, input_n) => $for($scope, [input_n]);
 const $input$1 = ($scope, input) => $input_n($scope, input.n);
-var rows_default = /*@__PURE__*/ _template("__tests__/tags/rows.marko", $template$1, " b", 0, $input$1);
+const $global_x = _fill_global_resume("__tests__/tags/rows.marko_0_$global_x#8/subscribe", $for_content__$global_x, "x");
+const $setup$1 = $global_x;
+var rows_default = /*@__PURE__*/ _template("__tests__/tags/rows.marko", $template$1, " b", $setup$1, $input$1);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0, _w1) => `<button>+</button>${_w0}${_w1}`)($template$1, $template$1);
@@ -17,6 +18,8 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($sc
 	$n($scope, +$scope.n + 1);
 }));
 function $setup($scope) {
+	$setup$1($scope["#childScope/1"]);
+	$setup$1($scope["#childScope/2"]);
 	$n($scope, 2);
 	$setup__script($scope);
 }

@@ -17,5 +17,6 @@ var template_default = _template("a", (input) => {
 	_html(`<button>${_text_mark($scope0_id, "c", count)}</button>${_el_mark($scope0_id, "b")}`);
 	_fill_global_subscribe("a2", $scope0_id, 1);
 	_script($scope0_id, "a3");
+	_patch_render($scope0_id, "a4", "h");
 	_scope($scope0_id, { d: count });
 }, 1);

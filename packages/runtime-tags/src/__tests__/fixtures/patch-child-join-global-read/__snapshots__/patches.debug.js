@@ -4,11 +4,11 @@
     g: "?"
   },
   "PatchChild:#childScope/0": {
-    "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-child-join-global-read/tags/child.marko_0_input_a#3_input_b#4/setup": "input_a",
+    "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-child-join-global-read/tags/child.marko_0_input_a#3_input_b#4_$global_g#6/setup": "input_a $global_g",
     "PatchMarkedWrite:input_a": "a"
   },
   "PatchChild:#childScope/1": {
-    "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-child-join-global-read/tags/child.marko_0_input_a#3_input_b#4/setup": "input_b",
+    "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-child-join-global-read/tags/child.marko_0_input_a#3_input_b#4_$global_g#6/setup": "input_b $global_g",
     "PatchMarkedWrite:input_b": "b"
   }
 }
@@ -19,11 +19,11 @@
     g: "#"
   },
   "PatchChild:#childScope/0": {
-    "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-child-join-global-read/tags/child.marko_0_input_a#3_input_b#4/setup": "input_a",
+    "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-child-join-global-read/tags/child.marko_0_input_a#3_input_b#4_$global_g#6/setup": "input_a $global_g",
     "PatchMarkedWrite:input_a": "a"
   },
   "PatchChild:#childScope/1": {
-    "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-child-join-global-read/tags/child.marko_0_input_a#3_input_b#4/setup": "input_b",
+    "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-child-join-global-read/tags/child.marko_0_input_a#3_input_b#4_$global_g#6/setup": "input_b $global_g",
     "PatchMarkedWrite:input_b": "b"
   }
 }

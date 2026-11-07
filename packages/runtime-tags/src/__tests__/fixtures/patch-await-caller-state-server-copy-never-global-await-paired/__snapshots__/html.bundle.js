@@ -9,8 +9,9 @@ _shells({
 	b: "b;b%;<!><!><!>"
 });
 var show_await_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $wi__input_promise = _write_if($scope0_reason, 0), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
+	const $global_flag__closures = /* @__PURE__ */ new Set();
 	const $global$1 = $global();
 	_await($scope0_id, "a", input.promise, (x) => {
 		const $scope1_id = _scope_id();
@@ -19,9 +20,12 @@ var show_await_default = _template("b", (input) => {
 			_html(`<p>${_text_mark($scope2_id, "a", y, 1, (2 | _updates_from($scope0_reason, 0)) << 1, 0)}</p>`);
 			_scope($scope2_id, {});
 		}, 1, "b0", _unfilled_if((2 | _updates_from($scope0_reason, 0)) << 1, 0) && 2, 1);
-		_fill_global_subscribe("b4", $scope1_id, _client_guard($scope0_reason, 0));
-		_write_if($scope0_reason, 0) && _scope($scope1_id, { c: _unfilled_if($scope0_reason, 0) && x });
+		_patch_render($scope1_id, "b4", [">k", _filled_guard($scope0_reason, 0) && "c"], (2 | _updates_from($scope0_reason, 0)) << 1, 0);
+		_subscribe($wi__input_promise && $global_flag__closures, _scope($scope1_id, { c: _unfilled_if($scope0_reason, 0) && x }), "b5", 0);
+		($scope0_page || $wi__input_promise) && _write_guard($scope0_reason, 0) && _resume_branch($scope1_id);
 	}, 1, "b2", _unfilled_if($scope0_reason, 0) && 3, 1);
+	_fill_global_subscribe("b6", $scope0_id, _client_guard($scope0_reason, 0));
+	_scope($scope0_id, { e: $wi__input_promise && _unfilled_if($scope0_reason, 0) && $global_flag__closures });
 });
 
 // template.marko

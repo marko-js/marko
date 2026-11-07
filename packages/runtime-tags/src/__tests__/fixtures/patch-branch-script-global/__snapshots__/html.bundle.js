@@ -13,11 +13,11 @@ var template_default = _template("a", (input) => {
 			const $scope1_id = _scope_id();
 			_html("<p>promo</p>");
 			_script($scope1_id, "a0", 0);
-			_write_if($scope0_reason, 0) && _scope($scope1_id, {});
+			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
 	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["a1"], $scope0_reason, 0);
 	_html("</main>");
-	_fill_global_subscribe("a2", $scope0_id);
+	_fill_global_subscribe("a2", $scope0_id, 1);
 	_scope($scope0_id, {});
 }, 1);

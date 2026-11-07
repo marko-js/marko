@@ -1,17 +1,16 @@
 // tags/child.marko
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
-const $setup$1 = ($_) => {};
 const $if_content__input_a__OR__input_b__OR__c = /*@__PURE__*/ _or_patch("__tests__/tags/child.marko_1_input_a#0:4_input_b#0:5_c#1/setup", 2, ($scope) => _text($scope["#text/0"], $scope._.input_a + $scope._.input_b + $scope.c), 2);
 const $if_content__input_a = /*@__PURE__*/ _if_closure_patch("__tests__/tags/child.marko_1_input_a#0:4/setup", "#text/0", 0, $if_content__input_a__OR__input_b__OR__c);
-const $if_content__c = /*@__PURE__*/ _const("c", $if_content__input_a__OR__input_b__OR__c);
-const $if_content__setup__$global_g = /*@__PURE__*/ _fill_global("__tests__/tags/child.marko_1_$global_g#0:8", ($scope) => $if_content__c($scope, $scope.$global.g + "!"), "g");
 const $if_content__setup = ($scope) => {
 	$if_content__input_a._($scope);
 	$if_content__input_b._($scope);
-	$if_content__setup__$global_g($scope);
+	$if_content__$global_g._($scope);
 };
 const $if_content__input_b = /*@__PURE__*/ _if_closure_patch("__tests__/tags/child.marko_1_input_b#0:5/setup", "#text/0", 0, $if_content__input_a__OR__input_b__OR__c);
+const $if_content__c = /*@__PURE__*/ _const("c", $if_content__input_a__OR__input_b__OR__c);
+const $if_content__$global_g = /*@__PURE__*/ _if_closure_patch("__tests__/tags/child.marko_1_$global_g#0:8/setup", "#text/0", 0, ($scope) => $if_content__c($scope, $scope.$global.g + "!"));
 const $if = /*@__PURE__*/ _if("#text/0", "<p> </p>", "D ", $if_content__setup);
 const $input_show$1 = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input$1 = ($scope, input) => {
@@ -21,7 +20,9 @@ const $input$1 = ($scope, input) => {
 };
 const $input_a = /*@__PURE__*/ _const("input_a", $if_content__input_a);
 const $input_b = /*@__PURE__*/ _const("input_b", $if_content__input_b);
-var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, "b%c", 0, $input$1);
+const $global_g = _fill_global_resume("__tests__/tags/child.marko_0_$global_g#8/subscribe", $if_content__$global_g, "g");
+const $setup$1 = $global_g;
+var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, "b%c", $setup$1, $input$1);
 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0, _w1) => `<!>${_w0}${_w1}<button class=n>+</button>`)($template$1, $template$1);
@@ -31,6 +32,8 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($sc
 	$n($scope, +$scope.n + 1);
 }));
 function $setup($scope) {
+	$setup$1($scope["#childScope/0"]);
+	$setup$1($scope["#childScope/1"]);
 	$n($scope, 0);
 	$setup__script($scope);
 }

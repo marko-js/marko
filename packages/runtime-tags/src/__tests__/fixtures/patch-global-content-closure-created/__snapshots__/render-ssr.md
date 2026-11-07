@@ -30,6 +30,7 @@ document.querySelector(selector).click();
 ```
 INSERT: .a + .b
 INSERT: .a + em
+UPDATE: em::text " " => "acme"
 ```
 
 # Update `{"$global":{"brand":"bmce","serializedGlobals":["brand"]}}`

@@ -50,6 +50,7 @@ document.querySelector(selector).click();
 ## Change
 ```
 INSERT: .b + p
+UPDATE: p::text " " => "acme"
 ```
 
 # Update `{"$global":{"brand":"bmce","serializedGlobals":["brand"]}}`

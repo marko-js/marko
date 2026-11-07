@@ -7,9 +7,16 @@
   M._.b = {
     "ready:packages/runtime-tags/src/__tests__/fixtures/patch-global-closure-lazy/child.marko": [
       _ => [2, {
-        count: 0
+        count: 0,
+        "ClosureScopes:$global_brand/5": new Set
+      }, {
+        _: _(2)
+      }, {
+        _: _(3)
+      }, {
+        _: _(3)
       }],
-      "packages/runtime-tags/src/__tests__/fixtures/patch-global-closure-lazy/child.marko_2_$global_brand#0:13 4 5 packages/runtime-tags/src/__tests__/fixtures/patch-global-closure-lazy/child.marko_0 2"
+      "packages/runtime-tags/src/__tests__/fixtures/patch-global-closure-lazy/child.marko_2_$global_brand#0:13/subscribe 4 5 packages/runtime-tags/src/__tests__/fixtures/patch-global-closure-lazy/child.marko_0_$global_brand#13/subscribe 2 packages/runtime-tags/src/__tests__/fixtures/patch-global-closure-lazy/child.marko_0 2"
     ]
   };
   M._.r = [_ => [0, {

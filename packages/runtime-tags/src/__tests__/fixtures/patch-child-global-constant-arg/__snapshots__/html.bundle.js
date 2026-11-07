@@ -24,6 +24,7 @@ var pass_default = _template("c", (input) => {
 	_patch_child_end();
 	_fill_global_subscribe("c0", $scope0_id, _client_guard($scope0_reason, 0));
 	_unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "wd", input.x, 1);
+	_patch_render($scope0_id, "c1", [_filled_guard($scope0_reason, 0) && "d", "f"], (2 | _updates_from($scope0_reason, 0)) << 1, 0);
 	_scope($scope0_id, {
 		d: _unfilled_if($scope0_reason, 0) && input.x,
 		a: _existing_scope($childScope)

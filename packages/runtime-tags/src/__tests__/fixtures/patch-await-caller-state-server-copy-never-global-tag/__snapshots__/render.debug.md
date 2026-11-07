@@ -8,21 +8,6 @@
 ```
 
 # Update `{"show":true,"promise":{},"$global":{"flag":true,"serializedGlobals":["flag"]}}`
-```html
-<button
-  class="swap"
->
-  swap
-</button>
-<span>
-  a
-</span>
-```
-## Change
-```
-INSERT: .swap + span
-UPDATE: span::text " " => "a"
-```
 
 # Update
 ```js
@@ -40,5 +25,6 @@ document.querySelector("button.swap").click();
 ```
 ## Change
 ```
-UPDATE: span::text "a" => "swapped"
+INSERT: .swap + span
+UPDATE: span::text " " => "swapped"
 ```

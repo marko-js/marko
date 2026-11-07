@@ -1,22 +1,25 @@
 // template.marko
 const $template = $template$1;
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1);
-const $for_content__setup__$global_brand = /*@__PURE__*/ _fill_global("__tests__/template.marko_2_$global_brand#0:6", ($scope) => _text($scope["#text/0"], $scope.$global.brand), "brand");
+const $for_content__$global_brand = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_2_$global_brand#0:6/subscribe", "$global_brand/5", ($scope) => _text($scope["#text/0"], $scope.$global.brand), ($scope) => $scope._._);
 const $for_content__setup = ($scope) => {
-	$for_content__setup__$global_brand($scope);
+	$for_content__$global_brand($scope);
 	_text($scope["#text/1"], $scope["#LoopKey"]);
 };
 const $card_content__for = /*@__PURE__*/ _for_until_unkeyed("#text/1", "<p><!> <!></p>", "D%c%", $for_content__setup);
 const $card_content__input_n = /*@__PURE__*/ _closure_get("input_n/4", ($scope) => $card_content__for($scope, [$scope._.input_n]), 0, "__tests__/template.marko_1_input_n#0:3/subscribe");
-const $card_content__setup__$global_brand = /*@__PURE__*/ _fill_global("__tests__/template.marko_1_$global_brand#0:6", ($scope) => _text($scope["#text/0"], $scope.$global.brand), "brand");
 const $card_content__setup = ($scope) => {
 	$card_content__input_n($scope);
-	$card_content__setup__$global_brand($scope);
+	$card_content__$global_brand($scope);
 };
+const $card_content__$global_brand = /*@__PURE__*/ _closure_get("$global_brand/5", ($scope) => _text($scope["#text/0"], $scope.$global.brand), 0, "__tests__/template.marko_1_$global_brand#0:6/subscribe");
 const $card_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "<h1> </h1><!><!>", "D l%", $card_content__setup);
+const $global_brand__closure = /*@__PURE__*/ _closure($card_content__$global_brand, $for_content__$global_brand);
+const $global_brand = /*@__PURE__*/ _fill_global("__tests__/template.marko_0_$global_brand#6/subscribe", $global_brand__closure, "brand");
 function $setup($scope) {
 	$setup$1($scope["#childScope/0"]);
 	$input_content($scope["#childScope/0"], $card_content($scope));
+	$global_brand($scope);
 }
 const $input = ($scope, input) => $input_n($scope, input.n);
 const $input_n__closure = /*@__PURE__*/ _closure($card_content__input_n);

@@ -11,7 +11,7 @@
       "PatchSetup:": {
         "PatchWrite:y": 0,
         "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-global-join-unfillable-created/template.marko_2_value#1:4/subscribe": 0,
-        "PatchRender:": "packages/runtime-tags/src/__tests__/fixtures/patch-global-join-unfillable-created/template.marko_2_value#1:4_y#3/setup"
+        "PatchRender:": "packages/runtime-tags/src/__tests__/fixtures/patch-global-join-unfillable-created/template.marko_2_value#1:4_y#3/setup packages/runtime-tags/src/__tests__/fixtures/patch-global-join-unfillable-created/template.marko_2_$global_suffix#0:16_b#5/setup"
       }
     },
     "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-global-join-unfillable-created/template.marko_1_value#4/subscribers": "value",
@@ -34,7 +34,7 @@
       "PatchSetup:": {
         "PatchWrite:y": 0,
         "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-global-join-unfillable-created/template.marko_2_value#1:4/subscribe": 0,
-        "PatchRender:": "packages/runtime-tags/src/__tests__/fixtures/patch-global-join-unfillable-created/template.marko_2_value#1:4_y#3/setup"
+        "PatchRender:": "packages/runtime-tags/src/__tests__/fixtures/patch-global-join-unfillable-created/template.marko_2_value#1:4_y#3/setup packages/runtime-tags/src/__tests__/fixtures/patch-global-join-unfillable-created/template.marko_2_$global_suffix#0:16_b#5/setup"
       }
     },
     "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-global-join-unfillable-created/template.marko_1_value#4/subscribers": "value",

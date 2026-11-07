@@ -2,9 +2,13 @@
 const $template = "<main><!><button> </button></main>";
 const $walks = "D%b D m";
 const $await_content__$params = ($scope, $params2) => _text($scope["#text/0"], $params2[0]);
-const $placeholder_content__n__$global_brand = /*@__PURE__*/ _fill_global("__tests__/template.marko_2_n#0:6_$global_brand#0:7", ($scope) => _text($scope["#text/0"], $scope._.n + _global_read($scope.$global, "brand")), "brand");
-const $placeholder_content__n = /*@__PURE__*/ _closure_get("n/8", $placeholder_content__n__$global_brand, 0, "__tests__/template.marko_2_n#0:6/subscribe");
-const $placeholder_content__setup = $placeholder_content__n;
+const $placeholder_content__n__OR__$global_brand = /*@__PURE__*/ _or_patch("__tests__/template.marko_2_n#0:6_$global_brand#0:7/setup", 1, ($scope) => _text($scope["#text/0"], $scope._.n + _global_read($scope.$global, "brand")));
+const $placeholder_content__n = /*@__PURE__*/ _closure_get("n/8", $placeholder_content__n__OR__$global_brand, 0, "__tests__/template.marko_2_n#0:6/subscribe");
+const $placeholder_content__setup = ($scope) => {
+	$placeholder_content__n($scope);
+	$placeholder_content__$global_brand($scope);
+};
+const $placeholder_content__$global_brand = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_2_$global_brand#0:7/subscribe", "$global_brand/9", $placeholder_content__n__OR__$global_brand);
 const $placeholder_content = _content("__tests__/template.marko_2*content", "<p> </p>", "D ", $placeholder_content__setup);
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<em> </em>", "D ");
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
@@ -19,12 +23,15 @@ const $n = _let("n/6", ($scope) => {
 	$n__closure($scope);
 });
 const $try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content__setup, $placeholder_content);
+const $global_brand__closure = /*@__PURE__*/ _closure($placeholder_content__$global_brand);
+const $global_brand = _fill_global_resume("__tests__/template.marko_0_$global_brand#7/subscribe", $global_brand__closure, "brand");
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$n($scope, +$scope.n + 1);
 }));
 function $setup($scope) {
 	$n($scope, 0);
 	$try($scope);
+	$global_brand($scope);
 	$setup__script($scope);
 }
 const $input = ($scope, input) => $input_promise($scope, input.promise);

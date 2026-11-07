@@ -15,13 +15,12 @@
   swap
 </button>
 <p>
-  a:true
+   
 </p>
 ```
 ## Change
 ```
 INSERT: .swap + p
-UPDATE: p::text " " => "a:true"
 ```
 
 # Update
@@ -40,5 +39,5 @@ document.querySelector("button.swap").click();
 ```
 ## Change
 ```
-UPDATE: p::text "a:true" => "swapped:true"
+UPDATE: p::text " " => "swapped:true"
 ```

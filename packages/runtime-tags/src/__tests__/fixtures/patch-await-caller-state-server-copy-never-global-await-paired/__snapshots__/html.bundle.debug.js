@@ -10,8 +10,9 @@ _shells({
 	"__tests__/tags/show-await.marko": "__tests__/tags/show-await.marko;b%;<!><!><!>"
 });
 var show_await_default = _template("__tests__/tags/show-await.marko", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $wi__input_promise = _write_if($scope0_reason, 0), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
+	const $global_flag__closures = new Set();
 	const $global$1 = $global();
 	_await($scope0_id, "#text/0", input.promise, (x) => {
 		const $scope1_id = _scope_id();
@@ -20,9 +21,12 @@ var show_await_default = _template("__tests__/tags/show-await.marko", (input) =>
 			_html(`<p>${_text_mark($scope2_id, "#text/0", y, 1, (2 | _updates_from($scope0_reason, 0)) << 1, 0)}</p>`);
 			_scope($scope2_id, {}, "__tests__/tags/show-await.marko", "2:4");
 		}, 1, "__tests__/tags/show-await.marko_2*content", _unfilled_if((2 | _updates_from($scope0_reason, 0)) << 1, 0) && 2, 1);
-		_fill_global_subscribe("__tests__/tags/show-await.marko_1_$global_flag#0:10_x#2", $scope1_id, _client_guard($scope0_reason, 0));
-		_write_if($scope0_reason, 0) && _scope($scope1_id, { x: _unfilled_if($scope0_reason, 0) && x }, "__tests__/tags/show-await.marko", "1:2", { x: "1:8" });
+		_patch_render($scope1_id, "__tests__/tags/show-await.marko_1_$global_flag#0:10_x#2/setup", [">$global_flag", _filled_guard($scope0_reason, 0) && "x"], (2 | _updates_from($scope0_reason, 0)) << 1, 0);
+		_subscribe($wi__input_promise && $global_flag__closures, _scope($scope1_id, { x: _unfilled_if($scope0_reason, 0) && x }, "__tests__/tags/show-await.marko", "1:2", { x: "1:8" }), "__tests__/tags/show-await.marko_1_$global_flag#0:10/subscribe", 0);
+		($scope0_page || $wi__input_promise) && _write_guard($scope0_reason, 0) && _resume_branch($scope1_id);
 	}, 1, "__tests__/tags/show-await.marko_1*content", _unfilled_if($scope0_reason, 0) && 3, 1);
+	_fill_global_subscribe("__tests__/tags/show-await.marko_0_$global_flag#10/subscribe", $scope0_id, _client_guard($scope0_reason, 0));
+	_scope($scope0_id, { "ClosureScopes:$global_flag/4": $wi__input_promise && _unfilled_if($scope0_reason, 0) && $global_flag__closures }, "__tests__/tags/show-await.marko", 0);
 });
 
 // template.marko

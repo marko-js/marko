@@ -23,7 +23,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				return 0;
 			}
 		}, $scope1_id, "#text/0", $scope1_page || $wg__v, $scope1_page || $wg__v, 0, 0, 1);
-		_fill_global_subscribe("__tests__/template.marko_1_$global_flag#0:10", $scope1_id);
 		_unfilled_if($scope1_reason, 0) && _patch_write($scope1_id, "PatchWrite:v", v, 1);
 		_patch_render($scope1_id, "__tests__/template.marko_1_v#3_flag#4/setup", [_filled_guard($scope1_reason, 0) && "v", "flag"], 6, 0);
 		_scope($scope1_id, {
@@ -38,6 +37,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/1", 0);
 	Show.content({ v: on });
 	_patch_child_end();
+	_fill_global_subscribe("__tests__/template.marko_0_$global_flag#10/subscribe", $scope0_id);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		on,

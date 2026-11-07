@@ -7,7 +7,7 @@ _shells({
 	a0: "a0;D ;<em> </em>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_other = _server_guard($scope0_reason, 1), $fg__input_other = _filled_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $cg__input_show = _client_guard($scope0_reason, 0), $sg__input_other = _server_guard($scope0_reason, 1), $fg__input_other = _filled_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
 	let open = false;
@@ -48,8 +48,7 @@ var template_default = _template("a", (input) => {
 			});
 			_patch_child_end();
 			_html(`<span>${_text_mark($scope1_id, "c", $global$1.brand, 1, 4, 0)}</span>`);
-			_fill_global_subscribe("a5", $scope1_id);
-			_client_guard($scope0_reason, 0) && _patch_render($scope1_id, "a6");
+			$cg__input_show && _patch_render($scope1_id, "a5");
 			_scope($scope1_id, {
 				_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id),
 				a: _existing_scope($childScope),
@@ -64,6 +63,7 @@ var template_default = _template("a", (input) => {
 		label: input.label + "!"
 	}, 16);
 	_html(`<button>toggle</button>${_el_mark($scope0_id, "c")}`);
+	_fill_global_subscribe("a6", $scope0_id, $cg__input_show);
 	_script($scope0_id, "a7");
 	_patch_render($scope0_id, "a8", $fg__input_other && "g", $scope0_reason, 1);
 	_patch_render($scope0_id, "a9", [$fg__input_label && "h", $fg__input_other && "l"]);

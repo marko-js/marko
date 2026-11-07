@@ -1,18 +1,21 @@
 // template.marko
 const $Badge_content__walks = "D l";
 const $Badge_content__template = "<p> </p>";
-_shells({ a: `a !a2;${((_w0) => `D/${_w0}& l`)($Badge_content__walks)};${((_w0) => `<main>${_w0}<button>+</button></main>`)($Badge_content__template)}` });
+_shells({ a: `a !a3;${((_w0) => `D/${_w0}& l`)($Badge_content__walks)};${((_w0) => `<main>${_w0}<button>+</button></main>`)($Badge_content__template)}` });
 var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
+	const $global_flag__closures = /* @__PURE__ */ new Set();
 	const $global$1 = $global();
 	const Badge = { content: _content("a0", (input) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason();
+		const $scope1_reason = _scope_reason(), $scope1_page = _page_render();
 		_html(`<p>${_text_mark($scope1_id, "a", input.value + $global$1.flag, 1, 6, 0)}</p>`);
-		_fill_global_subscribe("a1", $scope1_id, _client_guard($scope1_reason, 0));
 		_unfilled_if($scope1_reason, 0) && _patch_write($scope1_id, "wd", input.value, 1);
-		_scope($scope1_id, { d: _unfilled_if($scope1_reason, 0) && input.value });
+		_subscribe($global_flag__closures, _scope($scope1_id, {
+			d: _unfilled_if($scope1_reason, 0) && input.value,
+			_: ($scope1_page || _write_if($scope1_reason, 0)) && _scope_with_id($scope0_id)
+		}), "a1");
 	}, $scope0_id) };
 	let count = 0;
 	_html("<main>");
@@ -21,9 +24,11 @@ var template_default = _template("a", (input) => {
 	Badge.content({ value: count });
 	_patch_child_end();
 	_html(`<button>+</button>${_el_mark($scope0_id, "b")}</main>`);
-	_script($scope0_id, "a2");
+	_fill_global_subscribe("a2", $scope0_id, 1);
+	_script($scope0_id, "a3");
 	_scope($scope0_id, {
 		c: count,
+		d: $global_flag__closures,
 		a: _existing_scope($childScope)
 	});
 }, 1);

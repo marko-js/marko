@@ -10,8 +10,9 @@ var template_default = _template("a", (input) => {
 	let s = 0;
 	_html(`<button>${_text_mark($scope0_id, "b", s)}</button>${_el_mark($scope0_id, "a")}`);
 	_if(() => {}, $scope0_id, "c", 1, 1, 0, 0, 1);
+	_fill_global_subscribe("a1", $scope0_id, 1);
 	_script($scope0_id, "a2");
-	$fg__input_a && _patch_render($scope0_id, "a1", "f");
+	$fg__input_a && _patch_render($scope0_id, "a3", "f");
 	_scope($scope0_id, {
 		f: input.a,
 		g: s

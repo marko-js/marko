@@ -1,20 +1,25 @@
 // template.marko
 const $template = "<main><button>t</button><!></main>";
 const $walks = "D b%l";
-const $if_content__input_name__$global_brand = /*@__PURE__*/ _fill_global("__tests__/template.marko_1_input_name#0:4_$global_brand#0:8", ($scope) => _text($scope["#text/1"], $scope._.input_name + ":" + _global_read($scope.$global, "brand")), "brand");
-const $if_content__input_name = /*@__PURE__*/ _if_closure_patch("__tests__/template.marko_1_input_name#0:4/setup", "#text/1", 0, $if_content__input_name__$global_brand);
-const $if_content__setup__$global_brand = /*@__PURE__*/ _fill_global("__tests__/template.marko_1_$global_brand#0:8", ($scope) => _text($scope["#text/0"], $scope.$global.brand), "brand");
+const $if_content__input_name__OR__$global_brand = /*@__PURE__*/ _or_patch("__tests__/template.marko_1_input_name#0:4_$global_brand#0:8/setup", 2, ($scope) => _text($scope["#text/1"], $scope._.input_name + ":" + _global_read($scope.$global, "brand")));
+const $if_content__input_name = /*@__PURE__*/ _if_closure_patch("__tests__/template.marko_1_input_name#0:4/setup", "#text/1", 0, $if_content__input_name__OR__$global_brand);
 const $if_content__setup = ($scope) => {
 	$if_content__input_name._($scope);
-	$if_content__setup__$global_brand($scope);
+	$if_content__$global_brand._($scope);
 };
+const $if_content__$global_brand = /*@__PURE__*/ _if_closure_patch("__tests__/template.marko_1_$global_brand#0:8/setup", "#text/1", 0, ($scope) => {
+	_text($scope["#text/0"], $scope.$global.brand);
+	$if_content__input_name__OR__$global_brand($scope);
+});
 const $if = /*@__PURE__*/ _if("#text/1", "<p> </p><b> </b>", "D lD ", $if_content__setup);
 const $open = _let("open/5", ($scope) => $if($scope, $scope.open ? 0 : 1));
+const $global_brand = _fill_global_resume("__tests__/template.marko_0_$global_brand#8/subscribe", $if_content__$global_brand, "brand");
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$open($scope, !$scope.open);
 }));
 function $setup($scope) {
 	$open($scope, false);
+	$global_brand($scope);
 	$setup__script($scope);
 }
 const $input = ($scope, input) => $input_name($scope, input.name);

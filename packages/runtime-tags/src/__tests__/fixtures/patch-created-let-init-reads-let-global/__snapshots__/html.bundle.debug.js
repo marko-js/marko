@@ -16,13 +16,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			let x = 1;
 			let y = x + $global$1.n;
 			_html(`<span></span>${_el_mark($scope1_id, "#span/0")}<button>${_text_mark($scope1_id, "#text/2", x)}</button>${_el_mark($scope1_id, "#button/1")}`);
-			_fill_global_subscribe("__tests__/template.marko_1_$global_n#0:7_x#3", $scope1_id, 1);
 			_script($scope1_id, "__tests__/template.marko_1");
-			_script($scope1_id, "__tests__/template.marko_1_y#4");
+			_script($scope1_id, "__tests__/template.marko_1_y#5");
+			_patch_render($scope1_id, "__tests__/template.marko_1_$global_n#0:7_x#3/setup", ">$global_n");
 			_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill0", x, 1);
 			_scope($scope1_id, {
 				x,
-				y
+				y,
+				_: _scope_with_id($scope0_id)
 			}, "__tests__/template.marko", "1:2", {
 				x: "2:8",
 				y: "3:8"
@@ -30,5 +31,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "#text/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 0);
+	_fill_global_subscribe("__tests__/template.marko_0_$global_n#7/subscribe", $scope0_id, 1);
 	_scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

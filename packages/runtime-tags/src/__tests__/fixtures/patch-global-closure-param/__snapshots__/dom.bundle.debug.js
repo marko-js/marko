@@ -11,11 +11,21 @@ var wrap_default = /*@__PURE__*/ _template("__tests__/tags/wrap.marko", $templat
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<button> </button>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}& D l`)("D%l");
-const $wrap_content__z__$global_mark = /*@__PURE__*/ _fill_global("__tests__/template.marko_1_z#0:7_$global_mark#0:9", ($scope) => _attr($scope["#p/0"], "data-z", $scope._.z + _global_read($scope.$global, "mark")), "mark");
-const $wrap_content__z = /*@__PURE__*/ _closure_get("z/8", $wrap_content__z__$global_mark, 0, "__tests__/template.marko_1_z#0:7/subscribe");
-const $wrap_content__setup = $wrap_content__z;
+const $wrap_content__z__OR__$global_mark = /*@__PURE__*/ _or_patch("__tests__/template.marko_1_z#0:7_$global_mark#0:9/setup", 1, ($scope) => _attr($scope["#p/0"], "data-z", $scope._.z + _global_read($scope.$global, "mark")));
+const $wrap_content__z = /*@__PURE__*/ _closure_get("z/9", $wrap_content__z__OR__$global_mark, 0, "__tests__/template.marko_1_z#0:7/subscribe");
+const $wrap_content__setup = ($scope) => {
+	$wrap_content__z($scope);
+	$wrap_content__$global_mark($scope);
+};
+const $wrap_content__$global_mark = /*@__PURE__*/ _closure_get("$global_mark/10", $wrap_content__z__OR__$global_mark, 0, "__tests__/template.marko_1_$global_mark#0:9/subscribe");
 const $wrap_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "<p></p>", " ", $wrap_content__setup);
 const $n = _let("n/6", ($scope) => _text($scope["#text/2"], $scope.n));
+const $z__closure = /*@__PURE__*/ _closure($wrap_content__z);
+const $z = /*@__PURE__*/ _const("z", $z__closure);
+const $input_v__OR__$global_flag = /*@__PURE__*/ _or_patch("__tests__/template.marko_0_input_v#5_$global_flag#6/setup", 8, ($scope) => $z($scope, $scope.input_v + _global_read($scope.$global, "flag")));
+const $global_flag = _fill_global_resume("__tests__/template.marko_0_$global_flag#6/subscribe", $input_v__OR__$global_flag, "flag");
+const $global_mark__closure = /*@__PURE__*/ _closure($wrap_content__$global_mark);
+const $global_mark = _fill_global_resume("__tests__/template.marko_0_$global_mark#9/subscribe", $global_mark__closure, "mark");
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$n($scope, +$scope.n + 1);
 }));
@@ -23,10 +33,9 @@ function $setup($scope) {
 	$input_content_direct($scope["#childScope/0"], $wrap_content($scope));
 	$n($scope, 0);
 	$setup__script($scope);
+	$global_flag($scope);
+	$global_mark($scope);
 }
-const $z__closure = /*@__PURE__*/ _closure($wrap_content__z);
-const $z = /*@__PURE__*/ _const("z", $z__closure);
-const $input_v__$global_flag = /*@__PURE__*/ _fill_global("__tests__/template.marko_0_input_v#5_$global_flag#6", ($scope) => $z($scope, $scope.input_v + _global_read($scope.$global, "flag")), "flag");
-const $input_v = /*@__PURE__*/ _const("input_v", $input_v__$global_flag);
+const $input_v = /*@__PURE__*/ _const("input_v", $input_v__OR__$global_flag);
 const $input = ($scope, input) => $input_v($scope, input.v);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

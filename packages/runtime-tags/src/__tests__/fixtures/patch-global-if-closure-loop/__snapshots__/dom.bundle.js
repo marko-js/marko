@@ -1,14 +1,20 @@
 // template.marko
-const $for_content__setup = /* @__PURE__ */ _fill_global("a0", ($scope) => _text($scope.b, $scope.$.brand), "brand");
+const $for_content__$global_brand = /*@__PURE__*/ _closure_get_patch("a0", 3, ($scope) => _text($scope.b, $scope.$.brand), ($scope) => $scope._._);
+const $for_content__setup = $for_content__$global_brand;
 const $for_content__$params = ($scope, $params2) => _text($scope.a, $params2[0]);
-const $if_content__setup__$global_brand = /*@__PURE__*/ _fill_global("a1", ($scope) => _text($scope.a, $scope.$.brand), "brand");
+const $if_content__$global_brand = /*@__PURE__*/ _if_closure_patch("a4", 1, 0, ($scope) => _text($scope.a, $scope.$.brand));
 const $if_content__for = /*@__PURE__*/ _for_of_unkeyed(1, "<i><!><!></i>", "D%b%", $for_content__setup, $for_content__$params);
 const $if_content__setup = ($scope) => {
+	$if_content__$global_brand._($scope);
 	$if_content__for($scope, [[1, 2]]);
-	$if_content__setup__$global_brand($scope);
 };
 const $if = /*@__PURE__*/ _if(1, "<em> </em><!><!>", "D l%", $if_content__setup);
 const $on = _let(2, ($scope) => $if($scope, $scope.c ? 0 : 1));
+const $global_brand__closure = /*@__PURE__*/ _closure($for_content__$global_brand);
+const $global_brand = _fill_global("a1", ($scope) => {
+	$if_content__$global_brand($scope);
+	$global_brand__closure($scope);
+}, "brand");
 const $setup__script = _script("a2", ($scope) => _on($scope.a, "click", function() {
 	$on($scope, !$scope.c);
 }));

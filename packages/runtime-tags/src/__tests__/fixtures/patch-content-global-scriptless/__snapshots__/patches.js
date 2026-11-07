@@ -1,5 +1,5 @@
 // PATCH
-[`a3;D ;<i> </i>`, `a4;/E l%l&;<section><h2> </h2><!></section>`]
+[`a2;D ;<i> </i>`, `a3;/E l%l&;<section><h2> </h2><!></section>`]
 {
   $: {
     brand: "Zed"
@@ -15,12 +15,12 @@
       s: {
         ta: "x"
       },
-      fb: "^^a3",
+      fb: "^^a2",
       cAb: {
         ta: "Zed"
       }
     }
-  }, "a4"]
+  }, "a3"]
 }
 ;CQY
 
@@ -40,12 +40,12 @@
       s: {
         ta: "x"
       },
-      fb: "^^a3",
+      fb: "^^a2",
       cAb: {
         ta: "Zed"
       }
     }
-  }, "a4"]
+  }, "a3"]
 }
 
 // PATCH holding CQY
@@ -64,10 +64,10 @@
       s: {
         ta: "x"
       },
-      fb: "^^a3",
+      fb: "^^a2",
       cAb: {
         ta: "Qux"
       }
     }
-  }, "a4"]
+  }, "a3"]
 }

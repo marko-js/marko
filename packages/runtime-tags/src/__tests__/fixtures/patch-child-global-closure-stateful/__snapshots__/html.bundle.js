@@ -1,10 +1,10 @@
 // tags/gm/index.marko
 _shells({
 	b: "b; b%;<p></p><!><!>",
-	b2: "b2; ;<i></i>"
+	b1: "b1; ;<i></i>"
 });
 var gm_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wi__input_v = _write_if($scope0_reason, 0), $cg__input_v = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wi__input_v = _write_if($scope0_reason, 0), $cg__input_v = _client_guard($scope0_reason, 0), $fg__input_v = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
 	const z = input.v + $global$1.flag;
@@ -13,18 +13,19 @@ var gm_default = _template("b", (input) => {
 		if (input.v) {
 			const $scope1_id = _scope_id();
 			_html(`<i${_attr("data-z", z + $global$1.mark, $scope1_id, "aa$data-z", (2 | _updates_from($scope0_reason, 0)) << 1, 0)}></i>${_el_mark($scope1_id, "a")}`);
-			_fill_global_subscribe("b0", $scope1_id);
-			_client_guard((2 | _updates_from($scope0_reason, 0)) << 1, 0) && _patch_render($scope1_id, "b1");
+			_patch_render($scope1_id, "b0", [_filled_guard((2 | _updates_from($scope0_reason, 0)) << 1, 0) && ">g", ">k"], (2 | _updates_from($scope0_reason, 0)) << 1, 0);
 			_scope($scope1_id, { _: ($scope0_page || $wi__input_v) && _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["b2"], $scope0_reason, 0);
-	_fill_global_subscribe("b3", $scope0_id, $cg__input_v);
-	_filled_guard((2 | _updates_from($scope0_reason, 0)) << 1, 0) && $cg__input_v && _patch_render($scope0_id, "b1", _filled_guard((2 | _updates_from($scope0_reason, 0)) << 1, 0) && "g");
+	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["b1"], $scope0_reason, 0);
+	_fill_global_subscribe("b2", $scope0_id, $cg__input_v);
+	_fill_global_subscribe("b3", $scope0_id, _client_guard((2 | _updates_from($scope0_reason, 0)) << 1, 0));
+	_filled_guard((2 | _updates_from($scope0_reason, 0)) << 1, 0) && $cg__input_v && _patch_render($scope0_id, "b4", _filled_guard((2 | _updates_from($scope0_reason, 0)) << 1, 0) && "g");
+	_patch_render($scope0_id, "b5", [$fg__input_v && "e", "g"], (2 | _updates_from($scope0_reason, 0)) << 1, 0);
 	_scope($scope0_id, {
 		e: $wi__input_v && input.v,
 		g: (_unfilled_if($scope0_reason, 0) || _unfilled_if()) && z
-	}) || (_filled_guard($scope0_reason, 0) && $cg__input_v && _patch_write($scope0_id, "xe", input.v, !_server_guard($scope0_reason, 0)), _filled_guard((2 | _updates_from($scope0_reason, 0)) << 1, 0) && $cg__input_v && _patch_write($scope0_id, "xg", z, !_server_guard((2 | _updates_from($scope0_reason, 0)) << 1, 0)));
+	}) || ($fg__input_v && $cg__input_v && _patch_write($scope0_id, "xe", input.v, !_server_guard($scope0_reason, 0)), _filled_guard((2 | _updates_from($scope0_reason, 0)) << 1, 0) && $cg__input_v && _patch_write($scope0_id, "xg", z, !_server_guard((2 | _updates_from($scope0_reason, 0)) << 1, 0)));
 });
 
 // template.marko

@@ -1,10 +1,15 @@
 // template.marko
 const $Inner_content__walks = "D l";
 const $Inner_content__template = "<p> </p>";
-const $Inner_content__b = /*@__PURE__*/ _const(5, /* @__PURE__ */ _fill_global("a1", ($scope) => _text($scope.a, $scope.f + $scope.$.suffix), "suffix"));
-const $Inner_content__value__OR__y = /*@__PURE__*/ _or_patch("a3", 4, ($scope) => $Inner_content__b($scope, $scope._.e + $scope.d));
-const $Inner_content__value = /*@__PURE__*/ _closure_get_patch("a2", 6, $Inner_content__value__OR__y, 0, "a6", 0);
-const $Inner_content__setup = $Inner_content__value;
+const $Inner_content__$global_suffix__OR__b = /*@__PURE__*/ _or_patch("a3", 6, ($scope) => _text($scope.a, $scope.f + $scope.$.suffix));
+const $Inner_content__$global_suffix = /*@__PURE__*/ _closure_get_patch("a13", 7, $Inner_content__$global_suffix__OR__b, ($scope) => $scope._._);
+const $Inner_content__setup = ($scope) => {
+	$Inner_content__$global_suffix($scope);
+	$Inner_content__value($scope);
+};
+const $Inner_content__b = /*@__PURE__*/ _const(5, $Inner_content__$global_suffix__OR__b);
+const $Inner_content__value__OR__y = /*@__PURE__*/ _or_patch("a2", 4, ($scope) => $Inner_content__b($scope, $scope._.e + $scope.d));
+const $Inner_content__value = /*@__PURE__*/ _closure_get_patch("a1", 8, $Inner_content__value__OR__y, 0, "a6", 0);
 const $Inner_content__y = /*@__PURE__*/ _const(3, $Inner_content__value__OR__y);
 const $Outer_content__count = /*@__PURE__*/ _fill_let("a7", 5, ($scope) => $Inner_content__y($scope.a, $scope.f));
 const $Outer_content__setup__script = _script("a5", ($scope) => _on($scope.b, "click", function() {
@@ -19,3 +24,4 @@ const $Outer_content__setup = ($scope) => {
 const $Outer_content__$params = ($scope, $params2) => $Outer_content__value($scope, $params2[0].value);
 const $Outer_content__value = /*@__PURE__*/ _const(4, /* @__PURE__ */ _closure($Inner_content__value));
 const $Outer_content = _content$1("a4", /*@__PURE__*/ ((_w0) => `<!>${_w0}<button>inc</button>`)($Inner_content__template), /*@__PURE__*/ ((_w0) => `b/${_w0}& b`)($Inner_content__walks), $Outer_content__setup, $Outer_content__$params);
+const $global_suffix = _fill_global("a8", /* @__PURE__ */ _closure($Inner_content__$global_suffix), "suffix");

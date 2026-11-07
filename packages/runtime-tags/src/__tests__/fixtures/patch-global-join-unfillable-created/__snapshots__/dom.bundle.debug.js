@@ -3,11 +3,15 @@ const $Inner_content__walks = "D l";
 const $Inner_content__template = "<p> </p>";
 const $template = "<!><!><!>";
 const $walks = "b%c";
-const $Inner_content__b__$global_suffix = /*@__PURE__*/ _fill_global("__tests__/template.marko_2_$global_suffix#0:16_b#5", ($scope) => _text($scope["#text/0"], $scope.b + _global_read($scope.$global, "suffix")), "suffix");
-const $Inner_content__b = /*@__PURE__*/ _const("b", $Inner_content__b__$global_suffix);
+const $Inner_content__$global_suffix__OR__b = /*@__PURE__*/ _or_patch("__tests__/template.marko_2_$global_suffix#0:16_b#5/setup", 6, ($scope) => _text($scope["#text/0"], $scope.b + _global_read($scope.$global, "suffix")));
+const $Inner_content__$global_suffix = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_2_$global_suffix#0:16/subscribe", "$global_suffix/7", $Inner_content__$global_suffix__OR__b, ($scope) => $scope._._);
+const $Inner_content__setup = ($scope) => {
+	$Inner_content__$global_suffix($scope);
+	$Inner_content__value($scope);
+};
+const $Inner_content__b = /*@__PURE__*/ _const("b", $Inner_content__$global_suffix__OR__b);
 const $Inner_content__value__OR__y = /*@__PURE__*/ _or_patch("__tests__/template.marko_2_value#1:4_y#3/setup", 4, ($scope) => $Inner_content__b($scope, $scope._.value + $scope.y));
-const $Inner_content__value = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_2_value#1:4/subscribe", "value/6", $Inner_content__value__OR__y, 0, "__tests__/template.marko_1_value#4/subscribers", 0);
-const $Inner_content__setup = $Inner_content__value;
+const $Inner_content__value = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_2_value#1:4/subscribe", "value/8", $Inner_content__value__OR__y, 0, "__tests__/template.marko_1_value#4/subscribers", 0);
 const $Inner_content__y = /*@__PURE__*/ _const("y", $Inner_content__value__OR__y);
 const $Inner_content__$params = ($scope, $params3) => $Inner_content__$temp($scope, $params3[0]);
 const $Inner_content__$temp = ($scope, $temp2) => $Inner_content__y($scope, $temp2.y);
@@ -28,8 +32,11 @@ const $Outer_content = _content("__tests__/template.marko_1*content", /*@__PURE_
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $input_show__OR__input_n__OR__Outer = /*@__PURE__*/ _or_patch("__tests__/template.marko_0_input_show#3_input_n#4_Outer#5/setup", 6, ($scope) => $dynamicTag($scope, $scope.input_show && $scope.Outer, ($_) => ({ value: $scope.input_n })), 2);
 const $Outer = /*@__PURE__*/ _const("Outer", $input_show__OR__input_n__OR__Outer);
+const $global_suffix__closure = /*@__PURE__*/ _closure($Inner_content__$global_suffix);
+const $global_suffix = _fill_global_resume("__tests__/template.marko_0_$global_suffix#16/subscribe", $global_suffix__closure, "suffix");
 function $setup($scope) {
 	$Outer($scope, { content: $Outer_content($scope) });
+	$global_suffix($scope);
 }
 const $input_show = /*@__PURE__*/ _const("input_show", $input_show__OR__input_n__OR__Outer);
 const $input_n = /*@__PURE__*/ _const("input_n", $input_show__OR__input_n__OR__Outer);

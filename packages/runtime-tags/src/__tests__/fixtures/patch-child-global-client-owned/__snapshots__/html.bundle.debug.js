@@ -33,6 +33,7 @@ _shells({
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
+	const $global_brand__closures = new Set();
 	const $global$1 = $global();
 	let count = 0;
 	_html("<main>");
@@ -44,15 +45,16 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope1_reason = _scope_reason();
 			const $scope1_id = _scope_id();
 			_html(`<em>${_text_mark($scope1_id, "#text/0", $global$1.brand, 1, 4, 0)}</em>`);
-			_fill_global_subscribe("__tests__/template.marko_1_$global_brand#0:6", $scope1_id);
-			_scope($scope1_id, {}, "__tests__/template.marko", "4:6");
+			_subscribe($global_brand__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:6"));
 		}, $scope0_id) })
 	});
 	_patch_child_end();
 	_html(`<button>+</button>${_el_mark($scope0_id, "#button/1")}</main>`);
+	_fill_global_subscribe("__tests__/template.marko_0_$global_brand#6/subscribe", $scope0_id, 1);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		count,
+		"ClosureScopes:$global_brand/3": $global_brand__closures,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, { count: "1:6" });
 }, 1);

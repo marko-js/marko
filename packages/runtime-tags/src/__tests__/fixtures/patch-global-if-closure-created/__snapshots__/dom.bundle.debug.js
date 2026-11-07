@@ -1,14 +1,16 @@
 // tags/badge.marko
 const $template$1 = "<button class=b>o</button><!><!>";
 const $walks$1 = " b%c";
-const $if_content__setup__$global_brand = /*@__PURE__*/ _fill_global("__tests__/tags/badge.marko_1_$global_brand#0:7", ($scope) => _text($scope["#text/0"], $scope.$global.brand), "brand");
-const $if_content__setup$1 = $if_content__setup__$global_brand;
+const $if_content__$global_brand = /*@__PURE__*/ _if_closure_patch("__tests__/tags/badge.marko_1_$global_brand#0:7/setup", "#text/1", 0, ($scope) => _text($scope["#text/0"], $scope.$global.brand));
+const $if_content__setup$1 = $if_content__$global_brand;
 const $if$1 = /*@__PURE__*/ _if("#text/1", "<p> </p>", "D ", $if_content__setup$1);
 const $open = /*@__PURE__*/ _fill_let("__tests__/tags/badge.marko_fill0", "open/2", ($scope) => $if$1($scope, $scope.open ? 0 : 1));
+const $global_brand = _fill_global_resume("__tests__/tags/badge.marko_0_$global_brand#7/subscribe", $if_content__$global_brand, "brand");
 const $setup__script$1 = _script("__tests__/tags/badge.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$open($scope, !$scope.open);
 }));
 function $setup$1($scope) {
+	$global_brand($scope);
 	$setup__script$1($scope);
 	$open($scope, false);
 }

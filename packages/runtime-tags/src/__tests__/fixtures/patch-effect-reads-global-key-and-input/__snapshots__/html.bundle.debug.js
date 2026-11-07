@@ -8,6 +8,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
 	_html(`<div></div>${_el_mark($scope0_id, "#div/0")}`);
-	_script($scope0_id, "__tests__/template.marko_0_input_page#3_$global_user_name#6", 1, $fg__input_page, "input_page");
+	_fill_global_subscribe("__tests__/template.marko_0_$global_user_name#6/subscribe", $scope0_id, 1);
+	_patch_render($scope0_id, "__tests__/template.marko_0_input_page#3_$global_user_name#6/setup", [$fg__input_page && "input_page", "$global_user_name"], (2 | _updates_from($scope0_reason, 0)) << 1, 0) || _script($scope0_id, "__tests__/template.marko_0_input_page#3_$global_user_name#6", 1, $fg__input_page, "input_page");
 	_scope($scope0_id, { input_page: input.page }, "__tests__/template.marko", 0, { input_page: ["input.page"] }) || $fg__input_page && _patch_write($scope0_id, "PatchMarkedWrite:input_page", input.page, !_server_guard($scope0_reason, 0));
 }, 1);

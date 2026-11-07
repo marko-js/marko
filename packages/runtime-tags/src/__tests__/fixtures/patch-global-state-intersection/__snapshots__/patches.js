@@ -2,5 +2,6 @@
 {
   $: {
     brand: "Runtime"
-  }
+  },
+  ia2: "f"
 }

@@ -6,6 +6,7 @@ _shells({ "__tests__/child.marko": "__tests__/child.marko !__tests__/child.marko
 var child_default = _template("__tests__/child.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
+	const $global_brand__closures = new Set();
 	const $global$1 = $global();
 	let on = true;
 	let count = 0;
@@ -16,17 +17,21 @@ var child_default = _template("__tests__/child.marko", (input) => {
 			forOf([1, 2], (x) => {
 				const $scope2_id = _scope_id();
 				_html(`<i>${_escape(x)}${_text_mark($scope2_id, "#text/1", $global$1.brand, $scope0_page * 2)}</i>`);
-				_fill_global_subscribe("__tests__/child.marko_2_$global_brand#0:13", $scope2_id, 1);
-				_scope($scope2_id, {}, "__tests__/child.marko", "5:4");
+				_subscribe($global_brand__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/child.marko", "5:4"), "__tests__/child.marko_2_$global_brand#0:13/subscribe", $scope0_page);
+				$scope0_page || _resume_branch($scope2_id);
 			});
-			_scope($scope1_id, {}, "__tests__/child.marko", "4:2");
+			_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/child.marko", "4:2");
 			return 0;
 		}
 	}, $scope0_id, "#text/2");
+	_fill_global_subscribe("__tests__/child.marko_0_$global_brand#13/subscribe", $scope0_id, 1);
 	_script($scope0_id, "__tests__/child.marko_0");
 	_patch_fill($scope0_id, "PatchFill:__tests__/child.marko_fill0", on, 1);
 	_patch_fill($scope0_id, "PatchFill:__tests__/child.marko_fill1", count, 1);
-	_scope($scope0_id, { count }, "__tests__/child.marko", 0, { count: "2:6" });
+	_scope($scope0_id, {
+		count,
+		"ClosureScopes:$global_brand/5": $global_brand__closures
+	}, "__tests__/child.marko", 0, { count: "2:6" });
 });
 
 // template.marko

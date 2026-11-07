@@ -22,8 +22,9 @@ _shells({
 	"__tests__/template.marko_2*shell": `__tests__/template.marko_2*shell${_shell_marker([[], []], ["#childScope/0>", $setup$1])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1)};${$template$1}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wi__input_show = _write_if($scope0_reason, 1), $wg__input_show = _write_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
+	const $global_brand__closures = new Set();
 	const $global$1 = $global();
 	_html("<main>");
 	_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
@@ -34,8 +35,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope1_reason = _scope_reason();
 			const $scope1_id = _scope_id();
 			_html(`<em>${_text_mark($scope1_id, "#text/0", $global$1.brand, 1, 4, 0)}</em>`);
-			_fill_global_subscribe("__tests__/template.marko_1_$global_brand#0:7", $scope1_id);
-			_scope($scope1_id, {}, "__tests__/template.marko", "2:4");
+			_subscribe($wi__input_show && $global_brand__closures, _scope($scope1_id, {}, "__tests__/template.marko", "2:4"), "__tests__/template.marko_1_$global_brand#0:7/subscribe");
 		}, $scope0_id)
 	});
 	_patch_child_end();
@@ -50,15 +50,24 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					const $scope3_reason = _scope_reason();
 					const $scope3_id = _scope_id();
 					_html(`<i>${_text_mark($scope3_id, "#text/0", $global$1.brand, 1, 4, 0)}</i>`);
-					_fill_global_subscribe("__tests__/template.marko_3_$global_brand#0:7", $scope3_id);
-					_scope($scope3_id, {}, "__tests__/template.marko", "6:6");
+					_subscribe($wi__input_show && $global_brand__closures, _scope($scope3_id, {
+						_: $wi__input_show && _scope_with_id($scope2_id),
+						"ClosureSignalIndex:$global_brand/6": $wi__input_show && 1
+					}, "__tests__/template.marko", "6:6"));
 				}, $scope2_id, 0)
 			});
 			_patch_child_end();
-			_scope($scope2_id, { "#childScope/0": _existing_scope($childScope2) }, "__tests__/template.marko", "5:4");
+			_scope($scope2_id, {
+				_: $wi__input_show && _scope_with_id($scope0_id),
+				"#childScope/0": _existing_scope($childScope2)
+			}, "__tests__/template.marko", "5:4");
 			return 0;
 		}
 	}, $scope0_id, "#text/1", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 1);
 	_html("</main>");
-	_scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", 0);
+	_fill_global_subscribe("__tests__/template.marko_0_$global_brand#7/subscribe", $scope0_id, _client_guard($scope0_reason, 1));
+	_scope($scope0_id, {
+		"ClosureScopes:$global_brand/6": $wi__input_show && _unfilled_if($scope0_reason, 1) && $global_brand__closures,
+		"#childScope/0": _existing_scope($childScope)
+	}, "__tests__/template.marko", 0);
 }, 1);

@@ -8,7 +8,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
 	_html(`<main><h1>${_text_mark($scope0_id, "#text/0", $global$1.other, 1, 4, 0)}</h1></main>`);
-	_fill_global_subscribe("__tests__/template.marko_0_$global_other#4", $scope0_id);
+	_fill_global_subscribe("__tests__/template.marko_0_$global_other#4/subscribe", $scope0_id);
+	_fill_global_subscribe("__tests__/template.marko_0_$global_brand#5/subscribe", $scope0_id, 1);
+	_fill_global_subscribe("__tests__/template.marko_0_$global_locale#6/subscribe", $scope0_id, 1);
 	_script($scope0_id, "__tests__/template.marko_0_$global_brand#5_$global_locale#6");
+	_patch_render($scope0_id, "__tests__/template.marko_0_$global_brand#5_$global_locale#6/setup", ["$global_brand", "$global_locale"]);
 	_scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

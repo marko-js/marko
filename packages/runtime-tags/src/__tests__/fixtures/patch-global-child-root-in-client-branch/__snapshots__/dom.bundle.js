@@ -1,7 +1,7 @@
 // tags/badge.marko
 const $template = "<em> </em>";
-const $setup__$global_brand = /*@__PURE__*/ _fill_global("b0", ($scope) => _text($scope.a, $scope.$.brand), "brand");
-const $setup = $setup__$global_brand;
+const $global_brand = /*@__PURE__*/ _fill_global("b0", ($scope) => _text($scope.a, $scope.$.brand), "brand");
+const $setup = $global_brand;
 
 // template.marko
 const $if_content__setup = ($scope) => $setup($scope.a);

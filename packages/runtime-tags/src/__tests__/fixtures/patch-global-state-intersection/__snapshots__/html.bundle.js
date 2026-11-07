@@ -8,5 +8,6 @@ var template_default = _template("a", (input) => {
 	_html(`<div><h1>${_text_mark($scope0_id, "a", $global$1.brand + " #0")}</h1><button>+</button>${_el_mark($scope0_id, "b")}</div>`);
 	_fill_global_subscribe("a0", $scope0_id, 1);
 	_script($scope0_id, "a1");
+	_patch_render($scope0_id, "a2", "f");
 	_scope($scope0_id, { c: count });
 }, 1);

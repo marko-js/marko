@@ -1,15 +1,17 @@
 // tags/badge.marko
 const $template$1 = "<p> </p>";
 const $walks$1 = " D l";
-const $count__$global_brand = /*@__PURE__*/ _fill_global("__tests__/tags/badge.marko_0_count#2_$global_brand#6", ($scope) => _text($scope["#text/1"], $scope.count + _global_read($scope.$global, "brand")), "brand");
-const $count = /*@__PURE__*/ _fill_let("__tests__/tags/badge.marko_fill0", "count/2", $count__$global_brand);
-const $setup__$global__script = _fill_global_script("__tests__/tags/badge.marko_0_$global#5", ($scope) => _el_read($scope["#p/0"]).dataset.log = (_el_read($scope["#p/0"]).dataset.log || "") + "[" + JSON.stringify($scope.$global) + "]", "");
-const $setup__$global = $setup__$global__script;
+const $count__OR__$global_brand = /*@__PURE__*/ _or_patch("__tests__/tags/badge.marko_0_count#2_$global_brand#6/setup", 3, ($scope) => _text($scope["#text/1"], $scope.count + _global_read($scope.$global, "brand")));
+const $count = /*@__PURE__*/ _fill_let("__tests__/tags/badge.marko_fill0", "count/2", $count__OR__$global_brand);
+const $global_brand = _fill_global_resume("__tests__/tags/badge.marko_0_$global_brand#6/subscribe", $count__OR__$global_brand, "brand");
+const $global2__script = _script("__tests__/tags/badge.marko_0_$global#5", ($scope) => _el_read($scope["#p/0"]).dataset.log = (_el_read($scope["#p/0"]).dataset.log || "") + "[" + JSON.stringify($scope.$global) + "]");
+const $global2 = _fill_global_resume("__tests__/tags/badge.marko_0_$global#5/subscribe", $global2__script, "");
 const $setup__script$1 = _script("__tests__/tags/badge.marko_0", ($scope) => _on($scope["#p/0"], "click", function() {
 	$count($scope, +$scope.count + 1);
 }));
 function $setup$1($scope) {
-	$setup__$global($scope);
+	$global_brand($scope);
+	$global2($scope);
 	$setup__script$1($scope);
 	$count($scope, 0);
 }

@@ -5,11 +5,11 @@ function brandOf(g) {
 	return g.brand;
 }
 const $name = ($scope, name) => _text($scope["#text/1"], name);
-const $setup__$global = /*@__PURE__*/ _fill_global("__tests__/template.marko_0_$global#4", ($scope) => {
+const $global2 = /*@__PURE__*/ _fill_global("__tests__/template.marko_0_$global#4/subscribe", ($scope) => {
 	_text($scope["#text/0"], brandOf($scope.$global));
 	$name($scope, brandOf($scope.$global));
 }, "");
-const $setup = $setup__$global;
+const $setup = $global2;
 const $input_name = ($scope, input_name) => _text($scope["#text/2"], input_name);
 const $input = ($scope, input) => $input_name($scope, input.name);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

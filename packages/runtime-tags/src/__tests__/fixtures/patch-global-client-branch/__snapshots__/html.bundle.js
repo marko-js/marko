@@ -1,5 +1,5 @@
 // template.marko
-_shells({ a: "a !a3;D b%;<main><button>t</button><!></main>" });
+_shells({ a: "a !a2;D b%;<main><button>t</button><!></main>" });
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
 	_page_render();
@@ -11,8 +11,9 @@ var template_default = _template("a", (input) => {
 	_html(`<main><button>t</button>${_el_mark($scope0_id, "a")}`);
 	_if(() => {}, $scope0_id, "b");
 	_html("</main>");
-	_script($scope0_id, "a3");
-	$fg__input_name && _patch_render($scope0_id, "a2", "e");
+	_fill_global_subscribe("a1", $scope0_id, 1);
+	_script($scope0_id, "a2");
+	$fg__input_name && _patch_render($scope0_id, "a3", "e");
 	_scope($scope0_id, {
 		e: input.name,
 		f: open

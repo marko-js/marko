@@ -10,7 +10,7 @@ _shells({
 	"__tests__/template.marko_3*shell": "__tests__/template.marko_3*shell;D ;<em> </em>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_other = _server_guard($scope0_reason, 1), $fg__input_other = _filled_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $cg__input_show = _client_guard($scope0_reason, 0), $sg__input_other = _server_guard($scope0_reason, 1), $fg__input_other = _filled_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
 	let open = false;
@@ -54,8 +54,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			});
 			_patch_child_end();
 			_html(`<span>${_text_mark($scope1_id, "#text/2", $global$1.brand, 1, 4, 0)}</span>`);
-			_fill_global_subscribe("__tests__/template.marko_1_$global_brand#0:17", $scope1_id);
-			_client_guard($scope0_reason, 0) && _patch_render($scope1_id, "__tests__/template.marko_1_input_show#0:5/setup");
+			$cg__input_show && _patch_render($scope1_id, "__tests__/template.marko_1_input_show#0:5/setup");
 			_scope($scope1_id, {
 				_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id),
 				"#childScope/0": _existing_scope($childScope),
@@ -70,6 +69,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		label: input.label + "!"
 	}, 16);
 	_html(`<button>toggle</button>${_el_mark($scope0_id, "#button/2")}`);
+	_fill_global_subscribe("__tests__/template.marko_0_$global_brand#17/subscribe", $scope0_id, $cg__input_show);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_patch_render($scope0_id, "__tests__/template.marko_0_input_other#6_Panel#9/setup", $fg__input_other && "input_other", $scope0_reason, 1);
 	_patch_render($scope0_id, "__tests__/template.marko_0_input_label#7_open#8_Tag#11/setup", [$fg__input_label && "input_label", $fg__input_other && "Tag"]);

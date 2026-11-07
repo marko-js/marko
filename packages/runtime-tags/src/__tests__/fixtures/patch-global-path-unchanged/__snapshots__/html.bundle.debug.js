@@ -8,6 +8,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
 	_html(`<div></div>${_el_mark($scope0_id, "#div/0")}`);
+	_fill_global_subscribe("__tests__/template.marko_0_$global_o_x#5/subscribe", $scope0_id, 1);
 	_script($scope0_id, "__tests__/template.marko_0_$global_o_x#5");
 	_scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

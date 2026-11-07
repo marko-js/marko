@@ -1,5 +1,6 @@
 // template.marko
-const $setup__$global_cspNonce = _fill_global_script("a0", ($scope) => {
+const $global_cspNonce__script = _script("a2", ($scope) => {
 	$scope.b.textContent = $scope.$.cspNonce;
 	$scope.b.dataset.runs = String(+($scope.b.dataset.runs || 0) + 1);
-}, "cspNonce");
+});
+const $global_cspNonce = _fill_global("a1", $global_cspNonce__script, "cspNonce");

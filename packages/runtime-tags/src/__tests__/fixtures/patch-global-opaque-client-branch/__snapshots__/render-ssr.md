@@ -20,6 +20,7 @@ document.querySelector("button").click();
 ## Change
 ```
 INSERT: button + p
+UPDATE: p::text " " => "acme!"
 ```
 
 # Update `{"$global":{"brand":"bmce","serializedGlobals":["brand"]}}`

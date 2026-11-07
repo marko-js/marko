@@ -111,13 +111,13 @@ UPDATE: div:nth-of-type(4)[data-runs] "1" => "2"
 ```
 ## Change
 ```
-REMOVE: div:nth-of-type(5)::text("doca")
-INSERT: div:nth-of-type(5)::text("docb")
-UPDATE: div:nth-of-type(5)[data-runs] "1" => "2"
 UPDATE: div:nth-of-type(4)[data-runs] "2" => "3"
 REMOVE: div:nth-of-type(2)::text("a")
 INSERT: div:nth-of-type(2)::text("b")
 UPDATE: div:nth-of-type(2)[data-runs] "1" => "2"
+REMOVE: div:nth-of-type(5)::text("doca")
+INSERT: div:nth-of-type(5)::text("docb")
+UPDATE: div:nth-of-type(5)[data-runs] "1" => "2"
 ```
 
 # Update `{"$global":{"cspNonce":"patch","o":{"x":"b","y":2},"a":"a1","c":"c2","serializedGlobals":["o","a","c"]}}`
@@ -157,11 +157,11 @@ UPDATE: div:nth-of-type(2)[data-runs] "1" => "2"
 ```
 ## Change
 ```
-UPDATE: ul > li::text "a1c1" => "a1c2"
 UPDATE: b::text "a1c1" => "a1c2"
+UPDATE: ul > li::text "a1c1" => "a1c2"
+UPDATE: div:nth-of-type(4)[data-runs] "3" => "4"
 REMOVE: div:nth-of-type(1)::text("a1c1")
 INSERT: div:nth-of-type(1)::text("a1c2")
-UPDATE: div:nth-of-type(4)[data-runs] "3" => "4"
 ```
 
 # Update `{"$global":{"cspNonce":"patch","o":{"x":"b","y":2},"a":"a2","c":"c2","serializedGlobals":["o","a","c"]}}`
@@ -201,9 +201,9 @@ UPDATE: div:nth-of-type(4)[data-runs] "3" => "4"
 ```
 ## Change
 ```
-UPDATE: ul > li::text "a1c2" => "a2c2"
 UPDATE: b::text "a1c2" => "a2c2"
+UPDATE: ul > li::text "a1c2" => "a2c2"
+UPDATE: div:nth-of-type(4)[data-runs] "4" => "5"
 REMOVE: div:nth-of-type(1)::text("a1c2")
 INSERT: div:nth-of-type(1)::text("a2c2")
-UPDATE: div:nth-of-type(4)[data-runs] "4" => "5"
 ```

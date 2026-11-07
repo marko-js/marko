@@ -16,11 +16,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope1_id = _scope_id();
 			_html("<p>promo</p>");
 			_script($scope1_id, "__tests__/template.marko_1_$global_brand#0:5", 0);
-			_write_if($scope0_reason, 0) && _scope($scope1_id, {}, "__tests__/template.marko", "3:4");
+			_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4");
 			return 0;
 		}
 	}, $scope0_id, "#text/1", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 0);
 	_html("</main>");
-	_fill_global_subscribe("__tests__/template.marko_0_$global_brand#5", $scope0_id);
+	_fill_global_subscribe("__tests__/template.marko_0_$global_brand#5/subscribe", $scope0_id, 1);
 	_scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

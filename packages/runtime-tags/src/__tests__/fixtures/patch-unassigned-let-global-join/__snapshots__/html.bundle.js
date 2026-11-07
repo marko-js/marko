@@ -7,5 +7,6 @@ var template_default = _template("a", (input) => {
 	let x = input.a;
 	_html(`<p>${_text_mark($scope0_id, "a", x + $global$1.flag)}</p>`);
 	_fill_global_subscribe("a0", $scope0_id, 1);
+	_patch_render($scope0_id, "a1", "g");
 	_scope($scope0_id, { e: x });
 }, 1);

@@ -24,32 +24,34 @@ var panel_default = _template("c", (input) => {
 // tags/card.marko
 const $setup = _shell_setup([[], ["b2"]], ["a>", $setup$1]);
 _shells({
-	b1: "b1",
+	b0: "b0",
 	b: `b${_shell_marker($setup)};${((_w0) => `b/${_w0}& b`)("b%c")};${((_w0) => `<!>${_w0}<button class=b>+</button>`)($template)}`
 });
 var card_default = _template("b", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
+	const $global_brand__closures = /* @__PURE__ */ new Set();
 	const $global$1 = $global();
 	let count = 0;
 	_set_scope_reason(10);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	panel_default({
 		open: true,
-		body: attrTag({ content: _content_resume("b1", () => {
+		body: attrTag({ content: _content_resume("b0", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
 			_html(`<em>${_text_mark($scope1_id, "a", $global$1.brand, 1, 4, 0)}</em>`);
-			_fill_global_subscribe("b0", $scope1_id);
-			_scope($scope1_id, {});
+			_subscribe($global_brand__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
 		}, $scope0_id) })
 	});
 	_patch_child_end();
 	_html(`<button class=b>+</button>${_el_mark($scope0_id, "b")}`);
+	_fill_global_subscribe("b1", $scope0_id, 1);
 	_script($scope0_id, "b2");
 	_patch_fill($scope0_id, "vb3", count, 1);
 	_scope($scope0_id, {
 		c: count,
+		d: $global_brand__closures,
 		a: _existing_scope($childScope)
 	});
 });

@@ -2,8 +2,8 @@
 const $template = "<!><!><!>";
 const $setup$1 = [[], []];
 _shells({
+	b0: "b0;D%c%;<p><!>:<!></p>",
 	b1: "b1;D%c%;<p><!>:<!></p>",
-	b2: "b2;D%c%;<p><!>:<!></p>",
 	b: "b;b%;<!><!><!>"
 });
 var show_await_default = _template("b", (input) => {
@@ -13,9 +13,9 @@ var show_await_default = _template("b", (input) => {
 	_await($scope0_id, "a", input.promise, (x) => {
 		const $scope1_id = _scope_id();
 		_html(`<p>${_text_mark($scope1_id, "a", $global$1.brand, 1, 4, 0)}:${_text_mark($scope1_id, "b", x, 2, $scope0_reason, 0)}</p>`);
-		_fill_global_subscribe("b0", $scope1_id);
 		_scope($scope1_id, {});
-	}, 1, "b1", _unfilled_if($scope0_reason, 0), 1);
+	}, 1, "b0", _unfilled_if($scope0_reason, 0), 1);
+	_fill_global_subscribe("b2", $scope0_id);
 });
 
 // template.marko

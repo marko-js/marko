@@ -237,7 +237,6 @@ export interface PatchWrite {
   write?: boolean;
   effect?: boolean;
   seed?: boolean;
-  unfillable?: boolean;
 }
 
 const UNREAD: PatchFill & PatchWrite = {};
@@ -1724,41 +1723,6 @@ export function isSectionParam(binding: Binding) {
   return root === root.section.params;
 }
 
-// The caller params a `$global` signal reads unfilled: a changed key re-runs it
-// only where they update from the client.
-export function getUnfillableSources(refs: ReferencedBindings) {
-  return getSourcesForReferencedBindings(
-    bindingUtil.filter(refs, isUnfillablePatchRead),
-  );
-}
-
-// Server-sourced reads a patch cannot keep current: param-sourced bindings
-// a patch neither fills nor writes read stale after any patch render.
-function isUnfillablePatchRead(binding: Binding) {
-  return !!getPatchWrite(binding).unfillable;
-}
-
-// A patch fills a known child's value (a fill or a write), and a local
-// derivation when it fills every server source (the client derives it).
-function patchRefreshes(binding: Binding): boolean {
-  const root = getCanonicalBinding(binding);
-  if (getPatchFill(root).fill || isPatchWritten(root)) return true;
-  if (isKnownChild(root.section)) return false;
-  // A param arrives with its section, unless a branch derives it from its
-  // expression (a loop item, an `<await>` value): then its sources decide.
-  if (isSectionParam(root) && !derivesFromBranch(root)) return true;
-  // Sources are params, which the checks above decide without recursing.
-  return every(root.sources?.param, patchRefreshes);
-}
-
-// A branch's param its expression gives; one passed to its body (an attribute
-// tag loop's item) is its own source.
-function derivesFromBranch(param: Binding) {
-  return (
-    !!param.section.branchExpr && !bindingUtil.has(param.sources?.param, param)
-  );
-}
-
 // Whether a patch may create this content: its tag can diverge, a consumer
 // renders it in creatable structure, or an enclosing branch is created.
 export function patchMayCreate(section: Section) {
@@ -2251,8 +2215,7 @@ export function writesSeed(binding: Binding) {
   return !!getPatchWrite(binding).seed && !!findSlot(binding)?.reason;
 }
 
-// Each write (content's once its shell ships), seed and unfillable read, once
-// shells are built.
+// Each write (content's once its shell ships) and seed, once shells are built.
 function computePatchWrite(binding: Binding): PatchWrite {
   const write = isPatchWritten(binding) && leavesReadUnfilled(binding);
   const sources = getSourcesForReferencedBindings(binding);
@@ -2268,7 +2231,6 @@ function computePatchWrite(binding: Binding): PatchWrite {
           !sources?.state &&
           someAlias(binding, readsOwnEffect, undefined, true))),
     seed: seedsCreatedScope(binding),
-    unfillable: !!sources?.param && !sources.global && !patchRefreshes(binding),
   };
 }
 

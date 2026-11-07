@@ -59,6 +59,7 @@ document.querySelector("button").click();
 ## Change
 ```
 INSERT: main > em
+UPDATE: main > em::text " " => "b"
 ```
 
 # Update `{"$global":{"brand":"c","serializedGlobals":["brand"]}}`

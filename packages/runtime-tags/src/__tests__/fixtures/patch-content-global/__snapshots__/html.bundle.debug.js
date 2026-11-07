@@ -31,12 +31,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope1_reason = _scope_reason();
 			const $scope1_id = _scope_id();
 			_html(`<div>${_text_mark($scope1_id, "#text/0", $global$1.brand, 1, 4, 0)}</div>`);
-			_fill_global_subscribe("__tests__/template.marko_1_$global_brand#0:6", $scope1_id);
 			_scope($scope1_id, {}, "__tests__/template.marko", "3:4");
 		}, $scope0_id)
 	});
 	_patch_child_end();
 	_html(`<button>+</button>${_el_mark($scope0_id, "#button/1")}</main>`);
+	_fill_global_subscribe("__tests__/template.marko_0_$global_brand#6/subscribe", $scope0_id);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		count,
