@@ -1,5 +1,4 @@
 import {
-  type Accessor,
   AccessorPrefix,
   AccessorProp,
   type BranchScope,
@@ -51,47 +50,35 @@ patchers[PatchKey.Branch] = (scope, accessor, entry) => {
       liveBranch![AccessorProp.Owner] = scope;
       patchScope(branchPatch, liveBranch as Scope);
     } else {
+      // Anchored as `setBranch` does: in an only-child conditional's container,
+      // else before the live branch (a client render removed the marker) or marker.
+      const marker = scope[accessor] as Comment | Element;
+      const anchor =
+        marker.nodeType > NodeType.Element
+          ? liveBranch?.[AccessorProp.StartNode] || marker
+          : null;
+      const parentNode = (anchor ? anchor.parentNode : marker) as Element;
       // Every branch on the patch path ships a shell (`getShells`).
-      create(scope, branchKey, branchPatch, shellId!);
+      const branch = (scope[branchKey] = createAndSetupBranch(
+        scope[AccessorProp.Global],
+        getContent(shellId!)!,
+        scope,
+        parentNode,
+      ));
+      // Nested entries create recursively (no live children), before insertion. A
+      // created `<html-script>` never runs, as no script a shell parses runs.
+      withCreating(patchScope, branchPatch, branch as Scope);
+      insertChildNodes(
+        parentNode,
+        anchor,
+        branch[AccessorProp.StartNode],
+        branch[AccessorProp.EndNode],
+      );
+      // The live branch goes once the new one is in, as `setBranch` does.
+      if (liveBranch) removeAndDestroyBranch(liveBranch);
     }
   } else if (liveBranch) {
     scope[branchKey] = undefined;
     removeAndDestroyBranch(liveBranch);
   }
 };
-
-function create(
-  scope: Scope,
-  branchKey: Accessor,
-  branchPatch: Scope | 0 | undefined,
-  shellId: string,
-) {
-  // Anchored as `setBranch` does: in an only-child conditional's container,
-  // else before the live branch (a client render removed the marker) or marker.
-  const marker = scope[branchKey.slice(AccessorPrefix.BranchScopes.length)] as
-    | Comment
-    | Element;
-  const liveBranch = scope[branchKey] as BranchScope | undefined;
-  const anchor =
-    marker.nodeType > NodeType.Element
-      ? liveBranch?.[AccessorProp.StartNode] || marker
-      : null;
-  const parentNode = (anchor ? anchor.parentNode : marker) as Element;
-  const branch = (scope[branchKey] = createAndSetupBranch(
-    scope[AccessorProp.Global],
-    getContent(shellId)!,
-    scope,
-    parentNode,
-  ));
-  // Nested entries create recursively (no live children), before insertion. A
-  // created `<html-script>` never runs, as no script a shell parses runs.
-  withCreating(patchScope, branchPatch, branch as Scope);
-  insertChildNodes(
-    parentNode,
-    anchor,
-    branch[AccessorProp.StartNode],
-    branch[AccessorProp.EndNode],
-  );
-  // The live branch goes once the new one is in, as `setBranch` does.
-  if (liveBranch) removeAndDestroyBranch(liveBranch);
-}
