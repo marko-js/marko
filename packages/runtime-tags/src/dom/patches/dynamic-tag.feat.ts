@@ -3,7 +3,6 @@ import { toArray } from "../../common/opt";
 import {
   AccessorPrefix,
   AccessorProp,
-  type EncodedAccessor,
   PatchKey,
   type Scope,
 } from "../../common/types";
@@ -72,7 +71,7 @@ patchers[PatchKey.DynamicTag] = setupPatchers[PatchKey.DynamicTag] = (
   const content = contentId ? getContent(contentId, scope) : 0;
   (
     _dynamic_tag(
-      (MARKO_DEBUG ? accessor : encodeAccessor(accessor)) as EncodedAccessor,
+      MARKO_DEBUG ? accessor : encodeAccessor(accessor),
       content ? (_: Scope) => content : 0,
       varId
         ? (_?: never) => (owner: Scope, value: unknown) =>

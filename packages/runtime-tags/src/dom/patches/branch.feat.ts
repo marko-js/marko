@@ -44,7 +44,7 @@ patchers[PatchKey.Branch] = (scope, accessor, entry) => {
   } else {
     shellId = entry;
   }
-  scope[rendererKey] = index as never;
+  scope[rendererKey] = index;
   if (~index) {
     branchPatch ||= {} as Scope;
     if (index === current) {
