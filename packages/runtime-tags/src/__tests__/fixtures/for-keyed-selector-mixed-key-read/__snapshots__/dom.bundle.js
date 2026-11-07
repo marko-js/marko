@@ -3,7 +3,7 @@ const $for_content__selected__OR__row_label = /*@__PURE__*/ _or(8, ($scope) => _
 const $for_content__selected = /*@__PURE__*/ _for_selector(0, 2, ($scope) => {
 	_attr_class_item($scope.a, "danger", $scope._.c === $scope.M);
 	$for_content__selected__OR__row_label($scope);
-}, 4);
+});
 const $for_content__setup__script = _script("a0", ($scope) => _on($scope.c, "click", function() {
 	$selected($scope._, $scope.M);
 }));

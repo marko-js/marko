@@ -1,0 +1,10 @@
+<let/selected=1/>
+<if=input.show>
+  <ul>
+    <for|row| of=input.rows by="id">
+      <li class=(selected === row.id && "danger")>
+        <button.select onClick() { selected = row.id }>${row.label}</button>
+      </li>
+    </for>
+  </ul>
+</if>

@@ -7,7 +7,7 @@ const $for_content__setup = ($scope) => {
 	$for_content__enabled._($scope);
 	$for_content__selected._($scope);
 };
-const $for_content__selected = /*@__PURE__*/ _for_selector("#ul/1", "selected", $for_content__enabled__OR__selected, 6);
+const $for_content__selected = /*@__PURE__*/ _for_selector("#ul/1", "selected", $for_content__enabled__OR__selected);
 const $for_content__$params = ($scope, $params2) => _text($scope["#text/1"], $params2[0]?.label);
 const $enabled = /*@__PURE__*/ _let("enabled/2", $for_content__enabled);
 const $selected = /*@__PURE__*/ _let("selected/3");

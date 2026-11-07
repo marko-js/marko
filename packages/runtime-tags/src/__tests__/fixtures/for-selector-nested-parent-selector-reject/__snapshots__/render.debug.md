@@ -1,0 +1,199 @@
+# Render
+```html
+<ul
+  class="group"
+>
+  <li
+    class="danger"
+  >
+    <button
+      class="select"
+    >
+      1
+    </button>
+  </li>
+  <li>
+    <button
+      class="select"
+    >
+      2
+    </button>
+  </li>
+</ul>
+<ul>
+  <li>
+    <button
+      class="select"
+    >
+      3
+    </button>
+  </li>
+  <li>
+    <button
+      class="select"
+    >
+      4
+    </button>
+  </li>
+</ul>
+```
+
+# Update
+```js
+(document.querySelectorAll("button.select")[n]).click();
+```
+```html
+<ul
+  class=""
+>
+  <li
+    class=""
+  >
+    <button
+      class="select"
+    >
+      1
+    </button>
+  </li>
+  <li>
+    <button
+      class="select"
+    >
+      2
+    </button>
+  </li>
+</ul>
+<ul>
+  <li
+    class="danger"
+  >
+    <button
+      class="select"
+    >
+      3
+    </button>
+  </li>
+  <li>
+    <button
+      class="select"
+    >
+      4
+    </button>
+  </li>
+</ul>
+```
+## Change
+```
+UPDATE: ul:nth-of-type(1)[class] "group" => ""
+UPDATE: ul:nth-of-type(1) > li:nth-of-type(1)[class] "danger" => ""
+UPDATE: .danger[class] null => "danger"
+```
+
+# Update
+```js
+(document.querySelectorAll("button.select")[n]).click();
+```
+```html
+<ul
+  class=""
+>
+  <li
+    class=""
+  >
+    <button
+      class="select"
+    >
+      1
+    </button>
+  </li>
+  <li>
+    <button
+      class="select"
+    >
+      2
+    </button>
+  </li>
+</ul>
+<ul>
+  <li
+    class=""
+  >
+    <button
+      class="select"
+    >
+      3
+    </button>
+  </li>
+  <li
+    class="danger"
+  >
+    <button
+      class="select"
+    >
+      4
+    </button>
+  </li>
+</ul>
+```
+## Change
+```
+UPDATE: ul:nth-of-type(2) > li:nth-of-type(1)[class] "danger" => ""
+UPDATE: .danger[class] null => "danger"
+```
+
+# Update
+```js
+(document.querySelectorAll("button.select")[n]).click();
+```
+```html
+<ul
+  class=""
+>
+  <li
+    class=""
+  >
+    <button
+      class="select"
+    >
+      1
+    </button>
+  </li>
+  <li
+    class="danger"
+  >
+    <button
+      class="select"
+    >
+      2
+    </button>
+  </li>
+</ul>
+<ul
+  class="group"
+>
+  <li
+    class=""
+  >
+    <button
+      class="select"
+    >
+      3
+    </button>
+  </li>
+  <li
+    class=""
+  >
+    <button
+      class="select"
+    >
+      4
+    </button>
+  </li>
+</ul>
+```
+## Change
+```
+UPDATE: .danger[class] null => "danger"
+UPDATE: .group[class] null => "group"
+UPDATE: .group > li:nth-of-type(2)[class] "danger" => ""
+```

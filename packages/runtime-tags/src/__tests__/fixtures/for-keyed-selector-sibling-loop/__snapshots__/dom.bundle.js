@@ -1,0 +1,10 @@
+// template.marko
+const $for_content2__selected = /*@__PURE__*/ _for_closure(1, ($scope) => _text($scope.b, $scope._.c), 4);
+const $for_content__selected = /*@__PURE__*/ _for_selector(0, 2, ($scope) => _attr_class_item($scope.a, "danger", $scope._.c === $scope.M));
+const $for_content__setup__script = _script("a0", ($scope) => _on($scope.b, "click", function() {
+	$selected($scope._, $scope.M);
+}));
+const $selected = /*@__PURE__*/ _let(2, ($scope) => {
+	$for_content__selected($scope);
+	$for_content2__selected($scope);
+});

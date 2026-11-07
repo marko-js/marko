@@ -1,0 +1,345 @@
+# Render
+```html
+<ul>
+  <li
+    class="danger"
+  >
+    <button
+      class="select"
+    >
+      1
+    </button>
+  </li>
+  <li>
+    <button
+      class="select"
+    >
+      2
+    </button>
+  </li>
+</ul>
+<ul>
+  <li>
+    <button
+      class="select"
+    >
+      3
+    </button>
+  </li>
+  <li>
+    <button
+      class="select"
+    >
+      4
+    </button>
+  </li>
+</ul>
+<button
+  class="add"
+>
+  add
+</button>
+```
+
+# Update
+```js
+(document.querySelectorAll("button.select")[n]).click();
+```
+```html
+<ul>
+  <li
+    class=""
+  >
+    <button
+      class="select"
+    >
+      1
+    </button>
+  </li>
+  <li>
+    <button
+      class="select"
+    >
+      2
+    </button>
+  </li>
+</ul>
+<ul>
+  <li
+    class="danger"
+  >
+    <button
+      class="select"
+    >
+      3
+    </button>
+  </li>
+  <li>
+    <button
+      class="select"
+    >
+      4
+    </button>
+  </li>
+</ul>
+<button
+  class="add"
+>
+  add
+</button>
+```
+## Change
+```
+UPDATE: ul:nth-of-type(1) > li:nth-of-type(1)[class] "danger" => ""
+UPDATE: .danger[class] null => "danger"
+```
+
+# Update
+```js
+(document.querySelectorAll("button.select")[n]).click();
+```
+```html
+<ul>
+  <li
+    class=""
+  >
+    <button
+      class="select"
+    >
+      1
+    </button>
+  </li>
+  <li
+    class="danger"
+  >
+    <button
+      class="select"
+    >
+      2
+    </button>
+  </li>
+</ul>
+<ul>
+  <li
+    class=""
+  >
+    <button
+      class="select"
+    >
+      3
+    </button>
+  </li>
+  <li>
+    <button
+      class="select"
+    >
+      4
+    </button>
+  </li>
+</ul>
+<button
+  class="add"
+>
+  add
+</button>
+```
+## Change
+```
+UPDATE: .danger[class] null => "danger"
+UPDATE: ul:nth-of-type(2) > li:nth-of-type(1)[class] "danger" => ""
+```
+
+# Update
+```js
+(document.querySelector(selector)).click();
+```
+```html
+<ul>
+  <li
+    class=""
+  >
+    <button
+      class="select"
+    >
+      1
+    </button>
+  </li>
+  <li
+    class="danger"
+  >
+    <button
+      class="select"
+    >
+      2
+    </button>
+  </li>
+</ul>
+<ul>
+  <li
+    class=""
+  >
+    <button
+      class="select"
+    >
+      3
+    </button>
+  </li>
+  <li>
+    <button
+      class="select"
+    >
+      4
+    </button>
+  </li>
+</ul>
+<ul>
+  <li>
+    <button
+      class="select"
+    >
+      5
+    </button>
+  </li>
+</ul>
+<button
+  class="add"
+>
+  add
+</button>
+```
+## Change
+```
+INSERT: ul:nth-of-type(2) + ul
+```
+
+# Update
+```js
+(document.querySelectorAll("button.select")[n]).click();
+```
+```html
+<ul>
+  <li
+    class=""
+  >
+    <button
+      class="select"
+    >
+      1
+    </button>
+  </li>
+  <li
+    class=""
+  >
+    <button
+      class="select"
+    >
+      2
+    </button>
+  </li>
+</ul>
+<ul>
+  <li
+    class=""
+  >
+    <button
+      class="select"
+    >
+      3
+    </button>
+  </li>
+  <li>
+    <button
+      class="select"
+    >
+      4
+    </button>
+  </li>
+</ul>
+<ul>
+  <li
+    class="danger"
+  >
+    <button
+      class="select"
+    >
+      5
+    </button>
+  </li>
+</ul>
+<button
+  class="add"
+>
+  add
+</button>
+```
+## Change
+```
+UPDATE: ul:nth-of-type(1) > li:nth-of-type(2)[class] "danger" => ""
+UPDATE: .danger[class] null => "danger"
+```
+
+# Update
+```js
+(document.querySelectorAll("button.select")[n]).click();
+```
+```html
+<ul>
+  <li
+    class="danger"
+  >
+    <button
+      class="select"
+    >
+      1
+    </button>
+  </li>
+  <li
+    class=""
+  >
+    <button
+      class="select"
+    >
+      2
+    </button>
+  </li>
+</ul>
+<ul>
+  <li
+    class=""
+  >
+    <button
+      class="select"
+    >
+      3
+    </button>
+  </li>
+  <li>
+    <button
+      class="select"
+    >
+      4
+    </button>
+  </li>
+</ul>
+<ul>
+  <li
+    class=""
+  >
+    <button
+      class="select"
+    >
+      5
+    </button>
+  </li>
+</ul>
+<button
+  class="add"
+>
+  add
+</button>
+```
+## Change
+```
+UPDATE: .danger[class] "" => "danger"
+UPDATE: ul:nth-of-type(3) > li[class] "danger" => ""
+```

@@ -43,8 +43,8 @@ import {
 import { replaceWithStatements } from "../util/replace-with-statements";
 import { callRuntime } from "../util/runtime";
 import { getScopeAccessorLiteral } from "../util/scope-accessor";
+import { getScopeExpression, scopeIdentifier } from "../util/scope-read";
 import {
-  getForClosureIndex,
   getBranchRendererArgs,
   ensureSection,
   ensureBodySection,
@@ -56,7 +56,6 @@ import {
 import {
   addValue,
   buildClosureHop,
-  getLoopRenderOrder,
   getSignal,
   setClosureSignalBuilder,
   trimEmptyArgs,
@@ -259,10 +258,11 @@ export default {
             getScopeAccessorLiteral(nodeBinding, true),
             getScopeAccessorLiteral(closure, true),
             render,
-            t.numericLiteral(
-              closure.closureId! + getForClosureIndex(closure, bodySection),
-            ),
-            getLoopRenderOrder(bodySection),
+            closure.section !== tagSection &&
+              t.arrowFunctionExpression(
+                [scopeIdentifier],
+                getScopeExpression(tagSection, closure.section),
+              ),
           );
         });
 

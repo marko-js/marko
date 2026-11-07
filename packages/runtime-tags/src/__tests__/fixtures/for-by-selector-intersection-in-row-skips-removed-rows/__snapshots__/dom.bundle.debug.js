@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<!><!><!>";
 const $walks = "b%c";
-const $for_content2__selected = /*@__PURE__*/ _for_selector("#text/0", "selected", ($scope) => _attr_class_item($scope["#span/0"], "on", $scope["#LoopKey"] === $scope._.selected), 8);
+const $for_content2__selected = /*@__PURE__*/ _for_selector("#text/0", "selected", ($scope) => _attr_class_item($scope["#span/0"], "on", $scope["#LoopKey"] === $scope._.selected));
 const $for_content2__setup = ($scope) => {
 	$for_content2__selected._($scope);
 	_text($scope["#text/1"], $scope["#LoopKey"]);

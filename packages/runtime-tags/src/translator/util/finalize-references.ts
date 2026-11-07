@@ -96,10 +96,10 @@ export function finalizeReferences() {
   resolveReads(intersectionsBySection);
   forEachSection(finalizeContentDerives);
   resolveBindings();
-  forEachSection(addSectionReasons);
   for (const finalize of getReferenceFinalizers()) {
     finalize();
   }
+  forEachSection(addSectionReasons);
   forEachSection(applyReasonExprs);
   getReadsByExpression().clear();
   return intersectionsBySection;
@@ -462,7 +462,8 @@ export function allocateIds(
       if (binding.closureSections) {
         closureId = Math.max(closureId, nextId);
         binding.closureId = closureId;
-        // Each `<for>` body reading it renders its rows in one of these slots.
+        // Each `<for>` body reading it, but for selectors, renders its rows in
+        // one of these slots.
         closureId += getForClosureIndex(binding) || 1;
       }
     });

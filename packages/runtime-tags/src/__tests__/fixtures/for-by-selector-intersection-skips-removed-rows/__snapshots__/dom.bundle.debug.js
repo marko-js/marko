@@ -2,7 +2,7 @@
 const $template = "<!><!><!>";
 const $walks = "b%c";
 const $setup = ($_) => {};
-const $for_content__input_sel = /*@__PURE__*/ _for_selector("#text/0", "input_sel", ($scope) => _attr_class_item($scope["#span/0"], "on", $scope["#LoopKey"] === $scope._.input_sel), 7);
+const $for_content__input_sel = /*@__PURE__*/ _for_selector("#text/0", "input_sel", ($scope) => _attr_class_item($scope["#span/0"], "on", $scope["#LoopKey"] === $scope._.input_sel));
 const $for_content__setup = ($scope) => {
 	$for_content__input_sel._($scope);
 	_text($scope["#text/1"], $scope["#LoopKey"]);

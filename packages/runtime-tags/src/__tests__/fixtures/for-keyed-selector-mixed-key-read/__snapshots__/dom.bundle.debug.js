@@ -5,7 +5,7 @@ const $for_content__selected__OR__row_label = /*@__PURE__*/ _or(8, ($scope) => _
 const $for_content__selected = /*@__PURE__*/ _for_selector("#ul/0", "selected", ($scope) => {
 	_attr_class_item($scope["#li/0"], "danger", $scope._.selected === $scope["#LoopKey"]);
 	$for_content__selected__OR__row_label($scope);
-}, 4);
+});
 const $for_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/2"], "click", function() {
 	$selected($scope._, $scope["#LoopKey"]);
 }));
