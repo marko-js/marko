@@ -13,7 +13,7 @@ import {
 import * as ContentType from "./constants/content-type";
 import type * as Step from "./constants/step";
 import * as StructureKind from "./constants/structure-kind";
-import { createAnalysisMemo } from "./cyclic-memo";
+import { createAnalysisMemo, createPassMemo } from "./cyclic-memo";
 import { generateUid, generateUidIdentifier } from "./generate-uid";
 import { isCoreTag, isCoreTagName } from "./is-core-tag";
 import type { KnownTagExtra } from "./known-tag";
@@ -771,7 +771,8 @@ function getKnownChildSection(tag: t.NodePath<t.MarkoTag>) {
   );
 }
 
-export function getRendererReason(section: Section) {
+// Asked within solve (it reads reasons and stateful consumers), so a pass memo.
+export const getRendererReason = createPassMemo((section: Section) => {
   // A branch's tag reads its renderer.
   if (isOptionalBranch(section)) return false;
 
@@ -813,7 +814,7 @@ export function getRendererReason(section: Section) {
   }
 
   return ALWAYS;
-}
+}, false);
 
 // The read renders the content it reads: as its body, or a tag named by it alone.
 export function isContentRender(read: ReferencedExtra) {
