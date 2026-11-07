@@ -881,7 +881,7 @@ export function setBranch<T>(
   }
 }
 
-const loop = /*@__PURE__*/ withBranches(
+export const loop = /*@__PURE__*/ withBranches(
   <T extends unknown[] = unknown[]>(
     forEach: (value: T, cb: (key: unknown, args: unknown[]) => void) => void,
     reorder?: typeof reorderKeyed,
@@ -1078,7 +1078,7 @@ export const _for_until_unkeyed = /*@__PURE__*/ loop<
   [until: number, from?: number, step?: number]
 >(([until, from, step], cb) => forUntil(until, from, step, (v) => cb(v, [v])));
 
-function reorderKeyed(
+export function reorderKeyed(
   newScopes: BranchScope[],
   start: number,
   newEnd: number,

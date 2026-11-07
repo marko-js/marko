@@ -1,6 +1,6 @@
 import { encodeAccessor } from "../../common/helpers";
 import { AccessorPrefix, PatchKey, type Scope } from "../../common/types";
-import type { _for_of } from "../control-flow";
+import { loop, type reorderKeyed } from "../control-flow";
 import { type Patcher, patchScope, withCreating } from "./apply";
 import { getShell } from "./shells";
 
@@ -12,9 +12,17 @@ declare module "./apply" {
 
 // Interleaved `[key, patch, …, shellId?]`: an object head means implicit
 // index keys, and the trailing string (a patch never is one) is the shell.
-export const createLoopPatcher =
-  (reconcile: typeof _for_of): Patcher<typeof PatchKey.Loop> =>
-  (scope, accessor, value) => {
+export const createLoopPatcher = (
+  reorder?: typeof reorderKeyed,
+): Patcher<typeof PatchKey.Loop> => {
+  // A row's key is the one its loop's runtime gave it (sent unless every key is
+  // its index); the patcher's loop has no params, so no row's args are read.
+  const reconcile = loop(
+    ([patches, keys]: [patches: Scope[], keys: unknown[] | 0], cb) =>
+      patches.forEach((_, i) => cb(keys ? keys[i] : i, patches)),
+    reorder,
+  );
+  return (scope, accessor, value) => {
     let len = value.length;
     let shellId: string | undefined;
     if (len && typeof value[len - 1] === "string") {
@@ -33,10 +41,7 @@ export const createLoopPatcher =
         template,
         walks,
         setup || 0,
-      )(
-        scope,
-        keys ? [patches, (_patch: unknown, i: number) => keys[i]] : [patches],
-      );
+      )(scope, [patches, keys]);
       (scope[AccessorPrefix.BranchScopes + accessor] as Scope[]).forEach(
         (row, i) => patchScope(patches[i], row),
       );
@@ -48,3 +53,4 @@ export const createLoopPatcher =
     if (shellId) withCreating(apply);
     else apply();
   };
+};
