@@ -21,7 +21,7 @@ var frag_host_default = _template("__tests__/tags/frag-host.marko", (input) => {
 	_attr_content("#section/0", $scope0_id, input.mode ? frag.content : null, 0, 1, $scope0_reason, 2);
 	_html(`</section>${_el_mark($scope0_id, "#section/0", _updates_from($scope0_reason, 2))}`);
 	_unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchWrite:frag_content", frag?.content, 1);
-	$fg__input_note && _patch_subscribers($scope0_id, "__tests__/tags/frag-host.marko_0_input_note#3/subscribers", "input_note");
+	$fg__input_note && $cg__input_mode && _patch_subscribers($scope0_id, "__tests__/tags/frag-host.marko_0_input_note#3/subscribers", "input_note");
 	$cg__input_mode && _patch_render($scope0_id, "__tests__/tags/frag-host.marko_0_input_mode#4_frag_content#6/setup");
 	_scope($scope0_id, {
 		input_note: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1)) && input.note,

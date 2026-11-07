@@ -12,8 +12,7 @@
           "PatchText:#text/2": "m"
         }
       }, _.c = "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-attr-for-outer-loop/tags/list.marko_1*shell"]
-    },
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-attr-for-outer-loop/template.marko_1_a#3/subscribers": "a"
+    }
   }, {
     "PatchDynamicTag:#text/0": _.a,
     "PatchChild:BranchScopes:#text/0": {
@@ -25,10 +24,8 @@
           "PatchText:#text/2": "m"
         }
       }, _.c]
-    },
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-attr-for-outer-loop/template.marko_1_a#3/subscribers": "a"
-  }, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-attr-for-outer-loop/template.marko_1*shell"],
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-attr-for-outer-loop/template.marko_0_input_note#8/subscribers": "input_note"
+    }
+  }, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-attr-for-outer-loop/template.marko_1*shell"]
 }
 ;D2M
 
@@ -46,10 +43,8 @@
           "PatchText:#text/2": "o"
         }
       }, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-attr-for-outer-loop/tags/list2.marko_1*shell"]
-    },
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-attr-for-outer-loop/template.marko_1_a#3/subscribers": "a"
-  }, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-attr-for-outer-loop/template.marko_1*shell"],
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-attr-for-outer-loop/template.marko_0_input_note#8/subscribers": "input_note"
+    }
+  }, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-attr-for-outer-loop/template.marko_1*shell"]
 }
 ;D28
 
@@ -66,8 +61,6 @@
           "PatchText:#text/2": "p"
         }
       }, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-attr-for-outer-loop/tags/list.marko_1*shell"]
-    },
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-attr-for-outer-loop/template.marko_1_a#3/subscribers": "a"
-  }, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-attr-for-outer-loop/template.marko_1*shell"],
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-attr-for-outer-loop/template.marko_0_input_note#8/subscribers": "input_note"
+    }
+  }, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-attr-for-outer-loop/template.marko_1*shell"]
 }

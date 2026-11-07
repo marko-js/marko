@@ -7,7 +7,7 @@ _shells({
 	a0: "a0;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_note = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $fg__input_note = _filled_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = /* @__PURE__ */ new Set();
 	const Card = { content: _content("a2", ({ show, content }) => {
@@ -41,10 +41,10 @@ var template_default = _template("a", (input) => {
 	});
 	_patch_child_end();
 	_html("</main>");
-	$fg__input_note && _patch_subscribers($scope0_id, "a5", "e");
+	$fg__input_note && $cg__input_show && _patch_subscribers($scope0_id, "a5", "e");
 	_scope($scope0_id, {
 		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.note,
 		f: _write_if($scope0_reason, 2) && $input_note__closures,
 		a: _existing_scope($childScope)
-	}) || $fg__input_note && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.note, !_server_guard($scope0_reason, 2));
+	}) || $fg__input_note && $cg__input_show && _patch_write($scope0_id, "xe", input.note, !_server_guard($scope0_reason, 2));
 }, 1);

@@ -19,7 +19,6 @@
     cAa: {
       ta: "SHOWN_name2c"
     }
-  },
-  Sa4: "m"
+  }
 }
 ;CQY

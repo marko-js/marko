@@ -58,7 +58,7 @@ var template_default = _template("a", (input) => {
 		_dynamic_tag($scope1_id, "b", input.on ? keeper_default : plain_default, { content: prev }, 9, 0, 0, $wg__input_on || $wg__prev, _updates_from($scope0_reason, 0) << 1, 0, 0, void 0, 0, 0, "a0");
 		const $return = X;
 		_unfilled_if($scope0_reason, 0) && _patch_write($scope1_id, "wh", X, 1);
-		$fg__label && _patch_subscribers($scope1_id, "a3", "e");
+		$fg__label && (_client_branch_if("a0", $scope1_id) || $cg__input_on || $cg__input_on) && _patch_subscribers($scope1_id, "a3", "e");
 		_patch_render($scope1_id, "a4", [_filled_guard($scope0_reason, 0) && ">f", $fg__prev && "f"], _updates_from($scope0_reason, 0) << 1, 0);
 		($wi__input_on || _write_if($scope1_reason, 0)) && _subscribe(_unfilled_if(_updates_from($scope0_reason, 0) << 1, 0) && $wi__input_on && $input_on__closures, _scope($scope1_id, {
 			e: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope1_reason, 1)) && label,

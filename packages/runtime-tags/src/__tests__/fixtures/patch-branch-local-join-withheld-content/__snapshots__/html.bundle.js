@@ -7,14 +7,14 @@ _shells({
 	b6: "b6;D l ;<p> </p><section></section>"
 });
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_b = _client_guard($scope0_reason, 6), $wg__input_show = _write_guard($scope0_reason, 5), $sg__input_b = _server_guard($scope0_reason, 6), $cg__input_show = _client_guard($scope0_reason, 5), $fg__input_b = _filled_guard($scope0_reason, 6), $fg__input_a = _filled_guard($scope0_reason, 7), $fg__input_mode = _filled_guard($scope0_reason, 8);
+	const $scope0_reason = _scope_reason(), $cg__input_a__OR__input_mode = _client_guard($scope0_reason, 3), $cg__input_b = _client_guard($scope0_reason, 6), $wg__input_show = _write_guard($scope0_reason, 5), $sg__input_b = _server_guard($scope0_reason, 6), $cg__input_show = _client_guard($scope0_reason, 5), $fg__input_b = _filled_guard($scope0_reason, 6), $fg__input_a = _filled_guard($scope0_reason, 7), $fg__input_mode = _filled_guard($scope0_reason, 8);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			const $if_content__c__closures = /* @__PURE__ */ new Set();
 			const c = input.b + "!";
-			_filled_guard($scope0_reason, 6) && _client_guard($scope0_reason, 3) && _patch_write($scope1_id, "xc", c, !$sg__input_b);
+			_filled_guard($scope0_reason, 6) && $cg__input_a__OR__input_mode && _patch_write($scope1_id, "xc", c, !$sg__input_b);
 			_html(`<p>${_text_mark($scope1_id, "a", input.a + c, 1, $scope0_reason, 1)}</p>`);
 			const frag = { content: _content_resume("b0", () => {
 				const $scope2_id = _scope_id();
@@ -27,7 +27,7 @@ var child_default = _template("b", (input) => {
 			_attr_content("b", $scope1_id, input.mode ? frag.content : null, 0, 1, $scope0_reason, 8);
 			_html(`</section>${_el_mark($scope1_id, "b", _updates_from($scope0_reason, 8))}`);
 			_unfilled_if($scope0_reason, 8) && _patch_write($scope1_id, "wf", frag?.content, 1);
-			_filled_guard($scope0_reason, 6) && _patch_subscribers($scope1_id, "b2", "c");
+			_filled_guard($scope0_reason, 6) && $cg__input_a__OR__input_mode && _patch_subscribers($scope1_id, "b2", "c");
 			$cg__input_b && _patch_render($scope1_id, "b3");
 			_patch_render($scope1_id, "b4", [_filled_guard($scope0_reason, 7) && ">f", _filled_guard($scope0_reason, 6) && "c"], $scope0_reason, 1);
 			_client_guard($scope0_reason, 8) && _patch_render($scope1_id, "b5");

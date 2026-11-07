@@ -63,8 +63,8 @@ var template_default = _template("a", (input) => {
 		_subscribe(_unfilled_if($scope0_reason, 5) && $input_b__closures, _scope($scope2_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }));
 	}, $scope0_id, ($scope2) => $scope0_page ? [{ f: input.b }] : []) }) }, 17, 0, 0, $wg__input_on, $scope0_reason, 3, 0, void 0, 0, 0, ["a7", "a6"]);
 	_html("</main>");
-	$fg__input_a && _patch_subscribers($scope0_id, "a10", "e");
-	$fg__input_b && _patch_subscribers($scope0_id, "a11", "f");
+	$fg__input_a && (_client_branch_if("a7", $scope0_id) || $cg__input_on) && _patch_subscribers($scope0_id, "a10", "e");
+	$fg__input_b && (_client_branch_if("a6", $scope0_id) || $cg__input_on) && _patch_subscribers($scope0_id, "a11", "f");
 	_scope($scope0_id, {
 		e: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 4)) && input.a,
 		f: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 5)) && input.b,

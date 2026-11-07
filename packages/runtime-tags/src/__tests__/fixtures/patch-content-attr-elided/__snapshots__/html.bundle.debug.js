@@ -7,7 +7,7 @@ _shells({
 	"__tests__/template.marko": "__tests__/template.marko;D bD ;<main><section></section><p> </p></main>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_note = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $fg__input_note = _filled_guard($scope0_reason, 1), $cg__input_mode = _client_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = new Set();
 	const frag = { content: _content_resume("__tests__/template.marko_1*content", () => {
@@ -20,7 +20,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html("<main><section>");
 	_attr_content("#section/0", $scope0_id, input.mode ? frag.content : null, 0, 1, $scope0_reason, 2);
 	_html(`</section>${_el_mark($scope0_id, "#section/0", _updates_from($scope0_reason, 2))}<p>${_text_mark($scope0_id, "#text/1", input.note, 1, $scope0_reason, 1)}</p></main>`);
-	$fg__input_note && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_note#4/subscribers", "input_note");
+	$fg__input_note && $cg__input_mode && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_note#4/subscribers", "input_note");
 	_scope($scope0_id, {
 		input_note: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1)) && input.note,
 		frag_content: _unfilled_if($scope0_reason, 2) && frag?.content,
@@ -28,5 +28,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, "__tests__/template.marko", 0, {
 		input_note: ["input.note"],
 		frag_content: ["frag.content", "1:9"]
-	}) || $fg__input_note && _client_guard($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_note", input.note, !_server_guard($scope0_reason, 1));
+	}) || $fg__input_note && $cg__input_mode && _patch_write($scope0_id, "PatchMarkedWrite:input_note", input.note, !_server_guard($scope0_reason, 1));
 }, 1);

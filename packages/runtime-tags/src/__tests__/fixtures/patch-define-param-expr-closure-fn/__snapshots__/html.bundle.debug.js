@@ -49,7 +49,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $childScope2 = _peek_scope_id($scope0_id, "#childScope/1", 1);
 	counter_default({});
 	_patch_child_end();
-	$fg__input_a && _patch_subscribers($scope0_id, "__tests__/template.marko_0_f#6/subscribers", ["f", "input_a"]);
+	$fg__input_a && $cg__input_x && _patch_subscribers($scope0_id, "__tests__/template.marko_0_f#6/subscribers", ["f", "input_a"]);
 	_scope($scope0_id, {
 		input_a: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.a,
 		f: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && f,

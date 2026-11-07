@@ -43,7 +43,7 @@ var template_default = _template("a", (input) => {
 	_dynamic_tag($scope0_id, "a", input.x ? Label : "span", {}, 2, 0, 0, $wg__input_x, $scope0_reason, 3);
 	_dynamic_tag($scope0_id, "b", input.on ? card_default : "div", { content: Label }, 9, 0, 0, $wg__input_on, $scope0_reason, 4, 0, void 0, 0, 0, "a0");
 	_html("</main>");
-	$fg__input_note && _patch_subscribers($scope0_id, "a2", "e");
+	$fg__input_note && (_client_branch_if("a0", $scope0_id) || $cg__input_x__OR__input_on || $cg__input_x__OR__input_on) && _patch_subscribers($scope0_id, "a2", "e");
 	_scope($scope0_id, {
 		e: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && input.note,
 		h: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 4)) && Label,

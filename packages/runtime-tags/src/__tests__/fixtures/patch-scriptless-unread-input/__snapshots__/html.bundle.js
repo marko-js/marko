@@ -17,7 +17,7 @@ _shells({
 	a1: `a1${_shell_marker([[], []], ["a>", $setup$1])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)("D l")};${$template}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_tag__OR__input_cls = _write_guard($scope0_reason, 0), $wg__input_show = _write_guard($scope0_reason, 2), $fg__input_user = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 2), $fg__input_user3_name = _filled_guard($scope0_reason, 7), $fg__input_tag = _filled_guard($scope0_reason, 5), $fg__input_cls = _filled_guard($scope0_reason, 6);
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_tag__OR__input_cls = _write_guard($scope0_reason, 0), $wg__input_show = _write_guard($scope0_reason, 2), $fg__input_user = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 2), $fg__input_user3_name = _filled_guard($scope0_reason, 7), $cg__input_tag__OR__input_cls = _client_guard($scope0_reason, 0), $fg__input_tag = _filled_guard($scope0_reason, 5), $fg__input_cls = _filled_guard($scope0_reason, 6);
 	const $scope0_id = _scope_id();
 	const $input_user3_name__closures = /* @__PURE__ */ new Set();
 	_if(() => {
@@ -47,7 +47,7 @@ var template_default = _template("a", (input) => {
 		_subscribe(_unfilled_if($scope0_reason, 7) && $input_user3_name__closures, _scope($scope2_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }));
 	}, $scope0_id, ($scope) => $scope0_page ? [{ m: input.user3?.name }] : []), 0, $wg__input_tag__OR__input_cls, $scope0_reason, 0, 0, 5, void 0, 0, "a2");
 	$fg__input_user && $cg__input_show && _patch_render($scope0_id, "a0", "g");
-	$fg__input_user3_name && _patch_subscribers($scope0_id, "a4", "m");
+	$fg__input_user3_name && (_client_branch_if("a2", $scope0_id) || $cg__input_tag__OR__input_cls) && _patch_subscribers($scope0_id, "a4", "m");
 	_patch_render($scope0_id, "a5", [$fg__input_tag && "i", $fg__input_cls && "j"], $scope0_reason, 0);
 	_scope($scope0_id, {
 		g: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && input.user,
@@ -56,5 +56,5 @@ var template_default = _template("a", (input) => {
 		m: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 7)) && input.user3?.name,
 		b: _existing_scope($childScope2),
 		o: _write_if($scope0_reason, 7) && $input_user3_name__closures
-	}) || ($fg__input_user && $cg__input_show && _patch_write($scope0_id, "xg", input.user, !_server_guard($scope0_reason, 3)), $fg__input_tag && _client_guard($scope0_reason, 6) && _patch_write($scope0_id, "xi", input.tag, !_server_guard($scope0_reason, 5)), $fg__input_cls && _client_guard($scope0_reason, 5) && _patch_write($scope0_id, "xj", input.cls, !_server_guard($scope0_reason, 6)), $fg__input_user3_name && (_client_branch_if("a2", $scope0_id) || _client_guard($scope0_reason, 0)) && _patch_write($scope0_id, "xm", input.user3?.name, !_server_guard($scope0_reason, 7)));
+	}) || ($fg__input_user && $cg__input_show && _patch_write($scope0_id, "xg", input.user, !_server_guard($scope0_reason, 3)), $fg__input_tag && _client_guard($scope0_reason, 6) && _patch_write($scope0_id, "xi", input.tag, !_server_guard($scope0_reason, 5)), $fg__input_cls && _client_guard($scope0_reason, 5) && _patch_write($scope0_id, "xj", input.cls, !_server_guard($scope0_reason, 6)), $fg__input_user3_name && (_client_branch_if("a2", $scope0_id) || $cg__input_tag__OR__input_cls) && _patch_write($scope0_id, "xm", input.user3?.name, !_server_guard($scope0_reason, 7)));
 }, 1);

@@ -40,7 +40,6 @@ var wrap_default = _template("b", (input) => {
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	Card.content({});
 	_patch_child_end();
-	_filled_guard($scope0_reason, 1) && _patch_subscribers($scope0_id, "b6", "d");
 	_scope($scope0_id, {
 		f: $wi__input_label && $input_label__closures,
 		g: _write_if($scope0_reason, 2) && $input_show__closures,

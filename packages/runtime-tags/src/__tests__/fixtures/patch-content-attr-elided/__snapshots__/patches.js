@@ -5,16 +5,14 @@
   cAa: {
     ta: "two"
   },
-  tb: "two",
-  Sa2: "e"
+  tb: "two"
 }
 ;BAE
 
 // PATCH holding BAE
 {
   fa: 0,
-  tb: "three",
-  Sa2: "e"
+  tb: "three"
 }
 
 // PATCH holding BAE
@@ -23,6 +21,5 @@
   cAa: {
     ta: "four"
   },
-  tb: "four",
-  Sa2: "e"
+  tb: "four"
 }

@@ -10,7 +10,7 @@ _shells({
 var host_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	_write_guard($scope0_reason, 4);
-	const $scope0_page = _page_render(), $wg__input_wrap__OR__input_native = _write_guard($scope0_reason, 1), $wi__input_wrap__OR__input_show__OR__input_native__OR__input_label = _write_if($scope0_reason, 3), $fg__input_wrap = _filled_guard($scope0_reason, 4), $fg__input_native = _filled_guard($scope0_reason, 6), $cg__input_show = _client_guard($scope0_reason, 5), $fg__input_label = _filled_guard($scope0_reason, 7);
+	const $scope0_page = _page_render(), $wg__input_wrap__OR__input_native = _write_guard($scope0_reason, 1), $wi__input_wrap__OR__input_show__OR__input_native__OR__input_label = _write_if($scope0_reason, 3), $fg__input_wrap = _filled_guard($scope0_reason, 4), $fg__input_native = _filled_guard($scope0_reason, 6), $cg__input_show = _client_guard($scope0_reason, 5), $fg__input_label = _filled_guard($scope0_reason, 7), $cg__input_wrap__OR__input_show__OR__input_native = _client_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	let flag = false;
@@ -35,7 +35,7 @@ var host_default = _template("b", (input) => {
 	$fg__input_wrap && _patch_render($scope0_id, "b0", "f");
 	$fg__input_wrap && $cg__input_show && _patch_render($scope0_id, "b6", "f");
 	$fg__input_native && $cg__input_show && _patch_render($scope0_id, "b7", "h");
-	$fg__input_label && _patch_subscribers($scope0_id, "b8", "i");
+	$fg__input_label && (_client_branch_if("b1", $scope0_id) || $cg__input_wrap__OR__input_show__OR__input_native) && _patch_subscribers($scope0_id, "b8", "i");
 	_patch_fill($scope0_id, "vb9", flag, 1);
 	_scope($scope0_id, {
 		f: input.wrap,
@@ -43,7 +43,7 @@ var host_default = _template("b", (input) => {
 		i: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 7)) && input.label,
 		j: flag,
 		m: _write_if($scope0_reason, 7) && $input_label__closures
-	}) || ($fg__input_wrap && _patch_write($scope0_id, "xf", input.wrap, !_server_guard($scope0_reason, 4)), $fg__input_native && _client_guard($scope0_reason, 0) && _patch_write($scope0_id, "xh", input.native, !_server_guard($scope0_reason, 6)), $fg__input_label && (_client_branch_if("b1", $scope0_id) || _client_guard($scope0_reason, 2)) && _patch_write($scope0_id, "xi", input.label, !_server_guard($scope0_reason, 7)));
+	}) || ($fg__input_wrap && _patch_write($scope0_id, "xf", input.wrap, !_server_guard($scope0_reason, 4)), $fg__input_native && _client_guard($scope0_reason, 0) && _patch_write($scope0_id, "xh", input.native, !_server_guard($scope0_reason, 6)), $fg__input_label && (_client_branch_if("b1", $scope0_id) || $cg__input_wrap__OR__input_show__OR__input_native) && _patch_write($scope0_id, "xi", input.label, !_server_guard($scope0_reason, 7)));
 });
 
 // template.marko

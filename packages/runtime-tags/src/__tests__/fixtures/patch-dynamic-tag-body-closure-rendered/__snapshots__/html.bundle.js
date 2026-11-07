@@ -25,7 +25,7 @@ _shells({
 	c: "c;b%;<!><!><!>"
 });
 var heading_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_type = _write_guard($scope0_reason, 1), $fg__input_depth = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_type = _write_guard($scope0_reason, 1), $fg__input_depth = _filled_guard($scope0_reason, 2), $cg__input_type = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_depth__closures = /* @__PURE__ */ new Set();
 	_dynamic_tag($scope0_id, "a", input.type, {}, 2, _content_resume("c0", () => {
@@ -35,11 +35,11 @@ var heading_default = _template("c", (input) => {
 		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "c1", _client_guard($scope0_reason, 2));
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_depth__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }));
 	}, $scope0_id, ($scope) => $scope0_page ? [{ e: input.depth }] : []), 0, $wg__input_type, $scope0_reason, 1, 0, void 0, 0, 0, "c0");
-	$fg__input_depth && _patch_subscribers($scope0_id, "c2", "e");
+	$fg__input_depth && (_client_branch_if("c0", $scope0_id) || $cg__input_type) && _patch_subscribers($scope0_id, "c2", "e");
 	_scope($scope0_id, {
 		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.depth,
 		f: _write_if($scope0_reason, 2) && $input_depth__closures
-	}) || $fg__input_depth && (_client_branch_if("c0", $scope0_id) || _client_guard($scope0_reason, 1)) && _patch_write($scope0_id, "xe", input.depth, !_server_guard($scope0_reason, 2));
+	}) || $fg__input_depth && (_client_branch_if("c0", $scope0_id) || $cg__input_type) && _patch_write($scope0_id, "xe", input.depth, !_server_guard($scope0_reason, 2));
 });
 
 // template.marko

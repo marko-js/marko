@@ -7,8 +7,7 @@
     "PatchSetupValues:": {
       "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-var-define-state/template.marko_fill0": 0
     }
-  },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-var-define-state/template.marko_0_input_label#5/subscribers": "input_label"
+  }
 }
 ;BgE
 
@@ -19,8 +18,7 @@
   "PatchChild:BranchScopes:#text/0": {
     "PatchText:#text/0": "c"
   },
-  "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-var-define-state/template.marko_0_count#10/var": -1,
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-var-define-state/template.marko_0_input_label#5/subscribers": "input_label"
+  "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-var-define-state/template.marko_0_count#10/var": -1
 }
 ;BwY
 
@@ -32,6 +30,5 @@
     "PatchSetupValues:": {
       "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-var-define-state/template.marko_fill0": 0
     }
-  },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-var-define-state/template.marko_0_input_label#5/subscribers": "input_label"
+  }
 }

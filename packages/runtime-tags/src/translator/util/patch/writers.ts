@@ -357,34 +357,41 @@ export function writePatchResumeStatements(
     });
     if (walks) {
       const sources = getSourcesForReferencedBindings(binding);
-      body.push(
-        t.expressionStatement(
-          andGuard(
-            getCallerGroupGuard(section, "_filled_guard", sources),
+      const filled = getCallerGroupGuard(section, "_filled_guard", sources);
+      // Subscribers re-run only where the client renders one, which reads the value: where it
+      // holds the param-selected structure around them, else where the value's write ships.
+      const written =
+        orCallerGroupGuards(
+          section,
+          undefined,
+          "_client_guard",
+          fromIter(structure || []),
+        ) || getUnfilledWriteGuard(section, binding);
+      if (written) {
+        body.push(
+          t.expressionStatement(
             andGuard(
-              orCallerGroupGuards(
-                section,
-                undefined,
-                "_client_guard",
-                fromIter(structure || []),
-              ),
-              callRuntime(
-                "_patch_subscribers",
-                getScopeIdIdentifier(section),
-                t.stringLiteral(getClosureSubscribersId(binding)),
-                getReads(
-                  section,
-                  [binding],
-                  "_filled_guard",
-                  isGuardedReason(sources) &&
-                    !sources.global &&
-                    getSoleCallerGroup(section, sources),
+              filled,
+              andGuard(
+                written !== true && written,
+                callRuntime(
+                  "_patch_subscribers",
+                  getScopeIdIdentifier(section),
+                  t.stringLiteral(getClosureSubscribersId(binding)),
+                  getReads(
+                    section,
+                    [binding],
+                    "_filled_guard",
+                    isGuardedReason(sources) &&
+                      !sources.global &&
+                      getSoleCallerGroup(section, sources),
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-      );
+        );
+      }
     }
     forEach(binding.closureSections, (closureSection) => {
       if (runsClosureByWrite(binding, closureSection)) {
@@ -1210,21 +1217,22 @@ function getUnfilledPatchWrite(section: Section, binding: Binding) {
     undefined,
     getConstantSetup(section, binding),
   );
+  const guard = getUnfilledWriteGuard(section, binding);
+  return guard && andGuard(guard !== true && guard, write);
+}
+
+// Where that write ships: `true` on every instance, unset on none.
+function getUnfilledWriteGuard(section: Section, binding: Binding) {
   // A built object's source rides its readers' entries, where a patch fills them.
-  if (getPatchFill(binding).objectSource) return write;
+  if (getPatchFill(binding).objectSource) return true;
   const canonical = getCanonicalBinding(binding);
   const contents = getClosureContents(canonical);
-  if (contents === true) return write;
+  if (contents === true) return true;
   // Content taking the value as a closure needs it where the client keeps an instance.
   const guard = contents && getClientBranchGuard(section, contents);
   const reason = mapBodyParams(section, findSlot(canonical)?.reason);
-  if (!isDynamicWriteGuard(section, reason)) {
-    return reason ? write : guard && andGuard(guard, write);
-  }
-  return andGuard(
-    orCallerGroupGuards(section, guard, "_client_guard", reason),
-    write,
-  );
+  if (!isDynamicWriteGuard(section, reason)) return !!reason || guard;
+  return orCallerGroupGuards(section, guard, "_client_guard", reason) || true;
 }
 
 // The writes a client branch guard decides, at the section's end: its dynamic tags report

@@ -73,7 +73,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope($scope3_id, { "#childScope/0": _existing_scope($childScope2) }, "__tests__/template.marko", "7:4");
 	}, 1, "__tests__/template.marko_3*content", _unfilled_if($scope0_reason, 3), 1, 1);
 	_html("</main>");
-	$fg__input_note && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_note#5/subscribers", "input_note");
+	$fg__input_note && (_client_branch_if("__tests__/template.marko_2*content", $scope0_id) || $cg__input_on) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_note#5/subscribers", "input_note");
 	_scope($scope0_id, {
 		input_note: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.note,
 		"ClosureScopes:input_note/8": _write_if($scope0_reason, 2) && $input_note__closures,

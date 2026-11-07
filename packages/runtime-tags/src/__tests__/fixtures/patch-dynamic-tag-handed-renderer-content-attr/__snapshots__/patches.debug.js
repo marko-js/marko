@@ -4,8 +4,7 @@
     "PatchChild:BranchScopes:#text/0": {
       "PatchBranch:#text/0": 0
     }
-  },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-handed-renderer-content-attr/template.marko_0_input_y#4/subscribers": "input_y"
+  }
 }
 
 // PATCH
@@ -20,7 +19,6 @@
         }
       }, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-handed-renderer-content-attr/tags/card.marko_1*shell"]
     }
-  },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-handed-renderer-content-attr/template.marko_0_input_y#4/subscribers": "input_y"
+  }
 }
 ;CxI

@@ -6,8 +6,7 @@
     "PatchChild:BranchScopes:#text/0": {
       "PatchMarkedWrite:x": "a1",
       "PatchBranch:#text/0": 0
-    },
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-swap-branch-hidden-in-child/tags/w.marko_0_input_show#3/subscribers": "input_show"
+    }
   }
 }
 ;DAE
@@ -20,8 +19,7 @@
     "PatchChild:BranchScopes:#text/0": {
       "PatchMarkedWrite:x": "a2",
       "PatchBranch:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-swap-branch-hidden-in-child/tags/w.marko_3*shell"
-    },
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-swap-branch-hidden-in-child/tags/w.marko_0_input_show#3/subscribers": "input_show"
+    }
   }
 }
 ;DQo

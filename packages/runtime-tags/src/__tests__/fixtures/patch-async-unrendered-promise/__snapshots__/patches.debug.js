@@ -22,8 +22,7 @@
         "PatchText:#text/0": "SHOWN_name2b"
       }
     }
-  },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-async-unrendered-promise/template.marko_0_input_boxed#11/subscribers": "input_boxed"
+  }
 }
 {
   "PatchChild:BranchScopes:#text/3": {

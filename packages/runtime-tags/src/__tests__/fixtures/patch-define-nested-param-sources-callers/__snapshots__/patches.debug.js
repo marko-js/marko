@@ -4,8 +4,7 @@
     "PatchChild:#childScope/0": {
       "PatchChild:#childScope/0": {
         "PatchText:#text/0": "by0"
-      },
-      "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-define-nested-param-sources-callers/template.marko_1_x#3/subscribers": "x"
+      }
     },
     "PatchChild:#childScope/1": {
       "PatchChild:#childScope/0": {
@@ -23,8 +22,7 @@
     "PatchChild:#childScope/0": {
       "PatchChild:#childScope/0": {
         "PatchText:#text/0": "cz0"
-      },
-      "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-define-nested-param-sources-callers/template.marko_1_x#3/subscribers": "x"
+      }
     },
     "PatchChild:#childScope/1": {
       "PatchChild:#childScope/0": {

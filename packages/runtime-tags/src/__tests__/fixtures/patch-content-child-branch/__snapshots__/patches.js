@@ -8,8 +8,7 @@
         ta: "y"
       }
     }, "b1"]
-  },
-  Sa2: "e"
+  }
 }
 ;CQo
 
@@ -22,16 +21,14 @@
         ta: "z"
       }
     }, "b1"]
-  },
-  Sa2: "e"
+  }
 }
 
 // PATCH holding CQo
 {
   ca: {
     ba: 0
-  },
-  Sa2: "e"
+  }
 }
 
 // PATCH holding CQo
@@ -43,6 +40,5 @@
         ta: "v"
       }
     }, "b1"]
-  },
-  Sa2: "e"
+  }
 }

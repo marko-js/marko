@@ -76,7 +76,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, $scope0_id, ($scope) => $scope0_page ? [{ input_y: input.y }] : [])
 	});
 	_patch_child_end();
-	$fg__input_y && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_y#4/subscribers", "input_y");
+	$fg__input_y && (_client_branch_if("__tests__/template.marko_1*content", $scope0_id) || $cg__input_x || $cg__input_x) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_y#4/subscribers", "input_y");
 	_scope($scope0_id, {
 		input_y: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.y,
 		"ClosureScopes:input_y/5": _write_if($scope0_reason, 2) && $input_y__closures,

@@ -59,7 +59,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			v,
 			_: $scope($scope0_id)
 		}] : []), 0, $wg__input_on, $scope0_reason, 3, 0, void 0, 0, 0, "__tests__/template.marko_2*content");
-		_filled_guard($scope0_reason, 2) && _patch_subscribers($scope1_id, "__tests__/template.marko_1_v#2/subscribers", "v");
+		_filled_guard($scope0_reason, 2) && (_client_branch_if("__tests__/template.marko_2*content", $scope1_id) || $cg__input_on) && _patch_subscribers($scope1_id, "__tests__/template.marko_1_v#2/subscribers", "v");
 		_unfilled_if($scope0_reason, 3) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_on#0:4/subscribe", $cg__input_on);
 		$wi__input_v__OR__input_on__OR__input_note && _subscribe(_unfilled_if($scope0_reason, 3) && $input_on__closures, _scope($scope1_id, {
 			v: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 2)) && v,
@@ -69,7 +69,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		$wg__input_on || $wi__input_v__OR__input_on__OR__input_note && _resume_branch($scope1_id);
 	}, 1, "__tests__/template.marko_1*content", _unfilled_if($scope0_reason, 2), 1, 1);
 	_html("</main>");
-	$fg__input_note && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_note#5/subscribers", "input_note");
+	$fg__input_note && (_client_branch_if("__tests__/template.marko_2*content", $scope0_id) || $cg__input_on) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_note#5/subscribers", "input_note");
 	_scope($scope0_id, {
 		input_note: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 4)) && input.note,
 		"ClosureScopes:input_note/7": _write_if($scope0_reason, 4) && $input_note__closures,

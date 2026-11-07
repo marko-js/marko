@@ -7,7 +7,7 @@ _shells({
 	b3: "b3;b%;<!><!><!>"
 });
 var host_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_wrap__OR__input_items = _write_guard($scope0_reason, 2), $wi__input_show__OR__input_wrap__OR__input_items__OR__input_label = _write_if($scope0_reason, 4), $wg__input_show = _write_guard($scope0_reason, 5), $fg__input_wrap = _filled_guard($scope0_reason, 6), $fg__input_items = _filled_guard($scope0_reason, 7), $cg__input_show = _client_guard($scope0_reason, 5), $fg__input_label = _filled_guard($scope0_reason, 8);
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_wrap__OR__input_items = _write_guard($scope0_reason, 2), $wi__input_show__OR__input_wrap__OR__input_items__OR__input_label = _write_if($scope0_reason, 4), $wg__input_show = _write_guard($scope0_reason, 5), $fg__input_wrap = _filled_guard($scope0_reason, 6), $fg__input_items = _filled_guard($scope0_reason, 7), $cg__input_show = _client_guard($scope0_reason, 5), $fg__input_label = _filled_guard($scope0_reason, 8), $cg__input_show__OR__input_wrap__OR__input_items = _client_guard($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	_if(() => {
@@ -35,13 +35,13 @@ var host_default = _template("b", (input) => {
 	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["b3"], $scope0_reason, 5);
 	$fg__input_wrap && $cg__input_show && _patch_render($scope0_id, "b4", "e");
 	$fg__input_items && $cg__input_show && _patch_render($scope0_id, "b5", "f");
-	$fg__input_label && _patch_subscribers($scope0_id, "b6", "g");
+	$fg__input_label && (_client_branch_if("b1", $scope0_id) || $cg__input_show__OR__input_wrap__OR__input_items) && _patch_subscribers($scope0_id, "b6", "g");
 	_scope($scope0_id, {
 		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.wrap,
 		f: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && input.items,
 		g: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 8)) && input.label,
 		j: _write_if($scope0_reason, 8) && $input_label__closures
-	}) || ($fg__input_wrap && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.wrap, !_server_guard($scope0_reason, 6)), $fg__input_items && _client_guard($scope0_reason, 0) && _patch_write($scope0_id, "xf", input.items, !_server_guard($scope0_reason, 7)), $fg__input_label && (_client_branch_if("b1", $scope0_id) || _client_guard($scope0_reason, 3)) && _patch_write($scope0_id, "xg", input.label, !_server_guard($scope0_reason, 8)));
+	}) || ($fg__input_wrap && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.wrap, !_server_guard($scope0_reason, 6)), $fg__input_items && _client_guard($scope0_reason, 0) && _patch_write($scope0_id, "xf", input.items, !_server_guard($scope0_reason, 7)), $fg__input_label && (_client_branch_if("b1", $scope0_id) || $cg__input_show__OR__input_wrap__OR__input_items) && _patch_write($scope0_id, "xg", input.label, !_server_guard($scope0_reason, 8)));
 });
 
 // template.marko

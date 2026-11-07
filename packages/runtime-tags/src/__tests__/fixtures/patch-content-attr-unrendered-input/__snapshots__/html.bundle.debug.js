@@ -7,7 +7,7 @@ _shells({
 	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0; D l ;<button class=inc> </button><section></section>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_rec_name = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $fg__input_rec_name = _filled_guard($scope0_reason, 1), $cg__input_on = _client_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_rec_name__closures = new Set();
 	let n = 0;
@@ -23,7 +23,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_attr_content("#section/2", $scope0_id, input.on ? frag.content : null, 0, 1, $scope0_reason, 2);
 	_html(`</section>${_el_mark($scope0_id, "#section/2", _updates_from($scope0_reason, 2))}`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$fg__input_rec_name && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_rec_name#6/subscribers", "input_rec_name");
+	$fg__input_rec_name && $cg__input_on && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_rec_name#6/subscribers", "input_rec_name");
 	_scope($scope0_id, {
 		input_rec_name: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1)) && input.rec?.name,
 		n,
@@ -33,5 +33,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_rec_name: ["input.rec.name"],
 		n: "1:6",
 		frag_content: ["frag.content", "3:9"]
-	}) || $fg__input_rec_name && _client_guard($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_rec_name", input.rec?.name, !_server_guard($scope0_reason, 1));
+	}) || $fg__input_rec_name && $cg__input_on && _patch_write($scope0_id, "PatchMarkedWrite:input_rec_name", input.rec?.name, !_server_guard($scope0_reason, 1));
 }, 1);

@@ -62,8 +62,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_w: input.w
 	}] : []), 0, $wg__input_on, $scope0_reason, 2, 0, void 0, 0, 0, "__tests__/template.marko_1*content");
 	_html("</main>");
-	$fg__input_w && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_w#4/subscribers", "input_w");
-	$fg__input_note && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_note#5/subscribers", "input_note");
+	$fg__input_w && (_client_branch_if("__tests__/template.marko_1*content", $scope0_id) || $cg__input_on) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_w#4/subscribers", "input_w");
+	$fg__input_note && (_client_branch_if("__tests__/template.marko_1*content", $scope0_id) || $cg__input_on) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_note#5/subscribers", "input_note");
 	_scope($scope0_id, {
 		input_w: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && input.w,
 		input_note: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 4)) && input.note,

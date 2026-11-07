@@ -54,7 +54,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, "__tests__/template.marko", "7:2", { tag: "7:6" });
 	}, 0, $scope0_id, "#text/2", 1, 1, 1, 0, 0, "__tests__/template.marko_2*shell", $scope0_reason, 2);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$fg__input_label && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_label#5/subscribers", "input_label");
+	$fg__input_label && (_client_branch_if("__tests__/template.marko_1*content", $scope0_id) || $cg__input_tags__OR__input_card || $cg__input_tags__OR__input_card) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_label#5/subscribers", "input_label");
 	$fg__input_card && $cg__input_tags && _patch_render($scope0_id, "__tests__/template.marko_2_input_card#0:7/setup", "input_card");
 	_scope($scope0_id, {
 		input_label: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.label,

@@ -47,7 +47,7 @@ var template_default = _template("a", (input) => {
 			_unfilled_if($scope0_reason, 3) && _patch_subscribe($scope2_id, "a2", _client_guard($scope0_reason, 3));
 			_subscribe(_unfilled_if($scope0_reason, 3) && $await_content__v__closures, _subscribe(_unfilled_if($scope0_reason, 2) && $input_note__closures, _scope($scope2_id, { _: $wi__input_note__OR__input_v__OR__input_on && _scope_with_id($scope1_id) })));
 		}, $scope1_id, ($scope) => $scope0_page ? [{ c: v }] : []), 0, $wg__input_on, $scope0_reason, 4, 0, void 0, 0, 0, "a0");
-		_filled_guard($scope0_reason, 3) && _patch_subscribers($scope1_id, "a3", "c");
+		_filled_guard($scope0_reason, 3) && (_client_branch_if("a0", $scope1_id) || $cg__input_on) && _patch_subscribers($scope1_id, "a3", "c");
 		_unfilled_if($scope0_reason, 4) && _patch_subscribe($scope1_id, "a4", $cg__input_on);
 		$wi__input_note__OR__input_v__OR__input_on && _subscribe(_unfilled_if($scope0_reason, 4) && $input_on__closures, _scope($scope1_id, {
 			c: (_unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 3)) && v,

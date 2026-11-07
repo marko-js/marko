@@ -51,7 +51,7 @@ var card_default = _template("b", (input) => {
 			c: v,
 			_: $scope($scope0_id)
 		}] : []), 0, $wg__input_on, $scope0_reason, 3, 0, void 0, 0, 0, "b0");
-		_filled_guard($scope0_reason, 2) && _patch_subscribers($scope1_id, "b3", "c");
+		_filled_guard($scope0_reason, 2) && (_client_branch_if("b0", $scope1_id) || $cg__input_on) && _patch_subscribers($scope1_id, "b3", "c");
 		_unfilled_if($scope0_reason, 3) && _patch_subscribe($scope1_id, "b4", $cg__input_on);
 		$wi__input_v__OR__input_on__OR__input_note && _subscribe(_unfilled_if($scope0_reason, 3) && $input_on__closures, _scope($scope1_id, {
 			c: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 2)) && v,
@@ -60,7 +60,7 @@ var card_default = _template("b", (input) => {
 		_filled_guard($scope0_reason, 2) && (_client_branch_if("b0", $scope1_id) || $cg__input_on) && _patch_write($scope1_id, "xc", v, !$sg__input_v);
 		$wg__input_on || $wi__input_v__OR__input_on__OR__input_note && _resume_branch($scope1_id);
 	}, 1, "b5", _unfilled_if($scope0_reason, 2), 1, 1);
-	$fg__input_note && _patch_subscribers($scope0_id, "b7", "f");
+	$fg__input_note && (_client_branch_if("b0", $scope0_id) || $cg__input_on) && _patch_subscribers($scope0_id, "b7", "f");
 	_scope($scope0_id, {
 		f: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 4)) && input.note,
 		h: _write_if($scope0_reason, 4) && $input_note__closures,

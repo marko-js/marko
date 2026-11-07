@@ -8,8 +8,7 @@
     cAa: {
       ta: "two"
     }
-  },
-  Sa3: "g"
+  }
 }
 ;BAE
 
@@ -22,8 +21,7 @@
     cAa: {
       ta: "three"
     }
-  },
-  Sa3: "g"
+  }
 }
 
 // PATCH holding BAE
@@ -35,6 +33,5 @@
     cAa: {
       ta: "four"
     }
-  },
-  Sa3: "g"
+  }
 }

@@ -79,7 +79,7 @@ var template_default = _template("a", (input) => {
 	});
 	_patch_child_end();
 	_html("</main>");
-	$fg__input_note && _patch_subscribers($scope0_id, "a4", "f");
+	$fg__input_note && (_client_branch_if("a0", $scope0_id) || $cg__input_on) && _patch_subscribers($scope0_id, "a4", "f");
 	_scope($scope0_id, {
 		f: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && input.note,
 		h: _write_if($scope0_reason, 3) && $input_note__closures,

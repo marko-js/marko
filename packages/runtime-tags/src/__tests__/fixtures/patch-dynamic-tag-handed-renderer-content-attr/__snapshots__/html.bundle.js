@@ -66,7 +66,7 @@ var template_default = _template("a", (input) => {
 		}, $scope0_id, ($scope) => $scope0_page ? [{ e: input.y }] : [])
 	});
 	_patch_child_end();
-	$fg__input_y && _patch_subscribers($scope0_id, "a2", "e");
+	$fg__input_y && (_client_branch_if("a1", $scope0_id) || $cg__input_x || $cg__input_x) && _patch_subscribers($scope0_id, "a2", "e");
 	_scope($scope0_id, {
 		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.y,
 		f: _write_if($scope0_reason, 2) && $input_y__closures,

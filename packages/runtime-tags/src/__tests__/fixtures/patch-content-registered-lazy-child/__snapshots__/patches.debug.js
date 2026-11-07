@@ -13,8 +13,7 @@
         }
       }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-registered-lazy-child/tags/card/index.marko_1*shell"]
-  },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-registered-lazy-child/template.marko_0_input_note#4/subscribers": "input_note"
+  }
 }
 ;DTQ
 
@@ -32,6 +31,5 @@
         }
       }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-registered-lazy-child/tags/card/index.marko_1*shell"]
-  },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-registered-lazy-child/template.marko_0_input_note#4/subscribers": "input_note"
+  }
 }

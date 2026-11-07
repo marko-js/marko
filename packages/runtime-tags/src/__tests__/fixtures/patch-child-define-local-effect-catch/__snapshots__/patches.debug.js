@@ -12,8 +12,7 @@
           "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-child-define-local-effect-catch/tags/wrap.marko_3_x#1:1/subscribe": 0
         }
       }, _.a]
-    },
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-child-define-local-effect-catch/tags/wrap.marko_0_input_label#3/subscribers": "input_label"
+    }
   }
 }
 ;DzQ
@@ -31,7 +30,6 @@
           "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-child-define-local-effect-catch/tags/wrap.marko_3_x#1:1/subscribe": 0
         }
       }, _.a]
-    },
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-child-define-local-effect-catch/tags/wrap.marko_0_input_label#3/subscribers": "input_label"
+    }
   }
 }

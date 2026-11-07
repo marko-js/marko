@@ -7,7 +7,7 @@ _shells({
 	a: `a;${((_w0) => `b/${_w0}&b`)($Wrap_content__walks)};${((_w0) => `<!>${_w0}<!>`)($Wrap_content__template)}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_t = _write_if($scope0_reason, 0), $fg__input_t = _filled_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wi__input_t = _write_if($scope0_reason, 0), $fg__input_t = _filled_guard($scope0_reason, 0), $cg__input_x = _client_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_t__closures = /* @__PURE__ */ new Set();
 	const A = { content: _content_resume("a0", () => {
@@ -38,12 +38,12 @@ var template_default = _template("a", (input) => {
 		content: input.x === 1 ? A : B
 	});
 	_patch_child_end();
-	$fg__input_t && _patch_subscribers($scope0_id, "a5", "d");
+	$fg__input_t && $cg__input_x && _patch_subscribers($scope0_id, "a5", "d");
 	_scope($scope0_id, {
 		d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.t,
 		g: _unfilled_if($scope0_reason, 2) && A,
 		h: _unfilled_if($scope0_reason, 2) && B,
 		j: $wi__input_t && $input_t__closures,
 		a: _existing_scope($childScope)
-	}) || $fg__input_t && _client_guard($scope0_reason, 2) && _patch_write($scope0_id, "xd", input.t, !_server_guard($scope0_reason, 0));
+	}) || $fg__input_t && $cg__input_x && _patch_write($scope0_id, "xd", input.t, !_server_guard($scope0_reason, 0));
 }, 1);

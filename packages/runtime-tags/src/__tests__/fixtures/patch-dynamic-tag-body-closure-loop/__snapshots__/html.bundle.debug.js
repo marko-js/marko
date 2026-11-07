@@ -58,7 +58,7 @@ _shells({
 	"__tests__/tags/heading.marko": `__tests__/tags/heading.marko${_shell_marker($setup$1)};${((_w0) => `b/${_w0}&b`)("b%c")};${((_w0) => `<!>${_w0}<!>`)($template$2)}`
 });
 var heading_default = _template("__tests__/tags/heading.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_type = _write_guard($scope0_reason, 2), $wi__input_n__OR__input_type = _write_if($scope0_reason, 0), $cg__input_type = _client_guard($scope0_reason, 2), $cg__input_n = _client_guard($scope0_reason, 1), $fg__input_n = _filled_guard($scope0_reason, 1), $fg__input_type = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_type = _write_guard($scope0_reason, 2), $cg__input_type = _client_guard($scope0_reason, 2), $wi__input_n__OR__input_type = _write_if($scope0_reason, 0), $cg__input_n = _client_guard($scope0_reason, 1), $fg__input_n = _filled_guard($scope0_reason, 1), $fg__input_type = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_n__closures = new Set();
 	const $input_type__closures = new Set();
@@ -80,7 +80,7 @@ var heading_default = _template("__tests__/tags/heading.marko", (input) => {
 				i,
 				_: $scope($scope0_id)
 			}] : []), 0, $wg__input_type, $scope0_reason, 2, 0, void 0, 0, 0, "__tests__/tags/heading.marko_2*content");
-			_patch_subscribers($scope1_id, "__tests__/tags/heading.marko_1_i#1/subscribers", "i");
+			(_client_branch_if("__tests__/tags/heading.marko_2*content", $scope1_id) || $cg__input_type) && _patch_subscribers($scope1_id, "__tests__/tags/heading.marko_1_i#1/subscribers", "i");
 			$cg__input_type && _patch_render($scope1_id, "__tests__/tags/heading.marko_1_input_type#0:4/subscribe");
 			($wi__input_n__OR__input_type || $wi__i) && _subscribe(_unfilled_if($scope0_reason, 2) && $input_type__closures, _scope($scope1_id, {
 				i: _unfilled_if($scope0_reason, 2) && i,
@@ -94,7 +94,7 @@ var heading_default = _template("__tests__/tags/heading.marko", (input) => {
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 1);
 	list_default({ item: $item });
 	_patch_child_end();
-	$fg__input_n && _patch_subscribers($scope0_id, "__tests__/tags/heading.marko_0_input_n#3/subscribers", "input_n");
+	$fg__input_n && (_client_branch_if("__tests__/tags/heading.marko_2*content", $scope0_id) || $cg__input_type) && _patch_subscribers($scope0_id, "__tests__/tags/heading.marko_0_input_n#3/subscribers", "input_n");
 	$fg__input_type && $cg__input_n && _patch_subscribers($scope0_id, "__tests__/tags/heading.marko_0_input_type#4/subscribers", "input_type");
 	_scope($scope0_id, {
 		input_n: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1)) && input.n,

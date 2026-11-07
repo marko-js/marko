@@ -54,7 +54,7 @@ _shells({
 	"__tests__/template.marko": `__tests__/template.marko${_shell_marker($setup)};${((_w0) => `/${_w0}&`)($walks$1)};${$template$1}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_text = _client_guard($scope0_reason, 3), $wi__input_text = _write_if($scope0_reason, 3), $wi__input_rows__OR__input_text = _write_if($scope0_reason, 0), $fg__input_text = _filled_guard($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $cg__input_text = _client_guard($scope0_reason, 3), $wi__input_text = _write_if($scope0_reason, 3), $wi__input_rows__OR__input_text = _write_if($scope0_reason, 0), $fg__input_text = _filled_guard($scope0_reason, 3), $cg__input_rows = _client_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_text__closures = new Set();
 	_set_scope_reason(_updates_from($scope0_reason, 1) << 1 | _updates_from($scope0_reason, 2) << 7);
@@ -90,10 +90,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, $scope0_id)
 	});
 	_patch_child_end();
-	$fg__input_text && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_text#5/subscribers", "input_text");
+	$fg__input_text && $cg__input_rows && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_text#5/subscribers", "input_text");
 	_scope($scope0_id, {
 		input_text: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && input.text,
 		"ClosureScopes:input_text/6": $wi__input_text && $input_text__closures,
 		"#childScope/0": _existing_scope($childScope)
-	}, "__tests__/template.marko", 0, { input_text: ["input.text"] }) || $fg__input_text && _client_guard($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_text", input.text, !_server_guard($scope0_reason, 3));
+	}, "__tests__/template.marko", 0, { input_text: ["input.text"] }) || $fg__input_text && $cg__input_rows && _patch_write($scope0_id, "PatchMarkedWrite:input_text", input.text, !_server_guard($scope0_reason, 3));
 }, 1);

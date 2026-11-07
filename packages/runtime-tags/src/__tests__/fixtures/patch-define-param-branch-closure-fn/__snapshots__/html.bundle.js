@@ -50,7 +50,7 @@ var template_default = _template("a", (input) => {
 	const $childScope2 = _peek_scope_id($scope0_id, "b", 1);
 	counter_default({});
 	_patch_child_end();
-	$fg__input_a && _patch_subscribers($scope0_id, "a4", ["g", "e"]);
+	$fg__input_a && $cg__input_x && _patch_subscribers($scope0_id, "a4", ["g", "e"]);
 	_scope($scope0_id, {
 		e: _write_if($scope0_reason, 1) && input.a,
 		g: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && f,

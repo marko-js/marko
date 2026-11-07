@@ -45,7 +45,7 @@ _shells({
 	c: `c${_shell_marker($setup$1)};${((_w0) => `b/${_w0}&b`)("b%c")};${((_w0) => `<!>${_w0}<!>`)($template$1)}`
 });
 var heading_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_type = _write_guard($scope0_reason, 2), $wi__input_n__OR__input_type = _write_if($scope0_reason, 0), $cg__input_type = _client_guard($scope0_reason, 2), $cg__input_n = _client_guard($scope0_reason, 1), $fg__input_n = _filled_guard($scope0_reason, 1), $fg__input_type = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_type = _write_guard($scope0_reason, 2), $cg__input_type = _client_guard($scope0_reason, 2), $wi__input_n__OR__input_type = _write_if($scope0_reason, 0), $cg__input_n = _client_guard($scope0_reason, 1), $fg__input_n = _filled_guard($scope0_reason, 1), $fg__input_type = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_n__closures = /* @__PURE__ */ new Set();
 	const $input_type__closures = /* @__PURE__ */ new Set();
@@ -67,7 +67,7 @@ var heading_default = _template("c", (input) => {
 				b: i,
 				_: $scope($scope0_id)
 			}] : []), 0, $wg__input_type, $scope0_reason, 2, 0, void 0, 0, 0, "c0");
-			_patch_subscribers($scope1_id, "c3", "b");
+			(_client_branch_if("c0", $scope1_id) || $cg__input_type) && _patch_subscribers($scope1_id, "c3", "b");
 			$cg__input_type && _patch_render($scope1_id, "c4");
 			($wi__input_n__OR__input_type || $wi__i) && _subscribe(_unfilled_if($scope0_reason, 2) && $input_type__closures, _scope($scope1_id, {
 				b: _unfilled_if($scope0_reason, 2) && i,
@@ -81,7 +81,7 @@ var heading_default = _template("c", (input) => {
 	const $childScope = _peek_scope_id($scope0_id, "a", 1);
 	list_default({ item: $item });
 	_patch_child_end();
-	$fg__input_n && _patch_subscribers($scope0_id, "c6", "d");
+	$fg__input_n && (_client_branch_if("c0", $scope0_id) || $cg__input_type) && _patch_subscribers($scope0_id, "c6", "d");
 	$fg__input_type && $cg__input_n && _patch_subscribers($scope0_id, "c7", "e");
 	_scope($scope0_id, {
 		d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1)) && input.n,

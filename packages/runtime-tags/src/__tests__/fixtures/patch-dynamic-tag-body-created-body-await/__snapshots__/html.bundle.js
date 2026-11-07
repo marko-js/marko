@@ -53,8 +53,8 @@ var template_default = _template("a", (input) => {
 		e: input.w
 	}] : []), 0, $wg__input_on, $scope0_reason, 2, 0, void 0, 0, 0, "a3");
 	_html("</main>");
-	$fg__input_w && _patch_subscribers($scope0_id, "a5", "e");
-	$fg__input_note && _patch_subscribers($scope0_id, "a6", "f");
+	$fg__input_w && (_client_branch_if("a3", $scope0_id) || $cg__input_on) && _patch_subscribers($scope0_id, "a5", "e");
+	$fg__input_note && (_client_branch_if("a3", $scope0_id) || $cg__input_on) && _patch_subscribers($scope0_id, "a6", "f");
 	_scope($scope0_id, {
 		e: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && input.w,
 		f: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 4)) && input.note,

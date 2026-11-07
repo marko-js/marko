@@ -45,7 +45,6 @@
         "PatchText:#text/0": "c",
         "PatchText:#text/1": "z"
       }
-    },
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-beside/template.marko_1_v#2/subscribers": "v"
+    }
   }
 }

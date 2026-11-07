@@ -8,8 +8,7 @@
         "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-child-define-local-effect-branch/tags/wrap.marko_2_x#1:1": ">x"
       }, "packages/runtime-tags/src/__tests__/fixtures/patch-child-define-local-effect-branch/tags/wrap.marko_2*shell"],
       "PatchMarkedWrite:x": "b!"
-    },
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-child-define-local-effect-branch/tags/wrap.marko_0_input_label#3/subscribers": "input_label"
+    }
   }
 }
 ;CAI
@@ -23,7 +22,6 @@
         "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-child-define-local-effect-branch/tags/wrap.marko_2_x#1:1": ">x"
       }, "packages/runtime-tags/src/__tests__/fixtures/patch-child-define-local-effect-branch/tags/wrap.marko_2*shell"],
       "PatchMarkedWrite:x": "c!"
-    },
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-child-define-local-effect-branch/tags/wrap.marko_0_input_label#3/subscribers": "input_label"
+    }
   }
 }

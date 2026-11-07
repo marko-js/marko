@@ -6,8 +6,7 @@
     "PatchChild:BranchScopes:#div/0": {
       "PatchText:#text/0": "b"
     }
-  },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-native-body-swap/template.marko_0_input_x#4/subscribers": "input_x"
+  }
 }
 ;BgI
 
@@ -18,8 +17,7 @@
     "PatchChild:BranchScopes:#div/0": {
       "PatchText:#text/0": "c"
     }
-  },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-native-body-swap/template.marko_0_input_x#4/subscribers": "input_x"
+  }
 }
 
 // PATCH holding BgI

@@ -56,7 +56,6 @@
         "PatchText:#text/0": "d",
         "PatchText:#text/1": "w"
       }
-    },
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-late/template.marko_1_v#2/subscribers": "v"
+    }
   }
 }

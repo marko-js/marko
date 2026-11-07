@@ -53,7 +53,6 @@ var wrap_default = _template("__tests__/tags/wrap.marko", (input) => {
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	Card.content({});
 	_patch_child_end();
-	_filled_guard($scope0_reason, 1) && _patch_subscribers($scope0_id, "__tests__/tags/wrap.marko_0_input_label#3/subscribers", "input_label");
 	_scope($scope0_id, {
 		"ClosureScopes:input_promise/6": $wi__input_promise && $input_promise__closures,
 		"ClosureScopes:input_label/5": $wi__input_label && $input_label__closures,

@@ -22,8 +22,7 @@
         ta: "SHOWN_name2b"
       }
     }
-  },
-  Sa16: "l"
+  }
 }
 {
   cAd: {

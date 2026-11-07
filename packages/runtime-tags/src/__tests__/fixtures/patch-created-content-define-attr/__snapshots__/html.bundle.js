@@ -56,7 +56,7 @@ var template_default = _template("a", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["a5"], $scope0_reason, 5);
-	$fg__input_label && _patch_subscribers($scope0_id, "a6", "d");
+	$fg__input_label && (_client_branch_if("a0", $scope0_id) || $cg__input_tag__OR__input_show || $cg__input_tag__OR__input_show) && _patch_subscribers($scope0_id, "a6", "d");
 	$fg__input_tag && _patch_subscribers($scope0_id, "a7", "e");
 	_scope($scope0_id, {
 		d: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 3)) && input.label,

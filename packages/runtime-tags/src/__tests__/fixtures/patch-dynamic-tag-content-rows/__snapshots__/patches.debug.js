@@ -35,7 +35,6 @@
         "PatchText:#text/0": "x"
       }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-content-rows/tags/layout.marko_2*shell"]
-  },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-content-rows/template.marko_0_input_text#5/subscribers": "input_text"
+  }
 }
 ;DTY

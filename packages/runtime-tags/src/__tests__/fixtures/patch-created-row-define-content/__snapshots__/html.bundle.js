@@ -86,7 +86,7 @@ var template_default = _template("a", (input) => {
 		_script($scope2_id, "a11");
 		_unfilled_if($scope0_reason, 0) && _patch_write($scope2_id, "wm", Label, 1);
 		!$cg__input_rows && _unfilled_if() && _patch_write($scope0_id, "we", Card);
-		_filled_guard($scope0_reason, 0) && _patch_subscribers($scope2_id, "a12", "h");
+		_filled_guard($scope0_reason, 0) && (_client_branch_if("a3", $scope2_id) || $cg__input_rows || _client_branch_if("a1", $scope2_id)) && _patch_subscribers($scope2_id, "a12", "h");
 		$cg__input_rows && _patch_render($scope2_id, "a13");
 		_patch_fill($scope2_id, "va14", n, 1);
 		_scope($scope2_id, {

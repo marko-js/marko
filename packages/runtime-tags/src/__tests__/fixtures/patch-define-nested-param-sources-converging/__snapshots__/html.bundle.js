@@ -18,7 +18,7 @@ var template_default = _template("a", (input) => {
 	const Outer = { content: _content("a6", ({ x, y }) => {
 		const $scope1_id = _scope_id();
 		const $Outer_content__x__closures = /* @__PURE__ */ new Set();
-		const $scope1_reason = _scope_reason(), $wi__x = _write_if($scope1_reason, 1), $fg__x = _filled_guard($scope1_reason, 1);
+		const $scope1_reason = _scope_reason(), $wi__x = _write_if($scope1_reason, 1), $fg__x = _filled_guard($scope1_reason, 1), $cg__y = _client_guard($scope1_reason, 2);
 		const Inner = { content: _content("a0", ({ z }) => {
 			const $scope2_id = _scope_id();
 			const $scope2_reason = _scope_reason(), $fg__z = _filled_guard($scope2_reason, 0);
@@ -59,14 +59,14 @@ var template_default = _template("a", (input) => {
 		const $childScope4 = _peek_scope_id($scope1_id, "b", 3);
 		Right.content({ w: y });
 		_patch_child_end();
-		$fg__x && _patch_subscribers($scope1_id, "a7", "e");
+		$fg__x && ($cg__input_label || $cg__y) && _patch_subscribers($scope1_id, "a7", "e");
 		_scope($scope1_id, {
 			e: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope1_reason, 2) || _unfilled_if($scope1_reason, 1)) && x,
 			_: ($wi__input_label || _write_if($scope1_reason, 0)) && _scope_with_id($scope0_id),
 			i: $wi__x && $Outer_content__x__closures,
 			a: _existing_scope($childScope3),
 			b: _existing_scope($childScope4)
-		}) || $fg__x && ($cg__input_label || _client_guard($scope1_reason, 2)) && _patch_write($scope1_id, "xe", x, !_server_guard($scope1_reason, 1));
+		}) || $fg__x && ($cg__input_label || $cg__y) && _patch_write($scope1_id, "xe", x, !_server_guard($scope1_reason, 1));
 	}, $scope0_id) };
 	const Wrapper = { content: _content("a8", ({ a, b }) => {
 		const $scope3_id = _scope_id();

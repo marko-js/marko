@@ -56,7 +56,7 @@ var rowsy_default = _template("b", (input) => {
 	_script($scope0_id, "b6");
 	_unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "wi", Card, 1);
 	_unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "wk", Label, 1);
-	$fg__input_label && _patch_subscribers($scope0_id, "b7", "f");
+	$fg__input_label && (_client_branch_if("b2", $scope0_id) || $cg__input_tags__OR__input_card || $cg__input_tags__OR__input_card) && _patch_subscribers($scope0_id, "b7", "f");
 	$fg__input_card && $cg__input_tags && _patch_render($scope0_id, "b8", "h");
 	_patch_fill($scope0_id, "vb9", n, 1);
 	_scope($scope0_id, {

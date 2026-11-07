@@ -9,7 +9,6 @@
       pa: "a1"
     }
   },
-  Sa8: "g",
   Sa9: "h",
   xh: (p => p = new Promise((f, r) => _.a = {
     f,
@@ -41,7 +40,6 @@
       pa: "a1"
     }
   },
-  Sa8: "g",
   Sa9: "h",
   xh: (p => p = new Promise((f, r) => _.a = {
     f,

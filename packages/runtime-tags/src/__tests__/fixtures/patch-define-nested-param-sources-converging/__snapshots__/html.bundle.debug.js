@@ -21,7 +21,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const Outer = { content: _content("__tests__/template.marko_1*content", ({ x, y }) => {
 		const $scope1_id = _scope_id();
 		const $Outer_content__x__closures = new Set();
-		const $scope1_reason = _scope_reason(), $wi__x = _write_if($scope1_reason, 1), $fg__x = _filled_guard($scope1_reason, 1);
+		const $scope1_reason = _scope_reason(), $wi__x = _write_if($scope1_reason, 1), $fg__x = _filled_guard($scope1_reason, 1), $cg__y = _client_guard($scope1_reason, 2);
 		const Inner = { content: _content("__tests__/template.marko_2*content", ({ z }) => {
 			const $scope2_id = _scope_id();
 			const $scope2_reason = _scope_reason(), $fg__z = _filled_guard($scope2_reason, 0);
@@ -62,14 +62,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $childScope4 = _peek_scope_id($scope1_id, "#childScope/1", 3);
 		Right.content({ w: y });
 		_patch_child_end();
-		$fg__x && _patch_subscribers($scope1_id, "__tests__/template.marko_1_x#4/subscribers", "x");
+		$fg__x && ($cg__input_label || $cg__y) && _patch_subscribers($scope1_id, "__tests__/template.marko_1_x#4/subscribers", "x");
 		_scope($scope1_id, {
 			x: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope1_reason, 2) || _unfilled_if($scope1_reason, 1)) && x,
 			_: ($wi__input_label || _write_if($scope1_reason, 0)) && _scope_with_id($scope0_id),
 			"ClosureScopes:x/8": $wi__x && $Outer_content__x__closures,
 			"#childScope/0": _existing_scope($childScope3),
 			"#childScope/1": _existing_scope($childScope4)
-		}, "__tests__/template.marko", "2:2", { x: "2:17" }) || $fg__x && ($cg__input_label || _client_guard($scope1_reason, 2)) && _patch_write($scope1_id, "PatchMarkedWrite:x", x, !_server_guard($scope1_reason, 1));
+		}, "__tests__/template.marko", "2:2", { x: "2:17" }) || $fg__x && ($cg__input_label || $cg__y) && _patch_write($scope1_id, "PatchMarkedWrite:x", x, !_server_guard($scope1_reason, 1));
 	}, $scope0_id) };
 	const Wrapper = { content: _content("__tests__/template.marko_3*content", ({ a, b }) => {
 		const $scope3_id = _scope_id();

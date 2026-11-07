@@ -6,7 +6,7 @@ _shells({
 	a: "a !a4;D%b ;<main><!><button>interactive</button></main>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wi__input_as__OR__input_p = _write_if($scope0_reason, 0), $fg__input_p = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wi__input_as__OR__input_p = _write_if($scope0_reason, 0), $fg__input_p = _filled_guard($scope0_reason, 2), $cg__input_as = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_p__closures = /* @__PURE__ */ new Set();
 	_html("<main>");
@@ -24,9 +24,9 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id, ($scope) => $scope0_page ? [{ f: input.p }] : []), 0, _write_guard($scope0_reason, 1), $scope0_reason, 1, 0, void 0, 0, 0, "a2");
 	_html(`<button>interactive</button>${_el_mark($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a4");
-	$fg__input_p && _patch_subscribers($scope0_id, "a5", "f");
+	$fg__input_p && (_client_branch_if("a2", $scope0_id) || $cg__input_as) && _patch_subscribers($scope0_id, "a5", "f");
 	_scope($scope0_id, {
 		f: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.p,
 		g: _write_if($scope0_reason, 2) && $input_p__closures
-	}) || $fg__input_p && (_client_branch_if("a2", $scope0_id) || _client_guard($scope0_reason, 1)) && _patch_write($scope0_id, "xf", input.p, !_server_guard($scope0_reason, 2));
+	}) || $fg__input_p && (_client_branch_if("a2", $scope0_id) || $cg__input_as) && _patch_write($scope0_id, "xf", input.p, !_server_guard($scope0_reason, 2));
 }, 1);

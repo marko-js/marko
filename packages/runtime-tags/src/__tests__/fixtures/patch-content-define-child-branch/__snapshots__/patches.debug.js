@@ -8,8 +8,7 @@
         "PatchText:#text/0": "y"
       }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-define-child-branch/template.marko_3*shell"]
-  },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-define-child-branch/template.marko_0_input_note#4/subscribers": "input_note"
+  }
 }
 ;BwY
 
@@ -22,16 +21,14 @@
         "PatchText:#text/0": "z"
       }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-define-child-branch/template.marko_3*shell"]
-  },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-define-child-branch/template.marko_0_input_note#4/subscribers": "input_note"
+  }
 }
 
 // PATCH holding BwY
 {
   "PatchChild:#childScope/0": {
     "PatchBranch:#section/0": 0
-  },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-define-child-branch/template.marko_0_input_note#4/subscribers": "input_note"
+  }
 }
 
 // PATCH holding BwY
@@ -43,6 +40,5 @@
         "PatchText:#text/0": "v"
       }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-define-child-branch/template.marko_3*shell"]
-  },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-define-child-branch/template.marko_0_input_note#4/subscribers": "input_note"
+  }
 }

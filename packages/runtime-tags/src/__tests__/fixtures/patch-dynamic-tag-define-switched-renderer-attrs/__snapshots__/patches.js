@@ -4,8 +4,7 @@
   ca: {
     ta: 1,
     fb: "^^a1"
-  },
-  Sa5: "d"
+  }
 }
 ;BgI
 
@@ -14,8 +13,7 @@
   ca: {
     ta: 2,
     fb: "^^a1"
-  },
-  Sa5: "d"
+  }
 }
 
 // PATCH holding BgI
@@ -24,7 +22,6 @@
   ca: {
     ta: 2,
     fb: "^^a0"
-  },
-  Sa5: "d"
+  }
 }
 ;BwY

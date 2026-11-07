@@ -9,7 +9,7 @@ _shells({
 	b: `b a>;${((_w0) => `b/${_w0}&b`)($Wrap_content__walks)};${((_w0) => `<!>${_w0}<!>`)($Wrap_content__template)}`
 });
 var one_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 0), $wi__input_content = _write_if($scope0_reason, 0), $fg__input_content = _filled_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 0), $wi__input_content = _write_if($scope0_reason, 0), $fg__input_content = _filled_guard($scope0_reason, 0), $cg__input_t = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_content__closures = /* @__PURE__ */ new Set();
 	const Wrap = { content: _content("b0", ({ t }) => {
@@ -27,12 +27,12 @@ var one_default = _template("b", (input) => {
 	const $childScope = _peek_scope_id($scope0_id, "a", 1);
 	Wrap.content({ t: input.t });
 	_patch_child_end();
-	$fg__input_content && _patch_subscribers($scope0_id, "b3", "d");
+	$fg__input_content && $cg__input_t && _patch_subscribers($scope0_id, "b3", "d");
 	_scope($scope0_id, {
 		d: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.content,
 		f: $wi__input_content && $input_content__closures,
 		a: _existing_scope($childScope)
-	}) || $fg__input_content && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "xd", input.content, !_server_guard($scope0_reason, 0));
+	}) || $fg__input_content && $cg__input_t && _patch_write($scope0_id, "xd", input.content, !_server_guard($scope0_reason, 0));
 });
 
 // template.marko

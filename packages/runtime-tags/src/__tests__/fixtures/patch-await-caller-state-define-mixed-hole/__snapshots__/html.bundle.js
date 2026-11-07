@@ -26,7 +26,7 @@ var show_await_default = _template("b", (input) => {
 			_patch_render($scope2_id, "b1", [_filled_guard($scope1_reason, 0) && ">d", _filled_guard($scope0_reason, 0) && "c"], (_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 0)) << 1, 0);
 			_subscribe(_unfilled_if($scope1_reason, 0) && $Row_content__text__closures, _scope($scope2_id, { c: (_unfilled_if($scope1_reason, 0) || _unfilled_if($scope0_reason, 0)) && x }), $cg__text && "b0");
 		}, 1, "b2", _unfilled_if($scope0_reason, 0));
-		$fg__text && _patch_subscribers($scope1_id, "b5", "d");
+		$fg__text && $cg__input_promise && _patch_subscribers($scope1_id, "b5", "d");
 		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "b6", 1);
 		($wi__input_promise || $wi__text) && _subscribe(_unfilled_if($scope0_reason, 0) && $input_promise__closures, _scope($scope1_id, {
 			d: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope1_reason, 0)) && text,

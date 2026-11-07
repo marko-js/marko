@@ -46,8 +46,7 @@
           "PatchText:#text/0": "d"
         }
       }
-    }, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-renderer-params/tags/host.marko_2*shell"],
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-renderer-params/tags/host.marko_0_input_label#8/subscribers": "input_label"
+    }, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-renderer-params/tags/host.marko_2*shell"]
   }
 }
 

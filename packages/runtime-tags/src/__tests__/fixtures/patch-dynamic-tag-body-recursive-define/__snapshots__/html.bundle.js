@@ -74,7 +74,7 @@ var template_default = _template("a", (input) => {
 				return 0;
 			}
 		}, $scope1_id, "b", 1, _write_guard($scope1_reason, 0), 1, 0, 0, ["a3"], $scope1_reason, 0);
-		$fg__depth && _patch_subscribers($scope1_id, "a5", "e");
+		$fg__depth && (_client_branch_if("a0", $scope1_id) || $cg__input_on) && _patch_subscribers($scope1_id, "a5", "e");
 		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "a6", $cg__input_note);
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_note__closures, _scope($scope1_id, {
 			e: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope1_reason, 0)) && depth,

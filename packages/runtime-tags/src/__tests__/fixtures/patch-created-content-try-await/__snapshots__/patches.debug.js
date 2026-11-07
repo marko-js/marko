@@ -12,7 +12,6 @@
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-content-try-await/tags/wrap.marko_1*shell"]
   },
   "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-content-try-await/template.marko_0_input_id#4/subscribers": "input_id",
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-content-try-await/template.marko_0_input_value#5/subscribers": "input_value",
   "PatchMarkedWrite:input_id": "b"
 }
 {
@@ -48,7 +47,6 @@
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-content-try-await/tags/wrap.marko_1*shell"]
   },
   "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-content-try-await/template.marko_0_input_id#4/subscribers": "input_id",
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-content-try-await/template.marko_0_input_value#5/subscribers": "input_value",
   "PatchMarkedWrite:input_id": "c"
 }
 
@@ -58,7 +56,6 @@
     "PatchBranch:#text/0": 0
   },
   "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-content-try-await/template.marko_0_input_id#4/subscribers": "input_id",
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-content-try-await/template.marko_0_input_value#5/subscribers": "input_value",
   "PatchMarkedWrite:input_id": "d"
 }
 
@@ -79,6 +76,5 @@
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-content-try-await/tags/wrap.marko_1*shell"]
   },
   "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-content-try-await/template.marko_0_input_id#4/subscribers": "input_id",
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-content-try-await/template.marko_0_input_value#5/subscribers": "input_value",
   "PatchMarkedWrite:input_id": "e"
 }

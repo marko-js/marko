@@ -51,7 +51,7 @@ var template_default = _template("a", (input) => {
 			c: v,
 			_: $scope($scope0_id)
 		}] : []), 0, $wg__input_on, $scope0_reason, 3, 0, void 0, 0, 0, "a0");
-		_filled_guard($scope0_reason, 2) && _patch_subscribers($scope1_id, "a3", "c");
+		_filled_guard($scope0_reason, 2) && (_client_branch_if("a0", $scope1_id) || $cg__input_on) && _patch_subscribers($scope1_id, "a3", "c");
 		_unfilled_if($scope0_reason, 3) && _patch_subscribe($scope1_id, "a4", $cg__input_on);
 		$wi__input_v__OR__input_on__OR__input_note && _subscribe(_unfilled_if($scope0_reason, 3) && $input_on__closures, _scope($scope1_id, {
 			c: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 2)) && v,
@@ -71,7 +71,7 @@ var template_default = _template("a", (input) => {
 		}));
 	}, $scope0_id, ($scope2) => $scope0_page ? [{ g: input.note }] : []), 0, $wg__input_on, $scope0_reason, 3, 0, void 0, 0, 0, "a5");
 	_html("</main>");
-	$fg__input_note && _patch_subscribers($scope0_id, "a9", "g");
+	$fg__input_note && (_client_branch_if("a0", $scope0_id) || _client_branch_if("a5", $scope0_id) || $cg__input_on) && _patch_subscribers($scope0_id, "a9", "g");
 	_scope($scope0_id, {
 		g: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 4)) && input.note,
 		i: $wi__input_note && $input_note__closures,

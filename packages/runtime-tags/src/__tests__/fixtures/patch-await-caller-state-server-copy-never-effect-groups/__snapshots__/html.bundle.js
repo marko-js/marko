@@ -11,7 +11,7 @@ _shells({
 	b: `b a>;${((_w0) => `b/${_w0}&b`)($Row_content__walks)};${((_w0) => `<!>${_w0}<!>`)($Row_content__template)}`
 });
 var show_await_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_promise = _write_if($scope0_reason, 0), $cg__input_promise = _client_guard($scope0_reason, 0), $fg__input_promise = _filled_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wi__input_promise = _write_if($scope0_reason, 0), $cg__input_promise = _client_guard($scope0_reason, 0), $fg__input_promise = _filled_guard($scope0_reason, 0), $cg__input_label = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_promise__closures = /* @__PURE__ */ new Set();
 	const Row = { content: _content("b3", ({ text }) => {
@@ -36,12 +36,12 @@ var show_await_default = _template("b", (input) => {
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	Row.content({ text: input.label });
 	_patch_child_end();
-	$fg__input_promise && _patch_subscribers($scope0_id, "b6", "d");
+	$fg__input_promise && $cg__input_label && _patch_subscribers($scope0_id, "b6", "d");
 	_scope($scope0_id, {
 		d: _write_if($scope0_reason, 1) && input.promise,
 		f: $wi__input_promise && $input_promise__closures,
 		a: _existing_scope($childScope)
-	}) || $fg__input_promise && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "xd", input.promise, !_server_guard($scope0_reason, 0));
+	}) || $fg__input_promise && $cg__input_label && _patch_write($scope0_id, "xd", input.promise, !_server_guard($scope0_reason, 0));
 });
 
 // template.marko

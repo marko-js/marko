@@ -40,7 +40,7 @@ _shells({
 	a: `a${_shell_marker($setup)};${((_w0) => `b/${_w0}&b`)("b%c")};${((_w0) => `<!>${_w0}<!>`)($template)}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_label = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $fg__input_label = _filled_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	_set_scope_reason(_updates_from($scope0_reason, 1) << 1 | _updates_from($scope0_reason, 1) << 3);
@@ -65,10 +65,10 @@ var template_default = _template("a", (input) => {
 		}, $scope0_id)
 	});
 	_patch_child_end();
-	$fg__input_label && _patch_subscribers($scope0_id, "a2", "e");
+	$fg__input_label && $cg__input_show && _patch_subscribers($scope0_id, "a2", "e");
 	_scope($scope0_id, {
 		e: _write_if($scope0_reason, 1) && input.label,
 		f: _write_if($scope0_reason, 2) && $input_label__closures,
 		a: _existing_scope($childScope2)
-	}) || $fg__input_label && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.label, !_server_guard($scope0_reason, 2));
+	}) || $fg__input_label && $cg__input_show && _patch_write($scope0_id, "xe", input.label, !_server_guard($scope0_reason, 2));
 }, 1);

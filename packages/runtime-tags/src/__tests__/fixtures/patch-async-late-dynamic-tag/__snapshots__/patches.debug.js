@@ -9,7 +9,6 @@
       "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-async-late-dynamic-tag/template.marko_3*content"
     }
   },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-async-late-dynamic-tag/template.marko_0_input_p#6/subscribers": "input_p",
   "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-async-late-dynamic-tag/template.marko_0_input_q#7/subscribers": "input_q",
   "PatchMarkedWrite:input_q": (p => p = new Promise((f, r) => _.a = {
     f,
@@ -41,7 +40,6 @@
       "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-async-late-dynamic-tag/template.marko_3*content"
     }
   },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-async-late-dynamic-tag/template.marko_0_input_p#6/subscribers": "input_p",
   "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-async-late-dynamic-tag/template.marko_0_input_q#7/subscribers": "input_q",
   "PatchMarkedWrite:input_q": (p => p = new Promise((f, r) => _.a = {
     f,

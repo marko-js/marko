@@ -31,7 +31,7 @@ var frag_host_default = _template("b", (input) => {
 			_: $wi__input_note__OR__input_mode && _scope_with_id($scope0_id)
 		});
 	}, 0, $scope0_id, "a", 1, 1, 1, 0, 0, "b3", 0, 0);
-	$fg__input_note && _patch_subscribers($scope0_id, "b4", "d");
+	$fg__input_note && $cg__input_mode && _patch_subscribers($scope0_id, "b4", "d");
 	_scope($scope0_id, {
 		d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1)) && input.note,
 		f: _write_if($scope0_reason, 1) && $input_note__closures

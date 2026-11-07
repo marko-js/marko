@@ -101,7 +101,7 @@ var template_default = _template("a", (input) => {
 	counter_default({});
 	_patch_child_end();
 	$fg__input_a && $cg__input_items && _patch_render($scope0_id, "a16", "g");
-	$fg__input_x && _patch_subscribers($scope0_id, "a17", "i");
+	$fg__input_x && $cg__input_items && _patch_subscribers($scope0_id, "a17", "i");
 	$fg__input_x && $cg__input_items && _patch_render($scope0_id, "a9", "i");
 	$fg__input_a && $cg__input_items && _patch_render($scope0_id, "a10", ["k", "g"]);
 	_scope($scope0_id, {

@@ -13,8 +13,7 @@
           "PatchText:#text/0": "b!",
           "PatchText:#text/1": "y"
         }
-      },
-      "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-local-await-effect/template.marko_2_v#2/subscribers": "v"
+      }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-local-await-effect/template.marko_1*shell"]
 }
@@ -58,8 +57,7 @@
           "PatchText:#text/0": "d!",
           "PatchText:#text/1": "w"
         }
-      },
-      "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-local-await-effect/template.marko_2_v#2/subscribers": "v"
+      }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-local-await-effect/template.marko_1*shell"]
 }

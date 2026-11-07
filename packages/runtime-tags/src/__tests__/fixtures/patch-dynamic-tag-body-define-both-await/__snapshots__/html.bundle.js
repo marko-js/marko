@@ -65,7 +65,7 @@ var template_default = _template("a", (input) => {
 		_scope($scope3_id, { a: _existing_scope($childScope2) });
 	}, 1, "a4", _unfilled_if($scope0_reason, 3), 1, 1);
 	_html("</main>");
-	$fg__input_note && _patch_subscribers($scope0_id, "a6", "f");
+	$fg__input_note && (_client_branch_if("a0", $scope0_id) || $cg__input_on) && _patch_subscribers($scope0_id, "a6", "f");
 	_scope($scope0_id, {
 		f: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.note,
 		i: _write_if($scope0_reason, 2) && $input_note__closures,

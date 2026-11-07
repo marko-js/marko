@@ -10,8 +10,7 @@
         }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-try-shown-first/template.marko_3*content", "packages/runtime-tags/src/__tests__/fixtures/patch-content-try-shown-first/template.marko_2*content"]
       }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-try-shown-first/tags/wrap.marko_1*shell"]
-  },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-try-shown-first/template.marko_0_input_id#4/subscribers": "input_id"
+  }
 }
 ;DRo
 
@@ -19,8 +18,7 @@
 {
   "PatchChild:#childScope/0": {
     "PatchBranch:#text/0": 0
-  },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-try-shown-first/template.marko_0_input_id#4/subscribers": "input_id"
+  }
 }
 
 // PATCH holding DRo
@@ -34,6 +32,5 @@
         }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-try-shown-first/template.marko_3*content", "packages/runtime-tags/src/__tests__/fixtures/patch-content-try-shown-first/template.marko_2*content"]
       }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-try-shown-first/tags/wrap.marko_1*shell"]
-  },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-try-shown-first/template.marko_0_input_id#4/subscribers": "input_id"
+  }
 }

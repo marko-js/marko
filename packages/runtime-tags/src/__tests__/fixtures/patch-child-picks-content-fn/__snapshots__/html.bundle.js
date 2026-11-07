@@ -27,7 +27,7 @@ _shells({
 	a: `a${_shell_marker($setup)};${((_w0) => ` b/${_w0}&b`)("b%c")};${((_w0) => `<button>s</button>${_w0}<!>`)($template)}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_x = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $fg__input_x = _filled_guard($scope0_reason, 2), $cg__input_on = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_x__closures = /* @__PURE__ */ new Set();
 	const $s__closures = /* @__PURE__ */ new Set();
@@ -53,12 +53,12 @@ var template_default = _template("a", (input) => {
 	});
 	_patch_child_end();
 	_script($scope0_id, "a3");
-	$fg__input_x && _patch_subscribers($scope0_id, "a4", "f");
+	$fg__input_x && $cg__input_on && _patch_subscribers($scope0_id, "a4", "f");
 	_scope($scope0_id, {
 		f: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.x,
 		g: s,
 		h: _write_if($scope0_reason, 2) && $input_x__closures,
 		i: $s__closures,
 		b: _existing_scope($childScope)
-	}) || $fg__input_x && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "xf", input.x, !_server_guard($scope0_reason, 2));
+	}) || $fg__input_x && $cg__input_on && _patch_write($scope0_id, "xf", input.x, !_server_guard($scope0_reason, 2));
 }, 1);

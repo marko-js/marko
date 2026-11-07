@@ -89,7 +89,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_script($scope2_id, "__tests__/template.marko_2");
 		_unfilled_if($scope0_reason, 0) && _patch_write($scope2_id, "PatchWrite:Label", Label, 1);
 		!$cg__input_rows && _unfilled_if() && _patch_write($scope0_id, "PatchWrite:Card", Card);
-		_filled_guard($scope0_reason, 0) && _patch_subscribers($scope2_id, "__tests__/template.marko_2_row_label#7/subscribers", "row_label");
+		_filled_guard($scope0_reason, 0) && (_client_branch_if("__tests__/template.marko_5*content", $scope2_id) || $cg__input_rows || _client_branch_if("__tests__/template.marko_7*content", $scope2_id)) && _patch_subscribers($scope2_id, "__tests__/template.marko_2_row_label#7/subscribers", "row_label");
 		$cg__input_rows && _patch_render($scope2_id, "__tests__/template.marko_2_Card#0:4_row_card#8/setup");
 		_patch_fill($scope2_id, "PatchFill:__tests__/template.marko_fill0", n, 1);
 		_scope($scope2_id, {

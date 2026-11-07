@@ -22,7 +22,6 @@
       }
     },
     "PatchLoop:#text/4": [],
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_2_row_label#7/subscribers": "row_label",
     "PatchSetupValues:": {
       "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_fill0": 0
     }

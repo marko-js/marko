@@ -12,8 +12,7 @@
         }
       }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-shell-let-fn/tags/wrapper.marko_1*shell"]
-  },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-shell-let-fn/template.marko_0_input_label#4/subscribers": "input_label"
+  }
 }
 ;CxQ
 
@@ -30,6 +29,5 @@
         }
       }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-shell-let-fn/tags/wrapper.marko_1*shell"]
-  },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-content-shell-let-fn/template.marko_0_input_label#4/subscribers": "input_label"
+  }
 }

@@ -36,7 +36,7 @@ _shells({
 	"__tests__/template.marko": `__tests__/template.marko${_shell_marker($setup)};${((_w0) => ` b/${_w0}&b`)("b%c")};${((_w0) => `<button>s</button>${_w0}<!>`)($template$1)}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_x = _filled_guard($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $fg__input_x = _filled_guard($scope0_reason, 3), $cg__input_on__OR__input_title = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_x__closures = new Set();
 	const $s__closures = new Set();
@@ -63,7 +63,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	});
 	_patch_child_end();
 	_script($scope0_id, "__tests__/template.marko_0");
-	$fg__input_x && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_x#5/subscribers", "input_x");
+	$fg__input_x && $cg__input_on__OR__input_title && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_x#5/subscribers", "input_x");
 	_scope($scope0_id, {
 		input_x: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 3)) && input.x,
 		s,
@@ -73,5 +73,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, "__tests__/template.marko", 0, {
 		input_x: ["input.x"],
 		s: "1:6"
-	}) || $fg__input_x && _client_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_x", input.x, !_server_guard($scope0_reason, 3));
+	}) || $fg__input_x && $cg__input_on__OR__input_title && _patch_write($scope0_id, "PatchMarkedWrite:input_x", input.x, !_server_guard($scope0_reason, 3));
 }, 1);

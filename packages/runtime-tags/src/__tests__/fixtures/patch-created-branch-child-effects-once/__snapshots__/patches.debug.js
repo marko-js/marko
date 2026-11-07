@@ -24,7 +24,6 @@
         "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-created-branch-child-effects-once/template.marko_8_item#1": "item"
       }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-branch-child-effects-once/template.marko_8*shell"]
     }
-  }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-branch-child-effects-once/template.marko_1*shell"],
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-branch-child-effects-once/template.marko_0_input_items#6/subscribers": "input_items"
+  }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-branch-child-effects-once/template.marko_1*shell"]
 }
 ;F/AH

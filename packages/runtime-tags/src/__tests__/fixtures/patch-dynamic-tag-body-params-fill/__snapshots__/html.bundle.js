@@ -42,7 +42,7 @@ var template_default = _template("a", (input) => {
 		label: input.tag,
 		content: Label
 	}, 9, 0, 0, $wg__input_card__OR__input_tag, $scope0_reason, 0, 0, void 0, 0, 0, "a4");
-	$fg__input_label && _patch_subscribers($scope0_id, "a6", "d");
+	$fg__input_label && (_client_branch_if("a4", $scope0_id) || $cg__input_card__OR__input_tag || $cg__input_card__OR__input_tag) && _patch_subscribers($scope0_id, "a6", "d");
 	_patch_render($scope0_id, "a7", [$fg__input_card && "e", $fg__input_tag && "f"], $scope0_reason, 0);
 	_scope($scope0_id, {
 		d: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && input.label,

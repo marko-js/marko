@@ -40,8 +40,7 @@
             "PatchText:#text/0": "d",
             "PatchText:#text/1": "y"
           }
-        },
-        "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-loop-dynamic-tag-body-await/template.marko_2_v#2/subscribers": "v"
+        }
       }
     },
     [2, 3], {

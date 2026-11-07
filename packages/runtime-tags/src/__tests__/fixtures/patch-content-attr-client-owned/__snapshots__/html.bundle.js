@@ -27,7 +27,7 @@ var frag_host_default = _template("b", (input) => {
 	_html(`</section>${_el_mark($scope0_id, "a", _updates_from($scope0_reason, 2))}`);
 	_unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "wf", one, 1);
 	_unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "wg", two, 1);
-	$fg__input_b && _patch_subscribers($scope0_id, "b3", "d");
+	$fg__input_b && $cg__input_mode && _patch_subscribers($scope0_id, "b3", "d");
 	$cg__input_mode && _patch_render($scope0_id, "b4");
 	_scope($scope0_id, {
 		d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1)) && input.b,

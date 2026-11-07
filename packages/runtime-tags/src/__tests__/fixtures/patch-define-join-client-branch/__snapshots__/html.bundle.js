@@ -9,7 +9,7 @@ _shells({
 	b4: `b4 >a>;${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Info_content__walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Info_content__template)}`
 });
 var panel_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 6), $fg__input_a = _filled_guard($scope0_reason, 4), $fg__input_b = _filled_guard($scope0_reason, 5);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 6), $fg__input_a = _filled_guard($scope0_reason, 4), $cg__input_b__OR__input_show = _client_guard($scope0_reason, 2), $fg__input_b = _filled_guard($scope0_reason, 5), $cg__input_a__OR__input_show = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_a__closures = /* @__PURE__ */ new Set();
 	const $input_b__closures = /* @__PURE__ */ new Set();
@@ -35,14 +35,14 @@ var panel_default = _template("b", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["b4"], $scope0_reason, 6);
-	$fg__input_a && _patch_subscribers($scope0_id, "b5", "d");
-	$fg__input_b && _patch_subscribers($scope0_id, "b6", "e");
+	$fg__input_a && $cg__input_b__OR__input_show && _patch_subscribers($scope0_id, "b5", "d");
+	$fg__input_b && $cg__input_a__OR__input_show && _patch_subscribers($scope0_id, "b6", "e");
 	_scope($scope0_id, {
 		d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.a,
 		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.b,
 		g: _write_if($scope0_reason, 4) && $input_a__closures,
 		h: _write_if($scope0_reason, 5) && $input_b__closures
-	}) || ($fg__input_a && _client_guard($scope0_reason, 2) && _patch_write($scope0_id, "xd", input.a, !_server_guard($scope0_reason, 4)), $fg__input_b && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.b, !_server_guard($scope0_reason, 5)));
+	}) || ($fg__input_a && $cg__input_b__OR__input_show && _patch_write($scope0_id, "xd", input.a, !_server_guard($scope0_reason, 4)), $fg__input_b && $cg__input_a__OR__input_show && _patch_write($scope0_id, "xe", input.b, !_server_guard($scope0_reason, 5)));
 });
 
 // template.marko

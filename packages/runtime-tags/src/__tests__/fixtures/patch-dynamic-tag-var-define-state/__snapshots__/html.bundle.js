@@ -6,7 +6,7 @@ _shells({
 });
 _stateful_return("a0");
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 1), $wi__input_label__OR__input_which = _write_if($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 1), $fg__input_which = _filled_guard($scope0_reason, 2), $wi__input_label = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 1), $wi__input_label__OR__input_which = _write_if($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 1), $cg__input_which = _client_guard($scope0_reason, 2), $fg__input_which = _filled_guard($scope0_reason, 2), $wi__input_label = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	const Counter = { content: _content_resume("a0", () => {
@@ -40,7 +40,7 @@ var template_default = _template("a", (input) => {
 	let count = _dynamic_tag($scope0_id, "a", input.which ? Counter : Other, { label: input.label }, 1, 0, 0, 1, $scope0_reason, 0, 0, void 0, 0, "a6");
 	_var($scope0_id, "b", $inputwhichCounterOther_scope, "a6");
 	_html(`<p>${_text_mark($scope0_id, "c", count)}</p>`);
-	$fg__input_label && _patch_subscribers($scope0_id, "a7", "f");
+	$fg__input_label && $cg__input_which && _patch_subscribers($scope0_id, "a7", "f");
 	_patch_render($scope0_id, "a8", [$fg__input_label && "f", $fg__input_which && "g"], $scope0_reason, 0);
 	_scope($scope0_id, {
 		f: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.label,
@@ -48,5 +48,5 @@ var template_default = _template("a", (input) => {
 		h: _unfilled_if($scope0_reason, 0) && Counter,
 		i: _unfilled_if($scope0_reason, 0) && Other,
 		l: $wi__input_label && $input_label__closures
-	}) || ($fg__input_label && _client_guard($scope0_reason, 2) && _patch_write($scope0_id, "xf", input.label, !_server_guard($scope0_reason, 1)), $fg__input_which && $cg__input_label && _patch_write($scope0_id, "xg", input.which, !_server_guard($scope0_reason, 2)));
+	}) || ($fg__input_label && $cg__input_which && _patch_write($scope0_id, "xf", input.label, !_server_guard($scope0_reason, 1)), $fg__input_which && $cg__input_label && _patch_write($scope0_id, "xg", input.which, !_server_guard($scope0_reason, 2)));
 }, 1);

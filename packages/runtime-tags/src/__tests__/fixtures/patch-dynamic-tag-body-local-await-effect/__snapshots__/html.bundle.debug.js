@@ -63,7 +63,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					_unfilled_if($scope0_reason, 6) && _patch_subscribe($scope3_id, "__tests__/template.marko_3_v#2:2/subscribe", $cg__input_v);
 					_subscribe(_unfilled_if($scope0_reason, 6) && $await_content__v__closures, _subscribe(_unfilled_if($scope0_reason, 5) && $if_content__x__closures, _scope($scope3_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope2_id) }, "__tests__/template.marko", "8:10")));
 				}, $scope2_id, ($scope) => $scope0_page ? [{ v }] : []), 0, $wg__input_on, $scope0_reason, 7, 0, void 0, 0, 0, "__tests__/template.marko_3*content");
-				_filled_guard($scope0_reason, 6) && _patch_subscribers($scope2_id, "__tests__/template.marko_2_v#2/subscribers", "v");
+				_filled_guard($scope0_reason, 6) && (_client_branch_if("__tests__/template.marko_3*content", $scope2_id) || $cg__input_on) && _patch_subscribers($scope2_id, "__tests__/template.marko_2_v#2/subscribers", "v");
 				_unfilled_if($scope0_reason, 7) && _patch_subscribe($scope2_id, "__tests__/template.marko_2_input_on#0:6/subscribe", $cg__input_on);
 				$wi__input_show__OR__input_note__OR__input_v__OR__input_on && _subscribe(_unfilled_if($scope0_reason, 7) && $input_on__closures, _scope($scope2_id, {
 					v: (_unfilled_if($scope0_reason, 7) || _unfilled_if($scope0_reason, 6)) && v,

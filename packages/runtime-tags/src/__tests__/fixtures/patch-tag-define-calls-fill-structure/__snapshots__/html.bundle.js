@@ -42,7 +42,7 @@ var shape_default = _template("b", (input) => {
 	_patch_child_end();
 	_html(`<button>${_text_mark($scope0_id, "d", n)}</button>${_el_mark($scope0_id, "c")}`);
 	_script($scope0_id, "b4");
-	$fg__input_a && _patch_subscribers($scope0_id, "b5", ["k", "g"]);
+	$fg__input_a && $cg__input_x__OR__input_y && _patch_subscribers($scope0_id, "b5", ["k", "g"]);
 	_patch_fill($scope0_id, "vb6", n, 1);
 	_scope($scope0_id, {
 		g: _write_if($scope0_reason, 0) && input.a,

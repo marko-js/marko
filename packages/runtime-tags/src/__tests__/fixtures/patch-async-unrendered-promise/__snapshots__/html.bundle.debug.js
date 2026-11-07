@@ -29,7 +29,7 @@ _shells({
 	"__tests__/template.marko_2*shell": "__tests__/template.marko_2*shell;b%;<!><!><!>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_show__OR__input_card = _write_if($scope0_reason, 1), $wg__input_show = _write_guard($scope0_reason, 3), $scope0_page = _page_render(), $wi__input_tag__OR__input_boxed = _write_if($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 3), $fg__input_user = _filled_guard($scope0_reason, 4), $fg__input_card = _filled_guard($scope0_reason, 5), $fg__input_boxed = _filled_guard($scope0_reason, 7);
+	const $scope0_reason = _scope_reason(), $wi__input_show__OR__input_card = _write_if($scope0_reason, 1), $wg__input_show = _write_guard($scope0_reason, 3), $scope0_page = _page_render(), $wi__input_tag__OR__input_boxed = _write_if($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 3), $fg__input_user = _filled_guard($scope0_reason, 4), $fg__input_card = _filled_guard($scope0_reason, 5), $fg__input_boxed = _filled_guard($scope0_reason, 7), $cg__input_tag = _client_guard($scope0_reason, 6);
 	const $scope0_id = _scope_id();
 	const $input_card__closures = new Set();
 	const $input_boxed__closures = new Set();
@@ -90,7 +90,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	$fg__input_user && $cg__input_show && _patch_render($scope0_id, "__tests__/template.marko_1_input_user#0:8/setup", "input_user");
 	$fg__input_card && $cg__input_show && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_card#9/subscribers", "input_card");
-	$fg__input_boxed && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_boxed#11/subscribers", "input_boxed");
+	$fg__input_boxed && (_client_branch_if("__tests__/template.marko_4*content", $scope0_id) || $cg__input_tag) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_boxed#11/subscribers", "input_boxed");
 	_scope($scope0_id, {
 		input_user: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 4)) && input.user,
 		input_card: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 5)) && input.card,
@@ -103,5 +103,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_card: ["input.card"],
 		input_boxed: ["input.boxed"],
 		n: "1:6"
-	}) || ($fg__input_user && $cg__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_user", input.user, !_server_guard($scope0_reason, 4)), $fg__input_card && $cg__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_card", input.card, !_server_guard($scope0_reason, 5)), $fg__input_boxed && (_client_branch_if("__tests__/template.marko_4*content", $scope0_id) || _client_guard($scope0_reason, 6)) && _patch_write($scope0_id, "PatchMarkedWrite:input_boxed", input.boxed, !_server_guard($scope0_reason, 7)));
+	}) || ($fg__input_user && $cg__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_user", input.user, !_server_guard($scope0_reason, 4)), $fg__input_card && $cg__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_card", input.card, !_server_guard($scope0_reason, 5)), $fg__input_boxed && (_client_branch_if("__tests__/template.marko_4*content", $scope0_id) || $cg__input_tag) && _patch_write($scope0_id, "PatchMarkedWrite:input_boxed", input.boxed, !_server_guard($scope0_reason, 7)));
 }, 1);

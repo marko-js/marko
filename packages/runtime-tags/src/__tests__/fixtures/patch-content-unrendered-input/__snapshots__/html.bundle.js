@@ -85,7 +85,7 @@ _shells({
 	a: `a${_shell_marker($setup)};${((_w0, _w1) => ` D l/${_w0}&/${_w1}&`)("b%c", " b")};${((_w0, _w1) => `<button class=inc> </button>${_w0}${_w1}`)($template$1, $template)}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_admin = _client_guard($scope0_reason, 3), $fg__input_rows = _filled_guard($scope0_reason, 4), $fg__input_guestText = _filled_guard($scope0_reason, 5), $fg__input_bodyText = _filled_guard($scope0_reason, 7);
+	const $scope0_reason = _scope_reason(), $cg__input_admin = _client_guard($scope0_reason, 3), $fg__input_rows = _filled_guard($scope0_reason, 4), $fg__input_guestText = _filled_guard($scope0_reason, 5), $fg__input_bodyText = _filled_guard($scope0_reason, 7), $cg__input_showBody = _client_guard($scope0_reason, 6);
 	const $scope0_id = _scope_id();
 	const $input_rows__closures = /* @__PURE__ */ new Set();
 	const $input_guestText__closures = /* @__PURE__ */ new Set();
@@ -133,9 +133,9 @@ var template_default = _template("a", (input) => {
 	});
 	_patch_child_end();
 	_script($scope0_id, "a6");
-	$fg__input_rows && _patch_subscribers($scope0_id, "a7", "h");
-	$fg__input_guestText && _patch_subscribers($scope0_id, "a8", "i");
-	$fg__input_bodyText && _patch_subscribers($scope0_id, "a9", "k");
+	$fg__input_rows && $cg__input_admin && _patch_subscribers($scope0_id, "a7", "h");
+	$fg__input_guestText && $cg__input_admin && _patch_subscribers($scope0_id, "a8", "i");
+	$fg__input_bodyText && $cg__input_showBody && _patch_subscribers($scope0_id, "a9", "k");
 	_scope($scope0_id, {
 		h: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 4)) && input.rows,
 		i: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 5)) && input.guestText,
@@ -146,5 +146,5 @@ var template_default = _template("a", (input) => {
 		c: _existing_scope($childScope2),
 		o: _write_if($scope0_reason, 7) && $input_bodyText__closures,
 		d: _existing_scope($childScope3)
-	}) || ($fg__input_rows && $cg__input_admin && _patch_write($scope0_id, "xh", input.rows, !_server_guard($scope0_reason, 4)), $fg__input_guestText && $cg__input_admin && _patch_write($scope0_id, "xi", input.guestText, !_server_guard($scope0_reason, 5)), $fg__input_bodyText && _client_guard($scope0_reason, 6) && _patch_write($scope0_id, "xk", input.bodyText, !_server_guard($scope0_reason, 7)));
+	}) || ($fg__input_rows && $cg__input_admin && _patch_write($scope0_id, "xh", input.rows, !_server_guard($scope0_reason, 4)), $fg__input_guestText && $cg__input_admin && _patch_write($scope0_id, "xi", input.guestText, !_server_guard($scope0_reason, 5)), $fg__input_bodyText && $cg__input_showBody && _patch_write($scope0_id, "xk", input.bodyText, !_server_guard($scope0_reason, 7)));
 }, 1);

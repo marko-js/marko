@@ -56,7 +56,7 @@ var rowsy_default = _template("__tests__/tags/rowsy.marko", (input) => {
 	_script($scope0_id, "__tests__/tags/rowsy.marko_0");
 	_unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "PatchWrite:Card", Card, 1);
 	_unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "PatchWrite:Label", Label, 1);
-	$fg__input_label && _patch_subscribers($scope0_id, "__tests__/tags/rowsy.marko_0_input_label#5/subscribers", "input_label");
+	$fg__input_label && (_client_branch_if("__tests__/tags/rowsy.marko_1*content", $scope0_id) || $cg__input_tags__OR__input_card || $cg__input_tags__OR__input_card) && _patch_subscribers($scope0_id, "__tests__/tags/rowsy.marko_0_input_label#5/subscribers", "input_label");
 	$fg__input_card && $cg__input_tags && _patch_render($scope0_id, "__tests__/tags/rowsy.marko_2_input_card#0:7/setup", "input_card");
 	_patch_fill($scope0_id, "PatchFill:__tests__/tags/rowsy.marko_fill0", n, 1);
 	_scope($scope0_id, {
