@@ -1307,65 +1307,72 @@ export function inKeptContent(section: Section) {
   return keepsContent(section);
 }
 
-// Kept content serves its holes to every instance, and data names one scope: content
-// a patch would write such a value in as data renders on the client, as main does.
-function carriesOwnedData(section: Section) {
+// Kept content serves its holes to every instance, but a bind reference names one scope:
+// content sending one to a scope of its instance renders on the client, as main does.
+function sendsBindReference(section: Section) {
   return (
     !!section.derives &&
     rendersFromChildState(section) &&
-    writesOwnedData(section)
+    sendsBindReferenceIn(section)
   );
 }
 
 // Content only the client can render in a patch: every consumer renders it with
-// client state, or, kept, it would carry a value one instance owns.
+// client state, or, kept, it would send a bind reference to a scope of its instance.
 export function rendersOnClient(section: Section) {
-  return getStatefulConsumers(section) === "every" || carriesOwnedData(section);
+  return (
+    getStatefulConsumers(section) === "every" || sendsBindReference(section)
+  );
 }
 
-// Content or a scope-bound function created in `root`'s instance (in it, or in a body
-// it calls) that lands where a patch there writes it as data.
-const [writesOwnedData] = createAnalysisMemo(
+// A function or content bound to a scope of `root`'s instance (made in it, or in a body
+// it calls) that reaches a read a patch writes it in as a bind reference.
+const [sendsBindReferenceIn] = createAnalysisMemo(
   (root: Section): boolean =>
     someTrackedFunction(
       (fn) =>
         isScopeBoundFn(fn) &&
         isSameOrAncestorSection(root, fn.section) &&
-        landsAsData(fn),
-    ) || someSectionIn(root, root),
+        reachesBindReference(fn),
+    ) || sendsFromSection(root, root),
   false,
 );
 
-function someSectionIn(section: Section, root: Section): boolean {
+function sendsFromSection(section: Section, root: Section): boolean {
   return (
     (section !== root &&
       !!section.derives &&
-      someRead(getDerivedReaders(section.derives), isDataRead)) ||
-    !!section.knownTags?.some(callsWritingOwnedData) ||
-    section.children.some((child) => someSectionIn(child, root))
+      someRead(getDerivedReaders(section.derives), isBindReferenceRead)) ||
+    !!section.knownTags?.some(callSendsBindReference) ||
+    section.children.some((child) => sendsFromSection(child, root))
   );
 }
 
-function callsWritingOwnedData(call: KnownTagExtra) {
-  return writesOwnedData(call.childSection);
+function callSendsBindReference(call: KnownTagExtra) {
+  return sendsBindReferenceIn(call.childSection);
 }
 
 // Where the function sits, or a read its value reaches.
-function landsAsData(fn: RegisteredFnExtra) {
+function reachesBindReference(fn: RegisteredFnExtra) {
   const extra = getCanonicalExpr(fn.exprRoot);
-  return isDataRead(extra, true) || someRead(exprReaders(extra), isDataRead);
-}
-
-// A read a patch writes the value in as data: retained, or a known call's argument
-// the child's fill takes whole only where it is a function it registers (a bind).
-function isDataRead(read: t.NodeExtra, asInput: boolean) {
   return (
-    asInput &&
-    (!!read.retained || (!!read.callSiteExprs && !passesRegisteredFn(read)))
+    isBindReferenceRead(extra, true) ||
+    someRead(exprReaders(extra), isBindReferenceRead)
   );
 }
 
-function passesRegisteredFn(read: t.NodeExtra) {
+// A read a patch writes a scope-bound value in as a bind reference: retained, or a known
+// call's argument the child's fill doesn't ship as an owner-bound entry.
+function isBindReferenceRead(read: t.NodeExtra, asInput: boolean) {
+  return (
+    asInput &&
+    (!!read.retained || (!!read.callSiteExprs && !isOwnerBoundArg(read)))
+  );
+}
+
+// An argument that is a function its template registers, or reads a binding holding
+// only such: the child's fill ships it whole, as an owner-bound entry.
+function isOwnerBoundArg(read: t.NodeExtra) {
   return (
     isTrackedFunction(read) ||
     (!!read.read && holdsRegisteredFn(read.read.binding))
