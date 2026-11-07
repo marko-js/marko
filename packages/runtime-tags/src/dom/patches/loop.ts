@@ -29,7 +29,7 @@ export const createLoopPatcher =
     // ones); each row's patch applies once the loop owns every row, in its order.
     const apply = (_?: never) => {
       reconcile(
-        (MARKO_DEBUG ? accessor : encodeAccessor(accessor)) as never,
+        MARKO_DEBUG ? accessor : encodeAccessor(accessor),
         template,
         walks,
         setup || 0,

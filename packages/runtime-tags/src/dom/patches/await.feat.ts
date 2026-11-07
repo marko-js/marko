@@ -3,9 +3,7 @@ import {
   type Accessor,
   AccessorPrefix,
   AccessorProp,
-  type AwaitCounter,
   type BranchScope,
-  type EncodedAccessor,
   PatchKey,
   PatchPendingProp,
   RenderDataProp,
@@ -50,9 +48,10 @@ patchers[PatchKey.Pending] = (scope, accessor, value) => {
   const link = AccessorPrefix.BranchScopes + accessor;
   // This await now updates from the server: its value supersedes a client one.
   const pend = (_?: never) =>
-    _await_promise(
-      (MARKO_DEBUG ? accessor : encodeAccessor(accessor)) as EncodedAccessor,
-    )(scope, patchPending);
+    _await_promise(MARKO_DEBUG ? accessor : encodeAccessor(accessor))(
+      scope,
+      patchPending,
+    );
   if (!scope[link]) {
     // The walk has not reached this await: the document keeps its pending UI until
     // the body lands, as a deferred value would, unless a settle or a catch drops it.
@@ -118,8 +117,8 @@ function onStreamLanded<T>(scope: Scope, signal: Signal<T>, value?: T) {
       "A patch reached an `<await>` whose in-order content is still streaming. Start patches from an effect, which in-order content holds until it completes (RESUMABILITY.md, Timing).",
     );
   }
-  const complete = (tryBranch[AccessorProp.AwaitCounter] as AwaitCounter).c;
-  (tryBranch[AccessorProp.AwaitCounter] as AwaitCounter).c = (_?: never) =>
+  const complete = tryBranch[AccessorProp.AwaitCounter]!.c;
+  tryBranch[AccessorProp.AwaitCounter]!.c = (_?: never) =>
     complete() || queueAsyncRender(scope, signal, value);
 }
 
