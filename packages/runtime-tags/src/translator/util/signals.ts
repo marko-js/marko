@@ -866,20 +866,23 @@ function isPureMemberForwarder(binding: Binding): boolean {
 // entry re-runs, which nothing a created `@catch` holds has (no patch pairs it).
 export function isEffectOutsideShell(
   section: Section,
-  refs: ReferencedBindings,
+  referencedBindings: ReferencedBindings,
 ) {
   return (
-    isQueuedOnCreate(section, refs) ||
-    (!inCreatedCatch(section) && some(refs, runsEffectOnPatch))
+    isQueuedOnCreate(section, referencedBindings) ||
+    (!inCreatedCatch(section) && some(referencedBindings, runsEffectOnPatch))
   );
 }
 
 // The sources an effect re-runs on where one is a param a calling tag passes.
 export function getEffectCallerSources(
   section: Section,
-  refs: ReferencedBindings,
+  referencedBindings: ReferencedBindings,
 ) {
-  const sources = reduce(filter(refs, runsEffectOnPatch), pushCanonicalSources);
+  const sources = reduce(
+    filter(referencedBindings, runsEffectOnPatch),
+    pushCanonicalSources,
+  );
   if (some(sources, (s) => hasTagCallerParamAt(s, section))) return sources;
 }
 
@@ -1188,8 +1191,8 @@ export function buildSignalFn(signal: Signal): t.Expression {
 
         dynamicClosureArgs.push(getSignal(closureSection, binding).identifier);
       } else {
-        // A fill reaches a closure in structure the client may own, which
-        // no patch writes there.
+        // A fill reaches a closure in structure that may update from the
+        // client, which no patch writes there.
         const closureSignal = getSignal(closureSection, binding);
         pushScopeCall(
           !isPatch()
@@ -1857,11 +1860,11 @@ export function writeRegisteredFns() {
 
   for (const registeredFn of registeredFns) {
     const fn = registeredFn.node.extra as t.FunctionExtra & t.NodeExtra;
-    const live = isPatch() && !!getFilledReferences(fn);
+    const filled = isPatch() && !!getFilledReferences(fn);
     statements.push(
       t.expressionStatement(
         // A function with filled references a patch binds records what resume revives of it.
-        live
+        filled
           ? callRuntime(
               "_bind_resume",
               t.stringLiteral(

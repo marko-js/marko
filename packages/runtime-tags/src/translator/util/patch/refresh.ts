@@ -59,7 +59,7 @@ import { getScopeAccessor } from "../scope-accessor";
 import {
   ensureCallerParamGroups,
   forEachSection,
-  getConditionalCallerGroupsAt,
+  getGuardedCallerGroupsAt,
   getRendererReason,
   isCallerParamAt,
   isContentRender,
@@ -2283,7 +2283,7 @@ function leavesReadUnfilled(binding: Binding) {
     some(
       structure,
       (sources) =>
-        getConditionalCallerGroupsAt(sources, binding.section).length > 0,
+        getGuardedCallerGroupsAt(sources, binding.section).length > 0,
     )
   );
 }
