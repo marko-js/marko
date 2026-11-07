@@ -1170,14 +1170,14 @@ export function _patch_live<T>(
   scopeId: number,
   value: T,
   ownerScopeId: number,
-  ...sources: (string | Falsy)[]
+  sources: string,
 ) {
   const state = getState();
   if (state instanceof PatchRenderState) {
     const args = (state.liveArgs ??= new Map());
     let values = args.get(scopeId);
     if (!values) args.set(scopeId, (values = new Map()));
-    values.set(value, [ownerScopeId, sources.filter(Boolean).join(" ")]);
+    values.set(value, [ownerScopeId, sources]);
   }
   return value;
 }
