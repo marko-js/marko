@@ -69,9 +69,9 @@ UPDATE: section:nth-of-type(3) > span:nth-of-type(2)::text " " => "r3"
 
 # Update
 ```js
-d.querySelectorAll("section > *:not(button)").forEach((e) =>
-e.click(),
-  );
+for (const e of d.querySelectorAll("section > *:not(button)")) {
+e.click();
+}
 ```
 ## Console
 ```
@@ -134,9 +134,9 @@ UPDATE: section:nth-of-type(1) > i:nth-of-type(1) > b::text@0 "" => "r3"
 
 # Update
 ```js
-d.querySelectorAll("section > *:not(button)").forEach((e) =>
-e.click(),
-  );
+for (const e of d.querySelectorAll("section > *:not(button)")) {
+e.click();
+}
 ```
 ## Console
 ```
@@ -221,9 +221,9 @@ UPDATE: section:nth-of-type(2) > i:nth-of-type(1) > b::text@2 "c" => "d"
 
 # Update
 ```js
-d.querySelectorAll("section > *:not(button)").forEach((e) =>
-e.click(),
-  );
+for (const e of d.querySelectorAll("section > *:not(button)")) {
+e.click();
+}
 ```
 ## Console
 ```
@@ -271,9 +271,9 @@ UPDATE: section > b:nth-of-type(2)::text " " => "r5"
 
 # Update
 ```js
-d.querySelectorAll("section > *:not(button)").forEach((e) =>
-e.click(),
-  );
+for (const e of d.querySelectorAll("section > *:not(button)")) {
+e.click();
+}
 ```
 ## Console
 ```

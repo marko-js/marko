@@ -32,7 +32,9 @@ INSERT: section
 
 # Update
 ```js
-d.querySelectorAll("section li > *").forEach((e) => e.click());
+for (const e of d.querySelectorAll("section li > *")) {
+e.click();
+}
 ```
 ## Console
 ```
@@ -76,7 +78,9 @@ UPDATE: section > ul > li:nth-of-type(1) > i::text " " => "r3"
 
 # Update
 ```js
-d.querySelectorAll("section li > *").forEach((e) => e.click());
+for (const e of d.querySelectorAll("section li > *")) {
+e.click();
+}
 ```
 ## Console
 ```
@@ -126,7 +130,9 @@ UPDATE: section > ul > li:nth-of-type(4) > i::text " " => "r4"
 
 # Update
 ```js
-d.querySelectorAll("section li > *").forEach((e) => e.click());
+for (const e of d.querySelectorAll("section li > *")) {
+e.click();
+}
 ```
 ## Console
 ```

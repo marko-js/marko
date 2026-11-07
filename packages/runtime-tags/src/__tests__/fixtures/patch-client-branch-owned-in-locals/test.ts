@@ -1,8 +1,10 @@
 import type { TestConfig } from "../../main.test";
 function click(d: Document) {
-  d.querySelectorAll<HTMLElement>(
+  for (const e of d.querySelectorAll<HTMLElement>(
     "section b, section i, section u, section button, section span, section li",
-  ).forEach((e) => e.click());
+  )) {
+    e.click();
+  }
 }
 
 export const config: TestConfig = {

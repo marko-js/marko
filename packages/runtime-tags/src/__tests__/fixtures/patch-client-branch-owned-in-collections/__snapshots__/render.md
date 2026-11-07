@@ -24,9 +24,11 @@ INSERT: section
 
 # Update
 ```js
-d.querySelectorAll(
+for (const e of d.querySelectorAll(
 "section b, section i, section button:not(:first-child), section span",
-  ).forEach((e) => e.click());
+  )) {
+e.click();
+}
 ```
 ## Console
 ```
@@ -39,9 +41,11 @@ LOG "fn" "b"
 
 # Update
 ```js
-d.querySelectorAll(
+for (const e of d.querySelectorAll(
 "section b, section i, section button:not(:first-child), section span",
-  ).forEach((e) => e.click());
+  )) {
+e.click();
+}
 ```
 ## Console
 ```

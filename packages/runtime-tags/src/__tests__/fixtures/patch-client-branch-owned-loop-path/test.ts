@@ -1,8 +1,15 @@
 import type { TestConfig } from "../../main.test";
 function click(d: Document) {
-  d.querySelectorAll<HTMLElement>("section li > *").forEach((e) => e.click());
+  for (const e of d.querySelectorAll<HTMLElement>("section li > *")) {
+    e.click();
+  }
 }
-const R = (...ids: number[]) => ids.map((id) => ({ id, label: "r" + id }));
+function R(...ids: number[]) {
+  return ids.map(row);
+}
+function row(id: number) {
+  return { id, label: "r" + id };
+}
 export const config: TestConfig = {
   patches: true,
   steps: [

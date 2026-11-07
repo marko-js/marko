@@ -22,9 +22,11 @@ INSERT: section
 
 # Update
 ```js
-d.querySelectorAll(
+for (const e of d.querySelectorAll(
 "section b, section i, section u, section button, section span, section li",
-  ).forEach((e) => e.click());
+  )) {
+e.click();
+}
 ```
 ```html
 <section>
@@ -46,7 +48,9 @@ LOG "b"
 
 # Update
 ```js
-d.querySelectorAll(
+for (const e of d.querySelectorAll(
 "section b, section i, section u, section button, section span, section li",
-  ).forEach((e) => e.click());
+  )) {
+e.click();
+}
 ```
