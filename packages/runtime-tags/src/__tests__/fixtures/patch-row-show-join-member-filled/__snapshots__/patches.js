@@ -2,7 +2,7 @@
 `a1; ;<div>shown</div>`
 {
   la: [1, {
-    ga: [1, 0]
+    ga: 1
   }, "a1"],
   cAb: {
     ta: "b"
@@ -15,7 +15,7 @@
 // PATCH holding BgE
 {
   la: [1, {
-    ga: [0, 0]
+    ga: 0
   }, "a1"],
   cAb: {
     ta: "c"
@@ -27,7 +27,7 @@
 // PATCH holding BgE
 {
   la: [1, {
-    ga: [1, 0]
+    ga: 1
   }, "a1"],
   cAb: {
     ta: "d"

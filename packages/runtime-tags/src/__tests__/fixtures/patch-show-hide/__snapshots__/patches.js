@@ -1,5 +1,5 @@
 // PATCH
 {
   ta: "two",
-  gb: [0, 1]
+  gb: 0
 }

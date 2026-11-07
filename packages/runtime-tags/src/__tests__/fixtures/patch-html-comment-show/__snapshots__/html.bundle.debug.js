@@ -11,7 +11,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $show = input.on;
 	_show_start($show, 0);
 	_html(`<p>${_text_mark($scope0_id, "#text/1", input.label, 1, $scope0_reason, 0)}</p>`);
-	_show_end($scope0_id, "#text/2", $show, 1, 0, 0, 1, "#text/2", void 0, $scope0_reason, 1);
+	_show_end($scope0_id, "#text/2", $show, 1, 0, 0, 1, 1, $scope0_reason, 1);
 	_html(`<button>+</button>${_el_mark($scope0_id, "#button/3")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_patch_render($scope0_id, "__tests__/template.marko_0_input_label#6_count#8/setup", $fg__input_label && "input_label");

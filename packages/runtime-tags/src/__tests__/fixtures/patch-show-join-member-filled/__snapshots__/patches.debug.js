@@ -1,6 +1,6 @@
 // PATCH
 {
-  "PatchShow:#div/0": [1, "#div/0"],
+  "PatchShow:#div/0": 1,
   "PatchChild:BranchScopes:#text/1": {
     "PatchText:#text/0": "b"
   },
@@ -10,7 +10,7 @@
 
 // PATCH
 {
-  "PatchShow:#div/0": [0, "#div/0"],
+  "PatchShow:#div/0": 0,
   "PatchChild:BranchScopes:#text/1": {
     "PatchText:#text/0": "c"
   },
@@ -20,7 +20,7 @@
 
 // PATCH
 {
-  "PatchShow:#div/0": [1, "#div/0"],
+  "PatchShow:#div/0": 1,
   "PatchChild:BranchScopes:#text/1": {
     "PatchText:#text/0": "d"
   },

@@ -8,7 +8,7 @@ var hidden_note_default = _template("__tests__/tags/hidden-note.marko", (input) 
 	const $scope0_id = _scope_id();
 	_show_start(false, 0);
 	_html(`<b>${_text_mark($scope0_id, "#text/0", input.text, 1, $scope0_reason, 0)}</b>`);
-	_show_end($scope0_id, "#text/1", false, 0, 0, 0, 1, "#text/1", void 0, 0, 0);
+	_show_end($scope0_id, "#text/1", false, 0, 0, 0, 1, 1, 0, 0);
 	_scope($scope0_id, {}, "__tests__/tags/hidden-note.marko", 0);
 });
 
@@ -33,15 +33,15 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_html(`<p>${_text_mark($scope1_id, "#text/0", input.label, 1, $scope0_reason, 0)}</p>`);
 			_show_start(false, 0);
 			_html(`<b>${_text_mark($scope1_id, "#text/2", input.label, 1, $scope0_reason, 0)}</b> <i>range</i>`);
-			_show_end($scope1_id, "#text/3", false, 0, 1, 0, 0, "#text/3", "#text/1", 0, 0);
+			_show_end($scope1_id, "#text/3", false, 0, 1, 0, 0, 1, 0, 0, "#text/1");
 			_html("<div>");
 			_show_start(false, 0);
 			_html(`<em>${_text_mark($scope1_id, "#text/5", input.label, 1, $scope0_reason, 0)}</em>`);
-			_show_end($scope1_id, "#div/4", false, 0, 0, 0, 1, "#div/4", void 0, 0, 0);
+			_show_end($scope1_id, "#div/4", false, 0, 0, 0, 1, 1, 0, 0);
 			_html("</div>");
 			_show_start(false, 0);
 			_html("<s>single</s>");
-			_show_end($scope1_id, "#text/6", false, 0, 0, 0, 1, "#text/6", void 0, 0, 0);
+			_show_end($scope1_id, "#text/6", false, 0, 0, 0, 1, 1, 0, 0);
 			_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
 			const $childScope2 = _peek_scope_id($scope1_id, "#childScope/7", 1);
 			hidden_note_default({ text: input.label });

@@ -8,15 +8,15 @@
     "PatchText:#text/0": "b",
     "PatchText:#text/2": "b",
     "PatchSetup:": {
-      "PatchShow:#text/3": [0, "#text/3", "#text/1"],
-      "PatchShow:#div/4": [0, "#div/4"],
-      "PatchShow:#text/6": [0, "#text/6"]
+      "PatchShow:#text/3": [0, "#text/1"],
+      "PatchShow:#div/4": 0,
+      "PatchShow:#text/6": 0
     },
     "PatchText:#text/5": "b",
     "PatchChild:#childScope/7": {
       "PatchText:#text/0": "b",
       "PatchSetup:": {
-        "PatchShow:#text/1": [0, "#text/1"]
+        "PatchShow:#text/1": 0
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-show-static-created/template.marko_1*shell"]
@@ -32,15 +32,15 @@
     "PatchText:#text/0": "c",
     "PatchText:#text/2": "c",
     "PatchSetup:": {
-      "PatchShow:#text/3": [0, "#text/3", "#text/1"],
-      "PatchShow:#div/4": [0, "#div/4"],
-      "PatchShow:#text/6": [0, "#text/6"]
+      "PatchShow:#text/3": [0, "#text/1"],
+      "PatchShow:#div/4": 0,
+      "PatchShow:#text/6": 0
     },
     "PatchText:#text/5": "c",
     "PatchChild:#childScope/7": {
       "PatchText:#text/0": "c",
       "PatchSetup:": {
-        "PatchShow:#text/1": [0, "#text/1"]
+        "PatchShow:#text/1": 0
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-show-static-created/template.marko_1*shell"]

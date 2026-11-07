@@ -8,7 +8,7 @@ var hidden_note_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	_show_start(false, 0);
 	_html(`<b>${_text_mark($scope0_id, "a", input.text, 1, $scope0_reason, 0)}</b>`);
-	_show_end($scope0_id, "b", false, 0, 0, 0, 1, 1, void 0, 0, 0);
+	_show_end($scope0_id, "b", false, 0, 0, 0, 1, 1, 0, 0);
 	_scope($scope0_id, {});
 });
 
@@ -31,15 +31,15 @@ var template_default = _template("a", (input) => {
 			_html(`<p>${_text_mark($scope1_id, "a", input.label, 1, $scope0_reason, 0)}</p>`);
 			_show_start(false, 0);
 			_html(`<b>${_text_mark($scope1_id, "c", input.label, 1, $scope0_reason, 0)}</b> <i>range</i>`);
-			_show_end($scope1_id, "d", false, 0, 1, 0, 0, 3, 1, 0, 0);
+			_show_end($scope1_id, "d", false, 0, 1, 0, 0, 1, 0, 0, 1);
 			_html("<div>");
 			_show_start(false, 0);
 			_html(`<em>${_text_mark($scope1_id, "f", input.label, 1, $scope0_reason, 0)}</em>`);
-			_show_end($scope1_id, "e", false, 0, 0, 0, 1, 4, void 0, 0, 0);
+			_show_end($scope1_id, "e", false, 0, 0, 0, 1, 1, 0, 0);
 			_html("</div>");
 			_show_start(false, 0);
 			_html("<s>single</s>");
-			_show_end($scope1_id, "g", false, 0, 0, 0, 1, 6, void 0, 0, 0);
+			_show_end($scope1_id, "g", false, 0, 0, 0, 1, 1, 0, 0);
 			_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
 			const $childScope2 = _peek_scope_id($scope1_id, "h", 1);
 			hidden_note_default({ text: input.label });

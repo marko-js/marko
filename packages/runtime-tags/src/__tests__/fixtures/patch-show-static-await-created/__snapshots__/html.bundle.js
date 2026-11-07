@@ -14,7 +14,7 @@ var show_await_default = _template("b", (input) => {
 		_html(`<p>${_text_mark($scope1_id, "a", x, 1, $scope0_reason, 0)}</p>`);
 		_show_start(false, 0);
 		_html(`<b>${_text_mark($scope1_id, "b", x, 1, $scope0_reason, 0)}</b>`);
-		_show_end($scope1_id, "c", false, 0, 0, 0, 1, 2, void 0, 0, 0);
+		_show_end($scope1_id, "c", false, 0, 0, 0, 1, 1, 0, 0);
 		_scope($scope1_id, {});
 	}, 1, "b0", _unfilled_if($scope0_reason, 0) && 3, 1);
 });
