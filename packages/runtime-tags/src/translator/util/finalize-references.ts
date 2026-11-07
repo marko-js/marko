@@ -17,6 +17,7 @@ import {
   getAssignedObject,
   getPropertyPath,
   isDirectAlias,
+  isGlobalBinding,
   propertiesUtil,
 } from "./bindings";
 import { finalizeContentDerives } from "./content-derives";
@@ -1017,7 +1018,7 @@ function resolveReferencedBindings(
 }
 
 function isPartOfRead(binding: Binding, reads: ReferencedBindings) {
-  if (binding.type === BindingType.global) {
+  if (isGlobalBinding(binding)) {
     for (let cur = binding.aliasOf; cur; cur = cur.aliasOf) {
       if (bindingUtil.has(reads, cur)) return true;
     }

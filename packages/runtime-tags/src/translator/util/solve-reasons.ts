@@ -273,8 +273,8 @@ function addClosureReasons(section: Section) {
   });
 }
 
-// When a closure's change reaches the section on the client: as its sources change, or,
-// a `$global` member's, where the patch changing it fills not every read there.
+// When a closure's change reaches the section on the client: as its sources change, or
+// for a `$global` member, where the patch changing it leaves a read there to the client.
 export function getClosureChangeReason(section: Section, closure: Binding) {
   if (!isGlobalBinding(closure)) return closure.sources;
   // A read the client creates the structure of, joins with a value it holds, or runs.

@@ -497,18 +497,18 @@ call site hands the param to the client, a changed `$global` key re-runs the
 signal there instead: the page ships the value and subscribes the scope.
 _Avoid_: server-required param
 
-**`$global` signal**:
-A signal's client work that reads `$global` as it renders (each expression
-records the deepest member it reads, as a property alias would), split into a
-function the signal calls. A patch build registers it with the members it
-reads, each as its keys from `$global` (`_fill_global`), so a patch
-changing one re-runs only that work, once, on each scope that ran it. Work
-reading under the same keys shares one signal; a script keeps its own, so it
-runs again only when what it reads changes. A loop's rows reading one share a
-single subscription on the loop's owner (`_fill_global_for`, or
-`_fill_global_path_for` for a member path), which walks the rows on a change,
-so a row the client creates subscribes to none.
-_Avoid_: part, global part, `$global` join
+**`$global` member**:
+The binding a `$global` read reaches: `$global` itself, or the deepest
+property alias it reads (`$global.meta.headings`). Its value stays in the
+scope's `$global`, so it has no slot. In a patch build a read references its
+member like any binding: work below the template's root closes over it, and
+the root runs the member's signal from setup, registered under its keys
+(`_fill_global`, `_fill_global_path` for a member path), so a patch changing
+one re-runs that work on each subscribed template scope, whose closures reach
+the readers below. A patch fills each read but where the client creates its
+structure, joins it with a value it holds, or runs it as an effect: only there
+does the closure reach a resumed scope (`getClosureChangeReason`).
+_Avoid_: part, global part, `$global` join, `$global` signal
 
 **Stable**:
 A binding or expression with no sources, so fixed for its scope's lifetime: a
@@ -536,7 +536,7 @@ _Avoid_: capture path, patch section
 A fill lands one of two ways. It runs a registered _fill_ only where the hole
 is state a server value keeps reaching: a `<let>`'s declaration (`_fill_let`,
 `_fill_let_change`, `_fill_let_resume`), which reaches every read, and
-`$global`'s per-read setup (`_fill_global*`). Every other fill _writes_ the slot
+a `$global` member's registration (`_fill_global*`). Every other fill _writes_ the slot
 (`_patch_write`, `PatchKey.Write`).
 _Avoid_: deliver/delivery, forwarder
 

@@ -64,7 +64,6 @@ import {
 import {
   getCreatedSetupId,
   getResumeRegistryId,
-  getSignalRegistryId,
   getSignals,
   isEffectOutsideShell,
 } from "./signals";
@@ -534,7 +533,7 @@ export function getSectionEffectRegistryIds(
   for (let i = allSignals.length; i--;) {
     const { hasHTMLEffect, referencedBindings } = allSignals[i];
     if (hasHTMLEffect && !skip(referencedBindings)) {
-      ids.push(getSignalRegistryId(allSignals[i]));
+      ids.push(getResumeRegistryId(section, referencedBindings));
     }
   }
   return ids;

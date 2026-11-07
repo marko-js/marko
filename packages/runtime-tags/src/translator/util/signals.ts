@@ -498,7 +498,7 @@ export function getSignal(
       signal.build = () =>
         buildIntersection(section, referencedBindings, buildSignalFn(signal));
     } else if (
-      referencedBindings.type === BindingType.global &&
+      isGlobalBinding(referencedBindings) &&
       referencedBindings.section === section
     ) {
       // A `$global` member reads the scope's `$global`: setup renders it, and a patch
@@ -635,8 +635,16 @@ const [getGlobalSubscribe] = createAnalysisMemo(
 // object): pure, so the consumer's retention decides if the member has a reader.
 function buildGlobalSignal(signal: Signal, member: Binding) {
   const keys = getPropertyPath(member, getProgram().node.extra.globalBinding!);
+  // Where a document's scope subscribes, no shipped code reaches the registration.
+  const resumes = !!getGlobalSubscribe(member);
   return callRuntime(
-    `${Array.isArray(keys) ? "_fill_global_path" : "_fill_global"}${getGlobalSubscribe(member) ? "_resume" : ""}`,
+    Array.isArray(keys)
+      ? resumes
+        ? "_fill_global_path_resume"
+        : "_fill_global_path"
+      : resumes
+        ? "_fill_global_resume"
+        : "_fill_global",
     t.stringLiteral(getResumeRegistryId(signal.section, member, "subscribe")),
     buildSignalFn(signal),
     ...toArray(keys ?? "", toKeyLiteral),
@@ -844,7 +852,8 @@ function leavesValueToPatch(binding: Binding) {
   for (const read of binding.reads.keys()) {
     if (!leavesReadToPatch(read)) return false;
   }
-  if (binding.type === BindingType.global) return true;
+  // A `$global` member's parts run on their own keys.
+  if (isGlobalBinding(binding)) return true;
   for (const alias of binding.aliases) {
     if (!leavesForwardToPatch(getSignal(alias.section, alias))) return false;
   }
@@ -990,7 +999,7 @@ export function buildSignalFn(signal: Signal): t.Expression {
   const assertsHoists = isValue && binding.hoists && !isOptimize();
 
   // A `$global` member's parts run on their own keys, never forwarded.
-  if (isValue && binding.type !== BindingType.global) {
+  if (isValue && !isGlobalBinding(binding)) {
     for (const alias of binding.aliases) {
       const aliasSignal = getSignal(alias.section, alias);
       if (signalHasWork(aliasSignal)) {
@@ -1391,10 +1400,6 @@ export function getResumeRegistryId(
   return getTemplateId(markoOpts, filename as string, key);
 }
 
-export function getSignalRegistryId({ section, referencedBindings }: Signal) {
-  return getResumeRegistryId(section, referencedBindings);
-}
-
 export function writeSignals(section: Section) {
   const seen = new Set<Signal>();
   const written = new Set<Signal>();
@@ -1426,7 +1431,9 @@ export function writeSignals(section: Section) {
       }
       traverseReplace(signal, "effect", replaceEffectNode);
       const effectIdentifier = getSignalEffectIdentifier(signal);
-      const id = t.stringLiteral(getSignalRegistryId(signal));
+      const id = t.stringLiteral(
+        getResumeRegistryId(section, signal.referencedBindings),
+      );
       const effectFn = t.arrowFunctionExpression(
         [scopeIdentifier],
         toOnlyExpressionOrBlock(signal.effect),
@@ -1894,7 +1901,9 @@ export function writeHTMLResumeStatements(
       const script = callRuntime(
         "_script",
         scopeIdIdentifier,
-        t.stringLiteral(getSignalRegistryId(signal)),
+        t.stringLiteral(
+          getResumeRegistryId(section, signal.referencedBindings),
+        ),
         entry ? markerGuard || t.numericLiteral(1) : markerGuard,
         ...(entry || []),
       );
