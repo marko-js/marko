@@ -4,7 +4,7 @@ const $walks$1 = "b%b b";
 const $if_content__get = /*@__PURE__*/ _if_closure_patch("__tests__/tags/label-view.marko_1_get#0:9/setup", "#text/0", 0, ($scope) => _text($scope["#text/0"], $scope._.get()));
 const $if_content__setup = $if_content__get;
 const $if = /*@__PURE__*/ _if("#text/0", "<p> </p>", "D ", $if_content__setup);
-const $open = /*@__PURE__*/ _fill_let("__tests__/tags/label-view.marko_fill0", "open/8", ($scope) => $if($scope, $scope.open ? 0 : 1));
+const $open = /*@__PURE__*/ _fill_let("__tests__/tags/label-view.marko_0_open#8/fill", "open/8", ($scope) => $if($scope, $scope.open ? 0 : 1));
 const $setup__script$1 = _script("__tests__/tags/label-view.marko_0", ($scope) => _on($scope["#span/1"], "click", function() {
 	$open($scope, !$scope.open);
 }));

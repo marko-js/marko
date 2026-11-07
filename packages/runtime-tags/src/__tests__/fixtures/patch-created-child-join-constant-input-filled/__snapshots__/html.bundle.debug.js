@@ -21,7 +21,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	_script($scope0_id, "__tests__/tags/child.marko_0");
 	$fg__input_b && _patch_render($scope0_id, "__tests__/tags/child.marko_1_input_b#0:6/setup", "input_b");
 	_patch_render($scope0_id, "__tests__/tags/child.marko_0_input_a#5_input_b#6/setup", [$fg__input_a && "input_a", $fg__input_b && "input_b"], $scope0_reason, 0);
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/child.marko_fill0", open, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/child.marko_0_open#8/fill", open, 1);
 	_scope($scope0_id, {
 		input_a: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.a,
 		input_b: input.b,

@@ -22,7 +22,7 @@ const Child = /*@__PURE__*/ _load_template("__tests__/child.marko", ($_) => impo
 const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
 const $if_content__input_label__OR__alt = /*@__PURE__*/ _or_patch("__tests__/template.marko_1_input_label#0:4_alt#2/setup", 3, ($scope) => $if_content__dynamicTag($scope, $scope.alt ? Child : other_default, ($_) => ({ label: $scope._.input_label })));
 const $if_content__input_label = /*@__PURE__*/ _if_closure_patch("__tests__/template.marko_1_input_label#0:4/setup", "#main/0", 0, $if_content__input_label__OR__alt);
-const $if_content__alt = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill0", "alt/2", $if_content__input_label__OR__alt);
+const $if_content__alt = /*@__PURE__*/ _fill_let("__tests__/template.marko_1_alt#2/fill", "alt/2", $if_content__input_label__OR__alt);
 const $if_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/0"], "click", function() {
 	$if_content__alt($scope, !$scope.alt);
 }));

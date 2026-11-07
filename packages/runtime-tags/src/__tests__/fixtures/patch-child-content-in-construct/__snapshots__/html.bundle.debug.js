@@ -37,7 +37,7 @@ var card_default = _template("__tests__/tags/card/index.marko", (input) => {
 	}, $scope0_id, 0) });
 	_patch_child_end();
 	_script($scope0_id, "__tests__/tags/card/index.marko_0");
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/card/index.marko_fill0", n, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/card/index.marko_0_n#6/fill", n, 1);
 	_scope($scope0_id, {
 		n,
 		"ClosureScopes:input_note/7": $wi__input_note && _unfilled_if($scope0_reason, 0) && $input_note__closures,

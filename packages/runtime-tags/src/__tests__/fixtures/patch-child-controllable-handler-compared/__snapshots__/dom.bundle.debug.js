@@ -21,7 +21,7 @@ const $if_content__setup$1 = ($scope) => {
 	$if_content__setup__script($scope);
 };
 const $if$1 = /*@__PURE__*/ _if("#text/0", "<span>Seen <!></span><button class=add>+</button>", "Db%l ", $if_content__setup$1);
-const $open = /*@__PURE__*/ _fill_let("__tests__/tags/counter/index.marko_fill0", "open/5", ($scope) => $if$1($scope, $scope.open ? 0 : 1));
+const $open = /*@__PURE__*/ _fill_let("__tests__/tags/counter/index.marko_0_open#5/fill", "open/5", ($scope) => $if$1($scope, $scope.open ? 0 : 1));
 const $setup__script = _script("__tests__/tags/counter/index.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$open($scope, !$scope.open);
 }));

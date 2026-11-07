@@ -5,7 +5,7 @@
   "PatchBranch:#text/1": [{
     "PatchBranch:#text/1": 0,
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-branch-closure-nested/template.marko_fill0": 0
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-branch-closure-nested/template.marko_1_count#2/fill": 0
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-closure-nested/template.marko_1*shell"]
 }
@@ -18,7 +18,7 @@
   "PatchBranch:#text/1": [{
     "PatchBranch:#text/1": "packages/runtime-tags/src/__tests__/fixtures/patch-branch-closure-nested/template.marko_2*shell",
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-branch-closure-nested/template.marko_fill0": 0
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-branch-closure-nested/template.marko_1_count#2/fill": 0
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-closure-nested/template.marko_1*shell"]
 }
@@ -36,7 +36,7 @@
   "PatchBranch:#text/1": [{
     "PatchBranch:#text/1": "packages/runtime-tags/src/__tests__/fixtures/patch-branch-closure-nested/template.marko_2*shell",
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-branch-closure-nested/template.marko_fill0": 0
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-branch-closure-nested/template.marko_1_count#2/fill": 0
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-closure-nested/template.marko_1*shell"]
 }

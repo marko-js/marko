@@ -3,7 +3,7 @@ const $template$1 = "<!><!><button>+</button>";
 const $walks$1 = "b%b b";
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $input_content__OR__n = /*@__PURE__*/ _or_patch("__tests__/tags/wrapper.marko_0_input_content#4_n#5/setup", 6, ($scope) => $dynamicTag($scope, $scope.input_content, ($_) => ({ value: $scope.n })));
-const $n = /*@__PURE__*/ _fill_let("__tests__/tags/wrapper.marko_fill0", "n/5", $input_content__OR__n);
+const $n = /*@__PURE__*/ _fill_let("__tests__/tags/wrapper.marko_0_n#5/fill", "n/5", $input_content__OR__n);
 const $setup__script = _script("__tests__/tags/wrapper.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$n($scope, +$scope.n + 1);
 }));

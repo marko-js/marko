@@ -10,7 +10,7 @@ var price_card_default = _template("__tests__/tags/price-card.marko", (input) =>
 	_html(`<div><h2>${_text_mark($scope0_id, "#text/0", input.label + " x" + qty)}</h2><button>+</button>${_el_mark($scope0_id, "#button/1")}</div>`);
 	_script($scope0_id, "__tests__/tags/price-card.marko_0");
 	_patch_render($scope0_id, "__tests__/tags/price-card.marko_0_input_label#4_qty#5/setup", $fg__input_label && "input_label");
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/price-card.marko_fill0", qty, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/price-card.marko_0_qty#5/fill", qty, 1);
 	_scope($scope0_id, {
 		input_label: input.label,
 		qty

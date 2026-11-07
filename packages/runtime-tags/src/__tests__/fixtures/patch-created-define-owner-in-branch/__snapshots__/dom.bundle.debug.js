@@ -10,7 +10,7 @@ const $Panel_content__if = /*@__PURE__*/ _if("#text/0", "<p> </p>", "D ", $if_co
 const $Panel_content__open = ($scope, open) => $Panel_content__if($scope, open ? 0 : 1);
 const $Panel_content__$params = ($scope, $params2) => $Panel_content__$temp($scope, $params2[0]);
 const $Panel_content__$temp = ($scope, $temp) => $Panel_content__open($scope, $temp.open);
-const $if_content__k = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill0", "k/2", ($scope) => $Panel_content__open($scope["#childScope/0"], $scope.k));
+const $if_content__k = /*@__PURE__*/ _fill_let("__tests__/template.marko_1_k#2/fill", "k/2", ($scope) => $Panel_content__open($scope["#childScope/0"], $scope.k));
 const $if_content__input_n = /*@__PURE__*/ _if_closure_patch("__tests__/template.marko_1_input_n#0:4/setup", "#text/0", 0, ($scope) => $if_content__k($scope, $scope._.input_n));
 const $if_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/1"], "click", function() {
 	$if_content__k($scope, 0);

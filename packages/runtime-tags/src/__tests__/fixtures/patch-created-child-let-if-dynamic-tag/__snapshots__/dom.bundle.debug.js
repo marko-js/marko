@@ -4,7 +4,7 @@ const $walks$1 = " b%c";
 const $if_content__input_n = /*@__PURE__*/ _if_closure_patch("__tests__/tags/card.marko_1_input_n#0:4/setup", "#text/1", 0, ($scope) => _text($scope["#text/0"], $scope._.input_n));
 const $if_content__setup = $if_content__input_n;
 const $if = /*@__PURE__*/ _if("#text/1", "<p><b>yes</b> <!></p>", "Dc%", $if_content__setup);
-const $n = /*@__PURE__*/ _fill_let("__tests__/tags/card.marko_fill0", "n/5", ($scope) => $if($scope, $scope.n ? 0 : 1));
+const $n = /*@__PURE__*/ _fill_let("__tests__/tags/card.marko_0_n#5/fill", "n/5", ($scope) => $if($scope, $scope.n ? 0 : 1));
 const $input_n$1 = /*@__PURE__*/ _const("input_n", ($scope) => {
 	$n($scope, $scope.input_n);
 	$if_content__input_n($scope);

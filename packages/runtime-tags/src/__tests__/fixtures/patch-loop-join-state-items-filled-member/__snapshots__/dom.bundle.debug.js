@@ -10,7 +10,7 @@ const $for_content__setup = $for_content__input_a;
 const $for_content__item = /*@__PURE__*/ _const("item", $for_content__input_a__OR__item);
 const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);
 const $if = /*@__PURE__*/ _if("#text/1", "<div></div>", " ", $if_content__setup);
-const $open = /*@__PURE__*/ _fill_let("__tests__/tags/child.marko_fill0", "open/7", ($scope) => $if($scope, $scope.open ? 0 : 1));
+const $open = /*@__PURE__*/ _fill_let("__tests__/tags/child.marko_0_open#7/fill", "open/7", ($scope) => $if($scope, $scope.open ? 0 : 1));
 const $setup__script$1 = _script("__tests__/tags/child.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
 	$open($scope, !$scope.open);
 }));

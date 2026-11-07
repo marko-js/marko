@@ -33,7 +33,7 @@ const $if_content__setup = ($scope) => {
 const $if_content__input_baseXp = /*@__PURE__*/ _if_closure_patch("__tests__/tags/level-watch.marko_1_input_baseXp#0:7/setup", "#text/2", 0, $if_content__input_projection_skill__OR__input_baseXp__OR__input_playerId__OR__shown);
 const $if_content__input_playerId = /*@__PURE__*/ _if_closure_patch("__tests__/tags/level-watch.marko_1_input_playerId#0:8/setup", "#text/2", 0, $if_content__input_projection_skill__OR__input_baseXp__OR__input_playerId__OR__shown);
 const $if_content__shown = /*@__PURE__*/ _if_closure_patch("__tests__/tags/level-watch.marko_1_shown#0:9/setup", "#text/2", 0, $if_content__input_projection_skill__OR__input_baseXp__OR__input_playerId__OR__shown);
-const $shown = /*@__PURE__*/ _fill_let("__tests__/tags/level-watch.marko_fill0", "shown/9", ($scope) => {
+const $shown = /*@__PURE__*/ _fill_let("__tests__/tags/level-watch.marko_0_shown#9/fill", "shown/9", ($scope) => {
 	_text($scope["#text/1"], $scope.shown);
 	$if_content__shown($scope);
 });

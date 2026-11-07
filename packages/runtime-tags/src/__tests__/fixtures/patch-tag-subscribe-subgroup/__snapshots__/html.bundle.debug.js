@@ -12,7 +12,7 @@ var plain_let_default = _template("__tests__/tags/plain-let.marko", (input) => {
 	const $valueChange2 = _patch_bind($scope0_id, "PatchWrite:#TagVariableChange", _resume(function(next) {
 		value = next;
 	}, "__tests__/tags/plain-let.marko_0/valueChange", $scope0_id) || void 0, 0, 0);
-	_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/tags/plain-let.marko_fill0", value, 1);
+	_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/tags/plain-let.marko_0_value#3/fill", value, 1);
 	_scope($scope0_id, { "#TagVariableChange": $valueChange2 }, "__tests__/tags/plain-let.marko", 0);
 	_resume_branch($scope0_id);
 	return $return;

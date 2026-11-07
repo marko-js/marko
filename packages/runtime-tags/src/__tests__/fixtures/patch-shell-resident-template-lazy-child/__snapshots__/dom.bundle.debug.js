@@ -1,7 +1,7 @@
 // lazy.marko
 const $template = "<button><!>:<!></button>";
 const $walks = " D%c%l";
-const $count = /*@__PURE__*/ _fill_let("__tests__/lazy.marko_fill0", "count/6", ($scope) => _text($scope["#text/2"], $scope.count));
+const $count = /*@__PURE__*/ _fill_let("__tests__/lazy.marko_0_count#6/fill", "count/6", ($scope) => _text($scope["#text/2"], $scope.count));
 const $setup__script = _script("__tests__/lazy.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, +$scope.count + 1);
 }));
@@ -48,7 +48,7 @@ const $if_content__setup = ($scope) => {
 };
 const $if_content__input_label = /*@__PURE__*/ _if_closure_patch("__tests__/tags/chooser.marko_1_input_label#0:5/setup", "#text/1", 0, $if_content__input_Tag__OR__input_label);
 const $if = /*@__PURE__*/ _if("#text/1", "<!><!><!>", "b%", $if_content__setup);
-const $show = /*@__PURE__*/ _fill_let("__tests__/tags/chooser.marko_fill0", "show/6", ($scope) => $if($scope, $scope.show ? 0 : 1));
+const $show = /*@__PURE__*/ _fill_let("__tests__/tags/chooser.marko_0_show#6/fill", "show/6", ($scope) => $if($scope, $scope.show ? 0 : 1));
 const $setup__script = _script("__tests__/tags/chooser.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$show($scope, !$scope.show);
 }));

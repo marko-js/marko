@@ -7,7 +7,7 @@
       "PatchChild:#childScope/1": {
         "PatchText:#text/1": "b",
         "PatchSetupValues:": {
-          "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-define-state/lazy-child.marko_fill0": 0
+          "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-define-state/lazy-child.marko_0_count#6/fill": 0
         }
       },
       "PatchSetup:": {
@@ -18,7 +18,7 @@
       "PatchChild:#childScope/0": {
         "PatchText:#text/1": "b",
         "PatchSetupValues:": {
-          "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-define-state/child.marko_fill0": 0
+          "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-define-state/child.marko_0_count#6/fill": 0
         }
       },
       "PatchSetup:": {
@@ -27,7 +27,7 @@
     },
     "PatchChild:#childScope/3": {
       "PatchSetupValues:": {
-        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-define-state/template.marko_fill0": 0
+        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-define-state/template.marko_6_count#2/fill": 0
       }
     },
     "PatchChild:#childScope/4": {
@@ -35,7 +35,7 @@
         "PatchChild:#childScope/1": {
           "PatchText:#text/1": "b",
           "PatchSetupValues:": {
-            "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-define-state/lazy-child.marko_fill0": 0
+            "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-define-state/lazy-child.marko_0_count#6/fill": 0
           }
         },
         "PatchSetup:": {

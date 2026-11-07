@@ -7,7 +7,7 @@ const $if_content__count = /*@__PURE__*/ _if_closure_patch("__tests__/template.m
 	_text($scope["#text/1"], $scope._.count);
 	$if_content__count__OR__n($scope);
 });
-const $if_content__n = _fill_let_resume("__tests__/template.marko_fill0", "n/2", ($scope) => {
+const $if_content__n = _fill_let_resume("__tests__/template.marko_1_n#2/fill", "n/2", ($scope) => {
 	_text($scope["#text/0"], $scope.n);
 	$if_content__count__OR__n($scope);
 });

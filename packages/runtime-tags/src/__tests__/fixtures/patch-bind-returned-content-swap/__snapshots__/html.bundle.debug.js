@@ -22,7 +22,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	}, $scope0_id) };
 	const $return = Content;
 	$fg__input_label && _patch_subscribers($scope0_id, "__tests__/tags/child.marko_0_input_label#2/subscribers", "input_label");
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/child.marko_fill0", count, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/child.marko_0_count#3/fill", count, 1);
 	_scope($scope0_id, {
 		input_label: input.label,
 		count,

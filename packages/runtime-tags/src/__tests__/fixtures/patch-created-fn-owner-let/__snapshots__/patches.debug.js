@@ -6,7 +6,7 @@
     "PatchChild:#childScope/0": {
       "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-created-fn-owner-let/tags/outer.marko_0_input#2_open#3/setup": "input",
       "PatchSetupValues:": {
-        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-fn-owner-let/tags/outer.marko_fill0": !0
+        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-fn-owner-let/tags/outer.marko_0_open#3/fill": !0
       },
       "PatchMarkedWrite:input": {
         fn: _(["BranchScopes:#text/0"], "packages/runtime-tags/src/__tests__/fixtures/patch-created-fn-owner-let/template.marko_1/fn")
@@ -23,7 +23,7 @@
     "PatchChild:#childScope/0": {
       "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-created-fn-owner-let/tags/outer.marko_0_input#2_open#3/setup": "input",
       "PatchSetupValues:": {
-        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-fn-owner-let/tags/outer.marko_fill0": !0
+        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-fn-owner-let/tags/outer.marko_0_open#3/fill": !0
       },
       "PatchMarkedWrite:input": {
         fn: _(["BranchScopes:#text/0"], "packages/runtime-tags/src/__tests__/fixtures/patch-created-fn-owner-let/template.marko_1/fn")

@@ -4,7 +4,7 @@ const $walks$1 = "";
 const $g2__script = _script("__tests__/tags/card.marko_0_g#5", ($scope) => console.log("run", $scope.g()));
 const $g2 = /*@__PURE__*/ _const("g", $g2__script);
 const $input_fn__OR__open = /*@__PURE__*/ _or_patch("__tests__/tags/card.marko_0_input_fn#2_open#3/setup", 4, ($scope) => $g2($scope, $scope.open ? $scope.input_fn : $g));
-const $open = _fill_let_resume("__tests__/tags/card.marko_fill0", "open/3", $input_fn__OR__open);
+const $open = _fill_let_resume("__tests__/tags/card.marko_0_open#3/fill", "open/3", $input_fn__OR__open);
 function $setup$1($scope) {
 	$open($scope, true);
 }

@@ -27,8 +27,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, $scope1_id, "#li/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 1);
 		_html(`</li>${_el_mark($scope1_id, "#li/0", $wg__input_show)}`);
 		_client_guard($scope0_reason, 1) && _patch_render($scope1_id, "__tests__/template.marko_1_input_show#0:4/setup");
-		_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill0", n, 1);
-		_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill1", m, 1);
+		_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_1_n#2/fill", n, 1);
+		_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_1_m#3/fill", m, 1);
 		_scope($scope1_id, {
 			"#LoopKey": item?.id,
 			n,

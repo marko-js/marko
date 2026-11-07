@@ -6,7 +6,7 @@
     "PatchChild:#childScope/2": {
       "PatchText:#text/1": "b",
       "PatchSetupValues:": {
-        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-lazy-child/child.marko_fill0": 0
+        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-lazy-child/child.marko_0_count#6/fill": 0
       }
     },
     "PatchSetup:": {
@@ -25,7 +25,7 @@
     "PatchChild:#childScope/2": {
       "PatchText:#text/1": "c",
       "PatchSetupValues:": {
-        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-lazy-child/child.marko_fill0": 0
+        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-lazy-child/child.marko_0_count#6/fill": 0
       }
     },
     "PatchSetup:": {

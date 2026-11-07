@@ -32,7 +32,7 @@ var card_default = /*@__PURE__*/ _template("__tests__/tags/card.marko", $templat
 // tags/outer.marko
 const $template = /*@__PURE__*/ ((_w0) => `<button>x</button>${_w0}`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => ` b/${_w0}&`)("D%l");
-const $o = /*@__PURE__*/ _fill_let("__tests__/tags/outer.marko_fill0", "o/5", ($scope) => $o_content($scope, $scope.o?.content));
+const $o = /*@__PURE__*/ _fill_let("__tests__/tags/outer.marko_0_o#5/fill", "o/5", ($scope) => $o_content($scope, $scope.o?.content));
 const $o_content = /*@__PURE__*/ _const("o_content", ($scope) => $input_content$1($scope["#childScope/1"], $scope.o_content));
 const $input_content = ($scope, input_content) => $o($scope, { content: input_content });
 const $setup__script = _script("__tests__/tags/outer.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {

@@ -9,7 +9,7 @@
           "PatchBind:#TagVariableChange": "packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/tags/box.marko_0/valueChange"
         },
         "PatchSetupValues:": {
-          "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/tags/box.marko_fill0": null
+          "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/tags/box.marko_0_value#0/fill": null
         }
       },
       "PatchLoop:#text/3": [{
@@ -20,7 +20,7 @@
             "PatchChild:#childScope/0": {
               "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/tags/counter.marko_0_input_base#4_tick#5/setup": "",
               "PatchSetupValues:": {
-                "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/tags/counter.marko_fill0": 0
+                "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/tags/counter.marko_0_tick#5/fill": 0
               }
             },
             "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/page.marko_2_bonus#0:7_p_base#0:9_item_n#1:3/setup": _.b = ">>p_base >item_n"
@@ -34,7 +34,7 @@
             "PatchChild:#childScope/0": {
               "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/tags/counter.marko_0_input_base#4_tick#5/setup": "",
               "PatchSetupValues:": {
-                "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/tags/counter.marko_fill0": 0
+                "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/tags/counter.marko_0_tick#5/fill": 0
               }
             },
             "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/page.marko_2_bonus#0:7_p_base#0:9_item_n#1:3/setup": _.b
@@ -57,7 +57,7 @@
           "PatchBind:#TagVariableChange": "packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/tags/box.marko_0/valueChange"
         },
         "PatchSetupValues:": {
-          "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/tags/box.marko_fill0": null
+          "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/tags/box.marko_0_value#0/fill": null
         }
       },
       "PatchLoop:#text/3": [{
@@ -68,7 +68,7 @@
             "PatchChild:#childScope/0": {
               "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/tags/counter.marko_0_input_base#4_tick#5/setup": "",
               "PatchSetupValues:": {
-                "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/tags/counter.marko_fill0": 0
+                "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/tags/counter.marko_0_tick#5/fill": 0
               }
             },
             "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-content-join-fills-construct/page.marko_2_bonus#0:7_p_base#0:9_item_n#1:3/setup": ">>p_base >item_n"

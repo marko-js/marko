@@ -17,7 +17,7 @@ const $if_content__dynamicTag$1 = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $if_content__input_wrap = /*@__PURE__*/ _if_closure_patch("__tests__/tags/host.marko_1_input_wrap#0:5/setup", "#text/1", 0, ($scope) => $if_content__dynamicTag$1($scope, $scope._.input_wrap));
 const $if_content__setup$1 = $if_content__input_wrap;
 const $if = /*@__PURE__*/ _if("#text/1", "<!><!><!>", "b%", $if_content__setup$1);
-const $flag = /*@__PURE__*/ _fill_let("__tests__/tags/host.marko_fill0", "flag/9", ($scope) => $if($scope, $scope.flag ? 0 : 1));
+const $flag = /*@__PURE__*/ _fill_let("__tests__/tags/host.marko_0_flag#9/fill", "flag/9", ($scope) => $if($scope, $scope.flag ? 0 : 1));
 const $setup__script = _script("__tests__/tags/host.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$flag($scope, !$scope.flag);
 }));
@@ -49,7 +49,7 @@ const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $if_content__content = /*@__PURE__*/ _if_closure_patch("__tests__/template.marko_2_content#1:4/setup", "#text/1", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.content));
 const $if_content__setup = $if_content__content;
 const $wrap_content__if = /*@__PURE__*/ _if("#text/1", "<!><!><!>", "b%", $if_content__setup);
-const $wrap_content__open = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill0", "open/5", ($scope) => $wrap_content__if($scope, $scope.open ? 0 : 1));
+const $wrap_content__open = /*@__PURE__*/ _fill_let("__tests__/template.marko_1_open#5/fill", "open/5", ($scope) => $wrap_content__if($scope, $scope.open ? 0 : 1));
 const $wrap_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/0"], "click", function() {
 	$wrap_content__open($scope, !$scope.open);
 }));

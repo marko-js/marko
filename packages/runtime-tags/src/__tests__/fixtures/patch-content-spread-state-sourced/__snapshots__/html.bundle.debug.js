@@ -16,7 +16,7 @@ var box_default = _template("__tests__/tags/box.marko", (input) => {
 	_script($scope0_id, "__tests__/tags/box.marko_0");
 	_script($scope0_id, "__tests__/tags/box.marko_0_input#3_count#4");
 	_patch_render($scope0_id, "__tests__/tags/box.marko_0_input#3_count#4/setup", $fg__input && "input");
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/box.marko_fill0", count, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/box.marko_0_count#4/fill", count, 1);
 	_scope($scope0_id, {
 		input,
 		count

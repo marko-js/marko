@@ -11,7 +11,7 @@ var card_default = /*@__PURE__*/ _template("__tests__/tags/card.marko", $templat
 // tags/outer.marko
 const $template$1 = /*@__PURE__*/ ((_w0) => `<button>copy</button>${_w0}<small> </small>`)($template$2);
 const $walks$1 = /*@__PURE__*/ ((_w0) => ` b/${_w0}&D l`)("D%l");
-const $value = /*@__PURE__*/ _fill_let("__tests__/tags/outer.marko_fill0", "value/6", ($scope) => {
+const $value = /*@__PURE__*/ _fill_let("__tests__/tags/outer.marko_0_value#6/fill", "value/6", ($scope) => {
 	$input_content($scope["#childScope/1"], $scope.value.get("value"));
 	_text($scope["#text/2"], $scope.value.has($scope.value.get("value")));
 });

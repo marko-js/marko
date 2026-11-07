@@ -22,7 +22,7 @@ var stepper_default = _template("__tests__/tags/stepper.marko", (input) => {
 		$fg__input_valueChange && "input_valueChange"
 	]);
 	const $currentChange = input.valueChange || void 0;
-	_patch_let_change($scope0_id, "PatchFill:__tests__/tags/stepper.marko_fill0", current, "PatchWrite:TagVariableChange:current", $currentChange, $scope0_reason, 0);
+	_patch_let_change($scope0_id, "PatchFill:__tests__/tags/stepper.marko_0_current#8/fill", current, "PatchWrite:TagVariableChange:current", $currentChange, $scope0_reason, 0);
 	_scope($scope0_id, {
 		input_max: input.max,
 		input_value: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 0)) && input.value,
@@ -66,7 +66,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			max: row.qty
 		});
 		_patch_child_end();
-		_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill0", qty, 1);
+		_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_1_qty#4/fill", qty, 1);
 		_scope($scope1_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "1:2");
 	}, "id", $scope0_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/template.marko_1*shell");
 	_fill_global_subscribe("__tests__/template.marko_0_$global_rows#7", $scope0_id);

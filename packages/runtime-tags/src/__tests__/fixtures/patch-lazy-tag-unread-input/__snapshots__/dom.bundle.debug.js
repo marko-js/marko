@@ -1,7 +1,7 @@
 // card.marko
 const $template = "<div><!> <!></div>";
 const $walks = " D%c%l";
-const $c = /*@__PURE__*/ _fill_let("__tests__/card.marko_fill0", "c/7", ($scope) => _text($scope["#text/2"], $scope.c));
+const $c = /*@__PURE__*/ _fill_let("__tests__/card.marko_0_c#7/fill", "c/7", ($scope) => _text($scope["#text/2"], $scope.c));
 const $setup__script = _script("__tests__/card.marko_0", ($scope) => _on($scope["#div/0"], "click", function() {
 	$c($scope, +$scope.c + 1);
 }));

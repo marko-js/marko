@@ -17,7 +17,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_html(`<button>${_text_mark($scope1_id, "#text/1", n)}</button>${_el_mark($scope1_id, "#button/0")}`);
 			_script($scope1_id, "__tests__/template.marko_1");
 			_patch_write($scope1_id, "PatchWrite:opts_step", opts.step, 1);
-			_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill0", n, 1);
+			_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_1_n#4/fill", n, 1);
 			_scope($scope1_id, {
 				opts_step: opts.step,
 				n

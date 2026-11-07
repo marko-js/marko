@@ -25,7 +25,7 @@ var label_view_default = _template("__tests__/tags/label-view.marko", (input) =>
 		$fg__input_a && "input_a",
 		$fg__input_b && "input_b"
 	], $scope0_reason, 3);
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/label-view.marko_fill0", open, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/label-view.marko_0_open#8/fill", open, 1);
 	_scope($scope0_id, {
 		input_flag: _write_if($scope0_reason, 2) && input.flag,
 		input_a: _write_if($scope0_reason, 1) && input.a,

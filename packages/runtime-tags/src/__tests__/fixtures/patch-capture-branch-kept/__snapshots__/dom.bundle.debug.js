@@ -59,7 +59,7 @@ const $if_content__items = /*@__PURE__*/ _if_closure_patch("__tests__/tags/child
 	});
 	$input_item($scope["#childScope/0"], $item);
 });
-const $items = /*@__PURE__*/ _fill_let("__tests__/tags/child.marko_fill0", "items/6", $if_content__items);
+const $items = /*@__PURE__*/ _fill_let("__tests__/tags/child.marko_0_items#6/fill", "items/6", $if_content__items);
 const $setup__script = _script("__tests__/tags/child.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$items($scope, [...$scope.items, $scope.items.length + 1]);
 }));

@@ -13,7 +13,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const $valueChange2 = _patch_bind($scope0_id, "PatchWrite:#TagVariableChange", _resume(function(v) {
 		x = x === v ? x : v;
 	}, "__tests__/tags/child.marko_0/valueChange", $scope0_id) || void 0, 0, 0);
-	_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/tags/child.marko_fill0", x, 1);
+	_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/tags/child.marko_0_x#4/fill", x, 1);
 	_scope($scope0_id, {
 		x,
 		"#TagVariableChange": $valueChange2

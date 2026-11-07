@@ -9,7 +9,7 @@ const $input__OR__count = /*@__PURE__*/ _or_patch("__tests__/tags/box.marko_0_in
 	});
 	$input__OR__count__script($scope);
 });
-const $count = /*@__PURE__*/ _fill_let("__tests__/tags/box.marko_fill0", "count/4", $input__OR__count);
+const $count = /*@__PURE__*/ _fill_let("__tests__/tags/box.marko_0_count#4/fill", "count/4", $input__OR__count);
 const $setup__script = _script("__tests__/tags/box.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$count($scope, +$scope.count + 1);
 }));

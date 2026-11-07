@@ -28,7 +28,7 @@ var outer_default = _template("__tests__/tags/outer.marko", (input) => {
 	_patch_child_end();
 	_html(`<small>${_text_mark($scope0_id, "#text/2", value.has(value.get("value")))}</small>`);
 	_script($scope0_id, "__tests__/tags/outer.marko_0");
-	_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/tags/outer.marko_fill0", value, 1);
+	_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/tags/outer.marko_0_value#6/fill", value, 1);
 	_scope($scope0_id, {
 		value,
 		"#childScope/1": _existing_scope($childScope)

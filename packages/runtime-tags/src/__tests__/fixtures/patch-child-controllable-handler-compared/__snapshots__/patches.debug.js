@@ -12,7 +12,7 @@
     "PatchChild:#childScope/0": {
       "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-handler-compared/tags/counter/index.marko_1_input_onCount#0:4/setup": "input_onCount",
       "PatchSetupValues:": {
-        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-handler-compared/tags/counter/index.marko_fill0": !0
+        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-handler-compared/tags/counter/index.marko_0_open#5/fill": !0
       },
       "PatchSetup:": {
         "PatchBind:input_onCount": "^^packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-handler-compared/template.marko_0/onCount"

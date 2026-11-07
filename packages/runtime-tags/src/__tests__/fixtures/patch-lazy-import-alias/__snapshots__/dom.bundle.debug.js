@@ -13,7 +13,7 @@ const $setup = ($_) => {};
 const Child = /*@__PURE__*/ _load_template("__tests__/child.marko", ($_) => import("./child.mjs").then((mod) => mod.default));
 let $load_X_setup = /*@__PURE__*/ _load_setup(($_) => import("./v:child.marko.setup.mjs"));
 let $load_X_tag_input_label = /*@__PURE__*/ _load_signal_patch(($_) => import("./v:child.marko.input_label.mjs"), "ready:__tests__/child.marko");
-const $if_content__n = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill0", "n/4", ($scope) => {
+const $if_content__n = /*@__PURE__*/ _fill_let("__tests__/template.marko_1_n#4/fill", "n/4", ($scope) => {
 	_text($scope["#text/1"], $scope.n);
 	$load_X_tag_input_label($scope["#childScope/3"], $scope.n);
 });

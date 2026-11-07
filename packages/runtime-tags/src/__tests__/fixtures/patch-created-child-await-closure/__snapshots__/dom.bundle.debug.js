@@ -20,7 +20,7 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 const $template = "<!><!><!>";
 const $walks = "b%c";
 const $await_content__likes = /*@__PURE__*/ _closure_get_patch("__tests__/tags/page.marko_1_likes#0:4/subscribe", "likes/5", ($scope) => _text($scope["#text/2"], $scope._.likes));
-const $await_content__open = /*@__PURE__*/ _fill_let("__tests__/tags/page.marko_fill1", "open/6", ($scope) => _text($scope["#text/3"], $scope.open ? "open" : "closed"));
+const $await_content__open = /*@__PURE__*/ _fill_let("__tests__/tags/page.marko_1_open#6/fill", "open/6", ($scope) => _text($scope["#text/3"], $scope.open ? "open" : "closed"));
 const $await_content__setup__script = _script("__tests__/tags/page.marko_1", ($scope) => _on($scope["#button/0"], "click", function() {
 	$await_content__open($scope, !$scope.open);
 	$likes($scope._, +$scope._.likes + 1);
@@ -32,7 +32,7 @@ const $await_content__setup = ($scope) => {
 };
 const $await_content__$params = ($scope, $params2) => _text($scope["#text/1"], $params2[0]);
 const $likes__closure = /*@__PURE__*/ _closure($await_content__likes);
-const $likes = /*@__PURE__*/ _fill_let("__tests__/tags/page.marko_fill0", "likes/4", $likes__closure);
+const $likes = /*@__PURE__*/ _fill_let("__tests__/tags/page.marko_0_likes#4/fill", "likes/4", $likes__closure);
 function $setup($scope) {
 	$await_content($scope);
 	$likes($scope, 3);

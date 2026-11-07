@@ -2,7 +2,7 @@
 const $template$1 = "<div><h2> </h2><button class=bump>+</button></div>";
 const $walks$1 = "E l l";
 const $input_label__OR__qty = /*@__PURE__*/ _or_patch("__tests__/tags/price-card.marko_0_input_label#4_qty#5/setup", 6, ($scope) => _text($scope["#text/0"], $scope.input_label + " x" + $scope.qty));
-const $qty = /*@__PURE__*/ _fill_let("__tests__/tags/price-card.marko_fill0", "qty/5", ($scope) => {
+const $qty = /*@__PURE__*/ _fill_let("__tests__/tags/price-card.marko_0_qty#5/fill", "qty/5", ($scope) => {
 	_return($scope, $scope.qty);
 	$input_label__OR__qty($scope);
 });

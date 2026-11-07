@@ -34,7 +34,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			!$cg__input_show__OR__input_start && _unfilled_if() && _patch_write($scope0_id, "PatchWrite:onCount", onCount);
 			_patch_render($scope1_id, "__tests__/template.marko_1_input_start#0:5_onCount#0:7/setup", _filled_guard($scope0_reason, 2) && ">input_start", $scope0_reason, 2);
 			const $countChange = read($global$1, onCount) || void 0;
-			_patch_let_change($scope1_id, "PatchFill:__tests__/template.marko_fill0", count, "PatchWrite:TagVariableChange:count", $countChange, (2 | _updates_from($scope0_reason, 2)) << 1, 0);
+			_patch_let_change($scope1_id, "PatchFill:__tests__/template.marko_1_count#3/fill", count, "PatchWrite:TagVariableChange:count", $countChange, (2 | _updates_from($scope0_reason, 2)) << 1, 0);
 			_scope($scope1_id, {
 				count,
 				_: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id),

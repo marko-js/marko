@@ -12,7 +12,7 @@ const $if_content__setup = ($scope) => {
 };
 const $if_content__input_b = /*@__PURE__*/ _if_closure_patch("__tests__/tags/child.marko_1_input_b#0:7/setup", "#text/0", 0, $if_content__input_a__OR__input_b);
 const $if2 = /*@__PURE__*/ _if("#text/1", "<div></div>", " ", $if_content2__setup);
-const $open = /*@__PURE__*/ _fill_let("__tests__/tags/child.marko_fill0", "open/8", ($scope) => $if2($scope, $scope.open ? 0 : 1));
+const $open = /*@__PURE__*/ _fill_let("__tests__/tags/child.marko_0_open#8/fill", "open/8", ($scope) => $if2($scope, $scope.open ? 0 : 1));
 const $setup__script$1 = _script("__tests__/tags/child.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
 	$open($scope, !$scope.open);
 }));

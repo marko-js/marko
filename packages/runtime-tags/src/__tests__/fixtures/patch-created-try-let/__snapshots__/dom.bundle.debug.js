@@ -3,7 +3,7 @@ const $template = "<!><!><!>";
 const $walks = "b%c";
 const $setup = ($_) => {};
 const $catch_content = _content("__tests__/template.marko_3*content", "caught");
-const $try_content__open = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill0", "open/2", ($scope) => _text($scope["#text/1"], $scope.open ? "close" : "open"));
+const $try_content__open = /*@__PURE__*/ _fill_let("__tests__/template.marko_2_open#2/fill", "open/2", ($scope) => _text($scope["#text/1"], $scope.open ? "close" : "open"));
 const $try_content__setup__script = _script("__tests__/template.marko_2", ($scope) => _on($scope["#button/0"], "click", function() {
 	$try_content__open($scope, !$scope.open);
 }));

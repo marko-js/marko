@@ -8,7 +8,7 @@
     },
     "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-created-let-initial-value-calls-fn-rendered/template.marko_1_input_w#0:5_y#5/setup": ">input_w",
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-let-initial-value-calls-fn-rendered/template.marko_fill0": "a"
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-let-initial-value-calls-fn-rendered/template.marko_1_y#5/fill": "a"
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-let-initial-value-calls-fn-rendered/template.marko_1*shell"],
   "PatchMarkedWrite:input_w": "2"
@@ -24,7 +24,7 @@
     },
     "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-created-let-initial-value-calls-fn-rendered/template.marko_1_input_w#0:5_y#5/setup": ">input_w",
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-let-initial-value-calls-fn-rendered/template.marko_fill0": "a"
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-let-initial-value-calls-fn-rendered/template.marko_1_y#5/fill": "a"
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-let-initial-value-calls-fn-rendered/template.marko_1*shell"],
   "PatchMarkedWrite:input_w": "3"
@@ -45,7 +45,7 @@
     },
     "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-created-let-initial-value-calls-fn-rendered/template.marko_1_input_w#0:5_y#5/setup": ">input_w",
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-let-initial-value-calls-fn-rendered/template.marko_fill0": "b"
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-let-initial-value-calls-fn-rendered/template.marko_1_y#5/fill": "b"
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-let-initial-value-calls-fn-rendered/template.marko_1*shell"],
   "PatchMarkedWrite:input_w": "5"

@@ -3,7 +3,7 @@ const $template$1 = "<span> </span>";
 const $walks$1 = "D l";
 const $setup$1 = ($_) => {};
 const $n__script = _script("__tests__/tags/child.marko_0_n#4", ($scope) => console.log("n", $scope.n));
-const $n = _fill_let_resume("__tests__/tags/child.marko_fill0", "n/4", ($scope) => {
+const $n = _fill_let_resume("__tests__/tags/child.marko_0_n#4/fill", "n/4", ($scope) => {
 	_text($scope["#text/0"], $scope.n);
 	$n__script($scope);
 });

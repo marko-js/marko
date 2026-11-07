@@ -14,7 +14,7 @@ var list_default = _template("__tests__/tags/list.marko", (input) => {
 		_scope($scope1_id, {}, "__tests__/tags/list.marko", "3:2");
 	}, 0, $scope0_id, "#text/1");
 	_script($scope0_id, "__tests__/tags/list.marko_0");
-	_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/tags/list.marko_fill0", items, 1);
+	_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/tags/list.marko_0_items#5/fill", items, 1);
 	_scope($scope0_id, { items }, "__tests__/tags/list.marko", 0, { items: "1:6" }) || _client_branch(input.item);
 });
 

@@ -3,8 +3,8 @@
 {
   "PatchBranch:#text/0": [{
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-branch-input-let-seed/template.marko_fill0": "x",
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-branch-input-let-seed/template.marko_fill1": 1
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-branch-input-let-seed/template.marko_1_a#2/fill": "x",
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-branch-input-let-seed/template.marko_1_b#3/fill": 1
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-branch-input-let-seed/template.marko_1*shell"]
 }
@@ -14,8 +14,8 @@
 {
   "PatchBranch:#text/0": [{
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-branch-input-let-seed/template.marko_fill0": "y",
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-branch-input-let-seed/template.marko_fill1": 1
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-branch-input-let-seed/template.marko_1_a#2/fill": "y",
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-branch-input-let-seed/template.marko_1_b#3/fill": 1
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-branch-input-let-seed/template.marko_1*shell"]
 }

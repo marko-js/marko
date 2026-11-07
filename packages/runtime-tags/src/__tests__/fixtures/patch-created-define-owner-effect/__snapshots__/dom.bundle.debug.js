@@ -32,7 +32,7 @@ const $Panel_content__setup = ($scope) => {
 };
 const $Panel_content__k = /*@__PURE__*/ _closure_get_patch("__tests__/tags/card.marko_1_k#0:6/subscribe", "k/8", $Panel_content__input_w__OR__k);
 const $k__closure = /*@__PURE__*/ _closure($Panel_content__k);
-const $k = /*@__PURE__*/ _fill_let("__tests__/tags/card.marko_fill0", "k/6", $k__closure);
+const $k = /*@__PURE__*/ _fill_let("__tests__/tags/card.marko_0_k#6/fill", "k/6", $k__closure);
 const $input_n = $k;
 const $setup__script = _script("__tests__/tags/card.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$k($scope, +$scope.k + 1);

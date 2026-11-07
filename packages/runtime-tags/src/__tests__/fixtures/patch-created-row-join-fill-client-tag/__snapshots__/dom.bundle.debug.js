@@ -1,7 +1,7 @@
 // tags/plain-let.marko
 const $template$2 = "";
 const $walks$2 = "";
-const $value = /*@__PURE__*/ _fill_let("__tests__/tags/plain-let.marko_fill0", "value/3", ($scope) => _return($scope, $scope.value));
+const $value = /*@__PURE__*/ _fill_let("__tests__/tags/plain-let.marko_0_value#3/fill", "value/3", ($scope) => _return($scope, $scope.value));
 const $input_value = $value;
 function $setup$2($scope) {
 	_return_change($scope, $valueChange($scope));

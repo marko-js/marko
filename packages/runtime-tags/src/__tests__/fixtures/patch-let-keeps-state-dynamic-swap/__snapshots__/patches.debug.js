@@ -4,7 +4,7 @@
   "PatchDynamicTag:#text/0": "^packages/runtime-tags/src/__tests__/fixtures/patch-let-keeps-state-dynamic-swap/template.marko_1*content",
   "PatchChild:BranchScopes:#text/0": {
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-let-keeps-state-dynamic-swap/template.marko_fill0": "a1"
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-let-keeps-state-dynamic-swap/template.marko_1_l#5/fill": "a1"
     }
   }
 }
@@ -15,7 +15,7 @@
   "PatchDynamicTag:#text/0": "^packages/runtime-tags/src/__tests__/fixtures/patch-let-keeps-state-dynamic-swap/template.marko_1*content",
   "PatchChild:BranchScopes:#text/0": {
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-let-keeps-state-dynamic-swap/template.marko_fill0": "a2"
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-let-keeps-state-dynamic-swap/template.marko_1_l#5/fill": "a2"
     }
   }
 }

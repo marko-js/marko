@@ -6,7 +6,7 @@
       "PatchBranch:#text/0": [1, {
         "PatchChild:#childScope/1": {
           "PatchSetupValues:": {
-            "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-head-assets/page-b.marko_fill0": 0
+            "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-head-assets/page-b.marko_0_count#2/fill": 0
           }
         }
       }, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-head-assets/template.marko_3*shell"]
@@ -23,7 +23,7 @@
       "PatchBranch:#text/0": [{
         "PatchChild:#childScope/1": {
           "PatchSetupValues:": {
-            "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-head-assets/page-a.marko_fill0": 0
+            "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-head-assets/page-a.marko_0_count#2/fill": 0
           }
         }
       }, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-head-assets/template.marko_2*shell"]

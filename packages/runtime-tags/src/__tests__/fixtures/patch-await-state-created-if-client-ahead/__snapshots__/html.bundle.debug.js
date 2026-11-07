@@ -9,7 +9,7 @@ var lazy_default = _template("__tests__/lazy.marko", (input) => {
 	let count = 0;
 	_html(`<button class=child>${_text_mark($scope0_id, "#text/1", input.label, 1, $scope0_reason, 0)}:${_text_mark($scope0_id, "#text/2", count, 2)}</button>${_el_mark($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/lazy.marko_0");
-	_patch_fill($scope0_id, "PatchFill:__tests__/lazy.marko_fill0", count, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/lazy.marko_0_count#6/fill", count, 1);
 	_scope($scope0_id, { count }, "__tests__/lazy.marko", 0, { count: "1:6" });
 });
 

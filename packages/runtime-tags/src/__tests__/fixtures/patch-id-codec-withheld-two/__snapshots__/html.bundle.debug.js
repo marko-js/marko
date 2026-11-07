@@ -18,8 +18,8 @@ var keeper_default = _template("__tests__/tags/keeper.marko", (input) => {
 		}
 	}, $scope0_id, "#text/1");
 	_script($scope0_id, "__tests__/tags/keeper.marko_0");
-	_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/tags/keeper.marko_fill0", content, 1);
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/keeper.marko_fill1", show, 1);
+	_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/tags/keeper.marko_0_content#5/fill", content, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/keeper.marko_0_show#6/fill", show, 1);
 	_scope($scope0_id, {
 		content,
 		show

@@ -5,7 +5,7 @@
     "PatchChild:#childScope/0": {
       "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-state-input-effect/tags/child.marko_0_input_x#4_n#5/setup": "input_x",
       "PatchSetupValues:": {
-        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-state-input-effect/tags/child.marko_fill0": 0
+        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-state-input-effect/tags/child.marko_0_n#5/fill": 0
       },
       "PatchMarkedWrite:input_x": "b"
     }
@@ -19,7 +19,7 @@
     "PatchChild:#childScope/0": {
       "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-state-input-effect/tags/child.marko_0_input_x#4_n#5/setup": "input_x",
       "PatchSetupValues:": {
-        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-state-input-effect/tags/child.marko_fill0": 0
+        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-state-input-effect/tags/child.marko_0_n#5/fill": 0
       },
       "PatchMarkedWrite:input_x": "c"
     }

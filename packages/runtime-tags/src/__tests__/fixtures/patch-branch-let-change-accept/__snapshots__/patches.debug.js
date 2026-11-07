@@ -9,7 +9,7 @@
 {
   "PatchText:#text/0": "Store!",
   "PatchBranch:#text/2": [{
-    "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-branch-let-change-accept/template.marko_fill0": 0,
+    "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-branch-let-change-accept/template.marko_1_count#2/fill": 0,
     "PatchBind:TagVariableChange:count": "packages/runtime-tags/src/__tests__/fixtures/patch-branch-let-change-accept/template.marko_1/valueChange"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-let-change-accept/template.marko_1*shell"]
 }

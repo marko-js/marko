@@ -12,7 +12,7 @@ var counter_default = _template("__tests__/tags/counter.marko", (input) => {
 	let n = 0;
 	_html(`<button>${_text_mark($scope0_id, "#text/1", n ? fail() : "ok")}</button>${_el_mark($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/tags/counter.marko_0");
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/counter.marko_fill0", n, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/counter.marko_0_n#2/fill", n, 1);
 	_scope($scope0_id, { n }, "__tests__/tags/counter.marko", 0, { n: "1:6" });
 });
 

@@ -4,7 +4,7 @@ const $walks$1 = " D l";
 function fail() {
 	throw new Error("boom");
 }
-const $n = /*@__PURE__*/ _fill_let("__tests__/tags/counter.marko_fill0", "n/2", ($scope) => _text($scope["#text/1"], $scope.n ? fail() : "ok"));
+const $n = /*@__PURE__*/ _fill_let("__tests__/tags/counter.marko_0_n#2/fill", "n/2", ($scope) => _text($scope["#text/1"], $scope.n ? fail() : "ok"));
 const $setup__script = _script("__tests__/tags/counter.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$n($scope, +$scope.n + 1);
 }));

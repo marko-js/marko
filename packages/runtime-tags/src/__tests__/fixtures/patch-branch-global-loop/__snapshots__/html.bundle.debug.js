@@ -21,7 +21,7 @@ var row_default = _template("__tests__/tags/row.marko", (input) => {
 	let clicks = 0;
 	_html(`<p>${_text_mark($scope0_id, "#text/0", input.label, 1, $scope0_reason, 0)}<button>${_text_mark($scope0_id, "#text/2", clicks)}</button>${_el_mark($scope0_id, "#button/1")}</p>`);
 	_script($scope0_id, "__tests__/tags/row.marko_0");
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/row.marko_fill0", clicks, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/row.marko_0_clicks#6/fill", clicks, 1);
 	_scope($scope0_id, { clicks }, "__tests__/tags/row.marko", 0, { clicks: "6:6" });
 });
 

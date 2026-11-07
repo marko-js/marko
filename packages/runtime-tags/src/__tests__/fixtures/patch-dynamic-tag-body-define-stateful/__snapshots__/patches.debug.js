@@ -6,7 +6,7 @@
     "PatchBind:content": "^packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-define-stateful/template.marko_1*content",
     "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-define-stateful/template.marko_3_content#2:4/setup": "content",
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-define-stateful/template.marko_fill0": !0
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-define-stateful/template.marko_2_open#5/fill": !0
     }
   },
   "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-define-stateful/template.marko_0_input_note#4/subscribers": "input_note",
@@ -21,7 +21,7 @@
     "PatchBind:content": "^packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-define-stateful/template.marko_1*content",
     "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-define-stateful/template.marko_3_content#2:4/setup": "content",
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-define-stateful/template.marko_fill0": !0
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-define-stateful/template.marko_2_open#5/fill": !0
     }
   },
   "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-define-stateful/template.marko_0_input_note#4/subscribers": "input_note",

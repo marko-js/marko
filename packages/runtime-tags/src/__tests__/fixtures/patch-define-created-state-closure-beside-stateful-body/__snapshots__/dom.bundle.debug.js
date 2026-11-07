@@ -10,7 +10,7 @@ const $if_content2__setup = ($scope) => {
 };
 const $if_content2__n = /*@__PURE__*/ _if_closure_patch("__tests__/template.marko_3_n#2:6/setup", "#text/1", 0, ($scope) => _text($scope["#text/1"], $scope._.n));
 const $Panel_content__open = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_2_open#0:8/subscribe", "open/14", ($scope) => _text($scope["#text/0"], $scope._.open ? "o" : "c"));
-const $Panel_content__n = _fill_let_resume("__tests__/template.marko_fill0", "n/6", $if_content2__n);
+const $Panel_content__n = _fill_let_resume("__tests__/template.marko_2_n#6/fill", "n/6", $if_content2__n);
 const $Panel_content__setup = ($scope) => {
 	$Panel_content__open($scope);
 	$Panel_content__n($scope, 1);

@@ -17,7 +17,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			let x = 0;
 			_html(`<p class=pa>A ${_text_mark($scope1_id, "#text/0", x, 2)}</p><button class=ba>+</button>${_el_mark($scope1_id, "#button/1")}`);
 			_script($scope1_id, "__tests__/template.marko_1");
-			_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill0", x, 1);
+			_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_1_x#2/fill", x, 1);
 			_scope($scope1_id, { x }, "__tests__/template.marko", "3:4", { x: "4:10" });
 			return 0;
 		}
@@ -28,7 +28,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			let y = 10;
 			_html(`<p class=pb>B ${_text_mark($scope2_id, "#text/0", y, 2)}</p><button class=bb>+</button>${_el_mark($scope2_id, "#button/1")}`);
 			_script($scope2_id, "__tests__/template.marko_2");
-			_patch_fill($scope2_id, "PatchFill:__tests__/template.marko_fill1", y, 1);
+			_patch_fill($scope2_id, "PatchFill:__tests__/template.marko_2_y#2/fill", y, 1);
 			_scope($scope2_id, { y }, "__tests__/template.marko", "8:4", { y: "9:10" });
 			return 0;
 		}

@@ -4,7 +4,7 @@
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {
       "PatchSetupValues:": {
-        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-attr-tag-loop/tags/card2.marko_fill0": {
+        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-attr-tag-loop/tags/card2.marko_0_c#5/fill": {
           content: _(["BranchScopes:#text/0"], "packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-attr-tag-loop/template.marko_2*content", 1),
           *[(_.a = [{
             content: _(["BranchScopes:#text/0"], "packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-attr-tag-loop/template.marko_3*content", 1)
@@ -26,7 +26,7 @@
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {
       "PatchSetupValues:": {
-        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-attr-tag-loop/tags/card2.marko_fill0": {
+        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-attr-tag-loop/tags/card2.marko_0_c#5/fill": {
           content: _(["BranchScopes:#text/0"], "packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-attr-tag-loop/template.marko_2*content", 1),
           *[(_.a = [{
             content: _(["BranchScopes:#text/0"], "packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-attr-tag-loop/template.marko_3*content", 1)

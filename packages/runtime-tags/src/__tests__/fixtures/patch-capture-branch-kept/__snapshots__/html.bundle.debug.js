@@ -93,7 +93,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	}, $scope0_id, "#text/1", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["__tests__/tags/child.marko_1*shell"], $scope0_reason, 0);
 	_script($scope0_id, "__tests__/tags/child.marko_0");
 	$fg__input_show && $cg__input_on && _patch_render($scope0_id, "__tests__/tags/child.marko_1_input_show#0:5/setup", "input_show");
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/child.marko_fill0", items, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/child.marko_0_items#6/fill", items, 1);
 	_scope($scope0_id, {
 		input_show: _write_if($scope0_reason, 0) && input.show,
 		items

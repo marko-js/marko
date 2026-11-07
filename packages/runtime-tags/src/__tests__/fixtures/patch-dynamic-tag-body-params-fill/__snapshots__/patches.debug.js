@@ -9,7 +9,7 @@
     "PatchText:#text/1": "y",
     "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-params-fill/template.marko_3_content#2:6/setup": "content",
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-params-fill/template.marko_fill0": !0
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-params-fill/template.marko_2_open#7/fill": !0
     }
   },
   "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-params-fill/template.marko_0_input_label#3/subscribers": "input_label",
@@ -27,7 +27,7 @@
     "PatchText:#text/1": "z",
     "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-params-fill/template.marko_3_content#2:6/setup": "content",
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-params-fill/template.marko_fill0": !0
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-params-fill/template.marko_2_open#7/fill": !0
     }
   },
   "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-params-fill/template.marko_0_input_label#3/subscribers": "input_label",

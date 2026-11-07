@@ -5,12 +5,12 @@
     "PatchChild:#childScope/0": {
       "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-created-child-await-closure/tags/page.marko_1*content",
       "PatchSetupValues:": {
-        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-await-closure/tags/page.marko_fill0": 3
+        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-await-closure/tags/page.marko_0_likes#4/fill": 3
       },
       "PatchChild:BranchScopes:#text/0": {
         "PatchText:#text/1": "b",
         "PatchSetupValues:": {
-          "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-await-closure/tags/page.marko_fill1": !1
+          "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-await-closure/tags/page.marko_1_open#6/fill": !1
         }
       }
     }

@@ -13,7 +13,7 @@
     "PatchChild:BranchScopes:#text/0": {
       "PatchText:#text/2": 3,
       "PatchSetupValues:": {
-        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-await-value-let/template.marko_fill0": !1
+        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-await-value-let/template.marko_2_open#5/fill": !1
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-await-value-let/template.marko_1*shell"]

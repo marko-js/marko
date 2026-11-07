@@ -19,7 +19,7 @@ const $catch_content__err = ($scope, err) => {
 const $catch_content__$params = ($scope, $params2) => $catch_content__err($scope, $params2[0]);
 const $catch_content = _content("__tests__/tags/card.marko_1*content", "<i> </i><!><!>", "D l%", 0, $catch_content__$params);
 const $fail__closure = /*@__PURE__*/ _closure($try_content__fail);
-const $fail = /*@__PURE__*/ _fill_let("__tests__/tags/card.marko_fill0", "fail/5", $fail__closure);
+const $fail = /*@__PURE__*/ _fill_let("__tests__/tags/card.marko_0_fail#5/fill", "fail/5", $fail__closure);
 const $try = /*@__PURE__*/ _try("#text/1", "<!><!><!>", "b%", $try_content__setup, 0, $catch_content);
 const $setup__script = _script("__tests__/tags/card.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$fail($scope, true);

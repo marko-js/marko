@@ -14,7 +14,7 @@ const $walks$1 = "E l%b l";
 const $if_content__input_content = /*@__PURE__*/ _if_closure_patch("__tests__/tags/card/index.marko_1_input_content#0:6/setup", "#text/1", 0, ($scope) => $input_content$1($scope["#childScope/0"], $scope._.input_content));
 const $if_content__setup = $if_content__input_content;
 const $if = /*@__PURE__*/ _if("#text/1", $template$2, /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l"), $if_content__setup);
-const $open = /*@__PURE__*/ _fill_let("__tests__/tags/card/index.marko_fill0", "open/7", ($scope) => $if($scope, $scope.open ? 0 : 1));
+const $open = /*@__PURE__*/ _fill_let("__tests__/tags/card/index.marko_0_open#7/fill", "open/7", ($scope) => $if($scope, $scope.open ? 0 : 1));
 const $setup__script = _script("__tests__/tags/card/index.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
 	$open($scope, !$scope.open);
 }));

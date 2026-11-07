@@ -19,7 +19,7 @@ var keeper_default = _template("__tests__/tags/keeper.marko", (input) => {
 	}, $scope0_id, "#text/1");
 	_script($scope0_id, "__tests__/tags/keeper.marko_0");
 	$fg__input_content && _patch_render($scope0_id, "__tests__/tags/keeper.marko_1_input_content#0:4/setup", "input_content");
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/keeper.marko_fill0", open, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/keeper.marko_0_open#5/fill", open, 1);
 	_scope($scope0_id, {
 		input_content: input.content,
 		open
@@ -49,7 +49,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 		_dynamic_tag($scope1_id, "#text/0", x ? keeper_default : "div", { content: c });
 		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "__tests__/tags/card.marko_1_input_content#0:4/subscribe", $cg__input_content);
 		_patch_render($scope1_id, "__tests__/tags/card.marko_1_x#2_c#3/setup", _filled_guard($scope0_reason, 0) && "x");
-		_filled_guard($scope0_reason, 1) && _patch_fill($scope1_id, "PatchFill:__tests__/tags/card.marko_fill0", c, 1);
+		_filled_guard($scope0_reason, 1) && _patch_fill($scope1_id, "PatchFill:__tests__/tags/card.marko_1_c#3/fill", c, 1);
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_content__closures, _scope($scope1_id, {
 			x,
 			c: _write_if($scope0_reason, 0) && c

@@ -1,7 +1,6 @@
 // Patch fill decisions: which bindings a patch fills or writes, fill identity,
 // and what a created scope runs.
 import type { types as t } from "@marko/compiler";
-import { getFile, getTemplateId } from "@marko/compiler/babel-utils";
 
 import {
   type Binding,
@@ -61,7 +60,6 @@ import {
 import { getScopeAccessor } from "../scope-accessor";
 import {
   ensureCallerParamGroups,
-  forEachSection,
   getRendererReason,
   isCallerParamAt,
   isContentRender,
@@ -75,6 +73,7 @@ import {
   sectionUtil,
 } from "../sections";
 import { inCreatedCatch, shipsContentShell } from "../shell";
+import { getResumeRegistryId } from "../signals";
 import { findSlot, type Slot, SlotKind } from "../slots";
 import {
   bindingReaders,
@@ -94,7 +93,6 @@ import {
   sourcesUtil,
   withSources,
 } from "../sources";
-import { createAnalysisState } from "../state";
 import { getWriteReason } from "../write-guard";
 import {
   getStateInitialValueSources,
@@ -233,25 +231,10 @@ function isPatchWritten(binding: Binding) {
   );
 }
 
-// Stable wire/registry key for a fill: a register id for a template-wide fill
-// ordinal, built once per analysis in section order, which every output reads.
-const [getFillOrdinals] = createAnalysisState(() => {
-  const ordinals = new Map<Binding, number>();
-  forEachSection((section) => {
-    forEach(section.bindings, (binding) => {
-      if (getPatchFill(binding).fill) ordinals.set(binding, ordinals.size);
-    });
-  });
-  return ordinals;
-});
-
+// A fill's wire and registry key: its `<let>`'s register id, as the patch's other
+// registrations are named.
 export function getPatchFillKey(binding: Binding) {
-  const { markoOpts, opts } = getFile();
-  return getTemplateId(
-    markoOpts,
-    opts.filename as string,
-    "fill" + getFillOrdinals().get(binding)!,
-  );
+  return getResumeRegistryId(binding.section, binding, "fill");
 }
 
 // The section's `<let>`s a patch fills.

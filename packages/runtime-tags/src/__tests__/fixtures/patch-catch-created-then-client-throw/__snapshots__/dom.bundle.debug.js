@@ -8,7 +8,7 @@ function boom() {
 const $catch_content__$params = ($scope, $params3) => _text($scope["#text/0"], $params3[0]?.message);
 const $catch_content = _content("__tests__/template.marko_3*content", "<b> </b>", "D ", 0, $catch_content__$params);
 const $try_content__item_fail = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_2_item_fail#1:3/subscribe", "item_fail/5", ($scope) => _text($scope["#text/1"], $scope._.item_fail ? boom() : $scope._["#LoopKey"]));
-const $try_content__n = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill0", "n/4", ($scope) => _text($scope["#text/2"], $scope.n ? boom() : ""));
+const $try_content__n = /*@__PURE__*/ _fill_let("__tests__/template.marko_2_n#4/fill", "n/4", ($scope) => _text($scope["#text/2"], $scope.n ? boom() : ""));
 const $try_content__setup__script = _script("__tests__/template.marko_2", ($scope) => _on($scope["#button/0"], "click", function() {
 	$try_content__n($scope, +$scope.n + 1);
 }));

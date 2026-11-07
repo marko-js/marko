@@ -15,7 +15,7 @@
         }
       }, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-construct-inits/child.marko_1*shell"],
       "PatchSetupValues:": {
-        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-construct-inits/child.marko_fill0": 0
+        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-construct-inits/child.marko_0_count#5/fill": 0
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-construct-inits/template.marko_1*shell"],
@@ -39,7 +39,7 @@
         }
       }, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-construct-inits/child.marko_1*shell"],
       "PatchSetupValues:": {
-        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-construct-inits/child.marko_fill0": 0
+        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-construct-inits/child.marko_0_count#5/fill": 0
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-construct-inits/template.marko_1*shell"],

@@ -79,7 +79,7 @@ var rowsx_default = _template("__tests__/tags/rowsx.marko", (input) => {
 	$fg__input_open && $cg__input_items && _patch_render($scope0_id, "__tests__/tags/rowsx.marko_1_input_open#0:6/setup", "input_open");
 	$fg__input_label && $cg__input_items && _patch_render($scope0_id, "__tests__/tags/rowsx.marko_1_input_label#0:7/setup", "input_label");
 	$fg__input_label && _patch_render($scope0_id, "__tests__/tags/rowsx.marko_2_input_label#0:7/setup", "input_label");
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/rowsx.marko_fill0", open, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/rowsx.marko_0_open#8/fill", open, 1);
 	_scope($scope0_id, {
 		input_open: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && input.open,
 		input_label: input.label,

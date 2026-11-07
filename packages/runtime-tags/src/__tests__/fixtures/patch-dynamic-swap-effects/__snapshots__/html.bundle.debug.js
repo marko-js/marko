@@ -21,7 +21,7 @@ var card_live_default = _template("__tests__/card-live.marko", (input) => {
 	let n = 0;
 	_html(`<button>${_text_mark($scope0_id, "#text/1", input.label, 1, $scope0_reason, 0)} ${_text_mark($scope0_id, "#text/2", n, 2)}</button>${_el_mark($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/card-live.marko_0");
-	_patch_fill($scope0_id, "PatchFill:__tests__/card-live.marko_fill0", n, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/card-live.marko_0_n#6/fill", n, 1);
 	_scope($scope0_id, { n }, "__tests__/card-live.marko", 0, { n: "1:6" });
 });
 

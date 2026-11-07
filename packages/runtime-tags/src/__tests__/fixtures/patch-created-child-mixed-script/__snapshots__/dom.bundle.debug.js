@@ -21,7 +21,7 @@ const $template = "<p> </p><button>+</button>";
 const $walks = "D l b";
 const $input_x__OR__n__script = _script("__tests__/tags/child/index.marko_0_input_x#4_n#5", ($scope) => document.title = $scope.input_x + $scope.n);
 const $input_x__OR__n = /*@__PURE__*/ _or_patch("__tests__/tags/child/index.marko_0_input_x#4_n#5/setup", 6, $input_x__OR__n__script);
-const $n = /*@__PURE__*/ _fill_let("__tests__/tags/child/index.marko_fill0", "n/5", $input_x__OR__n);
+const $n = /*@__PURE__*/ _fill_let("__tests__/tags/child/index.marko_0_n#5/fill", "n/5", $input_x__OR__n);
 const $setup__script = _script("__tests__/tags/child/index.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$n($scope, +$scope.n + 1);
 }));

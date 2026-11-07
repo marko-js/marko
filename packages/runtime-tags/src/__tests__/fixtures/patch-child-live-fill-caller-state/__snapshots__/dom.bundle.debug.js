@@ -19,7 +19,7 @@ var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $templ
 // tags/mid.marko
 const $template$1 = /*@__PURE__*/ ((_w0) => `<!>${_w0}<button class=s>s</button>`)($template$2);
 const $walks$1 = /*@__PURE__*/ ((_w0) => `b/${_w0}& b`)("b%c");
-const $s = /*@__PURE__*/ _fill_let("__tests__/tags/mid.marko_fill0", "s/5", ($scope) => $input_suffix($scope["#childScope/0"], $scope.s));
+const $s = /*@__PURE__*/ _fill_let("__tests__/tags/mid.marko_0_s#5/fill", "s/5", ($scope) => $input_suffix($scope["#childScope/0"], $scope.s));
 const $setup__script$1 = _script("__tests__/tags/mid.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$s($scope, $scope.s + "!");
 }));

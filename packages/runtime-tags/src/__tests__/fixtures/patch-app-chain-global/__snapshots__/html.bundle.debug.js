@@ -11,7 +11,7 @@ var layout_default = _template("__tests__/layout.marko", (input) => {
 	_dynamic_tag($scope0_id, "#text/2", input.content, {}, 2, 0, 0, _write_guard($scope0_reason, 0), $scope0_reason, 0);
 	_html("</main>");
 	_script($scope0_id, "__tests__/layout.marko_0");
-	_patch_fill($scope0_id, "PatchFill:__tests__/layout.marko_fill0", open, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/layout.marko_0_open#6/fill", open, 1);
 	_scope($scope0_id, { open }, "__tests__/layout.marko", 0, { open: "1:6" });
 });
 
@@ -26,7 +26,7 @@ var page_a_default = _template("__tests__/page-a.marko", (input) => {
 	let count = 0;
 	_html(`<button class=a>a:${_text_mark($scope0_id, "#text/1", count, 2)}</button>${_el_mark($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/page-a.marko_0");
-	_patch_fill($scope0_id, "PatchFill:__tests__/page-a.marko_fill0", count, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/page-a.marko_0_count#2/fill", count, 1);
 	_scope($scope0_id, { count }, "__tests__/page-a.marko", 0, { count: "1:6" });
 });
 
@@ -44,7 +44,7 @@ var page_b_default = _template("__tests__/page-b.marko", (input) => {
 	_html(`<button class=b>b:${_text_mark($scope0_id, "#text/1", q, 2, 4, 0)}:${_text_mark($scope0_id, "#text/2", issues ? "!" : "", 2, 4, 0)}:${_text_mark($scope0_id, "#text/3", count, 2)}</button>${_el_mark($scope0_id, "#button/0")}`);
 	_fill_global_subscribe("__tests__/page-b.marko_0_$global_search#6", $scope0_id);
 	_script($scope0_id, "__tests__/page-b.marko_0");
-	_patch_fill($scope0_id, "PatchFill:__tests__/page-b.marko_fill0", count, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/page-b.marko_0_count#7/fill", count, 1);
 	_scope($scope0_id, { count }, "__tests__/page-b.marko", 0, { count: "2:6" });
 });
 

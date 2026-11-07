@@ -5,7 +5,7 @@ const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $if_content__content = /*@__PURE__*/ _if_closure_patch("__tests__/template.marko_3_content#2:6/setup", "#text/2", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.content));
 const $if_content__setup = $if_content__content;
 const $Card_content__if = /*@__PURE__*/ _if("#text/2", "<!><!><!>", "b%", $if_content__setup);
-const $Card_content__open = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill0", "open/7", ($scope) => $Card_content__if($scope, $scope.open ? 0 : 1));
+const $Card_content__open = /*@__PURE__*/ _fill_let("__tests__/template.marko_2_open#7/fill", "open/7", ($scope) => $Card_content__if($scope, $scope.open ? 0 : 1));
 const $Card_content__setup__script = _script("__tests__/template.marko_2", ($scope) => _on($scope["#button/0"], "click", function() {
 	$Card_content__open($scope, !$scope.open);
 }));

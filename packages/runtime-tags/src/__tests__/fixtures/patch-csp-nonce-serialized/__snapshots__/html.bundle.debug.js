@@ -30,7 +30,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				}
 			}, $scope2_id, "#text/0", 1, 1, 0, 0, 1);
 			_script($scope2_id, "__tests__/template.marko_2");
-			_patch_fill($scope2_id, "PatchFill:__tests__/template.marko_fill0", mounted, 1);
+			_patch_fill($scope2_id, "PatchFill:__tests__/template.marko_2_mounted#1/fill", mounted, 1);
 			_scope($scope2_id, {}, "__tests__/template.marko", "4:2");
 			return 1;
 		}

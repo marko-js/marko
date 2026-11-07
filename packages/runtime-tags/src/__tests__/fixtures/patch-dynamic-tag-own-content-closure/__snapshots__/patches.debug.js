@@ -5,7 +5,7 @@
   "PatchChild:BranchScopes:#text/0": {
     "PatchText:#text/1": "b",
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-own-content-closure/template.marko_fill0": 0
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-own-content-closure/template.marko_1_count#7/fill": 0
     }
   }
 }

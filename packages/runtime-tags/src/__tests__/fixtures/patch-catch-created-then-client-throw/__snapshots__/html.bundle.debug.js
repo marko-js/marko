@@ -24,7 +24,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_html(`<button>${_text_mark($scope2_id, "#text/1", item.fail ? boom() : item.id, 1, $scope0_reason, 0)}${_text_mark($scope2_id, "#text/2", n ? boom() : "", 2)}</button>${_el_mark($scope2_id, "#button/0")}`);
 			_script($scope2_id, "__tests__/template.marko_2");
 			_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope2_id, "__tests__/template.marko_2_item_fail#1:3/subscribe", $cg__input_items);
-			_patch_fill($scope2_id, "PatchFill:__tests__/template.marko_fill0", n, 1);
+			_patch_fill($scope2_id, "PatchFill:__tests__/template.marko_2_n#4/fill", n, 1);
 			_subscribe(_unfilled_if($scope0_reason, 0) && $for_content__item_fail__closures, _scope($scope2_id, {
 				n,
 				_: $wi__input_items && _scope_with_id($scope1_id)

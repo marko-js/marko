@@ -24,7 +24,7 @@
     "PatchLoop:#text/4": [],
     "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_2_row_label#7/subscribers": "row_label",
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_fill0": 0
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_2_n#11/fill": 0
     }
   }, 2, {
     "PatchChild:#childScope/2": {
@@ -73,7 +73,7 @@
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_3*shell"],
     "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_2_row_label#7/subscribers": "row_label",
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_fill0": 0
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_2_n#11/fill": 0
     },
     "PatchMarkedWrite:row_label": "c"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_2*shell"]
@@ -119,7 +119,7 @@
     }, _.d = "packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_3*shell"],
     "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_2_row_label#7/subscribers": "row_label",
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_fill0": 0
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_2_n#11/fill": 0
     },
     "PatchMarkedWrite:row_label": "d"
   }, 1, {
@@ -158,7 +158,7 @@
     }, _.d],
     "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_2_row_label#7/subscribers": "row_label",
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_fill0": 0
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_2_n#11/fill": 0
     },
     "PatchMarkedWrite:row_label": "e"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-define-content-owner/template.marko_2*shell"]

@@ -4,7 +4,7 @@
   "PatchChild:#childScope/0": {
     "PatchBranch:#text/0": [{
       "PatchSetupValues:": {
-        "PatchBindFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-branch-let-constant-input/tags/outer.marko_fill0": "^^packages/runtime-tags/src/__tests__/fixtures/patch-created-branch-let-constant-input/template.marko_1*content"
+        "PatchBindFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-branch-let-constant-input/tags/outer.marko_1_o#2/fill": "^^packages/runtime-tags/src/__tests__/fixtures/patch-created-branch-let-constant-input/template.marko_1*content"
       }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-branch-let-constant-input/tags/outer.marko_1*shell"]
   },
@@ -18,7 +18,7 @@
   "PatchChild:#childScope/0": {
     "PatchBranch:#text/0": [{
       "PatchSetupValues:": {
-        "PatchBindFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-branch-let-constant-input/tags/outer.marko_fill0": "^^packages/runtime-tags/src/__tests__/fixtures/patch-created-branch-let-constant-input/template.marko_1*content"
+        "PatchBindFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-branch-let-constant-input/tags/outer.marko_1_o#2/fill": "^^packages/runtime-tags/src/__tests__/fixtures/patch-created-branch-let-constant-input/template.marko_1*content"
       }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-branch-let-constant-input/tags/outer.marko_1*shell"]
   },
@@ -31,7 +31,7 @@
   "PatchChild:#childScope/0": {
     "PatchBranch:#text/0": [{
       "PatchSetupValues:": {
-        "PatchBindFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-branch-let-constant-input/tags/outer.marko_fill0": "^^packages/runtime-tags/src/__tests__/fixtures/patch-created-branch-let-constant-input/template.marko_1*content"
+        "PatchBindFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-branch-let-constant-input/tags/outer.marko_1_o#2/fill": "^^packages/runtime-tags/src/__tests__/fixtures/patch-created-branch-let-constant-input/template.marko_1*content"
       }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-branch-let-constant-input/tags/outer.marko_1*shell"]
   },

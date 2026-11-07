@@ -16,8 +16,8 @@ const $for_content__$params = ($scope, $params2) => _text($scope["#text/0"], $pa
 const $if_content__for = /*@__PURE__*/ _for_of_unkeyed("#text/0", "<i><!><!></i>", "D%b%", $for_content__setup, $for_content__$params);
 const $if_content__setup = ($scope) => $if_content__for($scope, [[1, 2]]);
 const $if = /*@__PURE__*/ _if("#text/2", "<!><!><!>", "b%", $if_content__setup);
-const $on = _fill_let_resume("__tests__/child.marko_fill0", "on/3", ($scope) => $if($scope, $scope.on ? 0 : 1));
-const $count = /*@__PURE__*/ _fill_let("__tests__/child.marko_fill1", "count/4", ($scope) => _text($scope["#text/1"], $scope.count));
+const $on = _fill_let_resume("__tests__/child.marko_0_on#3/fill", "on/3", ($scope) => $if($scope, $scope.on ? 0 : 1));
+const $count = /*@__PURE__*/ _fill_let("__tests__/child.marko_0_count#4/fill", "count/4", ($scope) => _text($scope["#text/1"], $scope.count));
 const $setup__script = _script("__tests__/child.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, +$scope.count + 1);
 }));

@@ -11,7 +11,7 @@ var wrapper_default = _template("__tests__/tags/wrapper.marko", (input) => {
 	_html(`<button>+</button>${_el_mark($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/tags/wrapper.marko_0");
 	_patch_render($scope0_id, "__tests__/tags/wrapper.marko_0_input_content#4_n#5/setup", $fg__input_content && "input_content");
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/wrapper.marko_fill0", n, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/wrapper.marko_0_n#5/fill", n, 1);
 	_scope($scope0_id, {
 		input_content: input.content,
 		n

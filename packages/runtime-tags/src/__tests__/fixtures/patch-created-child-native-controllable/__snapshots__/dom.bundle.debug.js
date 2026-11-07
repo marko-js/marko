@@ -25,7 +25,7 @@ var field_default = /*@__PURE__*/ _template("__tests__/tags/field.marko", $templ
 // tags/page-b.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<output> </output>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&D l`)(" b");
-const $text = /*@__PURE__*/ _fill_let("__tests__/tags/page-b.marko_fill0", "text/2", ($scope) => {
+const $text = /*@__PURE__*/ _fill_let("__tests__/tags/page-b.marko_0_text#2/fill", "text/2", ($scope) => {
 	$input_value($scope["#childScope/0"], $scope.text);
 	_text($scope["#text/1"], $scope.text);
 });

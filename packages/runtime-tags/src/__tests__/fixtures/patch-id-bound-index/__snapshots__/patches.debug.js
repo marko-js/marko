@@ -7,7 +7,7 @@
     }, {
       "PatchBranch:#text/0": [{
         "PatchSetupValues:": {
-          "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-id-bound-index/template.marko_fill0": 0
+          "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-id-bound-index/template.marko_3_count#2/fill": 0
         },
         "PatchWrite:TagVariableChange:count": _([
           ["#text/0", 0], "#childScope/0"
@@ -18,7 +18,7 @@
     "PatchLoop:#text/7": [{
       "PatchBranch:#text/0": [{
         "PatchSetupValues:": {
-          "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-id-bound-index/template.marko_fill0": 0
+          "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-id-bound-index/template.marko_3_count#2/fill": 0
         },
         "PatchWrite:TagVariableChange:count": _([
           ["#text/0", 1], "#childScope/0"

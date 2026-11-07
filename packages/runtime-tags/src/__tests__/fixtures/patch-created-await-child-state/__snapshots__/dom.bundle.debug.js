@@ -1,7 +1,7 @@
 // tags/counter.marko
 const $template$1 = "<button><!> <!></button>";
 const $walks$1 = " D%c%l";
-const $c = /*@__PURE__*/ _fill_let("__tests__/tags/counter.marko_fill0", "c/6", ($scope) => _text($scope["#text/2"], $scope.c));
+const $c = /*@__PURE__*/ _fill_let("__tests__/tags/counter.marko_0_c#6/fill", "c/6", ($scope) => _text($scope["#text/2"], $scope.c));
 const $setup__script = _script("__tests__/tags/counter.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$c($scope, +$scope.c + 1);
 }));

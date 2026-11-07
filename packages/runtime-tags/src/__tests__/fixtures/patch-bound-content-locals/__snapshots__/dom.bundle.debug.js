@@ -4,7 +4,7 @@ const $walks$1 = " b%c";
 const $for_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $for_content__$params = ($scope, $params2) => $for_content__dynamicTag($scope, $params2[0]?.content);
 const $for = /*@__PURE__*/ _for_of_unkeyed("#text/1", "<!><!><!>", "b%", 0, $for_content__$params);
-const $items = /*@__PURE__*/ _fill_let("__tests__/tags/list.marko_fill0", "items/5", ($scope) => $for($scope, [$scope.items]));
+const $items = /*@__PURE__*/ _fill_let("__tests__/tags/list.marko_0_items#5/fill", "items/5", ($scope) => $for($scope, [$scope.items]));
 const $input_item = $items;
 const $setup__script$1 = _script("__tests__/tags/list.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$items($scope, [...$scope.items]);

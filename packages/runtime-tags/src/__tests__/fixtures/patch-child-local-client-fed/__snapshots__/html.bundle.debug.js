@@ -29,7 +29,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	_html(`<button id=c>c</button>${_el_mark($scope0_id, "#button/1")}</div>`);
 	_script($scope0_id, "__tests__/tags/child.marko_0");
 	$fg__input_label && $cg__input_show && _patch_render($scope0_id, "__tests__/tags/child.marko_1_input_label#0:5/setup", "input_label");
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/child.marko_fill0", c, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/child.marko_0_c#6/fill", c, 1);
 	_scope($scope0_id, {
 		input_label: _write_if($scope0_reason, 0) && input.label,
 		c

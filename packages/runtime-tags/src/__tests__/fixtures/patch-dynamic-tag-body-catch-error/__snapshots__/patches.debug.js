@@ -6,7 +6,7 @@
     "PatchChild:BranchScopes:#text/1": [{}, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-catch-error/tags/card.marko_1*content", "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-catch-error/tags/card.marko_3*content"],
     "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-catch-error/tags/card.marko_0_input_content#4/subscribers": "input_content",
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-catch-error/tags/card.marko_fill0": !1
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-catch-error/tags/card.marko_0_fail#5/fill": !1
     },
     "PatchBind:input_content": "^packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-catch-error/template.marko_1*content"
   },
@@ -22,7 +22,7 @@
     "PatchChild:BranchScopes:#text/1": [{}, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-catch-error/tags/card.marko_1*content", "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-catch-error/tags/card.marko_3*content"],
     "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-catch-error/tags/card.marko_0_input_content#4/subscribers": "input_content",
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-catch-error/tags/card.marko_fill0": !1
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-catch-error/tags/card.marko_0_fail#5/fill": !1
     },
     "PatchBind:input_content": "^packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-catch-error/template.marko_1*content"
   },

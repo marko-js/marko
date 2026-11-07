@@ -11,7 +11,7 @@ var counter_box_default = _template("__tests__/tags/counter-box/index.marko", (i
 	_html(`<span>${_text_mark($scope0_id, "#text/0", count)}</span>`);
 	const $return = count;
 	const $valueChange = _patch_bind($scope0_id, "PatchWrite:#TagVariableChange", input.onChange || void 0, $scope0_reason, 0);
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/counter-box/index.marko_fill0", count, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/counter-box/index.marko_0_count#4/fill", count, 1);
 	_scope($scope0_id, {
 		input_onChange: input.onChange,
 		"#TagVariableChange": $valueChange

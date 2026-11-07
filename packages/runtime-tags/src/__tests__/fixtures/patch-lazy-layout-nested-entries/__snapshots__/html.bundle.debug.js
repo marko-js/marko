@@ -50,7 +50,7 @@ var page_a_default = _template("__tests__/page-a.marko", (input) => {
 	}, $scope0_id, "#text/1", 1, _write_guard($scope0_reason, 1), 1, 0, 0, ["__tests__/page-a.marko_1*shell"], $scope0_reason, 1);
 	_html(`<button>${_text_mark($scope0_id, "#text/3", n)}</button>${_el_mark($scope0_id, "#button/2")}`);
 	_script($scope0_id, "__tests__/page-a.marko_0");
-	_patch_fill($scope0_id, "PatchFill:__tests__/page-a.marko_fill0", n, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/page-a.marko_0_n#8/fill", n, 1);
 	_scope($scope0_id, { n }, "__tests__/page-a.marko", 0, { n: "1:6" });
 });
 

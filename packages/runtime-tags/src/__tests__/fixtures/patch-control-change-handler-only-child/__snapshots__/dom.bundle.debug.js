@@ -11,7 +11,7 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 // tags/child.marko
 const $template = "<p> </p><input><span> </span>";
 const $walks = "D l bD l";
-const $count = /*@__PURE__*/ _fill_let("__tests__/tags/child.marko_fill0", "count/6", ($scope) => {
+const $count = /*@__PURE__*/ _fill_let("__tests__/tags/child.marko_0_count#6/fill", "count/6", ($scope) => {
 	_attr_input_value($scope, "#input/1", void 0, $valueChange($scope));
 	_text($scope["#text/2"], $scope.count);
 });

@@ -14,7 +14,7 @@
       "PatchBind:TagVariableChange:current": _.a
     },
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-live-bind-global-rows/template.marko_fill0": 3
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-live-bind-global-rows/template.marko_1_qty#4/fill": 3
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-live-bind-global-rows/template.marko_1*shell"]
 }

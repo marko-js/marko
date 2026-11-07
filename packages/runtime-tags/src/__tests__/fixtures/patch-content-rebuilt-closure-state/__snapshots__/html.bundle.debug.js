@@ -56,7 +56,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	_patch_child_end();
 	_script($scope0_id, "__tests__/tags/child.marko_0");
 	$fg__input_show && _patch_subscribers($scope0_id, "__tests__/tags/child.marko_0_input_show#4/subscribers", "input_show");
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/child.marko_fill0", items, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/child.marko_0_items#5/fill", items, 1);
 	_scope($scope0_id, {
 		input_show: input.show,
 		items,

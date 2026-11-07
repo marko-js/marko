@@ -2,12 +2,12 @@
 const $template$1 = "<button>load</button><ul></ul>";
 const $walks$1 = " b b";
 const $for_content__$params = ($scope, $params2) => _text($scope["#text/0"], $params2[0]);
-const $refreshing = /*@__PURE__*/ _fill_let_change("__tests__/tags/picker.marko_fill0", "refreshing/7");
+const $refreshing = /*@__PURE__*/ _fill_let_change("__tests__/tags/picker.marko_0_refreshing#7/fill", "refreshing/7");
 const $input_refreshing__OR__input_refreshingChange = /*@__PURE__*/ _or_patch("__tests__/tags/picker.marko_0_input_refreshing#4_input_refreshingChange#5/setup", 6, ($scope) => $refreshing($scope, $scope.input_refreshing, $scope.input_refreshingChange));
 const $input_refreshing = /*@__PURE__*/ _const("input_refreshing", $input_refreshing__OR__input_refreshingChange);
 const $input_refreshingChange = /*@__PURE__*/ _const("input_refreshingChange", $input_refreshing__OR__input_refreshingChange);
 const $for = /*@__PURE__*/ _for_of_unkeyed("#ul/1", "<li> </li>", "D ", 0, $for_content__$params);
-const $catalog = /*@__PURE__*/ _fill_let("__tests__/tags/picker.marko_fill1", "catalog/9", ($scope) => $for($scope, [$scope.catalog || []]));
+const $catalog = /*@__PURE__*/ _fill_let("__tests__/tags/picker.marko_0_catalog#9/fill", "catalog/9", ($scope) => $for($scope, [$scope.catalog || []]));
 const $load2 = /*@__PURE__*/ _const("load", ($scope) => _return($scope, $scope.load));
 const $setup__script$1 = _script("__tests__/tags/picker.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$scope.load(true);

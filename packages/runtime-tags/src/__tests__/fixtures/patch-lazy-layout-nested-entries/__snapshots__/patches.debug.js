@@ -11,7 +11,7 @@
             "PatchText:#text/0": "a1",
             "PatchBranch:#text/1": "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/page-a.marko_1*shell",
             "PatchSetupValues:": {
-              "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/page-a.marko_fill0": 0
+              "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/page-a.marko_0_n#8/fill": 0
             }
           }
         }, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/template.marko_3*shell"]
@@ -72,7 +72,7 @@
             "PatchText:#text/0": "a2",
             "PatchBranch:#text/1": 0,
             "PatchSetupValues:": {
-              "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/page-a.marko_fill0": 0
+              "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/page-a.marko_0_n#8/fill": 0
             }
           }
         }, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-layout-nested-entries/template.marko_3*shell"]

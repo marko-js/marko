@@ -23,7 +23,7 @@ var child_default = _template("__tests__/tags/child/index.marko", (input) => {
 	_script($scope0_id, "__tests__/tags/child/index.marko_0");
 	$fg__input_x && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "__tests__/tags/child/index.marko_1_input_x#0:5/setup", "input_x");
 	_patch_render($scope0_id, "__tests__/tags/child/index.marko_0_input_x#5_n#6/setup", $fg__input_x && "input_x") || _script($scope0_id, "__tests__/tags/child/index.marko_0_input_x#5_n#6", 1, $sg__input_x && 2, "input_x");
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/child/index.marko_fill0", n, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/child/index.marko_0_n#6/fill", n, 1);
 	_scope($scope0_id, {
 		input_x: input.x,
 		n

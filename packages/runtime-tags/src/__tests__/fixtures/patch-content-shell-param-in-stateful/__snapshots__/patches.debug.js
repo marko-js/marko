@@ -8,7 +8,7 @@
         "PatchMarkedWrite:label": "b",
         "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-content-shell-param-in-stateful/template.marko_3_label#2:5/setup": "label",
         "PatchSetupValues:": {
-          "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-content-shell-param-in-stateful/template.marko_fill0": !0
+          "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-content-shell-param-in-stateful/template.marko_2_open#6/fill": !0
         }
       }
     }
@@ -25,7 +25,7 @@
         "PatchMarkedWrite:label": "c",
         "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-content-shell-param-in-stateful/template.marko_3_label#2:5/setup": "label",
         "PatchSetupValues:": {
-          "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-content-shell-param-in-stateful/template.marko_fill0": !0
+          "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-content-shell-param-in-stateful/template.marko_2_open#6/fill": !0
         }
       }
     }

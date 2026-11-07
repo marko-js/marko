@@ -18,7 +18,7 @@ var wrap_default = /*@__PURE__*/ _template("__tests__/tags/wrap.marko", $templat
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c");
 const $wrap_content__input_id = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_1_input_id#0:4/subscribe", "input_id/5", ($scope) => _text($scope["#text/2"], $scope._.input_id), 0, "__tests__/template.marko_0_input_id#4/subscribers", 0);
-const $wrap_content__c = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill0", "c/3", ($scope) => _text($scope["#text/1"], $scope.c));
+const $wrap_content__c = /*@__PURE__*/ _fill_let("__tests__/template.marko_1_c#3/fill", "c/3", ($scope) => _text($scope["#text/1"], $scope.c));
 const $wrap_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/0"], "click", function() {
 	$wrap_content__c($scope, +$scope.c + 1);
 }));

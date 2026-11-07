@@ -20,7 +20,7 @@ var wrap_default = _template("__tests__/tags/wrap.marko", (input) => {
 	_script($scope0_id, "__tests__/tags/wrap.marko_0");
 	$fg__input_row && _patch_render($scope0_id, "__tests__/tags/wrap.marko_1_input_row#0:4/setup", "input_row");
 	$fg__input_label && _patch_render($scope0_id, "__tests__/tags/wrap.marko_1_input_label#0:5/setup", "input_label");
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/wrap.marko_fill0", open, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/wrap.marko_0_open#6/fill", open, 1);
 	_scope($scope0_id, {
 		input_row: input.row,
 		input_label: input.label,

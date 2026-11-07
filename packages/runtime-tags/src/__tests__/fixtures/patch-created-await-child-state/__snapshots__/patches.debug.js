@@ -7,7 +7,7 @@
       "PatchChild:#childScope/0": {
         "PatchText:#text/1": "y",
         "PatchSetupValues:": {
-          "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-await-child-state/tags/counter.marko_fill0": 0
+          "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-await-child-state/tags/counter.marko_0_c#6/fill": 0
         }
       }
     }

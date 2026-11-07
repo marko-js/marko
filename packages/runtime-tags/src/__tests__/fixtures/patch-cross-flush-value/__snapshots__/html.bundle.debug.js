@@ -9,7 +9,7 @@ var tagged_default = _template("__tests__/tags/tagged/index.marko", (input) => {
 	let count = 0;
 	_html(`<button${_attr("id", input.id, $scope0_id, "PatchAttr:#button/0 id", $scope0_reason, 0)}>${_text_mark($scope0_id, "#text/1", input.tag.name, 1, $scope0_reason, 2)}:${_text_mark($scope0_id, "#text/2", count, 2)}</button>${_el_mark($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/tags/tagged/index.marko_0");
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/tagged/index.marko_fill0", count, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/tagged/index.marko_0_count#8/fill", count, 1);
 	_scope($scope0_id, {
 		input_tag: input.tag,
 		count

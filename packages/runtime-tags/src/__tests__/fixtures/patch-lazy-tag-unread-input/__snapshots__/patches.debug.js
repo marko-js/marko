@@ -8,7 +8,7 @@
     "PatchChild:#childScope/1": {
       "PatchText:#text/1": "SHOWN_name2b",
       "PatchSetupValues:": {
-        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-unread-input/card.marko_fill0": 0
+        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-unread-input/card.marko_0_c#7/fill": 0
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-unread-input/template.marko_1*shell"]

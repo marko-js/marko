@@ -32,7 +32,7 @@ const $walks = /*@__PURE__*/ ((_w0) => ` D l/${_w0}&`)("D%l");
 const $wrap_content__input_note = /*@__PURE__*/ _closure_get_patch("__tests__/tags/card/index.marko_1_input_note#0:5/subscribe", "input_note/7", ($scope) => _text($scope["#text/0"], $scope._.input_note));
 const $wrap_content__setup = $wrap_content__input_note;
 const $wrap_content = /*@__PURE__*/ _content("__tests__/tags/card/index.marko_1*content", "<em> </em>", "D ", $wrap_content__setup);
-const $n = /*@__PURE__*/ _fill_let("__tests__/tags/card/index.marko_fill0", "n/6", ($scope) => _text($scope["#text/1"], $scope.n));
+const $n = /*@__PURE__*/ _fill_let("__tests__/tags/card/index.marko_0_n#6/fill", "n/6", ($scope) => _text($scope["#text/1"], $scope.n));
 const $setup__script = _script("__tests__/tags/card/index.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$n($scope, +$scope.n + 1);
 }));

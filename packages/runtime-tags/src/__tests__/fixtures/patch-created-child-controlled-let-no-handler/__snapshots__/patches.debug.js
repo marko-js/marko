@@ -4,7 +4,7 @@
   "PatchChild:#childScope/0": {
     "PatchBranch:#text/0": [{
       "PatchSetupValues:": {
-        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-controlled-let-no-handler/tags/child.marko_fill0": 1
+        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-controlled-let-no-handler/tags/child.marko_1_count#2/fill": 1
       },
       "PatchWrite:TagVariableChange:count": $
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-child-controlled-let-no-handler/tags/child.marko_1*shell"]
@@ -17,7 +17,7 @@
   "PatchChild:#childScope/0": {
     "PatchBranch:#text/0": [{
       "PatchSetupValues:": {
-        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-controlled-let-no-handler/tags/child.marko_fill0": 1
+        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-controlled-let-no-handler/tags/child.marko_1_count#2/fill": 1
       },
       "PatchWrite:TagVariableChange:count": $
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-child-controlled-let-no-handler/tags/child.marko_1*shell"]

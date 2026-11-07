@@ -92,7 +92,7 @@ const $tab_content__setup = ($scope) => {
 };
 const $tab_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__tests__/tags/src.marko_1*content", "<button><!> <!></button>", " D%c%", $tab_content__setup), { t: ($scope) => _text($scope["#text/1"], $scope.t) });
 const $count__closure = /*@__PURE__*/ _closure($tab_content__count);
-const $count = /*@__PURE__*/ _fill_let("__tests__/tags/src.marko_fill0", "count/5", $count__closure);
+const $count = /*@__PURE__*/ _fill_let("__tests__/tags/src.marko_0_count#5/fill", "count/5", $count__closure);
 function $setup($scope) {
 	_var($scope, "#childScope/0", $h);
 	$count($scope, 0);

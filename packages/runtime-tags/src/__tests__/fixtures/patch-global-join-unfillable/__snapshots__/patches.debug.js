@@ -16,7 +16,7 @@
     },
     "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-global-join-unfillable/template.marko_1_value#4/subscribers": "value",
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-global-join-unfillable/template.marko_fill0": 0
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-global-join-unfillable/template.marko_1_count#5/fill": 0
     }
   }
 }
@@ -39,7 +39,7 @@
     },
     "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-global-join-unfillable/template.marko_1_value#4/subscribers": "value",
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-global-join-unfillable/template.marko_fill0": 0
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-global-join-unfillable/template.marko_1_count#5/fill": 0
     }
   }
 }

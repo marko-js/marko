@@ -23,8 +23,8 @@ var show_await_default = _template("__tests__/tags/show-await.marko", (input) =>
 			_scope($scope2_id, {}, "__tests__/tags/show-await.marko", "6:4");
 		}, 1, "__tests__/tags/show-await.marko_2*content", 2, 1);
 		_script($scope1_id, "__tests__/tags/show-await.marko_1");
-		_patch_fill($scope1_id, "PatchFill:__tests__/tags/show-await.marko_fill0", n, 1);
-		_patch_fill($scope1_id, "PatchFill:__tests__/tags/show-await.marko_fill1", q, 1);
+		_patch_fill($scope1_id, "PatchFill:__tests__/tags/show-await.marko_1_n#6/fill", n, 1);
+		_patch_fill($scope1_id, "PatchFill:__tests__/tags/show-await.marko_1_q#7/fill", q, 1);
 		_scope($scope1_id, { n }, "__tests__/tags/show-await.marko", "1:2", { n: "3:8" });
 	}, 1, "__tests__/tags/show-await.marko_1*content", _unfilled_if($scope0_reason, 0) && 3, 1);
 });

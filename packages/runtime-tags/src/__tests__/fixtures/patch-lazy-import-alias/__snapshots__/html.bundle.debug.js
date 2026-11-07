@@ -34,7 +34,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			$Child_withLoadAssets({ label: n });
 			_patch_child_end();
 			_script($scope1_id, "__tests__/template.marko_1");
-			_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill0", n, 1);
+			_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_1_n#4/fill", n, 1);
 			_scope($scope1_id, {
 				n,
 				"#childScope/3": _existing_scope($childScope)

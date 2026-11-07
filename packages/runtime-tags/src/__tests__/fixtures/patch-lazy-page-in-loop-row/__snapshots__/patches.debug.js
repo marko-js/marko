@@ -7,7 +7,7 @@
         "PatchText:#text/1": 1
       },
       "PatchSetupValues:": {
-        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-in-loop-row/page.marko_fill0": 0
+        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-in-loop-row/page.marko_0_count#6/fill": 0
       }
     }
   }, 2, {
@@ -16,7 +16,7 @@
         "PatchText:#text/1": 2
       },
       "PatchSetupValues:": {
-        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-in-loop-row/page.marko_fill0": 0
+        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-in-loop-row/page.marko_0_count#6/fill": 0
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-in-loop-row/template.marko_1*shell"]
@@ -31,7 +31,7 @@
         "PatchText:#text/1": 2
       },
       "PatchSetupValues:": {
-        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-in-loop-row/page.marko_fill0": 0
+        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-in-loop-row/page.marko_0_count#6/fill": 0
       }
     }
   }, 3, {
@@ -40,7 +40,7 @@
         "PatchText:#text/1": 3
       },
       "PatchSetupValues:": {
-        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-in-loop-row/page.marko_fill0": 0
+        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-in-loop-row/page.marko_0_count#6/fill": 0
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-in-loop-row/template.marko_1*shell"]

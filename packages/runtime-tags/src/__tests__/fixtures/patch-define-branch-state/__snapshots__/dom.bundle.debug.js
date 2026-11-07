@@ -4,7 +4,7 @@ const $Counter_content__template = "<div class=counter><span><!>: <!></span><but
 const $template = "<main></main>";
 const $walks = " b";
 const $setup = ($_) => {};
-const $Counter_content__n = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill0", "n/7", ($scope) => _text($scope["#text/1"], $scope.n));
+const $Counter_content__n = /*@__PURE__*/ _fill_let("__tests__/template.marko_2_n#7/fill", "n/7", ($scope) => _text($scope["#text/1"], $scope.n));
 const $Counter_content__input_start = $Counter_content__n;
 const $Counter_content__input_label = ($scope, input_label) => _text($scope["#text/0"], input_label);
 const $Counter_content__setup__script = _script("__tests__/template.marko_2", ($scope) => _on($scope["#button/2"], "click", function() {

@@ -2,7 +2,7 @@
 const $template$1 = "<button> </button>";
 const $walks$1 = " D l";
 const $input_fn__OR__open = /*@__PURE__*/ _or_patch("__tests__/tags/card.marko_0_input_fn#4_open#5/setup", 6, ($scope) => _text($scope["#text/1"], ($scope.open ? $scope.input_fn : () => "-")()));
-const $open = /*@__PURE__*/ _fill_let("__tests__/tags/card.marko_fill0", "open/5", $input_fn__OR__open);
+const $open = /*@__PURE__*/ _fill_let("__tests__/tags/card.marko_0_open#5/fill", "open/5", $input_fn__OR__open);
 const $setup__script = _script("__tests__/tags/card.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$open($scope, !$scope.open);
 }));

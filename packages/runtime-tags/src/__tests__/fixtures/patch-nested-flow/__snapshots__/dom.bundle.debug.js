@@ -42,7 +42,7 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 // tags/badge.marko
 const $template = "<footer><span><!> (<!>)</span><button>ack</button></footer>";
 const $walks = "E%c%l l";
-const $seen = /*@__PURE__*/ _fill_let("__tests__/tags/badge.marko_fill0", "seen/6", ($scope) => _text($scope["#text/1"], $scope.seen));
+const $seen = /*@__PURE__*/ _fill_let("__tests__/tags/badge.marko_0_seen#6/fill", "seen/6", ($scope) => _text($scope["#text/1"], $scope.seen));
 const $setup__script = _script("__tests__/tags/badge.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
 	$seen($scope, +$scope.seen + 1);
 }));

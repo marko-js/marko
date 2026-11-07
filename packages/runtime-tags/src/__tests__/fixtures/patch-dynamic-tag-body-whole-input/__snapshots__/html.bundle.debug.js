@@ -34,7 +34,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 	}, $scope0_id, "#text/1");
 	_script($scope0_id, "__tests__/tags/card.marko_0");
 	$fg__input_header && _patch_render($scope0_id, "__tests__/tags/card.marko_1_input_header#0:5/setup", "input_header");
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/card.marko_fill0", open, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/card.marko_0_open#4/fill", open, 1);
 	_scope($scope0_id, {
 		open,
 		input_header: input.header

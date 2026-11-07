@@ -24,7 +24,7 @@ var outer_default = _template("__tests__/tags/outer.marko", (input) => {
 	_html("</section>");
 	_script($scope0_id, "__tests__/tags/outer.marko_0");
 	_patch_render($scope0_id, "__tests__/tags/outer.marko_0_input_label#5_T#6/setup", $fg__input_label && "input_label");
-	_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/tags/outer.marko_fill0", T, 1);
+	_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/tags/outer.marko_0_T#6/fill", T, 1);
 	_scope($scope0_id, {
 		input_label: input.label,
 		T: _write_if($scope0_reason, 1) && T

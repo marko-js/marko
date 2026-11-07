@@ -9,7 +9,7 @@ var tab_editor_default = _template("__tests__/tags/tab-editor.marko", (input) =>
 	let selected = input.tab;
 	_html(`<p>sel=${_text_mark($scope0_id, "#text/0", String(selected), 2)}</p>`);
 	_patch_render($scope0_id, "__tests__/tags/tab-editor.marko_0_input_tab#3_input_tabChange#4/setup", [$fg__input_tab && "input_tab", $fg__input_tabChange && "input_tabChange"], $scope0_reason, 0);
-	_patch_let_change($scope0_id, "PatchFill:__tests__/tags/tab-editor.marko_fill0", selected, 0, input.tabChange, $scope0_reason, 0);
+	_patch_let_change($scope0_id, "PatchFill:__tests__/tags/tab-editor.marko_0_selected#6/fill", selected, 0, input.tabChange, $scope0_reason, 0);
 	_scope($scope0_id, {
 		input_tab: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.tab,
 		input_tabChange: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.tabChange
@@ -39,7 +39,7 @@ var route_pg_default = _template("__tests__/tags/route-pg.marko", (input) => {
 	_patch_child_end();
 	_html(`<button>+</button>${_el_mark($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/tags/route-pg.marko_0");
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/route-pg.marko_fill0", tab, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/route-pg.marko_0_tab#2/fill", tab, 1);
 	_scope($scope0_id, {
 		tab,
 		"#childScope/0": _existing_scope($childScope)

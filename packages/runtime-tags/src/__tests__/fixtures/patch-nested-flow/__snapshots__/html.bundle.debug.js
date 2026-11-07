@@ -9,7 +9,7 @@ var badge_default = _template("__tests__/tags/badge.marko", (input) => {
 	let seen = 0;
 	_html(`<footer><span>${_text_mark($scope0_id, "#text/0", input.label, 1, $scope0_reason, 0)} (${_text_mark($scope0_id, "#text/1", seen, 2)})</span><button>ack</button>${_el_mark($scope0_id, "#button/2")}</footer>`);
 	_script($scope0_id, "__tests__/tags/badge.marko_0");
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/badge.marko_fill0", seen, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/badge.marko_0_seen#6/fill", seen, 1);
 	_scope($scope0_id, { seen }, "__tests__/tags/badge.marko", 0, { seen: "1:6" });
 });
 

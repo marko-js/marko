@@ -70,12 +70,12 @@ const $proj = /*@__PURE__*/ _const("proj", $proj__closure);
 const $p_owned = /*@__PURE__*/ _const("p_owned", $for_content__p_owned);
 const $setup__$global_data = /*@__PURE__*/ _fill_global_path("__tests__/shop.marko_0_$global_data#6", ($scope) => $p($scope, $scope.$global.data.player), "data", "player");
 const $now__closure = /*@__PURE__*/ _closure($for_content2__now);
-const $now = /*@__PURE__*/ _fill_let("__tests__/shop.marko_fill0", "now/8", ($scope) => {
+const $now = /*@__PURE__*/ _fill_let("__tests__/shop.marko_0_now#8/fill", "now/8", ($scope) => {
 	_text($scope["#text/1"], $scope.now);
 	$now__closure($scope);
 });
 const $drops__closure = /*@__PURE__*/ _closure($for_content2__drops);
-const $drops = /*@__PURE__*/ _fill_let("__tests__/shop.marko_fill1", "drops/9", $drops__closure);
+const $drops = /*@__PURE__*/ _fill_let("__tests__/shop.marko_0_drops#9/fill", "drops/9", $drops__closure);
 const $for = /*@__PURE__*/ _for_of_unkeyed("#text/3", "<!><!><!>", "b%", $for_content__setup, $for_content__$params);
 const $setup__script = _script("__tests__/shop.marko_0", ($scope) => {
 	_on($scope["#button/0"], "click", function() {

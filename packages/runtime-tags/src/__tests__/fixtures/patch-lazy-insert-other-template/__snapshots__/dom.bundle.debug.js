@@ -18,7 +18,7 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 // lazy.marko
 const $template = "<button class=child><!>:<!></button>";
 const $walks = " D%c%l";
-const $count = /*@__PURE__*/ _fill_let("__tests__/lazy.marko_fill0", "count/6", ($scope) => _text($scope["#text/2"], $scope.count));
+const $count = /*@__PURE__*/ _fill_let("__tests__/lazy.marko_0_count#6/fill", "count/6", ($scope) => _text($scope["#text/2"], $scope.count));
 const $setup__script = _script("__tests__/lazy.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, +$scope.count + 1);
 }));
@@ -40,7 +40,7 @@ const $if_content__setup = ($scope) => {
 	$load_Lazy_tag_input_label($scope["#childScope/1"], "c");
 };
 const $if = /*@__PURE__*/ _if("#text/1", "<!><!><!>", "b%/&", $if_content__setup);
-const $open = /*@__PURE__*/ _fill_let("__tests__/tags/opener.marko_fill0", "open/2", ($scope) => $if($scope, $scope.open ? 0 : 1));
+const $open = /*@__PURE__*/ _fill_let("__tests__/tags/opener.marko_0_open#2/fill", "open/2", ($scope) => $if($scope, $scope.open ? 0 : 1));
 const $setup__script = _script("__tests__/tags/opener.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$open($scope, !$scope.open);
 }));

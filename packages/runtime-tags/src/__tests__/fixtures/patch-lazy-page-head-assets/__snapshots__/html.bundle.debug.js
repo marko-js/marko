@@ -26,7 +26,7 @@ var page_a_default = _template("__tests__/page-a.marko", (input) => {
 	let count = 0;
 	_html(`<button class=a>a:${_text_mark($scope0_id, "#text/1", count, 2)}</button>${_el_mark($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/page-a.marko_0");
-	_patch_fill($scope0_id, "PatchFill:__tests__/page-a.marko_fill0", count, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/page-a.marko_0_count#2/fill", count, 1);
 	_scope($scope0_id, { count }, "__tests__/page-a.marko", 0, { count: "2:6" });
 });
 
@@ -41,7 +41,7 @@ var page_b_default = _template("__tests__/page-b.marko", (input) => {
 	let count = 0;
 	_html(`<button class=b>b:${_text_mark($scope0_id, "#text/1", count, 2)}</button>${_el_mark($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/page-b.marko_0");
-	_patch_fill($scope0_id, "PatchFill:__tests__/page-b.marko_fill0", count, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/page-b.marko_0_count#2/fill", count, 1);
 	_scope($scope0_id, { count }, "__tests__/page-b.marko", 0, { count: "1:6" });
 });
 

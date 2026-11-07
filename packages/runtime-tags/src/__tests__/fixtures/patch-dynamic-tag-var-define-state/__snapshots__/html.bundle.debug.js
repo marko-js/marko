@@ -20,7 +20,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $return = n;
 		_script($scope1_id, "__tests__/template.marko_1");
 		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_label#0:5/subscribe", $cg__input_label);
-		_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill0", n, 1);
+		_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_1_n#3/fill", n, 1);
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_label__closures, _scope($scope1_id, {
 			n,
 			_: $wi__input_label__OR__input_which && _scope_with_id($scope0_id)

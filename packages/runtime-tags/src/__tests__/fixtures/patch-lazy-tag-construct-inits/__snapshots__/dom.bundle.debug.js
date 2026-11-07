@@ -10,7 +10,7 @@ const $for_content__count__OR__i = /*@__PURE__*/ _or_patch("__tests__/child.mark
 const $for_content__count = /*@__PURE__*/ _for_closure("#text/1", $for_content__count__OR__i, 7);
 const $for_content__i = /*@__PURE__*/ _const("i", $for_content__count__OR__i);
 const $for_content__$params = ($scope, $params2) => $for_content__i($scope, $params2[0]);
-const $count = /*@__PURE__*/ _fill_let("__tests__/child.marko_fill0", "count/5", $for_content__count);
+const $count = /*@__PURE__*/ _fill_let("__tests__/child.marko_0_count#5/fill", "count/5", $for_content__count);
 const $for = /*@__PURE__*/ _for_of_unkeyed("#text/1", "<span><!>:<!></span>", "D%c%", $for_content__setup, $for_content__$params);
 const $setup__script = _script("__tests__/child.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, +$scope.count + 1);

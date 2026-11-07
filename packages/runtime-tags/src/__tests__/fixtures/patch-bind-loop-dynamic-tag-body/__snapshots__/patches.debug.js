@@ -7,7 +7,7 @@
       "PatchChild:#childScope/0": {
         "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-bind-loop-dynamic-tag-body/tags/reveal.marko_1_input_content#0:4/setup": _.c = "input_content",
         "PatchSetupValues:": {
-          "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-bind-loop-dynamic-tag-body/tags/reveal.marko_fill0": !1
+          "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-bind-loop-dynamic-tag-body/tags/reveal.marko_0_show#5/fill": !1
         },
         "PatchBind:input_content": _.d = "^^packages/runtime-tags/src/__tests__/fixtures/patch-bind-loop-dynamic-tag-body/template.marko_2*content"
       }
@@ -20,7 +20,7 @@
       "PatchChild:#childScope/0": {
         "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-bind-loop-dynamic-tag-body/tags/reveal.marko_1_input_content#0:4/setup": _.c,
         "PatchSetupValues:": {
-          "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-bind-loop-dynamic-tag-body/tags/reveal.marko_fill0": !1
+          "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-bind-loop-dynamic-tag-body/tags/reveal.marko_0_show#5/fill": !1
         },
         "PatchBind:input_content": _.d
       }

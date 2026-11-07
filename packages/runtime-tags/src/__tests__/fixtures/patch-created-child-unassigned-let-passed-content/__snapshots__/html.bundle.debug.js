@@ -27,7 +27,7 @@ var outer_default = _template("__tests__/tags/outer.marko", (input) => {
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	card_default({ content: o });
 	_patch_child_end();
-	_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/tags/outer.marko_fill0", o, 1);
+	_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/tags/outer.marko_0_o#4/fill", o, 1);
 	_scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/tags/outer.marko", 0) || _client_branch(input.content);
 });
 

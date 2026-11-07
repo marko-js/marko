@@ -11,7 +11,7 @@ const $template$1 = "<button>clear</button><section><!></section>";
 const $walks$1 = " bD%l";
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
 const $input_label__OR__T = /*@__PURE__*/ _or_patch("__tests__/tags/outer.marko_0_input_label#5_T#6/setup", 7, ($scope) => $dynamicTag($scope, $scope.T, ($_) => ({ label: $scope.input_label })));
-const $T = /*@__PURE__*/ _fill_let("__tests__/tags/outer.marko_fill0", "T/6", $input_label__OR__T);
+const $T = /*@__PURE__*/ _fill_let("__tests__/tags/outer.marko_0_T#6/fill", "T/6", $input_label__OR__T);
 const $input_tag = $T;
 const $setup__script = _script("__tests__/tags/outer.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$T($scope, undefined);

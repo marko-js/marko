@@ -25,7 +25,7 @@ const $D_content__if = /*@__PURE__*/ _if("#text/0", "<span> </span>", "D ", $if_
 const $D_content__on = ($scope, on) => $D_content__if($scope, on ? 0 : 1);
 const $D_content__$params = ($scope, $params2) => $D_content__$temp($scope, $params2[0]);
 const $D_content__$temp = ($scope, $temp) => $D_content__on($scope, $temp.on);
-const $n = /*@__PURE__*/ _fill_let("__tests__/tags/shape.marko_fill0", "n/9", ($scope) => _text($scope["#text/3"], $scope.n));
+const $n = /*@__PURE__*/ _fill_let("__tests__/tags/shape.marko_0_n#9/fill", "n/9", ($scope) => _text($scope["#text/3"], $scope.n));
 const $setup__script = _script("__tests__/tags/shape.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
 	$n($scope, +$scope.n + 1);
 }));

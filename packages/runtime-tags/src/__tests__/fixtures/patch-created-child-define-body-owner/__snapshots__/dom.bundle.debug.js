@@ -16,7 +16,7 @@ const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}& b`)($Count_content__walks);
 const $Count_content__n = /*@__PURE__*/ _closure_get_patch("__tests__/tags/child.marko_1_n#0:2/subscribe", "n/3", ($scope) => _text($scope["#text/0"], $scope._.n));
 const $Count_content__setup = $Count_content__n;
 const $n__closure = /*@__PURE__*/ _closure($Count_content__n);
-const $n = /*@__PURE__*/ _fill_let("__tests__/tags/child.marko_fill0", "n/2", $n__closure);
+const $n = /*@__PURE__*/ _fill_let("__tests__/tags/child.marko_0_n#2/fill", "n/2", $n__closure);
 const $setup__script = _script("__tests__/tags/child.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$n($scope, +$scope.n + 1);
 }));

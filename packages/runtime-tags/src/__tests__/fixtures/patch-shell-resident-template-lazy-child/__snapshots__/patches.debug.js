@@ -7,7 +7,7 @@
     "PatchChild:#childScope/2": {
       "PatchText:#text/1": "b",
       "PatchSetupValues:": {
-        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-shell-resident-template-lazy-child/lazy.marko_fill0": 0
+        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-shell-resident-template-lazy-child/lazy.marko_0_count#6/fill": 0
       }
     }
   },

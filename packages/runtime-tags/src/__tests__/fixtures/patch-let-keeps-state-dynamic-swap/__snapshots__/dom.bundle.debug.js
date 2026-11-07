@@ -2,7 +2,7 @@
 const $template = "<!><!><!>";
 const $walks = "b%c";
 const $B_content = _content("__tests__/template.marko_2*content", "<b>B</b>");
-const $A_content__l = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill0", "l/5", ($scope) => _text($scope["#text/1"], $scope.l));
+const $A_content__l = /*@__PURE__*/ _fill_let("__tests__/template.marko_1_l#5/fill", "l/5", ($scope) => _text($scope["#text/1"], $scope.l));
 const $A_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/0"], "click", function() {
 	$A_content__l($scope, $scope.l + "+");
 }));

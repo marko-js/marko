@@ -12,7 +12,7 @@
         }
       },
       "PatchSetupValues:": {
-        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-dynamic-style/tags/route-bar.marko_fill0": 40
+        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-dynamic-style/tags/route-bar.marko_0_w#2/fill": 40
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-dynamic-style/template.marko_1*shell"]

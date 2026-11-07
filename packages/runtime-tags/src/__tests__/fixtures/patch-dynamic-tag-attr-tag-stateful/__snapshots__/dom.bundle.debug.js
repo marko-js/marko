@@ -8,7 +8,7 @@ const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $if_content__item = /*@__PURE__*/ _if_closure_patch("__tests__/template.marko_3_item#2:4/setup", "#text/1", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.item));
 const $if_content__setup = $if_content__item;
 const $Wrap_content__if = /*@__PURE__*/ _if("#text/1", "<!><!><!>", "b%", $if_content__setup);
-const $Wrap_content__open = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill0", "open/5", ($scope) => $Wrap_content__if($scope, $scope.open ? 0 : 1));
+const $Wrap_content__open = /*@__PURE__*/ _fill_let("__tests__/template.marko_2_open#5/fill", "open/5", ($scope) => $Wrap_content__if($scope, $scope.open ? 0 : 1));
 const $Wrap_content__setup__script = _script("__tests__/template.marko_2", ($scope) => _on($scope["#button/0"], "click", function() {
 	$Wrap_content__open($scope, !$scope.open);
 }));

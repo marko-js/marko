@@ -7,7 +7,7 @@
     "PatchChild:BranchScopes:#text/0": {
       "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-forwarded-template/tags/card.marko_1_input_content#0:4/setup": _.a = "input_content",
       "PatchSetupValues:": {
-        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-forwarded-template/tags/card.marko_fill0": !0
+        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-forwarded-template/tags/card.marko_0_open#5/fill": !0
       },
       "PatchBind:input_content": "^packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-forwarded-template/tags/fwd.marko_1*content"
     },
@@ -27,7 +27,7 @@
     "PatchChild:BranchScopes:#text/0": {
       "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-forwarded-template/tags/card.marko_1_input_content#0:4/setup": _.a = "input_content",
       "PatchSetupValues:": {
-        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-forwarded-template/tags/card.marko_fill0": !0
+        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-forwarded-template/tags/card.marko_0_open#5/fill": !0
       },
       "PatchBind:input_content": "^packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-forwarded-template/tags/fwd.marko_1*content"
     },

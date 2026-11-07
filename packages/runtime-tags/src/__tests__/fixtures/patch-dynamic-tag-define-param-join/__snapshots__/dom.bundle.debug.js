@@ -9,7 +9,7 @@ const $Inner_content__setup = $Inner_content__value;
 const $Inner_content__y = /*@__PURE__*/ _const("y", $Inner_content__value__OR__y);
 const $Inner_content__$params = ($scope, $params3) => $Inner_content__$temp($scope, $params3[0]);
 const $Inner_content__$temp = ($scope, $temp2) => $Inner_content__y($scope, $temp2.y);
-const $Outer_content__count = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill0", "count/5", ($scope) => $Inner_content__y($scope["#childScope/0"], $scope.count));
+const $Outer_content__count = /*@__PURE__*/ _fill_let("__tests__/template.marko_1_count#5/fill", "count/5", ($scope) => $Inner_content__y($scope["#childScope/0"], $scope.count));
 const $Outer_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/1"], "click", function() {
 	$Outer_content__count($scope, +$scope.count + 1);
 }));

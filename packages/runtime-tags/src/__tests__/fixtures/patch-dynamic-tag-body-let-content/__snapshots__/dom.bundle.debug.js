@@ -5,7 +5,7 @@ const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $if_content__input_content = /*@__PURE__*/ _if_closure_patch("__tests__/tags/keeper.marko_1_input_content#0:4/setup", "#text/1", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.input_content));
 const $if_content__setup = $if_content__input_content;
 const $if = /*@__PURE__*/ _if("#text/1", "<!><!><!>", "b%", $if_content__setup);
-const $open = /*@__PURE__*/ _fill_let("__tests__/tags/keeper.marko_fill0", "open/5", ($scope) => $if($scope, $scope.open ? 0 : 1));
+const $open = /*@__PURE__*/ _fill_let("__tests__/tags/keeper.marko_0_open#5/fill", "open/5", ($scope) => $if($scope, $scope.open ? 0 : 1));
 const $setup__script = _script("__tests__/tags/keeper.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$open($scope, !$scope.open);
 }));
@@ -23,7 +23,7 @@ const $walks$1 = "b%c";
 const $setup$1 = ($_) => {};
 const $dynamicTag$1 = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $input_p__OR__c = /*@__PURE__*/ _or_patch("__tests__/tags/card.marko_0_input_p#4_c#5/setup", 6, ($scope) => $dynamicTag$1($scope, $scope.input_p ? keeper_default : "div", ($_) => ({ content: $scope.c })));
-const $c = _fill_let_resume("__tests__/tags/card.marko_fill0", "c/5", $input_p__OR__c);
+const $c = _fill_let_resume("__tests__/tags/card.marko_0_c#5/fill", "c/5", $input_p__OR__c);
 const $input_content = $c;
 const $input_p$1 = /*@__PURE__*/ _const("input_p", $input_p__OR__c);
 const $input$1 = ($scope, input) => {

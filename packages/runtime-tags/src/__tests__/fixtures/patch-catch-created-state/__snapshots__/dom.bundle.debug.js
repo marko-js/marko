@@ -4,7 +4,7 @@ const $walks = "D%l";
 function boom(error) {
 	throw error;
 }
-const $catch_content__shown = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill0", "shown/5", ($scope) => _text($scope["#text/1"], $scope.shown));
+const $catch_content__shown = /*@__PURE__*/ _fill_let("__tests__/template.marko_2_shown#5/fill", "shown/5", ($scope) => _text($scope["#text/1"], $scope.shown));
 const $catch_content__setup__script = _script("__tests__/template.marko_2", ($scope) => _on($scope["#button/0"], "click", function() {
 	$catch_content__shown($scope, $scope.shown + "!");
 }));

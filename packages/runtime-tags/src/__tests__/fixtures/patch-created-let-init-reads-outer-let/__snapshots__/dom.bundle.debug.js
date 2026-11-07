@@ -14,7 +14,7 @@ const $if_content2__setup = ($scope) => {
 };
 const $if_content__if = /*@__PURE__*/ _if("#text/2", "<span></span><button class=y>go</button>", " b ", $if_content2__setup);
 const $if_content__input_show = /*@__PURE__*/ _if_closure_patch("__tests__/template.marko_1_input_show#0:4/setup", "#text/0", 0, ($scope) => $if_content__if($scope, $scope._.input_show ? 0 : 1));
-const $if_content__x = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill0", "x/3", ($scope) => {
+const $if_content__x = /*@__PURE__*/ _fill_let("__tests__/template.marko_1_x#3/fill", "x/3", ($scope) => {
 	_text($scope["#text/1"], $scope.x);
 	$if_content2__x($scope);
 });

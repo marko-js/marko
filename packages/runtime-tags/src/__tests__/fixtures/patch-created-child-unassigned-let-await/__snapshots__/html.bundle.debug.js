@@ -16,7 +16,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 		_html(`<p>${_text_mark($scope1_id, "#text/0", x)}</p>`);
 		_scope($scope1_id, {}, "__tests__/tags/card.marko", "2:2");
 	}, 1, "__tests__/tags/card.marko_1*content", 2, 1);
-	_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/tags/card.marko_fill0", n, 1);
+	_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/tags/card.marko_0_n#4/fill", n, 1);
 });
 
 // template.marko

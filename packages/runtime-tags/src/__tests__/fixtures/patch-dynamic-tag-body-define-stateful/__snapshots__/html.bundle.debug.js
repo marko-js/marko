@@ -27,7 +27,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, $scope2_id, "#text/1");
 		_script($scope2_id, "__tests__/template.marko_2");
 		_patch_render($scope2_id, "__tests__/template.marko_3_content#2:4/setup", "content");
-		_patch_fill($scope2_id, "PatchFill:__tests__/template.marko_fill0", open, 1);
+		_patch_fill($scope2_id, "PatchFill:__tests__/template.marko_2_open#5/fill", open, 1);
 		_scope($scope2_id, {
 			content,
 			open

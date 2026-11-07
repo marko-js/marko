@@ -4,7 +4,7 @@ const $walks = "b%c";
 const $setup = ($_) => {};
 const $if_content__opts = ($scope, opts) => $if_content__opts_step($scope, opts.step);
 const $if_content__opts_step = /*@__PURE__*/ _const("opts_step");
-const $if_content__n = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill0", "n/4", ($scope) => _text($scope["#text/1"], $scope.n));
+const $if_content__n = /*@__PURE__*/ _fill_let("__tests__/template.marko_1_n#4/fill", "n/4", ($scope) => _text($scope["#text/1"], $scope.n));
 const $if_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/0"], "click", function() {
 	$if_content__n($scope, $scope.n + $scope.opts_step);
 }));

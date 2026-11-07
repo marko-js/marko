@@ -20,7 +20,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			$cg__input_v && _patch_render($scope1_id, "__tests__/template.marko_1_input_v#0:4/setup");
 			$cg__input_v && _patch_render($scope1_id, "__tests__/template.marko_1_x#1_f#2/setup");
 			_patch_render($scope1_id, "__tests__/template.marko_1_input_w#0:5_y#4/setup", _filled_guard($scope0_reason, 2) && ">input_w");
-			_filled_guard($scope0_reason, 1) && _patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill0", y, 1);
+			_filled_guard($scope0_reason, 1) && _patch_fill($scope1_id, "PatchFill:__tests__/template.marko_1_y#4/fill", y, 1);
 			_scope($scope1_id, {
 				f,
 				y: _write_if($scope0_reason, 2) && y,

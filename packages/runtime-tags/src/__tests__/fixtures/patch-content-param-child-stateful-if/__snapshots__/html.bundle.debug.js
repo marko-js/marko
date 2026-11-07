@@ -19,7 +19,7 @@ var disclosure_default = _template("__tests__/tags/disclosure.marko", (input) =>
 	_html(`<button>toggle</button>${_el_mark($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/tags/disclosure.marko_0");
 	$fg__input_content && _patch_render($scope0_id, "__tests__/tags/disclosure.marko_1_input_content#0:4/setup", "input_content");
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/disclosure.marko_fill0", open, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/disclosure.marko_0_open#5/fill", open, 1);
 	_scope($scope0_id, {
 		input_content: input.content,
 		open

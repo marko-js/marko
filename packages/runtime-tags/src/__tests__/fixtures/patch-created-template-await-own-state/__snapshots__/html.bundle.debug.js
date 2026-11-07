@@ -28,7 +28,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 	}, 1, "__tests__/tags/card.marko_1*content", 1, 1);
 	_script($scope0_id, "__tests__/tags/card.marko_0");
 	$fg__input_content && _patch_subscribers($scope0_id, "__tests__/tags/card.marko_0_input_content#4/subscribers", "input_content");
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/card.marko_fill0", n, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/card.marko_0_n#5/fill", n, 1);
 	_scope($scope0_id, {
 		input_content: input.content,
 		n,

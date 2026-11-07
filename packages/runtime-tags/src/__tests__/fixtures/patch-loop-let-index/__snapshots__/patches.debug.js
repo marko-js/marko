@@ -4,17 +4,17 @@
   "PatchLoop:#ul/0": [{
     "PatchText:#text/0": "Apples",
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-loop-let-index/template.marko_fill0": 0
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-loop-let-index/template.marko_1_picks#5/fill": 0
     }
   }, {
     "PatchText:#text/0": "Bread",
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-loop-let-index/template.marko_fill0": 0
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-loop-let-index/template.marko_1_picks#5/fill": 0
     }
   }, {
     "PatchText:#text/0": "Milk",
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-loop-let-index/template.marko_fill0": 0
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-loop-let-index/template.marko_1_picks#5/fill": 0
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-let-index/template.marko_1*shell"]
 }
@@ -25,7 +25,7 @@
   "PatchLoop:#ul/0": [{
     "PatchText:#text/0": "Apples",
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-loop-let-index/template.marko_fill0": 0
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-loop-let-index/template.marko_1_picks#5/fill": 0
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-let-index/template.marko_1*shell"]
 }
@@ -35,17 +35,17 @@
   "PatchLoop:#ul/0": [{
     "PatchText:#text/0": "Apples",
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-loop-let-index/template.marko_fill0": 0
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-loop-let-index/template.marko_1_picks#5/fill": 0
     }
   }, {
     "PatchText:#text/0": "Bread",
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-loop-let-index/template.marko_fill0": 0
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-loop-let-index/template.marko_1_picks#5/fill": 0
     }
   }, {
     "PatchText:#text/0": "Milk",
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-loop-let-index/template.marko_fill0": 0
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-loop-let-index/template.marko_1_picks#5/fill": 0
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-let-index/template.marko_1*shell"]
 }

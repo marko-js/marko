@@ -2,7 +2,7 @@
 const $template$1 = "<span> </span>";
 const $walks$1 = "D l";
 const $setup$1 = ($_) => {};
-const $x = /*@__PURE__*/ _fill_let("__tests__/tags/child.marko_fill0", "x/4", ($scope) => {
+const $x = /*@__PURE__*/ _fill_let("__tests__/tags/child.marko_0_x#4/fill", "x/4", ($scope) => {
 	_return($scope, $scope.x);
 	_return_change($scope, $valueChange($scope));
 	_text($scope["#text/0"], $scope.x);

@@ -8,10 +8,10 @@ const $await_content__m__OR__n__OR__s__OR__c__script = _script("__tests__/tags/s
 	$scope.c
 ].join("|"));
 const $await_content__m__OR__n__OR__s__OR__c = /*@__PURE__*/ _or(11, $await_content__m__OR__n__OR__s__OR__c__script, 3);
-const $await_content__m = /*@__PURE__*/ _fill_let("__tests__/tags/show-await.marko_fill0", "m/5", $await_content__m__OR__n__OR__s__OR__c);
-const $await_content__n = /*@__PURE__*/ _fill_let_change("__tests__/tags/show-await.marko_fill1", "n/6", $await_content__m__OR__n__OR__s__OR__c);
-const $await_content__c = /*@__PURE__*/ _fill_let_change("__tests__/tags/show-await.marko_fill3", "c/9", $await_content__m__OR__n__OR__s__OR__c);
-const $await_content__s = /*@__PURE__*/ _fill_let("__tests__/tags/show-await.marko_fill2", "s/8", ($scope) => {
+const $await_content__m = /*@__PURE__*/ _fill_let("__tests__/tags/show-await.marko_1_m#5/fill", "m/5", $await_content__m__OR__n__OR__s__OR__c);
+const $await_content__n = /*@__PURE__*/ _fill_let_change("__tests__/tags/show-await.marko_1_n#6/fill", "n/6", $await_content__m__OR__n__OR__s__OR__c);
+const $await_content__c = /*@__PURE__*/ _fill_let_change("__tests__/tags/show-await.marko_1_c#9/fill", "c/9", $await_content__m__OR__n__OR__s__OR__c);
+const $await_content__s = /*@__PURE__*/ _fill_let("__tests__/tags/show-await.marko_1_s#8/fill", "s/8", ($scope) => {
 	$await_content__m__OR__n__OR__s__OR__c($scope);
 	$await_content__c($scope, $scope.s, $valueChange2($scope));
 }, $await_content__m__OR__n__OR__s__OR__c);

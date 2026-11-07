@@ -11,7 +11,7 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 // tags/demo-card.marko
 const $template$1 = "<button>tab=<!></button>";
 const $walks$1 = " Db%l";
-const $selected = /*@__PURE__*/ _fill_let_change("__tests__/tags/demo-card.marko_fill0", "selected/7", ($scope) => _text($scope["#text/1"], String($scope.selected)));
+const $selected = /*@__PURE__*/ _fill_let_change("__tests__/tags/demo-card.marko_0_selected#7/fill", "selected/7", ($scope) => _text($scope["#text/1"], String($scope.selected)));
 const $input_tab__OR__input_tabChange = /*@__PURE__*/ _or_patch("__tests__/tags/demo-card.marko_0_input_tab#4_input_tabChange#5/setup", 6, ($scope) => $selected($scope, $scope.input_tab, $scope.input_tabChange));
 const $input_tab = /*@__PURE__*/ _const("input_tab", $input_tab__OR__input_tabChange);
 const $input_tabChange = /*@__PURE__*/ _const("input_tabChange", $input_tab__OR__input_tabChange);
@@ -28,7 +28,7 @@ var demo_card_default = /*@__PURE__*/ _template("__tests__/tags/demo-card.marko"
 // tags/page-b.marko
 const $template = $template$1;
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1);
-const $tab = /*@__PURE__*/ _fill_let("__tests__/tags/page-b.marko_fill0", "tab/1", ($scope) => $input_tab($scope["#childScope/0"], $scope.tab));
+const $tab = /*@__PURE__*/ _fill_let("__tests__/tags/page-b.marko_0_tab#1/fill", "tab/1", ($scope) => $input_tab($scope["#childScope/0"], $scope.tab));
 function $setup($scope) {
 	$setup$1($scope["#childScope/0"]);
 	$input_tabChange($scope["#childScope/0"], $tabChange($scope));

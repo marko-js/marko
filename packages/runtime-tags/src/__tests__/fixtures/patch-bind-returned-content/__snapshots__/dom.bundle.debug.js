@@ -13,7 +13,7 @@ const $Content_content__setup = ($scope) => {
 const $Content_content__count = /*@__PURE__*/ _closure_get_patch("__tests__/tags/child.marko_1_count#0:3/subscribe", "count/6", ($scope) => _text($scope["#text/2"], $scope._.count));
 const $Content_content = _content("__tests__/tags/child.marko_1*content", "<em><!> <!></em>", " D%c%", $Content_content__setup);
 const $count__closure = /*@__PURE__*/ _closure($Content_content__count);
-const $count = /*@__PURE__*/ _fill_let("__tests__/tags/child.marko_fill0", "count/3", $count__closure);
+const $count = /*@__PURE__*/ _fill_let("__tests__/tags/child.marko_0_count#3/fill", "count/3", $count__closure);
 const $Content = /*@__PURE__*/ _const("Content", ($scope) => _return($scope, $scope.Content));
 function $setup$1($scope) {
 	$Content($scope, { content: $Content_content($scope) });

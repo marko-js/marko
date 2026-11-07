@@ -8,7 +8,7 @@
       "PatchBind:content": "^packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-forwarded-define/tags/fwd.marko_1*content",
       "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-forwarded-define/tags/fwd.marko_3_content#2:4/setup": "content",
       "PatchSetupValues:": {
-        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-forwarded-define/tags/fwd.marko_fill0": !0
+        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-forwarded-define/tags/fwd.marko_2_open#5/fill": !0
       }
     },
     "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-forwarded-define/tags/fwd.marko_0_input_content#3/subscribers": "input_content",
@@ -28,7 +28,7 @@
       "PatchBind:content": "^packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-forwarded-define/tags/fwd.marko_1*content",
       "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-forwarded-define/tags/fwd.marko_3_content#2:4/setup": "content",
       "PatchSetupValues:": {
-        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-forwarded-define/tags/fwd.marko_fill0": !0
+        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-forwarded-define/tags/fwd.marko_2_open#5/fill": !0
       }
     },
     "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-forwarded-define/tags/fwd.marko_0_input_content#3/subscribers": "input_content",

@@ -21,7 +21,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_html(`<span>Seen ${_text_mark($scope1_id, "#text/0", count, 2)}</span><button>+</button>${_el_mark($scope1_id, "#button/1")}`);
 			_script($scope1_id, "__tests__/template.marko_1");
 			const $countChange = handler || void 0;
-			_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill0", count, 1);
+			_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_1_count#2/fill", count, 1);
 			_patch_bind($scope1_id, "PatchWrite:TagVariableChange:count", $countChange);
 			_scope($scope1_id, {
 				count,

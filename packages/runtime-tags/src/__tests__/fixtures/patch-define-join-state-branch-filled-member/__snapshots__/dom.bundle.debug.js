@@ -18,7 +18,7 @@ const $Info_content__setup = ($scope) => {
 };
 const $Info_content__input_b = /*@__PURE__*/ _closure_get_patch("__tests__/tags/panel.marko_1_input_b#0:6/subscribe", "input_b/10", $Info_content__input_a__OR__input_b, 0, "__tests__/tags/panel.marko_0_input_b#6/subscribers", 0);
 const $if2 = /*@__PURE__*/ _if("#text/1", "<div></div>", " ", $if_content__setup);
-const $open = /*@__PURE__*/ _fill_let("__tests__/tags/panel.marko_fill0", "open/8", ($scope) => $if2($scope, $scope.open ? 0 : 1));
+const $open = /*@__PURE__*/ _fill_let("__tests__/tags/panel.marko_0_open#8/fill", "open/8", ($scope) => $if2($scope, $scope.open ? 0 : 1));
 const $setup__script$1 = _script("__tests__/tags/panel.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
 	$open($scope, !$scope.open);
 }));

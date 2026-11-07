@@ -1,7 +1,7 @@
 // lazy-child.marko
 const $template = "<button><!>:<!></button>";
 const $walks = " D%c%l";
-const $count = /*@__PURE__*/ _fill_let("__tests__/lazy-child.marko_fill0", "count/6", ($scope) => _text($scope["#text/2"], $scope.count));
+const $count = /*@__PURE__*/ _fill_let("__tests__/lazy-child.marko_0_count#6/fill", "count/6", ($scope) => _text($scope["#text/2"], $scope.count));
 const $setup__script = _script("__tests__/lazy-child.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, +$scope.count + 1);
 }));
@@ -16,7 +16,7 @@ var lazy_child_default = /*@__PURE__*/ _template("__tests__/lazy-child.marko", $
 // child.marko
 const $template$1 = "<button><!>:<!></button>";
 const $walks$1 = " D%c%l";
-const $count = /*@__PURE__*/ _fill_let("__tests__/child.marko_fill0", "count/6", ($scope) => _text($scope["#text/2"], $scope.count));
+const $count = /*@__PURE__*/ _fill_let("__tests__/child.marko_0_count#6/fill", "count/6", ($scope) => _text($scope["#text/2"], $scope.count));
 const $setup__script = _script("__tests__/child.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, +$scope.count + 1);
 }));
@@ -50,7 +50,7 @@ const $Outer_content__setup = ($scope) => {
 	$scope["#childScope/0"]._ = $scope._;
 	$Inner_content__setup($scope["#childScope/0"]);
 };
-const $OwnBody_content__count = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill0", "count/2", ($scope) => _text($scope["#text/1"], $scope.count));
+const $OwnBody_content__count = /*@__PURE__*/ _fill_let("__tests__/template.marko_6_count#2/fill", "count/2", ($scope) => _text($scope["#text/1"], $scope.count));
 const $OwnBody_content__setup__script = _script("__tests__/template.marko_6", ($scope) => _on($scope["#button/0"], "click", function() {
 	$OwnBody_content__count($scope, +$scope.count + 1);
 }));

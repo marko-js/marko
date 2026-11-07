@@ -14,7 +14,7 @@ var inner_default = _template("__tests__/tags/widget/tags/inner/index.marko", (i
 	const $valueChange2 = _patch_bind($scope0_id, "PatchWrite:#TagVariableChange", _resume(function(v) {
 		n = v;
 	}, "__tests__/tags/widget/tags/inner/index.marko_0/valueChange", $scope0_id) || void 0, 0, 0);
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/widget/tags/inner/index.marko_fill0", n, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/widget/tags/inner/index.marko_0_n#1/fill", n, 1);
 	_scope($scope0_id, {
 		n,
 		"#TagVariableChange": $valueChange2

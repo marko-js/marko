@@ -9,7 +9,7 @@ var card_default = _template("__tests__/card.marko", (input) => {
 	let c = 0;
 	_html(`<div>${_text_mark($scope0_id, "#text/1", input.user.name, 1, $scope0_reason, 0)} ${_text_mark($scope0_id, "#text/2", c, 2)}</div>${_el_mark($scope0_id, "#div/0")}`);
 	_script($scope0_id, "__tests__/card.marko_0");
-	_patch_fill($scope0_id, "PatchFill:__tests__/card.marko_fill0", c, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/card.marko_0_c#7/fill", c, 1);
 	_scope($scope0_id, { c }, "__tests__/card.marko", 0, { c: "1:6" });
 });
 

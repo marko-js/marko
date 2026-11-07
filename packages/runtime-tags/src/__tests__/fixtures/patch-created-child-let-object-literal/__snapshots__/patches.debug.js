@@ -7,7 +7,7 @@
         "PatchVar:": "packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-object-literal/template.marko_1_v#4/var"
       },
       "PatchSetupValues:": {
-        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-object-literal/tags/card.marko_fill0": {
+        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-object-literal/tags/card.marko_0_o#4/fill": {
           label: "b"
         }
       }
@@ -24,7 +24,7 @@
         "PatchVar:": "packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-object-literal/template.marko_1_v#4/var"
       },
       "PatchSetupValues:": {
-        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-object-literal/tags/card.marko_fill0": {
+        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-object-literal/tags/card.marko_0_o#4/fill": {
           label: "c"
         }
       }

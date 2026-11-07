@@ -52,7 +52,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_script($scope1_id, "__tests__/template.marko_1");
 			_client_guard($scope0_reason, 2) && _patch_render($scope1_id, "__tests__/template.marko_1_input_label#0:6/setup");
 			_client_guard($scope0_reason, 3) && _patch_render($scope1_id, "__tests__/template.marko_1_input_open#0:7/setup");
-			_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill0", n, 1);
+			_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_1_n#4/fill", n, 1);
 			_scope($scope1_id, {
 				n,
 				_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id),

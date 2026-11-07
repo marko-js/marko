@@ -36,7 +36,7 @@
               }
             }, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/page-b.marko_1*shell"],
             "PatchSetupValues:": {
-              "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/page-b.marko_fill0": 0
+              "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/page-b.marko_0_count#6/fill": 0
             }
           }
         }, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/template.marko_4*shell"]
@@ -71,7 +71,7 @@
             "PatchText:#text/0": "",
             "PatchBranch:#text/1": "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/page-a.marko_1*shell",
             "PatchSetupValues:": {
-              "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/page-a.marko_fill0": 0
+              "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/page-a.marko_0_n#8/fill": 0
             }
           }
         }, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/template.marko_3*shell"]
@@ -123,7 +123,7 @@
               }
             }, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/page-b.marko_1*shell"],
             "PatchSetupValues:": {
-              "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/page-b.marko_fill0": 0
+              "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/page-b.marko_0_count#6/fill": 0
             }
           }
         }, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-page-fill-join-records/template.marko_4*shell"]

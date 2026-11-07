@@ -6,7 +6,7 @@
       "PatchText:#text/0": "A",
       "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-branch-child-nested/tags/card.marko_1_input_title#0:5/setup": "input_title",
       "PatchSetupValues:": {
-        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-branch-child-nested/tags/card.marko_fill0": !1
+        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-branch-child-nested/tags/card.marko_0_open#6/fill": !1
       },
       "PatchMarkedWrite:input_title": "A"
     }
@@ -21,7 +21,7 @@
       "PatchText:#text/0": "B",
       "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-branch-child-nested/tags/card.marko_1_input_title#0:5/setup": "input_title",
       "PatchSetupValues:": {
-        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-branch-child-nested/tags/card.marko_fill0": !1
+        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-branch-child-nested/tags/card.marko_0_open#6/fill": !1
       },
       "PatchMarkedWrite:input_title": "B"
     }

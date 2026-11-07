@@ -4,7 +4,7 @@ const $walks$1 = " b%c";
 const $if_content__input = /*@__PURE__*/ _if_closure_patch("__tests__/tags/card.marko_1_input#0:3/setup", "#text/1", 0, ($scope) => _text($scope["#text/0"], $scope._.input.fn()));
 const $if_content__setup$1 = $if_content__input;
 const $if$1 = /*@__PURE__*/ _if("#text/1", "<p> </p>", "D ", $if_content__setup$1);
-const $open = /*@__PURE__*/ _fill_let("__tests__/tags/card.marko_fill0", "open/4", ($scope) => $if$1($scope, $scope.open ? 0 : 1));
+const $open = /*@__PURE__*/ _fill_let("__tests__/tags/card.marko_0_open#4/fill", "open/4", ($scope) => $if$1($scope, $scope.open ? 0 : 1));
 const $setup__script = _script("__tests__/tags/card.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$open($scope, !$scope.open);
 }));

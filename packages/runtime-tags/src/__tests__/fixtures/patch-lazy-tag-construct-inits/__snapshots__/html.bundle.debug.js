@@ -22,7 +22,7 @@ var child_default = _template("__tests__/child.marko", (input) => {
 		}, "__tests__/child.marko", "3:2", { i: "3:6" });
 	}, 0, $scope0_id, "#text/1", 1, 1, 1, 0, 0, "__tests__/child.marko_1*shell", 0, 0);
 	_script($scope0_id, "__tests__/child.marko_0");
-	_patch_fill($scope0_id, "PatchFill:__tests__/child.marko_fill0", count, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/child.marko_0_count#5/fill", count, 1);
 	_scope($scope0_id, { count }, "__tests__/child.marko", 0, { count: "1:6" });
 });
 

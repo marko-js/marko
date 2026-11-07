@@ -50,7 +50,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 	_patch_child_end();
 	_html(`<button class=b>+</button>${_el_mark($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/tags/card.marko_0");
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/card.marko_fill0", count, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/card.marko_0_count#2/fill", count, 1);
 	_scope($scope0_id, {
 		count,
 		"#childScope/0": _existing_scope($childScope)

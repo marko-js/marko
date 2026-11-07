@@ -4,7 +4,7 @@ const $walks$1 = "D%c%l";
 const $mounted__script = _script("__tests__/tags/widget/index.marko_0_mounted#5", ($scope) => _lifecycle($scope, { onMount: function() {
 	$mounted($scope, +$scope.mounted + 1);
 } }));
-const $mounted = /*@__PURE__*/ _fill_let("__tests__/tags/widget/index.marko_fill0", "mounted/5", ($scope) => {
+const $mounted = /*@__PURE__*/ _fill_let("__tests__/tags/widget/index.marko_0_mounted#5/fill", "mounted/5", ($scope) => {
 	_text($scope["#text/1"], $scope.mounted);
 	$mounted__script($scope);
 });

@@ -4,7 +4,7 @@
   "PatchBranch:#text/0": [{
     "PatchBranch:#text/2": "packages/runtime-tags/src/__tests__/fixtures/patch-created-let-init-reads-outer-let/template.marko_2*shell",
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-let-init-reads-outer-let/template.marko_fill0": 1
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-let-init-reads-outer-let/template.marko_1_x#3/fill": 1
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-let-init-reads-outer-let/template.marko_1*shell"]
 }
@@ -20,7 +20,7 @@
   "PatchBranch:#text/0": [{
     "PatchBranch:#text/2": "packages/runtime-tags/src/__tests__/fixtures/patch-created-let-init-reads-outer-let/template.marko_2*shell",
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-let-init-reads-outer-let/template.marko_fill0": 1
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-let-init-reads-outer-let/template.marko_1_x#3/fill": 1
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-let-init-reads-outer-let/template.marko_1*shell"]
 }

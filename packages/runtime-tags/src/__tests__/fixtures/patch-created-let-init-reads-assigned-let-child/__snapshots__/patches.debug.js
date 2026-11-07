@@ -8,7 +8,7 @@
     },
     "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-created-let-init-reads-assigned-let-child/template.marko_1_input_a#0:4_x#3/setup": ">input_a",
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-let-init-reads-assigned-let-child/template.marko_fill0": 1
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-let-init-reads-assigned-let-child/template.marko_1_x#3/fill": 1
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-let-init-reads-assigned-let-child/template.marko_1*shell"],
   "PatchMarkedWrite:input_a": "b"
@@ -24,7 +24,7 @@
     },
     "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-created-let-init-reads-assigned-let-child/template.marko_1_input_a#0:4_x#3/setup": ">input_a",
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-let-init-reads-assigned-let-child/template.marko_fill0": 1
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-let-init-reads-assigned-let-child/template.marko_1_x#3/fill": 1
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-let-init-reads-assigned-let-child/template.marko_1*shell"],
   "PatchMarkedWrite:input_a": "c"

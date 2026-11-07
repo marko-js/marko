@@ -17,7 +17,7 @@ const $template = "<!><!><!>";
 const $walks = "b%c";
 const $setup = ($_) => {};
 const $if_content__a__OR__b = /*@__PURE__*/ _or(4, ($scope) => _text($scope["#text/0"], $scope.a + $scope.b));
-const $if_content__a = /*@__PURE__*/ _fill_let("__tests__/tags/view.marko_fill0", "a/2", $if_content__a__OR__b);
+const $if_content__a = /*@__PURE__*/ _fill_let("__tests__/tags/view.marko_1_a#2/fill", "a/2", $if_content__a__OR__b);
 const $if_content__input_x = /*@__PURE__*/ _if_closure_patch("__tests__/tags/view.marko_1_input_x#0:4/setup", "#text/0", 0, ($scope) => $if_content__a($scope, $scope._.input_x));
 const $if_content__setup__script = _script("__tests__/tags/view.marko_1", ($scope) => _on($scope["#button/1"], "click", function() {
 	$if_content__a($scope, +$scope.a + 1);
@@ -27,7 +27,7 @@ const $if_content__setup = ($scope) => {
 	$if_content__input_y._($scope);
 	$if_content__setup__script($scope);
 };
-const $if_content__b = _fill_let_resume("__tests__/tags/view.marko_fill1", "b/3", $if_content__a__OR__b);
+const $if_content__b = _fill_let_resume("__tests__/tags/view.marko_1_b#3/fill", "b/3", $if_content__a__OR__b);
 const $if_content__input_y = /*@__PURE__*/ _if_closure_patch("__tests__/tags/view.marko_1_input_y#0:5/setup", "#text/0", 0, ($scope) => $if_content__b($scope, $scope._.input_y));
 const $if = /*@__PURE__*/ _if("#text/0", "<span> </span><button>+</button>", "D l ", $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);

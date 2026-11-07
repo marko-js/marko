@@ -23,7 +23,7 @@ const $walks = "D l%b b";
 const $if_content__input_b = /*@__PURE__*/ _if_closure_patch("__tests__/tags/kid.marko_1_input_b#0:6/setup", "#text/1", 0, ($scope) => _text($scope["#text/0"], $scope._.input_b));
 const $if_content__setup = $if_content__input_b;
 const $if = /*@__PURE__*/ _if("#text/1", "<p> </p>", "D ", $if_content__setup);
-const $on = /*@__PURE__*/ _fill_let("__tests__/tags/kid.marko_fill0", "on/7", ($scope) => $if($scope, $scope.on ? 0 : 1));
+const $on = /*@__PURE__*/ _fill_let("__tests__/tags/kid.marko_0_on#7/fill", "on/7", ($scope) => $if($scope, $scope.on ? 0 : 1));
 const $setup__script = _script("__tests__/tags/kid.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
 	$on($scope, !$scope.on);
 }));

@@ -16,7 +16,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		let l = String(x);
 		_html(`<button>${_text_mark($scope1_id, "#text/1", l)}</button>${_el_mark($scope1_id, "#button/0")}`);
 		_script($scope1_id, "__tests__/template.marko_1");
-		_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill0", l, 1);
+		_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_1_l#5/fill", l, 1);
 		_scope($scope1_id, { l }, "__tests__/template.marko", "1:2", { l: "2:8" });
 	}, $scope0_id) };
 	const B = { content: _content_resume("__tests__/template.marko_2*content", ({ x }) => {

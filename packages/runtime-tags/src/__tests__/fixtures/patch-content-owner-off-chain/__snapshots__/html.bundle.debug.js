@@ -38,7 +38,7 @@ var src_default = _template("__tests__/tags/src.marko", (input) => {
 	$cg__input_items && _var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/tags/src.marko_0_h#6/var");
 	_patch_child_end();
 	const $return = h;
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/src.marko_fill0", count, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/src.marko_0_count#5/fill", count, 1);
 	_scope($scope0_id, {
 		count,
 		"ClosureScopes:count/7": $count__closures,

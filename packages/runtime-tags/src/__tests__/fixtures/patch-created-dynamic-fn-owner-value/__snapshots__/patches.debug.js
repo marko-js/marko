@@ -6,7 +6,7 @@
   "PatchChild:BranchScopes:#text/0": {
     "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-created-dynamic-fn-owner-value/tags/card.marko_0_input_fn#4_open#5/setup": "input_fn",
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-dynamic-fn-owner-value/tags/card.marko_fill0": !0
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-dynamic-fn-owner-value/tags/card.marko_0_open#5/fill": !0
     },
     "PatchBind:input_fn": "^packages/runtime-tags/src/__tests__/fixtures/patch-created-dynamic-fn-owner-value/template.marko_0/fn"
   }
@@ -20,7 +20,7 @@
   "PatchChild:BranchScopes:#text/0": {
     "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-created-dynamic-fn-owner-value/tags/card.marko_0_input_fn#4_open#5/setup": "input_fn",
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-dynamic-fn-owner-value/tags/card.marko_fill0": !0
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-dynamic-fn-owner-value/tags/card.marko_0_open#5/fill": !0
     },
     "PatchBind:input_fn": "^packages/runtime-tags/src/__tests__/fixtures/patch-created-dynamic-fn-owner-value/template.marko_0/fn"
   }

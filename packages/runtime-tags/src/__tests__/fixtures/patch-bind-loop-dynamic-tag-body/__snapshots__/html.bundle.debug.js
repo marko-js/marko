@@ -19,7 +19,7 @@ var reveal_default = _template("__tests__/tags/reveal.marko", (input) => {
 	}, $scope0_id, "#text/1");
 	_script($scope0_id, "__tests__/tags/reveal.marko_0");
 	$fg__input_content && _patch_render($scope0_id, "__tests__/tags/reveal.marko_1_input_content#0:4/setup", "input_content");
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/reveal.marko_fill0", show, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/reveal.marko_0_show#5/fill", show, 1);
 	_scope($scope0_id, {
 		input_content: input.content,
 		show

@@ -21,7 +21,7 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 // tags/box.marko
 const $template$3 = "";
 const $walks$3 = "";
-const $value = /*@__PURE__*/ _fill_let("__tests__/tags/box.marko_fill0", "value/0", ($scope) => _return($scope, $scope.value));
+const $value = /*@__PURE__*/ _fill_let("__tests__/tags/box.marko_0_value#0/fill", "value/0", ($scope) => _return($scope, $scope.value));
 function $setup$3($scope) {
 	_return_change($scope, $valueChange($scope));
 	$value($scope, null);
@@ -36,7 +36,7 @@ var box_default = /*@__PURE__*/ _template("__tests__/tags/box.marko", "", "", /*
 const $template$2 = "<button class=tick> </button>";
 const $walks$2 = " D l";
 const $input_base__OR__tick = /*@__PURE__*/ _or_patch("__tests__/tags/counter.marko_0_input_base#4_tick#5/setup", 6, ($scope) => _text($scope["#text/1"], $scope.input_base + $scope.tick));
-const $tick = /*@__PURE__*/ _fill_let("__tests__/tags/counter.marko_fill0", "tick/5", $input_base__OR__tick);
+const $tick = /*@__PURE__*/ _fill_let("__tests__/tags/counter.marko_0_tick#5/fill", "tick/5", $input_base__OR__tick);
 const $setup__script$1 = _script("__tests__/tags/counter.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$tick($scope, +$scope.tick + 1);
 }));

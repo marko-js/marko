@@ -14,7 +14,7 @@ var counter_default = _template("__tests__/counter.marko", (input) => {
 	const $valueChange2 = _patch_bind($scope0_id, "PatchWrite:#TagVariableChange", _resume(function(v) {
 		n = v;
 	}, "__tests__/counter.marko_0/valueChange", $scope0_id) || void 0, 0, 0);
-	_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/counter.marko_fill0", n, 1);
+	_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/counter.marko_0_n#4/fill", n, 1);
 	_scope($scope0_id, {
 		n,
 		"#TagVariableChange": $valueChange2

@@ -7,7 +7,7 @@ const $g2 = /*@__PURE__*/ _const("g", ($scope) => {
 	$g2__script($scope);
 });
 const $input_fn__OR__open = /*@__PURE__*/ _or_patch("__tests__/tags/card.marko_0_input_fn#3_open#4/setup", 5, ($scope) => $g2($scope, $scope.open ? $scope.input_fn : $g));
-const $open = _fill_let_resume("__tests__/tags/card.marko_fill0", "open/4", $input_fn__OR__open);
+const $open = _fill_let_resume("__tests__/tags/card.marko_0_open#4/fill", "open/4", $input_fn__OR__open);
 function $setup$1($scope) {
 	$open($scope, true);
 }

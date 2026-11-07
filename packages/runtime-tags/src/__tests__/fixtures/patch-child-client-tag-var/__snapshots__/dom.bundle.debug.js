@@ -1,7 +1,7 @@
 // tags/widget/index.marko
 const $template$1 = "<em><!> x<!></em><button class=bump>+</button>";
 const $walks$1 = "D%c%l b";
-const $count = /*@__PURE__*/ _fill_let("__tests__/tags/widget/index.marko_fill0", "count/6", ($scope) => {
+const $count = /*@__PURE__*/ _fill_let("__tests__/tags/widget/index.marko_0_count#6/fill", "count/6", ($scope) => {
 	_text($scope["#text/1"], $scope.count);
 	_return($scope, $scope.count);
 });

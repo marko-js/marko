@@ -24,7 +24,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				}
 			}, $scope1_id, "#text/0", 1, 1, 0, 0, 1);
 			_client_guard($scope0_reason, 1) && _patch_render($scope1_id, "__tests__/template.marko_1_input_open#0:4/setup");
-			_filled_guard($scope0_reason, 1) && _patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill0", open, 1);
+			_filled_guard($scope0_reason, 1) && _patch_fill($scope1_id, "PatchFill:__tests__/template.marko_1_open#1/fill", open, 1);
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "1:2");
 			return 0;
 		}

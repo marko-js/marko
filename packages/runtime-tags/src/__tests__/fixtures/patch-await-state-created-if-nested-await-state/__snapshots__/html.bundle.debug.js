@@ -27,7 +27,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					_html(`<b>${_text_mark($scope3_id, "#text/0", y)}</b>`);
 					_scope($scope3_id, {}, "__tests__/template.marko", "7:6");
 				}, 1, "__tests__/template.marko_3*content", 2);
-				_patch_fill($scope2_id, "PatchFill:__tests__/template.marko_fill0", q, 1);
+				_patch_fill($scope2_id, "PatchFill:__tests__/template.marko_2_q#4/fill", q, 1);
 				_scope($scope2_id, {}, "__tests__/template.marko", "4:4");
 			}, 1, "__tests__/template.marko_2*content", 3);
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:2");

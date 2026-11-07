@@ -42,7 +42,7 @@ var host_default = _template("__tests__/tags/host.marko", (input) => {
 	$fg__input_wrap && $cg__input_show && _patch_render($scope0_id, "__tests__/tags/host.marko_2_input_wrap#0:5/setup", "input_wrap");
 	$fg__input_native && $cg__input_show && _patch_render($scope0_id, "__tests__/tags/host.marko_2_input_native#0:7/setup", "input_native");
 	$fg__input_label && _patch_subscribers($scope0_id, "__tests__/tags/host.marko_0_input_label#8/subscribers", "input_label");
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/host.marko_fill0", flag, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/host.marko_0_flag#9/fill", flag, 1);
 	_scope($scope0_id, {
 		input_wrap: input.wrap,
 		input_native: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.native,
@@ -91,7 +91,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}, $scope1_id, "#text/1");
 			_script($scope1_id, "__tests__/template.marko_1");
 			_patch_render($scope1_id, "__tests__/template.marko_2_content#1:4/setup", "content");
-			_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill0", open, 1);
+			_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_1_open#5/fill", open, 1);
 			_scope($scope1_id, {
 				content,
 				open

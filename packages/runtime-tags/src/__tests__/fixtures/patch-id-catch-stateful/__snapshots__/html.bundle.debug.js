@@ -12,7 +12,7 @@ var field_default = _template("__tests__/tags/field.marko", (input) => {
 	_html(`<label${_attr("for", uid, $scope0_id, "PatchAttr:#label/0 for", 0, 0)}>${_text_mark($scope0_id, "#text/1", input.name, 1, $scope0_reason, 0)}</label>${_el_mark($scope0_id, "#label/0", 0)}<input${_attr("id", uid, $scope0_id, "PatchAttr:#input/2 id", 0, 0)}>${_el_mark($scope0_id, "#input/2", 0)}<button>+</button>${_el_mark($scope0_id, "#button/3")}`);
 	const $return = count;
 	_script($scope0_id, "__tests__/tags/field.marko_0");
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/field.marko_fill0", count, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/field.marko_0_count#7/fill", count, 1);
 	_scope($scope0_id, { count }, "__tests__/tags/field.marko", 0, { count: "1:6" });
 	return $return;
 });

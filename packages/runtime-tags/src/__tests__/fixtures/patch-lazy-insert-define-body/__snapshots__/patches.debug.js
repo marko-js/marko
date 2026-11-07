@@ -8,7 +8,7 @@
           "PatchText:#text/1": "s"
         },
         "PatchSetupValues:": {
-          "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-insert-define-body/lazy.marko_fill0": 0
+          "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-insert-define-body/lazy.marko_0_count#6/fill": 0
         }
       }
     }

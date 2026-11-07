@@ -20,7 +20,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				let notes = 0;
 				_html(`<span>${_text_mark($scope2_id, "#text/0", notes)}</span><button>note</button>${_el_mark($scope2_id, "#button/1")}`);
 				_script($scope2_id, "__tests__/template.marko_2");
-				_patch_fill($scope2_id, "PatchFill:__tests__/template.marko_fill0", notes, 1);
+				_patch_fill($scope2_id, "PatchFill:__tests__/template.marko_2_notes#2/fill", notes, 1);
 				_scope($scope2_id, { notes }, "__tests__/template.marko", "5:8", { notes: "6:14" });
 				return 0;
 			}

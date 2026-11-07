@@ -6,7 +6,7 @@ const $input_onA__OR__input_onB__OR__mode = /*@__PURE__*/ _or_patch("__tests__/t
 	_return_change($scope, $scope.mode === "a" ? $scope.input_onA : $scope.input_onB);
 	$input_onA__OR__input_onB__OR__mode__script($scope);
 }, 2);
-const $mode = /*@__PURE__*/ _fill_let("__tests__/tags/counter-box/index.marko_fill0", "mode/7", ($scope) => {
+const $mode = /*@__PURE__*/ _fill_let("__tests__/tags/counter-box/index.marko_0_mode#7/fill", "mode/7", ($scope) => {
 	_text($scope["#text/0"], $scope.mode);
 	_return($scope, $scope.mode);
 	$input_onA__OR__input_onB__OR__mode($scope);

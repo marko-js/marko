@@ -10,7 +10,7 @@ function read($global, handler) {
 	queueMicrotask(() => reads.delete($global));
 	return handler;
 }
-const $if_content__count = /*@__PURE__*/ _fill_let_change("__tests__/template.marko_fill0", "count/3", ($scope) => _text($scope["#text/1"], $scope.count));
+const $if_content__count = /*@__PURE__*/ _fill_let_change("__tests__/template.marko_1_count#3/fill", "count/3", ($scope) => _text($scope["#text/1"], $scope.count));
 const $if_content__input_start__OR__onCount__$global = /*@__PURE__*/ _fill_global("__tests__/template.marko_1_input_start#0:5_onCount#0:7_$global#0:9", ($scope) => $if_content__count($scope, $scope._.input_start, read($scope.$global, $scope._.onCount)), "");
 const $if_content__input_start__OR__onCount = /*@__PURE__*/ _or_patch("__tests__/template.marko_1_input_start#0:5_onCount#0:7/setup", 2, $if_content__input_start__OR__onCount__$global);
 const $if_content__input_start = /*@__PURE__*/ _if_closure_patch("__tests__/template.marko_1_input_start#0:5/setup", "#text/1", 0, $if_content__input_start__OR__onCount);

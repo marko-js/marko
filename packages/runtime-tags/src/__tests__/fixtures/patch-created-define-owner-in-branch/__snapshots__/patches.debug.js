@@ -3,7 +3,7 @@
 {
   "PatchBranch:#text/0": [{
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-define-owner-in-branch/template.marko_fill0": 1
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-define-owner-in-branch/template.marko_1_k#2/fill": 1
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-define-owner-in-branch/template.marko_1*shell"],
   "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-define-owner-in-branch/template.marko_0_input_w#5/subscribers": "input_w",
@@ -15,7 +15,7 @@
 {
   "PatchBranch:#text/0": [{
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-define-owner-in-branch/template.marko_fill0": 1
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-define-owner-in-branch/template.marko_1_k#2/fill": 1
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-define-owner-in-branch/template.marko_1*shell"],
   "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-define-owner-in-branch/template.marko_0_input_w#5/subscribers": "input_w",

@@ -87,7 +87,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}, $scope1_id, "#text/1");
 			_script($scope1_id, "__tests__/template.marko_1");
 			_patch_render($scope1_id, "__tests__/template.marko_2_item#1:4/setup", "item");
-			_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill0", open, 1);
+			_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_1_open#5/fill", open, 1);
 			_scope($scope1_id, {
 				item,
 				open

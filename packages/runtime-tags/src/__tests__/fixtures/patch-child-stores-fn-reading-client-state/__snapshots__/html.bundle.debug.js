@@ -10,7 +10,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 	const g = open ? input.fn : _resume(() => "-", "__tests__/tags/card.marko_0/g");
 	_script($scope0_id, "__tests__/tags/card.marko_0_g#5", 0, $sg__input_fn && 2, "input_fn");
 	_patch_render($scope0_id, "__tests__/tags/card.marko_0_input_fn#2_open#3/setup", $fg__input_fn && "input_fn");
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/card.marko_fill0", open, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/card.marko_0_open#3/fill", open, 1);
 	_scope($scope0_id, {
 		input_fn: input.fn,
 		open: _write_if($scope0_reason, 0) && open,

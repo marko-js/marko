@@ -7,7 +7,7 @@
         "PatchText:#text/1": "s"
       },
       "PatchSetupValues:": {
-        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-insert-reopened/lazy.marko_fill0": 0
+        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-insert-reopened/lazy.marko_0_count#6/fill": 0
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-insert-reopened/template.marko_2*shell"],
@@ -24,7 +24,7 @@
         "PatchText:#text/1": "s"
       },
       "PatchSetupValues:": {
-        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-insert-reopened/lazy.marko_fill0": 0
+        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-insert-reopened/lazy.marko_0_count#6/fill": 0
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-insert-reopened/template.marko_2*shell"],

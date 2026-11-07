@@ -7,7 +7,7 @@
         "PatchText:#text/0": "b"
       }, "packages/runtime-tags/src/__tests__/fixtures/patch-define-created-state-closure-beside-stateful-body/template.marko_3*shell"],
       "PatchSetupValues:": {
-        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-define-created-state-closure-beside-stateful-body/template.marko_fill0": 1
+        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-define-created-state-closure-beside-stateful-body/template.marko_2_n#6/fill": 1
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-define-created-state-closure-beside-stateful-body/template.marko_1*shell"],
@@ -26,7 +26,7 @@
         "PatchText:#text/0": "c"
       }, "packages/runtime-tags/src/__tests__/fixtures/patch-define-created-state-closure-beside-stateful-body/template.marko_3*shell"],
       "PatchSetupValues:": {
-        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-define-created-state-closure-beside-stateful-body/template.marko_fill0": 1
+        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-define-created-state-closure-beside-stateful-body/template.marko_2_n#6/fill": 1
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-define-created-state-closure-beside-stateful-body/template.marko_1*shell"],
@@ -53,7 +53,7 @@
         "PatchText:#text/0": "e"
       }, "packages/runtime-tags/src/__tests__/fixtures/patch-define-created-state-closure-beside-stateful-body/template.marko_3*shell"],
       "PatchSetupValues:": {
-        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-define-created-state-closure-beside-stateful-body/template.marko_fill0": 1
+        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-define-created-state-closure-beside-stateful-body/template.marko_2_n#6/fill": 1
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-define-created-state-closure-beside-stateful-body/template.marko_1*shell"],

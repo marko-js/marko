@@ -20,7 +20,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 	}, $scope0_id, "#text/2");
 	_script($scope0_id, "__tests__/tags/card.marko_0");
 	$fg__input_content && _patch_render($scope0_id, "__tests__/tags/card.marko_1_content#0:5/setup", "content");
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/card.marko_fill0", open, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/card.marko_0_open#6/fill", open, 1);
 	_scope($scope0_id, {
 		content: input.content,
 		open

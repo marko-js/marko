@@ -9,7 +9,7 @@ var widget_default = _template("__tests__/tags/widget/index.marko", (input) => {
 	let mounted = 0;
 	_html(`<p>${_text_mark($scope0_id, "#text/0", input.label, 1, $scope0_reason, 0)}:${_text_mark($scope0_id, "#text/1", mounted, 2)}</p>`);
 	_script($scope0_id, "__tests__/tags/widget/index.marko_0_mounted#5");
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/widget/index.marko_fill0", mounted, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/widget/index.marko_0_mounted#5/fill", mounted, 1);
 	_scope($scope0_id, { mounted }, "__tests__/tags/widget/index.marko", 0, { mounted: "1:6" });
 });
 

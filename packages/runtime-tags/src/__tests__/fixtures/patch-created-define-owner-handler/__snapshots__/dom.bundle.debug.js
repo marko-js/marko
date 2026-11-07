@@ -30,7 +30,7 @@ const $Panel_content__setup = ($scope) => {
 	$Panel_content__setup__script($scope);
 };
 const $k__closure = /*@__PURE__*/ _closure($Panel_content__k);
-const $k = /*@__PURE__*/ _fill_let("__tests__/tags/card.marko_fill0", "k/4", $k__closure);
+const $k = /*@__PURE__*/ _fill_let("__tests__/tags/card.marko_0_k#4/fill", "k/4", $k__closure);
 const $input_n = $k;
 function $setup($scope) {
 	$scope["#childScope/0"]._ = $scope;

@@ -16,7 +16,7 @@ const $await_content__open = /*@__PURE__*/ _closure_get_patch("__tests__/tags/ca
 const $await_content__x = /*@__PURE__*/ _const("x", $await_content__input_content__OR__x);
 const $await_content__$params = ($scope, $params2) => $await_content__x($scope, $params2[0]);
 const $open__closure = /*@__PURE__*/ _closure($await_content__open);
-const $open = /*@__PURE__*/ _fill_let("__tests__/tags/card.marko_fill0", "open/6", $open__closure);
+const $open = /*@__PURE__*/ _fill_let("__tests__/tags/card.marko_0_open#6/fill", "open/6", $open__closure);
 const $setup__script = _script("__tests__/tags/card.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$open($scope, !$scope.open);
 }));

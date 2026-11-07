@@ -12,7 +12,7 @@ var mixer_default = _template("__tests__/tags/mixer/index.marko", (input) => {
 	const $return = input.value + local;
 	_script($scope0_id, "__tests__/tags/mixer/index.marko_0");
 	_patch_render($scope0_id, "__tests__/tags/mixer/index.marko_0_input_value#3_local#4/setup", $fg__input_value && "input_value");
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/mixer/index.marko_fill0", local, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/mixer/index.marko_0_local#4/fill", local, 1);
 	_scope($scope0_id, {
 		input_value: input.value,
 		local

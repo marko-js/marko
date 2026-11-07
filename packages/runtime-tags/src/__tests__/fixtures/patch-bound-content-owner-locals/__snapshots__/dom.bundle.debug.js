@@ -43,7 +43,7 @@ const $if_content__for = /*@__PURE__*/ _for_of_unkeyed("#text/0", "<!><!><!>", "
 const $if_content__item = /*@__PURE__*/ _if_closure_patch("__tests__/template.marko_2_item#1:4/setup", "#text/1", 0, ($scope) => $if_content__for($scope, [$scope._.item]));
 const $if_content__setup = $if_content__item;
 const $wrap_content__if = /*@__PURE__*/ _if("#text/1", "<!><!><!>", "b%", $if_content__setup);
-const $wrap_content__open = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill0", "open/5", ($scope) => $wrap_content__if($scope, $scope.open ? 0 : 1));
+const $wrap_content__open = /*@__PURE__*/ _fill_let("__tests__/template.marko_1_open#5/fill", "open/5", ($scope) => $wrap_content__if($scope, $scope.open ? 0 : 1));
 const $wrap_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/0"], "click", function() {
 	$wrap_content__open($scope, !$scope.open);
 }));

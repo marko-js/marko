@@ -38,7 +38,7 @@ const $item_content__if = /*@__PURE__*/ _if("#text/0", "<span>shown</span>");
 const $item_content__input_show = /*@__PURE__*/ _closure_get_patch("__tests__/tags/child.marko_1_input_show#0:5/subscribe", "input_show/7", ($scope) => $item_content__if($scope, $scope._.input_show ? 0 : 1), 0, "__tests__/tags/child.marko_0_input_show#5/subscribers", 0);
 const $item_content__setup = $item_content__input_show;
 const $item_content = /*@__PURE__*/ _content("__tests__/tags/child.marko_1*content", "<!><!><!>", "b%", $item_content__setup);
-const $items = /*@__PURE__*/ _fill_let("__tests__/tags/child.marko_fill0", "items/6", ($scope) => {
+const $items = /*@__PURE__*/ _fill_let("__tests__/tags/child.marko_0_items#6/fill", "items/6", ($scope) => {
 	let $item;
 	forOf($scope.items, (item) => {
 		$item = attrTags($item, { content: $item_content($scope) });

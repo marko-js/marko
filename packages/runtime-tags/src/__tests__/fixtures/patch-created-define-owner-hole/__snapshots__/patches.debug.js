@@ -4,7 +4,7 @@
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {
       "PatchSetupValues:": {
-        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-define-owner-hole/tags/card.marko_fill0": 1
+        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-define-owner-hole/tags/card.marko_0_k#5/fill": 1
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-define-owner-hole/template.marko_1*shell"]
@@ -16,7 +16,7 @@
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {
       "PatchSetupValues:": {
-        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-define-owner-hole/tags/card.marko_fill0": 1
+        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-define-owner-hole/tags/card.marko_0_k#5/fill": 1
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-define-owner-hole/template.marko_1*shell"]

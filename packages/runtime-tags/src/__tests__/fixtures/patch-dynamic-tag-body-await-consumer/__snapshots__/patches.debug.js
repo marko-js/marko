@@ -5,7 +5,7 @@
   "PatchChild:BranchScopes:#text/0": {
     "PatchPending:#text/1": "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-consumer/tags/card.marko_1*content",
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-consumer/tags/card.marko_fill0": !0
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-consumer/tags/card.marko_0_open#6/fill": !0
     }
   },
   "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-consumer/template.marko_0_input_note#6/subscribers": "input_note",
@@ -27,7 +27,7 @@
   "PatchChild:BranchScopes:#text/0": {
     "PatchPending:#text/1": "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-consumer/tags/card.marko_1*content",
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-consumer/tags/card.marko_fill0": !0
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-consumer/tags/card.marko_0_open#6/fill": !0
     },
     "PatchChild:BranchScopes:#text/1": {
       "PatchBind:c": "^^packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-consumer/template.marko_1*content",

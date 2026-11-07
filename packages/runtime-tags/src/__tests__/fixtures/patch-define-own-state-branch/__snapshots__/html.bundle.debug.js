@@ -24,7 +24,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html(`<button>toggle</button>${_el_mark($scope1_id, "#button/1")}`);
 		_script($scope1_id, "__tests__/template.marko_1");
 		$fg__label && _patch_render($scope1_id, "__tests__/template.marko_2_label#1:4/setup", "label");
-		_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill0", open, 1);
+		_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_1_open#5/fill", open, 1);
 		_scope($scope1_id, {
 			label,
 			open

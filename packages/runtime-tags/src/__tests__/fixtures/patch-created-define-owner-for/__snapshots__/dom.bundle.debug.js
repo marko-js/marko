@@ -32,7 +32,7 @@ const $List_content__for = /*@__PURE__*/ _for_of_unkeyed("#text/0", "<li><!> <!>
 const $List_content__items = ($scope, items) => $List_content__for($scope, [items]);
 const $List_content__$params = ($scope, $params2) => $List_content__$temp($scope, $params2[0]);
 const $List_content__$temp = ($scope, $temp) => $List_content__items($scope, $temp.items);
-const $k = /*@__PURE__*/ _fill_let("__tests__/tags/card.marko_fill0", "k/6", ($scope) => $List_content__items($scope["#childScope/0"], $scope.k));
+const $k = /*@__PURE__*/ _fill_let("__tests__/tags/card.marko_0_k#6/fill", "k/6", ($scope) => $List_content__items($scope["#childScope/0"], $scope.k));
 const $input_n = ($scope, input_n) => $k($scope, [input_n]);
 const $setup__script = _script("__tests__/tags/card.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$k($scope, []);

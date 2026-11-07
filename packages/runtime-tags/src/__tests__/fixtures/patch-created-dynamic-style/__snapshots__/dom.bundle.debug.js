@@ -36,7 +36,7 @@ var bar_default = /*@__PURE__*/ _template("__tests__/tags/bar.marko", $template$
 // tags/route-bar.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<button>+</button>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}& b`)($walks$1);
-const $w = /*@__PURE__*/ _fill_let("__tests__/tags/route-bar.marko_fill0", "w/2", ($scope) => $input_pct($scope["#childScope/0"], $scope.w));
+const $w = /*@__PURE__*/ _fill_let("__tests__/tags/route-bar.marko_0_w#2/fill", "w/2", ($scope) => $input_pct($scope["#childScope/0"], $scope.w));
 const $setup__script = _script("__tests__/tags/route-bar.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$w($scope, $scope.w + 10);
 }));

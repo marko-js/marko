@@ -4,7 +4,7 @@
   "PatchDynamicTag:#text/2": "packages/runtime-tags/src/__tests__/fixtures/patch-created-child-unassigned-let-for/tags/card.marko",
   "PatchChild:BranchScopes:#text/2": {
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-unassigned-let-for/tags/card.marko_fill0": ["a", "b"]
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-unassigned-let-for/tags/card.marko_0_items#4/fill": ["a", "b"]
     }
   }
 }
@@ -22,7 +22,7 @@
   "PatchDynamicTag:#text/2": "packages/runtime-tags/src/__tests__/fixtures/patch-created-child-unassigned-let-for/tags/card.marko",
   "PatchChild:BranchScopes:#text/2": {
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-unassigned-let-for/tags/card.marko_fill0": ["c"]
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-unassigned-let-for/tags/card.marko_0_items#4/fill": ["c"]
     }
   }
 }

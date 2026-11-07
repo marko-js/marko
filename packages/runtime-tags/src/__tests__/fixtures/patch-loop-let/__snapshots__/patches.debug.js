@@ -4,12 +4,12 @@
   "PatchLoop:#ul/0": [2, {
     "PatchText:#text/0": "Bread",
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-loop-let/template.marko_fill0": 0
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-loop-let/template.marko_1_votes#7/fill": 0
     }
   }, 1, {
     "PatchText:#text/0": "Apples",
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-loop-let/template.marko_fill0": 0
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-loop-let/template.marko_1_votes#7/fill": 0
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-let/template.marko_1*shell"]
 }
@@ -20,17 +20,17 @@
   "PatchLoop:#ul/0": [2, {
     "PatchText:#text/0": "Bread",
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-loop-let/template.marko_fill0": 0
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-loop-let/template.marko_1_votes#7/fill": 0
     }
   }, 3, {
     "PatchText:#text/0": "Milk",
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-loop-let/template.marko_fill0": 5
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-loop-let/template.marko_1_votes#7/fill": 5
     }
   }, 1, {
     "PatchText:#text/0": "Apples",
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-loop-let/template.marko_fill0": 0
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-loop-let/template.marko_1_votes#7/fill": 0
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-let/template.marko_1*shell"]
 }
@@ -40,12 +40,12 @@
   "PatchLoop:#ul/0": [2, {
     "PatchText:#text/0": "Bread",
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-loop-let/template.marko_fill0": 0
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-loop-let/template.marko_1_votes#7/fill": 0
     }
   }, 1, {
     "PatchText:#text/0": "Apples",
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-loop-let/template.marko_fill0": 0
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-loop-let/template.marko_1_votes#7/fill": 0
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-let/template.marko_1*shell"]
 }
@@ -55,17 +55,17 @@
   "PatchLoop:#ul/0": [2, {
     "PatchText:#text/0": "Bread",
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-loop-let/template.marko_fill0": 0
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-loop-let/template.marko_1_votes#7/fill": 0
     }
   }, 3, {
     "PatchText:#text/0": "Milk",
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-loop-let/template.marko_fill0": 5
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-loop-let/template.marko_1_votes#7/fill": 5
     }
   }, 1, {
     "PatchText:#text/0": "Apples",
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-loop-let/template.marko_fill0": 0
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-loop-let/template.marko_1_votes#7/fill": 0
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-let/template.marko_1*shell"]
 }

@@ -24,7 +24,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	_patch_child_end();
 	_html(`<button>+</button>${_el_mark($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/tags/child.marko_0");
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/child.marko_fill0", n, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/child.marko_0_n#2/fill", n, 1);
 	_scope($scope0_id, {
 		n,
 		"ClosureScopes:n/3": $n__closures,

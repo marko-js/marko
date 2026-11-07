@@ -23,7 +23,7 @@ const $if_content__setup = ($scope) => {
 };
 const $if_content__input_w = /*@__PURE__*/ _if_closure_patch("__tests__/tags/child.marko_1_input_w#0:5/setup", "#text/1", 0, ($scope) => _text($scope["#text/1"], $scope._.input_w));
 const $if = /*@__PURE__*/ _if("#text/1", "<p><!> <!></p>", "D%c%", $if_content__setup);
-const $on = /*@__PURE__*/ _fill_let("__tests__/tags/child.marko_fill0", "on/6", ($scope) => $if($scope, $scope.on ? 0 : 1));
+const $on = /*@__PURE__*/ _fill_let("__tests__/tags/child.marko_0_on#6/fill", "on/6", ($scope) => $if($scope, $scope.on ? 0 : 1));
 const $setup__script = _script("__tests__/tags/child.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$on($scope, !$scope.on);
 }));

@@ -17,7 +17,7 @@ const $await_content__b__OR__a = /*@__PURE__*/ _or(7, ($scope) => $await_content
 	v: $scope.b,
 	self: $a($scope)
 }));
-const $await_content__b = _fill_let_resume("__tests__/tags/show-await.marko_fill0", "b/5", ($scope) => {
+const $await_content__b = _fill_let_resume("__tests__/tags/show-await.marko_1_b#5/fill", "b/5", ($scope) => {
 	_text($scope["#text/0"], $scope.b);
 	$await_content__b__OR__a($scope);
 });

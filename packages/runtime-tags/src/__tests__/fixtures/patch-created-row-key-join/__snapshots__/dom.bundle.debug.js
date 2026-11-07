@@ -15,8 +15,8 @@ const $if_content__setup = ($scope) => {
 const $if_content__m = /*@__PURE__*/ _if_closure_patch("__tests__/template.marko_2_m#1:3/setup", "#li/0", 0, $if_content__n__OR__m);
 const $for_content__if = /*@__PURE__*/ _if("#li/0", "<button> </button>", " D ", $if_content__setup);
 const $for_content__input_show = /*@__PURE__*/ _for_closure_patch("__tests__/template.marko_1_input_show#0:4/setup", "#ul/0", ($scope) => $for_content__if($scope, $scope._.input_show ? 0 : 1), 5);
-const $for_content__n = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill0", "n/2", $if_content__n);
-const $for_content__m = _fill_let_resume("__tests__/template.marko_fill1", "m/3", $if_content__m);
+const $for_content__n = /*@__PURE__*/ _fill_let("__tests__/template.marko_1_n#2/fill", "n/2", $if_content__n);
+const $for_content__m = _fill_let_resume("__tests__/template.marko_1_m#3/fill", "m/3", $if_content__m);
 const $for_content__setup = ($scope) => {
 	$for_content__input_show._($scope);
 	$for_content__n($scope, 0);

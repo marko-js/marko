@@ -28,7 +28,7 @@ var feed_list_default = _template("__tests__/tags/feed-list.marko", (input) => {
 	}, 0, $scope0_id, "#ul/0", 1, 1, 1, 0, 0, "__tests__/tags/feed-list.marko_1*shell", $scope0_reason, 1);
 	_html(`</ul>${_el_mark($scope0_id, "#ul/0")}`);
 	$fg__input_data && $cg__input_items && _patch_render($scope0_id, "__tests__/tags/feed-list.marko_1_input_data#0:4/setup", "input_data");
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/feed-list.marko_fill0", hovered, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/feed-list.marko_0_hovered#5/fill", hovered, 1);
 	_scope($scope0_id, {
 		input_data: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.data,
 		hovered: _write_if($scope0_reason, 1) && hovered

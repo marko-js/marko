@@ -23,7 +23,7 @@ const $if_content__count = /*@__PURE__*/ _if_closure_patch("__tests__/tags/panel
 	$if_content__count__OR__a($scope);
 	$if_content__count__OR__b($scope);
 });
-const $count = /*@__PURE__*/ _fill_let("__tests__/tags/panel.marko_fill0", "count/7", $if_content__count);
+const $count = /*@__PURE__*/ _fill_let("__tests__/tags/panel.marko_0_count#7/fill", "count/7", $if_content__count);
 const $setup__script$1 = _script("__tests__/tags/panel.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$count($scope, +$scope.count + 1);
 }));

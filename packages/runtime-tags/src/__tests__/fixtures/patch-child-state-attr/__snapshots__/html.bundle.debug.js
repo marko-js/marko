@@ -9,7 +9,7 @@ var counter_default = _template("__tests__/tags/counter/index.marko", (input) =>
 	let spins = 0;
 	_html(`<section><p>Value ${_text_mark($scope0_id, "#text/0", input.value, 2, $scope0_reason, 0)} (spun ${_text_mark($scope0_id, "#text/1", spins, 2)})</p><button class=spin>spin</button>${_el_mark($scope0_id, "#button/2")}</section>`);
 	_script($scope0_id, "__tests__/tags/counter/index.marko_0");
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/counter/index.marko_fill0", spins, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/counter/index.marko_0_spins#6/fill", spins, 1);
 	_scope($scope0_id, { spins }, "__tests__/tags/counter/index.marko", 0, { spins: "1:6" });
 });
 

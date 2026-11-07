@@ -9,7 +9,7 @@ const $Other_content__setup = ($scope) => {
 };
 const $Other_content = _content("__tests__/template.marko_2*content", "<i> </i>", "D ", /*@__PURE__*/ _return_setup($Other_content__setup));
 const $Counter_content__input_label = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_1_input_label#0:5/subscribe", "input_label/11", ($scope) => _text($scope["#text/1"], $scope._.input_label), 0, "__tests__/template.marko_0_input_label#5/subscribers", 0);
-const $Counter_content__n = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill0", "n/3", ($scope) => {
+const $Counter_content__n = /*@__PURE__*/ _fill_let("__tests__/template.marko_1_n#3/fill", "n/3", ($scope) => {
 	_text($scope["#text/2"], $scope.n);
 	_return($scope, $scope.n);
 });

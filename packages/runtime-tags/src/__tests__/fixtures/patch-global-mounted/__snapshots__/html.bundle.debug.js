@@ -12,7 +12,7 @@ var badge_default = _template("__tests__/tags/badge.marko", (input) => {
 	_fill_global_subscribe("__tests__/tags/badge.marko_0_count#2_$global_brand#6", $scope0_id, 1);
 	_script($scope0_id, "__tests__/tags/badge.marko_0_$global#5");
 	_script($scope0_id, "__tests__/tags/badge.marko_0");
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/badge.marko_fill0", count, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/badge.marko_0_count#2/fill", count, 1);
 	_scope($scope0_id, { count }, "__tests__/tags/badge.marko", 0, { count: "1:6" });
 });
 

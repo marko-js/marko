@@ -11,7 +11,7 @@ var child_default = _template("__tests__/child.marko", (input) => {
 	_html(`<button>${_text_mark($scope0_id, "#text/1", $global$1.brand + ":" + count)}</button>${_el_mark($scope0_id, "#button/0")}`);
 	_fill_global_subscribe("__tests__/child.marko_0_count#2_$global_brand#6", $scope0_id, 1);
 	_script($scope0_id, "__tests__/child.marko_0");
-	_patch_fill($scope0_id, "PatchFill:__tests__/child.marko_fill0", count, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/child.marko_0_count#2/fill", count, 1);
 	_scope($scope0_id, { count }, "__tests__/child.marko", 0, { count: "1:6" });
 });
 

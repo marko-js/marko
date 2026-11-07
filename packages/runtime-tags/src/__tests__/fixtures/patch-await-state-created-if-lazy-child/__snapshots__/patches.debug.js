@@ -8,7 +8,7 @@
     "PatchChild:BranchScopes:#text/0": {
       "PatchChild:#childScope/1": {
         "PatchSetupValues:": {
-          "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-await-state-created-if-lazy-child/lazy.marko_fill0": 0
+          "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-await-state-created-if-lazy-child/lazy.marko_0_count#6/fill": 0
         }
       },
       "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-await-state-created-if-lazy-child/template.marko_2_input_label#0:5_x#3/setup": ">>input_label"

@@ -9,7 +9,7 @@
     },
     "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-destructure-alias-keep/tags/card.marko_1_content#0:5/setup": "content",
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-destructure-alias-keep/tags/card.marko_fill0": !0
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-destructure-alias-keep/tags/card.marko_0_open#6/fill": !0
     },
     "PatchBind:content": "^packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-destructure-alias-keep/template.marko_1*content"
   },
@@ -28,7 +28,7 @@
     },
     "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-destructure-alias-keep/tags/card.marko_1_content#0:5/setup": "content",
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-destructure-alias-keep/tags/card.marko_fill0": !0
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-destructure-alias-keep/tags/card.marko_0_open#6/fill": !0
     },
     "PatchBind:content": "^packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-destructure-alias-keep/template.marko_1*content"
   },

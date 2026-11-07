@@ -11,7 +11,7 @@
         "PatchBind:TagVariableChange:selected": _.a
       },
       "PatchSetupValues:": {
-        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-controllable-input/tags/page-b.marko_fill0": 0
+        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-controllable-input/tags/page-b.marko_0_tab#1/fill": 0
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-child-controllable-input/template.marko_1*shell"]

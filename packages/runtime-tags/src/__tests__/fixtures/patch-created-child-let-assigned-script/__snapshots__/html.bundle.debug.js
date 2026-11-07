@@ -11,7 +11,7 @@ var probe_default = _template("__tests__/tags/probe.marko", (input) => {
 	_html(`<button>probe</button>${_el_mark($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/tags/probe.marko_0");
 	_script($scope0_id, "__tests__/tags/probe.marko_0_count#1_doubled#2");
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/probe.marko_fill0", count, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/probe.marko_0_count#1/fill", count, 1);
 	_scope($scope0_id, {
 		count,
 		doubled

@@ -2,7 +2,7 @@
 const $template$2 = "<!><!><!>";
 const $walks$2 = "b%c";
 const $setup$2 = ($_) => {};
-const $if_content__count = /*@__PURE__*/ _fill_let_change("__tests__/tags/child.marko_fill0", "count/2", ($scope) => _text($scope["#text/0"], $scope.count));
+const $if_content__count = /*@__PURE__*/ _fill_let_change("__tests__/tags/child.marko_1_count#2/fill", "count/2", ($scope) => _text($scope["#text/0"], $scope.count));
 const $if_content__input_on = /*@__PURE__*/ _if_closure_patch("__tests__/tags/child.marko_1_input_on#0:4/setup", "#text/0", 0, ($scope) => $if_content__count($scope, 0, $scope._.input_on));
 const $if_content__setup__script = _script("__tests__/tags/child.marko_1", ($scope) => _on($scope["#button/1"], "click", function() {
 	$if_content__count($scope, +$scope.count + 1);
@@ -23,7 +23,7 @@ var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $templ
 // tags/store.marko
 const $template$1 = "";
 const $walks$1 = "";
-const $last = /*@__PURE__*/ _fill_let("__tests__/tags/store.marko_fill0", "last/0", ($scope) => _return($scope, {
+const $last = /*@__PURE__*/ _fill_let("__tests__/tags/store.marko_0_last#0/fill", "last/0", ($scope) => _return($scope, {
 	last: $scope.last,
 	set: $_return($scope)
 }));

@@ -21,7 +21,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_dynamic_tag($scope3_id, "#text/2", input.content, {}, 2, 0, 0, _write_guard($scope3_reason, 0), $scope3_reason, 0);
 		_html("</section>");
 		_script($scope3_id, "__tests__/template.marko_3");
-		_patch_fill($scope3_id, "PatchFill:__tests__/template.marko_fill0", n, 1);
+		_patch_fill($scope3_id, "PatchFill:__tests__/template.marko_3_n#6/fill", n, 1);
 		_scope($scope3_id, { n }, "__tests__/template.marko", "1:2", { n: "2:8" });
 	}, $scope0_id) };
 	_if(() => {

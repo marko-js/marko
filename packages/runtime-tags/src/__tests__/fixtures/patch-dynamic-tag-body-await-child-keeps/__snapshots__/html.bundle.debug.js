@@ -19,7 +19,7 @@ var show_body_default = _template("__tests__/tags/show-body.marko", (input) => {
 	}, $scope0_id, "#text/1");
 	_script($scope0_id, "__tests__/tags/show-body.marko_0");
 	$fg__input_body && _patch_render($scope0_id, "__tests__/tags/show-body.marko_1_input_body#0:4/setup", "input_body");
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/show-body.marko_fill0", open, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/show-body.marko_0_open#5/fill", open, 1);
 	_scope($scope0_id, {
 		input_body: input.body,
 		open

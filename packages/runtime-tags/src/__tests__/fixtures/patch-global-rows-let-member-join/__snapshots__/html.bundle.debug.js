@@ -50,7 +50,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_patch_child_end();
 		_html(`<button class=sell>Sell ${_text_mark($scope1_id, "#text/2", qty * item.value, 2)}</button></form></article>`);
 		_patch_render($scope1_id, "__tests__/template.marko_1_item_value#9_qty#10/setup", "item_value");
-		_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill0", qty, 1);
+		_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_1_qty#10/fill", qty, 1);
 		_scope($scope1_id, {
 			item_value: item?.value,
 			qty,

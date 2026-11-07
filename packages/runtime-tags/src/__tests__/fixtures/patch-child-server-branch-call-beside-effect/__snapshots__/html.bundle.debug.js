@@ -73,7 +73,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 	$fg__input_fmt && $cg__input_show && _patch_render($scope0_id, "__tests__/tags/card.marko_1_input_fmt#0:7/setup", "input_fmt");
 	$fg__input_label && $cg__input_show && _patch_render($scope0_id, "__tests__/tags/card.marko_1_input_label#0:8/setup", "input_label");
 	$fg__input_label && _patch_render($scope0_id, "__tests__/tags/card.marko_2_input_label#0:8/setup", "input_label");
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/card.marko_fill0", open, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/card.marko_0_open#9/fill", open, 1);
 	_scope($scope0_id, {
 		input_open: (_unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 5)) && input.open,
 		input_fmt: (_unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 6)) && input.fmt,

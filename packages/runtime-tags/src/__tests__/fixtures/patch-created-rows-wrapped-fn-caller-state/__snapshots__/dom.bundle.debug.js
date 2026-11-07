@@ -43,7 +43,7 @@ const $for_content__input_label = /*@__PURE__*/ _for_closure_patch("__tests__/ta
 const $for_content__x = /*@__PURE__*/ _const("x", $for_content__input_label__OR__x);
 const $for_content__$params = ($scope, $params3) => $for_content__x($scope, $params3[0]);
 const $if$1 = /*@__PURE__*/ _if("#text/1", "<b> </b>", "D ", $if_content__setup$1);
-const $open = /*@__PURE__*/ _fill_let("__tests__/tags/rowsx.marko_fill0", "open/8", ($scope) => $if$1($scope, $scope.open ? 0 : 1));
+const $open = /*@__PURE__*/ _fill_let("__tests__/tags/rowsx.marko_0_open#8/fill", "open/8", ($scope) => $if$1($scope, $scope.open ? 0 : 1));
 const $setup__script$1 = _script("__tests__/tags/rowsx.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
 	$open($scope, !$scope.open);
 }));

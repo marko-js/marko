@@ -13,7 +13,7 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 const $template$1 = "<p>sel=<!></p>";
 const $walks$1 = "Db%l";
 const $setup$1 = ($_) => {};
-const $selected = _fill_let_change_resume("__tests__/tags/tab-editor.marko_fill0", "selected/6", ($scope) => _text($scope["#text/0"], String($scope.selected)));
+const $selected = _fill_let_change_resume("__tests__/tags/tab-editor.marko_0_selected#6/fill", "selected/6", ($scope) => _text($scope["#text/0"], String($scope.selected)));
 const $input_tab__OR__input_tabChange = /*@__PURE__*/ _or_patch("__tests__/tags/tab-editor.marko_0_input_tab#3_input_tabChange#4/setup", 5, ($scope) => $selected($scope, $scope.input_tab, $scope.input_tabChange));
 const $input_tab = /*@__PURE__*/ _const("input_tab", $input_tab__OR__input_tabChange);
 const $input_tabChange = /*@__PURE__*/ _const("input_tabChange", $input_tab__OR__input_tabChange);
@@ -26,7 +26,7 @@ var tab_editor_default = /*@__PURE__*/ _template("__tests__/tags/tab-editor.mark
 // tags/route-pg.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<button>+</button>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}& b`)($walks$1);
-const $tab = /*@__PURE__*/ _fill_let("__tests__/tags/route-pg.marko_fill0", "tab/2", ($scope) => $input_tab($scope["#childScope/0"], $scope.tab));
+const $tab = /*@__PURE__*/ _fill_let("__tests__/tags/route-pg.marko_0_tab#2/fill", "tab/2", ($scope) => $input_tab($scope["#childScope/0"], $scope.tab));
 const $setup__script = _script("__tests__/tags/route-pg.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$tab($scope, +$scope.tab + 1);
 }));

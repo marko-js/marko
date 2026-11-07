@@ -11,7 +11,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 		count += v.length;
 	}, "__tests__/tags/child.marko_0/valueChange", $scope0_id))}>${_el_mark($scope0_id, "#input/1")}<span>${_text_mark($scope0_id, "#text/2", count)}</span>`);
 	_script($scope0_id, "__tests__/tags/child.marko_0");
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/child.marko_fill0", count, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/child.marko_0_count#6/fill", count, 1);
 	_scope($scope0_id, { count }, "__tests__/tags/child.marko", 0, {
 		count: "1:6",
 		"ControlledHandler:#input/1": ["valueChange", "3:8"]

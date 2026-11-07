@@ -5,7 +5,7 @@ const $Other_content__input_label = /*@__PURE__*/ _closure_get_patch("__tests__/
 const $Other_content__setup = $Other_content__input_label;
 const $Other_content = _content("__tests__/template.marko_2*content", "<i> </i>", "D ", $Other_content__setup);
 const $Counter_content__input_label = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_1_input_label#0:3/subscribe", "input_label/8", ($scope) => _text($scope["#text/1"], $scope._.input_label), 0, "__tests__/template.marko_0_input_label#3/subscribers", 0);
-const $Counter_content__n = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill0", "n/3", ($scope) => _text($scope["#text/2"], $scope.n));
+const $Counter_content__n = /*@__PURE__*/ _fill_let("__tests__/template.marko_1_n#3/fill", "n/3", ($scope) => _text($scope["#text/2"], $scope.n));
 const $Counter_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/0"], "click", function() {
 	$Counter_content__n($scope, +$scope.n + 1);
 }));

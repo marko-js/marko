@@ -17,7 +17,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		let n = input.start;
 		_html(`<div class=counter><span>${_text_mark($scope2_id, "#text/0", input.label, 1, $scope2_reason, 1)}: ${_text_mark($scope2_id, "#text/1", n, 2)}</span><button class=inc>+</button>${_el_mark($scope2_id, "#button/2")}</div>`);
 		_script($scope2_id, "__tests__/template.marko_2");
-		_filled_guard($scope2_reason, 0) && _patch_fill($scope2_id, "PatchFill:__tests__/template.marko_fill0", n, 1);
+		_filled_guard($scope2_reason, 0) && _patch_fill($scope2_id, "PatchFill:__tests__/template.marko_2_n#7/fill", n, 1);
 		_scope($scope2_id, { n }, "__tests__/template.marko", "1:2", { n: "2:8" });
 	}, $scope0_id) };
 	_html("<main>");

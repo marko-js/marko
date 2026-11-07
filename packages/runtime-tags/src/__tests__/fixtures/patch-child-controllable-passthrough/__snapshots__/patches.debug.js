@@ -15,7 +15,7 @@
   "PatchChild:#childScope/2": {
     "PatchChild:#childScope/0": {
       "PatchBranch:#text/0": [{
-        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-passthrough/tags/counter/index.marko_fill0": 0,
+        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-passthrough/tags/counter/index.marko_1_count#2/fill": 0,
         "PatchBind:TagVariableChange:count": "^^^packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-passthrough/template.marko_0/onCount"
       }, "packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-passthrough/tags/counter/index.marko_1*shell"]
     }

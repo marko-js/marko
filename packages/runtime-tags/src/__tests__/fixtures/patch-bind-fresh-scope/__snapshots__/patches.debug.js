@@ -7,11 +7,11 @@
         "PatchVar:": "packages/runtime-tags/src/__tests__/fixtures/patch-bind-fresh-scope/template.marko_1_store#5/var"
       },
       "PatchSetupValues:": {
-        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-bind-fresh-scope/tags/store.marko_fill0": 0
+        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-bind-fresh-scope/tags/store.marko_0_last#0/fill": 0
       }
     },
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-bind-fresh-scope/template.marko_fill0": 0
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-bind-fresh-scope/template.marko_1_count#8/fill": 0
     },
     "PatchWrite:TagVariableChange:count": _(["BranchScopes:#text/0", "#childScope/0"], "packages/runtime-tags/src/__tests__/fixtures/patch-bind-fresh-scope/tags/store.marko_0/_return")
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-bind-fresh-scope/template.marko_1*shell"]

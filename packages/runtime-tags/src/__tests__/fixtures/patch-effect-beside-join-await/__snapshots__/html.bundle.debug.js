@@ -19,7 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_script($scope1_id, "__tests__/template.marko_1");
 		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_a#0:3/subscribe", $cg__input_a);
 		_patch_render($scope1_id, "__tests__/template.marko_1_input_a#0:3_n#3/setup", _filled_guard($scope0_reason, 0) && ">input_a");
-		_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill0", n, 1);
+		_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_1_n#3/fill", n, 1);
 		_subscribe($wi__input_a && $input_a__closures, _scope($scope1_id, { n }, "__tests__/template.marko", "1:2", { n: "2:6" }), $cg__input_a && "__tests__/template.marko_1_input_a#0:3/subscribe");
 	}, 1, "__tests__/template.marko_1*content", void 0, 1);
 	_scope($scope0_id, {

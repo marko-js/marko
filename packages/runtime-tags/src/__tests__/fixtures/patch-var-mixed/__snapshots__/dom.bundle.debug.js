@@ -2,7 +2,7 @@
 const $template$1 = "<button>bump</button>";
 const $walks$1 = " b";
 const $input_value__OR__local = /*@__PURE__*/ _or_patch("__tests__/tags/mixer/index.marko_0_input_value#3_local#4/setup", 5, ($scope) => _return($scope, $scope.input_value + $scope.local));
-const $local = /*@__PURE__*/ _fill_let("__tests__/tags/mixer/index.marko_fill0", "local/4", $input_value__OR__local);
+const $local = /*@__PURE__*/ _fill_let("__tests__/tags/mixer/index.marko_0_local#4/fill", "local/4", $input_value__OR__local);
 const $setup__script = _script("__tests__/tags/mixer/index.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$local($scope, +$scope.local + 1);
 }));

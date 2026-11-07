@@ -41,7 +41,7 @@ const $if_content__setup = ($scope) => {
 const $if_content__input_fmt = /*@__PURE__*/ _if_closure_patch("__tests__/tags/card.marko_1_input_fmt#0:7/setup", "#text/0", 0, ($scope) => $Panel_content__tag_input_fmt($scope["#childScope/0"], $scope._.input_fmt));
 const $if_content__input_label = /*@__PURE__*/ _if_closure_patch("__tests__/tags/card.marko_1_input_label#0:8/setup", "#text/0", 0, ($scope) => $Panel_content__tag_input_label($scope["#childScope/0"], $scope._.input_label));
 const $if2 = /*@__PURE__*/ _if("#text/1", "<b> </b>", "D ", $if_content2__setup);
-const $open = /*@__PURE__*/ _fill_let("__tests__/tags/card.marko_fill0", "open/9", ($scope) => $if2($scope, $scope.open ? 0 : 1));
+const $open = /*@__PURE__*/ _fill_let("__tests__/tags/card.marko_0_open#9/fill", "open/9", ($scope) => $if2($scope, $scope.open ? 0 : 1));
 const $setup__script$1 = _script("__tests__/tags/card.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
 	$open($scope, !$scope.open);
 }));

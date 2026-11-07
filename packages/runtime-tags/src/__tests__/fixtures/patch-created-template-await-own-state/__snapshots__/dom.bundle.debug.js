@@ -8,7 +8,7 @@ const $await_content__if = /*@__PURE__*/ _if("#text/0", "<!><!><!>", "b%", $if_c
 const $await_content__$params = ($scope, $params2) => $await_content__if($scope, $params2[0] ? 0 : 1);
 const $await_content = /*@__PURE__*/ _await_content("#text/1", "<!><!><!>", "b%");
 const $await_promise = /*@__PURE__*/ _await_promise("#text/1", $await_content__$params);
-const $n = /*@__PURE__*/ _fill_let("__tests__/tags/card.marko_fill0", "n/5", ($scope) => $await_promise($scope, Promise.resolve($scope.n)));
+const $n = /*@__PURE__*/ _fill_let("__tests__/tags/card.marko_0_n#5/fill", "n/5", ($scope) => $await_promise($scope, Promise.resolve($scope.n)));
 const $setup__script = _script("__tests__/tags/card.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$n($scope, $scope.n ? 0 : 1);
 }));

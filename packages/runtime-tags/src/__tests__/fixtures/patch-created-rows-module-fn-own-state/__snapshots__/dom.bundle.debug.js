@@ -62,7 +62,7 @@ const $for_content__suffix__OR__x = /*@__PURE__*/ _or_patch("__tests__/tags/rows
 const $for_content__suffix = /*@__PURE__*/ _for_closure_patch("__tests__/tags/rowsx.marko_1_suffix#0:6/setup", "#text/0", $for_content__suffix__OR__x, 8);
 const $for_content__x = /*@__PURE__*/ _const("x", $for_content__suffix__OR__x);
 const $for_content__$params = ($scope, $params3) => $for_content__x($scope, $params3[0]);
-const $suffix = /*@__PURE__*/ _fill_let("__tests__/tags/rowsx.marko_fill0", "suffix/6", $for_content__suffix);
+const $suffix = /*@__PURE__*/ _fill_let("__tests__/tags/rowsx.marko_0_suffix#6/fill", "suffix/6", $for_content__suffix);
 const $setup__script = _script("__tests__/tags/rowsx.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$suffix($scope, $scope.suffix + "!");
 }));

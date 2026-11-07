@@ -20,7 +20,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 	_html("</section>");
 	_script($scope0_id, "__tests__/tags/card.marko_0");
 	$fg__input_content && _patch_render($scope0_id, "__tests__/tags/card.marko_1_input_content#0:4/setup", "input_content");
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/card.marko_fill0", open, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/card.marko_0_open#5/fill", open, 1);
 	_scope($scope0_id, { input_content: input.content }, "__tests__/tags/card.marko", 0, { input_content: ["input.content"] }) || $fg__input_content && _patch_write($scope0_id, "PatchMarkedWrite:input_content", input.content, !_server_guard($scope0_reason, 0));
 });
 

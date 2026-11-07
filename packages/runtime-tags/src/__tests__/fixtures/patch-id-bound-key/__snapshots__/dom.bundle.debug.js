@@ -1,7 +1,7 @@
 // tags/store.marko
 const $template$1 = "";
 const $walks$1 = "";
-const $last = /*@__PURE__*/ _fill_let("__tests__/tags/store.marko_fill0", "last/0", ($scope) => _return($scope, {
+const $last = /*@__PURE__*/ _fill_let("__tests__/tags/store.marko_0_last#0/fill", "last/0", ($scope) => _return($scope, {
 	last: $scope.last,
 	set: $_return($scope)
 }));
@@ -18,7 +18,7 @@ var store_default = /*@__PURE__*/ _template("__tests__/tags/store.marko", "", ""
 const $template = "<!><!><!>";
 const $walks = "b%c";
 const $setup = ($_) => {};
-const $if_content__count = /*@__PURE__*/ _fill_let_change("__tests__/template.marko_fill0", "count/2", ($scope) => _text($scope["#text/0"], $scope.count));
+const $if_content__count = /*@__PURE__*/ _fill_let_change("__tests__/template.marko_3_count#2/fill", "count/2", ($scope) => _text($scope["#text/0"], $scope.count));
 const $if_content__store_set = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_3_store_set#1:11/subscribe", "store_set/13", ($scope) => $if_content__count($scope, 0, $scope._._.store_set), ($scope) => $scope._._);
 const $if_content__setup__script = _script("__tests__/template.marko_3", ($scope) => _on($scope["#button/1"], "click", function() {
 	$if_content__count($scope, +$scope.count + 1);

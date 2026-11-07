@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<main><p>last <!></p><!></main>";
 const $walks = "Eb%l%l";
-const $if_content__count = /*@__PURE__*/ _fill_let_change("__tests__/template.marko_fill0", "count/2", ($scope) => _text($scope["#text/0"], $scope.count));
+const $if_content__count = /*@__PURE__*/ _fill_let_change("__tests__/template.marko_1_count#2/fill", "count/2", ($scope) => _text($scope["#text/0"], $scope.count));
 const $if_content__input_start = /*@__PURE__*/ _if_closure_patch("__tests__/template.marko_1_input_start#0:5/setup", "#text/1", 0, ($scope) => $if_content__count($scope, $scope._.input_start, $valueChange($scope)));
 const $if_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/1"], "click", function() {
 	$if_content__count($scope, +$scope.count + 1);

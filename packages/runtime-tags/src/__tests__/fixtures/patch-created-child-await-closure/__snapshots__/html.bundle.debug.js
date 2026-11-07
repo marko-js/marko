@@ -17,10 +17,10 @@ var page_default = _template("__tests__/tags/page.marko", (input) => {
 		let open = false;
 		_html(`<button>${_text_mark($scope1_id, "#text/1", v, 1, $scope0_reason, 0)} ${_text_mark($scope1_id, "#text/2", likes, 2)} ${_text_mark($scope1_id, "#text/3", open ? "open" : "closed", 2)}</button>${_el_mark($scope1_id, "#button/0")}`);
 		_script($scope1_id, "__tests__/tags/page.marko_1");
-		_patch_fill($scope1_id, "PatchFill:__tests__/tags/page.marko_fill1", open, 1);
+		_patch_fill($scope1_id, "PatchFill:__tests__/tags/page.marko_1_open#6/fill", open, 1);
 		_subscribe($likes__closures, _scope($scope1_id, { open }, "__tests__/tags/page.marko", "2:2", { open: "3:8" }), "__tests__/tags/page.marko_1_likes#0:4/subscribe");
 	}, 1, "__tests__/tags/page.marko_1*content", _unfilled_if($scope0_reason, 0) && 3, 1);
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/page.marko_fill0", likes, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/page.marko_0_likes#4/fill", likes, 1);
 	_scope($scope0_id, {
 		likes,
 		"ClosureScopes:likes/5": $likes__closures

@@ -22,7 +22,7 @@ const $for_content__item_id = /*@__PURE__*/ _const("item_id", ($scope) => {
 	_text($scope["#text/2"], $scope.item_id);
 });
 const $for_content__$params = ($scope, $params2) => $for_content__item_id($scope, $params2[0]?.id);
-const $hovered = /*@__PURE__*/ _fill_let("__tests__/tags/feed-list.marko_fill0", "hovered/5", $for_content__hovered);
+const $hovered = /*@__PURE__*/ _fill_let("__tests__/tags/feed-list.marko_0_hovered#5/fill", "hovered/5", $for_content__hovered);
 function $setup$1($scope) {
 	$hovered($scope, undefined);
 }

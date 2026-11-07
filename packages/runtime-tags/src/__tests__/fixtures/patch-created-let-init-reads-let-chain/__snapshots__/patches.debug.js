@@ -3,7 +3,7 @@
 {
   "PatchBranch:#text/0": [{
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-let-init-reads-let-chain/template.marko_fill0": 1
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-let-init-reads-let-chain/template.marko_1_x#3/fill": 1
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-let-init-reads-let-chain/template.marko_1*shell"]
 }

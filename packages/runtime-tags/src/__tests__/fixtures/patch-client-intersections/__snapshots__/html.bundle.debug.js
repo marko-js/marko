@@ -10,7 +10,7 @@ var price_card_default = _template("__tests__/tags/price-card.marko", (input) =>
 	_html(`<section><h2>${_text_mark($scope0_id, "#text/0", input.label + " x" + qty)}</h2><button>+</button>${_el_mark($scope0_id, "#button/1")}</section>`);
 	_script($scope0_id, "__tests__/tags/price-card.marko_0");
 	_patch_render($scope0_id, "__tests__/tags/price-card.marko_0_input_label#4_qty#5/setup", $fg__input_label && "input_label");
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/price-card.marko_fill0", qty, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/price-card.marko_0_qty#5/fill", qty, 1);
 	_scope($scope0_id, {
 		input_label: input.label,
 		qty
@@ -32,7 +32,7 @@ var promo_tag_default = _template("__tests__/tags/promo-tag.marko", (input) => {
 	_html(`<aside>${_text_mark($scope0_id, "#text/0", input.text + " (" + seen + ")")}</aside><button class=promo>seen</button>${_el_mark($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/tags/promo-tag.marko_0");
 	_patch_render($scope0_id, "__tests__/tags/promo-tag.marko_0_input_text#4_seen#5/setup", $fg__input_text && "input_text");
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/promo-tag.marko_fill0", seen, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/promo-tag.marko_0_seen#5/fill", seen, 1);
 	_scope($scope0_id, {
 		input_text: input.text,
 		seen
@@ -53,7 +53,7 @@ var site_footer_default = _template("__tests__/tags/site-footer.marko", (input) 
 	let frozen = 0;
 	_html(`<footer>${_text_mark($scope0_id, "#text/0", input.year + frozen)}</footer>`);
 	_patch_render($scope0_id, "__tests__/tags/site-footer.marko_0_input_year#3_frozen#4/setup", $fg__input_year && "input_year");
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/site-footer.marko_fill0", frozen, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/site-footer.marko_0_frozen#4/fill", frozen, 1);
 	_scope($scope0_id, {
 		input_year: input.year,
 		frozen: _write_if($scope0_reason, 0) && frozen

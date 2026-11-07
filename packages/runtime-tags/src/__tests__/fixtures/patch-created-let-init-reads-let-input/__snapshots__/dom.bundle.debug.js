@@ -6,7 +6,7 @@ const $if_content__y__script = _script("__tests__/template.marko_1_y#5", ($scope
 const $if_content__y = _let("y/5", $if_content__y__script);
 const $if_content__input_a__OR__x = /*@__PURE__*/ _or_patch("__tests__/template.marko_1_input_a#0:4_x#3/setup", 4, ($scope) => $if_content__y($scope, $scope.x + $scope._.input_a));
 const $if_content__input_a = /*@__PURE__*/ _if_closure_patch("__tests__/template.marko_1_input_a#0:4/setup", "#text/0", 0, $if_content__input_a__OR__x);
-const $if_content__x = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill0", "x/3", ($scope) => {
+const $if_content__x = /*@__PURE__*/ _fill_let("__tests__/template.marko_1_x#3/fill", "x/3", ($scope) => {
 	_text($scope["#text/2"], $scope.x);
 	$if_content__input_a__OR__x($scope);
 });

@@ -40,7 +40,7 @@ var show_await_default = _template("__tests__/tags/show-await.marko", (input) =>
 		const $childScope = _peek_scope_id($scope1_id, "#childScope/4", 0);
 		card_default({ label: x });
 		_patch_child_end();
-		_patch_fill($scope1_id, "PatchFill:__tests__/tags/show-await.marko_fill0", d, 1, $cg__input_promise << 1, 0);
+		_patch_fill($scope1_id, "PatchFill:__tests__/tags/show-await.marko_1_d#10/fill", d, 1, $cg__input_promise << 1, 0);
 		_scope($scope1_id, { "#childScope/4": _existing_scope($childScope) }, "__tests__/tags/show-await.marko", "1:2");
 	}, 1, "__tests__/tags/show-await.marko_1*content", _unfilled_if($scope0_reason, 0), 1);
 });

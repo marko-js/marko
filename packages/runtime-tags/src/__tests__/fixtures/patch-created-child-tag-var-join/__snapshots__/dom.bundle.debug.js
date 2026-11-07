@@ -12,7 +12,7 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 // tags/file-store.marko
 const $template$4 = "";
 const $walks$4 = "";
-const $files$1 = /*@__PURE__*/ _fill_let("__tests__/tags/file-store.marko_fill0", "files/3", ($scope) => _return($scope, $scope.files));
+const $files$1 = /*@__PURE__*/ _fill_let("__tests__/tags/file-store.marko_0_files#3/fill", "files/3", ($scope) => _return($scope, $scope.files));
 function $setup$4($scope) {
 	_return_change($scope, $valueChange($scope));
 	$files$1($scope, []);
@@ -29,7 +29,7 @@ var file_store_default = /*@__PURE__*/ _template("__tests__/tags/file-store.mark
 // tags/file-tabs.marko
 const $template$3 = "<p> </p><button>+</button>";
 const $walks$3 = "D l b";
-const $tabs = /*@__PURE__*/ _fill_let_change("__tests__/tags/file-tabs.marko_fill0", "tabs/7", ($scope) => _text($scope["#text/0"], $scope.tabs.map((tab) => tab.path).join()));
+const $tabs = /*@__PURE__*/ _fill_let_change("__tests__/tags/file-tabs.marko_0_tabs#7/fill", "tabs/7", ($scope) => _text($scope["#text/0"], $scope.tabs.map((tab) => tab.path).join()));
 const $input_files__OR__input_filesChange = /*@__PURE__*/ _or_patch("__tests__/tags/file-tabs.marko_0_input_files#4_input_filesChange#5/setup", 6, ($scope) => $tabs($scope, $scope.input_files, $scope.input_filesChange));
 const $input_files$1 = /*@__PURE__*/ _const("input_files", $input_files__OR__input_filesChange);
 const $input_filesChange$1 = /*@__PURE__*/ _const("input_filesChange", $input_files__OR__input_filesChange);

@@ -4,7 +4,7 @@
   "PatchText:#text/2": "b",
   "PatchBranch:#text/4": [{
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-branch-let-change-sibling/template.marko_fill0": 0
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-branch-let-change-sibling/template.marko_1_count#2/fill": 0
     },
     "PatchWrite:TagVariableChange:count": _(["#childScope/0"], "packages/runtime-tags/src/__tests__/fixtures/patch-branch-let-change-sibling/tags/store.marko_0/_return")
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-let-change-sibling/template.marko_1*shell"]

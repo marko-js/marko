@@ -5,7 +5,7 @@
   "PatchChild:BranchScopes:#text/0": {
     "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-unassigned-let-if-server-only/tags/card.marko_1_input_n#0:3/setup": "input_n",
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-unassigned-let-if-server-only/tags/card.marko_fill0": 1
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-unassigned-let-if-server-only/tags/card.marko_0_n#4/fill": 1
     },
     "PatchMarkedWrite:input_n": 1
   }
@@ -25,7 +25,7 @@
   "PatchChild:BranchScopes:#text/0": {
     "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-unassigned-let-if-server-only/tags/card.marko_1_input_n#0:3/setup": "input_n",
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-unassigned-let-if-server-only/tags/card.marko_fill0": 2
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-unassigned-let-if-server-only/tags/card.marko_0_n#4/fill": 2
     },
     "PatchMarkedWrite:input_n": 2
   }

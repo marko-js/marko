@@ -28,7 +28,7 @@ var counter_default = _template("__tests__/tags/counter/index.marko", (input) =>
 	_html(`<button class=toggle>t</button>${_el_mark($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/tags/counter/index.marko_0");
 	$fg__input_onCount && _patch_render($scope0_id, "__tests__/tags/counter/index.marko_1_input_onCount#0:4/setup", "input_onCount");
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/counter/index.marko_fill0", open, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/counter/index.marko_0_open#5/fill", open, 1);
 	_scope($scope0_id, {
 		input_onCount: input.onCount,
 		open

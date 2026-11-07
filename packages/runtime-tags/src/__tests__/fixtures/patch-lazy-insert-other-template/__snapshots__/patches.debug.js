@@ -7,7 +7,7 @@
         "PatchText:#text/1": "s"
       },
       "PatchSetupValues:": {
-        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-insert-other-template/lazy.marko_fill0": 0
+        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-insert-other-template/lazy.marko_0_count#6/fill": 0
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-insert-other-template/template.marko_1*shell"]

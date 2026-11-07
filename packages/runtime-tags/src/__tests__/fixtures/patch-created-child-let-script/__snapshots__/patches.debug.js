@@ -4,7 +4,7 @@
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {
       "PatchSetupValues:": {
-        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-script/tags/probe.marko_fill0": 5
+        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-script/tags/probe.marko_0_count#0/fill": 5
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-script/template.marko_1*shell"]

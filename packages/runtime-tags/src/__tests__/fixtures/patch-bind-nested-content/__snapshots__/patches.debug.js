@@ -7,7 +7,7 @@
         "PatchChild:BranchScopes:#text/0": {
           "PatchBranch:#text/0": [{
             "PatchSetupValues:": {
-              "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-bind-nested-content/template.marko_fill0": 0
+              "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-bind-nested-content/template.marko_3_count#2/fill": 0
             },
             "PatchWrite:TagVariableChange:count": _(["#childScope/0"], "packages/runtime-tags/src/__tests__/fixtures/patch-bind-nested-content/tags/store.marko_0/_return")
           }, "packages/runtime-tags/src/__tests__/fixtures/patch-bind-nested-content/template.marko_3*shell"]

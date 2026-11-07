@@ -68,7 +68,7 @@ var rowsx_default = _template("__tests__/tags/rowsx.marko", (input) => {
 	_html(`<button class=l>l</button>${_el_mark($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/tags/rowsx.marko_0");
 	$fg__input_open && $cg__input_items && _patch_render($scope0_id, "__tests__/tags/rowsx.marko_1_input_open#0:5/setup", "input_open");
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/rowsx.marko_fill0", suffix, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/rowsx.marko_0_suffix#6/fill", suffix, 1);
 	_scope($scope0_id, {
 		input_open: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.open,
 		suffix

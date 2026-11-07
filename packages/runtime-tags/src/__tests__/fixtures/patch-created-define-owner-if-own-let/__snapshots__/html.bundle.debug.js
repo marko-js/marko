@@ -32,7 +32,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 	_patch_child_end();
 	_html(`<button>x</button>${_el_mark($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/tags/card.marko_0");
-	_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/tags/card.marko_fill0", k, 1);
+	_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/tags/card.marko_0_k#5/fill", k, 1);
 	_scope($scope0_id, {
 		k,
 		"ClosureScopes:k/6": $k__closures,

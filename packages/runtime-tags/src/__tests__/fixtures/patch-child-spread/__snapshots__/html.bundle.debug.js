@@ -9,7 +9,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 	let open = false;
 	_html(`<div class=card><h2>${_text_mark($scope0_id, "#text/0", input.title, 1, $scope0_reason, 0)}</h2><p>${_text_mark($scope0_id, "#text/1", input.note, 1, $scope0_reason, 1)}</p><button class=t>${_text_mark($scope0_id, "#text/3", open ? "hide" : "show")}</button>${_el_mark($scope0_id, "#button/2")}</div>`);
 	_script($scope0_id, "__tests__/tags/card.marko_0");
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/card.marko_fill0", open, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/card.marko_0_open#8/fill", open, 1);
 	_scope($scope0_id, { open }, "__tests__/tags/card.marko", 0, { open: "1:6" });
 });
 

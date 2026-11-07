@@ -9,7 +9,7 @@ const $for_content__open = /*@__PURE__*/ _for_closure_patch("__tests__/tags/list
 const $for_content__setup = $for_content__open;
 const $for_content__$params = ($scope, $params2) => $for_content__item_content($scope, $params2[0]?.content);
 const $for_content__item_content = /*@__PURE__*/ _const("item_content", $if_content__item_content);
-const $open = /*@__PURE__*/ _fill_let("__tests__/tags/list.marko_fill0", "open/5", $for_content__open);
+const $open = /*@__PURE__*/ _fill_let("__tests__/tags/list.marko_0_open#5/fill", "open/5", $for_content__open);
 const $setup__script = _script("__tests__/tags/list.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$open($scope, !$scope.open);
 }));

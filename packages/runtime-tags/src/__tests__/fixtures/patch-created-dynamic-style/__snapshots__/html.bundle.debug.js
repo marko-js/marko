@@ -31,7 +31,7 @@ var route_bar_default = _template("__tests__/tags/route-bar.marko", (input) => {
 	_patch_child_end();
 	_html(`<button>+</button>${_el_mark($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/tags/route-bar.marko_0");
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/route-bar.marko_fill0", w, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/route-bar.marko_0_w#2/fill", w, 1);
 	_scope($scope0_id, {
 		w,
 		"#childScope/0": _existing_scope($childScope)

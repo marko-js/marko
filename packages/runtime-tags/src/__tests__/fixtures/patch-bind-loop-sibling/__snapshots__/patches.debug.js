@@ -7,7 +7,7 @@
     }, "x", {
       "PatchBranch:#text/0": [{
         "PatchSetupValues:": {
-          "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-bind-loop-sibling/template.marko_fill0": 0
+          "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-bind-loop-sibling/template.marko_3_count#2/fill": 0
         },
         "PatchWrite:TagVariableChange:count": _([
           ["#text/0", [0, "x"]], "#childScope/0"
@@ -18,7 +18,7 @@
     "PatchLoop:#text/4": ["y", {
       "PatchBranch:#text/0": [{
         "PatchSetupValues:": {
-          "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-bind-loop-sibling/template.marko_fill0": 0
+          "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-bind-loop-sibling/template.marko_3_count#2/fill": 0
         },
         "PatchWrite:TagVariableChange:count": _([
           ["#text/0", [1, "y"]], "#childScope/0"

@@ -3,7 +3,7 @@ const $template = "<main><!><em> </em><button id=c>+</button></main>";
 const $walks = "D%bD l l";
 const $if_content__input_title__OR__n = /*@__PURE__*/ _or_patch("__tests__/template.marko_1_input_title#0:6_n#2/setup", 3, ($scope) => _text($scope["#text/0"], $scope._.input_title + "@" + $scope.n));
 const $if_content__input_title = /*@__PURE__*/ _if_closure_patch("__tests__/template.marko_1_input_title#0:6/setup", "#text/0", 0, $if_content__input_title__OR__n);
-const $if_content__n = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill0", "n/2", $if_content__input_title__OR__n);
+const $if_content__n = /*@__PURE__*/ _fill_let("__tests__/template.marko_1_n#2/fill", "n/2", $if_content__input_title__OR__n);
 const $if_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/1"], "click", function() {
 	$if_content__n($scope, +$scope.n + 1);
 }));

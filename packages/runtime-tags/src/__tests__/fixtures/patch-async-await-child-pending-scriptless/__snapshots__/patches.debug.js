@@ -11,7 +11,7 @@
       "PatchChild:#childScope/0": {
         "PatchText:#text/0": "b",
         "PatchSetupValues:": {
-          "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-async-await-child-pending-scriptless/tags/pill.marko_fill0": 2
+          "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-async-await-child-pending-scriptless/tags/pill.marko_0_n#7/fill": 2
         }
       }
     }

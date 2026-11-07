@@ -9,7 +9,7 @@
         }
       },
       "PatchSetupValues:": {
-        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-literal-input/tags/page-b.marko_fill0": 0
+        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-literal-input/tags/page-b.marko_0_progress#3/fill": 0
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-child-literal-input/template.marko_1*shell"]

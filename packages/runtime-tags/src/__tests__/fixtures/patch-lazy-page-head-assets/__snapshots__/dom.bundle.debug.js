@@ -33,7 +33,7 @@ var page_a_default$1 = ".a {\n  color: green;\n}\n";
 // page-a.marko
 const $template = "<button class=a>a:<!></button>";
 const $walks = " Db%l";
-const $count = /*@__PURE__*/ _fill_let("__tests__/page-a.marko_fill0", "count/2", ($scope) => _text($scope["#text/1"], $scope.count));
+const $count = /*@__PURE__*/ _fill_let("__tests__/page-a.marko_0_count#2/fill", "count/2", ($scope) => _text($scope["#text/1"], $scope.count));
 const $setup__script = _script("__tests__/page-a.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, +$scope.count + 1);
 }));
@@ -46,7 +46,7 @@ var page_a_default = /*@__PURE__*/ _template("__tests__/page-a.marko", $template
 // page-b.marko
 const $template = "<button class=b>b:<!></button>";
 const $walks = " Db%l";
-const $count = /*@__PURE__*/ _fill_let("__tests__/page-b.marko_fill0", "count/2", ($scope) => _text($scope["#text/1"], $scope.count));
+const $count = /*@__PURE__*/ _fill_let("__tests__/page-b.marko_0_count#2/fill", "count/2", ($scope) => _text($scope["#text/1"], $scope.count));
 const $setup__script = _script("__tests__/page-b.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, +$scope.count + 1);
 }));

@@ -5,7 +5,7 @@ const $template = "<!><!><!>";
 const $walks = "b%c";
 const $setup = ($_) => {};
 const $input_content_direct = /*@__PURE__*/ _dynamic_tag_content("#text/2");
-const $Card_content2__n = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill0", "n/6", ($scope) => _text($scope["#text/1"], $scope.n));
+const $Card_content2__n = /*@__PURE__*/ _fill_let("__tests__/template.marko_3_n#6/fill", "n/6", ($scope) => _text($scope["#text/1"], $scope.n));
 const $Card_content2__setup__script = _script("__tests__/template.marko_3", ($scope) => _on($scope["#button/0"], "click", function() {
 	$Card_content2__n($scope, +$scope.n + 1);
 }));

@@ -49,7 +49,7 @@ var under_wrapper_default = _template("__tests__/under-wrapper.marko", (input) =
 	_patch_child_end();
 	_html(`<button>toggle</button>${_el_mark($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/under-wrapper.marko_0");
-	_patch_fill($scope0_id, "PatchFill:__tests__/under-wrapper.marko_fill0", showSecond, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/under-wrapper.marko_0_showSecond#6/fill", showSecond, 1);
 	_scope($scope0_id, {
 		input_second: input.second,
 		input_first: input.first,

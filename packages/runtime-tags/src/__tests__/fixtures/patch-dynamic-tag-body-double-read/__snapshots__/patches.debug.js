@@ -9,7 +9,7 @@
     },
     "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-double-read/tags/card.marko_1_input_content#0:5/setup": "input_content",
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-double-read/tags/card.marko_fill0": !1
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-double-read/tags/card.marko_0_open#6/fill": !1
     },
     "PatchBind:input_content": "^packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-double-read/template.marko_1*content"
   },

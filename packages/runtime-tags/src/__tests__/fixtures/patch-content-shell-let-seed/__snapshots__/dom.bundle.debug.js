@@ -13,7 +13,7 @@ const $template = "<!><!><!>";
 const $walks = "b%c";
 const $setup = ($_) => {};
 const $wrap_content__input_label = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_2_input_label#0:4/subscribe", "input_label/5", ($scope) => _text($scope["#text/1"], $scope._._.input_label), ($scope) => $scope._._, "__tests__/template.marko_0_input_label#4/subscribers", 0);
-const $wrap_content__n = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill0", "n/3", ($scope) => _text($scope["#text/2"], $scope.n));
+const $wrap_content__n = /*@__PURE__*/ _fill_let("__tests__/template.marko_2_n#3/fill", "n/3", ($scope) => _text($scope["#text/2"], $scope.n));
 const $wrap_content__setup__script = _script("__tests__/template.marko_2", ($scope) => _on($scope["#button/0"], "click", function() {
 	$wrap_content__n($scope, +$scope.n + 1);
 }));

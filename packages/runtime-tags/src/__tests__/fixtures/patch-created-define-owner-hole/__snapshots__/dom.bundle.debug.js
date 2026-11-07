@@ -24,7 +24,7 @@ const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}& b`)($Panel_content__walks);
 const $Panel_content__k = /*@__PURE__*/ _closure_get_patch("__tests__/tags/card.marko_1_k#0:5/subscribe", "k/6", ($scope) => _text($scope["#text/0"], $scope._.k));
 const $Panel_content__setup = $Panel_content__k;
 const $k__closure = /*@__PURE__*/ _closure($Panel_content__k);
-const $k = /*@__PURE__*/ _fill_let("__tests__/tags/card.marko_fill0", "k/5", $k__closure);
+const $k = /*@__PURE__*/ _fill_let("__tests__/tags/card.marko_0_k#5/fill", "k/5", $k__closure);
 const $input_n = $k;
 const $setup__script = _script("__tests__/tags/card.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$k($scope, +$scope.k + 1);

@@ -18,7 +18,7 @@
       "PatchText:#text/1": "d",
       "PatchChild:#childScope/2": {
         "PatchSetupValues:": {
-          "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-try-caught-keyed-rebuild/tags/counter.marko_fill0": 0
+          "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-try-caught-keyed-rebuild/tags/counter.marko_0_n#2/fill": 0
         }
       },
       "PatchBranch:#text/3": 0
@@ -52,7 +52,7 @@
       "PatchText:#text/1": "g",
       "PatchChild:#childScope/2": {
         "PatchSetupValues:": {
-          "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-try-caught-keyed-rebuild/tags/counter.marko_fill0": 0
+          "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-try-caught-keyed-rebuild/tags/counter.marko_0_n#2/fill": 0
         }
       },
       "PatchBranch:#text/3": 0

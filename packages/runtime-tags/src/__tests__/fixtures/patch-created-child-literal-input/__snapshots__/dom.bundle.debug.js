@@ -23,7 +23,7 @@ var demo_card_default = /*@__PURE__*/ _template("__tests__/tags/demo-card.marko"
 // tags/page-b.marko
 const $template = /*@__PURE__*/ ((_w0) => `<button> </button>${_w0}`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => ` D l/${_w0}&`)($walks$1);
-const $progress = /*@__PURE__*/ _fill_let("__tests__/tags/page-b.marko_fill0", "progress/3", ($scope) => {
+const $progress = /*@__PURE__*/ _fill_let("__tests__/tags/page-b.marko_0_progress#3/fill", "progress/3", ($scope) => {
 	_text($scope["#text/1"], $scope.progress);
 	$input_progress($scope["#childScope/2"], $scope.progress);
 });

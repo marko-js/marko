@@ -19,7 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $countChange = _resume(function(next) {
 				document.querySelector("main").dataset.attempt = String(next);
 			}, "__tests__/template.marko_1/valueChange") || void 0;
-			_patch_let_change($scope1_id, "PatchFill:__tests__/template.marko_fill0", count, "PatchWrite:TagVariableChange:count", $countChange);
+			_patch_let_change($scope1_id, "PatchFill:__tests__/template.marko_1_count#2/fill", count, "PatchWrite:TagVariableChange:count", $countChange);
 			_scope($scope1_id, {
 				count,
 				"TagVariableChange:count": $countChange

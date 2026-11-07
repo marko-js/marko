@@ -31,7 +31,7 @@ var sub_default = _template("__tests__/tags/sub.marko", (input) => {
 	_html(`<button class=inc>+</button>${_el_mark($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/tags/sub.marko_0");
 	$fg__input_n && _client_guard($scope0_reason, 0) && _patch_subscribers($scope0_id, "__tests__/tags/sub.marko_0_input_n#5/subscribers", "input_n");
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/sub.marko_fill0", g, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/sub.marko_0_g#6/fill", g, 1);
 	_scope($scope0_id, {
 		input_n: input.n,
 		g,

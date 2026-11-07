@@ -9,7 +9,7 @@ var lazy_child_default = _template("__tests__/lazy-child.marko", (input) => {
 	let count = 0;
 	_html(`<button>${_text_mark($scope0_id, "#text/1", input.label, 1, $scope0_reason, 0)}:${_text_mark($scope0_id, "#text/2", count, 2)}</button>${_el_mark($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/lazy-child.marko_0");
-	_patch_fill($scope0_id, "PatchFill:__tests__/lazy-child.marko_fill0", count, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/lazy-child.marko_0_count#6/fill", count, 1);
 	_scope($scope0_id, { count }, "__tests__/lazy-child.marko", 0, { count: "1:6" });
 });
 
@@ -24,7 +24,7 @@ var child_default = _template("__tests__/child.marko", (input) => {
 	let count = 0;
 	_html(`<button>${_text_mark($scope0_id, "#text/1", input.label, 1, $scope0_reason, 0)}:${_text_mark($scope0_id, "#text/2", count, 2)}</button>${_el_mark($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/child.marko_0");
-	_patch_fill($scope0_id, "PatchFill:__tests__/child.marko_fill0", count, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/child.marko_0_count#6/fill", count, 1);
 	_scope($scope0_id, { count }, "__tests__/child.marko", 0, { count: "1:6" });
 });
 
@@ -91,7 +91,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		let count = 0;
 		_html(`<button>own:${_text_mark($scope6_id, "#text/1", count, 2)}</button>${_el_mark($scope6_id, "#button/0")}`);
 		_script($scope6_id, "__tests__/template.marko_6");
-		_patch_fill($scope6_id, "PatchFill:__tests__/template.marko_fill0", count, 1);
+		_patch_fill($scope6_id, "PatchFill:__tests__/template.marko_6_count#2/fill", count, 1);
 		_scope($scope6_id, { count }, "__tests__/template.marko", "12:2", { count: "13:8" });
 	}, $scope0_id) };
 	const Inner = { content: _content("__tests__/template.marko_3*content", () => {

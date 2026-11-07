@@ -6,7 +6,7 @@
       "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-try-created-empty-catch-throw/template.marko_3*content",
       "PatchChild:#childScope/1": {
         "PatchSetupValues:": {
-          "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-try-created-empty-catch-throw/tags/counter.marko_fill0": 0
+          "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-try-created-empty-catch-throw/tags/counter.marko_0_n#2/fill": 0
         }
       },
       "PatchChild:BranchScopes:#text/0": {

@@ -9,7 +9,7 @@
       "PatchWrite:f": _._["packages/runtime-tags/src/__tests__/fixtures/patch-created-let-initial-value-calls-closure-fn/template.marko_1/f"]
     },
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-let-initial-value-calls-closure-fn/template.marko_fill0": "a"
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-let-initial-value-calls-closure-fn/template.marko_1_x#1/fill": "a"
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-let-initial-value-calls-closure-fn/template.marko_1*shell"],
   "PatchMarkedWrite:input_w": "2"
@@ -24,7 +24,7 @@
       "PatchWrite:f": _._["packages/runtime-tags/src/__tests__/fixtures/patch-created-let-initial-value-calls-closure-fn/template.marko_1/f"]
     },
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-let-initial-value-calls-closure-fn/template.marko_fill0": "a"
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-let-initial-value-calls-closure-fn/template.marko_1_x#1/fill": "a"
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-let-initial-value-calls-closure-fn/template.marko_1*shell"],
   "PatchMarkedWrite:input_w": "3"
@@ -40,7 +40,7 @@
       "PatchWrite:f": _._["packages/runtime-tags/src/__tests__/fixtures/patch-created-let-initial-value-calls-closure-fn/template.marko_1/f"]
     },
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-let-initial-value-calls-closure-fn/template.marko_fill0": "a"
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-let-initial-value-calls-closure-fn/template.marko_1_x#1/fill": "a"
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-let-initial-value-calls-closure-fn/template.marko_1*shell"],
   "PatchMarkedWrite:input_w": "4"
@@ -62,7 +62,7 @@
       "PatchWrite:f": _._["packages/runtime-tags/src/__tests__/fixtures/patch-created-let-initial-value-calls-closure-fn/template.marko_1/f"]
     },
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-let-initial-value-calls-closure-fn/template.marko_fill0": "b"
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-let-initial-value-calls-closure-fn/template.marko_1_x#1/fill": "b"
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-let-initial-value-calls-closure-fn/template.marko_1*shell"],
   "PatchMarkedWrite:input_w": "6"

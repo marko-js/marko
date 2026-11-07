@@ -20,7 +20,7 @@
         },
         "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-bound-content-owner-locals/template.marko_2_item#1:4/setup": "item",
         "PatchSetupValues:": {
-          "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-bound-content-owner-locals/template.marko_fill0": !0
+          "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-bound-content-owner-locals/template.marko_1_open#5/fill": !0
         }
       }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-bound-content-owner-locals/tags/host.marko_1*shell"],
@@ -46,7 +46,7 @@
         },
         "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-bound-content-owner-locals/template.marko_2_item#1:4/setup": "item",
         "PatchSetupValues:": {
-          "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-bound-content-owner-locals/template.marko_fill0": !0
+          "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-bound-content-owner-locals/template.marko_1_open#5/fill": !0
         }
       }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-bound-content-owner-locals/tags/host.marko_1*shell"],
@@ -76,7 +76,7 @@
         },
         "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-bound-content-owner-locals/template.marko_2_item#1:4/setup": "item",
         "PatchSetupValues:": {
-          "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-bound-content-owner-locals/template.marko_fill0": !0
+          "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-bound-content-owner-locals/template.marko_1_open#5/fill": !0
         }
       }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-bound-content-owner-locals/tags/host.marko_1*shell"],

@@ -8,7 +8,7 @@
         "PatchText:#text/0": "b"
       },
       "PatchSetupValues:": {
-        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-define-setup-content-owner/template.marko_fill0": 0
+        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-define-setup-content-owner/template.marko_3_n#6/fill": 0
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-define-setup-content-owner/template.marko_1*shell"]
@@ -24,7 +24,7 @@
         "PatchText:#text/0": "c"
       },
       "PatchSetupValues:": {
-        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-define-setup-content-owner/template.marko_fill0": 0
+        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-define-setup-content-owner/template.marko_3_n#6/fill": 0
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-define-setup-content-owner/template.marko_1*shell"]
@@ -39,7 +39,7 @@
         "PatchText:#text/0": "d"
       },
       "PatchSetupValues:": {
-        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-define-setup-content-owner/template.marko_fill0": 0
+        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-define-setup-content-owner/template.marko_3_n#6/fill": 0
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-define-setup-content-owner/template.marko_1*shell"]

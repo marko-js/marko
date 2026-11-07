@@ -11,7 +11,7 @@ var widget_default = _template("__tests__/tags/widget/index.marko", (input) => {
 	_html(`<em>${_text_mark($scope0_id, "#text/0", input.label, 1, $scope0_reason, 0)} x${_text_mark($scope0_id, "#text/1", count, 2)}</em><button class=bump>+</button>${_el_mark($scope0_id, "#button/2")}`);
 	const $return = count;
 	_script($scope0_id, "__tests__/tags/widget/index.marko_0");
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/widget/index.marko_fill0", count, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/widget/index.marko_0_count#6/fill", count, 1);
 	_scope($scope0_id, { count }, "__tests__/tags/widget/index.marko", 0, { count: "1:6" });
 	return $return;
 });

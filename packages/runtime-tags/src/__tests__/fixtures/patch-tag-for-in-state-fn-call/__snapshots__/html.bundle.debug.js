@@ -47,7 +47,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 	_script($scope0_id, "__tests__/tags/card.marko_0");
 	$fg__input_sel && $cg__input_obj && _patch_render($scope0_id, "__tests__/tags/card.marko_1_input_sel#0:6/setup", "input_sel");
 	$fg__input_prefix && ($cg__input_obj || $cg__input_sel) && _patch_subscribers($scope0_id, "__tests__/tags/card.marko_0_fmt#8/subscribers", ["fmt", "input_prefix"]);
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/card.marko_fill0", s, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/card.marko_0_s#7/fill", s, 1);
 	_scope($scope0_id, {
 		input_prefix: input.prefix,
 		input_sel: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && input.sel,

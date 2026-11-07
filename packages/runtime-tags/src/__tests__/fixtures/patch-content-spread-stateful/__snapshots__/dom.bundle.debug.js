@@ -8,7 +8,7 @@ const $if_content__input = /*@__PURE__*/ _if_closure_patch("__tests__/tags/card.
 });
 const $if_content__setup = $if_content__input;
 const $if = /*@__PURE__*/ _if("#text/0", "<div></div>", " ", $if_content__setup);
-const $open = /*@__PURE__*/ _fill_let("__tests__/tags/card.marko_fill0", "open/5", ($scope) => $if($scope, $scope.open ? 0 : 1));
+const $open = /*@__PURE__*/ _fill_let("__tests__/tags/card.marko_0_open#5/fill", "open/5", ($scope) => $if($scope, $scope.open ? 0 : 1));
 const $setup__script = _script("__tests__/tags/card.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$open($scope, !$scope.open);
 }));

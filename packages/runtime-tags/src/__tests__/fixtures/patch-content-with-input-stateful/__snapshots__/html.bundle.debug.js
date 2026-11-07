@@ -19,7 +19,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 	_html(`<button>+</button>${_el_mark($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/tags/card.marko_0");
 	$fg__input_content && _patch_render($scope0_id, "__tests__/tags/card.marko_1_input_content#0:5/setup", "input_content");
-	_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/tags/card.marko_fill0", open, 1);
+	_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/tags/card.marko_0_open#6/fill", open, 1);
 	_scope($scope0_id, {
 		input_content: input.content,
 		open

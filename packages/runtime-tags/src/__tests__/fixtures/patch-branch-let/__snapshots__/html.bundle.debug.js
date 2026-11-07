@@ -16,7 +16,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			let count = 0;
 			_html(`<p>Seen ${_text_mark($scope1_id, "#text/0", count, 2)}</p><button>+</button>${_el_mark($scope1_id, "#button/1")}`);
 			_script($scope1_id, "__tests__/template.marko_1");
-			_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill0", count, 1);
+			_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_1_count#2/fill", count, 1);
 			_scope($scope1_id, { count }, "__tests__/template.marko", "3:4", { count: "4:10" });
 			return 0;
 		}

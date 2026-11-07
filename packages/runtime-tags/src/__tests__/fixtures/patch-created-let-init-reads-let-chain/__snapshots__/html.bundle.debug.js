@@ -18,7 +18,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_html(`<span></span>${_el_mark($scope1_id, "#span/0")}<button>${_text_mark($scope1_id, "#text/2", x)}</button>${_el_mark($scope1_id, "#button/1")}`);
 			_script($scope1_id, "__tests__/template.marko_1");
 			_script($scope1_id, "__tests__/template.marko_1_z#5");
-			_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill0", x, 1);
+			_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_1_x#3/fill", x, 1);
 			_scope($scope1_id, {
 				x,
 				z

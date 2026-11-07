@@ -23,7 +23,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 			_client_guard($scope0_reason, 4) && _patch_render($scope1_id, "__tests__/tags/child.marko_1_input_b#0:6/setup");
 			_patch_render($scope1_id, "__tests__/tags/child.marko_1_input_a#0:5_input_b#0:6/setup", [_filled_guard($scope0_reason, 3) && ">input_a", _filled_guard($scope0_reason, 4) && ">input_b"], $scope0_reason, 1);
 			_patch_render($scope1_id, "__tests__/tags/child.marko_1_m#4_x#5_y#6/setup", [_filled_guard($scope0_reason, 3) && "x", _filled_guard($scope0_reason, 4) && "y"]);
-			_patch_fill($scope1_id, "PatchFill:__tests__/tags/child.marko_fill0", m, 1);
+			_patch_fill($scope1_id, "PatchFill:__tests__/tags/child.marko_1_m#4/fill", m, 1);
 			_scope($scope1_id, {
 				m,
 				x,

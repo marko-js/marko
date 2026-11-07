@@ -20,7 +20,7 @@ var card_default = _template("__tests__/tags/card/index.marko", (input) => {
 	_html(`<button>+</button>${_el_mark($scope0_id, "#button/1")}</section>`);
 	_script($scope0_id, "__tests__/tags/card/index.marko_0");
 	$fg__input_header && _patch_render($scope0_id, "__tests__/tags/card/index.marko_1_input_header#0:4/setup", "input_header");
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/card/index.marko_fill0", open, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/card/index.marko_0_open#5/fill", open, 1);
 	_scope($scope0_id, {
 		input_header: input.header,
 		open

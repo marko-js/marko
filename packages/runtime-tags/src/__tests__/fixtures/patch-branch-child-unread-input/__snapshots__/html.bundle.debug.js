@@ -34,7 +34,7 @@ var toggle_default = _template("__tests__/tags/toggle.marko", (input) => {
 	_html(`<button>${_text_mark($scope0_id, "#text/1", open ? input.user.bio : input.user.name)}</button>${_el_mark($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/tags/toggle.marko_0");
 	_patch_render($scope0_id, "__tests__/tags/toggle.marko_0_input_user_bio#5_input_user_name#6_open#7/setup", [$fg__input_user_bio && "input_user_bio", $fg__input_user_name && "input_user_name"]);
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/toggle.marko_fill0", open, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/toggle.marko_0_open#7/fill", open, 1);
 	_scope($scope0_id, {
 		input_user_bio: input.user?.bio,
 		input_user_name: input.user?.name,

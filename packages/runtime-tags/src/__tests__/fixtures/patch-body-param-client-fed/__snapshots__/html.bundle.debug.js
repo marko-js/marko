@@ -42,7 +42,7 @@ var list_default = _template("__tests__/tags/list.marko", (input) => {
 	}, 0, $scope0_id, "#ul/2", 1, 1, 1, "</ul>", 1);
 	_script($scope0_id, "__tests__/tags/list.marko_0");
 	$fg__input_row && _patch_render($scope0_id, "__tests__/tags/list.marko_1_input_row#0:5/setup", "input_row");
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/list.marko_fill0", items, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/list.marko_0_items#6/fill", items, 1);
 	_scope($scope0_id, {
 		input_row: input.row,
 		items

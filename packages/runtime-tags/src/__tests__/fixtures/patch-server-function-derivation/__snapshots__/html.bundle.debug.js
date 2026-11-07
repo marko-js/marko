@@ -40,8 +40,8 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 	_script($scope0_id, "__tests__/tags/panel.marko_0");
 	_patch_render($scope0_id, "__tests__/tags/panel.marko_1_summary#0:6/setup", "summary");
 	_patch_render($scope0_id, "__tests__/tags/panel.marko_1_pending_length#0:9/setup", "pending_length");
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/panel.marko_fill0", count, 1);
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/panel.marko_fill1", open, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/panel.marko_0_count#10/fill", count, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/panel.marko_0_open#11/fill", open, 1);
 	_scope($scope0_id, {
 		summary,
 		pending_length: pending?.length,

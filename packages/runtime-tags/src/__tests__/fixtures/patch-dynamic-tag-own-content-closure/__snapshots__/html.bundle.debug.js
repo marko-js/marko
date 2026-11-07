@@ -17,7 +17,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		let count = 0;
 		_html(`<em>${_text_mark($scope1_id, "#text/1", label, 1, 4, 0)} ${_text_mark($scope1_id, "#text/2", count, 2)} ${_text_mark($scope1_id, "#text/3", n, 2)}</em>${_el_mark($scope1_id, "#em/0")}`);
 		_script($scope1_id, "__tests__/template.marko_1");
-		_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill0", count, 1);
+		_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_1_count#7/fill", count, 1);
 		_subscribe($n__closures, _scope($scope1_id, {
 			count,
 			_: _scope_with_id($scope0_id)

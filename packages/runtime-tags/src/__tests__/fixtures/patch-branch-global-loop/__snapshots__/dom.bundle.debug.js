@@ -32,7 +32,7 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 // tags/row.marko
 const $template = "<p> <button> </button></p>";
 const $walks = "D b D m";
-const $clicks = /*@__PURE__*/ _fill_let("__tests__/tags/row.marko_fill0", "clicks/6", ($scope) => _text($scope["#text/2"], $scope.clicks));
+const $clicks = /*@__PURE__*/ _fill_let("__tests__/tags/row.marko_0_clicks#6/fill", "clicks/6", ($scope) => _text($scope["#text/2"], $scope.clicks));
 const $setup__script = _script("__tests__/tags/row.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$clicks($scope, +$scope.clicks + 1);
 }));

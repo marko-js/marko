@@ -12,7 +12,7 @@ var box_default = _template("__tests__/tags/box.marko", (input) => {
 	const $valueChange2 = _patch_bind($scope0_id, "PatchWrite:#TagVariableChange", _resume(function(next) {
 		value = next;
 	}, "__tests__/tags/box.marko_0/valueChange", $scope0_id) || void 0, 0, 0);
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/box.marko_fill0", value, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/box.marko_0_value#0/fill", value, 1);
 	_scope($scope0_id, { "#TagVariableChange": $valueChange2 }, "__tests__/tags/box.marko", 0);
 	_resume_branch($scope0_id);
 	return $return;
@@ -30,7 +30,7 @@ var counter_default = _template("__tests__/tags/counter.marko", (input) => {
 	_html(`<button class=tick>${_text_mark($scope0_id, "#text/1", input.base + tick)}</button>${_el_mark($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/tags/counter.marko_0");
 	_patch_render($scope0_id, "__tests__/tags/counter.marko_0_input_base#4_tick#5/setup", $fg__input_base && "input_base");
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/counter.marko_fill0", tick, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/counter.marko_0_tick#5/fill", tick, 1);
 	_scope($scope0_id, {
 		input_base: input.base,
 		tick

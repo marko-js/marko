@@ -8,7 +8,7 @@
       },
       "PatchChild:BranchScopes:#text/0": {
         "PatchSetupValues:": {
-          "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-await-caller-state-created-assigned-let/tags/show-await.marko_fill1": "b"
+          "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-await-caller-state-created-assigned-let/tags/show-await.marko_1_l#6/fill": "b"
         }
       }
     }

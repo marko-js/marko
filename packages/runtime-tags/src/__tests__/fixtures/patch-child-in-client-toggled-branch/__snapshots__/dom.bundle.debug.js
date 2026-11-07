@@ -4,7 +4,7 @@ const $walks$1 = "b%bD l";
 const $if_content__input_value$1 = /*@__PURE__*/ _if_closure_patch("__tests__/tags/my-tag.marko_1_input_value#0:4/setup", "#text/0", 0, ($scope) => _text($scope["#text/0"], $scope._.input_value));
 const $if_content__setup$1 = $if_content__input_value$1;
 const $if$1 = /*@__PURE__*/ _if("#text/0", "<p> </p>", "D ", $if_content__setup$1);
-const $open = _fill_let_resume("__tests__/tags/my-tag.marko_fill0", "open/5", ($scope) => $if$1($scope, $scope.open ? 0 : 1));
+const $open = _fill_let_resume("__tests__/tags/my-tag.marko_0_open#5/fill", "open/5", ($scope) => $if$1($scope, $scope.open ? 0 : 1));
 function $setup$1($scope) {
 	$open($scope, true);
 }

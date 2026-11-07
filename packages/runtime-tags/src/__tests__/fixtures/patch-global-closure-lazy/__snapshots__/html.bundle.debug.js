@@ -24,8 +24,8 @@ var child_default = _template("__tests__/child.marko", (input) => {
 		}
 	}, $scope0_id, "#text/2");
 	_script($scope0_id, "__tests__/child.marko_0");
-	_patch_fill($scope0_id, "PatchFill:__tests__/child.marko_fill0", on, 1);
-	_patch_fill($scope0_id, "PatchFill:__tests__/child.marko_fill1", count, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/child.marko_0_on#3/fill", on, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/child.marko_0_count#4/fill", count, 1);
 	_scope($scope0_id, { count }, "__tests__/child.marko", 0, { count: "2:6" });
 });
 

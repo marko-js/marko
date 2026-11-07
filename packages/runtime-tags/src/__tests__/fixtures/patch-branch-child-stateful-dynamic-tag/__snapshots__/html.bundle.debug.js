@@ -18,7 +18,7 @@ var child_default = _template("__tests__/tags/child/index.marko", (input) => {
 	_html(`<button>+</button>${_el_mark($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/tags/child/index.marko_0");
 	$fg__input_label && _patch_subscribers($scope0_id, "__tests__/tags/child/index.marko_0_input_label#4/subscribers", "input_label");
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/child/index.marko_fill0", count, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/child/index.marko_0_count#5/fill", count, 1);
 	_scope($scope0_id, {
 		input_label: input.label,
 		count,

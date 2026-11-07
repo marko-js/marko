@@ -5,7 +5,7 @@
     "PatchChild:#childScope/1": {
       "PatchText:#text/1": "b",
       "PatchSetupValues:": {
-        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-held-superseded/child.marko_fill0": 0
+        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-held-superseded/child.marko_0_count#6/fill": 0
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-held-superseded/template.marko_1*shell"]
@@ -19,7 +19,7 @@
     "PatchChild:#childScope/1": {
       "PatchText:#text/1": "c",
       "PatchSetupValues:": {
-        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-held-superseded/child.marko_fill0": 0
+        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-held-superseded/child.marko_0_count#6/fill": 0
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-held-superseded/template.marko_1*shell"]

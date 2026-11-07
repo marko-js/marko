@@ -11,7 +11,7 @@
       "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-created-row-caller-items-join-server-value/tags/child.marko_1_input_b#0:5/setup": "input_b",
       "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-created-row-caller-items-join-server-value/tags/child.marko_2_input_b#0:5/setup": "input_b",
       "PatchSetupValues:": {
-        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-row-caller-items-join-server-value/tags/child.marko_fill0": !0
+        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-row-caller-items-join-server-value/tags/child.marko_0_open#7/fill": !0
       },
       "PatchMarkedWrite:input_b": "m"
     }
@@ -31,7 +31,7 @@
       "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-created-row-caller-items-join-server-value/tags/child.marko_1_input_b#0:5/setup": "input_b",
       "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-created-row-caller-items-join-server-value/tags/child.marko_2_input_b#0:5/setup": "input_b",
       "PatchSetupValues:": {
-        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-row-caller-items-join-server-value/tags/child.marko_fill0": !0
+        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-row-caller-items-join-server-value/tags/child.marko_0_open#7/fill": !0
       },
       "PatchMarkedWrite:input_b": "n"
     }

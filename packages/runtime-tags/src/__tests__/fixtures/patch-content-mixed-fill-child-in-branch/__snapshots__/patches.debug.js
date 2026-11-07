@@ -9,7 +9,7 @@
           "PatchBind:#TagVariableChange": "packages/runtime-tags/src/__tests__/fixtures/patch-content-mixed-fill-child-in-branch/tags/box.marko_0/valueChange"
         },
         "PatchSetupValues:": {
-          "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-content-mixed-fill-child-in-branch/tags/box.marko_fill0": null
+          "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-content-mixed-fill-child-in-branch/tags/box.marko_0_value#0/fill": null
         }
       },
       "PatchChild:#childScope/3": {
@@ -18,7 +18,7 @@
           "PatchChild:#childScope/0": {
             "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-content-mixed-fill-child-in-branch/tags/counter.marko_0_input_base#4_tick#5/setup": "",
             "PatchSetupValues:": {
-              "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-content-mixed-fill-child-in-branch/tags/counter.marko_fill0": 0
+              "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-content-mixed-fill-child-in-branch/tags/counter.marko_0_tick#5/fill": 0
             }
           }
         }
@@ -40,7 +40,7 @@
           "PatchBind:#TagVariableChange": "packages/runtime-tags/src/__tests__/fixtures/patch-content-mixed-fill-child-in-branch/tags/box.marko_0/valueChange"
         },
         "PatchSetupValues:": {
-          "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-content-mixed-fill-child-in-branch/tags/box.marko_fill0": null
+          "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-content-mixed-fill-child-in-branch/tags/box.marko_0_value#0/fill": null
         }
       },
       "PatchChild:#childScope/3": {
@@ -49,7 +49,7 @@
           "PatchChild:#childScope/0": {
             "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-content-mixed-fill-child-in-branch/tags/counter.marko_0_input_base#4_tick#5/setup": "",
             "PatchSetupValues:": {
-              "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-content-mixed-fill-child-in-branch/tags/counter.marko_fill0": 0
+              "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-content-mixed-fill-child-in-branch/tags/counter.marko_0_tick#5/fill": 0
             }
           }
         }

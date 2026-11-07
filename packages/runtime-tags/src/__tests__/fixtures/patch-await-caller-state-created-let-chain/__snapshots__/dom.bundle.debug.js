@@ -18,7 +18,7 @@ var card_default = /*@__PURE__*/ _template("__tests__/tags/card.marko", $templat
 // tags/show-await.marko
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
-const $await_content__d = _fill_let_change_resume("__tests__/tags/show-await.marko_fill0", "d/10", ($scope) => _text($scope["#text/3"], $scope.d));
+const $await_content__d = _fill_let_change_resume("__tests__/tags/show-await.marko_1_d#10/fill", "d/10", ($scope) => _text($scope["#text/3"], $scope.d));
 const $await_content__c = _let("c/9", ($scope) => {
 	_style_rule_item($scope["#style/0"], "--M_packages-1bruntime-19tags-1bsrc-1b__tests__-1bfixtures-1bpatch-19await-19caller-19state-19created-19let-19chain-1btags-1bshow-19await-1amarko_0", $scope.c);
 	_text($scope["#text/2"], $scope.c);

@@ -14,7 +14,7 @@ const $walks$2 = " b%c";
 const $if_content__input_header = /*@__PURE__*/ _if_closure_patch("__tests__/tags/card.marko_1_input_header#0:5/setup", "#text/1", 0, ($scope) => $input_header$2($scope["#childScope/0"], $scope._.input_header));
 const $if_content__setup = $if_content__input_header;
 const $if = /*@__PURE__*/ _if("#text/1", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$3), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c"), $if_content__setup);
-const $open = /*@__PURE__*/ _fill_let("__tests__/tags/card.marko_fill0", "open/4", ($scope) => $if($scope, $scope.open ? 0 : 1));
+const $open = /*@__PURE__*/ _fill_let("__tests__/tags/card.marko_0_open#4/fill", "open/4", ($scope) => $if($scope, $scope.open ? 0 : 1));
 const $setup__script = _script("__tests__/tags/card.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$open($scope, !$scope.open);
 }));

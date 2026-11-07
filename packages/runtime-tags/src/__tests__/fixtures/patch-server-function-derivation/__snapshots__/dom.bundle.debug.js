@@ -35,12 +35,12 @@ const $data = /*@__PURE__*/ _const("data", ($scope) => {
 	$data__OR__summary($scope);
 });
 const $setup__$global_data = /*@__PURE__*/ _fill_global("__tests__/tags/panel.marko_0_$global_data#4", ($scope) => $data($scope, $scope.$global.data), "data");
-const $count = /*@__PURE__*/ _fill_let("__tests__/tags/panel.marko_fill0", "count/10", ($scope) => {
+const $count = /*@__PURE__*/ _fill_let("__tests__/tags/panel.marko_0_count#10/fill", "count/10", ($scope) => {
 	_text($scope["#text/1"], $scope.count);
 	$for_content__count($scope);
 });
 const $if = /*@__PURE__*/ _if("#text/3", "<p class=summary> </p><p class=total> </p>", "D lD ", $if_content__setup);
-const $open = /*@__PURE__*/ _fill_let("__tests__/tags/panel.marko_fill1", "open/11", ($scope) => $if($scope, $scope.open ? 0 : 1));
+const $open = /*@__PURE__*/ _fill_let("__tests__/tags/panel.marko_0_open#11/fill", "open/11", ($scope) => $if($scope, $scope.open ? 0 : 1));
 const $setup__script = _script("__tests__/tags/panel.marko_0", ($scope) => {
 	_on($scope["#button/0"], "click", function() {
 		$count($scope, +$scope.count + 1);

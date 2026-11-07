@@ -31,7 +31,7 @@ const $Panel_content__if = /*@__PURE__*/ _if("#text/0", "<p> </p>", "D ", $if_co
 const $Panel_content__open = ($scope, open) => $Panel_content__if($scope, open ? 0 : 1);
 const $Panel_content__$params = ($scope, $params2) => $Panel_content__$temp($scope, $params2[0]);
 const $Panel_content__$temp = ($scope, $temp) => $Panel_content__open($scope, $temp.open);
-const $k = /*@__PURE__*/ _fill_let("__tests__/tags/card.marko_fill0", "k/6", ($scope) => $Panel_content__open($scope["#childScope/0"], $scope.k));
+const $k = /*@__PURE__*/ _fill_let("__tests__/tags/card.marko_0_k#6/fill", "k/6", ($scope) => $Panel_content__open($scope["#childScope/0"], $scope.k));
 const $input_n = $k;
 const $setup__script = _script("__tests__/tags/card.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$k($scope, 0);

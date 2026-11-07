@@ -9,7 +9,7 @@ var outer_default = _template("__tests__/tags/outer.marko", (input) => {
 	let x = input.a;
 	_html(`<p>${_text_mark($scope0_id, "#text/0", x + input.b)}</p>`);
 	_patch_render($scope0_id, "__tests__/tags/outer.marko_0_input_b#4_x#5/setup", $fg__input_b && "input_b");
-	_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/tags/outer.marko_fill0", x, 1);
+	_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/tags/outer.marko_0_x#5/fill", x, 1);
 	_scope($scope0_id, {
 		input_b: input.b,
 		x: _write_if($scope0_reason, 1) && x

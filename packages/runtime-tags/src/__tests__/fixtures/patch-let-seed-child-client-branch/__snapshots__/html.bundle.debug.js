@@ -22,7 +22,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	_script($scope0_id, "__tests__/tags/child.marko_0");
 	$fg__input_v && _patch_render($scope0_id, "__tests__/tags/child.marko_1_input_v#0:4/setup", "input_v");
 	$fg__input_w && _patch_render($scope0_id, "__tests__/tags/child.marko_1_input_w#0:5/setup", "input_w");
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/child.marko_fill0", on, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/child.marko_0_on#6/fill", on, 1);
 	_scope($scope0_id, {
 		input_v: input.v,
 		input_w: input.w,

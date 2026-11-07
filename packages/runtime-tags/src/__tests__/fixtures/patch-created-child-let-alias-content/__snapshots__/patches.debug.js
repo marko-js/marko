@@ -7,7 +7,7 @@
     },
     "PatchChild:#childScope/0": {
       "PatchSetupValues:": {
-        "PatchBindFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-alias-content/tags/outer.marko_fill0": "^=packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-alias-content/template.marko_2*content"
+        "PatchBindFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-alias-content/tags/outer.marko_0_o#5/fill": "^=packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-alias-content/template.marko_2*content"
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-alias-content/template.marko_1*shell"],
@@ -23,7 +23,7 @@
     },
     "PatchChild:#childScope/0": {
       "PatchSetupValues:": {
-        "PatchBindFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-alias-content/tags/outer.marko_fill0": "^=packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-alias-content/template.marko_2*content"
+        "PatchBindFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-alias-content/tags/outer.marko_0_o#5/fill": "^=packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-alias-content/template.marko_2*content"
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-alias-content/template.marko_1*shell"],
@@ -38,7 +38,7 @@
     },
     "PatchChild:#childScope/0": {
       "PatchSetupValues:": {
-        "PatchBindFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-alias-content/tags/outer.marko_fill0": "^=packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-alias-content/template.marko_2*content"
+        "PatchBindFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-alias-content/tags/outer.marko_0_o#5/fill": "^=packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-alias-content/template.marko_2*content"
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-child-let-alias-content/template.marko_1*shell"],

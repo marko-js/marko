@@ -9,7 +9,7 @@ var probe_default = _template("__tests__/tags/probe.marko", (input) => {
 	let count = 5;
 	_html("<p>probe</p>");
 	_script($scope0_id, "__tests__/tags/probe.marko_0_count#0", 0);
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/probe.marko_fill0", count, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/probe.marko_0_count#0/fill", count, 1);
 	_scope($scope0_id, { count }, "__tests__/tags/probe.marko", 0, { count: "1:6" });
 });
 

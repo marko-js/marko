@@ -19,7 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_fill_global_subscribe("__tests__/template.marko_1_$global_n#0:7_x#3", $scope1_id, 1);
 			_script($scope1_id, "__tests__/template.marko_1");
 			_script($scope1_id, "__tests__/template.marko_1_y#4");
-			_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill0", x, 1);
+			_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_1_x#3/fill", x, 1);
 			_scope($scope1_id, {
 				x,
 				y

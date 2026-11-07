@@ -7,7 +7,7 @@
       "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-created-child-unassigned-let-await-server-only/tags/card.marko_1*content"
     },
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-unassigned-let-await-server-only/tags/card.marko_fill0": 2
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-unassigned-let-await-server-only/tags/card.marko_0_n#4/fill": 2
     }
   }
 }
@@ -28,7 +28,7 @@
       "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-created-child-unassigned-let-await-server-only/tags/card.marko_1*content"
     },
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-unassigned-let-await-server-only/tags/card.marko_fill0": 3
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-unassigned-let-await-server-only/tags/card.marko_0_n#4/fill": 3
     }
   }
 }

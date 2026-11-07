@@ -11,7 +11,7 @@
         }, "packages/runtime-tags/src/__tests__/fixtures/patch-define-created-stateful-call-beside-stateful-body/template.marko_4*shell"],
         "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-define-created-stateful-call-beside-stateful-body/template.marko_2_text#4": "text",
         "PatchSetupValues:": {
-          "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-define-created-stateful-call-beside-stateful-body/template.marko_fill0": 1
+          "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-define-created-stateful-call-beside-stateful-body/template.marko_2_n#5/fill": 1
         },
         "PatchSetup:": {
           "PatchWrite:text": "const"
@@ -37,7 +37,7 @@
         }, "packages/runtime-tags/src/__tests__/fixtures/patch-define-created-stateful-call-beside-stateful-body/template.marko_4*shell"],
         "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-define-created-stateful-call-beside-stateful-body/template.marko_2_text#4": "text",
         "PatchSetupValues:": {
-          "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-define-created-stateful-call-beside-stateful-body/template.marko_fill0": 1
+          "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-define-created-stateful-call-beside-stateful-body/template.marko_2_n#5/fill": 1
         },
         "PatchSetup:": {
           "PatchWrite:text": "const"
@@ -67,7 +67,7 @@
         }, "packages/runtime-tags/src/__tests__/fixtures/patch-define-created-stateful-call-beside-stateful-body/template.marko_4*shell"],
         "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-define-created-stateful-call-beside-stateful-body/template.marko_2_text#4": "text",
         "PatchSetupValues:": {
-          "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-define-created-stateful-call-beside-stateful-body/template.marko_fill0": 1
+          "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-define-created-stateful-call-beside-stateful-body/template.marko_2_n#5/fill": 1
         },
         "PatchSetup:": {
           "PatchWrite:text": "const"

@@ -15,7 +15,7 @@
       }, _.a]
     },
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-define-created-local-beside-stateful-body/template.marko_fill0": 1
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-define-created-local-beside-stateful-body/template.marko_1_n#4/fill": 1
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-define-created-local-beside-stateful-body/template.marko_1*shell"],
   "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-define-created-local-beside-stateful-body/template.marko_0_input_label#6_open#9_Tag#12/setup": "input_label Tag",
@@ -42,7 +42,7 @@
       }, _.a]
     },
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-define-created-local-beside-stateful-body/template.marko_fill0": 1
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-define-created-local-beside-stateful-body/template.marko_1_n#4/fill": 1
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-define-created-local-beside-stateful-body/template.marko_1*shell"],
   "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-define-created-local-beside-stateful-body/template.marko_0_input_label#6_open#9_Tag#12/setup": "input_label Tag",
@@ -78,7 +78,7 @@
       }, _.a]
     },
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-define-created-local-beside-stateful-body/template.marko_fill0": 1
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-define-created-local-beside-stateful-body/template.marko_1_n#4/fill": 1
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-define-created-local-beside-stateful-body/template.marko_1*shell"],
   "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-define-created-local-beside-stateful-body/template.marko_0_input_label#6_open#9_Tag#12/setup": "input_label Tag",

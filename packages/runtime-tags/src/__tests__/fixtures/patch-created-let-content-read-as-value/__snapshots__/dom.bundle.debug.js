@@ -31,7 +31,7 @@ var card_default = /*@__PURE__*/ _template("__tests__/tags/card.marko", $templat
 const $template = /*@__PURE__*/ ((_w0) => `<button>clear</button>${_w0}<section><!></section>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => ` b/${_w0}&D%l`)("D l");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/2");
-const $o = /*@__PURE__*/ _fill_let("__tests__/tags/outer.marko_fill0", "o/6", ($scope) => {
+const $o = /*@__PURE__*/ _fill_let("__tests__/tags/outer.marko_0_o#6/fill", "o/6", ($scope) => {
 	$input_value($scope["#childScope/1"], $scope.o === undefined);
 	$dynamicTag($scope, $scope.o);
 });

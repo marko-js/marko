@@ -17,7 +17,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 			_script($scope1_id, "__tests__/tags/child.marko_1");
 			_client_guard($scope0_reason, 1) && _patch_render($scope1_id, "__tests__/tags/child.marko_1_input_on#0:4/setup");
 			const $countChange = input.on || void 0;
-			_patch_let_change($scope1_id, "PatchFill:__tests__/tags/child.marko_fill0", count, "PatchWrite:TagVariableChange:count", $countChange, $scope0_reason, 1);
+			_patch_let_change($scope1_id, "PatchFill:__tests__/tags/child.marko_1_count#2/fill", count, "PatchWrite:TagVariableChange:count", $countChange, $scope0_reason, 1);
 			_scope($scope1_id, {
 				count,
 				_: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id),

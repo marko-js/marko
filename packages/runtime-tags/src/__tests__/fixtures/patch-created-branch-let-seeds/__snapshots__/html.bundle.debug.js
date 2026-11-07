@@ -18,8 +18,8 @@ var view_default = _template("__tests__/tags/view.marko", (input) => {
 			_script($scope1_id, "__tests__/tags/view.marko_1");
 			_client_guard($scope0_reason, 2) && _patch_render($scope1_id, "__tests__/tags/view.marko_1_input_x#0:4/setup");
 			_client_guard($scope0_reason, 3) && _patch_render($scope1_id, "__tests__/tags/view.marko_1_input_y#0:5/setup");
-			_filled_guard($scope0_reason, 2) && _patch_fill($scope1_id, "PatchFill:__tests__/tags/view.marko_fill0", a, 1);
-			_filled_guard($scope0_reason, 3) && _patch_fill($scope1_id, "PatchFill:__tests__/tags/view.marko_fill1", b, 1);
+			_filled_guard($scope0_reason, 2) && _patch_fill($scope1_id, "PatchFill:__tests__/tags/view.marko_1_a#2/fill", a, 1);
+			_filled_guard($scope0_reason, 3) && _patch_fill($scope1_id, "PatchFill:__tests__/tags/view.marko_1_b#3/fill", b, 1);
 			_scope($scope1_id, {
 				a,
 				b,

@@ -28,7 +28,7 @@ var outer_default = _template("__tests__/tags/outer.marko", (input) => {
 	_dynamic_tag($scope0_id, "#text/2", o, {}, 8);
 	_html("</section>");
 	_script($scope0_id, "__tests__/tags/outer.marko_0");
-	_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/tags/outer.marko_fill0", o, 1);
+	_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/tags/outer.marko_0_o#6/fill", o, 1);
 	_scope($scope0_id, { "#childScope/1": _existing_scope($childScope) }, "__tests__/tags/outer.marko", 0) || _client_branch(input.content);
 });
 

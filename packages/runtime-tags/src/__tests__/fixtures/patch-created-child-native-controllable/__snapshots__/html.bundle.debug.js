@@ -38,7 +38,7 @@ var page_b_default = _template("__tests__/tags/page-b.marko", (input) => {
 	});
 	_patch_child_end();
 	_html(`<output>${_text_mark($scope0_id, "#text/1", text)}</output>`);
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/page-b.marko_fill0", text, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/page-b.marko_0_text#2/fill", text, 1);
 	_scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/tags/page-b.marko", 0);
 });
 

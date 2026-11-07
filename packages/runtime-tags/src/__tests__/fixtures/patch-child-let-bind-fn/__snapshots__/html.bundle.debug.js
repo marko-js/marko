@@ -24,8 +24,8 @@ var picker_default = _template("__tests__/tags/picker.marko", (input) => {
 	_patch_write($scope0_id, "PatchWrite:load", load, 1);
 	_patch_render($scope0_id, "__tests__/tags/picker.marko_0_input_refreshing#4_input_refreshingChange#5/setup", [$fg__input_refreshing && "input_refreshing", $fg__input_refreshingChange && "input_refreshingChange"], $scope0_reason, 0);
 	const $refreshingChange = input.refreshingChange || void 0;
-	_patch_let_change($scope0_id, "PatchFill:__tests__/tags/picker.marko_fill0", refreshing, "PatchWrite:TagVariableChange:refreshing", $refreshingChange, $scope0_reason, 0);
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/picker.marko_fill1", catalog, 1);
+	_patch_let_change($scope0_id, "PatchFill:__tests__/tags/picker.marko_0_refreshing#7/fill", refreshing, "PatchWrite:TagVariableChange:refreshing", $refreshingChange, $scope0_reason, 0);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/picker.marko_0_catalog#9/fill", catalog, 1);
 	_scope($scope0_id, {
 		input_refreshing: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.refreshing,
 		input_refreshingChange: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.refreshingChange,

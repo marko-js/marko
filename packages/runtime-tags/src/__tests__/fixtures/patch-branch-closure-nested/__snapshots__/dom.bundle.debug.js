@@ -6,7 +6,7 @@ const $if_content2__count = /*@__PURE__*/ _if_closure_patch("__tests__/template.
 const $if_content2__setup = $if_content2__count;
 const $if_content__if = /*@__PURE__*/ _if("#text/1", "<p>Seen <!></p>", "Db%", $if_content2__setup);
 const $if_content__input_inner = /*@__PURE__*/ _if_closure_patch("__tests__/template.marko_1_input_inner#0:6/setup", "#text/1", 0, ($scope) => $if_content__if($scope, $scope._.input_inner ? 0 : 1));
-const $if_content__count = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill0", "count/2", $if_content2__count);
+const $if_content__count = /*@__PURE__*/ _fill_let("__tests__/template.marko_1_count#2/fill", "count/2", $if_content2__count);
 const $if_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/0"], "click", function() {
 	$if_content__count($scope, +$scope.count + 1);
 }));

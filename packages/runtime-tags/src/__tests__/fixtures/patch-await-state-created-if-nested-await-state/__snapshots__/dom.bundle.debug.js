@@ -4,7 +4,7 @@ const $walks = " D l%c";
 const $await_content2__$params = ($scope, $params3) => _text($scope["#text/0"], $params3[0]);
 const $await_content2 = /*@__PURE__*/ _await_content("#text/1", "<b> </b>", "D ");
 const $await_content__await_promise = /*@__PURE__*/ _await_promise("#text/1", $await_content2__$params);
-const $await_content__q = _fill_let_resume("__tests__/template.marko_fill0", "q/4", ($scope) => $await_content__await_promise($scope, $scope.q));
+const $await_content__q = _fill_let_resume("__tests__/template.marko_2_q#4/fill", "q/4", ($scope) => $await_content__await_promise($scope, $scope.q));
 const $await_content__setup = ($scope) => {
 	$await_content2($scope);
 	$await_content__q($scope, Promise.resolve("k"));

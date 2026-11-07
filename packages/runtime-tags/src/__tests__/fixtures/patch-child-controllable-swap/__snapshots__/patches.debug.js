@@ -12,7 +12,7 @@
   "PatchText:#text/0": "Store!",
   "PatchChild:#childScope/2": {
     "PatchBranch:#text/0": [{
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-swap/tags/counter/index.marko_fill0": 0,
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-swap/tags/counter/index.marko_1_count#2/fill": 0,
       "PatchBind:TagVariableChange:count": "^^packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-swap/template.marko_0/tenfold"
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-swap/tags/counter/index.marko_1*shell"]
   }

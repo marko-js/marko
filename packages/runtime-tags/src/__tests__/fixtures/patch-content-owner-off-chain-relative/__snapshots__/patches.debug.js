@@ -6,7 +6,7 @@
       "PatchChild:#childScope/0": {
         "PatchChild:#childScope/0": {
           "PatchSetupValues:": {
-            "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-content-owner-off-chain-relative/tags/src.marko_fill0": 0
+            "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-content-owner-off-chain-relative/tags/src.marko_0_count#5/fill": 0
           }
         },
         "PatchChild:#childScope/2": {

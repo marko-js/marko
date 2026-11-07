@@ -19,14 +19,14 @@
   "PatchLoop:#text/1": [{
     "PatchChild:#childScope/2": {
       "PatchBranch:#text/0": [{
-        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-loop/tags/counter/index.marko_fill0": 0,
+        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-loop/tags/counter/index.marko_1_count#2/fill": 0,
         "PatchBind:TagVariableChange:count": _.a = "^^packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-loop/template.marko_1/onCount"
       }, _.b = "packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-loop/tags/counter/index.marko_1*shell"]
     }
   }, {
     "PatchChild:#childScope/2": {
       "PatchBranch:#text/0": [{
-        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-loop/tags/counter/index.marko_fill0": 0,
+        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-loop/tags/counter/index.marko_1_count#2/fill": 0,
         "PatchBind:TagVariableChange:count": _.a
       }, _.b]
     }

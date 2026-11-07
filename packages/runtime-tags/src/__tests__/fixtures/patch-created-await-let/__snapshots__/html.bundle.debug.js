@@ -19,7 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				let open = false;
 				_html(`<button>${_text_mark($scope2_id, "#text/1", v, 1, $scope0_reason, 2)} ${_text_mark($scope2_id, "#text/2", open ? "close" : "open", 2)}</button>${_el_mark($scope2_id, "#button/0")}`);
 				_script($scope2_id, "__tests__/template.marko_2");
-				_patch_fill($scope2_id, "PatchFill:__tests__/template.marko_fill0", open, 1);
+				_patch_fill($scope2_id, "PatchFill:__tests__/template.marko_2_open#5/fill", open, 1);
 				_scope($scope2_id, { open }, "__tests__/template.marko", "2:4", { open: "3:10" });
 			}, 1, "__tests__/template.marko_2*content", _unfilled_if($scope0_reason, 2) && 3);
 			_client_guard($scope0_reason, 2) && _patch_render($scope1_id, "__tests__/template.marko_1_input_promise#0:4/setup");

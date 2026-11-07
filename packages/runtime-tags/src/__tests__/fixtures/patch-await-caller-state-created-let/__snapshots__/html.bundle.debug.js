@@ -25,10 +25,10 @@ var show_await_default = _template("__tests__/tags/show-await.marko", (input) =>
 		const $cChange = _resume(function(v) {
 			s = v;
 		}, "__tests__/tags/show-await.marko_1/valueChange2", $scope1_id) || void 0;
-		_filled_guard($scope0_reason, 0) && _patch_fill($scope1_id, "PatchFill:__tests__/tags/show-await.marko_fill0", m, 1);
-		_patch_let_change($scope1_id, "PatchFill:__tests__/tags/show-await.marko_fill1", n, "PatchWrite:TagVariableChange:n", $nChange, $scope0_reason, 0);
-		_filled_guard($scope0_reason, 0) && _patch_fill($scope1_id, "PatchFill:__tests__/tags/show-await.marko_fill2", s, 1);
-		_patch_fill($scope1_id, "PatchFill:__tests__/tags/show-await.marko_fill3", c, 1, _client_guard($scope0_reason, 0) << 1, 0);
+		_filled_guard($scope0_reason, 0) && _patch_fill($scope1_id, "PatchFill:__tests__/tags/show-await.marko_1_m#5/fill", m, 1);
+		_patch_let_change($scope1_id, "PatchFill:__tests__/tags/show-await.marko_1_n#6/fill", n, "PatchWrite:TagVariableChange:n", $nChange, $scope0_reason, 0);
+		_filled_guard($scope0_reason, 0) && _patch_fill($scope1_id, "PatchFill:__tests__/tags/show-await.marko_1_s#8/fill", s, 1);
+		_patch_fill($scope1_id, "PatchFill:__tests__/tags/show-await.marko_1_c#9/fill", c, 1, _client_guard($scope0_reason, 0) << 1, 0);
 		_patch_bind($scope1_id, "PatchWrite:TagVariableChange:c", $cChange);
 		_scope($scope1_id, {
 			m,

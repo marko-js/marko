@@ -7,7 +7,7 @@
       "PatchChild:BranchScopes:#text/0": {
         "PatchText:#text/1": "b",
         "PatchSetupValues:": {
-          "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-content-shell-let-seed/template.marko_fill0": 0
+          "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-content-shell-let-seed/template.marko_2_n#3/fill": 0
         }
       }
     }
@@ -23,7 +23,7 @@
       "PatchChild:BranchScopes:#text/0": {
         "PatchText:#text/1": "c",
         "PatchSetupValues:": {
-          "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-content-shell-let-seed/template.marko_fill0": 0
+          "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-content-shell-let-seed/template.marko_2_n#3/fill": 0
         }
       }
     }

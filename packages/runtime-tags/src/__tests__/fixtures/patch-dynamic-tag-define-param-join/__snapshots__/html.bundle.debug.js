@@ -36,7 +36,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html(`<button>inc</button>${_el_mark($scope1_id, "#button/1")}`);
 		_script($scope1_id, "__tests__/template.marko_1");
 		_patch_subscribers($scope1_id, "__tests__/template.marko_1_value#4/subscribers", "value");
-		_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_fill0", count, 1);
+		_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_1_count#5/fill", count, 1);
 		_scope($scope1_id, {
 			value,
 			count,

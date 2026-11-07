@@ -11,7 +11,7 @@ var inner_default = _template("__tests__/tags/widget/tags/inner/index.marko", (i
 	_html(`<button class=bump>+</button>${_el_mark($scope0_id, "#button/0")}`);
 	const $return = n;
 	_script($scope0_id, "__tests__/tags/widget/tags/inner/index.marko_0");
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/widget/tags/inner/index.marko_fill0", n, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/widget/tags/inner/index.marko_0_n#1/fill", n, 1);
 	_scope($scope0_id, { n }, "__tests__/tags/widget/tags/inner/index.marko", 0, { n: "1:6" });
 	return $return;
 });

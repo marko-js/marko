@@ -8,7 +8,7 @@
     "PatchChild:#childScope/2": {
       "PatchText:#text/1": "a",
       "PatchSetupValues:": {
-        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-construct-effect/child.marko_fill0": 0
+        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-construct-effect/child.marko_0_count#6/fill": 0
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-construct-effect/template.marko_1*shell"]

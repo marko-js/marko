@@ -8,7 +8,7 @@
     },
     "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-template-await-own-state/tags/card.marko_0_input_content#4/subscribers": "input_content",
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-template-await-own-state/tags/card.marko_fill0": 1
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-template-await-own-state/tags/card.marko_0_n#5/fill": 1
     },
     "PatchBind:input_content": "^packages/runtime-tags/src/__tests__/fixtures/patch-created-template-await-own-state/template.marko_1*content"
   },
@@ -26,7 +26,7 @@
     },
     "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-template-await-own-state/tags/card.marko_0_input_content#4/subscribers": "input_content",
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-template-await-own-state/tags/card.marko_fill0": 1
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-template-await-own-state/tags/card.marko_0_n#5/fill": 1
     },
     "PatchBind:input_content": "^packages/runtime-tags/src/__tests__/fixtures/patch-created-template-await-own-state/template.marko_1*content"
   },

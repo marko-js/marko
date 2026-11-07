@@ -9,7 +9,7 @@ var page1_default = _template("__tests__/page1.marko", (input) => {
 	let n = 0;
 	_html(`<button>${_text_mark($scope0_id, "#text/1", n)}</button>${_el_mark($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/page1.marko_0");
-	_patch_fill($scope0_id, "PatchFill:__tests__/page1.marko_fill0", n, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/page1.marko_0_n#2/fill", n, 1);
 	_scope($scope0_id, { n }, "__tests__/page1.marko", 0, { n: "1:6" });
 });
 

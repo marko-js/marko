@@ -13,7 +13,7 @@ var counter_box_default = _template("__tests__/tags/counter-box/index.marko", (i
 	_script($scope0_id, "__tests__/tags/counter-box/index.marko_0");
 	_patch_render($scope0_id, "__tests__/tags/counter-box/index.marko_0_input_onA#5_input_onB#6_mode#7/setup", [$fg__input_onA && "input_onA", $fg__input_onB && "input_onB"]) || _script($scope0_id, "__tests__/tags/counter-box/index.marko_0_input_onA#5_input_onB#6_mode#7", 1, ($sg__input_onA || $sg__input_onB) && 2, [$sg__input_onA && "input_onA", $sg__input_onB && "input_onB"]);
 	const $valueChange = _patch_bind($scope0_id, "PatchWrite:#TagVariableChange", (mode === "a" ? input.onA : input.onB) || void 0, 0, 0);
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/counter-box/index.marko_fill0", mode, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/counter-box/index.marko_0_mode#7/fill", mode, 1);
 	_scope($scope0_id, {
 		input_onA: input.onA,
 		input_onB: input.onB,

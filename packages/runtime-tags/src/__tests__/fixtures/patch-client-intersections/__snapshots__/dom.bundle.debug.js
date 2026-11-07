@@ -25,7 +25,7 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 const $template$2 = "<section><h2> </h2><button>+</button></section>";
 const $walks$2 = "E l l";
 const $input_label__OR__qty = /*@__PURE__*/ _or_patch("__tests__/tags/price-card.marko_0_input_label#4_qty#5/setup", 6, ($scope) => _text($scope["#text/0"], $scope.input_label + " x" + $scope.qty));
-const $qty = /*@__PURE__*/ _fill_let("__tests__/tags/price-card.marko_fill0", "qty/5", $input_label__OR__qty);
+const $qty = /*@__PURE__*/ _fill_let("__tests__/tags/price-card.marko_0_qty#5/fill", "qty/5", $input_label__OR__qty);
 const $setup__script$1 = _script("__tests__/tags/price-card.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$qty($scope, +$scope.qty + 1);
 }));
@@ -41,7 +41,7 @@ var price_card_default = /*@__PURE__*/ _template("__tests__/tags/price-card.mark
 const $template$1 = "<aside> </aside><button class=promo>seen</button>";
 const $walks$1 = "D l b";
 const $input_text__OR__seen = /*@__PURE__*/ _or_patch("__tests__/tags/promo-tag.marko_0_input_text#4_seen#5/setup", 6, ($scope) => _text($scope["#text/0"], $scope.input_text + " (" + $scope.seen + ")"));
-const $seen = /*@__PURE__*/ _fill_let("__tests__/tags/promo-tag.marko_fill0", "seen/5", $input_text__OR__seen);
+const $seen = /*@__PURE__*/ _fill_let("__tests__/tags/promo-tag.marko_0_seen#5/fill", "seen/5", $input_text__OR__seen);
 const $setup__script = _script("__tests__/tags/promo-tag.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$seen($scope, +$scope.seen + 1);
 }));
@@ -57,7 +57,7 @@ var promo_tag_default = /*@__PURE__*/ _template("__tests__/tags/promo-tag.marko"
 const $template = "<footer> </footer>";
 const $walks = "D l";
 const $input_year__OR__frozen = /*@__PURE__*/ _or_patch("__tests__/tags/site-footer.marko_0_input_year#3_frozen#4/setup", 5, ($scope) => _text($scope["#text/0"], $scope.input_year + $scope.frozen));
-const $frozen = _fill_let_resume("__tests__/tags/site-footer.marko_fill0", "frozen/4", $input_year__OR__frozen);
+const $frozen = _fill_let_resume("__tests__/tags/site-footer.marko_0_frozen#4/fill", "frozen/4", $input_year__OR__frozen);
 function $setup($scope) {
 	$frozen($scope, 0);
 }

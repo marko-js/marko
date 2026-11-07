@@ -40,7 +40,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 		}), $cg__input_content && "__tests__/tags/card.marko_1_input_content#0:5/subscribe"), "__tests__/tags/card.marko_1_open#0:6/subscribe");
 	}, 1, "__tests__/tags/card.marko_1*content", _unfilled_if($scope0_reason, 1), 1);
 	_script($scope0_id, "__tests__/tags/card.marko_0");
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/card.marko_fill0", open, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/card.marko_0_open#6/fill", open, 1);
 	_scope($scope0_id, {
 		input_content: _write_if($scope0_reason, 1) && input.content,
 		open,

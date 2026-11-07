@@ -46,7 +46,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 	_html(`</div>${_el_mark($scope0_id, "#div/0", $wg__input_w)}<button>x</button>${_el_mark($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/tags/card.marko_0");
 	$fg__input_w && _patch_subscribers($scope0_id, "__tests__/tags/card.marko_0_input_w#5/subscribers", "input_w");
-	_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/tags/card.marko_fill0", k, 1);
+	_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "PatchFill:__tests__/tags/card.marko_0_k#6/fill", k, 1);
 	_scope($scope0_id, {
 		input_w: input.w,
 		k: $wi__input_w && k,

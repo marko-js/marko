@@ -5,7 +5,7 @@
     "PatchChild:#childScope/0": {
       "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-define-owner-for/tags/card.marko_0_input_w#5/subscribers": "input_w",
       "PatchSetupValues:": {
-        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-define-owner-for/tags/card.marko_fill0": [1]
+        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-define-owner-for/tags/card.marko_0_k#6/fill": [1]
       },
       "PatchMarkedWrite:input_w": "b"
     }
@@ -19,7 +19,7 @@
     "PatchChild:#childScope/0": {
       "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-define-owner-for/tags/card.marko_0_input_w#5/subscribers": "input_w",
       "PatchSetupValues:": {
-        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-define-owner-for/tags/card.marko_fill0": [1]
+        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-define-owner-for/tags/card.marko_0_k#6/fill": [1]
       },
       "PatchMarkedWrite:input_w": "c"
     }

@@ -21,7 +21,7 @@ var lazy_default = _template("__tests__/lazy.marko", (input) => {
 	let count = 0;
 	_html(`<button>${_text_mark($scope0_id, "#text/1", input.label, 1, $scope0_reason, 0)}:${_text_mark($scope0_id, "#text/2", count, 2)}</button>${_el_mark($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/lazy.marko_0");
-	_patch_fill($scope0_id, "PatchFill:__tests__/lazy.marko_fill0", count, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/lazy.marko_0_count#6/fill", count, 1);
 	_scope($scope0_id, { count }, "__tests__/lazy.marko", 0, { count: "1:6" });
 });
 
@@ -64,7 +64,7 @@ var chooser_default = _template("__tests__/tags/chooser.marko", (input) => {
 	_script($scope0_id, "__tests__/tags/chooser.marko_0");
 	$fg__input_Tag && _patch_render($scope0_id, "__tests__/tags/chooser.marko_1_input_Tag#0:4/setup", "input_Tag");
 	$fg__input_label && _patch_render($scope0_id, "__tests__/tags/chooser.marko_1_input_label#0:5/setup", "input_label");
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/chooser.marko_fill0", show, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/chooser.marko_0_show#6/fill", show, 1);
 	_scope($scope0_id, {
 		input_Tag: input.Tag,
 		input_label: input.label,

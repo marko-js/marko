@@ -6,7 +6,7 @@
       "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-define-content-in-created-child/tags/wrap.marko_1_input_row#0:4/setup": "input_row",
       "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-define-content-in-created-child/tags/wrap.marko_1_input_label#0:5/setup": "input_label",
       "PatchSetupValues:": {
-        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-define-content-in-created-child/tags/wrap.marko_fill0": !1
+        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-define-content-in-created-child/tags/wrap.marko_0_open#6/fill": !1
       },
       "PatchSetup:": {
         "PatchWrite:input_row": {

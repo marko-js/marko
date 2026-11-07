@@ -28,7 +28,7 @@ var fwd_default = _template("__tests__/tags/fwd.marko", (input) => {
 		}, $scope2_id, "#text/1");
 		_script($scope2_id, "__tests__/tags/fwd.marko_2");
 		_patch_render($scope2_id, "__tests__/tags/fwd.marko_3_content#2:4/setup", "content");
-		_patch_fill($scope2_id, "PatchFill:__tests__/tags/fwd.marko_fill0", open, 1);
+		_patch_fill($scope2_id, "PatchFill:__tests__/tags/fwd.marko_2_open#5/fill", open, 1);
 		_scope($scope2_id, {
 			content,
 			open

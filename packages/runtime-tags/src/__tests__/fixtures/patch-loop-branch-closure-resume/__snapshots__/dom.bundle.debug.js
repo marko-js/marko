@@ -23,7 +23,7 @@ const $if_content__g = /*@__PURE__*/ _closure_get_patch("__tests__/tags/sub.mark
 const $for_content__if = /*@__PURE__*/ _if("#text/0", "<span class=v> </span>", "D ", $if_content__setup);
 const $for_content__$params = ($scope, $params2) => $for_content__if($scope, $params2[0]?.on ? 0 : 1);
 const $g__closure = /*@__PURE__*/ _closure($if_content__g);
-const $g = /*@__PURE__*/ _fill_let("__tests__/tags/sub.marko_fill0", "g/6", $g__closure);
+const $g = /*@__PURE__*/ _fill_let("__tests__/tags/sub.marko_0_g#6/fill", "g/6", $g__closure);
 const $setup__script = _script("__tests__/tags/sub.marko_0", ($scope) => {
 	_on($scope["#button/1"], "click", function() {
 		$g($scope, +$scope.g + 1);

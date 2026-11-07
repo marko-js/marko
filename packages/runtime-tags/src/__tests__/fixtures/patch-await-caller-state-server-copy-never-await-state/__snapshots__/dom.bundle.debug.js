@@ -2,10 +2,10 @@
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $await_content2__$params = ($scope, $params3) => _text($scope["#text/0"], $params3[0]);
-const $await_content__n = /*@__PURE__*/ _fill_let("__tests__/tags/show-await.marko_fill0", "n/6", ($scope) => _text($scope["#text/2"], $scope.n));
+const $await_content__n = /*@__PURE__*/ _fill_let("__tests__/tags/show-await.marko_1_n#6/fill", "n/6", ($scope) => _text($scope["#text/2"], $scope.n));
 const $await_content2 = /*@__PURE__*/ _await_content("#text/3", "<b> </b>", "D ");
 const $await_content__await_promise = /*@__PURE__*/ _await_promise("#text/3", $await_content2__$params);
-const $await_content__q = /*@__PURE__*/ _fill_let("__tests__/tags/show-await.marko_fill1", "q/7", ($scope) => $await_content__await_promise($scope, $scope.q));
+const $await_content__q = /*@__PURE__*/ _fill_let("__tests__/tags/show-await.marko_1_q#7/fill", "q/7", ($scope) => $await_content__await_promise($scope, $scope.q));
 const $await_content__setup__script = _script("__tests__/tags/show-await.marko_1", ($scope) => _on($scope["#button/1"], "click", function() {
 	$await_content__n($scope, +$scope.n + 1);
 	$await_content__q($scope, Promise.resolve("m"));

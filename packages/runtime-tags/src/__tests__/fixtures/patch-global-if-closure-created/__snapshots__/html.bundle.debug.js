@@ -19,7 +19,7 @@ var badge_default = _template("__tests__/tags/badge.marko", (input) => {
 		}
 	}, $scope0_id, "#text/1", 1, 1, 0, 0, 1);
 	_script($scope0_id, "__tests__/tags/badge.marko_0");
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/badge.marko_fill0", open, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/badge.marko_0_open#2/fill", open, 1);
 	_scope($scope0_id, { open }, "__tests__/tags/badge.marko", 0, { open: "1:6" });
 });
 

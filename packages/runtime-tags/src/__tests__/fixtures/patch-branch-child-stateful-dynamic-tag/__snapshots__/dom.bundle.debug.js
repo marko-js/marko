@@ -23,7 +23,7 @@ const $countbi_content__input_label = /*@__PURE__*/ _closure_get_patch("__tests_
 const $countbi_content__setup = $countbi_content__input_label;
 const $countbi_content = /*@__PURE__*/ _content("__tests__/tags/child/index.marko_1*content", " ", " ", $countbi_content__setup);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $countbi_content);
-const $count = /*@__PURE__*/ _fill_let("__tests__/tags/child/index.marko_fill0", "count/5", ($scope) => $dynamicTag($scope, $scope.count ? "b" : "i"));
+const $count = /*@__PURE__*/ _fill_let("__tests__/tags/child/index.marko_0_count#5/fill", "count/5", ($scope) => $dynamicTag($scope, $scope.count ? "b" : "i"));
 const $setup__script = _script("__tests__/tags/child/index.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$count($scope, +$scope.count + 1);
 }));

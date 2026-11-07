@@ -31,7 +31,7 @@ var level_watch_default = _template("__tests__/tags/level-watch.marko", (input) 
 	$fg__input_projection_skill && $cg__input_projection && _patch_render($scope0_id, "__tests__/tags/level-watch.marko_1_input_projection_skill#0:6/setup", "input_projection_skill");
 	$fg__input_baseXp && $cg__input_projection && _patch_render($scope0_id, "__tests__/tags/level-watch.marko_1_input_baseXp#0:7/setup", "input_baseXp");
 	$fg__input_playerId && $cg__input_projection && _patch_render($scope0_id, "__tests__/tags/level-watch.marko_1_input_playerId#0:8/setup", "input_playerId");
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/level-watch.marko_fill0", shown, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/level-watch.marko_0_shown#9/fill", shown, 1);
 	_scope($scope0_id, {
 		input_projection_skill: input.projection?.skill,
 		input_baseXp: input.baseXp,

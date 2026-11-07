@@ -21,7 +21,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				let open = false;
 				_html(`<button>${_text_mark($scope2_id, "#text/1", open ? "close" : "open")}</button>${_el_mark($scope2_id, "#button/0")}`);
 				_script($scope2_id, "__tests__/template.marko_2");
-				_patch_fill($scope2_id, "PatchFill:__tests__/template.marko_fill0", open, 1);
+				_patch_fill($scope2_id, "PatchFill:__tests__/template.marko_2_open#2/fill", open, 1);
 				_scope($scope2_id, { open }, "__tests__/template.marko", "4:6", { open: "5:12" });
 			}, () => {
 				const $scope3_reason = _scope_reason();

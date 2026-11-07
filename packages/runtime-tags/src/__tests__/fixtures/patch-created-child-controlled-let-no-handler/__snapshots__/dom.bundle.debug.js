@@ -14,7 +14,7 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 const $template = "<!><!><!>";
 const $walks = "b%c";
 const $setup = ($_) => {};
-const $if_content__count = /*@__PURE__*/ _fill_let_change("__tests__/tags/child.marko_fill0", "count/2", ($scope) => _text($scope["#text/1"], $scope.count));
+const $if_content__count = /*@__PURE__*/ _fill_let_change("__tests__/tags/child.marko_1_count#2/fill", "count/2", ($scope) => _text($scope["#text/1"], $scope.count));
 const $if_content__input_on = /*@__PURE__*/ _if_closure_patch("__tests__/tags/child.marko_1_input_on#0:4/setup", "#text/0", 0, ($scope) => $if_content__count($scope, 1, $scope._.input_on));
 const $if_content__setup__script = _script("__tests__/tags/child.marko_1", ($scope) => _on($scope["#button/0"], "click", function() {
 	$if_content__count($scope, +$scope.count + 1);

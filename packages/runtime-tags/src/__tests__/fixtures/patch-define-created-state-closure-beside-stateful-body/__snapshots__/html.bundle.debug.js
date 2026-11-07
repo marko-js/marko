@@ -29,7 +29,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}
 		}, $scope2_id, "#text/1", 1, _write_guard($scope2_reason, 0), 1, 0, 0, ["__tests__/template.marko_3*shell"], $scope2_reason, 0);
 		_unfilled_if($scope2_reason, 0) && _patch_write($scope2_id, "PatchWrite:label", label, 1);
-		_patch_fill($scope2_id, "PatchFill:__tests__/template.marko_fill0", n, 1);
+		_patch_fill($scope2_id, "PatchFill:__tests__/template.marko_2_n#6/fill", n, 1);
 		_subscribe($open__closures, _scope($scope2_id, {
 			label: (_unfilled_if($scope2_reason, 0) || _unfilled_if($scope2_reason, 1)) && label,
 			n: _write_if($scope2_reason, 0) && n,

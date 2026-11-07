@@ -67,8 +67,8 @@ var shop_default = _template("__tests__/shop.marko", (input) => {
 	}, 0, $scope0_id, "#text/3", 1, 1, 1, 0, 0, "__tests__/shop.marko_1*shell", 0, 0);
 	_fill_global_subscribe("__tests__/shop.marko_0_$global_data#6", $scope0_id);
 	_script($scope0_id, "__tests__/shop.marko_0");
-	_patch_fill($scope0_id, "PatchFill:__tests__/shop.marko_fill0", now, 1);
-	_patch_fill($scope0_id, "PatchFill:__tests__/shop.marko_fill1", drops, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/shop.marko_0_now#8/fill", now, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/shop.marko_0_drops#9/fill", drops, 1);
 	_scope($scope0_id, {
 		p,
 		proj,

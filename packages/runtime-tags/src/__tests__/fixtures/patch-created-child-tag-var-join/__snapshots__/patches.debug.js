@@ -13,7 +13,7 @@
         },
         "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-tag-var-join/tags/file-store.marko_0_input_value#2": "input_value",
         "PatchSetupValues:": {
-          "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-tag-var-join/tags/file-store.marko_fill0": []
+          "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-tag-var-join/tags/file-store.marko_0_files#3/fill": []
         }
       },
       "PatchChild:#childScope/2": {

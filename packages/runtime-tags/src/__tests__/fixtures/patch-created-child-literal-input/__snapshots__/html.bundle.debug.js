@@ -28,7 +28,7 @@ var page_b_default = _template("__tests__/tags/page-b.marko", (input) => {
 	});
 	_patch_child_end();
 	_script($scope0_id, "__tests__/tags/page-b.marko_0");
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/page-b.marko_fill0", progress, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/page-b.marko_0_progress#3/fill", progress, 1);
 	_scope($scope0_id, {
 		progress,
 		"#childScope/2": _existing_scope($childScope)

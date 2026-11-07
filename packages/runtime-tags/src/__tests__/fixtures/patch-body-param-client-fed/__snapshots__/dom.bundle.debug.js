@@ -27,7 +27,7 @@ const $for_content__$params = ($scope, $params2) => {
 	$for_content__item_label($scope, $params2[0]?.label);
 };
 const $for = /*@__PURE__*/ _for_of_unkeyed("#ul/2", "<li><!></li>", "D%", $for_content__setup, $for_content__$params);
-const $items = /*@__PURE__*/ _fill_let("__tests__/tags/list.marko_fill0", "items/6", ($scope) => $for($scope, [$scope.items]));
+const $items = /*@__PURE__*/ _fill_let("__tests__/tags/list.marko_0_items#6/fill", "items/6", ($scope) => $for($scope, [$scope.items]));
 const $setup__script = _script("__tests__/tags/list.marko_0", ($scope) => {
 	_on($scope["#button/0"], "click", function() {
 		$items($scope, [...$scope.items, {

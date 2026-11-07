@@ -11,7 +11,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 	_html(`<button>${_text_mark($scope0_id, "#text/1", g())}</button>${_el_mark($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/tags/card.marko_0");
 	_patch_render($scope0_id, "__tests__/tags/card.marko_0_input_fn#4_open#5/setup", $fg__input_fn && "input_fn");
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/card.marko_fill0", open, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/card.marko_0_open#5/fill", open, 1);
 	_scope($scope0_id, {
 		input_fn: input.fn,
 		open

@@ -52,7 +52,7 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 	$fg__input_a && _patch_subscribers($scope0_id, "__tests__/tags/panel.marko_0_input_a#5/subscribers", "input_a");
 	$fg__input_a && _patch_render($scope0_id, "__tests__/tags/panel.marko_2_input_a#0:5/setup", "input_a");
 	$fg__input_b && _patch_subscribers($scope0_id, "__tests__/tags/panel.marko_0_input_b#6/subscribers", "input_b");
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/panel.marko_fill0", open, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/panel.marko_0_open#8/fill", open, 1);
 	_scope($scope0_id, {
 		input_a: input.a,
 		input_b: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.b,

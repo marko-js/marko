@@ -17,7 +17,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 		}
 	}, $scope0_id, "#text/0", 1, 1, 0, 0, 1);
 	$fg__input_n && _patch_render($scope0_id, "__tests__/tags/card.marko_1_input_n#0:3/setup", "input_n");
-	$fg__input_n && _patch_fill($scope0_id, "PatchFill:__tests__/tags/card.marko_fill0", n, 1);
+	$fg__input_n && _patch_fill($scope0_id, "PatchFill:__tests__/tags/card.marko_0_n#4/fill", n, 1);
 	_scope($scope0_id, { input_n: input.n }, "__tests__/tags/card.marko", 0, { input_n: ["input.n"] }) || $fg__input_n && _patch_write($scope0_id, "PatchMarkedWrite:input_n", input.n, !_server_guard($scope0_reason, 0));
 });
 

@@ -12,7 +12,7 @@
     },
     "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-global-rows-let-member-join/template.marko_1_item_value#9_qty#10/setup": "item_value",
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-global-rows-let-member-join/template.marko_fill0": 4
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-global-rows-let-member-join/template.marko_1_qty#10/fill": 4
     }
   }, "b", {
     "PatchMarkedWrite:item_value": 5,
@@ -25,7 +25,7 @@
     },
     "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-global-rows-let-member-join/template.marko_1_item_value#9_qty#10/setup": "item_value",
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-global-rows-let-member-join/template.marko_fill0": 1
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-global-rows-let-member-join/template.marko_1_qty#10/fill": 1
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-global-rows-let-member-join/template.marko_1*shell"]
 }
@@ -44,7 +44,7 @@
     },
     "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-global-rows-let-member-join/template.marko_1_item_value#9_qty#10/setup": "item_value",
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-global-rows-let-member-join/template.marko_fill0": 2
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-global-rows-let-member-join/template.marko_1_qty#10/fill": 2
     }
   }, "c", {
     "PatchMarkedWrite:item_value": 7,
@@ -57,7 +57,7 @@
     },
     "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-global-rows-let-member-join/template.marko_1_item_value#9_qty#10/setup": "item_value",
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-global-rows-let-member-join/template.marko_fill0": 1
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-global-rows-let-member-join/template.marko_1_qty#10/fill": 1
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-global-rows-let-member-join/template.marko_1*shell"]
 }

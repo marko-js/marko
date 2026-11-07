@@ -5,7 +5,7 @@ const $setup$1 = ($_) => {};
 function read(reads) {
 	reads.count++;
 }
-const $count$1 = /*@__PURE__*/ _fill_let("__tests__/tags/counter-box/index.marko_fill0", "count/5", ($scope) => {
+const $count$1 = /*@__PURE__*/ _fill_let("__tests__/tags/counter-box/index.marko_0_count#5/fill", "count/5", ($scope) => {
 	_text($scope["#text/0"], $scope.count);
 	_return($scope, $scope.count);
 });

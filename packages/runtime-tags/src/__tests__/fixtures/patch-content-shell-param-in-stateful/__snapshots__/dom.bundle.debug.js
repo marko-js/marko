@@ -25,7 +25,7 @@ const $setup = ($_) => {};
 const $if_content2__label = /*@__PURE__*/ _if_closure_patch("__tests__/template.marko_3_label#2:5/setup", "#text/0", 0, ($scope) => _text($scope["#text/0"], $scope._.label));
 const $if_content2__setup = $if_content2__label;
 const $content_content__if = /*@__PURE__*/ _if("#text/0", "<p> </p>", "D ", $if_content2__setup);
-const $content_content__open = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill0", "open/6", ($scope) => $content_content__if($scope, $scope.open ? 0 : 1));
+const $content_content__open = /*@__PURE__*/ _fill_let("__tests__/template.marko_2_open#6/fill", "open/6", ($scope) => $content_content__if($scope, $scope.open ? 0 : 1));
 const $content_content__setup__script = _script("__tests__/template.marko_2", ($scope) => _on($scope["#button/1"], "click", function() {
 	$content_content__open($scope, !$scope.open);
 }));

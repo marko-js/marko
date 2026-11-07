@@ -34,7 +34,7 @@ var outer_default = _template("__tests__/tags/outer.marko", (input) => {
 			_patch_child_end();
 			_script($scope1_id, "__tests__/tags/outer.marko_1");
 			_client_guard($scope0_reason, 1) && _patch_render($scope1_id, "__tests__/tags/outer.marko_1_input_content#0:4/setup");
-			_filled_guard($scope0_reason, 1) && _patch_fill($scope1_id, "PatchFill:__tests__/tags/outer.marko_fill0", o, 1);
+			_filled_guard($scope0_reason, 1) && _patch_fill($scope1_id, "PatchFill:__tests__/tags/outer.marko_1_o#2/fill", o, 1);
 			_scope($scope1_id, {
 				_: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id),
 				"#childScope/1": _existing_scope($childScope)

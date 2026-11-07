@@ -18,7 +18,7 @@ var frame_default = _template("__tests__/tags/frame.marko", (input) => {
 		}
 	}, $scope0_id, "#section/0", 1, 1, 1, "</section>");
 	$fg__input_content && _patch_render($scope0_id, "__tests__/tags/frame.marko_1_input_content#0:3/setup", "input_content");
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/frame.marko_fill0", open, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/frame.marko_0_open#4/fill", open, 1);
 	_scope($scope0_id, { input_content: input.content }, "__tests__/tags/frame.marko", 0, { input_content: ["input.content"] }) || $fg__input_content && _patch_write($scope0_id, "PatchMarkedWrite:input_content", input.content, !_server_guard($scope0_reason, 0));
 });
 

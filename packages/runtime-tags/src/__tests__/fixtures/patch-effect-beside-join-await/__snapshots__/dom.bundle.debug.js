@@ -10,7 +10,7 @@ const $await_content__input_a = /*@__PURE__*/ _closure_get_patch("__tests__/temp
 	$await_content__input_a__OR__n($scope);
 	$await_content__input_a__script($scope);
 });
-const $await_content__n = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill0", "n/3", $await_content__input_a__OR__n);
+const $await_content__n = /*@__PURE__*/ _fill_let("__tests__/template.marko_1_n#3/fill", "n/3", $await_content__input_a__OR__n);
 const $await_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/0"], "click", function() {
 	$await_content__n($scope, +$scope.n + 1);
 }));

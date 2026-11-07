@@ -10,7 +10,7 @@
         }
       },
       "PatchSetupValues:": {
-        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-lazy-controllable-child/tags/route-pg.marko_fill0": 0
+        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-lazy-controllable-child/tags/route-pg.marko_0_tab#2/fill": 0
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-lazy-controllable-child/template.marko_1*shell"]

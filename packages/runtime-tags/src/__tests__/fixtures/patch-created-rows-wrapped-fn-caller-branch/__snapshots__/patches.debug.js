@@ -29,7 +29,7 @@
         "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-created-rows-wrapped-fn-caller-branch/tags/rowsx.marko_1_input_label#0:7_x#2/setup": "x"
       }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-rows-wrapped-fn-caller-branch/tags/rowsx.marko_1*shell"],
       "PatchSetupValues:": {
-        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-rows-wrapped-fn-caller-branch/tags/rowsx.marko_fill0": !0
+        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-rows-wrapped-fn-caller-branch/tags/rowsx.marko_0_open#8/fill": !0
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-rows-wrapped-fn-caller-branch/template.marko_1*shell"]
@@ -66,7 +66,7 @@
         "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-created-rows-wrapped-fn-caller-branch/tags/rowsx.marko_1_input_label#0:7_x#2/setup": "x"
       }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-rows-wrapped-fn-caller-branch/tags/rowsx.marko_1*shell"],
       "PatchSetupValues:": {
-        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-rows-wrapped-fn-caller-branch/tags/rowsx.marko_fill0": !0
+        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-rows-wrapped-fn-caller-branch/tags/rowsx.marko_0_open#8/fill": !0
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-rows-wrapped-fn-caller-branch/template.marko_1*shell"]

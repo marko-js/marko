@@ -11,7 +11,7 @@ var demo_card_default = _template("__tests__/tags/demo-card.marko", (input) => {
 	_script($scope0_id, "__tests__/tags/demo-card.marko_0");
 	_patch_render($scope0_id, "__tests__/tags/demo-card.marko_0_input_tab#4_input_tabChange#5/setup", [$fg__input_tab && "input_tab", $fg__input_tabChange && "input_tabChange"], $scope0_reason, 0);
 	const $selectedChange = input.tabChange || void 0;
-	_patch_let_change($scope0_id, "PatchFill:__tests__/tags/demo-card.marko_fill0", selected, "PatchWrite:TagVariableChange:selected", $selectedChange, $scope0_reason, 0);
+	_patch_let_change($scope0_id, "PatchFill:__tests__/tags/demo-card.marko_0_selected#7/fill", selected, "PatchWrite:TagVariableChange:selected", $selectedChange, $scope0_reason, 0);
 	_scope($scope0_id, {
 		input_tab: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.tab,
 		input_tabChange: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.tabChange,
@@ -43,7 +43,7 @@ var page_b_default = _template("__tests__/tags/page-b.marko", (input) => {
 		}, "__tests__/tags/page-b.marko_0/tabChange", $scope0_id)
 	});
 	_patch_child_end();
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/page-b.marko_fill0", tab, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/page-b.marko_0_tab#1/fill", tab, 1);
 	_scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/tags/page-b.marko", 0);
 	_resume_branch($scope0_id);
 });

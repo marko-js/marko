@@ -38,7 +38,7 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 	_script($scope0_id, "__tests__/tags/panel.marko_0");
 	$fg__input_x && $cg__input_show && _patch_render($scope0_id, "__tests__/tags/panel.marko_1_input_x#0:5/setup", "input_x");
 	$fg__input_y && $cg__input_show && _patch_render($scope0_id, "__tests__/tags/panel.marko_1_input_y#0:6/setup", "input_y");
-	_patch_fill($scope0_id, "PatchFill:__tests__/tags/panel.marko_fill0", count, 1);
+	_patch_fill($scope0_id, "PatchFill:__tests__/tags/panel.marko_0_count#7/fill", count, 1);
 	_scope($scope0_id, {
 		input_x: $wi__input_show && input.x,
 		input_y: $wi__input_show && input.y,

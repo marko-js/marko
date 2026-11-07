@@ -6,7 +6,7 @@
       "PatchText:#text/0": "a2",
       "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-mixed-script/tags/child/index.marko_0_input_x#4_n#5/setup": "input_x",
       "PatchSetupValues:": {
-        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-mixed-script/tags/child/index.marko_fill0": 0
+        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-mixed-script/tags/child/index.marko_0_n#5/fill": 0
       },
       "PatchMarkedWrite:input_x": "a2"
     }
@@ -21,7 +21,7 @@
       "PatchText:#text/0": "a3",
       "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-mixed-script/tags/child/index.marko_0_input_x#4_n#5/setup": "input_x",
       "PatchSetupValues:": {
-        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-mixed-script/tags/child/index.marko_fill0": 0
+        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-mixed-script/tags/child/index.marko_0_n#5/fill": 0
       },
       "PatchMarkedWrite:input_x": "a3"
     }

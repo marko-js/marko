@@ -5,7 +5,7 @@
     "PatchChild:#childScope/0": {
       "PatchText:#text/0": "A",
       "PatchSetupValues:": {
-        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-define-branch-state/template.marko_fill0": 5
+        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-define-branch-state/template.marko_2_n#7/fill": 5
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-define-branch-state/template.marko_1*shell"]
@@ -18,7 +18,7 @@
     "PatchChild:#childScope/0": {
       "PatchText:#text/0": "B",
       "PatchSetupValues:": {
-        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-define-branch-state/template.marko_fill0": 5
+        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-define-branch-state/template.marko_2_n#7/fill": 5
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-define-branch-state/template.marko_1*shell"]

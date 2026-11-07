@@ -14,7 +14,7 @@
     },
     "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-attr-tag-repeated/template.marko_4_item#3:4/setup": "item",
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-attr-tag-repeated/template.marko_fill0": !0
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-attr-tag-repeated/template.marko_3_open#5/fill": !0
     }
   },
   "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-attr-tag-repeated/template.marko_0_input_a#4/subscribers": "input_a",
@@ -39,7 +39,7 @@
     },
     "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-attr-tag-repeated/template.marko_4_item#3:4/setup": "item",
     "PatchSetupValues:": {
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-attr-tag-repeated/template.marko_fill0": !0
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-attr-tag-repeated/template.marko_3_open#5/fill": !0
     }
   },
   "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-attr-tag-repeated/template.marko_0_input_a#4/subscribers": "input_a",

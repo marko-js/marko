@@ -15,13 +15,13 @@
   "PatchText:#text/0": "Store!",
   "PatchChild:#childScope/3": {
     "PatchBranch:#text/0": [{
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-siblings/tags/counter/index.marko_fill0": 0,
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-siblings/tags/counter/index.marko_1_count#2/fill": 0,
       "PatchBind:TagVariableChange:count": "^^packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-siblings/template.marko_0/onCount"
     }, _.a = "packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-siblings/tags/counter/index.marko_1*shell"]
   },
   "PatchChild:#childScope/4": {
     "PatchBranch:#text/0": [{
-      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-siblings/tags/counter/index.marko_fill0": 0,
+      "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-siblings/tags/counter/index.marko_1_count#2/fill": 0,
       "PatchBind:TagVariableChange:count": "^^packages/runtime-tags/src/__tests__/fixtures/patch-child-controllable-siblings/template.marko_0/onCount2"
     }, _.a]
   }

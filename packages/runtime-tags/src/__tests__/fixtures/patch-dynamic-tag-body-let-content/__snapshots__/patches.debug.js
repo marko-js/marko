@@ -5,7 +5,7 @@
   "PatchChild:BranchScopes:#text/0": {
     "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-let-content/tags/card.marko_0_input_p#4_c#5/setup": "input_p",
     "PatchSetupValues:": {
-      "PatchBindFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-let-content/tags/card.marko_fill0": "^packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-let-content/template.marko_1*content"
+      "PatchBindFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-let-content/tags/card.marko_0_c#5/fill": "^packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-let-content/template.marko_1*content"
     },
     "PatchMarkedWrite:input_p": (p => p = new Promise((f, r) => _.a = {
       f,
@@ -27,7 +27,7 @@
   "PatchChild:BranchScopes:#text/0": {
     "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-let-content/tags/card.marko_0_input_p#4_c#5/setup": "input_p",
     "PatchSetupValues:": {
-      "PatchBindFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-let-content/tags/card.marko_fill0": "^packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-let-content/template.marko_1*content"
+      "PatchBindFill:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-let-content/tags/card.marko_0_c#5/fill": "^packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-let-content/template.marko_1*content"
     },
     "PatchMarkedWrite:input_p": (p => p = new Promise((f, r) => _.a = {
       f,

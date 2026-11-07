@@ -11,7 +11,7 @@ const $if_content__input_a = /*@__PURE__*/ _if_closure_patch("__tests__/template
 	$if_content__input_a__OR__n($scope);
 	$if_content__input_a__script($scope);
 });
-const $if_content__n = /*@__PURE__*/ _fill_let("__tests__/template.marko_fill0", "n/3", $if_content__input_a__OR__n);
+const $if_content__n = /*@__PURE__*/ _fill_let("__tests__/template.marko_1_n#3/fill", "n/3", $if_content__input_a__OR__n);
 const $if_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/0"], "click", function() {
 	$if_content__n($scope, +$scope.n + 1);
 }));

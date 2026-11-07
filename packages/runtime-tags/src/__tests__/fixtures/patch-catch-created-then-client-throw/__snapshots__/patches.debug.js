@@ -10,7 +10,7 @@
     "PatchChild:BranchScopes:#text/0": [{
       "PatchText:#text/1": "b",
       "PatchSetupValues:": {
-        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-then-client-throw/template.marko_fill0": 0
+        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-then-client-throw/template.marko_2_n#4/fill": 0
       }
     }, _.a, _.b]
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-then-client-throw/template.marko_1*shell"]

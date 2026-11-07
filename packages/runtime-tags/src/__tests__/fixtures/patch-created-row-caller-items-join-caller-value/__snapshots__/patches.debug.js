@@ -4,7 +4,7 @@
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {
       "PatchSetupValues:": {
-        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-row-caller-items-join-caller-value/tags/child.marko_fill0": !0
+        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-row-caller-items-join-caller-value/tags/child.marko_0_open#7/fill": !0
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-row-caller-items-join-caller-value/template.marko_1*shell"]
@@ -16,7 +16,7 @@
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {
       "PatchSetupValues:": {
-        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-row-caller-items-join-caller-value/tags/child.marko_fill0": !0
+        "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-created-row-caller-items-join-caller-value/tags/child.marko_0_open#7/fill": !0
       }
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-row-caller-items-join-caller-value/template.marko_1*shell"]
