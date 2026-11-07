@@ -1212,11 +1212,13 @@ function isKeptInLet(content: Section) {
   return (
     !!derives &&
     some(derives.binding, (binding) =>
-      someRead(bindingReaders(binding, derives.properties), (read) =>
-        some(read.derives, isLet),
-      ),
+      someRead(bindingReaders(binding, derives.properties), derivesLet),
     )
   );
+}
+
+function derivesLet(read: ReferencedExtra) {
+  return some(read.derives, isLet);
 }
 
 function isLet(binding: Binding) {
