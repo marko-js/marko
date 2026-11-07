@@ -561,7 +561,8 @@ export function getSignal(
         // position) registers once by its resume id, keyed by this section as HTML's is.
         if (walked || (isPatch() && getCreatedSetup(section).has(closure))) {
           return callRuntime(
-            // Kept for the flush naming it: resumed content's no registered renderer keeps.
+            // Off the pure list: in resumed content no renderer registers, this subscriber
+            // alone updates the closure, and nothing else references it.
             walked && keepsClosureFills(section)
               ? "_closure_resume"
               : "_closure_get_patch",

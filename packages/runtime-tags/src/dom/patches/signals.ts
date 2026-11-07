@@ -137,7 +137,8 @@ export function _closure_get_patch(
   }
   return closureSignal;
 }
-// The same, for a subscriber no shipped code reaches: its registration ships it.
+// The same, off the pure list: it ships the only subscriber of resumed content no
+// renderer registers.
 export { _closure_get_patch as _closure_resume };
 
 // An `<if>`/`<for>` closure a created scope sets up, registered under its id with
