@@ -63,8 +63,8 @@ import {
 // Main's helpers as a patch build runs them: a patch response writes its
 // entries instead, and a patch page tracks the structure no patch fills.
 
-// A `<show>`'s display: the client moves the body's range in or out, and
-// the encoded accessors (`node` when patched) let a created scope find its markers.
+// A `<show>`'s display: the client moves the body's range in or out, and a
+// created scope finds the range by the entry's key and encoded `start` marker.
 export function _show_end(
   scopeId: number,
   accessor: Accessor,
@@ -73,10 +73,10 @@ export function _show_end(
   branchExprGuard?: number,
   parentEndTag?: string | 0,
   singleNode?: 1 | 0,
-  node?: EncodedAccessor,
-  start?: EncodedAccessor,
+  patched?: 1,
   mask?: GroupMask,
   group?: number,
+  start?: EncodedAccessor,
 ) {
   _base_show_end(
     scopeId,
@@ -87,12 +87,12 @@ export function _show_end(
     parentEndTag,
     singleNode,
   );
-  if (node !== undefined) {
+  if (patched) {
     const fills = ensureFills(scopeId, mask, group!);
     if (fills) {
-      const entry: unknown[] = [display ? 1 : 0, node];
-      if (start !== undefined) entry.push(start);
-      fills[PatchKey.Show + accessor] = entry;
+      const shown = display ? 1 : 0;
+      fills[PatchKey.Show + accessor] =
+        start === undefined ? shown : [shown, start];
     }
   }
 }
