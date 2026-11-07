@@ -817,8 +817,8 @@ function addBindingGetter(binding: Binding, { invoked, hoisted }: Getter) {
   }
 }
 
-// A lazy read is excluded from `referencedBindings` and instead reads the
-// binding's scope slot on invocation, which its slot owner then stores.
+// A lazy read is excluded from `referencedBindings` and instead reads a scope
+// slot on invocation: its binding's, or a written ancestor's.
 function isLazyRead(
   read: Read,
   binding: Binding,

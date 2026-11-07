@@ -1,0 +1,10 @@
+// `a` reads lazily through `state`'s slot, which the server writes for `bump`;
+// `rest.a` and `rest.b` keep their own, as `rest` is a copy without `a`.
+<let/state={ a: 1, b: 2 }/>
+<const/{ a, ...rest }=state/>
+<let/log=""/>
+
+<button.bump onClick() { state = { ...state, a: state.a + 1, b: state.b + 1 }; }>bump</button>
+<button.show onClick() { log = `${log}[${a}:${rest.a}:${rest.b}]`; }>show</button>
+
+<div.log>${log}</div>

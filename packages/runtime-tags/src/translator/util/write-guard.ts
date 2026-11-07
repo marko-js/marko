@@ -2,8 +2,11 @@ import { types as t } from "@marko/compiler";
 
 import {
   type Binding,
+  bindingUtil,
+  getCanonicalBinding,
   getDebugNames,
   getDebugNamesAsIdentifier,
+  isRest,
 } from "./bindings";
 import { createAnalysisMemo } from "./cyclic-memo";
 import { generateUid, ensureSharedUid } from "./generate-uid";
@@ -14,6 +17,7 @@ import {
   type Reason,
   type Reasons,
 } from "./reasons";
+import { getLazyBindings } from "./references";
 import { callRuntime, type HTMLRuntimeHelpers } from "./runtime";
 import {
   getParamReasonGroupIndex,
@@ -116,9 +120,43 @@ export function getScopeReasonStatement(section: Section): t.Statement {
 }
 
 // A binding's write reason: whether, and under which guard, the server
-// writes it.
+// writes it; never for one its lazy reads read through an ancestor.
 export function getWriteReason(binding: Binding) {
-  return findSlot(binding)?.reason;
+  return getLazyReadAncestor(binding) ? undefined : findSlot(binding)?.reason;
+}
+
+// The nearest ancestor whose slot holds a value read only on invocation, which
+// the server writes wherever it writes their scope.
+export const [getLazyReadAncestor] = createAnalysisMemo(
+  (binding: Binding): Binding | undefined => {
+    const owner = getCanonicalBinding(binding);
+    if (owner !== binding) return getLazyReadAncestor(owner);
+    if (binding.hasLazyReads && isOnlyReadLazily(binding)) {
+      const { section } = binding;
+      // A rest is a copy, so nothing above it holds what it reads.
+      for (let cur = binding; !isRest(cur) && cur.aliasOf;) {
+        cur = cur.aliasOf;
+        const reason = mapBodyParams(section, getWriteReason(cur));
+        if (getWriteBit(section, reason) === 1) return cur;
+      }
+    }
+  },
+  undefined,
+);
+
+// Read only on invocation, as is every alias of it: client code reads its slot
+// for nothing else, and no forward's dirty check needs its resumed value.
+function isOnlyReadLazily(binding: Binding): boolean {
+  for (const expr of binding.reads.keys()) {
+    if (!bindingUtil.has(getLazyBindings(expr), binding)) return false;
+  }
+  for (const alias of binding.aliases) {
+    if (!isOnlyReadLazily(alias)) return false;
+  }
+  for (const alias of binding.propertyAliases.values()) {
+    if (!isOnlyReadLazily(alias)) return false;
+  }
+  return true;
 }
 
 // A branch's write reason: whether the server writes the scope it resumes.

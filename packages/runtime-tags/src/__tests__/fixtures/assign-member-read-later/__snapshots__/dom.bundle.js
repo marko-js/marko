@@ -7,6 +7,6 @@ const $setup__script = _script("a0", ($scope) => {
 		$scope.f.count++;
 	});
 	_on($scope.b, "click", function() {
-		$log($scope, `${$scope.d.open} ${$scope.e.depth} ${$scope.f.count} ${$scope.d.open}`);
+		$log($scope, `${$scope.d.open} ${$scope.d.nested.depth} ${$scope.f.count} ${$scope.d.open}`);
 	});
 });

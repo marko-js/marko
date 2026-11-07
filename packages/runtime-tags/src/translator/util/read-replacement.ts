@@ -1,6 +1,11 @@
 import { types as t } from "@marko/compiler";
 
-import { type Binding, BindingType, getAliasRoot } from "./bindings";
+import {
+  type Binding,
+  BindingType,
+  getAliasRoot,
+  getPropertyPath,
+} from "./bindings";
 import { getAccessorProp } from "./get-accessor-enums";
 import { getDeclaredBindingExpression } from "./get-declared-binding-expression";
 import { isOptimize, isOutputDOM } from "./marko-config";
@@ -33,6 +38,7 @@ import {
   toMemberExpression,
 } from "./to-property-name";
 import { withPreviousLocation } from "./with-previous-location";
+import { getLazyReadAncestor } from "./write-guard";
 
 export function getReadReplacement(
   node: t.Identifier | t.MemberExpression | t.OptionalMemberExpression,
@@ -81,9 +87,13 @@ export function getReadReplacement(
   }
 
   if (read.getter?.invoked) return;
-  const base = isOutputDOM()
-    ? getDOMReadBase(read, extra.section, signal)
-    : getHTMLReadBase(node, read);
+  const dom = isOutputDOM();
+  const ancestor = dom ? getLazyReadAncestor(read.binding) : undefined;
+  const base = ancestor
+    ? getAncestorReadExpression(read.binding, ancestor, extra.section!)
+    : dom
+      ? getDOMReadBase(read, extra.section, signal)
+      : getHTMLReadBase(node, read);
   if (!base) return;
 
   const expr = reduce(read.properties, addMember, base);
@@ -97,8 +107,26 @@ export function getReadReplacement(
   return getChainReplacement(
     node,
     expr,
-    isOutputDOM() ? size(read.properties) : Infinity,
+    dom
+      ? size(read.properties) +
+          size(ancestor && getPropertyPath(read.binding, ancestor))
+      : Infinity,
   );
+}
+
+// A lazy read through an ancestor's slot reads as the alias's forward computes
+// it, optional where that is.
+function getAncestorReadExpression(
+  binding: Binding,
+  ancestor: Binding,
+  section: Section,
+): t.Expression {
+  if (binding === ancestor) return createScopeReadExpression(ancestor, section);
+  const { aliasOf, property } = binding;
+  const object = getAncestorReadExpression(aliasOf!, ancestor, section);
+  return property === undefined
+    ? object
+    : toMemberExpression(object, property, aliasOf!.nullable);
 }
 
 // What a DOM read stands for before its properties: a value from its scope.

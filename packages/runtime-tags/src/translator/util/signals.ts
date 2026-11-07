@@ -94,6 +94,7 @@ import { withLeadingComment } from "./with-comment";
 import {
   andGuard,
   getExprIfWritten,
+  getLazyReadAncestor,
   getWriteGuardForAny,
   getWriteReason,
   isBranchAlwaysMarked,
@@ -471,8 +472,10 @@ function isChangeableDynamicClosure(section: Section, closure: Binding) {
 export function initValue(binding: Binding, isLet = false) {
   const section = binding.section;
   const signal = getSignal(section, binding);
-  // Lazy reads read the value from its scope slot.
-  signal.forceStore ||= binding.hasLazyReads;
+  // Lazy reads read the value from its scope slot, or its ancestor's.
+  const ancestor = getLazyReadAncestor(binding);
+  if (ancestor) getSignal(section, ancestor).forceStore = true;
+  else signal.forceStore ||= binding.hasLazyReads;
   signal.build = () => {
     if (isPureMemberForwarder(binding)) {
       return undefined;
@@ -529,14 +532,28 @@ export function signalHasWork(signal: Signal): boolean {
       (binding.closureSections ||
         binding.type === BindingType.dom ||
         (binding.section === signal.section &&
-          (binding.hoists ||
-            binding.aliases.size ||
-            hasNonConstantPropertyAlias(binding))))
+          (binding.hoists || hasAliasWork(binding))))
     ) {
       return true;
     }
   } else if (signal.section.referencedClosures) {
     return true;
+  }
+  return false;
+}
+
+// It forwards to an alias with work of its own.
+function hasAliasWork(binding: Binding) {
+  for (const alias of binding.aliases) {
+    if (signalHasWork(getSignal(alias.section, alias))) return true;
+  }
+  for (const alias of binding.propertyAliases.values()) {
+    if (
+      alias.type !== BindingType.constant &&
+      signalHasWork(getSignal(alias.section, alias))
+    ) {
+      return true;
+    }
   }
   return false;
 }
@@ -574,7 +591,8 @@ function pushMemberForwards(
       }
     }
   } else {
-    pushForward(signal, getSignal(alias.section, alias), value);
+    const aliasSignal = getSignal(alias.section, alias);
+    if (signalHasWork(aliasSignal)) pushForward(signal, aliasSignal, value);
   }
 }
 

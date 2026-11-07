@@ -1,8 +1,7 @@
 // template.marko
 const $template = "<button class=write>write</button><button class=read>read</button><p> </p>";
 const $walks = " b bD l";
-const $live = /*@__PURE__*/ _const("live", ($scope) => $live_nested($scope, $scope.live.nested));
-const $live_nested = /*@__PURE__*/ _const("live_nested");
+const $live = /*@__PURE__*/ _const("live");
 const $box = /*@__PURE__*/ _let("box/5");
 const $log = /*@__PURE__*/ _let("log/6", ($scope) => _text($scope["#text/2"], $scope.log));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
@@ -12,7 +11,7 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 		$scope.box.count++;
 	});
 	_on($scope["#button/1"], "click", function() {
-		$log($scope, `${$scope.live.open} ${$scope.live_nested.depth} ${$scope.box.count} ${$scope.live.open}`);
+		$log($scope, `${$scope.live.open} ${$scope.live.nested.depth} ${$scope.box.count} ${$scope.live.open}`);
 	});
 });
 function $setup($scope) {

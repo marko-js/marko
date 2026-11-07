@@ -1,0 +1,29 @@
+// template.marko
+const $for_content__setup = _script("a0", ($scope) => _on($scope.a, "click", function() {
+	$log($scope._, `${$scope._.l}[${$scope._.g?.id}:${$scope._.i}:${$scope._.j}]`);
+}));
+const $if_content__todo = /*@__PURE__*/ _if_closure(3, 0, ($scope) => _text($scope.a, JSON.stringify($scope._.g)));
+const $if_content__setup = $if_content__todo;
+const $todo = /*@__PURE__*/ _let(6, $if_content__todo);
+const $user = /*@__PURE__*/ _let(7, ($scope) => {
+	$nick($scope, $scope.h.nick);
+	$name($scope, $scope.h.name);
+});
+const $if = /*@__PURE__*/ _if(3, "<div class=all> </div>", "D ", $if_content__setup);
+const $show = /*@__PURE__*/ _let(10, ($scope) => $if($scope, $scope.k ? 0 : 1));
+const $log = /*@__PURE__*/ _let(11, ($scope) => _text($scope.f, $scope.l));
+const $setup__script = _script("a1", ($scope) => {
+	_on($scope.a, "click", function() {
+		$show($scope, !$scope.k);
+	});
+	_on($scope.b, "click", function() {
+		$todo($scope, null);
+	});
+	_on($scope.c, "click", function() {
+		$user($scope, { ...$scope.h });
+	});
+});
+const $nick__OR__shown__script = _script("a2", ($scope) => console.log(`${$scope.i} ${$scope.j}`));
+const $nick__OR__shown = /*@__PURE__*/ _or(13, $nick__OR__shown__script);
+const $nick = /*@__PURE__*/ _const(8, $nick__OR__shown);
+const $name = /*@__PURE__*/ _const(9, $nick__OR__shown);

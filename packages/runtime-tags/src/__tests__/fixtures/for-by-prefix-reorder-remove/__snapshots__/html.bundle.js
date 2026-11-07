@@ -17,11 +17,5 @@ var template_default = _template("a", (input) => {
 	}, "id", $scope0_id, "a", 1, 1, 1, "</ul>", 1);
 	_html(`<button class=reorder>stable prefix, drop tail, swap</button>${_el_mark($scope0_id, "b")}<button class=front>reorder from front and shrink</button>${_el_mark($scope0_id, "c")}<button class=append>append</button>${_el_mark($scope0_id, "d")}`);
 	_script($scope0_id, "a0");
-	_scope($scope0_id, {
-		e: rows,
-		f: rows?.[0],
-		g: rows?.[1],
-		h: rows?.[3],
-		i: rows?.[2]
-	});
+	_scope($scope0_id, { e: rows });
 }, 1);

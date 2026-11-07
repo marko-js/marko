@@ -17,17 +17,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, "id", $scope0_id, "#ul/0", 1, 1, 1, "</ul>", 1);
 	_html(`<button class=reorder>stable prefix, drop tail, swap</button>${_el_mark($scope0_id, "#button/1")}<button class=front>reorder from front and shrink</button>${_el_mark($scope0_id, "#button/2")}<button class=append>append</button>${_el_mark($scope0_id, "#button/3")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	_scope($scope0_id, {
-		rows,
-		rows_0: rows?.[0],
-		rows_1: rows?.[1],
-		rows_3: rows?.[3],
-		rows_2: rows?.[2]
-	}, "__tests__/template.marko", 0, {
-		rows: "1:6",
-		rows_0: ["rows[0]", "1:6"],
-		rows_1: ["rows[1]", "1:6"],
-		rows_3: ["rows[3]", "1:6"],
-		rows_2: ["rows[2]", "1:6"]
-	});
+	_scope($scope0_id, { rows }, "__tests__/template.marko", 0, { rows: "1:6" });
 }, 1);

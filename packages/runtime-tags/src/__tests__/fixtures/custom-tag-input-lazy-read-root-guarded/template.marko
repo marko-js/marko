@@ -1,0 +1,4 @@
+// Each child writes `input.todo` only for content this caller never shows, so
+// its handler's lazy read of `input.todo.id` keeps a slot of its own.
+<todo-view show=false todo={ id: 1 }/>
+<todo-box open=false todo={ id: 2 }/>

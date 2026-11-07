@@ -1,0 +1,22 @@
+// The loop reads `id` lazily through `todo`, which the server writes for the
+// branch; `nick` and `name` keep their own, which the effect's dirty checks read.
+<let/todo={ id: 1 }/>
+<let/user={ nick: "n", name: "u" }/>
+<const/{ nick, name }=user/>
+<const/shown=name/>
+<let/show=false/>
+<let/log=""/>
+
+<script>console.log(`${nick} ${shown}`)</script>
+<button.toggle onClick() { show = !show; }>toggle</button>
+<button.clear onClick() { todo = null; }>clear</button>
+<button.copy onClick() { user = { ...user }; }>copy</button>
+<if=show>
+  <div.all>${JSON.stringify(todo)}</div>
+</if>
+<for|n| of=[1]>
+  <const/{ id }=todo/>
+  <button.item onClick() { log = `${log}[${id}:${nick}:${name}]`; }>item</button>
+</for>
+
+<div.log>${log}</div>

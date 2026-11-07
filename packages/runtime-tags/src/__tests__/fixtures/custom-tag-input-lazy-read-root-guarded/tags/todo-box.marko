@@ -1,0 +1,7 @@
+<let/log=""/>
+<define/Box|{ open }|>
+  <if=open><div.all>${JSON.stringify(input.todo)}</div></if>
+</define>
+<Box open=input.open/>
+<button.box onClick() { log = `${log}[${input.todo.id}]`; }>box</button>
+<div.box-log>${log}</div>
