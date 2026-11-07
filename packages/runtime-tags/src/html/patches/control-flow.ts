@@ -661,7 +661,7 @@ export function _try(
     );
   // A patch shows `@placeholder` from received client state and creates
   // `@catch` in its entry, so no document reorder rides the flush stream.
-  let writesRenderers = false;
+  let writesRenderers: boolean;
   if (catchContent) {
     // Its entry goes out whenever the body renders, so a try the page caught
     // learns it; a body that throws leaves its patch out (or voids the entry).
@@ -716,7 +716,13 @@ export function _try(
     // A try this flush may create needs its entry even when its body writes
     // nothing.
     if (create) ensureScopePatch(state, branchId);
-    withBranchId(branchId, bodyContent);
+    // Its body's own boundary passes a throw on to the enclosing `<try>`.
+    writesRenderers = tryBoundary(
+      bodyContent,
+      catchContent,
+      branchId,
+      renderers,
+    );
   }
   applyBranchStart(chunk, beforeBranch, true);
   if (!writesRenderers) renderers();
