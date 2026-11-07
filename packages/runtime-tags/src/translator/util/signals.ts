@@ -62,7 +62,7 @@ import {
   getEffectEntryArgs,
   getExprIfUnfilled,
   getClientBranchGuardWrites,
-  getPatchFillCalls,
+  getPatchScopeCalls,
   getRootGroupArgs,
   hasCallerGroupsAt,
   writePatchResumeStatements,
@@ -2083,7 +2083,7 @@ export function writeHTMLResumeStatements(
   });
 
   const paramWrites: t.Statement[] = [];
-  const fillCalls = patches ? getPatchFillCalls(section, paramWrites) : [];
+  const scopeCalls = patches ? getPatchScopeCalls(section, paramWrites) : [];
   if (patches) {
     writePatchResumeStatements(section, body, paramWrites, renderScripts);
   }
@@ -2153,16 +2153,16 @@ export function writeHTMLResumeStatements(
       !(isGuardedReason(sectionReason) && sectionReason.global)
         ? getExprIfWritten(section, sectionReason, writeCall)
         : writeCall;
-    // A section's fills take its write's place in a patch render, where
+    // A section's patch calls take its write's place in a patch render, where
     // `_scope` writes nothing.
-    const fills = fillCalls.length
-      ? toSequenceExpression(fillCalls)
+    const calls = scopeCalls.length
+      ? toSequenceExpression(scopeCalls)
       : undefined;
     const statement =
-      write && fills ? t.logicalExpression("||", write, fills) : write || fills;
+      write && calls ? t.logicalExpression("||", write, calls) : write || calls;
     if (statement) body.push(t.expressionStatement(statement));
-  } else if (fillCalls.length) {
-    body.push(t.expressionStatement(toSequenceExpression(fillCalls)));
+  } else if (scopeCalls.length) {
+    body.push(t.expressionStatement(toSequenceExpression(scopeCalls)));
   }
   if (patches) body.push(...getClientBranchGuardWrites(section));
 

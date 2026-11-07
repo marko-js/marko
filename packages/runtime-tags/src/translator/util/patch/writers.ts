@@ -136,7 +136,6 @@ import {
   someReached,
   getUnfilledReadSources,
   getUnfilledSubscribedSources,
-  patchFillsScope,
   getWriteHop,
   hasTagCallerParamAt,
   runsEffectOnPatch,
@@ -146,47 +145,39 @@ import {
 } from "./refresh";
 import { getParamSelectedStructure } from "./structure";
 
-// The fills (and a known child's writes) a section's patch writes as `_scope`'s else;
-// a known child's filled references write where declared, its params' to `paramWrites`.
-export function getPatchFillCalls(
+// What a section's patch calls in `_scope`'s place: its client branch reports and a known
+// child's writes; a filled reference writes where declared instead, a param's into `paramWrites`.
+export function getPatchScopeCalls(
   section: Section,
   paramWrites: t.Statement[],
 ) {
-  // Root state seeds (below); a plain write would clobber the client's.
-  const fillCalls: t.Expression[] = [];
-  forEach(getPatchFillBindings(section), (binding) => {
-    pushKnownChildCalls(section, binding, fillCalls, paramWrites);
-  });
-  // A `<let>` keeps the content it is given: what it derives from reports it,
-  // with no fill of its own (or a state one) to report it otherwise.
+  const scopeCalls: t.Expression[] = [];
+  // A `<let>` keeps the content it is given: what it derives from reports it.
   forEach(section.bindings, (binding) => {
-    const { fill, keptInLet } = getPatchFill(binding);
-    if (keptInLet && (!fill || isStateSourced(binding))) {
+    if (getPatchFill(binding).keptInLet) {
       const branchCall = getClientBranchCall(section, binding);
-      if (branchCall) fillCalls.push(branchCall);
+      if (branchCall) scopeCalls.push(branchCall);
     }
   });
 
   // Effect-read values need no client registration: the wire writes the accessor and
-  // each effect runs again by register id on change; a known child's ride the complement.
+  // each effect runs again by register id on change.
   if (isKnownChild(section)) {
     forEach(section.bindings, (binding) => {
-      if (!getPatchFill(binding).fill) {
-        pushKnownChildCalls(section, binding, fillCalls, paramWrites);
-      }
+      pushKnownChildCalls(section, binding, scopeCalls, paramWrites);
     });
   }
-  return fillCalls;
+  return scopeCalls;
 }
 
 function pushKnownChildCalls(
   section: Section,
   binding: Binding,
-  fillCalls: t.Expression[],
+  scopeCalls: t.Expression[],
   paramWrites: t.Statement[],
 ) {
-  if (!isKnownChild(section) || !isFilledReference(binding)) {
-    fillCalls.push(...buildPatchCalls(section, binding));
+  if (!isFilledReference(binding)) {
+    scopeCalls.push(...buildPatchCalls(section, binding));
   } else if (isSectionParam(binding) && !isNamedWhereHidden(binding)) {
     const write = buildDeclarationWrite(binding);
     if (write) paramWrites.push(t.expressionStatement(write));
@@ -537,48 +528,16 @@ export function writePatchResumeStatements(
     }
   });
 
-  // A scope a flush writes, and so may create, seeds its state in the setup
-  // envelope; content an attribute tag `<for>` creates also seeds its loop params.
-  if (patchFillsScope(section)) {
-    forEach(getPatchFillBindings(section), (binding) => {
-      if (!isStateSourced(binding)) return;
-      const change = letChanges.get(binding);
-      letChanges.delete(binding);
-      for (const write of change
-        ? buildLetChangeWrites(section, binding, change)
-        : buildLetSeeds(section, binding)) {
-        body.push(t.expressionStatement(write));
-      }
-    });
-  }
-
-  // Elsewhere a controlled `<let>` only fills, while its handler controls it
-  // and its controller updates from the server.
-  for (const [binding, change] of letChanges) {
-    const controller = getSourcesForExpr(binding.derivedFrom as t.NodeExtra);
-    if (!controller?.state) {
-      const filledGuard = getCallerGroupGuard(
-        section,
-        "_filled_guard",
-        controller,
-      );
-      body.push(
-        t.expressionStatement(
-          t.logicalExpression(
-            "&&",
-            filledGuard
-              ? t.logicalExpression(
-                  "&&",
-                  t.cloneNode(change.expression),
-                  filledGuard,
-                )
-              : t.cloneNode(change.expression),
-            buildPatchFill(section, binding),
-          ),
-        ),
-      );
+  // A fill's scope is one a flush writes, and so may create: it seeds its state in
+  // the setup envelope.
+  forEach(getPatchFillBindings(section), (binding) => {
+    const change = letChanges.get(binding);
+    for (const write of change
+      ? buildLetChangeWrites(section, binding, change)
+      : buildLetSeeds(section, binding)) {
+      body.push(t.expressionStatement(write));
     }
-  }
+  });
 }
 
 // A controlled `<let>`'s value, a fill while its handler controls it and the
