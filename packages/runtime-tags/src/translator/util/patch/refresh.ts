@@ -380,6 +380,8 @@ function canPatchFill(binding: Binding) {
       // the value, or takes it past the scope's renders and effects (a child, an intersection).
       (binding.type === BindingType.let &&
         mayBeCreated(binding.section) &&
+        // Only from `<let>`s created with it: the page holds any other's value.
+        binding.readsInitialValues &&
         !initialValueRunsFromFills(binding) &&
         (!!getWriteReason(binding) || readsPastRenders(binding)))) &&
     bindingUtil.has(binding.sources.state, binding)
@@ -397,11 +399,13 @@ function isFilledOrReadsState(state: Binding) {
   return !!state.initialValueSources?.state || canPatchFill(state);
 }
 
-// A `<let>` whose initial value client code computes where a patch creates its
-// scope: a patch fills it, or state its initial value reads.
+// A `<let>` whose initial value client code computes where a patch creates its scope:
+// it reads a `<let>` not created with it, or a patch fills it or state it reads.
 export const fillsInitialValue = createPassMemo(
   (state: Binding): boolean =>
-    canPatchFill(state) || some(state.initialValueSources?.state, canPatchFill),
+    !state.readsInitialValues ||
+    canPatchFill(state) ||
+    some(state.initialValueSources?.state, canPatchFill),
   false,
 );
 

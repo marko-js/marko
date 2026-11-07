@@ -43,8 +43,8 @@ export interface Binding {
   /** The identifier of each emitted assignment to it (set in finalize). */
   assignments: Opt<AssignedBindingExtra>;
   sources: undefined | Sources;
-  /** For a `<let>`: its initial value reads no state but `<let>`s at theirs as its
-   * scope is created (created with it, or nothing assigns them). */
+  /** For a `<let>`: its initial value reads no state but `<let>`s created with its
+   * scope, at theirs. */
   readsInitialValues: boolean;
   /** For a `<let>` that is its own state source (patch builds): the sources its
    * initial value reads, through those of the state it reads. */

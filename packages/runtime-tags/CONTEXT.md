@@ -96,8 +96,8 @@ _Avoid_: ref
 **Initial value**:
 A `<let>`'s value as its scope is created, from its `value=` (`initialValue`);
 an uncontrolled `<let>` takes it once. In a patch template, the server renders
-it where its `value=` reads only other `<let>`s at theirs and no patch fills it
-or state that reads; otherwise client code computes it.
+it where its `value=` reads only `<let>`s created with its scope, at theirs, and
+no patch fills it or state that reads; otherwise client code computes it.
 _Avoid_: first value, init (for a `<let>`'s value)
 
 **Module read**:

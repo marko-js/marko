@@ -30,12 +30,19 @@ UPDATE: .x::text "1" => "2"
 >
   2
 </button>
+<button
+  class="s"
+>
+  2
+</button>
 <p>
   2
 </p>
 ```
 ## Change
 ```
-INSERT: .x + p
+INSERT: .x + .s
+INSERT: .s + p
+UPDATE: .s::text " " => "2"
 UPDATE: p::text " " => "2"
 ```
