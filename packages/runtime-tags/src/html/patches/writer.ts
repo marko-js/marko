@@ -1060,14 +1060,18 @@ export function _patch_write(
 }
 
 // An effect, and in a patch render its entry (`1`, or `2` queued) valued by the
-// writes it depends on that the patch fills.
+// writes it depends on that the patch fills, unless its intersection's render runs it.
 export function _script(
   scopeId: number,
   registryId: string,
   markerGuard?: number,
   entry?: 0 | 1 | 2,
   reads?: EntryReads,
+  renderId?: string,
+  mask?: GroupMask,
+  group?: number,
 ) {
+  if (renderId && _patch_render(scopeId, renderId, reads, mask, group)) return;
   _base_script(scopeId, registryId, markerGuard);
   const state = getState();
   if (entry && state instanceof PatchRenderState) {

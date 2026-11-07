@@ -2020,31 +2020,30 @@ export function writeHTMLResumeStatements(
   // Effects carry no order (CONTEXT.md Effect), so neither this loop's direction
   // nor its place after the section's body holds one.
   const patches = isPatch();
-  const renderScripts = new Map<Signal, t.Expression>();
+  const renderScripts = new Map<Signal, (t.Expression | undefined)[]>();
   for (let i = allSignals.length; i--;) {
     const signal = allSignals[i];
     if (signal.hasHTMLEffect) {
-      const entry = patches && getEffectEntryArgs(section, signal);
+      // A patch's intersection render may run the effect instead of its entry.
+      const ref = signal.referencedBindings;
+      const rendered =
+        patches &&
+        Array.isArray(ref) &&
+        getCreatedSetup(section).get(ref)?.setup === "mixed";
+      const entry = patches && getEffectEntryArgs(section, signal, rendered);
       const registryId = t.stringLiteral(getSignalRegistryId(signal));
-      const script = entry
-        ? callRuntime(
-            "_script",
+      const args = entry
+        ? [
             scopeIdIdentifier,
             registryId,
             markerGuard || t.numericLiteral(1),
             ...entry,
-          )
-        : callRuntime("_script", scopeIdIdentifier, registryId, markerGuard);
-      // A patch's intersection render may run the effect instead of its entry.
-      const ref = signal.referencedBindings;
-      if (
-        entry &&
-        Array.isArray(ref) &&
-        getCreatedSetup(section).get(ref)?.setup === "mixed"
-      ) {
-        renderScripts.set(signal, script);
+          ]
+        : [scopeIdIdentifier, registryId, markerGuard];
+      if (rendered && entry) {
+        renderScripts.set(signal, args);
       } else {
-        body.push(t.expressionStatement(script));
+        body.push(t.expressionStatement(callRuntime("_script", ...args)));
       }
     }
   }

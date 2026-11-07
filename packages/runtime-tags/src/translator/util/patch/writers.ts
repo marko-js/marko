@@ -182,9 +182,24 @@ function pushKnownChildCalls(
 
 // The patch side of an effect's `_script`: its entry (`1`, or `2` queued) where
 // a patch writes in place a value the effect read, then those values.
-export function getEffectEntryArgs(section: Section, signal: Signal) {
+export function getEffectEntryArgs(
+  section: Section,
+  signal: Signal,
+  rendered: boolean,
+) {
   const writes = getEffectWrites(section, signal);
   if (!writes) return;
+  // A mixed intersection's render passes the values, and stands in for the entry on
+  // every patch where no caller's groups decide.
+  if (
+    rendered &&
+    !hasCallerGroupsAt(
+      section,
+      getSourcesForReferencedBindings(signal.referencedBindings),
+    )
+  ) {
+    return [absentArg(0)];
+  }
   const { reads, written } = writes;
   // The entry mounts the effect in a created scope where no render of the
   // scope queues it: one its caller passes client state does.
@@ -215,10 +230,12 @@ export function getEffectEntryArgs(section: Section, signal: Signal) {
           t.numericLiteral(1),
         )
       : undefined;
-  return [
-    entry ? andGuard(guard, entry) : guard || t.numericLiteral(1),
-    getReads(section, reads, check, group),
-  ];
+  const entryArg = entry
+    ? andGuard(guard, entry)
+    : guard || t.numericLiteral(1);
+  return rendered
+    ? [entryArg]
+    : [entryArg, getReads(section, reads, check, group)];
 }
 
 // The sources an effect re-runs on where one is a param a calling tag passes.
@@ -245,12 +262,12 @@ export const [getLetChanges] = createOutputSectionState<
 >(() => new Map());
 
 // A section's patch entries beside its resume data: the setup a created scope
-// gets, and the intersection renders that run an effect or else its `_script`.
+// gets, and the intersection renders, an effect's in its `_script`.
 export function writePatchResumeStatements(
   section: Section,
   body: t.Statement[],
   paramWrites: t.Statement[],
-  renderScripts: Map<Signal, t.Expression>,
+  renderScripts: Map<Signal, (t.Expression | undefined)[]>,
 ) {
   const pendingProperties = getScopeProperties(section);
   // A branch param writes as its body starts, a local once it exists.
@@ -418,22 +435,32 @@ export function writePatchResumeStatements(
     if (Array.isArray(ref)) {
       if (setup.setup === "mixed") {
         // A mixed intersection re-renders as its members change, by its group where params decide.
-        const render = callRuntime(
-          "_patch_render",
-          getScopeIdIdentifier(section),
-          t.stringLiteral(getResumeRegistryId(section, ref, "setup")),
+        const renderId = t.stringLiteral(
+          getResumeRegistryId(section, ref, "setup"),
+        );
+        const reads =
           getReads(
             section,
             toArray(ref, getCanonicalBinding),
             "_filled_guard",
-          ) || absentArg(0),
-          ...getRootGroupArgs(section, getSourcesForReferencedBindings(ref)),
+          ) || absentArg(0);
+        const groupArgs = getRootGroupArgs(
+          section,
+          getSourcesForReferencedBindings(ref),
         );
         // The intersection's effect ships its entry only where the render doesn't run it.
-        const effect = renderScripts.get(getSignals(section).get(ref)!);
+        const script = renderScripts.get(getSignals(section).get(ref)!);
         body.push(
           t.expressionStatement(
-            effect ? t.logicalExpression("||", render, effect) : render,
+            script
+              ? callRuntime("_script", ...script, reads, renderId, ...groupArgs)
+              : callRuntime(
+                  "_patch_render",
+                  getScopeIdIdentifier(section),
+                  renderId,
+                  reads,
+                  ...groupArgs,
+                ),
           ),
         );
       } else if (setup.setup === "client") {
