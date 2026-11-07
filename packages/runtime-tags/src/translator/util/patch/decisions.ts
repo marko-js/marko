@@ -61,21 +61,19 @@ import {
 // A hole a patch writes (a value, a control's, a site it renders): in
 // patch-written structure, not state-sourced.
 export function fillsHole(section: Section, extra: t.NodeExtra | undefined) {
+  if (!patchFillsSection(section)) return false;
   const sources = getFillSources(extra);
-  return (
-    patchFillsSection(section) &&
-    (!sources?.state || seedsOnly(section, sources))
-  );
+  return !sources?.state || seedsOnly(section, sources);
 }
 
 // Read only from `<let>`s at the initial value the server renders where the scope
 // is created: the hole seeds a created scope alone.
 function seedsOnly(section: Section, sources: Sources | undefined) {
   return (
-    patchCreatesOrComposes(section) &&
     !!sources?.state &&
     !sources.param &&
     !sources.global &&
+    patchCreatesOrComposes(section) &&
     every(sources.state, (state) => holdsInitialValue(state, section))
   );
 }
@@ -491,19 +489,17 @@ function computePatchKeying(slot: Slot) {
     }
   } else if (
     slot.kind === SlotKind.Value &&
-    slot.owner.type === BindingType.dom
+    slot.owner.type === BindingType.dom &&
+    patchFillsSection(slot.section)
   ) {
     const node = slot.owner;
     if (isKnownChildNode(node)) {
       // A known child's scope, which a patch pairs through.
-      if (patchFillsSection(slot.section)) return "pairs";
+      return "pairs";
     } else if (getLoopBody(node) && patchesBranchesAt(node)) {
       // The marker of loop rows a patch pairs.
       return "pairs";
-    } else if (
-      patchFillsSection(slot.section) &&
-      some(slot.reasonExprs, rendersServerValue)
-    ) {
+    } else if (some(slot.reasonExprs, rendersServerValue)) {
       return "values";
     }
   }
