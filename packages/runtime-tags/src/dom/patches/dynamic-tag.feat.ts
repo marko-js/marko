@@ -10,7 +10,7 @@ import { _dynamic_tag } from "../control-flow";
 // The tag's branch pairs through a `PatchChild` entry.
 import "./child.feat";
 import { getRegisteredWithScope } from "../resume";
-import { setupPatchers, patchers, walkPath } from "./apply";
+import { setupPatchers, patchers } from "./apply";
 import { getContent } from "./shells";
 
 // `[renderer, contentId, input, varId]` or bare; `>div` is native, `^id`/`^^id`
@@ -44,7 +44,7 @@ patchers[PatchKey.DynamicTag] = setupPatchers[PatchKey.DynamicTag] = (
             owner = owner[AccessorProp.Owner]!;
           }
         }
-        owner = walkPath(owner, hops);
+        for (const hop of hops) owner = owner[hop] as Scope;
       }
       if (
         !input &&
