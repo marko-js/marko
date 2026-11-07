@@ -6,8 +6,8 @@ import {
   type Scope,
 } from "../../common/types";
 import { _resumed, installBoundFnRevive } from "../resume";
-import { patchers, renderData, walkPath } from "./apply";
-import { installBoundFnResolver, type OwnerBound } from "./bind.feat";
+import { patchers, renderData } from "./apply";
+import { installBoundFnResolver, type OwnerBound, walkPath } from "./bind.feat";
 import { filledReferences } from "./signals";
 
 // Where a page compares a bound function's identity (a marked slot, a fill, a

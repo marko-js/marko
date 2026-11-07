@@ -12,10 +12,9 @@ declare module "./apply" {
 
 // Interleaved `[key, patch, …, shellId?]`: an object head means implicit
 // index keys, and the trailing string (a patch never is one) is the shell.
-export function createLoopPatcher(
-  reconcile: typeof _for_of,
-): Patcher<typeof PatchKey.Loop> {
-  return (scope, accessor, value) => {
+export const createLoopPatcher =
+  (reconcile: typeof _for_of): Patcher<typeof PatchKey.Loop> =>
+  (scope, accessor, value) => {
     let len = value.length;
     let shellId: string | undefined;
     if (len && typeof value[len - 1] === "string") {
@@ -49,4 +48,3 @@ export function createLoopPatcher(
     if (shellId) withCreating(apply);
     else apply();
   };
-}
