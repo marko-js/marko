@@ -22,6 +22,7 @@ import {
 import { finalizeContentDerives } from "./content-derives";
 import { generateUid } from "./generate-uid";
 import { isPatch } from "./marko-config";
+import { getClosureChangeReason } from "./solve-reasons";
 import {
   every,
   concat,
@@ -43,7 +44,6 @@ import {
   addReason,
   applyReasonExprs,
   getSourcesForExpr,
-  getSourcesForReferencedBindings,
   mapParamBindingToExpr,
 } from "./reasons";
 import {
@@ -341,12 +341,19 @@ function addSectionReasons(section: Section) {
   // A closure's changes reach the section through its owner chain.
   forEach(section.referencedClosures, (closure) => {
     closure.closureSections = sectionUtil.add(closure.closureSections, section);
-    addOwnerReason(section, closure.section, closure.sources);
+    addOwnerReason(
+      section,
+      closure.section,
+      getClosureChangeReason(section, closure),
+    );
   });
 
   if (isOptionalBranch(section)) {
-    const closureSources = getSourcesForReferencedBindings(
+    const closureSources = reduce(
       getDirectClosures(section),
+      (reason, closure) =>
+        mergeSources(reason, getClosureChangeReason(section, closure)),
+      undefined as Sources | undefined,
     );
     const branchSlot = ensureSectionSlot(section, SlotKind.Branch);
     addReason(
@@ -361,7 +368,6 @@ function addSectionReasons(section: Section) {
       section.branchExpr,
     );
   }
-
 }
 
 // Dense per-section ids for bindings, intersections, and closure accessors.

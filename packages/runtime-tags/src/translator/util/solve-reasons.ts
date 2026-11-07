@@ -8,6 +8,7 @@ import {
   bindingUtil,
   getCanonicalBinding,
   isDirectAlias,
+  isGlobalBinding,
   isIndexProperty,
   propertiesUtil,
 } from "./bindings";
@@ -17,6 +18,7 @@ import {
   resetPassMemos,
 } from "./cyclic-memo";
 import { addKnownTagReasons, recordKnownTagPatchFacts } from "./known-tag";
+import { readsValuesOnResume } from "./finalize-references";
 import { isPatch } from "./marko-config";
 import { addFunctionReasons } from "./module-registrations";
 import {
@@ -51,6 +53,7 @@ import {
   getConstantBindingsInFunction,
   getReferencedBindingsInFunction,
   getBindingsDerivedFrom,
+  getReferencedBindings,
 } from "./references";
 import {
   ensureSectionReasonGroups,
@@ -257,16 +260,47 @@ function addClosureReasons(section: Section) {
   );
   forEach(section.referencedClosures, (closure) => {
     addClosureReason(section, closure);
-    if (closure.sources && isDynamicClosure(section, closure)) {
-      addReason(ensureSlot(closure, SlotKind.ClosureScopes), closure.sources);
+    const reason = getClosureChangeReason(section, closure);
+    if (reason && isDynamicClosure(section, closure)) {
+      addReason(ensureSlot(closure, SlotKind.ClosureScopes), reason);
       if (getDynamicClosureIndex(closure, section)) {
         addReason(
           ensureSlot(closure, SlotKind.ClosureSignalIndex, section),
-          closure.sources,
+          reason,
         );
       }
     }
   });
+}
+
+// When a closure's change reaches the section on the client: as its sources change, or,
+// a `$global` member's, where the patch changing it fills not every read there.
+export function getClosureChangeReason(section: Section, closure: Binding) {
+  if (!isGlobalBinding(closure)) return closure.sources;
+  // A read the client creates the structure of, joins with a value it holds, or runs.
+  let reason = getBranchExprReasonUntil(section, closure.section);
+  for (const read of closure.reads.keys()) {
+    if (read.section === section && isReadOf(read, closure)) {
+      reason = mergeSources(
+        reason,
+        readsValuesOnResume(read)
+          ? ALWAYS
+          : reduce(getReferencedBindings(read), mergeJoinedSources, undefined),
+      );
+    }
+  }
+  return reason;
+}
+
+// The read references the binding, not a value it is part of.
+export function isReadOf(read: ReferencedExtra, binding: Binding) {
+  return bindingUtil.has(getReferencedBindings(read), binding);
+}
+
+function mergeJoinedSources(sources: Sources | undefined, binding: Binding) {
+  return isGlobalBinding(binding)
+    ? sources
+    : mergeSources(sources, binding.sources);
 }
 
 // A closure a section reads is read whenever a branch or content between the

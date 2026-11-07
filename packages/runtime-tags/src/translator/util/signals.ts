@@ -7,7 +7,6 @@ import {
 
 import { toAccess } from "../../html/serializer";
 import {
-  bindingUtil,
   type Binding,
   BindingType,
   forEachGlobalMember,
@@ -35,6 +34,7 @@ import { getAccessorPrefix, getAccessorProp } from "./get-accessor-enums";
 import { getDeclaredBindingExpression } from "./get-declared-binding-expression";
 import { isOptimize, isOutputHTML, isPatch } from "./marko-config";
 import {
+  concat,
   every,
   filter,
   forEach,
@@ -44,16 +44,14 @@ import {
   some,
   toArray,
 } from "./optional";
+import { getClosureChangeReason, isReadOf } from "./solve-reasons";
 import { getEffectWrites, fillsHole } from "./patch/decisions";
 import {
   inKeptContent,
   keepsClosureFills,
-  hasGuardedSources,
   getCreatedSetup,
   getFilledReferences,
-  isFilledIntersection,
   getPatchFillKey,
-  getUnfillableSources,
   getPatchFill,
   getPatchWrite,
   fillSubscribes,
@@ -94,7 +92,6 @@ import {
   getBindingsDerivedFrom,
   getReferencedBindings,
   getReferencedBindingsInFunction,
-  getCanonicalExpr,
   hasResumableAssignment,
   isAssignedBindingExtra,
   isPureExpr,
@@ -613,45 +610,24 @@ function inShellChain(section: Section) {
   return false;
 }
 
-// Where resumed code re-runs a `$global` member's readers, which its owner's scope then
-// subscribes for: `true`, else the sources the client may own; none where a patch fills each.
-const [getGlobalSubscribe] = createAnalysisMemo((member: Binding) => {
-  let subscribe: true | Sources | undefined | false = false;
-  for (const expr of member.reads.keys()) {
-    const referencedBindings = getReferencedBindings(expr);
-    // Kept content's scopes never subscribe: no client code reads for them.
-    if (
-      subscribe === true ||
-      !bindingUtil.has(referencedBindings, member) ||
-      inKeptContent(expr.section)
-    ) {
-      continue;
-    }
-    subscribe ||= undefined;
-    const others = bindingUtil.filter(referencedBindings, isNotGlobalMember);
-    // The client runs a filled intersection wherever its group has a client member, and
-    // derives a value a patch writes only where a caller passes it client state.
-    const unfilled =
-      getCanonicalExpr(expr).isEffect ||
-      getUnfillableSources(others) ||
-      (some(expr.derives, hasGuardedSources)
-        ? getSourcesForReferencedBindings(others)
-        : isResumedRead(expr)) ||
-      (Array.isArray(others) &&
-        isFilledIntersection(others) &&
-        getSourcesForReferencedBindings(others));
-    if (unfilled === true) {
-      subscribe = true;
-    } else if (unfilled) {
-      subscribe = mergeSources(subscribe || undefined, unfilled);
-    }
-  }
-  return subscribe;
-}, false);
-
-function isNotGlobalMember(binding: Binding) {
-  return binding.type !== BindingType.global;
-}
+// Where the client re-runs a `$global` member's readers after a patch changes it, which
+// the template's scope then subscribes for; `false` where nothing reads it.
+const [getGlobalSubscribe] = createAnalysisMemo(
+  (member: Binding): Sources | undefined | false =>
+    reduce(
+      concat(member.section, member.closureSections),
+      (reason: Sources | undefined | false, section) =>
+        // Kept content's scopes never subscribe: no client code reads for them.
+        !inKeptContent(section) && someReadIn(member, section, isReadOf)
+          ? mergeSources(
+              reason || undefined,
+              getClosureChangeReason(section, member),
+            )
+          : reason,
+      false,
+    ),
+  false,
+);
 
 // A `$global` member's signal, registered under the member's keys (`""`: the whole
 // object): pure, so the consumer's retention decides if the member has a reader.
@@ -1876,8 +1852,8 @@ export function writeHTMLResumeStatements(
   // re-runs, which its closures reach below it.
   if (!section.parent) {
     forEachGlobalMember((member) => {
-      const unfilled = getGlobalSubscribe(member);
-      if (unfilled !== false) {
+      const reason = getGlobalSubscribe(member);
+      if (reason !== false) {
         body.push(
           t.expressionStatement(
             callRuntime(
@@ -1886,10 +1862,10 @@ export function writeHTMLResumeStatements(
                 getResumeRegistryId(section, member, "subscribe"),
               ),
               scopeIdIdentifier,
-              unfilled === true
+              reason && (reason.always || reason.state)
                 ? t.numericLiteral(1)
-                : unfilled &&
-                    getCallerGroupGuard(section, "_client_guard", unfilled),
+                : reason?.param &&
+                    getCallerGroupGuard(section, "_client_guard", reason),
             ),
           ),
         );
