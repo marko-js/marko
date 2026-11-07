@@ -768,6 +768,19 @@ export function writeFill(
   return "";
 }
 
+// An attribute's or style property's fill, keyed by its node and name:
+// optimized accessors are base-36, so the client splits the key at its first `$`.
+export function writeNamedFill(
+  fills: Record<string, unknown> | 0,
+  kind: typeof PatchKey.Attr | typeof PatchKey.Style,
+  accessor: Accessor,
+  name: string,
+  value: unknown,
+) {
+  if (fills) fills[kind + accessor + (MARKO_DEBUG ? " " : "$") + name] = value;
+  return "";
+}
+
 // On when a patch fills the group here: server-sourced, or constant (`0`, a
 // call-site constant) where a fresh scope may need the seed.
 export function _filled_guard(mask: GroupMask, group?: number) {

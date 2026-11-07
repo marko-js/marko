@@ -42,7 +42,6 @@ import {
 import {
   getAccessorPrefix,
   getAccessorProp,
-  getPatchKey,
 } from "../../util/get-accessor-enums";
 import { getTagName } from "../../util/get-tag-name";
 import { isEventOrChangeHandler } from "../../util/is-event-or-change-handler";
@@ -66,7 +65,6 @@ import {
 import {
   buildPatchTextContent,
   getExprRootGroupArgs,
-  getNamedPatchKey,
   getPatchHoleGroupArgs,
 } from "../../util/patch/writers";
 import { addAlwaysReason, addReasonExprs } from "../../util/reasons";
@@ -825,9 +823,7 @@ export default {
               // expression appears once): the element and group args trail.
               const helper = getPatchAttrHelper(tagName, name);
               const scopeId = getScopeIdIdentifier(tagSection);
-              const key = t.stringLiteral(
-                getNamedPatchKey(getPatchKey().Attr, nodeBinding!, name),
-              );
+              const accessor = getScopeAccessorLiteral(nodeBinding!);
               const groupArgs = getExprRootGroupArgs(tagSection, value.extra!);
               write`${
                 helper === "_attr"
@@ -836,10 +832,10 @@ export default {
                       t.stringLiteral(name),
                       value,
                       scopeId,
-                      key,
+                      accessor,
                       ...groupArgs,
                     )
-                  : callRuntime(helper, value, scopeId, key, ...groupArgs)
+                  : callRuntime(helper, value, scopeId, accessor, ...groupArgs)
               }`;
               continue;
             }

@@ -44,17 +44,17 @@ import {
   pushIdHop,
   walkMarkers,
   withPairedBranchId,
-  writeFill,
+  writeNamedFill,
   withUnpatched,
 } from "./writer";
 
-// A patched attribute (`scopeId` and its entry's `key` given) renders on a page
-// and writes its entry in a patch render, so its value evaluates once.
+// A patched attribute (`scopeId` and its element's accessor given) renders on a
+// page and writes its entry in a patch render, so its value evaluates once.
 export function _attr(
   name: string,
   value: unknown,
   scopeId?: number,
-  key?: string,
+  accessor?: Accessor,
   mask?: GroupMask,
   group?: number,
 ) {
@@ -62,7 +62,13 @@ export function _attr(
     scopeId === undefined ? undefined : ensureFills(scopeId, mask, group);
   return fills === undefined
     ? _base_attr(name, value)
-    : writeFill(fills, key!, normalizeAttrValue(value));
+    : writeNamedFill(
+        fills,
+        PatchKey.Attr,
+        accessor!,
+        name,
+        normalizeAttrValue(value),
+      );
 }
 
 // Class/style normalize on the server into the same string the dom helper
@@ -70,7 +76,7 @@ export function _attr(
 export function _attr_class(
   value: unknown,
   scopeId?: number,
-  key?: string,
+  accessor?: Accessor,
   mask?: GroupMask,
   group?: number,
 ) {
@@ -78,7 +84,7 @@ export function _attr_class(
     "class",
     toDelimitedString(value, " ", stringifyClassEntry),
     scopeId,
-    key,
+    accessor,
     mask,
     group,
   );
@@ -87,7 +93,7 @@ export function _attr_class(
 export function _attr_style(
   value: unknown,
   scopeId?: number,
-  key?: string,
+  accessor?: Accessor,
   mask?: GroupMask,
   group?: number,
 ) {
@@ -95,7 +101,7 @@ export function _attr_style(
     "style",
     toDelimitedString(value, ";", stringifyStyleEntry),
     scopeId,
-    key,
+    accessor,
     mask,
     group,
   );
@@ -106,7 +112,7 @@ export function _attr_style(
 export function _attr_option_value(
   value: unknown,
   scopeId?: number,
-  key?: string,
+  accessor?: Accessor,
   mask?: GroupMask,
   group?: number,
 ) {
@@ -114,14 +120,20 @@ export function _attr_option_value(
     scopeId === undefined ? undefined : ensureFills(scopeId, mask, group);
   return fills === undefined
     ? _base_attr_option_value(value)
-    : writeFill(fills, key!, normalizeAttrValue(value));
+    : writeNamedFill(
+        fills,
+        PatchKey.Attr,
+        accessor!,
+        "value",
+        normalizeAttrValue(value),
+      );
 }
 
 function patchStringAttr(
   name: string,
   value: string,
   scopeId: number | undefined,
-  key: string | undefined,
+  accessor: Accessor | undefined,
   mask: GroupMask | undefined,
   group: number | undefined,
 ) {
@@ -129,7 +141,7 @@ function patchStringAttr(
     scopeId === undefined ? undefined : ensureFills(scopeId, mask, group);
   return fills === undefined
     ? stringAttr(name, value)
-    : writeFill(fills, key!, value || undefined);
+    : writeNamedFill(fills, PatchKey.Attr, accessor!, name, value || undefined);
 }
 
 // An attribute's value as the client's `_attr` sets it: `""` for `true`, none
