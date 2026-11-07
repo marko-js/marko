@@ -29,7 +29,6 @@ const patchPureDOMFunctions = new Set<string>([
   "_for_selector_patch",
   "_if_closure_patch",
   "_or_patch",
-  "_fill_mark",
   "_fill_let",
   "_fill_let_change",
   "_await_content",

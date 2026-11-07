@@ -51,7 +51,6 @@ import {
   getClosureReadSources,
   isResumedRead,
   runsSubscribersByWrite,
-  effectEntryNamesFill,
   runsByEntry,
   leavesReadToPatch,
 } from "./patch/refresh";
@@ -66,7 +65,6 @@ import {
   getPatchFillCalls,
   getRootGroupArgs,
   hasCallerGroupsAt,
-  isFilledReference,
   writePatchResumeStatements,
 } from "./patch/writers";
 import { getReadReplacement } from "./read-replacement";
@@ -766,13 +764,12 @@ export function initValue(binding: Binding, isLet = false) {
       const accessor = getScopeAccessorLiteral(binding, true, true);
       // Where only the key reaches it, the fill's registration ships it and
       // its value signal stays pure; elsewhere what reaches the signal does.
-      const fillFn = signal.fillFn && markFill(signal, signal.fillFn);
       return callRuntime(
         `_fill${letHelper}${ownRegistration ? "_resume" : ""}`,
         key,
         accessor,
         fn,
-        fillFn,
+        signal.fillFn,
       );
     }
     if (
@@ -861,15 +858,6 @@ function setsInitialValue({ referencedBindings }: Signal) {
   return !!(
     (referencedBindings as Binding).derivedFrom as t.NodeExtra | undefined
   )?.initialValue;
-}
-
-// A fill's run leaving out what its change judges (a render's intersection, an effect's
-// entry, a function with filled references' bind) marks it; the signal's own run needs none.
-function markFill(signal: Signal, fillFn: t.Expression) {
-  const binding = signal.referencedBindings as Binding;
-  return effectEntryNamesFill(binding) || isFilledReference(binding)
-    ? callRuntime("_fill_mark", getScopeAccessorLiteral(binding, true), fillFn)
-    : fillFn;
 }
 
 function getForwardStatements(signal: Signal, target: Signal) {
