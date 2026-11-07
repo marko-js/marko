@@ -26,6 +26,7 @@ import {
   getCallSiteSources,
   getParamGroupSources,
   isKnownTagExtra,
+  type KnownTagExtra,
   someCallPasses,
 } from "../known-tag";
 import { isPatch } from "../marko-config";
@@ -320,13 +321,11 @@ function canPatchFill(binding: Binding) {
 // their fills compute it on the client, so it takes none.
 function initialValueRunsFromFills(binding: Binding): boolean {
   const sources = binding.initialValueSources;
-  return (
-    !!sources?.state &&
-    every(
-      sources.state,
-      (state) => !!state.initialValueSources?.state || canPatchFill(state),
-    )
-  );
+  return !!sources?.state && every(sources.state, isFilledOrReadsState);
+}
+
+function isFilledOrReadsState(state: Binding) {
+  return !!state.initialValueSources?.state || canPatchFill(state);
 }
 
 // A `<let>` whose initial value client code computes where a patch creates its
@@ -970,14 +969,13 @@ function rendersIntersectionByWrite(
 // A member such an intersection reads, which the patch writes for the intersection's render.
 const writesForIntersectionRender = createPassMemo(
   (binding: Binding) =>
-    someAlias(
-      binding,
-      (alias) => someBindingRead(alias, rendersByWriteRead),
-      undefined,
-      true,
-    ),
+    someAlias(binding, hasRenderByWriteRead, undefined, true),
   false,
 );
+
+function hasRenderByWriteRead(alias: Binding) {
+  return someBindingRead(alias, rendersByWriteRead);
+}
 
 function rendersByWriteRead(read: ReferencedExtra, binding: Binding) {
   const intersection = getReferencedBindings(read);
@@ -1885,12 +1883,14 @@ export const patchComposes = createPassMemo(
   (section: Section) =>
     isKnownChild(section) &&
     (section.parent
-      ? some(section.renderedBy, (call) =>
-          patchCreatesOrComposes(call.childScopeBinding.section),
-        )
+      ? some(section.renderedBy, isCreatedOrComposedCall)
       : mayBeCreated(section)),
   false,
 );
+
+function isCreatedOrComposedCall(call: KnownTagExtra) {
+  return patchCreatesOrComposes(call.childScopeBinding.section);
+}
 
 // A `<define>` body reading what its owner holds, called where a flush may
 // create the call: its shell hop, or its patch link below its owner, names it.
@@ -2025,7 +2025,7 @@ function findUnfilledStructure(
       // Content may sit in structure a caller selects too.
       structure =
         getParamSelectedStructure(read.section)?.reduce(
-          (all: SortedOpt<Sources>, sources) => sourcesUtil.add(all, sources),
+          addSources,
           structure,
         ) ?? structure;
     }
@@ -2119,6 +2119,10 @@ function findUnfilledStructure(
 
 function isFnRead(read: Read) {
   return !!read.fnRoot;
+}
+
+function addSources(all: SortedOpt<Sources>, sources: Sources) {
+  return sourcesUtil.add(all, sources);
 }
 
 // A read resumed code renders wherever its scope sits, so no patch fills it
