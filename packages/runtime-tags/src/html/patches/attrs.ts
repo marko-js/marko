@@ -57,7 +57,7 @@ export function _attr(
   group?: number,
 ) {
   const fills =
-    scopeId === undefined ? undefined : ensureFills(scopeId, mask, group!);
+    scopeId === undefined ? undefined : ensureFills(scopeId, mask, group);
   return fills === undefined
     ? _base_attr(name, value)
     : writeFill(fills, key!, normalizeAttrValue(value));
@@ -109,7 +109,7 @@ export function _attr_option_value(
   group?: number,
 ) {
   const fills =
-    scopeId === undefined ? undefined : ensureFills(scopeId, mask, group!);
+    scopeId === undefined ? undefined : ensureFills(scopeId, mask, group);
   return fills === undefined
     ? _base_attr_option_value(value)
     : writeFill(fills, key!, normalizeAttrValue(value));
@@ -124,7 +124,7 @@ function patchStringAttr(
   group: number | undefined,
 ) {
   const fills =
-    scopeId === undefined ? undefined : ensureFills(scopeId, mask, group!);
+    scopeId === undefined ? undefined : ensureFills(scopeId, mask, group);
   return fills === undefined
     ? stringAttr(name, value)
     : writeFill(fills, key!, value || undefined);
@@ -530,7 +530,7 @@ function patchControl(
   if (changeKey)
     _patch_bind(scopeId, changeKey, handler, changeMask, changeGroup);
   if (controlKey) {
-    const fills = ensureFills(scopeId, mask, group!);
+    const fills = ensureFills(scopeId, mask, group);
     if (fills) fills[controlKey] = normalizePatchValue(value);
   }
   return true;

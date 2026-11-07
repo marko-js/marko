@@ -80,7 +80,7 @@ function keepsMarker(
   group?: number,
   rewritten?: 1,
 ) {
-  return rewritten || getUpdatesFrom(mask, group!) ? markerGuard : 0;
+  return rewritten || getUpdatesFrom(mask, group) ? markerGuard : 0;
 }
 
 // A `<style>` value a patch writes passes its scope, key and group; its entry
@@ -96,7 +96,7 @@ export function _escape_style_value(
     group === undefined ? undefined : ensureFills(scopeId!, mask, group, 1);
   return fills === undefined
     ? _base_escape_style_value(value)
-    : _client_guard(mask!, group!)
+    : _client_guard(mask, group)
       ? writeFill(
           fills,
           key!.slice(0, key!.indexOf(MARKO_DEBUG ? " " : "$")),

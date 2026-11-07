@@ -88,7 +88,7 @@ export function _show_end(
     singleNode,
   );
   if (node !== undefined) {
-    const fills = ensureFills(scopeId, mask, group!);
+    const fills = ensureFills(scopeId, mask, group);
     if (fills) {
       const entry: unknown[] = [display ? 1 : 0, node];
       if (start !== undefined) entry.push(start);
@@ -123,7 +123,7 @@ export function _if(
   // A shell-less branch, or one whose expression derives from a group updating
   // from the client, is the resumed page's to render: no patch fills its reads.
   const render =
-    !shellIds || _client_guard(mask, group!) ? () => withUnpatched(cb) : cb;
+    !shellIds || _client_guard(mask, group) ? () => withUnpatched(cb) : cb;
   _base_if(
     render,
     scopeId,
@@ -147,7 +147,7 @@ export function writeBranch(
   mask?: GroupMask,
   group?: number,
 ) {
-  const updatesFrom = getUpdatesFrom(mask, group!);
+  const updatesFrom = getUpdatesFrom(mask, group);
   // A branch whose expression derives from a group updating from the client
   // re-renders on the resumed page: the patch skips it.
   if (updatesFrom & UpdatesFrom.Client) return;
@@ -412,7 +412,7 @@ function patchLoop<A, B>(
   forBranches(
     by,
     cb,
-    !shellId || _client_guard(mask, group!)
+    !shellId || _client_guard(mask, group)
       ? (each) => withUnpatched(rows, each)
       : rows,
     scopeId,
@@ -440,7 +440,7 @@ export function writeLoop<A, B>(
 ) {
   // A list updating from the client, or a paired one, pairs its rows: its entry
   // ships only what the rows themselves fill.
-  const updatesFrom = getUpdatesFrom(mask, group!);
+  const updatesFrom = getUpdatesFrom(mask, group);
   const clientRows = updatesFrom & UpdatesFrom.Client;
   const rowsPaired = clientRows || (!updatesFrom && !inCreatable());
   const patches: object[] = [];
