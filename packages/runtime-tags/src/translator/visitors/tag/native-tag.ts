@@ -22,7 +22,6 @@ import {
   stringifyStyleEntry,
   toDelimitedString,
 } from "../../../common/helpers";
-import { ControlledType, type Falsy } from "../../../common/types";
 import {
   _attr,
   _attr_class,
@@ -88,7 +87,6 @@ import {
 } from "../../util/runtime";
 import {
   getPrefixedScopeAccessor,
-  getScopeAccessor,
   getScopeAccessorLiteral,
 } from "../../util/scope-accessor";
 import {
@@ -133,7 +131,7 @@ const htmlSelectArgs = new WeakMap<
   {
     helper: "_attr_select_value" | "_attrs_select_value";
     args: t.Expression[];
-    patchArgs: (t.Expression | Falsy)[];
+    patchArgs: t.Expression[];
   }
 >();
 
@@ -487,8 +485,9 @@ export default {
           linkHolePatcher(
             tagSection,
             controlExtra,
-            patchControls[getControllableHelper(tagName, controllable.state)]
-              .feature,
+            patchControlFeatures[
+              getControllableHelper(tagName, controllable.state)
+            ],
           );
         }
 
@@ -698,7 +697,7 @@ export default {
 
         // A patched control's helper writes the bind and control entries from
         // the values it renders.
-        let patchArgs: (t.Expression | Falsy)[] = [];
+        let patchArgs: t.Expression[] = [];
         const controlHelper =
           controllable && getControllableHelper(tagName, controllable.state);
         if (controllable) {
@@ -712,34 +711,13 @@ export default {
           )!.value.extra!;
           const fillsControl = fillsHole(tagSection, controlExtra);
           if (fillsControl || fillsChangeHandler) {
-            // A param-sourced control value writes only where its group
-            // updates from the server.
-            const [mask, group] = fillsControl
-              ? getExprRootGroupArgs(tagSection, controlExtra)
-              : [];
-            const [changeMask, changeGroup] = fillsChangeHandler
-              ? getExprRootGroupArgs(tagSection, changeAttr!.value.extra!)
-              : [];
+            // Bits: 1 the control's entry, 2 its handler's bind; both take
+            // that group.
             patchArgs = [
-              fillsControl
-                ? t.stringLiteral(
-                    getPatchKey().Control +
-                      patchControls[controlHelper!].kind +
-                      getScopeAccessor(nodeBinding!),
-                  )
-                : absentArg(0),
-              fillsControl ? mask : absentArg(0),
-              fillsControl ? group : absentArg(0),
-              fillsChangeHandler &&
-                t.stringLiteral(
-                  getPatchKey().Write +
-                    getPrefixedScopeAccessor(
-                      nodeBinding!,
-                      getAccessorPrefix().ControlledHandler,
-                    ),
-                ),
-              changeMask,
-              changeGroup,
+              t.numericLiteral(
+                (fillsControl ? 1 : 0) | (fillsChangeHandler ? 2 : 0),
+              ),
+              ...getExprRootGroupArgs(tagSection, controlExtra),
             ];
           }
 
@@ -1634,36 +1612,15 @@ function getControllableHelper(tagName: string, state: Controllable["state"]) {
   }
 }
 
-// By a control's server helper: its wire kind and the feature applying its entries.
-const patchControls = {
-  _attr_input_checked: {
-    kind: ControlledType.InputChecked,
-    feature: "patches/control-input",
-  },
-  _attr_input_checkedValue: {
-    kind: ControlledType.InputCheckedValue,
-    feature: "patches/control-checked-value",
-  },
-  _attr_details_open: {
-    kind: ControlledType.DetailsOrDialogOpen,
-    feature: "patches/control-open",
-  },
-  _attr_dialog_open: {
-    kind: ControlledType.DetailsOrDialogOpen,
-    feature: "patches/control-open",
-  },
-  _attr_select_value: {
-    kind: ControlledType.SelectValue,
-    feature: "patches/control-select",
-  },
-  _attr_textarea_value: {
-    kind: ControlledType.InputValue,
-    feature: "patches/control-input",
-  },
-  _attr_input_value: {
-    kind: ControlledType.InputValue,
-    feature: "patches/control-input",
-  },
+// By a control's server helper: the feature applying its entries.
+const patchControlFeatures = {
+  _attr_input_checked: "patches/control-input",
+  _attr_input_checkedValue: "patches/control-checked-value",
+  _attr_details_open: "patches/control-open",
+  _attr_dialog_open: "patches/control-open",
+  _attr_select_value: "patches/control-select",
+  _attr_textarea_value: "patches/control-input",
+  _attr_input_value: "patches/control-input",
 } as const;
 
 function assertValidNativeAttrName(

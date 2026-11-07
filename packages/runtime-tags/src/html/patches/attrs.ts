@@ -7,6 +7,8 @@ import {
 } from "../../common/helpers";
 import {
   type Accessor,
+  AccessorPrefix,
+  ControlledType,
   IdHop,
   PatchKey,
   PatchPairing,
@@ -332,23 +334,19 @@ export function _attr_input_value(
   nodeAccessor: Accessor,
   value: unknown,
   valueChange: unknown,
-  controlKey?: string | 0,
+  patched?: ControlPatched,
   mask?: GroupMask,
   group?: number,
-  changeKey?: string,
-  changeMask?: GroupMask,
-  changeGroup?: number,
 ) {
   return patchControl(
     scopeId,
+    nodeAccessor,
+    ControlledType.InputValue,
     value,
     valueChange,
-    controlKey,
+    patched,
     mask,
     group,
-    changeKey,
-    changeMask,
-    changeGroup,
   )
     ? ""
     : _base_attr_input_value(scopeId, nodeAccessor, value, valueChange);
@@ -359,23 +357,19 @@ export function _attr_input_checked(
   nodeAccessor: Accessor,
   checked: unknown,
   checkedChange: unknown,
-  controlKey?: string | 0,
+  patched?: ControlPatched,
   mask?: GroupMask,
   group?: number,
-  changeKey?: string,
-  changeMask?: GroupMask,
-  changeGroup?: number,
 ) {
   return patchControl(
     scopeId,
+    nodeAccessor,
+    ControlledType.InputChecked,
     checked,
     checkedChange,
-    controlKey,
+    patched,
     mask,
     group,
-    changeKey,
-    changeMask,
-    changeGroup,
   )
     ? ""
     : _base_attr_input_checked(scopeId, nodeAccessor, checked, checkedChange);
@@ -388,23 +382,19 @@ export function _attr_input_checkedValue(
   checkedValue: unknown,
   checkedValueChange: unknown,
   value: unknown,
-  controlKey?: string | 0,
+  patched: ControlPatched = 0,
   mask?: GroupMask,
   group?: number,
-  changeKey?: string,
-  changeMask?: GroupMask,
-  changeGroup?: number,
 ) {
   return patchControl(
     scopeId,
-    controlKey && [checkedValue, value],
+    nodeAccessor,
+    ControlledType.InputCheckedValue,
+    patched & 1 && [checkedValue, value],
     checkedValueChange,
-    controlKey,
+    patched,
     mask,
     group,
-    changeKey,
-    changeMask,
-    changeGroup,
   )
     ? ""
     : _base_attr_input_checkedValue(
@@ -421,23 +411,19 @@ export function _attr_details_or_dialog_open(
   nodeAccessor: Accessor,
   open: unknown,
   openChange: unknown,
-  controlKey?: string | 0,
+  patched?: ControlPatched,
   mask?: GroupMask,
   group?: number,
-  changeKey?: string,
-  changeMask?: GroupMask,
-  changeGroup?: number,
 ) {
   return patchControl(
     scopeId,
+    nodeAccessor,
+    ControlledType.DetailsOrDialogOpen,
     open,
     openChange,
-    controlKey,
+    patched,
     mask,
     group,
-    changeKey,
-    changeMask,
-    changeGroup,
   )
     ? ""
     : _base_attr_details_or_dialog_open(
@@ -455,24 +441,20 @@ export function _attr_select_value(
   value: unknown,
   valueChange: unknown,
   content: () => void,
-  controlKey?: string | 0,
+  patched?: ControlPatched,
   mask?: GroupMask,
   group?: number,
-  changeKey?: string,
-  changeMask?: GroupMask,
-  changeGroup?: number,
 ) {
   if (
     patchControl(
       scopeId,
+      nodeAccessor,
+      ControlledType.SelectValue,
       value,
       valueChange,
-      controlKey,
+      patched,
       mask,
       group,
-      changeKey,
-      changeMask,
-      changeGroup,
     )
   ) {
     content();
@@ -486,52 +468,61 @@ export function _attr_textarea_value(
   nodeAccessor: Accessor,
   value: unknown,
   valueChange: unknown,
-  controlKey?: string | 0,
+  patched?: ControlPatched,
   mask?: GroupMask,
   group?: number,
-  changeKey?: string,
-  changeMask?: GroupMask,
-  changeGroup?: number,
 ) {
   return patchControl(
     scopeId,
+    nodeAccessor,
+    ControlledType.InputValue,
     value,
     valueChange,
-    controlKey,
+    patched,
     mask,
     group,
-    changeKey,
-    changeMask,
-    changeGroup,
   )
     ? ""
     : _base_attr_textarea_value(scopeId, nodeAccessor, value, valueChange);
 }
 
+// Bits: 1 the control's value entry, 2 its change handler's bind entry; the
+// control's attributes read as one group, which both take.
+type ControlPatched = 0 | 1 | 2 | 3;
+
 // The handler's bind entry applies first, then the value's control entry (its
 // kind digit rides the key ahead of the accessor); true on a patch render.
 function patchControl(
   scopeId: number,
+  nodeAccessor: Accessor,
+  kind: ControlledType,
   value: unknown,
   handler: unknown,
-  controlKey: string | 0 | undefined,
+  patched: ControlPatched = 0,
   mask: GroupMask | undefined,
   group: number | undefined,
-  changeKey: string | undefined,
-  changeMask: GroupMask | undefined,
-  changeGroup: number | undefined,
 ) {
   const state = getState();
   if (!(state instanceof PatchRenderState)) {
     // A page render only walks the markers a control entry pairs through.
-    if (controlKey) walkMarkers(state);
+    if (patched & 1) walkMarkers(state);
     return false;
   }
-  if (changeKey)
-    _patch_bind(scopeId, changeKey, handler, changeMask, changeGroup);
-  if (controlKey) {
+  if (patched & 2) {
+    _patch_bind(
+      scopeId,
+      PatchKey.Write + AccessorPrefix.ControlledHandler + nodeAccessor,
+      handler,
+      mask,
+      group,
+    );
+  }
+  if (patched & 1) {
     const fills = ensureFills(scopeId, mask, group!);
-    if (fills) fills[controlKey] = normalizePatchValue(value);
+    if (fills) {
+      fills[PatchKey.Control + kind + nodeAccessor] =
+        normalizePatchValue(value);
+    }
   }
   return true;
 }
