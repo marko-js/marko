@@ -2154,6 +2154,7 @@ function throwUnserializable(
 const accessorPrefixDescriptions: Record<string, string> = {
   BoundFn: "the bound function",
   BranchScopes: "the branch scopes",
+  ClientBranchHoles: "the kept content holes",
   ClosureScopes: "the closure scopes",
   ClosureSignalIndex: "the closure signal index",
   ConditionalRenderer: "the conditional renderer",
@@ -2171,7 +2172,6 @@ const accessorPrefixDescriptions: Record<string, string> = {
   Promise: "the pending promise",
   TagVariableChange: "the tag variable change handler",
   TryBranch: "the try branch",
-  ClientBranchHoles: "the kept content holes",
 };
 
 // A readable phrase for an internal `<Prefix>:<node accessor>` scope slot.
