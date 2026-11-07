@@ -1502,17 +1502,22 @@ export function getSetupSources(ref: Binding | Intersection) {
   return sources?.state ? getStateInitialValueSources(sources.state) : sources;
 }
 
-// Client state only holes a patch writes and initial values of `<let>`s it fills
-// read in the section: a created scope takes those from the patch.
+// Client state only holes a patch writes and initial values of `<let>`s it fills read
+// in the section, through its aliases too: a created scope takes those from the patch.
 function seedsReads(section: Section, ref: Binding | Intersection) {
   const intersection = Array.isArray(ref);
-  return !someReadIn(
+  return !someAlias(
     intersection ? ref[0] : ref,
-    section,
-    (read) =>
-      (!intersection || getReferencedBindings(read) === ref) &&
-      !isFilledHole(read) &&
-      !(read.initialValue && every(read.derives, canPatchFill)),
+    (alias) =>
+      someReadIn(
+        alias,
+        section,
+        (read) =>
+          (!intersection || getReferencedBindings(read) === ref) &&
+          !isFilledHole(read) &&
+          !(read.initialValue && every(read.derives, canPatchFill)),
+      ),
+    undefined,
   );
 }
 
