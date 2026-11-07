@@ -33,15 +33,7 @@ import { generateUid, generateUidIdentifier } from "./generate-uid";
 import { getAccessorPrefix, getAccessorProp } from "./get-accessor-enums";
 import { getDeclaredBindingExpression } from "./get-declared-binding-expression";
 import { isOptimize, isOutputHTML, isPatch } from "./marko-config";
-import {
-  every,
-  filter,
-  forEach,
-  type Opt,
-  push,
-  reduce,
-  some,
-} from "./optional";
+import { every, forEach, type Opt, push, reduce, some } from "./optional";
 import { getEffectWrites, fillsHole } from "./patch/decisions";
 import {
   inKeptContent,
@@ -57,9 +49,7 @@ import {
   fillSubscribes,
   getClosureReadSources,
   isResumedRead,
-  runsEffectOnPatch,
   runsSubscribersByWrite,
-  hasTagCallerParamAt,
   effectEntryNamesFill,
   runsByEntry,
   leavesReadToPatch,
@@ -141,12 +131,15 @@ import {
   type Section,
   sectionUtil,
 } from "./sections";
-import { isQueuedOnCreate, inCreatedCatch, shipsContentShell } from "./shell";
+import { shipsContentShell } from "./shell";
 import { replaceMethodNode, simplifyFunction } from "./simplify-fn";
 import { findSectionSlot, findSlot, type PlaceSlot, SlotKind } from "./slots";
 import { mergeSources, type Sources, sourcesUtil } from "./sources";
 import { createOutputState, createOutputSectionState } from "./state";
-import { toOnlyExpressionOrBlock } from "./to-only-or-block";
+import {
+  toOnlyExpressionOrBlock,
+  toSequenceExpression,
+} from "./to-only-or-block";
 import { toMemberExpression, toObjectProperty } from "./to-property-name";
 import { getRestPattern, withRestFallback } from "./translate-var";
 import { traverseReplace } from "./traverse";
@@ -759,7 +752,7 @@ export function initValue(binding: Binding, isLet = false) {
 
     // A fill runs from its scope slot, never as a value forwarder.
     const fills = isPatch() && getPatchFill(binding).fill;
-    if (fills) signal.storesValue = true;
+    signal.storesValue ||= !!fills;
     const fn = buildSignalFn(signal);
     const letHelper = signal.extraArgs ? "_let_change" : "_let";
     const helper = isLet ? letHelper : "_const";
@@ -859,35 +852,6 @@ function isPureMemberForwarder(binding: Binding): boolean {
   }
 
   return hasNonConstantPropertyAlias(binding);
-}
-
-// Left out of a created scope's shell: an effect its render queues, or one its
-// entry re-runs, which nothing a created `@catch` holds has (no patch pairs it).
-export function isEffectOutsideShell(
-  section: Section,
-  referencedBindings: ReferencedBindings,
-) {
-  return (
-    isQueuedOnCreate(section, referencedBindings) ||
-    (!inCreatedCatch(section) && some(referencedBindings, runsEffectOnPatch))
-  );
-}
-
-// The sources an effect re-runs on where one is a param a calling tag passes.
-export function getEffectCallerSources(
-  section: Section,
-  referencedBindings: ReferencedBindings,
-) {
-  const sources = reduce(
-    filter(referencedBindings, runsEffectOnPatch),
-    pushCanonicalSources,
-  );
-  if (some(sources, (s) => hasTagCallerParamAt(s, section))) return sources;
-}
-
-function pushCanonicalSources(list: Opt<Sources>, binding: Binding) {
-  const { sources } = getCanonicalBinding(binding);
-  return sources ? push(list, sources) : list;
 }
 
 // Only an uncontrolled `<let>`'s `value=` is marked its initial value (`core/let.ts`).
@@ -1714,6 +1678,11 @@ export function getCreatedSetupId(
   );
 }
 
+// The id an owner's entry runs a closure's subscribers by.
+export function getClosureSubscribersId(closure: Binding) {
+  return getResumeRegistryId(closure.section, closure, "subscribers");
+}
+
 function writeGetters(section: Section) {
   forEach(section.bindings, (binding) => {
     for (const [hoistSection, hasReference] of binding.getters) {
@@ -1896,10 +1865,6 @@ function toReturnedFunction(rawFn: t.Function, prologue?: t.Statement[]) {
 export function addHTMLEffectCall(section: Section, expr?: t.NodeExtra) {
   const signal = getExprSignal(section, expr);
   signal.hasHTMLEffect = signal.storesValue = true;
-}
-
-export function toSequenceExpression(exprs: t.Expression[]) {
-  return exprs.length === 1 ? exprs[0] : t.sequenceExpression(exprs);
 }
 
 export function writeHTMLResumeStatements(
@@ -2587,9 +2552,4 @@ function isClientAssignedLet(binding: Binding) {
 
 function getDebugLoc({ start }: t.SourceLocation) {
   return `${start.line}:${start.column + 1}`;
-}
-
-// The id an owner's entry runs a closure's subscribers by.
-export function getClosureSubscribersId(closure: Binding) {
-  return getResumeRegistryId(closure.section, closure, "subscribers");
 }

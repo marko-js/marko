@@ -771,7 +771,7 @@ export function linkKnownTagPatchEntries() {
 
 // Whether the call passes its child content (a body's or an attribute tag's) that
 // reaches one of `params`: a patch sends written content as a bind, as it registers.
-export function passesBoundContent(
+function passesBoundContent(
   tagExtra: t.MarkoTagExtra,
   params: Sources["param"],
 ) {
@@ -1011,32 +1011,29 @@ export function derivesConstantInput(binding: Binding) {
 
 // A `<define>` param every call passing a constant where the client renders it passes
 // a module read, which that call's fill runs push: the client derives it.
-export const derivesConstantParam = createPassMemo(
-  (param: ParamBinding): boolean => {
-    const body = param.section;
-    let derives = false;
-    return (
-      !!body.parent &&
-      !some(body.renderedBy, (call) => {
-        const exprs = mapParamReasonToExpr(call[kKnownExprs]!, param);
-        const sources = reduce(exprs, mergeAllSourcesForExpr);
-        if (
-          hasClientState(sources) ||
-          hasParamOrGlobalSource(sources) ||
-          !rendersCallOnClient(call.childScopeBinding.section) ||
-          // Main serializes the module read for that intersection.
-          intersectsClientState(param, call[kKnownExprs])
-        ) {
-          return false;
-        }
-        derives = true;
-        return !exprs || !every(exprs, isResolvedModuleRead);
-      }) &&
-      derives
-    );
-  },
-  false,
-);
+const derivesConstantParam = createPassMemo((param: ParamBinding): boolean => {
+  const body = param.section;
+  let derives = false;
+  return (
+    !!body.parent &&
+    !some(body.renderedBy, (call) => {
+      const exprs = mapParamReasonToExpr(call[kKnownExprs]!, param);
+      const sources = reduce(exprs, mergeAllSourcesForExpr);
+      if (
+        hasClientState(sources) ||
+        hasParamOrGlobalSource(sources) ||
+        !rendersCallOnClient(call.childScopeBinding.section) ||
+        // Main serializes the module read for that intersection.
+        intersectsClientState(param, call[kKnownExprs])
+      ) {
+        return false;
+      }
+      derives = true;
+      return !exprs || !every(exprs, isResolvedModuleRead);
+    }) &&
+    derives
+  );
+}, false);
 
 // The instance's sources mask (2 bits per group at `1 + 2i`; keyed when
 // dynamic), or undefined when the all-server default is equivalent.

@@ -13,6 +13,7 @@ import {
   isInvokeOnlyBinding,
   isSectionParam,
   isStateSourced,
+  type ReferencedBindings,
   someAlias,
   somePart,
 } from "../bindings";
@@ -33,9 +34,11 @@ import { isOptimize } from "../marko-config";
 import { isTrackedFunction } from "../module-registrations";
 import {
   every,
+  filter,
   forEach,
   fromIter,
   type Opt,
+  push,
   reduce,
   some,
   type SortedOpt,
@@ -78,16 +81,15 @@ import {
   getCreatedSetupId,
   getResumeRegistryId,
   getScopeProperties,
-  getEffectCallerSources,
   getSignals,
   type Signal,
-  toSequenceExpression,
 } from "../signals";
 import { findSlot } from "../slots";
 import { bindingReaders, someRead } from "../solve-reasons";
 import { type Sources } from "../sources";
 import { createOutputSectionState } from "../state";
 import { TagNameType } from "../tag-name-type";
+import { toSequenceExpression } from "../to-only-or-block";
 import { withLeadingComment } from "../with-comment";
 import {
   andGuard,
@@ -135,6 +137,7 @@ import {
   getUnfilledSubscribedSources,
   patchFillsScope,
   getWriteHop,
+  hasTagCallerParamAt,
   runsEffectOnPatch,
   runsSubscribersByWrite,
   seedsCreatedScope,
@@ -242,6 +245,23 @@ export function getEffectEntryArgs(section: Section, signal: Signal) {
       : entry || t.numericLiteral(1),
     getReads(section, reads, check, group),
   ];
+}
+
+// The sources an effect re-runs on where one is a param a calling tag passes.
+function getEffectCallerSources(
+  section: Section,
+  referencedBindings: ReferencedBindings,
+) {
+  const sources = reduce(
+    filter(referencedBindings, runsEffectOnPatch),
+    pushCanonicalSources,
+  );
+  if (some(sources, (s) => hasTagCallerParamAt(s, section))) return sources;
+}
+
+function pushCanonicalSources(list: Opt<Sources>, binding: Binding) {
+  const { sources } = getCanonicalBinding(binding);
+  return sources ? push(list, sources) : list;
 }
 
 // Each controlled `<let>`'s handler, which a patch's fill reads whether or not
