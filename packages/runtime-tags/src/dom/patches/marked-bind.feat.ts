@@ -8,12 +8,21 @@ import {
 import { _resumed, installBoundFnRevive } from "../resume";
 import { patchers, renderData, walkPath } from "./apply";
 import { installBoundFnResolver, type OwnerBound } from "./bind.feat";
-import { filledReferences, reviveBoundFn } from "./signals";
+import { filledReferences } from "./signals";
 
 // Where a page compares a bound function's identity (a marked slot, a fill, a
 // function with filled references), a bind marks its slot only for a new one.
 installBoundFnRevive(reviveBoundFn);
 installBoundFnResolver(resolveBoundFn);
+
+// The function resume revives for an owner is that owner's, until a bind makes
+// another.
+function reviveBoundFn(id: string, owner: Scope) {
+  return (owner[AccessorPrefix.BoundFn + id] = [
+    -1,
+    (_resumed[id] as (owner: Scope) => unknown)(owner),
+  ])[1];
+}
 patchers[PatchKey.Bind] = (scope, accessor, entry) => {
   const fn = resolveBoundFn(scope, entry);
   if (scope[accessor] !== fn) {

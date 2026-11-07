@@ -19,8 +19,9 @@ import "./loop-item.feat";
 import { createBranch, setupBranch } from "../renderer";
 import { collectScopes, syncGen } from "../scope";
 import type { Signal } from "../signals";
-import { applyInFlush, flushWait } from "./apply";
 import {
+  applyInFlush,
+  flushWait,
   patchers,
   renderData,
   patchScope,
