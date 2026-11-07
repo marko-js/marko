@@ -232,7 +232,7 @@ export interface PatchFill {
   filledMembers?: SortedOpt<Sources>;
 }
 
-// What a patch writes and seeds, asked once shells are built.
+// What a patch writes and seeds, derived afresh each solve pass.
 export interface PatchWrite {
   write?: boolean;
   effect?: boolean;
@@ -245,7 +245,7 @@ const UNREAD: PatchFill & PatchWrite = {};
 // A value re-asked within its own answer (a recursive `<define>`) is unread.
 export const getPatchFill = createPassMemo(computePatchFill, UNREAD);
 
-export const [getPatchWrite] = createAnalysisMemo(computePatchWrite, UNREAD);
+export const getPatchWrite = createPassMemo(computePatchWrite, UNREAD);
 
 function computePatchFill(binding: Binding): PatchFill {
   const { kind, contentKind, keptInLet } = getFillReadKind(binding);
@@ -994,9 +994,8 @@ function rendersIntersectionByWrite(
   );
 }
 
-// A member such an intersection reads, which the patch writes for the intersection's render (its
-// sources settle before solve, so no pass resets it).
-const [writesForIntersectionRender] = createAnalysisMemo(
+// A member such an intersection reads, which the patch writes for the intersection's render.
+const writesForIntersectionRender = createPassMemo(
   (binding: Binding) =>
     someAlias(
       binding,
@@ -2251,8 +2250,7 @@ export function writesSeed(binding: Binding) {
   return !!getPatchWrite(binding).seed && !!findSlot(binding)?.reason;
 }
 
-// Each write (content's once its shell ships), seed and unfillable read, once
-// shells are built.
+// Each write (content's once its shell ships), seed and unfillable read.
 function computePatchWrite(binding: Binding): PatchWrite {
   const write = isPatchWritten(binding) && leavesReadUnfilled(binding);
   const sources = getSourcesForReferencedBindings(binding);
