@@ -216,7 +216,6 @@ function isPatchFillBinding(binding: Binding) {
 // A value's fill, derived once per analysis (afresh each solve pass): what its reads
 // need, how a patch fills them, and what deriving it needs of its inputs.
 export interface PatchFill {
-  kind?: true | FillConditions;
   contentKind?: true | FillConditions;
   keptInLet?: boolean;
   /** A `<let>` a patch fills. */
@@ -279,7 +278,6 @@ function computePatchFill(binding: Binding): PatchFill {
     }
   }
   return {
-    kind,
     contentKind,
     keptInLet,
     fill,
@@ -891,21 +889,6 @@ function mergeConditions(
 // changes what it saw; ask through `someAlias` (direct aliases only).
 export function hasEffectRead(binding: Binding) {
   return someBindingRead(binding, readsValuesOnResume);
-}
-
-// An effect reading it alone in a scope a patch writes, which only its declaration's
-// signal or a closure of it runs: neither ships where main never changes the value.
-function readsOwnEffect(binding: Binding) {
-  return someBindingRead(binding, isOwnEffectRead);
-}
-
-function isOwnEffectRead(read: ReferencedExtra, binding: Binding) {
-  return (
-    (read.section === binding.section || patchFillsSection(read.section)) &&
-    readsValuesOnResume(read) &&
-    runsFromClosure(read, binding) &&
-    !Array.isArray(getReferencedBindings(read))
-  );
 }
 
 // Whether a patch re-runs an effect that reads `binding` (its fill root).
@@ -2253,17 +2236,9 @@ export function writesSeed(binding: Binding) {
 function computePatchWrite(binding: Binding): PatchWrite {
   const write = isPatchWritten(binding) && leavesReadUnfilled(binding);
   const sources = getSourcesForReferencedBindings(binding);
-  const { fill, effectRead } = getPatchFill(binding);
   return {
     write,
-    // An effect of a server value alone re-runs by its entry where a fill supplies the
-    // value, since the fill's registrations run its intersections only.
-    effect:
-      effectRead &&
-      (write ||
-        (fill === true &&
-          !sources?.state &&
-          someAlias(binding, readsOwnEffect, undefined, true))),
+    effect: getPatchFill(binding).effectRead && write,
     unfillable: !!sources?.param && !sources.global && !patchRefreshes(binding),
   };
 }
