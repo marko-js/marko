@@ -119,7 +119,7 @@ export function _dynamic_tag(
     pairing,
     // A kept tag with constant input needs no param writes; the page may have
     // left those holes unmarked.
-    pairing === PatchPairing.Keep && !getUpdatesFrom(mask, group!)
+    pairing === PatchPairing.Keep && !getUpdatesFrom(mask, group)
       ? 0
       : undefined,
     patched >> 3,
@@ -323,7 +323,7 @@ export function writeDynamicTagEntry(
   namesRegistered?: boolean,
 ) {
   const state = getState();
-  const updatesFrom = getUpdatesFrom(mask, group!);
+  const updatesFrom = getUpdatesFrom(mask, group);
   if (!(state instanceof PatchRenderState)) {
     walkMarkers(state);
   } else {

@@ -397,15 +397,15 @@ export const ALL_SERVER = 0x55555555;
 
 // Where a group updates from: its 2 bits, which `_updates_from` also composes
 // into a child's mask. No mask (no group args) reads as `ALL_SERVER`.
-export function getUpdatesFrom(mask: GroupMask, group: number) {
+export function getUpdatesFrom(mask: GroupMask, group?: number) {
   return mask === undefined || mask === ALL_SERVER
     ? UpdatesFrom.Server
-    : getGroupReason(mask, group);
+    : getGroupReason(mask, group!);
 }
 
 // Whether the group is client-sourced (the low mask bit): whatever derives from
 // the group then updates from the resumed page.
-export function _client_guard(mask: GroupMask, group: number) {
+export function _client_guard(mask: GroupMask, group?: number) {
   return getUpdatesFrom(mask, group) & UpdatesFrom.Client ? 1 : 0;
 }
 
@@ -709,7 +709,7 @@ export function _fill_global_subscribe(
 // On when no patch fills the group here: client-sourced, or read in unpatched structure
 // (on a page, the mask) unless it is a param whose `own` group a call passes constant.
 export function _unfilled_if(mask?: GroupMask, group?: number, own?: number) {
-  const updatesFrom = getUpdatesFrom(mask, group!);
+  const updatesFrom = getUpdatesFrom(mask, group);
   return updatesFrom & UpdatesFrom.Client ||
     (updatesFrom &&
       inUnpatched() &&
@@ -723,7 +723,7 @@ export function _unfilled_if(mask?: GroupMask, group?: number, own?: number) {
 export function ensureFills(
   scopeId: number,
   mask: GroupMask,
-  group: number,
+  group?: number,
   setup?: 1,
 ) {
   const state = getState();
@@ -756,7 +756,7 @@ export function writeFill(
 
 // On when a patch fills the group here: server-sourced, or constant (`0`, a
 // call-site constant) where a fresh scope may need the seed.
-export function _filled_guard(mask: GroupMask, group: number) {
+export function _filled_guard(mask: GroupMask, group?: number) {
   return isFilledEntry(getUpdatesFrom(mask, group)) ? 1 : 0;
 }
 
@@ -767,7 +767,7 @@ export function isFilledEntry(updatesFrom: number) {
 
 // On where the server alone sources the group: a patch writes its values in
 // place; a constant's only seed a created scope.
-export function _server_guard(mask: GroupMask, group: number) {
+export function _server_guard(mask: GroupMask, group?: number) {
   return getUpdatesFrom(mask, group) === UpdatesFrom.Server ? 1 : 0;
 }
 
@@ -858,7 +858,7 @@ export function _patch_fill(
   if (state instanceof PatchRenderState) {
     // A seed for a branch no flush creates is dropped before any scan, and a
     // client group's: the client derives it (its initial values, or its own value).
-    if (setup && (!inCreatable() || _client_guard(mask!, group!))) return "";
+    if (setup && (!inCreatable() || _client_guard(mask, group))) return "";
     const bind = bindEntry(state, scopeId, value);
     const patch = ensureScopePatch(state, scopeId);
     // Setup entries nest under `s`: the client applies them only to
@@ -887,7 +887,7 @@ export function _patch_bind<T>(
   if (state instanceof PatchRenderState) {
     // A constant group's handler is a paired scope's already: it goes only where a
     // scope may be created, which a paired one there takes again.
-    const updatesFrom = getUpdatesFrom(mask, group!);
+    const updatesFrom = getUpdatesFrom(mask, group);
     if (isFilledEntry(updatesFrom)) {
       const patch = ensureScopePatch(state, scopeId);
       const bind = bindEntry(state, scopeId, value);
@@ -920,7 +920,7 @@ export function _patch_let_change(
   changeGroup?: number,
 ) {
   if (getState() instanceof PatchRenderState) {
-    const filled = change && _filled_guard(mask, group!);
+    const filled = change && _filled_guard(mask, group);
     _patch_fill(scopeId, valueKey, value, filled ? undefined : 1, mask, group);
     if (changeKey) {
       _patch_bind(scopeId, changeKey, change, changeMask, changeGroup);
