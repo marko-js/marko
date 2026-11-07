@@ -32,7 +32,8 @@ import {
   _resume,
   _scope as _base_scope,
   _script as _base_script,
-  getChunk,
+  $chunk,
+  getContext,
   getState,
   kBranchId,
   getGroupReason,
@@ -91,10 +92,9 @@ export function popIdHop() {
 // (`State.captureContext`), else the state's.
 const kIdPath = Symbol("Id Path");
 export function getIds() {
-  const chunk = getChunk()!;
   return (
-    (chunk.context?.[kIdPath] as IdPath | undefined) ??
-    (chunk.boundary.state as PatchPageState).ids
+    (getContext(kIdPath) as IdPath | undefined) ??
+    (getState() as PatchPageState).ids
   );
 }
 
@@ -143,7 +143,7 @@ export function walkMarkers(state: State) {
 const kUnpatched = Symbol("Unpatched");
 
 export function inUnpatched() {
-  return !!getChunk()!.context?.[kUnpatched];
+  return !!getContext(kUnpatched);
 }
 
 export function withUnpatched<T>(cb: () => T): T;
@@ -171,7 +171,7 @@ export function withPatchReadyId<T>(
 }
 
 function getPatchReadyIds() {
-  return getChunk()!.context?.[kReadyIds] as string[] | undefined;
+  return getContext(kReadyIds) as string[] | undefined;
 }
 
 // The branch a patch renders whose expression nothing behind can change.
@@ -180,11 +180,8 @@ const kPairedBranch = Symbol("Paired Branch");
 // Whether a flush may create the scopes rendering here: in a branch not paired
 // (the client decides by divergence).
 export function inCreatable() {
-  const context = getChunk()!.context;
-  return (
-    context?.[kBranchId] !== undefined &&
-    context[kBranchId] !== context[kPairedBranch]
-  );
+  const branchId = getContext(kBranchId);
+  return branchId !== undefined && branchId !== getContext(kPairedBranch);
 }
 
 // Renders a branch a flush pairs but never creates.
@@ -199,7 +196,7 @@ export function pairedBranch<A, B>(cb: (a: A, b: B) => void) {
 }
 
 function pairBranch<T, U, V>(cb: (a: U, b: V) => T, a: U, b: V): T {
-  return withContext(kPairedBranch, getChunk()!.context![kBranchId], cb, a, b);
+  return withContext(kPairedBranch, getContext(kBranchId), cb, a, b);
 }
 
 // A consumer keeps content for the resumed page to render: the values inside fill
@@ -371,7 +368,7 @@ export function linkScopePatch(
     _base_scope(scopeId, patch);
     // A lazy module is named only by the flush that first needs it.
     state.patchFlushReadyIds = undefined;
-    const { channel } = getChunk()!;
+    const { channel } = $chunk;
     channel.writeScopes[scopeId] = patch;
     channel.flushScopes = true;
   }
@@ -730,7 +727,7 @@ export function ensureFills(
 ) {
   const state = getState();
   if (!(state instanceof PatchRenderState)) {
-    walkMarkers(getState());
+    walkMarkers(state);
     return;
   }
   const updatesFrom = getUpdatesFrom(mask, group);

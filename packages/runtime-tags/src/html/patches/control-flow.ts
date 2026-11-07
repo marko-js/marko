@@ -32,7 +32,7 @@ import {
   _scope_id,
   applyBranchStart,
   deferBranchStart,
-  getChunk,
+  $chunk,
   getState,
   withBranchId,
 } from "../writer";
@@ -110,7 +110,7 @@ export function _if(
   mask?: GroupMask,
   group?: number,
 ) {
-  const { state } = getChunk()!.boundary;
+  const state = getState();
   if (state instanceof PatchRenderState) {
     // A chain with no shells is the resumed page's (unpatched): a patch skips it.
     if (shellIds)
@@ -119,7 +119,7 @@ export function _if(
   }
   // A patchable conditional's markers must resume even on a page with no
   // other client code: a patch pairs and creates through them.
-  if (shellIds) walkMarkers(getState());
+  if (shellIds) walkMarkers(state);
   // A shell-less branch, or one whose expression derives from a group updating
   // from the client, is the resumed page's to render: no patch fills its reads.
   const render =
@@ -390,8 +390,7 @@ function patchLoop<A, B>(
   mask: GroupMask,
   group: undefined | number,
 ) {
-  const chunk = getChunk()!;
-  const { state } = chunk.boundary;
+  const state = getState();
   if (state instanceof PatchRenderState) {
     // A loop with no shell slot is the resumed page's (unpatched): a patch skips it.
     if (shellId !== undefined) {
@@ -638,7 +637,7 @@ export function _try(
     create || catchId ? slotIds : undefined,
     scopeId,
   );
-  const chunk = getChunk()!;
+  const chunk = $chunk;
   const beforeBranch = deferBranchStart(chunk);
   // In its branch, the body's own setup rides its shell; it is creatable
   // only where the try's scope is.
