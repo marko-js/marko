@@ -63,6 +63,7 @@ import {
   getRendererReason,
   isCallerParamAt,
   isContentRender,
+  isContentSection,
   isDynamicClosure,
   isKnownChild,
   isLoopBody,
@@ -173,11 +174,7 @@ function getClientRenderedContents(section: Section, upTo?: Section) {
     cur !== upTo && cur.enclosing.inContentSection;
     cur = cur.parent!
   ) {
-    if (
-      !cur.branch &&
-      (cur.derives || cur.branchExpr || cur.boundaryContent) &&
-      !reachedByData(cur)
-    ) {
+    if (isContentSection(cur) && !reachedByData(cur)) {
       contents = sectionUtil.add(contents, cur);
     }
   }
@@ -335,16 +332,13 @@ export const fillsInitialValue = createPassMemo(
   false,
 );
 
-// A scope a flush writes into: a known child, a branch, `<await>` or `<try>` body, a
-// `@catch`, attribute tag `<for>` content, or content it creates from its shell.
+// A scope a flush writes into: a known child, attribute tag `<for>` content, or one
+// it creates.
 export function patchFillsScope(section: Section) {
   return (
-    patchFillsSection(section) &&
-    (isKnownChild(section) ||
-      !!section.branch ||
-      section.boundaryContent === "catch" ||
-      !!section.localClosures ||
-      shipsContentShell(section))
+    (patchFillsSection(section) &&
+      (isKnownChild(section) || !!section.localClosures)) ||
+    patchCreates(section)
   );
 }
 
@@ -1862,10 +1856,10 @@ function patchMayCreateEnclosing(section: Section, root: boolean): boolean {
 // `<try>` body, a `@catch`, or content a patch may create.
 export function patchCreates(section: Section) {
   return (
+    patchFillsSection(section) &&
     (!!section.branch ||
       section.boundaryContent === "catch" ||
-      shipsContentShell(section)) &&
-    patchFillsSection(section)
+      shipsContentShell(section))
   );
 }
 

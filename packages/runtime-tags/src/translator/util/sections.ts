@@ -378,11 +378,7 @@ export function finalizeEnclosing(section: Section) {
             (!section.params || section.params.pruned)
           ),
         inContentSection:
-          enclosing.inContentSection ||
-          (!section.branch &&
-            (!!section.derives ||
-              !!section.branchExpr ||
-              !!section.boundaryContent)),
+          enclosing.inContentSection || isContentSection(section),
         nonOptionalAncestor: isOptionalBranch(section)
           ? enclosing.nonOptionalAncestor
           : section,
@@ -397,6 +393,14 @@ export function finalizeEnclosing(section: Section) {
         nonOptionalAncestor: section,
         awaitOrTryBody: undefined,
       };
+}
+
+// Content: a body a tag takes as a value, a dynamic tag's body, or boundary content.
+export function isContentSection(section: Section) {
+  return (
+    !section.branch &&
+    (!!section.derives || !!section.branchExpr || !!section.boundaryContent)
+  );
 }
 
 // Content analysis dropped is rendered by no output, so translate never visits it.
