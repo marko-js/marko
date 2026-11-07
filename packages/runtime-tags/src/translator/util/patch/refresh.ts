@@ -1335,7 +1335,7 @@ export function isReadInIntersection(section: Section, closure: Binding) {
   );
 }
 
-const NO_SETUP = new Map<never, CreatedSetup>();
+const NO_SETUP = new Map<never, never>();
 
 // Each section's closure setups, from the fills of the moment.
 export const getClosureSetups = createPassMemo(computeClosureSetups, NO_SETUP);
@@ -1347,11 +1347,13 @@ export const [getCreatedSetup] = createAnalysisMemo(
   NO_SETUP,
 );
 
-function computeClosureSetups(section: Section): Map<Binding, CreatedSetup> {
-  const setups = new Map<Binding, CreatedSetup>();
+function computeClosureSetups(
+  section: Section,
+): Map<Binding, CreatedSetup["setup"]> {
+  const setups = new Map<Binding, CreatedSetup["setup"]>();
   forEach(section.referencedClosures, (closure) => {
     const setup = getClosureSetup(section, closure);
-    if (setup) setups.set(closure, { setup });
+    if (setup) setups.set(closure, setup);
   });
   return setups.size ? setups : NO_SETUP;
 }
@@ -1372,7 +1374,7 @@ function computeCreatedSetup(section: Section) {
   }
   const setups = new Map<Binding | Intersection, CreatedSetup>();
   forEach(section.referencedClosures, (closure) => {
-    const setup = getClosureSetups(section).get(closure)?.setup;
+    const setup = getClosureSetups(section).get(closure);
     const subscribe = getClosureSubscribe(section, closure, setup);
     const named =
       (setup || subscribe) &&
@@ -2042,7 +2044,7 @@ function findUnfilledStructure(
       const setup = getClosureSetups(section).get(binding);
       if (
         (!section.branch && !rendersWithOwner(section)) ||
-        setup?.setup === "always"
+        setup === "always"
       ) {
         if (!throughCreated) return false;
         structure = sourcesUtil.union(
@@ -2053,10 +2055,9 @@ function findUnfilledStructure(
       }
       // The owner keeps what a mixed one sets up from too; its write never reaches the client's.
       if (
-        setup &&
-        (throughCreated
-          ? setupFromClient(section, binding, setup.setup)
-          : setup.setup === "client")
+        throughCreated
+          ? setupFromClient(section, binding, setup)
+          : setup === "client"
       ) {
         structure = sourcesUtil.union(
           structure,
