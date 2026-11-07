@@ -166,7 +166,7 @@ export function withPatchReadyId<T>(
   const readyIds = getPatchReadyIds();
   return withContext(
     kReadyIds,
-    readyIds ? [...readyIds, readyId] : [readyId],
+    readyIds ? readyIds.concat(readyId) : [readyId],
     cb,
     input,
   );
