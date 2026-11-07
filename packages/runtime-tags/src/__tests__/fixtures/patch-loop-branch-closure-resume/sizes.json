@@ -9,8 +9,8 @@
       "brotli": 612
     },
     "route-cl.mjs": {
-      "min": 4949,
-      "brotli": 2412
+      "min": 4951,
+      "brotli": 2417
     },
     "shared": {
       "min": 7858,

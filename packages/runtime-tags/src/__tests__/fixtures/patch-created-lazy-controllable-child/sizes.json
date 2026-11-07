@@ -10,7 +10,7 @@
     },
     "route-pg.mjs": {
       "total": {
-        "min": 2619,
+        "min": 2621,
         "brotli": 1219
       },
       "files": {

@@ -34,7 +34,7 @@ patchers[PatchKey.Render] = (scope, id, reads) => {
 };
 
 // A closure the owner's change re-runs in each subscribed scope, by the position its code
-// registers: a subscribed scope exists only where that code ran, so no position, no scope.
+// registers. A scope with none (not walked, or its code shaken out) is one entries reach.
 patchers[PatchKey.Subscribers] = (scope, id, reads) => {
   const signals = closureSubscribers[id];
   if (signals) {
@@ -57,7 +57,7 @@ patchers[PatchKey.Subscribers] = (scope, id, reads) => {
                 (childScope[
                   position[ClosureSignalProp.SignalIndexAccessor]
                 ] as number) || 0
-              ](childScope);
+              ]?.(childScope);
             }
           }
         }
