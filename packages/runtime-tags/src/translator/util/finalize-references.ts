@@ -22,7 +22,6 @@ import {
 import { finalizeContentDerives } from "./content-derives";
 import { generateUid } from "./generate-uid";
 import { isPatch } from "./marko-config";
-import { getClosureChangeReason } from "./solve-reasons";
 import {
   every,
   concat,
@@ -82,6 +81,7 @@ import {
 } from "./sections";
 import { addSetupWork } from "./setup-work";
 import { ensureSectionSlot, ensureSlot, SlotKind } from "./slots";
+import { getClosureChangeReason } from "./solve-reasons";
 import {
   ALWAYS,
   type Sources,

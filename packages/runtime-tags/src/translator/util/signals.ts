@@ -45,7 +45,6 @@ import {
   some,
   toArray,
 } from "./optional";
-import { getClosureChangeReason, isReadOf } from "./solve-reasons";
 import { getEffectWrites, fillsHole } from "./patch/decisions";
 import {
   inKeptContent,
@@ -144,6 +143,7 @@ import {
 import { isQueuedOnCreate, inCreatedCatch, shipsContentShell } from "./shell";
 import { replaceMethodNode, simplifyFunction } from "./simplify-fn";
 import { findSectionSlot, findSlot, type PlaceSlot, SlotKind } from "./slots";
+import { getClosureChangeReason, isReadOf } from "./solve-reasons";
 import { mergeSources, type Sources, sourcesUtil } from "./sources";
 import { createOutputState, createOutputSectionState } from "./state";
 import { toOnlyExpressionOrBlock } from "./to-only-or-block";
@@ -1355,7 +1355,6 @@ export function addValue(
     getReferencedBindingsInFunction(value.extra)
   );
 }
-
 
 function buildResumeRegisterKey(
   section: Section,

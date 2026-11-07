@@ -17,8 +17,8 @@ import {
   createPassPathMemo,
   resetPassMemos,
 } from "./cyclic-memo";
-import { addKnownTagReasons, recordKnownTagPatchFacts } from "./known-tag";
 import { readsValuesOnResume } from "./finalize-references";
+import { addKnownTagReasons, recordKnownTagPatchFacts } from "./known-tag";
 import { isPatch } from "./marko-config";
 import { addFunctionReasons } from "./module-registrations";
 import {
