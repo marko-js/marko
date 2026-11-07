@@ -3,7 +3,7 @@
     "template.marko.page.mjs": {
       "total": {
         "min": 6451,
-        "brotli": 2954
+        "brotli": 2951
       },
       "files": {
         "tags/label-view.marko": 410,

@@ -3,7 +3,7 @@
     "template.marko.page.mjs": {
       "total": {
         "min": 11617,
-        "brotli": 5092
+        "brotli": 5099
       },
       "files": {
         "tags/number-stepper.marko": 309,
