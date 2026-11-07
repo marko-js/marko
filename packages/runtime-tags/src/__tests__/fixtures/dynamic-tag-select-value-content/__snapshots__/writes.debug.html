@@ -1,6 +1,6 @@
 <button id=swap>swap</button><!--M_$1 #button/0--><button
-  id=bump>bump</button><!--M_$1 #button/1--><select><!--M_[-->
-  <option value=a>A<!>0<!--M_$3 #text/0--></option><!--M_]2 #select/0 3-->
+  id=bump>bump</button><!--M_$1 #button/1--><select>
+  <option value=a>A<!>0<!--M_$3 #text/0--></option>
 </select><!--M_(1 #text/2 2-->
 <script>
   WALKER_RUNTIME("M")("_");
@@ -10,6 +10,7 @@
       n: 0,
       "ClosureScopes:n/8": new Set([_(3)])
     }, {
+      "BranchScopes:#select/0": _(3),
       "ConditionalRenderer:#select/0": "packages/runtime-tags/src/__tests__/fixtures/dynamic-tag-select-value-content/template.marko_1*content 1"
     }, {
       _: _(1)

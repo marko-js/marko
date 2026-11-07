@@ -21,7 +21,7 @@ import {
 } from "../common/types";
 import { onAbort } from "./abort-signal";
 import { controllableSpreadHelpers } from "./controllable";
-import { _attrs, _attrs_content, _attrs_script } from "./dom";
+import { _attr_content, _attrs, _attrs_content, _attrs_script } from "./dom";
 import {
   runEffects,
   pendingEffects,
@@ -652,18 +652,11 @@ export let _dynamic_tag = /*@__PURE__*/ withBranches(
       if (typeof tagNameOrRenderer !== "string") {
         setupBranch(tagNameOrRenderer, branch);
       } else if (getContent) {
-        const content = getContent(scope);
-        const elementAccessor = MARKO_DEBUG
-          ? `#${tagNameOrRenderer.toLowerCase()}/0`
-          : "a";
-        setBranch(branch, elementAccessor, content, createAndSetupBranch);
-        if (content[RendererProp.Accessor]) {
-          subscribeToScopeSet(
-            content[RendererProp.Owner]!,
-            content[RendererProp.Accessor],
-            branch[AccessorPrefix.BranchScopes + elementAccessor],
-          );
-        }
+        _attr_content(
+          branch,
+          MARKO_DEBUG ? `#${tagNameOrRenderer.toLowerCase()}/0` : "a",
+          getContent(scope),
+        );
       }
 
       return branch;

@@ -1,7 +1,7 @@
-<select><!--M_[-->
+<select>
   <option value=a>A</option>
   <option value=b selected>B</option>
-  <option value=c>C</option><!--M_]2 #select/0 3-->
+  <option value=c>C</option>
 </select><!--M_(1 #text/0 2--><button>pick c</button><!--M_$1 #button/1-->
 <script>
   WALKER_RUNTIME("M")("_");
@@ -9,6 +9,7 @@
       "ConditionalRenderer:#text/0": "select",
       tag: "select"
     }, {
+      "BranchScopes:#select/0": _(3),
       "ConditionalRenderer:#select/0": "packages/runtime-tags/src/__tests__/fixtures/controllable-dynamic-tag-uncontrolled-value/template.marko_1*content 1"
     }],
     "packages/runtime-tags/src/__tests__/fixtures/controllable-dynamic-tag-uncontrolled-value/template.marko_0 1"
