@@ -21,7 +21,7 @@ var template_default = _template("a", (input) => {
 			_html(`<p>${_text_mark($scope2_id, "a", b + $global$1.suffix, 1, 6, 0)}</p>`);
 			_fill_global_subscribe("a1", $scope2_id, _client_guard(6, 0));
 			_patch_write($scope2_id, "wd", y, 1);
-			_patch_subscribe($scope2_id, "a2");
+			_unfilled_if(6, 0) && _patch_subscribe($scope2_id, "a2");
 			_client_guard(6, 0) && _patch_render($scope2_id, "a3");
 			_subscribe(_unfilled_if(6, 0) && $wi__value && $Outer_content__value__closures, _scope($scope2_id, {
 				d: _unfilled_if($scope1_reason, 0) && y,

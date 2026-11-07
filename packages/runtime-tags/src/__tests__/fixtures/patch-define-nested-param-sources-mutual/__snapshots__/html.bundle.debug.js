@@ -27,8 +27,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope2_id = _scope_id();
 			const $scope2_reason = _scope_reason(), $fg__z = _filled_guard($scope2_reason, 0);
 			_html(`<p>${_text_mark($scope2_id, "#text/0", input.label + x + z, 1, (_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 0) | _updates_from($scope2_reason, 0)) << 1, 0)}</p>`);
-			_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope2_id, "__tests__/template.marko_2_input_label#0:4/subscribe");
-			_unfilled_if($scope1_reason, 0) && _patch_subscribe($scope2_id, "__tests__/template.marko_2_x#1:3/subscribe");
+			_unfilled_if((_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 0) | _updates_from($scope2_reason, 0)) << 1, 0) && _patch_subscribe($scope2_id, "__tests__/template.marko_2_input_label#0:4/subscribe");
+			_unfilled_if((_updates_from($scope1_reason, 0) | _updates_from($scope2_reason, 0)) << 1, 0) && _patch_subscribe($scope2_id, "__tests__/template.marko_2_x#1:3/subscribe");
 			_patch_render($scope2_id, "__tests__/template.marko_2_input_label#0:4_x#1:3_z#3/setup", [
 				_filled_guard($scope0_reason, 0) && ">>input_label",
 				_filled_guard($scope1_reason, 0) && ">x",

@@ -130,6 +130,7 @@ import {
   getRendererCallerSources,
   getRendererRead,
   someReached,
+  getClosureReadSources,
   getUnfilledReadSources,
   getUnfilledSubscribedSources,
   getWriteHop,
@@ -897,15 +898,20 @@ function buildClientSetup(
   );
 }
 
-// A created subscriber enters its owner's set where no patch fills the closure,
-// rendering at once as its setup says, else resuming.
+// A created subscriber enters its owner's set where no patch fills its reads of the
+// closure, rendering at once as its setup says, else resuming.
 function buildSubscribe(
   section: Section,
   closure: Binding,
   subscribe: NonNullable<CreatedSetup["subscribe"]>,
 ) {
-  return andGuard(
-    getCallerGroupGuard(section, "_unfilled_if", closure.sources),
+  return t.logicalExpression(
+    "&&",
+    // By the reads' caller groups, as a document's; with none, only unpatched structure.
+    callRuntime(
+      "_unfilled_if",
+      ...getRootGroupArgs(section, getClosureReadSources(closure, section)),
+    ),
     callRuntime(
       "_patch_subscribe",
       getScopeIdIdentifier(section),

@@ -24,8 +24,8 @@ var template_default = _template("a", (input) => {
 			const $scope2_id = _scope_id();
 			const $scope2_reason = _scope_reason(), $fg__z = _filled_guard($scope2_reason, 0);
 			_html(`<p>${_text_mark($scope2_id, "a", input.label + x + z, 1, (_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 0) | _updates_from($scope2_reason, 0)) << 1, 0)}</p>`);
-			_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope2_id, "a1");
-			_unfilled_if($scope1_reason, 0) && _patch_subscribe($scope2_id, "a2");
+			_unfilled_if((_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 0) | _updates_from($scope2_reason, 0)) << 1, 0) && _patch_subscribe($scope2_id, "a1");
+			_unfilled_if((_updates_from($scope1_reason, 0) | _updates_from($scope2_reason, 0)) << 1, 0) && _patch_subscribe($scope2_id, "a2");
 			_patch_render($scope2_id, "a3", [
 				_filled_guard($scope0_reason, 0) && ">>e",
 				_filled_guard($scope1_reason, 0) && ">d",
