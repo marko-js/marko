@@ -24,7 +24,6 @@ import {
   flushWait,
   patchers,
   renderData,
-  patchScope,
   setupPatchers,
   withCreating,
 } from "./apply";
@@ -156,7 +155,7 @@ patchers[PatchKey.Child] = (scope, link, value) => {
         stop !== render[RenderDataProp.PatchStop] ||
           !scope[link] ||
           applyInFlush(wait, render, (_?: never) =>
-            patchScope({ [PatchKey.Child + link]: value } as Scope, scope),
+            patchers[PatchKey.Child]!(scope, link, value),
           ),
       ),
     );

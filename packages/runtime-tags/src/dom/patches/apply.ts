@@ -41,11 +41,11 @@ export const patchers: { [K in PatchKind]?: Patcher<K> } = {};
 export const setupPatchers: typeof patchers = {};
 // Structural patchers recurse back through here, so no scope is addressed by
 // id. Debug entry keys are `PatchKind:…`, optimized ones a single character.
-export const patchScope = <P extends Scope | 0>(
+export function patchScope<P extends Scope | 0>(
   patch: P,
   live: Scope,
   kinds = patchers,
-) => {
+) {
   for (const key in patch) {
     if (MARKO_DEBUG) {
       const kind = key.slice(0, key.indexOf(":") + 1);
@@ -63,7 +63,7 @@ export const patchScope = <P extends Scope | 0>(
       kinds[key[0] as PatchKind]!(live, key.slice(1), (patch as Scope)[key]);
     }
   }
-};
+}
 // The render a flush is applying against (set by `runFlush`); its response
 // marks a change, which counts for all of that response's flushes.
 export let renderData!: RenderData;
@@ -93,8 +93,9 @@ let waitFlush:
 // A flush's shells (`id;walks;template` strings), a line ahead of its tree,
 // registered by the patch feature that understands them.
 let onPatchShell: ((entry: string) => void) | undefined;
-export const installPatchShells = (handler: NonNullable<typeof onPatchShell>) =>
-  (onPatchShell = handler);
+export function installPatchShells(handler: NonNullable<typeof onPatchShell>) {
+  onPatchShell = handler;
+}
 /** Whether a flush applied: truthy when it did. */
 export type Applied = 0 | 1;
 /** A flush's outcome, reported once: at its first failure, else when it and

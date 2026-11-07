@@ -11,8 +11,9 @@ const loads: Record<string, (() => Promise<unknown>)[] | Promise<unknown> | 1> =
 
 // Ready by the page's own loads: a module the document loaded on a trigger
 // still lands its signals before a flush creates from it.
-export const isLoaded = (id: string) =>
-  loads[id] ? loads[id] === 1 : isReady(id);
+export function isLoaded(id: string) {
+  return loads[id] ? loads[id] === 1 : isReady(id);
+}
 
 // A load a patch starts and fails is not the page's end: its loaders stay
 // for the next patch to retry, and `onFail` rejects the flushes waiting on it.
