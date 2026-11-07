@@ -18,7 +18,7 @@
 `packages/runtime-tags/src/__tests__/fixtures/patch-catch-error-structure/template.marko_4*shell,<i>failed</i>`
 {
   "PatchCatch:#text/0": [{
-    "PatchBranch:#text/0": [1, {}, "packages/runtime-tags/src/__tests__/fixtures/patch-catch-error-structure/template.marko_4*shell"],
+    "PatchBranch:#text/0": [1, 0, "packages/runtime-tags/src/__tests__/fixtures/patch-catch-error-structure/template.marko_4*shell"],
     "PatchLoop:#text/1": [{
       "PatchText:#text/0": "SHOWN_z"
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-catch-error-structure/template.marko_5*shell"]

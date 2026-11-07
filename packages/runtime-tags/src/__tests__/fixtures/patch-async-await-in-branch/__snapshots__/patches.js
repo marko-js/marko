@@ -30,7 +30,7 @@
 `a3,<em>closed</em>`
 {
   ta: "Store!",
-  bb: [1, {}, "a3"]
+  bb: [1, 0, "a3"]
 }
 ;Cxo
 

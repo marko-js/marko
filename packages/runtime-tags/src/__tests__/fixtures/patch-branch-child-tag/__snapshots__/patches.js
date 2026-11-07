@@ -23,6 +23,6 @@
 // PATCH holding CAE
 `a3,<em>closed</em>`
 {
-  ba: [1, {}, "a3"]
+  ba: [1, 0, "a3"]
 }
 ;CQY

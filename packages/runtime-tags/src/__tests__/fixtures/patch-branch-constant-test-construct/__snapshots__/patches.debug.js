@@ -21,7 +21,7 @@
               "PatchText:#text/0": "b"
             },
             "PatchBranch:#text/1": [{
-              "PatchBranch:#text/0": [1, {}, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-construct/page.marko_5*shell"]
+              "PatchBranch:#text/0": [1, 0, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-construct/page.marko_5*shell"]
             }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-constant-test-construct/page.marko_3*shell"]
           }
         }

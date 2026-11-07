@@ -5,8 +5,8 @@
       "brotli": 90
     },
     "template.marko.page.mjs": {
-      "min": 6913,
-      "brotli": 3163
+      "min": 6904,
+      "brotli": 3156
     },
     "lazy.mjs": {
       "min": 285,

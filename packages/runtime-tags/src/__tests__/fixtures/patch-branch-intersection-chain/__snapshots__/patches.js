@@ -32,7 +32,7 @@
 // PATCH holding CQY
 `a4 a12;Db%;<p>None <!></p>`
 {
-  ba: [2, {}, "a4"],
+  ba: [2, 0, "a4"],
   ia8: "g",
   xg: "Plaza"
 }
@@ -40,7 +40,7 @@
 
 // PATCH holding CQ4
 {
-  ba: [2, {}, "a4"],
+  ba: [2, 0, "a4"],
   ia8: "g",
   xg: "Plaza!"
 }
