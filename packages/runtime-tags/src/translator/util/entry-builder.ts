@@ -124,13 +124,16 @@ const builder = {
             t.expressionStatement(
               t.callExpression(t.identifier("_load_lazy"), [
                 t.stringLiteral(readyId),
-                // `.then(() => {})` drops the namespace, so the bundler keeps
+                // `.then(_ => 0)` drops the namespace, so the bundler keeps
                 // the registrations alone (no export, no render).
                 t.arrowFunctionExpression(
-                  [],
+                  [getUnusedParamIdentifier()],
                   dynamicImport(
                     request,
-                    t.arrowFunctionExpression([], t.blockStatement([])),
+                    t.arrowFunctionExpression(
+                      [getUnusedParamIdentifier()],
+                      t.numericLiteral(0),
+                    ),
                   ),
                 ),
               ]),
