@@ -24,7 +24,7 @@ declare module "./apply" {
 }
 
 // Shape-typed conditional entry: bare number = index + 1 (`0` hides),
-// bare string = a static branch's shell id, else `[index?, patch, shellId?]`.
+// bare string = the first branch's shell id, nothing filled, else `[index?, patch, shellId?]`.
 patchers[PatchKey.Branch] = (scope, accessor, entry) => {
   const branchKey = AccessorPrefix.BranchScopes + accessor;
   const liveBranch = scope[branchKey] as BranchScope | undefined;

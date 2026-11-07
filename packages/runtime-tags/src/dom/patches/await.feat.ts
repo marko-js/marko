@@ -175,7 +175,7 @@ patchers[PatchKey.Child] = (scope, link, value) => {
     };
     if (renderer) {
       // Kept for `resolveAwait`: the client's value gives the body's `<let>`s
-      // their first value, as main's does.
+      // their initial value, as main's does.
       awaitBranch[AccessorProp.PendingScopes]?.forEach(syncGen);
       setupBranch(renderer, awaitBranch);
       awaitBranch[AccessorProp.DetachedAwait] = setUp;

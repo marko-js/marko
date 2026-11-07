@@ -120,7 +120,7 @@ export function reviveBoundFn(id: string, owner: Scope) {
 // An intersection a flush renders by this id, after whatever members arrive: a created
 // scope's setup, or a filled intersection's where its group mixes (`patches/render`).
 export function _or_patch(
-  initId: string,
+  setupId: string,
   id: number,
   fn: SignalFn,
   defaultPending?: number,
@@ -135,7 +135,7 @@ export function _or_patch(
       : AccessorProp.Id
   ) as Accessor;
   // Queued in the same order as the intersection's own renders.
-  _resumed[initId] = (scope: Scope) =>
+  _resumed[setupId] = (scope: Scope) =>
     queueRender(scope, fn, id, 0, scope[scopeIdKey]);
   return _or(id, fn, defaultPending, scopeIdAccessor);
 }

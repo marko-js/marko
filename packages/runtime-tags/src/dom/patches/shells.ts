@@ -40,7 +40,7 @@ patchers[PatchKey.Setup] = patchers[PatchKey.SetupValues] = (
     patchScope(value, scope, setupPatchers);
   }
 };
-// Setup ids the flush asks a fresh scope to run, in the shell's grammar: a
+// Setup ids the flush asks a created scope to run, in the shell's grammar: a
 // client-derived local's, a subscriber's.
 setupPatchers[PatchKey.Render] = (scope, _key, ids) =>
   runSetupIds(resolveSetupIds(ids), scope);
@@ -106,7 +106,7 @@ export const installKeptInstances = (keep: NonNullable<typeof keepInstance>) =>
   (keepInstance = keep);
 
 // `"id setup…!scripts…;walks;template"` (`,` for `;walks;` when walk-less):
-// setup renders inside the fresh scope's setup, `!` opens the mount scripts.
+// setup renders inside the created scope's setup, `!` opens the mount scripts.
 export const registerShell = (shell: string) => {
   // A debug shell of content with a `<return>` leads with `^` (its mark).
   const returns = MARKO_DEBUG && shell[0] === "^";

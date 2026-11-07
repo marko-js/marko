@@ -17,7 +17,7 @@ export const Pending = "PatchPending:";
 export const QueuedEffect = "PatchQueuedEffect:";
 export const Setup = "PatchSetup:";
 export const SetupValues = "PatchSetupValues:";
-// A `<show>` over request data: `accessor start? end?`, the display bit.
+// A `<show>` over request data, by its accessor: `[display, node, start?]`.
 export const Show = "PatchShow:";
 export const Style = "PatchStyle:";
 export const Text = "PatchText:";

@@ -17,7 +17,7 @@ export const Html = "q";
 export const DynamicTag = "f";
 // Mirrors `AccessorProp.Global` on live scopes.
 export const Global = "$";
-// Registered renders a scope runs: a fresh one's setup, in the shell's
+// Registered renders a scope runs: a created one's setup, in the shell's
 // `setup…!scripts…` grammar, or any scope's signals the patch writes.
 export const Render = "i";
 // A closure an owner's change re-runs in its subscribed scopes, by id.
@@ -29,7 +29,7 @@ export const Setup = "s";
 // A created scope's setup values, which its child entries precede: a value's
 // renders may read what they write.
 export const SetupValues = "o";
-// A `<show>` over request data: `accessor start? end?`, the display bit.
+// A `<show>` over request data, by its accessor: `[display, node, start?]`.
 export const Show = "g";
 // A `<style>` interpolation: `accessor name`, the client rewrites the rule.
 export const Style = "y";
