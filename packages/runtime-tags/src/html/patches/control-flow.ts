@@ -498,7 +498,9 @@ export function writeLoop<A, B>(
 
 // The value an `<await>`'s rejected server copy settles to: it renders nothing.
 const skipped = Symbol();
-const skip = (): typeof skipped => skipped;
+function skip(): typeof skipped {
+  return skipped;
+}
 
 // A patch writes the pending entry of an await whose promise it fills, and its
 // body pairs with the live branch once it settles.
