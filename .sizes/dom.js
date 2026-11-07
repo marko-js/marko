@@ -1,4 +1,4 @@
-// size: 28612 (min) 10621 (brotli)
+// size: 28558 (min) 10596 (brotli)
 // packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -2439,11 +2439,6 @@ function _load_signal_patch(load, id, trigger) {
 // packages/runtime-tags/dist/dom.mjs
 let filledReferences = {};
 let closureSubscribers = {};
-function _fill_mark(valueAccessor, fillFn) {
-  return (scope) => {
-    ((scope["T" + decodeAccessor(valueAccessor)] = renderData.q), fillFn && fillFn(scope));
-  };
-}
 function fill(key, signal, id, fillFn) {
   return ((patchFills[key] = fillFn === void 0 ? signal : _const(id, fillFn || void 0)), signal);
 }
