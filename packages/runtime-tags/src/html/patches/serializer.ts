@@ -1,5 +1,5 @@
 import { ROOT_SCOPE_ID } from "../../common/meta";
-import { PatchKey, RendererProp } from "../../common/types";
+import { RendererProp } from "../../common/types";
 import {
   K_SCOPE_ID,
   Reference,
@@ -107,13 +107,6 @@ export class PatchSerializerState extends SerializerState {
       throw new Error(`A patch cannot send the scoped registration "${id}".`);
     }
     const link = this.render.patchLinks[scopeId];
-    // Kept content's holes serve every instance, so the compiler renders content
-    // on the client instead wherever they would carry a value one instance owns.
-    if (MARKO_DEBUG && link.key?.startsWith(PatchKey.ClientBranch)) {
-      throw new Error(
-        `Kept content cannot send "${id}", which each of its instances owns.`,
-      );
-    }
     this.writeScopePath(link.parent, id);
     if (link.parent !== ROOT_SCOPE_ID) this.buf.push(",");
     // Accessors are compiler-made (nothing to escape); a loop key is data.
