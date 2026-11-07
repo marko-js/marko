@@ -7,7 +7,7 @@ import { wait } from "../../utils/resolve";
 // and an `<await>` of it, which no patch writes: no patch waits on the copy.
 export const config: TestConfig = {
   patches: true,
-  skip_fresh_render: true,
+  skip_documents: true,
   steps: () => [
     { label: "a", promise: Promise.resolve("a") },
     wait,

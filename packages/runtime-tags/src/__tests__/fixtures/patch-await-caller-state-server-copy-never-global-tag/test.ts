@@ -7,7 +7,7 @@ const flag = { $global: { flag: true, serializedGlobals: ["flag"] } };
 // `$global` holds the client's bit with the server's, so its content isn't written.
 export const config: TestConfig = {
   patches: true,
-  skip_fresh_render: true,
+  skip_documents: true,
   steps: () => [
     { show: false, promise: Promise.resolve("a"), ...flag },
     wait,

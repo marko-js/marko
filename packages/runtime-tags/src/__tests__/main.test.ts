@@ -128,9 +128,12 @@ export type TestConfig = {
   runtime_id?: string;
   /** Compiles the fixture with the `patches` compiler option. */
   patches?: boolean;
-  /** Patch: compare with the initial document, never a fresh one of a step's input: a caught `<try>`
-   * keeps its `@catch`, client effects leave state, or no document serializes the input. */
+  /** Patch: never compare a patched page with a fresh render of its input: a caught `<try>`
+   * keeps its `@catch`, or client effects leave state. */
   skip_fresh_render?: boolean;
+  /** Patch: a step's input has no document that finishes, as with a promise the server never
+   * settles: skips the fresh-render comparison and the size check. */
+  skip_documents?: boolean;
   /** Patch: applies a step's patch while the document is still
    * streaming; by default the remaining flushes land first. */
   patch_while_streaming?: boolean;
@@ -488,8 +491,8 @@ function testFixtures(interop?: true) {
             const patches: string[] = [];
             // The header each input's request sent, alongside its flushes.
             const patchHeaders: string[] = [];
-            // The document each patch is measured against (same input).
-            const freshDocs: string[] = [];
+            // Each applied response's index and input, whose document it must cost less than.
+            const docInputs: [number, Input][] = [];
             const logs: ConsoleRecord[][] = [];
             let server!: Awaited<ReturnType<typeof runner.runServer>>;
             let template!: (typeof server)["template"];
@@ -621,8 +624,7 @@ function testFixtures(interop?: true) {
             // server would render for the same input, every applied patch
             // must leave the DOM as a fresh render of that input would.
             let diverged = false;
-            // The document for a step's input: what the step's patch must
-            // cost less than, diverged or not.
+            // The document a fresh request for a step's input loads.
             const renderFresh = async (input: Input) => {
               const capture = captureConsole();
               const freshChunks: string[] = [];
@@ -635,9 +637,6 @@ function testFixtures(interop?: true) {
                 resetResolveState();
                 capture.cleanup();
               }
-              freshDocs[patches.length - 1] = stripDefaultScript(
-                freshChunks.join(""),
-              );
               return freshChunks;
             };
             const assertPatchedLikeFresh = async (input: Input) => {
@@ -761,11 +760,13 @@ function testFixtures(interop?: true) {
                     // A step whose render throws has no fresh or client
                     // render to compare.
                     if (throwsError) client = undefined;
+                    const hasDocument = !throwsError && !config.skip_documents;
                     const freshRenders =
                       !withClient &&
                       !hasFlush &&
+                      !diverged &&
                       !config.skip_fresh_render &&
-                      !throwsError;
+                      hasDocument;
                     tracker.beginUpdate();
                     let applied = true;
                     let abandoned = false;
@@ -843,6 +844,9 @@ function testFixtures(interop?: true) {
                       applied = false;
                     }
                     patches.push(flushes.join(""));
+                    if (applied && hasDocument) {
+                      docInputs.push([patches.length - 1, input]);
+                    }
                     // A held or refused response has no page to compare yet.
                     if (applied && !held.length) {
                       assertSecretsRendered(
@@ -866,8 +870,7 @@ function testFixtures(interop?: true) {
                       return applied;
                     }
                     if (applied && !betweenFlushes && freshRenders) {
-                      if (diverged) await renderFresh(input);
-                      else await assertPatchedLikeFresh(input);
+                      await assertPatchedLikeFresh(input);
                     }
                     if (client) {
                       await client.update(input);
@@ -939,7 +942,8 @@ function testFixtures(interop?: true) {
               chunks,
               patches,
               patchHeaders,
-              freshDocs,
+              docInputs,
+              renderFresh,
             };
           };
 
@@ -1018,8 +1022,14 @@ function testFixtures(interop?: true) {
             it("ssr", async () => {
               await snapMode(
                 async () => {
-                  const { tracker, chunks, patches, patchHeaders, freshDocs } =
-                    await ssr();
+                  const {
+                    tracker,
+                    chunks,
+                    patches,
+                    patchHeaders,
+                    docInputs,
+                    renderFresh,
+                  } = await ssr();
                   if (usesPatches) {
                     // Each wire flush is one expression; format them
                     // independently so beautify cannot glue `}{`.
@@ -1068,10 +1078,14 @@ function testFixtures(interop?: true) {
                         // A response must cost less on the wire, raw and
                         // compressed, than the document for the same input;
                         // a larger one ships what the client already has.
-                        for (let i = 0; i < patches.length; i++) {
-                          const doc: Sizes = freshDocs[i]
-                            ? await getSizes(freshDocs[i])
-                            : stats.html;
+                        for (const [i, input] of docInputs) {
+                          // Rendered once the run is done: a render resets the
+                          // resolve state a later step's `resolveAfter` reads.
+                          const doc = await getSizes(
+                            stripDefaultScript(
+                              (await renderFresh(input)).join(""),
+                            ),
+                          );
                           const flush = await getSizes(patches[i]);
                           assert.ok(
                             flush.min < doc.min && flush.brotli < doc.brotli,

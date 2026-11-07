@@ -4,7 +4,7 @@
   ba: [{
     aa$nonce: "n1"
   }, "a1"],
-  tb: "a"
+  tb: "a, and the branch it revealed"
 }
 ;BAE
 

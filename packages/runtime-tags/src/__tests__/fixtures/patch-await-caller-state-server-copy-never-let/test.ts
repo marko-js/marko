@@ -5,7 +5,7 @@ import { wait } from "../../utils/resolve";
 // it controls (unassigned: nothing binds), seed nothing the client lacks: no wait.
 export const config: TestConfig = {
   patches: true,
-  skip_fresh_render: true,
+  skip_documents: true,
   steps: () => [
     { show: false, label: "a", promise: Promise.resolve("a") },
     wait,

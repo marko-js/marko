@@ -12,7 +12,8 @@ export const config: TestConfig = {
   skip_fresh_render: true,
   steps: [
     { show: false, note: "a", nonce: "n1" },
-    { show: true, note: "a", nonce: "n1" },
+    // Its patch outweighs the first document, though not its own.
+    { show: true, note: "a, and the branch it revealed", nonce: "n1" },
     { show: true, note: "b", nonce: "n1" },
     { show: false, note: "b", nonce: "n1" },
     { show: true, note: "b", nonce: "n2" },

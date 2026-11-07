@@ -43,13 +43,3 @@ document.querySelector("button").click();
 ```
 
 # Update `{"show":true,"label":"d"}`
-```html
-<button>
-  x
-</button>
-```
-## Change
-```
-REMOVE: button
-INSERT: button
-```

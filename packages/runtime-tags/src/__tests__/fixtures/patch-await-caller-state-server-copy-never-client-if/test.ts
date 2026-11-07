@@ -5,7 +5,7 @@ import { wait } from "../../utils/resolve";
 // and a server hole sit in a branch the client renders from the value: no patch waits.
 export const config: TestConfig = {
   patches: true,
-  skip_fresh_render: true,
+  skip_documents: true,
   steps: () => [
     { show: false, label: "a", promise: Promise.resolve("a") },
     wait,

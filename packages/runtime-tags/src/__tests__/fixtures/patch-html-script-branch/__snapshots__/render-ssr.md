@@ -7,7 +7,7 @@
 </main>
 ```
 
-# Update `{"show":true,"note":"a","nonce":"n1"}`
+# Update `{"show":true,"note":"a, and the branch it revealed","nonce":"n1"}`
 ```html
 <main
   data-connected="true"
@@ -15,7 +15,7 @@
   data-ran="1"
 >
   <p>
-    a
+    a, and the branch it revealed
   </p>
 </main>
 ```
@@ -24,6 +24,7 @@
 UPDATE: main[data-ran] null => "1"
 UPDATE: main[data-nonce] null => "n1"
 UPDATE: main[data-connected] null => "true"
+UPDATE: main > p::text "a" => "a, and the branch it revealed"
 ```
 
 # Update `{"show":true,"note":"b","nonce":"n1"}`
@@ -40,7 +41,7 @@ UPDATE: main[data-connected] null => "true"
 ```
 ## Change
 ```
-UPDATE: main > p::text "a" => "b"
+UPDATE: main > p::text "a, and the branch it revealed" => "b"
 ```
 
 # Update `{"show":false,"note":"b","nonce":"n1"}`

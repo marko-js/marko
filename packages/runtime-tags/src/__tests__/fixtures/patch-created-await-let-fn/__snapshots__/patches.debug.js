@@ -39,11 +39,7 @@
 // PATCH holding CxQ
 {
   "PatchBranch:#text/0": [{
-    "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-created-await-let-fn/template.marko_2*content"
-  }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-await-let-fn/template.marko_1*shell"]
-}
-{
-  "PatchChild:BranchScopes:#text/0": {
+    "PatchPending:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-created-await-let-fn/template.marko_2*content",
     "PatchChild:BranchScopes:#text/0": {
       "PatchChild:#childScope/0": {
         "PatchSetup:": {
@@ -51,5 +47,5 @@
         }
       }
     }
-  }
+  }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-await-let-fn/template.marko_1*shell"]
 }

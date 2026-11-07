@@ -4,7 +4,7 @@
   "PatchBranch:#text/0": [{
     "PatchAttr:#script/0 nonce": "n1"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-html-script-branch/template.marko_1*shell"],
-  "PatchText:#text/1": "a"
+  "PatchText:#text/1": "a, and the branch it revealed"
 }
 ;BAE
 

@@ -7,7 +7,7 @@ import { wait } from "../../utils/resolve";
 // caller state's) in an effect: the client's render runs it, so no patch waits.
 export const config: TestConfig = {
   patches: true,
-  skip_fresh_render: true,
+  skip_documents: true,
   steps: () => [
     { label: "a", promise: Promise.resolve("a") },
     wait,

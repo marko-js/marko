@@ -5,7 +5,7 @@ import { wait } from "../../utils/resolve";
 // value, so its content is the client's and no patch waits on the copy.
 export const config: TestConfig = {
   patches: true,
-  skip_fresh_render: true,
+  skip_documents: true,
   steps: () => [
     { show: false, label: "a", promise: Promise.resolve("a") },
     wait,

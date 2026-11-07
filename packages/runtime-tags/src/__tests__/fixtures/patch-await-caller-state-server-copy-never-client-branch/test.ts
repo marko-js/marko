@@ -5,7 +5,7 @@ import { wait } from "../../utils/resolve";
 // branch the client renders from the value, so no patch waits on the copy.
 export const config: TestConfig = {
   patches: true,
-  skip_fresh_render: true,
+  skip_documents: true,
   steps: () => [
     { show: false, label: "a", promise: Promise.resolve("a") },
     wait,

@@ -7,7 +7,7 @@ const flag = { $global: { flag: true, serializedGlobals: ["flag"] } };
 // `$global` holds the client's bit with the server's, so `writeBranch` skips it: no patch waits.
 export const config: TestConfig = {
   patches: true,
-  skip_fresh_render: true,
+  skip_documents: true,
   steps: () => [
     { promise: Promise.resolve("a"), ...flag },
     wait,
