@@ -12,9 +12,7 @@ var template_default = _template("a", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "a", 1, 1, 1, "</div>", 1);
-	_html(`<input${_attr_input_value($scope0_id, "b", value, _resume((_new_value) => {
-		value = _new_value;
-	}, "a0", $scope0_id))}>${_el_mark($scope0_id, "b")}`);
+	_html(`<input${_attr_input_value($scope0_id, "b", value, _resume((_new_value) => value = _new_value, "a0", $scope0_id))}>${_el_mark($scope0_id, "b")}`);
 	_script($scope0_id, "a1");
 	_scope($scope0_id, {});
 }, 1);

@@ -7,9 +7,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope_reason();
 		let internal = 0;
 		const $return = internal;
-		_scope($scope1_id, { "#TagVariableChange": _resume((_new_internal) => {
-			internal = _new_internal;
-		}, "__tests__/template.marko_1/valueChange", $scope1_id) || void 0 }, "__tests__/template.marko", "1:2");
+		_scope($scope1_id, { "#TagVariableChange": _resume((_new_internal) => internal = _new_internal, "__tests__/template.marko_1/valueChange", $scope1_id) || void 0 }, "__tests__/template.marko", "1:2");
 		_resume_branch($scope1_id);
 		return $return;
 	}, $scope0_id) };

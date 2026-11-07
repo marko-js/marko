@@ -43,9 +43,7 @@ _resumed["__tests__/template.marko_1*content"] = $item_content;
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
 const $labels = /*@__PURE__*/ _let("labels/2", ($scope) => $dynamicTag($scope, _marko_template, ($_) => {
 	let $item;
-	forOf($scope.labels, (label) => {
-		$item = attrTags($item, { renderBody: $item_content($scope, { label }) });
-	});
+	forOf($scope.labels, (label) => $item = attrTags($item, { renderBody: $item_content($scope, { label }) }));
 	return { item: $item };
 }));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {

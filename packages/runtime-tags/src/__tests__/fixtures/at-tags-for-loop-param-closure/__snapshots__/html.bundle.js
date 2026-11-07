@@ -19,15 +19,13 @@ var template_default = _template("a", (input) => {
 		1,
 		2,
 		3
-	], (zzz) => {
-		$item = attrTags($item, { content: _content("a0", () => {
-			const $scope1_reason = _scope_reason(), $wg__zzz = _write_guard($scope1_reason, 0);
-			const $scope1_id = _scope_id();
-			const double = zzz * 2;
-			_html(`${_text_mark($scope1_id, "a", zzz, $wg__zzz * 2)} ${_text_mark($scope1_id, "b", double, $wg__zzz * 2)}`);
-			_write_if($scope1_reason, 0) && _scope($scope1_id, {});
-		}, $scope0_id) });
-	});
+	], (zzz) => $item = attrTags($item, { content: _content("a0", () => {
+		const $scope1_reason = _scope_reason(), $wg__zzz = _write_guard($scope1_reason, 0);
+		const $scope1_id = _scope_id();
+		const double = zzz * 2;
+		_html(`${_text_mark($scope1_id, "a", zzz, $wg__zzz * 2)} ${_text_mark($scope1_id, "b", double, $wg__zzz * 2)}`);
+		_write_if($scope1_reason, 0) && _scope($scope1_id, {});
+	}, $scope0_id) }));
 	list_default({ item: $item });
 	list_default({});
 }, 1);

@@ -20,9 +20,7 @@ function $setup($scope) {
 		1,
 		2,
 		3
-	], (item) => {
-		$item = attrTags($item, { content: $item_content($scope, { item }) });
-	});
+	], (item) => $item = attrTags($item, { content: $item_content($scope, { item }) }));
 	$input_item($scope["#childScope/0"], $item);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

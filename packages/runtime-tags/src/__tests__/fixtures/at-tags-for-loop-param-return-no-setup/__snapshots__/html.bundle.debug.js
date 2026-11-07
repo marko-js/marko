@@ -21,14 +21,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(`<button>more</button>${_el_mark($scope0_id, "#button/0")}`);
 	_set_scope_reason(2);
 	let $item;
-	forUntil(count, 0, 1, (n) => {
-		$item = attrTags($item, { content: _content("__tests__/template.marko_1*content", () => {
-			_scope_reason();
-			const $scope1_id = _scope_id();
-			const $return = n * 10;
-			return $return;
-		}, $scope0_id) });
-	});
+	forUntil(count, 0, 1, (n) => $item = attrTags($item, { content: _content("__tests__/template.marko_1*content", () => {
+		_scope_reason();
+		const $scope1_id = _scope_id();
+		const $return = n * 10;
+		return $return;
+	}, $scope0_id) }));
 	const $childScope = _peek_scope_id();
 	list_default({ item: $item });
 	_script($scope0_id, "__tests__/template.marko_0");

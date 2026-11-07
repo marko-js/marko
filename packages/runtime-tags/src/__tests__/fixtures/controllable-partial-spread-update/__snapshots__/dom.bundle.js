@@ -17,7 +17,5 @@ const $setup__script = _script("a2", ($scope) => {
 	});
 	_attr_input_value_script($scope, "b");
 });
-const $valueChange = ($scope) => (_new_v) => {
-	$v($scope, _new_v);
-};
+const $valueChange = ($scope) => (_new_v) => $v($scope, _new_v);
 _resumed.a0 = $valueChange;

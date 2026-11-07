@@ -28,9 +28,7 @@ var template_default = _template("a", (input) => {
 	const $childScope = _peek_scope_id();
 	child_default({
 		value: v,
-		valueChange: _resume((_new_v) => {
-			v = _new_v;
-		}, "a0", $scope0_id),
+		valueChange: _resume((_new_v) => v = _new_v, "a0", $scope0_id),
 		class: "c"
 	});
 	_html(`<em>${_text_mark($scope0_id, "b", v)}</em>`);

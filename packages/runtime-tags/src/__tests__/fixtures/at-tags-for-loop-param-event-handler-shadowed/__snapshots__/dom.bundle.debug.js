@@ -20,12 +20,10 @@ const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__
 const $foo = /*@__PURE__*/ _let("foo/2", ($scope) => _text($scope["#text/1"], $scope.foo));
 function $setup($scope) {
 	let $item;
-	forOf(["a", "b"], (foo) => {
-		$item = attrTags($item, {
-			onClick: $onClick({ "foo/5": foo }),
-			content: $item_content($scope, { foo })
-		});
-	});
+	forOf(["a", "b"], (foo) => $item = attrTags($item, {
+		onClick: $onClick({ "foo/5": foo }),
+		content: $item_content($scope, { foo })
+	}));
 	$input_item($scope["#childScope/0"], $item);
 	$foo($scope, "outer");
 }

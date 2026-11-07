@@ -20,19 +20,17 @@ var template_default = _template("a", (input) => {
 	let clicked = "";
 	_set_scope_reason(2);
 	let $item;
-	forOf(["a", "b"], (foo) => {
-		$item = attrTags($item, {
-			onClick: _resume_locals(function() {
-				clicked += foo;
-			}, "a0", { f: foo }, $scope0_id),
-			content: _content("a1", () => {
-				const $scope1_reason = _scope_reason(), $wg__foo = _write_guard($scope1_reason, 0);
-				const $scope1_id = _scope_id();
-				_html(`Click ${_text_mark($scope1_id, "a", foo, $wg__foo * 2)}`);
-				_write_if($scope1_reason, 0) && _scope($scope1_id, {});
-			}, $scope0_id)
-		});
-	});
+	forOf(["a", "b"], (foo) => $item = attrTags($item, {
+		onClick: _resume_locals(function() {
+			clicked += foo;
+		}, "a0", { f: foo }, $scope0_id),
+		content: _content("a1", () => {
+			const $scope1_reason = _scope_reason(), $wg__foo = _write_guard($scope1_reason, 0);
+			const $scope1_id = _scope_id();
+			_html(`Click ${_text_mark($scope1_id, "a", foo, $wg__foo * 2)}`);
+			_write_if($scope1_reason, 0) && _scope($scope1_id, {});
+		}, $scope0_id)
+	}));
 	const $childScope = _peek_scope_id();
 	my_menu_default({ item: $item });
 	_html(`<div>${_text_mark($scope0_id, "b", clicked)}</div>`);

@@ -102,12 +102,10 @@ const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__
 _resumed["__tests__/template.marko_1*content"] = $item_content;
 const $items = /*@__PURE__*/ _let("items/3", ($scope) => {
 	let $item;
-	forOf($scope.items, (item) => {
-		$item = attrTags($item, { content: $item_content($scope, {
-			item_text: item?.text,
-			item
-		}) });
-	});
+	forOf($scope.items, (item) => $item = attrTags($item, { content: $item_content($scope, {
+		item_text: item?.text,
+		item
+	}) }));
 	$input_item$1($scope["#childScope/0"], $item);
 	$items_($scope, $scope.items?.[0]);
 });
@@ -117,17 +115,13 @@ function $setup($scope) {
 	let $row;
 	forOf(["a", "b"], (row) => {
 		let $cell;
-		forOf([1], (n) => {
-			$cell = attrTags($cell, { content: $cell_content($scope, { n }) });
-		});
+		forOf([1], (n) => $cell = attrTags($cell, { content: $cell_content($scope, { n }) }));
 		$row = attrTags($row, { cell: $cell });
 	});
 	$input_row($scope["#childScope/1"], $row);
 	$setup$1($scope["#childScope/2"]);
 	let $item2;
-	forOf([1], (i) => {
-		$item2 = attrTags($item2, { content: $item_content2($scope, { i }) });
-	});
+	forOf([1], (i) => $item2 = attrTags($item2, { content: $item_content2($scope, { i }) }));
 	$input_item($scope["#childScope/2"], $item2);
 	$items($scope, [{ text: "a" }, { text: "b" }]);
 }

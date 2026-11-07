@@ -15,12 +15,12 @@
       }
     },
     "lazy.mjs": {
-      "min": 793,
-      "brotli": 438
+      "min": 791,
+      "brotli": 436
     },
     "shared": {
-      "min": 2124,
-      "brotli": 1113
+      "min": 2122,
+      "brotli": 1110
     }
   },
   "html": {

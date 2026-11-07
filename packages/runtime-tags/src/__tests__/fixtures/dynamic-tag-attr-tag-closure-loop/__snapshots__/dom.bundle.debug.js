@@ -39,9 +39,7 @@ _content_resume($item_content, 1);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $input_type = ($scope, input_type) => $dynamicTag($scope, input_type, ($_) => {
 	let $item;
-	forUntil(2, 0, 1, (i) => {
-		$item = attrTags($item, { content: $item_content($scope, { i }) });
-	});
+	forUntil(2, 0, 1, (i) => $item = attrTags($item, { content: $item_content($scope, { i }) }));
 	return { item: $item };
 });
 const $input = ($scope, input) => {

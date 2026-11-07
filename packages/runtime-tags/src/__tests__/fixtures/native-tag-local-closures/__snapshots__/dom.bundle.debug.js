@@ -16,9 +16,7 @@ const $Child_content__$params = ($scope, $params2) => $Child_content__input($sco
 const $Child_content__input = ($scope, input) => $Child_content__input_item($scope, input.item);
 const $size = /*@__PURE__*/ _let("size/2", ($scope) => {
 	let $item;
-	forUntil($scope.size, 0, 1, (i) => {
-		$item = attrTags($item, { content: $item_content($scope, { i }) });
-	});
+	forUntil($scope.size, 0, 1, (i) => $item = attrTags($item, { content: $item_content($scope, { i }) }));
 	$Child_content__input_item($scope["#childScope/0"], $item);
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {

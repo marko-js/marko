@@ -9,9 +9,7 @@ const $item_content__if = /*@__PURE__*/ _if(0, "<span>shown</span>");
 const $item_content = /*@__PURE__*/ _content("b0", "<!><!><!>", "b%", /* @__PURE__ */ _closure_get(5, ($scope) => $item_content__if($scope, $scope._.e ? 0 : 1)));
 const $input_items = /*@__PURE__*/ _const(3, ($scope) => {
 	let $item;
-	forOf($scope.d, (item) => {
-		$item = attrTags($item, { content: $item_content($scope) });
-	});
+	forOf($scope.d, (item) => $item = attrTags($item, { content: $item_content($scope) }));
 	$input_item($scope.a, $item);
 });
 

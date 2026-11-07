@@ -11,7 +11,5 @@ const $v = /*@__PURE__*/ _let(2, ($scope) => {
 	$value($scope.a, $scope.c);
 	_text($scope.b, $scope.c);
 });
-const $valueChange = ($scope) => (_new_v) => {
-	$v($scope, _new_v);
-};
+const $valueChange = ($scope) => (_new_v) => $v($scope, _new_v);
 _resumed.a0 = $valueChange;

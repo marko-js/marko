@@ -20,9 +20,7 @@ const $item_content__setup = $item_content__input_show;
 const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__tests__/template.marko_1*content", "<!><!><!>", "b%", $item_content__setup), { item: $if_content__item });
 function $setup($scope) {
 	let $item;
-	forOf(["a", "b"], (item) => {
-		$item = attrTags($item, { content: $item_content($scope, { item }) });
-	});
+	forOf(["a", "b"], (item) => $item = attrTags($item, { content: $item_content($scope, { item }) }));
 	$input_item($scope["#childScope/0"], $item);
 }
 const $input = ($scope, input) => $input_show($scope, input.show);

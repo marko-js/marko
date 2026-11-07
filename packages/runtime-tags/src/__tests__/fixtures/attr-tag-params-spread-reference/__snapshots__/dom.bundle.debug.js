@@ -11,9 +11,7 @@ const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)("%b");
 const $setup = ($_) => {};
 const $input = /*@__PURE__*/ _const("input", ($scope) => {
 	let $item;
-	forUntil(1, 0, 1, (i) => {
-		$item = attrTags($item, { value: i });
-	});
+	forUntil(1, 0, 1, (i) => $item = attrTags($item, { value: i }));
 	$input$1($scope["#childScope/0"], {
 		...$scope.input,
 		item: $item

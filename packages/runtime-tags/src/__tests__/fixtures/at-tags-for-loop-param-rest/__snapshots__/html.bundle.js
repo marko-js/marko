@@ -27,25 +27,21 @@ var template_default = _template("a", (input) => {
 	_html(`<button id=rename>rename</button>${_el_mark($scope0_id, "a")}`);
 	_set_scope_reason(2);
 	let $item;
-	forOf(items, ({ id, ...rest }) => {
-		$item = attrTags($item, { content: _content("a0", () => {
-			const $scope2_reason = _scope_reason(), $wg__id = _write_guard($scope2_reason, 1), $wg__$temp_extra = _write_guard($scope2_reason, 2);
-			const $scope2_id = _scope_id();
-			_html(`<p>${_text_mark($scope2_id, "a", id, $wg__id)}:${_text_mark($scope2_id, "b", rest.extra, $wg__$temp_extra * 2)}</p>`);
-			_write_if($scope2_reason, 0) && _scope($scope2_id, {});
-		}, $scope0_id) });
-	});
+	forOf(items, ({ id, ...rest }) => $item = attrTags($item, { content: _content("a0", () => {
+		const $scope2_reason = _scope_reason(), $wg__id = _write_guard($scope2_reason, 1), $wg__$temp_extra = _write_guard($scope2_reason, 2);
+		const $scope2_id = _scope_id();
+		_html(`<p>${_text_mark($scope2_id, "a", id, $wg__id)}:${_text_mark($scope2_id, "b", rest.extra, $wg__$temp_extra * 2)}</p>`);
+		_write_if($scope2_reason, 0) && _scope($scope2_id, {});
+	}, $scope0_id) }));
 	const $childScope = _peek_scope_id();
 	list_default({ item: $item });
 	let $item2;
-	forOf([["a", "b"], ["c", "d"]], ([first, ...others]) => {
-		$item2 = attrTags($item2, { content: _content("a1", () => {
-			const $scope3_reason = _scope_reason(), $wg__first = _write_guard($scope3_reason, 1), $wg__$temp2_ = _write_guard($scope3_reason, 2);
-			const $scope3_id = _scope_id();
-			_html(`<b>${_text_mark($scope3_id, "a", first, $wg__first)}${_text_mark($scope3_id, "b", others[0], $wg__$temp2_ * 2)}</b>`);
-			_write_if($scope3_reason, 0) && _scope($scope3_id, {});
-		}, $scope0_id) });
-	});
+	forOf([["a", "b"], ["c", "d"]], ([first, ...others]) => $item2 = attrTags($item2, { content: _content("a1", () => {
+		const $scope3_reason = _scope_reason(), $wg__first = _write_guard($scope3_reason, 1), $wg__$temp2_ = _write_guard($scope3_reason, 2);
+		const $scope3_id = _scope_id();
+		_html(`<b>${_text_mark($scope3_id, "a", first, $wg__first)}${_text_mark($scope3_id, "b", others[0], $wg__$temp2_ * 2)}</b>`);
+		_write_if($scope3_reason, 0) && _scope($scope3_id, {});
+	}, $scope0_id) }));
 	list_default({ item: $item2 });
 	const { a, ...r1 } = input.o;
 	const { a: $a, b: $b, ...r2 } = r1;

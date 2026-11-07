@@ -10,9 +10,7 @@ const $input_item = ($scope, input_item) => $for($scope, [input_item]);
 const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a0"), { 0: ($scope) => _return($scope, $scope.a * 10) });
 const $count = /*@__PURE__*/ _let(2, ($scope) => {
 	let $item;
-	forUntil($scope.c, 0, 1, (n) => {
-		$item = attrTags($item, { content: $item_content($scope, { 0: n }) });
-	});
+	forUntil($scope.c, 0, 1, (n) => $item = attrTags($item, { content: $item_content($scope, { 0: n }) }));
 	$input_item($scope.b, $item);
 });
 const $setup__script = _script("a1", ($scope) => _on($scope.a, "click", function() {

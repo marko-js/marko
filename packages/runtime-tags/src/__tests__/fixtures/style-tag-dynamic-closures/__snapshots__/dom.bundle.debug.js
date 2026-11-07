@@ -71,9 +71,7 @@ function $setup($scope) {
 }
 const $input_colors = /*@__PURE__*/ _const("input_colors", ($scope) => {
 	let $item;
-	forOf($scope.input_colors, (color) => {
-		$item = attrTags($item, { content: $item_content($scope, { color }) });
-	});
+	forOf($scope.input_colors, (color) => $item = attrTags($item, { content: $item_content($scope, { color }) }));
 	$input_item($scope["#childScope/4"], $item);
 });
 const $input = ($scope, input) => {

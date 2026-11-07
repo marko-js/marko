@@ -50,9 +50,7 @@ const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__
 const $show = /*@__PURE__*/ _let("show/2");
 const $items = /*@__PURE__*/ _let("items/3", ($scope) => {
 	let $item;
-	forOf($scope.items, (item) => {
-		$item = attrTags($item, { content: $item_content($scope, { item }) });
-	});
+	forOf($scope.items, (item) => $item = attrTags($item, { content: $item_content($scope, { item }) }));
 	$input_item($scope["#childScope/1"], $item);
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {

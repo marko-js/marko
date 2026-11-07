@@ -18,12 +18,10 @@ const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__
 });
 const $items = /*@__PURE__*/ _let("items/2", ($scope) => {
 	let $item;
-	forOf($scope.items, (item) => {
-		$item = attrTags($item, { content: $item_content($scope, {
-			item_text: item?.text,
-			item
-		}) });
-	});
+	forOf($scope.items, (item) => $item = attrTags($item, { content: $item_content($scope, {
+		item_text: item?.text,
+		item
+	}) }));
 	$input_item($scope["#childScope/1"], $item);
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {

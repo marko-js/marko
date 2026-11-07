@@ -36,30 +36,26 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}];
 	_set_scope_reason(2);
 	let $row;
-	forOf(rows, (a) => {
-		$row = attrTags($row, { content: _content("__tests__/template.marko_1*content", () => {
-			const $scope1_reason = _scope_reason(), $wg__a_id = _write_guard($scope1_reason, 2), $wi__a_items__OR__a_id = _write_if($scope1_reason, 0), $wi__a_id = _write_if($scope1_reason, 2), $wi__a_items = _write_if($scope1_reason, 1);
-			const $scope1_id = _scope_id();
-			const $row_content__a_id__closures = new Set();
-			_set_scope_reason(_write_guard($scope1_reason, 1) << 1);
-			let $cell;
-			forOf(a.items, (b) => {
-				$cell = attrTags($cell, { content: _content("__tests__/template.marko_2*content", () => {
-					const $scope2_reason = _scope_reason(), $wg__b = _write_guard($scope2_reason, 0);
-					const $scope2_id = _scope_id();
-					_html(`${_text_mark($scope2_id, "#text/0", a.id, $wg__a_id)}-${_text_mark($scope2_id, "#text/1", b, $wg__b * 2)};`);
-					($wi__a_items__OR__a_id || _write_if($scope2_reason, 0)) && _subscribe($wi__a_id && $row_content__a_id__closures, _scope($scope2_id, { _: $wi__a_items__OR__a_id && _scope_with_id($scope1_id) }, "__tests__/template.marko", "7:12"), "__tests__/template.marko_2_a_id#1:2/subscribe", $wg__a_id || $wg__b);
-				}, $scope1_id) });
-			});
-			const $childScope = _peek_scope_id();
-			inner_default({ cell: $cell });
-			$wi__a_items__OR__a_id && _scope($scope1_id, {
-				a_id: $wi__a_items && a?.id,
-				"ClosureScopes:a_id/3": $wi__a_id && $row_content__a_id__closures,
-				"#childScope/0": $wi__a_items && _existing_scope($childScope)
-			}, "__tests__/template.marko", "4:6", { a_id: 0 });
-		}, $scope0_id) });
-	});
+	forOf(rows, (a) => $row = attrTags($row, { content: _content("__tests__/template.marko_1*content", () => {
+		const $scope1_reason = _scope_reason(), $wg__a_id = _write_guard($scope1_reason, 2), $wi__a_items__OR__a_id = _write_if($scope1_reason, 0), $wi__a_id = _write_if($scope1_reason, 2), $wi__a_items = _write_if($scope1_reason, 1);
+		const $scope1_id = _scope_id();
+		const $row_content__a_id__closures = new Set();
+		_set_scope_reason(_write_guard($scope1_reason, 1) << 1);
+		let $cell;
+		forOf(a.items, (b) => $cell = attrTags($cell, { content: _content("__tests__/template.marko_2*content", () => {
+			const $scope2_reason = _scope_reason(), $wg__b = _write_guard($scope2_reason, 0);
+			const $scope2_id = _scope_id();
+			_html(`${_text_mark($scope2_id, "#text/0", a.id, $wg__a_id)}-${_text_mark($scope2_id, "#text/1", b, $wg__b * 2)};`);
+			($wi__a_items__OR__a_id || _write_if($scope2_reason, 0)) && _subscribe($wi__a_id && $row_content__a_id__closures, _scope($scope2_id, { _: $wi__a_items__OR__a_id && _scope_with_id($scope1_id) }, "__tests__/template.marko", "7:12"), "__tests__/template.marko_2_a_id#1:2/subscribe", $wg__a_id || $wg__b);
+		}, $scope1_id) }));
+		const $childScope = _peek_scope_id();
+		inner_default({ cell: $cell });
+		$wi__a_items__OR__a_id && _scope($scope1_id, {
+			a_id: $wi__a_items && a?.id,
+			"ClosureScopes:a_id/3": $wi__a_id && $row_content__a_id__closures,
+			"#childScope/0": $wi__a_items && _existing_scope($childScope)
+		}, "__tests__/template.marko", "4:6", { a_id: 0 });
+	}, $scope0_id) }));
 	const $childScope2 = _peek_scope_id();
 	outer_default({ row: $row });
 	_html(`<button>Add</button>${_el_mark($scope0_id, "#button/1")}`);

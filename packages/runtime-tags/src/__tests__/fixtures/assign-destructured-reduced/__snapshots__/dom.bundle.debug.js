@@ -25,8 +25,6 @@ const $count = /*@__PURE__*/ _let("count/1", ($scope) => $input($scope["#childSc
 function $setup($scope) {
 	$count($scope, 0);
 }
-const $valueChange = ($scope) => (_new_count) => {
-	$count($scope, _new_count);
-};
+const $valueChange = ($scope) => (_new_count) => $count($scope, _new_count);
 _resumed["__tests__/template.marko_0/valueChange"] = $valueChange;
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

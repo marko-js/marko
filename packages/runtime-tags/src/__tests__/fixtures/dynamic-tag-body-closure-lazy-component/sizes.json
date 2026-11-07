@@ -15,12 +15,12 @@
       }
     },
     "card.mjs": {
-      "min": 1007,
-      "brotli": 522
+      "min": 1003,
+      "brotli": 523
     },
     "shared": {
-      "min": 10107,
-      "brotli": 4377
+      "min": 10103,
+      "brotli": 4376
     }
   },
   "html": {

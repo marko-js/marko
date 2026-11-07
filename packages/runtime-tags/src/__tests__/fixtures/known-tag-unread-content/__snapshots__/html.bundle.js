@@ -27,9 +27,7 @@ var template_default = _template("a", (input) => {
 	const $childScope = _peek_scope_id();
 	label_child_default({ item: $item });
 	let $item2;
-	forTo(1, 0, 1, (i) => {
-		$item2 = attrTags($item2, { label: `for ${i}` });
-	});
+	forTo(1, 0, 1, (i) => $item2 = attrTags($item2, { label: `for ${i}` }));
 	label_child_default({ item: $item2 });
 	_html(`<span>${_escape(m)}</span><button class=inc>inc</button>${_el_mark($scope0_id, "f")}`);
 	_script($scope0_id, "a0");

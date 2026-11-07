@@ -28,13 +28,9 @@ var template_default = _template("a", (input) => {
 	const $childScope = _peek_scope_id();
 	_2counters_default({
 		count1,
-		count1Change: _resume((_new_count1) => {
-			count1 = _new_count1;
-		}, "a0", $scope0_id),
+		count1Change: _resume((_new_count1) => count1 = _new_count1, "a0", $scope0_id),
 		count2,
-		count2Change: _resume((_new_count2) => {
-			count2 = _new_count2;
-		}, "a1", $scope0_id)
+		count2Change: _resume((_new_count2) => count2 = _new_count2, "a1", $scope0_id)
 	});
 	_html(`<div>${_text_mark($scope0_id, "b", count1)} ${_text_mark($scope0_id, "c", count2, 2)}</div>`);
 	_scope($scope0_id, { a: _existing_scope($childScope) });

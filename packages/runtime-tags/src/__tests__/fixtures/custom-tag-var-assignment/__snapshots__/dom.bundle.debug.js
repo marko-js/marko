@@ -13,9 +13,7 @@ function $setup$1($scope) {
 	$x($scope, 1);
 	$setup__script$1($scope);
 }
-const $valueChange = ($scope) => (_new_x) => {
-	$x($scope, _new_x);
-};
+const $valueChange = ($scope) => (_new_x) => $x($scope, _new_x);
 _resumed["__tests__/tags/counter.marko_0/valueChange"] = $valueChange;
 var counter_default = /*@__PURE__*/ _template("__tests__/tags/counter.marko", $template$1, $walks$1, /*@__PURE__*/ _return_setup($setup$1));
 

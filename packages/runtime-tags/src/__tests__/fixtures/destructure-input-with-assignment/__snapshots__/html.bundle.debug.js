@@ -21,9 +21,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $value__closures = new Set();
 	let value = 1;
 	child_default({
-		valueChange: _resume((_new_value) => {
-			value = _new_value;
-		}, "__tests__/template.marko_0/valueChange", $scope0_id),
+		valueChange: _resume((_new_value) => value = _new_value, "__tests__/template.marko_0/valueChange", $scope0_id),
 		content: _content("__tests__/template.marko_1*content", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();

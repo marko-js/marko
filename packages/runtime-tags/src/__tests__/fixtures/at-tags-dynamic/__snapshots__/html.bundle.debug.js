@@ -62,17 +62,15 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	});
 	forOf([["a", "b"], ["c", "d"]], (col, i) => {
 		let $row;
-		forOf(col, (row) => {
-			$row = attrTags($row, {
-				row,
-				content: _content("__tests__/template.marko_3*content", () => {
-					const $scope3_reason = _scope_reason(), $wg__row = _write_guard($scope3_reason, 0);
-					const $scope3_id = _scope_id();
-					_html(_text_mark($scope3_id, "#text/0", row, $wg__row));
-					_write_if($scope3_reason, 0) && _scope($scope3_id, {}, "__tests__/template.marko", "16:18");
-				}, $scope0_id)
-			});
-		});
+		forOf(col, (row) => $row = attrTags($row, {
+			row,
+			content: _content("__tests__/template.marko_3*content", () => {
+				const $scope3_reason = _scope_reason(), $wg__row = _write_guard($scope3_reason, 0);
+				const $scope3_id = _scope_id();
+				_html(_text_mark($scope3_id, "#text/0", row, $wg__row));
+				_write_if($scope3_reason, 0) && _scope($scope3_id, {}, "__tests__/template.marko", "16:18");
+			}, $scope0_id)
+		}));
 		$col = attrTags($col, {
 			x: i,
 			row: $row

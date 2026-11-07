@@ -8,9 +8,7 @@ const $for_content2__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $for_content2__$params = ($scope, $params3) => $for_content2__dynamicTag($scope, $params3[0]);
 const $for_content__texts = /*@__PURE__*/ _const("texts", ($scope) => {
 	let $item;
-	forOf($scope.texts, (item) => {
-		$item = attrTags($item, { content: $item_content($scope, { item_text: item?.text }) });
-	});
+	forOf($scope.texts, (item) => $item = attrTags($item, { content: $item_content($scope, { item_text: item?.text }) }));
 	$Child_content__items($scope["#childScope/0"], $item);
 });
 const $for_content__$params = ($scope, $params4) => $for_content__texts($scope, $params4[0]);

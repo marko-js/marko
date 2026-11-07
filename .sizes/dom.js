@@ -1,4 +1,4 @@
-// size: 27114 (min) 10110 (brotli)
+// size: 27106 (min) 10108 (brotli)
 // packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -748,12 +748,7 @@ function _id(scope, accessor) {
   return id;
 }
 function _script(id, fn) {
-  return (
-    (_resumed[id] = fn),
-    (scope) => {
-      queueEffect(scope, fn);
-    }
-  );
+  return ((_resumed[id] = fn), (scope) => queueEffect(scope, fn));
 }
 function _global_read($global, key) {
   return $global[key];
@@ -860,7 +855,7 @@ function init(runtimeId = "M") {
   if (curRenders) return;
   let renders = self[runtimeId],
     defineRuntime = (desc) => Object.defineProperty(self, runtimeId, desc),
-    initRuntime = (renders) => {
+    initRuntime = (renders) =>
       defineRuntime({
         value: (curRenders = (renderId) => {
           let render = (curRenders[renderId] = renders[renderId] || renders(renderId)),
@@ -1082,7 +1077,6 @@ function init(runtimeId = "M") {
           );
         }),
       });
-    };
   if (renders) {
     initRuntime(renders);
     for (let renderId in renders) runResumeEffects(curRenders(renderId));
@@ -2157,9 +2151,7 @@ function mount(input = {}, reference, position) {
     args = this.d,
     effects = prepareEffects((_) => {
       ((branch = createBranch($global, this, void 0, parentNode)),
-        (branch.T = (newValue) => {
-          curValue = newValue;
-        }),
+        (branch.T = (newValue) => (curValue = newValue)),
         this.c?.(branch),
         args?.(branch, input));
     });
@@ -2176,11 +2168,7 @@ function mount(input = {}, reference, position) {
       update(newInput = {}) {
         args &&
           (newInput.$global && ({ $global, ...newInput } = newInput),
-          runEffects(
-            prepareEffects((_) => {
-              args(branch, newInput);
-            }),
-          ));
+          runEffects(prepareEffects((_) => args(branch, newInput))));
       },
       destroy() {
         removeAndDestroyBranch(branch);

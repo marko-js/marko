@@ -10,9 +10,7 @@ const $item_content__setup = ($scope) => $item_content__$item_text($scope, { n: 
 const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a0", "<p><!>|<!></p>", "D%c%", $item_content__setup), { 2: ($scope) => _text($scope.a, $scope.c) });
 const $items = /*@__PURE__*/ _let(2, ($scope) => {
 	let $item;
-	forOf($scope.c, (item) => {
-		$item = attrTags($item, { content: $item_content($scope, { 2: item?.text }) });
-	});
+	forOf($scope.c, (item) => $item = attrTags($item, { content: $item_content($scope, { 2: item?.text }) }));
 	$input_item($scope.b, $item);
 });
 const $setup__script = _script("a1", ($scope) => _on($scope.a, "click", function() {

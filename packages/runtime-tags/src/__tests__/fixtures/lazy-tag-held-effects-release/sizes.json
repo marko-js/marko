@@ -17,12 +17,12 @@
       "brotli": 79
     },
     "log-effect.mjs": {
-      "min": 146,
+      "min": 144,
       "brotli": 104
     },
     "shared": {
-      "min": 4782,
-      "brotli": 2473
+      "min": 4780,
+      "brotli": 2472
     }
   },
   "html": {

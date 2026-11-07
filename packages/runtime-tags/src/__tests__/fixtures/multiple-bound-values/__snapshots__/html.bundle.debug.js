@@ -37,13 +37,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $childScope = _peek_scope_id();
 	_2counters_default({
 		count1,
-		count1Change: _resume((_new_count1) => {
-			count1 = _new_count1;
-		}, "__tests__/template.marko_0/count1Change", $scope0_id),
+		count1Change: _resume((_new_count1) => count1 = _new_count1, "__tests__/template.marko_0/count1Change", $scope0_id),
 		count2,
-		count2Change: _resume((_new_count2) => {
-			count2 = _new_count2;
-		}, "__tests__/template.marko_0/count2Change", $scope0_id)
+		count2Change: _resume((_new_count2) => count2 = _new_count2, "__tests__/template.marko_0/count2Change", $scope0_id)
 	});
 	_html(`<div>${_text_mark($scope0_id, "#text/1", count1)} ${_text_mark($scope0_id, "#text/2", count2, 2)}</div>`);
 	_scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", 0);

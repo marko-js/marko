@@ -18,14 +18,12 @@ var template_default = _template("a", (input) => {
 	forOf([{ id: "a" }, { id: "b" }], (item) => {
 		const $scope1_id = _scope_id();
 		let $option;
-		forOf([1, 2], (n) => {
-			$option = attrTags($option, {
-				label: item.id + n,
-				onSelect: _resume_locals(function() {
-					document.getElementById("log").textContent = item.id + n;
-				}, "a0", { j: n }, $scope1_id)
-			});
-		});
+		forOf([1, 2], (n) => $option = attrTags($option, {
+			label: item.id + n,
+			onSelect: _resume_locals(function() {
+				document.getElementById("log").textContent = item.id + n;
+			}, "a0", { j: n }, $scope1_id)
+		}));
 		menu_default({ option: $option });
 		_scope($scope1_id, { M: item?.id });
 	});

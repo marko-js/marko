@@ -30,9 +30,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $childScope = _peek_scope_id();
 	counter_default({
 		count: x,
-		countChange: _resume((_new_x) => {
-			x = _new_x;
-		}, "__tests__/template.marko_0/countChange", $scope0_id),
+		countChange: _resume((_new_x) => x = _new_x, "__tests__/template.marko_0/countChange", $scope0_id),
 		id: "controlled",
 		content: _content("__tests__/template.marko_1*content", () => {
 			_scope_reason();

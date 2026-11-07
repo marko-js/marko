@@ -38,7 +38,5 @@ const $source = /*@__PURE__*/ _let(2, ($scope) => {
 	});
 	_text($scope.b, $scope.c);
 });
-const $valueChange = ($scope) => (_new_source) => {
-	$source($scope, _new_source);
-};
+const $valueChange = ($scope) => (_new_source) => $source($scope, _new_source);
 _resumed.a0 = $valueChange;

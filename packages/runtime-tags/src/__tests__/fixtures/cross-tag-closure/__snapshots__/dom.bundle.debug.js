@@ -7,9 +7,7 @@ function $setup$2($scope) {
 	_return_change($scope, $valueChange($scope));
 }
 const $input$1 = ($scope, input) => $input_value($scope, input.value);
-const $valueChange = ($scope) => (_new_value) => {
-	$value($scope, _new_value);
-};
+const $valueChange = ($scope) => (_new_value) => $value($scope, _new_value);
 _resumed["__tests__/tags/my-let.marko_0/valueChange"] = $valueChange;
 var my_let_default = /*@__PURE__*/ _template("__tests__/tags/my-let.marko", "", "", /*@__PURE__*/ _return_setup($setup$2), $input$1);
 

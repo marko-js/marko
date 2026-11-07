@@ -18,9 +18,7 @@ var template_default = _template("a", (input) => {
 	const $value__closures = /* @__PURE__ */ new Set();
 	let value = 1;
 	child_default({
-		valueChange: _resume((_new_value) => {
-			value = _new_value;
-		}, "a0", $scope0_id),
+		valueChange: _resume((_new_value) => value = _new_value, "a0", $scope0_id),
 		content: _content("a2", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();

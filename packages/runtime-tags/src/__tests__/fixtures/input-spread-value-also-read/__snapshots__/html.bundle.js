@@ -16,9 +16,7 @@ var template_default = _template("a", (input) => {
 	const $childScope = _peek_scope_id();
 	my_input_default({
 		value,
-		valueChange: _resume((_new_value) => {
-			value = _new_value;
-		}, "a0", $scope0_id)
+		valueChange: _resume((_new_value) => value = _new_value, "a0", $scope0_id)
 	});
 	_scope($scope0_id, { a: _existing_scope($childScope) });
 	_resume_branch($scope0_id);

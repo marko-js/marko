@@ -18,15 +18,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(`<button id=rename>rename</button>${_el_mark($scope0_id, "#button/0")}`);
 	_set_scope_reason(2);
 	let $item;
-	forOf(items, (item) => {
-		$item = attrTags($item, { content: _content("__tests__/template.marko_1*content", () => {
-			const $scope1_reason = _scope_reason(), $wg__item_text = _write_guard($scope1_reason, 0);
-			const $scope1_id = _scope_id();
-			const $item_text = { n: 1 };
-			_html(`<p>${_text_mark($scope1_id, "#text/0", item.text, $wg__item_text)}|${_escape($item_text.n)}</p>`);
-			_write_if($scope1_reason, 0) && _scope($scope1_id, {}, "__tests__/template.marko", "7:6");
-		}, $scope0_id) });
-	});
+	forOf(items, (item) => $item = attrTags($item, { content: _content("__tests__/template.marko_1*content", () => {
+		const $scope1_reason = _scope_reason(), $wg__item_text = _write_guard($scope1_reason, 0);
+		const $scope1_id = _scope_id();
+		const $item_text = { n: 1 };
+		_html(`<p>${_text_mark($scope1_id, "#text/0", item.text, $wg__item_text)}|${_escape($item_text.n)}</p>`);
+		_write_if($scope1_reason, 0) && _scope($scope1_id, {}, "__tests__/template.marko", "7:6");
+	}, $scope0_id) }));
 	const $childScope = _peek_scope_id();
 	list_default({ item: $item });
 	_script($scope0_id, "__tests__/template.marko_0");

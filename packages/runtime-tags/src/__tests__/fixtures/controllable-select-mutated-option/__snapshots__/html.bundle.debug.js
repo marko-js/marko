@@ -9,9 +9,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	];
 	let value = options[0];
 	_html("<form>");
-	_attr_select_value($scope0_id, "#select/0", value, _resume((_new_value) => {
-		value = _new_value;
-	}, "__tests__/template.marko_0/valueChange", $scope0_id), () => {
+	_attr_select_value($scope0_id, "#select/0", value, _resume((_new_value) => value = _new_value, "__tests__/template.marko_0/valueChange", $scope0_id), () => {
 		_html("<select>");
 		_for_of(options, (opt) => {
 			const $scope1_id = _scope_id();

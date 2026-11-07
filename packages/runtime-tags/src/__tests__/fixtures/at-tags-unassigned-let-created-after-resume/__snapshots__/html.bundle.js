@@ -17,15 +17,13 @@ var child_default = _template("b", (input) => {
 	let show = true;
 	_set_scope_reason(_write_guard($scope0_reason, 0) << 1);
 	let $item;
-	forOf(input.items, (item) => {
-		$item = attrTags($item, { content: _content("b0", () => {
-			_scope_reason();
-			const $scope1_id = _scope_id();
-			_scope_id();
-			_html("<span>shown</span>");
-			$wi__input_items && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
-		}, $scope0_id) });
-	});
+	forOf(input.items, (item) => $item = attrTags($item, { content: _content("b0", () => {
+		_scope_reason();
+		const $scope1_id = _scope_id();
+		_scope_id();
+		_html("<span>shown</span>");
+		$wi__input_items && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
+	}, $scope0_id) }));
 	const $childScope = _peek_scope_id();
 	list_default({ item: $item });
 	$wi__input_items && _scope($scope0_id, {

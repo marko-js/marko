@@ -8,7 +8,5 @@ const $v = /*@__PURE__*/ _let(6, ($scope) => {
 	_text($scope.b, $scope.g);
 	$tag__OR__v($scope);
 });
-const $valueChange = ($scope) => (_new_v) => {
-	$v($scope, _new_v);
-};
+const $valueChange = ($scope) => (_new_v) => $v($scope, _new_v);
 _resumed.a0 = $valueChange;
