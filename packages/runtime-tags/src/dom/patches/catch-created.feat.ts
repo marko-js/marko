@@ -21,9 +21,7 @@ patchers[PatchKey.Catch] = withBranches((scope, accessor, [value, catchId]) => {
       (scope[link] as BranchScope)[AccessorProp.CatchContent] = (_?: never) =>
         getContent(catchId)!;
       renderCatch(scope[link] as BranchScope);
-      withCreating((_?: never) =>
-        patchScope(value as Scope, scope[link] as Scope),
-      );
+      withCreating(patchScope, value as Scope, scope[link] as Scope);
     } else {
       renderCatch(scope[link] as BranchScope, value);
     }
