@@ -7,15 +7,16 @@ import {
   type Binding,
   bindingUtil,
   BindingType,
-  getAliasRoot,
   getCanonicalBinding,
   type Intersection,
   isStateSourced,
   isDirectAlias,
+  isSectionParam,
   type ParamBinding,
   type ReferencedBindings,
   someAlias,
   someBindingRead,
+  someDerivedRead,
   someReadIn,
 } from "../bindings";
 import { createAnalysisMemo, createPassMemo } from "../cyclic-memo";
@@ -113,103 +114,6 @@ import {
   isStatefulRead,
 } from "./structure";
 
-// Stable wire/registry key for a fill: a register id for a template-wide fill
-// ordinal, built once per analysis in section order, which every output reads.
-const [getFillOrdinals] = createAnalysisState(() => {
-  const ordinals = new Map<Binding, number>();
-  forEachSection((section) => {
-    forEach(section.bindings, (binding) => {
-      if (getPatchFill(binding).fill) ordinals.set(binding, ordinals.size);
-    });
-  });
-  return ordinals;
-});
-
-export function getPatchFillKey(binding: Binding) {
-  const { markoOpts, opts } = getFile();
-  return getTemplateId(
-    markoOpts,
-    opts.filename as string,
-    "fill" + getFillOrdinals().get(binding)!,
-  );
-}
-
-// The section's `<let>`s a patch fills.
-export function getPatchFillBindings(section: Section) {
-  return bindingUtil.filter(section.bindings, isPatchFillBinding);
-}
-
-// A canonical root server value a patch fills to keep it current (`$global`
-// readers re-read the re-shipped bag).
-function isPatchFilled(binding: Binding) {
-  return (
-    isPatch() &&
-    getCanonicalBinding(binding) === binding &&
-    hasParamOrGlobalSource(binding.sources) &&
-    !binding.sources!.state &&
-    (binding.type === BindingType.param ||
-      binding.type === BindingType.derived) &&
-    !derivesLocals(binding.section)
-  );
-}
-
-// Content plain renders on the client derives its locals from its closures
-// there: a patch fills none of them.
-function derivesLocals(section: Section) {
-  return isContentScope(section) && !!getRendererReason(section);
-}
-
-// Inside content a flush reaches only by data.
-function inContentReachedByData(section: Section) {
-  return (
-    section.enclosing.inContentSection && !getClientRenderedContents(section)
-  );
-}
-
-// The content around `section` (below `upTo`) a flush can't reach by data alone:
-// there its closures subscribe, and the server reports each instance the client renders.
-function getClientRenderedContents(section: Section, upTo?: Section) {
-  let contents: SortedOpt<Section>;
-  for (
-    let cur = section;
-    cur !== upTo && cur.enclosing.inContentSection;
-    cur = cur.parent!
-  ) {
-    if (isContentSection(cur) && !reachedByData(cur)) {
-      contents = sectionUtil.add(contents, cur);
-    }
-  }
-  return contents;
-}
-
-// Content a known tag renders, passed from no state and called in place nowhere,
-// that plain renders nowhere on the client: a flush reaches each instance by data.
-function reachedByData(section: Section) {
-  return (
-    !!section.derives &&
-    !section.renderedBy &&
-    !getSourcesForDerived(section.derives)?.state &&
-    !getRendererReason(section)
-  );
-}
-
-// Content with no params or local closures.
-function isContentScope(section: Section) {
-  return (
-    !section.params &&
-    !section.localClosures &&
-    !!section.parent &&
-    !section.branch &&
-    !section.boundaryContent &&
-    !isKnownChild(section)
-  );
-}
-
-// A `<let>` a patch fills (`canPatchFill`).
-function isPatchFillBinding(binding: Binding) {
-  return !!getPatchFill(binding).fill;
-}
-
 // A value's fill, derived once per analysis (afresh each solve pass): what its reads
 // need, how a patch fills them, and what deriving it needs of its inputs.
 interface PatchFill {
@@ -294,6 +198,212 @@ function computePatchFill(binding: Binding): PatchFill {
     ownRegistration: fill && !hasResumableAssignment(binding),
     filledMembers: fill ? members : undefined,
   };
+}
+
+// Each write (content's once its shell ships) and unfillable read.
+function computePatchWrite(binding: Binding): PatchWrite {
+  const write = isPatchWritten(binding) && leavesReadUnfilled(binding);
+  const { sources } = binding;
+  return {
+    write,
+    effect: getPatchFill(binding).effectRead && write,
+    unfillable: !!sources?.param && !sources.global && !patchRefreshes(binding),
+  };
+}
+
+// A client read the patch leaves unfilled: always, or under structure a caller
+// group updates from the client.
+function leavesReadUnfilled(binding: Binding) {
+  const structure =
+    !getPatchFill(binding).objectSource &&
+    getUnfilledSubscribedSources(binding);
+  return (
+    structure === false ||
+    some(structure, (sources) =>
+      hasCallerParamSourceAt(sources, binding.section),
+    )
+  );
+}
+
+// A filled value effects, function references, built objects or an intersection a write's render reads,
+// in a scope a flush writes.
+function isPatchWritten(binding: Binding) {
+  return (
+    !!getPatchFill(binding).writeReads && patchFillsValues(binding.section)
+  );
+}
+
+// Stable wire/registry key for a fill: a register id for a template-wide fill
+// ordinal, built once per analysis in section order, which every output reads.
+const [getFillOrdinals] = createAnalysisState(() => {
+  const ordinals = new Map<Binding, number>();
+  forEachSection((section) => {
+    forEach(section.bindings, (binding) => {
+      if (getPatchFill(binding).fill) ordinals.set(binding, ordinals.size);
+    });
+  });
+  return ordinals;
+});
+
+export function getPatchFillKey(binding: Binding) {
+  const { markoOpts, opts } = getFile();
+  return getTemplateId(
+    markoOpts,
+    opts.filename as string,
+    "fill" + getFillOrdinals().get(binding)!,
+  );
+}
+
+// The section's `<let>`s a patch fills.
+export function getPatchFillBindings(section: Section) {
+  return bindingUtil.filter(section.bindings, isPatchFillBinding);
+}
+
+// A `<let>` a patch fills (`canPatchFill`).
+function isPatchFillBinding(binding: Binding) {
+  return !!getPatchFill(binding).fill;
+}
+
+// A patch asks the sources of what it writes: each value it fills or writes, each
+// intersection it runs and each expression a node renders.
+export function ensurePatchReasonGroups(
+  section: Section,
+  intersections: Intersection[] | undefined,
+) {
+  forEach(section.bindings, ensureBindingGroups);
+  // Created intersections run by group, and a page ships a patch-filled intersection's
+  // members by it.
+  for (const intersection of intersections || []) {
+    ensureCallerParamGroups(getSourcesForReferencedBindings(intersection));
+  }
+  for (const slot of section.slots) ensureSlotGroups(slot);
+  // A closure's render over a written slot gates on the structure callers select.
+  getParamSelectedStructure(section)?.forEach(ensureCallerParamGroups);
+  // An `<await>` asks whether a patch fills its promise (`_unfilled_if`).
+  if (section.branch?.kind === "await") {
+    ensureCallerParamGroups(getSourcesForExpr(section.branchExpr!));
+  }
+  ensureKnownTagPatchGroups(section);
+}
+
+function ensureSlotGroups(slot: Slot) {
+  ensureWriteGroups(slot);
+  ensureUnfilledWriteGroups(slot);
+}
+
+function ensureBindingGroups(binding: Binding) {
+  const { writeReads, filledMembers } = getPatchFill(binding);
+  if (writeReads && patchFillsScope(binding.section)) {
+    ensureCallerParamGroups(binding.sources);
+  }
+  // Its write in place gates on each filled intersection's other members.
+  forEach(filledMembers, ensureCallerParamGroups);
+  // A created scope's `<let>` seeds by what its initial value reads.
+  ensureCallerParamGroups(getStateInitialValueSources(binding));
+}
+
+// A page writes a value a patch fills (and its closure set) only where a client
+// source leaves a read unfilled, by its param-selected structure's groups.
+function ensureUnfilledWriteGroups(slot: Slot) {
+  if (
+    (slot.kind === SlotKind.Value || slot.kind === SlotKind.ClosureScopes) &&
+    slot.owner.type !== BindingType.dom &&
+    isGuardedReason(slot.reason)
+  ) {
+    forEach(
+      (slot.kind === SlotKind.Value
+        ? getUnfilledReadSources
+        : getUnfilledSubscribedSources)(slot.owner) || undefined,
+      ensureCallerParamGroups,
+    );
+    // A param the client derives is written by its own group's bits.
+    if (derivesConstantInput(slot.owner)) {
+      ensureCallerParamGroups(slot.owner.sources);
+    }
+  }
+}
+
+// A patch writes what a node renders or a branch expression picks; handlers
+// are attached, and a known child's inputs are its own params.
+function ensureWriteGroups(slot: Slot) {
+  if (
+    slot.kind === SlotKind.BranchExpr ||
+    (slot.kind === SlotKind.Value &&
+      slot.owner.type === BindingType.dom &&
+      !isKnownChildNode(slot.owner))
+  ) {
+    forEach(slot.reasonExprs, ensureExprWriteGroups);
+  }
+}
+
+function ensureExprWriteGroups(expr: t.NodeExtra) {
+  if (!expr.consumed) ensureCallerParamGroups(getFillSources(expr));
+}
+
+// A canonical root server value a patch fills to keep it current (`$global`
+// readers re-read the re-shipped bag).
+function isPatchFilled(binding: Binding) {
+  return (
+    isPatch() &&
+    getCanonicalBinding(binding) === binding &&
+    hasParamOrGlobalSource(binding.sources) &&
+    !binding.sources!.state &&
+    (binding.type === BindingType.param ||
+      binding.type === BindingType.derived) &&
+    !derivesLocals(binding.section)
+  );
+}
+
+// Content plain renders on the client derives its locals from its closures
+// there: a patch fills none of them.
+function derivesLocals(section: Section) {
+  return isContentScope(section) && !!getRendererReason(section);
+}
+
+// Inside content a flush reaches only by data.
+function inContentReachedByData(section: Section) {
+  return (
+    section.enclosing.inContentSection && !getClientRenderedContents(section)
+  );
+}
+
+// The content around `section` (below `upTo`) a flush can't reach by data alone:
+// there its closures subscribe, and the server reports each instance the client renders.
+function getClientRenderedContents(section: Section, upTo?: Section) {
+  let contents: SortedOpt<Section>;
+  for (
+    let cur = section;
+    cur !== upTo && cur.enclosing.inContentSection;
+    cur = cur.parent!
+  ) {
+    if (isContentSection(cur) && !reachedByData(cur)) {
+      contents = sectionUtil.add(contents, cur);
+    }
+  }
+  return contents;
+}
+
+// Content a known tag renders, passed from no state and called in place nowhere,
+// that plain renders nowhere on the client: a flush reaches each instance by data.
+function reachedByData(section: Section) {
+  return (
+    !!section.derives &&
+    !section.renderedBy &&
+    !getSourcesForDerived(section.derives)?.state &&
+    !getRendererReason(section)
+  );
+}
+
+// Content with no params or local closures.
+function isContentScope(section: Section) {
+  return (
+    !section.params &&
+    !section.localClosures &&
+    !!section.parent &&
+    !section.branch &&
+    !section.boundaryContent &&
+    !isKnownChild(section)
+  );
 }
 
 // A `<let>` a patch fills: where a server value keeps reaching it (a controlled
@@ -393,6 +503,12 @@ export const [seedsCreatedScope] = createAnalysisMemo((binding: Binding) => {
     !derivesByCreatedSetup(binding)
   );
 }, false);
+
+// A created scope's seed a flush writes; a registration it carries binds by
+// what its own module imports.
+export function writesSeed(binding: Binding) {
+  return seedsCreatedScope(binding) && !!getWriteReason(binding);
+}
 
 // Read in `section` past renders, effects, setup, name-only dynamic tags and (never
 // assigned) control flow and call arguments: by a child, intersection or return.
@@ -1229,17 +1345,6 @@ export function someReached(
   return reaches(holder, expr);
 }
 
-// A value a read of the binding derives passes `test`.
-export function someDerivedRead(
-  binding: Binding,
-  test: (derived: Binding, expr: ReferencedExtra) => boolean,
-) {
-  for (const expr of binding.reads.keys()) {
-    if (some(expr.derives, (derived) => test(derived, expr))) return true;
-  }
-  return false;
-}
-
 // Referenced inside a function client code reads (registering it): its reads
 // reach the live scope at any later invocation, so a patch keeps it current.
 function isRegisteredFnReference(binding: Binding) {
@@ -1683,14 +1788,6 @@ function getFilledMembers(kind: true | FillConditions | undefined) {
     : undefined;
 }
 
-// A param by type (a template's or `<define>`'s), or the section's params and their
-// aliases, a loop item's (typed `derived`) included.
-export function isSectionParam(binding: Binding) {
-  if (binding.type === BindingType.param) return true;
-  const root = getAliasRoot(binding);
-  return root === root.section.params;
-}
-
 // The caller params a `$global` signal reads unfilled: a changed key re-runs it
 // only where they update from the client.
 export function getUnfillableSources(refs: ReferencedBindings) {
@@ -2132,121 +2229,6 @@ export function isResumedRead(read: ReferencedExtra) {
     !!getSourcesForExpr(read)?.state ||
     !patchFillsSection(read.section) ||
     !!getDerivedNeeds(read)
-  );
-}
-
-// A patch asks the sources of what it writes: each value it fills or writes, each
-// intersection it runs and each expression a node renders.
-export function ensurePatchReasonGroups(
-  section: Section,
-  intersections: Intersection[] | undefined,
-) {
-  forEach(section.bindings, ensureBindingGroups);
-  // Created intersections run by group, and a page ships a patch-filled intersection's
-  // members by it.
-  for (const intersection of intersections || []) {
-    ensureCallerParamGroups(getSourcesForReferencedBindings(intersection));
-  }
-  for (const slot of section.slots) ensureSlotGroups(slot);
-  // A closure's render over a written slot gates on the structure callers select.
-  getParamSelectedStructure(section)?.forEach(ensureCallerParamGroups);
-  // An `<await>` asks whether a patch fills its promise (`_unfilled_if`).
-  if (section.branch?.kind === "await") {
-    ensureCallerParamGroups(getSourcesForExpr(section.branchExpr!));
-  }
-  ensureKnownTagPatchGroups(section);
-}
-
-function ensureSlotGroups(slot: Slot) {
-  ensureWriteGroups(slot);
-  ensureUnfilledWriteGroups(slot);
-}
-
-function ensureBindingGroups(binding: Binding) {
-  const { writeReads, filledMembers } = getPatchFill(binding);
-  if (writeReads && patchFillsScope(binding.section)) {
-    ensureCallerParamGroups(binding.sources);
-  }
-  // Its write in place gates on each filled intersection's other members.
-  forEach(filledMembers, ensureCallerParamGroups);
-  // A created scope's `<let>` seeds by what its initial value reads.
-  ensureCallerParamGroups(getStateInitialValueSources(binding));
-}
-
-// A page writes a value a patch fills (and its closure set) only where a client
-// source leaves a read unfilled, by its param-selected structure's groups.
-function ensureUnfilledWriteGroups(slot: Slot) {
-  if (
-    (slot.kind === SlotKind.Value || slot.kind === SlotKind.ClosureScopes) &&
-    slot.owner.type !== BindingType.dom &&
-    isGuardedReason(slot.reason)
-  ) {
-    forEach(
-      (slot.kind === SlotKind.Value
-        ? getUnfilledReadSources
-        : getUnfilledSubscribedSources)(slot.owner) || undefined,
-      ensureCallerParamGroups,
-    );
-    // A param the client derives is written by its own group's bits.
-    if (derivesConstantInput(slot.owner)) {
-      ensureCallerParamGroups(slot.owner.sources);
-    }
-  }
-}
-
-// A patch writes what a node renders or a branch expression picks; handlers
-// are attached, and a known child's inputs are its own params.
-function ensureWriteGroups(slot: Slot) {
-  if (
-    slot.kind === SlotKind.BranchExpr ||
-    (slot.kind === SlotKind.Value &&
-      slot.owner.type === BindingType.dom &&
-      !isKnownChildNode(slot.owner))
-  ) {
-    forEach(slot.reasonExprs, ensureExprWriteGroups);
-  }
-}
-
-function ensureExprWriteGroups(expr: t.NodeExtra) {
-  if (!expr.consumed) ensureCallerParamGroups(getFillSources(expr));
-}
-
-// A created scope's seed a flush writes; a registration it carries binds by
-// what its own module imports.
-export function writesSeed(binding: Binding) {
-  return seedsCreatedScope(binding) && !!getWriteReason(binding);
-}
-
-// Each write (content's once its shell ships) and unfillable read.
-function computePatchWrite(binding: Binding): PatchWrite {
-  const write = isPatchWritten(binding) && leavesReadUnfilled(binding);
-  const { sources } = binding;
-  return {
-    write,
-    effect: getPatchFill(binding).effectRead && write,
-    unfillable: !!sources?.param && !sources.global && !patchRefreshes(binding),
-  };
-}
-
-// A client read the patch leaves unfilled: always, or under structure a caller
-// group updates from the client.
-function leavesReadUnfilled(binding: Binding) {
-  const structure =
-    !getPatchFill(binding).objectSource &&
-    getUnfilledSubscribedSources(binding);
-  return (
-    structure === false ||
-    some(structure, (sources) =>
-      hasCallerParamSourceAt(sources, binding.section),
-    )
-  );
-}
-
-// A filled value effects, function references, built objects or an intersection a write's render reads,
-// in a scope a flush writes.
-function isPatchWritten(binding: Binding) {
-  return (
-    !!getPatchFill(binding).writeReads && patchFillsValues(binding.section)
   );
 }
 

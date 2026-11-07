@@ -415,6 +415,17 @@ export function someBindingRead(
   return false;
 }
 
+// A value a read of the binding derives passes `test`.
+export function someDerivedRead(
+  binding: Binding,
+  test: (derived: Binding, expr: ReferencedExtra) => boolean,
+) {
+  for (const expr of binding.reads.keys()) {
+    if (some(expr.derives, (derived) => test(derived, expr))) return true;
+  }
+  return false;
+}
+
 // Whether a read of the binding in `section` passes `test`.
 export function someReadIn(
   binding: Binding,
@@ -500,6 +511,14 @@ export function getDebugAccess(
 // other modules.
 export function isTemplateParam(binding: Binding) {
   return binding.type === BindingType.param && !binding.section.parent;
+}
+
+// A param by type (a template's or `<define>`'s), or the section's params and their
+// aliases, a loop item's (typed `derived`) included.
+export function isSectionParam(binding: Binding) {
+  if (binding.type === BindingType.param) return true;
+  const root = getAliasRoot(binding);
+  return root === root.section.params;
 }
 
 export function isStateSourced(binding: Binding) {
