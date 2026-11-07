@@ -28,7 +28,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		$cg__input_msg && _patch_write($scope1_id, "xh", err?.message);
 		const upper = input.msg.toUpperCase();
-		_html(`<b${_attr("title", input.msg, $scope1_id, "aa$title", $scope0_reason, 1)}>${_text_mark($scope1_id, "b", err.message, 1, 4, 0)} ${_text_mark($scope1_id, "c", input.msg, 2, $scope0_reason, 1)} ${_text_mark($scope1_id, "d", upper, 2, $scope0_reason, 1)} ${_text_mark($scope1_id, "e", err.message + upper, 2, $scope0_reason, 1)}</b>${_el_mark($scope1_id, "a", _updates_from($scope0_reason, 1))}`);
+		_html(`<b${_attr("title", input.msg, $scope1_id, "a", $scope0_reason, 1)}>${_text_mark($scope1_id, "b", err.message, 1, 4, 0)} ${_text_mark($scope1_id, "c", input.msg, 2, $scope0_reason, 1)} ${_text_mark($scope1_id, "d", upper, 2, $scope0_reason, 1)} ${_text_mark($scope1_id, "e", err.message + upper, 2, $scope0_reason, 1)}</b>${_el_mark($scope1_id, "a", _updates_from($scope0_reason, 1))}`);
 		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "a0", $cg__input_msg);
 		_patch_render($scope1_id, "a1", ["h", _filled_guard($scope0_reason, 1) && "i"], $scope0_reason, 1);
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_msg__closures, _scope($scope1_id, {

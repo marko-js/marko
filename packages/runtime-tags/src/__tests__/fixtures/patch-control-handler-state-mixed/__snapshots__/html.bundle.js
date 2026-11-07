@@ -15,7 +15,7 @@ var template_default = _template("a", (input) => {
 		let cv = "";
 		_html(`<input${_attr_input_value($scope1_id, "a", it.v + cm, _resume(function(v) {
 			cv = v;
-		}, "a0", $scope1_id), 0, 0, 0, "wEa")}>${_el_mark($scope1_id, "a")}<span>${_text_mark($scope1_id, "b", cv, 1, 0, 0, 1)}</span>`);
+		}, "a0", $scope1_id), 2)}>${_el_mark($scope1_id, "a")}<span>${_text_mark($scope1_id, "b", cv, 1, 0, 0, 1)}</span>`);
 		_script($scope1_id, "a1");
 		_patch_render($scope1_id, "a2", [
 			">j",

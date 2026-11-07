@@ -6,7 +6,7 @@ var text_field_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $fg__input_value = _filled_guard($scope0_reason, 1), $fg__input_valueChange = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const { value, valueChange, ...attrs } = input;
-	_html(`<input${_attr_input_value($scope0_id, "a", value, valueChange, "n2a", $scope0_reason, 0, "wEa", $scope0_reason, 0)}${_attrs_partial(attrs, {
+	_html(`<input${_attr_input_value($scope0_id, "a", value, valueChange, 3, $scope0_reason, 0)}${_attrs_partial(attrs, {
 		value: 1,
 		valueChange: 1
 	}, "a", $scope0_id, "input", 0, $scope0_reason, 3)}>${_el_mark($scope0_id, "a")}`);

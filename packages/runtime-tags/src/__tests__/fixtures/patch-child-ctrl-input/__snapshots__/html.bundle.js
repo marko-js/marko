@@ -3,7 +3,7 @@ _shells({ b: "b !b0; bD ;<input><em> </em>" });
 var field_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $fg__input_value = _filled_guard($scope0_reason, 1), $fg__input_valueChange = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
-	_html(`<input${_attr_input_value($scope0_id, "a", input.value, input.valueChange, "n2a", $scope0_reason, 0, "wEa", $scope0_reason, 0)}>${_el_mark($scope0_id, "a")}<em>${_text_mark($scope0_id, "b", input.value, 1, $scope0_reason, 1)}</em>`);
+	_html(`<input${_attr_input_value($scope0_id, "a", input.value, input.valueChange, 3, $scope0_reason, 0)}>${_el_mark($scope0_id, "a")}<em>${_text_mark($scope0_id, "b", input.value, 1, $scope0_reason, 1)}</em>`);
 	_script($scope0_id, "b0");
 	_patch_render($scope0_id, "b1", [$fg__input_value && "e", $fg__input_valueChange && "f"], $scope0_reason, 0);
 	_scope($scope0_id, {

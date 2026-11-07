@@ -29,11 +29,11 @@ var template_default = _template("a", (input) => {
 	_for_of(input.items, (item) => {
 		const $scope1_id = _scope_id();
 		const uid = _id("A");
-		_html(`<input${_attr("id", uid, $scope1_id, "aa$id", 0, 0)}>${_el_mark($scope1_id, "a", 0)}`);
+		_html(`<input${_attr("id", uid, $scope1_id, "a", 0, 0)}>${_el_mark($scope1_id, "a", 0)}`);
 		_if(() => {
 			if (input.show) {
 				const $scope2_id = _scope_id();
-				_html(`<label${_attr("for", uid, $scope2_id, "aa$for", 0, 0)}>${_text_mark($scope2_id, "b", item.key, 1, $scope0_reason, 2)}</label>${_el_mark($scope2_id, "a", 0)}`);
+				_html(`<label${_attr("for", uid, $scope2_id, "a", 0, 0)}>${_text_mark($scope2_id, "b", item.key, 1, $scope0_reason, 2)}</label>${_el_mark($scope2_id, "a", 0)}`);
 				!$cg__input_show && _unfilled_if() && _patch_write($scope1_id, "wd", uid);
 				_scope($scope2_id, {});
 				return 0;
@@ -51,11 +51,11 @@ var template_default = _template("a", (input) => {
 		const $scope3_id = _scope_id();
 		const $scope3_reason = _scope_reason();
 		const uid = _id("B");
-		_html(`<input${_attr("id", uid, $scope3_id, "aa$id", 0, 0)}>${_el_mark($scope3_id, "a", 0)}`);
+		_html(`<input${_attr("id", uid, $scope3_id, "a", 0, 0)}>${_el_mark($scope3_id, "a", 0)}`);
 		_if(() => {
 			if (show) {
 				const $scope4_id = _scope_id();
-				_html(`<label${_attr("for", uid, $scope4_id, "aa$for", 0, 0)}>field</label>${_el_mark($scope4_id, "a", 0)}`);
+				_html(`<label${_attr("for", uid, $scope4_id, "a", 0, 0)}>field</label>${_el_mark($scope4_id, "a", 0)}`);
 				_unfilled_if() && _patch_write($scope3_id, "wf", uid);
 				_scope($scope4_id, {});
 				return 0;
@@ -74,7 +74,7 @@ var template_default = _template("a", (input) => {
 			_scope_reason();
 			const $scope6_id = _scope_id();
 			const uid = _id("C");
-			_html(`<input${_attr("id", uid, $scope6_id, "aa$id", 0, 0)}>${_el_mark($scope6_id, "a", 0)}<label${_attr("for", uid, $scope6_id, "ab$for", 0, 0)}>${_text_mark($scope6_id, "c", row.id, 1, $scope0_reason, 5)}</label>${_el_mark($scope6_id, "b", 0)}`);
+			_html(`<input${_attr("id", uid, $scope6_id, "a", 0, 0)}>${_el_mark($scope6_id, "a", 0)}<label${_attr("for", uid, $scope6_id, "b", 0, 0)}>${_text_mark($scope6_id, "c", row.id, 1, $scope0_reason, 5)}</label>${_el_mark($scope6_id, "b", 0)}`);
 			_scope($scope6_id, {});
 		}, $scope5_id, 6) });
 		_patch_child_end();

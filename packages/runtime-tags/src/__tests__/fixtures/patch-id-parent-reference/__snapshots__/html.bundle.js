@@ -7,11 +7,11 @@ var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const headingId = _id("A");
-	_html(`<h2${_attr("id", headingId, $scope0_id, "aa$id", 0, 0)}>Fields</h2>${_el_mark($scope0_id, "a", 0)}`);
+	_html(`<h2${_attr("id", headingId, $scope0_id, "a", 0, 0)}>Fields</h2>${_el_mark($scope0_id, "a", 0)}`);
 	_for_of(input.items, (item) => {
 		const $scope1_id = _scope_id();
 		const uid = _id("B");
-		_html(`<label${_attr("for", uid, $scope1_id, "aa$for", 0, 0)}>${_text_mark($scope1_id, "b", item.key, 1, $scope0_reason, 0)}</label>${_el_mark($scope1_id, "a", 0)}<input${_attr("id", uid, $scope1_id, "ac$id", 0, 0)}${_attr("aria-describedby", headingId, $scope1_id, "ac$aria-describedby", 0, 0)}>${_el_mark($scope1_id, "c", 0)}`);
+		_html(`<label${_attr("for", uid, $scope1_id, "a", 0, 0)}>${_text_mark($scope1_id, "b", item.key, 1, $scope0_reason, 0)}</label>${_el_mark($scope1_id, "a", 0)}<input${_attr("id", uid, $scope1_id, "c", 0, 0)}${_attr("aria-describedby", headingId, $scope1_id, "c", 0, 0)}>${_el_mark($scope1_id, "c", 0)}`);
 		!_client_guard($scope0_reason, 0) && _unfilled_if() && _patch_write($scope0_id, "wf", headingId);
 		_scope($scope1_id, {});
 	}, "key", $scope0_id, "b", 1, 1, 1, 0, 0, "a0", $scope0_reason, 0);

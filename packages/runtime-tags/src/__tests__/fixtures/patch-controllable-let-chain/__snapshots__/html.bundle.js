@@ -13,9 +13,9 @@ var template_default = _template("a", (input) => {
 			let b = a;
 			_html(`<input${_attr_input_value($scope1_id, "a", a, _resume((_new_a) => {
 				a = _new_a;
-			}, "a0", $scope1_id), "n2a", $cg__input_text << 1, 0, "wEa", $cg__input_text << 1, 0)}>${_el_mark($scope1_id, "a")}<input${_attr_input_value($scope1_id, "b", b, _resume((_new_b) => {
+			}, "a0", $scope1_id), 3, $cg__input_text << 1, 0)}>${_el_mark($scope1_id, "a")}<input${_attr_input_value($scope1_id, "b", b, _resume((_new_b) => {
 				b = _new_b;
-			}, "a1", $scope1_id), "n2b", $cg__input_text << 1, 0, "wEb", $cg__input_text << 1, 0)}>${_el_mark($scope1_id, "b")}`);
+			}, "a1", $scope1_id), 3, $cg__input_text << 1, 0)}>${_el_mark($scope1_id, "b")}`);
 			_script($scope1_id, "a2");
 			$cg__input_text && _patch_render($scope1_id, "a3");
 			_scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) });

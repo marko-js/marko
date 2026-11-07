@@ -12,7 +12,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const loud = _resume((next) => {
 		document.querySelector("main").dataset.got = next.toUpperCase();
 	}, "__tests__/template.marko_0/loud");
-	_html(`<main><h1>${_text_mark($scope0_id, "#text/0", input.title, 1, $scope0_reason, 1)}</h1><input${_attr_input_value($scope0_id, "#input/1", input.value, input.big ? loud : plain, "PatchControl:2#input/1", $scope0_reason, 0, "PatchWrite:ControlledHandler:#input/1", $scope0_reason, 0)}>${_el_mark($scope0_id, "#input/1")}</main>`);
+	_html(`<main><h1>${_text_mark($scope0_id, "#text/0", input.title, 1, $scope0_reason, 1)}</h1><input${_attr_input_value($scope0_id, "#input/1", input.value, input.big ? loud : plain, 3, $scope0_reason, 0)}>${_el_mark($scope0_id, "#input/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_patch_render($scope0_id, "__tests__/template.marko_0_input_value#5_input_big#6_plain#7_loud#8/setup", [$fg__input_value && "input_value", $fg__input_big && "input_big"], $scope0_reason, 0);
 	_scope($scope0_id, {

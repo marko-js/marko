@@ -13,7 +13,7 @@ var card_default = _template("__tests__/tags/card/index.marko", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_html(`<h2${_attr_class(input.title, $scope1_id, "PatchAttr:#h2/0 class", $scope0_reason, 2)}>${_text_mark($scope1_id, "#text/1", input.title, 1, $scope0_reason, 2)}</h2>${_el_mark($scope1_id, "#h2/0", _updates_from($scope0_reason, 2))}<p>${_text_mark($scope1_id, "#text/2", input.note, 1, $scope0_reason, 3)}</p>`);
+			_html(`<h2${_attr_class(input.title, $scope1_id, "#h2/0", $scope0_reason, 2)}>${_text_mark($scope1_id, "#text/1", input.title, 1, $scope0_reason, 2)}</h2>${_el_mark($scope1_id, "#h2/0", _updates_from($scope0_reason, 2))}<p>${_text_mark($scope1_id, "#text/2", input.note, 1, $scope0_reason, 3)}</p>`);
 			_client_guard($scope0_reason, 2) && _patch_render($scope1_id, "__tests__/tags/card/index.marko_1_input_title#0:4/setup");
 			_client_guard($scope0_reason, 3) && _patch_render($scope1_id, "__tests__/tags/card/index.marko_1_input_note#0:5/setup");
 			_scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }, "__tests__/tags/card/index.marko", "2:4");

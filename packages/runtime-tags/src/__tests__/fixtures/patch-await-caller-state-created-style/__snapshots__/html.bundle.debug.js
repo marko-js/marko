@@ -15,7 +15,7 @@ var show_await_default = _template("__tests__/tags/show-await.marko", (input) =>
 	const $scope0_id = _scope_id();
 	_await($scope0_id, "#text/0", input.promise, (x) => {
 		const $scope1_id = _scope_id();
-		_html(`${_style_html(`--M_packages-1bruntime-19tags-1bsrc-1b__tests__-1bfixtures-1bpatch-19await-19caller-19state-19created-19style-1btags-1bshow-19await-1amarko_0:${_escape_style_value(x, $scope1_id, "PatchStyle:#style/0 --M_packages-1bruntime-19tags-1bsrc-1b__tests__-1bfixtures-1bpatch-19await-19caller-19state-19created-19style-1btags-1bshow-19await-1amarko_0", $scope0_reason, 0)};`)}${_el_mark($scope1_id, "#style/0", _updates_from($scope0_reason, 0))}<p>${_text_mark($scope1_id, "#text/1", x, 1, $scope0_reason, 0)}</p>`);
+		_html(`${_style_html(`${_escape_style_value(x, $scope1_id, "#style/0", "--M_packages-1bruntime-19tags-1bsrc-1b__tests__-1bfixtures-1bpatch-19await-19caller-19state-19created-19style-1btags-1bshow-19await-1amarko_0", $scope0_reason, 0)};`)}${_el_mark($scope1_id, "#style/0", _updates_from($scope0_reason, 0))}<p>${_text_mark($scope1_id, "#text/1", x, 1, $scope0_reason, 0)}</p>`);
 		_scope($scope1_id, {}, "__tests__/tags/show-await.marko", "1:2");
 	}, 1, "__tests__/tags/show-await.marko_1*content", _unfilled_if($scope0_reason, 0) && 3, 1);
 });

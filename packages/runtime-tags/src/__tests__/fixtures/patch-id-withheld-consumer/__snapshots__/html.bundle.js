@@ -8,7 +8,7 @@ var card_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	const own = _id("A");
 	let c = input.content;
-	_html(`<input${_attr("id", own, $scope0_id, "aa$id", 0, 0)}>${_el_mark($scope0_id, "a", 0)}<label${_attr("for", own, $scope0_id, "ab$for", 0, 0)}>own</label>${_el_mark($scope0_id, "b", 0)}<button>clear</button>${_el_mark($scope0_id, "c")}`);
+	_html(`<input${_attr("id", own, $scope0_id, "a", 0, 0)}>${_el_mark($scope0_id, "a", 0)}<label${_attr("for", own, $scope0_id, "b", 0, 0)}>own</label>${_el_mark($scope0_id, "b", 0)}<button>clear</button>${_el_mark($scope0_id, "c")}`);
 	_dynamic_tag($scope0_id, "d", c, {}, 2, 0, 0, 1, _client_guard($scope0_reason, 0) << 1, 0, 1);
 	_script($scope0_id, "b0");
 	_scope($scope0_id, {}) || _client_branch(input.content);
@@ -31,7 +31,7 @@ var template_default = _template("a", (input) => {
 			_scope_reason();
 			const $scope2_id = _scope_id();
 			const uid = _id("A");
-			_html(`<input${_attr("id", uid, $scope2_id, "aa$id", 0, 0)}>${_el_mark($scope2_id, "a", 0)}<label${_attr("for", uid, $scope2_id, "ab$for", 0, 0)}>${_text_mark($scope2_id, "c", row.id, 1, $scope0_reason, 0)}</label>${_el_mark($scope2_id, "b", 0)}`);
+			_html(`<input${_attr("id", uid, $scope2_id, "a", 0, 0)}>${_el_mark($scope2_id, "a", 0)}<label${_attr("for", uid, $scope2_id, "b", 0, 0)}>${_text_mark($scope2_id, "c", row.id, 1, $scope0_reason, 0)}</label>${_el_mark($scope2_id, "b", 0)}`);
 			_scope($scope2_id, {});
 		}, $scope1_id, 2) });
 		_patch_child_end();

@@ -5,7 +5,7 @@ _shells({ b: "b !b0; ;<textarea></textarea>" });
 var text_area_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $fg__input_value = _filled_guard($scope0_reason, 1), $fg__input_valueChange = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
-	_html(`<textarea>${_attr_textarea_value($scope0_id, "a", input.value, input.valueChange, "n2a", $scope0_reason, 0, "wEa", $scope0_reason, 0)}</textarea>${_el_mark($scope0_id, "a")}`);
+	_html(`<textarea>${_attr_textarea_value($scope0_id, "a", input.value, input.valueChange, 3, $scope0_reason, 0)}</textarea>${_el_mark($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
 	_patch_render($scope0_id, "b1", [$fg__input_value && "d", $fg__input_valueChange && "e"], $scope0_reason, 0);
 	_scope($scope0_id, {
