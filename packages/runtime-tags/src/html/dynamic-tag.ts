@@ -16,6 +16,7 @@ import type { Locals } from "./serializer";
 import type { ServerRenderer } from "./template";
 import {
   $chunk,
+  _attr_content,
   _el,
   _existing_scope,
   _html,
@@ -66,78 +67,48 @@ export let _dynamic_tag = (
       assertValidTagName(renderer);
     }
 
+    const nodeAccessor = MARKO_DEBUG ? `#${renderer.toLowerCase()}/0` : "a";
     const input = ((inputIsArgs
       ? (inputOrArgs as unknown[])[0]
       : inputOrArgs) || {}) as Record<string, unknown>;
     rendered = true;
     _scope_id();
-    _html(
-      `<${renderer}${_attrs(input, MARKO_DEBUG ? `#${renderer.toLowerCase()}/0` : "a", branchId, renderer)}>`,
-    );
+    _html(`<${renderer}${_attrs(input, nodeAccessor, branchId, renderer)}>`);
 
     if (!voidElementsReg.test(renderer)) {
-      const renderContent =
-        content || normalizeDynamicRenderer<ServerRenderer>(input.content);
+      // Rendered as a native tag's content, as `_attrs_content` does on the client.
+      const renderContent = content || input.content;
       if (renderer === "textarea") {
-        if (MARKO_DEBUG && renderContent) {
+        if (MARKO_DEBUG && normalizeDynamicRenderer(renderContent)) {
           throw new Error(
             "A dynamic tag rendering a `<textarea>` cannot have `content` and must use the `value` attribute instead.",
           );
         }
-        _html(
-          _attrs_textarea_value(
-            branchId,
-            MARKO_DEBUG ? `#${renderer.toLowerCase()}/0` : "a",
-            input,
-          ),
+        _html(_attrs_textarea_value(branchId, nodeAccessor, input));
+      } else if (
+        renderer === "select" &&
+        ("value" in input || "valueChange" in input)
+      ) {
+        // Only this case defers the content, so it renders inside the
+        // dynamically scoped selected value.
+        _attr_select_value(
+          branchId,
+          nodeAccessor,
+          input.value,
+          input.valueChange,
+          renderContent
+            ? () =>
+                _attr_content(
+                  nodeAccessor,
+                  branchId,
+                  renderContent,
+                  markerGuard,
+                )
+            : undefined,
+          1,
         );
-      } else {
-        if (
-          MARKO_DEBUG &&
-          renderContent &&
-          typeof renderContent !== "function"
-        ) {
-          throw new Error(
-            `Body content is not supported for the \`<${renderer}>\` tag.`,
-          );
-        }
-
-        if (
-          renderer === "select" &&
-          ("value" in input || "valueChange" in input)
-        ) {
-          // Only this case defers the body, so it renders inside the
-          // dynamically scoped selected value; every other tag recurses directly.
-          _attr_select_value(
-            branchId,
-            MARKO_DEBUG ? `#${renderer.toLowerCase()}/0` : "a",
-            input.value,
-            input.valueChange,
-            renderContent
-              ? () =>
-                  _dynamic_tag(
-                    branchId,
-                    MARKO_DEBUG ? `#${renderer.toLowerCase()}/0` : "a",
-                    renderContent,
-                    undefined,
-                    0,
-                    undefined,
-                    markerGuard,
-                  )
-              : undefined,
-            1,
-          );
-        } else if (renderContent) {
-          _dynamic_tag(
-            branchId,
-            MARKO_DEBUG ? `#${renderer.toLowerCase()}/0` : "a",
-            renderContent,
-            undefined,
-            0,
-            undefined,
-            markerGuard,
-          );
-        }
+      } else if (renderContent) {
+        _attr_content(nodeAccessor, branchId, renderContent, markerGuard);
       }
 
       _html(`</${renderer}>`);
@@ -150,14 +121,8 @@ export let _dynamic_tag = (
     const childScope = getScopeById(branchId);
     const needsScript =
       childScope &&
-      (childScope[
-        AccessorPrefix.EventAttributes +
-          (MARKO_DEBUG ? `#${renderer.toLowerCase()}/0` : "a")
-      ] ||
-        childScope[
-          AccessorPrefix.ControlledHandler +
-            (MARKO_DEBUG ? `#${renderer.toLowerCase()}/0` : "a")
-        ]);
+      (childScope[AccessorPrefix.EventAttributes + nodeAccessor] ||
+        childScope[AccessorPrefix.ControlledHandler + nodeAccessor]);
 
     if (needsScript) {
       // The debug accessor is this write's only consumer, and `needsScript`

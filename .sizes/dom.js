@@ -1,4 +1,4 @@
-// size: 27082 (min) 10128 (brotli)
+// size: 27041 (min) 10091 (brotli)
 // packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -125,8 +125,8 @@ let _dynamic_tag = /*@__PURE__*/ withBranches(
       rendererAccessor = "D" + nodeAccessor,
       createTagBranch = ($global, tagNameOrRenderer, scope, parentNode) => {
         let branch = createBranch($global, tagNameOrRenderer, scope, parentNode);
-        if (
-          (typeof tagNameOrRenderer == "string" &&
+        return (
+          typeof tagNameOrRenderer == "string" &&
             (branch.a =
               branch.S =
               branch.K =
@@ -141,15 +141,11 @@ let _dynamic_tag = /*@__PURE__*/ withBranches(
           getTagVar &&
             ((branch.T = (value) => getTagVar()(scope, value)),
             bindTagVar(scope, branch, scope[scopeOffsetAccessor], tagNameOrRenderer)),
-          typeof tagNameOrRenderer != "string")
-        )
-          setupBranch(tagNameOrRenderer, branch);
-        else if (getContent) {
-          let content = getContent(scope);
-          (setBranch(branch, "a", content, createAndSetupBranch),
-            content.f && subscribeToScopeSet(content.e, content.f, branch.Aa));
-        }
-        return branch;
+          typeof tagNameOrRenderer == "string"
+            ? getContent && _attr_content(branch, "a", getContent(scope))
+            : setupBranch(tagNameOrRenderer, branch),
+          branch
+        );
       };
     return (scope, newRenderer, getInput) => {
       let normalizedRenderer = normalizeDynamicRenderer(newRenderer);

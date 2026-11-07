@@ -1,5 +1,5 @@
 <div><em>a</em></div>
-<div><!--M_[--><em>a</em><!--M_]5 #div/0 6--></div>
+<div><em>a</em></div>
 <!--M_(1 #text/1 5--><button>toggle</button><!--M_$1 #button/2-->
 <script>
   WALKER_RUNTIME("M")("_");
@@ -8,6 +8,7 @@
       input_foo: "a",
       tag: "div"
     }, 3, {
+      "BranchScopes:#div/0": _(6),
       "ConditionalRenderer:#div/0": "packages/runtime-tags/src/__tests__/fixtures/dynamic-tag-body-upstream/template.marko_2*content 1"
     }, {
       _: _(1)

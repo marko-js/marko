@@ -1,0 +1,6 @@
+import Counter from "./tags/counter.marko";
+
+<let/n=0/>
+<button id="outer" onClick() { n++ }>${n}</button>
+<const/attrs={ "data-n": n, content: Counter }/>
+<div ...attrs/>
