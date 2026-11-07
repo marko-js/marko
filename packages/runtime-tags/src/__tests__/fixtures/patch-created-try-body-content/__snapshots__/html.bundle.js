@@ -94,7 +94,7 @@ var template_default = _template("a", (input) => {
 	$fg__input_alt && $cg__input_show && _patch_render($scope0_id, "a8", "h");
 	_scope($scope0_id, {
 		f: input.label,
-		h: _unfilled_if($scope0_reason, 2) && input.alt,
+		h: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && input.alt,
 		i: count,
 		j: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 3)) && A,
 		k: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 3)) && B,

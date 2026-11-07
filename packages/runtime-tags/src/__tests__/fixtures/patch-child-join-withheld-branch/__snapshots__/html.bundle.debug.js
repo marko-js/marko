@@ -42,7 +42,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	_scope($scope0_id, {
 		input_a: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.a,
 		input_b: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.b,
-		input_mode: _unfilled_if($scope0_reason, 4) && input.mode,
+		input_mode: (_unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 7)) && input.mode,
 		"ClosureScopes:input_a/7": _write_if($scope0_reason, 5) && $input_a__closures,
 		"ClosureScopes:input_b/8": _write_if($scope0_reason, 6) && $input_b__closures
 	}, "__tests__/tags/child.marko", 0, {

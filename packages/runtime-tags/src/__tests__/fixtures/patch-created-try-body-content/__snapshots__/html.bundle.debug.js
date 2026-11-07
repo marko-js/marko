@@ -98,7 +98,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	$fg__input_alt && $cg__input_show && _patch_render($scope0_id, "__tests__/template.marko_3_input_alt#0:7/setup", "input_alt");
 	_scope($scope0_id, {
 		input_label: input.label,
-		input_alt: _unfilled_if($scope0_reason, 2) && input.alt,
+		input_alt: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && input.alt,
 		count,
 		A: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 3)) && A,
 		B: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 3)) && B,

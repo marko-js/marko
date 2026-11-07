@@ -47,7 +47,7 @@ var child_default = _template("b", (input) => {
 	_scope($scope0_id, {
 		e: _write_if($scope0_reason, 4) && input.b,
 		f: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.a,
-		g: _unfilled_if($scope0_reason, 4) && input.mode,
+		g: (_unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 7)) && input.mode,
 		i: _write_if($scope0_reason, 6) && $input_a__closures
 	}) || ($fg__input_b && $cg__input_show && _patch_write($scope0_id, "xe", input.b, !$sg__input_b), $fg__input_a && _client_guard($scope0_reason, 2) && _patch_write($scope0_id, "xf", input.a, !_server_guard($scope0_reason, 6)), $fg__input_mode && $cg__input_show && _patch_write($scope0_id, "xg", input.mode, !_server_guard($scope0_reason, 7)));
 });

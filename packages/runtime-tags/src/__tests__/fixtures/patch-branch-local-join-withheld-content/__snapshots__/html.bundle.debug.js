@@ -50,7 +50,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	_scope($scope0_id, {
 		input_b: _write_if($scope0_reason, 5) && input.b,
 		input_a: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.a,
-		input_mode: _unfilled_if($scope0_reason, 5) && input.mode
+		input_mode: (_unfilled_if($scope0_reason, 5) || _unfilled_if($scope0_reason, 8)) && input.mode
 	}, "__tests__/tags/child.marko", 0, {
 		input_b: ["input.b"],
 		input_a: ["input.a"],

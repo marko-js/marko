@@ -41,7 +41,7 @@ var template_default = _template("a", (input) => {
 	_html("</main>");
 	$fg__input_start && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "a6", "f");
 	_scope($scope0_id, {
-		f: _unfilled_if($scope0_reason, 0) && input.start,
+		f: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && input.start,
 		h: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && onCount
 	}) || $fg__input_start && $cg__input_show__OR__input_start && _patch_write($scope0_id, "xf", input.start, !_server_guard($scope0_reason, 2));
 }, 1);

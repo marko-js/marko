@@ -49,7 +49,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html("</main>");
 	$fg__input_start && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "__tests__/template.marko_1_input_start#0:5/setup", "input_start");
 	_scope($scope0_id, {
-		input_start: _unfilled_if($scope0_reason, 0) && input.start,
+		input_start: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && input.start,
 		onCount: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && onCount
 	}, "__tests__/template.marko", 0, {
 		input_start: ["input.start"],

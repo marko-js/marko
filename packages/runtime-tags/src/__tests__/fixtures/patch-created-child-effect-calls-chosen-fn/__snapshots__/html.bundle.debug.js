@@ -60,7 +60,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	$fg__input_pick && $cg__input_show && _patch_render($scope0_id, "__tests__/template.marko_1_input_pick#0:6/setup", "input_pick");
 	_scope($scope0_id, {
 		input_x: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && input.x,
-		input_pick: _unfilled_if($scope0_reason, 2) && input.pick,
+		input_pick: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 4)) && input.pick,
 		fa: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 4)) && fa,
 		fb: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 4)) && fb
 	}, "__tests__/template.marko", 0, {

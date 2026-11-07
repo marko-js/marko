@@ -56,7 +56,7 @@ var template_default = _template("a", (input) => {
 	$fg__input_pick && $cg__input_show && _patch_render($scope0_id, "a5", "g");
 	_scope($scope0_id, {
 		f: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && input.x,
-		g: _unfilled_if($scope0_reason, 2) && input.pick,
+		g: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 4)) && input.pick,
 		i: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 4)) && fa,
 		j: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 4)) && fb
 	}) || ($fg__input_x && $cg__input_show && _patch_write($scope0_id, "xf", input.x, !_server_guard($scope0_reason, 3)), $fg__input_pick && $cg__input_show && _patch_write($scope0_id, "xg", input.pick, !_server_guard($scope0_reason, 4)));

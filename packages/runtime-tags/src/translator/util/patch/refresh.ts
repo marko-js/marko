@@ -2066,6 +2066,17 @@ function findUnfilledStructure(
       }
     }
     if (Array.isArray(refs)) {
+      // An intersection of a closure a caller's client contributes sets itself up on a
+      // created scope, reading the closure from its owner.
+      if (
+        read.section !== binding.section &&
+        hasTagCallerParamAt(binding.sources, read.section)
+      ) {
+        structure = sourcesUtil.union(
+          structure,
+          getSourcesForReferencedBindings(refs),
+        );
+      }
       const filledHole = isFilledHole(read);
       for (const ref of refs) {
         const partner = getCanonicalBinding(ref);

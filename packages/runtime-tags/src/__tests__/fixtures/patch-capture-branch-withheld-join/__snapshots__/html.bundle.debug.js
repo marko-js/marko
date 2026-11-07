@@ -71,7 +71,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	_scope($scope0_id, {
 		input_b: _write_if($scope0_reason, 3) && input.b,
 		input_a: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.a,
-		input_mode: _unfilled_if($scope0_reason, 3) && input.mode,
+		input_mode: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 6)) && input.mode,
 		"ClosureScopes:input_a/8": _write_if($scope0_reason, 5) && $input_a__closures
 	}, "__tests__/tags/child.marko", 0, {
 		input_b: ["input.b"],
