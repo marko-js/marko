@@ -124,7 +124,6 @@ import {
   getSection,
   getSectionForBody,
   isDirectClosure,
-  isKnownChild,
   isDynamicClosure,
   isInParentSection,
   isLoopBody,
@@ -132,7 +131,6 @@ import {
   type Section,
   sectionUtil,
 } from "./sections";
-import { shipsContentShell } from "./shell";
 import { replaceMethodNode, simplifyFunction } from "./simplify-fn";
 import { findSectionSlot, findSlot, type PlaceSlot, SlotKind } from "./slots";
 import { mergeSources, type Sources, sourcesUtil } from "./sources";
@@ -584,22 +582,13 @@ export function getSignal(
             getClosureAccessorLiteral(closure),
             render,
             ownerScope,
-            resumesSubscriber(section, closure) && subscribeId,
+            isChangeableDynamicClosure(section, closure) && subscribeId,
           ]),
         );
       };
     }
   }
   return signal;
-}
-
-// A document scope's subscriber resumes by its id: a shell chain registers no
-// subscribe, and one the client cannot change is shaken with its owner's signal.
-function resumesSubscriber(section: Section, closure: Binding) {
-  return (
-    isChangeableDynamicClosure(section, closure) &&
-    !(isPatch() && inShellChain(section))
-  );
 }
 
 // A dynamic closure the client can change before a subscriber that resumes
@@ -618,15 +607,6 @@ function isChangeableDynamicClosure(section: Section, closure: Binding) {
 // where analysis gave it a reason (never for a value read for `$global` alone).
 export function shipsClosureScopes(closure: Binding) {
   return !!findSlot(closure, SlotKind.ClosureScopes)?.reason;
-}
-
-// A dynamic content shell elides the chain's dom renderers, and with them the
-// `_closure_get` subscribe registration; a known child's direct calls keep both.
-function inShellChain(section: Section) {
-  for (let cur: Section | undefined = section; cur; cur = cur.parent) {
-    if (shipsContentShell(cur) && !isKnownChild(cur)) return true;
-  }
-  return false;
 }
 
 // The `$global` signals whose scopes a document subscribes, which a changed member
@@ -1961,7 +1941,7 @@ export function writeHTMLResumeStatements(
             : identifier;
         // No call writes the subscriber set: the scope joins none.
         if (subscribeArg) {
-          const changeable = resumesSubscriber(section, closure);
+          const changeable = isChangeableDynamicClosure(section, closure);
           if (subscribeArg === identifier) {
             linkedWithScope = true;
           } else {
