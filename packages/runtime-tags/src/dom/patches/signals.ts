@@ -108,15 +108,6 @@ export function _bind_resume(key: string, factory: (owner: Scope) => unknown) {
   _resumed[id] = factory;
 }
 
-// The function resume revives for an owner is that owner's, until a bind makes
-// another.
-export function reviveBoundFn(id: string, owner: Scope) {
-  return (owner[AccessorPrefix.BoundFn + id] = [
-    -1,
-    (_resumed[id] as (owner: Scope) => unknown)(owner),
-  ])[1];
-}
-
 // An intersection a flush renders by this id, after whatever members arrive: a created
 // scope's setup, or a filled intersection's where its group mixes (`patches/render`).
 export function _or_patch(

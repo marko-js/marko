@@ -1,6 +1,5 @@
 import { PatchKey, type Scope } from "../../common/types";
-import { getLoopItem, type LoopItemAt } from "./apply";
-import { patchers, patchScope } from "./apply";
+import { getLoopItem, type LoopItemAt, patchers, patchScope } from "./apply";
 
 declare module "./apply" {
   interface PatchValues {

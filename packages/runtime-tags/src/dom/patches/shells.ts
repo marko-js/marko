@@ -8,9 +8,9 @@ import {
 import { queueEffect, runId } from "../queue";
 import { _content as content } from "../renderer";
 import { _resumed } from "../resume";
-import { installPatchShells } from "./apply";
 import {
   creating,
+  installPatchShells,
   setupPatchers,
   patchers,
   patchScope,
@@ -49,8 +49,8 @@ type SetupFn = (branch: Scope) => void;
 type SetupIds = [setup: SetupFn[], scripts?: SetupFn[]];
 // Each id resolves as it runs, on the scope its hops reach (`accessor>…id`, a `>` per
 // owner up; an id-less hop only sets the owner); a setup id runs a registration's `._`.
-export const resolveSetupIds = (ids: string) =>
-  ids.split("!").map((part) =>
+function resolveSetupIds(ids: string) {
+  return ids.split("!").map((part) =>
     part
       ? part.split(" ").map((id) => {
           const hops = id.split(">");
@@ -74,11 +74,12 @@ export const resolveSetupIds = (ids: string) =>
         })
       : [],
   ) as SetupIds;
+}
 // Setup renders now (the scope's first render); scripts queue as mounts.
-export const runSetupIds = ([setup, scripts]: SetupIds, scope: Scope) => {
+function runSetupIds([setup, scripts]: SetupIds, scope: Scope) {
   for (const render of setup) render(scope);
   scripts?.forEach((script) => queueEffect(scope, script));
-};
+}
 // A shell's parts, kept on the registered factory (and its renderers) for
 // the loop patcher, which reconciles from them rather than a renderer.
 export type Shell = [template: string, walks: string, setup: SetupFn | 0];
@@ -91,23 +92,28 @@ type Renderer = ReturnType<ReturnType<typeof _content>> & {
 
 // A shell registers under `=` and its id, apart from the module's registration, so
 // a flush creates from it before the module loads; the build id and token rule out a miss.
-export const getContentFactory = (id: string) =>
-  (_resumed["=" + id] || _resumed[id]) as ContentFactory | Renderer | undefined;
-export const getContent = (id: string, owner?: Scope) => {
-  const registered = getContentFactory(id);
+export function getContent(id: string, owner?: Scope) {
+  const registered = (_resumed["=" + id] || _resumed[id]) as
+    | ContentFactory
+    | Renderer
+    | undefined;
   return typeof registered === "function" ? registered(owner) : registered;
-};
-export const getShell = (id: string) =>
-  (_resumed["=" + id] as ContentFactory | undefined)?.[RendererProp.Shell];
+}
+export function getShell(id: string) {
+  return (_resumed["=" + id] as ContentFactory | undefined)?.[
+    RendererProp.Shell
+  ];
+}
 
 // Kept content's instances join their owner's set as they're created (`patches/client-branch`).
 let keepInstance: ((branch: Scope, id: string) => void) | undefined;
-export const installKeptInstances = (keep: NonNullable<typeof keepInstance>) =>
-  (keepInstance = keep);
+export function installKeptInstances(keep: NonNullable<typeof keepInstance>) {
+  keepInstance = keep;
+}
 
 // `"id setup…!scripts…;walks;template"` (`,` for `;walks;` when walk-less):
 // setup renders inside the created scope's setup, `!` opens the mount scripts.
-export const registerShell = (shell: string) => {
+export function registerShell(shell: string) {
   // A debug shell of content with a `<return>` leads with `^` (its mark).
   const returns = MARKO_DEBUG && shell[0] === "^";
   // A bare `id setupIds` is content the page's bundle registers.
@@ -156,5 +162,5 @@ export const registerShell = (shell: string) => {
   // the page's own registration stays, else the shell, till a later module's.
   _resumed[id] = registered || fromShell;
   return id;
-};
+}
 installPatchShells(registerShell);
