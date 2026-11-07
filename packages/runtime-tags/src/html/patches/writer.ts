@@ -204,15 +204,23 @@ function pairBranch<T, U, V>(cb: (a: U, b: V) => T, a: U, b: V): T {
 // (`_client_branch_if`). Only a renderer is content, not a value carrying its keys.
 export function _client_branch(value: unknown) {
   const state = getState();
-  const content =
-    (value as { content?: unknown } | undefined)?.content || value;
-  if (state instanceof PatchRenderState && typeof content === "function") {
-    const id = (content as ServerRenderer)[RendererProp.Id];
-    const owner = (content as ServerRenderer)[RendererProp.Owner]!;
-    if (id) addClientBranch(state, id, owner);
-    const section = clientBranchRenderers.get(content as ServerRenderer);
-    if (section) {
-      renderClientBranch(state, content as ServerRenderer, id!, owner, section);
+  if (state instanceof PatchRenderState) {
+    const content =
+      (value as { content?: unknown } | undefined)?.content || value;
+    if (typeof content === "function") {
+      const id = (content as ServerRenderer)[RendererProp.Id];
+      const owner = (content as ServerRenderer)[RendererProp.Owner]!;
+      if (id) addClientBranch(state, id, owner);
+      const section = clientBranchRenderers.get(content as ServerRenderer);
+      if (section) {
+        renderClientBranch(
+          state,
+          content as ServerRenderer,
+          id!,
+          owner,
+          section,
+        );
+      }
     }
   }
 }
