@@ -105,14 +105,14 @@ function isPatchedCall(call: KnownTagExtra) {
 // A branch body whose branch expression has a state reason (or nested in one), or
 // that every consumer or call makes stateful.
 export const isStatefulStructure = createPassMemo((section: Section) => {
-  // A body every consumer renders stateful, or an optional branch or a dynamic tag
-  // body the client renders by its branch expression.
+  // An optional branch or a dynamic tag body the client renders by its branch
+  // expression, or a body every consumer renders stateful.
   return (
-    getStatefulConsumers(section) === "every" ||
     (isPatch() &&
       (!section.branch || isOptionalBranch(section)) &&
       !!section.branchExpr &&
-      hasStatefulBranchExpr(section))
+      hasStatefulBranchExpr(section)) ||
+    getStatefulConsumers(section) === "every"
   );
 }, false);
 
