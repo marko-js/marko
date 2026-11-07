@@ -26,7 +26,7 @@ var template_default = _template("a", (input) => {
 	}, void 0, (err) => {
 		const $scope1_reason = _scope_reason();
 		const $scope1_id = _scope_id();
-		$cg__input_msg && _patch_write($scope1_id, "xh", err?.message);
+		_unfilled_if($scope0_reason, 1) && _patch_write($scope1_id, "xh", err?.message);
 		const upper = input.msg.toUpperCase();
 		_html(`<b${_attr("title", input.msg, $scope1_id, "a", $scope0_reason, 1)}>${_text_mark($scope1_id, "b", err.message, 1, 4, 0)} ${_text_mark($scope1_id, "c", input.msg, 2, $scope0_reason, 1)} ${_text_mark($scope1_id, "d", upper, 2, $scope0_reason, 1)} ${_text_mark($scope1_id, "e", err.message + upper, 2, (2 | _updates_from($scope0_reason, 1)) << 1, 0)}</b>${_el_mark($scope1_id, "a", _updates_from($scope0_reason, 1))}`);
 		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "a0", $cg__input_msg);
@@ -43,5 +43,5 @@ var template_default = _template("a", (input) => {
 		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.fail,
 		f: $wi__input_msg && $input_msg__closures,
 		g: _write_if($scope0_reason, 2) && (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && $input_fail__closures
-	}) || ($fg__input_msg && _patch_write($scope0_id, "xd", input.msg, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && $cg__input_msg && _patch_write($scope0_id, "xe", input.fail, !_server_guard($scope0_reason, 2)));
+	}) || ($fg__input_msg && _patch_write($scope0_id, "xd", input.msg, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.fail, !_server_guard($scope0_reason, 2)));
 }, 1);

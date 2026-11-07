@@ -19,7 +19,7 @@ _shells({
 	c3: `c3${_shell_marker([[], ["c0"]], ["b>", $setup$2])};${/*@__PURE__*/ ((_w0) => ` b/${_w0}&`)("D%l")};${/*@__PURE__*/ ((_w0) => `<button>x</button>${_w0}`)($template$1)}`
 });
 var outer_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0), $fg__input_content = _filled_guard($scope0_reason, 1), $cg__input_show = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0), $fg__input_content = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.show) {
@@ -40,8 +40,8 @@ var outer_default = _template("c", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["c3"], $scope0_reason, 0);
-	$fg__input_content && $cg__input_show && _patch_render($scope0_id, "c1", "e");
-	_scope($scope0_id, { e: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.content }) || (_client_branch(input.content), $fg__input_content && $cg__input_show && _patch_write($scope0_id, "xe", input.content, !_server_guard($scope0_reason, 1)));
+	$fg__input_content && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "c1", "e");
+	_scope($scope0_id, { e: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.content }) || (_client_branch(input.content), $fg__input_content && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xe", input.content, !_server_guard($scope0_reason, 1)));
 });
 
 // template.marko

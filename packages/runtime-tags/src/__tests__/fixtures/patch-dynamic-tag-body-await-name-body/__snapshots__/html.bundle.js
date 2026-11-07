@@ -56,7 +56,7 @@ _shells({
 	a: `a${_shell_marker($setup)};${((_w0) => `D/${_w0}&l`)("b%c")};${((_w0) => `<main>${_w0}</main>`)($template)}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_on = _write_guard($scope0_reason, 2), $wi__input_on__OR__input_note = _write_if($scope0_reason, 0), $cg__input_on = _client_guard($scope0_reason, 2), $fg__input_note = _filled_guard($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $wg__input_on = _write_guard($scope0_reason, 2), $wi__input_on__OR__input_note = _write_if($scope0_reason, 0), $fg__input_note = _filled_guard($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = /* @__PURE__ */ new Set();
 	const $input_on__closures = /* @__PURE__ */ new Set();
@@ -76,7 +76,7 @@ var template_default = _template("a", (input) => {
 				_unfilled_if($scope0_reason, 3) && _patch_subscribe($scope2_id, "a1", _client_guard($scope0_reason, 3));
 				_subscribe(_unfilled_if($scope0_reason, 3) && $input_note__closures, _scope($scope2_id, { _: $wi__input_on__OR__input_note && _scope_with_id($scope1_id) }));
 			}, $scope1_id, ($scope) => $scope1_page ? [{ f: input.note }, { _: $scope($scope0_id) }] : []), 0, $wg__input_on, $scope0_reason, 2, 0, void 0, 0, 0, "a0");
-			$wi__input_on__OR__input_note && _subscribe(_unfilled_if($scope0_reason, 2) && $input_on__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), $cg__input_on && "a2", $wg__input_on);
+			$wi__input_on__OR__input_note && _subscribe(_unfilled_if($scope0_reason, 2) && $input_on__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 2) && "a2", $wg__input_on);
 			$wg__input_on || $wi__input_on__OR__input_note && _resume_branch($scope1_id);
 		}, $scope0_id)
 	});
@@ -88,5 +88,5 @@ var template_default = _template("a", (input) => {
 		h: _write_if($scope0_reason, 3) && $input_note__closures,
 		g: _write_if($scope0_reason, 2) && $input_on__closures,
 		a: _existing_scope($childScope)
-	}) || $fg__input_note && (_client_branch_if("a0", $scope0_id) || $cg__input_on) && _patch_write($scope0_id, "xf", input.note, !_server_guard($scope0_reason, 3));
+	}) || $fg__input_note && (_client_branch_if("a0", $scope0_id) || _unfilled_if($scope0_reason, 2)) && _patch_write($scope0_id, "xf", input.note, !_server_guard($scope0_reason, 3));
 }, 1);

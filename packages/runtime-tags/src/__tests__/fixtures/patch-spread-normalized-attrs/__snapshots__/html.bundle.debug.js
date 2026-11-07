@@ -11,7 +11,7 @@ _shells({
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell !__tests__/template.marko_1_input_link#0:9; ;<a>z</a>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_link = _filled_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $fg__input_link = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	let n = 0;
 	_html(`<button class=inc>${_text_mark($scope0_id, "#text/1", n)}</button>${_el_mark($scope0_id, "#button/0")}<div${_attrs(input.attrs, "#div/2", $scope0_id, "div", 0, $scope0_reason, 0)}>x</div>${_el_mark($scope0_id, "#div/2")}`);
@@ -29,7 +29,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0_input_field#10");
 	_script($scope0_id, "__tests__/template.marko_0_input_attrs#7");
 	_script($scope0_id, "__tests__/template.marko_0");
-	$fg__input_link && $cg__input_show && _patch_render($scope0_id, "__tests__/template.marko_1_input_link#0:9/setup", "input_link");
+	$fg__input_link && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "__tests__/template.marko_1_input_link#0:9/setup", "input_link");
 	_scope($scope0_id, {
 		input_link: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.link,
 		n
@@ -39,5 +39,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		"EventAttributes:#div/2": ["...input.attrs", "3:9"],
 		"ControlledHandler:#input/4": ["...input.field", "5:11"],
 		"EventAttributes:#input/4": ["...input.field", "5:11"]
-	}) || $fg__input_link && $cg__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_link", input.link, !_server_guard($scope0_reason, 2));
+	}) || $fg__input_link && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_link", input.link, !_server_guard($scope0_reason, 2));
 }, 1);

@@ -7,7 +7,7 @@ _shells({
 	"__tests__/tags/view.marko_1*shell": "__tests__/tags/view.marko_1*shell !__tests__/tags/view.marko_1;D l ;<span> </span><button>+</button>"
 });
 var view_default = _template("__tests__/tags/view.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 1), $cg__input_show = _client_guard($scope0_reason, 1), $fg__input_x = _filled_guard($scope0_reason, 2), $fg__input_y = _filled_guard($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 1), $fg__input_x = _filled_guard($scope0_reason, 2), $fg__input_y = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.show) {
@@ -39,7 +39,7 @@ var view_default = _template("__tests__/tags/view.marko", (input) => {
 	}, "__tests__/tags/view.marko", 0, {
 		input_x: ["input.x"],
 		input_y: ["input.y"]
-	}) || ($fg__input_x && $cg__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_x", input.x, !_server_guard($scope0_reason, 2)), $fg__input_y && $cg__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_y", input.y, !_server_guard($scope0_reason, 3)));
+	}) || ($fg__input_x && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_x", input.x, !_server_guard($scope0_reason, 2)), $fg__input_y && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_y", input.y, !_server_guard($scope0_reason, 3)));
 });
 
 // template.marko

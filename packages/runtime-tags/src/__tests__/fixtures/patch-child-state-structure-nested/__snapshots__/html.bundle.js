@@ -7,7 +7,7 @@ _shells({
 	b1: "b1;D ;<em> </em>"
 });
 var panel_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_title = _client_guard($scope0_reason, 4), $wg__input_inner = _write_guard($scope0_reason, 3), $wi__input_show__OR__input_inner__OR__input_title = _write_if($scope0_reason, 1), $wg__input_show = _write_guard($scope0_reason, 2), $fg__input_inner = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 2), $fg__input_title = _filled_guard($scope0_reason, 4), $cg__input_inner = _client_guard($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $cg__input_title = _client_guard($scope0_reason, 4), $wg__input_inner = _write_guard($scope0_reason, 3), $wi__input_show__OR__input_inner__OR__input_title = _write_if($scope0_reason, 1), $wg__input_show = _write_guard($scope0_reason, 2), $fg__input_inner = _filled_guard($scope0_reason, 3), $fg__input_title = _filled_guard($scope0_reason, 4), $cg__input_show = _client_guard($scope0_reason, 2), $cg__input_inner = _client_guard($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	const $input_title__closures = /* @__PURE__ */ new Set();
 	_if(() => {
@@ -35,7 +35,7 @@ var panel_default = _template("b", (input) => {
 		e: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && input.inner,
 		f: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 4)) && input.title,
 		h: _write_if($scope0_reason, 4) && (_unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && $input_title__closures
-	}) || ($fg__input_inner && $cg__input_show && _patch_write($scope0_id, "xe", input.inner, !_server_guard($scope0_reason, 3)), $fg__input_title && _client_guard($scope0_reason, 0) && _patch_write($scope0_id, "xf", input.title, !_server_guard($scope0_reason, 4)));
+	}) || ($fg__input_inner && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xe", input.inner, !_server_guard($scope0_reason, 3)), $fg__input_title && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xf", input.title, !_server_guard($scope0_reason, 4)));
 });
 
 // template.marko

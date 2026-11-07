@@ -17,7 +17,7 @@ var layout_default = _template("__tests__/layout.marko", (input) => {
 	}, "__tests__/layout.marko", 0, {
 		input_nav: ["input.nav"],
 		input_label: ["input.label"]
-	}) || ($fg__input_nav && _client_guard($scope0_reason, 3) && _patch_write($scope0_id, "PatchMarkedWrite:input_nav", input.nav, !_server_guard($scope0_reason, 2)), $fg__input_label && _client_guard($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 3)));
+	}) || ($fg__input_nav && _unfilled_if($scope0_reason, 3) && _patch_write($scope0_id, "PatchMarkedWrite:input_nav", input.nav, !_server_guard($scope0_reason, 2)), $fg__input_label && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 3)));
 }, 1);
 
 // nav-a.marko

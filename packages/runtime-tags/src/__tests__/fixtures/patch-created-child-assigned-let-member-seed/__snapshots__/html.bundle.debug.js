@@ -23,7 +23,7 @@ _shells({
 	"__tests__/template.marko_1*shell": `__tests__/template.marko_1*shell${_shell_marker([[], []], ["#childScope/0>", $setup$1])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1)};${$template$1}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0), $fg__input_user = _filled_guard($scope0_reason, 1), $cg__input_show = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0), $fg__input_user = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_html("<main>");
 	_if(() => {
@@ -42,6 +42,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}
 	}, $scope0_id, "#main/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 0);
 	_html(`</main>${_el_mark($scope0_id, "#main/0", $wg__input_show)}`);
-	$fg__input_user && $cg__input_show && _patch_render($scope0_id, "__tests__/template.marko_1_input_user#0:4/setup", "input_user");
-	_scope($scope0_id, { input_user: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.user }, "__tests__/template.marko", 0, { input_user: ["input.user"] }) || $fg__input_user && $cg__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_user", input.user, !_server_guard($scope0_reason, 1));
+	$fg__input_user && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "__tests__/template.marko_1_input_user#0:4/setup", "input_user");
+	_scope($scope0_id, { input_user: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.user }, "__tests__/template.marko", 0, { input_user: ["input.user"] }) || $fg__input_user && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_user", input.user, !_server_guard($scope0_reason, 1));
 }, 1);

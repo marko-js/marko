@@ -20,7 +20,7 @@ _shells({
 	a5: `a5${_shell_marker([[], []], ["a>", $setup$1])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks)};${$template}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_note = _client_guard($scope0_reason, 3), $wi__input_note = _write_if($scope0_reason, 3), $wg__input_show = _write_guard($scope0_reason, 4), $cg__input_show = _client_guard($scope0_reason, 4), $fg__input_note = _filled_guard($scope0_reason, 3), $fg__input_t = _filled_guard($scope0_reason, 5);
+	const $scope0_reason = _scope_reason(), $cg__input_note = _client_guard($scope0_reason, 3), $wi__input_note = _write_if($scope0_reason, 3), $wg__input_show = _write_guard($scope0_reason, 4), $fg__input_note = _filled_guard($scope0_reason, 3), $fg__input_t = _filled_guard($scope0_reason, 5), $cg__input_show = _client_guard($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = /* @__PURE__ */ new Set();
 	_html("<main>");
@@ -71,5 +71,5 @@ var template_default = _template("a", (input) => {
 		h: (_unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 5)) && input.t2,
 		i: $wi__input_note && (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 4)) && $input_note__closures,
 		a: _existing_scope($childScope)
-	}) || ($fg__input_note && $cg__input_show && _patch_write($scope0_id, "xf", input.note, !_server_guard($scope0_reason, 3)), $fg__input_t && $cg__input_show && _patch_write($scope0_id, "xh", input.t2, !_server_guard($scope0_reason, 5)));
+	}) || ($fg__input_note && _unfilled_if($scope0_reason, 4) && _patch_write($scope0_id, "xf", input.note, !_server_guard($scope0_reason, 3)), $fg__input_t && _unfilled_if($scope0_reason, 4) && _patch_write($scope0_id, "xh", input.t2, !_server_guard($scope0_reason, 5)));
 }, 1);

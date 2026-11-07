@@ -4,7 +4,7 @@ const $walks$1 = "D lD l";
 const $setup$1 = [[], []];
 _shells({ "__tests__/tags/row.marko": "__tests__/tags/row.marko;D lD ;<p> </p><em> </em>" });
 var row_default = _template("__tests__/tags/row.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_b = _client_guard($scope0_reason, 4), $fg__input_a = _filled_guard($scope0_reason, 3), $fg__input_b = _filled_guard($scope0_reason, 4), $fg__input_y = _filled_guard($scope0_reason, 5);
+	const $scope0_reason = _scope_reason(), $fg__input_a = _filled_guard($scope0_reason, 3), $fg__input_b = _filled_guard($scope0_reason, 4), $fg__input_y = _filled_guard($scope0_reason, 5);
 	const $scope0_id = _scope_id();
 	_html(`<p>${_text_mark($scope0_id, "#text/0", input.a + input.b, 1, $scope0_reason, 0)}</p><em>${_text_mark($scope0_id, "#text/1", input.y + input.b, 1, $scope0_reason, 2)}</em>`);
 	_patch_render($scope0_id, "__tests__/tags/row.marko_0_input_a#4_input_b#5/setup", [$fg__input_a && "input_a", $fg__input_b && "input_b"], $scope0_reason, 0);
@@ -17,7 +17,7 @@ var row_default = _template("__tests__/tags/row.marko", (input) => {
 		input_a: ["input.a"],
 		input_b: ["input.b"],
 		input_y: ["input.y"]
-	}) || ($fg__input_a && $cg__input_b && _patch_write($scope0_id, "PatchMarkedWrite:input_a", input.a, !_server_guard($scope0_reason, 3)), $fg__input_b && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_b", input.b, !_server_guard($scope0_reason, 4)), $fg__input_y && $cg__input_b && _patch_write($scope0_id, "PatchMarkedWrite:input_y", input.y, !_server_guard($scope0_reason, 5)));
+	}) || ($fg__input_a && _unfilled_if($scope0_reason, 4) && _patch_write($scope0_id, "PatchMarkedWrite:input_a", input.a, !_server_guard($scope0_reason, 3)), $fg__input_b && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_b", input.b, !_server_guard($scope0_reason, 4)), $fg__input_y && _unfilled_if($scope0_reason, 4) && _patch_write($scope0_id, "PatchMarkedWrite:input_y", input.y, !_server_guard($scope0_reason, 5)));
 });
 
 // template.marko

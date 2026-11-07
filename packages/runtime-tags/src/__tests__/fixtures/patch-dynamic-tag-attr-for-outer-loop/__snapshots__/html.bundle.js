@@ -53,7 +53,7 @@ var template_default = _template("a", (input) => {
 	_for_of(input.as, (a) => {
 		const $scope1_id = _scope_id();
 		const $for_content__a__closures = /* @__PURE__ */ new Set();
-		_filled_guard($scope0_reason, 5) && _client_guard($scope0_reason, 2) && _patch_write($scope1_id, "xd", a, !_server_guard($scope0_reason, 5));
+		_filled_guard($scope0_reason, 5) && _unfilled_if($scope0_reason, 2) && _patch_write($scope1_id, "xd", a, !_server_guard($scope0_reason, 5));
 		let $item;
 		forOf(input.bs, (b) => {
 			$item = attrTags($item, { content: _content_resume("a2", () => {
@@ -84,5 +84,5 @@ var template_default = _template("a", (input) => {
 		i: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 8)) && input.note,
 		j: n,
 		m: _write_if($scope0_reason, 8) && $input_note__closures
-	}) || ($fg__input_on && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "xg", input.on, !_server_guard($scope0_reason, 6)), $fg__input_bs && _client_guard($scope0_reason, 0) && _patch_write($scope0_id, "xh", input.bs, !_server_guard($scope0_reason, 7)), $fg__input_note && _client_guard($scope0_reason, 3) && _patch_write($scope0_id, "xi", input.note, !_server_guard($scope0_reason, 8)));
+	}) || ($fg__input_on && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xg", input.on, !_server_guard($scope0_reason, 6)), $fg__input_bs && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xh", input.bs, !_server_guard($scope0_reason, 7)), $fg__input_note && _unfilled_if($scope0_reason, 3) && _patch_write($scope0_id, "xi", input.note, !_server_guard($scope0_reason, 8)));
 }, 1);

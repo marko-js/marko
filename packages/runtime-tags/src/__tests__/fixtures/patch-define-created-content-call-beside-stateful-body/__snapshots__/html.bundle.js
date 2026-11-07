@@ -29,7 +29,7 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id) };
 	const Wrap = { content: _content("a5", ({ show, content }) => {
 		const $scope4_id = _scope_id();
-		const $scope4_reason = _scope_reason(), $wg__content = _write_guard($scope4_reason, 2), $wg__show = _write_guard($scope4_reason, 1), $fg__content = _filled_guard($scope4_reason, 2), $cg__show = _client_guard($scope4_reason, 1);
+		const $scope4_reason = _scope_reason(), $wg__content = _write_guard($scope4_reason, 2), $wg__show = _write_guard($scope4_reason, 1), $fg__content = _filled_guard($scope4_reason, 2);
 		_if(() => {
 			if (show) {
 				const $scope5_id = _scope_id();
@@ -38,8 +38,8 @@ var template_default = _template("a", (input) => {
 				return 0;
 			}
 		}, $scope4_id, "a", 1, $wg__show, 1, 0, 0, ["a3"], $scope4_reason, 1);
-		$fg__content && $cg__show && _patch_render($scope4_id, "a6", "e");
-		_write_if($scope4_reason, 1) && _scope($scope4_id, { e: _unfilled_if($scope4_reason, 1) && content }) || $fg__content && $cg__show && _patch_write($scope4_id, "xe", content, !_server_guard($scope4_reason, 2));
+		$fg__content && _client_guard($scope4_reason, 1) && _patch_render($scope4_id, "a6", "e");
+		_write_if($scope4_reason, 1) && _scope($scope4_id, { e: _unfilled_if($scope4_reason, 1) && content }) || $fg__content && _unfilled_if($scope4_reason, 1) && _patch_write($scope4_id, "xe", content, !_server_guard($scope4_reason, 2));
 	}, $scope0_id) };
 	_set_scope_reason(_updates_from($scope0_reason, 1) << 1 | _updates_from($scope0_reason, 1) << 3);
 	const $childScope2 = _peek_scope_id($scope0_id, "a", 2);
@@ -81,5 +81,5 @@ var template_default = _template("a", (input) => {
 		l: Tag,
 		n: _write_if($scope0_reason, 2) && $input_label__closures,
 		a: _existing_scope($childScope2)
-	}) || ($fg__input_label && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "xg", input.label, !_server_guard($scope0_reason, 2)), $fg__input_other && _patch_write($scope0_id, "xl", Tag, !_server_guard($scope0_reason, 3)));
+	}) || ($fg__input_label && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xg", input.label, !_server_guard($scope0_reason, 2)), $fg__input_other && _patch_write($scope0_id, "xl", Tag, !_server_guard($scope0_reason, 3)));
 }, 1);

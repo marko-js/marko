@@ -8,7 +8,7 @@ _shells({
 	b2: "b2;D%b%;<li><!><!></li>"
 });
 var layout_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 1), $cg__input_rows = _client_guard($scope0_reason, 3), $fg__input_content = _filled_guard($scope0_reason, 1), $fg__input_row = _filled_guard($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 1), $fg__input_content = _filled_guard($scope0_reason, 1), $fg__input_row = _filled_guard($scope0_reason, 4), $cg__input_rows = _client_guard($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	_html(`<main><h1>${_text_mark($scope0_id, "a", input.title, 1, $scope0_reason, 0)}</h1>`);
 	_dynamic_tag($scope0_id, "b", input.content, {}, 2, 0, 0, $wg__input_content, $scope0_reason, 1);
@@ -38,7 +38,7 @@ var layout_default = _template("b", (input) => {
 	_scope($scope0_id, {
 		i: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 1)) && input.content,
 		l: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 4)) && input.row
-	}) || ($fg__input_content && $cg__input_rows && _patch_write($scope0_id, "xi", input.content, !_server_guard($scope0_reason, 1)), $fg__input_row && $cg__input_rows && _patch_write($scope0_id, "xl", input.row, !_server_guard($scope0_reason, 4)));
+	}) || ($fg__input_content && _unfilled_if($scope0_reason, 3) && _patch_write($scope0_id, "xi", input.content, !_server_guard($scope0_reason, 1)), $fg__input_row && _unfilled_if($scope0_reason, 3) && _patch_write($scope0_id, "xl", input.row, !_server_guard($scope0_reason, 4)));
 });
 
 // template.marko
@@ -90,5 +90,5 @@ var template_default = _template("a", (input) => {
 		f: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && input.text,
 		g: $wi__input_text && $input_text__closures,
 		a: _existing_scope($childScope)
-	}) || $fg__input_text && _client_guard($scope0_reason, 2) && _patch_write($scope0_id, "xf", input.text, !_server_guard($scope0_reason, 3));
+	}) || $fg__input_text && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xf", input.text, !_server_guard($scope0_reason, 3));
 }, 1);

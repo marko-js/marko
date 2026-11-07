@@ -451,8 +451,8 @@ declaration that reaches every read. A patch _fills_ it: the decision
 serialize the value (`PatchKey.Write`, `_patch_write`; the same verb as main's
 write reason) or by a registered fill (**Patch fill**). The write is the value's
 write reason on the instance (`getUnfilledPatchWrite`), a `<define>` body's
-params mapped to what its calls pass (`mapBodyParams`), a caller group's client
-bit deciding a guarded one (`_client_guard`); always where a `<let>` keeps
+params mapped to what its calls pass (`mapBodyParams`), a guarded one where its
+caller group leaves the reads unfilled (`_unfilled_if`); always where a `<let>` keeps
 content reading it, and where a consumer renders the content reading it as a
 client branch (`_client_branch_if`). What the client runs on a filled slot is
 named by the scope's entries, each valued by the filled reads it depends on

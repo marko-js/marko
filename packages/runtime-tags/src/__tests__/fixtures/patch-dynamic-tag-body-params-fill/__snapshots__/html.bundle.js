@@ -5,7 +5,7 @@ _shells({
 	a: "a;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_card__OR__input_tag = _write_guard($scope0_reason, 0), $cg__input_card__OR__input_tag = _client_guard($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 2), $fg__input_card = _filled_guard($scope0_reason, 3), $fg__input_tag = _filled_guard($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_card__OR__input_tag = _write_guard($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 2), $fg__input_card = _filled_guard($scope0_reason, 3), $fg__input_tag = _filled_guard($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	const Card = { content: _content_resume("a0", ({ label, content }) => {
@@ -51,5 +51,5 @@ var template_default = _template("a", (input) => {
 		g: _unfilled_if($scope0_reason, 0) && Card,
 		h: _unfilled_if($scope0_reason, 0) && Label,
 		j: _write_if($scope0_reason, 2) && $input_label__closures
-	}) || ($fg__input_label && (_client_branch_if("a4", $scope0_id) || $cg__input_card__OR__input_tag || $cg__input_card__OR__input_tag) && _patch_write($scope0_id, "xd", input.label, !_server_guard($scope0_reason, 2)), $fg__input_card && _client_guard($scope0_reason, 4) && _patch_write($scope0_id, "xe", input.card, !_server_guard($scope0_reason, 3)), $fg__input_tag && _client_guard($scope0_reason, 3) && _patch_write($scope0_id, "xf", input.tag, !_server_guard($scope0_reason, 4)));
+	}) || ($fg__input_label && (_client_branch_if("a4", $scope0_id) || _client_guard($scope0_reason, 0) || _unfilled_if($scope0_reason, 0)) && _patch_write($scope0_id, "xd", input.label, !_server_guard($scope0_reason, 2)), $fg__input_card && _unfilled_if($scope0_reason, 4) && _patch_write($scope0_id, "xe", input.card, !_server_guard($scope0_reason, 3)), $fg__input_tag && _unfilled_if($scope0_reason, 3) && _patch_write($scope0_id, "xf", input.tag, !_server_guard($scope0_reason, 4)));
 }, 1);

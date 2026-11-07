@@ -8,7 +8,7 @@ _shells({
 	"__tests__/tags/card.marko_2*shell": "__tests__/tags/card.marko_2*shell __tests__/tags/card.marko_2_s#0:7/subscribe;D ;<span> </span>"
 });
 var card_default = _template("__tests__/tags/card.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_sel = _write_guard($scope0_reason, 3), $cg__input_sel = _client_guard($scope0_reason, 3), $cg__input_obj = _client_guard($scope0_reason, 2), $sg__input_prefix = _server_guard($scope0_reason, 1), $fg__input_prefix = _filled_guard($scope0_reason, 1), $fg__input_sel = _filled_guard($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $wg__input_sel = _write_guard($scope0_reason, 3), $cg__input_sel = _client_guard($scope0_reason, 3), $sg__input_prefix = _server_guard($scope0_reason, 1), $fg__input_prefix = _filled_guard($scope0_reason, 1), $fg__input_sel = _filled_guard($scope0_reason, 3), $cg__input_obj = _client_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $s__closures = new Set();
 	const $fmt2__closures = new Set();
@@ -60,7 +60,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 		input_sel: ["input.sel"],
 		s: "1:6",
 		fmt: "2:8"
-	}) || ($fg__input_sel && $cg__input_obj && _patch_write($scope0_id, "PatchMarkedWrite:input_sel", input.sel, !_server_guard($scope0_reason, 3)), $fg__input_prefix && _patch_write($scope0_id, "PatchMarkedWrite:fmt", fmt, !$sg__input_prefix));
+	}) || ($fg__input_sel && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_sel", input.sel, !_server_guard($scope0_reason, 3)), $fg__input_prefix && _patch_write($scope0_id, "PatchMarkedWrite:fmt", fmt, !$sg__input_prefix));
 });
 
 // template.marko

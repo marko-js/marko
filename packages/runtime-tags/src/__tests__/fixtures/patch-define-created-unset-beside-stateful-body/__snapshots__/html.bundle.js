@@ -7,12 +7,12 @@ _shells({
 	a1: "a1;D ;<em> </em>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_open = _filled_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 3), $fg__input_other = _filled_guard($scope0_reason, 4), $fg__input_hidden = _filled_guard($scope0_reason, 5);
+	const $scope0_reason = _scope_reason(), $fg__input_open = _filled_guard($scope0_reason, 2), $fg__input_label = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 1), $fg__input_other = _filled_guard($scope0_reason, 4), $fg__input_hidden = _filled_guard($scope0_reason, 5);
 	const $scope0_id = _scope_id();
 	let open = false;
 	const Panel = { content: _content_resume("a3", ({ isOpen, label, hidden }) => {
 		const $scope2_id = _scope_id();
-		const $scope2_reason = _scope_reason(), $wg__isOpen__OR__hidden = _write_guard($scope2_reason, 0), $fg__label = _filled_guard($scope2_reason, 2), $cg__isOpen__OR__hidden = _client_guard($scope2_reason, 0), $fg__isOpen = _filled_guard($scope2_reason, 1), $fg__hidden = _filled_guard($scope2_reason, 3);
+		const $scope2_reason = _scope_reason(), $wg__isOpen__OR__hidden = _write_guard($scope2_reason, 0), $fg__label = _filled_guard($scope2_reason, 2), $fg__isOpen = _filled_guard($scope2_reason, 1), $fg__hidden = _filled_guard($scope2_reason, 3);
 		_if(() => {
 			if (isOpen && !hidden) {
 				const $scope3_id = _scope_id();
@@ -22,13 +22,13 @@ var template_default = _template("a", (input) => {
 				return 0;
 			}
 		}, $scope2_id, "a", 1, $wg__isOpen__OR__hidden, 1, 0, 0, ["a1"], $scope2_reason, 0);
-		$fg__label && $cg__isOpen__OR__hidden && _patch_render($scope2_id, "a0", "e");
+		$fg__label && _client_guard($scope2_reason, 0) && _patch_render($scope2_id, "a0", "e");
 		_patch_render($scope2_id, "a4", [$fg__isOpen && "d", $fg__hidden && "f"], $scope2_reason, 0);
 		_write_if($scope2_reason, 0) && _scope($scope2_id, {
 			d: (_unfilled_if($scope2_reason, 3) || _unfilled_if($scope2_reason, 0)) && isOpen,
 			e: (_unfilled_if($scope2_reason, 0) || _unfilled_if($scope2_reason, 2)) && label,
 			f: (_unfilled_if($scope2_reason, 1) || _unfilled_if($scope2_reason, 0)) && hidden
-		}) || ($fg__isOpen && _client_guard($scope2_reason, 3) && _patch_write($scope2_id, "xd", isOpen, !_server_guard($scope2_reason, 1)), $fg__label && $cg__isOpen__OR__hidden && _patch_write($scope2_id, "xe", label, !_server_guard($scope2_reason, 2)), $fg__hidden && _client_guard($scope2_reason, 1) && _patch_write($scope2_id, "xf", hidden, !_server_guard($scope2_reason, 3)));
+		}) || ($fg__isOpen && _unfilled_if($scope2_reason, 3) && _patch_write($scope2_id, "xd", isOpen, !_server_guard($scope2_reason, 1)), $fg__label && _unfilled_if($scope2_reason, 0) && _patch_write($scope2_id, "xe", label, !_server_guard($scope2_reason, 2)), $fg__hidden && _unfilled_if($scope2_reason, 1) && _patch_write($scope2_id, "xf", hidden, !_server_guard($scope2_reason, 3)));
 	}, $scope0_id) };
 	_if(() => {
 		if (input.show) {
@@ -72,5 +72,5 @@ var template_default = _template("a", (input) => {
 		k: open,
 		l: _write_if($scope0_reason, 4) && Panel,
 		n: Tag
-	}) || ($fg__input_open && $cg__input_show && _patch_write($scope0_id, "xg", input.open, !_server_guard($scope0_reason, 2)), $fg__input_label && _patch_write($scope0_id, "xh", input.label, !_server_guard($scope0_reason, 3)), $fg__input_hidden && _patch_write($scope0_id, "xj", input.hidden, !_server_guard($scope0_reason, 5)), $fg__input_other && _patch_write($scope0_id, "xn", Tag, !_server_guard($scope0_reason, 4)));
+	}) || ($fg__input_open && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xg", input.open, !_server_guard($scope0_reason, 2)), $fg__input_label && _patch_write($scope0_id, "xh", input.label, !_server_guard($scope0_reason, 3)), $fg__input_hidden && _patch_write($scope0_id, "xj", input.hidden, !_server_guard($scope0_reason, 5)), $fg__input_other && _patch_write($scope0_id, "xn", Tag, !_server_guard($scope0_reason, 4)));
 }, 1);

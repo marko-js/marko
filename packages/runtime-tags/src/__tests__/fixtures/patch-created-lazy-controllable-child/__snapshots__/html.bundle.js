@@ -13,7 +13,7 @@ var tab_editor_default = _template("c", (input) => {
 	_scope($scope0_id, {
 		d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.tab,
 		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.tabChange
-	}) || ($fg__input_tab && _client_guard($scope0_reason, 2) && _patch_write($scope0_id, "xd", input.tab, !_server_guard($scope0_reason, 1)), $fg__input_tabChange && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.tabChange, !_server_guard($scope0_reason, 2)));
+	}) || ($fg__input_tab && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xd", input.tab, !_server_guard($scope0_reason, 1)), $fg__input_tabChange && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.tabChange, !_server_guard($scope0_reason, 2)));
 });
 
 // tags/route-pg.marko

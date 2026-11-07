@@ -8,7 +8,7 @@ _shells({
 	a5: "a5;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_title = _client_guard($scope0_reason, 2), $wi__input_show__OR__input_promise = _write_if($scope0_reason, 0), $fg__input_title = _filled_guard($scope0_reason, 2), $fg__input_promise = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_title = _client_guard($scope0_reason, 2), $wi__input_show__OR__input_promise = _write_if($scope0_reason, 0), $fg__input_title = _filled_guard($scope0_reason, 2), $fg__input_promise = _filled_guard($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	const $input_title__closures = /* @__PURE__ */ new Set();
 	const $input_promise__closures = /* @__PURE__ */ new Set();
@@ -40,12 +40,12 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id, "c", 1, _write_guard($scope0_reason, 1), 1, 0, 0, ["a5"], $scope0_reason, 1);
 	_script($scope0_id, "a7");
 	$fg__input_title && _patch_subscribers($scope0_id, "a8", "g");
-	$fg__input_promise && $cg__input_show && _patch_subscribers($scope0_id, "a9", "h");
+	$fg__input_promise && _client_guard($scope0_reason, 1) && _patch_subscribers($scope0_id, "a9", "h");
 	_scope($scope0_id, {
 		g: input.title,
 		h: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 3)) && input.promise,
 		i: count,
 		j: _write_if($scope0_reason, 2) && $input_title__closures,
 		k: _write_if($scope0_reason, 3) && (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 1)) && $input_promise__closures
-	}) || ($fg__input_title && _patch_write($scope0_id, "xg", input.title, !_server_guard($scope0_reason, 2)), $fg__input_promise && $cg__input_show && _patch_write($scope0_id, "xh", input.promise, !_server_guard($scope0_reason, 3)));
+	}) || ($fg__input_title && _patch_write($scope0_id, "xg", input.title, !_server_guard($scope0_reason, 2)), $fg__input_promise && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xh", input.promise, !_server_guard($scope0_reason, 3)));
 }, 1);

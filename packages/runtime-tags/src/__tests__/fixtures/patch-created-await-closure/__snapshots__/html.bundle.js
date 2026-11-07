@@ -6,7 +6,7 @@ _shells({
 	a3: "a3;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_promise = _filled_guard($scope0_reason, 1), $cg__input_show = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $fg__input_promise = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $count__closures = /* @__PURE__ */ new Set();
 	let count = 0;
@@ -25,10 +25,10 @@ var template_default = _template("a", (input) => {
 		}
 	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["a3"], $scope0_reason, 0);
 	_script($scope0_id, "a5");
-	$fg__input_promise && $cg__input_show && _patch_render($scope0_id, "a4", "f");
+	$fg__input_promise && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "a4", "f");
 	_scope($scope0_id, {
 		f: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.promise,
 		g: count,
 		i: $count__closures
-	}) || $fg__input_promise && $cg__input_show && _patch_write($scope0_id, "xf", input.promise, !_server_guard($scope0_reason, 1));
+	}) || $fg__input_promise && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xf", input.promise, !_server_guard($scope0_reason, 1));
 }, 1);

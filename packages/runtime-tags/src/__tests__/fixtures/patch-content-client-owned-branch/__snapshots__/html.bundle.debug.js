@@ -7,7 +7,7 @@ _shells({
 	"__tests__/tags/panel/index.marko_1*shell": "__tests__/tags/panel/index.marko_1*shell;b%;<!><!><!>"
 });
 var panel_default = _template("__tests__/tags/panel/index.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_body = _write_guard($scope0_reason, 2), $wg__input_open = _write_guard($scope0_reason, 1), $fg__input_body = _filled_guard($scope0_reason, 2), $cg__input_open = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_body = _write_guard($scope0_reason, 2), $wg__input_open = _write_guard($scope0_reason, 1), $fg__input_body = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.open) {
@@ -18,8 +18,8 @@ var panel_default = _template("__tests__/tags/panel/index.marko", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "#text/0", 1, $wg__input_open, 1, 0, 0, ["__tests__/tags/panel/index.marko_1*shell"], $scope0_reason, 1);
-	$fg__input_body && $cg__input_open && _patch_render($scope0_id, "__tests__/tags/panel/index.marko_1_input_body#0:4/setup", "input_body");
-	_scope($scope0_id, { input_body: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.body }, "__tests__/tags/panel/index.marko", 0, { input_body: ["input.body"] }) || $fg__input_body && $cg__input_open && _patch_write($scope0_id, "PatchMarkedWrite:input_body", input.body, !_server_guard($scope0_reason, 2));
+	$fg__input_body && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "__tests__/tags/panel/index.marko_1_input_body#0:4/setup", "input_body");
+	_scope($scope0_id, { input_body: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.body }, "__tests__/tags/panel/index.marko", 0, { input_body: ["input.body"] }) || $fg__input_body && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_body", input.body, !_server_guard($scope0_reason, 2));
 });
 
 // template.marko

@@ -77,5 +77,5 @@ var template_default = _template("a", (input) => {
 		h: $wi__input_on && $input_on__closures,
 		a: _existing_scope($childScope2),
 		b: _existing_scope($childScope3)
-	}) || $fg__input_note && (_client_branch_if("a2", $scope0_id) || $cg__input_on) && _patch_write($scope0_id, "xe", input.note, !_server_guard($scope0_reason, 1));
+	}) || $fg__input_note && (_client_branch_if("a2", $scope0_id) || _unfilled_if($scope0_reason, 2)) && _patch_write($scope0_id, "xe", input.note, !_server_guard($scope0_reason, 1));
 }, 1);

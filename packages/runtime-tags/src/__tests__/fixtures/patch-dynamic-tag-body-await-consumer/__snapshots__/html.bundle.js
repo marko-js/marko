@@ -5,7 +5,7 @@ _shells({
 	b: "b !b6; b%;<button class=toggle>toggle</button><!><!>"
 });
 var card_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_p__OR__input_content = _write_guard($scope0_reason, 0), $wi__input_content = _write_if($scope0_reason, 2), $cg__input_content = _client_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_p__OR__input_content = _write_guard($scope0_reason, 0), $wi__input_content = _write_if($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_content__closures = /* @__PURE__ */ new Set();
 	const $open__closures = /* @__PURE__ */ new Set();
@@ -13,7 +13,7 @@ var card_default = _template("b", (input) => {
 	_html(`<button class=toggle>toggle</button>${_el_mark($scope0_id, "a")}`);
 	_await($scope0_id, "b", input.p, (x) => {
 		const $scope1_id = _scope_id();
-		_filled_guard($scope0_reason, 1) && $cg__input_content && _patch_write($scope1_id, "xc", x, !_server_guard($scope0_reason, 1));
+		_filled_guard($scope0_reason, 1) && _unfilled_if($scope0_reason, 2) && _patch_write($scope1_id, "xc", x, !_server_guard($scope0_reason, 1));
 		const c = x && input.content;
 		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "xe", c, !_server_guard($scope0_reason, 0));
 		_if(() => {
@@ -31,7 +31,7 @@ var card_default = _template("b", (input) => {
 		_subscribe($open__closures, _subscribe($wi__input_content && $input_content__closures, _scope($scope1_id, {
 			c: $wi__input_content && x,
 			e: c
-		}), $cg__input_content && "b1"), "b3");
+		}), _client_guard($scope0_reason, 2) && "b1"), "b3");
 	}, 1, "b4", _unfilled_if($scope0_reason, 1), 1);
 	_script($scope0_id, "b6");
 	_patch_fill($scope0_id, "vb7", open, 1);
@@ -40,7 +40,7 @@ var card_default = _template("b", (input) => {
 		g: open,
 		h: $wi__input_content && $input_content__closures,
 		i: $open__closures
-	}) || _filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "xf", input.content, !_server_guard($scope0_reason, 2));
+	}) || _filled_guard($scope0_reason, 2) && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xf", input.content, !_server_guard($scope0_reason, 2));
 });
 
 // template.marko
@@ -68,5 +68,5 @@ var template_default = _template("a", (input) => {
 		e: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.p,
 		g: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 4)) && input.note,
 		h: _write_if($scope0_reason, 4) && $input_note__closures
-	}) || ($fg__input_on && _client_guard($scope0_reason, 3) && _patch_write($scope0_id, "xd", input.on, !_server_guard($scope0_reason, 2)), $fg__input_p && _client_guard($scope0_reason, 2) && _patch_write($scope0_id, "xe", input.p, !_server_guard($scope0_reason, 3)), $fg__input_note && (_client_branch_if("a0", $scope0_id) || _client_guard($scope0_reason, 0)) && _patch_write($scope0_id, "xg", input.note, !_server_guard($scope0_reason, 4)));
+	}) || ($fg__input_on && _unfilled_if($scope0_reason, 3) && _patch_write($scope0_id, "xd", input.on, !_server_guard($scope0_reason, 2)), $fg__input_p && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xe", input.p, !_server_guard($scope0_reason, 3)), $fg__input_note && (_client_branch_if("a0", $scope0_id) || _unfilled_if($scope0_reason, 0)) && _patch_write($scope0_id, "xg", input.note, !_server_guard($scope0_reason, 4)));
 }, 1);

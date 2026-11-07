@@ -15,7 +15,7 @@ var template_default = _template("a", (input) => {
 	let count = 0;
 	const Inner = { content: _content("a2", ({ open, body }) => {
 		const $scope2_id = _scope_id();
-		const $scope2_reason = _scope_reason(), $wg__body = _write_guard($scope2_reason, 2), $wg__open = _write_guard($scope2_reason, 1), $fg__body = _filled_guard($scope2_reason, 2), $cg__open = _client_guard($scope2_reason, 1);
+		const $scope2_reason = _scope_reason(), $wg__body = _write_guard($scope2_reason, 2), $wg__open = _write_guard($scope2_reason, 1), $fg__body = _filled_guard($scope2_reason, 2);
 		_if(() => {
 			if (open) {
 				const $scope4_id = _scope_id();
@@ -24,8 +24,8 @@ var template_default = _template("a", (input) => {
 				return 0;
 			}
 		}, $scope2_id, "a", 1, $wg__open, 1, 0, 0, ["a0"], $scope2_reason, 1);
-		$fg__body && $cg__open && _patch_render($scope2_id, "a3", "e");
-		_write_if($scope2_reason, 1) && _scope($scope2_id, { e: _unfilled_if($scope2_reason, 1) && body }) || $fg__body && $cg__open && _patch_write($scope2_id, "xe", body, !_server_guard($scope2_reason, 2));
+		$fg__body && _client_guard($scope2_reason, 1) && _patch_render($scope2_id, "a3", "e");
+		_write_if($scope2_reason, 1) && _scope($scope2_id, { e: _unfilled_if($scope2_reason, 1) && body }) || $fg__body && _unfilled_if($scope2_reason, 1) && _patch_write($scope2_id, "xe", body, !_server_guard($scope2_reason, 2));
 	}, $scope0_id) };
 	const Outer = { content: _content("a4", ({ open, body }) => {
 		const $scope3_id = _scope_id();

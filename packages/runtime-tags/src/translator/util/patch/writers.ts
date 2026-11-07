@@ -1164,7 +1164,7 @@ function getClientBranchGuard(section: Section, contents: Opt<Section>) {
 }
 
 // A patch writes a value where main serializes it: where client code may read it
-// after resume (its write reason), a caller's client bit deciding a guarded one.
+// after resume (its write reason), a guarded one where no patch fills its reads.
 function getUnfilledPatchWrite(section: Section, binding: Binding) {
   // A built object's source rides its readers' entries, where a patch fills them.
   const contents =
@@ -1188,7 +1188,7 @@ function getUnfilledPatchWrite(section: Section, binding: Binding) {
     orCallerGroupGuards(
       section,
       contents && getClientBranchGuard(section, contents),
-      "_client_guard",
+      "_unfilled_if",
       reason,
     ),
     write,

@@ -27,7 +27,7 @@ var pass_on_default = _template("__tests__/tags/pass-on.marko", (input) => {
 	}, "__tests__/tags/pass-on.marko", 0, {
 		input_content: ["input.content"],
 		input_obj_x: ["input.obj.x"]
-	}) || ($fg__input_content && _client_guard($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_content", input.content, !_server_guard($scope0_reason, 1)), $fg__input_obj_x && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_obj_x", input.obj?.x, !_server_guard($scope0_reason, 2)));
+	}) || ($fg__input_content && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_content", input.content, !_server_guard($scope0_reason, 1)), $fg__input_obj_x && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_obj_x", input.obj?.x, !_server_guard($scope0_reason, 2)));
 });
 
 // template.marko
@@ -67,5 +67,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_a: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.a,
 		"ClosureScopes:input_a/5": _write_if($scope0_reason, 2) && $input_a__closures,
 		"#childScope/0": _existing_scope($childScope2)
-	}, "__tests__/template.marko", 0, { input_a: ["input.a"] }) || $fg__input_a && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_a", input.a, !_server_guard($scope0_reason, 2));
+	}, "__tests__/template.marko", 0, { input_a: ["input.a"] }) || $fg__input_a && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_a", input.a, !_server_guard($scope0_reason, 2));
 }, 1);

@@ -21,7 +21,7 @@ _shells({
 	c2: `c2${_shell_marker([[], []], ["a>", $setup$1], ["b>", $setup])};${/*@__PURE__*/ ((_w0, _w1) => `/${_w0}&/${_w1}&b`)($walks$1, "b%c")};${/*@__PURE__*/ ((_w0, _w1) => `${_w0}${_w1}<!>`)($template$1, $template)}`
 });
 const $content = (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_depth = _write_guard($scope0_reason, 1), $cg__input_depth = _client_guard($scope0_reason, 1), $fg__input_fn = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_depth = _write_guard($scope0_reason, 1), $fg__input_fn = _filled_guard($scope0_reason, 2), $cg__input_depth = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.depth) {
@@ -48,7 +48,7 @@ const $content = (input) => {
 		}
 	}, $scope0_id, "a", 1, $wg__input_depth, 1, 0, 0, ["c2"], $scope0_reason, 1);
 	$fg__input_fn && $cg__input_depth && _patch_render($scope0_id, "c1", "e");
-	_scope($scope0_id, { e: _write_if($scope0_reason, 1) && input.fn }) || $fg__input_fn && $cg__input_depth && _patch_write($scope0_id, "xe", input.fn, !_server_guard($scope0_reason, 2));
+	_scope($scope0_id, { e: _write_if($scope0_reason, 1) && input.fn }) || $fg__input_fn && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.fn, !_server_guard($scope0_reason, 2));
 };
 var tree_default = _template("c", $content);
 
@@ -58,7 +58,7 @@ _shells({
 	a1: `a1${_shell_marker([[], []], ["a>", $setup])};${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c")};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template)}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 1), $cg__input_show = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.show) {
@@ -80,6 +80,6 @@ var template_default = _template("a", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["a1"], $scope0_reason, 0);
-	$fg__input_label && $cg__input_show && _patch_render($scope0_id, "a0", "e");
-	_scope($scope0_id, { e: _write_if($scope0_reason, 0) && input.label }) || $fg__input_label && $cg__input_show && _patch_write($scope0_id, "xe", input.label, !_server_guard($scope0_reason, 1));
+	$fg__input_label && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "a0", "e");
+	_scope($scope0_id, { e: _write_if($scope0_reason, 0) && input.label }) || $fg__input_label && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xe", input.label, !_server_guard($scope0_reason, 1));
 }, 1);

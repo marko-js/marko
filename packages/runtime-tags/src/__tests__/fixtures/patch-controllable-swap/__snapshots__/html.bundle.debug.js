@@ -26,5 +26,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		plain: "1:8",
 		loud: "2:8",
 		"ControlledHandler:#input/1": ["valueChange", "5:28"]
-	}) || ($fg__input_value && _client_guard($scope0_reason, 3) && _patch_write($scope0_id, "PatchMarkedWrite:input_value", input.value, !_server_guard($scope0_reason, 2)), $fg__input_big && _client_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_big", input.big, !_server_guard($scope0_reason, 3)));
+	}) || ($fg__input_value && _unfilled_if($scope0_reason, 3) && _patch_write($scope0_id, "PatchMarkedWrite:input_value", input.value, !_server_guard($scope0_reason, 2)), $fg__input_big && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_big", input.big, !_server_guard($scope0_reason, 3)));
 }, 1);

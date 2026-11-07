@@ -9,7 +9,7 @@ _shells({
 	a4: "a4;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_message = _client_guard($scope0_reason, 2), $cg__input_boom = _client_guard($scope0_reason, 3), $wi__input_show__OR__input_message__OR__input_boom = _write_if($scope0_reason, 0), $wg__input_show = _write_guard($scope0_reason, 1), $cg__input_show = _client_guard($scope0_reason, 1), $fg__input_message = _filled_guard($scope0_reason, 2), $fg__input_boom = _filled_guard($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $cg__input_message = _client_guard($scope0_reason, 2), $cg__input_boom = _client_guard($scope0_reason, 3), $wi__input_show__OR__input_message__OR__input_boom = _write_if($scope0_reason, 0), $wg__input_show = _write_guard($scope0_reason, 1), $fg__input_message = _filled_guard($scope0_reason, 2), $fg__input_boom = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_message__closures = /* @__PURE__ */ new Set();
 	const $input_boom__closures = /* @__PURE__ */ new Set();
@@ -42,5 +42,5 @@ var template_default = _template("a", (input) => {
 		f: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 3)) && input.boom,
 		g: _write_if($scope0_reason, 2) && (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1)) && $input_message__closures,
 		h: _write_if($scope0_reason, 3) && (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 1)) && $input_boom__closures
-	}) || ($fg__input_message && $cg__input_show && _patch_write($scope0_id, "xe", input.message, !_server_guard($scope0_reason, 2)), $fg__input_boom && $cg__input_show && _patch_write($scope0_id, "xf", input.boom, !_server_guard($scope0_reason, 3)));
+	}) || ($fg__input_message && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.message, !_server_guard($scope0_reason, 2)), $fg__input_boom && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xf", input.boom, !_server_guard($scope0_reason, 3)));
 }, 1);

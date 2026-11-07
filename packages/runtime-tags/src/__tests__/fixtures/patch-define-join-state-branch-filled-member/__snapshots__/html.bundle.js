@@ -59,7 +59,7 @@ var panel_default = _template("b", (input) => {
 		i: open,
 		j: _write_if($scope0_reason, 3) && $input_a__closures,
 		k: _write_if($scope0_reason, 4) && $input_b__closures
-	}) || ($fg__input_a && _patch_write($scope0_id, "xf", input.a, !_server_guard($scope0_reason, 3)), $fg__input_b && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "xg", input.b, !_server_guard($scope0_reason, 4)));
+	}) || ($fg__input_a && _patch_write($scope0_id, "xf", input.a, !_server_guard($scope0_reason, 3)), $fg__input_b && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xg", input.b, !_server_guard($scope0_reason, 4)));
 });
 
 // template.marko

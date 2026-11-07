@@ -16,11 +16,11 @@ const $walks$1 = /*@__PURE__*/ ((_w0) => `0${_w0}&Db%l`)("");
 const $setup$1 = _shell_setup([[], []], ["#childScope/0>", $setup$2]);
 _shells({ "__tests__/tags/w.marko": `__tests__/tags/w.marko${_shell_marker($setup$1)};${((_w0) => `0${_w0}&Db%l`)("")};${((_w0) => `${_w0}<p>r:<!></p>`)("")}` });
 var w_default = _template("__tests__/tags/w.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_x = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0, $cg__input_x && 1);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0, _unfilled_if($scope0_reason, 0) && 1);
 	let r = ret_default({ x: input.x });
-	$cg__input_x && _var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/tags/w.marko_0_r#6/var");
+	_unfilled_if($scope0_reason, 0) && _var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/tags/w.marko_0_r#6/var");
 	_patch_child_end();
 	_html(`<p>r:${_text_mark($scope0_id, "#text/2", r, 2, $scope0_reason, 0)}</p>`);
 	_scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/tags/w.marko", 0);

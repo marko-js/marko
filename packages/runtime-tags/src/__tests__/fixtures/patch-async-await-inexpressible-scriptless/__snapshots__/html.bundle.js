@@ -24,9 +24,9 @@ var template_default = _template("a", (input) => {
 			const $scope1_id = _scope_id();
 			_await($scope1_id, "a", Promise.resolve(input.value), () => {
 				const $scope2_id = _scope_id();
-				const $childScope = _peek_scope_id($scope2_id, "a", 0, $cg__input_value && 1);
+				const $childScope = _peek_scope_id($scope2_id, "a", 0, _unfilled_if($scope0_reason, 2) && 1);
 				let w = widget_default({ label: input.value });
-				$cg__input_value && _var($scope2_id, "b", $childScope, "a0");
+				_unfilled_if($scope0_reason, 2) && _var($scope2_id, "b", $childScope, "a0");
 				_patch_child_end();
 				_html(`<em>${_text_mark($scope2_id, "c", w, 1, $scope0_reason, 2)}</em>`);
 				_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope2_id, "a1", $cg__input_value);
@@ -43,5 +43,5 @@ var template_default = _template("a", (input) => {
 	_scope($scope0_id, {
 		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.value,
 		f: _write_if($scope0_reason, 2) && (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1)) && $input_value__closures
-	}) || $fg__input_value && $cg__input_show && _patch_write($scope0_id, "xe", input.value, !_server_guard($scope0_reason, 2));
+	}) || $fg__input_value && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.value, !_server_guard($scope0_reason, 2));
 }, 1);

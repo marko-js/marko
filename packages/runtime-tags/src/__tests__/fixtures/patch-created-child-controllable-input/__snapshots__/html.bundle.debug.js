@@ -22,7 +22,7 @@ var demo_card_default = _template("__tests__/tags/demo-card.marko", (input) => {
 		input_tabChange: ["input.tabChange"],
 		selected: "2:6",
 		"TagVariableChange:selected": ["selectedChange", "2:6"]
-	}) || ($fg__input_tab && _client_guard($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_tab", input.tab, !_server_guard($scope0_reason, 1)), $fg__input_tabChange && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_tabChange", input.tabChange, !_server_guard($scope0_reason, 2)));
+	}) || ($fg__input_tab && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_tab", input.tab, !_server_guard($scope0_reason, 1)), $fg__input_tabChange && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_tabChange", input.tabChange, !_server_guard($scope0_reason, 2)));
 });
 
 // tags/page-b.marko

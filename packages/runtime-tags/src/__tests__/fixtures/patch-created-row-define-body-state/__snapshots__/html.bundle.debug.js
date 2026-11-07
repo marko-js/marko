@@ -12,7 +12,7 @@ _shells({
 	"__tests__/template.marko_1*shell": `__tests__/template.marko_1*shell >#childScope/0>;${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Info_content__walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Info_content__template)}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_value = _filled_guard($scope0_reason, 2), $cg__input_items = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $fg__input_value = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $count__closures = new Set();
 	let count = 0;
@@ -68,7 +68,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, 0, $scope0_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/template.marko_1*shell", $scope0_reason, 1);
 	_html(`<button>+</button>${_el_mark($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$fg__input_value && $cg__input_items && _patch_render($scope0_id, "__tests__/template.marko_1_input_value#0:5/setup", "input_value");
+	$fg__input_value && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "__tests__/template.marko_1_input_value#0:5/setup", "input_value");
 	_scope($scope0_id, {
 		input_value: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.value,
 		count,
@@ -76,5 +76,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, "__tests__/template.marko", 0, {
 		input_value: ["input.value"],
 		count: "1:6"
-	}) || $fg__input_value && $cg__input_items && _patch_write($scope0_id, "PatchMarkedWrite:input_value", input.value, !_server_guard($scope0_reason, 2));
+	}) || $fg__input_value && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_value", input.value, !_server_guard($scope0_reason, 2));
 }, 1);

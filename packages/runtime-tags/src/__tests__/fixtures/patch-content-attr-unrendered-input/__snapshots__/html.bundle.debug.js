@@ -33,5 +33,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_rec_name: ["input.rec.name"],
 		n: "1:6",
 		frag_content: ["frag.content", "3:9"]
-	}) || $fg__input_rec_name && _client_guard($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_rec_name", input.rec?.name, !_server_guard($scope0_reason, 1));
+	}) || $fg__input_rec_name && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_rec_name", input.rec?.name, !_server_guard($scope0_reason, 1));
 }, 1);

@@ -44,7 +44,7 @@ var card_default = _template("b", (input) => {
 		_write_if($scope2_reason, 0) && _scope($scope2_id, {
 			d: (_unfilled_if($scope2_reason, 2) || _unfilled_if($scope2_reason, 0)) && c,
 			e: (_unfilled_if($scope2_reason, 1) || _unfilled_if($scope2_reason, 0)) && on
-		}) || ($fg__c && _client_guard($scope2_reason, 2) && _patch_write($scope2_id, "xd", c, !_server_guard($scope2_reason, 1)), $fg__on && _client_guard($scope2_reason, 1) && _patch_write($scope2_id, "xe", on, !_server_guard($scope2_reason, 2)));
+		}) || ($fg__c && _unfilled_if($scope2_reason, 2) && _patch_write($scope2_id, "xd", c, !_server_guard($scope2_reason, 1)), $fg__on && _unfilled_if($scope2_reason, 1) && _patch_write($scope2_id, "xe", on, !_server_guard($scope2_reason, 2)));
 	}, $scope0_id, 0) };
 	_await($scope0_id, "a", input.p, (x) => {
 		const $scope1_id = _scope_id();
@@ -87,5 +87,5 @@ var template_default = _template("a", (input) => {
 		e: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.p,
 		g: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 4)) && input.note,
 		h: _write_if($scope0_reason, 4) && $input_note__closures
-	}) || ($fg__input_on && _client_guard($scope0_reason, 3) && _patch_write($scope0_id, "xd", input.on, !_server_guard($scope0_reason, 2)), $fg__input_p && _client_guard($scope0_reason, 2) && _patch_write($scope0_id, "xe", input.p, !_server_guard($scope0_reason, 3)), $fg__input_note && (_client_branch_if("a0", $scope0_id) || _client_guard($scope0_reason, 0)) && _patch_write($scope0_id, "xg", input.note, !_server_guard($scope0_reason, 4)));
+	}) || ($fg__input_on && _unfilled_if($scope0_reason, 3) && _patch_write($scope0_id, "xd", input.on, !_server_guard($scope0_reason, 2)), $fg__input_p && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xe", input.p, !_server_guard($scope0_reason, 3)), $fg__input_note && (_client_branch_if("a0", $scope0_id) || _unfilled_if($scope0_reason, 0)) && _patch_write($scope0_id, "xg", input.note, !_server_guard($scope0_reason, 4)));
 }, 1);

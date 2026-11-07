@@ -8,13 +8,13 @@ _shells({
 	a0: "a0;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_show__OR__input_open__OR__input_label = _write_if($scope0_reason, 1), $wg__input_label = _write_guard($scope0_reason, 4), $cg__input_label = _client_guard($scope0_reason, 4), $wi__input_label = _write_if($scope0_reason, 4), $fg__input_open = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 2), $fg__input_label = _filled_guard($scope0_reason, 4), $fg__input_other = _filled_guard($scope0_reason, 5);
+	const $scope0_reason = _scope_reason(), $wi__input_show__OR__input_open__OR__input_label = _write_if($scope0_reason, 1), $wg__input_label = _write_guard($scope0_reason, 4), $cg__input_label = _client_guard($scope0_reason, 4), $wi__input_label = _write_if($scope0_reason, 4), $fg__input_open = _filled_guard($scope0_reason, 3), $fg__input_label = _filled_guard($scope0_reason, 4), $fg__input_other = _filled_guard($scope0_reason, 5);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	let open = false;
 	const Panel = { content: _content_resume("a3", ({ isOpen, content }) => {
 		const $scope4_id = _scope_id();
-		const $scope4_reason = _scope_reason(), $wg__content = _write_guard($scope4_reason, 2), $wg__isOpen = _write_guard($scope4_reason, 1), $fg__content = _filled_guard($scope4_reason, 2), $cg__isOpen = _client_guard($scope4_reason, 1);
+		const $scope4_reason = _scope_reason(), $wg__content = _write_guard($scope4_reason, 2), $wg__isOpen = _write_guard($scope4_reason, 1), $fg__content = _filled_guard($scope4_reason, 2);
 		_if(() => {
 			if (isOpen) {
 				const $scope5_id = _scope_id();
@@ -23,8 +23,8 @@ var template_default = _template("a", (input) => {
 				return 0;
 			}
 		}, $scope4_id, "a", 1, $wg__isOpen, 1, 0, 0, ["a0"], $scope4_reason, 1);
-		$fg__content && $cg__isOpen && _patch_render($scope4_id, "a4", "e");
-		_write_if($scope4_reason, 1) && _scope($scope4_id, { e: _unfilled_if($scope4_reason, 1) && content }) || $fg__content && $cg__isOpen && _patch_write($scope4_id, "xe", content, !_server_guard($scope4_reason, 2));
+		$fg__content && _client_guard($scope4_reason, 1) && _patch_render($scope4_id, "a4", "e");
+		_write_if($scope4_reason, 1) && _scope($scope4_id, { e: _unfilled_if($scope4_reason, 1) && content }) || $fg__content && _unfilled_if($scope4_reason, 1) && _patch_write($scope4_id, "xe", content, !_server_guard($scope4_reason, 2));
 	}, $scope0_id) };
 	_if(() => {
 		if (input.show) {
@@ -63,7 +63,7 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id));
 	_html(`<button>toggle</button>${_el_mark($scope0_id, "c")}`);
 	_script($scope0_id, "a9");
-	$fg__input_open && $cg__input_show && _patch_render($scope0_id, "a6", "g");
+	$fg__input_open && _client_guard($scope0_reason, 2) && _patch_render($scope0_id, "a6", "g");
 	$fg__input_label && _patch_subscribers($scope0_id, "a10", "h");
 	_patch_render($scope0_id, "a11", $fg__input_other && "i", $scope0_reason, 5);
 	_patch_render($scope0_id, "a12", $fg__input_other && "m");
@@ -74,5 +74,5 @@ var template_default = _template("a", (input) => {
 		k: _write_if($scope0_reason, 5) && Panel,
 		m: Tag,
 		p: $wi__input_label && $input_label__closures
-	}) || ($fg__input_open && $cg__input_show && _patch_write($scope0_id, "xg", input.open, !_server_guard($scope0_reason, 3)), $fg__input_label && _patch_write($scope0_id, "xh", input.label, !_server_guard($scope0_reason, 4)), $fg__input_other && _patch_write($scope0_id, "xm", Tag, !_server_guard($scope0_reason, 5)));
+	}) || ($fg__input_open && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xg", input.open, !_server_guard($scope0_reason, 3)), $fg__input_label && _patch_write($scope0_id, "xh", input.label, !_server_guard($scope0_reason, 4)), $fg__input_other && _patch_write($scope0_id, "xm", Tag, !_server_guard($scope0_reason, 5)));
 }, 1);

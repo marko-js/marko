@@ -8,7 +8,7 @@ _shells({
 	a5: "a5;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_outer = _client_guard($scope0_reason, 3), $wi__input_show__OR__input_outer__OR__input_inner = _write_if($scope0_reason, 1), $cg__input_show = _client_guard($scope0_reason, 2), $fg__input_outer = _filled_guard($scope0_reason, 3), $fg__input_inner = _filled_guard($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $cg__input_outer = _client_guard($scope0_reason, 3), $wi__input_show__OR__input_outer__OR__input_inner = _write_if($scope0_reason, 1), $fg__input_outer = _filled_guard($scope0_reason, 3), $fg__input_inner = _filled_guard($scope0_reason, 4), $cg__input_show = _client_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_inner__closures = /* @__PURE__ */ new Set();
 	_html("<main>");
@@ -41,5 +41,5 @@ var template_default = _template("a", (input) => {
 		f: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && input.outer,
 		g: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 4)) && input.inner,
 		i: _write_if($scope0_reason, 4) && (_unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 2)) && $input_inner__closures
-	}) || ($fg__input_outer && $cg__input_show && _patch_write($scope0_id, "xf", input.outer, !_server_guard($scope0_reason, 3)), $fg__input_inner && $cg__input_show && _patch_write($scope0_id, "xg", input.inner, !_server_guard($scope0_reason, 4)));
+	}) || ($fg__input_outer && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xf", input.outer, !_server_guard($scope0_reason, 3)), $fg__input_inner && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xg", input.inner, !_server_guard($scope0_reason, 4)));
 }, 1);

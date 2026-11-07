@@ -10,7 +10,7 @@ var one_default = _template("b", (input) => {
 	_scope($scope0_id, {
 		d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.tag,
 		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.c
-	}) || ($fg__input_tag && _client_guard($scope0_reason, 2) && _patch_write($scope0_id, "xd", input.tag, !_server_guard($scope0_reason, 1)), $fg__input_c && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.c, !_server_guard($scope0_reason, 2)));
+	}) || ($fg__input_tag && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xd", input.tag, !_server_guard($scope0_reason, 1)), $fg__input_c && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.c, !_server_guard($scope0_reason, 2)));
 });
 
 // template.marko

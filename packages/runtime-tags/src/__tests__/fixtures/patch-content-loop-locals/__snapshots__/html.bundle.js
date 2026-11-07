@@ -24,7 +24,7 @@ _shells({
 	a0: "a0;D%;<b><!>!</b>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_show = _client_guard($scope0_reason, 1), $cg__input_labels = _client_guard($scope0_reason, 0), $fg__input_show = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_show = _client_guard($scope0_reason, 1), $fg__input_show = _filled_guard($scope0_reason, 1), $cg__input_labels = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_show__closures = /* @__PURE__ */ new Set();
 	const $n__closures = /* @__PURE__ */ new Set();
@@ -66,5 +66,5 @@ var template_default = _template("a", (input) => {
 		i: _write_if($scope0_reason, 1) && $input_show__closures,
 		j: $n__closures,
 		a: _existing_scope($childScope)
-	}) || $fg__input_show && $cg__input_labels && _patch_write($scope0_id, "xg", input.show, !_server_guard($scope0_reason, 1));
+	}) || $fg__input_show && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xg", input.show, !_server_guard($scope0_reason, 1));
 }, 1);

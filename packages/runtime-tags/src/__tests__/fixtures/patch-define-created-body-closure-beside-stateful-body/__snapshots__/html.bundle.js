@@ -7,13 +7,13 @@ _shells({
 	a1: "a1;D ;<em> </em>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_label = _write_if($scope0_reason, 1), $cg__input_label = _client_guard($scope0_reason, 1), $sg__input_label = _server_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 1), $fg__input_open = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 2), $fg__input_other = _filled_guard($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $wi__input_label = _write_if($scope0_reason, 1), $cg__input_label = _client_guard($scope0_reason, 1), $sg__input_label = _server_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 1), $fg__input_open = _filled_guard($scope0_reason, 3), $fg__input_other = _filled_guard($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	let open = false;
 	const Panel = { content: _content_resume("a3", ({ isOpen }) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason(), $wg__isOpen = _write_guard($scope1_reason, 0), $cg__isOpen = _client_guard($scope1_reason, 0);
+		const $scope1_reason = _scope_reason(), $wg__isOpen = _write_guard($scope1_reason, 0);
 		const label = input.label + "?";
 		_if(() => {
 			if (isOpen) {
@@ -24,12 +24,12 @@ var template_default = _template("a", (input) => {
 				return 0;
 			}
 		}, $scope1_id, "a", 1, $wg__isOpen, 1, 0, 0, ["a1"], $scope1_reason, 0);
-		_filled_guard($scope0_reason, 1) && $cg__isOpen && _patch_render($scope1_id, "a0", "e");
+		_filled_guard($scope0_reason, 1) && _client_guard($scope1_reason, 0) && _patch_render($scope1_id, "a0", "e");
 		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "a4", $cg__input_label);
 		_subscribe($wi__input_label && $input_label__closures, _scope($scope1_id, {
 			e: (_unfilled_if($scope1_reason, 0) || _unfilled_if($scope0_reason, 1)) && label,
 			_: _scope_with_id($scope0_id)
-		}), $cg__input_label && "a4", $wg__isOpen) || _filled_guard($scope0_reason, 1) && $cg__isOpen && _patch_write($scope1_id, "xe", label, !$sg__input_label);
+		}), $cg__input_label && "a4", $wg__isOpen) || _filled_guard($scope0_reason, 1) && _unfilled_if($scope1_reason, 0) && _patch_write($scope1_id, "xe", label, !$sg__input_label);
 		$wg__isOpen || _write_guard($scope0_reason, 1) && _resume_branch($scope1_id);
 	}, $scope0_id) };
 	_if(() => {
@@ -52,7 +52,7 @@ var template_default = _template("a", (input) => {
 	_html(`<button>toggle</button>${_el_mark($scope0_id, "c")}`);
 	_script($scope0_id, "a6");
 	$fg__input_label && _patch_subscribers($scope0_id, "a7", "f");
-	$fg__input_open && $cg__input_show && _patch_render($scope0_id, "a5", "h");
+	$fg__input_open && _client_guard($scope0_reason, 2) && _patch_render($scope0_id, "a5", "h");
 	_patch_render($scope0_id, "a8", $fg__input_other && "i", $scope0_reason, 4);
 	_patch_render($scope0_id, "a9", $fg__input_other && "m");
 	_scope($scope0_id, {
@@ -62,5 +62,5 @@ var template_default = _template("a", (input) => {
 		k: _write_if($scope0_reason, 4) && Panel,
 		m: Tag,
 		o: $wi__input_label && $input_label__closures
-	}) || ($fg__input_label && _patch_write($scope0_id, "xf", input.label, !$sg__input_label), $fg__input_open && $cg__input_show && _patch_write($scope0_id, "xh", input.open, !_server_guard($scope0_reason, 3)), $fg__input_other && _patch_write($scope0_id, "xm", Tag, !_server_guard($scope0_reason, 4)));
+	}) || ($fg__input_label && _patch_write($scope0_id, "xf", input.label, !$sg__input_label), $fg__input_open && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xh", input.open, !_server_guard($scope0_reason, 3)), $fg__input_other && _patch_write($scope0_id, "xm", Tag, !_server_guard($scope0_reason, 4)));
 }, 1);

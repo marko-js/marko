@@ -27,7 +27,7 @@ var label_view_default = _template("b", (input) => {
 			e: _write_if($scope1_reason, 1) && b,
 			f: _write_if($scope1_reason, 0) && flag,
 			h: get
-		}) || ($fg__a && _client_guard($scope1_reason, 2) && _patch_write($scope1_id, "xd", a, !_server_guard($scope1_reason, 4)), $fg__b && _client_guard($scope1_reason, 1) && _patch_write($scope1_id, "xe", b, !_server_guard($scope1_reason, 5)), $fg__flag && _client_guard($scope1_reason, 0) && _patch_write($scope1_id, "xf", flag, !_server_guard($scope1_reason, 6)), $fg__a__OR__b__OR__flag && _patch_write($scope1_id, "xh", get, !_server_guard($scope1_reason, 3)));
+		}) || ($fg__a && _unfilled_if($scope1_reason, 2) && _patch_write($scope1_id, "xd", a, !_server_guard($scope1_reason, 4)), $fg__b && _unfilled_if($scope1_reason, 1) && _patch_write($scope1_id, "xe", b, !_server_guard($scope1_reason, 5)), $fg__flag && _unfilled_if($scope1_reason, 0) && _patch_write($scope1_id, "xf", flag, !_server_guard($scope1_reason, 6)), $fg__a__OR__b__OR__flag && _patch_write($scope1_id, "xh", get, !_server_guard($scope1_reason, 3)));
 	}, $scope0_id, 0) };
 	_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 1) << 3 | _updates_from($scope0_reason, 2) << 5 | _updates_from($scope0_reason, 3) << 7 | _updates_from($scope0_reason, 4) << 9 | _updates_from($scope0_reason, 5) << 11 | _updates_from($scope0_reason, 6) << 13);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);

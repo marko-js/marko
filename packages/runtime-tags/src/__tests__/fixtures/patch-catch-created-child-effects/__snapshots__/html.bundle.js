@@ -71,5 +71,5 @@ var template_default = _template("a", (input) => {
 		i: $wi__input_msg && $input_msg__closures,
 		k: $count__closures,
 		j: _write_if($scope0_reason, 2) && (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && $input_fail__closures
-	}) || ($fg__input_msg && _patch_write($scope0_id, "xf", input.msg, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && $cg__input_msg && _patch_write($scope0_id, "xg", input.fail, !_server_guard($scope0_reason, 2)));
+	}) || ($fg__input_msg && _patch_write($scope0_id, "xf", input.msg, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xg", input.fail, !_server_guard($scope0_reason, 2)));
 }, 1);

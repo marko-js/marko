@@ -57,5 +57,5 @@ var template_default = _template("a", (input) => {
 		i: _write_if($scope0_reason, 3) && (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 2)) && $input_fast__closures,
 		h: _write_if($scope0_reason, 2) && _unfilled_if($scope0_reason, 2) && $input_show__closures,
 		j: _write_if($scope0_reason, 4) && _unfilled_if($scope0_reason, 4) && $input_slow__closures
-	}) || $fg__input_fast && $cg__input_show && _patch_write($scope0_id, "xf", input.fast, !_server_guard($scope0_reason, 3));
+	}) || $fg__input_fast && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xf", input.fast, !_server_guard($scope0_reason, 3));
 }, 1);

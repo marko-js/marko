@@ -7,7 +7,7 @@ const $Wrapper_content__walks = /*@__PURE__*/ ((_w0, _w1) => `b/${_w0}&/${_w1}&b
 const $Wrapper_content__template = /*@__PURE__*/ ((_w0, _w1) => `<!>${_w0}${_w1}<!>`)($Outer_content__template, $Outer_content__template);
 _shells({ a: `a !a7;${((_w0) => `b/${_w0}& b`)($Wrapper_content__walks)};${((_w0) => `<!>${_w0}<button>+</button>`)($Wrapper_content__template)}` });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_label = _write_if($scope0_reason, 0), $cg__input_label = _client_guard($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wi__input_label = _write_if($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	let n = 0;
@@ -27,7 +27,7 @@ var template_default = _template("a", (input) => {
 			_subscribe(_unfilled_if((_updates_from($scope1_reason, 1) | _updates_from($scope2_reason, 0)) << 1, 0) && $wi__x && $Outer_content__x__closures, _subscribe(_unfilled_if((_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 1) | _updates_from($scope2_reason, 0)) << 1, 0) && $wi__input_label && $input_label__closures, _scope($scope2_id, {
 				d: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope1_reason, 1) || _unfilled_if($scope2_reason, 0)) && z,
 				_: ($wi__input_label || $wi__x || _write_if($scope2_reason, 0)) && _scope_with_id($scope1_id)
-			}), _client_guard((_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 1) | _updates_from($scope2_reason, 0)) << 1, 0) && "a2"), _client_guard((_updates_from($scope1_reason, 1) | _updates_from($scope2_reason, 0)) << 1, 0) && "a3") || $fg__z && ($cg__input_label || _client_guard($scope1_reason, 1)) && _patch_write($scope2_id, "xd", z, !_server_guard($scope2_reason, 0));
+			}), _client_guard((_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 1) | _updates_from($scope2_reason, 0)) << 1, 0) && "a2"), _client_guard((_updates_from($scope1_reason, 1) | _updates_from($scope2_reason, 0)) << 1, 0) && "a3") || $fg__z && (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope1_reason, 1)) && _patch_write($scope2_id, "xd", z, !_server_guard($scope2_reason, 0));
 		}, $scope1_id) };
 		_set_scope_reason(_updates_from($scope1_reason, 2) << 1);
 		const $childScope = _peek_scope_id($scope1_id, "a", 0);
@@ -39,7 +39,7 @@ var template_default = _template("a", (input) => {
 			_: ($wi__input_label || _write_if($scope1_reason, 0)) && _scope_with_id($scope0_id),
 			i: $wi__x && $Outer_content__x__closures,
 			a: _existing_scope($childScope)
-		}) || $fg__x && ($cg__input_label || _client_guard($scope1_reason, 2)) && _patch_write($scope1_id, "xd", x, !_server_guard($scope1_reason, 1));
+		}) || $fg__x && (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope1_reason, 2)) && _patch_write($scope1_id, "xd", x, !_server_guard($scope1_reason, 1));
 	}, $scope0_id) };
 	const Wrapper = { content: _content("a6", ({ a, b }) => {
 		const $scope3_id = _scope_id();

@@ -18,5 +18,5 @@ var template_default = _template("a", (input) => {
 		f: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.tag,
 		g: input.title,
 		i: n
-	}) || $fg__input_tag && _client_guard($scope0_reason, 2) && _patch_write($scope0_id, "xf", input.tag, !_server_guard($scope0_reason, 1));
+	}) || $fg__input_tag && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xf", input.tag, !_server_guard($scope0_reason, 1));
 }, 1);

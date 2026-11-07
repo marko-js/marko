@@ -28,7 +28,7 @@ _shells({
 	"__tests__/tags/wrap.marko": `__tests__/tags/wrap.marko${_shell_marker($setup$1)};${((_w0) => `b/${_w0}&b`)("b%c")};${((_w0) => `<!>${_w0}<!>`)($template$2)}`
 });
 var wrap_default = _template("__tests__/tags/wrap.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_label = _filled_guard($scope0_reason, 2), $cg__input_items = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $fg__input_label = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = new Set();
 	_set_scope_reason(_updates_from($scope0_reason, 1) << 1);
@@ -37,7 +37,7 @@ var wrap_default = _template("__tests__/tags/wrap.marko", (input) => {
 		$row = attrTags($row, { content: _content("__tests__/tags/wrap.marko_1*content", () => {
 			const $scope1_reason = _scope_reason();
 			const $scope1_id = _scope_id();
-			_client_guard($scope0_reason, 2) && _patch_write($scope1_id, "PatchMarkedWrite:item", item);
+			_unfilled_if($scope0_reason, 2) && _patch_write($scope1_id, "PatchMarkedWrite:item", item);
 			_html(_text_mark($scope1_id, "#text/0", item + input.label, 1, (2 | _updates_from($scope0_reason, 2)) << 1, 0));
 			_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "__tests__/tags/wrap.marko_1_input_label#0:4/subscribe");
 			_patch_render($scope1_id, "__tests__/tags/wrap.marko_1_input_label#0:4_item#1/setup", [_filled_guard($scope0_reason, 2) && ">input_label", "item"], (2 | _updates_from($scope0_reason, 2)) << 1, 0);
@@ -51,12 +51,12 @@ var wrap_default = _template("__tests__/tags/wrap.marko", (input) => {
 	my_list_default({ row: $row });
 	_patch_child_end();
 	_script($scope0_id, "__tests__/tags/wrap.marko_0", 0);
-	$fg__input_label && $cg__input_items && _patch_subscribers($scope0_id, "__tests__/tags/wrap.marko_0_input_label#4/subscribers", "input_label");
+	$fg__input_label && _client_guard($scope0_reason, 1) && _patch_subscribers($scope0_id, "__tests__/tags/wrap.marko_0_input_label#4/subscribers", "input_label");
 	_scope($scope0_id, {
 		input_label: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.label,
 		"ClosureScopes:input_label/5": _write_if($scope0_reason, 2) && $input_label__closures,
 		"#childScope/0": _existing_scope($childScope)
-	}, "__tests__/tags/wrap.marko", 0, { input_label: ["input.label"] }) || $fg__input_label && $cg__input_items && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 2));
+	}, "__tests__/tags/wrap.marko", 0, { input_label: ["input.label"] }) || $fg__input_label && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 2));
 });
 
 // template.marko

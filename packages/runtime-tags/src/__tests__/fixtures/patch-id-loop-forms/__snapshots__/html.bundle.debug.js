@@ -136,5 +136,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_end: ["input.end"],
 		input_start: ["input.start"],
 		heading: "1:5"
-	}) || ($fg__input_end && _client_guard($scope0_reason, 5) && _patch_write($scope0_id, "PatchMarkedWrite:input_end", input.end, !_server_guard($scope0_reason, 4)), $fg__input_start && _client_guard($scope0_reason, 4) && _patch_write($scope0_id, "PatchMarkedWrite:input_start", input.start, !_server_guard($scope0_reason, 5)));
+	}) || ($fg__input_end && _unfilled_if($scope0_reason, 5) && _patch_write($scope0_id, "PatchMarkedWrite:input_end", input.end, !_server_guard($scope0_reason, 4)), $fg__input_start && _unfilled_if($scope0_reason, 4) && _patch_write($scope0_id, "PatchMarkedWrite:input_start", input.start, !_server_guard($scope0_reason, 5)));
 }, 1);

@@ -40,5 +40,5 @@ var template_default = _template("a", (input) => {
 		f: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && input.record,
 		g: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 2)) && Card,
 		h: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 2)) && Other
-	}) || ($fg__input_useA && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.useA, !_server_guard($scope0_reason, 5)), $fg__input_record && _client_guard($scope0_reason, 0) && _patch_write($scope0_id, "xf", input.record, !_server_guard($scope0_reason, 6)));
+	}) || ($fg__input_useA && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.useA, !_server_guard($scope0_reason, 5)), $fg__input_record && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xf", input.record, !_server_guard($scope0_reason, 6)));
 }, 1);

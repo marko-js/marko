@@ -27,7 +27,7 @@ var field_default = _template("b", (input) => {
 		_scope($scope1_id, {
 			d: (_unfilled_if($scope1_reason, 2) || _unfilled_if($scope1_reason, 0)) && value,
 			e: _unfilled_if($scope1_reason, 0) && valueChange
-		}) || ($fg__value && _client_guard($scope1_reason, 2) && _patch_write($scope1_id, "xd", value, !_server_guard($scope1_reason, 1)), $fg__valueChange && _client_guard($scope1_reason, 0) && _patch_write($scope1_id, "xe", valueChange, !_server_guard($scope1_reason, 2)));
+		}) || ($fg__value && _unfilled_if($scope1_reason, 2) && _patch_write($scope1_id, "xd", value, !_server_guard($scope1_reason, 1)), $fg__valueChange && _unfilled_if($scope1_reason, 0) && _patch_write($scope1_id, "xe", valueChange, !_server_guard($scope1_reason, 2)));
 	}, $scope0_id, 0) };
 	_set_scope_reason(_updates_from($scope0_reason, 2) << 1 | _updates_from($scope0_reason, 2) << 3 | _updates_from($scope0_reason, 1) << 7);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);

@@ -29,7 +29,7 @@ var gate_default = _template("__tests__/tags/gate.marko", (input) => {
 	}, "__tests__/tags/gate.marko", 0, {
 		input_on: ["input.on"],
 		flag: "1:8"
-	}) || _client_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:flag", flag);
+	}) || _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:flag", flag);
 });
 
 // template.marko

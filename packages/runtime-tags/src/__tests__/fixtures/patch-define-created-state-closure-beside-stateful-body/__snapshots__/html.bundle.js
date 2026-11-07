@@ -7,7 +7,7 @@ _shells({
 	a1: "a1 a11;D%b%;<em><!><!></em>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_label = _filled_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 1), $fg__input_other = _filled_guard($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $fg__input_label = _filled_guard($scope0_reason, 2), $fg__input_other = _filled_guard($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	const $open__closures = /* @__PURE__ */ new Set();
 	let open = false;
@@ -58,7 +58,7 @@ var template_default = _template("a", (input) => {
 	}, 8);
 	_html(`<button id=t>toggle</button>${_el_mark($scope0_id, "c")}`);
 	_script($scope0_id, "a7");
-	$fg__input_label && $cg__input_show && _patch_render($scope0_id, "a6", "g");
+	$fg__input_label && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "a6", "g");
 	_patch_render($scope0_id, "a8", $fg__input_other && "h", $scope0_reason, 3);
 	_patch_render($scope0_id, "a9", $fg__input_other && "l");
 	_scope($scope0_id, {
@@ -67,5 +67,5 @@ var template_default = _template("a", (input) => {
 		j: _write_if($scope0_reason, 3) && Panel,
 		l: Tag,
 		o: $open__closures
-	}) || ($fg__input_label && $cg__input_show && _patch_write($scope0_id, "xg", input.label, !_server_guard($scope0_reason, 2)), $fg__input_other && _patch_write($scope0_id, "xl", Tag, !_server_guard($scope0_reason, 3)));
+	}) || ($fg__input_label && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xg", input.label, !_server_guard($scope0_reason, 2)), $fg__input_other && _patch_write($scope0_id, "xl", Tag, !_server_guard($scope0_reason, 3)));
 }, 1);

@@ -129,5 +129,5 @@ var template_default = _template("a", (input) => {
 		n: (_unfilled_if($scope0_reason, 5) || _unfilled_if($scope0_reason, 0)) && input.end,
 		o: (_unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 0)) && input.start,
 		q: _unfilled_if($scope0_reason, 1) && heading
-	}) || ($fg__input_end && _client_guard($scope0_reason, 5) && _patch_write($scope0_id, "xn", input.end, !_server_guard($scope0_reason, 4)), $fg__input_start && _client_guard($scope0_reason, 4) && _patch_write($scope0_id, "xo", input.start, !_server_guard($scope0_reason, 5)));
+	}) || ($fg__input_end && _unfilled_if($scope0_reason, 5) && _patch_write($scope0_id, "xn", input.end, !_server_guard($scope0_reason, 4)), $fg__input_start && _unfilled_if($scope0_reason, 4) && _patch_write($scope0_id, "xo", input.start, !_server_guard($scope0_reason, 5)));
 }, 1);

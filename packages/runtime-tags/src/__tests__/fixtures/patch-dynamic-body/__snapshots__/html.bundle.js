@@ -26,7 +26,7 @@ _shells({
 	c: "c;D%;<main><!></main>"
 });
 var template_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_mode = _write_guard($scope0_reason, 1), $fg__input_text = _filled_guard($scope0_reason, 2), $cg__input_mode = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_mode = _write_guard($scope0_reason, 1), $fg__input_text = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_text__closures = /* @__PURE__ */ new Set();
 	_html("<main>");
@@ -38,9 +38,9 @@ var template_default = _template("c", (input) => {
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_text__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }));
 	}, $scope0_id, 0), 0, $wg__input_mode, $scope0_reason, 1);
 	_html("</main>");
-	$fg__input_text && $cg__input_mode && _patch_subscribers($scope0_id, "c2", "e");
+	$fg__input_text && _client_guard($scope0_reason, 1) && _patch_subscribers($scope0_id, "c2", "e");
 	_scope($scope0_id, {
 		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.text,
 		f: _write_if($scope0_reason, 2) && $input_text__closures
-	}) || $fg__input_text && $cg__input_mode && _patch_write($scope0_id, "xe", input.text, !_server_guard($scope0_reason, 2));
+	}) || $fg__input_text && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.text, !_server_guard($scope0_reason, 2));
 }, 1);

@@ -56,7 +56,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 		}, "__tests__/tags/card.marko", "2:2", {
 			c: "2:16",
 			on: "2:19"
-		}) || ($fg__c && _client_guard($scope2_reason, 2) && _patch_write($scope2_id, "PatchMarkedWrite:c", c, !_server_guard($scope2_reason, 1)), $fg__on && _client_guard($scope2_reason, 1) && _patch_write($scope2_id, "PatchMarkedWrite:on", on, !_server_guard($scope2_reason, 2)));
+		}) || ($fg__c && _unfilled_if($scope2_reason, 2) && _patch_write($scope2_id, "PatchMarkedWrite:c", c, !_server_guard($scope2_reason, 1)), $fg__on && _unfilled_if($scope2_reason, 1) && _patch_write($scope2_id, "PatchMarkedWrite:on", on, !_server_guard($scope2_reason, 2)));
 	}, $scope0_id, 0) };
 	_await($scope0_id, "#text/0", input.p, (x) => {
 		const $scope1_id = _scope_id();
@@ -106,5 +106,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_on: ["input.on"],
 		input_p: ["input.p"],
 		input_note: ["input.note"]
-	}) || ($fg__input_on && _client_guard($scope0_reason, 3) && _patch_write($scope0_id, "PatchMarkedWrite:input_on", input.on, !_server_guard($scope0_reason, 2)), $fg__input_p && _client_guard($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_p", input.p, !_server_guard($scope0_reason, 3)), $fg__input_note && (_client_branch_if("__tests__/template.marko_1*content", $scope0_id) || _client_guard($scope0_reason, 0)) && _patch_write($scope0_id, "PatchMarkedWrite:input_note", input.note, !_server_guard($scope0_reason, 4)));
+	}) || ($fg__input_on && _unfilled_if($scope0_reason, 3) && _patch_write($scope0_id, "PatchMarkedWrite:input_on", input.on, !_server_guard($scope0_reason, 2)), $fg__input_p && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_p", input.p, !_server_guard($scope0_reason, 3)), $fg__input_note && (_client_branch_if("__tests__/template.marko_1*content", $scope0_id) || _unfilled_if($scope0_reason, 0)) && _patch_write($scope0_id, "PatchMarkedWrite:input_note", input.note, !_server_guard($scope0_reason, 4)));
 }, 1);

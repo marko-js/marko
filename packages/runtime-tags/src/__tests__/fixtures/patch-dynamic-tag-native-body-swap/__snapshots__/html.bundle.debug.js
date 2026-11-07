@@ -35,5 +35,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope($scope0_id, {
 		input_x: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.x,
 		"ClosureScopes:input_x/5": _write_if($scope0_reason, 2) && $input_x__closures
-	}, "__tests__/template.marko", 0, { input_x: ["input.x"] }) || $fg__input_x && (_client_branch_if("__tests__/template.marko_1*content", $scope0_id) || _client_guard($scope0_reason, 1)) && _patch_write($scope0_id, "PatchMarkedWrite:input_x", input.x, !_server_guard($scope0_reason, 2));
+	}, "__tests__/template.marko", 0, { input_x: ["input.x"] }) || $fg__input_x && (_client_branch_if("__tests__/template.marko_1*content", $scope0_id) || _unfilled_if($scope0_reason, 1)) && _patch_write($scope0_id, "PatchMarkedWrite:input_x", input.x, !_server_guard($scope0_reason, 2));
 }, 1);

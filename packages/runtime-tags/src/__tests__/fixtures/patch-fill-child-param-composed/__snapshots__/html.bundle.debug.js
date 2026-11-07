@@ -22,7 +22,7 @@ _shells({
 	"__tests__/tags/feed-list.marko_1*shell": `__tests__/tags/feed-list.marko_1*shell${_shell_marker([["__tests__/tags/feed-list.marko_1_hovered#0:5/setup"], ["__tests__/tags/feed-list.marko_1"]], ["#childScope/1>", $setup$2])};${/*@__PURE__*/ ((_w0) => ` D/${_w0}&l`)($walks$2)};${/*@__PURE__*/ ((_w0) => `<li>${_w0}</li>`)($template$2)}`
 });
 var feed_list_default = _template("__tests__/tags/feed-list.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_data = _filled_guard($scope0_reason, 2), $cg__input_items = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $fg__input_data = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	let hovered = undefined;
 	_html("<ul>");
@@ -48,7 +48,7 @@ var feed_list_default = _template("__tests__/tags/feed-list.marko", (input) => {
 		}, "__tests__/tags/feed-list.marko", "6:4", { item_id: ["item.id", "6:8"] });
 	}, 0, $scope0_id, "#ul/0", 1, 1, 1, 0, 0, "__tests__/tags/feed-list.marko_1*shell", $scope0_reason, 1);
 	_html(`</ul>${_el_mark($scope0_id, "#ul/0")}`);
-	$fg__input_data && $cg__input_items && _patch_render($scope0_id, "__tests__/tags/feed-list.marko_1_input_data#0:4/setup", "input_data");
+	$fg__input_data && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "__tests__/tags/feed-list.marko_1_input_data#0:4/setup", "input_data");
 	_patch_fill($scope0_id, "PatchFill:__tests__/tags/feed-list.marko_0_hovered#5/fill", hovered, 1);
 	_scope($scope0_id, {
 		input_data: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.data,
@@ -56,7 +56,7 @@ var feed_list_default = _template("__tests__/tags/feed-list.marko", (input) => {
 	}, "__tests__/tags/feed-list.marko", 0, {
 		input_data: ["input.data"],
 		hovered: "4:6"
-	}) || $fg__input_data && $cg__input_items && _patch_write($scope0_id, "PatchMarkedWrite:input_data", input.data, !_server_guard($scope0_reason, 2));
+	}) || $fg__input_data && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_data", input.data, !_server_guard($scope0_reason, 2));
 });
 
 // template.marko

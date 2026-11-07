@@ -16,7 +16,7 @@ const $walks = "D%b l";
 const $setup = [[], ["__tests__/template.marko_0"]];
 _shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;D%b ;<main><!><button>t</button></main>" });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_key__OR__input_title = _write_guard($scope0_reason, 0), $wi__input_title = _write_if($scope0_reason, 4), $cg__input_title = _client_guard($scope0_reason, 4), $sg__input_key__OR__input_title = _server_guard($scope0_reason, 0), $fg__input_key__OR__input_title = _filled_guard($scope0_reason, 0), $sg__input_title = _server_guard($scope0_reason, 4), $fg__input_title = _filled_guard($scope0_reason, 4), $fg__input_key = _filled_guard($scope0_reason, 3), $fg__input_title__OR__input_pre = _filled_guard($scope0_reason, 1), $fg__input_pre = _filled_guard($scope0_reason, 5);
+	const $scope0_reason = _scope_reason(), $wg__input_key__OR__input_title = _write_guard($scope0_reason, 0), $wi__input_title = _write_if($scope0_reason, 4), $sg__input_key__OR__input_title = _server_guard($scope0_reason, 0), $fg__input_key__OR__input_title = _filled_guard($scope0_reason, 0), $sg__input_title = _server_guard($scope0_reason, 4), $fg__input_title = _filled_guard($scope0_reason, 4), $fg__input_key = _filled_guard($scope0_reason, 3), $fg__input_title__OR__input_pre = _filled_guard($scope0_reason, 1), $fg__input_pre = _filled_guard($scope0_reason, 5);
 	const $scope0_id = _scope_id();
 	$fg__input_title && _patch_write($scope0_id, "PatchMarkedWrite:input_title", input.title, !$sg__input_title);
 	const key = input.key;
@@ -46,7 +46,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_html(`<p>${_text_mark($scope1_id, "#text/3", o.key, $wg__input_key__OR__input_title)}</p>`);
 			_client_guard($scope0_reason, 0) && _patch_render($scope1_id, "__tests__/template.marko_1_o_key#0:11/setup");
 			_client_guard($scope0_reason, 1) && _patch_render($scope1_id, "__tests__/template.marko_1_first#0:13/setup");
-			$cg__input_title && _patch_render($scope1_id, "__tests__/template.marko_1_tag#0:14/setup");
+			_client_guard($scope0_reason, 4) && _patch_render($scope1_id, "__tests__/template.marko_1_tag#0:14/setup");
 			_patch_render($scope1_id, "__tests__/template.marko_1_key#0:8_o#0:10/setup", [_filled_guard($scope0_reason, 3) && ">key", _filled_guard($scope0_reason, 4) && ">input_title"], $scope0_reason, 0);
 			_scope($scope1_id, {
 				"#childScope/0": _write_if($scope0_reason, 0) && _existing_scope($childScope),
@@ -83,5 +83,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		first: "3:9",
 		tag: "4:8",
 		show: "5:6"
-	}) || ($fg__input_pre && $cg__input_title && _patch_write($scope0_id, "PatchMarkedWrite:input_pre", input.pre, !_server_guard($scope0_reason, 5)), $fg__input_key && _patch_write($scope0_id, "PatchMarkedWrite:key", key, !_server_guard($scope0_reason, 3)), $fg__input_key__OR__input_title && _patch_write($scope0_id, "PatchMarkedWrite:o", o, !$sg__input_key__OR__input_title), $fg__input_key__OR__input_title && _patch_write($scope0_id, "PatchMarkedWrite:o_key", o.key, !$sg__input_key__OR__input_title), $fg__input_title__OR__input_pre && _patch_write($scope0_id, "PatchMarkedWrite:first", first, !_server_guard($scope0_reason, 1)), $fg__input_title && _patch_write($scope0_id, "PatchMarkedWrite:tag", tag, !$sg__input_title));
+	}) || ($fg__input_pre && _unfilled_if($scope0_reason, 4) && _patch_write($scope0_id, "PatchMarkedWrite:input_pre", input.pre, !_server_guard($scope0_reason, 5)), $fg__input_key && _patch_write($scope0_id, "PatchMarkedWrite:key", key, !_server_guard($scope0_reason, 3)), $fg__input_key__OR__input_title && _patch_write($scope0_id, "PatchMarkedWrite:o", o, !$sg__input_key__OR__input_title), $fg__input_key__OR__input_title && _patch_write($scope0_id, "PatchMarkedWrite:o_key", o.key, !$sg__input_key__OR__input_title), $fg__input_title__OR__input_pre && _patch_write($scope0_id, "PatchMarkedWrite:first", first, !_server_guard($scope0_reason, 1)), $fg__input_title && _patch_write($scope0_id, "PatchMarkedWrite:tag", tag, !$sg__input_title));
 }, 1);

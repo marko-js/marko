@@ -36,7 +36,7 @@ var wrap_default = _template("b", (input) => {
 		d: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.title,
 		f: $wi__input_title && $input_title__closures,
 		a: _existing_scope($childScope)
-	}) || $fg__input_title && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "xd", input.title, !_server_guard($scope0_reason, 0));
+	}) || $fg__input_title && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xd", input.title, !_server_guard($scope0_reason, 0));
 });
 
 // template.marko

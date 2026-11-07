@@ -19,7 +19,7 @@ _shells({
 	a3: `a3${_shell_marker([[], []], ["a>", $setup])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks)};${$template}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 2), $fg__input_title = _filled_guard($scope0_reason, 3), $fg__input_note = _filled_guard($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 2), $fg__input_title = _filled_guard($scope0_reason, 3), $fg__input_note = _filled_guard($scope0_reason, 4), $cg__input_show = _client_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = /* @__PURE__ */ new Set();
 	_html("<main>");
@@ -54,5 +54,5 @@ var template_default = _template("a", (input) => {
 		e: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && input.title,
 		f: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 4)) && input.note,
 		h: _write_if($scope0_reason, 4) && (_unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 2)) && $input_note__closures
-	}) || ($fg__input_title && $cg__input_show && _patch_write($scope0_id, "xe", input.title, !_server_guard($scope0_reason, 3)), $fg__input_note && $cg__input_show && _patch_write($scope0_id, "xf", input.note, !_server_guard($scope0_reason, 4)));
+	}) || ($fg__input_title && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xe", input.title, !_server_guard($scope0_reason, 3)), $fg__input_note && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xf", input.note, !_server_guard($scope0_reason, 4)));
 }, 1);

@@ -22,7 +22,7 @@ _shells({
 	a1: `a1${_shell_marker([["a4"], []], ["a>", $setup], ["b>", $setup])};${/*@__PURE__*/ ((_w0, _w1) => `b/${_w0}&/${_w1}&b`)("b%c", "b%c")};${/*@__PURE__*/ ((_w0, _w1) => `<!>${_w0}${_w1}<!>`)($template, $template)}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_p = _filled_guard($scope0_reason, 1), $cg__input_show = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $fg__input_p = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	let n = 1;
 	_html(`<button class=toggle>toggle</button>${_el_mark($scope0_id, "a")}`);
@@ -47,9 +47,9 @@ var template_default = _template("a", (input) => {
 		}
 	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["a1"], $scope0_reason, 0);
 	_script($scope0_id, "a2");
-	$fg__input_p && $cg__input_show && _patch_render($scope0_id, "a0", "f");
+	$fg__input_p && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "a0", "f");
 	_scope($scope0_id, {
 		f: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.p,
 		g: n
-	}) || $fg__input_p && $cg__input_show && _patch_write($scope0_id, "xf", input.p, !_server_guard($scope0_reason, 1));
+	}) || $fg__input_p && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xf", input.p, !_server_guard($scope0_reason, 1));
 }, 1);

@@ -35,7 +35,7 @@ var child_default = _template("b", (input) => {
 		f: _write_if($scope0_reason, 1) && input.label,
 		g: _write_if($scope0_reason, 0) && input.other,
 		h: c
-	}) || ($fg__input_label && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "xf", input.label, !_server_guard($scope0_reason, 4)), $fg__input_other && _client_guard($scope0_reason, 0) && _patch_write($scope0_id, "xg", input.other, !_server_guard($scope0_reason, 5)));
+	}) || ($fg__input_label && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xf", input.label, !_server_guard($scope0_reason, 4)), $fg__input_other && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xg", input.other, !_server_guard($scope0_reason, 5)));
 });
 
 // template.marko

@@ -51,5 +51,5 @@ var template_default = _template("c", (input) => {
 	_scope($scope0_id, {
 		d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.page,
 		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.promise
-	}) || ($fg__input_page && _client_guard($scope0_reason, 2) && _patch_write($scope0_id, "xd", input.page, !_server_guard($scope0_reason, 1)), $fg__input_promise && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.promise, !_server_guard($scope0_reason, 2)));
+	}) || ($fg__input_page && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xd", input.page, !_server_guard($scope0_reason, 1)), $fg__input_promise && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.promise, !_server_guard($scope0_reason, 2)));
 }, 1);

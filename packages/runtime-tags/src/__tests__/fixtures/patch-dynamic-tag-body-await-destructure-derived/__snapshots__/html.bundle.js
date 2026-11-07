@@ -30,12 +30,12 @@ _shells({
 	b: "b;b%;<!><!><!>"
 });
 var card_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input = _write_guard($scope0_reason, 0), $cg__input = _client_guard($scope0_reason, 0), $wi__input = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input = _write_guard($scope0_reason, 0), $wi__input = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input__closures = /* @__PURE__ */ new Set();
 	_await($scope0_id, "a", input.p, (x) => {
 		const $scope1_id = _scope_id();
-		_filled_guard($scope0_reason, 1) && $cg__input && _patch_write($scope1_id, "xc", x, !_server_guard($scope0_reason, 1));
+		_filled_guard($scope0_reason, 1) && _unfilled_if($scope0_reason, 0) && _patch_write($scope1_id, "xc", x, !_server_guard($scope0_reason, 1));
 		const { content: c } = x ? input : {};
 		_dynamic_tag($scope1_id, "a", x ? keeper_default : "div", { content: c }, 1, 0, 0, $wg__input, $scope0_reason, 0);
 		_unfilled_if($scope0_reason, 1) && _patch_write($scope1_id, "wf", c, 1);
@@ -45,7 +45,7 @@ var card_default = _template("b", (input) => {
 		$wi__input && _subscribe(_unfilled_if($scope0_reason, 0) && $input__closures, _scope($scope1_id, {
 			c: _unfilled_if($scope0_reason, 0) && x,
 			f: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && c
-		}), $cg__input && "b0", $wg__input);
+		}), _client_guard($scope0_reason, 0) && "b0", $wg__input);
 	}, 1, "b3", _unfilled_if($scope0_reason, 1), 1, 1);
 	_scope($scope0_id, { e: $wi__input && _unfilled_if($scope0_reason, 0) && $input__closures });
 });
@@ -75,5 +75,5 @@ var template_default = _template("a", (input) => {
 		e: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.p,
 		g: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 4)) && input.note,
 		h: _write_if($scope0_reason, 4) && $input_note__closures
-	}) || ($fg__input_on && _client_guard($scope0_reason, 3) && _patch_write($scope0_id, "xd", input.on, !_server_guard($scope0_reason, 2)), $fg__input_p && _client_guard($scope0_reason, 2) && _patch_write($scope0_id, "xe", input.p, !_server_guard($scope0_reason, 3)), $fg__input_note && (_client_branch_if("a0", $scope0_id) || _client_guard($scope0_reason, 0)) && _patch_write($scope0_id, "xg", input.note, !_server_guard($scope0_reason, 4)));
+	}) || ($fg__input_on && _unfilled_if($scope0_reason, 3) && _patch_write($scope0_id, "xd", input.on, !_server_guard($scope0_reason, 2)), $fg__input_p && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xe", input.p, !_server_guard($scope0_reason, 3)), $fg__input_note && (_client_branch_if("a0", $scope0_id) || _unfilled_if($scope0_reason, 0)) && _patch_write($scope0_id, "xg", input.note, !_server_guard($scope0_reason, 4)));
 }, 1);

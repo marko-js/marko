@@ -32,7 +32,7 @@ _shells({
 	a7: "a7; b%;<div></div><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_on = _write_guard($scope0_reason, 7), $cg__input_on = _client_guard($scope0_reason, 7), $wi__input_show__OR__input_note__OR__input_v__OR__input_on = _write_if($scope0_reason, 3), $cg__input_note = _client_guard($scope0_reason, 5), $cg__input_v = _client_guard($scope0_reason, 6), $wg__input_show = _write_guard($scope0_reason, 4), $wi__input_show = _write_if($scope0_reason, 4), $sg__input_note = _server_guard($scope0_reason, 5), $sg__input_v = _server_guard($scope0_reason, 6), $cg__input_show = _client_guard($scope0_reason, 4), $fg__input_note = _filled_guard($scope0_reason, 5), $fg__input_v = _filled_guard($scope0_reason, 6), $fg__input_on = _filled_guard($scope0_reason, 7);
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_on = _write_guard($scope0_reason, 7), $cg__input_on = _client_guard($scope0_reason, 7), $wi__input_show__OR__input_note__OR__input_v__OR__input_on = _write_if($scope0_reason, 3), $cg__input_note = _client_guard($scope0_reason, 5), $cg__input_v = _client_guard($scope0_reason, 6), $wg__input_show = _write_guard($scope0_reason, 4), $wi__input_show = _write_if($scope0_reason, 4), $sg__input_note = _server_guard($scope0_reason, 5), $sg__input_v = _server_guard($scope0_reason, 6), $fg__input_note = _filled_guard($scope0_reason, 5), $fg__input_v = _filled_guard($scope0_reason, 6), $cg__input_show = _client_guard($scope0_reason, 4), $fg__input_on = _filled_guard($scope0_reason, 7);
 	const $scope0_id = _scope_id();
 	const $input_on__closures = /* @__PURE__ */ new Set();
 	_html("<main>");
@@ -60,7 +60,7 @@ var template_default = _template("a", (input) => {
 					c: (_unfilled_if($scope0_reason, 7) || _unfilled_if($scope0_reason, 6)) && v,
 					l: _write_if($scope0_reason, 6) && $await_content__v__closures
 				}), $cg__input_on && "a4", $wg__input_on);
-				_filled_guard($scope0_reason, 6) && (_client_branch_if("a0", $scope2_id) || $cg__input_on) && _patch_write($scope2_id, "xc", v, !$sg__input_v);
+				_filled_guard($scope0_reason, 6) && (_client_branch_if("a0", $scope2_id) || _unfilled_if($scope0_reason, 7)) && _patch_write($scope2_id, "xc", v, !$sg__input_v);
 				$wg__input_on || $wi__input_show__OR__input_note__OR__input_v__OR__input_on && _resume_branch($scope2_id);
 			}, 1, "a5", _unfilled_if($scope0_reason, 6), 0, 1);
 			_script($scope1_id, "a8", 1, _filled_guard($scope0_reason, 5), "c");
@@ -84,5 +84,5 @@ var template_default = _template("a", (input) => {
 		f: $wi__input_show && input.v,
 		g: (_unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 7)) && input.on,
 		j: _write_if($scope0_reason, 7) && (_unfilled_if($scope0_reason, 7) || _unfilled_if($scope0_reason, 4)) && $input_on__closures
-	}) || ($fg__input_note && $cg__input_show && _patch_write($scope0_id, "xe", input.note, !$sg__input_note), $fg__input_v && $cg__input_show && _patch_write($scope0_id, "xf", input.v, !$sg__input_v), $fg__input_on && $cg__input_show && _patch_write($scope0_id, "xg", input.on, !_server_guard($scope0_reason, 7)));
+	}) || ($fg__input_note && _unfilled_if($scope0_reason, 4) && _patch_write($scope0_id, "xe", input.note, !$sg__input_note), $fg__input_v && _unfilled_if($scope0_reason, 4) && _patch_write($scope0_id, "xf", input.v, !$sg__input_v), $fg__input_on && _unfilled_if($scope0_reason, 4) && _patch_write($scope0_id, "xg", input.on, !_server_guard($scope0_reason, 7)));
 }, 1);

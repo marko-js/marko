@@ -22,5 +22,5 @@ var template_default = _template("a", (input) => {
 		g: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.a,
 		h: n,
 		i: _write_if($scope0_reason, 2) && $input_a__closures
-	}) || $fg__input_a && (_client_branch_if("a0", $scope0_id) || _client_guard($scope0_reason, 1)) && _patch_write($scope0_id, "xg", input.a, !_server_guard($scope0_reason, 2));
+	}) || $fg__input_a && (_client_branch_if("a0", $scope0_id) || _unfilled_if($scope0_reason, 1)) && _patch_write($scope0_id, "xg", input.a, !_server_guard($scope0_reason, 2));
 }, 1);

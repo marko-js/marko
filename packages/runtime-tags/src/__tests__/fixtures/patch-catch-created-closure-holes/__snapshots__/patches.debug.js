@@ -2,6 +2,7 @@
 `packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-closure-holes/template.marko_1*content`
 {
   "PatchCatch:#text/0": [{
+    "PatchMarkedWrite:err_message": "b",
     "PatchAttr:#b/0 title": "b",
     "PatchText:#text/1": "b",
     "PatchText:#text/2": "b",

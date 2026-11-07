@@ -25,12 +25,12 @@ var labeler_default = _template("c", (input) => {
 const $setup = _shell_setup([[], []], ["a>", $setup$2], ["c>", $setup$1]);
 _shells({ a: `a${_shell_marker($setup)};${((_w0, _w1) => `D0${_w0}&/${_w1}&l`)("b", "b")};${((_w0, _w1) => `<main>${_w0}${_w1}</main>`)($template$1, $template)}` });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_n = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html("<main>");
-	const $childScope = _peek_scope_id($scope0_id, "a", 0, $cg__input_n && 1);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0, _unfilled_if($scope0_reason, 0) && 1);
 	let double = doubler_default({ value: input.n });
-	$cg__input_n && _var($scope0_id, "b", $childScope, "a0");
+	_unfilled_if($scope0_reason, 0) && _var($scope0_id, "b", $childScope, "a0");
 	_patch_child_end();
 	const $childScope2 = _peek_scope_id($scope0_id, "c", 1);
 	labeler_default({ title: double });

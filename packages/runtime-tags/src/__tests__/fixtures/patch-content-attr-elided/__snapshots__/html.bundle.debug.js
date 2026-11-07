@@ -28,5 +28,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, "__tests__/template.marko", 0, {
 		input_note: ["input.note"],
 		frag_content: ["frag.content", "1:9"]
-	}) || $fg__input_note && _client_guard($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_note", input.note, !_server_guard($scope0_reason, 1));
+	}) || $fg__input_note && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_note", input.note, !_server_guard($scope0_reason, 1));
 }, 1);

@@ -6,9 +6,9 @@ _shells({ "__tests__/tags/code-block.marko": "__tests__/tags/code-block.marko;D 
 var code_block_default = _template("__tests__/tags/code-block.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $fg__input_a = _filled_guard($scope0_reason, 5), $fg__input_b = _filled_guard($scope0_reason, 6), $fg__input_c = _filled_guard($scope0_reason, 7), $fg__input_d = _filled_guard($scope0_reason, 8), $fg__input_a__OR__input_b__OR__input_c = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	$fg__input_a && _client_guard($scope0_reason, 3) && _patch_write($scope0_id, "PatchMarkedWrite:input_a", input.a, !_server_guard($scope0_reason, 5));
-	$fg__input_b && _client_guard($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_b", input.b, !_server_guard($scope0_reason, 6));
-	$fg__input_c && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_c", input.c, !_server_guard($scope0_reason, 7));
+	$fg__input_a && _unfilled_if($scope0_reason, 3) && _patch_write($scope0_id, "PatchMarkedWrite:input_a", input.a, !_server_guard($scope0_reason, 5));
+	$fg__input_b && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_b", input.b, !_server_guard($scope0_reason, 6));
+	$fg__input_c && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_c", input.c, !_server_guard($scope0_reason, 7));
 	const f = _bind_resume(function(t) {
 		return t + input.a + input.b + input.c;
 	}, "__tests__/tags/code-block.marko_0/f", $scope0_id);
@@ -37,7 +37,7 @@ var code_block_default = _template("__tests__/tags/code-block.marko", (input) =>
 		input_c: ["input.c"],
 		input_d: ["input.d"],
 		f: "1:8"
-	}) || ($fg__input_d && _client_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_d", input.d, !_server_guard($scope0_reason, 8)), $fg__input_a__OR__input_b__OR__input_c && _client_guard($scope0_reason, 8) && _patch_write($scope0_id, "PatchMarkedWrite:f", f, !_server_guard($scope0_reason, 0)));
+	}) || ($fg__input_d && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_d", input.d, !_server_guard($scope0_reason, 8)), $fg__input_a__OR__input_b__OR__input_c && _unfilled_if($scope0_reason, 8) && _patch_write($scope0_id, "PatchMarkedWrite:f", f, !_server_guard($scope0_reason, 0)));
 });
 
 // template.marko

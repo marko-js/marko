@@ -25,7 +25,7 @@ var template_default = _template("a", (input) => {
 			d: (_unfilled_if($scope2_reason, 2, 4) || _unfilled_if($scope2_reason, 3, 4)) && fmt,
 			e: (_unfilled_if($scope2_reason, 1, 5) || _unfilled_if($scope2_reason, 3, 5)) && sep,
 			f: (_unfilled_if($scope2_reason, 0) || _unfilled_if($scope2_reason, 3)) && label
-		}) || ($fg__fmt && _client_guard($scope2_reason, 2) && _patch_write($scope2_id, "xd", fmt, !_server_guard($scope2_reason, 4)), $fg__sep && _client_guard($scope2_reason, 1) && _patch_write($scope2_id, "xe", sep, !_server_guard($scope2_reason, 5)), $fg__label && _client_guard($scope2_reason, 0) && _patch_write($scope2_id, "xf", label, !_server_guard($scope2_reason, 6)));
+		}) || ($fg__fmt && _unfilled_if($scope2_reason, 2) && _patch_write($scope2_id, "xd", fmt, !_server_guard($scope2_reason, 4)), $fg__sep && _unfilled_if($scope2_reason, 1) && _patch_write($scope2_id, "xe", sep, !_server_guard($scope2_reason, 5)), $fg__label && _unfilled_if($scope2_reason, 0) && _patch_write($scope2_id, "xf", label, !_server_guard($scope2_reason, 6)));
 	}, $scope0_id) };
 	_if(() => {
 		{

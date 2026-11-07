@@ -12,7 +12,7 @@ _shells({
 	a9: `a9 >a>>>a>>a>a>;${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Relay_content__walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Relay_content__template)}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 0), $wi__input_label = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $fg__input_label = _filled_guard($scope0_reason, 0), $wi__input_label = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	let n = 0;
@@ -34,7 +34,7 @@ var template_default = _template("a", (input) => {
 			_subscribe(_unfilled_if((_updates_from($scope1_reason, 0) | _updates_from($scope2_reason, 0)) << 1, 0) && $wi__x && $Outer_content__x__closures, _subscribe(_unfilled_if((_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 0) | _updates_from($scope2_reason, 0)) << 1, 0) && $wi__input_label && $input_label__closures, _scope($scope2_id, {
 				d: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope1_reason, 0) || _unfilled_if($scope2_reason, 0)) && z,
 				_: _scope_with_id($scope1_id)
-			}), _client_guard((_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 0) | _updates_from($scope2_reason, 0)) << 1, 0) && "a1"), _client_guard((_updates_from($scope1_reason, 0) | _updates_from($scope2_reason, 0)) << 1, 0) && "a2") || $fg__z && ($cg__input_label || _client_guard($scope1_reason, 0)) && _patch_write($scope2_id, "xd", z, !_server_guard($scope2_reason, 0));
+			}), _client_guard((_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 0) | _updates_from($scope2_reason, 0)) << 1, 0) && "a1"), _client_guard((_updates_from($scope1_reason, 0) | _updates_from($scope2_reason, 0)) << 1, 0) && "a2") || $fg__z && (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope1_reason, 0)) && _patch_write($scope2_id, "xd", z, !_server_guard($scope2_reason, 0));
 		}, $scope1_id) };
 		_set_scope_reason(_updates_from($scope1_reason, 1) << 1);
 		const $childScope = _peek_scope_id($scope1_id, "a", 0);
@@ -46,11 +46,11 @@ var template_default = _template("a", (input) => {
 			_: _scope_with_id($scope0_id),
 			i: $wi__x && $Outer_content__x__closures,
 			a: _existing_scope($childScope)
-		}) || $fg__x && ($cg__input_label || _client_guard($scope1_reason, 1)) && _patch_write($scope1_id, "xd", x, !_server_guard($scope1_reason, 0));
+		}) || $fg__x && (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope1_reason, 1)) && _patch_write($scope1_id, "xd", x, !_server_guard($scope1_reason, 0));
 	}, $scope0_id) };
 	const Wrapper = { content: _content("a10", ({ a, b, depth }) => {
 		const $scope3_id = _scope_id();
-		const $scope3_reason = _scope_reason(), $wg__depth = _write_guard($scope3_reason, 3), $wi__depth = _write_if($scope3_reason, 3), $fg__a = _filled_guard($scope3_reason, 1), $cg__depth = _client_guard($scope3_reason, 3);
+		const $scope3_reason = _scope_reason(), $wg__depth = _write_guard($scope3_reason, 3), $wi__depth = _write_if($scope3_reason, 3), $fg__a = _filled_guard($scope3_reason, 1);
 		const Relay = { content: _content("a6", ({ a, b, depth }) => {
 			const $scope4_id = _scope_id();
 			const $scope4_reason = _scope_reason();
@@ -95,13 +95,13 @@ var template_default = _template("a", (input) => {
 			}
 		}, $scope3_id, "b", 1, $wg__depth, 1, 0, 0, ["a9"], $scope3_reason, 3);
 		_unfilled_if($scope3_reason, 3) && _patch_write($scope3_id, "wf", b, 1);
-		$fg__a && $cg__depth && _patch_render($scope3_id, "a7", "e");
+		$fg__a && _client_guard($scope3_reason, 3) && _patch_render($scope3_id, "a7", "e");
 		_scope($scope3_id, {
 			e: $wi__depth && a,
 			f: (_unfilled_if($scope3_reason, 3) || _unfilled_if($scope3_reason, 2)) && b,
 			_: $wi__depth && _scope_with_id($scope0_id),
 			a: _existing_scope($childScope3)
-		}) || $fg__a && $cg__depth && _patch_write($scope3_id, "xe", a, !_server_guard($scope3_reason, 1));
+		}) || $fg__a && _unfilled_if($scope3_reason, 3) && _patch_write($scope3_id, "xe", a, !_server_guard($scope3_reason, 1));
 	}, $scope0_id) };
 	_set_scope_reason(38 | _updates_from($scope0_reason, 1) << 3);
 	const $childScope5 = _peek_scope_id($scope0_id, "a", 4);

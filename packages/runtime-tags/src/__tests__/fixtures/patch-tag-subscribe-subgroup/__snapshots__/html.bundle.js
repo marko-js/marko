@@ -26,7 +26,7 @@ _shells({
 	c4: "c4 c3;D ;<span> </span>"
 });
 var row_list_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_type = _write_guard($scope0_reason, 1), $cg__input_type = _client_guard($scope0_reason, 1), $cg__input_tally = _client_guard($scope0_reason, 0), $fg__input_type = _filled_guard($scope0_reason, 1), $fg__input_settled = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_type = _write_guard($scope0_reason, 1), $cg__input_type = _client_guard($scope0_reason, 1), $fg__input_type = _filled_guard($scope0_reason, 1), $cg__input_tally = _client_guard($scope0_reason, 0), $fg__input_settled = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_settled__closures = /* @__PURE__ */ new Set();
 	const $bounty__closures = /* @__PURE__ */ new Set();
@@ -66,7 +66,7 @@ var row_list_default = _template("c", (input) => {
 		a: _existing_scope($childScope),
 		l: _write_if($scope0_reason, 2) && $input_settled__closures,
 		m: $bounty__closures
-	}) || ($fg__input_type && $cg__input_tally && _patch_write($scope0_id, "xh", input.type, !_server_guard($scope0_reason, 1)), $fg__input_settled && _patch_write($scope0_id, "xi", input.settled, !_server_guard($scope0_reason, 2)));
+	}) || ($fg__input_type && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xh", input.type, !_server_guard($scope0_reason, 1)), $fg__input_settled && _patch_write($scope0_id, "xi", input.settled, !_server_guard($scope0_reason, 2)));
 });
 
 // template.marko

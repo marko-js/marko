@@ -53,5 +53,5 @@ var template_default = _template("a", (input) => {
 		g: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.which,
 		h: input.id,
 		k: $wi__input_id && $input_id__closures
-	}) || ($fg__input_which && $cg__input_id && _patch_write($scope0_id, "xg", input.which, !_server_guard($scope0_reason, 1)), $fg__input_id && _patch_write($scope0_id, "xh", input.id, !_server_guard($scope0_reason, 2)));
+	}) || ($fg__input_which && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xg", input.which, !_server_guard($scope0_reason, 1)), $fg__input_id && _patch_write($scope0_id, "xh", input.id, !_server_guard($scope0_reason, 2)));
 }, 1);

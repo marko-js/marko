@@ -7,21 +7,21 @@ _shells({
 	b2: "b2;D ;<p> </p>"
 });
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_b = _write_guard($scope0_reason, 1), $cg__input_b = _client_guard($scope0_reason, 1), $fg__input_b = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_b = _write_guard($scope0_reason, 1), $fg__input_b = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	let open = true;
 	_if(() => {
 		{
 			const $scope1_id = _scope_id();
 			_html(`<i>${_text_mark($scope1_id, "a", input.b, $wg__input_b)}</i>`);
-			$cg__input_b && _patch_render($scope1_id, "b0");
+			_client_guard($scope0_reason, 1) && _patch_render($scope1_id, "b0");
 			_scope($scope1_id, {});
 			return 0;
 		}
 	}, $scope0_id, "a", 1, 1, 0, 0, 1);
 	_for_of(input.items, (item) => {
 		const $scope2_id = _scope_id();
-		_filled_guard($scope0_reason, 2) && $cg__input_b && _patch_write($scope2_id, "xc", item, !_server_guard($scope0_reason, 2));
+		_filled_guard($scope0_reason, 2) && _unfilled_if($scope0_reason, 1) && _patch_write($scope2_id, "xc", item, !_server_guard($scope0_reason, 2));
 		const d = input.b + item;
 		_html(`<p>${_text_mark($scope2_id, "a", d, 1, $scope0_reason, 0)}</p>`);
 		_patch_render($scope2_id, "b1", [_filled_guard($scope0_reason, 1) && ">f", _filled_guard($scope0_reason, 2) && "c"], $scope0_reason, 0);
@@ -47,7 +47,7 @@ _shells({
 	a1: `a1${_shell_marker([["a4"], []], ["a>", $setup])};${/*@__PURE__*/ ((_w0) => `b/${_w0}&`)($walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}`)($template)}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_b = _filled_guard($scope0_reason, 1), $cg__input_show = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $fg__input_b = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	let list = ["p", "q"];
 	_if(() => {
@@ -70,9 +70,9 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["a1"], $scope0_reason, 0);
 	_html(`<button class=l>l</button>${_el_mark($scope0_id, "b")}`);
 	_script($scope0_id, "a2");
-	$fg__input_b && $cg__input_show && _patch_render($scope0_id, "a0", "f");
+	$fg__input_b && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "a0", "f");
 	_scope($scope0_id, {
 		f: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.b,
 		g: list
-	}) || $fg__input_b && $cg__input_show && _patch_write($scope0_id, "xf", input.b, !_server_guard($scope0_reason, 1));
+	}) || $fg__input_b && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xf", input.b, !_server_guard($scope0_reason, 1));
 }, 1);

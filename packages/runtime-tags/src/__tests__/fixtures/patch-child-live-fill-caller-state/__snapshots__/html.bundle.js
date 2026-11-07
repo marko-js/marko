@@ -6,9 +6,9 @@ _shells({
 	b2: "b2; ; "
 });
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 1), $sg__input_suffix = _server_guard($scope0_reason, 0), $cg__input_show = _client_guard($scope0_reason, 1), $fg__input_suffix = _filled_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 1), $sg__input_suffix = _server_guard($scope0_reason, 0), $fg__input_suffix = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	$fg__input_suffix && $cg__input_show && _patch_write($scope0_id, "xd", input.suffix, !$sg__input_suffix);
+	$fg__input_suffix && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xd", input.suffix, !$sg__input_suffix);
 	const fmt = _bind_resume((v) => v + input.suffix, "b0", $scope0_id);
 	_if(() => {
 		if (input.show) {
@@ -19,11 +19,11 @@ var child_default = _template("b", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["b2"], $scope0_reason, 1);
-	$fg__input_suffix && $cg__input_show && _patch_render($scope0_id, "b1", ["f", "d"]);
+	$fg__input_suffix && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "b1", ["f", "d"]);
 	_scope($scope0_id, {
 		d: _write_if($scope0_reason, 1) && input.suffix,
 		f: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && fmt
-	}) || $fg__input_suffix && $cg__input_show && _patch_write($scope0_id, "xf", fmt, !$sg__input_suffix);
+	}) || $fg__input_suffix && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xf", fmt, !$sg__input_suffix);
 });
 
 // tags/mid.marko

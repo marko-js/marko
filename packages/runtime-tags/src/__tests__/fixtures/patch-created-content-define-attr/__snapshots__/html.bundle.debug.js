@@ -73,5 +73,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_tag: ["input.tag"],
 		Inner: "1:9",
 		Body_content: ["Body.content", "2:9"]
-	}) || ($fg__input_label && (_client_branch_if("__tests__/template.marko_1*content", $scope0_id) || $cg__input_tag__OR__input_show || $cg__input_tag__OR__input_show) && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 3)), $fg__input_tag && _patch_write($scope0_id, "PatchMarkedWrite:input_tag", input.tag, !_server_guard($scope0_reason, 4)));
+	}) || ($fg__input_label && (_client_branch_if("__tests__/template.marko_1*content", $scope0_id) || $cg__input_tag__OR__input_show || _unfilled_if($scope0_reason, 1)) && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 3)), $fg__input_tag && _patch_write($scope0_id, "PatchMarkedWrite:input_tag", input.tag, !_server_guard($scope0_reason, 4)));
 }, 1);

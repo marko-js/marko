@@ -131,7 +131,7 @@ _shells({
 	"__tests__/template.marko_5*shell": "__tests__/template.marko_5*shell,<p>home</p>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_note = _client_guard($scope0_reason, 6), $wg__input_page = _write_guard($scope0_reason, 3), $wi__input_page__OR__input_wide__OR__input_note = _write_if($scope0_reason, 1), $cg__input_page = _client_guard($scope0_reason, 3), $fg__input_list = _filled_guard($scope0_reason, 4), $fg__input_wide = _filled_guard($scope0_reason, 5), $fg__input_note = _filled_guard($scope0_reason, 6), $wi__input_note = _write_if($scope0_reason, 6), $wi__input_page = _write_if($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $cg__input_note = _client_guard($scope0_reason, 6), $wg__input_page = _write_guard($scope0_reason, 3), $wi__input_page__OR__input_wide__OR__input_note = _write_if($scope0_reason, 1), $fg__input_list = _filled_guard($scope0_reason, 4), $cg__input_page = _client_guard($scope0_reason, 3), $fg__input_wide = _filled_guard($scope0_reason, 5), $fg__input_note = _filled_guard($scope0_reason, 6), $wi__input_note = _write_if($scope0_reason, 6), $wi__input_page = _write_if($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	const $input_wide__closures = new Set();
 	const $input_note__closures = new Set();
@@ -215,5 +215,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_list: ["input.list"],
 		input_wide: ["input.wide"],
 		input_note: ["input.note"]
-	}) || ($fg__input_list && $cg__input_page && _patch_write($scope0_id, "PatchMarkedWrite:input_list", input.list, !_server_guard($scope0_reason, 4)), $fg__input_wide && $cg__input_page && _patch_write($scope0_id, "PatchMarkedWrite:input_wide", input.wide, !_server_guard($scope0_reason, 5)), $fg__input_note && $cg__input_page && _patch_write($scope0_id, "PatchMarkedWrite:input_note", input.note, !_server_guard($scope0_reason, 6)));
+	}) || ($fg__input_list && _unfilled_if($scope0_reason, 3) && _patch_write($scope0_id, "PatchMarkedWrite:input_list", input.list, !_server_guard($scope0_reason, 4)), $fg__input_wide && _unfilled_if($scope0_reason, 3) && _patch_write($scope0_id, "PatchMarkedWrite:input_wide", input.wide, !_server_guard($scope0_reason, 5)), $fg__input_note && _unfilled_if($scope0_reason, 3) && _patch_write($scope0_id, "PatchMarkedWrite:input_note", input.note, !_server_guard($scope0_reason, 6)));
 }, 1);

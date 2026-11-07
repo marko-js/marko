@@ -17,7 +17,7 @@ var demo_card_default = _template("b", (input) => {
 		f: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.tabChange,
 		h: selected,
 		i: $selectedChange
-	}) || ($fg__input_tab && _client_guard($scope0_reason, 2) && _patch_write($scope0_id, "xe", input.tab, !_server_guard($scope0_reason, 1)), $fg__input_tabChange && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "xf", input.tabChange, !_server_guard($scope0_reason, 2)));
+	}) || ($fg__input_tab && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xe", input.tab, !_server_guard($scope0_reason, 1)), $fg__input_tabChange && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xf", input.tabChange, !_server_guard($scope0_reason, 2)));
 });
 
 // tags/page-b.marko

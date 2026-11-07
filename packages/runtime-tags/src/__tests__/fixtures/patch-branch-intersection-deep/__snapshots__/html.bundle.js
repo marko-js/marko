@@ -5,7 +5,7 @@ _shells({
 	a3: "a3 a2;D ;<p> </p>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_inner = _write_guard($scope0_reason, 1), $fg__input_inner = _filled_guard($scope0_reason, 1), $cg__input_show = _client_guard($scope0_reason, 0), $fg__input_title = _filled_guard($scope0_reason, 2), $cg__input_inner = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_inner = _write_guard($scope0_reason, 1), $fg__input_inner = _filled_guard($scope0_reason, 1), $fg__input_title = _filled_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 0), $cg__input_inner = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_title__closures = /* @__PURE__ */ new Set();
 	const $count__closures = /* @__PURE__ */ new Set();
@@ -39,5 +39,5 @@ var template_default = _template("a", (input) => {
 		h: count,
 		j: _write_if($scope0_reason, 2) && $input_title__closures,
 		k: $count__closures
-	}) || ($fg__input_inner && $cg__input_show && _patch_write($scope0_id, "xf", input.inner, !_server_guard($scope0_reason, 1)), $fg__input_title && _patch_write($scope0_id, "xg", input.title, !_server_guard($scope0_reason, 2)));
+	}) || ($fg__input_inner && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xf", input.inner, !_server_guard($scope0_reason, 1)), $fg__input_title && _patch_write($scope0_id, "xg", input.title, !_server_guard($scope0_reason, 2)));
 }, 1);

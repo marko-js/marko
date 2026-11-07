@@ -29,7 +29,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			a: "2:15",
 			b: "2:18",
 			c: "2:21"
-		}), _client_guard((_updates_from($scope0_reason, 1) | _updates_from($scope1_reason, 5)) << 1, 0) && "__tests__/template.marko_1_input_y#0:4/subscribe") || ($fg__a && _client_guard($scope1_reason, 2) && _patch_write($scope1_id, "PatchMarkedWrite:a", a, !_server_guard($scope1_reason, 4)), $fg__b && (_client_guard($scope0_reason, 1) || _client_guard($scope1_reason, 1)) && _patch_write($scope1_id, "PatchMarkedWrite:b", b, !_server_guard($scope1_reason, 5)), $fg__c && _client_guard($scope1_reason, 0) && _patch_write($scope1_id, "PatchMarkedWrite:c", c, !_server_guard($scope1_reason, 6)));
+		}), _client_guard((_updates_from($scope0_reason, 1) | _updates_from($scope1_reason, 5)) << 1, 0) && "__tests__/template.marko_1_input_y#0:4/subscribe") || ($fg__a && _unfilled_if($scope1_reason, 2) && _patch_write($scope1_id, "PatchMarkedWrite:a", a, !_server_guard($scope1_reason, 4)), $fg__b && (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope1_reason, 1)) && _patch_write($scope1_id, "PatchMarkedWrite:b", b, !_server_guard($scope1_reason, 5)), $fg__c && _unfilled_if($scope1_reason, 0) && _patch_write($scope1_id, "PatchMarkedWrite:c", c, !_server_guard($scope1_reason, 6)));
 	}, $scope0_id) };
 	_set_scope_reason(926 | (_updates_from($scope0_reason, 0) << 5 | _updates_from($scope0_reason, 2) << 11 | _updates_from($scope0_reason, 3) << 13));
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
@@ -50,5 +50,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, "__tests__/template.marko", 0, {
 		input_y: ["input.y"],
 		n: "1:6"
-	}) || $fg__input_y && _client_guard($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_y", input.y, !_server_guard($scope0_reason, 1));
+	}) || $fg__input_y && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_y", input.y, !_server_guard($scope0_reason, 1));
 }, 1);

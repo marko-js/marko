@@ -7,7 +7,7 @@ _shells({
 	"__tests__/tags/list/index.marko_1*shell": "__tests__/tags/list/index.marko_1*shell;D%b%;<li><!><!></li>"
 });
 var list_default = _template("__tests__/tags/list/index.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_suffix = _filled_guard($scope0_reason, 1), $cg__input_items = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $fg__input_suffix = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_html("<ul>");
 	_for_of(input.items, (item) => {
@@ -17,8 +17,8 @@ var list_default = _template("__tests__/tags/list/index.marko", (input) => {
 		_scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }, "__tests__/tags/list/index.marko", "2:4");
 	}, 0, $scope0_id, "#ul/0", 1, 1, 1, 0, 0, "__tests__/tags/list/index.marko_1*shell", $scope0_reason, 0);
 	_html(`</ul>${_el_mark($scope0_id, "#ul/0")}`);
-	$fg__input_suffix && $cg__input_items && _patch_render($scope0_id, "__tests__/tags/list/index.marko_1_input_suffix#0:4/setup", "input_suffix");
-	_scope($scope0_id, { input_suffix: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.suffix }, "__tests__/tags/list/index.marko", 0, { input_suffix: ["input.suffix"] }) || $fg__input_suffix && $cg__input_items && _patch_write($scope0_id, "PatchMarkedWrite:input_suffix", input.suffix, !_server_guard($scope0_reason, 1));
+	$fg__input_suffix && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "__tests__/tags/list/index.marko_1_input_suffix#0:4/setup", "input_suffix");
+	_scope($scope0_id, { input_suffix: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.suffix }, "__tests__/tags/list/index.marko", 0, { input_suffix: ["input.suffix"] }) || $fg__input_suffix && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_suffix", input.suffix, !_server_guard($scope0_reason, 1));
 });
 
 // template.marko

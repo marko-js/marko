@@ -32,7 +32,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, "__tests__/template.marko", "2:2", {
 			content: "2:20",
 			Tag: "3:10"
-		}) || ($fg__content && _client_guard($scope3_reason, 1) && _patch_write($scope3_id, "PatchMarkedWrite:content", content, !_server_guard($scope3_reason, 2)), $fg__on && _client_guard($scope3_reason, 2) && _patch_write($scope3_id, "PatchMarkedWrite:Tag", Tag, !_server_guard($scope3_reason, 1)));
+		}) || ($fg__content && _unfilled_if($scope3_reason, 1) && _patch_write($scope3_id, "PatchMarkedWrite:content", content, !_server_guard($scope3_reason, 2)), $fg__on && _unfilled_if($scope3_reason, 2) && _patch_write($scope3_id, "PatchMarkedWrite:Tag", Tag, !_server_guard($scope3_reason, 1)));
 	}, $scope0_id) };
 	_for_of(input.items, (item) => {
 		const $scope2_id = _scope_id();

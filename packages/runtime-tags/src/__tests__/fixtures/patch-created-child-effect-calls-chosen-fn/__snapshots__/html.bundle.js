@@ -16,7 +16,7 @@ _shells({
 	a4: `a4${_shell_marker([[], []], ["a>", $setup])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)("D l")};${$template}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_show__OR__input_pick = _client_guard($scope0_reason, 0), $cg__input_show = _client_guard($scope0_reason, 2), $fg__input_x = _filled_guard($scope0_reason, 3), $fg__input_pick = _filled_guard($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $cg__input_show__OR__input_pick = _client_guard($scope0_reason, 0), $fg__input_x = _filled_guard($scope0_reason, 3), $fg__input_pick = _filled_guard($scope0_reason, 4), $cg__input_show = _client_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	let flag = 0;
 	const fa = _resume(function() {
@@ -59,5 +59,5 @@ var template_default = _template("a", (input) => {
 		g: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 4)) && input.pick,
 		i: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 4)) && fa,
 		j: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 4)) && fb
-	}) || ($fg__input_x && $cg__input_show && _patch_write($scope0_id, "xf", input.x, !_server_guard($scope0_reason, 3)), $fg__input_pick && $cg__input_show && _patch_write($scope0_id, "xg", input.pick, !_server_guard($scope0_reason, 4)));
+	}) || ($fg__input_x && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xf", input.x, !_server_guard($scope0_reason, 3)), $fg__input_pick && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xg", input.pick, !_server_guard($scope0_reason, 4)));
 }, 1);

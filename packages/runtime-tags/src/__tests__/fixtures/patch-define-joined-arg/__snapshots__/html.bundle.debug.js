@@ -26,5 +26,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, "__tests__/template.marko", 0, {
 		input_q: ["input.q"],
 		input_item: ["input.item"]
-	}) || ($fg__input_q && _client_guard($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_q", input.q, !_server_guard($scope0_reason, 1)), $fg__input_item && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_item", input.item, !_server_guard($scope0_reason, 2)));
+	}) || ($fg__input_q && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_q", input.q, !_server_guard($scope0_reason, 1)), $fg__input_item && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_item", input.item, !_server_guard($scope0_reason, 2)));
 }, 1);

@@ -9,7 +9,7 @@ _shells({
 	b3: "b3 b7!b0; D D ;<li><a> </a></li>"
 });
 var feed_list_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_data = _filled_guard($scope0_reason, 2), $cg__input_items = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $fg__input_data = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	let hovered = void 0;
 	_html("<ul>");
@@ -26,12 +26,12 @@ var feed_list_default = _template("b", (input) => {
 		});
 	}, 0, $scope0_id, "a", 1, 1, 1, 0, 0, "b3", $scope0_reason, 1);
 	_html(`</ul>${_el_mark($scope0_id, "a")}`);
-	$fg__input_data && $cg__input_items && _patch_render($scope0_id, "b4", "e");
+	$fg__input_data && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "b4", "e");
 	_patch_fill($scope0_id, "vb5", hovered, 1);
 	_scope($scope0_id, {
 		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.data,
 		f: _write_if($scope0_reason, 1) && hovered
-	}) || $fg__input_data && $cg__input_items && _patch_write($scope0_id, "xe", input.data, !_server_guard($scope0_reason, 2));
+	}) || $fg__input_data && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.data, !_server_guard($scope0_reason, 2));
 });
 
 // template.marko

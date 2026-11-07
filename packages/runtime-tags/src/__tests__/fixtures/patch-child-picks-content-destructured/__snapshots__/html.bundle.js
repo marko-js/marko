@@ -15,7 +15,7 @@ var pick_default = _template("b", (input) => {
 		d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && input.a,
 		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 3)) && input.b,
 		f: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 3)) && input.on
-	}) || ($fg__input_a && _client_guard($scope0_reason, 2) && _patch_write($scope0_id, "xd", input.a, !_server_guard($scope0_reason, 4)), $fg__input_b && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.b, !_server_guard($scope0_reason, 5)), $fg__input_on && _client_guard($scope0_reason, 0) && _patch_write($scope0_id, "xf", input.on, !_server_guard($scope0_reason, 6)));
+	}) || ($fg__input_a && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xd", input.a, !_server_guard($scope0_reason, 4)), $fg__input_b && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.b, !_server_guard($scope0_reason, 5)), $fg__input_on && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xf", input.on, !_server_guard($scope0_reason, 6)));
 });
 
 // template.marko
@@ -59,5 +59,5 @@ var template_default = _template("a", (input) => {
 		h: _write_if($scope0_reason, 2) && $input_x__closures,
 		i: $s__closures,
 		b: _existing_scope($childScope)
-	}) || $fg__input_x && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "xf", input.x, !_server_guard($scope0_reason, 2));
+	}) || $fg__input_x && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xf", input.x, !_server_guard($scope0_reason, 2));
 }, 1);

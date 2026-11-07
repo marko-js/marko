@@ -41,7 +41,7 @@ _shells({
 	"__tests__/tags/child.marko_3*shell": "__tests__/tags/child.marko_3*shell,<span>shown</span>"
 });
 var child_default = _template("__tests__/tags/child.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 1), $cg__input_show = _client_guard($scope0_reason, 1), $wi__input_show = _write_if($scope0_reason, 1), $sg__input_show = _server_guard($scope0_reason, 1), $fg__input_show = _filled_guard($scope0_reason, 1), $cg__input_on = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 1), $cg__input_show = _client_guard($scope0_reason, 1), $wi__input_show = _write_if($scope0_reason, 1), $sg__input_show = _server_guard($scope0_reason, 1), $fg__input_show = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	let items = [1, 2];
 	_html(`<button>add</button>${_el_mark($scope0_id, "#button/0")}`);
@@ -92,7 +92,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 		}
 	}, $scope0_id, "#text/1", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["__tests__/tags/child.marko_1*shell"], $scope0_reason, 0);
 	_script($scope0_id, "__tests__/tags/child.marko_0");
-	$fg__input_show && $cg__input_on && _patch_render($scope0_id, "__tests__/tags/child.marko_1_input_show#0:5/setup", "input_show");
+	$fg__input_show && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "__tests__/tags/child.marko_1_input_show#0:5/setup", "input_show");
 	_patch_fill($scope0_id, "PatchFill:__tests__/tags/child.marko_0_items#6/fill", items, 1);
 	_scope($scope0_id, {
 		input_show: _write_if($scope0_reason, 0) && input.show,
@@ -100,7 +100,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	}, "__tests__/tags/child.marko", 0, {
 		input_show: ["input.show"],
 		items: "1:6"
-	}) || $fg__input_show && $cg__input_on && _patch_write($scope0_id, "PatchMarkedWrite:input_show", input.show, !$sg__input_show);
+	}) || $fg__input_show && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_show", input.show, !$sg__input_show);
 });
 
 // template.marko

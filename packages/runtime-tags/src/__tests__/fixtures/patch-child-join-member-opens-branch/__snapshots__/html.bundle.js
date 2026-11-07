@@ -6,7 +6,7 @@ _shells({
 	b1: "b1;D ;<p> </p>"
 });
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_b = _write_guard($scope0_reason, 1), $fg__input_b = _filled_guard($scope0_reason, 1), $cg__input_b = _client_guard($scope0_reason, 1), $fg__input_a = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_b = _write_guard($scope0_reason, 1), $fg__input_b = _filled_guard($scope0_reason, 1), $fg__input_a = _filled_guard($scope0_reason, 2), $cg__input_b = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.b) {
@@ -22,7 +22,7 @@ var child_default = _template("b", (input) => {
 	_scope($scope0_id, {
 		d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.b,
 		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.a
-	}) || ($fg__input_b && _client_guard($scope0_reason, 2) && _patch_write($scope0_id, "xd", input.b, !_server_guard($scope0_reason, 1)), $fg__input_a && $cg__input_b && _patch_write($scope0_id, "xe", input.a, !_server_guard($scope0_reason, 2)));
+	}) || ($fg__input_b && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xd", input.b, !_server_guard($scope0_reason, 1)), $fg__input_a && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.a, !_server_guard($scope0_reason, 2)));
 });
 
 // template.marko

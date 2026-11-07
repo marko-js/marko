@@ -54,7 +54,7 @@ var host_default = _template("__tests__/tags/host.marko", (input) => {
 		input_native: ["input.native"],
 		input_label: ["input.label"],
 		flag: "1:6"
-	}) || ($fg__input_wrap && _patch_write($scope0_id, "PatchMarkedWrite:input_wrap", input.wrap, !_server_guard($scope0_reason, 4)), $fg__input_native && _client_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_native", input.native, !_server_guard($scope0_reason, 6)), $fg__input_label && (_client_branch_if("__tests__/tags/host.marko_3*content", $scope0_id) || _client_guard($scope0_reason, 2)) && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 7)));
+	}) || ($fg__input_wrap && _patch_write($scope0_id, "PatchMarkedWrite:input_wrap", input.wrap, !_server_guard($scope0_reason, 4)), $fg__input_native && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_native", input.native, !_server_guard($scope0_reason, 6)), $fg__input_label && (_client_branch_if("__tests__/tags/host.marko_3*content", $scope0_id) || _unfilled_if($scope0_reason, 2)) && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 7)));
 });
 
 // template.marko

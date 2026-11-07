@@ -6,7 +6,7 @@ _shells({
 	b2: "b2 !b0; D ;<button> </button>"
 });
 var card_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_fn = _client_guard($scope0_reason, 1), $wg__input_show = _write_guard($scope0_reason, 0), $fg__input_fn = _filled_guard($scope0_reason, 1), $cg__input_show = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_fn = _client_guard($scope0_reason, 1), $wg__input_show = _write_guard($scope0_reason, 0), $fg__input_fn = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.show) {
@@ -19,8 +19,8 @@ var card_default = _template("b", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["b2"], $scope0_reason, 0);
-	$fg__input_fn && $cg__input_show && _patch_render($scope0_id, "b1", "e");
-	_scope($scope0_id, { e: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.fn }) || $fg__input_fn && $cg__input_show && _patch_write($scope0_id, "xe", input.fn, !_server_guard($scope0_reason, 1));
+	$fg__input_fn && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "b1", "e");
+	_scope($scope0_id, { e: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.fn }) || $fg__input_fn && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xe", input.fn, !_server_guard($scope0_reason, 1));
 });
 
 // template.marko
@@ -29,7 +29,7 @@ _shells({ a: `a${_shell_marker($setup)};${((_w0) => `b/${_w0}&b`)("b%c")};${((_w
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_filled_guard($scope0_reason, 1) && _client_guard($scope0_reason, 0) && _patch_write($scope0_id, "xe", input.label, !_server_guard($scope0_reason, 1));
+	_filled_guard($scope0_reason, 1) && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xe", input.label, !_server_guard($scope0_reason, 1));
 	_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 1) << 3);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	card_default({

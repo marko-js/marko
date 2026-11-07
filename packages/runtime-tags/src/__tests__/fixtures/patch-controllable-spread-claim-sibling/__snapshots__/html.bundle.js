@@ -15,5 +15,5 @@ var template_default = _template("a", (input) => {
 	_scope($scope0_id, {
 		f: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.attrs,
 		g: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.on
-	}) || ($fg__input_attrs && _client_guard($scope0_reason, 2) && _patch_write($scope0_id, "xf", input.attrs, !_server_guard($scope0_reason, 1)), $fg__input_on && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "xg", input.on, !_server_guard($scope0_reason, 2)));
+	}) || ($fg__input_attrs && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xf", input.attrs, !_server_guard($scope0_reason, 1)), $fg__input_on && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xg", input.on, !_server_guard($scope0_reason, 2)));
 }, 1);

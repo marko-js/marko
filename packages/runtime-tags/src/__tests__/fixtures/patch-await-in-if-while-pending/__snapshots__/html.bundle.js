@@ -53,5 +53,5 @@ var template_default = _template("a", (input) => {
 		l: _write_if($scope0_reason, 4) && (_unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 2)) && $input_msg__closures,
 		k: _write_if($scope0_reason, 3) && (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 2)) && $input_promise__closures,
 		j: _write_if($scope0_reason, 2) && _unfilled_if($scope0_reason, 2) && $input_show__closures
-	}) || ($fg__input_promise && $cg__input_show && _patch_write($scope0_id, "xg", input.promise, !_server_guard($scope0_reason, 3)), $fg__input_msg && $cg__input_show && _patch_write($scope0_id, "xh", input.msg, !_server_guard($scope0_reason, 4)));
+	}) || ($fg__input_promise && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xg", input.promise, !_server_guard($scope0_reason, 3)), $fg__input_msg && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xh", input.msg, !_server_guard($scope0_reason, 4)));
 }, 1);

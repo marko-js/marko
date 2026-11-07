@@ -41,7 +41,7 @@ var host_default = _template("b", (input) => {
 		f: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && input.items,
 		g: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 8)) && input.label,
 		j: _write_if($scope0_reason, 8) && $input_label__closures
-	}) || ($fg__input_wrap && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.wrap, !_server_guard($scope0_reason, 6)), $fg__input_items && _client_guard($scope0_reason, 0) && _patch_write($scope0_id, "xf", input.items, !_server_guard($scope0_reason, 7)), $fg__input_label && (_client_branch_if("b1", $scope0_id) || _client_guard($scope0_reason, 3)) && _patch_write($scope0_id, "xg", input.label, !_server_guard($scope0_reason, 8)));
+	}) || ($fg__input_wrap && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.wrap, !_server_guard($scope0_reason, 6)), $fg__input_items && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xf", input.items, !_server_guard($scope0_reason, 7)), $fg__input_label && (_client_branch_if("b1", $scope0_id) || _unfilled_if($scope0_reason, 3)) && _patch_write($scope0_id, "xg", input.label, !_server_guard($scope0_reason, 8)));
 });
 
 // template.marko

@@ -10,7 +10,7 @@ _shells({
 	"__tests__/tags/rowsy.marko_4*shell": "__tests__/tags/rowsy.marko_4*shell;b%;<!><!><!>"
 });
 var rowsy_default = _template("__tests__/tags/rowsy.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_tags__OR__input_card = _write_guard($scope0_reason, 0), $cg__input_tags__OR__input_card = _client_guard($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 1), $fg__input_card = _filled_guard($scope0_reason, 3), $cg__input_tags = _client_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_tags__OR__input_card = _write_guard($scope0_reason, 0), $cg__input_tags__OR__input_card = _client_guard($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 1), $fg__input_card = _filled_guard($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = new Set();
 	const $n__closures = new Set();
@@ -40,7 +40,7 @@ var rowsy_default = _template("__tests__/tags/rowsy.marko", (input) => {
 	_html(`<button>${_text_mark($scope0_id, "#text/1", n)}</button>${_el_mark($scope0_id, "#button/0")}`);
 	_for_of(input.tags, (tag) => {
 		const $scope2_id = _scope_id();
-		_filled_guard($scope0_reason, 2) && _client_guard($scope0_reason, 3) && _patch_write($scope2_id, "PatchMarkedWrite:tag", tag, !_server_guard($scope0_reason, 2));
+		_filled_guard($scope0_reason, 2) && _unfilled_if($scope0_reason, 3) && _patch_write($scope2_id, "PatchMarkedWrite:tag", tag, !_server_guard($scope0_reason, 2));
 		_dynamic_tag($scope2_id, "#text/0", input.card ? Card : "span", {
 			label: tag,
 			content: Label
@@ -57,7 +57,7 @@ var rowsy_default = _template("__tests__/tags/rowsy.marko", (input) => {
 	_unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "PatchWrite:Card", Card, 1);
 	_unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "PatchWrite:Label", Label, 1);
 	$fg__input_label && _patch_subscribers($scope0_id, "__tests__/tags/rowsy.marko_0_input_label#5/subscribers", "input_label");
-	$fg__input_card && $cg__input_tags && _patch_render($scope0_id, "__tests__/tags/rowsy.marko_2_input_card#0:7/setup", "input_card");
+	$fg__input_card && _client_guard($scope0_reason, 2) && _patch_render($scope0_id, "__tests__/tags/rowsy.marko_2_input_card#0:7/setup", "input_card");
 	_patch_fill($scope0_id, "PatchFill:__tests__/tags/rowsy.marko_0_n#9/fill", n, 1);
 	_scope($scope0_id, {
 		input_label: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.label,
@@ -73,7 +73,7 @@ var rowsy_default = _template("__tests__/tags/rowsy.marko", (input) => {
 		Card: "1:9",
 		n: "4:6",
 		Label: "5:9"
-	}) || ($fg__input_label && (_client_branch_if("__tests__/tags/rowsy.marko_1*content", $scope0_id) || $cg__input_tags__OR__input_card || $cg__input_tags__OR__input_card) && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 1)), $fg__input_card && $cg__input_tags && _patch_write($scope0_id, "PatchMarkedWrite:input_card", input.card, !_server_guard($scope0_reason, 3)));
+	}) || ($fg__input_label && (_client_branch_if("__tests__/tags/rowsy.marko_1*content", $scope0_id) || $cg__input_tags__OR__input_card || _unfilled_if($scope0_reason, 0)) && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 1)), $fg__input_card && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_card", input.card, !_server_guard($scope0_reason, 3)));
 });
 
 // template.marko

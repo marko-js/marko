@@ -16,7 +16,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let open = false;
 	const Panel = { content: _content_resume("__tests__/template.marko_2*content", ({ isOpen, label }) => {
 		const $scope2_id = _scope_id();
-		const $scope2_reason = _scope_reason(), $fg__label = _filled_guard($scope2_reason, 2), $cg__isOpen = _client_guard($scope2_reason, 1), $fg__isOpen = _filled_guard($scope2_reason, 1);
+		const $scope2_reason = _scope_reason(), $fg__label = _filled_guard($scope2_reason, 2), $fg__isOpen = _filled_guard($scope2_reason, 1);
 		_if(() => {
 			if (isOpen) {
 				const $scope3_id = _scope_id();
@@ -26,7 +26,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}
 		}, $scope2_id, "#text/0", 1, _write_guard($scope2_reason, 1), 1, 0, 0, ["__tests__/template.marko_3*shell"], $scope2_reason, 1);
 		_html(`<span>${_text_mark($scope2_id, "#text/1", isOpen ? label : "-", 1, $scope2_reason, 0)}</span>`);
-		$fg__label && $cg__isOpen && _patch_render($scope2_id, "__tests__/template.marko_3_label#2:5/setup", "label");
+		$fg__label && _client_guard($scope2_reason, 1) && _patch_render($scope2_id, "__tests__/template.marko_3_label#2:5/setup", "label");
 		_patch_render($scope2_id, "__tests__/template.marko_2_isOpen#4_label#5/setup", [$fg__isOpen && "isOpen", $fg__label && "label"], $scope2_reason, 0);
 		_scope($scope2_id, {
 			isOpen: (_unfilled_if($scope2_reason, 2) || _unfilled_if($scope2_reason, 0)) && isOpen,
@@ -34,7 +34,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, "__tests__/template.marko", "2:2", {
 			isOpen: "2:17",
 			label: "2:25"
-		}) || ($fg__isOpen && _client_guard($scope2_reason, 2) && _patch_write($scope2_id, "PatchMarkedWrite:isOpen", isOpen, !_server_guard($scope2_reason, 1)), $fg__label && $cg__isOpen && _patch_write($scope2_id, "PatchMarkedWrite:label", label, !_server_guard($scope2_reason, 2)));
+		}) || ($fg__isOpen && _unfilled_if($scope2_reason, 2) && _patch_write($scope2_id, "PatchMarkedWrite:isOpen", isOpen, !_server_guard($scope2_reason, 1)), $fg__label && _unfilled_if($scope2_reason, 1) && _patch_write($scope2_id, "PatchMarkedWrite:label", label, !_server_guard($scope2_reason, 2)));
 	}, $scope0_id) };
 	_if(() => {
 		if (input.show) {

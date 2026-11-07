@@ -11,11 +11,11 @@ var ret_default = _template("b", (input) => {
 const $setup = _shell_setup([[], []], ["a>", $setup$1]);
 _shells({ c: `c${_shell_marker($setup)};${((_w0) => `0${_w0}&Db%l`)("")};${((_w0) => `${_w0}<p>r:<!></p>`)("")}` });
 var w_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_x = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	const $childScope = _peek_scope_id($scope0_id, "a", 0, $cg__input_x && 1);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0, _unfilled_if($scope0_reason, 0) && 1);
 	let r = ret_default({ x: input.x });
-	$cg__input_x && _var($scope0_id, "b", $childScope, "c0");
+	_unfilled_if($scope0_reason, 0) && _var($scope0_id, "b", $childScope, "c0");
 	_patch_child_end();
 	_html(`<p>r:${_text_mark($scope0_id, "c", r, 2, $scope0_reason, 0)}</p>`);
 	_scope($scope0_id, { a: _existing_scope($childScope) });

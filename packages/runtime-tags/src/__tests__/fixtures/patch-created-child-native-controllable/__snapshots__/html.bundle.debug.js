@@ -16,7 +16,7 @@ var field_default = _template("__tests__/tags/field.marko", (input) => {
 		input_value: ["input.value"],
 		input_valueChange: ["input.valueChange"],
 		"ControlledHandler:#input/0": ["valueChange", "1:26"]
-	}) || ($fg__input_value && _client_guard($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_value", input.value, !_server_guard($scope0_reason, 1)), $fg__input_valueChange && _client_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_valueChange", input.valueChange, !_server_guard($scope0_reason, 2)));
+	}) || ($fg__input_value && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_value", input.value, !_server_guard($scope0_reason, 1)), $fg__input_valueChange && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_valueChange", input.valueChange, !_server_guard($scope0_reason, 2)));
 });
 
 // tags/page-b.marko

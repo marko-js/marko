@@ -74,7 +74,7 @@ _shells({
 	"__tests__/template.marko_1*shell": `__tests__/template.marko_1*shell${_shell_marker([[], []], ["#childScope/0>", $setup$1])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1)};${$template$1}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 1), $cg__input_show = _client_guard($scope0_reason, 1), $fg__input_first = _filled_guard($scope0_reason, 2), $fg__input_second = _filled_guard($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 1), $fg__input_first = _filled_guard($scope0_reason, 2), $fg__input_second = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.show) {
@@ -103,5 +103,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, "__tests__/template.marko", 0, {
 		input_first: ["input.first"],
 		input_second: ["input.second"]
-	}) || ($fg__input_first && $cg__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_first", input.first, !_server_guard($scope0_reason, 2)), $fg__input_second && $cg__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_second", input.second, !_server_guard($scope0_reason, 3)));
+	}) || ($fg__input_first && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_first", input.first, !_server_guard($scope0_reason, 2)), $fg__input_second && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_second", input.second, !_server_guard($scope0_reason, 3)));
 }, 1);

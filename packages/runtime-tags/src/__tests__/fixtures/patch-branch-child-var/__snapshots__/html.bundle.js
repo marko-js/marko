@@ -19,7 +19,7 @@ _shells({
 	a3: `a3${_shell_marker([[], ["a1"]], ["a>", $setup])};${/*@__PURE__*/ ((_w0) => `0${_w0}& b`)($walks)};${/*@__PURE__*/ ((_w0) => `${_w0}<button id=read>read</button>`)($template)}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 1), $cg__input_show = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $fg__input_label = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_html("<main>");
@@ -27,14 +27,14 @@ var template_default = _template("a", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_set_scope_reason(_updates_from($scope0_reason, 1) << 1);
-			const $childScope = _peek_scope_id($scope1_id, "a", 0, $cg__input_label && 1);
+			const $childScope = _peek_scope_id($scope1_id, "a", 0, _unfilled_if($scope0_reason, 1) && 1);
 			let el = box_default({ label: input.label });
-			$cg__input_label && _var($scope1_id, "b", $childScope, "a0");
+			_unfilled_if($scope0_reason, 1) && _var($scope1_id, "b", $childScope, "a0");
 			_patch_child_end();
 			_html(`<button id=read>read</button>${_el_mark($scope1_id, "c")}`);
 			_script($scope1_id, "a1");
 			_patch_write($scope1_id, "wd", el, 1);
-			$cg__input_label && _patch_render($scope1_id, "a2");
+			_client_guard($scope0_reason, 1) && _patch_render($scope1_id, "a2");
 			_scope($scope1_id, {
 				d: el,
 				_: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id),
@@ -45,9 +45,9 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["a3"], $scope0_reason, 0);
 	_html(`<button id=c>${_text_mark($scope0_id, "c", count)}</button>${_el_mark($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a4");
-	$fg__input_label && $cg__input_show && _patch_render($scope0_id, "a2", "g");
+	$fg__input_label && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "a2", "g");
 	_scope($scope0_id, {
 		g: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.label,
 		h: count
-	}) || $fg__input_label && $cg__input_show && _patch_write($scope0_id, "xg", input.label, !_server_guard($scope0_reason, 1));
+	}) || $fg__input_label && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xg", input.label, !_server_guard($scope0_reason, 1));
 }, 1);

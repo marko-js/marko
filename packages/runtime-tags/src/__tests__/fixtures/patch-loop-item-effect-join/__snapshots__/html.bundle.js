@@ -6,7 +6,7 @@ _shells({
 	b2: "b2;D l ;<p> </p><div></div>"
 });
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_a = _filled_guard($scope0_reason, 2), $cg__input_items = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $fg__input_a = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	_for_of(input.items, (item) => {
 		const $scope1_id = _scope_id();
@@ -19,8 +19,8 @@ var child_default = _template("b", (input) => {
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id)
 		});
 	}, 0, $scope0_id, "a", 1, 1, 1, 0, 0, "b2", $scope0_reason, 1);
-	$fg__input_a && $cg__input_items && _patch_render($scope0_id, "b3", "e");
-	_scope($scope0_id, { e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.a }) || $fg__input_a && $cg__input_items && _patch_write($scope0_id, "xe", input.a, !_server_guard($scope0_reason, 2));
+	$fg__input_a && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "b3", "e");
+	_scope($scope0_id, { e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.a }) || $fg__input_a && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.a, !_server_guard($scope0_reason, 2));
 });
 
 // template.marko

@@ -62,7 +62,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			v: (_unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 3)) && v,
 			"ClosureScopes:v/9": _write_if($scope0_reason, 3) && $await_content__v__closures
 		}, "__tests__/template.marko", "5:4", { v: "5:10" }), $cg__input_on && "__tests__/template.marko_1_input_on#0:6/subscribe", $wg__input_on);
-		_filled_guard($scope0_reason, 3) && (_client_branch_if("__tests__/template.marko_2*content", $scope1_id) || $cg__input_on) && _patch_write($scope1_id, "PatchMarkedWrite:v", v, !_server_guard($scope0_reason, 3));
+		_filled_guard($scope0_reason, 3) && (_client_branch_if("__tests__/template.marko_2*content", $scope1_id) || _unfilled_if($scope0_reason, 4)) && _patch_write($scope1_id, "PatchMarkedWrite:v", v, !_server_guard($scope0_reason, 3));
 		$wg__input_on || $wi__input_note__OR__input_v__OR__input_on && _resume_branch($scope1_id);
 	}, 1, "__tests__/template.marko_1*content", _unfilled_if($scope0_reason, 3), 1, 1);
 	_html("</main>");

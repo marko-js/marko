@@ -89,7 +89,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			depth: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope1_reason, 0)) && depth,
 			_: (_write_if($scope0_reason, 0) || $wi__depth) && _scope_with_id($scope0_id),
 			"ClosureScopes:depth/7": $wi__depth && $Tree_content__depth__closures
-		}, "__tests__/template.marko", "2:2", { depth: "2:16" }), $cg__input_note && "__tests__/template.marko_1_input_note#0:3/subscribe") || $fg__depth && (_client_branch_if("__tests__/template.marko_3*content", $scope1_id) || $cg__input_on) && _patch_write($scope1_id, "PatchMarkedWrite:depth", depth, !_server_guard($scope1_reason, 0));
+		}, "__tests__/template.marko", "2:2", { depth: "2:16" }), $cg__input_note && "__tests__/template.marko_1_input_note#0:3/subscribe") || $fg__depth && (_client_branch_if("__tests__/template.marko_3*content", $scope1_id) || _unfilled_if($scope0_reason, 2)) && _patch_write($scope1_id, "PatchMarkedWrite:depth", depth, !_server_guard($scope1_reason, 0));
 	}, $scope0_id) };
 	_html("<main>");
 	_set_scope_reason(0);

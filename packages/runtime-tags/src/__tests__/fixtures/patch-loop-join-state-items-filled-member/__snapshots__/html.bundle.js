@@ -7,12 +7,12 @@ _shells({
 	b1: "b1;D ;<p> </p>"
 });
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_a = _client_guard($scope0_reason, 2), $fg__input_a = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $fg__input_a = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	let open = true;
 	_for_of(input.items, (item) => {
 		const $scope1_id = _scope_id();
-		_filled_guard($scope0_reason, 1) && $cg__input_a && _patch_write($scope1_id, "xc", item, !_server_guard($scope0_reason, 1));
+		_filled_guard($scope0_reason, 1) && _unfilled_if($scope0_reason, 2) && _patch_write($scope1_id, "xc", item, !_server_guard($scope0_reason, 1));
 		_html(`<p>${_text_mark($scope1_id, "a", input.a + item, 1, $scope0_reason, 0)}</p>`);
 		_patch_render($scope1_id, "b0", [_filled_guard($scope0_reason, 2) && ">g", _filled_guard($scope0_reason, 1) && "c"], $scope0_reason, 0);
 		_scope($scope1_id, {
@@ -25,7 +25,7 @@ var child_default = _template("b", (input) => {
 			const $scope2_id = _scope_id();
 			_html(`<div></div>${_el_mark($scope2_id, "a")}`);
 			_script($scope2_id, "b2", 1, _filled_guard($scope0_reason, 2), ">g");
-			$cg__input_a && _patch_render($scope2_id, "b3");
+			_client_guard($scope0_reason, 2) && _patch_render($scope2_id, "b3");
 			_scope($scope2_id, {});
 			return 0;
 		}

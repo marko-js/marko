@@ -36,7 +36,7 @@ var picker_default = _template("__tests__/tags/picker.marko", (input) => {
 		input_refreshingChange: ["input.refreshingChange"],
 		load: "3:8",
 		"TagVariableChange:refreshing": ["refreshingChange", "1:6"]
-	}) || ($fg__input_refreshing && _client_guard($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_refreshing", input.refreshing, !_server_guard($scope0_reason, 1)), $fg__input_refreshingChange && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_refreshingChange", input.refreshingChange, !_server_guard($scope0_reason, 2)));
+	}) || ($fg__input_refreshing && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_refreshing", input.refreshing, !_server_guard($scope0_reason, 1)), $fg__input_refreshingChange && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_refreshingChange", input.refreshingChange, !_server_guard($scope0_reason, 2)));
 	return $return;
 });
 

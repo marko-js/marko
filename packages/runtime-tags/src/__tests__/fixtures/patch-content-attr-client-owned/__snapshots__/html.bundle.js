@@ -7,7 +7,7 @@ _shells({
 	b: "b; ;<section></section>"
 });
 var frag_host_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_b = _filled_guard($scope0_reason, 1), $cg__input_mode = _client_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $fg__input_b = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_b__closures = /* @__PURE__ */ new Set();
 	const one = { content: _content_resume("b0", () => {
@@ -28,13 +28,13 @@ var frag_host_default = _template("b", (input) => {
 	_unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "wf", one, 1);
 	_unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "wg", two, 1);
 	$fg__input_b && _patch_subscribers($scope0_id, "b3", "d");
-	$cg__input_mode && _patch_render($scope0_id, "b4");
+	_client_guard($scope0_reason, 2) && _patch_render($scope0_id, "b4");
 	_scope($scope0_id, {
 		d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1)) && input.b,
 		f: _unfilled_if($scope0_reason, 2) && one,
 		g: _unfilled_if($scope0_reason, 2) && two,
 		i: _write_if($scope0_reason, 1) && $input_b__closures
-	}) || $fg__input_b && $cg__input_mode && _patch_write($scope0_id, "xd", input.b, !_server_guard($scope0_reason, 1));
+	}) || $fg__input_b && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xd", input.b, !_server_guard($scope0_reason, 1));
 });
 
 // template.marko

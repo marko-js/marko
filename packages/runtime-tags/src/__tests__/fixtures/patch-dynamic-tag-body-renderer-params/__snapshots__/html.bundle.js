@@ -43,7 +43,7 @@ var host_default = _template("b", (input) => {
 		i: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 7)) && input.label,
 		j: flag,
 		m: _write_if($scope0_reason, 7) && $input_label__closures
-	}) || ($fg__input_wrap && _patch_write($scope0_id, "xf", input.wrap, !_server_guard($scope0_reason, 4)), $fg__input_native && _client_guard($scope0_reason, 0) && _patch_write($scope0_id, "xh", input.native, !_server_guard($scope0_reason, 6)), $fg__input_label && (_client_branch_if("b1", $scope0_id) || _client_guard($scope0_reason, 2)) && _patch_write($scope0_id, "xi", input.label, !_server_guard($scope0_reason, 7)));
+	}) || ($fg__input_wrap && _patch_write($scope0_id, "xf", input.wrap, !_server_guard($scope0_reason, 4)), $fg__input_native && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xh", input.native, !_server_guard($scope0_reason, 6)), $fg__input_label && (_client_branch_if("b1", $scope0_id) || _unfilled_if($scope0_reason, 2)) && _patch_write($scope0_id, "xi", input.label, !_server_guard($scope0_reason, 7)));
 });
 
 // template.marko

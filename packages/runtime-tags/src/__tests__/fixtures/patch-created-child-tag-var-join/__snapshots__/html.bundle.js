@@ -39,7 +39,7 @@ var file_tabs_default = _template("e", (input) => {
 		f: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.filesChange,
 		h: tabs,
 		i: $tabsChange
-	}) || ($fg__input_files && _client_guard($scope0_reason, 2) && _patch_write($scope0_id, "xe", input.files, !_server_guard($scope0_reason, 1)), $fg__input_filesChange && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "xf", input.filesChange, !_server_guard($scope0_reason, 2)));
+	}) || ($fg__input_files && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xe", input.files, !_server_guard($scope0_reason, 1)), $fg__input_filesChange && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xf", input.filesChange, !_server_guard($scope0_reason, 2)));
 });
 
 // tags/file-panes.marko

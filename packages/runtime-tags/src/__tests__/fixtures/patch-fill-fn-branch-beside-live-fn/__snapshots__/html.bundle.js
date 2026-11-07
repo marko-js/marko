@@ -68,5 +68,5 @@ var template_default = _template("a", (input) => {
 		l: last,
 		m: tag,
 		n: show
-	}) || ($fg__input_flag && $cg__input_title && _patch_write($scope0_id, "xe", input.flag, !_server_guard($scope0_reason, 3)), $fg__input_alt && $cg__input_title && _patch_write($scope0_id, "xh", input.alt, !_server_guard($scope0_reason, 5)), $fg__input_flag__OR__input_title && _patch_write($scope0_id, "xj", fmt, !_server_guard($scope0_reason, 0)), $fg__input_title__OR__input_alt && _patch_write($scope0_id, "xk", alt, !_server_guard($scope0_reason, 1)), $fg__input_title && _patch_write($scope0_id, "xl", last, !$sg__input_title), $fg__input_title && _patch_write($scope0_id, "xm", tag, !$sg__input_title));
+	}) || ($fg__input_flag && _unfilled_if($scope0_reason, 4) && _patch_write($scope0_id, "xe", input.flag, !_server_guard($scope0_reason, 3)), $fg__input_alt && _unfilled_if($scope0_reason, 4) && _patch_write($scope0_id, "xh", input.alt, !_server_guard($scope0_reason, 5)), $fg__input_flag__OR__input_title && _patch_write($scope0_id, "xj", fmt, !_server_guard($scope0_reason, 0)), $fg__input_title__OR__input_alt && _patch_write($scope0_id, "xk", alt, !_server_guard($scope0_reason, 1)), $fg__input_title && _patch_write($scope0_id, "xl", last, !$sg__input_title), $fg__input_title && _patch_write($scope0_id, "xm", tag, !$sg__input_title));
 }, 1);

@@ -8,7 +8,7 @@ _shells({
 	a4: "a4;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_on = _write_guard($scope0_reason, 3), $cg__input_on = _client_guard($scope0_reason, 3), $fg__input_a = _filled_guard($scope0_reason, 4), $fg__input_b = _filled_guard($scope0_reason, 5);
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_on = _write_guard($scope0_reason, 3), $fg__input_a = _filled_guard($scope0_reason, 4), $fg__input_b = _filled_guard($scope0_reason, 5);
 	const $scope0_id = _scope_id();
 	const $input_a__closures = /* @__PURE__ */ new Set();
 	const $input_b__closures = /* @__PURE__ */ new Set();
@@ -72,5 +72,5 @@ var template_default = _template("a", (input) => {
 		h: _unfilled_if($scope0_reason, 3) && Plain,
 		j: _write_if($scope0_reason, 4) && $input_a__closures,
 		k: _write_if($scope0_reason, 5) && $input_b__closures
-	}) || ($fg__input_a && (_client_branch_if("a7", $scope0_id) || $cg__input_on) && _patch_write($scope0_id, "xe", input.a, !_server_guard($scope0_reason, 4)), $fg__input_b && (_client_branch_if("a6", $scope0_id) || $cg__input_on) && _patch_write($scope0_id, "xf", input.b, !_server_guard($scope0_reason, 5)));
+	}) || ($fg__input_a && (_client_branch_if("a7", $scope0_id) || _unfilled_if($scope0_reason, 3)) && _patch_write($scope0_id, "xe", input.a, !_server_guard($scope0_reason, 4)), $fg__input_b && (_client_branch_if("a6", $scope0_id) || _unfilled_if($scope0_reason, 3)) && _patch_write($scope0_id, "xf", input.b, !_server_guard($scope0_reason, 5)));
 }, 1);

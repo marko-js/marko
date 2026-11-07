@@ -7,9 +7,9 @@ _shells({
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell;D ;<p> </p>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 5), $sg__input_decor = _server_guard($scope0_reason, 4), $cg__input_show__OR__input_text = _client_guard($scope0_reason, 2), $fg__input_decor = _filled_guard($scope0_reason, 4), $fg__input_text = _filled_guard($scope0_reason, 6), $cg__input_show = _client_guard($scope0_reason, 5);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 5), $sg__input_decor = _server_guard($scope0_reason, 4), $fg__input_decor = _filled_guard($scope0_reason, 4), $fg__input_text = _filled_guard($scope0_reason, 6), $cg__input_show = _client_guard($scope0_reason, 5);
 	const $scope0_id = _scope_id();
-	$fg__input_decor && $cg__input_show__OR__input_text && _patch_write($scope0_id, "PatchMarkedWrite:input_decor", input.decor, !$sg__input_decor);
+	$fg__input_decor && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_decor", input.decor, !$sg__input_decor);
 	const fmt = _bind_resume(function(text) {
 		return text + input.decor.mark();
 	}, "__tests__/template.marko_0/fmt", $scope0_id);
@@ -36,5 +36,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_decor: ["input.decor"],
 		input_text: ["input.text"],
 		fmt: "1:8"
-	}) || ($fg__input_text && _client_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_text", input.text, !_server_guard($scope0_reason, 6)), $fg__input_decor && $cg__input_show__OR__input_text && _patch_write($scope0_id, "PatchMarkedWrite:fmt", fmt, !$sg__input_decor));
+	}) || ($fg__input_text && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_text", input.text, !_server_guard($scope0_reason, 6)), $fg__input_decor && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:fmt", fmt, !$sg__input_decor));
 }, 1);

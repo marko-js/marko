@@ -20,7 +20,7 @@ _shells({
 	"__tests__/template.marko_1*shell": `__tests__/template.marko_1*shell${_shell_marker([[], []], ["#childScope/0>", $setup$1])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)("D l")};${$template$1}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_tag__OR__input_cls = _write_guard($scope0_reason, 0), $wg__input_show = _write_guard($scope0_reason, 2), $fg__input_user = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 2), $fg__input_user3_name = _filled_guard($scope0_reason, 7), $fg__input_tag = _filled_guard($scope0_reason, 5), $fg__input_cls = _filled_guard($scope0_reason, 6);
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_tag__OR__input_cls = _write_guard($scope0_reason, 0), $wg__input_show = _write_guard($scope0_reason, 2), $fg__input_user = _filled_guard($scope0_reason, 3), $fg__input_user3_name = _filled_guard($scope0_reason, 7), $fg__input_tag = _filled_guard($scope0_reason, 5), $fg__input_cls = _filled_guard($scope0_reason, 6);
 	const $scope0_id = _scope_id();
 	const $input_user3_name__closures = new Set();
 	_if(() => {
@@ -49,7 +49,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_unfilled_if($scope0_reason, 7) && _patch_subscribe($scope2_id, "__tests__/template.marko_2_input_user3_name#0:12/subscribe", _client_guard($scope0_reason, 7));
 		_subscribe(_unfilled_if($scope0_reason, 7) && $input_user3_name__closures, _scope($scope2_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4"));
 	}, $scope0_id, ($scope) => $scope0_page ? [{ input_user3_name: input.user3?.name }] : []), 0, $wg__input_tag__OR__input_cls, $scope0_reason, 0, 0, 5, void 0, 0, "__tests__/template.marko_2*content");
-	$fg__input_user && $cg__input_show && _patch_render($scope0_id, "__tests__/template.marko_1_input_user#0:6/setup", "input_user");
+	$fg__input_user && _client_guard($scope0_reason, 2) && _patch_render($scope0_id, "__tests__/template.marko_1_input_user#0:6/setup", "input_user");
 	$fg__input_user3_name && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_user3_name#12/subscribers", "input_user3_name");
 	_patch_render($scope0_id, "__tests__/template.marko_0_input_tag#8_input_cls#9/setup", [$fg__input_tag && "input_tag", $fg__input_cls && "input_cls"], $scope0_reason, 0);
 	_scope($scope0_id, {
@@ -64,5 +64,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_tag: ["input.tag"],
 		input_cls: ["input.cls"],
 		input_user3_name: ["input.user3.name"]
-	}) || ($fg__input_user && $cg__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_user", input.user, !_server_guard($scope0_reason, 3)), $fg__input_tag && _client_guard($scope0_reason, 6) && _patch_write($scope0_id, "PatchMarkedWrite:input_tag", input.tag, !_server_guard($scope0_reason, 5)), $fg__input_cls && _client_guard($scope0_reason, 5) && _patch_write($scope0_id, "PatchMarkedWrite:input_cls", input.cls, !_server_guard($scope0_reason, 6)), $fg__input_user3_name && (_client_branch_if("__tests__/template.marko_2*content", $scope0_id) || _client_guard($scope0_reason, 0)) && _patch_write($scope0_id, "PatchMarkedWrite:input_user3_name", input.user3?.name, !_server_guard($scope0_reason, 7)));
+	}) || ($fg__input_user && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_user", input.user, !_server_guard($scope0_reason, 3)), $fg__input_tag && _unfilled_if($scope0_reason, 6) && _patch_write($scope0_id, "PatchMarkedWrite:input_tag", input.tag, !_server_guard($scope0_reason, 5)), $fg__input_cls && _unfilled_if($scope0_reason, 5) && _patch_write($scope0_id, "PatchMarkedWrite:input_cls", input.cls, !_server_guard($scope0_reason, 6)), $fg__input_user3_name && (_client_branch_if("__tests__/template.marko_2*content", $scope0_id) || _unfilled_if($scope0_reason, 0)) && _patch_write($scope0_id, "PatchMarkedWrite:input_user3_name", input.user3?.name, !_server_guard($scope0_reason, 7)));
 }, 1);

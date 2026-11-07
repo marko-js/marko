@@ -60,5 +60,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		"ClosureScopes:input_fast/8": _write_if($scope0_reason, 3) && (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 2)) && $input_fast__closures,
 		"ClosureScopes:input_show/7": _write_if($scope0_reason, 2) && _unfilled_if($scope0_reason, 2) && $input_show__closures,
 		"ClosureScopes:input_slow/9": _write_if($scope0_reason, 4) && _unfilled_if($scope0_reason, 4) && $input_slow__closures
-	}, "__tests__/template.marko", 0, { input_fast: ["input.fast"] }) || $fg__input_fast && $cg__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_fast", input.fast, !_server_guard($scope0_reason, 3));
+	}, "__tests__/template.marko", 0, { input_fast: ["input.fast"] }) || $fg__input_fast && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_fast", input.fast, !_server_guard($scope0_reason, 3));
 }, 1);

@@ -66,7 +66,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			v: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 2)) && v,
 			"ClosureScopes:v/9": _write_if($scope0_reason, 2) && $await_content__v__closures
 		}, "__tests__/template.marko", "3:4", { v: "3:10" }), $cg__input_on && "__tests__/template.marko_1_input_on#0:5/subscribe", $wg__input_on);
-		_filled_guard($scope0_reason, 2) && (_client_branch_if("__tests__/template.marko_2*content", $scope1_id) || $cg__input_on) && _patch_write($scope1_id, "PatchMarkedWrite:v", v, !_server_guard($scope0_reason, 2));
+		_filled_guard($scope0_reason, 2) && (_client_branch_if("__tests__/template.marko_2*content", $scope1_id) || _unfilled_if($scope0_reason, 3)) && _patch_write($scope1_id, "PatchMarkedWrite:v", v, !_server_guard($scope0_reason, 2));
 		$wg__input_on || $wi__input_v__OR__input_on__OR__input_note && _resume_branch($scope1_id);
 	}, 1, "__tests__/template.marko_1*content", _unfilled_if($scope0_reason, 2), 1, 1);
 	_dynamic_tag($scope0_id, "#text/1", input.on ? card_default : "div", {}, 10, _content_resume("__tests__/template.marko_3*content", () => {
@@ -85,5 +85,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_note: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 4)) && input.note,
 		"ClosureScopes:input_note/8": $wi__input_note && $input_note__closures,
 		"ClosureScopes:input_on/7": _write_if($scope0_reason, 3) && _unfilled_if($scope0_reason, 3) && $input_on__closures
-	}, "__tests__/template.marko", 0, { input_note: ["input.note"] }) || $fg__input_note && (_client_branch_if("__tests__/template.marko_2*content", $scope0_id) || _client_branch_if("__tests__/template.marko_3*content", $scope0_id) || $cg__input_on) && _patch_write($scope0_id, "PatchMarkedWrite:input_note", input.note, !_server_guard($scope0_reason, 4));
+	}, "__tests__/template.marko", 0, { input_note: ["input.note"] }) || $fg__input_note && (_client_branch_if("__tests__/template.marko_2*content", $scope0_id) || _client_branch_if("__tests__/template.marko_3*content", $scope0_id) || _unfilled_if($scope0_reason, 3)) && _patch_write($scope0_id, "PatchMarkedWrite:input_note", input.note, !_server_guard($scope0_reason, 4));
 }, 1);

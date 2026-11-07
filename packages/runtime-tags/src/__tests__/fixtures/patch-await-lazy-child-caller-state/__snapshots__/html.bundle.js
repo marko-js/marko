@@ -26,7 +26,7 @@ _shells({
 	b1: `b1${_shell_marker([["b4"], []], ["b>", $setup])};${/*@__PURE__*/ ((_w0) => `b%b/${_w0}&b`)("b%c")};${/*@__PURE__*/ ((_w0) => `<!><!>${_w0}<!>`)($template)}`
 });
 var template_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_label = _filled_guard($scope0_reason, 1), $cg__input_show = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $fg__input_label = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	let n = 0;
 	_html(`<button class=open>inc</button>${_el_mark($scope0_id, "a")}`);
@@ -49,9 +49,9 @@ var template_default = _template("b", (input) => {
 		}
 	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["b1"], $scope0_reason, 0);
 	_script($scope0_id, "b2");
-	$fg__input_label && $cg__input_show && _patch_render($scope0_id, "b0", "f");
+	$fg__input_label && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "b0", "f");
 	_scope($scope0_id, {
 		f: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.label,
 		g: n
-	}) || $fg__input_label && $cg__input_show && _patch_write($scope0_id, "xf", input.label, !_server_guard($scope0_reason, 1));
+	}) || $fg__input_label && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xf", input.label, !_server_guard($scope0_reason, 1));
 }, 1);

@@ -38,5 +38,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_title: ["input.title"],
 		input_alt: ["input.alt"],
 		fn: "3:8"
-	}) || ($fg__input_alt && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_alt", input.alt, !_server_guard($scope0_reason, 2)), $fg__input_title && _client_guard($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:fn", fn, !$sg__input_title));
+	}) || ($fg__input_alt && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_alt", input.alt, !_server_guard($scope0_reason, 2)), $fg__input_title && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:fn", fn, !$sg__input_title));
 }, 1);

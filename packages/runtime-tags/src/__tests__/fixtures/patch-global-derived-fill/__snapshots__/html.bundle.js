@@ -1,7 +1,7 @@
 // template.marko
 _shells({ a: "a !a2; b%;<button>inc</button><!><!>" });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $cg__input_name = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const greeting = $global().prefix + ":" + input.name;
 	let count = 0;
@@ -15,12 +15,12 @@ var template_default = _template("a", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "b", 1, 1, 0, 0, 1);
-	_fill_global_subscribe("a1", $scope0_id, $cg__input_name);
+	_fill_global_subscribe("a1", $scope0_id, _client_guard($scope0_reason, 0));
 	_script($scope0_id, "a2");
 	_filled_guard((2 | _updates_from($scope0_reason, 0)) << 1, 0) && _patch_render($scope0_id, "a0", _filled_guard((2 | _updates_from($scope0_reason, 0)) << 1, 0) && "f");
 	_scope($scope0_id, {
 		e: _write_if($scope0_reason, 0) && input.name,
 		f: greeting,
 		g: count
-	}) || (_filled_guard($scope0_reason, 0) && $cg__input_name && _patch_write($scope0_id, "xe", input.name, !_server_guard($scope0_reason, 0)), _filled_guard((2 | _updates_from($scope0_reason, 0)) << 1, 0) && _patch_write($scope0_id, "xf", greeting, !_server_guard((2 | _updates_from($scope0_reason, 0)) << 1, 0)));
+	}) || (_filled_guard($scope0_reason, 0) && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xe", input.name, !_server_guard($scope0_reason, 0)), _filled_guard((2 | _updates_from($scope0_reason, 0)) << 1, 0) && _patch_write($scope0_id, "xf", greeting, !_server_guard((2 | _updates_from($scope0_reason, 0)) << 1, 0)));
 }, 1);

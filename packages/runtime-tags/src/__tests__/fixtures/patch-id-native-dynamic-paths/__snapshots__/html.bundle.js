@@ -26,7 +26,7 @@ var template_default = _template("a", (input) => {
 		_write_if($scope3_reason, 0) && _scope($scope3_id, {
 			e: (_unfilled_if($scope3_reason, 1) || _unfilled_if($scope3_reason, 0)) && content,
 			f: (_unfilled_if($scope3_reason, 2) || _unfilled_if($scope3_reason, 0)) && Tag
-		}) || ($fg__content && _client_guard($scope3_reason, 1) && _patch_write($scope3_id, "xe", content, !_server_guard($scope3_reason, 2)), $fg__on && _client_guard($scope3_reason, 2) && _patch_write($scope3_id, "xf", Tag, !_server_guard($scope3_reason, 1)));
+		}) || ($fg__content && _unfilled_if($scope3_reason, 1) && _patch_write($scope3_id, "xe", content, !_server_guard($scope3_reason, 2)), $fg__on && _unfilled_if($scope3_reason, 2) && _patch_write($scope3_id, "xf", Tag, !_server_guard($scope3_reason, 1)));
 	}, $scope0_id) };
 	_for_of(input.items, (item) => {
 		const $scope2_id = _scope_id();

@@ -59,5 +59,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_user: ["input.user"],
 		Card: "2:9",
 		Other: "7:9"
-	}) || ($fg__input_useA && _client_guard($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_useA", input.useA, !_server_guard($scope0_reason, 1)), $fg__input_user && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_user", input.user, !_server_guard($scope0_reason, 2)));
+	}) || ($fg__input_useA && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_useA", input.useA, !_server_guard($scope0_reason, 1)), $fg__input_user && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_user", input.user, !_server_guard($scope0_reason, 2)));
 }, 1);

@@ -14,7 +14,7 @@ var label_default = _template("b", (input) => {
 const $setup = _shell_setup([[], []], ["c>", $setup$1]);
 _shells({ a: `a${_shell_marker($setup)};${((_w0) => `0&b/${_w0}&`)(" b")};${((_w0) => `<!>${_w0}`)($template)}` });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_v = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const Row = { content: _content("a1", ({ text }) => {
 		_scope_id();
@@ -22,10 +22,10 @@ var template_default = _template("a", (input) => {
 		return text + "!";
 	}, $scope0_id) };
 	_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
-	const $childScope = _peek_scope_id($scope0_id, "a", 0, $cg__input_v && 1);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0, _unfilled_if($scope0_reason, 0) && 1);
 	let row = Row.content({ text: input.v });
 	_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xg", row, !_server_guard($scope0_reason, 0));
-	$cg__input_v && _var($scope0_id, "b", $childScope, "a2");
+	_unfilled_if($scope0_reason, 0) && _var($scope0_id, "b", $childScope, "a2");
 	_patch_child_end();
 	_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
 	const $childScope2 = _peek_scope_id($scope0_id, "c", 1);

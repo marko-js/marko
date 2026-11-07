@@ -24,7 +24,7 @@ _shells({
 	"__tests__/template.marko_5*shell": `__tests__/template.marko_5*shell${_shell_marker([[], []], ["#childScope/0>", $setup$1])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1)};${$template$1}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_nested = _write_guard($scope0_reason, 1), $wg__input_mode = _write_guard($scope0_reason, 0), $wg__input_other = _write_guard($scope0_reason, 2), $fg__input_nested = _filled_guard($scope0_reason, 1), $cg__input_mode = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_nested = _write_guard($scope0_reason, 1), $wg__input_mode = _write_guard($scope0_reason, 0), $wg__input_other = _write_guard($scope0_reason, 2), $fg__input_nested = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.mode === 0) {
@@ -104,10 +104,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "#text/3", 1, $wg__input_other, 1, 0, 0, ["__tests__/template.marko_5*shell"], $scope0_reason, 2);
-	$fg__input_nested && $cg__input_mode && _patch_render($scope0_id, "__tests__/template.marko_1_input_nested#0:7/setup", "input_nested");
+	$fg__input_nested && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "__tests__/template.marko_1_input_nested#0:7/setup", "input_nested");
 	_scope($scope0_id, {
 		input_nested: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.nested,
 		"#childScope/1": _existing_scope($childScope9),
 		"#childScope/2": _existing_scope($childScope10)
-	}, "__tests__/template.marko", 0, { input_nested: ["input.nested"] }) || $fg__input_nested && $cg__input_mode && _patch_write($scope0_id, "PatchMarkedWrite:input_nested", input.nested, !_server_guard($scope0_reason, 1));
+	}, "__tests__/template.marko", 0, { input_nested: ["input.nested"] }) || $fg__input_nested && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_nested", input.nested, !_server_guard($scope0_reason, 1));
 }, 1);

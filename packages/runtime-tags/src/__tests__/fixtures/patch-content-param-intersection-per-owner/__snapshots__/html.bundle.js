@@ -10,7 +10,7 @@ var pass_on_default = _template("c", (input) => {
 	_scope($scope0_id, {
 		d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.content,
 		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.x
-	}) || ($fg__input_content && _client_guard($scope0_reason, 2) && _patch_write($scope0_id, "xd", input.content, !_server_guard($scope0_reason, 1)), $fg__input_x && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.x, !_server_guard($scope0_reason, 2)));
+	}) || ($fg__input_content && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xd", input.content, !_server_guard($scope0_reason, 1)), $fg__input_x && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.x, !_server_guard($scope0_reason, 2)));
 });
 
 // tags/owner.marko
@@ -32,7 +32,7 @@ var owner_default = _template("b", (input) => {
 		content: _content_resume("b2", (x) => {
 			const $scope1_reason = _scope_reason();
 			const $scope1_id = _scope_id();
-			_client_guard($scope0_reason, 2) && _patch_write($scope1_id, "xc", x);
+			_unfilled_if($scope0_reason, 2) && _patch_write($scope1_id, "xc", x);
 			_html(`<p>${_text_mark($scope1_id, "a", input.a + x, 1, (2 | _updates_from($scope0_reason, 2)) << 1, 0)}</p>`);
 			_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "b0");
 			_patch_render($scope1_id, "b1", [_filled_guard($scope0_reason, 2) && ">e", "c"], (2 | _updates_from($scope0_reason, 2)) << 1, 0);
@@ -49,7 +49,7 @@ var owner_default = _template("b", (input) => {
 		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.a,
 		f: _write_if($scope0_reason, 2) && $input_a__closures,
 		a: _existing_scope($childScope)
-	}) || $fg__input_a && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.a, !_server_guard($scope0_reason, 2));
+	}) || $fg__input_a && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.a, !_server_guard($scope0_reason, 2));
 });
 
 // template.marko

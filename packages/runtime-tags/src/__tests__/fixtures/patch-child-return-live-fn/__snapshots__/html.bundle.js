@@ -16,13 +16,13 @@ var make_default = _template("b", (input) => {
 const $setup = _shell_setup([[], []], ["a>", $setup$1]);
 _shells({ a: `a${_shell_marker($setup)};${((_w0) => `0${_w0}&b b b`)("")};${((_w0) => `<output id=out></output>${_w0}<button class=call>call</button><pre></pre>`)("")}` });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_title = _client_guard($scope0_reason, 0), $fg__input_title = _filled_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $fg__input_title = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_html("<output id=out></output>");
 	_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
-	const $childScope = _peek_scope_id($scope0_id, "a", 0, $cg__input_title && 1);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0, _unfilled_if($scope0_reason, 0) && 1);
 	let fn = make_default({ title: input.title });
-	$cg__input_title && _var($scope0_id, "b", $childScope, "a0");
+	_unfilled_if($scope0_reason, 0) && _var($scope0_id, "b", $childScope, "a0");
 	_patch_child_end();
 	_html(`<button class=call>call</button>${_el_mark($scope0_id, "c")}<pre></pre>${_el_mark($scope0_id, "d")}`);
 	_script($scope0_id, "a1", 1, $fg__input_title, "h");

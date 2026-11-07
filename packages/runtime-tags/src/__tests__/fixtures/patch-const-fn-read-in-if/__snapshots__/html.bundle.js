@@ -20,9 +20,9 @@ _shells({
 	a2: "a2;D ;<span> </span>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_x = _write_guard($scope0_reason, 1), $sg__input_a = _server_guard($scope0_reason, 0), $cg__input_x = _client_guard($scope0_reason, 1), $fg__input_a = _filled_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_x = _write_guard($scope0_reason, 1), $sg__input_a = _server_guard($scope0_reason, 0), $fg__input_a = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	$fg__input_a && $cg__input_x && _patch_write($scope0_id, "xe", input.a, !$sg__input_a);
+	$fg__input_a && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.a, !$sg__input_a);
 	const f = _bind_resume(function() {
 		return input.a;
 	}, "a0", $scope0_id);
@@ -38,10 +38,10 @@ var template_default = _template("a", (input) => {
 	const $childScope = _peek_scope_id($scope0_id, "b", 0);
 	counter_default({});
 	_patch_child_end();
-	$fg__input_a && $cg__input_x && _patch_render($scope0_id, "a1", ["g", "e"]);
+	$fg__input_a && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "a1", ["g", "e"]);
 	_scope($scope0_id, {
 		e: _write_if($scope0_reason, 1) && input.a,
 		g: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && f,
 		b: _existing_scope($childScope)
-	}) || $fg__input_a && $cg__input_x && _patch_write($scope0_id, "xg", f, !$sg__input_a);
+	}) || $fg__input_a && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xg", f, !$sg__input_a);
 }, 1);

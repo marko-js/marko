@@ -30,7 +30,7 @@ _shells({
 	c: "c !c3;b%b ;<!><!><button>+</button>"
 });
 var template_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_label = _filled_guard($scope0_reason, 2), $cg__input_on = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $fg__input_label = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	const $count__closures = /* @__PURE__ */ new Set();
@@ -59,11 +59,11 @@ var template_default = _template("c", (input) => {
 	}, $scope0_id, 0), 0, _write_guard($scope0_reason, 1), $scope0_reason, 1);
 	_html(`<button>+</button>${_el_mark($scope0_id, "b")}`);
 	_script($scope0_id, "c3");
-	$fg__input_label && $cg__input_on && _patch_subscribers($scope0_id, "c4", "f");
+	$fg__input_label && _client_guard($scope0_reason, 1) && _patch_subscribers($scope0_id, "c4", "f");
 	_scope($scope0_id, {
 		f: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.label,
 		g: count,
 		h: _write_if($scope0_reason, 2) && $input_label__closures,
 		i: $count__closures
-	}) || $fg__input_label && $cg__input_on && _patch_write($scope0_id, "xf", input.label, !_server_guard($scope0_reason, 2));
+	}) || $fg__input_label && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xf", input.label, !_server_guard($scope0_reason, 2));
 }, 1);

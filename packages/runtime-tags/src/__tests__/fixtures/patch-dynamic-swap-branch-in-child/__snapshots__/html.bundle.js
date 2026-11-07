@@ -79,7 +79,7 @@ var w_default = _template("b", (input) => {
 		g: _unfilled_if($scope0_reason, 0) && A,
 		h: _unfilled_if($scope0_reason, 0) && B,
 		j: $wi__input_show && $input_show__closures
-	}) || ($fg__input_show && _client_guard($scope0_reason, 0) && _patch_write($scope0_id, "xd", input.show, !_server_guard($scope0_reason, 2)), $fg__input_flag && _client_guard($scope0_reason, 4) && _patch_write($scope0_id, "xe", input.flag, !_server_guard($scope0_reason, 3)), $fg__input_x && _client_guard($scope0_reason, 3) && _patch_write($scope0_id, "xf", input.x, !_server_guard($scope0_reason, 4)));
+	}) || ($fg__input_show && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xd", input.show, !_server_guard($scope0_reason, 2)), $fg__input_flag && _unfilled_if($scope0_reason, 4) && _patch_write($scope0_id, "xe", input.flag, !_server_guard($scope0_reason, 3)), $fg__input_x && _unfilled_if($scope0_reason, 3) && _patch_write($scope0_id, "xf", input.x, !_server_guard($scope0_reason, 4)));
 });
 
 // template.marko

@@ -25,7 +25,7 @@ _shells({
 	"__tests__/template.marko_4*shell": "__tests__/template.marko_4*shell,<em>on sale</em>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_detail = _client_guard($scope0_reason, 3), $wi__input_summary__OR__input_detail = _write_if($scope0_reason, 0), $cg__input_summary = _client_guard($scope0_reason, 2), $fg__input_detail = _filled_guard($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $cg__input_detail = _client_guard($scope0_reason, 3), $wi__input_summary__OR__input_detail = _write_if($scope0_reason, 0), $fg__input_detail = _filled_guard($scope0_reason, 3), $cg__input_summary = _client_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_detail__closures = new Set();
 	_html("<main><ul>");
@@ -75,5 +75,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_detail: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && input.detail,
 		"ClosureScopes:input_detail/10": _write_if($scope0_reason, 3) && (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 2)) && $input_detail__closures,
 		"#childScope/2": _existing_scope($childScope)
-	}, "__tests__/template.marko", 0, { input_detail: ["input.detail"] }) || $fg__input_detail && $cg__input_summary && _patch_write($scope0_id, "PatchMarkedWrite:input_detail", input.detail, !_server_guard($scope0_reason, 3));
+	}, "__tests__/template.marko", 0, { input_detail: ["input.detail"] }) || $fg__input_detail && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_detail", input.detail, !_server_guard($scope0_reason, 3));
 }, 1);

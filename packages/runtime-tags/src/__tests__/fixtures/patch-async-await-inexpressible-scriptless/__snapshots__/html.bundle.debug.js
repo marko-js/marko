@@ -30,9 +30,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope1_id = _scope_id();
 			_await($scope1_id, "#text/0", Promise.resolve(input.value), () => {
 				const $scope2_id = _scope_id();
-				const $childScope = _peek_scope_id($scope2_id, "#childScope/0", 0, $cg__input_value && 1);
+				const $childScope = _peek_scope_id($scope2_id, "#childScope/0", 0, _unfilled_if($scope0_reason, 2) && 1);
 				let w = widget_default({ label: input.value });
-				$cg__input_value && _var($scope2_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_2_w#3/var");
+				_unfilled_if($scope0_reason, 2) && _var($scope2_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_2_w#3/var");
 				_patch_child_end();
 				_html(`<em>${_text_mark($scope2_id, "#text/2", w, 1, $scope0_reason, 2)}</em>`);
 				_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope2_id, "__tests__/template.marko_2_input_value#0:4/subscribe", $cg__input_value);
@@ -49,5 +49,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope($scope0_id, {
 		input_value: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.value,
 		"ClosureScopes:input_value/5": _write_if($scope0_reason, 2) && (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1)) && $input_value__closures
-	}, "__tests__/template.marko", 0, { input_value: ["input.value"] }) || $fg__input_value && $cg__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_value", input.value, !_server_guard($scope0_reason, 2));
+	}, "__tests__/template.marko", 0, { input_value: ["input.value"] }) || $fg__input_value && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_value", input.value, !_server_guard($scope0_reason, 2));
 }, 1);

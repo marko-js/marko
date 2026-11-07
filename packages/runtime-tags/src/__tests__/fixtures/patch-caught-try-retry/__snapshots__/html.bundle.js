@@ -9,7 +9,7 @@ _shells({
 	a3: "a3;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_fail = _client_guard($scope0_reason, 2), $wi__input_show__OR__input_fail = _write_if($scope0_reason, 0), $wg__input_show = _write_guard($scope0_reason, 1), $fg__input_fail = _filled_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_fail = _client_guard($scope0_reason, 2), $wi__input_show__OR__input_fail = _write_if($scope0_reason, 0), $wg__input_show = _write_guard($scope0_reason, 1), $fg__input_fail = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_fail__closures = /* @__PURE__ */ new Set();
 	_html("<main>");
@@ -34,9 +34,9 @@ var template_default = _template("a", (input) => {
 		}
 	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["a3"], $scope0_reason, 1);
 	_html(`</main>${_el_mark($scope0_id, "a", $wg__input_show)}`);
-	$fg__input_fail && $cg__input_show && _patch_subscribers($scope0_id, "a4", "e");
+	$fg__input_fail && _client_guard($scope0_reason, 1) && _patch_subscribers($scope0_id, "a4", "e");
 	_scope($scope0_id, {
 		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.fail,
 		f: _write_if($scope0_reason, 2) && (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1)) && $input_fail__closures
-	}) || $fg__input_fail && $cg__input_show && _patch_write($scope0_id, "xe", input.fail, !_server_guard($scope0_reason, 2));
+	}) || $fg__input_fail && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.fail, !_server_guard($scope0_reason, 2));
 }, 1);

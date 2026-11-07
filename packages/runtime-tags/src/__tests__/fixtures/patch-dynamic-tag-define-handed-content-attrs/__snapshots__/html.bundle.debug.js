@@ -21,7 +21,7 @@ var one_default = _template("__tests__/tags/one.marko", (input) => {
 		($wi__input_content || _write_if($scope1_reason, 0)) && _subscribe(_unfilled_if((_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 0)) << 1, 0) && $wi__input_content && $input_content__closures, _scope($scope1_id, {
 			t: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope1_reason, 0)) && t,
 			_: _scope_with_id($scope0_id)
-		}, "__tests__/tags/one.marko", "1:2", { t: "1:16" }), _client_guard((_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 0)) << 1, 0) && "__tests__/tags/one.marko_1_input_content#0:3/subscribe", $wg__input_content || $wg__t) || $fg__t && _client_guard($scope0_reason, 0) && _patch_write($scope1_id, "PatchMarkedWrite:t", t, !_server_guard($scope1_reason, 0));
+		}, "__tests__/tags/one.marko", "1:2", { t: "1:16" }), _client_guard((_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 0)) << 1, 0) && "__tests__/tags/one.marko_1_input_content#0:3/subscribe", $wg__input_content || $wg__t) || $fg__t && _unfilled_if($scope0_reason, 0) && _patch_write($scope1_id, "PatchMarkedWrite:t", t, !_server_guard($scope1_reason, 0));
 	}, $scope0_id, 0) };
 	_set_scope_reason(_updates_from($scope0_reason, 1) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 1);
@@ -32,7 +32,7 @@ var one_default = _template("__tests__/tags/one.marko", (input) => {
 		input_content: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.content,
 		"ClosureScopes:input_content/5": $wi__input_content && $input_content__closures,
 		"#childScope/0": _existing_scope($childScope)
-	}, "__tests__/tags/one.marko", 0, { input_content: ["input.content"] }) || $fg__input_content && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_content", input.content, !_server_guard($scope0_reason, 0));
+	}, "__tests__/tags/one.marko", 0, { input_content: ["input.content"] }) || $fg__input_content && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_content", input.content, !_server_guard($scope0_reason, 0));
 });
 
 // template.marko

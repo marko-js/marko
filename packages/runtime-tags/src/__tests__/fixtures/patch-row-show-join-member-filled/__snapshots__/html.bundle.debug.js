@@ -13,7 +13,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $input_id__closures = new Set();
 	_for_of(input.items, (item) => {
 		const $scope1_id = _scope_id();
-		_filled_guard($scope0_reason, 1) && $cg__input_id && _patch_write($scope1_id, "PatchMarkedWrite:item_on", item?.on, !_server_guard($scope0_reason, 1));
+		_filled_guard($scope0_reason, 1) && _unfilled_if($scope0_reason, 2) && _patch_write($scope1_id, "PatchMarkedWrite:item_on", item?.on, !_server_guard($scope0_reason, 1));
 		_html("<div>");
 		const $show = item.on ? input.id : "";
 		_show_start($show, 1, $wg__input_items__OR__input_id, "</div>");

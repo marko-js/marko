@@ -12,7 +12,7 @@ _shells({
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell;b%;<!><!><!>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_fail = _client_guard($scope0_reason, 2), $wi__input_show__OR__input_fail = _write_if($scope0_reason, 0), $wg__input_show = _write_guard($scope0_reason, 1), $fg__input_fail = _filled_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_fail = _client_guard($scope0_reason, 2), $wi__input_show__OR__input_fail = _write_if($scope0_reason, 0), $wg__input_show = _write_guard($scope0_reason, 1), $fg__input_fail = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_fail__closures = new Set();
 	_html("<main>");
@@ -37,9 +37,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}
 	}, $scope0_id, "#main/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 1);
 	_html(`</main>${_el_mark($scope0_id, "#main/0", $wg__input_show)}`);
-	$fg__input_fail && $cg__input_show && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_fail#4/subscribers", "input_fail");
+	$fg__input_fail && _client_guard($scope0_reason, 1) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_fail#4/subscribers", "input_fail");
 	_scope($scope0_id, {
 		input_fail: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.fail,
 		"ClosureScopes:input_fail/5": _write_if($scope0_reason, 2) && (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1)) && $input_fail__closures
-	}, "__tests__/template.marko", 0, { input_fail: ["input.fail"] }) || $fg__input_fail && $cg__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_fail", input.fail, !_server_guard($scope0_reason, 2));
+	}, "__tests__/template.marko", 0, { input_fail: ["input.fail"] }) || $fg__input_fail && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_fail", input.fail, !_server_guard($scope0_reason, 2));
 }, 1);

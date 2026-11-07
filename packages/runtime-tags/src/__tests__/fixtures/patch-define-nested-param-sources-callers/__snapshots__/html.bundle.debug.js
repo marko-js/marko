@@ -10,7 +10,7 @@ const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}& b`)($Wrapper_content__walks);
 const $setup = [[], ["__tests__/template.marko_0"]];
 _shells({ "__tests__/template.marko": `__tests__/template.marko !__tests__/template.marko_0;${((_w0) => `b/${_w0}& b`)($Wrapper_content__walks)};${((_w0) => `<!>${_w0}<button>+</button>`)($Wrapper_content__template)}` });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_label = _write_if($scope0_reason, 0), $cg__input_label = _client_guard($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wi__input_label = _write_if($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = new Set();
 	let n = 0;
@@ -30,7 +30,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_subscribe(_unfilled_if((_updates_from($scope1_reason, 1) | _updates_from($scope2_reason, 0)) << 1, 0) && $wi__x && $Outer_content__x__closures, _subscribe(_unfilled_if((_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 1) | _updates_from($scope2_reason, 0)) << 1, 0) && $wi__input_label && $input_label__closures, _scope($scope2_id, {
 				z: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope1_reason, 1) || _unfilled_if($scope2_reason, 0)) && z,
 				_: ($wi__input_label || $wi__x || _write_if($scope2_reason, 0)) && _scope_with_id($scope1_id)
-			}, "__tests__/template.marko", "3:4", { z: "3:19" }), _client_guard((_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 1) | _updates_from($scope2_reason, 0)) << 1, 0) && "__tests__/template.marko_2_input_label#0:4/subscribe"), _client_guard((_updates_from($scope1_reason, 1) | _updates_from($scope2_reason, 0)) << 1, 0) && "__tests__/template.marko_2_x#1:3/subscribe") || $fg__z && ($cg__input_label || _client_guard($scope1_reason, 1)) && _patch_write($scope2_id, "PatchMarkedWrite:z", z, !_server_guard($scope2_reason, 0));
+			}, "__tests__/template.marko", "3:4", { z: "3:19" }), _client_guard((_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 1) | _updates_from($scope2_reason, 0)) << 1, 0) && "__tests__/template.marko_2_input_label#0:4/subscribe"), _client_guard((_updates_from($scope1_reason, 1) | _updates_from($scope2_reason, 0)) << 1, 0) && "__tests__/template.marko_2_x#1:3/subscribe") || $fg__z && (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope1_reason, 1)) && _patch_write($scope2_id, "PatchMarkedWrite:z", z, !_server_guard($scope2_reason, 0));
 		}, $scope1_id) };
 		_set_scope_reason(_updates_from($scope1_reason, 2) << 1);
 		const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
@@ -42,7 +42,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_: ($wi__input_label || _write_if($scope1_reason, 0)) && _scope_with_id($scope0_id),
 			"ClosureScopes:x/8": $wi__x && $Outer_content__x__closures,
 			"#childScope/0": _existing_scope($childScope)
-		}, "__tests__/template.marko", "2:2", { x: "2:17" }) || $fg__x && ($cg__input_label || _client_guard($scope1_reason, 2)) && _patch_write($scope1_id, "PatchMarkedWrite:x", x, !_server_guard($scope1_reason, 1));
+		}, "__tests__/template.marko", "2:2", { x: "2:17" }) || $fg__x && (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope1_reason, 2)) && _patch_write($scope1_id, "PatchMarkedWrite:x", x, !_server_guard($scope1_reason, 1));
 	}, $scope0_id) };
 	const Wrapper = { content: _content("__tests__/template.marko_3*content", ({ a, b }) => {
 		const $scope3_id = _scope_id();

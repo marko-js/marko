@@ -22,7 +22,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}
 		}, $scope2_id, "#text/0", _write_guard($scope2_reason, 0), $wg__open);
 		$fg__body && _patch_render($scope2_id, "__tests__/template.marko_3_body#2:4/setup", "body");
-		_write_if($scope2_reason, 1) && _scope($scope2_id, { body }, "__tests__/template.marko", "2:2", { body: "2:23" }) || $fg__body && _client_guard($scope2_reason, 1) && _patch_write($scope2_id, "PatchMarkedWrite:body", body, !_server_guard($scope2_reason, 2));
+		_write_if($scope2_reason, 1) && _scope($scope2_id, { body }, "__tests__/template.marko", "2:2", { body: "2:23" }) || $fg__body && _unfilled_if($scope2_reason, 1) && _patch_write($scope2_id, "PatchMarkedWrite:body", body, !_server_guard($scope2_reason, 2));
 	}, $scope0_id) };
 	_html("<main>");
 	_set_scope_reason(10);

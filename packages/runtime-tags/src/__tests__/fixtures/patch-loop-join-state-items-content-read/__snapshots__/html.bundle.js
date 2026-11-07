@@ -8,14 +8,14 @@ _shells({
 	b3: "b3;D ;<p> </p>"
 });
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_b = _client_guard($scope0_reason, 3), $fg__input_b = _filled_guard($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $fg__input_b = _filled_guard($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	const $input_b__closures = /* @__PURE__ */ new Set();
 	const frag = { content: _content_resume("b0", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_html(`<i>${_text_mark($scope1_id, "a", input.b, 1, $scope0_reason, 3)}</i>`);
-		_unfilled_if($scope0_reason, 3) && _patch_subscribe($scope1_id, "b1", $cg__input_b);
+		_unfilled_if($scope0_reason, 3) && _patch_subscribe($scope1_id, "b1", _client_guard($scope0_reason, 3));
 		_subscribe(_unfilled_if($scope0_reason, 3) && $input_b__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }));
 	}, $scope0_id) };
 	_html("<section>");
@@ -23,7 +23,7 @@ var child_default = _template("b", (input) => {
 	_html(`</section>${_el_mark($scope0_id, "a", _updates_from($scope0_reason, 4))}`);
 	_for_of(input.items, (item) => {
 		const $scope2_id = _scope_id();
-		_filled_guard($scope0_reason, 5) && $cg__input_b && _patch_write($scope2_id, "xc", item, !_server_guard($scope0_reason, 5));
+		_filled_guard($scope0_reason, 5) && _unfilled_if($scope0_reason, 3) && _patch_write($scope2_id, "xc", item, !_server_guard($scope0_reason, 5));
 		const d = input.b + item;
 		_html(`<p>${_text_mark($scope2_id, "a", d, 1, $scope0_reason, 1)}</p>`);
 		_patch_render($scope2_id, "b2", [_filled_guard($scope0_reason, 3) && ">e", _filled_guard($scope0_reason, 5) && "c"], $scope0_reason, 1);
@@ -40,7 +40,7 @@ var child_default = _template("b", (input) => {
 		e: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 3)) && input.b,
 		i: _unfilled_if($scope0_reason, 4) && frag?.content,
 		k: _write_if($scope0_reason, 3) && $input_b__closures
-	}) || $fg__input_b && _client_guard($scope0_reason, 2) && _patch_write($scope0_id, "xe", input.b, !_server_guard($scope0_reason, 3));
+	}) || $fg__input_b && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xe", input.b, !_server_guard($scope0_reason, 3));
 });
 
 // template.marko

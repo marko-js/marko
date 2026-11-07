@@ -18,7 +18,7 @@ _shells({
 	a0: `a0${_shell_marker([[], []], ["a>", $setup], ["b>", $setup])};${/*@__PURE__*/ ((_w0, _w1) => `/${_w0}&/${_w1}&`)($walks, $walks)};${/*@__PURE__*/ ((_w0, _w1) => `${_w0}${_w1}`)($template, $template)}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_visible__OR__input_items = _write_if($scope0_reason, 0), $fg__input_items = _filled_guard($scope0_reason, 2), $cg__input_visible = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wi__input_visible__OR__input_items = _write_if($scope0_reason, 0), $fg__input_items = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const headingId = _id("A");
 	_html(`<h2${_attr("id", headingId, $scope0_id, "a", 0, 0)}>Fields</h2>${_el_mark($scope0_id, "a", 0)}`);
@@ -53,9 +53,9 @@ var template_default = _template("a", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 1), 1, 0, 0, ["a1"], $scope0_reason, 1);
-	$fg__input_items && $cg__input_visible && _patch_render($scope0_id, "a2", "f");
+	$fg__input_items && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "a2", "f");
 	_scope($scope0_id, {
 		f: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.items,
 		g: _unfilled_if($scope0_reason, 0) && headingId
-	}) || $fg__input_items && $cg__input_visible && _patch_write($scope0_id, "xf", input.items, !_server_guard($scope0_reason, 2));
+	}) || $fg__input_items && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xf", input.items, !_server_guard($scope0_reason, 2));
 }, 1);

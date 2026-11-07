@@ -90,7 +90,7 @@ _shells({
 	d8: "d8,<p>home</p>"
 });
 var template_default = _template("d", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_wide = _client_guard($scope0_reason, 4), $cg__input_note = _client_guard($scope0_reason, 5), $wi__input_page__OR__input_wide__OR__input_note = _write_if($scope0_reason, 0), $wg__input_page = _write_guard($scope0_reason, 2), $cg__input_page = _client_guard($scope0_reason, 2), $fg__input_list = _filled_guard($scope0_reason, 3), $fg__input_wide = _filled_guard($scope0_reason, 4), $fg__input_note = _filled_guard($scope0_reason, 5), $wi__input_wide = _write_if($scope0_reason, 4), $wi__input_note = _write_if($scope0_reason, 5), $wi__input_page = _write_if($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $cg__input_wide = _client_guard($scope0_reason, 4), $cg__input_note = _client_guard($scope0_reason, 5), $wi__input_page__OR__input_wide__OR__input_note = _write_if($scope0_reason, 0), $wg__input_page = _write_guard($scope0_reason, 2), $fg__input_list = _filled_guard($scope0_reason, 3), $cg__input_page = _client_guard($scope0_reason, 2), $fg__input_wide = _filled_guard($scope0_reason, 4), $fg__input_note = _filled_guard($scope0_reason, 5), $wi__input_wide = _write_if($scope0_reason, 4), $wi__input_note = _write_if($scope0_reason, 5), $wi__input_page = _write_if($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_wide__closures = /* @__PURE__ */ new Set();
 	const $input_note__closures = /* @__PURE__ */ new Set();
@@ -175,5 +175,5 @@ var template_default = _template("d", (input) => {
 		j: $wi__input_wide && (_unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 2)) && $input_wide__closures,
 		k: $wi__input_note && (_unfilled_if($scope0_reason, 5) || _unfilled_if($scope0_reason, 2)) && $input_note__closures,
 		h: $wi__input_page && _unfilled_if($scope0_reason, 2) && $input_page__closures
-	}) || ($fg__input_list && $cg__input_page && _patch_write($scope0_id, "xe", input.list, !_server_guard($scope0_reason, 3)), $fg__input_wide && $cg__input_page && _patch_write($scope0_id, "xf", input.wide, !_server_guard($scope0_reason, 4)), $fg__input_note && $cg__input_page && _patch_write($scope0_id, "xg", input.note, !_server_guard($scope0_reason, 5)));
+	}) || ($fg__input_list && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xe", input.list, !_server_guard($scope0_reason, 3)), $fg__input_wide && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xf", input.wide, !_server_guard($scope0_reason, 4)), $fg__input_note && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xg", input.note, !_server_guard($scope0_reason, 5)));
 }, 1);

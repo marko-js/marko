@@ -22,7 +22,7 @@ _shells({
 	b5: "b5;b%;<!><!><!>"
 });
 var template_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_label = _server_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 1), $cg__input_show = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $sg__input_label = _server_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $n__closures = /* @__PURE__ */ new Set();
 	let n = 0;
@@ -51,10 +51,10 @@ var template_default = _template("b", (input) => {
 		}
 	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["b5"], $scope0_reason, 0);
 	_script($scope0_id, "b7");
-	$fg__input_label && $cg__input_show && _patch_render($scope0_id, "b6", "f");
+	$fg__input_label && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "b6", "f");
 	_scope($scope0_id, {
 		f: _write_if($scope0_reason, 0) && input.label,
 		g: n,
 		i: $n__closures
-	}) || $fg__input_label && $cg__input_show && _patch_write($scope0_id, "xf", input.label, !$sg__input_label);
+	}) || $fg__input_label && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xf", input.label, !$sg__input_label);
 }, 1);

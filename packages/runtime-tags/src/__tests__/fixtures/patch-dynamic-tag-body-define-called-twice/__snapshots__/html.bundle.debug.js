@@ -85,5 +85,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		"ClosureScopes:input_on/7": $wi__input_on && $input_on__closures,
 		"#childScope/0": _existing_scope($childScope2),
 		"#childScope/1": _existing_scope($childScope3)
-	}, "__tests__/template.marko", 0, { input_note: ["input.note"] }) || $fg__input_note && (_client_branch_if("__tests__/template.marko_3*content", $scope0_id) || $cg__input_on) && _patch_write($scope0_id, "PatchMarkedWrite:input_note", input.note, !_server_guard($scope0_reason, 1));
+	}, "__tests__/template.marko", 0, { input_note: ["input.note"] }) || $fg__input_note && (_client_branch_if("__tests__/template.marko_3*content", $scope0_id) || _unfilled_if($scope0_reason, 2)) && _patch_write($scope0_id, "PatchMarkedWrite:input_note", input.note, !_server_guard($scope0_reason, 1));
 }, 1);

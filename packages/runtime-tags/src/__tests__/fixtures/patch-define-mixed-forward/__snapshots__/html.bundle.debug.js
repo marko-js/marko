@@ -19,7 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, "__tests__/template.marko", "1:2", {
 			input_a: ["input.a", "1:13"],
 			input_b: ["input.b", "1:13"]
-		}) || ($fg__input_a && _client_guard($scope1_reason, 2) && _patch_write($scope1_id, "PatchMarkedWrite:input_a", input.a, !_server_guard($scope1_reason, 1)), $fg__input_b && _client_guard($scope1_reason, 1) && _patch_write($scope1_id, "PatchMarkedWrite:input_b", input.b, !_server_guard($scope1_reason, 2)));
+		}) || ($fg__input_a && _unfilled_if($scope1_reason, 2) && _patch_write($scope1_id, "PatchMarkedWrite:input_a", input.a, !_server_guard($scope1_reason, 1)), $fg__input_b && _unfilled_if($scope1_reason, 1) && _patch_write($scope1_id, "PatchMarkedWrite:input_b", input.b, !_server_guard($scope1_reason, 2)));
 	}, $scope0_id) };
 	let s = 1;
 	_set_scope_reason(14 | _updates_from($scope0_reason, 0) << 5);

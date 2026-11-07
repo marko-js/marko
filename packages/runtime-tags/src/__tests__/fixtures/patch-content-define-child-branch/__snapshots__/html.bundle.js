@@ -12,7 +12,7 @@ var template_default = _template("a", (input) => {
 	const $input_note__closures = /* @__PURE__ */ new Set();
 	const Card = { content: _content("a2", ({ show, content }) => {
 		const $scope2_id = _scope_id();
-		const $scope2_reason = _scope_reason(), $wg__content = _write_guard($scope2_reason, 2), $wg__show = _write_guard($scope2_reason, 1), $fg__content = _filled_guard($scope2_reason, 2), $cg__show = _client_guard($scope2_reason, 1);
+		const $scope2_reason = _scope_reason(), $wg__content = _write_guard($scope2_reason, 2), $wg__show = _write_guard($scope2_reason, 1), $fg__content = _filled_guard($scope2_reason, 2);
 		_html("<section>");
 		_if(() => {
 			if (show) {
@@ -23,8 +23,8 @@ var template_default = _template("a", (input) => {
 			}
 		}, $scope2_id, "a", 1, $wg__show, 1, 0, 0, ["a0"], $scope2_reason, 1);
 		_html(`</section>${_el_mark($scope2_id, "a", $wg__show)}`);
-		$fg__content && $cg__show && _patch_render($scope2_id, "a3", "e");
-		_write_if($scope2_reason, 1) && _scope($scope2_id, { e: _unfilled_if($scope2_reason, 1) && content }) || $fg__content && $cg__show && _patch_write($scope2_id, "xe", content, !_server_guard($scope2_reason, 2));
+		$fg__content && _client_guard($scope2_reason, 1) && _patch_render($scope2_id, "a3", "e");
+		_write_if($scope2_reason, 1) && _scope($scope2_id, { e: _unfilled_if($scope2_reason, 1) && content }) || $fg__content && _unfilled_if($scope2_reason, 1) && _patch_write($scope2_id, "xe", content, !_server_guard($scope2_reason, 2));
 	}, $scope0_id) };
 	_html("<main>");
 	_set_scope_reason(_updates_from($scope0_reason, 1) << 1 | _updates_from($scope0_reason, 1) << 3);
@@ -46,5 +46,5 @@ var template_default = _template("a", (input) => {
 		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.note,
 		f: _write_if($scope0_reason, 2) && $input_note__closures,
 		a: _existing_scope($childScope)
-	}) || $fg__input_note && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.note, !_server_guard($scope0_reason, 2));
+	}) || $fg__input_note && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.note, !_server_guard($scope0_reason, 2));
 }, 1);

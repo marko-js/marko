@@ -52,7 +52,7 @@ var heading_default = _template("__tests__/tags/heading.marko", (input) => {
 	_scope($scope0_id, {
 		input_depth: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.depth,
 		"ClosureScopes:input_depth/5": _write_if($scope0_reason, 2) && $input_depth__closures
-	}, "__tests__/tags/heading.marko", 0, { input_depth: ["input.depth"] }) || $fg__input_depth && (_client_branch_if("__tests__/tags/heading.marko_1*content", $scope0_id) || _client_guard($scope0_reason, 1)) && _patch_write($scope0_id, "PatchMarkedWrite:input_depth", input.depth, !_server_guard($scope0_reason, 2));
+	}, "__tests__/tags/heading.marko", 0, { input_depth: ["input.depth"] }) || $fg__input_depth && (_client_branch_if("__tests__/tags/heading.marko_1*content", $scope0_id) || _unfilled_if($scope0_reason, 1)) && _patch_write($scope0_id, "PatchMarkedWrite:input_depth", input.depth, !_server_guard($scope0_reason, 2));
 });
 
 // template.marko

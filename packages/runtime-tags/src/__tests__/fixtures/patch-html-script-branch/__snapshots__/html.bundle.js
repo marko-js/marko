@@ -4,7 +4,7 @@ _shells({
 	a1: "a1; ;<script>\n      { const main = document.querySelector(\"main\");\n      main.dataset.ran = (+main.dataset.ran || 0) + 1;\n      main.dataset.nonce = document.currentScript.getAttribute(\"nonce\");\n      main.dataset.connected = document.currentScript.isConnected; }\n    <\/script>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_nonce = _filled_guard($scope0_reason, 1), $cg__input_show = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $fg__input_nonce = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_html("<main>");
 	_if(() => {
@@ -22,6 +22,6 @@ var template_default = _template("a", (input) => {
 		}
 	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["a1"], $scope0_reason, 0);
 	_html(`<p>${_text_mark($scope0_id, "b", input.note, 1, $scope0_reason, 2)}</p></main>`);
-	$fg__input_nonce && $cg__input_show && _patch_render($scope0_id, "a0", "f");
-	_scope($scope0_id, { f: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.nonce }) || $fg__input_nonce && $cg__input_show && _patch_write($scope0_id, "xf", input.nonce, !_server_guard($scope0_reason, 1));
+	$fg__input_nonce && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "a0", "f");
+	_scope($scope0_id, { f: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.nonce }) || $fg__input_nonce && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xf", input.nonce, !_server_guard($scope0_reason, 1));
 }, 1);

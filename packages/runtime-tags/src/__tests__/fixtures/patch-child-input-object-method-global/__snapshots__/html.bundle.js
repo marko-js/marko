@@ -7,10 +7,10 @@ _shells({
 	b4: "b4;D ;<span> </span>"
 });
 var code_block_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wi__input_cursor__OR__input_text = _write_if($scope0_reason, 0), $wg__input_text_length = _write_guard($scope0_reason, 3), $cg__input_cursor = _client_guard($scope0_reason, 1), $fg__input_text = _filled_guard($scope0_reason, 2), $cg__input_text_length = _client_guard($scope0_reason, 3), $fg__input_cursor = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wi__input_cursor__OR__input_text = _write_if($scope0_reason, 0), $wg__input_text_length = _write_guard($scope0_reason, 3), $fg__input_text = _filled_guard($scope0_reason, 2), $cg__input_text_length = _client_guard($scope0_reason, 3), $fg__input_cursor = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
-	$fg__input_cursor && _client_guard($scope0_reason, 0) && _patch_write($scope0_id, "xd", input.cursor, !_server_guard($scope0_reason, 1));
+	$fg__input_cursor && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xd", input.cursor, !_server_guard($scope0_reason, 1));
 	const highlight = _bind_resume(function(text) {
 		return text.replace(input.cursor.test, (m) => `<b class=${$global$1.theme}>${input.cursor.content((s) => s)}</b>`);
 	}, "b0", $scope0_id);
@@ -37,7 +37,7 @@ var code_block_default = _template("b", (input) => {
 			return 1;
 		}
 	}, $scope0_id, "a", 1, $wg__input_text_length, 1, 0, 0, ["b3", "b4"], $scope0_reason, 3);
-	_fill_global_subscribe("b5", $scope0_id, $cg__input_cursor);
+	_fill_global_subscribe("b5", $scope0_id, _client_guard($scope0_reason, 1));
 	$fg__input_text && $cg__input_text_length && _patch_render($scope0_id, "b6", "e");
 	$fg__input_text && $cg__input_text_length && _patch_render($scope0_id, "b7", "e");
 	_filled_guard((2 | _updates_from($scope0_reason, 1)) << 1, 0) && $cg__input_text_length && _patch_render($scope0_id, "b8", [_filled_guard((2 | _updates_from($scope0_reason, 1)) << 1, 0) && "g", $fg__input_cursor && "d"]);
@@ -46,7 +46,7 @@ var code_block_default = _template("b", (input) => {
 		d: _unfilled_if($scope0_reason, 0) && input.cursor,
 		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0) || _unfilled_if()) && input.text,
 		g: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && highlight
-	}) || ($fg__input_text && $cg__input_cursor && _patch_write($scope0_id, "xe", input.text, !_server_guard($scope0_reason, 2)), _filled_guard((2 | _updates_from($scope0_reason, 1)) << 1, 0) && _client_guard($scope0_reason, 2) && _patch_write($scope0_id, "xg", highlight, !_server_guard((2 | _updates_from($scope0_reason, 1)) << 1, 0)));
+	}) || ($fg__input_text && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.text, !_server_guard($scope0_reason, 2)), _filled_guard((2 | _updates_from($scope0_reason, 1)) << 1, 0) && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xg", highlight, !_server_guard((2 | _updates_from($scope0_reason, 1)) << 1, 0)));
 });
 
 // template.marko

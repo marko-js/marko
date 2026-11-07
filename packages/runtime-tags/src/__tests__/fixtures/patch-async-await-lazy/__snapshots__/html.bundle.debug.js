@@ -12,7 +12,7 @@ _shells({
 	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;E lD%lD%l Db%;<main><h1> </h1><section><!></section><footer><!></footer><button>Count <!></button></main>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_related__OR__input_slow = _write_if($scope0_reason, 0), $cg__input_slow = _client_guard($scope0_reason, 5), $fg__input_slow = _filled_guard($scope0_reason, 5), $fg__input_note = _filled_guard($scope0_reason, 6);
+	const $scope0_reason = _scope_reason(), $wi__input_related__OR__input_slow = _write_if($scope0_reason, 0), $fg__input_slow = _filled_guard($scope0_reason, 5), $fg__input_note = _filled_guard($scope0_reason, 6);
 	const $scope0_id = _scope_id();
 	const $input_related__closures = new Set();
 	const $input_slow__closures = new Set();
@@ -29,7 +29,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_unfilled_if($scope0_reason, 4) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_related#0:8/subscribe", 1);
 		_unfilled_if($scope0_reason, 5) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_slow#0:9/subscribe", 1);
 		_patch_render($scope1_id, "__tests__/template.marko_1_input_related#0:8_input_slow#0:9/setup", [_filled_guard($scope0_reason, 4) && ">input_related", _filled_guard($scope0_reason, 5) && ">input_slow"], $scope0_reason, 0);
-		$wi__input_related__OR__input_slow && _subscribe(_unfilled_if($scope0_reason, 5) && $input_slow__closures, _subscribe(_unfilled_if($scope0_reason, 4) && $input_related__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "7:6"), _client_guard($scope0_reason, 4) && "__tests__/template.marko_1_input_related#0:8/subscribe", 0), $cg__input_slow && "__tests__/template.marko_1_input_slow#0:9/subscribe", 0);
+		$wi__input_related__OR__input_slow && _subscribe(_unfilled_if($scope0_reason, 5) && $input_slow__closures, _subscribe(_unfilled_if($scope0_reason, 4) && $input_related__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "7:6"), _client_guard($scope0_reason, 4) && "__tests__/template.marko_1_input_related#0:8/subscribe", 0), _client_guard($scope0_reason, 5) && "__tests__/template.marko_1_input_slow#0:9/subscribe", 0);
 		$wi__input_related__OR__input_slow && _resume_branch($scope1_id);
 	}, () => {
 		const $scope2_reason = _scope_reason();
@@ -57,5 +57,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_slow: ["input.slow"],
 		input_note: ["input.note"],
 		count: "3:6"
-	}) || (_filled_guard($scope0_reason, 4) && $cg__input_slow && _patch_write($scope0_id, "PatchMarkedWrite:input_related", input.related, !_server_guard($scope0_reason, 4)), $fg__input_slow && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_slow", input.slow, !_server_guard($scope0_reason, 5)), $fg__input_note && $cg__input_slow && _patch_write($scope0_id, "PatchMarkedWrite:input_note", input.note, !_server_guard($scope0_reason, 6)));
+	}) || (_filled_guard($scope0_reason, 4) && _unfilled_if($scope0_reason, 5) && _patch_write($scope0_id, "PatchMarkedWrite:input_related", input.related, !_server_guard($scope0_reason, 4)), $fg__input_slow && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_slow", input.slow, !_server_guard($scope0_reason, 5)), $fg__input_note && _unfilled_if($scope0_reason, 5) && _patch_write($scope0_id, "PatchMarkedWrite:input_note", input.note, !_server_guard($scope0_reason, 6)));
 }, 1);

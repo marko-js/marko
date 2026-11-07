@@ -30,7 +30,7 @@ var gm_default = _template("__tests__/tags/gm/index.marko", (input) => {
 	}, "__tests__/tags/gm/index.marko", 0, {
 		input_v: ["input.v"],
 		z: "1:8"
-	}) || (_filled_guard($scope0_reason, 0) && $cg__input_v && _patch_write($scope0_id, "PatchMarkedWrite:input_v", input.v, !_server_guard($scope0_reason, 0)), _filled_guard((2 | _updates_from($scope0_reason, 0)) << 1, 0) && $cg__input_v && _patch_write($scope0_id, "PatchMarkedWrite:z", z, !_server_guard((2 | _updates_from($scope0_reason, 0)) << 1, 0)));
+	}) || (_filled_guard($scope0_reason, 0) && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_v", input.v, !_server_guard($scope0_reason, 0)), _filled_guard((2 | _updates_from($scope0_reason, 0)) << 1, 0) && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:z", z, !_server_guard((2 | _updates_from($scope0_reason, 0)) << 1, 0)));
 });
 
 // template.marko

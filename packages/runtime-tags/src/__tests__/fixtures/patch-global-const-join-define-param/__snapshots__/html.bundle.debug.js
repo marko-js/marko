@@ -32,7 +32,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, "__tests__/template.marko", "3:2", {
 			v: "3:16",
 			flag: "4:10"
-		}) || _client_guard($scope1_reason, 0) && _patch_write($scope1_id, "PatchMarkedWrite:flag", flag);
+		}) || _unfilled_if($scope1_reason, 0) && _patch_write($scope1_id, "PatchMarkedWrite:flag", flag);
 	}, $scope0_id) };
 	_set_scope_reason(2);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/1", 0);

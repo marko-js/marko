@@ -10,10 +10,10 @@ _shells({
 	"__tests__/tags/shape.marko_2*shell": "__tests__/tags/shape.marko_2*shell;D ;<span> </span>"
 });
 var shape_default = _template("__tests__/tags/shape.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_a = _client_guard($scope0_reason, 1), $wi__input_a = _write_if($scope0_reason, 1), $sg__input_a = _server_guard($scope0_reason, 1), $cg__input_x__OR__input_y = _client_guard($scope0_reason, 0), $fg__input_a = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_a = _client_guard($scope0_reason, 1), $wi__input_a = _write_if($scope0_reason, 1), $sg__input_a = _server_guard($scope0_reason, 1), $fg__input_a = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $f2__closures = new Set();
-	$fg__input_a && $cg__input_x__OR__input_y && _patch_write($scope0_id, "PatchMarkedWrite:input_a", input.a, !$sg__input_a);
+	$fg__input_a && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_a", input.a, !$sg__input_a);
 	let n = 0;
 	const f = _bind_resume(function() {
 		return input.a;
@@ -55,7 +55,7 @@ var shape_default = _template("__tests__/tags/shape.marko", (input) => {
 		input_a: ["input.a"],
 		n: "1:6",
 		f: "2:8"
-	}) || $fg__input_a && $cg__input_x__OR__input_y && _patch_write($scope0_id, "PatchMarkedWrite:f", f, !$sg__input_a);
+	}) || $fg__input_a && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:f", f, !$sg__input_a);
 });
 
 // template.marko

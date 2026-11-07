@@ -21,7 +21,7 @@ _shells({
 	"__tests__/tags/rowsx.marko_3*shell": "__tests__/tags/rowsx.marko_3*shell;D ;<em> </em>"
 });
 var rowsx_default = _template("__tests__/tags/rowsx.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_open = _filled_guard($scope0_reason, 1), $cg__input_items = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $fg__input_open = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	let suffix = "s";
 	const Panel = { content: _content("__tests__/tags/rowsx.marko_2*content", ({ isOpen, fmt, label }) => {
@@ -44,7 +44,7 @@ var rowsx_default = _template("__tests__/tags/rowsx.marko", (input) => {
 		}, "__tests__/tags/rowsx.marko", "3:2", {
 			fmt: "3:25",
 			label: "3:30"
-		}) || ($fg__fmt && _client_guard($scope2_reason, 1) && _patch_write($scope2_id, "PatchMarkedWrite:fmt", fmt, !_server_guard($scope2_reason, 5)), $fg__label && _client_guard($scope2_reason, 0) && _patch_write($scope2_id, "PatchMarkedWrite:label", label, !_server_guard($scope2_reason, 6)));
+		}) || ($fg__fmt && _unfilled_if($scope2_reason, 1) && _patch_write($scope2_id, "PatchMarkedWrite:fmt", fmt, !_server_guard($scope2_reason, 5)), $fg__label && _unfilled_if($scope2_reason, 0) && _patch_write($scope2_id, "PatchMarkedWrite:label", label, !_server_guard($scope2_reason, 6)));
 	}, $scope0_id, 0) };
 	_for_of(input.items, (x) => {
 		const $scope1_id = _scope_id();
@@ -67,7 +67,7 @@ var rowsx_default = _template("__tests__/tags/rowsx.marko", (input) => {
 	}, 0, $scope0_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/tags/rowsx.marko_1*shell", $scope0_reason, 0);
 	_html(`<button class=l>l</button>${_el_mark($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/tags/rowsx.marko_0");
-	$fg__input_open && $cg__input_items && _patch_render($scope0_id, "__tests__/tags/rowsx.marko_1_input_open#0:5/setup", "input_open");
+	$fg__input_open && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "__tests__/tags/rowsx.marko_1_input_open#0:5/setup", "input_open");
 	_patch_fill($scope0_id, "PatchFill:__tests__/tags/rowsx.marko_0_suffix#6/fill", suffix, 1);
 	_scope($scope0_id, {
 		input_open: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.open,
@@ -75,7 +75,7 @@ var rowsx_default = _template("__tests__/tags/rowsx.marko", (input) => {
 	}, "__tests__/tags/rowsx.marko", 0, {
 		input_open: ["input.open"],
 		suffix: "2:6"
-	}) || $fg__input_open && $cg__input_items && _patch_write($scope0_id, "PatchMarkedWrite:input_open", input.open, !_server_guard($scope0_reason, 1));
+	}) || $fg__input_open && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_open", input.open, !_server_guard($scope0_reason, 1));
 });
 
 // template.marko
@@ -87,7 +87,7 @@ _shells({
 	"__tests__/template.marko_1*shell": `__tests__/template.marko_1*shell${_shell_marker([[], []], ["#childScope/0>", $setup$1])};${/*@__PURE__*/ ((_w0) => `b/${_w0}&`)($walks$1)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}`)($template$1)}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 1), $cg__input_show = _client_guard($scope0_reason, 1), $fg__input_open = _filled_guard($scope0_reason, 2), $fg__input_items = _filled_guard($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 1), $fg__input_open = _filled_guard($scope0_reason, 2), $fg__input_items = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.show) {
@@ -116,5 +116,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, "__tests__/template.marko", 0, {
 		input_open: ["input.open"],
 		input_items: ["input.items"]
-	}) || ($fg__input_open && $cg__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_open", input.open, !_server_guard($scope0_reason, 2)), $fg__input_items && $cg__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_items", input.items, !_server_guard($scope0_reason, 3)));
+	}) || ($fg__input_open && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_open", input.open, !_server_guard($scope0_reason, 2)), $fg__input_items && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_items", input.items, !_server_guard($scope0_reason, 3)));
 }, 1);

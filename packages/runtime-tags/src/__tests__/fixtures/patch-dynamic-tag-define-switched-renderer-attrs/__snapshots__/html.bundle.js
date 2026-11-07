@@ -29,7 +29,7 @@ var template_default = _template("a", (input) => {
 		_subscribe(_unfilled_if((_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 1)) << 1, 0) && $wi__input_t && $input_t__closures, _scope($scope1_id, {
 			f: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope1_reason, 1)) && content,
 			_: ($wi__input_t || _write_if($scope1_reason, 1)) && _scope_with_id($scope0_id)
-		}), _client_guard((_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 1)) << 1, 0) && "a4") || $fg__content && _client_guard($scope0_reason, 0) && _patch_write($scope1_id, "xf", content, !_server_guard($scope1_reason, 1));
+		}), _client_guard((_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 1)) << 1, 0) && "a4") || $fg__content && _unfilled_if($scope0_reason, 0) && _patch_write($scope1_id, "xf", content, !_server_guard($scope1_reason, 1));
 	}, $scope0_id) };
 	_set_scope_reason(_updates_from($scope0_reason, 1) << 1 | _updates_from($scope0_reason, 2) << 3);
 	const $childScope = _peek_scope_id($scope0_id, "a", 1);
@@ -45,5 +45,5 @@ var template_default = _template("a", (input) => {
 		h: _unfilled_if($scope0_reason, 2) && B,
 		j: $wi__input_t && $input_t__closures,
 		a: _existing_scope($childScope)
-	}) || $fg__input_t && _client_guard($scope0_reason, 2) && _patch_write($scope0_id, "xd", input.t, !_server_guard($scope0_reason, 0));
+	}) || $fg__input_t && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xd", input.t, !_server_guard($scope0_reason, 0));
 }, 1);

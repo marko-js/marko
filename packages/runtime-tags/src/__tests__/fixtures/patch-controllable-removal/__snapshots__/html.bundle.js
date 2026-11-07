@@ -13,5 +13,5 @@ var template_default = _template("a", (input) => {
 		f: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 0)) && input.value,
 		g: _unfilled_if($scope0_reason, 0) && input.wire,
 		h: _unfilled_if($scope0_reason, 0) && handler
-	}) || ($fg__input_value && _client_guard($scope0_reason, 3) && _patch_write($scope0_id, "xf", input.value, !_server_guard($scope0_reason, 2)), $fg__input_wire && _client_guard($scope0_reason, 0) && _patch_write($scope0_id, "xg", input.wire, !_server_guard($scope0_reason, 3)));
+	}) || ($fg__input_value && _unfilled_if($scope0_reason, 3) && _patch_write($scope0_id, "xf", input.value, !_server_guard($scope0_reason, 2)), $fg__input_wire && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xg", input.wire, !_server_guard($scope0_reason, 3)));
 }, 1);

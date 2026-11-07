@@ -22,7 +22,7 @@ var one_default = _template("__tests__/tags/one.marko", (input) => {
 		}, "__tests__/tags/one.marko", "1:2", {
 			content: "1:16",
 			t: "1:25"
-		}) || ($fg__content && _client_guard($scope1_reason, 2) && _patch_write($scope1_id, "PatchMarkedWrite:content", content, !_server_guard($scope1_reason, 1)), $fg__t && _client_guard($scope1_reason, 1) && _patch_write($scope1_id, "PatchMarkedWrite:t", t, !_server_guard($scope1_reason, 2)));
+		}) || ($fg__content && _unfilled_if($scope1_reason, 2) && _patch_write($scope1_id, "PatchMarkedWrite:content", content, !_server_guard($scope1_reason, 1)), $fg__t && _unfilled_if($scope1_reason, 1) && _patch_write($scope1_id, "PatchMarkedWrite:t", t, !_server_guard($scope1_reason, 2)));
 	}, $scope0_id, 0) };
 	_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 1) << 3 | _updates_from($scope0_reason, 2) << 5);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 1);

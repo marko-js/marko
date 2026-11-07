@@ -80,7 +80,7 @@ var template_default = _template("a", (input) => {
 			e: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope1_reason, 0)) && depth,
 			_: (_write_if($scope0_reason, 0) || $wi__depth) && _scope_with_id($scope0_id),
 			h: $wi__depth && $Tree_content__depth__closures
-		}), $cg__input_note && "a6") || $fg__depth && (_client_branch_if("a0", $scope1_id) || $cg__input_on) && _patch_write($scope1_id, "xe", depth, !_server_guard($scope1_reason, 0));
+		}), $cg__input_note && "a6") || $fg__depth && (_client_branch_if("a0", $scope1_id) || _unfilled_if($scope0_reason, 2)) && _patch_write($scope1_id, "xe", depth, !_server_guard($scope1_reason, 0));
 	}, $scope0_id) };
 	_html("<main>");
 	_set_scope_reason(0);

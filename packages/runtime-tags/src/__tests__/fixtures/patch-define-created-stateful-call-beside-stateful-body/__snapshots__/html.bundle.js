@@ -10,7 +10,7 @@ _shells({
 	a3: "a3;D ;<i> </i>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_label = _filled_guard($scope0_reason, 1), $cg__input_show = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $fg__input_label = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	let open = false;
 	const Inner = { content: _content_resume("a4", ({ isOpen, text }) => {
@@ -88,11 +88,11 @@ var template_default = _template("a", (input) => {
 	}, 24);
 	_html(`<button id=t>toggle</button>${_el_mark($scope0_id, "d")}`);
 	_script($scope0_id, "a11");
-	$fg__input_label && $cg__input_show && _patch_render($scope0_id, "a10", "h");
+	$fg__input_label && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "a10", "h");
 	_scope($scope0_id, {
 		h: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.label,
 		i: open,
 		j: Inner,
 		l: Outer
-	}) || $fg__input_label && $cg__input_show && _patch_write($scope0_id, "xh", input.label, !_server_guard($scope0_reason, 1));
+	}) || $fg__input_label && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xh", input.label, !_server_guard($scope0_reason, 1));
 }, 1);

@@ -7,7 +7,7 @@ _shells({
 	b1: "b1;D ;<em> </em>"
 });
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_a = _filled_guard($scope0_reason, 1), $cg__input_v = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $fg__input_a = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_html(`<span>${_text_mark($scope0_id, "a", input.v, 1, $scope0_reason, 0)}</span>`);
 	_if(() => {
@@ -19,8 +19,8 @@ var child_default = _template("b", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["b1"], $scope0_reason, 0);
-	$fg__input_a && $cg__input_v && _patch_render($scope0_id, "b0", "f");
-	_scope($scope0_id, { f: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.a }) || $fg__input_a && $cg__input_v && _patch_write($scope0_id, "xf", input.a, !_server_guard($scope0_reason, 1));
+	$fg__input_a && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "b0", "f");
+	_scope($scope0_id, { f: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.a }) || $fg__input_a && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xf", input.a, !_server_guard($scope0_reason, 1));
 });
 
 // template.marko

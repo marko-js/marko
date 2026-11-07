@@ -6,12 +6,12 @@ _shells({
 	b2: "b2;D ;<p> </p>"
 });
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_b = _server_guard($scope0_reason, 3), $fg__input_b = _filled_guard($scope0_reason, 3), $cg__input_items = _client_guard($scope0_reason, 2), $fg__input_a = _filled_guard($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $sg__input_b = _server_guard($scope0_reason, 3), $fg__input_b = _filled_guard($scope0_reason, 3), $fg__input_a = _filled_guard($scope0_reason, 4), $cg__input_items = _client_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	_for_of(input.items, (item) => {
 		const $scope1_id = _scope_id();
 		const d = input.b + "!";
-		_filled_guard($scope0_reason, 3) && _client_guard($scope0_reason, 4) && _patch_write($scope1_id, "xb", d, !$sg__input_b);
+		_filled_guard($scope0_reason, 3) && _unfilled_if($scope0_reason, 4) && _patch_write($scope1_id, "xb", d, !$sg__input_b);
 		_html(`<p>${_text_mark($scope1_id, "a", input.a + d, 1, $scope0_reason, 1)}</p>`);
 		_client_guard($scope0_reason, 3) && _patch_render($scope1_id, "b0");
 		_patch_render($scope1_id, "b1", [_filled_guard($scope0_reason, 4) && ">f", _filled_guard($scope0_reason, 3) && "b"], $scope0_reason, 1);
@@ -25,7 +25,7 @@ var child_default = _template("b", (input) => {
 	_scope($scope0_id, {
 		e: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && input.b,
 		f: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.a
-	}) || ($fg__input_b && $cg__input_items && _patch_write($scope0_id, "xe", input.b, !$sg__input_b), $fg__input_a && _client_guard($scope0_reason, 0) && _patch_write($scope0_id, "xf", input.a, !_server_guard($scope0_reason, 4)));
+	}) || ($fg__input_b && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xe", input.b, !$sg__input_b), $fg__input_a && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xf", input.a, !_server_guard($scope0_reason, 4)));
 });
 
 // template.marko

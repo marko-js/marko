@@ -32,7 +32,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			fmt: "3:17",
 			sep: "3:22",
 			label: "3:27"
-		}) || ($fg__fmt && _client_guard($scope2_reason, 2) && _patch_write($scope2_id, "PatchMarkedWrite:fmt", fmt, !_server_guard($scope2_reason, 4)), $fg__sep && _client_guard($scope2_reason, 1) && _patch_write($scope2_id, "PatchMarkedWrite:sep", sep, !_server_guard($scope2_reason, 5)), $fg__label && _client_guard($scope2_reason, 0) && _patch_write($scope2_id, "PatchMarkedWrite:label", label, !_server_guard($scope2_reason, 6)));
+		}) || ($fg__fmt && _unfilled_if($scope2_reason, 2) && _patch_write($scope2_id, "PatchMarkedWrite:fmt", fmt, !_server_guard($scope2_reason, 4)), $fg__sep && _unfilled_if($scope2_reason, 1) && _patch_write($scope2_id, "PatchMarkedWrite:sep", sep, !_server_guard($scope2_reason, 5)), $fg__label && _unfilled_if($scope2_reason, 0) && _patch_write($scope2_id, "PatchMarkedWrite:label", label, !_server_guard($scope2_reason, 6)));
 	}, $scope0_id) };
 	_if(() => {
 		if (open) {

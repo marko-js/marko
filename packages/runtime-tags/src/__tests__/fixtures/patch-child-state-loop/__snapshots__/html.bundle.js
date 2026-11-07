@@ -6,7 +6,7 @@ _shells({
 	b1: "b1;D%b%;<li><!><!></li>"
 });
 var list_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_suffix = _filled_guard($scope0_reason, 1), $cg__input_items = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $fg__input_suffix = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_html("<ul>");
 	_for_of(input.items, (item) => {
@@ -16,8 +16,8 @@ var list_default = _template("b", (input) => {
 		_scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) });
 	}, 0, $scope0_id, "a", 1, 1, 1, 0, 0, "b1", $scope0_reason, 0);
 	_html(`</ul>${_el_mark($scope0_id, "a")}`);
-	$fg__input_suffix && $cg__input_items && _patch_render($scope0_id, "b0", "e");
-	_scope($scope0_id, { e: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.suffix }) || $fg__input_suffix && $cg__input_items && _patch_write($scope0_id, "xe", input.suffix, !_server_guard($scope0_reason, 1));
+	$fg__input_suffix && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "b0", "e");
+	_scope($scope0_id, { e: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.suffix }) || $fg__input_suffix && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xe", input.suffix, !_server_guard($scope0_reason, 1));
 });
 
 // template.marko

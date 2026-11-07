@@ -60,5 +60,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_promise: ["input.promise"],
 		input_msg: ["input.msg"],
 		count: "1:6"
-	}) || ($fg__input_promise && $cg__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_promise", input.promise, !_server_guard($scope0_reason, 3)), $fg__input_msg && $cg__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_msg", input.msg, !_server_guard($scope0_reason, 4)));
+	}) || ($fg__input_promise && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_promise", input.promise, !_server_guard($scope0_reason, 3)), $fg__input_msg && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_msg", input.msg, !_server_guard($scope0_reason, 4)));
 }, 1);

@@ -66,5 +66,5 @@ var template_default = _template("a", (input) => {
 		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.note,
 		h: _write_if($scope0_reason, 2) && $input_note__closures,
 		g: _write_if($scope0_reason, 1) && $input_on__closures
-	}) || $fg__input_note && (_client_branch_if("a0", $scope0_id) || $cg__input_on) && _patch_write($scope0_id, "xe", input.note, !_server_guard($scope0_reason, 2));
+	}) || $fg__input_note && (_client_branch_if("a0", $scope0_id) || _unfilled_if($scope0_reason, 1)) && _patch_write($scope0_id, "xe", input.note, !_server_guard($scope0_reason, 2));
 }, 1);

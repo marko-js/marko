@@ -10,23 +10,23 @@ _shells({
 	"__tests__/template.marko_3*shell": "__tests__/template.marko_3*shell;D ;<em> </em>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 1), $wg__input_label = _write_guard($scope0_reason, 1), $sg__input_label = _server_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 1), $fg__input_other = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_label = _write_guard($scope0_reason, 1), $cg__input_label = _client_guard($scope0_reason, 1), $sg__input_label = _server_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 1), $fg__input_other = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	let open = false;
 	const Panel = { content: _content_resume("__tests__/template.marko_2*content", ({ isOpen, label }) => {
 		const $scope2_id = _scope_id();
-		const $scope2_reason = _scope_reason(), $wg__isOpen = _write_guard($scope2_reason, 1), $wi__label = _write_if($scope2_reason, 2), $cg__label = _client_guard($scope2_reason, 2), $fg__label = _filled_guard($scope2_reason, 2), $cg__isOpen = _client_guard($scope2_reason, 1), $fg__isOpen = _filled_guard($scope2_reason, 1);
+		const $scope2_reason = _scope_reason(), $wg__isOpen = _write_guard($scope2_reason, 1), $wi__label = _write_if($scope2_reason, 2), $fg__label = _filled_guard($scope2_reason, 2), $fg__isOpen = _filled_guard($scope2_reason, 1);
 		_if(() => {
 			if (isOpen) {
 				const $scope3_id = _scope_id();
 				_html(`<em>${_text_mark($scope3_id, "#text/0", label, 1, $scope2_reason, 2)}</em>`);
-				$cg__label && _patch_render($scope3_id, "__tests__/template.marko_3_label#2:4/setup");
+				_client_guard($scope2_reason, 2) && _patch_render($scope3_id, "__tests__/template.marko_3_label#2:4/setup");
 				_scope($scope3_id, { _: $wi__label && _scope_with_id($scope2_id) }, "__tests__/template.marko", "3:4");
 				return 0;
 			}
 		}, $scope2_id, "#text/0", 1, $wg__isOpen, 1, 0, 0, ["__tests__/template.marko_3*shell"], $scope2_reason, 1);
 		const $return = label + (isOpen ? "Y" : "N");
-		$fg__label && $cg__isOpen && _patch_render($scope2_id, "__tests__/template.marko_3_label#2:4/setup", "label");
+		$fg__label && _client_guard($scope2_reason, 1) && _patch_render($scope2_id, "__tests__/template.marko_3_label#2:4/setup", "label");
 		_patch_render($scope2_id, "__tests__/template.marko_2_isOpen#3_label#4/setup", [$fg__isOpen && "isOpen", $fg__label && "label"], $scope2_reason, 0);
 		_write_if($scope2_reason, 0) && _scope($scope2_id, {
 			isOpen: $wi__label && isOpen,
@@ -34,20 +34,20 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, "__tests__/template.marko", "2:2", {
 			isOpen: "2:17",
 			label: "2:25"
-		}) || ($fg__isOpen && $cg__label && _patch_write($scope2_id, "PatchMarkedWrite:isOpen", isOpen, !_server_guard($scope2_reason, 1)), $fg__label && $cg__isOpen && _patch_write($scope2_id, "PatchMarkedWrite:label", label, !_server_guard($scope2_reason, 2)));
+		}) || ($fg__isOpen && _unfilled_if($scope2_reason, 2) && _patch_write($scope2_id, "PatchMarkedWrite:isOpen", isOpen, !_server_guard($scope2_reason, 1)), $fg__label && _unfilled_if($scope2_reason, 1) && _patch_write($scope2_id, "PatchMarkedWrite:label", label, !_server_guard($scope2_reason, 2)));
 		return $return;
 	}, $scope0_id) };
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_set_scope_reason(_updates_from($scope0_reason, 1) << 1 | _updates_from($scope0_reason, 1) << 5);
-			const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0, $cg__input_label && 1);
+			const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0, _unfilled_if($scope0_reason, 1) && 1);
 			let ret = Panel.content({
 				isOpen: true,
 				label: input.label
 			});
 			_filled_guard($scope0_reason, 1) && _patch_write($scope1_id, "PatchMarkedWrite:ret", ret, !$sg__input_label);
-			$cg__input_label && _var($scope1_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_1_ret#4/var");
+			_unfilled_if($scope0_reason, 1) && _var($scope1_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_1_ret#4/var");
 			_patch_child_end();
 			_html(`<b>${_text_mark($scope1_id, "#text/2", ret, 1, $scope0_reason, 1)}</b>`);
 			_if(() => {

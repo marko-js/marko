@@ -32,5 +32,5 @@ var template_default = _template("a", (input) => {
 		f: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.b,
 		g: _write_if($scope0_reason, 3) && $input_a__closures,
 		h: _write_if($scope0_reason, 4) && $input_b__closures
-	}) || ($fg__input_a && _patch_write($scope0_id, "xe", input.a, !_server_guard($scope0_reason, 3)), $fg__input_b && (_client_branch_if("a0", $scope0_id) || _client_guard($scope0_reason, 0)) && _patch_write($scope0_id, "xf", input.b, !_server_guard($scope0_reason, 4)));
+	}) || ($fg__input_a && _patch_write($scope0_id, "xe", input.a, !_server_guard($scope0_reason, 3)), $fg__input_b && (_client_branch_if("a0", $scope0_id) || _unfilled_if($scope0_reason, 0)) && _patch_write($scope0_id, "xf", input.b, !_server_guard($scope0_reason, 4)));
 }, 1);

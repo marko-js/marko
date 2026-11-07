@@ -14,7 +14,7 @@ var tabs_default = _template("__tests__/tags/tabs.marko", (input) => {
 	}, "__tests__/tags/tabs.marko", 0, {
 		input_tab: ["input.tab"],
 		input_selected: ["input.selected"]
-	}) || ($fg__input_tab && _client_guard($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_tab", input.tab, !_server_guard($scope0_reason, 1)), $fg__input_selected && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_selected", input.selected, !_server_guard($scope0_reason, 2)));
+	}) || ($fg__input_tab && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_tab", input.tab, !_server_guard($scope0_reason, 1)), $fg__input_selected && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_selected", input.selected, !_server_guard($scope0_reason, 2)));
 });
 
 // template.marko
@@ -68,5 +68,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, "__tests__/template.marko", 0, {
 		input_y: ["input.y"],
 		s: "1:6"
-	}) || $fg__input_y && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_y", input.y, !_server_guard($scope0_reason, 2));
+	}) || $fg__input_y && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_y", input.y, !_server_guard($scope0_reason, 2));
 }, 1);

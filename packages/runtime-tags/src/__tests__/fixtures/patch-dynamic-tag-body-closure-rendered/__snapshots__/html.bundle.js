@@ -39,7 +39,7 @@ var heading_default = _template("c", (input) => {
 	_scope($scope0_id, {
 		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.depth,
 		f: _write_if($scope0_reason, 2) && $input_depth__closures
-	}) || $fg__input_depth && (_client_branch_if("c0", $scope0_id) || _client_guard($scope0_reason, 1)) && _patch_write($scope0_id, "xe", input.depth, !_server_guard($scope0_reason, 2));
+	}) || $fg__input_depth && (_client_branch_if("c0", $scope0_id) || _unfilled_if($scope0_reason, 1)) && _patch_write($scope0_id, "xe", input.depth, !_server_guard($scope0_reason, 2));
 });
 
 // template.marko

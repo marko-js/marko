@@ -24,7 +24,7 @@ var gm_default = _template("b", (input) => {
 	_scope($scope0_id, {
 		e: $wi__input_v && input.v,
 		g: (_unfilled_if($scope0_reason, 0) || _unfilled_if()) && z
-	}) || (_filled_guard($scope0_reason, 0) && $cg__input_v && _patch_write($scope0_id, "xe", input.v, !_server_guard($scope0_reason, 0)), _filled_guard((2 | _updates_from($scope0_reason, 0)) << 1, 0) && $cg__input_v && _patch_write($scope0_id, "xg", z, !_server_guard((2 | _updates_from($scope0_reason, 0)) << 1, 0)));
+	}) || (_filled_guard($scope0_reason, 0) && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xe", input.v, !_server_guard($scope0_reason, 0)), _filled_guard((2 | _updates_from($scope0_reason, 0)) << 1, 0) && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xg", z, !_server_guard((2 | _updates_from($scope0_reason, 0)) << 1, 0)));
 });
 
 // template.marko

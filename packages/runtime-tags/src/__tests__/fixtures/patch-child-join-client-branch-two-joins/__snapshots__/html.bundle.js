@@ -26,7 +26,7 @@ var child_default = _template("b", (input) => {
 		f: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.a,
 		g: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.b,
 		h: (_unfilled_if($scope0_reason, 5) || _unfilled_if($scope0_reason, 2)) && input.c
-	}) || ($fg__input_a && _client_guard($scope0_reason, 3) && _patch_write($scope0_id, "xf", input.a, !_server_guard($scope0_reason, 5)), $fg__input_b && _client_guard($scope0_reason, 0) && _patch_write($scope0_id, "xg", input.b, !_server_guard($scope0_reason, 6)), $fg__input_c && _client_guard($scope0_reason, 5) && _patch_write($scope0_id, "xh", input.c, !_server_guard($scope0_reason, 7)));
+	}) || ($fg__input_a && _unfilled_if($scope0_reason, 3) && _patch_write($scope0_id, "xf", input.a, !_server_guard($scope0_reason, 5)), $fg__input_b && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xg", input.b, !_server_guard($scope0_reason, 6)), $fg__input_c && _unfilled_if($scope0_reason, 5) && _patch_write($scope0_id, "xh", input.c, !_server_guard($scope0_reason, 7)));
 });
 
 // template.marko

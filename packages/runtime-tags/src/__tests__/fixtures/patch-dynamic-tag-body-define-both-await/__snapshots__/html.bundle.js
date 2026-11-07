@@ -71,5 +71,5 @@ var template_default = _template("a", (input) => {
 		i: _write_if($scope0_reason, 2) && $input_note__closures,
 		h: _write_if($scope0_reason, 1) && $input_on__closures,
 		a: _existing_scope($childScope)
-	}) || $fg__input_note && (_client_branch_if("a0", $scope0_id) || $cg__input_on) && _patch_write($scope0_id, "xf", input.note, !_server_guard($scope0_reason, 2));
+	}) || $fg__input_note && (_client_branch_if("a0", $scope0_id) || _unfilled_if($scope0_reason, 1)) && _patch_write($scope0_id, "xf", input.note, !_server_guard($scope0_reason, 2));
 }, 1);

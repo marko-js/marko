@@ -14,7 +14,7 @@ var one_default = _template("__tests__/tags/one.marko", (input) => {
 	}, "__tests__/tags/one.marko", 0, {
 		input_tag: ["input.tag"],
 		input_c: ["input.c"]
-	}) || ($fg__input_tag && _client_guard($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_tag", input.tag, !_server_guard($scope0_reason, 1)), $fg__input_c && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_c", input.c, !_server_guard($scope0_reason, 2)));
+	}) || ($fg__input_tag && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_tag", input.tag, !_server_guard($scope0_reason, 1)), $fg__input_c && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_c", input.c, !_server_guard($scope0_reason, 2)));
 });
 
 // template.marko

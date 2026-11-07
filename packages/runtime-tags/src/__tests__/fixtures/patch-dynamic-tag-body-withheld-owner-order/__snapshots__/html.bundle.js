@@ -40,7 +40,7 @@ _shells({
 	a: `a;${((_w0, _w1) => `D0${_w0}&/${_w1}&l`)($D_content__walks, $D_content__walks)};${((_w0, _w1) => `<main>${_w0}${_w1}</main>`)($D_content__template, $D_content__template)}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_on = _write_guard($scope0_reason, 0), $wi__input_on = _write_if($scope0_reason, 0), $cg__input_on = _client_guard($scope0_reason, 0), $cg__input_a = _client_guard($scope0_reason, 1), $fg__input_on = _filled_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_on = _write_guard($scope0_reason, 0), $wi__input_on = _write_if($scope0_reason, 0), $fg__input_on = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_on__closures = /* @__PURE__ */ new Set();
 	const D = { content: _content("a2", ({ label, prev }) => {
@@ -66,14 +66,14 @@ var template_default = _template("a", (input) => {
 			h: _unfilled_if($scope0_reason, 0) && X,
 			_: ($wi__input_on || _write_if($scope1_reason, 2)) && _scope_with_id($scope0_id),
 			k: $wi__label && $D_content__label__closures
-		}), _client_guard(_updates_from($scope0_reason, 0) << 1, 0) && "a5", $wg__input_on || $wg__prev || $wg__input_on) || ($fg__label && (_client_branch_if("a0", $scope1_id) || $cg__input_on || $cg__input_on) && _patch_write($scope1_id, "xe", label, !_server_guard($scope1_reason, 1)), $fg__prev && $cg__input_on && _patch_write($scope1_id, "xf", prev, !_server_guard($scope1_reason, 2)));
+		}), _client_guard(_updates_from($scope0_reason, 0) << 1, 0) && "a5", $wg__input_on || $wg__prev || $wg__input_on) || ($fg__label && (_client_branch_if("a0", $scope1_id) || _client_guard($scope0_reason, 0) || _unfilled_if($scope0_reason, 0)) && _patch_write($scope1_id, "xe", label, !_server_guard($scope1_reason, 1)), $fg__prev && _unfilled_if($scope0_reason, 0) && _patch_write($scope1_id, "xf", prev, !_server_guard($scope1_reason, 2)));
 		return $return;
 	}, $scope0_id) };
 	_html("<main>");
 	_set_scope_reason(_updates_from($scope0_reason, 1) << 1 | _updates_from($scope0_reason, 1) << 3);
-	const $childScope = _peek_scope_id($scope0_id, "a", 2, $cg__input_a && 1);
+	const $childScope = _peek_scope_id($scope0_id, "a", 2, _unfilled_if($scope0_reason, 1) && 1);
 	let first = D.content({ label: input.a });
-	$cg__input_a && _var($scope0_id, "b", $childScope, "a6");
+	_unfilled_if($scope0_reason, 1) && _var($scope0_id, "b", $childScope, "a6");
 	_patch_child_end();
 	_set_scope_reason(_updates_from($scope0_reason, 2) << 1 | _updates_from($scope0_reason, 2) << 3);
 	const $childScope2 = _peek_scope_id($scope0_id, "c", 3);

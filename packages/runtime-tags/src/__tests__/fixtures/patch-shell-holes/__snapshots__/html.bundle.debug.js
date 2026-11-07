@@ -7,7 +7,7 @@ _shells({
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell; D ;<a> </a>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_show = _client_guard($scope0_reason, 2), $fg__input_href = _filled_guard($scope0_reason, 3), $fg__input_hidden = _filled_guard($scope0_reason, 4), $fg__input_label = _filled_guard($scope0_reason, 5);
+	const $scope0_reason = _scope_reason(), $fg__input_href = _filled_guard($scope0_reason, 3), $fg__input_hidden = _filled_guard($scope0_reason, 4), $cg__input_show = _client_guard($scope0_reason, 2), $fg__input_label = _filled_guard($scope0_reason, 5);
 	const $scope0_id = _scope_id();
 	_html(`<main><h1>${_text_mark($scope0_id, "#text/0", input.title, 1, $scope0_reason, 1)}</h1>`);
 	_if(() => {
@@ -33,5 +33,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_href: ["input.href"],
 		input_hidden: ["input.hidden"],
 		input_label: ["input.label"]
-	}) || ($fg__input_href && $cg__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_href", input.href, !_server_guard($scope0_reason, 3)), $fg__input_hidden && $cg__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_hidden", input.hidden, !_server_guard($scope0_reason, 4)), $fg__input_label && $cg__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 5)));
+	}) || ($fg__input_href && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_href", input.href, !_server_guard($scope0_reason, 3)), $fg__input_hidden && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_hidden", input.hidden, !_server_guard($scope0_reason, 4)), $fg__input_label && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 5)));
 }, 1);

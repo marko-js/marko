@@ -21,7 +21,7 @@ _shells({
 	b1: `b1${_shell_marker([[], []], ["b>", $setup$1])};${/*@__PURE__*/ ((_w0) => `b%b/${_w0}&b`)($walks)};${/*@__PURE__*/ ((_w0) => `<!><!>${_w0}<!>`)($template)}`
 });
 var template_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_user = _filled_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $fg__input_user = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	let n = 0;
 	_html(`<button class=inc>${_text_mark($scope0_id, "b", n)}</button>${_el_mark($scope0_id, "a")}`);
@@ -45,10 +45,10 @@ var template_default = _template("b", (input) => {
 		}
 	}, $scope0_id, "e", 1, _write_guard($scope0_reason, 1), 1, 0, 0, ["b1"], $scope0_reason, 1);
 	_script($scope0_id, "b2");
-	$fg__input_user && $cg__input_show && _patch_render($scope0_id, "b0", "j");
+	$fg__input_user && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "b0", "j");
 	_scope($scope0_id, {
 		j: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.user2,
 		k: n,
 		d: _existing_scope($childScope)
-	}) || $fg__input_user && $cg__input_show && _patch_write($scope0_id, "xj", input.user2, !_server_guard($scope0_reason, 2));
+	}) || $fg__input_user && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xj", input.user2, !_server_guard($scope0_reason, 2));
 }, 1);

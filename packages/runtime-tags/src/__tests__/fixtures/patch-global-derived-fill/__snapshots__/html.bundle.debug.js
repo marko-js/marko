@@ -4,7 +4,7 @@ const $walks = " b%c";
 const $setup = [[], ["__tests__/template.marko_0"]];
 _shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0; b%;<button>inc</button><!><!>" });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $cg__input_name = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render();
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
 	const greeting = $global$1.prefix + ":" + input.name;
@@ -19,7 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "#text/1", 1, 1, 0, 0, 1);
-	_fill_global_subscribe("__tests__/template.marko_0_input_name#4_$global_prefix#5", $scope0_id, $cg__input_name);
+	_fill_global_subscribe("__tests__/template.marko_0_input_name#4_$global_prefix#5", $scope0_id, _client_guard($scope0_reason, 0));
 	_script($scope0_id, "__tests__/template.marko_0");
 	_filled_guard((2 | _updates_from($scope0_reason, 0)) << 1, 0) && _patch_render($scope0_id, "__tests__/template.marko_1_greeting#0:5/setup", _filled_guard((2 | _updates_from($scope0_reason, 0)) << 1, 0) && "greeting");
 	_scope($scope0_id, {
@@ -30,5 +30,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_name: ["input.name"],
 		greeting: "1:8",
 		count: "2:6"
-	}) || (_filled_guard($scope0_reason, 0) && $cg__input_name && _patch_write($scope0_id, "PatchMarkedWrite:input_name", input.name, !_server_guard($scope0_reason, 0)), _filled_guard((2 | _updates_from($scope0_reason, 0)) << 1, 0) && _patch_write($scope0_id, "PatchMarkedWrite:greeting", greeting, !_server_guard((2 | _updates_from($scope0_reason, 0)) << 1, 0)));
+	}) || (_filled_guard($scope0_reason, 0) && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_name", input.name, !_server_guard($scope0_reason, 0)), _filled_guard((2 | _updates_from($scope0_reason, 0)) << 1, 0) && _patch_write($scope0_id, "PatchMarkedWrite:greeting", greeting, !_server_guard((2 | _updates_from($scope0_reason, 0)) << 1, 0)));
 }, 1);

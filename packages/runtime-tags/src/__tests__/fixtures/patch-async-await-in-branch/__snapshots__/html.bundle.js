@@ -7,7 +7,7 @@ _shells({
 	a3: "a3,<em>closed</em>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_promise = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $fg__input_promise = _filled_guard($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_html(`<main><h1>${_text_mark($scope0_id, "a", input.title, 1, $scope0_reason, 1)}</h1>`);
@@ -31,9 +31,9 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 2), 1, 0, 0, ["a2", "a3"], $scope0_reason, 2);
 	_html(`<button>Count ${_text_mark($scope0_id, "d", count, 2)}</button>${_el_mark($scope0_id, "c")}</main>`);
 	_script($scope0_id, "a5");
-	$fg__input_promise && $cg__input_show && _patch_render($scope0_id, "a4", "i");
+	$fg__input_promise && _client_guard($scope0_reason, 2) && _patch_render($scope0_id, "a4", "i");
 	_scope($scope0_id, {
 		i: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && input.promise,
 		j: count
-	}) || $fg__input_promise && $cg__input_show && _patch_write($scope0_id, "xi", input.promise, !_server_guard($scope0_reason, 3));
+	}) || $fg__input_promise && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xi", input.promise, !_server_guard($scope0_reason, 3));
 }, 1);

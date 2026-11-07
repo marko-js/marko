@@ -69,7 +69,7 @@ import {
   hasStructuralParam,
   recordStructuralParams,
 } from "./patch/structure";
-import { mayHoldScopeBoundFn } from "./patch/writers";
+import { getCallerGroupGuard, mayHoldScopeBoundFn } from "./patch/writers";
 import {
   addAlwaysReason,
   addReasonExprs,
@@ -169,7 +169,6 @@ import {
   andGuard,
   buildGroupsValue,
   buildGroupMask,
-  getClientGuard,
   getExprIfWritten,
   getWriteGuard,
   getGroupsConstant,
@@ -449,10 +448,13 @@ export function knownTagTranslateHTML(
         getResumeRegistryId(section, tagVar.extra?.binding, "var"),
       );
     // A patch keys the child's scope, so it writes it even for a constant group;
-    // the wiring resolves only where the group updates from the client.
+    // the wiring resolves where no patch fills the variable (`_unfilled_if`).
     const guardVar = (expr: t.Expression) =>
       isPatchKeyedSlot(childScopeSlot)
-        ? andGuard(getClientGuard(section, childScopeReason!), expr)
+        ? andGuard(
+            getCallerGroupGuard(section, "_unfilled_if", childScopeReason),
+            expr,
+          )
         : getExprIfWritten(section, childScopeReason!, expr);
     // After the attr statements: building attribute tags can consume scope
     // ids (eg `_resume_locals`), and the peek must see the child's root id.

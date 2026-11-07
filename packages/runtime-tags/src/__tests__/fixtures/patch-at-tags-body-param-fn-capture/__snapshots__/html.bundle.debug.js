@@ -27,7 +27,7 @@ var wrap_default = _template("__tests__/tags/wrap.marko", (input) => {
 	}, "__tests__/tags/wrap.marko", 0, {
 		input_then: ["input.then"],
 		input_x: ["input.x"]
-	}) || ($fg__input_then && _client_guard($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_then", input.then, !_server_guard($scope0_reason, 1)), $fg__input_x && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_x", input.x, !_server_guard($scope0_reason, 2)));
+	}) || ($fg__input_then && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_then", input.then, !_server_guard($scope0_reason, 1)), $fg__input_x && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_x", input.x, !_server_guard($scope0_reason, 2)));
 });
 
 // template.marko

@@ -47,7 +47,7 @@ _shells({
 	a5: `a5${_shell_marker([["a12"], []], ["a>", $setup])};${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c")};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template)}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 1), $cg__input_show__OR__input_alt = _client_guard($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 1), $fg__input_alt = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 2), $wi__input_label = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 1), $cg__input_show__OR__input_alt = _client_guard($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 1), $fg__input_alt = _filled_guard($scope0_reason, 3), $wi__input_label = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	let count = 0;
@@ -91,7 +91,7 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id, "c", 1, _write_guard($scope0_reason, 2), 1, 0, 0, ["a5"], $scope0_reason, 2);
 	_script($scope0_id, "a6");
 	$fg__input_label && _patch_subscribers($scope0_id, "a7", "f");
-	$fg__input_alt && $cg__input_show && _patch_render($scope0_id, "a8", "h");
+	$fg__input_alt && _client_guard($scope0_reason, 2) && _patch_render($scope0_id, "a8", "h");
 	_scope($scope0_id, {
 		f: input.label,
 		h: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && input.alt,
@@ -99,5 +99,5 @@ var template_default = _template("a", (input) => {
 		j: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 3)) && A,
 		k: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 3)) && B,
 		l: $wi__input_label && $input_label__closures
-	}) || ($fg__input_label && _patch_write($scope0_id, "xf", input.label, !_server_guard($scope0_reason, 1)), $fg__input_alt && $cg__input_show && _patch_write($scope0_id, "xh", input.alt, !_server_guard($scope0_reason, 3)));
+	}) || ($fg__input_label && _patch_write($scope0_id, "xf", input.label, !_server_guard($scope0_reason, 1)), $fg__input_alt && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xh", input.alt, !_server_guard($scope0_reason, 3)));
 }, 1);

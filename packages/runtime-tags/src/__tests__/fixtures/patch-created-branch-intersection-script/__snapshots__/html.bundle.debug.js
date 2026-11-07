@@ -34,5 +34,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_prefix: ["input.prefix"],
 		input_x: ["input.x"],
 		input_suffix: ["input.suffix"]
-	}) || ($fg__input_prefix && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_prefix", input.prefix, !_server_guard($scope0_reason, 5)), $fg__input_x && _client_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_x", input.x, !_server_guard($scope0_reason, 6)), $fg__input_suffix && _patch_write($scope0_id, "PatchMarkedWrite:input_suffix", input.suffix, !_server_guard($scope0_reason, 7)));
+	}) || ($fg__input_prefix && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_prefix", input.prefix, !_server_guard($scope0_reason, 5)), $fg__input_x && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_x", input.x, !_server_guard($scope0_reason, 6)), $fg__input_suffix && _patch_write($scope0_id, "PatchMarkedWrite:input_suffix", input.suffix, !_server_guard($scope0_reason, 7)));
 }, 1);

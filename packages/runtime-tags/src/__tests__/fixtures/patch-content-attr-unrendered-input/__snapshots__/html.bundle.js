@@ -26,5 +26,5 @@ var template_default = _template("a", (input) => {
 		i: n,
 		k: _unfilled_if($scope0_reason, 2) && frag?.content,
 		m: _write_if($scope0_reason, 1) && $input_rec_name__closures
-	}) || $fg__input_rec_name && _client_guard($scope0_reason, 2) && _patch_write($scope0_id, "xg", input.rec?.name, !_server_guard($scope0_reason, 1));
+	}) || $fg__input_rec_name && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xg", input.rec?.name, !_server_guard($scope0_reason, 1));
 }, 1);

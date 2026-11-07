@@ -16,7 +16,7 @@ var text_field_default = _template("b", (input) => {
 	_scope($scope0_id, {
 		d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && value,
 		e: _unfilled_if($scope0_reason, 0) && valueChange
-	}) || ($fg__input_value && _client_guard($scope0_reason, 2) && _patch_write($scope0_id, "xd", value, !_server_guard($scope0_reason, 1)), $fg__input_valueChange && _client_guard($scope0_reason, 0) && _patch_write($scope0_id, "xe", valueChange, !_server_guard($scope0_reason, 2)));
+	}) || ($fg__input_value && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xd", value, !_server_guard($scope0_reason, 1)), $fg__input_valueChange && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xe", valueChange, !_server_guard($scope0_reason, 2)));
 });
 
 // template.marko

@@ -293,14 +293,6 @@ export function scopePageIdentifier(section: Section) {
   return id;
 }
 
-// Whether a param of the reason updates from the client, in whichever section it
-// lives: what a value written for a patch needs to wire on the client.
-export function getClientGuard(section: Section, reason: Reason) {
-  if (isDynamicWriteGuard(section, reason)) {
-    return orEachParamGroup(reason.param, "_client_guard");
-  }
-}
-
 // A group's runtime check arguments: its section's reason and its index.
 export function getGroupArgs(
   section: Section,

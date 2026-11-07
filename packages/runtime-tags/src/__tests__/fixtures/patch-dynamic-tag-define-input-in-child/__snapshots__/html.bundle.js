@@ -30,7 +30,7 @@ var picker_default = _template("b", (input) => {
 		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.record,
 		f: _unfilled_if($scope0_reason, 0) && Card,
 		g: _unfilled_if($scope0_reason, 0) && Other
-	}) || ($fg__input_useA && _client_guard($scope0_reason, 2) && _patch_write($scope0_id, "xd", input.useA, !_server_guard($scope0_reason, 1)), $fg__input_record && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.record, !_server_guard($scope0_reason, 2)));
+	}) || ($fg__input_useA && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xd", input.useA, !_server_guard($scope0_reason, 1)), $fg__input_record && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.record, !_server_guard($scope0_reason, 2)));
 });
 
 // template.marko

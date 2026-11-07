@@ -15,7 +15,7 @@ var template_default = _template("a", (input) => {
 		_subscribe(_unfilled_if((_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 0)) << 1, 0) && $wi__input_title && $input_title__closures, _scope($scope1_id, {
 			d: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope1_reason, 0)) && value,
 			_: _scope_with_id($scope0_id)
-		}), _client_guard((_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 0)) << 1, 0) && "a2") || $fg__value && _client_guard($scope0_reason, 0) && _patch_write($scope1_id, "xd", value, !_server_guard($scope1_reason, 0));
+		}), _client_guard((_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 0)) << 1, 0) && "a2") || $fg__value && _unfilled_if($scope0_reason, 0) && _patch_write($scope1_id, "xd", value, !_server_guard($scope1_reason, 0));
 	}, $scope0_id) };
 	_html("<main>");
 	_set_scope_reason(0);

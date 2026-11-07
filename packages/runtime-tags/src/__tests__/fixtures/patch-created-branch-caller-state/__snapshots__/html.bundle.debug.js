@@ -7,7 +7,7 @@ _shells({
 	"__tests__/tags/panel.marko_1*shell": "__tests__/tags/panel.marko_1*shell;D ;<em> </em>"
 });
 var panel_default = _template("__tests__/tags/panel.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_open = _write_guard($scope0_reason, 0), $fg__input_n = _filled_guard($scope0_reason, 1), $cg__input_open = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_open = _write_guard($scope0_reason, 0), $fg__input_n = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.open) {
@@ -18,8 +18,8 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "#text/0", 1, $wg__input_open, 1, 0, 0, ["__tests__/tags/panel.marko_1*shell"], $scope0_reason, 0);
-	$fg__input_n && $cg__input_open && _patch_render($scope0_id, "__tests__/tags/panel.marko_1_input_n#0:4/setup", "input_n");
-	_scope($scope0_id, { input_n: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.n }, "__tests__/tags/panel.marko", 0, { input_n: ["input.n"] }) || $fg__input_n && $cg__input_open && _patch_write($scope0_id, "PatchMarkedWrite:input_n", input.n, !_server_guard($scope0_reason, 1));
+	$fg__input_n && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "__tests__/tags/panel.marko_1_input_n#0:4/setup", "input_n");
+	_scope($scope0_id, { input_n: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.n }, "__tests__/tags/panel.marko", 0, { input_n: ["input.n"] }) || $fg__input_n && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_n", input.n, !_server_guard($scope0_reason, 1));
 });
 
 // template.marko

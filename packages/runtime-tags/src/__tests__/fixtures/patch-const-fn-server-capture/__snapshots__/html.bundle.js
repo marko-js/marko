@@ -4,9 +4,9 @@ _shells({
 	a2: "a2;D ;<p> </p>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 5), $sg__input_decor = _server_guard($scope0_reason, 4), $cg__input_show__OR__input_text = _client_guard($scope0_reason, 2), $fg__input_decor = _filled_guard($scope0_reason, 4), $fg__input_text = _filled_guard($scope0_reason, 6), $cg__input_show = _client_guard($scope0_reason, 5);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 5), $sg__input_decor = _server_guard($scope0_reason, 4), $fg__input_decor = _filled_guard($scope0_reason, 4), $fg__input_text = _filled_guard($scope0_reason, 6), $cg__input_show = _client_guard($scope0_reason, 5);
 	const $scope0_id = _scope_id();
-	$fg__input_decor && $cg__input_show__OR__input_text && _patch_write($scope0_id, "xd", input.decor, !$sg__input_decor);
+	$fg__input_decor && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xd", input.decor, !$sg__input_decor);
 	const fmt = _bind_resume(function(text) {
 		return text + input.decor.mark();
 	}, "a0", $scope0_id);
@@ -29,5 +29,5 @@ var template_default = _template("a", (input) => {
 		d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1)) && input.decor,
 		f: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.text,
 		g: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1)) && fmt
-	}) || ($fg__input_text && _client_guard($scope0_reason, 0) && _patch_write($scope0_id, "xf", input.text, !_server_guard($scope0_reason, 6)), $fg__input_decor && $cg__input_show__OR__input_text && _patch_write($scope0_id, "xg", fmt, !$sg__input_decor));
+	}) || ($fg__input_text && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xf", input.text, !_server_guard($scope0_reason, 6)), $fg__input_decor && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xg", fmt, !$sg__input_decor));
 }, 1);

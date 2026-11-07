@@ -44,5 +44,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope($scope0_id, {
 		input_suffix: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1)) && input.suffix,
 		"ClosureScopes:input_suffix/5": _write_if($scope0_reason, 1) && $input_suffix__closures
-	}, "__tests__/template.marko", 0, { input_suffix: ["input.suffix"] }) || $fg__input_suffix && _client_guard($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_suffix", input.suffix, !_server_guard($scope0_reason, 1));
+	}, "__tests__/template.marko", 0, { input_suffix: ["input.suffix"] }) || $fg__input_suffix && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_suffix", input.suffix, !_server_guard($scope0_reason, 1));
 }, 1);

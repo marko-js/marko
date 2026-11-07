@@ -56,7 +56,7 @@ var template_default = _template("a", (input) => {
 			c: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 2)) && v,
 			i: _write_if($scope0_reason, 2) && $await_content__v__closures
 		}), $cg__input_on && "a4", $wg__input_on);
-		_filled_guard($scope0_reason, 2) && (_client_branch_if("a0", $scope1_id) || $cg__input_on) && _patch_write($scope1_id, "xc", v, !_server_guard($scope0_reason, 2));
+		_filled_guard($scope0_reason, 2) && (_client_branch_if("a0", $scope1_id) || _unfilled_if($scope0_reason, 3)) && _patch_write($scope1_id, "xc", v, !_server_guard($scope0_reason, 2));
 		$wg__input_on || $wi__input_v__OR__input_on__OR__input_note && _resume_branch($scope1_id);
 	}, 1, "a5", _unfilled_if($scope0_reason, 2), 1, 1);
 	_html("</main>");
@@ -65,5 +65,5 @@ var template_default = _template("a", (input) => {
 		f: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 4)) && input.note,
 		h: _write_if($scope0_reason, 4) && $input_note__closures,
 		g: _write_if($scope0_reason, 3) && _unfilled_if($scope0_reason, 3) && $input_on__closures
-	}) || $fg__input_note && (_client_branch_if("a0", $scope0_id) || $cg__input_on) && _patch_write($scope0_id, "xf", input.note, !_server_guard($scope0_reason, 4));
+	}) || $fg__input_note && (_client_branch_if("a0", $scope0_id) || _unfilled_if($scope0_reason, 3)) && _patch_write($scope0_id, "xf", input.note, !_server_guard($scope0_reason, 4));
 }, 1);

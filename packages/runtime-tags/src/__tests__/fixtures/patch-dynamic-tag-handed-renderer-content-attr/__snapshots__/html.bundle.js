@@ -4,7 +4,7 @@ _shells({
 	b1: "b1;b%;<!><!><!>"
 });
 var card_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_c = _write_guard($scope0_reason, 2), $wg__input_show = _write_guard($scope0_reason, 1), $fg__input_c = _filled_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_c = _write_guard($scope0_reason, 2), $wg__input_show = _write_guard($scope0_reason, 1), $fg__input_c = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.show) {
@@ -15,8 +15,8 @@ var card_default = _template("b", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["b1"], $scope0_reason, 1);
-	$fg__input_c && $cg__input_show && _patch_render($scope0_id, "b0", "e");
-	_scope($scope0_id, { e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.c }) || $fg__input_c && $cg__input_show && _patch_write($scope0_id, "xe", input.c, !_server_guard($scope0_reason, 2));
+	$fg__input_c && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "b0", "e");
+	_scope($scope0_id, { e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.c }) || $fg__input_c && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.c, !_server_guard($scope0_reason, 2));
 });
 
 // tags/one.marko
@@ -39,7 +39,7 @@ var one_default = _template("c", (input) => {
 		d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && input.Tag,
 		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 3)) && input.content,
 		f: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 3)) && input.show
-	}) || ($fg__input_Tag && _client_guard($scope0_reason, 2) && _patch_write($scope0_id, "xd", input.Tag, !_server_guard($scope0_reason, 4)), $fg__input_content && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.content, !_server_guard($scope0_reason, 5)), $fg__input_show && _client_guard($scope0_reason, 0) && _patch_write($scope0_id, "xf", input.show, !_server_guard($scope0_reason, 6)));
+	}) || ($fg__input_Tag && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xd", input.Tag, !_server_guard($scope0_reason, 4)), $fg__input_content && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.content, !_server_guard($scope0_reason, 5)), $fg__input_show && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xf", input.show, !_server_guard($scope0_reason, 6)));
 });
 
 // template.marko
@@ -49,7 +49,7 @@ _shells({
 	a: `a${_shell_marker($setup)};${((_w0) => `b/${_w0}&b`)("b%c")};${((_w0) => `<!>${_w0}<!>`)($template)}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $cg__input_x = _client_guard($scope0_reason, 1), $fg__input_y = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $fg__input_y = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_y__closures = /* @__PURE__ */ new Set();
 	_set_scope_reason(_updates_from($scope0_reason, 1) << 3 | _updates_from($scope0_reason, 1) << 5 | _updates_from($scope0_reason, 1) << 7 | _updates_from($scope0_reason, 1) << 13);
@@ -71,5 +71,5 @@ var template_default = _template("a", (input) => {
 		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.y,
 		f: _write_if($scope0_reason, 2) && $input_y__closures,
 		a: _existing_scope($childScope)
-	}) || $fg__input_y && (_client_branch_if("a1", $scope0_id) || $cg__input_x || $cg__input_x) && _patch_write($scope0_id, "xe", input.y, !_server_guard($scope0_reason, 2));
+	}) || $fg__input_y && (_client_branch_if("a1", $scope0_id) || _client_guard($scope0_reason, 1) || _unfilled_if($scope0_reason, 1)) && _patch_write($scope0_id, "xe", input.y, !_server_guard($scope0_reason, 2));
 }, 1);

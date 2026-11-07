@@ -27,7 +27,7 @@ var template_default = _template("a", (input) => {
 		_scope($scope3_id, {
 			d: (_unfilled_if($scope3_reason, 2, 1) || _unfilled_if($scope3_reason, 0, 1)) && fmt,
 			e: (_unfilled_if($scope3_reason, 1) || _unfilled_if($scope3_reason, 0)) && label
-		}) || ($fg__fmt && _client_guard($scope3_reason, 2) && _patch_write($scope3_id, "xd", fmt, !_server_guard($scope3_reason, 1)), $fg__label && _client_guard($scope3_reason, 1) && _patch_write($scope3_id, "xe", label, !_server_guard($scope3_reason, 2)));
+		}) || ($fg__fmt && _unfilled_if($scope3_reason, 2) && _patch_write($scope3_id, "xd", fmt, !_server_guard($scope3_reason, 1)), $fg__label && _unfilled_if($scope3_reason, 1) && _patch_write($scope3_id, "xe", label, !_server_guard($scope3_reason, 2)));
 	}, $scope0_id) };
 	_if(() => {
 		{

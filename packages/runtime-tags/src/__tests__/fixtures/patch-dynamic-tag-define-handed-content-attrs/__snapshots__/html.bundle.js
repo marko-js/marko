@@ -21,7 +21,7 @@ var one_default = _template("b", (input) => {
 		($wi__input_content || _write_if($scope1_reason, 0)) && _subscribe(_unfilled_if((_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 0)) << 1, 0) && $wi__input_content && $input_content__closures, _scope($scope1_id, {
 			d: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope1_reason, 0)) && t,
 			_: _scope_with_id($scope0_id)
-		}), _client_guard((_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 0)) << 1, 0) && "b1", $wg__input_content || $wg__t) || $fg__t && _client_guard($scope0_reason, 0) && _patch_write($scope1_id, "xd", t, !_server_guard($scope1_reason, 0));
+		}), _client_guard((_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 0)) << 1, 0) && "b1", $wg__input_content || $wg__t) || $fg__t && _unfilled_if($scope0_reason, 0) && _patch_write($scope1_id, "xd", t, !_server_guard($scope1_reason, 0));
 	}, $scope0_id, 0) };
 	_set_scope_reason(_updates_from($scope0_reason, 1) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "a", 1);
@@ -32,7 +32,7 @@ var one_default = _template("b", (input) => {
 		d: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.content,
 		f: $wi__input_content && $input_content__closures,
 		a: _existing_scope($childScope)
-	}) || $fg__input_content && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "xd", input.content, !_server_guard($scope0_reason, 0));
+	}) || $fg__input_content && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xd", input.content, !_server_guard($scope0_reason, 0));
 });
 
 // template.marko

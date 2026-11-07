@@ -7,7 +7,7 @@ _shells({
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell !__tests__/template.marko_1_input_img#0:10; ;<img>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_img = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $fg__input_img = _filled_guard($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_html(`<main><a${_attrs({
@@ -30,7 +30,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(`<button>${_text_mark($scope0_id, "#text/4", count)}</button>${_el_mark($scope0_id, "#button/3")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_script($scope0_id, "__tests__/template.marko_0_input_attrs#7");
-	$fg__input_img && $cg__input_show && _patch_render($scope0_id, "__tests__/template.marko_1_input_img#0:10/setup", "input_img");
+	$fg__input_img && _client_guard($scope0_reason, 2) && _patch_render($scope0_id, "__tests__/template.marko_1_input_img#0:10/setup", "input_img");
 	_scope($scope0_id, {
 		input_img: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && input.img,
 		count
@@ -38,5 +38,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_img: ["input.img"],
 		count: "1:6",
 		"EventAttributes:#a/0": ["...input.attrs", "3:24"]
-	}) || $fg__input_img && $cg__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_img", input.img, !_server_guard($scope0_reason, 3));
+	}) || $fg__input_img && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_img", input.img, !_server_guard($scope0_reason, 3));
 }, 1);

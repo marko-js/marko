@@ -4,7 +4,7 @@ const $walks = "D lD l%b b";
 const $setup$1 = [[], ["b1"]];
 _shells({ b: "b !b1;D lD l%b ;<em> </em><p> </p><!><button class=t>t</button>" });
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_a = _write_guard($scope0_reason, 1), $cg__input_a = _client_guard($scope0_reason, 1), $fg__input_a = _filled_guard($scope0_reason, 1), $fg__input_b = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_a = _write_guard($scope0_reason, 1), $fg__input_a = _filled_guard($scope0_reason, 1), $fg__input_b = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	let open = true;
 	_html(`<em>${_text_mark($scope0_id, "a", input.a, 1, $scope0_reason, 1)}</em><p>${_text_mark($scope0_id, "b", input.a + input.b, 1, $scope0_reason, 0)}</p>`);
@@ -12,7 +12,7 @@ var child_default = _template("b", (input) => {
 		{
 			const $scope1_id = _scope_id();
 			_html(`<i>${_text_mark($scope1_id, "a", input.a, $wg__input_a)}</i>`);
-			$cg__input_a && _patch_render($scope1_id, "b0");
+			_client_guard($scope0_reason, 1) && _patch_render($scope1_id, "b0");
 			_scope($scope1_id, {});
 			return 0;
 		}
@@ -26,7 +26,7 @@ var child_default = _template("b", (input) => {
 		g: input.a,
 		h: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.b,
 		i: open
-	}) || ($fg__input_a && _patch_write($scope0_id, "xg", input.a, !_server_guard($scope0_reason, 1)), $fg__input_b && $cg__input_a && _patch_write($scope0_id, "xh", input.b, !_server_guard($scope0_reason, 2)));
+	}) || ($fg__input_a && _patch_write($scope0_id, "xg", input.a, !_server_guard($scope0_reason, 1)), $fg__input_b && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xh", input.b, !_server_guard($scope0_reason, 2)));
 });
 
 // template.marko

@@ -8,7 +8,7 @@ _shells({
 	b2: "b2 !b0; D ;<button class=read> </button>"
 });
 var panel_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_y = _write_guard($scope0_reason, 2), $cg__input_a = _client_guard($scope0_reason, 1), $cg__input_y = _client_guard($scope0_reason, 2), $sg__input_a = _server_guard($scope0_reason, 1), $cg__input_x = _client_guard($scope0_reason, 0), $fg__input_a = _filled_guard($scope0_reason, 1), $fg__input_y = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_y = _write_guard($scope0_reason, 2), $cg__input_a = _client_guard($scope0_reason, 1), $cg__input_y = _client_guard($scope0_reason, 2), $sg__input_a = _server_guard($scope0_reason, 1), $fg__input_a = _filled_guard($scope0_reason, 1), $cg__input_x = _client_guard($scope0_reason, 0), $fg__input_y = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	let out = "";
 	_if(() => {
@@ -42,7 +42,7 @@ var panel_default = _template("b", (input) => {
 	_scope($scope0_id, {
 		f: _write_if($scope0_reason, 0) && input.a,
 		g: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && input.y
-	}) || ($fg__input_a && $cg__input_x && _patch_write($scope0_id, "xf", input.a, !$sg__input_a), $fg__input_y && $cg__input_x && _patch_write($scope0_id, "xg", input.y, !_server_guard($scope0_reason, 2)));
+	}) || ($fg__input_a && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xf", input.a, !$sg__input_a), $fg__input_y && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xg", input.y, !_server_guard($scope0_reason, 2)));
 });
 
 // template.marko

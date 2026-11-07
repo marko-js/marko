@@ -4,7 +4,7 @@ _shells({
 	a1: "a1;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 2), $fg__input_content = _filled_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 2), $fg__input_content = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_html("<main>");
@@ -19,9 +19,9 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 1), 1, 0, 0, ["a1"], $scope0_reason, 1);
 	_html(`<button>${_text_mark($scope0_id, "c", count)}</button>${_el_mark($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a2");
-	$fg__input_content && $cg__input_show && _patch_render($scope0_id, "a0", "g");
+	$fg__input_content && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "a0", "g");
 	_scope($scope0_id, {
 		g: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.content,
 		h: count
-	}) || $fg__input_content && $cg__input_show && _patch_write($scope0_id, "xg", input.content, !_server_guard($scope0_reason, 2));
+	}) || $fg__input_content && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xg", input.content, !_server_guard($scope0_reason, 2));
 }, 1);

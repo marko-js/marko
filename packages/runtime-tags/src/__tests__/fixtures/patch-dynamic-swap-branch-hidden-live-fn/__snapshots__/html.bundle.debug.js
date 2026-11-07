@@ -95,7 +95,7 @@ var w_default = _template("__tests__/tags/w.marko", (input) => {
 		input_x: ["input.x"],
 		A: "1:9",
 		B: "7:9"
-	}) || ($fg__input_flag && _client_guard($scope0_reason, 4) && _patch_write($scope0_id, "PatchMarkedWrite:input_flag", input.flag, !_server_guard($scope0_reason, 3)), $fg__input_x && _client_guard($scope0_reason, 3) && _patch_write($scope0_id, "PatchMarkedWrite:input_x", input.x, !_server_guard($scope0_reason, 4)));
+	}) || ($fg__input_flag && _unfilled_if($scope0_reason, 4) && _patch_write($scope0_id, "PatchMarkedWrite:input_flag", input.flag, !_server_guard($scope0_reason, 3)), $fg__input_x && _unfilled_if($scope0_reason, 3) && _patch_write($scope0_id, "PatchMarkedWrite:input_x", input.x, !_server_guard($scope0_reason, 4)));
 });
 
 // template.marko

@@ -37,7 +37,7 @@ var show_await_default = _template("__tests__/tags/show-await.marko", (input) =>
 	}, "__tests__/tags/show-await.marko", 0, {
 		input_promise: ["input.promise"],
 		input_label: ["input.label"]
-	}) || ($fg__input_promise && $cg__input_items && _patch_write($scope0_id, "PatchMarkedWrite:input_promise", input.promise, !_server_guard($scope0_reason, 3)), $fg__input_label && $cg__input_items && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 4)));
+	}) || ($fg__input_promise && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_promise", input.promise, !_server_guard($scope0_reason, 3)), $fg__input_label && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 4)));
 });
 
 // template.marko

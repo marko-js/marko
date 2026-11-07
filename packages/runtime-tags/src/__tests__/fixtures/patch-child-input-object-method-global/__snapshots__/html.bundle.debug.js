@@ -8,10 +8,10 @@ _shells({
 	"__tests__/tags/code-block.marko_2*shell": "__tests__/tags/code-block.marko_2*shell;D ;<span> </span>"
 });
 var code_block_default = _template("__tests__/tags/code-block.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wi__input_cursor__OR__input_text = _write_if($scope0_reason, 0), $wg__input_text_length = _write_guard($scope0_reason, 3), $cg__input_cursor = _client_guard($scope0_reason, 1), $fg__input_text = _filled_guard($scope0_reason, 2), $cg__input_text_length = _client_guard($scope0_reason, 3), $fg__input_cursor = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wi__input_cursor__OR__input_text = _write_if($scope0_reason, 0), $wg__input_text_length = _write_guard($scope0_reason, 3), $fg__input_text = _filled_guard($scope0_reason, 2), $cg__input_text_length = _client_guard($scope0_reason, 3), $fg__input_cursor = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
-	$fg__input_cursor && _client_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_cursor", input.cursor, !_server_guard($scope0_reason, 1));
+	$fg__input_cursor && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_cursor", input.cursor, !_server_guard($scope0_reason, 1));
 	const highlight = _bind_resume(function(text) {
 		return text.replace(input.cursor.test, (m) => `<b class=${$global$1.theme}>${input.cursor.content((s) => s)}</b>`);
 	}, "__tests__/tags/code-block.marko_0/highlight", $scope0_id);
@@ -38,7 +38,7 @@ var code_block_default = _template("__tests__/tags/code-block.marko", (input) =>
 			return 1;
 		}
 	}, $scope0_id, "#text/0", 1, $wg__input_text_length, 1, 0, 0, ["__tests__/tags/code-block.marko_1*shell", "__tests__/tags/code-block.marko_2*shell"], $scope0_reason, 3);
-	_fill_global_subscribe("__tests__/tags/code-block.marko_0_input_cursor#3_$global_theme#8", $scope0_id, $cg__input_cursor);
+	_fill_global_subscribe("__tests__/tags/code-block.marko_0_input_cursor#3_$global_theme#8", $scope0_id, _client_guard($scope0_reason, 1));
 	$fg__input_text && $cg__input_text_length && _patch_render($scope0_id, "__tests__/tags/code-block.marko_1_input_text#0:4/setup", "input_text");
 	$fg__input_text && $cg__input_text_length && _patch_render($scope0_id, "__tests__/tags/code-block.marko_2_input_text#0:4/setup", "input_text");
 	_filled_guard((2 | _updates_from($scope0_reason, 1)) << 1, 0) && $cg__input_text_length && _patch_render($scope0_id, "__tests__/tags/code-block.marko_1_highlight#0:6/setup", [_filled_guard((2 | _updates_from($scope0_reason, 1)) << 1, 0) && "highlight", $fg__input_cursor && "input_cursor"]);
@@ -51,7 +51,7 @@ var code_block_default = _template("__tests__/tags/code-block.marko", (input) =>
 		input_cursor: ["input.cursor"],
 		input_text: ["input.text"],
 		highlight: "1:8"
-	}) || ($fg__input_text && $cg__input_cursor && _patch_write($scope0_id, "PatchMarkedWrite:input_text", input.text, !_server_guard($scope0_reason, 2)), _filled_guard((2 | _updates_from($scope0_reason, 1)) << 1, 0) && _client_guard($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:highlight", highlight, !_server_guard((2 | _updates_from($scope0_reason, 1)) << 1, 0)));
+	}) || ($fg__input_text && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_text", input.text, !_server_guard($scope0_reason, 2)), _filled_guard((2 | _updates_from($scope0_reason, 1)) << 1, 0) && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:highlight", highlight, !_server_guard((2 | _updates_from($scope0_reason, 1)) << 1, 0)));
 });
 
 // template.marko

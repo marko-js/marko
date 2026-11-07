@@ -6,7 +6,7 @@ _shells({
 	a4: `a4 a7;${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Panel_content__walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Panel_content__template)}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_label = _filled_guard($scope0_reason, 1), $cg__input_show = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $fg__input_label = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	let o = true;
 	const Panel = { content: _content("a1", ({ isOpen, label }) => {
@@ -45,9 +45,9 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["a4"], $scope0_reason, 0);
 	_html(`<button id=t>toggle</button>${_el_mark($scope0_id, "b")}`);
 	_script($scope0_id, "a5");
-	$fg__input_label && $cg__input_show && _patch_render($scope0_id, "a3", "f");
+	$fg__input_label && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "a3", "f");
 	_scope($scope0_id, {
 		f: _write_if($scope0_reason, 0) && input.label,
 		g: o
-	}) || $fg__input_label && $cg__input_show && _patch_write($scope0_id, "xf", input.label, !_server_guard($scope0_reason, 1));
+	}) || $fg__input_label && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xf", input.label, !_server_guard($scope0_reason, 1));
 }, 1);

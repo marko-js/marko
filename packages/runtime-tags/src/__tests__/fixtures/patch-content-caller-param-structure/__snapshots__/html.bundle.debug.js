@@ -7,7 +7,7 @@ _shells({
 	"__tests__/tags/toggle-if.marko_1*shell": "__tests__/tags/toggle-if.marko_1*shell;b%;<!><!><!>"
 });
 var toggle_if_default = _template("__tests__/tags/toggle-if.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 2), $wg__input_open = _write_guard($scope0_reason, 1), $fg__input_content = _filled_guard($scope0_reason, 2), $cg__input_open = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 2), $wg__input_open = _write_guard($scope0_reason, 1), $fg__input_content = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.open) {
@@ -18,8 +18,8 @@ var toggle_if_default = _template("__tests__/tags/toggle-if.marko", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "#text/0", 1, $wg__input_open, 1, 0, 0, ["__tests__/tags/toggle-if.marko_1*shell"], $scope0_reason, 1);
-	$fg__input_content && $cg__input_open && _patch_render($scope0_id, "__tests__/tags/toggle-if.marko_1_input_content#0:4/setup", "input_content");
-	_scope($scope0_id, { input_content: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.content }, "__tests__/tags/toggle-if.marko", 0, { input_content: ["input.content"] }) || $fg__input_content && $cg__input_open && _patch_write($scope0_id, "PatchMarkedWrite:input_content", input.content, !_server_guard($scope0_reason, 2));
+	$fg__input_content && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "__tests__/tags/toggle-if.marko_1_input_content#0:4/setup", "input_content");
+	_scope($scope0_id, { input_content: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.content }, "__tests__/tags/toggle-if.marko", 0, { input_content: ["input.content"] }) || $fg__input_content && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_content", input.content, !_server_guard($scope0_reason, 2));
 });
 
 // tags/toggle-for.marko
@@ -31,7 +31,7 @@ _shells({
 	"__tests__/tags/toggle-for.marko_1*shell": "__tests__/tags/toggle-for.marko_1*shell;b%;<!><!><!>"
 });
 var toggle_for_default = _template("__tests__/tags/toggle-for.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 2), $fg__input_content = _filled_guard($scope0_reason, 2), $cg__input_open = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 2), $fg__input_content = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	_for_until(input.open ? 1 : 0, 0, 1, (i) => {
 		const $scope1_id = _scope_id();
@@ -39,8 +39,8 @@ var toggle_for_default = _template("__tests__/tags/toggle-for.marko", (input) =>
 		_client_guard($scope0_reason, 2) && _patch_render($scope1_id, "__tests__/tags/toggle-for.marko_1_input_content#0:4/setup");
 		_write_if($scope0_reason, 0) && _scope($scope1_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id) }, "__tests__/tags/toggle-for.marko", "1:2");
 	}, 0, $scope0_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/tags/toggle-for.marko_1*shell", $scope0_reason, 1);
-	$fg__input_content && $cg__input_open && _patch_render($scope0_id, "__tests__/tags/toggle-for.marko_1_input_content#0:4/setup", "input_content");
-	_scope($scope0_id, { input_content: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.content }, "__tests__/tags/toggle-for.marko", 0, { input_content: ["input.content"] }) || $fg__input_content && $cg__input_open && _patch_write($scope0_id, "PatchMarkedWrite:input_content", input.content, !_server_guard($scope0_reason, 2));
+	$fg__input_content && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "__tests__/tags/toggle-for.marko_1_input_content#0:4/setup", "input_content");
+	_scope($scope0_id, { input_content: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.content }, "__tests__/tags/toggle-for.marko", 0, { input_content: ["input.content"] }) || $fg__input_content && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_content", input.content, !_server_guard($scope0_reason, 2));
 });
 
 // tags/toggle-tag.marko
@@ -67,7 +67,7 @@ var toggle_tag_default = _template("__tests__/tags/toggle-tag.marko", (input) =>
 	_scope($scope0_id, {
 		input_content: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.content,
 		"ClosureScopes:input_content/5": _write_if($scope0_reason, 2) && $input_content__closures
-	}, "__tests__/tags/toggle-tag.marko", 0, { input_content: ["input.content"] }) || $fg__input_content && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_content", input.content, !_server_guard($scope0_reason, 2));
+	}, "__tests__/tags/toggle-tag.marko", 0, { input_content: ["input.content"] }) || $fg__input_content && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_content", input.content, !_server_guard($scope0_reason, 2));
 });
 
 // tags/param-host.marko
@@ -147,7 +147,7 @@ var param_host_default = _template("__tests__/tags/param-host.marko", (input) =>
 		"#childScope/0": _existing_scope($childScope),
 		"#childScope/1": _existing_scope($childScope2),
 		"#childScope/2": _existing_scope($childScope3)
-	}, "__tests__/tags/param-host.marko", 0, { input_label: ["input.label"] }) || $fg__input_label && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 2));
+	}, "__tests__/tags/param-host.marko", 0, { input_label: ["input.label"] }) || $fg__input_label && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 2));
 });
 
 // tags/const-host.marko
@@ -228,7 +228,7 @@ var const_host_default = _template("__tests__/tags/const-host.marko", (input) =>
 		"#childScope/0": _existing_scope($childScope),
 		"#childScope/1": _existing_scope($childScope2),
 		"#childScope/2": _existing_scope($childScope3)
-	}, "__tests__/tags/const-host.marko", 0, { input_label: ["input.label"] }) || $fg__input_label && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 2));
+	}, "__tests__/tags/const-host.marko", 0, { input_label: ["input.label"] }) || $fg__input_label && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 2));
 });
 
 // template.marko

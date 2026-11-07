@@ -26,7 +26,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			value: "2:12",
 			valueChange: "2:19",
 			"ControlledHandler:#input/0": ["valueChange", "3:31"]
-		}) || ($fg__value && _client_guard($scope1_reason, 2) && _patch_write($scope1_id, "PatchMarkedWrite:value", value, !_server_guard($scope1_reason, 1)), $fg__valueChange && _client_guard($scope1_reason, 0) && _patch_write($scope1_id, "PatchMarkedWrite:valueChange", valueChange, !_server_guard($scope1_reason, 2)));
+		}) || ($fg__value && _unfilled_if($scope1_reason, 2) && _patch_write($scope1_id, "PatchMarkedWrite:value", value, !_server_guard($scope1_reason, 1)), $fg__valueChange && _unfilled_if($scope1_reason, 0) && _patch_write($scope1_id, "PatchMarkedWrite:valueChange", valueChange, !_server_guard($scope1_reason, 2)));
 	}, $scope0_id) };
 	_set_scope_reason(_updates_from($scope0_reason, 1) << 1 | _updates_from($scope0_reason, 1) << 3 | _updates_from($scope0_reason, 0) << 7);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);

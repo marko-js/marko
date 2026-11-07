@@ -29,7 +29,7 @@ var stepper_default = _template("b", (input) => {
 		h: clamp,
 		i: _write_if($scope0_reason, 1) && current,
 		j: $currentChange
-	}) || ($fg__input_value && _client_guard($scope0_reason, 3) && _patch_write($scope0_id, "xe", input.value, !_server_guard($scope0_reason, 2)), $fg__input_valueChange && _client_guard($scope0_reason, 2) && _patch_write($scope0_id, "xf", input.valueChange, !_server_guard($scope0_reason, 3)));
+	}) || ($fg__input_value && _unfilled_if($scope0_reason, 3) && _patch_write($scope0_id, "xe", input.value, !_server_guard($scope0_reason, 2)), $fg__input_valueChange && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xf", input.valueChange, !_server_guard($scope0_reason, 3)));
 });
 
 // template.marko

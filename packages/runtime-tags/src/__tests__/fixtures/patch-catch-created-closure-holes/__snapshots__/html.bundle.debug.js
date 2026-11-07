@@ -29,7 +29,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, void 0, (err) => {
 		const $scope1_reason = _scope_reason();
 		const $scope1_id = _scope_id();
-		$cg__input_msg && _patch_write($scope1_id, "PatchMarkedWrite:err_message", err?.message);
+		_unfilled_if($scope0_reason, 1) && _patch_write($scope1_id, "PatchMarkedWrite:err_message", err?.message);
 		const upper = input.msg.toUpperCase();
 		_html(`<b${_attr("title", input.msg, $scope1_id, "#b/0", $scope0_reason, 1)}>${_text_mark($scope1_id, "#text/1", err.message, 1, 4, 0)} ${_text_mark($scope1_id, "#text/2", input.msg, 2, $scope0_reason, 1)} ${_text_mark($scope1_id, "#text/3", upper, 2, $scope0_reason, 1)} ${_text_mark($scope1_id, "#text/4", err.message + upper, 2, (2 | _updates_from($scope0_reason, 1)) << 1, 0)}</b>${_el_mark($scope1_id, "#b/0", _updates_from($scope0_reason, 1))}`);
 		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_msg#0:3/subscribe", $cg__input_msg);
@@ -52,5 +52,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, "__tests__/template.marko", 0, {
 		input_msg: ["input.msg"],
 		input_fail: ["input.fail"]
-	}) || ($fg__input_msg && _patch_write($scope0_id, "PatchMarkedWrite:input_msg", input.msg, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && $cg__input_msg && _patch_write($scope0_id, "PatchMarkedWrite:input_fail", input.fail, !_server_guard($scope0_reason, 2)));
+	}) || ($fg__input_msg && _patch_write($scope0_id, "PatchMarkedWrite:input_msg", input.msg, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_fail", input.fail, !_server_guard($scope0_reason, 2)));
 }, 1);

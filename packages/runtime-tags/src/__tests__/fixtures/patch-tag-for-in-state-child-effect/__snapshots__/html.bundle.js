@@ -20,7 +20,7 @@ _shells({
 	c3: `c3${_shell_marker([["c2"], []], ["a>", $setup$2])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1)};${$template$1}`
 });
 var shape_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_sel = _write_guard($scope0_reason, 2), $cg__input_sel = _client_guard($scope0_reason, 2), $cg__input_obj = _client_guard($scope0_reason, 1), $fg__input_b = _filled_guard($scope0_reason, 3), $fg__input_sel = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_sel = _write_guard($scope0_reason, 2), $cg__input_sel = _client_guard($scope0_reason, 2), $fg__input_b = _filled_guard($scope0_reason, 3), $fg__input_sel = _filled_guard($scope0_reason, 2), $cg__input_obj = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_b__closures = /* @__PURE__ */ new Set();
 	const $s__closures = /* @__PURE__ */ new Set();
@@ -68,7 +68,7 @@ var shape_default = _template("c", (input) => {
 		h: s,
 		j: _write_if($scope0_reason, 3) && $input_b__closures,
 		k: $s__closures
-	}) || ($fg__input_sel && $cg__input_obj && _patch_write($scope0_id, "xf", input.sel, !_server_guard($scope0_reason, 2)), $fg__input_b && _patch_write($scope0_id, "xg", input.b, !_server_guard($scope0_reason, 3)));
+	}) || ($fg__input_sel && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xf", input.sel, !_server_guard($scope0_reason, 2)), $fg__input_b && _patch_write($scope0_id, "xg", input.b, !_server_guard($scope0_reason, 3)));
 });
 
 // template.marko

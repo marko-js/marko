@@ -6,7 +6,7 @@ _shells({
 	f1: "f1;b%;<!><!><!>"
 });
 var toggle_if_default = _template("f", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 2), $wg__input_open = _write_guard($scope0_reason, 1), $fg__input_content = _filled_guard($scope0_reason, 2), $cg__input_open = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 2), $wg__input_open = _write_guard($scope0_reason, 1), $fg__input_content = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.open) {
@@ -17,8 +17,8 @@ var toggle_if_default = _template("f", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "a", 1, $wg__input_open, 1, 0, 0, ["f1"], $scope0_reason, 1);
-	$fg__input_content && $cg__input_open && _patch_render($scope0_id, "f0", "e");
-	_scope($scope0_id, { e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.content }) || $fg__input_content && $cg__input_open && _patch_write($scope0_id, "xe", input.content, !_server_guard($scope0_reason, 2));
+	$fg__input_content && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "f0", "e");
+	_scope($scope0_id, { e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.content }) || $fg__input_content && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.content, !_server_guard($scope0_reason, 2));
 });
 
 // tags/toggle-for.marko
@@ -29,7 +29,7 @@ _shells({
 	e1: "e1;b%;<!><!><!>"
 });
 var toggle_for_default = _template("e", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 2), $fg__input_content = _filled_guard($scope0_reason, 2), $cg__input_open = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 2), $fg__input_content = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	_for_until(input.open ? 1 : 0, 0, 1, (i) => {
 		const $scope1_id = _scope_id();
@@ -37,8 +37,8 @@ var toggle_for_default = _template("e", (input) => {
 		_client_guard($scope0_reason, 2) && _patch_render($scope1_id, "e0");
 		_write_if($scope0_reason, 0) && _scope($scope1_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id) });
 	}, 0, $scope0_id, "a", 1, 1, 1, 0, 0, "e1", $scope0_reason, 1);
-	$fg__input_content && $cg__input_open && _patch_render($scope0_id, "e0", "e");
-	_scope($scope0_id, { e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.content }) || $fg__input_content && $cg__input_open && _patch_write($scope0_id, "xe", input.content, !_server_guard($scope0_reason, 2));
+	$fg__input_content && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "e0", "e");
+	_scope($scope0_id, { e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.content }) || $fg__input_content && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.content, !_server_guard($scope0_reason, 2));
 });
 
 // tags/toggle-tag.marko
@@ -64,7 +64,7 @@ var toggle_tag_default = _template("g", (input) => {
 	_scope($scope0_id, {
 		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.content,
 		f: _write_if($scope0_reason, 2) && $input_content__closures
-	}) || $fg__input_content && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.content, !_server_guard($scope0_reason, 2));
+	}) || $fg__input_content && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.content, !_server_guard($scope0_reason, 2));
 });
 
 // tags/param-host.marko
@@ -144,7 +144,7 @@ var param_host_default = _template("d", (input) => {
 		a: _existing_scope($childScope),
 		b: _existing_scope($childScope2),
 		c: _existing_scope($childScope3)
-	}) || $fg__input_label && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "xh", input.label, !_server_guard($scope0_reason, 2));
+	}) || $fg__input_label && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xh", input.label, !_server_guard($scope0_reason, 2));
 });
 
 // tags/outer.marko
@@ -257,7 +257,7 @@ var define_host_default = _template("b", (input) => {
 		d: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.label,
 		f: $wi__input_label && $input_label__closures,
 		a: _existing_scope($childScope4)
-	}) || $fg__input_label && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "xd", input.label, !_server_guard($scope0_reason, 0));
+	}) || $fg__input_label && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xd", input.label, !_server_guard($scope0_reason, 0));
 });
 
 // template.marko

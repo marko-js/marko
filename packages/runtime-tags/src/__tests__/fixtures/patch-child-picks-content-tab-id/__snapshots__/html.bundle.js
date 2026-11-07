@@ -10,7 +10,7 @@ var tabs_default = _template("b", (input) => {
 	_scope($scope0_id, {
 		d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.tab,
 		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.selected
-	}) || ($fg__input_tab && _client_guard($scope0_reason, 2) && _patch_write($scope0_id, "xd", input.tab, !_server_guard($scope0_reason, 1)), $fg__input_selected && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.selected, !_server_guard($scope0_reason, 2)));
+	}) || ($fg__input_tab && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xd", input.tab, !_server_guard($scope0_reason, 1)), $fg__input_selected && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.selected, !_server_guard($scope0_reason, 2)));
 });
 
 // template.marko
@@ -59,5 +59,5 @@ var template_default = _template("a", (input) => {
 		h: _write_if($scope0_reason, 2) && $input_y__closures,
 		i: $s__closures,
 		b: _existing_scope($childScope)
-	}) || $fg__input_y && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "xf", input.y, !_server_guard($scope0_reason, 2));
+	}) || $fg__input_y && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xf", input.y, !_server_guard($scope0_reason, 2));
 }, 1);

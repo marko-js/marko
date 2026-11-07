@@ -39,7 +39,7 @@ var rowsx_default = _template("b", (input) => {
 		_write_if($scope1_reason, 3) && _scope($scope1_id, {
 			e: (_unfilled_if($scope1_reason, 1) || _unfilled_if($scope1_reason, 2)) && fmt,
 			f: (_unfilled_if($scope1_reason, 0) || _unfilled_if($scope1_reason, 2)) && label
-		}) || ($fg__fmt && _client_guard($scope1_reason, 1) && _patch_write($scope1_id, "xe", fmt, !_server_guard($scope1_reason, 5)), $fg__label && _client_guard($scope1_reason, 0) && _patch_write($scope1_id, "xf", label, !_server_guard($scope1_reason, 6)));
+		}) || ($fg__fmt && _unfilled_if($scope1_reason, 1) && _patch_write($scope1_id, "xe", fmt, !_server_guard($scope1_reason, 5)), $fg__label && _unfilled_if($scope1_reason, 0) && _patch_write($scope1_id, "xf", label, !_server_guard($scope1_reason, 6)));
 	}, $scope0_id, 0) };
 	_set_scope_reason(_updates_from($scope0_reason, 1) << 1 | _updates_from($scope0_reason, 0) << 3 | _updates_from($scope0_reason, 2) << 5 | _updates_from($scope0_reason, 0) << 7 | _updates_from($scope0_reason, 1) << 9 | _updates_from($scope0_reason, 2) << 13);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
@@ -58,7 +58,7 @@ _shells({
 	a1: `a1${_shell_marker([["a4"], []], ["a>", $setup])};${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template)}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_open = _filled_guard($scope0_reason, 1), $cg__input_show = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $fg__input_open = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	let l = "a";
 	_if(() => {
@@ -81,9 +81,9 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["a1"], $scope0_reason, 0);
 	_html(`<button class=l>l</button>${_el_mark($scope0_id, "b")}`);
 	_script($scope0_id, "a2");
-	$fg__input_open && $cg__input_show && _patch_render($scope0_id, "a0", "f");
+	$fg__input_open && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "a0", "f");
 	_scope($scope0_id, {
 		f: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.open,
 		g: l
-	}) || $fg__input_open && $cg__input_show && _patch_write($scope0_id, "xf", input.open, !_server_guard($scope0_reason, 1));
+	}) || $fg__input_open && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xf", input.open, !_server_guard($scope0_reason, 1));
 }, 1);

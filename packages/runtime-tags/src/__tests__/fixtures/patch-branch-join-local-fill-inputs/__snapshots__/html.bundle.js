@@ -40,7 +40,7 @@ var child_default = _template("b", (input) => {
 	_scope($scope0_id, {
 		f: input.a,
 		g: _write_if($scope0_reason, 0) && input.b
-	}) || ($fg__input_a && _patch_write($scope0_id, "xf", input.a, !$sg__input_a), $fg__input_b && _client_guard($scope0_reason, 0) && _patch_write($scope0_id, "xg", input.b, !$sg__input_b));
+	}) || ($fg__input_a && _patch_write($scope0_id, "xf", input.a, !$sg__input_a), $fg__input_b && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xg", input.b, !$sg__input_b));
 });
 
 // template.marko

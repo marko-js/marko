@@ -9,7 +9,7 @@ _shells({
 	a: "a !a9;E lD%lD%l Db%;<main><h1> </h1><section><!></section><footer><!></footer><button>Count <!></button></main>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_related__OR__input_slow = _write_if($scope0_reason, 0), $cg__input_slow = _client_guard($scope0_reason, 5), $fg__input_slow = _filled_guard($scope0_reason, 5), $fg__input_note = _filled_guard($scope0_reason, 6);
+	const $scope0_reason = _scope_reason(), $wi__input_related__OR__input_slow = _write_if($scope0_reason, 0), $fg__input_slow = _filled_guard($scope0_reason, 5), $fg__input_note = _filled_guard($scope0_reason, 6);
 	const $scope0_id = _scope_id();
 	const $input_related__closures = /* @__PURE__ */ new Set();
 	const $input_slow__closures = /* @__PURE__ */ new Set();
@@ -26,7 +26,7 @@ var template_default = _template("a", (input) => {
 		_unfilled_if($scope0_reason, 4) && _patch_subscribe($scope1_id, "a6", 1);
 		_unfilled_if($scope0_reason, 5) && _patch_subscribe($scope1_id, "a7", 1);
 		_patch_render($scope1_id, "a8", [_filled_guard($scope0_reason, 4) && ">i", _filled_guard($scope0_reason, 5) && ">j"], $scope0_reason, 0);
-		$wi__input_related__OR__input_slow && _subscribe(_unfilled_if($scope0_reason, 5) && $input_slow__closures, _subscribe(_unfilled_if($scope0_reason, 4) && $input_related__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 4) && "a6", 0), $cg__input_slow && "a7", 0);
+		$wi__input_related__OR__input_slow && _subscribe(_unfilled_if($scope0_reason, 5) && $input_slow__closures, _subscribe(_unfilled_if($scope0_reason, 4) && $input_related__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 4) && "a6", 0), _client_guard($scope0_reason, 5) && "a7", 0);
 		$wi__input_related__OR__input_slow && _resume_branch($scope1_id);
 	}, () => {
 		_scope_reason();
@@ -49,5 +49,5 @@ var template_default = _template("a", (input) => {
 		m: count,
 		n: _write_if($scope0_reason, 4) && (_unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 0)) && $input_related__closures,
 		o: _write_if($scope0_reason, 5) && (_unfilled_if($scope0_reason, 5) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && $input_slow__closures
-	}) || (_filled_guard($scope0_reason, 4) && $cg__input_slow && _patch_write($scope0_id, "xi", input.related, !_server_guard($scope0_reason, 4)), $fg__input_slow && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "xj", input.slow, !_server_guard($scope0_reason, 5)), $fg__input_note && $cg__input_slow && _patch_write($scope0_id, "xk", input.note, !_server_guard($scope0_reason, 6)));
+	}) || (_filled_guard($scope0_reason, 4) && _unfilled_if($scope0_reason, 5) && _patch_write($scope0_id, "xi", input.related, !_server_guard($scope0_reason, 4)), $fg__input_slow && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xj", input.slow, !_server_guard($scope0_reason, 5)), $fg__input_note && _unfilled_if($scope0_reason, 5) && _patch_write($scope0_id, "xk", input.note, !_server_guard($scope0_reason, 6)));
 }, 1);

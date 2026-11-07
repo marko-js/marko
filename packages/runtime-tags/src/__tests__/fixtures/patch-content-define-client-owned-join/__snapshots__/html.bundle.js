@@ -15,7 +15,7 @@ var template_default = _template("a", (input) => {
 		_subscribe(_unfilled_if((1 | _updates_from($scope0_reason, 0)) << 1, 0) && $wi__input_suffix && $input_suffix__closures, _scope($scope1_id, {
 			d: _unfilled_if($scope0_reason, 0) && n,
 			_: ($wi__input_suffix || _write_if($scope1_reason, 0)) && _scope_with_id($scope0_id)
-		}), _client_guard((1 | _updates_from($scope0_reason, 0)) << 1, 0) && "a2") || $fg__n && _client_guard($scope0_reason, 0) && _patch_write($scope1_id, "xd", n, !_server_guard($scope1_reason, 0));
+		}), _client_guard((1 | _updates_from($scope0_reason, 0)) << 1, 0) && "a2") || $fg__n && _unfilled_if($scope0_reason, 0) && _patch_write($scope1_id, "xd", n, !_server_guard($scope1_reason, 0));
 	}, $scope0_id) };
 	_set_scope_reason(2);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);

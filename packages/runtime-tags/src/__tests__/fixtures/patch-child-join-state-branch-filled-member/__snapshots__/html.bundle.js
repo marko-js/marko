@@ -39,7 +39,7 @@ var child_default = _template("b", (input) => {
 		g: input.a,
 		h: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.b,
 		i: open
-	}) || ($fg__input_a && _patch_write($scope0_id, "xg", input.a, !_server_guard($scope0_reason, 3)), $fg__input_b && _client_guard($scope0_reason, 0) && _patch_write($scope0_id, "xh", input.b, !_server_guard($scope0_reason, 4)));
+	}) || ($fg__input_a && _patch_write($scope0_id, "xg", input.a, !_server_guard($scope0_reason, 3)), $fg__input_b && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xh", input.b, !_server_guard($scope0_reason, 4)));
 });
 
 // template.marko

@@ -26,7 +26,7 @@ _shells({
 	b1: `b1${_shell_marker([[], []], ["b>", $setup])};${/*@__PURE__*/ ((_w0) => `D%b/${_w0}&l`)(" b")};${/*@__PURE__*/ ((_w0) => `<main><!>${_w0}</main>`)($template)}`
 });
 var template_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0), $fg__input_title = _filled_guard($scope0_reason, 1), $cg__input_show = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0), $fg__input_title = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.show) {
@@ -45,6 +45,6 @@ var template_default = _template("b", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["b1"], $scope0_reason, 0);
-	$fg__input_title && $cg__input_show && _patch_render($scope0_id, "b0", "e");
-	_scope($scope0_id, { e: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.title }) || $fg__input_title && $cg__input_show && _patch_write($scope0_id, "xe", input.title, !_server_guard($scope0_reason, 1));
+	$fg__input_title && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "b0", "e");
+	_scope($scope0_id, { e: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.title }) || $fg__input_title && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xe", input.title, !_server_guard($scope0_reason, 1));
 }, 1);

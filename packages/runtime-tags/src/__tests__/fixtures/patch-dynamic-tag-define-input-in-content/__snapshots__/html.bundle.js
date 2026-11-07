@@ -19,7 +19,7 @@ _shells({
 	a: `a${_shell_marker($setup)};${((_w0) => `/${_w0}&`)("D%l")};${$template}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_useA__OR__input_record = _write_guard($scope0_reason, 0), $cg__input_useA__OR__input_record = _client_guard($scope0_reason, 0), $cg__input_record = _client_guard($scope0_reason, 2), $cg__input_useA = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_useA__OR__input_record = _write_guard($scope0_reason, 0), $cg__input_useA__OR__input_record = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_useA__closures = /* @__PURE__ */ new Set();
 	const $input_record__closures = /* @__PURE__ */ new Set();
@@ -44,7 +44,7 @@ var template_default = _template("a", (input) => {
 		!$cg__input_useA__OR__input_record && _unfilled_if() && _patch_write($scope0_id, "wf", Card);
 		!$cg__input_useA__OR__input_record && _unfilled_if() && _patch_write($scope0_id, "wg", Other);
 		_patch_render($scope1_id, "a2", [_filled_guard($scope0_reason, 1) && ">d", _filled_guard($scope0_reason, 2) && ">e"], $scope0_reason, 0);
-		_write_if($scope0_reason, 0) && _subscribe(_unfilled_if($scope0_reason, 2) && $input_record__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_useA__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), $cg__input_useA && "a3", $wg__input_useA__OR__input_record), $cg__input_record && "a4", $wg__input_useA__OR__input_record);
+		_write_if($scope0_reason, 0) && _subscribe(_unfilled_if($scope0_reason, 2) && $input_record__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_useA__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 1) && "a3", $wg__input_useA__OR__input_record), _client_guard($scope0_reason, 2) && "a4", $wg__input_useA__OR__input_record);
 	}, $scope0_id) });
 	_patch_child_end();
 	_scope($scope0_id, {
@@ -55,5 +55,5 @@ var template_default = _template("a", (input) => {
 		h: _write_if($scope0_reason, 1) && (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && $input_useA__closures,
 		i: _write_if($scope0_reason, 2) && (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && $input_record__closures,
 		a: _existing_scope($childScope)
-	}) || (_filled_guard($scope0_reason, 1) && $cg__input_record && _patch_write($scope0_id, "xd", input.useA, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && $cg__input_useA && _patch_write($scope0_id, "xe", input.record, !_server_guard($scope0_reason, 2)));
+	}) || (_filled_guard($scope0_reason, 1) && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xd", input.useA, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.record, !_server_guard($scope0_reason, 2)));
 }, 1);

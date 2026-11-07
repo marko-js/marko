@@ -26,7 +26,7 @@ var template_default = _template("a", (input) => {
 		_scope($scope1_id, {
 			d: _unfilled_if($scope1_reason, 0) && v,
 			e: _unfilled_if($scope1_reason, 0) && flag
-		}) || _client_guard($scope1_reason, 0) && _patch_write($scope1_id, "xe", flag);
+		}) || _unfilled_if($scope1_reason, 0) && _patch_write($scope1_id, "xe", flag);
 	}, $scope0_id) };
 	_set_scope_reason(2);
 	const $childScope = _peek_scope_id($scope0_id, "b", 0);

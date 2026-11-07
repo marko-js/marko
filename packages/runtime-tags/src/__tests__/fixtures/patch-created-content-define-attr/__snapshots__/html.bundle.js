@@ -65,5 +65,5 @@ var template_default = _template("a", (input) => {
 		i: _unfilled_if($scope0_reason, 5) && Body?.content,
 		j: _write_if($scope0_reason, 3) && $input_label__closures,
 		k: _write_if($scope0_reason, 4) && $input_tag__closures
-	}) || ($fg__input_label && (_client_branch_if("a0", $scope0_id) || $cg__input_tag__OR__input_show || $cg__input_tag__OR__input_show) && _patch_write($scope0_id, "xd", input.label, !_server_guard($scope0_reason, 3)), $fg__input_tag && _patch_write($scope0_id, "xe", input.tag, !_server_guard($scope0_reason, 4)));
+	}) || ($fg__input_label && (_client_branch_if("a0", $scope0_id) || $cg__input_tag__OR__input_show || _unfilled_if($scope0_reason, 1)) && _patch_write($scope0_id, "xd", input.label, !_server_guard($scope0_reason, 3)), $fg__input_tag && _patch_write($scope0_id, "xe", input.tag, !_server_guard($scope0_reason, 4)));
 }, 1);

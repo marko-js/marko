@@ -38,7 +38,7 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 	_scope($scope0_id, {
 		input_n: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1)) && input.n,
 		"ClosureScopes:input_n/5": _write_if($scope0_reason, 1) && $input_n__closures
-	}, "__tests__/tags/panel.marko", 0, { input_n: ["input.n"] }) || $fg__input_n && _client_guard($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_n", input.n, !_server_guard($scope0_reason, 1));
+	}, "__tests__/tags/panel.marko", 0, { input_n: ["input.n"] }) || $fg__input_n && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_n", input.n, !_server_guard($scope0_reason, 1));
 });
 
 // template.marko

@@ -31,7 +31,7 @@ var picker_default = _template("b", (input) => {
 		f: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.refreshingChange,
 		k: load,
 		i: $refreshingChange
-	}) || ($fg__input_refreshing && _client_guard($scope0_reason, 2) && _patch_write($scope0_id, "xe", input.refreshing, !_server_guard($scope0_reason, 1)), $fg__input_refreshingChange && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "xf", input.refreshingChange, !_server_guard($scope0_reason, 2)));
+	}) || ($fg__input_refreshing && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xe", input.refreshing, !_server_guard($scope0_reason, 1)), $fg__input_refreshingChange && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xf", input.refreshingChange, !_server_guard($scope0_reason, 2)));
 	return $return;
 });
 

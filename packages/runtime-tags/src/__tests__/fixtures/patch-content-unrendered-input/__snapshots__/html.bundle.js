@@ -26,7 +26,7 @@ _shells({
 	b3: "b3;b%;<!><!><!>"
 });
 var gate_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_admin = _write_guard($scope0_reason, 3), $wg__input_guest = _write_guard($scope0_reason, 4), $wg__input_show = _write_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 2), $fg__input_admin = _filled_guard($scope0_reason, 3), $fg__input_guest = _filled_guard($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $wg__input_admin = _write_guard($scope0_reason, 3), $wg__input_guest = _write_guard($scope0_reason, 4), $wg__input_show = _write_guard($scope0_reason, 2), $fg__input_admin = _filled_guard($scope0_reason, 3), $fg__input_guest = _filled_guard($scope0_reason, 4), $cg__input_show = _client_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.show) {
@@ -48,7 +48,7 @@ var gate_default = _template("b", (input) => {
 	_scope($scope0_id, {
 		e: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && input.admin,
 		f: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 4)) && input.guest
-	}) || ($fg__input_admin && $cg__input_show && _patch_write($scope0_id, "xe", input.admin, !_server_guard($scope0_reason, 3)), $fg__input_guest && $cg__input_show && _patch_write($scope0_id, "xf", input.guest, !_server_guard($scope0_reason, 4)));
+	}) || ($fg__input_admin && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xe", input.admin, !_server_guard($scope0_reason, 3)), $fg__input_guest && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xf", input.guest, !_server_guard($scope0_reason, 4)));
 });
 
 // tags/wrapper.marko
@@ -59,7 +59,7 @@ _shells({
 	d1: "d1;b%;<!><!><!>"
 });
 var wrapper_default = _template("d", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 2), $wg__input_show = _write_guard($scope0_reason, 1), $fg__input_content = _filled_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 2), $wg__input_show = _write_guard($scope0_reason, 1), $fg__input_content = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	_html("<div>");
 	_if(() => {
@@ -72,8 +72,8 @@ var wrapper_default = _template("d", (input) => {
 		}
 	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["d1"], $scope0_reason, 1);
 	_html(`</div>${_el_mark($scope0_id, "a", $wg__input_show)}`);
-	$fg__input_content && $cg__input_show && _patch_render($scope0_id, "d0", "e");
-	_scope($scope0_id, { e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.content }) || $fg__input_content && $cg__input_show && _patch_write($scope0_id, "xe", input.content, !_server_guard($scope0_reason, 2));
+	$fg__input_content && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "d0", "e");
+	_scope($scope0_id, { e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.content }) || $fg__input_content && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.content, !_server_guard($scope0_reason, 2));
 });
 
 // template.marko
@@ -85,7 +85,7 @@ _shells({
 	a: `a${_shell_marker($setup)};${((_w0, _w1) => ` D l/${_w0}&/${_w1}&`)("b%c", " b")};${((_w0, _w1) => `<button class=inc> </button>${_w0}${_w1}`)($template$1, $template)}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_admin = _client_guard($scope0_reason, 3), $fg__input_rows = _filled_guard($scope0_reason, 4), $fg__input_guestText = _filled_guard($scope0_reason, 5), $fg__input_bodyText = _filled_guard($scope0_reason, 7);
+	const $scope0_reason = _scope_reason(), $fg__input_rows = _filled_guard($scope0_reason, 4), $fg__input_guestText = _filled_guard($scope0_reason, 5), $fg__input_bodyText = _filled_guard($scope0_reason, 7);
 	const $scope0_id = _scope_id();
 	const $input_rows__closures = /* @__PURE__ */ new Set();
 	const $input_guestText__closures = /* @__PURE__ */ new Set();
@@ -146,5 +146,5 @@ var template_default = _template("a", (input) => {
 		c: _existing_scope($childScope2),
 		o: _write_if($scope0_reason, 7) && $input_bodyText__closures,
 		d: _existing_scope($childScope3)
-	}) || ($fg__input_rows && $cg__input_admin && _patch_write($scope0_id, "xh", input.rows, !_server_guard($scope0_reason, 4)), $fg__input_guestText && $cg__input_admin && _patch_write($scope0_id, "xi", input.guestText, !_server_guard($scope0_reason, 5)), $fg__input_bodyText && _client_guard($scope0_reason, 6) && _patch_write($scope0_id, "xk", input.bodyText, !_server_guard($scope0_reason, 7)));
+	}) || ($fg__input_rows && _unfilled_if($scope0_reason, 3) && _patch_write($scope0_id, "xh", input.rows, !_server_guard($scope0_reason, 4)), $fg__input_guestText && _unfilled_if($scope0_reason, 3) && _patch_write($scope0_id, "xi", input.guestText, !_server_guard($scope0_reason, 5)), $fg__input_bodyText && _unfilled_if($scope0_reason, 6) && _patch_write($scope0_id, "xk", input.bodyText, !_server_guard($scope0_reason, 7)));
 }, 1);

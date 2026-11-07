@@ -46,7 +46,7 @@ var file_tabs_default = _template("__tests__/tags/file-tabs.marko", (input) => {
 		input_filesChange: ["input.filesChange"],
 		tabs: "1:6",
 		"TagVariableChange:tabs": ["tabsChange", "1:6"]
-	}) || ($fg__input_files && _client_guard($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_files", input.files, !_server_guard($scope0_reason, 1)), $fg__input_filesChange && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_filesChange", input.filesChange, !_server_guard($scope0_reason, 2)));
+	}) || ($fg__input_files && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_files", input.files, !_server_guard($scope0_reason, 1)), $fg__input_filesChange && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_filesChange", input.filesChange, !_server_guard($scope0_reason, 2)));
 });
 
 // tags/file-panes.marko

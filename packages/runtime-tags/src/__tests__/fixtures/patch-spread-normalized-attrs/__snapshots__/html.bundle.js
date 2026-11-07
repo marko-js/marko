@@ -4,7 +4,7 @@ _shells({
 	a2: "a2 !a0; ;<a>z</a>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_link = _filled_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $fg__input_link = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	let n = 0;
 	_html(`<button class=inc>${_text_mark($scope0_id, "b", n)}</button>${_el_mark($scope0_id, "a")}<div${_attrs(input.attrs, "c", $scope0_id, "div", 0, $scope0_reason, 0)}>x</div>${_el_mark($scope0_id, "c")}`);
@@ -22,9 +22,9 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a3");
 	_script($scope0_id, "a4");
 	_script($scope0_id, "a5");
-	$fg__input_link && $cg__input_show && _patch_render($scope0_id, "a1", "j");
+	$fg__input_link && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "a1", "j");
 	_scope($scope0_id, {
 		j: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.link,
 		l: n
-	}) || $fg__input_link && $cg__input_show && _patch_write($scope0_id, "xj", input.link, !_server_guard($scope0_reason, 2));
+	}) || $fg__input_link && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xj", input.link, !_server_guard($scope0_reason, 2));
 }, 1);

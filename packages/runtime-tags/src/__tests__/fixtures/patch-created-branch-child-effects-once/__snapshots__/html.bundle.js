@@ -51,7 +51,7 @@ _shells({
 	a9: "a9,"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_items = _server_guard($scope0_reason, 4), $scope0_page = _page_render(), $wi__input_items = _write_if($scope0_reason, 4), $cg__input_items = _client_guard($scope0_reason, 4), $cg__input_show = _client_guard($scope0_reason, 3), $fg__input_items = _filled_guard($scope0_reason, 4), $fg__input_nested = _filled_guard($scope0_reason, 5), $fg__input_tag = _filled_guard($scope0_reason, 6);
+	const $scope0_reason = _scope_reason(), $sg__input_items = _server_guard($scope0_reason, 4), $scope0_page = _page_render(), $wi__input_items = _write_if($scope0_reason, 4), $cg__input_items = _client_guard($scope0_reason, 4), $fg__input_items = _filled_guard($scope0_reason, 4), $fg__input_nested = _filled_guard($scope0_reason, 5), $cg__input_show = _client_guard($scope0_reason, 3), $fg__input_tag = _filled_guard($scope0_reason, 6);
 	const $scope0_id = _scope_id();
 	const $input_items__closures = /* @__PURE__ */ new Set();
 	let count = 0;
@@ -149,5 +149,5 @@ var template_default = _template("a", (input) => {
 		i: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 6)) && input.tag,
 		j: count,
 		k: $wi__input_items && $input_items__closures
-	}) || ($fg__input_items && (_client_branch_if("a4", $scope0_id) || _client_guard($scope0_reason, 1)) && _patch_write($scope0_id, "xg", input.items, !$sg__input_items), $fg__input_nested && $cg__input_show && _patch_write($scope0_id, "xh", input.nested, !_server_guard($scope0_reason, 5)), $fg__input_tag && $cg__input_show && _patch_write($scope0_id, "xi", input.tag, !_server_guard($scope0_reason, 6)));
+	}) || ($fg__input_items && (_client_branch_if("a4", $scope0_id) || _unfilled_if($scope0_reason, 1)) && _patch_write($scope0_id, "xg", input.items, !$sg__input_items), $fg__input_nested && _unfilled_if($scope0_reason, 3) && _patch_write($scope0_id, "xh", input.nested, !_server_guard($scope0_reason, 5)), $fg__input_tag && _unfilled_if($scope0_reason, 3) && _patch_write($scope0_id, "xi", input.tag, !_server_guard($scope0_reason, 6)));
 }, 1);

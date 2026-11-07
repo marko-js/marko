@@ -11,7 +11,7 @@ _shells({
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell;b%;<!><!><!>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_outer = _client_guard($scope0_reason, 3), $wi__input_show__OR__input_outer__OR__input_inner = _write_if($scope0_reason, 1), $cg__input_show = _client_guard($scope0_reason, 2), $fg__input_outer = _filled_guard($scope0_reason, 3), $fg__input_inner = _filled_guard($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $cg__input_outer = _client_guard($scope0_reason, 3), $wi__input_show__OR__input_outer__OR__input_inner = _write_if($scope0_reason, 1), $fg__input_outer = _filled_guard($scope0_reason, 3), $fg__input_inner = _filled_guard($scope0_reason, 4), $cg__input_show = _client_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_inner__closures = new Set();
 	_html("<main>");
@@ -47,5 +47,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, "__tests__/template.marko", 0, {
 		input_outer: ["input.outer"],
 		input_inner: ["input.inner"]
-	}) || ($fg__input_outer && $cg__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_outer", input.outer, !_server_guard($scope0_reason, 3)), $fg__input_inner && $cg__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_inner", input.inner, !_server_guard($scope0_reason, 4)));
+	}) || ($fg__input_outer && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_outer", input.outer, !_server_guard($scope0_reason, 3)), $fg__input_inner && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_inner", input.inner, !_server_guard($scope0_reason, 4)));
 }, 1);

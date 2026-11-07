@@ -64,7 +64,7 @@ _shells({
 	a1: `a1${_shell_marker([[], []], ["a>", $setup])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks)};${$template}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0), $fg__input_node = _filled_guard($scope0_reason, 1), $cg__input_show = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0), $fg__input_node = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_html("<ul>");
 	_if(() => {
@@ -83,6 +83,6 @@ var template_default = _template("a", (input) => {
 		}
 	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["a1"], $scope0_reason, 0);
 	_html(`</ul>${_el_mark($scope0_id, "a", $wg__input_show)}`);
-	$fg__input_node && $cg__input_show && _patch_render($scope0_id, "a0", "e");
-	_scope($scope0_id, { e: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.node }) || $fg__input_node && $cg__input_show && _patch_write($scope0_id, "xe", input.node, !_server_guard($scope0_reason, 1));
+	$fg__input_node && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "a0", "e");
+	_scope($scope0_id, { e: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.node }) || $fg__input_node && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xe", input.node, !_server_guard($scope0_reason, 1));
 }, 1);

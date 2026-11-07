@@ -22,5 +22,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_on: ["input.on"],
 		"ControlledHandler:#input/0": ["...input.attrs", "1:27"],
 		"EventAttributes:#input/0": ["...input.attrs", "1:27"]
-	}) || ($fg__input_attrs && _client_guard($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_attrs", input.attrs, !_server_guard($scope0_reason, 1)), $fg__input_on && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_on", input.on, !_server_guard($scope0_reason, 2)));
+	}) || ($fg__input_attrs && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_attrs", input.attrs, !_server_guard($scope0_reason, 1)), $fg__input_on && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_on", input.on, !_server_guard($scope0_reason, 2)));
 }, 1);

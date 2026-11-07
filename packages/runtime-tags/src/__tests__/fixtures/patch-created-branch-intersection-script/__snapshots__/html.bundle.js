@@ -27,5 +27,5 @@ var template_default = _template("a", (input) => {
 		e: _write_if($scope0_reason, 1) && input.prefix,
 		f: _write_if($scope0_reason, 0) && input.x,
 		g: input.suffix
-	}) || ($fg__input_prefix && _client_guard($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.prefix, !_server_guard($scope0_reason, 5)), $fg__input_x && _client_guard($scope0_reason, 0) && _patch_write($scope0_id, "xf", input.x, !_server_guard($scope0_reason, 6)), $fg__input_suffix && _patch_write($scope0_id, "xg", input.suffix, !_server_guard($scope0_reason, 7)));
+	}) || ($fg__input_prefix && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.prefix, !_server_guard($scope0_reason, 5)), $fg__input_x && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xf", input.x, !_server_guard($scope0_reason, 6)), $fg__input_suffix && _patch_write($scope0_id, "xg", input.suffix, !_server_guard($scope0_reason, 7)));
 }, 1);

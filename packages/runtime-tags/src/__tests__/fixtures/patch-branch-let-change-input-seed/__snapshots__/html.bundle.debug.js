@@ -7,7 +7,7 @@ _shells({
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell !__tests__/template.marko_1;Db%l ;<span>Seen <!></span><button>+</button>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_start = _filled_guard($scope0_reason, 1), $cg__input_show = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $fg__input_start = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	let last = 0;
 	_html(`<main><p>last ${_text_mark($scope0_id, "#text/0", last, 2)}</p>`);
@@ -34,6 +34,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}
 	}, $scope0_id, "#text/1", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 0);
 	_html("</main>");
-	$fg__input_start && $cg__input_show && _patch_render($scope0_id, "__tests__/template.marko_1_input_start#0:5/setup", "input_start");
-	_scope($scope0_id, { input_start: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.start }, "__tests__/template.marko", 0, { input_start: ["input.start"] }) || $fg__input_start && $cg__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_start", input.start, !_server_guard($scope0_reason, 1));
+	$fg__input_start && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "__tests__/template.marko_1_input_start#0:5/setup", "input_start");
+	_scope($scope0_id, { input_start: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.start }, "__tests__/template.marko", 0, { input_start: ["input.start"] }) || $fg__input_start && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_start", input.start, !_server_guard($scope0_reason, 1));
 }, 1);
