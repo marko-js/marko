@@ -540,7 +540,7 @@ export class PatchRenderState extends PatchPageState {
   // none leaves the page's token as it is.
   public heldCount = 0;
   public pendingShells = "";
-  override serializer = new PatchSerializerState(this);
+  override serializer = new PatchSerializerState();
   // A flush carries every entry rendered so far, so a patch never reorders: the
   // client creates a shown `@placeholder` from the shell its render ships.
   override writeReorders: State["writeReorders"] = false;

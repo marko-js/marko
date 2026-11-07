@@ -3,7 +3,6 @@ import { inspect } from "node:util";
 import { runInThisContext } from "node:vm";
 
 import { PatchSerializerState } from "../html/patches/serializer";
-import type { PatchRenderState } from "../html/patches/writer";
 import type { ScopeFlush } from "../html/serializer";
 import {
   dropQueuedCall,
@@ -3059,9 +3058,7 @@ describe("serializer", () => {
     it("serializes a scope run bare", () => {
       assert.equal(
         stringifyScopes(
-          new PatchSerializerState({
-            patchTreeNodes: new Set(),
-          } as PatchRenderState),
+          new PatchSerializerState(),
           [[1, {}, { value: 1 }]],
           patchBoundary(),
         ),
@@ -3075,9 +3072,7 @@ describe("serializer", () => {
       err.cause = wrapper;
       assert.equal(
         stringifyScopes(
-          new PatchSerializerState({
-            patchTreeNodes: new Set(),
-          } as PatchRenderState),
+          new PatchSerializerState(),
           [[1, {}, { value: { wrapper } }]],
           patchBoundary(),
         ),
@@ -3541,5 +3536,8 @@ function abortedStringifying(scopes: ScopeFlush[]) {
 }
 
 function patchBoundary() {
-  return { signal: { aborted: false }, state: {} } as any as Boundary;
+  return {
+    signal: { aborted: false },
+    state: { patchTreeNodes: new Set() },
+  } as any as Boundary;
 }
