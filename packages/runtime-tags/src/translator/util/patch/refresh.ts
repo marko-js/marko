@@ -1,5 +1,5 @@
-// Patch fill decisions (which bindings a patch fills or writes, fill identity,
-// what a created scope runs) and the finalizers recording what they need.
+// Patch fill decisions: which bindings a patch fills or writes, fill identity,
+// and what a created scope runs.
 import type { types as t } from "@marko/compiler";
 import { getFile, getTemplateId } from "@marko/compiler/babel-utils";
 
@@ -131,13 +131,13 @@ export function getPatchFillKey(binding: Binding) {
   );
 }
 
-// The template's fill bindings.
+// The section's `<let>`s a patch fills.
 export function getPatchFillBindings(section: Section) {
   return bindingUtil.filter(section.bindings, isPatchFillBinding);
 }
 
-// A canonical root server value a patch fills to keep it current (aliases
-// never get ordinals; `$global` readers re-read the re-shipped bag).
+// A canonical root server value a patch fills to keep it current (`$global`
+// readers re-read the re-shipped bag).
 function isPatchFilled(binding: Binding) {
   return (
     isPatch() &&
@@ -206,8 +206,7 @@ function isContentScope(section: Section) {
   );
 }
 
-// A potential fill: a server-sourced value whose reads intersect client
-// state; the server writes all, tree-shaking decides which apply.
+// A `<let>` a patch fills (`canPatchFill`).
 function isPatchFillBinding(binding: Binding) {
   return !!getPatchFill(binding).fill;
 }
@@ -468,7 +467,7 @@ export interface FillConditions {
 }
 
 // What a binding's reads (and its direct aliases') need of its fill, and the
-// intersections the patch writes that it reaches in structure the client may own.
+// intersections the patch writes that it reaches in structure that may update from the client.
 const getFillReadKind = createPassMemo(computeFillReadKind, {
   kind: undefined,
   contentKind: undefined,
@@ -652,8 +651,8 @@ function getReadKind(
   );
 }
 
-// What the client may own between the binding's section and the read (`true`:
-// always), a path no per-section memo holds; `handOff` takes `<await>` bodies.
+// The structure between the binding's section and the read that may update from the client
+// (`true`: always), a path no per-section memo holds; `handOff` takes `<await>` bodies.
 function getReadStructure(
   binding: Binding,
   read: ReferencedExtra,
@@ -997,8 +996,8 @@ function buildsEffectReadObject(binding: Binding) {
   });
 }
 
-function isFilledForEffect(held: Binding) {
-  return !!getPatchFill(held).effectRead;
+function isFilledForEffect(reached: Binding) {
+  return !!getPatchFill(reached).effectRead;
 }
 
 // An effect, outside a created `@catch`, references the value itself.
@@ -1211,18 +1210,18 @@ function addFilledRead(reads: Set<Binding>, binding: Binding) {
 // from its holder (`expr` derives it): one choosing it, another template's input, and on.
 export function someReached(
   holder: Binding,
-  test: (held: Binding, expr?: t.NodeExtra) => boolean,
+  test: (reached: Binding, expr?: t.NodeExtra) => boolean,
   expr?: t.NodeExtra,
   carries?: (binding: Binding, expr: ReferencedExtra) => boolean,
 ) {
   const seen = new Set<Binding>();
-  const reaches = (held: Binding, expr?: t.NodeExtra): boolean => {
-    if (seen.has(held)) return false;
-    seen.add(held);
+  const reaches = (reached: Binding, expr?: t.NodeExtra): boolean => {
+    if (seen.has(reached)) return false;
+    seen.add(reached);
     return (
-      test(held, expr) ||
+      test(reached, expr) ||
       someAlias(
-        held,
+        reached,
         (alias) =>
           someDerivedRead(
             alias,
@@ -1249,7 +1248,7 @@ export function someDerivedRead(
 }
 
 // Referenced inside a function client code reads (registering it): its reads
-// reach the live scope at any later invocation, so a patch keeps it fresh.
+// reach the live scope at any later invocation, so a patch keeps it current.
 function isRegisteredFnReference(binding: Binding) {
   for (const reads of binding.reads.values()) {
     if (some(reads, isRegisteredFnRead)) return true;
@@ -2150,7 +2149,7 @@ export function ensurePatchReasonGroups(
     ensureCallerParamGroups(getSourcesForReferencedBindings(intersection));
   }
   for (const slot of section.slots) ensureSlotGroups(slot);
-  // A closure's render over a written slot gates on the structure callers own.
+  // A closure's render over a written slot gates on the structure callers select.
   getParamSelectedStructure(section)?.forEach(ensureCallerParamGroups);
   // An `<await>` asks whether a patch fills its promise (`_unfilled_if`).
   if (section.branch?.kind === "await") {
