@@ -1,13 +1,5 @@
-import { decodeAccessor } from "../../common/helpers";
-import { toArray } from "../../common/opt";
-import {
-  AccessorPrefix,
-  AccessorProp,
-  type EncodedAccessor,
-  PatchKey,
-  type Scope,
-} from "../../common/types";
-import { queueEffect, queueRender } from "../queue";
+import { AccessorProp, PatchKey, type Scope } from "../../common/types";
+import { queueRender } from "../queue";
 import { _resumed } from "../resume";
 import { type SignalFn, subscribeToScopeSet } from "../signals";
 import { patchers } from "./apply";
@@ -44,51 +36,8 @@ export function _fill_global(
   ])[0];
 }
 
-// A signal a loop's rows read: the loop's owner subscribes once and a changed member
-// walks its rows, as a loop closure does, so a row the client creates subscribes to none.
-export function _fill_global_for(
-  id: string,
-  ownerLoopNodeAccessor: EncodedAccessor,
-  signal: SignalFn,
-  ...keys: (string | 0)[]
-): SignalFn {
-  const rows =
-    AccessorPrefix.BranchScopes +
-    (MARKO_DEBUG
-      ? ownerLoopNodeAccessor
-      : decodeAccessor(ownerLoopNodeAccessor as number));
-  _fill_global(
-    id,
-    (owner: Scope) => {
-      for (const row of toArray(owner[rows as keyof Scope] as Scope))
-        signal(row);
-    },
-    ...keys,
-  );
-  return (scope: Scope) => {
-    signal(scope);
-    subscribeToScopeSet(globalScopes, id, scope[AccessorProp.Owner]!);
-  };
-}
-
-// Like `_script`, but a change to a `$global` member it reads re-runs it on every
-// scope it ran on.
-export function _fill_global_script(
-  id: string,
-  fn: (scope: Scope) => void,
-  ...keys: (string | 0)[]
-) {
-  const effect = (_resumed[id] = (scope: Scope) => {
-    fn(scope);
-    subscribeToScopeSet(globalScopes, id, scope);
-  });
-  const queue = (scope: Scope) => queueEffect(scope, effect);
-  _fill_global(id, queue, ...keys);
-  return queue;
-}
-
-// Registrations with a nested member, each member ending in `0`: only a page
-// with one checks paths, and only on such registrations.
+// A registration with a nested member, ending in `0`: only a page with one
+// checks paths, and only on such registrations.
 export function _fill_global_path(
   id: string,
   signal: SignalFn,
@@ -97,23 +46,12 @@ export function _fill_global_path(
   changesMember = membersChanged;
   return _fill_global(id, signal, ...keys, 0);
 }
-export function _fill_global_path_for(
-  id: string,
-  ownerLoopNodeAccessor: EncodedAccessor,
-  signal: SignalFn,
-  ...keys: (string | 0)[]
-): SignalFn {
-  changesMember = membersChanged;
-  return _fill_global_for(id, ownerLoopNodeAccessor, signal, ...keys, 0);
-}
-export function _fill_global_path_script(
-  id: string,
-  fn: (scope: Scope) => void,
-  ...keys: (string | 0)[]
-) {
-  changesMember = membersChanged;
-  return _fill_global_script(id, fn, ...keys, 0);
-}
+// The same, for a member whose document scopes subscribe on resume: no shipped code
+// reaches it, so its registration ships it.
+export {
+  _fill_global as _fill_global_resume,
+  _fill_global_path as _fill_global_path_resume,
+};
 let changesMember: typeof membersChanged | undefined;
 
 // Each signal reading a member the patch changes re-runs once per live scope, then

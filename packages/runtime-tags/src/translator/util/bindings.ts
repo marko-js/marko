@@ -212,6 +212,24 @@ export function createBinding(
   return binding;
 }
 
+// A `$global` read's binding: the object, or a member of it.
+export function isGlobalBinding(binding: Binding) {
+  return binding.type === BindingType.global;
+}
+
+// Each `$global` binding the template reads through, the whole object first.
+export function forEachGlobalMember(cb: (member: Binding) => void) {
+  const { globalBinding } = getProgram().node.extra;
+  if (globalBinding) visitGlobalMember(globalBinding, cb);
+}
+
+function visitGlobalMember(member: Binding, cb: (member: Binding) => void) {
+  cb(member);
+  for (const part of member.propertyAliases.values()) {
+    visitGlobalMember(part, cb);
+  }
+}
+
 // Holds the scope id at `offset` past its own for what the runtime keeps there.
 export function reserveId(binding: Binding, offset: ReservedId) {
   binding.reserveSize = Math.max(binding.reserveSize, offset);

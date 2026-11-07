@@ -48,9 +48,7 @@ import {
   type Read,
   type ReferencedExtra,
   getFunctionReadsByExpression,
-  getConstantBindings,
   getConstantBindingsInFunction,
-  getReferencedBindings,
   getReferencedBindingsInFunction,
   getBindingsDerivedFrom,
 } from "./references";
@@ -153,19 +151,6 @@ function addIntersectionMemberReason(
       ? partner.sources
       : partner.sources?.global && member.sources,
   );
-}
-
-// A changed `$global` key re-runs what reads it wherever the client holds the
-// values it reads, so each value's own sources say where it is read.
-export function addGlobalReadReasons(section: Section) {
-  for (const expr of section.globalReadExprs || []) {
-    forEach(getReferencedBindings(expr), (member) => {
-      addMemberReason(section, member, member.sources);
-    });
-    forEach(getConstantBindings(expr), (key) => {
-      addMemberReason(section, key, key.sources);
-    });
-  }
 }
 
 function addMemberReason(

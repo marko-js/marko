@@ -10,6 +10,7 @@ import {
   bindingUtil,
   type Binding,
   BindingType,
+  forEachGlobalMember,
   getCanonicalBinding,
   getDebugName,
   getDebugNames,
@@ -41,6 +42,7 @@ import {
   push,
   reduce,
   some,
+  toArray,
 } from "./optional";
 import { getEffectWrites, fillsHole } from "./patch/decisions";
 import {
@@ -93,7 +95,6 @@ import {
   getReferencedBindings,
   getReferencedBindingsInFunction,
   getCanonicalExpr,
-  getGlobalReads,
   hasResumableAssignment,
   isAssignedBindingExtra,
   isPureExpr,
@@ -137,7 +138,6 @@ import {
   isKnownChild,
   isDynamicClosure,
   isInParentSection,
-  isLoopBody,
   isOptionalBranch,
   type Section,
   sectionUtil,
@@ -156,7 +156,6 @@ import {
   andGuard,
   getExprIfWritten,
   getWriteGuardForAny,
-  getBranchWriteReason,
   getWriteReason,
   isBranchAlwaysMarked,
   isSameReason,
@@ -182,13 +181,6 @@ export interface Signal {
     value: t.Expression | undefined;
   }>;
   intersections: Opt<Signal>;
-  /** Its `$global` signals: work reading `$global` keys, which it calls. */
-  globalSignals: Opt<Signal>;
-  /** As a `$global` signal, the reads its id names: a script's own, so it
-   * re-runs on exactly those, else the keys its work reads under. */
-  globalSignalReads: ReferencedBindings;
-  /** As a `$global` signal, the reads its work makes: a changed value re-runs it. */
-  globalReads: ReferencedBindings;
   /** Signals this one forwards into: they must declare first when the
    * forward simplifies to a bare, eagerly evaluated reference. */
   forwards: Opt<Signal>;
@@ -409,13 +401,8 @@ export function getSignal(
   section: Section,
   referencedBindings: ReferencedBindings,
   name?: string,
-  globalSignalReads?: ReferencedBindings,
 ) {
-  if (
-    !globalSignalReads &&
-    referencedBindings &&
-    !Array.isArray(referencedBindings)
-  ) {
+  if (referencedBindings && !Array.isArray(referencedBindings)) {
     if (referencedBindings.type === BindingType.constant) {
       return getSignal(section, undefined);
     }
@@ -429,28 +416,21 @@ export function getSignal(
   }
 
   const signals = getSignals(section);
-  const key = globalSignalReads
-    ? getGlobalSignalId(section, referencedBindings, globalSignalReads)
-    : referencedBindings;
-  let signal = signals.get(key)!;
+  let signal = signals.get(referencedBindings)!;
   if (!signal) {
-    let signalName =
+    const signalName =
       name ??
       (referencedBindings
         ? getDebugNamesAsIdentifier(referencedBindings)
         : "setup");
-    let exportName = referencedBindings
+    const exportName = referencedBindings
       ? !Array.isArray(referencedBindings) &&
         referencedBindings.section === section &&
         getProgram().node.extra.exportNames!.params.get(referencedBindings)
       : !section.parent && getProgram().node.extra.exportNames!.setup;
-    if (globalSignalReads) {
-      signalName += "__" + getDebugNamesAsIdentifier(globalSignalReads);
-      exportName = false;
-    }
 
     signals.set(
-      key,
+      referencedBindings,
       (signal = {
         identifier: exportName
           ? t.identifier(exportName)
@@ -461,9 +441,6 @@ export function getSignal(
         section,
         values: [],
         intersections: undefined,
-        globalSignals: undefined,
-        globalSignalReads,
-        globalReads: undefined,
         forwards: undefined,
         render: [],
         patch: [],
@@ -496,12 +473,6 @@ export function getSignal(
 
     if (isOutputHTML()) {
       return signal;
-    } else if (globalSignalReads) {
-      const parent = getSignal(section, referencedBindings);
-      parent.globalSignals = push(parent.globalSignals, signal);
-      // The runtime runs an intersection on the scope alone, so it reads values there.
-      parent.storesValue = signal.storesValue = true;
-      signal.build = () => buildSignalFn(signal);
     } else if (!referencedBindings) {
       signal.build = () => buildSignalFn(signal);
     } else if (Array.isArray(referencedBindings)) {
@@ -528,6 +499,15 @@ export function getSignal(
       signal.build = () =>
         buildIntersection(section, referencedBindings, buildSignalFn(signal));
     } else if (
+      referencedBindings.type === BindingType.global &&
+      referencedBindings.section === section
+    ) {
+      // A `$global` member reads the scope's `$global`: setup renders it, and a patch
+      // changing it runs it on each scope it subscribed.
+      signal.storesValue = true;
+      addValue(section, undefined, signal);
+      signal.build = () => buildGlobalSignal(signal, referencedBindings);
+    } else if (
       referencedBindings.section !== section &&
       sectionUtil.has(referencedBindings.closureSections, section)
     ) {
@@ -538,11 +518,9 @@ export function getSignal(
 
         if (closureSignalBuilder && isDirectClosure(section, closure)) {
           // A created scope sets the closure up by its id, registered with the
-          // signal it runs (a `$global` signal's wrapper registers its own).
+          // signal it runs.
           const setup =
-            isPatch() &&
-            !signal.globalReads &&
-            getCreatedSetup(section).get(closure)?.setup;
+            isPatch() && getCreatedSetup(section).get(closure)?.setup;
           // A patch may render a mixed one on any scope, whoever renders this body.
           if (setup === "mixed") importRuntimeFeature("patches/render");
           return closureSignalBuilder(
@@ -635,117 +613,60 @@ function inShellChain(section: Section) {
   return false;
 }
 
-// The `$global` signals whose scopes a document subscribes, which a changed member
-// re-runs: `true` if resumed code renders the read, else the sources the client may own.
-const [getGlobalSignals] = createAnalysisMemo((section: Section) => {
-  const signals = new Map<string, true | Sources | undefined>();
-  // Kept content's scopes never subscribe: no client code reads for them.
-  if (inKeptContent(section)) return signals;
-  const effects = new Set<string>();
-  for (const expr of section.globalReadExprs || []) {
+// Where resumed code re-runs a `$global` member's readers, which its owner's scope then
+// subscribes for: `true`, else the sources the client may own; none where a patch fills each.
+const [getGlobalSubscribe] = createAnalysisMemo((member: Binding) => {
+  let subscribe: true | Sources | undefined | false = false;
+  for (const expr of member.reads.keys()) {
     const referencedBindings = getReferencedBindings(expr);
-    const id = getGlobalSignalId(
-      section,
-      referencedBindings,
-      getGlobalSignalReads(expr, getGlobalReads(expr)!),
-    );
-    // An effect subscribes its scope as it runs, which a document's do on resume,
-    // for any signal of its id.
-    if (getCanonicalExpr(expr).isEffect) {
-      effects.add(id);
+    // Kept content's scopes never subscribe: no client code reads for them.
+    if (
+      subscribe === true ||
+      !bindingUtil.has(referencedBindings, member) ||
+      inKeptContent(expr.section)
+    ) {
       continue;
     }
+    subscribe ||= undefined;
+    const others = bindingUtil.filter(referencedBindings, isNotGlobalMember);
     // The client runs a filled intersection wherever its group has a client member, and
     // derives a value a patch writes only where a caller passes it client state.
     const unfilled =
-      getUnfillableSources(referencedBindings) ||
+      getCanonicalExpr(expr).isEffect ||
+      getUnfillableSources(others) ||
       (some(expr.derives, hasGuardedSources)
-        ? getSourcesForReferencedBindings(referencedBindings)
+        ? getSourcesForReferencedBindings(others)
         : isResumedRead(expr)) ||
-      (Array.isArray(referencedBindings) &&
-        isFilledIntersection(referencedBindings) &&
-        getSourcesForReferencedBindings(referencedBindings));
-    const prev = signals.get(id);
-    signals.set(
-      id,
-      prev === true || unfilled === true
-        ? true
-        : mergeSources(prev, unfilled || undefined),
-    );
+      (Array.isArray(others) &&
+        isFilledIntersection(others) &&
+        getSourcesForReferencedBindings(others));
+    if (unfilled === true) {
+      subscribe = true;
+    } else if (unfilled) {
+      subscribe = mergeSources(subscribe || undefined, unfilled);
+    }
   }
-  for (const id of effects) signals.delete(id);
-  return signals;
-}, new Map<string, true | Sources | undefined>());
+  return subscribe;
+}, false);
 
-// Registers a `$global` signal under the members it reads: pure, so the
-// consumer's retention decides if a member has a reader.
-function wrapGlobalSignals(signal: Signal, value: t.Expression): t.Expression {
-  const id = t.stringLiteral(getSignalRegistryId(signal));
-  const { path, args } = getGlobalMembers(signal);
-  return subscribesLoopOwner(signal.section) &&
-    getGlobalSignals(signal.section).has(id.value)
-    ? callRuntime(
-        path ? "_fill_global_path_for" : "_fill_global_for",
-        id,
-        getScopeAccessorLiteral(signal.section.branch!.tag.nodeBinding, true),
-        value,
-        ...args,
-      )
-    : callRuntime(
-        path ? "_fill_global_path" : "_fill_global",
-        id,
-        value,
-        ...args,
-      );
+function isNotGlobalMember(binding: Binding) {
+  return binding.type !== BindingType.global;
 }
 
-// Rows a loop's markers always resume into its owner: the owner subscribes once
-// to each `$global` signal of theirs (no effects), and a change walks its rows.
-function subscribesLoopOwner(section: Section) {
-  if (!isLoopBody(section)) return false;
-  const branchReason = getBranchWriteReason(section);
-  const nodeReason = getWriteReason(section.branch!.tag.nodeBinding);
-  return (
-    !!branchReason &&
-    !isGuardedReason(branchReason) &&
-    !!nodeReason &&
-    !isGuardedReason(nodeReason)
+// A `$global` member's signal, registered under the member's keys (`""`: the whole
+// object): pure, so the consumer's retention decides if the member has a reader.
+function buildGlobalSignal(signal: Signal, member: Binding) {
+  const keys = getPropertyPath(member, getProgram().node.extra.globalBinding!);
+  return callRuntime(
+    `${Array.isArray(keys) ? "_fill_global_path" : "_fill_global"}${getGlobalSubscribe(member) ? "_resume" : ""}`,
+    t.stringLiteral(getResumeRegistryId(signal.section, member, "subscribe")),
+    buildSignalFn(signal),
+    ...toArray(keys ?? "", toKeyLiteral),
   );
 }
 
-// The `$global` members a signal reads by their keys (`""`: the whole object), a `0`
-// between them where one is nested (`path`); a read below another is covered by it.
-function getGlobalMembers(signal: Signal) {
-  const members: string[][] = [];
-  forEach(signal.globalReads, (read) => {
-    for (let above = read.aliasOf; above; above = above.aliasOf) {
-      if (bindingUtil.has(signal.globalReads, above)) return;
-    }
-    const keys = getPropertyPath(read, getProgram().node.extra.globalBinding!);
-    members.push(Array.isArray(keys) ? keys : [keys ?? ""]);
-  });
-  const path = members.some(isNestedMember);
-  const args: t.Expression[] = [];
-  for (const keys of members) {
-    if (path && args.length) args.push(t.numericLiteral(0));
-    for (const key of keys) args.push(t.stringLiteral(key));
-  }
-  return { path, args };
-}
-
-function isNestedMember(keys: string[]) {
-  return keys.length > 1;
-}
-
-// A first-hop `$global` key, or `$global` itself for a whole-object read.
-function isGlobalKey(read: Binding) {
-  return !read.aliasOf?.aliasOf;
-}
-
-// The key a `$global` read reads under.
-function toGlobalKey(read: Binding) {
-  while (!isGlobalKey(read)) read = read.aliasOf!;
-  return read;
+function toKeyLiteral(key: string) {
+  return t.stringLiteral(key);
 }
 
 export function initValue(binding: Binding, isLet = false) {
@@ -821,8 +742,7 @@ export function signalHasWork(signal: Signal): boolean {
     signal.effect.length ||
     signal.hasHTMLEffect ||
     signal.values.length ||
-    signal.intersections ||
-    signal.globalSignals
+    signal.intersections
   ) {
     return true;
   }
@@ -915,12 +835,10 @@ function getForwardStatements(signal: Signal, target: Signal) {
 function leavesForwardToPatch({
   referencedBindings,
   section,
-  globalReads,
 }: Signal): boolean {
   if (!referencedBindings) return false;
   if (
     Array.isArray(referencedBindings) ||
-    globalReads ||
     referencedBindings.section !== section
   ) {
     return every(referencedBindings, (binding) => {
@@ -948,6 +866,7 @@ function leavesValueToPatch(binding: Binding) {
   for (const read of binding.reads.keys()) {
     if (!leavesReadToPatch(read)) return false;
   }
+  if (binding.type === BindingType.global) return true;
   for (const alias of binding.aliases) {
     if (!leavesForwardToPatch(getSignal(alias.section, alias))) return false;
   }
@@ -1089,11 +1008,11 @@ export function buildSignalFn(signal: Signal): t.Expression {
   const binding = signal.referencedBindings;
   const isIntersection = Array.isArray(binding);
   const isBinding = binding && !isIntersection;
-  const isValue =
-    isBinding && binding.section === section && !signal.globalReads;
+  const isValue = isBinding && binding.section === section;
   const assertsHoists = isValue && binding.hoists && !isOptimize();
 
-  if (isValue) {
+  // A `$global` member's parts run on their own keys, never forwarded.
+  if (isValue && binding.type !== BindingType.global) {
     for (const alias of binding.aliases) {
       const aliasSignal = getSignal(alias.section, alias);
       if (signalHasWork(aliasSignal)) {
@@ -1160,13 +1079,6 @@ export function buildSignalFn(signal: Signal): t.Expression {
   }
 
   forEach(signal.intersections, (intersection) => {
-    pushScopeCall(
-      getForwardStatements(signal, intersection),
-      intersection.identifier,
-    );
-  });
-
-  forEach(signal.globalSignals, (intersection) => {
     pushScopeCall(
       getForwardStatements(signal, intersection),
       intersection.identifier,
@@ -1403,7 +1315,7 @@ export function addStatement(
   statement: t.Statement | t.Statement[] | t.Expression,
   isPure?: boolean,
 ): void {
-  const signal = getExprSignal(targetSection, expr);
+  const signal = getSignal(targetSection, getReferencedBindings(expr));
   // A render of a hole the patch fills is the patch's own (`Signal.patch`).
   const statements =
     signal[
@@ -1453,7 +1365,7 @@ export function addValue(
   signal: Signal,
   value?: t.Expression,
 ) {
-  const parentSignal = getExprSignal(targetSection, expr);
+  const parentSignal = getSignal(targetSection, getReferencedBindings(expr));
   parentSignal.values.push({
     signal,
     value,
@@ -1466,31 +1378,6 @@ export function addValue(
   );
 }
 
-// An expression reading `$global` keys (a patch build's) adds its work to its
-// `$global` signal for those keys, along with what it reads.
-function getExprSignal(section: Section, expr: t.NodeExtra | undefined) {
-  const reads = getGlobalReads(expr);
-  const signal = getSignal(
-    section,
-    getReferencedBindings(expr),
-    undefined,
-    reads && getGlobalSignalReads(expr!, reads),
-  );
-  if (reads) signal.globalReads = bindingUtil.union(signal.globalReads, reads);
-  return signal;
-}
-
-// The reads naming an expression's `$global` signal: a script's own, else the
-// keys it reads under, so idempotent work under the same keys shares one signal.
-function getGlobalSignalReads(expr: t.NodeExtra, reads: ReferencedBindings) {
-  return getCanonicalExpr(expr).isEffect
-    ? reads
-    : reduce(reads, addGlobalKey, undefined as ReferencedBindings);
-}
-
-function addGlobalKey(keys: ReferencedBindings, read: Binding) {
-  return bindingUtil.add(keys, toGlobalKey(read));
-}
 
 function buildResumeRegisterKey(
   section: Section,
@@ -1527,26 +1414,8 @@ export function getResumeRegistryId(
   return getTemplateId(markoOpts, filename as string, key);
 }
 
-// A `$global` signal's register id names its keys beside its signal's bindings.
-function getGlobalSignalId(
-  section: Section,
-  referencedBindings: ReferencedBindings,
-  keys: ReferencedBindings,
-) {
-  return getResumeRegistryId(
-    section,
-    bindingUtil.union(referencedBindings, keys),
-  );
-}
-
-export function getSignalRegistryId({
-  section,
-  referencedBindings,
-  globalSignalReads,
-}: Signal) {
-  return globalSignalReads
-    ? getGlobalSignalId(section, referencedBindings, globalSignalReads)
-    : getResumeRegistryId(section, referencedBindings);
+export function getSignalRegistryId({ section, referencedBindings }: Signal) {
+  return getResumeRegistryId(section, referencedBindings);
 }
 
 export function writeSignals(section: Section) {
@@ -1568,7 +1437,6 @@ export function writeSignals(section: Section) {
     }
 
     forEach(signal.intersections, writeSignal);
-    forEach(signal.globalSignals, writeSignal);
 
     // Its caller writes its reads in place.
     if (isInlinedValue(signal)) return;
@@ -1586,28 +1454,14 @@ export function writeSignals(section: Section) {
         [scopeIdentifier],
         toOnlyExpressionOrBlock(signal.effect),
       );
-      // An effect reading `$global` runs once per run however many reach it, and
-      // its registration carries the members whose change re-runs it.
-      const members = signal.globalReads && getGlobalMembers(signal);
       effectDeclarator = t.variableDeclarator(
         effectIdentifier,
-        members
-          ? callRuntime(
-              members.path ? "_fill_global_path_script" : "_fill_global_script",
-              id,
-              effectFn,
-              ...members.args,
-            )
-          : callRuntime("_script", id, effectFn),
+        callRuntime("_script", id, effectFn),
       );
     }
 
     let signalDeclaration: t.Statement | undefined;
     if (signal.build) {
-      // An intersection with no work but its effect is that effect, which its script
-      // registration puts under each member already.
-      const onlyEffect =
-        !signal.render.length && !signal.values.length && !signal.patch.length;
       let value = signal.build();
       // A built bare identifier, or one a `_const`/`_let` store takes as its
       // fn, references its forward target when the module evaluates.
@@ -1628,21 +1482,6 @@ export function writeSignals(section: Section) {
 
       if (t.isCallExpression(value)) {
         trimEmptyArgs(value.arguments as t.Expression[]);
-      }
-
-      if (isPatch()) {
-        const unwrapped = value;
-        if (signal.globalReads && !onlyEffect) {
-          value = wrapGlobalSignals(signal, value);
-        }
-        // A wrapper takes the signal as a callback whose result goes unused.
-        if (
-          value !== unwrapped &&
-          t.isArrowFunctionExpression(unwrapped) &&
-          t.isBlockStatement(unwrapped.body)
-        ) {
-          unwrapped.body = toOnlyExpressionOrBlock(unwrapped.body.body);
-        }
       }
 
       if (signal.register) {
@@ -1894,7 +1733,7 @@ function toReturnedFunction(rawFn: t.Function, prologue?: t.Statement[]) {
 }
 
 export function addHTMLEffectCall(section: Section, expr?: t.NodeExtra) {
-  const signal = getExprSignal(section, expr);
+  const signal = getSignal(section, getReferencedBindings(expr));
   signal.hasHTMLEffect = signal.storesValue = true;
 }
 
@@ -2033,23 +1872,29 @@ export function writeHTMLResumeStatements(
     }
   });
 
-  // A scope with client work reading `$global` keys enters their readers.
-  for (const [id, unfilled] of getGlobalSignals(section)) {
-    body.push(
-      t.expressionStatement(
-        callRuntime(
-          "_fill_global_subscribe",
-          t.stringLiteral(id),
-          subscribesLoopOwner(section)
-            ? getScopeIdIdentifier(section.parent!)
-            : scopeIdIdentifier,
-          unfilled === true
-            ? t.numericLiteral(1)
-            : unfilled &&
-                getCallerGroupGuard(section, "_client_guard", unfilled),
-        ),
-      ),
-    );
+  // A template's scope enters the readers of each `$global` member resumed code
+  // re-runs, which its closures reach below it.
+  if (!section.parent) {
+    forEachGlobalMember((member) => {
+      const unfilled = getGlobalSubscribe(member);
+      if (unfilled !== false) {
+        body.push(
+          t.expressionStatement(
+            callRuntime(
+              "_fill_global_subscribe",
+              t.stringLiteral(
+                getResumeRegistryId(section, member, "subscribe"),
+              ),
+              scopeIdIdentifier,
+              unfilled === true
+                ? t.numericLiteral(1)
+                : unfilled &&
+                    getCallerGroupGuard(section, "_client_guard", unfilled),
+            ),
+          ),
+        );
+      }
+    });
   }
 
   // Effects carry no order (CONTEXT.md Effect), so neither this loop's direction

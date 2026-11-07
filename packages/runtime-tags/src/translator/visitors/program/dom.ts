@@ -1,6 +1,7 @@
 import { types as t } from "@marko/compiler";
 import { getFile, importDefault } from "@marko/compiler/babel-utils";
 
+import { forEachGlobalMember } from "../../util/bindings";
 import { getUnusedParamIdentifier } from "../../util/generate-uid";
 import { addTagVarBindings } from "../../util/known-tag";
 import { isOptimize, isPatch } from "../../util/marko-config";
@@ -90,6 +91,10 @@ export default {
         inputBinding && !inputBinding.pruned
           ? initValue(inputBinding)
           : undefined;
+      // The template declares `$global`: a member read only below it dispatches here.
+      forEachGlobalMember((member) => {
+        if (member.closureSections) getSignal(section, member);
+      });
       const styleFile = program.node.extra.styleFile;
       if (styleFile) {
         importDefault(getFile(), styleFile);

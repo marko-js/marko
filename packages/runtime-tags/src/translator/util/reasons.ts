@@ -21,7 +21,6 @@ import {
 import {
   isReferencedExtra,
   getCanonicalExpr,
-  getGlobalReads,
   getReferencedBindings,
 } from "./references";
 import {
@@ -42,7 +41,6 @@ import {
 } from "./slots";
 import {
   ALWAYS,
-  globalSources,
   mergeSources,
   type Sources,
   sourcesUtil,
@@ -141,12 +139,7 @@ export function isStateReason(reason: undefined | Reason): reason is Sources {
 export function getSourcesForExpr(expr: t.NodeExtra) {
   const root = getCanonicalExpr(expr);
   if (isReferencedExtra(root)) {
-    const sources = getSourcesForReferencedBindings(
-      getReferencedBindings(root),
-    );
-    return getGlobalReads(root)
-      ? mergeSources(globalSources, sources)
-      : sources;
+    return getSourcesForReferencedBindings(getReferencedBindings(root));
   }
 }
 

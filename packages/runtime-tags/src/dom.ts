@@ -80,11 +80,9 @@ export {
 export { _on } from "./dom/event";
 export {
   _fill_global,
-  _fill_global_for,
   _fill_global_path,
-  _fill_global_path_for,
-  _fill_global_path_script,
-  _fill_global_script,
+  _fill_global_path_resume,
+  _fill_global_resume,
 } from "./dom/patches/global";
 export { _load_lazy, _load_signal_patch } from "./dom/patches/load";
 export {
