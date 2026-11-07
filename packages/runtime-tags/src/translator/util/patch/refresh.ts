@@ -816,7 +816,7 @@ function getOtherInputs(sources: Sources | undefined, binding: Binding) {
     bindingUtil.filter(sources?.param, (param) =>
       isCallerParamAt(param, binding.section),
     ),
-    getSourcesForReferencedBindings(binding)?.param,
+    binding.sources?.param,
   );
   return others && createSources(undefined, others);
 }
@@ -1825,7 +1825,7 @@ export function getRendererRead(extra: t.NodeExtra) {
 export function getRendererCallerSources(extra: t.NodeExtra) {
   const name = getNameRead(extra);
   return name && isSectionParam(name.binding)
-    ? getSourcesForReferencedBindings(name.binding)
+    ? name.binding.sources
     : undefined;
 }
 
@@ -2083,9 +2083,9 @@ function findUnfilledStructure(
         if (hasCallerParamSource(partner.sources)) {
           structure = sourcesUtil.add(
             structure,
-            getSourcesForReferencedBindings(
-              fill || writesForIntersectionRender(partner) ? refs : partner,
-            )!,
+            (fill || writesForIntersectionRender(partner)
+              ? getSourcesForReferencedBindings(refs)
+              : partner.sources)!,
           );
         }
       }
@@ -2171,7 +2171,7 @@ function ensureSlotGroups(slot: Slot) {
 function ensureBindingGroups(binding: Binding) {
   const { writeReads, filledMembers } = getPatchFill(binding);
   if (writeReads && patchFillsScope(binding.section)) {
-    ensureCallerParamGroups(getSourcesForReferencedBindings(binding));
+    ensureCallerParamGroups(binding.sources);
   }
   // Its write in place gates on each filled intersection's other members.
   forEach(filledMembers, ensureCallerParamGroups);
@@ -2195,7 +2195,7 @@ function ensureUnfilledWriteGroups(slot: Slot) {
     );
     // A param the client derives is written by its own group's bits.
     if (derivesConstantInput(slot.owner)) {
-      ensureCallerParamGroups(getSourcesForReferencedBindings(slot.owner));
+      ensureCallerParamGroups(slot.owner.sources);
     }
   }
 }
@@ -2226,7 +2226,7 @@ export function writesSeed(binding: Binding) {
 // Each write (content's once its shell ships) and unfillable read.
 function computePatchWrite(binding: Binding): PatchWrite {
   const write = isPatchWritten(binding) && leavesReadUnfilled(binding);
-  const sources = getSourcesForReferencedBindings(binding);
+  const { sources } = binding;
   return {
     write,
     effect: getPatchFill(binding).effectRead && write,
@@ -2268,7 +2268,7 @@ function isServerSourced(binding: Binding) {
 // Only a caller's params or `$global` change the value: the patch writes it and
 // names its readers.
 export function hasGuardedSources(binding: Binding) {
-  return isGuardedReason(getCanonicalBinding(binding).sources);
+  return isGuardedReason(binding.sources);
 }
 
 // Subscribers of a server value's closure that its owner's entry runs by id, where a
