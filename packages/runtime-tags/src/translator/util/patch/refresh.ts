@@ -1350,14 +1350,10 @@ function callsWritingOwnedData(call: KnownTagExtra) {
   return writesOwnedData(call.childSection);
 }
 
-// A function lands as data where main would register it as client code reads it.
+// Where the function sits, or a read its value reaches.
 function landsAsData(fn: RegisteredFnExtra) {
   const extra = getCanonicalExpr(fn.exprRoot);
-  return (
-    (!fn.exprRoot.consumed || !!extra.retained) &&
-    (isDataRead(extra, true) ||
-      (!extra.isEffect && someRead(exprReaders(extra), isDataRead)))
-  );
+  return isDataRead(extra, true) || someRead(exprReaders(extra), isDataRead);
 }
 
 // A read a patch writes the value in as data: retained, or a known call's argument
@@ -1372,9 +1368,7 @@ function isDataRead(read: t.NodeExtra, asInput: boolean) {
 function passesRegisteredFn(read: t.NodeExtra) {
   return (
     isTrackedFunction(read) ||
-    (read.read?.properties === undefined &&
-      !!read.read &&
-      holdsRegisteredFn(read.read.binding))
+    (!!read.read && holdsRegisteredFn(read.read.binding))
   );
 }
 
