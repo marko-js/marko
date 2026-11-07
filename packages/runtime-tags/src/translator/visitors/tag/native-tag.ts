@@ -42,7 +42,6 @@ import {
 import {
   getAccessorPrefix,
   getAccessorProp,
-  getPatchKey,
 } from "../../util/get-accessor-enums";
 import { getTagName } from "../../util/get-tag-name";
 import { isEventOrChangeHandler } from "../../util/is-event-or-change-handler";
@@ -66,7 +65,6 @@ import {
 import {
   buildPatchTextContent,
   getExprRootGroupArgs,
-  getNamedPatchKey,
   getPatchHoleGroupArgs,
 } from "../../util/patch/writers";
 import { addAlwaysReason, addReasonExprs } from "../../util/reasons";
@@ -829,9 +827,7 @@ export default {
                 ...(helper === "_attr" ? [t.stringLiteral(name)] : []),
                 value,
                 getScopeIdIdentifier(tagSection),
-                t.stringLiteral(
-                  getNamedPatchKey(getPatchKey().Attr, nodeBinding!, name),
-                ),
+                getScopeAccessorLiteral(nodeBinding!),
                 ...getExprRootGroupArgs(tagSection, value.extra!),
               )}`;
               continue;
