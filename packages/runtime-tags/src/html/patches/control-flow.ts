@@ -155,10 +155,7 @@ export function writeBranch(
   // structure a flush creates, pairs its branch: the entry ships only what its body fills.
   const paired = !updatesFrom && !inCreatable();
   const branchId = _peek_scope_id();
-  state.patchLinks[branchId] = {
-    parent: scopeId,
-    hop: AccessorPrefix.BranchScopes + accessor,
-  };
+  linkBranch(state, scopeId, accessor, branchId);
   const opened = openScopePatch(state, branchId);
   const branchIndex = (paired ? withPairedBranchId : withBranchId)(
     branchId,
@@ -450,8 +447,8 @@ export function writeLoop<A, B>(
   const keys: (string | number)[] = [];
   let indexKeys = true;
   const row = rowsPaired ? pairedBranch(cb) : cb;
-  const iterateItems = MARKO_DEBUG && by ? checkLoopKeys(cb, iterate) : iterate;
-  iterateItems((itemKey, sameAsIndex, a, b) => {
+  if (MARKO_DEBUG && by) iterate = checkLoopKeys(cb, iterate);
+  iterate((itemKey, sameAsIndex, a, b) => {
     indexKeys &&= sameAsIndex;
     // An item is found where it rendered, checked by key as the loop's
     // reconciler does (the client may since have moved it).
@@ -635,7 +632,6 @@ export function _try(
     branchId,
     create ? bodyId : undefined,
     create || catchId ? slotIds : undefined,
-    scopeId,
   );
   const chunk = $chunk;
   const beforeBranch = deferBranchStart(chunk);
@@ -741,10 +737,7 @@ function writeCatch(
   catchId: string,
 ) {
   const catchBranchId = _peek_scope_id();
-  state.patchLinks[catchBranchId] = {
-    parent: scopeId,
-    hop: AccessorPrefix.BranchScopes + accessor,
-  };
+  linkBranch(state, scopeId, accessor, catchBranchId);
   const patch = openScopePatch(state, catchBranchId);
   withBranchId(catchBranchId, withUnpatched, catchContent, err);
   return patchTreeNode(state, [patch, catchId]);
