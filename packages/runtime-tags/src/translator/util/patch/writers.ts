@@ -1400,7 +1400,7 @@ function bindsLive(held: Binding, own: boolean, expr?: t.NodeExtra) {
     ? getPatchWrite(held).write || !!getPatchFill(held).fill
     : runsEffectOnPatch(held) ||
         !!getPatchFill(held).fill ||
-        intersectsClientState(held, expr!);
+        intersectsClientState(held, expr!.callSiteExprs);
 }
 
 // A read of the binding lands in a function with filled references its template registers.

@@ -31,7 +31,6 @@ import {
 } from "./nested-attribute-tags";
 import {
   every,
-  first,
   forEach,
   fromIter,
   type Opt,
@@ -432,14 +431,13 @@ export function knownTagTranslateHTML(
 
   const childScopeBinding = tagExtra.childScopeBinding!;
 
-  const childScopeReason = findSlot(childScopeBinding)?.reason;
   let liveInput: ((input: t.Expression) => t.Expression) | undefined;
-  // A patch pairs the child through its scope ref, whatever the reason.
-  const childScopeWriteReason = getWriteReason(childScopeBinding);
   let varStatement: t.Statement | undefined;
-  if (isEverWritten(section, childScopeWriteReason)) {
+  // A patch pairs the child through its scope ref, whatever the reason.
+  if (isChildScopeResumed(section, tagExtra)) {
     const peekScopeId = generateUidIdentifier(childScopeBinding.name);
     const childScopeSlot = findSlot(childScopeBinding)!;
+    const childScopeReason = childScopeSlot.reason;
     const varId =
       tagVar &&
       childScopeReason &&
@@ -720,7 +718,7 @@ export function linkKnownTagPatchEntries() {
       for (const tagExtra of section.knownTags || []) {
         const groups = getParamGroupSources(tagExtra);
         if (!groups) continue;
-        const child = getParamEntries(first(groups[0].params).section);
+        const child = getParamEntries(tagExtra.childSection);
         for (const fill of child.fills) {
           grew = linkParamFill(tagExtra[kKnownExprs]!, fill) || grew;
         }
@@ -879,12 +877,7 @@ export function someCallPasses(
   test: (sources: Sources | undefined) => boolean,
 ) {
   return some(body.renderedBy, (call) =>
-    test(
-      reduce(
-        mapParamReasonToExpr(call[kKnownExprs]!, params),
-        mergeAllSourcesForExpr,
-      ),
-    ),
+    test(getPassedSources(call[kKnownExprs]!, params)),
   );
 }
 
@@ -978,18 +971,19 @@ export function isKnownTagExtra(tagExtra: t.MarkoTagExtra) {
   return !!tagExtra[kKnownExprs];
 }
 
-// A child's param the call `expr` passes intersects another, client state among what
-// it passes them: the child fills it where that group is the client's.
-export function intersectsClientState(param: Binding, expr: t.NodeExtra) {
-  const exprs = expr.callSiteExprs;
+// A child's param intersects another, the call (`exprs`) passing client state among
+// them: the client re-runs that intersection where its group is the client's.
+export function intersectsClientState(
+  param: Binding,
+  exprs: KnownExprs | undefined,
+) {
   return (
     !!exprs &&
     !!param.section.paramReasonGroups?.some(
       (params) =>
         Array.isArray(params) &&
         bindingUtil.has(params, param) &&
-        !!reduce(mapParamReasonToExpr(exprs, params), mergeAllSourcesForExpr)
-          ?.state,
+        hasClientState(getPassedSources(exprs, params)),
     )
   );
 }
@@ -1035,7 +1029,8 @@ export const derivesConstantParam = createPassMemo(
           hasClientState(sources) ||
           hasParamOrGlobalSource(sources) ||
           !rendersCallOnClient(call.childScopeBinding.section) ||
-          passesClientStateBeside(call, body, param)
+          // Main serializes the module read for that intersection.
+          intersectsClientState(param, call[kKnownExprs])
         ) {
           return false;
         }
@@ -1047,25 +1042,6 @@ export const derivesConstantParam = createPassMemo(
   },
   false,
 );
-
-// A call feeding client state to a param intersecting this one: the client
-// re-runs the intersection (main serializes the module read for it), so none derive it.
-function passesClientStateBeside(
-  tagExtra: t.MarkoTagExtra,
-  body: Section,
-  param: ParamBinding,
-) {
-  return !!body.paramReasonGroups?.some(
-    (group) =>
-      bindingUtil.has(group, param) &&
-      hasClientState(
-        reduce(
-          mapParamReasonToExpr(tagExtra[kKnownExprs]!, group),
-          mergeAllSourcesForExpr,
-        ),
-      ),
-  );
-}
 
 // The instance's sources mask (2 bits per group at `1 + 2i`; keyed when
 // dynamic), or undefined when the all-server default is equivalent.

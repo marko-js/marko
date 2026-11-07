@@ -402,15 +402,8 @@ export function bindingLandsRetained(
 
 // Where content passed to templates renders: the dynamic tags naming it (`sites`,
 // and `deepSites` past a further call), or `unseen` where a read hands it on.
-export function getContentSites({
-  binding,
-  properties,
-}: NonNullable<Section["derives"]>) {
-  const { reads, directReads, asInput } = reduce(
-    binding,
-    (readers, part) => mergeReaders(readers, bindingReaders(part, properties)),
-    UNREAD,
-  );
+export function getContentSites(derives: NonNullable<Section["derives"]>) {
+  const { reads, directReads, asInput } = getDerivedReaders(derives);
   const isNamedBy = (read: ReferencedExtra) =>
     !read.isEffect && !readUtil.has(asInput, read);
   return {
