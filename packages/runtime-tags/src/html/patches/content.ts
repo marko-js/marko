@@ -19,6 +19,7 @@ import {
   ensureFills,
   getUpdatesFrom,
   writeFill,
+  writeNamedFill,
 } from "./writer";
 
 // A hole a patch writes passes its group: a patch render writes its fill, a page
@@ -83,26 +84,29 @@ function keepsMarker(
   return rewritten || getUpdatesFrom(mask, group) ? markerGuard : 0;
 }
 
-// A `<style>` value a patch writes passes its scope, key and group; its entry
-// also writes a created scope's style shell, alone for a client value.
+// A patched `<style>` value passes its scope, node, property and group, and writes
+// its declaration; its entry writes a created scope's shell, alone for a client value.
 export function _escape_style_value(
   value: unknown,
   scopeId?: number,
-  key?: string,
+  accessor?: Accessor,
+  name?: string,
   mask?: GroupMask,
   group?: number,
 ) {
   const fills =
     group === undefined ? undefined : ensureFills(scopeId!, mask, group, 1);
   return fills === undefined
-    ? _base_escape_style_value(value)
+    ? (name ? name + ":" : "") + _base_escape_style_value(value)
     : _client_guard(mask, group)
-      ? writeFill(
+      ? writeFill(fills, PatchKey.Style + accessor!, 0)
+      : writeNamedFill(
           fills,
-          key!.slice(0, key!.indexOf(MARKO_DEBUG ? " " : "$")),
-          0,
-        )
-      : writeFill(fills, key!, normalizePatchValue(value));
+          PatchKey.Style,
+          accessor!,
+          name!,
+          normalizePatchValue(value),
+        );
 }
 
 // A text-only body a patch writes passes its scope, key and group: its entry

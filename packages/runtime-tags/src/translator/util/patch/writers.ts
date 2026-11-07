@@ -31,7 +31,6 @@ import {
   intersectsClientState,
   type KnownTagExtra,
 } from "../known-tag";
-import { isOptimize } from "../marko-config";
 import { isTrackedFunction } from "../module-registrations";
 import {
   every,
@@ -817,18 +816,6 @@ export function buildReturnChangeBind(
     t.stringLiteral(getPatchKey().Write + getAccessorProp().TagVariableChange),
     handler,
     ...getRootGroupArgs(section, sources, !sources || !!sources.state),
-  );
-}
-
-// An attribute or style entry's key: optimized accessors are base-36, so the
-// client splits a key at its first `$`.
-export function getNamedPatchKey(
-  prefix: string,
-  nodeBinding: Binding,
-  name: string,
-) {
-  return (
-    prefix + getScopeAccessor(nodeBinding) + (isOptimize() ? "$" : " ") + name
   );
 }
 
