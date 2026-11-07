@@ -34,6 +34,7 @@ var template_default = _template("a", (input) => {
 					return v + ":" + input.label;
 				} });
 				_patch_child_end();
+				_unfilled_if($scope0_reason, 2) && _patch_write($scope2_id, "wc", v, 1);
 				_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope2_id, "a0");
 				$cg__input_label && _patch_render($scope2_id, "a1");
 				_subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope2_id, {

@@ -66,7 +66,6 @@ import {
   isContentSection,
   isDynamicClosure,
   isKnownChild,
-  isLoopBody,
   isOptionalBranch,
   isSameOrAncestorSection,
   type Section,
@@ -502,13 +501,13 @@ function derivesByCreatedSetup(binding: Binding) {
   );
 }
 
-// A param a created scope gets as a seed, as no structure brings it: a known
-// child's, a loop row's static one, or a `@catch` error member intersecting a caller's.
+// A param a created scope gets as a seed, as no structure brings it: a known child's, a
+// branch's static one (a loop item, an `<await>` value), or a `@catch` error member intersecting a caller's.
 function seedsParam(binding: Binding) {
   const { section } = binding;
   return (
     isKnownChild(section) ||
-    (isLoopBody(section) && !binding.sources?.param) ||
+    (!!section.branch && !binding.sources?.param) ||
     (section.boundaryContent === "catch" &&
       hasCallerParamSourceAt(getWriteReason(binding), section))
   );

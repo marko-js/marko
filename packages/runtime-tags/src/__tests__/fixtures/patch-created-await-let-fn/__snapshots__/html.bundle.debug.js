@@ -37,6 +37,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					return v + ":" + input.label;
 				} });
 				_patch_child_end();
+				_unfilled_if($scope0_reason, 2) && _patch_write($scope2_id, "PatchWrite:v", v, 1);
 				_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope2_id, "__tests__/template.marko_2_input_label#0:4/subscribe");
 				$cg__input_label && _patch_render($scope2_id, "__tests__/template.marko_2_input_label#0:4_v#2/setup");
 				_subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope2_id, {
