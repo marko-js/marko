@@ -49,7 +49,7 @@ patchers[PatchKey.QueuedEffect] = (scope, id, reads) => {
     const scopes = queued.get(fn) || new Set();
     queued.set(fn, scopes);
     queueEffect(scope, (scope: Scope) => {
-      if (readChanged(scope, reads, stop) && !scopes.has(scope)) {
+      if (!scopes.has(scope) && readChanged(scope, reads, stop)) {
         fn(scope);
       }
     });
