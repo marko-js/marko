@@ -34,7 +34,6 @@ import {
   SerializerState,
   setDebugInfo,
   stringifyScopes,
-  takeChannelDeps,
   toAccess,
   toObjectKey,
 } from "./serializer";
@@ -575,6 +574,7 @@ export function writeWaitReady(
     resumes: "",
     writeScopes: {},
     flushScopes: false,
+    deps: null,
   });
   const bodyEnd = body.render(renderer, input);
   // A throw in the body ends the render around it too, instead of letting it
@@ -1285,7 +1285,6 @@ export class Chunk {
       const effects = holdEffects ? "" : this.effects;
       if (effects) flushSerializerGlobals(boundary);
       flushSerializer(boundary, channel);
-      const deps = takeChannelDeps(state.serializer);
       const { resumes } = channel;
       const chunkScripts = this.scripts;
       channel.resumes = this.scripts = "";
@@ -1293,7 +1292,7 @@ export class Chunk {
       if (resumes || effects) {
         state.needsWalkerRuntime = true;
         const batch = concatSequence(
-          depsMarker(deps),
+          depsMarker(channel),
           concatSequence(resumes, effects && `"${effects}"`),
         );
         if (reservations) {
@@ -1343,13 +1342,12 @@ export class Chunk {
       !boundary.aborted && (channel = pendingReadyChannel(state.serializer));
     ) {
       const resumes = stringifyScopes(state.serializer, [], boundary, channel);
-      const deps = takeChannelDeps(state.serializer);
       state.needsWalkerRuntime = true;
       readyResumeScripts = concatScripts(
         readyResumeScripts,
         state.readyScript(
           channel.readyId!,
-          concatSequence(depsMarker(deps), resumes),
+          concatSequence(depsMarker(channel), resumes),
         ),
       );
     }
@@ -1690,9 +1688,11 @@ function flushSerializerGlobals(boundary: Boundary) {
   }
 }
 
-function depsMarker(deps: Set<string> | null) {
+function depsMarker(channel: SerializeChannel) {
+  const { deps } = channel;
   let marker = "";
   if (deps) {
+    channel.deps = null;
     for (const dep of deps) {
       marker += (marker ? "," : "[") + quote(dep, 0);
     }

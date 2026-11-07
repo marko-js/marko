@@ -36,6 +36,8 @@ export type ScopeFlush = [scopeId: number, scope: object, props: object];
 export interface SerializeChannel {
   readyId?: string;
   parent?: SerializeChannel;
+  // Ancestor channels whose data its next batch reads.
+  deps?: Set<string> | null;
 }
 // A `Map`'s or `Set`'s first member that references an ancestor (a `Map`'s as
 // its entry), and the live iteration past it.
@@ -323,7 +325,6 @@ class State {
   deferredRefs = new Set<Reference>();
   boundary!: Boundary;
   channel: SerializeChannel | undefined = undefined;
-  channelDeps: Set<string> | null = null;
   // Calls queued for main, which every main flush writes, and for ready
   // streams in the order they queued.
   queuedCalls: QueuedCall[] = [];
@@ -481,12 +482,6 @@ export function stringifyScopes(
 export function pendingReadyChannel(state: State) {
   const calls = state.queuedReadyCalls;
   return calls.length ? calls[0].channel : undefined;
-}
-
-export function takeChannelDeps(state: State) {
-  const deps = state.channelDeps;
-  state.channelDeps = null;
-  return deps;
 }
 
 export function queueCall(
@@ -2198,7 +2193,7 @@ function trackChannel(state: State, ref: Reference) {
   let cur = state.channel?.parent;
   while (cur) {
     if (cur.readyId === refReadyId) {
-      (state.channelDeps ||= new Set()).add(refReadyId);
+      (state.channel!.deps ||= new Set()).add(refReadyId);
       return true;
     }
     cur = cur.parent;

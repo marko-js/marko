@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { inspect } from "node:util";
 import { runInThisContext } from "node:vm";
 
-import type { ScopeFlush } from "../html/serializer";
+import type { ScopeFlush, SerializeChannel } from "../html/serializer";
 import {
   dropQueuedCall,
   hasMatchingCalls,
@@ -13,7 +13,6 @@ import {
   SerializerState,
   setDebugInfo,
   stringifyScopes,
-  takeChannelDeps,
 } from "../html/serializer";
 import type { Boundary } from "../html/writer";
 
@@ -2239,16 +2238,14 @@ describe("serializer", () => {
       const { boundary, aborted } = abortingBoundary();
       const serializer = new SerializerState();
       const parent = { readyId: "a" };
+      const child: SerializeChannel = { readyId: "b", parent };
       const shared = { x: 1 };
       stringifyScopes(serializer, [[1, {}, { shared }]], boundary, parent);
       assert.equal(
-        stringifyScopes(serializer, [[2, {}, { shared }]], boundary, {
-          readyId: "b",
-          parent,
-        }),
+        stringifyScopes(serializer, [[2, {}, { shared }]], boundary, child),
         `_=>[2,{shared:_(1).shared}]`,
       );
-      assert.deepEqual([...takeChannelDeps(serializer)!], ["a"]);
+      assert.deepEqual([...child.deps!], ["a"]);
       assert.deepEqual(aborted, []);
     });
 
@@ -2302,14 +2299,14 @@ describe("serializer", () => {
       const serializer = new SerializerState();
       const subs = new Set();
       const parent = { readyId: "a" };
-      const child = { readyId: "b", parent };
+      const child: SerializeChannel = { readyId: "b", parent };
       stringifyScopes(serializer, [[1, {}, { subs }]], boundary, parent);
       queueCall(serializer, { [K_SCOPE_ID]: 2 }, subs, "add", child);
       assert.equal(
         stringifyScopes(serializer, [], boundary, child),
         `_=>(_(1).subs.add(_(2)),0)`,
       );
-      assert.deepEqual([...takeChannelDeps(serializer)!], ["a"]);
+      assert.deepEqual([...child.deps!], ["a"]);
       queueCall(serializer, { [K_SCOPE_ID]: 3 }, subs, "add", parent);
       assert.equal(
         stringifyScopes(serializer, [], boundary, parent),
