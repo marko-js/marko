@@ -31,8 +31,8 @@ import {
 import type { KnownTagExtra } from "../known-tag";
 import { isPatch } from "../marko-config";
 import {
+  forEachTrackedFunction,
   isTrackedFunction,
-  someTrackedFunction,
 } from "../module-registrations";
 import {
   every,
@@ -1311,9 +1311,9 @@ export function inKeptContent(section: Section) {
 // content sending one to a scope of its instance renders on the client, as main does.
 function sendsBindReference(section: Section) {
   return (
+    section.handsOnScopeBound &&
     !!section.derives &&
-    rendersFromChildState(section) &&
-    sendsBindReferenceIn(section)
+    rendersFromChildState(section)
   );
 }
 
@@ -1325,31 +1325,42 @@ export function rendersOnClient(section: Section) {
   );
 }
 
-// A function or content bound to a scope of `root`'s instance (made in it, or in a body
-// it calls) that reaches a read a patch writes it in as a bind reference.
-const [sendsBindReferenceIn] = createAnalysisMemo(
-  (root: Section): boolean =>
-    someTrackedFunction(
-      (fn) =>
-        isScopeBoundFn(fn) &&
-        isSameOrAncestorSection(root, fn.section) &&
-        reachesBindReference(fn),
-    ) || sendsFromSection(root, root),
-  false,
-);
-
-function sendsFromSection(section: Section, root: Section): boolean {
-  return (
-    (section !== root &&
-      !!section.derives &&
-      someRead(getDerivedReaders(section.derives), isBindReferenceRead)) ||
-    !!section.knownTags?.some(callSendsBindReference) ||
-    section.children.some((child) => sendsFromSection(child, root))
-  );
+// Each section's `handsOnScopeBound`, once reads settle: a callee's is final before
+// its callers analyze, so a call to another template reads it.
+export function finalizeHandsOnScopeBound() {
+  forEachTrackedFunction(markFunction);
+  forEachSection(markSection);
 }
 
-function callSendsBindReference(call: KnownTagExtra) {
-  return sendsBindReferenceIn(call.childSection);
+function markFunction(fn: RegisteredFnExtra) {
+  if (isScopeBoundFn(fn) && reachesBindReference(fn)) markHandsOn(fn.section);
+}
+
+function markSection(section: Section) {
+  if (
+    section.derives &&
+    someRead(getDerivedReaders(section.derives), isBindReferenceRead)
+  ) {
+    markHandsOn(section.parent!);
+  }
+  if (section.knownTags?.some(callsHandingOn)) markHandsOn(section);
+}
+
+function callsHandingOn({ childSection }: KnownTagExtra) {
+  return childSection.handsOnScopeBound;
+}
+
+// Its scopes are its enclosing sections', and those of each call rendering it in place.
+function markHandsOn(section: Section) {
+  if (!section.handsOnScopeBound) {
+    section.handsOnScopeBound = true;
+    if (section.parent) markHandsOn(section.parent);
+    forEach(section.renderedBy, markCallSection);
+  }
+}
+
+function markCallSection(call: KnownTagExtra) {
+  markHandsOn(call.childScopeBinding.section);
 }
 
 // Where the function sits, or a read its value reaches.

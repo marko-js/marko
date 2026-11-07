@@ -24,7 +24,10 @@ import {
 } from "../../util/marko-config";
 import { finalizeRegistrations } from "../../util/module-registrations";
 import { type ParamsTree, exposeParamsTree } from "../../util/params-tree";
-import { keepsClosureFills } from "../../util/patch/refresh";
+import {
+  finalizeHandsOnScopeBound,
+  keepsClosureFills,
+} from "../../util/patch/refresh";
 import { isGuardedReason, mapBodyParams } from "../../util/reasons";
 import { trackParamsReferences } from "../../util/references";
 import { writeBodyStatements } from "../../util/replace-with-statements";
@@ -112,6 +115,7 @@ export default {
       if (hasAnalyzeErrors()) return;
       analyzeRecursiveTags();
       const intersectionsBySection = finalizeReferences();
+      if (isPatch()) finalizeHandsOnScopeBound();
       solveReasons(intersectionsBySection);
       finalizeRegistrations();
       allocateIds(intersectionsBySection);

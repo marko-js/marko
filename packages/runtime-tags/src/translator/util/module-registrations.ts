@@ -81,10 +81,9 @@ export function isTrackedFunction(extra: t.NodeExtra) {
   return getReferencesByFn().has(extra as RegisteredFnExtra);
 }
 
-// Whether a function its template may register passes `test`.
-export function someTrackedFunction(test: (fn: RegisteredFnExtra) => boolean) {
-  for (const fn of getReferencesByFn().keys()) if (test(fn)) return true;
-  return false;
+// Each function its template may register.
+export function forEachTrackedFunction(fn: (fn: RegisteredFnExtra) => void) {
+  for (const extra of getReferencesByFn().keys()) fn(extra);
 }
 
 // Tracks a function its template may register once client code reads it,

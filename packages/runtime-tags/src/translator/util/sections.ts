@@ -200,6 +200,9 @@ export interface Section {
   /** Whether analysis found work keyed by setup in the section, or in a
    * `<define>` body or template it calls in place. */
   hasSetupWork: boolean;
+  /** A function or content bound to one of its scopes (made in it, or in a body it
+   * calls) lands as input in a retained read or a call's argument it is not whole. */
+  handsOnScopeBound: boolean;
   /** Its tag, which renders it in place into branch scopes at the tag's node
    * binding; an `<if>` chain's at `index`, the renderer index it renders as. */
   branch:
@@ -324,6 +327,7 @@ export function ensureBodySection(
       globalReadExprs: undefined,
       readsOwner: false,
       hasSetupWork: false,
+      handsOnScopeBound: false,
       branch: undefined,
       boundaryContent: false,
       enclosing: undefined as unknown as Section["enclosing"],
