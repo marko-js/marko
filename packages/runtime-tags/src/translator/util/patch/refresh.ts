@@ -246,8 +246,6 @@ export const getPatchWrite = createPassMemo(computePatchWrite, UNREAD);
 
 function computePatchFill(binding: Binding): PatchFill {
   const { kind, contentKind, keptInLet } = getFillReadKind(binding);
-  // A server value the patch writes reaches client-rendered structure by its closures.
-  const guarded = hasGuardedSources(binding);
   // A value only intersections the patch writes call for rides its slot write.
   const members = getFilledMembers(kind);
   const reasons = members ? undefined : kind;
@@ -291,8 +289,9 @@ function computePatchFill(binding: Binding): PatchFill {
       (effectRead ||
         fnReference ||
         objectSource ||
-        writesForIntersectionRender(binding) ||
-        (guarded && !!kind)),
+        // A server value the patch writes reaches client-rendered structure by its closures.
+        (!!kind && hasGuardedSources(binding)) ||
+        writesForIntersectionRender(binding)),
     // Only the patch's key reaches the declaration: a `<let>` no shipped code assigns.
     ownRegistration: fill && !hasResumableAssignment(binding),
     filledMembers: fill ? members : undefined,
@@ -382,10 +381,10 @@ export function seedsOwnerConstant(section: Section, closure: Binding) {
 export const [seedsCreatedScope] = createAnalysisMemo((binding: Binding) => {
   const { section } = binding;
   return (
-    mayBeCreated(section) &&
-    (binding.localOf ? shipsContentShell(section) : patchFillsScope(section)) &&
     binding.type !== BindingType.dom &&
     binding.type !== BindingType.constant &&
+    mayBeCreated(section) &&
+    (binding.localOf ? shipsContentShell(section) : patchFillsScope(section)) &&
     every(binding.sources?.state, (state) => isFirstState(state, section)) &&
     // A branch's own params arrive with its structure.
     !(isSectionParam(binding) && !binding.localOf && !seedsParam(binding)) &&
@@ -948,13 +947,12 @@ function rendersIntersectionByWrite(
 ) {
   if (!hasGuardedSources(member)) return false;
   const sources = getSourcesForReferencedBindings(intersection);
-  const others = getOtherInputs(sources, member);
   // One the client runs beside a server value: with client state, where its group mixes,
   // where another member a caller may pass client state, or not deriving only what the patch writes.
   return (
     !!sources?.state ||
     isFilledIntersection(intersection) ||
-    (!!others && hasTagCallerParamAt(others, member.section)) ||
+    hasTagCallerParamAt(getOtherInputs(sources, member), member.section) ||
     someBindingRead(
       member,
       (read) =>
@@ -1547,10 +1545,10 @@ function getClosureSubscribe(
 ): CreatedSetup["subscribe"] {
   if (
     setup !== "always" &&
+    isDynamicClosure(section, closure) &&
     some(closure.sources?.param, (param) =>
       isReceivedParamAt(param, section),
     ) &&
-    isDynamicClosure(section, closure) &&
     // Content a flush reaches by data takes every value from its entries, but
     // for the intersections with client state it computes itself.
     !(
@@ -1594,6 +1592,8 @@ function passesClientState(passed: Sources | undefined) {
 // and effect entries: where its group mixes, a member's fill or the render re-runs it.
 export const isFilledIntersection = createPassMemo(
   (intersection: Intersection) => {
+    const sources = getSourcesForReferencedBindings(intersection);
+    if (!Array.isArray(sources?.param)) return false;
     let section: Section | undefined;
     for (const read of intersection[0].reads.keys()) {
       if (getReferencedBindings(read) === intersection) {
@@ -1601,10 +1601,8 @@ export const isFilledIntersection = createPassMemo(
         section = read.section;
       }
     }
-    const sources = getSourcesForReferencedBindings(intersection);
     // Every caller asks for an intersection a read references, which sets `section`.
     return (
-      Array.isArray(sources?.param) &&
       hasTagCallerParamAt(sources, section!) &&
       !(
         isPassedStateByEveryCall(sources, true) &&
