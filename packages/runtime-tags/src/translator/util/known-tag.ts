@@ -691,7 +691,7 @@ export function addKnownTagReasons(section: Section) {
 // scope, by its ref's own reason (a patch keys the ref, so writes it always).
 export function ensureKnownTagPatchGroups(section: Section) {
   for (const { childScopeBinding } of section.knownTags || []) {
-    if (childScopeBinding && hasScopeOffset(childScopeBinding)) {
+    if (hasScopeOffset(childScopeBinding)) {
       ensureReasonGroups(section, findSlot(childScopeBinding)?.reason);
     }
   }
@@ -993,9 +993,9 @@ export function intersectsClientState(
 export function getParamGroupSources(
   tagExtra: t.MarkoTagExtra,
 ): ParamGroupSources[] | undefined {
-  const knownExprs = tagExtra[kKnownExprs];
-  const groups = tagExtra.childSection?.paramReasonGroups;
-  if (knownExprs && tagExtra.childScopeBinding && groups) {
+  const groups = tagExtra.childSection!.paramReasonGroups;
+  if (groups) {
+    const knownExprs = tagExtra[kKnownExprs]!;
     return groups.map((params) => {
       const exprs = mapParamReasonToExpr(knownExprs, params);
       return { params, sources: reduce(exprs, mergeAllSourcesForExpr), exprs };
@@ -1005,13 +1005,8 @@ export function getParamGroupSources(
 
 // A param every call derives from a module read (`derivesConstantParam`).
 export function derivesConstantInput(binding: Binding) {
-  const params = getSourcesForReferencedBindings(binding)?.param;
-  return (
-    !!params &&
-    !Array.isArray(params) &&
-    params === binding &&
-    derivesConstantParam(params)
-  );
+  const params = binding.sources?.param;
+  return params === binding && derivesConstantParam(params);
 }
 
 // A `<define>` param every call passing a constant where the client renders it passes
@@ -1095,8 +1090,16 @@ function getGroupSourcesValue<R>(
       ? UpdatesFrom.Client | UpdatesFrom.Server
       : UpdatesFrom.Client;
   }
-  // Params this section's callers pass compose their groups' bits; a `$global`
-  // source adds a static server bit beside them.
+  return getGroupParamValue(section, sources, combine);
+}
+
+// A group's value from its call site's param and `$global` sources: params this section's
+// callers pass compose their groups' bits, a `$global` source adds a static server bit.
+function getGroupParamValue<R>(
+  section: Section,
+  sources: Sources | undefined,
+  combine: (groups: [Section, ParamReasonGroup][], bits: number) => R,
+) {
   const callerGroups = getCallerParamGroupsAt(sources?.param, section);
   if (callerGroups.length) {
     return combine(callerGroups, sources!.global ? UpdatesFrom.Server : 0);
@@ -1132,16 +1135,7 @@ function getPatchGroupValue<R>(
   combine: (groups: [Section, ParamReasonGroup][], bits: number) => R,
 ) {
   return some(exprs, passesFilledReferences)
-    ? getGroupSourcesValue(
-        section,
-        {
-          state: undefined,
-          param: sources?.param,
-          global: sources?.global,
-          always: undefined,
-        },
-        combine,
-      )
+    ? getGroupParamValue(section, sources, combine)
     : 0;
 }
 
@@ -1165,14 +1159,10 @@ function isServerOnly(value: number | t.Expression) {
   return value === UpdatesFrom.Server;
 }
 
-// A group with param or `$global` sources but none from state or a param a
-// caller passes: no caller gates it, so its mask is fixed and a patch writes it.
+// A group with param or `$global` sources but none a caller passes: no
+// caller gates it, so its mask is fixed and a patch writes it.
 function isUngatedGroup(sources: Sources | undefined) {
-  return (
-    !sources?.state &&
-    hasParamOrGlobalSource(sources) &&
-    !hasCallerParamSource(sources)
-  );
+  return hasParamOrGlobalSource(sources) && !hasCallerParamSource(sources);
 }
 
 function analyzeParams(
@@ -1565,8 +1555,7 @@ function isBuiltObjectExpr(extra: t.NodeExtra) {
 
 // A function with filled references as the call passes it: a literal reading a reference a patch
 // writes, or a binding holding one.
-function passesFilledReferences(extra: t.NodeExtra | undefined) {
-  if (!extra) return false;
+function passesFilledReferences(extra: t.NodeExtra) {
   if (isRegisteredFnExtra(extra)) return !!getFilledReferences(extra);
   const ref = getReferencedBindings(extra);
   return !!ref && !Array.isArray(ref) && holdsRegisteredFn(ref);
@@ -1725,7 +1714,6 @@ function writeParamsToSignals(
       tagInputIdentifier,
       tagExtra,
       t.arrayExpression(getRenderArgs(tag, translatedAttrs.properties)),
-      undefined,
     );
     return;
   }
