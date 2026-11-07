@@ -1,12 +1,12 @@
 // PATCH
-[`a3;D%c%c%;<i><!>:<!>:<!></i>`, `a4;/D%l&;<section><!></section>`]
+[`a2;D%c%c%;<i><!>:<!>:<!></i>`, `a3;/D%l&;<section><!></section>`]
 {
   $: {
     brand: "Acme"
   },
   la: [{
     ca: {
-      fa: "^^a3",
+      fa: "^^a2",
       cAa: {
         ta: "Acme",
         tb: "q",
@@ -15,14 +15,14 @@
     }
   }, {
     ca: {
-      fa: "^^a3",
+      fa: "^^a2",
       cAa: {
         ta: "Acme",
         tb: "q",
         tc: "b"
       }
     }
-  }, "a4"]
+  }, "a3"]
 }
 ;CQY
 
@@ -33,7 +33,7 @@
   },
   la: [{
     ca: {
-      fa: "^^a3",
+      fa: "^^a2",
       cAa: {
         ta: "Zed",
         tb: "q",
@@ -42,7 +42,7 @@
     }
   }, {
     ca: {
-      fa: "^^a3",
+      fa: "^^a2",
       cAa: {
         ta: "Zed",
         tb: "q",
@@ -51,12 +51,12 @@
     }
   }, {
     ca: {
-      fa: "^^a3",
+      fa: "^^a2",
       cAa: {
         ta: "Zed",
         tb: "q",
         tc: "d"
       }
     }
-  }, "a4"]
+  }, "a3"]
 }

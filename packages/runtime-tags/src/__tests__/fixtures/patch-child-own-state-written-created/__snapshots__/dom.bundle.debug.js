@@ -1,17 +1,21 @@
 // tags/gm-badge/index.marko
 const $template$1 = "<p> </p>";
 const $walks$1 = "D l";
-const $setup$1 = ($_) => {};
-const $input_value__$global_flag = /*@__PURE__*/ _fill_global("__tests__/tags/gm-badge/index.marko_0_input_value#3_$global_flag#5", ($scope) => _text($scope["#text/0"], $scope.input_value + _global_read($scope.$global, "flag")), "flag");
-const $input_value = /*@__PURE__*/ _const("input_value", $input_value__$global_flag);
+const $input_value__OR__$global_flag = /*@__PURE__*/ _or_patch("__tests__/tags/gm-badge/index.marko_0_input_value#3_$global_flag#5/setup", 4, ($scope) => _text($scope["#text/0"], $scope.input_value + _global_read($scope.$global, "flag")));
+const $input_value = /*@__PURE__*/ _const("input_value", $input_value__OR__$global_flag);
+const $global_flag = _fill_global_resume("__tests__/tags/gm-badge/index.marko_0_$global_flag#5/subscribe", $input_value__OR__$global_flag, "flag");
+const $setup$1 = $global_flag;
 const $input$1 = ($scope, input) => $input_value($scope, input.value);
-var gm_badge_default = /*@__PURE__*/ _template("__tests__/tags/gm-badge/index.marko", $template$1, "D l", 0, $input$1);
+var gm_badge_default = /*@__PURE__*/ _template("__tests__/tags/gm-badge/index.marko", $template$1, "D l", $setup$1, $input$1);
 
 // template.marko
 const $template = "<!><!><button>+</button>";
 const $walks = "b%b b";
 const $if_content__count = /*@__PURE__*/ _if_closure_patch("__tests__/template.marko_1_count#0:5/setup", "#text/0", 0, ($scope) => $input_value($scope["#childScope/0"], $scope._.count));
-const $if_content__setup = $if_content__count;
+const $if_content__setup = ($scope) => {
+	$if_content__count._($scope);
+	$setup$1($scope["#childScope/0"]);
+};
 const $count = _let("count/5", $if_content__count);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$count($scope, +$scope.count + 1);

@@ -40,7 +40,7 @@ var fwd_default = _template("b", (input) => {
 	}, $scope0_id, ($scope) => $scope0_page ? [{ d: input.content }] : []), 0, $scope0_page, void 0, void 0, 0, void 0, 0, 0, "b4");
 	_fill_global_subscribe("b6", $scope0_id);
 	$fg__input_content && _patch_subscribers($scope0_id, "b7", "d");
-	_scope($scope0_id, { f: $wi__input_content && $input_content__closures }) || $fg__input_content && _client_branch_if("b4", $scope0_id) && _patch_write($scope0_id, "xd", input.content, !_server_guard($scope0_reason, 0));
+	_scope($scope0_id, { g: $wi__input_content && $input_content__closures }) || $fg__input_content && _client_branch_if("b4", $scope0_id) && _patch_write($scope0_id, "xd", input.content, !_server_guard($scope0_reason, 0));
 });
 
 // template.marko

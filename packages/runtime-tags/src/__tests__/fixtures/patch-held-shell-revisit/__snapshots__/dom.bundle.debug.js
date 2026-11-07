@@ -52,12 +52,12 @@ const $Layout_content__if = /*@__PURE__*/ _if("#text/0", "<!><!><!>", "b%/&", $i
 const $Layout_content__input_page = /*@__PURE__*/ _closure_get("input_page/4", ($scope) => $Layout_content__if($scope, $scope._.input_page <= 0 ? 0 : 1), 0, "__tests__/template.marko_1_input_page#0:3/subscribe");
 const $Layout_content__setup = $Layout_content__input_page;
 const $Layout_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "<!><!><!>", "b%", $Layout_content__setup);
-const $setup__$global__script = _fill_global_script("__tests__/template.marko_0_$global#3", ($scope) => $scope.$global.log?.("router"), "");
-const $setup__$global = $setup__$global__script;
+const $global2__script = _script("__tests__/template.marko_0_$global#3", ($scope) => $scope.$global.log?.("router"));
+const $global2 = _fill_global_resume("__tests__/template.marko_0_$global#3/subscribe", $global2__script, "");
 function $setup($scope) {
 	$setup$1($scope["#childScope/0"]);
 	$input_content_direct($scope["#childScope/0"], $Layout_content($scope));
-	$setup__$global($scope);
+	$global2($scope);
 }
 const $input = ($scope, input) => $input_page($scope, input.page);
 const $input_page__closure = /*@__PURE__*/ _closure($Layout_content__input_page);

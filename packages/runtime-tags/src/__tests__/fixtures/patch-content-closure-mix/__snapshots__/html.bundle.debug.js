@@ -22,9 +22,10 @@ _shells({
 	"__tests__/template.marko_1*shell": `__tests__/template.marko_1*shell${_shell_marker([[], []], ["#childScope/0>", $setup$1])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l")};${$template$1}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_items__OR__input_prefix = _write_if($scope0_reason, 0), $cg__input_items = _client_guard($scope0_reason, 1), $fg__input_prefix = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wi__input_items__OR__input_prefix = _write_if($scope0_reason, 0), $wi__input_items = _write_if($scope0_reason, 1), $cg__input_items = _client_guard($scope0_reason, 1), $fg__input_prefix = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_prefix__closures = new Set();
+	const $global_brand__closures = new Set();
 	const $global$1 = $global();
 	_html("<main>");
 	_for_of(input.items, (item) => {
@@ -36,22 +37,23 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope2_reason = _scope_reason();
 			const $scope2_id = _scope_id();
 			_html(`<i>${_text_mark($scope2_id, "#text/0", $global$1.brand, 1, 4, 0)}:${_text_mark($scope2_id, "#text/1", input.prefix, 2, $scope0_reason, 2)}:${_text_mark($scope2_id, "#text/2", item, 2, $scope0_reason, 1)}</i>`);
-			_fill_global_subscribe("__tests__/template.marko_2_$global_brand#0:10", $scope2_id);
 			_client_guard($scope0_reason, 2) && _patch_render($scope2_id, "__tests__/template.marko_2_input_prefix#0:4/subscribe");
 			$cg__input_items && _patch_render($scope2_id, "__tests__/template.marko_2_item#1:2/subscribe");
-			_subscribe(_unfilled_if($scope0_reason, 1) && $for_content__item__closures, _subscribe(_unfilled_if($scope0_reason, 2) && $input_prefix__closures, _scope($scope2_id, { _: $wi__input_items__OR__input_prefix && _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:6")));
+			_subscribe(_unfilled_if($scope0_reason, 1) && $for_content__item__closures, _subscribe($wi__input_items && $global_brand__closures, _subscribe(_unfilled_if($scope0_reason, 2) && $input_prefix__closures, _scope($scope2_id, { _: $wi__input_items__OR__input_prefix && _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:6"))));
 		}, $scope1_id, 0) });
 		_patch_child_end();
 		_scope($scope1_id, {
 			_: $wi__input_items__OR__input_prefix && _scope_with_id($scope0_id),
-			"ClosureScopes:item/6": _write_if($scope0_reason, 1) && _unfilled_if($scope0_reason, 1) && $for_content__item__closures,
+			"ClosureScopes:item/7": $wi__input_items && _unfilled_if($scope0_reason, 1) && $for_content__item__closures,
 			"#childScope/0": _existing_scope($childScope)
 		}, "__tests__/template.marko", "2:4");
 	}, 0, $scope0_id, "#main/0", 1, 1, 1, 0, 0, "__tests__/template.marko_1*shell", $scope0_reason, 1);
 	_html(`</main>${_el_mark($scope0_id, "#main/0")}`);
+	_fill_global_subscribe("__tests__/template.marko_0_$global_brand#10/subscribe", $scope0_id, $cg__input_items);
 	$fg__input_prefix && $cg__input_items && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_prefix#4/subscribers", "input_prefix");
 	_scope($scope0_id, {
 		input_prefix: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.prefix,
-		"ClosureScopes:input_prefix/5": _write_if($scope0_reason, 2) && (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1)) && $input_prefix__closures
+		"ClosureScopes:input_prefix/5": _write_if($scope0_reason, 2) && (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1)) && $input_prefix__closures,
+		"ClosureScopes:$global_brand/6": $wi__input_items && _unfilled_if($scope0_reason, 1) && $global_brand__closures
 	}, "__tests__/template.marko", 0, { input_prefix: ["input.prefix"] }) || $fg__input_prefix && $cg__input_items && _patch_write($scope0_id, "PatchMarkedWrite:input_prefix", input.prefix, !_server_guard($scope0_reason, 2));
 }, 1);

@@ -21,12 +21,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope3_id = _scope_id();
 			_html("<em>static</em>");
 		}, 1, "__tests__/template.marko_3*content");
-		_fill_global_subscribe("__tests__/template.marko_1_$global_promise#0:9", $scope1_id);
 	}, void 0, () => {
 		const $scope2_reason = _scope_reason();
 		const $scope2_id = _scope_id();
 		_html("<s>caught</s>");
 	}, 0, "__tests__/template.marko_2*content", "__tests__/template.marko_1*content", 0, 0, 1);
 	_html("</main>");
+	_fill_global_subscribe("__tests__/template.marko_0_$global_promise#9/subscribe", $scope0_id);
 	_scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

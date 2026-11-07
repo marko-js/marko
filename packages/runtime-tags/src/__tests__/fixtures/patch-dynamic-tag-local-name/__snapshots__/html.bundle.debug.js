@@ -8,7 +8,7 @@ var alpha_default = _template("__tests__/tags/alpha.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
 	_html(`<i>A ${_text_mark($scope0_id, "#text/0", $global$1.brand, 2, 4, 0)}</i>`);
-	_fill_global_subscribe("__tests__/tags/alpha.marko_0_$global_brand#4", $scope0_id);
+	_fill_global_subscribe("__tests__/tags/alpha.marko_0_$global_brand#4/subscribe", $scope0_id);
 	_scope($scope0_id, {}, "__tests__/tags/alpha.marko", 0);
 });
 

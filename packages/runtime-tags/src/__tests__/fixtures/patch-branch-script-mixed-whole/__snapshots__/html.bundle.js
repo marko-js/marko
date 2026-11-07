@@ -12,13 +12,13 @@ var template_default = _template("a", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_html("<p>promo</p>");
-			_script($scope1_id, "a0", 0, _filled_guard($scope0_reason, 2), ">g");
-			_client_guard($scope0_reason, 2) && _patch_render($scope1_id, "a1");
+			_patch_render($scope1_id, "a1", [_filled_guard($scope0_reason, 2) && ">g", ">h"], (2 | _updates_from($scope0_reason, 2)) << 1, 0) || _script($scope1_id, "a0", 0, _filled_guard($scope0_reason, 2), ">g");
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
 	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 1), 1, 0, 0, ["a2"], $scope0_reason, 1);
 	_html("</main>");
-	$fg__input_value && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "a1", "g");
+	_fill_global_subscribe("a3", $scope0_id, 1);
+	$fg__input_value && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "a4", "g");
 	_scope($scope0_id, { g: input.value }) || $fg__input_value && _patch_write($scope0_id, "xg", input.value, !_server_guard($scope0_reason, 2));
 }, 1);

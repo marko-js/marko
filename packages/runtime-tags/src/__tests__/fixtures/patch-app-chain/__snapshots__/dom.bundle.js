@@ -5,7 +5,8 @@ const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function
 }));
 
 // template.marko
-const $setup__$global = _fill_global_script("d0", ($scope) => $scope.$.log?.("router"), "");
+const $global2__script = _script("d5", ($scope) => $scope.$.log?.("router"));
+const $global2 = _fill_global("d4", $global2__script, "");
 
 // page-a.marko
 const $count = /*@__PURE__*/ _fill_let("b1", 2, ($scope) => _text($scope.b, $scope.c));

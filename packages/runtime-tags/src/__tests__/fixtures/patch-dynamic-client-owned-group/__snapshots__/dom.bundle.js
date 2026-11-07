@@ -2,8 +2,8 @@
 const $template = "<em><!> <!></em>";
 const $walks = "D%c%l";
 const $input_label = ($scope, input_label) => _text($scope.a, input_label);
-const $setup__$global_brand = /*@__PURE__*/ _fill_global("b0", ($scope) => _text($scope.b, $scope.$.brand), "brand");
-const $setup = $setup__$global_brand;
+const $global_brand = /*@__PURE__*/ _fill_global("b0", ($scope) => _text($scope.b, $scope.$.brand), "brand");
+const $setup = $global_brand;
 const $input = ($scope, input) => $input_label($scope, input.label);
 var card_default = /*@__PURE__*/ _template("b", $template, $walks, $setup, $input);
 

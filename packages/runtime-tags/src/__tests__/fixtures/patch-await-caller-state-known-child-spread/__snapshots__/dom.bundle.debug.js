@@ -1,8 +1,8 @@
 // tags/brand.marko
 const $template$2 = "<span> </span><b> </b>";
 const $walks$2 = "D lD l";
-const $setup__$global_brand = /*@__PURE__*/ _fill_global("__tests__/tags/brand.marko_0_$global_brand#5", ($scope) => _text($scope["#text/0"], $scope.$global.brand), "brand");
-const $setup$2 = $setup__$global_brand;
+const $global_brand = /*@__PURE__*/ _fill_global("__tests__/tags/brand.marko_0_$global_brand#5/subscribe", ($scope) => _text($scope["#text/0"], $scope.$global.brand), "brand");
+const $setup$2 = $global_brand;
 const $input_label = ($scope, input_label) => _text($scope["#text/1"], input_label);
 const $input$2 = ($scope, input) => $input_label($scope, input.label);
 var brand_default = /*@__PURE__*/ _template("__tests__/tags/brand.marko", $template$2, $walks$2, $setup$2, $input$2);

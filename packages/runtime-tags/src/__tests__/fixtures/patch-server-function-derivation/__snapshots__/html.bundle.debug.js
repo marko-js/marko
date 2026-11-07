@@ -36,7 +36,7 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 		_html(`<p>${_text_mark($scope2_id, "#text/0", row.name, 1, 4, 0)}/${_text_mark($scope2_id, "#text/1", count, 2)}</p>`);
 		_scope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/panel.marko", "16:2");
 	}, "id", $scope0_id, "#text/4", 1, 1, 1, 0, 0, "__tests__/tags/panel.marko_2*shell");
-	_fill_global_subscribe("__tests__/tags/panel.marko_0_$global_data#4", $scope0_id);
+	_fill_global_subscribe("__tests__/tags/panel.marko_0_$global_data#4/subscribe", $scope0_id);
 	_script($scope0_id, "__tests__/tags/panel.marko_0");
 	_patch_render($scope0_id, "__tests__/tags/panel.marko_1_summary#0:6/setup", "summary");
 	_patch_render($scope0_id, "__tests__/tags/panel.marko_1_pending_length#0:9/setup", "pending_length");

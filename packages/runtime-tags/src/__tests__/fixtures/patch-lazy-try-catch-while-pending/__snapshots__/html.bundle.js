@@ -2,11 +2,11 @@
 const $template = "<!><!><!>";
 const $setup$1 = [[], []];
 _shells({
-	a1: "a1;D%c%;<em><!> <!></em>",
-	a2: "a2,<s>caught</s>",
-	a3: "a3,<i>loading</i>",
-	a4: "a4;D%c%;<em><!> <!></em>",
-	a5: "a5;b%;<!><!><!>",
+	a0: "a0;D%c%;<em><!> <!></em>",
+	a1: "a1,<s>caught</s>",
+	a2: "a2,<i>loading</i>",
+	a3: "a3;D%c%;<em><!> <!></em>",
+	a4: "a4;b%;<!><!><!>",
 	a: "a;b%;<!><!><!>"
 });
 var child_default = _template("a", (input) => {
@@ -19,10 +19,8 @@ var child_default = _template("a", (input) => {
 		_await($scope1_id, "a", $global$1.promise, (v) => {
 			const $scope4_id = _scope_id();
 			_html(`<em>${_text_mark($scope4_id, "a", $global$1.name, 1, 4, 0)} ${_text_mark($scope4_id, "b", v, 2, 4, 0)}</em>`);
-			_fill_global_subscribe("a0", $scope4_id);
 			_scope($scope4_id, {});
-		}, 1, "a1", void 0, 1);
-		_fill_global_subscribe("a6", $scope1_id);
+		}, 1, "a0", void 0, 1);
 	}, () => {
 		_scope_reason();
 		_scope_id();
@@ -31,7 +29,9 @@ var child_default = _template("a", (input) => {
 		_scope_reason();
 		_scope_id();
 		_html("<s>caught</s>");
-	}, "a3", "a2", "a5", 0, 0, 3);
+	}, "a2", "a1", "a4", 0, 0, 3);
+	_fill_global_subscribe("a5", $scope0_id);
+	_fill_global_subscribe("a6", $scope0_id);
 });
 
 // template.marko

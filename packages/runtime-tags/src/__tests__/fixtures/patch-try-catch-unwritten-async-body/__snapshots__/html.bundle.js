@@ -18,12 +18,12 @@ var template_default = _template("a", (input) => {
 			_scope_id();
 			_html("<em>static</em>");
 		}, 1, "a0");
-		_fill_global_subscribe("a4", $scope1_id);
 	}, void 0, () => {
 		_scope_reason();
 		_scope_id();
 		_html("<s>caught</s>");
 	}, 0, "a1", "a3", 0, 0, 1);
 	_html("</main>");
+	_fill_global_subscribe("a4", $scope0_id);
 	_scope($scope0_id, {});
 }, 1);

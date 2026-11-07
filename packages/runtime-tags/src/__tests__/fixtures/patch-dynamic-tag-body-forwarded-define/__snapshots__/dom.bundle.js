@@ -7,7 +7,7 @@ const $Wrap_content__setup__script = _script("b1", ($scope) => _on($scope.a, "cl
 	$Wrap_content__open($scope, !$scope.f);
 }));
 const $globalppWrap_content__dynamicTag = /*@__PURE__*/ _dynamic_tag(0);
-const $globalppWrap_content__input_content = /*@__PURE__*/ _closure_get_patch("b5", 5, ($scope) => $globalppWrap_content__dynamicTag($scope, $scope._.d), 0, "b7", 0);
+const $globalppWrap_content__input_content = /*@__PURE__*/ _closure_get_patch("b5", 6, ($scope) => $globalppWrap_content__dynamicTag($scope, $scope._.d), 0, "b7", 0);
 const $globalppWrap_content = _content$1("b4", "<!><!><!>", "b%", $globalppWrap_content__input_content);
 _content_resume($globalppWrap_content);
 

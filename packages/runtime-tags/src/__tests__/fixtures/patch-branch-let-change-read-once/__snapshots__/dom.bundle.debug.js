@@ -11,23 +11,26 @@ function read($global, handler) {
 	return handler;
 }
 const $if_content__count = /*@__PURE__*/ _fill_let_change("__tests__/template.marko_fill0", "count/3", ($scope) => _text($scope["#text/1"], $scope.count));
-const $if_content__input_start__OR__onCount__$global = /*@__PURE__*/ _fill_global("__tests__/template.marko_1_input_start#0:5_onCount#0:7_$global#0:9", ($scope) => $if_content__count($scope, $scope._.input_start, read($scope.$global, $scope._.onCount)), "");
-const $if_content__input_start__OR__onCount = /*@__PURE__*/ _or_patch("__tests__/template.marko_1_input_start#0:5_onCount#0:7/setup", 2, $if_content__input_start__OR__onCount__$global);
-const $if_content__input_start = /*@__PURE__*/ _if_closure_patch("__tests__/template.marko_1_input_start#0:5/setup", "#text/1", 0, $if_content__input_start__OR__onCount);
+const $if_content__input_start__OR__onCount__OR__$global = /*@__PURE__*/ _or_patch("__tests__/template.marko_1_input_start#0:5_onCount#0:7_$global#0:9/setup", 2, ($scope) => $if_content__count($scope, $scope._.input_start, read($scope.$global, $scope._.onCount)), 2);
+const $if_content__input_start = /*@__PURE__*/ _if_closure_patch("__tests__/template.marko_1_input_start#0:5/setup", "#text/1", 0, $if_content__input_start__OR__onCount__OR__$global);
 const $if_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/0"], "click", function() {
 	$if_content__count($scope, +$scope.count + 1);
 }));
 const $if_content__setup = ($scope) => {
 	$if_content__input_start._($scope);
 	$if_content__onCount._($scope);
+	$if_content__$global._($scope);
 	$if_content__setup__script($scope);
 };
-const $if_content__onCount = /*@__PURE__*/ _if_closure("#text/1", 0, $if_content__input_start__OR__onCount);
+const $if_content__onCount = /*@__PURE__*/ _if_closure("#text/1", 0, $if_content__input_start__OR__onCount__OR__$global);
+const $if_content__$global = /*@__PURE__*/ _if_closure_patch("__tests__/template.marko_1_$global#0:9/setup", "#text/1", 0, $if_content__input_start__OR__onCount__OR__$global);
 const $last = _let("last/6", ($scope) => _text($scope["#text/0"], $scope.last));
 const $onCount2 = /*@__PURE__*/ _const("onCount");
+const $global2 = _fill_global_resume("__tests__/template.marko_0_$global#9/subscribe", $if_content__$global, "");
 function $setup($scope) {
 	$last($scope, 0);
 	$onCount2($scope, $onCount($scope));
+	$global2($scope);
 }
 const $if = /*@__PURE__*/ _if("#text/1", "<button> </button>", " D ", $if_content__setup);
 const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);

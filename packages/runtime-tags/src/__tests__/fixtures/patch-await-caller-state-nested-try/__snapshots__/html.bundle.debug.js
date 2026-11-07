@@ -20,7 +20,6 @@ var show_await_default = _template("__tests__/tags/show-await.marko", (input) =>
 			const $scope2_reason = _scope_reason();
 			const $scope2_id = _scope_id();
 			_html(`<span>${_text_mark($scope2_id, "#text/0", $global$1.brand, 1, 4, 0)}</span>`);
-			_fill_global_subscribe("__tests__/tags/show-await.marko_2_$global_brand#0:10", $scope2_id);
 			_scope($scope2_id, {}, "__tests__/tags/show-await.marko", "3:4");
 		}, void 0, () => {
 			const $scope3_reason = _scope_reason();
@@ -29,6 +28,7 @@ var show_await_default = _template("__tests__/tags/show-await.marko", (input) =>
 		}, 0, "__tests__/tags/show-await.marko_3*content", "__tests__/tags/show-await.marko_2*content", 1, 0, 1);
 		_scope($scope1_id, {}, "__tests__/tags/show-await.marko", "1:2");
 	}, 1, "__tests__/tags/show-await.marko_1*content", _unfilled_if($scope0_reason, 0), 1);
+	_fill_global_subscribe("__tests__/tags/show-await.marko_0_$global_brand#10/subscribe", $scope0_id);
 });
 
 // template.marko
