@@ -973,7 +973,7 @@ function resolveReferencedBindings(
         }
       }
     }
-    // The first step of main's tag-name analysis TODO.
+    // A dynamic tag's name that is one read records it (`getNameRead`).
     if (isNameRead(extra)) setNameRead(expr, extra.read);
     allBindings = bindingUtil.add(allBindings, binding);
   });

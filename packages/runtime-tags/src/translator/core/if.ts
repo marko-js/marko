@@ -205,7 +205,7 @@ export const IfTag = {
                   patchesBranches,
                 ),
                 // Shell ids per branch index (an absent body ships `0`): the
-                // client creates diverged branches without bundling them.
+                // client creates a branch a flush selects without bundling it.
                 patchesBranches &&
                   t.arrayExpression(branches.map(getBranchShellIdArg)),
                 // A chain whose conditions derive from params yields to the
