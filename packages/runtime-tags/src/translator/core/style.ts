@@ -18,7 +18,7 @@ import { MagicString, type SourceMap } from "magic-string";
 
 import { coreTagLink } from "../util/assert";
 import { addAssetImport } from "../util/asset-imports";
-import { BindingType, createBinding } from "../util/bindings";
+import { type Binding, BindingType, createBinding } from "../util/bindings";
 import buildStringExpression from "../util/build-string-expression";
 import { getPatchKey } from "../util/get-accessor-enums";
 import { isCoreTagName } from "../util/is-core-tag";
@@ -38,6 +38,7 @@ import {
   ensureSection,
   getScopeIdIdentifier,
   getSection,
+  type Section,
 } from "../util/sections";
 import { addSetupWork } from "../util/setup-work";
 import { addStatement } from "../util/signals";
@@ -234,27 +235,9 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
   const binding = node.extra?.nodeBinding;
 
   if (binding) {
-    const names = node.extra![kCustomPropertyNames]!;
-    const section = getSection(tag);
     writer.writeTo(tag)`${callRuntime(
       "_style_html",
-      buildStyleDecls(node, (value, i) =>
-        callRuntime(
-          "_escape_style_value",
-          value,
-          ...(patchFillsSection(section)
-            ? [
-                getScopeIdIdentifier(section),
-                t.stringLiteral(
-                  getNamedPatchKey(getPatchKey().Style, binding, names[i]),
-                ),
-                ...(fillsHole(section, value.extra)
-                  ? getExprRootGroupArgs(section, value.extra!)
-                  : [t.numericLiteral(0), t.numericLiteral(0)]),
-              ]
-            : []),
-        ),
-      ),
+      buildStyleDecls(node, getSection(tag), binding),
     )}`;
     writer.markNode(tag, binding, getWriteReason(binding));
   }
@@ -343,16 +326,31 @@ function emitStyleImport(tag: t.NodePath<t.MarkoTag>) {
   }
 }
 
-function buildStyleDecls(
-  node: t.MarkoTag,
-  toDecl: (value: t.Expression, i: number) => t.Expression,
-) {
+// Each value escapes with its patch entry where a patch fills the section.
+function buildStyleDecls(node: t.MarkoTag, section: Section, binding: Binding) {
   const names = node.extra![kCustomPropertyNames]!;
+  const patched = patchFillsSection(section);
   const parts: (string | t.Expression)[] = [];
 
   dynamicStyleValues(node).forEach((value, i) => {
     parts.push(`${names[i]}:`);
-    parts.push(toDecl(value, i));
+    parts.push(
+      callRuntime(
+        "_escape_style_value",
+        value,
+        ...(patched
+          ? [
+              getScopeIdIdentifier(section),
+              t.stringLiteral(
+                getNamedPatchKey(getPatchKey().Style, binding, names[i]),
+              ),
+              ...(fillsHole(section, value.extra)
+                ? getExprRootGroupArgs(section, value.extra!)
+                : [t.numericLiteral(0), t.numericLiteral(0)]),
+            ]
+          : []),
+      ),
+    );
     parts.push(";");
   });
 
