@@ -10,6 +10,7 @@ import {
   getCanonicalBinding,
   getDebugNames,
   getNearestDeclared,
+  type Intersection,
   isInvokeOnlyBinding,
   isSectionParam,
   isStateSourced,
@@ -81,7 +82,6 @@ import {
   getCreatedSetupId,
   getResumeRegistryId,
   getScopeProperties,
-  getSignals,
   type Signal,
 } from "../signals";
 import { findSlot } from "../slots";
@@ -89,6 +89,7 @@ import { bindingReaders, someRead } from "../solve-reasons";
 import { type Sources } from "../sources";
 import { createOutputSectionState } from "../state";
 import { TagNameType } from "../tag-name-type";
+import { toSequenceExpression } from "../to-only-or-block";
 import { withLeadingComment } from "../with-comment";
 import {
   andGuard,
@@ -267,7 +268,7 @@ export function writePatchResumeStatements(
   section: Section,
   body: t.Statement[],
   paramWrites: t.Statement[],
-  renderScripts: Map<Signal, (t.Expression | undefined)[]>,
+  renderScripts: Map<Intersection, (t.Expression | undefined)[][]>,
 ) {
   const pendingProperties = getScopeProperties(section);
   // A branch param writes as its body starts, a local once it exists.
@@ -448,12 +449,26 @@ export function writePatchResumeStatements(
           section,
           getSourcesForReferencedBindings(ref),
         );
-        // The intersection's effect ships its entry only where the render doesn't run it.
-        const script = renderScripts.get(getSignals(section).get(ref)!);
+        // The intersection's effects ship their entries only where the render doesn't run
+        // them: the first takes the render, the rest run where it shipped none.
+        const [script, ...scripts] = renderScripts.get(ref) || [];
+        const rendered =
+          script &&
+          callRuntime("_script", ...script, reads, renderId, ...groupArgs);
         body.push(
           t.expressionStatement(
-            script
-              ? callRuntime("_script", ...script, reads, renderId, ...groupArgs)
+            rendered
+              ? scripts.length
+                ? t.logicalExpression(
+                    "||",
+                    rendered,
+                    toSequenceExpression(
+                      scripts.map((args) =>
+                        callRuntime("_script", ...args, t.cloneNode(reads)),
+                      ),
+                    ),
+                  )
+                : rendered
               : callRuntime(
                   "_patch_render",
                   getScopeIdIdentifier(section),

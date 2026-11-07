@@ -5,8 +5,10 @@
       name: "x"
     }
   },
-  ea0: "d",
-  xd: "b"
+  ea1: "d e",
+  ea0: "d e",
+  xd: "b",
+  xe: 1
 }
 
 // PATCH
@@ -16,6 +18,8 @@
       name: "y"
     }
   },
-  ea0: "d",
-  xd: "b"
+  ea1: "d e",
+  ea0: "d e",
+  xd: "b",
+  xe: 1
 }

@@ -1,30 +1,37 @@
-# Render `{"page":"a","$global":{"user":{"name":"x"},"serializedGlobals":["user"]}}`
+# Render `{"page":"a","n":1,"$global":{"user":{"name":"x"},"serializedGlobals":["user"]}}`
 ```html
-<div>
-  x:a
+<div
+  title="a1"
+>
+  x:a1
 </div>
 ```
 
-# Update `{"page":"b","$global":{"user":{"name":"x"},"serializedGlobals":["user"]}}`
+# Update `{"page":"b","n":1,"$global":{"user":{"name":"x"},"serializedGlobals":["user"]}}`
 ```html
-<div>
-  x:b
+<div
+  title="b1"
+>
+  x:b1
 </div>
 ```
 ## Change
 ```
-REMOVE: div::text("x:a")
-INSERT: div::text("x:b")
+UPDATE: div[title] "a1" => "b1"
+REMOVE: div::text("x:a1")
+INSERT: div::text("x:b1")
 ```
 
-# Update `{"page":"b","$global":{"user":{"name":"y"},"serializedGlobals":["user"]}}`
+# Update `{"page":"b","n":1,"$global":{"user":{"name":"y"},"serializedGlobals":["user"]}}`
 ```html
-<div>
-  y:b
+<div
+  title="b1"
+>
+  y:b1
 </div>
 ```
 ## Change
 ```
-REMOVE: div::text("x:b")
-INSERT: div::text("y:b")
+REMOVE: div::text("x:b1")
+INSERT: div::text("y:b1")
 ```

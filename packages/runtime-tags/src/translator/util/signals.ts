@@ -2022,17 +2022,20 @@ export function writeHTMLResumeStatements(
   // Effects carry no order (CONTEXT.md Effect), so neither this loop's direction
   // nor its place after the section's body holds one.
   const patches = isPatch();
-  const renderScripts = new Map<Signal, (t.Expression | undefined)[]>();
+  const renderScripts = new Map<Intersection, (t.Expression | undefined)[][]>();
   for (let i = allSignals.length; i--;) {
     const signal = allSignals[i];
     if (signal.hasHTMLEffect) {
-      // A patch's intersection render may run the effect instead of its entry.
+      // A patch's intersection render may run the effect instead of its entry:
+      // the intersection's own effect and each of its `$global` signals'.
       const ref = signal.referencedBindings;
       const rendered =
         patches &&
         Array.isArray(ref) &&
-        getCreatedSetup(section).get(ref)?.setup === "mixed";
-      const entry = patches && getEffectEntryArgs(section, signal, rendered);
+        getCreatedSetup(section).get(ref)?.setup === "mixed"
+          ? ref
+          : undefined;
+      const entry = patches && getEffectEntryArgs(section, signal, !!rendered);
       const registryId = t.stringLiteral(getSignalRegistryId(signal));
       const args = entry
         ? [
@@ -2043,7 +2046,9 @@ export function writeHTMLResumeStatements(
           ]
         : [scopeIdIdentifier, registryId, markerGuard];
       if (rendered && entry) {
-        renderScripts.set(signal, args);
+        let scripts = renderScripts.get(rendered);
+        if (!scripts) renderScripts.set(rendered, (scripts = []));
+        scripts.push(args);
       } else {
         body.push(t.expressionStatement(callRuntime("_script", ...args)));
       }
