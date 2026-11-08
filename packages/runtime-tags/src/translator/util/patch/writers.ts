@@ -90,7 +90,6 @@ import { bindingReaders, someRead } from "../solve-reasons";
 import { type Sources } from "../sources";
 import { createOutputSectionState } from "../state";
 import { TagNameType } from "../tag-name-type";
-import { toSequenceExpression } from "../to-only-or-block";
 import { withLeadingComment } from "../with-comment";
 import {
   andGuard,
