@@ -335,21 +335,19 @@ function buildStyleDecls(node: t.MarkoTag, section: Section, binding: Binding) {
   dynamicStyleValues(node).forEach((value, i) => {
     parts.push(`${names[i]}:`);
     parts.push(
-      callRuntime(
-        "_escape_style_value",
-        value,
-        ...(patched
-          ? [
-              getScopeIdIdentifier(section),
-              t.stringLiteral(
-                getNamedPatchKey(getPatchKey().Style, binding, names[i]),
-              ),
-              ...(fillsHole(section, value.extra)
-                ? getExprRootGroupArgs(section, value.extra!)
-                : [t.numericLiteral(0), t.numericLiteral(0)]),
-            ]
-          : []),
-      ),
+      patched
+        ? callRuntime(
+            "_escape_style_value",
+            value,
+            getScopeIdIdentifier(section),
+            t.stringLiteral(
+              getNamedPatchKey(getPatchKey().Style, binding, names[i]),
+            ),
+            ...(fillsHole(section, value.extra)
+              ? getExprRootGroupArgs(section, value.extra!)
+              : [t.numericLiteral(0), t.numericLiteral(0)]),
+          )
+        : callRuntime("_escape_style_value", value),
     );
     parts.push(";");
   });
