@@ -1,5 +1,59 @@
 # @marko/runtime-tags
 
+## 6.4.11
+
+### Patch Changes
+
+- [#4634](https://github.com/marko-js/marko/pull/4634) [`589dda1`](https://github.com/marko-js/marko/commit/589dda19acd420d2942a7100e522df6e9313eb6b) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - A static nullish `valueChange` written as the first attribute of an attribute-backed `<input>` (`type="checkbox"`, `"radio"`, `"hidden"`, …) now compiles the same as one written anywhere else among its attributes.
+
+- [#4626](https://github.com/marko-js/marko/pull/4626) [`cd3c1bc`](https://github.com/marko-js/marko/commit/cd3c1bca9d847804734a38c58118605377366b74) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix a client crash (`$…_content__setup is not defined`) when a `<define>` in a `<for>` body reads only the loop's key and its own params, and is rendered statically (`<D/>`) or dynamically (`<${D}/>`).
+
+- [#4641](https://github.com/marko-js/marko/pull/4641) [`37b12d1`](https://github.com/marko-js/marko/commit/37b12d196891e4a423f06b6c20be27f4fb83300d) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Build an attribute tag or input object once when the child only spreads it onto an element or invokes the functions in it, instead of rebuilding it whenever state its handlers read changes.
+
+- [#4645](https://github.com/marko-js/marko/pull/4645) [`4ff0791`](https://github.com/marko-js/marko/commit/4ff079100e4a1b6f4d94c332a525df4e1f60d1ad) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - A keyed `<for>` inside an `<if>`, `<await>`, `<try>`, another `<for>` or tag content now keeps its O(1) row selection: when the loop compares its key to a value declared further out (`class=(selected === row.id && "danger")`), a change updates only the previous and next selected rows instead of every row subscribing to the value.
+
+- [#4643](https://github.com/marko-js/marko/pull/4643) [`6cfc211`](https://github.com/marko-js/marko/commit/6cfc2119bdace8f1e1d947974432b00711d1a230) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Skip the escape scan for numbers in server-rendered text, which renders numeric-heavy pages faster.
+
+- [#4603](https://github.com/marko-js/marko/pull/4603) [`7183eb4`](https://github.com/marko-js/marko/commit/7183eb4627b48be27559096e6789b071ed6f5e9d) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Shrink client code for `<for to>` and `<for until>` loops: a loop whose `from` and `step` are constants uses the unkeyed loop, which needs no reordering, and an omitted or default `from` (0) or `step` (1) is no longer passed to the loop.
+
+- [#4644](https://github.com/marko-js/marko/pull/4644) [`33e9ebf`](https://github.com/marko-js/marko/commit/33e9ebf41d85966d35edebdb16c5f61d4b439260) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Write compiler-generated change handlers (`:=`) and attribute tag `<for>` callbacks, and a few runtime closures, as expression-bodied arrows, which minify smaller.
+
+- [#4618](https://github.com/marko-js/marko/pull/4618) [`6f6f929`](https://github.com/marko-js/marko/commit/6f6f929d0f8fcc9bb9a950bdd567b20e38bebb1d) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix a resumed `<define>` body or `<for>` row that combines a value of the template its parent always writes (such as `input.p1` a `<script>` also reads) with one of its own (a param or `<let>`): when its own value changed on the client, it threw reading the template's value, since the link to its owner scope was not written.
+
+- [#4637](https://github.com/marko-js/marko/pull/4637) [`fce28ac`](https://github.com/marko-js/marko/commit/fce28ac65de98cbe967c91ab08f71b6717bc920b) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix the wording of compile errors: `<return>` names its control-flow parent without quotes, `<style>`'s html-attribute error links the `<style>` and `html-style` docs like `<script>`'s, and a range `<for>` suggests `by=(num) => ...` for a string `by`.
+
+- [#4617](https://github.com/marko-js/marko/pull/4617) [`066f9a3`](https://github.com/marko-js/marko/commit/066f9a314606052f8198628279d462ed79e13abc) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix a `<for>` whose bound or list reads several values, or a child tag's returned value, updating its rows before it adds or removes them: rows it was about to remove were updated with the new values first, which threw where a row read by index (`${input.items[i].name}` after `input.items` shrank) and rewrote a removed row's selected state. Rows now update after the loop settles them.
+
+- [#4632](https://github.com/marko-js/marko/pull/4632) [`7048535`](https://github.com/marko-js/marko/commit/704853532e1f7eee1ea4e88ab925992b4a9e7be3) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix a resumed `<for>` whose bound or list reads a child tag's returned value that cannot change in the browser (one computed from server-only input), together with state the browser changes: the child's scope offset is not written for it, so the rows' update was ordered `NaN` and could run before the loop removed rows, throwing where a row read by index or leaving a removed row's selection behind. A loop's rows update now queues like the loop's value does, in its own slot after the owner's renders, so it falls back to the owner's order the same way.
+
+- [#4640](https://github.com/marko-js/marko/pull/4640) [`f4fc401`](https://github.com/marko-js/marko/commit/f4fc40185f33f0f4a2e5b199fc081a5ef41be2ff) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix `Cannot drop a merged reference` when a recursive tag call passes content the tag never renders and that content holds control flow such as `<if>` or `<for>`.
+
+- [#4642](https://github.com/marko-js/marko/pull/4642) [`e2c7630`](https://github.com/marko-js/marko/commit/e2c76309e2992b1b2e8080bb69889ffea3e43c94) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Resolve a branch's parsed markup from its content instead of rebuilding a cache key from the whole template on every clone, which speeds up creating loop rows and conditional branches.
+
+- [#4634](https://github.com/marko-js/marko/pull/4634) [`589dda1`](https://github.com/marko-js/marko/commit/589dda19acd420d2942a7100e522df6e9313eb6b) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - In a Tags template compiled alongside Marko 5, `out["global"]` now reads `$global` like `out.global`, and `out[global]` (a variable named `global`) is now the "Only `out.global` is supported" compile error instead of silently reading `$global`.
+
+- [#4635](https://github.com/marko-js/marko/pull/4635) [`adc765e`](https://github.com/marko-js/marko/commit/adc765ec63af9b25dd522a5e67e9fae3f6551069) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - A binding used as a computed member key on an assignment, such as `obj[key] = 1`, is now only read: a `<const>` rest binding there no longer fails to compile, and other keys keep their per-property updates.
+
+- [#4610](https://github.com/marko-js/marko/pull/4610) [`13f8aa1`](https://github.com/marko-js/marko/commit/13f8aa1d537b205654cc5aaa2744890e4d572d76) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix cleanup on a resumed page when a `<for>` or `<if>` removes content that has no resume marker of its own, such as a child tag's static `<for>` rows, or a tag whose content is only another tag: removing it now aborts its `$signal`, runs its `onDestroy` and stops its updates, as a client render does.
+
+- [#4638](https://github.com/marko-js/marko/pull/4638) [`fb05fb1`](https://github.com/marko-js/marko/commit/fb05fb186f498f51463706c5134a531e18ac6f18) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Attribute tag content whose only client code is a `<return>` of its `<for>` param no longer throws `Cannot set properties of undefined (setting 'returns')` as its module loads in a debug build.
+
+- [#4620](https://github.com/marko-js/marko/pull/4620) [`23aed68`](https://github.com/marko-js/marko/commit/23aed68c08be9924e51cb9b22cf657638fa468e6) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - When a migrator or transform builds a node without a source location, compile errors and diagnostics about it now mark the nearest part of the template that has one (the node's first located part, its attribute or its tag) instead of failing with "Cannot read properties of undefined", pointing at the start of the file, or pointing at an unrelated `await`.
+
+- [#4631](https://github.com/marko-js/marko/pull/4631) [`94223f7`](https://github.com/marko-js/marko/commit/94223f77540af034091e3db111f4150612d7271b) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Drop the `undefined` argument a `<let>` without an initial value passed to its signal in client output.
+
+- [#4611](https://github.com/marko-js/marko/pull/4611) [`81b2751`](https://github.com/marko-js/marko/commit/81b27514ad7ab986a2e5bef1dc977d903f79308f) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Migrate Marko 5's `out.global` to `$global` only in Tags templates that the interop translator (`marko`) compiles, so a Tags-only project no longer rewrites `out`, and leave the scope crawl after migration to the compiler. Also skip binding lookups for identifiers the translator never rewrites.
+
+- [#4636](https://github.com/marko-js/marko/pull/4636) [`fdf683d`](https://github.com/marko-js/marko/commit/fdf683d0a722b67ed91676de335074667a183987) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - A tag named like a JavaScript built-in (`<Map/>`, `<Date/>`) with no tag file now reports "Unable to find entry point" instead of "Local variables must be in a dynamic tag", since nothing declares that name.
+
+- [#4602](https://github.com/marko-js/marko/pull/4602) [`e5c5bcd`](https://github.com/marko-js/marko/commit/e5c5bcdfcc4389e2a1066ca80d5d5d8c2312111f) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Write a native tag's object literal spread (`<div ...{ id: "x", onClick() {} }>`) as the attributes it names, so static ones join the markup and the tag no longer resumes for the spread alone.
+
+- [#4607](https://github.com/marko-js/marko/pull/4607) [`68efc83`](https://github.com/marko-js/marko/commit/68efc8393385396b52f623c407e01bba57a4ba05) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Skip creating an `AbortController` for an expression that only uses `$signal` to set `onabort`; its cleanup runs directly on teardown.
+
+- [#4613](https://github.com/marko-js/marko/pull/4613) [`fd9b1e0`](https://github.com/marko-js/marko/commit/fd9b1e00617e8bf232ce07809fc258a6939f7b6d) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Write a single-use derived value's client update where it is computed, dropping a function and a call for each (a `<for>` item's property, a one-use `<const>`).
+- Updated dependencies [[`4a5e758`](https://github.com/marko-js/marko/commit/4a5e7582b4f271ea995c697f75883aba484aed75), [`ff3cec9`](https://github.com/marko-js/marko/commit/ff3cec995bf344ac76f993d99eda18f9842520ff), [`fce28ac`](https://github.com/marko-js/marko/commit/fce28ac65de98cbe967c91ab08f71b6717bc920b), [`f52e0bd`](https://github.com/marko-js/marko/commit/f52e0bd14e88f1b1a99473885bca110ff5041224), [`23aed68`](https://github.com/marko-js/marko/commit/23aed68c08be9924e51cb9b22cf657638fa468e6), [`81b2751`](https://github.com/marko-js/marko/commit/81b27514ad7ab986a2e5bef1dc977d903f79308f), [`eab0534`](https://github.com/marko-js/marko/commit/eab0534dfdcaf8e6538154027b7c0dec68f311b8)]:
+  - @marko/compiler@5.42.17
+
 ## 6.4.10
 
 ### Patch Changes
