@@ -1,4 +1,4 @@
-// size: 3723 (min) 1685 (brotli)
+// size: 3699 (min) 1676 (brotli)
 // packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36);
 let rendering;
@@ -32,7 +32,6 @@ let _var_change = (scope, value) => scope.U?.(value);
 let currentNode;
 let walkNextSibling = (_) => (currentNode = currentNode.nextSibling || currentNode);
 let _resumed = {};
-let cloneCache = {};
 function queueRender(scope, signal, signalKey, value, scopeKey = scope.L) {
   let render;
   if (signalKey >= 0 && (render = scope[signalKey])) {
@@ -232,16 +231,10 @@ function _content(id, template, walks, setup, params, dynamicScopesAccessor) {
   ((walks = walks ? walks.replace(/[^\0-1]+$/, "") : ""),
     (setup = setup ? setup._ || setup : void 0),
     (params ||= void 0));
-  let clone = template
-    ? (branch, ns) => {
-        ((cloneCache[ns] ||= {})[1 + template] ||= createCloneableHTML(template, ns))(
-          branch,
-          walks,
-        );
-      }
-    : (branch) => {
-        walk((branch.S = branch.K = new Text()), walks, branch);
-      };
+  let cloneables = {},
+    clone = template
+      ? (branch, ns) => (cloneables[ns] ||= createCloneableHTML(template, walks, ns))(branch)
+      : (branch) => walk((branch.S = branch.K = new Text()), walks, branch);
   return (_resumed[id] = (owner) => ({
     a: id,
     b: clone,
@@ -251,16 +244,14 @@ function _content(id, template, walks, setup, params, dynamicScopesAccessor) {
     f: dynamicScopesAccessor,
   }));
 }
-function createCloneableHTML(html, ns) {
+function createCloneableHTML(html, walks, ns) {
   let { firstChild, lastChild } = parseHTML(html, ns),
     parent = new DocumentFragment();
   return (
     insertChildNodes(parent, null, firstChild, lastChild),
     firstChild === lastChild && firstChild.nodeType < 8
-      ? (branch, walks) => {
-          walk((branch.S = branch.K = firstChild.cloneNode(!0)), walks, branch);
-        }
-      : (branch, walks) => {
+      ? (branch) => walk((branch.S = branch.K = firstChild.cloneNode(!0)), walks, branch)
+      : (branch) => {
           let clone = parent.cloneNode(!0);
           ((clone.namespaceURI = ns),
             walk(clone.firstChild, walks, branch),

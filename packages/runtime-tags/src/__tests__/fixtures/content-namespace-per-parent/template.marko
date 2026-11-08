@@ -1,0 +1,13 @@
+<let/show = false/>
+<button onClick() { show = !show }>Toggle</button>
+<div/el>
+  <if=show>
+    <svg-and-html><a href="#">Link</a></svg-and-html>
+  </if>
+</div>
+<script>
+  show;
+  for (const node of el().querySelectorAll("a")) {
+    node.setAttribute("ns", node.namespaceURI!);
+  }
+</script>
