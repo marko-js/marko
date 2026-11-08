@@ -1,4 +1,4 @@
-// size: 27142 (min) 10127 (brotli)
+// size: 27114 (min) 10110 (brotli)
 // packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -45,7 +45,6 @@ let curRenders;
 let embedRenders;
 let readyIds;
 let isResuming;
-let cloneCache = {};
 let _html = /*@__PURE__*/ withDynamicHtml(function (scope, value, accessor) {
   let prevValue = scope["R" + accessor];
   if (prevValue !== (scope["R" + accessor] = _to_text(value))) {
@@ -1145,16 +1144,10 @@ function _content(id, template, walks, setup, params, dynamicScopesAccessor) {
   ((walks = walks ? walks.replace(/[^\0-1]+$/, "") : ""),
     (setup = setup ? setup._ || setup : void 0),
     (params ||= void 0));
-  let clone = template
-    ? (branch, ns) => {
-        ((cloneCache[ns] ||= {})[1 + template] ||= createCloneableHTML(template, ns))(
-          branch,
-          walks,
-        );
-      }
-    : (branch) => {
-        walk((branch.S = branch.K = new Text()), walks, branch);
-      };
+  let cloneables = {},
+    clone = template
+      ? (branch, ns) => (cloneables[ns] ||= createCloneableHTML(template, walks, ns))(branch)
+      : (branch) => walk((branch.S = branch.K = new Text()), walks, branch);
   return (_resumed[id] = (owner) => ({
     a: id,
     b: clone,
@@ -1191,16 +1184,14 @@ function _content_closures(renderer, closureFns) {
     );
   };
 }
-function createCloneableHTML(html, ns) {
+function createCloneableHTML(html, walks, ns) {
   let { firstChild, lastChild } = parseHTML(html, ns),
     parent = new DocumentFragment();
   return (
     insertChildNodes(parent, null, firstChild, lastChild),
     firstChild === lastChild && firstChild.nodeType < 8
-      ? (branch, walks) => {
-          walk((branch.S = branch.K = firstChild.cloneNode(!0)), walks, branch);
-        }
-      : (branch, walks) => {
+      ? (branch) => walk((branch.S = branch.K = firstChild.cloneNode(!0)), walks, branch)
+      : (branch) => {
           let clone = parent.cloneNode(!0);
           ((clone.namespaceURI = ns),
             walk(clone.firstChild, walks, branch),
