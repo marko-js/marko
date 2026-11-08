@@ -161,30 +161,42 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
 
     if (isHTML) {
       if (markerReason) {
+        const guard = getWriteGuard(section, markerReason, true);
+        const helper = node.escape ? "_text_mark" : "_html_mark";
+        const scopeId = getScopeIdIdentifier(section);
+        const accessor = getScopeAccessorLiteral(nodeBinding!);
         // `2` (or a guard scaled to 0/2) also asks the runtime to write a
         // `<!>` between non-empty text and the mergeable text before it.
-        const guard = getWriteGuard(section, markerReason, true);
-        write`${callRuntime(
-          node.escape ? "_text_mark" : "_html_mark",
-          getScopeIdIdentifier(section),
-          getScopeAccessorLiteral(nodeBinding!),
-          value,
+        const markerGuard =
           (extra.textBefore ?? getSectionTextBefore(section) ?? true)
             ? guard
               ? t.binaryExpression("*", guard, t.numericLiteral(2))
               : t.numericLiteral(2)
-            : guard || absentArg(1),
-          // The patch write is also the output and resume writer, so the value
-          // evaluates once; its group args follow.
-          ...(filledHole
+            : guard || absentArg(1);
+        // The patch write is also the output and resume writer, so the value
+        // evaluates once; its group args follow.
+        write`${
+          filledHole
             ? keepsSeededMarker(section, valueExtra)
-              ? [
+              ? callRuntime(
+                  helper,
+                  scopeId,
+                  accessor,
+                  value,
+                  markerGuard,
                   ...getExprRootGroupArgs(section, valueExtra),
                   t.numericLiteral(1),
-                ]
-              : getPatchHoleGroupArgs(section, valueExtra)
-            : []),
-        )}`;
+                )
+              : callRuntime(
+                  helper,
+                  scopeId,
+                  accessor,
+                  value,
+                  markerGuard,
+                  ...getPatchHoleGroupArgs(section, valueExtra),
+                )
+            : callRuntime(helper, scopeId, accessor, value, markerGuard)
+        }`;
       } else {
         write`${
           method === "_escape"

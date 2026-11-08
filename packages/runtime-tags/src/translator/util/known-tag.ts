@@ -460,25 +460,23 @@ export function knownTagTranslateHTML(
       t.variableDeclaration("const", [
         t.variableDeclarator(
           peekScopeId,
-          callRuntime(
-            "_peek_scope_id",
-            ...(isPatch()
-              ? [
-                  getScopeIdIdentifier(section),
-                  getScopeAccessorLiteral(childScopeBinding),
-                  t.numericLiteral(nextIdSite()),
-                  // Only a patch render of a section the patch fills reads these two.
-                  (patchFillsSection(section) &&
-                    varId &&
-                    guardVar(t.numericLiteral(1))) ||
-                    absentArg(0),
-                  patchFillsSection(section) &&
-                    childSection.parent !== section &&
-                    namesBodyOwner(section, childSection) &&
-                    getScopeIdIdentifier(childSection.parent!),
-                ]
-              : []),
-          ),
+          isPatch()
+            ? callRuntime(
+                "_peek_scope_id",
+                getScopeIdIdentifier(section),
+                getScopeAccessorLiteral(childScopeBinding),
+                t.numericLiteral(nextIdSite()),
+                // Only a patch render of a section the patch fills reads these two.
+                (patchFillsSection(section) &&
+                  varId &&
+                  guardVar(t.numericLiteral(1))) ||
+                  absentArg(0),
+                patchFillsSection(section) &&
+                  childSection.parent !== section &&
+                  namesBodyOwner(section, childSection) &&
+                  getScopeIdIdentifier(childSection.parent!),
+              )
+            : callRuntime("_peek_scope_id"),
         ),
       ]),
     );

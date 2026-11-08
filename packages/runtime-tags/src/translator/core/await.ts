@@ -151,24 +151,37 @@ export default {
         setSectionOwnerResumedByMarker(bodySection);
         writeHTMLResumeStatements(tag);
 
+        const scopeId = getScopeIdIdentifier(section);
+        const accessor = getScopeAccessorLiteral(nodeBinding);
+        const content = t.arrowFunctionExpression(
+          node.body.params,
+          toOnlyExpressionOrBlock(node.body.body),
+        );
+        // A patch page always marks a patchable boundary: the
+        // flush pairs its body through the resumed branch link.
+        const markerGuard = patchFillsSection(section)
+          ? t.numericLiteral(1)
+          : getWriteGuard(section, bodySection.reason, true);
         replaceWithStatements(tag, [
           t.expressionStatement(
-            callRuntime(
-              "_await",
-              getScopeIdIdentifier(section),
-              getScopeAccessorLiteral(nodeBinding),
-              valueAttr.value,
-              t.arrowFunctionExpression(
-                node.body.params,
-                toOnlyExpressionOrBlock(node.body.body),
-              ),
-              // A patch page always marks a patchable boundary: the
-              // flush pairs its body through the resumed branch link.
-              patchFillsSection(section)
-                ? t.numericLiteral(1)
-                : getWriteGuard(section, bodySection.reason, true),
-              ...(isPatch() ? getPendingArgs(bodySection) : []),
-            ),
+            isPatch()
+              ? callRuntime(
+                  "_await",
+                  scopeId,
+                  accessor,
+                  valueAttr.value,
+                  content,
+                  markerGuard,
+                  ...getPendingArgs(bodySection),
+                )
+              : callRuntime(
+                  "_await",
+                  scopeId,
+                  accessor,
+                  valueAttr.value,
+                  content,
+                  markerGuard,
+                ),
           ),
         ]);
       },

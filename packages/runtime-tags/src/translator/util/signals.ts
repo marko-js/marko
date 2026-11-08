@@ -1029,16 +1029,28 @@ function buildIntersection(
   ) {
     importRuntimeFeature("patches/render");
   }
-  return callRuntime(
-    setupId ? "_or_patch" : "_or",
-    ...(setupId ? [t.stringLiteral(setupId)] : []),
-    t.numericLiteral(id),
-    fn,
+  const defaultPending =
     returnedBy || intersection.length > 2
       ? t.numericLiteral(intersection.length - 1)
-      : undefined,
-    returnedBy && getScopeOffsetAccessorLiteral(returnedBy, true),
-  );
+      : undefined;
+  const scopeIdAccessor =
+    returnedBy && getScopeOffsetAccessorLiteral(returnedBy, true);
+  return setupId
+    ? callRuntime(
+        "_or_patch",
+        t.stringLiteral(setupId),
+        t.numericLiteral(id),
+        fn,
+        defaultPending,
+        scopeIdAccessor,
+      )
+    : callRuntime(
+        "_or",
+        t.numericLiteral(id),
+        fn,
+        defaultPending,
+        scopeIdAccessor,
+      );
 }
 
 export function buildSignalFn(signal: Signal): t.Expression {
@@ -2013,13 +2025,16 @@ export function writeHTMLResumeStatements(
     const signal = allSignals[i];
     if (signal.hasHTMLEffect) {
       const entry = patches && getEffectEntryArgs(section, signal);
-      const script = callRuntime(
-        "_script",
-        scopeIdIdentifier,
-        t.stringLiteral(getSignalRegistryId(signal)),
-        entry ? markerGuard || t.numericLiteral(1) : markerGuard,
-        ...(entry || []),
-      );
+      const registryId = t.stringLiteral(getSignalRegistryId(signal));
+      const script = entry
+        ? callRuntime(
+            "_script",
+            scopeIdIdentifier,
+            registryId,
+            markerGuard || t.numericLiteral(1),
+            ...entry,
+          )
+        : callRuntime("_script", scopeIdIdentifier, registryId, markerGuard);
       // A patch's intersection render may run the effect instead of its entry.
       const ref = signal.referencedBindings;
       if (

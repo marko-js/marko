@@ -537,12 +537,14 @@ function buildLetChangeWrites(
     // A state-sourced controller is the client's: the value only seeds, but
     // where its initial value reads a caller group, in that group.
     const seedGroups = getSeedWriteGroups(section, binding);
-    const seed = buildPatchFill(
-      section,
-      binding,
-      t.numericLiteral(1),
-      ...(seedGroups.groups.length ? buildWriteGroupArgs(seedGroups) : []),
-    );
+    const seed = seedGroups.groups.length
+      ? buildPatchFill(
+          section,
+          binding,
+          t.numericLiteral(1),
+          ...buildWriteGroupArgs(seedGroups),
+        )
+      : buildPatchFill(section, binding, t.numericLiteral(1));
     if (!reason) return [seed];
     return [
       seed,

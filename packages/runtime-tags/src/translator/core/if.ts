@@ -194,26 +194,26 @@ export const IfTag = {
               t.blockStatement([statement!]),
             );
 
+            const resumeArgs = getBranchResumeArgs(
+              ifTag,
+              branchReasons,
+              branches.every(isSingleNodeBranch),
+              patchesBranches,
+            );
             statement = t.expressionStatement(
-              callRuntime(
-                "_if",
-                cbNode,
-                ...getBranchResumeArgs(
-                  ifTag,
-                  branchReasons,
-                  branches.every(isSingleNodeBranch),
-                  patchesBranches,
-                ),
-                // Shell ids per branch index (an absent body ships `0`): the
-                // client creates a branch a flush selects without bundling it.
-                patchesBranches &&
-                  t.arrayExpression(branches.map(getBranchShellIdArg)),
-                // A chain whose conditions derive from params yields to the
-                // client when the call site passes state for them.
-                ...(patchesBranches
-                  ? getExprRootGroupArgs(ifTagSection, ifTagExtra)
-                  : []),
-              ),
+              patchesBranches
+                ? callRuntime(
+                    "_if",
+                    cbNode,
+                    ...resumeArgs,
+                    // Shell ids per branch index (an absent body ships `0`): the
+                    // client creates a branch a flush selects without bundling it.
+                    t.arrayExpression(branches.map(getBranchShellIdArg)),
+                    // A chain whose conditions derive from params yields to the
+                    // client when the call site passes state for them.
+                    ...getExprRootGroupArgs(ifTagSection, ifTagExtra),
+                  )
+                : callRuntime("_if", cbNode, ...resumeArgs),
             );
           }
 

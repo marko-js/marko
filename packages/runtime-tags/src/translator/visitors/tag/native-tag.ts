@@ -846,16 +846,23 @@ export default {
               // The attribute's helper also writes its patch entry (the
               // expression appears once): the element and group args trail.
               const helper = getPatchAttrHelper(tagName, name);
-              write`${callRuntime(
-                helper,
-                ...(helper === "_attr" ? [t.stringLiteral(name)] : []),
-                value,
-                getScopeIdIdentifier(tagSection),
-                t.stringLiteral(
-                  getNamedPatchKey(getPatchKey().Attr, nodeBinding!, name),
-                ),
-                ...getExprRootGroupArgs(tagSection, value.extra!),
-              )}`;
+              const scopeId = getScopeIdIdentifier(tagSection);
+              const key = t.stringLiteral(
+                getNamedPatchKey(getPatchKey().Attr, nodeBinding!, name),
+              );
+              const groupArgs = getExprRootGroupArgs(tagSection, value.extra!);
+              write`${
+                helper === "_attr"
+                  ? callRuntime(
+                      "_attr",
+                      t.stringLiteral(name),
+                      value,
+                      scopeId,
+                      key,
+                      ...groupArgs,
+                    )
+                  : callRuntime(helper, value, scopeId, key, ...groupArgs)
+              }`;
               continue;
             }
 
@@ -923,47 +930,67 @@ export default {
         } else if (contentAttr) {
           write`>`;
           htmlContentAttrTags.add(tag.node);
+          const content = contentAttr.value;
           // A `content=` a patch writes renders from a dynamic tag entry, like
           // a dynamic tag (the client signal shape is the same).
-          const patches = fillsHole(tagSection, contentAttr.value.extra);
+          const patches = fillsHole(tagSection, content.extra);
+          const scopeId = getScopeIdIdentifier(tagSection);
+          const markerGuard =
+            getWriteGuard(
+              tagSection,
+              nodeBinding && getWriteReason(nodeBinding),
+              true,
+            ) || absentArg(1);
           (tag.node.body.body as t.Statement[]) = [
             t.expressionStatement(
-              callRuntime(
-                "_attr_content",
-                nodeAccessor,
-                getScopeIdIdentifier(tagSection),
-                contentAttr.value,
-                ...(isPatch() ? [t.numericLiteral(nextIdSite())] : []),
-                getWriteGuard(
-                  tagSection,
-                  nodeBinding && getWriteReason(nodeBinding),
-                  true,
-                ) || absentArg(1),
-                ...(patches
-                  ? getPatchHoleGroupArgs(tagSection, contentAttr.value.extra!)
-                  : []),
-              ),
+              isPatch()
+                ? patches
+                  ? callRuntime(
+                      "_attr_content",
+                      nodeAccessor,
+                      scopeId,
+                      content,
+                      t.numericLiteral(nextIdSite()),
+                      markerGuard,
+                      ...getPatchHoleGroupArgs(tagSection, content.extra!),
+                    )
+                  : callRuntime(
+                      "_attr_content",
+                      nodeAccessor,
+                      scopeId,
+                      content,
+                      t.numericLiteral(nextIdSite()),
+                      markerGuard,
+                    )
+                : callRuntime(
+                    "_attr_content",
+                    nodeAccessor,
+                    scopeId,
+                    content,
+                    markerGuard,
+                  ),
             ),
           ];
         } else if (spreadContent) {
-          const markerGuard = getWriteGuard(
-            tagSection,
-            nodeBinding && getWriteReason(nodeBinding),
-            true,
-          );
+          const markerGuard =
+            getWriteGuard(
+              tagSection,
+              nodeBinding && getWriteReason(nodeBinding),
+              true,
+            ) || absentArg(1);
           const patches = fillsHole(tagSection, tagExtra);
-          const contentArgs = [
-            ...(isPatch() ? [t.numericLiteral(nextIdSite())] : []),
-            markerGuard || absentArg(1),
-            ...(patches
+          const contentArgs = isPatch()
+            ? patches
               ? [
+                  t.numericLiteral(nextIdSite()),
+                  markerGuard,
                   !controllable && controllableElements.has(tagName)
                     ? t.numericLiteral(1)
                     : absentArg(0),
                   ...getPatchHoleGroupArgs(tagSection, tagExtra),
                 ]
-              : []),
-          ];
+              : [t.numericLiteral(nextIdSite()), markerGuard]
+            : [markerGuard];
           htmlContentAttrTags.add(tag.node);
           (tag.node.body.body as t.Statement[]) = [
             skipExpression
