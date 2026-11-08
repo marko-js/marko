@@ -1,4 +1,4 @@
-// size: 28558 (min) 10596 (brotli)
+// size: 28549 (min) 10568 (brotli)
 // packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -840,9 +840,7 @@ function ready(readyId) {
   (readyIds ||= /* @__PURE__ */ new Set()).add(readyId);
   for (let renderId in curRenders) runResumeEffects(curRenders[renderId]);
 }
-function readyFailed(readyId) {
-  readyIds?.has(readyId);
-}
+function readyFailed(readyId) {}
 function initEmbedded(readyId, runtimeId) {
   (embedRenders ||
     ((embedRenders = /* @__PURE__ */ new Map()),
@@ -2457,10 +2455,10 @@ function _bind_resume(key, factory) {
     reads = key.slice(sep + 1);
   ((filledReferences[id] = (owner) => readChanged(owner, reads)), (_resumed[id] = factory));
 }
-function _or_patch(initId, id, fn, defaultPending, scopeIdAccessor) {
+function _or_patch(setupId, id, fn, defaultPending, scopeIdAccessor) {
   let scopeIdKey = scopeIdAccessor ? decodeAccessor(scopeIdAccessor) : "L";
   return (
-    (_resumed[initId] = (scope) => queueRender(scope, fn, id, 0, scope[scopeIdKey])),
+    (_resumed[setupId] = (scope) => queueRender(scope, fn, id, 0, scope[scopeIdKey])),
     _or(id, fn, defaultPending, scopeIdAccessor)
   );
 }

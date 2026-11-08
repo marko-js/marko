@@ -1,7 +1,6 @@
 import { decodeAccessor } from "../../common/helpers";
 import {
   type Accessor,
-  AccessorPrefix,
   AccessorProp,
   ClosureSignalProp,
   type EncodedAccessor,
