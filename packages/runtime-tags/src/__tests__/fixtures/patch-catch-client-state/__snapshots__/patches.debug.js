@@ -5,9 +5,9 @@
     "PatchCatch:#text/0": [{
       "PatchMarkedWrite:err_message": "SHOWN_x",
       "PatchSetup:": {
-        "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-client-state/tags/panel.marko_1_input_label#0:3/subscribe": 0,
-        "PatchRender:": "packages/runtime-tags/src/__tests__/fixtures/patch-catch-client-state/tags/panel.marko_1_input_label#0:3_err_message#5/setup"
+        "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-client-state/tags/panel.marko_1_input_label#0:3/subscribe": 0
       },
+      "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-catch-client-state/tags/panel.marko_1_input_label#0:3_err_message#5/setup": "err_message",
       "PatchSetupValues:": {
         "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-catch-client-state/tags/panel.marko_1_n#7/fill": 0
       }

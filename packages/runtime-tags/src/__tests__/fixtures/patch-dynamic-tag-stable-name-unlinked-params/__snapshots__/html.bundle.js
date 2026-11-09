@@ -1,6 +1,5 @@
 // template.marko
 _shells({
-	a2: "a2;b%;<!><!><!>",
 	a0: "a0,<b>R</b>",
 	a: "a;b%;<!><!><!>",
 	a1: "a1;b%;<!><!><!>"
@@ -25,7 +24,7 @@ var template_default = _template("a", (input) => {
 			}
 		}, $scope2_id, "a", 1, $wg__show, 1, 0, 0, ["a1"]);
 		_write_if($scope2_reason, 1) && _scope($scope2_id, { e: _unfilled_if($scope2_reason, 1) && content });
-	}, $scope0_id, void 0, 1) };
+	}, $scope0_id) };
 	_dynamic_tag($scope0_id, "a", Box, {
 		show: input.show,
 		content: Row

@@ -32,10 +32,12 @@ var template_default = _template("a", (input) => {
 	panel_default({
 		label: input.label,
 		items: input.items,
-		content: _content_resume("a2", ({ label, items }) => {
+		content: _content_resume("a5", ({ label, items }) => {
 			const $scope1_reason = _scope_reason(), $wg__label = _write_guard($scope1_reason, 0), $wg__items = _write_guard($scope1_reason, 1), $wi__label = _write_if($scope1_reason, 0);
 			const $scope1_id = _scope_id();
 			const $panel_content__label__closures = /* @__PURE__ */ new Set();
+			_patch_write($scope1_id, "xe", label);
+			_patch_write($scope1_id, "xf", items);
 			let open = true;
 			_if(() => {
 				{
@@ -60,13 +62,16 @@ var template_default = _template("a", (input) => {
 			}, $scope1_id, "a");
 			_html(`<button>toggle</button>${_el_mark($scope1_id, "b")}`);
 			_script($scope1_id, "a1");
+			_patch_subscribers($scope1_id, "a2", "e");
+			_patch_render($scope1_id, "a3", "e");
+			_patch_render($scope1_id, "a4", "f");
 			_scope($scope1_id, {
 				e: label,
 				f: items,
 				g: open,
 				h: $wi__label && $panel_content__label__closures
 			});
-		}, $scope0_id, void 0, 1)
+		}, $scope0_id)
 	});
 	_patch_child_end();
 	_scope($scope0_id, { a: _existing_scope($childScope) });

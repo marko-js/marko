@@ -1,21 +1,17 @@
 // PATCH
 {
-  fa: ["^a0", 0, {
-    show: !0,
-    label: "b"
-  }],
   cAa: {
+    xe: !0,
+    xf: "b",
     ia2: "e f"
   }
 }
 
 // PATCH
 {
-  fa: ["^a0", 0, {
-    show: !1,
-    label: "c"
-  }],
   cAa: {
+    xe: !1,
+    xf: "c",
     ia2: "e f"
   }
 }

@@ -65,7 +65,7 @@ var template_default = _template("a", (input) => {
 						g: open,
 						c: _existing_scope($childScope)
 					});
-				}, $scope1_id, void 0, 1) })
+				}, $scope1_id) })
 			});
 			_patch_child_end();
 			_client_guard($scope0_reason, 1) && _patch_render($scope1_id, "a4");

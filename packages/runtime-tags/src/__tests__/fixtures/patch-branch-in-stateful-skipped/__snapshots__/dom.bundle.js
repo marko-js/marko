@@ -1,14 +1,14 @@
 // template.marko
 const $for_content__$params = ($scope, $params3) => _text($scope.a, $params3[0]);
-const $if_content2__label = /*@__PURE__*/ _closure_get_patch("a0", 7, ($scope) => _text($scope.a, $scope._._.e), ($scope) => $scope._._);
+const $if_content2__label = /*@__PURE__*/ _closure_get_patch("a0", 7, ($scope) => _text($scope.a, $scope._._.e), ($scope) => $scope._._, "a2", 0);
 const $if_content__if = /*@__PURE__*/ _if(0, "<p> </p>", "D ", $if_content2__label);
-const $if_content__label = /*@__PURE__*/ _if_closure_patch("a4", 0, 0, ($scope) => $if_content__if($scope, $scope._.e ? 0 : 1));
+const $if_content__label = /*@__PURE__*/ _if_closure_patch("a3", 0, 0, ($scope) => $if_content__if($scope, $scope._.e ? 0 : 1));
 const $if_content__setup = ($scope) => {
 	$if_content__label._($scope);
 	$if_content__items._($scope);
 };
 const $if_content__for = /*@__PURE__*/ _for_of_unkeyed(1, "<li> </li>", "D ", 0, $for_content__$params);
-const $if_content__items = /*@__PURE__*/ _if_closure_patch("a5", 0, 0, ($scope) => $if_content__for($scope, [$scope._.f]));
+const $if_content__items = /*@__PURE__*/ _if_closure_patch("a4", 0, 0, ($scope) => $if_content__for($scope, [$scope._.f]));
 const $panel_content__if = /*@__PURE__*/ _if(0, "<!><!><ul></ul>", "b%b ", $if_content__setup);
 const $panel_content__open = _let(6, ($scope) => $panel_content__if($scope, $scope.g ? 0 : 1));
 const $panel_content__setup__script = _script("a1", ($scope) => _on($scope.b, "click", function() {
@@ -28,4 +28,4 @@ const $panel_content__label = /*@__PURE__*/ _const(4, ($scope) => {
 	$panel_content__label__closure($scope);
 });
 const $panel_content__items = /*@__PURE__*/ _const(5, $if_content__items);
-const $panel_content = _content$1("a2", "<!><!><button>toggle</button>", "b%b ", $panel_content__setup, $panel_content__$params);
+const $panel_content = _content$1("a5", "<!><!><button>toggle</button>", "b%b ", $panel_content__setup, $panel_content__$params);

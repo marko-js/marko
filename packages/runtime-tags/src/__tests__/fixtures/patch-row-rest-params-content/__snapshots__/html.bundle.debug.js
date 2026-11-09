@@ -50,7 +50,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				i,
 				_: _scope_with_id($scope0_id)
 			}, "__tests__/template.marko", "2:2", { i: "2:9" }));
-		}, $scope0_id, void 0, 1)
+		}, $scope0_id)
 	});
 	_patch_child_end();
 	_scope($scope0_id, {

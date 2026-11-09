@@ -47,7 +47,7 @@ var template_default = _template("a", (input) => {
 				d: i,
 				_: _scope_with_id($scope0_id)
 			}));
-		}, $scope0_id, void 0, 1)
+		}, $scope0_id)
 	});
 	_patch_child_end();
 	_scope($scope0_id, {

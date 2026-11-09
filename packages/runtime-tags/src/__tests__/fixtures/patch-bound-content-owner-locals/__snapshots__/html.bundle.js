@@ -85,7 +85,7 @@ var template_default = _template("a", (input) => {
 				e: item,
 				f: open
 			});
-		}, $scope0_id, void 0, 1) })
+		}, $scope0_id) })
 	});
 	_patch_child_end();
 	_html("</main>");

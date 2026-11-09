@@ -29,9 +29,9 @@
 ```
 ## Change
 ```
-REMOVE: p
 UPDATE: ul > li::text "x" => "y"
 REMOVE: ul > li + li
+REMOVE: p
 ```
 
 # Update
@@ -87,8 +87,8 @@ INSERT: ul > li
 ```
 ## Change
 ```
-INSERT: p
 UPDATE: ul > li:nth-of-type(1)::text "y" => "x"
 INSERT: ul > li:nth-of-type(1) + li
+INSERT: p
 UPDATE: p::text " " => "b"
 ```

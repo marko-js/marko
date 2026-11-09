@@ -43,6 +43,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope1_reason = _scope_reason(), $wg__label = _write_guard($scope1_reason, 0), $wg__items = _write_guard($scope1_reason, 1), $wi__label = _write_if($scope1_reason, 0);
 			const $scope1_id = _scope_id();
 			const $panel_content__label__closures = new Set();
+			_patch_write($scope1_id, "PatchMarkedWrite:label", label);
+			_patch_write($scope1_id, "PatchMarkedWrite:items", items);
 			let open = true;
 			_if(() => {
 				if (open) {
@@ -67,6 +69,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}, $scope1_id, "#text/0");
 			_html(`<button>toggle</button>${_el_mark($scope1_id, "#button/1")}`);
 			_script($scope1_id, "__tests__/template.marko_1");
+			_patch_subscribers($scope1_id, "__tests__/template.marko_1_label#4/subscribers", "label");
+			_patch_render($scope1_id, "__tests__/template.marko_2_label#1:4/setup", "label");
+			_patch_render($scope1_id, "__tests__/template.marko_2_items#1:5/setup", "items");
 			_scope($scope1_id, {
 				label,
 				items,
@@ -77,7 +82,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				items: "1:17",
 				open: "2:8"
 			});
-		}, $scope0_id, void 0, 1)
+		}, $scope0_id)
 	});
 	_patch_child_end();
 	_scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", 0);

@@ -95,7 +95,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				item: "3:14",
 				open: "4:12"
 			});
-		}, $scope0_id, void 0, 1) })
+		}, $scope0_id) })
 	});
 	_patch_child_end();
 	_html("</main>");

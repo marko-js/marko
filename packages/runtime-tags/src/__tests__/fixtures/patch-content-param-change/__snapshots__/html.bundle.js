@@ -47,14 +47,14 @@ var template_default = _template("a", (input) => {
 		($wi__input_suffix || $wi__value) && _var($scope1_id, "b", $childScope, "a0");
 		_patch_child_end();
 		_html(`<p>${_text_mark($scope1_id, "c", label, $wg__input_suffix || $wg__value)}</p>`);
-		_patch_render($scope1_id, "a1", [_filled_guard($scope0_reason, 0) && ">d", "f"], $scope0_reason, 0);
+		_patch_render($scope1_id, "a1", [_filled_guard($scope0_reason, 0) && ">d", "f"], (2 | _updates_from($scope0_reason, 0)) << 1, 0);
 		_subscribe($wi__input_suffix && $input_suffix__closures, _scope($scope1_id, {
 			f: $wi__input_suffix && value,
 			_: _scope_with_id($scope0_id),
 			a: ($wi__input_suffix || $wi__value) && _existing_scope($childScope)
 		}), _client_guard($scope0_reason, 0) && "a2", $wg__input_suffix || $wg__value);
 		$wg__input_suffix || $wg__value || $wg__input_suffix && _resume_branch($scope1_id);
-	}, $scope0_id, void 0, 1) });
+	}, $scope0_id) });
 	_patch_child_end();
 	$fg__input_suffix && _patch_subscribers($scope0_id, "a4", "d");
 	_scope($scope0_id, {

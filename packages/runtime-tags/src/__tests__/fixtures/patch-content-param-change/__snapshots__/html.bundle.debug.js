@@ -55,14 +55,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		($wi__input_suffix || $wi__value) && _var($scope1_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_1_label#7/var");
 		_patch_child_end();
 		_html(`<p>${_text_mark($scope1_id, "#text/2", label, $wg__input_suffix || $wg__value)}</p>`);
-		_patch_render($scope1_id, "__tests__/template.marko_1_input_suffix#0:3_value#5/setup", [_filled_guard($scope0_reason, 0) && ">input_suffix", "value"], $scope0_reason, 0);
+		_patch_render($scope1_id, "__tests__/template.marko_1_input_suffix#0:3_value#5/setup", [_filled_guard($scope0_reason, 0) && ">input_suffix", "value"], (2 | _updates_from($scope0_reason, 0)) << 1, 0);
 		_subscribe($wi__input_suffix && $input_suffix__closures, _scope($scope1_id, {
 			value: $wi__input_suffix && value,
 			_: _scope_with_id($scope0_id),
 			"#childScope/0": ($wi__input_suffix || $wi__value) && _existing_scope($childScope)
 		}, "__tests__/template.marko", "1:2", { value: "1:12" }), _client_guard($scope0_reason, 0) && "__tests__/template.marko_1_input_suffix#0:3/subscribe", $wg__input_suffix || $wg__value);
 		$wg__input_suffix || $wg__value || $wg__input_suffix && _resume_branch($scope1_id);
-	}, $scope0_id, void 0, 1) });
+	}, $scope0_id) });
 	_patch_child_end();
 	$fg__input_suffix && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_suffix#3/subscribers", "input_suffix");
 	_scope($scope0_id, {

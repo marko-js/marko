@@ -36,6 +36,7 @@ var template_default = _template("a", (input) => {
 		then: attrTag({ content: _content_resume("a1", ({ x }) => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
+			_patch_write($scope1_id, "xd", x);
 			const $childScope = _peek_scope_id($scope1_id, "a", 0);
 			reader_default({ get: _bind_resume(function() {
 				return x;
@@ -45,7 +46,7 @@ var template_default = _template("a", (input) => {
 				d: x,
 				a: _existing_scope($childScope)
 			});
-		}, $scope0_id, void 0, 1) })
+		}, $scope0_id) })
 	});
 	_patch_child_end();
 	_scope($scope0_id, { a: _existing_scope($childScope2) });

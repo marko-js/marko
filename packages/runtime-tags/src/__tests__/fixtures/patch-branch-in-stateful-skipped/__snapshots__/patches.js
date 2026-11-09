@@ -1,19 +1,25 @@
 // PATCH
 {
   ca: {
-    fa: ["^^a2", 0, {
-      label: "",
-      items: ["y"]
-    }]
+    cAa: {
+      xe: "",
+      xf: ["y"],
+      Sa2: "e",
+      ia3: "e",
+      ia4: "f"
+    }
   }
 }
 
 // PATCH
 {
   ca: {
-    fa: ["^^a2", 0, {
-      label: "b",
-      items: ["x", "z"]
-    }]
+    cAa: {
+      xe: "b",
+      xf: ["x", "z"],
+      Sa2: "e",
+      ia3: "e",
+      ia4: "f"
+    }
   }
 }

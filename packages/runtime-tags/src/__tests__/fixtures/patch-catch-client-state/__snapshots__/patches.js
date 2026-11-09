@@ -5,9 +5,9 @@
     ka: [{
       xf: "SHOWN_x",
       s: {
-        Sb1: 0,
-        i: "b2"
+        Sb1: 0
       },
+      ib2: "f",
       o: {
         vb3: 0
       }

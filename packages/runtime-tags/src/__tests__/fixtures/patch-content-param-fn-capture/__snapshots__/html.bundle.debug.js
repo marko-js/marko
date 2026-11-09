@@ -45,6 +45,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		content: _content_resume("__tests__/template.marko_1*content", ({ x }) => {
 			const $scope1_reason = _scope_reason();
 			const $scope1_id = _scope_id();
+			_patch_write($scope1_id, "PatchMarkedWrite:x", x);
 			const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 			reader_default({ get: _bind_resume(function() {
 				return x;
@@ -54,7 +55,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				x,
 				"#childScope/0": _existing_scope($childScope)
 			}, "__tests__/template.marko", "1:2", { x: "1:9" });
-		}, $scope0_id, void 0, 1)
+		}, $scope0_id)
 	});
 	_patch_child_end();
 	_scope($scope0_id, { "#childScope/0": _existing_scope($childScope2) }, "__tests__/template.marko", 0);

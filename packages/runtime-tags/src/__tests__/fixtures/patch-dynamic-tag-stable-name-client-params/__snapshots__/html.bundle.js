@@ -6,6 +6,8 @@ var template_default = _template("a", (input) => {
 	const Box = { content: _content_resume("a0", ({ show, label }) => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
+		_patch_write($scope1_id, "xe", show);
+		_patch_write($scope1_id, "xf", label);
 		let n = 0;
 		_html(`<button>${_text_mark($scope1_id, "b", show ? label + n : "-")}</button>${_el_mark($scope1_id, "a")}`);
 		_script($scope1_id, "a1");
@@ -15,7 +17,7 @@ var template_default = _template("a", (input) => {
 			f: label,
 			g: n
 		});
-	}, $scope0_id, void 0, 1) };
+	}, $scope0_id) };
 	_dynamic_tag($scope0_id, "a", Box, {
 		show: input.show,
 		label: input.label

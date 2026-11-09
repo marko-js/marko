@@ -9,6 +9,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const Box = { content: _content_resume("__tests__/template.marko_1*content", ({ show, label }) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
+		_patch_write($scope1_id, "PatchMarkedWrite:show", show);
+		_patch_write($scope1_id, "PatchMarkedWrite:label", label);
 		let n = 0;
 		_html(`<button>${_text_mark($scope1_id, "#text/1", show ? label + n : "-")}</button>${_el_mark($scope1_id, "#button/0")}`);
 		_script($scope1_id, "__tests__/template.marko_1");
@@ -22,7 +24,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			label: "1:21",
 			n: "2:8"
 		});
-	}, $scope0_id, void 0, 1) };
+	}, $scope0_id) };
 	_dynamic_tag($scope0_id, "#text/0", Box, {
 		show: input.show,
 		label: input.label

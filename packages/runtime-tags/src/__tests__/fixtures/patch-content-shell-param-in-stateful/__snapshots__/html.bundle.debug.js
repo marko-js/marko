@@ -77,7 +77,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 						label: "3:17",
 						open: "4:12"
 					});
-				}, $scope1_id, void 0, 1) })
+				}, $scope1_id) })
 			});
 			_patch_child_end();
 			_client_guard($scope0_reason, 1) && _patch_render($scope1_id, "__tests__/template.marko_1_input_label#0:4/setup");

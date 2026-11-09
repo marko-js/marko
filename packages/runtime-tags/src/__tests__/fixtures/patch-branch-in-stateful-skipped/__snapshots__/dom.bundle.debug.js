@@ -21,7 +21,7 @@ var panel_default = /*@__PURE__*/ _template("__tests__/tags/panel.marko", $templ
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c");
 const $for_content__$params = ($scope, $params3) => _text($scope["#text/0"], $params3[0]);
-const $if_content2__label = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_3_label#1:4/subscribe", "label/7", ($scope) => _text($scope["#text/0"], $scope._._.label), ($scope) => $scope._._);
+const $if_content2__label = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_3_label#1:4/subscribe", "label/7", ($scope) => _text($scope["#text/0"], $scope._._.label), ($scope) => $scope._._, "__tests__/template.marko_1_label#4/subscribers", 0);
 const $if_content2__setup = $if_content2__label;
 const $if_content__if = /*@__PURE__*/ _if("#text/0", "<p> </p>", "D ", $if_content2__setup);
 const $if_content__label = /*@__PURE__*/ _if_closure_patch("__tests__/template.marko_2_label#1:4/setup", "#text/0", 0, ($scope) => $if_content__if($scope, $scope._.label ? 0 : 1));
