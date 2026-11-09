@@ -270,10 +270,7 @@ export function mapParamBindingToExpr(
 
 // The call site's known expressions at `binding`, passing through property-less
 // links; past the properties it lists, only the value expression holding it.
-export function getKnownExprsAt(
-  exprs: KnownExprs,
-  binding: Binding,
-): KnownExprs {
+function getKnownExprsAt(exprs: KnownExprs, binding: Binding): KnownExprs {
   const aliased = binding.aliasOf;
   if (!aliased) return exprs;
   const known = getKnownExprsAt(exprs, aliased);

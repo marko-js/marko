@@ -42,7 +42,6 @@ import {
   getSourcesForExpr,
   getSourcesForExprs,
   type KnownExprs,
-  getKnownExprsAt,
   mapParamBindingToExpr,
   mapParamReasonToExpr,
 } from "./reasons";
@@ -468,7 +467,6 @@ export function knownTagTranslateDOM(
   if (paramsTree) {
     writeParamsToSignals(tag, paramsTree, getTagName(tag) || "tag", {
       tagSection,
-      knownExprs: extra[kKnownExprs]!,
       getBindingIdentifier,
       childScopeBinding,
     });
@@ -1075,7 +1073,6 @@ function dropAttrTag(tag: t.MarkoTag, dropReferenceNodes: t.Node[]) {
 
 type TranslateDOMInfo = {
   tagSection: Section;
-  knownExprs: KnownExprs;
   getBindingIdentifier: (
     binding: Binding,
     preferredName?: string,
@@ -1135,12 +1132,12 @@ function writeParamsToSignals(
   }
 
   const attrsTree = paramsTree.properties[i];
+  const { known } = tag.node.extra![kKnownExprs]!;
   if (attrsTree && tag.node.extra![kPassesInput]) {
-    writeAttrsToSignals(tag, attrsTree, `${hint}_input`, info);
+    writeAttrsToSignals(tag, attrsTree, known![i], `${hint}_input`, info);
   }
 
   // A param the call passes nothing for is undefined, as the server leaves it.
-  const { known } = tag.node.extra![kKnownExprs]!;
   for (const key in paramsTree.properties) {
     if (!known![key]) {
       writeToSignal(
@@ -1199,6 +1196,7 @@ function applyAttrObject(
 function writeAttrsToSignals(
   tag: t.NodePath<t.MarkoTag>,
   paramsTree: ParamsTree,
+  exprs: KnownExprs,
   hint: string,
   info: TranslateDOMInfo,
 ) {
@@ -1288,29 +1286,25 @@ function writeAttrsToSignals(
               attrTagMeta,
               t.objectExpression(translatedAttrs.properties),
             );
-          } else if (
-            attrTagMeta.repeated &&
-            (!childAttrTree.properties || childAttrTree.rest)
-          ) {
-            // Like HTML, the first occurrence passes the whole `attrTags` value,
-            // since a whole read or a rest reaches the others.
-            if (remaining.delete(attrTagMeta.name)) {
-              applyAttrObject(
-                child,
-                childAttrTree,
-                info.getBindingIdentifier(
-                  childAttrTree.binding,
-                  `${hint}_${attrTagMeta.name}`,
-                ),
-                info,
-              );
-            }
-          } else {
+          } else if (exprs.known![attrTagMeta.name].known) {
+            // Analysis read its members from the one occurrence it kept.
             remaining.delete(attrTagMeta.name);
             writeAttrsToSignals(
               child,
               childAttrTree,
+              exprs.known![attrTagMeta.name],
               `${hint}_${attrTagMeta.name}`,
+              info,
+            );
+          } else if (remaining.delete(attrTagMeta.name)) {
+            // Like HTML, the first occurrence passes the whole `attrTags` value.
+            applyAttrObject(
+              child,
+              childAttrTree,
+              info.getBindingIdentifier(
+                childAttrTree.binding,
+                `${hint}_${attrTagMeta.name}`,
+              ),
               info,
             );
           }
@@ -1432,10 +1426,7 @@ function writeAttrsToSignals(
       writeToSignal(
         info,
         propSignal,
-        getKnownExprsAt(
-          info.knownExprs,
-          (getParamsTreeAt(paramsTree, prop) as ParamsTree).binding,
-        ).value,
+        exprs.known![prop].value,
         createScopeReadExpression(propBinding, info.tagSection),
         true,
       );
