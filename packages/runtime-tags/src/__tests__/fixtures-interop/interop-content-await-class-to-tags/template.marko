@@ -1,0 +1,12 @@
+// use class
+import { resolveAfter } from "../../utils/resolve";
+
+<tags-child>
+  <@foo>
+    <await(resolveAfter("hi", 1))>
+      <@then|value|><b>${value}</b></@then>
+    </await>
+  </@foo>
+</tags-child>
+
+<init-components/>

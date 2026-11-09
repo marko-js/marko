@@ -107,9 +107,8 @@ export function createInteropTranslator(translate5: any) {
               );
             };
             return [
-              // A Tags template captures the dynamic tag helper at module
-              // scope, so the Class runtime has to patch it in before either
-              // half runs.
+              // What a Class template passes a Tags child resumes through the compat
+              // runtime, which loads even where the browser skips that template.
               ...(state.needsCompat
                 ? [
                     t.importDeclaration(

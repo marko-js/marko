@@ -1,0 +1,28 @@
+<!--M#s0--><button id=class>0</button><!--F#1-->
+<div><!--Ms[-->direct 0<!--Ms]1 a 2--></div><!--F/--><!--F#1-->
+<div><!--Ms[-->forwarded 0<!--Ms]3 a 4--></div><!--F/--><!--M/-->
+<script>
+  WALKER_RUNTIME("M")("s");
+  M.s.r = [_ => [1, {
+    m5c: "s0-1",
+    Da: _._.$C_b
+  }, 1, {
+    m5c: "s0-2-0",
+    Da: {
+      id: "forwarded",
+      renderBody: _._.$C_b,
+      *[Symbol.iterator]() {
+        yield this
+      }
+    }
+  }], "$C_s 1 $C_s 3"];
+  M.s.w();
+  $MC = (window.$MC || []).concat({
+    "w": [
+      ["s0", 0, {}, {
+        "f": 1
+      }]
+    ],
+    "t": ["a"]
+  })
+</script>

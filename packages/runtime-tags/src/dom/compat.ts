@@ -1,12 +1,18 @@
 import { RENDER_BODY_ID, SET_SCOPE_REGISTER_ID } from "../common/compat-meta";
+import { setClassAPIRenderer } from "../common/helpers";
 import {
   AccessorProp,
   type BranchScope,
   RendererProp,
   type Scope,
 } from "../common/types";
-import { patchDynamicTag } from "./control-flow";
-import { prepareEffects, queueEffect, rendering, runEffects } from "./queue";
+import {
+  prepareEffects,
+  queueEffect,
+  queueRender,
+  rendering,
+  runEffects,
+} from "./queue";
 import { _content, createAndSetupBranch, type Renderer } from "./renderer";
 import { _resumed, getRegisteredWithScope, init } from "./resume";
 import { destroyBranch } from "./scope";
@@ -32,7 +38,7 @@ const getRenderScopes = ($global: Record<string, unknown>) => {
 };
 
 export const compat = {
-  patchDynamicTag,
+  setClassAPIRenderer,
   queueEffect,
   init(warp10Noop: any) {
     _resumed[SET_SCOPE_REGISTER_ID] = (scope: Scope & { m5c?: string }) => {
@@ -63,11 +69,15 @@ export const compat = {
   getScope($global: Record<string, unknown>, scopeId: unknown) {
     return getRenderScopes($global)?.[scopeId as string];
   },
-  setRendererId(renderer: any, id: unknown) {
-    renderer[RendererProp.Id] = id;
+  // Data may carry a renderer's id key, but not its clone.
+  isRenderer(value: any) {
+    return (
+      RendererProp.Id in value &&
+      typeof value[RendererProp.Clone] === "function"
+    );
   },
-  isRenderer(renderer: any) {
-    return renderer[RendererProp.Clone];
+  getGlobal(scope: Scope) {
+    return scope[AccessorProp.Global];
   },
   getStartNode(branch: any) {
     return branch[AccessorProp.StartNode];
@@ -103,17 +113,31 @@ export const compat = {
 
     return value;
   },
-  createRenderer(
-    params: NonNullable<Renderer[typeof RendererProp.Params]>,
-    clone: () => { startNode: ChildNode; endNode: ChildNode },
-  ) {
-    const renderer = _content("", 0, 0, 0, params)();
-    renderer[RendererProp.Clone] = (branch) => {
-      const cloned = clone();
-      branch[AccessorProp.StartNode] = cloned.startNode;
-      branch[AccessorProp.EndNode] = cloned.endNode;
-    };
+  createRenderer(id: string, clone: CloneNodes) {
+    const renderer = _content("", 0)();
+    renderer[RendererProp.Id] = id;
+    renderer[RendererProp.Clone] = cloneBranch(clone);
     return renderer;
+  },
+  // A Class template is keyed by itself and renders from a dynamic tag's input, or
+  // from none as a native tag's content, as a Tags template does.
+  createTemplate(render: ClassRender, clone: CloneNodes) {
+    const create = createClassRenderer(render, clone);
+    return (template: any, renderer: unknown) => {
+      const templateRenderer = create(template, renderer);
+      (templateRenderer as any)._ = templateRenderer;
+      return templateRenderer;
+    };
+  },
+  // All Class content shares one key, so a Class parent's rerender renders its new content
+  // in the branch the last rendered.
+  createContent(render: ClassRender, clone: CloneNodes) {
+    const create = createClassRenderer(render, clone);
+    return (content: unknown) => {
+      const renderer = create(RENDER_BODY_ID, content);
+      renderer[RendererProp.LocalClosures] = renderer[RendererProp.Setup];
+      return renderer;
+    };
   },
   render(out: any, component: any, renderer: Renderer, args: any) {
     // A rerendering class parent may hydrate before this runtime has resumed;
@@ -168,3 +192,41 @@ export const compat = {
     }
   },
 };
+
+type CloneNodes = () => { startNode: ChildNode; endNode: ChildNode };
+type ClassScope = Scope & { m5b?: unknown; m5a?: unknown };
+type ClassRender = (branch: ClassScope, value: unknown, input: unknown) => void;
+
+// Renders the value and input a branch was last given, once per update; signal key 0
+// is free without a template. Params gives the value too: a resumed branch skips setup.
+function createClassRenderer(render: ClassRender, clone: CloneNodes) {
+  const renderBranch = (branch: ClassScope) =>
+    render(branch, branch.m5b, branch.m5a);
+  const create = _content("", 0);
+  const cloneClass = cloneBranch(clone);
+  return (id: string, value: unknown) => {
+    const renderer = create();
+    renderer[RendererProp.Id] = id;
+    renderer[RendererProp.Clone] = cloneClass;
+    renderer[RendererProp.Setup] = (branch: ClassScope) => {
+      if (branch.m5b !== value) {
+        branch.m5b = value;
+        queueRender(branch, renderBranch, 0);
+      }
+    };
+    renderer[RendererProp.Params] = (branch: ClassScope, input: unknown) => {
+      branch.m5b = value;
+      branch.m5a = input;
+      queueRender(branch, renderBranch, 0);
+    };
+    return renderer;
+  };
+}
+
+function cloneBranch(clone: CloneNodes): Renderer[typeof RendererProp.Clone] {
+  return (branch) => {
+    const cloned = clone();
+    branch[AccessorProp.StartNode] = cloned.startNode;
+    branch[AccessorProp.EndNode] = cloned.endNode;
+  };
+}

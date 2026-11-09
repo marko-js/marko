@@ -172,34 +172,51 @@ export function isPromise(value: unknown): value is Promise<unknown> {
   );
 }
 
+// Class API interop latch: only the compat layer sets it, so bundles without it
+// fold away telling Tags renderers from Class values.
+let classAPIRenderer:
+  | undefined
+  | (<Renderer>(value: object) => Renderer | undefined);
+
+export function setClassAPIRenderer(
+  render: NonNullable<typeof classAPIRenderer>,
+) {
+  classAPIRenderer = render;
+}
+
 export function normalizeDynamicRenderer<Renderer>(
   value: any,
 ): Renderer | string | undefined {
   if (value) {
     if (typeof value === "string") return value;
     const normalized = value.content || value.default || value;
-    if (MARKO_DEBUG) {
-      const isRenderer =
-        (typeof normalized === "object" || typeof normalized === "function") &&
-        RendererProp.Id in normalized;
-      if (!isRenderer) {
-        if (value.content) {
-          throw new Error(
-            `A dynamic tag must be a string tag name (like \`"div"\`) or a Marko template/component, but received an object whose \`content\` is not a template/component.`,
-          );
-        }
-        if (typeof value !== "object" && typeof value !== "function") {
-          throw new Error(
-            `A dynamic tag must be a string tag name (like \`"div"\`) or a Marko template/component, but received a ${typeof value}.`,
-          );
-        }
-        // Any other truthy non-renderer (a bare object/function or a non-renderer
-        // `.default`) renders body-only by design, e.g. `<${navigator}>x</>`; don't throw.
-      }
+    if (
+      MARKO_DEBUG &&
+      typeof normalized !== "object" &&
+      typeof normalized !== "function"
+    ) {
+      throw new Error(
+        `A dynamic tag must be a string tag name (like \`"div"\`) or a Marko template/component, but received ${
+          normalized === value
+            ? `a ${typeof value}`
+            : `an object whose \`content\` or \`default\` is a ${typeof normalized}`
+        }.`,
+      );
     }
-    if (RendererProp.Id in normalized) {
+    // The compat layer decides first, since Class data may carry the id key.
+    if (classAPIRenderer) {
+      const renderer = classAPIRenderer<Renderer>(normalized);
+      if (renderer || !MARKO_DEBUG) return renderer;
+    } else if (RendererProp.Id in normalized) {
       return normalized;
     }
+    if (MARKO_DEBUG && value.content) {
+      throw new Error(
+        `A dynamic tag must be a string tag name (like \`"div"\`) or a Marko template/component, but received an object whose \`content\` is not a template/component.`,
+      );
+    }
+    // Any other truthy non-renderer (a bare object/function or a non-renderer
+    // `.default`) renders body-only by design, e.g. `<${navigator}>x</>`.
   }
 }
 

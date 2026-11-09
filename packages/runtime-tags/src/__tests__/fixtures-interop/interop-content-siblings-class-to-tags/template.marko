@@ -1,0 +1,9 @@
+class {
+  onCreate() { this.state = { n: 0 }; }
+  inc() { this.state.n++; }
+}
+<button id="class" onClick("inc")>${state.n}</button>
+<tags-spread id="spread">Spread ${state.n}</tags-spread>
+<tags-passthrough id="passthrough">Passthrough ${state.n}</tags-passthrough>
+<tags-spread id="thing"><class-thing/></tags-spread>
+<init-components/>

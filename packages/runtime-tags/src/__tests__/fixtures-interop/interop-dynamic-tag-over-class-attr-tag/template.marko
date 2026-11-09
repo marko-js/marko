@@ -1,0 +1,16 @@
+class {
+  onCreate() {
+    this.state = { n: 0 };
+  }
+  increment() {
+    this.state.n++;
+  }
+}
+<button id="class" onClick("increment")>${state.n}</button>
+<tags-child>
+  <@foo>direct ${state.n}</@foo>
+</tags-child>
+<class-middle>
+  <@foo id="forwarded">forwarded ${state.n}</@foo>
+</class-middle>
+<init-components/>

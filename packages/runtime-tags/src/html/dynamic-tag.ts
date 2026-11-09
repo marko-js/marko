@@ -42,7 +42,7 @@ interface BodyContentObject {
   content: ServerRenderer;
 }
 
-export let _dynamic_tag = (
+export function _dynamic_tag(
   scopeId: number,
   accessor: Accessor,
   tag: unknown | string | ServerRenderer | BodyContentObject,
@@ -52,7 +52,7 @@ export let _dynamic_tag = (
   markerGuard?: 1 | 0,
   // Passed by a debug build's compiler for a tag variable.
   tagVar?: 1,
-) => {
+) {
   const shouldResume = markerGuard !== 0;
   const renderer = normalizeDynamicRenderer<ServerRenderer>(tag);
   const state = getState();
@@ -203,7 +203,7 @@ export let _dynamic_tag = (
   }
 
   return result;
-};
+}
 
 export function _content(id: string, fn: ServerRenderer, scopeId?: number) {
   fn[RendererProp.Id] = id;
@@ -223,33 +223,3 @@ export function _content_resume(
 ) {
   return _resume(_content(id, fn, scopeId), id, scopeId, locals);
 }
-
-export const patchDynamicTag = /* @__PURE__ */ (
-  (originalDynamicTag) =>
-  (patch: (tag: unknown, scopeId: number, accessor: Accessor) => unknown) => {
-    _dynamic_tag = (
-      scopeId,
-      accessor,
-      tag,
-      input,
-      content,
-      inputIsArgs,
-      markerGuard,
-      tagVar,
-    ) => {
-      const patched = patch(tag, scopeId, accessor);
-      if (patched !== tag)
-        (patched as ServerRenderer)[RendererProp.Id] = tag as string;
-      return originalDynamicTag(
-        scopeId,
-        accessor,
-        patched,
-        input,
-        content,
-        inputIsArgs,
-        markerGuard,
-        tagVar,
-      );
-    };
-  }
-)(_dynamic_tag);

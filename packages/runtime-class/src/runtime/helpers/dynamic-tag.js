@@ -69,9 +69,7 @@ module.exports = function dynamicTag(
         }
       }
 
-      var renderer =
-        tag._ ||
-        (tag.renderer ? tag.renderer.renderer || tag.renderer : tag.render);
+      var renderer = getRenderer(tag);
       var render = (tag && tag.renderBody) || tag;
 
       // eslint-disable-next-line no-constant-condition
@@ -244,4 +242,13 @@ function addEvents(componentDef, customEvents, props) {
   return result;
 }
 
+// A template's Class renderer, from any of the shapes a template or component takes.
+function getRenderer(tag) {
+  var renderer =
+    tag._ ||
+    (tag.renderer ? tag.renderer.renderer || tag.renderer : tag.render);
+  return typeof renderer === "function" ? renderer : undefined;
+}
+
+module.exports.___getRenderer = getRenderer;
 module.exports.___CLASS_EVENT_MARKER = CLASS_EVENT_MARKER;

@@ -1,7 +1,8 @@
-// size: 27041 (min) 10091 (brotli)
+// size: 27464 (min) 10218 (brotli)
 // packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
+let classAPIRenderer;
 let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36);
 let branchesEnabled;
 let dynamicHtmlEnabled;
@@ -359,10 +360,14 @@ function isNotNullishOrFalse(value) {
 function isPromise(value) {
   return value != null && typeof value.then == "function";
 }
+function setClassAPIRenderer(render) {
+  classAPIRenderer = render;
+}
 function normalizeDynamicRenderer(value) {
   if (value) {
     if (typeof value == "string") return value;
     let normalized = value.content || value.default || value;
+    if (classAPIRenderer) return classAPIRenderer(normalized);
     if ("a" in normalized) return normalized;
   }
 }
@@ -1940,9 +1945,6 @@ function findTryWithCatch(scope) {
 function rendererKey(renderer) {
   return renderer?.e ? renderer.a + " " + renderer.e.L : renderer?.a || renderer;
 }
-function patchDynamicTag(fn) {
-  _dynamic_tag = fn(_dynamic_tag);
-}
 function dynamicTagScript(branch) {
   _attrs_script(branch, "a");
 }
@@ -2002,6 +2004,12 @@ function byFirstArg(name) {
 // packages/runtime-tags/dist/dom.mjs
 let empty = [];
 let rest = Symbol();
+let _template = (id, template, walks, setup, inputSignal) => {
+  let renderer = _content(id, template, walks, setup, inputSignal)();
+  return ((renderer.mount = mount), (renderer._ = renderer), (_resumed[id] = renderer));
+};
+let noop = (_) => 0;
+let RENDER_BODY_ID = "$C_b";
 let classIdToBranch = /* @__PURE__ */ new Map();
 let classEventResolver;
 let scopesByRender = /* @__PURE__ */ new WeakMap();
@@ -2012,7 +2020,7 @@ let getRenderScopes = ($global) => {
   return (render && !scopes && scopesByRender.set(render, (scopes = {})), scopes);
 };
 let compat = {
-  patchDynamicTag,
+  setClassAPIRenderer,
   queueEffect,
   init(warp10Noop) {
     ((_resumed.$C_s = (scope) => {
@@ -2026,7 +2034,7 @@ let compat = {
           resolved !== scope[key] && (scope[key] = resolved);
         }
     }),
-      (_resumed.$C_b = warp10Noop));
+      (_resumed[RENDER_BODY_ID] = warp10Noop));
   },
   setClassEventResolver(fn) {
     classEventResolver = fn;
@@ -2037,11 +2045,11 @@ let compat = {
   getScope($global, scopeId) {
     return getRenderScopes($global)?.[scopeId];
   },
-  setRendererId(renderer, id) {
-    renderer.a = id;
+  isRenderer(value) {
+    return "a" in value && typeof value.b == "function";
   },
-  isRenderer(renderer) {
-    return renderer.b;
+  getGlobal(scope) {
+    return scope.$;
   },
   getStartNode(branch) {
     return branch.S;
@@ -2063,15 +2071,23 @@ let compat = {
       ? getRegisteredWithScope(getRenderScopes($global)?.[value[1]], value[0])
       : value;
   },
-  createRenderer(params, clone) {
-    let renderer = _content("", 0, 0, 0, params)();
-    return (
-      (renderer.b = (branch) => {
-        let cloned = clone();
-        ((branch.S = cloned.startNode), (branch.K = cloned.endNode));
-      }),
-      renderer
-    );
+  createRenderer(id, clone) {
+    let renderer = _content("", 0)();
+    return ((renderer.a = id), (renderer.b = cloneBranch(clone)), renderer);
+  },
+  createTemplate(render, clone) {
+    let create = createClassRenderer(render, clone);
+    return (template, renderer) => {
+      let templateRenderer = create(template, renderer);
+      return ((templateRenderer._ = templateRenderer), templateRenderer);
+    };
+  },
+  createContent(render, clone) {
+    let create = createClassRenderer(render, clone);
+    return (content) => {
+      let renderer = create(RENDER_BODY_ID, content);
+      return ((renderer.g = renderer.c), renderer);
+    };
   },
   render(out, component, renderer, args) {
     init(out.global.runtimeId);
@@ -2098,11 +2114,6 @@ let compat = {
       return branch.S.parentNode || branch.S;
   },
 };
-let _template = (id, template, walks, setup, inputSignal) => {
-  let renderer = _content(id, template, walks, setup, inputSignal)();
-  return ((renderer.mount = mount), (renderer._ = renderer), (_resumed[id] = renderer));
-};
-let noop = (_) => 0;
 function attrTag(attrs) {
   return ((attrs[Symbol.iterator] = attrTagIterator), (attrs[rest] = empty), attrs);
 }
@@ -2304,4 +2315,29 @@ function _load_race_trigger(...triggers) {
 }
 function getSelectorOrResolve(selector, resolve) {
   return document.querySelector(selector) || resolve();
+}
+function createClassRenderer(render, clone) {
+  let renderBranch = (branch) => render(branch, branch.m5b, branch.m5a),
+    create = _content("", 0),
+    cloneClass = cloneBranch(clone);
+  return (id, value) => {
+    let renderer = create();
+    return (
+      (renderer.a = id),
+      (renderer.b = cloneClass),
+      (renderer.c = (branch) => {
+        branch.m5b !== value && ((branch.m5b = value), queueRender(branch, renderBranch, 0));
+      }),
+      (renderer.d = (branch, input) => {
+        ((branch.m5b = value), (branch.m5a = input), queueRender(branch, renderBranch, 0));
+      }),
+      renderer
+    );
+  };
+}
+function cloneBranch(clone) {
+  return (branch) => {
+    let cloned = clone();
+    ((branch.S = cloned.startNode), (branch.K = cloned.endNode));
+  };
 }
