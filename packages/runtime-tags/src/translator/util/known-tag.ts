@@ -898,6 +898,7 @@ function analyzeAttrs(
         tag.node,
         spreadReferenceNodes,
       );
+      rootAttrExprs.add(inputExpr.value);
       setDerivedFrom(
         paramsTree.rest?.binding || paramsTree.binding,
         inputExpr.value,
@@ -909,6 +910,7 @@ function analyzeAttrs(
   } else {
     if (restReferenceNodes) {
       inputExpr.value = mergeReferences(section, tag.node, restReferenceNodes);
+      rootAttrExprs.add(inputExpr.value);
       setDerivedFrom(paramsTree.rest!.binding, inputExpr.value, rootExprs);
     }
 
