@@ -11,7 +11,7 @@ const type = (document: Document) => {
 };
 
 // A controlled input's handler shares its value's sources, here state beside
-// params: the patch binds it ungated, as no caller group holds them.
+// params: client code sets it with the value, in rows a patch creates too.
 export const config: TestConfig = {
   patches: true,
   skip_fresh_render: true,

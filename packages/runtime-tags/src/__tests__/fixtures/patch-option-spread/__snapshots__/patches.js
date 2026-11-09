@@ -1,6 +1,5 @@
 // PATCH
 {
-  dEa: "a0",
   jb: {
     value: "a",
     "data-x": 1
@@ -14,7 +13,6 @@
 
 // PATCH
 {
-  dEa: "a0",
   jb: {
     value: "c2"
   },

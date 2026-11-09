@@ -11,7 +11,7 @@ var stepper_default = _template("b", (input) => {
 	let current = input.value;
 	_html(`<input${_attr_input_value($scope0_id, "a", current, _bind_resume((_new_current) => {
 		current = clamp(_new_current);
-	}, "b1", $scope0_id), 2)} type=number>${_el_mark($scope0_id, "a")}`);
+	}, "b1", $scope0_id))} type=number>${_el_mark($scope0_id, "a")}`);
 	_script($scope0_id, "b2");
 	_patch_render($scope0_id, "b3", [$fg__input_value && "e", $fg__input_valueChange && "f"], $scope0_reason, 0);
 	_patch_render($scope0_id, "b4", [

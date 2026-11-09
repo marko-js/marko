@@ -1,6 +1,5 @@
 // PATCH
 {
-  "PatchBind:ControlledHandler:#select/0": "packages/runtime-tags/src/__tests__/fixtures/patch-option-spread/template.marko_0/valueChange",
   "PatchAttrs:#option/1": {
     value: "a",
     "data-x": 1
@@ -14,7 +13,6 @@
 
 // PATCH
 {
-  "PatchBind:ControlledHandler:#select/0": "packages/runtime-tags/src/__tests__/fixtures/patch-option-spread/template.marko_0/valueChange",
   "PatchAttrs:#option/1": {
     value: "c2"
   },

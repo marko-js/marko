@@ -5,7 +5,6 @@
     "PatchChild:#childScope/0": {
       "PatchMarkedWrite:input_max": 3,
       "PatchBind:clamp": "packages/runtime-tags/src/__tests__/fixtures/patch-live-bind-global-rows/tags/stepper.marko_0/clamp",
-      "PatchBind:ControlledHandler:#input/0": "packages/runtime-tags/src/__tests__/fixtures/patch-live-bind-global-rows/tags/stepper.marko_0/valueChange",
       "PatchSetup:": {
         "PatchRender:": "packages/runtime-tags/src/__tests__/fixtures/patch-live-bind-global-rows/tags/stepper.marko_0_input_value#4_input_valueChange#5/setup",
         "PatchBind:input_valueChange": _.a = "^packages/runtime-tags/src/__tests__/fixtures/patch-live-bind-global-rows/template.marko_1/valueChange"
