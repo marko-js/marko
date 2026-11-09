@@ -34,7 +34,7 @@ patchers[PatchKey.Render] = (scope, id, reads) => {
 };
 
 // A closure the owner's change re-runs in each subscribed scope, by the position its code
-// registers: a subscribed scope exists only where that code ran, so no position, no scope.
+// registers: the server subscribes a scope only where that code ships, the client where it ran.
 patchers[PatchKey.Subscribers] = (scope, id, reads) => {
   const signals = closureSubscribers[id];
   if (signals) {
@@ -53,6 +53,18 @@ patchers[PatchKey.Subscribers] = (scope, id, reads) => {
               childScope[AccessorProp.Gen] > 0 &&
               childScope[AccessorProp.Gen] < runId
             ) {
+              if (
+                MARKO_DEBUG &&
+                !signals[
+                  (childScope[
+                    position[ClosureSignalProp.SignalIndexAccessor]
+                  ] as number) || 0
+                ]
+              ) {
+                throw new Error(
+                  `The server subscribed a scope to the "${id}" walk at a position it does not run.`,
+                );
+              }
               signals[
                 (childScope[
                   position[ClosureSignalProp.SignalIndexAccessor]
