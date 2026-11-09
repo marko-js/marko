@@ -57,11 +57,7 @@ import {
   toModuleReadExpression,
 } from "../../util/module-read";
 import { type Opt, push } from "../../util/optional";
-import {
-  linkHolePatcher,
-  fillsHole,
-  fillsHandler,
-} from "../../util/patch/decisions";
+import { linkHolePatcher, fillsHole } from "../../util/patch/decisions";
 import {
   buildPatchTextContent,
   getExprRootGroupArgs,
@@ -707,13 +703,12 @@ export default {
           // Client code sets the handler with its value wherever that group reads
           // client state, so a patch writes the handler only with its control.
           if (fillsHole(tagSection, controlExtra)) {
-            const changeAttr = attrAt(attributes, controllable.attrs[1]);
-            const fillsChangeHandler =
-              !!changeAttr && fillsHandler(tagSection, changeAttr.value);
             // Bits: 1 the control's entry, 2 its handler's bind; both take
             // that group.
             patchArgs = [
-              t.numericLiteral(fillsChangeHandler ? 3 : 1),
+              t.numericLiteral(
+                attrAt(attributes, controllable.attrs[1]) ? 3 : 1,
+              ),
               ...getExprRootGroupArgs(tagSection, controlExtra),
             ];
           }

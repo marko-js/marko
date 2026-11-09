@@ -500,7 +500,8 @@ export function _attr_textarea_value(
 
 // Bits: 1 the control's value entry, 2 its change handler's bind entry; the
 // control's attributes read as one group, which both take.
-type ControlPatched = 0 | 1 | 2 | 3;
+// A handler's bind (`2`) ships only with its control's entry (`1`).
+type ControlPatched = 0 | 1 | 3;
 
 // The handler's bind entry applies first, then the value's control entry (its
 // kind digit rides the key ahead of the accessor); true on a patch render.

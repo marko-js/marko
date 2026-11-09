@@ -9,7 +9,6 @@ import {
   bindingUtil,
   compareReferences,
   getCanonicalBinding,
-  isStateSourced,
 } from "../bindings";
 import { createPassMemo } from "../cyclic-memo";
 import { mergeInitialValueSources } from "../finalize-references";
@@ -21,11 +20,7 @@ import {
   isGuardedReason,
   mapParamReason,
 } from "../reasons";
-import {
-  getConstantBindings,
-  getReferencedBindingsInFunction,
-  type ReferencedExtra,
-} from "../references";
+import { getConstantBindings, type ReferencedExtra } from "../references";
 import { type DOMRuntimeFeature, linkRuntimeFeature } from "../runtime";
 import {
   getCallerParamGroupsAt,
@@ -139,18 +134,6 @@ export function keepsSeededMarker(
   extra: t.NodeExtra | undefined,
 ) {
   return seedsOnly(section, getFillSources(extra));
-}
-
-// A handler written inline merged its references with its control's, so
-// only its own references say whether it is client-sourced.
-export function fillsHandler(tagSection: Section, value: t.Expression) {
-  switch (value.type) {
-    case "ArrowFunctionExpression":
-    case "FunctionExpression":
-      return patchFillsSection(tagSection) && !referencesState(value.extra!);
-    default:
-      return fillsHole(tagSection, value.extra);
-  }
 }
 
 // A read rendering a hole a patch fills (`fillsHole`): its value or content renders
@@ -516,9 +499,4 @@ function computePatchKeying(slot: Slot) {
 
 function rendersServerValue(extra: t.NodeExtra) {
   return !!extra.rendersValue && !getFillSources(extra)?.state;
-}
-
-// Whether a function's own references read state.
-function referencesState(extra: t.FunctionExtra) {
-  return some(getReferencedBindingsInFunction(extra), isStateSourced);
 }
