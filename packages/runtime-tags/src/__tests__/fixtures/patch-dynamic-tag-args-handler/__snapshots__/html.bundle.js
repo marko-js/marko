@@ -1,7 +1,7 @@
 // template.marko
 _shells({ a: "a !a1;b%b D ;<!><!><button> </button>" });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_tag = _filled_guard($scope0_reason, 1), $fg__input_title = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $ui__input_title = _unfilled_if($scope0_reason, 2), $fg__input_tag = _filled_guard($scope0_reason, 1), $fg__input_title = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	$fg__input_title && _patch_write($scope0_id, "xg", input.title, !_server_guard($scope0_reason, 2));
 	let n = 0;
@@ -15,8 +15,8 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a1");
 	_patch_render($scope0_id, "a2", [$fg__input_tag && "f", $fg__input_title && "g"], $scope0_reason, 0);
 	_scope($scope0_id, {
-		f: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.tag,
+		f: ($ui__input_title || _unfilled_if($scope0_reason, 0)) && input.tag,
 		g: input.title,
 		i: n
-	}) || $fg__input_tag && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xf", input.tag, !_server_guard($scope0_reason, 1));
+	}) || $fg__input_tag && $ui__input_title && _patch_write($scope0_id, "xf", input.tag, !_server_guard($scope0_reason, 1));
 }, 1);

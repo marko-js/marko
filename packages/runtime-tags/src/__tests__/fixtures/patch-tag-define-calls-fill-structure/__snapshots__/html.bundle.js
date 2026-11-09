@@ -10,10 +10,10 @@ _shells({
 	b2: "b2;D ;<span> </span>"
 });
 var shape_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_a = _client_guard($scope0_reason, 1), $wi__input_a = _write_if($scope0_reason, 1), $sg__input_a = _server_guard($scope0_reason, 1), $fg__input_a = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_a = _client_guard($scope0_reason, 1), $wi__input_a = _write_if($scope0_reason, 1), $ui__input_x__OR__input_y = _unfilled_if($scope0_reason, 0), $sg__input_a = _server_guard($scope0_reason, 1), $fg__input_a = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $f2__closures = /* @__PURE__ */ new Set();
-	$fg__input_a && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xg", input.a, !$sg__input_a);
+	$fg__input_a && $ui__input_x__OR__input_y && _patch_write($scope0_id, "xg", input.a, !$sg__input_a);
 	let n = 0;
 	const f = _bind_resume(function() {
 		return input.a;
@@ -47,11 +47,11 @@ var shape_default = _template("b", (input) => {
 	_scope($scope0_id, {
 		g: _write_if($scope0_reason, 0) && input.a,
 		j: n,
-		k: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && f,
+		k: ($ui__input_x__OR__input_y || _unfilled_if($scope0_reason, 1)) && f,
 		l: $wi__input_a && $f2__closures,
 		a: _existing_scope($childScope),
 		b: _existing_scope($childScope2)
-	}) || $fg__input_a && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xk", f, !$sg__input_a);
+	}) || $fg__input_a && $ui__input_x__OR__input_y && _patch_write($scope0_id, "xk", f, !$sg__input_a);
 });
 
 // template.marko

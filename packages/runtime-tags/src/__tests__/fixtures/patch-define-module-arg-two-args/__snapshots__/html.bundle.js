@@ -11,25 +11,25 @@ const lib = { format(value) {
 // template.marko
 _shells({ a: "a !a4;b%b ;<!><!><button class=toggle>toggle</button>" });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_label = _filled_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $uf__input_label = _updates_from($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let open = true;
 	const Panel = { content: _content("a0", ({ fmt, a, b }) => {
 		const $scope2_id = _scope_id();
-		const $scope2_reason = _scope_reason(), $fg__fmt = _filled_guard($scope2_reason, 3), $fg__a = _filled_guard($scope2_reason, 4), $fg__b = _filled_guard($scope2_reason, 5);
+		const $scope2_reason = _scope_reason(), $ui__fmt = _unfilled_if($scope2_reason, 3), $fg__fmt = _filled_guard($scope2_reason, 3), $fg__a = _filled_guard($scope2_reason, 4), $fg__b = _filled_guard($scope2_reason, 5);
 		_html(`<em>${_text_mark($scope2_id, "a", fmt(a), 1, $scope2_reason, 0)} ${_text_mark($scope2_id, "b", fmt(b), 2, $scope2_reason, 1)}</em>`);
 		_patch_render($scope2_id, "a1", [$fg__fmt && "e", $fg__a && "f"], $scope2_reason, 0);
 		_patch_render($scope2_id, "a2", [$fg__fmt && "e", $fg__b && "h"], $scope2_reason, 1);
 		_scope($scope2_id, {
 			e: (_unfilled_if($scope2_reason, 2, 3) || _unfilled_if($scope2_reason, 0, 3) || _unfilled_if($scope2_reason, 1, 3)) && fmt,
-			f: (_unfilled_if($scope2_reason, 3) || _unfilled_if($scope2_reason, 0)) && a,
-			h: (_unfilled_if($scope2_reason, 3) || _unfilled_if($scope2_reason, 1)) && b
-		}) || ($fg__fmt && _unfilled_if($scope2_reason, 2) && _patch_write($scope2_id, "xe", fmt, !_server_guard($scope2_reason, 3)), $fg__a && _unfilled_if($scope2_reason, 3) && _patch_write($scope2_id, "xf", a, !_server_guard($scope2_reason, 4)), $fg__b && _unfilled_if($scope2_reason, 3) && _patch_write($scope2_id, "xh", b, !_server_guard($scope2_reason, 5)));
+			f: ($ui__fmt || _unfilled_if($scope2_reason, 0)) && a,
+			h: ($ui__fmt || _unfilled_if($scope2_reason, 1)) && b
+		}) || ($fg__fmt && _unfilled_if($scope2_reason, 2) && _patch_write($scope2_id, "xe", fmt, !_server_guard($scope2_reason, 3)), $fg__a && $ui__fmt && _patch_write($scope2_id, "xf", a, !_server_guard($scope2_reason, 4)), $fg__b && $ui__fmt && _patch_write($scope2_id, "xh", b, !_server_guard($scope2_reason, 5)));
 	}, $scope0_id) };
 	_if(() => {
 		{
 			const $scope1_id = _scope_id();
-			_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 0) << 3 | _updates_from($scope0_reason, 0) << 5 | _updates_from($scope0_reason, 0) << 9 | _updates_from($scope0_reason, 0) << 11);
+			_set_scope_reason($uf__input_label << 1 | $uf__input_label << 3 | $uf__input_label << 5 | $uf__input_label << 9 | $uf__input_label << 11);
 			const $childScope = _peek_scope_id($scope1_id, "a", 0);
 			Panel.content({
 				fmt: lib.format,

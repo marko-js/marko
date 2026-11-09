@@ -25,12 +25,12 @@ var label_view_default = _template("b", (input) => {
 const $setup = _shell_setup([[], []], ["a>", $setup$1]);
 _shells({ a: `a${_shell_marker($setup)};${((_w0) => `/${_w0}&`)(" b")};${$template}` });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $uf__input_title = _updates_from($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xd", input.title, !_server_guard($scope0_reason, 0));
 	const up = _bind_resume(() => "U" + input.title, "a0", $scope0_id);
 	const low = _bind_resume(() => "l" + input.title, "a1", $scope0_id);
-	_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 0) << 3 | _updates_from($scope0_reason, 0) << 5 | _updates_from($scope0_reason, 0) << 7 | _updates_from($scope0_reason, 0) << 11 | _updates_from($scope0_reason, 0) << 13);
+	_set_scope_reason($uf__input_title << 1 | $uf__input_title << 3 | $uf__input_title << 5 | $uf__input_title << 7 | $uf__input_title << 11 | $uf__input_title << 13);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	label_view_default({
 		a: up,

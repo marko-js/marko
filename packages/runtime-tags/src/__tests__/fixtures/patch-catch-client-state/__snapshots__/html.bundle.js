@@ -10,7 +10,7 @@ _shells({
 	b: "b;b%;<!><!><!>"
 });
 var panel_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_error = _client_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 0), $wi__input_error = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $uf__input_label = _updates_from($scope0_reason, 0), $cg__input_error = _client_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 0), $wi__input_error = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	const $input_error__closures = /* @__PURE__ */ new Set();
@@ -22,17 +22,17 @@ var panel_default = _template("b", (input) => {
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_error__closures, _scope($scope2_id, { _: $wi__input_error && _scope_with_id($scope0_id) }), $cg__input_error && "b4");
 	}, void 0, (err) => {
 		_scope_reason();
-		const $scope1_id = _scope_id();
-		_unfilled_if($scope0_reason, 0) && _patch_write($scope1_id, "xf", err?.message);
+		const $scope1_id = _scope_id(), $ui__input_label = _unfilled_if($scope0_reason, 0);
+		$ui__input_label && _patch_write($scope1_id, "xf", err?.message);
 		let n = 0;
 		const text = `${input.label}: ${err.message}`;
-		_html(`<button class=inc>${_text_mark($scope1_id, "b", text, 1, (2 | _updates_from($scope0_reason, 0)) << 1, 0)} ${_text_mark($scope1_id, "c", n, 2)}</button>${_el_mark($scope1_id, "a")}`);
+		_html(`<button class=inc>${_text_mark($scope1_id, "b", text, 1, (2 | $uf__input_label) << 1, 0)} ${_text_mark($scope1_id, "c", n, 2)}</button>${_el_mark($scope1_id, "a")}`);
 		_script($scope1_id, "b0");
 		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "b1");
-		_patch_render($scope1_id, "b2", [_filled_guard($scope0_reason, 0) && ">d", "f"], (2 | _updates_from($scope0_reason, 0)) << 1, 0);
+		_patch_render($scope1_id, "b2", [_filled_guard($scope0_reason, 0) && ">d", "f"], (2 | $uf__input_label) << 1, 0);
 		_patch_fill($scope1_id, "vb3", n, 1);
-		_subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope1_id, {
-			f: _unfilled_if($scope0_reason, 0) && err?.message,
+		_subscribe($ui__input_label && $input_label__closures, _scope($scope1_id, {
+			f: $ui__input_label && err?.message,
 			h: n,
 			_: _scope_with_id($scope0_id)
 		}), _client_guard($scope0_reason, 0) && "b1");

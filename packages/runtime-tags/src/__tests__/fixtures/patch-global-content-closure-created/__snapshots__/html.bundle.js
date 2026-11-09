@@ -6,7 +6,7 @@ _shells({
 	c1: "c1;b%;<!><!><!>"
 });
 var panel_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_body = _write_guard($scope0_reason, 2), $wg__input_open = _write_guard($scope0_reason, 1), $fg__input_body = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_body = _write_guard($scope0_reason, 2), $wg__input_open = _write_guard($scope0_reason, 1), $ui__input_open = _unfilled_if($scope0_reason, 1), $fg__input_body = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.open) {
@@ -18,7 +18,7 @@ var panel_default = _template("c", (input) => {
 		}
 	}, $scope0_id, "a", 1, $wg__input_open, 1, 0, 0, ["c1"], $scope0_reason, 1);
 	$fg__input_body && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "c0", "e");
-	_scope($scope0_id, { e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.body }) || $fg__input_body && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.body, !_server_guard($scope0_reason, 2));
+	_scope($scope0_id, { e: ($ui__input_open || _unfilled_if($scope0_reason, 2)) && input.body }) || $fg__input_body && $ui__input_open && _patch_write($scope0_id, "xe", input.body, !_server_guard($scope0_reason, 2));
 });
 
 // tags/card.marko

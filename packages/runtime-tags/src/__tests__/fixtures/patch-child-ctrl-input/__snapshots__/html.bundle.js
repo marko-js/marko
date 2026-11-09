@@ -1,15 +1,15 @@
 // tags/field/index.marko
 _shells({ b: "b !b0; bD ;<input><em> </em>" });
 var field_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_value = _filled_guard($scope0_reason, 1), $fg__input_valueChange = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $ui__input_value__OR__input_valueChange = _unfilled_if($scope0_reason, 0), $ui__input_valueChange = _unfilled_if($scope0_reason, 2), $fg__input_value = _filled_guard($scope0_reason, 1), $fg__input_valueChange = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	_html(`<input${_attr_input_value($scope0_id, "a", input.value, input.valueChange, 3, $scope0_reason, 0)}>${_el_mark($scope0_id, "a")}<em>${_text_mark($scope0_id, "b", input.value, 1, $scope0_reason, 1)}</em>`);
 	_script($scope0_id, "b0");
 	_patch_render($scope0_id, "b1", [$fg__input_value && "e", $fg__input_valueChange && "f"], $scope0_reason, 0);
 	_scope($scope0_id, {
-		e: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.value,
-		f: _unfilled_if($scope0_reason, 0) && input.valueChange
-	}) || ($fg__input_value && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xe", input.value, !_server_guard($scope0_reason, 1)), $fg__input_valueChange && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xf", input.valueChange, !_server_guard($scope0_reason, 2)));
+		e: ($ui__input_valueChange || $ui__input_value__OR__input_valueChange) && input.value,
+		f: $ui__input_value__OR__input_valueChange && input.valueChange
+	}) || ($fg__input_value && $ui__input_valueChange && _patch_write($scope0_id, "xe", input.value, !_server_guard($scope0_reason, 1)), $fg__input_valueChange && $ui__input_value__OR__input_valueChange && _patch_write($scope0_id, "xf", input.valueChange, !_server_guard($scope0_reason, 2)));
 });
 
 // template.marko

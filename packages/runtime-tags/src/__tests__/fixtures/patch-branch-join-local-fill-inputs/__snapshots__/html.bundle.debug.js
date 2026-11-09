@@ -7,22 +7,22 @@ _shells({
 	"__tests__/tags/child.marko_1*shell": "__tests__/tags/child.marko_1*shell !__tests__/tags/child.marko_1;D lD l ;<p> </p><em> </em><button class=m>m</button>"
 });
 var child_default = _template("__tests__/tags/child.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_a = _server_guard($scope0_reason, 3), $fg__input_a = _filled_guard($scope0_reason, 3), $sg__input_b = _server_guard($scope0_reason, 4), $fg__input_b = _filled_guard($scope0_reason, 4), $cg__input_show = _client_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $sg__input_a = _server_guard($scope0_reason, 3), $fg__input_a2 = _filled_guard($scope0_reason, 3), $sg__input_b = _server_guard($scope0_reason, 4), $fg__input_b2 = _filled_guard($scope0_reason, 4), $cg__input_show = _client_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.show) {
-			const $scope1_id = _scope_id();
+			const $scope1_id = _scope_id(), $fg__input_a = _filled_guard($scope0_reason, 3), $fg__input_b = _filled_guard($scope0_reason, 4);
 			let m = 0;
 			const x = input.a + "!";
-			_filled_guard($scope0_reason, 3) && _patch_write($scope1_id, "PatchMarkedWrite:x", x, !$sg__input_a);
+			$fg__input_a && _patch_write($scope1_id, "PatchMarkedWrite:x", x, !$sg__input_a);
 			const y = input.b + "?";
-			_filled_guard($scope0_reason, 4) && _patch_write($scope1_id, "PatchMarkedWrite:y", y, !$sg__input_b);
+			$fg__input_b && _patch_write($scope1_id, "PatchMarkedWrite:y", y, !$sg__input_b);
 			_html(`<p>${_text_mark($scope1_id, "#text/0", x + y + m)}</p><em>${_text_mark($scope1_id, "#text/1", input.a + input.b, 1, $scope0_reason, 1)}</em><button class=m>m</button>${_el_mark($scope1_id, "#button/2")}`);
 			_script($scope1_id, "__tests__/tags/child.marko_1");
 			_client_guard($scope0_reason, 3) && _patch_render($scope1_id, "__tests__/tags/child.marko_1_input_a#0:5/setup");
 			_client_guard($scope0_reason, 4) && _patch_render($scope1_id, "__tests__/tags/child.marko_1_input_b#0:6/setup");
-			_patch_render($scope1_id, "__tests__/tags/child.marko_1_input_a#0:5_input_b#0:6/setup", [_filled_guard($scope0_reason, 3) && ">input_a", _filled_guard($scope0_reason, 4) && ">input_b"], $scope0_reason, 1);
-			_patch_render($scope1_id, "__tests__/tags/child.marko_1_m#4_x#5_y#6/setup", [_filled_guard($scope0_reason, 3) && "x", _filled_guard($scope0_reason, 4) && "y"]);
+			_patch_render($scope1_id, "__tests__/tags/child.marko_1_input_a#0:5_input_b#0:6/setup", [$fg__input_a && ">input_a", $fg__input_b && ">input_b"], $scope0_reason, 1);
+			_patch_render($scope1_id, "__tests__/tags/child.marko_1_m#4_x#5_y#6/setup", [$fg__input_a && "x", $fg__input_b && "y"]);
 			_patch_fill($scope1_id, "PatchFill:__tests__/tags/child.marko_1_m#4/fill", m, 1);
 			_scope($scope1_id, {
 				m,
@@ -38,16 +38,16 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 		}
 	}, $scope0_id, "#text/0", 1, _write_guard($scope0_reason, 2), 1, 0, 0, ["__tests__/tags/child.marko_1*shell"], $scope0_reason, 2);
 	_html(`<div></div>${_el_mark($scope0_id, "#div/1")}`);
-	_script($scope0_id, "__tests__/tags/child.marko_0_input_a#5", 1, $fg__input_a, "input_a");
-	$fg__input_a && $cg__input_show && _patch_render($scope0_id, "__tests__/tags/child.marko_1_input_a#0:5/setup", "input_a");
-	$fg__input_b && $cg__input_show && _patch_render($scope0_id, "__tests__/tags/child.marko_1_input_b#0:6/setup", "input_b");
+	_script($scope0_id, "__tests__/tags/child.marko_0_input_a#5", 1, $fg__input_a2, "input_a");
+	$fg__input_a2 && $cg__input_show && _patch_render($scope0_id, "__tests__/tags/child.marko_1_input_a#0:5/setup", "input_a");
+	$fg__input_b2 && $cg__input_show && _patch_render($scope0_id, "__tests__/tags/child.marko_1_input_b#0:6/setup", "input_b");
 	_scope($scope0_id, {
 		input_a: input.a,
 		input_b: _write_if($scope0_reason, 0) && input.b
 	}, "__tests__/tags/child.marko", 0, {
 		input_a: ["input.a"],
 		input_b: ["input.b"]
-	}) || ($fg__input_a && _patch_write($scope0_id, "PatchMarkedWrite:input_a", input.a, !$sg__input_a), $fg__input_b && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_b", input.b, !$sg__input_b));
+	}) || ($fg__input_a2 && _patch_write($scope0_id, "PatchMarkedWrite:input_a", input.a, !$sg__input_a), $fg__input_b2 && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_b", input.b, !$sg__input_b));
 });
 
 // template.marko
@@ -56,10 +56,10 @@ const $walks = /*@__PURE__*/ ((_w0, _w1) => `b/${_w0}&/${_w1}& b`)($walks$1, $wa
 const $setup = _shell_setup([[], ["__tests__/template.marko_0"]], ["#childScope/0>", $setup$1], ["#childScope/1>", $setup$1]);
 _shells({ "__tests__/template.marko": `__tests__/template.marko${_shell_marker($setup)};${((_w0, _w1) => `b/${_w0}&/${_w1}& b`)($walks$1, $walks$1)};${((_w0, _w1) => `<!>${_w0}${_w1}<button class=n>+</button>`)($template$1, $template$1)}` });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $uf__input_show = _updates_from($scope0_reason, 3), $uf__input_x = _updates_from($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	let n = 0;
-	_set_scope_reason(158 | (_updates_from($scope0_reason, 3) << 5 | _updates_from($scope0_reason, 2) << 9));
+	_set_scope_reason(158 | ($uf__input_show << 5 | $uf__input_x << 9));
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	child_default({
 		a: n,
@@ -67,7 +67,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		show: input.show
 	});
 	_patch_child_end();
-	_set_scope_reason(_updates_from($scope0_reason, 1) << 1 | _updates_from($scope0_reason, 0) << 3 | _updates_from($scope0_reason, 3) << 5 | _updates_from($scope0_reason, 4) << 7 | _updates_from($scope0_reason, 2) << 9);
+	_set_scope_reason(_updates_from($scope0_reason, 1) << 1 | _updates_from($scope0_reason, 0) << 3 | $uf__input_show << 5 | _updates_from($scope0_reason, 4) << 7 | $uf__input_x << 9);
 	const $childScope2 = _peek_scope_id($scope0_id, "#childScope/1", 1);
 	child_default({
 		a: input.y,

@@ -33,7 +33,7 @@ var wrapper_default = _template("c", (input) => {
 const $setup = _shell_setup([[], []], ["a>", $setup$1]);
 _shells({ a: `a${_shell_marker($setup)};${((_w0) => `b/${_w0}&`)($walks)};${((_w0) => `<!>${_w0}`)($template)}` });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_suffix = _write_guard($scope0_reason, 0), $wi__input_suffix = _write_if($scope0_reason, 0), $fg__input_suffix = _filled_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_suffix = _write_guard($scope0_reason, 0), $wi__input_suffix = _write_if($scope0_reason, 0), $uf__input_suffix = _updates_from($scope0_reason, 0), $fg__input_suffix = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_suffix__closures = /* @__PURE__ */ new Set();
 	_set_scope_reason(0);
@@ -41,13 +41,13 @@ var template_default = _template("a", (input) => {
 	wrapper_default({ content: _content_resume("a3", ({ value }) => {
 		const $scope1_reason = _scope_reason(), $wg__value = _write_guard($scope1_reason, 0), $wi__value = _write_if($scope1_reason, 0);
 		const $scope1_id = _scope_id();
-		_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
+		_set_scope_reason($uf__input_suffix << 1);
 		const $childScope = _peek_scope_id($scope1_id, "a", 0);
 		let label = labeler_default({ title: value + input.suffix });
 		($wi__input_suffix || $wi__value) && _var($scope1_id, "b", $childScope, "a0");
 		_patch_child_end();
 		_html(`<p>${_text_mark($scope1_id, "c", label, $wg__input_suffix || $wg__value)}</p>`);
-		_patch_render($scope1_id, "a1", [_filled_guard($scope0_reason, 0) && ">d", "f"], (2 | _updates_from($scope0_reason, 0)) << 1, 0);
+		_patch_render($scope1_id, "a1", [_filled_guard($scope0_reason, 0) && ">d", "f"], (2 | $uf__input_suffix) << 1, 0);
 		_subscribe($wi__input_suffix && $input_suffix__closures, _scope($scope1_id, {
 			f: $wi__input_suffix && value,
 			_: _scope_with_id($scope0_id),

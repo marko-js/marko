@@ -4,19 +4,19 @@ const $walks$2 = "Db%l";
 const $setup$2 = [[], []];
 _shells({ "__tests__/tags/tab-editor.marko": "__tests__/tags/tab-editor.marko !;Db%;<p>sel=<!></p>" });
 var tab_editor_default = _template("__tests__/tags/tab-editor.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_tab = _filled_guard($scope0_reason, 1), $fg__input_tabChange = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $ui__input_tab__OR__input_tabChange = _unfilled_if($scope0_reason, 0), $ui__input_tabChange = _unfilled_if($scope0_reason, 2), $ui__input_tab = _unfilled_if($scope0_reason, 1), $fg__input_tab = _filled_guard($scope0_reason, 1), $fg__input_tabChange = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	let selected = input.tab;
 	_html(`<p>sel=${_text_mark($scope0_id, "#text/0", String(selected), 2)}</p>`);
 	_patch_render($scope0_id, "__tests__/tags/tab-editor.marko_0_input_tab#3_input_tabChange#4/setup", [$fg__input_tab && "input_tab", $fg__input_tabChange && "input_tabChange"], $scope0_reason, 0);
 	_patch_let_change($scope0_id, "PatchFill:__tests__/tags/tab-editor.marko_0_selected#6/fill", selected, 0, input.tabChange, $scope0_reason, 0);
 	_scope($scope0_id, {
-		input_tab: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.tab,
-		input_tabChange: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.tabChange
+		input_tab: ($ui__input_tabChange || $ui__input_tab__OR__input_tabChange) && input.tab,
+		input_tabChange: ($ui__input_tab || $ui__input_tab__OR__input_tabChange) && input.tabChange
 	}, "__tests__/tags/tab-editor.marko", 0, {
 		input_tab: ["input.tab"],
 		input_tabChange: ["input.tabChange"]
-	}) || ($fg__input_tab && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_tab", input.tab, !_server_guard($scope0_reason, 1)), $fg__input_tabChange && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_tabChange", input.tabChange, !_server_guard($scope0_reason, 2)));
+	}) || ($fg__input_tab && $ui__input_tabChange && _patch_write($scope0_id, "PatchMarkedWrite:input_tab", input.tab, !_server_guard($scope0_reason, 1)), $fg__input_tabChange && $ui__input_tab && _patch_write($scope0_id, "PatchMarkedWrite:input_tabChange", input.tabChange, !_server_guard($scope0_reason, 2)));
 });
 
 // tags/route-pg.marko

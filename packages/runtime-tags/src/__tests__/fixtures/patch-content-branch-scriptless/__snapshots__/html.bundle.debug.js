@@ -22,7 +22,7 @@ _shells({
 	"__tests__/template.marko_1*shell": `__tests__/template.marko_1*shell${_shell_marker([[], []], ["#childScope/0>", $setup$1])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l")};${$template$1}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_text = _client_guard($scope0_reason, 2), $wi__input_show__OR__input_text = _write_if($scope0_reason, 0), $wg__input_show = _write_guard($scope0_reason, 1), $fg__input_text = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $cg__input_text = _client_guard($scope0_reason, 2), $wi__input_show__OR__input_text = _write_if($scope0_reason, 0), $wg__input_show = _write_guard($scope0_reason, 1), $ui__input_show = _unfilled_if($scope0_reason, 1), $ui__input_text = _unfilled_if($scope0_reason, 2), $fg__input_text = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_text__closures = new Set();
 	_html("<main>");
@@ -49,7 +49,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(`</main>${_el_mark($scope0_id, "#main/0", $wg__input_show)}`);
 	$fg__input_text && _client_guard($scope0_reason, 1) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_text#4/subscribers", "input_text");
 	_scope($scope0_id, {
-		input_text: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.text,
-		"ClosureScopes:input_text/5": _write_if($scope0_reason, 2) && (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1)) && $input_text__closures
-	}, "__tests__/template.marko", 0, { input_text: ["input.text"] }) || $fg__input_text && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_text", input.text, !_server_guard($scope0_reason, 2));
+		input_text: ($ui__input_show || $ui__input_text) && input.text,
+		"ClosureScopes:input_text/5": _write_if($scope0_reason, 2) && ($ui__input_text || $ui__input_show) && $input_text__closures
+	}, "__tests__/template.marko", 0, { input_text: ["input.text"] }) || $fg__input_text && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_text", input.text, !_server_guard($scope0_reason, 2));
 }, 1);

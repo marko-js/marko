@@ -21,16 +21,16 @@ _shells({
 	"__tests__/tags/tree.marko_1*shell": `__tests__/tags/tree.marko_1*shell${_shell_marker([[], []], ["#childScope/0>", $setup$2], ["#childScope/1>", $setup$1])};${/*@__PURE__*/ ((_w0, _w1) => `/${_w0}&/${_w1}&b`)($walks$2, "b%c")};${/*@__PURE__*/ ((_w0, _w1) => `${_w0}${_w1}<!>`)($template$2, $template$1)}`
 });
 const $content = (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_depth = _write_guard($scope0_reason, 1), $fg__input_fn = _filled_guard($scope0_reason, 2), $cg__input_depth = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $uf__input_fn = _updates_from($scope0_reason, 2), $wg__input_depth = _write_guard($scope0_reason, 1), $fg__input_fn = _filled_guard($scope0_reason, 2), $cg__input_depth = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.depth) {
 			const $scope1_id = _scope_id();
-			_set_scope_reason(_updates_from($scope0_reason, 2) << 1);
+			_set_scope_reason($uf__input_fn << 1);
 			const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 			card_default({ fn: input.fn });
 			_patch_child_end();
-			_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 1) << 3 | _updates_from($scope0_reason, 2) << 5);
+			_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 1) << 3 | $uf__input_fn << 5);
 			const $childScope2 = _peek_scope_id($scope1_id, "#childScope/1", 1);
 			$content({
 				fn: input.fn,
@@ -61,12 +61,12 @@ _shells({
 	"__tests__/template.marko_1*shell": `__tests__/template.marko_1*shell${_shell_marker([[], []], ["#childScope/0>", $setup$1])};${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c")};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1)}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $uf__input_label = _updates_from($scope0_reason, 1), $wg__input_show = _write_guard($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_set_scope_reason(_updates_from($scope0_reason, 1) << 1 | _updates_from($scope0_reason, 1) << 5);
+			_set_scope_reason($uf__input_label << 1 | $uf__input_label << 5);
 			const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 			tree_default({
 				depth: 2,

@@ -45,7 +45,7 @@ _shells({
 	c: `c${_shell_marker($setup$1)};${((_w0) => `b/${_w0}&b`)("b%c")};${((_w0) => `<!>${_w0}<!>`)($template$1)}`
 });
 var heading_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_n = _client_guard($scope0_reason, 1), $wg__input_type = _write_guard($scope0_reason, 2), $wi__input_n__OR__input_type = _write_if($scope0_reason, 0), $cg__input_type = _client_guard($scope0_reason, 2), $fg__input_n = _filled_guard($scope0_reason, 1), $fg__input_type = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $cg__input_n = _client_guard($scope0_reason, 1), $wg__input_type = _write_guard($scope0_reason, 2), $wi__input_n__OR__input_type = _write_if($scope0_reason, 0), $cg__input_type = _client_guard($scope0_reason, 2), $ui__input_n = _unfilled_if($scope0_reason, 1), $ui__input_type2 = _unfilled_if($scope0_reason, 2), $fg__input_n = _filled_guard($scope0_reason, 1), $fg__input_type = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_n__closures = /* @__PURE__ */ new Set();
 	const $input_type__closures = /* @__PURE__ */ new Set();
@@ -53,7 +53,7 @@ var heading_default = _template("c", (input) => {
 	let $item;
 	forUntil(input.n, 0, 1, (i) => $item = attrTags($item, { content: _content("c5", () => {
 		const $scope1_reason = _scope_reason(), $scope1_page = _page_render(), $wi__i = _write_if($scope1_reason, 0);
-		const $scope1_id = _scope_id();
+		const $scope1_id = _scope_id(), $ui__input_type = _unfilled_if($scope0_reason, 2);
 		const $item_content__i__closures = /* @__PURE__ */ new Set();
 		_dynamic_tag($scope1_id, "a", input.type, {}, 2, _content_resume("c0", () => {
 			const $scope2_id = _scope_id();
@@ -68,12 +68,12 @@ var heading_default = _template("c", (input) => {
 		}] : []), 0, $wg__input_type, $scope0_reason, 2, 0, void 0, 0, 0, "c0");
 		_patch_subscribers($scope1_id, "c3", "b");
 		$cg__input_type && _patch_render($scope1_id, "c4");
-		($wi__input_n__OR__input_type || $wi__i) && _subscribe(_unfilled_if($scope0_reason, 2) && $input_type__closures, _scope($scope1_id, {
-			b: _unfilled_if($scope0_reason, 2) && i,
+		($wi__input_n__OR__input_type || $wi__i) && _subscribe($ui__input_type && $input_type__closures, _scope($scope1_id, {
+			b: $ui__input_type && i,
 			_: $wi__input_n__OR__input_type && _scope_with_id($scope0_id),
 			h: $wi__i && $item_content__i__closures
 		}), $cg__input_type && "c4", $wg__input_type);
-		(_client_branch_if("c0", $scope1_id) || _unfilled_if($scope0_reason, 2)) && _patch_write($scope1_id, "xb", i);
+		(_client_branch_if("c0", $scope1_id) || $ui__input_type) && _patch_write($scope1_id, "xb", i);
 		$wg__input_type || ($wi__input_n__OR__input_type || $wi__i) && _resume_branch($scope1_id);
 	}, $scope0_id, 0) }));
 	const $childScope = _peek_scope_id($scope0_id, "a", 1);
@@ -82,21 +82,21 @@ var heading_default = _template("c", (input) => {
 	$fg__input_n && _patch_subscribers($scope0_id, "c6", "d");
 	$fg__input_type && $cg__input_n && _patch_subscribers($scope0_id, "c7", "e");
 	_scope($scope0_id, {
-		d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1)) && input.n,
-		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.type,
+		d: ($ui__input_type2 || $ui__input_n) && input.n,
+		e: ($ui__input_n || $ui__input_type2) && input.type,
 		f: _write_if($scope0_reason, 1) && $input_n__closures,
 		g: _write_if($scope0_reason, 2) && $input_type__closures,
 		a: _existing_scope($childScope)
-	}) || ($fg__input_n && (_client_branch_if("c0", $scope0_id) || _unfilled_if($scope0_reason, 2)) && _patch_write($scope0_id, "xd", input.n, !_server_guard($scope0_reason, 1)), $fg__input_type && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.type, !_server_guard($scope0_reason, 2)));
+	}) || ($fg__input_n && (_client_branch_if("c0", $scope0_id) || $ui__input_type2) && _patch_write($scope0_id, "xd", input.n, !_server_guard($scope0_reason, 1)), $fg__input_type && $ui__input_n && _patch_write($scope0_id, "xe", input.type, !_server_guard($scope0_reason, 2)));
 });
 
 // template.marko
 const $setup = _shell_setup([[], []], ["a>", $setup$1]);
 _shells({ a: `a${_shell_marker($setup)};${((_w0) => `b/${_w0}&b`)($walks)};${((_w0) => `<!>${_w0}<!>`)($template)}` });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $uf__input_n = _updates_from($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 0) << 3);
+	_set_scope_reason($uf__input_n << 1 | $uf__input_n << 3);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	heading_default({
 		type: card_default,

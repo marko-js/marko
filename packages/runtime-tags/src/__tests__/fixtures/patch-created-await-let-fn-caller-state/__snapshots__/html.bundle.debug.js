@@ -30,17 +30,17 @@ var inner_default = _template("__tests__/tags/inner.marko", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_await($scope1_id, "#text/0", resolveAfter("v", 1), (v) => {
-				const $scope2_id = _scope_id();
+				const $scope2_id = _scope_id(), $ui__input_label = _unfilled_if($scope0_reason, 2);
 				_set_scope_reason(_updates_from($scope0_reason, 2) << 1);
 				const $childScope = _peek_scope_id($scope2_id, "#childScope/0", 0);
 				card_default({ fn: function() {
 					return v + ":" + input.label;
 				} });
 				_patch_child_end();
-				_unfilled_if($scope0_reason, 2) && _patch_write($scope2_id, "PatchWrite:v", v, 1);
+				$ui__input_label && _patch_write($scope2_id, "PatchWrite:v", v, 1);
 				_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope2_id, "__tests__/tags/inner.marko_2_input_label#0:4/subscribe");
 				$cg__input_label && _patch_render($scope2_id, "__tests__/tags/inner.marko_2_input_label#0:4_v#2/setup");
-				_subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope2_id, {
+				_subscribe($ui__input_label && $input_label__closures, _scope($scope2_id, {
 					v: $wi__input_label && v,
 					"#childScope/0": _existing_scope($childScope)
 				}, "__tests__/tags/inner.marko", "2:17", { v: "2:23" }), $cg__input_label && "__tests__/tags/inner.marko_2_input_label#0:4/subscribe", 0);

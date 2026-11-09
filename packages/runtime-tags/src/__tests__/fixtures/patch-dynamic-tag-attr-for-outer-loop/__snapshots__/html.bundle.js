@@ -45,15 +45,15 @@ _shells({
 	a5: "a5;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_note = _client_guard($scope0_reason, 8), $cg__input_as = _client_guard($scope0_reason, 5), $wg__input_on__OR__input_bs = _write_guard($scope0_reason, 2), $wi__input_as__OR__input_on__OR__input_bs__OR__input_note = _write_if($scope0_reason, 4), $fg__input_on = _filled_guard($scope0_reason, 6), $fg__input_bs = _filled_guard($scope0_reason, 7), $fg__input_note = _filled_guard($scope0_reason, 8);
+	const $scope0_reason = _scope_reason(), $cg__input_note = _client_guard($scope0_reason, 8), $cg__input_as = _client_guard($scope0_reason, 5), $wg__input_on__OR__input_bs = _write_guard($scope0_reason, 2), $wi__input_as__OR__input_on__OR__input_bs__OR__input_note = _write_if($scope0_reason, 4), $ui__input_on__OR__input_bs2 = _unfilled_if($scope0_reason, 2), $ui__input_as__OR__input_bs = _unfilled_if($scope0_reason, 1), $ui__input_as__OR__input_on = _unfilled_if($scope0_reason, 0), $ui__input_as__OR__input_on__OR__input_bs = _unfilled_if($scope0_reason, 3), $fg__input_on = _filled_guard($scope0_reason, 6), $fg__input_bs = _filled_guard($scope0_reason, 7), $fg__input_note = _filled_guard($scope0_reason, 8);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = /* @__PURE__ */ new Set();
 	let n = 0;
 	_html(`<button class=inc>${_text_mark($scope0_id, "b", n)}</button>${_el_mark($scope0_id, "a")}`);
 	_for_of(input.as, (a) => {
-		const $scope1_id = _scope_id();
+		const $scope1_id = _scope_id(), $ui__input_on__OR__input_bs = _unfilled_if($scope0_reason, 2), $fg__input_as = _filled_guard($scope0_reason, 5);
 		const $for_content__a__closures = /* @__PURE__ */ new Set();
-		_filled_guard($scope0_reason, 5) && _unfilled_if($scope0_reason, 2) && _patch_write($scope1_id, "xd", a, !_server_guard($scope0_reason, 5));
+		$fg__input_as && $ui__input_on__OR__input_bs && _patch_write($scope1_id, "xd", a, !_server_guard($scope0_reason, 5));
 		let $item;
 		forOf(input.bs, (b) => $item = attrTags($item, { content: _content_resume("a2", () => {
 			_scope_reason();
@@ -64,10 +64,10 @@ var template_default = _template("a", (input) => {
 			_subscribe(_unfilled_if($scope0_reason, 5) && $for_content__a__closures, _subscribe(_unfilled_if($scope0_reason, 8) && $input_note__closures, _scope($scope2_id, { _: $wi__input_as__OR__input_on__OR__input_bs__OR__input_note && _scope_with_id($scope1_id) }), $cg__input_note && "a0"), $cg__input_as && "a1");
 		}, $scope1_id, () => [{ 3: b }]) }));
 		_dynamic_tag($scope1_id, "a", input.on ? list_default : list2_default, { item: $item }, 1, 0, 0, $wg__input_on__OR__input_bs, $scope0_reason, 2);
-		_filled_guard($scope0_reason, 5) && _patch_subscribers($scope1_id, "a3", "d");
+		$fg__input_as && _patch_subscribers($scope1_id, "a3", "d");
 		_patch_render($scope1_id, "a4", [_filled_guard($scope0_reason, 6) && ">g", _filled_guard($scope0_reason, 7) && ">h"], $scope0_reason, 2);
 		$wi__input_as__OR__input_on__OR__input_bs__OR__input_note && _scope($scope1_id, {
-			d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 5)) && a,
+			d: ($ui__input_on__OR__input_bs || _unfilled_if($scope0_reason, 5)) && a,
 			_: _scope_with_id($scope0_id),
 			n: _write_if($scope0_reason, 5) && $for_content__a__closures
 		});
@@ -77,10 +77,10 @@ var template_default = _template("a", (input) => {
 	$fg__input_bs && $cg__input_as && _patch_render($scope0_id, "a8", "h");
 	$fg__input_note && _patch_subscribers($scope0_id, "a9", "i");
 	_scope($scope0_id, {
-		g: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.on,
-		h: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && input.bs,
-		i: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 8)) && input.note,
+		g: ($ui__input_as__OR__input_bs || $ui__input_on__OR__input_bs2) && input.on,
+		h: ($ui__input_as__OR__input_on || $ui__input_on__OR__input_bs2) && input.bs,
+		i: ($ui__input_as__OR__input_on__OR__input_bs || _unfilled_if($scope0_reason, 8)) && input.note,
 		j: n,
 		m: _write_if($scope0_reason, 8) && $input_note__closures
-	}) || ($fg__input_on && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xg", input.on, !_server_guard($scope0_reason, 6)), $fg__input_bs && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xh", input.bs, !_server_guard($scope0_reason, 7)), $fg__input_note && _unfilled_if($scope0_reason, 3) && _patch_write($scope0_id, "xi", input.note, !_server_guard($scope0_reason, 8)));
+	}) || ($fg__input_on && $ui__input_as__OR__input_bs && _patch_write($scope0_id, "xg", input.on, !_server_guard($scope0_reason, 6)), $fg__input_bs && $ui__input_as__OR__input_on && _patch_write($scope0_id, "xh", input.bs, !_server_guard($scope0_reason, 7)), $fg__input_note && $ui__input_as__OR__input_on__OR__input_bs && _patch_write($scope0_id, "xi", input.note, !_server_guard($scope0_reason, 8)));
 }, 1);

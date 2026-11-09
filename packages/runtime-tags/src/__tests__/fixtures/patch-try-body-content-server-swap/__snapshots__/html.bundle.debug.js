@@ -46,7 +46,7 @@ const $walks = /*@__PURE__*/ ((_w0) => ` D l/${_w0}&b`)("b%c");
 const $setup = _shell_setup([[], ["__tests__/template.marko_0"]], ["#childScope/2>", $setup$1]);
 _shells({ "__tests__/template.marko": `__tests__/template.marko${_shell_marker($setup)};${((_w0) => ` D l/${_w0}&b`)("b%c")};${((_w0) => `<button> </button>${_w0}<!>`)($template$1)}` });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 0), $wi__input_label = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 0), $ui__input_alt = _unfilled_if($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 0), $wi__input_label = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = new Set();
 	let count = 0;
@@ -80,8 +80,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope($scope0_id, {
 		input_label: input.label,
 		count,
-		A: _unfilled_if($scope0_reason, 1) && A,
-		B: _unfilled_if($scope0_reason, 1) && B,
+		A: $ui__input_alt && A,
+		B: $ui__input_alt && B,
 		"ClosureScopes:input_label/11": $wi__input_label && $input_label__closures,
 		"#childScope/2": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, {

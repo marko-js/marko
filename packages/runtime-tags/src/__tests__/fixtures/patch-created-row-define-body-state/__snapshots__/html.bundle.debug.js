@@ -12,7 +12,7 @@ _shells({
 	"__tests__/template.marko_1*shell": `__tests__/template.marko_1*shell >#childScope/0>;${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Info_content__walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Info_content__template)}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_value = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $ui__input_items = _unfilled_if($scope0_reason, 1), $fg__input_value = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $count__closures = new Set();
 	let count = 0;
@@ -23,15 +23,15 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope2_reason = _scope_reason(), $wg__id = _write_guard($scope2_reason, 0), $wi__id = _write_if($scope2_reason, 0), $cg__id = _client_guard($scope2_reason, 0), $cg__value = _client_guard($scope2_reason, 1), $fg__id = _filled_guard($scope2_reason, 0);
 		_try($scope2_id, "#text/0", () => {
 			const $scope3_reason = _scope_reason();
-			const $scope3_id = _scope_id();
+			const $scope3_id = _scope_id(), $ui__value = _unfilled_if($scope2_reason, 1);
 			_await($scope3_id, "#text/0", value, (v) => {
 				const $scope4_id = _scope_id();
 				_html(`<p>${_text_mark($scope4_id, "#text/0", id, 1, $scope2_reason, 0)}:${_text_mark($scope4_id, "#text/1", v, 2, $scope2_reason, 1)}:${_text_mark($scope4_id, "#text/2", count, 2)}</p>`);
 				$cg__id && _patch_render($scope4_id, "__tests__/template.marko_4_id#2:3/subscribe");
 				_subscribe(_unfilled_if($scope2_reason, 0) && $Info_content__id__closures, _subscribe($count__closures, _scope($scope4_id, {}, "__tests__/template.marko", "4:6"), "__tests__/template.marko_4_count#0:6/subscribe"), $cg__id && "__tests__/template.marko_4_id#2:3/subscribe");
-			}, 1, "__tests__/template.marko_4*content", _unfilled_if($scope2_reason, 1));
+			}, 1, "__tests__/template.marko_4*content", $ui__value);
 			$cg__value && _patch_render($scope3_id, "__tests__/template.marko_3_value#2:4/subscribe");
-			_subscribe(_unfilled_if($scope2_reason, 1) && $Info_content__value__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "3:4"), $cg__value && "__tests__/template.marko_3_value#2:4/subscribe", 0);
+			_subscribe($ui__value && $Info_content__value__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "3:4"), $cg__value && "__tests__/template.marko_3_value#2:4/subscribe", 0);
 			_resume_branch($scope3_id);
 		}, () => {
 			const $scope5_reason = _scope_reason();
@@ -70,11 +70,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	$fg__input_value && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "__tests__/template.marko_1_input_value#0:5/setup", "input_value");
 	_scope($scope0_id, {
-		input_value: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.value,
+		input_value: ($ui__input_items || _unfilled_if($scope0_reason, 2)) && input.value,
 		count,
 		"ClosureScopes:count/8": $count__closures
 	}, "__tests__/template.marko", 0, {
 		input_value: ["input.value"],
 		count: "1:6"
-	}) || $fg__input_value && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_value", input.value, !_server_guard($scope0_reason, 2));
+	}) || $fg__input_value && $ui__input_items && _patch_write($scope0_id, "PatchMarkedWrite:input_value", input.value, !_server_guard($scope0_reason, 2));
 }, 1);

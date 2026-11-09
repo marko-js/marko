@@ -21,7 +21,7 @@ _shells({
 	a2: "a2;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_promise = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $ui__input_show = _unfilled_if($scope0_reason, 1), $fg__input_promise = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_html("<main>");
@@ -48,7 +48,7 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a4");
 	$fg__input_promise && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "a3", "g");
 	_scope($scope0_id, {
-		g: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.promise,
+		g: ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.promise,
 		h: count
-	}) || $fg__input_promise && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xg", input.promise, !_server_guard($scope0_reason, 2));
+	}) || $fg__input_promise && $ui__input_show && _patch_write($scope0_id, "xg", input.promise, !_server_guard($scope0_reason, 2));
 }, 1);

@@ -3,9 +3,9 @@ const $template = "<div> </div>";
 const $setup$1 = [[], []];
 _shells({ b: "b;D ;<div> </div>" });
 var code_block_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_cursor = _server_guard($scope0_reason, 1), $fg__input_cursor = _filled_guard($scope0_reason, 1), $fg__input_text = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $ui__input_cursor__OR__input_text = _unfilled_if($scope0_reason, 0), $ui__input_text = _unfilled_if($scope0_reason, 2), $ui__input_cursor = _unfilled_if($scope0_reason, 1), $sg__input_cursor = _server_guard($scope0_reason, 1), $fg__input_cursor = _filled_guard($scope0_reason, 1), $fg__input_text = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
-	$fg__input_cursor && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xd", input.cursor, !$sg__input_cursor);
+	$fg__input_cursor && $ui__input_text && _patch_write($scope0_id, "xd", input.cursor, !$sg__input_cursor);
 	const highlight = _bind_resume(function(text) {
 		return text.replace(input.cursor.test, (m) => `<b>${input.cursor.content((s) => s)}</b>`);
 	}, "b0", $scope0_id);
@@ -16,19 +16,19 @@ var code_block_default = _template("b", (input) => {
 		$fg__input_cursor && "d"
 	], $scope0_reason, 0);
 	_scope($scope0_id, {
-		d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.cursor,
-		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.text,
-		f: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && highlight
-	}) || ($fg__input_text && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.text, !_server_guard($scope0_reason, 2)), $fg__input_cursor && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xf", highlight, !$sg__input_cursor));
+		d: ($ui__input_text || $ui__input_cursor__OR__input_text) && input.cursor,
+		e: ($ui__input_cursor || $ui__input_cursor__OR__input_text) && input.text,
+		f: ($ui__input_text || $ui__input_cursor__OR__input_text) && highlight
+	}) || ($fg__input_text && $ui__input_cursor && _patch_write($scope0_id, "xe", input.text, !_server_guard($scope0_reason, 2)), $fg__input_cursor && $ui__input_text && _patch_write($scope0_id, "xf", highlight, !$sg__input_cursor));
 });
 
 // template.marko
 const $setup = _shell_setup([[], []], ["a>", $setup$1]);
 _shells({ a: `a${_shell_marker($setup)};${((_w0) => `/${_w0}&`)("D l")};${$template}` });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $uf__input_text = _updates_from($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 0) << 5);
+	_set_scope_reason($uf__input_text << 1 | $uf__input_text << 5);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	code_block_default({
 		text: input.text,

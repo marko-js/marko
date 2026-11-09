@@ -7,7 +7,7 @@ _shells({
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell !__tests__/template.marko_1_input_attrs#0:5; ;<a>go</a>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_attrs = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $ui__input_show = _unfilled_if($scope0_reason, 0), $fg__input_attrs = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_html("<main>");
@@ -29,10 +29,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(`<em>${_text_mark($scope0_id, "#text/1", count)}</em></main>`);
 	$fg__input_attrs && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "__tests__/template.marko_1_input_attrs#0:5/setup", "input_attrs");
 	_scope($scope0_id, {
-		input_attrs: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.attrs,
+		input_attrs: ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.attrs,
 		count
 	}, "__tests__/template.marko", 0, {
 		input_attrs: ["input.attrs"],
 		count: "1:6"
-	}) || $fg__input_attrs && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_attrs", input.attrs, !_server_guard($scope0_reason, 1));
+	}) || $fg__input_attrs && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_attrs", input.attrs, !_server_guard($scope0_reason, 1));
 }, 1);

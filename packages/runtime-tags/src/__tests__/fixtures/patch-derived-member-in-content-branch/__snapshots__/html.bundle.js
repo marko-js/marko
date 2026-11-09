@@ -26,12 +26,12 @@ var template_default = _template("a", (input) => {
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	wrapper_default({ content: _content("a4", () => {
 		_scope_reason();
-		const $scope1_id = _scope_id();
+		const $scope1_id = _scope_id(), $fg__input_label = _filled_guard($scope0_reason, 0);
 		const item = { label: input.label };
-		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "xc", item.label, !_server_guard($scope0_reason, 0));
+		$fg__input_label && _patch_write($scope1_id, "xc", item.label, !_server_guard($scope0_reason, 0));
 		_if(() => {}, $scope1_id, "a", 1, 1, 0, 0, 1);
-		_filled_guard($scope0_reason, 0) && _patch_render($scope1_id, "a0", "c");
-		_patch_render($scope1_id, "a1", _filled_guard($scope0_reason, 0) && "c");
+		$fg__input_label && _patch_render($scope1_id, "a0", "c");
+		_patch_render($scope1_id, "a1", $fg__input_label && "c");
 		_subscribe($count__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope1_id, {
 			c: item.label,
 			_: _scope_with_id($scope0_id)

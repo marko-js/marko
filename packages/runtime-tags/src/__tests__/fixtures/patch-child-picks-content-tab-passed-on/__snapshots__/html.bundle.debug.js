@@ -35,7 +35,7 @@ _shells({
 	"__tests__/template.marko": `__tests__/template.marko${_shell_marker($setup)};${((_w0) => ` b/${_w0}&b`)($walks$1)};${((_w0) => `<button class=s>s</button>${_w0}<!>`)($template$1)}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_y = _client_guard($scope0_reason, 2), $fg__input_y = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $cg__input_y = _client_guard($scope0_reason, 2), $ui__input_x = _unfilled_if($scope0_reason, 1), $ui__input_y = _unfilled_if($scope0_reason, 2), $fg__input_y = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_y__closures = new Set();
 	const $s__closures = new Set();
@@ -65,13 +65,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	$fg__input_y && _client_guard($scope0_reason, 1) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_y#5/subscribers", "input_y");
 	_scope($scope0_id, {
-		input_y: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.y,
+		input_y: ($ui__input_x || $ui__input_y) && input.y,
 		s,
-		"ClosureScopes:input_y/7": _write_if($scope0_reason, 2) && (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1)) && $input_y__closures,
+		"ClosureScopes:input_y/7": _write_if($scope0_reason, 2) && ($ui__input_y || $ui__input_x) && $input_y__closures,
 		"ClosureScopes:s/8": $s__closures,
 		"#childScope/1": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, {
 		input_y: ["input.y"],
 		s: "1:6"
-	}) || $fg__input_y && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_y", input.y, !_server_guard($scope0_reason, 2));
+	}) || $fg__input_y && $ui__input_x && _patch_write($scope0_id, "PatchMarkedWrite:input_y", input.y, !_server_guard($scope0_reason, 2));
 }, 1);

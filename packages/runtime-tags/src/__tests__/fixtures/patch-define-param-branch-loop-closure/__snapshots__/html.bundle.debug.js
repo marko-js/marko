@@ -15,7 +15,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const Panel = { content: _content("__tests__/template.marko_1*content", ({ isOpen, label }) => {
 		const $scope1_id = _scope_id();
 		const $Panel_content__label__closures = new Set();
-		const $scope1_reason = _scope_reason(), $cg__label = _client_guard($scope1_reason, 2), $wi__isOpen__OR__label = _write_if($scope1_reason, 0), $wg__isOpen = _write_guard($scope1_reason, 1), $fg__label = _filled_guard($scope1_reason, 2);
+		const $scope1_reason = _scope_reason(), $cg__label = _client_guard($scope1_reason, 2), $wi__isOpen__OR__label = _write_if($scope1_reason, 0), $wg__isOpen = _write_guard($scope1_reason, 1), $ui__isOpen = _unfilled_if($scope1_reason, 1), $ui__label = _unfilled_if($scope1_reason, 2), $fg__label = _filled_guard($scope1_reason, 2);
 		_if(() => {
 			if (isOpen) {
 				const $scope2_id = _scope_id();
@@ -31,9 +31,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, $scope1_id, "#text/0", 1, $wg__isOpen, 1, 0, 0, ["__tests__/template.marko_2*shell"], $scope1_reason, 1);
 		$fg__label && _client_guard($scope1_reason, 1) && _patch_subscribers($scope1_id, "__tests__/template.marko_1_label#4/subscribers", "label");
 		$wi__isOpen__OR__label && _scope($scope1_id, {
-			label: (_unfilled_if($scope1_reason, 1) || _unfilled_if($scope1_reason, 2)) && label,
-			"ClosureScopes:label/5": _write_if($scope1_reason, 2) && (_unfilled_if($scope1_reason, 2) || _unfilled_if($scope1_reason, 1)) && $Panel_content__label__closures
-		}, "__tests__/template.marko", "1:2", { label: "1:25" }) || $fg__label && _unfilled_if($scope1_reason, 1) && _patch_write($scope1_id, "PatchMarkedWrite:label", label, !_server_guard($scope1_reason, 2));
+			label: ($ui__isOpen || $ui__label) && label,
+			"ClosureScopes:label/5": _write_if($scope1_reason, 2) && ($ui__label || $ui__isOpen) && $Panel_content__label__closures
+		}, "__tests__/template.marko", "1:2", { label: "1:25" }) || $fg__label && $ui__isOpen && _patch_write($scope1_id, "PatchMarkedWrite:label", label, !_server_guard($scope1_reason, 2));
 	}, $scope0_id) };
 	_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 1) << 3 | _updates_from($scope0_reason, 2) << 5);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);

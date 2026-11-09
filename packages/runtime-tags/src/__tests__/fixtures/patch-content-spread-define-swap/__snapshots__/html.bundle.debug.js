@@ -8,7 +8,7 @@ _shells({
 	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0_attrs#8; ;<div></div>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_title = _client_guard($scope0_reason, 0), $fg__input_title = _filled_guard($scope0_reason, 0), $wi__input_title = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_title = _client_guard($scope0_reason, 0), $ui__input_which = _unfilled_if($scope0_reason, 1), $fg__input_title = _filled_guard($scope0_reason, 0), $wi__input_title = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_title__closures = new Set();
 	const one = { content: _content_resume("__tests__/template.marko_1*content", () => {
@@ -36,8 +36,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	$fg__input_title && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_title#3/subscribers", "input_title");
 	_scope($scope0_id, {
 		input_title: input.title,
-		one: _unfilled_if($scope0_reason, 1) && one,
-		two: _unfilled_if($scope0_reason, 1) && two,
+		one: $ui__input_which && one,
+		two: $ui__input_which && two,
 		"ClosureScopes:input_title/9": $wi__input_title && $input_title__closures
 	}, "__tests__/template.marko", 0, {
 		input_title: ["input.title"],

@@ -23,7 +23,7 @@ _shells({
 	"__tests__/components/wrapper.marko_1*shell": `__tests__/components/wrapper.marko_1*shell${_shell_marker([[], []], ["#childScope/1>", $setup$2])};${/*@__PURE__*/ ((_w0) => `b%b/${_w0}&b`)($walks$2)};${/*@__PURE__*/ ((_w0) => `<!><!>${_w0}<!>`)($template$2)}`
 });
 var wrapper_default = _template("__tests__/components/wrapper.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0), $ui__input_show = _unfilled_if($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_html("<section>");
 	_if(() => {
@@ -43,7 +43,7 @@ var wrapper_default = _template("__tests__/components/wrapper.marko", (input) =>
 	}, $scope0_id, "#section/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/components/wrapper.marko_1*shell"], $scope0_reason, 0);
 	_html(`</section>${_el_mark($scope0_id, "#section/0", $wg__input_show)}`);
 	$fg__input_label && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "__tests__/components/wrapper.marko_1_input_label#0:4/setup", "input_label");
-	_scope($scope0_id, { input_label: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.label }, "__tests__/components/wrapper.marko", 0, { input_label: ["input.label"] }) || $fg__input_label && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 1));
+	_scope($scope0_id, { input_label: ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.label }, "__tests__/components/wrapper.marko", 0, { input_label: ["input.label"] }) || $fg__input_label && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 1));
 });
 
 // template.marko

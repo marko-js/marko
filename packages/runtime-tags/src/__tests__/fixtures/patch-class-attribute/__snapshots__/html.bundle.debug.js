@@ -4,11 +4,11 @@ const $walks = " D b l";
 const $setup = [[], []];
 _shells({ "__tests__/template.marko": "__tests__/template.marko; D b ;<div><p>content</p><span class=base>badge</span></div>" });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $uf__input_accent = _updates_from($scope0_reason, 1);
 	const $scope0_id = _scope_id();
-	_html(`<div${_attr_class(input.theme, $scope0_id, "#div/0", $scope0_reason, 0)}><p${_attr_style(input.accent, $scope0_id, "#p/1", $scope0_reason, 1)}>content</p>${_el_mark($scope0_id, "#p/1", _updates_from($scope0_reason, 1))}<span${_attr_class({
+	_html(`<div${_attr_class(input.theme, $scope0_id, "#div/0", $scope0_reason, 0)}><p${_attr_style(input.accent, $scope0_id, "#p/1", $scope0_reason, 1)}>content</p>${_el_mark($scope0_id, "#p/1", $uf__input_accent)}<span${_attr_class({
 		base: true,
 		compact: input.on
-	}, $scope0_id, "#span/2", $scope0_reason, 2)}${_attr_style([input.accent, { margin: 0 }], $scope0_id, "#span/2", $scope0_reason, 1)}>badge</span>${_el_mark($scope0_id, "#span/2", _updates_from($scope0_reason, 2) || _updates_from($scope0_reason, 1))}</div>${_el_mark($scope0_id, "#div/0", _updates_from($scope0_reason, 0))}`);
+	}, $scope0_id, "#span/2", $scope0_reason, 2)}${_attr_style([input.accent, { margin: 0 }], $scope0_id, "#span/2", $scope0_reason, 1)}>badge</span>${_el_mark($scope0_id, "#span/2", _updates_from($scope0_reason, 2) || $uf__input_accent)}</div>${_el_mark($scope0_id, "#div/0", _updates_from($scope0_reason, 0))}`);
 	_scope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

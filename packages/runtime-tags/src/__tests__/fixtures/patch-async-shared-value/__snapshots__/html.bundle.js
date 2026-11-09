@@ -23,20 +23,20 @@ _shells({
 	b: `b${_shell_marker($setup)};${((_w0, _w1) => `D/${_w0}&/${_w1}&%l`)(" b", " b")};${((_w0, _w1) => `<main>${_w0}${_w1}<!></main>`)($template, $template)}`
 });
 var template_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 1), $wi__input_label__OR__input_promise = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $uf__input_label = _updates_from($scope0_reason, 1), $cg__input_label = _client_guard($scope0_reason, 1), $wi__input_label__OR__input_promise = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $item__closures = /* @__PURE__ */ new Set();
 	const $input_promise__closures = /* @__PURE__ */ new Set();
 	const item = { label: input.label };
 	_html("<main>");
-	_set_scope_reason(_updates_from($scope0_reason, 1) << 1 | _updates_from($scope0_reason, 1) << 5);
+	_set_scope_reason($uf__input_label << 1 | $uf__input_label << 5);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	child_default({
 		name: "a",
 		item: _patch_live($childScope, item, $scope0_id, "f")
 	});
 	_patch_child_end();
-	_set_scope_reason(_updates_from($scope0_reason, 1) << 1 | _updates_from($scope0_reason, 1) << 5);
+	_set_scope_reason($uf__input_label << 1 | $uf__input_label << 5);
 	const $childScope2 = _peek_scope_id($scope0_id, "b", 1);
 	child_default({
 		name: "b",
@@ -45,11 +45,11 @@ var template_default = _template("b", (input) => {
 	_patch_child_end();
 	_try($scope0_id, "c", () => {
 		_scope_reason();
-		const $scope1_id = _scope_id();
+		const $scope1_id = _scope_id(), $ui__input_promise = _unfilled_if($scope0_reason, 2);
 		_await($scope1_id, "a", input.promise, (value) => {
 			const $scope2_id = _scope_id();
 			_html(`<span>${_text_mark($scope2_id, "a", value, 1, $scope0_reason, 2)}</span>`);
-			_set_scope_reason(_updates_from($scope0_reason, 1) << 1 | _updates_from($scope0_reason, 1) << 5);
+			_set_scope_reason($uf__input_label << 1 | $uf__input_label << 5);
 			const $childScope3 = _peek_scope_id($scope2_id, "b", 2);
 			child_default({
 				name: "c",
@@ -58,9 +58,9 @@ var template_default = _template("b", (input) => {
 			_patch_child_end();
 			_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope2_id, "b0", $cg__input_label);
 			_subscribe(_unfilled_if($scope0_reason, 1) && $item__closures, _scope($scope2_id, { b: _existing_scope($childScope3) }), $cg__input_label && "b0");
-		}, 1, "b2", _unfilled_if($scope0_reason, 2), 1);
+		}, 1, "b2", $ui__input_promise, 1);
 		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "b5", 1);
-		$wi__input_label__OR__input_promise && _subscribe(_unfilled_if($scope0_reason, 2) && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 2) && "b5", 0);
+		$wi__input_label__OR__input_promise && _subscribe($ui__input_promise && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 2) && "b5", 0);
 		$wi__input_label__OR__input_promise && _resume_branch($scope1_id);
 	}, () => {
 		_scope_reason();

@@ -21,7 +21,7 @@ _shells({
 	"__tests__/tags/outer.marko_1*shell": `__tests__/tags/outer.marko_1*shell${_shell_marker([[], ["__tests__/tags/outer.marko_1"]], ["#childScope/1>", $setup$2])};${/*@__PURE__*/ ((_w0) => ` b/${_w0}&`)("D%l")};${/*@__PURE__*/ ((_w0) => `<button>x</button>${_w0}`)($template$2)}`
 });
 var outer_default = _template("__tests__/tags/outer.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0), $fg__input_content = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0), $ui__input_show = _unfilled_if($scope0_reason, 0), $fg__input_content = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.show) {
@@ -43,7 +43,7 @@ var outer_default = _template("__tests__/tags/outer.marko", (input) => {
 		}
 	}, $scope0_id, "#text/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/tags/outer.marko_1*shell"], $scope0_reason, 0);
 	$fg__input_content && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "__tests__/tags/outer.marko_1_input_content#0:4/setup", "input_content");
-	_scope($scope0_id, { input_content: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.content }, "__tests__/tags/outer.marko", 0, { input_content: ["input.content"] }) || (_client_branch(input.content), $fg__input_content && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_content", input.content, !_server_guard($scope0_reason, 1)));
+	_scope($scope0_id, { input_content: ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.content }, "__tests__/tags/outer.marko", 0, { input_content: ["input.content"] }) || (_client_branch(input.content), $fg__input_content && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_content", input.content, !_server_guard($scope0_reason, 1)));
 });
 
 // template.marko

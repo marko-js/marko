@@ -36,7 +36,7 @@ const $walks = "b1b D l";
 const $setup = [[], []];
 _shells({ "__tests__/template.marko": "__tests__/template.marko;b1b D ;<!><!><p> </p>" });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_which = _filled_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $ui__input_which__OR__input_label = _unfilled_if($scope0_reason, 0), $ui__input_label = _unfilled_if($scope0_reason, 2), $ui__input_which = _unfilled_if($scope0_reason, 1), $fg__input_which = _filled_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $inputwhichcounterother_scope = _peek_scope_id();
 	let count = _dynamic_tag($scope0_id, "#text/0", input.which ? counter_default : other_default, { label: input.label }, 1, 0, 0, 1, $scope0_reason, 0, 0, void 0, 0, "__tests__/template.marko_0_count#9/var");
@@ -45,12 +45,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0_count#9");
 	_patch_render($scope0_id, "__tests__/template.marko_0_input_which#6_input_label#7/setup", [$fg__input_which && "input_which", $fg__input_label && "input_label"], $scope0_reason, 0);
 	_scope($scope0_id, {
-		input_which: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.which,
-		input_label: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.label,
+		input_which: ($ui__input_label || $ui__input_which__OR__input_label) && input.which,
+		input_label: ($ui__input_which || $ui__input_which__OR__input_label) && input.label,
 		count
 	}, "__tests__/template.marko", 0, {
 		input_which: ["input.which"],
 		input_label: ["input.label"],
 		count: "3:35"
-	}) || ($fg__input_which && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_which", input.which, !_server_guard($scope0_reason, 1)), $fg__input_label && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 2)));
+	}) || ($fg__input_which && $ui__input_label && _patch_write($scope0_id, "PatchMarkedWrite:input_which", input.which, !_server_guard($scope0_reason, 1)), $fg__input_label && $ui__input_which && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 2)));
 }, 1);

@@ -7,7 +7,7 @@ _shells({
 	a1: "a1;D ;<em> </em>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_open = _filled_guard($scope0_reason, 2), $fg__input_label = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 1), $fg__input_other = _filled_guard($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $ui__input_show = _unfilled_if($scope0_reason, 1), $fg__input_open = _filled_guard($scope0_reason, 2), $fg__input_label = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 1), $fg__input_other = _filled_guard($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	let open = false;
 	const Panel = { content: _content_resume("a3", ({ isOpen, label }) => {
@@ -65,10 +65,10 @@ var template_default = _template("a", (input) => {
 	_patch_render($scope0_id, "a8", $fg__input_other && "i", $scope0_reason, 4);
 	_patch_render($scope0_id, "a9", $fg__input_other && "m");
 	_scope($scope0_id, {
-		g: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.open,
+		g: ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.open,
 		h: _write_if($scope0_reason, 1) && input.label,
 		j: open,
 		k: _write_if($scope0_reason, 4) && Panel,
 		m: Tag
-	}) || ($fg__input_open && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xg", input.open, !_server_guard($scope0_reason, 2)), $fg__input_label && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xh", input.label, !_server_guard($scope0_reason, 3)), $fg__input_other && _patch_write($scope0_id, "xm", Tag, !_server_guard($scope0_reason, 4)));
+	}) || ($fg__input_open && $ui__input_show && _patch_write($scope0_id, "xg", input.open, !_server_guard($scope0_reason, 2)), $fg__input_label && $ui__input_show && _patch_write($scope0_id, "xh", input.label, !_server_guard($scope0_reason, 3)), $fg__input_other && _patch_write($scope0_id, "xm", Tag, !_server_guard($scope0_reason, 4)));
 }, 1);

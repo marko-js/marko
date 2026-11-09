@@ -8,7 +8,7 @@ _shells({
 	"__tests__/template.marko_2*shell": "__tests__/template.marko_2*shell __tests__/template.marko_2_n#1:2/setup __tests__/template.marko_2_m#1:3/setup!__tests__/template.marko_2; D ;<button> </button>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 1), $fg__input_show = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 1), $ui__input_items = _unfilled_if($scope0_reason, 0), $fg__input_show = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_html("<ul>");
 	_for_of(input.items, (item) => {
@@ -42,5 +42,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, "id", $scope0_id, "#ul/0", 1, 1, 1, 0, 0, "__tests__/template.marko_1*shell", $scope0_reason, 0);
 	_html(`</ul>${_el_mark($scope0_id, "#ul/0")}`);
 	$fg__input_show && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "__tests__/template.marko_1_input_show#0:4/setup", "input_show");
-	_scope($scope0_id, { input_show: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.show }, "__tests__/template.marko", 0, { input_show: ["input.show"] }) || $fg__input_show && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_show", input.show, !_server_guard($scope0_reason, 1));
+	_scope($scope0_id, { input_show: ($ui__input_items || _unfilled_if($scope0_reason, 1)) && input.show }, "__tests__/template.marko", 0, { input_show: ["input.show"] }) || $fg__input_show && $ui__input_items && _patch_write($scope0_id, "PatchMarkedWrite:input_show", input.show, !_server_guard($scope0_reason, 1));
 }, 1);

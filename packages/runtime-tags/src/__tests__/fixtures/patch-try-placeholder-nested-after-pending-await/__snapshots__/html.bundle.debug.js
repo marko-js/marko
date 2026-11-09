@@ -21,22 +21,22 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html("<main>");
 	_try($scope0_id, "#text/0", () => {
 		const $scope1_reason = _scope_reason();
-		const $scope1_id = _scope_id();
+		const $scope1_id = _scope_id(), $ui__input_a = _unfilled_if($scope0_reason, 1);
 		_await($scope1_id, "#text/0", input.a, (a) => {
 			const $scope4_id = _scope_id();
 			_html(`<p>${_text_mark($scope4_id, "#text/0", a, 1, $scope0_reason, 1)}</p>`);
 			_scope($scope4_id, {}, "__tests__/template.marko", "3:6");
-		}, 1, "__tests__/template.marko_4*content", _unfilled_if($scope0_reason, 1) && 2, 1);
+		}, 1, "__tests__/template.marko_4*content", $ui__input_a && 2, 1);
 		_try($scope1_id, "#text/1", () => {
 			const $scope2_reason = _scope_reason();
-			const $scope2_id = _scope_id();
+			const $scope2_id = _scope_id(), $ui__input_b = _unfilled_if($scope0_reason, 2);
 			_await($scope2_id, "#text/0", input.b, (b) => {
 				const $scope6_id = _scope_id();
 				_html(`<span>${_text_mark($scope6_id, "#text/0", b, 1, $scope0_reason, 2)}</span>`);
 				_scope($scope6_id, {}, "__tests__/template.marko", "7:8");
-			}, 1, "__tests__/template.marko_6*content", _unfilled_if($scope0_reason, 2) && 2, 1);
+			}, 1, "__tests__/template.marko_6*content", $ui__input_b && 2, 1);
 			_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope2_id, "__tests__/template.marko_2_input_b#0:4/subscribe", 1);
-			$wi__input_b && _subscribe(_unfilled_if($scope0_reason, 2) && $input_b__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "6:6"), _client_guard($scope0_reason, 2) && "__tests__/template.marko_2_input_b#0:4/subscribe", 0);
+			$wi__input_b && _subscribe($ui__input_b && $input_b__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "6:6"), _client_guard($scope0_reason, 2) && "__tests__/template.marko_2_input_b#0:4/subscribe", 0);
 			$wi__input_b && _resume_branch($scope2_id);
 		}, () => {
 			const $scope5_reason = _scope_reason();
@@ -44,7 +44,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_html("<i>inner</i>");
 		}, void 0, "__tests__/template.marko_5*content", void 0, "__tests__/template.marko_2*content", 1, 0, 2);
 		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_a#0:3/subscribe", 1);
-		$wi__input_a__OR__input_b && _subscribe(_unfilled_if($scope0_reason, 1) && $input_a__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4"), _client_guard($scope0_reason, 1) && "__tests__/template.marko_1_input_a#0:3/subscribe", 0);
+		$wi__input_a__OR__input_b && _subscribe($ui__input_a && $input_a__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4"), _client_guard($scope0_reason, 1) && "__tests__/template.marko_1_input_a#0:3/subscribe", 0);
 		$wi__input_a__OR__input_b && _resume_branch($scope1_id);
 	}, () => {
 		const $scope3_reason = _scope_reason();

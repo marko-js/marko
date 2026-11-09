@@ -6,7 +6,7 @@ _shells({
 	e1: "e1;b%;<!><!><!>"
 });
 var toggle_if_default = _template("e", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 2), $wg__input_open = _write_guard($scope0_reason, 1), $fg__input_content = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 2), $wg__input_open = _write_guard($scope0_reason, 1), $ui__input_open = _unfilled_if($scope0_reason, 1), $fg__input_content = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.open) {
@@ -18,7 +18,7 @@ var toggle_if_default = _template("e", (input) => {
 		}
 	}, $scope0_id, "a", 1, $wg__input_open, 1, 0, 0, ["e1"], $scope0_reason, 1);
 	$fg__input_content && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "e0", "e");
-	_scope($scope0_id, { e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.content }) || $fg__input_content && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.content, !_server_guard($scope0_reason, 2));
+	_scope($scope0_id, { e: ($ui__input_open || _unfilled_if($scope0_reason, 2)) && input.content }) || $fg__input_content && $ui__input_open && _patch_write($scope0_id, "xe", input.content, !_server_guard($scope0_reason, 2));
 });
 
 // tags/toggle-for.marko
@@ -29,7 +29,7 @@ _shells({
 	d1: "d1;b%;<!><!><!>"
 });
 var toggle_for_default = _template("d", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 2), $fg__input_content = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 2), $ui__input_open = _unfilled_if($scope0_reason, 1), $fg__input_content = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	_for_until(input.open ? 1 : 0, 0, 1, (i) => {
 		const $scope1_id = _scope_id();
@@ -38,7 +38,7 @@ var toggle_for_default = _template("d", (input) => {
 		_write_if($scope0_reason, 0) && _scope($scope1_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id) });
 	}, 0, $scope0_id, "a", 1, 1, 1, 0, 0, "d1", $scope0_reason, 1);
 	$fg__input_content && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "d0", "e");
-	_scope($scope0_id, { e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.content }) || $fg__input_content && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.content, !_server_guard($scope0_reason, 2));
+	_scope($scope0_id, { e: ($ui__input_open || _unfilled_if($scope0_reason, 2)) && input.content }) || $fg__input_content && $ui__input_open && _patch_write($scope0_id, "xe", input.content, !_server_guard($scope0_reason, 2));
 });
 
 // tags/toggle-tag.marko
@@ -49,7 +49,7 @@ _shells({
 	f: "f;b%;<!><!><!>"
 });
 var toggle_tag_default = _template("f", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 2), $cg__input_content = _client_guard($scope0_reason, 2), $wi__input_open__OR__input_content = _write_if($scope0_reason, 0), $wg__input_open = _write_guard($scope0_reason, 1), $fg__input_content = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 2), $cg__input_content = _client_guard($scope0_reason, 2), $wi__input_open__OR__input_content = _write_if($scope0_reason, 0), $wg__input_open = _write_guard($scope0_reason, 1), $ui__input_open = _unfilled_if($scope0_reason, 1), $fg__input_content = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_content__closures = /* @__PURE__ */ new Set();
 	_dynamic_tag($scope0_id, "a", input.open ? "div" : "section", {}, 10, _content("f0", () => {
@@ -62,9 +62,9 @@ var toggle_tag_default = _template("f", (input) => {
 	}, $scope0_id, 0), 0, $wg__input_open, $scope0_reason, 1);
 	$fg__input_content && _client_guard($scope0_reason, 1) && _patch_subscribers($scope0_id, "f2", "e");
 	_scope($scope0_id, {
-		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.content,
+		e: ($ui__input_open || _unfilled_if($scope0_reason, 2)) && input.content,
 		f: _write_if($scope0_reason, 2) && $input_content__closures
-	}) || $fg__input_content && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.content, !_server_guard($scope0_reason, 2));
+	}) || $fg__input_content && $ui__input_open && _patch_write($scope0_id, "xe", input.content, !_server_guard($scope0_reason, 2));
 });
 
 // tags/param-host.marko
@@ -79,10 +79,10 @@ _shells({
 	c: `c${_shell_marker($setup$2)};${((_w0, _w1, _w2) => `b/${_w0}&/${_w1}&/${_w2}&%c`)("b%c", "b%c", "b%c")};${((_w0, _w1, _w2) => `<!>${_w0}${_w1}${_w2}<!><!>`)($template$4, $template$3, $template$2)}`
 });
 var param_host_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 2), $wi__input_open__OR__input_label = _write_if($scope0_reason, 0), $wi__input_label = _write_if($scope0_reason, 2), $wg__input_open = _write_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 2), $uf__input_open = _updates_from($scope0_reason, 1), $wi__input_open__OR__input_label = _write_if($scope0_reason, 0), $wi__input_label = _write_if($scope0_reason, 2), $wg__input_open = _write_guard($scope0_reason, 1), $ui__input_open = _unfilled_if($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
-	_set_scope_reason(_updates_from($scope0_reason, 1) << 1 | _updates_from($scope0_reason, 1) << 3);
+	_set_scope_reason($uf__input_open << 1 | $uf__input_open << 3);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	toggle_if_default({
 		open: input.open,
@@ -95,7 +95,7 @@ var param_host_default = _template("c", (input) => {
 		}, $scope0_id)
 	});
 	_patch_child_end();
-	_set_scope_reason(_updates_from($scope0_reason, 1) << 1 | _updates_from($scope0_reason, 1) << 3);
+	_set_scope_reason($uf__input_open << 1 | $uf__input_open << 3);
 	const $childScope2 = _peek_scope_id($scope0_id, "b", 1);
 	toggle_for_default({
 		open: input.open,
@@ -111,7 +111,7 @@ var param_host_default = _template("c", (input) => {
 		}, $scope0_id)
 	});
 	_patch_child_end();
-	_set_scope_reason(_updates_from($scope0_reason, 1) << 1 | _updates_from($scope0_reason, 1) << 3);
+	_set_scope_reason($uf__input_open << 1 | $uf__input_open << 3);
 	const $childScope3 = _peek_scope_id($scope0_id, "c", 2);
 	toggle_tag_default({
 		open: input.open,
@@ -139,12 +139,12 @@ var param_host_default = _template("c", (input) => {
 	}, $scope0_id, 0), 0, $wg__input_open, $scope0_reason, 1);
 	$fg__input_label && _patch_subscribers($scope0_id, "c8", "h");
 	_scope($scope0_id, {
-		h: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.label,
+		h: ($ui__input_open || _unfilled_if($scope0_reason, 2)) && input.label,
 		i: $wi__input_label && $input_label__closures,
 		a: _existing_scope($childScope),
 		b: _existing_scope($childScope2),
 		c: _existing_scope($childScope3)
-	}) || $fg__input_label && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xh", input.label, !_server_guard($scope0_reason, 2));
+	}) || $fg__input_label && $ui__input_open && _patch_write($scope0_id, "xh", input.label, !_server_guard($scope0_reason, 2));
 });
 
 // tags/const-host.marko
@@ -159,11 +159,11 @@ _shells({
 	b: `b${_shell_marker($setup$1)};${((_w0, _w1, _w2) => `b/${_w0}&/${_w1}&/${_w2}&%c`)("b%c", "b%c", "b%c")};${((_w0, _w1, _w2) => `<!>${_w0}${_w1}${_w2}<!><!>`)($template$4, $template$3, $template$2)}`
 });
 var const_host_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 2), $wi__input_open__OR__input_label = _write_if($scope0_reason, 0), $wi__input_label = _write_if($scope0_reason, 2), $wg__input_open = _write_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 2), $uf__input_open = _updates_from($scope0_reason, 1), $wi__input_open__OR__input_label = _write_if($scope0_reason, 0), $wi__input_label = _write_if($scope0_reason, 2), $wg__input_open = _write_guard($scope0_reason, 1), $ui__input_open = _unfilled_if($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	const show = input.open;
-	_set_scope_reason(_updates_from($scope0_reason, 1) << 1 | _updates_from($scope0_reason, 1) << 3);
+	_set_scope_reason($uf__input_open << 1 | $uf__input_open << 3);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	toggle_if_default({
 		open: show,
@@ -176,7 +176,7 @@ var const_host_default = _template("b", (input) => {
 		}, $scope0_id)
 	});
 	_patch_child_end();
-	_set_scope_reason(_updates_from($scope0_reason, 1) << 1 | _updates_from($scope0_reason, 1) << 3);
+	_set_scope_reason($uf__input_open << 1 | $uf__input_open << 3);
 	const $childScope2 = _peek_scope_id($scope0_id, "b", 1);
 	toggle_for_default({
 		open: show,
@@ -192,7 +192,7 @@ var const_host_default = _template("b", (input) => {
 		}, $scope0_id)
 	});
 	_patch_child_end();
-	_set_scope_reason(_updates_from($scope0_reason, 1) << 1 | _updates_from($scope0_reason, 1) << 3);
+	_set_scope_reason($uf__input_open << 1 | $uf__input_open << 3);
 	const $childScope3 = _peek_scope_id($scope0_id, "c", 2);
 	toggle_tag_default({
 		open: show,
@@ -220,29 +220,29 @@ var const_host_default = _template("b", (input) => {
 	}, $scope0_id, 0), 0, $wg__input_open, $scope0_reason, 1);
 	$fg__input_label && _patch_subscribers($scope0_id, "b8", "h");
 	_scope($scope0_id, {
-		h: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.label,
+		h: ($ui__input_open || _unfilled_if($scope0_reason, 2)) && input.label,
 		j: $wi__input_label && $input_label__closures,
 		a: _existing_scope($childScope),
 		b: _existing_scope($childScope2),
 		c: _existing_scope($childScope3)
-	}) || $fg__input_label && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xh", input.label, !_server_guard($scope0_reason, 2));
+	}) || $fg__input_label && $ui__input_open && _patch_write($scope0_id, "xh", input.label, !_server_guard($scope0_reason, 2));
 });
 
 // template.marko
 const $setup = _shell_setup([[], ["a0"]], ["a>", $setup$2], ["b>", $setup$1]);
 _shells({ a: `a${_shell_marker($setup)};${((_w0, _w1) => `b/${_w0}&/${_w1}& b`)($walks$1, $walks)};${((_w0, _w1) => `<!>${_w0}${_w1}<button>+</button>`)($template$1, $template)}` });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $uf__input_label = _updates_from($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let open = true;
-	_set_scope_reason(14 | _updates_from($scope0_reason, 0) << 5);
+	_set_scope_reason(14 | $uf__input_label << 5);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	param_host_default({
 		open,
 		label: input.label
 	});
 	_patch_child_end();
-	_set_scope_reason(14 | _updates_from($scope0_reason, 0) << 5);
+	_set_scope_reason(14 | $uf__input_label << 5);
 	const $childScope2 = _peek_scope_id($scope0_id, "b", 1);
 	const_host_default({
 		open,

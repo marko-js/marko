@@ -19,7 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const handler = _bind_resume((event) => event.target.dataset.seen = input.title, "__tests__/template.marko_0/handler", $scope0_id);
 	_html("<main>");
 	_await($scope0_id, "#text/0", input.one, () => {
-		const $scope1_id = _scope_id();
+		const $scope1_id = _scope_id(), $ui__input_title = _unfilled_if($scope0_reason, 0);
 		const attrs = {
 			title: input.title,
 			onClick: handler
@@ -32,10 +32,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_title#0:5/subscribe");
 		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_handler#0:9/subscribe");
 		$cg__input_title && _patch_render($scope1_id, "__tests__/template.marko_1_input_title#0:5_handler#0:9/setup");
-		_subscribe(_unfilled_if($scope0_reason, 0) && $handler2__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $input_title__closures, _scope($scope1_id, {}, "__tests__/template.marko", "4:4", { "EventAttributes:#button/0": ["...attrs", "6:25"] }), $cg__input_title && "__tests__/template.marko_1_input_title#0:5/subscribe"), $cg__input_title && "__tests__/template.marko_1_handler#0:9/subscribe");
+		_subscribe($ui__input_title && $handler2__closures, _subscribe($ui__input_title && $input_title__closures, _scope($scope1_id, {}, "__tests__/template.marko", "4:4", { "EventAttributes:#button/0": ["...attrs", "6:25"] }), $cg__input_title && "__tests__/template.marko_1_input_title#0:5/subscribe"), $cg__input_title && "__tests__/template.marko_1_handler#0:9/subscribe");
 	}, 1, "__tests__/template.marko_1*content", _unfilled_if($scope0_reason, 1), 1, 1);
 	_await($scope0_id, "#text/1", input.two, () => {
-		const $scope2_id = _scope_id();
+		const $scope2_id = _scope_id(), $ui__input_title2 = _unfilled_if($scope0_reason, 0);
 		const attrs = {
 			title: input.title,
 			onClick: handler
@@ -48,7 +48,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope2_id, "__tests__/template.marko_2_input_title#0:5/subscribe");
 		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope2_id, "__tests__/template.marko_2_handler#0:9/subscribe");
 		$cg__input_title && _patch_render($scope2_id, "__tests__/template.marko_2_input_title#0:5_handler#0:9/setup");
-		_subscribe(_unfilled_if($scope0_reason, 0) && $handler2__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $input_title__closures, _scope($scope2_id, {
+		_subscribe($ui__input_title2 && $handler2__closures, _subscribe($ui__input_title2 && $input_title__closures, _scope($scope2_id, {
 			"ClosureSignalIndex:input_title/10": $wi__input_title && 1,
 			"ClosureSignalIndex:handler/11": $wi__input_title && 1
 		}, "__tests__/template.marko", "8:4", { "EventAttributes:#button/0": ["...attrs", "10:25"] }), $cg__input_title && "__tests__/template.marko_2_input_title#0:5/subscribe"), $cg__input_title && "__tests__/template.marko_2_handler#0:9/subscribe");

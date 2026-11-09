@@ -15,13 +15,13 @@ var card_default = _template("b", (input) => {
 	_html("<section>");
 	_try($scope0_id, "a", () => {
 		_scope_reason();
-		const $scope2_id = _scope_id();
+		const $scope2_id = _scope_id(), $ui__input_promise = _unfilled_if($scope0_reason, 1);
 		_await($scope2_id, "a", input.promise, () => {
 			_scope_id();
 			_html("<span>done</span>");
-		}, 1, "b1", _unfilled_if($scope0_reason, 1) && 2);
+		}, 1, "b1", $ui__input_promise && 2);
 		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope2_id, "b4", 1);
-		$wi__input_promise && _subscribe(_unfilled_if($scope0_reason, 1) && $input_promise__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 1) && "b4", 0);
+		$wi__input_promise && _subscribe($ui__input_promise && $input_promise__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 1) && "b4", 0);
 		$wi__input_promise && _resume_branch($scope2_id);
 	}, () => {
 		_scope_reason();

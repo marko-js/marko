@@ -39,16 +39,16 @@ _shells({
 	b1: "b1,<span>shown</span>"
 });
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 1), $cg__input_show = _client_guard($scope0_reason, 1), $wi__input_show = _write_if($scope0_reason, 1), $sg__input_show = _server_guard($scope0_reason, 1), $fg__input_show = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 1), $cg__input_show = _client_guard($scope0_reason, 1), $wi__input_show = _write_if($scope0_reason, 1), $sg__input_show = _server_guard($scope0_reason, 1), $fg__input_show2 = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	let items = [1, 2];
 	_html(`<button>add</button>${_el_mark($scope0_id, "a")}`);
 	_if(() => {
 		if (input.on) {
-			const $scope1_id = _scope_id();
+			const $scope1_id = _scope_id(), $fg__input_show = _filled_guard($scope0_reason, 1);
 			const $if_content__s__closures = /* @__PURE__ */ new Set();
 			const s = input.show;
-			_filled_guard($scope0_reason, 1) && _patch_write($scope1_id, "xc", s, !$sg__input_show);
+			$fg__input_show && _patch_write($scope1_id, "xc", s, !$sg__input_show);
 			_set_scope_reason(2);
 			let $item;
 			forOf(items, (item) => $item = attrTags($item, { content: _content("b2", () => {
@@ -75,7 +75,7 @@ var child_default = _template("b", (input) => {
 				return "s:" + s;
 			}, "b0", $scope1_id) });
 			_patch_child_end();
-			_filled_guard($scope0_reason, 1) && _patch_subscribers($scope1_id, "b5", "c");
+			$fg__input_show && _patch_subscribers($scope1_id, "b5", "c");
 			$cg__input_show && _patch_render($scope1_id, "b6");
 			_scope($scope1_id, {
 				c: s,
@@ -88,12 +88,12 @@ var child_default = _template("b", (input) => {
 		}
 	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["b3"], $scope0_reason, 0);
 	_script($scope0_id, "b7");
-	$fg__input_show && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "b6", "f");
+	$fg__input_show2 && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "b6", "f");
 	_patch_fill($scope0_id, "vb8", items, 1);
 	_scope($scope0_id, {
 		f: _write_if($scope0_reason, 0) && input.show,
 		g: items
-	}) || $fg__input_show && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xf", input.show, !$sg__input_show);
+	}) || $fg__input_show2 && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xf", input.show, !$sg__input_show);
 });
 
 // template.marko

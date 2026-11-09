@@ -8,7 +8,7 @@ _shells({
 	"__tests__/tags/tabs/index.marko_2*shell": "__tests__/tags/tabs/index.marko_2*shell,<span>b</span>"
 });
 var tabs_default = _template("__tests__/tags/tabs/index.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_tab = _write_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_tab = _write_guard($scope0_reason, 0), $ui__input_tab = _unfilled_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.tab) {
@@ -24,8 +24,8 @@ var tabs_default = _template("__tests__/tags/tabs/index.marko", (input) => {
 			return 1;
 		}
 	}, $scope0_id, "#text/0", 1, $wg__input_tab, 1, 0, 0, ["__tests__/tags/tabs/index.marko_1*shell", "__tests__/tags/tabs/index.marko_2*shell"], $scope0_reason, 0);
-	_unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "PatchWrite:input_tab_on", input.tab?.on, 1);
-	_scope($scope0_id, { input_tab_on: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.tab?.on }, "__tests__/tags/tabs/index.marko", 0, { input_tab_on: ["input.tab.on"] });
+	$ui__input_tab && _patch_write($scope0_id, "PatchWrite:input_tab_on", input.tab?.on, 1);
+	_scope($scope0_id, { input_tab_on: ($ui__input_tab || _unfilled_if($scope0_reason, 1)) && input.tab?.on }, "__tests__/tags/tabs/index.marko", 0, { input_tab_on: ["input.tab.on"] });
 });
 
 // template.marko

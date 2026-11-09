@@ -10,12 +10,12 @@ var rows_default = _template("__tests__/tags/rows.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_for_of([1, 2], (x) => {
-		const $scope1_id = _scope_id();
+		const $scope1_id = _scope_id(), $ui__input_label = _unfilled_if($scope0_reason, 0);
 		_html(`<em>${_text_mark($scope1_id, "#text/0", input.label + x, 1, $scope0_reason, 0)}</em>`);
-		_unfilled_if($scope0_reason, 0) && _patch_write($scope1_id, "PatchWrite:x", x, 1);
+		$ui__input_label && _patch_write($scope1_id, "PatchWrite:x", x, 1);
 		_client_guard($scope0_reason, 0) && _patch_render($scope1_id, "__tests__/tags/rows.marko_1_input_label#0:3_x#2/setup");
 		_scope($scope1_id, {
-			x: _unfilled_if($scope0_reason, 0) && x,
+			x: $ui__input_label && x,
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id)
 		}, "__tests__/tags/rows.marko", "1:2", { x: "1:6" });
 	}, 0, $scope0_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/tags/rows.marko_1*shell", 0, 0);

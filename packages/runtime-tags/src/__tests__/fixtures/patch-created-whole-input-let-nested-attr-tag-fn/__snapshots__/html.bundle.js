@@ -16,7 +16,7 @@ _shells({
 	a1: `a1${_shell_marker([[], []], ["a>", $setup])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)("D l")};${$template}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 4), $fg__input_on = _filled_guard($scope0_reason, 5), $fg__input_label = _filled_guard($scope0_reason, 6), $cg__input_show = _client_guard($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 4), $ui__input_show__OR__input_label = _unfilled_if($scope0_reason, 1), $fg__input_on = _filled_guard($scope0_reason, 5), $fg__input_label = _filled_guard($scope0_reason, 6), $cg__input_show = _client_guard($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.show) {
@@ -40,7 +40,7 @@ var template_default = _template("a", (input) => {
 	$fg__input_on && $cg__input_show && _patch_render($scope0_id, "a2", "e");
 	$fg__input_label && $cg__input_show && _patch_render($scope0_id, "a3", "f");
 	_scope($scope0_id, {
-		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.on,
+		e: ($ui__input_show__OR__input_label || _unfilled_if($scope0_reason, 2)) && input.on,
 		f: _write_if($scope0_reason, 0) && input.label
-	}) || ($fg__input_on && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.on, !_server_guard($scope0_reason, 5)), $fg__input_label && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xf", input.label, !_server_guard($scope0_reason, 6)));
+	}) || ($fg__input_on && $ui__input_show__OR__input_label && _patch_write($scope0_id, "xe", input.on, !_server_guard($scope0_reason, 5)), $fg__input_label && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xf", input.label, !_server_guard($scope0_reason, 6)));
 }, 1);

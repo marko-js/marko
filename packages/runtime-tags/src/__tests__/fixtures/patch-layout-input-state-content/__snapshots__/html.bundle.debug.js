@@ -7,7 +7,7 @@ _shells({
 	"__tests__/tags/wrap.marko_1*shell": "__tests__/tags/wrap.marko_1*shell;D%;<div><!></div>"
 });
 var wrap_default = _template("__tests__/tags/wrap.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 2), $wg__input_show = _write_guard($scope0_reason, 1), $fg__input_content = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 2), $wg__input_show = _write_guard($scope0_reason, 1), $ui__input_show = _unfilled_if($scope0_reason, 1), $fg__input_content = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.show) {
@@ -21,7 +21,7 @@ var wrap_default = _template("__tests__/tags/wrap.marko", (input) => {
 		}
 	}, $scope0_id, "#text/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/tags/wrap.marko_1*shell"], $scope0_reason, 1);
 	$fg__input_content && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "__tests__/tags/wrap.marko_1_input_content#0:4/setup", "input_content");
-	_scope($scope0_id, { input_content: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.content }, "__tests__/tags/wrap.marko", 0, { input_content: ["input.content"] }) || $fg__input_content && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_content", input.content, !_server_guard($scope0_reason, 2));
+	_scope($scope0_id, { input_content: ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.content }, "__tests__/tags/wrap.marko", 0, { input_content: ["input.content"] }) || $fg__input_content && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_content", input.content, !_server_guard($scope0_reason, 2));
 });
 
 // layout.marko
@@ -33,10 +33,10 @@ _shells({
 	"__tests__/layout.marko": `__tests__/layout.marko${_shell_marker($setup$1)};${((_w0) => `F/${_w0}&%n`)("b%c")};${((_w0) => `<html><body><main>${_w0}<!></main></body></html>`)($template$2)}`
 });
 var layout_default = _template("__tests__/layout.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $uf__input_open = _updates_from($scope0_reason, 0), $wg__input_content = _write_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_html(`<html>${_flush_head()}<body><main>`);
-	_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 0) << 3);
+	_set_scope_reason($uf__input_open << 1 | $uf__input_open << 3);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	wrap_default({
 		show: input.open,

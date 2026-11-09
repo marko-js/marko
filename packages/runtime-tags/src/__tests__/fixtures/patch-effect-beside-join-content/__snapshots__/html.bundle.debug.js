@@ -25,12 +25,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	wrap_default({ content: _content("__tests__/template.marko_1*content", () => {
 		const $scope1_reason = _scope_reason();
-		const $scope1_id = _scope_id();
+		const $scope1_id = _scope_id(), $fg__input_a = _filled_guard($scope0_reason, 0);
 		let n = 0;
 		_html(`<div><button class=n>n</button>${_el_mark($scope1_id, "#button/0")}<p class=j>${_text_mark($scope1_id, "#text/1", input.a + n)}</p><div class=e></div>${_el_mark($scope1_id, "#div/2")}</div>`);
-		_script($scope1_id, "__tests__/template.marko_1_input_a#0:3", 1, _filled_guard($scope0_reason, 0), ">input_a");
+		_script($scope1_id, "__tests__/template.marko_1_input_a#0:3", 1, $fg__input_a, ">input_a");
 		_script($scope1_id, "__tests__/template.marko_1");
-		_patch_render($scope1_id, "__tests__/template.marko_1_input_a#0:3_n#3/setup", _filled_guard($scope0_reason, 0) && ">input_a");
+		_patch_render($scope1_id, "__tests__/template.marko_1_input_a#0:3_n#3/setup", $fg__input_a && ">input_a");
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_a__closures, _scope($scope1_id, {
 			n,
 			_: _scope_with_id($scope0_id)

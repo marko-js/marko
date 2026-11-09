@@ -11,13 +11,13 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const $scope0_id = _scope_id();
 	_html(`<div></div>${_el_mark($scope0_id, "#div/0")}`);
 	_for_of(input.items, (item) => {
-		const $scope1_id = _scope_id();
-		_filled_guard($scope0_reason, 2) && _unfilled_if($scope0_reason, 1) && _patch_write($scope1_id, "PatchMarkedWrite:item", item, !_server_guard($scope0_reason, 2));
+		const $scope1_id = _scope_id(), $ui__input_b = _unfilled_if($scope0_reason, 1), $fg__input_items = _filled_guard($scope0_reason, 2);
+		$fg__input_items && $ui__input_b && _patch_write($scope1_id, "PatchMarkedWrite:item", item, !_server_guard($scope0_reason, 2));
 		const d = input.b + item;
 		_html(`<p>${_text_mark($scope1_id, "#text/0", d, 1, $scope0_reason, 0)}</p>`);
-		_patch_render($scope1_id, "__tests__/tags/child.marko_1_input_b#0:4_item#2/setup", [_filled_guard($scope0_reason, 1) && ">input_b", _filled_guard($scope0_reason, 2) && "item"], $scope0_reason, 0);
+		_patch_render($scope1_id, "__tests__/tags/child.marko_1_input_b#0:4_item#2/setup", [_filled_guard($scope0_reason, 1) && ">input_b", $fg__input_items && "item"], $scope0_reason, 0);
 		_scope($scope1_id, {
-			item: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && item,
+			item: ($ui__input_b || _unfilled_if($scope0_reason, 0)) && item,
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id)
 		}, "__tests__/tags/child.marko", "3:2", { item: "3:6" });
 	}, 0, $scope0_id, "#text/1", 1, 1, 1, 0, 0, "__tests__/tags/child.marko_1*shell", $scope0_reason, 2);

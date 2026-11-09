@@ -46,13 +46,13 @@ const $walks$1 = /*@__PURE__*/ ((_w0, _w1) => `/${_w0}&/${_w1}&`)($walks$3, $wal
 const $setup$1 = _shell_setup([[], []], ["#childScope/0>", $setup$3], ["#childScope/1>", $setup$2]);
 _shells({ "__tests__/tags/dia-a/index.marko": `__tests__/tags/dia-a/index.marko${_shell_marker($setup$1)};${((_w0, _w1) => `/${_w0}&/${_w1}&`)($walks$3, $walks$2)};${((_w0, _w1) => `${_w0}${_w1}`)($template$3, $template$2)}` });
 var dia_a_default = _template("__tests__/tags/dia-a/index.marko", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $uf__input_note = _updates_from($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
+	_set_scope_reason($uf__input_note << 1);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	dia_b_default({ note: input.note });
 	_patch_child_end();
-	_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
+	_set_scope_reason($uf__input_note << 1);
 	const $childScope2 = _peek_scope_id($scope0_id, "#childScope/1", 1);
 	dia_c_default({ note: input.note });
 	_patch_child_end();

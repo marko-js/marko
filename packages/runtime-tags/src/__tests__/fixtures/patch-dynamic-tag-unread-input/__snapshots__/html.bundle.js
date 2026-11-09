@@ -23,7 +23,7 @@ _shells({
 	c: "c !c2; D l%b%b%b%;<button class=inc> </button><!><!><!><!><!>"
 });
 var template_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_which = _filled_guard($scope0_reason, 7), $fg__input_user = _filled_guard($scope0_reason, 8), $fg__input_tag = _filled_guard($scope0_reason, 11), $fg__input_cls = _filled_guard($scope0_reason, 12), $fg__input_title = _filled_guard($scope0_reason, 13), $fg__input_none = _filled_guard($scope0_reason, 14), $fg__input_hidden = _filled_guard($scope0_reason, 15), $fg__input_alt = _filled_guard($scope0_reason, 9), $fg__input_user2 = _filled_guard($scope0_reason, 10);
+	const $scope0_reason = _scope_reason(), $ui__input_which__OR__input_user = _unfilled_if($scope0_reason, 0), $ui__input_alt__OR__input_user = _unfilled_if($scope0_reason, 1), $ui__input_tag__OR__input_cls__OR__input_title = _unfilled_if($scope0_reason, 6), $ui__input_none__OR__input_hidden = _unfilled_if($scope0_reason, 5), $ui__input_user = _unfilled_if($scope0_reason, 8), $ui__input_which = _unfilled_if($scope0_reason, 7), $ui__input_user2 = _unfilled_if($scope0_reason, 10), $ui__input_alt = _unfilled_if($scope0_reason, 9), $ui__input_cls__OR__input_title = _unfilled_if($scope0_reason, 4), $ui__input_tag__OR__input_title = _unfilled_if($scope0_reason, 3), $ui__input_tag__OR__input_cls = _unfilled_if($scope0_reason, 2), $ui__input_hidden = _unfilled_if($scope0_reason, 15), $ui__input_none = _unfilled_if($scope0_reason, 14), $fg__input_which = _filled_guard($scope0_reason, 7), $fg__input_user = _filled_guard($scope0_reason, 8), $fg__input_tag = _filled_guard($scope0_reason, 11), $fg__input_cls = _filled_guard($scope0_reason, 12), $fg__input_title = _filled_guard($scope0_reason, 13), $fg__input_none = _filled_guard($scope0_reason, 14), $fg__input_hidden = _filled_guard($scope0_reason, 15), $fg__input_alt = _filled_guard($scope0_reason, 9), $fg__input_user2 = _filled_guard($scope0_reason, 10);
 	const $scope0_id = _scope_id();
 	let n = 0;
 	_html(`<button class=inc>${_text_mark($scope0_id, "b", n)}</button>${_el_mark($scope0_id, "a")}`);
@@ -56,17 +56,17 @@ var template_default = _template("c", (input) => {
 	_patch_render($scope0_id, "c5", [$fg__input_none && "r", $fg__input_hidden && "s"], $scope0_reason, 5);
 	_patch_render($scope0_id, "c6", [$fg__input_alt && "l", $fg__input_user2 && "m"], $scope0_reason, 1);
 	_scope($scope0_id, {
-		i: (_unfilled_if($scope0_reason, 8) || _unfilled_if($scope0_reason, 0)) && input.which,
-		j: (_unfilled_if($scope0_reason, 7) || _unfilled_if($scope0_reason, 0)) && input.user,
-		l: (_unfilled_if($scope0_reason, 10) || _unfilled_if($scope0_reason, 1)) && input.alt,
-		m: (_unfilled_if($scope0_reason, 9) || _unfilled_if($scope0_reason, 1)) && input.user2,
-		n: (_unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 6)) && input.tag,
-		o: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 6)) && input.cls,
-		p: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 6)) && input.title,
-		r: (_unfilled_if($scope0_reason, 15) || _unfilled_if($scope0_reason, 5)) && input.none,
-		s: (_unfilled_if($scope0_reason, 14) || _unfilled_if($scope0_reason, 5)) && input.hidden,
+		i: ($ui__input_user || $ui__input_which__OR__input_user) && input.which,
+		j: ($ui__input_which || $ui__input_which__OR__input_user) && input.user,
+		l: ($ui__input_user2 || $ui__input_alt__OR__input_user) && input.alt,
+		m: ($ui__input_alt || $ui__input_alt__OR__input_user) && input.user2,
+		n: ($ui__input_cls__OR__input_title || $ui__input_tag__OR__input_cls__OR__input_title) && input.tag,
+		o: ($ui__input_tag__OR__input_title || $ui__input_tag__OR__input_cls__OR__input_title) && input.cls,
+		p: ($ui__input_tag__OR__input_cls || $ui__input_tag__OR__input_cls__OR__input_title) && input.title,
+		r: ($ui__input_hidden || $ui__input_none__OR__input_hidden) && input.none,
+		s: ($ui__input_none || $ui__input_none__OR__input_hidden) && input.hidden,
 		u: n,
-		v: _unfilled_if($scope0_reason, 1) && Row,
-		w: _unfilled_if($scope0_reason, 1) && Alt
-	}) || ($fg__input_which && _unfilled_if($scope0_reason, 8) && _patch_write($scope0_id, "xi", input.which, !_server_guard($scope0_reason, 7)), $fg__input_user && _unfilled_if($scope0_reason, 7) && _patch_write($scope0_id, "xj", input.user, !_server_guard($scope0_reason, 8)), $fg__input_alt && _unfilled_if($scope0_reason, 10) && _patch_write($scope0_id, "xl", input.alt, !_server_guard($scope0_reason, 9)), $fg__input_user2 && _unfilled_if($scope0_reason, 9) && _patch_write($scope0_id, "xm", input.user2, !_server_guard($scope0_reason, 10)), $fg__input_tag && _unfilled_if($scope0_reason, 4) && _patch_write($scope0_id, "xn", input.tag, !_server_guard($scope0_reason, 11)), $fg__input_cls && _unfilled_if($scope0_reason, 3) && _patch_write($scope0_id, "xo", input.cls, !_server_guard($scope0_reason, 12)), $fg__input_title && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xp", input.title, !_server_guard($scope0_reason, 13)), $fg__input_none && _unfilled_if($scope0_reason, 15) && _patch_write($scope0_id, "xr", input.none, !_server_guard($scope0_reason, 14)), $fg__input_hidden && _unfilled_if($scope0_reason, 14) && _patch_write($scope0_id, "xs", input.hidden, !_server_guard($scope0_reason, 15)));
+		v: $ui__input_alt__OR__input_user && Row,
+		w: $ui__input_alt__OR__input_user && Alt
+	}) || ($fg__input_which && $ui__input_user && _patch_write($scope0_id, "xi", input.which, !_server_guard($scope0_reason, 7)), $fg__input_user && $ui__input_which && _patch_write($scope0_id, "xj", input.user, !_server_guard($scope0_reason, 8)), $fg__input_alt && $ui__input_user2 && _patch_write($scope0_id, "xl", input.alt, !_server_guard($scope0_reason, 9)), $fg__input_user2 && $ui__input_alt && _patch_write($scope0_id, "xm", input.user2, !_server_guard($scope0_reason, 10)), $fg__input_tag && $ui__input_cls__OR__input_title && _patch_write($scope0_id, "xn", input.tag, !_server_guard($scope0_reason, 11)), $fg__input_cls && $ui__input_tag__OR__input_title && _patch_write($scope0_id, "xo", input.cls, !_server_guard($scope0_reason, 12)), $fg__input_title && $ui__input_tag__OR__input_cls && _patch_write($scope0_id, "xp", input.title, !_server_guard($scope0_reason, 13)), $fg__input_none && $ui__input_hidden && _patch_write($scope0_id, "xr", input.none, !_server_guard($scope0_reason, 14)), $fg__input_hidden && $ui__input_none && _patch_write($scope0_id, "xs", input.hidden, !_server_guard($scope0_reason, 15)));
 }, 1);

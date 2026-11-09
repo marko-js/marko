@@ -41,7 +41,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_patch_child_end();
 		_html(`<p>${_text_mark($scope1_id, "#text/2", name, 1, 0, 0)}:${_text_mark($scope1_id, "#text/3", store.last, 2)}</p>`);
 		_for_of(["y", "x"], (other) => {
-			const $scope2_id = _scope_id();
+			const $scope2_id = _scope_id(), $ui__input_show = _unfilled_if($scope0_reason, 0);
 			_if(() => {
 				if (input.show && other === name) {
 					const $scope3_id = _scope_id();
@@ -63,8 +63,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				}
 			}, $scope2_id, "#text/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_3*shell"], $scope0_reason, 0);
 			_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope2_id, "__tests__/template.marko_2_input_show#0:3/subscribe", $cg__input_show);
-			_subscribe(_unfilled_if($scope0_reason, 0) && $input_show__closures, _scope($scope2_id, {
-				"#LoopKey": _unfilled_if($scope0_reason, 0) && other,
+			_subscribe($ui__input_show && $input_show__closures, _scope($scope2_id, {
+				"#LoopKey": $ui__input_show && other,
 				_: _scope_with_id($scope1_id)
 			}, "__tests__/template.marko", "4:4", { "#LoopKey": "4:8" }), $cg__input_show && "__tests__/template.marko_2_input_show#0:3/subscribe", $wg__input_show);
 		}, (n) => n, $scope1_id, "#text/4", 1, 1, 1, 0, 0, "__tests__/template.marko_2*shell", 0, 0);

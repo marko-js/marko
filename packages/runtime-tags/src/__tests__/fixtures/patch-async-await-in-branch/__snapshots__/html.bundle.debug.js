@@ -10,7 +10,7 @@ _shells({
 	"__tests__/template.marko_2*shell": "__tests__/template.marko_2*shell,<em>closed</em>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_promise = _filled_guard($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $ui__input_show = _unfilled_if($scope0_reason, 2), $fg__input_promise = _filled_guard($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_html(`<main><h1>${_text_mark($scope0_id, "#text/0", input.title, 1, $scope0_reason, 1)}</h1>`);
@@ -36,10 +36,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	$fg__input_promise && _client_guard($scope0_reason, 2) && _patch_render($scope0_id, "__tests__/template.marko_1_input_promise#0:8/setup", "input_promise");
 	_scope($scope0_id, {
-		input_promise: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && input.promise,
+		input_promise: ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.promise,
 		count
 	}, "__tests__/template.marko", 0, {
 		input_promise: ["input.promise"],
 		count: "1:6"
-	}) || $fg__input_promise && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_promise", input.promise, !_server_guard($scope0_reason, 3));
+	}) || $fg__input_promise && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_promise", input.promise, !_server_guard($scope0_reason, 3));
 }, 1);

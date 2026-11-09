@@ -12,8 +12,8 @@ var list_default = _template("__tests__/tags/list.marko", (input) => {
 	let open = true;
 	_html(`<button>toggle</button>${_el_mark($scope0_id, "#button/0")}<button>pick</button>${_el_mark($scope0_id, "#button/1")}`);
 	_for_of(input.item, (item) => {
-		const $scope1_id = _scope_id();
-		_filled_guard($scope0_reason, 1) && _patch_write($scope1_id, "PatchMarkedWrite:item_content", item?.content, !_server_guard($scope0_reason, 1));
+		const $scope1_id = _scope_id(), $fg__input_item = _filled_guard($scope0_reason, 1);
+		$fg__input_item && _patch_write($scope1_id, "PatchMarkedWrite:item_content", item?.content, !_server_guard($scope0_reason, 1));
 		_if(() => {
 			if (open) {
 				const $scope2_id = _scope_id();
@@ -23,7 +23,7 @@ var list_default = _template("__tests__/tags/list.marko", (input) => {
 				return 0;
 			}
 		}, $scope1_id, "#text/0");
-		_filled_guard($scope0_reason, 1) && _patch_render($scope1_id, "__tests__/tags/list.marko_2_item_content#1:3/setup", "item_content");
+		$fg__input_item && _patch_render($scope1_id, "__tests__/tags/list.marko_2_item_content#1:3/setup", "item_content");
 		_scope($scope1_id, {
 			item_content: item?.content,
 			_: _scope_with_id($scope0_id)

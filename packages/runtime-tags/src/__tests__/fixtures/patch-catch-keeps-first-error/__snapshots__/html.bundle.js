@@ -18,7 +18,7 @@ _shells({
 	a: "a !a7; D l%;<button> </button><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 1), $ui__input_fail__OR__input_msg = _unfilled_if($scope0_reason, 0), $ui__input_msg = _unfilled_if($scope0_reason, 3), $ui__input_fail = _unfilled_if($scope0_reason, 2), $fg__input_label = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	const $n__closures = /* @__PURE__ */ new Set();
@@ -56,12 +56,12 @@ var template_default = _template("a", (input) => {
 	$fg__input_label && _patch_subscribers($scope0_id, "a8", "f");
 	_scope($scope0_id, {
 		f: input.label,
-		g: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 0)) && input.fail,
-		h: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.msg,
+		g: ($ui__input_msg || $ui__input_fail__OR__input_msg) && input.fail,
+		h: ($ui__input_fail || $ui__input_fail__OR__input_msg) && input.msg,
 		i: n,
 		j: _write_if($scope0_reason, 1) && $input_label__closures,
 		m: $n__closures,
-		k: _write_if($scope0_reason, 2) && (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && $input_fail__closures,
-		l: _write_if($scope0_reason, 3) && (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 0)) && $input_msg__closures
-	}) || ($fg__input_label && _patch_write($scope0_id, "xf", input.label, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && _unfilled_if($scope0_reason, 3) && _patch_write($scope0_id, "xg", input.fail, !_server_guard($scope0_reason, 2)), _filled_guard($scope0_reason, 3) && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xh", input.msg, !_server_guard($scope0_reason, 3)));
+		k: _write_if($scope0_reason, 2) && ($ui__input_fail || $ui__input_fail__OR__input_msg) && $input_fail__closures,
+		l: _write_if($scope0_reason, 3) && ($ui__input_msg || $ui__input_fail__OR__input_msg) && $input_msg__closures
+	}) || ($fg__input_label && _patch_write($scope0_id, "xf", input.label, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && $ui__input_msg && _patch_write($scope0_id, "xg", input.fail, !_server_guard($scope0_reason, 2)), _filled_guard($scope0_reason, 3) && $ui__input_fail && _patch_write($scope0_id, "xh", input.msg, !_server_guard($scope0_reason, 3)));
 }, 1);

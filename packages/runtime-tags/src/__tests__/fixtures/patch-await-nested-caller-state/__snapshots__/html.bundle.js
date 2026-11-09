@@ -13,7 +13,7 @@ var show_await_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	_await($scope0_id, "a", input.promise, (x) => {
-		const $scope1_id = _scope_id();
+		const $scope1_id = _scope_id(), $ui__input_promise = _unfilled_if($scope0_reason, 1);
 		const $await_content__x__closures = /* @__PURE__ */ new Set();
 		_await($scope1_id, "a", Promise.resolve(x + 10), (y) => {
 			const $scope2_id = _scope_id();
@@ -21,8 +21,8 @@ var show_await_default = _template("b", (input) => {
 			_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope2_id, "b0", $cg__input_label);
 			_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope2_id, "b1", $cg__input_promise);
 			_subscribe(_unfilled_if($scope0_reason, 1) && $await_content__x__closures, _subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope2_id, {}), $cg__input_label && "b0"), $cg__input_promise && "b1");
-		}, 1, "b2", _unfilled_if($scope0_reason, 1), 1);
-		_write_if($scope0_reason, 0) && _scope($scope1_id, { g: _write_if($scope0_reason, 1) && _unfilled_if($scope0_reason, 1) && $await_content__x__closures });
+		}, 1, "b2", $ui__input_promise, 1);
+		_write_if($scope0_reason, 0) && _scope($scope1_id, { g: _write_if($scope0_reason, 1) && $ui__input_promise && $await_content__x__closures });
 	}, 1, "b4", _unfilled_if($scope0_reason, 1), 1);
 	_scope($scope0_id, { f: _write_if($scope0_reason, 2) && _unfilled_if($scope0_reason, 2) && $input_label__closures });
 });

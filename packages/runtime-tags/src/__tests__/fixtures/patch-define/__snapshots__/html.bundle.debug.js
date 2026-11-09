@@ -6,7 +6,7 @@ const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}& b`)($thing_content__walks);
 const $setup = [[], []];
 _shells({ "__tests__/template.marko": `__tests__/template.marko;${((_w0) => `/${_w0}& b`)($thing_content__walks)};${((_w0) => `${_w0}<div>x</div>`)($thing_content__template)}` });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_cls = _filled_guard($scope0_reason, 3), $fg__input_on = _filled_guard($scope0_reason, 4), $wi__input_title = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $ui__input_cls__OR__input_on = _unfilled_if($scope0_reason, 0), $ui__input_on = _unfilled_if($scope0_reason, 4), $ui__input_cls = _unfilled_if($scope0_reason, 3), $fg__input_cls = _filled_guard($scope0_reason, 3), $fg__input_on = _filled_guard($scope0_reason, 4), $wi__input_title = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_title__closures = new Set();
 	const thing = { content: _content("__tests__/template.marko_1*content", (attrs) => {
@@ -22,12 +22,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(`<div${_attr_class([input.cls, { on: input.on }], $scope0_id, "#div/1", $scope0_reason, 0)}${_attr_style({ color: input.color }, $scope0_id, "#div/1", $scope0_reason, 5)}>x</div>${_el_mark($scope0_id, "#div/1", _updates_from($scope0_reason, 0) || _updates_from($scope0_reason, 5))}`);
 	_patch_render($scope0_id, "__tests__/template.marko_0_input_cls#6_input_on#7/setup", [$fg__input_cls && "input_cls", $fg__input_on && "input_on"], $scope0_reason, 0);
 	_scope($scope0_id, {
-		input_cls: (_unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 0)) && input.cls,
-		input_on: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 0)) && input.on,
+		input_cls: ($ui__input_on || $ui__input_cls__OR__input_on) && input.cls,
+		input_on: ($ui__input_cls || $ui__input_cls__OR__input_on) && input.on,
 		"ClosureScopes:input_title/10": $wi__input_title && $input_title__closures,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, {
 		input_cls: ["input.cls"],
 		input_on: ["input.on"]
-	}) || ($fg__input_cls && _unfilled_if($scope0_reason, 4) && _patch_write($scope0_id, "PatchMarkedWrite:input_cls", input.cls, !_server_guard($scope0_reason, 3)), $fg__input_on && _unfilled_if($scope0_reason, 3) && _patch_write($scope0_id, "PatchMarkedWrite:input_on", input.on, !_server_guard($scope0_reason, 4)));
+	}) || ($fg__input_cls && $ui__input_on && _patch_write($scope0_id, "PatchMarkedWrite:input_cls", input.cls, !_server_guard($scope0_reason, 3)), $fg__input_on && $ui__input_cls && _patch_write($scope0_id, "PatchMarkedWrite:input_on", input.on, !_server_guard($scope0_reason, 4)));
 }, 1);

@@ -19,9 +19,9 @@ _shells({
 	a1: `a1${_shell_marker([[], []], ["h>", $setup$1])};${/*@__PURE__*/ ((_w0) => `D l%bD lc%b E mb%b/${_w0}&b`)($walks)};${/*@__PURE__*/ ((_w0) => `<p> </p><!><b> </b> <i>range</i><!><div><em> </em></div><s>single</s><!>${_w0}<!>`)($template)}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $uf__input_label = _updates_from($scope0_reason, 0), $wg__input_show = _write_guard($scope0_reason, 1), $ui__input_show = _unfilled_if($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
+	_set_scope_reason($uf__input_label << 1);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	hidden_note_default({ text: input.label });
 	_patch_child_end();
@@ -40,7 +40,7 @@ var template_default = _template("a", (input) => {
 			_show_start(false, 0);
 			_html("<s>single</s>");
 			_show_end($scope1_id, "g", false, 0, 0, 0, 1, 1, 0, 0);
-			_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
+			_set_scope_reason($uf__input_label << 1);
 			const $childScope2 = _peek_scope_id($scope1_id, "h", 1);
 			hidden_note_default({ text: input.label });
 			_patch_child_end();
@@ -54,7 +54,7 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id, "b", 1, $wg__input_show, 1, 0, 0, ["a1"], $scope0_reason, 1);
 	$fg__input_label && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "a0", "e");
 	_scope($scope0_id, {
-		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.label,
+		e: ($ui__input_show || _unfilled_if($scope0_reason, 0)) && input.label,
 		a: _existing_scope($childScope)
-	}) || $fg__input_label && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.label, !_server_guard($scope0_reason, 0));
+	}) || $fg__input_label && $ui__input_show && _patch_write($scope0_id, "xe", input.label, !_server_guard($scope0_reason, 0));
 }, 1);

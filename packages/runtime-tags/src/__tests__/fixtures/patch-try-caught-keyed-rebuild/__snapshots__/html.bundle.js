@@ -30,12 +30,12 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	_html("<main>");
 	_for_of(input.pages, (page) => {
-		const $scope1_id = _scope_id();
+		const $scope1_id = _scope_id(), $ui__input_pages = _unfilled_if($scope0_reason, 0);
 		const $for_content__page_title__closures = /* @__PURE__ */ new Set();
 		const $for_content__page_fail__closures = /* @__PURE__ */ new Set();
 		_try($scope1_id, "a", () => {
 			_scope_reason();
-			const $scope2_id = _scope_id();
+			const $scope2_id = _scope_id(), $ui__input_pages2 = _unfilled_if($scope0_reason, 0);
 			_html(`<p>${_text_mark($scope2_id, "a", SITE, 1, 0, 0)} ${_text_mark($scope2_id, "b", page.title, 2, $scope0_reason, 0)}</p>`);
 			const $childScope = _peek_scope_id($scope2_id, "c", 0);
 			counter_default({});
@@ -50,7 +50,7 @@ var template_default = _template("a", (input) => {
 			}, $scope2_id, "d", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["a0"], $scope0_reason, 0);
 			_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope2_id, "a4", $cg__input_pages);
 			_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope2_id, "a5", $cg__input_pages);
-			_subscribe(_unfilled_if($scope0_reason, 0) && $for_content__page_fail__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $for_content__page_title__closures, _scope($scope2_id, {
+			_subscribe($ui__input_pages2 && $for_content__page_fail__closures, _subscribe($ui__input_pages2 && $for_content__page_title__closures, _scope($scope2_id, {
 				_: $wi__input_pages && _scope_with_id($scope1_id),
 				c: _existing_scope($childScope)
 			}), $cg__input_pages && "a4"), $cg__input_pages && "a5");
@@ -60,8 +60,8 @@ var template_default = _template("a", (input) => {
 			_html("caught");
 		}, 0, "a1", "a2", 0, 0, 1);
 		$wi__input_pages && _scope($scope1_id, {
-			f: _unfilled_if($scope0_reason, 0) && $for_content__page_title__closures,
-			g: _unfilled_if($scope0_reason, 0) && $for_content__page_fail__closures
+			f: $ui__input_pages && $for_content__page_title__closures,
+			g: $ui__input_pages && $for_content__page_fail__closures
 		});
 	}, "key", $scope0_id, "a", 1, 1, 1, 0, 0, "a3", $scope0_reason, 0);
 	_html(`</main>${_el_mark($scope0_id, "a")}`);

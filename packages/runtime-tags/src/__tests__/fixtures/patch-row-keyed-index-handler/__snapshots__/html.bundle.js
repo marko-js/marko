@@ -8,9 +8,9 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_for_of(input.items, (item, i) => {
-		const $scope1_id = _scope_id();
-		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "xe", item?.v, !$sg__input_items);
-		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "xg", i, !$sg__input_items);
+		const $scope1_id = _scope_id(), $fg__input_items = _filled_guard($scope0_reason, 0);
+		$fg__input_items && _patch_write($scope1_id, "xe", item?.v, !$sg__input_items);
+		$fg__input_items && _patch_write($scope1_id, "xg", i, !$sg__input_items);
 		_html(`<button class=r>${_text_mark($scope1_id, "b", item.id, 1, $scope0_reason, 0)}</button>${_el_mark($scope1_id, "a")}`);
 		_script($scope1_id, "a0");
 		_scope($scope1_id, {

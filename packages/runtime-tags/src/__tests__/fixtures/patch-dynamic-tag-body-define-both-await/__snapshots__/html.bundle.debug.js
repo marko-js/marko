@@ -42,7 +42,7 @@ _shells({
 	"__tests__/template.marko": `__tests__/template.marko;${((_w0) => `E/${_w0}&l%l`)($Body_content__walks)};${((_w0) => `<main><section>${_w0}</section><!></main>`)($Body_content__template)}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_note = _client_guard($scope0_reason, 2), $wg__input_on = _write_guard($scope0_reason, 1), $cg__input_on = _client_guard($scope0_reason, 1), $wi__input_on__OR__input_note = _write_if($scope0_reason, 0), $fg__input_note = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $cg__input_note = _client_guard($scope0_reason, 2), $wg__input_on = _write_guard($scope0_reason, 1), $cg__input_on = _client_guard($scope0_reason, 1), $wi__input_on__OR__input_note = _write_if($scope0_reason, 0), $ui__input_on = _unfilled_if($scope0_reason, 1), $fg__input_note = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = new Set();
 	const $input_on__closures = new Set();
@@ -75,9 +75,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html("</main>");
 	$fg__input_note && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_note#5/subscribers", "input_note");
 	_scope($scope0_id, {
-		input_note: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.note,
+		input_note: ($ui__input_on || _unfilled_if($scope0_reason, 2)) && input.note,
 		"ClosureScopes:input_note/8": _write_if($scope0_reason, 2) && $input_note__closures,
 		"ClosureScopes:input_on/7": _write_if($scope0_reason, 1) && $input_on__closures,
 		"#childScope/0": _existing_scope($childScope)
-	}, "__tests__/template.marko", 0, { input_note: ["input.note"] }) || $fg__input_note && (_client_branch_if("__tests__/template.marko_2*content", $scope0_id) || _unfilled_if($scope0_reason, 1)) && _patch_write($scope0_id, "PatchMarkedWrite:input_note", input.note, !_server_guard($scope0_reason, 2));
+	}, "__tests__/template.marko", 0, { input_note: ["input.note"] }) || $fg__input_note && (_client_branch_if("__tests__/template.marko_2*content", $scope0_id) || $ui__input_on) && _patch_write($scope0_id, "PatchMarkedWrite:input_note", input.note, !_server_guard($scope0_reason, 2));
 }, 1);

@@ -4,10 +4,10 @@ const $walks = " D l b";
 const $setup = [[], []];
 _shells({ b: "b; D l ;<label> </label><input>" });
 var field_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $uf__input_uid = _updates_from($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const uid = input.uid || _id("A");
-	_html(`<label${_attr("for", uid, $scope0_id, "a", $scope0_reason, 0)}>${_text_mark($scope0_id, "b", input.name, 1, $scope0_reason, 1)}</label>${_el_mark($scope0_id, "a", _updates_from($scope0_reason, 0))}<input${_attr("id", uid, $scope0_id, "c", $scope0_reason, 0)}${_attr("aria-describedby", input.heading, $scope0_id, "c", $scope0_reason, 2)}>${_el_mark($scope0_id, "c", _updates_from($scope0_reason, 0) || _updates_from($scope0_reason, 2))}`);
+	_html(`<label${_attr("for", uid, $scope0_id, "a", $scope0_reason, 0)}>${_text_mark($scope0_id, "b", input.name, 1, $scope0_reason, 1)}</label>${_el_mark($scope0_id, "a", $uf__input_uid)}<input${_attr("id", uid, $scope0_id, "c", $scope0_reason, 0)}${_attr("aria-describedby", input.heading, $scope0_id, "c", $scope0_reason, 2)}>${_el_mark($scope0_id, "c", $uf__input_uid || _updates_from($scope0_reason, 2))}`);
 	_scope($scope0_id, {});
 });
 
@@ -17,14 +17,14 @@ _shells({
 	a1: `a1${_shell_marker([[], []], ["a>", $setup])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks)};${$template}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_heading = _filled_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $uf__input_heading = _updates_from($scope0_reason, 0), $ui__input_items = _unfilled_if($scope0_reason, 1), $fg__input_heading = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const heading = input.heading || _id("A");
 	const second = _id("B");
-	_html(`<h1${_attr("id", heading, $scope0_id, "a", $scope0_reason, 0)}>Fields</h1>${_el_mark($scope0_id, "a", _updates_from($scope0_reason, 0))}<label${_attr("for", second, $scope0_id, "b", 0, 0)}>second</label>${_el_mark($scope0_id, "b", 0)}<input${_attr("id", second, $scope0_id, "c", 0, 0)}>${_el_mark($scope0_id, "c", 0)}`);
+	_html(`<h1${_attr("id", heading, $scope0_id, "a", $scope0_reason, 0)}>Fields</h1>${_el_mark($scope0_id, "a", $uf__input_heading)}<label${_attr("for", second, $scope0_id, "b", 0, 0)}>second</label>${_el_mark($scope0_id, "b", 0)}<input${_attr("id", second, $scope0_id, "c", 0, 0)}>${_el_mark($scope0_id, "c", 0)}`);
 	_for_of(input.items, (item) => {
 		const $scope1_id = _scope_id();
-		_set_scope_reason(_updates_from($scope0_reason, 1) << 1 | _updates_from($scope0_reason, 0) << 5);
+		_set_scope_reason(_updates_from($scope0_reason, 1) << 1 | $uf__input_heading << 5);
 		const $childScope = _peek_scope_id($scope1_id, "a", 0);
 		field_default({
 			name: item.key,
@@ -44,7 +44,7 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a2");
 	$fg__input_heading && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "a0", "l");
 	_scope($scope0_id, {
-		l: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && heading,
+		l: ($ui__input_items || _unfilled_if($scope0_reason, 0)) && heading,
 		n: local
-	}) || $fg__input_heading && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xl", heading, !_server_guard($scope0_reason, 0));
+	}) || $fg__input_heading && $ui__input_items && _patch_write($scope0_id, "xl", heading, !_server_guard($scope0_reason, 0));
 }, 1);

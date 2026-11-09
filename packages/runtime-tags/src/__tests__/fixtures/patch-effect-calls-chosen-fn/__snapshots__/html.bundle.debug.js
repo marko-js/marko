@@ -4,7 +4,7 @@ const $walks = " b";
 const $setup = [[], []];
 _shells({ "__tests__/template.marko": "__tests__/template.marko; ;<output></output>" });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_upper = _write_if($scope0_reason, 2), $fg__input_title = _filled_guard($scope0_reason, 1), $sg__input_title = _server_guard($scope0_reason, 1), $fg__input_title__OR__input_upper = _filled_guard($scope0_reason, 0), $fg__input_upper = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wi__input_upper = _write_if($scope0_reason, 2), $fg__input_title = _filled_guard($scope0_reason, 1), $sg__input_title = _server_guard($scope0_reason, 1), $ui__input_upper = _unfilled_if($scope0_reason, 2), $fg__input_title__OR__input_upper = _filled_guard($scope0_reason, 0), $fg__input_upper = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	$fg__input_title && _patch_write($scope0_id, "PatchMarkedWrite:input_title", input.title, !$sg__input_title);
 	const up = _bind_resume(() => "U" + input.title, "__tests__/template.marko_0/up", $scope0_id);
@@ -30,5 +30,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		up: "1:8",
 		low: "2:8",
 		pick: "3:8"
-	}) || ($fg__input_upper && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_upper", input.upper, !_server_guard($scope0_reason, 2)), $fg__input_title && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:up", up, !$sg__input_title), $fg__input_title && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:low", low, !$sg__input_title), $fg__input_title__OR__input_upper && _patch_write($scope0_id, "PatchMarkedWrite:pick", pick, !_server_guard($scope0_reason, 0)));
+	}) || ($fg__input_upper && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_upper", input.upper, !_server_guard($scope0_reason, 2)), $fg__input_title && $ui__input_upper && _patch_write($scope0_id, "PatchMarkedWrite:up", up, !$sg__input_title), $fg__input_title && $ui__input_upper && _patch_write($scope0_id, "PatchMarkedWrite:low", low, !$sg__input_title), $fg__input_title__OR__input_upper && _patch_write($scope0_id, "PatchMarkedWrite:pick", pick, !_server_guard($scope0_reason, 0)));
 }, 1);

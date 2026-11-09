@@ -21,9 +21,9 @@ _shells({
 	"__tests__/template.marko_1*shell": `__tests__/template.marko_1*shell${_shell_marker([[], []], ["#childScope/0>", $setup$1])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)("D l")};${$template$1}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 1), $sg__input_label = _server_guard($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 1), $ui__input_show = _unfilled_if($scope0_reason, 1), $sg__input_label = _server_guard($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	$fg__input_label && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !$sg__input_label);
+	$fg__input_label && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !$sg__input_label);
 	const opts = { fn: _bind_resume(function() {
 		return "f:" + input.label;
 	}, "__tests__/template.marko_0/opts", $scope0_id) };
@@ -45,9 +45,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	$fg__input_label && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "__tests__/template.marko_1_opts#0:5/setup", "input_label");
 	_scope($scope0_id, {
 		input_label: _write_if($scope0_reason, 1) && input.label,
-		opts: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && opts
+		opts: ($ui__input_show || _unfilled_if($scope0_reason, 0)) && opts
 	}, "__tests__/template.marko", 0, {
 		input_label: ["input.label"],
 		opts: "1:8"
-	}) || $fg__input_label && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:opts", opts, !$sg__input_label);
+	}) || $fg__input_label && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:opts", opts, !$sg__input_label);
 }, 1);

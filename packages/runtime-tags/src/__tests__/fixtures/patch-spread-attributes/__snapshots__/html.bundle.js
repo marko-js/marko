@@ -4,7 +4,7 @@ _shells({
 	a2: "a2 !a0; ;<img>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_img = _filled_guard($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $ui__input_show = _unfilled_if($scope0_reason, 2), $fg__input_img = _filled_guard($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_html(`<main><a${_attrs({
@@ -29,7 +29,7 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a4");
 	$fg__input_img && _client_guard($scope0_reason, 2) && _patch_render($scope0_id, "a1", "k");
 	_scope($scope0_id, {
-		k: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && input.img,
+		k: ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.img,
 		l: count
-	}) || $fg__input_img && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xk", input.img, !_server_guard($scope0_reason, 3));
+	}) || $fg__input_img && $ui__input_show && _patch_write($scope0_id, "xk", input.img, !_server_guard($scope0_reason, 3));
 }, 1);

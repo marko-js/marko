@@ -6,12 +6,12 @@ _shells({
 	a1: "a1;D ;<em> </em>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_show = _filled_guard($scope0_reason, 1), $fg__input_rest = _filled_guard($scope0_reason, 2), $fg__input_other = _filled_guard($scope0_reason, 3), $fg__input_label = _filled_guard($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $uf__input_show__OR__input_rest = _updates_from($scope0_reason, 0), $fg__input_show = _filled_guard($scope0_reason, 1), $fg__input_rest = _filled_guard($scope0_reason, 2), $fg__input_other = _filled_guard($scope0_reason, 3), $fg__input_label = _filled_guard($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	let open = false;
 	const Panel = { content: _content_resume("a2", ({ isOpen, label }) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason(), $wg__isOpen = _write_guard($scope1_reason, 0), $fg__label = _filled_guard($scope1_reason, 1);
+		const $scope1_reason = _scope_reason(), $wg__isOpen = _write_guard($scope1_reason, 0), $ui__isOpen = _unfilled_if($scope1_reason, 0), $fg__label = _filled_guard($scope1_reason, 1);
 		_if(() => {
 			if (isOpen) {
 				const $scope2_id = _scope_id();
@@ -22,9 +22,9 @@ var template_default = _template("a", (input) => {
 			}
 		}, $scope1_id, "a", 1, $wg__isOpen, 1, 0, 0, ["a1"], $scope1_reason, 0);
 		$fg__label && _client_guard($scope1_reason, 0) && _patch_render($scope1_id, "a0", "e");
-		_write_if($scope1_reason, 0) && _scope($scope1_id, { e: (_unfilled_if($scope1_reason, 0) || _unfilled_if($scope1_reason, 1)) && label }) || $fg__label && _unfilled_if($scope1_reason, 0) && _patch_write($scope1_id, "xe", label, !_server_guard($scope1_reason, 1));
+		_write_if($scope1_reason, 0) && _scope($scope1_id, { e: ($ui__isOpen || _unfilled_if($scope1_reason, 1)) && label }) || $fg__label && $ui__isOpen && _patch_write($scope1_id, "xe", label, !_server_guard($scope1_reason, 1));
 	}, $scope0_id) };
-	_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 0) << 3);
+	_set_scope_reason($uf__input_show__OR__input_rest << 1 | $uf__input_show__OR__input_rest << 3);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	Panel.content({
 		isOpen: input.show,

@@ -10,7 +10,7 @@ var card_default = _template("b", (input) => {
 // template.marko
 _shells({ a: "a !a16;D%b ;<main><!><button>t</button></main>" });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_title = _client_guard($scope0_reason, 0), $wi__input_title = _write_if($scope0_reason, 0), $sg__input_title = _server_guard($scope0_reason, 0), $fg__input_title = _filled_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $uf__input_title = _updates_from($scope0_reason, 0), $cg__input_title = _client_guard($scope0_reason, 0), $wi__input_title = _write_if($scope0_reason, 0), $sg__input_title = _server_guard($scope0_reason, 0), $fg__input_title = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	$fg__input_title && _patch_write($scope0_id, "xe", input.title, !$sg__input_title);
 	const { fmt, wrap, quoted, keyed, templated } = {
@@ -32,35 +32,35 @@ var template_default = _template("a", (input) => {
 	_if(() => {
 		{
 			const $scope1_id = _scope_id();
-			_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
+			_set_scope_reason($uf__input_title << 1);
 			const $childScope = _peek_scope_id($scope1_id, "a", 0);
 			card_default({ fn: fmt });
 			_patch_child_end();
-			_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
+			_set_scope_reason($uf__input_title << 1);
 			const $childScope2 = _peek_scope_id($scope1_id, "b", 1);
 			card_default({ fn: wrap });
 			_patch_child_end();
-			_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
+			_set_scope_reason($uf__input_title << 1);
 			const $childScope3 = _peek_scope_id($scope1_id, "c", 2);
 			card_default({ fn: quoted });
 			_patch_child_end();
-			_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
+			_set_scope_reason($uf__input_title << 1);
 			const $childScope4 = _peek_scope_id($scope1_id, "d", 3);
 			card_default({ fn: keyed });
 			_patch_child_end();
-			_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
+			_set_scope_reason($uf__input_title << 1);
 			const $childScope5 = _peek_scope_id($scope1_id, "e", 4);
 			card_default({ fn: templated });
 			_patch_child_end();
-			_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
+			_set_scope_reason($uf__input_title << 1);
 			const $childScope6 = _peek_scope_id($scope1_id, "f", 5);
 			card_default({ fn: o.get });
 			_patch_child_end();
-			_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
+			_set_scope_reason($uf__input_title << 1);
 			const $childScope7 = _peek_scope_id($scope1_id, "g", 6);
 			card_default({ fn: o[0] });
 			_patch_child_end();
-			_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
+			_set_scope_reason($uf__input_title << 1);
 			const $childScope8 = _peek_scope_id($scope1_id, "h", 7);
 			card_default({ fn: tag });
 			_patch_child_end();

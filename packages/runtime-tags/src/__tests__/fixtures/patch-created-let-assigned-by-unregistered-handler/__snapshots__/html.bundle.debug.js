@@ -19,7 +19,7 @@ _shells({
 	"__tests__/template.marko_1*shell": `__tests__/template.marko_1*shell${_shell_marker([[], []], ["#childScope/0>", $setup$1])};${/*@__PURE__*/ ((_w0) => `/${_w0}&D l`)("D l")};${/*@__PURE__*/ ((_w0) => `${_w0}<p> </p>`)($template$1)}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0), $fg__input_v = _filled_guard($scope0_reason, 1), $fg__input_w = _filled_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0), $ui__input_show = _unfilled_if($scope0_reason, 0), $fg__input_v = _filled_guard($scope0_reason, 1), $fg__input_w = _filled_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.show) {
@@ -46,10 +46,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	$fg__input_v && $cg__input_show && _patch_render($scope0_id, "__tests__/template.marko_1_input_v#0:4/setup", "input_v");
 	$fg__input_w && $cg__input_show && _patch_render($scope0_id, "__tests__/template.marko_1_input_w#0:5/setup", "input_w");
 	_scope($scope0_id, {
-		input_v: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.v,
+		input_v: ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.v,
 		input_w: input.w
 	}, "__tests__/template.marko", 0, {
 		input_v: ["input.v"],
 		input_w: ["input.w"]
-	}) || ($fg__input_v && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_v", input.v, !_server_guard($scope0_reason, 1)), $fg__input_w && _patch_write($scope0_id, "PatchMarkedWrite:input_w", input.w, !_server_guard($scope0_reason, 2)));
+	}) || ($fg__input_v && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_v", input.v, !_server_guard($scope0_reason, 1)), $fg__input_w && _patch_write($scope0_id, "PatchMarkedWrite:input_w", input.w, !_server_guard($scope0_reason, 2)));
 }, 1);

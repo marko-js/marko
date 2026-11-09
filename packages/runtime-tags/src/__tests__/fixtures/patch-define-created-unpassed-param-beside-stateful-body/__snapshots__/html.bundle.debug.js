@@ -10,12 +10,12 @@ _shells({
 	"__tests__/template.marko_3*shell": "__tests__/template.marko_3*shell;D%b%;<em><!><!></em>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_open = _filled_guard($scope0_reason, 2), $fg__input_label = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 1), $fg__input_other = _filled_guard($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $uf__input_label = _updates_from($scope0_reason, 3), $ui__input_show = _unfilled_if($scope0_reason, 1), $fg__input_open = _filled_guard($scope0_reason, 2), $fg__input_label = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 1), $fg__input_other = _filled_guard($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	let open = false;
 	const Panel = { content: _content_resume("__tests__/template.marko_2*content", ({ isOpen, label }, extra) => {
 		const $scope2_id = _scope_id();
-		const $scope2_reason = _scope_reason(), $wg__isOpen = _write_guard($scope2_reason, 1), $fg__label = _filled_guard($scope2_reason, 2), $fg__extra = _filled_guard($scope2_reason, 3), $cg__isOpen = _client_guard($scope2_reason, 1);
+		const $scope2_reason = _scope_reason(), $wg__isOpen = _write_guard($scope2_reason, 1), $ui__isOpen = _unfilled_if($scope2_reason, 1), $fg__label = _filled_guard($scope2_reason, 2), $fg__extra = _filled_guard($scope2_reason, 3), $cg__isOpen = _client_guard($scope2_reason, 1);
 		_if(() => {
 			if (isOpen) {
 				const $scope3_id = _scope_id();
@@ -28,17 +28,17 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		$fg__label && $cg__isOpen && _patch_render($scope2_id, "__tests__/template.marko_3_label#2:4/setup", "label");
 		$fg__extra && $cg__isOpen && _patch_render($scope2_id, "__tests__/template.marko_3_extra#2:5/setup", "extra");
 		_write_if($scope2_reason, 1) && _scope($scope2_id, {
-			label: (_unfilled_if($scope2_reason, 1) || _unfilled_if($scope2_reason, 2)) && label,
-			extra: _unfilled_if($scope2_reason, 1) && extra
+			label: ($ui__isOpen || _unfilled_if($scope2_reason, 2)) && label,
+			extra: $ui__isOpen && extra
 		}, "__tests__/template.marko", "2:2", {
 			label: "2:25",
 			extra: "2:34"
-		}) || ($fg__label && _unfilled_if($scope2_reason, 1) && _patch_write($scope2_id, "PatchMarkedWrite:label", label, !_server_guard($scope2_reason, 2)), $fg__extra && _unfilled_if($scope2_reason, 1) && _patch_write($scope2_id, "PatchMarkedWrite:extra", extra, !_server_guard($scope2_reason, 3)));
+		}) || ($fg__label && $ui__isOpen && _patch_write($scope2_id, "PatchMarkedWrite:label", label, !_server_guard($scope2_reason, 2)), $fg__extra && $ui__isOpen && _patch_write($scope2_id, "PatchMarkedWrite:extra", extra, !_server_guard($scope2_reason, 3)));
 	}, $scope0_id) };
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_set_scope_reason(_updates_from($scope0_reason, 3) << 1 | _updates_from($scope0_reason, 2) << 3 | _updates_from($scope0_reason, 3) << 5);
+			_set_scope_reason($uf__input_label << 1 | _updates_from($scope0_reason, 2) << 3 | $uf__input_label << 5);
 			const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 			Panel.content({
 				isOpen: input.open,
@@ -66,7 +66,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_patch_render($scope0_id, "__tests__/template.marko_0_input_other#8_Panel#10/setup", $fg__input_other && "input_other", $scope0_reason, 4);
 	_patch_render($scope0_id, "__tests__/template.marko_0_input_label#7_open#9_Tag#12/setup", [$fg__input_label && "input_label", $fg__input_other && "Tag"]);
 	_scope($scope0_id, {
-		input_open: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.open,
+		input_open: ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.open,
 		input_label: input.label,
 		open,
 		Panel: _write_if($scope0_reason, 4) && Panel,
@@ -77,5 +77,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		open: "1:6",
 		Panel: "2:9",
 		Tag: "10:8"
-	}) || ($fg__input_open && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_open", input.open, !_server_guard($scope0_reason, 2)), $fg__input_label && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 3)), $fg__input_other && _patch_write($scope0_id, "PatchMarkedWrite:Tag", Tag, !_server_guard($scope0_reason, 4)));
+	}) || ($fg__input_open && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_open", input.open, !_server_guard($scope0_reason, 2)), $fg__input_label && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 3)), $fg__input_other && _patch_write($scope0_id, "PatchMarkedWrite:Tag", Tag, !_server_guard($scope0_reason, 4)));
 }, 1);

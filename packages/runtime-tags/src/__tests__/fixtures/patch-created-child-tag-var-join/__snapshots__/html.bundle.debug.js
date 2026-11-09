@@ -26,7 +26,7 @@ const $walks$4 = "D l b";
 const $setup$4 = [[], ["__tests__/tags/file-tabs.marko_0"]];
 _shells({ "__tests__/tags/file-tabs.marko": "__tests__/tags/file-tabs.marko !__tests__/tags/file-tabs.marko_0;D l ;<p> </p><button>+</button>" });
 var file_tabs_default = _template("__tests__/tags/file-tabs.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_files = _filled_guard($scope0_reason, 1), $fg__input_filesChange = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $ui__input_files__OR__input_filesChange = _unfilled_if($scope0_reason, 0), $ui__input_filesChange = _unfilled_if($scope0_reason, 2), $ui__input_files = _unfilled_if($scope0_reason, 1), $fg__input_files = _filled_guard($scope0_reason, 1), $fg__input_filesChange = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	let tabs = input.files;
 	_html(`<p>${_text_mark($scope0_id, "#text/0", tabs.map((tab) => tab.path).join())}</p><button>+</button>${_el_mark($scope0_id, "#button/1")}`);
@@ -35,8 +35,8 @@ var file_tabs_default = _template("__tests__/tags/file-tabs.marko", (input) => {
 	const $tabsChange = input.filesChange || void 0;
 	_patch_let_change($scope0_id, "PatchFill:__tests__/tags/file-tabs.marko_0_tabs#7/fill", tabs, "PatchWrite:TagVariableChange:tabs", $tabsChange, $scope0_reason, 0);
 	_scope($scope0_id, {
-		input_files: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.files,
-		input_filesChange: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.filesChange,
+		input_files: ($ui__input_filesChange || $ui__input_files__OR__input_filesChange) && input.files,
+		input_filesChange: ($ui__input_files || $ui__input_files__OR__input_filesChange) && input.filesChange,
 		tabs,
 		"TagVariableChange:tabs": $tabsChange
 	}, "__tests__/tags/file-tabs.marko", 0, {
@@ -44,7 +44,7 @@ var file_tabs_default = _template("__tests__/tags/file-tabs.marko", (input) => {
 		input_filesChange: ["input.filesChange"],
 		tabs: "1:6",
 		"TagVariableChange:tabs": ["tabsChange", "1:6"]
-	}) || ($fg__input_files && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_files", input.files, !_server_guard($scope0_reason, 1)), $fg__input_filesChange && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_filesChange", input.filesChange, !_server_guard($scope0_reason, 2)));
+	}) || ($fg__input_files && $ui__input_filesChange && _patch_write($scope0_id, "PatchMarkedWrite:input_files", input.files, !_server_guard($scope0_reason, 1)), $fg__input_filesChange && $ui__input_files && _patch_write($scope0_id, "PatchMarkedWrite:input_filesChange", input.filesChange, !_server_guard($scope0_reason, 2)));
 });
 
 // tags/file-panes.marko

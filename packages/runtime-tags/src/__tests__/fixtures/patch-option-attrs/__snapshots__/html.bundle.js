@@ -4,7 +4,7 @@ _shells({
 	a0: "a0; D ;<option> </option>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $uf__input_pick = _updates_from($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_html("<main>");
@@ -17,7 +17,7 @@ var template_default = _template("a", (input) => {
 		}, (o) => o.id, $scope0_id, "a", 1, 1, 1, 0, 0, "a0", $scope0_reason, 1);
 		_html("</select>");
 	}, 1, $scope0_reason, 0);
-	_html(`${_el_mark($scope0_id, "a")}<select id=plain><option${_attr_option_value("a")}${_attr("selected", input.pick === "a", $scope0_id, "b", $scope0_reason, 2)}>A</option>${_el_mark($scope0_id, "b", _updates_from($scope0_reason, 2))}<option${_attr_option_value("b")}${_attr("selected", input.pick === "b", $scope0_id, "c", $scope0_reason, 2)}>B</option>${_el_mark($scope0_id, "c", _updates_from($scope0_reason, 2))}</select><em>${_text_mark($scope0_id, "d", count)}</em><button>+</button>${_el_mark($scope0_id, "e")}</main>`);
+	_html(`${_el_mark($scope0_id, "a")}<select id=plain><option${_attr_option_value("a")}${_attr("selected", input.pick === "a", $scope0_id, "b", $scope0_reason, 2)}>A</option>${_el_mark($scope0_id, "b", $uf__input_pick)}<option${_attr_option_value("b")}${_attr("selected", input.pick === "b", $scope0_id, "c", $scope0_reason, 2)}>B</option>${_el_mark($scope0_id, "c", $uf__input_pick)}</select><em>${_text_mark($scope0_id, "d", count)}</em><button>+</button>${_el_mark($scope0_id, "e")}</main>`);
 	_script($scope0_id, "a1");
 	_scope($scope0_id, { k: count });
 }, 1);

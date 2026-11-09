@@ -3,18 +3,18 @@ const $template = "<p> </p>";
 const $setup$1 = [[], []];
 _shells({ b: "b;D ;<p> </p>" });
 var gm_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $ui__input_v = _unfilled_if($scope0_reason, 0), $uf__input_v = _updates_from($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
 	const z = input.v + $global$1.flag;
-	_html(`<p>${_text_mark($scope0_id, "a", z + $global$1.mark, 1, (2 | _updates_from($scope0_reason, 0)) << 1, 0)}</p>`);
+	_html(`<p>${_text_mark($scope0_id, "a", z + $global$1.mark, 1, (2 | $uf__input_v) << 1, 0)}</p>`);
 	_fill_global_subscribe("b0", $scope0_id, _client_guard($scope0_reason, 0));
 	_fill_global_subscribe("b1", $scope0_id);
-	_unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "wd", input.v, 1);
-	_unfilled_if((2 | _updates_from($scope0_reason, 0)) << 1, 0) && _patch_write($scope0_id, "we", z, 1);
+	$ui__input_v && _patch_write($scope0_id, "wd", input.v, 1);
+	_unfilled_if((2 | $uf__input_v) << 1, 0) && _patch_write($scope0_id, "we", z, 1);
 	_scope($scope0_id, {
-		d: _unfilled_if($scope0_reason, 0) && input.v,
-		e: (_unfilled_if($scope0_reason, 0) || _unfilled_if()) && z
+		d: $ui__input_v && input.v,
+		e: ($ui__input_v || _unfilled_if()) && z
 	});
 });
 

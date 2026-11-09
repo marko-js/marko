@@ -20,7 +20,7 @@ _shells({
 	a1: `a1${_shell_marker([[], []], ["a>", $setup$1])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks)};${$template}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_more = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $uf__input_more = _updates_from($scope0_reason, 1), $ui__input_show = _unfilled_if($scope0_reason, 0), $fg__input_more = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_html("<main>");
@@ -31,7 +31,7 @@ var template_default = _template("a", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_set_scope_reason(_updates_from($scope0_reason, 1) << 1 | _updates_from($scope0_reason, 1) << 3);
+			_set_scope_reason($uf__input_more << 1 | $uf__input_more << 3);
 			const $childScope2 = _peek_scope_id($scope1_id, "a", 1);
 			card_default({
 				title: "fixed",
@@ -50,8 +50,8 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a2");
 	$fg__input_more && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "a0", "i");
 	_scope($scope0_id, {
-		i: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.more,
+		i: ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.more,
 		j: count,
 		a: _existing_scope($childScope)
-	}) || $fg__input_more && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xi", input.more, !_server_guard($scope0_reason, 1));
+	}) || $fg__input_more && $ui__input_show && _patch_write($scope0_id, "xi", input.more, !_server_guard($scope0_reason, 1));
 }, 1);

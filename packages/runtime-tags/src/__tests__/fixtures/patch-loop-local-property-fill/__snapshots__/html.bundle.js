@@ -19,14 +19,14 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_for_of(input.rows, (row) => {
-		const $scope1_id = _scope_id();
+		const $scope1_id = _scope_id(), $fg__input_rows = _filled_guard($scope0_reason, 0);
 		const item = row.item;
-		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "xf", item?.id, !_server_guard($scope0_reason, 0));
+		$fg__input_rows && _patch_write($scope1_id, "xf", item?.id, !_server_guard($scope0_reason, 0));
 		_set_scope_reason(6);
 		const $childScope = _peek_scope_id($scope1_id, "a", 0);
 		tagged_default({ label: `${item.id}:${count}` });
 		_patch_child_end();
-		_patch_render($scope1_id, "a0", _filled_guard($scope0_reason, 0) && "f");
+		_patch_render($scope1_id, "a0", $fg__input_rows && "f");
 		_scope($scope1_id, {
 			f: item?.id,
 			_: _scope_with_id($scope0_id),

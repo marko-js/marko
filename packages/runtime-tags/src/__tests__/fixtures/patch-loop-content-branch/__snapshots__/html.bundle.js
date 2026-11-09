@@ -25,7 +25,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	_html("<ul>");
 	_for_of(input.items, (item) => {
-		const $scope1_id = _scope_id();
+		const $scope1_id = _scope_id(), $ui__input_items = _unfilled_if($scope0_reason, 0);
 		const $for_content__item_n__closures = /* @__PURE__ */ new Set();
 		const $for_content__item_alt__closures = /* @__PURE__ */ new Set();
 		_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
@@ -59,8 +59,8 @@ var template_default = _template("a", (input) => {
 		});
 		_patch_child_end();
 		_scope($scope1_id, {
-			h: $wi__input_items && _unfilled_if($scope0_reason, 0) && $for_content__item_n__closures,
-			g: $wi__input_items && _unfilled_if($scope0_reason, 0) && $for_content__item_alt__closures,
+			h: $wi__input_items && $ui__input_items && $for_content__item_n__closures,
+			g: $wi__input_items && $ui__input_items && $for_content__item_alt__closures,
 			a: _existing_scope($childScope)
 		});
 	}, 0, $scope0_id, "a", 1, 1, 1, 0, 0, "a4", $scope0_reason, 0);

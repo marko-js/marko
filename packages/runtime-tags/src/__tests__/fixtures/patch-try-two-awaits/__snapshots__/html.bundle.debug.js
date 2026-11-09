@@ -19,22 +19,22 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html("<main>");
 	_try($scope0_id, "#text/0", () => {
 		const $scope1_reason = _scope_reason();
-		const $scope1_id = _scope_id();
+		const $scope1_id = _scope_id(), $ui__input_fast = _unfilled_if($scope0_reason, 1), $ui__input_slow = _unfilled_if($scope0_reason, 2);
 		_html("<div>");
 		_await($scope1_id, "#text/0", input.fast, (a) => {
 			const $scope3_id = _scope_id();
 			_html(`<b>${_text_mark($scope3_id, "#text/0", a, 1, $scope0_reason, 1)}</b>`);
 			_scope($scope3_id, {}, "__tests__/template.marko", "4:8");
-		}, 1, "__tests__/template.marko_3*content", _unfilled_if($scope0_reason, 1) && 2, 1);
+		}, 1, "__tests__/template.marko_3*content", $ui__input_fast && 2, 1);
 		_await($scope1_id, "#text/1", input.slow, (b) => {
 			const $scope4_id = _scope_id();
 			_html(`<em>${_text_mark($scope4_id, "#text/0", b, 1, $scope0_reason, 2)}</em>`);
 			_scope($scope4_id, {}, "__tests__/template.marko", "5:8");
-		}, 1, "__tests__/template.marko_4*content", _unfilled_if($scope0_reason, 2) && 2, 1);
+		}, 1, "__tests__/template.marko_4*content", $ui__input_slow && 2, 1);
 		_html("</div>");
 		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_fast#0:4/subscribe", 1);
 		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_slow#0:5/subscribe", 1);
-		$wi__input_fast__OR__input_slow && _subscribe(_unfilled_if($scope0_reason, 2) && $input_slow__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_fast__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4"), _client_guard($scope0_reason, 1) && "__tests__/template.marko_1_input_fast#0:4/subscribe", 0), _client_guard($scope0_reason, 2) && "__tests__/template.marko_1_input_slow#0:5/subscribe", 0);
+		$wi__input_fast__OR__input_slow && _subscribe($ui__input_slow && $input_slow__closures, _subscribe($ui__input_fast && $input_fast__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4"), _client_guard($scope0_reason, 1) && "__tests__/template.marko_1_input_fast#0:4/subscribe", 0), _client_guard($scope0_reason, 2) && "__tests__/template.marko_1_input_slow#0:5/subscribe", 0);
 		$wi__input_fast__OR__input_slow && _resume_branch($scope1_id);
 	}, () => {
 		const $scope2_reason = _scope_reason();

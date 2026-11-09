@@ -34,13 +34,13 @@ const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}& b`)(" b");
 const $setup = _shell_setup([[], ["__tests__/template.marko_0"]], ["#childScope/0>", $setup$1]);
 _shells({ "__tests__/template.marko": `__tests__/template.marko${_shell_marker($setup)};${((_w0) => `/${_w0}& b`)(" b")};${((_w0) => `${_w0}<button>toggle</button>`)($template$1)}` });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_title = _server_guard($scope0_reason, 0), $fg__input_title = _filled_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $uf__input_title = _updates_from($scope0_reason, 0), $sg__input_title = _server_guard($scope0_reason, 0), $fg__input_title = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	$fg__input_title && _patch_write($scope0_id, "PatchMarkedWrite:input_title", input.title, !$sg__input_title);
 	let upper = false;
 	const up = _bind_resume(() => "U" + input.title, "__tests__/template.marko_0/up", $scope0_id);
 	const low = _bind_resume(() => "l" + input.title, "__tests__/template.marko_0/low", $scope0_id);
-	_set_scope_reason(6630 | (_updates_from($scope0_reason, 0) << 3 | _updates_from($scope0_reason, 0) << 13));
+	_set_scope_reason(6630 | ($uf__input_title << 3 | $uf__input_title << 13));
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	label_view_default({
 		a: upper ? up : low,

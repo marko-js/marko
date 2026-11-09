@@ -15,10 +15,10 @@ var child_default = _template("b", (input) => {
 const $setup = _shell_setup([[], []], ["a>", $setup$1]);
 _shells({ a: `a${_shell_marker($setup)};${((_w0) => `/${_w0}&`)($walks)};${$template}` });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $uf__input_label = _updates_from($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xd", input.label, !_server_guard($scope0_reason, 0));
-	_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 0) << 3);
+	_set_scope_reason($uf__input_label << 1 | $uf__input_label << 3);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	child_default(_patch_live($childScope, {
 		fn: _bind_resume(() => input.label, "a0", $scope0_id),

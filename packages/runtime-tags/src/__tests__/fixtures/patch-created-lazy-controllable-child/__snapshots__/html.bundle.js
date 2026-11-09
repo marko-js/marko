@@ -4,16 +4,16 @@ const $walks$1 = "Db%l";
 const $setup$1 = [[], []];
 _shells({ c: "c !;Db%;<p>sel=<!></p>" });
 var tab_editor_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_tab = _filled_guard($scope0_reason, 1), $fg__input_tabChange = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $ui__input_tab__OR__input_tabChange = _unfilled_if($scope0_reason, 0), $ui__input_tabChange = _unfilled_if($scope0_reason, 2), $ui__input_tab = _unfilled_if($scope0_reason, 1), $fg__input_tab = _filled_guard($scope0_reason, 1), $fg__input_tabChange = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	let selected = input.tab;
 	_html(`<p>sel=${_text_mark($scope0_id, "a", String(selected), 2)}</p>`);
 	_patch_render($scope0_id, "c0", [$fg__input_tab && "d", $fg__input_tabChange && "e"], $scope0_reason, 0);
 	_patch_let_change($scope0_id, "vc1", selected, 0, input.tabChange, $scope0_reason, 0);
 	_scope($scope0_id, {
-		d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.tab,
-		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.tabChange
-	}) || ($fg__input_tab && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xd", input.tab, !_server_guard($scope0_reason, 1)), $fg__input_tabChange && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.tabChange, !_server_guard($scope0_reason, 2)));
+		d: ($ui__input_tabChange || $ui__input_tab__OR__input_tabChange) && input.tab,
+		e: ($ui__input_tab || $ui__input_tab__OR__input_tabChange) && input.tabChange
+	}) || ($fg__input_tab && $ui__input_tabChange && _patch_write($scope0_id, "xd", input.tab, !_server_guard($scope0_reason, 1)), $fg__input_tabChange && $ui__input_tab && _patch_write($scope0_id, "xe", input.tabChange, !_server_guard($scope0_reason, 2)));
 });
 
 // tags/route-pg.marko

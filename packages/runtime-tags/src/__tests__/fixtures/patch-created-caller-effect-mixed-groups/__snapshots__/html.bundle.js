@@ -19,7 +19,7 @@ _shells({
 	a1: `a1${_shell_marker([["a4"], []], ["a>", $setup])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)("b")};${$template}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_label = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $ui__input_show = _unfilled_if($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_html(`<button>${_text_mark($scope0_id, "b", count)}</button>${_el_mark($scope0_id, "a")}`);
@@ -44,7 +44,7 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a2");
 	$fg__input_label && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "a0", "g");
 	_scope($scope0_id, {
-		g: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.label,
+		g: ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.label,
 		h: count
-	}) || $fg__input_label && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xg", input.label, !_server_guard($scope0_reason, 1));
+	}) || $fg__input_label && $ui__input_show && _patch_write($scope0_id, "xg", input.label, !_server_guard($scope0_reason, 1));
 }, 1);

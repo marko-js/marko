@@ -16,7 +16,7 @@ const $walks = /*@__PURE__*/ ((_w0) => `D /${_w0}&l`)("");
 const $setup = _shell_setup([[], []], ["#childScope/1>", $setup$1]);
 _shells({ "__tests__/template.marko": `__tests__/template.marko${_shell_marker($setup)};${((_w0) => `D /${_w0}&l`)("")};${((_w0) => `<p> </p>${_w0}`)("")}` });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_y = _server_guard($scope0_reason, 2), $fg__input_y = _filled_guard($scope0_reason, 2), $sg__input_x = _server_guard($scope0_reason, 1), $fg__input_x = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $ui__input_x__OR__input_y = _unfilled_if($scope0_reason, 0), $sg__input_y = _server_guard($scope0_reason, 2), $fg__input_y = _filled_guard($scope0_reason, 2), $sg__input_x = _server_guard($scope0_reason, 1), $fg__input_x = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const a = { y: input.y };
 	const b = { x: input.x };
@@ -31,8 +31,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_patch_child_end();
 	_patch_render($scope0_id, "__tests__/template.marko_0_a#6_b#7/setup", [$fg__input_y && "input_y", $fg__input_x && "input_x"], $scope0_reason, 0);
 	_scope($scope0_id, {
-		a: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && a,
-		b: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && b,
+		a: (_unfilled_if($scope0_reason, 1) || $ui__input_x__OR__input_y) && a,
+		b: (_unfilled_if($scope0_reason, 2) || $ui__input_x__OR__input_y) && b,
 		"#childScope/1": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, {
 		a: "2:8",

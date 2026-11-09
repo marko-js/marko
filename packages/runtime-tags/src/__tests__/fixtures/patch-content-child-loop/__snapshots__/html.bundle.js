@@ -6,7 +6,7 @@ _shells({
 	b1: "b1;D%b%;<li><!><!></li>"
 });
 var card_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_content = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $ui__input_count = _unfilled_if($scope0_reason, 0), $fg__input_content = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_html("<ul>");
 	_for_of(input.count, (i) => {
@@ -19,7 +19,7 @@ var card_default = _template("b", (input) => {
 	}, 0, $scope0_id, "a", 1, 1, 1, 0, 0, "b1", $scope0_reason, 0);
 	_html(`</ul>${_el_mark($scope0_id, "a")}`);
 	$fg__input_content && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "b0", "e");
-	_scope($scope0_id, { e: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.content }) || $fg__input_content && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xe", input.content, !_server_guard($scope0_reason, 1));
+	_scope($scope0_id, { e: ($ui__input_count || _unfilled_if($scope0_reason, 1)) && input.content }) || $fg__input_content && $ui__input_count && _patch_write($scope0_id, "xe", input.content, !_server_guard($scope0_reason, 1));
 });
 
 // template.marko
@@ -29,7 +29,7 @@ _shells({
 	a: `a${_shell_marker($setup)};${((_w0) => `D/${_w0}&l`)(" b")};${((_w0) => `<main>${_w0}</main>`)($template)}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_note = _client_guard($scope0_reason, 2), $fg__input_note = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $cg__input_note = _client_guard($scope0_reason, 2), $ui__input_count = _unfilled_if($scope0_reason, 1), $fg__input_note = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = /* @__PURE__ */ new Set();
 	_html("<main>");
@@ -49,8 +49,8 @@ var template_default = _template("a", (input) => {
 	_html("</main>");
 	$fg__input_note && _patch_subscribers($scope0_id, "a2", "e");
 	_scope($scope0_id, {
-		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.note,
+		e: ($ui__input_count || _unfilled_if($scope0_reason, 2)) && input.note,
 		f: _write_if($scope0_reason, 2) && $input_note__closures,
 		a: _existing_scope($childScope)
-	}) || $fg__input_note && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.note, !_server_guard($scope0_reason, 2));
+	}) || $fg__input_note && $ui__input_count && _patch_write($scope0_id, "xe", input.note, !_server_guard($scope0_reason, 2));
 }, 1);

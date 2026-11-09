@@ -34,13 +34,13 @@ var child_default = _template("b", (input) => {
 const $setup = _shell_setup([[], ["a1"]], ["a>", $setup$1]);
 _shells({ a: `a${_shell_marker($setup)};${((_w0) => `0${_w0}&b%b D l`)("")};${((_w0) => `<!>${_w0}<!><button> </button>`)("")}` });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $ui__input_label = _unfilled_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let n = 0;
 	_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
-	const $childScope = _peek_scope_id($scope0_id, "a", 0, _unfilled_if($scope0_reason, 0) && 1);
+	const $childScope = _peek_scope_id($scope0_id, "a", 0, $ui__input_label && 1);
 	let content = child_default({ label: input.label });
-	_unfilled_if($scope0_reason, 0) && _var($scope0_id, "b", $childScope, "a0");
+	$ui__input_label && _var($scope0_id, "b", $childScope, "a0");
 	_patch_child_end();
 	_dynamic_tag($scope0_id, "c", content, {}, 10, 0, 0, 0, 0, 0);
 	_html(`<button>${_text_mark($scope0_id, "e", n)}</button>${_el_mark($scope0_id, "d")}`);

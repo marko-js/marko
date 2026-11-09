@@ -10,13 +10,13 @@ _shells({
 	"__tests__/template.marko_3*shell": "__tests__/template.marko_3*shell __tests__/template.marko_3_n#2:6/setup;D%b%;<em><!><!></em>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_label = _filled_guard($scope0_reason, 2), $fg__input_other = _filled_guard($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $ui__input_show = _unfilled_if($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 2), $fg__input_other = _filled_guard($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	const $open__closures = new Set();
 	let open = false;
 	const Panel = { content: _content_resume("__tests__/template.marko_2*content", ({ isOpen, label }) => {
 		const $scope2_id = _scope_id();
-		const $scope2_reason = _scope_reason();
+		const $scope2_reason = _scope_reason(), $ui__isOpen = _unfilled_if($scope2_reason, 0);
 		let n = 1;
 		_html(`<span>${_text_mark($scope2_id, "#text/0", open ? "o" : "c")}</span>`);
 		_if(() => {
@@ -28,10 +28,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				return 0;
 			}
 		}, $scope2_id, "#text/1", 1, _write_guard($scope2_reason, 0), 1, 0, 0, ["__tests__/template.marko_3*shell"], $scope2_reason, 0);
-		_unfilled_if($scope2_reason, 0) && _patch_write($scope2_id, "PatchWrite:label", label, 1);
+		$ui__isOpen && _patch_write($scope2_id, "PatchWrite:label", label, 1);
 		_patch_fill($scope2_id, "PatchFill:__tests__/template.marko_2_n#6/fill", n, 1);
 		_subscribe($open__closures, _scope($scope2_id, {
-			label: (_unfilled_if($scope2_reason, 0) || _unfilled_if($scope2_reason, 1)) && label,
+			label: ($ui__isOpen || _unfilled_if($scope2_reason, 1)) && label,
 			n: _write_if($scope2_reason, 0) && n,
 			_: _scope_with_id($scope0_id)
 		}, "__tests__/template.marko", "2:2", {
@@ -68,7 +68,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_patch_render($scope0_id, "__tests__/template.marko_0_input_other#7_Panel#9/setup", $fg__input_other && "input_other", $scope0_reason, 3);
 	_patch_render($scope0_id, "__tests__/template.marko_0_open#8_Tag#11/setup", $fg__input_other && "Tag");
 	_scope($scope0_id, {
-		input_label: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.label,
+		input_label: ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.label,
 		open,
 		Panel: _write_if($scope0_reason, 3) && Panel,
 		Tag,
@@ -78,5 +78,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		open: "1:6",
 		Panel: "2:9",
 		Tag: "10:8"
-	}) || ($fg__input_label && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 2)), $fg__input_other && _patch_write($scope0_id, "PatchMarkedWrite:Tag", Tag, !_server_guard($scope0_reason, 3)));
+	}) || ($fg__input_label && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 2)), $fg__input_other && _patch_write($scope0_id, "PatchMarkedWrite:Tag", Tag, !_server_guard($scope0_reason, 3)));
 }, 1);

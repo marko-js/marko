@@ -4,10 +4,10 @@ const $walks = " D l b";
 const $setup = [[], []];
 _shells({ b: "b; D l ;<label> </label><input>" });
 var field_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $uf__input_uid = _updates_from($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const uid = input.uid || _id("A");
-	_html(`<label${_attr("for", uid, $scope0_id, "a", $scope0_reason, 0)}>${_text_mark($scope0_id, "b", input.name, 1, $scope0_reason, 1)}</label>${_el_mark($scope0_id, "a", _updates_from($scope0_reason, 0))}<input${_attr("id", uid, $scope0_id, "c", $scope0_reason, 0)}${_attr("aria-describedby", input.heading, $scope0_id, "c", $scope0_reason, 2)}>${_el_mark($scope0_id, "c", _updates_from($scope0_reason, 0) || _updates_from($scope0_reason, 2))}`);
+	_html(`<label${_attr("for", uid, $scope0_id, "a", $scope0_reason, 0)}>${_text_mark($scope0_id, "b", input.name, 1, $scope0_reason, 1)}</label>${_el_mark($scope0_id, "a", $uf__input_uid)}<input${_attr("id", uid, $scope0_id, "c", $scope0_reason, 0)}${_attr("aria-describedby", input.heading, $scope0_id, "c", $scope0_reason, 2)}>${_el_mark($scope0_id, "c", $uf__input_uid || _updates_from($scope0_reason, 2))}`);
 	_scope($scope0_id, {});
 });
 
@@ -30,14 +30,14 @@ var template_default = _template("a", (input) => {
 		const $for_content__row_promise__closures = /* @__PURE__ */ new Set();
 		_try($scope1_id, "a", () => {
 			_scope_reason();
-			const $scope3_id = _scope_id();
+			const $scope3_id = _scope_id(), $ui__input_rows = _unfilled_if($scope0_reason, 0);
 			_await($scope3_id, "a", row.promise, (v) => {
 				const $scope4_id = _scope_id();
 				_html(`<p>${_text_mark($scope4_id, "a", v, 1, $scope0_reason, 0)}</p>`);
 				_scope($scope4_id, {});
-			}, 1, "a0", _unfilled_if($scope0_reason, 0) && 2);
+			}, 1, "a0", $ui__input_rows && 2);
 			_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope3_id, "a5", 1);
-			$wi__input_rows && _subscribe(_unfilled_if($scope0_reason, 0) && $for_content__row_promise__closures, _scope($scope3_id, { _: _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 0) && "a5", 0);
+			$wi__input_rows && _subscribe($ui__input_rows && $for_content__row_promise__closures, _scope($scope3_id, { _: _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 0) && "a5", 0);
 			$wi__input_rows && _resume_branch($scope3_id);
 		}, void 0, (error) => {
 			_scope_reason();

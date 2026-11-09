@@ -5,7 +5,7 @@ _shells({
 	a1: "a1;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0), $ui__input_show = _unfilled_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const Row = { content: _content_resume("a0", () => {
 		_scope_id();
@@ -30,7 +30,7 @@ var template_default = _template("a", (input) => {
 		content: Row
 	}, 9, 0, 0, $wg__input_show, $scope0_reason, 0, 0, 0, 0);
 	_scope($scope0_id, {
-		e: _unfilled_if($scope0_reason, 0) && Row,
-		f: _unfilled_if($scope0_reason, 0) && Box
+		e: $ui__input_show && Row,
+		f: $ui__input_show && Box
 	});
 }, 1);

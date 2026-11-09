@@ -12,16 +12,16 @@ const $template = "<section><!></section>";
 const $setup = [[], []];
 _shells({ c: "c;D%;<section><!></section>" });
 var wrap_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_content__OR__input_label = _write_guard($scope0_reason, 0), $fg__input_content = _filled_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_content__OR__input_label = _write_guard($scope0_reason, 0), $ui__input_content__OR__input_label = _unfilled_if($scope0_reason, 0), $ui__input_label = _unfilled_if($scope0_reason, 2), $ui__input_content = _unfilled_if($scope0_reason, 1), $fg__input_content = _filled_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	_html("<section>");
 	_dynamic_tag($scope0_id, "a", input.content, { label: input.label }, 1, 0, 0, $wg__input_content__OR__input_label, $scope0_reason, 0, 0, 1);
 	_html("</section>");
 	_patch_render($scope0_id, "c0", [$fg__input_content && "d", $fg__input_label && "e"], $scope0_reason, 0);
 	_scope($scope0_id, {
-		d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.content,
-		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.label
-	}) || ($fg__input_content && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xd", input.content, !_server_guard($scope0_reason, 1)), $fg__input_label && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.label, !_server_guard($scope0_reason, 2)));
+		d: ($ui__input_label || $ui__input_content__OR__input_label) && input.content,
+		e: ($ui__input_content || $ui__input_content__OR__input_label) && input.label
+	}) || ($fg__input_content && $ui__input_label && _patch_write($scope0_id, "xd", input.content, !_server_guard($scope0_reason, 1)), $fg__input_label && $ui__input_content && _patch_write($scope0_id, "xe", input.label, !_server_guard($scope0_reason, 2)));
 });
 
 // template.marko
@@ -31,12 +31,12 @@ _shells({
 	a5: `a5${_shell_marker([[], []], ["a>", $setup])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l")};${$template}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $uf__input_label = _updates_from($scope0_reason, 1), $wg__input_show = _write_guard($scope0_reason, 0), $ui__input_show = _unfilled_if($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_set_scope_reason(_updates_from($scope0_reason, 1) << 1 | _updates_from($scope0_reason, 1) << 5);
+			_set_scope_reason($uf__input_label << 1 | $uf__input_label << 5);
 			const $childScope2 = _peek_scope_id($scope1_id, "a", 1);
 			wrap_default({
 				label: input.label,
@@ -77,5 +77,5 @@ var template_default = _template("a", (input) => {
 		}
 	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["a5"], $scope0_reason, 0);
 	$fg__input_label && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "a4", "e");
-	_scope($scope0_id, { e: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.label }) || $fg__input_label && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xe", input.label, !_server_guard($scope0_reason, 1));
+	_scope($scope0_id, { e: ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.label }) || $fg__input_label && $ui__input_show && _patch_write($scope0_id, "xe", input.label, !_server_guard($scope0_reason, 1));
 }, 1);

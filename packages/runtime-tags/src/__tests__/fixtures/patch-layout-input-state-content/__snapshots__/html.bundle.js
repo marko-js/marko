@@ -6,7 +6,7 @@ _shells({
 	c1: "c1;D%;<div><!></div>"
 });
 var wrap_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 2), $wg__input_show = _write_guard($scope0_reason, 1), $fg__input_content = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 2), $wg__input_show = _write_guard($scope0_reason, 1), $ui__input_show = _unfilled_if($scope0_reason, 1), $fg__input_content = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.show) {
@@ -20,7 +20,7 @@ var wrap_default = _template("c", (input) => {
 		}
 	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["c1"], $scope0_reason, 1);
 	$fg__input_content && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "c0", "e");
-	_scope($scope0_id, { e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.content }) || $fg__input_content && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.content, !_server_guard($scope0_reason, 2));
+	_scope($scope0_id, { e: ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.content }) || $fg__input_content && $ui__input_show && _patch_write($scope0_id, "xe", input.content, !_server_guard($scope0_reason, 2));
 });
 
 // layout.marko
@@ -32,10 +32,10 @@ _shells({
 	a: `a${_shell_marker($setup$1)};${((_w0) => `F/${_w0}&%n`)("b%c")};${((_w0) => `<html><body><main>${_w0}<!></main></body></html>`)($template$1)}`
 });
 var layout_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $uf__input_open = _updates_from($scope0_reason, 0), $wg__input_content = _write_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_html(`<html>${_flush_head()}<body><main>`);
-	_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 0) << 3);
+	_set_scope_reason($uf__input_open << 1 | $uf__input_open << 3);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	wrap_default({
 		show: input.open,

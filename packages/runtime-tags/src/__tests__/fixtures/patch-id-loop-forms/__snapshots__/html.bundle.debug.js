@@ -4,10 +4,10 @@ const $walks$1 = " D l b";
 const $setup$1 = [[], []];
 _shells({ "__tests__/tags/field.marko": "__tests__/tags/field.marko; D l ;<label> </label><input>" });
 var field_default = _template("__tests__/tags/field.marko", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $uf__input_uid = _updates_from($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const uid = input.uid || _id("uid");
-	_html(`<label${_attr("for", uid, $scope0_id, "#label/0", $scope0_reason, 0)}>${_text_mark($scope0_id, "#text/1", input.name, 1, $scope0_reason, 1)}</label>${_el_mark($scope0_id, "#label/0", _updates_from($scope0_reason, 0))}<input${_attr("id", uid, $scope0_id, "#input/2", $scope0_reason, 0)}${_attr("aria-describedby", input.heading, $scope0_id, "#input/2", $scope0_reason, 2)}>${_el_mark($scope0_id, "#input/2", _updates_from($scope0_reason, 0) || _updates_from($scope0_reason, 2))}`);
+	_html(`<label${_attr("for", uid, $scope0_id, "#label/0", $scope0_reason, 0)}>${_text_mark($scope0_id, "#text/1", input.name, 1, $scope0_reason, 1)}</label>${_el_mark($scope0_id, "#label/0", $uf__input_uid)}<input${_attr("id", uid, $scope0_id, "#input/2", $scope0_reason, 0)}${_attr("aria-describedby", input.heading, $scope0_id, "#input/2", $scope0_reason, 2)}>${_el_mark($scope0_id, "#input/2", $uf__input_uid || _updates_from($scope0_reason, 2))}`);
 	_scope($scope0_id, {}, "__tests__/tags/field.marko", 0);
 });
 
@@ -27,7 +27,7 @@ _shells({
 	"__tests__/template.marko_8*shell": `__tests__/template.marko_8*shell${_shell_marker([[], []], ["#childScope/0>", $setup$1])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1)};${$template$1}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_items__OR__input_record__OR__input_end__OR__input_start = _client_guard($scope0_reason, 1), $fg__input_end = _filled_guard($scope0_reason, 4), $fg__input_start = _filled_guard($scope0_reason, 5);
+	const $scope0_reason = _scope_reason(), $cg__input_items__OR__input_record__OR__input_end__OR__input_start = _client_guard($scope0_reason, 1), $uf__input_end__OR__input_start = _updates_from($scope0_reason, 0), $ui__input_end__OR__input_start = _unfilled_if($scope0_reason, 0), $ui__input_start = _unfilled_if($scope0_reason, 5), $ui__input_end = _unfilled_if($scope0_reason, 4), $fg__input_end = _filled_guard($scope0_reason, 4), $fg__input_start = _filled_guard($scope0_reason, 5);
 	const $scope0_id = _scope_id();
 	const heading = _id("heading");
 	_html(`<h1${_attr("id", heading, $scope0_id, "#h1/0", 0, 0)}>Fields</h1>${_el_mark($scope0_id, "#h1/0", 0)}`);
@@ -93,7 +93,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, 0, $scope0_id, "#text/5", 1, 1, 1, 0, 0, "__tests__/template.marko_5*shell", $scope0_reason, 0);
 	_for_to(input.end, input.start, 1, (i) => {
 		const $scope6_id = _scope_id();
-		_set_scope_reason(_updates_from($scope0_reason, 0) << 3);
+		_set_scope_reason($uf__input_end__OR__input_start << 3);
 		const $childScope6 = _peek_scope_id($scope6_id, "#childScope/0", 5);
 		field_default({
 			name: i,
@@ -117,7 +117,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, 0, $scope0_id, "#text/7", 1, 1, 1, 0, 0, "__tests__/template.marko_7*shell", $scope0_reason, 0);
 	_for_until(input.end, input.start, 2, (i) => {
 		const $scope8_id = _scope_id();
-		_set_scope_reason(_updates_from($scope0_reason, 0) << 3);
+		_set_scope_reason($uf__input_end__OR__input_start << 3);
 		const $childScope8 = _peek_scope_id($scope8_id, "#childScope/0", 7);
 		field_default({
 			name: i,
@@ -129,12 +129,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, (i) => "until-" + i, $scope0_id, "#text/8", 1, 1, 1, 0, 0, "__tests__/template.marko_8*shell", $scope0_reason, 0);
 	_patch_render($scope0_id, "__tests__/template.marko_0_input_end#13_input_start#14/setup", [$fg__input_end && "input_end", $fg__input_start && "input_start"], $scope0_reason, 0);
 	_scope($scope0_id, {
-		input_end: (_unfilled_if($scope0_reason, 5) || _unfilled_if($scope0_reason, 0)) && input.end,
-		input_start: (_unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 0)) && input.start,
+		input_end: ($ui__input_start || $ui__input_end__OR__input_start) && input.end,
+		input_start: ($ui__input_end || $ui__input_end__OR__input_start) && input.start,
 		heading: _unfilled_if($scope0_reason, 1) && heading
 	}, "__tests__/template.marko", 0, {
 		input_end: ["input.end"],
 		input_start: ["input.start"],
 		heading: "1:5"
-	}) || ($fg__input_end && _unfilled_if($scope0_reason, 5) && _patch_write($scope0_id, "PatchMarkedWrite:input_end", input.end, !_server_guard($scope0_reason, 4)), $fg__input_start && _unfilled_if($scope0_reason, 4) && _patch_write($scope0_id, "PatchMarkedWrite:input_start", input.start, !_server_guard($scope0_reason, 5)));
+	}) || ($fg__input_end && $ui__input_start && _patch_write($scope0_id, "PatchMarkedWrite:input_end", input.end, !_server_guard($scope0_reason, 4)), $fg__input_start && $ui__input_end && _patch_write($scope0_id, "PatchMarkedWrite:input_start", input.start, !_server_guard($scope0_reason, 5)));
 }, 1);

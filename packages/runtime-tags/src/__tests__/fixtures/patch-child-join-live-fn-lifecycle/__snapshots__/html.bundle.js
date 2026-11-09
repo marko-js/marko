@@ -24,17 +24,17 @@ var child_default = _template("b", (input) => {
 const $setup = _shell_setup([[], ["a0"]], ["a>", $setup$1], ["b>", $setup$1]);
 _shells({ a: `a${_shell_marker($setup)};${((_w0, _w1) => `/${_w0}&/${_w1}& b`)("D l", "D l")};${((_w0, _w1) => `${_w0}${_w1}<button>+</button>`)($template, $template)}` });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $uf__input_a = _updates_from($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	let n = 0;
-	_set_scope_reason(38 | _updates_from($scope0_reason, 1) << 3);
+	_set_scope_reason(38 | $uf__input_a << 3);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	child_default({
 		a: input.a,
 		b: n
 	});
 	_patch_child_end();
-	_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 1) << 3 | _updates_from($scope0_reason, 2) << 5);
+	_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | $uf__input_a << 3 | _updates_from($scope0_reason, 2) << 5);
 	const $childScope2 = _peek_scope_id($scope0_id, "b", 1);
 	child_default({
 		a: input.a,

@@ -4,10 +4,10 @@ const $walks$1 = " D l b";
 const $setup$1 = [[], []];
 _shells({ "__tests__/tags/field.marko": "__tests__/tags/field.marko; D l ;<label> </label><input>" });
 var field_default = _template("__tests__/tags/field.marko", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $uf__input_uid = _updates_from($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const uid = input.uid || _id("uid");
-	_html(`<label${_attr("for", uid, $scope0_id, "#label/0", $scope0_reason, 0)}>${_text_mark($scope0_id, "#text/1", input.name, 1, $scope0_reason, 1)}</label>${_el_mark($scope0_id, "#label/0", _updates_from($scope0_reason, 0))}<input${_attr("id", uid, $scope0_id, "#input/2", $scope0_reason, 0)}${_attr("aria-describedby", input.heading, $scope0_id, "#input/2", $scope0_reason, 2)}>${_el_mark($scope0_id, "#input/2", _updates_from($scope0_reason, 0) || _updates_from($scope0_reason, 2))}`);
+	_html(`<label${_attr("for", uid, $scope0_id, "#label/0", $scope0_reason, 0)}>${_text_mark($scope0_id, "#text/1", input.name, 1, $scope0_reason, 1)}</label>${_el_mark($scope0_id, "#label/0", $uf__input_uid)}<input${_attr("id", uid, $scope0_id, "#input/2", $scope0_reason, 0)}${_attr("aria-describedby", input.heading, $scope0_id, "#input/2", $scope0_reason, 2)}>${_el_mark($scope0_id, "#input/2", $uf__input_uid || _updates_from($scope0_reason, 2))}`);
 	_scope($scope0_id, {}, "__tests__/tags/field.marko", 0);
 });
 

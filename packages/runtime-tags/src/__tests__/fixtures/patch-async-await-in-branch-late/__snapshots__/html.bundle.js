@@ -6,7 +6,7 @@ _shells({
 	a2: "a2;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_promise = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $ui__input_show = _unfilled_if($scope0_reason, 1), $fg__input_promise = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	_html("<main>");
 	_if(() => {
@@ -25,5 +25,5 @@ var template_default = _template("a", (input) => {
 	_html(`<button>interactive</button>${_el_mark($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a4");
 	$fg__input_promise && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "a3", "f");
-	_scope($scope0_id, { f: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.promise }) || $fg__input_promise && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xf", input.promise, !_server_guard($scope0_reason, 2));
+	_scope($scope0_id, { f: ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.promise }) || $fg__input_promise && $ui__input_show && _patch_write($scope0_id, "xf", input.promise, !_server_guard($scope0_reason, 2));
 }, 1);

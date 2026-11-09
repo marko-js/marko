@@ -9,16 +9,16 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	const $input_id__closures = /* @__PURE__ */ new Set();
 	_for_of(input.items, (item) => {
-		const $scope1_id = _scope_id();
-		_filled_guard($scope0_reason, 1) && _unfilled_if($scope0_reason, 2) && _patch_write($scope1_id, "xd", item?.on, !_server_guard($scope0_reason, 1));
+		const $scope1_id = _scope_id(), $ui__input_id = _unfilled_if($scope0_reason, 2), $fg__input_items = _filled_guard($scope0_reason, 1);
+		$fg__input_items && $ui__input_id && _patch_write($scope1_id, "xd", item?.on, !_server_guard($scope0_reason, 1));
 		_html("<div>");
 		const $show = item.on ? input.id : "";
 		_show_start($show, 1, $wg__input_items__OR__input_id, "</div>");
 		_html("shown");
 		_show_end($scope1_id, "a", $show, 1, $wg__input_items__OR__input_id, "</div>", 0, 1, $scope0_reason, 0);
-		_patch_render($scope1_id, "a0", [_filled_guard($scope0_reason, 2) && ">f", _filled_guard($scope0_reason, 1) && "d"], $scope0_reason, 0);
+		_patch_render($scope1_id, "a0", [_filled_guard($scope0_reason, 2) && ">f", $fg__input_items && "d"], $scope0_reason, 0);
 		_scope($scope1_id, {
-			d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && item?.on,
+			d: ($ui__input_id || _unfilled_if($scope0_reason, 0)) && item?.on,
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id)
 		});
 	}, "k", $scope0_id, "a", 1, 1, 1, 0, 0, "a1", $scope0_reason, 1);

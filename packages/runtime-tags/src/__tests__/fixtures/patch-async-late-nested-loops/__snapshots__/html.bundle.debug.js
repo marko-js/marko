@@ -23,14 +23,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $for_content2__item_promise__closures = new Set();
 			_try($scope2_id, "#text/0", () => {
 				const $scope3_reason = _scope_reason();
-				const $scope3_id = _scope_id();
+				const $scope3_id = _scope_id(), $ui__input_groups = _unfilled_if($scope0_reason, 0);
 				_await($scope3_id, "#text/0", item.promise, (v) => {
 					const $scope4_id = _scope_id();
 					_html(`<em>${_text_mark($scope4_id, "#text/0", group.id, 1, $scope0_reason, 0)}.${_text_mark($scope4_id, "#text/1", v, 2, $scope0_reason, 0)}</em>`);
 					_scope($scope4_id, {}, "__tests__/template.marko", "6:12");
-				}, 1, "__tests__/template.marko_4*content", _unfilled_if($scope0_reason, 0) && 3);
+				}, 1, "__tests__/template.marko_4*content", $ui__input_groups && 3);
 				_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope3_id, "__tests__/template.marko_3_item_promise#2:3/subscribe", 1);
-				$wi__input_groups && _subscribe(_unfilled_if($scope0_reason, 0) && $for_content2__item_promise__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "5:10"), _client_guard($scope0_reason, 0) && "__tests__/template.marko_3_item_promise#2:3/subscribe", 0);
+				$wi__input_groups && _subscribe($ui__input_groups && $for_content2__item_promise__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "5:10"), _client_guard($scope0_reason, 0) && "__tests__/template.marko_3_item_promise#2:3/subscribe", 0);
 				$wi__input_groups && _resume_branch($scope3_id);
 			}, void 0, (err) => {
 				const $scope5_reason = _scope_reason();

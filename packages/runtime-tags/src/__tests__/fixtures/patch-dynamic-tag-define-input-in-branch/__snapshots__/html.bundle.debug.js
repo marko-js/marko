@@ -9,7 +9,7 @@ _shells({
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell;b%;<!><!><!>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_useA__OR__input_record = _write_guard($scope0_reason, 2), $cg__input_show__OR__input_useA__OR__input_record = _client_guard($scope0_reason, 3), $wg__input_show = _write_guard($scope0_reason, 4), $fg__input_useA = _filled_guard($scope0_reason, 5), $fg__input_record = _filled_guard($scope0_reason, 6), $cg__input_show = _client_guard($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $wg__input_useA__OR__input_record = _write_guard($scope0_reason, 2), $cg__input_show__OR__input_useA__OR__input_record = _client_guard($scope0_reason, 3), $wg__input_show = _write_guard($scope0_reason, 4), $ui__input_useA__OR__input_record = _unfilled_if($scope0_reason, 2), $ui__input_show__OR__input_useA__OR__input_record = _unfilled_if($scope0_reason, 3), $ui__input_show__OR__input_record = _unfilled_if($scope0_reason, 1), $ui__input_show__OR__input_useA = _unfilled_if($scope0_reason, 0), $fg__input_useA = _filled_guard($scope0_reason, 5), $fg__input_record = _filled_guard($scope0_reason, 6), $cg__input_show = _client_guard($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	const Card = { content: _content_resume("__tests__/template.marko_2*content", ({ record }) => {
 		const $scope2_id = _scope_id();
@@ -39,14 +39,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	$fg__input_useA && $cg__input_show && _patch_render($scope0_id, "__tests__/template.marko_1_input_useA#0:4/setup", "input_useA");
 	$fg__input_record && $cg__input_show && _patch_render($scope0_id, "__tests__/template.marko_1_input_record#0:5/setup", "input_record");
 	_scope($scope0_id, {
-		input_useA: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.useA,
-		input_record: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && input.record,
-		Card: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 2)) && Card,
-		Other: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 2)) && Other
+		input_useA: ($ui__input_show__OR__input_record || $ui__input_useA__OR__input_record) && input.useA,
+		input_record: ($ui__input_show__OR__input_useA || $ui__input_useA__OR__input_record) && input.record,
+		Card: ($ui__input_show__OR__input_useA__OR__input_record || $ui__input_useA__OR__input_record) && Card,
+		Other: ($ui__input_show__OR__input_useA__OR__input_record || $ui__input_useA__OR__input_record) && Other
 	}, "__tests__/template.marko", 0, {
 		input_useA: ["input.useA"],
 		input_record: ["input.record"],
 		Card: "1:9",
 		Other: "4:9"
-	}) || ($fg__input_useA && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_useA", input.useA, !_server_guard($scope0_reason, 5)), $fg__input_record && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_record", input.record, !_server_guard($scope0_reason, 6)));
+	}) || ($fg__input_useA && $ui__input_show__OR__input_record && _patch_write($scope0_id, "PatchMarkedWrite:input_useA", input.useA, !_server_guard($scope0_reason, 5)), $fg__input_record && $ui__input_show__OR__input_useA && _patch_write($scope0_id, "PatchMarkedWrite:input_record", input.record, !_server_guard($scope0_reason, 6)));
 }, 1);

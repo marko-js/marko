@@ -7,7 +7,7 @@ _shells({
 	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0; D l ;<button class=inc> </button><section></section>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_rec_name = _client_guard($scope0_reason, 1), $fg__input_rec_name = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_rec_name = _client_guard($scope0_reason, 1), $ui__input_on = _unfilled_if($scope0_reason, 2), $fg__input_rec_name = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_rec_name__closures = new Set();
 	let n = 0;
@@ -25,13 +25,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	$fg__input_rec_name && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_rec_name#6/subscribers", "input_rec_name");
 	_scope($scope0_id, {
-		input_rec_name: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1)) && input.rec?.name,
+		input_rec_name: ($ui__input_on || _unfilled_if($scope0_reason, 1)) && input.rec?.name,
 		n,
-		frag_content: _unfilled_if($scope0_reason, 2) && frag?.content,
+		frag_content: $ui__input_on && frag?.content,
 		"ClosureScopes:input_rec_name/12": _write_if($scope0_reason, 1) && $input_rec_name__closures
 	}, "__tests__/template.marko", 0, {
 		input_rec_name: ["input.rec.name"],
 		n: "1:6",
 		frag_content: ["frag.content", "3:9"]
-	}) || $fg__input_rec_name && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_rec_name", input.rec?.name, !_server_guard($scope0_reason, 1));
+	}) || $fg__input_rec_name && $ui__input_on && _patch_write($scope0_id, "PatchMarkedWrite:input_rec_name", input.rec?.name, !_server_guard($scope0_reason, 1));
 }, 1);

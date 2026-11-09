@@ -23,7 +23,7 @@ _shells({
 	a7: "a7 !a8;D ;<u> </u>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_v = _client_guard($scope0_reason, 2), $wi__input_v = _write_if($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 3), $cg__input_items = _client_guard($scope0_reason, 4), $sg__input_items = _server_guard($scope0_reason, 4), $fg__input_v = _filled_guard($scope0_reason, 2), $fg__input_show = _filled_guard($scope0_reason, 3), $fg__input_items = _filled_guard($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $cg__input_v = _client_guard($scope0_reason, 2), $wi__input_v = _write_if($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 3), $cg__input_items = _client_guard($scope0_reason, 4), $ui__input_fail__OR__input_msg = _unfilled_if($scope0_reason, 1), $ui__input_msg = _unfilled_if($scope0_reason, 6), $ui__input_fail = _unfilled_if($scope0_reason, 5), $sg__input_items = _server_guard($scope0_reason, 4), $fg__input_v = _filled_guard($scope0_reason, 2), $fg__input_show = _filled_guard($scope0_reason, 3), $fg__input_items2 = _filled_guard($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	const $input_v__closures = /* @__PURE__ */ new Set();
 	const $input_show__closures = /* @__PURE__ */ new Set();
@@ -40,7 +40,7 @@ var template_default = _template("a", (input) => {
 		_subscribe(_unfilled_if($scope0_reason, 6) && $input_msg__closures, _subscribe(_unfilled_if($scope0_reason, 5) && $input_fail__closures, _scope($scope5_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 5) && "a18"), _client_guard($scope0_reason, 6) && "a19");
 	}, void 0, (err) => {
 		_scope_reason();
-		const $scope1_id = _scope_id();
+		const $scope1_id = _scope_id(), $ui__input_v2 = _unfilled_if($scope0_reason, 2), $ui__input_show = _unfilled_if($scope0_reason, 3);
 		const $catch_content__w__closures = /* @__PURE__ */ new Set();
 		const w = input.v * 10;
 		_html(`<b>${_text_mark($scope1_id, "a", err.message, 1, 4, 0)}</b>`);
@@ -59,12 +59,12 @@ var template_default = _template("a", (input) => {
 			}
 		}, $scope1_id, "b", 1, _write_guard($scope0_reason, 3), 1, 0, 0, ["a3"], $scope0_reason, 3);
 		_for_of(input.items, (x) => {
-			const $scope3_id = _scope_id();
-			_filled_guard($scope0_reason, 4) && _patch_write($scope3_id, "xc", x, !$sg__input_items);
+			const $scope3_id = _scope_id(), $fg__input_items = _filled_guard($scope0_reason, 4);
+			$fg__input_items && _patch_write($scope3_id, "xc", x, !$sg__input_items);
 			_html(`<u>${_text_mark($scope3_id, "a", x, 1, $scope0_reason, 4)}</u>`);
 			_script($scope3_id, "a8");
 			_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope3_id, "a9");
-			_patch_render($scope3_id, "a10", [_filled_guard($scope0_reason, 2) && ">>d", _filled_guard($scope0_reason, 4) && "c"], $scope0_reason, 0);
+			_patch_render($scope3_id, "a10", [_filled_guard($scope0_reason, 2) && ">>d", $fg__input_items && "c"], $scope0_reason, 0);
 			_subscribe(_unfilled_if($scope0_reason, 2) && $input_v__closures, _scope($scope3_id, {
 				c: x,
 				_: _scope_with_id($scope1_id),
@@ -75,42 +75,42 @@ var template_default = _template("a", (input) => {
 		const $childScope = _peek_scope_id($scope1_id, "d", 0);
 		wrap_default({ content: _content("a5", () => {
 			_scope_reason();
-			const $scope4_id = _scope_id();
+			const $scope4_id = _scope_id(), $ui__input_v = _unfilled_if($scope0_reason, 2);
 			_html(`<s>${_text_mark($scope4_id, "a", w, 1, $scope0_reason, 2)}</s>`);
 			_script($scope4_id, "a11");
 			_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope4_id, "a12", $cg__input_v);
 			_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope4_id, "a13", $cg__input_v);
-			_subscribe(_unfilled_if($scope0_reason, 2) && $catch_content__w__closures, _subscribe(_unfilled_if($scope0_reason, 2) && $input_v__closures, _scope($scope4_id, {
+			_subscribe($ui__input_v && $catch_content__w__closures, _subscribe($ui__input_v && $input_v__closures, _scope($scope4_id, {
 				_: _scope_with_id($scope1_id),
 				Ci: $wi__input_v && 3
 			}), $cg__input_v && "a12"), $cg__input_v && "a13");
 		}, $scope1_id, 0) });
 		_patch_child_end();
 		_script($scope1_id, "a14");
-		_unfilled_if($scope0_reason, 3) && _patch_write($scope1_id, "wh", w, 1);
+		$ui__input_show && _patch_write($scope1_id, "wh", w, 1);
 		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "a15", $cg__input_v);
 		_unfilled_if($scope0_reason, 3) && _patch_subscribe($scope1_id, "a16", $cg__input_show);
 		_unfilled_if($scope0_reason, 4) && _patch_subscribe($scope1_id, "a17", $cg__input_items);
-		_subscribe(_unfilled_if($scope0_reason, 4) && $input_items__closures, _subscribe(_unfilled_if($scope0_reason, 3) && $input_show__closures, _subscribe(_unfilled_if($scope0_reason, 2) && $input_v__closures, _scope($scope1_id, {
-			h: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 2)) && w,
+		_subscribe(_unfilled_if($scope0_reason, 4) && $input_items__closures, _subscribe($ui__input_show && $input_show__closures, _subscribe($ui__input_v2 && $input_v__closures, _scope($scope1_id, {
+			h: ($ui__input_show || $ui__input_v2) && w,
 			_: _scope_with_id($scope0_id),
-			n: $wi__input_v && (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && $catch_content__w__closures,
+			n: $wi__input_v && ($ui__input_v2 || $ui__input_show) && $catch_content__w__closures,
 			d: _existing_scope($childScope)
 		}), $cg__input_v && "a15"), $cg__input_show && "a16"), $cg__input_items && "a17");
 	}, 0, "a6", "a4", 1, 1, 1);
 	$fg__input_v && _patch_subscribers($scope0_id, "a21", "d");
 	$fg__input_show && _patch_subscribers($scope0_id, "a22", "e");
-	$fg__input_items && _patch_subscribers($scope0_id, "a23", "f");
+	$fg__input_items2 && _patch_subscribers($scope0_id, "a23", "f");
 	_scope($scope0_id, {
 		d: input.v,
 		e: input.show,
 		f: input.items,
-		g: (_unfilled_if($scope0_reason, 6) || _unfilled_if($scope0_reason, 1)) && input.fail,
-		h: (_unfilled_if($scope0_reason, 5) || _unfilled_if($scope0_reason, 1)) && input.msg,
+		g: ($ui__input_msg || $ui__input_fail__OR__input_msg) && input.fail,
+		h: ($ui__input_fail || $ui__input_fail__OR__input_msg) && input.msg,
 		i: $wi__input_v && $input_v__closures,
 		j: _write_if($scope0_reason, 3) && $input_show__closures,
 		k: _write_if($scope0_reason, 4) && $input_items__closures,
-		l: _write_if($scope0_reason, 5) && (_unfilled_if($scope0_reason, 5) || _unfilled_if($scope0_reason, 1)) && $input_fail__closures,
-		m: _write_if($scope0_reason, 6) && (_unfilled_if($scope0_reason, 6) || _unfilled_if($scope0_reason, 1)) && $input_msg__closures
-	}) || ($fg__input_v && _patch_write($scope0_id, "xd", input.v, !_server_guard($scope0_reason, 2)), $fg__input_show && _patch_write($scope0_id, "xe", input.show, !_server_guard($scope0_reason, 3)), $fg__input_items && _patch_write($scope0_id, "xf", input.items, !$sg__input_items), _filled_guard($scope0_reason, 5) && _unfilled_if($scope0_reason, 6) && _patch_write($scope0_id, "xg", input.fail, !_server_guard($scope0_reason, 5)), _filled_guard($scope0_reason, 6) && _unfilled_if($scope0_reason, 5) && _patch_write($scope0_id, "xh", input.msg, !_server_guard($scope0_reason, 6)));
+		l: _write_if($scope0_reason, 5) && ($ui__input_fail || $ui__input_fail__OR__input_msg) && $input_fail__closures,
+		m: _write_if($scope0_reason, 6) && ($ui__input_msg || $ui__input_fail__OR__input_msg) && $input_msg__closures
+	}) || ($fg__input_v && _patch_write($scope0_id, "xd", input.v, !_server_guard($scope0_reason, 2)), $fg__input_show && _patch_write($scope0_id, "xe", input.show, !_server_guard($scope0_reason, 3)), $fg__input_items2 && _patch_write($scope0_id, "xf", input.items, !$sg__input_items), _filled_guard($scope0_reason, 5) && $ui__input_msg && _patch_write($scope0_id, "xg", input.fail, !_server_guard($scope0_reason, 5)), _filled_guard($scope0_reason, 6) && $ui__input_fail && _patch_write($scope0_id, "xh", input.msg, !_server_guard($scope0_reason, 6)));
 }, 1);

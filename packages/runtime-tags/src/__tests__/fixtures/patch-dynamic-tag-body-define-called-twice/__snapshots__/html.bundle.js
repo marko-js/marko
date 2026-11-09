@@ -33,7 +33,7 @@ _shells({
 	a: `a;${((_w0, _w1) => `D/${_w0}&/${_w1}&l`)($Note_content__walks, $Wrap_content__walks)};${((_w0, _w1) => `<main>${_w0}${_w1}</main>`)($Note_content__template, $Wrap_content__template)}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_note = _client_guard($scope0_reason, 1), $wg__input_on = _write_guard($scope0_reason, 2), $wi__input_on = _write_if($scope0_reason, 2), $fg__input_note = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_note = _client_guard($scope0_reason, 1), $wg__input_on = _write_guard($scope0_reason, 2), $wi__input_on = _write_if($scope0_reason, 2), $ui__input_on = _unfilled_if($scope0_reason, 2), $fg__input_note = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = /* @__PURE__ */ new Set();
 	const $input_on__closures = /* @__PURE__ */ new Set();
@@ -71,10 +71,10 @@ var template_default = _template("a", (input) => {
 	_html("</main>");
 	$fg__input_note && _patch_subscribers($scope0_id, "a5", "e");
 	_scope($scope0_id, {
-		e: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1)) && input.note,
+		e: ($ui__input_on || _unfilled_if($scope0_reason, 1)) && input.note,
 		g: _write_if($scope0_reason, 1) && $input_note__closures,
 		h: $wi__input_on && $input_on__closures,
 		a: _existing_scope($childScope2),
 		b: _existing_scope($childScope3)
-	}) || $fg__input_note && (_client_branch_if("a2", $scope0_id) || _unfilled_if($scope0_reason, 2)) && _patch_write($scope0_id, "xe", input.note, !_server_guard($scope0_reason, 1));
+	}) || $fg__input_note && (_client_branch_if("a2", $scope0_id) || $ui__input_on) && _patch_write($scope0_id, "xe", input.note, !_server_guard($scope0_reason, 1));
 }, 1);

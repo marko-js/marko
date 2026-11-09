@@ -4,10 +4,10 @@ const $walks = " D l b";
 const $setup = [[], []];
 _shells({ b: "b; D l ;<label> </label><input>" });
 var field_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $uf__input_uid = _updates_from($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const uid = input.uid || _id("A");
-	_html(`<label${_attr("for", uid, $scope0_id, "a", $scope0_reason, 0)}>${_text_mark($scope0_id, "b", input.name, 1, $scope0_reason, 1)}</label>${_el_mark($scope0_id, "a", _updates_from($scope0_reason, 0))}<input${_attr("id", uid, $scope0_id, "c", $scope0_reason, 0)}${_attr("aria-describedby", input.heading, $scope0_id, "c", $scope0_reason, 2)}>${_el_mark($scope0_id, "c", _updates_from($scope0_reason, 0) || _updates_from($scope0_reason, 2))}`);
+	_html(`<label${_attr("for", uid, $scope0_id, "a", $scope0_reason, 0)}>${_text_mark($scope0_id, "b", input.name, 1, $scope0_reason, 1)}</label>${_el_mark($scope0_id, "a", $uf__input_uid)}<input${_attr("id", uid, $scope0_id, "c", $scope0_reason, 0)}${_attr("aria-describedby", input.heading, $scope0_id, "c", $scope0_reason, 2)}>${_el_mark($scope0_id, "c", $uf__input_uid || _updates_from($scope0_reason, 2))}`);
 	_scope($scope0_id, {});
 });
 
@@ -24,7 +24,7 @@ _shells({
 	a7: `a7${_shell_marker([[], []], ["a>", $setup])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks)};${$template}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_items__OR__input_record__OR__input_end__OR__input_start = _client_guard($scope0_reason, 1), $fg__input_end = _filled_guard($scope0_reason, 4), $fg__input_start = _filled_guard($scope0_reason, 5);
+	const $scope0_reason = _scope_reason(), $cg__input_items__OR__input_record__OR__input_end__OR__input_start = _client_guard($scope0_reason, 1), $uf__input_end__OR__input_start = _updates_from($scope0_reason, 0), $ui__input_end__OR__input_start = _unfilled_if($scope0_reason, 0), $ui__input_start = _unfilled_if($scope0_reason, 5), $ui__input_end = _unfilled_if($scope0_reason, 4), $fg__input_end = _filled_guard($scope0_reason, 4), $fg__input_start = _filled_guard($scope0_reason, 5);
 	const $scope0_id = _scope_id();
 	const heading = _id("A");
 	_html(`<h1${_attr("id", heading, $scope0_id, "a", 0, 0)}>Fields</h1>${_el_mark($scope0_id, "a", 0)}`);
@@ -90,7 +90,7 @@ var template_default = _template("a", (input) => {
 	}, 0, $scope0_id, "f", 1, 1, 1, 0, 0, "a4", $scope0_reason, 0);
 	_for_to(input.end, input.start, 1, (i) => {
 		const $scope6_id = _scope_id();
-		_set_scope_reason(_updates_from($scope0_reason, 0) << 3);
+		_set_scope_reason($uf__input_end__OR__input_start << 3);
 		const $childScope6 = _peek_scope_id($scope6_id, "a", 5);
 		field_default({
 			name: i,
@@ -114,7 +114,7 @@ var template_default = _template("a", (input) => {
 	}, 0, $scope0_id, "h", 1, 1, 1, 0, 0, "a6", $scope0_reason, 0);
 	_for_until(input.end, input.start, 2, (i) => {
 		const $scope8_id = _scope_id();
-		_set_scope_reason(_updates_from($scope0_reason, 0) << 3);
+		_set_scope_reason($uf__input_end__OR__input_start << 3);
 		const $childScope8 = _peek_scope_id($scope8_id, "a", 7);
 		field_default({
 			name: i,
@@ -126,8 +126,8 @@ var template_default = _template("a", (input) => {
 	}, (i) => "until-" + i, $scope0_id, "i", 1, 1, 1, 0, 0, "a7", $scope0_reason, 0);
 	_patch_render($scope0_id, "a8", [$fg__input_end && "n", $fg__input_start && "o"], $scope0_reason, 0);
 	_scope($scope0_id, {
-		n: (_unfilled_if($scope0_reason, 5) || _unfilled_if($scope0_reason, 0)) && input.end,
-		o: (_unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 0)) && input.start,
+		n: ($ui__input_start || $ui__input_end__OR__input_start) && input.end,
+		o: ($ui__input_end || $ui__input_end__OR__input_start) && input.start,
 		q: _unfilled_if($scope0_reason, 1) && heading
-	}) || ($fg__input_end && _unfilled_if($scope0_reason, 5) && _patch_write($scope0_id, "xn", input.end, !_server_guard($scope0_reason, 4)), $fg__input_start && _unfilled_if($scope0_reason, 4) && _patch_write($scope0_id, "xo", input.start, !_server_guard($scope0_reason, 5)));
+	}) || ($fg__input_end && $ui__input_start && _patch_write($scope0_id, "xn", input.end, !_server_guard($scope0_reason, 4)), $fg__input_start && $ui__input_end && _patch_write($scope0_id, "xo", input.start, !_server_guard($scope0_reason, 5)));
 }, 1);

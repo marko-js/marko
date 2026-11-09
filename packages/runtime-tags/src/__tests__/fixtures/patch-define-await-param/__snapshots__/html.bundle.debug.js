@@ -22,15 +22,15 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_reason = _scope_reason(), $wg__id = _write_guard($scope1_reason, 0), $wi__id = _write_if($scope1_reason, 0), $cg__id = _client_guard($scope1_reason, 0), $cg__value = _client_guard($scope1_reason, 1), $fg__id = _filled_guard($scope1_reason, 0);
 		_try($scope1_id, "#text/0", () => {
 			const $scope2_reason = _scope_reason();
-			const $scope2_id = _scope_id();
+			const $scope2_id = _scope_id(), $ui__value = _unfilled_if($scope1_reason, 1);
 			_await($scope2_id, "#text/0", value, (v) => {
 				const $scope3_id = _scope_id();
 				_html(`<p>${_text_mark($scope3_id, "#text/0", id, 1, $scope1_reason, 0)}:${_text_mark($scope3_id, "#text/1", v, 2, $scope1_reason, 1)}:${_text_mark($scope3_id, "#text/2", count, 2)}</p>`);
 				$cg__id && _patch_render($scope3_id, "__tests__/template.marko_3_id#1:3/subscribe");
 				_subscribe(_unfilled_if($scope1_reason, 0) && $Info_content__id__closures, _subscribe($count__closures, _scope($scope3_id, {}, "__tests__/template.marko", "4:6"), "__tests__/template.marko_3_count#0:6/subscribe"), $cg__id && "__tests__/template.marko_3_id#1:3/subscribe");
-			}, 1, "__tests__/template.marko_3*content", _unfilled_if($scope1_reason, 1));
+			}, 1, "__tests__/template.marko_3*content", $ui__value);
 			$cg__value && _patch_render($scope2_id, "__tests__/template.marko_2_value#1:4/subscribe");
-			_subscribe(_unfilled_if($scope1_reason, 1) && $Info_content__value__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:4"), $cg__value && "__tests__/template.marko_2_value#1:4/subscribe", 0);
+			_subscribe($ui__value && $Info_content__value__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:4"), $cg__value && "__tests__/template.marko_2_value#1:4/subscribe", 0);
 			_resume_branch($scope2_id);
 		}, () => {
 			const $scope4_reason = _scope_reason();

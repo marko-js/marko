@@ -1,7 +1,7 @@
 // template.marko
 _shells({ a: "a !a2;D%b ;<main><!><button>t</button></main>" });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_parts = _filled_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $uf__input_parts = _updates_from($scope0_reason, 0), $fg__input_parts = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let show = true;
 	const badge = { content: _content("a0", (a, b) => {
@@ -14,7 +14,7 @@ var template_default = _template("a", (input) => {
 	_if(() => {
 		{
 			const $scope1_id = _scope_id();
-			_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 0) << 3);
+			_set_scope_reason($uf__input_parts << 1 | $uf__input_parts << 3);
 			const $childScope = _peek_scope_id($scope1_id, "a", 0);
 			badge.content(...input.parts);
 			_patch_child_end();

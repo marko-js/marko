@@ -27,10 +27,10 @@ _shells({
 	"__tests__/template.marko_5*shell": `__tests__/template.marko_5*shell${_shell_marker([[], []], ["#childScope/0>", $setup$1])};${/*@__PURE__*/ ((_w0) => `/${_w0}&b`)($walks$1)};${/*@__PURE__*/ ((_w0) => `${_w0}<!>`)($template$1)}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_show = _client_guard($scope0_reason, 3), $wg__input_show__OR__input_on = _write_guard($scope0_reason, 1), $fg__input_show = _filled_guard($scope0_reason, 3), $fg__input_on = _filled_guard($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $cg__input_show = _client_guard($scope0_reason, 3), $wg__input_show__OR__input_on = _write_guard($scope0_reason, 1), $ui__input_show2 = _unfilled_if($scope0_reason, 3), $ui__input_show__OR__input_on = _unfilled_if($scope0_reason, 1), $ui__input_items__OR__input_on = _unfilled_if($scope0_reason, 0), $fg__input_show = _filled_guard($scope0_reason, 3), $fg__input_on = _filled_guard($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	_for_of(input.items, (item) => {
-		const $scope1_id = _scope_id();
+		const $scope1_id = _scope_id(), $ui__input_show = _unfilled_if($scope0_reason, 3);
 		const uid = _id("uid");
 		_html(`<input${_attr("id", uid, $scope1_id, "#input/0", 0, 0)}>${_el_mark($scope1_id, "#input/0", 0)}`);
 		_if(() => {
@@ -42,11 +42,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				return 0;
 			}
 		}, $scope1_id, "#text/1", 1, _write_guard($scope0_reason, 3), 1, 0, 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 3);
-		_unfilled_if($scope0_reason, 3) && _patch_write($scope1_id, "PatchWrite:uid", uid, 1);
+		$ui__input_show && _patch_write($scope1_id, "PatchWrite:uid", uid, 1);
 		$cg__input_show && _patch_render($scope1_id, "__tests__/template.marko_1_input_show#0:7/setup");
 		_scope($scope1_id, {
-			"#LoopKey": _unfilled_if($scope0_reason, 3) && item?.key,
-			uid: _unfilled_if($scope0_reason, 3) && uid,
+			"#LoopKey": $ui__input_show && item?.key,
+			uid: $ui__input_show && uid,
 			_: _write_if($scope0_reason, 3) && _scope_with_id($scope0_id)
 		}, "__tests__/template.marko", "1:2", {
 			"#LoopKey": ["item.key", "1:6"],
@@ -89,12 +89,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	$fg__input_show && _client_guard($scope0_reason, 2) && _patch_render($scope0_id, "__tests__/template.marko_1_input_show#0:7/setup", "input_show");
 	_patch_render($scope0_id, "__tests__/template.marko_0_input_show#7_input_on#8_Field#10/setup", [$fg__input_show && "input_show", $fg__input_on && "input_on"], $scope0_reason, 1);
 	_scope($scope0_id, {
-		input_show: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 3)) && input.show,
-		input_on: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 1)) && input.on,
-		Field: _unfilled_if($scope0_reason, 1) && Field
+		input_show: ($ui__input_items__OR__input_on || $ui__input_show__OR__input_on || $ui__input_show2) && input.show,
+		input_on: ($ui__input_show2 || $ui__input_show__OR__input_on) && input.on,
+		Field: $ui__input_show__OR__input_on && Field
 	}, "__tests__/template.marko", 0, {
 		input_show: ["input.show"],
 		input_on: ["input.on"],
 		Field: "6:9"
-	}) || ($fg__input_show && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_show", input.show, !_server_guard($scope0_reason, 3)), $fg__input_on && _unfilled_if($scope0_reason, 3) && _patch_write($scope0_id, "PatchMarkedWrite:input_on", input.on, !_server_guard($scope0_reason, 4)));
+	}) || ($fg__input_show && $ui__input_items__OR__input_on && _patch_write($scope0_id, "PatchMarkedWrite:input_show", input.show, !_server_guard($scope0_reason, 3)), $fg__input_on && $ui__input_show2 && _patch_write($scope0_id, "PatchMarkedWrite:input_on", input.on, !_server_guard($scope0_reason, 4)));
 }, 1);

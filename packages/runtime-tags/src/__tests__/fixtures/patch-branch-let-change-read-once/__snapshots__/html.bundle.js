@@ -11,7 +11,7 @@ _shells({
 	a5: "a5 !a2; D ;<button> </button>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_start = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $ui__input_show__OR__input_start = _unfilled_if($scope0_reason, 0), $ui__input_start = _unfilled_if($scope0_reason, 2), $fg__input_start = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
 	let last = 0;
@@ -41,7 +41,7 @@ var template_default = _template("a", (input) => {
 	_html("</main>");
 	$fg__input_start && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "a6", "f");
 	_scope($scope0_id, {
-		f: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && input.start,
-		h: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && onCount
-	}) || $fg__input_start && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xf", input.start, !_server_guard($scope0_reason, 2));
+		f: ($ui__input_show__OR__input_start || $ui__input_start) && input.start,
+		h: ($ui__input_show__OR__input_start || $ui__input_start) && onCount
+	}) || $fg__input_start && $ui__input_show__OR__input_start && _patch_write($scope0_id, "xf", input.start, !_server_guard($scope0_reason, 2));
 }, 1);

@@ -28,9 +28,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const $input_note__closures = new Set();
 	_for_of(input.bs, (b) => {
-		const $scope1_id = _scope_id();
+		const $scope1_id = _scope_id(), $fg__input_bs = _filled_guard($scope0_reason, 0);
 		const $for_content__b__closures = new Set();
-		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "PatchMarkedWrite:b", b, !_server_guard($scope0_reason, 0));
+		$fg__input_bs && _patch_write($scope1_id, "PatchMarkedWrite:b", b, !_server_guard($scope0_reason, 0));
 		_set_scope_reason(0);
 		const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 		keep_default({ content: _content_resume("__tests__/template.marko_2*content", () => {
@@ -42,7 +42,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_subscribe(_unfilled_if($scope0_reason, 0) && $for_content__b__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_note__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "2:4"), $cg__input_note && "__tests__/template.marko_2_input_note#0:4/subscribe"), $cg__input_bs && "__tests__/template.marko_2_b#1:2/subscribe");
 		}, $scope1_id) });
 		_patch_child_end();
-		_filled_guard($scope0_reason, 0) && _patch_subscribers($scope1_id, "__tests__/template.marko_1_b#2/subscribers", "b");
+		$fg__input_bs && _patch_subscribers($scope1_id, "__tests__/template.marko_1_b#2/subscribers", "b");
 		_scope($scope1_id, {
 			b,
 			_: _scope_with_id($scope0_id),

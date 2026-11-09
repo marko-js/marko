@@ -22,12 +22,12 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.show) {
-			const $scope1_id = _scope_id();
+			const $scope1_id = _scope_id(), $ui__input_label = _unfilled_if($scope0_reason, 1);
 			_set_scope_reason(_updates_from($scope0_reason, 1) << 1);
-			const $childScope = _peek_scope_id($scope1_id, "a", 0, _unfilled_if($scope0_reason, 1) && 1);
+			const $childScope = _peek_scope_id($scope1_id, "a", 0, $ui__input_label && 1);
 			let r = card_default({ label: input.label });
 			_filled_guard($scope0_reason, 1) && _patch_write($scope1_id, "xf", r, !$sg__input_label);
-			_unfilled_if($scope0_reason, 1) && _var($scope1_id, "b", $childScope, "a0");
+			$ui__input_label && _var($scope1_id, "b", $childScope, "a0");
 			_patch_child_end();
 			_html(`<p>${_text_mark($scope1_id, "c", r.fn(), 1, $scope0_reason, 1)} ${_text_mark($scope1_id, "d", "-", 2, 0, 0, 1)}</p><button>show</button>${_el_mark($scope1_id, "e")}`);
 			_script($scope1_id, "a1");

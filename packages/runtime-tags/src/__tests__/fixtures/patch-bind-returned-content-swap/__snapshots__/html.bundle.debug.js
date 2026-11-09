@@ -42,7 +42,7 @@ const $walks = /*@__PURE__*/ ((_w0, _w1) => `0${_w0}&0${_w1}&b%b D l`)("", "");
 const $setup = _shell_setup([[], ["__tests__/template.marko_0"]], ["#childScope/0>", $setup$1], ["#childScope/2>", $setup$1]);
 _shells({ "__tests__/template.marko": `__tests__/template.marko${_shell_marker($setup)};${((_w0, _w1) => `0${_w0}&0${_w1}&b%b D l`)("", "")};${((_w0, _w1) => `<!>${_w0}${_w1}<!><button> </button>`)("", "")}` });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $ui__input_first = _unfilled_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let n = 0;
 	_set_scope_reason(0);
@@ -58,8 +58,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		n,
-		a: _unfilled_if($scope0_reason, 0) && a,
-		b: _unfilled_if($scope0_reason, 0) && b,
+		a: $ui__input_first && a,
+		b: $ui__input_first && b,
 		"#childScope/0": _existing_scope($childScope),
 		"#childScope/2": _existing_scope($childScope2)
 	}, "__tests__/template.marko", 0, {

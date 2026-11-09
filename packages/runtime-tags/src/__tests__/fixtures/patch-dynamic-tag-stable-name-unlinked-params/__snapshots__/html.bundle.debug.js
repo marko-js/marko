@@ -8,7 +8,7 @@ _shells({
 	"__tests__/template.marko_3*shell": "__tests__/template.marko_3*shell;b%;<!><!><!>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0), $ui__input_show = _unfilled_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const Row = { content: _content_resume("__tests__/template.marko_1*content", () => {
 		const $scope1_id = _scope_id();
@@ -33,8 +33,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		content: Row
 	}, 9, 0, 0, $wg__input_show, $scope0_reason, 0, 0, 0, 0);
 	_scope($scope0_id, {
-		Row: _unfilled_if($scope0_reason, 0) && Row,
-		Box: _unfilled_if($scope0_reason, 0) && Box
+		Row: $ui__input_show && Row,
+		Box: $ui__input_show && Box
 	}, "__tests__/template.marko", 0, {
 		Row: "1:9",
 		Box: "2:9"

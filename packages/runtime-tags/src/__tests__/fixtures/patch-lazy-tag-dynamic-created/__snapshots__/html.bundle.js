@@ -14,7 +14,7 @@ var child_default = _template("a", (input) => {
 const $Child_withLoadAssets = withLoadAssets(() => child_default, "a", flush, "_a");
 _shells({ b: "b !b0; D lD%;<button class=n> </button><main><!></main>" });
 var template_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_show = _filled_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $ui__input_show__OR__input_label = _unfilled_if($scope0_reason, 0), $ui__input_label = _unfilled_if($scope0_reason, 2), $ui__input_show = _unfilled_if($scope0_reason, 1), $fg__input_show = _filled_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	let n = 0;
 	_html(`<button class=n>${_text_mark($scope0_id, "b", n)}</button>${_el_mark($scope0_id, "a")}<main>`);
@@ -23,8 +23,8 @@ var template_default = _template("b", (input) => {
 	_script($scope0_id, "b0");
 	_patch_render($scope0_id, "b1", [$fg__input_show && "f", $fg__input_label && "g"], $scope0_reason, 0);
 	_scope($scope0_id, {
-		f: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.show,
-		g: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.label,
+		f: ($ui__input_label || $ui__input_show__OR__input_label) && input.show,
+		g: ($ui__input_show || $ui__input_show__OR__input_label) && input.label,
 		i: n
-	}) || ($fg__input_show && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xf", input.show, !_server_guard($scope0_reason, 1)), $fg__input_label && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xg", input.label, !_server_guard($scope0_reason, 2)));
+	}) || ($fg__input_show && $ui__input_label && _patch_write($scope0_id, "xf", input.show, !_server_guard($scope0_reason, 1)), $fg__input_label && $ui__input_show && _patch_write($scope0_id, "xg", input.label, !_server_guard($scope0_reason, 2)));
 }, 1);

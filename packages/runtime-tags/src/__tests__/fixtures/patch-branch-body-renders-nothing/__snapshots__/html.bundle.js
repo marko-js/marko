@@ -11,12 +11,12 @@ _shells({
 	a7: "a7,"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_n = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_n = _client_guard($scope0_reason, 1), $ui__input_p = _unfilled_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_n__closures = /* @__PURE__ */ new Set();
 	_await($scope0_id, "a", input.p, (a) => {
 		_scope_id();
-	}, 1, "a3", _unfilled_if($scope0_reason, 0) && 2);
+	}, 1, "a3", $ui__input_p && 2);
 	_try($scope0_id, "b", () => {
 		_scope_reason();
 		_scope_id();
@@ -38,7 +38,7 @@ var template_default = _template("a", (input) => {
 		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope5_id, "a9", $cg__input_n);
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_n__closures, _scope($scope5_id, {}), $cg__input_n && "a9", 0);
 		_resume_branch($scope5_id);
-	}, 1, "a1", _unfilled_if($scope0_reason, 0), 1);
+	}, 1, "a1", $ui__input_p, 1);
 	_scope($scope0_id, {
 		h: input.n,
 		i: _write_if($scope0_reason, 1) && $input_n__closures

@@ -20,19 +20,19 @@ _shells({
 	f1: "f1; ;<path></path>"
 });
 var icon_default = _template("f", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $uf__input_name = _updates_from($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_html(`<svg${_attr("viewBox", input.name, $scope0_id, "a", $scope0_reason, 0)}>`);
 	_if(() => {
 		if (input.name) {
 			const $scope1_id = _scope_id();
-			_html(`<path${_attr("d", input.name, $scope1_id, "a", $scope0_reason, 0)}></path>${_el_mark($scope1_id, "a", _updates_from($scope0_reason, 0))}`);
+			_html(`<path${_attr("d", input.name, $scope1_id, "a", $scope0_reason, 0)}></path>${_el_mark($scope1_id, "a", $uf__input_name)}`);
 			_client_guard($scope0_reason, 0) && _patch_render($scope1_id, "f0");
 			_scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) });
 			return 0;
 		}
 	}, $scope0_id, "a", 1, 1, 1, 0, 0, ["f1"], $scope0_reason, 0);
-	_html(`</svg>${_el_mark($scope0_id, "a", _updates_from($scope0_reason, 0))}`);
+	_html(`</svg>${_el_mark($scope0_id, "a", $uf__input_name)}`);
 	_scope($scope0_id, {});
 });
 
@@ -115,7 +115,7 @@ _shells({
 	e4: `e4${_shell_marker([[], []], ["b>", $setup$1])};${/*@__PURE__*/ ((_w0) => `b%b/${_w0}&b`)("b")};${/*@__PURE__*/ ((_w0) => `<!><!>${_w0}<!>`)($template)}`
 });
 var template_default = _template("e", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_page = _write_guard($scope0_reason, 1), $cg__input_page = _client_guard($scope0_reason, 1), $wi__input_page = _write_if($scope0_reason, 1), $cg__input_list = _client_guard($scope0_reason, 2), $wi__input_page__OR__input_list = _write_if($scope0_reason, 0), $fg__input_list = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_page = _write_guard($scope0_reason, 1), $cg__input_page = _client_guard($scope0_reason, 1), $wi__input_page = _write_if($scope0_reason, 1), $ui__input_page = _unfilled_if($scope0_reason, 1), $cg__input_list = _client_guard($scope0_reason, 2), $wi__input_page__OR__input_list = _write_if($scope0_reason, 0), $ui__input_list = _unfilled_if($scope0_reason, 2), $fg__input_list = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_page__closures = /* @__PURE__ */ new Set();
 	const $input_list__closures = /* @__PURE__ */ new Set();
@@ -179,9 +179,9 @@ var template_default = _template("e", (input) => {
 	_patch_child_end();
 	$fg__input_list && $cg__input_page && _patch_subscribers($scope0_id, "e9", "e");
 	_scope($scope0_id, {
-		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.list,
-		f: $wi__input_page && _unfilled_if($scope0_reason, 1) && $input_page__closures,
-		g: _write_if($scope0_reason, 2) && (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1)) && $input_list__closures,
+		e: ($ui__input_page || $ui__input_list) && input.list,
+		f: $wi__input_page && $ui__input_page && $input_page__closures,
+		g: _write_if($scope0_reason, 2) && ($ui__input_list || $ui__input_page) && $input_list__closures,
 		a: _existing_scope($childScope4)
-	}) || $fg__input_list && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.list, !_server_guard($scope0_reason, 2));
+	}) || $fg__input_list && $ui__input_page && _patch_write($scope0_id, "xe", input.list, !_server_guard($scope0_reason, 2));
 }, 1);

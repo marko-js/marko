@@ -9,7 +9,7 @@ _shells({
 	"__tests__/template.marko_2*shell": "__tests__/template.marko_2*shell;b%;<!><!><!>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_rows = _write_guard($scope0_reason, 0), $cg__input_rows = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_rows = _write_guard($scope0_reason, 0), $cg__input_rows = _client_guard($scope0_reason, 0), $ui__input_rows = _unfilled_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const Card = { content: _content_resume("__tests__/template.marko_1*content", ({ record }) => {
 		const $scope1_id = _scope_id();
@@ -34,8 +34,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, "id", $scope0_id, "#main/0", 1, 1, 1, 0, 0, "__tests__/template.marko_2*shell", $scope0_reason, 0);
 	_html(`</main>${_el_mark($scope0_id, "#main/0")}`);
 	_scope($scope0_id, {
-		Card: _unfilled_if($scope0_reason, 0) && Card,
-		Other: _unfilled_if($scope0_reason, 0) && Other
+		Card: $ui__input_rows && Card,
+		Other: $ui__input_rows && Other
 	}, "__tests__/template.marko", 0, {
 		Card: "1:9",
 		Other: "4:9"

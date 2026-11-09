@@ -24,7 +24,7 @@ _shells({
 	a4: "a4 a3!a1;Db%l ;<span>Seen <!></span><button>+</button>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 2), $wi__input_keys__OR__input_show = _write_if($scope0_reason, 0), $fg__input_show = _filled_guard($scope0_reason, 2), $cg__input_keys = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 2), $wi__input_keys__OR__input_show = _write_if($scope0_reason, 0), $ui__input_keys = _unfilled_if($scope0_reason, 1), $ui__input_show2 = _unfilled_if($scope0_reason, 2), $fg__input_show = _filled_guard($scope0_reason, 2), $cg__input_keys = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_show__closures = /* @__PURE__ */ new Set();
 	_for_of(input.keys, (name) => {
@@ -37,7 +37,7 @@ var template_default = _template("a", (input) => {
 		const uid = _id("A");
 		_html(`<label${_attr("for", uid, $scope1_id, "c", 0, 0)}>${_text_mark($scope1_id, "d", name, 1, $scope0_reason, 1)}</label>${_el_mark($scope1_id, "c", 0)}<input${_attr("id", uid, $scope1_id, "e", 0, 0)}>${_el_mark($scope1_id, "e", 0)}<p>${_text_mark($scope1_id, "f", name, 1, $scope0_reason, 1)}:${_text_mark($scope1_id, "g", store.last, 2)}</p>`);
 		_for_of(input.keys.toReversed(), (other) => {
-			const $scope2_id = _scope_id();
+			const $scope2_id = _scope_id(), $ui__input_show = _unfilled_if($scope0_reason, 2);
 			_if(() => {
 				if (input.show && other === name) {
 					const $scope3_id = _scope_id();
@@ -56,8 +56,8 @@ var template_default = _template("a", (input) => {
 				}
 			}, $scope2_id, "a", 1, $wg__input_show, 1, 0, 0, ["a4"], $scope0_reason, 0);
 			_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope2_id, "a7", $cg__input_show);
-			_subscribe(_unfilled_if($scope0_reason, 2) && $input_show__closures, _scope($scope2_id, {
-				M: _unfilled_if($scope0_reason, 2) && other,
+			_subscribe($ui__input_show && $input_show__closures, _scope($scope2_id, {
+				M: $ui__input_show && other,
 				_: _scope_with_id($scope1_id)
 			}), $cg__input_show && "a7", $wg__input_show);
 		}, (n) => n, $scope1_id, "h", 1, 1, 1, 0, 0, "a6", $scope0_reason, 1);
@@ -72,7 +72,7 @@ var template_default = _template("a", (input) => {
 	}, (n) => n, $scope0_id, "a", 1, 1, 1, 0, 0, "a5", $scope0_reason, 1);
 	$fg__input_show && $cg__input_keys && _patch_subscribers($scope0_id, "a9", "e");
 	_scope($scope0_id, {
-		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.show,
-		g: _write_if($scope0_reason, 2) && (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1)) && $input_show__closures
-	}) || $fg__input_show && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.show, !_server_guard($scope0_reason, 2));
+		e: ($ui__input_keys || $ui__input_show2) && input.show,
+		g: _write_if($scope0_reason, 2) && ($ui__input_show2 || $ui__input_keys) && $input_show__closures
+	}) || $fg__input_show && $ui__input_keys && _patch_write($scope0_id, "xe", input.show, !_server_guard($scope0_reason, 2));
 }, 1);

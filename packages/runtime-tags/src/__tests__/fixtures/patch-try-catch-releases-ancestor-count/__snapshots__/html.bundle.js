@@ -18,17 +18,17 @@ var template_default = _template("a", (input) => {
 	_html("<main>");
 	_try($scope0_id, "a", () => {
 		_scope_reason();
-		const $scope1_id = _scope_id();
+		const $scope1_id = _scope_id(), $ui__input_b = _unfilled_if($scope0_reason, 2);
 		_try($scope1_id, "a", () => {
 			_scope_reason();
-			const $scope2_id = _scope_id();
+			const $scope2_id = _scope_id(), $ui__input_a = _unfilled_if($scope0_reason, 1);
 			_await($scope2_id, "a", input.a, (a) => {
 				const $scope5_id = _scope_id();
 				_html(`<b>${_text_mark($scope5_id, "a", a, 1, $scope0_reason, 1)}</b>`);
 				_scope($scope5_id, {});
-			}, 1, "a1", _unfilled_if($scope0_reason, 1) && 2, 1);
+			}, 1, "a1", $ui__input_a && 2, 1);
 			_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope2_id, "a8", 1);
-			$wi__input_a && _subscribe(_unfilled_if($scope0_reason, 1) && $input_a__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 1) && "a8", 0);
+			$wi__input_a && _subscribe($ui__input_a && $input_a__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 1) && "a8", 0);
 			$wi__input_a && _resume_branch($scope2_id);
 		}, void 0, (err) => {
 			_scope_reason();
@@ -40,9 +40,9 @@ var template_default = _template("a", (input) => {
 			const $scope6_id = _scope_id();
 			_html(`<em>${_text_mark($scope6_id, "a", b, 1, $scope0_reason, 2)}</em>`);
 			_scope($scope6_id, {});
-		}, 1, "a0", _unfilled_if($scope0_reason, 2) && 2, 1);
+		}, 1, "a0", $ui__input_b && 2, 1);
 		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "a9", 1);
-		$wi__input_a__OR__input_b && _subscribe(_unfilled_if($scope0_reason, 2) && $input_b__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 2) && "a9", 0);
+		$wi__input_a__OR__input_b && _subscribe($ui__input_b && $input_b__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 2) && "a9", 0);
 		$wi__input_a__OR__input_b && _resume_branch($scope1_id);
 	}, () => {
 		_scope_reason();

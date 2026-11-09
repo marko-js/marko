@@ -36,7 +36,7 @@ var template_default = _template("a", (input) => {
 		_patch_child_end();
 		_html(`<p>${_text_mark($scope1_id, "c", name, 1, 0, 0)}:${_text_mark($scope1_id, "d", store.last, 2)}</p>`);
 		_for_of(["y", "x"], (other) => {
-			const $scope2_id = _scope_id();
+			const $scope2_id = _scope_id(), $ui__input_show = _unfilled_if($scope0_reason, 0);
 			_if(() => {
 				if (input.show && other === name) {
 					const $scope3_id = _scope_id();
@@ -55,8 +55,8 @@ var template_default = _template("a", (input) => {
 				}
 			}, $scope2_id, "a", 1, $wg__input_show, 1, 0, 0, ["a4"], $scope0_reason, 0);
 			_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope2_id, "a7", $cg__input_show);
-			_subscribe(_unfilled_if($scope0_reason, 0) && $input_show__closures, _scope($scope2_id, {
-				M: _unfilled_if($scope0_reason, 0) && other,
+			_subscribe($ui__input_show && $input_show__closures, _scope($scope2_id, {
+				M: $ui__input_show && other,
 				_: _scope_with_id($scope1_id)
 			}), $cg__input_show && "a7", $wg__input_show);
 		}, (n) => n, $scope1_id, "e", 1, 1, 1, 0, 0, "a6", 0, 0);

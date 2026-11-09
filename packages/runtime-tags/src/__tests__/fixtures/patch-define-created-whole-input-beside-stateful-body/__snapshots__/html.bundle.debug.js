@@ -16,7 +16,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let open = false;
 	const Panel = { content: _content_resume("__tests__/template.marko_1*content", (attrs) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason(), $wg__attrs_isOpen = _write_guard($scope1_reason, 1);
+		const $scope1_reason = _scope_reason(), $wg__attrs_isOpen = _write_guard($scope1_reason, 1), $ui__attrs_isOpen = _unfilled_if($scope1_reason, 1);
 		_if(() => {
 			if (attrs.isOpen) {
 				const $scope3_id = _scope_id();
@@ -30,8 +30,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				return 0;
 			}
 		}, $scope1_id, "#text/0", 1, $wg__attrs_isOpen, 1, 0, 0, ["__tests__/template.marko_3*shell"], $scope1_reason, 1);
-		_unfilled_if($scope1_reason, 1) && _patch_write($scope1_id, "PatchWrite:attrs_item", attrs?.item, 1);
-		_write_if($scope1_reason, 1) && _scope($scope1_id, { attrs_item: _unfilled_if($scope1_reason, 1) && attrs?.item }, "__tests__/template.marko", "2:2", { attrs_item: ["attrs.item", "2:15"] });
+		$ui__attrs_isOpen && _patch_write($scope1_id, "PatchWrite:attrs_item", attrs?.item, 1);
+		_write_if($scope1_reason, 1) && _scope($scope1_id, { attrs_item: $ui__attrs_isOpen && attrs?.item }, "__tests__/template.marko", "2:2", { attrs_item: ["attrs.item", "2:15"] });
 	}, $scope0_id) };
 	_if(() => {
 		if (input.show) {

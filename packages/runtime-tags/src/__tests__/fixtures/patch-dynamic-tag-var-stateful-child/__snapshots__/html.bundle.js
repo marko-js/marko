@@ -27,7 +27,7 @@ var other_default = _template("c", (input) => {
 // template.marko
 _shells({ a: "a;b1b D ;<!><!><p> </p>" });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_which = _filled_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $ui__input_which__OR__input_label = _unfilled_if($scope0_reason, 0), $ui__input_label = _unfilled_if($scope0_reason, 2), $ui__input_which = _unfilled_if($scope0_reason, 1), $fg__input_which = _filled_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $inputwhichcounterother_scope = _peek_scope_id();
 	let count = _dynamic_tag($scope0_id, "a", input.which ? counter_default : other_default, { label: input.label }, 1, 0, 0, 1, $scope0_reason, 0, 0, void 0, 0, "a0");
@@ -36,8 +36,8 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a1");
 	_patch_render($scope0_id, "a2", [$fg__input_which && "g", $fg__input_label && "h"], $scope0_reason, 0);
 	_scope($scope0_id, {
-		g: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.which,
-		h: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.label,
+		g: ($ui__input_label || $ui__input_which__OR__input_label) && input.which,
+		h: ($ui__input_which || $ui__input_which__OR__input_label) && input.label,
 		j: count
-	}) || ($fg__input_which && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xg", input.which, !_server_guard($scope0_reason, 1)), $fg__input_label && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xh", input.label, !_server_guard($scope0_reason, 2)));
+	}) || ($fg__input_which && $ui__input_label && _patch_write($scope0_id, "xg", input.which, !_server_guard($scope0_reason, 1)), $fg__input_label && $ui__input_which && _patch_write($scope0_id, "xh", input.label, !_server_guard($scope0_reason, 2)));
 }, 1);

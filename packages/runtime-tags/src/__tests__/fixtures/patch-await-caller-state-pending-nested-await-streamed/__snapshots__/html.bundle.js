@@ -20,14 +20,14 @@ var show_await_default = _template("b", (input) => {
 		_html(`<p>${_text_mark($scope1_id, "a", input.label, 1, $scope0_reason, 2)}:${_text_mark($scope1_id, "b", x, 2, $scope0_reason, 1)}</p>`);
 		_try($scope1_id, "c", () => {
 			_scope_reason();
-			const $scope2_id = _scope_id();
+			const $scope2_id = _scope_id(), $ui__input_inner = _unfilled_if($scope0_reason, 3);
 			_await($scope2_id, "a", input.inner, (y) => {
 				const $scope4_id = _scope_id();
 				_html(`<em>${_text_mark($scope4_id, "a", y, 1, $scope0_reason, 3)}</em>`);
 				_scope($scope4_id, {});
-			}, 1, "b0", _unfilled_if($scope0_reason, 3) && 2, 1);
+			}, 1, "b0", $ui__input_inner && 2, 1);
 			_unfilled_if($scope0_reason, 3) && _patch_subscribe($scope2_id, "b6", 1);
-			$wi__input_inner && _subscribe(_unfilled_if($scope0_reason, 3) && $input_inner__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 3) && "b6", 0);
+			$wi__input_inner && _subscribe($ui__input_inner && $input_inner__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 3) && "b6", 0);
 			$wi__input_inner && _resume_branch($scope2_id);
 		}, () => {
 			_scope_reason();

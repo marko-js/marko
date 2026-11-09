@@ -17,7 +17,7 @@ const $walks = "b%c";
 const $setup = [[], []];
 _shells({ "__tests__/template.marko": "__tests__/template.marko;b%;<output id=out></output><!><!>" });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_title__OR__input_alt = _write_guard($scope0_reason, 0), $sg__input_title = _server_guard($scope0_reason, 1), $fg__input_title = _filled_guard($scope0_reason, 1), $fg__input_alt = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_title__OR__input_alt = _write_guard($scope0_reason, 0), $ui__input_title__OR__input_alt = _unfilled_if($scope0_reason, 0), $ui__input_title = _unfilled_if($scope0_reason, 1), $sg__input_title = _server_guard($scope0_reason, 1), $ui__input_alt = _unfilled_if($scope0_reason, 2), $fg__input_title = _filled_guard($scope0_reason, 1), $fg__input_alt = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	$fg__input_title && _patch_write($scope0_id, "PatchMarkedWrite:input_title", input.title, !$sg__input_title);
 	const fn = _bind_resume(() => {
@@ -32,11 +32,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	], $scope0_reason, 0);
 	_scope($scope0_id, {
 		input_title: input.title,
-		input_alt: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.alt,
-		fn: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && fn
+		input_alt: ($ui__input_title || $ui__input_title__OR__input_alt) && input.alt,
+		fn: ($ui__input_alt || $ui__input_title__OR__input_alt) && fn
 	}, "__tests__/template.marko", 0, {
 		input_title: ["input.title"],
 		input_alt: ["input.alt"],
 		fn: "3:8"
-	}) || ($fg__input_alt && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_alt", input.alt, !_server_guard($scope0_reason, 2)), $fg__input_title && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:fn", fn, !$sg__input_title));
+	}) || ($fg__input_alt && $ui__input_title && _patch_write($scope0_id, "PatchMarkedWrite:input_alt", input.alt, !_server_guard($scope0_reason, 2)), $fg__input_title && $ui__input_alt && _patch_write($scope0_id, "PatchMarkedWrite:fn", fn, !$sg__input_title));
 }, 1);

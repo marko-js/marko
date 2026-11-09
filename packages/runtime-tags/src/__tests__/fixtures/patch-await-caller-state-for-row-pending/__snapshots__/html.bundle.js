@@ -8,7 +8,7 @@ _shells({
 	b4: "b4;b%;<!><!><!>"
 });
 var show_await_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 4), $cg__input_items = _client_guard($scope0_reason, 2), $fg__input_promise = _filled_guard($scope0_reason, 3), $fg__input_label = _filled_guard($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 4), $cg__input_items = _client_guard($scope0_reason, 2), $ui__input_items = _unfilled_if($scope0_reason, 2), $ui__input_label = _unfilled_if($scope0_reason, 4), $fg__input_promise = _filled_guard($scope0_reason, 3), $fg__input_label = _filled_guard($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	_for_of(input.items, (item) => {
@@ -30,10 +30,10 @@ var show_await_default = _template("b", (input) => {
 	$fg__input_promise && $cg__input_items && _patch_render($scope0_id, "b5", "e");
 	$fg__input_label && $cg__input_items && _patch_subscribers($scope0_id, "b6", "f");
 	_scope($scope0_id, {
-		e: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && input.promise,
-		f: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 4)) && input.label,
-		h: _write_if($scope0_reason, 4) && (_unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 2)) && $input_label__closures
-	}) || ($fg__input_promise && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xe", input.promise, !_server_guard($scope0_reason, 3)), $fg__input_label && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xf", input.label, !_server_guard($scope0_reason, 4)));
+		e: ($ui__input_items || _unfilled_if($scope0_reason, 3)) && input.promise,
+		f: ($ui__input_items || $ui__input_label) && input.label,
+		h: _write_if($scope0_reason, 4) && ($ui__input_label || $ui__input_items) && $input_label__closures
+	}) || ($fg__input_promise && $ui__input_items && _patch_write($scope0_id, "xe", input.promise, !_server_guard($scope0_reason, 3)), $fg__input_label && $ui__input_items && _patch_write($scope0_id, "xf", input.label, !_server_guard($scope0_reason, 4)));
 });
 
 // template.marko

@@ -10,7 +10,7 @@ _shells({
 	"__tests__/tags/panel.marko_2*shell": `__tests__/tags/panel.marko_2*shell >#childScope/0>;${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($Info_content__walks)};${$Info_content__template}`
 });
 var panel_default = _template("__tests__/tags/panel.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 6), $fg__input_a = _filled_guard($scope0_reason, 4), $fg__input_b = _filled_guard($scope0_reason, 5), $cg__input_show = _client_guard($scope0_reason, 6);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 6), $ui__input_a__OR__input_b = _unfilled_if($scope0_reason, 0), $ui__input_b__OR__input_show = _unfilled_if($scope0_reason, 2), $ui__input_a__OR__input_show = _unfilled_if($scope0_reason, 1), $fg__input_a = _filled_guard($scope0_reason, 4), $fg__input_b = _filled_guard($scope0_reason, 5), $cg__input_show = _client_guard($scope0_reason, 6);
 	const $scope0_id = _scope_id();
 	const $input_a__closures = new Set();
 	const $input_b__closures = new Set();
@@ -39,14 +39,14 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 	$fg__input_a && $cg__input_show && _patch_subscribers($scope0_id, "__tests__/tags/panel.marko_0_input_a#3/subscribers", "input_a");
 	$fg__input_b && $cg__input_show && _patch_subscribers($scope0_id, "__tests__/tags/panel.marko_0_input_b#4/subscribers", "input_b");
 	_scope($scope0_id, {
-		input_a: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.a,
-		input_b: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.b,
+		input_a: ($ui__input_b__OR__input_show || $ui__input_a__OR__input_b) && input.a,
+		input_b: ($ui__input_a__OR__input_show || $ui__input_a__OR__input_b) && input.b,
 		"ClosureScopes:input_a/6": _write_if($scope0_reason, 4) && $input_a__closures,
 		"ClosureScopes:input_b/7": _write_if($scope0_reason, 5) && $input_b__closures
 	}, "__tests__/tags/panel.marko", 0, {
 		input_a: ["input.a"],
 		input_b: ["input.b"]
-	}) || ($fg__input_a && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_a", input.a, !_server_guard($scope0_reason, 4)), $fg__input_b && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_b", input.b, !_server_guard($scope0_reason, 5)));
+	}) || ($fg__input_a && $ui__input_b__OR__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_a", input.a, !_server_guard($scope0_reason, 4)), $fg__input_b && $ui__input_a__OR__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_b", input.b, !_server_guard($scope0_reason, 5)));
 });
 
 // template.marko
@@ -55,11 +55,11 @@ const $walks = /*@__PURE__*/ ((_w0, _w1) => `b/${_w0}&/${_w1}& b b`)("b%c", "b%c
 const $setup = _shell_setup([[], ["__tests__/template.marko_0"]], ["#childScope/0>", $setup$1], ["#childScope/1>", $setup$1]);
 _shells({ "__tests__/template.marko": `__tests__/template.marko${_shell_marker($setup)};${((_w0, _w1) => `b/${_w0}&/${_w1}& b b`)("b%c", "b%c")};${((_w0, _w1) => `<!>${_w0}${_w1}<button class=c>+</button><button class=s>s</button>`)($template$1, $template$1)}` });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $uf__input_x = _updates_from($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	let count = 0;
 	let s = false;
-	_set_scope_reason(9198 | _updates_from($scope0_reason, 1) << 11);
+	_set_scope_reason(9198 | $uf__input_x << 11);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	panel_default({
 		a: count,
@@ -67,7 +67,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		show: s
 	});
 	_patch_child_end();
-	_set_scope_reason(8696 | (_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 2) << 9 | _updates_from($scope0_reason, 1) << 11));
+	_set_scope_reason(8696 | (_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 2) << 9 | $uf__input_x << 11));
 	const $childScope2 = _peek_scope_id($scope0_id, "#childScope/1", 1);
 	panel_default({
 		a: input.y,

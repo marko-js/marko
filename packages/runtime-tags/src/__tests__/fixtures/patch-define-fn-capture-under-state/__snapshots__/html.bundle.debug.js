@@ -12,9 +12,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $input_x__closures = new Set();
 	let show = true;
 	const Show = { content: _content("__tests__/template.marko_1*content", ({ v }) => {
-		const $scope1_id = _scope_id();
+		const $scope1_id = _scope_id(), $ui__input_x = _unfilled_if($scope0_reason, 0);
 		const $scope1_reason = _scope_reason(), $sg__v = _server_guard($scope1_reason, 0), $fg__v = _filled_guard($scope1_reason, 0);
-		$fg__v && _unfilled_if($scope0_reason, 0) && _patch_write($scope1_id, "PatchMarkedWrite:v", v, !$sg__v);
+		$fg__v && $ui__input_x && _patch_write($scope1_id, "PatchMarkedWrite:v", v, !$sg__v);
 		const f = _bind_resume(function() {
 			return v;
 		}, "__tests__/template.marko_1/f", $scope1_id);
@@ -29,14 +29,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, $scope1_id, "#text/0", 1, $wg__input_x, 1, 0, 0, ["__tests__/template.marko_3*shell"], $scope0_reason, 0);
 		$fg__v && $cg__input_x && _patch_render($scope1_id, "__tests__/template.marko_3_f#1:4/setup", ["f", "v"]);
 		$cg__input_x && _patch_render($scope1_id, "__tests__/template.marko_1_input_x#0:4/subscribe");
-		_subscribe(_unfilled_if($scope0_reason, 0) && $input_x__closures, _scope($scope1_id, {
+		_subscribe($ui__input_x && $input_x__closures, _scope($scope1_id, {
 			v: $wi__input_x && v,
-			f: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope1_reason, 0)) && f,
+			f: ($ui__input_x || _unfilled_if($scope1_reason, 0)) && f,
 			_: _scope_with_id($scope0_id)
 		}, "__tests__/template.marko", "2:2", {
 			v: "2:16",
 			f: "3:10"
-		}), $cg__input_x && "__tests__/template.marko_1_input_x#0:4/subscribe", $wg__input_x) || $fg__v && _unfilled_if($scope0_reason, 0) && _patch_write($scope1_id, "PatchMarkedWrite:f", f, !$sg__v);
+		}), $cg__input_x && "__tests__/template.marko_1_input_x#0:4/subscribe", $wg__input_x) || $fg__v && $ui__input_x && _patch_write($scope1_id, "PatchMarkedWrite:f", f, !$sg__v);
 		$wg__input_x || _resume_branch($scope1_id);
 	}, $scope0_id) };
 	_html(`<button class=toggle>toggle</button>${_el_mark($scope0_id, "#button/0")}`);

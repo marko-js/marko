@@ -41,12 +41,12 @@ _shells({
 	"__tests__/template.marko_2*shell": "__tests__/template.marko_2*shell;b%;<!><!><!>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_on = _write_guard($scope0_reason, 2), $cg__input_on = _client_guard($scope0_reason, 2), $wi__input_on = _write_if($scope0_reason, 2), $cg__input_note = _client_guard($scope0_reason, 1), $fg__input_note = _filled_guard($scope0_reason, 1), $fg__input_on = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_on = _write_guard($scope0_reason, 2), $cg__input_on = _client_guard($scope0_reason, 2), $wi__input_on = _write_if($scope0_reason, 2), $cg__input_note = _client_guard($scope0_reason, 1), $ui__input_on2 = _unfilled_if($scope0_reason, 2), $fg__input_note = _filled_guard($scope0_reason, 1), $fg__input_on = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_on__closures = new Set();
 	const $input_note__closures = new Set();
 	const Tree = { content: _content("__tests__/template.marko_1*content", ({ depth }) => {
-		const $scope1_id = _scope_id();
+		const $scope1_id = _scope_id(), $ui__input_on = _unfilled_if($scope0_reason, 2);
 		const $Tree_content__depth__closures = new Set();
 		const $scope1_reason = _scope_reason(), $scope1_page = _page_render(), $wi__depth = _write_if($scope1_reason, 0), $fg__depth = _filled_guard($scope1_reason, 0);
 		_html(`<em>${_text_mark($scope1_id, "#text/0", input.note, 1, $scope0_reason, 1)}</em>`);
@@ -86,10 +86,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		$fg__depth && _patch_subscribers($scope1_id, "__tests__/template.marko_1_depth#4/subscribers", "depth");
 		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_note#0:3/subscribe", $cg__input_note);
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_note__closures, _scope($scope1_id, {
-			depth: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope1_reason, 0)) && depth,
+			depth: ($ui__input_on || _unfilled_if($scope1_reason, 0)) && depth,
 			_: (_write_if($scope0_reason, 0) || $wi__depth) && _scope_with_id($scope0_id),
 			"ClosureScopes:depth/7": $wi__depth && $Tree_content__depth__closures
-		}, "__tests__/template.marko", "2:2", { depth: "2:16" }), $cg__input_note && "__tests__/template.marko_1_input_note#0:3/subscribe") || $fg__depth && (_client_branch_if("__tests__/template.marko_3*content", $scope1_id) || _unfilled_if($scope0_reason, 2)) && _patch_write($scope1_id, "PatchMarkedWrite:depth", depth, !_server_guard($scope1_reason, 0));
+		}, "__tests__/template.marko", "2:2", { depth: "2:16" }), $cg__input_note && "__tests__/template.marko_1_input_note#0:3/subscribe") || $fg__depth && (_client_branch_if("__tests__/template.marko_3*content", $scope1_id) || $ui__input_on) && _patch_write($scope1_id, "PatchMarkedWrite:depth", depth, !_server_guard($scope1_reason, 0));
 	}, $scope0_id) };
 	_html("<main>");
 	_set_scope_reason(0);
@@ -100,12 +100,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	$fg__input_note && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_note#3/subscribers", "input_note");
 	$fg__input_on && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_on#4/subscribers", "input_on");
 	_scope($scope0_id, {
-		input_note: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1)) && input.note,
+		input_note: ($ui__input_on2 || _unfilled_if($scope0_reason, 1)) && input.note,
 		"ClosureScopes:input_on/6": $wi__input_on && $input_on__closures,
 		"ClosureScopes:input_note/5": _write_if($scope0_reason, 1) && $input_note__closures,
 		"#childScope/0": _existing_scope($childScope2)
 	}, "__tests__/template.marko", 0, {
 		input_note: ["input.note"],
 		input_on: ["input.on"]
-	}) || ($fg__input_note && (_client_branch_if("__tests__/template.marko_3*content", $scope0_id) || _unfilled_if($scope0_reason, 2)) && _patch_write($scope0_id, "PatchMarkedWrite:input_note", input.note, !_server_guard($scope0_reason, 1)), $fg__input_on && _client_branch_if("__tests__/template.marko_3*content", $scope0_id) && _patch_write($scope0_id, "PatchMarkedWrite:input_on", input.on, !_server_guard($scope0_reason, 2)));
+	}) || ($fg__input_note && (_client_branch_if("__tests__/template.marko_3*content", $scope0_id) || $ui__input_on2) && _patch_write($scope0_id, "PatchMarkedWrite:input_note", input.note, !_server_guard($scope0_reason, 1)), $fg__input_on && _client_branch_if("__tests__/template.marko_3*content", $scope0_id) && _patch_write($scope0_id, "PatchMarkedWrite:input_on", input.on, !_server_guard($scope0_reason, 2)));
 }, 1);

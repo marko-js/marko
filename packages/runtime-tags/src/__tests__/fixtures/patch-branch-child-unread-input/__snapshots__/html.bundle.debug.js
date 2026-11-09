@@ -57,7 +57,7 @@ _shells({
 	"__tests__/template.marko_3*shell": `__tests__/template.marko_3*shell${_shell_marker([[], []], ["#childScope/0>", $setup$2], ["#childScope/1>", $setup$1])};${/*@__PURE__*/ ((_w0, _w1) => `/${_w0}&/${_w1}&`)("D l", $walks$1)};${/*@__PURE__*/ ((_w0, _w1) => `${_w0}${_w1}`)($template$2, $template$1)}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_adminData = _filled_guard($scope0_reason, 2), $fg__input_user = _filled_guard($scope0_reason, 3), $cg__input_admin = _client_guard($scope0_reason, 1), $fg__input_other = _filled_guard($scope0_reason, 5), $fg__input_props_user = _filled_guard($scope0_reason, 6), $cg__input_more = _client_guard($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $uf__input_other = _updates_from($scope0_reason, 5), $ui__input_admin = _unfilled_if($scope0_reason, 1), $ui__input_more = _unfilled_if($scope0_reason, 4), $fg__input_adminData = _filled_guard($scope0_reason, 2), $fg__input_user = _filled_guard($scope0_reason, 3), $cg__input_admin = _client_guard($scope0_reason, 1), $fg__input_other = _filled_guard($scope0_reason, 5), $fg__input_props_user = _filled_guard($scope0_reason, 6), $cg__input_more = _client_guard($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	let n = 0;
 	_html(`<button class=inc>${_text_mark($scope0_id, "#text/1", n)}</button>${_el_mark($scope0_id, "#button/0")}`);
@@ -95,7 +95,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $childScope3 = _peek_scope_id($scope3_id, "#childScope/0", 1);
 			card_default(input.props);
 			_patch_child_end();
-			_set_scope_reason(_updates_from($scope0_reason, 5) << 1 | _updates_from($scope0_reason, 5) << 3);
+			_set_scope_reason($uf__input_other << 1 | $uf__input_other << 3);
 			const $childScope4 = _peek_scope_id($scope3_id, "#childScope/1", 2);
 			toggle_default({ user: input.other });
 			_patch_child_end();
@@ -115,16 +115,16 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	$fg__input_other && $cg__input_more && _patch_render($scope0_id, "__tests__/template.marko_3_input_other#0:11/setup", "input_other");
 	$fg__input_props_user && $cg__input_more && _patch_render($scope0_id, "__tests__/template.marko_3_input_props_user#0:13/setup", "input_props_user");
 	_scope($scope0_id, {
-		input_adminData: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.adminData,
-		input_user: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 3)) && input.user,
-		input_other: (_unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 5)) && input.other,
+		input_adminData: ($ui__input_admin || _unfilled_if($scope0_reason, 2)) && input.adminData,
+		input_user: ($ui__input_admin || _unfilled_if($scope0_reason, 3)) && input.user,
+		input_other: ($ui__input_more || _unfilled_if($scope0_reason, 5)) && input.other,
 		n,
-		input_props_user: (_unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 6)) && input.props?.user
+		input_props_user: ($ui__input_more || _unfilled_if($scope0_reason, 6)) && input.props?.user
 	}, "__tests__/template.marko", 0, {
 		input_adminData: ["input.adminData"],
 		input_user: ["input.user"],
 		input_other: ["input.other"],
 		n: "1:6",
 		input_props_user: ["input.props.user"]
-	}) || ($fg__input_adminData && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_adminData", input.adminData, !_server_guard($scope0_reason, 2)), $fg__input_user && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_user", input.user, !_server_guard($scope0_reason, 3)), $fg__input_other && _unfilled_if($scope0_reason, 4) && _patch_write($scope0_id, "PatchMarkedWrite:input_other", input.other, !_server_guard($scope0_reason, 5)), $fg__input_props_user && _unfilled_if($scope0_reason, 4) && _patch_write($scope0_id, "PatchMarkedWrite:input_props_user", input.props?.user, !_server_guard($scope0_reason, 6)));
+	}) || ($fg__input_adminData && $ui__input_admin && _patch_write($scope0_id, "PatchMarkedWrite:input_adminData", input.adminData, !_server_guard($scope0_reason, 2)), $fg__input_user && $ui__input_admin && _patch_write($scope0_id, "PatchMarkedWrite:input_user", input.user, !_server_guard($scope0_reason, 3)), $fg__input_other && $ui__input_more && _patch_write($scope0_id, "PatchMarkedWrite:input_other", input.other, !_server_guard($scope0_reason, 5)), $fg__input_props_user && $ui__input_more && _patch_write($scope0_id, "PatchMarkedWrite:input_props_user", input.props?.user, !_server_guard($scope0_reason, 6)));
 }, 1);

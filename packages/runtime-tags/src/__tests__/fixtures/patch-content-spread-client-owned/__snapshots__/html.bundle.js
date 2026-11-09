@@ -8,7 +8,7 @@ _shells({
 	b: "b !b3 b4; b ;<section></section><div id=partial></div>"
 });
 var frag_host_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_b = _client_guard($scope0_reason, 0), $fg__input_b = _filled_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_b = _client_guard($scope0_reason, 0), $ui__input_mode = _unfilled_if($scope0_reason, 1), $fg__input_b = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_b__closures = /* @__PURE__ */ new Set();
 	const one = { content: _content_resume("b0", () => {
@@ -32,14 +32,14 @@ var frag_host_default = _template("b", (input) => {
 	_html(`</div>${_el_mark($scope0_id, "b")}`);
 	_script($scope0_id, "b3");
 	_script($scope0_id, "b4");
-	_unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "wg", one, 1);
-	_unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "wh", two, 1);
+	$ui__input_mode && _patch_write($scope0_id, "wg", one, 1);
+	$ui__input_mode && _patch_write($scope0_id, "wh", two, 1);
 	$fg__input_b && _patch_subscribers($scope0_id, "b5", "e");
 	_client_guard($scope0_reason, 1) && _patch_render($scope0_id, "b6");
 	_scope($scope0_id, {
 		e: input.b,
-		g: _unfilled_if($scope0_reason, 1) && one,
-		h: _unfilled_if($scope0_reason, 1) && two,
+		g: $ui__input_mode && one,
+		h: $ui__input_mode && two,
 		l: _write_if($scope0_reason, 0) && $input_b__closures
 	}) || $fg__input_b && _patch_write($scope0_id, "xe", input.b, !_server_guard($scope0_reason, 0));
 });

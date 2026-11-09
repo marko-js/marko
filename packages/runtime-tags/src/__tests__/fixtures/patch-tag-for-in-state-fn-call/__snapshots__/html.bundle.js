@@ -8,31 +8,31 @@ _shells({
 	b4: "b4 b3;D ;<span> </span>"
 });
 var card_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_sel = _write_guard($scope0_reason, 3), $cg__input_sel = _client_guard($scope0_reason, 3), $sg__input_prefix = _server_guard($scope0_reason, 1), $fg__input_prefix = _filled_guard($scope0_reason, 1), $fg__input_sel = _filled_guard($scope0_reason, 3), $cg__input_obj = _client_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_sel = _write_guard($scope0_reason, 3), $cg__input_sel = _client_guard($scope0_reason, 3), $ui__input_obj = _unfilled_if($scope0_reason, 2), $sg__input_prefix = _server_guard($scope0_reason, 1), $fg__input_prefix2 = _filled_guard($scope0_reason, 1), $fg__input_sel = _filled_guard($scope0_reason, 3), $cg__input_obj = _client_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $s__closures = /* @__PURE__ */ new Set();
 	const $fmt2__closures = /* @__PURE__ */ new Set();
-	$fg__input_prefix && _patch_write($scope0_id, "xe", input.prefix, !$sg__input_prefix);
+	$fg__input_prefix2 && _patch_write($scope0_id, "xe", input.prefix, !$sg__input_prefix);
 	let s = 0;
 	const fmt = _bind_resume((v) => input.prefix + v, "b0", $scope0_id);
 	_for_in(input.obj, (k, v) => {
-		const $scope1_id = _scope_id();
-		_filled_guard($scope0_reason, 2) && _patch_write($scope1_id, "xe", v, !_server_guard($scope0_reason, 2));
+		const $scope1_id = _scope_id(), $fg__input_obj = _filled_guard($scope0_reason, 2);
+		$fg__input_obj && _patch_write($scope1_id, "xe", v, !_server_guard($scope0_reason, 2));
 		_if(() => {
 			if (k === input.sel) {
-				const $scope2_id = _scope_id();
+				const $scope2_id = _scope_id(), $fg__input_prefix = _filled_guard($scope0_reason, 1);
 				_html(`<span>${_text_mark($scope2_id, "a", fmt(v + s))}</span>`);
 				_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope2_id, "b1");
 				_patch_render($scope2_id, "b2", [
-					_filled_guard($scope0_reason, 1) && ">>i",
-					_filled_guard($scope0_reason, 1) && ">>e",
+					$fg__input_prefix && ">>i",
+					$fg__input_prefix && ">>e",
 					_filled_guard($scope0_reason, 2) && ">e"
 				]);
 				_subscribe(_unfilled_if($scope0_reason, 1) && $fmt2__closures, _subscribe($s__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "b3"), _client_guard($scope0_reason, 1) && "b1");
 				return 0;
 			}
 		}, $scope1_id, "a", 1, $wg__input_sel, 1, 0, 0, ["b4"], $scope0_reason, 0);
-		_filled_guard($scope0_reason, 2) && $cg__input_sel && _patch_render($scope1_id, "b6", "e");
+		$fg__input_obj && $cg__input_sel && _patch_render($scope1_id, "b6", "e");
 		$cg__input_sel && _patch_render($scope1_id, "b7");
 		_scope($scope1_id, {
 			M: _unfilled_if($scope0_reason, 3) && k,
@@ -43,16 +43,16 @@ var card_default = _template("b", (input) => {
 	_html(`<button class=s>+</button>${_el_mark($scope0_id, "b")}`);
 	_script($scope0_id, "b8");
 	$fg__input_sel && $cg__input_obj && _patch_render($scope0_id, "b7", "g");
-	$fg__input_prefix && ($cg__input_obj || $cg__input_sel) && _patch_subscribers($scope0_id, "b9", ["i", "e"]);
+	$fg__input_prefix2 && ($cg__input_obj || $cg__input_sel) && _patch_subscribers($scope0_id, "b9", ["i", "e"]);
 	_patch_fill($scope0_id, "vb10", s, 1);
 	_scope($scope0_id, {
 		e: input.prefix,
-		g: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && input.sel,
+		g: ($ui__input_obj || _unfilled_if($scope0_reason, 3)) && input.sel,
 		h: s,
 		i: fmt,
 		k: $s__closures,
 		l: _write_if($scope0_reason, 1) && $fmt2__closures
-	}) || ($fg__input_sel && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xg", input.sel, !_server_guard($scope0_reason, 3)), $fg__input_prefix && _patch_write($scope0_id, "xi", fmt, !$sg__input_prefix));
+	}) || ($fg__input_sel && $ui__input_obj && _patch_write($scope0_id, "xg", input.sel, !_server_guard($scope0_reason, 3)), $fg__input_prefix2 && _patch_write($scope0_id, "xi", fmt, !$sg__input_prefix));
 });
 
 // template.marko

@@ -4,7 +4,7 @@ _shells({
 	a: "a;D bD ;<main><section></section><p> </p></main>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_note = _client_guard($scope0_reason, 1), $fg__input_note = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_note = _client_guard($scope0_reason, 1), $ui__input_mode = _unfilled_if($scope0_reason, 2), $fg__input_note = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = /* @__PURE__ */ new Set();
 	const frag = { content: _content_resume("a0", () => {
@@ -19,8 +19,8 @@ var template_default = _template("a", (input) => {
 	_html(`</section>${_el_mark($scope0_id, "a", _updates_from($scope0_reason, 2))}<p>${_text_mark($scope0_id, "b", input.note, 1, $scope0_reason, 1)}</p></main>`);
 	$fg__input_note && _patch_subscribers($scope0_id, "a2", "e");
 	_scope($scope0_id, {
-		e: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1)) && input.note,
-		h: _unfilled_if($scope0_reason, 2) && frag?.content,
+		e: ($ui__input_mode || _unfilled_if($scope0_reason, 1)) && input.note,
+		h: $ui__input_mode && frag?.content,
 		j: _write_if($scope0_reason, 1) && $input_note__closures
-	}) || $fg__input_note && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xe", input.note, !_server_guard($scope0_reason, 1));
+	}) || $fg__input_note && $ui__input_mode && _patch_write($scope0_id, "xe", input.note, !_server_guard($scope0_reason, 1));
 }, 1);

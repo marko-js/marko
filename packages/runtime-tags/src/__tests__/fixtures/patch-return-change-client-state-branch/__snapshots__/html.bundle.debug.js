@@ -36,14 +36,14 @@ _shells({
 	"__tests__/template.marko_1*shell": `__tests__/template.marko_1*shell${_shell_marker([[], ["__tests__/template.marko_1"]], ["#childScope/0>", $setup$1])};${/*@__PURE__*/ ((_w0) => `0${_w0}& b`)($walks$1)};${/*@__PURE__*/ ((_w0) => `${_w0}<button class=set>set</button>`)($template$1)}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_p = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $uf__input_p = _updates_from($scope0_reason, 1), $fg__input_p = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	$fg__input_p && _patch_write($scope0_id, "PatchMarkedWrite:input_p", input.p, !_server_guard($scope0_reason, 1));
 	let last = "none";
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_set_scope_reason(_updates_from($scope0_reason, 1) << 1 | _updates_from($scope0_reason, 1) << 3);
+			_set_scope_reason($uf__input_p << 1 | $uf__input_p << 3);
 			const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0, 1);
 			let count = counter_box_default({
 				onA: _bind_resume(function(v) {

@@ -4,7 +4,7 @@ const $walks$1 = " b b";
 const $setup$1 = [[], ["__tests__/tags/picker.marko_0"]];
 _shells({ "__tests__/tags/picker.marko": "^__tests__/tags/picker.marko !__tests__/tags/picker.marko_0; b ;<button>load</button><ul></ul>" });
 var picker_default = _template("__tests__/tags/picker.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_refreshing = _filled_guard($scope0_reason, 1), $fg__input_refreshingChange = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $ui__input_refreshing__OR__input_refreshingChange = _unfilled_if($scope0_reason, 0), $ui__input_refreshingChange = _unfilled_if($scope0_reason, 2), $ui__input_refreshing = _unfilled_if($scope0_reason, 1), $fg__input_refreshing = _filled_guard($scope0_reason, 1), $fg__input_refreshingChange = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	let refreshing = input.refreshing;
 	let catalog = null;
@@ -27,8 +27,8 @@ var picker_default = _template("__tests__/tags/picker.marko", (input) => {
 	_patch_let_change($scope0_id, "PatchFill:__tests__/tags/picker.marko_0_refreshing#7/fill", refreshing, "PatchWrite:TagVariableChange:refreshing", $refreshingChange, $scope0_reason, 0);
 	_patch_fill($scope0_id, "PatchFill:__tests__/tags/picker.marko_0_catalog#9/fill", catalog, 1);
 	_scope($scope0_id, {
-		input_refreshing: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.refreshing,
-		input_refreshingChange: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.refreshingChange,
+		input_refreshing: ($ui__input_refreshingChange || $ui__input_refreshing__OR__input_refreshingChange) && input.refreshing,
+		input_refreshingChange: ($ui__input_refreshing || $ui__input_refreshing__OR__input_refreshingChange) && input.refreshingChange,
 		load,
 		"TagVariableChange:refreshing": $refreshingChange
 	}, "__tests__/tags/picker.marko", 0, {
@@ -36,7 +36,7 @@ var picker_default = _template("__tests__/tags/picker.marko", (input) => {
 		input_refreshingChange: ["input.refreshingChange"],
 		load: "3:8",
 		"TagVariableChange:refreshing": ["refreshingChange", "1:6"]
-	}) || ($fg__input_refreshing && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_refreshing", input.refreshing, !_server_guard($scope0_reason, 1)), $fg__input_refreshingChange && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_refreshingChange", input.refreshingChange, !_server_guard($scope0_reason, 2)));
+	}) || ($fg__input_refreshing && $ui__input_refreshingChange && _patch_write($scope0_id, "PatchMarkedWrite:input_refreshing", input.refreshing, !_server_guard($scope0_reason, 1)), $fg__input_refreshingChange && $ui__input_refreshing && _patch_write($scope0_id, "PatchMarkedWrite:input_refreshingChange", input.refreshingChange, !_server_guard($scope0_reason, 2)));
 	return $return;
 });
 

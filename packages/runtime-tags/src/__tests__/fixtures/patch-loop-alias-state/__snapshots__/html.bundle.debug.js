@@ -12,11 +12,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let count = 0;
 	_html("<main>");
 	_for_of(input.items, (item) => {
-		const $scope1_id = _scope_id();
-		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "PatchMarkedWrite:name", item.name, !$sg__input_items);
-		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "PatchMarkedWrite:item_id", item.id, !$sg__input_items);
+		const $scope1_id = _scope_id(), $fg__input_items = _filled_guard($scope0_reason, 0);
+		$fg__input_items && _patch_write($scope1_id, "PatchMarkedWrite:name", item.name, !$sg__input_items);
+		$fg__input_items && _patch_write($scope1_id, "PatchMarkedWrite:item_id", item.id, !$sg__input_items);
 		_html(`<p>${_text_mark($scope1_id, "#text/0", item.name + "/" + item.id + "#" + count)}</p>`);
-		_patch_render($scope1_id, "__tests__/template.marko_1_count#0:5_name#3_item_id#4/setup", [_filled_guard($scope0_reason, 0) && "name", _filled_guard($scope0_reason, 0) && "item_id"]);
+		_patch_render($scope1_id, "__tests__/template.marko_1_count#0:5_name#3_item_id#4/setup", [$fg__input_items && "name", $fg__input_items && "item_id"]);
 		_scope($scope1_id, {
 			name: item.name,
 			item_id: item.id,

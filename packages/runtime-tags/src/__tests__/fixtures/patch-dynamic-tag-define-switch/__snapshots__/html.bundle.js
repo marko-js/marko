@@ -5,7 +5,7 @@ _shells({
 	a: "a;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 1), $wi__input_label__OR__input_which = _write_if($scope0_reason, 0), $wg__input_label__OR__input_which = _write_guard($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 1), $fg__input_which = _filled_guard($scope0_reason, 2), $wi__input_label = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 1), $wi__input_label__OR__input_which = _write_if($scope0_reason, 0), $wg__input_label__OR__input_which = _write_guard($scope0_reason, 0), $ui__input_label = _unfilled_if($scope0_reason, 1), $ui__input_label__OR__input_which = _unfilled_if($scope0_reason, 0), $ui__input_which = _unfilled_if($scope0_reason, 2), $fg__input_label = _filled_guard($scope0_reason, 1), $fg__input_which = _filled_guard($scope0_reason, 2), $wi__input_label = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	const Counter = { content: _content_resume("a0", () => {
@@ -35,10 +35,10 @@ var template_default = _template("a", (input) => {
 	$fg__input_label && _patch_subscribers($scope0_id, "a6", "d");
 	_patch_render($scope0_id, "a7", [$fg__input_label && "d", $fg__input_which && "e"], $scope0_reason, 0);
 	_scope($scope0_id, {
-		d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.label,
-		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.which,
-		f: _unfilled_if($scope0_reason, 0) && Counter,
-		g: _unfilled_if($scope0_reason, 0) && Other,
+		d: ($ui__input_which || $ui__input_label__OR__input_which || $ui__input_label) && input.label,
+		e: ($ui__input_label || $ui__input_label__OR__input_which) && input.which,
+		f: $ui__input_label__OR__input_which && Counter,
+		g: $ui__input_label__OR__input_which && Other,
 		i: $wi__input_label && $input_label__closures
-	}) || ($fg__input_label && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xd", input.label, !_server_guard($scope0_reason, 1)), $fg__input_which && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.which, !_server_guard($scope0_reason, 2)));
+	}) || ($fg__input_label && $ui__input_which && _patch_write($scope0_id, "xd", input.label, !_server_guard($scope0_reason, 1)), $fg__input_which && $ui__input_label && _patch_write($scope0_id, "xe", input.which, !_server_guard($scope0_reason, 2)));
 }, 1);

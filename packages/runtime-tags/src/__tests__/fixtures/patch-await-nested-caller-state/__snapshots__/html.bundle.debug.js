@@ -14,7 +14,7 @@ var show_await_default = _template("__tests__/tags/show-await.marko", (input) =>
 	const $scope0_id = _scope_id();
 	const $input_label__closures = new Set();
 	_await($scope0_id, "#text/0", input.promise, (x) => {
-		const $scope1_id = _scope_id();
+		const $scope1_id = _scope_id(), $ui__input_promise = _unfilled_if($scope0_reason, 1);
 		const $await_content__x__closures = new Set();
 		_await($scope1_id, "#text/0", Promise.resolve(x + 10), (y) => {
 			const $scope2_id = _scope_id();
@@ -22,8 +22,8 @@ var show_await_default = _template("__tests__/tags/show-await.marko", (input) =>
 			_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope2_id, "__tests__/tags/show-await.marko_2_input_label#0:4/subscribe", $cg__input_label);
 			_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope2_id, "__tests__/tags/show-await.marko_2_x#1:2/subscribe", $cg__input_promise);
 			_subscribe(_unfilled_if($scope0_reason, 1) && $await_content__x__closures, _subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope2_id, {}, "__tests__/tags/show-await.marko", "2:4"), $cg__input_label && "__tests__/tags/show-await.marko_2_input_label#0:4/subscribe"), $cg__input_promise && "__tests__/tags/show-await.marko_2_x#1:2/subscribe");
-		}, 1, "__tests__/tags/show-await.marko_2*content", _unfilled_if($scope0_reason, 1), 1);
-		_write_if($scope0_reason, 0) && _scope($scope1_id, { "ClosureScopes:x/6": _write_if($scope0_reason, 1) && _unfilled_if($scope0_reason, 1) && $await_content__x__closures }, "__tests__/tags/show-await.marko", "1:2");
+		}, 1, "__tests__/tags/show-await.marko_2*content", $ui__input_promise, 1);
+		_write_if($scope0_reason, 0) && _scope($scope1_id, { "ClosureScopes:x/6": _write_if($scope0_reason, 1) && $ui__input_promise && $await_content__x__closures }, "__tests__/tags/show-await.marko", "1:2");
 	}, 1, "__tests__/tags/show-await.marko_1*content", _unfilled_if($scope0_reason, 1), 1);
 	_scope($scope0_id, { "ClosureScopes:input_label/5": _write_if($scope0_reason, 2) && _unfilled_if($scope0_reason, 2) && $input_label__closures }, "__tests__/tags/show-await.marko", 0);
 });

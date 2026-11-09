@@ -15,15 +15,15 @@ var show_await_default = _template("b", (input) => {
 	_await($scope0_id, "a", input.promise, (x) => {
 		const $scope1_id = _scope_id();
 		_for_of([x], (n, i) => {
-			const $scope2_id = _scope_id();
+			const $scope2_id = _scope_id(), $ui__input_promise = _unfilled_if($scope0_reason, 0);
 			const $for_content__n__closures = /* @__PURE__ */ new Set();
 			_await($scope2_id, "a", Promise.resolve(i), (y) => {
 				const $scope3_id = _scope_id();
 				_html(`<b>${_text_mark($scope3_id, "a", n, 1, $scope0_reason, 0)}:${_text_mark($scope3_id, "b", y, 2, 0, 0)}</b>`);
 				_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope3_id, "b0", $cg__input_promise);
 				_subscribe(_unfilled_if($scope0_reason, 0) && $for_content__n__closures, _scope($scope3_id, {}), $cg__input_promise && "b0");
-			}, 1, "b1", _unfilled_if($scope0_reason, 0) && 3);
-			_write_if($scope0_reason, 0) && _scope($scope2_id, { e: _unfilled_if($scope0_reason, 0) && $for_content__n__closures });
+			}, 1, "b1", $ui__input_promise && 3);
+			_write_if($scope0_reason, 0) && _scope($scope2_id, { e: $ui__input_promise && $for_content__n__closures });
 		}, 0, $scope1_id, "a", 1, 1, 1, 0, 0, "b5", $scope0_reason, 0);
 		_scope($scope1_id, {});
 	}, 1, "b2", _unfilled_if($scope0_reason, 0) && 2, 1);

@@ -7,7 +7,7 @@ _shells({
 	a4: "a4;%;<!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_html = _client_guard($scope0_reason, 2), $wi__input_show__OR__input_html = _write_if($scope0_reason, 0), $wi__input_html = _write_if($scope0_reason, 2), $wg__input_html = _write_guard($scope0_reason, 2), $wg__input_show = _write_guard($scope0_reason, 1), $fg__input_html = _filled_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_html = _client_guard($scope0_reason, 2), $wi__input_show__OR__input_html = _write_if($scope0_reason, 0), $wi__input_html = _write_if($scope0_reason, 2), $wg__input_html = _write_guard($scope0_reason, 2), $wg__input_show = _write_guard($scope0_reason, 1), $ui__input_show = _unfilled_if($scope0_reason, 1), $ui__input_html = _unfilled_if($scope0_reason, 2), $fg__input_html = _filled_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_html__closures = /* @__PURE__ */ new Set();
 	_html("<main>");
@@ -58,7 +58,7 @@ var template_default = _template("a", (input) => {
 	$fg__input_html && ($cg__input_show || $cg__input_html) && _patch_subscribers($scope0_id, "a9", "e");
 	$fg__input_html && $cg__input_show && _patch_render($scope0_id, "a8", "e");
 	_scope($scope0_id, {
-		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.html,
-		g: $wi__input_html && (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1)) && $input_html__closures
-	}) || $fg__input_html && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.html, !_server_guard($scope0_reason, 2));
+		e: ($ui__input_show || $ui__input_html) && input.html,
+		g: $wi__input_html && ($ui__input_html || $ui__input_show) && $input_html__closures
+	}) || $fg__input_html && $ui__input_show && _patch_write($scope0_id, "xe", input.html, !_server_guard($scope0_reason, 2));
 }, 1);

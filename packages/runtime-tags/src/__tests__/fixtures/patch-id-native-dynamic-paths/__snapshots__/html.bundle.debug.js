@@ -11,7 +11,7 @@ _shells({
 	"__tests__/template.marko_2*shell": `__tests__/template.marko_2*shell;${/*@__PURE__*/ ((_w0) => `b%b/${_w0}&%c`)($Wrap_content__walks)};${/*@__PURE__*/ ((_w0) => `<!><!>${_w0}<!><!>`)($Wrap_content__template)}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_items = _write_guard($scope0_reason, 0), $cg__input_items = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $uf__input_items = _updates_from($scope0_reason, 0), $wg__input_items = _write_guard($scope0_reason, 0), $cg__input_items = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const Body = { content: _content_resume("__tests__/template.marko_1*content", () => {
 		const $scope1_id = _scope_id();
@@ -22,17 +22,17 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id) };
 	const Wrap = { content: _content("__tests__/template.marko_3*content", ({ on, content }) => {
 		const $scope3_id = _scope_id();
-		const $scope3_reason = _scope_reason(), $wg__on__OR__content = _write_guard($scope3_reason, 0), $fg__content = _filled_guard($scope3_reason, 2), $fg__on = _filled_guard($scope3_reason, 1);
+		const $scope3_reason = _scope_reason(), $wg__on__OR__content = _write_guard($scope3_reason, 0), $ui__on__OR__content = _unfilled_if($scope3_reason, 0), $ui__on = _unfilled_if($scope3_reason, 1), $ui__content = _unfilled_if($scope3_reason, 2), $fg__content = _filled_guard($scope3_reason, 2), $fg__on = _filled_guard($scope3_reason, 1);
 		const Tag = on ? "p" : "div";
 		_dynamic_tag($scope3_id, "#text/0", Tag, { content }, 1, 0, 0, $wg__on__OR__content, $scope3_reason, 0);
 		_patch_render($scope3_id, "__tests__/template.marko_3_content#4_Tag#5/setup", [$fg__content && "content", $fg__on && "Tag"], $scope3_reason, 0);
 		_write_if($scope3_reason, 0) && _scope($scope3_id, {
-			content: (_unfilled_if($scope3_reason, 1) || _unfilled_if($scope3_reason, 0)) && content,
-			Tag: (_unfilled_if($scope3_reason, 2) || _unfilled_if($scope3_reason, 0)) && Tag
+			content: ($ui__on || $ui__on__OR__content) && content,
+			Tag: ($ui__content || $ui__on__OR__content) && Tag
 		}, "__tests__/template.marko", "2:2", {
 			content: "2:20",
 			Tag: "3:10"
-		}) || ($fg__content && _unfilled_if($scope3_reason, 1) && _patch_write($scope3_id, "PatchMarkedWrite:content", content, !_server_guard($scope3_reason, 2)), $fg__on && _unfilled_if($scope3_reason, 2) && _patch_write($scope3_id, "PatchMarkedWrite:Tag", Tag, !_server_guard($scope3_reason, 1)));
+		}) || ($fg__content && $ui__on && _patch_write($scope3_id, "PatchMarkedWrite:content", content, !_server_guard($scope3_reason, 2)), $fg__on && $ui__content && _patch_write($scope3_id, "PatchMarkedWrite:Tag", Tag, !_server_guard($scope3_reason, 1)));
 	}, $scope0_id) };
 	_for_of(input.items, (item) => {
 		const $scope2_id = _scope_id();
@@ -44,7 +44,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_html(`<label${_attr("for", uid, $scope4_id, "#label/0", 0, 0)}>attr</label>${_el_mark($scope4_id, "#label/0", 0)}<input${_attr("id", uid, $scope4_id, "#input/1", 0, 0)}>${_el_mark($scope4_id, "#input/1", 0)}`);
 			_scope($scope4_id, {}, "__tests__/template.marko", "8:12");
 		}, $scope2_id, 0) }) }, 9, 0, 0, $wg__input_items, $scope0_reason, 0);
-		_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 0) << 3);
+		_set_scope_reason($uf__input_items << 1 | $uf__input_items << 3);
 		const $childScope = _peek_scope_id($scope2_id, "#childScope/1", 2);
 		Wrap.content({
 			on: item.on,

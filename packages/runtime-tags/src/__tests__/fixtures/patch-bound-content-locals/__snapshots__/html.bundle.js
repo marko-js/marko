@@ -24,7 +24,7 @@ _shells({
 	a3: `a3${_shell_marker([[], []], ["a>", $setup])};${/*@__PURE__*/ ((_w0) => `/${_w0}&b`)($walks)};${/*@__PURE__*/ ((_w0) => `${_w0}<!>`)($template)}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_items = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $ui__input_show = _unfilled_if($scope0_reason, 0), $fg__input_items = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $n__closures = /* @__PURE__ */ new Set();
 	let n = 0;
@@ -54,8 +54,8 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a4");
 	$fg__input_items && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "a2", "f");
 	_scope($scope0_id, {
-		f: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.items,
+		f: ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.items,
 		g: n,
 		i: $n__closures
-	}) || $fg__input_items && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xf", input.items, !_server_guard($scope0_reason, 1));
+	}) || $fg__input_items && $ui__input_show && _patch_write($scope0_id, "xf", input.items, !_server_guard($scope0_reason, 1));
 }, 1);

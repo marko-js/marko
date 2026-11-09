@@ -11,23 +11,23 @@ const lib = { format(value) {
 // template.marko
 _shells({ a: "a !a4;b%b ;<!><!><button class=toggle>toggle</button>" });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_label = _filled_guard($scope0_reason, 1), $fg__input_title = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $uf__input_label = _updates_from($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 1), $fg__input_title = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	let open = true;
 	const Panel = { content: _content("a0", ({ fmt, label, title }) => {
 		const $scope2_id = _scope_id();
-		const $scope2_reason = _scope_reason(), $fg__fmt = _filled_guard($scope2_reason, 1), $fg__label = _filled_guard($scope2_reason, 2);
+		const $scope2_reason = _scope_reason(), $ui__fmt = _unfilled_if($scope2_reason, 1), $fg__fmt = _filled_guard($scope2_reason, 1), $fg__label = _filled_guard($scope2_reason, 2);
 		_html(`<em>${_text_mark($scope2_id, "a", fmt(label), 1, $scope2_reason, 0)}</em><b>${_text_mark($scope2_id, "b", title, 1, $scope2_reason, 3)}</b>`);
 		_patch_render($scope2_id, "a1", [$fg__fmt && "e", $fg__label && "f"], $scope2_reason, 0);
 		_scope($scope2_id, {
 			e: (_unfilled_if($scope2_reason, 2, 1) || _unfilled_if($scope2_reason, 0, 1)) && fmt,
-			f: (_unfilled_if($scope2_reason, 1) || _unfilled_if($scope2_reason, 0)) && label
-		}) || ($fg__fmt && _unfilled_if($scope2_reason, 2) && _patch_write($scope2_id, "xe", fmt, !_server_guard($scope2_reason, 1)), $fg__label && _unfilled_if($scope2_reason, 1) && _patch_write($scope2_id, "xf", label, !_server_guard($scope2_reason, 2)));
+			f: ($ui__fmt || _unfilled_if($scope2_reason, 0)) && label
+		}) || ($fg__fmt && _unfilled_if($scope2_reason, 2) && _patch_write($scope2_id, "xe", fmt, !_server_guard($scope2_reason, 1)), $fg__label && $ui__fmt && _patch_write($scope2_id, "xf", label, !_server_guard($scope2_reason, 2)));
 	}, $scope0_id) };
 	_if(() => {
 		{
 			const $scope1_id = _scope_id();
-			_set_scope_reason(_updates_from($scope0_reason, 1) << 1 | _updates_from($scope0_reason, 1) << 5 | _updates_from($scope0_reason, 2) << 7);
+			_set_scope_reason($uf__input_label << 1 | $uf__input_label << 5 | _updates_from($scope0_reason, 2) << 7);
 			const $childScope = _peek_scope_id($scope1_id, "a", 0);
 			Panel.content({
 				fmt: lib.format,

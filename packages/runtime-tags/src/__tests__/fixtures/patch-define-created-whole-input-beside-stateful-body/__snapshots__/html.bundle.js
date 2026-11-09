@@ -13,7 +13,7 @@ var template_default = _template("a", (input) => {
 	let open = false;
 	const Panel = { content: _content_resume("a3", (attrs) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason(), $wg__attrs_isOpen = _write_guard($scope1_reason, 1);
+		const $scope1_reason = _scope_reason(), $wg__attrs_isOpen = _write_guard($scope1_reason, 1), $ui__attrs_isOpen = _unfilled_if($scope1_reason, 1);
 		_if(() => {
 			if (attrs.isOpen) {
 				const $scope3_id = _scope_id();
@@ -27,8 +27,8 @@ var template_default = _template("a", (input) => {
 				return 0;
 			}
 		}, $scope1_id, "a", 1, $wg__attrs_isOpen, 1, 0, 0, ["a2"], $scope1_reason, 1);
-		_unfilled_if($scope1_reason, 1) && _patch_write($scope1_id, "we", attrs?.item, 1);
-		_write_if($scope1_reason, 1) && _scope($scope1_id, { e: _unfilled_if($scope1_reason, 1) && attrs?.item });
+		$ui__attrs_isOpen && _patch_write($scope1_id, "we", attrs?.item, 1);
+		_write_if($scope1_reason, 1) && _scope($scope1_id, { e: $ui__attrs_isOpen && attrs?.item });
 	}, $scope0_id) };
 	_if(() => {
 		if (input.show) {

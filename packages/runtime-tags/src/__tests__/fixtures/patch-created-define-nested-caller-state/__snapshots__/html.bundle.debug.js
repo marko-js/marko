@@ -16,7 +16,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let count = 0;
 	const Inner = { content: _content("__tests__/template.marko_1*content", ({ v, show }) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason(), $wg__show = _write_guard($scope1_reason, 1), $fg__v = _filled_guard($scope1_reason, 0);
+		const $scope1_reason = _scope_reason(), $wg__show = _write_guard($scope1_reason, 1), $ui__show = _unfilled_if($scope1_reason, 1), $fg__v = _filled_guard($scope1_reason, 0);
 		_if(() => {
 			if (show) {
 				const $scope3_id = _scope_id();
@@ -27,7 +27,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}
 		}, $scope1_id, "#text/0", 1, $wg__show, 1, 0, 0, ["__tests__/template.marko_3*shell"], $scope1_reason, 1);
 		$fg__v && _client_guard($scope1_reason, 1) && _patch_render($scope1_id, "__tests__/template.marko_3_v#1:3/setup", "v");
-		_write_if($scope1_reason, 1) && _scope($scope1_id, { v: (_unfilled_if($scope1_reason, 1) || _unfilled_if($scope1_reason, 0)) && v }, "__tests__/template.marko", "2:2", { v: "2:17" }) || $fg__v && _unfilled_if($scope1_reason, 1) && _patch_write($scope1_id, "PatchMarkedWrite:v", v, !_server_guard($scope1_reason, 0));
+		_write_if($scope1_reason, 1) && _scope($scope1_id, { v: ($ui__show || _unfilled_if($scope1_reason, 0)) && v }, "__tests__/template.marko", "2:2", { v: "2:17" }) || $fg__v && $ui__show && _patch_write($scope1_id, "PatchMarkedWrite:v", v, !_server_guard($scope1_reason, 0));
 	}, $scope0_id) };
 	const Outer = { content: _content("__tests__/template.marko_2*content", ({ v, show }) => {
 		const $scope2_id = _scope_id();

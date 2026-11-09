@@ -5,7 +5,7 @@ _shells({
 	a2: "a2,<p>a</p>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_attrs = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $ui__input_page = _unfilled_if($scope0_reason, 0), $fg__input_attrs = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.page === 0) {
@@ -31,5 +31,5 @@ var template_default = _template("a", (input) => {
 	}, "b", $scope0_id, "style", 2, $scope0_reason, 1)}>${_escape_style(`p.u { --page: ${_to_text(input.page)} }`, $scope0_id, "mb", $scope0_reason, 0)}</style>${_el_mark($scope0_id, "b")}`);
 	_script($scope0_id, "a4");
 	$fg__input_attrs && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "a1", "f");
-	_scope($scope0_id, { f: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.attrs }) || $fg__input_attrs && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xf", input.attrs, !_server_guard($scope0_reason, 1));
+	_scope($scope0_id, { f: ($ui__input_page || _unfilled_if($scope0_reason, 1)) && input.attrs }) || $fg__input_attrs && $ui__input_page && _patch_write($scope0_id, "xf", input.attrs, !_server_guard($scope0_reason, 1));
 }, 1);

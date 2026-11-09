@@ -59,10 +59,10 @@ var panel_default = _template("b", (input) => {
 const $setup = _shell_setup([[], ["a0"]], ["a>", $setup$1], ["b>", $setup$1]);
 _shells({ a: `a${_shell_marker($setup)};${((_w0, _w1) => `b/${_w0}&/${_w1}& b`)($walks, $walks)};${((_w0, _w1) => `<!>${_w0}${_w1}<button class=n>+</button>`)($template, $template)}` });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $uf__input_a = _updates_from($scope0_reason, 1), $uf__input_show = _updates_from($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	let n = "k";
-	_set_scope_reason(38 | (_updates_from($scope0_reason, 1) << 3 | _updates_from($scope0_reason, 2) << 7));
+	_set_scope_reason(38 | ($uf__input_a << 3 | $uf__input_show << 7));
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	panel_default({
 		a: input.a,
@@ -70,7 +70,7 @@ var template_default = _template("a", (input) => {
 		show: input.show
 	});
 	_patch_child_end();
-	_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 1) << 3 | _updates_from($scope0_reason, 3) << 5 | _updates_from($scope0_reason, 2) << 7);
+	_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | $uf__input_a << 3 | _updates_from($scope0_reason, 3) << 5 | $uf__input_show << 7);
 	const $childScope2 = _peek_scope_id($scope0_id, "b", 1);
 	panel_default({
 		a: input.a,

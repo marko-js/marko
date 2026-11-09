@@ -7,7 +7,7 @@ _shells({
 	b: "b; ;<section></section>"
 });
 var frag_host_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_b = _client_guard($scope0_reason, 1), $fg__input_b = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_b = _client_guard($scope0_reason, 1), $ui__input_mode = _unfilled_if($scope0_reason, 2), $fg__input_b = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_b__closures = /* @__PURE__ */ new Set();
 	const one = { content: _content_resume("b0", () => {
@@ -25,16 +25,16 @@ var frag_host_default = _template("b", (input) => {
 	_html("<section>");
 	_attr_content("a", $scope0_id, input.mode ? one : two, 0, 1, $scope0_reason, 2);
 	_html(`</section>${_el_mark($scope0_id, "a", _updates_from($scope0_reason, 2))}`);
-	_unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "wf", one, 1);
-	_unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "wg", two, 1);
+	$ui__input_mode && _patch_write($scope0_id, "wf", one, 1);
+	$ui__input_mode && _patch_write($scope0_id, "wg", two, 1);
 	$fg__input_b && _patch_subscribers($scope0_id, "b3", "d");
 	_client_guard($scope0_reason, 2) && _patch_render($scope0_id, "b4");
 	_scope($scope0_id, {
-		d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1)) && input.b,
-		f: _unfilled_if($scope0_reason, 2) && one,
-		g: _unfilled_if($scope0_reason, 2) && two,
+		d: ($ui__input_mode || _unfilled_if($scope0_reason, 1)) && input.b,
+		f: $ui__input_mode && one,
+		g: $ui__input_mode && two,
 		i: _write_if($scope0_reason, 1) && $input_b__closures
-	}) || $fg__input_b && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xd", input.b, !_server_guard($scope0_reason, 1));
+	}) || $fg__input_b && $ui__input_mode && _patch_write($scope0_id, "xd", input.b, !_server_guard($scope0_reason, 1));
 });
 
 // template.marko

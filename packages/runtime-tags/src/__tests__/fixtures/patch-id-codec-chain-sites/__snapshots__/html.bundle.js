@@ -22,7 +22,7 @@ _shells({
 	a4: `a4${_shell_marker([[], []], ["a>", $setup$1])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks)};${$template}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_nested = _write_guard($scope0_reason, 1), $wg__input_mode = _write_guard($scope0_reason, 0), $wg__input_other = _write_guard($scope0_reason, 2), $fg__input_nested = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_nested = _write_guard($scope0_reason, 1), $wg__input_mode = _write_guard($scope0_reason, 0), $wg__input_other = _write_guard($scope0_reason, 2), $ui__input_mode = _unfilled_if($scope0_reason, 0), $fg__input_nested = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.mode === 0) {
@@ -104,8 +104,8 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id, "d", 1, $wg__input_other, 1, 0, 0, ["a4"], $scope0_reason, 2);
 	$fg__input_nested && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "a5", "h");
 	_scope($scope0_id, {
-		h: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.nested,
+		h: ($ui__input_mode || _unfilled_if($scope0_reason, 1)) && input.nested,
 		b: _existing_scope($childScope9),
 		c: _existing_scope($childScope10)
-	}) || $fg__input_nested && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xh", input.nested, !_server_guard($scope0_reason, 1));
+	}) || $fg__input_nested && $ui__input_mode && _patch_write($scope0_id, "xh", input.nested, !_server_guard($scope0_reason, 1));
 }, 1);

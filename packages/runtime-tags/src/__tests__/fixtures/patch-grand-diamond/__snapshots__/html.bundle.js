@@ -43,13 +43,13 @@ var dia_c_default = _template("d", (input) => {
 const $setup = _shell_setup([[], []], ["a>", $setup$2], ["b>", $setup$1]);
 _shells({ b: `b${_shell_marker($setup)};${((_w0, _w1) => `/${_w0}&/${_w1}&`)($walks$1, $walks)};${((_w0, _w1) => `${_w0}${_w1}`)($template$1, $template)}` });
 var dia_a_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $uf__input_note = _updates_from($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
+	_set_scope_reason($uf__input_note << 1);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	dia_b_default({ note: input.note });
 	_patch_child_end();
-	_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
+	_set_scope_reason($uf__input_note << 1);
 	const $childScope2 = _peek_scope_id($scope0_id, "b", 1);
 	dia_c_default({ note: input.note });
 	_patch_child_end();

@@ -6,7 +6,7 @@ _shells({
 	b1: "b1;b%;<!><!><!>"
 });
 var panel_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 2), $wg__input_open = _write_guard($scope0_reason, 1), $fg__input_content = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 2), $wg__input_open = _write_guard($scope0_reason, 1), $ui__input_open = _unfilled_if($scope0_reason, 1), $fg__input_content = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	_html("<div class=panel>");
 	_if(() => {
@@ -20,7 +20,7 @@ var panel_default = _template("b", (input) => {
 	}, $scope0_id, "a", 1, $wg__input_open, 1, 0, 0, ["b1"], $scope0_reason, 1);
 	_html(`</div>${_el_mark($scope0_id, "a", $wg__input_open)}`);
 	$fg__input_content && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "b0", "e");
-	_scope($scope0_id, { e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.content }) || $fg__input_content && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.content, !_server_guard($scope0_reason, 2));
+	_scope($scope0_id, { e: ($ui__input_open || _unfilled_if($scope0_reason, 2)) && input.content }) || $fg__input_content && $ui__input_open && _patch_write($scope0_id, "xe", input.content, !_server_guard($scope0_reason, 2));
 });
 
 // template.marko
@@ -35,9 +35,9 @@ var template_default = _template("a", (input) => {
 	let open = true;
 	_html(`<button>toggle</button>${_el_mark($scope0_id, "a")}`);
 	_for_of(input.panels, (p) => {
-		const $scope1_id = _scope_id();
+		const $scope1_id = _scope_id(), $fg__input_panels = _filled_guard($scope0_reason, 0);
 		const $for_content__p_text__closures = /* @__PURE__ */ new Set();
-		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "xd", p?.text, !_server_guard($scope0_reason, 0));
+		$fg__input_panels && _patch_write($scope1_id, "xd", p?.text, !_server_guard($scope0_reason, 0));
 		_set_scope_reason(10);
 		const $childScope = _peek_scope_id($scope1_id, "a", 0);
 		panel_default({
@@ -51,7 +51,7 @@ var template_default = _template("a", (input) => {
 			}, $scope1_id)
 		});
 		_patch_child_end();
-		_filled_guard($scope0_reason, 0) && _patch_subscribers($scope1_id, "a2", "d");
+		$fg__input_panels && _patch_subscribers($scope1_id, "a2", "d");
 		_scope($scope1_id, {
 			d: p?.text,
 			_: _scope_with_id($scope0_id),

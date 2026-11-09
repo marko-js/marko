@@ -7,7 +7,7 @@ _shells({
 	b: "b;b%;<!><!><!>"
 });
 var picker_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_useA__OR__input_record = _write_guard($scope0_reason, 0), $fg__input_useA = _filled_guard($scope0_reason, 1), $fg__input_record = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_useA__OR__input_record = _write_guard($scope0_reason, 0), $ui__input_useA__OR__input_record = _unfilled_if($scope0_reason, 0), $ui__input_record = _unfilled_if($scope0_reason, 2), $ui__input_useA = _unfilled_if($scope0_reason, 1), $fg__input_useA = _filled_guard($scope0_reason, 1), $fg__input_record = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const Card = { content: _content_resume("b0", ({ record }) => {
 		const $scope1_id = _scope_id();
@@ -22,15 +22,15 @@ var picker_default = _template("b", (input) => {
 		_scope($scope2_id, {});
 	}, $scope0_id) };
 	_dynamic_tag($scope0_id, "a", input.useA ? Card : Other, { record: input.record }, 1, 0, 0, $wg__input_useA__OR__input_record, $scope0_reason, 0);
-	_unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "wf", Card, 1);
-	_unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "wg", Other, 1);
+	$ui__input_useA__OR__input_record && _patch_write($scope0_id, "wf", Card, 1);
+	$ui__input_useA__OR__input_record && _patch_write($scope0_id, "wg", Other, 1);
 	_patch_render($scope0_id, "b2", [$fg__input_useA && "d", $fg__input_record && "e"], $scope0_reason, 0);
 	_scope($scope0_id, {
-		d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.useA,
-		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.record,
-		f: _unfilled_if($scope0_reason, 0) && Card,
-		g: _unfilled_if($scope0_reason, 0) && Other
-	}) || ($fg__input_useA && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xd", input.useA, !_server_guard($scope0_reason, 1)), $fg__input_record && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.record, !_server_guard($scope0_reason, 2)));
+		d: ($ui__input_record || $ui__input_useA__OR__input_record) && input.useA,
+		e: ($ui__input_useA || $ui__input_useA__OR__input_record) && input.record,
+		f: $ui__input_useA__OR__input_record && Card,
+		g: $ui__input_useA__OR__input_record && Other
+	}) || ($fg__input_useA && $ui__input_record && _patch_write($scope0_id, "xd", input.useA, !_server_guard($scope0_reason, 1)), $fg__input_record && $ui__input_useA && _patch_write($scope0_id, "xe", input.record, !_server_guard($scope0_reason, 2)));
 });
 
 // template.marko

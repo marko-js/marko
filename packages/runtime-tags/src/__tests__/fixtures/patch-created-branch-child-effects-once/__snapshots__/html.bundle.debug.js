@@ -56,7 +56,7 @@ _shells({
 	"__tests__/template.marko_8*shell": "__tests__/template.marko_8*shell,"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_items = _server_guard($scope0_reason, 4), $cg__input_items = _client_guard($scope0_reason, 4), $scope0_page = _page_render(), $fg__input_items = _filled_guard($scope0_reason, 4), $fg__input_nested = _filled_guard($scope0_reason, 5), $cg__input_show = _client_guard($scope0_reason, 3), $fg__input_tag = _filled_guard($scope0_reason, 6), $wi__input_items = _write_if($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $sg__input_items = _server_guard($scope0_reason, 4), $cg__input_items = _client_guard($scope0_reason, 4), $scope0_page = _page_render(), $ui__input_show = _unfilled_if($scope0_reason, 3), $fg__input_items4 = _filled_guard($scope0_reason, 4), $fg__input_nested = _filled_guard($scope0_reason, 5), $cg__input_show = _client_guard($scope0_reason, 3), $fg__input_tag = _filled_guard($scope0_reason, 6), $wi__input_items = _write_if($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	const $input_items__closures = new Set();
 	let count = 0;
@@ -77,10 +77,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			Body.content({});
 			_patch_child_end();
 			_for_of(input.items, (item) => {
-				const $scope5_id = _scope_id();
-				_filled_guard($scope0_reason, 4) && _patch_write($scope5_id, "PatchMarkedWrite:item", item, !$sg__input_items);
+				const $scope5_id = _scope_id(), $fg__input_items = _filled_guard($scope0_reason, 4);
+				$fg__input_items && _patch_write($scope5_id, "PatchMarkedWrite:item", item, !$sg__input_items);
 				_html(`<i>${_text_mark($scope5_id, "#text/0", item, 1, $scope0_reason, 4)}</i>`);
-				_script($scope5_id, "__tests__/template.marko_5_item#2", 1, _filled_guard($scope0_reason, 4), "item");
+				_script($scope5_id, "__tests__/template.marko_5_item#2", 1, $fg__input_items, "item");
 				_scope($scope5_id, { item }, "__tests__/template.marko", "11:4", { item: "11:8" });
 			}, 0, $scope1_id, "#text/2", 1, 1, 1, 0, 0, "__tests__/template.marko_5*shell", $scope0_reason, 4);
 			_if(() => {
@@ -99,9 +99,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope2_id = _scope_id();
 				_html("<em>content</em>");
 				_for_of(input.items, (item) => {
-					const $scope7_id = _scope_id();
-					_filled_guard($scope0_reason, 4) && _patch_write($scope7_id, "PatchMarkedWrite:item", item, !$sg__input_items);
-					_script($scope7_id, "__tests__/template.marko_7_item#1", 0, _filled_guard($scope0_reason, 4), "item");
+					const $scope7_id = _scope_id(), $fg__input_items2 = _filled_guard($scope0_reason, 4);
+					$fg__input_items2 && _patch_write($scope7_id, "PatchMarkedWrite:item", item, !$sg__input_items);
+					_script($scope7_id, "__tests__/template.marko_7_item#1", 0, $fg__input_items2, "item");
 					_scope($scope7_id, { item }, "__tests__/template.marko", "23:8", { item: "23:12" });
 				}, 0, $scope2_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/template.marko_7*shell", $scope0_reason, 4);
 				_script($scope2_id, "__tests__/template.marko_2");
@@ -116,9 +116,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				inner_default({});
 				_patch_child_end();
 				_for_of(input.items, (item) => {
-					const $scope8_id = _scope_id();
-					_filled_guard($scope0_reason, 4) && _patch_write($scope8_id, "PatchMarkedWrite:item", item, !$sg__input_items);
-					_script($scope8_id, "__tests__/template.marko_8_item#1", 0, _filled_guard($scope0_reason, 4), "item");
+					const $scope8_id = _scope_id(), $fg__input_items3 = _filled_guard($scope0_reason, 4);
+					$fg__input_items3 && _patch_write($scope8_id, "PatchMarkedWrite:item", item, !$sg__input_items);
+					_script($scope8_id, "__tests__/template.marko_8_item#1", 0, $fg__input_items3, "item");
 					_scope($scope8_id, { item }, "__tests__/template.marko", "31:6", { item: "31:10" });
 				}, 0, $scope3_id, "#text/1", 1, 1, 1, 0, 0, "__tests__/template.marko_8*shell", $scope0_reason, 4);
 				_script($scope3_id, "__tests__/template.marko_3");
@@ -144,14 +144,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}
 	}, $scope0_id, "#text/2", 1, _write_guard($scope0_reason, 3), 1, 0, 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 3);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$fg__input_items && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_items#6/subscribers", "input_items");
-	$fg__input_items && $cg__input_show && _patch_render($scope0_id, "__tests__/template.marko_1_input_items#0:6/setup", "input_items");
+	$fg__input_items4 && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_items#6/subscribers", "input_items");
+	$fg__input_items4 && $cg__input_show && _patch_render($scope0_id, "__tests__/template.marko_1_input_items#0:6/setup", "input_items");
 	$fg__input_nested && $cg__input_show && _patch_render($scope0_id, "__tests__/template.marko_1_input_nested#0:7/setup", "input_nested");
 	$fg__input_tag && $cg__input_show && _patch_render($scope0_id, "__tests__/template.marko_1_input_tag#0:8/setup", "input_tag");
 	_scope($scope0_id, {
 		input_items: _write_if($scope0_reason, 1) && input.items,
-		input_nested: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 5)) && input.nested,
-		input_tag: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 6)) && input.tag,
+		input_nested: ($ui__input_show || _unfilled_if($scope0_reason, 5)) && input.nested,
+		input_tag: ($ui__input_show || _unfilled_if($scope0_reason, 6)) && input.tag,
 		count,
 		"ClosureScopes:input_items/10": $wi__input_items && $input_items__closures
 	}, "__tests__/template.marko", 0, {
@@ -159,5 +159,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_nested: ["input.nested"],
 		input_tag: ["input.tag"],
 		count: "1:6"
-	}) || ($fg__input_items && (_client_branch_if("__tests__/template.marko_3*content", $scope0_id) || _unfilled_if($scope0_reason, 1)) && _patch_write($scope0_id, "PatchMarkedWrite:input_items", input.items, !$sg__input_items), $fg__input_nested && _unfilled_if($scope0_reason, 3) && _patch_write($scope0_id, "PatchMarkedWrite:input_nested", input.nested, !_server_guard($scope0_reason, 5)), $fg__input_tag && _unfilled_if($scope0_reason, 3) && _patch_write($scope0_id, "PatchMarkedWrite:input_tag", input.tag, !_server_guard($scope0_reason, 6)));
+	}) || ($fg__input_items4 && (_client_branch_if("__tests__/template.marko_3*content", $scope0_id) || _unfilled_if($scope0_reason, 1)) && _patch_write($scope0_id, "PatchMarkedWrite:input_items", input.items, !$sg__input_items), $fg__input_nested && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_nested", input.nested, !_server_guard($scope0_reason, 5)), $fg__input_tag && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_tag", input.tag, !_server_guard($scope0_reason, 6)));
 }, 1);

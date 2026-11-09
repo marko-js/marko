@@ -15,7 +15,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let open = false;
 	const Panel = { content: _content_resume("__tests__/template.marko_2*content", ({ isOpen, label }) => {
 		const $scope2_id = _scope_id();
-		const $scope2_reason = _scope_reason(), $wg__isOpen = _write_guard($scope2_reason, 0), $fg__label = _filled_guard($scope2_reason, 1);
+		const $scope2_reason = _scope_reason(), $wg__isOpen = _write_guard($scope2_reason, 0), $ui__isOpen = _unfilled_if($scope2_reason, 0), $fg__label = _filled_guard($scope2_reason, 1);
 		let n = 1;
 		_if(() => {
 			if (isOpen) {
@@ -29,12 +29,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		$fg__label && _client_guard($scope2_reason, 0) && _patch_render($scope2_id, "__tests__/template.marko_3_label#2:4/setup", "label");
 		_patch_fill($scope2_id, "PatchFill:__tests__/template.marko_2_n#5/fill", n, 1);
 		_write_if($scope2_reason, 0) && _scope($scope2_id, {
-			label: (_unfilled_if($scope2_reason, 0) || _unfilled_if($scope2_reason, 1)) && label,
+			label: ($ui__isOpen || _unfilled_if($scope2_reason, 1)) && label,
 			n
 		}, "__tests__/template.marko", "2:2", {
 			label: "2:25",
 			n: "3:8"
-		}) || $fg__label && _unfilled_if($scope2_reason, 0) && _patch_write($scope2_id, "PatchMarkedWrite:label", label, !_server_guard($scope2_reason, 1));
+		}) || $fg__label && $ui__isOpen && _patch_write($scope2_id, "PatchMarkedWrite:label", label, !_server_guard($scope2_reason, 1));
 	}, $scope0_id) };
 	_if(() => {
 		if (input.show) {

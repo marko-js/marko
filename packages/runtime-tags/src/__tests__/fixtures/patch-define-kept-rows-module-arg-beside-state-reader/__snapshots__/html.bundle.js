@@ -17,12 +17,12 @@ _shells({
 	a1: "a1;D ;<em> </em>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_label = _write_guard($scope0_reason, 2), $cg__input_label = _client_guard($scope0_reason, 2), $fg__input_label = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $uf__input_open__OR__input_label = _updates_from($scope0_reason, 0), $uf__input_open = _updates_from($scope0_reason, 1), $uf__input_label = _updates_from($scope0_reason, 2), $wg__input_label = _write_guard($scope0_reason, 2), $cg__input_label = _client_guard($scope0_reason, 2), $fg__input_label = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	let open = true;
 	const Panel = { content: _content("a3", ({ isOpen, fmt, label }) => {
 		const $scope3_id = _scope_id();
-		const $scope3_reason = _scope_reason(), $wg__isOpen = _write_guard($scope3_reason, 4), $fg__fmt = _filled_guard($scope3_reason, 5), $fg__label = _filled_guard($scope3_reason, 6), $cg__isOpen = _client_guard($scope3_reason, 4);
+		const $scope3_reason = _scope_reason(), $wg__isOpen = _write_guard($scope3_reason, 4), $ui__fmt__OR__label = _unfilled_if($scope3_reason, 2), $ui__isOpen__OR__label = _unfilled_if($scope3_reason, 1), $ui__isOpen__OR__fmt = _unfilled_if($scope3_reason, 0), $fg__fmt = _filled_guard($scope3_reason, 5), $fg__label = _filled_guard($scope3_reason, 6), $cg__isOpen = _client_guard($scope3_reason, 4);
 		_if(() => {
 			if (isOpen) {
 				const $scope4_id = _scope_id();
@@ -35,13 +35,13 @@ var template_default = _template("a", (input) => {
 		$fg__fmt && $cg__isOpen && _patch_render($scope3_id, "a4", "e");
 		$fg__label && $cg__isOpen && _patch_render($scope3_id, "a5", "f");
 		_write_if($scope3_reason, 3) && _scope($scope3_id, {
-			e: (_unfilled_if($scope3_reason, 1) || _unfilled_if($scope3_reason, 2)) && fmt,
-			f: (_unfilled_if($scope3_reason, 0) || _unfilled_if($scope3_reason, 2)) && label
-		}) || ($fg__fmt && _unfilled_if($scope3_reason, 1) && _patch_write($scope3_id, "xe", fmt, !_server_guard($scope3_reason, 5)), $fg__label && _unfilled_if($scope3_reason, 0) && _patch_write($scope3_id, "xf", label, !_server_guard($scope3_reason, 6)));
+			e: ($ui__isOpen__OR__label || $ui__fmt__OR__label) && fmt,
+			f: ($ui__isOpen__OR__fmt || $ui__fmt__OR__label) && label
+		}) || ($fg__fmt && $ui__isOpen__OR__label && _patch_write($scope3_id, "xe", fmt, !_server_guard($scope3_reason, 5)), $fg__label && $ui__isOpen__OR__fmt && _patch_write($scope3_id, "xf", label, !_server_guard($scope3_reason, 6)));
 	}, $scope0_id) };
 	_for_of([1, 2], (x) => {
-		const $scope1_id = _scope_id();
-		_set_scope_reason(_updates_from($scope0_reason, 1) << 1 | _updates_from($scope0_reason, 0) << 3 | _updates_from($scope0_reason, 2) << 5 | _updates_from($scope0_reason, 0) << 7 | _updates_from($scope0_reason, 1) << 9 | _updates_from($scope0_reason, 2) << 13);
+		const $scope1_id = _scope_id(), $ui__input_label = _unfilled_if($scope0_reason, 2);
+		_set_scope_reason($uf__input_open << 1 | $uf__input_open__OR__input_label << 3 | $uf__input_label << 5 | $uf__input_open__OR__input_label << 7 | $uf__input_open << 9 | $uf__input_label << 13);
 		const $childScope = _peek_scope_id($scope1_id, "a", 0);
 		Panel.content({
 			isOpen: input.open,
@@ -49,11 +49,11 @@ var template_default = _template("a", (input) => {
 			label: input.label + x
 		});
 		_patch_child_end();
-		_unfilled_if($scope0_reason, 2) && _patch_write($scope1_id, "wc", x, 1);
+		$ui__input_label && _patch_write($scope1_id, "wc", x, 1);
 		_client_guard($scope0_reason, 1) && _patch_render($scope1_id, "a6");
 		$cg__input_label && _patch_render($scope1_id, "a7");
 		_scope($scope1_id, {
-			c: _unfilled_if($scope0_reason, 2) && x,
+			c: $ui__input_label && x,
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id),
 			a: _existing_scope($childScope)
 		});

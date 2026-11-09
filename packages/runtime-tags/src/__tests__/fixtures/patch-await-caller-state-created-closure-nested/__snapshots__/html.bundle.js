@@ -9,7 +9,7 @@ _shells({
 	b: "b;b%;<!><!><!>"
 });
 var show_await_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_promise = _client_guard($scope0_reason, 0), $wi__input_promise = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_promise = _client_guard($scope0_reason, 0), $wi__input_promise = _write_if($scope0_reason, 0), $ui__input_promise2 = _unfilled_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_promise__closures = /* @__PURE__ */ new Set();
 	_await($scope0_id, "a", input.promise, (x) => {
@@ -17,19 +17,19 @@ var show_await_default = _template("b", (input) => {
 		const $await_content__x__closures = /* @__PURE__ */ new Set();
 		_try($scope1_id, "a", () => {
 			_scope_reason();
-			const $scope2_id = _scope_id();
+			const $scope2_id = _scope_id(), $ui__input_promise = _unfilled_if($scope0_reason, 0);
 			_html(`<p>${_text_mark($scope2_id, "a", x, 1, $scope0_reason, 0)}:${_text_mark($scope2_id, "b", input.promise ? "p" : "-", 2, $scope0_reason, 0)}</p>`);
 			_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope2_id, "b0", $cg__input_promise);
 			_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope2_id, "b1", $cg__input_promise);
-			_subscribe(_unfilled_if($scope0_reason, 0) && $await_content__x__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $input_promise__closures, _scope($scope2_id, { _: $wi__input_promise && _scope_with_id($scope1_id) }), $cg__input_promise && "b0"), $cg__input_promise && "b1");
+			_subscribe($ui__input_promise && $await_content__x__closures, _subscribe($ui__input_promise && $input_promise__closures, _scope($scope2_id, { _: $wi__input_promise && _scope_with_id($scope1_id) }), $cg__input_promise && "b0"), $cg__input_promise && "b1");
 		}, void 0, () => {
 			_scope_reason();
 			_scope_id();
 			_html("error");
 		}, 0, "b2", "b3", 1, 0, 1);
 		$wi__input_promise && _scope($scope1_id, { f: _unfilled_if($scope0_reason, 0) && $await_content__x__closures });
-	}, 1, "b4", _unfilled_if($scope0_reason, 0) && 3, 1);
-	_scope($scope0_id, { e: $wi__input_promise && _unfilled_if($scope0_reason, 0) && $input_promise__closures });
+	}, 1, "b4", $ui__input_promise2 && 3, 1);
+	_scope($scope0_id, { e: $wi__input_promise && $ui__input_promise2 && $input_promise__closures });
 });
 
 // template.marko

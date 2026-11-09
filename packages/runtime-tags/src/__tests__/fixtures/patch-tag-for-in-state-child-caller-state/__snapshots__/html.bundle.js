@@ -20,14 +20,14 @@ _shells({
 	c3: `c3${_shell_marker([["c2"], []], ["a>", $setup$2])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1)};${$template$1}`
 });
 var shape_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_sel = _write_guard($scope0_reason, 2), $cg__input_sel = _client_guard($scope0_reason, 2), $fg__input_sel = _filled_guard($scope0_reason, 2), $fg__input_b = _filled_guard($scope0_reason, 3), $cg__input_obj = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_sel = _write_guard($scope0_reason, 2), $cg__input_sel = _client_guard($scope0_reason, 2), $ui__input_obj = _unfilled_if($scope0_reason, 1), $fg__input_sel = _filled_guard($scope0_reason, 2), $fg__input_b = _filled_guard($scope0_reason, 3), $cg__input_obj = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_b__closures = /* @__PURE__ */ new Set();
 	const $s__closures = /* @__PURE__ */ new Set();
 	let s = 0;
 	_for_in(input.obj, (k, v) => {
-		const $scope1_id = _scope_id();
-		_filled_guard($scope0_reason, 1) && _patch_write($scope1_id, "xe", v, !_server_guard($scope0_reason, 1));
+		const $scope1_id = _scope_id(), $fg__input_obj = _filled_guard($scope0_reason, 1);
+		$fg__input_obj && _patch_write($scope1_id, "xe", v, !_server_guard($scope0_reason, 1));
 		_if(() => {
 			if (k === input.sel) {
 				const $scope2_id = _scope_id();
@@ -48,7 +48,7 @@ var shape_default = _template("c", (input) => {
 				return 0;
 			}
 		}, $scope1_id, "a", 1, $wg__input_sel, 1, 0, 0, ["c3"], $scope0_reason, 0);
-		_filled_guard($scope0_reason, 1) && $cg__input_sel && _patch_render($scope1_id, "c5", "e");
+		$fg__input_obj && $cg__input_sel && _patch_render($scope1_id, "c5", "e");
 		$cg__input_sel && _patch_render($scope1_id, "c6");
 		_scope($scope1_id, {
 			M: _unfilled_if($scope0_reason, 2) && k,
@@ -62,12 +62,12 @@ var shape_default = _template("c", (input) => {
 	$fg__input_b && ($cg__input_obj || $cg__input_sel) && _patch_subscribers($scope0_id, "c8", "g");
 	_patch_fill($scope0_id, "vc9", s, 1);
 	_scope($scope0_id, {
-		f: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.sel,
+		f: ($ui__input_obj || _unfilled_if($scope0_reason, 2)) && input.sel,
 		g: input.b,
 		h: s,
 		j: _write_if($scope0_reason, 3) && $input_b__closures,
 		k: $s__closures
-	}) || ($fg__input_sel && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xf", input.sel, !_server_guard($scope0_reason, 2)), $fg__input_b && _patch_write($scope0_id, "xg", input.b, !_server_guard($scope0_reason, 3)));
+	}) || ($fg__input_sel && $ui__input_obj && _patch_write($scope0_id, "xf", input.sel, !_server_guard($scope0_reason, 2)), $fg__input_b && _patch_write($scope0_id, "xg", input.b, !_server_guard($scope0_reason, 3)));
 });
 
 // template.marko

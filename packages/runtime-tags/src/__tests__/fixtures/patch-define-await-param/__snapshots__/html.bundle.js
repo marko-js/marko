@@ -19,15 +19,15 @@ var template_default = _template("a", (input) => {
 		const $scope1_reason = _scope_reason(), $wg__id = _write_guard($scope1_reason, 0), $wi__id = _write_if($scope1_reason, 0), $cg__id = _client_guard($scope1_reason, 0), $cg__value = _client_guard($scope1_reason, 1), $fg__id = _filled_guard($scope1_reason, 0);
 		_try($scope1_id, "a", () => {
 			_scope_reason();
-			const $scope2_id = _scope_id();
+			const $scope2_id = _scope_id(), $ui__value = _unfilled_if($scope1_reason, 1);
 			_await($scope2_id, "a", value, (v) => {
 				const $scope3_id = _scope_id();
 				_html(`<p>${_text_mark($scope3_id, "a", id, 1, $scope1_reason, 0)}:${_text_mark($scope3_id, "b", v, 2, $scope1_reason, 1)}:${_text_mark($scope3_id, "c", count, 2)}</p>`);
 				$cg__id && _patch_render($scope3_id, "a1");
 				_subscribe(_unfilled_if($scope1_reason, 0) && $Info_content__id__closures, _subscribe($count__closures, _scope($scope3_id, {}), "a2"), $cg__id && "a1");
-			}, 1, "a3", _unfilled_if($scope1_reason, 1));
+			}, 1, "a3", $ui__value);
 			$cg__value && _patch_render($scope2_id, "a6");
-			_subscribe(_unfilled_if($scope1_reason, 1) && $Info_content__value__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), $cg__value && "a6", 0);
+			_subscribe($ui__value && $Info_content__value__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), $cg__value && "a6", 0);
 			_resume_branch($scope2_id);
 		}, () => {
 			_scope_reason();

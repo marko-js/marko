@@ -23,7 +23,7 @@ _shells({
 	"__tests__/template.marko_1*shell": `__tests__/template.marko_1*shell${_shell_marker([[], ["__tests__/template.marko_1_input_attrs#0:4"]], ["#childScope/2>", $setup$1])};${/*@__PURE__*/ ((_w0) => ` b%b/${_w0}&b`)($walks$1)};${/*@__PURE__*/ ((_w0) => `<div>x</div><!>${_w0}<!>`)($template$1)}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 1), $fg__input_attrs = _filled_guard($scope0_reason, 2), $fg__input_label = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 1), $ui__input_show = _unfilled_if($scope0_reason, 1), $fg__input_attrs = _filled_guard($scope0_reason, 2), $fg__input_label = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_html("<main>");
 	_if(() => {
@@ -48,10 +48,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	$fg__input_attrs && $cg__input_show && _patch_render($scope0_id, "__tests__/template.marko_1_input_attrs#0:4/setup", "input_attrs");
 	$fg__input_label && $cg__input_show && _patch_render($scope0_id, "__tests__/template.marko_1_input_label#0:5/setup", "input_label");
 	_scope($scope0_id, {
-		input_attrs: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.attrs,
-		input_label: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 3)) && input.label
+		input_attrs: ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.attrs,
+		input_label: ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.label
 	}, "__tests__/template.marko", 0, {
 		input_attrs: ["input.attrs"],
 		input_label: ["input.label"]
-	}) || ($fg__input_attrs && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_attrs", input.attrs, !_server_guard($scope0_reason, 2)), $fg__input_label && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 3)));
+	}) || ($fg__input_attrs && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_attrs", input.attrs, !_server_guard($scope0_reason, 2)), $fg__input_label && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 3)));
 }, 1);

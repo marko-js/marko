@@ -11,7 +11,7 @@ _shells({
 	"__tests__/tags/panel.marko": "__tests__/tags/panel.marko;b%;<!><!><!>"
 });
 var panel_default = _template("__tests__/tags/panel.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_error = _client_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 0), $wi__input_error = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $uf__input_label = _updates_from($scope0_reason, 0), $cg__input_error = _client_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 0), $wi__input_error = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = new Set();
 	const $input_error__closures = new Set();
@@ -23,17 +23,17 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_error__closures, _scope($scope2_id, { _: $wi__input_error && _scope_with_id($scope0_id) }, "__tests__/tags/panel.marko", "4:2"), $cg__input_error && "__tests__/tags/panel.marko_2_input_error#0:4/subscribe");
 	}, void 0, (err) => {
 		const $scope1_reason = _scope_reason();
-		const $scope1_id = _scope_id();
-		_unfilled_if($scope0_reason, 0) && _patch_write($scope1_id, "PatchMarkedWrite:err_message", err?.message);
+		const $scope1_id = _scope_id(), $ui__input_label = _unfilled_if($scope0_reason, 0);
+		$ui__input_label && _patch_write($scope1_id, "PatchMarkedWrite:err_message", err?.message);
 		let n = 0;
 		const text = `${input.label}: ${err.message}`;
-		_html(`<button class=inc>${_text_mark($scope1_id, "#text/1", text, 1, (2 | _updates_from($scope0_reason, 0)) << 1, 0)} ${_text_mark($scope1_id, "#text/2", n, 2)}</button>${_el_mark($scope1_id, "#button/0")}`);
+		_html(`<button class=inc>${_text_mark($scope1_id, "#text/1", text, 1, (2 | $uf__input_label) << 1, 0)} ${_text_mark($scope1_id, "#text/2", n, 2)}</button>${_el_mark($scope1_id, "#button/0")}`);
 		_script($scope1_id, "__tests__/tags/panel.marko_1");
 		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "__tests__/tags/panel.marko_1_input_label#0:3/subscribe");
-		_patch_render($scope1_id, "__tests__/tags/panel.marko_1_input_label#0:3_err_message#5/setup", [_filled_guard($scope0_reason, 0) && ">input_label", "err_message"], (2 | _updates_from($scope0_reason, 0)) << 1, 0);
+		_patch_render($scope1_id, "__tests__/tags/panel.marko_1_input_label#0:3_err_message#5/setup", [_filled_guard($scope0_reason, 0) && ">input_label", "err_message"], (2 | $uf__input_label) << 1, 0);
 		_patch_fill($scope1_id, "PatchFill:__tests__/tags/panel.marko_1_n#7/fill", n, 1);
-		_subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope1_id, {
-			err_message: _unfilled_if($scope0_reason, 0) && err?.message,
+		_subscribe($ui__input_label && $input_label__closures, _scope($scope1_id, {
+			err_message: $ui__input_label && err?.message,
 			n,
 			_: _scope_with_id($scope0_id)
 		}, "__tests__/tags/panel.marko", "6:4", {

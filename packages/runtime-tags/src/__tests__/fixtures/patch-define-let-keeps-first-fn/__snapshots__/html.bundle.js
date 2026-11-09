@@ -6,7 +6,7 @@ _shells({
 	a2: `a2;${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($Card_content__walks)};${$Card_content__template}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $uf__input_label = _updates_from($scope0_reason, 0), $wg__input_show = _write_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const Card = { content: _content("a0", ({ opts }) => {
 		const $scope2_id = _scope_id();
@@ -14,7 +14,7 @@ var template_default = _template("a", (input) => {
 		_html(`<p>${_text_mark($scope2_id, "a", opts.fn(), 1, _client_guard($scope2_reason, 0) << 1, 0, 1)}</p>`);
 		_scope($scope2_id, {});
 	}, $scope0_id) };
-	_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
+	_set_scope_reason($uf__input_label << 1);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	Card.content({ opts: _patch_live($childScope, { fn() {
 		return "root:" + input.label;
@@ -23,7 +23,7 @@ var template_default = _template("a", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
+			_set_scope_reason($uf__input_label << 1);
 			const $childScope2 = _peek_scope_id($scope1_id, "a", 1);
 			Card.content({ opts: _patch_live($childScope2, { fn() {
 				return "if:" + input.label;

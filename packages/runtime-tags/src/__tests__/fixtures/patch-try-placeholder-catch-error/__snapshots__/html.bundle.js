@@ -22,14 +22,14 @@ var template_default = _template("a", (input) => {
 	const $input_slow__closures = /* @__PURE__ */ new Set();
 	_try($scope0_id, "a", () => {
 		_scope_reason();
-		const $scope3_id = _scope_id();
+		const $scope3_id = _scope_id(), $ui__input_slow = _unfilled_if($scope0_reason, 3);
 		_await($scope3_id, "a", input.slow, (v) => {
 			const $scope5_id = _scope_id();
 			_html(`<em>${_text_mark($scope5_id, "a", v, 1, $scope0_reason, 3)}</em>`);
 			_scope($scope5_id, {});
-		}, 1, "a5", _unfilled_if($scope0_reason, 3) && 2, 1);
+		}, 1, "a5", $ui__input_slow && 2, 1);
 		_unfilled_if($scope0_reason, 3) && _patch_subscribe($scope3_id, "a8", 1);
-		$wi__input_slow && _subscribe(_unfilled_if($scope0_reason, 3) && $input_slow__closures, _scope($scope3_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 3) && "a8", 0);
+		$wi__input_slow && _subscribe($ui__input_slow && $input_slow__closures, _scope($scope3_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 3) && "a8", 0);
 		$wi__input_slow && _resume_branch($scope3_id);
 	}, () => {
 		_scope_reason();

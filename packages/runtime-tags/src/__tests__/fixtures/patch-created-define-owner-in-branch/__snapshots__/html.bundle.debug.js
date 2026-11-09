@@ -10,7 +10,7 @@ _shells({
 	"__tests__/template.marko_1*shell": `__tests__/template.marko_1*shell #childScope/0>!__tests__/template.marko_1;${/*@__PURE__*/ ((_w0) => `b/${_w0}& b`)($Panel_content__walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<button>x</button>`)($Panel_content__template)}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_w = _write_guard($scope0_reason, 3), $cg__input_w = _client_guard($scope0_reason, 3), $wi__input_on__OR__input_w = _write_if($scope0_reason, 0), $wg__input_on = _write_guard($scope0_reason, 1), $fg__input_n = _filled_guard($scope0_reason, 2), $fg__input_w = _filled_guard($scope0_reason, 3), $wi__input_w = _write_if($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $wg__input_w = _write_guard($scope0_reason, 3), $cg__input_w = _client_guard($scope0_reason, 3), $wi__input_on__OR__input_w = _write_if($scope0_reason, 0), $wg__input_on = _write_guard($scope0_reason, 1), $ui__input_on = _unfilled_if($scope0_reason, 1), $fg__input_n = _filled_guard($scope0_reason, 2), $fg__input_w = _filled_guard($scope0_reason, 3), $wi__input_w = _write_if($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	const $input_w__closures = new Set();
 	_if(() => {
@@ -49,11 +49,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	$fg__input_n && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "__tests__/template.marko_1_input_n#0:4/setup", "input_n");
 	$fg__input_w && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_w#5/subscribers", "input_w");
 	_scope($scope0_id, {
-		input_n: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.n,
+		input_n: ($ui__input_on || _unfilled_if($scope0_reason, 2)) && input.n,
 		input_w: input.w,
 		"ClosureScopes:input_w/7": $wi__input_w && $input_w__closures
 	}, "__tests__/template.marko", 0, {
 		input_n: ["input.n"],
 		input_w: ["input.w"]
-	}) || ($fg__input_n && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_n", input.n, !_server_guard($scope0_reason, 2)), $fg__input_w && _patch_write($scope0_id, "PatchMarkedWrite:input_w", input.w, !_server_guard($scope0_reason, 3)));
+	}) || ($fg__input_n && $ui__input_on && _patch_write($scope0_id, "PatchMarkedWrite:input_n", input.n, !_server_guard($scope0_reason, 2)), $fg__input_w && _patch_write($scope0_id, "PatchMarkedWrite:input_w", input.w, !_server_guard($scope0_reason, 3)));
 }, 1);

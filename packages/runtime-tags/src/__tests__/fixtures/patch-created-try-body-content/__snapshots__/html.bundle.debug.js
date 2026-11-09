@@ -51,7 +51,7 @@ _shells({
 	"__tests__/template.marko_3*shell": `__tests__/template.marko_3*shell${_shell_marker([["__tests__/template.marko_3_count#0:8/setup"], []], ["#childScope/0>", $setup$1])};${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c")};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1)}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 1), $cg__input_show__OR__input_alt = _client_guard($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 1), $fg__input_alt = _filled_guard($scope0_reason, 3), $wi__input_label = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 1), $cg__input_show__OR__input_alt = _client_guard($scope0_reason, 0), $ui__input_alt = _unfilled_if($scope0_reason, 3), $ui__input_show__OR__input_alt = _unfilled_if($scope0_reason, 0), $ui__input_show = _unfilled_if($scope0_reason, 2), $fg__input_label = _filled_guard($scope0_reason, 1), $fg__input_alt = _filled_guard($scope0_reason, 3), $wi__input_label = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = new Set();
 	let count = 0;
@@ -98,10 +98,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	$fg__input_alt && _client_guard($scope0_reason, 2) && _patch_render($scope0_id, "__tests__/template.marko_3_input_alt#0:7/setup", "input_alt");
 	_scope($scope0_id, {
 		input_label: input.label,
-		input_alt: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && input.alt,
+		input_alt: ($ui__input_show || $ui__input_alt) && input.alt,
 		count,
-		A: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 3)) && A,
-		B: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 3)) && B,
+		A: ($ui__input_show__OR__input_alt || $ui__input_alt) && A,
+		B: ($ui__input_show__OR__input_alt || $ui__input_alt) && B,
 		"ClosureScopes:input_label/11": $wi__input_label && $input_label__closures
 	}, "__tests__/template.marko", 0, {
 		input_label: ["input.label"],
@@ -109,5 +109,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		count: "1:6",
 		A: "3:9",
 		B: "4:9"
-	}) || ($fg__input_label && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 1)), $fg__input_alt && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_alt", input.alt, !_server_guard($scope0_reason, 3)));
+	}) || ($fg__input_label && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 1)), $fg__input_alt && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_alt", input.alt, !_server_guard($scope0_reason, 3)));
 }, 1);

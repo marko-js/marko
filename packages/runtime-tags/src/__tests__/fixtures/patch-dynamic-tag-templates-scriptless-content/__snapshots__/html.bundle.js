@@ -22,7 +22,7 @@ _shells({
 	a: "a;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_bold__OR__input_label = _write_guard($scope0_reason, 2), $wi__input_tag__OR__input_bold__OR__input_label = _write_if($scope0_reason, 3), $wg__input_tag = _write_guard($scope0_reason, 4), $fg__input_bold = _filled_guard($scope0_reason, 5), $fg__input_label = _filled_guard($scope0_reason, 6);
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_bold__OR__input_label = _write_guard($scope0_reason, 2), $wi__input_tag__OR__input_bold__OR__input_label = _write_if($scope0_reason, 3), $wg__input_tag = _write_guard($scope0_reason, 4), $ui__input_bold__OR__input_label = _unfilled_if($scope0_reason, 2), $ui__input_tag__OR__input_label = _unfilled_if($scope0_reason, 1), $ui__input_tag__OR__input_bold = _unfilled_if($scope0_reason, 0), $fg__input_bold = _filled_guard($scope0_reason, 5), $fg__input_label = _filled_guard($scope0_reason, 6);
 	const $scope0_id = _scope_id();
 	const $input_bold__closures = /* @__PURE__ */ new Set();
 	const $input_label__closures = /* @__PURE__ */ new Set();
@@ -42,9 +42,9 @@ var template_default = _template("a", (input) => {
 	$fg__input_bold && _patch_subscribers($scope0_id, "a4", "e");
 	$fg__input_label && _patch_subscribers($scope0_id, "a5", "f");
 	_scope($scope0_id, {
-		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.bold,
-		f: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && input.label,
+		e: ($ui__input_tag__OR__input_label || $ui__input_bold__OR__input_label) && input.bold,
+		f: ($ui__input_tag__OR__input_bold || $ui__input_bold__OR__input_label) && input.label,
 		g: _write_if($scope0_reason, 5) && $input_bold__closures,
 		h: _write_if($scope0_reason, 6) && $input_label__closures
-	}) || ($fg__input_bold && (_client_branch_if("a0", $scope0_id) || _unfilled_if($scope0_reason, 1)) && _patch_write($scope0_id, "xe", input.bold, !_server_guard($scope0_reason, 5)), $fg__input_label && (_client_branch_if("a0", $scope0_id) || _unfilled_if($scope0_reason, 0)) && _patch_write($scope0_id, "xf", input.label, !_server_guard($scope0_reason, 6)));
+	}) || ($fg__input_bold && (_client_branch_if("a0", $scope0_id) || $ui__input_tag__OR__input_label) && _patch_write($scope0_id, "xe", input.bold, !_server_guard($scope0_reason, 5)), $fg__input_label && (_client_branch_if("a0", $scope0_id) || $ui__input_tag__OR__input_bold) && _patch_write($scope0_id, "xf", input.label, !_server_guard($scope0_reason, 6)));
 }, 1);

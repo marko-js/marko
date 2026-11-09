@@ -16,10 +16,10 @@ _shells({
 	"__tests__/template.marko_1*shell": `__tests__/template.marko_1*shell,${/*@__PURE__*/ (() => `<span class="${item}"></span>`)()}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $uf__input_lit = _updates_from($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let on$1 = false;
-	_html(`<button>toggle</button>${_el_mark($scope0_id, "#button/0")}<div${$class}></div><div${_assert_class_toggles(item, ["on"]), $class2[on$1 ? 1 : 0]}></div>${_el_mark($scope0_id, "#div/1")}<div${_attr_class([item, input.lit && "on"], $scope0_id, "#div/2", $scope0_reason, 0)}></div>${_el_mark($scope0_id, "#div/2", _updates_from($scope0_reason, 0))}<div${_attr_class({ ["on"]: input.lit }, $scope0_id, "#div/3", $scope0_reason, 0)}></div>${_el_mark($scope0_id, "#div/3", _updates_from($scope0_reason, 0))}<div${_attr_class(input.lit ? "on" : "box", $scope0_id, "#div/4", $scope0_reason, 0)}></div>${_el_mark($scope0_id, "#div/4", _updates_from($scope0_reason, 0))}`);
+	_html(`<button>toggle</button>${_el_mark($scope0_id, "#button/0")}<div${$class}></div><div${_assert_class_toggles(item, ["on"]), $class2[on$1 ? 1 : 0]}></div>${_el_mark($scope0_id, "#div/1")}<div${_attr_class([item, input.lit && "on"], $scope0_id, "#div/2", $scope0_reason, 0)}></div>${_el_mark($scope0_id, "#div/2", $uf__input_lit)}<div${_attr_class({ ["on"]: input.lit }, $scope0_id, "#div/3", $scope0_reason, 0)}></div>${_el_mark($scope0_id, "#div/3", $uf__input_lit)}<div${_attr_class(input.lit ? "on" : "box", $scope0_id, "#div/4", $scope0_reason, 0)}></div>${_el_mark($scope0_id, "#div/4", $uf__input_lit)}`);
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();

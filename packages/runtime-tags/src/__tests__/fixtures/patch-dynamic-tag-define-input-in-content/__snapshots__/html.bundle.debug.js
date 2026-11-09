@@ -22,7 +22,7 @@ _shells({
 	"__tests__/template.marko": `__tests__/template.marko${_shell_marker($setup)};${((_w0) => `/${_w0}&`)("D%l")};${$template$1}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_useA__OR__input_record = _write_guard($scope0_reason, 0), $cg__input_useA__OR__input_record = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_useA__OR__input_record = _write_guard($scope0_reason, 0), $ui__input_useA__OR__input_record = _unfilled_if($scope0_reason, 0), $cg__input_useA__OR__input_record = _client_guard($scope0_reason, 0), $ui__input_record = _unfilled_if($scope0_reason, 2), $ui__input_useA = _unfilled_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_useA__closures = new Set();
 	const $input_record__closures = new Set();
@@ -51,17 +51,17 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id) });
 	_patch_child_end();
 	_scope($scope0_id, {
-		input_useA: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.useA,
-		input_record: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.record,
-		Card: _unfilled_if($scope0_reason, 0) && Card,
-		Other: _unfilled_if($scope0_reason, 0) && Other,
-		"ClosureScopes:input_useA/7": _write_if($scope0_reason, 1) && (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && $input_useA__closures,
-		"ClosureScopes:input_record/8": _write_if($scope0_reason, 2) && (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && $input_record__closures,
+		input_useA: ($ui__input_record || $ui__input_useA__OR__input_record) && input.useA,
+		input_record: ($ui__input_useA || $ui__input_useA__OR__input_record) && input.record,
+		Card: $ui__input_useA__OR__input_record && Card,
+		Other: $ui__input_useA__OR__input_record && Other,
+		"ClosureScopes:input_useA/7": _write_if($scope0_reason, 1) && ($ui__input_useA || $ui__input_useA__OR__input_record) && $input_useA__closures,
+		"ClosureScopes:input_record/8": _write_if($scope0_reason, 2) && ($ui__input_record || $ui__input_useA__OR__input_record) && $input_record__closures,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, {
 		input_useA: ["input.useA"],
 		input_record: ["input.record"],
 		Card: "1:9",
 		Other: "4:9"
-	}) || (_filled_guard($scope0_reason, 1) && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_useA", input.useA, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_record", input.record, !_server_guard($scope0_reason, 2)));
+	}) || (_filled_guard($scope0_reason, 1) && $ui__input_record && _patch_write($scope0_id, "PatchMarkedWrite:input_useA", input.useA, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && $ui__input_useA && _patch_write($scope0_id, "PatchMarkedWrite:input_record", input.record, !_server_guard($scope0_reason, 2)));
 }, 1);

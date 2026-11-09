@@ -18,7 +18,7 @@ _shells({
 	a4: `a4${_shell_marker([[], []], ["a>", $setup])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)("D%l")};${$template}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_prefix = _client_guard($scope0_reason, 2), $cg__input_items = _client_guard($scope0_reason, 1), $wi__input_items__OR__input_prefix = _write_if($scope0_reason, 0), $fg__input_prefix = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $cg__input_prefix = _client_guard($scope0_reason, 2), $cg__input_items = _client_guard($scope0_reason, 1), $wi__input_items__OR__input_prefix = _write_if($scope0_reason, 0), $ui__input_items = _unfilled_if($scope0_reason, 1), $ui__input_prefix = _unfilled_if($scope0_reason, 2), $fg__input_prefix = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_prefix__closures = /* @__PURE__ */ new Set();
 	const $global$1 = $global();
@@ -47,7 +47,7 @@ var template_default = _template("a", (input) => {
 	_html(`</main>${_el_mark($scope0_id, "a")}`);
 	$fg__input_prefix && $cg__input_items && _patch_subscribers($scope0_id, "a5", "e");
 	_scope($scope0_id, {
-		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.prefix,
-		f: _write_if($scope0_reason, 2) && (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1)) && $input_prefix__closures
-	}) || $fg__input_prefix && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.prefix, !_server_guard($scope0_reason, 2));
+		e: ($ui__input_items || $ui__input_prefix) && input.prefix,
+		f: _write_if($scope0_reason, 2) && ($ui__input_prefix || $ui__input_items) && $input_prefix__closures
+	}) || $fg__input_prefix && $ui__input_items && _patch_write($scope0_id, "xe", input.prefix, !_server_guard($scope0_reason, 2));
 }, 1);

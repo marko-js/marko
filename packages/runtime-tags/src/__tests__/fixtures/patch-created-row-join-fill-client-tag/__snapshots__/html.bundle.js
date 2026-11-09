@@ -26,7 +26,7 @@ _shells({
 	c4: "c4 c3;D ;<span> </span>"
 });
 var row_list_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_type = _write_guard($scope0_reason, 1), $cg__input_type = _client_guard($scope0_reason, 1), $fg__input_type = _filled_guard($scope0_reason, 1), $fg__input_settled = _filled_guard($scope0_reason, 2), $cg__input_tally = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_type = _write_guard($scope0_reason, 1), $cg__input_type = _client_guard($scope0_reason, 1), $ui__input_tally = _unfilled_if($scope0_reason, 0), $fg__input_type = _filled_guard($scope0_reason, 1), $fg__input_settled = _filled_guard($scope0_reason, 2), $cg__input_tally = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_settled__closures = /* @__PURE__ */ new Set();
 	const $bounty__closures = /* @__PURE__ */ new Set();
@@ -36,8 +36,8 @@ var row_list_default = _template("c", (input) => {
 	_var($scope0_id, "b", $childScope, "c0");
 	_patch_child_end();
 	_for_of(input.tally, (t) => {
-		const $scope1_id = _scope_id();
-		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "xc", t, !_server_guard($scope0_reason, 0));
+		const $scope1_id = _scope_id(), $fg__input_tally = _filled_guard($scope0_reason, 0);
+		$fg__input_tally && _patch_write($scope1_id, "xc", t, !_server_guard($scope0_reason, 0));
 		_if(() => {
 			if (input.type) {
 				const $scope2_id = _scope_id();
@@ -48,7 +48,7 @@ var row_list_default = _template("c", (input) => {
 				return 0;
 			}
 		}, $scope1_id, "a", 1, $wg__input_type, 1, 0, 0, ["c4"], $scope0_reason, 1);
-		_filled_guard($scope0_reason, 0) && $cg__input_type && _patch_render($scope1_id, "c6", "c");
+		$fg__input_tally && $cg__input_type && _patch_render($scope1_id, "c6", "c");
 		$cg__input_type && _patch_render($scope1_id, "c7");
 		_scope($scope1_id, {
 			c: t,
@@ -60,13 +60,13 @@ var row_list_default = _template("c", (input) => {
 	$fg__input_type && $cg__input_tally && _patch_render($scope0_id, "c7", "h");
 	$fg__input_settled && ($cg__input_tally || $cg__input_type) && _patch_subscribers($scope0_id, "c9", "i");
 	_scope($scope0_id, {
-		h: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.type,
+		h: ($ui__input_tally || _unfilled_if($scope0_reason, 1)) && input.type,
 		i: input.settled,
 		j: bounty,
 		a: _existing_scope($childScope),
 		l: _write_if($scope0_reason, 2) && $input_settled__closures,
 		m: $bounty__closures
-	}) || ($fg__input_type && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xh", input.type, !_server_guard($scope0_reason, 1)), $fg__input_settled && _patch_write($scope0_id, "xi", input.settled, !_server_guard($scope0_reason, 2)));
+	}) || ($fg__input_type && $ui__input_tally && _patch_write($scope0_id, "xh", input.type, !_server_guard($scope0_reason, 1)), $fg__input_settled && _patch_write($scope0_id, "xi", input.settled, !_server_guard($scope0_reason, 2)));
 });
 
 // template.marko

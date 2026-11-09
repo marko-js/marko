@@ -16,7 +16,7 @@ _shells({
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell !__tests__/template.marko_1; D ;<button> </button>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_start = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $ui__input_show__OR__input_start = _unfilled_if($scope0_reason, 0), $ui__input_start = _unfilled_if($scope0_reason, 2), $fg__input_start = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
 	let last = 0;
@@ -49,10 +49,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html("</main>");
 	$fg__input_start && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "__tests__/template.marko_1_input_start#0:5/setup", "input_start");
 	_scope($scope0_id, {
-		input_start: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && input.start,
-		onCount: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && onCount
+		input_start: ($ui__input_show__OR__input_start || $ui__input_start) && input.start,
+		onCount: ($ui__input_show__OR__input_start || $ui__input_start) && onCount
 	}, "__tests__/template.marko", 0, {
 		input_start: ["input.start"],
 		onCount: "12:8"
-	}) || $fg__input_start && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_start", input.start, !_server_guard($scope0_reason, 2));
+	}) || $fg__input_start && $ui__input_show__OR__input_start && _patch_write($scope0_id, "PatchMarkedWrite:input_start", input.start, !_server_guard($scope0_reason, 2));
 }, 1);

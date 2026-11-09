@@ -4,10 +4,10 @@ const $walks = " D l b";
 const $setup = [[], []];
 _shells({ b: "b; D l ;<label> </label><input>" });
 var field_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $uf__input_uid = _updates_from($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const uid = input.uid || _id("A");
-	_html(`<label${_attr("for", uid, $scope0_id, "a", $scope0_reason, 0)}>${_text_mark($scope0_id, "b", input.name, 1, $scope0_reason, 1)}</label>${_el_mark($scope0_id, "a", _updates_from($scope0_reason, 0))}<input${_attr("id", uid, $scope0_id, "c", $scope0_reason, 0)}${_attr("aria-describedby", input.heading, $scope0_id, "c", $scope0_reason, 2)}>${_el_mark($scope0_id, "c", _updates_from($scope0_reason, 0) || _updates_from($scope0_reason, 2))}`);
+	_html(`<label${_attr("for", uid, $scope0_id, "a", $scope0_reason, 0)}>${_text_mark($scope0_id, "b", input.name, 1, $scope0_reason, 1)}</label>${_el_mark($scope0_id, "a", $uf__input_uid)}<input${_attr("id", uid, $scope0_id, "c", $scope0_reason, 0)}${_attr("aria-describedby", input.heading, $scope0_id, "c", $scope0_reason, 2)}>${_el_mark($scope0_id, "c", $uf__input_uid || _updates_from($scope0_reason, 2))}`);
 	_scope($scope0_id, {});
 });
 
@@ -23,7 +23,7 @@ _shells({
 	a0: "a0;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_items = _filled_guard($scope0_reason, 4), $fg__input_record = _filled_guard($scope0_reason, 5), $fg__input_end = _filled_guard($scope0_reason, 6);
+	const $scope0_reason = _scope_reason(), $ui__input_items__OR__input_record__OR__input_end = _unfilled_if($scope0_reason, 3), $ui__input_record__OR__input_end = _unfilled_if($scope0_reason, 2), $ui__input_items__OR__input_end = _unfilled_if($scope0_reason, 1), $ui__input_items__OR__input_record = _unfilled_if($scope0_reason, 0), $fg__input_items = _filled_guard($scope0_reason, 4), $fg__input_record = _filled_guard($scope0_reason, 5), $fg__input_end = _filled_guard($scope0_reason, 6);
 	const $scope0_id = _scope_id();
 	const Content = { content: _content("a5", ({ item: items }) => {
 		const $scope1_id = _scope_id();
@@ -82,9 +82,9 @@ var template_default = _template("a", (input) => {
 		$fg__input_end && "f"
 	], $scope0_reason, 3);
 	_scope($scope0_id, {
-		d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && input.items,
-		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 3)) && input.record,
-		f: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 3)) && input.end,
+		d: ($ui__input_record__OR__input_end || $ui__input_items__OR__input_record__OR__input_end) && input.items,
+		e: ($ui__input_items__OR__input_end || $ui__input_items__OR__input_record__OR__input_end) && input.record,
+		f: ($ui__input_items__OR__input_record || $ui__input_items__OR__input_record__OR__input_end) && input.end,
 		a: _existing_scope($childScope5)
-	}) || ($fg__input_items && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xd", input.items, !_server_guard($scope0_reason, 4)), $fg__input_record && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.record, !_server_guard($scope0_reason, 5)), $fg__input_end && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xf", input.end, !_server_guard($scope0_reason, 6)));
+	}) || ($fg__input_items && $ui__input_record__OR__input_end && _patch_write($scope0_id, "xd", input.items, !_server_guard($scope0_reason, 4)), $fg__input_record && $ui__input_items__OR__input_end && _patch_write($scope0_id, "xe", input.record, !_server_guard($scope0_reason, 5)), $fg__input_end && $ui__input_items__OR__input_record && _patch_write($scope0_id, "xf", input.end, !_server_guard($scope0_reason, 6)));
 }, 1);

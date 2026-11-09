@@ -7,7 +7,7 @@ _shells({
 	"__tests__/tags/child.marko": "__tests__/tags/child.marko; ;<section></section>"
 });
 var child_default = _template("__tests__/tags/child.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_a = _filled_guard($scope0_reason, 4), $fg__input_b = _filled_guard($scope0_reason, 5);
+	const $scope0_reason = _scope_reason(), $ui__input_a__OR__input_b = _unfilled_if($scope0_reason, 0), $ui__input_b__OR__input_mode = _unfilled_if($scope0_reason, 2), $ui__input_a__OR__input_mode = _unfilled_if($scope0_reason, 1), $ui__input_mode = _unfilled_if($scope0_reason, 6), $fg__input_a = _filled_guard($scope0_reason, 4), $fg__input_b = _filled_guard($scope0_reason, 5);
 	const $scope0_id = _scope_id();
 	const $input_a__closures = new Set();
 	const $input_b__closures = new Set();
@@ -23,21 +23,21 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	_html("<section>");
 	_attr_content("#section/0", $scope0_id, input.mode ? frag.content : null, 0, 1, $scope0_reason, 6);
 	_html(`</section>${_el_mark($scope0_id, "#section/0", _updates_from($scope0_reason, 6))}`);
-	_unfilled_if($scope0_reason, 6) && _patch_write($scope0_id, "PatchWrite:frag_content", frag?.content, 1);
+	$ui__input_mode && _patch_write($scope0_id, "PatchWrite:frag_content", frag?.content, 1);
 	$fg__input_a && _patch_subscribers($scope0_id, "__tests__/tags/child.marko_0_input_a#3/subscribers", "input_a");
 	$fg__input_b && _patch_subscribers($scope0_id, "__tests__/tags/child.marko_0_input_b#4/subscribers", "input_b");
 	_client_guard($scope0_reason, 6) && _patch_render($scope0_id, "__tests__/tags/child.marko_0_input_mode#5_frag_content#7/setup");
 	_scope($scope0_id, {
-		input_a: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.a,
-		input_b: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.b,
-		frag_content: _unfilled_if($scope0_reason, 6) && frag?.content,
+		input_a: ($ui__input_b__OR__input_mode || $ui__input_a__OR__input_b) && input.a,
+		input_b: ($ui__input_a__OR__input_mode || $ui__input_a__OR__input_b) && input.b,
+		frag_content: $ui__input_mode && frag?.content,
 		"ClosureScopes:input_a/9": _write_if($scope0_reason, 4) && $input_a__closures,
 		"ClosureScopes:input_b/10": _write_if($scope0_reason, 5) && $input_b__closures
 	}, "__tests__/tags/child.marko", 0, {
 		input_a: ["input.a"],
 		input_b: ["input.b"],
 		frag_content: ["frag.content", "1:9"]
-	}) || ($fg__input_a && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_a", input.a, !_server_guard($scope0_reason, 4)), $fg__input_b && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_b", input.b, !_server_guard($scope0_reason, 5)));
+	}) || ($fg__input_a && $ui__input_b__OR__input_mode && _patch_write($scope0_id, "PatchMarkedWrite:input_a", input.a, !_server_guard($scope0_reason, 4)), $fg__input_b && $ui__input_a__OR__input_mode && _patch_write($scope0_id, "PatchMarkedWrite:input_b", input.b, !_server_guard($scope0_reason, 5)));
 });
 
 // template.marko
@@ -46,11 +46,11 @@ const $walks = /*@__PURE__*/ ((_w0, _w1) => `/${_w0}&/${_w1}& b b`)(" b", " b");
 const $setup = _shell_setup([[], ["__tests__/template.marko_0"]], ["#childScope/0>", $setup$1], ["#childScope/1>", $setup$1]);
 _shells({ "__tests__/template.marko": `__tests__/template.marko${_shell_marker($setup)};${((_w0, _w1) => `/${_w0}&/${_w1}& b b`)(" b", " b")};${((_w0, _w1) => `${_w0}${_w1}<button class=n>+</button><button class=m>m</button>`)($template$1, $template$1)}` });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $uf__input_x = _updates_from($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	let n = 0;
 	let m = false;
-	_set_scope_reason(9198 | _updates_from($scope0_reason, 1) << 11);
+	_set_scope_reason(9198 | $uf__input_x << 11);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	child_default({
 		a: n,
@@ -58,7 +58,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		mode: m
 	});
 	_patch_child_end();
-	_set_scope_reason(8696 | (_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 2) << 9 | _updates_from($scope0_reason, 1) << 11));
+	_set_scope_reason(8696 | (_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 2) << 9 | $uf__input_x << 11));
 	const $childScope2 = _peek_scope_id($scope0_id, "#childScope/1", 1);
 	child_default({
 		a: input.y,

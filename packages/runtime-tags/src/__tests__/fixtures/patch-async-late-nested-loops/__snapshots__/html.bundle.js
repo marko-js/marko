@@ -20,14 +20,14 @@ var template_default = _template("a", (input) => {
 			const $for_content2__item_promise__closures = /* @__PURE__ */ new Set();
 			_try($scope2_id, "a", () => {
 				_scope_reason();
-				const $scope3_id = _scope_id();
+				const $scope3_id = _scope_id(), $ui__input_groups = _unfilled_if($scope0_reason, 0);
 				_await($scope3_id, "a", item.promise, (v) => {
 					const $scope4_id = _scope_id();
 					_html(`<em>${_text_mark($scope4_id, "a", group.id, 1, $scope0_reason, 0)}.${_text_mark($scope4_id, "b", v, 2, $scope0_reason, 0)}</em>`);
 					_scope($scope4_id, {});
-				}, 1, "a1", _unfilled_if($scope0_reason, 0) && 3);
+				}, 1, "a1", $ui__input_groups && 3);
 				_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope3_id, "a6", 1);
-				$wi__input_groups && _subscribe(_unfilled_if($scope0_reason, 0) && $for_content2__item_promise__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }), _client_guard($scope0_reason, 0) && "a6", 0);
+				$wi__input_groups && _subscribe($ui__input_groups && $for_content2__item_promise__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }), _client_guard($scope0_reason, 0) && "a6", 0);
 				$wi__input_groups && _resume_branch($scope3_id);
 			}, void 0, (err) => {
 				_scope_reason();

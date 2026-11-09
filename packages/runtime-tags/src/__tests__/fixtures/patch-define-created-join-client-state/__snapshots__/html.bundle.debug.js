@@ -13,16 +13,16 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const PlainChild = { content: _content("__tests__/template.marko_2*content", (input) => {
 		const $scope2_id = _scope_id();
-		const $scope2_reason = _scope_reason(), $fg__input_a = _filled_guard($scope2_reason, 1), $fg__input_b = _filled_guard($scope2_reason, 2);
+		const $scope2_reason = _scope_reason(), $ui__input_a__OR__input_b = _unfilled_if($scope2_reason, 0), $ui__input_b = _unfilled_if($scope2_reason, 2), $ui__input_a = _unfilled_if($scope2_reason, 1), $fg__input_a = _filled_guard($scope2_reason, 1), $fg__input_b = _filled_guard($scope2_reason, 2);
 		_html(`<p>t=${_text_mark($scope2_id, "#text/0", input.a + input.b, 2, $scope2_reason, 0)}</p>`);
 		_patch_render($scope2_id, "__tests__/template.marko_2_input_a#3_input_b#4/setup", [$fg__input_a && "input_a", $fg__input_b && "input_b"], $scope2_reason, 0);
 		_scope($scope2_id, {
-			input_a: (_unfilled_if($scope2_reason, 2) || _unfilled_if($scope2_reason, 0)) && input.a,
-			input_b: (_unfilled_if($scope2_reason, 1) || _unfilled_if($scope2_reason, 0)) && input.b
+			input_a: ($ui__input_b || $ui__input_a__OR__input_b) && input.a,
+			input_b: ($ui__input_a || $ui__input_a__OR__input_b) && input.b
 		}, "__tests__/template.marko", "1:2", {
 			input_a: ["input.a", "1:20"],
 			input_b: ["input.b", "1:20"]
-		}) || ($fg__input_a && _unfilled_if($scope2_reason, 2) && _patch_write($scope2_id, "PatchMarkedWrite:input_a", input.a, !_server_guard($scope2_reason, 1)), $fg__input_b && _unfilled_if($scope2_reason, 1) && _patch_write($scope2_id, "PatchMarkedWrite:input_b", input.b, !_server_guard($scope2_reason, 2)));
+		}) || ($fg__input_a && $ui__input_b && _patch_write($scope2_id, "PatchMarkedWrite:input_a", input.a, !_server_guard($scope2_reason, 1)), $fg__input_b && $ui__input_a && _patch_write($scope2_id, "PatchMarkedWrite:input_b", input.b, !_server_guard($scope2_reason, 2)));
 	}, $scope0_id) };
 	let tab = 0;
 	_html(`<button>+</button>${_el_mark($scope0_id, "#button/0")}`);

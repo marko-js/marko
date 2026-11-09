@@ -21,19 +21,19 @@ _shells({
 	"__tests__/tags/icon.marko_1*shell": "__tests__/tags/icon.marko_1*shell; ;<path></path>"
 });
 var icon_default = _template("__tests__/tags/icon.marko", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $uf__input_name = _updates_from($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_html(`<svg${_attr("viewBox", input.name, $scope0_id, "#svg/0", $scope0_reason, 0)}>`);
 	_if(() => {
 		if (input.name) {
 			const $scope1_id = _scope_id();
-			_html(`<path${_attr("d", input.name, $scope1_id, "#path/0", $scope0_reason, 0)}></path>${_el_mark($scope1_id, "#path/0", _updates_from($scope0_reason, 0))}`);
+			_html(`<path${_attr("d", input.name, $scope1_id, "#path/0", $scope0_reason, 0)}></path>${_el_mark($scope1_id, "#path/0", $uf__input_name)}`);
 			_client_guard($scope0_reason, 0) && _patch_render($scope1_id, "__tests__/tags/icon.marko_1_input_name#0:3/setup");
 			_scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }, "__tests__/tags/icon.marko", "2:4");
 			return 0;
 		}
 	}, $scope0_id, "#svg/0", 1, 1, 1, 0, 0, ["__tests__/tags/icon.marko_1*shell"], $scope0_reason, 0);
-	_html(`</svg>${_el_mark($scope0_id, "#svg/0", _updates_from($scope0_reason, 0))}`);
+	_html(`</svg>${_el_mark($scope0_id, "#svg/0", $uf__input_name)}`);
 	_scope($scope0_id, {}, "__tests__/tags/icon.marko", 0);
 });
 
@@ -120,7 +120,7 @@ _shells({
 	"__tests__/template.marko_6*shell": `__tests__/template.marko_6*shell${_shell_marker([[], []], ["#childScope/1>", $setup$1])};${/*@__PURE__*/ ((_w0) => `b%b/${_w0}&b`)("b")};${/*@__PURE__*/ ((_w0) => `<!><!>${_w0}<!>`)($template$1)}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_page = _write_guard($scope0_reason, 1), $cg__input_page = _client_guard($scope0_reason, 1), $wi__input_page = _write_if($scope0_reason, 1), $cg__input_list = _client_guard($scope0_reason, 2), $wi__input_page__OR__input_list = _write_if($scope0_reason, 0), $fg__input_list = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_page = _write_guard($scope0_reason, 1), $cg__input_page = _client_guard($scope0_reason, 1), $wi__input_page = _write_if($scope0_reason, 1), $ui__input_page = _unfilled_if($scope0_reason, 1), $cg__input_list = _client_guard($scope0_reason, 2), $wi__input_page__OR__input_list = _write_if($scope0_reason, 0), $ui__input_list = _unfilled_if($scope0_reason, 2), $fg__input_list = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_page__closures = new Set();
 	const $input_list__closures = new Set();
@@ -184,9 +184,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_patch_child_end();
 	$fg__input_list && $cg__input_page && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_list#4/subscribers", "input_list");
 	_scope($scope0_id, {
-		input_list: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.list,
-		"ClosureScopes:input_page/5": $wi__input_page && _unfilled_if($scope0_reason, 1) && $input_page__closures,
-		"ClosureScopes:input_list/6": _write_if($scope0_reason, 2) && (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1)) && $input_list__closures,
+		input_list: ($ui__input_page || $ui__input_list) && input.list,
+		"ClosureScopes:input_page/5": $wi__input_page && $ui__input_page && $input_page__closures,
+		"ClosureScopes:input_list/6": _write_if($scope0_reason, 2) && ($ui__input_list || $ui__input_page) && $input_list__closures,
 		"#childScope/0": _existing_scope($childScope4)
-	}, "__tests__/template.marko", 0, { input_list: ["input.list"] }) || $fg__input_list && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_list", input.list, !_server_guard($scope0_reason, 2));
+	}, "__tests__/template.marko", 0, { input_list: ["input.list"] }) || $fg__input_list && $ui__input_page && _patch_write($scope0_id, "PatchMarkedWrite:input_list", input.list, !_server_guard($scope0_reason, 2));
 }, 1);

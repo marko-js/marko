@@ -6,7 +6,7 @@ _shells({
 	b2: "b2; D lD ;<h2> </h2><p> </p>"
 });
 var card_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 1), $fg__input_title = _filled_guard($scope0_reason, 2), $fg__input_note = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 1), $ui__input_show = _unfilled_if($scope0_reason, 1), $fg__input_title = _filled_guard($scope0_reason, 2), $fg__input_note = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_html("<section>");
 	_if(() => {
@@ -23,19 +23,19 @@ var card_default = _template("b", (input) => {
 	$fg__input_title && $cg__input_show && _patch_render($scope0_id, "b0", "e");
 	$fg__input_note && $cg__input_show && _patch_render($scope0_id, "b1", "f");
 	_scope($scope0_id, {
-		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.title,
-		f: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 3)) && input.note
-	}) || ($fg__input_title && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.title, !_server_guard($scope0_reason, 2)), $fg__input_note && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xf", input.note, !_server_guard($scope0_reason, 3)));
+		e: ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.title,
+		f: ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.note
+	}) || ($fg__input_title && $ui__input_show && _patch_write($scope0_id, "xe", input.title, !_server_guard($scope0_reason, 2)), $fg__input_note && $ui__input_show && _patch_write($scope0_id, "xf", input.note, !_server_guard($scope0_reason, 3)));
 });
 
 // template.marko
 const $setup = _shell_setup([[], []], ["a>", $setup$1]);
 _shells({ a: `a${_shell_marker($setup)};${((_w0) => `D/${_w0}&l`)(" b")};${((_w0) => `<main>${_w0}</main>`)($template)}` });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $uf__input_note = _updates_from($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_html("<main>");
-	_set_scope_reason(_updates_from($scope0_reason, 1) << 1 | _updates_from($scope0_reason, 0) << 3 | _updates_from($scope0_reason, 1) << 7);
+	_set_scope_reason($uf__input_note << 1 | _updates_from($scope0_reason, 0) << 3 | $uf__input_note << 7);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	card_default({
 		show: input.show,

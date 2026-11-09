@@ -4,7 +4,7 @@ const $walks$1 = "D l%b b";
 const $setup$2 = [[], ["b2"]];
 _shells({ b: "b !b2;D l%b ;<p> </p><!><button class=t>t</button>" });
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_a = _filled_guard($scope0_reason, 1), $fg__input_b = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $ui__input_a = _unfilled_if($scope0_reason, 1), $fg__input_a = _filled_guard($scope0_reason, 1), $fg__input_b = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	let open = true;
 	_html(`<p>${_text_mark($scope0_id, "a", input.a + input.b, 1, $scope0_reason, 0)}</p>`);
@@ -25,9 +25,9 @@ var child_default = _template("b", (input) => {
 	_patch_fill($scope0_id, "vb4", open, 1);
 	_scope($scope0_id, {
 		f: input.a,
-		g: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.b,
+		g: ($ui__input_a || _unfilled_if($scope0_reason, 0)) && input.b,
 		i: open
-	}) || ($fg__input_a && _patch_write($scope0_id, "xf", input.a, !_server_guard($scope0_reason, 1)), $fg__input_b && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xg", input.b, !_server_guard($scope0_reason, 2)));
+	}) || ($fg__input_a && _patch_write($scope0_id, "xf", input.a, !_server_guard($scope0_reason, 1)), $fg__input_b && $ui__input_a && _patch_write($scope0_id, "xg", input.b, !_server_guard($scope0_reason, 2)));
 });
 
 // tags/mid.marko
@@ -36,10 +36,10 @@ const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1);
 const $setup$1 = _shell_setup([[], []], ["a>", $setup$2]);
 _shells({ c: `c${_shell_marker($setup$1)};${((_w0) => `/${_w0}&`)($walks$1)};${$template$1}` });
 var mid_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $uf__input_b = _updates_from($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
-	_set_scope_reason(16 | ((2 | _updates_from($scope0_reason, 0)) << 1 | _updates_from($scope0_reason, 0) << 5));
+	_set_scope_reason(16 | ((2 | $uf__input_b) << 1 | $uf__input_b << 5));
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	child_default({
 		a: $global$1.x,

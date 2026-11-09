@@ -25,11 +25,11 @@ _shells({
 	a: "a;b%b%;<!><!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $uf__input_first = _updates_from($scope0_reason, 0), $uf__input_second = _updates_from($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_await($scope0_id, "a", input.first, (a) => {
 		const $scope1_id = _scope_id();
-		_set_scope_reason(_updates_from($scope0_reason, 0) << 3 | _updates_from($scope0_reason, 0) << 5);
+		_set_scope_reason($uf__input_first << 3 | $uf__input_first << 5);
 		const $childScope = _peek_scope_id($scope1_id, "a", 0);
 		tagged_default({
 			id: "a",
@@ -40,7 +40,7 @@ var template_default = _template("a", (input) => {
 	}, 1, "a1", _unfilled_if($scope0_reason, 0), 1);
 	_await($scope0_id, "b", input.second, (b) => {
 		const $scope2_id = _scope_id();
-		_set_scope_reason(_updates_from($scope0_reason, 1) << 3 | _updates_from($scope0_reason, 1) << 5);
+		_set_scope_reason($uf__input_second << 3 | $uf__input_second << 5);
 		const $childScope2 = _peek_scope_id($scope2_id, "a", 1);
 		tagged_default({
 			id: "b",

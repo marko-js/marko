@@ -26,18 +26,18 @@ const $walks = /*@__PURE__*/ ((_w0, _w1) => ` b/${_w0}&/${_w1}&b`)("b%c", "b%c")
 const $setup = _shell_setup([[], ["__tests__/template.marko_0"]], ["#childScope/1>", $setup$1], ["#childScope/2>", $setup$1]);
 _shells({ "__tests__/template.marko": `__tests__/template.marko${_shell_marker($setup)};${((_w0, _w1) => ` b/${_w0}&/${_w1}&b`)("b%c", "b%c")};${((_w0, _w1) => `<button class=open>inc</button>${_w0}${_w1}<!>`)($template$1, $template$1)}` });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $uf__input_label = _updates_from($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let n = 0;
 	_html(`<button class=open>inc</button>${_el_mark($scope0_id, "#button/0")}`);
-	_set_scope_reason(2 | _updates_from($scope0_reason, 0) << 3);
+	_set_scope_reason(2 | $uf__input_label << 3);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/1", 0);
 	show_await_default({
 		promise: Promise.resolve(n),
 		label: input.label
 	});
 	_patch_child_end();
-	_set_scope_reason(_updates_from($scope0_reason, 1) << 1 | _updates_from($scope0_reason, 0) << 3);
+	_set_scope_reason(_updates_from($scope0_reason, 1) << 1 | $uf__input_label << 3);
 	const $childScope2 = _peek_scope_id($scope0_id, "#childScope/2", 1);
 	show_await_default({
 		promise: Promise.resolve(input.value),

@@ -6,7 +6,7 @@ _shells({
 	b3: "b3 !b0;Db%l ;<span>Seen <!></span><button>+</button>"
 });
 var counter_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0), $fg__input_onCount = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0), $ui__input_show = _unfilled_if($scope0_reason, 0), $fg__input_onCount = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.show) {
@@ -26,19 +26,19 @@ var counter_default = _template("b", (input) => {
 		}
 	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["b3"], $scope0_reason, 0);
 	$fg__input_onCount && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "b1", "e");
-	_scope($scope0_id, { e: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.onCount }) || $fg__input_onCount && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xe", input.onCount, !_server_guard($scope0_reason, 1));
+	_scope($scope0_id, { e: ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.onCount }) || $fg__input_onCount && $ui__input_show && _patch_write($scope0_id, "xe", input.onCount, !_server_guard($scope0_reason, 1));
 });
 
 // template.marko
 const $setup = _shell_setup([[], []], ["d>", $setup$1], ["e>", $setup$1]);
 _shells({ a: `a${_shell_marker($setup)};${((_w0, _w1) => `E lDb%c%l/${_w0}&/${_w1}&l`)("b%c", "b%c")};${((_w0, _w1) => `<main><h1> </h1><p>First <!> Second <!></p>${_w0}${_w1}</main>`)($template, $template)}` });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $uf__input_show = _updates_from($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	let first = 0;
 	let second = 0;
 	_html(`<main><h1>${_text_mark($scope0_id, "a", input.title, 1, $scope0_reason, 0)}</h1><p>First ${_text_mark($scope0_id, "b", first, 2)} Second ${_text_mark($scope0_id, "c", second, 2)}</p>`);
-	_set_scope_reason(_updates_from($scope0_reason, 1) << 1);
+	_set_scope_reason($uf__input_show << 1);
 	const $childScope = _peek_scope_id($scope0_id, "d", 0);
 	counter_default({
 		show: input.show,
@@ -47,7 +47,7 @@ var template_default = _template("a", (input) => {
 		}, "a0", $scope0_id)
 	});
 	_patch_child_end();
-	_set_scope_reason(_updates_from($scope0_reason, 1) << 1);
+	_set_scope_reason($uf__input_show << 1);
 	const $childScope2 = _peek_scope_id($scope0_id, "e", 1);
 	counter_default({
 		show: input.show,

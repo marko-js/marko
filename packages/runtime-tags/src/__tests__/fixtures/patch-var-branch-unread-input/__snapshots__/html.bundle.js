@@ -14,21 +14,21 @@ _shells({
 	a3: `a3${_shell_marker([[], []], ["a>", $setup$1])};${/*@__PURE__*/ ((_w0) => `0${_w0}&D l`)("")};${/*@__PURE__*/ ((_w0) => `${_w0}<p> </p>`)("")}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_user = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $ui__input_user = _unfilled_if($scope0_reason, 0), $ui__input_show = _unfilled_if($scope0_reason, 1), $fg__input_user = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	let n = 0;
 	_html(`<button class=inc>${_text_mark($scope0_id, "b", n)}</button>${_el_mark($scope0_id, "a")}`);
-	const $childScope = _peek_scope_id($scope0_id, "c", 0, _unfilled_if($scope0_reason, 0) && 1);
+	const $childScope = _peek_scope_id($scope0_id, "c", 0, $ui__input_user && 1);
 	let info = user_info_default({ user: input.user });
-	_unfilled_if($scope0_reason, 0) && _var($scope0_id, "d", $childScope, "a0");
+	$ui__input_user && _var($scope0_id, "d", $childScope, "a0");
 	_patch_child_end();
 	_html(`<p>${_text_mark($scope0_id, "e", info.name, 1, $scope0_reason, 0)}</p>`);
 	_if(() => {
 		if (input.show) {
-			const $scope1_id = _scope_id();
-			const $childScope2 = _peek_scope_id($scope1_id, "a", 1, _unfilled_if($scope0_reason, 2) && 1);
+			const $scope1_id = _scope_id(), $ui__input_user2 = _unfilled_if($scope0_reason, 2);
+			const $childScope2 = _peek_scope_id($scope1_id, "a", 1, $ui__input_user2 && 1);
 			let info2 = user_info_default({ user: input.user2 });
-			_unfilled_if($scope0_reason, 2) && _var($scope1_id, "b", $childScope2, "a1");
+			$ui__input_user2 && _var($scope1_id, "b", $childScope2, "a1");
 			_patch_child_end();
 			_html(`<p>${_text_mark($scope1_id, "c", info2.name, 1, $scope0_reason, 2)}</p>`);
 			_client_guard($scope0_reason, 2) && _patch_render($scope1_id, "a2");
@@ -42,8 +42,8 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a4");
 	$fg__input_user && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "a2", "k");
 	_scope($scope0_id, {
-		k: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.user2,
+		k: ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.user2,
 		l: n,
 		c: _existing_scope($childScope)
-	}) || $fg__input_user && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xk", input.user2, !_server_guard($scope0_reason, 2));
+	}) || $fg__input_user && $ui__input_show && _patch_write($scope0_id, "xk", input.user2, !_server_guard($scope0_reason, 2));
 }, 1);

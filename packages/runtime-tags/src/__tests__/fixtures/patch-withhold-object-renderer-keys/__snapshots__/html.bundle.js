@@ -31,7 +31,7 @@ _shells({
 	c: "c; ;<section></section>"
 });
 var holder_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $ui__input_mode = _unfilled_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const frag = { content: _content_resume("c0", () => {
 		_scope_id();
@@ -41,9 +41,9 @@ var holder_default = _template("c", (input) => {
 	_html("<section>");
 	_attr_content("a", $scope0_id, input.mode ? frag.content : null, 0, 1, $scope0_reason, 0);
 	_html(`</section>${_el_mark($scope0_id, "a", _updates_from($scope0_reason, 0))}`);
-	_unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "wf", frag?.content, 1);
+	$ui__input_mode && _patch_write($scope0_id, "wf", frag?.content, 1);
 	_client_guard($scope0_reason, 0) && _patch_render($scope0_id, "c1");
-	_scope($scope0_id, { f: _unfilled_if($scope0_reason, 0) && frag?.content });
+	_scope($scope0_id, { f: $ui__input_mode && frag?.content });
 });
 
 // template.marko
@@ -53,7 +53,7 @@ _shells({
 	a: `a${_shell_marker($setup)};${((_w0) => `/${_w0}&D%l b`)(" b")};${((_w0) => `${_w0}<main><!></main><button class=m>m</button>`)($template)}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $cg__input_note = _client_guard($scope0_reason, 3), $fg__input_note = _filled_guard($scope0_reason, 3), $fg__input_mode = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $cg__input_note = _client_guard($scope0_reason, 3), $ui__input_on = _unfilled_if($scope0_reason, 2), $fg__input_note = _filled_guard($scope0_reason, 3), $fg__input_mode = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = /* @__PURE__ */ new Set();
 	let m = false;
@@ -75,9 +75,9 @@ var template_default = _template("a", (input) => {
 	_patch_render($scope0_id, "a4", $fg__input_mode && "f");
 	_scope($scope0_id, {
 		f: input.mode,
-		h: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && input.note,
+		h: ($ui__input_on || _unfilled_if($scope0_reason, 3)) && input.note,
 		i: m,
 		a: _existing_scope($childScope),
 		k: _write_if($scope0_reason, 3) && $input_note__closures
-	}) || ($fg__input_mode && _patch_write($scope0_id, "xf", input.mode, !_server_guard($scope0_reason, 1)), $fg__input_note && (_client_branch_if("a0", $scope0_id) || _unfilled_if($scope0_reason, 2)) && _patch_write($scope0_id, "xh", input.note, !_server_guard($scope0_reason, 3)));
+	}) || ($fg__input_mode && _patch_write($scope0_id, "xf", input.mode, !_server_guard($scope0_reason, 1)), $fg__input_note && (_client_branch_if("a0", $scope0_id) || $ui__input_on) && _patch_write($scope0_id, "xh", input.note, !_server_guard($scope0_reason, 3)));
 }, 1);

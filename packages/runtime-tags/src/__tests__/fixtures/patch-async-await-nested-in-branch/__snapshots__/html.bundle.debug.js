@@ -11,7 +11,7 @@ _shells({
 	"__tests__/template.marko_1*shell": "__tests__/template.marko_1*shell;b%;<!><!><!>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_outer = _client_guard($scope0_reason, 3), $wi__input_show__OR__input_outer__OR__input_inner = _write_if($scope0_reason, 1), $fg__input_outer = _filled_guard($scope0_reason, 3), $fg__input_inner = _filled_guard($scope0_reason, 4), $cg__input_show = _client_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $cg__input_outer = _client_guard($scope0_reason, 3), $wi__input_show__OR__input_outer__OR__input_inner = _write_if($scope0_reason, 1), $ui__input_show = _unfilled_if($scope0_reason, 2), $ui__input_inner2 = _unfilled_if($scope0_reason, 4), $fg__input_outer = _filled_guard($scope0_reason, 3), $fg__input_inner = _filled_guard($scope0_reason, 4), $cg__input_show = _client_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_inner__closures = new Set();
 	_html("<main>");
@@ -19,16 +19,16 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_await($scope1_id, "#text/0", input.outer, (outer) => {
-				const $scope2_id = _scope_id();
+				const $scope2_id = _scope_id(), $ui__input_inner = _unfilled_if($scope0_reason, 4);
 				const $await_content__outer__closures = new Set();
 				_await($scope2_id, "#text/0", input.inner, (inner) => {
 					const $scope3_id = _scope_id();
 					_html(`<em>${_text_mark($scope3_id, "#text/0", outer, 1, $scope0_reason, 3)}:${_text_mark($scope3_id, "#text/1", inner, 2, $scope0_reason, 4)}</em>`);
 					_unfilled_if($scope0_reason, 3) && _patch_subscribe($scope3_id, "__tests__/template.marko_3_outer#2:2/subscribe", $cg__input_outer);
 					_subscribe(_unfilled_if($scope0_reason, 3) && $await_content__outer__closures, _scope($scope3_id, {}, "__tests__/template.marko", "4:8"), $cg__input_outer && "__tests__/template.marko_3_outer#2:2/subscribe");
-				}, 1, "__tests__/template.marko_3*content", _unfilled_if($scope0_reason, 4));
+				}, 1, "__tests__/template.marko_3*content", $ui__input_inner);
 				_unfilled_if($scope0_reason, 4) && _patch_subscribe($scope2_id, "__tests__/template.marko_2_input_inner#0:6/subscribe", 1);
-				$wi__input_show__OR__input_outer__OR__input_inner && _subscribe(_unfilled_if($scope0_reason, 4) && $input_inner__closures, _scope($scope2_id, { "ClosureScopes:outer/9": _write_if($scope0_reason, 3) && (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 2)) && $await_content__outer__closures }, "__tests__/template.marko", "3:6"), _client_guard($scope0_reason, 4) && "__tests__/template.marko_2_input_inner#0:6/subscribe", 0);
+				$wi__input_show__OR__input_outer__OR__input_inner && _subscribe($ui__input_inner && $input_inner__closures, _scope($scope2_id, { "ClosureScopes:outer/9": _write_if($scope0_reason, 3) && (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 2)) && $await_content__outer__closures }, "__tests__/template.marko", "3:6"), _client_guard($scope0_reason, 4) && "__tests__/template.marko_2_input_inner#0:6/subscribe", 0);
 				$wi__input_show__OR__input_outer__OR__input_inner && _resume_branch($scope2_id);
 			}, 1, "__tests__/template.marko_2*content", _unfilled_if($scope0_reason, 3));
 			$cg__input_outer && _patch_render($scope1_id, "__tests__/template.marko_1_input_outer#0:5/setup");
@@ -41,11 +41,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	$fg__input_outer && $cg__input_show && _patch_render($scope0_id, "__tests__/template.marko_1_input_outer#0:5/setup", "input_outer");
 	$fg__input_inner && $cg__input_show && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_inner#6/subscribers", "input_inner");
 	_scope($scope0_id, {
-		input_outer: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && input.outer,
-		input_inner: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 4)) && input.inner,
-		"ClosureScopes:input_inner/8": _write_if($scope0_reason, 4) && (_unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 2)) && $input_inner__closures
+		input_outer: ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.outer,
+		input_inner: ($ui__input_show || $ui__input_inner2) && input.inner,
+		"ClosureScopes:input_inner/8": _write_if($scope0_reason, 4) && ($ui__input_inner2 || $ui__input_show) && $input_inner__closures
 	}, "__tests__/template.marko", 0, {
 		input_outer: ["input.outer"],
 		input_inner: ["input.inner"]
-	}) || ($fg__input_outer && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_outer", input.outer, !_server_guard($scope0_reason, 3)), $fg__input_inner && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_inner", input.inner, !_server_guard($scope0_reason, 4)));
+	}) || ($fg__input_outer && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_outer", input.outer, !_server_guard($scope0_reason, 3)), $fg__input_inner && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_inner", input.inner, !_server_guard($scope0_reason, 4)));
 }, 1);

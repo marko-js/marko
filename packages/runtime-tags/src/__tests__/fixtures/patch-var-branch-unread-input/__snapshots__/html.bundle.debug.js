@@ -19,21 +19,21 @@ _shells({
 	"__tests__/template.marko_1*shell": `__tests__/template.marko_1*shell${_shell_marker([[], []], ["#childScope/0>", $setup$1])};${/*@__PURE__*/ ((_w0) => `0${_w0}&D l`)("")};${/*@__PURE__*/ ((_w0) => `${_w0}<p> </p>`)("")}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_user = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $ui__input_user = _unfilled_if($scope0_reason, 0), $ui__input_show = _unfilled_if($scope0_reason, 1), $fg__input_user = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	let n = 0;
 	_html(`<button class=inc>${_text_mark($scope0_id, "#text/1", n)}</button>${_el_mark($scope0_id, "#button/0")}`);
-	const $childScope = _peek_scope_id($scope0_id, "#childScope/2", 0, _unfilled_if($scope0_reason, 0) && 1);
+	const $childScope = _peek_scope_id($scope0_id, "#childScope/2", 0, $ui__input_user && 1);
 	let info = user_info_default({ user: input.user });
-	_unfilled_if($scope0_reason, 0) && _var($scope0_id, "#scopeOffset/3", $childScope, "__tests__/template.marko_0_info#12/var");
+	$ui__input_user && _var($scope0_id, "#scopeOffset/3", $childScope, "__tests__/template.marko_0_info#12/var");
 	_patch_child_end();
 	_html(`<p>${_text_mark($scope0_id, "#text/4", info.name, 1, $scope0_reason, 0)}</p>`);
 	_if(() => {
 		if (input.show) {
-			const $scope1_id = _scope_id();
-			const $childScope2 = _peek_scope_id($scope1_id, "#childScope/0", 1, _unfilled_if($scope0_reason, 2) && 1);
+			const $scope1_id = _scope_id(), $ui__input_user2 = _unfilled_if($scope0_reason, 2);
+			const $childScope2 = _peek_scope_id($scope1_id, "#childScope/0", 1, $ui__input_user2 && 1);
 			let info2 = user_info_default({ user: input.user2 });
-			_unfilled_if($scope0_reason, 2) && _var($scope1_id, "#scopeOffset/1", $childScope2, "__tests__/template.marko_1_info2#3/var");
+			$ui__input_user2 && _var($scope1_id, "#scopeOffset/1", $childScope2, "__tests__/template.marko_1_info2#3/var");
 			_patch_child_end();
 			_html(`<p>${_text_mark($scope1_id, "#text/2", info2.name, 1, $scope0_reason, 2)}</p>`);
 			_client_guard($scope0_reason, 2) && _patch_render($scope1_id, "__tests__/template.marko_1_input_user2#0:10/setup");
@@ -47,11 +47,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	$fg__input_user && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "__tests__/template.marko_1_input_user2#0:10/setup", "input_user2");
 	_scope($scope0_id, {
-		input_user2: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.user2,
+		input_user2: ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.user2,
 		n,
 		"#childScope/2": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, {
 		input_user2: ["input.user2"],
 		n: "1:6"
-	}) || $fg__input_user && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_user2", input.user2, !_server_guard($scope0_reason, 2));
+	}) || $fg__input_user && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_user2", input.user2, !_server_guard($scope0_reason, 2));
 }, 1);

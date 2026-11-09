@@ -6,7 +6,7 @@ _shells({
 	a3: "a3;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_useA__OR__input_record = _write_guard($scope0_reason, 2), $cg__input_show__OR__input_useA__OR__input_record = _client_guard($scope0_reason, 3), $wg__input_show = _write_guard($scope0_reason, 4), $fg__input_useA = _filled_guard($scope0_reason, 5), $fg__input_record = _filled_guard($scope0_reason, 6), $cg__input_show = _client_guard($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $wg__input_useA__OR__input_record = _write_guard($scope0_reason, 2), $cg__input_show__OR__input_useA__OR__input_record = _client_guard($scope0_reason, 3), $wg__input_show = _write_guard($scope0_reason, 4), $ui__input_useA__OR__input_record = _unfilled_if($scope0_reason, 2), $ui__input_show__OR__input_useA__OR__input_record = _unfilled_if($scope0_reason, 3), $ui__input_show__OR__input_record = _unfilled_if($scope0_reason, 1), $ui__input_show__OR__input_useA = _unfilled_if($scope0_reason, 0), $fg__input_useA = _filled_guard($scope0_reason, 5), $fg__input_record = _filled_guard($scope0_reason, 6), $cg__input_show = _client_guard($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	const Card = { content: _content_resume("a0", ({ record }) => {
 		const $scope2_id = _scope_id();
@@ -36,9 +36,9 @@ var template_default = _template("a", (input) => {
 	$fg__input_useA && $cg__input_show && _patch_render($scope0_id, "a4", "e");
 	$fg__input_record && $cg__input_show && _patch_render($scope0_id, "a5", "f");
 	_scope($scope0_id, {
-		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.useA,
-		f: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && input.record,
-		g: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 2)) && Card,
-		h: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 2)) && Other
-	}) || ($fg__input_useA && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.useA, !_server_guard($scope0_reason, 5)), $fg__input_record && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xf", input.record, !_server_guard($scope0_reason, 6)));
+		e: ($ui__input_show__OR__input_record || $ui__input_useA__OR__input_record) && input.useA,
+		f: ($ui__input_show__OR__input_useA || $ui__input_useA__OR__input_record) && input.record,
+		g: ($ui__input_show__OR__input_useA__OR__input_record || $ui__input_useA__OR__input_record) && Card,
+		h: ($ui__input_show__OR__input_useA__OR__input_record || $ui__input_useA__OR__input_record) && Other
+	}) || ($fg__input_useA && $ui__input_show__OR__input_record && _patch_write($scope0_id, "xe", input.useA, !_server_guard($scope0_reason, 5)), $fg__input_record && $ui__input_show__OR__input_useA && _patch_write($scope0_id, "xf", input.record, !_server_guard($scope0_reason, 6)));
 }, 1);

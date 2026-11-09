@@ -8,7 +8,7 @@ _shells({
 	"__tests__/template.marko_2*shell": "__tests__/template.marko_2*shell __tests__/template.marko_2_count#0:7/subscribe;D ;<p> </p>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_flag = _write_guard($scope0_reason, 1), $fg__input_flag = _filled_guard($scope0_reason, 1), $fg__input_suffix = _filled_guard($scope0_reason, 2), $cg__input_items = _client_guard($scope0_reason, 0), $cg__input_flag = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_flag = _write_guard($scope0_reason, 1), $ui__input_items = _unfilled_if($scope0_reason, 0), $fg__input_flag = _filled_guard($scope0_reason, 1), $fg__input_suffix = _filled_guard($scope0_reason, 2), $cg__input_items = _client_guard($scope0_reason, 0), $cg__input_flag = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_suffix__closures = new Set();
 	const $count__closures = new Set();
@@ -37,7 +37,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	$fg__input_flag && $cg__input_items && _patch_render($scope0_id, "__tests__/template.marko_1_input_flag#0:5/setup", "input_flag");
 	$fg__input_suffix && ($cg__input_items || $cg__input_flag) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_suffix#6/subscribers", "input_suffix");
 	_scope($scope0_id, {
-		input_flag: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.flag,
+		input_flag: ($ui__input_items || _unfilled_if($scope0_reason, 1)) && input.flag,
 		input_suffix: input.suffix,
 		count,
 		"ClosureScopes:input_suffix/9": _write_if($scope0_reason, 2) && $input_suffix__closures,
@@ -46,5 +46,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_flag: ["input.flag"],
 		input_suffix: ["input.suffix"],
 		count: "1:6"
-	}) || ($fg__input_flag && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_flag", input.flag, !_server_guard($scope0_reason, 1)), $fg__input_suffix && _patch_write($scope0_id, "PatchMarkedWrite:input_suffix", input.suffix, !_server_guard($scope0_reason, 2)));
+	}) || ($fg__input_flag && $ui__input_items && _patch_write($scope0_id, "PatchMarkedWrite:input_flag", input.flag, !_server_guard($scope0_reason, 1)), $fg__input_suffix && _patch_write($scope0_id, "PatchMarkedWrite:input_suffix", input.suffix, !_server_guard($scope0_reason, 2)));
 }, 1);

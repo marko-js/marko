@@ -28,7 +28,7 @@ const $walks = "D1bD m";
 const $setup = [[], []];
 _shells({ "__tests__/template.marko": "__tests__/template.marko;D1bD ;<main><!><p> </p></main>" });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_on = _filled_guard($scope0_reason, 1), $fg__input_start = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $ui__input_on__OR__input_start = _unfilled_if($scope0_reason, 0), $ui__input_start = _unfilled_if($scope0_reason, 2), $ui__input_on = _unfilled_if($scope0_reason, 1), $fg__input_on = _filled_guard($scope0_reason, 1), $fg__input_start = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	_html("<main>");
 	const $inputoncounternull_scope = _peek_scope_id();
@@ -37,10 +37,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(`<p>${_text_mark($scope0_id, "#text/2", n)}</p></main>`);
 	_patch_render($scope0_id, "__tests__/template.marko_0_input_on#5_input_start#6/setup", [$fg__input_on && "input_on", $fg__input_start && "input_start"], $scope0_reason, 0);
 	_scope($scope0_id, {
-		input_on: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.on,
-		input_start: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.start
+		input_on: ($ui__input_start || $ui__input_on__OR__input_start) && input.on,
+		input_start: ($ui__input_on || $ui__input_on__OR__input_start) && input.start
 	}, "__tests__/template.marko", 0, {
 		input_on: ["input.on"],
 		input_start: ["input.start"]
-	}) || ($fg__input_on && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_on", input.on, !_server_guard($scope0_reason, 1)), $fg__input_start && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_start", input.start, !_server_guard($scope0_reason, 2)));
+	}) || ($fg__input_on && $ui__input_start && _patch_write($scope0_id, "PatchMarkedWrite:input_on", input.on, !_server_guard($scope0_reason, 1)), $fg__input_start && $ui__input_on && _patch_write($scope0_id, "PatchMarkedWrite:input_start", input.start, !_server_guard($scope0_reason, 2)));
 }, 1);

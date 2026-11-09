@@ -7,11 +7,11 @@ _shells({
 	b3: "b3; ;<section></section>"
 });
 var frag_host_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_note = _client_guard($scope0_reason, 1), $wi__input_note__OR__input_mode = _write_if($scope0_reason, 0), $fg__input_note = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_note = _client_guard($scope0_reason, 1), $wi__input_note__OR__input_mode = _write_if($scope0_reason, 0), $ui__input_mode2 = _unfilled_if($scope0_reason, 2), $fg__input_note = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = /* @__PURE__ */ new Set();
 	_for_of([0, 1], (i) => {
-		const $scope1_id = _scope_id();
+		const $scope1_id = _scope_id(), $ui__input_mode = _unfilled_if($scope0_reason, 2);
 		const frag = { content: _content_resume("b0", () => {
 			const $scope2_id = _scope_id();
 			_scope_reason();
@@ -22,20 +22,20 @@ var frag_host_default = _template("b", (input) => {
 		_html("<section>");
 		_attr_content("a", $scope1_id, i || input.mode ? frag.content : null, 0, 1, $scope0_reason, 2);
 		_html(`</section>${_el_mark($scope1_id, "a", _updates_from($scope0_reason, 2))}`);
-		_unfilled_if($scope0_reason, 2) && _patch_write($scope1_id, "wc", i, 1);
-		_unfilled_if($scope0_reason, 2) && _patch_write($scope1_id, "we", frag?.content, 1);
+		$ui__input_mode && _patch_write($scope1_id, "wc", i, 1);
+		$ui__input_mode && _patch_write($scope1_id, "we", frag?.content, 1);
 		_client_guard($scope0_reason, 2) && _patch_render($scope1_id, "b2");
 		_scope($scope1_id, {
-			c: _unfilled_if($scope0_reason, 2) && i,
-			e: _unfilled_if($scope0_reason, 2) && frag?.content,
+			c: $ui__input_mode && i,
+			e: $ui__input_mode && frag?.content,
 			_: $wi__input_note__OR__input_mode && _scope_with_id($scope0_id)
 		});
 	}, 0, $scope0_id, "a", 1, 1, 1, 0, 0, "b3", 0, 0);
 	$fg__input_note && _patch_subscribers($scope0_id, "b4", "d");
 	_scope($scope0_id, {
-		d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1)) && input.note,
+		d: ($ui__input_mode2 || _unfilled_if($scope0_reason, 1)) && input.note,
 		f: _write_if($scope0_reason, 1) && $input_note__closures
-	}) || $fg__input_note && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xd", input.note, !_server_guard($scope0_reason, 1));
+	}) || $fg__input_note && $ui__input_mode2 && _patch_write($scope0_id, "xd", input.note, !_server_guard($scope0_reason, 1));
 });
 
 // template.marko

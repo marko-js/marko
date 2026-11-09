@@ -19,20 +19,20 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope($scope1_id, {}, "__tests__/template.marko", "2:4");
 	}, 1, "__tests__/template.marko_1*content", _unfilled_if($scope0_reason, 0) && 2, 1);
 	_await($scope0_id, "#text/1", input.second, (second) => {
-		const $scope2_id = _scope_id();
-		_filled_guard($scope0_reason, 1) && _patch_write($scope2_id, "PatchMarkedWrite:second", second, !_server_guard($scope0_reason, 1));
+		const $scope2_id = _scope_id(), $fg__input_second = _filled_guard($scope0_reason, 1), $ui__input_second = _unfilled_if($scope0_reason, 1);
+		$fg__input_second && _patch_write($scope2_id, "PatchMarkedWrite:second", second, !_server_guard($scope0_reason, 1));
 		const handler = _bind_resume((event) => event.target.dataset.seen = second, "__tests__/template.marko_2/handler", $scope2_id);
 		const attrs = {
 			title: second,
 			onClick: handler
 		};
 		_html(`<button${_attrs(attrs, "#button/0", $scope2_id, "button", 0, $scope0_reason, 1)}>${_text_mark($scope2_id, "#text/1", second, 1, $scope0_reason, 1)}</button>${_el_mark($scope2_id, "#button/0")}`);
-		_script($scope2_id, "__tests__/template.marko_2_attrs#6", 1, _filled_guard($scope0_reason, 1), "second");
-		_unfilled_if($scope0_reason, 1) && _patch_write($scope2_id, "PatchWrite:handler", handler, 1);
+		_script($scope2_id, "__tests__/template.marko_2_attrs#6", 1, $fg__input_second, "second");
+		$ui__input_second && _patch_write($scope2_id, "PatchWrite:handler", handler, 1);
 		_client_guard($scope0_reason, 1) && _patch_render($scope2_id, "__tests__/template.marko_2_second#3_handler#4/setup");
 		_scope($scope2_id, {
 			second,
-			handler: _unfilled_if($scope0_reason, 1) && handler
+			handler: $ui__input_second && handler
 		}, "__tests__/template.marko", "3:4", {
 			second: "3:10",
 			handler: "4:12",

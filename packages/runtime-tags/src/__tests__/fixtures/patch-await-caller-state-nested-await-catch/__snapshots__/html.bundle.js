@@ -20,15 +20,15 @@ var show_await_default = _template("b", (input) => {
 		_html(`<p>${_text_mark($scope1_id, "a", x, 1, $scope0_reason, 1)}</p>`);
 		_try($scope1_id, "b", () => {
 			_scope_reason();
-			const $scope2_id = _scope_id();
+			const $scope2_id = _scope_id(), $ui__input_other = _unfilled_if($scope0_reason, 2);
 			_await($scope2_id, "a", input.other, (y) => {
 				const $scope3_id = _scope_id();
 				_html(`<b>${_text_mark($scope3_id, "a", x, 1, $scope0_reason, 1)}</b>`);
 				_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope3_id, "b0", $cg__input_promise);
 				_subscribe(_unfilled_if($scope0_reason, 1) && $await_content__x__closures, _scope($scope3_id, {}), $cg__input_promise && "b0");
-			}, 1, "b2", _unfilled_if($scope0_reason, 2), 1);
+			}, 1, "b2", $ui__input_other, 1);
 			_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope2_id, "b7", 1);
-			$wi__input_promise__OR__input_other && _subscribe(_unfilled_if($scope0_reason, 2) && $input_other__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 2) && "b7", 0);
+			$wi__input_promise__OR__input_other && _subscribe($ui__input_other && $input_other__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 2) && "b7", 0);
 			$wi__input_promise__OR__input_other && _resume_branch($scope2_id);
 		}, void 0, () => {
 			_scope_reason();

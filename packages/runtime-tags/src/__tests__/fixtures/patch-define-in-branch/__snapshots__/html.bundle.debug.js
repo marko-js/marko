@@ -9,7 +9,7 @@ _shells({
 	"__tests__/template.marko_2*shell": `__tests__/template.marko_2*shell >#childScope/0> >#childScope/1>;${/*@__PURE__*/ ((_w0, _w1) => `/${_w0}&/${_w1}&`)($row_content__walks, $row_content__walks)};${/*@__PURE__*/ ((_w0, _w1) => `${_w0}${_w1}`)($row_content__template, $row_content__template)}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_suffix = _client_guard($scope0_reason, 1), $wg__input_show = _write_guard($scope0_reason, 2), $fg__input_suffix = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_suffix = _client_guard($scope0_reason, 1), $wg__input_show = _write_guard($scope0_reason, 2), $ui__input_show = _unfilled_if($scope0_reason, 2), $fg__input_suffix = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_suffix__closures = new Set();
 	const row = { content: _content("__tests__/template.marko_1*content", (label) => {
@@ -42,7 +42,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(`</ul>${_el_mark($scope0_id, "#ul/0", $wg__input_show)}`);
 	$fg__input_suffix && _client_guard($scope0_reason, 2) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_suffix#3/subscribers", "input_suffix");
 	_scope($scope0_id, {
-		input_suffix: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1)) && input.suffix,
+		input_suffix: ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.suffix,
 		"ClosureScopes:input_suffix/5": _write_if($scope0_reason, 1) && $input_suffix__closures
-	}, "__tests__/template.marko", 0, { input_suffix: ["input.suffix"] }) || $fg__input_suffix && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_suffix", input.suffix, !_server_guard($scope0_reason, 1));
+	}, "__tests__/template.marko", 0, { input_suffix: ["input.suffix"] }) || $fg__input_suffix && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_suffix", input.suffix, !_server_guard($scope0_reason, 1));
 }, 1);

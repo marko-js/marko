@@ -4,7 +4,7 @@ const $walks$3 = "F%b%n";
 const $setup$3 = [[], []];
 _shells({ "__tests__/layout.marko": "__tests__/layout.marko;F%b%;<html><body><main><!><!></main></body></html>" });
 var layout_default = _template("__tests__/layout.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_nav__OR__input_label = _write_guard($scope0_reason, 0), $wg__input_content = _write_guard($scope0_reason, 4), $fg__input_nav = _filled_guard($scope0_reason, 2), $fg__input_label = _filled_guard($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $wg__input_nav__OR__input_label = _write_guard($scope0_reason, 0), $wg__input_content = _write_guard($scope0_reason, 4), $ui__input_nav__OR__input_label = _unfilled_if($scope0_reason, 0), $ui__input_label = _unfilled_if($scope0_reason, 3), $ui__input_nav = _unfilled_if($scope0_reason, 2), $fg__input_nav = _filled_guard($scope0_reason, 2), $fg__input_label = _filled_guard($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	_html(`<html>${_flush_head()}<body><main>`);
 	_dynamic_tag($scope0_id, "#text/0", input.nav, { label: input.label }, 1, 0, 0, $wg__input_nav__OR__input_label, $scope0_reason, 0, 0, 2);
@@ -12,12 +12,12 @@ var layout_default = _template("__tests__/layout.marko", (input) => {
 	_html("</main>"), _trailers("</body></html>");
 	_patch_render($scope0_id, "__tests__/layout.marko_0_input_nav#4_input_label#5/setup", [$fg__input_nav && "input_nav", $fg__input_label && "input_label"], $scope0_reason, 0);
 	_scope($scope0_id, {
-		input_nav: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 0)) && input.nav,
-		input_label: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.label
+		input_nav: ($ui__input_label || $ui__input_nav__OR__input_label) && input.nav,
+		input_label: ($ui__input_nav || $ui__input_nav__OR__input_label) && input.label
 	}, "__tests__/layout.marko", 0, {
 		input_nav: ["input.nav"],
 		input_label: ["input.label"]
-	}) || ($fg__input_nav && _unfilled_if($scope0_reason, 3) && _patch_write($scope0_id, "PatchMarkedWrite:input_nav", input.nav, !_server_guard($scope0_reason, 2)), $fg__input_label && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 3)));
+	}) || ($fg__input_nav && $ui__input_label && _patch_write($scope0_id, "PatchMarkedWrite:input_nav", input.nav, !_server_guard($scope0_reason, 2)), $fg__input_label && $ui__input_nav && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 3)));
 }, 1);
 
 // nav-a.marko

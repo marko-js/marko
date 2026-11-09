@@ -20,13 +20,13 @@ var child_default = _template("b", (input) => {
 		}
 	}, $scope0_id, "a", 1, 1, 0, 0, 1);
 	_for_of(input.items, (item) => {
-		const $scope2_id = _scope_id();
-		_filled_guard($scope0_reason, 2) && _unfilled_if($scope0_reason, 1) && _patch_write($scope2_id, "xc", item, !_server_guard($scope0_reason, 2));
+		const $scope2_id = _scope_id(), $ui__input_b = _unfilled_if($scope0_reason, 1), $fg__input_items = _filled_guard($scope0_reason, 2);
+		$fg__input_items && $ui__input_b && _patch_write($scope2_id, "xc", item, !_server_guard($scope0_reason, 2));
 		const d = input.b + item;
 		_html(`<p>${_text_mark($scope2_id, "a", d, 1, $scope0_reason, 0)}</p>`);
-		_patch_render($scope2_id, "b1", [_filled_guard($scope0_reason, 1) && ">f", _filled_guard($scope0_reason, 2) && "c"], $scope0_reason, 0);
+		_patch_render($scope2_id, "b1", [_filled_guard($scope0_reason, 1) && ">f", $fg__input_items && "c"], $scope0_reason, 0);
 		_scope($scope2_id, {
-			c: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && item,
+			c: ($ui__input_b || _unfilled_if($scope0_reason, 0)) && item,
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id)
 		});
 	}, 0, $scope0_id, "b", 1, 1, 1, 0, 0, "b2", $scope0_reason, 2);

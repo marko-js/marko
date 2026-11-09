@@ -7,7 +7,7 @@ _shells({
 	"__tests__/tags/child.marko": "__tests__/tags/child.marko;b%;<!><!><!>"
 });
 var child_default = _template("__tests__/tags/child.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $cg__input_note = _client_guard($scope0_reason, 2), $wg__input_tag = _write_guard($scope0_reason, 1), $fg__input_note = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $cg__input_note = _client_guard($scope0_reason, 2), $wg__input_tag = _write_guard($scope0_reason, 1), $ui__input_tag = _unfilled_if($scope0_reason, 1), $fg__input_note = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = new Set();
 	_dynamic_tag($scope0_id, "#text/0", input.tag, {}, 2, _content_resume("__tests__/tags/child.marko_1*content", () => {
@@ -19,9 +19,9 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	}, $scope0_id, ($scope) => $scope0_page ? [{ input_note: input.note }] : []), 0, $wg__input_tag, $scope0_reason, 1, 0, void 0, 0, 0, "__tests__/tags/child.marko_1*content");
 	$fg__input_note && _patch_subscribers($scope0_id, "__tests__/tags/child.marko_0_input_note#4/subscribers", "input_note");
 	_scope($scope0_id, {
-		input_note: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.note,
+		input_note: ($ui__input_tag || _unfilled_if($scope0_reason, 2)) && input.note,
 		"ClosureScopes:input_note/5": _write_if($scope0_reason, 2) && $input_note__closures
-	}, "__tests__/tags/child.marko", 0, { input_note: ["input.note"] }) || $fg__input_note && (_client_branch_if("__tests__/tags/child.marko_1*content", $scope0_id) || _unfilled_if($scope0_reason, 1)) && _patch_write($scope0_id, "PatchMarkedWrite:input_note", input.note, !_server_guard($scope0_reason, 2));
+	}, "__tests__/tags/child.marko", 0, { input_note: ["input.note"] }) || $fg__input_note && (_client_branch_if("__tests__/tags/child.marko_1*content", $scope0_id) || $ui__input_tag) && _patch_write($scope0_id, "PatchMarkedWrite:input_note", input.note, !_server_guard($scope0_reason, 2));
 });
 
 // template.marko

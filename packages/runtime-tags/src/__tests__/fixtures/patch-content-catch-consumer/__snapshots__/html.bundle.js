@@ -79,13 +79,13 @@ _shells({
 	a: `a${_shell_marker($setup)};${((_w0, _w1) => ` D l/${_w0}&/${_w1}&b`)("b%c", "b%c")};${((_w0, _w1) => `<button> </button>${_w0}${_w1}<!>`)($template$1, $template)}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 1), $wi__input_label = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 1), $uf__input_fail = _updates_from($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 1), $wi__input_label = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	const $count__closures = /* @__PURE__ */ new Set();
 	let count = 0;
 	_html(`<button>${_text_mark($scope0_id, "b", count)}</button>${_el_mark($scope0_id, "a")}`);
-	_set_scope_reason(_updates_from($scope0_reason, 0) << 3);
+	_set_scope_reason($uf__input_fail << 3);
 	const $childScope = _peek_scope_id($scope0_id, "c", 0);
 	wrapper_default({
 		fail: input.fail,
@@ -98,7 +98,7 @@ var template_default = _template("a", (input) => {
 		}, $scope0_id) })
 	});
 	_patch_child_end();
-	_set_scope_reason(_updates_from($scope0_reason, 0) << 3);
+	_set_scope_reason($uf__input_fail << 3);
 	const $childScope2 = _peek_scope_id($scope0_id, "d", 1);
 	error_wrapper_default({
 		fail: input.fail,

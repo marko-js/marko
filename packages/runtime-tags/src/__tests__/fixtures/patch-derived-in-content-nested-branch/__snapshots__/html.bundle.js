@@ -27,10 +27,10 @@ var template_default = _template("a", (input) => {
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	wrapper_default({ content: _content("a7", () => {
 		_scope_reason();
-		const $scope1_id = _scope_id();
+		const $scope1_id = _scope_id(), $fg__input_label = _filled_guard($scope0_reason, 0);
 		const $wrapper_content__label__closures = /* @__PURE__ */ new Set();
 		const label = input.label;
-		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "xb", label, !_server_guard($scope0_reason, 0));
+		$fg__input_label && _patch_write($scope1_id, "xb", label, !_server_guard($scope0_reason, 0));
 		_if(() => {
 			if (input.label) {
 				const $scope2_id = _scope_id();
@@ -40,8 +40,8 @@ var template_default = _template("a", (input) => {
 				return 0;
 			}
 		}, $scope1_id, "a", 1, $wg__input_label, 1, 0, 0, ["a3"], $scope0_reason, 0);
-		_filled_guard($scope0_reason, 0) && _patch_subscribers($scope1_id, "a4", "b");
-		_filled_guard($scope0_reason, 0) && $cg__input_label && _patch_render($scope1_id, "a5", "b");
+		$fg__input_label && _patch_subscribers($scope1_id, "a4", "b");
+		$fg__input_label && $cg__input_label && _patch_render($scope1_id, "a5", "b");
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope1_id, {
 			b: label,
 			_: _scope_with_id($scope0_id),

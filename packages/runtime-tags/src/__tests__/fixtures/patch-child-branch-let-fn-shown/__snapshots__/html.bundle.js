@@ -6,7 +6,7 @@ _shells({
 	b2: "b2 !b0; D ;<button> </button>"
 });
 var card_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_fn = _client_guard($scope0_reason, 1), $wg__input_show = _write_guard($scope0_reason, 0), $fg__input_fn = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_fn = _client_guard($scope0_reason, 1), $wg__input_show = _write_guard($scope0_reason, 0), $ui__input_show = _unfilled_if($scope0_reason, 0), $fg__input_fn = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.show) {
@@ -20,7 +20,7 @@ var card_default = _template("b", (input) => {
 		}
 	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["b2"], $scope0_reason, 0);
 	$fg__input_fn && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "b1", "e");
-	_scope($scope0_id, { e: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.fn }) || $fg__input_fn && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xe", input.fn, !_server_guard($scope0_reason, 1));
+	_scope($scope0_id, { e: ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.fn }) || $fg__input_fn && $ui__input_show && _patch_write($scope0_id, "xe", input.fn, !_server_guard($scope0_reason, 1));
 });
 
 // template.marko

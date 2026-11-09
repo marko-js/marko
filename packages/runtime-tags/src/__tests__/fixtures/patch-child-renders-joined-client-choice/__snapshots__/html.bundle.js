@@ -3,7 +3,7 @@ const $template = "<p> </p>";
 const $setup$1 = [[], []];
 _shells({ b: "b;D ;<p> </p>" });
 var label_view_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_flag = _filled_guard($scope0_reason, 4), $fg__input_a = _filled_guard($scope0_reason, 5), $fg__input_b = _filled_guard($scope0_reason, 6);
+	const $scope0_reason = _scope_reason(), $ui__input_flag__OR__input_a__OR__input_b = _unfilled_if($scope0_reason, 3), $ui__input_a__OR__input_b = _unfilled_if($scope0_reason, 2), $ui__input_flag__OR__input_b = _unfilled_if($scope0_reason, 1), $ui__input_flag__OR__input_a = _unfilled_if($scope0_reason, 0), $fg__input_flag = _filled_guard($scope0_reason, 4), $fg__input_a = _filled_guard($scope0_reason, 5), $fg__input_b = _filled_guard($scope0_reason, 6);
 	const $scope0_id = _scope_id();
 	const get = input.flag ? input.a : input.b;
 	_html(`<p>${_text_mark($scope0_id, "a", get(), 1, $scope0_reason, 3)}</p>`);
@@ -13,10 +13,10 @@ var label_view_default = _template("b", (input) => {
 		$fg__input_b && "f"
 	], $scope0_reason, 3);
 	_scope($scope0_id, {
-		d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && input.flag,
-		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 3)) && input.a,
-		f: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 3)) && input.b
-	}) || ($fg__input_flag && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xd", input.flag, !_server_guard($scope0_reason, 4)), $fg__input_a && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.a, !_server_guard($scope0_reason, 5)), $fg__input_b && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xf", input.b, !_server_guard($scope0_reason, 6)));
+		d: ($ui__input_a__OR__input_b || $ui__input_flag__OR__input_a__OR__input_b) && input.flag,
+		e: ($ui__input_flag__OR__input_b || $ui__input_flag__OR__input_a__OR__input_b) && input.a,
+		f: ($ui__input_flag__OR__input_a || $ui__input_flag__OR__input_a__OR__input_b) && input.b
+	}) || ($fg__input_flag && $ui__input_a__OR__input_b && _patch_write($scope0_id, "xd", input.flag, !_server_guard($scope0_reason, 4)), $fg__input_a && $ui__input_flag__OR__input_b && _patch_write($scope0_id, "xe", input.a, !_server_guard($scope0_reason, 5)), $fg__input_b && $ui__input_flag__OR__input_a && _patch_write($scope0_id, "xf", input.b, !_server_guard($scope0_reason, 6)));
 });
 
 // template.marko

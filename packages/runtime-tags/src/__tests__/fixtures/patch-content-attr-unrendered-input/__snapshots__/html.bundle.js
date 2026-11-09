@@ -4,7 +4,7 @@ _shells({
 	a: "a !a2; D l ;<button class=inc> </button><section></section>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_rec_name = _client_guard($scope0_reason, 1), $fg__input_rec_name = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_rec_name = _client_guard($scope0_reason, 1), $ui__input_on = _unfilled_if($scope0_reason, 2), $fg__input_rec_name = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_rec_name__closures = /* @__PURE__ */ new Set();
 	let n = 0;
@@ -22,9 +22,9 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a2");
 	$fg__input_rec_name && _patch_subscribers($scope0_id, "a3", "g");
 	_scope($scope0_id, {
-		g: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1)) && input.rec?.name,
+		g: ($ui__input_on || _unfilled_if($scope0_reason, 1)) && input.rec?.name,
 		i: n,
-		k: _unfilled_if($scope0_reason, 2) && frag?.content,
+		k: $ui__input_on && frag?.content,
 		m: _write_if($scope0_reason, 1) && $input_rec_name__closures
-	}) || $fg__input_rec_name && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xg", input.rec?.name, !_server_guard($scope0_reason, 1));
+	}) || $fg__input_rec_name && $ui__input_on && _patch_write($scope0_id, "xg", input.rec?.name, !_server_guard($scope0_reason, 1));
 }, 1);

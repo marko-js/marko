@@ -28,7 +28,7 @@ _shells({
 	"__tests__/tags/row-list.marko_2*shell": "__tests__/tags/row-list.marko_2*shell __tests__/tags/row-list.marko_2_bounty#0:9/subscribe;D ;<span> </span>"
 });
 var row_list_default = _template("__tests__/tags/row-list.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_type = _write_guard($scope0_reason, 1), $cg__input_type = _client_guard($scope0_reason, 1), $fg__input_type = _filled_guard($scope0_reason, 1), $fg__input_settled = _filled_guard($scope0_reason, 2), $cg__input_tally = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_type = _write_guard($scope0_reason, 1), $cg__input_type = _client_guard($scope0_reason, 1), $ui__input_tally = _unfilled_if($scope0_reason, 0), $fg__input_type = _filled_guard($scope0_reason, 1), $fg__input_settled = _filled_guard($scope0_reason, 2), $cg__input_tally = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_settled__closures = new Set();
 	const $bounty__closures = new Set();
@@ -38,8 +38,8 @@ var row_list_default = _template("__tests__/tags/row-list.marko", (input) => {
 	_var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/tags/row-list.marko_0_bounty#9/var");
 	_patch_child_end();
 	_for_of(input.tally, (t) => {
-		const $scope1_id = _scope_id();
-		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "PatchMarkedWrite:t", t, !_server_guard($scope0_reason, 0));
+		const $scope1_id = _scope_id(), $fg__input_tally = _filled_guard($scope0_reason, 0);
+		$fg__input_tally && _patch_write($scope1_id, "PatchMarkedWrite:t", t, !_server_guard($scope0_reason, 0));
 		_if(() => {
 			if (input.type) {
 				const $scope2_id = _scope_id();
@@ -50,7 +50,7 @@ var row_list_default = _template("__tests__/tags/row-list.marko", (input) => {
 				return 0;
 			}
 		}, $scope1_id, "#text/0", 1, $wg__input_type, 1, 0, 0, ["__tests__/tags/row-list.marko_2*shell"], $scope0_reason, 1);
-		_filled_guard($scope0_reason, 0) && $cg__input_type && _patch_render($scope1_id, "__tests__/tags/row-list.marko_2_t#1:2/setup", "t");
+		$fg__input_tally && $cg__input_type && _patch_render($scope1_id, "__tests__/tags/row-list.marko_2_t#1:2/setup", "t");
 		$cg__input_type && _patch_render($scope1_id, "__tests__/tags/row-list.marko_1_input_type#0:7/setup");
 		_scope($scope1_id, {
 			t,
@@ -62,7 +62,7 @@ var row_list_default = _template("__tests__/tags/row-list.marko", (input) => {
 	$fg__input_type && $cg__input_tally && _patch_render($scope0_id, "__tests__/tags/row-list.marko_1_input_type#0:7/setup", "input_type");
 	$fg__input_settled && ($cg__input_tally || $cg__input_type) && _patch_subscribers($scope0_id, "__tests__/tags/row-list.marko_0_input_settled#8/subscribers", "input_settled");
 	_scope($scope0_id, {
-		input_type: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.type,
+		input_type: ($ui__input_tally || _unfilled_if($scope0_reason, 1)) && input.type,
 		input_settled: input.settled,
 		bounty,
 		"#childScope/0": _existing_scope($childScope),
@@ -72,7 +72,7 @@ var row_list_default = _template("__tests__/tags/row-list.marko", (input) => {
 		input_type: ["input.type"],
 		input_settled: ["input.settled"],
 		bounty: "1:12"
-	}) || ($fg__input_type && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_type", input.type, !_server_guard($scope0_reason, 1)), $fg__input_settled && _patch_write($scope0_id, "PatchMarkedWrite:input_settled", input.settled, !_server_guard($scope0_reason, 2)));
+	}) || ($fg__input_type && $ui__input_tally && _patch_write($scope0_id, "PatchMarkedWrite:input_type", input.type, !_server_guard($scope0_reason, 1)), $fg__input_settled && _patch_write($scope0_id, "PatchMarkedWrite:input_settled", input.settled, !_server_guard($scope0_reason, 2)));
 });
 
 // template.marko

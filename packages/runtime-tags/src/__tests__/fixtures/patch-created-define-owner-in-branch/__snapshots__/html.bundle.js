@@ -7,7 +7,7 @@ _shells({
 	a5: `a5 a>!a2;${/*@__PURE__*/ ((_w0) => `b/${_w0}& b`)($Panel_content__walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<button>x</button>`)($Panel_content__template)}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_w = _write_guard($scope0_reason, 3), $cg__input_w = _client_guard($scope0_reason, 3), $wi__input_on__OR__input_w = _write_if($scope0_reason, 0), $wg__input_on = _write_guard($scope0_reason, 1), $fg__input_n = _filled_guard($scope0_reason, 2), $fg__input_w = _filled_guard($scope0_reason, 3), $wi__input_w = _write_if($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $wg__input_w = _write_guard($scope0_reason, 3), $cg__input_w = _client_guard($scope0_reason, 3), $wi__input_on__OR__input_w = _write_if($scope0_reason, 0), $wg__input_on = _write_guard($scope0_reason, 1), $ui__input_on = _unfilled_if($scope0_reason, 1), $fg__input_n = _filled_guard($scope0_reason, 2), $fg__input_w = _filled_guard($scope0_reason, 3), $wi__input_w = _write_if($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	const $input_w__closures = /* @__PURE__ */ new Set();
 	_if(() => {
@@ -46,8 +46,8 @@ var template_default = _template("a", (input) => {
 	$fg__input_n && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "a3", "e");
 	$fg__input_w && _patch_subscribers($scope0_id, "a6", "f");
 	_scope($scope0_id, {
-		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.n,
+		e: ($ui__input_on || _unfilled_if($scope0_reason, 2)) && input.n,
 		f: input.w,
 		h: $wi__input_w && $input_w__closures
-	}) || ($fg__input_n && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.n, !_server_guard($scope0_reason, 2)), $fg__input_w && _patch_write($scope0_id, "xf", input.w, !_server_guard($scope0_reason, 3)));
+	}) || ($fg__input_n && $ui__input_on && _patch_write($scope0_id, "xe", input.n, !_server_guard($scope0_reason, 2)), $fg__input_w && _patch_write($scope0_id, "xf", input.w, !_server_guard($scope0_reason, 3)));
 }, 1);

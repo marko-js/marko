@@ -26,12 +26,12 @@ _shells({
 	"__tests__/template.marko_3*shell": `__tests__/template.marko_3*shell${_shell_marker([[], []], ["#childScope/0>", $setup$1])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1)};${$template$1}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 3), $wg__input_tag = _write_guard($scope0_reason, 4), $cg__input_tag = _client_guard($scope0_reason, 4), $wi__input_label__OR__input_tag__OR__input_show = _write_if($scope0_reason, 2), $wg__input_show = _write_guard($scope0_reason, 5), $fg__input_label = _filled_guard($scope0_reason, 3), $fg__input_tag = _filled_guard($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 3), $wg__input_tag = _write_guard($scope0_reason, 4), $cg__input_tag = _client_guard($scope0_reason, 4), $wi__input_label__OR__input_tag__OR__input_show = _write_if($scope0_reason, 2), $wg__input_show = _write_guard($scope0_reason, 5), $ui__input_show = _unfilled_if($scope0_reason, 5), $fg__input_label = _filled_guard($scope0_reason, 3), $fg__input_tag = _filled_guard($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = new Set();
 	const $input_tag__closures = new Set();
 	const Body = { content: _content_resume("__tests__/template.marko_1*content", () => {
-		const $scope1_id = _scope_id();
+		const $scope1_id = _scope_id(), $ui__input_tag = _unfilled_if($scope0_reason, 4);
 		const $scope1_reason = _scope_reason(), $scope1_page = _page_render();
 		const Inner = { content: _content_resume("__tests__/template.marko_2*content", () => {
 			const $scope2_id = _scope_id();
@@ -41,11 +41,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_subscribe(_unfilled_if($scope0_reason, 3) && $input_label__closures, _scope($scope2_id, { _: $wi__input_label__OR__input_tag__OR__input_show && _scope_with_id($scope1_id) }, "__tests__/template.marko", "2:4"), $cg__input_label && "__tests__/template.marko_2_input_label#0:3/subscribe");
 		}, $scope1_id, ($scope) => $scope1_page ? [{ input_label: input.label }, { _: $scope($scope0_id) }] : []) };
 		_dynamic_tag($scope1_id, "#text/0", input.tag, { content: Inner }, 1, 0, 0, $wg__input_tag, $scope0_reason, 4);
-		_unfilled_if($scope0_reason, 4) && _patch_write($scope1_id, "PatchWrite:Inner", Inner, 1);
+		$ui__input_tag && _patch_write($scope1_id, "PatchWrite:Inner", Inner, 1);
 		_unfilled_if($scope0_reason, 4) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_tag#0:4/subscribe");
 		$cg__input_tag && _patch_render($scope1_id, "__tests__/template.marko_1_input_tag#0:4_Inner#1/setup");
-		$wi__input_label__OR__input_tag__OR__input_show && _subscribe(_unfilled_if($scope0_reason, 4) && $input_tag__closures, _scope($scope1_id, {
-			Inner: _unfilled_if($scope0_reason, 4) && Inner,
+		$wi__input_label__OR__input_tag__OR__input_show && _subscribe($ui__input_tag && $input_tag__closures, _scope($scope1_id, {
+			Inner: $ui__input_tag && Inner,
 			_: _scope_with_id($scope0_id)
 		}, "__tests__/template.marko", "1:2", { Inner: "2:11" }), $cg__input_tag && "__tests__/template.marko_1_input_tag#0:4/subscribe", $wg__input_tag);
 		$wg__input_tag || $wi__input_label__OR__input_tag__OR__input_show && _resume_branch($scope1_id);
@@ -66,8 +66,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	$fg__input_tag && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_tag#4/subscribers", "input_tag");
 	_scope($scope0_id, {
 		input_label: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 3)) && input.label,
-		input_tag: (_unfilled_if($scope0_reason, 5) || _unfilled_if($scope0_reason, 4)) && input.tag,
-		Body_content: _unfilled_if($scope0_reason, 5) && Body?.content,
+		input_tag: ($ui__input_show || _unfilled_if($scope0_reason, 4)) && input.tag,
+		Body_content: $ui__input_show && Body?.content,
 		"ClosureScopes:input_label/8": _write_if($scope0_reason, 3) && $input_label__closures,
 		"ClosureScopes:input_tag/9": _write_if($scope0_reason, 4) && $input_tag__closures
 	}, "__tests__/template.marko", 0, {

@@ -9,7 +9,7 @@ _shells({
 	b4: `b4 >a>;${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($Info_content__walks)};${$Info_content__template}`
 });
 var panel_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 6), $fg__input_a = _filled_guard($scope0_reason, 4), $fg__input_b = _filled_guard($scope0_reason, 5), $cg__input_show = _client_guard($scope0_reason, 6);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 6), $ui__input_a__OR__input_b = _unfilled_if($scope0_reason, 0), $ui__input_b__OR__input_show = _unfilled_if($scope0_reason, 2), $ui__input_a__OR__input_show = _unfilled_if($scope0_reason, 1), $fg__input_a = _filled_guard($scope0_reason, 4), $fg__input_b = _filled_guard($scope0_reason, 5), $cg__input_show = _client_guard($scope0_reason, 6);
 	const $scope0_id = _scope_id();
 	const $input_a__closures = /* @__PURE__ */ new Set();
 	const $input_b__closures = /* @__PURE__ */ new Set();
@@ -38,22 +38,22 @@ var panel_default = _template("b", (input) => {
 	$fg__input_a && $cg__input_show && _patch_subscribers($scope0_id, "b5", "d");
 	$fg__input_b && $cg__input_show && _patch_subscribers($scope0_id, "b6", "e");
 	_scope($scope0_id, {
-		d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.a,
-		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.b,
+		d: ($ui__input_b__OR__input_show || $ui__input_a__OR__input_b) && input.a,
+		e: ($ui__input_a__OR__input_show || $ui__input_a__OR__input_b) && input.b,
 		g: _write_if($scope0_reason, 4) && $input_a__closures,
 		h: _write_if($scope0_reason, 5) && $input_b__closures
-	}) || ($fg__input_a && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xd", input.a, !_server_guard($scope0_reason, 4)), $fg__input_b && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.b, !_server_guard($scope0_reason, 5)));
+	}) || ($fg__input_a && $ui__input_b__OR__input_show && _patch_write($scope0_id, "xd", input.a, !_server_guard($scope0_reason, 4)), $fg__input_b && $ui__input_a__OR__input_show && _patch_write($scope0_id, "xe", input.b, !_server_guard($scope0_reason, 5)));
 });
 
 // template.marko
 const $setup = _shell_setup([[], ["a0"]], ["a>", $setup$1], ["b>", $setup$1]);
 _shells({ a: `a${_shell_marker($setup)};${((_w0, _w1) => `b/${_w0}&/${_w1}& b b`)("b%c", "b%c")};${((_w0, _w1) => `<!>${_w0}${_w1}<button class=c>+</button><button class=s>s</button>`)($template, $template)}` });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $uf__input_x = _updates_from($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	let count = 0;
 	let s = false;
-	_set_scope_reason(9198 | _updates_from($scope0_reason, 1) << 11);
+	_set_scope_reason(9198 | $uf__input_x << 11);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	panel_default({
 		a: count,
@@ -61,7 +61,7 @@ var template_default = _template("a", (input) => {
 		show: s
 	});
 	_patch_child_end();
-	_set_scope_reason(8696 | (_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 2) << 9 | _updates_from($scope0_reason, 1) << 11));
+	_set_scope_reason(8696 | (_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 2) << 9 | $uf__input_x << 11));
 	const $childScope2 = _peek_scope_id($scope0_id, "b", 1);
 	panel_default({
 		a: input.y,

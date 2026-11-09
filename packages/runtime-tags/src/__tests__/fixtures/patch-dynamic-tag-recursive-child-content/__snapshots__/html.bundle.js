@@ -6,7 +6,7 @@ _shells({
 	c1: "c1;D%;<ul><!></ul>"
 });
 var wrap_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 2), $wg__input_show = _write_guard($scope0_reason, 1), $fg__input_content = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 2), $wg__input_show = _write_guard($scope0_reason, 1), $ui__input_show = _unfilled_if($scope0_reason, 1), $fg__input_content = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.show) {
@@ -20,7 +20,7 @@ var wrap_default = _template("c", (input) => {
 		}
 	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["c1"], $scope0_reason, 1);
 	$fg__input_content && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "c0", "e");
-	_scope($scope0_id, { e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.content }) || $fg__input_content && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.content, !_server_guard($scope0_reason, 2));
+	_scope($scope0_id, { e: ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.content }) || $fg__input_content && $ui__input_show && _patch_write($scope0_id, "xe", input.content, !_server_guard($scope0_reason, 2));
 });
 
 // tags/tree.marko
@@ -32,18 +32,18 @@ _shells({
 	b: `b${_shell_marker($setup)};${((_w0) => `D%b/${_w0}&l`)("b%c")};${((_w0) => `<li><!>${_w0}</li>`)($template$1)}`
 });
 const $content = (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_node_kid = _client_guard($scope0_reason, 1), $wi__input_node_kid = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $uf__input_node_kid = _updates_from($scope0_reason, 1), $cg__input_node_kid = _client_guard($scope0_reason, 1), $wi__input_node_kid = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_node_kid__closures = /* @__PURE__ */ new Set();
 	_html(`<li>${_text_mark($scope0_id, "a", input.node.name, 1, $scope0_reason, 0)}`);
-	_set_scope_reason(_updates_from($scope0_reason, 1) << 1 | _updates_from($scope0_reason, 1) << 3);
+	_set_scope_reason($uf__input_node_kid << 1 | $uf__input_node_kid << 3);
 	const $childScope2 = _peek_scope_id($scope0_id, "b", 1);
 	wrap_default({
 		show: !!input.node.kid,
 		content: _content_resume("b1", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
-			_set_scope_reason(_updates_from($scope0_reason, 1) << 1 | _updates_from($scope0_reason, 1) << 3);
+			_set_scope_reason($uf__input_node_kid << 1 | $uf__input_node_kid << 3);
 			const $childScope = _peek_scope_id($scope1_id, "a", 0);
 			$content({ node: input.node.kid });
 			_patch_child_end();
@@ -70,7 +70,7 @@ _shells({
 	a: "a;D%;<ul><!></ul>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_deep__OR__input_node = _write_guard($scope0_reason, 0), $fg__input_deep = _filled_guard($scope0_reason, 1), $fg__input_node = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_deep__OR__input_node = _write_guard($scope0_reason, 0), $ui__input_deep__OR__input_node = _unfilled_if($scope0_reason, 0), $ui__input_node = _unfilled_if($scope0_reason, 2), $ui__input_deep = _unfilled_if($scope0_reason, 1), $fg__input_deep = _filled_guard($scope0_reason, 1), $fg__input_node = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const Card = { content: _content_resume("a0", ({ node }) => {
 		const $scope1_id = _scope_id();
@@ -83,8 +83,8 @@ var template_default = _template("a", (input) => {
 	_html("</ul>");
 	_patch_render($scope0_id, "a1", [$fg__input_deep && "d", $fg__input_node && "e"], $scope0_reason, 0);
 	_scope($scope0_id, {
-		d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.deep,
-		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.node,
-		f: _unfilled_if($scope0_reason, 0) && Card
-	}) || ($fg__input_deep && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xd", input.deep, !_server_guard($scope0_reason, 1)), $fg__input_node && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.node, !_server_guard($scope0_reason, 2)));
+		d: ($ui__input_node || $ui__input_deep__OR__input_node) && input.deep,
+		e: ($ui__input_deep || $ui__input_deep__OR__input_node) && input.node,
+		f: $ui__input_deep__OR__input_node && Card
+	}) || ($fg__input_deep && $ui__input_node && _patch_write($scope0_id, "xd", input.deep, !_server_guard($scope0_reason, 1)), $fg__input_node && $ui__input_deep && _patch_write($scope0_id, "xe", input.node, !_server_guard($scope0_reason, 2)));
 }, 1);

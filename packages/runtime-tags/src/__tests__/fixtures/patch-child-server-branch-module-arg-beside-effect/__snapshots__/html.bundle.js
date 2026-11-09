@@ -21,12 +21,12 @@ _shells({
 	b1: "b1;D ;<em> </em>"
 });
 var card_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_label = _write_guard($scope0_reason, 3), $cg__input_label = _client_guard($scope0_reason, 3), $fg__input_label = _filled_guard($scope0_reason, 3), $fg__input_open = _filled_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $uf__input_open__OR__input_label = _updates_from($scope0_reason, 0), $uf__input_open = _updates_from($scope0_reason, 2), $uf__input_label = _updates_from($scope0_reason, 3), $wg__input_label = _write_guard($scope0_reason, 3), $cg__input_label = _client_guard($scope0_reason, 3), $ui__input_show = _unfilled_if($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 3), $fg__input_open = _filled_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	let open = true;
 	const Panel = { content: _content("b2", ({ isOpen, fmt, label }) => {
 		const $scope3_id = _scope_id();
-		const $scope3_reason = _scope_reason(), $wg__isOpen = _write_guard($scope3_reason, 4), $fg__fmt = _filled_guard($scope3_reason, 5), $fg__label = _filled_guard($scope3_reason, 6), $cg__isOpen = _client_guard($scope3_reason, 4);
+		const $scope3_reason = _scope_reason(), $wg__isOpen = _write_guard($scope3_reason, 4), $ui__isOpen__OR__fmt = _unfilled_if($scope3_reason, 0), $fg__fmt = _filled_guard($scope3_reason, 5), $fg__label = _filled_guard($scope3_reason, 6), $cg__isOpen = _client_guard($scope3_reason, 4);
 		_if(() => {
 			if (isOpen) {
 				const $scope4_id = _scope_id();
@@ -40,13 +40,13 @@ var card_default = _template("b", (input) => {
 		$fg__label && $cg__isOpen && _patch_render($scope3_id, "b5", "f");
 		_write_if($scope3_reason, 3) && _scope($scope3_id, {
 			e: (_unfilled_if($scope3_reason, 1, 5) || _unfilled_if($scope3_reason, 2, 5)) && fmt,
-			f: (_unfilled_if($scope3_reason, 0) || _unfilled_if($scope3_reason, 2)) && label
-		}) || ($fg__fmt && _unfilled_if($scope3_reason, 1) && _patch_write($scope3_id, "xe", fmt, !_server_guard($scope3_reason, 5)), $fg__label && _unfilled_if($scope3_reason, 0) && _patch_write($scope3_id, "xf", label, !_server_guard($scope3_reason, 6)));
+			f: ($ui__isOpen__OR__fmt || _unfilled_if($scope3_reason, 2)) && label
+		}) || ($fg__fmt && _unfilled_if($scope3_reason, 1) && _patch_write($scope3_id, "xe", fmt, !_server_guard($scope3_reason, 5)), $fg__label && $ui__isOpen__OR__fmt && _patch_write($scope3_id, "xf", label, !_server_guard($scope3_reason, 6)));
 	}, $scope0_id, 0) };
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_set_scope_reason(_updates_from($scope0_reason, 2) << 1 | _updates_from($scope0_reason, 0) << 3 | _updates_from($scope0_reason, 3) << 5 | _updates_from($scope0_reason, 0) << 7 | _updates_from($scope0_reason, 2) << 9 | _updates_from($scope0_reason, 3) << 13);
+			_set_scope_reason($uf__input_open << 1 | $uf__input_open__OR__input_label << 3 | $uf__input_label << 5 | $uf__input_open__OR__input_label << 7 | $uf__input_open << 9 | $uf__input_label << 13);
 			const $childScope = _peek_scope_id($scope1_id, "a", 0);
 			Panel.content({
 				isOpen: input.open,
@@ -80,19 +80,19 @@ var card_default = _template("b", (input) => {
 	$fg__input_label && _patch_render($scope0_id, "b8", "h");
 	_patch_fill($scope0_id, "vb11", open, 1);
 	_scope($scope0_id, {
-		g: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.open,
+		g: ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.open,
 		h: input.label,
 		i: open
-	}) || ($fg__input_open && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xg", input.open, !_server_guard($scope0_reason, 2)), $fg__input_label && _patch_write($scope0_id, "xh", input.label, !_server_guard($scope0_reason, 3)));
+	}) || ($fg__input_open && $ui__input_show && _patch_write($scope0_id, "xg", input.open, !_server_guard($scope0_reason, 2)), $fg__input_label && _patch_write($scope0_id, "xh", input.label, !_server_guard($scope0_reason, 3)));
 });
 
 // template.marko
 const $setup = _shell_setup([[], []], ["a>", $setup$1]);
 _shells({ a: `a${_shell_marker($setup)};${((_w0) => `b/${_w0}&`)($walks)};${((_w0) => `<!>${_w0}`)($template)}` });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $uf__input_label = _updates_from($scope0_reason, 1);
 	const $scope0_id = _scope_id();
-	_set_scope_reason(_updates_from($scope0_reason, 1) << 1 | _updates_from($scope0_reason, 0) << 3 | _updates_from($scope0_reason, 1) << 7);
+	_set_scope_reason($uf__input_label << 1 | _updates_from($scope0_reason, 0) << 3 | $uf__input_label << 7);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	card_default({
 		show: input.show,

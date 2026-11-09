@@ -56,18 +56,18 @@ const $walks = /*@__PURE__*/ ((_w0, _w1) => `D/${_w0}&/${_w1}& D m`)("b%c", "b%c
 const $setup = _shell_setup([[], ["__tests__/template.marko_0"]], ["#childScope/0>", $setup$1], ["#childScope/1>", $setup$1]);
 _shells({ "__tests__/template.marko": `__tests__/template.marko${_shell_marker($setup)};${((_w0, _w1) => `D/${_w0}&/${_w1}& D m`)("b%c", "b%c")};${((_w0, _w1) => `<main>${_w0}${_w1}<button> </button></main>`)($template$1, $template$1)}` });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $uf__input_error = _updates_from($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_html("<main>");
-	_set_scope_reason(_updates_from($scope0_reason, 1) << 1 | _updates_from($scope0_reason, 0) << 3);
+	_set_scope_reason(_updates_from($scope0_reason, 1) << 1 | $uf__input_error << 3);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	detail_view_default({
 		error: input.error,
 		detail: input.detail
 	});
 	_patch_child_end();
-	_set_scope_reason(2 | _updates_from($scope0_reason, 0) << 3);
+	_set_scope_reason(2 | $uf__input_error << 3);
 	const $childScope2 = _peek_scope_id($scope0_id, "#childScope/1", 1);
 	detail_view_default({
 		error: input.error,

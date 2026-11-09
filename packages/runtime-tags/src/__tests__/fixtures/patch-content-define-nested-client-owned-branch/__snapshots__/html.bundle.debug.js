@@ -18,7 +18,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let count = 0;
 	const Inner = { content: _content("__tests__/template.marko_2*content", ({ open, body }) => {
 		const $scope2_id = _scope_id();
-		const $scope2_reason = _scope_reason(), $wg__body = _write_guard($scope2_reason, 2), $wg__open = _write_guard($scope2_reason, 1), $fg__body = _filled_guard($scope2_reason, 2);
+		const $scope2_reason = _scope_reason(), $wg__body = _write_guard($scope2_reason, 2), $wg__open = _write_guard($scope2_reason, 1), $ui__open = _unfilled_if($scope2_reason, 1), $fg__body = _filled_guard($scope2_reason, 2);
 		_if(() => {
 			if (open) {
 				const $scope4_id = _scope_id();
@@ -28,7 +28,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}
 		}, $scope2_id, "#text/0", 1, $wg__open, 1, 0, 0, ["__tests__/template.marko_4*shell"], $scope2_reason, 1);
 		$fg__body && _client_guard($scope2_reason, 1) && _patch_render($scope2_id, "__tests__/template.marko_4_body#2:4/setup", "body");
-		_write_if($scope2_reason, 1) && _scope($scope2_id, { body: _unfilled_if($scope2_reason, 1) && body }, "__tests__/template.marko", "2:2", { body: "2:23" }) || $fg__body && _unfilled_if($scope2_reason, 1) && _patch_write($scope2_id, "PatchMarkedWrite:body", body, !_server_guard($scope2_reason, 2));
+		_write_if($scope2_reason, 1) && _scope($scope2_id, { body: $ui__open && body }, "__tests__/template.marko", "2:2", { body: "2:23" }) || $fg__body && $ui__open && _patch_write($scope2_id, "PatchMarkedWrite:body", body, !_server_guard($scope2_reason, 2));
 	}, $scope0_id) };
 	const Outer = { content: _content("__tests__/template.marko_3*content", ({ open, body }) => {
 		const $scope3_id = _scope_id();

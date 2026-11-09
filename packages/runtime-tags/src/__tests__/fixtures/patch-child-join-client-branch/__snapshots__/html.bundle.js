@@ -6,7 +6,7 @@ _shells({
 	b1: "b1;D ;<p> </p>"
 });
 var panel_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 4), $fg__input_a = _filled_guard($scope0_reason, 5), $fg__input_b = _filled_guard($scope0_reason, 6), $cg__input_show = _client_guard($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 4), $ui__input_a__OR__input_b = _unfilled_if($scope0_reason, 2), $ui__input_show__OR__input_b = _unfilled_if($scope0_reason, 1), $ui__input_show__OR__input_a = _unfilled_if($scope0_reason, 0), $fg__input_a = _filled_guard($scope0_reason, 5), $fg__input_b = _filled_guard($scope0_reason, 6), $cg__input_show = _client_guard($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.show) {
@@ -20,20 +20,20 @@ var panel_default = _template("b", (input) => {
 	$fg__input_a && $cg__input_show && _patch_render($scope0_id, "b2", "e");
 	$fg__input_b && $cg__input_show && _patch_render($scope0_id, "b3", "f");
 	_scope($scope0_id, {
-		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.a,
-		f: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && input.b
-	}) || ($fg__input_a && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.a, !_server_guard($scope0_reason, 5)), $fg__input_b && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xf", input.b, !_server_guard($scope0_reason, 6)));
+		e: ($ui__input_show__OR__input_b || $ui__input_a__OR__input_b) && input.a,
+		f: ($ui__input_show__OR__input_a || $ui__input_a__OR__input_b) && input.b
+	}) || ($fg__input_a && $ui__input_show__OR__input_b && _patch_write($scope0_id, "xe", input.a, !_server_guard($scope0_reason, 5)), $fg__input_b && $ui__input_show__OR__input_a && _patch_write($scope0_id, "xf", input.b, !_server_guard($scope0_reason, 6)));
 });
 
 // template.marko
 const $setup = _shell_setup([[], ["a0"]], ["a>", $setup$1], ["b>", $setup$1]);
 _shells({ a: `a${_shell_marker($setup)};${((_w0, _w1) => `b/${_w0}&/${_w1}& b b`)("b%c", "b%c")};${((_w0, _w1) => `<!>${_w0}${_w1}<button class=c>+</button><button class=s>s</button>`)($template, $template)}` });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $uf__input_x = _updates_from($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	let count = 0;
 	let s = false;
-	_set_scope_reason(3066 | _updates_from($scope0_reason, 1) << 13);
+	_set_scope_reason(3066 | $uf__input_x << 13);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	panel_default({
 		a: count,
@@ -41,7 +41,7 @@ var template_default = _template("a", (input) => {
 		show: s
 	});
 	_patch_child_end();
-	_set_scope_reason(926 | (_updates_from($scope0_reason, 0) << 5 | _updates_from($scope0_reason, 2) << 11 | _updates_from($scope0_reason, 1) << 13));
+	_set_scope_reason(926 | (_updates_from($scope0_reason, 0) << 5 | _updates_from($scope0_reason, 2) << 11 | $uf__input_x << 13));
 	const $childScope2 = _peek_scope_id($scope0_id, "b", 1);
 	panel_default({
 		a: input.y,

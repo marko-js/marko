@@ -16,7 +16,7 @@ var template_default = _template("a", (input) => {
 	const handler = _bind_resume((event) => event.target.dataset.seen = input.title, "a0", $scope0_id);
 	_html("<main>");
 	_await($scope0_id, "a", input.one, () => {
-		const $scope1_id = _scope_id();
+		const $scope1_id = _scope_id(), $ui__input_title = _unfilled_if($scope0_reason, 0);
 		const attrs = {
 			title: input.title,
 			onClick: handler
@@ -29,10 +29,10 @@ var template_default = _template("a", (input) => {
 		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "a2");
 		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "a3");
 		$cg__input_title && _patch_render($scope1_id, "a4");
-		_subscribe(_unfilled_if($scope0_reason, 0) && $handler2__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $input_title__closures, _scope($scope1_id, {}), $cg__input_title && "a2"), $cg__input_title && "a3");
+		_subscribe($ui__input_title && $handler2__closures, _subscribe($ui__input_title && $input_title__closures, _scope($scope1_id, {}), $cg__input_title && "a2"), $cg__input_title && "a3");
 	}, 1, "a6", _unfilled_if($scope0_reason, 1), 1, 1);
 	_await($scope0_id, "b", input.two, () => {
-		const $scope2_id = _scope_id();
+		const $scope2_id = _scope_id(), $ui__input_title2 = _unfilled_if($scope0_reason, 0);
 		const attrs = {
 			title: input.title,
 			onClick: handler
@@ -45,7 +45,7 @@ var template_default = _template("a", (input) => {
 		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope2_id, "a10");
 		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope2_id, "a11");
 		$cg__input_title && _patch_render($scope2_id, "a12");
-		_subscribe(_unfilled_if($scope0_reason, 0) && $handler2__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $input_title__closures, _scope($scope2_id, {
+		_subscribe($ui__input_title2 && $handler2__closures, _subscribe($ui__input_title2 && $input_title__closures, _scope($scope2_id, {
 			Ck: $wi__input_title && 1,
 			Cl: $wi__input_title && 1
 		}), $cg__input_title && "a10"), $cg__input_title && "a11");

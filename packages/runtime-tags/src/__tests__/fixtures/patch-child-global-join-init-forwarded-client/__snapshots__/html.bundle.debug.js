@@ -4,7 +4,7 @@ const $walks$2 = "D l%b b";
 const $setup$2 = [[], ["__tests__/tags/child.marko_0"]];
 _shells({ "__tests__/tags/child.marko": "__tests__/tags/child.marko !__tests__/tags/child.marko_0;D l%b ;<p> </p><!><button class=t>t</button>" });
 var child_default = _template("__tests__/tags/child.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_a = _filled_guard($scope0_reason, 1), $fg__input_b = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $ui__input_a = _unfilled_if($scope0_reason, 1), $fg__input_a = _filled_guard($scope0_reason, 1), $fg__input_b = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	let open = true;
 	_html(`<p>${_text_mark($scope0_id, "#text/0", input.a + input.b, 1, $scope0_reason, 0)}</p>`);
@@ -25,13 +25,13 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	_patch_fill($scope0_id, "PatchFill:__tests__/tags/child.marko_0_open#8/fill", open, 1);
 	_scope($scope0_id, {
 		input_a: input.a,
-		input_b: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.b,
+		input_b: ($ui__input_a || _unfilled_if($scope0_reason, 0)) && input.b,
 		open
 	}, "__tests__/tags/child.marko", 0, {
 		input_a: ["input.a"],
 		input_b: ["input.b"],
 		open: "1:6"
-	}) || ($fg__input_a && _patch_write($scope0_id, "PatchMarkedWrite:input_a", input.a, !_server_guard($scope0_reason, 1)), $fg__input_b && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_b", input.b, !_server_guard($scope0_reason, 2)));
+	}) || ($fg__input_a && _patch_write($scope0_id, "PatchMarkedWrite:input_a", input.a, !_server_guard($scope0_reason, 1)), $fg__input_b && $ui__input_a && _patch_write($scope0_id, "PatchMarkedWrite:input_b", input.b, !_server_guard($scope0_reason, 2)));
 });
 
 // tags/mid.marko
@@ -40,10 +40,10 @@ const $walks$1 = /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$2);
 const $setup$1 = _shell_setup([[], []], ["#childScope/0>", $setup$2]);
 _shells({ "__tests__/tags/mid.marko": `__tests__/tags/mid.marko${_shell_marker($setup$1)};${((_w0) => `/${_w0}&`)($walks$2)};${$template$2}` });
 var mid_default = _template("__tests__/tags/mid.marko", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $uf__input_b = _updates_from($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
-	_set_scope_reason(16 | ((2 | _updates_from($scope0_reason, 0)) << 1 | _updates_from($scope0_reason, 0) << 5));
+	_set_scope_reason(16 | ((2 | $uf__input_b) << 1 | $uf__input_b << 5));
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	child_default({
 		a: $global$1.x,

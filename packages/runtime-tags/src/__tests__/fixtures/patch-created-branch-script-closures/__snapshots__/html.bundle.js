@@ -42,9 +42,9 @@ const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&b`)($walks$1);
 const $setup$1 = _shell_setup([[], []], ["a>", $setup$2]);
 _shells({ c: `c${_shell_marker($setup$1)};${((_w0) => `/${_w0}&b`)($walks$1)};${((_w0) => `${_w0}<p>route</p>`)($template$1)}` });
 var route_play_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $uf__input_projection = _updates_from($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 0) << 3 | _updates_from($scope0_reason, 1) << 5 | _updates_from($scope0_reason, 2) << 7);
+	_set_scope_reason($uf__input_projection << 1 | $uf__input_projection << 3 | _updates_from($scope0_reason, 1) << 5 | _updates_from($scope0_reason, 2) << 7);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	level_watch_default({
 		projection: input.projection,

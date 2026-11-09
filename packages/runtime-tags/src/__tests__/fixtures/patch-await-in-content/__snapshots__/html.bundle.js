@@ -34,15 +34,15 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		_try($scope1_id, "a", () => {
 			_scope_reason();
-			const $scope2_id = _scope_id();
+			const $scope2_id = _scope_id(), $ui__input_promise = _unfilled_if($scope0_reason, 1);
 			_await($scope2_id, "a", input.promise, () => {
 				const $scope3_id = _scope_id();
 				_html(`<div id=done>${_text_mark($scope3_id, "a", input.msg, 1, $scope0_reason, 2)} done</div>`);
 				$cg__input_msg && _patch_render($scope3_id, "a0");
 				_subscribe(_unfilled_if($scope0_reason, 2) && $input_msg__closures, _scope($scope3_id, {}), $cg__input_msg && "a0");
-			}, 1, "a2", _unfilled_if($scope0_reason, 1));
+			}, 1, "a2", $ui__input_promise);
 			$cg__input_promise && _patch_render($scope2_id, "a5");
-			$wi__input_promise__OR__input_msg && _subscribe(_unfilled_if($scope0_reason, 1) && $input_promise__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), $cg__input_promise && "a5", 0);
+			$wi__input_promise__OR__input_msg && _subscribe($ui__input_promise && $input_promise__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), $cg__input_promise && "a5", 0);
 			$wi__input_promise__OR__input_msg && _resume_branch($scope2_id);
 		}, () => {
 			_scope_reason();

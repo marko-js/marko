@@ -20,14 +20,14 @@ var template_default = _template("a", (input) => {
 	}, 1, "a2", _unfilled_if($scope0_reason, 0) && 2, 1);
 	_try($scope0_id, "b", () => {
 		_scope_reason();
-		const $scope1_id = _scope_id();
+		const $scope1_id = _scope_id(), $ui__input_b = _unfilled_if($scope0_reason, 1);
 		_await($scope1_id, "a", input.b, (b) => {
 			const $scope4_id = _scope_id();
 			_html(`<span>${_text_mark($scope4_id, "a", b, 1, $scope0_reason, 1)}</span>`);
 			_scope($scope4_id, {});
-		}, 1, "a0", _unfilled_if($scope0_reason, 1) && 2, 1);
+		}, 1, "a0", $ui__input_b && 2, 1);
 		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "a6", 1);
-		$wi__input_b && _subscribe(_unfilled_if($scope0_reason, 1) && $input_b__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 1) && "a6", 0);
+		$wi__input_b && _subscribe($ui__input_b && $input_b__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 1) && "a6", 0);
 		$wi__input_b && _resume_branch($scope1_id);
 	}, () => {
 		_scope_reason();

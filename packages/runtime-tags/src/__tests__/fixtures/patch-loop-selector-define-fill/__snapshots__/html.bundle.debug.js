@@ -11,7 +11,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let on = true;
 	const List = { content: _content("__tests__/template.marko_1*content", ({ selected, flag }) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason(), $fg__selected = _filled_guard($scope1_reason, 1), $fg__flag = _filled_guard($scope1_reason, 2);
+		const $scope1_reason = _scope_reason(), $fg__selected2 = _filled_guard($scope1_reason, 1), $fg__flag2 = _filled_guard($scope1_reason, 2);
 		let rows = [
 			{ id: 1 },
 			{ id: 2 },
@@ -19,15 +19,15 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		];
 		_html("<ul>");
 		_for_of(rows, (row) => {
-			const $scope2_id = _scope_id();
+			const $scope2_id = _scope_id(), $fg__selected = _filled_guard($scope1_reason, 1), $fg__flag = _filled_guard($scope1_reason, 2);
 			_html(`<li>${_escape(row.id)}</li>${_el_mark($scope2_id, "#li/0")}`);
-			_script($scope2_id, "__tests__/template.marko_2_selected#1:4_flag#1:5", 1, (_filled_guard($scope1_reason, 1) || _filled_guard($scope1_reason, 2)) && (_client_guard($scope1_reason, 1) || _client_guard($scope1_reason, 2) ? 2 : 1), [_filled_guard($scope1_reason, 1) && ">selected", _filled_guard($scope1_reason, 2) && ">flag"], "__tests__/template.marko_2_selected#1:4_flag#1:5/setup", $scope1_reason, 0);
+			_script($scope2_id, "__tests__/template.marko_2_selected#1:4_flag#1:5", 1, ($fg__selected || $fg__flag) && (_client_guard($scope1_reason, 1) || _client_guard($scope1_reason, 2) ? 2 : 1), [$fg__selected && ">selected", $fg__flag && ">flag"], "__tests__/template.marko_2_selected#1:4_flag#1:5/setup", $scope1_reason, 0);
 			_scope($scope2_id, { "#LoopKey": row?.id }, "__tests__/template.marko", "5:6", { "#LoopKey": ["row.id", "5:10"] });
 		}, "id", $scope1_id, "#ul/0", 1, 1, 1, "</ul>", 1);
 		_html(`<button class=add>+</button>${_el_mark($scope1_id, "#button/1")}`);
 		_script($scope1_id, "__tests__/template.marko_1");
-		$fg__selected && _patch_render($scope1_id, "__tests__/template.marko_2_selected#1:4/setup", "selected");
-		$fg__flag && _patch_render($scope1_id, "__tests__/template.marko_2_flag#1:5/setup", "flag");
+		$fg__selected2 && _patch_render($scope1_id, "__tests__/template.marko_2_selected#1:4/setup", "selected");
+		$fg__flag2 && _patch_render($scope1_id, "__tests__/template.marko_2_flag#1:5/setup", "flag");
 		_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_1_rows#6/fill", rows, 1);
 		_scope($scope1_id, {
 			selected,
@@ -37,7 +37,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			selected: "2:16",
 			flag: "2:26",
 			rows: "3:8"
-		}) || ($fg__selected && _patch_write($scope1_id, "PatchMarkedWrite:selected", selected, !_server_guard($scope1_reason, 1)), $fg__flag && _patch_write($scope1_id, "PatchMarkedWrite:flag", flag, !_server_guard($scope1_reason, 2)));
+		}) || ($fg__selected2 && _patch_write($scope1_id, "PatchMarkedWrite:selected", selected, !_server_guard($scope1_reason, 1)), $fg__flag2 && _patch_write($scope1_id, "PatchMarkedWrite:flag", flag, !_server_guard($scope1_reason, 2)));
 	}, $scope0_id) };
 	_set_scope_reason(38 | _updates_from($scope0_reason, 0) << 3);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);

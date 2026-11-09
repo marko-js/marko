@@ -28,7 +28,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	_html("<ul>");
 	_for_of(input.items, (item) => {
-		const $scope1_id = _scope_id();
+		const $scope1_id = _scope_id(), $ui__input_items = _unfilled_if($scope0_reason, 0);
 		const $for_content__item_n__closures = new Set();
 		const $for_content__item_alt__closures = new Set();
 		_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
@@ -62,8 +62,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		});
 		_patch_child_end();
 		_scope($scope1_id, {
-			"ClosureScopes:item_n/7": $wi__input_items && _unfilled_if($scope0_reason, 0) && $for_content__item_n__closures,
-			"ClosureScopes:item_alt/6": $wi__input_items && _unfilled_if($scope0_reason, 0) && $for_content__item_alt__closures,
+			"ClosureScopes:item_n/7": $wi__input_items && $ui__input_items && $for_content__item_n__closures,
+			"ClosureScopes:item_alt/6": $wi__input_items && $ui__input_items && $for_content__item_alt__closures,
 			"#childScope/0": _existing_scope($childScope)
 		}, "__tests__/template.marko", "2:4");
 	}, 0, $scope0_id, "#ul/0", 1, 1, 1, 0, 0, "__tests__/template.marko_1*shell", $scope0_reason, 0);

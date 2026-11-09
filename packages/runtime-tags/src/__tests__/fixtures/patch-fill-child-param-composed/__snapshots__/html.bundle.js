@@ -21,13 +21,13 @@ _shells({
 	c3: `c3${_shell_marker([["c7"], ["c0"]], ["b>", $setup$2])};${/*@__PURE__*/ ((_w0) => ` D/${_w0}&l`)($walks)};${/*@__PURE__*/ ((_w0) => `<li>${_w0}</li>`)($template$1)}`
 });
 var feed_list_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_data = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $ui__input_items = _unfilled_if($scope0_reason, 1), $fg__input_data = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	let hovered = void 0;
 	_html("<ul>");
 	_for_of(input.items, (item) => {
-		const $scope1_id = _scope_id();
-		_filled_guard($scope0_reason, 1) && _patch_write($scope1_id, "xe", item?.id, !_server_guard($scope0_reason, 1));
+		const $scope1_id = _scope_id(), $fg__input_items = _filled_guard($scope0_reason, 1);
+		$fg__input_items && _patch_write($scope1_id, "xe", item?.id, !_server_guard($scope0_reason, 1));
 		_html(`<li${hovered === item.id ? " class=hovered" : ""}>`);
 		_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 1) << 3);
 		const $childScope = _peek_scope_id($scope1_id, "b", 0);
@@ -38,8 +38,8 @@ var feed_list_default = _template("c", (input) => {
 		_patch_child_end();
 		_html(`</li>${_el_mark($scope1_id, "a")}`);
 		_script($scope1_id, "c0");
-		_patch_render($scope1_id, "c1", [_filled_guard($scope0_reason, 2) && ">e", _filled_guard($scope0_reason, 1) && "e"], $scope0_reason, 0);
-		_patch_render($scope1_id, "c2", _filled_guard($scope0_reason, 1) && "e");
+		_patch_render($scope1_id, "c1", [_filled_guard($scope0_reason, 2) && ">e", $fg__input_items && "e"], $scope0_reason, 0);
+		_patch_render($scope1_id, "c2", $fg__input_items && "e");
 		_scope($scope1_id, {
 			e: item?.id,
 			_: _scope_with_id($scope0_id),
@@ -50,9 +50,9 @@ var feed_list_default = _template("c", (input) => {
 	$fg__input_data && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "c4", "e");
 	_patch_fill($scope0_id, "vc5", hovered, 1);
 	_scope($scope0_id, {
-		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.data,
+		e: ($ui__input_items || _unfilled_if($scope0_reason, 0)) && input.data,
 		f: _write_if($scope0_reason, 1) && hovered
-	}) || $fg__input_data && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.data, !_server_guard($scope0_reason, 2));
+	}) || $fg__input_data && $ui__input_items && _patch_write($scope0_id, "xe", input.data, !_server_guard($scope0_reason, 2));
 });
 
 // template.marko

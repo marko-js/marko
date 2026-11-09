@@ -8,7 +8,7 @@ _shells({
 	"__tests__/template.marko_2*shell": "__tests__/template.marko_2*shell __tests__/template.marko_2_count#0:8/subscribe;Db%;<span>Seen <!></span>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_inner = _write_guard($scope0_reason, 2), $fg__input_inner = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_inner = _write_guard($scope0_reason, 2), $ui__input_outer = _unfilled_if($scope0_reason, 1), $fg__input_inner = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $count__closures = new Set();
 	let count = 0;
@@ -34,11 +34,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	$fg__input_inner && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "__tests__/template.marko_1_input_inner#0:7/setup", "input_inner");
 	_scope($scope0_id, {
-		input_inner: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.inner,
+		input_inner: ($ui__input_outer || _unfilled_if($scope0_reason, 2)) && input.inner,
 		count,
 		"ClosureScopes:count/10": $count__closures
 	}, "__tests__/template.marko", 0, {
 		input_inner: ["input.inner"],
 		count: "1:6"
-	}) || $fg__input_inner && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_inner", input.inner, !_server_guard($scope0_reason, 2));
+	}) || $fg__input_inner && $ui__input_outer && _patch_write($scope0_id, "PatchMarkedWrite:input_inner", input.inner, !_server_guard($scope0_reason, 2));
 }, 1);

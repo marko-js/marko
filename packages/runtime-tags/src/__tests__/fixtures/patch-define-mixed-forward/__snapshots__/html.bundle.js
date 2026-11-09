@@ -7,13 +7,13 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	const Kid = { content: _content("a0", (input) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason(), $fg__input_a = _filled_guard($scope1_reason, 1), $fg__input_b = _filled_guard($scope1_reason, 2);
+		const $scope1_reason = _scope_reason(), $ui__input_a__OR__input_b = _unfilled_if($scope1_reason, 0), $ui__input_b = _unfilled_if($scope1_reason, 2), $ui__input_a = _unfilled_if($scope1_reason, 1), $fg__input_a = _filled_guard($scope1_reason, 1), $fg__input_b = _filled_guard($scope1_reason, 2);
 		_html(`<span>${_text_mark($scope1_id, "a", input.a + input.b, 1, $scope1_reason, 0)}</span>`);
 		_patch_render($scope1_id, "a1", [$fg__input_a && "d", $fg__input_b && "e"], $scope1_reason, 0);
 		_scope($scope1_id, {
-			d: (_unfilled_if($scope1_reason, 2) || _unfilled_if($scope1_reason, 0)) && input.a,
-			e: (_unfilled_if($scope1_reason, 1) || _unfilled_if($scope1_reason, 0)) && input.b
-		}) || ($fg__input_a && _unfilled_if($scope1_reason, 2) && _patch_write($scope1_id, "xd", input.a, !_server_guard($scope1_reason, 1)), $fg__input_b && _unfilled_if($scope1_reason, 1) && _patch_write($scope1_id, "xe", input.b, !_server_guard($scope1_reason, 2)));
+			d: ($ui__input_b || $ui__input_a__OR__input_b) && input.a,
+			e: ($ui__input_a || $ui__input_a__OR__input_b) && input.b
+		}) || ($fg__input_a && $ui__input_b && _patch_write($scope1_id, "xd", input.a, !_server_guard($scope1_reason, 1)), $fg__input_b && $ui__input_a && _patch_write($scope1_id, "xe", input.b, !_server_guard($scope1_reason, 2)));
 	}, $scope0_id) };
 	let s = 1;
 	_set_scope_reason(14 | _updates_from($scope0_reason, 0) << 5);

@@ -44,13 +44,13 @@ var label_view_default = _template("b", (input) => {
 const $setup = _shell_setup([[], ["a2"]], ["a>", $setup$1]);
 _shells({ a: `a${_shell_marker($setup)};${((_w0) => `/${_w0}& b`)($walks)};${((_w0) => `${_w0}<button>toggle</button>`)($template)}` });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_title = _server_guard($scope0_reason, 0), $fg__input_title = _filled_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $uf__input_title = _updates_from($scope0_reason, 0), $sg__input_title = _server_guard($scope0_reason, 0), $fg__input_title = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	$fg__input_title && _patch_write($scope0_id, "xe", input.title, !$sg__input_title);
 	let upper = false;
 	const up = _bind_resume(() => "U" + input.title, "a0", $scope0_id);
 	const low = _bind_resume(() => "l" + input.title, "a1", $scope0_id);
-	_set_scope_reason(1950 | (_updates_from($scope0_reason, 0) << 5 | _updates_from($scope0_reason, 0) << 11));
+	_set_scope_reason(1950 | ($uf__input_title << 5 | $uf__input_title << 11));
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	label_view_default({
 		a: low,

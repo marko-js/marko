@@ -29,7 +29,7 @@ _shells({
 	"__tests__/template.marko_3*shell": "__tests__/template.marko_3*shell __tests__/template.marko_3_store_set#1:11/subscribe!__tests__/template.marko_3;Db%l ;<span>Seen <!></span><button>+</button>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 2), $wi__input_keys__OR__input_show = _write_if($scope0_reason, 0), $fg__input_show = _filled_guard($scope0_reason, 2), $cg__input_keys = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 2), $wi__input_keys__OR__input_show = _write_if($scope0_reason, 0), $ui__input_keys = _unfilled_if($scope0_reason, 1), $ui__input_show2 = _unfilled_if($scope0_reason, 2), $fg__input_show = _filled_guard($scope0_reason, 2), $cg__input_keys = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_show__closures = new Set();
 	_for_of(input.keys, (name) => {
@@ -42,7 +42,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const uid = _id("uid");
 		_html(`<label${_attr("for", uid, $scope1_id, "#label/2", 0, 0)}>${_text_mark($scope1_id, "#text/3", name, 1, $scope0_reason, 1)}</label>${_el_mark($scope1_id, "#label/2", 0)}<input${_attr("id", uid, $scope1_id, "#input/4", 0, 0)}>${_el_mark($scope1_id, "#input/4", 0)}<p>${_text_mark($scope1_id, "#text/5", name, 1, $scope0_reason, 1)}:${_text_mark($scope1_id, "#text/6", store.last, 2)}</p>`);
 		_for_of(input.keys.toReversed(), (other) => {
-			const $scope2_id = _scope_id();
+			const $scope2_id = _scope_id(), $ui__input_show = _unfilled_if($scope0_reason, 2);
 			_if(() => {
 				if (input.show && other === name) {
 					const $scope3_id = _scope_id();
@@ -64,8 +64,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				}
 			}, $scope2_id, "#text/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_3*shell"], $scope0_reason, 0);
 			_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope2_id, "__tests__/template.marko_2_input_show#0:4/subscribe", $cg__input_show);
-			_subscribe(_unfilled_if($scope0_reason, 2) && $input_show__closures, _scope($scope2_id, {
-				"#LoopKey": _unfilled_if($scope0_reason, 2) && other,
+			_subscribe($ui__input_show && $input_show__closures, _scope($scope2_id, {
+				"#LoopKey": $ui__input_show && other,
 				_: _scope_with_id($scope1_id)
 			}, "__tests__/template.marko", "5:4", { "#LoopKey": "5:8" }), $cg__input_show && "__tests__/template.marko_2_input_show#0:4/subscribe", $wg__input_show);
 		}, (n) => n, $scope1_id, "#text/7", 1, 1, 1, 0, 0, "__tests__/template.marko_2*shell", $scope0_reason, 1);
@@ -83,7 +83,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, (n) => n, $scope0_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/template.marko_1*shell", $scope0_reason, 1);
 	$fg__input_show && $cg__input_keys && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_show#4/subscribers", "input_show");
 	_scope($scope0_id, {
-		input_show: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.show,
-		"ClosureScopes:input_show/6": _write_if($scope0_reason, 2) && (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1)) && $input_show__closures
-	}, "__tests__/template.marko", 0, { input_show: ["input.show"] }) || $fg__input_show && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_show", input.show, !_server_guard($scope0_reason, 2));
+		input_show: ($ui__input_keys || $ui__input_show2) && input.show,
+		"ClosureScopes:input_show/6": _write_if($scope0_reason, 2) && ($ui__input_show2 || $ui__input_keys) && $input_show__closures
+	}, "__tests__/template.marko", 0, { input_show: ["input.show"] }) || $fg__input_show && $ui__input_keys && _patch_write($scope0_id, "PatchMarkedWrite:input_show", input.show, !_server_guard($scope0_reason, 2));
 }, 1);

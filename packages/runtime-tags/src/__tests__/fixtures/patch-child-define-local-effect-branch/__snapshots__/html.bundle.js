@@ -15,7 +15,7 @@ var wrap_default = _template("b", (input) => {
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	const $input_show__closures = /* @__PURE__ */ new Set();
 	const Card = { content: _content("b3", () => {
-		const $scope1_id = _scope_id();
+		const $scope1_id = _scope_id(), $fg__input_label = _filled_guard($scope0_reason, 1);
 		_scope_reason();
 		const x = input.label + "!";
 		_if(() => {
@@ -28,13 +28,13 @@ var wrap_default = _template("b", (input) => {
 				return 0;
 			}
 		}, $scope1_id, "a", 1, $wg__input_show, 1, 0, 0, ["b2"], $scope0_reason, 2);
-		_filled_guard($scope0_reason, 1) && $cg__input_show && _patch_render($scope1_id, "b1", "b");
+		$fg__input_label && $cg__input_show && _patch_render($scope1_id, "b1", "b");
 		$cg__input_label && _patch_render($scope1_id, "b4");
 		$cg__input_show && _patch_render($scope1_id, "b5");
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_show__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_label__closures, _scope($scope1_id, {
 			b: x,
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id)
-		}), $cg__input_label && "b4", $wg__input_show), $cg__input_show && "b5", $wg__input_show) || _filled_guard($scope0_reason, 1) && _patch_write($scope1_id, "xb", x, !_server_guard($scope0_reason, 1));
+		}), $cg__input_label && "b4", $wg__input_show), $cg__input_show && "b5", $wg__input_show) || $fg__input_label && _patch_write($scope1_id, "xb", x, !_server_guard($scope0_reason, 1));
 		$wg__input_show || _resume_branch($scope1_id);
 	}, $scope0_id, 0) };
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);

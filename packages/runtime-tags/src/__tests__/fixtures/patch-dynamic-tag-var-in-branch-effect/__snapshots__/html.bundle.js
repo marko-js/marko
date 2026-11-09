@@ -5,7 +5,7 @@ _shells({
 	a3: "a3;b1;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0), $fg__input_type = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0), $ui__input_show = _unfilled_if($scope0_reason, 0), $fg__input_type = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.show) {
@@ -27,5 +27,5 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["a3"], $scope0_reason, 0);
 	_script($scope0_id, "a4", $wg__input_show);
 	$fg__input_type && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "a2", "e");
-	_scope($scope0_id, { e: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.type }) || $fg__input_type && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xe", input.type, !_server_guard($scope0_reason, 1));
+	_scope($scope0_id, { e: ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.type }) || $fg__input_type && $ui__input_show && _patch_write($scope0_id, "xe", input.type, !_server_guard($scope0_reason, 1));
 }, 1);

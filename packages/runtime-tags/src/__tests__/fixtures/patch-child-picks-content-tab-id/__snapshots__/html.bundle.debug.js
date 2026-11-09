@@ -4,17 +4,17 @@ const $walks$1 = "b%c";
 const $setup$1 = [[], []];
 _shells({ "__tests__/tags/tabs.marko": "__tests__/tags/tabs.marko;b%;<!><!><!>" });
 var tabs_default = _template("__tests__/tags/tabs.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_tab__OR__input_selected = _write_guard($scope0_reason, 0), $fg__input_tab = _filled_guard($scope0_reason, 1), $fg__input_selected = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_tab__OR__input_selected = _write_guard($scope0_reason, 0), $ui__input_tab__OR__input_selected = _unfilled_if($scope0_reason, 0), $ui__input_selected = _unfilled_if($scope0_reason, 2), $ui__input_tab = _unfilled_if($scope0_reason, 1), $fg__input_tab = _filled_guard($scope0_reason, 1), $fg__input_selected = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	_dynamic_tag($scope0_id, "#text/0", [...input.tab].find((t) => t.id === input.selected)?.content, {}, 2, 0, 0, $wg__input_tab__OR__input_selected, $scope0_reason, 0);
 	_patch_render($scope0_id, "__tests__/tags/tabs.marko_0_input_tab#3_input_selected#4/setup", [$fg__input_tab && "input_tab", $fg__input_selected && "input_selected"], $scope0_reason, 0);
 	_scope($scope0_id, {
-		input_tab: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.tab,
-		input_selected: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.selected
+		input_tab: ($ui__input_selected || $ui__input_tab__OR__input_selected) && input.tab,
+		input_selected: ($ui__input_tab || $ui__input_tab__OR__input_selected) && input.selected
 	}, "__tests__/tags/tabs.marko", 0, {
 		input_tab: ["input.tab"],
 		input_selected: ["input.selected"]
-	}) || ($fg__input_tab && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_tab", input.tab, !_server_guard($scope0_reason, 1)), $fg__input_selected && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_selected", input.selected, !_server_guard($scope0_reason, 2)));
+	}) || ($fg__input_tab && $ui__input_selected && _patch_write($scope0_id, "PatchMarkedWrite:input_tab", input.tab, !_server_guard($scope0_reason, 1)), $fg__input_selected && $ui__input_tab && _patch_write($scope0_id, "PatchMarkedWrite:input_selected", input.selected, !_server_guard($scope0_reason, 2)));
 });
 
 // template.marko
@@ -27,13 +27,13 @@ _shells({
 	"__tests__/template.marko": `__tests__/template.marko${_shell_marker($setup)};${((_w0) => ` b/${_w0}&b`)("b%c")};${((_w0) => `<button class=s>s</button>${_w0}<!>`)($template$1)}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_y = _client_guard($scope0_reason, 2), $fg__input_y = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $cg__input_y = _client_guard($scope0_reason, 2), $uf__input_x = _updates_from($scope0_reason, 1), $ui__input_x = _unfilled_if($scope0_reason, 1), $fg__input_y = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_y__closures = new Set();
 	const $s__closures = new Set();
 	let s = 0;
 	_html(`<button class=s>s</button>${_el_mark($scope0_id, "#button/0")}`);
-	_set_scope_reason(_updates_from($scope0_reason, 1) << 1 | _updates_from($scope0_reason, 1) << 5);
+	_set_scope_reason($uf__input_x << 1 | $uf__input_x << 5);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/1", 0);
 	tabs_default({
 		selected: input.x,
@@ -60,7 +60,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	$fg__input_y && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_y#5/subscribers", "input_y");
 	_scope($scope0_id, {
-		input_y: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.y,
+		input_y: ($ui__input_x || _unfilled_if($scope0_reason, 2)) && input.y,
 		s,
 		"ClosureScopes:input_y/7": _write_if($scope0_reason, 2) && $input_y__closures,
 		"ClosureScopes:s/8": $s__closures,
@@ -68,5 +68,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, "__tests__/template.marko", 0, {
 		input_y: ["input.y"],
 		s: "1:6"
-	}) || $fg__input_y && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_y", input.y, !_server_guard($scope0_reason, 2));
+	}) || $fg__input_y && $ui__input_x && _patch_write($scope0_id, "PatchMarkedWrite:input_y", input.y, !_server_guard($scope0_reason, 2));
 }, 1);

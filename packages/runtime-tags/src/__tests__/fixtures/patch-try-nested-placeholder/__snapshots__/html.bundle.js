@@ -15,7 +15,7 @@ var template_default = _template("a", (input) => {
 	_html("<main>");
 	_try($scope0_id, "a", () => {
 		_scope_reason();
-		const $scope1_id = _scope_id();
+		const $scope1_id = _scope_id(), $ui__input_promise = _unfilled_if($scope0_reason, 0);
 		_await($scope1_id, "a", input.promise, (value) => {
 			const $scope3_id = _scope_id();
 			const $await_content__value__closures = /* @__PURE__ */ new Set();
@@ -32,9 +32,9 @@ var template_default = _template("a", (input) => {
 				_scope($scope5_id, {});
 			}, 0, "a1", "a2", 1, 1, 1);
 			$wi__input_promise && _scope($scope3_id, { f: _unfilled_if($scope0_reason, 0) && $await_content__value__closures });
-		}, 1, "a3", _unfilled_if($scope0_reason, 0), 1);
+		}, 1, "a3", $ui__input_promise, 1);
 		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "a7", 1);
-		$wi__input_promise && _subscribe(_unfilled_if($scope0_reason, 0) && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), $cg__input_promise && "a7", 0);
+		$wi__input_promise && _subscribe($ui__input_promise && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), $cg__input_promise && "a7", 0);
 		$wi__input_promise && _resume_branch($scope1_id);
 	}, () => {
 		_scope_reason();

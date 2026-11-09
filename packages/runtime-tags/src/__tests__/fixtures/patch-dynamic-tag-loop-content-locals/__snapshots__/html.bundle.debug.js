@@ -8,10 +8,10 @@ _shells({
 	"__tests__/tags/tabs.marko_2*shell": "__tests__/tags/tabs.marko_2*shell;b%;<!><!><!>"
 });
 var tabs_default = _template("__tests__/tags/tabs.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_tab = _write_guard($scope0_reason, 1), $wg__input_selected = _write_guard($scope0_reason, 2), $wi__input_tab__OR__input_selected = _write_if($scope0_reason, 0), $fg__input_selected = _filled_guard($scope0_reason, 2), $cg__input_tab = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_tab = _write_guard($scope0_reason, 1), $wg__input_selected = _write_guard($scope0_reason, 2), $wi__input_tab__OR__input_selected = _write_if($scope0_reason, 0), $ui__input_tab = _unfilled_if($scope0_reason, 1), $fg__input_selected = _filled_guard($scope0_reason, 2), $cg__input_tab = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_for_of(input.tab, (tab, i) => {
-		const $scope1_id = _scope_id();
+		const $scope1_id = _scope_id(), $ui__input_selected = _unfilled_if($scope0_reason, 2);
 		_if(() => {
 			if (i === input.selected) {
 				const $scope2_id = _scope_id();
@@ -23,8 +23,8 @@ var tabs_default = _template("__tests__/tags/tabs.marko", (input) => {
 		}, $scope1_id, "#text/0", 1, $wg__input_selected, 1, 0, 0, ["__tests__/tags/tabs.marko_2*shell"], $scope0_reason, 0);
 		_client_guard($scope0_reason, 2) && _patch_render($scope1_id, "__tests__/tags/tabs.marko_1_input_selected#0:4/setup");
 		$wi__input_tab__OR__input_selected && _scope($scope1_id, {
-			tab_content: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1)) && tab?.content,
-			"#LoopKey": _unfilled_if($scope0_reason, 2) && i,
+			tab_content: ($ui__input_selected || _unfilled_if($scope0_reason, 1)) && tab?.content,
+			"#LoopKey": $ui__input_selected && i,
 			_: _scope_with_id($scope0_id)
 		}, "__tests__/tags/tabs.marko", "1:2", {
 			tab_content: ["tab.content", "1:6"],
@@ -32,7 +32,7 @@ var tabs_default = _template("__tests__/tags/tabs.marko", (input) => {
 		});
 	}, 0, $scope0_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/tags/tabs.marko_1*shell", $scope0_reason, 1);
 	$fg__input_selected && $cg__input_tab && _patch_render($scope0_id, "__tests__/tags/tabs.marko_1_input_selected#0:4/setup", "input_selected");
-	_scope($scope0_id, { input_selected: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.selected }, "__tests__/tags/tabs.marko", 0, { input_selected: ["input.selected"] }) || $fg__input_selected && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_selected", input.selected, !_server_guard($scope0_reason, 2));
+	_scope($scope0_id, { input_selected: ($ui__input_tab || _unfilled_if($scope0_reason, 2)) && input.selected }, "__tests__/tags/tabs.marko", 0, { input_selected: ["input.selected"] }) || $fg__input_selected && $ui__input_tab && _patch_write($scope0_id, "PatchMarkedWrite:input_selected", input.selected, !_server_guard($scope0_reason, 2));
 });
 
 // template.marko

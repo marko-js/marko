@@ -34,7 +34,7 @@ var child_default = _template("b", (input) => {
 const $setup = _shell_setup([[], ["a0"]], ["a>", $setup$1], ["c>", $setup$1]);
 _shells({ a: `a${_shell_marker($setup)};${((_w0, _w1) => `0${_w0}&0${_w1}&b%b D l`)("", "")};${((_w0, _w1) => `<!>${_w0}${_w1}<!><button> </button>`)("", "")}` });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $ui__input_first = _unfilled_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let n = 0;
 	_set_scope_reason(0);
@@ -50,8 +50,8 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a0");
 	_scope($scope0_id, {
 		k: n,
-		l: _unfilled_if($scope0_reason, 0) && a,
-		m: _unfilled_if($scope0_reason, 0) && b,
+		l: $ui__input_first && a,
+		m: $ui__input_first && b,
 		a: _existing_scope($childScope),
 		c: _existing_scope($childScope2)
 	});

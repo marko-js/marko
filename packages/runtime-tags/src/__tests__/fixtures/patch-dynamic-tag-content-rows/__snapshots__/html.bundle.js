@@ -8,7 +8,7 @@ _shells({
 	b2: "b2;D%b%;<li><!><!></li>"
 });
 var layout_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 1), $fg__input_content = _filled_guard($scope0_reason, 1), $fg__input_row = _filled_guard($scope0_reason, 4), $cg__input_rows = _client_guard($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $wg__input_content = _write_guard($scope0_reason, 1), $ui__input_rows = _unfilled_if($scope0_reason, 3), $fg__input_content = _filled_guard($scope0_reason, 1), $fg__input_row = _filled_guard($scope0_reason, 4), $cg__input_rows = _client_guard($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	_html(`<main><h1>${_text_mark($scope0_id, "a", input.title, 1, $scope0_reason, 0)}</h1>`);
 	_dynamic_tag($scope0_id, "b", input.content, {}, 2, 0, 0, $wg__input_content, $scope0_reason, 1);
@@ -36,9 +36,9 @@ var layout_default = _template("b", (input) => {
 	$fg__input_content && $cg__input_rows && _patch_render($scope0_id, "b3", "i");
 	$fg__input_row && $cg__input_rows && _patch_render($scope0_id, "b0", "l");
 	_scope($scope0_id, {
-		i: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 1)) && input.content,
-		l: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 4)) && input.row
-	}) || ($fg__input_content && _unfilled_if($scope0_reason, 3) && _patch_write($scope0_id, "xi", input.content, !_server_guard($scope0_reason, 1)), $fg__input_row && _unfilled_if($scope0_reason, 3) && _patch_write($scope0_id, "xl", input.row, !_server_guard($scope0_reason, 4)));
+		i: ($ui__input_rows || _unfilled_if($scope0_reason, 1)) && input.content,
+		l: ($ui__input_rows || _unfilled_if($scope0_reason, 4)) && input.row
+	}) || ($fg__input_content && $ui__input_rows && _patch_write($scope0_id, "xi", input.content, !_server_guard($scope0_reason, 1)), $fg__input_row && $ui__input_rows && _patch_write($scope0_id, "xl", input.row, !_server_guard($scope0_reason, 4)));
 });
 
 // template.marko
@@ -49,7 +49,7 @@ _shells({
 	a: `a${_shell_marker($setup)};${((_w0) => `/${_w0}&`)($walks)};${$template}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_text = _client_guard($scope0_reason, 3), $wi__input_text = _write_if($scope0_reason, 3), $wi__input_rows__OR__input_text = _write_if($scope0_reason, 0), $fg__input_text = _filled_guard($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $cg__input_text = _client_guard($scope0_reason, 3), $wi__input_text = _write_if($scope0_reason, 3), $wi__input_rows__OR__input_text = _write_if($scope0_reason, 0), $ui__input_rows = _unfilled_if($scope0_reason, 2), $fg__input_text = _filled_guard($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	const $input_text__closures = /* @__PURE__ */ new Set();
 	_set_scope_reason(_updates_from($scope0_reason, 1) << 1 | _updates_from($scope0_reason, 2) << 7);
@@ -87,8 +87,8 @@ var template_default = _template("a", (input) => {
 	_patch_child_end();
 	$fg__input_text && _patch_subscribers($scope0_id, "a6", "f");
 	_scope($scope0_id, {
-		f: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && input.text,
+		f: ($ui__input_rows || _unfilled_if($scope0_reason, 3)) && input.text,
 		g: $wi__input_text && $input_text__closures,
 		a: _existing_scope($childScope)
-	}) || $fg__input_text && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xf", input.text, !_server_guard($scope0_reason, 3));
+	}) || $fg__input_text && $ui__input_rows && _patch_write($scope0_id, "xf", input.text, !_server_guard($scope0_reason, 3));
 }, 1);

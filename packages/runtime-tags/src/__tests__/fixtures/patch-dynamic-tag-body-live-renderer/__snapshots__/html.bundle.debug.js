@@ -38,7 +38,7 @@ _shells({
 	"__tests__/tags/heading.marko": "__tests__/tags/heading.marko;b%;<!><!><!>"
 });
 var heading_default = _template("__tests__/tags/heading.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $cg__input_depth = _client_guard($scope0_reason, 2), $wg__input_type = _write_guard($scope0_reason, 1), $fg__input_depth = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $cg__input_depth = _client_guard($scope0_reason, 2), $wg__input_type = _write_guard($scope0_reason, 1), $ui__input_type = _unfilled_if($scope0_reason, 1), $fg__input_depth = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_depth__closures = new Set();
 	_dynamic_tag($scope0_id, "#text/0", input.type, {}, 2, _content_resume("__tests__/tags/heading.marko_1*content", () => {
@@ -50,9 +50,9 @@ var heading_default = _template("__tests__/tags/heading.marko", (input) => {
 	}, $scope0_id, ($scope) => $scope0_page ? [{ input_depth: input.depth }] : []), 0, $wg__input_type, $scope0_reason, 1, 0, void 0, 0, 0, "__tests__/tags/heading.marko_1*content");
 	$fg__input_depth && _patch_subscribers($scope0_id, "__tests__/tags/heading.marko_0_input_depth#4/subscribers", "input_depth");
 	_scope($scope0_id, {
-		input_depth: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.depth,
+		input_depth: ($ui__input_type || _unfilled_if($scope0_reason, 2)) && input.depth,
 		"ClosureScopes:input_depth/5": _write_if($scope0_reason, 2) && $input_depth__closures
-	}, "__tests__/tags/heading.marko", 0, { input_depth: ["input.depth"] }) || $fg__input_depth && (_client_branch_if("__tests__/tags/heading.marko_1*content", $scope0_id) || _unfilled_if($scope0_reason, 1)) && _patch_write($scope0_id, "PatchMarkedWrite:input_depth", input.depth, !_server_guard($scope0_reason, 2));
+	}, "__tests__/tags/heading.marko", 0, { input_depth: ["input.depth"] }) || $fg__input_depth && (_client_branch_if("__tests__/tags/heading.marko_1*content", $scope0_id) || $ui__input_type) && _patch_write($scope0_id, "PatchMarkedWrite:input_depth", input.depth, !_server_guard($scope0_reason, 2));
 });
 
 // template.marko
@@ -61,9 +61,9 @@ const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c");
 const $setup = _shell_setup([[], []], ["#childScope/0>", $setup$1]);
 _shells({ "__tests__/template.marko": `__tests__/template.marko${_shell_marker($setup)};${((_w0) => `b/${_w0}&b`)("b%c")};${((_w0) => `<!>${_w0}<!>`)($template$1)}` });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $uf__input_depth = _updates_from($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 0) << 5);
+	_set_scope_reason($uf__input_depth << 1 | $uf__input_depth << 5);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	heading_default({
 		type: card_default,

@@ -10,10 +10,10 @@ var show_await_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_await($scope0_id, "a", input.promise, (x) => {
-		const $scope1_id = _scope_id();
-		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "xc", x, !_server_guard($scope0_reason, 0));
+		const $scope1_id = _scope_id(), $fg__input_promise = _filled_guard($scope0_reason, 0);
+		$fg__input_promise && _patch_write($scope1_id, "xc", x, !_server_guard($scope0_reason, 0));
 		_html(`<p>${_text_mark($scope1_id, "a", x, 1, $scope0_reason, 0)}</p>`);
-		_script($scope1_id, "b0", 1, _filled_guard($scope0_reason, 0), "c");
+		_script($scope1_id, "b0", 1, $fg__input_promise, "c");
 		_scope($scope1_id, { c: x });
 	}, 1, "b1", _unfilled_if($scope0_reason, 0) && 2, 1);
 });

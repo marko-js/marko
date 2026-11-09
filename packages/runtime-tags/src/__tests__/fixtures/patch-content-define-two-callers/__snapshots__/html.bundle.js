@@ -8,13 +8,13 @@ _shells({
 	a0: "a0;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_title = _client_guard($scope0_reason, 1), $fg__input_title = _filled_guard($scope0_reason, 1), $wi__input_title = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_title = _client_guard($scope0_reason, 1), $uf__input_open = _updates_from($scope0_reason, 2), $fg__input_title = _filled_guard($scope0_reason, 1), $wi__input_title = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_title__closures = /* @__PURE__ */ new Set();
 	let count = 0;
 	const Panel = { content: _content("a3", ({ open, body }) => {
 		const $scope3_id = _scope_id();
-		const $scope3_reason = _scope_reason(), $wg__body = _write_guard($scope3_reason, 2), $wg__open = _write_guard($scope3_reason, 1), $fg__body = _filled_guard($scope3_reason, 2);
+		const $scope3_reason = _scope_reason(), $wg__body = _write_guard($scope3_reason, 2), $wg__open = _write_guard($scope3_reason, 1), $ui__open = _unfilled_if($scope3_reason, 1), $fg__body = _filled_guard($scope3_reason, 2);
 		_if(() => {
 			if (open) {
 				const $scope4_id = _scope_id();
@@ -24,7 +24,7 @@ var template_default = _template("a", (input) => {
 			}
 		}, $scope3_id, "a", 1, $wg__open, 1, 0, 0, ["a0"], $scope3_reason, 1);
 		$fg__body && _client_guard($scope3_reason, 1) && _patch_render($scope3_id, "a4", "e");
-		_write_if($scope3_reason, 1) && _scope($scope3_id, { e: _unfilled_if($scope3_reason, 1) && body }) || $fg__body && _unfilled_if($scope3_reason, 1) && _patch_write($scope3_id, "xe", body, !_server_guard($scope3_reason, 2));
+		_write_if($scope3_reason, 1) && _scope($scope3_id, { e: $ui__open && body }) || $fg__body && $ui__open && _patch_write($scope3_id, "xe", body, !_server_guard($scope3_reason, 2));
 	}, $scope0_id) };
 	_html("<main>");
 	_set_scope_reason(10);
@@ -40,7 +40,7 @@ var template_default = _template("a", (input) => {
 		}, $scope0_id) })
 	});
 	_patch_child_end();
-	_set_scope_reason(_updates_from($scope0_reason, 2) << 1 | _updates_from($scope0_reason, 2) << 3);
+	_set_scope_reason($uf__input_open << 1 | $uf__input_open << 3);
 	const $childScope2 = _peek_scope_id($scope0_id, "b", 2);
 	Panel.content({
 		open: input.open,

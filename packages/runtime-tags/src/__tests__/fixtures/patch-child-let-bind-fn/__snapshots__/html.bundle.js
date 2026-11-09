@@ -4,7 +4,7 @@ const $walks = " b b";
 const $setup$1 = [[], ["b1"]];
 _shells({ b: "b !b1; b ;<button>load</button><ul></ul>" });
 var picker_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_refreshing = _filled_guard($scope0_reason, 1), $fg__input_refreshingChange = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $ui__input_refreshing__OR__input_refreshingChange = _unfilled_if($scope0_reason, 0), $ui__input_refreshingChange = _unfilled_if($scope0_reason, 2), $ui__input_refreshing = _unfilled_if($scope0_reason, 1), $fg__input_refreshing = _filled_guard($scope0_reason, 1), $fg__input_refreshingChange = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	let refreshing = input.refreshing;
 	let catalog = null;
@@ -27,11 +27,11 @@ var picker_default = _template("b", (input) => {
 	_patch_let_change($scope0_id, "vb3", refreshing, "wi", $refreshingChange, $scope0_reason, 0);
 	_patch_fill($scope0_id, "vb4", catalog, 1);
 	_scope($scope0_id, {
-		e: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.refreshing,
-		f: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.refreshingChange,
+		e: ($ui__input_refreshingChange || $ui__input_refreshing__OR__input_refreshingChange) && input.refreshing,
+		f: ($ui__input_refreshing || $ui__input_refreshing__OR__input_refreshingChange) && input.refreshingChange,
 		k: load,
 		i: $refreshingChange
-	}) || ($fg__input_refreshing && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xe", input.refreshing, !_server_guard($scope0_reason, 1)), $fg__input_refreshingChange && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xf", input.refreshingChange, !_server_guard($scope0_reason, 2)));
+	}) || ($fg__input_refreshing && $ui__input_refreshingChange && _patch_write($scope0_id, "xe", input.refreshing, !_server_guard($scope0_reason, 1)), $fg__input_refreshingChange && $ui__input_refreshing && _patch_write($scope0_id, "xf", input.refreshingChange, !_server_guard($scope0_reason, 2)));
 	return $return;
 });
 

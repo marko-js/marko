@@ -21,7 +21,7 @@ _shells({
 	"__tests__/template.marko_2*shell": `__tests__/template.marko_2*shell${_shell_marker([[], []], ["#childScope/0>", $setup$1], ["#childScope/1>", $setup$1])};${/*@__PURE__*/ ((_w0, _w1) => `/${_w0}&/${_w1}&`)($walks$1, $walks$1)};${/*@__PURE__*/ ((_w0, _w1) => `${_w0}${_w1}`)($template$1, $template$1)}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_visible__OR__input_items = _write_if($scope0_reason, 0), $fg__input_items = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wi__input_visible__OR__input_items = _write_if($scope0_reason, 0), $ui__input_visible = _unfilled_if($scope0_reason, 1), $fg__input_items = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const headingId = _id("headingId");
 	_html(`<h2${_attr("id", headingId, $scope0_id, "#h2/0", 0, 0)}>Fields</h2>${_el_mark($scope0_id, "#h2/0", 0)}`);
@@ -58,10 +58,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id, "#text/1", 1, _write_guard($scope0_reason, 1), 1, 0, 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 1);
 	$fg__input_items && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "__tests__/template.marko_1_input_items#0:5/setup", "input_items");
 	_scope($scope0_id, {
-		input_items: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.items,
+		input_items: ($ui__input_visible || _unfilled_if($scope0_reason, 2)) && input.items,
 		headingId: _unfilled_if($scope0_reason, 0) && headingId
 	}, "__tests__/template.marko", 0, {
 		input_items: ["input.items"],
 		headingId: "1:5"
-	}) || $fg__input_items && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_items", input.items, !_server_guard($scope0_reason, 2));
+	}) || $fg__input_items && $ui__input_visible && _patch_write($scope0_id, "PatchMarkedWrite:input_items", input.items, !_server_guard($scope0_reason, 2));
 }, 1);

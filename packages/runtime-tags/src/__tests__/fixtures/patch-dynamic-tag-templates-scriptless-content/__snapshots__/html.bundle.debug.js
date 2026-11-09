@@ -31,7 +31,7 @@ _shells({
 	"__tests__/template.marko": "__tests__/template.marko;b%;<!><!><!>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_bold__OR__input_label = _write_guard($scope0_reason, 2), $wi__input_tag__OR__input_bold__OR__input_label = _write_if($scope0_reason, 3), $wg__input_tag = _write_guard($scope0_reason, 4), $fg__input_bold = _filled_guard($scope0_reason, 5), $fg__input_label = _filled_guard($scope0_reason, 6);
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_bold__OR__input_label = _write_guard($scope0_reason, 2), $wi__input_tag__OR__input_bold__OR__input_label = _write_if($scope0_reason, 3), $wg__input_tag = _write_guard($scope0_reason, 4), $ui__input_bold__OR__input_label = _unfilled_if($scope0_reason, 2), $ui__input_tag__OR__input_label = _unfilled_if($scope0_reason, 1), $ui__input_tag__OR__input_bold = _unfilled_if($scope0_reason, 0), $fg__input_bold = _filled_guard($scope0_reason, 5), $fg__input_label = _filled_guard($scope0_reason, 6);
 	const $scope0_id = _scope_id();
 	const $input_bold__closures = new Set();
 	const $input_label__closures = new Set();
@@ -51,12 +51,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	$fg__input_bold && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_bold#4/subscribers", "input_bold");
 	$fg__input_label && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_label#5/subscribers", "input_label");
 	_scope($scope0_id, {
-		input_bold: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.bold,
-		input_label: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && input.label,
+		input_bold: ($ui__input_tag__OR__input_label || $ui__input_bold__OR__input_label) && input.bold,
+		input_label: ($ui__input_tag__OR__input_bold || $ui__input_bold__OR__input_label) && input.label,
 		"ClosureScopes:input_bold/6": _write_if($scope0_reason, 5) && $input_bold__closures,
 		"ClosureScopes:input_label/7": _write_if($scope0_reason, 6) && $input_label__closures
 	}, "__tests__/template.marko", 0, {
 		input_bold: ["input.bold"],
 		input_label: ["input.label"]
-	}) || ($fg__input_bold && (_client_branch_if("__tests__/template.marko_1*content", $scope0_id) || _unfilled_if($scope0_reason, 1)) && _patch_write($scope0_id, "PatchMarkedWrite:input_bold", input.bold, !_server_guard($scope0_reason, 5)), $fg__input_label && (_client_branch_if("__tests__/template.marko_1*content", $scope0_id) || _unfilled_if($scope0_reason, 0)) && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 6)));
+	}) || ($fg__input_bold && (_client_branch_if("__tests__/template.marko_1*content", $scope0_id) || $ui__input_tag__OR__input_label) && _patch_write($scope0_id, "PatchMarkedWrite:input_bold", input.bold, !_server_guard($scope0_reason, 5)), $fg__input_label && (_client_branch_if("__tests__/template.marko_1*content", $scope0_id) || $ui__input_tag__OR__input_bold) && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 6)));
 }, 1);

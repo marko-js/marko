@@ -7,13 +7,13 @@ _shells({
 	b5: "b5; ;<section></section>"
 });
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_show__OR__input_a__OR__input_b__OR__input_mode = _write_if($scope0_reason, 3), $wg__input_show = _write_guard($scope0_reason, 4), $fg__input_a = _filled_guard($scope0_reason, 5), $fg__input_b = _filled_guard($scope0_reason, 6), $fg__input_mode = _filled_guard($scope0_reason, 7);
+	const $scope0_reason = _scope_reason(), $wi__input_show__OR__input_a__OR__input_b__OR__input_mode = _write_if($scope0_reason, 3), $wg__input_show = _write_guard($scope0_reason, 4), $ui__input_a__OR__input_b = _unfilled_if($scope0_reason, 0), $ui__input_show__OR__input_b__OR__input_mode = _unfilled_if($scope0_reason, 2), $ui__input_show__OR__input_a__OR__input_mode = _unfilled_if($scope0_reason, 1), $ui__input_show = _unfilled_if($scope0_reason, 4), $fg__input_a = _filled_guard($scope0_reason, 5), $fg__input_b = _filled_guard($scope0_reason, 6), $fg__input_mode = _filled_guard($scope0_reason, 7);
 	const $scope0_id = _scope_id();
 	const $input_a__closures = /* @__PURE__ */ new Set();
 	const $input_b__closures = /* @__PURE__ */ new Set();
 	_if(() => {
 		if (input.show) {
-			const $scope1_id = _scope_id();
+			const $scope1_id = _scope_id(), $ui__input_mode = _unfilled_if($scope0_reason, 7);
 			const frag = { content: _content_resume("b0", () => {
 				const $scope2_id = _scope_id();
 				_scope_reason();
@@ -26,10 +26,10 @@ var child_default = _template("b", (input) => {
 			_html("<section>");
 			_attr_content("a", $scope1_id, input.mode ? frag.content : null, 0, 1, $scope0_reason, 7);
 			_html(`</section>${_el_mark($scope1_id, "a", _updates_from($scope0_reason, 7))}`);
-			_unfilled_if($scope0_reason, 7) && _patch_write($scope1_id, "wc", frag?.content, 1);
+			$ui__input_mode && _patch_write($scope1_id, "wc", frag?.content, 1);
 			_client_guard($scope0_reason, 7) && _patch_render($scope1_id, "b4");
 			_scope($scope1_id, {
-				c: _unfilled_if($scope0_reason, 7) && frag?.content,
+				c: $ui__input_mode && frag?.content,
 				_: $wi__input_show__OR__input_a__OR__input_b__OR__input_mode && _scope_with_id($scope0_id)
 			});
 			return 0;
@@ -39,23 +39,23 @@ var child_default = _template("b", (input) => {
 	$fg__input_b && _patch_subscribers($scope0_id, "b7", "f");
 	$fg__input_mode && _client_guard($scope0_reason, 4) && _patch_render($scope0_id, "b8", "g");
 	_scope($scope0_id, {
-		e: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.a,
-		f: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.b,
-		g: (_unfilled_if($scope0_reason, 4) || _unfilled_if($scope0_reason, 7)) && input.mode,
+		e: ($ui__input_show__OR__input_b__OR__input_mode || $ui__input_a__OR__input_b) && input.a,
+		f: ($ui__input_show__OR__input_a__OR__input_mode || $ui__input_a__OR__input_b) && input.b,
+		g: ($ui__input_show || _unfilled_if($scope0_reason, 7)) && input.mode,
 		h: _write_if($scope0_reason, 5) && $input_a__closures,
 		i: _write_if($scope0_reason, 6) && $input_b__closures
-	}) || ($fg__input_a && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xe", input.a, !_server_guard($scope0_reason, 5)), $fg__input_b && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xf", input.b, !_server_guard($scope0_reason, 6)), $fg__input_mode && _unfilled_if($scope0_reason, 4) && _patch_write($scope0_id, "xg", input.mode, !_server_guard($scope0_reason, 7)));
+	}) || ($fg__input_a && $ui__input_show__OR__input_b__OR__input_mode && _patch_write($scope0_id, "xe", input.a, !_server_guard($scope0_reason, 5)), $fg__input_b && $ui__input_show__OR__input_a__OR__input_mode && _patch_write($scope0_id, "xf", input.b, !_server_guard($scope0_reason, 6)), $fg__input_mode && $ui__input_show && _patch_write($scope0_id, "xg", input.mode, !_server_guard($scope0_reason, 7)));
 });
 
 // template.marko
 const $setup = _shell_setup([[], ["a0"]], ["a>", $setup$1], ["b>", $setup$1]);
 _shells({ a: `a${_shell_marker($setup)};${((_w0, _w1) => `b/${_w0}&/${_w1}& b b`)("b%c", "b%c")};${((_w0, _w1) => `<!>${_w0}${_w1}<button class=n>+</button><button class=m>m</button>`)($template, $template)}` });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $uf__input_show = _updates_from($scope0_reason, 2), $uf__input_x = _updates_from($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	let n = 0;
 	let m = false;
-	_set_scope_reason(35326 | (_updates_from($scope0_reason, 2) << 9 | _updates_from($scope0_reason, 1) << 13));
+	_set_scope_reason(35326 | ($uf__input_show << 9 | $uf__input_x << 13));
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	child_default({
 		a: n,
@@ -64,7 +64,7 @@ var template_default = _template("a", (input) => {
 		mode: m
 	});
 	_patch_child_end();
-	_set_scope_reason(33272 | (_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 2) << 9 | _updates_from($scope0_reason, 3) << 11 | _updates_from($scope0_reason, 1) << 13));
+	_set_scope_reason(33272 | (_updates_from($scope0_reason, 0) << 1 | $uf__input_show << 9 | _updates_from($scope0_reason, 3) << 11 | $uf__input_x << 13));
 	const $childScope2 = _peek_scope_id($scope0_id, "b", 1);
 	child_default({
 		a: input.y,

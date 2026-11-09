@@ -27,11 +27,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	wrapper_default({ content: _content("__tests__/template.marko_1*content", () => {
 		const $scope1_reason = _scope_reason();
-		const $scope1_id = _scope_id();
+		const $scope1_id = _scope_id(), $fg__input_label = _filled_guard($scope0_reason, 0);
 		const label = input.label;
-		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "PatchMarkedWrite:label", label, !_server_guard($scope0_reason, 0));
+		$fg__input_label && _patch_write($scope1_id, "PatchMarkedWrite:label", label, !_server_guard($scope0_reason, 0));
 		_html(`<p>${_text_mark($scope1_id, "#text/0", label + count)}</p>`);
-		_patch_render($scope1_id, "__tests__/template.marko_1_count#0:5_label#1/setup", _filled_guard($scope0_reason, 0) && "label");
+		_patch_render($scope1_id, "__tests__/template.marko_1_count#0:5_label#1/setup", $fg__input_label && "label");
 		_subscribe($count__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope1_id, {
 			label,
 			_: _scope_with_id($scope0_id)

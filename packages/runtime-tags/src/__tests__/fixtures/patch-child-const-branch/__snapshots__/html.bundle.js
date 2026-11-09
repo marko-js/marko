@@ -6,7 +6,7 @@ _shells({
 	b1: "b1;D ;<i> </i>"
 });
 var badge_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_label = _write_guard($scope0_reason, 0), $fg__input_note = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_label = _write_guard($scope0_reason, 0), $ui__input_label = _unfilled_if($scope0_reason, 0), $fg__input_note = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_html("<div>");
 	_if(() => {
@@ -20,7 +20,7 @@ var badge_default = _template("b", (input) => {
 	}, $scope0_id, "a", 1, $wg__input_label, 1, 0, 0, ["b1"], $scope0_reason, 0);
 	_html(`</div>${_el_mark($scope0_id, "a", $wg__input_label)}`);
 	$fg__input_note && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "b0", "e");
-	_scope($scope0_id, { e: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.note }) || $fg__input_note && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xe", input.note, !_server_guard($scope0_reason, 1));
+	_scope($scope0_id, { e: ($ui__input_label || _unfilled_if($scope0_reason, 1)) && input.note }) || $fg__input_note && $ui__input_label && _patch_write($scope0_id, "xe", input.note, !_server_guard($scope0_reason, 1));
 });
 
 // template.marko

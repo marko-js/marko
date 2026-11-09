@@ -17,7 +17,7 @@ _shells({
 	a1: `a1${_shell_marker([[], []], ["a>", $setup$1])};${/*@__PURE__*/ ((_w0) => `/${_w0}&D l`)($walks)};${/*@__PURE__*/ ((_w0) => `${_w0}<p> </p>`)($template)}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0), $fg__input_note = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0), $ui__input_show = _unfilled_if($scope0_reason, 0), $fg__input_note = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_html("<main>");
 	_set_scope_reason(0);
@@ -43,7 +43,7 @@ var template_default = _template("a", (input) => {
 	_html("</main>");
 	$fg__input_note && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "a0", "f");
 	_scope($scope0_id, {
-		f: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.note,
+		f: ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.note,
 		a: _existing_scope($childScope)
-	}) || $fg__input_note && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xf", input.note, !_server_guard($scope0_reason, 1));
+	}) || $fg__input_note && $ui__input_show && _patch_write($scope0_id, "xf", input.note, !_server_guard($scope0_reason, 1));
 }, 1);

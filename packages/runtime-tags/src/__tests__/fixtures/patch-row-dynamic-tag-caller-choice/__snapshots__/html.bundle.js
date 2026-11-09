@@ -10,7 +10,7 @@ _shells({
 	b0: "b0;b%;<!><!><!>"
 });
 var rowsy_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $cg__input_label = _client_guard($scope0_reason, 1), $wg__input_tags__OR__input_card = _write_guard($scope0_reason, 0), $cg__input_tags__OR__input_card = _client_guard($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 1), $fg__input_card = _filled_guard($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $cg__input_label = _client_guard($scope0_reason, 1), $wg__input_tags__OR__input_card = _write_guard($scope0_reason, 0), $cg__input_tags__OR__input_card = _client_guard($scope0_reason, 0), $ui__input_tags__OR__input_card = _unfilled_if($scope0_reason, 0), $ui__input_tags = _unfilled_if($scope0_reason, 2), $fg__input_label = _filled_guard($scope0_reason, 1), $fg__input_card = _filled_guard($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	const $n__closures = /* @__PURE__ */ new Set();
@@ -39,35 +39,35 @@ var rowsy_default = _template("b", (input) => {
 	}, $scope0_id, ($scope) => $scope0_page ? [{ f: input.label }] : []) };
 	_html(`<button>${_text_mark($scope0_id, "b", n)}</button>${_el_mark($scope0_id, "a")}`);
 	_for_of(input.tags, (tag) => {
-		const $scope2_id = _scope_id();
-		_filled_guard($scope0_reason, 2) && _unfilled_if($scope0_reason, 3) && _patch_write($scope2_id, "xc", tag, !_server_guard($scope0_reason, 2));
+		const $scope2_id = _scope_id(), $ui__input_card = _unfilled_if($scope0_reason, 3), $fg__input_tags = _filled_guard($scope0_reason, 2);
+		$fg__input_tags && $ui__input_card && _patch_write($scope2_id, "xc", tag, !_server_guard($scope0_reason, 2));
 		_dynamic_tag($scope2_id, "a", input.card ? Card : "span", {
 			label: tag,
 			content: Label
 		}, 9, 0, 0, $wg__input_tags__OR__input_card, $scope0_reason, 0, 0, void 0, 0, 0, "b2");
 		!$cg__input_tags__OR__input_card && _unfilled_if() && _patch_write($scope0_id, "wi", Card);
 		!$cg__input_tags__OR__input_card && _unfilled_if() && _patch_write($scope0_id, "wk", Label);
-		_patch_render($scope2_id, "b6", [_filled_guard($scope0_reason, 3) && ">h", _filled_guard($scope0_reason, 2) && "c"], $scope0_reason, 0);
+		_patch_render($scope2_id, "b6", [_filled_guard($scope0_reason, 3) && ">h", $fg__input_tags && "c"], $scope0_reason, 0);
 		_write_if($scope0_reason, 0) && _scope($scope2_id, {
-			c: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 0)) && tag,
+			c: ($ui__input_card || _unfilled_if($scope0_reason, 0)) && tag,
 			_: _scope_with_id($scope0_id)
 		});
 	}, 0, $scope0_id, "c", 1, 1, 1, 0, 0, "b3", $scope0_reason, 2);
 	_script($scope0_id, "b7");
-	_unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "wi", Card, 1);
-	_unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "wk", Label, 1);
+	$ui__input_tags__OR__input_card && _patch_write($scope0_id, "wi", Card, 1);
+	$ui__input_tags__OR__input_card && _patch_write($scope0_id, "wk", Label, 1);
 	$fg__input_label && _patch_subscribers($scope0_id, "b8", "f");
 	$fg__input_card && _client_guard($scope0_reason, 2) && _patch_render($scope0_id, "b9", "h");
 	_patch_fill($scope0_id, "vb10", n, 1);
 	_scope($scope0_id, {
-		f: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.label,
-		h: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.card,
-		i: _unfilled_if($scope0_reason, 0) && Card,
+		f: ($ui__input_tags__OR__input_card || _unfilled_if($scope0_reason, 1)) && input.label,
+		h: ($ui__input_tags || $ui__input_tags__OR__input_card) && input.card,
+		i: $ui__input_tags__OR__input_card && Card,
 		j: n,
-		k: _unfilled_if($scope0_reason, 0) && Label,
+		k: $ui__input_tags__OR__input_card && Label,
 		l: _write_if($scope0_reason, 1) && $input_label__closures,
 		o: $n__closures
-	}) || ($fg__input_label && (_client_branch_if("b2", $scope0_id) || $cg__input_tags__OR__input_card || _unfilled_if($scope0_reason, 0)) && _patch_write($scope0_id, "xf", input.label, !_server_guard($scope0_reason, 1)), $fg__input_card && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xh", input.card, !_server_guard($scope0_reason, 3)));
+	}) || ($fg__input_label && (_client_branch_if("b2", $scope0_id) || $cg__input_tags__OR__input_card || $ui__input_tags__OR__input_card) && _patch_write($scope0_id, "xf", input.label, !_server_guard($scope0_reason, 1)), $fg__input_card && $ui__input_tags && _patch_write($scope0_id, "xh", input.card, !_server_guard($scope0_reason, 3)));
 });
 
 // template.marko

@@ -10,7 +10,7 @@ _shells({
 	"__tests__/tags/wrap.marko_2*shell": "__tests__/tags/wrap.marko_2*shell;D ;<em> </em>"
 });
 var wrap_default = _template("__tests__/tags/wrap.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_title = _client_guard($scope0_reason, 0), $wi__input_title = _write_if($scope0_reason, 0), $fg__input_title = _filled_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_title = _client_guard($scope0_reason, 0), $wi__input_title = _write_if($scope0_reason, 0), $ui__input_open = _unfilled_if($scope0_reason, 1), $fg__input_title = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_title__closures = new Set();
 	const Panel = { content: _content("__tests__/tags/wrap.marko_1*content", ({ open }) => {
@@ -33,10 +33,10 @@ var wrap_default = _template("__tests__/tags/wrap.marko", (input) => {
 	_patch_child_end();
 	$fg__input_title && _patch_subscribers($scope0_id, "__tests__/tags/wrap.marko_0_input_title#3/subscribers", "input_title");
 	_scope($scope0_id, {
-		input_title: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && input.title,
+		input_title: ($ui__input_open || _unfilled_if($scope0_reason, 0)) && input.title,
 		"ClosureScopes:input_title/5": $wi__input_title && $input_title__closures,
 		"#childScope/0": _existing_scope($childScope)
-	}, "__tests__/tags/wrap.marko", 0, { input_title: ["input.title"] }) || $fg__input_title && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_title", input.title, !_server_guard($scope0_reason, 0));
+	}, "__tests__/tags/wrap.marko", 0, { input_title: ["input.title"] }) || $fg__input_title && $ui__input_open && _patch_write($scope0_id, "PatchMarkedWrite:input_title", input.title, !_server_guard($scope0_reason, 0));
 });
 
 // template.marko

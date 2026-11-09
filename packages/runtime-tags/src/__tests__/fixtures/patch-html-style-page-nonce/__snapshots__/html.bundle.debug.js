@@ -8,7 +8,7 @@ _shells({
 	"__tests__/template.marko_2*shell": "__tests__/template.marko_2*shell,<p>a</p>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_attrs = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $ui__input_page = _unfilled_if($scope0_reason, 0), $fg__input_attrs = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.page === 0) {
@@ -34,8 +34,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, "#style/1", $scope0_id, "style", 2, $scope0_reason, 1)}>${_escape_style(`p.u { --page: ${_to_text(input.page)} }`, $scope0_id, "PatchTextContent:#style/1", $scope0_reason, 0)}</style>${_el_mark($scope0_id, "#style/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0_input_attrs#5");
 	$fg__input_attrs && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "__tests__/template.marko_1_input_attrs#0:5/setup", "input_attrs");
-	_scope($scope0_id, { input_attrs: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.attrs }, "__tests__/template.marko", 0, {
+	_scope($scope0_id, { input_attrs: ($ui__input_page || _unfilled_if($scope0_reason, 1)) && input.attrs }, "__tests__/template.marko", 0, {
 		input_attrs: ["input.attrs"],
 		"EventAttributes:#style/1": ["...input.attrs", "8:16"]
-	}) || $fg__input_attrs && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_attrs", input.attrs, !_server_guard($scope0_reason, 1));
+	}) || $fg__input_attrs && $ui__input_page && _patch_write($scope0_id, "PatchMarkedWrite:input_attrs", input.attrs, !_server_guard($scope0_reason, 1));
 }, 1);

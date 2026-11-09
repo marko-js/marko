@@ -34,14 +34,14 @@ _shells({
 	b1: `b1${_shell_marker([[], []], ["a>", $setup$1])};${/*@__PURE__*/ ((_w0) => `D/${_w0}&l`)($walks$1)};${/*@__PURE__*/ ((_w0) => `<ul>${_w0}</ul>`)($template$1)}`
 });
 var tree_a_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $uf__input_node_kid = _updates_from($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_html(`<li>${_text_mark($scope0_id, "a", input.node.name, 1, $scope0_reason, 0)}`);
 	_if(() => {
 		if (input.node.kid) {
 			const $scope1_id = _scope_id();
 			_html("<ul>");
-			_set_scope_reason(_updates_from($scope0_reason, 1) << 1 | _updates_from($scope0_reason, 1) << 3);
+			_set_scope_reason($uf__input_node_kid << 1 | $uf__input_node_kid << 3);
 			const $childScope = _peek_scope_id($scope1_id, "a", 0);
 			tree_b_default({ node: input.node.kid });
 			_patch_child_end();
@@ -64,13 +64,13 @@ _shells({
 	a1: `a1${_shell_marker([[], []], ["a>", $setup])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks)};${$template}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0), $fg__input_node = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $uf__input_node = _updates_from($scope0_reason, 1), $wg__input_show = _write_guard($scope0_reason, 0), $ui__input_show = _unfilled_if($scope0_reason, 0), $fg__input_node = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_html("<ul>");
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_set_scope_reason(_updates_from($scope0_reason, 1) << 1 | _updates_from($scope0_reason, 1) << 3);
+			_set_scope_reason($uf__input_node << 1 | $uf__input_node << 3);
 			const $childScope = _peek_scope_id($scope1_id, "a", 0);
 			tree_a_default({ node: input.node });
 			_patch_child_end();
@@ -84,5 +84,5 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["a1"], $scope0_reason, 0);
 	_html(`</ul>${_el_mark($scope0_id, "a", $wg__input_show)}`);
 	$fg__input_node && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "a0", "e");
-	_scope($scope0_id, { e: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.node }) || $fg__input_node && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xe", input.node, !_server_guard($scope0_reason, 1));
+	_scope($scope0_id, { e: ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.node }) || $fg__input_node && $ui__input_show && _patch_write($scope0_id, "xe", input.node, !_server_guard($scope0_reason, 1));
 }, 1);

@@ -16,7 +16,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	const Card = { content: _content_resume("a4", ({ label, content }) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason(), $wg__content = _write_guard($scope1_reason, 2);
+		const $scope1_reason = _scope_reason(), $wg__content = _write_guard($scope1_reason, 2), $ui__label = _unfilled_if($scope1_reason, 1);
 		_html(`<p>${_text_mark($scope1_id, "a", label, 1, $scope1_reason, 1)}`);
 		_if(() => {
 			if (label) {
@@ -27,11 +27,11 @@ var template_default = _template("a", (input) => {
 			}
 		}, $scope1_id, "b", 1, _write_guard($scope1_reason, 1), 1, 0, 0, ["a0"], $scope1_reason, 1);
 		_html("</p>");
-		_unfilled_if($scope1_reason, 1) && _patch_write($scope1_id, "wf", content, 1);
-		_scope($scope1_id, { f: _unfilled_if($scope1_reason, 1) && content });
+		$ui__label && _patch_write($scope1_id, "wf", content, 1);
+		_scope($scope1_id, { f: $ui__label && content });
 	}, $scope0_id) };
 	_for_of(input.rows, (row) => {
-		const $scope2_id = _scope_id();
+		const $scope2_id = _scope_id(), $ui__input_rows = _unfilled_if($scope0_reason, 0), $fg__input_rows = _filled_guard($scope0_reason, 0);
 		const $for_content__row_label__closures = /* @__PURE__ */ new Set();
 		const $for_content__n__closures = /* @__PURE__ */ new Set();
 		let n = 0;
@@ -84,20 +84,20 @@ var template_default = _template("a", (input) => {
 		}, 0, $scope2_id, "e", 1, 1, 1, 0, 0, "a6", $scope0_reason, 0);
 		_html("</section>");
 		_script($scope2_id, "a14");
-		_unfilled_if($scope0_reason, 0) && _patch_write($scope2_id, "wm", Label, 1);
+		$ui__input_rows && _patch_write($scope2_id, "wm", Label, 1);
 		!$cg__input_rows && _unfilled_if() && _patch_write($scope0_id, "we", Card);
-		_filled_guard($scope0_reason, 0) && _patch_subscribers($scope2_id, "a15", "h");
+		$fg__input_rows && _patch_subscribers($scope2_id, "a15", "h");
 		$cg__input_rows && _patch_render($scope2_id, "a16");
 		_patch_fill($scope2_id, "va17", n, 1);
 		_scope($scope2_id, {
 			l: n,
-			m: _unfilled_if($scope0_reason, 0) && Label,
+			m: $ui__input_rows && Label,
 			_: $wi__input_rows && _scope_with_id($scope0_id),
 			n: $wi__input_rows && $for_content__row_label__closures,
 			p: $for_content__n__closures,
 			c: _existing_scope($childScope)
 		});
-		_filled_guard($scope0_reason, 0) && (_client_branch_if("a3", $scope2_id) || $cg__input_rows || _client_branch_if("a1", $scope2_id)) && _patch_write($scope2_id, "xh", row?.label, !_server_guard($scope0_reason, 0));
+		$fg__input_rows && (_client_branch_if("a3", $scope2_id) || $cg__input_rows || _client_branch_if("a1", $scope2_id)) && _patch_write($scope2_id, "xh", row?.label, !_server_guard($scope0_reason, 0));
 	}, "id", $scope0_id, "a", 1, 1, 1, 0, 0, "a5", $scope0_reason, 0);
 	_scope($scope0_id, { e: _unfilled_if($scope0_reason, 0) && Card });
 }, 1);

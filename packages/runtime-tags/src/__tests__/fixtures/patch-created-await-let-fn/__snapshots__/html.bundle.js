@@ -27,17 +27,17 @@ var template_default = _template("a", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_await($scope1_id, "a", resolveAfter("v", 1), (v) => {
-				const $scope2_id = _scope_id();
+				const $scope2_id = _scope_id(), $ui__input_label = _unfilled_if($scope0_reason, 2);
 				_set_scope_reason(_updates_from($scope0_reason, 2) << 1);
 				const $childScope = _peek_scope_id($scope2_id, "a", 0);
 				card_default({ fn: function() {
 					return v + ":" + input.label;
 				} });
 				_patch_child_end();
-				_unfilled_if($scope0_reason, 2) && _patch_write($scope2_id, "wc", v, 1);
+				$ui__input_label && _patch_write($scope2_id, "wc", v, 1);
 				_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope2_id, "a0");
 				$cg__input_label && _patch_render($scope2_id, "a1");
-				_subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope2_id, {
+				_subscribe($ui__input_label && $input_label__closures, _scope($scope2_id, {
 					c: $wi__input_label && v,
 					a: _existing_scope($childScope)
 				}), $cg__input_label && "a0", 0);

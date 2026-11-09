@@ -9,7 +9,7 @@ _shells({
 	a: "a;D%;<main><!></main>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_promise = _write_if($scope0_reason, 1), $cg__input = _client_guard($scope0_reason, 0), $wi__input = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wi__input_promise = _write_if($scope0_reason, 1), $ui__input_promise2 = _unfilled_if($scope0_reason, 1), $cg__input = _client_guard($scope0_reason, 0), $wi__input = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_promise__closures = /* @__PURE__ */ new Set();
 	const $input__closures = /* @__PURE__ */ new Set();
@@ -21,14 +21,14 @@ var template_default = _template("a", (input) => {
 		_html(`<em>${_text_mark($scope1_id, "a", checked, 1, $scope0_reason, 0)}</em>`);
 		_try($scope1_id, "b", () => {
 			_scope_reason();
-			const $scope2_id = _scope_id();
+			const $scope2_id = _scope_id(), $ui__input_promise = _unfilled_if($scope0_reason, 1);
 			_await($scope2_id, "a", input.promise, (value) => {
 				const $scope5_id = _scope_id();
 				_html(`<strong>${_text_mark($scope5_id, "a", value, 1, $scope0_reason, 1)}</strong>`);
 				_scope($scope5_id, {});
-			}, 1, "a0", _unfilled_if($scope0_reason, 1) && 2, 1);
+			}, 1, "a0", $ui__input_promise && 2, 1);
 			_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope2_id, "a6", 1);
-			$wi__input_promise && _subscribe(_unfilled_if($scope0_reason, 1) && $input_promise__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 1) && "a6", 0);
+			$wi__input_promise && _subscribe($ui__input_promise && $input_promise__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 1) && "a6", 0);
 			$wi__input_promise && _resume_branch($scope2_id);
 		}, void 0, () => {
 			_scope_reason();
@@ -45,7 +45,7 @@ var template_default = _template("a", (input) => {
 	}, 0, "a2", "a5", 1, 1, 1);
 	_html("</main>");
 	_scope($scope0_id, {
-		f: $wi__input_promise && _unfilled_if($scope0_reason, 1) && $input_promise__closures,
-		e: $wi__input && (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && $input__closures
+		f: $wi__input_promise && $ui__input_promise2 && $input_promise__closures,
+		e: $wi__input && (_unfilled_if($scope0_reason, 0) || $ui__input_promise2) && $input__closures
 	});
 }, 1);

@@ -14,7 +14,7 @@ var child_default = _template("b", (input) => {
 const $setup = _shell_setup([[], []], ["a>", $setup$1]);
 _shells({ a: `a${_shell_marker($setup)};${((_w0) => `D/${_w0}&D m`)("D l")};${((_w0) => `<main>${_w0}<p> </p></main>`)($template)}` });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $ui__input_pick = _unfilled_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	let flag = 0;
 	const fa = _resume(function() {
@@ -37,8 +37,8 @@ var template_default = _template("a", (input) => {
 	_patch_child_end();
 	_html(`<p>${_text_mark($scope0_id, "b", flag)}</p></main>`);
 	_scope($scope0_id, {
-		h: _unfilled_if($scope0_reason, 1) && fa,
-		i: _unfilled_if($scope0_reason, 1) && fb,
+		h: $ui__input_pick && fa,
+		i: $ui__input_pick && fb,
 		a: _existing_scope($childScope)
 	});
 }, 1);

@@ -3,7 +3,7 @@ const $template = "<!><!><!>";
 const $setup$1 = [[], []];
 _shells({ b: "b;b%;<!><!><!>" });
 var panel_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_content__OR__input_label__OR__input_items = _write_guard($scope0_reason, 3), $fg__input_content = _filled_guard($scope0_reason, 4), $fg__input_label = _filled_guard($scope0_reason, 5), $fg__input_items = _filled_guard($scope0_reason, 6);
+	const $scope0_reason = _scope_reason(), $wg__input_content__OR__input_label__OR__input_items = _write_guard($scope0_reason, 3), $ui__input_content__OR__input_label__OR__input_items = _unfilled_if($scope0_reason, 3), $ui__input_label__OR__input_items = _unfilled_if($scope0_reason, 2), $ui__input_content__OR__input_items = _unfilled_if($scope0_reason, 1), $ui__input_content__OR__input_label = _unfilled_if($scope0_reason, 0), $fg__input_content = _filled_guard($scope0_reason, 4), $fg__input_label = _filled_guard($scope0_reason, 5), $fg__input_items = _filled_guard($scope0_reason, 6);
 	const $scope0_id = _scope_id();
 	_dynamic_tag($scope0_id, "a", input.content, {
 		label: input.label,
@@ -15,19 +15,19 @@ var panel_default = _template("b", (input) => {
 		$fg__input_items && "f"
 	], $scope0_reason, 3);
 	_scope($scope0_id, {
-		d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && input.content,
-		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 3)) && input.label,
-		f: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 3)) && input.items
-	}) || ($fg__input_content && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xd", input.content, !_server_guard($scope0_reason, 4)), $fg__input_label && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.label, !_server_guard($scope0_reason, 5)), $fg__input_items && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xf", input.items, !_server_guard($scope0_reason, 6)));
+		d: ($ui__input_label__OR__input_items || $ui__input_content__OR__input_label__OR__input_items) && input.content,
+		e: ($ui__input_content__OR__input_items || $ui__input_content__OR__input_label__OR__input_items) && input.label,
+		f: ($ui__input_content__OR__input_label || $ui__input_content__OR__input_label__OR__input_items) && input.items
+	}) || ($fg__input_content && $ui__input_label__OR__input_items && _patch_write($scope0_id, "xd", input.content, !_server_guard($scope0_reason, 4)), $fg__input_label && $ui__input_content__OR__input_items && _patch_write($scope0_id, "xe", input.label, !_server_guard($scope0_reason, 5)), $fg__input_items && $ui__input_content__OR__input_label && _patch_write($scope0_id, "xf", input.items, !_server_guard($scope0_reason, 6)));
 });
 
 // template.marko
 const $setup = _shell_setup([[], []], ["a>", $setup$1]);
 _shells({ a: `a${_shell_marker($setup)};${((_w0) => `b/${_w0}&b`)("b%c")};${((_w0) => `<!>${_w0}<!>`)($template)}` });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $uf__input_label__OR__input_items = _updates_from($scope0_reason, 0), $uf__input_label = _updates_from($scope0_reason, 1), $uf__input_items = _updates_from($scope0_reason, 2);
 	const $scope0_id = _scope_id();
-	_set_scope_reason(_updates_from($scope0_reason, 1) << 1 | _updates_from($scope0_reason, 2) << 3 | _updates_from($scope0_reason, 0) << 5 | _updates_from($scope0_reason, 0) << 7 | _updates_from($scope0_reason, 1) << 11 | _updates_from($scope0_reason, 2) << 13);
+	_set_scope_reason($uf__input_label << 1 | $uf__input_items << 3 | $uf__input_label__OR__input_items << 5 | $uf__input_label__OR__input_items << 7 | $uf__input_label << 11 | $uf__input_items << 13);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	panel_default({
 		label: input.label,

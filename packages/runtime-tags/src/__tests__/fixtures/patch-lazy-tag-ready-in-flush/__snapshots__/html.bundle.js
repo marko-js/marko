@@ -36,12 +36,12 @@ var template_default = _template("b", (input) => {
 	_patch_child_end();
 	_try($scope0_id, "c", () => {
 		_scope_reason();
-		const $scope1_id = _scope_id();
+		const $scope1_id = _scope_id(), $ui__input_a = _unfilled_if($scope0_reason, 2), $ui__input_b = _unfilled_if($scope0_reason, 3);
 		_await($scope1_id, "a", input.a, (a) => {
 			const $scope3_id = _scope_id();
 			_html(`<b>${_text_mark($scope3_id, "a", a, 1, $scope0_reason, 2)}</b>`);
 			_scope($scope3_id, {});
-		}, 1, "b1", _unfilled_if($scope0_reason, 2) && 2, 1);
+		}, 1, "b1", $ui__input_a && 2, 1);
 		_set_scope_reason(0);
 		const $childScope2 = _peek_scope_id($scope1_id, "c", 1);
 		$Child_withLoadAssets({ label: "in-try" });
@@ -50,10 +50,10 @@ var template_default = _template("b", (input) => {
 			const $scope4_id = _scope_id();
 			_html(`<em>${_text_mark($scope4_id, "a", b, 1, $scope0_reason, 3)}</em>`);
 			_scope($scope4_id, {});
-		}, 1, "b0", _unfilled_if($scope0_reason, 3) && 2, 1);
+		}, 1, "b0", $ui__input_b && 2, 1);
 		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "b6", 1);
 		_unfilled_if($scope0_reason, 3) && _patch_subscribe($scope1_id, "b7", 1);
-		_subscribe(_unfilled_if($scope0_reason, 3) && $input_b__closures, _subscribe(_unfilled_if($scope0_reason, 2) && $input_a__closures, _scope($scope1_id, {
+		_subscribe($ui__input_b && $input_b__closures, _subscribe($ui__input_a && $input_a__closures, _scope($scope1_id, {
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id),
 			c: _existing_scope($childScope2)
 		}), _client_guard($scope0_reason, 2) && "b6", 0), _client_guard($scope0_reason, 3) && "b7", 0);

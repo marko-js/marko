@@ -22,12 +22,12 @@ var template_default = _template("a", (input) => {
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	wrap_default({ content: _content("a4", () => {
 		_scope_reason();
-		const $scope1_id = _scope_id();
+		const $scope1_id = _scope_id(), $fg__input_a = _filled_guard($scope0_reason, 0);
 		let n = 0;
 		_html(`<div><button class=n>n</button>${_el_mark($scope1_id, "a")}<p class=j>${_text_mark($scope1_id, "b", input.a + n)}</p><div class=e></div>${_el_mark($scope1_id, "c")}</div>`);
-		_script($scope1_id, "a0", 1, _filled_guard($scope0_reason, 0), ">d");
+		_script($scope1_id, "a0", 1, $fg__input_a, ">d");
 		_script($scope1_id, "a1");
-		_patch_render($scope1_id, "a2", _filled_guard($scope0_reason, 0) && ">d");
+		_patch_render($scope1_id, "a2", $fg__input_a && ">d");
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_a__closures, _scope($scope1_id, {
 			d: n,
 			_: _scope_with_id($scope0_id)

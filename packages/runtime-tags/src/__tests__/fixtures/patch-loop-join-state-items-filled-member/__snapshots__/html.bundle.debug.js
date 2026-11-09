@@ -11,12 +11,12 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let open = true;
 	_for_of(input.items, (item) => {
-		const $scope1_id = _scope_id();
-		_filled_guard($scope0_reason, 1) && _unfilled_if($scope0_reason, 2) && _patch_write($scope1_id, "PatchMarkedWrite:item", item, !_server_guard($scope0_reason, 1));
+		const $scope1_id = _scope_id(), $ui__input_a = _unfilled_if($scope0_reason, 2), $fg__input_items = _filled_guard($scope0_reason, 1);
+		$fg__input_items && $ui__input_a && _patch_write($scope1_id, "PatchMarkedWrite:item", item, !_server_guard($scope0_reason, 1));
 		_html(`<p>${_text_mark($scope1_id, "#text/0", input.a + item, 1, $scope0_reason, 0)}</p>`);
-		_patch_render($scope1_id, "__tests__/tags/child.marko_1_input_a#0:6_item#2/setup", [_filled_guard($scope0_reason, 2) && ">input_a", _filled_guard($scope0_reason, 1) && "item"], $scope0_reason, 0);
+		_patch_render($scope1_id, "__tests__/tags/child.marko_1_input_a#0:6_item#2/setup", [_filled_guard($scope0_reason, 2) && ">input_a", $fg__input_items && "item"], $scope0_reason, 0);
 		_scope($scope1_id, {
-			item: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && item,
+			item: ($ui__input_a || _unfilled_if($scope0_reason, 0)) && item,
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id)
 		}, "__tests__/tags/child.marko", "2:2", { item: "2:6" });
 	}, 0, $scope0_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/tags/child.marko_1*shell", $scope0_reason, 1);
@@ -50,17 +50,17 @@ const $walks = /*@__PURE__*/ ((_w0, _w1) => `b/${_w0}&/${_w1}& b`)($walks$1, $wa
 const $setup = _shell_setup([[], ["__tests__/template.marko_0"]], ["#childScope/0>", $setup$1], ["#childScope/1>", $setup$1]);
 _shells({ "__tests__/template.marko": `__tests__/template.marko${_shell_marker($setup)};${((_w0, _w1) => `b/${_w0}&/${_w1}& b`)($walks$1, $walks$1)};${((_w0, _w1) => `<!>${_w0}${_w1}<button class=l>l</button>`)($template$1, $template$1)}` });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $uf__input_a = _updates_from($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	let list = ["p", "q"];
-	_set_scope_reason(14 | _updates_from($scope0_reason, 1) << 5);
+	_set_scope_reason(14 | $uf__input_a << 5);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	child_default({
 		a: input.a,
 		items: list
 	});
 	_patch_child_end();
-	_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 2) << 3 | _updates_from($scope0_reason, 1) << 5);
+	_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 2) << 3 | $uf__input_a << 5);
 	const $childScope2 = _peek_scope_id($scope0_id, "#childScope/1", 1);
 	child_default({
 		a: input.a,

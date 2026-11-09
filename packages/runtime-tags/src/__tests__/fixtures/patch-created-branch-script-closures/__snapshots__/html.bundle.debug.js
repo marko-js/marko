@@ -47,9 +47,9 @@ const $walks$1 = /*@__PURE__*/ ((_w0) => `/${_w0}&b`)($walks$2);
 const $setup$1 = _shell_setup([[], []], ["#childScope/0>", $setup$2]);
 _shells({ "__tests__/tags/route-play.marko": `__tests__/tags/route-play.marko${_shell_marker($setup$1)};${((_w0) => `/${_w0}&b`)($walks$2)};${((_w0) => `${_w0}<p>route</p>`)($template$2)}` });
 var route_play_default = _template("__tests__/tags/route-play.marko", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $uf__input_projection = _updates_from($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 0) << 3 | _updates_from($scope0_reason, 1) << 5 | _updates_from($scope0_reason, 2) << 7);
+	_set_scope_reason($uf__input_projection << 1 | $uf__input_projection << 3 | _updates_from($scope0_reason, 1) << 5 | _updates_from($scope0_reason, 2) << 7);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	level_watch_default({
 		projection: input.projection,

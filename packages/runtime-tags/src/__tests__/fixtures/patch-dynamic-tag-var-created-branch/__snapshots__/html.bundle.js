@@ -22,7 +22,7 @@ _shells({
 	a2: "a2;b1bD ;<!><!><p> </p>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 4), $fg__input_which = _filled_guard($scope0_reason, 5), $fg__input_a = _filled_guard($scope0_reason, 6), $cg__input_show = _client_guard($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 4), $ui__input_which__OR__input_a = _unfilled_if($scope0_reason, 2), $ui__input_show__OR__input_a = _unfilled_if($scope0_reason, 1), $ui__input_show__OR__input_which = _unfilled_if($scope0_reason, 0), $fg__input_which = _filled_guard($scope0_reason, 5), $fg__input_a = _filled_guard($scope0_reason, 6), $cg__input_show = _client_guard($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	_html("<main>");
 	_if(() => {
@@ -41,7 +41,7 @@ var template_default = _template("a", (input) => {
 	$fg__input_which && $cg__input_show && _patch_render($scope0_id, "a3", "e");
 	$fg__input_a && $cg__input_show && _patch_render($scope0_id, "a4", "f");
 	_scope($scope0_id, {
-		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.which,
-		f: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 2)) && input.a
-	}) || ($fg__input_which && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.which, !_server_guard($scope0_reason, 5)), $fg__input_a && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xf", input.a, !_server_guard($scope0_reason, 6)));
+		e: ($ui__input_show__OR__input_a || $ui__input_which__OR__input_a) && input.which,
+		f: ($ui__input_show__OR__input_which || $ui__input_which__OR__input_a) && input.a
+	}) || ($fg__input_which && $ui__input_show__OR__input_a && _patch_write($scope0_id, "xe", input.which, !_server_guard($scope0_reason, 5)), $fg__input_a && $ui__input_show__OR__input_which && _patch_write($scope0_id, "xf", input.a, !_server_guard($scope0_reason, 6)));
 }, 1);

@@ -5,7 +5,7 @@ _shells({
 	a: "a !a4; ;<div></div>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_title = _client_guard($scope0_reason, 0), $fg__input_title = _filled_guard($scope0_reason, 0), $wi__input_title = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_title = _client_guard($scope0_reason, 0), $ui__input_which = _unfilled_if($scope0_reason, 1), $fg__input_title = _filled_guard($scope0_reason, 0), $wi__input_title = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_title__closures = /* @__PURE__ */ new Set();
 	const one = { content: _content_resume("a0", () => {
@@ -33,8 +33,8 @@ var template_default = _template("a", (input) => {
 	$fg__input_title && _patch_subscribers($scope0_id, "a5", "d");
 	_scope($scope0_id, {
 		d: input.title,
-		f: _unfilled_if($scope0_reason, 1) && one,
-		g: _unfilled_if($scope0_reason, 1) && two,
+		f: $ui__input_which && one,
+		g: $ui__input_which && two,
 		j: $wi__input_title && $input_title__closures
 	}) || $fg__input_title && _patch_write($scope0_id, "xd", input.title, !_server_guard($scope0_reason, 0));
 }, 1);

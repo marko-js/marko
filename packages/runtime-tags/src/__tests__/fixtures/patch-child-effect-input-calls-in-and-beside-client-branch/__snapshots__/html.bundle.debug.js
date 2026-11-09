@@ -21,12 +21,12 @@ _shells({
 	"__tests__/tags/card.marko_4*shell": "__tests__/tags/card.marko_4*shell;D ;<em> </em>"
 });
 var card_default = _template("__tests__/tags/card.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_label = _write_guard($scope0_reason, 5), $cg__input_label = _client_guard($scope0_reason, 5), $fg__input_label = _filled_guard($scope0_reason, 5), $fg__input_fmt = _filled_guard($scope0_reason, 4), $cg__input_show = _client_guard($scope0_reason, 6), $fg__input_open = _filled_guard($scope0_reason, 7);
+	const $scope0_reason = _scope_reason(), $uf__input_fmt__OR__input_label = _updates_from($scope0_reason, 0), $uf__input_fmt = _updates_from($scope0_reason, 4), $uf__input_label = _updates_from($scope0_reason, 5), $wg__input_label = _write_guard($scope0_reason, 5), $cg__input_label = _client_guard($scope0_reason, 5), $ui__input_show = _unfilled_if($scope0_reason, 6), $fg__input_label = _filled_guard($scope0_reason, 5), $fg__input_fmt = _filled_guard($scope0_reason, 4), $cg__input_show = _client_guard($scope0_reason, 6), $fg__input_open = _filled_guard($scope0_reason, 7);
 	const $scope0_id = _scope_id();
 	let open = true;
 	const Panel = { content: _content("__tests__/tags/card.marko_3*content", ({ isOpen, fmt, label }) => {
 		const $scope3_id = _scope_id();
-		const $scope3_reason = _scope_reason(), $wg__isOpen = _write_guard($scope3_reason, 4), $fg__fmt = _filled_guard($scope3_reason, 5), $fg__label = _filled_guard($scope3_reason, 6), $cg__isOpen = _client_guard($scope3_reason, 4);
+		const $scope3_reason = _scope_reason(), $wg__isOpen = _write_guard($scope3_reason, 4), $ui__fmt__OR__label = _unfilled_if($scope3_reason, 2), $ui__isOpen__OR__label = _unfilled_if($scope3_reason, 1), $ui__isOpen__OR__fmt = _unfilled_if($scope3_reason, 0), $fg__fmt = _filled_guard($scope3_reason, 5), $fg__label = _filled_guard($scope3_reason, 6), $cg__isOpen = _client_guard($scope3_reason, 4);
 		_if(() => {
 			if (isOpen) {
 				const $scope4_id = _scope_id();
@@ -39,14 +39,14 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 		$fg__fmt && $cg__isOpen && _patch_render($scope3_id, "__tests__/tags/card.marko_4_fmt#3:4/setup", "fmt");
 		$fg__label && $cg__isOpen && _patch_render($scope3_id, "__tests__/tags/card.marko_4_label#3:5/setup", "label");
 		_write_if($scope3_reason, 3) && _scope($scope3_id, {
-			fmt: (_unfilled_if($scope3_reason, 1) || _unfilled_if($scope3_reason, 2)) && fmt,
-			label: (_unfilled_if($scope3_reason, 0) || _unfilled_if($scope3_reason, 2)) && label
+			fmt: ($ui__isOpen__OR__label || $ui__fmt__OR__label) && fmt,
+			label: ($ui__isOpen__OR__fmt || $ui__fmt__OR__label) && label
 		}, "__tests__/tags/card.marko", "2:2", {
 			fmt: "2:25",
 			label: "2:30"
-		}) || ($fg__fmt && _unfilled_if($scope3_reason, 1) && _patch_write($scope3_id, "PatchMarkedWrite:fmt", fmt, !_server_guard($scope3_reason, 5)), $fg__label && _unfilled_if($scope3_reason, 0) && _patch_write($scope3_id, "PatchMarkedWrite:label", label, !_server_guard($scope3_reason, 6)));
+		}) || ($fg__fmt && $ui__isOpen__OR__label && _patch_write($scope3_id, "PatchMarkedWrite:fmt", fmt, !_server_guard($scope3_reason, 5)), $fg__label && $ui__isOpen__OR__fmt && _patch_write($scope3_id, "PatchMarkedWrite:label", label, !_server_guard($scope3_reason, 6)));
 	}, $scope0_id, 0) };
-	_set_scope_reason(_updates_from($scope0_reason, 4) << 1 | _updates_from($scope0_reason, 5) << 3 | _updates_from($scope0_reason, 0) << 5 | _updates_from($scope0_reason, 0) << 7 | _updates_from($scope0_reason, 4) << 11 | _updates_from($scope0_reason, 5) << 13);
+	_set_scope_reason($uf__input_fmt << 1 | $uf__input_label << 3 | $uf__input_fmt__OR__input_label << 5 | $uf__input_fmt__OR__input_label << 7 | $uf__input_fmt << 11 | $uf__input_label << 13);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	Panel.content({
 		isOpen: true,
@@ -57,7 +57,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
-			_set_scope_reason(_updates_from($scope0_reason, 1) << 1 | _updates_from($scope0_reason, 2) << 3 | _updates_from($scope0_reason, 0) << 5 | _updates_from($scope0_reason, 3) << 7 | _updates_from($scope0_reason, 7) << 9 | _updates_from($scope0_reason, 4) << 11 | _updates_from($scope0_reason, 5) << 13);
+			_set_scope_reason(_updates_from($scope0_reason, 1) << 1 | _updates_from($scope0_reason, 2) << 3 | $uf__input_fmt__OR__input_label << 5 | _updates_from($scope0_reason, 3) << 7 | _updates_from($scope0_reason, 7) << 9 | $uf__input_fmt << 11 | $uf__input_label << 13);
 			const $childScope2 = _peek_scope_id($scope1_id, "#childScope/0", 1);
 			Panel.content({
 				isOpen: input.open,
@@ -93,9 +93,9 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 	$fg__input_open && $cg__input_show && _patch_render($scope0_id, "__tests__/tags/card.marko_1_input_open#0:9/setup", "input_open");
 	_patch_fill($scope0_id, "PatchFill:__tests__/tags/card.marko_0_open#10/fill", open, 1);
 	_scope($scope0_id, {
-		input_fmt: (_unfilled_if($scope0_reason, 6) || _unfilled_if($scope0_reason, 4)) && input.fmt,
+		input_fmt: ($ui__input_show || _unfilled_if($scope0_reason, 4)) && input.fmt,
 		input_label: input.label,
-		input_open: (_unfilled_if($scope0_reason, 6) || _unfilled_if($scope0_reason, 7)) && input.open,
+		input_open: ($ui__input_show || _unfilled_if($scope0_reason, 7)) && input.open,
 		open,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/tags/card.marko", 0, {
@@ -103,7 +103,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 		input_label: ["input.label"],
 		input_open: ["input.open"],
 		open: "1:6"
-	}) || ($fg__input_fmt && _unfilled_if($scope0_reason, 6) && _patch_write($scope0_id, "PatchMarkedWrite:input_fmt", input.fmt, !_server_guard($scope0_reason, 4)), $fg__input_label && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 5)), $fg__input_open && _unfilled_if($scope0_reason, 6) && _patch_write($scope0_id, "PatchMarkedWrite:input_open", input.open, !_server_guard($scope0_reason, 7)));
+	}) || ($fg__input_fmt && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_fmt", input.fmt, !_server_guard($scope0_reason, 4)), $fg__input_label && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 5)), $fg__input_open && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_open", input.open, !_server_guard($scope0_reason, 7)));
 });
 
 // template.marko
@@ -112,10 +112,10 @@ const $walks = /*@__PURE__*/ ((_w0, _w1) => `b/${_w0}&/${_w1}& b`)($walks$1, $wa
 const $setup = _shell_setup([[], ["__tests__/template.marko_0"]], ["#childScope/0>", $setup$1], ["#childScope/1>", $setup$1]);
 _shells({ "__tests__/template.marko": `__tests__/template.marko${_shell_marker($setup)};${((_w0, _w1) => `b/${_w0}&/${_w1}& b`)($walks$1, $walks$1)};${((_w0, _w1) => `<!>${_w0}${_w1}<button class=hide>hide</button>`)($template$1, $template$1)}` });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason();
+	const $scope0_reason = _scope_reason(), $uf__input_label = _updates_from($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let shown = true;
-	_set_scope_reason(8192 | (_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 0) << 5 | _updates_from($scope0_reason, 0) << 7 | _updates_from($scope0_reason, 0) << 11));
+	_set_scope_reason(8192 | ($uf__input_label << 1 | $uf__input_label << 5 | $uf__input_label << 7 | $uf__input_label << 11));
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	card_default({
 		show: shown,
@@ -124,7 +124,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		label: input.label
 	});
 	_patch_child_end();
-	_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 0) << 5 | _updates_from($scope0_reason, 0) << 7 | _updates_from($scope0_reason, 0) << 11);
+	_set_scope_reason($uf__input_label << 1 | $uf__input_label << 5 | $uf__input_label << 7 | $uf__input_label << 11);
 	const $childScope2 = _peek_scope_id($scope0_id, "#childScope/1", 1);
 	card_default({
 		show: true,

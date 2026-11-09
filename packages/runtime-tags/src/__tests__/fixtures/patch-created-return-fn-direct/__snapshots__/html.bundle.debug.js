@@ -27,12 +27,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.show) {
-			const $scope1_id = _scope_id();
+			const $scope1_id = _scope_id(), $ui__input_label = _unfilled_if($scope0_reason, 1);
 			_set_scope_reason(_updates_from($scope0_reason, 1) << 1);
-			const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0, _unfilled_if($scope0_reason, 1) && 1);
+			const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0, $ui__input_label && 1);
 			let r = card_default({ label: input.label });
 			_filled_guard($scope0_reason, 1) && _patch_write($scope1_id, "PatchMarkedWrite:r", r, !$sg__input_label);
-			_unfilled_if($scope0_reason, 1) && _var($scope1_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_1_r#5/var");
+			$ui__input_label && _var($scope1_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_1_r#5/var");
 			_patch_child_end();
 			let shown = "-";
 			_html(`<p>${_text_mark($scope1_id, "#text/2", r.fn(), 1, $scope0_reason, 1)} ${_text_mark($scope1_id, "#text/3", shown, 2, 0, 0, 1)}</p><button>show</button>${_el_mark($scope1_id, "#button/4")}`);
