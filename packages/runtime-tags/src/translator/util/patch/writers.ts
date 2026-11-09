@@ -97,10 +97,11 @@ import {
   buildGroupsValue,
   buildGroupMask,
   getGroupArgs,
+  getOrShareGroupCheck,
   getOrShareSectionGuard,
   getWriteReason,
   isDynamicWriteGuard,
-  sharesGroupCheck,
+  isGroupCheck,
   getSectionWriteReason,
   orGuard,
 } from "../write-guard";
@@ -1037,17 +1038,13 @@ export function getCallerGroupGuard(
   sources: Sources | undefined,
 ) {
   const write = getWriteGroups(section, sources);
-  // One caller group's mask-only check is shared, as a write guard is.
-  if (
-    write?.groups.length === 1 &&
-    !write.ungated &&
-    sharesGroupCheck(check, write.groups[0][0], section)
-  ) {
+  if (!write) return;
+  // One caller group's check is shared, as a write guard is.
+  if (write.groups.length === 1 && !write.ungated && isGroupCheck(check)) {
     const [groupSection, group] = write.groups[0];
-    return getOrShareSectionGuard(groupSection, group, check);
+    return getOrShareGroupCheck(section, groupSection, group, check);
   }
-  const args = buildWriteGroupArgs(write);
-  return args.length ? callRuntime(check, ...args) : undefined;
+  return callRuntime(check, ...buildWriteGroupArgs(write));
 }
 
 // Where a patch fills the binding: its caller groups are the server's.
@@ -1067,19 +1064,27 @@ function orCallerGroupGuards(
 ) {
   let expr = guard;
   forEachCallerGroup(section, list, checked, (paramSection, group, index) => {
-    const ownArg = getOwnGroupArg(own, paramSection);
     expr = orGuard(
       expr,
-      !ownArg && sharesGroupCheck(check, paramSection, section)
-        ? getOrShareSectionGuard(paramSection, group, check)
-        : callRuntime(
-            check,
-            ...getGroupArgs(paramSection, group, index),
-            ownArg,
-          ),
+      buildGroupCheck(section, paramSection, group, index, check, own),
     );
   });
   return expr;
+}
+
+// A group's check in `section`, shared but where it names the value's own group.
+function buildGroupCheck(
+  section: Section,
+  paramSection: Section,
+  group: ParamReasonGroup,
+  index: number,
+  check: HTMLRuntimeHelpers,
+  own: OwnParamGroup | undefined,
+) {
+  const ownArg = getOwnGroupArg(own, paramSection);
+  return !ownArg && isGroupCheck(check)
+    ? getOrShareGroupCheck(section, paramSection, group, check)
+    : callRuntime(check, ...getGroupArgs(paramSection, group, index), ownArg);
 }
 
 // Each caller group a write in `section` gates on, once: `seen` collects them
@@ -1121,12 +1126,10 @@ function getUnfilledGuard(
   forEachParamGroup(params, (paramSection, group) => {
     const index = getParamReasonGroupIndex(paramSection, group);
     checked.add(paramSection.paramReasonGroups![index]);
-    const part = callRuntime(
-      "_unfilled_if",
-      ...getGroupArgs(paramSection, group, index),
-      getOwnGroupArg(own, paramSection),
+    guard = orGuard(
+      guard,
+      buildGroupCheck(section, paramSection, group, index, "_unfilled_if", own),
     );
-    guard = orGuard(guard, part);
   });
   guard = orCallerGroupGuards(
     section,

@@ -63,7 +63,6 @@ import {
   getExprIfUnfilled,
   getClientBranchGuardWrites,
   getPatchScopeCalls,
-  getRootGroupArgs,
   hasCallerGroupsAt,
   writePatchResumeStatements,
 } from "./patch/writers";
@@ -154,6 +153,7 @@ import {
   getSlotWriteReason,
   getSectionWriteReason,
   getEmittedReasonStatement,
+  getScopeIdStatement,
 } from "./write-guard";
 import { flushInto } from "./writer";
 
@@ -1925,17 +1925,17 @@ export function writeHTMLResumeStatements(
           isPatch() && !closure.sources.state
             ? getClosureReadSources(closure, section)
             : undefined;
-        const groupArgs = readSources && getRootGroupArgs(section, readSources);
+        const callerGroups = hasCallerGroupsAt(section, readSources);
         // A scope a patch pairs takes its reads by fills and entries, so it subscribes only where
         // the client can change the owner value (`_unfilled_if`); one no patch pairs, for the walk too.
-        const unfilledGroupArgs =
-          isPatch() && patchFillsSection(section) ? groupArgs : undefined;
+        const unfilled = !!readSources && patchFillsSection(section);
         const subscribeArg =
           isGuardedReason(closureScopesReason) &&
           !isSameReason(closureScopesReason, sectionReason) &&
           // `_unfilled_if` on the same root group already tests the mask.
           !(
-            unfilledGroupArgs?.length &&
+            unfilled &&
+            callerGroups &&
             isSameReason(closureScopesReason, readSources)
           )
             ? getExprIfWritten(closure.section, closureScopesReason, identifier)
@@ -1948,10 +1948,10 @@ export function writeHTMLResumeStatements(
           } else {
             linkReasons = sourcesUtil.add(linkReasons, closureScopesReason!);
           }
-          const subscribed = unfilledGroupArgs
-            ? t.logicalExpression(
-                "&&",
-                callRuntime("_unfilled_if", ...unfilledGroupArgs),
+          const subscribed = unfilled
+            ? andGuard(
+                getCallerGroupGuard(section, "_unfilled_if", readSources) ||
+                  callRuntime("_unfilled_if"),
                 subscribeArg,
               )
             : subscribeArg;
@@ -1966,7 +1966,7 @@ export function writeHTMLResumeStatements(
               subscribed,
               expr,
               // A value a patch fills can change before the subscriber resumes.
-              resumeId && groupArgs?.length && !fillSubscribes(closure, section)
+              resumeId && callerGroups && !fillSubscribes(closure, section)
                 ? t.logicalExpression(
                     "&&",
                     getCallerGroupGuard(section, "_client_guard", readSources)!,
@@ -2210,12 +2210,7 @@ export function writeHTMLResumeStatements(
   // A patch page names each scope by the id its caller peeks (a marker, a patch
   // link, a child scope ref) whatever it writes, so every section claims its id.
   if (body.length || additionalStatements.length || isPatch()) {
-    body.unshift(
-      t.variableDeclaration("const", [
-        t.variableDeclarator(scopeIdIdentifier, callRuntime("_scope_id")),
-      ]),
-      ...additionalStatements,
-    );
+    body.unshift(getScopeIdStatement(section), ...additionalStatements);
   }
 
   if (debug) {

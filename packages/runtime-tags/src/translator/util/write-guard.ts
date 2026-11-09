@@ -21,6 +21,7 @@ import { callRuntime, type HTMLRuntimeHelpers } from "./runtime";
 import {
   findParamReasonGroupIndex,
   getParamReasonGroupIndex,
+  getScopeIdIdentifier,
   isOptionalBranch,
   isSameOrAncestorSection,
   type ParamReasonGroup,
@@ -45,45 +46,57 @@ export function isSameReason(a: Reason | undefined, b: Reason | undefined) {
 const groupCheckPrefixes = {
   _write_guard: "wg",
   _write_if: "wi",
-  // A patch build's checks, of the mask and a render context fixed for the body.
+  // A patch build's checks of the mask alone,
   _client_guard: "cg",
   _server_guard: "sg",
+  _updates_from: "uf",
+  // and of the render context too, which is fixed only within one body.
   _filled_guard: "fg",
+  _unfilled_if: "ui",
 } satisfies Partial<Record<HTMLRuntimeHelpers, string>>;
 type GroupCheck = keyof typeof groupCheckPrefixes;
+type MaskCheck = Exclude<GroupCheck, "_filled_guard" | "_unfilled_if">;
 
-// Whether a check in `section` shares its group section's guard: `_filled_guard`
-// also reads whether the render may create the scope, fixed only for that body.
-export function sharesGroupCheck(
-  check: string,
-  groupSection: Section,
-  section: Section,
-): check is GroupCheck {
-  return (
-    check in groupCheckPrefixes &&
-    (check !== "_filled_guard" || groupSection === section)
-  );
+export function isGroupCheck(check: string): check is GroupCheck {
+  return check in groupCheckPrefixes;
 }
 
 // Keyed by param reason group: a section's guard for a set of params is
 // that group's check, whatever else the reason reads.
 interface GuardShares {
-  names: Map<number, string>;
-  pending: Map<number, t.ParenthesizedExpression>;
+  names: Map<ParamReasonGroup, string>;
+  pending: Map<ParamReasonGroup, t.ParenthesizedExpression>;
 }
 
-const [getSectionGuards] = createOutputSectionState<{
+interface SharedGuards {
   shares: Map<GroupCheck, GuardShares>;
   declarators: t.VariableDeclarator[];
-  page?: true;
-  /** The statement binding the reason, once a body has it. */
-  statement?: t.Statement;
-}>((section) => ({
+}
+
+const [getSectionGuards] = createOutputSectionState<
+  SharedGuards & {
+    page?: true;
+    /** The statement binding the reason, once a body has it. */
+    statement?: t.Statement;
+  }
+>((section) => ({
   shares: new Map(),
   declarators: [
     t.variableDeclarator(
       scopeReasonIdentifier(section),
       callRuntime("_scope_reason"),
+    ),
+  ],
+}));
+
+// A body's checks of the render context for groups of the bodies around it,
+// shared beside its scope id.
+const [getBodyGuards] = createOutputSectionState<SharedGuards>((section) => ({
+  shares: new Map(),
+  declarators: [
+    t.variableDeclarator(
+      getScopeIdIdentifier(section),
+      callRuntime("_scope_id"),
     ),
   ],
 }));
@@ -148,6 +161,11 @@ export function getScopeReasonStatement(section: Section): t.Statement {
 // The statement binding the section's reason, once its body has one.
 export function getEmittedReasonStatement(section: Section) {
   return getSectionGuards(section).statement;
+}
+
+// The statement claiming a body's scope id, with the checks it shares there.
+export function getScopeIdStatement(section: Section) {
+  return t.variableDeclaration("const", getBodyGuards(section).declarators);
 }
 
 // A binding's write reason: whether, and under which guard, the server
@@ -262,7 +280,7 @@ export function getExprIfWritten(
 function getDynamicGuard(
   section: Section,
   reason: Sources & { state: undefined },
-  check: GroupCheck,
+  check: keyof typeof orGroupChecks,
 ) {
   const paramGuard = orEachParamGroup(reason.param, check);
   if (!reason.global) return paramGuard;
@@ -352,7 +370,7 @@ function orMaskGroup(
   section: Section,
   group: ParamReasonGroup,
 ) {
-  const bits = callRuntime("_updates_from", ...getGroupArgs(section, group));
+  const bits = getOrShareSectionGuard(section, group, "_updates_from");
   return value ? t.binaryExpression("|", value, bits) : bits;
 }
 
@@ -436,7 +454,10 @@ function addGroupBit(
 }
 
 // Each param group's `check`, or-ed together, but for a group never written.
-function orEachParamGroup(params: Sources["param"], check: GroupCheck) {
+function orEachParamGroup(
+  params: Sources["param"],
+  check: keyof typeof orGroupChecks,
+) {
   return reduceParamGroups(params, orGroupChecks[check], undefined)!;
 }
 
@@ -444,11 +465,9 @@ const orGroupChecks = {
   _write_guard: orGroupCheck("_write_guard"),
   _write_if: orGroupCheck("_write_if"),
   _client_guard: orGroupCheck("_client_guard"),
-  _server_guard: orGroupCheck("_server_guard"),
-  _filled_guard: orGroupCheck("_filled_guard"),
-} satisfies Record<GroupCheck, unknown>;
+};
 
-function orGroupCheck(check: GroupCheck) {
+function orGroupCheck(check: MaskCheck) {
   return (
     expr: t.Expression | undefined,
     section: Section,
@@ -470,35 +489,64 @@ export function andGuard(
   return guard ? t.logicalExpression("&&", guard, expr) : expr;
 }
 
-// The first use stays inline; a second shares it through a declarator.
+// A check of the mask alone, shared beside its group's reason.
 export function getOrShareSectionGuard(
+  section: Section,
+  params: ParamReasonGroup,
+  check: MaskCheck,
+): t.Expression {
+  return shareGroupCheck(getSectionGuards(section), section, params, check);
+}
+
+// A check `section` evaluates of a group of `groupSection`: one also reading the
+// render context shares only within that body, beside its own reason or scope id.
+export function getOrShareGroupCheck(
+  section: Section,
+  groupSection: Section,
+  params: ParamReasonGroup,
+  check: GroupCheck,
+) {
+  return shareGroupCheck(
+    section === groupSection ||
+      (check !== "_filled_guard" && check !== "_unfilled_if")
+      ? getSectionGuards(groupSection)
+      : getBodyGuards(section),
+    groupSection,
+    params,
+    check,
+  );
+}
+
+// The first use stays inline; a second shares it through a declarator.
+function shareGroupCheck(
+  guards: SharedGuards,
   section: Section,
   params: ParamReasonGroup,
   check: GroupCheck,
 ): t.Expression {
   if (!section.paramReasonGroups) return scopeReasonIdentifier(section);
 
-  const state = getSectionGuards(section);
-  let tracking = state.shares.get(check);
-  if (!tracking) state.shares.set(check, (tracking = createGuardShares()));
+  let tracking = guards.shares.get(check);
+  if (!tracking) guards.shares.set(check, (tracking = createGuardShares()));
   const index = getParamReasonGroupIndex(section, params);
-  const name = tracking.names.get(index);
+  const group = section.paramReasonGroups[index];
+  const name = tracking.names.get(group);
   if (name) return t.identifier(name);
 
   const guard = callRuntime(check, ...getGroupArgs(section, params, index));
-  const pending = tracking.pending.get(index);
+  const pending = tracking.pending.get(group);
   if (!pending) {
     const expr = t.parenthesizedExpression(guard);
-    tracking.pending.set(index, expr);
+    tracking.pending.set(group, expr);
     return expr;
   }
 
   const shared = generateUid(
     `${groupCheckPrefixes[check]}__${getDebugNamesAsIdentifier(params)}`,
   );
-  tracking.names.set(index, shared);
-  tracking.pending.delete(index);
-  state.declarators.push(t.variableDeclarator(t.identifier(shared), guard));
+  tracking.names.set(group, shared);
+  tracking.pending.delete(group);
+  guards.declarators.push(t.variableDeclarator(t.identifier(shared), guard));
   pending.expression = t.identifier(shared);
   return t.parenthesizedExpression(t.identifier(shared));
 }
