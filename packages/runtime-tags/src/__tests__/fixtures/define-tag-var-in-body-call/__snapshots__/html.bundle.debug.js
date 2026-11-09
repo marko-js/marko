@@ -27,5 +27,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, "__tests__/template.marko", "5:2", { input_message: ["input.message", "5:13"] });
 	}, $scope0_id) };
 	Foo.content({ depth: 1 });
-	_scope($scope0_id, { Foo }, "__tests__/template.marko", 0, { Foo: "5:9" });
 }, 1);

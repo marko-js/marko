@@ -15,7 +15,6 @@ var test_default = _template("__tests__/tags/test.marko", (input) => {
 		}, $scope1_id, "#text/0", 0, 0, 0, 0, 1);
 	}, $scope0_id) };
 	Tag.content({ x: 1 });
-	_scope($scope0_id, { count }, "__tests__/tags/test.marko", 0, { count: "1:8" });
 });
 
 // template.marko
