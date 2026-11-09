@@ -980,7 +980,7 @@ export function getRootGroupArgs(
 }
 
 // A write's group args: one group's own, else one mask composing them, as a call
-// site does (a `<define>` body's beside its template's, `$global`'s server bit).
+// site does (a `<define>` body's beside its template's, an ungated source's server bit).
 function buildWriteGroupArgs(
   write: WriteGroups | undefined,
 ): [t.Expression, t.Expression] | [] {
@@ -988,7 +988,7 @@ function buildWriteGroupArgs(
   const { groups } = write;
   // Never changes: the write only seeds a created scope.
   if (!groups.length) return [t.numericLiteral(0), t.numericLiteral(0)];
-  if (groups.length === 1 && !write.global && !write.seed) {
+  if (groups.length === 1 && !write.ungated && !write.seed) {
     const [section, group] = groups[0];
     return getGroupArgs(section, group);
   }
@@ -1003,9 +1003,9 @@ function buildWriteGroupArgs(
   ];
 }
 
-// A composed mask's value: its groups' bits or'd, with `$global`'s server bit, or a
+// A composed mask's value: its groups' bits or'd, with an ungated source's server bit, or a
 // seed's client bit alone (one group's is its client guard, shared as a guard is).
-function buildWriteGroupValue({ groups, global, seed }: WriteGroups) {
+function buildWriteGroupValue({ groups, ungated, seed }: WriteGroups) {
   if (seed && groups.length === 1) {
     const [section, group] = groups[0];
     return getOrShareSectionGuard(section, group, "_client_guard");
@@ -1016,7 +1016,7 @@ function buildWriteGroupValue({ groups, global, seed }: WriteGroups) {
         buildComposedGroupValue(groups),
         t.numericLiteral(UpdatesFrom.Client),
       )
-    : buildGroupsValue(groups, global ? UpdatesFrom.Server : 0);
+    : buildGroupsValue(groups, ungated ? UpdatesFrom.Server : 0);
 }
 
 // The same test as a guard expression (`_filled_guard` for fills and effect
@@ -1030,7 +1030,7 @@ export function getCallerGroupGuard(
   // One caller group's mask-only check is shared, as a write guard is.
   if (
     write?.groups.length === 1 &&
-    !write.global &&
+    !write.ungated &&
     sharesGroupCheck(check, write.groups[0][0], section)
   ) {
     const [groupSection, group] = write.groups[0];

@@ -40,7 +40,12 @@ import { inCreatedCatch } from "../shell";
 import { getSignals, type Signal } from "../signals";
 import { findSlot, SlotKind, type Slot } from "../slots";
 import { getContentSites } from "../solve-reasons";
-import { mergeSources, type Sources, withSources } from "../sources";
+import {
+  hasUngatedSource,
+  mergeSources,
+  type Sources,
+  withSources,
+} from "../sources";
 import { createAnalysisState } from "../state";
 import {
   getFilledReads,
@@ -245,11 +250,11 @@ export function getUnwrittenBodies(
 }
 
 // What a write's group mask composes (`buildWriteGroupArgs` builds it): its caller
-// groups, with the server's bit for `$global`, or (`seed`) only their client bit.
+// groups, with the server's bit for an ungated source, or (`seed`) only their client bit.
 export interface WriteGroups {
   groups: [Section, ParamReasonGroup][];
   params?: Sources["param"];
-  global?: boolean;
+  ungated?: boolean;
   seed?: boolean;
 }
 
@@ -265,7 +270,11 @@ export function getWriteGroups(
   if (!isGuardedReason(sources)) return;
   const groups = getCallerParamGroupsAt(sources.param, section);
   if (groups.length) {
-    return { groups, params: sources.param, global: sources.global };
+    return {
+      groups,
+      params: sources.param,
+      ungated: hasUngatedSource(sources),
+    };
   }
 }
 
@@ -295,7 +304,7 @@ export function getSeedWriteGroups(
 }
 
 // What a mask of `write` reads where `groups` hold the client's bit: that bit where it
-// composes just them, with the server's for `$global`; else the server's, maybe alone.
+// composes just them, with the server's for an ungated source; else the server's, maybe alone.
 function getMaskUpdatesFrom(
   write: WriteGroups | undefined,
   groups: [Section, ParamReasonGroup][],
@@ -316,7 +325,7 @@ function getMaskUpdatesFrom(
       ),
     )
   ) {
-    return write.global
+    return write.ungated
       ? UpdatesFrom.Client | UpdatesFrom.Server
       : UpdatesFrom.Client;
   }
