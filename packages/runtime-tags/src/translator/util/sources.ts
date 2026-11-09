@@ -164,6 +164,12 @@ export function hasCallerParamSourceAt(
   return some(sources?.param, (param) => isCallerParamAt(param, section));
 }
 
+// A source only the server changes that no caller group gates: `$global`, or a param of a
+// section no known caller renders (a patch renders that section only with server input).
+export function hasUngatedSource(sources: Sources | undefined) {
+  return !!sources?.global || !every(sources?.param, isCallerParam);
+}
+
 function isCallerParam(binding: ParamBinding) {
   return isKnownChild(binding.section);
 }
