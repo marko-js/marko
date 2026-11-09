@@ -1,0 +1,5 @@
+// The effect has the server write `input`, but `onPick` only calls
+// `countChange`, so it keeps reading it and changes only when it does.
+<const/{ count }=input/>
+<script>console.log(JSON.stringify(input))</script>
+<picker onPick() { count = 5 }/>

@@ -1,0 +1,12 @@
+// `fmt` and `Box` read through `api`, which `whole` has the server write; read
+// through it as a tag, the optional chain is parenthesized.
+<let/log=""/>
+<let/show=true/>
+<child/api/>
+<button.whole onClick() { log = Object.keys(api).join() }>whole</button>
+<if=show>
+  <const/{ fmt, Box }=api/>
+  <button.tag onClick() { log = fmt`a${1}b` }>tag</button>
+  <button.new onClick() { log = String(new Box(2).n) }>new</button>
+</if>
+<div.log>${log}</div>

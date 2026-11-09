@@ -1,0 +1,6 @@
+// The effect has the server write `input`, so `inc` reads `count` and calls
+// `countChange` through it; `reset` reads only `countChange`, which it keeps.
+<const/{ count }=input/>
+<script>console.log(JSON.stringify(input))</script>
+<button.inc onClick() { count = count + 1 }>inc</button>
+<button.reset onClick() { count = 0 }>reset</button>

@@ -11,8 +11,6 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a0");
 	_scope($scope0_id, {
 		f: state,
-		g: state.a,
-		h: state.b,
-		i: rest
+		h: rest
 	});
 }, 1);

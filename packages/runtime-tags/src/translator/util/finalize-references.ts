@@ -119,23 +119,28 @@ function settleAssignments() {
 }
 
 // Hands each read to the binding it reads through, before pruning judges what
-// is read.
+// is read: by the expression's other reads, then by what effects read on resume.
 function handReadsToAncestors() {
+  const holdersByExpression = new Map<ReferencedExtra, Set<Binding>>();
   for (const [expr, reads] of getReadsByExpression()) {
-    readThroughOutermost(expr, reads);
+    holdersByExpression.set(expr, readThroughOutermost(expr, reads));
+  }
+  const effectReads = getEffectReads(holdersByExpression);
+  for (const [expr, holders] of holdersByExpression) {
+    readThroughWrittenAncestor(expr, holders, effectReads);
   }
 }
 
 // An expression reads each binding through the outermost one up its chain it
 // also reads, and a property assigned in place from its object, kept current.
+// Returns the bindings holding its reads.
 function readThroughOutermost(expr: ReferencedExtra, reads: Opt<Read>) {
   if (!Array.isArray(reads)) {
-    if (reads) {
-      const object = !reads.getter && getAssignedObject(reads.binding);
-      if (object) moveReads(reads.binding, expr, object);
-      resolveRead(reads, object || reads.binding, expr);
-    }
-    return;
+    if (!reads) return new Set<Binding>();
+    const object = !reads.getter && getAssignedObject(reads.binding);
+    if (object) moveReads(reads.binding, expr, object);
+    resolveRead(reads, object || reads.binding, expr);
+    return new Set([object || reads.binding]);
   }
   const targets = new Map<Binding, Binding>();
   for (const { binding } of reads) {
@@ -146,18 +151,60 @@ function readThroughOutermost(expr: ReferencedExtra, reads: Opt<Read>) {
   }
   const readBindings = new Set(targets.values());
   for (const [binding, start] of targets) {
-    let target = start;
-    // A rest is a copy, so nothing above it is what it reads.
-    for (let cur = start; cur.aliasOf && !isRest(cur);) {
-      cur = cur.aliasOf;
-      if (readBindings.has(cur)) target = cur;
-    }
+    const target = getOutermostIn(start, readBindings);
     targets.set(binding, target);
     if (target !== binding) moveReads(binding, expr, target);
   }
+  const holders = new Set<Binding>();
   for (const read of reads) {
-    resolveRead(read, targets.get(read.binding) || read.binding, expr);
+    const target = targets.get(read.binding) || read.binding;
+    holders.add(target);
+    resolveRead(read, target, expr);
   }
+  return holders;
+}
+
+// An expression's reads made only inside a function go to the outermost ancestor
+// an effect has the server write, with what else it reads inside one below it.
+function readThroughWrittenAncestor(
+  expr: ReferencedExtra,
+  holders: Set<Binding>,
+  effectReads: ReturnType<typeof getEffectReads>,
+) {
+  const readFrom = new Map<Binding, Binding>();
+  for (const holder of holders) {
+    const held = holder.reads.get(expr);
+    if (every(held, isDeferredRead)) {
+      readFrom.set(
+        holder,
+        (isOnlyInvokedBy(holder, held) &&
+          getWrittenAncestor(holder, effectReads)) ||
+          holder,
+      );
+    }
+  }
+  const readBindings = new Set(readFrom.values());
+  for (const [holder, from] of readFrom) {
+    const target = getOutermostIn(from, readBindings);
+    if (target !== holder) {
+      // A binding handing its reads on is handed none, so it holds its own.
+      forEach(holder.reads.get(expr), (read) =>
+        resolveRead(read, target, expr),
+      );
+      moveReads(holder, expr, target);
+    }
+  }
+}
+
+// The outermost of a binding and its ancestors among `bindings`.
+function getOutermostIn(binding: Binding, bindings: Set<Binding>) {
+  let outermost = binding;
+  // A rest is a copy, so nothing above it is what it reads.
+  for (let cur = binding; cur.aliasOf && !isRest(cur);) {
+    cur = cur.aliasOf;
+    if (bindings.has(cur)) outermost = cur;
+  }
+  return outermost;
 }
 
 // What a read handed to `target` resolves to: read through it, or through the
@@ -177,13 +224,59 @@ function resolveRead(read: Read, target: Binding, expr: ReferencedExtra) {
 }
 
 function createReadThrough({ binding, inOwnBody }: Read, target: Binding) {
-  return target === binding
-    ? createResolvedRead(binding, undefined, inOwnBody)
-    : createResolvedRead(target, getPropertyPath(binding, target));
+  if (target === binding) {
+    return createResolvedRead(binding, undefined, inOwnBody);
+  }
+  const read = createResolvedRead(target, getPropertyPath(binding, target));
+  read.through = binding;
+  return read;
+}
+
+// The slots effects read on resume once each expression has its reads handed
+// on, which the server writes, and those of them an effect reads live.
+function getEffectReads(
+  holdersByExpression: Map<ReferencedExtra, Set<Binding>>,
+) {
+  const written = new Set<Binding>();
+  const live = new Set<Binding>();
+  for (const [expr, holders] of holdersByExpression) {
+    if (readsValuesOnResume(expr)) {
+      for (const holder of holders) {
+        const owner = getCanonicalBinding(holder);
+        written.add(owner);
+        if (!isOnlyInvokedBy(holder, holder.reads.get(expr))) live.add(owner);
+      }
+    }
+  }
+  return { written, live };
+}
+
+// The outermost ancestor above its slot an effect has the server write; none
+// when an effect reads its own slot live, a shorter read.
+function getWrittenAncestor(
+  binding: Binding,
+  { written, live }: ReturnType<typeof getEffectReads>,
+) {
+  const owner = getCanonicalBinding(binding);
+  if (!live.has(owner)) {
+    const ancestor = getOutermostIn(owner, written);
+    if (ancestor !== owner) return ancestor;
+  }
+}
+
+// Made inside a function rather than as the expression runs, and not through a
+// getter, so it may read any slot holding the value when it runs.
+function isDeferredRead(read: Read) {
+  return read.deferred && !read.getter;
 }
 
 function isGetterRead(read: Read) {
   return !!read.getter;
+}
+
+// Each read happens only when a function it sits in is invoked.
+function isOnlyInvokedBy(binding: Binding, reads: Opt<Read>) {
+  return every(reads, (read) => isLazyRead(read, binding));
 }
 
 function moveReads(binding: Binding, expr: ReferencedExtra, target: Binding) {
@@ -876,14 +969,10 @@ function addBindingGetter(binding: Binding, { invoked, hoisted }: Getter) {
 
 // A lazy read is excluded from `referencedBindings` and instead reads the
 // binding's scope slot on invocation, which its slot owner then stores.
-function isLazyRead(
-  read: Read,
-  binding: Binding,
-  isChangeHandlerRead: boolean,
-) {
+function isLazyRead(read: Read, binding: Binding) {
   return (
-    read.deferred &&
-    !isChangeHandlerRead &&
+    isDeferredRead(read) &&
+    read.extra.assignmentTo !== read.binding &&
     binding.type !== BindingType.constant &&
     !!read.extra.exprRoot.invokeOnly
   );
@@ -906,7 +995,7 @@ function resolveReferencedBindings(
 
   forEach(reads, (read) => {
     let { binding } = read;
-    const { extra, getter } = read;
+    const { getter } = read;
 
     if (getter) {
       addBindingGetter(binding, getter);
@@ -918,7 +1007,6 @@ function resolveReferencedBindings(
         }
       }
     } else {
-      const isChangeHandlerRead = extra.assignmentTo === binding;
       if (binding.type !== BindingType.global) {
         ({ binding } = getResolvedRead(read));
       }
@@ -931,7 +1019,7 @@ function resolveReferencedBindings(
         const closure =
           binding.section !== expr.section &&
           (getConstantRoot(binding) ?? getCanonicalBinding(binding));
-        if (isLazyRead(read, binding, isChangeHandlerRead)) {
+        if (isLazyRead(read, binding)) {
           // A lazy read subscribes to nothing.
           lazyBindings = bindingUtil.add(lazyBindings, binding);
         } else if (binding.type === BindingType.constant) {

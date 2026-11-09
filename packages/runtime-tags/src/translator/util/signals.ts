@@ -1635,6 +1635,13 @@ function replaceBindingReadNode(node: t.Node, signal?: Signal) {
       }
       break;
     }
+    case "TaggedTemplateExpression":
+      // A tag read through an ancestor may be an optional chain, which only
+      // tags a template in parentheses.
+      if (node.tag.type === "OptionalMemberExpression") {
+        node.tag = t.parenthesizedExpression(node.tag);
+      }
+      break;
   }
 }
 

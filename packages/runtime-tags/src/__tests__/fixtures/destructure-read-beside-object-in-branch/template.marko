@@ -1,0 +1,9 @@
+// The branch reads `id` through `todo`, which it reads too; the server reads it
+// as the author wrote it.
+<let/todo=input.todo/>
+<let/show=true/>
+<if=show>
+  <const/{ id }=todo/>
+  <div>${id + JSON.stringify(todo)}</div>
+</if>
+<button onClick() { todo = null; show = false }>x</button>

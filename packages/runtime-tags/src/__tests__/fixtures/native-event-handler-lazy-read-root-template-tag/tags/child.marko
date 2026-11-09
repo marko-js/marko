@@ -1,0 +1,7 @@
+static class Box {
+  constructor(n) {
+    this.n = n;
+  }
+}
+<let/n=1/>
+<return={ n, fmt: (strings, value) => strings.join(String(value + n)), Box: (v) => new Box(v) }/>

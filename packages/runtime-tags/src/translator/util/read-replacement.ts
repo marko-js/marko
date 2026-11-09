@@ -81,12 +81,15 @@ export function getReadReplacement(
   }
 
   if (read.getter?.invoked) return;
-  const base = isOutputDOM()
+  const dom = isOutputDOM();
+  const base = dom
     ? getDOMReadBase(read, extra.section, signal)
     : getHTMLReadBase(node, read);
   if (!base) return;
 
-  const expr = reduce(read.properties, addMember, base);
+  const expr = read.through
+    ? addAliasPath(base, read.through, read.binding, dom)
+    : reduce(read.properties, addMember, base);
   if (node.type === "Identifier" && expr.type === "Identifier") {
     node.name = expr.name;
     return;
@@ -97,7 +100,7 @@ export function getReadReplacement(
   return getChainReplacement(
     node,
     expr,
-    isOutputDOM() ? size(read.properties) : Infinity,
+    dom ? size(read.properties) : Infinity,
   );
 }
 
@@ -233,9 +236,27 @@ export function createResolvedReadExpression(
   read: ResolvedRead,
   section: Section,
 ) {
-  return reduce(
-    read.properties,
-    addMember,
-    createScopeReadExpression(read.binding, section),
-  );
+  const base = createScopeReadExpression(read.binding, section);
+  return read.through
+    ? addAliasPath(base, read.through, read.binding, true)
+    : reduce(read.properties, addMember, base);
+}
+
+// The path from `ancestor` to its alias, optional where the alias's forward is
+// unless read in place.
+function addAliasPath(
+  base: t.Expression,
+  alias: Binding,
+  ancestor: Binding,
+  optional: boolean,
+): t.Expression {
+  if (alias === ancestor) return base;
+  const object = addAliasPath(base, alias.aliasOf!, ancestor, optional);
+  return alias.property === undefined
+    ? object
+    : toMemberExpression(
+        object,
+        alias.property,
+        optional && alias.aliasOf!.nullable,
+      );
 }

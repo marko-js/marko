@@ -1,0 +1,18 @@
+// The handler reads `todo`'s properties lazily through its slot, which the
+// server writes for `bump`'s read of all of it, so the server writes none of
+// them; `meta` keeps its signal, as it forwards the `label` that renders.
+<let/todo={ id: 1, info: { tag: "a" }, meta: { label: "m" }, title: "x" }/>
+<const/current=todo/>
+<const/{ info: { tag }, meta, title }=current/>
+<const/heading=title/>
+<let/log=""/>
+
+<button.bump onClick() {
+  todo = { ...todo, id: todo.id + 1, info: { tag: todo.info.tag + "!" } };
+}>bump</button>
+<button.show onClick() {
+  log = `${log}[${todo.id}:${tag}:${heading}:${JSON.stringify(meta)}]`;
+}>show</button>
+
+<div.label>${meta.label}</div>
+<div.log>${log}</div>

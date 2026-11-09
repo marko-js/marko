@@ -1,0 +1,14 @@
+// The handler reads `item.name` through `item`, which `whole` has the server
+// write, while the selector keeps comparing `selected` with the key alone.
+static function track(name, value) {
+  console.log("eval " + name);
+  return value;
+}
+<let/items=[{ id: 1, name: "a" }, { id: 2, name: "b" }, { id: 3, name: "c" }, { id: 4, name: "d" }]/>
+<let/selected=1/>
+<let/log=""/>
+<for|item| of=items by="id">
+  <button class=`b${item.id}` onClick=(track("h", selected === item.id) ? undefined : () => { selected = item.id; log = `${log}[${item.name}]` })>b</button>
+  <button class=`w${item.id}` onClick() { log = JSON.stringify(item) }>whole</button>
+</for>
+<div.log>${log}</div>

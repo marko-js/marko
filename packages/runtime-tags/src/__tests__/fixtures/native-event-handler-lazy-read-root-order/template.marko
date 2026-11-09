@@ -1,0 +1,10 @@
+// `todo.id` and `flag` read through `data` whichever is destructured first, and
+// `e` keeps reading `todo` live.
+<let/data={ flag: 1, todo: { id: 1 } }/>
+<const/{ todo }=data/>
+<const/{ flag }=data/>
+<let/log=""/>
+<button.h0 onClick() { log = JSON.stringify(data) }>h0</button>
+<button.e onClick=(todo ? () => { log = String(flag) } : undefined)>e</button>
+<button.h3 onClick() { log = String(todo.id) }>h3</button>
+<div>${log}</div>

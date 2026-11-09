@@ -1,0 +1,8 @@
+// `mid` reads `api.n` through `api`, which `whole` has the server write, while
+// `get` keeps the read its getter makes and with it the hoist.
+<let/log=""/>
+<child/api/>
+<button.whole onClick() { log = Object.keys(api).join() }>whole</button>
+<button.mid onClick() { log = `${api.n}:${get()}` }>mid</button>
+<const/{ get }=api/>
+<div.log>${log}</div>

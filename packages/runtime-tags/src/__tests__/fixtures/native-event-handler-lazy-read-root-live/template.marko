@@ -1,0 +1,8 @@
+// `id` reads through `todo`, which the effect has the server write; `open`, read
+// live in the same expression, keeps its own, so the handler changes with it.
+<let/todo={ id: 1, open: true }/>
+<let/log=""/>
+<const/{ id, open }=todo/>
+<script>console.log(JSON.stringify(todo))</script>
+<button.show onClick=(open ? () => { log = `${log}[${id}]`; } : undefined)>show</button>
+<div>${log}</div>

@@ -73,13 +73,14 @@ sections marked `Section.dropped`, so reads later recorded in them are not kept.
 
 `finalizeReferences()` is the center of analysis. It hands each read to the
 binding it reads through (the outermost one up its alias chain the expression
-also reads), resolves each expression to canonical bindings, separates
+also reads, or, for a read only on invocation, the outermost one an effect has
+the server write), resolves each expression to canonical bindings, separates
 constant/live/hoisted/lazy reads, prunes unused property paths, computes
-transitive `Sources`, and finalizes known-tag contracts;
-`solveReasons()` then propagates owner/closure/branch/effect/registry
-requirements, and `allocateIds()` collapses eligible intersections. Safe
-invoke-only reads avoid subscriptions but set `hasLazyReads`: the current scope
-slot must still survive for later invocation.
+transitive `Sources`, and finalizes known-tag contracts; `solveReasons()` then
+propagates owner/closure/branch/effect/registry requirements, and
+`allocateIds()` collapses eligible intersections. Safe invoke-only reads avoid
+subscriptions but set `hasLazyReads`: the slot they read must still survive for
+later invocation.
 
 ### Reasons and write reasons
 

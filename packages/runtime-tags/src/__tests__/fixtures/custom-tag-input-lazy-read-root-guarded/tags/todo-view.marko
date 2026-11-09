@@ -1,0 +1,6 @@
+<let/log=""/>
+<if=input.show>
+  <div.all>${JSON.stringify(input.todo)}</div>
+</if>
+<button.view onClick() { log = `${log}[${input.todo.id}]`; }>view</button>
+<div.view-log>${log}</div>

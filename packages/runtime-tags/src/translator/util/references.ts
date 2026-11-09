@@ -61,6 +61,8 @@ export interface Read {
 export interface ResolvedRead {
   binding: Binding;
   properties: Opt<string>;
+  /** The alias read through `binding` along `properties`, if any. */
+  through?: Binding;
   inOwnBody: boolean;
   getter: Getter | undefined;
   /** Set for same-section local reads: the function root that owns the read. */

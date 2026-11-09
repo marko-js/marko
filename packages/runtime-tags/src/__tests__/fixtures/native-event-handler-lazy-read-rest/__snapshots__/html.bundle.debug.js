@@ -12,13 +12,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		state,
-		state_a: state.a,
-		state_b: state.b,
 		rest
 	}, "__tests__/template.marko", 0, {
 		state: "3:6",
-		state_a: ["state.a", "3:6"],
-		state_b: ["state.b", "3:6"],
 		rest: "4:16"
 	});
 }, 1);
