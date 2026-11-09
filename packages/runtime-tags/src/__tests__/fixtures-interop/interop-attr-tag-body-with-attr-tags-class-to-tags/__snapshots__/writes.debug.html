@@ -1,0 +1,27 @@
+<!--M#s0--><button id=class>0</button><!--F#1-->
+<div id=spread class=stuff>Body 0</div><!--Ms$1 #div/0-->
+<div id=passthrough><!--Ms[-->Body 0<!--Ms]1 #text/1 3--></div><span
+  id=inner><!--Ms[-->Inner 0<!--Ms]1 #text/2 4--></span><!--F/--><!--M/-->
+<script>
+  WALKER_RUNTIME("M")("s");
+  M.s.r = [_ => [1, {
+      m5c: "s0-1",
+      "BranchScopes:#div/0": _(2),
+      "ConditionalRenderer:#div/0": _._.$compat_renderBody,
+      "ConditionalRenderer:#text/1": _._.$compat_renderBody,
+      "ConditionalRenderer:#text/2": _._.$compat_renderBody
+    }],
+    "$compat_setScope 1 packages/runtime-tags/src/__tests__/fixtures-interop/interop-attr-tag-body-with-attr-tags-class-to-tags/components/tags-layout.marko_0_stuff#10 1"
+  ];
+  M.s.w();
+  $MC = (window.$MC || []).concat({
+    "w": [
+      ["s0", 0, {}, {
+        "f": 1
+      }]
+    ],
+    "t": [
+      "packages/runtime-tags/src/__tests__/fixtures-interop/interop-attr-tag-body-with-attr-tags-class-to-tags/template.marko"
+    ]
+  })
+</script>
