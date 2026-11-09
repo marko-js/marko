@@ -10,17 +10,18 @@ import {
   type Binding,
   BindingType,
   getCanonicalBinding,
+  getDebugAccess,
   getDebugName,
   getDebugNames,
   getDebugNamesAsIdentifier,
-  getDebugAccess,
-  type Getter,
   hasNonConstantPropertyAlias,
-  type Intersection,
   isDirectAlias,
   isRest,
-  type ReferencedBindings,
   someAlias,
+  toAliasExpression,
+  type Getter,
+  type Intersection,
+  type ReferencedBindings,
 } from "./bindings";
 import { getLastOwnSourceReturn } from "./finalize-references";
 import { forEachIdentifier } from "./for-each-identifier";
@@ -91,7 +92,7 @@ import { findSectionSlot, findSlot, type PlaceSlot, SlotKind } from "./slots";
 import { sourcesUtil } from "./sources";
 import { createOutputState, createOutputSectionState } from "./state";
 import { toOnlyExpressionOrBlock } from "./to-only-or-block";
-import { toMemberExpression, toObjectProperty } from "./to-property-name";
+import { toObjectProperty } from "./to-property-name";
 import { getRestPattern, withRestFallback } from "./translate-var";
 import { traverseReplace } from "./traverse";
 import { withLeadingComment } from "./with-comment";
@@ -568,11 +569,11 @@ function pushMemberForwards(
   alias: Binding,
 ) {
   if (isPureMemberForwarder(alias)) {
-    for (const [key, child] of alias.propertyAliases) {
+    for (const child of alias.propertyAliases.values()) {
       if (child.type !== BindingType.constant) {
         pushMemberForwards(
           signal,
-          toMemberExpression(t.cloneNode(value, true), key, alias.nullable),
+          toAliasExpression(t.cloneNode(value, true), child),
           child,
         );
       }
@@ -698,15 +699,11 @@ export function buildSignalFn(signal: Signal): t.Expression {
       }
     }
 
-    for (const [key, alias] of binding.propertyAliases) {
+    for (const alias of binding.propertyAliases.values()) {
       if (alias.type !== BindingType.constant) {
         pushMemberForwards(
           signal,
-          toMemberExpression(
-            createScopeReadExpression(binding),
-            key,
-            binding.nullable,
-          ),
+          toAliasExpression(createScopeReadExpression(binding), alias),
           alias,
         );
       }

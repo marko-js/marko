@@ -5,6 +5,7 @@ import {
   BindingType,
   getAliasRoot,
   getPropertyDepth,
+  toAliasExpression,
 } from "./bindings";
 import { getAccessorProp } from "./get-accessor-enums";
 import { getDeclaredBindingExpression } from "./get-declared-binding-expression";
@@ -258,13 +259,11 @@ function addAliasPath(
   ancestor: Binding,
   optional: boolean,
 ): t.Expression {
-  if (alias === ancestor) return base;
-  const object = addAliasPath(base, alias.aliasOf!, ancestor, optional);
-  return alias.property === undefined
-    ? object
-    : toMemberExpression(
-        object,
-        alias.property,
-        optional && alias.aliasOf!.nullable,
+  return alias === ancestor
+    ? base
+    : toAliasExpression(
+        addAliasPath(base, alias.aliasOf!, ancestor, optional),
+        alias,
+        optional,
       );
 }

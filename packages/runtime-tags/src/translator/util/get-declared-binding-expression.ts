@@ -7,6 +7,7 @@ import {
   getNearestDeclared,
   isRest,
   propertiesUtil,
+  toAliasExpression,
 } from "./bindings";
 import { toMemberExpression } from "./to-property-name";
 
@@ -53,12 +54,11 @@ export function getDeclaredBindingExpression(
         !inPlace && alias.nullable,
       );
     }
-    return toMemberExpression(
-      getDeclaredBindingExpression(aliased, inPlace),
-      property,
-      !inPlace && aliased.nullable,
-    );
   }
 
-  return getDeclaredBindingExpression(aliased, inPlace);
+  return toAliasExpression(
+    getDeclaredBindingExpression(aliased, inPlace),
+    canonicalBinding,
+    !inPlace,
+  );
 }

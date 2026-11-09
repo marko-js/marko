@@ -22,6 +22,7 @@ import {
 import { type Section } from "./sections";
 import { type Sources } from "./sources";
 import { createAnalysisState } from "./state";
+import { toMemberExpression } from "./to-property-name";
 
 type BindingType = BindingType.Value;
 export { BindingType };
@@ -527,6 +528,22 @@ export function hasNonConstantPropertyAlias(binding: Binding) {
     }
   }
   return false;
+}
+
+// An alias, given an expression for the value it aliases: that value or its
+// property, which is optional where the value may be nullish.
+export function toAliasExpression<T extends t.Expression>(
+  value: T,
+  alias: Binding,
+  optional = true,
+): T | t.MemberExpression | t.OptionalMemberExpression {
+  return alias.property === undefined
+    ? value
+    : toMemberExpression(
+        value,
+        alias.property,
+        optional && alias.aliasOf!.nullable,
+      );
 }
 
 // How many properties `binding`, one of its aliases, is below `ancestor`.

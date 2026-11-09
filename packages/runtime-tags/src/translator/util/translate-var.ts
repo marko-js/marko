@@ -5,6 +5,7 @@ import {
   getCanonicalBinding,
   getDeclaredAlias,
   isRest,
+  toAliasExpression,
 } from "./bindings";
 import {
   forEachIdentifier,
@@ -17,7 +18,7 @@ import { toArray } from "./optional";
 import { insertStatementBefore } from "./replace-with-statements";
 import { importRuntime } from "./runtime";
 import { getSection, type Section } from "./sections";
-import { toMemberExpression, toPropertyName } from "./to-property-name";
+import { toPropertyName } from "./to-property-name";
 import { getWriteReason } from "./write-guard";
 
 export default function translateVar(
@@ -173,12 +174,7 @@ function translateAliasInSection(
   insertStatementBefore(
     getSectionTarget(tag, alias.section),
     t.variableDeclaration(kind, [
-      t.variableDeclarator(
-        id,
-        alias.property === undefined
-          ? value
-          : toMemberExpression(value, alias.property, aliased.nullable),
-      ),
+      t.variableDeclarator(id, toAliasExpression(value, alias)),
     ]),
   );
 }
