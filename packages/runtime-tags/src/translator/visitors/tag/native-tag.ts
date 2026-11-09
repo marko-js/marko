@@ -699,22 +699,21 @@ export default {
         const controlHelper =
           controllable && getControllableHelper(tagName, controllable.state);
         if (controllable) {
-          const changeAttr = attrAt(attributes, controllable.attrs[1]);
-          const fillsChangeHandler =
-            !!changeAttr && fillsHandler(tagSection, changeAttr.value);
           // The control's attributes read as one group.
           const controlExtra = attrAt(
             attributes,
             controllable.attrs.find(isDefined),
           )!.value.extra!;
-          const fillsControl = fillsHole(tagSection, controlExtra);
-          if (fillsControl || fillsChangeHandler) {
+          // Client code sets the handler with its value wherever that group reads
+          // client state, so a patch writes the handler only with its control.
+          if (fillsHole(tagSection, controlExtra)) {
+            const changeAttr = attrAt(attributes, controllable.attrs[1]);
+            const fillsChangeHandler =
+              !!changeAttr && fillsHandler(tagSection, changeAttr.value);
             // Bits: 1 the control's entry, 2 its handler's bind; both take
             // that group.
             patchArgs = [
-              t.numericLiteral(
-                (fillsControl ? 1 : 0) | (fillsChangeHandler ? 2 : 0),
-              ),
+              t.numericLiteral(fillsChangeHandler ? 3 : 1),
               ...getExprRootGroupArgs(tagSection, controlExtra),
             ];
           }
