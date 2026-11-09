@@ -1578,7 +1578,7 @@ export function writeHTMLResumeStatements(
       if (binding.hoists && binding.type !== BindingType.dom) {
         body.push(
           t.expressionStatement(
-            callRuntime("_assert_hoist", t.identifier(binding.name)),
+            callRuntime("_assert_hoist", getDeclaredBindingExpression(binding)),
           ),
         );
       }

@@ -1,0 +1,10 @@
+// `get` is hoisted out of the `<if>` its destructure is in, and the server
+// writes it from `x`, as it declares no `get` of its own.
+<let/log=""/>
+<if=true>
+  <child/x/>
+  <const/{ get }=x/>
+  <button.whole onClick() { log += typeof x }>whole</button>
+</if>
+<button.hoisted onClick() { log += `[${get()}]` }>hoisted</button>
+<div>${log}</div>
