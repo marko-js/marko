@@ -9,7 +9,7 @@ const $if_content__setup = ($scope) => {
 	$scope["#childScope/0"]._ = $scope._._;
 	$Tree_content__setup($scope["#childScope/0"]);
 };
-const $Tree_content__if = /*@__PURE__*/ _if("#text/2", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Tree_content__template), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Tree_content__walks), $if_content__setup);
+const $Tree_content__if = /*@__PURE__*/ _if("#text/2", /*@__PURE__*/ ((_w0) => `${_w0}<!>`)($Tree_content__template), /*@__PURE__*/ ((_w0) => `/${_w0}&b`)($Tree_content__walks), $if_content__setup);
 const $Tree_content__depth__OR__level = /*@__PURE__*/ _or(6, ($scope) => $Tree_content__if($scope, $scope.level < $scope._.depth ? 0 : 1));
 const $Tree_content__depth = /*@__PURE__*/ _closure_get("depth/4", $Tree_content__depth__OR__level, 0, "__tests__/template.marko_1_depth#0:2/subscribe");
 const $Tree_content__setup = ($scope) => {

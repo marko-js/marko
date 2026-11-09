@@ -20,8 +20,8 @@ var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $templ
 // template.marko
 const $Box_content2__walks = /*@__PURE__*/ ((_w0) => `/${_w0}&b`)($walks$1);
 const $Box_content2__template = /*@__PURE__*/ ((_w0) => `${_w0}<!>`)($template$1);
-const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Box_content2__template);
-const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Box_content2__walks);
+const $template = /*@__PURE__*/ ((_w0) => `${_w0}<!>`)($Box_content2__template);
+const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&b`)($Box_content2__walks);
 const $child_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $child_content__input_content = /*@__PURE__*/ _closure_get("input_content/5", ($scope) => $child_content__dynamicTag($scope, $scope._.input_content), 0, "__tests__/template.marko_3_input_content#2:3/subscribe");
 const $child_content__setup = $child_content__input_content;

@@ -18,7 +18,7 @@ var template_default = _template("a", (input) => {
 			_scope($scope2_id, {});
 			return 0;
 		}
-	}, $scope0_id, "b");
+	}, $scope0_id, "b", 1, 1, 0, 0, 1);
 	_html(`<button>${_text_mark($scope0_id, "d", x)}</button>${_el_mark($scope0_id, "c")}`);
 	_script($scope0_id, "a2");
 	_scope($scope0_id, {

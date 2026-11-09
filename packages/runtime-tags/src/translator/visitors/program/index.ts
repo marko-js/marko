@@ -37,6 +37,7 @@ import {
   forEachSection,
   ensureBodySection,
   getRendererReason,
+  settleContent,
 } from "../../util/sections";
 import { finalizeSetupWork } from "../../util/setup-work";
 import { solveReasons } from "../../util/solve-reasons";
@@ -107,6 +108,7 @@ export default {
       // Analyze failures were already reported as diagnostics and their tags
       // skipped, so skip finalization work that assumes an error-free template.
       if (hasAnalyzeErrors()) return;
+      settleContent(program);
       analyzeRecursiveTags();
       const intersectionsBySection = finalizeReferences();
       solveReasons(intersectionsBySection);

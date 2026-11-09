@@ -10,7 +10,7 @@ const $for_content__setup = ($scope) => {
 	$scope["#childScope/0"]._ = $scope;
 	$D_content__q($scope["#childScope/0"], 1);
 };
-const $for = /*@__PURE__*/ _for_to_unkeyed("#text/0", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($D_content__template), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($D_content__walks), $for_content__setup);
+const $for = /*@__PURE__*/ _for_to_unkeyed("#text/0", $D_content__template, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($D_content__walks), $for_content__setup);
 function $setup($scope) {
 	$for($scope, [2, 1]);
 }

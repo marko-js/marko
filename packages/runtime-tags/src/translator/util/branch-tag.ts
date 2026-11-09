@@ -127,7 +127,7 @@ export function isEndTagWrittenByBranch(nodeBinding: Binding | undefined) {
 
 // Resume adopts the element before a branch's resume comments, so only
 // content of one tag qualifies; a placeholder may write zero or many nodes.
-export function isSingleNodeContent(content: Section["content"] | undefined) {
+export function isSingleNodeContent(content: Section["content"]) {
   return !!(content?.singleChild && content.startType === ContentType.Tag);
 }
 

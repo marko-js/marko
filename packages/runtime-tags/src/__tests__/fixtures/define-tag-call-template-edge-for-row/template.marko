@@ -1,0 +1,8 @@
+<let/labels=["a", "b"]/>
+<ul>
+  <for|label| of=labels>
+    <row label=label/>
+  </for>
+</ul>
+<button#add onClick() { labels = [...labels, "c"] }>Add</button>
+<button#remove onClick() { labels = labels.slice(1) }>Remove</button>

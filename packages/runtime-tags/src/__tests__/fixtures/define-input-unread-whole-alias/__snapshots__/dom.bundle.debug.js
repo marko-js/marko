@@ -1,8 +1,8 @@
 // template.marko
 const $Card_content__walks = "D lD l";
 const $Card_content__template = "<h1> </h1><p> </p>";
-const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<button></button>`)($Card_content__template);
-const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}& b`)($Card_content__walks);
+const $template = /*@__PURE__*/ ((_w0) => `${_w0}<button></button>`)($Card_content__template);
+const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}& b`)($Card_content__walks);
 const $Card_content__title = ($scope, title) => _text($scope["#text/0"], title);
 const $Card_content__input_body = ($scope, input_body) => _text($scope["#text/1"], input_body);
 const $Card_content__$params = ($scope, $params2) => $Card_content__input($scope, $params2[0]);

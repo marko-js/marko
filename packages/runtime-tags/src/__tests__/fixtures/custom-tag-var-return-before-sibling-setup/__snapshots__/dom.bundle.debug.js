@@ -53,7 +53,7 @@ const $Box_content__color = /*@__PURE__*/ _const("color", ($scope) => _style_rul
 const $Box_content__$params = ($scope, $params2) => $Box_content__$temp($scope, $params2[0]);
 const $Box_content__$temp = ($scope, $temp) => $Box_content__color($scope, $temp.color);
 const $top = ($scope, top) => $input_color($scope["#childScope/2"], top);
-const $if = /*@__PURE__*/ _if("#text/4", /*@__PURE__*/ ((_w0, _w1, _w2, _w3) => `<!>${_w0}${_w1}${_w2}${_w3}<!>`)("", $Box_content__template, $template$1, $Later_content__template), /*@__PURE__*/ ((_w0, _w1, _w2, _w3) => `0${_w0}&b/${_w1}&/${_w2}&/${_w3}&b`)("", $Box_content__walks, " c", $Later_content__walks), $if_content__setup);
+const $if = /*@__PURE__*/ _if("#text/4", /*@__PURE__*/ ((_w0, _w1, _w2, _w3) => `${_w0}${_w1}${_w2}${_w3}<!>`)("", $Box_content__template, $template$1, $Later_content__template), /*@__PURE__*/ ((_w0, _w1, _w2, _w3) => `0${_w0}&/${_w1}&/${_w2}&/${_w3}&b`)("", $Box_content__walks, " c", $Later_content__walks), $if_content__setup);
 const $open = /*@__PURE__*/ _let("open/6", ($scope) => $if($scope, $scope.open ? 0 : 1));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/3"], "click", function() {
 	$open($scope, !$scope.open);

@@ -1,8 +1,8 @@
 // template.marko
 const $Child_content2__walks = " b";
 const $Child_content2__template = "<div></div>";
-const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Child_content2__template);
-const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Child_content2__walks);
+const $template = $Child_content2__template;
+const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)($Child_content2__walks);
 const $Child_content2__input__script = _script("__tests__/template.marko_3_input#2", ($scope) => _attrs_script($scope, "#div/0"));
 const $Child_content2__input = /*@__PURE__*/ _const("input", ($scope) => {
 	_attrs_content($scope, "#div/0", $scope.input);
