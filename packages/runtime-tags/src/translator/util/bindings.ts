@@ -49,8 +49,8 @@ export interface Binding {
   /** The expressions its value is computed from, `false` for none; unset when
    * analysis cannot see them, which makes it its own source. */
   derivedFrom: Opt<t.NodeExtra> | false;
-  /** Its reads by expression, complete once `finalizeReferences` runs: pruning
-   * hands an expression's reads to the nearest ancestor it also reads. */
+  /** Its reads by expression, complete once `finalizeReferences` runs: each
+   * read is handed to the binding it reads through. */
   reads: Map<ReferencedExtra, Opt<Read>>;
   aliases: Set<Binding>;
   /** The sections reading it through a hoist: its own or its ancestors, so

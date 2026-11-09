@@ -11,7 +11,6 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a0");
 	_scope($scope0_id, {
 		d: live,
-		e: live.nested,
-		f: box
+		e: box
 	});
 }, 1);

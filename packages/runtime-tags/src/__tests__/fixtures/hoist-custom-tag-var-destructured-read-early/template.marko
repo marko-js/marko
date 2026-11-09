@@ -1,0 +1,7 @@
+// The handler reads all of `api` and calls `get` through its getter before its
+// declaration; the getter read stays with `get`, which keeps its hoist.
+<let/log=""/>
+<child/api/>
+<button.mid onClick() { log = `${Object.keys(api).join()}:${get()}` }>mid</button>
+<const/{ get }=api/>
+<div.log>${log}</div>

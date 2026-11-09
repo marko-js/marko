@@ -57,6 +57,7 @@ import {
   getFunctionReadsByExpression,
   getReadsByExpression,
   getReferenceFinalizers,
+  getResolvedRead,
   getValueReferences,
   isPureExpr,
   isReferencedExtra,
@@ -91,6 +92,7 @@ import { createAnalysisState } from "./state";
 export function finalizeReferences() {
   const intersectionsBySection = new Map<Section, Intersection[]>();
   settleAssignments();
+  handReadsToAncestors();
   pruneBindings();
   removeDroppedAssignments();
   excludeAssignedChangeHandlers();
@@ -114,6 +116,82 @@ function settleAssignments() {
       binding.assignments = push(binding.assignments, idExtra);
     }
   }
+}
+
+// Hands each read to the binding it reads through, before pruning judges what
+// is read.
+function handReadsToAncestors() {
+  for (const [expr, reads] of getReadsByExpression()) {
+    readThroughOutermost(expr, reads);
+  }
+}
+
+// An expression reads each binding through the outermost one up its chain it
+// also reads, and a property assigned in place from its object, kept current.
+function readThroughOutermost(expr: ReferencedExtra, reads: Opt<Read>) {
+  if (!Array.isArray(reads)) {
+    if (reads) {
+      const object = !reads.getter && getAssignedObject(reads.binding);
+      if (object) moveReads(reads.binding, expr, object);
+      resolveRead(reads, object || reads.binding, expr);
+    }
+    return;
+  }
+  const targets = new Map<Binding, Binding>();
+  for (const { binding } of reads) {
+    // A read through a getter calls it, so the binding keeps all its reads.
+    if (!some(binding.reads.get(expr), isGetterRead)) {
+      targets.set(binding, getAssignedObject(binding) || binding);
+    }
+  }
+  const readBindings = new Set(targets.values());
+  for (const [binding, start] of targets) {
+    let target = start;
+    // A rest is a copy, so nothing above it is what it reads.
+    for (let cur = start; cur.aliasOf && !isRest(cur);) {
+      cur = cur.aliasOf;
+      if (readBindings.has(cur)) target = cur;
+    }
+    targets.set(binding, target);
+    if (target !== binding) moveReads(binding, expr, target);
+  }
+  for (const read of reads) {
+    resolveRead(read, targets.get(read.binding) || read.binding, expr);
+  }
+}
+
+// What a read handed to `target` resolves to: read through it, or through the
+// outermost constant it is a property of.
+function resolveRead(read: Read, target: Binding, expr: ReferencedExtra) {
+  const { binding, extra, getter } = read;
+  if (getter) {
+    extra.section = expr.section;
+    extra.read = createResolvedGetterRead(binding, undefined, getter);
+  } else if (extra.assignmentTo === binding) {
+    extra.changeHandlerRead = createReadThrough(read, target);
+  } else if (binding.type !== BindingType.global) {
+    extra.section = expr.section;
+    extra.read =
+      resolveConstantReference(binding) ?? createReadThrough(read, target);
+  }
+}
+
+function createReadThrough({ binding, inOwnBody }: Read, target: Binding) {
+  return target === binding
+    ? createResolvedRead(binding, undefined, inOwnBody)
+    : createResolvedRead(target, getPropertyPath(binding, target));
+}
+
+function isGetterRead(read: Read) {
+  return !!read.getter;
+}
+
+function moveReads(binding: Binding, expr: ReferencedExtra, target: Binding) {
+  target.reads.set(
+    expr,
+    concat(target.reads.get(expr), binding.reads.get(expr)),
+  );
+  binding.reads.delete(expr);
 }
 
 function pruneBindings() {
@@ -227,7 +305,6 @@ function resolveReads(intersectionsBySection: Map<Section, Intersection[]>) {
               fn === expr
                 ? exprBindings
                 : resolveReferencedBindingsInFunction(
-                    expr,
                     exprBindings.allBindings,
                     fnReads,
                   );
@@ -701,21 +778,6 @@ function pruneBinding(binding: Binding): boolean {
   // Likewise an assignment from such a value.
   forEach(binding.assignments, pruneAssignmentDerived);
 
-  // An expression that also reads an ancestor reads this through it, and one
-  // reading a property assigned in place reads it from the object, kept current.
-  const assignedObject = getAssignedObject(binding);
-  for (const [expr, reads] of binding.reads) {
-    const ancestor = assignedObject
-      ? getNearestReadBy(assignedObject, expr) || assignedObject
-      : binding.aliasOf &&
-        !isRest(binding) &&
-        getNearestReadBy(binding.aliasOf, expr);
-    if (ancestor) {
-      ancestor.reads.set(expr, concat(ancestor.reads.get(expr), reads));
-      binding.reads.delete(expr);
-    }
-  }
-
   let shouldPrune = true;
   for (const alias of binding.aliases) {
     if (pruneBinding(alias)) {
@@ -733,8 +795,8 @@ function pruneBinding(binding: Binding): boolean {
     }
   }
 
-  // Judged after its aliases, which can hand it their reads; an emitted
-  // assignment calls the change handler in the id it reserves.
+  // Judged after its aliases, which keep it; an emitted assignment calls the
+  // change handler in the id it reserves.
   shouldPrune &&=
     !binding.reads.size &&
     !(binding.reserveSize && hasEmittedAssignment(binding));
@@ -767,7 +829,6 @@ function pruneDerived(expr: t.NodeExtra) {
 }
 
 function resolveReferencedBindingsInFunction(
-  expr: ReferencedExtra,
   refs: SortedOneMany<Binding>,
   reads: Opt<Read>,
 ) {
@@ -776,18 +837,18 @@ function resolveReferencedBindingsInFunction(
 
   // Every closest reference is one of `refs`, so filtering keeps the order.
   const closest = new Set<Binding>();
-  forEach(reads, ({ getter, binding }) => {
-    if (getter) {
+  forEach(reads, (read) => {
+    if (read.getter || read.binding.type === BindingType.global) {
       // hoisted/getter reads resolve through getters, not signals.
-    } else if (binding.type === BindingType.constant) {
+      return;
+    }
+    const { binding } = getResolvedRead(read);
+    if (binding.type === BindingType.constant) {
       if (bindingUtil.has(refs, binding)) {
         constantBindings = bindingUtil.add(constantBindings, binding);
       }
-    } else if (
-      binding.type !== BindingType.dom &&
-      binding.type !== BindingType.global
-    ) {
-      closest.add(getNearestReadBy(binding, expr)!);
+    } else if (binding.type !== BindingType.dom) {
+      closest.add(binding);
     }
   });
   if (closest.size) {
@@ -795,18 +856,6 @@ function resolveReferencedBindingsInFunction(
   }
 
   return { referencedBindings, constantBindings };
-}
-
-// The nearest of a binding and its ancestors that the expression reads, once
-// pruning has given each read to the binding it resolves to.
-function getNearestReadBy(binding: Binding, expr: ReferencedExtra) {
-  let cur = binding;
-  while (!cur.reads.has(expr)) {
-    // A rest is a copy, so nothing above it is what it reads.
-    if (!cur.aliasOf || isRest(cur)) return;
-    cur = cur.aliasOf;
-  }
-  return cur;
 }
 
 // A direct alias has no slot of its own, so its slot owner stores the value.
@@ -860,8 +909,6 @@ function resolveReferencedBindings(
     const { extra, getter } = read;
 
     if (getter) {
-      extra.section = expr.section;
-      extra.read = createResolvedGetterRead(binding, undefined, getter);
       addBindingGetter(binding, getter);
       // A hoisted read calls the getter from the section the getter is in.
       if (getter.hoisted) {
@@ -872,16 +919,8 @@ function resolveReferencedBindings(
       }
     } else {
       const isChangeHandlerRead = extra.assignmentTo === binding;
-      if (isChangeHandlerRead) {
-        ({ binding } = extra.changeHandlerRead = resolveExpressionReference(
-          expr,
-          read,
-        ));
-      } else if (binding.type !== BindingType.global) {
-        extra.section = expr.section;
-        ({ binding } = extra.read =
-          resolveConstantReference(binding) ??
-          resolveExpressionReference(expr, read));
+      if (binding.type !== BindingType.global) {
+        ({ binding } = getResolvedRead(read));
       }
       if (binding.type === BindingType.global) {
         // `$global` reads stay verbatim member chains: no read slot,
@@ -988,14 +1027,4 @@ function getConstantRoot(binding: Binding): Binding | undefined {
     if (cur.aliasOf.type === BindingType.constant) root = cur.aliasOf;
   }
   return root;
-}
-
-function resolveExpressionReference(
-  expr: ReferencedExtra,
-  { binding, inOwnBody }: Read,
-) {
-  const holder = getNearestReadBy(binding, expr)!;
-  return holder === binding
-    ? createResolvedRead(binding, undefined, inOwnBody)
-    : createResolvedRead(holder, getPropertyPath(binding, holder));
 }

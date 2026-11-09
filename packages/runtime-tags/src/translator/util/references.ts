@@ -1152,7 +1152,7 @@ function untrackExpr(exprExtra: ReferencedExtra) {
   if (reads) {
     readsByExpr.delete(exprExtra);
     getFunctionReadsByExpression().delete(exprExtra);
-    // Pruning may have handed a read to any binding up its alias chain.
+    // A read may have been handed to any binding up its alias chain.
     forEach(reads, (read) => {
       for (
         let cur: Binding | undefined = read.binding;
@@ -1312,6 +1312,14 @@ export function getChildTagReferenceNodes(
   }
 
   return referenceNodes;
+}
+
+// What finalize resolved the read to. An assignment's change handler resolves
+// beside what the assignment reads, on the same node.
+export function getResolvedRead(read: Read) {
+  return read.extra.assignmentTo === read.binding
+    ? read.extra.changeHandlerRead!
+    : read.extra.read!;
 }
 
 export function createResolvedRead(

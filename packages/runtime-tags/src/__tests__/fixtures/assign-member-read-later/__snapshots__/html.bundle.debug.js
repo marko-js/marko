@@ -12,11 +12,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		live,
-		live_nested: live.nested,
 		box
 	}, "__tests__/template.marko", 0, {
 		live: "1:8",
-		live_nested: ["live.nested", "1:8"],
 		box: "2:6"
 	});
 }, 1);

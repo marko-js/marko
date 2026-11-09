@@ -71,9 +71,11 @@ holds a rest, as written. Content the child never reads, a tag's or an attribute
 tag's, is dropped whole (`dropContent`): its expressions are untracked and its
 sections marked `Section.dropped`, so reads later recorded in them are not kept.
 
-`finalizeReferences()` is the center of analysis. It resolves each expression to
-canonical bindings, separates constant/live/hoisted/lazy reads, prunes unused
-property paths, computes transitive `Sources`, and finalizes known-tag contracts;
+`finalizeReferences()` is the center of analysis. It hands each read to the
+binding it reads through (the outermost one up its alias chain the expression
+also reads), resolves each expression to canonical bindings, separates
+constant/live/hoisted/lazy reads, prunes unused property paths, computes
+transitive `Sources`, and finalizes known-tag contracts;
 `solveReasons()` then propagates owner/closure/branch/effect/registry
 requirements, and `allocateIds()` collapses eligible intersections. Safe
 invoke-only reads avoid subscriptions but set `hasLazyReads`: the current scope
