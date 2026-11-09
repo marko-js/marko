@@ -1,5 +1,5 @@
 // size: 162 (min) 129 (brotli)
-//#region packages/runtime-tags/src/__tests__/fixtures/basic-counter/template.marko
+// packages/runtime-tags/src/__tests__/fixtures/basic-counter/template.marko
 const $template = "<div><button> </button></div>";
 const $walks = "D D m";
 const $clickCount = /*@__PURE__*/ _let(2, ($scope) => _text($scope.b, $scope.c));
@@ -12,7 +12,5 @@ function $setup($scope) {
   $clickCount($scope, 0);
   $setup__script($scope);
 }
-//#endregion
-//#region entry
+// entry
 /* @__PURE__ */ _template("a", $template, $walks, $setup).mount();
-//#endregion

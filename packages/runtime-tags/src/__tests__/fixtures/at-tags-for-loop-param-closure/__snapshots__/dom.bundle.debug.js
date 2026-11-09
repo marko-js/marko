@@ -3,26 +3,28 @@ const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $setup$1 = ($_) => {};
 const $for_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $for_content__item_content = $for_content__dynamicTag;
-const $for_content__$params = ($scope, $params2) => $for_content__item_content($scope, $params2[0]?.content);
+const $for_content__$params = ($scope, $params2) => $for_content__dynamicTag($scope, $params2[0]?.content);
 const $for = /*@__PURE__*/ _for_of_unkeyed("#text/0", "<!><!><!>", "b%", 0, $for_content__$params);
 const $input_item = ($scope, input_item) => $for($scope, [input_item]);
 const $input = ($scope, input) => $input_item($scope, input.item);
 var list_default = /*@__PURE__*/ _template("__tests__/tags/list/index.marko", $template$1, "b%c", 0, $input);
 
 // template.marko
-const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1);
-const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c");
-const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__tests__/template.marko_1*content", " ", " "), { zzz: ($scope) => _text($scope["#text/0"], $scope.zzz) });
+const $template = /*@__PURE__*/ ((_w0, _w1) => `<!>${_w0}${_w1}<!>`)($template$1, $template$1);
+const $walks = /*@__PURE__*/ ((_w0, _w1) => `b/${_w0}&/${_w1}&b`)("b%c", "b%c");
+const $item_content__double = ($scope, double) => _text($scope["#text/1"], double);
+const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__tests__/template.marko_1*content", "<!> <!>", "%c%"), { zzz($scope) {
+	_text($scope["#text/0"], $scope.zzz);
+	$item_content__double($scope, $scope.zzz * 2);
+} });
 function $setup($scope) {
 	let $item;
 	forOf([
 		1,
 		2,
 		3
-	], (zzz) => {
-		$item = attrTags($item, { content: $item_content($scope, { zzz }) });
-	});
+	], (zzz) => $item = attrTags($item, { content: $item_content($scope, { zzz }) }));
 	$input_item($scope["#childScope/0"], $item);
+	$input_item($scope["#childScope/1"]);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

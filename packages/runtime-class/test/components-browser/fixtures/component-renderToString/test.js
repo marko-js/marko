@@ -1,11 +1,9 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), {
     name: "john",
   });
 
-  expect(component.renderedHtml).to.equal(
-    '<div class="hello"><div>john</div></div>',
-  );
+  assert.equal(component.renderedHtml, '<div class="hello"><div>john</div></div>');
 };

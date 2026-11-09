@@ -27,12 +27,12 @@ var middle_default = _template("__tests__/tags/middle.marko", (input) => {
 
 // template.marko
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_v = _write_guard($scope0_reason, 0), $wi__input_v = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wi__input_v = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $childScope = _peek_scope_id();
 	let fn = make_default({ v: input.v });
 	$wi__input_v && _var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_fn#6/var");
-	_set_scope_reason($wg__input_v << 1);
+	_set_scope_reason(_write_guard($scope0_reason, 0) << 1);
 	const $childScope2 = _peek_scope_id();
 	middle_default({ fn });
 	$wi__input_v && _scope($scope0_id, {

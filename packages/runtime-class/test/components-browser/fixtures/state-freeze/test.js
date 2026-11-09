@@ -1,11 +1,11 @@
 "use strict";
 
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), {});
 
-  expect(function () {
+  assert.throws(function () {
     component.state.foo = "bar";
-  }).to.throw("Cannot add property foo");
+  }, /Cannot add property foo/);
 };

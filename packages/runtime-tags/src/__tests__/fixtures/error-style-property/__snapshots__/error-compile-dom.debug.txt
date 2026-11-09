@@ -3,7 +3,7 @@
       1 | <style>
       2 |   .box {
     > 3 |     ${input.prop}: red;
-        |     ^^^^^^^^^^^^^ A `${...}` interpolation in a [`<style>` tag](https://markojs.com/docs/reference/core-tag#style) is substituted as a `var(--…)` custom property reference, which cannot be used as a property name. For a native html [`<style>` tag](https://markojs.com/docs/reference/core-tag#style) use the `html-style` core tag instead.
+        |     ^^^^^^^^^^^^^ A `${...}` interpolation in a [`<style>` tag](https://markojs.com/docs/reference/core-tag#style) is substituted as a `var(--…)` custom property reference, which cannot be used as a property name. For a native html `<style>` tag use the [`html-style` core tag](https://markojs.com/docs/reference/core-tag#html-script--html-style) instead.
       4 |   }
       5 | </style>
       6 |

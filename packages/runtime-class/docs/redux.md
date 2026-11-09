@@ -55,6 +55,7 @@ In `counter.marko`, the imported store module exports a Redux store created with
 
 ```js
 import redux from "redux";
+
 import counter from "./reducer.js";
 
 export default redux.createStore(counter);

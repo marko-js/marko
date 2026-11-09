@@ -7,19 +7,29 @@ linkWorkspacePackages: true
 minimumReleaseAgeExclude:
   - "@zcov/*"
   - htmljs-parser
+  # Checked by hand: npm provenance ties it to jsdom's release workflow at the
+  # v31.0.0 tag. Drop once it is a day old (2026-11-06 12:15 UTC).
+  - jsdom@31.0.0
 # The patched generator requires htmljs-parser for `escapeText`; declared so it
 # does not resolve only through pnpm's hidden hoisting of every package.
 packageExtensions:
-  "@babel/generator@7.29.7":
+  "@babel/generator@7.29.12":
     dependencies:
       htmljs-parser: ^5.17.1
+# mocha-autotest loads `it-fails`, whose patches reach mocha internals that
+# mocha 12 removed; no fixture uses `fails`, so its patch drops the require.
+overrides:
+  it-fails: "-"
 patchedDependencies:
-  "@babel/generator@7.29.7": patches/@babel__generator@7.29.7.patch
+  "@babel/generator@7.29.12": patches/@babel__generator@7.29.12.patch
   "@babel/helper-compilation-targets@7.29.7": patches/@babel__helper-compilation-targets@7.29.7.patch
-  "@babel/traverse@7.29.7": patches/@babel__traverse@7.29.7.patch
-  "@babel/types@7.29.7": patches/@babel__types@7.29.7.patch
-  mocha@11.7.6: patches/mocha@11.7.6.patch
+  "@babel/traverse@7.29.12": patches/@babel__traverse@7.29.12.patch
+  "@babel/types@7.29.11": patches/@babel__types@7.29.11.patch
   mocha-autotest@1.1.3: patches/mocha-autotest@1.1.3.patch
+  mocha@12.0.3: patches/mocha@12.0.3.patch
+  # Inserts each run of parser text in one step, as whatwg/html#13199 specifies;
+  # drop once parse5 does it.
+  parse5@8.1.0: patches/parse5@8.1.0.patch
 # The compiler resolves phantom workspace ids ("marko/translator",
 # "@marko/runtime-tags/translator") from the repo root; hoist them into the
 # root node_modules so that resolution works without pnpm's .bin-shim NODE_PATH.

@@ -15,6 +15,7 @@ import { _attr_select_value, _attrs, _attrs_textarea_value } from "./attrs";
 import type { Locals } from "./serializer";
 import type { ServerRenderer } from "./template";
 import {
+  $chunk,
   _el,
   _existing_scope,
   _html,
@@ -27,7 +28,6 @@ import {
   ALL_GROUPS,
   applyBranchStart,
   deferBranchStart,
-  getChunk,
   getScopeById,
   getState,
   rendererKey,
@@ -54,7 +54,7 @@ export let _dynamic_tag = (
 ) => {
   const shouldResume = markerGuard !== 0;
   const renderer = normalizeDynamicRenderer<ServerRenderer>(tag);
-  const state = getState()!;
+  const state = getState();
   const branchId = _peek_scope_id();
   let rendered: boolean;
   let result: unknown;
@@ -70,115 +70,112 @@ export let _dynamic_tag = (
       ? (inputOrArgs as unknown[])[0]
       : inputOrArgs) || {}) as Record<string, unknown>;
     rendered = true;
-    const renderNative = () => {
-      _scope_id();
-      _html(
-        `<${renderer}${_attrs(input, MARKO_DEBUG ? `#${renderer.toLowerCase()}/0` : "a", branchId, renderer)}>`,
-      );
+    _scope_id();
+    _html(
+      `<${renderer}${_attrs(input, MARKO_DEBUG ? `#${renderer.toLowerCase()}/0` : "a", branchId, renderer)}>`,
+    );
 
-      if (!voidElementsReg.test(renderer)) {
-        const renderContent =
-          content || normalizeDynamicRenderer<ServerRenderer>(input.content);
-        if (renderer === "textarea") {
-          if (MARKO_DEBUG && renderContent) {
-            throw new Error(
-              "A dynamic tag rendering a `<textarea>` cannot have `content` and must use the `value` attribute instead.",
-            );
-          }
-          _html(
-            _attrs_textarea_value(
-              branchId,
-              MARKO_DEBUG ? `#${renderer.toLowerCase()}/0` : "a",
-              input,
-            ),
+    if (!voidElementsReg.test(renderer)) {
+      const renderContent =
+        content || normalizeDynamicRenderer<ServerRenderer>(input.content);
+      if (renderer === "textarea") {
+        if (MARKO_DEBUG && renderContent) {
+          throw new Error(
+            "A dynamic tag rendering a `<textarea>` cannot have `content` and must use the `value` attribute instead.",
           );
-        } else {
-          if (
-            MARKO_DEBUG &&
-            renderContent &&
-            typeof renderContent !== "function"
-          ) {
-            throw new Error(
-              `Body content is not supported for the \`<${renderer}>\` tag.`,
-            );
-          }
-
-          if (
-            renderer === "select" &&
-            ("value" in input || "valueChange" in input)
-          ) {
-            // Only this case defers the body, so it renders inside the
-            // dynamically scoped selected value; every other tag recurses directly.
-            _attr_select_value(
-              branchId,
-              MARKO_DEBUG ? `#${renderer.toLowerCase()}/0` : "a",
-              input.value,
-              input.valueChange,
-              renderContent
-                ? () =>
-                    _dynamic_tag(
-                      branchId,
-                      MARKO_DEBUG ? `#${renderer.toLowerCase()}/0` : "a",
-                      renderContent,
-                      undefined,
-                      0,
-                      undefined,
-                      markerGuard,
-                    )
-                : undefined,
-              1,
-            );
-          } else if (renderContent) {
-            _dynamic_tag(
-              branchId,
-              MARKO_DEBUG ? `#${renderer.toLowerCase()}/0` : "a",
-              renderContent,
-              undefined,
-              0,
-              undefined,
-              markerGuard,
-            );
-          }
         }
-
-        _html(`</${renderer}>`);
-      } else if (MARKO_DEBUG && content) {
-        throw new Error(
-          `Body content is not supported for the \`<${renderer}>\` tag.`,
-        );
-      }
-
-      const childScope = getScopeById(branchId);
-      const needsScript =
-        childScope &&
-        (childScope[
-          AccessorPrefix.EventAttributes +
-            (MARKO_DEBUG ? `#${renderer.toLowerCase()}/0` : "a")
-        ] ||
-          childScope[
-            AccessorPrefix.ControlledHandler +
-              (MARKO_DEBUG ? `#${renderer.toLowerCase()}/0` : "a")
-          ]);
-
-      if (needsScript) {
-        // The debug accessor is this write's only consumer, and `needsScript`
-        // already means the branch scope ships.
-        if (MARKO_DEBUG) {
-          _scope(branchId, { [AccessorProp.Renderer]: renderer });
-        }
-        _script(branchId, DYNAMIC_TAG_SCRIPT_REGISTER_ID);
-      }
-
-      if (shouldResume || needsScript) {
         _html(
-          state.mark(
-            ResumeSymbol.BranchEndNativeTag,
-            scopeId + " " + accessor + " " + branchId,
+          _attrs_textarea_value(
+            branchId,
+            MARKO_DEBUG ? `#${renderer.toLowerCase()}/0` : "a",
+            input,
           ),
         );
+      } else {
+        if (
+          MARKO_DEBUG &&
+          renderContent &&
+          typeof renderContent !== "function"
+        ) {
+          throw new Error(
+            `Body content is not supported for the \`<${renderer}>\` tag.`,
+          );
+        }
+
+        if (
+          renderer === "select" &&
+          ("value" in input || "valueChange" in input)
+        ) {
+          // Only this case defers the body, so it renders inside the
+          // dynamically scoped selected value; every other tag recurses directly.
+          _attr_select_value(
+            branchId,
+            MARKO_DEBUG ? `#${renderer.toLowerCase()}/0` : "a",
+            input.value,
+            input.valueChange,
+            renderContent
+              ? () =>
+                  _dynamic_tag(
+                    branchId,
+                    MARKO_DEBUG ? `#${renderer.toLowerCase()}/0` : "a",
+                    renderContent,
+                    undefined,
+                    0,
+                    undefined,
+                    markerGuard,
+                  )
+              : undefined,
+            1,
+          );
+        } else if (renderContent) {
+          _dynamic_tag(
+            branchId,
+            MARKO_DEBUG ? `#${renderer.toLowerCase()}/0` : "a",
+            renderContent,
+            undefined,
+            0,
+            undefined,
+            markerGuard,
+          );
+        }
       }
-    };
-    renderNative();
+
+      _html(`</${renderer}>`);
+    } else if (MARKO_DEBUG && content) {
+      throw new Error(
+        `Body content is not supported for the \`<${renderer}>\` tag.`,
+      );
+    }
+
+    const childScope = getScopeById(branchId);
+    const needsScript =
+      childScope &&
+      (childScope[
+        AccessorPrefix.EventAttributes +
+          (MARKO_DEBUG ? `#${renderer.toLowerCase()}/0` : "a")
+      ] ||
+        childScope[
+          AccessorPrefix.ControlledHandler +
+            (MARKO_DEBUG ? `#${renderer.toLowerCase()}/0` : "a")
+        ]);
+
+    if (needsScript) {
+      // The debug accessor is this write's only consumer, and `needsScript`
+      // already means the branch scope ships.
+      if (MARKO_DEBUG) {
+        _scope(branchId, { [AccessorProp.Renderer]: renderer });
+      }
+      _script(branchId, DYNAMIC_TAG_SCRIPT_REGISTER_ID);
+    }
+
+    if (shouldResume || needsScript) {
+      _html(
+        state.mark(
+          ResumeSymbol.BranchEndNativeTag,
+          scopeId + " " + accessor + " " + branchId,
+        ),
+      );
+    }
 
     // Registered, not written: the getter only reaches the wire when a tag
     // variable holds it. It reads this scope's node visit, not the branch.
@@ -190,7 +187,7 @@ export let _dynamic_tag = (
       );
     }
 
-    const chunk = getChunk()!;
+    const chunk = $chunk;
     const beforeBranch = shouldResume ? deferBranchStart(chunk) : undefined;
 
     const render = () => {

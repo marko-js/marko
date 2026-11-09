@@ -5,14 +5,12 @@ const $setup__script = _script("__tests__/tags/child.marko_0", ($scope) => _on($
 	$scope.input_onToggle();
 }));
 const $setup$2 = $setup__script;
-const $input_label = ($scope, input_label) => _text($scope["#text/1"], input_label);
 const $input$1 = ($scope, input) => {
 	_attr($scope["#a/2"], "href", input.hrefFor("x"));
 	$input_onToggle$1($scope, input.onToggle);
-	$input_label($scope, input.label);
-	$input_count$1($scope, input.count);
+	_text($scope["#text/1"], input.label);
+	_attr_class($scope["#a/2"], input.count % 2 ? "odd" : "even");
 };
-const $input_count$1 = ($scope, input_count) => _attr_class($scope["#a/2"], input_count % 2 ? "odd" : "even");
 const $input_onToggle$1 = /*@__PURE__*/ _const("input_onToggle");
 var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$2, $walks$2, $setup$2, $input$1);
 

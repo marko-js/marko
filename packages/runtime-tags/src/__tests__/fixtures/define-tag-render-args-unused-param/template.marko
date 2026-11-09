@@ -5,9 +5,13 @@
 <define/Wrap|a, opts|>
   <p><${opts.content}/></p>
 </define>
+<define/Titled|a, opts|>
+  <h1>${opts.title}</h1>
+</define>
 
 <MyTag(1, "Hello", x) />
 <Wrap(x)>${x}</Wrap>
+<Titled(x)>unread</Titled>
 <button onClick() { x++; }>
   ${x}
 </button>

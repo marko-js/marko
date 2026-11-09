@@ -1,4 +1,7 @@
 import { types as t } from "@marko/compiler";
+
+import { getLiteralName } from "./to-property-name";
+
 export function getTagName<T extends t.MarkoTag>(
   tag: t.NodePath<T>,
 ): T["name"] extends t.StringLiteral ? string : string | undefined {
@@ -19,9 +22,5 @@ export function getTagName<T extends t.MarkoTag>(
 // A name for uid hints and messages: an identifier or string tag name, else
 // "tag". Unlike `getTagName`, it is never undefined.
 export function getTagNameHint(node: t.MarkoTag) {
-  return t.isIdentifier(node.name)
-    ? node.name.name
-    : t.isStringLiteral(node.name)
-      ? node.name.value
-      : "tag";
+  return getLiteralName(node.name) ?? "tag";
 }

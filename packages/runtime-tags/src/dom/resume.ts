@@ -139,7 +139,7 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
   const renders = (self as any)[runtimeId] as Renders | undefined;
   const defineRuntime = (desc: PropertyDescriptor) =>
     Object.defineProperty(self, runtimeId, desc);
-  const initRuntime = (renders: Renders) => {
+  const initRuntime = (renders: Renders) =>
     defineRuntime({
       value: (curRenders = ((renderId: string) => {
         const render = (curRenders[renderId] =
@@ -533,7 +533,6 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
         return render;
       }) as Renders),
     });
-  };
   if (renders) {
     initRuntime(renders);
     for (const renderId in renders) {
@@ -590,8 +589,7 @@ export function _dynamic_tag_var_resume(accessor: EncodedAccessor) {
   _resumed[DYNAMIC_TAG_VAR_REGISTER_ID + accessor] =
     (scope: Scope) => (_?: never) => {
       const node = scope[accessor] as ChildNode;
-      const el =
-        node.nodeType === NodeType.Comment ? node.previousSibling : node;
+      const el = node.nodeType > NodeType.Element ? node.previousSibling : node;
       return MARKO_DEBUG ? _el_read(el) : el;
     };
 }

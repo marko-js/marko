@@ -1,6 +1,5 @@
 // template.marko
-const $await_content__value = ($scope, value) => _text($scope.a, value);
-const $await_content__$params = ($scope, $params2) => $await_content__value($scope, $params2[0]);
+const $await_content__$params = ($scope, $params2) => _text($scope.a, $params2[0]);
 const $placeholder_content = _content("a1", "LOADING...");
 const $try_content__await_promise = /*@__PURE__*/ _await_promise(0, $await_content__$params);
 const $try_content__clickCount = /*@__PURE__*/ _closure_get(3, ($scope) => $try_content__await_promise($scope, resolveAfter($scope._.c)), 0, "a0");

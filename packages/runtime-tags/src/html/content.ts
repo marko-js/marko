@@ -29,7 +29,11 @@ export function _escape(val: unknown) {
   if (MARKO_DEBUG) {
     assertValidTextValue(val);
   }
-  return val ? escapeXMLStr(val + "") : val === 0 ? "0" : "";
+  return val || val === 0
+    ? typeof val === "number"
+      ? val + ""
+      : escapeXMLStr(val + "")
+    : "";
 }
 
 // Escapes `</script`, `<!--`, and `<script`: their combination shifts the parser

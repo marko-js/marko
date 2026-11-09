@@ -1,5 +1,5 @@
 var nodePath = require("path");
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 exports.check = function (taglibFinder) {
   var finderDir = nodePath.join(__dirname, "a/b/c");
@@ -22,6 +22,6 @@ exports.check = function (taglibFinder) {
 
   var pathsAfterReset = getPaths();
 
-  expect(pathsBeforeExclude).to.not.deep.equal(pathsAfterExclude);
-  expect(pathsBeforeExclude).to.deep.equal(pathsAfterReset);
+  assert.notDeepEqual(pathsBeforeExclude, pathsAfterExclude);
+  assert.deepEqual(pathsBeforeExclude, pathsAfterReset);
 };

@@ -6,7 +6,7 @@ const $setup__script$1 = _script("__tests__/tags/counter.marko_0", ($scope) => {
 	_on($scope["#button/0"], "click", function() {
 		$count($scope, +$scope.count + 1);
 	});
-	$signal($scope, 0).onabort = () => console.log("counter destroyed");
+	onAbort($scope, 0, () => console.log("counter destroyed"));
 });
 function $setup$1($scope) {
 	$signalReset($scope, 0);

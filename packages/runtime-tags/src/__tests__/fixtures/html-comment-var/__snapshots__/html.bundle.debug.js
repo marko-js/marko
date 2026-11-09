@@ -2,7 +2,7 @@
 var parent_el_default = _template("__tests__/tags/parent-el.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	let tagName = undefined;
+	let tagName = void 0;
 	_html(`<!--Body Text-->${_el_mark($scope0_id, "#comment/0")}`);
 	const $return = tagName;
 	_script($scope0_id, "__tests__/tags/parent-el.marko_0");

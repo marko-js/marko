@@ -28,7 +28,6 @@ var template_default = _template("a", (input) => {
 			_scope_reason();
 			_html(`item ${_escape(i)}`);
 			$wi__input_itemType && _scope($scope4_id, { _: _scope_with_id($scope2_id) });
-			$wi__input_itemType && _resume_branch($scope4_id);
 		}, $scope2_id, ($scope) => [{ M: i }]));
 		_var($scope2_id, "b", $inputitemType_scope, "a4");
 		_scope($scope2_id, {

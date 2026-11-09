@@ -27,9 +27,8 @@ const $setup = ($_) => {};
 const $input_head__script = _script("__tests__/tags/my-box.marko_0_input_head#4", ($scope) => _attrs_script($scope, "#div/0"));
 const $input_head = /*@__PURE__*/ _const("input_head", ($scope) => {
 	_attrs_content($scope, "#div/0", $scope.input_head);
-	$input_head_content($scope, $scope.input_head?.content);
+	$input_content($scope["#childScope/1"], $scope.input_head?.content);
 	$input_head__script($scope);
 });
-const $input_head_content = ($scope, input_head_content) => $input_content($scope["#childScope/1"], input_head_content);
 const $input = ($scope, input) => $input_head($scope, input.head);
 var my_box_default = /*@__PURE__*/ _template("__tests__/tags/my-box.marko", $template, $walks, 0, $input);

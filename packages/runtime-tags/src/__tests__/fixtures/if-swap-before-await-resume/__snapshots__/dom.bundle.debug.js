@@ -7,18 +7,18 @@ function subscribeCartState(callback) {
 	});
 	return () => {};
 }
-const $cart$1 = /*@__PURE__*/ _let("cart/0", ($scope) => _return($scope, { cart: $scope.cart }));
+const $cart = /*@__PURE__*/ _let("cart/0", ($scope) => _return($scope, { cart: $scope.cart }));
 const $setup__script = _script("__tests__/tags/cart-state.marko_0", ($scope) => {
 	{
 		const unsubscribe = subscribeCartState((state) => {
-			$cart$1($scope, state);
+			$cart($scope, state);
 		});
 		$signal($scope, 0).addEventListener("abort", unsubscribe);
 	}
 });
 function $setup$1($scope) {
 	$signalReset($scope, 0);
-	$cart$1($scope, null);
+	$cart($scope, null);
 	$setup__script($scope);
 }
 var cart_state_default = /*@__PURE__*/ _template("__tests__/tags/cart-state.marko", "", "", /*@__PURE__*/ _return_setup($setup$1));
@@ -32,12 +32,9 @@ const $for_content__collection = ($scope, collection) => {
 };
 const $for_content__$params = ($scope, $params3) => $for_content__collection($scope, $params3[0]);
 const $await_content__for = /*@__PURE__*/ _for_of_unkeyed("#text/0", "<a> </a>", " D ", 0, $for_content__$params);
-const $await_content__collections = ($scope, collections) => $await_content__for($scope, [collections]);
-const $await_content__$params = ($scope, $params2) => $await_content__collections($scope, $params2[0]);
-const $pattern2 = _var_resume("__tests__/template.marko_0_$pattern#4/var", ($scope, $pattern) => $cart($scope, $pattern.cart));
+const $await_content__$params = ($scope, $params2) => $await_content__for($scope, [$params2[0]]);
+const $pattern2 = _var_resume("__tests__/template.marko_0_$pattern#4/var", ($scope, $pattern) => $if($scope, !($pattern.cart !== null) ? 0 : 1));
 const $if = /*@__PURE__*/ _if("#text/3", "<a href=/go-to>Go</a>", 0, 0, "<button>Go to</button>");
-const $hasHydrate = ($scope, hasHydrate) => $if($scope, !hasHydrate ? 0 : 1);
-const $cart = ($scope, cart) => $hasHydrate($scope, cart !== null);
 const $await_content = /*@__PURE__*/ _await_content("#text/2", "<!><!><!>", "b%");
 const $await_promise = /*@__PURE__*/ _await_promise("#text/2", $await_content__$params);
 function $setup($scope) {

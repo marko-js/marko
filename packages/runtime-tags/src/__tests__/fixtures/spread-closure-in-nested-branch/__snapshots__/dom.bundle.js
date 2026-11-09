@@ -9,7 +9,7 @@ const $for_content__if = /*@__PURE__*/ _if(0, "<div></div>", " ", /* @__PURE__ *
 	_attrs_content($scope, "a", $scope._.c);
 	$if_content__item__script($scope);
 }));
-const $for_content__show = /*@__PURE__*/ _for_closure(1, ($scope) => $for_content__if($scope, $scope._.d ? 0 : 1));
+const $for_content__show = /*@__PURE__*/ _for_closure(1, ($scope) => $for_content__if($scope, $scope._.d ? 0 : 1), 5);
 const $if = /*@__PURE__*/ _if(2, "<span></span>", " ", $if_content2__setup);
 const $show = /*@__PURE__*/ _let(3, ($scope) => {
 	$if($scope, $scope.d ? 0 : 1);

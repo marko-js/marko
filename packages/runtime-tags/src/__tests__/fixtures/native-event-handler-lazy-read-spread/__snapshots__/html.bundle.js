@@ -4,10 +4,8 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let count = 0;
 	let log = "";
-	_html(`<button class=inc>inc</button>${_el_mark($scope0_id, "a")}<button class=act${_attrs_partial({ onClick: _resume(function() {
-		log = `${log}[${count}]`;
-	}, "a0", $scope0_id) }, { class: 1 }, "b", $scope0_id, "button")}>act</button>${_el_mark($scope0_id, "b")}<div class=log>${_text_mark($scope0_id, "c", log)}</div>`);
-	_script($scope0_id, "a1");
+	_html(`<button class=inc>inc</button>${_el_mark($scope0_id, "a")}<button class=act>act</button>${_el_mark($scope0_id, "b")}<div class=log>${_text_mark($scope0_id, "c", log)}</div>`);
+	_script($scope0_id, "a0");
 	_scope($scope0_id, {
 		d: count,
 		e: log

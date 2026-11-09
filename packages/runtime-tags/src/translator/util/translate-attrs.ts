@@ -27,6 +27,7 @@ import { getSectionRendererIdentifier } from "./section-renderer";
 import {
   getScopeIdIdentifier,
   getSection,
+  getSectionForBody,
   getRendererReason,
   type Section,
 } from "./sections";
@@ -169,7 +170,7 @@ export function getTranslatedBodyContentProperty(
 ) {
   for (const prop of props) {
     if (contentProps.has(prop)) {
-      return prop as unknown as t.ObjectProperty & { value: t.Expression };
+      return prop as t.ObjectProperty & { value: t.Expression };
     }
   }
 }
@@ -413,11 +414,13 @@ function getConditionTestValue({
 }
 
 function buildContent(body: t.NodePath<t.MarkoTagBody>) {
-  const bodySection = body.node.extra?.section;
+  const bodySection = getSectionForBody(body);
   if (bodySection) {
     if (isOutputHTML()) {
       const serialized = getRendererReason(bodySection);
-      body.node.body.unshift(getScopeReasonStatement(bodySection) as any);
+      (body.node.body as t.Statement[]).unshift(
+        getScopeReasonStatement(bodySection),
+      );
 
       return callRuntime(
         serialized ? "_content_resume" : "_content",
@@ -429,7 +432,7 @@ function buildContent(body: t.NodePath<t.MarkoTagBody>) {
         getScopeIdIdentifier(
           getSection(
             getAttributeTagParent(body.parentPath as t.NodePath<t.MarkoTag>),
-          )!,
+          ),
         ),
         serialized && getRegisteredLocals(bodySection),
       );
@@ -469,14 +472,16 @@ function getRegisteredLocals(bodySection: Section) {
 function getLocalClosureValues(bodySection: Section) {
   if (bodySection.localClosures) {
     return t.objectExpression(
-      toArray(bodySection.localClosures, (closure) =>
-        toObjectProperty(
-          getScopeAccessor(closure, true),
-          getDeclaredBindingExpression(closure),
-        ),
-      ),
+      toArray(bodySection.localClosures, toLocalClosureProperty),
     );
   }
+}
+
+function toLocalClosureProperty(closure: Binding) {
+  return toObjectProperty(
+    getScopeAccessor(closure, true),
+    getDeclaredBindingExpression(closure),
+  );
 }
 
 // The one spread a child reading every prop by name reads, prop by prop.

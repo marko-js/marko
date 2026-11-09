@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), {
@@ -6,10 +6,10 @@ module.exports = function (helpers) {
     label: "Initial Label",
   });
 
-  expect(component.el.className).to.contain("large");
+  assert.match(component.el.className, /large/);
 
   component.setSize("small");
   component.update();
 
-  expect(component.el.className).to.contain("small");
+  assert.match(component.el.className, /small/);
 };

@@ -3,7 +3,7 @@ const $template = "<p></p><button>inc</button>";
 const $walks = " b b";
 const $if_content__n = /*@__PURE__*/ _closure_get("n/3", ($scope) => _text($scope["#text/0"], $scope._._.n), ($scope) => $scope._._, "__tests__/template.marko_2_n#0:2/subscribe");
 const $if_content__setup = $if_content__n;
-const $for_content__n = /*@__PURE__*/ _for_closure("#p/0", ($scope) => _text($scope["#text/0"], $scope._.n));
+const $for_content__n = /*@__PURE__*/ _for_closure("#p/0", ($scope) => _text($scope["#text/0"], $scope._.n), 3);
 const $for_content__if = /*@__PURE__*/ _if("#text/1", " ", " ", $if_content__setup);
 const $for_content__setup = ($scope) => {
 	$for_content__n._($scope);

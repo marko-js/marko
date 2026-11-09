@@ -13,10 +13,8 @@ const $walks = "b%b%/&c";
 const $load_Child_trigger = /*@__PURE__*/ _load_event_trigger("click", "body");
 let $load_Child_setup = /*@__PURE__*/ _load_setup(/*@__PURE__*/ $load_Child_trigger(($_) => import("./v:child.marko.setup.mjs")));
 let $load_Child_tag_input_value = /*@__PURE__*/ _load_signal(/*@__PURE__*/ $load_Child_trigger(($_) => import("./v:child.marko.input_value.mjs")));
-const $await_content2__v = ($scope, v) => _text($scope["#text/0"], v);
-const $await_content2__$params = ($scope, $params4) => $await_content2__v($scope, $params4[0]);
-const $await_content__v = ($scope, v) => _text($scope["#text/0"], v);
-const $await_content__$params = ($scope, $params3) => $await_content__v($scope, $params3[0]);
+const $await_content2__$params = ($scope, $params4) => _text($scope["#text/0"], $params4[0]);
+const $await_content__$params = ($scope, $params3) => _text($scope["#text/0"], $params3[0]);
 const $placeholder_content__setup = ($scope) => _text($scope["#text/0"], (() => {
 	throw new Error("P");
 })());
@@ -27,8 +25,7 @@ const $try_content2__setup = ($scope) => {
 	$await_content($scope);
 	$try_content2__await_promise($scope, resolveAfter("x", 1));
 };
-const $catch_content__err_message = ($scope, err_message) => _text($scope["#text/0"], err_message);
-const $catch_content__$params = ($scope, $params2) => $catch_content__err_message($scope, $params2[0]?.message);
+const $catch_content__$params = ($scope, $params2) => _text($scope["#text/0"], $params2[0]?.message);
 const $catch_content = _content("__tests__/template.marko_2*content", "caught <!>", "b%", 0, $catch_content__$params);
 const $try_content__try = /*@__PURE__*/ _try("#text/2", "<!><!><!>", "b%", $try_content2__setup, $placeholder_content);
 const $await_content2 = /*@__PURE__*/ _await_content("#text/3", " ", " ");

@@ -3,8 +3,7 @@ const $template$2 = "<!><!><!>";
 const $walks$2 = "b%c";
 const $setup$2 = ($_) => {};
 const $for_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $for_content__item_content = $for_content__dynamicTag;
-const $for_content__$params = ($scope, $params2) => $for_content__item_content($scope, $params2[0]?.content);
+const $for_content__$params = ($scope, $params2) => $for_content__dynamicTag($scope, $params2[0]?.content);
 const $for = /*@__PURE__*/ _for_of_unkeyed("#text/0", "<!><!><!>", "b%", 0, $for_content__$params);
 const $input_item = ($scope, input_item) => $for($scope, [input_item]);
 const $input$1 = ($scope, input) => $input_item($scope, input.item);
@@ -20,9 +19,7 @@ const $item_content__setup = $item_content__input_show;
 const $item_content = /*@__PURE__*/ _content("__tests__/tags/child.marko_1*content", "<!><!><!>", "b%", $item_content__setup);
 const $input_items = /*@__PURE__*/ _const("input_items", ($scope) => {
 	let $item;
-	forOf($scope.input_items, (item) => {
-		$item = attrTags($item, { content: $item_content($scope) });
-	});
+	forOf($scope.input_items, (item) => $item = attrTags($item, { content: $item_content($scope) }));
 	$input_item($scope["#childScope/0"], $item);
 });
 const $input = ($scope, input) => {

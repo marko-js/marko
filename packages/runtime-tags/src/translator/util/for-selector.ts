@@ -2,13 +2,13 @@ import type { types as t } from "@marko/compiler";
 
 import {
   type Binding,
-  BindingType,
+  bindingUtil,
   getCanonicalBinding,
   getPropertyAlias,
 } from "./bindings";
 import { forEach, some } from "./optional";
 import { getReferencedBindings } from "./references";
-import { isDirectClosure, type Section } from "./sections";
+import type { Section } from "./sections";
 
 export function isForSelectorClosure(
   bodySection: Section,
@@ -28,18 +28,29 @@ export function detectForSelector(
   bodySection: Section,
   keyBinding: Binding,
 ): void {
+  const parentSection = bodySection.parent!;
   let closures: Set<Binding> | undefined;
   for (const expr of keyBinding.reads.keys()) {
     if (expr.section !== bodySection) continue;
     forEach(getReferencedBindings(expr), (closure) => {
       const canonical = getCanonicalBinding(closure);
       if (
-        closure.type !== BindingType.constant &&
-        isDirectClosure(bodySection, closure) &&
         !closures?.has(canonical) &&
+        bindingUtil.has(bodySection.referencedClosures, canonical) &&
+        // The parent loop's own selector, detected first, reaches only two of
+        // its rows.
+        !parentSection.selector?.has(canonical) &&
         onlyComparesKey(closure, canonical, bodySection, keyBinding)
       ) {
         (closures ||= new Set()).add(canonical);
+        // The parent's scope finds the rows by the value, so it reads one from
+        // further up as its own closure.
+        if (canonical.section !== parentSection) {
+          parentSection.referencedClosures = bindingUtil.add(
+            parentSection.referencedClosures,
+            canonical,
+          );
+        }
       }
     });
   }
@@ -105,10 +116,7 @@ function resolvesThrough(
 }
 
 function readsKey(read: t.NodeExtra["read"], keyBinding: Binding): boolean {
-  if (!read || read.getter) return false;
-  const binding = getPropertyAlias(read.binding, read.properties);
   return (
-    !!binding &&
-    getCanonicalBinding(binding) === getCanonicalBinding(keyBinding)
+    !!read && !read.getter && resolvesTo(read, getCanonicalBinding(keyBinding))
   );
 }

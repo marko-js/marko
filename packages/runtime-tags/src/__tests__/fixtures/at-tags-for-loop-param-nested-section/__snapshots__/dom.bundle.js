@@ -1,13 +1,13 @@
 // tags/list.marko
-const $for_content__item_content = /* @__PURE__ */ _dynamic_tag(0);
-const $for_content__$params = ($scope, $params2) => $for_content__item_content($scope, $params2[0]?.content);
+const $for_content__dynamicTag = /*@__PURE__*/ _dynamic_tag(0);
+const $for_content__$params = ($scope, $params2) => $for_content__dynamicTag($scope, $params2[0]?.content);
 const $for = /*@__PURE__*/ _for_of_unkeyed(0, "<!><!><!>", "b%", 0, $for_content__$params);
 const $input_item = ($scope, input_item) => $for($scope, [input_item]);
 
 // template.marko
 const $if_content2__item_text = /*@__PURE__*/ _if_closure(0, 0, ($scope) => _text($scope.a, $scope._.b));
 const $if_content2__setup = $if_content2__item_text;
-const $for_content__i = /*@__PURE__*/ _for_closure(2, ($scope) => _text($scope.a, $scope._.d));
+const $for_content__i = /*@__PURE__*/ _for_closure(2, ($scope) => _text($scope.a, $scope._.d), 9);
 const $for_content__setup = ($scope) => {
 	$for_content__i._($scope);
 	_text($scope.b, $scope.M);
@@ -28,11 +28,7 @@ const $item_content__show = /*@__PURE__*/ _closure_get(8, ($scope) => {
 const $item_content__for = /*@__PURE__*/ _for_until_unkeyed(2, "<span><!>.<!></span>", "D%c%", $for_content__setup);
 const $item_content__setup = ($scope) => {
 	$item_content__show($scope);
-	$item_content__for($scope, [
-		2,
-		0,
-		1
-	]);
+	$item_content__for($scope, [2]);
 };
 const $item_content__i__closure = /*@__PURE__*/ _closure($showbi_content__i);
 const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a3", "<!><!><!><!><!>", "b%b%b%", $item_content__setup), { 3($scope) {
@@ -42,17 +38,13 @@ const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a3
 } });
 const $count = /*@__PURE__*/ _let(5, ($scope) => {
 	let $item;
-	forUntil($scope.f, 0, 1, (i) => {
-		$item = attrTags($item, { content: $item_content($scope, { 3: i }) });
-	});
+	forUntil($scope.f, 0, 1, (i) => $item = attrTags($item, { content: $item_content($scope, { 3: i }) }));
 	$input_item($scope.d, $item);
 });
 const $show = /*@__PURE__*/ _let(6, /* @__PURE__ */ _closure($item_content__show, $item_content2__show));
 const $items = /*@__PURE__*/ _let(7, ($scope) => {
 	let $item2;
-	forOf($scope.h, (item) => {
-		$item2 = attrTags($item2, { content: $item_content2($scope, { 1: item?.text }) });
-	});
+	forOf($scope.h, (item) => $item2 = attrTags($item2, { content: $item_content2($scope, { 1: item?.text }) }));
 	$input_item($scope.e, $item2);
 });
 const $setup__script = _script("a6", ($scope) => {

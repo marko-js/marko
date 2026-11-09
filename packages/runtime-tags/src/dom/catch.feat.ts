@@ -71,7 +71,7 @@ installCatch(
           render[PendingRenderProp.Pending] = 1;
           return branch[AccessorProp.PendingRenders].push(render);
         }
-        branch = branch![AccessorProp.ParentBranch];
+        branch = branch[AccessorProp.ParentBranch];
       }
       render[PendingRenderProp.Pending] = 0;
       runRender(render);

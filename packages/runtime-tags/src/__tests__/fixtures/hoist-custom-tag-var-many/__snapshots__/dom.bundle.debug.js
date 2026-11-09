@@ -18,11 +18,7 @@ const $for_content4__setup = ($scope) => {
 	_var($scope, "#childScope/0", $for_content4__setHtml);
 };
 const $for_content3__for = /*@__PURE__*/ _for_to_unkeyed("#ul/0", $template$1, /*@__PURE__*/ ((_w0) => `0${_w0}&`)(" b"), $for_content4__setup);
-const $for_content3__setup = ($scope) => $for_content3__for($scope, [
-	3,
-	0,
-	1
-]);
+const $for_content3__setup = ($scope) => $for_content3__for($scope, [3]);
 const $setHtml2_getter = /*@__PURE__*/ _hoist("setHtml2", "BranchScopes:#text/1");
 const $for_content2__setHtml = /*@__PURE__*/ _const("setHtml2", ($scope) => _assert_hoist($scope.setHtml2));
 const $for_content2__setup = ($scope) => {
@@ -37,11 +33,7 @@ const $for_content__setup = ($scope) => {
 };
 const $for = /*@__PURE__*/ _for_to_unkeyed("#text/0", $template$1, /*@__PURE__*/ ((_w0) => `0${_w0}&`)(" b"), $for_content__setup);
 const $for2 = /*@__PURE__*/ _for_to_unkeyed("#text/1", $template$1, /*@__PURE__*/ ((_w0) => `0${_w0}&`)(" b"), $for_content2__setup);
-const $to = /*@__PURE__*/ _let("to/3", ($scope) => $for2($scope, [
-	$scope.to,
-	0,
-	1
-]));
+const $to = /*@__PURE__*/ _let("to/3", ($scope) => $for2($scope, [$scope.to]));
 const $for3 = /*@__PURE__*/ _for_to_unkeyed("#text/2", "<ul></ul>", " ", $for_content3__setup);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	$setHtml_getter($scope)()("First Only");
@@ -54,17 +46,9 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	}
 });
 function $setup($scope) {
-	$for($scope, [
-		5,
-		0,
-		1
-	]);
+	$for($scope, [5]);
 	$to($scope, 3);
-	$for3($scope, [
-		3,
-		0,
-		1
-	]);
+	$for3($scope, [3]);
 	$setup__script($scope);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

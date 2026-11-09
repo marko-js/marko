@@ -157,11 +157,7 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
       // A lazy template renders through the wrapper its import shares.
       const childFile = loadFileForTag(tag)!;
       tagIdentifier = t.identifier(
-        ensureHtmlLoadWrapped(
-          childFile,
-          importTemplate,
-          loadConfig.render ? undefined : loadConfig.triggers,
-        ),
+        ensureHtmlLoadWrapped(childFile, importTemplate, loadConfig.triggers),
       );
     } else {
       tagIdentifier =
@@ -180,7 +176,6 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
   const { node } = tag;
   const tagExtra = node.extra as KnownTagExtra;
   const file = getFile();
-  const relativePath = getTagRelativePath(tag);
   const programSection = getProgram().node.extra.section!;
   const childFile = loadFileForTag(tag)!;
   const childExports = childFile.ast.program.extra.exportNames!;
@@ -209,7 +204,8 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
     knownTagTranslateDOM(
       tag,
       (binding) => {
-        const signalKey = `${triggerIdent ? triggerIdent.name : ""}\0${childFileName}\0${childExports.params.get(binding)!}`;
+        const childExport = childExports.params.get(binding)!;
+        const signalKey = `${triggerIdent ? triggerIdent.name : ""}\0${childFileName}\0${childExport}`;
         return (
           signals.get(signalKey) ||
           createLoadIdentifier(
@@ -220,7 +216,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
             buildLoadSignalVirtualModule(
               file,
               childFileName,
-              childExports.params.get(binding)!,
+              childExport,
               binding.name,
             )!,
             triggerIdent,
@@ -272,6 +268,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
         : undefined,
     );
   } else {
+    const relativePath = getTagRelativePath(tag);
     knownTagTranslateDOM(
       tag,
       (binding, preferredName, directContent) =>
@@ -371,8 +368,8 @@ function buildLoadSignalVirtualModule(
   });
 }
 
-function loadTriggersToExpression(loadConfig: LoadImportConfig | undefined) {
-  if (!loadConfig || loadConfig.render) return;
+function loadTriggersToExpression(loadConfig: LoadImportConfig) {
+  if (loadConfig.render) return;
 
   const triggers = loadConfig.triggers.map(toDOMTriggerExpression);
   return triggers.length === 1

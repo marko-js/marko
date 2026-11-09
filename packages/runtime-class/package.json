@@ -1,6 +1,6 @@
 {
   "name": "marko",
-  "version": "5.39.48",
+  "version": "5.39.49",
   "private": true,
   "description": "UI Components + streaming, async, high performance, HTML templating for Node.js and the browser.",
   "keywords": [
@@ -70,8 +70,8 @@
     "build": "babel ./src --out-dir ./dist --extensions .js --copy-files --config-file ../../babel.config.js --env-name=production"
   },
   "dependencies": {
-    "@marko/compiler": "^5.42.14",
-    "@marko/runtime-tags": "^6.4.8",
+    "@marko/compiler": "^5.42.16",
+    "@marko/runtime-tags": "^6.4.10",
     "app-module-path": "^2.2.0",
     "argly": "^1.2.0",
     "browser-refresh-client": "1.1.4",
@@ -79,10 +79,9 @@
     "csstype": "^3.2.3",
     "events-light": "^1.0.5",
     "listener-tracker": "^2.0.0",
-    "magic-string": "^0.30.21",
-    "minimatch": "^10.2.5",
+    "magic-string": "^1.4.5",
+    "minimatch": "^11.0.4",
     "raptor-util": "^3.2.0",
-    "resolve-from": "^5.0.0",
     "self-closing-tags": "^1.0.1",
     "warp10": "^2.1.0"
   },
@@ -90,7 +89,7 @@
     "marko": "workspace:*"
   },
   "engines": {
-    "node": ">=22"
+    "node": ">=22.12.0"
   },
   "logo": {
     "url": "https://raw.githubusercontent.com/marko-js/branding/master/marko-logo-small.png"

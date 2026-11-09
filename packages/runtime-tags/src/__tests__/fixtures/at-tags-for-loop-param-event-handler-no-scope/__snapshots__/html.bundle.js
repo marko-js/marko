@@ -18,17 +18,15 @@ var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let $item;
-	forOf(["a", "b"], (foo) => {
-		$item = attrTags($item, {
-			onClick: _resume_locals(function(ev) {
-				ev.target.textContent = foo;
-			}, "a0", { e: foo }),
-			content: _content("a1", () => {
-				_scope_reason();
-				_scope_id();
-				_html("Click");
-			}, $scope0_id)
-		});
-	});
+	forOf(["a", "b"], (foo) => $item = attrTags($item, {
+		onClick: _resume_locals(function(ev) {
+			ev.target.textContent = foo;
+		}, "a0", { e: foo }),
+		content: _content("a1", () => {
+			_scope_reason();
+			_scope_id();
+			_html("Click");
+		}, $scope0_id)
+	}));
 	my_menu_default({ item: $item });
 }, 1);

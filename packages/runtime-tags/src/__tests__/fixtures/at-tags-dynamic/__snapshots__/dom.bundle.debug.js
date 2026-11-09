@@ -28,12 +28,10 @@ function $setup($scope) {
 	let $col;
 	forOf([["a", "b"], ["c", "d"]], (col, i) => {
 		let $row;
-		forOf(col, (row) => {
-			$row = attrTags($row, {
-				row,
-				content: $row_content($scope, { row })
-			});
-		});
+		forOf(col, (row) => $row = attrTags($row, {
+			row,
+			content: $row_content($scope, { row })
+		}));
 		$col = attrTags($col, {
 			x: i,
 			row: $row
@@ -60,11 +58,10 @@ const $for_content3__attrs = /*@__PURE__*/ _const("attrs", ($scope) => {
 	$for_content3__attrs__script($scope);
 });
 const $for_content3__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
-const $for_content3__content = $for_content3__dynamicTag;
 const $for_content3__$params = ($scope, $params4) => $for_content3__$temp($scope, $params4[0]);
 const $for_content3__$temp = ($scope, $temp3) => {
 	$for_content3__attrs($scope, (({ content, ...attrs }) => attrs)($temp3));
-	$for_content3__content($scope, $temp3.content);
+	$for_content3__dynamicTag($scope, $temp3.content);
 };
 const $for_content2__attrs__script = _script("__tests__/tags/hello/index.marko_2_attrs#5", ($scope) => _attrs_script($scope, "#div/0"));
 const $for_content2__attrs = /*@__PURE__*/ _const("attrs", ($scope) => {
@@ -72,11 +69,10 @@ const $for_content2__attrs = /*@__PURE__*/ _const("attrs", ($scope) => {
 	$for_content2__attrs__script($scope);
 });
 const $for_content2__for = /*@__PURE__*/ _for_of_unkeyed("#text/1", "<div class=row><!></div>", " D%", 0, $for_content3__$params);
-const $for_content2__row = ($scope, row) => $for_content2__for($scope, [row]);
 const $for_content2__$params = ($scope, $params3) => $for_content2__$temp($scope, $params3[0]);
 const $for_content2__$temp = ($scope, $temp2) => {
 	$for_content2__attrs($scope, (({ content, row, ...attrs }) => attrs)($temp2));
-	$for_content2__row($scope, $temp2.row);
+	$for_content2__for($scope, [$temp2.row]);
 };
 const $for_content__attrs__script = _script("__tests__/tags/hello/index.marko_1_attrs#5", ($scope) => _attrs_script($scope, "#div/0"));
 const $for_content__attrs = /*@__PURE__*/ _const("attrs", ($scope) => {
@@ -84,11 +80,10 @@ const $for_content__attrs = /*@__PURE__*/ _const("attrs", ($scope) => {
 	$for_content__attrs__script($scope);
 });
 const $for_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
-const $for_content__content = $for_content__dynamicTag;
 const $for_content__$params = ($scope, $params2) => $for_content__$temp($scope, $params2[0]);
 const $for_content__$temp = ($scope, $temp) => {
 	$for_content__attrs($scope, (({ content, ...attrs }) => attrs)($temp));
-	$for_content__content($scope, $temp.content);
+	$for_content__dynamicTag($scope, $temp.content);
 };
 const $for = /*@__PURE__*/ _for_of_unkeyed("#text/0", "<div class=item><!></div>", " D%", 0, $for_content__$params);
 const $input_list_item = ($scope, input_list_item) => $for($scope, [input_list_item]);

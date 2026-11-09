@@ -1,5 +1,3 @@
-export { forIn, forOf, forTo, forUntil } from "../common/for";
-
 import type { Falsy } from "../common/types";
 
 export function forOfBy(

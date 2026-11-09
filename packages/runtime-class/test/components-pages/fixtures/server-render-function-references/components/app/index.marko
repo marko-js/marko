@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import assert from 'assert/strict';
 
 class {
     onCreate() {
@@ -13,17 +13,17 @@ class {
 
     test() {
         var hello = this.getComponent('hello');
-        expect(hello.el.innerHTML).to.equal('John Doe');
+        assert.equal(hello.el.innerHTML, 'John Doe');
 
         // Rerender just the nested component
         hello.forceUpdate();
         hello.update();
-        expect(hello.el.innerHTML).to.equal('John Doe');
+        assert.equal(hello.el.innerHTML, 'John Doe');
 
         this.state.person = {firstName: 'Jane', lastName: 'Doe'};
         this.update();
 
-        expect(hello.el.innerHTML).to.equal('Jane Doe');
+        assert.equal(hello.el.innerHTML, 'Jane Doe');
     }
 }
 

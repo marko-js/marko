@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 function triggerMouseEvent(el, type) {
   var ev = document.createEvent("MouseEvent");
@@ -29,5 +29,5 @@ function triggerClick(el) {
 it("should allow getEl() with a split component", function () {
   var app = window.splitComponent;
   triggerClick(app.el);
-  expect(app.clicked).to.equal(true);
+  assert.equal(app.clicked, true);
 });

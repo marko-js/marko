@@ -14,11 +14,12 @@ import {
 import { _escape } from "../../../html/content";
 import { flattenTextOnlyConditional } from "../../core/if";
 import { preAnalyze as preAnalyzeTextarea } from "../../core/textarea";
-import { buildAttrNameError } from "../../util/assert";
+import { buildAttrError, buildAttrNameError } from "../../util/assert";
 import buildStringExpression from "../../util/build-string-expression";
 import { generateUid, generateUidIdentifier } from "../../util/generate-uid";
 import { getMarkoRoot, isMarkoRoot } from "../../util/get-root";
 import {
+  getTagNameBinding,
   isUnresolvedKnownWrongTag,
   tagNotFoundError,
 } from "../../util/tag-name-type";
@@ -31,7 +32,6 @@ declare module "@marko/compiler/dist/types" {
   }
 }
 
-const TAG_NAME_IDENTIFIER_REG = /^[A-Z][a-zA-Z0-9_$]*$/;
 // Keyed per refining modifier (`value:parseInt:=x` vs `value:=x`), since the
 // modifier is baked into the built handler.
 const BINDING_CHANGE_HANDLER = new WeakMap<
@@ -118,17 +118,12 @@ function normalizeTag(tag: t.NodePath<t.MarkoTag>) {
   let invalidNameReg = invalidAttrNameReg;
   if (name.type === "StringLiteral") {
     const tagName = name.value;
-    if (
-      tag.scope.getBinding(tagName) &&
-      TAG_NAME_IDENTIFIER_REG.test(tagName)
-    ) {
+    if (getTagNameBinding(tag)) {
       // Convert tags which have an associated binding to an identifier.
       // <MyTag> --> <${MyTag}>
       node.name = withPreviousLocation(t.identifier(tagName), name);
     }
   }
-  // Before the body: a child asking for this tag's type would cache the
-  // unrewritten name as an unresolved dynamic tag.
   normalizeBody(tag.get("body").get("body"));
   normalizeBody(tag.get("attributeTags"));
 
@@ -180,14 +175,64 @@ function normalizeTag(tag: t.NodePath<t.MarkoTag>) {
         attr.name += ":" + attr.modifier;
       }
 
-      if (invalidNameReg.test(attr.name)) {
-        if (isUnresolvedKnownWrongTag(tag)) throw tagNotFoundError(tag);
-        throw buildAttrNameError(tag, attr, "Invalid attribute name.");
-      }
-
+      assertAttrName(tag, attr, invalidNameReg);
       attr.modifier = null;
+    } else if (nativeTagDef) {
+      const spreadAttrs = getObjectSpreadAttrs(tag, attr, invalidNameReg);
+      if (spreadAttrs) {
+        attributes.splice(i, 1, ...spreadAttrs);
+        i += spreadAttrs.length - 1;
+      }
     }
   }
+}
+
+function assertAttrName(
+  tag: t.NodePath<t.MarkoTag>,
+  attr: t.MarkoAttribute,
+  invalidNameReg: RegExp,
+) {
+  if (invalidNameReg.test(attr.name)) {
+    if (isUnresolvedKnownWrongTag(tag)) throw tagNotFoundError(tag);
+    throw buildAttrNameError(tag, attr, "Invalid attribute name.");
+  }
+}
+
+// An object literal names each attribute it spreads, so each property is written
+// as that attribute in place, where a later attribute still overrides it.
+function getObjectSpreadAttrs(
+  tag: t.NodePath<t.MarkoTag>,
+  spread: t.MarkoSpreadAttribute,
+  invalidNameReg: RegExp,
+) {
+  const { value } = spread;
+  if (value.type !== "ObjectExpression") return;
+  const attrs: t.MarkoAttribute[] = [];
+  for (const prop of value.properties) {
+    const name = prop.type !== "SpreadElement" && getStaticKeyName(prop);
+    if (!name || name === "__proto__") return;
+    let attrValue: t.Expression;
+    if (prop.type === "ObjectProperty") {
+      attrValue = prop.value as t.Expression;
+    } else if (prop.kind === "method") {
+      attrValue = withPreviousLocation(
+        t.functionExpression(
+          undefined,
+          prop.params,
+          prop.body,
+          prop.generator,
+          prop.async,
+        ),
+        prop,
+      );
+    } else {
+      return;
+    }
+    const attr = withPreviousLocation(t.markoAttribute(name, attrValue), prop);
+    assertAttrName(tag, attr, invalidNameReg);
+    attrs.push(attr);
+  }
+  return attrs;
 }
 
 function getStaticNativeTagDef(tag: t.NodePath<t.MarkoTag>) {
@@ -219,22 +264,26 @@ function buildChangeHandlerAttr(
   let refiningFn: undefined | t.Identifier;
   if (attr.modifier != null) {
     if (!t.isValidIdentifier(attr.modifier)) {
-      throw tag.hub.buildError(
-        attr.value.loc?.end &&
-          ({
-            loc: {
-              start: {
-                line: attr.value.loc.start.line,
-                column: attr.value.loc.start.column - attr.modifier.length - 2,
+      const msg =
+        "Bound attribute refinement shorthand must be a valid JavaScript identifier.";
+      throw attr.value.loc
+        ? tag.hub.buildError(
+            {
+              loc: {
+                start: {
+                  line: attr.value.loc.start.line,
+                  column:
+                    attr.value.loc.start.column - attr.modifier.length - 2,
+                },
+                end: {
+                  line: attr.value.loc.start.line,
+                  column: attr.value.loc.start.column - 2,
+                },
               },
-              end: {
-                line: attr.value.loc.start.line,
-                column: attr.value.loc.start.column - 2,
-              },
-            },
-          } as any),
-        "Bound attribute refinement shorthand must be a valid JavaScript identifier.",
-      );
+            } as any,
+            msg,
+          )
+        : buildAttrError(tag, attr, msg);
     }
     refiningFn = withPreviousLocation(t.identifier(attr.modifier), attr);
   }
@@ -381,12 +430,8 @@ function buildRefiningFnForwarder(
   const newValueId = generateUid("next");
   return t.arrowFunctionExpression(
     [t.identifier(newValueId)],
-    t.blockStatement([
-      t.expressionStatement(
-        t.callExpression(changeHandler, [
-          t.callExpression(t.cloneNode(refiningFn), [t.identifier(newValueId)]),
-        ]),
-      ),
+    t.callExpression(changeHandler, [
+      t.callExpression(t.cloneNode(refiningFn), [t.identifier(newValueId)]),
     ]),
   );
 }
@@ -402,15 +447,11 @@ function buildChangeHandlerFunction(
   }
   return t.arrowFunctionExpression(
     [withPreviousLocation(t.identifier(newId), id)],
-    t.blockStatement([
-      t.expressionStatement(
-        t.assignmentExpression(
-          "=",
-          withPreviousLocation(t.identifier(id.name), id),
-          newValue,
-        ),
-      ),
-    ]),
+    t.assignmentExpression(
+      "=",
+      withPreviousLocation(t.identifier(id.name), id),
+      newValue,
+    ),
   );
 }
 
@@ -448,7 +489,7 @@ function ensureDestructuredChangeHandler(parent: t.NodePath<t.ObjectProperty>) {
   return changeKey;
 }
 
-function getStaticKeyName(prop: t.ObjectProperty) {
+function getStaticKeyName(prop: t.ObjectMember) {
   return prop.computed && !t.isStringLiteral(prop.key)
     ? undefined
     : getLiteralName(prop.key);

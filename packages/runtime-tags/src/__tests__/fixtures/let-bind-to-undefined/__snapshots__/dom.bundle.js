@@ -8,7 +8,5 @@ const $count = /*@__PURE__*/ _let(2, ($scope) => $input_value($scope.a, $scope.c
 const $setup__script = _script("a1", ($scope) => _on($scope.b, "click", function() {
 	$count($scope, void 0);
 }));
-const $valueChange = ($scope) => (_new_count) => {
-	$count($scope, _new_count);
-};
+const $valueChange = ($scope) => (_new_count) => $count($scope, _new_count);
 _resumed.a0 = $valueChange;

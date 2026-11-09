@@ -1,12 +1,12 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 it("should allow diffing html", function () {
   var app = window.app;
   app.forceUpdate();
   app.update();
-  expect(app.getEl()).to.equal(undefined);
+  assert.equal(app.getEl(), undefined);
   app.input = { show: true };
   app.forceUpdate();
   app.update();
-  expect(app.getEl().outerHTML).to.equal('<div class="show"></div>');
+  assert.equal(app.getEl().outerHTML, '<div class="show"></div>');
 });

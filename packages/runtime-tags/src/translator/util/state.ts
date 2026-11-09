@@ -15,7 +15,7 @@ export function createAnalysisState<T>(init: () => T) {
 }
 
 function getAnalysisRoot() {
-  return getProgram().node.extra!.section!;
+  return getProgram().node.extra.section!;
 }
 
 function createKeyedState<K extends object, T>(getKey: () => K, init: () => T) {

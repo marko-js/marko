@@ -32,8 +32,7 @@ _content_resume($Tag_content);
 const $Note_content__input_note = /*@__PURE__*/ _closure_get("input_note/6", ($scope) => _text($scope["#text/0"], $scope._.input_note), 0, "__tests__/template.marko_1_input_note#0:3/subscribe");
 const $Note_content__setup = $Note_content__input_note;
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $Tag_content);
-const $Tag = $dynamicTag;
-const $input_on = ($scope, input_on) => $Tag($scope, input_on ? card_default : "div");
+const $input_on = ($scope, input_on) => $dynamicTag($scope, input_on ? card_default : "div");
 const $input = ($scope, input) => {
 	$input_note($scope, input.note);
 	$input_on($scope, input.on);

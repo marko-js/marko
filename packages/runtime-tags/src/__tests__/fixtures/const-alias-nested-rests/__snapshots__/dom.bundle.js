@@ -7,8 +7,8 @@ const $obj = /*@__PURE__*/ _let(7, ($scope) => {
 const $outer = /*@__PURE__*/ _const(12, ($scope) => _text($scope.c, JSON.stringify($scope.m)));
 const $pattern2 = ($scope, $pattern) => {
 	$last($scope, (([, , ...last]) => last)($pattern));
-	$first($scope, $pattern[0]);
-	$second($scope, $pattern[1]);
+	_text($scope.d, $pattern[0]);
+	_text($scope.e, $pattern[1]);
 };
 const $obj_d = /*@__PURE__*/ _const(8, ($scope) => $pattern2($scope, [
 	$scope.i,
@@ -32,5 +32,3 @@ const $setup__script = _script("a0", ($scope) => _on($scope.g, "click", function
 	});
 }));
 const $last = ($scope, last) => _text($scope.f, last.join("+"));
-const $first = ($scope, first) => _text($scope.d, first);
-const $second = ($scope, second) => _text($scope.e, second);

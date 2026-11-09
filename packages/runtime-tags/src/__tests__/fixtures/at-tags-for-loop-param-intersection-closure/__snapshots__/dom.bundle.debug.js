@@ -3,8 +3,7 @@ const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $setup$1 = ($_) => {};
 const $for_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $for_content__item_content = $for_content__dynamicTag;
-const $for_content__$params = ($scope, $params2) => $for_content__item_content($scope, $params2[0]?.content);
+const $for_content__$params = ($scope, $params2) => $for_content__dynamicTag($scope, $params2[0]?.content);
 const $for = /*@__PURE__*/ _for_of_unkeyed("#text/0", "<!><!><!>", "b%", 0, $for_content__$params);
 const $input_item = ($scope, input_item) => $for($scope, [input_item]);
 const $input = ($scope, input) => $input_item($scope, input.item);
@@ -31,9 +30,7 @@ function $setup($scope) {
 		1,
 		2,
 		3
-	], (item) => {
-		$item = attrTags($item, { content: $item_content($scope, { item }) });
-	});
+	], (item) => $item = attrTags($item, { content: $item_content($scope, { item }) }));
 	$input_item($scope["#childScope/0"], $item);
 	$mult($scope, 2);
 	$setup__script($scope);

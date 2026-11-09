@@ -15,7 +15,7 @@ export default function invokeHandlers(config, handlers, path) {
         throw cause;
       }
 
-      message += ". Cause: " + (cause.stack || cause);
+      message += ". Cause: " + cause;
     }
 
     if (path) {

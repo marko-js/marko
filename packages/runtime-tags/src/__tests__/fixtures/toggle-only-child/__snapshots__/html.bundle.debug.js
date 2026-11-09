@@ -12,9 +12,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "#div/0", 1, 1, 1, "</div>", 1);
-	_html(`<input${_attr_input_value($scope0_id, "#input/1", value, _resume((_new_value) => {
-		value = _new_value;
-	}, "__tests__/template.marko_0/valueChange", $scope0_id))}>${_el_mark($scope0_id, "#input/1")}`);
+	_html(`<input${_attr_input_value($scope0_id, "#input/1", value, _resume((_new_value) => value = _new_value, "__tests__/template.marko_0/valueChange", $scope0_id))}>${_el_mark($scope0_id, "#input/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {}, "__tests__/template.marko", 0, { "ControlledHandler:#input/1": ["valueChange"] });
 }, 1);

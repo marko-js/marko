@@ -1,15 +1,15 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), {});
   var innerComponent = component.getComponent("inner");
 
-  expect(helpers.targetEl.querySelector(".inner").innerHTML).to.equal("0");
+  assert.equal(helpers.targetEl.querySelector(".inner").innerHTML, "0");
 
   component.state.count++;
   component.update();
 
-  expect(component.getComponent("inner")).to.equal(innerComponent);
+  assert.equal(component.getComponent("inner"), innerComponent);
 
-  expect(helpers.targetEl.querySelector(".inner").innerHTML).to.equal("1");
+  assert.equal(helpers.targetEl.querySelector(".inner").innerHTML, "1");
 };

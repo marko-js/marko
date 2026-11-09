@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), {
@@ -12,7 +12,7 @@ module.exports = function (helpers) {
     simpleDestroyed = true;
   };
 
-  expect(simple != null).to.equal(true);
+  assert.equal(simple != null, true);
 
   component.input = {
     showSimple: false,
@@ -20,8 +20,8 @@ module.exports = function (helpers) {
 
   component.update();
 
-  expect(simpleDestroyed).to.equal(true);
-  expect(simple.isDestroyed()).to.equal(true);
+  assert.equal(simpleDestroyed, true);
+  assert.equal(simple.isDestroyed(), true);
 
-  expect(component.getComponent("simple") == null).to.equal(true);
+  assert.equal(component.getComponent("simple") == null, true);
 };

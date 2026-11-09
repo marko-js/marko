@@ -1,6 +1,6 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"));
-  expect(component.receivedData).to.eql({ hello: "world" });
+  assert.deepEqual(component.receivedData, { hello: "world" });
 };

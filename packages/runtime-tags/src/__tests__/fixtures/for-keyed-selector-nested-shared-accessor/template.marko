@@ -1,0 +1,13 @@
+<let/selected=1/>
+<let/rows=[{ id: 1, label: "a" }, { id: 2, label: "b" }, { id: 3, label: "c" }]/>
+<if=rows.length>
+  <let/hovered=2/>
+  <ul>
+    <for|row| of=rows by="id">
+      <li class=[selected === row.id && "sel", hovered === row.id && "hov"]>
+        <button.select onClick() { selected = row.id }>${row.label}</button>
+        <button.hover onClick() { hovered = row.id }>h</button>
+      </li>
+    </for>
+  </ul>
+</if>

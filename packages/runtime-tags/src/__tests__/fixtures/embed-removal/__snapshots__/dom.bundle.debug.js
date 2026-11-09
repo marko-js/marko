@@ -2,9 +2,9 @@
 const $template = "<button>Cleanup</button>";
 const $walks = " b";
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
-	$signal($scope, 0).onabort = () => {
+	onAbort($scope, 0, () => {
 		console.log("cleaned up");
-	};
+	});
 	_on($scope["#button/0"], "click", function() {
 		document.body.innerHTML = "";
 	});

@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 var domData = require("../../../../src/runtime/components/dom-data");
 var vElementByDOMNode = domData.___vElementByDOMNode;
 
@@ -45,14 +45,8 @@ module.exports = function (helpers) {
     for (var key in lookupB) {
       if (lookupA[key]) {
         var fullPath = path + " " + key;
-        expect(
-          lookupA[key].el === lookupB[key].el,
-          'unpreserved element "' + fullPath + '"',
-        ).to.equal(true);
-        expect(
-          lookupA[key].component === lookupB[key].component,
-          'unpreserved component "' + fullPath + '"',
-        ).to.equal(true);
+        assert.equal(lookupA[key].el === lookupB[key].el, true, 'unpreserved element "' + fullPath + '"');
+        assert.equal(lookupA[key].component === lookupB[key].component, true, 'unpreserved component "' + fullPath + '"');
         ensurePreservedKeys(
           lookupA[key].children,
           lookupB[key].children,

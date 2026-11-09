@@ -18,8 +18,7 @@ const PEOPLE = [
 	"bob",
 	"carol"
 ];
-const $for_content__person = ($scope, person) => _text($scope.a, person);
-const $for_content__$params = ($scope, $params2) => $for_content__person($scope, $params2[0]);
+const $for_content__$params = ($scope, $params2) => _text($scope.a, $params2[0]);
 const $menu_content__for = /*@__PURE__*/ _for_of_unkeyed(0, "<div>person: <!></div>", "Db%", 0, $for_content__$params);
 const $menu_content__setup = ($scope) => $menu_content__for($scope, [PEOPLE]);
 const $menu_content = _content("a0", "<!><!><!>", "b%", $menu_content__setup);

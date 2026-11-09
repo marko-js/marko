@@ -8,7 +8,7 @@ _content_resume($inputitemType_content);
 const $inputtype_content = _content("__tests__/template.marko_3*content", "body");
 const $item_getter = _hoist_resume("__tests__/template.marko_0_$item#2:3/hoist", "$item", "BranchScopes:#text/1");
 const $for_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $inputitemType_content, ($_) => $for_content__$item);
-const $for_content__input_itemType = /*@__PURE__*/ _for_closure("#text/1", ($scope) => $for_content__dynamicTag($scope, $scope._.input_itemType));
+const $for_content__input_itemType = /*@__PURE__*/ _for_closure("#text/1", ($scope) => $for_content__dynamicTag($scope, $scope._.input_itemType), 8);
 const $for_content__setup = $for_content__input_itemType;
 const $for_content__$item = _var_resume("__tests__/template.marko_2_$item#3/var", /*@__PURE__*/ _const("$item", ($scope) => _assert_hoist($scope.$item)));
 const $el_getter = /*@__PURE__*/ _hoist("$el", "BranchScopes:#text/0");
@@ -24,11 +24,7 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	for (const item of $item_getter($scope)) item.setAttribute("data-mounted", "");
 });
 function $setup($scope) {
-	$for($scope, [
-		2,
-		0,
-		1
-	]);
+	$for($scope, [2]);
 	$setup__script($scope);
 }
 const $input = ($scope, input) => {

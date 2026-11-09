@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component1 = helpers.mount(require.resolve("./index"), {});
@@ -15,9 +15,9 @@ module.exports = function (helpers) {
 
   component2.emit("foo", "a", "b");
 
-  expect(fooEvent[0]).to.equal("a");
-  expect(fooEvent[1]).to.equal("b");
-  expect(fooEventThis).to.equal(component2);
+  assert.equal(fooEvent[0], "a");
+  assert.equal(fooEvent[1], "b");
+  assert.equal(fooEventThis, component2);
 
   fooEvent = null;
 
@@ -25,5 +25,5 @@ module.exports = function (helpers) {
 
   component2.emit("foo", "a", "b");
 
-  expect(fooEvent).to.equal(null);
+  assert.equal(fooEvent, null);
 };

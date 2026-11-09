@@ -1,26 +1,26 @@
+const assert = require("assert/strict");
+
 var nodePath = require("path");
 
-exports.check = function (taglibLoader, expect) {
+exports.check = function (taglibLoader) {
   var taglib = taglibLoader.loadTaglibFromFile(
     nodePath.join(__dirname, "marko.json"),
   );
-  expect(taglib != null).to.equal(true);
+  assert.equal(taglib != null, true);
 
   var shorthandCheckbox = taglib.tags["shorthand-checkbox"];
-  expect(shorthandCheckbox.attributes.checked.type).to.equal("boolean");
-  expect(shorthandCheckbox.attributes.label.type).to.equal("object");
-  expect(shorthandCheckbox.nestedTags.label.type).to.equal("object");
-  expect(shorthandCheckbox.nestedTags.foo.attributes.bar.type).to.equal(
-    "string",
-  );
+  assert.equal(shorthandCheckbox.attributes.checked.type, "boolean");
+  assert.equal(shorthandCheckbox.attributes.label.type, "object");
+  assert.equal(shorthandCheckbox.nestedTags.label.type, "object");
+  assert.equal(shorthandCheckbox.nestedTags.foo.attributes.bar.type, "string");
 
   var shorthandTabsTag = taglib.tags["shorthand-tabs"];
-  expect(shorthandTabsTag.attributes.orientation != null).to.equal(true);
-  expect(shorthandTabsTag.attributes.orientation.type).to.equal("string");
-  expect(shorthandTabsTag.attributes.tabs.type).to.equal("expression");
+  assert.equal(shorthandTabsTag.attributes.orientation != null, true);
+  assert.equal(shorthandTabsTag.attributes.orientation.type, "string");
+  assert.equal(shorthandTabsTag.attributes.tabs.type, "expression");
 
   var nestedTabTag = shorthandTabsTag.nestedTags.tab;
-  expect(nestedTabTag.attributes.label != null).to.equal(true);
-  expect(nestedTabTag.isRepeated).to.equal(true);
-  expect(nestedTabTag.targetProperty).to.equal("tabs");
+  assert.equal(nestedTabTag.attributes.label != null, true);
+  assert.equal(nestedTabTag.isRepeated, true);
+  assert.equal(nestedTabTag.targetProperty, "tabs");
 };

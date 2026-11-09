@@ -13,7 +13,5 @@ const $open = /*@__PURE__*/ _let(2, ($scope) => {
 	});
 	_text($scope.b, String($scope.c));
 });
-const $openChange = ($scope) => (_new_open) => {
-	$open($scope, _new_open);
-};
+const $openChange = ($scope) => (_new_open) => $open($scope, _new_open);
 _resumed.a0 = $openChange;

@@ -3,6 +3,12 @@
 <div>
   1|Hello|1
 </div>
+<div>
+  1||2
+</div>
+<div>
+  1||2
+</div>
 <button>
   1
 </button>
@@ -16,14 +22,24 @@ document.querySelector("button").click();
 <div>
   1|Hello|2
 </div>
+<div>
+  2||3
+</div>
+<div>
+  2||3
+</div>
 <button>
   2
 </button>
 ```
 ## Change
 ```
-UPDATE: div::text@8 "1" => "2"
+UPDATE: div:nth-of-type(2)::text@0 "1" => "2"
+UPDATE: div:nth-of-type(3)::text@0 "1" => "2"
 UPDATE: button::text "1" => "2"
+UPDATE: div:nth-of-type(1)::text@8 "1" => "2"
+UPDATE: div:nth-of-type(2)::text@3 "2" => "3"
+UPDATE: div:nth-of-type(3)::text@3 "2" => "3"
 ```
 
 # Update
@@ -34,14 +50,24 @@ document.querySelector("button").click();
 <div>
   1|Hello|3
 </div>
+<div>
+  3||4
+</div>
+<div>
+  3||4
+</div>
 <button>
   3
 </button>
 ```
 ## Change
 ```
-UPDATE: div::text@8 "2" => "3"
+UPDATE: div:nth-of-type(2)::text@0 "2" => "3"
+UPDATE: div:nth-of-type(3)::text@0 "2" => "3"
 UPDATE: button::text "2" => "3"
+UPDATE: div:nth-of-type(1)::text@8 "2" => "3"
+UPDATE: div:nth-of-type(2)::text@3 "3" => "4"
+UPDATE: div:nth-of-type(3)::text@3 "3" => "4"
 ```
 
 # Update
@@ -52,12 +78,22 @@ document.querySelector("button").click();
 <div>
   1|Hello|4
 </div>
+<div>
+  4||5
+</div>
+<div>
+  4||5
+</div>
 <button>
   4
 </button>
 ```
 ## Change
 ```
-UPDATE: div::text@8 "3" => "4"
+UPDATE: div:nth-of-type(2)::text@0 "3" => "4"
+UPDATE: div:nth-of-type(3)::text@0 "3" => "4"
 UPDATE: button::text "3" => "4"
+UPDATE: div:nth-of-type(1)::text@8 "3" => "4"
+UPDATE: div:nth-of-type(2)::text@3 "4" => "5"
+UPDATE: div:nth-of-type(3)::text@3 "4" => "5"
 ```

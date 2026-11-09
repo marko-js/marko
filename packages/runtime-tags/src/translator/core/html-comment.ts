@@ -38,7 +38,8 @@ export default {
     assertIdentifierVar(tag);
 
     const tagVar = tag.node.var;
-    let needsBinding = !!tagVar && isTagVarUsed(tag);
+    const varUsed = isTagVarUsed(tag);
+    let needsBinding = varUsed;
 
     let nodeBinding: Binding | undefined;
     const referenceNodes: t.Node[] = [];
@@ -68,7 +69,7 @@ export default {
 
       trackDomVarReferences(tag, nodeBinding);
 
-      if (isTagVarUsed(tag)) addAlwaysReason(nodeBinding);
+      if (varUsed) addAlwaysReason(nodeBinding);
       addReasonExprs(ensureSlot(nodeBinding), tagExtra);
     }
 

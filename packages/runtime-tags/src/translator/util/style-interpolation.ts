@@ -1,7 +1,7 @@
 import { types as t } from "@marko/compiler";
 
 export const htmlStyleTagAlternateMsg =
-  " For a native html [`<style>` tag](https://markojs.com/docs/reference/core-tag#style) use the `html-style` core tag instead.";
+  " For a native html `<style>` tag use the [`html-style` core tag](https://markojs.com/docs/reference/core-tag#html-script--html-style) instead.";
 
 export function checkStyleInterpolations(tag: t.NodePath<t.MarkoTag>) {
   const { body } = tag.node.body;
@@ -94,7 +94,7 @@ export function checkStyleInterpolations(tag: t.NodePath<t.MarkoTag>) {
       } else if (!groupDepth) {
         switch (c) {
           case ":":
-            if (blockDepth) valueColon = true;
+            valueColon ||= blockDepth > 0;
             break;
           case "{":
             endRun(true);

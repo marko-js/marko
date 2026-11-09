@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 var lookup = require("./lookup");
 
 var items = [
@@ -23,7 +23,7 @@ module.exports = function (helpers) {
 
   // Test first one twice, should be the same
   lookup.componentsById[0].emitPurchase();
-  expect(component.purchaseEvents).to.deep.equal([
+  assert.deepEqual(component.purchaseEvents, [
     {
       id: 0,
       title: "Item 1",
@@ -31,7 +31,7 @@ module.exports = function (helpers) {
   ]);
 
   lookup.componentsById[0].emitPurchase();
-  expect(component.purchaseEvents).to.deep.equal([
+  assert.deepEqual(component.purchaseEvents, [
     {
       id: 0,
       title: "Item 1",
@@ -40,7 +40,7 @@ module.exports = function (helpers) {
 
   // Test second one twice, should be the same
   lookup.componentsById[1].emitPurchase();
-  expect(component.purchaseEvents).to.deep.equal([
+  assert.deepEqual(component.purchaseEvents, [
     {
       id: 0,
       title: "Item 1",
@@ -52,7 +52,7 @@ module.exports = function (helpers) {
   ]);
 
   lookup.componentsById[1].emitPurchase();
-  expect(component.purchaseEvents).to.deep.equal([
+  assert.deepEqual(component.purchaseEvents, [
     {
       id: 0,
       title: "Item 1",

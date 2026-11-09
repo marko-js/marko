@@ -8,9 +8,7 @@ var counter_default = _template("__tests__/tags/counter.marko", (input) => {
 	_script($scope0_id, "__tests__/tags/counter.marko_0");
 	_scope($scope0_id, {
 		x,
-		"#TagVariableChange": _resume((_new_x) => {
-			x = _new_x;
-		}, "__tests__/tags/counter.marko_0/valueChange", $scope0_id) || void 0
+		"#TagVariableChange": _resume((_new_x) => x = _new_x, "__tests__/tags/counter.marko_0/valueChange", $scope0_id) || void 0
 	}, "__tests__/tags/counter.marko", 0, { x: "1:6" });
 	return $return;
 });

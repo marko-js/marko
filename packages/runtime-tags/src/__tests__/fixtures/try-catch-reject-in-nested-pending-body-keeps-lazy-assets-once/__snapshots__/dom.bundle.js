@@ -2,24 +2,17 @@
 let $load_Child_setup = /*@__PURE__*/ _load_setup(($_) => import("./v:child.marko.setup.mjs"));
 let $load_Child_tag_input_value = /*@__PURE__*/ _load_signal(($_) => import("./v:child.marko.input_value.mjs"));
 const $catch_content3 = _content("b0", "never caught");
-const $catch_content2__err_message = ($scope, err_message) => _text($scope.a, err_message);
-const $catch_content2__$params = ($scope, $params3) => $catch_content2__err_message($scope, $params3[0]?.message);
+const $catch_content2__$params = ($scope, $params3) => _text($scope.a, $params3[0]?.message);
 const $catch_content2 = _content("b1", "caught <!>", "b%", 0, $catch_content2__$params);
 const $catch_content__setup = ($scope) => {
 	$load_Child_setup($scope, $scope.b, $scope.a);
 	$load_Child_tag_input_value($scope.b, "catch");
 };
-const $catch_content__err_message = ($scope, err_message) => _text($scope.c, err_message);
-const $catch_content__$params = ($scope, $params2) => $catch_content__err_message($scope, $params2[0]?.message);
+const $catch_content__$params = ($scope, $params2) => _text($scope.c, $params2[0]?.message);
 const $catch_content = _content("b2", "<!><!> caught <!>", "b%/&c%", $catch_content__setup, $catch_content__$params);
 
 // child.marko
-var child_exports = /* @__PURE__ */ __exportAll({
-	$input_value: () => $input_value,
-	$setup: () => $setup,
-	$template: () => $template,
-	$walks: () => "D l"
-});
+var child_exports = /* @__PURE__ */ __exportAll({});
 const $template = "<span> </span>";
 const $setup = ($_) => {};
 const $input_value__script = _script("a0", ($scope) => console.log("loaded " + $scope.d));

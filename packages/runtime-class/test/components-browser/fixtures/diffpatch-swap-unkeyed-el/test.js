@@ -1,26 +1,26 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), {});
   var children = component.getEl("root").children;
-  expect(children.length).to.equal(2);
+  assert.equal(children.length, 2);
 
-  expect(children[0].getAttribute("data-foo")).to.equal("true");
-  expect(children[0].getAttribute("data-bar")).to.equal(null);
+  assert.equal(children[0].getAttribute("data-foo"), "true");
+  assert.equal(children[0].getAttribute("data-bar"), null);
 
-  expect(children[1].getAttribute("data-foo")).to.equal(null);
-  expect(children[1].getAttribute("data-bar")).to.equal("true");
+  assert.equal(children[1].getAttribute("data-foo"), null);
+  assert.equal(children[1].getAttribute("data-bar"), "true");
 
   component.state.swapped = true;
   component.update();
 
   children = component.getEl("root").children;
 
-  expect(children.length).to.equal(2);
+  assert.equal(children.length, 2);
 
-  expect(children[0].getAttribute("data-foo")).to.equal(null);
-  expect(children[0].getAttribute("data-bar")).to.equal("true");
+  assert.equal(children[0].getAttribute("data-foo"), null);
+  assert.equal(children[0].getAttribute("data-bar"), "true");
 
-  expect(children[1].getAttribute("data-foo")).to.equal("true");
-  expect(children[1].getAttribute("data-bar")).to.equal(null);
+  assert.equal(children[1].getAttribute("data-foo"), "true");
+  assert.equal(children[1].getAttribute("data-bar"), null);
 };

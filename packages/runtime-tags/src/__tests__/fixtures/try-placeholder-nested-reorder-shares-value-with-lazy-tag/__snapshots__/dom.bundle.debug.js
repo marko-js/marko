@@ -18,8 +18,7 @@ const $template = "<!><!><!>";
 const $walks = "b%c";
 let $load_Child_setup = /*@__PURE__*/ _load_setup(($_) => import("./v:child.marko.setup.mjs"));
 let $load_Child_tag_input_shared = /*@__PURE__*/ _load_signal(($_) => import("./v:child.marko.input_shared.mjs"));
-const $await_content3__c = ($scope, c) => _text($scope["#text/0"], c);
-const $await_content3__$params = ($scope, $params4) => $await_content3__c($scope, $params4[0]);
+const $await_content3__$params = ($scope, $params4) => _text($scope["#text/0"], $params4[0]);
 const $placeholder_content3__shared = /*@__PURE__*/ _const("shared", ($scope) => $load_Child_tag_input_shared($scope["#childScope/1"], $scope.shared));
 const $placeholder_content3__count = /*@__PURE__*/ _let("count/5", ($scope) => _text($scope["#text/3"], $scope.count));
 const $placeholder_content3__setup__script = _script("__tests__/template.marko_8", ($scope) => _on($scope["#button/2"], "click", function() {
@@ -38,10 +37,9 @@ const $try_content3__setup = ($scope) => {
 	$await_content3($scope);
 	$try_content3__await_promise($scope, resolveAfter("c", 3));
 };
-const $await_content2__b = ($scope, b) => _text($scope["#text/0"], b);
 const $await_content2__try = /*@__PURE__*/ _try("#text/1", "<!><!><!>", "b%", $try_content3__setup, $placeholder_content3);
 const $await_content2__setup = $await_content2__try;
-const $await_content2__$params = ($scope, $params3) => $await_content2__b($scope, $params3[0]);
+const $await_content2__$params = ($scope, $params3) => _text($scope["#text/0"], $params3[0]);
 const $placeholder_content2 = _content("__tests__/template.marko_5*content", "middle");
 const $await_content2 = /*@__PURE__*/ _await_content("#text/0", "<!><!><!>", "%b%", $await_content2__setup);
 const $try_content2__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content2__$params);
@@ -49,10 +47,9 @@ const $try_content2__setup = ($scope) => {
 	$await_content2($scope);
 	$try_content2__await_promise($scope, resolveAfter("b", 1));
 };
-const $await_content__a = ($scope, a) => _text($scope["#text/0"], a);
 const $await_content__try = /*@__PURE__*/ _try("#text/1", "<!><!><!>", "b%", $try_content2__setup, $placeholder_content2);
 const $await_content__setup = $await_content__try;
-const $await_content__$params = ($scope, $params2) => $await_content__a($scope, $params2[0]);
+const $await_content__$params = ($scope, $params2) => _text($scope["#text/0"], $params2[0]);
 const $placeholder_content = _content("__tests__/template.marko_2*content", "outer");
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<!><!><!>", "%b%", $await_content__setup);
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);

@@ -1,5 +1,5 @@
 require("../__util__/test-init");
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 var AsyncVDOMBuilder = require("marko/src/runtime/vdom/AsyncVDOMBuilder");
 var VElement = require("marko/src/runtime/vdom/VElement");
 
@@ -22,27 +22,27 @@ describe("AsyncVDOMBuilder", function () {
       seen = err;
     });
     out.on("finish", function () {
-      expect(seen).to.be.an("error");
-      expect(seen.message).to.equal("boom");
+      assert.ok(seen instanceof Error);
+      assert.equal(seen.message, "boom");
       done();
     });
-    expect(out.error(new Error("boom"))).to.equal(out);
+    assert.equal(out.error(new Error("boom")), out);
   });
 
   it("refuses to go async once in sync mode", function () {
     var out = new AsyncVDOMBuilder();
     out.sync();
-    expect(function () {
+    assert.throws(function () {
       out.beginAsync();
-    }).to.throw(/sync mode/);
+    }, /sync mode/);
   });
 
   it("creates a sibling out sharing the same global", function () {
     var global = { a: 1 };
     var out = new AsyncVDOMBuilder(global);
     var next = out.createOut();
-    expect(next).to.not.equal(out);
-    expect(next.global).to.equal(out.global);
+    assert.notEqual(next, out);
+    assert.equal(next.global, out.global);
   });
 
   it("routes on/once for last through onLast", function (done) {
@@ -57,7 +57,7 @@ describe("AsyncVDOMBuilder", function () {
 
     var lastOut = out.beginAsync({ last: true });
     out.on("finish", function () {
-      expect(calls).to.equal(2);
+      assert.equal(calls, 2);
       done();
     });
     out.end();
@@ -71,9 +71,9 @@ describe("AsyncVDOMBuilder", function () {
       calls++;
     };
     out.on("finish", onFinish);
-    expect(out.removeListener("finish", onFinish)).to.equal(out);
+    assert.equal(out.removeListener("finish", onFinish), out);
     out.on("finish", function () {
-      expect(calls).to.equal(0);
+      assert.equal(calls, 0);
       done();
     });
     out.end();
@@ -86,7 +86,7 @@ describe("AsyncVDOMBuilder", function () {
     });
     out.error(new Error("nope"));
     return caught.then(function (message) {
-      expect(message).to.equal("nope");
+      assert.equal(message, "nope");
     });
   });
 
@@ -99,7 +99,7 @@ describe("AsyncVDOMBuilder", function () {
         throw new Error("resolved after an error");
       },
       function (err) {
-        expect(err.message).to.equal("nope");
+        assert.equal(err.message, "nope");
       },
     );
   });
@@ -108,7 +108,7 @@ describe("AsyncVDOMBuilder", function () {
     var out = new AsyncVDOMBuilder();
     out.element("div", {}, 0);
     var tree = out.___getOutput();
-    expect(getChildNodes(tree).length).to.equal(1);
+    assert.equal(getChildNodes(tree).length, 1);
   });
 
   it("end, then listen for finish", function (done) {
@@ -116,7 +116,7 @@ describe("AsyncVDOMBuilder", function () {
     out.element("div", {}, 0);
     out.end();
     out.on("finish", function (result) {
-      expect(getChildNodes(result.getOutput()).length).to.equal(1);
+      assert.equal(getChildNodes(result.getOutput()).length, 1);
       done();
     });
   });
@@ -136,12 +136,13 @@ describe("AsyncVDOMBuilder", function () {
     out.end();
     out.on("finish", function (result) {
       var tree = result.getOutput();
-      expect(getChildNodes(tree).length).to.equal(3);
-      expect(tree.___firstChild.___nodeName).to.equal("div");
-      expect(tree.___firstChild.___nextSibling.___nodeName).to.equal("span");
-      expect(
+      assert.equal(getChildNodes(tree).length, 3);
+      assert.equal(tree.___firstChild.___nodeName, "div");
+      assert.equal(tree.___firstChild.___nextSibling.___nodeName, "span");
+      assert.equal(
         tree.___firstChild.___nextSibling.___nextSibling.___nodeName,
-      ).to.equal("section");
+        "section",
+      );
       done();
     });
   });
@@ -152,7 +153,7 @@ describe("AsyncVDOMBuilder", function () {
     out
       .end()
       .then((result) => {
-        expect(getChildNodes(result.getOutput()).length).to.equal(1);
+        assert.equal(getChildNodes(result.getOutput()).length, 1);
         done();
       })
       .catch(done);
@@ -161,10 +162,10 @@ describe("AsyncVDOMBuilder", function () {
   it("async flush", function (done) {
     var out = new AsyncVDOMBuilder();
     out.on("update", function (result) {
-      expect(getChildNodes(result.getOutput()).length).to.equal(1);
+      assert.equal(getChildNodes(result.getOutput()).length, 1);
     });
     out.once("finish", function (result) {
-      expect(getChildNodes(result.getOutput()).length).to.equal(2);
+      assert.equal(getChildNodes(result.getOutput()).length, 2);
       done();
     });
 
@@ -189,10 +190,10 @@ describe("AsyncVDOMBuilder", function () {
       var header = childNodes[0];
       var list = childNodes[1];
       var paragraph = childNodes[2];
-      expect(header.___nodeName).to.equal("h1");
-      expect(list.___nodeName).to.equal("ul");
-      expect(getChildNodes(list).length).to.equal(10);
-      expect(paragraph.___nodeName).to.equal("p");
+      assert.equal(header.___nodeName, "h1");
+      assert.equal(list.___nodeName, "ul");
+      assert.equal(getChildNodes(list).length, 10);
+      assert.equal(paragraph.___nodeName, "p");
       done();
     });
 
@@ -222,8 +223,8 @@ describe("AsyncVDOMBuilder", function () {
     out.once("finish", function (result) {
       var tree = result.getOutput();
       var childNodes = getChildNodes(tree);
-      expect(childNodes[0].___nodeName).to.equal("div");
-      expect(childNodes[1].___nodeValue).to.equal("Hello <em>World</em>");
+      assert.equal(childNodes[0].___nodeName, "div");
+      assert.equal(childNodes[1].___nodeValue, "Hello <em>World</em>");
       done();
     });
   });

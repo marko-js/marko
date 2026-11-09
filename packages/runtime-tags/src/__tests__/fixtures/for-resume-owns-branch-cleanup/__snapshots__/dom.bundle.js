@@ -8,11 +8,7 @@ const $for_content__setup = ($scope) => {
 	$for_content__setup__script($scope);
 };
 const $for = /*@__PURE__*/ _for_to_unkeyed(0, "<p>item <!></p>", "Db%", $for_content__setup);
-const $count$1 = ($scope, count) => $for($scope, [
-	count,
-	0,
-	1
-]);
+const $count$1 = ($scope, count) => $for($scope, [count]);
 
 // template.marko
 const $if_content__count = /*@__PURE__*/ _if_closure(2, 0, ($scope) => $count$1($scope.a, $scope._.e));

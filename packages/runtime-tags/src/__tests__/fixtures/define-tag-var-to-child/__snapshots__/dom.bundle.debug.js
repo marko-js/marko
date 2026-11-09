@@ -1,7 +1,7 @@
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!><!><!>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `0&b/${_w0}&%b%c`)($walks$1);
-const $for_content__x = /*@__PURE__*/ _for_closure("#text/4", ($scope) => $input_value($scope["#childScope/0"], $scope["#LoopKey"] + $scope._.x));
+const $for_content__x = /*@__PURE__*/ _for_closure("#text/4", ($scope) => $input_value($scope["#childScope/0"], $scope["#LoopKey"] + $scope._.x), 9, "#scopeOffset/1");
 const $for_content__setup = $for_content__x;
 const $if_content__x = /*@__PURE__*/ _if_closure("#text/3", 0, ($scope) => $input_value($scope["#childScope/0"], $scope._.x));
 const $if_content__setup = $if_content__x;
@@ -13,11 +13,7 @@ const $for = /*@__PURE__*/ _for_until_unkeyed("#text/4", $template$1, /*@__PURE_
 const $x = _var_resume("__tests__/template.marko_0_x#8/var", /*@__PURE__*/ _const("x", ($scope) => {
 	$input_value($scope["#childScope/2"], $scope.x);
 	$if($scope, $scope.x > 1 ? 0 : 1);
-	$for($scope, [
-		$scope.x,
-		0,
-		1
-	]);
+	$for($scope, [$scope.x]);
 	$if_content__x($scope);
 	$for_content__x($scope);
 }));

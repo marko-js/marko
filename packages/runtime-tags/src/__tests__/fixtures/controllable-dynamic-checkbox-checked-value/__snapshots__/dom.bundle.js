@@ -26,7 +26,5 @@ const $setup__script = _script("a2", ($scope) => {
 		$show($scope, !$scope.f);
 	});
 });
-const $checkedValueChange2 = ($scope) => (_new_checkedValue) => {
-	$checkedValue($scope, _new_checkedValue);
-};
+const $checkedValueChange2 = ($scope) => (_new_checkedValue) => $checkedValue($scope, _new_checkedValue);
 _resumed.a0 = $checkedValueChange2;

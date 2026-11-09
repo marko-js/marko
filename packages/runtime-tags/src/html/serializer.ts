@@ -577,7 +577,10 @@ function writeScopesRoot(state: State, flushes: ScopeFlush[]) {
   }
 
   let extras = "";
-  if (state.deferredRefs.size || hasChannelCalls(state)) {
+  if (
+    state.deferredRefs.size ||
+    hasMatchingCalls(state, state.channel?.readyId)
+  ) {
     extras = state.writeTrailing(scopesIndex);
   }
 
@@ -735,10 +738,6 @@ function writeCallArg(state: State, val: unknown, valueId: string | null) {
   } else {
     state.buf.push("void 0");
   }
-}
-
-function hasChannelCalls(state: State) {
-  return hasMatchingCalls(state, state.channel?.readyId);
 }
 
 export function hasMatchingCalls(state: State, readyId: string | undefined) {
@@ -1626,7 +1625,7 @@ function writeURLSearchParams(state: State, val: URLSearchParams) {
 }
 
 function writeHeaders(state: State, val: Headers) {
-  const headers = stringEntriesToHeadersInit(val as any);
+  const headers = stringEntriesToHeadersInit(val);
   state.buf.push("new Headers" + (headers ? "(" + headers + ")" : ""));
   return true;
 }
@@ -1634,7 +1633,7 @@ function writeHeaders(state: State, val: Headers) {
 function writeFormData(state: State, val: FormData, ref: Reference) {
   let sep = "[";
   let valStr: string = "";
-  for (const [key, value] of val as unknown as Iterable<[string, unknown]>) {
+  for (const [key, value] of val) {
     if (typeof value !== "string") {
       // `File`/`Blob` entries aren't serializable yet; fail like any other
       // unsupported value rather than silently dropping the entry.
@@ -1685,22 +1684,10 @@ function writeRequest(state: State, val: Request, ref: Reference) {
     sep = ",";
   }
 
-  const seenHeaders = state.refs.get(val.headers);
-  if (seenHeaders) {
-    // Dedup against the already-serialized Headers instead of re-emitting the
-    // entries inline (which also clobbered its reference).
-    options += sep + "headers:" + ensureRefAccess(state, seenHeaders);
+  const headers = headersOption(state, val.headers, ref);
+  if (headers) {
+    options += sep + "headers:" + headers;
     sep = ",";
-  } else {
-    state.refs.set(
-      val.headers,
-      new Reference(ref, "headers", state.flushId, null),
-    );
-    const headers = stringEntriesToHeadersInit(val.headers as any);
-    if (headers) {
-      options += sep + "headers:" + headers;
-      sep = ",";
-    }
   }
 
   if (val.integrity) {
@@ -1758,20 +1745,9 @@ function writeResponse(state: State, val: Response, ref: Reference) {
     sep = ",";
   }
 
-  const seenHeaders = state.refs.get(val.headers);
-  if (seenHeaders) {
-    // Dedup against the already-serialized Headers instead of re-emitting the
-    // entries inline (which also clobbered its reference).
-    options += sep + "headers:" + ensureRefAccess(state, seenHeaders);
-  } else {
-    state.refs.set(
-      val.headers,
-      new Reference(ref, "headers", state.flushId, null),
-    );
-    const headers = stringEntriesToHeadersInit(val.headers as any);
-    if (headers) {
-      options += sep + "headers:" + headers;
-    }
+  const headers = headersOption(state, val.headers, ref);
+  if (headers) {
+    options += sep + "headers:" + headers;
   }
 
   if (!val.body || val.bodyUsed) {
@@ -1787,6 +1763,13 @@ function writeResponse(state: State, val: Response, ref: Reference) {
   }
 
   return true;
+}
+
+function headersOption(state: State, headers: Headers, ref: Reference) {
+  const seen = state.refs.get(headers);
+  if (seen) return ensureRefAccess(state, seen);
+  state.refs.set(headers, new Reference(ref, "headers", state.flushId, null));
+  return stringEntriesToHeadersInit(headers);
 }
 
 // Rebuilt from `resolvedOptions()`, with `locale` passed as the first argument
@@ -2504,9 +2487,9 @@ function nextId(state: State): string {
 }
 
 function hasSymbolIterator(
-  value: unknown,
+  value: object,
 ): value is { [Symbol.iterator](): IterableIterator<unknown> } {
-  return Symbol.iterator in (value as any);
+  return Symbol.iterator in value;
 }
 
 function stringEntriesToHeadersInit(entries: Iterable<[string, string]>) {

@@ -139,6 +139,9 @@ function getBaseBabelConfig(filename, { babelConfig, ...markoConfig }) {
     babelrc: loadConfig,
     configFile: loadConfig,
     browserslistConfigFile: loadConfig,
+    // A template never carries an input map, so Babel must not take one from a
+    // `sourceMappingURL` comment inside it.
+    inputSourceMap: false,
     ...babelConfig,
     filename,
     sourceType: "module",

@@ -3,9 +3,9 @@ const $template = "<button>Toggle</button><pre></pre><!><!>";
 const $walks = " b b%c";
 const $if_content__setup__script = _script("__tests__/template.marko_1", ($scope) => {
 	_el_read($scope._["#pre/1"]).innerHTML += "\nmounted";
-	$signal($scope, 0).onabort = () => {
+	onAbort($scope, 0, () => {
 		_el_read($scope._["#pre/1"]).innerHTML += "\ndestroyed";
-	};
+	});
 });
 const $if_content__setup = ($scope) => {
 	$signalReset($scope, 0);

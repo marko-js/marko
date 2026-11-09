@@ -1,12 +1,12 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 exports.templateData = {
   testDataProvider: Promise.resolve({ name: "Frank" }),
 };
 
 exports.checkHtml = function (html) {
-  expect(html).to.contain("Loading main...");
-  expect(html).to.contain("Hello Frank");
+  assert.match(html, /Loading main\.\.\./);
+  assert.match(html, /Hello Frank/);
 };
 
 exports.skip_vdom = "client-reorder/placeholders are not supported in vdom";

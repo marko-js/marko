@@ -16,31 +16,36 @@ const cwdRegExp = new RegExp(
 );
 
 describe("runtime-class/translator", () => {
+  const dev = createModes({});
+  const production = createModes({ optimize: true });
   autotest("fixtures", {
-    cjs: runTest({ output: "html", modules: "cjs" }),
-    html: runTest({ output: "html" }),
-    htmlProduction: runTest({
-      output: "html",
-      optimize: true,
-    }),
-    vdom: runTest({ output: "dom" }),
-    vdomProduction: runTest({
-      output: "dom",
-      optimize: true,
-    }),
-    generated: runTest({ output: "migrate" }),
-    hydrate: runTest({
-      output: "hydrate",
+    cjs: createModes({ modules: "cjs" })("html"),
+    html: dev("html"),
+    htmlProduction: production("html"),
+    vdom: dev("dom"),
+    vdomProduction: production("dom"),
+    generated: dev("migrate"),
+    hydrate: createModes({
       resolveVirtualDependency(from, { virtualPath }) {
         return virtualPath;
       },
-    }),
+    })("hydrate"),
   });
 });
 
-function runTest(config) {
+// The modes made from one config differ only in `output`, as a bundler
+// plugin's do, so they share a compile cache per fixture.
+function createModes(config) {
+  const caches = new Map();
+  return (output) => runTest({ ...config, output }, caches);
+}
+
+function runTest(config, caches) {
   return ({ mode, test, resolve, snapshot }) => {
-    const relativeFixtureDir = path.relative(process.cwd(), resolve("."));
+    const fixtureDir = resolve(".");
+    let cache = caches.get(fixtureDir);
+    if (!cache) caches.set(fixtureDir, (cache = new Map()));
+    const relativeFixtureDir = path.relative(process.cwd(), fixtureDir);
     const testConfigFile = resolve("test.js");
     const testConfig = fs.existsSync(testConfigFile)
       ? require(testConfigFile)
@@ -49,6 +54,7 @@ function runTest(config) {
 
     const compilerConfig = {
       ...config,
+      cache,
       babelConfig: {
         ...config.babelConfig,
         babelrc: false,

@@ -1,22 +1,22 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), {});
 
   var button1Component = component.getComponent("button1");
 
-  expect(button1Component.el.innerHTML).to.contain("Initial Button Label");
-  expect(button1Component.el.className).to.contain("large");
+  assert.match(button1Component.el.innerHTML, /Initial Button Label/);
+  assert.match(button1Component.el.className, /large/);
 
   button1Component.setSize("small");
   button1Component.update();
 
-  expect(button1Component.el.innerHTML).to.contain("Initial Button Label");
-  expect(button1Component.el.className).to.contain("small");
+  assert.match(button1Component.el.innerHTML, /Initial Button Label/);
+  assert.match(button1Component.el.className, /small/);
 
   component.setState("buttonLabel", "New Button Label");
   component.update();
 
-  expect(button1Component.el.innerHTML).to.contain("New Button Label");
-  expect(button1Component.el.className).to.contain("large"); // Size will revert back to large since it was not driven by state
+  assert.match(button1Component.el.innerHTML, /New Button Label/);
+  assert.match(button1Component.el.className, /large/); // Size will revert back to large since it was not driven by state
 };

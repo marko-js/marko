@@ -27,9 +27,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $childScope = _peek_scope_id();
 	let setCount = setter_default({
 		value: count,
-		valueChange: _resume((_new_count) => {
-			count = _new_count;
-		}, "__tests__/template.marko_0/valueChange", $scope0_id)
+		valueChange: _resume((_new_count) => count = _new_count, "__tests__/template.marko_0/valueChange", $scope0_id)
 	});
 	_var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_setCount#4/var");
 	_html(`<div>${_text_mark($scope0_id, "#text/2", count)}</div>`);

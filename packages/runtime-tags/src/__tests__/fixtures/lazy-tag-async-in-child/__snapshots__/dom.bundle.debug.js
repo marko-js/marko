@@ -21,8 +21,7 @@ const $await_content__setup = ($scope) => {
 	$await_content__count($scope);
 	$await_content__setup__script($scope);
 };
-const $await_content__value = ($scope, value) => _text($scope["#text/2"], value);
-const $await_content__$params = ($scope, $params2) => $await_content__value($scope, $params2[0]);
+const $await_content__$params = ($scope, $params2) => _text($scope["#text/2"], $params2[0]);
 const $count__closure = /*@__PURE__*/ _closure($await_content__count);
 const $count = /*@__PURE__*/ _let("count/4", $count__closure);
 const $input_value = $count;

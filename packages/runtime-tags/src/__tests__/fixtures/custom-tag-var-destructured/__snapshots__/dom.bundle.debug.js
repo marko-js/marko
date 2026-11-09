@@ -37,8 +37,7 @@ const $countChange2__script = _script("__tests__/template.marko_0_$countChange#8
 }));
 const $countChange2 = /*@__PURE__*/ _const("$countChange", $countChange2__script);
 const $inc = /*@__PURE__*/ _const("inc");
-const $missing3 = ($scope, missing) => _text($scope["#text/5"], missing);
-const $missing2 = ($scope, $missing) => $missing3($scope, void 0 !== $missing ? $missing : "fallback");
+const $missing2 = ($scope, $missing) => _text($scope["#text/5"], void 0 !== $missing ? $missing : "fallback");
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
 	$scope.inc();
 }));

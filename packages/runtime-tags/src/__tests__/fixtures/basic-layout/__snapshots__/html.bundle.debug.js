@@ -18,7 +18,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_html(`<h1>Hello ${_text_mark($scope1_id, "#text/0", input.name, $wg__input_name * 2)}</h1>`);
 		$wi__input_name && _subscribe($name__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:2"), "__tests__/template.marko_1_name#0:3/subscribe", $wg__input_name);
-		$wg__input_name || $wi__input_name && _resume_branch($scope1_id);
 	}, $scope0_id) });
 	$wi__input_name && _scope($scope0_id, { "ClosureScopes:name/4": $name__closures }, "__tests__/template.marko", 0);
 }, 1);

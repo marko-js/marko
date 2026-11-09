@@ -1,0 +1,14 @@
+diff --git a/lib/nodejs/esm-utils.cjs b/lib/nodejs/esm-utils.cjs
+index 34b2e09a447dd601685e11c31f177ace1f1ab5ff..2b8c1910e76246e4692307f338f8c787cc0c4179 100644
+--- a/lib/nodejs/esm-utils.cjs
++++ b/lib/nodejs/esm-utils.cjs
+@@ -103,6 +103,9 @@ const requireModule = async (file, esmDecorator) => {
+       throw requireErr;
+     }
+     try {
++      // A require() failure that import() then rescues would otherwise vanish,
++      // hiding module-scope compile and syntax errors. Keep this print.
++      console.error(requireErr);
+       return dealWithExports(await formattedImport(file, esmDecorator));
+     } catch (importErr) {
+       // If a --require module throws in a Node.js version that doesn't yet support .ts files,

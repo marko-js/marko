@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), {
@@ -10,24 +10,24 @@ module.exports = function (helpers) {
   var li2 = component.getEl("foo-1");
   var li3 = component.getEl("foo-2");
 
-  expect(li1.innerHTML).to.equal("red");
-  expect(li2.innerHTML).to.equal("green");
-  expect(li3.innerHTML).to.equal("blue");
+  assert.equal(li1.innerHTML, "red");
+  assert.equal(li2.innerHTML, "green");
+  assert.equal(li3.innerHTML, "blue");
 
   helpers.triggerMouseMove(li1);
 
-  expect(li1.innerHTML).to.equal("0");
-  expect(li2.innerHTML).to.equal("green");
-  expect(li3.innerHTML).to.equal("blue");
+  assert.equal(li1.innerHTML, "0");
+  assert.equal(li2.innerHTML, "green");
+  assert.equal(li3.innerHTML, "blue");
 
   helpers.triggerMouseMove(li2);
 
-  expect(li1.innerHTML).to.equal("0");
-  expect(li2.innerHTML).to.equal("1");
-  expect(li3.innerHTML).to.equal("blue");
+  assert.equal(li1.innerHTML, "0");
+  assert.equal(li2.innerHTML, "1");
+  assert.equal(li3.innerHTML, "blue");
 
   helpers.triggerMouseMove(li3);
 
-  expect(li1.innerHTML).to.equal("0");
-  expect(li2.innerHTML).to.equal("1");
+  assert.equal(li1.innerHTML, "0");
+  assert.equal(li2.innerHTML, "1");
 };

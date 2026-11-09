@@ -1,8 +1,17 @@
 diff --git a/dist/index.js b/dist/index.js
-index 57f53f1..5e1c7f4 100644
+index 57f53f1d219c9500228875acf427788686f0b703..5a17f337654b209490bea486c1e313e1b7cf77ea 100644
 --- a/dist/index.js
 +++ b/dist/index.js
-@@ -26,6 +26,15 @@ function autotest(fixturesName, run) {
+@@ -5,8 +5,6 @@ var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefau
+ exports.__esModule = true;
+ exports.default = autotest;
+ 
+-require("it-fails");
+-
+ var _fs = _interopRequireDefault(require("fs"));
+ 
+ var _path = _interopRequireDefault(require("path"));
+@@ -26,6 +24,15 @@ function autotest(fixturesName, run) {
  
    const fixturesDirectory = _path.default.join(suiteDirectory, fixturesName);
  
@@ -18,7 +27,7 @@ index 57f53f1..5e1c7f4 100644
    describe(_path.default.join(suiteName, fixturesName), () => {
      let modes = [];
  
-@@ -47,6 +56,7 @@ function autotest(fixturesName, run) {
+@@ -47,6 +54,7 @@ function autotest(fixturesName, run) {
        let context = {};
  
        if (fixtureName[0] === "~" || fixtureName[0] === "_") {// skip the fixture directory
@@ -26,7 +35,7 @@ index 57f53f1..5e1c7f4 100644
        } else if (modes.length > 1) {
          describe(fixtureName, function () {
            modes.forEach(mode => {
-@@ -78,12 +88,8 @@ function runFixtureTest(name, dir, run, mode, context) {
+@@ -78,12 +86,8 @@ function runFixtureTest(name, dir, run, mode, context) {
      const skip = main.skip || main["skip_" + mode];
      const fails = main.fails || main["fails_" + mode];
  
@@ -41,7 +50,7 @@ index 57f53f1..5e1c7f4 100644
      }
    }
  
-@@ -128,10 +134,7 @@ function runFixtureTest(name, dir, run, mode, context) {
+@@ -128,10 +132,7 @@ function runFixtureTest(name, dir, run, mode, context) {
    };
  
    const skip = reason => {

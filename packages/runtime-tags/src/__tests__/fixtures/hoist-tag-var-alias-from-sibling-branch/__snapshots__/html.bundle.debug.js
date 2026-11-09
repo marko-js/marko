@@ -34,6 +34,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				y: "5:10",
 				result: "6:8"
 			});
+			$wg__input_b || _resume_branch($scope1_id);
 			return 0;
 		}
 	}, $scope0_id, "#text/1", _write_guard($scope0_reason, 0), $wg__input_a);

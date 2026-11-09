@@ -7,8 +7,7 @@ const $for_content__o = ($scope, o) => {
 };
 const $for_content__$params = ($scope, $params3) => $for_content__o($scope, $params3[0]);
 const $await_content__for = /*@__PURE__*/ _for_of_unkeyed("#text/0", "<option> </option>", " D ", 0, $for_content__$params);
-const $await_content__opts = ($scope, opts) => $await_content__for($scope, [opts]);
-const $await_content__$params = ($scope, $params2) => $await_content__opts($scope, $params2[0]);
+const $await_content__$params = ($scope, $params2) => $await_content__for($scope, [$params2[0]]);
 const $v__OR__calls = /*@__PURE__*/ _or(6, ($scope) => _attr_select_value($scope, "#select/0", $scope.v, $valueChange($scope)));
 const $v = /*@__PURE__*/ _let("v/4", ($scope) => {
 	_text($scope["#text/2"], $scope.v);

@@ -11,8 +11,7 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 const $template$1 = "<button id=toggle>toggle</button><!><!>";
 const $walks$1 = " b%c";
 const $for_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $for_content__item_content = $for_content__dynamicTag;
-const $for_content__$params = ($scope, $params2) => $for_content__item_content($scope, $params2[0]?.content);
+const $for_content__$params = ($scope, $params2) => $for_content__dynamicTag($scope, $params2[0]?.content);
 const $if_content__for = /*@__PURE__*/ _for_of_unkeyed("#text/0", "<!><!><!>", "b%", 0, $for_content__$params);
 const $if_content__input_item = /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $if_content__for($scope, [$scope._.input_item]));
 const $if_content__setup = $if_content__input_item;
@@ -40,9 +39,7 @@ _content_resume($item_content, 1);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $input_type = ($scope, input_type) => $dynamicTag($scope, input_type, ($_) => {
 	let $item;
-	forUntil(2, 0, 1, (i) => {
-		$item = attrTags($item, { content: $item_content($scope, { i }) });
-	});
+	forUntil(2, 0, 1, (i) => $item = attrTags($item, { content: $item_content($scope, { i }) }));
 	return { item: $item };
 });
 const $input = ($scope, input) => {

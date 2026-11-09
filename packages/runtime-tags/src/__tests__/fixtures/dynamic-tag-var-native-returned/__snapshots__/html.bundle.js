@@ -21,7 +21,7 @@ var template_default = _template("a", (input) => {
 	const $childScope = _peek_scope_id();
 	let v = child_default({ as: "section" });
 	_var($scope0_id, "b", $childScope, "a0");
-	_script($scope0_id, "a1");
+	_script($scope0_id, "a1", 0);
 	_scope($scope0_id, {
 		c: v,
 		a: _existing_scope($childScope)

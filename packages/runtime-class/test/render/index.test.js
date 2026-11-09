@@ -4,8 +4,7 @@ require("../__util__/test-init");
 
 const fs = require("fs");
 const path = require("path");
-const expect = require("chai").expect;
-const toDiffableHtml = require("diffable-html");
+const assert = require("assert/strict");
 const marko = require("marko");
 const autotest = require("mocha-autotest").default;
 const createBrowserWithMarko = require("../__util__/create-marko-jsdom-module");
@@ -29,7 +28,7 @@ function testRunner(fixture) {
 function compareNormalized({ test, context }) {
   if ("html" in context && "vdom" in context) {
     test(function () {
-      expect(context.html).to.equal(context.vdom);
+      assert.equal(context.html, context.vdom);
     });
   }
 }
@@ -160,10 +159,7 @@ async function runRenderTest(fixture) {
           });
           main.checkHtml(html);
         } else {
-          snapshot(html, {
-            ext: ".html",
-            format: toDiffableHtml,
-          });
+          snapshot(html, { ext: ".html" });
         }
 
         (fixture.context || (fixture.context = {})).html = normalizeHtml(html);
@@ -180,9 +176,10 @@ function normalizeHtml(htmlOrNode) {
   let document = browser.window.document;
 
   if (typeof htmlOrNode === "string") {
-    document.open();
-    document.write(htmlOrNode);
-    document.close();
+    document = new browser.window.DOMParser().parseFromString(
+      htmlOrNode,
+      "text/html",
+    );
   } else {
     document.documentElement.innerHTML = "";
     document.body.appendChild(htmlOrNode);
@@ -272,7 +269,7 @@ function createAsyncVerifier(main, snapshot, out, isVDOM) {
       // Make sure all of the await instances were correctly ended
       Object.keys(eventsByAwaitInstance).forEach(function (name) {
         var events = eventsByAwaitInstance[name];
-        expect(events).to.deep.equal([
+        assert.deepEqual(events, [
           "await:begin",
           "await:beforeRender",
           "await:finish",

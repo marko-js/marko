@@ -4,9 +4,9 @@ const $walks = " b b%c";
 const $if = /*@__PURE__*/ _if("#text/2", "<div>Hello</div>");
 const $hide = /*@__PURE__*/ _let("hide/3", ($scope) => $if($scope, !$scope.hide ? 0 : 1));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
-	$signal($scope, 0).onabort = () => {
+	onAbort($scope, 0, () => {
 		console.log("cleaned up");
-	};
+	});
 	_on($scope["#button/0"], "click", function() {
 		$hide($scope, !$scope.hide);
 	});
@@ -16,7 +16,7 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 });
 function $setup($scope) {
 	$signalReset($scope, 0);
-	$hide($scope, undefined);
+	$hide($scope);
 	$setup__script($scope);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

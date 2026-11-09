@@ -1,6 +1,8 @@
+const assert = require("assert/strict");
+
 var nodePath = require("path");
 
-exports.check = function (markoCompiler, expect) {
+exports.check = function (markoCompiler) {
   var taglibLookup = markoCompiler.taglibLookup;
   var lookup = taglibLookup.buildLookup(
     nodePath.join(__dirname, "taglib-duplicate"),
@@ -10,10 +12,10 @@ exports.check = function (markoCompiler, expect) {
   // taglib so it should have been found since the taglib
   // should not have been de-duped.
   var barTag = lookup.getTag("duplicate-bar");
-  expect(barTag != null).to.equal(true);
+  assert.equal(barTag != null, true);
 
   // The "duplicate-foo" tag was declared in the higher
   // up taglib so it should have been discarded
   var fooTag = lookup.getTag("duplicate-foo");
-  expect(fooTag == null).to.equal(true);
+  assert.equal(fooTag == null, true);
 };

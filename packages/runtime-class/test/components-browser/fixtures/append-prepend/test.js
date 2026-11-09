@@ -1,15 +1,13 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index.marko"));
   var hello = require("./components/app-hello").default;
 
   var renderTarget = component.getEl("renderTarget");
-  expect(renderTarget.innerHTML).to.equal("<span>ref</span>");
+  assert.equal(renderTarget.innerHTML, "<span>ref</span>");
 
   hello.renderSync({ value: "before" }).prependTo(renderTarget);
   hello.renderSync({ value: "after" }).appendTo(renderTarget);
-  expect(renderTarget.innerHTML).to.equal(
-    "<div>Hello before</div><span>ref</span><div>Hello after</div>",
-  );
+  assert.equal(renderTarget.innerHTML, "<div>Hello before</div><span>ref</span><div>Hello after</div>");
 };

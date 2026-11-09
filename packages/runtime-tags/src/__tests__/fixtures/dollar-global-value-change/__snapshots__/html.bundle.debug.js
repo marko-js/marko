@@ -8,7 +8,6 @@ var g_default = _template("__tests__/tags/g.marko", (input) => {
 	_scope($scope0_id, { "#TagVariableChange": _resume(function(next) {
 		$global$1.store = next;
 	}, "__tests__/tags/g.marko_0/valueChange", $scope0_id) || void 0 }, "__tests__/tags/g.marko", 0);
-	_resume_branch($scope0_id);
 	return $return;
 });
 

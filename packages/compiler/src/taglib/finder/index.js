@@ -1,7 +1,6 @@
 import nodePath from "path";
 
 import markoModules from "@marko/compiler/modules";
-import lassoPackageRoot from "lasso-package-root";
 
 import taglibConfig from "../config";
 import * as taglibLoader from "../loader";
@@ -22,7 +21,7 @@ function reset() {
 
 function getModuleRootPackage(dirname) {
   try {
-    return lassoPackageRoot.getRootPackage(dirname);
+    return markoModules.getRootPackage(dirname, taglibConfig.fs);
   } catch (e) {
     return undefined;
   }

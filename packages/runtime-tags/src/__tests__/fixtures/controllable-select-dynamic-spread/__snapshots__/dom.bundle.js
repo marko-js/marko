@@ -1,16 +1,18 @@
 // template.marko
-const $tagselect_content__setup__script = _script("a2", ($scope) => {
-	_attrs_script($scope, "a");
-	_attrs_script($scope, "b");
-	_attrs_script($scope, "c");
+const $for_content__option__script = _script("a1", ($scope) => _attrs_script($scope, "a"));
+const $for_content__option = /*@__PURE__*/ _const(3, ($scope) => {
+	_attrs($scope, "a", $scope.d);
+	_text($scope.b, ($scope.d?.value).toUpperCase());
+	$for_content__option__script($scope);
 });
-const $tagselect_content__setup = ($scope) => {
-	_attrs($scope, "a", { value: "a" });
-	_attrs($scope, "b", { value: "b" });
-	_attrs($scope, "c", { value: "c" });
-	$tagselect_content__setup__script($scope);
-};
-const $tagselect_content = _content("a1", "<option>A</option><option>B</option><option>C</option>", " b b ", $tagselect_content__setup);
+const $for_content__$params = ($scope, $params2) => $for_content__option($scope, $params2[0]);
+const $tagselect_content__for = /*@__PURE__*/ _for_of_unkeyed(0, "<option> </option>", " D ", 0, $for_content__$params);
+const $tagselect_content__setup = ($scope) => $tagselect_content__for($scope, [[
+	{ value: "a" },
+	{ value: "b" },
+	{ value: "c" }
+]]);
+const $tagselect_content = _content("a2", "<!><!><!>", "b%", $tagselect_content__setup);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag(0, $tagselect_content);
 const $value__OR__tag = /*@__PURE__*/ _or(4, ($scope) => $dynamicTag($scope, $scope.d ? "select" : {}, ($_) => ({
 	value: $scope.c,

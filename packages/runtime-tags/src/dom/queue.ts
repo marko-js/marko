@@ -2,7 +2,6 @@ import { branchesEnabled, withBranches } from "../common/helpers";
 import { AccessorProp, PendingRenderProp, type Scope } from "../common/types";
 import type { Signal } from "./signals";
 
-type ExecFn<S extends Scope = Scope> = (scope: S, arg?: any) => void;
 export type PendingRender = {
   [PendingRenderProp.Key]: number;
   [PendingRenderProp.Scope]: Scope;
@@ -126,10 +125,7 @@ function runBranchRenders(_scope: Scope, renders: PendingRender[]) {
   runRenders(renders);
 }
 
-export function queueEffect<S extends Scope, T extends ExecFn<S>>(
-  scope: S,
-  fn: T,
-) {
+export function queueEffect<S extends Scope>(scope: S, fn: (scope: S) => void) {
   pendingEffects.push(fn, scope);
 }
 
@@ -176,11 +172,11 @@ export function prepareEffects(fn: () => void): unknown[] {
   return preparedEffects;
 }
 
-export let runEffects = ((effects) => {
+export let runEffects = (effects: unknown[]) => {
   for (let i = 0; i < effects.length;) {
     (effects[i++] as (scope: Scope) => void)(effects[i++] as Scope);
   }
-}) as (effects: unknown[]) => void;
+};
 
 let runRender = (render: PendingRender) => {
   // Skip renders whose branch was destroyed; short-circuits to a single flag

@@ -24,21 +24,13 @@ const $for_content2__ref = /*@__PURE__*/ _const("ref", ($scope) => _assert_hoist
 const $for_content__for = /*@__PURE__*/ _for_to_unkeyed("#text/0", "", /*@__PURE__*/ ((_w0) => `0${_w0}&`)(""), $for_content2__setup);
 const $for_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _el_read($scope._["#pre/1"]).innerHTML += `${[...$for_content__ref_getter($scope)].length}; ${$for_content__ref_getter($scope)()}\n\t`);
 const $for_content__setup = ($scope) => {
-	$for_content__for($scope, [
-		2,
-		0,
-		1
-	]);
+	$for_content__for($scope, [2]);
 	$for_content__setup__script($scope);
 };
 const $for = /*@__PURE__*/ _for_to_unkeyed("#text/3", "<!><!><!>", "b%", $for_content__setup);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _el_read($scope["#pre/0"]).innerHTML += `${[...$ref_getter($scope)].length}; ${$ref_getter($scope)()}\n\t`);
 function $setup($scope) {
-	$for($scope, [
-		2,
-		0,
-		1
-	]);
+	$for($scope, [2]);
 	$setup__script($scope);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

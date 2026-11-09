@@ -1,18 +1,16 @@
 // template.marko
 const $template = "<button>show</button><!><!><!><!><!>";
 const $walks = " b%b%b%b%c";
-const $catch_content7__err_message = ($scope, err_message) => _text($scope["#text/0"], (() => {
-	throw new Error(`catch of ${err_message}`);
+const $catch_content7__$params = ($scope, $params7) => _text($scope["#text/0"], (() => {
+	throw new Error(`catch of ${$params7[0]?.message}`);
 })());
-const $catch_content7__$params = ($scope, $params7) => $catch_content7__err_message($scope, $params7[0]?.message);
 const $catch_content7 = _content("__tests__/template.marko_18*content", " ", " ", 0, $catch_content7__$params);
 const $try_content7__setup = ($scope) => _text($scope["#text/0"], (() => {
 	throw new Error("try body");
 })());
 const $if_content4__try = /*@__PURE__*/ _try("#text/0", " ", " ", $try_content7__setup, 0, $catch_content7);
 const $if_content4__setup = $if_content4__try;
-const $catch_content6__err_message = ($scope, err_message) => _text($scope["#text/0"], err_message);
-const $catch_content6__$params = ($scope, $params6) => $catch_content6__err_message($scope, $params6[0]?.message);
+const $catch_content6__$params = ($scope, $params6) => _text($scope["#text/0"], $params6[0]?.message);
 const $catch_content6 = _content("__tests__/template.marko_15*content", "outer caught <!>", "b%", 0, $catch_content6__$params);
 const $catch_content5__setup = ($scope) => _text($scope["#text/0"], (() => {
 	throw new Error("catch");
@@ -23,25 +21,21 @@ const $try_content6__setup = ($scope) => _text($scope["#text/0"], (() => {
 })());
 const $if_content3__try = /*@__PURE__*/ _try("#text/0", " ", " ", $try_content6__setup, 0, $catch_content5);
 const $if_content3__setup = $if_content3__try;
-const $catch_content4__err_message = ($scope, err_message) => _text($scope["#text/0"], err_message);
-const $catch_content4__$params = ($scope, $params5) => $catch_content4__err_message($scope, $params5[0]?.message);
+const $catch_content4__$params = ($scope, $params5) => _text($scope["#text/0"], $params5[0]?.message);
 const $catch_content4 = _content("__tests__/template.marko_11*content", "outer caught <!>", "b%", 0, $catch_content4__$params);
-const $catch_content3__err_message = ($scope, err_message) => _text($scope["#text/0"], err_message);
-const $catch_content3__$params = ($scope, $params4) => $catch_content3__err_message($scope, $params4[0]?.message);
+const $catch_content3__$params = ($scope, $params4) => _text($scope["#text/0"], $params4[0]?.message);
 const $catch_content3 = _content("__tests__/template.marko_10*content", "caught <!>", "b%", 0, $catch_content3__$params);
 const $try_content5__setup = ($scope) => _text($scope["#text/0"], (() => {
 	throw new Error("try body");
 })());
 const $if_content2__try = /*@__PURE__*/ _try("#text/0", " ", " ", $try_content5__setup, 0, $catch_content3);
 const $if_content2__setup = $if_content2__try;
-const $catch_content2__err_message = ($scope, err_message) => _text($scope["#text/0"], err_message);
-const $catch_content2__$params = ($scope, $params3) => $catch_content2__err_message($scope, $params3[0]?.message);
+const $catch_content2__$params = ($scope, $params3) => _text($scope["#text/0"], $params3[0]?.message);
 const $catch_content2 = _content("__tests__/template.marko_7*content", "outer caught <!>", "b%", 0, $catch_content2__$params);
 const $if_content__setup = ($scope) => _text($scope["#text/0"], (() => {
 	throw new Error("if body");
 })());
-const $catch_content__err_message = ($scope, err_message) => _text($scope["#text/0"], err_message);
-const $catch_content__$params = ($scope, $params2) => $catch_content__err_message($scope, $params2[0]?.message);
+const $catch_content__$params = ($scope, $params2) => _text($scope["#text/0"], $params2[0]?.message);
 const $catch_content = _content("__tests__/template.marko_5*content", "caught <!>", "b%", 0, $catch_content__$params);
 const $try_content4__if = /*@__PURE__*/ _if("#text/0", "<!><!><!>", "b%", $if_content4__setup);
 const $try_content4__show = /*@__PURE__*/ _closure_get("show/6", ($scope) => $try_content4__if($scope, $scope._.show ? 0 : 1), 0, "__tests__/template.marko_4_show#0:5/subscribe");

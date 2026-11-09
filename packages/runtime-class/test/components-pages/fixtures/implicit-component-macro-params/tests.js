@@ -1,5 +1,5 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 it("should not mount implicit components with macros that have tag parameters", function () {
-  expect(window.helloImplicitComponentSent).to.equal(undefined);
+  assert.equal(window.helloImplicitComponentSent, undefined);
 });

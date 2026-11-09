@@ -5,9 +5,7 @@ function num(v) {
 var my_input_default = _template("__tests__/tags/my-input.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<input${_attr_input_value($scope0_id, "#input/0", input.count, input.countChange && _resume(($next) => {
-		input.countChange(num($next));
-	}, "__tests__/tags/my-input.marko_0/valueChange", $scope0_id))} type=number>${_el_mark($scope0_id, "#input/0")}`);
+	_html(`<input${_attr_input_value($scope0_id, "#input/0", input.count, input.countChange && _resume(($next) => input.countChange(num($next)), "__tests__/tags/my-input.marko_0/valueChange", $scope0_id))} type=number>${_el_mark($scope0_id, "#input/0")}`);
 	_script($scope0_id, "__tests__/tags/my-input.marko_0");
 	_scope($scope0_id, {
 		$countChange: input.countChange,
@@ -27,9 +25,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $childScope = _peek_scope_id();
 	my_input_default({
 		count: value,
-		countChange: _resume((_new_value) => {
-			value = _new_value;
-		}, "__tests__/template.marko_0/countChange", $scope0_id)
+		countChange: _resume((_new_value) => value = _new_value, "__tests__/template.marko_0/countChange", $scope0_id)
 	});
 	_html(`<span>${_text_mark($scope0_id, "#text/1", value)} ${_text_mark($scope0_id, "#text/2", typeof value, 2)}</span>`);
 	_scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", 0);

@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var el = helpers.vdom
@@ -39,17 +39,17 @@ module.exports = function (helpers) {
     );
 
   var clone = el.___cloneNode();
-  expect(clone).to.not.equal(el);
-  expect(clone.___nodeName).to.equal("div");
-  expect(clone.___attributes.class === "foo").to.equal(true);
-  expect(clone.firstChild).to.equal(el.firstChild);
+  assert.notEqual(clone, el);
+  assert.equal(clone.___nodeName, "div");
+  assert.equal(clone.___attributes.class === "foo", true);
+  assert.equal(clone.firstChild, el.firstChild);
 
   var root = helpers.vdom.createElement("div", { class: "root" });
 
   root.___appendChild(clone);
 
-  expect(el.___parentNode).to.equal(null);
-  expect(clone.___parentNode).to.equal(root);
+  assert.equal(el.___parentNode, null);
+  assert.equal(clone.___parentNode, root);
 
   return root;
 };

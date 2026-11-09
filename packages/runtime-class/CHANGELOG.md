@@ -1,5 +1,16 @@
 # Change Log
 
+## 5.39.49
+
+### Patch Changes
+
+- [#4583](https://github.com/marko-js/marko/pull/4583) [`60841bc`](https://github.com/marko-js/marko/commit/60841bcdc24e0452669b9745f0e82066e84440bd) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Update dependencies: the bundled Babel to 7.29.12, `htmljs-parser` 5.20, `@luxass/strip-json-comments` 2.0.2 and the bundled `entities` 9 in the compiler, `minimatch` 11 in `markoc`, and `magic-string` 1. `magic-string` 1 ships only ESM, so `engines.node` rises to `>=22.12.0`, the first Node 22 release that can `require()` it.
+
+- [#4596](https://github.com/marko-js/marko/pull/4596) [`7546ef9`](https://github.com/marko-js/marko/commit/7546ef9966afaccc90ea7c4c6526dd4df99d97b4) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Drop dependencies that Node now covers. The compiler resolves modules with `createRequire`, caching one per directory, instead of `resolve-from`; the require hook maps stack traces through Node's own source maps instead of `source-map-support`; and the `raptor-regexp` wildcard helper is inlined. The compiler also stops depending on `complain` and `self-closing-tags`, which it never imported, and `marko` resolves with `createRequire` instead of `resolve-from`.
+- Updated dependencies [[`f843c14`](https://github.com/marko-js/marko/commit/f843c1419ab9fcab48469c0455c0092d4d353b37), [`df57ab1`](https://github.com/marko-js/marko/commit/df57ab19908ee90a1be821d885ad72d11ba83823), [`f79a9b9`](https://github.com/marko-js/marko/commit/f79a9b93c8b305e2a6045d100b8f9dea4d3e9817), [`b5b57c9`](https://github.com/marko-js/marko/commit/b5b57c95db452c14de12819441890ee1198775ff), [`d8060f6`](https://github.com/marko-js/marko/commit/d8060f63620b0ee90a45f884a63ed30ec46fa81b), [`60841bc`](https://github.com/marko-js/marko/commit/60841bcdc24e0452669b9745f0e82066e84440bd), [`e9f7e74`](https://github.com/marko-js/marko/commit/e9f7e74ca52da0335246c47ab85d4f94077f6c28), [`7546ef9`](https://github.com/marko-js/marko/commit/7546ef9966afaccc90ea7c4c6526dd4df99d97b4), [`ceeb985`](https://github.com/marko-js/marko/commit/ceeb98572e70975fac218935eab4c0b7e61f8cdb), [`b73626b`](https://github.com/marko-js/marko/commit/b73626b1fd863abd2d435d21f0b8de54d3067d0c), [`88b13c4`](https://github.com/marko-js/marko/commit/88b13c483c72725d74aee0a719b84d53ce8650fa)]:
+  - @marko/runtime-tags@6.4.10
+  - @marko/compiler@5.42.16
+
 ## 5.39.48
 
 ### Patch Changes

@@ -20,6 +20,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_set_scope_reason(2);
 	const $childScope2 = _peek_scope_id();
 	B.content({ value });
-	_script($scope0_id, "__tests__/template.marko_0");
+	_script($scope0_id, "__tests__/template.marko_0", 0);
 	_scope($scope0_id, { "#childScope/0": _existing_scope($childScope2) }, "__tests__/template.marko", 0);
+	_resume_branch($scope0_id);
 }, 1);

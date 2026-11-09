@@ -1,8 +1,8 @@
 // tags/child.marko
 const $template = "<div> </div>";
-const $input_name__OR__input_write__script = _script("b0", ($scope) => $signal($scope, 0).onabort = () => {
+const $input_name__OR__input_write__script = _script("b0", ($scope) => onAbort($scope, 0, () => {
 	$scope.e(`destroyed ${$scope.d}`);
-});
+}));
 const $input_name__OR__input_write = /*@__PURE__*/ _or(5, ($scope) => {
 	$signalReset($scope, 0);
 	$input_name__OR__input_write__script($scope);
@@ -20,16 +20,16 @@ const $for_content2__setup = ($scope) => {
 	$for_content2__outerItem._($scope);
 };
 const $for_content2__outerItem__OR__middleItem = /*@__PURE__*/ _or(3, ($scope) => $name($scope.a, `${$scope._.d}.${$scope.c}`));
-const $for_content2__outerItem = /*@__PURE__*/ _for_closure(1, $for_content2__outerItem__OR__middleItem);
+const $for_content2__outerItem = /*@__PURE__*/ _for_closure(1, $for_content2__outerItem__OR__middleItem, 7);
 const $for_content2__middleItem = /*@__PURE__*/ _const(2, $for_content2__outerItem__OR__middleItem);
 const $for_content2__$params = ($scope, $params3) => $for_content2__middleItem($scope, $params3[0]);
 const $for_content__for = /*@__PURE__*/ _for_of_unkeyed(1, /*@__PURE__*/ ((_w0) => `<div>${_w0}</div>`)($template), /*@__PURE__*/ ((_w0) => `D/${_w0}&l`)("D l"), $for_content2__setup, $for_content2__$params);
-const $for_content__items = /*@__PURE__*/ _for_closure(2, ($scope) => $for_content__for($scope, [$scope._.d]));
+const $for_content__items = /*@__PURE__*/ _for_closure(2, ($scope) => $for_content__for($scope, [$scope._.d]), 5);
 const $for_content__setup = ($scope) => {
 	$for_content__items._($scope);
 	$for_content__write._($scope);
 };
-const $for_content__write = /*@__PURE__*/ _for_closure(2, ($scope) => $write$1($scope.a, $scope._.e));
+const $for_content__write = /*@__PURE__*/ _for_closure(2, ($scope) => $write$1($scope.a, $scope._.e), 6);
 const $for_content__outerItem = /*@__PURE__*/ _const(3, ($scope) => {
 	$name($scope.a, `${$scope.d}`);
 	$for_content2__outerItem($scope);

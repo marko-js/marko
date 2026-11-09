@@ -3,7 +3,6 @@ import { getProgram } from "@marko/compiler/babel-utils";
 
 import {
   type Binding,
-  BindingType,
   type Intersection,
   type ParamBinding,
   bindingUtil,
@@ -11,7 +10,6 @@ import {
   isDirectAlias,
   isIndexProperty,
   propertiesUtil,
-  someUpToAliasRoot,
 } from "./bindings";
 import {
   createPassMemo,
@@ -64,7 +62,7 @@ import { findSlot, ensureSlot, SlotKind } from "./slots";
 import {
   ALWAYS,
   type Sources,
-  isInParams,
+  isCoveredParam,
   isSupersetSources,
   mergeSources,
   sharesSources,
@@ -131,10 +129,11 @@ function addIntersectionMemberReason(
   partner: Binding,
 ) {
   if (
-    !findSlot(member)?.reason?.always &&
-    (!isSupersetSources(member, partner) ||
-      hasReadIntermediate(member, partner, new Set()))
+    !isSupersetSources(member, partner) ||
+    hasReadIntermediate(member, partner, new Set())
   ) {
+    // A member of an ancestor, even one always written, is read through the
+    // owner chain, so its partners' changes need that chain written.
     if (member.section !== section) {
       addOwnerReason(
         section,
@@ -158,7 +157,9 @@ function hasReadIntermediate(
     seen.add(from);
     if (
       bindingUtil.has(partner.sources!.state, from) ||
-      bindingUtil.has(partner.sources!.param, from as ParamBinding)
+      some(partner.sources!.param, (param) =>
+        isCoveredParam(param, from as ParamBinding),
+      )
     ) {
       return false;
     }
@@ -176,7 +177,7 @@ function withoutOwnSources(closure: Binding, sources: Sources | undefined) {
   const state = bindingUtil.difference(sources.state, own.state);
   const param = bindingUtil.filter(
     sources.param,
-    (binding) => !someUpToAliasRoot(binding, isInParams, own.param),
+    (binding) => !isCoveredParam(binding, own.param),
   );
   return withSources(sources, state, param);
 }
@@ -221,34 +222,40 @@ function getBranchExprReasonUntil(section: Section, ancestor: Section) {
   return reason;
 }
 
-// A closure a section reads is read whenever a branch or content between the
-// read and the closure's own section is created, unless that recomputes it.
+// A loop key a section reads in place takes a closure's reasons, and a closure's
+// signal also reaches the section through subscriber sets where no branch links them.
 function addClosureReasons(section: Section) {
+  forEach(section.referencedConstants, (constant) =>
+    addClosureReason(section, constant),
+  );
   forEach(section.referencedClosures, (closure) => {
-    const sourceSection = closure.section;
-    const branchesReason = getBranchExprReasonUntil(section, sourceSection);
-    addReason(
-      ensureSlot(closure),
-      branchesReason?.always
-        ? branchesReason
-        : withoutOwnSources(closure, branchesReason),
-    );
-
-    if (isDynamicClosure(section, closure)) {
-      addOwnerReason(section, sourceSection, branchesReason);
-
-      // A constant never changes, so no signal subscribes to it.
-      if (closure.sources && closure.type !== BindingType.constant) {
-        addReason(ensureSlot(closure, SlotKind.ClosureScopes), closure.sources);
-        if (getDynamicClosureIndex(closure, section)) {
-          addReason(
-            ensureSlot(closure, SlotKind.ClosureSignalIndex, section),
-            closure.sources,
-          );
-        }
+    addClosureReason(section, closure);
+    if (closure.sources && isDynamicClosure(section, closure)) {
+      addReason(ensureSlot(closure, SlotKind.ClosureScopes), closure.sources);
+      if (getDynamicClosureIndex(closure, section)) {
+        addReason(
+          ensureSlot(closure, SlotKind.ClosureSignalIndex, section),
+          closure.sources,
+        );
       }
     }
   });
+}
+
+// A closure a section reads is read whenever a branch or content between the
+// read and the closure's own section is created, unless that recomputes it.
+function addClosureReason(section: Section, binding: Binding) {
+  const sourceSection = binding.section;
+  const branchesReason = getBranchExprReasonUntil(section, sourceSection);
+  addReason(
+    ensureSlot(binding),
+    branchesReason?.always
+      ? branchesReason
+      : withoutOwnSources(binding, branchesReason),
+  );
+  if (isDynamicClosure(section, binding)) {
+    addOwnerReason(section, sourceSection, branchesReason);
+  }
 }
 
 // A call links its body's scope to the body's owner as the calling scope is
@@ -384,7 +391,7 @@ function readersOfDerives(
   part: Binding | undefined,
   properties?: Opt<string> | true,
 ): Readers {
-  if (extra === getProgram().node.extra?.section!.returnValueExpr) {
+  if (extra === getProgram().node.extra.section!.returnValueExpr) {
     return ALWAYS_READ;
   }
   let readers = UNREAD;
@@ -482,7 +489,7 @@ function computeBindingReaders(
         aliased,
         properties === undefined
           ? binding.property
-          : concat(binding.property, properties as Opt<string>),
+          : concat(binding.property, properties),
       ),
     );
   }
@@ -596,7 +603,7 @@ function renderingReaders(expr: ReferencedExtra, binding: Binding): Readers {
     return {
       reason: undefined,
       lands: 0,
-      sites: first(reads).extra.exprRoot!.tagName,
+      sites: first(reads).extra.exprRoot.tagName,
     };
   }
   // So does a spread, a native element's `content=` or a class component's body,

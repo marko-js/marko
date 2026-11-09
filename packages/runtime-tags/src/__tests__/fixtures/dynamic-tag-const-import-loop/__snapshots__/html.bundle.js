@@ -26,7 +26,6 @@ var template_default = _template("a", (input) => {
 			const $scope2_id = _scope_id();
 			_html(`item ${_escape(i)}`);
 			_scope($scope2_id, { _: _scope_with_id($scope1_id) });
-			_resume_branch($scope2_id);
 		}, $scope1_id) });
 		_scope($scope1_id, { M: i });
 	}, 0, $scope0_id, "b");

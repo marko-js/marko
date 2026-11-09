@@ -1,8 +1,8 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./template.marko"));
   var el = component.el;
-  expect(el).to.have.property("tagName", "DIV");
-  expect(el.getAttribute("data-id")).to.equal("nested-child");
+  assert.equal(el.tagName, "DIV");
+  assert.equal(el.getAttribute("data-id"), "nested-child");
 };

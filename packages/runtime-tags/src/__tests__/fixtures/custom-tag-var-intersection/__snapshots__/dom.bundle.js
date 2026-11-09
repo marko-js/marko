@@ -9,6 +9,5 @@ const $setup__script = _script("b0", ($scope) => _on($scope.a, "click", function
 }));
 
 // template.marko
-const $message = ($scope, message) => _text($scope.c, message);
-const $name__OR__data = /*@__PURE__*/ _or(5, ($scope) => $message($scope, `${$scope.d} ${$scope.e}`), 1, 1);
+const $name__OR__data = /*@__PURE__*/ _or(5, ($scope) => _text($scope.c, `${$scope.d} ${$scope.e}`), 1, 1);
 const $data = _var_resume("a0", /*@__PURE__*/ _const(4, $name__OR__data));

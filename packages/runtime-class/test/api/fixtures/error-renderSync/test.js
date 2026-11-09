@@ -1,6 +1,8 @@
+const assert = require("assert/strict");
+
 var nodePath = require("path");
 
-exports.check = function (marko, markoCompiler, expect, helpers, done) {
+exports.check = function (marko, markoCompiler, helpers, done) {
   var template = marko.load(nodePath.join(__dirname, "template.marko"));
   var output;
   var e;
@@ -11,7 +13,7 @@ exports.check = function (marko, markoCompiler, expect, helpers, done) {
     e = _e;
   }
 
-  expect(output).to.equal(undefined);
-  expect(e).to.not.equal(undefined);
+  assert.equal(output, undefined);
+  assert.notEqual(e, undefined);
   done();
 };

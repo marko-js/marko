@@ -104,6 +104,7 @@ The HTML output is written to the passed `stream`. Render errors are emitted as 
 
 ```js
 import http from "http";
+
 import View from "./view.marko";
 
 http.createServer((req, res) => {
@@ -177,6 +178,7 @@ The `stream` method returns a Node.js-style stream of the output HTML.
 
 ```js
 import fs from "fs";
+
 import View from "./view.marko";
 const writeStream = fs.createWriteStream("output.html");
 

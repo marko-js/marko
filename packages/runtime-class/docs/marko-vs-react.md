@@ -663,8 +663,8 @@ var html = ReactDOMServer.renderToString(<HelloMessage name="John" />);
 With React, all custom tags for UI components must be explicitly imported:
 
 ```jsx
-import Hello from "./components/Hello";
 import GoodBye from "./components/GoodBye";
+import Hello from "./components/Hello";
 
 export default function HelloGoodBye(props) {
   return (
@@ -770,6 +770,7 @@ Markdown to HTML at _compile-time_:
 
 ```js
 import marked from "marked";
+
 import { removeIndentation } from "./util";
 
 export default function generateCode(el, codegen) {

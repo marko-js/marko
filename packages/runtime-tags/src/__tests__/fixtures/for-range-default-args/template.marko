@@ -1,0 +1,14 @@
+<let/count=3/>
+<button onClick() { count++ }>more</button>
+<div.defaults>
+  <for|i| from=0 to=count step=1>${i}</for>
+</div>
+<div.from>
+  <for|i| from=1 to=count>${i}</for>
+</div>
+<div.step>
+  <for|i| until=count step=2>${i}</for>
+</div>
+<div.by>
+  <for|i| to=count by=(n) => n>${i}</for>
+</div>

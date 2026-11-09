@@ -28,9 +28,7 @@ export function parseBlock(file, str, sourceStart, sourceEnd) {
   );
   const block = t.blockStatement(body, directives);
   block.innerComments = innerComments;
-  return typeof sourceStart === "number"
-    ? withLoc(file, block, sourceStart, sourceEnd)
-    : block;
+  return withLoc(file, block, sourceStart, sourceEnd);
 }
 
 export function parseExpression(
@@ -56,7 +54,7 @@ export function parseParams(file, str, sourceStart, sourceEnd) {
     return parsed.params;
   }
 
-  return [ensureParseError(file, parsed, sourceStart, sourceEnd)];
+  return [ensureParseError(file, str, parsed, sourceStart, sourceEnd)];
 }
 
 export function parseArgs(file, str, sourceStart, sourceEnd) {
@@ -66,7 +64,7 @@ export function parseArgs(file, str, sourceStart, sourceEnd) {
     return parsed.arguments;
   }
 
-  return [ensureParseError(file, parsed, sourceStart, sourceEnd)];
+  return [ensureParseError(file, str, parsed, sourceStart, sourceEnd)];
 }
 
 export function parseVar(file, str, sourceStart, sourceEnd) {
@@ -84,7 +82,13 @@ export function parseVar(file, str, sourceStart, sourceEnd) {
     return parsed.params[0];
   }
 
-  const parseError = ensureParseError(file, parsed, sourceStart, sourceEnd);
+  const parseError = ensureParseError(
+    file,
+    str,
+    parsed,
+    sourceStart,
+    sourceEnd,
+  );
   // Babel reports the borrowed parameter-list grammar ("invalid left-hand
   // side in function parameter list"), naming syntax the author never wrote.
   if (/function parameter list/.test(parseError.label)) {
@@ -107,7 +111,7 @@ export function parseTemplateLiteral(file, str, sourceStart, sourceEnd) {
     return t.templateLiteral(parsed.quasis, parsed.expressions);
   }
 
-  return ensureParseError(file, parsed, sourceStart, sourceEnd);
+  return ensureParseError(file, str, parsed, sourceStart, sourceEnd);
 }
 
 export function parseTypeArgs(file, str, sourceStart, sourceEnd) {
@@ -118,7 +122,7 @@ export function parseTypeArgs(file, str, sourceStart, sourceEnd) {
     return parsed.typeParameters;
   }
 
-  return [ensureParseError(file, parsed, sourceStart, sourceEnd)];
+  return [ensureParseError(file, str, parsed, sourceStart, sourceEnd)];
 }
 
 export function parseTypeParams(file, str, sourceStart, sourceEnd) {
@@ -134,7 +138,7 @@ export function parseTypeParams(file, str, sourceStart, sourceEnd) {
     return parsed.typeParameters;
   }
 
-  return [ensureParseError(file, parsed, sourceStart, sourceEnd)];
+  return [ensureParseError(file, str, parsed, sourceStart, sourceEnd)];
 }
 
 function tryParse(
@@ -146,9 +150,9 @@ function tryParse(
   sourceOffset,
 ) {
   const { parserOpts } = file.opts;
+  const startLoc = getLoc(file, sourceStart);
 
-  if (typeof sourceStart === "number") {
-    const startLoc = getLoc(file, sourceStart);
+  if (startLoc) {
     const startLine = startLoc.line;
     let startIndex = sourceStart;
     let startColumn = startLoc.column;
@@ -171,6 +175,7 @@ function tryParse(
     } catch (err) {
       const parseError = createParseError(
         file,
+        code,
         sourceStart,
         sourceEnd,
         getParseErrorLabel(err, code, startIndex),
@@ -208,24 +213,26 @@ function getParseErrorLabel(err, code, startIndex) {
   }
 }
 
-function ensureParseError(file, node, sourceStart, sourceEnd) {
+function ensureParseError(file, str, node, sourceStart, sourceEnd) {
   if (node.type === "MarkoParseError") return node;
   return createParseError(
     file,
+    str,
     sourceStart,
     sourceEnd,
     `Unexpected node of type ${node.type} returned while parsing.`,
   );
 }
 
-function createParseError(file, sourceStart, sourceEnd, label, errorLoc) {
+// Without a source range the error has no loc, and its source is what was parsed.
+function createParseError(file, str, sourceStart, sourceEnd, label, errorLoc) {
   file.___hasParseErrors = true;
   const loc = getLocRange(file, sourceStart, sourceEnd);
   return {
     type: "MarkoParseError",
-    source: file.code.slice(sourceStart, sourceEnd),
+    source: loc ? file.code.slice(sourceStart, sourceEnd) : str,
     label: label.replace(/ *\(\d+:\d+\)$/, ""),
-    errorLoc: errorLoc && getBoundedRange(loc, errorLoc),
+    errorLoc: loc && errorLoc && getBoundedRange(loc, errorLoc),
     loc,
     start: sourceStart,
     end: sourceEnd,

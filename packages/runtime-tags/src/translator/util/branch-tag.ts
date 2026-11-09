@@ -16,6 +16,7 @@ import {
 import { setSectionOwnerResumedByMarker } from "./signals";
 import { findSlot, SlotKind } from "./slots";
 import { createOutputState } from "./state";
+import { toOnlyExpressionOrBlock } from "./to-only-or-block";
 import {
   getBranchWriteReason,
   getWriteGuard,
@@ -44,15 +45,15 @@ export function resumeOwnerByMarkerWhenUnconditional(
   nodeBinding: Binding,
 ) {
   const branchExprReason = findSlot(nodeBinding, SlotKind.BranchExpr)?.reason;
+  if (!isStateReason(branchExprReason)) return;
   const branchReason = getBranchWriteReason(bodySection);
   const nodeReason = getWriteReason(nodeBinding);
   if (
-    isStateReason(branchExprReason) &&
-    some(branchExprReason.state, hasResumableAssignment) &&
     branchReason &&
     !isGuardedReason(branchReason) &&
     nodeReason &&
-    !isGuardedReason(nodeReason)
+    !isGuardedReason(nodeReason) &&
+    some(branchExprReason.state, hasResumableAssignment)
   ) {
     setSectionOwnerResumedByMarker(bodySection);
   }
@@ -142,7 +143,7 @@ export function buildForRuntimeCall(
     callRuntime(
       forTypeToRuntime(type),
       ...getBaseArgsInForTag(type, attrs),
-      t.arrowFunctionExpression(params, t.blockStatement(statements)),
+      t.arrowFunctionExpression(params, toOnlyExpressionOrBlock(statements)),
     ),
   );
 }

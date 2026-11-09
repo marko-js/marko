@@ -1,7 +1,6 @@
 import { types as t } from "@marko/compiler";
 import { getFile, importDefault } from "@marko/compiler/babel-utils";
 
-import { BindingType } from "../../util/bindings";
 import { getUnusedParamIdentifier } from "../../util/generate-uid";
 import { addTagVarBindings } from "../../util/known-tag";
 import { isOptimize } from "../../util/marko-config";
@@ -30,7 +29,6 @@ import {
   getSetup,
   getSignal,
   initValue,
-  type Signal,
   signalHasWork,
   trimEmptyArgs,
   writeRegisteredFns,
@@ -51,22 +49,20 @@ export default {
       forEachSectionReverse((childSection) => {
         if (childSection !== section) {
           forEach(childSection.referencedClosures, (closure) => {
-            if (closure.type !== BindingType.constant) {
-              const closureSignal = getSignal(childSection, closure);
-              if (signalHasWork(closureSignal)) {
-                const invocation = t.expressionStatement(
-                  t.callExpression(
-                    isDynamicClosure(childSection, closure)
-                      ? closureSignal.identifier
-                      : t.memberExpression(
-                          closureSignal.identifier,
-                          t.identifier("_"),
-                        ),
-                    [scopeIdentifier],
-                  ),
-                );
-                addStatement("render", childSection, undefined, invocation);
-              }
+            const closureSignal = getSignal(childSection, closure);
+            if (signalHasWork(closureSignal)) {
+              const invocation = t.expressionStatement(
+                t.callExpression(
+                  isDynamicClosure(childSection, closure)
+                    ? closureSignal.identifier
+                    : t.memberExpression(
+                        closureSignal.identifier,
+                        t.identifier("_"),
+                      ),
+                  [scopeIdentifier],
+                ),
+              );
+              addStatement("render", childSection, undefined, invocation);
             }
           });
         }
@@ -102,9 +98,10 @@ export default {
             tagParamsSignal && signalHasWork(tagParamsSignal)
               ? tagParamsSignal.identifier
               : undefined;
-          const { writes } = getSectionMeta(childSection);
+          const meta = getSectionMeta(childSection);
+          const { writes } = meta;
           // Reaches the runtime through `_content`, which strips these.
-          const walks = trimTrailingExits(getSectionMeta(childSection).walks);
+          const walks = trimTrailingExits(meta.walks);
           addTagVarBindings(childSection);
           const written = writeSignals(childSection);
           const setup = getSetup(childSection);
@@ -222,19 +219,17 @@ export default {
       const setup = getSetup(section);
       const setupWritten = !!setup && written.has(setup);
       // Parents skip calling this setup export when analysis found no setup work.
-      assertSetupWorkFound(program, section, written);
+      if (setupWritten && !section.hasSetupWork) {
+        throw program.buildCodeFrameError(
+          "Marko internal error: analysis found no setup work for a section whose translation produced setup statements. Please open an issue with a reproduction.",
+        );
+      }
 
       if (!setupWritten) {
         program.node.body.unshift(
           t.exportNamedDeclaration(
             t.variableDeclaration("const", [
-              t.variableDeclarator(
-                setupIdentifier,
-                t.arrowFunctionExpression(
-                  [getUnusedParamIdentifier()],
-                  t.blockStatement([]),
-                ),
-              ),
+              t.variableDeclarator(setupIdentifier, emptySetup()),
             ]),
           ),
         );
@@ -264,31 +259,23 @@ export default {
   },
 } satisfies TemplateVisitor<t.Program>;
 
-// Callers skip a setup analysis found no work for, so translate writing one
-// means analysis missed work.
-function assertSetupWorkFound(
-  program: t.NodePath<t.Program>,
-  section: Section,
-  written: Set<Signal>,
-) {
-  const setup = getSetup(section);
-  if (!section.hasSetupWork && setup && written.has(setup)) {
-    throw program.buildCodeFrameError(
-      "Marko internal error: analysis found no setup work for a section whose translation produced setup statements. Please open an issue with a reproduction.",
-    );
-  }
-}
-
-// A debug build marks content with a `<return>` on its setup, or its params if
-// it has no setup, to check a dynamic tag's variable over it.
+// A debug build marks content with a `<return>` on its setup, else its params,
+// else an empty setup, to check a dynamic tag's variable over it.
 function markReturn(
   section: Section,
   setup: t.Expression | undefined,
   params: t.Expression | undefined,
 ) {
   return section.returnValueExpr && !isOptimize()
-    ? setup
-      ? [callRuntime("_return_setup", setup), params]
-      : [setup, callRuntime("_return_setup", params!)]
+    ? setup || !params
+      ? [callRuntime("_return_setup", setup || emptySetup()), params]
+      : [setup, callRuntime("_return_setup", params)]
     : [setup, params];
+}
+
+function emptySetup() {
+  return t.arrowFunctionExpression(
+    [getUnusedParamIdentifier()],
+    t.blockStatement([]),
+  );
 }

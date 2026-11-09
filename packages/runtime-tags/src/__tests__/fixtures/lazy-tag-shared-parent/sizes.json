@@ -10,9 +10,9 @@
         "brotli": 868
       },
       "files": {
-        "tags/parent-a.marko": 260,
-        "tags/parent-b.marko": 258,
-        "template.marko": 287
+        "tags/parent-a.marko": 217,
+        "tags/parent-b.marko": 215,
+        "template.marko": 249
       }
     },
     "child.mjs": {
@@ -20,8 +20,8 @@
       "brotli": 104
     },
     "shared": {
-      "min": 4380,
-      "brotli": 2216
+      "min": 4345,
+      "brotli": 2197
     }
   },
   "html": {

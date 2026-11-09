@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = {
   onMount: function () {
@@ -11,20 +11,20 @@ module.exports = {
     var helloJane = this.getComponent("helloJane");
 
     this.test = function () {
-      expect(helloFrank).to.be.an("object");
-      expect(helloFrank.name).to.equal("Frank");
+      assert.ok(typeof helloFrank === "object" && helloFrank !== null);
+      assert.equal(helloFrank.name, "Frank");
 
-      expect(helloFrankAsync).to.be.an("object");
-      expect(helloFrankAsync.name).to.equal("Frank Async");
+      assert.ok(typeof helloFrankAsync === "object" && helloFrankAsync !== null);
+      assert.equal(helloFrankAsync.name, "Frank Async");
 
-      expect(helloJohn).to.be.an("object");
-      expect(helloJohn.name).to.equal("John");
+      assert.ok(typeof helloJohn === "object" && helloJohn !== null);
+      assert.equal(helloJohn.name, "John");
 
-      expect(helloJohnAsync).to.be.an("object");
-      expect(helloJohnAsync.name).to.equal("John Async");
+      assert.ok(typeof helloJohnAsync === "object" && helloJohnAsync !== null);
+      assert.equal(helloJohnAsync.name, "John Async");
 
-      expect(helloJane).to.be.an("object");
-      expect(helloJane.name).to.equal("Jane");
+      assert.ok(typeof helloJane === "object" && helloJane !== null);
+      assert.equal(helloJane.name, "Jane");
     };
   },
 };

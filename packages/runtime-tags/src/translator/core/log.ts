@@ -18,7 +18,7 @@ export default {
     assertNoVar(tag);
     assertNoParams(tag);
     assertNoBodyContent(tag);
-    const valueAttr = assertOnlyValueAttr(tag, true);
+    const { valueAttr } = assertOnlyValueAttr(tag, true);
 
     addSetupExpr(ensureSection(tag), valueAttr.value);
   },

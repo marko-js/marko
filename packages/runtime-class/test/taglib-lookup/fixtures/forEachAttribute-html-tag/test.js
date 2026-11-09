@@ -1,4 +1,6 @@
-exports.check = function (markoCompiler, expect) {
+const assert = require("assert/strict");
+
+exports.check = function (markoCompiler) {
   var lookup = markoCompiler.buildTaglibLookup(__dirname);
 
   var hasHrefAttr = false;
@@ -9,5 +11,5 @@ exports.check = function (markoCompiler, expect) {
     }
   });
 
-  expect(hasHrefAttr).to.equal(true);
+  assert.equal(hasHrefAttr, true);
 };

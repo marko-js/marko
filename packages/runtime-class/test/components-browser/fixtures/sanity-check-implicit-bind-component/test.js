@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), {
@@ -6,11 +6,11 @@ module.exports = function (helpers) {
     age: 30,
   });
 
-  expect(component.el.innerHTML).to.equal("Frank");
+  assert.equal(component.el.innerHTML, "Frank");
 
   component.setName("Jane");
 
   component.update();
 
-  expect(component.el.innerHTML).to.equal("Jane");
+  assert.equal(component.el.innerHTML, "Jane");
 };

@@ -21,9 +21,6 @@ type LoadValues = Map<Promise<LoadSignal>, [value: unknown, apply: LoadApply]>;
 interface LoadApply extends Signal {
   _?: Signal;
 }
-interface LoadModule {
-  _: [template: string, walks: string, setup: SetupFn];
-}
 interface LoadSignal {
   _: Signal;
 }
@@ -70,7 +67,9 @@ export function _load_template(id: string, load: () => Promise<Renderer>) {
   return lazyTemplate;
 }
 
-export function _load_setup(load: () => Promise<LoadModule>) {
+export function _load_setup(
+  load: () => Promise<{ _: [template: string, walks: string, setup: SetupFn] }>,
+) {
   let pending: ReturnType<typeof load> | undefined;
   let renderer: Renderer | undefined;
   const insertCached = (child: BranchScope, marker: ChildNode) =>
@@ -123,14 +122,14 @@ function insertLoaded(
       awaitCounter?.c();
     };
   let remaining: number;
-  if ((remaining = values?.size as number)) {
+  if ((remaining = values.size)) {
     // A module already loaded still waits on its input's chunks, which a pending
     // `<try>` counts before it dismisses its placeholder.
     awaitCounter ||= startAwait(branch);
     const fail = loadFailed(branch, awaitCounter);
     // Each entry's signal is cached as its chunk lands, so the render
     // applies every entry synchronously.
-    values!.forEach(([, apply], promise) =>
+    values.forEach(([, apply], promise) =>
       promise.then(
         (mod) =>
           (apply._ = mod._) &&

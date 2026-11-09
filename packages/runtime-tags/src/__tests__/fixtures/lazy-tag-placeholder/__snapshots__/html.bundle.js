@@ -22,7 +22,8 @@ var template_default = _template("b", (input) => {
 		_subscribe($count__closures, _scope($scope1_id, {
 			_: _scope_with_id($scope0_id),
 			b: _existing_scope($childScope)
-		}), "b0");
+		}), "b0", 0);
+		_resume_branch($scope1_id);
 	}, () => {
 		_scope_reason();
 		_scope_id();

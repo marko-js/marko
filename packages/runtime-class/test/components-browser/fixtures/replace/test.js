@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index.marko"));
@@ -7,6 +7,6 @@ module.exports = function (helpers) {
   var targetEl = component.getEl("target");
   hello.renderSync({ name: "John" }).replace(targetEl);
 
-  expect(component.el.firstElementChild.className).to.equal("hello");
-  expect(component.el.firstElementChild.innerHTML).to.equal("Hello John");
+  assert.equal(component.el.firstElementChild.className, "hello");
+  assert.equal(component.el.firstElementChild.innerHTML, "Hello John");
 };

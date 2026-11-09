@@ -3,6 +3,7 @@
 <!--M_]3 #text/0 4--><!--M_[3--><!--M_[-->
 <p>2<!--M_$6 #text/0-->:<!>y<!--M_$6 #text/1--></p>
 <!--M_]5 #text/0 6--><!--M_]2 #text/0 5--><b>ab</b><b>cd</b>
+<p title=t>b</p><!--M_$14 #p/0--><i>x<!--M_$18 #text/0--></i>
 <script>
   WALKER_RUNTIME("M")("_");
   M._.r = [_ => [1, {
@@ -13,14 +14,19 @@
         id: 2,
         extra: "y"
       }],
-      "#childScope/1": _(2)
+      "#childScope/1": _(2),
+      "ClosureScopes:firstExtra/17": new Set([_(18)])
     }, 1, {
       "ConditionalRenderer:#text/0": _.a =
-        "packages/runtime-tags/src/__tests__/fixtures/at-tags-for-loop-param-rest/template.marko_1*content 1"
+        "packages/runtime-tags/src/__tests__/fixtures/at-tags-for-loop-param-rest/template.marko_2*content 1"
     }, 1, {
       "ConditionalRenderer:#text/0": _.a
+    }, 11, {
+      _: _(1)
+    }, {
+      _: _(17)
     }],
-    "packages/runtime-tags/src/__tests__/fixtures/at-tags-for-loop-param-rest/template.marko_0 1"
+    "packages/runtime-tags/src/__tests__/fixtures/at-tags-for-loop-param-rest/template.marko_4_r2#0:12 14 packages/runtime-tags/src/__tests__/fixtures/at-tags-for-loop-param-rest/template.marko_0 1"
   ];
   M._.w()
 </script>

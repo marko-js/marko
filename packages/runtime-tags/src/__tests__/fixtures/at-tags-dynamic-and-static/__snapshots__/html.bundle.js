@@ -19,14 +19,12 @@ var template_default = _template("a", (input) => {
 	forIn({
 		a: 1,
 		b: 2
-	}, (a, v) => {
-		$item = attrTags($item, { content: _content("a0", () => {
-			const $scope1_reason = _scope_reason(), $wg__a = _write_guard($scope1_reason, 1), $wg__v = _write_guard($scope1_reason, 2);
-			const $scope1_id = _scope_id();
-			_html(`${_text_mark($scope1_id, "a", a, $wg__a * 2)}:${_text_mark($scope1_id, "b", v, $wg__v * 2)}`);
-			_write_if($scope1_reason, 0) && _scope($scope1_id, {});
-		}, $scope0_id) });
-	});
+	}, (a, v) => $item = attrTags($item, { content: _content("a0", () => {
+		const $scope1_reason = _scope_reason(), $wg__a = _write_guard($scope1_reason, 1), $wg__v = _write_guard($scope1_reason, 2);
+		const $scope1_id = _scope_id();
+		_html(`${_text_mark($scope1_id, "a", a, $wg__a * 2)}:${_text_mark($scope1_id, "b", v, $wg__v * 2)}`);
+		_write_if($scope1_reason, 0) && _scope($scope1_id, {});
+	}, $scope0_id) }));
 	hello_default({
 		item: $item,
 		other: attrTag({ content: _content("a1", () => {

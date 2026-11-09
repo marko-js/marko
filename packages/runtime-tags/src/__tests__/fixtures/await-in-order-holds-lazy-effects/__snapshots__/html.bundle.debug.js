@@ -23,9 +23,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $childScope = _peek_scope_id();
 	$Child_withLoadAssets({
 		value,
-		valueChange: _resume((_new_value) => {
-			value = _new_value;
-		}, "__tests__/template.marko_0/valueChange", $scope0_id)
+		valueChange: _resume((_new_value) => value = _new_value, "__tests__/template.marko_0/valueChange", $scope0_id)
 	});
 	_await($scope0_id, "#text/2", value ? value : resolveAfter(value, 3), (v) => {
 		const $scope1_id = _scope_id();
@@ -33,4 +31,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope($scope1_id, {}, "__tests__/template.marko", "5:2");
 	});
 	_scope($scope0_id, { "#childScope/1": _existing_scope($childScope) }, "__tests__/template.marko", 0);
+	_resume_branch($scope0_id);
 }, 1);

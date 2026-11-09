@@ -12,15 +12,13 @@ const $input_item = ($scope, input_item) => $for($scope, [input_item]);
 const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a1", "Click <!>", "b%"), { 1: ($scope) => _text($scope.a, $scope.b) });
 const $clicked = /*@__PURE__*/ _let(2, ($scope) => {
 	let $item;
-	forOf(["a", "b"], (foo) => {
-		$item = attrTags($item, {
-			onClick: $onClick({
-				_: $scope,
-				f: foo
-			}),
-			content: $item_content($scope, { 1: foo })
-		});
-	});
+	forOf(["a", "b"], (foo) => $item = attrTags($item, {
+		onClick: $onClick({
+			_: $scope,
+			f: foo
+		}),
+		content: $item_content($scope, { 1: foo })
+	}));
 	$input_item($scope.a, $item);
 	_text($scope.b, $scope.c);
 });

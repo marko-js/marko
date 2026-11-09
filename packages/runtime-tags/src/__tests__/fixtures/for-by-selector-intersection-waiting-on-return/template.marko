@@ -1,0 +1,8 @@
+<let/items=[{ id: 1 }, { id: 2 }, { id: 3 }]/>
+<let/selected=1/>
+<let/short=false/>
+<child/r v=short/>
+<for|item| of=(r ? items.slice(0, 1) : items) by="id">
+  <span class=item.id === selected && "on">${item.id}</span>
+</for>
+<button onClick() { short = true; selected = 3 }>go</button>

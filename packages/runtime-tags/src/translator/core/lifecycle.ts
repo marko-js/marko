@@ -7,7 +7,11 @@ import {
   type Tag,
 } from "@marko/compiler/babel-utils";
 
-import { assertNoBodyContent, assertNoSpreadAttrs } from "../util/assert";
+import {
+  assertNoBodyContent,
+  assertNoSpreadAttrs,
+  coreTagLink,
+} from "../util/assert";
 import { isOutputDOM } from "../util/marko-config";
 import { mergeTagReferences } from "../util/references";
 import { replaceWithStatements } from "../util/replace-with-statements";
@@ -32,23 +36,25 @@ export default {
     assertNoSpreadAttrs(tag);
 
     const { node } = tag;
+    if (node.attributes.length === 0) {
+      throw tag
+        .get("name")
+        .buildCodeFrameError(
+          `The ${coreTagLink(tag)} requires at least one attribute.`,
+        );
+    }
+
     const section = ensureSection(tag);
     for (const attr of node.attributes) {
       (attr.value.extra ??= {}).consumed = true;
     }
+    // The tag, and so `onUpdate`, re-runs for what any attribute reads,
+    // inside the hooks and the functions they create included.
     const tagExtra = mergeTagReferences(section, tag.node);
     tagExtra.isEffect = true;
     // `_lifecycle` registers cleanup via `$signal` at runtime, so the scope
     // must resume with its closest branch linked.
     section.hasAbortSignal = true;
-
-    if (node.attributes.length === 0) {
-      throw tag
-        .get("name")
-        .buildCodeFrameError(
-          "The [`<lifecycle>` tag](https://markojs.com/docs/reference/core-tag#lifecycle) requires at least one attribute.",
-        );
-    }
 
     getProgram().node.extra.isInteractive = true;
   },

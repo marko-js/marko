@@ -1,3 +1,5 @@
+const assert = require("assert/strict");
+
 const fs = require("fs");
 const path = require("path");
 const babel = require("@babel/core");
@@ -5,7 +7,7 @@ const pluginPath = require.resolve(
   "../../../../../../scripts/babel-plugin-marko-debug",
 );
 
-exports.check = function (expect, helpers, done) {
+exports.check = function (helpers, done) {
   const input = fs.readFileSync(path.join(__dirname, "input.js"), "utf-8");
   const actual = babel.transform(input, {
     plugins: [pluginPath],
@@ -20,7 +22,7 @@ exports.check = function (expect, helpers, done) {
       .readFileSync(path.join(__dirname, "expected.js"), "utf-8")
       .trim();
 
-    expect(expected).to.equal(actual);
+    assert.equal(expected, actual);
   }
 
   done();

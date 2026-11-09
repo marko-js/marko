@@ -1,0 +1,13 @@
+<let/label="a"/>
+<let/suffix="!"/>
+<ul>
+  <for|item| of=input.first>
+    <li>${label}${item}</li>
+  </for>
+</ul>
+<ol>
+  <for|item| of=input.second>
+    <li>${label}${item}${suffix}</li>
+  </for>
+</ol>
+<button onClick() { label = "b"; suffix = "?" }>go</button>

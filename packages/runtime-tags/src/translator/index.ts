@@ -46,15 +46,7 @@ export const tagDiscoveryDirs = ["tags"];
 export { default as internalEntryBuilder } from "./util/entry-builder";
 export const preferAPI = "tags";
 export const { transform, analyze, translate } = visitors;
-export const taglibs = [
-  [
-    coreTagLib.taglibId,
-    {
-      ...coreTagLib,
-      migrate: visitors.migrate,
-    },
-  ],
-];
+export const taglibs = [[coreTagLib.taglibId, coreTagLib]];
 
 export function getRuntimeEntryFiles(
   output: Config["output"],

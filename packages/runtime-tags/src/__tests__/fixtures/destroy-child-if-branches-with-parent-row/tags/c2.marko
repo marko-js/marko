@@ -1,0 +1,8 @@
+<let/n=0/>
+<if=input.on>
+  <lifecycle onDestroy() { console.log("destroy static"); }/>
+</if>
+<if=input.on>
+  <lifecycle onDestroy() { console.log("destroy reading state", n); }/>
+</if>
+<button.inc onClick() { n++ }></button>

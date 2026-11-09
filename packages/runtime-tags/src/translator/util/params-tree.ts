@@ -44,7 +44,7 @@ export function exposeParamsTree(
     if (!restAlias) {
       tree.properties = Object.create(null) as { [prop: string]: ParamsTree };
       for (const [property, alias] of binding.propertyAliases) {
-        tree.properties[property] = exposeParamsTree(alias, bodyAnalyzed)!;
+        tree.properties[property] = exposeParamsTree(alias, bodyAnalyzed);
       }
     } else if (aliasCount === 1) {
       if (hasSupersetExcludeProperties(binding, restAlias.excludeProperties)) {
@@ -59,7 +59,7 @@ export function exposeParamsTree(
             tree.properties![property] = exposeParamsTree(
               propAlias,
               bodyAnalyzed,
-            )!;
+            );
           }
         });
       }

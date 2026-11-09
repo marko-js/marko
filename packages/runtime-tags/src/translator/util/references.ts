@@ -49,7 +49,7 @@ interface ReferencedFunctionExtra extends t.FunctionExtra, ReferencedExtra {}
 
 export interface Read {
   binding: Binding;
-  extra: t.NodeExtra;
+  extra: ReadExtra;
   inOwnBody: boolean;
   getter: Getter | undefined;
   comparedTo: t.Node | undefined;
@@ -103,8 +103,9 @@ declare module "@marko/compiler/dist/types" {
     /** The initial value of the binding it derives, which keeps it rather than
      * following it, so the binding derives no sources from it. */
     initialValue?: true;
-    /** Its value has no side effect to evaluate, so an unread one can go: an
-     * expression's from `evaluate`, a tag's from its value attributes. */
+    /** Its value has no side effect to evaluate, so an unread one can go and
+     * a read one can move: an expression's from `evaluate`, a tag's from its
+     * value attributes. */
     pure?: boolean;
     /** The tag-root `KnownExprs` of the call site that linked this expression
      * to a derives template's binding, for dereferencing its reasons. */
@@ -181,10 +182,16 @@ function ensureLocalClosure(local: Binding, section: Section) {
 
 // Whether anything reads or assigns a tag's variable.
 export function isTagVarUsed(tag: t.NodePath<t.MarkoTag>) {
-  for (const name in t.getBindingIdentifiers(tag.node.var!)) {
-    const binding = tag.scope.getBinding(name);
-    if (binding?.referencePaths.length || binding?.constantViolations.length) {
-      return true;
+  const tagVar = tag.node.var;
+  if (tagVar) {
+    for (const name in t.getBindingIdentifiers(tagVar)) {
+      const binding = tag.scope.getBinding(name);
+      if (
+        binding?.referencePaths.length ||
+        binding?.constantViolations.length
+      ) {
+        return true;
+      }
     }
   }
   return false;
@@ -240,8 +247,6 @@ export function trackDomVarReferences(
       addOwnerReason(refSection, section, ALWAYS);
     }
   }
-
-  return binding;
 }
 
 export function trackVarReferences(
@@ -597,7 +602,7 @@ export function setReferencesScope(path: t.NodePath<any>) {
 export function trackGlobalReference(path: t.NodePath<t.Identifier>) {
   trackReference(
     path,
-    (getProgram().node.extra!.globalBinding ??= createBinding(
+    (getProgram().node.extra.globalBinding ??= createBinding(
       "$global",
       BindingType.global,
       ensureSection(getProgram()),
@@ -835,6 +840,9 @@ function trackReference(
     const { parent } = root;
     if (!t.isMemberExpression(parent) && !t.isOptionalMemberExpression(parent))
       break;
+    // A reference used as a member key is only read; only the member object
+    // continues the walk that can reach an assigned member.
+    if (parent.object !== root.node) break;
 
     let prop = getMemberExpressionPropString(parent);
     if (isAssignedMember(root.parentPath!)) {
@@ -981,9 +989,9 @@ function mergeInto(
           );
         }
       }
-    } else if (extra?.dropped) {
+    } else if (extra.dropped) {
       /* v8 ignore next -- a dropped reference is never merged into another */
-      throw new Error("Cannot merged a dropped reference.");
+      throw new Error("Cannot merge a dropped reference.");
     }
   }
 
@@ -1057,8 +1065,8 @@ export const [getReferenceFinalizers] = createAnalysisState<(() => void)[]>(
   () => [],
 );
 
-// Runs once reads, assignments, pruning and sources settle, before reasons
-// propagate: a finalizer may add them, but reads none, nor facts on them.
+// Runs once reads, assignments, pruning and sources settle, before sections
+// link their closures and reasons propagate: a finalizer may add either.
 export function onFinalizeReferences(finalize: () => void) {
   getReferenceFinalizers().push(finalize);
 }
@@ -1066,14 +1074,17 @@ export function onFinalizeReferences(finalize: () => void) {
 export function addRead(
   exprExtra: ReferencedExtra,
   extra: t.NodeExtra,
+  exprRoot: t.NodeExtra,
   binding: Binding,
   section: Section,
   getter: Getter | undefined,
 ) {
+  // Every read records the expression it sits in, before any merge.
+  (extra as ReadExtra).exprRoot = exprRoot;
   const readsByExpression = getReadsByExpression();
   const read: Read = {
     binding,
-    extra,
+    extra: extra as ReadExtra,
     getter,
     inOwnBody: false,
     comparedTo: undefined,
@@ -1098,8 +1109,14 @@ export function dropNodes(node: t.Node | t.Node[]) {
   forEachNodeExtra(node, dropExpr);
 }
 
+// Dropping content drops each expression a part of it merged into, which is
+// always in the same content.
 function untrackNodes(node: t.Node | t.Node[]) {
-  forEachNodeExtra(node, untrackExpr);
+  forEachNodeExtra(node, untrackCanonicalExpr);
+}
+
+function untrackCanonicalExpr(extra: ReferencedExtra) {
+  untrackExpr(getCanonicalExpr(extra));
 }
 
 function forEachNodeExtra(
@@ -1201,8 +1218,7 @@ function addReadToExpression(
   // reference) must not keep the binding alive.
   if (exprExtra.dropped) return;
   const extra = (node.extra ??= {});
-  extra.exprRoot = rootExtra;
-  const read = addRead(exprExtra, extra, binding, section, getter);
+  const read = addRead(exprExtra, extra, rootExtra, binding, section, getter);
 
   const { parent } = root;
   if (
@@ -1260,6 +1276,16 @@ export function getAllTagReferenceNodes(
     referenceNodes.push(attr.value);
   }
 
+  return getChildTagReferenceNodes(tag, referenceNodes, collectAttrTag);
+}
+
+// The references of a tag's child tags: attribute tags through `collectAttrTag`
+// when given, the rest (control flow, scriptlets) in place.
+export function getChildTagReferenceNodes(
+  tag: t.MarkoTag,
+  referenceNodes: t.Node[],
+  collectAttrTag?: (attrTag: t.MarkoTag) => void,
+) {
   for (const child of tag.body.attributeTags
     ? tag.body.body
     : tag.attributeTags) {
@@ -1310,6 +1336,10 @@ export function isReferencedExtra(
   extra: t.NodeExtra | undefined,
 ): extra is ReferencedExtra {
   return !!(extra && !extra.dropped && extra.section);
+}
+
+export interface ReadExtra extends t.NodeExtra {
+  exprRoot: t.NodeExtra;
 }
 
 export interface AssignedBindingExtra extends ReferencedExtra {
@@ -1371,6 +1401,10 @@ export function getValueReferences(
   exprs: Opt<t.NodeExtra>,
 ): ReferencedBindings {
   return reduce(exprs, addValueReferences);
+}
+
+export function isPureExpr(expr: t.NodeExtra) {
+  return !!expr.pure;
 }
 
 function addValueReferences(refs: ReferencedBindings, expr: t.NodeExtra) {

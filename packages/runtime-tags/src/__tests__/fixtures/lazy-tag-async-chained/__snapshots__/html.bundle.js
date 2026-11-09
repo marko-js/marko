@@ -11,7 +11,7 @@ var child_default = _template("a", (input) => {
 // template.marko
 const $Child_withLoadAssets = withLoadAssets(() => child_default, "a", flush$1, "_a");
 var template_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_value = _write_guard($scope0_reason, 0), $wi__input_value = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wi__input_value = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $childScope = _peek_scope_id();
 	$Child_withLoadAssets({
@@ -26,6 +26,6 @@ var template_default = _template("b", (input) => {
 			value
 		});
 		$wi__input_value && _scope($scope1_id, { b: _existing_scope($childScope2) });
-	}, $wg__input_value);
+	}, _write_guard($scope0_reason, 0));
 	$wi__input_value && _scope($scope0_id, { b: _existing_scope($childScope) });
 }, 1);

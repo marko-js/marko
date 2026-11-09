@@ -27,20 +27,26 @@ export function assertNoSpreadAttrs(tag: t.NodePath<t.MarkoTag>) {
   }
 }
 
-// The `value=` attribute of a core tag that supports no other attribute, or
-// also its change handler with `change`; `hint` helps with an unsupported one.
+// The single `value=` attribute of a core tag that supports no other attribute,
+// and with `change` its change handler; `hint` helps with an unsupported one.
 export function assertOnlyValueAttr(
   tag: t.NodePath<t.MarkoTag>,
   required: true,
   change?: boolean,
   hint?: (attr: t.MarkoAttribute) => string | undefined,
-): t.MarkoAttribute;
+): {
+  valueAttr: t.MarkoAttribute;
+  valueChangeAttr: t.MarkoAttribute | undefined;
+};
 export function assertOnlyValueAttr(
   tag: t.NodePath<t.MarkoTag>,
   required?: boolean,
   change?: boolean,
   hint?: (attr: t.MarkoAttribute) => string | undefined,
-): t.MarkoAttribute | undefined;
+): {
+  valueAttr: t.MarkoAttribute | undefined;
+  valueChangeAttr: t.MarkoAttribute | undefined;
+};
 export function assertOnlyValueAttr(
   tag: t.NodePath<t.MarkoTag>,
   required?: boolean,
@@ -48,12 +54,14 @@ export function assertOnlyValueAttr(
   hint?: (attr: t.MarkoAttribute) => string | undefined,
 ) {
   let valueAttr: t.MarkoAttribute | undefined;
-  let changeAttr: t.MarkoAttribute | undefined;
+  let valueChangeAttr: t.MarkoAttribute | undefined;
   for (const attr of tag.node.attributes) {
-    if (!valueAttr && isValueAttr(attr)) {
+    if (isValueAttr(attr)) {
+      if (valueAttr) throw buildDuplicateAttrError(tag, attr);
       valueAttr = attr;
-    } else if (change && !changeAttr && isValueChangeAttr(attr)) {
-      changeAttr = attr;
+    } else if (change && isValueChangeAttr(attr)) {
+      if (valueChangeAttr) throw buildDuplicateAttrError(tag, attr);
+      valueChangeAttr = attr;
     } else {
       throw buildUnsupportedAttrsError(tag, change, hint);
     }
@@ -67,7 +75,7 @@ export function assertOnlyValueAttr(
       );
   }
 
-  return valueAttr;
+  return { valueAttr, valueChangeAttr };
 }
 
 export function assertHasVar(
@@ -151,6 +159,15 @@ export function buildAttrsError(
   );
 }
 
+// An error at `attr`, or at the tag name when it has no location.
+export function buildAttrError(
+  tag: t.NodePath<t.MarkoTag>,
+  attr: t.MarkoTag["attributes"][number],
+  msg: string,
+) {
+  return buildRangeError(tag, attr.loc?.start, attr.loc?.end, msg);
+}
+
 // An error at an attribute's name, or at the tag name when it has no location.
 export function buildAttrNameError(
   tag: t.NodePath<t.MarkoTag>,
@@ -163,6 +180,18 @@ export function buildAttrNameError(
     start,
     start && { line: start.line, column: start.column + attr.name.length },
     msg,
+  );
+}
+
+// An error at a second `value=` attribute or change handler.
+export function buildDuplicateAttrError(
+  tag: t.NodePath<t.MarkoTag>,
+  attr: t.MarkoAttribute,
+) {
+  return buildAttrError(
+    tag,
+    attr,
+    `The ${coreTagLink(tag)} takes a single ${isValueAttr(attr) ? valueAttrLink : "`valueChange=` attribute"}.`,
   );
 }
 
@@ -231,7 +260,7 @@ export function assertForParams(tag: t.NodePath<t.MarkoTag>, type: ForType) {
   }
 }
 
-function coreTagLink(tag: t.NodePath<t.MarkoTag>) {
+export function coreTagLink(tag: t.NodePath<t.MarkoTag>) {
   const tagName = getTagName(tag)!;
   const anchor = docsAnchors[tagName] ?? tagName;
   return `[\`<${tagName}>\` tag](https://markojs.com/docs/reference/core-tag${anchor && "#" + anchor})`;
@@ -241,13 +270,13 @@ function withHint(msg: string, hint: string | undefined) {
   return hint ? `${msg} ${hint}` : msg;
 }
 
-function isValueAttr(
+export function isValueAttr(
   attr: t.MarkoTag["attributes"][number],
 ): attr is t.MarkoAttribute {
   return attr.type === "MarkoAttribute" && attr.name === "value";
 }
 
-function isValueChangeAttr(
+export function isValueChangeAttr(
   attr: t.MarkoTag["attributes"][number],
 ): attr is t.MarkoAttribute {
   return attr.type === "MarkoAttribute" && attr.name === "valueChange";

@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var items = ["a", "b", "c"];
@@ -9,17 +9,15 @@ module.exports = function (helpers) {
     count: count,
   });
 
-  expect(
-    helpers.targetEl.firstElementChild.getAttribute("data-count"),
-  ).to.equal("0");
+  assert.equal(helpers.targetEl.firstElementChild.getAttribute("data-count"), "0");
 
   Array.from(helpers.targetEl.firstElementChild.childNodes).forEach((child) => {
     if (child.tagName === "div") {
-      expect(child.getAttribute("data-count")).to.equal("0");
+      assert.equal(child.getAttribute("data-count"), "0");
     }
   });
 
-  expect(helpers.targetEl.textContent).to.equal("abc");
+  assert.equal(helpers.targetEl.textContent, "abc");
 
   component.input = {
     count: count + 1,
@@ -27,15 +25,13 @@ module.exports = function (helpers) {
   };
   component.update();
 
-  expect(
-    helpers.targetEl.firstElementChild.getAttribute("data-count"),
-  ).to.equal("1");
+  assert.equal(helpers.targetEl.firstElementChild.getAttribute("data-count"), "1");
 
   Array.from(helpers.targetEl.firstElementChild.childNodes).forEach((child) => {
     if (child.tagName === "div") {
-      expect(child.getAttribute("data-count")).to.equal("0");
+      assert.equal(child.getAttribute("data-count"), "0");
     }
   });
 
-  expect(helpers.targetEl.textContent).to.equal("cba");
+  assert.equal(helpers.targetEl.textContent, "cba");
 };

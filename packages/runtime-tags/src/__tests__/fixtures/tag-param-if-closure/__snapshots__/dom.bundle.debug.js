@@ -15,8 +15,7 @@ const $Foo_content2__input = ($scope, input) => {
 const $if_content__a = /*@__PURE__*/ _closure_get("a/4", ($scope) => _text($scope["#text/0"], $scope._._.a), ($scope) => $scope._._);
 const $if_content__setup = $if_content__a;
 const $Foo_content__if = /*@__PURE__*/ _if("#text/0", " ", " ", $if_content__setup);
-const $Foo_content__v = ($scope, v) => $Foo_content__if($scope, v ? 0 : 1);
-const $Foo_content__$params = ($scope, $params3) => $Foo_content__v($scope, $params3[0]);
+const $Foo_content__$params = ($scope, $params3) => $Foo_content__if($scope, $params3[0] ? 0 : 1);
 const $Foo_content = _content("__tests__/template.marko_1*content", "<!><!><!>", "b%", 0, $Foo_content__$params);
 const $count = /*@__PURE__*/ _let("count/2", ($scope) => $Foo_content2__input_value($scope["#childScope/1"], $scope.count));
 const $a = /*@__PURE__*/ _const("a");

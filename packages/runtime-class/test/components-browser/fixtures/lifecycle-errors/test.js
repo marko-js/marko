@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 var template = require("./index.marko").default;
 
 module.exports = function (helpers) {
@@ -7,47 +7,51 @@ module.exports = function (helpers) {
   var stack = error.stack;
   try {
     ["onCreate", "onInput", "onRender", "onMount"].forEach(function (hook) {
-      expect(function () {
-        template
-          .renderSync({ fail: { hook: hook, error: error } })
-          .appendTo(helpers.targetEl);
-      })
-        .to.throw(
-          new RegExp(
+      assert.throws(
+        function () {
+          template
+            .renderSync({ fail: { hook: hook, error: error } })
+            .appendTo(helpers.targetEl);
+        },
+        {
+          message: new RegExp(
             "Error in " + hook +
               ' for component ".*lifecycle-errors/index.marko.*" \\(id: .+\\)\\.',
           ),
-        )
-        .and.have.property("cause", error);
+          cause: error,
+        },
+      );
     });
 
     component.once("update", function () {
       throw error;
     });
-    expect(function () {
+    assert.throws(function () {
       component.input = { name: "John" };
       component.update();
-    }).to.throw(error);
+    }, error);
 
     ["shouldUpdate", "onUpdate", "onDestroy"].forEach(function (hook) {
       component.fail = { hook: hook, error: error };
-      expect(function () {
-        if (hook === "onDestroy") {
-          component.destroy();
-        } else {
-          component.input = { name: hook };
-          component.update();
-        }
-      })
-        .to.throw(
-          new RegExp(
+      assert.throws(
+        function () {
+          if (hook === "onDestroy") {
+            component.destroy();
+          } else {
+            component.input = { name: hook };
+            component.update();
+          }
+        },
+        {
+          message: new RegExp(
             "Error in " + hook +
               ' for component ".*lifecycle-errors/index.marko.*" \\(id: .+\\)\\.',
           ),
-        )
-        .and.have.property("cause", error);
+          cause: error,
+        },
+      );
     });
-    expect(error.stack).to.equal(stack);
+    assert.equal(error.stack, stack);
   } finally {
     component.fail = null;
   }

@@ -1,8 +1,8 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 var markoComponents = require("marko/components");
 
 it("should serialize component config down to the browser", function () {
-  expect(window.simpleComponents).to.deep.equal([]);
+  assert.deepEqual(window.simpleComponents, []);
 
   var components = window.components;
   var html = components.html;
@@ -14,27 +14,23 @@ it("should serialize component config down to the browser", function () {
   // Initialize the components to bind behavior!
   markoComponents.init(componentIds);
 
-  expect(window.simpleComponents.length).to.equal(2);
-  expect(window.simpleComponents[0].state.type).to.equal("component state");
-  expect(window.simpleComponents[0].state.name).to.equal("John");
-  expect(window.simpleComponents[0].state.messageCount).to.equal(10);
-  expect(window.simpleComponents[0].componentConfig.type).to.equal(
-    "component config",
-  );
-  expect(window.simpleComponents[0].componentConfig.name).to.equal("John");
-  expect(window.simpleComponents[0].componentConfig.messageCount).to.equal(10);
+  assert.equal(window.simpleComponents.length, 2);
+  assert.equal(window.simpleComponents[0].state.type, "component state");
+  assert.equal(window.simpleComponents[0].state.name, "John");
+  assert.equal(window.simpleComponents[0].state.messageCount, 10);
+  assert.equal(window.simpleComponents[0].componentConfig.type, "component config");
+  assert.equal(window.simpleComponents[0].componentConfig.name, "John");
+  assert.equal(window.simpleComponents[0].componentConfig.messageCount, 10);
 
-  expect(window.simpleComponents[1].state.type).to.equal("component state");
-  expect(window.simpleComponents[1].state.name).to.equal("Frank");
-  expect(window.simpleComponents[1].state.messageCount).to.equal(20);
-  expect(window.simpleComponents[1].componentConfig.type).to.equal(
-    "component config",
-  );
-  expect(window.simpleComponents[1].componentConfig.name).to.equal("Frank");
-  expect(window.simpleComponents[1].componentConfig.messageCount).to.equal(20);
+  assert.equal(window.simpleComponents[1].state.type, "component state");
+  assert.equal(window.simpleComponents[1].state.name, "Frank");
+  assert.equal(window.simpleComponents[1].state.messageCount, 20);
+  assert.equal(window.simpleComponents[1].componentConfig.type, "component config");
+  assert.equal(window.simpleComponents[1].componentConfig.name, "Frank");
+  assert.equal(window.simpleComponents[1].componentConfig.messageCount, 20);
 
   testsTarget.innerHTML = html; // Reset html.
   markoComponents.init(componentIds); // Re-initialize the components.
 
-  expect(window.simpleComponents.length).to.equal(4);
+  assert.equal(window.simpleComponents.length, 4);
 });

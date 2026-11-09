@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<!><!><!>";
 const $walks = "b%c";
-const $for_content__n = /*@__PURE__*/ _for_closure("#text/0", ($scope) => _text($scope["#text/2"], $scope._.n));
+const $for_content__n = /*@__PURE__*/ _for_closure("#text/0", ($scope) => _text($scope["#text/2"], $scope._.n), 2);
 const $for_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#div/0"], "click", function() {
 	$n($scope._, $scope._.n + $scope.__length);
 }));

@@ -25,6 +25,7 @@ var template_default = _template("a", (input) => {
 				on
 			});
 			_subscribe($on__closures, _scope($scope2_id, { a: _existing_scope($childScope) }));
+			_resume_branch($scope2_id);
 		});
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 	}, () => {
@@ -33,5 +34,4 @@ var template_default = _template("a", (input) => {
 		_html("loading...");
 	}, void 0, "a0");
 	_scope($scope0_id, { c: $on__closures });
-	_resume_branch($scope0_id);
 }, 1);

@@ -3,4 +3,5 @@
 <span />
 <div />
 <div />
+<foo-bar />
 ```

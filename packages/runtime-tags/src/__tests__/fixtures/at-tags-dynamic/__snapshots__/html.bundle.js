@@ -59,17 +59,15 @@ var template_default = _template("a", (input) => {
 	});
 	forOf([["a", "b"], ["c", "d"]], (col, i) => {
 		let $row;
-		forOf(col, (row) => {
-			$row = attrTags($row, {
-				row,
-				content: _content("a2", () => {
-					const $scope3_reason = _scope_reason(), $wg__row = _write_guard($scope3_reason, 0);
-					const $scope3_id = _scope_id();
-					_html(_text_mark($scope3_id, "a", row, $wg__row));
-					_write_if($scope3_reason, 0) && _scope($scope3_id, {});
-				}, $scope0_id)
-			});
-		});
+		forOf(col, (row) => $row = attrTags($row, {
+			row,
+			content: _content("a2", () => {
+				const $scope3_reason = _scope_reason(), $wg__row = _write_guard($scope3_reason, 0);
+				const $scope3_id = _scope_id();
+				_html(_text_mark($scope3_id, "a", row, $wg__row));
+				_write_if($scope3_reason, 0) && _scope($scope3_id, {});
+			}, $scope0_id)
+		}));
 		$col = attrTags($col, {
 			x: i,
 			row: $row

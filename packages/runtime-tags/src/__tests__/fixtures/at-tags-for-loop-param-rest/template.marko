@@ -12,3 +12,22 @@
     <@item><b>${first}${others[0]}</b></@item>
   </for>
 </list>
+
+<const/{ a, ...r1 }=input.o/>
+<list>
+  <if=input.show>
+    <@item>
+      <const/{ b, ...r2 }=r1/>
+      <p ...r2>${b}</p>
+    </@item>
+  </if>
+</list>
+
+<list>
+  <if=input.show>
+    <@item>
+      <const/[{ extra: firstExtra }]=items/>
+      <for|items| of=[0]><i>${firstExtra}</i></for>
+    </@item>
+  </if>
+</list>

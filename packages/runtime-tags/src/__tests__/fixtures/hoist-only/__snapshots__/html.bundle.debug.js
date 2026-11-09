@@ -24,6 +24,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					z: "10:12",
 					hoist3: "11:12"
 				}), "__tests__/template.marko_2_input_value#0:3/subscribe", 0);
+				_write_guard($scope0_reason, 0) && _resume_branch($scope2_id);
 				_assert_hoist(hoist3);
 				return 0;
 			}

@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index.marko"), {
@@ -13,6 +13,6 @@ module.exports = function (helpers) {
   var onCreateInput = onCreateArgs[0];
   var onCreateOut = onCreateArgs[1];
 
-  expect(onCreateInput.name).to.equal("Frank");
-  expect(onCreateOut.global.name).to.equal("Frank");
+  assert.equal(onCreateInput.name, "Frank");
+  assert.equal(onCreateOut.global.name, "Frank");
 };

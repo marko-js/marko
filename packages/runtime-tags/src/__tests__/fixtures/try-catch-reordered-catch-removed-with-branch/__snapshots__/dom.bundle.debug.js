@@ -4,8 +4,7 @@ const $walks = "b D l b%c";
 const $placeholder_content = _content("__tests__/template.marko_7*content", "loading");
 const $await_content2__v = /*@__PURE__*/ _closure_get("v/7", ($scope) => _text($scope["#text/0"], $scope._._.v), ($scope) => $scope._._);
 const $await_content2__setup = $await_content2__v;
-const $await_content2__x = ($scope, x) => _text($scope["#text/1"], x);
-const $await_content2__$params = ($scope, $params4) => $await_content2__x($scope, $params4[0]);
+const $await_content2__$params = ($scope, $params4) => _text($scope["#text/1"], $params4[0]);
 const $await_content2 = /*@__PURE__*/ _await_content("#text/0", "<!><!>", "%b%", $await_content2__setup);
 const $try_content2__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content2__$params);
 const $try_content2__setup = ($scope) => {

@@ -8,6 +8,7 @@ var child_default = _template("b", (input) => {
 			_html("<p>inner</p>");
 			_script($scope1_id, "b0", 0);
 			$wi__input_show && _scope($scope1_id, {});
+			_resume_branch($scope1_id);
 			return 0;
 		}
 	}, $scope0_id, "a", $wg__input_show, $wg__input_show, 0, 0, 1);

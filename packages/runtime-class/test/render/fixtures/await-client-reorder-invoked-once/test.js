@@ -1,4 +1,4 @@
-const expect = require("chai").expect;
+const assert = require("assert/strict");
 const extend = require("raptor-util/extend");
 
 exports.templateData = {
@@ -10,11 +10,11 @@ exports.templateData = {
 exports.checkEvents = function (events, snapshot, out) {
   // Expect that we invoked the await reorderer. If true, it was only able to
   // be invoked once.
-  expect(out.global.__awaitReordererInvoked).to.equal(true);
+  assert.equal(out.global.__awaitReordererInvoked, true);
 
   events = events.map(function (eventInfo) {
     var arg = extend({}, eventInfo.arg);
-    expect(arg.out != null).to.equal(true);
+    assert.equal(arg.out != null, true);
 
     delete arg.out; // Not serializable
     delete arg.parent; // Not serializable

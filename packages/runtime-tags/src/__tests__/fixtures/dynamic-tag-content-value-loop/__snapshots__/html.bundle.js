@@ -21,7 +21,7 @@ var card_default = _template("b", (input) => {
 
 // template.marko
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_items = _write_guard($scope0_reason, 2), $wg__input_note = _write_guard($scope0_reason, 3), $wi__input_items__OR__input_note__OR__input_on = _write_if($scope0_reason, 1), $wg__input_on = _write_guard($scope0_reason, 4), $wi__input_on = _write_if($scope0_reason, 4), $wi__input_items = _write_if($scope0_reason, 2), $wi__input_note = _write_if($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $wg__input_items = _write_guard($scope0_reason, 2), $wg__input_note = _write_guard($scope0_reason, 3), $wg__input_on = _write_guard($scope0_reason, 4), $wi__input_on = _write_if($scope0_reason, 4), $wi__input_items = _write_if($scope0_reason, 2), $wi__input_items__OR__input_note__OR__input_on = _write_if($scope0_reason, 1), $wi__input_note = _write_if($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = /* @__PURE__ */ new Set();
 	_for_of(input.items, (item) => {
@@ -32,7 +32,6 @@ var template_default = _template("a", (input) => {
 			_scope_reason();
 			_html(`<em>${_text_mark($scope2_id, "a", item, $wg__input_items)} ${_text_mark($scope2_id, "b", input.note, $wg__input_note * 2)}</em>`);
 			$wi__input_items__OR__input_note__OR__input_on && _subscribe($wi__input_items && $for_content__item__closures, _subscribe($wi__input_note && $input_note__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "a1", $wg__input_items || $wg__input_note), "a2", $wg__input_items || $wg__input_note);
-			$wg__input_items || $wg__input_note || $wi__input_items__OR__input_note__OR__input_on && _resume_branch($scope2_id);
 		}, $scope1_id, ($scope) => [{ e: input.note }, {
 			c: item,
 			_: $scope($scope0_id)

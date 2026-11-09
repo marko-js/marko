@@ -1,9 +1,9 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 it("should allow attributes to not be updated", function () {
   var app = window.app;
   var noUpdateComponent = app.getComponent("no-update-attr");
-  expect(noUpdateComponent.el.getAttribute("data-foo")).to.equal("server");
+  assert.equal(noUpdateComponent.el.getAttribute("data-foo"), "server");
 
   noUpdateComponent.input = {
     name: "browser",
@@ -11,13 +11,13 @@ it("should allow attributes to not be updated", function () {
 
   noUpdateComponent.update();
 
-  expect(noUpdateComponent.el.getAttribute("data-foo")).to.equal("server");
+  assert.equal(noUpdateComponent.el.getAttribute("data-foo"), "server");
 });
 
 it("should allow input value to not be updated", function () {
   var app = window.app;
   var noUpdateComponent = app.getComponent("no-update-input-value");
-  expect(noUpdateComponent.el.value).to.equal("server");
+  assert.equal(noUpdateComponent.el.value, "server");
 
   noUpdateComponent.input = {
     name: "browser",
@@ -25,13 +25,13 @@ it("should allow input value to not be updated", function () {
 
   noUpdateComponent.update();
 
-  expect(noUpdateComponent.el.value).to.equal("server");
+  assert.equal(noUpdateComponent.el.value, "server");
 });
 
 it("should allow textarea value to not be updated", function () {
   var app = window.app;
   var noUpdateComponent = app.getComponent("no-update-body-textarea");
-  expect(noUpdateComponent.el.value).to.equal("server");
+  assert.equal(noUpdateComponent.el.value, "server");
 
   noUpdateComponent.input = {
     name: "browser",
@@ -39,17 +39,15 @@ it("should allow textarea value to not be updated", function () {
 
   noUpdateComponent.update();
 
-  expect(noUpdateComponent.el.value).to.equal("server");
+  assert.equal(noUpdateComponent.el.value, "server");
 });
 
 it("should allow a root element to not be updated", function () {
   var app = window.app;
   var noUpdateComponent = app.getComponent("no-update-el");
 
-  expect(noUpdateComponent.getNoUpdateEl().getAttribute("data-foo")).to.equal(
-    "server",
-  );
-  expect(noUpdateComponent.getNoUpdateEl().innerHTML).to.equal("server");
+  assert.equal(noUpdateComponent.getNoUpdateEl().getAttribute("data-foo"), "server");
+  assert.equal(noUpdateComponent.getNoUpdateEl().innerHTML, "server");
 
   noUpdateComponent.input = {
     name: "browser",
@@ -57,20 +55,16 @@ it("should allow a root element to not be updated", function () {
 
   noUpdateComponent.update();
 
-  expect(noUpdateComponent.getNoUpdateEl().getAttribute("data-foo")).to.equal(
-    "server",
-  );
-  expect(noUpdateComponent.getNoUpdateEl().innerHTML).to.equal("server");
+  assert.equal(noUpdateComponent.getNoUpdateEl().getAttribute("data-foo"), "server");
+  assert.equal(noUpdateComponent.getNoUpdateEl().innerHTML, "server");
 });
 
 it("should allow a nested element to not be updated", function () {
   var app = window.app;
   var noUpdateComponent = app.getComponent("no-update-el-nested");
 
-  expect(noUpdateComponent.getNoUpdateEl().getAttribute("data-foo")).to.equal(
-    "server",
-  );
-  expect(noUpdateComponent.getNoUpdateEl().innerHTML).to.equal("server");
+  assert.equal(noUpdateComponent.getNoUpdateEl().getAttribute("data-foo"), "server");
+  assert.equal(noUpdateComponent.getNoUpdateEl().innerHTML, "server");
 
   noUpdateComponent.input = {
     name: "browser",
@@ -78,20 +72,16 @@ it("should allow a nested element to not be updated", function () {
 
   noUpdateComponent.update();
 
-  expect(noUpdateComponent.getNoUpdateEl().getAttribute("data-foo")).to.equal(
-    "server",
-  );
-  expect(noUpdateComponent.getNoUpdateEl().innerHTML).to.equal("server");
+  assert.equal(noUpdateComponent.getNoUpdateEl().getAttribute("data-foo"), "server");
+  assert.equal(noUpdateComponent.getNoUpdateEl().innerHTML, "server");
 });
 
 it("should allow a body element to not be updated", function () {
   var app = window.app;
   var noUpdateComponent = app.getComponent("no-update-body-el");
 
-  expect(noUpdateComponent.getNoUpdateEl().getAttribute("data-foo")).to.equal(
-    "server",
-  );
-  expect(noUpdateComponent.getNoUpdateEl().innerHTML).to.equal("server");
+  assert.equal(noUpdateComponent.getNoUpdateEl().getAttribute("data-foo"), "server");
+  assert.equal(noUpdateComponent.getNoUpdateEl().innerHTML, "server");
 
   noUpdateComponent.input = {
     name: "browser",
@@ -99,8 +89,6 @@ it("should allow a body element to not be updated", function () {
 
   noUpdateComponent.update();
 
-  expect(noUpdateComponent.getNoUpdateEl().getAttribute("data-foo")).to.equal(
-    "browser",
-  );
-  expect(noUpdateComponent.getNoUpdateEl().innerHTML).to.equal("server");
+  assert.equal(noUpdateComponent.getNoUpdateEl().getAttribute("data-foo"), "browser");
+  assert.equal(noUpdateComponent.getNoUpdateEl().innerHTML, "server");
 });

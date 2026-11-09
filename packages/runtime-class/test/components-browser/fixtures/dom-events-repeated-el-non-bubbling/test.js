@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), {
@@ -8,11 +8,11 @@ module.exports = function (helpers) {
   var liEls = component.el.querySelectorAll("li");
 
   helpers.triggerMouseEvent(liEls[0], "mouseover");
-  expect(component.color).to.equal("red");
+  assert.equal(component.color, "red");
 
   helpers.triggerMouseEvent(liEls[1], "mouseover");
-  expect(component.color).to.equal("green");
+  assert.equal(component.color, "green");
 
   helpers.triggerMouseEvent(liEls[2], "mouseover");
-  expect(component.color).to.equal("blue");
+  assert.equal(component.color, "blue");
 };

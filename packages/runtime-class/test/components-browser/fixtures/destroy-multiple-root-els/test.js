@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), {
@@ -10,13 +10,13 @@ module.exports = function (helpers) {
   var ageEl = component.getEl("age");
   var linkEl = component.getEl("link");
 
-  expect(nameEl.parentNode != null).to.equal(true);
-  expect(ageEl.parentNode != null).to.equal(true);
-  expect(linkEl.parentNode != null).to.equal(true);
+  assert.equal(nameEl.parentNode != null, true);
+  assert.equal(ageEl.parentNode != null, true);
+  assert.equal(linkEl.parentNode != null, true);
 
   component.destroy();
 
-  expect(nameEl.parentNode == null).to.equal(true);
-  expect(ageEl.parentNode == null).to.equal(true);
-  expect(linkEl.parentNode == null).to.equal(true);
+  assert.equal(nameEl.parentNode == null, true);
+  assert.equal(ageEl.parentNode == null, true);
+  assert.equal(linkEl.parentNode == null, true);
 };

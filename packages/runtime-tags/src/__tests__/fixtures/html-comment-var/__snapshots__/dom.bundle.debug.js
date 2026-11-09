@@ -4,7 +4,7 @@ const $walks$1 = " b";
 const $tagName = /*@__PURE__*/ _let("tagName/1", ($scope) => _return($scope, $scope.tagName));
 const $setup__script = _script("__tests__/tags/parent-el.marko_0", ($scope) => $tagName($scope, _el_read($scope["#comment/0"]).parentElement.tagName));
 function $setup$1($scope) {
-	$tagName($scope, undefined);
+	$tagName($scope);
 	$setup__script($scope);
 }
 var parent_el_default = /*@__PURE__*/ _template("__tests__/tags/parent-el.marko", $template$1, " b", /*@__PURE__*/ _return_setup($setup$1));

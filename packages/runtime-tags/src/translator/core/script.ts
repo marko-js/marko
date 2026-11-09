@@ -10,7 +10,12 @@ import {
   type Tag,
 } from "@marko/compiler/babel-utils";
 
-import { assertNoBodyContent } from "../util/assert";
+import {
+  assertNoBodyContent,
+  buildDuplicateAttrError,
+  coreTagLink,
+  isValueAttr,
+} from "../util/assert";
 import { isOutputDOM } from "../util/marko-config";
 import { dropNodes, getAllTagReferenceNodes } from "../util/references";
 import { replaceWithStatements } from "../util/replace-with-statements";
@@ -21,7 +26,7 @@ import { addHTMLEffectCall, addStatement } from "../util/signals";
 import { skip, traverseContains, traverseFindAwait } from "../util/traverse";
 
 const htmlScriptTagAlternateMsg =
-  " For a native html [`<script>` tag](https://markojs.com/docs/reference/core-tag#script) use the `html-script` core tag instead.";
+  " For a native html `<script>` tag use the [`html-script` core tag](https://markojs.com/docs/reference/core-tag#html-script--html-style) instead.";
 
 export default {
   parse(tag) {
@@ -33,7 +38,7 @@ export default {
         if (child.type !== "MarkoText") {
           throw getFile().hub.buildError(
             child,
-            "Unexpected content in [`<script>` tag](https://markojs.com/docs/reference/core-tag#script). Only javascript and typescript is supported." +
+            `Unexpected content in ${coreTagLink(tag)}. Only javascript and typescript is supported.` +
               htmlScriptTagAlternateMsg,
             SyntaxError,
           );
@@ -42,9 +47,13 @@ export default {
         code += child.value;
       }
 
-      const start = body[0]?.start;
-      const end = body[body.length - 1]?.end;
+      const start = body[0].start;
+      const end = body[body.length - 1].end;
       const block = parseBlock(getFile(), code, start, end);
+      const [parseError] = block.body;
+      if (parseError?.type === "MarkoParseError") {
+        parseError.label += htmlScriptTagAlternateMsg;
+      }
       if (block.body.length || block.innerComments) {
         const valueFn = t.arrowFunctionExpression(
           [],
@@ -69,16 +78,16 @@ export default {
     if (node.var) {
       throw tag.hub.buildError(
         node.var,
-        "The [`<script>` tag](https://markojs.com/docs/reference/core-tag#script) does not support a tag variable reference." +
+        `The ${coreTagLink(tag)} does not support a tag variable reference.` +
           htmlScriptTagAlternateMsg,
       );
     }
 
     let seenValueAttr = false;
     for (const attr of node.attributes) {
-      if (attr.type === "MarkoAttribute" && attr.name === "value") {
+      if (isValueAttr(attr)) {
         if (seenValueAttr) {
-          throw tag.hub.buildError(attr, "Invalid duplicate value attribute.");
+          throw buildDuplicateAttrError(tag, attr);
         }
         seenValueAttr = true;
         // A function without statements, such as a body of only comments, runs nothing.
@@ -92,7 +101,7 @@ export default {
       } else {
         throw tag.hub.buildError(
           attr,
-          "The [`<script>` tag](https://markojs.com/docs/reference/core-tag#script) does not support html attributes." +
+          `The ${coreTagLink(tag)} does not support html attributes.` +
             htmlScriptTagAlternateMsg,
         );
       }
@@ -171,7 +180,8 @@ export default {
   },
   autocomplete: [
     {
-      description: "Use to create side effects.",
+      description:
+        "Use to create side effects. For a native `<script>` element, use `<html-script>`.",
       descriptionMoreURL: "https://markojs.com/docs/reference/core-tag#script",
     },
   ],

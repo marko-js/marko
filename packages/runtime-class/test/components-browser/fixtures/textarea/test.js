@@ -1,14 +1,12 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index.marko"));
 
-  expect(component.el.querySelector("pre").innerHTML).to.equal("");
+  assert.equal(component.el.querySelector("pre").innerHTML, "");
 
   component.submit();
   component.update();
 
-  expect(component.el.querySelector("pre").innerHTML).to.equal(
-    "Placeholder error",
-  );
+  assert.equal(component.el.querySelector("pre").innerHTML, "Placeholder error");
 };

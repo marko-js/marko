@@ -1,5 +1,10 @@
 import { types as t } from "@marko/compiler";
-import { getFile, withLoc } from "@marko/compiler/babel-utils";
+import {
+  getEnd,
+  getFile,
+  getStart,
+  withLoc,
+} from "@marko/compiler/babel-utils";
 
 import { getExprRoot, getFnRoot, getMarkoRoot } from "../util/get-root";
 import { canIgnoreRegister, trackFunction } from "../util/module-registrations";
@@ -17,9 +22,11 @@ export default {
       traverseFindAwait(fn.node.body);
     if (awaitNode) {
       const file = getFile();
-      const start = file.code.indexOf("await", awaitNode.start ?? 0);
+      const awaitStart = getStart(file, awaitNode);
+      const start =
+        awaitStart === null ? -1 : file.code.indexOf("await", awaitStart);
       const highlight =
-        start >= 0 && (awaitNode.end == null || start < awaitNode.end)
+        start >= 0 && start < getEnd(file, awaitNode)!
           ? withLoc(file, t.cloneNode(awaitNode), start, start + 5)
           : awaitNode;
       throw fn.hub.buildError(
@@ -27,9 +34,6 @@ export default {
         "Attribute methods containing `await` must be `async`. Add `async` before the method name.",
       );
     }
-
-    // bail on closures
-    if (fn !== getFnRoot(fn)) return;
 
     const { node } = fn;
 
@@ -40,6 +44,9 @@ export default {
     ) {
       return;
     }
+
+    // bail on closures
+    if (fn !== getFnRoot(fn)) return;
 
     const exprRoot = getExprRoot(fn);
     const markoRoot = getMarkoRoot(exprRoot);

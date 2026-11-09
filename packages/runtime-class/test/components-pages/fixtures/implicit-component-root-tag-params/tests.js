@@ -1,5 +1,5 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 it("should mount implicit components with tag params", function () {
-  expect(window.helloImplicitComponentSent).to.equal(true);
+  assert.equal(window.helloImplicitComponentSent, true);
 });

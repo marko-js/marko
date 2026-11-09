@@ -9,10 +9,10 @@ var child_default = _template("__tests__/child.marko", (input) => {
 // template.marko
 const $Child_withLoadAssets = withLoadAssets(() => child_default, "__tests__/child.marko", flush, "ready:__tests__/child.marko");
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_value = _write_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html(`<!DOCTYPE html><html><head><title>Head Flush Test</title>${_flush_head()}</head><body>`);
-	_set_scope_reason($wg__input_value << 1);
+	_set_scope_reason(_write_guard($scope0_reason, 0) << 1);
 	const $childScope = _peek_scope_id();
 	$Child_withLoadAssets({ value: input.value });
 	_trailers("</body></html>");

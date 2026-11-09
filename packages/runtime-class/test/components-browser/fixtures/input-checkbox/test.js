@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index.marko"));
@@ -6,21 +6,21 @@ module.exports = function (helpers) {
   var firstCheckbox = component.getEl("first");
   var secondCheckbox = component.getEl("second");
 
-  expect(firstCheckbox.checked).to.equal(true);
-  expect(secondCheckbox.checked).to.equal(false);
+  assert.equal(firstCheckbox.checked, true);
+  assert.equal(secondCheckbox.checked, false);
 
   helpers.triggerMouseEvent(firstCheckbox, "click");
 
-  expect(firstCheckbox.checked).to.equal(false);
-  expect(secondCheckbox.checked).to.equal(false);
+  assert.equal(firstCheckbox.checked, false);
+  assert.equal(secondCheckbox.checked, false);
 
   helpers.triggerMouseEvent(firstCheckbox, "click");
 
-  expect(firstCheckbox.checked).to.equal(true);
-  expect(secondCheckbox.checked).to.equal(false);
+  assert.equal(firstCheckbox.checked, true);
+  assert.equal(secondCheckbox.checked, false);
 
   helpers.triggerMouseEvent(secondCheckbox, "click");
 
-  expect(firstCheckbox.checked).to.equal(true);
-  expect(secondCheckbox.checked).to.equal(true);
+  assert.equal(firstCheckbox.checked, true);
+  assert.equal(secondCheckbox.checked, true);
 };

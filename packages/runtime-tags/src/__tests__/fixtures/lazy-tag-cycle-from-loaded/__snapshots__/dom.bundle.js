@@ -21,14 +21,7 @@ const $input_depth$1 = /*@__PURE__*/ _const(6, ($scope) => {
 });
 
 // b.marko
-var b_exports = /* @__PURE__ */ __exportAll({
-	$input: () => $input,
-	$input_depth: () => $input_depth,
-	$setup: () => $setup,
-	$template: () => $template,
-	$walks: () => $walks,
-	default: () => b_default
-});
+var b_exports = /* @__PURE__ */ __exportAll({ default: () => b_default });
 const $template = "<button>b <!>:<!></button><!><!>";
 const $walks = " Db%c%l%c";
 const $if_content__input_depth = /*@__PURE__*/ _if_closure(3, 0, ($scope) => $input_depth$1($scope.a, $scope._.g - 1));

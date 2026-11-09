@@ -15,9 +15,7 @@ var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let checkedValue = "a";
-	const $checkedValueChange = _resume((_new_checkedValue) => {
-		checkedValue = _new_checkedValue;
-	}, "a0", $scope0_id);
+	const $checkedValueChange = _resume((_new_checkedValue) => checkedValue = _new_checkedValue, "a0", $scope0_id);
 	const $childScope = _peek_scope_id();
 	radio_default({
 		checkedValue,

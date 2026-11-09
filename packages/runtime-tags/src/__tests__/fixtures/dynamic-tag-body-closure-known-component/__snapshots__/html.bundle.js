@@ -23,7 +23,6 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		_html(`depth ${_text_mark($scope1_id, "a", input.depth, $wg__input_depth * 2)}`);
 		_subscribe($wi__input_depth && $input_depth__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a0", $wg__input_depth);
-		$wg__input_depth || _resume_branch($scope1_id);
 	}, $scope0_id) });
 	_scope($scope0_id, {
 		d: input.depth,

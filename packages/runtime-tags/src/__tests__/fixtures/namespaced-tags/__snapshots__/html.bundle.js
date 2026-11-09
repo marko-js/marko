@@ -23,7 +23,6 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		_html(_html_mark($scope1_id, "a", input.value, $wg__input_value * 2));
 		_subscribe($wi__input_value && $input_value__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a3", $wg__input_value);
-		$wg__input_value || _resume_branch($scope1_id);
 	}, $scope0_id));
 	_html(`<button class=toggle-parent>Toggle Parent</button>${_el_mark($scope0_id, "g")}<button class=toggle-child>Toggle Child</button>${_el_mark($scope0_id, "h")}</div>${_el_mark($scope0_id, "a")}`);
 	_script($scope0_id, "a4");

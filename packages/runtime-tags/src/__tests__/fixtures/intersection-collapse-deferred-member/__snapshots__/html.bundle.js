@@ -6,7 +6,7 @@ function feed(inc, sfx) {
 	};
 }
 var row_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_inc = _write_guard($scope0_reason, 0), $wi__input_inc_pending = _write_if($scope0_reason, 1), $wi__input_inc = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_inc = _write_guard($scope0_reason, 0), $wi__input_inc = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let sfx = "!";
 	const item = feed(input.inc, sfx);
@@ -31,11 +31,8 @@ var row_default = _template("b", (input) => {
 	_html(`</div>${_el_mark($scope0_id, "a", $wg__input_inc)}`);
 	$wi__input_inc && _scope($scope0_id, {
 		h: input.inc?.pending,
-		i: sfx,
-		l: $wi__input_inc_pending && item?.status,
-		o: $wi__input_inc_pending && upper
+		i: sfx
 	});
-	$wg__input_inc || $wi__input_inc && _resume_branch($scope0_id);
 });
 
 // template.marko
@@ -49,7 +46,7 @@ var template_default = _template("a", (input) => {
 		flag,
 		inc.status
 	])}></span>${_el_mark($scope0_id, "b")}`);
-	_set_scope_reason(10);
+	_set_scope_reason(2);
 	const $childScope = _peek_scope_id();
 	row_default({ inc });
 	_script($scope0_id, "a0");

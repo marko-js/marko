@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), {
@@ -6,19 +6,19 @@ module.exports = function (helpers) {
   });
 
   var els = helpers.targetEl.querySelectorAll("div");
-  expect(els[0].className).to.equal("a");
-  expect(els[1].className).to.equal("b");
+  assert.equal(els[0].className, "a");
+  assert.equal(els[1].className, "b");
 
   component.input = { swapped: true };
   component.update();
 
   var elsAfter = helpers.targetEl.querySelectorAll("div");
-  expect(elsAfter[0].className).to.equal("b");
-  expect(elsAfter[1].className).to.equal("a");
+  assert.equal(elsAfter[0].className, "b");
+  assert.equal(elsAfter[1].className, "a");
 
   // Make sure the same element was swapped
-  expect(els[0]).to.equal(elsAfter[1]);
-  expect(els[1]).to.equal(elsAfter[0]);
+  assert.equal(els[0], elsAfter[1]);
+  assert.equal(els[1], elsAfter[0]);
 };
 
 module.exports.skip_hydrate = "Implicit components do not get hydrated";

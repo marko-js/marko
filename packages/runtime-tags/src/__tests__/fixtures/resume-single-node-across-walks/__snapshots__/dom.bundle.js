@@ -1,6 +1,5 @@
 // template.marko
-const $await_content2__v = ($scope, v) => _text($scope.a, v);
-const $await_content2__$params = ($scope, $params4) => $await_content2__v($scope, $params4[0]);
+const $await_content2__$params = ($scope, $params4) => _text($scope.a, $params4[0]);
 const $await_content__setup = _script("a0", ($scope) => _on($scope.a, "click", function() {
 	console.log($scope.d);
 }));

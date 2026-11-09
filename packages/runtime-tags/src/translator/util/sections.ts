@@ -14,6 +14,7 @@ import * as ContentType from "./constants/content-type";
 import type * as Step from "./constants/step";
 import * as StructureKind from "./constants/structure-kind";
 import { createAnalysisMemo } from "./cyclic-memo";
+import { isForSelectorClosure } from "./for-selector";
 import { generateUid, generateUidIdentifier } from "./generate-uid";
 import { isCoreTag, isCoreTagName } from "./is-core-tag";
 import type { KnownTagExtra } from "./known-tag";
@@ -136,7 +137,12 @@ export interface Section {
   /** The attribute tag `<for>` params this content reads, held as its own
    * bindings that the loop binds as it creates it. */
   localClosures: ReferencedBindings;
+  /** The closures it reads from enclosing sections, each notifying it through
+   * its signal, which its setup subscribes to. */
   referencedClosures: ReferencedBindings;
+  /** The loop keys it reads from enclosing sections, in place through its owner
+   * chain: a key never changes, so it is no closure. */
+  referencedConstants: ReferencedBindings;
   bindings: ReferencedBindings;
   hoisted: ReferencedBindings;
   /** The closures its `<for>` rows read only by comparing them to the row's
@@ -235,7 +241,7 @@ export function ensureBodySection(
   const extra = (path.node.extra ??= {});
   let section = extra.section;
 
-  if (!section && (path.type === "Program" || path.get("body").length)) {
+  if (!section && (path.type === "Program" || path.node.body.length)) {
     const parentTag = path.parentPath?.isMarkoTag()
       ? path.parentPath
       : undefined;
@@ -250,7 +256,7 @@ export function ensureBodySection(
             : parentTag.get("name").toString()) + "_content",
         )
       : "";
-    const programExtra = (getProgram().node.extra ??= {});
+    const programExtra = getProgram().node.extra;
     const sections = (programExtra.sections ??= []);
     section = extra.section = {
       id: sections.length,
@@ -263,6 +269,7 @@ export function ensureBodySection(
       params: undefined,
       localClosures: undefined,
       referencedClosures: undefined,
+      referencedConstants: undefined,
       bindings: undefined,
       hoisted: undefined,
       selector: undefined,
@@ -327,9 +334,9 @@ export function removeDroppedContent(tag: t.NodePath<t.MarkoTag>) {
 }
 
 export function getSection(path: t.NodePath) {
-  let section: Section;
+  let section: Section | undefined;
   let currentPath = path;
-  while ((section = currentPath.node.extra?.section as Section) === undefined) {
+  while ((section = currentPath.node.extra?.section) === undefined) {
     currentPath = currentPath.parentPath!;
   }
 
@@ -352,11 +359,12 @@ export const [getBranchRendererArgs, setBranchRendererArgs] =
 
 export function forEachSection(fn: (section: Section) => void) {
   const { sections } = getProgram().node.extra;
-  sections?.forEach(fn);
+  sections!.forEach(fn);
 }
 
 // For content code the analysis cannot see may render later (a body or value a
-// tag it cannot resolve receives), the closures it reads that its owners may not write.
+// tag it cannot resolve receives), the closures and loop keys it reads that its
+// owners may not write.
 export function getDynamicTagContentClosures(section: Section) {
   const { derives } = section;
   if (
@@ -379,18 +387,27 @@ function mayBeUnwritten(closure: Binding) {
 }
 
 // What a render of `section` reads from above `top`: its own and its nested
-// sections' closures, and those of each `<define>` body a direct call renders.
+// sections' closures and loop keys, and those of each `<define>` body a direct
+// call renders.
 function getClosuresFromAbove(
   section: Section,
   top: Section,
   seen: Set<Section>,
 ): ReferencedBindings {
   // Closures are of ancestors, so those above `top` sort before it.
-  let closures = bindingUtil.leadingRun(
-    section.referencedClosures,
-    bindingToSection,
-    sectionUtil.compare,
-    top,
+  let closures = bindingUtil.union(
+    bindingUtil.leadingRun(
+      section.referencedClosures,
+      bindingToSection,
+      sectionUtil.compare,
+      top,
+    ),
+    bindingUtil.leadingRun(
+      section.referencedConstants,
+      bindingToSection,
+      sectionUtil.compare,
+      top,
+    ),
   );
   for (const child of section.children) {
     closures = bindingUtil.union(
@@ -546,8 +563,12 @@ function mayContentFollowText(section: Section) {
       sites,
       (site) => getSiteTextBefore(site, section) ?? tagFollowsText(),
     ) ||
-    some(deepSites, (site) => getSiteTextBefore(site, undefined) ?? true)
+    some(deepSites, mayDeepSiteFollowText)
   );
+}
+
+function mayDeepSiteFollowText(site: t.MarkoTagExtra) {
+  return getSiteTextBefore(site, undefined) ?? true;
 }
 
 // What may come before a dynamic tag rendering content, `undefined` at its
@@ -590,7 +611,7 @@ function isAlwaysWritten(
 }
 
 // Whether the section's content may end with text.
-export function mayEndWithText(section: Section) {
+function mayEndWithText(section: Section) {
   return !!section.content && mayRenderText(section.content.endType);
 }
 
@@ -717,8 +738,14 @@ export function isInParentSection(binding: Binding, section: Section) {
   return section.parent?.id === binding.section.id;
 }
 
+// A closure an optional branch's owner passes to its scopes: the owner's own,
+// or one its loop's selector reads in the owner's scope.
 export function isDirectClosure(section: Section, closure: Binding) {
-  return !!isOptionalBranch(section) && isInParentSection(closure, section);
+  return (
+    isOptionalBranch(section) &&
+    (isInParentSection(closure, section) ||
+      isForSelectorClosure(section, closure))
+  );
 }
 
 export function isDynamicClosure(section: Section, closure: Binding) {
@@ -741,15 +768,28 @@ export function getDynamicClosureIndex(
   return index;
 }
 
+// The `<for>` bodies of its own section reading the closure before
+// `closureSection`, but for selectors, each rendering its rows in the next slot.
+export function getForClosureIndex(closure: Binding, closureSection?: Section) {
+  let index = 0;
+  find(closure.closureSections, (section) => {
+    if (section === closureSection) return true;
+    if (
+      section.branch?.kind === "for" &&
+      section.parent === closure.section &&
+      !isForSelectorClosure(section, closure)
+    ) {
+      index++;
+    }
+    return false;
+  });
+  return index;
+}
+
 export function getDirectClosures(section: Section) {
-  if (isOptionalBranch(section)) {
-    return bindingUtil.range(
-      section.referencedClosures,
-      bindingToSection,
-      sectionUtil.compare,
-      section.parent!,
-    );
-  }
+  return bindingUtil.filter(section.referencedClosures, (closure) =>
+    isDirectClosure(section, closure),
+  );
 }
 
 export function isSameOrAncestorSection(section: Section, other: Section) {

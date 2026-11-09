@@ -24,7 +24,7 @@ const $for_content__id = /*@__PURE__*/ _const("id", ($scope) => {
 	_attr($scope["#li/0"], "id", $scope.id);
 	$if_content__id($scope);
 });
-const $for_content__input_path = /*@__PURE__*/ _for_closure("#ul/0", ($scope) => $for_content__id($scope, `${$scope._.input_path || "c"}-${$scope["#LoopKey"]}`));
+const $for_content__input_path = /*@__PURE__*/ _for_closure("#ul/0", ($scope) => $for_content__id($scope, `${$scope._.input_path || "c"}-${$scope["#LoopKey"]}`), 5);
 const $for_content__open = /*@__PURE__*/ _let("open/12", ($scope) => {
 	_attr($scope["#li/0"], "hidden", !$scope.open);
 	_text($scope["#text/3"], $scope.open ? "[-]" : "[+]");
@@ -37,14 +37,13 @@ const $for_content__setup = ($scope) => {
 	$for_content__open($scope, true);
 	$for_content__setup__script($scope);
 };
-const $for_content__comment_text = ($scope, comment_text) => _text($scope["#text/1"], comment_text);
 const $for_content__if = /*@__PURE__*/ _if("#text/4", $template, /*@__PURE__*/ ((_w0) => `/${_w0}&`)(" b"), $if_content__setup);
 const $for_content__comment_comments = /*@__PURE__*/ _const("comment_comments", ($scope) => {
 	$for_content__if($scope, $scope.comment_comments ? 0 : 1);
 	$if_content__comment_comments($scope);
 });
 const $for_content__$params = ($scope, $params2) => {
-	$for_content__comment_text($scope, $params2[0]?.text);
+	_text($scope["#text/1"], $params2[0]?.text);
 	$for_content__comment_comments($scope, $params2[0]?.comments);
 };
 const $for = /*@__PURE__*/ _for_of_unkeyed("#ul/0", "<li><span> </span><button> </button><!></li>", " E l D l%", $for_content__setup, $for_content__$params);

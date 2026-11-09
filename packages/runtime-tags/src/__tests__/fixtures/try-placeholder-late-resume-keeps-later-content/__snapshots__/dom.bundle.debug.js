@@ -6,8 +6,7 @@ const $await_content2__count = /*@__PURE__*/ _closure_get("count/7", ($scope) =>
 const $await_content2__setup = $await_content2__count;
 const $await_content__count = /*@__PURE__*/ _closure_get("count/7", ($scope) => _text($scope["#text/1"], $scope._._._.count), ($scope) => $scope._._._, "__tests__/template.marko_3_count#0:5/subscribe");
 const $await_content__setup = $await_content__count;
-const $await_content__v = ($scope, v) => _text($scope["#text/0"], v);
-const $await_content__$params = ($scope, $params2) => $await_content__v($scope, $params2[0]);
+const $await_content__$params = ($scope, $params2) => _text($scope["#text/0"], $params2[0]);
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<span class=body><!><!></span>", "D%b%", $await_content__setup);
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
 const $try_content__setup = ($scope) => {

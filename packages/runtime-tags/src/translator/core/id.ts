@@ -35,7 +35,7 @@ export default {
     assertNoAttributeTags(tag);
     assertHasVar(tag);
     assertIdentifierVar(tag);
-    const valueAttr = assertOnlyValueAttr(tag);
+    const { valueAttr } = assertOnlyValueAttr(tag);
 
     // Minting is unobservable, so a tag without a value is itself the pure
     // value its variable takes, dropped with it when unread.

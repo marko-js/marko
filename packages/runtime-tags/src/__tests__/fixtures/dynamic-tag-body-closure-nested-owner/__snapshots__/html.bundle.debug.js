@@ -24,7 +24,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 
 // tags/heading.marko
 var heading_default = _template("__tests__/tags/heading.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_depth = _write_guard($scope0_reason, 4), $wi__input_show__OR__input_type__OR__input_depth = _write_if($scope0_reason, 1), $wg__input_type = _write_guard($scope0_reason, 3), $wg__input_show = _write_guard($scope0_reason, 2), $wi__input_depth = _write_if($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $wg__input_depth = _write_guard($scope0_reason, 4), $wg__input_type = _write_guard($scope0_reason, 3), $wi__input_show__OR__input_type__OR__input_depth = _write_if($scope0_reason, 1), $wg__input_show = _write_guard($scope0_reason, 2), $wi__input_depth = _write_if($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	const $input_depth__closures = new Set();
 	_if(() => {
@@ -35,7 +35,6 @@ var heading_default = _template("__tests__/tags/heading.marko", (input) => {
 				const $scope2_reason = _scope_reason();
 				_html(`depth ${_text_mark($scope2_id, "#text/0", input.depth, $wg__input_depth * 2)}`);
 				$wi__input_show__OR__input_type__OR__input_depth && _subscribe($wi__input_depth && $input_depth__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/heading.marko", "2:6"), "__tests__/tags/heading.marko_2_input_depth#0:5/subscribe", $wg__input_depth);
-				$wg__input_depth || $wi__input_show__OR__input_type__OR__input_depth && _resume_branch($scope2_id);
 			}, $scope1_id, ($scope) => [{ input_depth: input.depth }, { _: $scope($scope0_id) }]), 0, $wg__input_type);
 			$wi__input_show__OR__input_type__OR__input_depth && _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/heading.marko", "1:2");
 			return 0;

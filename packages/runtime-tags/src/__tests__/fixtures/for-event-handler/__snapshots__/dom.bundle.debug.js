@@ -9,11 +9,7 @@ const $for_content__setup = ($scope) => {
 	$for_content__setup__script($scope);
 };
 const $for = /*@__PURE__*/ _for_to_unkeyed("#text/0", "<button> </button>", " D ", $for_content__setup);
-const $num = /*@__PURE__*/ _let("num/1", ($scope) => $for($scope, [
-	$scope.num,
-	0,
-	1
-]));
+const $num = /*@__PURE__*/ _let("num/1", ($scope) => $for($scope, [$scope.num]));
 function $setup($scope) {
 	$num($scope, 0);
 }

@@ -1,6 +1,6 @@
 {
   "name": "@marko/compiler",
-  "version": "5.42.15",
+  "version": "5.42.16",
   "description": "Marko template to JS compiler.",
   "keywords": [
     "babel",
@@ -70,26 +70,20 @@
     "build-babel-types": "node -r ~ts scripts/types"
   },
   "dependencies": {
-    "@luxass/strip-json-comments": "^2.0.1",
-    "complain": "^1.6.1",
-    "htmljs-parser": "^5.17.1",
+    "@luxass/strip-json-comments": "^2.0.2",
+    "htmljs-parser": "^5.20.0",
     "jsesc": "^3.1.0",
     "kleur": "^4.1.5",
-    "lasso-package-root": "^1.0.1",
-    "magic-string": "^0.30.21",
-    "raptor-regexp": "^1.0.1",
+    "magic-string": "^1.4.5",
     "raptor-util": "^3.2.0",
-    "relative-import-path": "^1.0.1",
-    "resolve-from": "^5.0.0",
-    "self-closing-tags": "^1.0.1",
-    "source-map-support": "^0.5.21"
+    "relative-import-path": "^1.0.1"
   },
   "devDependencies": {
-    "entities": "^8.0.0",
-    "marko": "^5.39.48"
+    "entities": "^9.0.0",
+    "marko": "^5.39.49"
   },
   "engines": {
-    "node": ">=22"
+    "node": ">=22.12.0"
   },
   "exports:override": {
     ".": {

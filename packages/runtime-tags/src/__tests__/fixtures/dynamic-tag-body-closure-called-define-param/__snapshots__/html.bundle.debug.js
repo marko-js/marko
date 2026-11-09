@@ -43,7 +43,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			label: $wi__input_on && label,
 			_: _scope_with_id($scope0_id)
 		}, "__tests__/template.marko", "2:2", { label: "2:16" }), "__tests__/template.marko_1_input_on#0:3/subscribe", $wg__input_on);
-		$wg__input_on || $wi__input_on__OR__input_note && _resume_branch($scope1_id);
 	}, $scope0_id) };
 	_dynamic_tag($scope0_id, "#text/0", input.on ? card_default : "div", {}, _content_resume("__tests__/template.marko_3*content", () => {
 		const $scope3_id = _scope_id();

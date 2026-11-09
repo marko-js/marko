@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 var getComponentForEl = require("marko/components").getComponentForEl;
 
 module.exports = function (helpers) {
@@ -8,7 +8,7 @@ module.exports = function (helpers) {
   var childB = root.querySelector(".child-b");
   var childC = root.querySelector(".child-c");
 
-  expect(getComponentForEl(childA)).has.property("name", "child-a");
-  expect(getComponentForEl(childB)).has.property("name", "parent");
-  expect(getComponentForEl(childC)).has.property("name", "child-c");
+  assert.equal(getComponentForEl(childA).name, "child-a");
+  assert.equal(getComponentForEl(childB).name, "parent");
+  assert.equal(getComponentForEl(childC).name, "child-c");
 };

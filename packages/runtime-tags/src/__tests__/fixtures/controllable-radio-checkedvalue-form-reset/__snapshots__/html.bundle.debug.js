@@ -3,9 +3,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let checkedValue = "b";
-	const $checkedValueChange = _resume((_new_checkedValue) => {
-		checkedValue = _new_checkedValue;
-	}, "__tests__/template.marko_0/checkedValueChange2", $scope0_id);
+	const $checkedValueChange = _resume((_new_checkedValue) => checkedValue = _new_checkedValue, "__tests__/template.marko_0/checkedValueChange2", $scope0_id);
 	_html(`<form><input${_attr_input_checkedValue($scope0_id, "#input/0", checkedValue, $checkedValueChange, "a")} type=radio name=p>${_el_mark($scope0_id, "#input/0")}<input${_attr_input_checkedValue($scope0_id, "#input/1", checkedValue, $checkedValueChange, "b")} type=radio name=p>${_el_mark($scope0_id, "#input/1")}<input${_attr_input_checkedValue($scope0_id, "#input/2", checkedValue, $checkedValueChange, "c")} type=radio name=p>${_el_mark($scope0_id, "#input/2")}<button type=reset>reset</button></form><span>v=${_text_mark($scope0_id, "#text/3", checkedValue, 2)}</span>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, { $checkedValueChange }, "__tests__/template.marko", 0, {

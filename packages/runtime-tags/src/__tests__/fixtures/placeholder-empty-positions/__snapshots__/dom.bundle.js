@@ -1,5 +1,5 @@
 // template.marko
-const $for_content__a = /*@__PURE__*/ _for_closure(2, ($scope) => _text($scope.a, $scope._.g));
+const $for_content__a = /*@__PURE__*/ _for_closure(2, ($scope) => _text($scope.a, $scope._.g), 7);
 const $if_content__a = /*@__PURE__*/ _if_closure(1, 0, ($scope) => _text($scope.a, $scope._.g));
 const $a = /*@__PURE__*/ _let(6, ($scope) => {
 	_text($scope.a, $scope.g);
@@ -14,7 +14,5 @@ const $setup__script = _script("a1", ($scope) => {
 		$a($scope, "filled");
 	});
 });
-const $valueChange = ($scope) => (_new_a) => {
-	$a($scope, _new_a);
-};
+const $valueChange = ($scope) => (_new_a) => $a($scope, _new_a);
 _resumed.a0 = $valueChange;

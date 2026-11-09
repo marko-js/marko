@@ -12,8 +12,7 @@ const $await_content__setup = ($scope) => {
 	$await_content__setup__script($scope);
 };
 const $await_content__value = /*@__PURE__*/ _let(4, ($scope) => _text($scope.b, $scope.e));
-const $await_content__v = $await_content__value;
-const $await_content__$params = ($scope, $params2) => $await_content__v($scope, $params2[0]);
+const $await_content__$params = ($scope, $params2) => $await_content__value($scope, $params2[0]);
 const $await_content = /*@__PURE__*/ _await_content(0, "<button> </button>", " D ", $await_content__setup);
 const $await_promise = /*@__PURE__*/ _await_promise(0, $await_content__$params);
 function $setup($scope) {
@@ -42,8 +41,7 @@ _marko_template._ = (0, import_renderer.default)(function(input, out, _component
 _marko_template.Component = (0, import_defineComponent.default)(_marko_component, _marko_template._);
 
 // template.marko
-const $catch_content__err_message = ($scope, err_message) => _text($scope.a, err_message);
-const $catch_content__$params = ($scope, $params2) => $catch_content__err_message($scope, $params2[0]?.message);
+const $catch_content__$params = ($scope, $params2) => _text($scope.a, $params2[0]?.message);
 const $catch_content = _content("a0", "caught <!>", "b%", 0, $catch_content__$params);
 
 // v:template.marko.hydrate-6.js

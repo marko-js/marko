@@ -1,27 +1,27 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), {});
   var rootEl = component.el;
   var helloComponent = component.getComponent("hello");
   var worldComponent = component.getComponent("world");
-  expect(helloComponent.el.parentNode).to.equal(rootEl);
-  expect(worldComponent.el.parentNode).to.equal(rootEl);
+  assert.equal(helloComponent.el.parentNode, rootEl);
+  assert.equal(worldComponent.el.parentNode, rootEl);
 
   var nestedDivs = rootEl.querySelectorAll("div");
-  expect(nestedDivs[0].className).to.equal("hello");
-  expect(nestedDivs[1].className).to.equal("world");
+  assert.equal(nestedDivs[0].className, "hello");
+  assert.equal(nestedDivs[1].className, "world");
 
   component.state.swapped = true;
   component.update();
 
-  expect(component.getComponent("hello")).to.equal(helloComponent);
-  expect(component.getComponent("world")).to.equal(worldComponent);
+  assert.equal(component.getComponent("hello"), helloComponent);
+  assert.equal(component.getComponent("world"), worldComponent);
 
   var nestedDivsAfter = rootEl.querySelectorAll("div");
-  expect(nestedDivsAfter[0].className).to.equal("world");
-  expect(nestedDivsAfter[1].className).to.equal("hello");
+  assert.equal(nestedDivsAfter[0].className, "world");
+  assert.equal(nestedDivsAfter[1].className, "hello");
 
-  expect(nestedDivsAfter[0]).to.equal(nestedDivs[1]);
-  expect(nestedDivsAfter[1]).to.equal(nestedDivs[0]);
+  assert.equal(nestedDivsAfter[0], nestedDivs[1]);
+  assert.equal(nestedDivsAfter[1], nestedDivs[0]);
 };

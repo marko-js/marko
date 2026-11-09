@@ -19,7 +19,7 @@ import {
   ReservedId,
   type Scope,
 } from "../common/types";
-import { trackAbort } from "./abort-signal";
+import { onAbort } from "./abort-signal";
 import { controllableSpreadHelpers } from "./controllable";
 import { _attrs, _attrs_content, _attrs_script } from "./dom";
 import {
@@ -120,7 +120,7 @@ export function _await_promise(
       scope[tryAccessor] = tryBranch;
       // Destroying the await drops its value and releases its count after the
       // flush's renders, so an await swapped in keeps the `@placeholder` up.
-      trackAbort(scope, promiseAccessor, (_?: never) => {
+      onAbort(scope, promiseAccessor, (_?: never) => {
         scope[promiseAccessor] = 0;
         if (scope[tryAccessor]) {
           queueAsyncRender(
@@ -322,7 +322,7 @@ function completeAwaitCounter(_scope: Scope, awaitCounter: AwaitCounter) {
     const fnScopes = new Map<unknown, Set<Scope>>();
     const effects = awaitCounter.m([]);
     for (let i = 0; i < pendingEffects.length;) {
-      const fn = pendingEffects[i++] as any;
+      const fn = pendingEffects[i++];
       let scopes = fnScopes.get(fn);
       if (!scopes) {
         fnScopes.set(fn, (scopes = new Set()));
@@ -412,12 +412,10 @@ export function renderCatch(scope: Scope, error?: unknown) {
     throw error;
   } else {
     const owner = tryWithCatch[AccessorProp.Owner]!;
-    const placeholderBranch = tryWithCatch[
-      AccessorProp.PlaceholderBranch
-    ] as BranchScope;
+    const placeholderBranch = tryWithCatch[AccessorProp.PlaceholderBranch];
     if (placeholderBranch) {
       if (tryWithCatch[AccessorProp.AwaitCounter])
-        (tryWithCatch[AccessorProp.AwaitCounter] as AwaitCounter).i = 0;
+        tryWithCatch[AccessorProp.AwaitCounter].i = 0;
       owner[
         AccessorPrefix.BranchScopes + tryWithCatch[AccessorProp.BranchAccessor]
       ] = placeholderBranch;
@@ -517,7 +515,7 @@ export const _show = /*@__PURE__*/ withBranches(
       // The reference node is the parent element when the `<show>` is its only
       // child, otherwise a marker node just after the body.
       const referenceNode = scope[nodeAccessor] as ChildNode;
-      const onlyChild = referenceNode.nodeType === NodeType.Element;
+      const onlyChild = referenceNode.nodeType < NodeType.Text;
       const parentNode = onlyChild
         ? (referenceNode as unknown as ParentNode & Element)
         : referenceNode.parentNode!;
@@ -893,7 +891,7 @@ const loop = /*@__PURE__*/ withBranches(
             : referenceNode
         ) as Element;
         let oldScopesByKey: Map<unknown, BranchScope> | undefined;
-        let hasPotentialMoves: boolean | undefined;
+        let hasPotentialMoves: undefined | 1;
         let start = 0;
 
         if (MARKO_DEBUG) {
@@ -921,7 +919,7 @@ const loop = /*@__PURE__*/ withBranches(
                 )).get(key)
               : oldScope && (start++, oldScope));
           if (branch) {
-            hasPotentialMoves = true;
+            hasPotentialMoves = 1;
             oldScopesByKey?.delete(key);
             branch[AccessorProp.LoopKey] = key;
           } else {
@@ -1034,14 +1032,14 @@ export const _for_in = /*@__PURE__*/ loop<
 }, reorderKeyed);
 
 export const _for_to = /*@__PURE__*/ loop<
-  [to: number, from: number, step: number, by?: (v: number) => unknown]
+  [to: number, from?: number, step?: number, by?: (v: number) => unknown]
 >(([to, from, step, by], cb) => {
   by ||= byFirstArg;
   forTo(to, from, step, (v) => cb(by(v), [v]));
 }, reorderKeyed);
 
 export const _for_until = /*@__PURE__*/ loop<
-  [until: number, from: number, step: number, by?: (v: number) => unknown]
+  [until: number, from?: number, step?: number, by?: (v: number) => unknown]
 >(([until, from, step, by], cb) => {
   by ||= byFirstArg;
   forUntil(until, from, step, (v) => cb(by(v), [v]));
@@ -1054,11 +1052,11 @@ export const _for_of_unkeyed = /*@__PURE__*/ loop<[all: unknown[]]>(
 );
 
 export const _for_to_unkeyed = /*@__PURE__*/ loop<
-  [to: number, from: number, step: number]
+  [to: number, from?: number, step?: number]
 >(([to, from, step], cb) => forTo(to, from, step, (v) => cb(v, [v])));
 
 export const _for_until_unkeyed = /*@__PURE__*/ loop<
-  [until: number, from: number, step: number]
+  [until: number, from?: number, step?: number]
 >(([until, from, step], cb) => forUntil(until, from, step, (v) => cb(v, [v])));
 
 function reorderKeyed(

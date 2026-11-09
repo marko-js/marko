@@ -10,7 +10,7 @@ var counter_default = _template("__tests__/tags/counter.marko", (input) => {
 
 // template.marko
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_a = _write_guard($scope0_reason, 1), $wi__input_a = _write_if($scope0_reason, 1), $wg__input_x = _write_guard($scope0_reason, 2), $wi__input_x = _write_if($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_a = _write_guard($scope0_reason, 1), $wi__input_a = _write_if($scope0_reason, 1), $wi__input_x = _write_if($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $f2__closures = new Set();
 	const $input_a__closures = new Set();
@@ -32,18 +32,17 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id) };
 	const D = { content: _content("__tests__/template.marko_1*content", ({ on }) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason(), $wg__on = _write_guard($scope1_reason, 0), $wi__on = _write_if($scope1_reason, 0);
-		_set_scope_reason($wg__on << 1);
+		const $scope1_reason = _scope_reason(), $wi__on = _write_if($scope1_reason, 0);
+		_set_scope_reason(_write_guard($scope1_reason, 0) << 1);
 		const $childScope = _peek_scope_id();
 		E.content({ show: on });
 		_html(`<p>${_text_mark($scope1_id, "#text/1", input.a, $wg__input_a)}</p>`);
 		($wi__input_a || $wi__on) && _subscribe($wi__input_a && $input_a__closures, _scope($scope1_id, {
 			_: $wi__input_a && _scope_with_id($scope0_id),
 			"#childScope/0": $wi__on && _existing_scope($childScope)
-		}, "__tests__/template.marko", "5:2"), "__tests__/template.marko_1_input_a#0:4/subscribe", $wg__input_a || $wg__on);
-		$wg__input_a || $wg__on || ($wi__input_a || $wi__on) && _resume_branch($scope1_id);
+		}, "__tests__/template.marko", "5:2"), "__tests__/template.marko_1_input_a#0:4/subscribe", $wg__input_a);
 	}, $scope0_id) };
-	_set_scope_reason($wg__input_x << 1);
+	_set_scope_reason(_write_guard($scope0_reason, 2) << 1);
 	const $childScope2 = _peek_scope_id();
 	D.content({ on: input.x });
 	counter_default({});

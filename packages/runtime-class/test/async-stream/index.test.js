@@ -3,10 +3,9 @@
 require("../__util__/test-init");
 var fs = require("fs");
 var nodePath = require("path");
-var chai = require("chai");
-chai.config.includeStack = true;
+var PassThrough = require("stream").PassThrough;
 
-var expect = chai.expect;
+var assert = require("assert/strict");
 var fsReadOptions = { encoding: "utf8" };
 var AsyncStream = require("marko/src/runtime/html/AsyncStream");
 
@@ -53,7 +52,7 @@ describe("AsyncStream", function () {
     out.end();
     out.on("finish", function (result) {
       var output = result.getOutput();
-      expect(output).to.equal("1234");
+      assert.equal(output, "1234");
       done();
     });
   });
@@ -66,8 +65,8 @@ describe("AsyncStream", function () {
 
     return out.end().then((result) => {
       const output = result.getOutput();
-      expect(output).to.equal("12");
-      expect(result.toString()).to.equal("12");
+      assert.equal(output, "12");
+      assert.equal(result.toString(), "12");
     });
   });
 
@@ -92,7 +91,7 @@ describe("AsyncStream", function () {
     out.end();
     out.on("finish", function (result) {
       var output = result.getOutput();
-      expect(output).to.equal("1234");
+      assert.equal(output, "1234");
       done();
     });
   });
@@ -111,7 +110,7 @@ describe("AsyncStream", function () {
     out.end();
     out.on("finish", function (result) {
       var output = result.getOutput();
-      expect(output).to.equal("123");
+      assert.equal(output, "123");
       done();
     });
   });
@@ -129,7 +128,7 @@ describe("AsyncStream", function () {
     out.end();
     out.on("finish", function (result) {
       var output = result.getOutput();
-      expect(output).to.equal("123");
+      assert.equal(output, "123");
       done();
     });
   });
@@ -153,8 +152,8 @@ describe("AsyncStream", function () {
     out.end();
 
     out.on("finish", function (result) {
-      expect(errors.length).to.equal(1);
-      expect(result.getOutput()).to.equal("13");
+      assert.equal(errors.length, 1);
+      assert.equal(result.getOutput(), "13");
       done();
     });
   });
@@ -200,7 +199,7 @@ describe("AsyncStream", function () {
     out.end();
     out.on("finish", function (result) {
       var output = result.getOutput();
-      expect(output).to.equal("12a2b2c34a4b4c");
+      assert.equal(output, "12a2b2c34a4b4c");
       done();
     });
   });
@@ -210,7 +209,7 @@ describe("AsyncStream", function () {
 
     outA.on("finish", function (result) {
       var output = result.getOutput();
-      expect(output).to.equal("1234567");
+      assert.equal(output, "1234567");
       done();
     });
 
@@ -256,8 +255,8 @@ describe("AsyncStream", function () {
     out.end();
     out.on("finish", function (result) {
       var output = result.getOutput();
-      expect(errors.length).to.equal(1);
-      expect(output).to.equal("13");
+      assert.equal(errors.length, 1);
+      assert.equal(output, "13");
       done();
     });
   });
@@ -280,8 +279,8 @@ describe("AsyncStream", function () {
 
     out.write("3");
     out.end().catch((err) => {
-      expect(errors.length).to.equal(1);
-      expect(err).to.be.an("error");
+      assert.equal(errors.length, 1);
+      assert.ok(err instanceof Error);
       done();
     });
   });
@@ -291,8 +290,8 @@ describe("AsyncStream", function () {
 
     out
       .catch((err) => {
-        expect(err).to.be.an("error");
-        expect(out.getOutput()).to.equal("1");
+        assert.ok(err instanceof Error);
+        assert.equal(out.getOutput(), "1");
         done();
       })
       .then(() => {
@@ -312,8 +311,8 @@ describe("AsyncStream", function () {
       })
       .on("finish", function (result) {
         var output = result.getOutput();
-        expect(errors.length).to.equal(1);
-        expect(output).to.equal("13");
+        assert.equal(errors.length, 1);
+        assert.equal(output, "13");
         done();
       })
       .write("1");
@@ -326,21 +325,23 @@ describe("AsyncStream", function () {
     out.write("3").end();
   });
 
-  it("should support writing to a through stream", function (done) {
+  it("should support writing to a passthrough stream", function (done) {
     var output = "";
-    var through = require("through")(function write(data) {
-      output += data;
-      this.queue(data);
-    });
+    var passthrough = new PassThrough({ encoding: "utf8" }).on(
+      "data",
+      function (data) {
+        output += data;
+      },
+    );
 
     var errors = [];
-    var out = createAsyncStream(through)
+    var out = createAsyncStream(passthrough)
       .on("error", function (e) {
         errors.push(e);
       })
       .on("end", function () {
-        expect(errors.length).to.equal(0);
-        expect(output).to.equal("123");
+        assert.equal(errors.length, 0);
+        assert.equal(output, "123");
         done();
       })
       .write("1");
@@ -361,8 +362,8 @@ describe("AsyncStream", function () {
 
     out.on("close", function () {
       var output = fs.readFileSync(outFile, fsReadOptions);
-      expect(errors.length).to.equal(0);
-      expect(output).to.equal("123");
+      assert.equal(errors.length, 0);
+      assert.equal(output, "123");
       fs.unlinkSync(outFile);
       done();
     });
@@ -399,24 +400,24 @@ describe("AsyncStream", function () {
     out.end();
     out.on("finish", function (result) {
       var output = result.getOutput();
-      expect(output).to.equal("1Hello World2");
+      assert.equal(output, "1Hello World2");
       done();
     });
   });
 
   it("should support a writer being piped to another stream", function (done) {
-    var through = require("through")();
+    var passthrough = new PassThrough();
     var outStr = "";
 
-    var out = require("through")(function write(str) {
+    var out = new PassThrough({ encoding: "utf8" }).on("data", function (str) {
       outStr += str;
     });
 
-    through.pipe(out).on("error", function (e) {
+    passthrough.pipe(out).on("error", function (e) {
       done(e);
     });
 
-    out = createAsyncStream(through);
+    out = createAsyncStream(passthrough);
     out.write("1");
 
     var asyncOut = out.beginAsync();
@@ -430,7 +431,7 @@ describe("AsyncStream", function () {
     out.write("2");
 
     out.on("end", function () {
-      expect(outStr).to.equal("1Hello World2");
+      assert.equal(outStr, "1Hello World2");
       done();
     });
 
@@ -451,7 +452,7 @@ describe("AsyncStream", function () {
     out.end();
     out.on("finish", function (result) {
       var output = result.getOutput();
-      expect(output).to.equal("123");
+      assert.equal(output, "123");
       done();
     });
   });
@@ -477,16 +478,14 @@ describe("AsyncStream", function () {
     out.write("3");
     out.end();
     out.on("finish", function (result) {
-      expect(lastFiredCount).to.equal(1);
+      assert.equal(lastFiredCount, 1);
       var output = result.getOutput();
-      expect(output).to.equal("123");
+      assert.equal(output, "123");
       done();
     });
   });
 
   it("should not crash the program if the underlying stream has an error listener", function (done) {
-    var stream = require("stream");
-    var PassThrough = stream.PassThrough;
     var passthrough = new PassThrough();
 
     passthrough.on("error", function () {
@@ -499,8 +498,6 @@ describe("AsyncStream", function () {
   });
 
   it("should crash the program if the underlying stream does *not* have an error listener", function (done) {
-    var stream = require("stream");
-    var PassThrough = stream.PassThrough;
     var passthrough = new PassThrough();
 
     var out = createAsyncStream(passthrough);
@@ -548,9 +545,9 @@ describe("AsyncStream", function () {
     out.end();
     out.on("finish", function (result) {
       var output = result.getOutput();
-      expect(output).to.equal("12345");
-      expect(onLastCount).to.equal(2);
-      expect(lastOutput).to.deep.equal(["a", "b"]);
+      assert.equal(output, "12345");
+      assert.equal(onLastCount, 2);
+      assert.deepEqual(lastOutput, ["a", "b"]);
       done();
     });
   });
@@ -559,20 +556,21 @@ describe("AsyncStream", function () {
     var output = "";
     var errors = [];
 
-    var through = require("through")(function write(data) {
-      output += data;
-    })
+    var passthrough = new PassThrough({ encoding: "utf8" })
+      .on("data", function (data) {
+        output += data;
+      })
       .on("error", function (err) {
         errors.push(err);
       })
       .on("end", function () {
-        expect(output).to.equal("12");
-        expect(errors.length).to.equal(1);
-        expect(errors[0].toString()).to.contain("timed out");
+        assert.equal(output, "12");
+        assert.equal(errors.length, 1);
+        assert.match(errors[0].toString(), /timed out/);
         done();
       });
 
-    var out = createAsyncStream(through);
+    var out = createAsyncStream(passthrough);
     out.write("1");
 
     var asyncOut1 = out.beginAsync();
@@ -591,20 +589,21 @@ describe("AsyncStream", function () {
     var errors = [];
     var ended = false;
 
-    var through = require("through")(function write(data) {
-      expect(ended).to.equal(false);
-      output += data;
-    })
+    var passthrough = new PassThrough({ encoding: "utf8" })
+      .on("data", function (data) {
+        assert.equal(ended, false);
+        output += data;
+      })
       .on("error", function (err) {
         errors.push(err);
       })
       .on("end", function () {
         ended = true;
-        expect(output).to.equal("13");
+        assert.equal(output, "13");
         done();
       });
 
-    var out = createAsyncStream(through);
+    var out = createAsyncStream(passthrough);
     out.write("1");
 
     var asyncOut1 = out.beginAsync({ timeout: 50 });
@@ -628,20 +627,21 @@ describe("AsyncStream", function () {
     var errors = [];
     var ended = false;
 
-    var through = require("through")(function write(data) {
-      expect(ended).to.equal(false);
-      output += data;
-    })
+    var passthrough = new PassThrough({ encoding: "utf8" })
+      .on("data", function (data) {
+        assert.equal(ended, false);
+        output += data;
+      })
       .on("error", function (err) {
         errors.push(err);
       })
       .on("end", function () {
         ended = true;
-        expect(output).to.equal("12");
+        assert.equal(output, "12");
         done();
       });
 
-    var out = createAsyncStream(through);
+    var out = createAsyncStream(passthrough);
     out.write("1");
 
     var asyncOut1 = out.beginAsync();
@@ -667,21 +667,22 @@ describe("AsyncStream", function () {
     var errors = [];
     var ended = false;
 
-    var through = require("through")(function write(data) {
-      expect(ended).to.equal(false);
-      output += data;
-    })
+    var passthrough = new PassThrough({ encoding: "utf8" })
+      .on("data", function (data) {
+        assert.equal(ended, false);
+        output += data;
+      })
       .on("error", function (err) {
         errors.push(err);
       })
       .on("end", function () {
         ended = true;
-        expect(output).to.equal("12");
-        expect(errors.length).to.equal(1);
+        assert.equal(output, "12");
+        assert.equal(errors.length, 1);
         done();
       });
 
-    var out = createAsyncStream(through);
+    var out = createAsyncStream(passthrough);
     out.write("1");
 
     var asyncOut1 = out.beginAsync();
@@ -745,7 +746,7 @@ describe("AsyncStream", function () {
 
     out.on("finish", function (result) {
       var output = result.getOutput();
-      expect(output).to.equal("123");
+      assert.equal(output, "123");
       done();
     });
 
@@ -770,7 +771,7 @@ describe("AsyncStream", function () {
 
     out.on("finish", function (result) {
       var output = result.getOutput();
-      expect(output).to.equal("123");
+      assert.equal(output, "123");
       done();
     });
 
@@ -790,30 +791,29 @@ describe("AsyncStream", function () {
   });
 
   it("should support out.stream for accessing the original stream", function (done) {
-    var through = require("through");
-    var stream = through(function write() {});
+    var stream = new PassThrough().resume();
 
     var out = createAsyncStream(stream);
-    expect(out.stream).to.equal(stream);
+    assert.equal(out.stream, stream);
 
     var asyncOut1 = out.beginAsync();
-    expect(asyncOut1.stream).to.equal(stream);
+    assert.equal(asyncOut1.stream, stream);
     setTimeout(function () {
-      expect(asyncOut1.stream).to.equal(stream);
+      assert.equal(asyncOut1.stream, stream);
       asyncOut1.end();
     }, 100);
 
     var asyncOut2 = out.beginAsync();
-    expect(asyncOut2.stream).to.equal(stream);
+    assert.equal(asyncOut2.stream, stream);
     setTimeout(function () {
-      expect(asyncOut2.stream).to.equal(stream);
+      assert.equal(asyncOut2.stream, stream);
       asyncOut2.end();
     }, 50);
 
     out.on("end", function () {
-      expect(out.stream).to.equal(stream);
-      expect(asyncOut1.stream).to.equal(stream);
-      expect(asyncOut2.stream).to.equal(stream);
+      assert.equal(out.stream, stream);
+      assert.equal(asyncOut1.stream, stream);
+      assert.equal(asyncOut2.stream, stream);
       done();
     });
 
@@ -837,7 +837,7 @@ describe("AsyncStream", function () {
       out.end();
 
       await iterated;
-      expect(chunks).to.deep.equal(["a", "bc"]);
+      assert.deepEqual(chunks, ["a", "bc"]);
     });
 
     it("yields the buffered output once writing has finished", async function () {
@@ -847,12 +847,12 @@ describe("AsyncStream", function () {
 
       var chunks = [];
       for await (var chunk of out) chunks.push(chunk);
-      expect(chunks).to.deep.equal(["x"]);
+      assert.deepEqual(chunks, ["x"]);
     });
 
     it("hands back the same iterator every time", function () {
       var out = new AsyncStream();
-      expect(out[Symbol.asyncIterator]()).to.equal(out[Symbol.asyncIterator]());
+      assert.equal(out[Symbol.asyncIterator](), out[Symbol.asyncIterator]());
     });
 
     it("iterates the iterator itself", async function () {
@@ -863,7 +863,7 @@ describe("AsyncStream", function () {
 
       var chunks = [];
       for await (var chunk of iterator) chunks.push(chunk);
-      expect(chunks).to.deep.equal(["only"]);
+      assert.deepEqual(chunks, ["only"]);
     });
 
     it("rejects the iteration when the stream errors", async function () {
@@ -886,9 +886,9 @@ describe("AsyncStream", function () {
       } catch (err) {
         caught = err;
       }
-      expect(caught).to.be.an("error");
-      expect(caught.message).to.contain("boom");
-      expect(chunks).to.deep.equal([]);
+      assert.ok(caught instanceof Error);
+      assert.match(caught.message, /boom/);
+      assert.deepEqual(chunks, []);
     });
 
     it("reports an error raised before the first read", async function () {
@@ -903,8 +903,8 @@ describe("AsyncStream", function () {
       } catch (err) {
         caught = err;
       }
-      expect(caught).to.be.an("error");
-      expect(caught.message).to.contain("early");
+      assert.ok(caught instanceof Error);
+      assert.match(caught.message, /early/);
     });
 
     it("ends the iteration on return", async function () {
@@ -912,7 +912,7 @@ describe("AsyncStream", function () {
       var iterator = out[Symbol.asyncIterator]();
       out.write("a");
       out.end();
-      expect(await iterator.return()).to.deep.equal({
+      assert.deepEqual(await iterator.return(), {
         value: undefined,
         done: true,
       });
@@ -932,7 +932,7 @@ describe("AsyncStream", function () {
       }, 5);
       out.end();
 
-      expect(await new Response(readable).text()).to.equal("hello world");
+      assert.equal(await new Response(readable).text(), "hello world");
     });
 
     it("stops enqueuing once the reader cancels mid-stream", async function () {
@@ -943,7 +943,8 @@ describe("AsyncStream", function () {
       var asyncOut = out.beginAsync();
       out.end();
 
-      expect(new TextDecoder().decode((await reader.read()).value)).to.equal(
+      assert.equal(
+        new TextDecoder().decode((await reader.read()).value),
         "first",
       );
       await reader.cancel();
@@ -958,12 +959,13 @@ describe("AsyncStream", function () {
 
       out.write("first");
       var asyncOut = out.beginAsync();
-      expect(new TextDecoder().decode((await reader.read()).value)).to.equal(
+      assert.equal(
+        new TextDecoder().decode((await reader.read()).value),
         "first",
       );
       await reader.cancel();
 
-      expect(await iterator.next()).to.deep.equal({
+      assert.deepEqual(await iterator.next(), {
         value: undefined,
         done: true,
       });
@@ -1000,7 +1002,7 @@ describe("AsyncStream", function () {
         if (read.done) break;
         chunks.push(decoder.decode(read.value));
       }
-      expect(chunks).to.deep.equal(["a", "onetwo"]);
+      assert.deepEqual(chunks, ["a", "onetwo"]);
     });
 
     it("ends the iteration once the last consumer cancels", async function () {
@@ -1015,7 +1017,7 @@ describe("AsyncStream", function () {
       await first.cancel();
       await second.cancel();
 
-      expect(await iterator.next()).to.deep.equal({
+      assert.deepEqual(await iterator.next(), {
         value: undefined,
         done: true,
       });
@@ -1036,7 +1038,7 @@ describe("AsyncStream", function () {
 
       asyncOut.write("dropped");
       asyncOut.flush();
-      expect(await iterator.next()).to.deep.equal({
+      assert.deepEqual(await iterator.next(), {
         value: undefined,
         done: true,
       });
@@ -1062,7 +1064,7 @@ describe("AsyncStream", function () {
       } catch (err) {
         caught = err;
       }
-      expect(caught).to.be.an("error");
+      assert.ok(caught instanceof Error);
     });
   });
 
@@ -1071,7 +1073,7 @@ describe("AsyncStream", function () {
       var out = new AsyncStream();
       out.element("div", { class: "a" });
       out.element("input", { value: "1" }, true);
-      expect(out.toString()).to.equal("<div class=a></div><input value=1>");
+      assert.equal(out.toString(), "<div class=a></div><input value=1>");
     });
 
     it("closes the elements a begin/end pair opened, innermost first", function () {
@@ -1081,33 +1083,33 @@ describe("AsyncStream", function () {
       out.text("hi");
       out.endElement();
       out.endElement();
-      expect(out.toString()).to.equal("<section id=s><p>hi</p></section>");
+      assert.equal(out.toString(), "<section id=s><p>hi</p></section>");
     });
 
     it("keeps a comment from ending early", function () {
       var out = new AsyncStream();
       out.comment("a --> b --!> c");
-      expect(out.toString()).to.equal("<!--a --&gt; b --!&gt; c-->");
+      assert.equal(out.toString(), "<!--a --&gt; b --!&gt; c-->");
     });
   });
 
   describe("writer api", function () {
     it("refuses a null parent", function () {
-      expect(function () {
+      assert.throws(function () {
         new AsyncStream(null, null, null);
-      }).to.throw("illegal state");
+      }, /illegal state/);
     });
 
     it("drops a nullish write or script", function () {
       var out = new AsyncStream();
       out.write(null).write(undefined).script(null).script(undefined);
-      expect(out.toString()).to.equal("");
+      assert.equal(out.toString(), "");
     });
 
     it("takes a bare number as the beginAsync timeout", function (done) {
       var out = new AsyncStream();
       var asyncOut = out.beginAsync(5000);
-      expect(asyncOut._timeoutId).to.not.equal(undefined);
+      assert.notEqual(asyncOut._timeoutId, undefined);
       asyncOut.end();
       out.on("finish", function () {
         done();
@@ -1121,7 +1123,7 @@ describe("AsyncStream", function () {
         AsyncStream.INCLUDE_STACK = false;
         var out = new AsyncStream();
         var asyncOut = out.beginAsync();
-        expect(asyncOut._stack).to.equal(null);
+        assert.equal(asyncOut._stack, null);
         asyncOut.end();
         out.end();
       } finally {
@@ -1141,7 +1143,7 @@ describe("AsyncStream", function () {
       out.on("finish", function (result) {
         results.push(result.getOutput());
       });
-      expect(results).to.deep.equal(["done", "done"]);
+      assert.deepEqual(results, ["done", "done"]);
     });
 
     it("pipes the underlying stream", function () {
@@ -1154,8 +1156,8 @@ describe("AsyncStream", function () {
       };
       var sink = {};
       var out = createAsyncStream(source);
-      expect(out.pipe(sink)).to.equal(out);
-      expect(piped).to.deep.equal([sink]);
+      assert.equal(out.pipe(sink), out);
+      assert.deepEqual(piped, [sink]);
     });
   });
 
@@ -1165,7 +1167,7 @@ describe("AsyncStream", function () {
       try {
         AsyncStream.INCLUDE_STACK = false;
         AsyncStream.enableAsyncStackTrace();
-        expect(AsyncStream.INCLUDE_STACK).to.equal(true);
+        assert.equal(AsyncStream.INCLUDE_STACK, true);
       } finally {
         AsyncStream.INCLUDE_STACK = previous;
       }

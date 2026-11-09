@@ -8,7 +8,6 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		_html(`<span>${_text_mark($scope1_id, "a", input.x, $wg__input_x)}</span>`);
 		_subscribe($wi__input_x && $input_x__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a1", $wg__input_x);
-		$wg__input_x || _resume_branch($scope1_id);
 	}, $scope0_id) };
 	const D = { content: _content("a2", ({ on }) => {
 		const $scope2_id = _scope_id();

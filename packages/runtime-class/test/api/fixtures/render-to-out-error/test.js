@@ -1,6 +1,8 @@
+const assert = require("assert/strict");
+
 var nodePath = require("path");
 
-exports.check = function (marko, markoCompiler, expect, helpers, done) {
+exports.check = function (marko, markoCompiler, helpers, done) {
   var template = marko.load(nodePath.join(__dirname, "template.marko"));
   var out = template.createOut();
   var events = [];
@@ -14,9 +16,9 @@ exports.check = function (marko, markoCompiler, expect, helpers, done) {
     .on("finish", function () {
       events.push("finish");
 
-      expect(events).to.deep.equal(["error", "finish"]);
-      expect(error != null).to.equal(true);
-      expect(error.toString()).to.contain("invalid");
+      assert.deepEqual(events, ["error", "finish"]);
+      assert.equal(error != null, true);
+      assert.match(error.toString(), /invalid/);
 
       done();
     });

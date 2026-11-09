@@ -1,10 +1,10 @@
 var nodePath = require("path");
-var through = require("through");
+var PassThrough = require("stream").PassThrough;
 
-exports.check = function (marko, markoCompiler, expect, snapshot, done) {
+exports.check = function (marko, markoCompiler, snapshot, done) {
   var output = "";
 
-  var stream = through(function write(data) {
+  var stream = new PassThrough({ encoding: "utf8" }).on("data", function (data) {
     output += data;
   });
 

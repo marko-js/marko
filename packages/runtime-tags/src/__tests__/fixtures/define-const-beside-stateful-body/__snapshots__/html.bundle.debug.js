@@ -45,9 +45,9 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 
 // template.marko
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_label = _write_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_set_scope_reason($wg__input_label << 1);
+	_set_scope_reason(_write_guard($scope0_reason, 0) << 1);
 	const $childScope = _peek_scope_id();
 	child_default({ label: input.label });
 	_write_if($scope0_reason, 0) && _scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", 0);

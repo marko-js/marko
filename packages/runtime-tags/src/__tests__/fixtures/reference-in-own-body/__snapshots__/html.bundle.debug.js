@@ -14,7 +14,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope2_id = _scope_id();
 		_script($scope2_id, "__tests__/template.marko_2_name#0:2", 0);
 		_scope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "6:2");
-		_resume_branch($scope2_id);
 	}, $scope0_id) });
 	_scope($scope0_id, { name }, "__tests__/template.marko", 0, { name: "6:6" });
 }, 1);

@@ -23,7 +23,7 @@ import {
   RendererProp,
   type Scope,
 } from "../common/types";
-import { trackAbort } from "./abort-signal";
+import { onAbort } from "./abort-signal";
 import { rendererKey, setBranch } from "./control-flow";
 import {
   type ControllableSpreadHelper,
@@ -323,7 +323,17 @@ export function _attr_content(
   nodeAccessor: Accessor,
   value: unknown,
 ) {
-  const content = normalizeClientRender(value);
+  const renderer = normalizeDynamicRenderer<Renderer>(value);
+  let content: Renderer | undefined;
+  if (renderer) {
+    if ((renderer as Renderer)[RendererProp.Id]) {
+      content = renderer as Renderer;
+    } else if (MARKO_DEBUG) {
+      throw new Error(
+        `Invalid \`content\` attribute. Received ${typeof value}`,
+      );
+    }
+  }
   if (
     scope[AccessorPrefix.ConditionalRenderer + nodeAccessor] !==
     (scope[AccessorPrefix.ConditionalRenderer + nodeAccessor] =
@@ -358,7 +368,7 @@ export function _attrs_script(scope: Scope, nodeAccessor: Accessor) {
   ]?.(scope, nodeAccessor);
 
   for (const name in events) {
-    _on(el, name as any, events[name] as any);
+    _on(el, name as any, events[name]);
   }
 }
 
@@ -415,19 +425,6 @@ export const _html = /*@__PURE__*/ withDynamicHtml(function _html(
   }
 });
 
-function normalizeClientRender(value: any) {
-  const renderer = normalizeDynamicRenderer<Renderer>(value);
-  if (renderer) {
-    if ((renderer as Renderer)[RendererProp.Id]) {
-      return renderer as Renderer;
-    } else if (MARKO_DEBUG) {
-      throw new Error(
-        `Invalid \`content\` attribute. Received ${typeof value}`,
-      );
-    }
-  }
-}
-
 export function normalizeAttrValue(value: unknown) {
   if (isNotNullishOrFalse(value)) {
     return value === true ? "" : value + "";
@@ -463,7 +460,7 @@ export function _lifecycle(
     } else {
       Object.assign(thisObj, thisObj.onMount?.());
     }
-    trackAbort(scope, accessor, (_?: never) => thisObj.onDestroy?.());
+    onAbort(scope, accessor, (_?: never) => thisObj.onDestroy?.());
   }
 }
 

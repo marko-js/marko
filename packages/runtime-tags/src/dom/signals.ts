@@ -9,7 +9,6 @@ import {
   ClosureScopesProp,
   ClosureSignalProp,
   type EncodedAccessor,
-  KeyedScopesProp,
   ReservedId,
   type Scope,
 } from "../common/types";
@@ -29,9 +28,7 @@ export type Signal<T = unknown, U extends Scope = Scope> = (
   scope: U,
   value: T,
 ) => void;
-type KeyedScopes = Map<unknown, BranchScope> & {
-  [x: `${typeof KeyedScopesProp.PreviousKey}${string}`]: unknown;
-};
+type KeyedScopes = Map<unknown, BranchScope>;
 export type ClosureScopes = Set<Scope> & {
   [ClosureScopesProp.Changed]?: 1;
 };
@@ -112,11 +109,14 @@ export function _or(
   id: number,
   fn: SignalFn,
   defaultPending: number = 1,
-  scopeIdAccessor: EncodedAccessor = AccessorProp.Id,
+  scopeIdAccessor?: EncodedAccessor,
 ): Signal<never> {
-  if (!MARKO_DEBUG && scopeIdAccessor !== AccessorProp.Id) {
-    scopeIdAccessor = decodeAccessor(scopeIdAccessor as number);
-  }
+  // A child's scope offset follows its node, so it is never accessor 0.
+  scopeIdAccessor = scopeIdAccessor
+    ? MARKO_DEBUG
+      ? scopeIdAccessor
+      : decodeAccessor(scopeIdAccessor as number)
+    : AccessorProp.Id;
 
   return (scope) => {
     if (scope[AccessorProp.Gen] === runId) {
@@ -129,7 +129,7 @@ export function _or(
         scope[~id] = defaultPending;
       }
     } else {
-      queueRender(scope, fn, id, 0, scope[scopeIdAccessor]);
+      queueRender(scope, fn, id, 0, scope[scopeIdAccessor as Accessor]);
     }
   };
 }
@@ -137,26 +137,36 @@ export function _or(
 export function _for_closure(
   ownerLoopNodeAccessor: EncodedAccessor,
   fn: SignalFn,
+  id: number,
+  scopeIdAccessor?: EncodedAccessor,
 ): SignalFn {
   if (!MARKO_DEBUG)
     ownerLoopNodeAccessor = decodeAccessor(ownerLoopNodeAccessor as number);
+  scopeIdAccessor = scopeIdAccessor
+    ? MARKO_DEBUG
+      ? scopeIdAccessor
+      : decodeAccessor(scopeIdAccessor as number)
+    : AccessorProp.Id;
   const scopeAccessor = AccessorPrefix.BranchScopes + ownerLoopNodeAccessor;
-  const ownerSignal = (ownerScope: Scope) => {
-    const scopes = toArray(ownerScope[scopeAccessor] as BranchScope);
-    // Keyed by the owner, which is older than every row, so this runs
-    // before any row's own renders.
+  // Reads the rows once the loop settles them, so each is live; one created this
+  // update already rendered with current values.
+  const render = (ownerScope: Scope) => {
+    for (const scope of toArray(ownerScope[scopeAccessor] as BranchScope)) {
+      if (scope[AccessorProp.Gen] < runId) {
+        fn(scope);
+      }
+    }
+  };
+  // Its slot follows the owner's ids, so it runs once the loop settles its rows;
+  // an unwritten child offset leaves it keyed by the owner.
+  const ownerSignal = (ownerScope: Scope) =>
     queueRender(
       ownerScope,
-      (_) => {
-        for (const scope of scopes as BranchScope[]) {
-          if (scope[AccessorProp.Gen] > 0 && scope[AccessorProp.Gen] < runId) {
-            fn(scope);
-          }
-        }
-      },
-      -1,
+      render,
+      id,
+      0,
+      ownerScope[scopeIdAccessor as Accessor],
     );
-  };
   ownerSignal._ = (scope: Scope) => queueRender(scope, fn, -1);
   return ownerSignal;
 }
@@ -165,6 +175,7 @@ export function _for_selector(
   ownerLoopNodeAccessor: EncodedAccessor,
   ownerValueAccessor: EncodedAccessor,
   fn: SignalFn,
+  getValueScope?: (scope: Scope) => Scope,
 ): SignalFn {
   if (!MARKO_DEBUG) {
     ownerLoopNodeAccessor = decodeAccessor(ownerLoopNodeAccessor as number);
@@ -172,32 +183,30 @@ export function _for_selector(
   }
   const scopeAccessor = AccessorPrefix.BranchScopes + ownerLoopNodeAccessor;
   const mapAccessor = AccessorPrefix.KeyedScopes + ownerLoopNodeAccessor;
-  const prevKeyProp: `${typeof KeyedScopesProp.PreviousKey}${string}` = `${KeyedScopesProp.PreviousKey}${ownerValueAccessor as string}`;
+  // One per selector: a loop's selectors may read closures of different
+  // sections, whose accessors can match.
+  const prevKey = MARKO_DEBUG ? Symbol(ownerValueAccessor) : Symbol();
   const ownerSignal = (ownerScope: Scope) => {
     if (ownerScope[AccessorProp.Gen] < runId) {
-      const nextKey = ownerScope[ownerValueAccessor];
-      queueRender(
-        ownerScope,
-        (_) => {
-          const map = keyedScopes(ownerScope, scopeAccessor, mapAccessor);
-          if (map && prevKeyProp in map) {
-            const prevScope = map.get(map[prevKeyProp]);
-            const nextScope = map.get(nextKey);
-            if (prevScope !== nextScope) {
-              runLiveBranch(prevScope, fn);
-              runLiveBranch(nextScope, fn);
-            }
-          } else {
-            for (const scope of toArray(
-              ownerScope[scopeAccessor] as BranchScope,
-            )) {
-              runLiveBranch(scope, fn);
-            }
-          }
-          if (map) map[prevKeyProp] = nextKey;
-        },
-        -1,
-      );
+      const nextKey = (getValueScope ? getValueScope(ownerScope) : ownerScope)[
+        ownerValueAccessor
+      ];
+      const map = keyedScopes(ownerScope, scopeAccessor, mapAccessor);
+      if (map && prevKey in ownerScope) {
+        const prevScope = map.get(ownerScope[prevKey]);
+        const nextScope = map.get(nextKey);
+        if (prevScope !== nextScope) {
+          queueLiveBranch(prevScope, fn);
+          queueLiveBranch(nextScope, fn);
+        }
+      } else {
+        for (const scope of toArray(ownerScope[scopeAccessor] as BranchScope)) {
+          queueLiveBranch(scope, fn);
+        }
+      }
+      // On the owner, it outlives the map a list change drops: kept rows still
+      // show it, and new ones the current value.
+      ownerScope[prevKey] = nextKey;
     }
   };
   ownerSignal._ = (scope: Scope) => queueRender(scope, fn, -1);
@@ -222,9 +231,11 @@ function keyedScopes(
   return map;
 }
 
-function runLiveBranch(scope: BranchScope | undefined, fn: SignalFn) {
-  if (scope && scope[AccessorProp.Gen] > 0 && scope[AccessorProp.Gen] < runId) {
-    fn(scope);
+// Queued, a row the loop removes later in this update never renders; one it
+// created in this update already rendered with current values.
+function queueLiveBranch(scope: BranchScope | undefined, fn: SignalFn) {
+  if ((scope?.[AccessorProp.Gen] as number) < runId) {
+    queueRender(scope!, fn, -1);
   }
 }
 export function _if_closure(
@@ -403,9 +414,7 @@ export function _script(id: string, fn: (scope: Scope) => void) {
   _resumed[id] = fn;
   // A client render queues it as its signal runs; resume runs the server's list,
   // each section's after its body. Neither order is guaranteed, only a final DOM.
-  return (scope: Scope) => {
-    queueEffect(scope, fn);
-  };
+  return (scope: Scope) => queueEffect(scope, fn);
 }
 
 // Emitted only for a debug build, around a client-reactive `$global` read.
@@ -425,11 +434,9 @@ export function _el_read<T>(value: T): T {
   return value;
 }
 
-type Hoistable<T> = (...args: unknown[]) => T;
-type Hoisted<T> = Hoistable<T> & Iterable<T>;
 // An `<if>` branch: the slot its chain's scope is in, the slot naming which
 // branch renders, and its own index.
-type HoistStep = Accessor | [Accessor, Accessor, number];
+type HoistStep = EncodedAccessor | [Accessor, Accessor, number];
 
 function* traverse<T>(
   scope: Scope,
@@ -470,7 +477,7 @@ export function _hoist<T>(...path: HoistStep[]) {
   return (scope: Scope) => {
     // Single reads intentionally share the iterable traversal: a dedicated
     // fast path costs more runtime bytes than its latency savings justify.
-    const fn: Hoisted<T> = (...args) =>
+    const fn: ((...args: unknown[]) => T) & Iterable<T> = (...args) =>
       traverse<T>(scope, path, args).next().value as T;
     fn[Symbol.iterator] = (_?: never) => traverse<T>(scope, path, []);
     return fn;

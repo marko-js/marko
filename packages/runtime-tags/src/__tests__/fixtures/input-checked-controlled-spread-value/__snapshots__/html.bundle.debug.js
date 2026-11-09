@@ -6,9 +6,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(`<input${_attrs({
 		type: "radio",
 		checked,
-		checkedChange: _resume((_new_checked) => {
-			checked = _new_checked;
-		}, "__tests__/template.marko_0/checkedChange", $scope0_id),
+		checkedChange: _resume((_new_checked) => checked = _new_checked, "__tests__/template.marko_0/checkedChange", $scope0_id),
 		value: "x",
 		...input.rest
 	}, "#input/0", $scope0_id, "input")}>${_el_mark($scope0_id, "#input/0")}`);

@@ -6,7 +6,7 @@ function feed(inc, sfx) {
 	};
 }
 var row_default = _template("__tests__/tags/row.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_inc = _write_guard($scope0_reason, 0), $wi__input_inc_pending = _write_if($scope0_reason, 1), $wi__input_inc = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_inc = _write_guard($scope0_reason, 0), $wi__input_inc = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let sfx = "!";
 	const item = feed(input.inc, sfx);
@@ -31,16 +31,11 @@ var row_default = _template("__tests__/tags/row.marko", (input) => {
 	_html(`</div>${_el_mark($scope0_id, "#div/0", $wg__input_inc)}`);
 	$wi__input_inc && _scope($scope0_id, {
 		input_inc_pending: input.inc?.pending,
-		sfx,
-		item_status: $wi__input_inc_pending && item?.status,
-		upper: $wi__input_inc_pending && upper
+		sfx
 	}, "__tests__/tags/row.marko", 0, {
 		input_inc_pending: ["input.inc.pending"],
-		sfx: "5:6",
-		item_status: ["item.status", "6:8"],
-		upper: "7:8"
+		sfx: "5:6"
 	});
-	$wg__input_inc || $wi__input_inc && _resume_branch($scope0_id);
 });
 
 // template.marko
@@ -54,7 +49,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		flag,
 		inc.status
 	])}></span>${_el_mark($scope0_id, "#span/1")}`);
-	_set_scope_reason(10);
+	_set_scope_reason(2);
 	const $childScope = _peek_scope_id();
 	row_default({ inc });
 	_script($scope0_id, "__tests__/template.marko_0");

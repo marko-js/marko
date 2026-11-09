@@ -11,10 +11,12 @@ import {
   assertNoBodyContent,
   assertNoSpreadAttrs,
   assertOnlyValueAttr,
+  coreTagLink,
 } from "../util/assert";
 import { generateUidIdentifier } from "../util/generate-uid";
 import { getKnownAttrValues } from "../util/get-known-attr-values";
 import { getParentTag } from "../util/get-parent-tag";
+import { getTagName } from "../util/get-tag-name";
 import { addReason } from "../util/reasons";
 import { replaceWithStatements } from "../util/replace-with-statements";
 import { callRuntime } from "../util/runtime";
@@ -39,32 +41,7 @@ export default {
     assertNoParams(tag);
     assertNoBodyContent(tag);
     assertNoSpreadAttrs(tag);
-
-    let valueAttr: t.MarkoAttribute | undefined;
-    let valueChangeAttr: t.MarkoAttribute | undefined;
-    for (const attr of tag.node.attributes) {
-      if (t.isMarkoAttribute(attr)) {
-        if (attr.name === "value") {
-          if (valueAttr) {
-            throw tag.hub.buildError(
-              attr,
-              "Invalid duplicate value attribute.",
-            );
-          }
-          valueAttr = attr;
-        } else if (attr.name === "valueChange") {
-          if (valueChangeAttr) {
-            throw tag.hub.buildError(
-              attr,
-              "Invalid duplicate valueChange attribute.",
-            );
-          }
-          valueChangeAttr = attr;
-        }
-      }
-    }
-
-    assertOnlyValueAttr(tag, true, true);
+    const { valueAttr, valueChangeAttr } = assertOnlyValueAttr(tag, true, true);
 
     const parentTag = getParentTag(tag);
     if (parentTag) {
@@ -72,13 +49,13 @@ export default {
         throw tag
           .get("name")
           .buildCodeFrameError(
-            "The [`<return>` tag](https://markojs.com/docs/reference/core-tag#return) can not be used in a [native tag](https://markojs.com/docs/reference/native-tag).",
+            `The ${coreTagLink(tag)} can not be used in a [native tag](https://markojs.com/docs/reference/native-tag).`,
           );
       } else if (getTagFacts(parentTag).controlFlow) {
         throw tag
           .get("name")
           .buildCodeFrameError(
-            `The [\`<return>\` tag](https://markojs.com/docs/reference/core-tag#return) can not be used under the \`<${parentTag.get("name").toString()}>\` tag.`,
+            `The ${coreTagLink(tag)} can not be used under the \`<${getTagName(parentTag)}>\` tag.`,
           );
       }
     }
@@ -92,10 +69,9 @@ export default {
         );
     }
 
-    const attrs = getKnownAttrValues(tag.node);
-    if (attrs.valueChange) {
-      (attrs.valueChange.extra ??= {}).isEffect = true;
-      addSetupExpr(section, attrs.valueChange);
+    if (valueChangeAttr) {
+      (valueChangeAttr.value.extra ??= {}).isEffect = true;
+      addSetupExpr(section, valueChangeAttr.value);
       // TODO: this should be based on the parent actually mutating the tag variable.
       addReason(
         ensureSectionSlot(section, SlotKind.ReturnChangeHandler),
@@ -103,8 +79,8 @@ export default {
       );
     }
 
-    addSetupExpr(section, attrs.value);
-    section.returnValueExpr = attrs.value.extra ??= {};
+    addSetupExpr(section, valueAttr.value);
+    section.returnValueExpr = valueAttr.value.extra ??= {};
   },
   translate: translateByTarget({
     html: {
@@ -124,15 +100,13 @@ export default {
           );
         }
 
-        if (attrs.value) {
-          const returnId = generateUidIdentifier("return");
-          setReturnValueIdentifier(section, returnId);
-          replaceWithStatements(tag, [
-            t.variableDeclaration("const", [
-              t.variableDeclarator(returnId, attrs.value),
-            ]),
-          ]);
-        }
+        const returnId = generateUidIdentifier("return");
+        setReturnValueIdentifier(section, returnId);
+        replaceWithStatements(tag, [
+          t.variableDeclaration("const", [
+            t.variableDeclarator(returnId, attrs.value),
+          ]),
+        ]);
       },
     },
     dom: {
@@ -140,14 +114,12 @@ export default {
         const section = getSection(tag);
         const attrs = getKnownAttrValues(tag.node);
 
-        if (attrs.value) {
-          addStatement(
-            "render",
-            section,
-            attrs.value.extra,
-            callRuntime("_return", scopeIdentifier, attrs.value),
-          );
-        }
+        addStatement(
+          "render",
+          section,
+          attrs.value.extra,
+          callRuntime("_return", scopeIdentifier, attrs.value),
+        );
 
         if (attrs.valueChange) {
           addStatement(

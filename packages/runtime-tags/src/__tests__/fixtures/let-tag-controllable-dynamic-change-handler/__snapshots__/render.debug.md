@@ -3,7 +3,7 @@
 <button
   id="inc"
 >
-  1|1
+  1|1|
 </button>
 <button
   id="toggle"
@@ -20,7 +20,7 @@ document.querySelector("#inc").click();
 <button
   id="inc"
 >
-  3|3
+  3|3|
 </button>
 <button
   id="toggle"
@@ -42,7 +42,7 @@ document.querySelector("#inc").click();
 <button
   id="inc"
 >
-  5|5
+  5|5|
 </button>
 <button
   id="toggle"
@@ -69,7 +69,7 @@ document.querySelector("#inc").click();
 <button
   id="inc"
 >
-  5|6
+  5|6|
 </button>
 <button
   id="toggle"
@@ -90,7 +90,7 @@ document.querySelector("#inc").click();
 <button
   id="inc"
 >
-  5|7
+  5|7|
 </button>
 <button
   id="toggle"

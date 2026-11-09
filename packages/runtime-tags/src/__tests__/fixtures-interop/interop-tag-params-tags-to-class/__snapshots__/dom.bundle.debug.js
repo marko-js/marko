@@ -50,14 +50,13 @@ const $classlayout_content__setup = ($scope) => {
 	$classlayout_content__multiplier($scope);
 	$classlayout_content__setup__script($scope);
 };
-const $classlayout_content__message = ($scope, message) => _text($scope["#text/0"], message);
 const $classlayout_content__baseCount = /*@__PURE__*/ _const("baseCount", ($scope) => {
 	_text($scope["#text/3"], $scope.baseCount);
 	$classlayout_content__multiplier__OR__baseCount($scope);
 });
 const $classlayout_content__$params = ($scope, $params2) => {
 	$classlayout_content__baseCount($scope, $params2[0]);
-	$classlayout_content__message($scope, $params2[1]);
+	_text($scope["#text/0"], $params2[1]);
 };
 const $classlayout_content = _content("__tests__/template.marko_1*content", "<h1> </h1><button id=tags><!> * <!> = <!></button>", "D l D%c%c%", $classlayout_content__setup, $classlayout_content__$params);
 const $multiplier__closure = /*@__PURE__*/ _closure($classlayout_content__multiplier);

@@ -27,7 +27,7 @@ var list_default = _template("b", (input) => {
 
 // template.marko
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_color = _write_guard($scope0_reason, 6), $wg__input_selected = _write_guard($scope0_reason, 8), $wi__input_color = _write_if($scope0_reason, 6), $wi__input_color__OR__input_show = _write_if($scope0_reason, 2), $wg__input_show = _write_guard($scope0_reason, 9), $wg__input_rows = _write_guard($scope0_reason, 5), $wg__input_items = _write_guard($scope0_reason, 7), $wg__input_colors = _write_guard($scope0_reason, 10);
+	const $scope0_reason = _scope_reason(), $wg__input_color = _write_guard($scope0_reason, 6), $wg__input_selected = _write_guard($scope0_reason, 8), $wi__input_color = _write_if($scope0_reason, 6), $wi__input_color__OR__input_show = _write_if($scope0_reason, 2), $wg__input_show = _write_guard($scope0_reason, 9), $wg__input_rows = _write_guard($scope0_reason, 5), $wg__input_items = _write_guard($scope0_reason, 7);
 	const $scope0_id = _scope_id();
 	const $input_color__closures = /* @__PURE__ */ new Set();
 	const Box = { content: _content("a5", ({ color }) => {
@@ -71,19 +71,16 @@ var template_default = _template("a", (input) => {
 			const $scope4_id = _scope_id();
 			_html(`${_style_html(`--M_a3:${_escape_style_value(input.color)};`)}${_el_mark($scope4_id, "a", $wg__input_color)}<div class=content></div>`);
 			$wi__input_color__OR__input_show && _subscribe($wi__input_color && $input_color__closures, _scope($scope4_id, { _: _scope_with_id($scope0_id) }), "a6", $wg__input_color);
-			$wg__input_color || $wi__input_color__OR__input_show && _resume_branch($scope4_id);
 		}, $scope0_id)
 	});
-	_set_scope_reason($wg__input_colors << 1);
+	_set_scope_reason(_write_guard($scope0_reason, 10) << 1);
 	let $item;
-	forOf(input.colors, (color) => {
-		$item = attrTags($item, { content: _content("a8", () => {
-			const $scope6_reason = _scope_reason(), $wg__color2 = _write_guard($scope6_reason, 0);
-			const $scope6_id = _scope_id();
-			_html(`${_style_html(`--M_a4:${_escape_style_value(color)};`)}${_el_mark($scope6_id, "a", $wg__color2)}<div class=item></div>`);
-			_write_if($scope6_reason, 0) && _scope($scope6_id, {});
-		}, $scope0_id) });
-	});
+	forOf(input.colors, (color) => $item = attrTags($item, { content: _content("a8", () => {
+		const $scope6_reason = _scope_reason(), $wg__color2 = _write_guard($scope6_reason, 0);
+		const $scope6_id = _scope_id();
+		_html(`${_style_html(`--M_a4:${_escape_style_value(color)};`)}${_el_mark($scope6_id, "a", $wg__color2)}<div class=item></div>`);
+		_write_if($scope6_reason, 0) && _scope($scope6_id, {});
+	}, $scope0_id) }));
 	const $childScope3 = _peek_scope_id();
 	list_default({ item: $item });
 	_write_if($scope0_reason, 4) && _scope($scope0_id, {

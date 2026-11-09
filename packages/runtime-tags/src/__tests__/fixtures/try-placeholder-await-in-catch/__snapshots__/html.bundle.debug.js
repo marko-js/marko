@@ -20,7 +20,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope5_id = _scope_id();
 				_html(`<p>caught ${_text_mark($scope5_id, "#text/0", err.message, $wg__err_message * 2)}, ${_escape(retry)}</p>`);
 				$wi__err_message && _subscribe($catch_content__err_message__closures, _scope($scope5_id, {}, "__tests__/template.marko", "7:8"), "__tests__/template.marko_5_err_message#4:3/subscribe", $wg__err_message);
-				$wg__err_message || $wi__err_message && _resume_branch($scope5_id);
 			}, $wg__err_message);
 			$wi__err_message && _scope($scope4_id, { "ClosureScopes:err_message/4": $catch_content__err_message__closures }, "__tests__/template.marko", "6:6");
 		}, 0, "__tests__/template.marko_4*content");

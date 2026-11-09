@@ -5,8 +5,8 @@ const $input_title = ($scope, input_title) => _attr($scope.a, "title", input_tit
 const $input_text = ($scope, input_text) => _text($scope.b, input_text);
 
 // tags/list.marko
-const $for_content__item_content = /* @__PURE__ */ _dynamic_tag(0);
-const $for_content__$params = ($scope, $params2) => $for_content__item_content($scope, $params2[0]?.content);
+const $for_content__dynamicTag = /*@__PURE__*/ _dynamic_tag(0);
+const $for_content__$params = ($scope, $params2) => $for_content__dynamicTag($scope, $params2[0]?.content);
 const $for = /*@__PURE__*/ _for_of_unkeyed(0, "<!><!><!>", "b%", 0, $for_content__$params);
 const $input_item = ($scope, input_item) => $for($scope, [input_item]);
 
@@ -33,9 +33,7 @@ const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a1
 } });
 const $items = /*@__PURE__*/ _let(3, ($scope) => {
 	let $item;
-	forOf($scope.d, (item) => {
-		$item = attrTags($item, { content: $item_content($scope, { 3: item }) });
-	});
+	forOf($scope.d, (item) => $item = attrTags($item, { content: $item_content($scope, { 3: item }) }));
 	$input_item($scope.b, $item);
 });
 const $setup__script = _script("a2", ($scope) => _on($scope.a, "click", function() {

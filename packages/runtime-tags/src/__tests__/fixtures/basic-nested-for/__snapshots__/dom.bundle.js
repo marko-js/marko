@@ -4,12 +4,12 @@ const $name = ($scope, name) => _text($scope.a, name);
 
 // template.marko
 const $for_content2__outer__OR__inner = /*@__PURE__*/ _or(3, ($scope) => $name($scope.a, `${$scope._.c}.${$scope.c}`));
-const $for_content2__outer = /*@__PURE__*/ _for_closure(0, $for_content2__outer__OR__inner);
+const $for_content2__outer = /*@__PURE__*/ _for_closure(0, $for_content2__outer__OR__inner, 4);
 const $for_content2__setup = $for_content2__outer;
 const $for_content2__inner = /*@__PURE__*/ _const(2, $for_content2__outer__OR__inner);
 const $for_content2__$params = ($scope, $params3) => $for_content2__inner($scope, $params3[0]);
 const $for_content__for = /*@__PURE__*/ _for_of_unkeyed(0, $template, /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D l"), $for_content2__setup, $for_content2__$params);
-const $for_content__items = /*@__PURE__*/ _for_closure(1, ($scope) => $for_content__for($scope, [$scope._.c]));
+const $for_content__items = /*@__PURE__*/ _for_closure(1, ($scope) => $for_content__for($scope, [$scope._.c]), 3);
 const $for_content__setup = $for_content__items;
 const $for_content__$params = ($scope, $params2) => $for_content__outer($scope, $params2[0]);
 const $for_content__outer = /*@__PURE__*/ _const(2, $for_content2__outer);

@@ -1,0 +1,6 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures-interop/error-tags-out-member/template.marko:1:15
+    > 1 | <const/stream=out.stream/>
+        |               ^^^ Only `out.global` is supported for compatibility.
+      2 | <div>${stream}</div>
+      3 |

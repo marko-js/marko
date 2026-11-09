@@ -4,9 +4,9 @@ const $walks$1 = "D l";
 const $setup$1 = ($_) => {};
 const $input_name__OR__input_write__script = _script("__tests__/tags/child.marko_0_name#3_write#4", ($scope) => {
 	$scope.write(`mounted ${$scope.name}`);
-	$signal($scope, 0).onabort = () => {
+	onAbort($scope, 0, () => {
 		$scope.write(`destroyed ${$scope.name}`);
-	};
+	});
 });
 const $input_name__OR__input_write = /*@__PURE__*/ _or(5, ($scope) => {
 	$signalReset($scope, 0);
@@ -26,10 +26,9 @@ var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $templ
 // template.marko
 const $template = "<button>Toggle</button><div></div><!><!>";
 const $walks = " b b%c";
-const $for_content__write = /*@__PURE__*/ _for_closure("#text/2", ($scope) => $write$1($scope["#childScope/0"], $scope._.write));
+const $for_content__write = /*@__PURE__*/ _for_closure("#text/2", ($scope) => $write$1($scope["#childScope/0"], $scope._.write), 5);
 const $for_content__setup = $for_content__write;
-const $for_content__item = ($scope, item) => $name($scope["#childScope/0"], item);
-const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);
+const $for_content__$params = ($scope, $params2) => $name($scope["#childScope/0"], $params2[0]);
 const $for = /*@__PURE__*/ _for_of_unkeyed("#text/2", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)("D l"), $for_content__setup, $for_content__$params);
 const $items = /*@__PURE__*/ _let("items/3", ($scope) => $for($scope, [$scope.items]));
 const $write2 = /*@__PURE__*/ _const("write");

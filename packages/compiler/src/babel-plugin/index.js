@@ -125,6 +125,17 @@ export default (api, markoOpts) => {
           return;
         }
 
+        // Recovery reports every error as a diagnostic, but, as without it, a
+        // template with errors is not translated: its module is empty.
+        if (
+          markoOpts.errorRecovery &&
+          metadata.marko.diagnostics.some(isErrorDiagnostic)
+        ) {
+          file.path.node.body = [];
+          finalizeMeta(metadata.marko);
+          return;
+        }
+
         const taglibLookup = sourceFile.___taglibLookup;
         const rootTranslators = [];
         file.buildCodeFrameError = MarkoFile.prototype.buildCodeFrameError;
@@ -193,8 +204,9 @@ function getMarkoFile(code, fileOpts, markoOpts) {
   // `stripTypes` is left out of the key on purpose: it is for cli flows, which
   // compile once per process, so no cache is shared across its settings.
   const contentHash = canCache && new Hash().update(code).digest();
-  // A cache is scoped to ONE compilation config: template-id derivation
-  // (including `optimizeKnownTemplates`) is part of that contract.
+  // Configs may share a cache only when they differ in `output` alone, as the
+  // bundler plugins' do: it keeps each template as analyzed, so only translate
+  // may read `output`.
   let cached = canCache && compileCache.get(id);
 
   // A template still analyzing is part of the analysis an import cycle led
@@ -309,6 +321,7 @@ function getMarkoFile(code, fileOpts, markoOpts) {
       return file;
     }
 
+    file.path.scope.crawl(); // Migrators may have changed bindings.
     file.___compileStage = "transform";
 
     const rootTransformers = [];
@@ -384,6 +397,10 @@ function getMarkoFile(code, fileOpts, markoOpts) {
     taglibConfig.fs = prevFs;
     setFileInternal(prevFile);
   }
+}
+
+function isErrorDiagnostic(diag) {
+  return diag.type === DiagnosticType.Error;
 }
 
 function hasStaleDependency(cached, markoOpts) {

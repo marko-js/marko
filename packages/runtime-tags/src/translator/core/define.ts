@@ -54,10 +54,9 @@ export default {
 
     assertNoTagVarMutation(tag);
 
-    if (
-      t.isIdentifier(tag.node.var) &&
-      !tag.scope.getBinding(tag.node.var.name)!.referencePaths.length
-    ) {
+    const babelBinding =
+      t.isIdentifier(tag.node.var) && tag.scope.getBinding(tag.node.var.name)!;
+    if (babelBinding && !babelBinding.referencePaths.length) {
       dropContent(tag.node.body);
       dropNodes(getAllTagReferenceNodes(tag.node));
       return;
@@ -68,8 +67,7 @@ export default {
 
     if (bodySection) {
       // TODO: support destructure
-      if (t.isIdentifier(tag.node.var)) {
-        const babelBinding = tag.scope.getBinding(tag.node.var.name)!;
+      if (babelBinding) {
         let allDirectReferences = true;
         let allHaveInput = true;
         for (const ref of babelBinding.referencePaths) {
@@ -108,7 +106,7 @@ export default {
   translate: {
     enter(tag) {
       // An unreferenced `<define>`'s content was dropped in analyze.
-      if (!tag.node.var || tag.node.body.extra?.dropped) {
+      if (tag.node.body.extra?.dropped) {
         replaceWithStatements(tag);
         return;
       }

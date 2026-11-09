@@ -6,10 +6,9 @@ function makeHandler() {
 	return () => {};
 }
 const $for_content__item = ($scope, item) => {
-	$for_content__item_name($scope, item?.name);
+	_text($scope["#text/0"], item?.name);
 	item.make();
 };
-const $for_content__item_name = ($scope, item_name) => _text($scope["#text/0"], item_name);
 const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);
 const $input_y = ($scope, input_y) => makeHandler();
 const $input_label = ($scope, input_label) => _text($scope["#text/0"], input_label);

@@ -74,7 +74,7 @@ export function flushInto(
   >;
   const expr = consumeHTML(target);
   if (expr) {
-    target.node.body.push(expr as any);
+    (target.node.body as t.Statement[]).push(expr);
   }
   return target;
 }

@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 var hooks = require("./hooks");
 
 module.exports = function (helpers) {
@@ -6,13 +6,13 @@ module.exports = function (helpers) {
     name: "Frank",
   });
 
-  expect(component.el.querySelector(".foo .name").innerHTML).to.equal("Frank");
-  expect(hooks.getHookNames("foo")).to.deep.equal([
+  assert.equal(component.el.querySelector(".foo .name").innerHTML, "Frank");
+  assert.deepEqual(hooks.getHookNames("foo"), [
     "create",
     "render",
     "mount",
   ]);
-  expect(hooks.getHookNames("root")).to.deep.equal([
+  assert.deepEqual(hooks.getHookNames("root"), [
     "create",
     "render",
     "mount",
@@ -23,7 +23,7 @@ module.exports = function (helpers) {
   component.input = { name: "John" };
   component.update();
 
-  expect(component.el.querySelector(".foo .name").innerHTML).to.equal("John");
-  expect(hooks.getHookNames("foo")).to.deep.equal(["render", "update"]);
-  expect(hooks.getHookNames("root")).to.deep.equal(["render", "update"]);
+  assert.equal(component.el.querySelector(".foo .name").innerHTML, "John");
+  assert.deepEqual(hooks.getHookNames("foo"), ["render", "update"]);
+  assert.deepEqual(hooks.getHookNames("root"), ["render", "update"]);
 };

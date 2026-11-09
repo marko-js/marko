@@ -22,7 +22,7 @@ const $if_content__setup = ($scope) => {
 	$input_onDismiss($scope["#childScope/0"], $onDismiss($scope));
 };
 const $for_content__if = /*@__PURE__*/ _if("#text/0", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1), $if_content__setup);
-const $for_content__show = /*@__PURE__*/ _for_closure("#text/0", ($scope) => $for_content__if($scope, $scope._.show ? 0 : 1));
+const $for_content__show = /*@__PURE__*/ _for_closure("#text/0", ($scope) => $for_content__if($scope, $scope._.show ? 0 : 1), 3);
 const $for_content__setup = $for_content__show;
 const $for = /*@__PURE__*/ _for_of("#text/0", "<!><!><!>", "b%", $for_content__setup);
 const $items = /*@__PURE__*/ _let("items/1", ($scope) => $for($scope, [$scope.items, "id"]));

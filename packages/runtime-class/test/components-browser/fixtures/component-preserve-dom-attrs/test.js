@@ -1,10 +1,10 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), {});
 
   var helloEl = component.getEl("hello");
-  expect(helloEl.innerHTML).to.equal("Hello Joe!");
+  assert.equal(helloEl.innerHTML, "Hello Joe!");
 
   component.el.style.border = "1px solid red";
   component.el.className = "foo";
@@ -16,11 +16,11 @@ module.exports = function (helpers) {
   component.setState("name", "Frank");
   component.update();
 
-  expect(helloEl.innerHTML).to.equal("Hello Frank!");
-  expect(component.getEl("hello2").getAttribute("class")).to.equal(null);
+  assert.equal(helloEl.innerHTML, "Hello Frank!");
+  assert.equal(component.getEl("hello2").getAttribute("class"), null);
 
   // Make sure the preserved attributes did not change
-  expect(component.el.style.border).to.equal("1px solid red");
-  expect(component.el.className).to.equal("foo");
-  expect(component.el.querySelector("a").href).to.equal("http://www.foo.com/");
+  assert.equal(component.el.style.border, "1px solid red");
+  assert.equal(component.el.className, "foo");
+  assert.equal(component.el.querySelector("a").href, "http://www.foo.com/");
 };

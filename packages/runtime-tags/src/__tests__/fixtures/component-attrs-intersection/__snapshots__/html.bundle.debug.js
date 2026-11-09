@@ -1,11 +1,10 @@
 // tags/display-intersection.marko
 var display_intersection_default = _template("__tests__/tags/display-intersection.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_value = _write_guard($scope0_reason, 0), $wi__input_value = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_value = _write_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let dummy = {};
 	_html(`<div>${_text_mark($scope0_id, "#text/0", (dummy, input.value), $wg__input_value)}</div>`);
-	$wi__input_value && _scope($scope0_id, { dummy }, "__tests__/tags/display-intersection.marko", 0, { dummy: "2:6" });
-	$wg__input_value || $wi__input_value && _resume_branch($scope0_id);
+	_write_if($scope0_reason, 0) && _scope($scope0_id, { dummy }, "__tests__/tags/display-intersection.marko", 0, { dummy: "2:6" });
 });
 
 // template.marko

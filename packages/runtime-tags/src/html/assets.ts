@@ -41,11 +41,10 @@ export type LoadTrigger =
   | IdleTrigger
   | MediaTrigger
   | EventTrigger;
-type Trigger = LoadTrigger;
 interface Asset {
   id: string;
   flush: AssetFlush;
-  triggers: Trigger[] | undefined;
+  triggers: LoadTrigger[] | undefined;
   // Kept to write again: an asset flush may write each url only once per render.
   block: string | undefined;
   defer: string | undefined;
@@ -77,7 +76,7 @@ export function withLoadAssets(
   id: string,
   flush: AssetFlush,
   assetId: string,
-  triggers?: Trigger[],
+  triggers?: LoadTrigger[],
 ): ServerRenderer {
   const renderer: ServerRenderer = (input: unknown) => {
     writeLoadAsset(assetId, flush, triggers);
@@ -92,7 +91,7 @@ export function withLoadAssets(
 export function writeLoadAsset(
   assetId: string,
   flush: AssetFlush,
-  triggers?: Trigger[],
+  triggers?: LoadTrigger[],
 ) {
   const g = $global();
   writeAsset(g, addAsset(g, assetId, flush, triggers));
@@ -211,7 +210,7 @@ function addAsset(
   g: $Global,
   id: string,
   flush: AssetFlush,
-  triggers?: Trigger[],
+  triggers?: LoadTrigger[],
 ) {
   const assets = (g[kAssets] ||= []);
   let asset = assets.find((a) => a.id === id);
@@ -240,7 +239,7 @@ function addAsset(
   return asset;
 }
 
-function triggerScript(id: string, html: string, triggers: Trigger[]) {
+function triggerScript(id: string, html: string, triggers: LoadTrigger[]) {
   const htmlStr = quoteScriptTemplateLiteral(html);
   // A loader script that fails at the network level never evaluates, so the
   // debug build reports from the script's own error event; matches the
@@ -250,25 +249,27 @@ function triggerScript(id: string, html: string, triggers: Trigger[]) {
         `The lazy module for "${id}" failed to load; its server-rendered content cannot become interactive.`,
       )})),document.head.append(d))`
     : `document.head.append(new Range().createContextualFragment(d=h))`;
-  const exprs = triggers.map((trigger) => {
-    const options = trigger.options && toObjectExpression(trigger.options);
-    switch (trigger.type) {
-      case "visible":
-        return `(e=>e&&new IntersectionObserver((e,i)=>e.some(e=>e.isIntersecting)&&i.disconnect()+l()${
-          options ? `,${options}` : ""
-        }).observe(e))(${querySelectorOrLoad(trigger.selector!)})`;
-      case "idle":
-        return `(self.requestIdleCallback||l)(l${options ? `,${options}` : ""})`;
-      case "media":
-        return `(m=>m.matches?l():m.addEventListener("change",l,{once:1}))(matchMedia(${JSON.stringify(trigger.selector)}))`;
-      default:
-        return `(e=>e?.addEventListener("${trigger.type.slice("on-".length)}",l,{once:1}))(${querySelectorOrLoad(trigger.selector!)})`;
-    }
-  });
+  const exprs = triggers.map(triggerExpression);
   // The head takes the module: a `@catch` may remove the range around this script.
   return `((h,d,l=$=>{d||${insert}})=>${
     exprs.length > 1 ? `{${exprs.join(";")}}` : exprs[0]
   })(${htmlStr})`;
+}
+
+function triggerExpression(trigger: LoadTrigger) {
+  const options = trigger.options && toObjectExpression(trigger.options);
+  switch (trigger.type) {
+    case "visible":
+      return `(e=>e&&new IntersectionObserver((e,i)=>e.some(e=>e.isIntersecting)&&i.disconnect()+l()${
+        options ? `,${options}` : ""
+      }).observe(e))(${querySelectorOrLoad(trigger.selector)})`;
+    case "idle":
+      return `(self.requestIdleCallback||l)(l${options ? `,${options}` : ""})`;
+    case "media":
+      return `(m=>m.matches?l():m.addEventListener("change",l,{once:1}))(matchMedia(${JSON.stringify(trigger.selector)}))`;
+    default:
+      return `(e=>e?.addEventListener("${trigger.type.slice("on-".length)}",l,{once:1}))(${querySelectorOrLoad(trigger.selector)})`;
+  }
 }
 
 // A trigger script flushes with the chunk that requested the asset, so a target

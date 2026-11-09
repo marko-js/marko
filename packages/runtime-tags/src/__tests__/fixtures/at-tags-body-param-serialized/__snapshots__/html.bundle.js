@@ -31,7 +31,6 @@ var ui_select_default = _template("c", (input) => {
 				c,
 				_: _scope_with_id($scope0_id)
 			}), "c1", $wg__input_option);
-			$wg__input_option || $wi__input_option && _resume_branch($scope1_id);
 		}, $scope0_id)
 	});
 	$wi__input_option && _scope($scope0_id, { e: $input_option__closures });

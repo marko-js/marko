@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var states = {
@@ -15,14 +15,14 @@ module.exports = function (helpers) {
 
   var component = helpers.mount(require.resolve("./index"), states.original);
 
-  expect(component.state.heading).to.equal(states.original.heading);
-  expect(component.state.message).to.equal(states.original.message);
-  expect(component.state.colors).to.deep.equal(states.original.colors);
+  assert.equal(component.state.heading, states.original.heading);
+  assert.equal(component.state.message, states.original.message);
+  assert.deepEqual(component.state.colors, states.original.colors);
 
   component.replaceState(states.new);
   component.update();
 
-  expect(component.state.heading).to.equal(states.new.heading);
-  expect(component.state.message).to.equal(states.new.message); // undefined
-  expect(component.state.colors).to.deep.equal(states.new.colors);
+  assert.equal(component.state.heading, states.new.heading);
+  assert.equal(component.state.message, states.new.message); // undefined
+  assert.deepEqual(component.state.colors, states.new.colors);
 };

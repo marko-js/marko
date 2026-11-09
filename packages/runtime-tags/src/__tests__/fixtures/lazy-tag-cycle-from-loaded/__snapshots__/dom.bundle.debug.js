@@ -32,14 +32,7 @@ const $input$1 = ($scope, input) => $input_depth$1($scope, input.depth);
 var a_default = /*@__PURE__*/ _template("__tests__/a.marko", $template$1, $walks$1, $setup$1, $input$1);
 
 // b.marko
-var b_exports = /* @__PURE__ */ __exportAll({
-	$input: () => $input,
-	$input_depth: () => $input_depth,
-	$setup: () => $setup,
-	$template: () => $template,
-	$walks: () => $walks,
-	default: () => b_default
-});
+var b_exports = /* @__PURE__ */ __exportAll({ default: () => b_default });
 const $template = "<button>b <!>:<!></button><!><!>";
 const $walks = " Db%c%l%c";
 const $if_content__input_depth = /*@__PURE__*/ _if_closure("#text/3", 0, ($scope) => $input_depth$1($scope["#childScope/0"], $scope._.input_depth - 1));

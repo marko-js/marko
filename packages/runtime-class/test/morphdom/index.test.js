@@ -4,11 +4,9 @@ require("../__util__/test-init");
 
 const fs = require("fs");
 const path = require("path");
-var chai = require("chai");
 const { JSDOM } = require("jsdom");
 const morphdom = require("marko/src/runtime/vdom/morphdom");
 var autotest = require("mocha-autotest").default;
-chai.config.includeStack = true;
 
 let doc;
 before(() => (doc = new JSDOM("").window.document));
@@ -52,7 +50,7 @@ autotest("fixtures", (fixture) => {
     snapshot(actualHTML, ".html");
 
     if (fs.existsSync(path.join(dir, "index.js"))) {
-      require(dir).verify({ rootNode: fromNode }, chai.expect);
+      require(dir).verify({ rootNode: fromNode });
     }
   });
 });

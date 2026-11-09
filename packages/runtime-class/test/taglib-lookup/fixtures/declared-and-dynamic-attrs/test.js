@@ -1,13 +1,15 @@
-exports.check = function (markoCompiler, expect) {
+const assert = require("assert/strict");
+
+exports.check = function (markoCompiler) {
   var taglibLookup = markoCompiler.taglibLookup;
   var lookup = taglibLookup.buildLookup(__dirname);
   // console.log(Object.keys(lookup.attributes));
   var attr = lookup.getAttribute("test-dynamic-attribute", "DYNAMIC");
-  expect(attr != null).to.equal(true);
-  expect(attr.type).to.equal("boolean");
-  expect(attr.name).to.equal("*");
+  assert.equal(attr != null, true);
+  assert.equal(attr.type, "boolean");
+  assert.equal(attr.name, "*");
 
   attr = lookup.getAttribute("test-dynamic-attribute", "foo");
-  expect(attr != null).to.equal(true);
-  expect(attr.type).to.equal("string");
+  assert.equal(attr != null, true);
+  assert.equal(attr.type, "string");
 };

@@ -49,12 +49,12 @@ import {
   dropContent,
   dropNodes,
   getAllTagReferenceNodes,
+  getChildTagReferenceNodes,
   mergeReferences,
   type ReferencedExtra,
   setDerivedFrom,
   trackParamsReferences,
   trackVarReferences,
-  mergeTagReferences,
 } from "./references";
 import { replaceWithStatements } from "./replace-with-statements";
 import { absentArg, callRuntime } from "./runtime";
@@ -107,6 +107,7 @@ import {
   buildGroupMask,
   getExprIfWritten,
   getWriteGuard,
+  getWriteReason,
   isEverWritten,
 } from "./write-guard";
 
@@ -123,6 +124,7 @@ const [getCallSiteSourcesByParam] = createAnalysisState(
 
 const kParamsTree = Symbol("known tag params tree");
 const kKnownExprs = Symbol("known tag exprs");
+const kPassesInput = Symbol("known tag passes input");
 
 declare module "@marko/compiler/dist/types" {
   export interface MarkoTagExtra {
@@ -133,6 +135,8 @@ declare module "@marko/compiler/dist/types" {
     /** The child's params tree the call site was analyzed against. */
     [kParamsTree]?: ParamsTree;
     [kKnownExprs]?: KnownExprs;
+    /** The call passes its input after its arguments, as written in source. */
+    [kPassesInput]?: boolean;
   }
 }
 
@@ -254,9 +258,16 @@ function analyzeKnownTagParams(
   tag: t.NodePath<t.MarkoTag>,
   paramsTree: ParamsTree | undefined,
 ) {
-  const tagExtra = tag.node.extra!;
+  const { node } = tag;
+  const tagExtra = node.extra!;
   const attrExprs = new Set([tagExtra]);
   tagExtra[kParamsTree] = paramsTree;
+  // Attributes beside arguments are an error, so a call with arguments passes
+  // its input only to carry a body or attribute tags.
+  tagExtra[kPassesInput] =
+    !node.arguments?.length ||
+    !!node.body.body.length ||
+    !!node.attributeTags.length;
   const exprs = (tagExtra[kKnownExprs] = analyzeParams(
     tagExtra,
     getSection(tag),
@@ -266,7 +277,7 @@ function analyzeKnownTagParams(
   ));
   setTagContentDerives(
     tag,
-    paramsTree?.properties?.[tag.node.arguments?.length ?? 0]?.binding,
+    paramsTree?.properties?.[node.arguments?.length ?? 0]?.binding,
     exprs,
   );
   addReasonExprs(ensureSlot(tagExtra.childScopeBinding!), fromIter(attrExprs));
@@ -294,7 +305,7 @@ function assertReturns(tag: t.NodePath<t.MarkoTag>, childSection: Section) {
 // The child's scope resumes, and with it any tag variable, which HTML wires
 // with `_var` and DOM registers for.
 function isChildScopeResumed(section: Section, tagExtra: t.MarkoTagExtra) {
-  return isEverWritten(section, findSlot(tagExtra.childScopeBinding!)?.reason);
+  return isEverWritten(section, getWriteReason(tagExtra.childScopeBinding!));
 }
 
 // Arguments are dropped when a child reads none of them nor the input after
@@ -304,13 +315,12 @@ function getRenderArgs(
   properties: t.ObjectExpression["properties"],
 ) {
   const args = tag.node.arguments;
+  const withInput = tag.node.extra![kPassesInput];
   const renderArgs: (t.Expression | t.SpreadElement)[] =
-    args?.length && (properties.length || !args.every(isDroppedNode))
+    args?.length && (withInput || !args.every(isDroppedNode))
       ? args.map(toRenderArg)
       : [];
-  if (!renderArgs.length || properties.length) {
-    renderArgs.push(propsToExpression(properties));
-  }
+  if (withInput) renderArgs.push(propsToExpression(properties));
   return renderArgs;
 }
 
@@ -419,11 +429,7 @@ export function knownTagTranslateHTML(
 
 export function knownTagTranslateDOM(
   tag: t.NodePath<t.MarkoTag>,
-  getBindingIdentifier: (
-    binding: Binding,
-    preferredName?: string,
-    directContent?: boolean,
-  ) => t.Identifier,
+  getBindingIdentifier: TranslateDOMInfo["getBindingIdentifier"],
   callSetup: ((section: Section, childBinding: Binding) => void) | undefined,
 ) {
   const tagSection = getSection(tag);
@@ -600,7 +606,7 @@ function analyzeParams(
   }
 
   const attrsTree = paramsTree.properties[i];
-  if (attrsTree) {
+  if (attrsTree && rootTagExtra[kPassesInput]) {
     known[i] = analyzeAttrs(
       rootTagExtra,
       section,
@@ -614,6 +620,14 @@ function analyzeParams(
     tag.node.arguments = null;
     dropAllTagNodes(tag.node);
     tag.node.arguments = args;
+  }
+
+  // A param the call passes nothing for is written `undefined` in setup.
+  for (const key in paramsTree.properties) {
+    if (!known[key]) {
+      addSetupWork(section);
+      break;
+    }
   }
 
   return paramsExpr;
@@ -840,14 +854,7 @@ function analyzeAttrs(
         rootAttrExprs.add(attrExtra);
         addSetupExpr(section, attr.value);
         setDerivedFrom(attrTree.binding, attrExtra, rootExprs);
-        // A cross template child that only ever invokes this input makes the attribute
-        // `invokeOnly`; same-program params trees may be mid-analysis with incomplete reads, so skipped.
-        if (
-          !isOwnBinding(attrTree.binding) &&
-          isInvokeOnlyBinding(attrTree.binding)
-        ) {
-          attrExtra.invokeOnly = true;
-        }
+        if (isInvokeOnlyInput(attrTree.binding)) attrExtra.invokeOnly = true;
       }
     } else if (spreadReferenceNodes) {
       spreadReferenceNodes.push(attr.value);
@@ -871,7 +878,7 @@ function analyzeAttrs(
 
       known[prop] = { value: propExtra };
       rootAttrExprs.add(propExtra);
-      addRead(propExtra, propExtra, propBinding, section, undefined);
+      addRead(propExtra, propExtra, propExtra, propBinding, section, undefined);
       setDerivedFrom(
         attrTree === true ? paramsTree.rest!.binding : attrTree.binding,
         propExtra,
@@ -940,9 +947,39 @@ function setDerivedFromTag(
   binding: Binding,
   rootExprs: KnownExprs,
 ) {
-  const extra = mergeTagReferences(section, tag.node);
+  const extra = mergeReferences(
+    section,
+    tag.node,
+    isInvokeOnlyInput(binding)
+      ? collectInvokeOnlyInputNodes(tag.node)
+      : getAllTagReferenceNodes(tag.node),
+  );
   setDerivedFrom(binding, extra, rootExprs);
   return extra;
+}
+
+// A child in another template that only ever invokes this input; same-program
+// params trees may be mid-analysis with incomplete reads, so are skipped.
+function isInvokeOnlyInput(binding: Binding) {
+  return !isOwnBinding(binding) && isInvokeOnlyBinding(binding);
+}
+
+// Collects a tag's reference nodes, making the input it passes `invokeOnly`:
+// its attributes and its attribute tags', never what its control flow reads.
+function collectInvokeOnlyInputNodes(
+  tag: t.MarkoTag,
+  referenceNodes: t.Node[] = [],
+) {
+  if (tag.arguments) {
+    for (const arg of tag.arguments) referenceNodes.push(arg);
+  }
+  for (const attr of tag.attributes) {
+    (attr.value.extra ??= {}).invokeOnly = true;
+    referenceNodes.push(attr.value);
+  }
+  return getChildTagReferenceNodes(tag, referenceNodes, (attrTag) =>
+    collectInvokeOnlyInputNodes(attrTag, referenceNodes),
+  );
 }
 
 // A child reading no attribute of a tag leaves every expression, attribute tag
@@ -974,15 +1011,20 @@ function collectAttrTagReferenceNodes(
     if (!getParamsTreeAt(attrTagTree, "content")) {
       dropContent(attrTag.body);
     }
-    getAllTagReferenceNodes(attrTag, referenceNodes, (nestedAttrTag) =>
-      collectAttrTagReferenceNodes(
-        nestedAttrTag,
-        attrTag.extra!.attrTagLookup!,
-        attrTagTree,
-        referenceNodes,
-        dropReferenceNodes,
-      ),
-    );
+    // Read whole, so the child reads every attribute tag nested in it.
+    if (attrTagTree !== true && isInvokeOnlyInput(attrTagTree.binding)) {
+      collectInvokeOnlyInputNodes(attrTag, referenceNodes);
+    } else {
+      getAllTagReferenceNodes(attrTag, referenceNodes, (nestedAttrTag) =>
+        collectAttrTagReferenceNodes(
+          nestedAttrTag,
+          attrTag.extra!.attrTagLookup!,
+          attrTagTree,
+          referenceNodes,
+          dropReferenceNodes,
+        ),
+      );
+    }
   } else {
     dropAttrTag(attrTag, dropReferenceNodes);
   }
@@ -1061,8 +1103,25 @@ function writeParamsToSignals(
   }
 
   const attrsTree = paramsTree.properties[i];
-  if (attrsTree) {
+  if (attrsTree && tag.node.extra![kPassesInput]) {
     writeAttrsToSignals(tag, attrsTree, `${hint}_input`, info);
+  }
+
+  // A param the call passes nothing for is undefined, as the server leaves it.
+  const { known } = tag.node.extra![kKnownExprs]!;
+  for (const key in paramsTree.properties) {
+    if (!known![key]) {
+      writeToSignal(
+        info,
+        info.getBindingIdentifier(
+          paramsTree.properties[key].binding,
+          `${hint}_param_${key}`,
+        ),
+        undefined,
+        undefined,
+        true,
+      );
+    }
   }
 }
 
@@ -1252,15 +1311,10 @@ function writeAttrsToSignals(
 
     for (const [group, { expr, statements }] of statementsByGroup) {
       const trees = getGroupParamsTrees(group, attrTagLookup, paramsTree);
-      const hasRest = trees.some(([, tree]) => tree === true);
+      const hasRest = trees.some(isRestTree);
 
       addStatement("render", info.tagSection, hasRest ? tagExtra : expr, [
-        t.variableDeclaration(
-          "let",
-          trees.map(([attrTagMeta]) =>
-            t.variableDeclarator(getAttrTagIdentifier(attrTagMeta)),
-          ),
-        ),
+        t.variableDeclaration("let", trees.map(toAttrTagDeclarator)),
         ...statements,
       ]);
 
@@ -1519,4 +1573,12 @@ function getGroupParamsTrees(
     if (tree) trees.push([attrTagMeta, tree]);
   }
   return trees;
+}
+
+function isRestTree([, tree]: [AttrTagMeta, ParamsTree | true]) {
+  return tree === true;
+}
+
+function toAttrTagDeclarator([attrTagMeta]: [AttrTagMeta, ParamsTree | true]) {
+  return t.variableDeclarator(getAttrTagIdentifier(attrTagMeta));
 }

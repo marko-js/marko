@@ -1,8 +1,7 @@
 // template.marko
 const $template = "<!><!><!>";
 const $walks = "b%c";
-const $catch_content__err_message = ($scope, err_message) => _text($scope["#text/0"], err_message);
-const $catch_content__$params = ($scope, $params2) => $catch_content__err_message($scope, $params2[0]?.message);
+const $catch_content__$params = ($scope, $params2) => _text($scope["#text/0"], $params2[0]?.message);
 const $catch_content = _content("__tests__/template.marko_5*content", "caught: <!>", "b%", 0, $catch_content__$params);
 const $await_content2 = /*@__PURE__*/ _await_content("#text/0", "never");
 const $try_content2__await_promise = /*@__PURE__*/ _await_promise("#text/0");

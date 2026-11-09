@@ -2,8 +2,7 @@
 const $template$1 = "<button id=open>open</button><!><!>";
 const $walks$1 = " b%c";
 const $for_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $for_content__item_content = $for_content__dynamicTag;
-const $for_content__$params = ($scope, $params2) => $for_content__item_content($scope, $params2[0]?.content);
+const $for_content__$params = ($scope, $params2) => $for_content__dynamicTag($scope, $params2[0]?.content);
 const $if_content__for = /*@__PURE__*/ _for_of_unkeyed("#text/0", "<!><!><!>", "b%", 0, $for_content__$params);
 const $if_content__input_item = /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $if_content__for($scope, [$scope._.input_item]));
 const $if_content__setup = $if_content__input_item;
@@ -39,14 +38,11 @@ function $setup($scope) {
 }
 const $input_items = /*@__PURE__*/ _const("input_items", ($scope) => {
 	let $item;
-	forOf($scope.input_items, (item) => {
-		$item = attrTags($item, { content: $item_content($scope, { item }) });
-	});
+	forOf($scope.input_items, (item) => $item = attrTags($item, { content: $item_content($scope, { item }) }));
 	$input_item($scope["#childScope/0"], $item);
-	$input_items_($scope, $scope.input_items?.[1]);
+	$await_promise($scope, resolveAfter($scope.input_items?.[1]));
 });
 const $await_content = /*@__PURE__*/ _await_content("#text/1", "<button id=pick>pick</button>", " ", $await_content__setup);
 const $await_promise = /*@__PURE__*/ _await_promise("#text/1", $await_content__$params);
-const $input_items_ = ($scope, input_items_1) => $await_promise($scope, resolveAfter(input_items_1));
 const $input = ($scope, input) => $input_items($scope, input.items);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

@@ -31,6 +31,9 @@ function createBrowser({
     ...jsdomOptions,
   });
   const { window } = browser;
+  // Opened before anything listens: `document.open()` drops every listener on
+  // the window and document.
+  window.document.open();
   const loader = new ContextLoader(browser, dir, extensions);
 
   // Pass through istanbul coverage.
@@ -137,7 +140,6 @@ function createBrowser({
     beforeParse(window, browser);
   }
 
-  window.document.open();
   window.document.write(
     html || "<!DOCTYPE html><html><head></head><body></body></html>",
   );

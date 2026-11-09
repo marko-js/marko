@@ -1,6 +1,5 @@
 // template.marko
-const $for_content__r = ($scope, r) => _text($scope.a, r);
-const $for_content__$params = ($scope, $params2) => $for_content__r($scope, $params2[0]);
+const $for_content__$params = ($scope, $params2) => _text($scope.a, $params2[0]);
 const $show = /*@__PURE__*/ _show(2);
 const $open = /*@__PURE__*/ _let(4, ($scope) => $show($scope, $scope.e));
 const $for = /*@__PURE__*/ _for_of_unkeyed(3, "<li> </li>", "D ", 0, $for_content__$params);

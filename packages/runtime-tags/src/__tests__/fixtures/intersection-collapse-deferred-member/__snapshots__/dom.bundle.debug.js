@@ -9,7 +9,7 @@ function feed(inc, sfx) {
 }
 const $item = ($scope, item) => {
 	$item_status($scope, item?.status);
-	$item_label($scope, item?.label);
+	_text($scope["#text/1"], item?.label);
 };
 const $input_inc__OR__sfx = /*@__PURE__*/ _or(9, ($scope) => $item($scope, feed($scope.input_inc, $scope.sfx)));
 const $sfx = /*@__PURE__*/ _let("sfx/8", $input_inc__OR__sfx);
@@ -35,7 +35,6 @@ const $item_status = /*@__PURE__*/ _const("item_status", ($scope) => {
 	$upper($scope, $scope.item_status.toUpperCase());
 	$input_inc_pending__OR__item_status($scope);
 });
-const $item_label = ($scope, item_label) => _text($scope["#text/1"], item_label);
 const $input_inc = /*@__PURE__*/ _const("input_inc", ($scope) => {
 	$input_inc_pending($scope, $scope.input_inc?.pending);
 	$input_inc__OR__sfx($scope);

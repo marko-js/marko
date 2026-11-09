@@ -19,8 +19,7 @@ const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $setup$1 = ($_) => {};
 const $for_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $for_content__item_content = $for_content__dynamicTag;
-const $for_content__$params = ($scope, $params2) => $for_content__item_content($scope, $params2[0]?.content);
+const $for_content__$params = ($scope, $params2) => $for_content__dynamicTag($scope, $params2[0]?.content);
 const $for$1 = /*@__PURE__*/ _for_of_unkeyed("#text/0", "<!><!><!>", "b%", 0, $for_content__$params);
 const $input_item = ($scope, input_item) => $for$1($scope, [input_item]);
 const $input$1 = ($scope, input) => $input_item($scope, input.item);
@@ -53,7 +52,7 @@ const $for_content2__setup = ($scope) => {
 	$for_content2__input_selected._($scope);
 	_style_shell($scope, "#style/0");
 };
-const $for_content__input_color = /*@__PURE__*/ _for_closure("#text/0", ($scope) => _style_rule_item($scope["#style/0"], "--M_packages-1bruntime-19tags-1bsrc-1b__tests__-1bfixtures-1bstyle-19tag-19dynamic-19closures-1btemplate-1amarko_1", $scope._.input_color));
+const $for_content__input_color = /*@__PURE__*/ _for_closure("#text/0", ($scope) => _style_rule_item($scope["#style/0"], "--M_packages-1bruntime-19tags-1bsrc-1b__tests__-1bfixtures-1bstyle-19tag-19dynamic-19closures-1btemplate-1amarko_1", $scope._.input_color), 13);
 const $for_content__setup = ($scope) => {
 	$for_content__input_color._($scope);
 	_style_shell($scope, "#style/0");
@@ -72,9 +71,7 @@ function $setup($scope) {
 }
 const $input_colors = /*@__PURE__*/ _const("input_colors", ($scope) => {
 	let $item;
-	forOf($scope.input_colors, (color) => {
-		$item = attrTags($item, { content: $item_content($scope, { color }) });
-	});
+	forOf($scope.input_colors, (color) => $item = attrTags($item, { content: $item_content($scope, { color }) }));
 	$input_item($scope["#childScope/4"], $item);
 });
 const $input = ($scope, input) => {

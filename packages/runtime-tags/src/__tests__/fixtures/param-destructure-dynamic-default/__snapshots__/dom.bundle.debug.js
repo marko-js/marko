@@ -7,8 +7,7 @@ const $template = /*@__PURE__*/ ((_w0, _w1, _w2, _w3, _w4, _w5) => `<!>${_w0}${_
 const $walks = /*@__PURE__*/ ((_w0, _w1, _w2, _w3, _w4, _w5) => `b/${_w0}&/${_w1}&/${_w2}&/${_w3}&/${_w4}&/${_w5}& b`)($ChildA_content__walks, $ChildA_content__walks, $ChildA_content__walks, $ChildB_content__walks, $ChildB_content__walks, $ChildB_content__walks);
 const $ChildB_content__$pattern = ($scope, $pattern2) => $ChildB_content__$bar($scope, $pattern2.bar);
 const $ChildB_content__count__OR__foo = /*@__PURE__*/ _or(10, ($scope) => $ChildB_content__$pattern($scope, void 0 !== $scope.foo ? $scope.foo : { bar: $scope._.count + 2 }));
-const $ChildB_content__bar = ($scope, bar) => _text($scope["#text/1"], bar);
-const $ChildB_content__count__OR__$bar = /*@__PURE__*/ _or(11, ($scope) => $ChildB_content__bar($scope, void 0 !== $scope.$bar2 ? $scope.$bar2 : $scope._.count + 1));
+const $ChildB_content__count__OR__$bar = /*@__PURE__*/ _or(11, ($scope) => _text($scope["#text/1"], void 0 !== $scope.$bar2 ? $scope.$bar2 : $scope._.count + 1));
 const $ChildB_content__count = /*@__PURE__*/ _closure_get("count/8", ($scope) => {
 	$ChildB_content__count__OR__foo($scope);
 	$ChildB_content__count__OR__$bar($scope);
@@ -27,8 +26,7 @@ const $ChildB_content__input = ($scope, input) => {
 };
 const $ChildA_content__$pattern = ($scope, $pattern) => $ChildA_content__$bar($scope, $pattern.bar);
 const $ChildA_content__count__OR__$foo = /*@__PURE__*/ _or(10, ($scope) => $ChildA_content__$pattern($scope, void 0 !== $scope.foo ? $scope.foo : { bar: $scope._.count + 2 }));
-const $ChildA_content__bar = ($scope, bar) => _text($scope["#text/1"], bar);
-const $ChildA_content__count__OR__$bar = /*@__PURE__*/ _or(11, ($scope) => $ChildA_content__bar($scope, void 0 !== $scope.$bar ? $scope.$bar : $scope._.count + 1));
+const $ChildA_content__count__OR__$bar = /*@__PURE__*/ _or(11, ($scope) => _text($scope["#text/1"], void 0 !== $scope.$bar ? $scope.$bar : $scope._.count + 1));
 const $ChildA_content__count = /*@__PURE__*/ _closure_get("count/8", ($scope) => {
 	$ChildA_content__count__OR__$foo($scope);
 	$ChildA_content__count__OR__$bar($scope);

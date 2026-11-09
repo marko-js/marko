@@ -30,8 +30,6 @@ function $setup($scope) {
 }
 const $setCount__script = _script("__tests__/template.marko_0_setCount#4", ($scope) => $scope.setCount());
 const $setCount = _var_resume("__tests__/template.marko_0_setCount#4/var", /*@__PURE__*/ _const("setCount", $setCount__script));
-const $valueChange = ($scope) => (_new_count) => {
-	$count($scope, _new_count);
-};
+const $valueChange = ($scope) => (_new_count) => $count($scope, _new_count);
 _resumed["__tests__/template.marko_0/valueChange"] = $valueChange;
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

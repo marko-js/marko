@@ -1,4 +1,4 @@
-# Render
+# Render `{"show":true,"o":{"a":1,"b":"b","title":"t"}}`
 ```html
 <button
   id="rename"
@@ -17,6 +17,14 @@
 <b>
   cd
 </b>
+<p
+  title="t"
+>
+  b
+</p>
+<i>
+  x
+</i>
 ```
 
 # Update
@@ -41,9 +49,18 @@ document.querySelector("#rename").click();
 <b>
   cd
 </b>
+<p
+  title="t"
+>
+  b
+</p>
+<i>
+  x!
+</i>
 ```
 ## Change
 ```
 UPDATE: p:nth-of-type(1)::text@2 "x" => "x!"
 UPDATE: p:nth-of-type(2)::text@2 "y" => "y!"
+UPDATE: i::text "x" => "x!"
 ```

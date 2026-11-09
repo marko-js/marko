@@ -1,5 +1,5 @@
-// size: 3732 (min) 1690 (brotli)
-//#region packages/runtime-tags/dist/dom.mjs
+// size: 3693 (min) 1673 (brotli)
+// packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) => (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36);
 let rendering;
 let runId = 2;
@@ -26,58 +26,12 @@ let delegate = (type, handler) =>
   (handler[1 + type] ||= (document.addEventListener(type, handler, !0), 1));
 let parsers = {};
 let nextScopeId = 1e6;
-let destroyNestedScopes = function destroyNestedScopes(scope) {
-  ((scope.H = 0), scope.D?.forEach(destroyNestedScopes), scope.B?.forEach(cleanupScope));
-};
 let isScheduled;
 let channel;
 let _var_change = (scope, value) => scope.U?.(value);
 let currentNode;
-let walkInternal = function walkInternal(currentWalkIndex, walkCodes, scope) {
-  let value,
-    currentMultiplier,
-    storedMultiplier = 0,
-    currentScopeIndex = 0;
-  for (; currentWalkIndex < walkCodes.length;)
-    if (
-      ((value = walkCodes.charCodeAt(currentWalkIndex++)),
-      (currentMultiplier = storedMultiplier),
-      (storedMultiplier = 0),
-      value === 32)
-    )
-      scope[decodeAccessor(currentScopeIndex++)] = currentNode;
-    else if (value === 37 || value === 49)
-      (currentNode.replaceWith(
-        (currentNode = scope[decodeAccessor(currentScopeIndex++)] = new Text()),
-      ),
-        value === 49 && (scope[decodeAccessor(currentScopeIndex++)] = skipScope()));
-    else if (value === 38) return currentWalkIndex;
-    else if (value === 47 || value === 48)
-      ((currentWalkIndex = walkInternal(
-        currentWalkIndex,
-        walkCodes,
-        (scope[decodeAccessor(currentScopeIndex++)] = createScope(scope.$, scope.F)),
-      )),
-        value === 48 && (scope[decodeAccessor(currentScopeIndex++)] = skipScope()));
-    else if (value < 92)
-      for (value = 25 * currentMultiplier + value - 67; value--;)
-        if (currentNode.firstChild) currentNode = currentNode.firstChild;
-        else {
-          for (; !currentNode.nextSibling && currentNode.parentNode;)
-            currentNode = currentNode.parentNode;
-          walkNextSibling();
-        }
-    else if (value < 107)
-      for (value = 10 * currentMultiplier + value - 97; value--;) walkNextSibling();
-    else if (value < 117) {
-      for (value = 10 * currentMultiplier + value - 107; value--;)
-        currentNode = currentNode.parentNode || currentNode;
-      walkNextSibling();
-    } else storedMultiplier = currentMultiplier * 10 + value - 117;
-};
 let walkNextSibling = (_) => (currentNode = currentNode.nextSibling || currentNode);
 let _resumed = {};
-let cloneCache = {};
 function queueRender(scope, signal, signalKey, value, scopeKey = scope.L) {
   let render;
   if (signalKey >= 0 && (render = scope[signalKey])) {
@@ -168,7 +122,10 @@ function skipScope() {
   return nextScopeId++;
 }
 function destroyBranch(branch) {
-  (branch.N?.D?.delete(branch), destroyNestedScopes(branch));
+  (branch.N?.D.delete(branch), destroyNestedScopes(branch));
+}
+function destroyNestedScopes(scope) {
+  ((scope.H = 0), scope.D?.forEach(destroyNestedScopes), scope.B?.forEach(cleanupScope));
 }
 function cleanupScope(scope) {}
 function removeAndDestroyBranch(branch) {
@@ -203,16 +160,53 @@ function _let(id, fn) {
   );
 }
 function _script(id, fn) {
-  return (
-    (_resumed[id] = fn),
-    (scope) => {
-      queueEffect(scope, fn);
-    }
-  );
+  return ((_resumed[id] = fn), (scope) => queueEffect(scope, fn));
 }
 /** Cloned templates are small, where a TreeWalker's per-step cost dominates. */
 function walk(startNode, walkCodes, branch) {
   ((currentNode = startNode), walkInternal(0, walkCodes, branch));
+}
+function walkInternal(currentWalkIndex, walkCodes, scope) {
+  let value,
+    currentMultiplier,
+    storedMultiplier = 0,
+    currentScopeIndex = 0;
+  for (; currentWalkIndex < walkCodes.length;)
+    if (
+      ((value = walkCodes.charCodeAt(currentWalkIndex++)),
+      (currentMultiplier = storedMultiplier),
+      (storedMultiplier = 0),
+      value === 32)
+    )
+      scope[decodeAccessor(currentScopeIndex++)] = currentNode;
+    else if (value === 37 || value === 49)
+      (currentNode.replaceWith(
+        (currentNode = scope[decodeAccessor(currentScopeIndex++)] = new Text()),
+      ),
+        value === 49 && (scope[decodeAccessor(currentScopeIndex++)] = skipScope()));
+    else if (value === 38) return currentWalkIndex;
+    else if (value === 47 || value === 48)
+      ((currentWalkIndex = walkInternal(
+        currentWalkIndex,
+        walkCodes,
+        (scope[decodeAccessor(currentScopeIndex++)] = createScope(scope.$, scope.F)),
+      )),
+        value === 48 && (scope[decodeAccessor(currentScopeIndex++)] = skipScope()));
+    else if (value < 92)
+      for (value = 25 * currentMultiplier + value - 67; value--;)
+        if (currentNode.firstChild) currentNode = currentNode.firstChild;
+        else {
+          for (; !currentNode.nextSibling && currentNode.parentNode;)
+            currentNode = currentNode.parentNode;
+          walkNextSibling();
+        }
+    else if (value < 107)
+      for (value = 10 * currentMultiplier + value - 97; value--;) walkNextSibling();
+    else if (value < 117) {
+      for (value = 10 * currentMultiplier + value - 107; value--;)
+        currentNode = currentNode.parentNode || currentNode;
+      walkNextSibling();
+    } else storedMultiplier = currentMultiplier * 10 + value - 117;
 }
 function createBranch($global, renderer, parentScope, parentNode) {
   let branch = createScope($global);
@@ -232,16 +226,10 @@ function _content(id, template, walks, setup, params, dynamicScopesAccessor) {
   ((walks = walks ? walks.replace(/[^\0-1]+$/, "") : ""),
     (setup = setup ? setup._ || setup : void 0),
     (params ||= void 0));
-  let clone = template
-    ? (branch, ns) => {
-        ((cloneCache[ns] ||= {})[1 + template] ||= createCloneableHTML(template, ns))(
-          branch,
-          walks,
-        );
-      }
-    : (branch) => {
-        walk((branch.S = branch.K = new Text()), walks, branch);
-      };
+  let cloneables = {},
+    clone = template
+      ? (branch, ns) => (cloneables[ns] ||= createCloneableHTML(template, walks, ns))(branch)
+      : (branch) => walk((branch.S = branch.K = new Text()), walks, branch);
   return (_resumed[id] = (owner) => ({
     a: id,
     b: clone,
@@ -251,16 +239,14 @@ function _content(id, template, walks, setup, params, dynamicScopesAccessor) {
     f: dynamicScopesAccessor,
   }));
 }
-function createCloneableHTML(html, ns) {
+function createCloneableHTML(html, walks, ns) {
   let { firstChild, lastChild } = parseHTML(html, ns),
     parent = new DocumentFragment();
   return (
     insertChildNodes(parent, null, firstChild, lastChild),
     firstChild === lastChild && firstChild.nodeType < 8
-      ? (branch, walks) => {
-          walk((branch.S = branch.K = firstChild.cloneNode(!0)), walks, branch);
-        }
-      : (branch, walks) => {
+      ? (branch) => walk((branch.S = branch.K = firstChild.cloneNode(!0)), walks, branch)
+      : (branch) => {
           let clone = parent.cloneNode(!0);
           ((clone.namespaceURI = ns),
             walk(clone.firstChild, walks, branch),
@@ -288,8 +274,7 @@ function insertChildNodes(parentNode, referenceNode, startNode, endNode) {
     (parentNode.insertBefore(startNode, referenceNode), (startNode = next));
   }
 }
-//#endregion
-//#region packages/runtime-tags/dist/dom.mjs
+// packages/runtime-tags/dist/dom.mjs
 let _template = (id, template, walks, setup, inputSignal) => {
   let renderer = _content(id, template, walks, setup, inputSignal)();
   return ((renderer.mount = mount), (renderer._ = renderer), (_resumed[id] = renderer));
@@ -326,9 +311,7 @@ function mount(input = {}, reference, position) {
     args = this.d,
     effects = prepareEffects((_) => {
       ((branch = createBranch($global, this, void 0, parentNode)),
-        (branch.T = (newValue) => {
-          curValue = newValue;
-        }),
+        (branch.T = (newValue) => (curValue = newValue)),
         this.c?.(branch),
         args?.(branch, input));
     });
@@ -345,11 +328,7 @@ function mount(input = {}, reference, position) {
       update(newInput = {}) {
         args &&
           (newInput.$global && ({ $global, ...newInput } = newInput),
-          runEffects(
-            prepareEffects((_) => {
-              args(branch, newInput);
-            }),
-          ));
+          runEffects(prepareEffects((_) => args(branch, newInput))));
       },
       destroy() {
         removeAndDestroyBranch(branch);
@@ -357,4 +336,3 @@ function mount(input = {}, reference, position) {
     }
   );
 }
-//#endregion

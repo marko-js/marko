@@ -1,12 +1,14 @@
+const assert = require("assert/strict");
+
 var nodePath = require("path");
 
-exports.check = function (taglibLoader, expect) {
+exports.check = function (taglibLoader) {
   var taglib = taglibLoader.loadTaglibFromFile(
     nodePath.join(__dirname, "marko.json"),
   );
 
-  expect(taglib.scriptLang).to.equal("ts");
-  expect(Object.keys(taglib.tags).sort()).to.deep.equal(["alpha", "beta"]);
-  expect(taglib.transformers).to.have.lengthOf(2);
-  expect(taglib.migrators).to.have.lengthOf(2);
+  assert.equal(taglib.scriptLang, "ts");
+  assert.deepEqual(Object.keys(taglib.tags).sort(), ["alpha", "beta"]);
+  assert.equal(taglib.transformers.length, 2);
+  assert.equal(taglib.migrators.length, 2);
 };

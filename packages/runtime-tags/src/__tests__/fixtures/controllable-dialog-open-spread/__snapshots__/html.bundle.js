@@ -17,9 +17,7 @@ var template_default = _template("a", (input) => {
 	const $childScope = _peek_scope_id();
 	my_dialog_default({
 		open,
-		openChange: _resume((_new_open) => {
-			open = _new_open;
-		}, "a0", $scope0_id)
+		openChange: _resume((_new_open) => open = _new_open, "a0", $scope0_id)
 	});
 	_html(`<span>${_text_mark($scope0_id, "b", String(open))}</span>`);
 	_scope($scope0_id, { a: _existing_scope($childScope) });

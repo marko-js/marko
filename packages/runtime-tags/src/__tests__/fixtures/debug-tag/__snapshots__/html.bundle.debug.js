@@ -15,5 +15,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		x: "2:8",
 		y: "4:6"
 	});
-	_resume_branch($scope0_id);
 }, 1);

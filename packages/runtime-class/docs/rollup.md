@@ -80,16 +80,18 @@ The following configuration file is long and hairy, which may be upsetting to so
 ```js
 import { builtinModules } from "module";
 import path from "path";
-import autoprefixer from "autoprefixer";
+
+import markoPlugin from "@marko/rollup";
 import babelPlugin from "@rollup/plugin-babel";
 import commonjsPlugin from "@rollup/plugin-commonjs";
 import jsonPlugin from "@rollup/plugin-json";
-import markoPlugin from "@marko/rollup";
 import nodeResolvePlugin from "@rollup/plugin-node-resolve";
 import replacePlugin from "@rollup/plugin-replace";
 import runPlugin from "@rollup/plugin-run";
-import stylesPlugin from "rollup-plugin-styles";
 import urlPlugin from "@rollup/plugin-url";
+import autoprefixer from "autoprefixer";
+import stylesPlugin from "rollup-plugin-styles";
+
 import pkg from "./package.json";
 
 const __DEV__ = process.env.NODE_ENV === "development";

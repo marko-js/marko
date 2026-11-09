@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), {});
@@ -8,12 +8,6 @@ module.exports = function (helpers) {
   component.hide();
   component.update();
 
-  expect(
-    null === rootEl.querySelector("label"),
-    "label should have been removed",
-  ).to.equal(true);
-  expect(
-    inputEl === rootEl.querySelector("input"),
-    "input should not have been removed",
-  ).to.equal(true);
+  assert.equal(null === rootEl.querySelector("label"), true, "label should have been removed");
+  assert.equal(inputEl === rootEl.querySelector("input"), true, "input should not have been removed");
 };

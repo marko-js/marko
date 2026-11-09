@@ -13,7 +13,9 @@ import {
   getRuntimeEntryFiles,
   getRuntimeVersion,
   taglib,
+  types as t,
 } from "@marko/compiler";
+import { diagnosticError } from "@marko/compiler/babel-utils";
 import * as translator from "@marko/runtime-tags/translator";
 
 const template = path.join(
@@ -23,17 +25,28 @@ const template = path.join(
   "template.marko",
 );
 
-// Enough of an fs to read one template, standing in for the virtual one a
-// bundler hands over.
-const fromMemory = (src) => ({
-  ...fs,
-  readFile: (_file, _encoding, cb) => cb(null, src),
-  readFileSync: () => src,
-});
+// Serves `files` over the disk, standing in for the virtual file system a
+// bundler hands over; it takes no options object for an encoding.
+const fromMemory = (files) => {
+  const readFileSync = (file, encoding) => {
+    if (typeof encoding === "object") {
+      throw new TypeError("Expected a string encoding");
+    }
+    return Object.hasOwn(files, file)
+      ? files[file]
+      : fs.readFileSync(file, encoding);
+  };
+  return {
+    statSync: fs.statSync,
+    readdirSync: fs.readdirSync,
+    readFileSync,
+    readFile: (file, encoding, cb) => cb(null, readFileSync(file, encoding)),
+  };
+};
 
-const failing = (src) => {
+const failing = (src, babelConfig) => {
   try {
-    compileSync(src, "test.marko", { translator, code: false });
+    compileSync(src, "test.marko", { translator, code: false, babelConfig });
   } catch (err) {
     return err;
   }
@@ -49,7 +62,7 @@ describe("compiler/compile", () => {
 
     it("reads through a file system from the config", async () => {
       const { code } = await compileFile(template, {
-        fileSystem: fromMemory("<div>from config</div>"),
+        fileSystem: fromMemory({ [template]: "<div>from config</div>" }),
       });
       assert.match(code, /from config/);
     });
@@ -67,7 +80,7 @@ describe("compiler/compile", () => {
     it("reads through a file system from the config", () =>
       assert.match(
         compileFileSync(template, {
-          fileSystem: fromMemory("<div>from config</div>"),
+          fileSystem: fromMemory({ [template]: "<div>from config</div>" }),
         }).code,
         /from config/,
       ));
@@ -163,6 +176,12 @@ describe("compiler/compile", () => {
         "// line\n/* block */\n<!-- html -->\n<div>\n  // line\n  /* block */\n  <!-- html -->\n</div>\n<pre>a // line\n</pre>";
       assert.equal(print(src), src);
     });
+
+    it("keeps a sourceMappingURL comment", () => {
+      const src =
+        "<button onClick() {\n  //# sourceMappingURL=save.js.map\n  save();\n}/>";
+      assert.equal(print(src), src);
+    });
   });
 
   describe("synthetic filenames", () => {
@@ -186,6 +205,115 @@ describe("compiler/compile", () => {
         ).code,
         /<div>/,
       ));
+  });
+
+  describe("packages", () => {
+    // A project whose `dep` package ships a tag, imported by path or found
+    // through its taglib; `esm` holds a package.json that only sets a type.
+    let project;
+    const compileImport = (filename) =>
+      compileSync('import Dep from "dep/tag.marko"\n<Dep/>', filename, {
+        translator,
+        output: "html",
+      }).code;
+
+    before(() => {
+      project = fs.mkdtempSync(path.join(os.tmpdir(), "marko-imports-"));
+      fs.mkdirSync(path.join(project, "node_modules", "dep"), {
+        recursive: true,
+      });
+      fs.mkdirSync(path.join(project, "pkg"));
+      fs.writeFileSync(
+        path.join(project, "node_modules", "dep", "tag.marko"),
+        "<span>dep</span>",
+      );
+      fs.writeFileSync(
+        path.join(project, "node_modules", "dep", "marko.json"),
+        JSON.stringify({ "<dep-tag>": { template: "./tag.marko" } }),
+      );
+      fs.writeFileSync(
+        path.join(project, "package.json"),
+        JSON.stringify({ name: "app", dependencies: { dep: "*" } }),
+      );
+      fs.mkdirSync(path.join(project, "esm"));
+      fs.writeFileSync(
+        path.join(project, "esm", "package.json"),
+        JSON.stringify({ type: "module" }),
+      );
+    });
+
+    it("resolves from a source directory that does not exist", () =>
+      assert.match(
+        compileImport(path.join(project, "missing", "x.marko")),
+        /dep\/tag\.marko/,
+      ));
+
+    it("resolves from where a symlinked source directory lives", () => {
+      const link = path.join(
+        fs.mkdtempSync(path.join(os.tmpdir(), "marko-link-")),
+        "pkg",
+      );
+      fs.symlinkSync(path.join(project, "pkg"), link, "dir");
+      assert.match(
+        compileImport(path.join(link, "x.marko")),
+        /dep\/tag\.marko/,
+      );
+    });
+
+    it("finds a dependency's tags past a package.json that only sets a type", () =>
+      assert.match(
+        compileSync("<dep-tag/>", path.join(project, "esm", "x.marko"), {
+          translator,
+          output: "html",
+        }).code,
+        /dep\/tag\.marko/,
+      ));
+
+    describe("through a file system from the config", () => {
+      // `app` has `dep` installed, but only `files` holds a package.json naming it.
+      let app;
+      const files = {};
+      const setDependencies = (dependencies) => {
+        files[path.join(app, "package.json")] = JSON.stringify({
+          name: "app",
+          dependencies,
+        });
+      };
+      const compileTag = () =>
+        compileSync("<dep-tag/>", path.join(app, "x.marko"), {
+          translator,
+          output: "html",
+          cache: new Map(),
+          fileSystem: fromMemory(files),
+        }).code;
+
+      before(() => {
+        app = fs.mkdtempSync(path.join(os.tmpdir(), "marko-fs-"));
+        fs.mkdirSync(path.join(app, "node_modules"));
+        fs.symlinkSync(
+          path.join(project, "node_modules", "dep"),
+          path.join(app, "node_modules", "dep"),
+          "dir",
+        );
+      });
+
+      // Clears `dep`'s taglib, which earlier compiles cached, so these read it
+      // through the config's file system.
+      beforeEach(() => taglib.clearCaches());
+
+      it("finds the root package and taglibs there", () => {
+        setDependencies({ dep: "*" });
+        assert.match(compileTag(), /dep\/tag\.marko/);
+      });
+
+      it("reads the root package again once the taglib caches are cleared", () => {
+        setDependencies({});
+        assert.throws(compileTag, /Unable to find entry point/);
+        setDependencies({ dep: "*" });
+        taglib.clearCaches();
+        assert.match(compileTag(), /dep\/tag\.marko/);
+      });
+    });
   });
 
   describe("template id", () => {
@@ -246,6 +374,43 @@ describe("compiler/compile", () => {
       assert.equal(err.toJSON(), String(err));
       assert.equal(JSON.parse(JSON.stringify({ err })).err, String(err));
     });
+
+    // Some engines keep only the frames in `stack`, without V8's message header.
+    it("keeps each error's text when `stack` holds only frames", () => {
+      const report = () => ({
+        visitor: {
+          Program(path) {
+            diagnosticError(path, {
+              label: "Located",
+              loc: {
+                start: { line: 1, column: 1 },
+                end: { line: 1, column: 4 },
+              },
+            });
+            diagnosticError(path, { label: "Unlocated", loc: false });
+          },
+        },
+      });
+      const { prepareStackTrace } = Error;
+      Error.prepareStackTrace = (_err, frames) =>
+        frames.map((frame) => `    at ${frame}\n`).join("");
+      try {
+        assert.equal(
+          stripVTControlCharacters(
+            failing("<div>hi</div>", { plugins: [report] }).message,
+          ),
+          `
+    at test.marko:1:2
+    > 1 | <div>hi</div>
+        |  ^^^ Located
+
+    CompileError: Unlocated
+        at test.marko`,
+        );
+      } finally {
+        Error.prepareStackTrace = prepareStackTrace;
+      }
+    });
   });
 
   describe("code frame", () => {
@@ -269,6 +434,46 @@ describe("compiler/compile", () => {
       assert.match(above, /^  1 \| <div>x+…$/);
       assert.equal(source, "> 2 | <if>a</if>");
       assert.equal(marker.indexOf("^"), source.indexOf("if>"));
+    });
+  });
+
+  // Matches Babel's `File.buildCodeFrameError`, for nodes a transform builds.
+  describe("buildCodeFrameError", () => {
+    const buildError = (getNode) => {
+      try {
+        compileSync("<div x=1/>", "test.marko", {
+          code: false,
+          translator: {
+            transform: {
+              MarkoTag(tag) {
+                throw tag.hub.buildError(getNode(tag), "msg");
+              },
+            },
+            translate: {},
+            taglibs: [],
+            tagDiscoveryDirs: [],
+          },
+        });
+      } catch (err) {
+        assert.equal(err.label, "msg");
+        return err;
+      }
+      assert.fail("expected a compile error");
+    };
+
+    it("frames a node without a loc at its first descendant with one", () => {
+      const err = buildError((tag) =>
+        t.markoTag(
+          t.stringLiteral("div"),
+          tag.node.attributes,
+          t.markoTagBody(),
+        ),
+      );
+      assert.equal(err.loc.start.column, "<div ".length);
+    });
+
+    it("reports a missing node without a frame", () => {
+      assert.equal(buildError(() => null).loc, undefined);
     });
   });
 
@@ -427,15 +632,29 @@ describe("compiler/compile", () => {
     });
     afterEach(() => fs.rmSync(dir, { recursive: true, force: true }));
 
-    const mappedSource = (file, cache) => {
+    const mappedSource = (file, cache, fileSystem = fs) => {
       const { map } = compileFileSync(file, {
         translator,
         cache,
+        fileSystem,
         output: "dom",
         sourceMaps: true,
       });
       return map.sourceRoot + map.sources[0];
     };
+    const inputMap = (source) => ({
+      version: 3,
+      sources: [source],
+      names: [],
+      mappings: "AAAA",
+    });
+    // From memory, so only a read that bypasses `fileSystem` finds a map file.
+    const mappedSourceOf = (src) =>
+      mappedSource(
+        path.join(dir, "template.marko"),
+        new Map(),
+        fromMemory(src),
+      );
 
     it("maps a template to its own path", () => {
       const file = path.join(dir, "template.marko");
@@ -451,6 +670,42 @@ describe("compiler/compile", () => {
       });
       const child = path.join(dir, "tags", "my-child.marko");
       assert.equal(mappedSource(child, cache), child);
+    });
+
+    it("keeps an inline map in a comment out of the template's map", () => {
+      const data = Buffer.from(JSON.stringify(inputMap("inline.ts"))).toString(
+        "base64",
+      );
+      assert.equal(
+        mappedSourceOf(
+          `<button onClick() {\n  //# sourceMappingURL=data:application/json;base64,${data}\n  save();\n}/>\n`,
+        ),
+        path.join(dir, "template.marko"),
+      );
+    });
+
+    it("never reads the map file a comment names", () => {
+      fs.writeFileSync(
+        path.join(dir, "side.map"),
+        JSON.stringify(inputMap("side.ts")),
+      );
+      assert.equal(
+        mappedSourceOf(
+          `import x from "./x.js"; //# sourceMappingURL=side.map\n<div>\${x}</div>\n`,
+        ),
+        path.join(dir, "template.marko"),
+      );
+    });
+
+    it("remaps through an input map the caller passes", () => {
+      const { map } = compileFileSync(path.join(dir, "template.marko"), {
+        translator,
+        cache: new Map(),
+        output: "dom",
+        sourceMaps: true,
+        babelConfig: { inputSourceMap: inputMap("pre.ts") },
+      });
+      assert.deepEqual(map.sources, ["pre.ts"]);
     });
   });
 

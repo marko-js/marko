@@ -7,7 +7,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		x = newValue + 1;
 	}, "__tests__/template.marko_0/yChange", $scope0_id);
 	let y = x;
-	_html(`<button id=inc>${_text_mark($scope0_id, "#text/1", x)}|${_text_mark($scope0_id, "#text/2", y, 2)}</button>${_el_mark($scope0_id, "#button/0")}<button id=toggle>toggle</button>${_el_mark($scope0_id, "#button/3")}`);
+	let z = void 0;
+	_html(`<button id=inc>${_text_mark($scope0_id, "#text/1", x)}|${_text_mark($scope0_id, "#text/2", y, 2)}|${_text_mark($scope0_id, "#text/3", z, 2)}</button>${_el_mark($scope0_id, "#button/0")}<button id=toggle>toggle</button>${_el_mark($scope0_id, "#button/4")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		x,

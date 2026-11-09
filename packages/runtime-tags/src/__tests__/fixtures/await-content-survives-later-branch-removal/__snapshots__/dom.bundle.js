@@ -4,7 +4,7 @@ const $setup__script$1 = _script("b0", ($scope) => {
 	_on($scope.a, "click", function() {
 		$count($scope, +$scope.c + 1);
 	});
-	$signal($scope, 0).onabort = () => console.log("counter destroyed");
+	onAbort($scope, 0, () => console.log("counter destroyed"));
 });
 
 // template.marko

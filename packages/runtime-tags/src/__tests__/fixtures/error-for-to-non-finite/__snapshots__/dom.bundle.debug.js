@@ -4,10 +4,6 @@ const $walks = "b%c";
 const $setup = ($_) => {};
 const $for_content__setup = ($scope) => _text($scope["#text/0"], $scope["#LoopKey"]);
 const $for = /*@__PURE__*/ _for_to_unkeyed("#text/0", "<li> </li>", "D ", $for_content__setup);
-const $input_to = ($scope, input_to) => $for($scope, [
-	input_to,
-	0,
-	1
-]);
+const $input_to = ($scope, input_to) => $for($scope, [input_to]);
 const $input = ($scope, input) => $input_to($scope, input.to);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", 0, $input);

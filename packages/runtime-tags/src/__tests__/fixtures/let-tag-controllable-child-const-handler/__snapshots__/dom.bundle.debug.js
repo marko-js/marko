@@ -19,12 +19,11 @@ var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $templ
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<p id=out> </p>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&D l`)($walks$1);
 const $out = /*@__PURE__*/ _let("out/2", ($scope) => _text($scope["#text/1"], $scope.out));
-const $onChange2 = ($scope, onChange) => $input_valueChange($scope["#childScope/0"], onChange);
 function $setup($scope) {
 	$setup$1($scope["#childScope/0"]);
 	$input_value($scope["#childScope/0"], 1);
 	$out($scope, "-");
-	$onChange2($scope, $onChange($scope));
+	$input_valueChange($scope["#childScope/0"], $onChange($scope));
 }
 const $onChange = ($scope) => (next) => {
 	$out($scope, String(next));

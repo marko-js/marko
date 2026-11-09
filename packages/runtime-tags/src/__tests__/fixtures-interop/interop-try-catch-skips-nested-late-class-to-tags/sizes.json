@@ -2,17 +2,17 @@
   "dom": {
     "template.marko.page.mjs": {
       "total": {
-        "min": 68866,
-        "brotli": 21687
+        "min": 68731,
+        "brotli": 21655
       },
       "files": {
-        "components/tags-leaf.marko": 549,
-        "components/class-inner.marko": 1492,
-        "components/tags-middle.marko": 307,
-        "components/class-outer.marko": 707,
-        "template.marko": 329,
-        "v:template.marko.hydrate-6.js": 110,
-        "v:template.marko.hydrate-5.js": 104
+        "components/tags-leaf.marko": 499,
+        "components/class-inner.marko": 1440,
+        "components/tags-middle.marko": 255,
+        "components/class-outer.marko": 655,
+        "template.marko": 180,
+        "v:template.marko.hydrate-6.js": 57,
+        "v:template.marko.hydrate-5.js": 51
       }
     }
   },

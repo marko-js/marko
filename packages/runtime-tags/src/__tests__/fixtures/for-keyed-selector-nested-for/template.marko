@@ -1,0 +1,12 @@
+<let/selected=1/>
+<let/groups=[{ id: "x", rows: [{ id: 1 }, { id: 2 }] }, { id: "y", rows: [{ id: 3 }, { id: 4 }] }]/>
+<for|group| of=groups by="id">
+  <ul>
+    <for|row| of=group.rows by="id">
+      <li class=(selected === row.id && "danger")>
+        <button.select onClick() { selected = row.id }>${row.id}</button>
+      </li>
+    </for>
+  </ul>
+</for>
+<button.add onClick() { groups = [...groups, { id: "z", rows: [{ id: 5 }] }] }>add</button>

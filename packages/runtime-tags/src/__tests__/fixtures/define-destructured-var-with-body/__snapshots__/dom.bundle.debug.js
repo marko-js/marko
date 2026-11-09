@@ -1,8 +1,7 @@
 // template.marko
 const $template = "<span> </span>";
 const $walks = "D l";
-const $pattern2 = ($scope, $pattern) => $value($scope, $pattern.value);
-const $value = ($scope, value) => _text($scope["#text/0"], value);
+const $pattern2 = ($scope, $pattern) => _text($scope["#text/0"], $pattern.value);
 function $setup($scope) {
 	$pattern2($scope, { value: 2 });
 }

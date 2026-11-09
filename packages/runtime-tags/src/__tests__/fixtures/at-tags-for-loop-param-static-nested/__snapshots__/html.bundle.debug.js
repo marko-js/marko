@@ -16,25 +16,22 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const $input_show__closures = new Set();
 	let $item;
-	forOf(["a", "b"], (item) => {
-		$item = attrTags($item, { content: _content("__tests__/template.marko_1*content", () => {
-			const $scope1_reason = _scope_reason(), $wg__item = _write_guard($scope1_reason, 0), $wi__item = _write_if($scope1_reason, 0);
-			const $scope1_id = _scope_id();
-			_if(() => {
-				if (input.show) {
-					const $scope2_id = _scope_id();
-					_html(`<span>${_text_mark($scope2_id, "#text/0", item, $wg__item)}</span>`);
-					($wi__input_show || $wi__item) && _scope($scope2_id, { _: $wi__item && _scope_with_id($scope1_id) }, "__tests__/template.marko", "4:13");
-					return 0;
-				}
-			}, $scope1_id, "#text/0", $wg__input_show || $wg__item, $wg__input_show, 0, 0, 1);
-			$wi__input_show && _subscribe($input_show__closures, _scope($scope1_id, {
-				item,
-				_: _scope_with_id($scope0_id)
-			}, "__tests__/template.marko", "4:6", { item: "3:8" }), "__tests__/template.marko_1_input_show#0:3/subscribe", $wg__input_show);
-			$wg__input_show || $wi__input_show && _resume_branch($scope1_id);
-		}, $scope0_id) });
-	});
+	forOf(["a", "b"], (item) => $item = attrTags($item, { content: _content("__tests__/template.marko_1*content", () => {
+		const $scope1_reason = _scope_reason(), $wg__item = _write_guard($scope1_reason, 0), $wi__item = _write_if($scope1_reason, 0);
+		const $scope1_id = _scope_id();
+		_if(() => {
+			if (input.show) {
+				const $scope2_id = _scope_id();
+				_html(`<span>${_text_mark($scope2_id, "#text/0", item, $wg__item)}</span>`);
+				($wi__input_show || $wi__item) && _scope($scope2_id, { _: $wi__item && _scope_with_id($scope1_id) }, "__tests__/template.marko", "4:13");
+				return 0;
+			}
+		}, $scope1_id, "#text/0", $wg__input_show || $wg__item, $wg__input_show, 0, 0, 1);
+		$wi__input_show && _subscribe($input_show__closures, _scope($scope1_id, {
+			item,
+			_: _scope_with_id($scope0_id)
+		}, "__tests__/template.marko", "4:6", { item: "3:8" }), "__tests__/template.marko_1_input_show#0:3/subscribe", $wg__input_show);
+	}, $scope0_id) }));
 	list_default({ item: $item });
 	$wi__input_show && _scope($scope0_id, { "ClosureScopes:input_show/4": $input_show__closures }, "__tests__/template.marko", 0);
 }, 1);

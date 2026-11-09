@@ -1,6 +1,6 @@
 // tags/child.marko
-const $for_content__it_content = /* @__PURE__ */ _dynamic_tag(0);
-const $for_content__$params = ($scope, $params2) => $for_content__it_content($scope, $params2[0]?.content);
+const $for_content__dynamicTag = /*@__PURE__*/ _dynamic_tag(0);
+const $for_content__$params = ($scope, $params2) => $for_content__dynamicTag($scope, $params2[0]?.content);
 const $for = /*@__PURE__*/ _for_of_unkeyed(0, "<!><!><!>", "b%", 0, $for_content__$params);
 const $item = ($scope, item) => $for($scope, [item]);
 const $rest = ($scope, rest) => _text($scope.b, Object.keys(rest).join());

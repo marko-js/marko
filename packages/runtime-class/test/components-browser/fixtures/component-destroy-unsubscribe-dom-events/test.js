@@ -1,23 +1,23 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), {});
 
-  // expect(Array.isArray(component.___domEventListenerHandles)).to.equal(true);
+  // assert.equal(Array.isArray(component.___domEventListenerHandles), true);
 
   var el = component.el;
   var fooLink = component.getEl("fooLink");
 
   component.destroy();
 
-  // expect(component.___domEventListenerHandles).to.equal(null);
+  // assert.equal(component.___domEventListenerHandles, null);
 
   // Make sure the component is removed from the DOM tree
 
-  expect(el.parentNode == null).to.equal(true);
+  assert.equal(el.parentNode == null, true);
 
   // Make sure there are no DOM event listeners
   component.clearLog();
   helpers.triggerMouseEvent(fooLink, "mouseout");
-  expect(component.logOutput).to.deep.equal([]);
+  assert.deepEqual(component.logOutput, []);
 };

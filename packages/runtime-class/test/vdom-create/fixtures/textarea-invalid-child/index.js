@@ -1,7 +1,7 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
-  expect(function () {
+  assert.throws(function () {
     helpers.vdom
       .createElement(
         "textarea",
@@ -12,7 +12,7 @@ module.exports = function (helpers) {
       )
       .e("div", {}, null /* key */, null /* component */, 0)
       .t("bar");
-  }).to.throw("");
+  });
 
   return null;
 };

@@ -15,9 +15,8 @@ const $if_content__input = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => {
 });
 const $if_content__setup = $if_content__input;
 const $if = /*@__PURE__*/ _if("#text/0", "<a></a>", " ", $if_content__setup, "<button></button>", " ", $else_content__setup);
-const $input_href = ($scope, input_href) => $if($scope, input_href ? 0 : 1);
 const $input = /*@__PURE__*/ _const("input", ($scope) => {
-	$input_href($scope, $scope.input.href);
+	$if($scope, $scope.input.href ? 0 : 1);
 	$if_content__input($scope);
 	$else_content__input($scope);
 });
@@ -45,7 +44,7 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	});
 });
 function $setup($scope) {
-	$href($scope, undefined);
+	$href($scope);
 	$count($scope, 0);
 	$setup__script($scope);
 }

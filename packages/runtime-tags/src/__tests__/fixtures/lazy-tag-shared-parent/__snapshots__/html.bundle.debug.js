@@ -10,9 +10,9 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 // tags/parent-a.marko
 const $Child_withLoadAssets$1 = withLoadAssets(() => child_default, "__tests__/tags/child.marko", flush, "ready:__tests__/tags/child.marko");
 var parent_a_default = _template("__tests__/tags/parent-a.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_value = _write_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_set_scope_reason($wg__input_value << 1);
+	_set_scope_reason(_write_guard($scope0_reason, 0) << 1);
 	const $childScope = _peek_scope_id();
 	$Child_withLoadAssets$1({ value: input.value });
 	_write_if($scope0_reason, 0) && _scope($scope0_id, { "#childScope/1": _existing_scope($childScope) }, "__tests__/tags/parent-a.marko", 0);
@@ -21,9 +21,9 @@ var parent_a_default = _template("__tests__/tags/parent-a.marko", (input) => {
 // tags/parent-b.marko
 const $Child_withLoadAssets = withLoadAssets(() => child_default, "__tests__/tags/child.marko", flush, "ready:__tests__/tags/child.marko");
 var parent_b_default = _template("__tests__/tags/parent-b.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_value = _write_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	_set_scope_reason($wg__input_value << 1);
+	_set_scope_reason(_write_guard($scope0_reason, 0) << 1);
 	const $childScope = _peek_scope_id();
 	$Child_withLoadAssets({ value: input.value * 2 });
 	_write_if($scope0_reason, 0) && _scope($scope0_id, { "#childScope/1": _existing_scope($childScope) }, "__tests__/tags/parent-b.marko", 0);

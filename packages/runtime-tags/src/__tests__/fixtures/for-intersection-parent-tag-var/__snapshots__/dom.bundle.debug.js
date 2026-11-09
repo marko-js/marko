@@ -20,7 +20,7 @@ const $walks = /*@__PURE__*/ ((_w0) => `0${_w0}&b%c`)("");
 const $for_content__label__OR__c = /*@__PURE__*/ _or(8, ($scope) => _text($scope["#text/1"], $scope.c + ":" + $scope.label));
 const $for_content__c = /*@__PURE__*/ _const("c", $for_content__label__OR__c);
 const $for_content__v_n__OR__item = /*@__PURE__*/ _or(4, ($scope) => $for_content__c($scope, $scope._.v_n + $scope.item));
-const $for_content__v_n = /*@__PURE__*/ _for_closure("#text/2", $for_content__v_n__OR__item);
+const $for_content__v_n = /*@__PURE__*/ _for_closure("#text/2", $for_content__v_n__OR__item, 5);
 const $for_content__label = /*@__PURE__*/ _const("label", $for_content__label__OR__c);
 const $for_content__m = /*@__PURE__*/ _let("m/5", ($scope) => $for_content__label($scope, "m" + $scope.m));
 const $for_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/0"], "click", function() {

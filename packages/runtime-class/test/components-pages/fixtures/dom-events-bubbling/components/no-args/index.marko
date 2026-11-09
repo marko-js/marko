@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import assert from 'assert/strict';
 
 class {
     onCreate() {
@@ -15,9 +15,9 @@ class {
 	}
 
     test(helpers) {
-        expect(this.clicked).to.equal(false);
+        assert.equal(this.clicked, false);
         helpers.triggerMouseEvent(this.getEl('button'), 'click');
-        expect(this.clicked).to.equal(true);
+        assert.equal(this.clicked, true);
     }
 }
 

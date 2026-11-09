@@ -30,6 +30,7 @@ var template_default = _template("a", (input) => {
 				c: _write_if($scope0_reason, 2) && result,
 				_: _scope_with_id($scope0_id)
 			});
+			$wg__input_b || _resume_branch($scope1_id);
 			return 0;
 		}
 	}, $scope0_id, "b", _write_guard($scope0_reason, 0), $wg__input_a);

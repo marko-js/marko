@@ -17,8 +17,8 @@ import { toArray } from "./optional";
 import { insertStatementBefore } from "./replace-with-statements";
 import { importRuntime } from "./runtime";
 import { getSection, type Section } from "./sections";
-import { findSlot } from "./slots";
 import { toMemberExpression, toPropertyName } from "./to-property-name";
+import { getWriteReason } from "./write-guard";
 
 export default function translateVar(
   tag: t.NodePath<t.MarkoTag>,
@@ -195,7 +195,7 @@ function translateRest(
   const from = getDeclaredAlias(source) || source;
   let target: t.NodePath = tag;
   let inPlace = true;
-  if (rest.section !== getSection(tag) && findSlot(rest)?.reason) {
+  if (rest.section !== getSection(tag) && getWriteReason(rest)) {
     // Its own section serializes it, so declares it whether or not this tag
     // renders.
     target = getSectionTarget(tag, rest.section);
@@ -260,11 +260,14 @@ export function withRestFallback(
 }
 
 // Before the tag holding this one in `section`, where a declaration of that
-// section goes.
+// section goes; attribute tags and their control flow place no statements.
 function getSectionTarget(tag: t.NodePath<t.MarkoTag>, section: Section) {
   let target: t.NodePath = tag;
   let cur = tag.parentPath;
-  while (cur.node.extra?.section !== section) {
+  while (
+    cur.node.extra?.section !== section ||
+    cur.listKey === "attributeTags"
+  ) {
     target = cur;
     cur = cur.parentPath!;
   }

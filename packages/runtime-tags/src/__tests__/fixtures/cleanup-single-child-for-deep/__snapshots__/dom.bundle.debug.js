@@ -2,9 +2,9 @@
 const $template$1 = "<div> </div>";
 const $walks$1 = "D l";
 const $setup$1 = ($_) => {};
-const $input_name__OR__input_write__script = _script("__tests__/tags/child.marko_0_name#3_write#4", ($scope) => $signal($scope, 0).onabort = () => {
+const $input_name__OR__input_write__script = _script("__tests__/tags/child.marko_0_name#3_write#4", ($scope) => onAbort($scope, 0, () => {
 	$scope.write(`destroyed ${$scope.name}`);
-});
+}));
 const $input_name__OR__input_write = /*@__PURE__*/ _or(5, ($scope) => {
 	$signalReset($scope, 0);
 	$input_name__OR__input_write__script($scope);
@@ -29,16 +29,16 @@ const $for_content2__setup = ($scope) => {
 	$for_content2__outerItem._($scope);
 };
 const $for_content2__outerItem__OR__middleItem = /*@__PURE__*/ _or(3, ($scope) => $name($scope["#childScope/0"], `${$scope._.outerItem}.${$scope.middleItem}`));
-const $for_content2__outerItem = /*@__PURE__*/ _for_closure("#text/1", $for_content2__outerItem__OR__middleItem);
+const $for_content2__outerItem = /*@__PURE__*/ _for_closure("#text/1", $for_content2__outerItem__OR__middleItem, 7);
 const $for_content2__middleItem = /*@__PURE__*/ _const("middleItem", $for_content2__outerItem__OR__middleItem);
 const $for_content2__$params = ($scope, $params3) => $for_content2__middleItem($scope, $params3[0]);
 const $for_content__for = /*@__PURE__*/ _for_of_unkeyed("#text/1", /*@__PURE__*/ ((_w0) => `<div>${_w0}</div>`)($template$1), /*@__PURE__*/ ((_w0) => `D/${_w0}&l`)("D l"), $for_content2__setup, $for_content2__$params);
-const $for_content__items = /*@__PURE__*/ _for_closure("#text/2", ($scope) => $for_content__for($scope, [$scope._.items]));
+const $for_content__items = /*@__PURE__*/ _for_closure("#text/2", ($scope) => $for_content__for($scope, [$scope._.items]), 5);
 const $for_content__setup = ($scope) => {
 	$for_content__items._($scope);
 	$for_content__write._($scope);
 };
-const $for_content__write = /*@__PURE__*/ _for_closure("#text/2", ($scope) => $write$1($scope["#childScope/0"], $scope._.write));
+const $for_content__write = /*@__PURE__*/ _for_closure("#text/2", ($scope) => $write$1($scope["#childScope/0"], $scope._.write), 6);
 const $for_content__outerItem = /*@__PURE__*/ _const("outerItem", ($scope) => {
 	$name($scope["#childScope/0"], `${$scope.outerItem}`);
 	$for_content2__outerItem($scope);

@@ -1,9 +1,7 @@
 // template.marko
 const $template = "<div> </div>";
 const $walks = "D l";
-const $z = ($scope, z) => _text($scope["#text/0"], z);
-const $y = ($scope, y) => $z($scope, y * 3);
-const $x = /*@__PURE__*/ _let("x/1", ($scope) => $y($scope, $scope.x * 2));
+const $x = /*@__PURE__*/ _let("x/1", ($scope) => _text($scope["#text/0"], $scope.x * 2 * 3));
 function $setup($scope) {
 	$x($scope, 1);
 }

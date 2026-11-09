@@ -1,9 +1,9 @@
 // template.marko
 const $if_content__setup__script = _script("a0", ($scope) => {
 	$scope._.b.innerHTML += "\nmounted";
-	$signal($scope, 0).onabort = () => {
+	onAbort($scope, 0, () => {
 		$scope._.b.innerHTML += "\ndestroyed";
-	};
+	});
 });
 const $if_content__setup = ($scope) => {
 	$signalReset($scope, 0);

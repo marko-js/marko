@@ -33,7 +33,8 @@ await Promise.all([
       dir: "dist/translator",
     },
   }),
-  // Build runtime, with each feature module as an extra entry
+  // Build runtime, with each feature module as an extra entry. One module per
+  // entry, not preserved modules: app bundlers tree-shake what a page leaves unused.
   ...["dom", "html"].flatMap((name) =>
     ["dist/debug", "dist"].map(async (out) => {
       const isProd = out === "dist";

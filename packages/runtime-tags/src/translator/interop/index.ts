@@ -15,9 +15,11 @@ import {
   markReached,
   type Reach,
   resolveRelativeToEntry,
+  type VisitChild,
 } from "../util/entry-builder";
 import { getCompatRuntimeFile } from "../util/runtime";
 import { isTagsAPI } from "./feature-detection";
+import migrateOutGlobal from "./out-global";
 
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
@@ -52,7 +54,9 @@ export function createInteropTranslator(translate5: any) {
       taglib
         .resolveOptionalTaglibs(translate5.optionalTaglibs)
         .concat(translate5.taglibs) as Taglibs,
-      translate6.taglibs as Taglibs,
+      (translate6.taglibs as Taglibs).concat([
+        ["marko-interop", { migrate: migrateOutGlobal }],
+      ]),
     ),
     getRuntimeEntryFiles(output: Config["output"], optimize: boolean) {
       return [
@@ -139,11 +143,7 @@ export function createInteropTranslator(translate5: any) {
           return translate6.internalEntryBuilder.build(entryFile);
         }
       },
-      visit(
-        file: t.BabelFile,
-        entryFile: EntryFile,
-        visitChild: (id: string, reach?: Reach) => void,
-      ) {
+      visit(file: t.BabelFile, entryFile: EntryFile, visitChild: VisitChild) {
         const state = (entryFile[kState] ||= {
           has5: false,
           has6: false,
@@ -156,10 +156,8 @@ export function createInteropTranslator(translate5: any) {
           translate6.internalEntryBuilder.visit(file, entryFile, visitChild);
         } else {
           state.has5 = true;
-          if (file.path.node.extra?.resumesCompat) {
-            state.needsCompat = true;
-          }
-          if (file.path.node.extra?.resumesClassFns) {
+          state.needsCompat ||= !!file.path.node.extra.resumesCompat;
+          if (file.path.node.extra.resumesClassFns) {
             // Its Tags resume registrations run when the module itself loads.
             state.classFnFiles.add(
               resolveRelativePath(entryFile, file.opts.filename as string),
@@ -171,44 +169,42 @@ export function createInteropTranslator(translate5: any) {
     };
     const enterProgram = getVisitorEnter(Program);
 
-    return {
-      ...visitor,
-      Program: {
-        enter(program, state) {
-          const entryFile = getFile();
-          const { output, entry } = entryFile.markoOpts;
-          const isDOMPageEntry =
-            (output === "dom" && entry === "page") || output === "hydrate";
-          if (!isDOMPageEntry) {
-            return enterProgram?.call(this, program, state);
-          }
+    visitor.Program = {
+      enter(program, state) {
+        const entryFile = getFile();
+        const { output, entry } = entryFile.markoOpts;
+        const isDOMPageEntry =
+          (output === "dom" && entry === "page") || output === "hydrate";
+        if (!isDOMPageEntry) {
+          return enterProgram?.call(this, program, state);
+        }
 
-          // Mirrors the Tags builder's own traversal. The Class builder omits
-          // the reach, so children inherit how their parent was reached.
-          const visitedFiles = createVisited(entryFile);
-          entryBuilder.visit(
-            entryFile,
-            entryFile,
-            function visitChild(resolved: string, reach: Reach = 0) {
-              if (!markReached(visitedFiles, resolved, reach)) return;
-              const file = loadFileForImport(entryFile, resolved);
-              if (file) {
-                entryBuilder.visit(file, entryFile, (id, childReach = 0) =>
-                  visitChild(
-                    resolveRelativeToEntry(entryFile, file, id),
-                    childReach > reach ? childReach : reach,
-                  ),
-                );
-              }
-            },
-          );
+        // Mirrors the Tags builder's own traversal. The Class builder omits
+        // the reach, so children inherit how their parent was reached.
+        const visitedFiles = createVisited(entryFile);
+        entryBuilder.visit(
+          entryFile,
+          entryFile,
+          function visitChild(resolved: string, reach: Reach = 0) {
+            if (!markReached(visitedFiles, resolved, reach)) return;
+            const file = loadFileForImport(entryFile, resolved);
+            if (file) {
+              entryBuilder.visit(file, entryFile, (id, childReach = 0) =>
+                visitChild(
+                  resolveRelativeToEntry(entryFile, file, id),
+                  childReach > reach ? childReach : reach,
+                ),
+              );
+            }
+          },
+        );
 
-          program.node.body = entryBuilder.build(entryFile);
-          program.skip();
-        },
-        exit: getVisitorExit(Program),
+        program.node.body = entryBuilder.build(entryFile);
+        program.skip();
       },
+      exit: getVisitorExit(Program),
     };
+    return visitor;
   }
 }
 
@@ -242,7 +238,7 @@ function mergeHook(
 function mergeTaglibs(libs5: Taglibs, libs6: Taglibs) {
   const libs5Map = new Map(libs5);
   const libs6Map = new Map(libs6);
-  const merged = [] as Taglibs;
+  const merged: Taglibs = [];
 
   for (const taglibId of new Set([...libs5Map.keys(), ...libs6Map.keys()])) {
     merged.push([
@@ -250,26 +246,7 @@ function mergeTaglibs(libs5: Taglibs, libs6: Taglibs) {
       mergeObjects(
         libs5Map.get(taglibId),
         libs6Map.get(taglibId),
-        (key, value5, value6) => {
-          switch (key) {
-            case "migrate":
-            case "analyze":
-            case "transform":
-            case "translate":
-              return mergeVisitors(
-                normalizeVisitor(value5),
-                normalizeVisitor(value6),
-              );
-            default:
-              if (key[0] === "<") {
-                return mergeTagDef(
-                  value5 as TagDef | undefined,
-                  value6 as TagDef | undefined,
-                );
-              }
-              return value5 ?? value6;
-          }
-        },
+        mergeTaglibValue,
       ),
     ]);
   }
@@ -277,23 +254,43 @@ function mergeTaglibs(libs5: Taglibs, libs6: Taglibs) {
   return merged;
 }
 
+function mergeTaglibValue(key: string, value5: unknown, value6: unknown) {
+  switch (key) {
+    case "migrate":
+    case "analyze":
+    case "transform":
+    case "translate":
+      return mergeVisitors(normalizeVisitor(value5), normalizeVisitor(value6));
+    default:
+      if (key[0] === "<") {
+        return mergeTagDef(
+          value5 as TagDef | undefined,
+          value6 as TagDef | undefined,
+        );
+      }
+      return value5 ?? value6;
+  }
+}
+
 function mergeTagDef(def5?: TagDef, def6?: TagDef) {
   return mergeObjects(
     normalizeTagDef(def5),
     normalizeTagDef(def6),
-    (key, value5, value6) => {
-      switch (key) {
-        case "parse":
-        case "migrate":
-        case "transform":
-        case "analyze":
-        case "translate":
-          return mergeVisit(normalizeVisit(value5), normalizeVisit(value6));
-        default:
-          return value5 ?? value6;
-      }
-    },
+    mergeTagDefValue,
   ) as TagDef;
+}
+
+function mergeTagDefValue(key: string, value5: unknown, value6: unknown) {
+  switch (key) {
+    case "parse":
+    case "migrate":
+    case "transform":
+    case "analyze":
+    case "translate":
+      return mergeVisit(normalizeVisit(value5), normalizeVisit(value6));
+    default:
+      return value5 ?? value6;
+  }
 }
 
 function mergeObjects<A, B, K extends keyof (B & {}) | keyof (A & {}), R>(

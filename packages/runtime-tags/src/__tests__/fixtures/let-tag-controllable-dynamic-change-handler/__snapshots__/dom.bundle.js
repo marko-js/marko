@@ -1,16 +1,20 @@
 // template.marko
-const $y = /*@__PURE__*/ _let_change(7, ($scope) => _text($scope.c, $scope.h));
-const $x__OR__yChange = /*@__PURE__*/ _or(6, ($scope) => $y($scope, $scope.e, $scope.f));
-const $x = /*@__PURE__*/ _let(4, ($scope) => {
-	_text($scope.b, $scope.e);
+const $y = /*@__PURE__*/ _let_change(8, ($scope) => _text($scope.c, $scope.i));
+const $x__OR__yChange = /*@__PURE__*/ _or(7, ($scope) => $y($scope, $scope.f, $scope.g));
+const $x = /*@__PURE__*/ _let(5, ($scope) => {
+	_text($scope.b, $scope.f);
 	$x__OR__yChange($scope);
 });
-const $yChange2 = /*@__PURE__*/ _let(5, $x__OR__yChange);
+const $z = /*@__PURE__*/ _let_change(10, ($scope) => _text($scope.d, $scope.k));
+const $yChange2 = /*@__PURE__*/ _let(6, ($scope) => {
+	$z($scope, void 0, $scope.g);
+	$x__OR__yChange($scope);
+});
 const $setup__script = _script("a1", ($scope) => {
 	_on($scope.a, "click", function() {
-		$y($scope, +$scope.h + 1);
+		$y($scope, +$scope.i + 1);
 	});
-	_on($scope.d, "click", function() {
+	_on($scope.e, "click", function() {
 		$yChange2($scope, null);
 	});
 });

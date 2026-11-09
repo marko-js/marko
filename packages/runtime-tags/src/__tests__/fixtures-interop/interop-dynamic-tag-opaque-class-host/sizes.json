@@ -2,15 +2,15 @@
   "dom": {
     "template.marko.page.mjs": {
       "total": {
-        "min": 64868,
-        "brotli": 20265
+        "min": 64760,
+        "brotli": 20259
       },
       "files": {
-        "components/class-layout.marko": 1257,
-        "components/class-static.marko": 726,
-        "template.marko": 803,
-        "v:template.marko.hydrate-6.js": 112,
-        "v:template.marko.hydrate-5.js": 177
+        "components/class-layout.marko": 1204,
+        "components/class-static.marko": 673,
+        "template.marko": 765,
+        "v:template.marko.hydrate-6.js": 59,
+        "v:template.marko.hydrate-5.js": 124
       }
     }
   },

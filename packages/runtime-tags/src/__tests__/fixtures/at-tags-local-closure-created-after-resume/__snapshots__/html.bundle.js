@@ -67,43 +67,35 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let items = [{ text: "a" }, { text: "b" }];
 	let $item;
-	forOf(items, (item) => {
-		$item = attrTags($item, { content: _content_resume("a0", () => {
-			const $scope1_reason = _scope_reason(), $wg__item_text = _write_guard($scope1_reason, 0), $wg__item = _write_guard($scope1_reason, 1);
-			const $scope1_id = _scope_id();
-			_html(`<span>${_text_mark($scope1_id, "a", item.text, $wg__item_text)}:${_text_mark($scope1_id, "b", item === items[0], $wg__item * 2)}</span>`);
-			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
-			$wg__item_text || $wg__item || _resume_branch($scope1_id);
-		}, $scope0_id, () => [{
-			2: item?.text,
-			3: item
-		}]) });
-	});
+	forOf(items, (item) => $item = attrTags($item, { content: _content_resume("a0", () => {
+		const $scope1_reason = _scope_reason(), $wg__item_text = _write_guard($scope1_reason, 0), $wg__item = _write_guard($scope1_reason, 1);
+		const $scope1_id = _scope_id();
+		_html(`<span>${_text_mark($scope1_id, "a", item.text, $wg__item_text)}:${_text_mark($scope1_id, "b", item === items[0], $wg__item * 2)}</span>`);
+		_scope($scope1_id, { _: _scope_with_id($scope0_id) });
+	}, $scope0_id, () => [{
+		2: item?.text,
+		3: item
+	}]) }));
 	list_default({ item: $item });
 	let $row;
 	forOf(["a", "b"], (row) => {
 		let $cell;
-		forOf([1], (n) => {
-			$cell = attrTags($cell, { content: _content_resume("a1", () => {
-				const $scope2_reason = _scope_reason(), $wg__n = _write_guard($scope2_reason, 0);
-				const $scope2_id = _scope_id();
-				_html(`<em>${_text_mark($scope2_id, "a", n, $wg__n)}</em>`);
-				_write_if($scope2_reason, 0) && _scope($scope2_id, {});
-			}, $scope0_id, () => [{ 1: n }]) });
-		});
+		forOf([1], (n) => $cell = attrTags($cell, { content: _content_resume("a1", () => {
+			const $scope2_reason = _scope_reason(), $wg__n = _write_guard($scope2_reason, 0);
+			const $scope2_id = _scope_id();
+			_html(`<em>${_text_mark($scope2_id, "a", n, $wg__n)}</em>`);
+			_write_if($scope2_reason, 0) && _scope($scope2_id, {});
+		}, $scope0_id, () => [{ 1: n }]) }));
 		$row = attrTags($row, { cell: $cell });
 	});
 	grid_default({ row: $row });
 	let $item2;
-	forOf([1], (i) => {
-		$item2 = attrTags($item2, { content: _content_resume("a2", () => {
-			const $scope3_reason = _scope_reason(), $wg__i = _write_guard($scope3_reason, 0);
-			const $scope3_id = _scope_id();
-			_html(`${_text_mark($scope3_id, "a", i, $wg__i)}<b>${_text_mark($scope3_id, "b", i, $wg__i)}</b>`);
-			_write_if($scope3_reason, 0) && _scope($scope3_id, {});
-		}, $scope0_id, () => [{ 2: i }]) });
-	});
+	forOf([1], (i) => $item2 = attrTags($item2, { content: _content_resume("a2", () => {
+		const $scope3_reason = _scope_reason(), $wg__i = _write_guard($scope3_reason, 0);
+		const $scope3_id = _scope_id();
+		_html(`${_text_mark($scope3_id, "a", i, $wg__i)}<b>${_text_mark($scope3_id, "b", i, $wg__i)}</b>`);
+		_write_if($scope3_reason, 0) && _scope($scope3_id, {});
+	}, $scope0_id, () => [{ 2: i }]) }));
 	last_default({ item: $item2 });
 	_scope($scope0_id, { e: items?.[0] });
-	_resume_branch($scope0_id);
 }, 1);

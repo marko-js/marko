@@ -9,6 +9,6 @@ abcdfgh
 ```
 ## Change
 ```
-INSERT: ::text@1 + ::text("cd")
-INSERT: ::text@2 + ::text("fgh")
+UPDATE: ::text@1 "b" => "bcd"
+INSERT: ::text@1 + ::text("fgh")
 ```

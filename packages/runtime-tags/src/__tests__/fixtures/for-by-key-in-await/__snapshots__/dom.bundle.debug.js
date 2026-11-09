@@ -2,11 +2,10 @@
 const $template = "<button>add</button><!><!>";
 const $walks = " b%c";
 const $await_content__setup = ($scope) => _text($scope["#text/0"], $scope._["#LoopKey"]);
-const $await_content__v = ($scope, v) => _text($scope["#text/1"], v);
-const $await_content__$params = ($scope, $params3) => $await_content__v($scope, $params3[0]);
+const $await_content__$params = ($scope, $params3) => _text($scope["#text/1"], $params3[0]);
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<em><!>:<!></em>", "D%c%", $await_content__setup);
 const $for_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);
-const $for_content__input_value = /*@__PURE__*/ _for_closure("#text/1", ($scope) => $for_content__await_promise($scope, $scope._.input_value));
+const $for_content__input_value = /*@__PURE__*/ _for_closure("#text/1", ($scope) => $for_content__await_promise($scope, $scope._.input_value), 6);
 const $for_content__setup = ($scope) => {
 	$for_content__input_value._($scope);
 	$await_content($scope);

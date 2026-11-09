@@ -117,7 +117,7 @@ const config = {
   })(),
 
   /**
-   * Use a different file system object, eg webpacks CachedInputFileSystem or lasso-caching-fs
+   * Use a different file system object, eg webpack's CachedInputFileSystem.
    */
   fileSystem: fs,
   /**

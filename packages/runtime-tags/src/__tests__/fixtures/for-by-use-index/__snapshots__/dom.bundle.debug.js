@@ -22,6 +22,6 @@ const $last = /*@__PURE__*/ _let("last/3", ($scope) => {
 });
 function $setup($scope) {
 	$messages($scope, ["hello"]);
-	$last($scope, undefined);
+	$last($scope);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

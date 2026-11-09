@@ -2,11 +2,9 @@
 const $template = "<ul></ul>";
 const $walks = " b";
 const $setup = ($_) => {};
-const $for_content__user_name = ($scope, user_name) => _text($scope["#text/0"], user_name);
-const $for_content__user_role = ($scope, user_role) => _text($scope["#text/1"], user_role);
 const $for_content__$params = ($scope, $params2) => {
-	$for_content__user_name($scope, $params2[0]?.name);
-	$for_content__user_role($scope, $params2[0]?.role);
+	_text($scope["#text/0"], $params2[0]?.name);
+	_text($scope["#text/1"], $params2[0]?.role);
 };
 const $for = /*@__PURE__*/ _for_of_unkeyed("#ul/0", "<li><!> (<!>)</li>", "D%c%", 0, $for_content__$params);
 const $input_users = ($scope, input_users) => $for($scope, [input_users]);

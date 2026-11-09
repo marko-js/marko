@@ -16,25 +16,22 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	const $input_show__closures = /* @__PURE__ */ new Set();
 	let $item;
-	forOf(["a", "b"], (item) => {
-		$item = attrTags($item, { content: _content("a1", () => {
-			const $scope1_reason = _scope_reason(), $wg__item = _write_guard($scope1_reason, 0), $wi__item = _write_if($scope1_reason, 0);
-			const $scope1_id = _scope_id();
-			_if(() => {
-				if (input.show) {
-					const $scope2_id = _scope_id();
-					_html(`<span>${_text_mark($scope2_id, "a", item, $wg__item)}</span>`);
-					($wi__input_show || $wi__item) && _scope($scope2_id, { _: $wi__item && _scope_with_id($scope1_id) });
-					return 0;
-				}
-			}, $scope1_id, "a", $wg__input_show || $wg__item, $wg__input_show, 0, 0, 1);
-			$wi__input_show && _subscribe($input_show__closures, _scope($scope1_id, {
-				b: item,
-				_: _scope_with_id($scope0_id)
-			}), "a0", $wg__input_show);
-			$wg__input_show || $wi__input_show && _resume_branch($scope1_id);
-		}, $scope0_id) });
-	});
+	forOf(["a", "b"], (item) => $item = attrTags($item, { content: _content("a1", () => {
+		const $scope1_reason = _scope_reason(), $wg__item = _write_guard($scope1_reason, 0), $wi__item = _write_if($scope1_reason, 0);
+		const $scope1_id = _scope_id();
+		_if(() => {
+			if (input.show) {
+				const $scope2_id = _scope_id();
+				_html(`<span>${_text_mark($scope2_id, "a", item, $wg__item)}</span>`);
+				($wi__input_show || $wi__item) && _scope($scope2_id, { _: $wi__item && _scope_with_id($scope1_id) });
+				return 0;
+			}
+		}, $scope1_id, "a", $wg__input_show || $wg__item, $wg__input_show, 0, 0, 1);
+		$wi__input_show && _subscribe($input_show__closures, _scope($scope1_id, {
+			b: item,
+			_: _scope_with_id($scope0_id)
+		}), "a0", $wg__input_show);
+	}, $scope0_id) }));
 	list_default({ item: $item });
 	$wi__input_show && _scope($scope0_id, { e: $input_show__closures });
 }, 1);

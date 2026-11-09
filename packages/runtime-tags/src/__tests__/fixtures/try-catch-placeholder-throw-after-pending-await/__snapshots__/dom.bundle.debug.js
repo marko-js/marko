@@ -1,8 +1,7 @@
 // template.marko
 const $template = "<!><!><!>";
 const $walks = "b%c";
-const $await_content2__b = ($scope, b) => _text($scope["#text/0"], b);
-const $await_content2__$params = ($scope, $params4) => $await_content2__b($scope, $params4[0]);
+const $await_content2__$params = ($scope, $params4) => _text($scope["#text/0"], $params4[0]);
 const $placeholder_content2__setup = ($scope) => _text($scope["#text/0"], (() => {
 	throw new Error("ERROR!");
 })());
@@ -13,10 +12,8 @@ const $try_content3__setup = ($scope) => {
 	$await_content2($scope);
 	$try_content3__await_promise($scope, resolveAfter("b", 3));
 };
-const $await_content__a = ($scope, a) => _text($scope["#text/0"], a);
-const $await_content__$params = ($scope, $params3) => $await_content__a($scope, $params3[0]);
-const $catch_content__err_message = ($scope, err_message) => _text($scope["#text/0"], err_message);
-const $catch_content__$params = ($scope, $params2) => $catch_content__err_message($scope, $params2[0]?.message);
+const $await_content__$params = ($scope, $params3) => _text($scope["#text/0"], $params3[0]);
+const $catch_content__$params = ($scope, $params2) => _text($scope["#text/0"], $params2[0]?.message);
 const $catch_content = _content("__tests__/template.marko_4*content", "caught <!>", "b%", 0, $catch_content__$params);
 const $await_content = /*@__PURE__*/ _await_content("#text/0", " ", " ");
 const $try_content2__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);

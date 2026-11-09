@@ -1,16 +1,16 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), {
     colors: ["red", "green", "blue"],
   });
 
-  expect(component.events.length).to.equal(0);
+  assert.equal(component.events.length, 0);
 
   var finishDetach;
 
   component.handleDetach = function (color, event) {
-    expect(color).to.equal("green");
+    assert.equal(color, "green");
     finishDetach = event.detach;
     event.preventDefault();
   };
@@ -21,11 +21,11 @@ module.exports = function (helpers) {
 
   component.update();
 
-  expect(component.el.querySelectorAll("li").length).to.equal(3);
-  expect(component.el.querySelectorAll("li")[1].innerHTML).to.contain("green");
+  assert.equal(component.el.querySelectorAll("li").length, 3);
+  assert.match(component.el.querySelectorAll("li")[1].innerHTML, /green/);
 
   finishDetach();
 
-  expect(component.el.querySelectorAll("li").length).to.equal(2);
-  expect(component.el.querySelectorAll("li")[1].innerHTML).to.contain("blue");
+  assert.equal(component.el.querySelectorAll("li").length, 2);
+  assert.match(component.el.querySelectorAll("li")[1].innerHTML, /blue/);
 };

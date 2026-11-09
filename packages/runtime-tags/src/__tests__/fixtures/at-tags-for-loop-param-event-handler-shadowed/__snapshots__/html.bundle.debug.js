@@ -19,19 +19,17 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let foo = "outer";
 	let $item;
-	forOf(["a", "b"], (foo) => {
-		$item = attrTags($item, {
-			onClick: _resume_locals(function(ev) {
-				ev.target.textContent = foo;
-			}, "__tests__/template.marko_0/onClick", { "foo/5": foo }),
-			content: _content("__tests__/template.marko_1*content", () => {
-				const $scope1_reason = _scope_reason(), $wg__foo = _write_guard($scope1_reason, 0);
-				const $scope1_id = _scope_id();
-				_html(_text_mark($scope1_id, "#text/0", foo, $wg__foo));
-				_write_if($scope1_reason, 0) && _scope($scope1_id, {}, "__tests__/template.marko", "4:6");
-			}, $scope0_id)
-		});
-	});
+	forOf(["a", "b"], (foo) => $item = attrTags($item, {
+		onClick: _resume_locals(function(ev) {
+			ev.target.textContent = foo;
+		}, "__tests__/template.marko_0/onClick", { "foo/5": foo }),
+		content: _content("__tests__/template.marko_1*content", () => {
+			const $scope1_reason = _scope_reason(), $wg__foo = _write_guard($scope1_reason, 0);
+			const $scope1_id = _scope_id();
+			_html(_text_mark($scope1_id, "#text/0", foo, $wg__foo));
+			_write_if($scope1_reason, 0) && _scope($scope1_id, {}, "__tests__/template.marko", "4:6");
+		}, $scope0_id)
+	}));
 	my_menu_default({ item: $item });
 	_html(`<div>${_escape(foo)}</div>`);
 }, 1);

@@ -30,9 +30,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $childScope = _peek_scope_id();
 	counter_default({
 		count: x,
-		countChange: _resume((_new_x) => {
-			x = _new_x;
-		}, "__tests__/template.marko_0/countChange", $scope0_id),
+		countChange: _resume((_new_x) => x = _new_x, "__tests__/template.marko_0/countChange", $scope0_id),
 		id: "controlled",
 		content: _content("__tests__/template.marko_1*content", () => {
 			_scope_reason();
@@ -61,4 +59,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		"#childScope/0": _existing_scope($childScope),
 		"#childScope/1": _existing_scope($childScope2)
 	}, "__tests__/template.marko", 0);
+	_resume_branch($scope0_id);
 }, 1);

@@ -14,7 +14,7 @@ const $if_content__setup = ($scope) => {
 };
 const $if_content__$temp_extra = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => _text($scope["#text/1"], $scope._.$temp_extra));
 const $for_content2__if = /*@__PURE__*/ _if("#text/0", "<b><!><!></b>", "D%b%", $if_content2__setup);
-const $for_content2__show = /*@__PURE__*/ _for_closure("#text/2", ($scope) => $for_content2__if($scope, $scope._.show ? 0 : 1));
+const $for_content2__show = /*@__PURE__*/ _for_closure("#text/2", ($scope) => $for_content2__if($scope, $scope._.show ? 0 : 1), 9);
 const $for_content2__setup = $for_content2__show;
 const $for_content2__$params = ($scope, $params3) => {
 	$for_content2__first($scope, $params3[0][0]);
@@ -23,7 +23,7 @@ const $for_content2__$params = ($scope, $params3) => {
 const $for_content2__first = /*@__PURE__*/ _const("first", $if_content2__first);
 const $for_content2__$temp2_ = /*@__PURE__*/ _const("$temp2_1", $if_content2__$temp2_);
 const $for_content__if = /*@__PURE__*/ _if("#text/0", "<span><!>:<!></span>", "D%c%", $if_content__setup);
-const $for_content__show = /*@__PURE__*/ _for_closure("#text/1", ($scope) => $for_content__if($scope, $scope._.show ? 0 : 1));
+const $for_content__show = /*@__PURE__*/ _for_closure("#text/1", ($scope) => $for_content__if($scope, $scope._.show ? 0 : 1), 8);
 const $for_content__setup = $for_content__show;
 const $for_content__$params = ($scope, $params2) => {
 	$for_content__id($scope, $params2[0].id);

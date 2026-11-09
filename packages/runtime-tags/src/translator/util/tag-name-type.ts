@@ -31,7 +31,7 @@ declare module "@marko/compiler/dist/types" {
   export interface NodeExtra {
     tagNameType?: TagNameType;
   }
-  // Written by `analyzeExpressionTagName`, on the tag whose name it types.
+  // Written by `analyzeTagNameType`, on the tag whose name it types.
   export interface MarkoTagExtra {
     // Incomplete when `tagNameType` is `DynamicTag`, since that ends the
     // analysis early.
@@ -53,8 +53,16 @@ type TagNameType = TagNameType.Value;
 export { TagNameType };
 
 const MARKO_FILE_REG = /^<.*>$|\.marko$/;
-// Matches `pre-analyze`, which rewrites a bound PascalCase tag to `<${Name}>`.
 const TAG_NAME_IDENTIFIER_REG = /^[A-Z][a-zA-Z0-9_$]*$/;
+
+// The declared binding a PascalCase string tag name refers to, if any. Only
+// `getBinding` is used: `hasBinding` is also true for built-in globals.
+export function getTagNameBinding(tag: t.NodePath<t.MarkoTag>) {
+  const tagName = getTagName(tag);
+  return tagName && TAG_NAME_IDENTIFIER_REG.test(tagName)
+    ? tag.scope.getBinding(tagName)
+    : undefined;
+}
 
 export default function analyzeTagNameType(tag: t.NodePath<t.MarkoTag>) {
   const extra = (tag.node.extra ??= {});
@@ -62,16 +70,14 @@ export default function analyzeTagNameType(tag: t.NodePath<t.MarkoTag>) {
   if (extra.tagNameType === undefined) {
     const name = tag.get("name");
     let load: LoadImportConfig | undefined;
-    if (name.isStringLiteral()) {
+    if (isStaticNativeTag(tag)) {
+      extra.tagNameType = TagNameType.NativeTag;
+      extra.tagNameNullable = extra[kTagNameDynamic] = false;
+    } else if (name.isStringLiteral()) {
       extra.tagNameType =
         name.node.value[0] === "@"
           ? TagNameType.AttributeTag
-          : isNativeTag(tag)
-            ? TagNameType.NativeTag
-            : TagNameType.CustomTag;
-      extra.tagNameNullable = extra[kTagNameDynamic] = false;
-    } else if (name.isTemplateLiteral() && name.node.quasis.length === 1) {
-      extra.tagNameType = TagNameType.NativeTag;
+          : TagNameType.CustomTag;
       extra.tagNameNullable = extra[kTagNameDynamic] = false;
     } else if (name.isIdentifier()) {
       load = analyzeExpressionTagName(name, extra);
@@ -101,7 +107,7 @@ export default function analyzeTagNameType(tag: t.NodePath<t.MarkoTag>) {
           (childFile?.metadata.marko.classHydration === ClassHydration.Self &&
             (tag.node.attributes.length || tag.node.body.body.length))
         ) {
-          getProgram().node.extra!.isInteractive = true;
+          getProgram().node.extra.isInteractive = true;
         }
       } else if (!childFile) {
         extra.tagNameType = TagNameType.DynamicTag;
@@ -110,10 +116,7 @@ export default function analyzeTagNameType(tag: t.NodePath<t.MarkoTag>) {
         // the rest is unresolvable. `DynamicTag.analyze` reports it: at
         // translate the scope its hint reads is already rewritten, and the
         // error escapes analyze batching.
-        const tagName = (name.node as t.StringLiteral).value;
-        extra.tagNameUnresolved = !(
-          TAG_NAME_IDENTIFIER_REG.test(tagName) && tag.scope.hasBinding(tagName)
-        );
+        extra.tagNameUnresolved = !getTagNameBinding(tag);
       } else if (childFile !== getFile() && isAnalyzing(childFile)) {
         // Closing a cross-file cycle: the child's analysis is incomplete, so
         // the runtime path renders it rather than composing its template.
@@ -130,12 +133,21 @@ export default function analyzeTagNameType(tag: t.NodePath<t.MarkoTag>) {
   return extra[kTagNameDynamic] ? TagNameType.DynamicTag : extra.tagNameType!;
 }
 
+/** A native element by its name alone: the tag lookup's verdict on a string, or
+ * a template literal without expressions. Loads no template, so pre-analyze may ask. */
+export function isStaticNativeTag(tag: t.NodePath<t.MarkoTag>) {
+  const { name } = tag.node;
+  return t.isStringLiteral(name)
+    ? isNativeTag(tag)
+    : t.isTemplateLiteral(name) && name.quasis.length === 1;
+}
+
 // The load import a name resolving to one template names, if any.
 function analyzeExpressionTagName(
   name: t.NodePath<t.Expression>,
   extra: t.MarkoTagExtra,
 ): LoadImportConfig | undefined {
-  const pending = [name] as t.NodePath<t.Expression>[];
+  const pending = [name];
   const seen = new Set<t.Node>();
   let path: (typeof pending)[0] | undefined;
   let type: TagNameType | undefined;
@@ -200,7 +212,7 @@ function analyzeExpressionTagName(
         const decl = declPath.node;
         if (
           MARKO_FILE_REG.test(decl.source.value) &&
-          decl.specifiers.some((it) => t.isImportDefaultSpecifier(it))
+          decl.specifiers.some(t.isImportDefaultSpecifier)
         ) {
           const { tagImport, loadImport } = getImportFacts(declPath);
           const resolvedImport = tagImport!;
@@ -335,7 +347,7 @@ export function isUnresolvedKnownWrongTag(tag: t.NodePath<t.MarkoTag>) {
 
 export function tagNotFoundError(tag: t.NodePath<t.MarkoTag>) {
   const tagName = getTagName(tag);
-  if (tagName && tag.scope.hasBinding(tagName)) {
+  if (tagName && tag.scope.getBinding(tagName)) {
     return tag
       .get("name")
       .buildCodeFrameError(

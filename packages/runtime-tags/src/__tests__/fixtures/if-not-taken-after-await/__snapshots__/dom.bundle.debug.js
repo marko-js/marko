@@ -1,8 +1,7 @@
 // template.marko
 const $template = "<button> </button><!><!>";
 const $walks = " D l%c";
-const $await_content__v = ($scope, v) => _text($scope["#text/0"], v);
-const $await_content__$params = ($scope, $params2) => $await_content__v($scope, $params2[0]);
+const $await_content__$params = ($scope, $params2) => _text($scope["#text/0"], $params2[0]);
 const $if_content__if = /*@__PURE__*/ _if("#text/1", "never");
 const $if_content__x = /*@__PURE__*/ _if_closure("#text/2", 0, ($scope) => $if_content__if($scope, $scope._.x > 9 ? 0 : 1));
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<i> </i>", "D ");

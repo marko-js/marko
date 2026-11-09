@@ -1,6 +1,6 @@
 // tags/list.marko
-const $for_content__item_content = /* @__PURE__ */ _dynamic_tag(0);
-const $for_content__$params = ($scope, $params2) => $for_content__item_content($scope, $params2[0]?.content);
+const $for_content__dynamicTag = /*@__PURE__*/ _dynamic_tag(0);
+const $for_content__$params = ($scope, $params2) => $for_content__dynamicTag($scope, $params2[0]?.content);
 const $for = /*@__PURE__*/ _for_of_unkeyed(0, "<!><!><!>", "b%", 0, $for_content__$params);
 const $input_item = ($scope, input_item) => $for($scope, [input_item]);
 
@@ -21,9 +21,7 @@ const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("a2
 const $out = /*@__PURE__*/ _let(3, ($scope) => _text($scope.b, $scope.d));
 const $items = /*@__PURE__*/ _let(5, ($scope) => {
 	let $item;
-	forOf($scope.f, (item) => {
-		$item = attrTags($item, { content: $item_content($scope, { 2: item }) });
-	});
+	forOf($scope.f, (item) => $item = attrTags($item, { content: $item_content($scope, { 2: item }) }));
 	$input_item($scope.c, $item);
 });
 const $setup__script = _script("a3", ($scope) => _on($scope.a, "click", function() {

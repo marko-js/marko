@@ -4,9 +4,7 @@ var my_let_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	let value = input.value;
 	const $return = value;
-	_scope($scope0_id, { U: _resume((_new_value) => {
-		value = _new_value;
-	}, "b0", $scope0_id) || void 0 });
+	_scope($scope0_id, { U: _resume((_new_value) => value = _new_value, "b0", $scope0_id) || void 0 });
 	_resume_branch($scope0_id);
 	return $return;
 });

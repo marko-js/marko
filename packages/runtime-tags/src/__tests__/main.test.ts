@@ -228,31 +228,29 @@ function testFixtures(interop?: true) {
             csr.reset();
             ssr.reset();
           });
-          const getModeOpts = once(
-            (): compiler.Config => ({
-              translator,
-              // A compile cache is scoped to one configuration, and the
-              // per-fixture `optimizeKnownTemplates` are part of it.
-              cache: new Map(),
-              runtimeId: config.runtime_id,
-              writeVersionComment: false,
-              babelConfig: {
-                babelrc: false,
-                configFile: false,
-                browserslistConfigFile: false,
-              },
-              optimize,
-              optimizeKnownTemplates: optimize
-                ? (
-                    fs.readdirSync(fixtureDir, {
-                      recursive: true,
-                    }) as string[]
-                  )
-                    .filter((f) => f.endsWith(".marko"))
-                    .map((f) => path.join(fixtureDir, f))
-                : undefined,
-            }),
-          );
+          const getModeOpts = once((): compiler.Config => ({
+            translator,
+            // A compile cache is scoped to one configuration, and the
+            // per-fixture `optimizeKnownTemplates` are part of it.
+            cache: new Map(),
+            runtimeId: config.runtime_id,
+            writeVersionComment: false,
+            babelConfig: {
+              babelrc: false,
+              configFile: false,
+              browserslistConfigFile: false,
+            },
+            optimize,
+            optimizeKnownTemplates: optimize
+              ? (
+                  fs.readdirSync(fixtureDir, {
+                    recursive: true,
+                  }) as string[]
+                )
+                  .filter((f) => f.endsWith(".marko"))
+                  .map((f) => path.join(fixtureDir, f))
+              : undefined,
+          }));
 
           const ssrRunner = once(() =>
             createServerRunner(
@@ -301,14 +299,22 @@ function testFixtures(interop?: true) {
                     for (const f of Array.isArray(config.error_compiler)
                       ? config.error_compiler.map(resolve)
                       : [templateFile]) {
-                      compiler.compileFileSync(f, {
+                      const opts: compiler.Config = {
                         ...getModeOpts(),
                         ...(config.fix_guide && {
                           translator: "@marko/runtime-tags/translator",
                         }),
                         linkAssets: { runtime: "asset-runtime", onAsset() {} },
                         output,
+                      };
+                      // Recovery returns analyze errors as diagnostics, so anything it
+                      // throws must be the snapshot's error (own cache: a setting differs).
+                      compiler.compileFileSync(f, {
+                        ...opts,
+                        errorRecovery: true,
+                        cache: new Map(),
                       });
+                      compiler.compileFileSync(f, opts);
                     }
                   } finally {
                     restore();

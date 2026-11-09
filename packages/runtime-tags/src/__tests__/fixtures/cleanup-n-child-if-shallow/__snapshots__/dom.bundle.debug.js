@@ -4,9 +4,9 @@ const $walks$1 = "d";
 const $setup$1 = ($_) => {};
 const $input__script = _script("__tests__/tags/child.marko_0_input#1", ($scope) => {
 	$scope.input.write("mounted");
-	$signal($scope, 0).onabort = () => {
+	onAbort($scope, 0, () => {
 		$scope.input.write("destroyed");
-	};
+	});
 });
 const $input = /*@__PURE__*/ _const("input", ($scope) => {
 	$signalReset($scope, 0);

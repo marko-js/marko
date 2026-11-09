@@ -1,12 +1,12 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 it("should allow diffing title inside head", function () {
   var app = window.app;
-  expect(document.title).to.equal("Count: 0");
+  assert.equal(document.title, "Count: 0");
 
   app.increment();
   app.update();
 
-  expect(app.state.count).to.equal(1);
-  expect(document.title).to.equal("Count: 1");
+  assert.equal(app.state.count, 1);
+  assert.equal(document.title, "Count: 1");
 });

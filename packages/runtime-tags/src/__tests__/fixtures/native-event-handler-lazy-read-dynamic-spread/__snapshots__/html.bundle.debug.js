@@ -5,9 +5,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let enabled = true;
 	let count = 0;
 	let log = "";
-	_html(`<button class=toggle>toggle</button>${_el_mark($scope0_id, "#button/0")}<button class=bump>bump</button>${_el_mark($scope0_id, "#button/1")}<button class=a${_attrs_partial({ onClick: enabled && _resume(() => {
-		log = `${log}a(${count})`;
-	}, "__tests__/template.marko_0/anonymous", $scope0_id) }, { class: 1 }, "#button/2", $scope0_id, "button")}>a</button>${_el_mark($scope0_id, "#button/2")}<button class=b${_attrs_partial(enabled && { onClick: _resume(function() {
+	_html(`<button class=toggle>toggle</button>${_el_mark($scope0_id, "#button/0")}<button class=bump>bump</button>${_el_mark($scope0_id, "#button/1")}<button class=a>a</button>${_el_mark($scope0_id, "#button/2")}<button class=b${_attrs_partial(enabled && { onClick: _resume(function() {
 		log = `${log}b(${count})`;
 	}, "__tests__/template.marko_0/onClick", $scope0_id) }, { class: 1 }, "#button/3", $scope0_id, "button")}>b</button>${_el_mark($scope0_id, "#button/3")}<div class=state>${_text_mark($scope0_id, "#text/4", enabled)}:${_text_mark($scope0_id, "#text/5", count, 2)}</div><div class=log>${_text_mark($scope0_id, "#text/6", log)}</div>`);
 	_script($scope0_id, "__tests__/template.marko_0_enabled#7");
@@ -20,7 +18,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		enabled: "3:6",
 		count: "4:6",
 		log: "5:6",
-		"EventAttributes:#button/2": ["...{ onClick: enabled && (() => { log = `${log}a(${count})`; }) }", "9:14"],
 		"EventAttributes:#button/3": ["...enabled && { onClick() { log = `${log}b(${count})`; } }", "10:15"]
 	});
 }, 1);

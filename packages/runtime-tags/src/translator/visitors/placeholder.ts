@@ -42,8 +42,6 @@ declare module "@marko/compiler/dist/types" {
   }
 }
 
-type HTMLMethod = "_escape" | "_unescaped";
-
 export default {
   analyze: {
     enter(placeholder) {
@@ -160,7 +158,7 @@ function translateExit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
         write`${
           method === "_escape"
             ? buildEscapedTextExpression(value)
-            : callRuntime(method as HTMLMethod, value)
+            : callRuntime(method, value)
         }`;
       }
     } else {

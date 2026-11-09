@@ -14,8 +14,9 @@ import {
   importStar,
   type Tag,
 } from "@marko/compiler/babel-utils";
-import MagicString, { type SourceMap } from "magic-string";
+import { MagicString, type SourceMap } from "magic-string";
 
+import { coreTagLink } from "../util/assert";
 import { addAssetImport } from "../util/asset-imports";
 import { BindingType, createBinding } from "../util/bindings";
 import buildStringExpression from "../util/build-string-expression";
@@ -141,7 +142,7 @@ function createCustomPropertyNames(tag: t.NodePath<t.MarkoTag>) {
     } else if (!t.isMarkoText(child)) {
       throw tag.hub.buildError(
         child,
-        "The [`<style>` tag](https://markojs.com/docs/reference/core-tag#style) only supports text and `${...}` interpolations." +
+        `The ${coreTagLink(tag)} only supports text and \`\${...}\` interpolations.` +
           htmlStyleTagAlternateMsg,
       );
     }
@@ -181,8 +182,7 @@ function checkDynamicStylePlacement(tag: t.NodePath<t.MarkoTag>) {
 
     if (rendered) {
       diagnosticWarn(tag, {
-        label:
-          "The `${...}` values of a [`<style>` tag](https://markojs.com/docs/reference/core-tag#style) only apply to the subsequent siblings of the `<style>` tag and their descendants, so the content before this tag will not receive them. Move the `<style>` tag above the content it styles.",
+        label: `The \`\${...}\` values of a ${coreTagLink(tag)} only apply to the subsequent siblings of the \`<style>\` tag and their descendants, so the content before this tag will not receive them. Move the \`<style>\` tag above the content it styles.`,
       });
       return;
     }
@@ -206,7 +206,7 @@ function assertNoStyleAttributes(tag: t.NodePath<t.MarkoTag>) {
 
     throw tag.hub.buildError(
       attr.value,
-      "The `style` does not support html attributes." +
+      `The ${coreTagLink(tag)} does not support html attributes.` +
         htmlStyleTagAlternateMsg,
     );
   }

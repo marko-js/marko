@@ -1,6 +1,5 @@
 import * as assert from "assert";
 
-import raptorRegexp from "raptor-regexp";
 import createError from "raptor-util/createError";
 
 import propertyHandlers from "./property-handlers";
@@ -83,8 +82,7 @@ class AttrLoader {
   pattern(value) {
     var attr = this.attr;
     if (value === true) {
-      var patternRegExp = raptorRegexp.simple(attr.name);
-      attr.pattern = patternRegExp;
+      attr.pattern = wildcardRegExp(attr.name);
     }
   }
 
@@ -241,3 +239,16 @@ loadAttributeFromProps.isSupportedProperty = function (name) {
 };
 
 export default loadAttributeFromProps;
+
+// `*` matches any run of characters and `?` at most one; the rest is literal.
+function wildcardRegExp(pattern) {
+  return new RegExp(
+    `^${pattern.replace(/[*?]|[^*?]+/g, (part) =>
+      part === "*"
+        ? ".*?"
+        : part === "?"
+          ? ".?"
+          : part.replace(/[.+^${}()|[\]\\]/g, "\\$&"),
+    )}$`,
+  );
+}

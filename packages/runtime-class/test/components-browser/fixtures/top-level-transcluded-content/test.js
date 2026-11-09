@@ -1,16 +1,16 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index.marko"));
   var inner = component.getComponent("inner");
-  expect(helpers.targetEl.textContent).to.equal("Hello world");
+  assert.equal(helpers.targetEl.textContent, "Hello world");
   inner.forceUpdate(); // Toggle
   inner.update();
-  expect(helpers.targetEl.textContent).to.equal("Hello world");
+  assert.equal(helpers.targetEl.textContent, "Hello world");
   inner.forceUpdate(); // Toggle
   inner.update();
-  expect(helpers.targetEl.textContent).to.equal("Hello world");
+  assert.equal(helpers.targetEl.textContent, "Hello world");
   component.forceUpdate(); // Break
   component.update();
-  expect(helpers.targetEl.textContent).to.equal("Hello world");
+  assert.equal(helpers.targetEl.textContent, "Hello world");
 };

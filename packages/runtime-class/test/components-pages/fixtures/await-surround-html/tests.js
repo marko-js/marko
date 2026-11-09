@@ -1,5 +1,5 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 it("should mount components", function () {
-  expect(window.helloComponent != null).to.equal(true);
+  assert.equal(window.helloComponent != null, true);
 });

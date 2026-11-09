@@ -1,0 +1,7 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-for-to-string-by/template.marko:1:19
+    > 1 | <for|num| to=3 by="id">
+        |                   ^^^^ The [`<for>` tag](https://markojs.com/docs/reference/core-tag#for) only supports a string `by` key with `of`; use a `by=(num) => ...` function for `<for to>`.
+      2 |   <div>${num}</div>
+      3 | </for>
+      4 |

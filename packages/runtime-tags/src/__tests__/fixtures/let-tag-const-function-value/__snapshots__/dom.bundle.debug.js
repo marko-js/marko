@@ -7,12 +7,11 @@ const $x__script = _script("__tests__/template.marko_0_x#2", ($scope) => {
 	}
 });
 const $x = /*@__PURE__*/ _let("x/2", $x__script);
-const $fn2 = $x;
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$x($scope, () => "b");
 }));
 function $setup($scope) {
-	$fn2($scope, $fn);
+	$x($scope, $fn);
 	$setup__script($scope);
 }
 function $fn() {

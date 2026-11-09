@@ -1,15 +1,15 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index.marko"));
-  expect(component.el.outerHTML).to.equal(`<div class="a" id="b" style="color:green"></div>`);
+  assert.equal(component.el.outerHTML, `<div class="a" id="b" style="color:green"></div>`);
   component.toggle();
   component.update();
-  expect(component.el.outerHTML).to.equal(`<div></div>`);
+  assert.equal(component.el.outerHTML, `<div></div>`);
   component.toggle();
   component.update();
-  expect(component.el.outerHTML).to.equal(`<div class="a" id="b" style="color: green;"></div>`);
+  assert.equal(component.el.outerHTML, `<div class="a" id="b" style="color: green;"></div>`);
   component.toggle();
   component.update();
-  expect(component.el.outerHTML).to.equal(`<div></div>`);
+  assert.equal(component.el.outerHTML, `<div></div>`);
 };

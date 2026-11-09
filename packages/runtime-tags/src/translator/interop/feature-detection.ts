@@ -28,7 +28,7 @@ export function isTagsAPI(file = getFile()) {
   if (!featureType) {
     const lookup = getTaglibLookup(file);
     const tagsDir = getTagsDir(lookup, file.opts.filename);
-    const state = {} as FeatureState;
+    const state: FeatureState = {};
     if (tagsDir && !lookup.manualTagsDirs?.has(tagsDir)) {
       addFeature(
         state,
@@ -73,43 +73,39 @@ function getTagsDir(
 
 function scanBody(
   state: FeatureState,
-  body:
-    | undefined
-    | t.NodePath<
-        | t.Program["body"][number]
-        | t.MarkoTagBody["body"][number]
-        | t.MarkoTag["attributeTags"][number]
-      >[],
+  body: t.NodePath<
+    | t.Program["body"][number]
+    | t.MarkoTagBody["body"][number]
+    | t.MarkoTag["attributeTags"][number]
+  >[],
 ) {
-  if (body?.length) {
-    for (const child of body) {
-      switch (child.type) {
-        case "MarkoTag":
-          scanTag(state, child as t.NodePath<t.MarkoTag>);
-          break;
-        case "MarkoComment":
-          if (/^\s*use tags\s*$/.test((child.node as t.MarkoComment).value)) {
-            addFeature(state, FeatureType.Tags, "<!-- use tags -->", child);
-          } else if (
-            /^\s*use class\s*$/.test((child.node as t.MarkoComment).value)
-          ) {
-            addFeature(state, FeatureType.Class, "<!-- use class -->", child);
-          }
-          break;
-        case "MarkoScriptlet":
-          if (!(child.node as t.MarkoScriptlet).static) {
-            addFeature(state, FeatureType.Class, "Scriptlet", child);
-          }
-          break;
-        case "MarkoClass":
-          addFeature(
-            state,
-            FeatureType.Class,
-            "Class block",
-            (child as t.NodePath<t.MarkoClass>).get("body"),
-          );
-          break;
-      }
+  for (const child of body) {
+    switch (child.type) {
+      case "MarkoTag":
+        scanTag(state, child as t.NodePath<t.MarkoTag>);
+        break;
+      case "MarkoComment":
+        if (/^\s*use tags\s*$/.test((child.node as t.MarkoComment).value)) {
+          addFeature(state, FeatureType.Tags, "<!-- use tags -->", child);
+        } else if (
+          /^\s*use class\s*$/.test((child.node as t.MarkoComment).value)
+        ) {
+          addFeature(state, FeatureType.Class, "<!-- use class -->", child);
+        }
+        break;
+      case "MarkoScriptlet":
+        if (!(child.node as t.MarkoScriptlet).static) {
+          addFeature(state, FeatureType.Class, "Scriptlet", child);
+        }
+        break;
+      case "MarkoClass":
+        addFeature(
+          state,
+          FeatureType.Class,
+          "Class block",
+          (child as t.NodePath<t.MarkoClass>).get("body"),
+        );
+        break;
     }
   }
 }

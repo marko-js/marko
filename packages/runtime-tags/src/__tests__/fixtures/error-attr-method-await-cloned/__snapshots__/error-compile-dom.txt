@@ -1,0 +1,6 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-attr-method-await-cloned/template.marko:2:21
+      1 | <p>Please await the result.</p>
+    > 2 | <button onClick() { await save() }/>
+        |                     ^^^^^ Attribute methods containing `await` must be `async`. Add `async` before the method name.
+      3 |

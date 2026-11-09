@@ -32,8 +32,9 @@ Express’s builtin view engine may be asynchronous, but it doesn’t support st
 > **ProTip**: By using `res.marko()`, properties from [`app.locals`](https://expressjs.com/en/api.html#app.locals) and [`res.locals`](https://expressjs.com/en/api.html#res.locals) are automatically [available on `$global`](https://markojs.com/docs/rendering/#global-data).
 
 ```js
-import express from "express";
 import markoPlugin from "@marko/express";
+import express from "express";
+
 import template from "./template.marko";
 
 const app = express();

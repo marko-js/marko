@@ -71,14 +71,6 @@ declare module "@marko/compiler/dist/types" {
 }
 
 export default {
-  migrate: {
-    enter(program) {
-      program.node.params = [t.identifier("input")];
-    },
-    exit(program) {
-      program.scope.crawl();
-    },
-  },
   transform: {
     exit: preAnalyze,
   },
@@ -87,7 +79,7 @@ export default {
       ensureBodySection(program);
       trackParamsReferences(program, BindingType.param);
 
-      const programExtra = (program.node.extra ??= {});
+      const programExtra = program.node.extra;
       const inputBinding = program.node.params![0].extra?.binding;
       if (inputBinding) {
         inputBinding.nullable = false;
@@ -120,7 +112,7 @@ export default {
       solveReasons(intersectionsBySection);
       finalizeRegistrations();
       allocateIds(intersectionsBySection);
-      const programExtra = program.node.extra!;
+      const programExtra = program.node.extra;
       const paramsBinding = programExtra.binding;
       if (paramsBinding && !paramsBinding.pruned) {
         programExtra.paramsTree = exposeParamsTree(paramsBinding);
@@ -131,6 +123,7 @@ export default {
       // Anything revived or unconditionally registered against this module
       // has to reach the client on its own.
       forEachSection((childSection) => {
+        if (programExtra.hasResumes) return;
         const reason = mapBodyParams(childSection, childSection.reason);
         programExtra.hasResumes ||= !!(
           (reason && !isGuardedReason(reason)) ||

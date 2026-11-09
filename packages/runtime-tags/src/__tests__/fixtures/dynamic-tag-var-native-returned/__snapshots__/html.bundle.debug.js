@@ -21,7 +21,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $childScope = _peek_scope_id();
 	let v = child_default({ as: "section" });
 	_var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_v#2/var");
-	_script($scope0_id, "__tests__/template.marko_0_v#2");
+	_script($scope0_id, "__tests__/template.marko_0_v#2", 0);
 	_scope($scope0_id, {
 		v,
 		"#childScope/0": _existing_scope($childScope)

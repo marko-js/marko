@@ -18,19 +18,14 @@ const $if_content__setup = ($scope) => {
 	$if_content__count._($scope);
 	$if_content__setup__script($scope);
 };
-const $inc = ($scope, inc) => _text($scope["#text/3"], typeof inc);
 const $if = /*@__PURE__*/ _if("#div/0", "<button id=own> </button>", " D ", $if_content__setup);
 const $for = /*@__PURE__*/ _for_until_unkeyed("#text/2", " ", " ", $for_content__setup);
 const $count = /*@__PURE__*/ _let("count/7", ($scope) => {
 	_attr_class($scope["#div/0"], `c${$scope.count}`);
 	_attr_class($scope["#section/1"], `c${$scope.count}`);
-	$inc($scope, () => $count($scope, +$scope.count + 1) - 1);
+	_text($scope["#text/3"], typeof (() => $count($scope, +$scope.count + 1) - 1));
 	$if($scope, $scope.count ? 0 : 1);
-	$for($scope, [
-		$scope.count,
-		0,
-		1
-	]);
+	$for($scope, [$scope.count]);
 	$if_content__count($scope);
 	$if_content2__count($scope);
 });

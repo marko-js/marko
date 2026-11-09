@@ -6,21 +6,21 @@
     },
     "template.marko.page.mjs": {
       "total": {
-        "min": 624,
-        "brotli": 298
+        "min": 634,
+        "brotli": 301
       },
       "files": {
-        "v:template.marko.hydrate-6.js": 110,
-        "v:template.marko.hydrate-5.js": 104
+        "v:template.marko.hydrate-6.js": 57,
+        "v:template.marko.hydrate-5.js": 51
       }
     },
     "lazy.mjs": {
-      "min": 793,
-      "brotli": 438
+      "min": 791,
+      "brotli": 436
     },
     "shared": {
-      "min": 2126,
-      "brotli": 1119
+      "min": 2122,
+      "brotli": 1110
     }
   },
   "html": {

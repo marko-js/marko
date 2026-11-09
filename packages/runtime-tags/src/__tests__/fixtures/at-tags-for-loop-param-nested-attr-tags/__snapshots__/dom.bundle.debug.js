@@ -3,8 +3,7 @@ const $template$2 = "<!><!><!>";
 const $walks$2 = "b%c";
 const $setup$2 = ($_) => {};
 const $for_content__dynamicTag$1 = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $for_content__cell_content = $for_content__dynamicTag$1;
-const $for_content__$params$1 = ($scope, $params2) => $for_content__cell_content($scope, $params2[0]?.content);
+const $for_content__$params$1 = ($scope, $params2) => $for_content__dynamicTag$1($scope, $params2[0]?.content);
 const $for$1 = /*@__PURE__*/ _for_of_unkeyed("#text/0", "<span><!></span>", "D%", 0, $for_content__$params$1);
 const $input_cell = ($scope, input_cell) => $for$1($scope, [input_cell]);
 const $input$1 = ($scope, input) => $input_cell($scope, input.cell);
@@ -15,8 +14,7 @@ const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $setup$1 = ($_) => {};
 const $for_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $for_content__row_content = $for_content__dynamicTag;
-const $for_content__$params = ($scope, $params2) => $for_content__row_content($scope, $params2[0]?.content);
+const $for_content__$params = ($scope, $params2) => $for_content__dynamicTag($scope, $params2[0]?.content);
 const $for = /*@__PURE__*/ _for_of_unkeyed("#text/0", "<div><!></div>", "D%", 0, $for_content__$params);
 const $input_row = ($scope, input_row) => $for($scope, [input_row]);
 const $input = ($scope, input) => $input_row($scope, input.row);
@@ -32,21 +30,17 @@ const $row_content__a_id__closure = /*@__PURE__*/ _closure($cell_content__a_id);
 const $row_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__tests__/template.marko_1*content", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$2), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c")), {
 	a_items($scope) {
 		let $cell;
-		forOf($scope.a_items, (b) => {
-			$cell = attrTags($cell, { content: $cell_content($scope, { b }) });
-		});
+		forOf($scope.a_items, (b) => $cell = attrTags($cell, { content: $cell_content($scope, { b }) }));
 		$input_cell($scope["#childScope/0"], $cell);
 	},
 	a_id: $row_content__a_id__closure
 });
 const $rows = /*@__PURE__*/ _let("rows/2", ($scope) => {
 	let $row;
-	forOf($scope.rows, (a) => {
-		$row = attrTags($row, { content: $row_content($scope, {
-			a_items: a?.items,
-			a_id: a?.id
-		}) });
-	});
+	forOf($scope.rows, (a) => $row = attrTags($row, { content: $row_content($scope, {
+		a_items: a?.items,
+		a_id: a?.id
+	}) }));
 	$input_row($scope["#childScope/0"], $row);
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {

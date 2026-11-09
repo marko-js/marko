@@ -1,6 +1,5 @@
 // template.marko
-const $for_content__item = ($scope, item) => _text($scope.a, item);
-const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);
+const $for_content__$params = ($scope, $params2) => _text($scope.a, $params2[0]);
 const $id = /*@__PURE__*/ _let(3);
 const $for = /*@__PURE__*/ _for_of_unkeyed(0, " ", " ", 0, $for_content__$params);
 const $items = /*@__PURE__*/ _let(4, ($scope) => $for($scope, [$scope.e]));

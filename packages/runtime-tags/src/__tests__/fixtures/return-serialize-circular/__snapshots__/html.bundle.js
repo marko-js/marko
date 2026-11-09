@@ -23,9 +23,7 @@ var template_default = _template("a", (input) => {
 	const $childScope = _peek_scope_id();
 	let setCount = setter_default({
 		value: count,
-		valueChange: _resume((_new_count) => {
-			count = _new_count;
-		}, "a0", $scope0_id)
+		valueChange: _resume((_new_count) => count = _new_count, "a0", $scope0_id)
 	});
 	_var($scope0_id, "b", $childScope, "a1");
 	_html(`<div>${_text_mark($scope0_id, "c", count)}</div>`);

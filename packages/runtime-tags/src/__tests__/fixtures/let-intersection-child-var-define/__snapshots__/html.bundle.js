@@ -7,9 +7,7 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		let internal = 0;
 		const $return = internal;
-		_scope($scope1_id, { U: _resume((_new_internal) => {
-			internal = _new_internal;
-		}, "a0", $scope1_id) || void 0 });
+		_scope($scope1_id, { U: _resume((_new_internal) => internal = _new_internal, "a0", $scope1_id) || void 0 });
 		_resume_branch($scope1_id);
 		return $return;
 	}, $scope0_id) };

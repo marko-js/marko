@@ -5,7 +5,7 @@ const $input_value__script = _script("c1", ($scope) => {
 	{
 		const subs = subsByKey[$scope.c] ??= /* @__PURE__ */ new Set();
 		const sub = () => $value($scope, $scope.$[$scope.c]);
-		$signal($scope, 0).onabort = () => subs.delete(sub);
+		onAbort($scope, 0, () => subs.delete(sub));
 		subs.add(sub);
 	}
 });

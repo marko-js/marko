@@ -10,13 +10,13 @@
     },
     "components.mjs": {
       "total": {
-        "min": 65688,
-        "brotli": 20531
+        "min": 65573,
+        "brotli": 20493
       },
       "files": {
-        "a.marko": 1254,
-        "t.marko": 750,
-        "b.marko": 917
+        "a.marko": 1223,
+        "t.marko": 719,
+        "b.marko": 886
       }
     }
   },

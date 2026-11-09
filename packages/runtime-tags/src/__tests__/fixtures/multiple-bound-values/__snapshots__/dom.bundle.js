@@ -23,11 +23,7 @@ const $count2 = /*@__PURE__*/ _let(4, ($scope) => {
 	$input_count2($scope.a, $scope.e);
 	_text($scope.c, $scope.e);
 });
-const $count2Change = ($scope) => (_new_count2) => {
-	$count2($scope, _new_count2);
-};
-const $count1Change = ($scope) => (_new_count1) => {
-	$count($scope, _new_count1);
-};
+const $count2Change = ($scope) => (_new_count2) => $count2($scope, _new_count2);
+const $count1Change = ($scope) => (_new_count1) => $count($scope, _new_count1);
 _resumed.a1 = $count2Change;
 _resumed.a0 = $count1Change;

@@ -1,0 +1,9 @@
+<div>
+  d${input.depth}
+  <${input.content}/>
+  <if=input.depth>
+    <tree depth=input.depth - 1>
+      <if=input.depth % 2>odd</if>
+    </tree>
+  </if>
+</div>

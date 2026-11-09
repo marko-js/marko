@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import assert from 'assert/strict';
 
 class {
     onCreate(input, out) {
@@ -42,9 +42,9 @@ class {
     }
 
     test() {
-        expect(this.state.events).to.deep.equal(['onCreate', 'onInput[Frank]', 'onRender']);
-        expect(this.onCreateInputName).to.equal('Frank');
-        expect(this.onCreateOutName).to.equal('FrankGlobal');
+        assert.deepEqual(this.state.events, ['onCreate', 'onInput[Frank]', 'onRender']);
+        assert.equal(this.onCreateInputName, 'Frank');
+        assert.equal(this.onCreateOutName, 'FrankGlobal');
     }
 }
 

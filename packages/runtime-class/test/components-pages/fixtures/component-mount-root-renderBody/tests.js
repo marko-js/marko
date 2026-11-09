@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 function triggerMouseEvent(el, type) {
   var ev = document.createEvent("MouseEvent");
@@ -28,21 +28,21 @@ function triggerClick(el) {
 
 it("should mount all components", function () {
   var app = window.app;
-  expect(app != null).to.equal(true);
-  expect(window.hello != null).to.equal(true);
+  assert.equal(app != null, true);
+  assert.equal(window.hello != null, true);
 });
 
 it("should have correct input", function () {
-  expect(window.app.input.name).to.equal("App");
-  expect(window.hello.input.name).to.equal("Marko");
+  assert.equal(window.app.input.name, "App");
+  assert.equal(window.hello.input.name, "Marko");
 });
 
 it("should attach DOM events", function () {
   var app = window.app;
   triggerClick(app.el);
-  expect(app.clicked).to.equal(true);
+  assert.equal(app.clicked, true);
 
   var helloComponent = window.hello;
   triggerClick(helloComponent.el);
-  expect(helloComponent.clicked).to.equal(true);
+  assert.equal(helloComponent.clicked, true);
 });

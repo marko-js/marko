@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), {
@@ -8,21 +8,13 @@ module.exports = function (helpers) {
 
   var fooComponent = component.getComponent("foo");
 
-  expect(fooComponent.el.querySelector(".body").innerHTML).to.equal(
-    "Current index: 0",
-  );
-  expect(fooComponent.el.querySelector("span").innerHTML).to.equal(
-    "Hello Frank!",
-  );
+  assert.equal(fooComponent.el.querySelector(".body").innerHTML, "Current index: 0");
+  assert.equal(fooComponent.el.querySelector("span").innerHTML, "Hello Frank!");
 
   fooComponent.state.name = "Jane";
 
   fooComponent.update();
 
-  expect(fooComponent.el.querySelector(".body").innerHTML).to.equal(
-    "Current index: 0",
-  );
-  expect(fooComponent.el.querySelector("span").innerHTML).to.equal(
-    "Hello Jane!",
-  );
+  assert.equal(fooComponent.el.querySelector(".body").innerHTML, "Current index: 0");
+  assert.equal(fooComponent.el.querySelector("span").innerHTML, "Hello Jane!");
 };

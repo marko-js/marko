@@ -10,7 +10,7 @@ var counter_default = _template("__tests__/tags/counter.marko", (input) => {
 
 // template.marko
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_a = _write_guard($scope0_reason, 1), $wi__input_a = _write_if($scope0_reason, 1), $wg__input_x = _write_guard($scope0_reason, 2), $wi__input_x = _write_if($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_a = _write_guard($scope0_reason, 1), $wi__input_a = _write_if($scope0_reason, 1), $wi__input_x = _write_if($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $f2__closures = new Set();
 	const f = _resume(function() {
@@ -18,15 +18,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, "__tests__/template.marko_0/f", $scope0_id);
 	const D = { content: _content("__tests__/template.marko_1*content", ({ on }) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason(), $wg__on = _write_guard($scope1_reason, 0), $wi__on = _write_if($scope1_reason, 0);
+		const $scope1_reason = _scope_reason(), $wg__on = _write_guard($scope1_reason, 0);
 		_html(`<span>${_text_mark($scope1_id, "#text/0", on && f(), $wg__input_a || $wg__on)}</span>`);
-		($wi__input_a || $wi__on) && _subscribe($wi__input_a && $f2__closures, _scope($scope1_id, {
+		($wi__input_a || _write_if($scope1_reason, 0)) && _subscribe($wi__input_a && $f2__closures, _scope($scope1_id, {
 			on: $wi__input_a && on,
 			_: _scope_with_id($scope0_id)
 		}, "__tests__/template.marko", "2:2", { on: "2:13" }), "__tests__/template.marko_1_f#0:6/subscribe", $wg__input_a || $wg__on);
-		$wg__input_a || $wg__on || ($wi__input_a || $wi__on) && _resume_branch($scope1_id);
 	}, $scope0_id) };
-	_set_scope_reason($wg__input_x << 1);
+	_set_scope_reason(_write_guard($scope0_reason, 2) << 1);
 	const $childScope = _peek_scope_id();
 	D.content({ on: input.x });
 	counter_default({});

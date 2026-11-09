@@ -33,7 +33,7 @@ export default {
     assertNoParams(tag);
     assertNoBodyContent(tag);
     assertHasVar(tag, getVarHint);
-    const valueAttr = assertOnlyValueAttr(tag, true);
+    const { valueAttr } = assertOnlyValueAttr(tag, true);
 
     const valueExtra = (valueAttr.value.extra ??= {});
     valueExtra.pure = evaluate(valueAttr.value).pure;

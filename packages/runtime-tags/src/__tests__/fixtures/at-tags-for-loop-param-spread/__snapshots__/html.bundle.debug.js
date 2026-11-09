@@ -39,40 +39,37 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id) };
 	_set_scope_reason(2);
 	let $item;
-	forOf(items, (item) => {
-		$item = attrTags($item, { content: _content("__tests__/template.marko_1*content", () => {
-			const $scope1_reason = _scope_reason(), $wg__item_text = _write_guard($scope1_reason, 2), $wg__item_title__OR__item_text = _write_guard($scope1_reason, 0), $wi__item_text = _write_if($scope1_reason, 2);
-			const $scope1_id = _scope_id();
-			_set_scope_reason($wg__item_title__OR__item_text << 1 | _write_guard($scope1_reason, 1) << 3 | $wg__item_text << 5);
-			const $childScope = _peek_scope_id();
-			child_default(item);
-			_set_scope_reason($wg__item_text << 1);
-			const $childScope2 = _peek_scope_id();
-			Row.content(item);
-			_if(() => {
-				if (show) {
-					const $scope3_id = _scope_id();
-					_set_scope_reason($wg__item_text << 1 | $wg__item_text << 5);
-					const $childScope3 = _peek_scope_id();
-					child_default({
-						...item,
-						title: "over"
-					});
-					$wi__item_text && _scope($scope3_id, {
-						_: _scope_with_id($scope1_id),
-						"#childScope/0": _existing_scope($childScope3)
-					}, "__tests__/template.marko", "13:8");
-					return 0;
-				}
-			}, $scope1_id, "#text/2", $wg__item_text, 0, 0, 0, 1);
-			_scope($scope1_id, {
-				_: _scope_with_id($scope0_id),
-				"#childScope/0": _write_if($scope1_reason, 0) && _existing_scope($childScope),
-				"#childScope/1": $wi__item_text && _existing_scope($childScope2)
-			}, "__tests__/template.marko", "10:6");
-			$wg__item_title__OR__item_text || $wg__item_text || _resume_branch($scope1_id);
-		}, $scope0_id) });
-	});
+	forOf(items, (item) => $item = attrTags($item, { content: _content("__tests__/template.marko_1*content", () => {
+		const $scope1_reason = _scope_reason(), $wg__item_text = _write_guard($scope1_reason, 2), $wi__item_text = _write_if($scope1_reason, 2);
+		const $scope1_id = _scope_id();
+		_set_scope_reason(_write_guard($scope1_reason, 0) << 1 | _write_guard($scope1_reason, 1) << 3 | $wg__item_text << 5);
+		const $childScope = _peek_scope_id();
+		child_default(item);
+		_set_scope_reason($wg__item_text << 1);
+		const $childScope2 = _peek_scope_id();
+		Row.content(item);
+		_if(() => {
+			if (show) {
+				const $scope3_id = _scope_id();
+				_set_scope_reason($wg__item_text << 1 | $wg__item_text << 5);
+				const $childScope3 = _peek_scope_id();
+				child_default({
+					...item,
+					title: "over"
+				});
+				$wi__item_text && _scope($scope3_id, {
+					_: _scope_with_id($scope1_id),
+					"#childScope/0": _existing_scope($childScope3)
+				}, "__tests__/template.marko", "13:8");
+				return 0;
+			}
+		}, $scope1_id, "#text/2", $wg__item_text, 0, 0, 0, 1);
+		_scope($scope1_id, {
+			_: _scope_with_id($scope0_id),
+			"#childScope/0": _write_if($scope1_reason, 0) && _existing_scope($childScope),
+			"#childScope/1": $wi__item_text && _existing_scope($childScope2)
+		}, "__tests__/template.marko", "10:6");
+	}, $scope0_id) }));
 	const $childScope4 = _peek_scope_id();
 	list_default({ item: $item });
 	_script($scope0_id, "__tests__/template.marko_0");

@@ -219,46 +219,13 @@ export default function createBrowser(
     },
     stream(chunks: string[]): () => boolean {
       const { document } = window;
+      let i = 0;
       document.open();
-
-      if (chunks.length > 1) {
-        const parsed = document.implementation.createHTMLDocument();
-        parsed.write(ensureBody(chunks.join("<!--%%FLUSH%%-->")));
-        parsed.doctype?.remove();
-
-        const walker = parsed.createTreeWalker(parsed);
-        const targetNodes = new WeakMap<Node, Node>([[parsed, document]]);
-        let node: Node | null;
-
-        return () => {
-          while ((node = walker.nextNode())) {
-            if (
-              node.nodeType === 8 /* Node.COMMENT_NODE */ &&
-              (node as Comment).data === "%%FLUSH%%"
-            ) {
-              return true;
-            }
-
-            const isInline = isInlineScript(node);
-            const clone = document.importNode(node, isInline);
-            targetNodes.set(node, clone);
-            (targetNodes.get(node.parentNode!) as ParentNode).appendChild(
-              clone,
-            );
-
-            if (isInline) {
-              walker.nextNode();
-            }
-          }
-          document.close();
-          return false;
-        };
-      }
-
       return () => {
-        if (chunks.length) {
-          document.write(ensureBody(chunks[0]));
+        if (i < chunks.length) {
+          document.write(i ? chunks[i] : ensureBody(chunks[0]));
         }
+        if (++i < chunks.length) return true;
         document.close();
         return false;
       };
@@ -290,13 +257,6 @@ function batchQueue<T>(each: (item: T) => void) {
       }
     },
   };
-}
-
-function isInlineScript(node: Node): node is HTMLScriptElement {
-  return (
-    (node as HTMLScriptElement).tagName === "SCRIPT" &&
-    (node as HTMLScriptElement).type !== "module"
-  );
 }
 
 function ensureBody(html: string) {

@@ -7,7 +7,7 @@ import {
   resolveRelativePath,
 } from "@marko/compiler/babel-utils";
 import markoModules from "@marko/compiler/modules";
-import MagicString from "magic-string";
+import { MagicString } from "magic-string";
 const kEntryState = Symbol();
 const lassoDepPrefix = "package: ";
 

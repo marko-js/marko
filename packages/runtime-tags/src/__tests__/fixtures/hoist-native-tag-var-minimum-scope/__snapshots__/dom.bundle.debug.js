@@ -12,21 +12,13 @@ const $for_content2__setup = ($scope) => {
 const $for_content__for = /*@__PURE__*/ _for_to_unkeyed("#text/0", "<div></div>", " ", $for_content2__setup);
 const $for_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _el_read($scope._["#pre/1"]).innerHTML += `${[...$for_content__$el_getter($scope)].length}; ${$for_content__$el_getter($scope)().className}\n\t`);
 const $for_content__setup = ($scope) => {
-	$for_content__for($scope, [
-		2,
-		0,
-		1
-	]);
+	$for_content__for($scope, [2]);
 	$for_content__setup__script($scope);
 };
 const $for = /*@__PURE__*/ _for_to_unkeyed("#text/3", "<!><!><!>", "b%", $for_content__setup);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _el_read($scope["#pre/0"]).innerHTML += `${[...$el_getter($scope)].length}; ${$el_getter($scope)().className}\n\t`);
 function $setup($scope) {
-	$for($scope, [
-		2,
-		0,
-		1
-	]);
+	$for($scope, [2]);
 	$setup__script($scope);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

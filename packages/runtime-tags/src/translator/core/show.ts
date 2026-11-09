@@ -10,6 +10,7 @@ import {
   assertHasBody,
   assertNoSpreadAttrs,
   assertOnlyValueAttr,
+  coreTagLink,
 } from "../util/assert";
 import { type Binding, BindingType, createBinding } from "../util/bindings";
 import { buildBranchEndArgs, isSingleNodeContent } from "../util/branch-tag";
@@ -157,7 +158,7 @@ export default {
 
         writer.flushInto(tag);
 
-        const bodyStatements = tag.node.body.body as unknown as t.Statement[];
+        const bodyStatements = tag.node.body.body;
 
         if (staticDisplay !== undefined) {
           replaceWithStatements(tag, bodyStatements);
@@ -270,7 +271,7 @@ function assertValidShow(tag: t.NodePath<t.MarkoTag>) {
     throw tag
       .get("name")
       .buildCodeFrameError(
-        "The [`<show>` tag](https://markojs.com/docs/reference/core-tag#show) does not support [attribute tags](https://markojs.com/docs/reference/language#attribute-tags).",
+        `The ${coreTagLink(tag)} does not support [attribute tags](https://markojs.com/docs/reference/language#attribute-tags).`,
       );
   }
 
@@ -289,7 +290,7 @@ function assertLegalHiddenContext(tag: t.NodePath<t.MarkoTag>) {
     throw tag
       .get("name")
       .buildCodeFrameError(
-        `A [\`<${getTagName(tag)}>\` tag](https://markojs.com/docs/reference/core-tag#show) cannot be a direct child of \`<${parentName}>\`: hidden content is wrapped in an element that \`<${parentName}>\` discards, which would render the content instead of hiding it. Move the \`<${getTagName(tag)}>\` inside the row or option, or use [\`<if>\`](https://markojs.com/docs/reference/core-tag#if).`,
+        `A ${coreTagLink(tag)} cannot be a direct child of \`<${parentName}>\`: hidden content is wrapped in an element that \`<${parentName}>\` discards, which would render the content instead of hiding it. Move the \`<${getTagName(tag)}>\` inside the row or option, or use [\`<if>\`](https://markojs.com/docs/reference/core-tag#if).`,
       );
   }
 }

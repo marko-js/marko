@@ -115,8 +115,8 @@ export default {
 
       // The page entry links eager templates only; a lazy one arrives through
       // its own load entry.
-      ((file.path.node.extra.loadImports ??= new Set()) as Set<string>).add(
-        loadFile.opts.filename as string,
+      (file.path.node.extra.loadImports ??= new Set()).add(
+        loadFile.opts.filename,
       );
 
       // The compat dynamic tag this child renders through cannot read the load
@@ -145,7 +145,7 @@ export default {
             const wrappedName = ensureHtmlLoadWrapped(
               loadFile,
               () => t.identifier(local.name),
-              loadImport.render ? undefined : loadImport.triggers,
+              loadImport.triggers,
             );
 
             for (const ref of binding.referencePaths) {
@@ -214,7 +214,7 @@ export function ensureHtmlLoadWrapped(
   const existing = loadWrapped.get(readyId);
   if (existing) return existing;
 
-  markoOpts.linkAssets?.onAsset("load", loadFile.opts.filename, readyId);
+  markoOpts.linkAssets!.onAsset("load", loadFile.opts.filename, readyId);
 
   const template = getTemplate();
   const wrappedName = generateUid(`${template.name}_withLoadAssets`);

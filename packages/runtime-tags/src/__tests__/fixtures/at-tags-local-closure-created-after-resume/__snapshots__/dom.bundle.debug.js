@@ -2,8 +2,7 @@
 const $template$4 = "<button id=open>open</button><!><!>";
 const $walks$4 = " b%c";
 const $for_content__dynamicTag$1 = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $for_content__item_content = $for_content__dynamicTag$1;
-const $for_content__$params$2 = ($scope, $params2) => $for_content__item_content($scope, $params2[0]?.content);
+const $for_content__$params$2 = ($scope, $params2) => $for_content__dynamicTag$1($scope, $params2[0]?.content);
 const $if_content__for$1 = /*@__PURE__*/ _for_of_unkeyed("#text/0", "<!><!><!>", "b%", 0, $for_content__$params$2);
 const $if_content__input_item = /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $if_content__for$1($scope, [$scope._.input_item]));
 const $if_content__setup$2 = $if_content__input_item;
@@ -24,8 +23,7 @@ var list_default = /*@__PURE__*/ _template("__tests__/tags/list.marko", $templat
 const $template$3 = "<button>toggle</button><!><!>";
 const $walks$3 = " b%c";
 const $for_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $for_content__cell_content = $for_content__dynamicTag;
-const $for_content__$params$1 = ($scope, $params2) => $for_content__cell_content($scope, $params2[0]?.content);
+const $for_content__$params$1 = ($scope, $params2) => $for_content__dynamicTag($scope, $params2[0]?.content);
 const $if_content__for = /*@__PURE__*/ _for_of_unkeyed("#text/0", "<!><!><!>", "b%", 0, $for_content__$params$1);
 const $if_content__input_row_cell = /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $if_content__for($scope, [$scope._.input_row_cell]));
 const $if_content__setup$1 = $if_content__input_row_cell;
@@ -55,8 +53,7 @@ const $for_content__setup = ($scope) => {
 	$setup$3($scope["#childScope/0"]);
 	$input_index($scope["#childScope/0"], $scope["#LoopKey"]);
 };
-const $for_content__row = ($scope, row) => $input_row$1($scope["#childScope/0"], row);
-const $for_content__$params = ($scope, $params2) => $for_content__row($scope, $params2[0]);
+const $for_content__$params = ($scope, $params2) => $input_row$1($scope["#childScope/0"], $params2[0]);
 const $for = /*@__PURE__*/ _for_of_unkeyed("#text/0", /*@__PURE__*/ ((_w0) => `${_w0}<!>`)($template$3), /*@__PURE__*/ ((_w0) => `/${_w0}&b`)($walks$3), $for_content__setup, $for_content__$params);
 const $input_row = ($scope, input_row) => $for($scope, [input_row]);
 const $input$1 = ($scope, input) => $input_row($scope, input.row);
@@ -105,12 +102,10 @@ const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__
 _resumed["__tests__/template.marko_1*content"] = $item_content;
 const $items = /*@__PURE__*/ _let("items/3", ($scope) => {
 	let $item;
-	forOf($scope.items, (item) => {
-		$item = attrTags($item, { content: $item_content($scope, {
-			item_text: item?.text,
-			item
-		}) });
-	});
+	forOf($scope.items, (item) => $item = attrTags($item, { content: $item_content($scope, {
+		item_text: item?.text,
+		item
+	}) }));
 	$input_item$1($scope["#childScope/0"], $item);
 	$items_($scope, $scope.items?.[0]);
 });
@@ -120,17 +115,13 @@ function $setup($scope) {
 	let $row;
 	forOf(["a", "b"], (row) => {
 		let $cell;
-		forOf([1], (n) => {
-			$cell = attrTags($cell, { content: $cell_content($scope, { n }) });
-		});
+		forOf([1], (n) => $cell = attrTags($cell, { content: $cell_content($scope, { n }) }));
 		$row = attrTags($row, { cell: $cell });
 	});
 	$input_row($scope["#childScope/1"], $row);
 	$setup$1($scope["#childScope/2"]);
 	let $item2;
-	forOf([1], (i) => {
-		$item2 = attrTags($item2, { content: $item_content2($scope, { i }) });
-	});
+	forOf([1], (i) => $item2 = attrTags($item2, { content: $item_content2($scope, { i }) }));
 	$input_item($scope["#childScope/2"], $item2);
 	$items($scope, [{ text: "a" }, { text: "b" }]);
 }

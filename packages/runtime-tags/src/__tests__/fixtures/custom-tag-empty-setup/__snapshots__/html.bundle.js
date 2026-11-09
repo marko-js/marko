@@ -8,13 +8,13 @@ var cell_default = _template("b", (input) => {
 
 // tags/row/index.marko
 var row_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_name = _write_guard($scope0_reason, 1), $wg__input_quantity = _write_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	_html("<div class=row>");
-	_set_scope_reason($wg__input_name << 1);
+	_set_scope_reason(_write_guard($scope0_reason, 1) << 1);
 	const $childScope = _peek_scope_id();
 	cell_default({ value: input.name });
-	_set_scope_reason($wg__input_quantity << 1);
+	_set_scope_reason(_write_guard($scope0_reason, 2) << 1);
 	const $childScope2 = _peek_scope_id();
 	cell_default({ value: input.quantity });
 	_html("</div>");

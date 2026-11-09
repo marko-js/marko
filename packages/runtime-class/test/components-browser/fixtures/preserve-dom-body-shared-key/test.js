@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var counter = 0;
@@ -7,9 +7,7 @@ module.exports = function (helpers) {
     counter: counter,
   });
 
-  expect(
-    helpers.targetEl.querySelector(".unpreserved-counter").innerHTML,
-  ).to.equal("0");
+  assert.equal(helpers.targetEl.querySelector(".unpreserved-counter").innerHTML, "0");
 
   component.input = {
     counter: counter + 1,
@@ -17,7 +15,5 @@ module.exports = function (helpers) {
 
   component.update();
 
-  expect(
-    helpers.targetEl.querySelector(".unpreserved-counter").innerHTML,
-  ).to.equal("1");
+  assert.equal(helpers.targetEl.querySelector(".unpreserved-counter").innerHTML, "1");
 };

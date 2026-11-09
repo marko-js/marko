@@ -3,4 +3,7 @@
 <input
   type="hidden"
 />
+<input
+  type="hidden"
+/>
 ```

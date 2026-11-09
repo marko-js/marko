@@ -3,8 +3,7 @@ const $template$2 = "<div></div>";
 const $walks$2 = " b";
 const $setup$2 = ($_) => {};
 const $for_content__dynamicTag$1 = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $for_content__item_content$1 = $for_content__dynamicTag$1;
-const $for_content__$params$1 = ($scope, $params2) => $for_content__item_content$1($scope, $params2[0]?.content);
+const $for_content__$params$1 = ($scope, $params2) => $for_content__dynamicTag$1($scope, $params2[0]?.content);
 const $for$1 = /*@__PURE__*/ _for_of_unkeyed("#div/0", "<!><!><!>", "b%", 0, $for_content__$params$1);
 const $input_item$1 = ($scope, input_item) => $for$1($scope, [input_item]);
 const $input$1 = ($scope, input) => $input_item$1($scope, input.item);
@@ -15,8 +14,7 @@ const $template$1 = "<div><!><!></div>";
 const $walks$1 = "D%b%l";
 const $setup$1 = ($_) => {};
 const $for_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $for_content__item_content = $for_content__dynamicTag;
-const $for_content__$params = ($scope, $params2) => $for_content__item_content($scope, $params2[0]?.content);
+const $for_content__$params = ($scope, $params2) => $for_content__dynamicTag($scope, $params2[0]?.content);
 const $input_label_text = ($scope, input_label_text) => _text($scope["#text/0"], input_label_text);
 const $for = /*@__PURE__*/ _for_of_unkeyed("#text/1", "<!><!><!>", "b%", 0, $for_content__$params);
 const $input_item = ($scope, input_item) => $for($scope, [input_item]);
@@ -39,24 +37,18 @@ const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__
 const $count__OR__mode = /*@__PURE__*/ _or(10, ($scope) => {
 	let $item2;
 	if ($scope.mode === 0) {
-		forUntil($scope.count, 0, 1, (i) => {
-			$item2 = attrTags($item2, { content: $item_content2($scope, { i }) });
-		});
+		forUntil($scope.count, 0, 1, (i) => $item2 = attrTags($item2, { content: $item_content2($scope, { i }) }));
 	}
 	$input_item$1($scope["#childScope/3"], $item2);
 	let $item3;
 	if ($scope.mode === 0) {} else if ($scope.mode === 1) {
-		forUntil($scope.count, 0, 1, (i) => {
-			$item3 = attrTags($item3, { content: $item_content3($scope, { i }) });
-		});
+		forUntil($scope.count, 0, 1, (i) => $item3 = attrTags($item3, { content: $item_content3($scope, { i }) }));
 	}
 	$input_item$1($scope["#childScope/4"], $item3);
 	let $item4;
 	if ($scope.mode !== 2) {} else {
 		if ($scope.count) {
-			forUntil($scope.count, 0, 1, (i) => {
-				$item4 = attrTags($item4, { content: $item_content4($scope, { i }) });
-			});
+			forUntil($scope.count, 0, 1, (i) => $item4 = attrTags($item4, { content: $item_content4($scope, { i }) }));
 		}
 	}
 	$input_item$1($scope["#childScope/5"], $item4);
@@ -71,9 +63,7 @@ const $count__OR__mode = /*@__PURE__*/ _or(10, ($scope) => {
 	if ($scope.mode === 0) {
 		$label = attrTag({ text: "zero" });
 	} else {
-		forUntil($scope.count, 0, 1, (i) => {
-			$item6 = attrTags($item6, { content: $item_content6($scope, { i }) });
-		});
+		forUntil($scope.count, 0, 1, (i) => $item6 = attrTags($item6, { content: $item_content6($scope, { i }) }));
 	}
 	$input_label($scope["#childScope/7"], $label);
 	$input_item($scope["#childScope/7"], $item6);
@@ -91,9 +81,7 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 function $setup($scope) {
 	let $item;
 	if (true) {
-		forUntil(3, 0, 1, (i) => {
-			$item = attrTags($item, { content: $item_content($scope, { i }) });
-		});
+		forUntil(3, 0, 1, (i) => $item = attrTags($item, { content: $item_content($scope, { i }) }));
 	}
 	$input_item$1($scope["#childScope/2"], $item);
 	$count($scope, 2);

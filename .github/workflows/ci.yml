@@ -8,13 +8,12 @@ on:
   push:
     branches: [main, v3, v4]
 
-concurrency:
-  group: "${{ github.workflow }}-${{ github.event_name == 'pull_request_target' && github.head_ref || github.ref }}"
-  cancel-in-progress: true
-
 jobs:
   build:
     runs-on: ubuntu-latest
+    concurrency:
+      group: ${{ github.workflow }}-build-${{ github.ref }}
+      cancel-in-progress: true
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
@@ -43,6 +42,9 @@ jobs:
   test:
     runs-on: ubuntu-latest
     name: "test: node@${{ matrix.node }}"
+    concurrency:
+      group: ${{ github.workflow }}-test-${{ matrix.node }}-${{ github.ref }}
+      cancel-in-progress: true
     strategy:
       fail-fast: false
       matrix:
@@ -79,6 +81,10 @@ jobs:
     runs-on: ubuntu-latest
     needs: [build, test]
     if: ${{ github.repository_owner == 'marko-js' && github.event_name == 'push' }}
+    # Never cancelled: a newer push cancels a run's build and test, but waits
+    # for a release that has started instead of cutting off its publish.
+    concurrency:
+      group: ${{ github.workflow }}-release-${{ github.ref }}
     permissions:
       id-token: write
       contents: write
@@ -97,11 +103,21 @@ jobs:
         run: pnpm install --frozen-lockfile
       - name: Release
         id: changesets
-        uses: changesets/action@v1
+        uses: changesets/action@v2
         with:
-          version: pnpm run @ci:version
-          publish: pnpm run @ci:release
-          commit: "[ci] release"
-          title: "[ci] release"
+          version-script: pnpm run @ci:version
+          publish-script: pnpm run @ci:release
+          commit-message: "[ci] release"
+          pr-title: "[ci] release"
+          # Pushes the annotated tags changesets creates; the GitHub API would
+          # create lightweight ones.
+          push-with-git-cli: true
+      - name: Show Marko 6 as the latest marko release
+        # Marko 6 is published as both @marko/runtime-tags and marko; its release
+        # takes the marko name and the Latest badge the last release made would get.
+        if: steps.changesets.outputs.published == 'true'
+        run: |
+          version=$(node -p 'require("./packages/runtime-tags/package.json").version')
+          gh release edit "@marko/runtime-tags@$version" --title "marko@$version" --latest
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ github.token }}

@@ -14,15 +14,15 @@
     },
     "child-b.mjs": {
       "min": 165,
-      "brotli": 124
+      "brotli": 116
     },
     "child-s.mjs": {
       "min": 165,
-      "brotli": 124
+      "brotli": 116
     },
     "shared": {
-      "min": 4534,
-      "brotli": 2266
+      "min": 4514,
+      "brotli": 2253
     }
   },
   "html": {

@@ -2,14 +2,13 @@
 const $template = "<button class=flip>flip</button><ul></ul>";
 const $walks = " b b";
 const $for_content__enabled__OR__selected = /*@__PURE__*/ _or(2, ($scope) => _attr_class_item($scope["#li/0"], "danger", $scope._.enabled && $scope._.selected === $scope["#LoopKey"]));
-const $for_content__enabled = /*@__PURE__*/ _for_closure("#ul/1", $for_content__enabled__OR__selected);
+const $for_content__enabled = /*@__PURE__*/ _for_closure("#ul/1", $for_content__enabled__OR__selected, 5);
 const $for_content__setup = ($scope) => {
 	$for_content__enabled._($scope);
 	$for_content__selected._($scope);
 };
 const $for_content__selected = /*@__PURE__*/ _for_selector("#ul/1", "selected", $for_content__enabled__OR__selected);
-const $for_content__row_label = ($scope, row_label) => _text($scope["#text/1"], row_label);
-const $for_content__$params = ($scope, $params2) => $for_content__row_label($scope, $params2[0]?.label);
+const $for_content__$params = ($scope, $params2) => _text($scope["#text/1"], $params2[0]?.label);
 const $enabled = /*@__PURE__*/ _let("enabled/2", $for_content__enabled);
 const $selected = /*@__PURE__*/ _let("selected/3");
 const $for = /*@__PURE__*/ _for_of("#ul/1", "<li> </li>", " D ", $for_content__setup, $for_content__$params);

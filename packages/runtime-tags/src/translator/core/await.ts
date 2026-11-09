@@ -10,6 +10,7 @@ import {
   assertHasBody,
   assertNoSpreadAttrs,
   assertOnlyValueAttr,
+  coreTagLink,
 } from "../util/assert";
 import { BindingType, createBinding } from "../util/bindings";
 import { initBranchSection } from "../util/branch-tag";
@@ -58,15 +59,8 @@ export default {
     );
     const { node } = tag;
     const tagBody = tag.get("body");
-    const section = ensureSection(tag);
-    const valueAttr = assertOnlyValueAttr(tag, true);
+    const { valueAttr } = assertOnlyValueAttr(tag, true);
     assertHasBody(tag);
-    const tagExtra = (tag.node.extra ??= {}) as ControlFlowTagExtra;
-    const nodeBinding = (tagExtra.nodeBinding = createBinding(
-      "#text",
-      BindingType.dom,
-      section,
-    ));
 
     if (
       node.body.params.length &&
@@ -76,9 +70,17 @@ export default {
       throw tag
         .get("name")
         .buildCodeFrameError(
-          "The [`<await>` tag](https://markojs.com/docs/reference/core-tag#await) only supports a single parameter.",
+          `The ${coreTagLink(tag)} only supports a single parameter.`,
         );
     }
+
+    const section = ensureSection(tag);
+    const tagExtra = (tag.node.extra ??= {}) as ControlFlowTagExtra;
+    const nodeBinding = (tagExtra.nodeBinding = createBinding(
+      "#text",
+      BindingType.dom,
+      section,
+    ));
 
     const bodySection = ensureBodySection(tagBody)!;
     const valueExtra = (valueAttr.value.extra ??= {});

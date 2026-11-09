@@ -5,7 +5,7 @@ const $if_content__item = /*@__PURE__*/ _if_closure(0, 0, ($scope) => {
 	$if_content__item__script($scope);
 });
 const $for_content__if = /*@__PURE__*/ _if(0, "<div></div>", " ", $if_content__item);
-const $for_content__show = /*@__PURE__*/ _for_closure(1, ($scope) => $for_content__if($scope, $scope._.f ? 0 : 1));
+const $for_content__show = /*@__PURE__*/ _for_closure(1, ($scope) => $for_content__if($scope, $scope._.f ? 0 : 1), 6);
 const $show = /*@__PURE__*/ _let(5, $for_content__show);
 const $setup__script$1 = _script("b1", ($scope) => _on($scope.a, "click", function() {
 	$show($scope, !$scope.f);

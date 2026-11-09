@@ -1,17 +1,19 @@
-exports.check = function (marko, markoCompiler, expect, helpers, done) {
+const assert = require("assert/strict");
+
+exports.check = function (marko, markoCompiler, helpers, done) {
   var compiler = require("marko/compiler");
   compiler.configure(); // Use defaults
-  expect(compiler.config.writeVersionComment).to.equal(true);
-  expect(compiler.config.ignoreUnrecognizedTags).to.equal(false);
+  assert.equal(compiler.config.writeVersionComment, true);
+  assert.equal(compiler.config.ignoreUnrecognizedTags, false);
 
   compiler.configure({
     ignoreUnrecognizedTags: true,
   });
-  expect(compiler.config.writeVersionComment).to.equal(true);
-  expect(compiler.config.ignoreUnrecognizedTags).to.equal(true);
+  assert.equal(compiler.config.writeVersionComment, true);
+  assert.equal(compiler.config.ignoreUnrecognizedTags, true);
 
   compiler.configure(); // Use defaults
-  expect(compiler.config.writeVersionComment).to.equal(true);
-  expect(compiler.config.ignoreUnrecognizedTags).to.equal(false);
+  assert.equal(compiler.config.writeVersionComment, true);
+  assert.equal(compiler.config.ignoreUnrecognizedTags, false);
   done();
 };

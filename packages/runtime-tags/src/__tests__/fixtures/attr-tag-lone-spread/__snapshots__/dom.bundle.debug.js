@@ -8,10 +8,9 @@ const $Row_content__input_cell_label = ($scope, input_cell_label) => _text($scop
 const $Row_content__$params = ($scope, $params2) => $Row_content__input($scope, $params2[0]);
 const $Row_content__input = ($scope, input) => $Row_content__input_cell($scope, input.cell);
 const $Row_content__input_cell = ($scope, input_cell) => $Row_content__input_cell_label($scope, input_cell?.label);
-const $input_obj_label = ($scope, input_obj_label) => $Row_content__input_cell_label($scope["#childScope/0"], input_obj_label);
 const $input_obj = ($scope, input_obj) => {
 	_text($scope["#text/1"], Object.getOwnPropertySymbols(input_obj).length);
-	$input_obj_label($scope, input_obj?.label);
+	$Row_content__input_cell_label($scope["#childScope/0"], input_obj?.label);
 };
 const $input = ($scope, input) => $input_obj($scope, input.obj);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, 0, $input);

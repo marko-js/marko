@@ -1,6 +1,6 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 it("should update correctly", function () {
   var $el = document.getElementById("root");
-  expect($el).has.property("textContent", "Is Server: true");
+  assert.equal($el.textContent, "Is Server: true");
 });

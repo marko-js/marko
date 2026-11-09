@@ -134,9 +134,9 @@ export function marker(path: t.NodePath<t.MarkoTag>, binding: Binding) {
 // element, else by a marker of its own.
 export function controlFlowNode(tag: t.NodePath<t.MarkoTag>, section: Section) {
   const extra = (tag.node.extra ??= {});
-  if (getOnlyChildParentTagName(tag)) {
+  const parentTagName = getOnlyChildParentTagName(tag);
+  if (parentTagName) {
     const parentTag = getParentTag(tag)!.node;
-    const parentTagName = (parentTag.name as t.StringLiteral).value;
     return (extra.nodeBinding = (parentTag.extra ??= {}).nodeBinding ??=
       createBinding(
         "#" + parentTagName.toLowerCase(),
@@ -325,7 +325,7 @@ export const [getSectionMeta] = createOutputSectionState<SectionMeta>(
     }
     const { writes, walks, walkComment } = resolveStructure(section);
     const walkLiteral = buildStringExpression(walks, true);
-    if (walkLiteral && (walkLiteral as t.StringLiteral).value !== "") {
+    if (walkLiteral) {
       withLeadingComment(walkLiteral, walkComment.join(", "));
     }
     return {

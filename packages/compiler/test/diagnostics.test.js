@@ -43,6 +43,31 @@ describe("compiler/diagnostics", () => {
     assert.deepEqual(path.diagnostics[0].loc, path.node.loc);
   });
 
+  // As a node a migrator or transform builds.
+  const withoutLoc = (parentPath) => ({
+    node: {},
+    parentPath,
+    hub: parentPath.hub,
+  });
+
+  it("defaults the location to the nearest ancestor with one", () => {
+    const path = stubPath();
+    diagnosticError(withoutLoc(withoutLoc(path)), { label: "e" });
+    assert.deepEqual(path.diagnostics[0].loc, path.node.loc);
+  });
+
+  it("does not default the location to the program", () => {
+    const path = { ...stubPath(), type: "Program" };
+    diagnosticError(withoutLoc(path), { label: "e" });
+    assert.equal(path.diagnostics[0].loc, undefined);
+  });
+
+  it("keeps an explicit null location", () => {
+    const path = stubPath();
+    diagnosticError(path, { label: "e", loc: null });
+    assert.equal(path.diagnostics[0].loc, null);
+  });
+
   describe("fixes", () => {
     it("applies a function fix immediately when nothing is selecting", () => {
       const path = stubPath();

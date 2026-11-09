@@ -1,5 +1,8 @@
 "use strict";
 
+const assert = require("assert/strict");
+
+
 // Regression test for https://github.com/marko-js/marko/issues/3386, plus the
 // `linkAssets`-less fallback.
 //
@@ -31,7 +34,7 @@ function compile(output, hot, link) {
   return compiler.compileFileSync(templatePath, opts).code;
 }
 
-exports.check = function (marko, markoCompiler, expect, snapshot, done) {
+exports.check = function (marko, markoCompiler, snapshot, done) {
   try {
     // Dev (hot) and the unlinked build both drop the facade: no lazy runtime,
     // no dynamic import, `load` attribute stripped.
@@ -42,22 +45,14 @@ exports.check = function (marko, markoCompiler, expect, snapshot, done) {
       var label = scenario[0];
       ["dom", "html"].forEach(function (output) {
         var code = compile(output, scenario[1], scenario[2]);
-        expect(code, output + " " + label + " output").to.not.match(
-          /load-tag-browser|withLoadAssets|import\(/,
-        );
-        expect(code, output + " " + label + " output").to.not.contain(
-          "with { load",
-        );
+        assert.doesNotMatch(code, /load-tag-browser|withLoadAssets|import\(/, output + " " + label + " output");
+        assert.doesNotMatch(code, /with \{ load/, output + " " + label + " output");
       });
     });
 
     // Production (non-hot, linked): lazy loading is unchanged.
-    expect(compile("dom", false), "dom production output").to.contain(
-      "load-tag-browser",
-    );
-    expect(compile("html", false), "html production output").to.contain(
-      "withLoadAssets",
-    );
+    assert.match(compile("dom", false), /load-tag-browser/, "dom production output");
+    assert.match(compile("html", false), /withLoadAssets/, "html production output");
 
     done();
   } catch (err) {

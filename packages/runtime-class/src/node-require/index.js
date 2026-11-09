@@ -1,8 +1,7 @@
 "use strict";
 // eslint-disable-next-line no-constant-binary-expression
 const complain = "MARKO_DEBUG" && require("complain");
-const path = require("path");
-const resolveFrom = require("resolve-from");
+const { createRequire } = require("module");
 const requiredCompilerOptions = { modules: "cjs" };
 const defaultCompilerOptions = {
   // eslint-disable-next-line no-constant-condition
@@ -67,9 +66,9 @@ function install(options) {
 
   function markoRequireExtension(module, filename) {
     // Resolve the appropriate compiler relative to the location of the
-    // marko template file on disk using the "resolve-from" module.
-    var dirname = path.dirname(filename);
-    var markoCompilerModulePath = resolveFrom(dirname, "@marko/compiler");
+    // marko template file on disk.
+    var markoCompilerModulePath =
+      createRequire(filename).resolve("@marko/compiler");
     var markoCompiler = require(markoCompilerModulePath);
 
     // Now use the appropriate Marko compiler to compile the Marko template

@@ -11,8 +11,7 @@ const $template = "<!><!><button id=toggle></button>";
 const $walks = "b%b b";
 const $x_content = /*@__PURE__*/ _content("__tests__/template.marko_1*content", "Fallback Body");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $x_content);
-const $x = $dynamicTag;
-const $show = /*@__PURE__*/ _let("show/2", ($scope) => $x($scope, $scope.show ? custom_tag_default : null));
+const $show = /*@__PURE__*/ _let("show/2", ($scope) => $dynamicTag($scope, $scope.show ? custom_tag_default : null));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$show($scope, !$scope.show);
 }));

@@ -2,7 +2,7 @@
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	let hide = undefined;
+	let hide = void 0;
 	_if(() => {
 		if (!hide) {
 			const $scope1_id = _scope_id();

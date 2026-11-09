@@ -17,6 +17,7 @@ import {
 import { callRuntime, type HTMLRuntimeHelpers } from "./runtime";
 import {
   getParamReasonGroupIndex,
+  isOptionalBranch,
   isSameOrAncestorSection,
   type ParamReasonGroup,
   reduceParamGroups,
@@ -26,8 +27,6 @@ import { findSectionSlot, findSlot, type Slot, SlotKind } from "./slots";
 import { compareSources, type Sources } from "./sources";
 import { createOutputSectionState } from "./state";
 import { withLeadingComment } from "./with-comment";
-
-type GuardedReason = Sources & { state: undefined };
 
 export function isSameReason(a: Reason | undefined, b: Reason | undefined) {
   // Reasons read always match whatever their sources: both guard as `1`.
@@ -45,11 +44,6 @@ const groupCheckPrefixes = {
 } satisfies Partial<Record<HTMLRuntimeHelpers, string>>;
 type GroupCheck = keyof typeof groupCheckPrefixes;
 
-interface SectionGuards {
-  shares: Map<GroupCheck, GuardShares>;
-  declarators: t.VariableDeclarator[];
-}
-
 // Keyed by param reason group: a section's guard for a set of params is
 // that group's check, whatever else the reason reads.
 interface GuardShares {
@@ -57,17 +51,15 @@ interface GuardShares {
   pending: Map<number, t.ParenthesizedExpression>;
 }
 
-const [getSectionGuards] = createOutputSectionState<SectionGuards>(
-  (section) => ({
-    shares: new Map(),
-    declarators: [
-      t.variableDeclarator(
-        scopeReasonIdentifier(section),
-        callRuntime("_scope_reason"),
-      ),
-    ],
-  }),
-);
+const [getSectionGuards] = createOutputSectionState((section: Section) => ({
+  shares: new Map<GroupCheck, GuardShares>(),
+  declarators: [
+    t.variableDeclarator(
+      scopeReasonIdentifier(section),
+      callRuntime("_scope_reason"),
+    ),
+  ],
+}));
 
 // Packs groups' 2-bit values into a call site's reason (a keyed object past
 // 15 groups); one known `0` still makes the reason an explicit `0`.
@@ -132,6 +124,18 @@ export function getWriteReason(binding: Binding) {
 // A branch's write reason: whether the server writes the scope it resumes.
 export function getBranchWriteReason(section: Section) {
   return findSectionSlot(section, SlotKind.Branch)?.reason;
+}
+
+// Resume joins a branch to its parent at the marker its tag writes wherever the
+// client reads its node, which also resumes the branch.
+export function isBranchAlwaysMarked(section: Section) {
+  return (
+    isOptionalBranch(section) &&
+    getWriteBit(
+      section.parent!,
+      getWriteReason(section.branch.tag.nodeBinding),
+    ) === 1
+  );
 }
 
 export function getWriteGuard(
@@ -210,7 +214,6 @@ export function isEverWritten(section: Section, reason: undefined | Reason) {
     : !!ownReason;
 }
 
-// The constant a reason's guard folds to: `0` unwritten, `1` always written.
 // Whether a guard on `reason` in a known tag's template writes for every render
 // of `call` (in `callSection`): always there, or by a param group it always passes.
 export function isWrittenForCall(
@@ -245,6 +248,7 @@ export function isWrittenForCall(
   );
 }
 
+// The constant a reason's guard folds to: `0` unwritten, `1` always written.
 export function getWriteBit(section: Section, reason: undefined | Reason) {
   return isDynamicWriteGuard(section, reason)
     ? getGroupsBit(reason.param)
@@ -296,7 +300,10 @@ function orGuard(guard: t.Expression | undefined, other: t.Expression) {
   return guard ? t.logicalExpression("||", guard, other) : other;
 }
 
-function andGuard(guard: t.Expression | undefined | false, expr: t.Expression) {
+export function andGuard(
+  guard: t.Expression | undefined | false,
+  expr: t.Expression,
+) {
   return guard ? t.logicalExpression("&&", guard, expr) : expr;
 }
 
@@ -341,7 +348,7 @@ function getOrShareSectionGuard(
 function isDynamicWriteGuard(
   section: Section,
   reason: undefined | Reason,
-): reason is GuardedReason {
+): reason is Sources & { state: undefined } {
   return isGuardedReason(reason) && !isCrossSection(section, reason);
 }
 

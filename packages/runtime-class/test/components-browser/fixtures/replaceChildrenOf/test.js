@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index.marko"));
@@ -8,11 +8,11 @@ module.exports = function (helpers) {
   var counter = require("./components/app-counter").default;
 
   var renderTarget = component.getEl("renderTarget");
-  expect(renderTarget.innerHTML).to.contain("Count: 0");
+  assert.match(renderTarget.innerHTML, /Count: 0/);
 
   counter.renderSync({ value: 99 }).replaceChildrenOf(renderTarget);
 
-  expect(renderTarget.innerHTML).to.not.contain("Count: 0");
-  expect(renderTarget.innerHTML).to.contain("Count: 99");
-  expect(initialCounter.isDestroyed()).to.equal(true);
+  assert.doesNotMatch(renderTarget.innerHTML, /Count: 0/);
+  assert.match(renderTarget.innerHTML, /Count: 99/);
+  assert.equal(initialCounter.isDestroyed(), true);
 };

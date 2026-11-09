@@ -165,7 +165,7 @@ Imperative libs (charts, maps) needing mount/update/destroy: use `<lifecycle>`, 
 <canvas/canvas/>
 <lifecycle
   onMount() { return { chart: new Chart(canvas(), data) } }
-  onUpdate() { this.chart.setData(data) }         // re-runs when `data` changes
+  onUpdate() { this.chart.setData(data) }         // runs when anything its attributes read changes
   onDestroy() { this.chart.destroy() }
 />
 ```

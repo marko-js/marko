@@ -46,11 +46,9 @@ let $load_Child_tag_input_id = /*@__PURE__*/ _load_signal(($_) => import("./v:ch
 let $load_Reordered_setup = /*@__PURE__*/ _load_setup(($_) => import("./v:reordered.marko.setup.mjs"));
 let $load_Reordered_tag_input_id = /*@__PURE__*/ _load_signal(($_) => import("./v:reordered.marko.input_id.mjs"));
 const $await_content3__setup = ($scope) => $load_Child_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
-const $await_content3__v = ($scope, v) => $load_Child_tag_input_id($scope["#childScope/1"], v);
-const $await_content3__$params = ($scope, $params4) => $await_content3__v($scope, $params4[0]);
+const $await_content3__$params = ($scope, $params4) => $load_Child_tag_input_id($scope["#childScope/1"], $params4[0]);
 const $await_content2__setup = ($scope) => $load_Reordered_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
-const $await_content2__v = ($scope, v) => $load_Reordered_tag_input_id($scope["#childScope/1"], v);
-const $await_content2__$params = ($scope, $params3) => $await_content2__v($scope, $params3[0]);
+const $await_content2__$params = ($scope, $params3) => $load_Reordered_tag_input_id($scope["#childScope/1"], $params3[0]);
 const $placeholder_content = _content("__tests__/template.marko_3*content", "loading");
 const $await_content2 = /*@__PURE__*/ _await_content("#text/0", "<!><!><!>", "b%/&", $await_content2__setup);
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content2__$params);
@@ -59,8 +57,7 @@ const $try_content__setup = ($scope) => {
 	$try_content__await_promise($scope, resolveAfter("c", 2));
 };
 const $await_content__setup = ($scope) => $load_Child_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
-const $await_content__v = ($scope, v) => $load_Child_tag_input_id($scope["#childScope/1"], v);
-const $await_content__$params = ($scope, $params2) => $await_content__v($scope, $params2[0]);
+const $await_content__$params = ($scope, $params2) => $load_Child_tag_input_id($scope["#childScope/1"], $params2[0]);
 const $await_content = /*@__PURE__*/ _await_content("#text/2", "<!><!><!>", "b%/&", $await_content__setup);
 const $await_promise = /*@__PURE__*/ _await_promise("#text/2", $await_content__$params);
 const $try = /*@__PURE__*/ _try("#text/3", "<!><!><!>", "b%", $try_content__setup, $placeholder_content);

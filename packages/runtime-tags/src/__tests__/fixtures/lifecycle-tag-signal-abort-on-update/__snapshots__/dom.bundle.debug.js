@@ -3,7 +3,7 @@ const $template = "<button> </button>";
 const $walks = " D l";
 const $count__script = _script("__tests__/template.marko_0_count#2", ($scope) => _lifecycle($scope, { onUpdate: function() {
 	const n = $scope.count;
-	$signal($scope, 0).onabort = () => console.log("abort", n);
+	onAbort($scope, 0, () => console.log("abort", n));
 } }));
 const $count = /*@__PURE__*/ _let("count/2", ($scope) => {
 	$signalReset($scope, 0);

@@ -25,7 +25,7 @@ const $if = /*@__PURE__*/ _if("#div/0", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)(
 const $m = /*@__PURE__*/ _let("m/1", ($scope) => $if($scope, $scope.m ? 0 : 1));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => $m($scope, 1));
 function $setup($scope) {
-	$m($scope, undefined);
+	$m($scope);
 	$setup__script($scope);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, " b", $setup);

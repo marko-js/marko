@@ -42,9 +42,8 @@ const $classlayout_content__setup__script = _script("__tests__/template.marko_1"
 	$scope.onBump();
 }));
 const $classlayout_content__setup = $classlayout_content__setup__script;
-const $classlayout_content__count = ($scope, count) => _text($scope["#text/1"], count);
 const $classlayout_content__$params = ($scope, $params2) => {
-	$classlayout_content__count($scope, $params2[0]);
+	_text($scope["#text/1"], $params2[0]);
 	$classlayout_content__onBump($scope, $params2[1]);
 };
 const $classlayout_content__onBump = /*@__PURE__*/ _const("onBump");

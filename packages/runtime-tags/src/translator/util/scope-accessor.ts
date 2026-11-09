@@ -66,7 +66,7 @@ export function getScopeAccessorLiteral(
   encoded?: boolean,
   includeId?: boolean,
 ) {
-  const canonicalBinding = getCanonicalBinding(binding)!;
+  const canonicalBinding = getCanonicalBinding(binding);
   return encoded &&
     isOptimize() &&
     canonicalBinding.type !== BindingType.constant
@@ -79,7 +79,7 @@ export function getScopeAccessor(
   encoded?: boolean,
   includeId?: boolean,
 ) {
-  const canonicalBinding = getCanonicalBinding(binding)!;
+  const canonicalBinding = getCanonicalBinding(binding);
   if (canonicalBinding.type === BindingType.constant) {
     return canonicalBinding.scopeAccessor ?? canonicalBinding.name;
   } else if (isOptimize()) {
@@ -112,7 +112,7 @@ export function getPrefixedScopeAccessor(
   binding: Binding,
   prefix: AccessorPrefix,
 ) {
-  const canonicalBinding = getCanonicalBinding(binding)!;
+  const canonicalBinding = getCanonicalBinding(binding);
   if (isOptimize()) {
     switch (prefix) {
       case getAccessorPrefix().TagVariableChange:
@@ -163,8 +163,10 @@ function getSectionInstancesAccessor(section: Section) {
   // Only hoists reach the prefix + section id fallback; a reserved numeric id
   // would be a byte shorter, but hoists are too rare for that to pay.
   return isOptionalBranch(section)
-    ? getAccessorPrefix().BranchScopes +
-        getScopeAccessor(section.branch.tag.nodeBinding)
+    ? getPrefixedScopeAccessor(
+        section.branch.tag.nodeBinding,
+        getAccessorPrefix().BranchScopes,
+      )
     : getAccessorPrefix().ClosureScopes + section.id;
 }
 

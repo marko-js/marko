@@ -1,16 +1,16 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), {});
 
-  expect(helpers.targetEl.querySelector(".root") != null).to.equal(true);
+  assert.equal(helpers.targetEl.querySelector(".root") != null, true);
 
-  expect(component.detachEvent).to.equal(undefined);
+  assert.equal(component.detachEvent, undefined);
   component.destroy();
 
-  expect(helpers.targetEl.querySelector(".root") != null).to.equal(true);
-  expect(component.detachEvent != null).to.equal(true);
+  assert.equal(helpers.targetEl.querySelector(".root") != null, true);
+  assert.equal(component.detachEvent != null, true);
 
   component.detachEvent.detach();
-  expect(helpers.targetEl.querySelector(".root") == null).to.equal(true);
+  assert.equal(helpers.targetEl.querySelector(".root") == null, true);
 };

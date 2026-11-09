@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var counter = 0;
@@ -7,28 +7,16 @@ module.exports = function (helpers) {
     counter: counter,
   });
 
-  expect(component.el.querySelector(".unpreserved-counter").innerHTML).to.equal(
-    "0",
-  );
-  expect(
-    component.el.querySelector(".preserve").getAttribute("data-counter"),
-  ).to.equal("0");
-  expect(component.el.querySelector(".preserved-counter").innerHTML).to.equal(
-    "0",
-  );
+  assert.equal(component.el.querySelector(".unpreserved-counter").innerHTML, "0");
+  assert.equal(component.el.querySelector(".preserve").getAttribute("data-counter"), "0");
+  assert.equal(component.el.querySelector(".preserved-counter").innerHTML, "0");
 
   component.input = {
     counter: counter + 1,
   };
   component.update();
 
-  expect(component.el.querySelector(".unpreserved-counter").innerHTML).to.equal(
-    "1",
-  );
-  expect(
-    component.el.querySelector(".preserve").getAttribute("data-counter"),
-  ).to.equal("1");
-  expect(component.el.querySelector(".preserved-counter").innerHTML).to.equal(
-    "0",
-  );
+  assert.equal(component.el.querySelector(".unpreserved-counter").innerHTML, "1");
+  assert.equal(component.el.querySelector(".preserve").getAttribute("data-counter"), "1");
+  assert.equal(component.el.querySelector(".preserved-counter").innerHTML, "0");
 };

@@ -19,7 +19,7 @@ export default {
     assertNoArgs(tag);
     assertNoParams(tag);
     assertNoBodyContent(tag);
-    const valueAttr = assertOnlyValueAttr(tag);
+    const { valueAttr } = assertOnlyValueAttr(tag);
 
     const section = ensureSection(tag);
     if (valueAttr) {

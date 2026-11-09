@@ -1,12 +1,12 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 it("should update correctly", function () {
   var component = window.component;
   var $button = component.getEl("button");
-  expect($button.textContent).to.eql("button label");
+  assert.deepEqual($button.textContent, "button label");
 
   $button.click();
   component.update();
 
-  expect($button.textContent).to.eql("button labeltest");
+  assert.deepEqual($button.textContent, "button labeltest");
 });

@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 exports.templateData = {};
 
@@ -9,8 +9,8 @@ exports.checkError = function (e) {
     "",
   );
   //includes the tag it broke on
-  expect(message).to.contain("test-hello");
+  assert.match(message, /test-hello/);
 
   //includes the line number of the template
-  expect(message).to.contain("template.marko:1:2");
+  assert.match(message, /template\.marko:1:2/);
 };

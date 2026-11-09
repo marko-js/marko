@@ -103,11 +103,8 @@ export function dynamicImport(
     : load;
 }
 
-// A `src/{dom,html}/*.feat.ts` module is a compiler-injected side-effect
-// import: it enables optional runtime behavior that referenced imports alone
-// cannot keep alive under tree shaking (eg catch enablement).
-// Every dom feature module, listed as a runtime entry so a dev optimizer
-// sees each `.feat` chunk up front instead of discovering it from a template.
+// The compiler-injected `src/dom/*.feat.ts` modules, enabling behavior no referenced import
+// keeps alive; each is a runtime entry so a dev optimizer sees it before a template imports it.
 export const domRuntimeFeatures = [
   "catch",
   "controllable",
@@ -173,7 +170,7 @@ export function absentArg(value: 0 | 1) {
 
 const absentArgs = new WeakSet<t.Node>();
 
-function trimFalsyArgs<A extends t.Node>(args: (A | Falsy)[]) {
+export function trimFalsyArgs<A extends t.Node>(args: (A | Falsy)[]) {
   const filteredArgs = [];
   for (let i = args.length; i--;) {
     const arg = args[i];

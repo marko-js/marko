@@ -1,15 +1,15 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index.marko"), {});
 
   var foo = component.getComponent("foo");
-  expect(foo.el.innerHTML).to.contain("count:0");
+  assert.match(foo.el.innerHTML, /count:0/);
 
   foo.state.count++;
   foo.update();
 
-  expect(component.isDestroyed()).to.equal(false);
-  expect(foo.isDestroyed()).to.equal(false);
-  expect(foo.el.innerHTML).to.contain("count:1");
+  assert.equal(component.isDestroyed(), false);
+  assert.equal(foo.isDestroyed(), false);
+  assert.match(foo.el.innerHTML, /count:1/);
 };

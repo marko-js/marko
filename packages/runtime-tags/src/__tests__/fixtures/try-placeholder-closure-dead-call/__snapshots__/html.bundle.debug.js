@@ -31,6 +31,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				on
 			});
 			_subscribe($on__closures, _scope($scope2_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "9:4"));
+			_resume_branch($scope2_id);
 		});
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "7:2");
 	}, () => {
@@ -39,5 +40,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html("loading...");
 	}, void 0, "__tests__/template.marko_3*content");
 	_scope($scope0_id, { "ClosureScopes:on/2": $on__closures }, "__tests__/template.marko", 0);
-	_resume_branch($scope0_id);
 }, 1);

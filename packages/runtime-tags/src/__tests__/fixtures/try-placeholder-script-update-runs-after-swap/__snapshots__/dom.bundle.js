@@ -1,6 +1,5 @@
 // template.marko
-const $await_content__v = ($scope, v) => _text($scope.a, v);
-const $await_content__$params = ($scope, $params2) => $await_content__v($scope, $params2[0]);
+const $await_content__$params = ($scope, $params2) => _text($scope.a, $params2[0]);
 const $placeholder_content = _content("a3", "LOADING");
 const $try_content__n__script = _script("a0", ($scope) => console.log("script n=" + $scope._.d + " connected=" + $scope.a.isConnected));
 const $try_content__n = /*@__PURE__*/ _closure_get(5, ($scope) => {

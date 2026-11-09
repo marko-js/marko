@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var components = [];
@@ -17,6 +17,6 @@ module.exports = function (helpers) {
     ids[component.id] = true;
   });
 
-  expect(components.length).to.equal(3);
-  expect(Object.keys(ids).length).to.equal(components.length);
+  assert.equal(components.length, 3);
+  assert.equal(Object.keys(ids).length, components.length);
 };

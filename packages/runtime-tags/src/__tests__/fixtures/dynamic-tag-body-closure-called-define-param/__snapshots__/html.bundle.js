@@ -40,7 +40,6 @@ var template_default = _template("a", (input) => {
 			d: $wi__input_on && label,
 			_: _scope_with_id($scope0_id)
 		}), "a2", $wg__input_on);
-		$wg__input_on || $wi__input_on__OR__input_note && _resume_branch($scope1_id);
 	}, $scope0_id) };
 	_dynamic_tag($scope0_id, "a", input.on ? card_default : "div", {}, _content_resume("a3", () => {
 		const $scope3_id = _scope_id();

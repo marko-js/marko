@@ -2,8 +2,7 @@
 const $template$1 = "<!> ";
 const $walks$1 = "%c";
 const $setup$1 = ($_) => {};
-const $value = ($scope, value) => _text($scope["#text/0"], value);
-const $input_value = $value;
+const $input_value = ($scope, input_value) => _text($scope["#text/0"], input_value);
 const $input = ($scope, input) => $input_value($scope, input.value);
 var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $template$1, "%c", 0, $input);
 

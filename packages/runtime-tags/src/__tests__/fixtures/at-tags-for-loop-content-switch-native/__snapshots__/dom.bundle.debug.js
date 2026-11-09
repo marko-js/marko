@@ -8,8 +8,7 @@ const $for_content__setup = ($scope) => {
 	_attr($scope["#button/0"], "data-tab", $scope["#LoopKey"]);
 	$for_content__setup__script($scope);
 };
-const $for_content__tab_title = ($scope, tab_title) => _text($scope["#text/1"], tab_title);
-const $for_content__$params = ($scope, $params2) => $for_content__tab_title($scope, $params2[0]?.title);
+const $for_content__$params = ($scope, $params2) => _text($scope["#text/1"], $params2[0]?.title);
 const $i__OR__tabs__script = _script("__tests__/tags/tabs.marko_0_i#5_tabs#6", ($scope) => _attrs_script($scope, "#section/1"));
 const $i__OR__tabs = /*@__PURE__*/ _or(7, ($scope) => {
 	_attrs_content($scope, "#section/1", $scope.tabs[$scope.i]);
@@ -44,12 +43,10 @@ _resumed["__tests__/template.marko_1*content"] = $tab_content;
 function $setup($scope) {
 	$setup$1($scope["#childScope/0"]);
 	let $tab;
-	forOf(["a", "b"], (t) => {
-		$tab = attrTags($tab, {
-			title: t,
-			content: $tab_content($scope, { t })
-		});
-	});
+	forOf(["a", "b"], (t) => $tab = attrTags($tab, {
+		title: t,
+		content: $tab_content($scope, { t })
+	}));
 	$input_tab($scope["#childScope/0"], $tab);
 }
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

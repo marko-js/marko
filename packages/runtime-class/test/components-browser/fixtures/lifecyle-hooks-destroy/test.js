@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 var hooks = require("./hooks");
 
 module.exports = function (helpers) {
@@ -8,5 +8,5 @@ module.exports = function (helpers) {
 
   component.destroy();
 
-  expect(hooks.getHookNames()).deep.equal(["root:destroy", "foo:destroy"]);
+  assert.deepEqual(hooks.getHookNames(), ["root:destroy", "foo:destroy"]);
 };

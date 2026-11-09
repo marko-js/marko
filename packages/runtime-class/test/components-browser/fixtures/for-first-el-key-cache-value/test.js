@@ -1,27 +1,25 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), {});
 
-  expect(component.callCount).to.equal(2);
+  assert.equal(component.callCount, 2);
 
   var fooEl = component.getEl("foo");
   var fooNextSibling = fooEl.nextElementSibling;
   var barEl = component.getEl("bar");
   var barNextSibling = barEl.nextElementSibling;
 
-  expect(fooNextSibling.nextElementSibling).to.equal(barEl);
+  assert.equal(fooNextSibling.nextElementSibling, barEl);
 
   component.swap();
   component.update();
 
-  expect(component.callCount).to.equal(4);
+  assert.equal(component.callCount, 4);
 
-  expect(component.getEl("bar").nextElementSibling.nextElementSibling).to.equal(
-    component.getEl("foo"),
-  );
-  expect(component.getEl("foo")).to.equal(fooEl);
-  expect(component.getEl("foo").nextElementSibling).to.equal(fooNextSibling);
-  expect(component.getEl("bar")).to.equal(barEl);
-  expect(component.getEl("bar").nextElementSibling).to.equal(barNextSibling);
+  assert.equal(component.getEl("bar").nextElementSibling.nextElementSibling, component.getEl("foo"));
+  assert.equal(component.getEl("foo"), fooEl);
+  assert.equal(component.getEl("foo").nextElementSibling, fooNextSibling);
+  assert.equal(component.getEl("bar"), barEl);
+  assert.equal(component.getEl("bar").nextElementSibling, barNextSibling);
 };

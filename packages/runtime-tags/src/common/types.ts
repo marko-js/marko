@@ -1,5 +1,5 @@
 import type { PendingRender } from "../dom/queue";
-import type { Renderer as ClientRenderer, Renderer } from "../dom/renderer";
+import type { Renderer } from "../dom/renderer";
 import type { SignalFn } from "../dom/signals";
 import type { AccessorProp } from "./accessor.debug";
 import * as ControlledType from "./constants/controlled-type";
@@ -15,7 +15,7 @@ export interface BranchScope extends Scope {
   [AccessorProp.ParentBranch]: BranchScope | undefined;
   [AccessorProp.AbortScopes]: Set<Scope> | undefined;
   [AccessorProp.BranchScopes]: Set<BranchScope> | undefined;
-  [AccessorProp.Renderer]: ClientRenderer | string;
+  [AccessorProp.Renderer]: Renderer | string;
   [AccessorProp.AwaitCounter]: AwaitCounter | undefined;
   [AccessorProp.PendingEffectScopes]: Scope[] | null | undefined;
   [AccessorProp.PlaceholderBranch]: BranchScope | undefined | 0;
@@ -41,6 +41,7 @@ export interface Scope {
   [AccessorProp.Subscriptions]: Set<Scope>[] | undefined;
   [x: `___${string}`]: never;
   [x: string | number]: any;
+  [x: symbol]: unknown;
 }
 
 type ResumeSymbol = ResumeSymbol.Value;
@@ -57,7 +58,6 @@ export {
   AccessorProp,
   ClosureScopesProp,
   ClosureSignalProp,
-  KeyedScopesProp,
   PendingRenderProp,
   RendererProp,
 } from "./accessor.debug";

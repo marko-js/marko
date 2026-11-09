@@ -1,14 +1,13 @@
 import fs from "fs";
 import path from "path";
+import { styleText } from "util";
 import zlib from "zlib";
 
 import * as compiler from "@marko/compiler";
-import kleur from "kleur";
 import { format } from "oxfmt";
 import { build, type OutputAsset, type OutputChunk } from "rolldown";
 import { minifySync } from "rolldown/utils";
 import { table } from "table";
-import glob from "tiny-glob";
 
 const compiledOutputDir = path.join(process.cwd(), ".sizes");
 
@@ -85,7 +84,7 @@ function renderTable(
   measure: keyof Sizes,
 ) {
   const columns = ["name", "user", "runtime", "total"].map((n) =>
-    kleur.bold(n),
+    styleText("bold", n),
   );
   let unsynced = false;
   return table(
@@ -97,7 +96,7 @@ function renderTable(
           p = previous.find((p) => p.name === result.name)!;
         }
         return [
-          kleur.cyan(result.name),
+          styleText("cyan", result.name),
           renderSize(result.user, !unsynced ? p.user : undefined, measure),
           renderSize(
             result.runtime,
@@ -129,11 +128,11 @@ function renderSize(
       const delta = current[measure] - previous[measure];
       str += "\n";
       if (delta === 0) {
-        str += kleur.dim(delta);
+        str += styleText("dim", "0");
       } else if (delta < 0) {
-        str += kleur.green().dim(delta);
+        str += styleText(["green", "dim"], String(delta));
       } else {
-        str += kleur.red().dim("+" + delta);
+        str += styleText(["red", "dim"], "+" + delta);
       }
     }
   }
@@ -227,10 +226,11 @@ async function bundleRuntime() {
 
 async function bundleUserCode(examplePath: string, hydrate: boolean) {
   const cache = new Map<unknown, unknown>();
-  const optimizeKnownTemplates: string[] = await glob(
-    path.join(path.dirname(examplePath), "**/*.marko"),
-    { absolute: true },
-  );
+  // Sorted: short template ids follow this order, so it must not depend on the
+  // order a directory lists its files.
+  const optimizeKnownTemplates = fs
+    .globSync(path.join(path.dirname(examplePath), "**/*.marko"))
+    .sort();
   const { output } = await build({
     input: virtualEntry,
     resolve: { alias: { "@marko/runtime-tags/dom": runtimePath } },
@@ -347,9 +347,9 @@ function brotli(src: string): Promise<Buffer> {
 function stripModuleCode(code: string) {
   return (
     code
-      // Drop content hashes from dist chunk names in region banners so runtime
+      // Drop content hashes from dist chunk names in module banners so runtime
       // edits don't churn every snapshot.
-      .replace(/^(\/\/#region .*?)-[\w-]{8}(\.[cm]?js)$/gm, "$1$2")
+      .replace(/^(\/\/ .*?)-[\w-]{8}(\.[cm]?js)$/gm, "$1$2")
       .replace(
         /\s*(?:export\s*\{[^}]+\}|import\s*.*\s*from\s*['"][^'"]+['"]);?\s*/gm,
         "",

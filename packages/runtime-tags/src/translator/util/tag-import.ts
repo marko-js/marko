@@ -49,9 +49,13 @@ export function getImportFacts(importDecl: t.NodePath<t.ImportDeclaration>) {
 export function getLoadAttr(importDecl: t.NodePath<t.ImportDeclaration>) {
   return importDecl.node.attributes?.length
     ? (importDecl.get("attributes") as t.NodePath<t.ImportAttribute>[]).find(
-        (p) => getLiteralName(p.node.key) === "load",
+        isLoadAttr,
       )
     : undefined;
+}
+
+function isLoadAttr(attr: t.NodePath<t.ImportAttribute>) {
+  return getLiteralName(attr.node.key) === "load";
 }
 
 function getLoadImportConfig(

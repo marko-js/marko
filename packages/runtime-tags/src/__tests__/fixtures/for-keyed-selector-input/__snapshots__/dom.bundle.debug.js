@@ -7,9 +7,8 @@ const $for_content__setup = ($scope) => {
 	$for_content__input_selected._($scope);
 	$for_content__enabled._($scope);
 };
-const $for_content__enabled = /*@__PURE__*/ _for_closure("#ul/1", $for_content__input_selected__OR__enabled);
-const $for_content__row_label = ($scope, row_label) => _text($scope["#text/1"], row_label);
-const $for_content__$params = ($scope, $params2) => $for_content__row_label($scope, $params2[0]?.label);
+const $for_content__enabled = /*@__PURE__*/ _for_closure("#ul/1", $for_content__input_selected__OR__enabled, 8);
+const $for_content__$params = ($scope, $params2) => _text($scope["#text/1"], $params2[0]?.label);
 const $enabled = /*@__PURE__*/ _let("enabled/6", $for_content__enabled);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$enabled($scope, !$scope.enabled);

@@ -9,7 +9,7 @@ ab
 ```
 ## Change
 ```
-INSERT: ::text@0 + ::text("b")
+UPDATE: ::text "a" => "ab"
 ```
 
 # Update
@@ -18,7 +18,7 @@ abc
 ```
 ## Change
 ```
-INSERT: ::text@1 + ::text("c")
+UPDATE: ::text "ab" => "abc"
 ```
 
 # Update
@@ -27,5 +27,5 @@ abcdefghijklm
 ```
 ## Change
 ```
-INSERT: ::text@2 + ::text("defghijklm")
+UPDATE: ::text "abc" => "abcdefghijklm"
 ```

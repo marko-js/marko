@@ -1,11 +1,11 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), {
     colors: ["red", "green", "blue"],
   });
 
-  expect(helpers.targetEl.querySelectorAll(".color").length).to.equal(3);
+  assert.equal(helpers.targetEl.querySelectorAll(".color").length, 3);
 
   var redComponent = component.getComponent("red");
   var greenComponent = component.getComponent("green");
@@ -16,26 +16,26 @@ module.exports = function (helpers) {
   var blueEl = blueComponent.getEl("root");
 
   var ul = component.getEl("root");
-  expect(ul != null).to.equal(true);
+  assert.equal(ul != null, true);
 
-  expect(redEl.parentNode).to.equal(ul);
-  expect(greenEl.parentNode).to.equal(ul);
-  expect(blueEl.parentNode).to.equal(ul);
+  assert.equal(redEl.parentNode, ul);
+  assert.equal(greenEl.parentNode, ul);
+  assert.equal(blueEl.parentNode, ul);
 
   component.input = { colors: ["red", "blue"] };
   component.update();
 
-  expect(redEl.parentNode).to.equal(ul);
-  expect(greenEl.parentNode).to.equal(ul);
-  expect(blueEl.parentNode).to.equal(ul);
+  assert.equal(redEl.parentNode, ul);
+  assert.equal(greenEl.parentNode, ul);
+  assert.equal(blueEl.parentNode, ul);
 
-  expect(helpers.targetEl.querySelectorAll(".color").length).to.equal(3);
+  assert.equal(helpers.targetEl.querySelectorAll(".color").length, 3);
 
-  expect(redComponent.detachEvent == null).to.equal(true);
-  expect(greenComponent.detachEvent != null).to.equal(true);
-  expect(blueComponent.detachEvent == null).to.equal(true);
+  assert.equal(redComponent.detachEvent == null, true);
+  assert.equal(greenComponent.detachEvent != null, true);
+  assert.equal(blueComponent.detachEvent == null, true);
 
   greenComponent.detachEvent.detach();
 
-  expect(helpers.targetEl.querySelectorAll(".color").length).to.equal(2);
+  assert.equal(helpers.targetEl.querySelectorAll(".color").length, 2);
 };

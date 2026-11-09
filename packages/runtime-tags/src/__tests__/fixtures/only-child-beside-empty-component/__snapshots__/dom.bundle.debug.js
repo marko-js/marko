@@ -10,8 +10,7 @@ var noop_default = /*@__PURE__*/ _template("__tests__/tags/noop.marko", "", "", 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0, _w1) => `<div>${_w0}${_w1}</div><ul></ul><button>toggle</button>`)("", "");
 const $walks = /*@__PURE__*/ ((_w0, _w1) => ` /${_w0}&/${_w1}&b /&b b`)("", "");
-const $for_content__item = ($scope, item) => _text($scope["#text/0"], item);
-const $for_content__$params = ($scope, $params3) => $for_content__item($scope, $params3[0]);
+const $for_content__$params = ($scope, $params3) => _text($scope["#text/0"], $params3[0]);
 const $Nothing_content__v__script = _script("__tests__/template.marko_1_v#2", ($scope) => void $scope.v);
 const $Nothing_content__v = /*@__PURE__*/ _const("v", $Nothing_content__v__script);
 const $Nothing_content__$params = ($scope, $params2) => $Nothing_content__$temp($scope, $params2[0]);

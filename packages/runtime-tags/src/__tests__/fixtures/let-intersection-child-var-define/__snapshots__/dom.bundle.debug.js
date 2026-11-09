@@ -19,8 +19,6 @@ function $setup($scope) {
 	$b($scope, 0);
 	$setup__script($scope);
 }
-const $valueChange = ($scope) => (_new_internal) => {
-	$Let_content__internal($scope, _new_internal);
-};
+const $valueChange = ($scope) => (_new_internal) => $Let_content__internal($scope, _new_internal);
 _resumed["__tests__/template.marko_1/valueChange"] = $valueChange;
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

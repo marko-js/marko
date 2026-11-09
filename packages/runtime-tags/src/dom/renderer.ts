@@ -107,23 +107,18 @@ export function _content(
   walks = walks ? walks.replace(/[^\0-1]+$/, "") : "";
   setup = setup ? (setup as { _: SetupFn })._ || setup : undefined;
   params ||= undefined;
+  // Keyed by the parent's namespace: one content can render in both SVG and HTML.
+  const cloneables: Record<string, ReturnType<typeof createCloneableHTML>> = {};
   const clone: Renderer[typeof RendererProp.Clone] = template
-    ? (branch, ns) => {
-        // The digit prefix keeps a branch whose entire markup is an
-        // `Object.prototype` member name (`constructor`, …) off the prototype.
-        ((cloneCache[ns] ||= {})[1 + template] ||= createCloneableHTML(
-          template,
-          ns,
-        ))(branch, walks);
-      }
-    : (branch) => {
+    ? (branch, ns) =>
+        (cloneables[ns] ||= createCloneableHTML(template, walks, ns))(branch)
+    : (branch) =>
         walk(
           (branch[AccessorProp.StartNode] = branch[AccessorProp.EndNode] =
             new Text()),
           walks,
           branch,
         );
-      };
 
   // Registered here so any reference that keeps a renderer in the bundle
   // also resumes it; one that must always register is emitted impure.
@@ -191,36 +186,34 @@ export function _content_closures(
       setClosures(branch);
     };
     if (MARKO_DEBUG) {
-      instance[RendererProp.Setup][RendererProp.Returns] = (setup ||
-        instance[RendererProp.Params])?.[RendererProp.Returns];
+      instance[RendererProp.Setup][RendererProp.Returns] = (
+        setup || instance[RendererProp.Params]
+      )?.[RendererProp.Returns];
     }
     return instance;
   };
 }
 
-const cloneCache: Partial<
-  Record<string, Record<string, ReturnType<typeof createCloneableHTML>>>
-> = {};
 function createCloneableHTML(
   html: string,
+  walks: string,
   ns: string,
-): (branch: BranchScope, walks: string) => void {
+): (branch: BranchScope) => void {
   const { firstChild, lastChild } = parseHTML(html, ns) as {
     firstChild: ChildNode;
     lastChild: ChildNode;
   };
   const parent = new DocumentFragment();
   insertChildNodes(parent, null, firstChild, lastChild);
-  return firstChild === lastChild && firstChild!.nodeType < NodeType.Comment
-    ? (branch, walks) => {
+  return firstChild === lastChild && firstChild.nodeType < NodeType.Comment
+    ? (branch) =>
         walk(
           (branch[AccessorProp.StartNode] = branch[AccessorProp.EndNode] =
             firstChild.cloneNode(true) as ChildNode),
           walks,
           branch,
-        );
-      }
-    : (branch, walks) => {
+        )
+    : (branch) => {
         // What the branch renders before it is inserted reads its namespace here,
         // as in the DocumentFragment `detachBranch` parks a branch in.
         const clone = parent.cloneNode(true) as DocumentFragment & {

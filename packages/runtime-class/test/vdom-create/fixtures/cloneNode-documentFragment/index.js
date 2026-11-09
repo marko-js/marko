@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 module.exports = function (helpers) {
   var svg = helpers.vdom.createElement(
@@ -13,8 +13,8 @@ module.exports = function (helpers) {
   svg.___appendChild(docFragment);
 
   var docFragmentClone = docFragment.___cloneNode();
-  expect(docFragmentClone.___nextSibling).to.equal(null);
-  expect(docFragmentClone.___parentNode == null).to.equal(true);
+  assert.equal(docFragmentClone.___nextSibling, null);
+  assert.equal(docFragmentClone.___parentNode == null, true);
 
   return svg;
 };

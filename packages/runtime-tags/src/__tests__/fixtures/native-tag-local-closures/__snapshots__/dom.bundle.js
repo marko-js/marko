@@ -10,9 +10,7 @@ const $Child_content__for = /*@__PURE__*/ _for_of_unkeyed(0, "<div></div>", " ",
 const $Child_content__input_item = ($scope, input_item) => $Child_content__for($scope, [input_item]);
 const $size = /*@__PURE__*/ _let(2, ($scope) => {
 	let $item;
-	forUntil($scope.c, 0, 1, (i) => {
-		$item = attrTags($item, { content: $item_content($scope, { 1: i }) });
-	});
+	forUntil($scope.c, 0, 1, (i) => $item = attrTags($item, { content: $item_content($scope, { 1: i }) }));
 	$Child_content__input_item($scope.a, $item);
 });
 const $setup__script = _script("a3", ($scope) => _on($scope.b, "click", function() {

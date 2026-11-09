@@ -1,12 +1,13 @@
 import { RENDER_BODY_ID, SET_SCOPE_REGISTER_ID } from "../common/compat-meta";
 import { DEFAULT_RENDER_ID, DEFAULT_RUNTIME_ID } from "../common/meta";
-import { RendererProp, type Scope } from "../common/types";
+import { RendererProp } from "../common/types";
 import { writeLoadAsset } from "./assets";
 import { _await } from "./control-flow";
 import { patchDynamicTag } from "./dynamic-tag";
 import { register, REGISTRY } from "./serializer";
 import type { ServerRenderer } from "./template";
 import {
+  $chunk,
   _html,
   _peek_scope_id,
   _scope,
@@ -22,6 +23,7 @@ import {
   getScopeId,
   isInResumedBranch,
   joinHeldEffects,
+  NOOP,
   State,
   withChunk,
   writeScript,
@@ -93,7 +95,7 @@ export const compat = {
         const registered = REGISTRY.get(this);
         if (registered) {
           const scopeId = registered.scope
-            ? getScopeId(registered.scope as Scope)
+            ? getScopeId(registered.scope)
             : undefined;
           if (scopeId !== undefined) {
             _script(scopeId, SET_SCOPE_REGISTER_ID);
@@ -122,7 +124,7 @@ export const compat = {
   // Joins the tags content a class render's html carries to the chunk it streams
   // in, so its effects wait for and drop with the content around it.
   appendChunks(chunks: Chunk[]) {
-    const chunk = getChunk()!;
+    const chunk = $chunk;
     for (const part of chunks) {
       chunk.append(part);
       // Its effects now end the chunk's, so ids continue only from its last.
@@ -132,7 +134,7 @@ export const compat = {
   // Parks the reorders a class render's html carries just after the chunk it streams
   // in, so each queues once that html, holding the markers it replaces, streams.
   deferReorders(reorders: Chunk[]) {
-    const chunk = getChunk()!;
+    const chunk = $chunk;
     for (let i = reorders.length; i--;) {
       const carrier = chunk.fork(chunk.boundary, chunk.next);
       carrier.deferredReorder = reorders[i];
@@ -328,5 +330,3 @@ function swapReorders(state: State, reorders: Chunk[] | null) {
   state.writeReorders = reorders;
   return writeReorders;
 }
-
-function NOOP() {}

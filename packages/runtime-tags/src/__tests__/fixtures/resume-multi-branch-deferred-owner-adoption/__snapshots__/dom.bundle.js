@@ -10,9 +10,8 @@ const $if_content__setup = ($scope) => {
 };
 const $if_content__input_item = /*@__PURE__*/ _if_closure(0, 0, ($scope) => _text($scope.a, $scope._.e));
 const $if = /*@__PURE__*/ _if(0, "<span> </span>", "D ", $if_content__setup);
-const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 const $input = /*@__PURE__*/ _const(2, ($scope) => {
-	$input_show($scope, $scope.c.show);
+	$if($scope, $scope.c.show ? 0 : 1);
 	$input_item($scope, $scope.c.item);
 	$if_content__input($scope);
 });
@@ -24,7 +23,7 @@ const $for_content__show__OR__item = /*@__PURE__*/ _or(3, ($scope) => $input($sc
 	show: $scope._.f,
 	log: $log_getter($scope._)
 }));
-const $for_content__show = /*@__PURE__*/ _for_closure(3, $for_content__show__OR__item);
+const $for_content__show = /*@__PURE__*/ _for_closure(3, $for_content__show__OR__item, 6);
 const $for_content__setup = $for_content__show;
 const $for_content__item = /*@__PURE__*/ _const(2, $for_content__show__OR__item);
 const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);

@@ -1,4 +1,4 @@
-import { expect } from 'chai'
+import assert from 'assert/strict'
 
 class {
     onMount() {
@@ -14,13 +14,13 @@ class {
         var liEls = this.el.querySelectorAll("li");
 
         helpers.triggerMouseEvent(liEls[0], "click");
-        expect(this.color).to.equal("red");
+        assert.equal(this.color, "red");
 
         helpers.triggerMouseEvent(liEls[1], "click");
-        expect(this.color).to.equal("green");
+        assert.equal(this.color, "green");
 
         helpers.triggerMouseEvent(liEls[2], "click");
-        expect(this.color).to.equal("blue");
+        assert.equal(this.color, "blue");
     }
 }
 

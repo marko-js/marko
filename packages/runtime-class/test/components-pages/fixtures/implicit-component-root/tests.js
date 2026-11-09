@@ -1,11 +1,9 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 it("should mount explicit components", function () {
-  expect(window.helloExplicitComponent != null).to.equal(true);
+  assert.equal(window.helloExplicitComponent != null, true);
 });
 
 it("should mount implicit components nested in an explicit component", function () {
-  expect(window.helloExplicitComponent.getComponent("nested") != null).to.equal(
-    true,
-  );
+  assert.equal(window.helloExplicitComponent.getComponent("nested") != null, true);
 });

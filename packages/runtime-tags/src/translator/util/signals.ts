@@ -22,31 +22,40 @@ import {
   type ReferencedBindings,
   someAlias,
 } from "./bindings";
+import { getLastOwnSourceReturn } from "./finalize-references";
 import { forEachIdentifier } from "./for-each-identifier";
 import { isForSelectorValue } from "./for-selector";
 import { generateUid, generateUidIdentifier } from "./generate-uid";
 import { getAccessorPrefix, getAccessorProp } from "./get-accessor-enums";
 import { getDeclaredBindingExpression } from "./get-declared-binding-expression";
 import { isOptimize, isOutputHTML } from "./marko-config";
-import { forEach, type Opt, push, reduce, some } from "./optional";
+import { every, forEach, type Opt, push, reduce, some } from "./optional";
 import { getReadReplacement } from "./read-replacement";
-import { getNodeReasons, isGuardedReason, type Reason } from "./reasons";
+import {
+  getNodeReasons,
+  isGuardedReason,
+  type Reason,
+  type Reasons,
+} from "./reasons";
 import {
   type AssignedBindingExtra,
+  getBindingsDerivedFrom,
   getReferencedBindings,
   getReferencedBindingsInFunction,
   hasResumableAssignment,
   isAssignedBindingExtra,
+  isPureExpr,
   isRegisteredFnExtra,
 } from "./references";
 import {
   insertStatementBefore,
   replaceWithStatements,
 } from "./replace-with-statements";
-import { callRuntime, registerRuntimeValue } from "./runtime";
+import { callRuntime, registerRuntimeValue, trimFalsyArgs } from "./runtime";
 import {
   getClosureAccessorLiteral,
   getLocalsScopeAccessor,
+  getPrefixedScopeAccessor,
   getScopeAccessor,
   getScopeAccessorLiteral,
   getScopeOffsetAccessorLiteral,
@@ -63,17 +72,19 @@ import {
   forEachAncestorSection,
   getDynamicTagContentClosures,
   getDynamicClosureIndex,
+  getForClosureIndex,
   getScopeIdIdentifier,
   getSection,
   getSectionForBody,
+  isDirectClosure,
   isDynamicClosure,
   isInParentSection,
-  isOptionalBranch,
   type Section,
   sectionUtil,
 } from "./sections";
 import { replaceMethodNode, simplifyFunction } from "./simplify-fn";
 import { findSectionSlot, findSlot, type PlaceSlot, SlotKind } from "./slots";
+import { sourcesUtil } from "./sources";
 import { createOutputState, createOutputSectionState } from "./state";
 import { toOnlyExpressionOrBlock } from "./to-only-or-block";
 import { toMemberExpression, toObjectProperty } from "./to-property-name";
@@ -81,9 +92,11 @@ import { getRestPattern, withRestFallback } from "./translate-var";
 import { traverseReplace } from "./traverse";
 import { withLeadingComment } from "./with-comment";
 import {
+  andGuard,
   getExprIfWritten,
   getWriteGuardForAny,
   getWriteReason,
+  isBranchAlwaysMarked,
   isSameReason,
 } from "./write-guard";
 import { flushInto } from "./writer";
@@ -136,12 +149,16 @@ export function setClosureSignalBuilder(
   const section = getSectionForBody(tag.get("body"))!;
   _setClosureSignalBuilder(
     section,
-    build || ((_closure, render) => buildClosureHop(section, render)),
+    build || ((closure, render) => buildClosureHop(section, closure, render)),
   );
 }
 
 // The hop from a branch of an `<if>` or `<for>` to the scope its closure is in.
-export function buildClosureHop(section: Section, render: t.Expression) {
+export function buildClosureHop(
+  section: Section,
+  closure: Binding,
+  render: t.Expression,
+) {
   const branch = section.branch!;
   const accessor = getScopeAccessorLiteral(branch.tag.nodeBinding, true);
   return branch.kind === "if"
@@ -151,7 +168,25 @@ export function buildClosureHop(section: Section, render: t.Expression) {
         t.numericLiteral(branch.index),
         render,
       )
-    : callRuntime("_for_closure", accessor, render);
+    : callRuntime(
+        "_for_closure",
+        accessor,
+        render,
+        t.numericLiteral(
+          closure.closureId! + getForClosureIndex(closure, section),
+        ),
+        getLoopRenderOrder(section),
+      );
+}
+
+// A loop settles its rows in its value's render, which waits for the scope offset
+// of the last child whose returned value that value reads.
+export function getLoopRenderOrder(bodySection: Section) {
+  const returnedBy = getLastOwnSourceReturn(
+    getReferencedBindings(bodySection.branch!.tag),
+    bodySection.parent!,
+  );
+  return returnedBy && getScopeOffsetAccessorLiteral(returnedBy, true);
 }
 
 // A branch section whose scope ids ride a resume marker carrying the parent scope
@@ -346,7 +381,8 @@ export function getSignal(
             referencedBindings.section !== section ||
             referencedBindings.closureSections ||
             referencedBindings.hoists ||
-            referencedBindings.localOf)
+            referencedBindings.localOf ||
+            getWriteReason(referencedBindings))
         ),
         forceStore: false,
         inline: undefined,
@@ -367,11 +403,12 @@ export function getSignal(
         const sourceSignal = getSignal(section, meta.source);
         forEach(referencedBindings, (member) => {
           const memberSignal = getSignal(section, member);
+          // A member only its intersection reads is computed there from the source,
+          // unless client code reads it after resume: then it reads what the server wrote.
           const inline =
-            member.type === BindingType.derived &&
-            !member.aliasOf &&
             !member.propertyAliases.size &&
             member.reads.size === 1 &&
+            !getWriteReason(member) &&
             sourceSignal.values.find((v) => v.signal === memberSignal);
           if (inline) {
             memberSignal.inline = inline;
@@ -391,7 +428,7 @@ export function getSignal(
         const render = buildSignalFn(signal);
         const closureSignalBuilder = getClosureSignalBuilder(section);
 
-        if (closureSignalBuilder && !isDynamicClosure(section, closure)) {
+        if (closureSignalBuilder && isDirectClosure(section, closure)) {
           return closureSignalBuilder(closure, render);
         }
 
@@ -435,7 +472,7 @@ export function initValue(binding: Binding, isLet = false) {
   const section = binding.section;
   const signal = getSignal(section, binding);
   // Lazy reads read the value from its scope slot.
-  if (binding.hasLazyReads) signal.forceStore = true;
+  signal.forceStore ||= binding.hasLazyReads;
   signal.build = () => {
     if (isPureMemberForwarder(binding)) {
       return undefined;
@@ -512,7 +549,7 @@ function isPureMemberForwarder(binding: Binding): boolean {
     binding.aliases.size ||
     binding.assignments ||
     isForSelectorValue(binding) ||
-    findSlot(binding)?.reason ||
+    getWriteReason(binding) ||
     getSignal(binding.section, binding).storesValue
   ) {
     return false;
@@ -542,16 +579,73 @@ function pushMemberForwards(
 }
 
 function pushForward(signal: Signal, target: Signal, value: t.Expression) {
-  signal.forwards = push(signal.forwards, target);
+  if (pushSignalCall(signal, target, value)) {
+    signal.forwards = push(signal.forwards, target);
+  }
+}
+
+// Calls `target` with `value`, or runs its statements in place when it is
+// inlined; true for a call.
+function pushSignalCall(
+  signal: Signal,
+  target: Signal,
+  value: t.Expression | undefined,
+) {
+  if (isInlinedValue(target)) {
+    // Its one read, now in the caller, reads the value as the caller reads it.
+    target.inline = { value };
+    traverseReplace(target.inline, "value", replaceRenderNode, signal);
+    buildSignalFn(target);
+    signal.render.push(...target.render);
+    return false;
+  }
+
   signal.render.push(
     t.expressionStatement(
-      t.callExpression(target.identifier, [
-        scopeIdentifier,
-        value,
-        ...getTranslatedExtraArgs(target),
-      ]),
+      t.callExpression(
+        target.identifier,
+        trimFalsyArgs([
+          scopeIdentifier,
+          value,
+          ...getTranslatedExtraArgs(target),
+        ]),
+      ),
     ),
   );
+  return true;
+}
+
+// A derived value or property alias read once has one caller, the signal
+// computing it, so its read runs there with its value in place.
+function isInlinedValue(signal: Signal) {
+  const binding = signal.referencedBindings;
+  if (
+    !binding ||
+    Array.isArray(binding) ||
+    binding.reads.size !== 1 ||
+    signal.storesValue ||
+    signal.referenced ||
+    binding.exposed ||
+    binding.assignments ||
+    binding.aliases.size ||
+    binding.propertyAliases.size ||
+    (binding.property === undefined &&
+      (binding.type !== BindingType.derived ||
+        binding.aliasOf ||
+        // Moved into its read, it must not depend on running first.
+        !every(binding.derivedFrom || undefined, isPureExpr)))
+  ) {
+    return false;
+  }
+
+  // A read in a function names the value lexically, so it needs the param.
+  const [read] = binding.reads.values();
+  if (Array.isArray(read) || read!.fnRoot) return false;
+
+  // A local closure's signal is built after its reads resolve, too late to
+  // take in what it computes.
+  const from = getBindingsDerivedFrom(binding);
+  return Array.isArray(from) || !from?.localOf;
 }
 
 // A source intersection runs in its source's pass, so it needs no `_or`.
@@ -627,31 +721,37 @@ export function buildSignalFn(signal: Signal): t.Expression {
     if (value.signal.inline) {
       continue;
     }
-    signal.render.push(
-      t.expressionStatement(
-        signalHasWork(value.signal)
-          ? t.callExpression(value.signal.identifier, [
-              scopeIdentifier,
-              ...(value.value ? [value.value] : []),
-              ...getTranslatedExtraArgs(value.signal),
-            ])
-          : withLeadingComment(
-              value.value!,
-              getDebugNames(value.signal.referencedBindings),
-            ),
-      ),
-    );
+    if (signalHasWork(value.signal)) {
+      pushSignalCall(signal, value.signal, value.value);
+    } else {
+      signal.render.push(
+        t.expressionStatement(
+          withLeadingComment(
+            value.value!,
+            getDebugNames(value.signal.referencedBindings),
+          ),
+        ),
+      );
+    }
   }
 
   forEach(signal.intersections, (intersection) => {
     pushScopeCall(signal.render, intersection.identifier);
   });
 
-  if (isValue && binding.sources) {
+  if (isBinding && binding.sources) {
     let dynamicClosureArgs: t.Expression[] | undefined;
     let dynamicClosureSignalIdentifier: t.Identifier | undefined;
     forEach(binding.closureSections, (closureSection) => {
-      if (isDynamicClosure(closureSection, binding)) {
+      if (!isDynamicClosure(closureSection, binding)) {
+        // An optional branch's direct closure comes from its parent's signal.
+        if (closureSection.parent === section) {
+          pushScopeCall(
+            signal.render,
+            getSignal(closureSection, binding).identifier,
+          );
+        }
+      } else if (isValue) {
         if (!dynamicClosureArgs) {
           dynamicClosureArgs = [];
           dynamicClosureSignalIdentifier = generateUidIdentifier(
@@ -661,11 +761,6 @@ export function buildSignalFn(signal: Signal): t.Expression {
         }
 
         dynamicClosureArgs.push(getSignal(closureSection, binding).identifier);
-      } else {
-        pushScopeCall(
-          signal.render,
-          getSignal(closureSection, binding).identifier,
-        );
       }
     });
 
@@ -683,10 +778,6 @@ export function buildSignalFn(signal: Signal): t.Expression {
 
   if (signal.effect.length) {
     pushScopeCall(signal.render, getSignalEffectIdentifier(signal));
-  }
-
-  if (isValue && findSlot(binding)?.reason) {
-    signal.storesValue = true;
   }
 
   if (isValue && !signal.storesValue) {
@@ -862,7 +953,7 @@ export function addStatement(
   isPure?: boolean,
 ): void {
   const signal = getSignal(targetSection, getReferencedBindings(expr));
-  const statements = (signal[type] ??= []);
+  const statements = signal[type];
 
   if (Array.isArray(statement)) {
     statements.push(...statement);
@@ -872,9 +963,7 @@ export function addStatement(
     );
   }
 
-  if (!isPure || type === "effect") {
-    signal.storesValue = true;
-  }
+  signal.storesValue ||= !isPure || type === "effect";
 }
 
 // Runs a `<log>` or `<debug>` statement where the tag is: in place on the
@@ -910,13 +999,11 @@ export function addValue(
     value,
   });
 
-  if (
+  parentSignal.storesValue ||= !!(
     t.isFunction(value) &&
     value.extra &&
     getReferencedBindingsInFunction(value.extra)
-  ) {
-    parentSignal.storesValue = true;
-  }
+  );
 }
 
 function buildResumeRegisterKey(
@@ -973,6 +1060,9 @@ export function writeSignals(section: Section) {
     }
 
     forEach(signal.intersections, writeSignal);
+
+    // Its caller writes its reads in place.
+    if (isInlinedValue(signal)) return;
 
     let effectDeclarator: t.VariableDeclarator | undefined;
     if (signal.effect.length) {
@@ -1121,8 +1211,10 @@ function pushInstancesAccessor(section: Section, accessors: t.Expression[]) {
       ? t.arrayExpression([
           instancesAccessor,
           t.stringLiteral(
-            getAccessorPrefix().ConditionalRenderer +
-              getScopeAccessor(branch.tag.nodeBinding),
+            getPrefixedScopeAccessor(
+              branch.tag.nodeBinding,
+              getAccessorPrefix().ConditionalRenderer,
+            ),
           ),
           t.numericLiteral(branch.index),
         ])
@@ -1236,15 +1328,16 @@ export function writeHTMLResumeStatements(
   const scopeIdIdentifier = getScopeIdIdentifier(section);
   // Whether any node of the section writes a marker, as the same argument
   // shape `_if` and `_await` take: absent when always, `0` when never.
-  const markerGuard = getWriteGuardForAny(
-    section,
-    getNodeReasons(section),
-    true,
-  );
+  const nodeReasons = getNodeReasons(section);
+  const markerGuard = getWriteGuardForAny(section, nodeReasons, true);
   const sectionReason = section.reason;
+  // The client reads the scope's closest branch wherever the server writes
+  // state its handlers assign or a subscription for it: with the scope, or with
+  // subscriber sets written only for some renders.
+  let linkedWithScope = some(section.bindings, isClientAssignedLet);
+  let linkReasons: Reasons | undefined;
   forEach(section.referencedClosures, (closure) => {
-    // A constant never changes, so nothing subscribes to it.
-    if (closure.sources && closure.type !== BindingType.constant) {
+    if (closure.sources) {
       if (isDynamicClosure(section, closure)) {
         const closureSignal = getSignal(closure.section, closure);
         let identifier =
@@ -1285,9 +1378,14 @@ export function writeHTMLResumeStatements(
           !isSameReason(closureScopesReason, sectionReason)
             ? getExprIfWritten(closure.section, closureScopesReason, identifier)
             : identifier;
-        const changeable = isChangeableDynamicClosure(section, closure);
         // No call writes the subscriber set: the scope joins none.
         if (subscribeArg) {
+          const changeable = isChangeableDynamicClosure(section, closure);
+          if (subscribeArg === identifier) {
+            linkedWithScope = true;
+          } else {
+            linkReasons = sourcesUtil.add(linkReasons, closureScopesReason!);
+          }
           addWriteScopeBuilder(section, (expr) => {
             const resumeId =
               changeable &&
@@ -1429,21 +1527,28 @@ export function writeHTMLResumeStatements(
     if (write) body.push(t.expressionStatement(write));
   }
 
-  const resumeClosestBranch =
-    !isOptionalBranch(section) &&
-    (section.hasAbortSignal ||
-      !!section.referencedClosures ||
-      (sectionReason && some(section.bindings, isLetBinding)));
-
   // The walker places a scope whose marker it visits, so a section that always
   // writes one needs no link; a dynamic marker guards it, none writes it plain.
-  if (resumeClosestBranch && markerGuard) {
-    // An abort signal's effect always ships; a closure subscription only with
-    // the scope write, so the link borrows that guard.
-    const call = callRuntime("_resume_branch", scopeIdIdentifier);
-    const link = section.hasAbortSignal
-      ? call
-      : getExprIfWritten(section, sectionReason, call);
+  if (markerGuard && !isBranchAlwaysMarked(section)) {
+    let link: t.Expression | undefined;
+    if (section.hasAbortSignal) {
+      // An abort signal's effect always ships.
+      link = callRuntime("_resume_branch", scopeIdIdentifier);
+    } else if (sectionReason && !sourcesUtil.has(nodeReasons, sectionReason)) {
+      // The rest ship with the scope write, but where a marker written for the
+      // same reason places the scope.
+      const guard = linkedWithScope
+        ? undefined
+        : getWriteGuardForAny(
+            section,
+            sourcesUtil.difference(linkReasons, nodeReasons),
+            true,
+          );
+      if (guard?.type !== "NumericLiteral") {
+        const call = callRuntime("_resume_branch", scopeIdIdentifier);
+        link = getExprIfWritten(section, sectionReason, andGuard(guard, call));
+      }
+    }
     if (link) {
       body.push(
         t.expressionStatement(
@@ -1514,10 +1619,7 @@ function replaceBindingReadNode(node: t.Node, signal?: Signal) {
         const { binding, getter } = extra.read;
 
         if (binding.type === BindingType.dom && !getter) {
-          const replacement = createScopeReadExpression(
-            binding,
-            extra!.section,
-          );
+          const replacement = createScopeReadExpression(binding, extra.section);
           return isOptimize()
             ? replacement
             : callRuntime("_el_read", replacement);
@@ -1790,8 +1892,9 @@ function appendBindingKey(name: string, binding: Binding, section: Section) {
   return `${name}_${binding.name}#${binding.section === section ? "" : binding.section.id + ":"}${binding.id}`;
 }
 
-function isLetBinding(binding: Binding) {
-  return binding.type === BindingType.let;
+// State a resumed handler or effect can assign, which queues the scope's render.
+function isClientAssignedLet(binding: Binding) {
+  return binding.type === BindingType.let && hasResumableAssignment(binding);
 }
 
 function getDebugLoc({ start }: t.SourceLocation) {

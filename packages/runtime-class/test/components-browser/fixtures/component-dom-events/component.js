@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var assert = require("assert/strict");
 
 var Component = {
   onCreate: function () {
@@ -21,10 +21,10 @@ var Component = {
   },
 
   handleRootClick: function (event, el) {
-    expect(el.getAttribute("class")).to.equal("app-dom-events");
-    expect(event.target.tagName.length > 0).to.equal(true);
+    assert.equal(el.getAttribute("class"), "app-dom-events");
+    assert.equal(event.target.tagName.length > 0, true);
     this.log("el:click");
-    expect(this.name).to.equal("app-dom-events");
+    assert.equal(this.name, "app-dom-events");
   },
 
   handleButtonClick: function () {
@@ -44,12 +44,12 @@ var Component = {
   },
 
   handleFooLinkMouseOut: function (event, el) {
-    expect(event.target).to.equal(el);
+    assert.equal(event.target, el);
     this.log("#fooLink:mouseout");
   },
 
   handleHelloWorldMouseDown: function (event, el) {
-    expect(this.getEl("helloWorld")).to.equal(el);
+    assert.equal(this.getEl("helloWorld"), el);
     this.log("#helloWorld:mousedown");
   },
 };

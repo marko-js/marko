@@ -1,7 +1,7 @@
 // template.marko
 const $for_content__checked = /*@__PURE__*/ _let_change(6, ($scope) => _attr_input_checked($scope, "a", $scope.g, $checkedChange($scope)));
 const $for_content__states__OR__state = /*@__PURE__*/ _or(3, ($scope) => $for_content__checked($scope, $scope.c, $valueChange($scope)));
-const $for_content__states = /*@__PURE__*/ _for_closure(0, $for_content__states__OR__state);
+const $for_content__states = /*@__PURE__*/ _for_closure(0, $for_content__states__OR__state, 3);
 const $for_content__setup__script = _script("a2", ($scope) => _attr_input_checked_script($scope, "a"));
 const $for_content__setup = ($scope) => {
 	$for_content__states._($scope);
@@ -15,9 +15,7 @@ const $states = /*@__PURE__*/ _let(2, ($scope) => {
 	$for($scope, [$scope.c]);
 	$for_content__states($scope);
 });
-const $checkedChange = ($scope) => (_new_checked) => {
-	$for_content__checked($scope, _new_checked);
-};
+const $checkedChange = ($scope) => (_new_checked) => $for_content__checked($scope, _new_checked);
 const $valueChange = ($scope) => function(value) {
 	if ($scope.M === void 0) throw new Error("LoopKey is undefined");
 	const newStates = [...$scope._.c];
