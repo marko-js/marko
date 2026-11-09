@@ -114,6 +114,8 @@ declare module "@marko/compiler/dist/types" {
     assignment?: Binding;
     assignmentTo?: Binding;
     read?: ResolvedRead;
+    /** What finalize resolves the change handler an assignment calls to read. */
+    changeHandlerRead?: ResolvedRead;
     /** For an expression root that is a dynamic tag's name, not one of its
      * inputs: that tag. */
     tagName?: t.MarkoTagExtra;

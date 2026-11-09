@@ -30,7 +30,10 @@ import { getAccessorPrefix, getAccessorProp } from "./get-accessor-enums";
 import { getDeclaredBindingExpression } from "./get-declared-binding-expression";
 import { isOptimize, isOutputHTML } from "./marko-config";
 import { every, forEach, type Opt, push, reduce, some } from "./optional";
-import { getReadReplacement } from "./read-replacement";
+import {
+  createResolvedReadExpression,
+  getReadReplacement,
+} from "./read-replacement";
 import {
   getNodeReasons,
   isGuardedReason,
@@ -1667,7 +1670,7 @@ function replaceAssignedNode(node: t.Node): t.Node | undefined {
             node.operator === "++" ? "+" : "-",
             t.unaryExpression(
               "+",
-              createScopeReadExpression(extra.assignment, extra.section),
+              createResolvedReadExpression(extra.read!, extra.section),
             ),
             t.numericLiteral(1),
           ),
@@ -1696,7 +1699,7 @@ function replaceAssignedNode(node: t.Node): t.Node | undefined {
             const shortCircuits =
               operator === "||=" || operator === "&&=" || operator === "??=";
             const readAssigned = () =>
-              createScopeReadExpression(extra.assignment, extra.section);
+              createResolvedReadExpression(extra.read!, extra.section);
             const builtAssignment = getBuildAssignment(extra)?.(
               extra.section,
               operator === "=" || shortCircuits
@@ -1778,28 +1781,13 @@ function replaceAssignedNode(node: t.Node): t.Node | undefined {
   }
 }
 
-// A pruned change binding (an ancestor is already tracked) reads through the
-// nearest kept ancestor's property chain.
-function getChangeHandlerRead(
-  binding: Binding,
-  section: Section,
-): t.Expression {
-  return binding.pruned && binding.property !== undefined && binding.aliasOf
-    ? toMemberExpression(
-        getChangeHandlerRead(binding.aliasOf, section),
-        binding.property,
-        false,
-      )
-    : createScopeReadExpression(binding, section);
-}
-
 function getBuildAssignment(extra: AssignedBindingExtra) {
   const { assignmentTo, assignment } = extra;
   if (assignmentTo) {
     return (section: Section, value: t.Expression) => {
       const replacement = callRuntime(
         "_call",
-        getChangeHandlerRead(assignmentTo, section),
+        createResolvedReadExpression(extra.changeHandlerRead!, section),
         value,
       );
       updateExpressions.add(replacement);

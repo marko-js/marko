@@ -1,0 +1,17 @@
+<span>x<!--M_$2 a--></span><button class=inc>inc</button><!--M_$2 b-->
+<div class=log>0<!--M_$1 b--></div>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+    a: _(2)
+  }, {
+    d: {
+      obj: {
+        label: "x",
+        count: 0,
+        countChange: _(1, "a0")
+      }
+    }
+  }], "b0 2"];
+  M._.w()
+</script>

@@ -1,0 +1,6 @@
+// `obj` only forwards `label`, so the assignment calls `countChange` through
+// `input`, which the handler reads, not from `obj`'s slot.
+<const/{ obj }=input/>
+<const/{ count }=obj/>
+<span>${obj.label}</span>
+<button.inc onClick() { console.log(JSON.stringify(input)); count = count + 1 }>inc</button>

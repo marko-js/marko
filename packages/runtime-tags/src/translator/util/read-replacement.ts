@@ -226,3 +226,16 @@ function getChainReplacement(
 function addMember(expr: t.Expression, prop: string) {
   return toMemberExpression(expr, prop);
 }
+
+// A resolved read in `section`: its binding's scope slot and the properties
+// read through it.
+export function createResolvedReadExpression(
+  read: ResolvedRead,
+  section: Section,
+) {
+  return reduce(
+    read.properties,
+    addMember,
+    createScopeReadExpression(read.binding, section),
+  );
+}

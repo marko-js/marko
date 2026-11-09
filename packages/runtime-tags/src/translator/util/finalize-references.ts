@@ -873,7 +873,10 @@ function resolveReferencedBindings(
     } else {
       const isChangeHandlerRead = extra.assignmentTo === binding;
       if (isChangeHandlerRead) {
-        binding = getNearestReadBy(binding, expr)!;
+        ({ binding } = extra.changeHandlerRead = resolveExpressionReference(
+          expr,
+          read,
+        ));
       } else if (binding.type !== BindingType.global) {
         extra.section = expr.section;
         ({ binding } = extra.read =
