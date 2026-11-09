@@ -13,6 +13,7 @@ import {
   getPropertyAlias,
   isInvokeOnlyBinding,
   isOwnBinding,
+  propertiesUtil,
   reserveId,
 } from "./bindings";
 import { setTagContentDerives } from "./content-derives";
@@ -32,6 +33,7 @@ import {
   exposeParamsTree,
   getParamsTreeAt,
   getSettledParamsTree,
+  hasAllKnownProperties,
 } from "./params-tree";
 import {
   addAlwaysReason,
@@ -97,7 +99,6 @@ import {
   appendAttrTag,
   propsToExpression,
   translateAttrs,
-  getSingleKnownSpread,
 } from "./translate-attrs";
 import translateVar, {
   buildVarChange,
@@ -127,6 +128,10 @@ const kKnownExprs = Symbol("known tag exprs");
 const kPassesInput = Symbol("known tag passes input");
 
 declare module "@marko/compiler/dist/types" {
+  export interface MarkoSpreadAttributeExtra {
+    /** The binding it spreads, which its known child reads prop by prop. */
+    knownSpread?: Binding;
+  }
   export interface MarkoTagExtra {
     /** The dom binding a known tag holds its child's scope in. */
     childScopeBinding?: Binding;
@@ -827,7 +832,7 @@ function analyzeAttrs(
     }
   }
 
-  let knownSpread: ReturnType<typeof getSingleKnownSpread>;
+  let knownSpread: Binding | undefined;
   let spreadReferenceNodes: t.Node[] | undefined;
   const { attributes } = tag.node;
   for (let i = attributes.length; i--;) {
@@ -859,10 +864,11 @@ function analyzeAttrs(
     } else if (spreadReferenceNodes) {
       spreadReferenceNodes.push(attr.value);
     } else {
-      knownSpread = getSingleKnownSpread(paramsTree, attributes);
+      knownSpread = getKnownSpread(paramsTree, attributes, i);
 
       if (knownSpread) {
         // Read prop by prop, so it is written as what those props read.
+        (attr.extra ??= {}).knownSpread = knownSpread;
         dropNodes(attr.value);
       } else {
         (spreadReferenceNodes = restReferenceNodes || []).push(attr.value);
@@ -920,6 +926,33 @@ function analyzeAttrs(
   dropNodes(dropReferenceNodes);
 
   return inputExpr;
+}
+
+// The binding the last spread passes, when a child reading every prop by name
+// reads it prop by prop: no attribute before it holds a prop it may override.
+function getKnownSpread(
+  paramsTree: ParamsTree,
+  attributes: (t.MarkoAttribute | t.MarkoSpreadAttribute)[],
+  index: number,
+) {
+  const binding = attributes[index].value.extra?.spreadFrom;
+  if (
+    !binding ||
+    Array.isArray(binding) ||
+    !hasAllKnownProperties(paramsTree)
+  ) {
+    return;
+  }
+  for (let i = index; i--;) {
+    const attr = attributes[i];
+    if (
+      attr.type === "MarkoSpreadAttribute" ||
+      !propertiesUtil.has(binding.excludeProperties, attr.name)
+    ) {
+      return;
+    }
+  }
+  return binding;
 }
 
 // A child reading its params as one value (with a rest, or from a spread
@@ -1348,7 +1381,7 @@ function writeAttrsToSignals(
     }
   }
 
-  let knownSpread: ReturnType<typeof getSingleKnownSpread>;
+  let knownSpread: Binding | undefined;
   let hasSpread = false;
   const attrProps: t.ObjectExpression["properties"] = [];
 
@@ -1369,14 +1402,11 @@ function writeAttrsToSignals(
       } else {
         staticAttrs.push(attr);
       }
-    } else if (hasSpread) {
-      attrProps.push(t.spreadElement(attr.value));
+    } else if (attr.extra?.knownSpread) {
+      knownSpread = attr.extra.knownSpread;
     } else {
-      knownSpread = getSingleKnownSpread(paramsTree, attributes);
-      if (!knownSpread) {
-        hasSpread = true;
-        attrProps.push(t.spreadElement(attr.value));
-      }
+      hasSpread = true;
+      attrProps.push(t.spreadElement(attr.value));
     }
   }
 
