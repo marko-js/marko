@@ -482,11 +482,14 @@ export function orGuard(guard: t.Expression | undefined, other: t.Expression) {
   return guard ? t.logicalExpression("||", guard, other) : other;
 }
 
+// A guard folded to `1` holds always.
 export function andGuard(
   guard: t.Expression | undefined | false,
   expr: t.Expression,
 ) {
-  return guard ? t.logicalExpression("&&", guard, expr) : expr;
+  return guard && !t.isNumericLiteral(guard, { value: 1 })
+    ? t.logicalExpression("&&", guard, expr)
+    : expr;
 }
 
 // A check of the mask alone, shared beside its group's reason.

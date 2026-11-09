@@ -97,6 +97,7 @@ import {
   buildGroupsValue,
   buildGroupMask,
   getGroupArgs,
+  getGroupsConstant,
   getOrShareGroupCheck,
   getOrShareSectionGuard,
   getWriteReason,
@@ -888,9 +889,8 @@ function buildClientSetup(
   sources: Sources | undefined,
   initId: string,
 ) {
-  return t.logicalExpression(
-    "&&",
-    getCallerGroupGuard(section, "_client_guard", sources)!,
+  return andGuard(
+    getCallerGroupGuard(section, "_client_guard", sources),
     callRuntime(
       "_patch_render",
       getScopeIdIdentifier(section),
@@ -1043,6 +1043,20 @@ export function getCallerGroupGuard(
   if (write.groups.length === 1 && !write.ungated && isGroupCheck(check)) {
     const [groupSection, group] = write.groups[0];
     return getOrShareGroupCheck(section, groupSection, group, check);
+  }
+  // A constant mask the client contributes to holds both checks of its bit; the
+  // server's alone leaves `_unfilled_if` the render context.
+  if (check === "_client_guard" || check === "_unfilled_if") {
+    const value = getGroupsConstant(
+      write.groups,
+      write.ungated ? UpdatesFrom.Server : 0,
+    );
+    if (value !== undefined && value & UpdatesFrom.Client) {
+      return t.numericLiteral(1);
+    }
+    if (value === UpdatesFrom.Server && check === "_unfilled_if") {
+      return callRuntime("_unfilled_if");
+    }
   }
   return callRuntime(check, ...buildWriteGroupArgs(write));
 }
