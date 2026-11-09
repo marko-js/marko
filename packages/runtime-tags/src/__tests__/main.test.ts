@@ -277,21 +277,25 @@ function testFixtures(interop?: true) {
                 config.reject_load_once ||
                 config.delay_load ||
                 config.hold_load) &&
-              ((id: string) =>
+              ((id: string) => {
                 // Only a fixture asset can fail to load, never a runtime module
                 // (the prebuilt runtime splits `dom/load.ts` into a chunk).
-                id.includes("/dist/dom-")
-                  ? undefined
-                  : config.reject_load?.some((s) => id.includes(s)) ||
-                      (config.reject_load_once?.some((s) => id.includes(s)) &&
-                        !rejectedOnce.has(id) &&
-                        rejectedOnce.add(id))
-                    ? "reject"
-                    : config.delay_load?.some((s) => id.includes(s))
-                      ? "delay"
-                      : config.hold_load?.some((s) => id.includes(s))
-                        ? "hold"
-                        : undefined)
+                if (id.includes("/dist/dom-")) return;
+                // Names match the asset's file, never a directory above it.
+                const file = path.basename(id);
+                const named = (names?: string[]) =>
+                  names?.some((s) => file.includes(s));
+                return named(config.reject_load) ||
+                  (named(config.reject_load_once) &&
+                    !rejectedOnce.has(id) &&
+                    rejectedOnce.add(id))
+                  ? "reject"
+                  : named(config.delay_load)
+                    ? "delay"
+                    : named(config.hold_load)
+                      ? "hold"
+                      : undefined;
+              })
             );
           };
 
