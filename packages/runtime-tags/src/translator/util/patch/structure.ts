@@ -4,7 +4,7 @@ import { type Binding, bindingUtil } from "../bindings";
 import { createPassMemo } from "../cyclic-memo";
 import { everyCallPasses, type KnownTagExtra } from "../known-tag";
 import { isPatch } from "../marko-config";
-import { every, first, some } from "../optional";
+import { every, first, reduce, some } from "../optional";
 import {
   addStructuralParams,
   getSourcesForDerived,
@@ -145,10 +145,10 @@ export function isPassedStateByEveryCall(
   return passes;
 }
 
-// What selects the section: a branch's expression, or the call site
-// expression passing content (an attribute tag item of a param loop).
+// What selects the section: a branch's expression (a dynamic tag's name too), or the
+// call site expression passing content (an attribute tag item of a param loop).
 function getStructureSources(section: Section) {
-  if (isOptionalBranch(section)) {
+  if (isOptionalBranch(section) || (!section.branch && section.branchExpr)) {
     return section.branchExpr && getSourcesForExpr(section.branchExpr);
   }
   if (!section.branch && section.derives) {
@@ -160,7 +160,13 @@ function getStructureSources(section: Section) {
 // param-selected structure: a call passing them state hands it to the client.
 export const getParamSelectedStructure = createPassMemo(
   (section: Section): Sources[] | undefined => {
-    const chain = section.parent && getParamSelectedStructure(section.parent);
+    const { parent, renderedBy } = section;
+    // A `<define>` body sits in the structure around each call rendering it.
+    const chain =
+      parent &&
+      (renderedBy
+        ? reduce(renderedBy, addCallStructure)
+        : getParamSelectedStructure(parent));
     const sources = patchFillsSection(section)
       ? getStructureSources(section)
       : undefined;
@@ -170,6 +176,14 @@ export const getParamSelectedStructure = createPassMemo(
   },
   undefined,
 );
+
+function addCallStructure(
+  structure: Sources[] | undefined,
+  call: KnownTagExtra,
+) {
+  const around = getParamSelectedStructure(call.childScopeBinding.section);
+  return structure && around ? structure.concat(around) : structure || around;
+}
 
 // A call input its callee keeps per instance where a patch renders the call: its
 // own fill or holes where its group is the server's, a filled intersection where it mixes.

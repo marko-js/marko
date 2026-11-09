@@ -50,12 +50,11 @@ import {
   fillSubscribes,
   getClosureReadSources,
   isResumedRead,
-  readsBySubscription,
   runsSubscribersByWrite,
   runsByEntry,
   leavesReadToPatch,
 } from "./patch/refresh";
-import { patchesBranchesAt } from "./patch/structure";
+import { patchesBranchesAt, patchFillsSection } from "./patch/structure";
 import {
   comparesBoundFn,
   getCallerGroupGuard,
@@ -1927,12 +1926,10 @@ export function writeHTMLResumeStatements(
             ? getClosureReadSources(closure, section)
             : undefined;
         const groupArgs = readSources && getRootGroupArgs(section, readSources);
-        // A reader a patch fills, or re-runs by an entry, needs no subscription unless
-        // the client can change the owner value (`_unfilled_if`).
+        // A scope a patch pairs takes its reads by fills and entries, so it subscribes only where
+        // the client can change the owner value (`_unfilled_if`); one no patch pairs, for the walk too.
         const unfilledGroupArgs =
-          isPatch() && !someReadIn(closure, section, readsBySubscription)
-            ? groupArgs
-            : undefined;
+          isPatch() && patchFillsSection(section) ? groupArgs : undefined;
         const subscribeArg =
           isGuardedReason(closureScopesReason) &&
           !isSameReason(closureScopesReason, sectionReason) &&

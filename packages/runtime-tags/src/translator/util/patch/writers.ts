@@ -116,7 +116,7 @@ import {
 } from "./decisions";
 import {
   setupFromClient,
-  clientMayRenderInAnyCall,
+  getCallerSelectedStructure,
   addFilledReads,
   someFnValue,
   type CreatedSetup,
@@ -140,7 +140,6 @@ import {
   seedsCreatedScope,
   seedsOwnerConstant,
 } from "./refresh";
-import { getParamSelectedStructure } from "./structure";
 
 // What a section's patch calls in `_scope`'s place: its client branch reports and a known
 // child's writes; a filled reference writes where declared instead, a param's into `paramWrites`.
@@ -1437,14 +1436,6 @@ export function getClosureRenderGroups(closure: Binding, section: Section) {
       (sources) => getCallerParamGroupsAt(sources.param, own),
     ),
   };
-}
-
-// The param-selected structure around a closure's reader that a call passing client
-// state hands the client; none where the client may render it below the closure.
-function getCallerSelectedStructure(closure: Binding, section: Section) {
-  return clientMayRenderInAnyCall(section, closure.section)
-    ? undefined
-    : getParamSelectedStructure(section);
 }
 
 // A closure over a slot a patch writes, in structure the client may render (a `mixed`

@@ -363,15 +363,19 @@ function getClientRenderedContents(section: Section, upTo?: Section) {
   return contents;
 }
 
-// Content a known tag renders, passed from no state and called in place nowhere,
-// that plain renders nowhere on the client: a flush reaches each instance by data.
-function reachedByData(section: Section) {
-  return (
-    !!section.derives &&
-    !section.renderedBy &&
-    !getSourcesForDerived(section.derives)?.state &&
-    !getRendererReason(section)
-  );
+// Content no shipped code renders: no registered renderer or kept closure fills, no state
+// passing it, no call the client renders whatever callers pass. A flush reaches it by data.
+const reachedByData = createPassMemo(
+  (section: Section): boolean =>
+    !getRendererReason(section) &&
+    !(section.derives && getSourcesForDerived(section.derives)?.state) &&
+    !keepsClosureFills(section) &&
+    !some(section.renderedBy, isClientRenderedCall),
+  true,
+);
+
+function isClientRenderedCall(call: KnownTagExtra) {
+  return clientMayRenderInAnyCall(call.childScopeBinding.section);
 }
 
 // A `<let>` a patch fills: where a server value keeps reaching it (a controlled
@@ -2156,19 +2160,15 @@ function addSources(all: SortedOpt<Sources>, sources: Sources) {
   return sourcesUtil.add(all, sources);
 }
 
-// A read resumed code renders wherever its scope sits, so no patch fills it.
+// A read resumed code renders wherever its scope sits, so no patch fills it: also one
+// no patch pairs, or deriving what no patch fills.
 export function isResumedRead(read: ReferencedExtra) {
   return (
     readsValuesOnResume(read) ||
     !!getSourcesForExpr(read)?.state ||
-    readsBySubscription(read)
+    !patchFillsSection(read.section) ||
+    !!getDerivedNeeds(read)
   );
-}
-
-// A read only its scope's subscription reaches as a patch writes the owner value: one no
-// patch pairs, or deriving what no patch fills. A patch fills, or re-runs by an entry, the rest.
-export function readsBySubscription(read: ReferencedExtra) {
-  return !patchFillsSection(read.section) || !!getDerivedNeeds(read);
 }
 
 // Its group is the server's on every instance: guarded sources (a page's input,
@@ -2187,12 +2187,29 @@ export function hasGuardedSources(binding: Binding) {
 }
 
 // Subscribers of a server value's closure that its owner's entry runs by id, where a
-// patch writes the value.
+// patch writes the value and the client may render them below its owner.
 export function runsSubscribersByWrite(closure: Binding, section: Section) {
+  if (
+    !isDynamicClosure(section, closure) ||
+    !getPatchWrite(getCanonicalBinding(closure)).write
+  ) {
+    return false;
+  }
+  const structure = getCallerSelectedStructure(closure, section);
   return (
-    isDynamicClosure(section, closure) &&
-    hasGuardedSources(closure) &&
-    clientMayRender(section) &&
-    !!getPatchWrite(getCanonicalBinding(closure)).write
+    !structure ||
+    structure.some((sources) => hasTagCallerParamAt(sources, section))
+  );
+}
+
+// The param-selected structure between a closure and its reader that a call passing
+// client state hands the client; none where the client may render it below the closure.
+export function getCallerSelectedStructure(closure: Binding, section: Section) {
+  if (clientMayRenderInAnyCall(section, closure.section)) return;
+  const above = getParamSelectedStructure(closure.section);
+  return (
+    getParamSelectedStructure(section)?.filter(
+      (sources) => !above?.includes(sources),
+    ) || []
   );
 }
