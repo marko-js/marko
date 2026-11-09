@@ -1,10 +1,12 @@
-// `rest` is only read inside the handler; its scope slot must hold the current value.
+// `rest` is only read inside the handler; its scope slot must hold the current
+// value. It is a copy without `a`, even read beside `state`.
 <let/state={ a: 1, b: 2 }/>
 <const/{ a, ...rest }=state/>
 <let/log=""/>
 
 <button.bump onClick() { state = { a: state.a + 1, b: state.b + 1 }; }>bump</button>
 <button.show onClick() { log = JSON.stringify(rest); }>show</button>
+<button.both onClick() { log = `${JSON.stringify(state)}:${rest.a}:${JSON.stringify(rest)}`; }>both</button>
 
 <div.a>${a}</div>
 <div.log>${log}</div>
