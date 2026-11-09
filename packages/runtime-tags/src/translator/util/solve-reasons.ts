@@ -47,6 +47,7 @@ import {
   getConstantBindingsInFunction,
   getReferencedBindingsInFunction,
   getBindingsDerivedFrom,
+  readsProperty,
 } from "./references";
 import {
   ensureSectionReasonGroups,
@@ -460,7 +461,7 @@ function isReferenceTo(extra: t.NodeExtra, binding: Binding) {
   const { read } = extra;
   return (
     !!read &&
-    read.properties === undefined &&
+    !readsProperty(read) &&
     getCanonicalBinding(read.binding) === getCanonicalBinding(binding)
   );
 }

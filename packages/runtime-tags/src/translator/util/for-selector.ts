@@ -1,11 +1,6 @@
 import type { types as t } from "@marko/compiler";
 
-import {
-  type Binding,
-  bindingUtil,
-  getCanonicalBinding,
-  getPropertyAlias,
-} from "./bindings";
+import { type Binding, bindingUtil, getCanonicalBinding } from "./bindings";
 import { forEach, some } from "./optional";
 import { getReferencedBindings } from "./references";
 import type { Section } from "./sections";
@@ -90,13 +85,12 @@ function onlyComparesKey(
   return found;
 }
 
-// Whether the read's binding, past its properties, is `canonical`.
+// Whether the read names `canonical`.
 function resolvesTo(
   read: NonNullable<t.NodeExtra["read"]>,
   canonical: Binding,
 ) {
-  const binding = getPropertyAlias(read.binding, read.properties);
-  return !!binding && getCanonicalBinding(binding) === canonical;
+  return getCanonicalBinding(read.alias) === canonical;
 }
 
 // Whether the read reads a property through `canonical`.
@@ -104,15 +98,15 @@ function resolvesThrough(
   read: NonNullable<t.NodeExtra["read"]>,
   canonical: Binding,
 ) {
-  let binding: Binding | undefined = read.binding;
-  let through = false;
-  forEach(read.properties, (prop) => {
-    if (binding) {
-      through ||= getCanonicalBinding(binding) === canonical;
-      binding = binding.propertyAliases.get(prop);
+  for (let cur = read.alias; cur !== read.binding; cur = cur.aliasOf!) {
+    if (
+      cur.property !== undefined &&
+      getCanonicalBinding(cur.aliasOf!) === canonical
+    ) {
+      return true;
     }
-  });
-  return through;
+  }
+  return false;
 }
 
 function readsKey(read: t.NodeExtra["read"], keyBinding: Binding): boolean {

@@ -59,10 +59,10 @@ export interface Read {
 }
 
 export interface ResolvedRead {
+  /** The binding whose value it reads. */
   binding: Binding;
-  properties: Opt<string>;
-  /** The alias read through `binding` along `properties`, if any. */
-  through?: Binding;
+  /** What the read names: `binding`, or an alias of it read through it. */
+  alias: Binding;
   inOwnBody: boolean;
   getter: Getter | undefined;
   /** Set for same-section local reads: the function root that owns the read. */
@@ -462,7 +462,7 @@ function trackReferencesForBinding(babelBinding: t.Binding, binding: Binding) {
         );
         const refExtra = (ref.node.extra ??= {});
         refExtra.section = refSection;
-        refExtra.read = createResolvedRead(binding, undefined);
+        refExtra.read = createResolvedRead(binding);
         refExtra.read.localFn = fnExtra;
       }
     }
@@ -1326,18 +1326,22 @@ export function getResolvedRead(read: Read) {
 
 export function createResolvedRead(
   binding: Binding,
-  properties: Opt<string>,
-  inOwnBody: boolean = false,
+  alias = binding,
+  inOwnBody = false,
 ): ResolvedRead {
-  return { binding, properties, inOwnBody, getter: undefined };
+  return { binding, alias, inOwnBody, getter: undefined };
 }
 
 export function createResolvedGetterRead(
   binding: Binding,
-  properties: Opt<string>,
   getter: Getter,
 ): ResolvedRead {
-  return { binding, properties, inOwnBody: false, getter };
+  return { binding, alias: binding, inOwnBody: false, getter };
+}
+
+// It reads a property of its binding, not the whole value.
+export function readsProperty({ binding, alias }: ResolvedRead) {
+  return getCanonicalBinding(alias) !== getCanonicalBinding(binding);
 }
 
 export interface ReferencedExtra extends t.NodeExtra {

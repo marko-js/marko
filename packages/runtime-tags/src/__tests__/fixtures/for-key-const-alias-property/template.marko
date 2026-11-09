@@ -1,0 +1,11 @@
+// `length` reads through the loop key, a constant, as written: no optional
+// chain where the author wrote none.
+<let/items=[{ name: "ab" }, { name: "cde" }]/>
+<let/show=true/>
+<for|{ name }| of=items by="name">
+  <if=show>
+    <const/{ length }=name/>
+    <span>${length}</span>
+  </if>
+</for>
+<button onClick() { show = !show }>t</button>

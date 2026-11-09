@@ -1,13 +1,18 @@
 import { types as t } from "@marko/compiler";
 
-import { type Binding, BindingType, getAliasRoot } from "./bindings";
+import {
+  type Binding,
+  BindingType,
+  getAliasRoot,
+  getPropertyDepth,
+} from "./bindings";
 import { getAccessorProp } from "./get-accessor-enums";
 import { getDeclaredBindingExpression } from "./get-declared-binding-expression";
 import { isOptimize, isOutputDOM } from "./marko-config";
-import { reduce, size } from "./optional";
 import {
   getReferencedBindings,
   isRegisteredFnExtra,
+  readsProperty,
   type ResolvedRead,
 } from "./references";
 import { callRuntime } from "./runtime";
@@ -87,9 +92,14 @@ export function getReadReplacement(
     : getHTMLReadBase(node, read);
   if (!base) return;
 
-  const expr = read.through
-    ? addAliasPath(base, read.through, read.binding, dom)
-    : reduce(read.properties, addMember, base);
+  // A constant's properties read in place; others read optionally where the
+  // alias's forward does.
+  const expr = addAliasPath(
+    base,
+    read.alias,
+    read.binding,
+    dom && read.binding.type !== BindingType.constant,
+  );
   if (node.type === "Identifier" && expr.type === "Identifier") {
     node.name = expr.name;
     return;
@@ -100,7 +110,7 @@ export function getReadReplacement(
   return getChainReplacement(
     node,
     expr,
-    dom ? size(read.properties) : Infinity,
+    dom ? getPropertyDepth(read.alias, read.binding) : Infinity,
   );
 }
 
@@ -110,7 +120,7 @@ function getDOMReadBase(
   section: Section | undefined,
   signal: Signal | undefined,
 ) {
-  const { binding, properties, getter } = read;
+  const { binding, getter } = read;
   if (read.localFn) {
     // A registered function receives its serialized locals scope; an inline
     // one keeps the lexical reference (following renames).
@@ -135,7 +145,7 @@ function getDOMReadBase(
         ]);
   }
 
-  if (properties === undefined && binding.type === BindingType.dom) {
+  if (!readsProperty(read) && binding.type === BindingType.dom) {
     return (
       getter &&
       t.callExpression(getBindingGetterIdentifier(binding, binding.section), [
@@ -226,20 +236,18 @@ function getChainReplacement(
   replaceMember.object = withPreviousLocation(expr, replaceMember.object);
 }
 
-function addMember(expr: t.Expression, prop: string) {
-  return toMemberExpression(expr, prop);
-}
-
 // A resolved read in `section`: its binding's scope slot and the properties
 // read through it.
 export function createResolvedReadExpression(
   read: ResolvedRead,
   section: Section,
 ) {
-  const base = createScopeReadExpression(read.binding, section);
-  return read.through
-    ? addAliasPath(base, read.through, read.binding, true)
-    : reduce(read.properties, addMember, base);
+  return addAliasPath(
+    createScopeReadExpression(read.binding, section),
+    read.alias,
+    read.binding,
+    true,
+  );
 }
 
 // The path from `ancestor` to its alias, optional where the alias's forward is

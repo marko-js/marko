@@ -9,7 +9,6 @@ import {
   type Opt,
   type SortedMany,
   type SortedOpt,
-  push,
   Sorted,
   reduceWhile,
   some,
@@ -530,14 +529,13 @@ export function hasNonConstantPropertyAlias(binding: Binding) {
   return false;
 }
 
-// The properties from `ancestor` down to `binding`, one of its aliases.
-export function getPropertyPath(
-  binding: Binding,
-  ancestor: Binding,
-): Opt<string> {
-  if (binding === ancestor) return;
-  const path = getPropertyPath(binding.aliasOf!, ancestor);
-  return binding.property === undefined ? path : push(path, binding.property);
+// How many properties `binding`, one of its aliases, is below `ancestor`.
+export function getPropertyDepth(binding: Binding, ancestor: Binding) {
+  let depth = 0;
+  for (let cur = binding; cur !== ancestor; cur = cur.aliasOf!) {
+    if (cur.property !== undefined) depth++;
+  }
+  return depth;
 }
 
 export function isIndexProperty(property: string) {

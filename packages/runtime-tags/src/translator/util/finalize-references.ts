@@ -14,7 +14,6 @@ import {
   getBindings,
   getCanonicalBinding,
   getAssignedObject,
-  getPropertyPath,
   isDirectAlias,
   isRest,
   propertiesUtil,
@@ -213,7 +212,7 @@ function resolveRead(read: Read, target: Binding, expr: ReferencedExtra) {
   const { binding, extra, getter } = read;
   if (getter) {
     extra.section = expr.section;
-    extra.read = createResolvedGetterRead(binding, undefined, getter);
+    extra.read = createResolvedGetterRead(binding, getter);
   } else if (extra.assignmentTo === binding) {
     extra.changeHandlerRead = createReadThrough(read, target);
   } else if (binding.type !== BindingType.global) {
@@ -224,12 +223,7 @@ function resolveRead(read: Read, target: Binding, expr: ReferencedExtra) {
 }
 
 function createReadThrough({ binding, inOwnBody }: Read, target: Binding) {
-  if (target === binding) {
-    return createResolvedRead(binding, undefined, inOwnBody);
-  }
-  const read = createResolvedRead(target, getPropertyPath(binding, target));
-  read.through = binding;
-  return read;
+  return createResolvedRead(target, binding, target === binding && inOwnBody);
 }
 
 // The slots effects read on resume once each expression has its reads handed
@@ -1103,7 +1097,7 @@ function getCanonicalIntersection(
 
 function resolveConstantReference(binding: Binding): ResolvedRead | undefined {
   const root = getConstantRoot(binding);
-  return root && createResolvedRead(root, getPropertyPath(binding, root));
+  return root && createResolvedRead(root, binding);
 }
 
 // A property of a constant is constant, so it reads through the outermost

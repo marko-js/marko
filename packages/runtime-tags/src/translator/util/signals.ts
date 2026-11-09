@@ -49,6 +49,7 @@ import {
   isAssignedBindingExtra,
   isPureExpr,
   isRegisteredFnExtra,
+  readsProperty,
 } from "./references";
 import {
   insertStatementBefore,
@@ -884,7 +885,7 @@ function isOwnValueRead(node: t.Node, binding: Binding) {
     !!read &&
     !extra!.assignment &&
     read.binding === binding &&
-    read.properties === undefined &&
+    !readsProperty(read) &&
     !read.getter?.invoked
   );
 }
