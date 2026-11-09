@@ -287,7 +287,7 @@ declare global {
         input: Marko.TemplateInput<Input>,
         reference: Node,
         position?: "afterbegin" | "afterend" | "beforebegin" | "beforeend",
-      ): Marko.MountedTemplate<typeof input>;
+      ): Marko.MountedTemplate<typeof input, Return>;
       /** @marko-overload-end */
     }
 
@@ -363,9 +363,7 @@ declare global {
         ? Name extends keyof NativeTags
           ? NativeTags[Name]["input"]
           : Record<string, unknown>
-        : Name extends
-              | Template<infer Input, any>
-              | { _(): () => (input: infer Input) => any }
+        : Name extends Template<infer Input, any>
           ? Input
           : Name extends Body<infer Args, any>
             ? Args extends {
@@ -385,10 +383,7 @@ declare global {
         ? Name extends keyof NativeTags
           ? NativeTags[Name]["return"]
           : () => Element
-        : Name extends
-              | { _(): () => (input: any) => { return: infer Return } }
-              | Template<any, infer Return>
-              | Body<any, infer Return>
+        : Name extends Template<any, infer Return> | Body<any, infer Return>
           ? Return
           : never;
 
