@@ -8,8 +8,7 @@
     "PatchChild:BranchScopes:#section/0": {
       "PatchText:#text/0": "two"
     }
-  },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-native-dynamic-tag-scriptless/template.marko_0_input_label#4/subscribers": "input_label"
+  }
 }
 ;BAE
 
@@ -22,8 +21,7 @@
     "PatchChild:BranchScopes:#article/0": {
       "PatchText:#text/0": "three"
     }
-  },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-native-dynamic-tag-scriptless/template.marko_0_input_label#4/subscribers": "input_label"
+  }
 }
 
 // PATCH holding BAE
@@ -35,6 +33,5 @@
     "PatchChild:BranchScopes:#section/0": {
       "PatchText:#text/0": "four"
     }
-  },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-native-dynamic-tag-scriptless/template.marko_0_input_label#4/subscribers": "input_label"
+  }
 }

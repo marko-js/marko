@@ -3,7 +3,7 @@ const $Label_content__walks = "D l";
 const $Label_content__template = "<p> </p>";
 _shells({ a: `a !a3;${((_w0) => `/${_w0}& b`)($Label_content__walks)};${((_w0) => `${_w0}<button>+</button>`)($Label_content__template)}` });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_suffix = _write_if($scope0_reason, 0), $fg__input_suffix = _filled_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wi__input_suffix = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_suffix__closures = /* @__PURE__ */ new Set();
 	let count = 0;
@@ -23,11 +23,10 @@ var template_default = _template("a", (input) => {
 	_patch_child_end();
 	_html(`<button>+</button>${_el_mark($scope0_id, "b")}`);
 	_script($scope0_id, "a3");
-	$fg__input_suffix && _patch_subscribers($scope0_id, "a4", "e");
 	_scope($scope0_id, {
 		e: input.suffix,
 		f: count,
 		g: $wi__input_suffix && $input_suffix__closures,
 		a: _existing_scope($childScope)
-	}) || $fg__input_suffix && _patch_write($scope0_id, "xe", input.suffix, !_server_guard($scope0_reason, 0));
+	}) || _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xe", input.suffix, !_server_guard($scope0_reason, 0));
 }, 1);

@@ -4,7 +4,7 @@ const $D_content__template = "<span> </span>";
 const $template = /*@__PURE__*/ ((_w0, _w1) => `${_w0}${_w1}`)($D_content__template, $template$1);
 const $walks = /*@__PURE__*/ ((_w0, _w1) => `/${_w0}&/${_w1}&`)($D_content__walks, $walks$1);
 const $D_content__f__OR__on = /*@__PURE__*/ _or_patch("__tests__/template.marko_1_f#0:6_on#3/setup", 4, ($scope) => _text($scope["#text/0"], $scope.on && $scope._.f()));
-const $D_content__f = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_1_f#0:6/subscribe", "f/7", $D_content__f__OR__on, 0, "__tests__/template.marko_0_f#6/subscribers", 0);
+const $D_content__f = /*@__PURE__*/ _closure_get("f/7", $D_content__f__OR__on, 0, "__tests__/template.marko_1_f#0:6/subscribe");
 const $D_content__setup = $D_content__f;
 const $D_content__on = /*@__PURE__*/ _const("on", $D_content__f__OR__on);
 const $D_content__$params = ($scope, $params2) => $D_content__$temp($scope, $params2[0]);

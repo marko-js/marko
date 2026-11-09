@@ -96,7 +96,6 @@ var page_default = _template("__tests__/page.marko", (input) => {
 			_resume_branch($scope2_id);
 		}, $scope1_id, 0) }) });
 		_patch_child_end();
-		_filled_guard($scope0_reason, 0) && $cg__input_items && _patch_subscribers($scope1_id, "__tests__/page.marko_1_item_n#3/subscribers", "item_n");
 		_scope($scope1_id, {
 			item_n: item?.n,
 			_: _scope_with_id($scope0_id),

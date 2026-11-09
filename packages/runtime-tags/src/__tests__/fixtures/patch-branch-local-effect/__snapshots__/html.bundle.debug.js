@@ -8,7 +8,7 @@ _shells({
 	"__tests__/template.marko_2*shell": "__tests__/template.marko_2*shell,<span>inner</span>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_title = _client_guard($scope0_reason, 2), $cg__input_inner = _client_guard($scope0_reason, 3), $wg__input_show = _write_guard($scope0_reason, 1), $sg__input_title = _server_guard($scope0_reason, 2), $fg__input_title = _filled_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 1), $fg__input_inner = _filled_guard($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $cg__input_title = _client_guard($scope0_reason, 2), $cg__input_inner = _client_guard($scope0_reason, 3), $wg__input_show = _write_guard($scope0_reason, 1), $sg__input_title = _server_guard($scope0_reason, 2), $fg__input_title = _filled_guard($scope0_reason, 2), $fg__input_inner = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_html("<main>");
 	_if(() => {
@@ -27,7 +27,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					return 0;
 				}
 			}, $scope1_id, "#text/1", 1, _write_guard($scope0_reason, 3), 1, 0, 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 3);
-			_filled_guard($scope0_reason, 2) && ($cg__input_show || $cg__input_inner) && _patch_render($scope1_id, "__tests__/template.marko_2_label#1:2/setup", "label");
+			_filled_guard($scope0_reason, 2) && $cg__input_inner && _patch_render($scope1_id, "__tests__/template.marko_2_label#1:2/setup", "label");
 			$cg__input_title && _patch_render($scope1_id, "__tests__/template.marko_1_input_title#0:4/setup");
 			$cg__input_inner && _patch_render($scope1_id, "__tests__/template.marko_1_input_inner#0:5/setup");
 			_scope($scope1_id, {

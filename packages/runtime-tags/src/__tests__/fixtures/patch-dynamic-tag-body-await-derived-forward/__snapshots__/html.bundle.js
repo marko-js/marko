@@ -31,7 +31,7 @@ _shells({
 	b: "b;b%;<!><!><!>"
 });
 var card_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_p__OR__input_content = _write_guard($scope0_reason, 0), $cg__input_p__OR__input_content = _client_guard($scope0_reason, 0), $wg__input_p = _write_guard($scope0_reason, 1), $wi__input_content = _write_if($scope0_reason, 2), $wi__input_p__OR__input_content = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_p__OR__input_content = _write_guard($scope0_reason, 0), $cg__input_p__OR__input_content = _client_guard($scope0_reason, 0), $wg__input_p = _write_guard($scope0_reason, 1), $wi__input_p__OR__input_content = _write_if($scope0_reason, 0), $wi__input_content = _write_if($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_content__closures = /* @__PURE__ */ new Set();
 	_await($scope0_id, "a", input.p, (x) => {
@@ -49,13 +49,13 @@ var card_default = _template("b", (input) => {
 		_filled_guard($scope0_reason, 0) && _patch_subscribers($scope1_id, "b2", "e");
 		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "b3");
 		_patch_render($scope1_id, "b4", [_filled_guard($scope0_reason, 2) && ">e", _filled_guard($scope0_reason, 1) && "c"], $scope0_reason, 0);
-		$wi__input_p__OR__input_content && _subscribe($wi__input_content && $input_content__closures, _scope($scope1_id, {
+		$wi__input_p__OR__input_content && _subscribe(_unfilled_if($scope0_reason, 2) && $input_content__closures, _scope($scope1_id, {
 			c: $wi__input_content && x,
 			e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && c,
 			g: $await_content__c__closures
 		}), _client_guard($scope0_reason, 2) && "b3", $wg__input_p);
 		_filled_guard($scope0_reason, 0) && (_client_branch_if("b0", $scope1_id) || _unfilled_if($scope0_reason, 1)) && _patch_write($scope1_id, "xe", c, !_server_guard($scope0_reason, 0));
-		$wg__input_p || $wi__input_p__OR__input_content && _write_guard($scope0_reason, 2) && _resume_branch($scope1_id);
+		$wg__input_p || $wi__input_p__OR__input_content && _resume_branch($scope1_id);
 	}, 1, "b5", _unfilled_if($scope0_reason, 1) && 3, 1, 1);
 	_scope($scope0_id, {
 		e: _write_if($scope0_reason, 1) && input.content,

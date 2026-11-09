@@ -3,7 +3,7 @@ const $Row_content__walks = "D lD l";
 const $Row_content__template = "<p> </p><em> </em>";
 _shells({ a: `a !a4;${((_w0) => `/${_w0}& b`)($Row_content__walks)};${((_w0) => `${_w0}<button class=n>+</button>`)($Row_content__template)}` });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_y = _write_if($scope0_reason, 1), $fg__input_y = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wi__input_y = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_y__closures = /* @__PURE__ */ new Set();
 	let n = 0;
@@ -34,11 +34,10 @@ var template_default = _template("a", (input) => {
 	_patch_child_end();
 	_html(`<button class=n>+</button>${_el_mark($scope0_id, "b")}`);
 	_script($scope0_id, "a4");
-	$fg__input_y && _patch_subscribers($scope0_id, "a5", "e");
 	_scope($scope0_id, {
 		e: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1)) && input.y,
 		h: n,
 		i: $wi__input_y && $input_y__closures,
 		a: _existing_scope($childScope)
-	}) || $fg__input_y && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xe", input.y, !_server_guard($scope0_reason, 1));
+	}) || _filled_guard($scope0_reason, 1) && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xe", input.y, !_server_guard($scope0_reason, 1));
 }, 1);

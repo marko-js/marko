@@ -10,7 +10,6 @@
       "PatchMarkedWrite:label": "b"
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-define-mount-caller-effect/template.marko_2*shell"],
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-define-mount-caller-effect/template.marko_0_input_page#6/subscribers": "input_page",
   "PatchMarkedWrite:input_page": 1
 }
 ;BAE
@@ -26,6 +25,5 @@
       "PatchMarkedWrite:label": "b"
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-define-mount-caller-effect/template.marko_2*shell"],
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-define-mount-caller-effect/template.marko_0_input_page#6/subscribers": "input_page",
   "PatchMarkedWrite:input_page": 2
 }

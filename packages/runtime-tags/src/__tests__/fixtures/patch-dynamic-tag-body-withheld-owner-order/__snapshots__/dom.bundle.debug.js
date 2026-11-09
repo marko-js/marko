@@ -40,10 +40,10 @@ const $D_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $D_content__input_on__OR__X = /*@__PURE__*/ _or(8, ($scope) => $D_content__dynamicTag($scope, $scope._.input_on ? keeper_default : plain_default, ($_) => ({ content: $scope.X })));
 const $D_content__dynamicTag2 = /*@__PURE__*/ _dynamic_tag("#text/1");
 const $D_content__input_on__OR__prev = /*@__PURE__*/ _or_patch("__tests__/template.marko_1_input_on#0:5_prev#5/setup", 6, ($scope) => $D_content__dynamicTag2($scope, $scope._.input_on ? keeper_default : plain_default, ($_) => ({ content: $scope.prev })));
-const $D_content__input_on = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_1_input_on#0:5/subscribe", "input_on/9", ($scope) => {
+const $D_content__input_on = /*@__PURE__*/ _closure_get("input_on/9", ($scope) => {
 	$D_content__input_on__OR__X($scope);
 	$D_content__input_on__OR__prev($scope);
-}, 0, "__tests__/template.marko_0_input_on#5/subscribers", 0);
+}, 0, "__tests__/template.marko_1_input_on#0:5/subscribe");
 const $D_content__X = /*@__PURE__*/ _const("X", ($scope) => {
 	_return($scope, $scope.X);
 	$D_content__input_on__OR__X($scope);

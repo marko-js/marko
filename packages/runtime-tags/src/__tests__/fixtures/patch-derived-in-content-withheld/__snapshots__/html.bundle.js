@@ -66,7 +66,7 @@ var template_default = _template("a", (input) => {
 		});
 		_patch_child_end();
 		_filled_guard($scope0_reason, 0) && _patch_subscribers($scope1_id, "a2", "b");
-		_subscribe($open__closures, _subscribe($wi__input_label && $input_label__closures, _scope($scope1_id, {
+		_subscribe($open__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope1_id, {
 			b: label,
 			_: _scope_with_id($scope0_id),
 			i: $wi__input_label && $wrapper_content__label__closures,

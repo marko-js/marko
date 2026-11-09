@@ -17,7 +17,7 @@ _shells({ a: `a${_shell_marker($setup)};${((_w0) => `/${_w0}& b`)("D%l")};${((_w
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
 	_write_guard($scope0_reason, 0);
-	const $cg__input_label = _client_guard($scope0_reason, 0), $wi__input_label = _write_if($scope0_reason, 0);
+	const $cg__input_label = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	const $count__closures = /* @__PURE__ */ new Set();
@@ -32,7 +32,7 @@ var template_default = _template("a", (input) => {
 		_if(() => {}, $scope1_id, "a", 1, 1, 0, 0, 1);
 		_filled_guard($scope0_reason, 0) && _patch_render($scope1_id, "a0", "b");
 		_patch_render($scope1_id, "a1", _filled_guard($scope0_reason, 0) && "b");
-		_subscribe($count__closures, _subscribe($wi__input_label && $input_label__closures, _scope($scope1_id, {
+		_subscribe($count__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope1_id, {
 			b: label,
 			_: _scope_with_id($scope0_id)
 		}), $cg__input_label && "a2"), "a3");
@@ -42,7 +42,7 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a5");
 	_scope($scope0_id, {
 		f: count,
-		g: $wi__input_label && $input_label__closures,
+		g: _write_if($scope0_reason, 0) && $input_label__closures,
 		h: $count__closures,
 		a: _existing_scope($childScope)
 	});

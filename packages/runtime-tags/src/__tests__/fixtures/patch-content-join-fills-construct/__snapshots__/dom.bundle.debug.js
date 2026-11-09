@@ -68,7 +68,7 @@ const $aside_content__setup = ($scope) => {
 	$setup$2($scope["#childScope/0"]);
 };
 const $aside_content__p_base = /*@__PURE__*/ _closure_get_patch("__tests__/page.marko_2_p_base#0:9/subscribe", "p_base/11", $aside_content__bonus__OR__p_base__OR__item_n, ($scope) => $scope._._, "__tests__/page.marko_0_p_base#9/subscribers", 0);
-const $aside_content__item_n = /*@__PURE__*/ _closure_get_patch("__tests__/page.marko_2_item_n#1:3/subscribe", "item_n/12", $aside_content__bonus__OR__p_base__OR__item_n, 0, "__tests__/page.marko_1_item_n#3/subscribers", 0);
+const $aside_content__item_n = /*@__PURE__*/ _closure_get_patch("__tests__/page.marko_2_item_n#1:3/subscribe", "item_n/12", $aside_content__bonus__OR__p_base__OR__item_n);
 const $aside_content = /*@__PURE__*/ _content("__tests__/page.marko_2*content", $template$2, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$2), $aside_content__setup);
 const $for_content__setup = ($scope) => $input_aside($scope["#childScope/0"], attrTag({ content: $aside_content($scope) }));
 const $for_content__$params = ($scope, $params2) => $for_content__item_n($scope, $params2[0]?.n);

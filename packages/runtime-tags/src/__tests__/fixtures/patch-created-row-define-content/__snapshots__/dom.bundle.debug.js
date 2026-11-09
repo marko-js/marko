@@ -11,7 +11,7 @@ const $rowcardCardspan_content__setup = ($scope) => {
 const $rowcardCardspan_content__n = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_7_n#2:11/subscribe", "n/15", ($scope) => _text($scope["#text/1"], $scope._.n));
 const $rowcardCardspan_content = _content("__tests__/template.marko_7*content", "<b><!> <!></b>", "D%c%", $rowcardCardspan_content__setup);
 _content_resume($rowcardCardspan_content);
-const $Card_content2__row_label = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_6_row_label#2:7/subscribe", "row_label/13", ($scope) => _text($scope["#text/0"], $scope._.row_label), 0, "__tests__/template.marko_2_row_label#7/subscribers", 1);
+const $Card_content2__row_label = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_6_row_label#2:7/subscribe", "row_label/13", ($scope) => _text($scope["#text/0"], $scope._.row_label));
 const $Card_content2__setup = ($scope) => {
 	$Card_content2__row_label($scope);
 	$Card_content2__n($scope);

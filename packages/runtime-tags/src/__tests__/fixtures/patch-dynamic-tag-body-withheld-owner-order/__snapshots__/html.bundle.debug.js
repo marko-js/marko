@@ -99,7 +99,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	});
 	_patch_child_end();
 	_html("</main>");
-	_filled_guard($scope0_reason, 0) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_on#5/subscribers", "input_on");
 	_scope($scope0_id, {
 		"ClosureScopes:input_on/9": $wi__input_on && $input_on__closures,
 		"#childScope/0": _existing_scope($childScope),

@@ -44,7 +44,6 @@
     },
     "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-withheld-owner-order/template.marko_1_label#4/subscribers": "label",
     "PatchMarkedWrite:label": "b2"
-  },
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-withheld-owner-order/template.marko_0_input_on#5/subscribers": "input_on"
+  }
 }
 ;CAA

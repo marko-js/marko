@@ -25,7 +25,7 @@ const $template = "<button>x</button>";
 const $walks = "/& b";
 const $Panel_content__input_w__OR__k__script = _script("__tests__/tags/card.marko_1_input_w#0:5_k#0:6", ($scope) => console.log("k", $scope._.k, $scope._.input_w));
 const $Panel_content__input_w__OR__k = /*@__PURE__*/ _or_patch("__tests__/tags/card.marko_1_input_w#0:5_k#0:6/setup", 0, $Panel_content__input_w__OR__k__script);
-const $Panel_content__input_w = /*@__PURE__*/ _closure_get_patch("__tests__/tags/card.marko_1_input_w#0:5/subscribe", "input_w/7", $Panel_content__input_w__OR__k, 0, "__tests__/tags/card.marko_0_input_w#5/subscribers", 0);
+const $Panel_content__input_w = /*@__PURE__*/ _closure_get_patch("__tests__/tags/card.marko_1_input_w#0:5/subscribe", "input_w/7", $Panel_content__input_w__OR__k);
 const $Panel_content__setup = ($scope) => {
 	$Panel_content__input_w($scope);
 	$Panel_content__k($scope);

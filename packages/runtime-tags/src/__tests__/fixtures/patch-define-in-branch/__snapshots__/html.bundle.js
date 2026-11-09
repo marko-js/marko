@@ -13,7 +13,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
 		_html(`<li>${_text_mark($scope1_id, "a", label, 1, $scope1_reason, 0)}: ${_text_mark($scope1_id, "b", input.suffix, 2, $scope0_reason, 1)}</li>`);
-		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "a1", $cg__input_suffix);
+		$cg__input_suffix && _patch_render($scope1_id, "a1");
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_suffix__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }), $cg__input_suffix && "a1");
 	}, $scope0_id) };
 	_html("<ul>");
@@ -37,7 +37,7 @@ var template_default = _template("a", (input) => {
 		}
 	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["a2"], $scope0_reason, 2);
 	_html(`</ul>${_el_mark($scope0_id, "a", $wg__input_show)}`);
-	$fg__input_suffix && _patch_subscribers($scope0_id, "a3", "d");
+	$fg__input_suffix && _client_guard($scope0_reason, 2) && _patch_subscribers($scope0_id, "a3", "d");
 	_scope($scope0_id, {
 		d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1)) && input.suffix,
 		f: _write_if($scope0_reason, 1) && $input_suffix__closures

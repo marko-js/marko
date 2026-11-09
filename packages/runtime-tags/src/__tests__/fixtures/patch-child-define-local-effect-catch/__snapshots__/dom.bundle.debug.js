@@ -32,7 +32,7 @@ const $try_content__setup = ($scope) => {
 };
 const $Card_content__x__closure = /*@__PURE__*/ _closure($catch_content__x);
 const $Card_content__x = /*@__PURE__*/ _const("x", $Card_content__x__closure);
-const $Card_content__input_label = /*@__PURE__*/ _closure_get_patch("__tests__/tags/wrap.marko_1_input_label#0:3/subscribe", "input_label/5", ($scope) => $Card_content__x($scope, $scope._.input_label + "!"), 0, "__tests__/tags/wrap.marko_0_input_label#3/subscribers", 0);
+const $Card_content__input_label = /*@__PURE__*/ _closure_get_patch("__tests__/tags/wrap.marko_1_input_label#0:3/subscribe", "input_label/5", ($scope) => $Card_content__x($scope, $scope._.input_label + "!"));
 const $Card_content__try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%", $try_content__setup, 0, $catch_content);
 const $Card_content__setup = ($scope) => {
 	$Card_content__input_label($scope);

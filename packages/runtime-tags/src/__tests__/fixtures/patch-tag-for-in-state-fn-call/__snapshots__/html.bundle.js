@@ -32,7 +32,7 @@ var card_default = _template("b", (input) => {
 				return 0;
 			}
 		}, $scope1_id, "a", 1, $wg__input_sel, 1, 0, 0, ["b4"], $scope0_reason, 0);
-		_filled_guard($scope0_reason, 2) && ($cg__input_obj || $cg__input_sel) && _patch_render($scope1_id, "b6", "e");
+		_filled_guard($scope0_reason, 2) && $cg__input_sel && _patch_render($scope1_id, "b6", "e");
 		$cg__input_sel && _patch_render($scope1_id, "b7");
 		_scope($scope1_id, {
 			M: _unfilled_if($scope0_reason, 3) && k,

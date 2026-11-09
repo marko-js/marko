@@ -51,7 +51,7 @@ _shells({
 	a9: "a9,"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_items = _server_guard($scope0_reason, 4), $cg__input_items = _client_guard($scope0_reason, 4), $scope0_page = _page_render(), $wi__input_items = _write_if($scope0_reason, 4), $fg__input_items = _filled_guard($scope0_reason, 4), $fg__input_nested = _filled_guard($scope0_reason, 5), $cg__input_show = _client_guard($scope0_reason, 3), $fg__input_tag = _filled_guard($scope0_reason, 6);
+	const $scope0_reason = _scope_reason(), $sg__input_items = _server_guard($scope0_reason, 4), $cg__input_items = _client_guard($scope0_reason, 4), $scope0_page = _page_render(), $fg__input_items = _filled_guard($scope0_reason, 4), $fg__input_nested = _filled_guard($scope0_reason, 5), $cg__input_show = _client_guard($scope0_reason, 3), $fg__input_tag = _filled_guard($scope0_reason, 6), $wi__input_items = _write_if($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	const $input_items__closures = /* @__PURE__ */ new Set();
 	let count = 0;
@@ -101,7 +101,7 @@ var template_default = _template("a", (input) => {
 				}, 0, $scope2_id, "a", 1, 1, 1, 0, 0, "a8", $scope0_reason, 4);
 				_script($scope2_id, "a12");
 				$cg__input_items && _patch_render($scope2_id, "a13");
-				_subscribe($wi__input_items && $input_items__closures, _scope($scope2_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope1_id) }), $cg__input_items && "a13");
+				_subscribe(_unfilled_if($scope0_reason, 4) && $input_items__closures, _scope($scope2_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope1_id) }), $cg__input_items && "a13");
 			}, $scope1_id, 0) }) });
 			_patch_child_end();
 			_dynamic_tag($scope1_id, "f", input.tag, {}, 34, _content_resume("a4", () => {
@@ -118,7 +118,7 @@ var template_default = _template("a", (input) => {
 				}, 0, $scope3_id, "b", 1, 1, 1, 0, 0, "a9", $scope0_reason, 4);
 				_script($scope3_id, "a15");
 				_unfilled_if($scope0_reason, 4) && _patch_subscribe($scope3_id, "a16", $cg__input_items);
-				_subscribe($wi__input_items && $input_items__closures, _scope($scope3_id, {
+				_subscribe(_unfilled_if($scope0_reason, 4) && $input_items__closures, _scope($scope3_id, {
 					_: _write_if($scope0_reason, 2) && _scope_with_id($scope1_id),
 					a: _existing_scope($childScope4),
 					Ck: $wi__input_items && 1

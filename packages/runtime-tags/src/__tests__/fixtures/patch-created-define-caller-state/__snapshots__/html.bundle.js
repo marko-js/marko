@@ -16,7 +16,7 @@ var panel_default = _template("b", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
 		_html(`<p>${_text_mark($scope1_id, "a", id, 1, $scope1_reason, 0)}:${_text_mark($scope1_id, "b", input.n, 2, $scope0_reason, 1)}</p>`);
-		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "b1", $cg__input_n);
+		$cg__input_n && _patch_render($scope1_id, "b1");
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_n__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }), $cg__input_n && "b1");
 	}, $scope0_id, 0) };
 	_if(() => {
@@ -33,7 +33,7 @@ var panel_default = _template("b", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["b2"], $scope0_reason, 2);
-	$fg__input_n && _patch_subscribers($scope0_id, "b3", "d");
+	$fg__input_n && _client_guard($scope0_reason, 2) && _patch_subscribers($scope0_id, "b3", "d");
 	_scope($scope0_id, {
 		d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 1)) && input.n,
 		f: _write_if($scope0_reason, 1) && $input_n__closures

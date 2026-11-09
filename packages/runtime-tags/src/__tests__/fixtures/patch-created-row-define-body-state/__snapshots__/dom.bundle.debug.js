@@ -11,7 +11,7 @@ const $await_content__setup = ($scope) => {
 	$await_content__count($scope);
 	$await_content__id($scope);
 };
-const $await_content__id = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_4_id#2:3/subscribe", "id/9", ($scope) => _text($scope["#text/0"], $scope._._.id), ($scope) => $scope._._, "__tests__/template.marko_2_id#3/subscribers", 0);
+const $await_content__id = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_4_id#2:3/subscribe", "id/9", ($scope) => _text($scope["#text/0"], $scope._._.id), ($scope) => $scope._._);
 const $await_content__$params = ($scope, $params3) => _text($scope["#text/1"], $params3[0]);
 const $await_content = /*@__PURE__*/ _await_content("#text/0", "<p><!>:<!>:<!></p>", "D%c%c%", $await_content__setup);
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0", $await_content__$params);

@@ -30,7 +30,7 @@ const $if_content__setup = ($scope) => {
 	$input_label($scope["#childScope/0"], "left");
 };
 const $Repeat_content__if = /*@__PURE__*/ _if("#text/0", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1), $if_content3__setup);
-const $Repeat_content__input_right = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_1_input_right#0:7/subscribe", "input_right/8", ($scope) => $Repeat_content__if($scope, $scope._.input_right ? 0 : 1));
+const $Repeat_content__input_right = /*@__PURE__*/ _closure_get("input_right/8", ($scope) => $Repeat_content__if($scope, $scope._.input_right ? 0 : 1), 0, "__tests__/template.marko_1_input_right#0:7/subscribe");
 const $Repeat_content__setup = $Repeat_content__input_right;
 const $if = /*@__PURE__*/ _if("#text/0", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1), $if_content__setup);
 const $input_left = ($scope, input_left) => $if($scope, input_left ? 0 : 1);

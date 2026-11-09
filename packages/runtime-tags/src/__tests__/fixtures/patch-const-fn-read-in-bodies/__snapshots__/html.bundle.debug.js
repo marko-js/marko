@@ -92,7 +92,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}
 		}, $scope2_id, "#text/0", 1, $wg__input_x, 1, 0, 0, ["__tests__/template.marko_5*shell"], $scope0_reason, 4);
 		$fg__v && $cg__input_x && _patch_render($scope2_id, "__tests__/template.marko_5_h#2:4/setup", ["h", "v"]);
-		$cg__input_x && _patch_render($scope2_id, "__tests__/template.marko_2_input_x#0:8/subscribe");
 		$wi__input_x && _subscribe(_unfilled_if($scope0_reason, 4) && $input_x__closures, _scope($scope2_id, {
 			v,
 			h: (_unfilled_if($scope0_reason, 4) || _unfilled_if($scope2_reason, 0)) && h,
@@ -110,7 +109,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	counter_default({});
 	_patch_child_end();
 	$fg__input_a && $cg__input_items && _patch_render($scope0_id, "__tests__/template.marko_1_input_a#0:6/setup", "input_a");
-	$fg__input_x && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_x#8/subscribers", "input_x");
 	$fg__input_x && $cg__input_items && _patch_render($scope0_id, "__tests__/template.marko_1_input_x#0:8/setup", "input_x");
 	$fg__input_a && $cg__input_items && _patch_render($scope0_id, "__tests__/template.marko_1_f#0:10/setup", ["f", "input_a"]);
 	_scope($scope0_id, {

@@ -22,7 +22,7 @@ var template_default = _template("a", (input) => {
 			_scope($scope3_id, { c: value });
 		}, 1, "a1", _unfilled_if($scope0_reason, 0) && 2, 1);
 		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "a5", 1);
-		$wi__input_promise && _subscribe($input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 0) && "a5", 0);
+		$wi__input_promise && _subscribe(_unfilled_if($scope0_reason, 0) && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 0) && "a5", 0);
 		$wi__input_promise && _resume_branch($scope1_id);
 	}, () => {
 		_scope_reason();

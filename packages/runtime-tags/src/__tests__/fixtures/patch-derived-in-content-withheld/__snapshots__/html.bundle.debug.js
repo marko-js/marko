@@ -72,7 +72,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		});
 		_patch_child_end();
 		_filled_guard($scope0_reason, 0) && _patch_subscribers($scope1_id, "__tests__/template.marko_1_label#1/subscribers", "label");
-		_subscribe($open__closures, _subscribe($wi__input_label && $input_label__closures, _scope($scope1_id, {
+		_subscribe($open__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope1_id, {
 			label,
 			_: _scope_with_id($scope0_id),
 			"ClosureScopes:label/8": $wi__input_label && $wrapper_content__label__closures,

@@ -21,10 +21,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_await($scope2_id, "#text/0", p, (x) => {
 			const $scope3_id = _scope_id();
 			_html(`<p>${_text_mark($scope3_id, "#text/0", label, 1, $scope2_reason, 1)}:${_text_mark($scope3_id, "#text/1", x, 2, $scope2_reason, 0)}</p>`);
-			_unfilled_if($scope2_reason, 1) && _patch_subscribe($scope3_id, "__tests__/template.marko_3_label#2:4/subscribe", $cg__label);
+			$cg__label && _patch_render($scope3_id, "__tests__/template.marko_3_label#2:4/subscribe");
 			_subscribe(_unfilled_if($scope2_reason, 1) && $Show_content__label__closures, _scope($scope3_id, {}, "__tests__/template.marko", "4:4"), $cg__label && "__tests__/template.marko_3_label#2:4/subscribe");
 		}, 1, "__tests__/template.marko_3*content", 1);
-		_write_if($scope2_reason, 1) && _scope($scope2_id, { "ClosureScopes:label/9": _unfilled_if($scope2_reason, 1) && $Show_content__label__closures }, "__tests__/template.marko", "3:2");
+		_write_if($scope2_reason, 1) && _scope($scope2_id, { "ClosureScopes:label/9": (_unfilled_if($scope2_reason, 1) || _unfilled_if($scope0_reason, 0)) && $Show_content__label__closures }, "__tests__/template.marko", "3:2");
 	}, $scope0_id) };
 	_if(() => {
 		if (input.show) {

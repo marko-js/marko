@@ -28,7 +28,7 @@ _shells({
 	"__tests__/template.marko_3*shell": "__tests__/template.marko_3*shell !__tests__/template.marko_3_input_v#0:3_x#2;D ;<u> </u>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_v = _client_guard($scope0_reason, 2), $wi__input_v = _write_if($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 3), $cg__input_items = _client_guard($scope0_reason, 4), $sg__input_items = _server_guard($scope0_reason, 4), $fg__input_v = _filled_guard($scope0_reason, 2), $fg__input_show = _filled_guard($scope0_reason, 3), $fg__input_items = _filled_guard($scope0_reason, 4), $wi__input_items = _write_if($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $cg__input_v = _client_guard($scope0_reason, 2), $wi__input_v = _write_if($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 3), $cg__input_items = _client_guard($scope0_reason, 4), $sg__input_items = _server_guard($scope0_reason, 4), $fg__input_v = _filled_guard($scope0_reason, 2), $fg__input_show = _filled_guard($scope0_reason, 3), $fg__input_items = _filled_guard($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	const $input_v__closures = new Set();
 	const $input_show__closures = new Set();
@@ -96,7 +96,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_v#0:3/subscribe", $cg__input_v);
 		_unfilled_if($scope0_reason, 3) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_show#0:4/subscribe", $cg__input_show);
 		_unfilled_if($scope0_reason, 4) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_items#0:5/subscribe", $cg__input_items);
-		_subscribe($wi__input_items && $input_items__closures, _subscribe(_unfilled_if($scope0_reason, 3) && $input_show__closures, _subscribe(_unfilled_if($scope0_reason, 2) && $input_v__closures, _scope($scope1_id, {
+		_subscribe(_unfilled_if($scope0_reason, 4) && $input_items__closures, _subscribe(_unfilled_if($scope0_reason, 3) && $input_show__closures, _subscribe(_unfilled_if($scope0_reason, 2) && $input_v__closures, _scope($scope1_id, {
 			w: (_unfilled_if($scope0_reason, 3) || _unfilled_if($scope0_reason, 2)) && w,
 			_: _scope_with_id($scope0_id),
 			"ClosureScopes:w/13": $wi__input_v && (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 3)) && $catch_content__w__closures,
@@ -114,7 +114,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_msg: (_unfilled_if($scope0_reason, 5) || _unfilled_if($scope0_reason, 1)) && input.msg,
 		"ClosureScopes:input_v/8": $wi__input_v && $input_v__closures,
 		"ClosureScopes:input_show/9": _write_if($scope0_reason, 3) && $input_show__closures,
-		"ClosureScopes:input_items/10": $wi__input_items && $input_items__closures,
+		"ClosureScopes:input_items/10": _write_if($scope0_reason, 4) && $input_items__closures,
 		"ClosureScopes:input_fail/11": _write_if($scope0_reason, 5) && (_unfilled_if($scope0_reason, 5) || _unfilled_if($scope0_reason, 1)) && $input_fail__closures,
 		"ClosureScopes:input_msg/12": _write_if($scope0_reason, 6) && (_unfilled_if($scope0_reason, 6) || _unfilled_if($scope0_reason, 1)) && $input_msg__closures
 	}, "__tests__/template.marko", 0, {

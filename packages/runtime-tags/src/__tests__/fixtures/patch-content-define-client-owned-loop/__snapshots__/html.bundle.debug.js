@@ -20,7 +20,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_for_of(items, (item) => {
 			const $scope2_id = _scope_id();
 			_html(`<li>${_text_mark($scope2_id, "#text/0", item, 1, $scope1_reason, 0)}${_text_mark($scope2_id, "#text/1", input.suffix, 2, $scope0_reason, 0)}</li>`);
-			_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope2_id, "__tests__/template.marko_2_input_suffix#0:5/subscribe", $cg__input_suffix);
+			$cg__input_suffix && _patch_render($scope2_id, "__tests__/template.marko_2_input_suffix#0:5/subscribe");
 			_subscribe(_unfilled_if($scope0_reason, 0) && $input_suffix__closures, _scope($scope2_id, { _: ($wi__input_suffix || $wi__items) && _scope_with_id($scope1_id) }, "__tests__/template.marko", "4:6"), $cg__input_suffix && "__tests__/template.marko_2_input_suffix#0:5/subscribe");
 		}, 0, $scope1_id, "#ul/0", 1, 1, 1, 0, 0, "__tests__/template.marko_2*shell", $scope1_reason, 0);
 		_html(`</ul>${_el_mark($scope1_id, "#ul/0")}`);

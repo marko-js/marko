@@ -56,11 +56,11 @@ var toggle_tag_default = _template("g", (input) => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_dynamic_tag($scope1_id, "a", input.content, {}, 2, 0, 0, $wg__input_content, $scope0_reason, 2);
-		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "g1", $cg__input_content);
+		$cg__input_content && _patch_render($scope1_id, "g1");
 		$wi__input_open__OR__input_content && _subscribe(_unfilled_if($scope0_reason, 2) && $input_content__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), $cg__input_content && "g1", $wg__input_content);
 		$wg__input_content || $wi__input_open__OR__input_content && _resume_branch($scope1_id);
 	}, $scope0_id, 0), 0, $wg__input_open, $scope0_reason, 1);
-	$fg__input_content && _patch_subscribers($scope0_id, "g2", "e");
+	$fg__input_content && _client_guard($scope0_reason, 1) && _patch_subscribers($scope0_id, "g2", "e");
 	_scope($scope0_id, {
 		e: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 2)) && input.content,
 		f: _write_if($scope0_reason, 2) && $input_content__closures
@@ -131,7 +131,7 @@ var param_host_default = _template("d", (input) => {
 		const $scope4_id = _scope_id();
 		_scope_reason();
 		_html(`<p>own ${_text_mark($scope4_id, "a", input.label, 2, $scope0_reason, 2)}</p>`);
-		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope4_id, "d7", $cg__input_label);
+		$cg__input_label && _patch_render($scope4_id, "d7");
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope4_id, {
 			_: $wi__input_open__OR__input_label && _scope_with_id($scope0_id),
 			Ci: $wi__input_label && 3
@@ -235,7 +235,7 @@ var define_host_default = _template("b", (input) => {
 			const $scope5_id = _scope_id();
 			_scope_reason();
 			_html(`<p>own ${_text_mark($scope5_id, "a", input.label, 2, $scope0_reason, 0)}</p>`);
-			_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope5_id, "b7", $cg__input_label);
+			$cg__input_label && _patch_render($scope5_id, "b7");
 			_subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope5_id, {
 				_: ($wi__input_label || $wi__open) && _scope_with_id($scope1_id),
 				Cf: $wi__input_label && 3

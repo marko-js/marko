@@ -5,7 +5,7 @@ const $template$1 = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Wrap_content__templ
 const $walks$1 = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Wrap_content__walks);
 const $Wrap_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $Wrap_content__input_content__OR__t = /*@__PURE__*/ _or_patch("__tests__/tags/one.marko_1_input_content#0:3_t#3/setup", 4, ($scope) => $Wrap_content__dynamicTag($scope, $scope._.input_content, ($_) => ({ title: $scope.t })));
-const $Wrap_content__input_content = /*@__PURE__*/ _closure_get_patch("__tests__/tags/one.marko_1_input_content#0:3/subscribe", "input_content/5", $Wrap_content__input_content__OR__t, 0, "__tests__/tags/one.marko_0_input_content#3/subscribers", 0);
+const $Wrap_content__input_content = /*@__PURE__*/ _closure_get_patch("__tests__/tags/one.marko_1_input_content#0:3/subscribe", "input_content/5", $Wrap_content__input_content__OR__t);
 const $Wrap_content__setup = $Wrap_content__input_content;
 const $Wrap_content__t = /*@__PURE__*/ _const("t", $Wrap_content__input_content__OR__t);
 const $Wrap_content__$params = ($scope, $params2) => $Wrap_content__$temp($scope, $params2[0]);

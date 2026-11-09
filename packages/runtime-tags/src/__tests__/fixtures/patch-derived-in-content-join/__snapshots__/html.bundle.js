@@ -15,7 +15,7 @@ var wrapper_default = _template("b", (input) => {
 const $setup = _shell_setup([[], ["a4"]], ["a>", $setup$1]);
 _shells({ a: `a${_shell_marker($setup)};${((_w0) => `/${_w0}& b`)("D%l")};${((_w0) => `${_w0}<button>+</button>`)($template)}` });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_label = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	const $count__closures = /* @__PURE__ */ new Set();
@@ -29,7 +29,7 @@ var template_default = _template("a", (input) => {
 		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "xb", label, !_server_guard($scope0_reason, 0));
 		_html(`<p>${_text_mark($scope1_id, "a", label + count)}</p>`);
 		_patch_render($scope1_id, "a0", _filled_guard($scope0_reason, 0) && "b");
-		_subscribe($count__closures, _subscribe($wi__input_label && $input_label__closures, _scope($scope1_id, {
+		_subscribe($count__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope1_id, {
 			b: label,
 			_: _scope_with_id($scope0_id)
 		}), _client_guard($scope0_reason, 0) && "a1"), "a2");
@@ -39,7 +39,7 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a4");
 	_scope($scope0_id, {
 		f: count,
-		g: $wi__input_label && $input_label__closures,
+		g: _write_if($scope0_reason, 0) && $input_label__closures,
 		h: $count__closures,
 		a: _existing_scope($childScope)
 	});

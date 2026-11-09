@@ -18,7 +18,7 @@ const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}& b`)("D%l");
 const $setup = _shell_setup([[], ["__tests__/template.marko_0"]], ["#childScope/0>", $setup$1]);
 _shells({ "__tests__/template.marko": `__tests__/template.marko${_shell_marker($setup)};${((_w0) => `/${_w0}& b`)("D%l")};${((_w0) => `${_w0}<button>+</button>`)($template$1)}` });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_label = _write_guard($scope0_reason, 0), $cg__input_label = _client_guard($scope0_reason, 0), $wi__input_label = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_label = _write_guard($scope0_reason, 0), $cg__input_label = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = new Set();
 	const $count__closures = new Set();
@@ -42,7 +42,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, $scope1_id, "#text/0", 1, 1, 0, 0, 1);
 		_filled_guard($scope0_reason, 0) && _patch_render($scope1_id, "__tests__/template.marko_2_shout#1:2/setup", "shout");
 		_patch_render($scope1_id, "__tests__/template.marko_1_count#0:5_shout#2/setup", _filled_guard($scope0_reason, 0) && "shout");
-		_subscribe($count__closures, _subscribe($wi__input_label && $input_label__closures, _scope($scope1_id, {
+		_subscribe($count__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope1_id, {
 			shout,
 			_: _scope_with_id($scope0_id)
 		}, "__tests__/template.marko", "2:2", { shout: "4:10" }), $cg__input_label && "__tests__/template.marko_1_input_label#0:4/subscribe"), "__tests__/template.marko_1_count#0:5/subscribe");
@@ -52,7 +52,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		count,
-		"ClosureScopes:input_label/6": $wi__input_label && $input_label__closures,
+		"ClosureScopes:input_label/6": _write_if($scope0_reason, 0) && $input_label__closures,
 		"ClosureScopes:count/7": $count__closures,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, { count: "1:6" });

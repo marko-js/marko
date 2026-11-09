@@ -26,7 +26,7 @@ _shells({
 	c4: "c4 c3;D ;<span> </span>"
 });
 var row_list_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_type = _write_guard($scope0_reason, 1), $cg__input_type = _client_guard($scope0_reason, 1), $fg__input_type = _filled_guard($scope0_reason, 1), $cg__input_tally = _client_guard($scope0_reason, 0), $fg__input_settled = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_type = _write_guard($scope0_reason, 1), $cg__input_type = _client_guard($scope0_reason, 1), $fg__input_type = _filled_guard($scope0_reason, 1), $fg__input_settled = _filled_guard($scope0_reason, 2), $cg__input_tally = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_settled__closures = /* @__PURE__ */ new Set();
 	const $bounty__closures = /* @__PURE__ */ new Set();
@@ -48,7 +48,7 @@ var row_list_default = _template("c", (input) => {
 				return 0;
 			}
 		}, $scope1_id, "a", 1, $wg__input_type, 1, 0, 0, ["c4"], $scope0_reason, 1);
-		_filled_guard($scope0_reason, 0) && ($cg__input_tally || $cg__input_type) && _patch_render($scope1_id, "c6", "c");
+		_filled_guard($scope0_reason, 0) && $cg__input_type && _patch_render($scope1_id, "c6", "c");
 		$cg__input_type && _patch_render($scope1_id, "c7");
 		_scope($scope1_id, {
 			c: t,

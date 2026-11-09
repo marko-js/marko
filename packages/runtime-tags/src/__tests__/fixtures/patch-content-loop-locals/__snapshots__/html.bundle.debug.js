@@ -27,7 +27,7 @@ _shells({
 	"__tests__/template.marko_2*shell": "__tests__/template.marko_2*shell;D%;<b><!>!</b>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_show = _client_guard($scope0_reason, 1), $fg__input_show = _filled_guard($scope0_reason, 1), $cg__input_labels = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_show = _client_guard($scope0_reason, 1), $fg__input_show = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_show__closures = new Set();
 	const $n__closures = new Set();
@@ -47,7 +47,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				return 0;
 			}
 		}, $scope1_id, "#text/1", 1, _write_guard($scope0_reason, 1), 1, 0, 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 1);
-		($cg__input_labels || $cg__input_show) && _patch_render($scope1_id, "__tests__/template.marko_2_label#1:2/setup", "label");
+		$cg__input_show && _patch_render($scope1_id, "__tests__/template.marko_2_label#1:2/setup", "label");
 		$cg__input_show && _patch_render($scope1_id, "__tests__/template.marko_1_input_show#0:6/subscribe");
 		_patch_render($scope1_id, "__tests__/template.marko_1_n#0:7_label#2/setup", "label");
 		_subscribe($n__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_show__closures, _scope($scope1_id, {
@@ -60,7 +60,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_patch_child_end();
 	_html(`<button>${_text_mark($scope0_id, "#text/2", n)}</button>${_el_mark($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$fg__input_show && $cg__input_labels && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_show#6/subscribers", "input_show");
+	$fg__input_show && _client_guard($scope0_reason, 0) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_show#6/subscribers", "input_show");
 	_scope($scope0_id, {
 		input_show: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.show,
 		n,

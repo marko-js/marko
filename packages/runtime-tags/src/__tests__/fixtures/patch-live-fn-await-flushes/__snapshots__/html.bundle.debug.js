@@ -10,7 +10,7 @@ _shells({
 	"__tests__/template.marko": "__tests__/template.marko;/&b%;<pre id=log></pre><!><!>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_x = _client_guard($scope0_reason, 1), $wi__input_x__OR__input_promise = _write_if($scope0_reason, 0), $wi__input_x = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_x = _client_guard($scope0_reason, 1), $wi__input_x__OR__input_promise = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $fn2__closures = new Set();
 	const $input_promise__closures = new Set();
@@ -53,8 +53,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			});
 			_patch_child_end();
 			_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope2_id, "__tests__/template.marko_2_fn#0:6/subscribe", $cg__input_x);
-			_subscribe($wi__input_x && $fn2__closures, _scope($scope2_id, { "#childScope/0": _existing_scope($childScope2) }, "__tests__/template.marko", "12:4"), $cg__input_x && "__tests__/template.marko_2_fn#0:6/subscribe", 0);
-			_write_guard($scope0_reason, 1) && _resume_branch($scope2_id);
+			_subscribe(_unfilled_if($scope0_reason, 1) && $fn2__closures, _scope($scope2_id, { "#childScope/0": _existing_scope($childScope2) }, "__tests__/template.marko", "12:4"), $cg__input_x && "__tests__/template.marko_2_fn#0:6/subscribe", 0);
+			_resume_branch($scope2_id);
 		}, 1, "__tests__/template.marko_2*content", _unfilled_if($scope0_reason, 2), 1);
 		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_promise#0:5/subscribe", 1);
 		$wi__input_x__OR__input_promise && _subscribe(_unfilled_if($scope0_reason, 2) && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "11:2"), _client_guard($scope0_reason, 2) && "__tests__/template.marko_1_input_promise#0:5/subscribe", 0);
@@ -67,7 +67,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope($scope0_id, {
 		input_x: input.x,
 		"#childScope/0": _existing_scope($childScope),
-		"ClosureScopes:fn/8": $wi__input_x && $fn2__closures,
+		"ClosureScopes:fn/8": _write_if($scope0_reason, 1) && $fn2__closures,
 		"ClosureScopes:input_promise/7": _write_if($scope0_reason, 2) && _unfilled_if($scope0_reason, 2) && $input_promise__closures
 	}, "__tests__/template.marko", 0, { input_x: ["input.x"] });
 }, 1);

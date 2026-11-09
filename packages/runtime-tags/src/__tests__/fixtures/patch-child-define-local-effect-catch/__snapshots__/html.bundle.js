@@ -13,7 +13,7 @@ _shells({
 	b: `b a>;${((_w0) => `b/${_w0}&b`)($Card_content__walks)};${((_w0) => `<!>${_w0}<!>`)($Card_content__template)}`
 });
 var wrap_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 1), $wi__input_promise = _write_if($scope0_reason, 2), $wi__input_label = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 1), $cg__input_promise = _client_guard($scope0_reason, 2), $wi__input_promise = _write_if($scope0_reason, 2), $wi__input_label = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_promise__closures = /* @__PURE__ */ new Set();
 	const $input_label__closures = /* @__PURE__ */ new Set();
@@ -30,8 +30,8 @@ var wrap_default = _template("b", (input) => {
 				_html(`<em>${_text_mark($scope4_id, "a", v, 1, $scope0_reason, 2)}</em>`);
 				_scope($scope4_id, {});
 			}, 1, "b2", _unfilled_if($scope0_reason, 2) && 2);
-			_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope2_id, "b7", 1);
-			$wi__input_promise && _subscribe(_unfilled_if($scope0_reason, 2) && $input_promise__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 2) && "b7", 0);
+			$cg__input_promise && _patch_render($scope2_id, "b7");
+			$wi__input_promise && _subscribe(_unfilled_if($scope0_reason, 2) && $input_promise__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), $cg__input_promise && "b7", 0);
 			$wi__input_promise && _resume_branch($scope2_id);
 		}, void 0, (err) => {
 			_scope_reason();
@@ -42,18 +42,17 @@ var wrap_default = _template("b", (input) => {
 			_subscribe(_unfilled_if($scope0_reason, 1) && $Card_content__x__closures, _scope($scope3_id, { _: _scope_with_id($scope1_id) }), $cg__input_label && "b1");
 		}, 0, "b3", "b5", 0, 1, 1);
 		_filled_guard($scope0_reason, 1) && _patch_subscribers($scope1_id, "b8", "b");
-		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "b9", $cg__input_label);
-		_subscribe($wi__input_label && $input_label__closures, _scope($scope1_id, {
+		$cg__input_label && _patch_render($scope1_id, "b9");
+		_subscribe(_unfilled_if($scope0_reason, 1) && $input_label__closures, _scope($scope1_id, {
 			b: x,
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id),
 			h: $wi__input_label && $Card_content__x__closures
 		}), $cg__input_label && "b9", 0) || _filled_guard($scope0_reason, 1) && _patch_write($scope1_id, "xb", x, !_server_guard($scope0_reason, 1));
-		_write_guard($scope0_reason, 1) && _resume_branch($scope1_id);
+		_resume_branch($scope1_id);
 	}, $scope0_id, 0) };
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	Card.content({});
 	_patch_child_end();
-	_filled_guard($scope0_reason, 1) && _patch_subscribers($scope0_id, "b10", "d");
 	_scope($scope0_id, {
 		g: $wi__input_promise && $input_promise__closures,
 		f: $wi__input_label && $input_label__closures,

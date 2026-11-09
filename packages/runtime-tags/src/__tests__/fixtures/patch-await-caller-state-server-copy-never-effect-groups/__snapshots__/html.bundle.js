@@ -11,7 +11,7 @@ _shells({
 	b: `b a>;${((_w0) => `b/${_w0}&b`)($Row_content__walks)};${((_w0) => `<!>${_w0}<!>`)($Row_content__template)}`
 });
 var show_await_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_promise = _write_if($scope0_reason, 0), $fg__input_promise = _filled_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wi__input_promise = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_promise__closures = /* @__PURE__ */ new Set();
 	const Row = { content: _content("b3", ({ text }) => {
@@ -26,7 +26,7 @@ var show_await_default = _template("b", (input) => {
 		}, 1, "b1", _unfilled_if((_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 0)) << 1, 0) && 2);
 		_unfilled_if((_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 0)) << 1, 0) && _patch_subscribe($scope1_id, "b4", 1);
 		_patch_render($scope1_id, "b5", [_filled_guard($scope0_reason, 0) && ">d", $fg__text && "d"], (_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 0)) << 1, 0);
-		($wi__input_promise || $wi__text) && _subscribe($wi__input_promise && $input_promise__closures, _scope($scope1_id, {
+		($wi__input_promise || $wi__text) && _subscribe(_unfilled_if((_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 0)) << 1, 0) && $wi__input_promise && $input_promise__closures, _scope($scope1_id, {
 			d: $wi__input_promise && text,
 			_: _scope_with_id($scope0_id)
 		}), _client_guard((_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 0)) << 1, 0) && "b4", 0) || $fg__text && _unfilled_if($scope0_reason, 0) && _patch_write($scope1_id, "xd", text, !_server_guard($scope1_reason, 0));
@@ -36,12 +36,11 @@ var show_await_default = _template("b", (input) => {
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	Row.content({ text: input.label });
 	_patch_child_end();
-	$fg__input_promise && _patch_subscribers($scope0_id, "b6", "d");
 	_scope($scope0_id, {
 		d: _write_if($scope0_reason, 1) && input.promise,
 		f: $wi__input_promise && $input_promise__closures,
 		a: _existing_scope($childScope)
-	}) || $fg__input_promise && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xd", input.promise, !_server_guard($scope0_reason, 0));
+	}) || _filled_guard($scope0_reason, 0) && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xd", input.promise, !_server_guard($scope0_reason, 0));
 });
 
 // template.marko

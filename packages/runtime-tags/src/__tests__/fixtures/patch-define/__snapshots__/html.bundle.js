@@ -3,15 +3,14 @@ const $thing_content__walks = "D%c%l";
 const $thing_content__template = "<em><!> <!></em>";
 _shells({ a: `a;${((_w0) => `/${_w0}& b`)($thing_content__walks)};${((_w0) => `${_w0}<div>x</div>`)($thing_content__template)}` });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_title = _client_guard($scope0_reason, 1), $fg__input_cls = _filled_guard($scope0_reason, 3), $fg__input_on = _filled_guard($scope0_reason, 4), $wi__input_title = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $fg__input_cls = _filled_guard($scope0_reason, 3), $fg__input_on = _filled_guard($scope0_reason, 4), $wi__input_title = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_title__closures = /* @__PURE__ */ new Set();
 	const thing = { content: _content("a0", (attrs) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
 		_html(`<em>${_text_mark($scope1_id, "a", attrs.x, 1, $scope1_reason, 0)} ${_text_mark($scope1_id, "b", input.title, 2, $scope0_reason, 1)}</em>`);
-		$cg__input_title && _patch_render($scope1_id, "a1");
-		_subscribe(_unfilled_if($scope0_reason, 1) && $input_title__closures, _scope($scope1_id, { _: $wi__input_title && _scope_with_id($scope0_id) }), $cg__input_title && "a1");
+		_subscribe(_unfilled_if($scope0_reason, 1) && $input_title__closures, _scope($scope1_id, { _: $wi__input_title && _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 1) && "a1");
 	}, $scope0_id) };
 	_set_scope_reason(_updates_from($scope0_reason, 2) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);

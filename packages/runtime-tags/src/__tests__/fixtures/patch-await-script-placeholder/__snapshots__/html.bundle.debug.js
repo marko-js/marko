@@ -25,7 +25,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_scope($scope3_id, { value }, "__tests__/template.marko", "4:6", { value: "4:12" });
 		}, 1, "__tests__/template.marko_3*content", _unfilled_if($scope0_reason, 0) && 2, 1);
 		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_promise#0:3/subscribe", 1);
-		$wi__input_promise && _subscribe($input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4"), _client_guard($scope0_reason, 0) && "__tests__/template.marko_1_input_promise#0:3/subscribe", 0);
+		$wi__input_promise && _subscribe(_unfilled_if($scope0_reason, 0) && $input_promise__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4"), _client_guard($scope0_reason, 0) && "__tests__/template.marko_1_input_promise#0:3/subscribe", 0);
 		$wi__input_promise && _resume_branch($scope1_id);
 	}, () => {
 		const $scope2_reason = _scope_reason();

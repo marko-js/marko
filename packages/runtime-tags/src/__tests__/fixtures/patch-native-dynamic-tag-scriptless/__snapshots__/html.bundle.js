@@ -11,10 +11,10 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_html(_text_mark($scope1_id, "a", input.label, 2, $scope0_reason, 2));
-		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "a1", $cg__input_label);
+		$cg__input_label && _patch_render($scope1_id, "a1");
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }), $cg__input_label && "a1");
 	}, $scope0_id, 0), 0, $wg__input_on__OR__input_label, $scope0_reason, 0);
-	$fg__input_label && _patch_subscribers($scope0_id, "a2", "e");
+	$fg__input_label && _client_guard($scope0_reason, 0) && _patch_subscribers($scope0_id, "a2", "e");
 	_patch_render($scope0_id, "a3", [$fg__input_on && "d", $fg__input_label && "e"], $scope0_reason, 0);
 	_scope($scope0_id, {
 		d: (_unfilled_if($scope0_reason, 2) || _unfilled_if($scope0_reason, 0)) && input.on,

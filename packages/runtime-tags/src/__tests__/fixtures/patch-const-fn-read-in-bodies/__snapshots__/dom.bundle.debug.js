@@ -24,7 +24,7 @@ const $await_content__f = /*@__PURE__*/ _closure_get_patch("__tests__/template.m
 const $await_content__setup = $await_content__f;
 const $await_content__$params = ($scope, $params3) => _text($scope["#text/0"], $params3[0]);
 const $Show_content__if = /*@__PURE__*/ _if("#text/0", "<i> </i>", "D ", $if_content2__setup);
-const $Show_content__input_x = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_2_input_x#0:8/subscribe", "input_x/12", ($scope) => $Show_content__if($scope, $scope._.input_x ? 0 : 1), 0, "__tests__/template.marko_0_input_x#8/subscribers", 0);
+const $Show_content__input_x = /*@__PURE__*/ _closure_get("input_x/12", ($scope) => $Show_content__if($scope, $scope._.input_x ? 0 : 1), 0, "__tests__/template.marko_2_input_x#0:8/subscribe");
 const $Show_content__setup = $Show_content__input_x;
 const $Show_content__h = /*@__PURE__*/ _const("h", $if_content2__h);
 const $Show_content__v = /*@__PURE__*/ _const("v", ($scope) => $Show_content__h($scope, $h($scope)));

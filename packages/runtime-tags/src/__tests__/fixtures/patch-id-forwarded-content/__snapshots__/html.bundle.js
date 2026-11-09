@@ -122,7 +122,7 @@ var forward_inner_default = _template("f", (input) => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_dynamic_tag($scope1_id, "a", input.content, {}, 2, 0, 0, $wg__input_content, $scope0_reason, 0);
-		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "f1", $cg__input_content);
+		$cg__input_content && _patch_render($scope1_id, "f1");
 		$wi__input_content && _subscribe(_unfilled_if($scope0_reason, 0) && $input_content__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), $cg__input_content && "f1", $wg__input_content);
 	}, $scope0_id, 0) };
 	const $childScope = _peek_scope_id($scope0_id, "a", 1);

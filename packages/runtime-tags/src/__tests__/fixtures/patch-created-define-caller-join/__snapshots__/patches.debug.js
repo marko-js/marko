@@ -10,7 +10,6 @@
         "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-created-define-caller-join/tags/panel.marko_1_input_a#0:3_input_b#0:4/setup": ">input_b"
       }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-define-caller-join/tags/panel.marko_2*shell"],
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-define-caller-join/tags/panel.marko_0_input_b#4/subscribers": "input_b",
     "PatchMarkedWrite:input_b": "b"
   }
 }
@@ -20,7 +19,6 @@
 {
   "PatchChild:#childScope/0": {
     "PatchBranch:#text/0": 0,
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-define-caller-join/tags/panel.marko_0_input_b#4/subscribers": "input_b",
     "PatchMarkedWrite:input_b": "c"
   }
 }
@@ -36,7 +34,6 @@
         "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-created-define-caller-join/tags/panel.marko_1_input_a#0:3_input_b#0:4/setup": ">input_b"
       }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-define-caller-join/tags/panel.marko_2*shell"],
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-define-caller-join/tags/panel.marko_0_input_b#4/subscribers": "input_b",
     "PatchMarkedWrite:input_b": "d"
   }
 }
@@ -52,7 +49,6 @@
         "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-created-define-caller-join/tags/panel.marko_1_input_a#0:3_input_b#0:4/setup": ">input_b"
       }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-define-caller-join/tags/panel.marko_2*shell"],
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-define-caller-join/tags/panel.marko_0_input_b#4/subscribers": "input_b",
     "PatchMarkedWrite:input_b": "e"
   }
 }

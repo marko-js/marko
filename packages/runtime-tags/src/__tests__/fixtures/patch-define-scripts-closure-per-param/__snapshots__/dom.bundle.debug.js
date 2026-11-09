@@ -5,10 +5,10 @@ const $Row_content__input_c__OR__a__script = _script("__tests__/template.marko_1
 const $Row_content__input_c__OR__a = /*@__PURE__*/ _or_patch("__tests__/template.marko_1_input_c#0:3_a#2/setup", 3, $Row_content__input_c__OR__a__script);
 const $Row_content__input_c__OR__b__script = _script("__tests__/template.marko_1_input_c#0:3_b#4", ($scope) => console.log("b", $scope.b + $scope._.input_c));
 const $Row_content__input_c__OR__b = /*@__PURE__*/ _or_patch("__tests__/template.marko_1_input_c#0:3_b#4/setup", 5, $Row_content__input_c__OR__b__script);
-const $Row_content__input_c = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_1_input_c#0:3/subscribe", "input_c/6", ($scope) => {
+const $Row_content__input_c = /*@__PURE__*/ _closure_get("input_c/6", ($scope) => {
 	$Row_content__input_c__OR__a($scope);
 	$Row_content__input_c__OR__b($scope);
-}, 0, "__tests__/template.marko_0_input_c#3/subscribers", 0);
+}, 0, "__tests__/template.marko_1_input_c#0:3/subscribe");
 const $Row_content__setup = $Row_content__input_c;
 const $Row_content__a = /*@__PURE__*/ _const("a", $Row_content__input_c__OR__a);
 const $Row_content__b = /*@__PURE__*/ _const("b", $Row_content__input_c__OR__b);

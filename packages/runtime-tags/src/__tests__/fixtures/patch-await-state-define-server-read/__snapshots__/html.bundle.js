@@ -16,7 +16,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
 		_html(`<em>${_text_mark($scope1_id, "a", input.label, 1, $scope0_reason, 0)}:${_text_mark($scope1_id, "b", r.v, 2, $scope1_reason, 0)}</em>`);
-		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "a1", $cg__input_label);
+		$cg__input_label && _patch_render($scope1_id, "a1");
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope1_id, { _: $wi__input_label && _scope_with_id($scope0_id) }), $cg__input_label && "a1");
 	}, $scope0_id) };
 	_await($scope0_id, "b", Promise.resolve(n), (x) => {

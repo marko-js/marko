@@ -30,7 +30,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				return 0;
 			}
 		}, $scope1_id, "#text/1", 1, _write_guard($scope1_reason, 0), 1, 0, 0, ["__tests__/template.marko_2*shell"], $scope1_reason, 0);
-		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_x#0:3/subscribe", $cg__input_x);
+		$cg__input_x && _patch_render($scope1_id, "__tests__/template.marko_1_input_x#0:3/subscribe");
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_x__closures, _scope($scope1_id, { _: ($wi__input_x || $wi__n) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "1:2"), $cg__input_x && "__tests__/template.marko_1_input_x#0:3/subscribe");
 	}, $scope0_id) };
 	_set_scope_reason(0);

@@ -17,7 +17,7 @@ var show_await_default = _template("b", (input) => {
 			const $scope2_id = _scope_id();
 			_scope_reason();
 			_html(_text_mark($scope2_id, "a", x, 2, $scope0_reason, 0));
-			_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope2_id, "b1", $cg__input_promise);
+			$cg__input_promise && _patch_render($scope2_id, "b1");
 			_subscribe(_unfilled_if($scope0_reason, 0) && $await_content__x__closures, _scope($scope2_id, { _: $wi__input_promise && _scope_with_id($scope1_id) }), $cg__input_promise && "b1");
 		}, $scope1_id, 0), 0, $wg__input_promise, $scope0_reason, 0);
 		$wi__input_promise && _scope($scope1_id, { d: $await_content__x__closures });

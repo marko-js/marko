@@ -15,7 +15,7 @@ const $Row_content__template = /*@__PURE__*/ ((_w0) => `${_w0}<p> </p>`)($templa
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<button>+</button>`)($Row_content__template);
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}& b`)($Row_content__walks);
 const $Row_content__input_suffix__OR__value = /*@__PURE__*/ _or_patch("__tests__/template.marko_1_input_suffix#0:4_value#5/setup", 6, ($scope) => $input_title($scope["#childScope/0"], $scope.value + $scope._.input_suffix));
-const $Row_content__input_suffix = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_1_input_suffix#0:4/subscribe", "input_suffix/6", $Row_content__input_suffix__OR__value, 0, "__tests__/template.marko_0_input_suffix#4/subscribers", 0);
+const $Row_content__input_suffix = /*@__PURE__*/ _closure_get("input_suffix/6", $Row_content__input_suffix__OR__value, 0, "__tests__/template.marko_1_input_suffix#0:4/subscribe");
 const $Row_content__setup = ($scope) => {
 	$Row_content__input_suffix($scope);
 	_var($scope, "#childScope/0", $Row_content__label);

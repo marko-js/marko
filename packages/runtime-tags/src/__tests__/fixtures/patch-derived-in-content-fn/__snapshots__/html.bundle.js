@@ -25,7 +25,7 @@ var wrapper_default = _template("c", (input) => {
 const $setup = _shell_setup([[], []], ["a>", $setup$1]);
 _shells({ a: `a${_shell_marker($setup)};${((_w0) => `/${_w0}&D l`)("D%l")};${((_w0) => `${_w0}<p> </p>`)($template)}` });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_label = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	let shown = "";
@@ -45,17 +45,17 @@ var template_default = _template("a", (input) => {
 			}, "a1", $scope1_id)
 		});
 		_patch_child_end();
-		_subscribe($wi__input_label && $input_label__closures, _scope($scope1_id, {
+		_subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope1_id, {
 			b: label,
 			_: _scope_with_id($scope0_id),
 			a: _existing_scope($childScope)
 		}), _client_guard($scope0_reason, 0) && "a2", 0);
-		_write_guard($scope0_reason, 0) && _resume_branch($scope1_id);
+		_resume_branch($scope1_id);
 	}, $scope0_id) });
 	_patch_child_end();
 	_html(`<p>${_text_mark($scope0_id, "b", shown)}</p>`);
 	_scope($scope0_id, {
-		g: $wi__input_label && $input_label__closures,
+		g: _write_if($scope0_reason, 0) && $input_label__closures,
 		a: _existing_scope($childScope2)
 	});
 }, 1);

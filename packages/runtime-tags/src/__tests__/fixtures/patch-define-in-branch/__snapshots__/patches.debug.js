@@ -14,8 +14,7 @@
       },
       "PatchText:#text/1": "1"
     }
-  }, "packages/runtime-tags/src/__tests__/fixtures/patch-define-in-branch/template.marko_2*shell"],
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-define-in-branch/template.marko_0_input_suffix#3/subscribers": "input_suffix"
+  }, "packages/runtime-tags/src/__tests__/fixtures/patch-define-in-branch/template.marko_2*shell"]
 }
 ;BAE
 
@@ -34,12 +33,10 @@
       },
       "PatchText:#text/1": "2"
     }
-  }, "packages/runtime-tags/src/__tests__/fixtures/patch-define-in-branch/template.marko_2*shell"],
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-define-in-branch/template.marko_0_input_suffix#3/subscribers": "input_suffix"
+  }, "packages/runtime-tags/src/__tests__/fixtures/patch-define-in-branch/template.marko_2*shell"]
 }
 
 // PATCH holding BAE
 {
-  "PatchBranch:#ul/0": 0,
-  "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-define-in-branch/template.marko_0_input_suffix#3/subscribers": "input_suffix"
+  "PatchBranch:#ul/0": 0
 }

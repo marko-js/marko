@@ -86,7 +86,6 @@ var template_default = _template("a", (input) => {
 			}
 		}, $scope2_id, "a", 1, $wg__input_x, 1, 0, 0, ["a8"], $scope0_reason, 4);
 		$fg__v && $cg__input_x && _patch_render($scope2_id, "a13", ["e", "d"]);
-		$cg__input_x && _patch_render($scope2_id, "a15");
 		$wi__input_x && _subscribe(_unfilled_if($scope0_reason, 4) && $input_x__closures, _scope($scope2_id, {
 			d: v,
 			e: (_unfilled_if($scope0_reason, 4) || _unfilled_if($scope2_reason, 0)) && h,
@@ -101,7 +100,6 @@ var template_default = _template("a", (input) => {
 	counter_default({});
 	_patch_child_end();
 	$fg__input_a && $cg__input_items && _patch_render($scope0_id, "a16", "g");
-	$fg__input_x && _patch_subscribers($scope0_id, "a17", "i");
 	$fg__input_x && $cg__input_items && _patch_render($scope0_id, "a9", "i");
 	$fg__input_a && $cg__input_items && _patch_render($scope0_id, "a10", ["k", "g"]);
 	_scope($scope0_id, {

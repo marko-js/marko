@@ -18,10 +18,10 @@ var template_default = _template("a", (input) => {
 		_await($scope2_id, "a", p, (x) => {
 			const $scope3_id = _scope_id();
 			_html(`<p>${_text_mark($scope3_id, "a", label, 1, $scope2_reason, 1)}:${_text_mark($scope3_id, "b", x, 2, $scope2_reason, 0)}</p>`);
-			_unfilled_if($scope2_reason, 1) && _patch_subscribe($scope3_id, "a0", $cg__label);
+			$cg__label && _patch_render($scope3_id, "a0");
 			_subscribe(_unfilled_if($scope2_reason, 1) && $Show_content__label__closures, _scope($scope3_id, {}), $cg__label && "a0");
 		}, 1, "a1", 1);
-		_write_if($scope2_reason, 1) && _scope($scope2_id, { j: _unfilled_if($scope2_reason, 1) && $Show_content__label__closures });
+		_write_if($scope2_reason, 1) && _scope($scope2_id, { j: (_unfilled_if($scope2_reason, 1) || _unfilled_if($scope0_reason, 0)) && $Show_content__label__closures });
 	}, $scope0_id) };
 	_if(() => {
 		if (input.show) {

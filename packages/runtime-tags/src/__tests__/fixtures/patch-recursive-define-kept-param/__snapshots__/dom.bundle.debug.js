@@ -29,7 +29,7 @@ const $Level_content2__setup = ($scope) => {
 };
 const $Level_content2__label = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_3_label#1:5/subscribe", "label/8", ($scope) => _text($scope["#text/1"], $scope._._.label), ($scope) => $scope._._, "__tests__/template.marko_1_label#5/subscribers", 0);
 const $Level_content2 = _content("__tests__/template.marko_3*content", "<em><!>:<!></em>", "D%c%", $Level_content2__setup);
-const $if_content__n = /*@__PURE__*/ _if_closure_patch("__tests__/template.marko_2_n#1:4/setup", "#text/0", 0, ($scope) => $Level_content__tag_input_n($scope["#childScope/0"], $scope._.n - 1));
+const $if_content__n = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $Level_content__tag_input_n($scope["#childScope/0"], $scope._.n - 1));
 const $if_content__setup = ($scope) => {
 	$if_content__n._($scope);
 	$if_content__label._($scope);

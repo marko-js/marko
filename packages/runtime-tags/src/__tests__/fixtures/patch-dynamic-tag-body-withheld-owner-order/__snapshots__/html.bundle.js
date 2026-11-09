@@ -83,7 +83,6 @@ var template_default = _template("a", (input) => {
 	});
 	_patch_child_end();
 	_html("</main>");
-	_filled_guard($scope0_reason, 0) && _patch_subscribers($scope0_id, "a7", "f");
 	_scope($scope0_id, {
 		j: $wi__input_on && $input_on__closures,
 		a: _existing_scope($childScope),

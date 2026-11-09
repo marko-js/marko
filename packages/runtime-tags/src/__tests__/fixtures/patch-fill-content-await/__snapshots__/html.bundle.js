@@ -18,7 +18,7 @@ _shells({
 	a: `a${_shell_marker($setup)};${((_w0) => `D/${_w0}& l`)("D%l")};${((_w0) => `<main>${_w0}<button>toggle</button></main>`)($template)}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_second = _write_if($scope0_reason, 0), $wi__input_first = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const $input_second__closures = /* @__PURE__ */ new Set();
 	const $input_first__closures = /* @__PURE__ */ new Set();
@@ -36,7 +36,7 @@ var template_default = _template("a", (input) => {
 			_scope($scope2_id, {});
 		}, 1, "a0", 2);
 		_patch_render($scope1_id, "a1", [_filled_guard($scope0_reason, 0) && ">e", _filled_guard($scope0_reason, 1) && ">f"]);
-		_subscribe($showSecond__closures, _subscribe($wi__input_first && $input_first__closures, _subscribe($wi__input_second && $input_second__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 0) && "a2", 0), _client_guard($scope0_reason, 1) && "a3", 0), "a4", 0);
+		_subscribe($showSecond__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_first__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $input_second__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 0) && "a2", 0), _client_guard($scope0_reason, 1) && "a3", 0), "a4", 0);
 		_resume_branch($scope1_id);
 	}, $scope0_id) });
 	_patch_child_end();
@@ -46,8 +46,8 @@ var template_default = _template("a", (input) => {
 		e: input.second,
 		f: input.first,
 		g: showSecond,
-		h: $wi__input_second && $input_second__closures,
-		i: $wi__input_first && $input_first__closures,
+		h: _write_if($scope0_reason, 0) && $input_second__closures,
+		i: _write_if($scope0_reason, 1) && $input_first__closures,
 		j: $showSecond__closures,
 		a: _existing_scope($childScope)
 	}) || (_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xe", input.second, !_server_guard($scope0_reason, 0)), _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "xf", input.first, !_server_guard($scope0_reason, 1)));

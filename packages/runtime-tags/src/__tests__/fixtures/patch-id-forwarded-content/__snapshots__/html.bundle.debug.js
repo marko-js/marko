@@ -123,7 +123,7 @@ var forward_inner_default = _template("__tests__/tags/forward-inner.marko", (inp
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
 		_dynamic_tag($scope1_id, "#text/0", input.content, {}, 2, 0, 0, $wg__input_content, $scope0_reason, 0);
-		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "__tests__/tags/forward-inner.marko_1_input_content#0:3/subscribe", $cg__input_content);
+		$cg__input_content && _patch_render($scope1_id, "__tests__/tags/forward-inner.marko_1_input_content#0:3/subscribe");
 		$wi__input_content && _subscribe(_unfilled_if($scope0_reason, 0) && $input_content__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/forward-inner.marko", "1:2"), $cg__input_content && "__tests__/tags/forward-inner.marko_1_input_content#0:3/subscribe", $wg__input_content);
 	}, $scope0_id, 0) };
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 1);

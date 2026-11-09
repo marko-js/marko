@@ -28,7 +28,7 @@ var card_default = _template("b", (input) => {
 		_filled_guard($scope0_reason, 0) && _patch_render($scope1_id, "b0", "e");
 		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "b1");
 		_patch_render($scope1_id, "b2", [_filled_guard($scope0_reason, 2) && ">f", _filled_guard($scope0_reason, 1) && "c"], $scope0_reason, 0);
-		_subscribe($open__closures, _subscribe($wi__input_content && $input_content__closures, _scope($scope1_id, {
+		_subscribe($open__closures, _subscribe(_unfilled_if($scope0_reason, 2) && $input_content__closures, _scope($scope1_id, {
 			c: $wi__input_content && x,
 			e: c
 		}), _client_guard($scope0_reason, 2) && "b1"), "b3");

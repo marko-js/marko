@@ -4,7 +4,7 @@ const $Row_content__template = "<!><!><!>";
 const $template$1 = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Row_content__template);
 const $walks$1 = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Row_content__walks);
 const $await_content__text__OR__x = /*@__PURE__*/ _or_patch("__tests__/tags/show-await.marko_2_text#1:3_x#2/setup", 3, ($scope) => _text($scope["#text/0"], $scope.x + ":" + $scope._.text));
-const $await_content__text = /*@__PURE__*/ _closure_get_patch("__tests__/tags/show-await.marko_2_text#1:3/subscribe", "text/6", $await_content__text__OR__x, 0, "__tests__/tags/show-await.marko_1_text#3/subscribers", 0);
+const $await_content__text = /*@__PURE__*/ _closure_get_patch("__tests__/tags/show-await.marko_2_text#1:3/subscribe", "text/6", $await_content__text__OR__x);
 const $await_content__setup = $await_content__text;
 const $await_content__x = /*@__PURE__*/ _const("x", $await_content__text__OR__x);
 const $await_content__$params = ($scope, $params3) => $await_content__x($scope, $params3[0]);

@@ -31,7 +31,7 @@ const $inputonCarddiv_content__setup = ($scope) => {
 const $inputonCarddiv_content = _content("__tests__/template.marko_3*content", $Note_content__template, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($Note_content__walks), $inputonCarddiv_content__setup);
 _content_resume($inputonCarddiv_content);
 const $Wrap_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $inputonCarddiv_content);
-const $Wrap_content__input_on = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_2_input_on#0:5/subscribe", "input_on/7", ($scope) => $Wrap_content__dynamicTag($scope, $scope._.input_on ? card_default : "div"));
+const $Wrap_content__input_on = /*@__PURE__*/ _closure_get("input_on/7", ($scope) => $Wrap_content__dynamicTag($scope, $scope._.input_on ? card_default : "div"), 0, "__tests__/template.marko_2_input_on#0:5/subscribe");
 const $Wrap_content__setup = $Wrap_content__input_on;
 const $Note_content__input_note = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_1_input_note#0:4/subscribe", "input_note/6", ($scope) => _text($scope["#text/0"], $scope._.input_note), 0, "__tests__/template.marko_0_input_note#4/subscribers", 0);
 const $Note_content__setup = $Note_content__input_note;

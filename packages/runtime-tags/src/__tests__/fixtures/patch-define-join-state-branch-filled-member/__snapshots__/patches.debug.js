@@ -12,9 +12,7 @@
         "PatchText:#text/0": "y:q"
       }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-define-join-state-branch-filled-member/tags/panel.marko_3*shell"],
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-define-join-state-branch-filled-member/tags/panel.marko_0_input_a#5/subscribers": "input_a",
     "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-define-join-state-branch-filled-member/tags/panel.marko_2_input_a#0:5/setup": "input_a",
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-define-join-state-branch-filled-member/tags/panel.marko_0_input_b#6/subscribers": "input_b",
     "PatchMarkedWrite:input_a": "y"
   }
 }
@@ -33,9 +31,7 @@
         "PatchText:#text/0": "z:r"
       }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-define-join-state-branch-filled-member/tags/panel.marko_3*shell"],
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-define-join-state-branch-filled-member/tags/panel.marko_0_input_a#5/subscribers": "input_a",
     "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-define-join-state-branch-filled-member/tags/panel.marko_2_input_a#0:5/setup": "input_a",
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-define-join-state-branch-filled-member/tags/panel.marko_0_input_b#6/subscribers": "input_b",
     "PatchMarkedWrite:input_a": "z"
   }
 }

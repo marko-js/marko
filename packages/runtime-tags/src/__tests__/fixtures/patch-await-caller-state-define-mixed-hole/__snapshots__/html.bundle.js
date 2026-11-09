@@ -11,13 +11,13 @@ _shells({
 	b: `b a>;${((_w0) => `b/${_w0}&b`)($Row_content__walks)};${((_w0) => `<!>${_w0}<!>`)($Row_content__template)}`
 });
 var show_await_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_promise = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_promise = _client_guard($scope0_reason, 0), $wi__input_promise = _write_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_promise__closures = /* @__PURE__ */ new Set();
 	const Row = { content: _content("b4", ({ text }) => {
 		const $scope1_id = _scope_id();
 		const $Row_content__text__closures = /* @__PURE__ */ new Set();
-		const $scope1_reason = _scope_reason(), $fg__text = _filled_guard($scope1_reason, 0), $wi__text = _write_if($scope1_reason, 0);
+		const $scope1_reason = _scope_reason(), $wi__text = _write_if($scope1_reason, 0);
 		_await($scope1_id, "a", input.promise, (x) => {
 			const $scope2_id = _scope_id();
 			_filled_guard($scope0_reason, 0) && _unfilled_if($scope1_reason, 0) && _patch_write($scope2_id, "xc", x, !_server_guard($scope0_reason, 0));
@@ -26,13 +26,12 @@ var show_await_default = _template("b", (input) => {
 			_patch_render($scope2_id, "b1", [_filled_guard($scope1_reason, 0) && ">d", _filled_guard($scope0_reason, 0) && "c"], (_updates_from($scope0_reason, 0) | _updates_from($scope1_reason, 0)) << 1, 0);
 			_subscribe(_unfilled_if($scope1_reason, 0) && $Row_content__text__closures, _scope($scope2_id, { c: (_unfilled_if($scope1_reason, 0) || _unfilled_if($scope0_reason, 0)) && x }), _client_guard($scope1_reason, 0) && "b0");
 		}, 1, "b2", _unfilled_if($scope0_reason, 0));
-		$fg__text && _patch_subscribers($scope1_id, "b5", "d");
-		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "b6", 1);
+		$cg__input_promise && _patch_render($scope1_id, "b5");
 		($wi__input_promise || $wi__text) && _subscribe(_unfilled_if($scope0_reason, 0) && $input_promise__closures, _scope($scope1_id, {
 			d: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope1_reason, 0)) && text,
 			_: $wi__input_promise && _scope_with_id($scope0_id),
 			g: $wi__text && (_unfilled_if($scope1_reason, 0) || _unfilled_if($scope0_reason, 0)) && $Row_content__text__closures
-		}), _client_guard($scope0_reason, 0) && "b6", 0) || $fg__text && _unfilled_if($scope0_reason, 0) && _patch_write($scope1_id, "xd", text, !_server_guard($scope1_reason, 0));
+		}), $cg__input_promise && "b5", 0) || _filled_guard($scope1_reason, 0) && _unfilled_if($scope0_reason, 0) && _patch_write($scope1_id, "xd", text, !_server_guard($scope1_reason, 0));
 		($wi__input_promise || $wi__text) && _resume_branch($scope1_id);
 	}, $scope0_id, 0) };
 	_set_scope_reason(_updates_from($scope0_reason, 1) << 1);

@@ -9,7 +9,7 @@ _shells({
 	"__tests__/template.marko_3*shell": "__tests__/template.marko_3*shell __tests__/template.marko_3_count#0:8/subscribe;D ;<p> </p>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_items = _client_guard($scope0_reason, 3), $wg__input_inner = _write_guard($scope0_reason, 2), $fg__input_inner = _filled_guard($scope0_reason, 2), $fg__input_items = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 1), $cg__input_inner = _client_guard($scope0_reason, 2), $fg__input_suffix = _filled_guard($scope0_reason, 4), $wi__input_items = _write_if($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $cg__input_items = _client_guard($scope0_reason, 3), $wg__input_inner = _write_guard($scope0_reason, 2), $fg__input_inner = _filled_guard($scope0_reason, 2), $fg__input_items = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 1), $cg__input_inner = _client_guard($scope0_reason, 2), $fg__input_suffix = _filled_guard($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	const $input_suffix__closures = new Set();
 	const $count__closures = new Set();
@@ -33,7 +33,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 						}, "__tests__/template.marko", "5:8", { "#LoopKey": "5:12" }), _client_guard($scope0_reason, 4) && "__tests__/template.marko_3_input_suffix#0:7/subscribe"), "__tests__/template.marko_3_count#0:8/subscribe");
 					}, (item) => item, $scope2_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/template.marko_3*shell", $scope0_reason, 3);
 					_unfilled_if($scope0_reason, 3) && _patch_subscribe($scope2_id, "__tests__/template.marko_2_input_items#0:6/subscribe", $cg__input_items);
-					_subscribe($wi__input_items && $input_items__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "4:6"), $cg__input_items && "__tests__/template.marko_2_input_items#0:6/subscribe");
+					_subscribe(_unfilled_if($scope0_reason, 3) && $input_items__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "4:6"), $cg__input_items && "__tests__/template.marko_2_input_items#0:6/subscribe");
 					return 0;
 				}
 			}, $scope1_id, "#text/0", 1, $wg__input_inner, 1, 0, 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 2);
@@ -54,7 +54,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		count,
 		"ClosureScopes:input_suffix/11": _write_if($scope0_reason, 4) && $input_suffix__closures,
 		"ClosureScopes:count/12": $count__closures,
-		"ClosureScopes:input_items/10": $wi__input_items && $input_items__closures
+		"ClosureScopes:input_items/10": _write_if($scope0_reason, 3) && $input_items__closures
 	}, "__tests__/template.marko", 0, {
 		input_inner: ["input.inner"],
 		input_items: ["input.items"],

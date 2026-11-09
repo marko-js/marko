@@ -48,7 +48,7 @@ var shape_default = _template("c", (input) => {
 				return 0;
 			}
 		}, $scope1_id, "a", 1, $wg__input_sel, 1, 0, 0, ["c3"], $scope0_reason, 0);
-		_filled_guard($scope0_reason, 1) && ($cg__input_obj || $cg__input_sel) && _patch_render($scope1_id, "c5", "e");
+		_filled_guard($scope0_reason, 1) && $cg__input_sel && _patch_render($scope1_id, "c5", "e");
 		$cg__input_sel && _patch_render($scope1_id, "c6");
 		_scope($scope1_id, {
 			M: _unfilled_if($scope0_reason, 2) && k,

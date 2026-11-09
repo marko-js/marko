@@ -1,7 +1,7 @@
 // template.marko
 _shells({ a: "a;/&;" });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_c = _client_guard($scope0_reason, 1), $fg__input_c = _filled_guard($scope0_reason, 1), $wi__input_c = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_c = _client_guard($scope0_reason, 1), $wi__input_c = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_c__closures = /* @__PURE__ */ new Set();
 	const Row = { content: _content("a0", ({ a, b }) => {
@@ -23,10 +23,9 @@ var template_default = _template("a", (input) => {
 		b: input.b
 	});
 	_patch_child_end();
-	$fg__input_c && _patch_subscribers($scope0_id, "a6", "d");
 	_scope($scope0_id, {
 		d: input.c,
 		g: $wi__input_c && $input_c__closures,
 		a: _existing_scope($childScope)
-	}) || $fg__input_c && _patch_write($scope0_id, "xd", input.c, !_server_guard($scope0_reason, 1));
+	}) || _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "xd", input.c, !_server_guard($scope0_reason, 1));
 }, 1);

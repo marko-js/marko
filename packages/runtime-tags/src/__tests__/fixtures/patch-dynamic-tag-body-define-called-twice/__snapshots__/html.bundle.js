@@ -33,7 +33,7 @@ _shells({
 	a: `a;${((_w0, _w1) => `D/${_w0}&/${_w1}&l`)($Note_content__walks, $Wrap_content__walks)};${((_w0, _w1) => `<main>${_w0}${_w1}</main>`)($Note_content__template, $Wrap_content__template)}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_note = _client_guard($scope0_reason, 1), $wg__input_on = _write_guard($scope0_reason, 2), $cg__input_on = _client_guard($scope0_reason, 2), $wi__input_on = _write_if($scope0_reason, 2), $fg__input_note = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_note = _client_guard($scope0_reason, 1), $wg__input_on = _write_guard($scope0_reason, 2), $wi__input_on = _write_if($scope0_reason, 2), $fg__input_note = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = /* @__PURE__ */ new Set();
 	const $input_on__closures = /* @__PURE__ */ new Set();
@@ -59,8 +59,7 @@ var template_default = _template("a", (input) => {
 				a: _existing_scope($childScope)
 			});
 		}, $scope2_id, ($scope) => $scope2_page ? [{ e: input.note }, { _: $scope($scope0_id) }] : []), 0, $wg__input_on, $scope0_reason, 2, 0, void 0, 0, 0, "a2");
-		$cg__input_on && _patch_render($scope2_id, "a4");
-		$wi__input_on && _subscribe(_unfilled_if($scope0_reason, 2) && $input_on__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }), $cg__input_on && "a4", $wg__input_on);
+		$wi__input_on && _subscribe(_unfilled_if($scope0_reason, 2) && $input_on__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 2) && "a4", $wg__input_on);
 	}, $scope0_id) };
 	_html("<main>");
 	const $childScope2 = _peek_scope_id($scope0_id, "a", 2);

@@ -20,7 +20,7 @@ _shells({
 	"__tests__/tags/shape.marko_2*shell": `__tests__/tags/shape.marko_2*shell${_shell_marker([["__tests__/tags/shape.marko_2_s#0:7/subscribe"], []], ["#childScope/0>", $setup$2])};${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$2)};${$template$2}`
 });
 var shape_default = _template("__tests__/tags/shape.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_sel = _write_guard($scope0_reason, 2), $cg__input_sel = _client_guard($scope0_reason, 2), $fg__input_sel = _filled_guard($scope0_reason, 2), $cg__input_obj = _client_guard($scope0_reason, 1), $fg__input_b = _filled_guard($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $wg__input_sel = _write_guard($scope0_reason, 2), $cg__input_sel = _client_guard($scope0_reason, 2), $fg__input_sel = _filled_guard($scope0_reason, 2), $fg__input_b = _filled_guard($scope0_reason, 3), $cg__input_obj = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_b__closures = new Set();
 	const $s__closures = new Set();
@@ -48,7 +48,7 @@ var shape_default = _template("__tests__/tags/shape.marko", (input) => {
 				return 0;
 			}
 		}, $scope1_id, "#text/0", 1, $wg__input_sel, 1, 0, 0, ["__tests__/tags/shape.marko_2*shell"], $scope0_reason, 0);
-		_filled_guard($scope0_reason, 1) && ($cg__input_obj || $cg__input_sel) && _patch_render($scope1_id, "__tests__/tags/shape.marko_2_v#1:4/setup", "v");
+		_filled_guard($scope0_reason, 1) && $cg__input_sel && _patch_render($scope1_id, "__tests__/tags/shape.marko_2_v#1:4/setup", "v");
 		$cg__input_sel && _patch_render($scope1_id, "__tests__/tags/shape.marko_1_input_sel#0:5/setup");
 		_scope($scope1_id, {
 			"#LoopKey": _unfilled_if($scope0_reason, 2) && k,

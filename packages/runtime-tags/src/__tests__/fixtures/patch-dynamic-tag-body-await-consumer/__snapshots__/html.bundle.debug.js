@@ -31,7 +31,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 		_filled_guard($scope0_reason, 0) && _patch_render($scope1_id, "__tests__/tags/card.marko_2_c#1:4/setup", "c");
 		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "__tests__/tags/card.marko_1_input_content#0:5/subscribe");
 		_patch_render($scope1_id, "__tests__/tags/card.marko_1_input_content#0:5_x#2/setup", [_filled_guard($scope0_reason, 2) && ">input_content", _filled_guard($scope0_reason, 1) && "x"], $scope0_reason, 0);
-		_subscribe($open__closures, _subscribe($wi__input_content && $input_content__closures, _scope($scope1_id, {
+		_subscribe($open__closures, _subscribe(_unfilled_if($scope0_reason, 2) && $input_content__closures, _scope($scope1_id, {
 			x: $wi__input_content && x,
 			c
 		}, "__tests__/tags/card.marko", "3:2", {

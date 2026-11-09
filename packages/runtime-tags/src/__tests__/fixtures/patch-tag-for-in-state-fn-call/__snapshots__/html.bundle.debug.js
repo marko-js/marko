@@ -32,7 +32,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 				return 0;
 			}
 		}, $scope1_id, "#text/0", 1, $wg__input_sel, 1, 0, 0, ["__tests__/tags/card.marko_2*shell"], $scope0_reason, 0);
-		_filled_guard($scope0_reason, 2) && ($cg__input_obj || $cg__input_sel) && _patch_render($scope1_id, "__tests__/tags/card.marko_2_v#1:4/setup", "v");
+		_filled_guard($scope0_reason, 2) && $cg__input_sel && _patch_render($scope1_id, "__tests__/tags/card.marko_2_v#1:4/setup", "v");
 		$cg__input_sel && _patch_render($scope1_id, "__tests__/tags/card.marko_1_input_sel#0:6/setup");
 		_scope($scope1_id, {
 			"#LoopKey": _unfilled_if($scope0_reason, 3) && k,

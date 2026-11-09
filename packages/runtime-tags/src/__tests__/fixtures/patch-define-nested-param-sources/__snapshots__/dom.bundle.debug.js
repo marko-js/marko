@@ -19,12 +19,12 @@ const $Wrapper_content__$temp = ($scope, $temp3) => {
 	$Wrapper_content__b($scope, $temp3.b);
 };
 const $Inner_content__input_label__OR__x__OR__z = /*@__PURE__*/ _or_patch("__tests__/template.marko_2_input_label#0:4_x#1:3_z#3/setup", 4, ($scope) => _text($scope["#text/0"], $scope._._.input_label + $scope._.x + $scope.z), 2);
-const $Inner_content__input_label = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_2_input_label#0:4/subscribe", "input_label/7", $Inner_content__input_label__OR__x__OR__z, ($scope) => $scope._._, "__tests__/template.marko_0_input_label#4/subscribers", 0);
+const $Inner_content__input_label = /*@__PURE__*/ _closure_get("input_label/7", $Inner_content__input_label__OR__x__OR__z, ($scope) => $scope._._, "__tests__/template.marko_2_input_label#0:4/subscribe");
 const $Inner_content__setup = ($scope) => {
 	$Inner_content__input_label($scope);
 	$Inner_content__x($scope);
 };
-const $Inner_content__x = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_2_x#1:3/subscribe", "x/8", $Inner_content__input_label__OR__x__OR__z, 0, "__tests__/template.marko_1_x#3/subscribers", 0);
+const $Inner_content__x = /*@__PURE__*/ _closure_get("x/8", $Inner_content__input_label__OR__x__OR__z, 0, "__tests__/template.marko_2_x#1:3/subscribe");
 const $Inner_content__z = /*@__PURE__*/ _const("z", $Inner_content__input_label__OR__x__OR__z);
 const $Inner_content__$params = ($scope, $params3) => $Inner_content__$temp($scope, $params3[0]);
 const $Inner_content__$temp = ($scope, $temp2) => $Inner_content__z($scope, $temp2.z);

@@ -19,7 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
 		_html(`<em>${_text_mark($scope1_id, "#text/0", input.label, 1, $scope0_reason, 0)}:${_text_mark($scope1_id, "#text/1", r.v, 2, $scope1_reason, 0)}</em>`);
-		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_label#0:4/subscribe", $cg__input_label);
+		$cg__input_label && _patch_render($scope1_id, "__tests__/template.marko_1_input_label#0:4/subscribe");
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope1_id, { _: $wi__input_label && _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:2"), $cg__input_label && "__tests__/template.marko_1_input_label#0:4/subscribe");
 	}, $scope0_id) };
 	_await($scope0_id, "#text/1", Promise.resolve(n), (x) => {

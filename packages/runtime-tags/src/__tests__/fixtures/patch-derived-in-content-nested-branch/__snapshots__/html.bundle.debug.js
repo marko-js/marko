@@ -53,11 +53,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, $scope1_id, "#text/0", 1, $wg__input_label, 1, 0, 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 0);
 		_filled_guard($scope0_reason, 0) && _patch_subscribers($scope1_id, "__tests__/template.marko_1_label#1/subscribers", "label");
 		_filled_guard($scope0_reason, 0) && $cg__input_label && _patch_render($scope1_id, "__tests__/template.marko_2_label#1:1/setup", "label");
-		_subscribe($wi__input_label && $input_label__closures, _scope($scope1_id, {
+		_subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope1_id, {
 			label,
 			_: _scope_with_id($scope0_id),
 			"ClosureScopes:label/8": $wi__input_label && $wrapper_content__label__closures
 		}, "__tests__/template.marko", "2:2", { label: "3:10" }), $cg__input_label && "__tests__/template.marko_1_input_label#0:4/subscribe", $wg__input_label);
+		$wg__input_label || _resume_branch($scope1_id);
 	}, $scope0_id) });
 	_patch_child_end();
 	_html(`<button>+</button>${_el_mark($scope0_id, "#button/1")}`);

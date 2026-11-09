@@ -3,7 +3,7 @@ const $foo_content__walks = "D l%c";
 const $foo_content__template = "<b> </b><!><!>";
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<!>`)($foo_content__template);
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&b`)($foo_content__walks);
-const $if_content__n = /*@__PURE__*/ _if_closure_patch("__tests__/template.marko_2_n#1:3/setup", "#text/1", 0, ($scope) => $foo_content__tag_param_($scope["#childScope/0"], $scope._.n - 1));
+const $if_content__n = /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $foo_content__tag_param_($scope["#childScope/0"], $scope._.n - 1));
 const $if_content__setup = ($scope) => {
 	$if_content__n._($scope);
 	$scope["#childScope/0"]._ = $scope._._;

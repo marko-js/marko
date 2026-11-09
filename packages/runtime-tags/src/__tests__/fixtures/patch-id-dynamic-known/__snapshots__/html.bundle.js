@@ -43,7 +43,7 @@ var template_default = _template("a", (input) => {
 			_scope_reason();
 			const bodyId = _id("A");
 			_html(`<label${_attr("for", bodyId, $scope3_id, "a", 0, 0)}>${_text_mark($scope3_id, "b", item.key, 1, $scope0_reason, 0)}</label>${_el_mark($scope3_id, "a", 0)}<input${_attr("id", bodyId, $scope3_id, "c", 0, 0)}>${_el_mark($scope3_id, "c", 0)}`);
-			_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope3_id, "a6", $cg__input_items);
+			$cg__input_items && _patch_render($scope3_id, "a6");
 			_subscribe(_unfilled_if($scope0_reason, 0) && $for_content2__item_key__closures, _scope($scope3_id, { _: $wi__input_items && _scope_with_id($scope2_id) }), $cg__input_items && "a6");
 		}, $scope2_id, 0), 0, $wg__input_items, $scope0_reason, 0);
 		$wi__input_items && _scope($scope2_id, { f: $for_content2__item_key__closures });

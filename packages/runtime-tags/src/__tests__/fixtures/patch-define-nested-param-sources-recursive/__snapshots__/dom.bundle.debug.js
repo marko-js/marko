@@ -16,7 +16,7 @@ const $if_content__setup = ($scope) => {
 	$Wrapper_content__setup($scope["#childScope/0"]);
 };
 const $if_content__b = /*@__PURE__*/ _if_closure_patch("__tests__/template.marko_4_b#3:5/setup", "#text/1", 0, ($scope) => $Wrapper_content__a($scope["#childScope/0"], $scope._.b));
-const $if_content__depth = /*@__PURE__*/ _if_closure_patch("__tests__/template.marko_4_depth#3:6/setup", "#text/1", 0, ($scope) => $Wrapper_content__tag_input_depth($scope["#childScope/0"], $scope._.depth - 1));
+const $if_content__depth = /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $Wrapper_content__tag_input_depth($scope["#childScope/0"], $scope._.depth - 1));
 const $Wrapper_content__setup = ($scope) => {
 	$scope["#childScope/0"]._ = $scope._;
 	$Outer_content__setup($scope["#childScope/0"]);
@@ -41,12 +41,12 @@ const $Wrapper_content__$temp = ($scope, $temp3) => {
 	$Wrapper_content__tag_input_depth($scope, $temp3.depth);
 };
 const $Inner_content__input_label__OR__x__OR__z = /*@__PURE__*/ _or_patch("__tests__/template.marko_2_input_label#0:4_x#1:3_z#3/setup", 4, ($scope) => _text($scope["#text/0"], $scope._._.input_label + $scope._.x + $scope.z), 2);
-const $Inner_content__input_label = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_2_input_label#0:4/subscribe", "input_label/7", $Inner_content__input_label__OR__x__OR__z, ($scope) => $scope._._, "__tests__/template.marko_0_input_label#4/subscribers", 0);
+const $Inner_content__input_label = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_2_input_label#0:4/subscribe", "input_label/7", $Inner_content__input_label__OR__x__OR__z, ($scope) => $scope._._);
 const $Inner_content__setup = ($scope) => {
 	$Inner_content__input_label($scope);
 	$Inner_content__x($scope);
 };
-const $Inner_content__x = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_2_x#1:3/subscribe", "x/8", $Inner_content__input_label__OR__x__OR__z, 0, "__tests__/template.marko_1_x#3/subscribers", 0);
+const $Inner_content__x = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_2_x#1:3/subscribe", "x/8", $Inner_content__input_label__OR__x__OR__z);
 const $Inner_content__z = /*@__PURE__*/ _const("z", $Inner_content__input_label__OR__x__OR__z);
 const $Inner_content__$params = ($scope, $params3) => $Inner_content__$temp($scope, $params3[0]);
 const $Inner_content__$temp = ($scope, $temp2) => $Inner_content__z($scope, $temp2.z);

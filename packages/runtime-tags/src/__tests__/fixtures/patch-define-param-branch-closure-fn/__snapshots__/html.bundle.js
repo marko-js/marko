@@ -36,7 +36,7 @@ var template_default = _template("a", (input) => {
 			if (on) {
 				const $scope2_id = _scope_id();
 				_html(`<span>${_text_mark($scope2_id, "a", f(), 1, $scope0_reason, 0)}</span>`);
-				_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope2_id, "a1", $cg__input_a);
+				$cg__input_a && _patch_render($scope2_id, "a1");
 				_subscribe(_unfilled_if($scope0_reason, 0) && $f2__closures, _scope($scope2_id, { _: ($wi__input_a || $wi__on) && _scope_with_id($scope1_id) }), $cg__input_a && "a1");
 				return 0;
 			}

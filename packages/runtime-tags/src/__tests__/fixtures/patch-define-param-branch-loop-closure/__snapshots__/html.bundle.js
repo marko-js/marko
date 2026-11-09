@@ -19,7 +19,7 @@ var template_default = _template("a", (input) => {
 				_for_of([1, 2], (x) => {
 					const $scope3_id = _scope_id();
 					_html(`<em>${_text_mark($scope3_id, "a", label, 1, $scope1_reason, 2)}${_text_mark($scope3_id, "b", x, 2, 0, 0)}</em>`);
-					_unfilled_if($scope1_reason, 2) && _patch_subscribe($scope3_id, "a0", $cg__label);
+					$cg__label && _patch_render($scope3_id, "a0");
 					_subscribe(_unfilled_if($scope1_reason, 2) && $Panel_content__label__closures, _scope($scope3_id, { _: $wi__isOpen__OR__label && _scope_with_id($scope2_id) }), $cg__label && "a0");
 				}, 0, $scope2_id, "a", 1, 1, 1, 0, 0, "a1", 0, 0);
 				_scope($scope2_id, { _: $wi__isOpen__OR__label && _scope_with_id($scope1_id) });

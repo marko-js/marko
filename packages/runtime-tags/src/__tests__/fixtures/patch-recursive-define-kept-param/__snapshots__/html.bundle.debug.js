@@ -47,7 +47,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		const $Level_content__n__closures = new Set();
 		const $Level_content__label__closures = new Set();
-		const $scope1_reason = _scope_reason(), $cg__label = _client_guard($scope1_reason, 1), $wg__n = _write_guard($scope1_reason, 0), $fg__n = _filled_guard($scope1_reason, 0), $cg__n = _client_guard($scope1_reason, 0), $fg__label = _filled_guard($scope1_reason, 1);
+		const $scope1_reason = _scope_reason(), $cg__label = _client_guard($scope1_reason, 1), $wg__n = _write_guard($scope1_reason, 0), $fg__n = _filled_guard($scope1_reason, 0), $fg__label = _filled_guard($scope1_reason, 1);
 		_if(() => {
 			if (n) {
 				const $scope2_id = _scope_id();
@@ -62,7 +62,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 						_html(`<em>${_text_mark($scope3_id, "#text/0", n, 1, $scope1_reason, 0)}:${_text_mark($scope3_id, "#text/1", label, 2, $scope1_reason, 1)}</em>`);
 						_unfilled_if($scope1_reason, 0) && _patch_subscribe($scope3_id, "__tests__/template.marko_3_n#1:4/subscribe");
 						_unfilled_if($scope1_reason, 1) && _patch_subscribe($scope3_id, "__tests__/template.marko_3_label#1:5/subscribe", $cg__label);
-						_subscribe(_unfilled_if($scope1_reason, 1) && $Level_content__label__closures, _subscribe(_unfilled_if($scope1_reason, 0) && $Level_content__n__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "3:6"), $cg__n && "__tests__/template.marko_3_n#1:4/subscribe"), $cg__label && "__tests__/template.marko_3_label#1:5/subscribe");
+						_subscribe(_unfilled_if($scope1_reason, 1) && $Level_content__label__closures, _subscribe(_unfilled_if($scope1_reason, 0) && $Level_content__n__closures, _scope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "3:6"), _client_guard($scope1_reason, 0) && "__tests__/template.marko_3_n#1:4/subscribe"), $cg__label && "__tests__/template.marko_3_label#1:5/subscribe");
 					}, $scope2_id)
 				});
 				_patch_child_end();
@@ -79,9 +79,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		keeper_default({ content });
 		_patch_child_end();
 		$fg__n && _patch_subscribers($scope1_id, "__tests__/template.marko_1_n#4/subscribers", "n");
-		$fg__n && $cg__n && _patch_render($scope1_id, "__tests__/template.marko_2_n#1:4/setup", "n");
 		$fg__label && _patch_subscribers($scope1_id, "__tests__/template.marko_1_label#5/subscribers", "label");
-		$fg__label && $cg__n && _patch_render($scope1_id, "__tests__/template.marko_2_label#1:5/setup", "label");
 		_scope($scope1_id, {
 			n,
 			label,

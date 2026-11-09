@@ -6,15 +6,14 @@ const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}& b`)($thing_content__walks);
 const $setup = [[], []];
 _shells({ "__tests__/template.marko": `__tests__/template.marko;${((_w0) => `/${_w0}& b`)($thing_content__walks)};${((_w0) => `${_w0}<div>x</div>`)($thing_content__template)}` });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_title = _client_guard($scope0_reason, 1), $fg__input_cls = _filled_guard($scope0_reason, 3), $fg__input_on = _filled_guard($scope0_reason, 4), $wi__input_title = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $fg__input_cls = _filled_guard($scope0_reason, 3), $fg__input_on = _filled_guard($scope0_reason, 4), $wi__input_title = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_title__closures = new Set();
 	const thing = { content: _content("__tests__/template.marko_1*content", (attrs) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
 		_html(`<em>${_text_mark($scope1_id, "#text/0", attrs.x, 1, $scope1_reason, 0)} ${_text_mark($scope1_id, "#text/1", input.title, 2, $scope0_reason, 1)}</em>`);
-		$cg__input_title && _patch_render($scope1_id, "__tests__/template.marko_1_input_title#0:4/subscribe");
-		_subscribe(_unfilled_if($scope0_reason, 1) && $input_title__closures, _scope($scope1_id, { _: $wi__input_title && _scope_with_id($scope0_id) }, "__tests__/template.marko", "1:2"), $cg__input_title && "__tests__/template.marko_1_input_title#0:4/subscribe");
+		_subscribe(_unfilled_if($scope0_reason, 1) && $input_title__closures, _scope($scope1_id, { _: $wi__input_title && _scope_with_id($scope0_id) }, "__tests__/template.marko", "1:2"), _client_guard($scope0_reason, 1) && "__tests__/template.marko_1_input_title#0:4/subscribe");
 	}, $scope0_id) };
 	_set_scope_reason(_updates_from($scope0_reason, 2) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);

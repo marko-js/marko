@@ -42,11 +42,12 @@ var template_default = _template("a", (input) => {
 		}, $scope1_id, "a", 1, $wg__input_label, 1, 0, 0, ["a3"], $scope0_reason, 0);
 		_filled_guard($scope0_reason, 0) && _patch_subscribers($scope1_id, "a4", "b");
 		_filled_guard($scope0_reason, 0) && $cg__input_label && _patch_render($scope1_id, "a5", "b");
-		_subscribe($wi__input_label && $input_label__closures, _scope($scope1_id, {
+		_subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope1_id, {
 			b: label,
 			_: _scope_with_id($scope0_id),
 			i: $wi__input_label && $wrapper_content__label__closures
 		}), $cg__input_label && "a6", $wg__input_label);
+		$wg__input_label || _resume_branch($scope1_id);
 	}, $scope0_id) });
 	_patch_child_end();
 	_html(`<button>+</button>${_el_mark($scope0_id, "b")}`);

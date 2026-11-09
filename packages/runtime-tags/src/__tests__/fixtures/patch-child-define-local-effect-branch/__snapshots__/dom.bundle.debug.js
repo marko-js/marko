@@ -24,7 +24,7 @@ const $if_content__x = /*@__PURE__*/ _if_closure_patch("__tests__/tags/wrap.mark
 });
 const $if_content__setup = $if_content__x;
 const $Card_content__x = /*@__PURE__*/ _const("x", $if_content__x);
-const $Card_content__input_label = /*@__PURE__*/ _closure_get_patch("__tests__/tags/wrap.marko_1_input_label#0:3/subscribe", "input_label/5", ($scope) => $Card_content__x($scope, $scope._.input_label + "!"), 0, "__tests__/tags/wrap.marko_0_input_label#3/subscribers", 0);
+const $Card_content__input_label = /*@__PURE__*/ _closure_get_patch("__tests__/tags/wrap.marko_1_input_label#0:3/subscribe", "input_label/5", ($scope) => $Card_content__x($scope, $scope._.input_label + "!"));
 const $Card_content__setup = ($scope) => {
 	$Card_content__input_label($scope);
 	$Card_content__input_show($scope);

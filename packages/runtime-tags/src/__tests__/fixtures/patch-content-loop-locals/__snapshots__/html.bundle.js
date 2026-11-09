@@ -24,7 +24,7 @@ _shells({
 	a0: "a0;D%;<b><!>!</b>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_show = _client_guard($scope0_reason, 1), $fg__input_show = _filled_guard($scope0_reason, 1), $cg__input_labels = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_show = _client_guard($scope0_reason, 1), $fg__input_show = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_show__closures = /* @__PURE__ */ new Set();
 	const $n__closures = /* @__PURE__ */ new Set();
@@ -44,7 +44,7 @@ var template_default = _template("a", (input) => {
 				return 0;
 			}
 		}, $scope1_id, "b", 1, _write_guard($scope0_reason, 1), 1, 0, 0, ["a0"], $scope0_reason, 1);
-		($cg__input_labels || $cg__input_show) && _patch_render($scope1_id, "a2", "c");
+		$cg__input_show && _patch_render($scope1_id, "a2", "c");
 		$cg__input_show && _patch_render($scope1_id, "a3");
 		_patch_render($scope1_id, "a4", "c");
 		_subscribe($n__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_show__closures, _scope($scope1_id, {
@@ -57,7 +57,7 @@ var template_default = _template("a", (input) => {
 	_patch_child_end();
 	_html(`<button>${_text_mark($scope0_id, "c", n)}</button>${_el_mark($scope0_id, "b")}`);
 	_script($scope0_id, "a6");
-	$fg__input_show && $cg__input_labels && _patch_subscribers($scope0_id, "a7", "g");
+	$fg__input_show && _client_guard($scope0_reason, 0) && _patch_subscribers($scope0_id, "a7", "g");
 	_scope($scope0_id, {
 		g: (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope0_reason, 1)) && input.show,
 		h: n,

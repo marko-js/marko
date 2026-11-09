@@ -8,7 +8,7 @@ _shells({
 	b3: "b3 !b1; D ;<button class=read> </button>"
 });
 var panel_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_y = _write_guard($scope0_reason, 2), $cg__input_a = _client_guard($scope0_reason, 1), $cg__input_y = _client_guard($scope0_reason, 2), $sg__input_a = _server_guard($scope0_reason, 1), $fg__input_a = _filled_guard($scope0_reason, 1), $cg__input_x = _client_guard($scope0_reason, 0), $fg__input_y = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_y = _write_guard($scope0_reason, 2), $cg__input_a = _client_guard($scope0_reason, 1), $cg__input_y = _client_guard($scope0_reason, 2), $sg__input_a = _server_guard($scope0_reason, 1), $fg__input_a = _filled_guard($scope0_reason, 1), $fg__input_y = _filled_guard($scope0_reason, 2), $cg__input_x = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	$fg__input_a && _patch_write($scope0_id, "xf", input.a, !$sg__input_a);
 	let out = "";
@@ -29,7 +29,7 @@ var panel_default = _template("b", (input) => {
 					return 0;
 				}
 			}, $scope1_id, "a", 1, $wg__input_y, 1, 0, 0, ["b3"], $scope0_reason, 2);
-			_filled_guard($scope0_reason, 1) && ($cg__input_x || $cg__input_y) && _patch_render($scope1_id, "b2", ["b", ">f"]);
+			_filled_guard($scope0_reason, 1) && $cg__input_y && _patch_render($scope1_id, "b2", ["b", ">f"]);
 			$cg__input_a && _patch_render($scope1_id, "b5");
 			$cg__input_y && _patch_render($scope1_id, "b6");
 			_scope($scope1_id, {

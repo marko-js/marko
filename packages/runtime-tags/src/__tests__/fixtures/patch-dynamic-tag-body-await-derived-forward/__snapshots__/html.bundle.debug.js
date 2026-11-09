@@ -40,7 +40,7 @@ _shells({
 	"__tests__/tags/card.marko": "__tests__/tags/card.marko;b%;<!><!><!>"
 });
 var card_default = _template("__tests__/tags/card.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_p__OR__input_content = _write_guard($scope0_reason, 0), $cg__input_p__OR__input_content = _client_guard($scope0_reason, 0), $wg__input_p = _write_guard($scope0_reason, 1), $wi__input_content = _write_if($scope0_reason, 2), $wi__input_p__OR__input_content = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $scope0_page = _page_render(), $wg__input_p__OR__input_content = _write_guard($scope0_reason, 0), $cg__input_p__OR__input_content = _client_guard($scope0_reason, 0), $wg__input_p = _write_guard($scope0_reason, 1), $wi__input_p__OR__input_content = _write_if($scope0_reason, 0), $wi__input_content = _write_if($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_content__closures = new Set();
 	_await($scope0_id, "#text/0", input.p, (x) => {
@@ -58,7 +58,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 		_filled_guard($scope0_reason, 0) && _patch_subscribers($scope1_id, "__tests__/tags/card.marko_1_c#4/subscribers", "c");
 		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "__tests__/tags/card.marko_1_input_content#0:4/subscribe");
 		_patch_render($scope1_id, "__tests__/tags/card.marko_1_input_content#0:4_x#2/setup", [_filled_guard($scope0_reason, 2) && ">input_content", _filled_guard($scope0_reason, 1) && "x"], $scope0_reason, 0);
-		$wi__input_p__OR__input_content && _subscribe($wi__input_content && $input_content__closures, _scope($scope1_id, {
+		$wi__input_p__OR__input_content && _subscribe(_unfilled_if($scope0_reason, 2) && $input_content__closures, _scope($scope1_id, {
 			x: $wi__input_content && x,
 			c: (_unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 0)) && c,
 			"ClosureScopes:c/6": $await_content__c__closures
@@ -67,7 +67,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 			c: "3:10"
 		}), _client_guard($scope0_reason, 2) && "__tests__/tags/card.marko_1_input_content#0:4/subscribe", $wg__input_p);
 		_filled_guard($scope0_reason, 0) && (_client_branch_if("__tests__/tags/card.marko_2*content", $scope1_id) || _unfilled_if($scope0_reason, 1)) && _patch_write($scope1_id, "PatchMarkedWrite:c", c, !_server_guard($scope0_reason, 0));
-		$wg__input_p || $wi__input_p__OR__input_content && _write_guard($scope0_reason, 2) && _resume_branch($scope1_id);
+		$wg__input_p || $wi__input_p__OR__input_content && _resume_branch($scope1_id);
 	}, 1, "__tests__/tags/card.marko_1*content", _unfilled_if($scope0_reason, 1) && 3, 1, 1);
 	_scope($scope0_id, {
 		input_content: _write_if($scope0_reason, 1) && input.content,

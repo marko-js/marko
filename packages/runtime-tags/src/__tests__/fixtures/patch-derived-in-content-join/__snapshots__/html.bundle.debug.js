@@ -18,7 +18,7 @@ const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}& b`)("D%l");
 const $setup = _shell_setup([[], ["__tests__/template.marko_0"]], ["#childScope/0>", $setup$1]);
 _shells({ "__tests__/template.marko": `__tests__/template.marko${_shell_marker($setup)};${((_w0) => `/${_w0}& b`)("D%l")};${((_w0) => `${_w0}<button>+</button>`)($template$1)}` });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_label = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const $input_label__closures = new Set();
 	const $count__closures = new Set();
@@ -32,7 +32,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_filled_guard($scope0_reason, 0) && _patch_write($scope1_id, "PatchMarkedWrite:label", label, !_server_guard($scope0_reason, 0));
 		_html(`<p>${_text_mark($scope1_id, "#text/0", label + count)}</p>`);
 		_patch_render($scope1_id, "__tests__/template.marko_1_count#0:5_label#1/setup", _filled_guard($scope0_reason, 0) && "label");
-		_subscribe($count__closures, _subscribe($wi__input_label && $input_label__closures, _scope($scope1_id, {
+		_subscribe($count__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope1_id, {
 			label,
 			_: _scope_with_id($scope0_id)
 		}, "__tests__/template.marko", "2:2", { label: "3:10" }), _client_guard($scope0_reason, 0) && "__tests__/template.marko_1_input_label#0:4/subscribe"), "__tests__/template.marko_1_count#0:5/subscribe");
@@ -42,7 +42,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		count,
-		"ClosureScopes:input_label/6": $wi__input_label && $input_label__closures,
+		"ClosureScopes:input_label/6": _write_if($scope0_reason, 0) && $input_label__closures,
 		"ClosureScopes:count/7": $count__closures,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, { count: "1:6" });
