@@ -7,7 +7,6 @@ export {
 export { forIn, forOf, forTo, forUntil } from "./common/for";
 export { _call } from "./common/helpers";
 export { $signal, $signalReset, onAbort } from "./dom/abort-signal";
-export { compat } from "./dom/compat";
 export {
   _await_content,
   _await_promise,
@@ -128,3 +127,5 @@ export {
   _var_change,
 } from "./dom/signals";
 export { _template } from "./dom/template";
+// Last, so the bundle orders the runtime by the exports above, not by compat's imports.
+export { compat } from "./dom/compat";

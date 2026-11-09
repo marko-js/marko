@@ -1,0 +1,15 @@
+class {
+  onCreate() {
+    this.state = { which: true, count: 0 };
+  }
+  toggle() {
+    this.state.which = !this.state.which;
+  }
+  increment() {
+    this.state.count++;
+  }
+}
+<button id="toggle" onClick("toggle")>toggle</button>
+<button id="increment" onClick("increment")>${state.count}</button>
+<tags-namespace which=state.which count=state.count/>
+<init-components/>

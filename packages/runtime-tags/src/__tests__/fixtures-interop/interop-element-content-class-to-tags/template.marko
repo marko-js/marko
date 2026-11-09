@@ -1,0 +1,19 @@
+class {
+  onCreate() {
+    this.state = { count: 0 };
+  }
+  increment() {
+    this.state.count++;
+  }
+}
+
+<button id="class" onClick("increment")>increment</button>
+<tags-child>
+  <@foo>body text ${state.count}</@foo>
+  outer text ${state.count}
+</tags-child>
+<tags-dynamic-child tag="section">
+  <@foo>dynamic text ${state.count}</@foo>
+</tags-dynamic-child>
+
+<init-components/>

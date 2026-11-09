@@ -1,0 +1,5 @@
+class {
+  onCreate() { this.state = { clicks: 0 }; }
+  inc() { this.state.clicks++; }
+}
+<button class="thing" onClick("inc")>thing ${state.clicks}</button>

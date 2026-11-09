@@ -137,47 +137,44 @@ exports.p = function (domCompat) {
   }));
 
   const rendererCache = new WeakMap();
+  const createFragment = () => ___createFragmentNode();
+  const createTemplate = domCompat.createTemplate(
+    (scope, renderer, input) =>
+      renderAndMorph(scope, renderer, undefined, input),
+    createFragment,
+  );
+  const createContent = domCompat.createContent(
+    (scope, renderBody, args) =>
+      renderAndMorph(scope, undefined, renderBody, args),
+    createFragment,
+  );
 
-  domCompat.patchDynamicTag((dynamicTag) => (...args) => {
-    const signal = dynamicTag(...args);
-    return (scope, renderer, getInput) => {
-      return signal(scope, create5to6Renderer(renderer), getInput);
-    };
-  });
-
-  function create5to6Renderer(renderer) {
-    let newRenderer = renderer;
-    if (renderer && typeof renderer !== "string") {
-      if (renderer === noopRenderer) {
-        return noopRenderer;
+  // The Tags runtime hands over what no Tags renderer matches: a Class template becomes a
+  // Tags template, and Class content becomes Tags content that morphs in its Class output.
+  domCompat.setClassAPIRenderer((value) => {
+    if (domCompat.isRenderer(value)) return value;
+    let renderer = rendererCache.get(value);
+    if (!renderer) {
+      const classRenderer = dynamicTag.___getRenderer(value);
+      const renderBody = value.renderBody || value;
+      if (classRenderer) {
+        renderer = createTemplate(value, classRenderer);
+      } else if (renderBody === noopRenderer) {
+        // Content only the server can render resumes as noop; its markup stays.
+        renderer = domCompat.createRenderer(renderBody, createFragment);
+      } else if (typeof renderBody === "function") {
+        renderer = createContent(renderBody);
       }
-
-      const rendererFromAnywhere =
-        renderer._ ||
-        renderer.render ||
-        (renderer.renderer && renderer.renderer.renderer) ||
-        renderer.renderer;
-
-      if (!domCompat.isRenderer(rendererFromAnywhere || renderer)) {
-        newRenderer = rendererCache.get(renderer);
-        if (!newRenderer) {
-          newRenderer = domCompat.createRenderer(
-            (scope, input) =>
-              renderAndMorph(scope, rendererFromAnywhere, renderer, input),
-            () => ___createFragmentNode(),
-          );
-          domCompat.setRendererId(newRenderer, renderer);
-          rendererCache.set(renderer, newRenderer);
-        }
-      }
+      rendererCache.set(value, renderer);
     }
-    return newRenderer;
-  }
+    return renderer;
+  });
 
   domCompat.init(noopRenderer);
 
   function renderAndMorph(scope, renderer, renderBody, input) {
-    const out = defaultCreateOut(scope.$global);
+    const $global = domCompat.getGlobal(scope);
+    const out = defaultCreateOut($global);
     let host = domCompat.getStartNode(scope);
     let rootNode = host.fragment;
     if (!rootNode) {
@@ -203,18 +200,19 @@ exports.p = function (domCompat) {
       domCompat.setScopeNodes(scope, rootNode.startNode, rootNode.endNode);
     }
     const existingComponent = scope.___marko5Component;
-    const componentsContext = ___getComponentsContext(out);
-    const globalComponentsContext = componentsContext.___globalContext;
     let customEvents;
     let normalizedInput;
-    globalComponentsContext.___rerenderComponent = existingComponent;
+    // Cleared so this render gets a context of its own: sharing a Class parent's
+    // mid-render context would reset its rerender state for later siblings.
+    $global.___components = undefined;
+    const componentsContext = ___getComponentsContext(out);
+    componentsContext.___globalContext.___rerenderComponent = existingComponent;
     out.sync();
     if (renderer) {
-      const [rawInput] = input;
       normalizedInput = {};
 
-      for (const key in rawInput) {
-        const value = rawInput[key];
+      for (const key in input) {
+        const value = input[key];
         if (/^on[-A-Z]/.test(key) && typeof value === "function") {
           (customEvents || (customEvents = {}))[toCustomEventName(key)] = [
             value,
@@ -226,7 +224,8 @@ exports.p = function (domCompat) {
 
       renderer(normalizedInput, out);
     } else {
-      normalizedInput = input[0];
+      // Content a native tag renders has no arguments.
+      normalizedInput = input && input[0];
       RenderBodyComponent({ renderBody, args: input }, out);
     }
 

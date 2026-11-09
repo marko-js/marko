@@ -1,9 +1,9 @@
 import { RENDER_BODY_ID, SET_SCOPE_REGISTER_ID } from "../common/compat-meta";
+import { setClassAPIRenderer } from "../common/helpers";
 import { DEFAULT_RENDER_ID, DEFAULT_RUNTIME_ID } from "../common/meta";
 import { RendererProp } from "../common/types";
 import { writeLoadAsset } from "./assets";
 import { _await } from "./control-flow";
-import { patchDynamicTag } from "./dynamic-tag";
 import { register, REGISTRY } from "./serializer";
 import type { ServerRenderer } from "./template";
 import {
@@ -40,13 +40,15 @@ const COMPAT_REGISTRY = new WeakMap<
 export const compat = {
   $global,
   writeLoadAsset,
-  fork: ((scopeId, accessor, promise, content) =>
-    _await(scopeId, accessor, promise, (value) => {
+  // Class output awaits in the scope of its renderer, as a template's only node.
+  fork(scopeId: number, promise: unknown, content: (value: unknown) => void) {
+    _await(scopeId, MARKO_DEBUG ? "#text/0" : "a", promise, (value) => {
       // Class output has no scope of its own; claim the id so sibling branch markers stay unique.
       const branchId = _peek_scope_id();
       content(value);
       if (_peek_scope_id() === branchId) _scope_id();
-    })) as typeof _await,
+    });
+  },
   write: _html,
   writeScript,
   nextScopeId: _scope_id,
@@ -68,8 +70,12 @@ export const compat = {
 
     return state;
   },
-  isTagsAPI(fn: any) {
-    return !!fn[RendererProp.Id];
+  // Data may carry a renderer's id key, but is not a function.
+  isRenderer(value: any) {
+    return typeof value === "function" && RendererProp.Id in value;
+  },
+  setRendererId(renderer: any, id: unknown) {
+    renderer[RendererProp.Id] = id;
   },
   onFlush(fn: (chunk: Chunk) => void) {
     const { flushHTML } = Chunk.prototype;
@@ -83,7 +89,7 @@ export const compat = {
       return flushHTML.call(this, boundary);
     };
   },
-  patchDynamicTag,
+  setClassAPIRenderer,
   writeSetScopeForComponent(branchId: number, m5c: string, m5i: unknown) {
     _scope(branchId, { m5c, m5i });
     _script(branchId, SET_SCOPE_REGISTER_ID);

@@ -20,9 +20,7 @@ exports.p = function (htmlCompat) {
   require("../load-tag").___tagsCompat = htmlCompat;
   const writersByGlobal = new WeakMap();
   const boundaryModeByRenderer = new WeakMap();
-  const isMarko6 = (fn) => typeof fn !== "function" || htmlCompat.isTagsAPI(fn);
-  const isMarko5 = (fn) =>
-    typeof fn !== "function" || !htmlCompat.isTagsAPI(fn);
+  const isMarko5 = (fn) => !htmlCompat.isRenderer(fn);
   const writeClassAPIResultToTagsAPI = ({ out }) => {
     const { writer } = out._state;
     htmlCompat.write(writer._content);
@@ -184,22 +182,18 @@ exports.p = function (htmlCompat) {
     {},
   );
 
-  htmlCompat.patchDynamicTag(function getRenderer(tag, scopeId, accessor) {
-    if (!tag || isMarko6(tag._ || tag.content || tag)) {
-      return tag;
-    }
-
-    const renderer5 =
-      tag._ ||
-      tag.render ||
-      (tag.renderer && tag.renderer.renderer) ||
-      tag.renderer;
+  // The Tags runtime hands over what no Tags renderer matches: a Class template or
+  // Class content becomes a Tags renderer that writes its Class output in place.
+  htmlCompat.setClassAPIRenderer((tag) => {
+    if (htmlCompat.isRenderer(tag)) return tag;
+    const renderer5 = dynamicTag5.___getRenderer(tag);
     const renderBody5 = tag.renderBody || tag;
 
-    if (!renderer5 && renderBody5) {
+    if (!renderer5) {
+      if (typeof renderBody5 !== "function") return;
       htmlCompat.registerRenderBody(renderBody5);
     }
-    return (input, ...args) => {
+    const render = (input, ...args) => {
       // tags to class
       const $global = htmlCompat.$global();
       htmlCompat.ensureState($global);
@@ -260,9 +254,13 @@ exports.p = function (htmlCompat) {
 
       if (async !== false) {
         async = true;
-        htmlCompat.fork(scopeId, accessor, out, writeClassAPIResultToTagsAPI);
+        htmlCompat.fork(branchId, out, writeClassAPIResultToTagsAPI);
       }
     };
+    // Keyed by the value, which resumes as itself for a template and as a noop for
+    // content, so live content's first client render replaces the server's markup.
+    htmlCompat.setRendererId(render, tag);
+    return render;
   });
 
   return function register(id, renderer, boundaryMode) {

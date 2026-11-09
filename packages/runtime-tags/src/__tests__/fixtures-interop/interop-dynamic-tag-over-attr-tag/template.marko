@@ -1,0 +1,11 @@
+class {
+  onCreate() {
+    this.state = { label: "a" };
+  }
+  toggle() {
+    this.state.label = this.state.label === "a" ? "b" : "a";
+  }
+}
+<button id="class" onClick("toggle")>toggle</button>
+<tags-outer label=state.label/>
+<init-components/>

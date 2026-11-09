@@ -1,0 +1,8 @@
+class {
+  onCreate() { this.state = { show: false }; }
+  show() { this.state.show = true; }
+}
+<button id="class" onClick("show")>show</button>
+<tags-if show=state.show>Content</tags-if>
+<class-thing/>
+<init-components/>
