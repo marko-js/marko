@@ -1,26 +1,23 @@
 // PATCH
-[`a2;b%;<!><!><!>`, `a0,<b>R</b>`, `a1;b%;<!><!><!>`]
+[`a0,<b>R</b>`, `a1;b%;<!><!><!>`]
 {
-  fa: "^a2",
   cAa: {
     ba: [{
       fa: "^^^a0"
     }, "a1"]
   }
 }
-;CQ4
+;CQY
 
-// PATCH holding CQ4
+// PATCH holding CQY
 {
-  fa: "^a2",
   cAa: {
     ba: 0
   }
 }
 
-// PATCH holding CQ4
+// PATCH holding CQY
 {
-  fa: "^a2",
   cAa: {
     ba: [{
       fa: "^^^a0"

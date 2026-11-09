@@ -28,7 +28,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}
 		}, $scope2_id, "#text/0", 1, $wg__show, 1, 0, 0, ["__tests__/template.marko_3*shell"]);
 		_write_if($scope2_reason, 1) && _scope($scope2_id, { content: _unfilled_if($scope2_reason, 1) && content }, "__tests__/template.marko", "2:2", { content: "2:21" });
-	}, $scope0_id, void 0, 1) };
+	}, $scope0_id) };
 	_dynamic_tag($scope0_id, "#text/0", Box, {
 		show: input.show,
 		content: Row
