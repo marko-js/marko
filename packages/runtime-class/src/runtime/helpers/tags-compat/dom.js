@@ -1,3 +1,3 @@
 const runtimeDom = require("./runtime-dom.js");
-runtimeDom.p(require("@marko/runtime-tags/dom").compat);
+runtimeDom.p(require("@marko/runtime-tags/dom/compat.feat").compat);
 exports.f = runtimeDom.f;

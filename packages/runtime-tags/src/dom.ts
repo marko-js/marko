@@ -127,5 +127,3 @@ export {
   _var_change,
 } from "./dom/signals";
 export { _template } from "./dom/template";
-// Last, so the bundle orders the runtime by the exports above, not by compat's imports.
-export { compat } from "./dom/compat";
