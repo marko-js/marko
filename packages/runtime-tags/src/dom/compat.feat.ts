@@ -37,6 +37,7 @@ const getRenderScopes = ($global: Record<string, unknown>) => {
   return scopes as Record<string, Scope> | undefined;
 };
 
+// Imported by runtime-class's tags-compat entries alone: only interop pages load it.
 export const compat = {
   setClassAPIRenderer,
   queueEffect,

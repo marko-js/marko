@@ -19,6 +19,7 @@ var tags_child_default = /*@__PURE__*/ _template("c", $template$1, $walks$1, $se
 var import_dynamic_tag = /* @__PURE__ */ __toESM(require_dynamic_tag());
 var import_renderer = /* @__PURE__ */ __toESM(require_renderer());
 var import_registry = require_registry();
+var import_defineComponent = /* @__PURE__ */ __toESM(require_defineComponent());
 const _marko_componentType$1 = "b";
 const _marko_template$1 = (0, import_vdom.t)(_marko_componentType$1);
 (0, import_registry.r)(_marko_componentType$1, () => _marko_template$1);

@@ -37,6 +37,7 @@ const COMPAT_REGISTRY = new WeakMap<
   [registryId: string, scopeId: unknown]
 >();
 
+// Imported by runtime-class's tags-compat entries alone: only interop pages load it.
 export const compat = {
   $global,
   writeLoadAsset,

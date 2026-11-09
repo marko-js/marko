@@ -180,7 +180,7 @@ importers:
         specifier: ^5.42.17
         version: link:../compiler
       '@marko/runtime-tags':
-        specifier: ^6.4.11
+        specifier: 6.4.11
         version: link:../runtime-tags
       app-module-path:
         specifier: ^2.2.0
