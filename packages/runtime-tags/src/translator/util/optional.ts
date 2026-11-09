@@ -462,14 +462,6 @@ export function toArray<T, R>(
     : [];
 }
 
-export function toSet<T>(data: Opt<T>): Set<T> {
-  return data !== undefined
-    ? Array.isArray(data)
-      ? new Set(data)
-      : new Set<T>().add(data)
-    : new Set();
-}
-
 export function mapToString<T>(
   data: Opt<T>,
   sep: string,

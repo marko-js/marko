@@ -436,7 +436,6 @@ export default {
         tag,
         undefined,
         undefined,
-        undefined,
         isClassAPI ? "renderBody" : "content",
       );
       const args: (t.Expression | t.SpreadElement)[] = [];

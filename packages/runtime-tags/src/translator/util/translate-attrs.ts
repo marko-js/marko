@@ -14,7 +14,7 @@ import {
   getAttrTagIdentifier,
   getAttrTagPaths,
 } from "./nested-attribute-tags";
-import { type SortedOpt, toArray, toSet } from "./optional";
+import { toArray } from "./optional";
 import {
   type ParamsTree,
   getParamsTreeAt,
@@ -41,13 +41,12 @@ type ContentKey = "renderBody" | "content";
 export function translateAttrs(
   tag: t.NodePath<t.MarkoTag>,
   paramsTree: ParamsTree | true = true,
-  skip?: SortedOpt<string>,
   statements: t.Statement[] = [],
   contentKey: ContentKey = "content",
 ) {
   const contentProperties: t.ObjectExpression["properties"] = [];
   const attrTagLookup = tag.node.extra?.attrTagLookup;
-  const seen = toSet(skip);
+  const seen = new Set<string>();
   if (attrTagLookup) {
     for (const name in attrTagLookup) {
       const attrTagMeta = attrTagLookup[name];
@@ -78,9 +77,6 @@ export function translateAttrs(
       if (child.isMarkoTag()) {
         if (isAttributeTag(child)) {
           const attrTagMeta = attrTagLookup[getTagName(child)];
-
-          if (propertiesUtil.has(skip, attrTagMeta.name)) continue;
-
           if (attrTagMeta.dynamic) {
             i = addDynamicAttrTagStatements(
               attrTags,
@@ -94,7 +90,6 @@ export function translateAttrs(
             const translatedAttrTag = translateAttrs(
               child,
               getParamsTreeAt(paramsTree, attrTagMeta.name),
-              undefined,
               statements,
               contentKey,
             );
@@ -193,7 +188,6 @@ export function addDynamicAttrTagStatements(
         const translatedAttrTag = translateAttrs(
           tag,
           attrTagTree,
-          undefined,
           statements,
           contentKey,
         );

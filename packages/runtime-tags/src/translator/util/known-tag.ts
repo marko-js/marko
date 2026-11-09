@@ -1146,15 +1146,14 @@ function applyAttrObject(
         translatedProps = appendAttrTag(
           translatedProps,
           t.objectExpression(
-            translateAttrs(attrTag, paramsTree, undefined, statements)
-              .properties,
+            translateAttrs(attrTag, paramsTree, statements).properties,
           ),
         );
       }
     }
   } else {
     translatedProps = propsToExpression(
-      translateAttrs(tag, paramsTree, undefined, statements).properties,
+      translateAttrs(tag, paramsTree, statements).properties,
     );
   }
 
@@ -1248,12 +1247,7 @@ function writeAttrsToSignals(
             i = translateDynamicAttrTagChildInGroup(attrTagMeta.group, i);
           } else if (childAttrTree === true) {
             const statements: t.Statement[] = [];
-            const translatedAttrs = translateAttrs(
-              child,
-              true,
-              undefined,
-              statements,
-            );
+            const translatedAttrs = translateAttrs(child, true, statements);
 
             addStatement("render", info.tagSection, tagExtra, statements);
 
@@ -1292,18 +1286,6 @@ function writeAttrsToSignals(
           const group = child.node.extra!.attributeTagGroup!;
           if (hasGroupReads(group, attrTagLookup, paramsTree)) {
             i = translateDynamicAttrTagChildInGroup(group, i);
-          } else if (getTagName(child) === "if") {
-            while (++i < attrTags.length) {
-              const nextTag = attrTags[i];
-              switch (nextTag.isMarkoTag() && getTagName(nextTag)) {
-                case "else":
-                case "else-if":
-                  continue;
-              }
-
-              i--;
-              break;
-            }
           }
         }
       }
