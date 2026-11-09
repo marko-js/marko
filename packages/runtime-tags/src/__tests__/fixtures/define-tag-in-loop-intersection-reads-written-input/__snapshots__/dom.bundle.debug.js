@@ -19,7 +19,7 @@ const $D_content__q = /*@__PURE__*/ _const("q", $D_content__input_p1__OR__q);
 const $D_content__$params = ($scope, $params2) => $D_content__$temp($scope, $params2[0]);
 const $D_content__$temp = ($scope, $temp) => $D_content__q($scope, $temp.q);
 const $v = /*@__PURE__*/ _let("v/4", $for_content__v);
-const $for = /*@__PURE__*/ _for_of_unkeyed("#text/0", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($D_content__template), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($D_content__walks), $for_content__setup, $for_content__$params);
+const $for = /*@__PURE__*/ _for_of_unkeyed("#text/0", $D_content__template, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($D_content__walks), $for_content__setup, $for_content__$params);
 function $setup($scope) {
 	$v($scope, 0);
 	$for($scope, [[1, 2]]);

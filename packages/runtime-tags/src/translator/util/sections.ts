@@ -190,11 +190,16 @@ export interface Section {
     | { kind: "if"; tag: ControlFlowTagExtra; index: number }
     | { kind: "for" | "await" | "try"; tag: ControlFlowTagExtra }
     | undefined;
-  content: null | {
-    startType: ContentType;
-    endType: ContentType;
-    singleChild: boolean;
-  };
+  /** What renders at its edges, `null` for nothing; set once its body is
+   * analyzed (`settleContent`). */
+  content:
+    | undefined
+    | null
+    | {
+        startType: ContentType;
+        endType: ContentType;
+        singleChild: boolean;
+      };
   // Null for a section compiled output never renders (class-API interop
   // bodies); recorders skip it and descendants inherit it.
   structure: StructureOp[] | null;
@@ -279,7 +284,7 @@ export function ensureBodySection(
       reason: undefined,
       paramReasonGroups: undefined,
       returnValueExpr: undefined,
-      content: getContentInfo(path),
+      content: undefined,
       branchExpr: undefined,
       renderedBy: undefined,
       knownTags: undefined,
@@ -451,6 +456,13 @@ export function forEachSectionReverse(fn: (section: Section) => void) {
   }
 }
 
+// Each `<define>` a body calls is analyzed before the call, so once the body is
+// analyzed every call at its edges is known to render in place.
+export function settleContent(body: t.NodePath<t.Program | t.MarkoTagBody>) {
+  const section = getSectionForBody(body);
+  if (section) section.content = getContentInfo(body);
+}
+
 export function getContentInfo(
   path: t.NodePath<t.Program | t.MarkoTagBody>,
 ): Section["content"] {
@@ -468,16 +480,14 @@ export function getContentInfo(
 
       // A lone node's content is that of the known child section it renders,
       // or else its one type at both edges.
-      const knownChild =
-        end.type === "MarkoTag" &&
-        getKnownChildSection(end as t.NodePath<t.MarkoTag>);
-      return knownChild
-        ? knownChild.content
-        : {
-            startType: endType,
-            endType,
-            singleChild: endType !== ContentType.Dynamic,
-          };
+      return (
+        (end.type === "MarkoTag" &&
+          getKnownChildContent(end as t.NodePath<t.MarkoTag>)) || {
+          startType: endType,
+          endType,
+          singleChild: endType !== ContentType.Dynamic,
+        }
+      );
     }
   }
 
@@ -502,9 +512,10 @@ export function getNodeContentType(
       return null;
     case "MarkoTag": {
       const tag = path as t.NodePath<t.MarkoTag>;
-      const tagSection = getKnownChildSection(tag);
-      if (!tagSection) return getTagContentType(tag);
-      return tagSection.content ? tagSection.content[edge] : null;
+      const content = getKnownChildContent(tag);
+      return content === undefined
+        ? getTagContentType(tag)
+        : content && content[edge];
     }
   }
 
@@ -673,16 +684,27 @@ function mayRenderText(contentType: ContentType) {
   );
 }
 
-// The known child section `structure.child` renders in place; a load tag
-// renders behind a marker.
-function getKnownChildSection(tag: t.NodePath<t.MarkoTag>) {
-  return (
+// The content of the known child section the tag renders in place, `undefined`
+// to read the tag as its own (a load tag renders behind a marker).
+function getKnownChildContent(tag: t.NodePath<t.MarkoTag>) {
+  const section =
     tag.node.extra?.defineBodySection ||
     (!isCoreTag(tag) &&
       analyzeTagNameType(tag) === TagNameType.CustomTag &&
       !tag.node.extra!.tagNameLoad &&
-      loadFileForTag(tag)!.ast.program.extra.section)
-  );
+      loadFileForTag(tag)!.ast.program.extra.section);
+  if (!section) return;
+  if (section.content !== undefined) return section.content;
+
+  // A call nested in the body it renders reads what the body holds; one
+  // directly in it would read itself, so it reads as its own tag.
+  let body: t.NodePath = tag.parentPath;
+  while (body.type === "MarkoTagBody") {
+    body = body.parentPath!.parentPath!;
+    if (body.node.extra?.section === section) {
+      return getContentInfo(body as t.NodePath<t.Program | t.MarkoTagBody>);
+    }
+  }
 }
 
 export function getRendererReason(section: Section) {

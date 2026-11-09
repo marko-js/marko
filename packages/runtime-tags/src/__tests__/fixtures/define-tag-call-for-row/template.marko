@@ -1,0 +1,12 @@
+<define/Row|{ item }|>
+  <li>${item}</li>
+</define>
+
+<let/items=[1, 2]/>
+<ul>
+  <for|item| of=items>
+    <Row item=item/>
+  </for>
+</ul>
+<button#add onClick() { items = [...items, items.length + 1] }>Add</button>
+<button#remove onClick() { items = items.slice(1) }>Remove</button>

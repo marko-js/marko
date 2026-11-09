@@ -16,7 +16,7 @@ const $Tree_content__tag_input = ($scope, input) => {
 	$Tree_content__input_depth($scope, input.depth);
 	$Tree_content__input_label($scope, input.label);
 };
-const $Tree_content__if = /*@__PURE__*/ _if(0, /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Tree_content__template), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Tree_content__walks), $if_content__setup);
+const $Tree_content__if = /*@__PURE__*/ _if(0, /*@__PURE__*/ ((_w0) => `<!>${_w0}`)($Tree_content__template), /*@__PURE__*/ ((_w0) => `b/${_w0}&`)($Tree_content__walks), $if_content__setup);
 const $Tree_content__input_depth = /*@__PURE__*/ _const(5, ($scope) => {
 	$Tree_content__if($scope, $scope.f ? 0 : 1);
 	$if_content__input_depth($scope);

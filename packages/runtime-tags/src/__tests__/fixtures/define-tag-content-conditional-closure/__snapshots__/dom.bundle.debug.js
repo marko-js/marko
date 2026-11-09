@@ -1,8 +1,8 @@
 // template.marko
 const $Box_content2__walks = " b%c";
 const $Box_content2__template = "<button>toggle</button><!><!>";
-const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Box_content2__template);
-const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Box_content2__walks);
+const $template = /*@__PURE__*/ ((_w0) => `${_w0}<!>`)($Box_content2__template);
+const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&b`)($Box_content2__walks);
 const $if_content__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $if_content__input_content = /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $if_content__dynamicTag($scope, $scope._.input_content));
 const $if_content__setup = $if_content__input_content;

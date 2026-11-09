@@ -34,7 +34,7 @@ const $if_content__setup = ($scope) => {
 };
 const $Box_content__setup = ($scope) => _style_shell($scope, "a");
 const $Box_content__color = /*@__PURE__*/ _const(3, ($scope) => _style_rule_item($scope.a, "--M_a0", $scope.d));
-const $if = /*@__PURE__*/ _if(4, /*@__PURE__*/ ((_w0, _w1, _w2, _w3) => `<!>${_w0}${_w1}${_w2}${_w3}<!>`)("", $Box_content__template, $template, $Later_content__template), /*@__PURE__*/ ((_w0, _w1, _w2, _w3) => `0${_w0}&b/${_w1}&/${_w2}&/${_w3}&b`)("", $Box_content__walks, " c", $Later_content__walks), $if_content__setup);
+const $if = /*@__PURE__*/ _if(4, /*@__PURE__*/ ((_w0, _w1, _w2, _w3) => `${_w0}${_w1}${_w2}${_w3}<!>`)("", $Box_content__template, $template, $Later_content__template), /*@__PURE__*/ ((_w0, _w1, _w2, _w3) => `0${_w0}&/${_w1}&/${_w2}&/${_w3}&b`)("", $Box_content__walks, " c", $Later_content__walks), $if_content__setup);
 const $open = /*@__PURE__*/ _let(6, ($scope) => $if($scope, $scope.g ? 0 : 1));
 const $setup__script = _script("a0", ($scope) => _on($scope.d, "click", function() {
 	$open($scope, !$scope.g);

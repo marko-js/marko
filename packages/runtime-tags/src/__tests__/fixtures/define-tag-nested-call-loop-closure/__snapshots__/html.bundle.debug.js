@@ -19,7 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope3_id = _scope_id();
 		D.content({});
 		$wi__input_list && _scope($scope3_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:2");
-	}, 0, $scope0_id, "#text/0", $wg__input_list, $wg__input_list);
+	}, 0, $scope0_id, "#text/0", $wg__input_list, $wg__input_list, 0, 0, 1);
 	$wi__input_x__OR__input_list && _scope($scope0_id, {
 		input_x: $wi__input_list && input.x,
 		"ClosureScopes:input_x/5": $wi__input_x && $input_x__closures

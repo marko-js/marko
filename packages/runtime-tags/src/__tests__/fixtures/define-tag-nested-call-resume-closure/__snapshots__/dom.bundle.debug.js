@@ -9,7 +9,7 @@ const $if_content__setup = ($scope) => {
 	$scope["#childScope/0"]._ = $scope._._;
 	$E_content__setup($scope["#childScope/0"]);
 };
-const $D_content__if = /*@__PURE__*/ _if("#text/0", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($E_content__template), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($E_content__walks), $if_content__setup);
+const $D_content__if = /*@__PURE__*/ _if("#text/0", $E_content__template, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($E_content__walks), $if_content__setup);
 const $D_content__on = ($scope, on) => $D_content__if($scope, on ? 0 : 1);
 const $D_content__$params = ($scope, $params2) => $D_content__$temp($scope, $params2[0]);
 const $D_content__$temp = ($scope, $temp) => $D_content__on($scope, $temp.on);

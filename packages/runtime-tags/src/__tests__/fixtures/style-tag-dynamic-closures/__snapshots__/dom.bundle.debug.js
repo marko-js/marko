@@ -61,7 +61,7 @@ const $for = /*@__PURE__*/ _for_of_unkeyed("#text/0", "<style></style><div class
 const $input_rows = ($scope, input_rows) => $for($scope, [input_rows]);
 const $for2 = /*@__PURE__*/ _for_of("#text/1", "<style></style><div class=selected></div>", " ", $for_content2__setup);
 const $input_items = ($scope, input_items) => $for2($scope, [input_items, "id"]);
-const $if = /*@__PURE__*/ _if("#text/2", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Box_content__template), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Box_content__walks), $if_content__setup);
+const $if = /*@__PURE__*/ _if("#text/2", $Box_content__template, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($Box_content__walks), $if_content__setup);
 const $input_show = ($scope, input_show) => {
 	$input_show$1($scope["#childScope/3"], input_show);
 	$if($scope, input_show ? 0 : 1);

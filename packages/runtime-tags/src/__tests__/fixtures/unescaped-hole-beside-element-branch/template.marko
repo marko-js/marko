@@ -1,0 +1,6 @@
+<let/show=false/>
+<main>
+  <if=show>$!{input.html}<hr/></if>
+  <if=show><hr/>$!{input.html}</if>
+  <button onClick() { show = !show }>t</button>
+</main>
