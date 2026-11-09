@@ -133,6 +133,7 @@ import {
   getUnfilledSubscribedSources,
   getWriteHop,
   hasTagCallerParamAt,
+  getKeptInputSources,
   readsWithKeptInput,
   runsEffectOnPatch,
   runsSubscribersByWrite,
@@ -705,6 +706,15 @@ export function getClosureScopesIfWritten(
   );
 }
 
+// Where a kept dynamic tag's entry hands content its params (`getKeptInputSources`), as a
+// test of its owner's groups.
+export function getKeptInputGuard(content: Section) {
+  const input = getKeptInputSources(content);
+  return input === true
+    ? t.numericLiteral(1)
+    : getUnfilledGuard(content.parent!, input.params, input.structure, false);
+}
+
 function buildUnfilledIfWritten(
   section: Section,
   reason: Reason | undefined,
@@ -722,7 +732,7 @@ function buildUnfilledIfWritten(
       structure,
       !!ownReason.global,
       binding && getOwnParamGroup(binding),
-    ),
+    )!,
     expr,
   );
 }
@@ -1117,7 +1127,7 @@ function getUnfilledGuard(
     own,
   );
   if (unpatched) guard = orGuard(guard, callRuntime("_unfilled_if"));
-  return guard!;
+  return guard;
 }
 
 // Where content is live on the client: `true` where something renders it

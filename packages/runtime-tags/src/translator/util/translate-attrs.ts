@@ -21,6 +21,7 @@ import {
   hasAllKnownProperties,
 } from "./params-tree";
 import { keepsHoles, readsKeptInputOnClient } from "./patch/refresh";
+import { getKeptInputGuard } from "./patch/writers";
 import { callRuntime } from "./runtime";
 import { getScopeAccessor } from "./scope-accessor";
 import { scopeIdentifier } from "./scope-read";
@@ -449,7 +450,7 @@ function buildContent(body: t.NodePath<t.MarkoTagBody>) {
             : shipsContentShell(bodySection) && t.numericLiteral(0),
         serialized &&
           readsKeptInputOnClient(bodySection) &&
-          t.numericLiteral(1),
+          getKeptInputGuard(bodySection),
       );
     } else {
       // Nothing reads content whose renderer is elided, so it has no property.

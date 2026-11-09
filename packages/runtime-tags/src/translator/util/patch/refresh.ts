@@ -45,6 +45,7 @@ import {
   getSourcesForExpr,
   getSourcesForReferencedBindings,
   isGuardedReason,
+  mapBodyParams,
 } from "../reasons";
 import {
   getLazyBindings,
@@ -1903,10 +1904,46 @@ export function readsKeptInputOnClient(section: Section) {
   );
 }
 
+// Where a kept dynamic tag's entry hands content its params, as the page writes one for a
+// read no patch fills: `true` where a read of one never is, else the owner sources deciding it.
+export const [getKeptInputSources] = createAnalysisMemo(
+  computeKeptInputSources,
+  true,
+);
+
+interface KeptInputSources {
+  params: Sources["param"];
+  structure: SortedOpt<Sources>;
+}
+
+function computeKeptInputSources(content: Section): KeptInputSources | true {
+  let params: Sources["param"];
+  let structure: SortedOpt<Sources>;
+  const always = some(content.bindings, (binding) => {
+    if (isClientReadParam(binding)) {
+      const reason = mapBodyParams(content, getWriteReason(binding));
+      const unfilled = getUnfilledReadSources(binding);
+      if (unfilled === false || !isGuardedReason(reason)) return true;
+      // The content's own params are the tag's input: the server's wherever it ships.
+      params = bindingUtil.union(
+        params,
+        bindingUtil.filter(reason.param, (param) => param.section !== content),
+      );
+      structure = sourcesUtil.union(structure, unfilled);
+    }
+    return false;
+  });
+  return always || { params, structure };
+}
+
 // A value such content's client code reads with the params the entry carries: an
 // intersection of it and one of them, which re-runs as they arrive.
 export function readsWithKeptInput(content: Section, binding: Binding) {
-  if (readsKeptInputOnClient(content)) {
+  const input = readsKeptInputOnClient(content) && getKeptInputSources(content);
+  if (
+    input &&
+    (input === true || !decidesByOwnGroups(input, content, binding))
+  ) {
     for (const read of binding.reads.keys()) {
       if (
         some(
@@ -1919,6 +1956,21 @@ export function readsWithKeptInput(content: Section, binding: Binding) {
     }
   }
   return false;
+}
+
+// Whether only the value's own groups (and the content's, the tag's input) decide where the
+// entry hands the params: then it never does while a patch fills the value.
+function decidesByOwnGroups(
+  input: KeptInputSources,
+  content: Section,
+  binding: Binding,
+) {
+  const isOwn = (param: Binding) =>
+    param.section === content || bindingUtil.has(binding.sources?.param, param);
+  return (
+    every(input.params, isOwn) &&
+    every(input.structure, (sources) => every(sources.param, isOwn))
+  );
 }
 
 // A param the document writes for client code: rendered, an effect's, a function's.
