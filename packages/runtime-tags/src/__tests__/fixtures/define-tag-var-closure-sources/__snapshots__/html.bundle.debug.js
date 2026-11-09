@@ -19,7 +19,6 @@ var sum_with_default = _template("__tests__/tags/sum-with.marko", (input) => {
 	$wi__input_n && _var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/tags/sum-with.marko_0_x#6/var");
 	_html(`<div>${_text_mark($scope0_id, "#text/2", x, $wg__input_n)}</div>`);
 	$wi__input_n && _scope($scope0_id, {
-		input_n: input.n,
 		"ClosureScopes:input_n/7": $wi__input_n && $input_n__closures,
 		"#childScope/0": $wi__input_n && _existing_scope($childScope)
 	}, "__tests__/tags/sum-with.marko", 0, { input_n: ["input.n"] });

@@ -24,5 +24,4 @@ var template_default = _template("a", (input) => {
 		});
 	}, $scope0_id) };
 	Foo.content({ depth: 1 });
-	_scope($scope0_id, { b: Foo });
 }, 1);

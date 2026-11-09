@@ -26,10 +26,7 @@ var c2_default = _template("b", (input) => {
 		}), "b1", $wg__input_content || $wg__depth || $wg__depth);
 	}, $scope0_id) };
 	D.content({ depth: 1 });
-	$wi__input_content && _scope($scope0_id, {
-		d: input.content,
-		e: $wi__input_content && $input_content__closures
-	});
+	$wi__input_content && _scope($scope0_id, { e: $wi__input_content && $input_content__closures });
 });
 
 // template.marko

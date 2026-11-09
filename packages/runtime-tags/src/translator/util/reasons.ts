@@ -91,23 +91,15 @@ function addOwnerSlotReason(section: Section, reason: Reason) {
 export function mapBodyParams(
   section: Section,
   reason: undefined | Reason,
-): Reason | undefined {
-  // A reason whose params are only ever passed constants still writes: code
-  // that tests the stored reason for a write at all expects one.
-  return reason && (mapCallSiteParams(section, reason, new Set()) || ALWAYS);
-}
-
-// A param already mapped adds nothing, so a recursive call passing a body's
-// param back to it settles on what its other calls pass.
-function mapCallSiteParams(
-  section: Section,
-  reason: undefined | Reason,
-  seen: Set<ParamBinding>,
+  // A param already mapped adds nothing, so a recursive call passing a body's
+  // param back to it settles on what its other calls pass.
+  seen?: Set<ParamBinding>,
 ): Reason | undefined {
   if (!reason) return;
   let mapped: Sources | undefined;
   const params = bindingUtil.filter(reason.param, (param) => {
     if (isSameOrAncestorSection(param.section, section)) return true;
+    seen ??= new Set();
     if (!seen.has(param)) {
       seen.add(param);
       mapped = mergeSources(mapped, getCallSiteSources(param));
@@ -116,7 +108,7 @@ function mapCallSiteParams(
   });
   if (params === reason.param) return reason;
   return mergeSources(
-    mapCallSiteParams(section, mapped, seen),
+    mapBodyParams(section, mapped, seen),
     withSources(reason, reason.state, params),
   );
 }

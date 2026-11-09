@@ -9,6 +9,5 @@ var template_default = _template("a", (input) => {
 			_scope_reason();
 			_html(`<span>${_text_mark($scope2_id, "a", i > q, 0)}</span>`);
 		}, $scope1_id) }).content({ q: 1 });
-		_scope($scope1_id, { M: i });
 	});
 }, 1);

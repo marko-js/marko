@@ -30,10 +30,7 @@ var c1_default = _template("__tests__/tags/c1.marko", (input) => {
 		($wi__input_item || $wi__depth) && _subscribe($wi__input_item && $input_item__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/c1.marko", "1:2"), "__tests__/tags/c1.marko_1_input_item#0:3/subscribe", $wg__input_item || $wg__depth);
 	}, $scope0_id) };
 	D.content({ depth: 1 });
-	$wi__input_item && _scope($scope0_id, {
-		input_item: input.item,
-		"ClosureScopes:input_item/4": $wi__input_item && $input_item__closures
-	}, "__tests__/tags/c1.marko", 0, { input_item: ["input.item"] });
+	$wi__input_item && _scope($scope0_id, { "ClosureScopes:input_item/4": $wi__input_item && $input_item__closures }, "__tests__/tags/c1.marko", 0, { input_item: ["input.item"] });
 });
 
 // template.marko

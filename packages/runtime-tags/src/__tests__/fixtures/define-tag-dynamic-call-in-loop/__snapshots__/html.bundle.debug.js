@@ -10,6 +10,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_html(_text_mark($scope2_id, "#text/0", i > q, 0 * 2));
 		}, $scope1_id) };
 		D.content({});
-		_scope($scope1_id, { "#LoopKey": i }, "__tests__/template.marko", "1:2", { "#LoopKey": "1:6" });
 	});
 }, 1);

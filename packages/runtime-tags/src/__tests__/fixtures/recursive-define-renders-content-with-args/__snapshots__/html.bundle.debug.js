@@ -26,10 +26,7 @@ var c2_default = _template("__tests__/tags/c2.marko", (input) => {
 		}, "__tests__/tags/c2.marko", "1:2", { depth: "1:13" }), "__tests__/tags/c2.marko_1_input_content#0:3/subscribe", $wg__input_content || $wg__depth || $wg__depth);
 	}, $scope0_id) };
 	D.content({ depth: 1 });
-	$wi__input_content && _scope($scope0_id, {
-		input_content: input.content,
-		"ClosureScopes:input_content/4": $wi__input_content && $input_content__closures
-	}, "__tests__/tags/c2.marko", 0, { input_content: ["input.content"] });
+	$wi__input_content && _scope($scope0_id, { "ClosureScopes:input_content/4": $wi__input_content && $input_content__closures }, "__tests__/tags/c2.marko", 0, { input_content: ["input.content"] });
 });
 
 // template.marko

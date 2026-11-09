@@ -14,7 +14,6 @@ var test_default = _template("b", (input) => {
 			}
 		}, $scope1_id, "a", 0, 0, 0, 0, 1);
 	}, $scope0_id) }).content({ x: 1 });
-	_scope($scope0_id, { b: count });
 });
 
 // template.marko

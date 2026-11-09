@@ -31,6 +31,7 @@ import { getReasonForExpr, landsRetained } from "./solve-reasons";
 import { ALWAYS, mergeSources } from "./sources";
 import { createAnalysisState } from "./state";
 import { getLiteralName, isValidPropertyIdentifier } from "./to-property-name";
+import { isEverWritten } from "./write-guard";
 
 const kRegisteredExports = Symbol("registered exports");
 declare module "@marko/compiler/dist/types" {
@@ -118,7 +119,7 @@ export function addFunctionReasons() {
 export function finalizeRegistrations() {
   const programExtra = getProgram().node.extra;
   for (const fnExtra of getReferencesByFn().keys()) {
-    if (fnExtra.reason) {
+    if (isEverWritten(fnExtra.section, fnExtra.reason)) {
       registerFunction(fnExtra);
       programExtra.isInteractive ||= !isGuardedReason(fnExtra.reason);
     }
