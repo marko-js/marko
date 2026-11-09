@@ -88,11 +88,7 @@ import {
 import { findSlot, ensureSlot, SlotKind } from "./slots";
 import { mergeSources, type Sources } from "./sources";
 import { createAnalysisState, createOutputSectionState } from "./state";
-import {
-  toMemberExpression,
-  toObjectProperty,
-  toPropertyName,
-} from "./to-property-name";
+import { toMemberExpression, toObjectProperty } from "./to-property-name";
 import {
   addDynamicAttrTagStatements,
   addAttrTag,
@@ -102,6 +98,7 @@ import {
 } from "./translate-attrs";
 import translateVar, {
   buildVarChange,
+  getRestPattern,
   isTagVarAssigned,
 } from "./translate-var";
 import {
@@ -1469,29 +1466,17 @@ function writeAttrsToSignals(
     }
 
     if (paramsTree.rest && !paramsTree.rest.properties) {
-      const props: t.ObjectPattern["properties"] = [];
-      const restId = t.identifier(paramsTree.rest.binding.name);
-      forEach(paramsTree.rest.binding.excludeProperties, (name) => {
-        const propId = toPropertyName(name);
-        const shorthand =
-          propId.type === "Identifier" && t.isValidIdentifier(name);
-        props.push(
-          t.objectProperty(
-            propId,
-            shorthand ? propId : generateUidIdentifier(name),
-            false,
-            shorthand,
-          ),
-        );
-      });
-
-      props.push(t.restElement(restId));
+      const rest = paramsTree.rest.binding;
+      const restId = t.identifier(rest.name);
       writeToSignal(
         info,
-        info.getBindingIdentifier(paramsTree.rest.binding, hint + "_$rest"),
+        info.getBindingIdentifier(rest, hint + "_$rest"),
         tagExtra,
         t.callExpression(
-          t.arrowFunctionExpression([t.objectPattern(props)], restId),
+          t.arrowFunctionExpression(
+            [getRestPattern(rest, restId, paramsTree.binding, true)],
+            restId,
+          ),
           [spreadId],
         ),
         true,
