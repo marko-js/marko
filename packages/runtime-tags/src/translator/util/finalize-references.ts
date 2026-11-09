@@ -16,6 +16,7 @@ import {
   getAssignedObject,
   getPropertyPath,
   isDirectAlias,
+  isRest,
   propertiesUtil,
 } from "./bindings";
 import { finalizeContentDerives } from "./content-derives";
@@ -706,7 +707,9 @@ function pruneBinding(binding: Binding): boolean {
   for (const [expr, reads] of binding.reads) {
     const ancestor = assignedObject
       ? getNearestReadBy(assignedObject, expr) || assignedObject
-      : getNearestReadBy(binding.aliasOf, expr);
+      : binding.aliasOf &&
+        !isRest(binding) &&
+        getNearestReadBy(binding.aliasOf, expr);
     if (ancestor) {
       ancestor.reads.set(expr, concat(ancestor.reads.get(expr), reads));
       binding.reads.delete(expr);
@@ -796,10 +799,14 @@ function resolveReferencedBindingsInFunction(
 
 // The nearest of a binding and its ancestors that the expression reads, once
 // pruning has given each read to the binding it resolves to.
-function getNearestReadBy(binding: Binding | undefined, expr: ReferencedExtra) {
-  for (let cur = binding; cur; cur = cur.aliasOf) {
-    if (cur.reads.has(expr)) return cur;
+function getNearestReadBy(binding: Binding, expr: ReferencedExtra) {
+  let cur = binding;
+  while (!cur.reads.has(expr)) {
+    // A rest is a copy, so nothing above it is what it reads.
+    if (!cur.aliasOf || isRest(cur)) return;
+    cur = cur.aliasOf;
   }
+  return cur;
 }
 
 // A direct alias has no slot of its own, so its slot owner stores the value.
@@ -866,10 +873,7 @@ function resolveReferencedBindings(
     } else {
       const isChangeHandlerRead = extra.assignmentTo === binding;
       if (isChangeHandlerRead) {
-        const ancestor = getNearestReadBy(binding.aliasOf, expr);
-        if (ancestor) {
-          binding = ancestor;
-        }
+        binding = getNearestReadBy(binding, expr)!;
       } else if (binding.type !== BindingType.global) {
         extra.section = expr.section;
         ({ binding } = extra.read =
@@ -987,8 +991,8 @@ function resolveExpressionReference(
   expr: ReferencedExtra,
   { binding, inOwnBody }: Read,
 ) {
-  const ancestor = getNearestReadBy(binding.aliasOf, expr);
-  return ancestor
-    ? createResolvedRead(ancestor, getPropertyPath(binding, ancestor))
-    : createResolvedRead(binding, undefined, inOwnBody);
+  const holder = getNearestReadBy(binding, expr)!;
+  return holder === binding
+    ? createResolvedRead(binding, undefined, inOwnBody)
+    : createResolvedRead(holder, getPropertyPath(binding, holder));
 }

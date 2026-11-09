@@ -1,13 +1,18 @@
 <button class=bump>bump</button><!--M_$1 a--><button
-  class=show>show</button><!--M_$1 b-->
-<div class=a>1<!--M_$1 c--></div>
-<div class=log><!--M_%1 d--></div>
+  class=show>show</button><!--M_$1 b--><button
+  class=both>both</button><!--M_$1 c-->
+<div class=a>1<!--M_$1 d--></div>
+<div class=log><!--M_%1 e--></div>
 <script>
   WALKER_RUNTIME("M")("_");
   M._.r = [_ => [1, {
-    f: 1,
-    g: 2,
-    h: {
+    f: {
+      a: 1,
+      b: 2
+    },
+    g: 1,
+    h: 2,
+    i: {
       b: 2
     }
   }], "a0 1"];
