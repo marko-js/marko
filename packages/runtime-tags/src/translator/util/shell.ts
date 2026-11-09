@@ -29,7 +29,6 @@ import {
   patchCreates,
   getPatchWrite,
   keepsHoles,
-  readsKeptInputOnClient,
   runsEffectOnPatch,
   writesSeed,
   runsSubscribersByWrite,
@@ -112,10 +111,7 @@ export const [getShells] = createOutputState(() => {
         ? createsFromShell(section)
         : section.branch
           ? shipsBoundaryShell(section)
-          : shipsContentShell(section) ||
-            // A kept dynamic tag's entry names content by its shell: the params its
-            // own client code reads ride the entry only to a page that registers it.
-            (readsKeptInputOnClient(section) && !clientRegisters(section)))
+          : shipsContentShell(section))
     ) {
       addShell(shells, section, "content");
     }

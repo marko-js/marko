@@ -13,10 +13,9 @@ import {
 } from "../../common/types";
 import {
   _content as _base_content,
-  _content_resume as _base_content_resume,
   _dynamic_tag as _base_dynamic_tag,
 } from "../dynamic-tag";
-import { type Locals, REGISTRY, register } from "../serializer";
+import { REGISTRY, register } from "../serializer";
 import type { ServerRenderer } from "../template";
 import {
   type GroupMask,
@@ -333,12 +332,10 @@ export function writeDynamicTagEntry(
       rendererGroup !== undefined &&
       !isFilledEntry(getUpdatesFrom(rendererMask, rendererGroup));
     // A renderer its caller hands unchanged pairs, and its render writes its new
-    // input, but for input a native element or the content's own code renders.
+    // input, but for input a native element renders.
     if (
       isFilledEntry(updatesFrom) &&
-      (!fixed ||
-        typeof renderer === "string" ||
-        (!!renderer && clientInputRenderers.has(renderer)))
+      (!fixed || typeof renderer === "string")
     ) {
       const id =
         typeof renderer === "function" ? renderer[RendererProp.Id] : undefined;
@@ -393,21 +390,6 @@ export function writeDynamicTagEntry(
     ? PatchPairing.Skip
     : PatchPairing.Render;
 }
-
-// Registered content whose own client code renders the params a dynamic tag may
-// keep handing it: a kept renderer's entry carries them there, as main's params do.
-export function _content_resume(
-  id: string,
-  fn: ServerRenderer,
-  scopeId?: number,
-  locals?: Locals,
-  clientInput?: 1,
-) {
-  if (clientInput) clientInputRenderers.add(fn);
-  return _base_content_resume(id, fn, scopeId, locals);
-}
-
-const clientInputRenderers = new WeakSet<ServerRenderer>();
 
 // Content's owner as an id prefix: a `^` per scope up the tag's owner chain (its
 // own first), then accessor hops down from it or the root, or up to a row.

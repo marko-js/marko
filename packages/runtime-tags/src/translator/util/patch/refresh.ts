@@ -224,10 +224,10 @@ function leavesReadUnfilled(binding: Binding) {
 }
 
 // A filled value effects, function references, built objects or an intersection a write's render reads,
-// in a scope a flush writes.
+// in a section a flush reaches.
 function isPatchWritten(binding: Binding) {
   return (
-    !!getPatchFill(binding).writeReads && patchFillsValues(binding.section)
+    !!getPatchFill(binding).writeReads && patchFillsSection(binding.section)
   );
 }
 
@@ -433,17 +433,6 @@ export function patchFillsScope(section: Section) {
     (patchFillsSection(section) &&
       (isKnownChild(section) || !!section.localClosures)) ||
     patchCreates(section)
-  );
-}
-
-// A scope a flush writes values into: also content plain renders nowhere on
-// the client, which a paired consumer or the client branch entry reaches.
-function patchFillsValues(section: Section) {
-  return (
-    patchFillsScope(section) ||
-    (patchFillsSection(section) &&
-      isContentScope(section) &&
-      !getRendererReason(section))
   );
 }
 
@@ -1882,34 +1871,6 @@ export function getRendererCallerSources(extra: t.NodeExtra) {
   return name && isSectionParam(name.binding)
     ? name.binding.sources
     : undefined;
-}
-
-// Content a dynamic tag may keep (its name passing the content through) while
-// handing it new input.
-const [takesKeptInput] = createAnalysisMemo(
-  (section: Section) =>
-    !!section.derives &&
-    someRead(getDerivedReaders(section.derives), keepsWithInput),
-  false,
-);
-
-// Content whose own client code reads the params a dynamic tag may keep handing
-// it: the tag's entry carries them there, as main's renderer params do.
-export function readsKeptInputOnClient(section: Section) {
-  return (
-    isPatch() &&
-    takesKeptInput(section) &&
-    some(section.bindings, isClientReadParam)
-  );
-}
-
-// A param the document writes for client code: rendered, an effect's, a function's.
-function isClientReadParam(binding: Binding) {
-  return isSectionParam(binding) && !!getWriteReason(binding);
-}
-
-function keepsWithInput(read: ReferencedExtra) {
-  return !read.nameOnly && !!getRendererRead(read);
 }
 
 // Whether a patch may create the section or one around it, where `root` says
