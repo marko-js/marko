@@ -133,6 +133,7 @@ import {
   getUnfilledSubscribedSources,
   getWriteHop,
   hasTagCallerParamAt,
+  readsWithKeptInput,
   runsEffectOnPatch,
   runsSubscribersByWrite,
   seedsCreatedScope,
@@ -1216,7 +1217,10 @@ function computeClosureContents(binding: Binding) {
       if (seen.has(cur)) return false;
       seen.add(cur);
       if (isKeptInLet(cur) || some(cur.renderedBy, visitCall)) return true;
-      if (bindingUtil.has(getDynamicTagContentClosures(cur), binding)) {
+      if (
+        bindingUtil.has(getDynamicTagContentClosures(cur), binding) ||
+        readsWithKeptInput(cur, binding)
+      ) {
         contents = sectionUtil.add(contents, cur);
       }
     }

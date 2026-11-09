@@ -1903,6 +1903,24 @@ export function readsKeptInputOnClient(section: Section) {
   );
 }
 
+// A value such content's client code reads with the params the entry carries: an
+// intersection of it and one of them, which re-runs as they arrive.
+export function readsWithKeptInput(content: Section, binding: Binding) {
+  if (readsKeptInputOnClient(content)) {
+    for (const read of binding.reads.keys()) {
+      if (
+        some(
+          getSourcesForReferencedBindings(getReferencedBindings(read))?.param,
+          (param) => param.section === content,
+        )
+      ) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
 // A param the document writes for client code: rendered, an effect's, a function's.
 function isClientReadParam(binding: Binding) {
   return isSectionParam(binding) && !!getWriteReason(binding);

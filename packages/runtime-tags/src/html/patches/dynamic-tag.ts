@@ -355,6 +355,11 @@ export function writeDynamicTagEntry(
       // id's prefix) takes no input: the flush's entries render what it would.
       const shell = id && shipShell(state, id, namesRegistered);
       if (contentId) shipShell(state, contentId);
+      const input = (!shell && renderer && args) || 0;
+      // Content the client holds renders the input it is handed: a client branch, so
+      // the values it reads beside that input ship (`_client_branch_if`).
+      if (input && id && ownerId !== undefined)
+        addClientBranch(state, id, ownerId);
       const entry: unknown[] = [
         id
           ? withOwnerHops(
@@ -365,7 +370,7 @@ export function writeDynamicTagEntry(
             ? ">" + renderer
             : 0,
         contentId,
-        (!shell && renderer && args) || 0,
+        input,
         varId,
       ];
       // The resumed page renders a native tag's `content` input.
