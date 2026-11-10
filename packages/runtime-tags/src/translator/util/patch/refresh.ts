@@ -23,7 +23,6 @@ import { readsValuesOnResume } from "../finalize-references";
 import {
   derivesConstantInput,
   ensureKnownTagPatchGroups,
-  getCallSiteSources,
   getParamGroupSources,
   isKnownTagExtra,
   type KnownTagExtra,
@@ -45,6 +44,7 @@ import {
   getSourcesForExpr,
   getSourcesForReferencedBindings,
   isGuardedReason,
+  mapBodyParams,
 } from "../reasons";
 import {
   getLazyBindings,
@@ -856,28 +856,14 @@ function mergeKinds(
       : a || b;
 }
 
-// What the direct calls of `<define>` bodies outside `section` pass for their
-// params among the sources, through each body a call sits in.
+// What the calls of `<define>` bodies outside `section` pass for their params among
+// the sources, as `section` guards it.
 function getDefineCallSources(sources: Sources | undefined, section: Section) {
-  let passed: Sources | undefined;
-  const pending = [sources];
-  const seen = new Set<ParamBinding>();
-  for (const sources of pending) {
-    forEach(sources?.param, (param) => {
-      const body = param.section;
-      if (
-        isKnownChild(body) &&
-        !isSameOrAncestorSection(body, section) &&
-        !seen.has(param)
-      ) {
-        seen.add(param);
-        const callSources = getCallSiteSources(param);
-        passed = mergeSources(passed, callSources);
-        pending.push(callSources);
-      }
-    });
-  }
-  return passed;
+  const params = bindingUtil.filter(
+    sources?.param,
+    (param) => !isSameOrAncestorSection(param.section, section),
+  );
+  return params && mapBodyParams(section, createSources(undefined, params));
 }
 
 // The params a read intersects besides the binding's own that a write in its
