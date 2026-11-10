@@ -1,0 +1,8 @@
+import B from "./b.marko" with { load: "render" }
+
+<let/obj={ name: "a" + input.depth }>
+<let/from=input.from>
+<button onClick() { obj = { ...obj }; console.log("a", obj.name, JSON.stringify(from)) }>a</button>
+<if=(input.depth > 0)>
+  <B depth=input.depth - 1 from=obj/>
+</if>

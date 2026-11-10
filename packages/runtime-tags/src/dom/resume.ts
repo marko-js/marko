@@ -25,7 +25,10 @@ import { _el_read, type Signal } from "./signals";
 import { getDebugKey } from "./walker";
 
 type ResumeFn = (ctx: SerializeContext) => unknown;
-type ResumeData = (string | number | (string | number)[] | ResumeFn)[];
+// `n` counts the payloads a stream has run, the position a wait names.
+type ResumeData = (string | number | Record<string, number> | ResumeFn)[] & {
+  n?: number;
+};
 interface SerializeContext {
   (data: number | (Scope | number)[], registryId?: string): unknown;
   _: Record<string, unknown>;
@@ -363,27 +366,23 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
                   effects.push(lastEffect, getScope(lastToken));
                 }
               }
-            } else if (Array.isArray(serialized)) {
+            } else if (readyIds && typeof serialized !== "function") {
+              // A reorder reservation gate, swapped when its content arrives, or
+              // a wait: each named module loaded and its stream that far along.
               if (
-                !(
-                  readyIds &&
-                  serialized.every(
-                    // A dep's data is flushed before any marker naming it, so
-                    // its resumes are present once its module has loaded.
-                    (dep) =>
-                      readyIds!.has(dep as string) && !render.b![dep].length,
-                  )
+                typeof serialized === "number" ||
+                !Object.keys(serialized).every(
+                  (dep) =>
+                    readyIds!.has(dep) &&
+                    (render.b![dep]?.n || 0) >= serialized[dep],
                 )
               ) {
                 break;
               }
-            } else if (readyIds && typeof serialized === "number") {
-              // A reorder reservation gate, will swap
-              // when the reordered content arrives.
-              break;
             } else {
-              // Gates can't reach here (only in ready streams, readyIds set);
-              // a payload returns its scopes or applies them and ends in `,0`.
+              // A payload returns its scopes or applies them and ends in `,0`; only
+              // pages with ready streams, where waits read it, count it.
+              if (readyIds) resumes.n = (resumes.n || 0) + 1;
               const scopes = (serialized as ResumeFn)(serializeContext);
               if (Array.isArray(scopes)) applyScopes(scopes);
             }

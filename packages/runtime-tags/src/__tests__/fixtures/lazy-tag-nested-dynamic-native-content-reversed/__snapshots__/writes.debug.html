@@ -1,0 +1,17 @@
+<script async type=module src="child.marko.load.mjs"></script>
+<script async type=module src="grand-child.marko.load.mjs"></script>
+<section><button>count:<!>0<!--M_$5 #text/1--></button><!--M_$5 #button/0-->
+</section>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.b = {
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-dynamic-native-content-reversed/grand-child.marko": [{
+        "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-dynamic-native-content-reversed/child.marko": 0
+      }, _ => [5, {
+        count: 0
+      }],
+      "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-dynamic-native-content-reversed/child.marko_1 5 packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-dynamic-native-content-reversed/grand-child.marko_0 3"
+    ]
+  };
+  M._.w()
+</script>

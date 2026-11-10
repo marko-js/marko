@@ -1,0 +1,21 @@
+import { resolveAfter } from "../../utils/resolve";
+import Child from "./child.marko" with { load: "render" }
+
+<const/first={ name: "first" }/>
+<button.parent onClick() { console.log("parent", JSON.stringify(first)) }>
+  parent
+</button>
+<Child item=first/>
+<await|name|=resolveAfter("second", 1)>
+  <const/second={ name }/>
+  <button.later onClick() { console.log("later", JSON.stringify(second)) }>
+    later
+  </button>
+  <Child item=second/>
+  <try>
+    <@placeholder>loading</@placeholder>
+    <await|_|=resolveAfter("third", 2)>
+      <Child item=first/>
+    </await>
+  </try>
+</await>

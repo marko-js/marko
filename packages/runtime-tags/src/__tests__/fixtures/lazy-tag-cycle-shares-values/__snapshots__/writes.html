@@ -1,0 +1,39 @@
+<script async type=module src="a.marko.load.mjs"></script>
+<script async type=module src="b.marko.load.mjs"></script>
+<button>a</button><!--M_$2 a--><button>b</button><!--M_$4 a--><!--M_[--><button>a</button><!--M_$6 a--><!--M_]6 b--><!--M_]5 a 6-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.b = {
+    _a: [_ => [2, {
+      Ab: _(3),
+      g: {
+        name: "a2"
+      }
+    }, {
+      _: _(2),
+      b: _(4)
+    }], "a0 2"]
+  };
+  M._.b._b = [{
+    _a: 1
+  }, _ => [4, {
+    Ab: _(5),
+    e: 1,
+    g: {
+      name: "b1"
+    },
+    h: _(2).g
+  }, {
+    Da: "a",
+    _: _(4)
+  }], "b0 4"];
+  M._.b._a.push({
+    _b: 1
+  }, _ => [6, {
+    g: {
+      name: "a0"
+    },
+    h: _(4).g
+  }], "a0 6");
+  M._.w()
+</script>

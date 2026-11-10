@@ -1,0 +1,53 @@
+<script async type=module src="child.marko.load.mjs"></script>
+<script async type=module src="grand-child.marko.load.mjs"></script><button
+  class=child>shared<!--M_$2 #text/1--></button><!--M_$2 #button/0--><button
+  class=grand>shared<!--M_$4 #text/1--></button><!--M_$4 #button/0--><button
+  class=grand>shared<!--M_$6 #text/1--></button><!--M_$6 #button/0--><button
+  class=grand>shared<!--M_$8 #text/1--></button><!--M_$8 #button/0-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.b = {
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-for-reads-parent/child.marko": [
+      _ => [2, {
+        "BranchScopes:#text/2": [_(3), _(5), _(7)],
+        obj: {
+          name: "shared"
+        }
+      }, {
+        _: _(2),
+        "#childScope/1": _(4)
+      }, 1, {
+        _: _(2),
+        "#childScope/1": _(6)
+      }, 1, {
+        _: _(2),
+        "#childScope/1": _(8)
+      }],
+      "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-for-reads-parent/child.marko_0 2"
+    ]
+  };
+  M._.b[
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-for-reads-parent/grand-child.marko"
+    ] = [{
+      "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-for-reads-parent/child.marko": 1
+    }, _ => [4, {
+      copy: _(2).obj
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-for-reads-parent/grand-child.marko_0 4"
+  ];
+  M._.b[
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-for-reads-parent/grand-child.marko"
+    ].push(_ => [6, {
+      copy: _(2).obj
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-for-reads-parent/grand-child.marko_0 6"
+    );
+  M._.b[
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-for-reads-parent/grand-child.marko"
+    ].push(_ => [8, {
+      copy: _(2).obj
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-for-reads-parent/grand-child.marko_0 8"
+    );
+  M._.w()
+</script>

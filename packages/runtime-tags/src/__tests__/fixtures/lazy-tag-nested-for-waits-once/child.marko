@@ -1,0 +1,8 @@
+import GrandChild from "./grand-child.marko" with { load: "render" }
+
+<for until=3>
+  <GrandChild>
+    <let/count=0>
+    <button onClick() { count++ }>${count}</button>
+  </GrandChild>
+</for>

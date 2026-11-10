@@ -1,0 +1,19 @@
+<script async type=module src="parent.marko.load.mjs"></script>
+<script async type=module src="child.marko.load.mjs"></script>
+<script async type=module src="grand-child.marko.load.mjs"></script>
+<button>count:<!>0<!--M_$6 b--></button><!--M_$6 a-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.b = {
+    _a: [{
+      _c: 0
+    }, "a0 3"]
+  };
+  M._.b._b = [{
+    _a: 0,
+    _c: 0
+  }, _ => [6, {
+    c: 0
+  }], "c0 6 b0 5"];
+  M._.w()
+</script>

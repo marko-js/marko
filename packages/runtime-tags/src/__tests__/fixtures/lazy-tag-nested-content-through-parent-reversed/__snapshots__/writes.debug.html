@@ -1,0 +1,25 @@
+<script async type=module src="parent.marko.load.mjs"></script>
+<script async type=module src="child.marko.load.mjs"></script>
+<script async type=module src="grand-child.marko.load.mjs"></script>
+<button>count:<!>0<!--M_$6 #text/1--></button><!--M_$6 #button/0-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.b = {
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-content-through-parent-reversed/child.marko": [{
+        "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-content-through-parent-reversed/parent.marko": 0
+      },
+      "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-content-through-parent-reversed/child.marko_0 3"
+    ]
+  };
+  M._.b[
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-content-through-parent-reversed/grand-child.marko"
+    ] = [{
+      "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-content-through-parent-reversed/child.marko": 0,
+      "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-content-through-parent-reversed/parent.marko": 0
+    }, _ => [6, {
+      count: 0
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-content-through-parent-reversed/parent.marko_2 6 packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-content-through-parent-reversed/grand-child.marko_0 5"
+  ];
+  M._.w()
+</script>

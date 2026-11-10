@@ -1,0 +1,36 @@
+<script async type=module src="child.marko.load.mjs"></script>
+<script async type=module src="grand-child.marko.load.mjs"></script>
+<button>count:<!>
+    0<!--M_$5 #text/0--></button><!--M_$4 #button/0--><button><!--M_[-->add <!>
+    10<!--M_$10 #text/0--><!--M_]9 #text/1 10--></button><!--M_$9 #button/0--><!--M_|7 #text/0 8-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.b = {
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-own-content/grand-child.marko": [{
+        "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-own-content/child.marko": 0
+      }, _ => [3, {
+        count: 0,
+        "ClosureScopes:count/3": new Set,
+        "#childScope/1": _(7)
+      }, {
+        input_onPress: _(3,
+          "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-own-content/grand-child.marko_0/onPress"
+          )
+      }, {
+        _: _(3)
+      }, {
+        "step/7": 10,
+        _: _(3)
+      }, 1, {
+        "#childScope/0": _(9)
+      }, {
+        "ConditionalRenderer:#text/1": "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-own-content/grand-child.marko_2*content 3",
+        input_onPress: _(6,
+          "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-own-content/grand-child.marko_0/onPress2"
+          )
+      }],
+      "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-own-content/grand-child.marko_1_count#0:2/subscribe 5 packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-own-content/tags/press-button.marko_0_input_onPress#4 4 9"
+    ]
+  };
+  M._.w()
+</script>

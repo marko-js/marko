@@ -1,0 +1,52 @@
+// child.marko
+var child_default = _template("a", (input) => {
+	const $scope0_reason = _scope_reason();
+	const $scope0_id = _scope_id();
+	let shared = input.shared;
+	let count = 0;
+	_html(`<button${_attr_class(input.label)}>${_text_mark($scope0_id, "b", input.label, _write_guard($scope0_reason, 0))}:${_text_mark($scope0_id, "c", count, 2)}</button>${_el_mark($scope0_id, "a")}`);
+	_script($scope0_id, "a0");
+	_scope($scope0_id, {
+		g: input.label,
+		h: shared,
+		i: count
+	});
+});
+
+// template.marko
+const $Child_withLoadAssets = withLoadAssets(() => child_default, "a", flush$1, "_a");
+var template_default = _template("b", (input) => {
+	_scope_reason();
+	const $scope0_id = _scope_id();
+	const shared = {
+		held: 1,
+		streamed: 2
+	};
+	$Child_withLoadAssets({
+		label: "first",
+		shared: { first: 3 }
+	});
+	_try($scope0_id, "c", () => {
+		_scope_reason();
+		const $scope1_id = _scope_id();
+		$Child_withLoadAssets({
+			label: "held",
+			shared
+		});
+		_await($scope1_id, "c", resolveAfter("done", 2), (value) => {
+			_scope_id();
+			_html(_escape(value));
+		}, 0);
+	}, () => {
+		_scope_reason();
+		_scope_id();
+		_html("loading");
+	}, void 0, "b0");
+	_await($scope0_id, "d", resolveAfter("streamed", 1), (label) => {
+		_scope_id();
+		$Child_withLoadAssets({
+			label,
+			shared
+		});
+	}, 0);
+}, 1);

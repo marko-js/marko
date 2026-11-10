@@ -6,8 +6,8 @@
     },
     "template.marko.page.mjs": {
       "total": {
-        "min": 20048,
-        "brotli": 7987
+        "min": 20017,
+        "brotli": 8017
       },
       "files": {
         "components/class-wrap.marko": 1310,

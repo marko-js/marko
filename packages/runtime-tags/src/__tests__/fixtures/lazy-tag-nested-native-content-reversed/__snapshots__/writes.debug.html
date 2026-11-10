@@ -1,0 +1,20 @@
+<script async type=module src="child.marko.load.mjs"></script>
+<script async type=module src="grand-child.marko.load.mjs"></script>
+<div><button>count:<!>0<!--M_$4 #text/1--></button><!--M_$4 #button/0--></div>
+<!--M_$3 #div/0-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.b = {
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-native-content-reversed/grand-child.marko": [{
+        "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-native-content-reversed/child.marko": 0
+      }, _ => [3, {
+        "BranchScopes:#div/0": _(4),
+        "ConditionalRenderer:#div/0": "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-native-content-reversed/child.marko_1*content 2"
+      }, {
+        count: 0
+      }],
+      "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-native-content-reversed/child.marko_1 4 packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-native-content-reversed/grand-child.marko_0 3 packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-native-content-reversed/grand-child.marko_0_input#2 3"
+    ]
+  };
+  M._.w()
+</script>
