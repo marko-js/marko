@@ -1,0 +1,6 @@
+<define/Wrapper|{ content }|>
+  <let/open=false/>
+  <button#toggle onClick() { open = !open }>toggle</button>
+  <${open ? content : undefined}/>
+</define>
+<Wrapper>Hello</Wrapper>
