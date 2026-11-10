@@ -15,7 +15,7 @@ var frame_default = _template("b", (input) => {
 	_html("<section>");
 	_dynamic_tag($scope0_id, "a", input.item, { label: input.label }, 1, 0, 0, $wg__input_item__OR__input_label, $scope0_reason, 0, 0, 1);
 	_html("</section>");
-	_patch_render($scope0_id, "b0", [$fg__input_item && "d", $fg__input_label && "e"], $scope0_reason, 0);
+	_patch_render($scope0_id, "b0", (($fg__input_item ? " d" : "") + ($fg__input_label ? " e" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		d: ($ui__input_label || $ui__input_item__OR__input_label) && input.item,
 		e: ($ui__input_item || $ui__input_item__OR__input_label) && input.label
@@ -34,7 +34,7 @@ var template_default = _template("a", (input) => {
 		label: input.label
 	}, 1, 0, 0, _write_guard($scope0_reason, 0), $scope0_reason, 0);
 	_script($scope0_id, "a0");
-	_patch_render($scope0_id, "a1", [$fg__input_framed && "f", $fg__input_label && "g"], $scope0_reason, 0);
+	_patch_render($scope0_id, "a1", (($fg__input_framed ? " f" : "") + ($fg__input_label ? " g" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		f: ($ui__input_label || $ui__input_framed__OR__input_label) && input.framed,
 		g: ($ui__input_framed || $ui__input_framed__OR__input_label) && input.label,

@@ -46,11 +46,7 @@ var host_default = _template("__tests__/tags/host.marko", (input) => {
 		item: input.item,
 		label: input.label
 	}, 1, 0, 0, $wg__input_frame__OR__input_item__OR__input_label, $scope0_reason, 3, 0, 4);
-	_patch_render($scope0_id, "__tests__/tags/host.marko_0_input_frame#3_input_item#4_input_label#5/setup", [
-		$fg__input_frame && "input_frame",
-		$fg__input_item && "input_item",
-		$fg__input_label && "input_label"
-	], $scope0_reason, 3);
+	_patch_render($scope0_id, "__tests__/tags/host.marko_0_input_frame#3_input_item#4_input_label#5/setup", (($fg__input_frame ? " input_frame" : "") + ($fg__input_item ? " input_item" : "") + ($fg__input_label ? " input_label" : "")).slice(1), $scope0_reason, 3);
 	_scope($scope0_id, {
 		input_frame: ($ui__input_item__OR__input_label || $ui__input_frame__OR__input_item__OR__input_label) && input.frame,
 		input_item: ($ui__input_frame__OR__input_label || $ui__input_frame__OR__input_item__OR__input_label) && input.item,

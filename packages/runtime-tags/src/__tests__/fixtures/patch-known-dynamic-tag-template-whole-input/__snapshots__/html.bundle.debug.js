@@ -52,7 +52,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		item: item_default,
 		label: input.label
 	}, 1, 0, 0, $wg__input_framed__OR__input_label, $scope0_reason, 0);
-	_patch_render($scope0_id, "__tests__/template.marko_0_input_framed#3_input_label#4/setup", [$fg__input_framed && "input_framed", $fg__input_label && "input_label"], $scope0_reason, 0);
+	_patch_render($scope0_id, "__tests__/template.marko_0_input_framed#3_input_label#4/setup", (($fg__input_framed ? " input_framed" : "") + ($fg__input_label ? " input_label" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		input_framed: ($ui__input_label || $ui__input_framed__OR__input_label) && input.framed,
 		input_label: ($ui__input_framed || $ui__input_framed__OR__input_label) && input.label

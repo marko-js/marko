@@ -43,7 +43,7 @@ var template_default = _template("a", (input) => {
 		item: item_default,
 		label: input.label
 	}, 1, 0, 0, $wg__input_framed__OR__input_label, $scope0_reason, 0);
-	_patch_render($scope0_id, "a0", [$fg__input_framed && "d", $fg__input_label && "e"], $scope0_reason, 0);
+	_patch_render($scope0_id, "a0", (($fg__input_framed ? " d" : "") + ($fg__input_label ? " e" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		d: ($ui__input_label || $ui__input_framed__OR__input_label) && input.framed,
 		e: ($ui__input_framed || $ui__input_framed__OR__input_label) && input.label

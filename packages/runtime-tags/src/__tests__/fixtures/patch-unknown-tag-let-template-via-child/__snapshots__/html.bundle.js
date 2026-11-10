@@ -36,11 +36,7 @@ var host_default = _template("c", (input) => {
 		item: input.item,
 		label: input.label
 	}, 1, 0, 0, $wg__input_frame__OR__input_item__OR__input_label, $scope0_reason, 3, 0, 4);
-	_patch_render($scope0_id, "c0", [
-		$fg__input_frame && "d",
-		$fg__input_item && "e",
-		$fg__input_label && "f"
-	], $scope0_reason, 3);
+	_patch_render($scope0_id, "c0", (($fg__input_frame ? " d" : "") + ($fg__input_item ? " e" : "") + ($fg__input_label ? " f" : "")).slice(1), $scope0_reason, 3);
 	_scope($scope0_id, {
 		d: ($ui__input_item__OR__input_label || $ui__input_frame__OR__input_item__OR__input_label) && input.frame,
 		e: ($ui__input_frame__OR__input_label || $ui__input_frame__OR__input_item__OR__input_label) && input.item,
