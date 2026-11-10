@@ -146,6 +146,7 @@ import {
   hasParamOrGlobalSource,
   mergeSources,
   type Sources,
+  withSources,
 } from "./sources";
 import {
   createAnalysisState,
@@ -1106,16 +1107,7 @@ function getGroupSourcesValue<R>(
       ? UpdatesFrom.Client | UpdatesFrom.Server
       : UpdatesFrom.Client;
   }
-  return getGroupParamValue(section, sources, combine);
-}
-
-// A group's value from its call site's param and `$global` sources: params this section's
-// callers pass compose their groups' bits, a `$global` source adds a static server bit.
-function getGroupParamValue<R>(
-  section: Section,
-  sources: Sources | undefined,
-  combine: (groups: [Section, ParamReasonGroup][], bits: number) => R,
-) {
+  // Params this section's callers pass compose their groups' bits; `$global` adds a server bit.
   const callerGroups = getCallerParamGroupsAt(sources?.param, section);
   if (callerGroups.length) {
     return combine(callerGroups, sources!.global ? UpdatesFrom.Server : 0);
@@ -1142,17 +1134,23 @@ export function getCallUpdatesFrom(
   }
 }
 
-// A function its scope registers is fixed for the child's life: a page passes its group as
-// its sources say, a patch as the references it writes say, else as a constant.
+// A function its scope registers changes on a patch as the client makes it anew, on a change
+// of state it references, and as a patch binds it anew (its filled references); else never.
 function getPatchGroupValue<R>(
   section: Section,
   sources: Sources | undefined,
   exprs: Opt<t.NodeExtra>,
   combine: (groups: [Section, ParamReasonGroup][], bits: number) => R,
 ) {
-  return some(exprs, passesFilledReferences)
-    ? getGroupParamValue(section, sources, combine)
-    : 0;
+  const state = getSourcesForExprs(exprs)?.state;
+  if (some(exprs, passesFilledReferences)) {
+    return getGroupSourcesValue(
+      section,
+      withSources(sources!, state, sources!.param),
+      combine,
+    );
+  }
+  return state ? UpdatesFrom.Client : 0;
 }
 
 // Whether a scope-bound group passes one value on page and patch renders: the same
