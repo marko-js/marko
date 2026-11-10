@@ -26,6 +26,8 @@ export interface TagFacts {
   /** Its insertion mode drops an unknown element but keeps its children, so a
    * wrapper around content inside it is discarded. */
   discardsWrapperChildren?: true;
+  /** Its `content` attribute is an html attribute, not content it renders. */
+  htmlContentAttr?: true;
 }
 
 const noContentFacts: TagFacts = { content: null };
@@ -94,6 +96,11 @@ const discardsWrapperChildrenFacts: TagFacts = {
   inlineBody: true,
   discardsWrapperChildren: true,
 };
+const htmlContentAttrFacts: TagFacts = {
+  content: ContentType.Tag,
+  inlineBody: true,
+  htmlContentAttr: true,
+};
 const nativeElementFacts = new Map<string, TagFacts>([
   ["html", pageElementFacts],
   ["head", pageElementFacts],
@@ -106,6 +113,7 @@ const nativeElementFacts = new Map<string, TagFacts>([
   ["colgroup", discardsWrapperChildrenFacts],
   ["select", discardsWrapperChildrenFacts],
   ["optgroup", discardsWrapperChildrenFacts],
+  ["meta", htmlContentAttrFacts],
 ]);
 
 // The attributes each controllable element's pair may take, the helper a
