@@ -1,0 +1,22 @@
+<select>
+  <option value=a>a</option>
+  <option value=b selected>b</option>
+</select><!--M_$1 #select/0--><select multiple>
+  <option value=a>a</option>
+  <option value=b selected>b</option>
+</select><!--M_$1 #select/1--><span>0<!--M_$1 #text/2--></span>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+      "ControlledHandler:#select/0": _(1,
+        "packages/runtime-tags/src/__tests__/fixtures/select-controlled-option-value-swap/template.marko_0/valueChange"
+        ),
+      "ControlledHandler:#select/1": _(1,
+        "packages/runtime-tags/src/__tests__/fixtures/select-controlled-option-value-swap/template.marko_0/valueChange2"
+        ),
+      calls: 0
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/select-controlled-option-value-swap/template.marko_0 1"
+  ];
+  M._.w()
+</script>
