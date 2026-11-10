@@ -90,6 +90,7 @@ import { type Sources } from "../sources";
 import { createOutputSectionState } from "../state";
 import { TagNameType } from "../tag-name-type";
 import { toSequenceExpression } from "../to-only-or-block";
+import { toObjectProperty } from "../to-property-name";
 import { withLeadingComment } from "../with-comment";
 import {
   andGuard,
@@ -599,10 +600,16 @@ function buildLetChangeWrites(
       ? buildPatchFill(
           section,
           binding,
+          getDeclaredBindingExpression(binding),
           t.numericLiteral(1),
           ...buildWriteGroupArgs(seedGroups),
         )
-      : buildPatchFill(section, binding, t.numericLiteral(1));
+      : buildPatchFill(
+          section,
+          binding,
+          getDeclaredBindingExpression(binding),
+          t.numericLiteral(1),
+        );
     if (!reason) return [seed];
     return [
       seed,
@@ -642,7 +649,24 @@ function buildLetSeeds(section: Section, binding: Binding) {
   // None where no call's patch fills the initial value.
   return guard && isNever(guard)
     ? []
-    : [andGuard(guard, buildPatchFill(section, binding, setup))];
+    : [
+        andGuard(
+          guard,
+          buildPatchFill(section, binding, buildReadValue(binding), setup),
+        ),
+      ];
+}
+
+// What client code reads of a `<let>`: the value where read whole, else each member
+// read, as plain writes them.
+function buildReadValue(binding: Binding): t.Expression {
+  return binding.reads.size || binding.aliases.size
+    ? getDeclaredBindingExpression(binding)
+    : t.objectExpression(Array.from(binding.propertyAliases, buildReadMember));
+}
+
+function buildReadMember([name, member]: [string, Binding]) {
+  return toObjectProperty(name, buildReadValue(member));
 }
 
 // A created scope's own state starts from its initial values: the server's
@@ -834,6 +858,7 @@ export function getValueNodeMarkerGuard(section: Section, binding: Binding) {
 function buildPatchFill(
   section: Section,
   binding: Binding,
+  value: t.Expression,
   setup?: t.Expression,
   ...groupArgs: t.Expression[]
 ) {
@@ -841,7 +866,7 @@ function buildPatchFill(
     "_patch_fill",
     getScopeIdIdentifier(section),
     t.stringLiteral(getPatchKey().Fill + getPatchFillKey(binding)),
-    getDeclaredBindingExpression(binding),
+    value,
     setup,
     ...groupArgs,
   );

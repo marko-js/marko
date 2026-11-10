@@ -9,7 +9,7 @@ var card_default = _template("b", (input) => {
 	let o = input.opts;
 	const $return = o.label + "!";
 	_html(`<span>${_text_mark($scope0_id, "a", o.label)}</span>`);
-	_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "vb0", o, 1);
+	_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "vb0", { label: o?.label }, 1);
 	_scope($scope0_id, {});
 	return $return;
 });

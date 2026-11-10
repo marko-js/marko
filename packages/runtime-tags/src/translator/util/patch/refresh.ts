@@ -393,8 +393,33 @@ function canPatchFill(binding: Binding) {
         // Only from `<let>`s created with it: the page holds any other's value.
         binding.readsInitialValues &&
         !initialValueRunsFromFills(binding) &&
-        (!!getWriteReason(binding) || readsPastRenders(binding)))) &&
+        (!!getWriteReason(binding) ||
+          readsPastRenders(binding) ||
+          initialValueQueuesEffect(binding)))) &&
     bindingUtil.has(binding.sources.state, binding)
+  );
+}
+
+// A caller's client render of the initial value runs the `<let>`'s signal and the effects
+// it queues in its scope: filled, it runs in every created scope, whose shell then mounts none.
+function initialValueQueuesEffect(binding: Binding) {
+  return (
+    hasTagCallerParamAt(binding.initialValueSources, binding.section) &&
+    someRead(bindingReaders(binding, true), (read) =>
+      queuesEffectOn(read, binding),
+    )
+  );
+}
+
+// An effect in the state's scope whose signal its value reaches.
+function queuesEffectOn(read: ReferencedExtra, state: Binding) {
+  return (
+    read.section === state.section &&
+    readsValuesOnResume(read) &&
+    bindingUtil.has(
+      getSourcesForReferencedBindings(getReferencedBindings(read))?.state,
+      state,
+    )
   );
 }
 

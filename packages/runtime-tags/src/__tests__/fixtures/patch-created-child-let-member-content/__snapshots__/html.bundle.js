@@ -29,7 +29,7 @@ var outer_default = _template("c", (input) => {
 	card_default({ content: o.c });
 	_patch_child_end();
 	_script($scope0_id, "c0");
-	_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "vc1", o, 1);
+	_filled_guard($scope0_reason, 0) && _patch_fill($scope0_id, "vc1", { c: o?.c }, 1);
 	_scope($scope0_id, { b: _existing_scope($childScope) }) || _client_branch(input.content);
 });
 
