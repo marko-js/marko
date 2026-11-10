@@ -1,0 +1,21 @@
+<script async type=module src="a.marko.load.mjs"></script>
+<script async type=module src="b.marko.load.mjs"></script>
+<button>b</button><!--M_$7 #button/0--><button>a</button><!--M_$8 #button/0-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.b = {
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-cycle-passes-content/b.marko": [{
+        "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-cycle-passes-content/a.marko": 0
+      },
+      "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-cycle-passes-content/a.marko_2 8"
+    ]
+  };
+  M._.b[
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-cycle-passes-content/a.marko"
+    ] = [{
+      "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-cycle-passes-content/b.marko": 0
+    },
+    "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-cycle-passes-content/b.marko_2 7"
+  ];
+  M._.w()
+</script>

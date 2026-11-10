@@ -197,9 +197,15 @@ resume keeps the lazy content's markers until its module walks them.
 
 Lazy state cannot enter the main stream before its registered code exists.
 `writeWaitReady()` renders into `render.b[readyId]`; the serializer records
-ancestor-channel dependencies. Dependency arrays block a channel until named
-modules are ready and their earlier data is drained. `ready()` processes to a
-fixed point because one channel can unblock another.
+ancestor-channel dependencies. A batch may read an ancestor channel's data or
+name code an enclosing lazy module registers (content, a function or a template
+passed down), so it waits with an object naming each lazy module on its
+channel's `parent` chain and a position: how many payloads that module's stream
+must have run, those written so far where the batch reads its data, else none
+(its module has loaded). A position counts only payloads written before the
+wait, so no wait depends on itself, even across a lazy import cycle, and a
+stream writes a module's wait again only once it rises. `ready()` processes to
+a fixed point because one channel can unblock another.
 
 Async reorders may execute after later main-stream scripts. The server therefore
 reserves each ready-stream position with a numeric gate; the reorder script

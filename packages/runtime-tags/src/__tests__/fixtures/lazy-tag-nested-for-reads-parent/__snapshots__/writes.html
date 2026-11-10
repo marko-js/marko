@@ -1,0 +1,38 @@
+<script async type=module src="child.marko.load.mjs"></script>
+<script async type=module src="grand-child.marko.load.mjs"></script><button
+  class=child>shared<!--M_$2 b--></button><!--M_$2 a--><button
+  class=grand>shared<!--M_$4 b--></button><!--M_$4 a--><button
+  class=grand>shared<!--M_$6 b--></button><!--M_$6 a--><button
+  class=grand>shared<!--M_$8 b--></button><!--M_$8 a-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.b = {
+    _a: [_ => [2, {
+      Ac: [_(3), _(5), _(7)],
+      d: {
+        name: "shared"
+      }
+    }, {
+      _: _(2),
+      b: _(4)
+    }, 1, {
+      _: _(2),
+      b: _(6)
+    }, 1, {
+      _: _(2),
+      b: _(8)
+    }], "a0 2"]
+  };
+  M._.b._b = [{
+    _a: 1
+  }, _ => [4, {
+    f: _(2).d
+  }], "b0 4"];
+  M._.b._b.push(_ => [6, {
+    f: _(2).d
+  }], "b0 6");
+  M._.b._b.push(_ => [8, {
+    f: _(2).d
+  }], "b0 8");
+  M._.w()
+</script>

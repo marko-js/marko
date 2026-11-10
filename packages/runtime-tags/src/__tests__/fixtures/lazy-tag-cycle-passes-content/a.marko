@@ -1,0 +1,8 @@
+import B from "./b.marko" with { load: "render" }
+
+<if=(input.depth > 0)>
+  <B depth=input.depth - 1>
+    <button onClick() { console.log("a") }>a</button>
+  </B>
+</if>
+<${input.content}/>

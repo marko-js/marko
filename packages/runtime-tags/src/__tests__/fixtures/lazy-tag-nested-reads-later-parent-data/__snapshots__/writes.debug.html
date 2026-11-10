@@ -1,0 +1,97 @@
+<script async type=module src="parent.marko.load.mjs"></script>
+<script async type=module src="child.marko.load.mjs"></script><button
+  class=parent>parent</button><!--M_$2 #button/0--><button
+  class=child>first<!--M_$3 #text/1--></button><!--M_$3 #button/0-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.b = {
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-reads-later-parent-data/parent.marko": [
+      _ => [2, {
+        first: {
+          name: "first"
+        }
+      }]
+    ]
+  };
+  M._.b[
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-reads-later-parent-data/child.marko"
+    ] = [{
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-reads-later-parent-data/parent.marko": 1
+  }, _ => [3, {
+    item: _(2).first
+  }]];
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<!--M_[--><button class=later>later</button><!--M_$4 #button/0--><button
+  class=child>second<!--M_$5 #text/1--></button><!--M_$5 #button/0--><!--M_[--><!--M_!^7-->loading<!--M_!7--><!--M_]4 #text/3 7--><!--M_]2 #text/3 4-->
+<t hidden M_=7><!--M_#b--></t>
+<script>
+  M._.b[
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-reads-later-parent-data/parent.marko"
+    ].push(_ => [4, {
+    second: {
+      name: "second"
+    }
+  }]);
+  M._.b[
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-reads-later-parent-data/child.marko"
+    ].push(
+    "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-reads-later-parent-data/child.marko_0 3"
+    );
+  M._.b[
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-reads-later-parent-data/child.marko"
+    ].push({
+      "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-reads-later-parent-data/parent.marko": 2
+    }, _ => [5, {
+      item: _(4).second
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-reads-later-parent-data/child.marko_0 5"
+    );
+  M._.b[
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-reads-later-parent-data/parent.marko"
+    ].push(
+    "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-reads-later-parent-data/parent.marko_1 4"
+    );
+  M._.b[
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-reads-later-parent-data/parent.marko"
+    ].push(
+    "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-reads-later-parent-data/parent.marko_0 2"
+    );
+  REORDER_RUNTIME(M._);
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<t hidden M_=b><button
+    class=child>first<!--M_$10 #text/1--></button><!--M_$10 #button/0--></t>
+<script>
+  M._.b[
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-reads-later-parent-data/parent.marko"
+    ].push(1);
+  M._.b[
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-reads-later-parent-data/child.marko"
+    ].push(2);
+  M._.j.b = _ => {
+    (b => b.splice(b.indexOf(1), 1, _ => [7, {
+      "#PlaceholderContent": _._[
+        "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-reads-later-parent-data/parent.marko_4*content"
+        ]
+    }]))(M._.b[
+      "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-reads-later-parent-data/parent.marko"
+      ]);
+    (b => b.splice(b.indexOf(2), 1, {
+        "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-reads-later-parent-data/parent.marko": 3
+      }, _ => [10, {
+        item: _(2).first
+      }],
+      "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-reads-later-parent-data/child.marko_0 10"
+      ))(M._.b[
+      "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested-reads-later-parent-data/child.marko"
+      ])
+  };
+  M._.w()
+</script>

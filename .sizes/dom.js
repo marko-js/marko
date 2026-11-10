@@ -1,4 +1,4 @@
-// size: 25749 (min) 9588 (brotli)
+// size: 25774 (min) 9604 (brotli)
 // packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -989,16 +989,16 @@ function init(runtimeId = "M") {
                     /\D/.test(lastToken)
                       ? (lastEffect = _resumed[lastToken])
                       : effects.push(lastEffect, getScope(lastToken));
-                else if (Array.isArray(serialized)) {
+                else if (readyIds && typeof serialized != "function") {
                   if (
-                    !(
-                      readyIds &&
-                      serialized.every((dep) => readyIds.has(dep) && !render.b[dep].length)
+                    typeof serialized == "number" ||
+                    !Object.keys(serialized).every(
+                      (dep) => readyIds.has(dep) && (render.b[dep]?.n || 0) >= serialized[dep],
                     )
                   )
                     break;
-                } else if (readyIds && typeof serialized == "number") break;
-                else {
+                } else {
+                  readyIds && (resumes.n = (resumes.n || 0) + 1);
                   let scopes = serialized(serializeContext);
                   Array.isArray(scopes) && applyScopes(scopes);
                 }

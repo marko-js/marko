@@ -1,0 +1,5 @@
+import Child from "./child.marko" with { load: "render" }
+
+<let/count=0>
+<button.page onClick() { count++ }>page:${count}</button>
+<Child count=count/>

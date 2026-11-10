@@ -1,0 +1,7 @@
+<let/count=0>
+<press-button onPress() { count++ }>count:${count}</press-button>
+<press-buttons>
+  <for|step| of=[10]>
+    <@button onPress() { count += step }>add ${step}</@button>
+  </for>
+</press-buttons>

@@ -270,7 +270,8 @@ _Avoid_: out-of-band content
 
 **Ready stream**:
 A `readyId`-keyed serialization channel that withholds lazy resume data until
-its module registers and earlier data drains.
+its module and each lazy module enclosing it register, and the payloads it reads
+from theirs have run.
 _Avoid_: async HTML stream
 
 ## Compilation modes

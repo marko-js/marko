@@ -27,7 +27,6 @@ import {
 import {
   K_SCOPE_ID,
   type Locals,
-  quote,
   queueCall,
   register as serializerRegister,
   dropQueuedCall,
@@ -690,6 +689,9 @@ export class State implements Channel {
   public flushScopes = false;
   public writeScopes: Record<number, PartialScope> = {};
   public readyIds: Set<string> | null = null;
+  // Per ready stream, the resume payloads each stream has run once its written
+  // batches run: its own count, and each one it waits for.
+  public readyPositions: Record<string, Record<string, number>> | null = null;
   public scopeReason: GroupMask;
   public $global: $Global & { renderId: string; runtimeId: string };
   constructor($global: $Global & { renderId: string; runtimeId: string }) {
@@ -1296,8 +1298,8 @@ export class Chunk {
       if (resumes || effects) {
         state.needsWalkerRuntime = true;
         const batch = concatSequence(
-          depsMarker(deps),
-          concatSequence(resumes, effects && `"${effects}"`),
+          readyBatch(state, channel, deps, resumes),
+          effects && `"${effects}"`,
         );
         if (reservations) {
           // Main-stream gates reserve ready-batch order until reorders arrive.
@@ -1352,7 +1354,7 @@ export class Chunk {
         readyResumeScripts,
         state.readyScript(
           channel.readyId!,
-          concatSequence(depsMarker(deps), resumes),
+          readyBatch(state, channel, deps, resumes),
         ),
       );
     }
@@ -1693,15 +1695,28 @@ function flushSerializerGlobals(boundary: Boundary) {
   }
 }
 
-function depsMarker(deps: Set<string> | null) {
-  let marker = "";
-  if (deps) {
-    for (const dep of deps) {
-      marker += (marker ? "," : "[") + quote(dep, 0);
+// A batch waits for each lazy module around its channel: to load, or, for one
+// whose data it reads, to run the payloads written so far.
+function readyBatch(
+  state: State,
+  channel: SerializeChannel,
+  deps: Set<string> | null,
+  resumes: string,
+) {
+  const readyId = channel.readyId!;
+  const positions = (state.readyPositions ||= {});
+  const own = (positions[readyId] ||= { [readyId]: 0 });
+  let wait = "";
+  for (let cur = channel.parent!; cur.readyId; cur = cur.parent!) {
+    const id = cur.readyId;
+    const position = deps?.has(id) ? positions[id][id] : 0;
+    if (!(own[id] >= position)) {
+      own[id] = position;
+      wait += (wait ? "," : "{") + toObjectKey(id) + ":" + position;
     }
-    marker += "]";
   }
-  return marker;
+  if (resumes) own[readyId]++;
+  return concatSequence(wait && wait + "}", resumes);
 }
 
 function getFilteredGlobals($global: Record<string, unknown>) {

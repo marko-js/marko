@@ -1,0 +1,9 @@
+import Child from "./child.marko" with { load: "render" }
+import GrandChild from "./grand-child.marko" with { load: "render" }
+
+<Child>
+  <GrandChild>
+    <let/count=0>
+    <button onClick() { count++ }>count:${count}</button>
+  </GrandChild>
+</Child>
