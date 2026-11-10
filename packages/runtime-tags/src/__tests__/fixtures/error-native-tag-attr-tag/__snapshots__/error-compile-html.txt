@@ -1,0 +1,7 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-native-tag-attr-tag/template.marko:2:3
+      1 | <div>
+    > 2 |   <@item>Hello</@item>
+        |   ^^^^^^^^^^^^^^^^^^^^ Tag does not support nested attribute tags. [Native tags](https://markojs.com/docs/reference/native-tag) take their content from their body or the [`content=` attribute](https://markojs.com/docs/reference/native-tag#content).
+      3 | </div>
+      4 |

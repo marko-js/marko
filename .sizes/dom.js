@@ -1,4 +1,4 @@
-// size: 25762 (min) 9583 (brotli)
+// size: 25749 (min) 9588 (brotli)
 // packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -1314,10 +1314,8 @@ function attrsInternal(scope, nodeAccessor, nextAttrs, controllable) {
     }
   }
 }
-function _attr_content(scope, nodeAccessor, value) {
-  let renderer = normalizeDynamicRenderer(value),
-    content;
-  (renderer && renderer.a && (content = renderer),
+function _attr_content(scope, nodeAccessor, content) {
+  ((content = content?.content || content),
     scope["D" + nodeAccessor] !== (scope["D" + nodeAccessor] = rendererKey(content)) &&
       (setBranch(scope, nodeAccessor, content, createAndSetupBranch),
       content?.f && subscribeToScopeSet(content.e, content.f, scope["A" + nodeAccessor])),

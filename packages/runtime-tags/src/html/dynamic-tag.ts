@@ -1,4 +1,4 @@
-import { assertValidTagName } from "../common/errors";
+import { assertNoNativeAttrTags, assertValidTagName } from "../common/errors";
 import { normalizeDynamicRenderer } from "../common/helpers";
 import {
   DYNAMIC_TAG_SCRIPT_REGISTER_ID,
@@ -71,15 +71,21 @@ export function _dynamic_tag(
     const input = ((inputIsArgs
       ? (inputOrArgs as unknown[])[0]
       : inputOrArgs) || {}) as Record<string, unknown>;
+    if (MARKO_DEBUG) {
+      assertNoNativeAttrTags(renderer, input);
+    }
+
     rendered = true;
     _scope_id();
     _html(`<${renderer}${_attrs(input, nodeAccessor, branchId, renderer)}>`);
 
     if (!voidElementsReg.test(renderer)) {
       // Rendered as a native tag's content, as `_attrs_content` does on the client.
-      const renderContent = content || input.content;
+      const renderContent = (content || input.content) as
+        | ServerRenderer
+        | undefined;
       if (renderer === "textarea") {
-        if (MARKO_DEBUG && normalizeDynamicRenderer(renderContent)) {
+        if (MARKO_DEBUG && renderContent) {
           throw new Error(
             "A dynamic tag rendering a `<textarea>` cannot have `content` and must use the `value` attribute instead.",
           );

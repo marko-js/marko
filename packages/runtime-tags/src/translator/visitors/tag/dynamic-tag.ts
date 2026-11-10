@@ -11,6 +11,7 @@ import {
 
 import { isEventHandler } from "../../../common/helpers";
 import { ReservedId } from "../../../common/types";
+import { assertNoNativeAttrTags } from "../../util/assert";
 import {
   type Binding,
   BindingType,
@@ -145,6 +146,9 @@ export default {
 
       assertAttributesOrArgs(tag);
       const { node } = tag;
+      if (node.extra!.tagNameType === TagNameType.NativeTag) {
+        assertNoNativeAttrTags(tag);
+      }
       if (node.var && node.extra!.featureType === "class") {
         throw tag
           .get("var")

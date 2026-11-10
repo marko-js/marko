@@ -17,6 +17,7 @@ import {
 import { type Accessor, AccessorPrefix, ControlledType } from "../common/types";
 import { _escape } from "./content";
 import { setDebugSlotName } from "./serializer";
+import type { ServerRenderer } from "./template";
 import {
   _attr_content,
   _html,
@@ -429,7 +430,12 @@ export function _attrs_content(
   markerGuard?: 1 | 0,
 ) {
   _html(`${_attrs(data, nodeAccessor, scopeId, tagName)}>`);
-  _attr_content(nodeAccessor, scopeId, data?.content, markerGuard);
+  _attr_content(
+    nodeAccessor,
+    scopeId,
+    data?.content as ServerRenderer | undefined,
+    markerGuard,
+  );
 }
 
 export function _attrs_partial(
@@ -461,7 +467,12 @@ export function _attrs_partial_content(
   markerGuard?: 1 | 0,
 ) {
   _html(`${_attrs_partial(data, skip, nodeAccessor, scopeId, tagName)}>`);
-  _attr_content(nodeAccessor, scopeId, data?.content, markerGuard);
+  _attr_content(
+    nodeAccessor,
+    scopeId,
+    data?.content as ServerRenderer | undefined,
+    markerGuard,
+  );
 }
 
 function writeControlledScope(

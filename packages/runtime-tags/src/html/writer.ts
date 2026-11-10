@@ -1,5 +1,9 @@
-import { _el_read_error, _hoist_read_error } from "../common/errors";
-import { hasKeys, normalizeDynamicRenderer } from "../common/helpers";
+import {
+  _el_read_error,
+  _hoist_read_error,
+  assertValidContent,
+} from "../common/errors";
+import { classAPIRenderer, hasKeys } from "../common/helpers";
 import { PLACEHOLDER_DISMISS_REGISTER_ID } from "../common/meta";
 /* eslint-disable @typescript-eslint/no-this-alias */
 import { concat, type Opt, push, reduce, toArray } from "../common/opt";
@@ -367,21 +371,33 @@ export function _resume_branch(scopeId: number) {
 export function _attr_content(
   nodeAccessor: Accessor,
   scopeId: number,
-  content: unknown,
+  content: ServerRenderer | undefined,
   markerGuard?: number,
 ) {
   const shouldResume = markerGuard !== 0;
-  const render = normalizeServerRender(content);
+  if (MARKO_DEBUG) {
+    // eslint-disable-next-line no-var
+    var value = content;
+  }
+  // A `<define>` variable or attribute tag holds the content it renders.
+  content =
+    (content as { content?: ServerRenderer } | undefined)?.content || content;
+  if (classAPIRenderer && content) {
+    content = classAPIRenderer<ServerRenderer>(content);
+  }
+  if (MARKO_DEBUG) {
+    assertValidContent(value, content);
+  }
   const branchId = _peek_scope_id();
-  if (render) {
+  if (content) {
     // The client may swap in another instance of this content, with its own
     // loop values, so the content resumes every input it reads.
     try {
       _set_scope_reason(shouldResume ? ALL_GROUPS : 0);
       if (shouldResume) {
-        withBranchId(branchId, render);
+        withBranchId(branchId, content);
       } else {
-        render();
+        content();
       }
     } finally {
       _set_scope_reason(undefined);
@@ -394,24 +410,11 @@ export function _attr_content(
       writeScope(scopeId, {
         [AccessorPrefix.BranchScopes + nodeAccessor]: writeScope(branchId, {}),
         [AccessorPrefix.ConditionalRenderer + nodeAccessor]:
-          rendererKey(render),
+          rendererKey(content),
       });
     }
   } else {
     _scope_id();
-  }
-}
-
-function normalizeServerRender(value: unknown) {
-  const renderer = normalizeDynamicRenderer<ServerRenderer>(value);
-  if (renderer) {
-    if (typeof renderer === "function") {
-      return renderer;
-    } else if (MARKO_DEBUG) {
-      throw new Error(
-        `Invalid \`content\` attribute. Received ${typeof value}`,
-      );
-    }
   }
 }
 

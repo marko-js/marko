@@ -1,0 +1,7 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-content-attr-tag/template.marko:2:4
+      1 | <child>
+    > 2 |   <@content>Hello</@content>
+        |    ^^^^^^^^ The `<@content>` [attribute tag](https://markojs.com/docs/reference/language#attribute-tags) is not supported, since a tag's `content` is its [body content](https://markojs.com/docs/reference/language#tag-content). Write it as the tag's body, or pass it with a `content=` attribute.
+      3 | </child>
+      4 |
