@@ -2156,13 +2156,13 @@ function addSources(all: SortedOpt<Sources>, sources: Sources) {
 }
 
 // A read resumed code renders wherever its scope sits, so no patch fills it: also one
-// no patch pairs, or deriving what no patch fills.
+// no patch pairs, or deriving what no patch fills (one it writes reaches its readers).
 export function isResumedRead(read: ReferencedExtra) {
   return (
     readsValuesOnResume(read) ||
     !!getSourcesForExpr(read)?.state ||
     !patchFillsSection(read.section) ||
-    !!getDerivedNeeds(read)
+    (!!getDerivedNeeds(read) && !every(read.derives, isPatchWritten))
   );
 }
 
