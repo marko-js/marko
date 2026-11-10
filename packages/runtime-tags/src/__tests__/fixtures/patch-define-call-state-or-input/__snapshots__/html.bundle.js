@@ -19,7 +19,7 @@ var template_default = _template("a", (input) => {
 			}
 		}, $scope1_id, "a", _write_guard($scope1_reason, 0), $wg__isOpen, 0, 0, 1);
 		$fg__label && _patch_render($scope1_id, "a0", "e");
-		_write_if($scope1_reason, 1) && _scope($scope1_id, { e: label }) || $fg__label && _unfilled_if($scope1_reason, 1) && _patch_write($scope1_id, "xe", label, !_server_guard($scope1_reason, 2));
+		_write_if($scope1_reason, 1) && _scope($scope1_id, { e: label }) || $fg__label && _patch_write($scope1_id, "xe", label, !_server_guard($scope1_reason, 2));
 	}, $scope0_id) };
 	_set_scope_reason(30 | _updates_from($scope0_reason, 1) << 5);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);

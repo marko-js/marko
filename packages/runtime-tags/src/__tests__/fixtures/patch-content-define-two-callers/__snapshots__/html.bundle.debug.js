@@ -22,12 +22,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			if (open) {
 				const $scope4_id = _scope_id();
 				_dynamic_tag($scope4_id, "#text/0", body, {}, 2, 0, 0, $wg__body, $scope3_reason, 2);
-				_write_if($scope3_reason, 0) && _scope($scope4_id, { _: _write_if($scope3_reason, 2) && _scope_with_id($scope3_id) }, "__tests__/template.marko", "3:4");
+				_write_if($scope3_reason, 0) && _scope($scope4_id, {}, "__tests__/template.marko", "3:4");
 				return 0;
 			}
 		}, $scope3_id, "#text/0", 1, $wg__open, 1, 0, 0, ["__tests__/template.marko_4*shell"], $scope3_reason, 1);
 		$fg__body && _client_guard($scope3_reason, 1) && _patch_render($scope3_id, "__tests__/template.marko_4_body#3:4/setup", "body");
-		_write_if($scope3_reason, 1) && _scope($scope3_id, { body: $ui__open && body }, "__tests__/template.marko", "2:2", { body: "2:23" }) || $fg__body && $ui__open && _patch_write($scope3_id, "PatchMarkedWrite:body", body, !_server_guard($scope3_reason, 2));
+		_write_if($scope3_reason, 1) && _scope($scope3_id, { body: $ui__open && body }, "__tests__/template.marko", "2:2", { body: "2:23" }) || $fg__body && $ui__open && _patch_write($scope3_id, "PatchMarkedWrite:body", body, 1);
 	}, $scope0_id) };
 	_html("<main>");
 	_set_scope_reason(10);

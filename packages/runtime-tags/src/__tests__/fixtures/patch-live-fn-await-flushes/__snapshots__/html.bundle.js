@@ -17,7 +17,7 @@ var template_default = _template("a", (input) => {
 	const Use = { content: _content("a1", ({ fn, where }) => {
 		const $scope3_id = _scope_id();
 		const $scope3_reason = _scope_reason(), $fg__fn = _filled_guard($scope3_reason, 1), $fg__where = _filled_guard($scope3_reason, 2);
-		_script($scope3_id, "a2", 0, ($fg__fn || $fg__where) && (_client_guard($scope3_reason, 1) || _client_guard($scope3_reason, 2) ? 2 : 1), [
+		_script($scope3_id, "a2", 0, ($fg__fn || $fg__where) && (_client_guard($scope3_reason, 1) ? 2 : 1), [
 			$fg__fn && "c",
 			_filled_guard($scope0_reason, 1) && ">e",
 			$fg__where && "d"
@@ -25,7 +25,7 @@ var template_default = _template("a", (input) => {
 		_scope($scope3_id, {
 			c: fn,
 			d: where
-		}) || ($fg__fn && _patch_write($scope3_id, "xc", fn, !_server_guard($scope3_reason, 1)), $fg__where && _patch_write($scope3_id, "xd", where, !_server_guard($scope3_reason, 2)));
+		}) || ($fg__fn && _patch_write($scope3_id, "xc", fn, !_server_guard($scope3_reason, 1)), $fg__where && _patch_write($scope3_id, "xd", where, 1));
 	}, $scope0_id) };
 	_set_scope_reason($uf__input_x << 1 | $uf__input_x << 3);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);

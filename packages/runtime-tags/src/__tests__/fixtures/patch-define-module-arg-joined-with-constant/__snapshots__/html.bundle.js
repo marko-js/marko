@@ -14,7 +14,7 @@ var template_default = _template("a", (input) => {
 	let open = true;
 	const Panel = { content: _content("a0", ({ fmt, sep, label }) => {
 		const $scope2_id = _scope_id();
-		const $scope2_reason = _scope_reason(), $ui__fmt__OR__sep = _unfilled_if($scope2_reason, 0), $fg__fmt = _filled_guard($scope2_reason, 4), $fg__sep = _filled_guard($scope2_reason, 5), $fg__label = _filled_guard($scope2_reason, 6);
+		const $scope2_reason = _scope_reason(), $fg__fmt = _filled_guard($scope2_reason, 4), $fg__sep = _filled_guard($scope2_reason, 5), $fg__label = _filled_guard($scope2_reason, 6);
 		_html(`<em>${_text_mark($scope2_id, "a", fmt(label, sep), 1, $scope2_reason, 3)}</em>`);
 		_patch_render($scope2_id, "a1", [
 			$fg__fmt && "d",
@@ -24,8 +24,8 @@ var template_default = _template("a", (input) => {
 		_scope($scope2_id, {
 			d: (_unfilled_if($scope2_reason, 2, 4) || _unfilled_if($scope2_reason, 3, 4)) && fmt,
 			e: (_unfilled_if($scope2_reason, 1, 5) || _unfilled_if($scope2_reason, 3, 5)) && sep,
-			f: ($ui__fmt__OR__sep || _unfilled_if($scope2_reason, 3)) && label
-		}) || ($fg__fmt && _unfilled_if($scope2_reason, 2) && _patch_write($scope2_id, "xd", fmt, !_server_guard($scope2_reason, 4)), $fg__sep && _unfilled_if($scope2_reason, 1) && _patch_write($scope2_id, "xe", sep, !_server_guard($scope2_reason, 5)), $fg__label && $ui__fmt__OR__sep && _patch_write($scope2_id, "xf", label, !_server_guard($scope2_reason, 6)));
+			f: _unfilled_if($scope2_reason, 3) && label
+		}) || ($fg__fmt && _unfilled_if($scope2_reason, 2) && _patch_write($scope2_id, "xd", fmt, 1), $fg__sep && _unfilled_if($scope2_reason, 1) && _patch_write($scope2_id, "xe", sep, 1));
 	}, $scope0_id) };
 	_if(() => {
 		{

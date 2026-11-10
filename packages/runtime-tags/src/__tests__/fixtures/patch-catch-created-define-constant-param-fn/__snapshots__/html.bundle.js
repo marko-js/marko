@@ -28,7 +28,6 @@ var template_default = _template("a", (input) => {
 				return 0;
 			}
 		}, $scope2_id, "a", 1, $wg__on, 1, 0, 0, ["a0"], $scope2_reason, 0);
-		_write_if($scope2_reason, 0) && _scope($scope2_id, { e: _unfilled_if($scope2_reason, 0) && f });
 	}, $scope0_id) };
 	_try($scope0_id, "a", () => {
 		_scope_reason();

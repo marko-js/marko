@@ -14,12 +14,12 @@ var template_default = _template("a", (input) => {
 			if (open) {
 				const $scope3_id = _scope_id();
 				_dynamic_tag($scope3_id, "a", body, {}, 0, 0, 0, $wg__body);
-				_write_if($scope2_reason, 0) && _scope($scope3_id, { _: _write_if($scope2_reason, 2) && _scope_with_id($scope2_id) });
+				_write_if($scope2_reason, 0) && _scope($scope3_id, {});
 				return 0;
 			}
 		}, $scope2_id, "a", _write_guard($scope2_reason, 0), $wg__open);
 		$fg__body && _patch_render($scope2_id, "a1", "e");
-		_write_if($scope2_reason, 1) && _scope($scope2_id, { e: body }) || $fg__body && _unfilled_if($scope2_reason, 1) && _patch_write($scope2_id, "xe", body, !_server_guard($scope2_reason, 2));
+		_write_if($scope2_reason, 1) && _scope($scope2_id, { e: body }) || $fg__body && _patch_write($scope2_id, "xe", body, 1);
 	}, $scope0_id) };
 	_html("<main>");
 	_set_scope_reason(10);

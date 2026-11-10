@@ -74,15 +74,15 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_patch_render($scope1_id, "__tests__/template.marko_1_input_on#0:5_prev#5/setup", [_filled_guard($scope0_reason, 0) && ">input_on", $fg__prev && "prev"], $uf__input_on << 1, 0);
 		($wi__input_on || _write_if($scope1_reason, 0)) && _subscribe(_unfilled_if($uf__input_on << 1, 0) && $wi__input_on && $input_on__closures, _scope($scope1_id, {
 			label: ($ui__input_on || _unfilled_if($scope1_reason, 1)) && label,
-			prev: ($ui__input_on || _unfilled_if($scope1_reason, 2)) && prev,
+			prev: $ui__input_on && prev,
 			X: $ui__input_on && X,
-			_: ($wi__input_on || _write_if($scope1_reason, 2)) && _scope_with_id($scope0_id),
+			_: $wi__input_on && _scope_with_id($scope0_id),
 			"ClosureScopes:label/10": $wi__label && $D_content__label__closures
 		}, "__tests__/template.marko", "3:2", {
 			label: "3:13",
 			prev: "3:20",
 			X: "4:11"
-		}), _client_guard($uf__input_on << 1, 0) && "__tests__/template.marko_1_input_on#0:5/subscribe", $wg__input_on || $wg__prev || $wg__input_on) || ($fg__label && (_client_branch_if("__tests__/template.marko_2*content", $scope1_id) || _client_guard($scope0_reason, 0) || $ui__input_on) && _patch_write($scope1_id, "PatchMarkedWrite:label", label, !_server_guard($scope1_reason, 1)), $fg__prev && $ui__input_on && _patch_write($scope1_id, "PatchMarkedWrite:prev", prev, !_server_guard($scope1_reason, 2)));
+		}), _client_guard($uf__input_on << 1, 0) && "__tests__/template.marko_1_input_on#0:5/subscribe", $wg__input_on || $wg__prev || $wg__input_on) || ($fg__label && (_client_branch_if("__tests__/template.marko_2*content", $scope1_id) || _client_guard($scope0_reason, 0) || $ui__input_on) && _patch_write($scope1_id, "PatchMarkedWrite:label", label, !_server_guard($scope1_reason, 1)), $fg__prev && $ui__input_on && _patch_write($scope1_id, "PatchMarkedWrite:prev", prev, 1));
 		return $return;
 	}, $scope0_id) };
 	_html("<main>");

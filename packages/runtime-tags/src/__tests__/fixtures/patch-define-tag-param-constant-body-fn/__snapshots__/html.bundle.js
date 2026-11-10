@@ -22,7 +22,6 @@ var template_default = _template("a", (input) => {
 				return 0;
 			}
 		}, $scope1_id, "a", 1, $wg__on, 1, 0, 0, ["a0"], $scope1_reason, 0);
-		_write_if($scope1_reason, 0) && _scope($scope1_id, { e: _unfilled_if($scope1_reason, 0) && f });
 	}, $scope0_id) };
 	_set_scope_reason(0);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);

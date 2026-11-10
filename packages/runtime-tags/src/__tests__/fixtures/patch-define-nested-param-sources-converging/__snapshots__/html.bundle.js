@@ -16,22 +16,21 @@ var template_default = _template("a", (input) => {
 	const $input_label__closures = /* @__PURE__ */ new Set();
 	let n = 0;
 	const Outer = { content: _content("a6", ({ x, y }) => {
-		const $scope1_id = _scope_id(), $ui__input_label2 = _unfilled_if($scope0_reason, 0);
+		const $scope1_id = _scope_id();
+		_unfilled_if($scope0_reason, 0);
 		const $Outer_content__x__closures = /* @__PURE__ */ new Set();
-		const $scope1_reason = _scope_reason(), $uf__x = _updates_from($scope1_reason, 1), $wi__x = _write_if($scope1_reason, 1), $ui__y = _unfilled_if($scope1_reason, 2);
+		const $scope1_reason = _scope_reason(), $uf__x = _updates_from($scope1_reason, 1), $wi__x = _write_if($scope1_reason, 1);
 		const Inner = { content: _content("a0", ({ z }) => {
-			const $scope2_id = _scope_id(), $ui__input_label = _unfilled_if($scope0_reason, 0), $ui__x = _unfilled_if($scope1_reason, 1);
-			const $scope2_reason = _scope_reason(), $fg__z = _filled_guard($scope2_reason, 0);
+			const $scope2_id = _scope_id();
+			_unfilled_if($scope0_reason, 0);
+			_unfilled_if($scope1_reason, 1);
+			const $scope2_reason = _scope_reason();
 			_html(`<p>${_text_mark($scope2_id, "a", input.label + x + z, 1, (1 | ($uf__input_label | $uf__x)) << 1, 0)}</p>`);
-			_patch_render($scope2_id, "a1", [
-				_filled_guard($scope0_reason, 0) && ">>e",
-				_filled_guard($scope1_reason, 1) && ">e",
-				$fg__z && "d"
-			], (1 | ($uf__input_label | $uf__x)) << 1, 0);
+			_patch_render($scope2_id, "a1", [_filled_guard($scope0_reason, 0) && ">>e", _filled_guard($scope1_reason, 1) && ">e"], (1 | ($uf__input_label | $uf__x)) << 1, 0);
 			_subscribe(_unfilled_if((1 | $uf__x) << 1, 0) && $wi__x && $Outer_content__x__closures, _subscribe(_unfilled_if((1 | ($uf__input_label | $uf__x)) << 1, 0) && $wi__input_label && $input_label__closures, _scope($scope2_id, {
-				d: ($ui__input_label || $ui__x || _unfilled_if($scope2_reason, 0)) && z,
+				d: z,
 				_: ($wi__input_label || $wi__x || _write_if($scope2_reason, 0)) && _scope_with_id($scope1_id)
-			}), _client_guard((1 | ($uf__input_label | $uf__x)) << 1, 0) && "a2"), _client_guard((1 | $uf__x) << 1, 0) && "a3") || $fg__z && ($ui__input_label || $ui__x) && _patch_write($scope2_id, "xd", z, !_server_guard($scope2_reason, 0));
+			}), _client_guard((1 | ($uf__input_label | $uf__x)) << 1, 0) && "a2"), _client_guard((1 | $uf__x) << 1, 0) && "a3");
 		}, $scope1_id) };
 		const Left = { content: _content("a4", ({ v }) => {
 			const $scope4_id = _scope_id();
@@ -60,12 +59,12 @@ var template_default = _template("a", (input) => {
 		Right.content({ w: y });
 		_patch_child_end();
 		_scope($scope1_id, {
-			e: ($ui__input_label2 || $ui__y || _unfilled_if($scope1_reason, 1)) && x,
+			e: x,
 			_: ($wi__input_label || _write_if($scope1_reason, 0)) && _scope_with_id($scope0_id),
 			i: $wi__x && $Outer_content__x__closures,
 			a: _existing_scope($childScope3),
 			b: _existing_scope($childScope4)
-		}) || _filled_guard($scope1_reason, 1) && ($ui__input_label2 || $ui__y) && _patch_write($scope1_id, "xe", x, !_server_guard($scope1_reason, 1));
+		}) || _filled_guard($scope1_reason, 1) && _patch_write($scope1_id, "xe", x, !_server_guard($scope1_reason, 1));
 	}, $scope0_id) };
 	const Wrapper = { content: _content("a7", ({ a, b }) => {
 		const $scope3_id = _scope_id();

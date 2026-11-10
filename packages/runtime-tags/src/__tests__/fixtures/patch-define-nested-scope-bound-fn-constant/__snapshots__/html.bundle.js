@@ -12,7 +12,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_reason = _scope_reason(), $fg__fn = _filled_guard($scope1_reason, 0);
 		_html(`<button>${_text_mark($scope1_id, "b", label, 1, $scope1_reason, 1)}</button>${_el_mark($scope1_id, "a")}`);
 		_script($scope1_id, "a2", 1, $fg__fn, "e");
-		_scope($scope1_id, { e: fn }) || $fg__fn && _patch_write($scope1_id, "xe", fn, !_server_guard($scope1_reason, 0));
+		_scope($scope1_id, { e: fn }) || $fg__fn && _patch_write($scope1_id, "xe", fn, 1);
 	}, $scope0_id) };
 	const Outer = { content: _content("a3", ({ fn, label }) => {
 		const $scope2_id = _scope_id();

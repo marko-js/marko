@@ -27,7 +27,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_subscribe($wi__value && $Outer_content__value__closures, _scope($scope2_id, {
 				y: $wi__value && y,
 				_: ($wi__value || _write_if($scope2_reason, 0)) && _scope_with_id($scope1_id)
-			}, "__tests__/template.marko", "3:4", { y: "3:19" }), 1 && "__tests__/template.marko_2_value#1:4/subscribe");
+			}, "__tests__/template.marko", "3:4", { y: "3:19" }), "__tests__/template.marko_2_value#1:4/subscribe");
 		}, $scope1_id, 0) };
 		_set_scope_reason(2);
 		const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);

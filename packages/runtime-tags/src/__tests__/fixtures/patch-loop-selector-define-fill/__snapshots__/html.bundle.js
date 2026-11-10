@@ -8,7 +8,7 @@ var template_default = _template("a", (input) => {
 	let on = true;
 	const List = { content: _content("a2", ({ selected, flag }) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason(), $fg__selected2 = _filled_guard($scope1_reason, 1), $fg__flag2 = _filled_guard($scope1_reason, 2);
+		const $scope1_reason = _scope_reason(), $fg__selected2 = _filled_guard($scope1_reason, 1);
 		let rows = [
 			{ id: 1 },
 			{ id: 2 },
@@ -16,21 +16,20 @@ var template_default = _template("a", (input) => {
 		];
 		_html("<ul>");
 		_for_of(rows, (row) => {
-			const $scope2_id = _scope_id(), $fg__selected = _filled_guard($scope1_reason, 1), $fg__flag = _filled_guard($scope1_reason, 2);
+			const $scope2_id = _scope_id(), $fg__selected = _filled_guard($scope1_reason, 1);
 			_html(`<li>${_escape(row.id)}</li>${_el_mark($scope2_id, "a")}`);
-			_script($scope2_id, "a0", 1, ($fg__selected || $fg__flag) && (_client_guard($scope1_reason, 1) || _client_guard($scope1_reason, 2) ? 2 : 1), [$fg__selected && ">e", $fg__flag && ">f"], "a1", $scope1_reason, 0);
+			_script($scope2_id, "a0", 1, $fg__selected && 2, $fg__selected && ">e", "a1", $scope1_reason, 0);
 			_scope($scope2_id, { M: row?.id });
 		}, "id", $scope1_id, "a", 1, 1, 1, "</ul>", 1);
 		_html(`<button class=add>+</button>${_el_mark($scope1_id, "b")}`);
 		_script($scope1_id, "a3");
 		$fg__selected2 && _patch_render($scope1_id, "a4", "e");
-		$fg__flag2 && _patch_render($scope1_id, "a5", "f");
 		_patch_fill($scope1_id, "va6", rows, 1);
 		_scope($scope1_id, {
 			e: selected,
 			f: flag,
 			g: rows
-		}) || ($fg__selected2 && _patch_write($scope1_id, "xe", selected, !_server_guard($scope1_reason, 1)), $fg__flag2 && _patch_write($scope1_id, "xf", flag, !_server_guard($scope1_reason, 2)));
+		}) || $fg__selected2 && _patch_write($scope1_id, "xe", selected, !_server_guard($scope1_reason, 1));
 	}, $scope0_id) };
 	_set_scope_reason(38 | _updates_from($scope0_reason, 0) << 3);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);

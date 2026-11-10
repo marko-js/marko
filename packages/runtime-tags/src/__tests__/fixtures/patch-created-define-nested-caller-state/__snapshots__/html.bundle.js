@@ -12,19 +12,18 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let count = 0;
 	const Inner = { content: _content("a2", ({ v, show }) => {
-		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason(), $wg__show = _write_guard($scope1_reason, 1), $ui__show = _unfilled_if($scope1_reason, 1), $fg__v = _filled_guard($scope1_reason, 0);
+		const $scope1_id = _scope_id(), $scope1_reason = _scope_reason(), $wg__show = _write_guard($scope1_reason, 1);
+		_unfilled_if($scope1_reason, 1);
 		_if(() => {
 			if (show) {
 				const $scope3_id = _scope_id();
 				_html(`<em>${_text_mark($scope3_id, "a", v, 1, $scope1_reason, 0)}</em>`);
-				_client_guard($scope1_reason, 0) && _patch_render($scope3_id, "a0");
+				_patch_render($scope3_id, "a0");
 				_scope($scope3_id, { _: _write_if($scope1_reason, 0) && _scope_with_id($scope1_id) });
 				return 0;
 			}
 		}, $scope1_id, "a", 1, $wg__show, 1, 0, 0, ["a1"], $scope1_reason, 1);
-		$fg__v && _client_guard($scope1_reason, 1) && _patch_render($scope1_id, "a0", "d");
-		_write_if($scope1_reason, 1) && _scope($scope1_id, { d: ($ui__show || _unfilled_if($scope1_reason, 0)) && v }) || $fg__v && $ui__show && _patch_write($scope1_id, "xd", v, !_server_guard($scope1_reason, 0));
+		_write_if($scope1_reason, 1) && _scope($scope1_id, { d: v });
 	}, $scope0_id) };
 	const Outer = { content: _content("a3", ({ v, show }) => {
 		const $scope2_id = _scope_id();

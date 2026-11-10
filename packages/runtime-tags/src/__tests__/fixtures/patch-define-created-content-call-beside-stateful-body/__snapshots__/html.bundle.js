@@ -34,12 +34,12 @@ var template_default = _template("a", (input) => {
 			if (show) {
 				const $scope5_id = _scope_id();
 				_dynamic_tag($scope5_id, "a", content, {}, 2, 0, 0, $wg__content, $scope4_reason, 2);
-				_write_if($scope4_reason, 0) && _scope($scope5_id, { _: _write_if($scope4_reason, 2) && _scope_with_id($scope4_id) });
+				_write_if($scope4_reason, 0) && _scope($scope5_id, {});
 				return 0;
 			}
 		}, $scope4_id, "a", 1, $wg__show, 1, 0, 0, ["a3"], $scope4_reason, 1);
 		$fg__content && _client_guard($scope4_reason, 1) && _patch_render($scope4_id, "a6", "e");
-		_write_if($scope4_reason, 1) && _scope($scope4_id, { e: $ui__show && content }) || $fg__content && $ui__show && _patch_write($scope4_id, "xe", content, !_server_guard($scope4_reason, 2));
+		_write_if($scope4_reason, 1) && _scope($scope4_id, { e: $ui__show && content }) || $fg__content && $ui__show && _patch_write($scope4_id, "xe", content, 1);
 	}, $scope0_id) };
 	_set_scope_reason($uf__input_show << 1 | $uf__input_show << 3);
 	const $childScope2 = _peek_scope_id($scope0_id, "a", 2);

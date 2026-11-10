@@ -31,7 +31,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				return 0;
 			}
 		}, $scope2_id, "#text/0", 1, $wg__on, 1, 0, 0, ["__tests__/template.marko_4*shell"], $scope2_reason, 0);
-		_write_if($scope2_reason, 0) && _scope($scope2_id, { f: _unfilled_if($scope2_reason, 0) && f }, "__tests__/template.marko", "4:2", { f: "5:10" });
 	}, $scope0_id) };
 	_try($scope0_id, "#text/0", () => {
 		const $scope1_reason = _scope_reason();

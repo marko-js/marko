@@ -37,12 +37,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			if (show) {
 				const $scope5_id = _scope_id();
 				_dynamic_tag($scope5_id, "#text/0", content, {}, 2, 0, 0, $wg__content, $scope4_reason, 2);
-				_write_if($scope4_reason, 0) && _scope($scope5_id, { _: _write_if($scope4_reason, 2) && _scope_with_id($scope4_id) }, "__tests__/template.marko", "8:4");
+				_write_if($scope4_reason, 0) && _scope($scope5_id, {}, "__tests__/template.marko", "8:4");
 				return 0;
 			}
 		}, $scope4_id, "#text/0", 1, $wg__show, 1, 0, 0, ["__tests__/template.marko_5*shell"], $scope4_reason, 1);
 		$fg__content && _client_guard($scope4_reason, 1) && _patch_render($scope4_id, "__tests__/template.marko_5_content#4:4/setup", "content");
-		_write_if($scope4_reason, 1) && _scope($scope4_id, { content: $ui__show && content }, "__tests__/template.marko", "7:2", { content: "7:22" }) || $fg__content && $ui__show && _patch_write($scope4_id, "PatchMarkedWrite:content", content, !_server_guard($scope4_reason, 2));
+		_write_if($scope4_reason, 1) && _scope($scope4_id, { content: $ui__show && content }, "__tests__/template.marko", "7:2", { content: "7:22" }) || $fg__content && $ui__show && _patch_write($scope4_id, "PatchMarkedWrite:content", content, 1);
 	}, $scope0_id) };
 	_set_scope_reason($uf__input_show << 1 | $uf__input_show << 3);
 	const $childScope2 = _peek_scope_id($scope0_id, "#childScope/0", 2);

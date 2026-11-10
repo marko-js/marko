@@ -21,18 +21,18 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope2_reason = _scope_reason();
 			const b = value + y;
 			_html(`<p>${_text_mark($scope2_id, "#text/0", b + $global$1.suffix, 1, 4, 0)}</p>`);
-			_fill_global_subscribe("__tests__/template.marko_2_$global_suffix#0:16_b#5", $scope2_id, _client_guard(4, 0));
+			_fill_global_subscribe("__tests__/template.marko_2_$global_suffix#0:16_b#5", $scope2_id);
 			_patch_write($scope2_id, "PatchWrite:y", y, 1);
 			_unfilled_if() && _patch_write($scope2_id, "PatchWrite:b", b, 1);
 			_unfilled_if(4, 0) && _patch_subscribe($scope2_id, "__tests__/template.marko_2_value#1:5/subscribe");
 			_subscribe(_unfilled_if() && $wi__value && $Outer_content__value__closures, _scope($scope2_id, {
 				y: $ui__value && y,
-				b: ($ui__value || _unfilled_if($scope2_reason, 0)) && b,
-				_: ($wi__value || _write_if($scope2_reason, 0)) && _scope_with_id($scope1_id)
+				b: $ui__value && b,
+				_: $wi__value && _scope_with_id($scope1_id)
 			}, "__tests__/template.marko", "3:4", {
 				y: "3:19",
 				b: "4:12"
-			}), _client_guard(4, 0) && "__tests__/template.marko_2_value#1:5/subscribe");
+			}));
 		}, $scope1_id, 0) };
 		_set_scope_reason(0);
 		const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);

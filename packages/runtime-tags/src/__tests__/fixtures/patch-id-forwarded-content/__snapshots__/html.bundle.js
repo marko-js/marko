@@ -86,7 +86,6 @@ var forward_define_default = _template("e", (input) => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason(), $wg__content = _write_guard($scope2_reason, 0);
 		_dynamic_tag($scope2_id, "a", content, {}, 2, 0, 0, $wg__content, $scope2_reason, 0);
-		_write_if($scope2_reason, 0) && _scope($scope2_id, {});
 	}, $scope0_id, 0) };
 	_set_scope_reason(0);
 	const $childScope = _peek_scope_id($scope0_id, "a", 2);

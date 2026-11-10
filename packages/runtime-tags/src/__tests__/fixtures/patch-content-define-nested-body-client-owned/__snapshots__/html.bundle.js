@@ -15,17 +15,17 @@ var template_default = _template("a", (input) => {
 	let count = 0;
 	const Inner = { content: _content("a2", ({ open, content }) => {
 		const $scope3_id = _scope_id();
-		const $scope3_reason = _scope_reason(), $wg__content = _write_guard($scope3_reason, 2), $wg__open = _write_guard($scope3_reason, 1), $ui__open = _unfilled_if($scope3_reason, 1), $fg__content = _filled_guard($scope3_reason, 2);
+		const $scope3_reason = _scope_reason(), $wg__content = _write_guard($scope3_reason, 2), $wg__open = _write_guard($scope3_reason, 1), $fg__content = _filled_guard($scope3_reason, 2);
 		_if(() => {
 			if (open) {
 				const $scope4_id = _scope_id();
 				_dynamic_tag($scope4_id, "a", content, {}, 2, 0, 0, $wg__content, $scope3_reason, 2);
-				_write_if($scope3_reason, 0) && _scope($scope4_id, { _: _write_if($scope3_reason, 2) && _scope_with_id($scope3_id) });
+				_write_if($scope3_reason, 0) && _scope($scope4_id, {});
 				return 0;
 			}
 		}, $scope3_id, "a", 1, $wg__open, 1, 0, 0, ["a0"], $scope3_reason, 1);
-		$fg__content && _client_guard($scope3_reason, 1) && _patch_render($scope3_id, "a3", "e");
-		_write_if($scope3_reason, 1) && _scope($scope3_id, { e: $ui__open && content }) || $fg__content && $ui__open && _patch_write($scope3_id, "xe", content, !_server_guard($scope3_reason, 2));
+		$fg__content && _patch_render($scope3_id, "a3", "e");
+		_write_if($scope3_reason, 1) && _scope($scope3_id, { e: content }) || $fg__content && _patch_write($scope3_id, "xe", content, 1);
 	}, $scope0_id) };
 	const Outer = { content: _content("a5", ({ open }) => {
 		const $scope1_id = _scope_id();

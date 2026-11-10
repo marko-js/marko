@@ -21,20 +21,16 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const Outer = { content: _content("__tests__/template.marko_1*content", ({ x, y }) => {
 		const $scope1_id = _scope_id(), $ui__input_label2 = _unfilled_if($scope0_reason, 0);
 		const $Outer_content__x__closures = new Set();
-		const $scope1_reason = _scope_reason(), $uf__x = _updates_from($scope1_reason, 1), $wi__x = _write_if($scope1_reason, 1), $ui__y = _unfilled_if($scope1_reason, 2);
+		const $scope1_reason = _scope_reason(), $uf__x = _updates_from($scope1_reason, 1), $wi__x = _write_if($scope1_reason, 1);
 		const Inner = { content: _content("__tests__/template.marko_2*content", ({ z }) => {
 			const $scope2_id = _scope_id(), $ui__input_label = _unfilled_if($scope0_reason, 0), $ui__x = _unfilled_if($scope1_reason, 1);
-			const $scope2_reason = _scope_reason(), $fg__z = _filled_guard($scope2_reason, 0);
+			const $scope2_reason = _scope_reason();
 			_html(`<p>${_text_mark($scope2_id, "#text/0", input.label + x + z, 1, (1 | ($uf__input_label | $uf__x)) << 1, 0)}</p>`);
-			_patch_render($scope2_id, "__tests__/template.marko_2_input_label#0:4_x#1:4_z#3/setup", [
-				_filled_guard($scope0_reason, 0) && ">>input_label",
-				_filled_guard($scope1_reason, 1) && ">x",
-				$fg__z && "z"
-			], (1 | ($uf__input_label | $uf__x)) << 1, 0);
+			_patch_render($scope2_id, "__tests__/template.marko_2_input_label#0:4_x#1:4_z#3/setup", [_filled_guard($scope0_reason, 0) && ">>input_label", _filled_guard($scope1_reason, 1) && ">x"], (1 | ($uf__input_label | $uf__x)) << 1, 0);
 			_subscribe(_unfilled_if((1 | $uf__x) << 1, 0) && $wi__x && $Outer_content__x__closures, _subscribe(_unfilled_if((1 | ($uf__input_label | $uf__x)) << 1, 0) && $wi__input_label && $input_label__closures, _scope($scope2_id, {
-				z: ($ui__input_label || $ui__x || _unfilled_if($scope2_reason, 0)) && z,
+				z,
 				_: ($wi__input_label || $wi__x || _write_if($scope2_reason, 0)) && _scope_with_id($scope1_id)
-			}, "__tests__/template.marko", "3:4", { z: "3:19" }), _client_guard((1 | ($uf__input_label | $uf__x)) << 1, 0) && "__tests__/template.marko_2_input_label#0:4/subscribe"), _client_guard((1 | $uf__x) << 1, 0) && "__tests__/template.marko_2_x#1:4/subscribe") || $fg__z && ($ui__input_label || $ui__x) && _patch_write($scope2_id, "PatchMarkedWrite:z", z, !_server_guard($scope2_reason, 0));
+			}, "__tests__/template.marko", "3:4", { z: "3:19" }), _client_guard((1 | ($uf__input_label | $uf__x)) << 1, 0) && "__tests__/template.marko_2_input_label#0:4/subscribe"), _client_guard((1 | $uf__x) << 1, 0) && "__tests__/template.marko_2_x#1:4/subscribe");
 		}, $scope1_id) };
 		const Left = { content: _content("__tests__/template.marko_4*content", ({ v }) => {
 			const $scope4_id = _scope_id();
@@ -63,12 +59,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		Right.content({ w: y });
 		_patch_child_end();
 		_scope($scope1_id, {
-			x: ($ui__input_label2 || $ui__y || _unfilled_if($scope1_reason, 1)) && x,
+			x,
 			_: ($wi__input_label || _write_if($scope1_reason, 0)) && _scope_with_id($scope0_id),
 			"ClosureScopes:x/8": $wi__x && $Outer_content__x__closures,
 			"#childScope/0": _existing_scope($childScope3),
 			"#childScope/1": _existing_scope($childScope4)
-		}, "__tests__/template.marko", "2:2", { x: "2:17" }) || _filled_guard($scope1_reason, 1) && ($ui__input_label2 || $ui__y) && _patch_write($scope1_id, "PatchMarkedWrite:x", x, !_server_guard($scope1_reason, 1));
+		}, "__tests__/template.marko", "2:2", { x: "2:17" }) || _filled_guard($scope1_reason, 1) && _patch_write($scope1_id, "PatchMarkedWrite:x", x, !_server_guard($scope1_reason, 1));
 	}, $scope0_id) };
 	const Wrapper = { content: _content("__tests__/template.marko_3*content", ({ a, b }) => {
 		const $scope3_id = _scope_id();

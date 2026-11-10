@@ -18,17 +18,17 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let count = 0;
 	const Inner = { content: _content("__tests__/template.marko_3*content", ({ open, content }) => {
 		const $scope3_id = _scope_id();
-		const $scope3_reason = _scope_reason(), $wg__content = _write_guard($scope3_reason, 2), $wg__open = _write_guard($scope3_reason, 1), $ui__open = _unfilled_if($scope3_reason, 1), $fg__content = _filled_guard($scope3_reason, 2);
+		const $scope3_reason = _scope_reason(), $wg__content = _write_guard($scope3_reason, 2), $wg__open = _write_guard($scope3_reason, 1), $fg__content = _filled_guard($scope3_reason, 2);
 		_if(() => {
 			if (open) {
 				const $scope4_id = _scope_id();
 				_dynamic_tag($scope4_id, "#text/0", content, {}, 2, 0, 0, $wg__content, $scope3_reason, 2);
-				_write_if($scope3_reason, 0) && _scope($scope4_id, { _: _write_if($scope3_reason, 2) && _scope_with_id($scope3_id) }, "__tests__/template.marko", "3:4");
+				_write_if($scope3_reason, 0) && _scope($scope4_id, {}, "__tests__/template.marko", "3:4");
 				return 0;
 			}
 		}, $scope3_id, "#text/0", 1, $wg__open, 1, 0, 0, ["__tests__/template.marko_4*shell"], $scope3_reason, 1);
-		$fg__content && _client_guard($scope3_reason, 1) && _patch_render($scope3_id, "__tests__/template.marko_4_content#3:4/setup", "content");
-		_write_if($scope3_reason, 1) && _scope($scope3_id, { content: $ui__open && content }, "__tests__/template.marko", "2:2", { content: "2:23" }) || $fg__content && $ui__open && _patch_write($scope3_id, "PatchMarkedWrite:content", content, !_server_guard($scope3_reason, 2));
+		$fg__content && _patch_render($scope3_id, "__tests__/template.marko_4_content#3:4/setup", "content");
+		_write_if($scope3_reason, 1) && _scope($scope3_id, { content }, "__tests__/template.marko", "2:2", { content: "2:23" }) || $fg__content && _patch_write($scope3_id, "PatchMarkedWrite:content", content, 1);
 	}, $scope0_id) };
 	const Outer = { content: _content("__tests__/template.marko_1*content", ({ open }) => {
 		const $scope1_id = _scope_id();

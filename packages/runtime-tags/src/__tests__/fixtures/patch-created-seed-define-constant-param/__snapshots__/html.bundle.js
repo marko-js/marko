@@ -17,17 +17,17 @@ var template_default = _template("a", (input) => {
 			const v = `${input.v}!`;
 			const D = { content: _content("a2", ({ on }) => {
 				const $scope2_id = _scope_id();
-				const $scope2_reason = _scope_reason(), $wg__on = _write_guard($scope2_reason, 0), $wi__on = _write_if($scope2_reason, 0);
+				const $scope2_reason = _scope_reason(), $wg__on = _write_guard($scope2_reason, 0);
 				_if(() => {
 					if (on) {
 						const $scope3_id = _scope_id();
 						_html(`<span>${_text_mark($scope3_id, "a", v, 1, $scope0_reason, 1)}</span>`);
 						$cg__input_v && _patch_render($scope3_id, "a0");
-						_subscribe(_unfilled_if($scope0_reason, 1) && $if_content__v__closures, _scope($scope3_id, { _: ($wi__input_v || $wi__on) && _scope_with_id($scope2_id) }), $cg__input_v && "a0");
+						_subscribe(_unfilled_if($scope0_reason, 1) && $if_content__v__closures, _scope($scope3_id, { _: $wi__input_v && _scope_with_id($scope2_id) }), $cg__input_v && "a0");
 						return 0;
 					}
 				}, $scope2_id, "a", 1, $wg__on, 1, 0, 0, ["a1"], $scope2_reason, 0);
-				($wi__input_v || $wi__on) && _scope($scope2_id, { _: _scope_with_id($scope1_id) });
+				$wi__input_v && _scope($scope2_id, { _: _scope_with_id($scope1_id) });
 			}, $scope1_id, 0) };
 			_set_scope_reason(0);
 			const $childScope = _peek_scope_id($scope1_id, "a", 0);

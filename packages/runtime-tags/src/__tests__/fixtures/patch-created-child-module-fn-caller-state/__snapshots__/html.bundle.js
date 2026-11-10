@@ -39,7 +39,7 @@ var rowsx_default = _template("b", (input) => {
 		_write_if($scope1_reason, 3) && _scope($scope1_id, {
 			e: ($ui__isOpen__OR__label || $ui__fmt__OR__label) && fmt,
 			f: ($ui__isOpen__OR__fmt || $ui__fmt__OR__label) && label
-		}) || ($fg__fmt && $ui__isOpen__OR__label && _patch_write($scope1_id, "xe", fmt, !_server_guard($scope1_reason, 5)), $fg__label && $ui__isOpen__OR__fmt && _patch_write($scope1_id, "xf", label, !_server_guard($scope1_reason, 6)));
+		}) || ($fg__fmt && $ui__isOpen__OR__label && _patch_write($scope1_id, "xe", fmt, 1), $fg__label && $ui__isOpen__OR__fmt && _patch_write($scope1_id, "xf", label, !_server_guard($scope1_reason, 6)));
 	}, $scope0_id, 0) };
 	_set_scope_reason($uf__input_open << 1 | $uf__input_open__OR__input_label << 3 | $uf__input_label << 5 | $uf__input_open__OR__input_label << 7 | $uf__input_open << 9 | $uf__input_label << 13);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);

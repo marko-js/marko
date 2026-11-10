@@ -19,19 +19,19 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let open = true;
 	const Panel = { content: _content("__tests__/template.marko_2*content", ({ fmt, a, b }) => {
 		const $scope2_id = _scope_id();
-		const $scope2_reason = _scope_reason(), $ui__fmt = _unfilled_if($scope2_reason, 3), $fg__fmt = _filled_guard($scope2_reason, 3), $fg__a = _filled_guard($scope2_reason, 4), $fg__b = _filled_guard($scope2_reason, 5);
+		const $scope2_reason = _scope_reason(), $fg__fmt = _filled_guard($scope2_reason, 3), $fg__a = _filled_guard($scope2_reason, 4), $fg__b = _filled_guard($scope2_reason, 5);
 		_html(`<em>${_text_mark($scope2_id, "#text/0", fmt(a), 1, $scope2_reason, 0)} ${_text_mark($scope2_id, "#text/1", fmt(b), 2, $scope2_reason, 1)}</em>`);
 		_patch_render($scope2_id, "__tests__/template.marko_2_fmt#4_a#5/setup", [$fg__fmt && "fmt", $fg__a && "a"], $scope2_reason, 0);
 		_patch_render($scope2_id, "__tests__/template.marko_2_fmt#4_b#7/setup", [$fg__fmt && "fmt", $fg__b && "b"], $scope2_reason, 1);
 		_scope($scope2_id, {
 			fmt: (_unfilled_if($scope2_reason, 2, 3) || _unfilled_if($scope2_reason, 0, 3) || _unfilled_if($scope2_reason, 1, 3)) && fmt,
-			a: ($ui__fmt || _unfilled_if($scope2_reason, 0)) && a,
-			b: ($ui__fmt || _unfilled_if($scope2_reason, 1)) && b
+			a: _unfilled_if($scope2_reason, 0) && a,
+			b: _unfilled_if($scope2_reason, 1) && b
 		}, "__tests__/template.marko", "3:2", {
 			fmt: "3:17",
 			a: "3:22",
 			b: "3:25"
-		}) || ($fg__fmt && _unfilled_if($scope2_reason, 2) && _patch_write($scope2_id, "PatchMarkedWrite:fmt", fmt, !_server_guard($scope2_reason, 3)), $fg__a && $ui__fmt && _patch_write($scope2_id, "PatchMarkedWrite:a", a, !_server_guard($scope2_reason, 4)), $fg__b && $ui__fmt && _patch_write($scope2_id, "PatchMarkedWrite:b", b, !_server_guard($scope2_reason, 5)));
+		}) || $fg__fmt && _unfilled_if($scope2_reason, 2) && _patch_write($scope2_id, "PatchMarkedWrite:fmt", fmt, 1);
 	}, $scope0_id) };
 	_if(() => {
 		if (open) {

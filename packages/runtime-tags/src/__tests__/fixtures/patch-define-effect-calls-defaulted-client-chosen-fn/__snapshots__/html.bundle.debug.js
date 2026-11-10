@@ -14,11 +14,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const low = _bind_resume(() => "l" + input.title, "__tests__/template.marko_0/low", $scope0_id);
 	const Show = { content: _content("__tests__/template.marko_1*content", ({ get }) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason(), $fg__get = _filled_guard($scope1_reason, 0);
+		const $scope1_reason = _scope_reason();
 		const g = get ?? _resume(() => "none", "__tests__/template.marko_1/g");
 		_html(`<output></output>${_el_mark($scope1_id, "#output/0")}`);
-		_script($scope1_id, "__tests__/template.marko_1_g#4", 1, $fg__get, ["g", _filled_guard($scope0_reason, 0) && ">input_title"]);
-		_scope($scope1_id, { g }, "__tests__/template.marko", "4:2", { g: "5:10" }) || $fg__get && _patch_write($scope1_id, "PatchMarkedWrite:g", g, !_server_guard($scope1_reason, 0));
+		_script($scope1_id, "__tests__/template.marko_1_g#4");
+		_scope($scope1_id, { g }, "__tests__/template.marko", "4:2", { g: "5:10" });
 	}, $scope0_id) };
 	_set_scope_reason(6);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);

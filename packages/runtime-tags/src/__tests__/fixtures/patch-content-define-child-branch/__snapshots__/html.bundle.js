@@ -18,13 +18,13 @@ var template_default = _template("a", (input) => {
 			if (show) {
 				const $scope3_id = _scope_id();
 				_dynamic_tag($scope3_id, "a", content, {}, 2, 0, 0, $wg__content, $scope2_reason, 2);
-				_write_if($scope2_reason, 0) && _scope($scope3_id, { _: _write_if($scope2_reason, 2) && _scope_with_id($scope2_id) });
+				_write_if($scope2_reason, 0) && _scope($scope3_id, {});
 				return 0;
 			}
 		}, $scope2_id, "a", 1, $wg__show, 1, 0, 0, ["a0"], $scope2_reason, 1);
 		_html(`</section>${_el_mark($scope2_id, "a", $wg__show)}`);
 		$fg__content && _client_guard($scope2_reason, 1) && _patch_render($scope2_id, "a3", "e");
-		_write_if($scope2_reason, 1) && _scope($scope2_id, { e: $ui__show && content }) || $fg__content && $ui__show && _patch_write($scope2_id, "xe", content, !_server_guard($scope2_reason, 2));
+		_write_if($scope2_reason, 1) && _scope($scope2_id, { e: $ui__show && content }) || $fg__content && $ui__show && _patch_write($scope2_id, "xe", content, 1);
 	}, $scope0_id) };
 	_html("<main>");
 	_set_scope_reason($uf__input_show << 1 | $uf__input_show << 3);

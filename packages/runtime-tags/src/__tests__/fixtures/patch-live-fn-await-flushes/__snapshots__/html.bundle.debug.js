@@ -20,7 +20,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const Use = { content: _content("__tests__/template.marko_3*content", ({ fn, where }) => {
 		const $scope3_id = _scope_id();
 		const $scope3_reason = _scope_reason(), $fg__fn = _filled_guard($scope3_reason, 1), $fg__where = _filled_guard($scope3_reason, 2);
-		_script($scope3_id, "__tests__/template.marko_3_fn#2_where#3", 0, ($fg__fn || $fg__where) && (_client_guard($scope3_reason, 1) || _client_guard($scope3_reason, 2) ? 2 : 1), [
+		_script($scope3_id, "__tests__/template.marko_3_fn#2_where#3", 0, ($fg__fn || $fg__where) && (_client_guard($scope3_reason, 1) ? 2 : 1), [
 			$fg__fn && "fn",
 			_filled_guard($scope0_reason, 1) && ">input_x",
 			$fg__where && "where"
@@ -31,7 +31,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, "__tests__/template.marko", "3:2", {
 			fn: "3:15",
 			where: "3:19"
-		}) || ($fg__fn && _patch_write($scope3_id, "PatchMarkedWrite:fn", fn, !_server_guard($scope3_reason, 1)), $fg__where && _patch_write($scope3_id, "PatchMarkedWrite:where", where, !_server_guard($scope3_reason, 2)));
+		}) || ($fg__fn && _patch_write($scope3_id, "PatchMarkedWrite:fn", fn, !_server_guard($scope3_reason, 1)), $fg__where && _patch_write($scope3_id, "PatchMarkedWrite:where", where, 1));
 	}, $scope0_id) };
 	_set_scope_reason($uf__input_x << 1 | $uf__input_x << 3);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);

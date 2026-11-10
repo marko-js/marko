@@ -20,17 +20,17 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const v = `${input.v}!`;
 			const D = { content: _content("__tests__/template.marko_2*content", ({ on }) => {
 				const $scope2_id = _scope_id();
-				const $scope2_reason = _scope_reason(), $wg__on = _write_guard($scope2_reason, 0), $wi__on = _write_if($scope2_reason, 0);
+				const $scope2_reason = _scope_reason(), $wg__on = _write_guard($scope2_reason, 0);
 				_if(() => {
 					if (on) {
 						const $scope3_id = _scope_id();
 						_html(`<span>${_text_mark($scope3_id, "#text/0", v, 1, $scope0_reason, 1)}</span>`);
 						$cg__input_v && _patch_render($scope3_id, "__tests__/template.marko_3_v#1:1/subscribe");
-						_subscribe(_unfilled_if($scope0_reason, 1) && $if_content__v__closures, _scope($scope3_id, { _: ($wi__input_v || $wi__on) && _scope_with_id($scope2_id) }, "__tests__/template.marko", "4:6"), $cg__input_v && "__tests__/template.marko_3_v#1:1/subscribe");
+						_subscribe(_unfilled_if($scope0_reason, 1) && $if_content__v__closures, _scope($scope3_id, { _: $wi__input_v && _scope_with_id($scope2_id) }, "__tests__/template.marko", "4:6"), $cg__input_v && "__tests__/template.marko_3_v#1:1/subscribe");
 						return 0;
 					}
 				}, $scope2_id, "#text/0", 1, $wg__on, 1, 0, 0, ["__tests__/template.marko_3*shell"], $scope2_reason, 0);
-				($wi__input_v || $wi__on) && _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:4");
+				$wi__input_v && _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "3:4");
 			}, $scope1_id, 0) };
 			_set_scope_reason(0);
 			const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);

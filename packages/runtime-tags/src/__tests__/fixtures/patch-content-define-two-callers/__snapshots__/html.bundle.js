@@ -19,12 +19,12 @@ var template_default = _template("a", (input) => {
 			if (open) {
 				const $scope4_id = _scope_id();
 				_dynamic_tag($scope4_id, "a", body, {}, 2, 0, 0, $wg__body, $scope3_reason, 2);
-				_write_if($scope3_reason, 0) && _scope($scope4_id, { _: _write_if($scope3_reason, 2) && _scope_with_id($scope3_id) });
+				_write_if($scope3_reason, 0) && _scope($scope4_id, {});
 				return 0;
 			}
 		}, $scope3_id, "a", 1, $wg__open, 1, 0, 0, ["a0"], $scope3_reason, 1);
 		$fg__body && _client_guard($scope3_reason, 1) && _patch_render($scope3_id, "a4", "e");
-		_write_if($scope3_reason, 1) && _scope($scope3_id, { e: $ui__open && body }) || $fg__body && $ui__open && _patch_write($scope3_id, "xe", body, !_server_guard($scope3_reason, 2));
+		_write_if($scope3_reason, 1) && _scope($scope3_id, { e: $ui__open && body }) || $fg__body && $ui__open && _patch_write($scope3_id, "xe", body, 1);
 	}, $scope0_id) };
 	_html("<main>");
 	_set_scope_reason(10);
