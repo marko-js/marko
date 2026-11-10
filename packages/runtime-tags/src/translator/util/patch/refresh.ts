@@ -866,8 +866,8 @@ function getDefineCallSources(sources: Sources | undefined, section: Section) {
   return params && mapBodyParams(section, createSources(undefined, params));
 }
 
-// The params a read intersects besides the binding's own that a write in its
-// section gates on: a caller passes each.
+// The params a read intersects (or the structure around it selects by) besides the
+// binding's own that a write in its section gates on: a caller passes each.
 function getOtherInputs(sources: Sources | undefined, binding: Binding) {
   const others = bindingUtil.difference(
     bindingUtil.filter(sources?.param, (param) =>
@@ -2074,6 +2074,12 @@ function findUnfilledStructure(
       }
     }
     if (Array.isArray(refs)) {
+      // One a member of which every call passes client state runs on the client.
+      if (
+        isPassedStateByEveryCall(getSourcesForReferencedBindings(refs), true)
+      ) {
+        return false;
+      }
       // An intersection of a closure a caller's client contributes sets itself up on a
       // created scope, reading the closure from its owner.
       if (
@@ -2184,6 +2190,11 @@ export function runsSubscribersByWrite(closure: Binding, section: Section) {
   ) {
     return false;
   }
+  return mayHandStructureToClient(closure, section);
+}
+
+// A call may hand the client the structure between a closure and its reader.
+export function mayHandStructureToClient(closure: Binding, section: Section) {
   const structure = getCallerSelectedStructure(closure, section);
   return (
     !structure ||
@@ -2191,14 +2202,19 @@ export function runsSubscribersByWrite(closure: Binding, section: Section) {
   );
 }
 
-// The param-selected structure between a closure and its reader that a call passing
-// client state hands the client; none where the client may render it below the closure.
+// The param-selected structure between a closure and its reader that a call passing client state
+// hands the client, by params besides the closure's own; none where it may render below it.
 export function getCallerSelectedStructure(closure: Binding, section: Section) {
   if (clientMayRenderInAnyCall(section, closure.section)) return;
   const above = getParamSelectedStructure(closure.section);
-  return (
-    getParamSelectedStructure(section)?.filter(
-      (sources) => !above?.includes(sources),
-    ) || []
-  );
+  const structure: Sources[] = [];
+  for (const sources of getParamSelectedStructure(section) || []) {
+    if (!above?.includes(sources)) {
+      const passed = mapBodyParams(closure.section, sources);
+      if (passed?.state) return;
+      const others = getOtherInputs(passed, closure);
+      if (others) structure.push(others);
+    }
+  }
+  return structure;
 }

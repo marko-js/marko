@@ -119,6 +119,7 @@ import {
 import {
   setupFromClient,
   getCallerSelectedStructure,
+  mayHandStructureToClient,
   addFilledReads,
   someFnValue,
   type CreatedSetup,
@@ -1465,7 +1466,8 @@ export function runsClosureByWrite(closure: Binding, section: Section) {
     section.parent === closure.section &&
     !isDynamicClosure(section, closure) &&
     getPatchWrite(root).write &&
-    getCreatedSetup(section).get(closure)?.setup === "mixed"
+    getCreatedSetup(section).get(closure)?.setup === "mixed" &&
+    mayHandStructureToClient(closure, section)
   );
 }
 
