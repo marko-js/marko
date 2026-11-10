@@ -57,6 +57,7 @@ import {
 import { patchesBranchesAt, patchFillsSection } from "./patch/structure";
 import {
   comparesBoundFn,
+  getCallerGroupBit,
   getCallerGroupGuard,
   getClosureScopesIfWritten,
   getEffectEntryArgs,
@@ -150,7 +151,6 @@ import {
   getWriteReason,
   isBranchAlwaysMarked,
   ifEver,
-  isNever,
   isSameReason,
   getSlotWriteReason,
   getSectionWriteReason,
@@ -1931,6 +1931,13 @@ export function writeHTMLResumeStatements(
         // A scope a patch pairs takes its reads by fills and entries, so it subscribes only where
         // the client can change the owner value (`_unfilled_if`); one no patch pairs, for the walk too.
         const unfilled = !!readSources && patchFillsSection(section);
+        // A scope no call leaves the read unfilled for joins no set.
+        if (
+          unfilled &&
+          getCallerGroupBit(section, "_unfilled_if", readSources) === 0
+        ) {
+          return;
+        }
         const subscribeArg =
           isGuardedReason(closureScopesReason) &&
           !isSameReason(closureScopesReason, sectionReason) &&
@@ -1957,8 +1964,6 @@ export function writeHTMLResumeStatements(
                 subscribeArg,
               )
             : subscribeArg;
-          // A scope no call leaves the read unfilled for joins no set.
-          if (isNever(subscribed)) return;
           addWriteScopeBuilder(section, (expr) => {
             const resumeId =
               changeable &&

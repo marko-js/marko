@@ -101,6 +101,7 @@ import {
   getOrShareGroupCheck,
   getOrShareSectionGuard,
   getPatchCheckBit,
+  getStaticGroupBit,
   getWriteReason,
   type GroupCheck,
   isDynamicWriteGuard,
@@ -327,7 +328,7 @@ export function writePatchResumeStatements(
           inPlace,
           buildPatchWrite(section, binding, getPatchKey().Write),
         );
-    pushIfEver(body, entry);
+    if (entry) body.push(t.expressionStatement(entry));
   });
 
   // An enclosing scope's constant this scope's client code reads, which the page ships
@@ -343,16 +344,19 @@ export function writePatchResumeStatements(
         "_client_guard",
         reason,
       );
-      pushIfEver(
-        body,
-        andGuard(
-          client && notGuard(client),
-          andGuard(
-            callRuntime("_unfilled_if"),
-            buildPatchWrite(closure.section, closure, getPatchKey().Write),
+      if (!client || !isAlways(client)) {
+        body.push(
+          t.expressionStatement(
+            andGuard(
+              client && notGuard(client),
+              andGuard(
+                callRuntime("_unfilled_if"),
+                buildPatchWrite(closure.section, closure, getPatchKey().Write),
+              ),
+            ),
           ),
-        ),
-      );
+        );
+      }
     }
   });
 
@@ -369,61 +373,24 @@ export function writePatchResumeStatements(
         structure = selected ? structure?.concat(selected) : undefined;
       }
     });
-    if (walks) {
-      const { sources } = binding;
-      pushIfEver(
-        body,
-        andGuard(
-          getCallerGroupGuard(section, "_filled_guard", sources),
-          andGuard(
-            orCallerGroupGuards(
-              section,
-              undefined,
-              "_client_guard",
-              fromIter(structure || []),
-            ),
-            callRuntime(
-              "_patch_subscribers",
-              getScopeIdIdentifier(section),
-              t.stringLiteral(getClosureSubscribersId(binding)),
-              getReads(
-                section,
-                [binding],
-                "_filled_guard",
-                isGuardedReason(sources) &&
-                  !sources.global &&
-                  getSoleCallerGroup(section, sources),
-              ),
-            ),
-          ),
-        ),
-      );
-    }
-    forEach(binding.closureSections, (closureSection) => {
-      if (runsClosureByWrite(binding, closureSection)) {
-        const { sources } = binding;
-        // None where no call's patch fills the value, or where no call hands the client
-        // the param-selected structure.
-        pushIfEver(
-          body,
+    const { sources } = binding;
+    // None where no call's patch fills the value, decided before its guards are built.
+    if (walks && getCallerGroupBit(section, "_filled_guard", sources) !== 0) {
+      body.push(
+        t.expressionStatement(
           andGuard(
             getCallerGroupGuard(section, "_filled_guard", sources),
             andGuard(
-              // A call may hand the client param-selected structure.
               orCallerGroupGuards(
                 section,
                 undefined,
                 "_client_guard",
-                fromIter(
-                  getCallerSelectedStructure(binding, closureSection) || [],
-                ),
+                fromIter(structure || []),
               ),
               callRuntime(
-                "_patch_render",
+                "_patch_subscribers",
                 getScopeIdIdentifier(section),
-                t.stringLiteral(
-                  getResumeRegistryId(closureSection, binding, "setup"),
-                ),
+                t.stringLiteral(getClosureSubscribersId(binding)),
                 getReads(
                   section,
                   [binding],
@@ -431,6 +398,46 @@ export function writePatchResumeStatements(
                   isGuardedReason(sources) &&
                     !sources.global &&
                     getSoleCallerGroup(section, sources),
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+    forEach(binding.closureSections, (closureSection) => {
+      if (
+        runsClosureByWrite(binding, closureSection) &&
+        getCallerGroupBit(section, "_filled_guard", sources) !== 0
+      ) {
+        body.push(
+          t.expressionStatement(
+            andGuard(
+              getCallerGroupGuard(section, "_filled_guard", sources),
+              andGuard(
+                orCallerGroupGuards(
+                  section,
+                  undefined,
+                  "_client_guard",
+                  // A call may hand the client param-selected structure.
+                  fromIter(
+                    getCallerSelectedStructure(binding, closureSection) || [],
+                  ),
+                ),
+                callRuntime(
+                  "_patch_render",
+                  getScopeIdIdentifier(section),
+                  t.stringLiteral(
+                    getResumeRegistryId(closureSection, binding, "setup"),
+                  ),
+                  getReads(
+                    section,
+                    [binding],
+                    "_filled_guard",
+                    isGuardedReason(sources) &&
+                      !sources.global &&
+                      getSoleCallerGroup(section, sources),
+                  ),
                 ),
               ),
             ),
@@ -489,12 +496,13 @@ export function writePatchResumeStatements(
           ),
         );
       } else if (setup.setup === "client") {
-        pushIfEver(
-          body,
-          buildClientSetup(
-            section,
-            getSetupSources(ref),
-            getCreatedSetupId(section, ref),
+        body.push(
+          t.expressionStatement(
+            buildClientSetup(
+              section,
+              getSetupSources(ref),
+              getCreatedSetupId(section, ref),
+            ),
           ),
         );
       }
@@ -503,12 +511,13 @@ export function writePatchResumeStatements(
         t.expressionStatement(buildSubscribe(section, ref, setup.subscribe)),
       );
     } else if (setupFromClient(section, ref, setup.setup)) {
-      pushIfEver(
-        body,
-        buildClientSetup(
-          section,
-          getSetupSources(ref),
-          getCreatedSetupId(section, ref),
+      body.push(
+        t.expressionStatement(
+          buildClientSetup(
+            section,
+            getSetupSources(ref),
+            getCreatedSetupId(section, ref),
+          ),
         ),
       );
     }
@@ -558,18 +567,9 @@ export function writePatchResumeStatements(
     for (const write of change
       ? buildLetChangeWrites(section, binding, change)
       : buildLetSeeds(section, binding)) {
-      pushIfEver(body, write);
+      body.push(t.expressionStatement(write));
     }
   });
-}
-
-// A statement the patch writes, where its guards ever hold.
-function pushIfEver(
-  body: t.Statement[],
-  expr: t.Expression | false | undefined,
-) {
-  const ever = ifEver(expr);
-  if (ever) body.push(t.expressionStatement(ever));
 }
 
 // A controlled `<let>`'s value, a fill while its handler controls it and the
@@ -639,7 +639,10 @@ function buildLetSeeds(section: Section, binding: Binding) {
     "_filled_guard",
     getStateInitialValueSources(binding),
   );
-  return [andGuard(guard, buildPatchFill(section, binding, setup))];
+  // None where no call's patch fills the initial value.
+  return guard && isNever(guard)
+    ? []
+    : [andGuard(guard, buildPatchFill(section, binding, setup))];
 }
 
 // A created scope's own state starts from its initial values: the server's
@@ -695,15 +698,20 @@ function getClientBranchCall(section: Section, binding: Binding) {
   const contents =
     kind === true || getClientBranchGuard(section, kind.contents);
   if (contents === true) return call;
-  return contents && t.logicalExpression("&&", contents, call);
+  return contents && andGuard(contents, call);
 }
 
 // The marked write of a value a patch writes, gated like the root's writes: none where
-// its guards fold to never.
+// its guards fold to never, decided before either guard is built.
 function buildLocalWrite(section: Section, binding: Binding) {
-  const write =
-    getPatchWrite(binding).write && getUnfilledPatchWrite(section, binding);
-  return ifEver(write && andGuard(getFilledGuard(section, binding), write));
+  if (
+    !getPatchWrite(binding).write ||
+    getCallerGroupBit(section, "_filled_guard", binding.sources) === 0
+  ) {
+    return;
+  }
+  const write = getUnfilledPatchWrite(section, binding);
+  return write && andGuard(getFilledGuard(section, binding), write);
 }
 
 // A value a patch fills every client read of: a page ships it for the
@@ -1033,7 +1041,9 @@ function buildWriteGroupArgs(
 function buildWriteGroupValue({ groups, ungated, seed }: WriteGroups) {
   if (seed && groups.length === 1) {
     const [section, group] = groups[0];
-    return getOrShareSectionGuard(section, group, "_client_guard");
+    const client = getOrShareSectionGuard(section, group, "_client_guard");
+    // A folded check packs into the mask as the constant it is.
+    return t.isNumericLiteral(client) ? client.value : client;
   }
   return seed
     ? t.binaryExpression(
@@ -1053,25 +1063,39 @@ export function getCallerGroupGuard(
 ) {
   const write = getWriteGroups(section, sources);
   if (!write) return;
+  // A constant mask decides the check, as a constant group does.
+  const value = getWriteGroupsConstant(write);
+  const bit = getConstantBit(check, value);
+  if (bit !== undefined) return t.numericLiteral(bit);
   // One caller group's check is shared, as a write guard is.
   if (write.groups.length === 1 && !write.ungated) {
     const [groupSection, group] = write.groups[0];
     return getOrShareGroupCheck(section, groupSection, group, check);
   }
-  // A constant mask decides the check, as a constant group does; the server's alone
-  // leaves `_unfilled_if` the render context.
-  const value = getGroupsConstant(
-    write.groups,
-    write.ungated ? UpdatesFrom.Server : 0,
-  );
-  if (value !== undefined) {
-    const bit = getPatchCheckBit(check, value);
-    if (bit !== undefined) return t.numericLiteral(bit);
-    if (value === UpdatesFrom.Server && check === "_unfilled_if") {
-      return callRuntime("_unfilled_if");
-    }
+  // The server's constant alone leaves `_unfilled_if` the render context.
+  if (value === UpdatesFrom.Server && check === "_unfilled_if") {
+    return callRuntime("_unfilled_if");
   }
   return callRuntime(check, ...buildWriteGroupArgs(write));
+}
+
+// What `getCallerGroupGuard` folds to, without building it: `1` where no caller group
+// gates the write, so a guard deciding a never is asked before what it guards is built.
+export function getCallerGroupBit(
+  section: Section,
+  check: GroupCheck,
+  sources: Sources | undefined,
+) {
+  const write = getWriteGroups(section, sources);
+  return write ? getConstantBit(check, getWriteGroupsConstant(write)) : 1;
+}
+
+function getWriteGroupsConstant({ groups, ungated }: WriteGroups) {
+  return getGroupsConstant(groups, ungated ? UpdatesFrom.Server : 0);
+}
+
+function getConstantBit(check: GroupCheck, value: number | undefined) {
+  return value === undefined ? undefined : getPatchCheckBit(check, value);
 }
 
 // Where a patch fills the binding: its caller groups are the server's.
@@ -1089,13 +1113,36 @@ function orCallerGroupGuards(
   checked = new Set<ParamReasonGroup>(),
   own?: OwnParamGroup,
 ) {
+  return orGroupChecks(
+    section,
+    guard,
+    check,
+    getCallerGroups(section, list, checked, []),
+    own,
+  );
+}
+
+// Each group's check or-ed onto `guard`: `1`, with none of them built, where one
+// always holds.
+function orGroupChecks(
+  section: Section,
+  guard: t.Expression | undefined,
+  check: GroupCheck,
+  groups: CallerGroup[],
+  own: OwnParamGroup | undefined,
+) {
+  for (const [paramSection, group] of groups) {
+    if (getStaticGroupBit(paramSection, group, check) === 1) {
+      return t.numericLiteral(1);
+    }
+  }
   let expr = guard;
-  forEachCallerGroup(section, list, checked, (paramSection, group, index) => {
+  for (const [paramSection, group, index] of groups) {
     expr = orGuard(
       expr,
       buildGroupCheck(section, paramSection, group, index, check, own),
     );
-  });
+  }
   return expr;
 }
 
@@ -1114,13 +1161,19 @@ function buildGroupCheck(
     : callRuntime(check, ...getGroupArgs(paramSection, group, index), ownArg);
 }
 
-// Each caller group a write in `section` gates on, once: `seen` collects them
-// by their section's own list entry, as one may be reached through several sets.
-function forEachCallerGroup(
+type CallerGroup = [
+  paramSection: Section,
+  group: ParamReasonGroup,
+  index: number,
+];
+
+// Each caller group a write in `section` gates on, once, pushed onto `groups`: `seen`
+// collects them by their section's own list entry, as one may be reached through several sets.
+function getCallerGroups(
   section: Section,
   list: Opt<Sources>,
   seen: Set<ParamReasonGroup>,
-  fn: (paramSection: Section, group: ParamReasonGroup, index: number) => void,
+  groups: CallerGroup[],
 ) {
   forEach(list, (sources) => {
     for (const [paramSection, group] of getGuardedCallerGroupsAt(
@@ -1131,10 +1184,11 @@ function forEachCallerGroup(
       const key = paramSection.paramReasonGroups![index];
       if (!seen.has(key)) {
         seen.add(key);
-        fn(paramSection, group, index);
+        groups.push([paramSection, group, index]);
       }
     }
   });
+  return groups;
 }
 
 // Where a value a patch fills is still read unfilled: a client-sourced group,
@@ -1146,28 +1200,23 @@ function getUnfilledGuard(
   unpatched: boolean,
   own?: OwnParamGroup,
 ) {
-  let guard: t.Expression | undefined;
   // Each group once, keyed by its section's own list entry: param-selected
   // structure may gate on one the params already name.
   const checked = new Set<ParamReasonGroup>();
+  const groups: CallerGroup[] = [];
   forEachParamGroup(params, (paramSection, group) => {
     const index = getParamReasonGroupIndex(paramSection, group);
     checked.add(paramSection.paramReasonGroups![index]);
-    guard = orGuard(
-      guard,
-      buildGroupCheck(section, paramSection, group, index, "_unfilled_if", own),
-    );
+    groups.push([paramSection, group, index]);
   });
-  guard = orCallerGroupGuards(
+  const guard = orGroupChecks(
     section,
-    guard,
+    undefined,
     "_unfilled_if",
-    structure,
-    checked,
+    getCallerGroups(section, structure, checked, groups),
     own,
   );
-  if (unpatched) guard = orGuard(guard, callRuntime("_unfilled_if"));
-  return guard!;
+  return unpatched ? orGuard(guard, callRuntime("_unfilled_if")) : guard!;
 }
 
 // Where content is live on the client: `true` where something renders it
@@ -1207,28 +1256,30 @@ function getUnfilledPatchWrite(section: Section, binding: Binding) {
     getPatchFill(binding).objectSource || getClosureContents(binding);
   const reason = mapBodyParams(section, getWriteReason(binding));
   if (!contents && !reason) return;
-  const write = buildPatchWrite(
-    section,
-    binding,
-    getPatchKey().MarkedWrite,
-    getConstantSetup(section, binding),
-  );
-  if (contents === true) return write;
   // Content taking the value as a closure needs it where the client keeps an instance.
-  if (!isDynamicWriteGuard(section, reason)) {
-    return reason
-      ? write
-      : andGuard(getClientBranchGuard(section, contents), write);
+  const guard =
+    contents === true
+      ? undefined
+      : !isDynamicWriteGuard(section, reason)
+        ? !reason && getClientBranchGuard(section, contents)
+        : orCallerGroupGuards(
+            section,
+            contents && getClientBranchGuard(section, contents),
+            "_unfilled_if",
+            reason,
+          );
+  // None where the guard folds to never, decided before the write is built.
+  if (!guard || !isNever(guard)) {
+    return andGuard(
+      guard,
+      buildPatchWrite(
+        section,
+        binding,
+        getPatchKey().MarkedWrite,
+        getConstantSetup(section, binding),
+      ),
+    );
   }
-  return andGuard(
-    orCallerGroupGuards(
-      section,
-      contents && getClientBranchGuard(section, contents),
-      "_unfilled_if",
-      reason,
-    ),
-    write,
-  );
 }
 
 // The writes a client branch guard decides, at the section's end: its dynamic tags report
@@ -1337,13 +1388,11 @@ function getReads(
 
 // The one caller group a guard over `list` checks at `section`, if just one.
 function getSoleCallerGroup(section: Section, list: Opt<Sources>) {
-  const groups = new Set<ParamReasonGroup>();
-  forEachCallerGroup(section, list, groups, noop);
-  const [sole, other] = groups;
+  const seen = new Set<ParamReasonGroup>();
+  getCallerGroups(section, list, seen, []);
+  const [sole, other] = seen;
   return other ? undefined : sole;
 }
-
-function noop() {}
 
 // A filled reference of a function a patch may bind: its change makes the function anew.
 export function isFilledReference(binding: Binding) {

@@ -282,9 +282,7 @@ function getDynamicGuard(
   const paramGuard = orEachParamGroup(reason.param, check);
   if (!reason.global) return paramGuard;
   const globalGuard = scopePageIdentifier(getReasonSection(section));
-  return paramGuard
-    ? t.logicalExpression("||", globalGuard, paramGuard)
-    : globalGuard;
+  return paramGuard ? orGuard(globalGuard, paramGuard) : globalGuard;
 }
 
 // Branch and boundary bodies declare no reason of their own; the nearest
@@ -596,7 +594,7 @@ const [getBodyGroupValue] = createAnalysisMemo((group: ParamReasonGroup) => {
 
 // What `check` returns for a group every call passes the same constant, where that
 // decides it: in a plain build its write bit, in a patch build its value's answer.
-function getStaticGroupBit(
+export function getStaticGroupBit(
   section: Section,
   group: ParamReasonGroup,
   check: GroupCheck,

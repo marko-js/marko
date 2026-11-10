@@ -71,7 +71,11 @@ import {
   hasStructuralParam,
   recordStructuralParams,
 } from "./patch/structure";
-import { getCallerGroupGuard, mayHoldScopeBoundFn } from "./patch/writers";
+import {
+  getCallerGroupBit,
+  getCallerGroupGuard,
+  mayHoldScopeBoundFn,
+} from "./patch/writers";
 import {
   addAlwaysReason,
   addReasonExprs,
@@ -164,7 +168,6 @@ import translateVar, {
 } from "./translate-var";
 import {
   andGuard,
-  ifEver,
   buildGroupsValue,
   buildGroupMask,
   getExprIfWritten,
@@ -451,8 +454,13 @@ export function knownTagTranslateHTML(
       );
     // A patch keys the child's scope, so it writes it even for a constant group;
     // the wiring resolves where no patch fills the variable (`_unfilled_if`).
+    const keyed = isPatchKeyedSlot(childScopeSlot);
+    // None where no call leaves the variable unfilled, decided before the wiring is built.
+    const wires =
+      !keyed ||
+      getCallerGroupBit(section, "_unfilled_if", childScopeReason) !== 0;
     const guardVar = (expr: t.Expression) =>
-      isPatchKeyedSlot(childScopeSlot)
+      keyed
         ? andGuard(
             getCallerGroupGuard(section, "_unfilled_if", childScopeReason),
             expr,
@@ -473,7 +481,8 @@ export function knownTagTranslateHTML(
                 // Only a patch render of a section the patch fills reads these two.
                 (patchFillsSection(section) &&
                   varId &&
-                  ifEver(guardVar(t.numericLiteral(1)))) ||
+                  wires &&
+                  guardVar(t.numericLiteral(1))) ||
                   absentArg(0),
                 patchFillsSection(section) &&
                   childSection.parent !== section &&
@@ -525,15 +534,14 @@ export function knownTagTranslateHTML(
     // guarded, as its registration ships only where the guard holds.
     const varCall =
       varId &&
-      ifEver(
-        guardVar(
-          callRuntime(
-            "_var",
-            getScopeIdIdentifier(section),
-            getScopeOffsetAccessorLiteral(childScopeBinding),
-            peekScopeId,
-            varId,
-          ),
+      wires &&
+      guardVar(
+        callRuntime(
+          "_var",
+          getScopeIdIdentifier(section),
+          getScopeOffsetAccessorLiteral(childScopeBinding),
+          peekScopeId,
+          varId,
         ),
       );
     if (varCall) varStatement = t.expressionStatement(varCall);
