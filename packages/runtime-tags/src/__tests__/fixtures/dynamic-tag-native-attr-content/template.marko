@@ -1,0 +1,4 @@
+<for|item| of=input.items>
+  <const/Tag=item.on ? "p" : "div"/>
+  <${Tag}><@content><b>${item.key}</b></@content></>
+</for>

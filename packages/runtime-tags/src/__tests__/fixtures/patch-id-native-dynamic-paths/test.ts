@@ -5,9 +5,8 @@ export const config: TestConfig = {
   patches: true,
   skip_fresh_render: true,
   equivalent: false,
-  // Later updates hit gaps of their own: the patch binds the `<define>`
-  // body passed by `content=`, which the client neither registers nor
-  // resolves, and an `<@content>` element's branch is not found to pair.
+  // Later updates hit a gap of their own: the patch binds the `<define>`
+  // body passed by `content=`, which the client neither registers nor resolves.
   steps: [
     {
       items: [
