@@ -736,7 +736,6 @@ function getReadStructure(
   effect: boolean,
   handOff?: { under?: SortedOpt<Section> },
 ): true | FillConditions | undefined {
-  const knownChild = isKnownChild(binding.section);
   let found: FillConditions | undefined;
   // A `<define>` body reads as if at each tag rendering its var, with the
   // contents no `<await>` holds yet: again only when those grow, so it ends.
@@ -791,8 +790,8 @@ function getReadStructure(
     // An `<await>` in content the client keeps takes its promise by the fill,
     // as the patch pairs no boundary there to carry its settlement.
     if (contents) found = mergeConditions(found, { contents });
-    // A client branch's guard already holds what creates it on the client.
-    if (!knownChild) continue;
+    // A hoisted read sits in no structure below the binding.
+    if (!isSameOrAncestorSection(binding.section, readAt)) continue;
     // What creates the read's section anew on the client (main's reason): a
     // caller's group there, or a `<define>` body's calls, leave it unfilled.
     const reason = getBranchExprReasonUntil(readAt, binding.section);
@@ -803,11 +802,12 @@ function getReadStructure(
     const passed = getDefineCallSources(created, binding.section);
     if (passed?.state) return true;
     for (const sources of [created, passed]) {
+      const others = getOtherInputs(sources, binding);
       if (
-        hasTagCallerParamAt(sources, binding.section) &&
-        !isCoveredParam(binding, sources!.param)
+        hasTagCallerParamAt(others, binding.section) &&
+        !isCoveredParam(binding, others!.param)
       ) {
-        found = mergeConditions(found, { structure: sources });
+        found = mergeConditions(found, { structure: others });
       }
     }
   }
