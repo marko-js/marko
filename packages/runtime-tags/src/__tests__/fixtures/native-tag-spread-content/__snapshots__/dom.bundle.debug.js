@@ -41,7 +41,7 @@ const $input = /*@__PURE__*/ _const("input", ($scope) => {
 });
 const $CustomContent = ($scope, CustomContent) => {
 	_attr_content($scope, "#em/6", CustomContent);
-	$CustomContent_content2($scope, CustomContent?.content);
+	$CustomContent_content2($scope, CustomContent.content);
 };
 function $setup($scope) {
 	_attr_content($scope, "#output/3", undefined);

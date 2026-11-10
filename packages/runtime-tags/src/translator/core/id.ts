@@ -47,6 +47,8 @@ export default {
     const binding = trackVarReferences(tag, BindingType.derived);
     if (binding) {
       assertNoTagVarMutation(tag);
+      // A truthy `value`, else a minted id string.
+      binding.nullable = false;
       setDerivedFrom(binding, valueExtra);
     }
 

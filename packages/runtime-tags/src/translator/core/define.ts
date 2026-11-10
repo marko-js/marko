@@ -53,6 +53,8 @@ export default {
     }
 
     assertNoTagVarMutation(tag);
+    // Always an object of its attributes and `content`.
+    varBinding.nullable = false;
 
     const babelBinding =
       t.isIdentifier(tag.node.var) && tag.scope.getBinding(tag.node.var.name)!;
