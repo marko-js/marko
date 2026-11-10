@@ -165,10 +165,10 @@ visits comments, reconstructs branches, and runs effects with `isResuming = 1`.
 Resume visits branch markers only in a bundle that enables branches, which any
 retained `_if`, `_for`, `_show` or dynamic tag runtime does (`withBranches`).
 An unconditionally written branch whose condition reads state with a resumable
-assignment (one in a resumed effect or registered function) keeps its own
-runtime, so its owner links from its branch marker; any other branch's owner
-comes from the payload, as no template can see whether another one enables
-branches.
+writer (an assignment in a resumed effect or registered function, or a child's
+`<return>`, whose tag variable resumes its signal) keeps its own runtime, so its
+owner links from its branch marker; any other branch's owner comes from the
+payload, as no template can see whether another one enables branches.
 
 ## In-order content and effects
 

@@ -19,7 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_script($scope1_id, "__tests__/template.marko_1_setHtml#0:2", 0);
-		_subscribe($setHtml__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4"));
+		_subscribe($setHtml__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4"), "__tests__/template.marko_1_setHtml#0:2/subscribe", 0);
 		_resume_branch($scope1_id);
 	}, $scope0_id), 0, 1, 1);
 	_var($scope0_id, "#scopeOffset/1", $Child_scope, "__tests__/template.marko_0_setHtml#2/var");

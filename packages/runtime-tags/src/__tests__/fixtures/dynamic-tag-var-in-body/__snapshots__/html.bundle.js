@@ -19,10 +19,10 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_script($scope1_id, "a1", 0);
-		_subscribe($setHtml__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }));
+		_subscribe($setHtml__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a2", 0);
 		_resume_branch($scope1_id);
 	}, $scope0_id));
-	_var($scope0_id, "b", $Child_scope, "a2");
+	_var($scope0_id, "b", $Child_scope, "a3");
 	_scope($scope0_id, {
 		c: setHtml,
 		d: $setHtml__closures

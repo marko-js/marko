@@ -1,6 +1,9 @@
 import { resolveAfter } from "../../utils/resolve";
+import Counter from "./tags/counter.marko";
 <let/n=1/>
 <let/m=2/>
+<Counter/known/>
+<${input.show && Counter}/dynamic/>
 <button onClick() { m++ }/>
 <script>n = 5</script>
 <try>
@@ -8,6 +11,7 @@ import { resolveAfter } from "../../utils/resolve";
     <let/local=n/>
     <p>${n + m}</p>
     <span>${local}</span>
+    <b>${known} ${dynamic}</b>
     <script>console.log("e" + n)</script>
   </await>
   <@placeholder>loading</@placeholder>
