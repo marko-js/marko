@@ -137,8 +137,8 @@ import {
   hasTagCallerParamAt,
   runsEffectOnPatch,
   runsSubscribersByWrite,
-  seedsCreatedScope,
   seedsOwnerConstant,
+  writesSeed,
 } from "./refresh";
 
 // What a section's patch calls in `_scope`'s place: its client branch reports and a known
@@ -286,7 +286,8 @@ export function writePatchResumeStatements(
   }
   // Beside fills: a created scope's seeds and filled intersection members' slot writes.
   forEach(section.bindings, (binding) => {
-    const seeds = seedsCreatedScope(binding) && getWriteReason(binding);
+    const seeds =
+      writesSeed(binding) && mapBodyParams(section, getWriteReason(binding));
     // In place where an intersection the patch writes runs on the client (another
     // member is the client's).
     const { filledMembers } = getPatchFill(binding);

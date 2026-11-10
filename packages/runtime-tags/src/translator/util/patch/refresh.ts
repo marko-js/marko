@@ -92,7 +92,7 @@ import {
   sourcesUtil,
   withSources,
 } from "../sources";
-import { getWriteReason } from "../write-guard";
+import { getWriteReason, isEverWritten } from "../write-guard";
 import {
   getStateInitialValueSources,
   getFillSources,
@@ -442,7 +442,7 @@ export function seedsOwnerConstant(section: Section, closure: Binding) {
     !closure.sources &&
     closure.type !== BindingType.dom &&
     mayBeCreated(section) &&
-    !!getWriteReason(closure)
+    isEverWritten(closure.section, getWriteReason(closure))
   );
 }
 
@@ -472,7 +472,10 @@ export const [seedsCreatedScope] = createAnalysisMemo((binding: Binding) => {
 // A created scope's seed a flush writes; a registration it carries binds by
 // what its own module imports.
 export function writesSeed(binding: Binding) {
-  return seedsCreatedScope(binding) && !!getWriteReason(binding);
+  return (
+    seedsCreatedScope(binding) &&
+    isEverWritten(binding.section, getWriteReason(binding))
+  );
 }
 
 // Read in `section` past renders, effects, setup, name-only dynamic tags and (never

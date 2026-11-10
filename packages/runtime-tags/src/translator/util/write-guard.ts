@@ -360,8 +360,19 @@ function orMaskGroup(
 export function isEverWritten(section: Section, reason: undefined | Reason) {
   const ownReason = mapBodyParams(section, reason);
   return isGuardedReason(ownReason)
-    ? !!ownReason.global || getGroupsBit(ownReason.param) !== 0
+    ? !!ownReason.global ||
+        reduceParamGroups(ownReason.param, isGroupEverWritten, false)
     : !!ownReason;
+}
+
+// A group every call passes as a constant is never written, in a patch build too:
+// its guards keep the check, but `0` turns on neither `_write_if` nor `_unfilled_if`.
+function isGroupEverWritten(
+  written: boolean,
+  section: Section,
+  group: ParamReasonGroup,
+) {
+  return written || getStaticGroupValue(section, group) !== 0;
 }
 
 // Whether a guard on `reason` in a known tag's template writes for every render
