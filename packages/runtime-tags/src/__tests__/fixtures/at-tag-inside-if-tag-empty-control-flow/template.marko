@@ -1,0 +1,10 @@
+<const/{ x, list }=input/>
+<custom-tag>
+  <if=x>
+    <@thing x=1>Hello</@thing>
+    <for of=list/>
+  </if>
+  <else>
+    <@thing x=2>Goodbye</@thing>
+  </else>
+</custom-tag>

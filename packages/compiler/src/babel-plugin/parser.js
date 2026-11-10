@@ -690,7 +690,7 @@ export function parseMarko(file) {
               attributeTags.push(child);
             } else if (
               isControlFlow &&
-              child.tagDef?.controlFlow &&
+              child.tagDef?.parseOptions?.controlFlow &&
               !child.body.body.length
             ) {
               child.body.attributeTags = true;
