@@ -31,5 +31,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_title: ["input.title"],
 		bag: "2:8",
 		open: "3:6"
-	}) || $fg__input_title && _patch_write($scope0_id, "PatchMarkedWrite:bag", bag, !$sg__input_title);
+	}) || ($fg__input_title && _patch_write($scope0_id, "PatchMarkedWrite:mk", mk, !$sg__input_title), $fg__input_title && _patch_write($scope0_id, "PatchMarkedWrite:bag", bag, !$sg__input_title));
 }, 1);

@@ -36,5 +36,5 @@ var template_default = _template("a", (input) => {
 	_scope($scope0_id, {
 		f: z,
 		b: _existing_scope($childScope)
-	});
+	}) || _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xe", input.y, !_server_guard($scope0_reason, 0));
 }, 1);

@@ -6,7 +6,8 @@ var template_default = _template("a", (input) => {
 	const $sg__input_title = _server_guard($scope0_reason, 0), $fg__input_title = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	$fg__input_title && _patch_write($scope0_id, "xe", input.title, !$sg__input_title);
-	const bag = { get: _bind_resume(() => input.title, "a0", $scope0_id) };
+	const mk = _bind_resume(() => input.title, "a0", $scope0_id);
+	const bag = { get: mk };
 	let open = false;
 	_html("<main>");
 	_if(() => {}, $scope0_id, "a", 1, 1, 0, 0, 1);
@@ -17,5 +18,5 @@ var template_default = _template("a", (input) => {
 		e: input.title,
 		g: bag,
 		h: open
-	}) || $fg__input_title && _patch_write($scope0_id, "xg", bag, !$sg__input_title);
+	}) || ($fg__input_title && _patch_write($scope0_id, "xf", mk, !$sg__input_title), $fg__input_title && _patch_write($scope0_id, "xg", bag, !$sg__input_title));
 }, 1);

@@ -122,7 +122,7 @@ interface PatchFill {
   effectRead?: boolean;
   /** A function client code reads, or a flush seeds, references it. */
   fnReference?: boolean;
-  /** A built object an effect reads is built from it (`holdsBuiltObject`). */
+  /** A built object an entry reads is built from it (`holdsBuiltObject`). */
   objectSource?: boolean;
   writeReads?: boolean;
   ownRegistration?: boolean;
@@ -158,7 +158,7 @@ function computePatchFill(binding: Binding): PatchFill {
   );
   const objectSource = someAlias(
     binding,
-    buildsEffectReadObject,
+    buildsEntryReadObject,
     undefined,
     true,
   );
@@ -188,8 +188,7 @@ function computePatchFill(binding: Binding): PatchFill {
       (effectRead ||
         fnReference ||
         objectSource ||
-        // A server value the patch writes reaches client-rendered structure by its closures.
-        (!!kind && hasGuardedSources(binding)) ||
+        hasServerFillReads(binding) ||
         writesForIntersectionRender(binding)),
     // Only the patch's key reaches the declaration: a `<let>` no shipped code assigns.
     ownRegistration: fill && !hasResumableAssignment(binding),
@@ -1034,17 +1033,36 @@ function rendersByWriteRead(read: ReferencedExtra, binding: Binding) {
   );
 }
 
-// A source of a built object an effect reads, here or as another template's input:
+// A server value with reads that need its fill: client code renders them from a patch's write.
+function hasServerFillReads(binding: Binding) {
+  return !!getFillReadKind(binding).kind && hasGuardedSources(binding);
+}
+
+// A source of a built object an entry reads, here or as another template's input:
 // the object's readers depend on its sources (`holdsBuiltObject`).
-function buildsEffectReadObject(binding: Binding) {
+function buildsEntryReadObject(binding: Binding) {
   return someDerivedRead(binding, (derived, expr) => {
-    const built = getBuiltObject(derived, binding, expr);
-    return !!built && someReached(built, isFilledForEffect);
+    if (expr.buildsObject || holdsBuiltObject(derived)) {
+      return someReached(derived, isEntryRead);
+    }
+    if (derived.section.program !== binding.section.program) {
+      // The input object (an alias of the template's params), where an effect's entry
+      // depends on it whole: only there does the call record its sources (`_patch_live`).
+      let input = derived;
+      while (input.aliasOf?.aliasOf) input = input.aliasOf;
+      return isEffectRead(input) && someReached(input, isFilledForEffect);
+    }
+    return false;
   });
 }
 
 function isFilledForEffect(reached: Binding) {
   return !!getPatchFill(reached).effectRead;
+}
+
+// An effect's entry reads it, or a render's: one client code runs from a patch's write.
+function isEntryRead(reached: Binding) {
+  return isFilledForEffect(reached) || hasServerFillReads(reached);
 }
 
 // An effect, outside a created `@catch`, references the value itself.
@@ -1063,19 +1081,6 @@ function readsInEffect(alias: Binding) {
     }
   }
   return false;
-}
-
-// The object a value goes into that is built anew each time it runs: one its
-// reading expression builds or derives here, or another template's call input.
-function getBuiltObject(derived: Binding, from: Binding, expr: t.NodeExtra) {
-  if (expr.buildsObject || holdsBuiltObject(derived)) return derived;
-  if (derived.section.program !== from.section.program) {
-    // The input object (an alias of the template's params), where an effect's
-    // entry depends on it whole.
-    let input = derived;
-    while (input.aliasOf?.aliasOf) input = input.aliasOf;
-    if (isEffectRead(input)) return input;
-  }
 }
 
 // A value built anew each time it runs, as a client render builds it on a change of

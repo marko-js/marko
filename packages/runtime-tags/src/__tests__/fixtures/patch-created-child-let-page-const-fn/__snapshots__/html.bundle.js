@@ -18,7 +18,7 @@ _shells({
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 1), $ui__input_show = _unfilled_if($scope0_reason, 1), $sg__input_label = _server_guard($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	$fg__input_label && $ui__input_show && _patch_write($scope0_id, "xd", input.label, !$sg__input_label);
+	$fg__input_label && _patch_write($scope0_id, "xd", input.label, !$sg__input_label);
 	const opts = { fn: _bind_resume(function() {
 		return "f:" + input.label;
 	}, "a0", $scope0_id) };
