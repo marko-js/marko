@@ -53,18 +53,6 @@ patchers[PatchKey.Subscribers] = (scope, id, reads) => {
               childScope[AccessorProp.Gen] > 0 &&
               childScope[AccessorProp.Gen] < runId
             ) {
-              if (
-                MARKO_DEBUG &&
-                !signals[
-                  (childScope[
-                    position[ClosureSignalProp.SignalIndexAccessor]
-                  ] as number) || 0
-                ]
-              ) {
-                throw new Error(
-                  `The server subscribed a scope to the "${id}" walk at a position it does not run.`,
-                );
-              }
               signals[
                 (childScope[
                   position[ClosureSignalProp.SignalIndexAccessor]
