@@ -18,7 +18,12 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		_html(`<button>${_text_mark($scope1_id, "a", input.submitLabel || "OK", $wg__input_submitLabel)}</button><span>${_text_mark($scope1_id, "b", input.label, $wg__input_label)}</span>`);
-		$wi__input_submitLabel__OR__input_label && _subscribe($wi__input_label && $input_label__closures, _subscribe($wi__input_submitLabel && $input_submitLabel__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a0", $wg__input_submitLabel || $wg__input_label), "a1", $wg__input_submitLabel || $wg__input_label);
+		const $scope1_guard = $wg__input_submitLabel || $wg__input_label;
+		if (_write_if($scope0_reason, 0)) {
+			const $scope1_write = _scope($scope1_id, { _: _scope_with_id($scope0_id) });
+			_subscribe($wi__input_submitLabel && $input_submitLabel__closures, $scope1_write, "a0", $scope1_guard);
+			_subscribe($wi__input_label && $input_label__closures, $scope1_write, "a1", $scope1_guard);
+		}
 	}, $scope0_id) }) });
 	$wi__input_submitLabel__OR__input_label && _scope($scope0_id, {
 		f: $wi__input_submitLabel && $input_submitLabel__closures,

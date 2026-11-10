@@ -33,7 +33,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			let local = n;
 			_html(`<p>${_text_mark($scope2_id, "#text/0", n + m)}</p><span>${_escape(local)}</span><b>${_text_mark($scope2_id, "#text/2", known)} ${_text_mark($scope2_id, "#text/3", dynamic, 2)}</b>`);
 			_script($scope2_id, "__tests__/template.marko_2_n#0:9");
-			_subscribe($dynamic__closures, _subscribe($known__closures, _subscribe($m__closures, _subscribe($n__closures, _scope($scope2_id, {}, "__tests__/template.marko", "10:4"), "__tests__/template.marko_2_n#0:9/subscribe"), "__tests__/template.marko_2_m#0:10/subscribe"), "__tests__/template.marko_2_known#0:11/subscribe"), "__tests__/template.marko_2_dynamic#0:12/subscribe");
+			const $scope2_write = _scope($scope2_id, {}, "__tests__/template.marko", "10:4");
+			_subscribe($n__closures, $scope2_write, "__tests__/template.marko_2_n#0:9/subscribe");
+			_subscribe($m__closures, $scope2_write, "__tests__/template.marko_2_m#0:10/subscribe");
+			_subscribe($known__closures, $scope2_write, "__tests__/template.marko_2_known#0:11/subscribe");
+			_subscribe($dynamic__closures, $scope2_write, "__tests__/template.marko_2_dynamic#0:12/subscribe");
 		});
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "9:2");
 	}, () => {

@@ -16,10 +16,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 						const $scope3_id = _scope_id();
 						let y = f(v);
 						_html(`<p>${_text_mark($scope3_id, "#text/0", y + w, $wg__w)}</p>`);
-						$wi__show__OR__inner__OR__v__OR__w && _subscribe($wi__w && $D_content__w__closures, _subscribe($wi__v && $D_content__v__closures, _scope($scope3_id, {
-							y: $wi__w && y,
-							_: _scope_with_id($scope2_id)
-						}, "__tests__/template.marko", "4:6", { y: "5:12" }), "__tests__/template.marko_3_v#1:5/subscribe", $wg__w), "__tests__/template.marko_3_w#1:6/subscribe", $wg__w);
+						if (_write_if($scope1_reason, 2)) {
+							const $scope3_write = _scope($scope3_id, {
+								y: $wi__w && y,
+								_: _scope_with_id($scope2_id)
+							}, "__tests__/template.marko", "4:6", { y: "5:12" });
+							_subscribe($wi__v && $D_content__v__closures, $scope3_write, "__tests__/template.marko_3_v#1:5/subscribe", $wg__w);
+							_subscribe($wi__w && $D_content__w__closures, $scope3_write, "__tests__/template.marko_3_w#1:6/subscribe", $wg__w);
+						}
 						$wg__w || $wi__show__OR__inner__OR__v__OR__w && _write_guard($scope1_reason, 5) && _resume_branch($scope3_id);
 						return 0;
 					}

@@ -11,7 +11,9 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 				const $scope2_id = _scope_id();
 				_html(`<span>${_text_mark($scope2_id, "#text/0", item, $wg__input_obj_list)}</span>`);
 				_script($scope2_id, "__tests__/tags/child.marko_2_input_obj#0:3_input_count#0:6_item#1:2", $wg__input_obj_list);
-				_subscribe($wi__input_count && $input_count__closures, _subscribe($wi__input_obj && $input_obj__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/child.marko", "2:4"), "__tests__/tags/child.marko_2_input_obj#0:3/subscribe", $wg__input_obj_list), "__tests__/tags/child.marko_2_input_count#0:6/subscribe", $wg__input_obj_list);
+				const $scope2_write = _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/child.marko", "2:4");
+				_subscribe($wi__input_obj && $input_obj__closures, $scope2_write, "__tests__/tags/child.marko_2_input_obj#0:3/subscribe", $wg__input_obj_list);
+				_subscribe($wi__input_count && $input_count__closures, $scope2_write, "__tests__/tags/child.marko_2_input_count#0:6/subscribe", $wg__input_obj_list);
 				$wg__input_obj_list || (_write_guard($scope0_reason, 1) || _write_guard($scope0_reason, 4)) && _resume_branch($scope2_id);
 				return 0;
 			}

@@ -41,7 +41,8 @@ var template_default = _template("a", (input) => {
 				return 0;
 			}
 		}, $scope1_id, "b", $wg__n, $wg__n);
-		($wi__input_note__OR__input_on || $wi__n) && _subscribe($wi__input_note && $input_note__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a1", $wg__input_note || $wg__n);
+		const $scope1_guard = $wg__input_note || $wg__n;
+		($wi__input_note__OR__input_on || $wi__n) && _subscribe($wi__input_note && $input_note__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "a1", $scope1_guard);
 	}, $scope0_id) };
 	_dynamic_tag($scope0_id, "a", input.on ? card_default : "div", {}, _content_resume("a2", () => {
 		const $scope3_id = _scope_id();

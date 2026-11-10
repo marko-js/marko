@@ -44,7 +44,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				return 0;
 			}
 		}, $scope1_id, "#text/1", $wg__n, $wg__n);
-		($wi__input_note__OR__input_on || $wi__n) && _subscribe($wi__input_note && $input_note__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:2"), "__tests__/template.marko_1_input_note#0:3/subscribe", $wg__input_note || $wg__n);
+		const $scope1_guard = $wg__input_note || $wg__n;
+		($wi__input_note__OR__input_on || $wi__n) && _subscribe($wi__input_note && $input_note__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:2"), "__tests__/template.marko_1_input_note#0:3/subscribe", $scope1_guard);
 	}, $scope0_id) };
 	_dynamic_tag($scope0_id, "#text/0", input.on ? card_default : "div", {}, _content_resume("__tests__/template.marko_3*content", () => {
 		const $scope3_id = _scope_id();

@@ -53,7 +53,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope4_id = _scope_id();
 			_html(`<p${_attrs(r2, "#p/0", $scope4_id, "p")}>${_text_mark($scope4_id, "#text/1", r1.b, _write_guard($scope0_reason, 1))}</p>${_el_mark($scope4_id, "#p/0")}`);
 			_script($scope4_id, "__tests__/template.marko_4_r2#0:12");
-			_subscribe($wi__input_o && $r__closures, _subscribe($wi__input_o && $b2__closures, _scope($scope4_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "19:6", { "EventAttributes:#p/0": ["...r2", "21:13"] }), "__tests__/template.marko_4_b#0:11/subscribe"), "__tests__/template.marko_4_r2#0:12/subscribe");
+			const $scope4_write = _scope($scope4_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "19:6", { "EventAttributes:#p/0": ["...r2", "21:13"] });
+			_subscribe($wi__input_o && $b2__closures, $scope4_write, "__tests__/template.marko_4_b#0:11/subscribe");
+			_subscribe($wi__input_o && $r__closures, $scope4_write, "__tests__/template.marko_4_r2#0:12/subscribe");
 		}, $scope0_id) });
 	}
 	const $childScope2 = _peek_scope_id();
