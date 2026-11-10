@@ -457,7 +457,7 @@ caller group leaves the reads unfilled (`_unfilled_if`); always where a `<let>` 
 content reading it, and where a consumer renders the content reading it as a
 client branch (`_client_branch_if`). What the client runs on a filled slot is
 named by the scope's entries, each valued by the filled reads it depends on
-(`writeReadsEntry`): an effect's, which also mounts it in a scope its flush
+(`_script`, `_patch_render`, `_patch_subscribers`): an effect's, which also mounts it in a scope its flush
 created whose shell names no effect reading what a patch fills (one the created
 scope's own render queues ships as a `QueuedEffect`, which only re-runs it); a
 render, a filled intersection's or an `<if>`/`<for>` closure's; and the walk
@@ -588,14 +588,6 @@ reads (`_bind_resume`, keyed `id read …`), and a bind of it makes a new functi
 when one of them changed in that response, shared per owner and registration (marked
 bind); a function reading client state is the client's and has none.
 _Avoid_: written references, written captures, live function, live bind, held function
-
-**Built object**:
-A value an object or array literal builds, one a branch may yield one from
-(either arm of `?:`, either side of `||` or `??`, the right of `&&`), or the
-input a call builds: its readers depend on its sources, not its identity. A call
-records the built objects it passes (`_patch_live`), so a child's entries name
-their sources.
-_Avoid_: fresh object, identity-less value
 
 **Patch pairing**:
 How a patch treats a dynamic tag (`PatchPairing`, `renderDynamicTag`): `Render`

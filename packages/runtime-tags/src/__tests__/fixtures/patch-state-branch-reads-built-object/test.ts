@@ -5,7 +5,7 @@ const click = (document: Document) => {
 };
 
 // A branch state selects reads an object built from server input: the entry re-running
-// its closure waits on what the object is built from, which the patch writes.
+// its closure waits on the object's slot, which the patch writes.
 export const config: TestConfig = {
   patches: true,
   steps: [{ x: "a" }, { x: "b" }, click, click, { x: "c" }],

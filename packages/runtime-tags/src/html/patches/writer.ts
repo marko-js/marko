@@ -1,5 +1,4 @@
 import { ROOT_SCOPE_ID } from "../../common/meta";
-import { toArray } from "../../common/opt";
 import {
   encodeIdKey,
   encodeIdSite,
@@ -582,13 +581,6 @@ export class PatchRenderState extends PatchPageState {
   setupLinks?: Set<number>;
   // Each owner's client branch entry the response renders, with the scope it is in.
   clientBranchRendered?: Map<string, number>;
-  // What each scope's slots holding built objects depend on, by accessor.
-  filledReads?: Record<number, Record<string, string>>;
-  // The writes each entry re-runs on, and its scope, resolved as the flush
-  // serializes.
-  entryReads?: Map<string[], number>;
-  // The built objects each child scope's caller passes it, with their sources.
-  liveArgs?: Map<number, Map<unknown, [scopeId: number, sources: string]>>;
 
   // Nothing ever resumes a patch render's output, so resume writes stop at the
   // canonical scope (server reads); patch data goes through `writePatchEntry`.
@@ -1041,9 +1033,6 @@ export function _patch_write(
         : PatchKey.Write
       ).length,
     );
-    // A built object's readers depend on its sources, which the call recorded.
-    const reads = getBuiltObjectReads(state, scopeId, value);
-    if (reads) ((state.filledReads ??= {})[scopeId] ??= {})[accessor] = reads;
     if (setup && !inCreatable()) return "";
     const bind = bindEntry(state, scopeId, value);
     const patch = ensureScopePatch(state, scopeId);
@@ -1077,11 +1066,11 @@ export function _script(
   _base_script(scopeId, registryId, markerGuard);
   const state = getState();
   if (entry && state instanceof PatchRenderState) {
-    writeReadsEntry(
+    writePatchEntry(
       state,
       scopeId,
       (entry > 1 ? PatchKey.QueuedEffect : PatchKey.Effect) + registryId,
-      reads,
+      reads || "",
     );
   }
 }
@@ -1105,7 +1094,12 @@ export function _patch_render(
       reads !== undefined &&
       updatesFrom === (UpdatesFrom.Client | UpdatesFrom.Server)
     ) {
-      writeReadsEntry(state, scopeId, PatchKey.Render + registryId, reads);
+      writePatchEntry(
+        state,
+        scopeId,
+        PatchKey.Render + registryId,
+        reads || "",
+      );
       return 1;
     }
     if (updatesFrom & UpdatesFrom.Client && inCreatable()) {
@@ -1124,59 +1118,12 @@ export function _patch_subscribers(
 ) {
   const state = getState();
   if (state instanceof PatchRenderState) {
-    writeReadsEntry(state, scopeId, PatchKey.Subscribers + id, reads);
+    writePatchEntry(state, scopeId, PatchKey.Subscribers + id, reads || "");
   }
 }
 
-// What an entry depends on: one read, several, or none (falsy).
-type EntryReads = string | Falsy | (string | Falsy)[];
-
-// An entry valued by the writes it re-runs on, resolved once the flush's are in: a
-// slot holding a built object a call passed stands for that object's sources.
-function writeReadsEntry(
-  state: PatchRenderState,
-  scopeId: number,
-  key: string,
-  reads: EntryReads,
-) {
-  const names = toArray(reads).filter(Boolean);
-  (state.entryReads ??= new Map()).set(names, scopeId);
-  writePatchEntry(state, scopeId, key, names);
-}
-
-export function resolveEntryReads(
-  state: PatchRenderState,
-  scopeId: number,
-  names: string[],
-) {
-  const seen = new Set<string>();
-  let reads = "";
-  for (const name of names) {
-    let up = 0;
-    while (name[up] === ">") up++;
-    let owner: number | undefined = scopeId;
-    for (let hop = up; hop-- && owner !== undefined;) {
-      owner = getOwnerId(state, owner);
-    }
-    const referenced =
-      owner !== undefined && state.filledReads?.[owner]?.[name.slice(up)];
-    if (referenced) {
-      const hops = name.slice(0, up);
-      for (const read of referenced.split(" ")) {
-        reads = addRead(seen, reads, hops + read);
-      }
-    } else {
-      reads = addRead(seen, reads, name);
-    }
-  }
-  return reads;
-}
-
-function addRead(seen: Set<string>, reads: string, read: string) {
-  if (seen.has(read)) return reads;
-  seen.add(read);
-  return reads ? reads + " " + read : read;
-}
+// What an entry depends on: its reads joined, or none (falsy).
+type EntryReads = string | Falsy;
 
 // Functions with filled references: their registrations name them (`patches/marked-bind`).
 const FILLED_REFERENCE_FNS = new WeakSet<WeakKey>();
@@ -1188,40 +1135,6 @@ export function _bind_resume<T extends WeakKey>(
 ) {
   FILLED_REFERENCE_FNS.add(val);
   return _resume(val, id, scopeId);
-}
-
-// A built object a call passes its child: its readers there depend on its sources.
-export function _patch_live<T>(
-  scopeId: number,
-  value: T,
-  ownerScopeId: number,
-  sources: string,
-) {
-  const state = getState();
-  if (state instanceof PatchRenderState) {
-    const args = (state.liveArgs ??= new Map());
-    let values = args.get(scopeId);
-    if (!values) args.set(scopeId, (values = new Map()));
-    values.set(value, [ownerScopeId, sources]);
-  }
-  return value;
-}
-
-// What a built object a call passed depends on: its sources, as hops from the scope
-// through the owner it was built in.
-function getBuiltObjectReads(
-  state: PatchRenderState,
-  scopeId: number,
-  value: unknown,
-) {
-  const built = state.liveArgs?.get(scopeId)?.get(value);
-  if (built?.[1]) {
-    const up = findOwnerDepth(state, scopeId, built[0]);
-    if (up !== undefined) {
-      const hops = ">".repeat(up);
-      return hops + built[1].replaceAll(" ", " " + hops);
-    }
-  }
 }
 
 // A page render's resume payload rides this; a patch carries fills alone.

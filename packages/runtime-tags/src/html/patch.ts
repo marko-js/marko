@@ -78,7 +78,6 @@ export {
   _patch_subscribe,
   _patch_subscribers,
   _patch_let_change,
-  _patch_live,
   _patch_nonce,
   _patch_write,
   _bind_resume,

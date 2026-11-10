@@ -55,11 +55,8 @@ import {
   onReasonsSettled,
 } from "./patch/decisions";
 import {
-  getPassedReads,
   getFilledReferences,
   hasFilledReferences,
-  holdsBuiltObject,
-  runsEffectOnPatch,
   holdsRegisteredFn,
   namesBodyOwner,
   someReturnedFnValue,
@@ -440,7 +437,6 @@ export function knownTagTranslateHTML(
 
   const childScopeBinding = tagExtra.childScopeBinding!;
 
-  let liveInput: ((input: t.Expression) => t.Expression) | undefined;
   let varStatement: t.Statement | undefined;
   // A patch pairs the child through its scope ref, whatever the reason.
   if (isChildScopeResumed(section, tagExtra)) {
@@ -497,40 +493,6 @@ export function knownTagTranslateHTML(
 
     writeSlot(childScopeSlot, callRuntime("_existing_scope", peekScopeId));
 
-    // An object the call builds anew from what a patch fills: the child's readers
-    // depend on its sources.
-    if (isPatch() && patchFillsSection(section)) {
-      const inputReads = new Set<string>();
-      for (const prop of properties) {
-        if (t.isObjectProperty(prop) && t.isExpression(prop.value)) {
-          const { extra } = prop.value;
-          if (!extra) continue;
-          const reads = getPassedReads(section, extra);
-          for (const read of reads) inputReads.add(read);
-          if (reads.size && isBuiltObjectExpr(extra)) {
-            prop.value = callRuntime(
-              "_patch_live",
-              peekScopeId,
-              prop.value,
-              getScopeIdIdentifier(section),
-              t.stringLiteral([...reads].join(" ")),
-            );
-          }
-        }
-      }
-      // A child reading its whole input: the object the call builds anew.
-      if (inputReads.size && some(tagExtra.derives, runsEffectOnPatch)) {
-        liveInput = (input) =>
-          callRuntime(
-            "_patch_live",
-            peekScopeId,
-            input,
-            getScopeIdIdentifier(section),
-            t.stringLiteral([...inputReads].join(" ")),
-          );
-      }
-    }
-
     // Below the render call, `_var` mints the scope offset's post-render id;
     // guarded, as its registration ships only where the guard holds.
     const varCall =
@@ -583,11 +545,6 @@ export function knownTagTranslateHTML(
   }
 
   const renderArgs = getRenderArgs(tag, properties);
-  if (liveInput) {
-    renderArgs[renderArgs.length - 1] = liveInput(
-      renderArgs[renderArgs.length - 1] as t.Expression,
-    );
-  }
   if (tagVar) {
     // The render call reads attr-tag bindings, so its declaration must follow
     // the attr statements rather than precede the tag.
@@ -1590,13 +1547,6 @@ function readsParamsByName(
 
 function isSpreadArgument(arg: t.Expression | t.SpreadElement) {
   return arg.type === "SpreadElement";
-}
-
-// An object the call builds anew each time it runs: a literal, or a binding holding one.
-function isBuiltObjectExpr(extra: t.NodeExtra) {
-  if (extra.buildsObject) return true;
-  const ref = getReferencedBindings(extra);
-  return !!ref && !Array.isArray(ref) && holdsBuiltObject(ref);
 }
 
 // A function with filled references as the call passes it: a literal reading a reference a patch

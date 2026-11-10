@@ -609,7 +609,11 @@ function testFixtures(interop?: true) {
             // A client render replaying the steps is ground truth for a patched
             // page, most of all once a client step leaves the server's view.
             let client = withClient
-              ? await mountClient((await plainRunner()).clientRunner!, input)
+              ? await mountClient(
+                  (await plainRunner()).clientRunner!,
+                  input,
+                  config.runtime_id || "M",
+                )
               : undefined;
             let rejected = false;
             const held: Promise<unknown>[] = [];
@@ -692,10 +696,10 @@ function testFixtures(interop?: true) {
                 );
               }
             };
-            // Patching the input the page shows again must change nothing; only
-            // the oracle's run asks, as its server renders reach no snapshot.
+            // Patching the input the page shows again does to values the client computes what a
+            // client update to it does; only the oracle's run asks (its renders reach no snapshot).
             let sameInputDiverged = false;
-            const assertSameInputKeeps = async (input: Input) => {
+            const assertSameInputLikeClient = async (input: Input) => {
               if (!withClient || hasFlush) return;
               tracker.beginUpdate();
               const previous = response!;
@@ -716,14 +720,19 @@ function testFixtures(interop?: true) {
               browser.flush("raf");
               await timers.setImmediate();
               await timers.setImmediate();
-              const changes = tracker.takeChanges();
-              if (applied && !changes.length) return;
+              const changes = tracker.takeChanges().sort();
+              // A navigation's input is new data, so the client takes a copy; with no
+              // client render to ask, nothing may change.
+              const expected = client
+                ? (await client.updateChanges(copyPlain(input))).sort()
+                : [];
+              if (applied && String(changes) === String(expected)) return;
               if (config.same_input_divergence) {
                 sameInputDiverged = true;
                 return;
               }
               throw new Error(
-                `Patching ${JSON.stringify(input)} again ${applied ? "changed the page" : "rejected"} (set \`same_input_divergence\` if known).\n${changes.join("\n")}`,
+                `Patching ${JSON.stringify(input)} again ${applied ? "did not do what a client update to it does" : "rejected"} (set \`same_input_divergence\` if known).\n--- client update\n${expected.join("\n")}\n--- patch\n${changes.join("\n")}`,
               );
             };
             await runSteps(steps, tracker, browser, run, {
@@ -883,7 +892,7 @@ function testFixtures(interop?: true) {
                       }
                     }
                     if (applied && !held.length && !betweenFlushes) {
-                      await assertSameInputKeeps(input);
+                      await assertSameInputLikeClient(input);
                     }
                     if (!applied) {
                       if (!config.expect_rejection) {
@@ -1361,6 +1370,7 @@ async function mountClient(
     Awaited<ReturnType<typeof createServerRunner>>["clientRunner"]
   >,
   input: Input,
+  runtimeId: string,
 ) {
   const browser = createBrowser();
   const { template, run } = await runClient(browser.ctx);
@@ -1382,6 +1392,7 @@ async function mountClient(
   };
   const getHTML = () => browser.window.document.body.innerHTML;
   await settle();
+  let tracker: ReturnType<typeof createMutationTracker> | undefined;
   return {
     browser,
     settle,
@@ -1389,6 +1400,17 @@ async function mountClient(
     async update(input: Input) {
       instance.update(input);
       await settle();
+    },
+    /** What an update changes (nodes, values, console), as the patched page's tracker takes it. */
+    async updateChanges(input: Input) {
+      if (!tracker) {
+        tracker = createMutationTracker(browser, undefined, runtimeId);
+        tracker.logRender(input);
+      }
+      tracker.takeChanges();
+      tracker.beginUpdate();
+      await this.update(input);
+      return tracker.takeChanges();
     },
     async apply(update: Wait | Flush | ((document: Document) => unknown)) {
       if (isFlush(update)) {
@@ -1415,6 +1437,16 @@ function equalByValue(a: unknown, b: unknown): boolean {
     keys.length === Object.keys(b).length &&
     keys.every((key) => Object.hasOwn(b, key) && equalByValue(a[key], b[key]))
   );
+}
+
+// A copy of plain objects and arrays; anything else, such as a promise or a
+// function, is kept.
+function copyPlain<T>(value: T): T {
+  if (!isPlain(value)) return value;
+  if (Array.isArray(value)) return value.map(copyPlain) as T;
+  const copy: Record<string, unknown> = {};
+  for (const key in value) copy[key] = copyPlain(value[key]);
+  return copy as T;
 }
 
 function isPlain(value: unknown): value is Record<string, unknown> {

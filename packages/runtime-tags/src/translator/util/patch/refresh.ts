@@ -71,7 +71,7 @@ import {
   type Section,
   sectionUtil,
 } from "../sections";
-import { inCreatedCatch, shipsContentShell } from "../shell";
+import { shipsContentShell } from "../shell";
 import { getResumeRegistryId, shipsClosureScopes } from "../signals";
 import { findSlot, type Slot, SlotKind } from "../slots";
 import {
@@ -122,8 +122,6 @@ interface PatchFill {
   effectRead?: boolean;
   /** A function client code reads, or a flush seeds, references it. */
   fnReference?: boolean;
-  /** A built object an entry reads is built from it (`holdsBuiltObject`). */
-  objectSource?: boolean;
   writeReads?: boolean;
   ownRegistration?: boolean;
   filledMembers?: SortedOpt<Sources>;
@@ -156,12 +154,6 @@ function computePatchFill(binding: Binding): PatchFill {
     undefined,
     true,
   );
-  const objectSource = someAlias(
-    binding,
-    buildsEntryReadObject,
-    undefined,
-    true,
-  );
   let derivedNeeds: PatchFill["derivedNeeds"];
   // The client derives a value no patch can fill from its sources, wherever its reads,
   // effects and functions (or a part's) need it; one it writes, for functions and client callers.
@@ -180,14 +172,12 @@ function computePatchFill(binding: Binding): PatchFill {
     derivedNeeds,
     effectRead,
     fnReference,
-    objectSource,
-    // A filled value effects, function references, built objects' readers or an intersection a
-    // write's render reads: written where a flush writes its scope.
+    // A filled value effects, function references or an intersection a write's
+    // render reads: written where a flush writes its scope.
     writeReads:
       isPatchFilled(binding) &&
       (effectRead ||
         fnReference ||
-        objectSource ||
         hasServerFillReads(binding) ||
         writesForIntersectionRender(binding)),
     // Only the patch's key reaches the declaration: a `<let>` no shipped code assigns.
@@ -210,9 +200,7 @@ function computePatchWrite(binding: Binding): PatchWrite {
 // A client read the patch leaves unfilled: always, or under structure a caller
 // group updates from the client.
 function leavesReadUnfilled(binding: Binding) {
-  const structure =
-    !getPatchFill(binding).objectSource &&
-    getUnfilledSubscribedSources(binding);
+  const structure = getUnfilledSubscribedSources(binding);
   return (
     structure === false ||
     some(structure, (sources) =>
@@ -221,7 +209,7 @@ function leavesReadUnfilled(binding: Binding) {
   );
 }
 
-// A filled value effects, function references, built objects or an intersection a write's render reads,
+// A filled value effects, function references or an intersection a write's render reads,
 // in a section a flush reaches.
 function isPatchWritten(binding: Binding) {
   return (
@@ -975,21 +963,6 @@ export function runsEffectOnPatch(binding: Binding) {
   return !!getPatchWrite(getCanonicalBinding(binding)).effect;
 }
 
-// What a value a call passes depends on (a built object's sources, else itself),
-// as hops from `section`; the call records a built object's (`_patch_live`).
-export function getPassedReads(section: Section, extra: t.NodeExtra) {
-  const hops = new Set<string>();
-  for (const read of reduce(
-    getReferencedBindings(extra),
-    addFilledReads,
-    new Set<Binding>(),
-  )) {
-    const hop = getWriteHop(section, read);
-    if (hop) hops.add(hop);
-  }
-  return hops;
-}
-
 // A value a patch may fill, as `>` hops from `section` up to its own (what the
 // runtime's `readChanged` reads); client state and constants it never fills.
 export function getWriteHop(section: Section, binding: Binding) {
@@ -1061,62 +1034,6 @@ function rendersByWriteRead(read: ReferencedExtra, binding: Binding) {
 // A server value with reads that need its fill: client code renders them from a patch's write.
 function hasServerFillReads(binding: Binding) {
   return !!getFillReadKind(binding).kind && hasGuardedSources(binding);
-}
-
-// A source of a built object an entry reads, here or as another template's input:
-// the object's readers depend on its sources (`holdsBuiltObject`).
-function buildsEntryReadObject(binding: Binding) {
-  return someDerivedRead(binding, (derived, expr) => {
-    if (expr.buildsObject || holdsBuiltObject(derived)) {
-      return someReached(derived, isEntryRead);
-    }
-    if (derived.section.program !== binding.section.program) {
-      // The input object (an alias of the template's params), where an effect's entry
-      // depends on it whole: only there does the call record its sources (`_patch_live`).
-      let input = derived;
-      while (input.aliasOf?.aliasOf) input = input.aliasOf;
-      return isEffectRead(input) && someReached(input, isFilledForEffect);
-    }
-    return false;
-  });
-}
-
-function isFilledForEffect(reached: Binding) {
-  return !!getPatchFill(reached).effectRead;
-}
-
-// An effect's entry reads it, or a render's: one client code runs from a patch's write.
-function isEntryRead(reached: Binding) {
-  return isFilledForEffect(reached) || hasServerFillReads(reached);
-}
-
-// An effect, outside a created `@catch`, references the value itself.
-function isEffectRead(root: Binding) {
-  return someAlias(root, readsInEffect, undefined, true);
-}
-
-function readsInEffect(alias: Binding) {
-  for (const expr of alias.reads.keys()) {
-    if (
-      expr.isEffect &&
-      !inCreatedCatch(expr.section!) &&
-      bindingUtil.has(getReferencedBindings(expr), alias)
-    ) {
-      return true;
-    }
-  }
-  return false;
-}
-
-// A value built anew each time it runs, as a client render builds it on a change of
-// what it is built from: its readers depend on that, never on its identity.
-export function holdsBuiltObject(binding: Binding) {
-  const { derivedFrom } = getCanonicalBinding(binding);
-  return !!derivedFrom && every(derivedFrom, isBuiltObject);
-}
-
-function isBuiltObject(expr: t.NodeExtra) {
-  return !!expr.buildsObject;
 }
 
 // Structure the client may render: content, unpatched structure, or
@@ -1233,19 +1150,11 @@ export function someReturnedFnValueOf(
 
 const NO_READS = new Set<never>();
 
-// What an entry reading `binding` depends on: what an object is built from, else
-// a value's own change and the filled references of the functions it may hold.
+// What an entry reading `binding` depends on: a value's own change and the filled
+// references of the functions it may hold.
 export const [getFilledReads] = createAnalysisMemo(
   (binding: Binding): Set<Binding> => {
     const root = getCanonicalBinding(binding);
-    // What the object reads, even as a param's property a call passes.
-    if (holdsBuiltObject(root)) {
-      return reduce(
-        getValueReferences(root.derivedFrom || undefined),
-        addFilledReads,
-        new Set<Binding>(),
-      );
-    }
     const reads = new Set<Binding>().add(root);
     for (const reference of getFnValueReferences(root)) reads.add(reference);
     // A value client state derives changes as what it derives from in scope does.

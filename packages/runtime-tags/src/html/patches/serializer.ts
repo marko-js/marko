@@ -12,11 +12,7 @@ import {
   writeProp,
 } from "../serializer";
 import { type Boundary, getScopeId } from "../writer";
-import {
-  type PatchRenderState,
-  resolveEntryReads,
-  shipNamedShell,
-} from "./writer";
+import { type PatchRenderState, shipNamedShell } from "./writer";
 
 // A patch flush is one flat entry tree per line: no fn wrapper, no list
 // brackets, and no scope ids, since the live page maps none to its scopes.
@@ -152,8 +148,8 @@ function writePatchProp(
   sep: string,
 ) {
   const escapedKey = toObjectKey(key);
-  let member = (node as Record<string, unknown>)[key];
-  // Kept instances and entry reads are objects: a primitive skips both lookups.
+  const member = (node as Record<string, unknown>)[key];
+  // Kept instances are objects: a primitive skips the lookup.
   if (member && typeof member === "object") {
     const render = state.boundary.state;
     // A created instance takes the holes from its owner's client branch entry instead,
@@ -167,10 +163,6 @@ function writePatchProp(
       patchTreeNodes.has(render.patchTree![clientBranchId]!)
     ) {
       return sep;
-    }
-    const readsScope = render.entryReads?.get(member as string[]);
-    if (readsScope !== undefined) {
-      member = resolveEntryReads(render, readsScope, member as string[]);
     }
   }
   if (member === undefined) {

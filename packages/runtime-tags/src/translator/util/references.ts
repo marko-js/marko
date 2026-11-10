@@ -137,9 +137,6 @@ declare module "@marko/compiler/dist/types" {
     /** A `content` it spreads or sets, or a dynamic tag name, is rendered (as a
      * body, or a `<meta>`'s attribute), so its effect never reads it. */
     rendersContent?: true;
-    /** Some branch of it builds a new object each time it runs (an object or
-     * array literal); set once per expression root. */
-    buildsObject?: boolean;
     /** Its value renders into its tag's node (an attribute, a text, a comment's
      * or a style's), which the node's slot lists among its reason expressions. */
     rendersValue?: true;
@@ -1206,25 +1203,6 @@ function dropChildren(
   }
 }
 
-// Some value the expression yields is an object or array it builds, through the
-// branches of `?:`, `??`, `||` and `&&`.
-function buildsObject(node: t.Node): boolean {
-  switch (node.type) {
-    case "ObjectExpression":
-    case "ArrayExpression":
-      return true;
-    case "ConditionalExpression":
-      return buildsObject(node.consequent) || buildsObject(node.alternate);
-    case "LogicalExpression":
-      // `&&` yields its left side only when falsy, which no object is.
-      return (
-        (node.operator !== "&&" && buildsObject(node.left)) ||
-        buildsObject(node.right)
-      );
-  }
-  return false;
-}
-
 function addReadToExpression(
   root:
     | t.NodePath<t.Identifier>
@@ -1245,7 +1223,6 @@ function addReadToExpression(
   // reference) must not keep the binding alive.
   if (exprExtra.dropped) return;
   const extra = (node.extra ??= {});
-  rootExtra.buildsObject ??= buildsObject(exprRoot.node);
   const read = addRead(exprExtra, extra, rootExtra, binding, section, getter);
 
   const { parent } = root;

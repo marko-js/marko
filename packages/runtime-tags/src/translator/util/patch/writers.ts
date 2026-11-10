@@ -1276,9 +1276,7 @@ function getClientBranchGuard(section: Section, contents: Opt<Section>) {
 // A patch writes a value where main serializes it: where client code may read it
 // after resume (its write reason), a guarded one where no patch fills its reads.
 function getUnfilledPatchWrite(section: Section, binding: Binding) {
-  // A built object's source rides its readers' entries, where a patch fills them.
-  const contents =
-    getPatchFill(binding).objectSource || getClosureContents(binding);
+  const contents = getClosureContents(binding);
   const reason = mapBodyParams(section, getWriteReason(binding));
   if (!contents && !reason) return;
   // Content taking the value as a closure needs it where the client keeps an instance.
@@ -1381,34 +1379,54 @@ function getConstantSetup(section: Section, binding: Binding) {
 }
 
 // What an entry depends on, as shells' hops (`>` per owner up), each where this instance's
-// patch fills it (bare where the entry's guard checks its one group); one read stands alone.
+// patch fills it (bare where the entry's guard checks its one group), joined as it renders.
 function getReads(
   section: Section,
   roots: Binding[],
   check: GroupCheck,
   entryGroup?: ParamReasonGroup | false,
 ) {
-  const reads: t.Expression[] = [];
+  let joined = "";
+  const guarded: [t.Expression, string][] = [];
   for (const root of roots.reduce(addFilledReads, new Set<Binding>())) {
     const hop = getWriteHop(section, root);
     if (hop) {
       const sources = root.sources!;
-      const read = ifEver(
-        entryGroup &&
+      const guard =
+        !(
+          entryGroup &&
           !sources.global &&
           isGuardedReason(sources) &&
           getSoleCallerGroup(section, sources) === entryGroup
-          ? t.stringLiteral(hop)
-          : andGuard(
-              getCallerGroupGuard(section, check, sources),
-              t.stringLiteral(hop),
-            ),
-      );
+        ) && getCallerGroupGuard(section, check, sources);
+      if (!guard || isAlways(guard)) joined += " " + hop;
       // A read no call's patch fills names nothing.
-      if (read) reads.push(read);
+      else if (!isNever(guard)) guarded.push([guard, hop]);
     }
   }
-  return reads.length > 1 ? t.arrayExpression(reads) : reads[0];
+  if (!guarded.length) {
+    return joined ? t.stringLiteral(joined.slice(1)) : undefined;
+  }
+  if (!joined && guarded.length === 1) {
+    return andGuard(guarded[0][0], t.stringLiteral(guarded[0][1]));
+  }
+  // Each guarded read leads with its space, which a sum of only those drops.
+  let sum: t.Expression | undefined = joined
+    ? t.stringLiteral(joined.slice(1))
+    : undefined;
+  for (const [guard, hop] of guarded) {
+    const read = t.conditionalExpression(
+      guard,
+      t.stringLiteral(" " + hop),
+      t.stringLiteral(""),
+    );
+    sum = sum ? t.binaryExpression("+", sum, read) : read;
+  }
+  return joined
+    ? sum
+    : t.callExpression(t.memberExpression(sum!, t.identifier("slice")), [
+        t.numericLiteral(1),
+      ]);
 }
 
 // The one caller group a guard over `list` checks at `section`, if just one.

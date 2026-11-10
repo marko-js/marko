@@ -5,7 +5,7 @@ const click = (document: Document) => {
 };
 
 // An intersection with client state reads an object built from server input: its render
-// entry waits on what the object is built from, which the patch writes.
+// entry waits on the object's slot, which the patch writes.
 export const config: TestConfig = {
   patches: true,
   steps: [{ x: "a" }, click, { x: "b" }, click, { x: "c" }],

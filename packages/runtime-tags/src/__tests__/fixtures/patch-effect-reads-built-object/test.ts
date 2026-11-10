@@ -1,6 +1,6 @@
 import type { TestConfig } from "../../main.test";
-// A script reading an object the template builds re-runs once what it is built
-// from changes, not on every patch (the object goes as a plain write).
+// A script reading an object the template builds re-runs as the object's slot
+// changes, which every patch writes anew, as a client update makes it anew.
 export const config: TestConfig = {
   patches: true,
   steps: [{ title: "a" }, { title: "b" }, { title: "b" }],
