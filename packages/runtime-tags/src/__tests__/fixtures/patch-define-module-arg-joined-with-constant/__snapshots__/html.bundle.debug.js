@@ -17,12 +17,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let open = true;
 	const Panel = { content: _content("__tests__/template.marko_2*content", ({ fmt, sep, label }) => {
 		const $scope2_id = _scope_id();
-		const $scope2_reason = _scope_reason(), $fg__fmt = _filled_guard($scope2_reason, 4), $fg__sep = _filled_guard($scope2_reason, 5), $fg__label = _filled_guard($scope2_reason, 6);
+		const $scope2_reason = _scope_reason(), $fg__fmt = _filled_guard($scope2_reason, 4), $fg__sep = _filled_guard($scope2_reason, 5);
 		_html(`<em>${_text_mark($scope2_id, "#text/0", fmt(label, sep), 1, $scope2_reason, 3)}</em>`);
 		_patch_render($scope2_id, "__tests__/template.marko_2_fmt#3_sep#4_label#5/setup", [
 			$fg__fmt && "fmt",
 			$fg__sep && "sep",
-			$fg__label && "label"
+			_filled_guard($scope2_reason, 6) && "label"
 		], $scope2_reason, 3);
 		_scope($scope2_id, {
 			fmt: (_unfilled_if($scope2_reason, 2, 4) || _unfilled_if($scope2_reason, 3, 4)) && fmt,

@@ -4,7 +4,7 @@ _shells({
 	a3: "a3 a6;D ;<p> </p>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_label = _server_guard($scope0_reason, 1), $ui__input_show = _unfilled_if($scope0_reason, 0), $fg__input_label2 = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $ui__input_show = _unfilled_if($scope0_reason, 0), $sg__input_label = _server_guard($scope0_reason, 1), $fg__input_label2 = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	let n = 0;
 	_html(`<button class=open>inc</button>${_el_mark($scope0_id, "a")}`);

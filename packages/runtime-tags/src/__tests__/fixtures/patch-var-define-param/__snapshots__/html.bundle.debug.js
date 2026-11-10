@@ -26,19 +26,19 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let n = 0;
 	const Row = { content: _content("__tests__/template.marko_1*content", ({ value }) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason(), $fg__value = _filled_guard($scope1_reason, 0);
+		const $scope1_reason = _scope_reason();
 		_set_scope_reason((1 | $uf__input_suffix) << 1);
 		const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0, _unfilled_if((1 | $uf__input_suffix) << 1, 0) && 1);
 		let label = labeler_default({ title: value + input.suffix });
 		_unfilled_if((1 | $uf__input_suffix) << 1, 0) && _var($scope1_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_1_label#7/var");
 		_patch_child_end();
 		_html(`<p>${_text_mark($scope1_id, "#text/2", label, 1, (1 | $uf__input_suffix) << 1, 0)}</p>`);
-		_patch_render($scope1_id, "__tests__/template.marko_1_input_suffix#0:4_value#5/setup", [_filled_guard($scope0_reason, 0) && ">input_suffix", $fg__value && "value"], (1 | $uf__input_suffix) << 1, 0);
+		_patch_render($scope1_id, "__tests__/template.marko_1_input_suffix#0:4_value#5/setup", _filled_guard($scope0_reason, 0) && ">input_suffix", (1 | $uf__input_suffix) << 1, 0);
 		_subscribe(_unfilled_if((1 | $uf__input_suffix) << 1, 0) && $wi__input_suffix && $input_suffix__closures, _scope($scope1_id, {
 			value: $wi__input_suffix && value,
 			_: ($wi__input_suffix || _write_if($scope1_reason, 0)) && _scope_with_id($scope0_id),
 			"#childScope/0": _existing_scope($childScope)
-		}, "__tests__/template.marko", "2:2", { value: "2:15" }), _client_guard((1 | $uf__input_suffix) << 1, 0) && "__tests__/template.marko_1_input_suffix#0:4/subscribe") || $fg__value && _unfilled_if($scope0_reason, 0) && _patch_write($scope1_id, "PatchMarkedWrite:value", value, !_server_guard($scope1_reason, 0));
+		}, "__tests__/template.marko", "2:2", { value: "2:15" }), _client_guard((1 | $uf__input_suffix) << 1, 0) && "__tests__/template.marko_1_input_suffix#0:4/subscribe");
 	}, $scope0_id) };
 	_set_scope_reason(2);
 	const $childScope2 = _peek_scope_id($scope0_id, "#childScope/0", 1);

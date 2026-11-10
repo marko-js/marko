@@ -6,7 +6,7 @@ _shells({
 	b2: "b2;D ;<p> </p>"
 });
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_b = _server_guard($scope0_reason, 3), $ui__input_items = _unfilled_if($scope0_reason, 2), $ui__input_items__OR__input_b = _unfilled_if($scope0_reason, 0), $fg__input_b2 = _filled_guard($scope0_reason, 3), $fg__input_a = _filled_guard($scope0_reason, 4), $cg__input_items = _client_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $ui__input_items = _unfilled_if($scope0_reason, 2), $sg__input_b = _server_guard($scope0_reason, 3), $ui__input_items__OR__input_b = _unfilled_if($scope0_reason, 0), $fg__input_b2 = _filled_guard($scope0_reason, 3), $fg__input_a = _filled_guard($scope0_reason, 4), $cg__input_items = _client_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	_for_of(input.items, (item) => {
 		const $scope1_id = _scope_id(), $ui__input_a = _unfilled_if($scope0_reason, 4), $fg__input_b = _filled_guard($scope0_reason, 3);

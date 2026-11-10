@@ -41,7 +41,7 @@ _shells({
 	"__tests__/tags/child.marko_3*shell": "__tests__/tags/child.marko_3*shell,<span>shown</span>"
 });
 var child_default = _template("__tests__/tags/child.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 1), $cg__input_show = _client_guard($scope0_reason, 1), $wi__input_show = _write_if($scope0_reason, 1), $sg__input_show = _server_guard($scope0_reason, 1), $ui__input_on = _unfilled_if($scope0_reason, 0), $fg__input_show2 = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 1), $cg__input_show = _client_guard($scope0_reason, 1), $wi__input_show = _write_if($scope0_reason, 1), $ui__input_on = _unfilled_if($scope0_reason, 0), $sg__input_show = _server_guard($scope0_reason, 1), $fg__input_show2 = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	let items = [1, 2];
 	_html(`<button>add</button>${_el_mark($scope0_id, "#button/0")}`);

@@ -16,14 +16,14 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	_html(`<button>+</button>${_el_mark($scope0_id, "#button/0")}`);
 	const Label = { content: _content("__tests__/tags/child.marko_1*content", ({ n }) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason(), $fg__n = _filled_guard($scope1_reason, 0);
+		const $scope1_reason = _scope_reason();
 		_html(`<p>${_text_mark($scope1_id, "#text/0", n + input.suffix, 1, (1 | $uf__input_suffix) << 1, 0)}</p>`);
 		_unfilled_if((1 | $uf__input_suffix) << 1, 0) && _patch_subscribe($scope1_id, "__tests__/tags/child.marko_1_input_suffix#0:4/subscribe");
-		_patch_render($scope1_id, "__tests__/tags/child.marko_1_input_suffix#0:4_n#3/setup", [_filled_guard($scope0_reason, 0) && ">input_suffix", $fg__n && "n"], (1 | $uf__input_suffix) << 1, 0);
+		_patch_render($scope1_id, "__tests__/tags/child.marko_1_input_suffix#0:4_n#3/setup", _filled_guard($scope0_reason, 0) && ">input_suffix", (1 | $uf__input_suffix) << 1, 0);
 		_subscribe(_unfilled_if((1 | $uf__input_suffix) << 1, 0) && $wi__input_suffix && $input_suffix__closures, _scope($scope1_id, {
 			n: $wi__input_suffix && n,
 			_: ($wi__input_suffix || _write_if($scope1_reason, 0)) && _scope_with_id($scope0_id)
-		}, "__tests__/tags/child.marko", "3:2", { n: "3:17" }), _client_guard((1 | $uf__input_suffix) << 1, 0) && "__tests__/tags/child.marko_1_input_suffix#0:4/subscribe") || $fg__n && _unfilled_if($scope0_reason, 0) && _patch_write($scope1_id, "PatchMarkedWrite:n", n, !_server_guard($scope1_reason, 0));
+		}, "__tests__/tags/child.marko", "3:2", { n: "3:17" }), _client_guard((1 | $uf__input_suffix) << 1, 0) && "__tests__/tags/child.marko_1_input_suffix#0:4/subscribe");
 	}, $scope0_id, 0) };
 	_set_scope_reason(2);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/1", 0);

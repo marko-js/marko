@@ -28,12 +28,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_patch_render($scope2_id, "__tests__/template.marko_2_value#1:4_y#3/setup");
 			_subscribe($wi__value && $Outer_content__value__closures, _scope($scope2_id, {
 				y: $wi__value && y,
-				b: (_unfilled_if($scope1_reason, 0) || _unfilled_if($scope2_reason, 0)) && b,
+				b,
 				_: ($wi__value || _write_if($scope2_reason, 0)) && _scope_with_id($scope1_id)
 			}, "__tests__/template.marko", "3:4", {
 				y: "3:19",
 				b: "4:12"
-			}), 1 && "__tests__/template.marko_2_value#1:4/subscribe");
+			}), "__tests__/template.marko_2_value#1:4/subscribe");
 		}, $scope1_id, 0) };
 		_set_scope_reason(2);
 		const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);

@@ -12,8 +12,8 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let count = 0;
 	const Inner = { content: _content("a2", ({ v, show }) => {
-		const $scope1_id = _scope_id(), $scope1_reason = _scope_reason(), $wg__show = _write_guard($scope1_reason, 1);
-		_unfilled_if($scope1_reason, 1);
+		const $scope1_id = _scope_id();
+		const $scope1_reason = _scope_reason(), $wg__show = _write_guard($scope1_reason, 1);
 		_if(() => {
 			if (show) {
 				const $scope3_id = _scope_id();

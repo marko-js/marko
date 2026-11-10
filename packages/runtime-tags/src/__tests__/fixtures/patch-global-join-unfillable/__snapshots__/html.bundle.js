@@ -25,7 +25,7 @@ var template_default = _template("a", (input) => {
 			_patch_render($scope2_id, "a3");
 			_subscribe($wi__value && $Outer_content__value__closures, _scope($scope2_id, {
 				d: $wi__value && y,
-				f: (_unfilled_if($scope1_reason, 0) || _unfilled_if($scope2_reason, 0)) && b,
+				f: b,
 				_: ($wi__value || _write_if($scope2_reason, 0)) && _scope_with_id($scope1_id)
 			}), "a2");
 		}, $scope1_id, 0) };

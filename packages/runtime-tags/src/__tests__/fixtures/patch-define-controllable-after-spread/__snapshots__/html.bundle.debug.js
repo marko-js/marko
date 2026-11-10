@@ -10,7 +10,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const TextField = { content: _content("__tests__/template.marko_1*content", (input) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason(), $ui__value__OR__valueChange = _unfilled_if($scope1_reason, 0), $fg__value = _filled_guard($scope1_reason, 1), $fg__valueChange = _filled_guard($scope1_reason, 2);
+		const $scope1_reason = _scope_reason(), $ui__value__OR__valueChange = _unfilled_if($scope1_reason, 0), $fg__valueChange = _filled_guard($scope1_reason, 2);
 		const { value, valueChange, ...attrs } = input;
 		_html(`<input${_attr_input_value($scope1_id, "#input/0", value, valueChange, 3, $scope1_reason, 0)}${_attrs_partial(attrs, {
 			value: 1,
@@ -18,7 +18,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, "#input/0", $scope1_id, "input", 0, $scope1_reason, 3)}>${_el_mark($scope1_id, "#input/0")}`);
 		_script($scope1_id, "__tests__/template.marko_1_attrs#6");
 		_script($scope1_id, "__tests__/template.marko_1");
-		_patch_render($scope1_id, "__tests__/template.marko_1_value#3_valueChange#4/setup", [$fg__value && "value", $fg__valueChange && "valueChange"], $scope1_reason, 0);
+		_patch_render($scope1_id, "__tests__/template.marko_1_value#3_valueChange#4/setup", [_filled_guard($scope1_reason, 1) && "value", $fg__valueChange && "valueChange"], $scope1_reason, 0);
 		_scope($scope1_id, {
 			value: $ui__value__OR__valueChange && value,
 			valueChange: $ui__value__OR__valueChange && valueChange

@@ -16,7 +16,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let count = 0;
 	const Inner = { content: _content("__tests__/template.marko_1*content", ({ v, show }) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason(), $wg__show = _write_guard($scope1_reason, 1), $ui__show = _unfilled_if($scope1_reason, 1);
+		const $scope1_reason = _scope_reason(), $wg__show = _write_guard($scope1_reason, 1);
 		_if(() => {
 			if (show) {
 				const $scope3_id = _scope_id();

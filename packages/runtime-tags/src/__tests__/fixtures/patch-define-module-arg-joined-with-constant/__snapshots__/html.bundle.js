@@ -14,12 +14,12 @@ var template_default = _template("a", (input) => {
 	let open = true;
 	const Panel = { content: _content("a0", ({ fmt, sep, label }) => {
 		const $scope2_id = _scope_id();
-		const $scope2_reason = _scope_reason(), $fg__fmt = _filled_guard($scope2_reason, 4), $fg__sep = _filled_guard($scope2_reason, 5), $fg__label = _filled_guard($scope2_reason, 6);
+		const $scope2_reason = _scope_reason(), $fg__fmt = _filled_guard($scope2_reason, 4), $fg__sep = _filled_guard($scope2_reason, 5);
 		_html(`<em>${_text_mark($scope2_id, "a", fmt(label, sep), 1, $scope2_reason, 3)}</em>`);
 		_patch_render($scope2_id, "a1", [
 			$fg__fmt && "d",
 			$fg__sep && "e",
-			$fg__label && "f"
+			_filled_guard($scope2_reason, 6) && "f"
 		], $scope2_reason, 3);
 		_scope($scope2_id, {
 			d: (_unfilled_if($scope2_reason, 2, 4) || _unfilled_if($scope2_reason, 3, 4)) && fmt,

@@ -7,7 +7,7 @@ _shells({
 	b2: "b2;D ;<p> </p>"
 });
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_b = _server_guard($scope0_reason, 2), $ui__input_show = _unfilled_if($scope0_reason, 1), $fg__input_a = _filled_guard($scope0_reason, 3), $fg__input_b2 = _filled_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $ui__input_show = _unfilled_if($scope0_reason, 1), $sg__input_b = _server_guard($scope0_reason, 2), $fg__input_a = _filled_guard($scope0_reason, 3), $fg__input_b2 = _filled_guard($scope0_reason, 2), $cg__input_show = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.show) {

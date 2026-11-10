@@ -15,7 +15,7 @@ var field_default = _template("b", (input) => {
 	_filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.hint, !_server_guard($scope0_reason, 1));
 	const TextField = { content: _content("b2", (input) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason(), $ui__value__OR__valueChange = _unfilled_if($scope1_reason, 0), $fg__value = _filled_guard($scope1_reason, 1), $fg__valueChange = _filled_guard($scope1_reason, 2);
+		const $scope1_reason = _scope_reason(), $ui__value__OR__valueChange = _unfilled_if($scope1_reason, 0), $fg__valueChange = _filled_guard($scope1_reason, 2);
 		const { value, valueChange, ...attrs } = input;
 		_html(`<input${_attr_input_value($scope1_id, "a", value, valueChange, 3, $scope1_reason, 0)}${_attrs_partial(attrs, {
 			value: 1,
@@ -23,7 +23,7 @@ var field_default = _template("b", (input) => {
 		}, "a", $scope1_id, "input", 0, $scope1_reason, 3)}>${_el_mark($scope1_id, "a")}`);
 		_script($scope1_id, "b3");
 		_script($scope1_id, "b4");
-		_patch_render($scope1_id, "b5", [$fg__value && "d", $fg__valueChange && "e"], $scope1_reason, 0);
+		_patch_render($scope1_id, "b5", [_filled_guard($scope1_reason, 1) && "d", $fg__valueChange && "e"], $scope1_reason, 0);
 		_scope($scope1_id, {
 			d: $ui__value__OR__valueChange && value,
 			e: $ui__value__OR__valueChange && valueChange
@@ -41,16 +41,16 @@ var field_default = _template("b", (input) => {
 	_patch_child_end();
 	const Log = { content: _content("b6", ({ log, value }) => {
 		const $scope2_id = _scope_id();
-		const $scope2_reason = _scope_reason(), $fg__log = _filled_guard($scope2_reason, 1), $fg__value2 = _filled_guard($scope2_reason, 2);
-		_script($scope2_id, "b7", 0, ($fg__log || $fg__value2) && (_client_guard($scope2_reason, 1) || _client_guard($scope2_reason, 2) ? 2 : 1), [
+		const $scope2_reason = _scope_reason(), $fg__log = _filled_guard($scope2_reason, 1), $fg__value = _filled_guard($scope2_reason, 2);
+		_script($scope2_id, "b7", 0, ($fg__log || $fg__value) && (_client_guard($scope2_reason, 1) || _client_guard($scope2_reason, 2) ? 2 : 1), [
 			$fg__log && "c",
 			_filled_guard($scope0_reason, 1) && ">e",
-			$fg__value2 && "d"
+			$fg__value && "d"
 		], "b8", $scope2_reason, 0);
 		_scope($scope2_id, {
 			c: log,
 			d: value
-		}) || ($fg__log && _patch_write($scope2_id, "xc", log, !_server_guard($scope2_reason, 1)), $fg__value2 && _patch_write($scope2_id, "xd", value, !_server_guard($scope2_reason, 2)));
+		}) || ($fg__log && _patch_write($scope2_id, "xc", log, !_server_guard($scope2_reason, 1)), $fg__value && _patch_write($scope2_id, "xd", value, !_server_guard($scope2_reason, 2)));
 	}, $scope0_id, 0) };
 	_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | $uf__input_hint << 3 | $uf__input_v << 5);
 	const $childScope2 = _peek_scope_id($scope0_id, "b", 1);

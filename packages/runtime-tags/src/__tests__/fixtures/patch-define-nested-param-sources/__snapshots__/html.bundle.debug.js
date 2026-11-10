@@ -15,11 +15,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $input_label__closures = new Set();
 	let n = 0;
 	const Outer = { content: _content("__tests__/template.marko_1*content", ({ x, y }) => {
-		const $scope1_id = _scope_id(), $ui__input_label2 = _unfilled_if($scope0_reason, 0);
+		const $scope1_id = _scope_id();
 		const $Outer_content__x__closures = new Set();
 		const $scope1_reason = _scope_reason(), $uf__x = _updates_from($scope1_reason, 1), $wi__x = _write_if($scope1_reason, 1);
 		const Inner = { content: _content("__tests__/template.marko_2*content", ({ z }) => {
-			const $scope2_id = _scope_id(), $ui__input_label = _unfilled_if($scope0_reason, 0), $ui__x = _unfilled_if($scope1_reason, 1);
+			const $scope2_id = _scope_id();
 			const $scope2_reason = _scope_reason();
 			_html(`<p>${_text_mark($scope2_id, "#text/0", input.label + x + z, 1, (1 | ($uf__input_label | $uf__x)) << 1, 0)}</p>`);
 			_patch_render($scope2_id, "__tests__/template.marko_2_input_label#0:4_x#1:3_z#3/setup", [_filled_guard($scope0_reason, 0) && ">>input_label", _filled_guard($scope1_reason, 1) && ">x"], (1 | ($uf__input_label | $uf__x)) << 1, 0);

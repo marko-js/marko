@@ -16,14 +16,14 @@ var child_default = _template("b", (input) => {
 	_html(`<button>+</button>${_el_mark($scope0_id, "a")}`);
 	const Label = { content: _content("b0", ({ n }) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason(), $fg__n = _filled_guard($scope1_reason, 0);
+		const $scope1_reason = _scope_reason();
 		_html(`<p>${_text_mark($scope1_id, "a", n + input.suffix, 1, (1 | $uf__input_suffix) << 1, 0)}</p>`);
 		_unfilled_if((1 | $uf__input_suffix) << 1, 0) && _patch_subscribe($scope1_id, "b1");
-		_patch_render($scope1_id, "b2", [_filled_guard($scope0_reason, 0) && ">e", $fg__n && "d"], (1 | $uf__input_suffix) << 1, 0);
+		_patch_render($scope1_id, "b2", _filled_guard($scope0_reason, 0) && ">e", (1 | $uf__input_suffix) << 1, 0);
 		_subscribe(_unfilled_if((1 | $uf__input_suffix) << 1, 0) && $wi__input_suffix && $input_suffix__closures, _scope($scope1_id, {
 			d: $wi__input_suffix && n,
 			_: ($wi__input_suffix || _write_if($scope1_reason, 0)) && _scope_with_id($scope0_id)
-		}), _client_guard((1 | $uf__input_suffix) << 1, 0) && "b1") || $fg__n && _unfilled_if($scope0_reason, 0) && _patch_write($scope1_id, "xd", n, !_server_guard($scope1_reason, 0));
+		}), _client_guard((1 | $uf__input_suffix) << 1, 0) && "b1");
 	}, $scope0_id, 0) };
 	_set_scope_reason(2);
 	const $childScope = _peek_scope_id($scope0_id, "b", 0);

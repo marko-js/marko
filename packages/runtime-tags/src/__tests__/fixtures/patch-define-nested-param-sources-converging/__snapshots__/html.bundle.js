@@ -17,13 +17,10 @@ var template_default = _template("a", (input) => {
 	let n = 0;
 	const Outer = { content: _content("a6", ({ x, y }) => {
 		const $scope1_id = _scope_id();
-		_unfilled_if($scope0_reason, 0);
 		const $Outer_content__x__closures = /* @__PURE__ */ new Set();
 		const $scope1_reason = _scope_reason(), $uf__x = _updates_from($scope1_reason, 1), $wi__x = _write_if($scope1_reason, 1);
 		const Inner = { content: _content("a0", ({ z }) => {
 			const $scope2_id = _scope_id();
-			_unfilled_if($scope0_reason, 0);
-			_unfilled_if($scope1_reason, 1);
 			const $scope2_reason = _scope_reason();
 			_html(`<p>${_text_mark($scope2_id, "a", input.label + x + z, 1, (1 | ($uf__input_label | $uf__x)) << 1, 0)}</p>`);
 			_patch_render($scope2_id, "a1", [_filled_guard($scope0_reason, 0) && ">>e", _filled_guard($scope1_reason, 1) && ">e"], (1 | ($uf__input_label | $uf__x)) << 1, 0);
