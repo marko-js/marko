@@ -1,4 +1,8 @@
-import { assertValidLoopKey, assertValidTagName } from "../common/errors";
+import {
+  assertNoNativeAttrTags,
+  assertValidLoopKey,
+  assertValidTagName,
+} from "../common/errors";
 import { forIn, forOf, forTo, forUntil } from "../common/for";
 import {
   decodeAccessor,
@@ -700,6 +704,12 @@ export let _dynamic_tag = /*@__PURE__*/ withBranches(
           const nodeAccessor = MARKO_DEBUG
             ? `#${normalizedRenderer.toLowerCase()}/0`
             : "a";
+          if (MARKO_DEBUG) {
+            assertNoNativeAttrTags(
+              normalizedRenderer,
+              inputIsArgs ? args[0] : args,
+            );
+          }
           (getContent ? _attrs : _attrs_content)(
             childScope,
             nodeAccessor,

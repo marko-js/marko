@@ -1,0 +1,12 @@
+# Render
+```html
+<div>
+  Label
+</div>
+<section>
+  Header
+</section>
+<section>
+  Header
+</section>
+```

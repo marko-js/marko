@@ -14,7 +14,11 @@ import {
 import { _escape } from "../../../html/content";
 import { flattenTextOnlyConditional } from "../../core/if";
 import { preAnalyze as preAnalyzeTextarea } from "../../core/textarea";
-import { buildAttrError, buildAttrNameError } from "../../util/assert";
+import {
+  assertNotContentAttrTag,
+  buildAttrError,
+  buildAttrNameError,
+} from "../../util/assert";
 import buildStringExpression from "../../util/build-string-expression";
 import { generateUid, generateUidIdentifier } from "../../util/generate-uid";
 import { getMarkoRoot, isMarkoRoot } from "../../util/get-root";
@@ -113,6 +117,7 @@ function insertStaticText(
 }
 
 function normalizeTag(tag: t.NodePath<t.MarkoTag>) {
+  assertNotContentAttrTag(tag);
   const { node } = tag;
   const { name, attributes } = node;
   let invalidNameReg = invalidAttrNameReg;

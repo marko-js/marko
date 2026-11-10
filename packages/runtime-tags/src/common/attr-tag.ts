@@ -25,6 +25,10 @@ export function attrTags(first: undefined | AttrTag, attrs: Attrs) {
   return attrTag(attrs);
 }
 
+export function isAttrTag(value: unknown) {
+  return !!(value as AttrTag | undefined)?.[rest];
+}
+
 function* attrTagIterator(this: AttrTag) {
   yield this;
   yield* this[rest];

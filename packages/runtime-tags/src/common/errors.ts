@@ -1,3 +1,5 @@
+import { RendererProp } from "./accessor.debug";
+import { isAttrTag } from "./attr-tag";
 import { getWrongAttrSuggestion, invalidNativeAttrNameReg } from "./helpers";
 
 export const lowercaseOnAttrReg = /^on[a-z]/;
@@ -253,6 +255,31 @@ export function assertHandlerIsFunction(name: string, value: unknown) {
   if (value && typeof value !== "function") {
     throw new Error(
       `The \`${name}\` handler must be a function or a falsey value (\`null\`, \`undefined\`, \`false\`, \`0\`, …), but received type "${typeof value}".`,
+    );
+  }
+}
+
+// The compiler rejects attribute tags on a tag it knows is native and `<@content>`
+// on any tag; `content` is checked where it renders, by `assertValidContent`.
+export function assertNoNativeAttrTags(
+  tagName: string,
+  input: Record<string, unknown> | undefined,
+) {
+  for (const name in input) {
+    if (name !== "content" && isAttrTag(input[name])) {
+      throw new Error(
+        `A dynamic tag passed the native \`<${tagName}>\` tag an [attribute tag](https://markojs.com/docs/reference/language#attribute-tags) as \`${name}\`, but [native tags](https://markojs.com/docs/reference/native-tag) do not support attribute tags.`,
+      );
+    }
+  }
+}
+
+// A native tag's content is falsy, body content, or a `<define>` variable or attribute tag
+// holding it; the compat layer makes Class content and templates into renderers first.
+export function assertValidContent(value: any, renderer: any) {
+  if (value && !renderer?.[RendererProp.Id]) {
+    throw new Error(
+      `The \`content\` attribute on a [native tag](https://markojs.com/docs/reference/native-tag#content) must be body content, a \`<define>\` tag variable or attribute tag holding it, or a falsey value (\`null\`, \`undefined\`, \`false\`, \`0\`, …), but received type "${typeof value}".`,
     );
   }
 }

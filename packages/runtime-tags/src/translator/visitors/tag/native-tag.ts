@@ -1,7 +1,6 @@
 import { types as t } from "@marko/compiler";
 import {
   assertNoArgs,
-  assertNoAttributeTags,
   assertNoParams,
   computeNode,
   diagnosticWarn,
@@ -29,7 +28,7 @@ import {
   escapeDoubleQuotedAttrValue,
 } from "../../../html/attrs";
 import * as htmlContent from "../../../html/content";
-import { buildAttrNameError } from "../../util/assert";
+import { assertNoNativeAttrTags, buildAttrNameError } from "../../util/assert";
 import { BindingType, createBinding } from "../../util/bindings";
 import { bodyToText, bodyToUncoercedText } from "../../util/body-to-text";
 import { isEndTagWrittenByBranch } from "../../util/branch-tag";
@@ -157,7 +156,7 @@ export default {
     enter(tag) {
       assertNoArgs(tag);
       assertNoParams(tag);
-      assertNoAttributeTags(tag);
+      assertNoNativeAttrTags(tag);
 
       const { node } = tag;
       if (node.var && !t.isIdentifier(node.var)) {

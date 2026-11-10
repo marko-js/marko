@@ -1,0 +1,1 @@
+The `content` attribute on a [native tag](https://markojs.com/docs/reference/native-tag#content) must be body content, a `<define>` tag variable or attribute tag holding it, or a falsey value (`null`, `undefined`, `false`, `0`, …), but received type "string".

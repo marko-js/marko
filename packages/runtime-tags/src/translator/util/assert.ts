@@ -1,7 +1,9 @@
 import { types as t } from "@marko/compiler";
+import { assertNoAttributeTags } from "@marko/compiler/babel-utils";
 
 import { type ForType, getForType } from "./branch-tag";
 import { getTagName } from "./get-tag-name";
+import { isStaticNativeTag } from "./tag-name-type";
 
 // Tags whose docs heading is not their bare name; "" links the page root
 // for tags with no heading of their own, and a replaced tag links its successor.
@@ -13,6 +15,7 @@ const docsAnchors: Record<string, string | undefined> = {
   attrs: "",
 };
 const languageDocsURL = "https://markojs.com/docs/reference/language";
+const nativeTagDocsURL = "https://markojs.com/docs/reference/native-tag";
 const valueAttrLink = `[\`value=\` attribute](${languageDocsURL}#shorthand-value)`;
 
 export function assertNoSpreadAttrs(tag: t.NodePath<t.MarkoTag>) {
@@ -141,6 +144,28 @@ export function assertNoBodyContent(tag: t.NodePath<t.MarkoTag>) {
       .get("name")
       .buildCodeFrameError(
         `The ${coreTagLink(tag)} does not support body content.`,
+      );
+  }
+}
+
+// A tag that renders only native elements, whose content is its body or `content=`.
+export function assertNoNativeAttrTags(tag: t.NodePath<t.MarkoTag>) {
+  const takesContent = `take their content from their body or the [\`content=\` attribute](${nativeTagDocsURL}#content)`;
+  assertNoAttributeTags(
+    tag,
+    isStaticNativeTag(tag)
+      ? `[Native tags](${nativeTagDocsURL}) ${takesContent}.`
+      : `This dynamic tag only renders [native tags](${nativeTagDocsURL}), which ${takesContent}.`,
+  );
+}
+
+// A tag's `content` is its body, so no attribute tag may claim the name.
+export function assertNotContentAttrTag(tag: t.NodePath<t.MarkoTag>) {
+  if (getTagName(tag) === "@content") {
+    throw tag
+      .get("name")
+      .buildCodeFrameError(
+        `The \`<@content>\` [attribute tag](${languageDocsURL}#attribute-tags) is not supported, since a tag's \`content\` is its [body content](${languageDocsURL}#tag-content). Write it as the tag's body, or pass it with a \`content=\` attribute.`,
       );
   }
 }

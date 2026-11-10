@@ -174,9 +174,9 @@ export function isPromise(value: unknown): value is Promise<unknown> {
 
 // Class API interop latch: only the compat layer sets it, so bundles without it
 // fold away telling Tags renderers from Class values.
-let classAPIRenderer:
+export let classAPIRenderer:
   | undefined
-  | (<Renderer>(value: object) => Renderer | undefined);
+  | (<Renderer>(value: unknown) => Renderer | undefined);
 
 export function setClassAPIRenderer(
   render: NonNullable<typeof classAPIRenderer>,

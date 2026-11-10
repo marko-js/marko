@@ -1,0 +1,8 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-dynamic-tag-native-attr-tag/template.marko:3:3
+      1 | <const/Tag=input.inline ? "span" : "div">
+      2 | <${Tag}>
+    > 3 |   <@item>Hello</@item>
+        |   ^^^^^^^^^^^^^^^^^^^^ Tag does not support nested attribute tags. This dynamic tag only renders [native tags](https://markojs.com/docs/reference/native-tag), which take their content from their body or the [`content=` attribute](https://markojs.com/docs/reference/native-tag#content).
+      4 | </>
+      5 |

@@ -1,0 +1,1 @@
+A dynamic tag passed the native `<div>` tag an [attribute tag](https://markojs.com/docs/reference/language#attribute-tags) as `item`, but [native tags](https://markojs.com/docs/reference/native-tag) do not support attribute tags.

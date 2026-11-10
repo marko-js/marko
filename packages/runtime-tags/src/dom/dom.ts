@@ -2,15 +2,16 @@ import {
   assertExclusiveAttrs,
   assertValidAttrName,
   assertValidAttrValue,
+  assertValidContent,
   assertValidTextValue,
 } from "../common/errors";
 import {
+  classAPIRenderer,
   escapeStyleValue,
   getEventType,
   isEventHandler,
   isNotNullishOrFalse,
   withDynamicHtml,
-  normalizeDynamicRenderer,
   stringifyClassEntry,
   stringifyStyleEntry,
   toDelimitedString,
@@ -207,7 +208,11 @@ export function _attrs_content(
   controllable?: ControllableSpreadHelper,
 ) {
   _attrs(scope, nodeAccessor, nextAttrs, controllable);
-  _attr_content(scope, nodeAccessor, nextAttrs?.content);
+  _attr_content(
+    scope,
+    nodeAccessor,
+    nextAttrs?.content as Renderer | undefined,
+  );
 }
 
 function hasAttrAlias(
@@ -262,7 +267,11 @@ export function _attrs_partial_content(
   controllable?: ControllableSpreadHelper,
 ) {
   _attrs_partial(scope, nodeAccessor, nextAttrs, skip, controllable);
-  _attr_content(scope, nodeAccessor, nextAttrs?.content);
+  _attr_content(
+    scope,
+    nodeAccessor,
+    nextAttrs?.content as Renderer | undefined,
+  );
 }
 
 function attrsInternal(
@@ -321,18 +330,19 @@ function attrsInternal(
 export function _attr_content(
   scope: Scope,
   nodeAccessor: Accessor,
-  value: unknown,
+  content: Renderer | undefined,
 ) {
-  const renderer = normalizeDynamicRenderer<Renderer>(value);
-  let content: Renderer | undefined;
-  if (renderer) {
-    if ((renderer as Renderer)[RendererProp.Id]) {
-      content = renderer as Renderer;
-    } else if (MARKO_DEBUG) {
-      throw new Error(
-        `Invalid \`content\` attribute. Received ${typeof value}`,
-      );
-    }
+  if (MARKO_DEBUG) {
+    // eslint-disable-next-line no-var
+    var value = content;
+  }
+  // A `<define>` variable or attribute tag holds the content it renders.
+  content = (content as { content?: Renderer } | undefined)?.content || content;
+  if (classAPIRenderer && content) {
+    content = classAPIRenderer<Renderer>(content);
+  }
+  if (MARKO_DEBUG) {
+    assertValidContent(value, content);
   }
   if (
     scope[AccessorPrefix.ConditionalRenderer + nodeAccessor] !==
