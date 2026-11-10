@@ -1349,6 +1349,12 @@ export interface AssignedBindingExtra extends ReferencedExtra {
   fnRoot: ReferencedFunctionExtra | undefined;
 }
 
+// State the client can change after resume: a resumable assignment writes it,
+// or a child's `<return>` computes it from what this template cannot see.
+export function hasResumableWriter(source: Binding) {
+  return !!source.returnedBy || hasResumableAssignment(source);
+}
+
 // A resumed instance runs only its effects and its registered functions, so
 // only an assignment inside one of those can still write on the client.
 export function hasResumableAssignment(binding: Binding) {

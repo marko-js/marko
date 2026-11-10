@@ -1,4 +1,4 @@
-# Render
+# Render `{"show":true}`
 ```html
 <button />
 ```
@@ -15,12 +15,15 @@ new Promise((r) => setTimeout(r, 50));
 <span>
   5
 </span>
+<b>
+  5 5
+</b>
 ```
 ## Change
 ```
 INSERT: button + ::text("loading")
-INSERT: button + :is(p, span)
-REMOVE: span + ::text("loading")
+INSERT: button + :is(p, span, b)
+REMOVE: b + ::text("loading")
 ```
 ## Console
 ```
@@ -39,6 +42,9 @@ document.querySelector("button").click();
 <span>
   5
 </span>
+<b>
+  5 5
+</b>
 ```
 ## Change
 ```

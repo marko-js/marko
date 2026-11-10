@@ -1,20 +1,34 @@
-<button></button><!--M_$1 #button/0--><!--M_[--><!--M_!^3-->loading<!--M_!3--><!--M_]1 #text/1 3-->
-<t hidden M_=3><!--M_#b--></t>
+<!--M_[--><!--M_]1 #text/2 4--><button></button><!--M_$1 #button/4--><!--M_[--><!--M_!^7-->loading<!--M_!7--><!--M_]1 #text/5 7-->
+<t hidden M_=7><!--M_#b--></t>
 <script>
   WALKER_RUNTIME("M")("_");
   REORDER_RUNTIME(M._);
   M._.r = [_ => [1, {
+      "#scopeOffset/1": 3,
+      "#scopeOffset/3": 5,
+      "ConditionalRenderer:#text/2": "packages/runtime-tags/src/__tests__/fixtures/await-closure-changed-by-script/tags/counter.marko",
       n: 1,
       m: 2,
-      "ClosureScopes:n/4": new Set,
-      "ClosureScopes:m/5": new Set
+      "#childScope/0": _(2),
+      "ClosureScopes:n/13": new Set,
+      "ClosureScopes:m/14": new Set,
+      "ClosureScopes:known/15": new Set,
+      "ClosureScopes:dynamic/16": new Set
+    }, {
+      "#TagVariable": _(1,
+        "packages/runtime-tags/src/__tests__/fixtures/await-closure-changed-by-script/template.marko_0_known#11/var"
+        )
     }, 1, {
+      "#TagVariable": _(1,
+        "packages/runtime-tags/src/__tests__/fixtures/await-closure-changed-by-script/template.marko_0_dynamic#12/var"
+        )
+    }, 2, {
       _: _(1),
       "#PlaceholderContent": _._[
         "packages/runtime-tags/src/__tests__/fixtures/await-closure-changed-by-script/template.marko_3*content"
         ]
     }],
-    "packages/runtime-tags/src/__tests__/fixtures/await-closure-changed-by-script/template.marko_0 1"
+    "packages/runtime-tags/src/__tests__/fixtures/await-closure-changed-by-script/tags/counter.marko_0 2 4 packages/runtime-tags/src/__tests__/fixtures/await-closure-changed-by-script/template.marko_0 1"
   ];
   M._.w()
 </script>
@@ -22,12 +36,14 @@
 <!-- FLUSH -->
 
 <t hidden M_=b><!--M_[-->
-  <p>3<!--M_$5 #text/0--></p><span>1</span><!--M_]3 #text/0 5-->
+  <p>3<!--M_$9 #text/0--></p><span>1</span><b>0<!--M_$9 #text/2-->
+    <!>0<!--M_$9 #text/3-->
+  </b><!--M_]7 #text/0 9-->
 </t>
 <script>
   M._.j.b = _ => {
     _.push(
-      "packages/runtime-tags/src/__tests__/fixtures/await-closure-changed-by-script/template.marko_2_n#0:2 5 packages/runtime-tags/src/__tests__/fixtures/await-closure-changed-by-script/template.marko_2_n#0:2/subscribe 5 packages/runtime-tags/src/__tests__/fixtures/await-closure-changed-by-script/template.marko_2_m#0:3/subscribe 5"
+      "packages/runtime-tags/src/__tests__/fixtures/await-closure-changed-by-script/template.marko_2_n#0:9 9 packages/runtime-tags/src/__tests__/fixtures/await-closure-changed-by-script/template.marko_2_n#0:9/subscribe 9 packages/runtime-tags/src/__tests__/fixtures/await-closure-changed-by-script/template.marko_2_m#0:10/subscribe 9 packages/runtime-tags/src/__tests__/fixtures/await-closure-changed-by-script/template.marko_2_known#0:11/subscribe 9 packages/runtime-tags/src/__tests__/fixtures/await-closure-changed-by-script/template.marko_2_dynamic#0:12/subscribe 9"
       )
   };
   M._.w()
