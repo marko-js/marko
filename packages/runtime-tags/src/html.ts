@@ -32,7 +32,6 @@ export {
   _style_html,
   _textarea_value,
 } from "./html/attrs";
-export { compat } from "./html/compat";
 export {
   _escape,
   _escape_comment,

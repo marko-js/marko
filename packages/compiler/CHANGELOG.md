@@ -1,5 +1,23 @@
 # Change Log
 
+## 5.42.17
+
+### Patch Changes
+
+- [#4614](https://github.com/marko-js/marko/pull/4614) [`4a5e758`](https://github.com/marko-js/marko/commit/4a5e7582b4f271ea995c697f75883aba484aed75) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - `t.markoPlaceholder(value)` escapes its value again when no `escape` argument is passed, and the other Marko node builders set an omitted optional field to `null`, as Babel's builders do.
+
+- [#4624](https://github.com/marko-js/marko/pull/4624) [`ff3cec9`](https://github.com/marko-js/marko/commit/ff3cec995bf344ac76f993d99eda18f9842520ff) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Read the project's `package.json` through the `fileSystem` option when discovering taglibs, and read it again after `taglib.clearCaches()`, so a virtual or tracking file system sees it and a long-running dev process picks up new dependencies. Taglib JSON files are now read with a string encoding, like every other read, so a file system that only accepts a string encoding can load them.
+
+- [#4637](https://github.com/marko-js/marko/pull/4637) [`fce28ac`](https://github.com/marko-js/marko/commit/fce28ac65de98cbe967c91ab08f71b6717bc920b) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - With `errorRecovery`, a template whose parse, migrate, transform or analyze recorded an error now compiles to an empty module with its diagnostics, as it would throw without recovery, instead of translating past the error into a crash, an endless loop, or code that does not parse.
+
+- [#4621](https://github.com/marko-js/marko/pull/4621) [`f52e0bd`](https://github.com/marko-js/marko/commit/f52e0bd14e88f1b1a99473885bca110ff5041224) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix a `//# sourceMappingURL=` comment in a template's code (after an `import`, in a `<script>`, in an event handler) being taken as the template's input source map: the compiled source map was rewritten through the map that comment named, so it no longer pointed at the template; a named `.map` file was read from disk past the `fileSystem` option; and `source` and `migrate` output dropped the comment.
+
+- [#4620](https://github.com/marko-js/marko/pull/4620) [`23aed68`](https://github.com/marko-js/marko/commit/23aed68c08be9924e51cb9b22cf657638fa468e6) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - When a migrator or transform builds a node without a source location, compile errors and diagnostics about it now mark the nearest part of the template that has one (the node's first located part, its attribute or its tag) instead of failing with "Cannot read properties of undefined", pointing at the start of the file, or pointing at an unrelated `await`.
+
+- [#4611](https://github.com/marko-js/marko/pull/4611) [`81b2751`](https://github.com/marko-js/marko/commit/81b27514ad7ab986a2e5bef1dc977d903f79308f) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Crawl a template's scope after the migrate stage, so transform sees bindings that migrators added or removed.
+
+- [#4622](https://github.com/marko-js/marko/pull/4622) [`eab0534`](https://github.com/marko-js/marko/commit/eab0534dfdcaf8e6538154027b7c0dec68f311b8) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Show the error text when a compile fails with several errors, or a `marko.json` option is invalid, in JavaScript engines whose error `stack` leaves out the message. In Node, the combined message no longer includes the compiler's own stack frames for an error without a location, and a `marko.json` option error no longer embeds its cause's stack trace.
+
 ## 5.42.16
 
 ### Patch Changes

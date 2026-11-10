@@ -27,5 +27,4 @@ var template_default = _template("a", (input) => {
 		});
 	}, $scope0_id, ($scope) => [{ b: Foo }]) };
 	Foo.content({ bar: "hi" });
-	_scope($scope0_id, { b: Foo });
 }, 1);

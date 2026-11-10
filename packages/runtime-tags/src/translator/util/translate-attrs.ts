@@ -1,7 +1,7 @@
 import { types as t } from "@marko/compiler";
 import { isAttributeTag } from "@marko/compiler/babel-utils";
 
-import { type Binding, getCanonicalBinding, propertiesUtil } from "./bindings";
+import { type Binding, getCanonicalBinding } from "./bindings";
 import { buildForRuntimeCall, getForType } from "./branch-tag";
 import { getDeclaredBindingExpression } from "./get-declared-binding-expression";
 import { getKnownAttrValues } from "./get-known-attr-values";
@@ -14,12 +14,8 @@ import {
   getAttrTagIdentifier,
   getAttrTagPaths,
 } from "./nested-attribute-tags";
-import { type SortedOpt, toArray, toSet } from "./optional";
-import {
-  type ParamsTree,
-  getParamsTreeAt,
-  hasAllKnownProperties,
-} from "./params-tree";
+import { toArray } from "./optional";
+import { type ParamsTree, getParamsTreeAt } from "./params-tree";
 import { callRuntime } from "./runtime";
 import { getScopeAccessor } from "./scope-accessor";
 import { scopeIdentifier } from "./scope-read";
@@ -41,13 +37,12 @@ type ContentKey = "renderBody" | "content";
 export function translateAttrs(
   tag: t.NodePath<t.MarkoTag>,
   paramsTree: ParamsTree | true = true,
-  skip?: SortedOpt<string>,
   statements: t.Statement[] = [],
   contentKey: ContentKey = "content",
 ) {
   const contentProperties: t.ObjectExpression["properties"] = [];
   const attrTagLookup = tag.node.extra?.attrTagLookup;
-  const seen = toSet(skip);
+  const seen = new Set<string>();
   if (attrTagLookup) {
     for (const name in attrTagLookup) {
       const attrTagMeta = attrTagLookup[name];
@@ -78,9 +73,6 @@ export function translateAttrs(
       if (child.isMarkoTag()) {
         if (isAttributeTag(child)) {
           const attrTagMeta = attrTagLookup[getTagName(child)];
-
-          if (propertiesUtil.has(skip, attrTagMeta.name)) continue;
-
           if (attrTagMeta.dynamic) {
             i = addDynamicAttrTagStatements(
               attrTags,
@@ -94,7 +86,6 @@ export function translateAttrs(
             const translatedAttrTag = translateAttrs(
               child,
               getParamsTreeAt(paramsTree, attrTagMeta.name),
-              undefined,
               statements,
               contentKey,
             );
@@ -134,12 +125,12 @@ export function translateAttrs(
 
   const { attributes } = tag.node;
   const attrProperties: t.ObjectExpression["properties"] = [];
-  const knownSpread = getSingleKnownSpread(paramsTree, attributes);
   for (let i = attributes.length; i--;) {
     const attr = attributes[i];
     const { value } = attr;
-    if (t.isMarkoSpreadAttribute(attr) && knownSpread) {
+    if (t.isMarkoSpreadAttribute(attr) && attr.extra?.knownSpread) {
       // Analysis reads it prop by prop, so it spreads what those props read.
+      const { knownSpread } = attr.extra;
       if (!getCanonicalBinding(knownSpread).pruned) {
         attrProperties.push(
           t.spreadElement(getDeclaredBindingExpression(knownSpread, true)),
@@ -193,7 +184,6 @@ export function addDynamicAttrTagStatements(
         const translatedAttrTag = translateAttrs(
           tag,
           attrTagTree,
-          undefined,
           statements,
           contentKey,
         );
@@ -482,27 +472,4 @@ function toLocalClosureProperty(closure: Binding) {
     getScopeAccessor(closure, true),
     getDeclaredBindingExpression(closure),
   );
-}
-
-// The one spread a child reading every prop by name reads, prop by prop.
-export function getSingleKnownSpread(
-  paramsTree: ParamsTree | true,
-  attributes: (t.MarkoAttribute | t.MarkoSpreadAttribute)[],
-) {
-  if (paramsTree === true || !hasAllKnownProperties(paramsTree)) return;
-  let binding: Binding | undefined;
-  for (let i = attributes.length; i--;) {
-    const attr = attributes[i];
-    if (attr.type === "MarkoSpreadAttribute") {
-      const spreadFrom = attr.value.extra?.spreadFrom;
-      if (binding || !spreadFrom || Array.isArray(spreadFrom)) return;
-      binding = spreadFrom;
-    } else if (
-      binding &&
-      !propertiesUtil.has(binding.excludeProperties, attr.name)
-    ) {
-      return;
-    }
-  }
-  return binding;
 }

@@ -1,10 +1,10 @@
 // template.marko
 const $MyTag_content__walks = "D%c%c%l";
 const $MyTag_content__template = "<div><!>|<!>|<!></div>";
-const $Outer_content__walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($MyTag_content__walks);
-const $Outer_content__template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($MyTag_content__template);
-const $template = /*@__PURE__*/ ((_w0, _w1, _w2) => `<!>${_w0}${_w1}${_w2}<button> </button>`)($MyTag_content__template, $MyTag_content__template, $Outer_content__template);
-const $walks = /*@__PURE__*/ ((_w0, _w1, _w2) => `b/${_w0}&/${_w1}&/${_w2}& D l`)($MyTag_content__walks, $MyTag_content__walks, $Outer_content__walks);
+const $Outer_content__walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)($MyTag_content__walks);
+const $Outer_content__template = $MyTag_content__template;
+const $template = /*@__PURE__*/ ((_w0, _w1, _w2) => `${_w0}${_w1}${_w2}<button> </button>`)($MyTag_content__template, $MyTag_content__template, $Outer_content__template);
+const $walks = /*@__PURE__*/ ((_w0, _w1, _w2) => `/${_w0}&/${_w1}&/${_w2}& D l`)($MyTag_content__walks, $MyTag_content__walks, $Outer_content__walks);
 const $Outer_content__v = ($scope, v) => $MyTag_content__a($scope["#childScope/0"], v);
 const $Outer_content__setup = ($scope) => {
 	$MyTag_content__b($scope["#childScope/0"]);

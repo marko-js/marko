@@ -1,8 +1,8 @@
 // template.marko
 const $Baz_content__walks = "b";
 const $Baz_content__template = "<div>Baz Content</div>";
-const $template = /*@__PURE__*/ ((_w0) => `<!><!><!>${_w0}<!>`)($Baz_content__template);
-const $walks = /*@__PURE__*/ ((_w0) => `b%b%b/${_w0}&b`)($Baz_content__walks);
+const $template = /*@__PURE__*/ ((_w0) => `<!><!><!>${_w0}`)($Baz_content__template);
+const $walks = /*@__PURE__*/ ((_w0) => `b%b%b/${_w0}&`)($Baz_content__walks);
 const $Bar_content = _content("__tests__/template.marko_2*content", "<div>Bar Fallback</div>");
 const $Foo_content = _content("__tests__/template.marko_1*content", "<div>Foo Fallback</div>");
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $Foo_content);

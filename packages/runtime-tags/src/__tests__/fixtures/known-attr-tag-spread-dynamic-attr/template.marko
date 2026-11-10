@@ -1,0 +1,5 @@
+<let/obj={ class: "a" }/>
+<button onClick() { obj = { class: obj.class + "a" } }>grow</button>
+<child>
+  <@item ...obj/>
+</child>

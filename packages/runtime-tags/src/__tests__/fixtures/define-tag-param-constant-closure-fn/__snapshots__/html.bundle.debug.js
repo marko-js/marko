@@ -12,9 +12,9 @@ var counter_default = _template("__tests__/tags/counter.marko", (input) => {
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	const f = _resume(function() {
+	const f = function() {
 		return "A";
-	}, "__tests__/template.marko_0/f");
+	};
 	const D = { content: _content("__tests__/template.marko_1*content", ({ on }) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
@@ -28,5 +28,4 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id) };
 	D.content({ on: true });
 	counter_default({});
-	_scope($scope0_id, { f }, "__tests__/template.marko", 0, { f: "1:8" });
 }, 1);

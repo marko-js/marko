@@ -1,10 +1,10 @@
 // template.marko
 const $E_content__walks = "D l";
 const $E_content__template = "<span> </span>";
-const $D_content__walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($E_content__walks);
-const $D_content__template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($E_content__template);
-const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($D_content__template);
-const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($D_content__walks);
+const $D_content__walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)($E_content__walks);
+const $D_content__template = $E_content__template;
+const $template = $D_content__template;
+const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)($D_content__walks);
 const $D_content__setup = ($scope) => {
 	$scope["#childScope/0"]._ = $scope._;
 	$E_content__setup($scope["#childScope/0"]);

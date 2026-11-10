@@ -4,7 +4,7 @@ import { type Binding } from "./bindings";
 import { getOnlyChildParentTagName } from "./is-only-child-in-parent";
 import { push, some } from "./optional";
 import { isGuardedReason, isStateReason, type Reasons } from "./reasons";
-import { hasResumableAssignment } from "./references";
+import { hasResumableWriter } from "./references";
 import { callRuntime } from "./runtime";
 import { getScopeAccessorLiteral } from "./scope-accessor";
 import {
@@ -53,7 +53,7 @@ export function resumeOwnerByMarkerWhenUnconditional(
     !isGuardedReason(branchReason) &&
     nodeReason &&
     !isGuardedReason(nodeReason) &&
-    some(branchExprReason.state, hasResumableAssignment)
+    some(branchExprReason.state, hasResumableWriter)
   ) {
     setSectionOwnerResumedByMarker(bodySection);
   }
@@ -127,7 +127,7 @@ export function isEndTagWrittenByBranch(nodeBinding: Binding | undefined) {
 
 // Resume adopts the element before a branch's resume comments, so only
 // content of one tag qualifies; a placeholder may write zero or many nodes.
-export function isSingleNodeContent(content: Section["content"] | undefined) {
+export function isSingleNodeContent(content: Section["content"]) {
   return !!(content?.singleChild && content.startType === ContentType.Tag);
 }
 

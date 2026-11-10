@@ -25,6 +25,7 @@ export function getAttrs(path, preserveNames, isAttrTag) {
   const foundProperties = {};
   const hasAttributeTags = !!attributeTags.length;
   const isTagsAPI = findRootTag(path)?.node.extra?.featureType === "tags";
+  const isTagsAttrTag = isTagsAPI && isAttrTag;
   const renderBodyKey = isTagsAPI ? "content" : "renderBody";
 
   for (let i = 0; i < attrsLen; i++) {
@@ -79,7 +80,9 @@ export function getAttrs(path, preserveNames, isAttrTag) {
     }
   }
 
-  if (childLen && !hasAttributeTags) {
+  // `attr-tag.js` › `i` stores a returned body as `renderBody`, so a Tags
+  // attribute tag keeps its body keyed even beside nested attribute tags.
+  if (childLen && (!hasAttributeTags || isTagsAttrTag)) {
     properties.push(
       t.objectProperty(
         t.stringLiteral(renderBodyKey),
@@ -126,7 +129,7 @@ export function getAttrs(path, preserveNames, isAttrTag) {
   if (hasAttributeTags) {
     let attrTagBody = attributeTags;
 
-    if (body.length) {
+    if (body.length && !isTagsAttrTag) {
       attrTagBody = attrTagBody.concat(
         t.returnStatement(
           t.arrowFunctionExpression(

@@ -12,10 +12,10 @@ var counter_default = _template("b", (input) => {
 var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	const f = _resume(function() {
+	const f = function() {
 		return "A";
-	}, "a0");
-	({ content: _content("a1", ({ on }) => {
+	};
+	({ content: _content("a0", ({ on }) => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_if(() => {
@@ -27,5 +27,4 @@ var template_default = _template("a", (input) => {
 		}, $scope1_id, "a", 0, 0, 0, 0, 1);
 	}, $scope0_id) }).content({ on: true });
 	counter_default({});
-	_scope($scope0_id, { c: f });
 }, 1);

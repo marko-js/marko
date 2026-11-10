@@ -57,9 +57,7 @@ UPDATE: #tags::text "0" => "1"
 ```
 ## Change
 ```
-REMOVE: #class + #class
-INSERT: div > #class
-INSERT: #class::text("1")
+UPDATE: #class::text "0" => "1"
 ```
 
 # Update
@@ -105,9 +103,7 @@ UPDATE: #tags::text "1" => "2"
 ```
 ## Change
 ```
-REMOVE: #class + #class
-INSERT: div > #class
-INSERT: #class::text("2")
+UPDATE: #class::text "1" => "2"
 ```
 
 # Update

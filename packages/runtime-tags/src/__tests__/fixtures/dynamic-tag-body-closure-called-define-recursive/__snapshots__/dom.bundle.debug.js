@@ -28,7 +28,7 @@ const $inputonCarddiv_content__setup = ($scope) => {
 	$Tree_content__setup($scope["#childScope/0"]);
 	$Tree_content__tag_input_n($scope["#childScope/0"], 1);
 };
-const $inputonCarddiv_content = _content("__tests__/template.marko_3*content", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Tree_content__template), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Tree_content__walks), $inputonCarddiv_content__setup);
+const $inputonCarddiv_content = _content("__tests__/template.marko_3*content", /*@__PURE__*/ ((_w0) => `${_w0}<!>`)($Tree_content__template), /*@__PURE__*/ ((_w0) => `/${_w0}&b`)($Tree_content__walks), $inputonCarddiv_content__setup);
 _content_resume($inputonCarddiv_content);
 const $if_content__n = /*@__PURE__*/ _if_closure("#text/1", 0, ($scope) => $Tree_content__tag_input_n($scope["#childScope/0"], $scope._.n - 1));
 const $if_content__setup = ($scope) => {
@@ -38,7 +38,7 @@ const $if_content__setup = ($scope) => {
 };
 const $Tree_content__input_note = /*@__PURE__*/ _closure_get("input_note/5", ($scope) => _text($scope["#text/0"], $scope._.input_note), 0, "__tests__/template.marko_1_input_note#0:3/subscribe");
 const $Tree_content__setup = $Tree_content__input_note;
-const $Tree_content__if = /*@__PURE__*/ _if("#text/1", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Tree_content__template), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Tree_content__walks), $if_content__setup);
+const $Tree_content__if = /*@__PURE__*/ _if("#text/1", /*@__PURE__*/ ((_w0) => `${_w0}<!>`)($Tree_content__template), /*@__PURE__*/ ((_w0) => `/${_w0}&b`)($Tree_content__walks), $if_content__setup);
 const $Tree_content__tag_input_n = /*@__PURE__*/ _const("n", ($scope) => {
 	$Tree_content__if($scope, $scope.n ? 0 : 1);
 	$if_content__n($scope);

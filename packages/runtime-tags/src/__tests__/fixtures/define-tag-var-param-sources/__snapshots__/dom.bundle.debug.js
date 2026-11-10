@@ -1,6 +1,6 @@
 // template.marko
-const $template = "<!><div><!>|<!></div><button>+</button>";
-const $walks = "0&0&bD%c%l b";
+const $template = "<div><!>|<!></div><button>+</button>";
+const $walks = "0&0&D%c%l b";
 const $Sum_content__a__OR__b = /*@__PURE__*/ _or(4, ($scope) => _return($scope, $scope.a + $scope.b));
 const $Sum_content__a = /*@__PURE__*/ _const("a", $Sum_content__a__OR__b);
 const $Sum_content__b = /*@__PURE__*/ _const("b", $Sum_content__a__OR__b);

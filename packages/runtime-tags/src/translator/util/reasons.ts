@@ -91,26 +91,25 @@ function addOwnerSlotReason(section: Section, reason: Reason) {
 export function mapBodyParams(
   section: Section,
   reason: undefined | Reason,
+  // A param already mapped adds nothing, so a recursive call passing a body's
+  // param back to it settles on what its other calls pass.
   seen?: Set<ParamBinding>,
 ): Reason | undefined {
   if (!reason) return;
   let mapped: Sources | undefined;
   const params = bindingUtil.filter(reason.param, (param) => {
     if (isSameOrAncestorSection(param.section, section)) return true;
-    if (!(seen ||= new Set()).has(param)) {
+    seen ??= new Set();
+    if (!seen.has(param)) {
       seen.add(param);
       mapped = mergeSources(mapped, getCallSiteSources(param));
     }
     return false;
   });
   if (params === reason.param) return reason;
-  // A reason whose params are only ever passed constants still writes: code
-  // that tests the stored reason for a write at all expects one.
-  return (
-    mergeSources(
-      mapBodyParams(section, mapped, seen),
-      withSources(reason, reason.state, params),
-    ) || ALWAYS
+  return mergeSources(
+    mapBodyParams(section, mapped, seen),
+    withSources(reason, reason.state, params),
   );
 }
 
@@ -271,10 +270,7 @@ export function mapParamBindingToExpr(
 
 // The call site's known expressions at `binding`, passing through property-less
 // links; past the properties it lists, only the value expression holding it.
-export function getKnownExprsAt(
-  exprs: KnownExprs,
-  binding: Binding,
-): KnownExprs {
+function getKnownExprsAt(exprs: KnownExprs, binding: Binding): KnownExprs {
   const aliased = binding.aliasOf;
   if (!aliased) return exprs;
   const known = getKnownExprsAt(exprs, aliased);

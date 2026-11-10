@@ -19,7 +19,6 @@ var sum_with_default = _template("b", (input) => {
 	$wi__input_n && _var($scope0_id, "b", $childScope, "b2");
 	_html(`<div>${_text_mark($scope0_id, "c", x, $wg__input_n)}</div>`);
 	$wi__input_n && _scope($scope0_id, {
-		f: input.n,
 		h: $wi__input_n && $input_n__closures,
 		a: $wi__input_n && _existing_scope($childScope)
 	});

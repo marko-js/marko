@@ -179,9 +179,24 @@ function testFixtures(interop?: true) {
       }
 
       if (!fs.existsSync(templateFile)) {
-        console.warn(
-          `Template missing for fixture: ${path.relative(process.cwd(), templateFile)}`,
-        );
+        // A removed fixture leaves only its ignored `dist`; `test:update` removes
+        // what it generated, and anything else means the template is missing.
+        if (fs.readdirSync(fixtureDir).some((file) => file !== "dist")) {
+          it("template", () => {
+            if (process.env.UPDATE_EXPECTATIONS) {
+              fs.rmSync(resolve("sizes.json"), { force: true });
+              fs.rmSync(resolve("__snapshots__"), {
+                recursive: true,
+                force: true,
+              });
+            }
+            assert.deepStrictEqual(
+              fs.readdirSync(fixtureDir).filter((file) => file !== "dist"),
+              [],
+              `Template missing for fixture: ${relativeFixtureDir}`,
+            );
+          });
+        }
         return;
       }
 

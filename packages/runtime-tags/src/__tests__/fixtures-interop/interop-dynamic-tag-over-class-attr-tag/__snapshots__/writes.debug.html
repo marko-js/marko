@@ -1,0 +1,30 @@
+<!--M#s0--><button id=class>0</button><!--F#1-->
+<div><!--Ms[-->direct 0<!--Ms]1 #text/0 2--></div><!--F/--><!--F#1-->
+<div><!--Ms[-->forwarded 0<!--Ms]3 #text/0 4--></div><!--F/--><!--M/-->
+<script>
+  WALKER_RUNTIME("M")("s");
+  M.s.r = [_ => [1, {
+    m5c: "s0-1",
+    "ConditionalRenderer:#text/0": _._.$compat_renderBody
+  }, 1, {
+    m5c: "s0-2-0",
+    "ConditionalRenderer:#text/0": {
+      id: "forwarded",
+      renderBody: _._.$compat_renderBody,
+      *[Symbol.iterator]() {
+        yield this
+      }
+    }
+  }], "$compat_setScope 1 $compat_setScope 3"];
+  M.s.w();
+  $MC = (window.$MC || []).concat({
+    "w": [
+      ["s0", 0, {}, {
+        "f": 1
+      }]
+    ],
+    "t": [
+      "packages/runtime-tags/src/__tests__/fixtures-interop/interop-dynamic-tag-over-class-attr-tag/template.marko"
+    ]
+  })
+</script>

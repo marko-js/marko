@@ -1,0 +1,12 @@
+class {
+  onCreate() { this.state = { n: 0 }; }
+  inc() { this.state.n++; }
+}
+<button id="class" onClick("inc")>${state.n}</button>
+<tags-layout>
+  <@stuff class="stuff">
+    <@inner>Inner ${state.n}</@inner>
+    Body ${state.n}
+  </@stuff>
+</tags-layout>
+<init-components/>

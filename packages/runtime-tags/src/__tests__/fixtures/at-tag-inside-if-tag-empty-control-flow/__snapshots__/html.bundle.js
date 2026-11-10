@@ -1,0 +1,41 @@
+// tags/custom-tag/index.marko
+var custom_tag_default = _template("b", (input) => {
+	const $scope0_reason = _scope_reason(), $wg__input_thing_x = _write_guard($scope0_reason, 1), $wg__input_thing_content = _write_guard($scope0_reason, 2);
+	const $scope0_id = _scope_id();
+	_dynamic_tag($scope0_id, "a", input.thing.content, {}, 0, 0, $wg__input_thing_content);
+	_html(`<div>${_text_mark($scope0_id, "b", input.thing.x, $wg__input_thing_x)}</div>`);
+	_write_if($scope0_reason, 0) && _scope($scope0_id, {});
+});
+
+// template.marko
+var template_default = _template("a", (input) => {
+	const $scope0_reason = _scope_reason(), $wg__input_x__OR__input_list = _write_guard($scope0_reason, 0);
+	const $scope0_id = _scope_id();
+	_set_scope_reason($wg__input_x__OR__input_list << 1 | $wg__input_x__OR__input_list << 3 | $wg__input_x__OR__input_list << 5);
+	let $thing;
+	if (input.x) {
+		$thing = attrTag({
+			x: 1,
+			content: _content("a0", () => {
+				_scope_reason();
+				_scope_id();
+				_html("Hello");
+			}, $scope0_id)
+		});
+		forOf(input.list, () => {});
+	} else $thing = attrTag({
+		x: 2,
+		content: _content("a1", () => {
+			_scope_reason();
+			_scope_id();
+			_html("Goodbye");
+		}, $scope0_id)
+	});
+	const $childScope = _peek_scope_id();
+	custom_tag_default({ thing: $thing });
+	_write_if($scope0_reason, 0) && _scope($scope0_id, {
+		d: _write_if($scope0_reason, 2) && input.x,
+		e: _write_if($scope0_reason, 1) && input.list,
+		a: _existing_scope($childScope)
+	});
+}, 1);

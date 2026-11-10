@@ -43,6 +43,7 @@ import {
   getReferencedBindings,
   getReferencedBindingsInFunction,
   hasResumableAssignment,
+  hasResumableWriter,
   isAssignedBindingExtra,
   isPureExpr,
   isRegisteredFnExtra,
@@ -464,7 +465,7 @@ function isChangeableDynamicClosure(section: Section, closure: Binding) {
   return (
     !!sources &&
     isDynamicClosure(section, closure) &&
-    (!sources.state || some(sources.state, hasResumableAssignment))
+    (!sources.state || some(sources.state, hasResumableWriter))
   );
 }
 

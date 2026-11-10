@@ -1,8 +1,8 @@
 // template.marko
 const $E_content__walks = "D l";
 const $E_content__template = "<span> </span>";
-const $D_content__walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($E_content__walks);
-const $D_content__template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($E_content__template);
+const $D_content__walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)($E_content__walks);
+const $D_content__template = $E_content__template;
 const $template = "<!><!><!>";
 const $walks = "b%c";
 const $setup = ($_) => {};
@@ -16,7 +16,7 @@ const $D_content__setup = ($scope) => {
 };
 const $E_content__input_x = /*@__PURE__*/ _closure_get("input_x/5", ($scope) => _text($scope["#text/0"], $scope._.input_x), 0, "__tests__/template.marko_1_input_x#0:3/subscribe");
 const $E_content__setup = $E_content__input_x;
-const $for = /*@__PURE__*/ _for_of_unkeyed("#text/0", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($D_content__template), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($D_content__walks), $for_content__setup);
+const $for = /*@__PURE__*/ _for_of_unkeyed("#text/0", $D_content__template, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($D_content__walks), $for_content__setup);
 const $input_list = ($scope, input_list) => $for($scope, [input_list]);
 const $input = ($scope, input) => {
 	$input_x($scope, input.x);

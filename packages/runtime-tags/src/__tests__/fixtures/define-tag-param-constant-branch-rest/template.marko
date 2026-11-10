@@ -1,0 +1,7 @@
+<define/D|{ on, item }|>
+  <if=on>
+    <const/{ foo, ...rest }=item/>
+    <span ...rest>${foo}</span>
+  </if>
+</define>
+<D on=true item={ foo: 1, bar: 2 }/>

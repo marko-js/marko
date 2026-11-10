@@ -9,7 +9,7 @@ const $if_content__setup = ($scope) => {
 	$if_content__input_label._($scope);
 };
 const $if_content__input_label = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $Tree_content__tag_input_label($scope["#childScope/0"], $scope._.input_label));
-const $Tree_content__if = /*@__PURE__*/ _if("#text/0", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Tree_content__template), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Tree_content__walks), $if_content__setup);
+const $Tree_content__if = /*@__PURE__*/ _if("#text/0", /*@__PURE__*/ ((_w0) => `<!>${_w0}`)($Tree_content__template), /*@__PURE__*/ ((_w0) => `b/${_w0}&`)($Tree_content__walks), $if_content__setup);
 const $Tree_content__tag_input_depth = /*@__PURE__*/ _const("input_depth", ($scope) => {
 	$Tree_content__if($scope, $scope.input_depth ? 0 : 1);
 	$if_content__input_depth($scope);

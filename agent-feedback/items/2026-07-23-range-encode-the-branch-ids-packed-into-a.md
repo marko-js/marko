@@ -2,7 +2,7 @@
 type: perf
 impact: med
 effort: med
-site: packages/runtime-tags/src/html/writer.ts › forBranches
+site: packages/runtime-tags/src/html/control-flow.ts › forBranches
 ---
 
 # Range-encode the branch ids packed into a single-node loop's BranchEnd marker

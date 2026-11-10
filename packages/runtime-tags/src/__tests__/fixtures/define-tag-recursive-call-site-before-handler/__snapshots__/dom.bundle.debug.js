@@ -1,8 +1,8 @@
 // template.marko
 const $Item_content__walks = "b%b D l";
 const $Item_content__template = "<!><!><button> </button>";
-const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Item_content__template);
-const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Item_content__walks);
+const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}`)($Item_content__template);
+const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&`)($Item_content__walks);
 const $if_content__depth = /*@__PURE__*/ _if_closure("#text/0", 0, ($scope) => $Item_content__tag_input_depth($scope["#childScope/0"], $scope._.depth - 1));
 const $if_content__setup = ($scope) => {
 	$if_content__depth._($scope);
@@ -12,7 +12,7 @@ const $Item_content__setup__script = _script("__tests__/template.marko_1", ($sco
 	e.target.textContent = `clicked ${$scope.depth}`;
 }));
 const $Item_content__setup = $Item_content__setup__script;
-const $Item_content__if = /*@__PURE__*/ _if("#text/0", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Item_content__template), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Item_content__walks), $if_content__setup);
+const $Item_content__if = /*@__PURE__*/ _if("#text/0", /*@__PURE__*/ ((_w0) => `<!>${_w0}`)($Item_content__template), /*@__PURE__*/ ((_w0) => `b/${_w0}&`)($Item_content__walks), $if_content__setup);
 const $Item_content__tag_input_depth = /*@__PURE__*/ _const("depth", ($scope) => {
 	_text($scope["#text/2"], $scope.depth);
 	$Item_content__if($scope, $scope.depth ? 0 : 1);

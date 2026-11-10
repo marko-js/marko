@@ -1,0 +1,32 @@
+// template.marko
+var template_default = _template("__tests__/template.marko", (input) => {
+	const $scope0_reason = _scope_reason(), $wg__input_html = _write_guard($scope0_reason, 0);
+	const $scope0_id = _scope_id();
+	let show = false;
+	_html("<main>");
+	_if(() => {
+		if (show) {
+			const $scope1_id = _scope_id();
+			_html(`${_html_mark($scope1_id, "#text/0", input.html, $wg__input_html)}<hr>`);
+			_scope($scope1_id, {}, "__tests__/template.marko", "3:4");
+			return 0;
+		}
+	}, $scope0_id, "#text/0");
+	_if(() => {
+		if (show) {
+			const $scope2_id = _scope_id();
+			_html(`<hr>${_html_mark($scope2_id, "#text/0", input.html, $wg__input_html)}`);
+			_scope($scope2_id, {}, "__tests__/template.marko", "4:4");
+			return 0;
+		}
+	}, $scope0_id, "#text/1");
+	_html(`<button>t</button>${_el_mark($scope0_id, "#button/2")}</main>`);
+	_script($scope0_id, "__tests__/template.marko_0");
+	_scope($scope0_id, {
+		input_html: input.html,
+		show
+	}, "__tests__/template.marko", 0, {
+		input_html: ["input.html"],
+		show: "1:6"
+	});
+}, 1);

@@ -68,16 +68,8 @@ UPDATE: #class::text@8 "0" => "1"
 ```
 ## Change
 ```
-REMOVE: #class + h1
-REMOVE: #class + #class
-INSERT: div > h1
-INSERT: div > h1::text("hello")
-INSERT: div > h1 + #class
-INSERT: #class::text("2")
-INSERT: #class::text@0 + ::text(" * ")
-INSERT: #class::text@1 + ::text("1")
-INSERT: #class::text@4 + ::text(" = ")
-INSERT: #class::text@5 + ::text("2")
+UPDATE: #class::text@0 "1" => "2"
+UPDATE: #class::text@8 "1" => "2"
 ```
 
 # Update
@@ -131,16 +123,8 @@ UPDATE: #class::text@8 "2" => "4"
 ```
 ## Change
 ```
-REMOVE: #class + h1
-REMOVE: #class + #class
-INSERT: div > h1
-INSERT: div > h1::text("hello")
-INSERT: div > h1 + #class
-INSERT: #class::text("3")
-INSERT: #class::text@0 + ::text(" * ")
-INSERT: #class::text@1 + ::text("2")
-INSERT: #class::text@4 + ::text(" = ")
-INSERT: #class::text@5 + ::text("6")
+UPDATE: #class::text@0 "2" => "3"
+UPDATE: #class::text@8 "4" => "6"
 ```
 
 # Update

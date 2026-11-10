@@ -1,13 +1,13 @@
 // template.marko
 const $Item_content__walks = " b";
 const $Item_content__template = "<span>x</span>";
-const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!><!><!>`)($Item_content__template);
-const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&%b%c`)($Item_content__walks);
+const $template = /*@__PURE__*/ ((_w0) => `${_w0}<!><!><!>`)($Item_content__template);
+const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&%b%c`)($Item_content__walks);
 const $await_content3__$params = ($scope, $params5) => _text($scope["#text/0"], $params5[0]);
 const $catch_content__$params = ($scope, $params3) => _text($scope["#text/0"], $params3[0]?.message);
 const $catch_content = _content("__tests__/template.marko_5*content", "caught <!>", "b%", 0, $catch_content__$params);
 const $await_content2__$params = ($scope, $params2) => _text($scope["#text/0"], $params2[0]);
-const $await_content = /*@__PURE__*/ _await_content("#text/0", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Item_content__template), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Item_content__walks));
+const $await_content = /*@__PURE__*/ _await_content("#text/0", $Item_content__template, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($Item_content__walks));
 const $try_content__await_promise = /*@__PURE__*/ _await_promise("#text/0");
 const $await_content3 = /*@__PURE__*/ _await_content("#text/1", " ", " ");
 const $try_content__await_promise2 = /*@__PURE__*/ _await_promise("#text/1", $await_content3__$params);

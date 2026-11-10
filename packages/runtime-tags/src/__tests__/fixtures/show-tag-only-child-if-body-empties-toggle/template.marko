@@ -1,0 +1,10 @@
+<let/n=0/>
+<button onClick() { n = (n + 1) % 3 }>next</button>
+<p>
+  <show=n !== 2>
+    <if=n === 0>zero</if>
+    <else>
+      <let/v=true/>
+    </else>
+  </show>
+</p>

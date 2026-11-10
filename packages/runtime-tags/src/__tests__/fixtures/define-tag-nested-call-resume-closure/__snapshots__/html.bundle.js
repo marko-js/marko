@@ -19,7 +19,7 @@ var template_default = _template("a", (input) => {
 				_scope($scope3_id, { _: _scope_with_id($scope2_id) });
 				return 0;
 			}
-		}, $scope2_id, "a");
+		}, $scope2_id, "a", 1, 1, 0, 0, 1);
 		_scope($scope2_id, { _: _scope_with_id($scope0_id) });
 	}, $scope0_id) };
 	let on = false;

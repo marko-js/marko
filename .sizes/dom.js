@@ -1,4 +1,4 @@
-// size: 27082 (min) 10128 (brotli)
+// size: 25762 (min) 9583 (brotli)
 // packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -125,8 +125,8 @@ let _dynamic_tag = /*@__PURE__*/ withBranches(
       rendererAccessor = "D" + nodeAccessor,
       createTagBranch = ($global, tagNameOrRenderer, scope, parentNode) => {
         let branch = createBranch($global, tagNameOrRenderer, scope, parentNode);
-        if (
-          (typeof tagNameOrRenderer == "string" &&
+        return (
+          typeof tagNameOrRenderer == "string" &&
             (branch.a =
               branch.S =
               branch.K =
@@ -141,15 +141,11 @@ let _dynamic_tag = /*@__PURE__*/ withBranches(
           getTagVar &&
             ((branch.T = (value) => getTagVar()(scope, value)),
             bindTagVar(scope, branch, scope[scopeOffsetAccessor], tagNameOrRenderer)),
-          typeof tagNameOrRenderer != "string")
-        )
-          setupBranch(tagNameOrRenderer, branch);
-        else if (getContent) {
-          let content = getContent(scope);
-          (setBranch(branch, "a", content, createAndSetupBranch),
-            content.f && subscribeToScopeSet(content.e, content.f, branch.Aa));
-        }
-        return branch;
+          typeof tagNameOrRenderer == "string"
+            ? getContent && _attr_content(branch, "a", getContent(scope))
+            : setupBranch(tagNameOrRenderer, branch),
+          branch
+        );
       };
     return (scope, newRenderer, getInput) => {
       let normalizedRenderer = normalizeDynamicRenderer(newRenderer);
@@ -1092,9 +1088,6 @@ function runResumeEffects(render) {
     isResuming = 0;
   }
 }
-function getRegisteredWithScope(scope, id) {
-  return scope ? _resumed[id](scope) : _resumed[id];
-}
 function _var_resume(id, signal) {
   return ((_resumed[id] = (scope) => (value) => signal(scope, value)), signal);
 }
@@ -1944,9 +1937,6 @@ function findTryWithCatch(scope) {
 function rendererKey(renderer) {
   return renderer?.e ? renderer.a + " " + renderer.e.L : renderer?.a || renderer;
 }
-function patchDynamicTag(fn) {
-  _dynamic_tag = fn(_dynamic_tag);
-}
 function dynamicTagScript(branch) {
   _attrs_script(branch, "a");
 }
@@ -2006,102 +1996,6 @@ function byFirstArg(name) {
 // packages/runtime-tags/dist/dom.mjs
 let empty = [];
 let rest = Symbol();
-let classIdToBranch = /* @__PURE__ */ new Map();
-let classEventResolver;
-let scopesByRender = /* @__PURE__ */ new WeakMap();
-let getRenderScopes = ($global) => {
-  init($global.runtimeId);
-  let render = self[$global.runtimeId]?.[$global.renderId],
-    scopes = render && scopesByRender.get(render);
-  return (render && !scopes && scopesByRender.set(render, (scopes = {})), scopes);
-};
-let compat = {
-  patchDynamicTag,
-  queueEffect,
-  init(warp10Noop) {
-    ((_resumed.$C_s = (scope) => {
-      if (
-        ((getRenderScopes(scope.$)[scope.L] = scope),
-        scope.m5c && classIdToBranch.set(scope.m5c, scope),
-        classEventResolver)
-      )
-        for (let key in scope) {
-          let resolved = classEventResolver(scope[key], scope);
-          resolved !== scope[key] && (scope[key] = resolved);
-        }
-    }),
-      (_resumed.$C_b = warp10Noop));
-  },
-  setClassEventResolver(fn) {
-    classEventResolver = fn;
-  },
-  resumeClassFunction(id, build) {
-    _resumed[id] = build;
-  },
-  getScope($global, scopeId) {
-    return getRenderScopes($global)?.[scopeId];
-  },
-  setRendererId(renderer, id) {
-    renderer.a = id;
-  },
-  isRenderer(renderer) {
-    return renderer.b;
-  },
-  getStartNode(branch) {
-    return branch.S;
-  },
-  getEndNode(branch) {
-    return branch.K;
-  },
-  setScopeNodes(branch, startNode, endNode) {
-    ((branch.S = startNode), (branch.K = endNode));
-  },
-  runComponentEffects() {
-    this.effects && runEffects(this.effects);
-  },
-  runComponentDestroy() {
-    this.scope && destroyBranch(this.scope);
-  },
-  resolveRegistered(value, $global) {
-    return Array.isArray(value) && typeof value[0] == "string"
-      ? getRegisteredWithScope(getRenderScopes($global)?.[value[1]], value[0])
-      : value;
-  },
-  createRenderer(params, clone) {
-    let renderer = _content("", 0, 0, 0, params)();
-    return (
-      (renderer.b = (branch) => {
-        let cloned = clone();
-        ((branch.S = cloned.startNode), (branch.K = cloned.endNode));
-      }),
-      renderer
-    );
-  },
-  render(out, component, renderer, args) {
-    init(out.global.runtimeId);
-    let branch = component.scope,
-      created = 0;
-    if (
-      (!branch &&
-        (branch = classIdToBranch.get(component.id)) &&
-        ((component.scope = branch), classIdToBranch.delete(component.id)),
-      args[0] && typeof args[0] == "object" && "renderBody" in args[0])
-    ) {
-      let input = args[0],
-        normalizedInput = (args[0] = {});
-      for (let key in input) normalizedInput[key === "renderBody" ? "content" : key] = input[key];
-    }
-    let renderBranch = (_) => {
-      ((branch ||=
-        ((created = 1),
-        (component.scope = createAndSetupBranch(out.global, renderer, renderer.e, document.body)))),
-        renderer.g?.(branch),
-        renderer.d?.(branch, renderer._ ? args[0] : args));
-    };
-    if (((component.effects = rendering ? renderBranch() : prepareEffects(renderBranch)), created))
-      return branch.S.parentNode || branch.S;
-  },
-};
 let _template = (id, template, walks, setup, inputSignal) => {
   let renderer = _content(id, template, walks, setup, inputSignal)();
   return ((renderer.mount = mount), (renderer._ = renderer), (_resumed[id] = renderer));

@@ -21,7 +21,7 @@ import {
 } from "../common/types";
 import { onAbort } from "./abort-signal";
 import { controllableSpreadHelpers } from "./controllable";
-import { _attrs, _attrs_content, _attrs_script } from "./dom";
+import { _attr_content, _attrs, _attrs_content, _attrs_script } from "./dom";
 import {
   runEffects,
   pendingEffects,
@@ -568,8 +568,8 @@ export const _show = /*@__PURE__*/ withBranches(
 // only their owner tells them apart. Ownerless renderers and string tags keep
 // the bare id, so nothing but owner-bound content pays the suffix.
 export function rendererKey(renderer: Renderer | string | undefined) {
-  // Only owner-bound content is qualified; a Class-API interop renderer has no
-  // owner, so its non-string id keeps comparing as it always has.
+  // Only owner-bound content is qualified; a Class API interop renderer has no
+  // owner, so its id alone is its key.
   return (renderer as Renderer | undefined)?.[RendererProp.Owner]
     ? (renderer as Renderer)[RendererProp.Id] +
         // Debug ids can start with a digit, so they need the space; optimized
@@ -579,12 +579,7 @@ export function rendererKey(renderer: Renderer | string | undefined) {
     : (renderer as Renderer | undefined)?.[RendererProp.Id] || renderer;
 }
 
-export function patchDynamicTag(
-  fn: <T extends typeof _dynamic_tag>(cond: T) => T,
-) {
-  // Injection point for compat layer.
-  _dynamic_tag = fn(_dynamic_tag);
-}
+// A `let` the minifier joins with the declarations beside it; a `const` splits them.
 export let _dynamic_tag = /*@__PURE__*/ withBranches(
   (
     nodeAccessor: EncodedAccessor,
@@ -652,18 +647,11 @@ export let _dynamic_tag = /*@__PURE__*/ withBranches(
       if (typeof tagNameOrRenderer !== "string") {
         setupBranch(tagNameOrRenderer, branch);
       } else if (getContent) {
-        const content = getContent(scope);
-        const elementAccessor = MARKO_DEBUG
-          ? `#${tagNameOrRenderer.toLowerCase()}/0`
-          : "a";
-        setBranch(branch, elementAccessor, content, createAndSetupBranch);
-        if (content[RendererProp.Accessor]) {
-          subscribeToScopeSet(
-            content[RendererProp.Owner]!,
-            content[RendererProp.Accessor],
-            branch[AccessorPrefix.BranchScopes + elementAccessor],
-          );
-        }
+        _attr_content(
+          branch,
+          MARKO_DEBUG ? `#${tagNameOrRenderer.toLowerCase()}/0` : "a",
+          getContent(scope),
+        );
       }
 
       return branch;

@@ -276,7 +276,7 @@ export default {
             if (isDynamicAttr(attr.value, delimitedAttrMeta)) {
               hasDynamicAttributes = true;
               addSetupExpr(tagSection, attr.value);
-            } else if (attr.name === "content" && tagName !== "meta") {
+            } else if (attr.name === "content" && !tagFacts.htmlContentAttr) {
               // Content is rendered by the client whatever its value.
               addSetupExpr(tagSection, attr.value);
             }
@@ -284,7 +284,7 @@ export default {
 
           if (spread) {
             spread.push(i);
-          } else if (attr.name === "content" && tagName !== "meta") {
+          } else if (attr.name === "content" && !tagFacts.htmlContentAttr) {
             content = i;
           } else if (isEventHandlerAttr) {
             (handlers ||= []).push(i);
@@ -328,9 +328,10 @@ export default {
 
       const contentAttr = attrAt(attributes, indexByName.content);
       if (contentAttr) {
-        const tagDef = getTagDef(tag);
-        // `<meta content=x>` is a real html attribute, not renderable content.
-        if (tagDef?.parseOptions?.openTagOnly && !tagDef.attributes?.content) {
+        if (
+          getTagDef(tag)?.parseOptions?.openTagOnly &&
+          !tagFacts.htmlContentAttr
+        ) {
           throw tag.hub.buildError(
             contentAttr,
             `The \`<${tagName}>\` tag cannot have content, so it does not support the \`content\` attribute.`,

@@ -1,11 +1,16 @@
 import type { TestConfig } from "../../main.test";
 import { flush } from "../../utils/resolve";
 
-// The delay lets the root `<script>`'s flush finish before the body streams,
-// so the body resumes after `n` changed and its `<let>` keeps its initial value.
+// The delay lets the scripts flush before the body streams, so it resumes after
+// `n` and the tag variables changed and its `<let>` keeps its initial value.
 export const config: TestConfig = {
   equivalent: false,
-  steps: [{}, () => new Promise((r) => setTimeout(r, 50)), flush, click],
+  steps: [
+    { show: true },
+    () => new Promise((r) => setTimeout(r, 50)),
+    flush,
+    click,
+  ],
 };
 
 function click(document: Document) {

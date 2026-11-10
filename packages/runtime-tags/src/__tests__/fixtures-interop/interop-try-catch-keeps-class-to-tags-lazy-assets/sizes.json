@@ -1,13 +1,13 @@
 {
   "dom": {
     "lazy-child.marko.load.mjs": {
-      "min": 83,
+      "min": 74,
       "brotli": 74
     },
     "template.marko.page.mjs": {
       "total": {
-        "min": 57233,
-        "brotli": 17429
+        "min": 58753,
+        "brotli": 18014
       },
       "files": {
         "tags/tags-child.marko": 519,
@@ -18,16 +18,16 @@
       }
     },
     "lazy-child.mjs": {
-      "min": 207,
-      "brotli": 146
+      "min": 225,
+      "brotli": 151
     },
     "v:lazy-child.marko.setup.mjs": {
       "min": 92,
       "brotli": 95
     },
     "shared": {
-      "min": 9716,
-      "brotli": 4197
+      "min": 5745,
+      "brotli": 2681
     }
   },
   "html": {

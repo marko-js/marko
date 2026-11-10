@@ -22,7 +22,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_html(`<span>${_text_mark($scope1_id, "#text/0", x + y)}</span>`);
 		const $return = 1;
-		_subscribe($x__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:2"));
+		_subscribe($x__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:2"), "__tests__/template.marko_1_x#0:4/subscribe");
 		return $return;
 	}, $scope0_id) });
 	_var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_x#4/var");

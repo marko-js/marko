@@ -16,6 +16,7 @@ import {
   ensureSection,
   getScopeIdIdentifier,
   getSection,
+  getSectionForBody,
   getSectionTextBefore,
   mayMergeWithText,
 } from "../util/sections";
@@ -74,7 +75,6 @@ export default {
       } else {
         const before = extra.textBefore;
         const after = extra[kTextAfter];
-        const { content } = getSection(placeholder);
         structure.text(
           placeholder,
           extra.nodeBinding!,
@@ -82,8 +82,13 @@ export default {
             after ||
             // A lone text node is cloned without a parent, and `_html` needs one.
             (!node.escape &&
-              content!.singleChild &&
-              content!.startType === ContentType.Placeholder) ||
+              before === undefined &&
+              after === undefined &&
+              !!getSectionForBody(
+                placeholder.parentPath as t.NodePath<
+                  t.MarkoTagBody | t.Program
+                >,
+              )) ||
             // A side at its section's edge leaves it to whether the section is a known child.
             (before === false && after === false ? false : undefined),
         );

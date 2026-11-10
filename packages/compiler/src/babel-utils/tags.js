@@ -335,6 +335,8 @@ export function getTemplateId(opts, request, child) {
       let registered = lookup.get(request);
       if (registered) {
         if (child) {
+          // Numbered in request order, so the html and dom compiles must share
+          // one `optimizeKnownTemplates` array (as `@marko/vite` does) to agree.
           let childId = registered.children.get(child);
           if (childId === undefined) {
             childId = registered.children.size;

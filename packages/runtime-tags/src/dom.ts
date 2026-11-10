@@ -7,7 +7,6 @@ export {
 export { forIn, forOf, forTo, forUntil } from "./common/for";
 export { _call } from "./common/helpers";
 export { $signal, $signalReset, onAbort } from "./dom/abort-signal";
-export { compat } from "./dom/compat";
 export {
   _await_content,
   _await_promise,

@@ -3,6 +3,7 @@ import { getFile, getTagDef } from "@marko/compiler/babel-utils";
 
 import { reportAnalyzeError } from "../../util/analyze-errors";
 import { writeBodyStatements } from "../../util/replace-with-statements";
+import { settleContent } from "../../util/sections";
 import analyzeTagNameType, { TagNameType } from "../../util/tag-name-type";
 import { enterHook, exitHook, type TemplateVisitor } from "../../util/visitors";
 import AttributeTag from "./attribute-tag";
@@ -56,6 +57,7 @@ export default {
     },
     exit(tag) {
       if (tag.node.extra?.[kAnalyzeFailed]) return;
+      settleContent(tag.get("body"));
       try {
         const hook = getTagDef(tag)?.analyzer?.hook;
 

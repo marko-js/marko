@@ -1,0 +1,13 @@
+// use tags
+import ClassThing from "./components/class-thing.marko";
+
+<let/show=false/>
+<let/n=0/>
+<button id="toggle" onClick() { show = !show }>toggle</button>
+<button id="tags" onClick() { n++ }>${n}</button>
+<ClassThing/>
+<const/attrs={ "data-n": n, content: ClassThing }/>
+<div ...attrs/>
+<if=show>
+  <section content=ClassThing/>
+</if>

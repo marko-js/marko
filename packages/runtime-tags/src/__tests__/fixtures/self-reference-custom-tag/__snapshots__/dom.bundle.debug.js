@@ -1,8 +1,8 @@
 // template.marko
 const $Child_content__walks = " b";
 const $Child_content__template = "<button></button>";
-const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Child_content__template);
-const $walks = /*@__PURE__*/ ((_w0) => `b0${_w0}&b`)($Child_content__walks);
+const $template = $Child_content__template;
+const $walks = /*@__PURE__*/ ((_w0) => `0${_w0}&`)($Child_content__walks);
 const $Child_content__$el_getter = _el("__tests__/template.marko_1_#button#0", "#button/0");
 const $Child_content__input_onClick__script = _script("__tests__/template.marko_1_input_onClick#3", ($scope) => _on($scope["#button/0"], "click", $scope.input_onClick));
 const $Child_content__input_onClick = /*@__PURE__*/ _const("input_onClick", $Child_content__input_onClick__script);

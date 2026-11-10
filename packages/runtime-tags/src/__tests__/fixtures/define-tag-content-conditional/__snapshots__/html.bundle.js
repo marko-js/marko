@@ -11,7 +11,7 @@ var template_default = _template("a", (input) => {
 		_html("</section>");
 	}, $scope0_id);
 	_html(`<button id=toggle>toggle</button>${_el_mark($scope0_id, "a")}`);
-	_if(() => {}, $scope0_id, "b");
+	_if(() => {}, $scope0_id, "b", 1, 1, 0, 0, 1);
 	_script($scope0_id, "a2");
 	_scope($scope0_id, { c: show });
 }, 1);
