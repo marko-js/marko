@@ -4,7 +4,7 @@
   "PatchBranch:#main/0": [{
     "PatchMarkedWrite:x": "b!",
     "PatchPending:#text/1": "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-local-await-effect/template.marko_2*content",
-    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-local-await-effect/template.marko_1_x#2": "x",
+    "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-local-await-effect/template.marko_1_x#2",
     "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-local-await-effect/template.marko_1_x#2/subscribers": "x",
     "PatchChild:BranchScopes:#text/1": {
       "PatchDynamicTag:#text/0": [">div", "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-local-await-effect/template.marko_3*content"],
@@ -26,7 +26,7 @@
   "PatchBranch:#main/0": [{
     "PatchMarkedWrite:x": "c!",
     "PatchPending:#text/1": "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-local-await-effect/template.marko_2*content",
-    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-local-await-effect/template.marko_1_x#2": "x",
+    "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-local-await-effect/template.marko_1_x#2",
     "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-local-await-effect/template.marko_1_x#2/subscribers": "x",
     "PatchChild:BranchScopes:#text/1": {
       "PatchDynamicTag:#text/0": ["packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-local-await-effect/tags/card.marko", "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-local-await-effect/template.marko_3*content"],
@@ -49,7 +49,7 @@
   "PatchBranch:#main/0": [{
     "PatchMarkedWrite:x": "d!",
     "PatchPending:#text/1": "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-local-await-effect/template.marko_2*content",
-    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-local-await-effect/template.marko_1_x#2": "x",
+    "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-local-await-effect/template.marko_1_x#2",
     "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-local-await-effect/template.marko_1_x#2/subscribers": "x",
     "PatchChild:BranchScopes:#text/1": {
       "PatchDynamicTag:#text/0": [">div", "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-local-await-effect/template.marko_3*content"],

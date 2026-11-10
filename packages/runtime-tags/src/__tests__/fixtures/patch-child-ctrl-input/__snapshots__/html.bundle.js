@@ -5,7 +5,7 @@ var field_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	_html(`<input${_attr_input_value($scope0_id, "a", input.value, input.valueChange, 3, $scope0_reason, 0)}>${_el_mark($scope0_id, "a")}<em>${_text_mark($scope0_id, "b", input.value, 1, $scope0_reason, 1)}</em>`);
 	_script($scope0_id, "b0");
-	_patch_render($scope0_id, "b1", [$fg__input_value && "e", $fg__input_valueChange && "f"], $scope0_reason, 0);
+	_patch_render($scope0_id, "b1", (($fg__input_value ? " e" : "") + ($fg__input_valueChange ? " f" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		e: ($ui__input_valueChange || $ui__input_value__OR__input_valueChange) && input.value,
 		f: $ui__input_value__OR__input_valueChange && input.valueChange

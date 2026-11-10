@@ -3,7 +3,7 @@ const $input = ($scope, input) => {
 	_text($scope.a, JSON.stringify(input));
 	$input_label($scope, input.label);
 };
-const $input_label__script = _script("b0", ($scope) => {
+const $input_label__script = _script_patch("b0 d", ($scope) => {
 	{
 		const el = document.querySelector("main");
 		el.dataset.log = (el.dataset.log || "") + "[" + $scope.d + "]";

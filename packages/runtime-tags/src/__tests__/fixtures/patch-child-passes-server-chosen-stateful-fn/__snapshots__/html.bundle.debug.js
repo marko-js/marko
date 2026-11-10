@@ -7,7 +7,7 @@ var label_view_default = _template("__tests__/tags/label-view.marko", (input) =>
 	const $scope0_reason = _scope_reason(), $fg__input = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_html(`<output></output>${_el_mark($scope0_id, "#output/0")}`);
-	_script($scope0_id, "__tests__/tags/label-view.marko_0_input#2", 1, $fg__input, "input");
+	_script($scope0_id, "__tests__/tags/label-view.marko_0_input#2", 1, $fg__input);
 	_scope($scope0_id, { input }, "__tests__/tags/label-view.marko", 0, { input: 0 }) || $fg__input && _patch_write($scope0_id, "PatchMarkedWrite:input", input, !_server_guard($scope0_reason, 0));
 });
 
@@ -21,9 +21,9 @@ var mid_default = _template("__tests__/tags/mid.marko", (input) => {
 	const $scope0_id = _scope_id();
 	_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
-	label_view_default(_patch_live($childScope, { get: input.get }, $scope0_id, "input_get"));
+	label_view_default({ get: input.get });
 	_patch_child_end();
-	_scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/tags/mid.marko", 0) || _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_get", input.get, !_server_guard($scope0_reason, 0));
+	_scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/tags/mid.marko", 0);
 });
 
 // template.marko
@@ -45,12 +45,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(`<button>inc</button>${_el_mark($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_patch_render($scope0_id, "__tests__/template.marko_0_input_title#4_n#6/setup", $fg__input_title && "input_title");
-	_patch_render($scope0_id, "__tests__/template.marko_0_input_upper#5_up#8_low#9/setup", [
-		$fg__input_upper && "input_upper",
-		"up",
-		$fg__input_title && "input_title",
-		$fg__input_title && "low"
-	]);
+	_patch_render($scope0_id, "__tests__/template.marko_0_input_upper#5_up#8_low#9/setup", "up" + ($fg__input_upper ? " input_upper" : "") + ($fg__input_title ? " input_title" : "") + ($fg__input_title ? " low" : ""));
 	_scope($scope0_id, {
 		input_title: input.title,
 		input_upper: input.upper,

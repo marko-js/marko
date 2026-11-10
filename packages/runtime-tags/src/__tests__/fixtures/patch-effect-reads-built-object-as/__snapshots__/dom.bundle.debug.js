@@ -2,7 +2,7 @@
 const $template = "<output></output>";
 const $walks = " b";
 const $setup = ($_) => {};
-const $item__script = _script("__tests__/template.marko_0_item#4", ($scope) => {
+const $item__script = _script_patch("__tests__/template.marko_0_item#4 item", ($scope) => {
 	_el_read($scope["#output/0"]).textContent = JSON.stringify($scope.item);
 	console.log("run", JSON.stringify($scope.item));
 });

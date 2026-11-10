@@ -49,8 +49,8 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 		$fg__input_p__OR__input_content && $ui__input_p && _patch_write($scope1_id, "PatchMarkedWrite:c", c, !_server_guard($scope0_reason, 0));
 		_dynamic_tag($scope1_id, "#text/0", x ? keeper_default : "div", { content: c }, 1, 0, 0, $wg__input_p__OR__input_content, $scope0_reason, 0);
 		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "__tests__/tags/card.marko_1_input_content#0:4/subscribe");
-		_patch_render($scope1_id, "__tests__/tags/card.marko_1_input_content#0:4_x#2/setup", [_filled_guard($scope0_reason, 2) && ">input_content", $fg__input_p && "x"], $scope0_reason, 0);
-		_patch_render($scope1_id, "__tests__/tags/card.marko_1_x#2_c#4/setup", [$fg__input_p && "x", $fg__input_p__OR__input_content && "c"], $scope0_reason, 0);
+		_patch_render($scope1_id, "__tests__/tags/card.marko_1_input_content#0:4_x#2/setup", ((_filled_guard($scope0_reason, 2) ? " >input_content" : "") + ($fg__input_p ? " x" : "")).slice(1), $scope0_reason, 0);
+		_patch_render($scope1_id, "__tests__/tags/card.marko_1_x#2_c#4/setup", (($fg__input_p ? " x" : "") + ($fg__input_p__OR__input_content ? " c" : "")).slice(1), $scope0_reason, 0);
 		_write_if($scope0_reason, 0) && _subscribe(_unfilled_if($scope0_reason, 2) && $input_content__closures, _scope($scope1_id, {
 			x: $ui__input_p__OR__input_content && x,
 			c: ($ui__input_p || $ui__input_p__OR__input_content) && c
@@ -87,7 +87,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id, ($scope) => $scope0_page ? [{ input_note: input.note }] : []), 0, $wg__input_on__OR__input_p, $scope0_reason, 0, 0, void 0, 0, 0, "__tests__/template.marko_1*content");
 	_html("</main>");
 	$fg__input_note && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_note#6/subscribers", "input_note");
-	_patch_render($scope0_id, "__tests__/template.marko_0_input_on#3_input_p#4/setup", [$fg__input_on && "input_on", $fg__input_p && "input_p"], $scope0_reason, 0);
+	_patch_render($scope0_id, "__tests__/template.marko_0_input_on#3_input_p#4/setup", (($fg__input_on ? " input_on" : "") + ($fg__input_p ? " input_p" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		input_on: ($ui__input_p || $ui__input_on__OR__input_p) && input.on,
 		input_p: ($ui__input_on || $ui__input_on__OR__input_p) && input.p,

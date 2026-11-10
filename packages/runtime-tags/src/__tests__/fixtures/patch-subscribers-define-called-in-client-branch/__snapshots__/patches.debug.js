@@ -4,7 +4,7 @@
   "PatchChild:#childScope/0": {
     "PatchBranch:#text/0": [{
       "PatchChild:#childScope/0": {
-        "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-subscribers-define-called-in-client-branch/tags/panel.marko_1_input_n#0:4_twice#0": ">input_n twice",
+        "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-subscribers-define-called-in-client-branch/tags/panel.marko_1_input_n#0:4_twice#0",
         "PatchMarkedWrite:twice": 4
       }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-subscribers-define-called-in-client-branch/tags/panel.marko_3*shell"],
@@ -35,7 +35,7 @@
   "PatchChild:#childScope/0": {
     "PatchBranch:#text/0": [{
       "PatchChild:#childScope/0": {
-        "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-subscribers-define-called-in-client-branch/tags/panel.marko_1_input_n#0:4_twice#0": ">input_n twice",
+        "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-subscribers-define-called-in-client-branch/tags/panel.marko_1_input_n#0:4_twice#0",
         "PatchMarkedWrite:twice": 6
       }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-subscribers-define-called-in-client-branch/tags/panel.marko_3*shell"],

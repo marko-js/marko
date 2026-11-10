@@ -3,7 +3,7 @@ const $template$1 = "<span> </span>";
 const $walks$1 = "D l";
 const $setup$1 = ($_) => {};
 const $label = ($scope, label) => _text($scope["#text/0"], label);
-const $fn__script = _script("__tests__/tags/child.marko_0_fn#3", ($scope) => $scope.fn());
+const $fn__script = _script_patch("__tests__/tags/child.marko_0_fn#3 fn", ($scope) => $scope.fn());
 const $fn = /*@__PURE__*/ _const("fn", $fn__script);
 const $input$1 = ($scope, input) => {
 	$fn($scope, input.fn);

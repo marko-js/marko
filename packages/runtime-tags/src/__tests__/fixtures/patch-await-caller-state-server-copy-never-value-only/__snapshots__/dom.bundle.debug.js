@@ -1,7 +1,7 @@
 // tags/show-await.marko
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
-const $await_content__x__script = _script("__tests__/tags/show-await.marko_1_x#2", ($scope) => document.title = $scope.x);
+const $await_content__x__script = _script_patch("__tests__/tags/show-await.marko_1_x#2 x", ($scope) => document.title = $scope.x);
 const $await_content__x = /*@__PURE__*/ _const("x", ($scope) => {
 	_text($scope["#text/0"], $scope.x);
 	$await_content__x__script($scope);

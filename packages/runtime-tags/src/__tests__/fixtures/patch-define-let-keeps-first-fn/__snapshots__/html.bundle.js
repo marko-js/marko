@@ -16,18 +16,18 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id) };
 	_set_scope_reason($uf__input_label << 1);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
-	Card.content({ opts: _patch_live($childScope, { fn() {
+	Card.content({ opts: { fn() {
 		return "root:" + input.label;
-	} }, $scope0_id, "e") });
+	} } });
 	_patch_child_end();
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_set_scope_reason($uf__input_label << 1);
 			const $childScope2 = _peek_scope_id($scope1_id, "a", 1);
-			Card.content({ opts: _patch_live($childScope2, { fn() {
+			Card.content({ opts: { fn() {
 				return "if:" + input.label;
-			} }, $scope1_id, ">e") });
+			} } });
 			_patch_child_end();
 			_client_guard($scope0_reason, 0) && _patch_render($scope1_id, "a1");
 			_scope($scope1_id, {

@@ -15,9 +15,9 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 			const c = input.b + "!";
 			$fg__input_b && _patch_write($scope1_id, "PatchMarkedWrite:c", c, !$sg__input_b);
 			_html(`<p>${_text_mark($scope1_id, "#text/0", input.a + c, 1, $scope0_reason, 1)}</p><div></div>${_el_mark($scope1_id, "#div/1")}`);
-			_script($scope1_id, "__tests__/tags/child.marko_1_c#2", 1, $fg__input_b, "c");
+			_script($scope1_id, "__tests__/tags/child.marko_1_c#2", 1, $fg__input_b);
 			_client_guard($scope0_reason, 3) && _patch_render($scope1_id, "__tests__/tags/child.marko_1_input_b#0:4/setup");
-			_patch_render($scope1_id, "__tests__/tags/child.marko_1_input_a#0:5_c#2/setup", [_filled_guard($scope0_reason, 4) && ">input_a", $fg__input_b && "c"], $scope0_reason, 1);
+			_patch_render($scope1_id, "__tests__/tags/child.marko_1_input_a#0:5_c#2/setup", ((_filled_guard($scope0_reason, 4) ? " >input_a" : "") + ($fg__input_b ? " c" : "")).slice(1), $scope0_reason, 1);
 			_scope($scope1_id, {
 				c,
 				_: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id)

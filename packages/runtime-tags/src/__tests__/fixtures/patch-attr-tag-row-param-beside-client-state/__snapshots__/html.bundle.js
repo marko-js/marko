@@ -38,7 +38,7 @@ var wrap_default = _template("c", (input) => {
 		$ui__input_label && _patch_write($scope1_id, "xb", item);
 		_html(_text_mark($scope1_id, "a", item + input.label, 1, (2 | $uf__input_label) << 1, 0));
 		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "c0");
-		_patch_render($scope1_id, "c1", [_filled_guard($scope0_reason, 2) && ">e", "b"], (2 | $uf__input_label) << 1, 0);
+		_patch_render($scope1_id, "c1", "b" + (_filled_guard($scope0_reason, 2) ? " >e" : ""), (2 | $uf__input_label) << 1, 0);
 		_subscribe($ui__input_label && $input_label__closures, _scope($scope1_id, {
 			b: $ui__input_label && item,
 			_: (_write_if($scope0_reason, 0) || _write_if($scope1_reason, 0)) && _scope_with_id($scope0_id)

@@ -6,7 +6,7 @@ var label_view_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $fg__input = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_html(`<output></output>${_el_mark($scope0_id, "a")}`);
-	_script($scope0_id, "b0", 1, $fg__input, "c");
+	_script($scope0_id, "b0", 1, $fg__input);
 	_scope($scope0_id, { c: input }) || $fg__input && _patch_write($scope0_id, "xc", input, !_server_guard($scope0_reason, 0));
 });
 
@@ -22,15 +22,11 @@ var template_default = _template("a", (input) => {
 	const low = _bind_resume(() => "l" + input.title, "a1", $scope0_id);
 	_set_scope_reason(6);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
-	label_view_default(_patch_live($childScope, { get: low }, $scope0_id, "g e h"));
+	label_view_default({ get: low });
 	_patch_child_end();
 	_html(`<button>toggle</button>${_el_mark($scope0_id, "b")}`);
 	_script($scope0_id, "a2");
-	_patch_render($scope0_id, "a3", [
-		$fg__input_title && "g",
-		$fg__input_title && "e",
-		$fg__input_title && "h"
-	]);
+	_patch_render($scope0_id, "a3", (($fg__input_title ? " g" : "") + ($fg__input_title ? " e" : "") + ($fg__input_title ? " h" : "")).slice(1));
 	_scope($scope0_id, {
 		e: input.title,
 		f: upper,

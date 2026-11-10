@@ -14,17 +14,13 @@ var template_default = _template("a", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id(), $fg__input_decor = _filled_guard($scope0_reason, 4);
 			_html(`<p>${_html_mark($scope1_id, "a", fmt(input.text), 1, $scope0_reason, 1)}</p>`);
-			_patch_render($scope1_id, "a1", [
-				_filled_guard($scope0_reason, 6) && ">f",
-				$fg__input_decor && ">g",
-				$fg__input_decor && ">d"
-			], $scope0_reason, 1);
+			_patch_render($scope1_id, "a1", ((_filled_guard($scope0_reason, 6) ? " >f" : "") + ($fg__input_decor ? " >g" : "") + ($fg__input_decor ? " >d" : "")).slice(1), $scope0_reason, 1);
 			_scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) });
 			return 0;
 		}
 	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["a2"], $scope0_reason, 5);
 	$fg__input_text && $cg__input_show && _patch_render($scope0_id, "a3", "f");
-	$fg__input_decor2 && $cg__input_show && _patch_render($scope0_id, "a4", ["g", "d"]);
+	$fg__input_decor2 && $cg__input_show && _patch_render($scope0_id, "a4", "g d");
 	_scope($scope0_id, {
 		d: ($ui__input_show__OR__input_text || $ui__input_decor__OR__input_text) && input.decor,
 		f: ($ui__input_decor__OR__input_show || $ui__input_decor__OR__input_text) && input.text,

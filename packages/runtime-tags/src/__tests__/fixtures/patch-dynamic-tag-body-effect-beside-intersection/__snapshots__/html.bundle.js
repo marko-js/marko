@@ -13,11 +13,11 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		let n = 0;
 		_html(`<button>${_text_mark($scope1_id, "b", input.a + n)}</button>${_el_mark($scope1_id, "a")}<p>${_text_mark($scope1_id, "c", input.a + input.b, 1, $scope0_reason, 1)}</p>`);
-		_script($scope1_id, "a1", 1, $fg__input_a, ">e");
+		_script($scope1_id, "a1", 1, $fg__input_a);
 		_script($scope1_id, "a2");
 		_unfilled_if($scope0_reason, 3) && _patch_subscribe($scope1_id, "a3", $cg__input_a);
 		_unfilled_if($scope0_reason, 4) && _patch_subscribe($scope1_id, "a4");
-		_patch_render($scope1_id, "a5", [$fg__input_a && ">e", _filled_guard($scope0_reason, 4) && ">f"], $scope0_reason, 1);
+		_patch_render($scope1_id, "a5", (($fg__input_a ? " >e" : "") + (_filled_guard($scope0_reason, 4) ? " >f" : "")).slice(1), $scope0_reason, 1);
 		_patch_render($scope1_id, "a6", $fg__input_a && ">e");
 		_patch_fill($scope1_id, "va7", n, 1);
 		_subscribe(_unfilled_if($scope0_reason, 4) && $input_b__closures, _subscribe(_unfilled_if($scope0_reason, 3) && $input_a__closures, _scope($scope1_id, {

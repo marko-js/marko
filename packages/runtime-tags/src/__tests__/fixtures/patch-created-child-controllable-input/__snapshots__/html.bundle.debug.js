@@ -9,7 +9,7 @@ var demo_card_default = _template("__tests__/tags/demo-card.marko", (input) => {
 	let selected = input.tab;
 	_html(`<button>tab=${_text_mark($scope0_id, "#text/1", String(selected), 2)}</button>${_el_mark($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/tags/demo-card.marko_0");
-	_patch_render($scope0_id, "__tests__/tags/demo-card.marko_0_input_tab#4_input_tabChange#5/setup", [$fg__input_tab && "input_tab", $fg__input_tabChange && "input_tabChange"], $scope0_reason, 0);
+	_patch_render($scope0_id, "__tests__/tags/demo-card.marko_0_input_tab#4_input_tabChange#5/setup", (($fg__input_tab ? " input_tab" : "") + ($fg__input_tabChange ? " input_tabChange" : "")).slice(1), $scope0_reason, 0);
 	const $selectedChange = input.tabChange || void 0;
 	_patch_let_change($scope0_id, "PatchFill:__tests__/tags/demo-card.marko_0_selected#7/fill", selected, "PatchWrite:TagVariableChange:selected", $selectedChange, $scope0_reason, 0);
 	_scope($scope0_id, {

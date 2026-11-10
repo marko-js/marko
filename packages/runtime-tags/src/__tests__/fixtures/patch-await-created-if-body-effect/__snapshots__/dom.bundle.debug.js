@@ -24,7 +24,7 @@ const $await_content__setup = ($scope) => {
 	$await_content__n($scope);
 	$load_Lazy_setup($scope, $scope["#childScope/1"], $scope["#text/0"]);
 };
-const $await_content__x__script = _script("__tests__/template.marko_2_x#3", ($scope) => console.log("await", $scope.x));
+const $await_content__x__script = _script_patch("__tests__/template.marko_2_x#3 x", ($scope) => console.log("await", $scope.x));
 const $await_content__x = /*@__PURE__*/ _const("x", ($scope) => {
 	$await_content__n__OR__x($scope);
 	$await_content__x__script($scope);

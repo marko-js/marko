@@ -10,7 +10,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $fg__a = _filled_guard($scope1_reason, 1);
 		_html(`<p>${_text_mark($scope1_id, "a", a + b, 1, $scope1_reason, 0)}</p><div></div>${_el_mark($scope1_id, "b")}`);
-		_script($scope1_id, "a1", 1, $fg__a, "e");
+		_script($scope1_id, "a1", 1, $fg__a);
 		_patch_render($scope1_id, "a2", $fg__a && "e", $scope1_reason, 0);
 		_scope($scope1_id, {
 			e: a,

@@ -10,7 +10,7 @@
   },
   "PatchChild:#childScope/3": {
     "PatchBranch:#text/0": [{
-      "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-created-branch-caller-effect/tags/child.marko_1_input_count#0:4": ">input_count"
+      "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-created-branch-caller-effect/tags/child.marko_1_input_count#0:4"
     }, _.a],
     "PatchMarkedWrite:input_count": 10
   }
@@ -28,7 +28,7 @@
   },
   "PatchChild:#childScope/3": {
     "PatchBranch:#text/0": [{
-      "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-created-branch-caller-effect/tags/child.marko_1_input_count#0:4": ">input_count"
+      "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-created-branch-caller-effect/tags/child.marko_1_input_count#0:4"
     }, _.a],
     "PatchMarkedWrite:input_count": 11
   }

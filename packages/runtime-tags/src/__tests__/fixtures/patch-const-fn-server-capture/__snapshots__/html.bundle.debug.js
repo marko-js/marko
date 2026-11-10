@@ -17,17 +17,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id(), $fg__input_decor = _filled_guard($scope0_reason, 4);
 			_html(`<p>${_html_mark($scope1_id, "#text/0", fmt(input.text), 1, $scope0_reason, 1)}</p>`);
-			_patch_render($scope1_id, "__tests__/template.marko_1_input_text#0:5_fmt#0:6/setup", [
-				_filled_guard($scope0_reason, 6) && ">input_text",
-				$fg__input_decor && ">fmt",
-				$fg__input_decor && ">input_decor"
-			], $scope0_reason, 1);
+			_patch_render($scope1_id, "__tests__/template.marko_1_input_text#0:5_fmt#0:6/setup", ((_filled_guard($scope0_reason, 6) ? " >input_text" : "") + ($fg__input_decor ? " >fmt" : "") + ($fg__input_decor ? " >input_decor" : "")).slice(1), $scope0_reason, 1);
 			_scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:2");
 			return 0;
 		}
 	}, $scope0_id, "#text/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 5);
 	$fg__input_text && $cg__input_show && _patch_render($scope0_id, "__tests__/template.marko_1_input_text#0:5/setup", "input_text");
-	$fg__input_decor2 && $cg__input_show && _patch_render($scope0_id, "__tests__/template.marko_1_fmt#0:6/setup", ["fmt", "input_decor"]);
+	$fg__input_decor2 && $cg__input_show && _patch_render($scope0_id, "__tests__/template.marko_1_fmt#0:6/setup", "fmt input_decor");
 	_scope($scope0_id, {
 		input_decor: ($ui__input_show__OR__input_text || $ui__input_decor__OR__input_text) && input.decor,
 		input_text: ($ui__input_decor__OR__input_show || $ui__input_decor__OR__input_text) && input.text,

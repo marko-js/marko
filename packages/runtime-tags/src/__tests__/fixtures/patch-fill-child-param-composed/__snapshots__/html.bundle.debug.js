@@ -39,7 +39,7 @@ var feed_list_default = _template("__tests__/tags/feed-list.marko", (input) => {
 		_patch_child_end();
 		_html(`</li>${_el_mark($scope1_id, "#li/0")}`);
 		_script($scope1_id, "__tests__/tags/feed-list.marko_1");
-		_patch_render($scope1_id, "__tests__/tags/feed-list.marko_1_input_data#0:4_item_id#4/setup", [_filled_guard($scope0_reason, 2) && ">input_data", $fg__input_items && "item_id"], $scope0_reason, 0);
+		_patch_render($scope1_id, "__tests__/tags/feed-list.marko_1_input_data#0:4_item_id#4/setup", ((_filled_guard($scope0_reason, 2) ? " >input_data" : "") + ($fg__input_items ? " item_id" : "")).slice(1), $scope0_reason, 0);
 		_patch_render($scope1_id, "__tests__/tags/feed-list.marko_1_hovered#0:5_item_id#4/setup", $fg__input_items && "item_id");
 		_scope($scope1_id, {
 			item_id: item?.id,

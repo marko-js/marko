@@ -11,16 +11,8 @@ var template_default = _template("a", (input) => {
 	const pick = low;
 	_html(`<button>toggle</button>${_el_mark($scope0_id, "a")}`);
 	_script($scope0_id, "a2");
-	_script($scope0_id, "a3", 1, $sg__input_title && 2, [
-		"d",
-		"g",
-		"h"
-	]);
-	_patch_render($scope0_id, "a4", [
-		$fg__input_title && "g",
-		$fg__input_title && "d",
-		$fg__input_title && "h"
-	]);
+	_script($scope0_id, "a3", 1, $sg__input_title && 2);
+	_patch_render($scope0_id, "a4", (($fg__input_title ? " g" : "") + ($fg__input_title ? " d" : "") + ($fg__input_title ? " h" : "")).slice(1));
 	_scope($scope0_id, {
 		d: input.title,
 		e: upper,

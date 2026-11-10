@@ -2,11 +2,11 @@
 [`a2; ;<a href=#main>Skip to content</a>`, `a3;/b& b;<footer>foot</footer><p></p>`]
 {
   ba: [{
-    ea0: ">f"
+    e: "a0"
   }, "a2"],
   tb: "docs",
   bc: [{
-    ea4: ">f"
+    e: "a4"
   }, "a3"],
   xf: "docs"
 }
@@ -15,7 +15,7 @@
 // PATCH holding CQY
 {
   ba: [{
-    ea0: ">f"
+    e: "a0"
   }, "a2"],
   tb: "bare",
   bc: 0,
@@ -27,7 +27,7 @@
   ba: 0,
   tb: "home",
   bc: [{
-    ea4: ">f"
+    e: "a4"
   }, "a3"],
   xf: "home"
 }

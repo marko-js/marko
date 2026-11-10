@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<button> </button>";
 const $walks = " D l";
-const $input_other__OR__x__script = _script("__tests__/template.marko_0_input_other#5_x#8", ($scope) => console.log("run", $scope.x, $scope.input_other));
+const $input_other__OR__x__script = _script_patch("__tests__/template.marko_0_input_other#5_x#8 input_other input_label", ($scope) => console.log("run", $scope.x, $scope.input_other));
 const $input_other__OR__x = /*@__PURE__*/ _or_patch("__tests__/template.marko_0_input_other#5_x#8/setup", 9, $input_other__OR__x__script);
 const $x = /*@__PURE__*/ _const("x", ($scope) => {
 	_text($scope["#text/1"], $scope.x);

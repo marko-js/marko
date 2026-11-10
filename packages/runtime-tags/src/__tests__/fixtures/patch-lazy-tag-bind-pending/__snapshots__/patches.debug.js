@@ -6,7 +6,7 @@
       title: "b",
       onClick: _(["#childScope/1"], "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-bind-pending/child.marko_0/handler")
     },
-    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-bind-pending/child.marko_0_attrs#5": "input_title"
+    "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-bind-pending/child.marko_0_attrs#5"
   }
 }
 
@@ -18,6 +18,6 @@
       title: "c",
       onClick: _(["#childScope/1"], "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-bind-pending/child.marko_0/handler")
     },
-    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-bind-pending/child.marko_0_attrs#5": "input_title"
+    "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-bind-pending/child.marko_0_attrs#5"
   }
 }

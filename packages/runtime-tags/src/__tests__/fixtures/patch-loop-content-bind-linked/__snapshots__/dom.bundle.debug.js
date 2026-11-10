@@ -17,7 +17,7 @@ function $setup$1($scope) {
 	$setup__script($scope);
 	$open($scope, true);
 }
-const $input_onPick__script = _script("__tests__/tags/list.marko_0_input_onPick#5", ($scope) => _on($scope["#button/1"], "click", $scope.input_onPick));
+const $input_onPick__script = _script_patch("__tests__/tags/list.marko_0_input_onPick#5 input_onPick", ($scope) => _on($scope["#button/1"], "click", $scope.input_onPick));
 const $input_onPick = /*@__PURE__*/ _const("input_onPick", $input_onPick__script);
 const $for = /*@__PURE__*/ _for_of_unkeyed("#text/2", "<!><!><!>", "b%", $for_content__setup, $for_content__$params);
 const $input_item = ($scope, input_item) => $for($scope, [input_item]);

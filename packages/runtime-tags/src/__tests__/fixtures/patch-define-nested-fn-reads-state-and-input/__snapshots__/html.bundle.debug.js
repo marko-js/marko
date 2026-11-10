@@ -15,7 +15,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $fg__fn = _filled_guard($scope1_reason, 0);
 		_html(`<button>${_text_mark($scope1_id, "#text/1", label, 1, $scope1_reason, 1)}</button>${_el_mark($scope1_id, "#button/0")}`);
-		_script($scope1_id, "__tests__/template.marko_1_fn#4", 1, $fg__fn, "fn");
+		_script($scope1_id, "__tests__/template.marko_1_fn#4", 1, $fg__fn);
 		_scope($scope1_id, { fn }, "__tests__/template.marko", "2:2", { fn: "2:17" }) || $fg__fn && _patch_write($scope1_id, "PatchMarkedWrite:fn", fn, !_server_guard($scope1_reason, 0));
 	}, $scope0_id) };
 	const Outer = { content: _content("__tests__/template.marko_2*content", ({ fn, label }) => {

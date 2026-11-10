@@ -1,5 +1,5 @@
 // tags/card.marko
-const $g2__script = _script("b1", ($scope) => console.log("run", $scope.g()));
+const $g2__script = _script_patch("b1 d", ($scope) => console.log("run", $scope.g()));
 const $g2 = /*@__PURE__*/ _const(6, ($scope) => {
 	_text($scope.a, $scope.g());
 	$g2__script($scope);

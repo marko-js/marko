@@ -18,7 +18,7 @@ var template_default = _template("a", (input) => {
 			const $scope3_id = _scope_id(), $fg__input_promise = _filled_guard($scope0_reason, 0);
 			$fg__input_promise && _patch_write($scope3_id, "xc", value, !_server_guard($scope0_reason, 0));
 			_html(`<span id=v>${_text_mark($scope3_id, "a", value, 1, $scope0_reason, 0)}</span>`);
-			_script($scope3_id, "a0", 1, $fg__input_promise, "c");
+			_script($scope3_id, "a0", 1, $fg__input_promise);
 			_scope($scope3_id, { c: value });
 		}, 1, "a1", $ui__input_promise && 2, 1);
 		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "a5", 1);

@@ -23,12 +23,12 @@ var template_default = _template("a", (input) => {
 			const $scope1_id = _scope_id();
 			_set_scope_reason(_updates_from($scope0_reason, 2) << 1);
 			const $childScope = _peek_scope_id($scope1_id, "a", 0);
-			card_default({ opts: _patch_live($childScope, {
+			card_default({ opts: {
 				a: { [k]() {
 					return "f:" + input.label;
 				} },
 				label: input.label
-			}, $scope1_id, ">e") });
+			} });
 			_patch_child_end();
 			!_client_guard($scope0_reason, 0) && _unfilled_if() && _patch_write($scope0_id, "wf", k);
 			_client_guard($scope0_reason, 2) && _patch_render($scope1_id, "a0");

@@ -2,7 +2,7 @@
 const $template = "<div></div>";
 const $walks = " b";
 const $setup = ($_) => {};
-const $input_page__$global__script = _fill_global_script("__tests__/template.marko_0_input_page#3_$global#4", ($scope) => {
+const $input_page__$global__script = _fill_global_script(_filled_id("__tests__/template.marko_0_input_page#3_$global#4 input_page"), ($scope) => {
 	{
 		const g = $scope.$global;
 		_el_read($scope["#div/0"]).textContent = g.user + ":" + $scope.input_page;

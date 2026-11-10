@@ -9,6 +9,6 @@
     },
     "PatchMarkedWrite:twice": 6,
     "PatchText:#text/1": 8,
-    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-subscribers-await-body-effect/template.marko_1_input_n#0:4_twice#5": ">input_n twice"
+    "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-subscribers-await-body-effect/template.marko_1_input_n#0:4_twice#5"
   }
 }

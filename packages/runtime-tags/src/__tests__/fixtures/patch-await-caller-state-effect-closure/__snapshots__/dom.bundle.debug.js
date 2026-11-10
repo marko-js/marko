@@ -1,7 +1,7 @@
 // tags/show-await.marko
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
-const $await_content__input_label__script = _script("__tests__/tags/show-await.marko_1_input_label#0:4", ($scope) => document.title = $scope._.input_label);
+const $await_content__input_label__script = _script_patch("__tests__/tags/show-await.marko_1_input_label#0:4 >input_label", ($scope) => document.title = $scope._.input_label);
 const $await_content__input_label = /*@__PURE__*/ _closure_get_patch("__tests__/tags/show-await.marko_1_input_label#0:4/subscribe", "input_label/5", $await_content__input_label__script);
 const $await_content__setup = $await_content__input_label;
 const $await_content__$params = ($scope, $params2) => _text($scope["#text/0"], $params2[0]);

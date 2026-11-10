@@ -17,7 +17,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const y = input.label + "!";
 			$fg__input_label && _patch_write($scope1_id, "PatchMarkedWrite:y", y, !$sg__input_label);
 			_html(`<p>${_text_mark($scope1_id, "#text/0", y + n)}</p>`);
-			_script($scope1_id, "__tests__/template.marko_1_y#1", 1, $fg__input_label, "y");
+			_script($scope1_id, "__tests__/template.marko_1_y#1", 1, $fg__input_label);
 			_client_guard($scope0_reason, 1) && _patch_render($scope1_id, "__tests__/template.marko_1_input_label#0:5/setup");
 			_patch_render($scope1_id, "__tests__/template.marko_1_n#0:6_y#1/setup", $fg__input_label && "y");
 			_scope($scope1_id, {

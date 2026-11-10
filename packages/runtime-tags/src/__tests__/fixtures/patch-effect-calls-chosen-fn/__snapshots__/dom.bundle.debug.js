@@ -2,7 +2,7 @@
 const $template = "<output></output>";
 const $walks = " b";
 const $setup = ($_) => {};
-const $pick__script = _script("__tests__/template.marko_0_pick#8", ($scope) => {
+const $pick__script = _script_patch("__tests__/template.marko_0_pick#8 pick input_title", ($scope) => {
 	_el_read($scope["#output/0"]).textContent = $scope.pick();
 	console.log("run", $scope.pick());
 });

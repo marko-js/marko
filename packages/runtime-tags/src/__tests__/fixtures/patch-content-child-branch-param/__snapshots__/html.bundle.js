@@ -13,7 +13,7 @@ var card_default = _template("b", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_dynamic_tag($scope1_id, "a", input.content, { item: input.item }, 1, 0, 0, $wg__input_content__OR__input_item, $scope0_reason, 2, 0, 5);
-			_patch_render($scope1_id, "b0", [_filled_guard($scope0_reason, 5) && ">e", _filled_guard($scope0_reason, 6) && ">f"], $scope0_reason, 2);
+			_patch_render($scope1_id, "b0", ((_filled_guard($scope0_reason, 5) ? " >e" : "") + (_filled_guard($scope0_reason, 6) ? " >f" : "")).slice(1), $scope0_reason, 2);
 			_write_if($scope0_reason, 3) && _scope($scope1_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id) });
 			return 0;
 		}

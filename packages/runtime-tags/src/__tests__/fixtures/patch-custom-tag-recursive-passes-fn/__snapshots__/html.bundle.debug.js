@@ -51,7 +51,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		get: getTitle
 	});
 	_patch_child_end();
-	_script($scope0_id, "__tests__/template.marko_0_getTitle#4", 0, $fg__input_title, ["getTitle", "input_title"]);
+	_script($scope0_id, "__tests__/template.marko_0_getTitle#4", 0, $fg__input_title);
 	_scope($scope0_id, {
 		input_title: input.title,
 		getTitle,

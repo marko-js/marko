@@ -1,5 +1,5 @@
 // tags/mid-define.marko
-const $Show_content__get__script = _script("b1", ($scope) => {
+const $Show_content__get__script = _script_patch("b1 d", ($scope) => {
 	$scope.a.textContent = $scope.d();
 	console.log("run", $scope.d());
 });

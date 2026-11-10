@@ -1,7 +1,7 @@
 // PATCH
 {
   "PatchText:#text/0": "Store!",
-  "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-script-inputs/template.marko_0_input_a#4_input_b#5": "input_a input_b",
+  "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-script-inputs/template.marko_0_input_a#4_input_b#5",
   "PatchMarkedWrite:input_a": "x",
   "PatchMarkedWrite:input_b": "y"
 }
@@ -9,7 +9,7 @@
 // PATCH
 {
   "PatchText:#text/0": "Store!",
-  "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-script-inputs/template.marko_0_input_a#4_input_b#5": "input_a input_b",
+  "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-script-inputs/template.marko_0_input_a#4_input_b#5",
   "PatchMarkedWrite:input_a": "z",
   "PatchMarkedWrite:input_b": "w"
 }
@@ -17,7 +17,7 @@
 // PATCH
 {
   "PatchText:#text/0": "Store!",
-  "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-script-inputs/template.marko_0_input_a#4_input_b#5": "input_a input_b",
+  "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-script-inputs/template.marko_0_input_a#4_input_b#5",
   "PatchMarkedWrite:input_a": "x",
   "PatchMarkedWrite:input_b": "w"
 }

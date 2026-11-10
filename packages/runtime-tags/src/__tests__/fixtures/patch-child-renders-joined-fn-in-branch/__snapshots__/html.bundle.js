@@ -20,11 +20,7 @@ var label_view_default = _template("b", (input) => {
 	_html(`<span>x</span>${_el_mark($scope0_id, "b")}`);
 	_script($scope0_id, "b1");
 	$fg__input_flag__OR__input_a__OR__input_b && _patch_render($scope0_id, "b0", "j");
-	_patch_render($scope0_id, "b2", [
-		$fg__input_flag && "e",
-		$fg__input_a && "f",
-		$fg__input_b && "g"
-	], $scope0_reason, 3);
+	_patch_render($scope0_id, "b2", (($fg__input_flag ? " e" : "") + ($fg__input_a ? " f" : "") + ($fg__input_b ? " g" : "")).slice(1), $scope0_reason, 3);
 	_patch_fill($scope0_id, "vb3", open, 1);
 	_scope($scope0_id, {
 		e: ($ui__input_a__OR__input_b || $ui__input_flag__OR__input_a__OR__input_b) && input.flag,
@@ -55,11 +51,7 @@ var template_default = _template("a", (input) => {
 	_patch_child_end();
 	_html(`<button>toggle</button>${_el_mark($scope0_id, "b")}`);
 	_script($scope0_id, "a2");
-	_patch_render($scope0_id, "a3", [
-		$fg__input_title && "g",
-		$fg__input_title && "e",
-		$fg__input_title && "h"
-	]);
+	_patch_render($scope0_id, "a3", (($fg__input_title ? " g" : "") + ($fg__input_title ? " e" : "") + ($fg__input_title ? " h" : "")).slice(1));
 	_scope($scope0_id, {
 		e: input.title,
 		f: upper,

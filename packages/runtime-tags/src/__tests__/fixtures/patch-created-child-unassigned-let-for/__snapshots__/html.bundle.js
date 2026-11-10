@@ -23,7 +23,7 @@ var template_default = _template("a", (input) => {
 	_dynamic_tag($scope0_id, "c", input.on ? card_default : "div", { items: input.items }, 1, 0, 0, _write_guard($scope0_reason, 0), $scope0_reason, 0);
 	_html("</main>");
 	_script($scope0_id, "a0");
-	_patch_render($scope0_id, "a1", [$fg__input_on && "f", $fg__input_items && "g"], $scope0_reason, 0);
+	_patch_render($scope0_id, "a1", (($fg__input_on ? " f" : "") + ($fg__input_items ? " g" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		f: ($ui__input_items || $ui__input_on__OR__input_items) && input.on,
 		g: ($ui__input_on || $ui__input_on__OR__input_items) && input.items,

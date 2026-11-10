@@ -9,7 +9,7 @@
         "PatchText:#text/0": "b!"
       }
     },
-    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-local-effect/template.marko_1_x#2": "x",
+    "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-local-effect/template.marko_1_x#2",
     "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-local-effect/template.marko_1_x#2/subscribers": "x"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-local-effect/template.marko_1*shell"]
 }
@@ -28,7 +28,7 @@
       },
       "PatchBind:input_content": "^packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-local-effect/template.marko_2*content"
     },
-    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-local-effect/template.marko_1_x#2": "x",
+    "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-local-effect/template.marko_1_x#2",
     "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-local-effect/template.marko_1_x#2/subscribers": "x"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-local-effect/template.marko_1*shell"]
 }
@@ -44,7 +44,7 @@
         "PatchText:#text/0": "d!"
       }
     },
-    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-local-effect/template.marko_1_x#2": "x",
+    "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-local-effect/template.marko_1_x#2",
     "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-local-effect/template.marko_1_x#2/subscribers": "x"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-local-effect/template.marko_1*shell"]
 }

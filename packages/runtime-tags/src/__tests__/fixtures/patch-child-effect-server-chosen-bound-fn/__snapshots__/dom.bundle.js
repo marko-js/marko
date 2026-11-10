@@ -1,5 +1,5 @@
 // tags/child.marko
-const $input_fn__OR__input_v__script = _script("b0", ($scope) => $scope.c($scope.d));
+const $input_fn__OR__input_v__script = _script_patch("b0 c d", ($scope) => $scope.c($scope.d));
 
 // template.marko
 const $last = _let(6, ($scope) => _text($scope.b, $scope.g));

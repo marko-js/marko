@@ -1,7 +1,7 @@
 // tags/card.marko
 const $template$1 = "<p> </p>";
 const $walks$1 = "D l";
-const $g2__script = _script("__tests__/tags/card.marko_0_g#6", ($scope) => console.log("run", $scope.g()));
+const $g2__script = _script_patch("__tests__/tags/card.marko_0_g#6 input_fn", ($scope) => console.log("run", $scope.g()));
 const $g2 = /*@__PURE__*/ _const("g", ($scope) => {
 	_text($scope["#text/0"], $scope.g());
 	$g2__script($scope);

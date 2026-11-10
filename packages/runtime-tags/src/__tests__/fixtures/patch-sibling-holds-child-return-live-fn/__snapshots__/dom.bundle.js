@@ -5,7 +5,7 @@ const $_return = ($scope) => () => {
 _bind_resume("c0 c", $_return);
 
 // tags/holder.marko
-const $input_fn__script = _script("b0", ($scope) => {
+const $input_fn__script = _script_patch("b0 e", ($scope) => {
 	{
 		const el = $scope.b;
 		el.textContent += el.fn === $scope.e ? "same;" : "new;";

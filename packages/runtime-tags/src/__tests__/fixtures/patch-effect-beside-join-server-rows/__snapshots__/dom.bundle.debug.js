@@ -3,7 +3,7 @@ const $template = "<!><!><!>";
 const $walks = "b%c";
 const $setup = ($_) => {};
 const $for_content__input_a__OR__n = /*@__PURE__*/ _or_patch("__tests__/template.marko_1_input_a#0:4_n#3/setup", 4, ($scope) => _text($scope["#text/1"], $scope._.input_a + $scope.n));
-const $for_content__input_a__script = _script("__tests__/template.marko_1_input_a#0:4", ($scope) => {
+const $for_content__input_a__script = _script_patch("__tests__/template.marko_1_input_a#0:4 >input_a", ($scope) => {
 	_el_read($scope["#div/2"]).textContent = String($scope._.input_a);
 	_el_read($scope["#div/2"]).dataset.runs = String(+(_el_read($scope["#div/2"]).dataset.runs || 0) + 1);
 });

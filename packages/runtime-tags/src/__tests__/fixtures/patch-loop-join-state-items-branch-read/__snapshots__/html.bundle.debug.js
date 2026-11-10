@@ -24,7 +24,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 		$fg__input_items && $ui__input_b && _patch_write($scope2_id, "PatchMarkedWrite:item", item, !_server_guard($scope0_reason, 4));
 		const d = input.b + item;
 		_html(`<p>${_text_mark($scope2_id, "#text/0", d, 1, $scope0_reason, 1)}</p>`);
-		_patch_render($scope2_id, "__tests__/tags/child.marko_2_input_b#0:5_item#2/setup", [_filled_guard($scope0_reason, 3) && ">input_b", $fg__input_items && "item"], $scope0_reason, 1);
+		_patch_render($scope2_id, "__tests__/tags/child.marko_2_input_b#0:5_item#2/setup", ((_filled_guard($scope0_reason, 3) ? " >input_b" : "") + ($fg__input_items ? " item" : "")).slice(1), $scope0_reason, 1);
 		_scope($scope2_id, {
 			item: ($ui__input_b || _unfilled_if($scope0_reason, 1)) && item,
 			_: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id)

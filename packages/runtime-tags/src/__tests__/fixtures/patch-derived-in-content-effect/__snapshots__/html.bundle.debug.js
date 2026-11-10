@@ -29,7 +29,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const label = input.label;
 		$fg__input_label && _patch_write($scope1_id, "PatchMarkedWrite:label", label, !_server_guard($scope0_reason, 0));
 		_html(`<p></p>${_el_mark($scope1_id, "#p/0")}`);
-		_script($scope1_id, "__tests__/template.marko_1_label#1", 1, $fg__input_label, "label");
+		_script($scope1_id, "__tests__/template.marko_1_label#1", 1, $fg__input_label);
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope1_id, {
 			label,
 			_: $wi__input_label && _scope_with_id($scope0_id)

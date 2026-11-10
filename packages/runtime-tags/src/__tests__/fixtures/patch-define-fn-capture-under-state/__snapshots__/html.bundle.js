@@ -24,7 +24,7 @@ var template_default = _template("a", (input) => {
 				return 0;
 			}
 		}, $scope1_id, "a", 1, $wg__input_x, 1, 0, 0, ["a2"], $scope0_reason, 0);
-		$fg__v && $cg__input_x && _patch_render($scope1_id, "a1", ["e", "d"]);
+		$fg__v && $cg__input_x && _patch_render($scope1_id, "a1", "e d");
 		$cg__input_x && _patch_render($scope1_id, "a4");
 		_subscribe($ui__input_x && $input_x__closures, _scope($scope1_id, {
 			d: ($ui__input_x || $ui__v) && v,

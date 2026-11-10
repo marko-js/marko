@@ -40,7 +40,7 @@ var show_await_default = _template("c", (input) => {
 		echo_default({ value: x });
 		_patch_child_end();
 		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "c3", $cg__input_label);
-		_patch_render($scope1_id, "c4", [_filled_guard($scope0_reason, 2) && ">e", $fg__input_promise && "i"], $scope0_reason, 0);
+		_patch_render($scope1_id, "c4", ((_filled_guard($scope0_reason, 2) ? " >e" : "") + ($fg__input_promise ? " i" : "")).slice(1), $scope0_reason, 0);
 		_subscribe($ui__input_label && $input_label__closures, _scope($scope1_id, {
 			i: ($ui__input_label || _unfilled_if($scope0_reason, 0)) && x,
 			g: _existing_scope($childScope)

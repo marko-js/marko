@@ -26,7 +26,7 @@ var template_default = _template("a", (input) => {
 		const label = input.label;
 		$fg__input_label && _patch_write($scope1_id, "xb", label, !_server_guard($scope0_reason, 0));
 		_html(`<p></p>${_el_mark($scope1_id, "a")}`);
-		_script($scope1_id, "a0", 1, $fg__input_label, "b");
+		_script($scope1_id, "a0", 1, $fg__input_label);
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope1_id, {
 			b: label,
 			_: $wi__input_label && _scope_with_id($scope0_id)

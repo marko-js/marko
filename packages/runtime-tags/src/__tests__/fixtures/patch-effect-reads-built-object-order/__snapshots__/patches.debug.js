@@ -1,35 +1,27 @@
 // PATCH
 {
   "PatchText:#text/0": "c",
-  "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-effect-reads-built-object-order/template.marko_0_c#8": "input_y input_x",
-  "PatchMarkedWrite:input_x": "c",
-  "PatchMarkedWrite:input_y": "b",
-  "PatchMarkedWrite:a": _.a = {
-    y: "b"
-  },
-  "PatchMarkedWrite:b": _.b = {
-    x: "c"
-  },
+  "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-effect-reads-built-object-order/template.marko_0_c#8",
   "PatchMarkedWrite:c": {
-    a: _.a,
-    b: _.b
+    a: {
+      y: "b"
+    },
+    b: {
+      x: "c"
+    }
   }
 }
 
 // PATCH
 {
   "PatchText:#text/0": "c",
-  "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-effect-reads-built-object-order/template.marko_0_c#8": "input_y input_x",
-  "PatchMarkedWrite:input_x": "c",
-  "PatchMarkedWrite:input_y": "d",
-  "PatchMarkedWrite:a": _.a = {
-    y: "d"
-  },
-  "PatchMarkedWrite:b": _.b = {
-    x: "c"
-  },
+  "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-effect-reads-built-object-order/template.marko_0_c#8",
   "PatchMarkedWrite:c": {
-    a: _.a,
-    b: _.b
+    a: {
+      y: "d"
+    },
+    b: {
+      x: "c"
+    }
   }
 }

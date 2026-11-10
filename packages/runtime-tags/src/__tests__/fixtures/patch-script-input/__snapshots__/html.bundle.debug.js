@@ -7,6 +7,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $fg__input_announce = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_html(`<main><h1>${_text_mark($scope0_id, "#text/0", input.title, 1, $scope0_reason, 0)}</h1></main>`);
-	_script($scope0_id, "__tests__/template.marko_0_input_announce#4", 1, $fg__input_announce, "input_announce");
+	_script($scope0_id, "__tests__/template.marko_0_input_announce#4", 1, $fg__input_announce);
 	_scope($scope0_id, { input_announce: input.announce }, "__tests__/template.marko", 0, { input_announce: ["input.announce"] }) || $fg__input_announce && _patch_write($scope0_id, "PatchMarkedWrite:input_announce", input.announce, !_server_guard($scope0_reason, 1));
 }, 1);

@@ -33,7 +33,7 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id) };
 	_dynamic_tag($scope0_id, "a", input.which ? Counter : Other, { label: input.label }, 1, 0, 0, $wg__input_label__OR__input_which, $scope0_reason, 0);
 	$fg__input_label && _patch_subscribers($scope0_id, "a6", "d");
-	_patch_render($scope0_id, "a7", [$fg__input_label && "d", $fg__input_which && "e"], $scope0_reason, 0);
+	_patch_render($scope0_id, "a7", (($fg__input_label ? " d" : "") + ($fg__input_which ? " e" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		d: ($ui__input_which || $ui__input_label__OR__input_which || $ui__input_label) && input.label,
 		e: ($ui__input_label || $ui__input_label__OR__input_which) && input.which,

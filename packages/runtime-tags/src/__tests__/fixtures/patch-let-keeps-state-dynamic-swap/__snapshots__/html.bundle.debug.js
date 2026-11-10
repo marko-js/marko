@@ -25,7 +25,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html("<b>B</b>");
 	}, $scope0_id) };
 	_dynamic_tag($scope0_id, "#text/0", input.flag ? B : A, { x: input.a }, 1, 0, 0, $wg__input_flag__OR__input_a, $scope0_reason, 0);
-	_patch_render($scope0_id, "__tests__/template.marko_0_input_flag#3_input_a#4_A#5_B#6/setup", [$fg__input_flag && "input_flag", $fg__input_a && "input_a"], $scope0_reason, 0);
+	_patch_render($scope0_id, "__tests__/template.marko_0_input_flag#3_input_a#4_A#5_B#6/setup", (($fg__input_flag ? " input_flag" : "") + ($fg__input_a ? " input_a" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		input_flag: ($ui__input_a || $ui__input_flag__OR__input_a) && input.flag,
 		input_a: ($ui__input_flag || $ui__input_flag__OR__input_a) && input.a,

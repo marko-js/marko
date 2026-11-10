@@ -32,7 +32,7 @@ var panel_default = _template("b", (input) => {
 					const $scope2_id = _scope_id();
 					_html(`<i>${_text_mark($scope2_id, "a", input.a + ":" + JSON.stringify(b), 1, $scope0_reason, 2)}</i>`);
 					_unfilled_if($scope0_reason, 6) && _patch_subscribe($scope2_id, "b4");
-					_patch_render($scope2_id, "b5", [_filled_guard($scope0_reason, 6) && ">>f", _filled_guard($scope0_reason, 5) && ">>e"], $scope0_reason, 2);
+					_patch_render($scope2_id, "b5", ((_filled_guard($scope0_reason, 6) ? " >>f" : "") + (_filled_guard($scope0_reason, 5) ? " >c" : "")).slice(1), $scope0_reason, 2);
 					_subscribe(_unfilled_if($scope0_reason, 6) && $input_a__closures, _scope($scope2_id, { _: $wi__input_show__OR__input_b__OR__input_a && _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 6) && "b4");
 					return 0;
 				}
@@ -53,7 +53,7 @@ var panel_default = _template("b", (input) => {
 		e: ($ui__input_show || _unfilled_if($scope0_reason, 5)) && input.b,
 		f: ($ui__input_show__OR__input_b || $ui__input_b__OR__input_a) && input.a,
 		i: _write_if($scope0_reason, 6) && (_unfilled_if($scope0_reason, 6) || $ui__input_b__OR__input_a || $ui__input_show) && $input_a__closures
-	}) || ($fg__input_b && _patch_write($scope0_id, "xe", input.b, !$sg__input_b), $fg__input_a && $ui__input_show__OR__input_b && _patch_write($scope0_id, "xf", input.a, !_server_guard($scope0_reason, 6)));
+	}) || ($fg__input_b && $ui__input_show && _patch_write($scope0_id, "xe", input.b, !$sg__input_b), $fg__input_a && $ui__input_show__OR__input_b && _patch_write($scope0_id, "xf", input.a, !_server_guard($scope0_reason, 6)));
 });
 
 // template.marko

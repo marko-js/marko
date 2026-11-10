@@ -38,7 +38,7 @@ var child_default = _template("b", (input) => {
 		_patch_child_end();
 		$fg__input_items__OR__input_v && $cg__input_on && _patch_subscribers($scope1_id, "b4", "e");
 		$cg__input_on && _patch_render($scope1_id, "b5");
-		_patch_render($scope1_id, "b6", [_filled_guard($scope0_reason, 3) && ">e", $fg__input_items && "c"], $scope0_reason, 0);
+		_patch_render($scope1_id, "b6", ((_filled_guard($scope0_reason, 3) ? " >e" : "") + ($fg__input_items ? " c" : "")).slice(1), $scope0_reason, 0);
 		_scope($scope1_id, {
 			c: ($ui__input_v || $ui__input_items__OR__input_v) && item,
 			e: ($ui__input_on || $ui__input_items__OR__input_v) && v,

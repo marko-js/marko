@@ -1,9 +1,9 @@
 // template.marko
 const $template = "";
 const $walks = "/&";
-const $Row_content__sep__OR__a__script = _script("__tests__/template.marko_1_sep#0:5_a#2", ($scope) => console.log("a", $scope.a + $scope._.sep));
+const $Row_content__sep__OR__a__script = _script_patch("__tests__/template.marko_1_sep#0:5_a#2 a", ($scope) => console.log("a", $scope.a + $scope._.sep));
 const $Row_content__sep__OR__a = /*@__PURE__*/ _or_patch("__tests__/template.marko_1_sep#0:5_a#2/setup", 3, $Row_content__sep__OR__a__script);
-const $Row_content__sep__OR__b__script = _script("__tests__/template.marko_1_sep#0:5_b#4", ($scope) => console.log("b", $scope.b + $scope._.sep));
+const $Row_content__sep__OR__b__script = _script_patch("__tests__/template.marko_1_sep#0:5_b#4 b", ($scope) => console.log("b", $scope.b + $scope._.sep));
 const $Row_content__sep__OR__b = /*@__PURE__*/ _or_patch("__tests__/template.marko_1_sep#0:5_b#4/setup", 5, $Row_content__sep__OR__b__script);
 const $Row_content__sep = /*@__PURE__*/ _closure_get("sep/6", ($scope) => {
 	$Row_content__sep__OR__a($scope);

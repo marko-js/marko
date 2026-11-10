@@ -29,7 +29,7 @@ var rowsx_default = _template("b", (input) => {
 			if (isOpen) {
 				const $scope2_id = _scope_id();
 				_html(`<em>${_text_mark($scope2_id, "a", fmt(label), 1, $scope1_reason, 2)}</em>`);
-				_patch_render($scope2_id, "b1", [_filled_guard($scope1_reason, 5) && ">e", _filled_guard($scope1_reason, 6) && ">f"], $scope1_reason, 2);
+				_patch_render($scope2_id, "b1", ((_filled_guard($scope1_reason, 5) ? " >e" : "") + (_filled_guard($scope1_reason, 6) ? " >f" : "")).slice(1), $scope1_reason, 2);
 				_scope($scope2_id, { _: _write_if($scope1_reason, 2) && _scope_with_id($scope1_id) });
 				return 0;
 			}

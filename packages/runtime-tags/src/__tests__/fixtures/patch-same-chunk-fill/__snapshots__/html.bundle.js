@@ -7,7 +7,7 @@ var probe_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $fg__input_promise = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_html(`<div>${_text_mark($scope0_id, "b", "pending", 1, 0, 0, 1)}</div>${_el_mark($scope0_id, "a")}`);
-	_script($scope0_id, "b0", 1, $fg__input_promise, "e");
+	_script($scope0_id, "b0", 1, $fg__input_promise);
 	_scope($scope0_id, { e: input.promise }) || $fg__input_promise && _patch_write($scope0_id, "xe", input.promise, !_server_guard($scope0_reason, 0));
 });
 

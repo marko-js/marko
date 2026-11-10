@@ -1,5 +1,5 @@
 // tags/card.marko
-const $g2__script = _script("b1", ($scope) => console.log("run", $scope.f()));
+const $g2__script = _script_patch("b1 c", ($scope) => console.log("run", $scope.f()));
 const $g2 = /*@__PURE__*/ _const(5, $g2__script);
 const $input_fn__OR__open = /*@__PURE__*/ _or_patch("b2", 4, ($scope) => $g2($scope, $scope.d ? $scope.c : $g));
 const $open = _fill_let("b3", 3, $input_fn__OR__open);

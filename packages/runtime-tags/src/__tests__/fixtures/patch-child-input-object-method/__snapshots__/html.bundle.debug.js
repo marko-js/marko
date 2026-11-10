@@ -11,11 +11,7 @@ var code_block_default = _template("__tests__/tags/code-block.marko", (input) =>
 		return text.replace(input.cursor.test, (m) => `<b>${input.cursor.content((s) => s)}</b>`);
 	}, "__tests__/tags/code-block.marko_0/highlight", $scope0_id);
 	_html(`<div>${_html_mark($scope0_id, "#text/0", highlight(input.text), 1, $scope0_reason, 0)}</div>`);
-	_patch_render($scope0_id, "__tests__/tags/code-block.marko_0_input_text#4_highlight#5/setup", [
-		$fg__input_text && "input_text",
-		$fg__input_cursor && "highlight",
-		$fg__input_cursor && "input_cursor"
-	], $scope0_reason, 0);
+	_patch_render($scope0_id, "__tests__/tags/code-block.marko_0_input_text#4_highlight#5/setup", (($fg__input_text ? " input_text" : "") + ($fg__input_cursor ? " highlight" : "") + ($fg__input_cursor ? " input_cursor" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		input_cursor: ($ui__input_text || $ui__input_cursor__OR__input_text) && input.cursor,
 		input_text: ($ui__input_cursor || $ui__input_cursor__OR__input_text) && input.text,

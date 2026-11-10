@@ -26,7 +26,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "#text/0", 1, 1, 0, 0, 1);
-	_patch_render($scope0_id, "__tests__/template.marko_0_input_selected#3_input_selectedChange#4/setup", [$fg__input_selected && "input_selected", $fg__input_selectedChange && "input_selectedChange"], $scope0_reason, 0);
+	_patch_render($scope0_id, "__tests__/template.marko_0_input_selected#3_input_selectedChange#4/setup", (($fg__input_selected ? " input_selected" : "") + ($fg__input_selectedChange ? " input_selectedChange" : "")).slice(1), $scope0_reason, 0);
 	const $selectedChange = input.selectedChange || void 0;
 	_patch_let_change($scope0_id, "PatchFill:__tests__/template.marko_0_selected#8/fill", selected, "PatchWrite:TagVariableChange:selected", $selectedChange, $scope0_reason, 0);
 	_scope($scope0_id, {

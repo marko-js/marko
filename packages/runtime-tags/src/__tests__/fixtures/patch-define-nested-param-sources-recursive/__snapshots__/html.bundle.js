@@ -24,11 +24,7 @@ var template_default = _template("a", (input) => {
 			_html(`<p>${_text_mark($scope2_id, "a", input.label + x + z, 1, ($uf__input_label | $uf__x | $uf__z) << 1, 0)}</p>`);
 			_unfilled_if(($uf__input_label | $uf__x | $uf__z) << 1, 0) && _patch_subscribe($scope2_id, "a1");
 			_unfilled_if(($uf__x | $uf__z) << 1, 0) && _patch_subscribe($scope2_id, "a2");
-			_patch_render($scope2_id, "a3", [
-				_filled_guard($scope0_reason, 0) && ">>e",
-				_filled_guard($scope1_reason, 1) && ">d",
-				$fg__z && "d"
-			], ($uf__input_label | $uf__x | $uf__z) << 1, 0);
+			_patch_render($scope2_id, "a3", ((_filled_guard($scope0_reason, 0) ? " >>e" : "") + (_filled_guard($scope1_reason, 1) ? " >d" : "") + ($fg__z ? " d" : "")).slice(1), ($uf__input_label | $uf__x | $uf__z) << 1, 0);
 			_subscribe(_unfilled_if(($uf__x | $uf__z) << 1, 0) && $wi__x && $Outer_content__x__closures, _subscribe(_unfilled_if(($uf__input_label | $uf__x | $uf__z) << 1, 0) && $wi__input_label && $input_label__closures, _scope($scope2_id, {
 				d: ($ui__input_label || $ui__x || _unfilled_if($scope2_reason, 0)) && z,
 				_: ($wi__input_label || $wi__x || _write_if($scope2_reason, 0)) && _scope_with_id($scope1_id)

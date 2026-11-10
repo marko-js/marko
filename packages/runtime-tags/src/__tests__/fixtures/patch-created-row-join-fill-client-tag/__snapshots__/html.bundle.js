@@ -43,7 +43,7 @@ var row_list_default = _template("c", (input) => {
 				const $scope2_id = _scope_id();
 				_html(`<span>${_text_mark($scope2_id, "a", t + bounty + input.settled)}</span>`);
 				_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope2_id, "c1");
-				_patch_render($scope2_id, "c2", [_filled_guard($scope0_reason, 2) && ">>i", _filled_guard($scope0_reason, 0) && ">c"]);
+				_patch_render($scope2_id, "c2", ((_filled_guard($scope0_reason, 2) ? " >>i" : "") + (_filled_guard($scope0_reason, 0) ? " >c" : "")).slice(1));
 				_subscribe($bounty__closures, _subscribe(_unfilled_if($scope0_reason, 2) && $input_settled__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 2) && "c1"), "c3");
 				return 0;
 			}

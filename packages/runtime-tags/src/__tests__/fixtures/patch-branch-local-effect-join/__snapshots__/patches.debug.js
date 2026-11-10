@@ -5,7 +5,7 @@
     "PatchBranch:#text/0": [{
       "PatchMarkedWrite:c": "r!",
       "PatchText:#text/0": "sr!",
-      "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-branch-local-effect-join/tags/child.marko_1_c#2": "c"
+      "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-branch-local-effect-join/tags/child.marko_1_c#2"
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-local-effect-join/tags/child.marko_1*shell"]
   }
 }
@@ -17,7 +17,7 @@
     "PatchBranch:#text/0": [{
       "PatchMarkedWrite:c": "t!",
       "PatchText:#text/0": "ut!",
-      "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-branch-local-effect-join/tags/child.marko_1_c#2": "c"
+      "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-branch-local-effect-join/tags/child.marko_1_c#2"
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-local-effect-join/tags/child.marko_1*shell"]
   }
 }

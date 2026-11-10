@@ -5,7 +5,7 @@ const $settled = _let("settled/4", ($scope) => _text($scope["#text/0"], $scope.s
 function $setup($scope) {
 	$settled($scope, false);
 }
-const $input_promise__script = _script("__tests__/probe.marko_0_input_promise#3", ($scope) => $scope.input_promise.then(() => {
+const $input_promise__script = _script_patch("__tests__/probe.marko_0_input_promise#3 input_promise", ($scope) => $scope.input_promise.then(() => {
 	$settled($scope, true);
 }));
 const $input_promise = /*@__PURE__*/ _const("input_promise", $input_promise__script);

@@ -1,5 +1,5 @@
 // tags/child.marko
-const $fn__script = _script("b0", ($scope) => {
+const $fn__script = _script_patch("b0 d", ($scope) => {
 	{
 		const m = document.querySelector("main");
 		const seen = m.seen ||= /* @__PURE__ */ new Set();

@@ -2,22 +2,21 @@
 a, `b1`
 {
   cb: {
-    ea0: ">f",
+    e: "a0",
     xe: {
       label: "b"
     }
   },
   cAc: {
     pa: 1
-  },
-  xf: "b"
+  }
 }
 {
   cAc: {
     cAa: {
       ta: "y",
       cc: {
-        ea0: ">>>f",
+        e: "a0",
         xe: _(0).cb.xe
       }
     }

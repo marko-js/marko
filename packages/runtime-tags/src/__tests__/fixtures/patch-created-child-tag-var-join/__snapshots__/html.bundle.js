@@ -7,7 +7,7 @@ var file_store_default = _template("d", (input) => {
 	const $scope0_id = _scope_id();
 	let files = [];
 	const $return = files;
-	_script($scope0_id, "d1", 0, $fg__input_value, "c");
+	_script($scope0_id, "d1", 0, $fg__input_value);
 	const $valueChange2 = _patch_bind($scope0_id, "wU", _resume((_new_files) => files = _new_files, "d0", $scope0_id) || void 0, 0, 0);
 	_patch_fill($scope0_id, "vd2", files, 1);
 	_scope($scope0_id, {
@@ -29,7 +29,7 @@ var file_tabs_default = _template("e", (input) => {
 	let tabs = input.files;
 	_html(`<p>${_text_mark($scope0_id, "a", tabs.map((tab) => tab.path).join())}</p><button>+</button>${_el_mark($scope0_id, "b")}`);
 	_script($scope0_id, "e0");
-	_patch_render($scope0_id, "e1", [$fg__input_files && "e", $fg__input_filesChange && "f"], $scope0_reason, 0);
+	_patch_render($scope0_id, "e1", (($fg__input_files ? " e" : "") + ($fg__input_filesChange ? " f" : "")).slice(1), $scope0_reason, 0);
 	const $tabsChange = input.filesChange || void 0;
 	_patch_let_change($scope0_id, "ve2", tabs, "wi", $tabsChange, $scope0_reason, 0);
 	_scope($scope0_id, {

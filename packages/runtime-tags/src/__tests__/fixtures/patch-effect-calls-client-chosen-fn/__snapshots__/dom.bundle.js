@@ -1,5 +1,5 @@
 // template.marko
-const $pick__script = _script("a3", ($scope) => {
+const $pick__script = _script_patch("a3 e g h", ($scope) => {
 	$scope.a.textContent = $scope.j();
 	console.log("run", $scope.j());
 });

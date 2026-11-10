@@ -7,12 +7,12 @@ const $setup = $setup__script$2;
 const $setup__script$1 = _script("c0", ($scope) => console.log("outer setup"));
 
 // template.marko
-const $for_content3__item__script = _script("a14", ($scope) => console.log("tag body row setup", $scope.b));
+const $for_content3__item__script = _script_patch("a14 b", ($scope) => console.log("tag body row setup", $scope.b));
 const $for_content3__item = /*@__PURE__*/ _const(1, $for_content3__item__script);
 const $for_content3__$params = ($scope, $params4) => $for_content3__item($scope, $params4[0]);
-const $for_content2__item__script = _script("a11", ($scope) => console.log("content row setup", $scope.b));
+const $for_content2__item__script = _script_patch("a11 b", ($scope) => console.log("content row setup", $scope.b));
 const $if_content2__setup = _script("a10", ($scope) => console.log("nested setup"));
-const $for_content__item__script = _script("a2", ($scope) => console.log("row setup", $scope.c));
+const $for_content__item__script = _script_patch("a2 c", ($scope) => console.log("row setup", $scope.c));
 const $Body_content__setup = _script("a1", ($scope) => console.log("define setup"));
 const $inputtag_content__for = /*@__PURE__*/ _for_of_unkeyed(1, 0, 0, 0, $for_content3__$params);
 const $inputtag_content__input_items = /*@__PURE__*/ _closure_get_patch("a16", 10, ($scope) => $inputtag_content__for($scope, [$scope._._.g]), ($scope) => $scope._._, "a23", 1);

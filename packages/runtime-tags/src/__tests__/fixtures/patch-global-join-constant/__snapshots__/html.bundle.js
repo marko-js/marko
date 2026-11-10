@@ -42,7 +42,7 @@ var template_default = _template("a", (input) => {
 		});
 	}, $scope0_id) };
 	_dynamic_tag($scope0_id, "a", input.show && Outer, { value: input.n }, 9, 0, 0, $wg__input_show__OR__input_n, $scope0_reason, 0);
-	_patch_render($scope0_id, "a6", [$fg__input_show && "d", $fg__input_n && "e"], $scope0_reason, 0);
+	_patch_render($scope0_id, "a6", (($fg__input_show ? " d" : "") + ($fg__input_n ? " e" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		d: ($ui__input_n || $ui__input_show__OR__input_n) && input.show,
 		e: ($ui__input_show || $ui__input_show__OR__input_n) && input.n,

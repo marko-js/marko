@@ -21,7 +21,7 @@ var template_default = _template("a", (input) => {
 				return 0;
 			}
 		}, $scope2_id, "a", _write_guard($scope2_reason, 0), $wg__isOpen, 0, 0, 1);
-		_script($scope2_id, "a2", $wg__isOpen, $fg__label, "e");
+		_script($scope2_id, "a2", $wg__isOpen, $fg__label);
 		$fg__label && _patch_render($scope2_id, "a0", "e");
 		_scope($scope2_id, { e: label }) || $fg__label && _patch_write($scope2_id, "xe", label, !_server_guard($scope2_reason, 2));
 	}, $scope0_id) };

@@ -1,7 +1,7 @@
 // PATCH
 {
   "PatchChild:#childScope/0": {
-    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-define-effect-join-fill/template.marko_1_a#4": "a",
+    "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-define-effect-join-fill/template.marko_1_a#4",
     "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-define-effect-join-fill/template.marko_1_a#4_b#5/setup": "a",
     "PatchMarkedWrite:a": "y"
   }
@@ -10,7 +10,7 @@
 // PATCH
 {
   "PatchChild:#childScope/0": {
-    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-define-effect-join-fill/template.marko_1_a#4": "a",
+    "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-define-effect-join-fill/template.marko_1_a#4",
     "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-define-effect-join-fill/template.marko_1_a#4_b#5/setup": "a",
     "PatchMarkedWrite:a": "z"
   }

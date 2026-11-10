@@ -23,13 +23,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let shown = "";
 	_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
-	reader_default(_patch_live($childScope, {
+	reader_default({
 		read: _bind_resume(() => input.label, "__tests__/template.marko_0/read", $scope0_id),
 		onRead: _resume(function(v) {
 			shown = v;
 		}, "__tests__/template.marko_0/onRead", $scope0_id),
 		opt: attrTag({ v: input.label })
-	}, $scope0_id, "input_label"));
+	});
 	_patch_child_end();
 	_html(`<p>${_text_mark($scope0_id, "#text/1", shown)}</p>`);
 	_scope($scope0_id, {

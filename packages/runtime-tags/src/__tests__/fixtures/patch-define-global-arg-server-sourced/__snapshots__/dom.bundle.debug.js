@@ -8,7 +8,7 @@ const $if_content__setup = $if_content__text;
 const $Label_content__if = /*@__PURE__*/ _if("#text/1", "<span> </span>", "D ", $if_content__setup);
 const $Label_content__open = /*@__PURE__*/ _closure_get("open/3", ($scope) => $Label_content__if($scope, $scope._.open ? 0 : 1), 0, "__tests__/template.marko_1_open#0:2/subscribe");
 const $Label_content__setup = $Label_content__open;
-const $Label_content__text__script = _script("__tests__/template.marko_1_text#4", ($scope) => document.getElementById("log").textContent = $scope.text);
+const $Label_content__text__script = _script_patch("__tests__/template.marko_1_text#4 text", ($scope) => document.getElementById("log").textContent = $scope.text);
 const $Label_content__text = /*@__PURE__*/ _const("text", ($scope) => {
 	$if_content__text($scope);
 	_text($scope["#text/0"], $scope.text);

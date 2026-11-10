@@ -48,7 +48,7 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id, ($scope) => $scope0_page ? [{ m: input.user3?.name }] : []), 0, $wg__input_tag__OR__input_cls, $scope0_reason, 0, 0, 5, void 0, 0, "a2");
 	$fg__input_user && _client_guard($scope0_reason, 2) && _patch_render($scope0_id, "a0", "g");
 	$fg__input_user3_name && _patch_subscribers($scope0_id, "a4", "m");
-	_patch_render($scope0_id, "a5", [$fg__input_tag && "i", $fg__input_cls && "j"], $scope0_reason, 0);
+	_patch_render($scope0_id, "a5", (($fg__input_tag ? " i" : "") + ($fg__input_cls ? " j" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		g: ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.user,
 		i: ($ui__input_cls || $ui__input_tag__OR__input_cls) && input.tag,

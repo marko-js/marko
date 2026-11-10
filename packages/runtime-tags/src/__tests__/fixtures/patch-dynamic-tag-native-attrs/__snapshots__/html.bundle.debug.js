@@ -26,15 +26,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, "__tests__/template.marko_0/checkedChange")
 	}, 9, 0, 0, _write_guard($scope0_reason, 0), $scope0_reason, 0, 0, 14);
 	_script($scope0_id, "__tests__/template.marko_0");
-	_patch_render($scope0_id, "__tests__/template.marko_0_input_tag#6_input_cls#7_input_sty#8_input_title#9_input_x#10_input_hidden#11/setup", [
-		$fg__input_tag && "input_tag",
-		$fg__input_cls && "input_cls",
-		$fg__input_sty && "input_sty",
-		$fg__input_title && "input_title",
-		$fg__input_x && "input_x",
-		$fg__input_hidden && "input_hidden"
-	], $scope0_reason, 7);
-	_patch_render($scope0_id, "__tests__/template.marko_0_input_field#13_input_checked#14/setup", [$fg__input_field && "input_field", $fg__input_checked && "input_checked"], $scope0_reason, 0);
+	_patch_render($scope0_id, "__tests__/template.marko_0_input_tag#6_input_cls#7_input_sty#8_input_title#9_input_x#10_input_hidden#11/setup", (($fg__input_tag ? " input_tag" : "") + ($fg__input_cls ? " input_cls" : "") + ($fg__input_sty ? " input_sty" : "") + ($fg__input_title ? " input_title" : "") + ($fg__input_x ? " input_x" : "") + ($fg__input_hidden ? " input_hidden" : "")).slice(1), $scope0_reason, 7);
+	_patch_render($scope0_id, "__tests__/template.marko_0_input_field#13_input_checked#14/setup", (($fg__input_field ? " input_field" : "") + ($fg__input_checked ? " input_checked" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		input_tag: ($ui__input_cls__OR__input_sty__OR__input_title__OR__input_x__OR__input_hidden || $ui__input_tag__OR__input_cls__OR__input_sty__OR__input_title__OR__input_x__OR__input_hidden) && input.tag,
 		input_cls: ($ui__input_tag__OR__input_sty__OR__input_title__OR__input_x__OR__input_hidden || $ui__input_tag__OR__input_cls__OR__input_sty__OR__input_title__OR__input_x__OR__input_hidden) && input.cls,

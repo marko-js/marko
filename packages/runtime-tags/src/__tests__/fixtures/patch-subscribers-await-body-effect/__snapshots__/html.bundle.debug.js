@@ -34,10 +34,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const twice = input.n * 2;
 		$fg__input_n && _patch_write($scope1_id, "PatchMarkedWrite:twice", twice, !$sg__input_n);
 		_html(`<p>${_text_mark($scope1_id, "#text/1", input.n + input.m, 1, $scope0_reason, 1)}</p>`);
-		_script($scope1_id, "__tests__/template.marko_1_input_n#0:4_twice#5", 1, $fg__input_n, [">input_n", "twice"]);
+		_script($scope1_id, "__tests__/template.marko_1_input_n#0:4_twice#5", 1, $fg__input_n);
 		_unfilled_if($scope0_reason, 3) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_n#0:4/subscribe", $cg__input_n);
 		_unfilled_if($scope0_reason, 4) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_m#0:5/subscribe");
-		_patch_render($scope1_id, "__tests__/template.marko_1_input_n#0:4_input_m#0:5/setup", [$fg__input_n && ">input_n", _filled_guard($scope0_reason, 4) && ">input_m"], $scope0_reason, 1);
+		_patch_render($scope1_id, "__tests__/template.marko_1_input_n#0:4_input_m#0:5/setup", (($fg__input_n ? " >input_n" : "") + (_filled_guard($scope0_reason, 4) ? " >input_m" : "")).slice(1), $scope0_reason, 1);
 		$cg__input_n && _patch_render($scope1_id, "__tests__/template.marko_1_input_n#0:4_twice#5/setup");
 		_subscribe(_unfilled_if($scope0_reason, 4) && $input_m__closures, _subscribe(_unfilled_if($scope0_reason, 3) && $input_n__closures, _scope($scope1_id, {
 			twice,

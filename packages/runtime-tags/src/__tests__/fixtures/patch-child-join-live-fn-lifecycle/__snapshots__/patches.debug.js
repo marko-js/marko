@@ -8,7 +8,7 @@
   "PatchChild:#childScope/1": {
     "PatchMarkedWrite:input_a": "y",
     "PatchText:#text/0": "y!p",
-    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-child-join-live-fn-lifecycle/tags/child.marko_0_input_b#4_fmt#5": "input_b fmt input_a",
+    "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-child-join-live-fn-lifecycle/tags/child.marko_0_input_b#4_fmt#5",
     "PatchMarkedWrite:input_b": "p",
     "PatchBind:fmt": _.a
   }
@@ -24,7 +24,7 @@
   "PatchChild:#childScope/1": {
     "PatchMarkedWrite:input_a": "y",
     "PatchText:#text/0": "y!p",
-    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-child-join-live-fn-lifecycle/tags/child.marko_0_input_b#4_fmt#5": "input_b fmt input_a",
+    "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-child-join-live-fn-lifecycle/tags/child.marko_0_input_b#4_fmt#5",
     "PatchMarkedWrite:input_b": "p",
     "PatchBind:fmt": _.a
   }

@@ -2,7 +2,7 @@
 const $template$1 = "";
 const $walks$1 = "";
 const $setup$1 = ($_) => {};
-const $input__script = _script("__tests__/tags/label.marko_0_input#1", ($scope) => console.log("run", $scope.input.get()));
+const $input__script = _script_patch("__tests__/tags/label.marko_0_input#1 input", ($scope) => console.log("run", $scope.input.get()));
 const $input$1 = /*@__PURE__*/ _const("input", $input__script);
 var label_default = /*@__PURE__*/ _template("__tests__/tags/label.marko", "", "", 0, $input$1);
 

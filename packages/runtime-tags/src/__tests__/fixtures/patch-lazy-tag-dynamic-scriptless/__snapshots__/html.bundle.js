@@ -16,7 +16,7 @@ var template_default = _template("b", (input) => {
 	_html("<main>");
 	_dynamic_tag($scope0_id, "a", input.show ? $Child_withLoadAssets : null, { label: input.label }, 1, 0, 0, $wg__input_show__OR__input_label, $scope0_reason, 0);
 	_html("</main>");
-	_patch_render($scope0_id, "b0", [$fg__input_show && "d", $fg__input_label && "e"], $scope0_reason, 0);
+	_patch_render($scope0_id, "b0", (($fg__input_show ? " d" : "") + ($fg__input_label ? " e" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		d: ($ui__input_label || $ui__input_show__OR__input_label) && input.show,
 		e: ($ui__input_show || $ui__input_show__OR__input_label) && input.label

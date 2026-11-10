@@ -29,7 +29,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	$ui__input_title && _var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_fn#7/var");
 	_patch_child_end();
 	_html(`<button class=call>call</button>${_el_mark($scope0_id, "#button/2")}<pre></pre>${_el_mark($scope0_id, "#pre/3")}`);
-	_script($scope0_id, "__tests__/template.marko_0_fn#7", 1, $fg__input_title, "fn");
+	_script($scope0_id, "__tests__/template.marko_0_fn#7", 1, $fg__input_title);
 	_scope($scope0_id, {
 		fn,
 		"#childScope/0": _existing_scope($childScope)

@@ -5,7 +5,7 @@ const $seen = _let("seen/6", ($scope) => _text($scope["#text/0"], $scope.seen));
 function $setup$1($scope) {
 	$seen($scope, "");
 }
-const $input_opts__OR__input_label__script = _script("__tests__/tags/probe.marko_0_input_opts#3_input_label#4", ($scope) => $seen($scope, $scope.input_opts.describe($scope.input_label)));
+const $input_opts__OR__input_label__script = _script_patch("__tests__/tags/probe.marko_0_input_opts#3_input_label#4 input_opts input_label", ($scope) => $seen($scope, $scope.input_opts.describe($scope.input_label)));
 const $input_opts__OR__input_label = /*@__PURE__*/ _or_patch("__tests__/tags/probe.marko_0_input_opts#3_input_label#4/setup", 5, $input_opts__OR__input_label__script);
 const $input_opts = /*@__PURE__*/ _const("input_opts", $input_opts__OR__input_label);
 const $input_label$1 = /*@__PURE__*/ _const("input_label", $input_opts__OR__input_label);

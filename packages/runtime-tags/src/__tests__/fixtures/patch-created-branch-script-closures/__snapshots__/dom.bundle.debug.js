@@ -21,7 +21,7 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 // tags/level-watch.marko
 const $template$1 = "<button> </button><!><!>";
 const $walks$1 = " D l%c";
-const $if_content__input_projection_skill__OR__input_baseXp__OR__input_playerId__OR__shown__script = _script("__tests__/tags/level-watch.marko_1_input_projection_skill#0:6_input_baseXp#0:7_input_playerId#0:8_shown#0:9", ($scope) => document.body.dataset.watch = $scope._.input_projection_skill + ":" + $scope._.input_baseXp + ":" + ($scope._.input_playerId ?? "anon") + ":" + $scope._.shown);
+const $if_content__input_projection_skill__OR__input_baseXp__OR__input_playerId__OR__shown__script = _script_patch("__tests__/tags/level-watch.marko_1_input_projection_skill#0:6_input_baseXp#0:7_input_playerId#0:8_shown#0:9 >input_projection_skill >input_baseXp >input_playerId", ($scope) => document.body.dataset.watch = $scope._.input_projection_skill + ":" + $scope._.input_baseXp + ":" + ($scope._.input_playerId ?? "anon") + ":" + $scope._.shown);
 const $if_content__input_projection_skill__OR__input_baseXp__OR__input_playerId__OR__shown = /*@__PURE__*/ _or_patch("__tests__/tags/level-watch.marko_1_input_projection_skill#0:6_input_baseXp#0:7_input_playerId#0:8_shown#0:9/setup", 0, $if_content__input_projection_skill__OR__input_baseXp__OR__input_playerId__OR__shown__script, 3);
 const $if_content__input_projection_skill = /*@__PURE__*/ _if_closure_patch("__tests__/tags/level-watch.marko_1_input_projection_skill#0:6/setup", "#text/2", 0, $if_content__input_projection_skill__OR__input_baseXp__OR__input_playerId__OR__shown);
 const $if_content__setup = ($scope) => {

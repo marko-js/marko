@@ -1,7 +1,6 @@
 // PATCH
 {
-  ea0: "c",
-  xc: "b",
+  e: "a0",
   xd: {
     label: "b"
   }
@@ -9,8 +8,7 @@
 
 // PATCH
 {
-  ea0: "c",
-  xc: "b",
+  e: "a0",
   xd: {
     label: "b"
   }

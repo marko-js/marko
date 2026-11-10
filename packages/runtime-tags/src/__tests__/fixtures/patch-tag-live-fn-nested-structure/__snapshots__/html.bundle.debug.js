@@ -29,7 +29,7 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 					return 0;
 				}
 			}, $scope1_id, "#text/0", 1, $wg__input_y, 1, 0, 0, ["__tests__/tags/panel.marko_2*shell"], $scope0_reason, 2);
-			$fg__input_a && $cg__input_y && _patch_render($scope1_id, "__tests__/tags/panel.marko_2_f#1:1/setup", ["f", ">input_a"]);
+			$fg__input_a && $cg__input_y && _patch_render($scope1_id, "__tests__/tags/panel.marko_2_f#1:1/setup", "f >input_a");
 			$cg__input_a && _patch_render($scope1_id, "__tests__/tags/panel.marko_1_input_a#0:5/setup");
 			$cg__input_y && _patch_render($scope1_id, "__tests__/tags/panel.marko_1_input_y#0:6/setup");
 			_scope($scope1_id, {

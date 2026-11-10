@@ -9,7 +9,7 @@ const $if_content__setup = ($scope) => {
 	$scope["#childScope/0"]._ = $scope._;
 	$Info_content__setup($scope["#childScope/0"]);
 };
-const $Info_content__input_page__OR__label__script = _script("__tests__/template.marko_1_input_page#0:6_label#2", ($scope) => console.log("info", $scope.label, $scope._.input_page));
+const $Info_content__input_page__OR__label__script = _script_patch("__tests__/template.marko_1_input_page#0:6_label#2 >input_page label", ($scope) => console.log("info", $scope.label, $scope._.input_page));
 const $Info_content__input_page__OR__label = /*@__PURE__*/ _or_patch("__tests__/template.marko_1_input_page#0:6_label#2/setup", 3, $Info_content__input_page__OR__label__script);
 const $Info_content__input_page = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_1_input_page#0:6/subscribe", "input_page/10", $Info_content__input_page__OR__label, 0, "__tests__/template.marko_0_input_page#6/subscribers", 0);
 const $Info_content__setup = $Info_content__input_page;

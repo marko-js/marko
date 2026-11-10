@@ -35,7 +35,7 @@ import { getAccessorPrefix, getAccessorProp } from "./get-accessor-enums";
 import { getDeclaredBindingExpression } from "./get-declared-binding-expression";
 import { isOptimize, isOutputHTML, isPatch } from "./marko-config";
 import { every, forEach, type Opt, push, reduce, some } from "./optional";
-import { getEffectWrites, fillsHole } from "./patch/decisions";
+import { fillsHole } from "./patch/decisions";
 import {
   inKeptContent,
   keepsClosureFills,
@@ -61,6 +61,7 @@ import {
   getCallerGroupGuard,
   getClosureScopesIfWritten,
   getEffectEntryArgs,
+  getEffectReads,
   getExprIfUnfilled,
   getClientBranchGuardWrites,
   getPatchScopeCalls,
@@ -1529,13 +1530,15 @@ export function writeSignals(section: Section) {
 
     let effectDeclarator: t.VariableDeclarator | undefined;
     if (signal.effect.length) {
-      // An effect reading a value a patch writes re-runs by the flush's entry.
-      if (isPatch() && getEffectWrites(signal.section, signal)) {
-        importRuntimeFeature("patches/effect");
-      }
+      // An effect's registration names the writes a flush's entry re-runs it on, as a
+      // function's names its filled references.
+      const reads = isPatch() && getEffectReads(signal.section, signal);
+      if (reads) importRuntimeFeature("patches/effect");
       traverseReplace(signal, "effect", replaceEffectNode);
       const effectIdentifier = getSignalEffectIdentifier(signal);
-      const id = t.stringLiteral(getSignalRegistryId(signal));
+      const key = t.stringLiteral(
+        getSignalRegistryId(signal) + (reads ? " " + reads : ""),
+      );
       const effectFn = t.arrowFunctionExpression(
         [scopeIdentifier],
         toOnlyExpressionOrBlock(signal.effect),
@@ -1548,11 +1551,11 @@ export function writeSignals(section: Section) {
         members
           ? callRuntime(
               members.path ? "_fill_global_path_script" : "_fill_global_script",
-              id,
+              reads ? callRuntime("_filled_id", key) : key,
               effectFn,
               ...members.args,
             )
-          : callRuntime("_script", id, effectFn),
+          : callRuntime(reads ? "_script_patch" : "_script", key, effectFn),
       );
     }
 

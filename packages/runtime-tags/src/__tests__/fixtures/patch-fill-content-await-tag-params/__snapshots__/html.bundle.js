@@ -41,7 +41,7 @@ var inner_default = _template("c", (input) => {
 		}, 1, "c0", 2);
 		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "c3", 1);
 		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "c4", 1);
-		_patch_render($scope1_id, "c5", [_filled_guard($scope0_reason, 0) && ">e", _filled_guard($scope0_reason, 1) && ">f"]);
+		_patch_render($scope1_id, "c5", ((_filled_guard($scope0_reason, 0) ? " >e" : "") + (_filled_guard($scope0_reason, 1) ? " >f" : "")).slice(1));
 		_subscribe($showSecond__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_first__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $input_second__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 0) && "c3", 0), _client_guard($scope0_reason, 1) && "c4", 0), "c6", 0);
 		_resume_branch($scope1_id);
 	}, $scope0_id, 0) });

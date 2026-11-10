@@ -38,7 +38,7 @@ var feed_list_default = _template("c", (input) => {
 		_patch_child_end();
 		_html(`</li>${_el_mark($scope1_id, "a")}`);
 		_script($scope1_id, "c0");
-		_patch_render($scope1_id, "c1", [_filled_guard($scope0_reason, 2) && ">e", $fg__input_items && "e"], $scope0_reason, 0);
+		_patch_render($scope1_id, "c1", ((_filled_guard($scope0_reason, 2) ? " >e" : "") + ($fg__input_items ? " e" : "")).slice(1), $scope0_reason, 0);
 		_patch_render($scope1_id, "c2", $fg__input_items && "e");
 		_scope($scope1_id, {
 			e: item?.id,

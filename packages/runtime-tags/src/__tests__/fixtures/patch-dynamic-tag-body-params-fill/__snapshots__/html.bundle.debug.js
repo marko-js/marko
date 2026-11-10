@@ -49,7 +49,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		content: Label
 	}, 9, 0, 0, $wg__input_card__OR__input_tag, $scope0_reason, 0, 0, void 0, 0, 0, "__tests__/template.marko_1*content");
 	$fg__input_label && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_label#3/subscribers", "input_label");
-	_patch_render($scope0_id, "__tests__/template.marko_0_input_card#4_input_tag#5_Card#6_Label#7/setup", [$fg__input_card && "input_card", $fg__input_tag && "input_tag"], $scope0_reason, 0);
+	_patch_render($scope0_id, "__tests__/template.marko_0_input_card#4_input_tag#5_Card#6_Label#7/setup", (($fg__input_card ? " input_card" : "") + ($fg__input_tag ? " input_tag" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		input_label: ($ui__input_card__OR__input_tag || _unfilled_if($scope0_reason, 2)) && input.label,
 		input_card: ($ui__input_tag || $ui__input_card__OR__input_tag) && input.card,

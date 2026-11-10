@@ -41,7 +41,7 @@ var template_default = _template("a", (input) => {
 			_client_guard($scope0_reason, 0) && _patch_render($scope1_id, "a3");
 			_client_guard($scope0_reason, 1) && _patch_render($scope1_id, "a4");
 			_client_guard($scope0_reason, 4) && _patch_render($scope1_id, "a5");
-			_patch_render($scope1_id, "a6", [_filled_guard($scope0_reason, 3) && ">i", _filled_guard($scope0_reason, 4) && ">f"], $scope0_reason, 0);
+			_patch_render($scope1_id, "a6", ((_filled_guard($scope0_reason, 3) ? " >i" : "") + (_filled_guard($scope0_reason, 0) ? " >k" : "")).slice(1), $scope0_reason, 0);
 			_scope($scope1_id, {
 				a: _write_if($scope0_reason, 0) && _existing_scope($childScope),
 				b: _write_if($scope0_reason, 1) && _existing_scope($childScope2),
@@ -53,12 +53,12 @@ var template_default = _template("a", (input) => {
 	_html(`<button>t</button>${_el_mark($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a7");
 	$fg__input_key && _patch_render($scope0_id, "a8", "i");
-	$fg__input_key__OR__input_title && _patch_render($scope0_id, "a9", [$fg__input_title && "f", $fg__input_key && "i"]);
+	$fg__input_key__OR__input_title && _patch_render($scope0_id, "a9", "k");
 	$fg__input_key__OR__input_title && _patch_render($scope0_id, "a3", "l");
 	$fg__input_title__OR__input_pre && _patch_render($scope0_id, "a4", "n");
-	$fg__input_title && _patch_render($scope0_id, "a5", ["o", "f"]);
-	_patch_render($scope0_id, "a10", [$fg__input_title && "f", $fg__input_pre && "g"], $scope0_reason, 1);
-	_patch_render($scope0_id, "a11", [$fg__input_title && "f", $fg__input_key && "i"], $scope0_reason, 0);
+	$fg__input_title && _patch_render($scope0_id, "a5", "o f");
+	_patch_render($scope0_id, "a10", (($fg__input_title ? " f" : "") + ($fg__input_pre ? " g" : "")).slice(1), $scope0_reason, 1);
+	_patch_render($scope0_id, "a11", (($fg__input_title ? " f" : "") + ($fg__input_key ? " i" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		f: input.title,
 		g: $wi__input_title && input.pre,

@@ -1,13 +1,13 @@
 // PATCH
 {
   ta: "Store!",
-  ea0: "e",
+  e: "a0",
   xe: "sale"
 }
 
 // PATCH
 {
   ta: "Store!",
-  ea0: "e",
+  e: "a0",
   xe: "clearance"
 }

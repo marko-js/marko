@@ -21,7 +21,7 @@ var panel_default = _template("b", (input) => {
 					_html(`<i>${_text_mark($scope2_id, "a", input.a + ":" + JSON.stringify(input.b), 1, $scope0_reason, 2)}</i>`);
 					_unfilled_if($scope0_reason, 5) && _patch_subscribe($scope2_id, "b0");
 					_unfilled_if($scope0_reason, 6) && _patch_subscribe($scope2_id, "b1");
-					_patch_render($scope2_id, "b2", [_filled_guard($scope0_reason, 5) && ">>e", _filled_guard($scope0_reason, 6) && ">>f"], $scope0_reason, 2);
+					_patch_render($scope2_id, "b2", ((_filled_guard($scope0_reason, 5) ? " >>e" : "") + (_filled_guard($scope0_reason, 6) ? " >>f" : "")).slice(1), $scope0_reason, 2);
 					_subscribe(_unfilled_if($scope0_reason, 6) && $input_b__closures, _subscribe(_unfilled_if($scope0_reason, 5) && $input_a__closures, _scope($scope2_id, { _: $wi__input_show__OR__input_a__OR__input_b && _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 5) && "b0"), _client_guard($scope0_reason, 6) && "b1");
 					return 0;
 				}
@@ -53,7 +53,7 @@ var template_default = _template("a", (input) => {
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	panel_default({
 		a: count,
-		b: _patch_live($childScope, { value: input.x }, $scope0_id, "e"),
+		b: { value: input.x },
 		show: input.show
 	});
 	_patch_child_end();
@@ -62,5 +62,5 @@ var template_default = _template("a", (input) => {
 	_scope($scope0_id, {
 		g: count,
 		a: _existing_scope($childScope)
-	}) || _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.x, !_server_guard($scope0_reason, 1));
+	});
 }, 1);

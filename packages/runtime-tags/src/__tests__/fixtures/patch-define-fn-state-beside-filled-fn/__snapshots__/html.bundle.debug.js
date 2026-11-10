@@ -14,7 +14,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $fg__b = _filled_guard($scope1_reason, 2);
 		_html(`<p>${_text_mark($scope1_id, "#text/0", a() + b(), 1, $scope1_reason, 0)}</p>`);
-		_patch_render($scope1_id, "__tests__/template.marko_1_a#3_b#4/setup", [$fg__b && "b", _filled_guard($scope0_reason, 0) && ">input_x"], $scope1_reason, 0);
+		_patch_render($scope1_id, "__tests__/template.marko_1_a#3_b#4/setup", (($fg__b ? " b" : "") + (_filled_guard($scope0_reason, 0) ? " >input_x" : "")).slice(1), $scope1_reason, 0);
 		_scope($scope1_id, {
 			a: _write_if($scope1_reason, 2) && a,
 			b: _write_if($scope1_reason, 1) && b

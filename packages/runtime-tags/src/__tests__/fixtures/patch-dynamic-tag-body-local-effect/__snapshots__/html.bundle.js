@@ -47,7 +47,7 @@ var template_default = _template("a", (input) => {
 				_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope2_id, "a1", $cg__input_note);
 				_subscribe(_unfilled_if($scope0_reason, 2) && $if_content__x__closures, _scope($scope2_id, { _: $wi__input_note__OR__input_on && _scope_with_id($scope1_id) }), $cg__input_note && "a1");
 			}, $scope1_id), 0, _write_guard($scope0_reason, 3), $scope0_reason, 3);
-			_script($scope1_id, "a2", 1, $fg__input_note, "c");
+			_script($scope1_id, "a2", 1, $fg__input_note);
 			$fg__input_note && _patch_subscribers($scope1_id, "a3", "c");
 			$cg__input_note && _patch_render($scope1_id, "a4");
 			_client_guard($scope0_reason, 3) && _patch_render($scope1_id, "a5");

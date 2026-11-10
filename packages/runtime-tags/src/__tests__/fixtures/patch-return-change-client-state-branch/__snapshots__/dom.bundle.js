@@ -1,5 +1,5 @@
 // tags/counter-box/index.marko
-const $input_onA__OR__input_onB__OR__mode__script = _script("b0", ($scope) => _on($scope.c, "click", $scope.h === "a" ? $scope.f : $scope.g));
+const $input_onA__OR__input_onB__OR__mode__script = _script_patch("b0 f g", ($scope) => _on($scope.c, "click", $scope.h === "a" ? $scope.f : $scope.g));
 const $input_onA__OR__input_onB__OR__mode = /*@__PURE__*/ _or_patch("b2", 8, ($scope) => {
 	_return_change($scope, $scope.h === "a" ? $scope.f : $scope.g);
 	$input_onA__OR__input_onB__OR__mode__script($scope);

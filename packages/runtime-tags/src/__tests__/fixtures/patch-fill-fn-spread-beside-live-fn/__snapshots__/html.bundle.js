@@ -48,7 +48,7 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a6");
 	$fg__input_title && _patch_render($scope0_id, "a3", "g");
 	$fg__input_title && _patch_render($scope0_id, "a4", "i");
-	$fg__input_title && _patch_render($scope0_id, "a5", ["j", "e"]);
+	$fg__input_title && _patch_render($scope0_id, "a5", "j e");
 	_scope($scope0_id, {
 		e: input.title,
 		g: chars,

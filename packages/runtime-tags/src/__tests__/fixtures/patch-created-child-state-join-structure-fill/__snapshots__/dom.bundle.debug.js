@@ -25,7 +25,7 @@ const $template = "<!><!><button>+</button>";
 const $walks = "b%b b";
 const $if_content__input_x = /*@__PURE__*/ _if_closure_patch("__tests__/tags/child/index.marko_1_input_x#0:5/setup", "#text/0", 0, ($scope) => _text($scope["#text/0"], $scope._.input_x));
 const $if_content__setup = $if_content__input_x;
-const $input_x__OR__n__script = _script("__tests__/tags/child/index.marko_0_input_x#5_n#6", ($scope) => console.log(`effect ${$scope.input_x}:${$scope.n}`));
+const $input_x__OR__n__script = _script_patch("__tests__/tags/child/index.marko_0_input_x#5_n#6 input_x", ($scope) => console.log(`effect ${$scope.input_x}:${$scope.n}`));
 const $input_x__OR__n = /*@__PURE__*/ _or_patch("__tests__/tags/child/index.marko_0_input_x#5_n#6/setup", 7, $input_x__OR__n__script);
 const $n = /*@__PURE__*/ _fill_let("__tests__/tags/child/index.marko_0_n#6/fill", "n/6", $input_x__OR__n);
 const $setup__script = _script("__tests__/tags/child/index.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {

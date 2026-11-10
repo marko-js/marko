@@ -8,7 +8,7 @@
         xe: "B",
         aa$class: "b1",
         tb: "B",
-        ea0: "e"
+        e: "a0"
       }
     }, "b0"]
   }
@@ -24,7 +24,7 @@
         xe: "C",
         aa$class: "b1",
         tb: "C",
-        ea0: "e"
+        e: "a0"
       }
     }, {
       fa: "^^^a2",
@@ -32,7 +32,7 @@
         xe: "D",
         aa$class: "b2",
         tb: "D",
-        ea0: "e"
+        e: "a0"
       }
     }, "b0"]
   }

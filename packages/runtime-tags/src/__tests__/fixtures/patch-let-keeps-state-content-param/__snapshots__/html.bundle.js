@@ -8,7 +8,7 @@ var boxp_default = _template("b", (input) => {
 	_html("<div>");
 	_dynamic_tag($scope0_id, "a", input.content, { x: input.x }, 1, 0, 0, $wg__input_content__OR__input_x, $scope0_reason, 0, 0, 1);
 	_html("</div>");
-	_patch_render($scope0_id, "b0", [$fg__input_content && "d", $fg__input_x && "e"], $scope0_reason, 0);
+	_patch_render($scope0_id, "b0", (($fg__input_content ? " d" : "") + ($fg__input_x ? " e" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		d: ($ui__input_x || $ui__input_content__OR__input_x) && input.content,
 		e: ($ui__input_content || $ui__input_content__OR__input_x) && input.x

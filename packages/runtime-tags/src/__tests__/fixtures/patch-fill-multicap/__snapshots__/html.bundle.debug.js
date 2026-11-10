@@ -22,12 +22,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id, "#text/0", 1, 1, 0, 0, 1);
 	_html(`<button>+</button>${_el_mark($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$fg__input_a__OR__input_b && _patch_render($scope0_id, "__tests__/template.marko_1_fmt#0:7/setup", [
-		"fmt",
-		$fg__input_a && "input_a",
-		$fg__input_b && "input_b"
-	]);
-	_patch_render($scope0_id, "__tests__/template.marko_0_input_a#4_input_b#5/setup", [$fg__input_a && "input_a", $fg__input_b && "input_b"], $scope0_reason, 0);
+	$fg__input_a__OR__input_b && _patch_render($scope0_id, "__tests__/template.marko_1_fmt#0:7/setup", "fmt" + ($fg__input_a ? " input_a" : "") + ($fg__input_b ? " input_b" : ""));
+	_patch_render($scope0_id, "__tests__/template.marko_0_input_a#4_input_b#5/setup", (($fg__input_a ? " input_a" : "") + ($fg__input_b ? " input_b" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		input_a: input.a,
 		input_b: input.b,

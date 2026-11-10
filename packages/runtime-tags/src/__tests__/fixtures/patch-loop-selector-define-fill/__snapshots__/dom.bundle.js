@@ -1,5 +1,5 @@
 // template.marko
-const $for_content__selected__OR__flag__script = _script("a0", ($scope) => $scope.a.className = $scope._.f && $scope._.e === $scope.M ? "sel" : "");
+const $for_content__selected__OR__flag__script = _script_patch("a0 >e", ($scope) => $scope.a.className = $scope._.f && $scope._.e === $scope.M ? "sel" : "");
 const $for_content__selected__OR__flag = /*@__PURE__*/ _or_patch("a1", 2, $for_content__selected__OR__flag__script);
 const $for_content__selected = /*@__PURE__*/ _for_selector_patch("a4", 0, 4, $for_content__selected__OR__flag);
 const $for_content__setup = ($scope) => {

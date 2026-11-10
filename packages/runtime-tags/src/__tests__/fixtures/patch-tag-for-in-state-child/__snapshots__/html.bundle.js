@@ -39,7 +39,7 @@ var shape_default = _template("c", (input) => {
 				});
 				_patch_child_end();
 				_unfilled_if($scope0_reason, 3) && _patch_subscribe($scope2_id, "c0");
-				_patch_render($scope2_id, "c1", [_filled_guard($scope0_reason, 3) && ">>g", _filled_guard($scope0_reason, 1) && ">e"]);
+				_patch_render($scope2_id, "c1", ((_filled_guard($scope0_reason, 3) ? " >>g" : "") + (_filled_guard($scope0_reason, 1) ? " >e" : "")).slice(1));
 				_subscribe($s__closures, _subscribe(_unfilled_if($scope0_reason, 3) && $input_b__closures, _scope($scope2_id, {
 					_: _scope_with_id($scope1_id),
 					a: _existing_scope($childScope)

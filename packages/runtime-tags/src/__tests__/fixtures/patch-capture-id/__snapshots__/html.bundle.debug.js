@@ -7,7 +7,7 @@ var label_default = _template("__tests__/tags/label.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $fg__input_get = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_html(`<output></output>${_el_mark($scope0_id, "#output/0")}`);
-	_script($scope0_id, "__tests__/tags/label.marko_0_get#3", 1, $fg__input_get, "get");
+	_script($scope0_id, "__tests__/tags/label.marko_0_get#3", 1, $fg__input_get);
 	_scope($scope0_id, { get: input.get }, "__tests__/tags/label.marko", 0, { get: "1:10" }) || $fg__input_get && _patch_write($scope0_id, "PatchMarkedWrite:get", input.get, !_server_guard($scope0_reason, 0));
 });
 

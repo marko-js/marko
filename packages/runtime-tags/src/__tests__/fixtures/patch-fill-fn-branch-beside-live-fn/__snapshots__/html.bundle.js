@@ -56,9 +56,9 @@ var template_default = _template("a", (input) => {
 	$fg__input_flag__OR__input_title && _patch_render($scope0_id, "a5", "j");
 	$fg__input_title__OR__input_alt && _patch_render($scope0_id, "a6", "k");
 	$fg__input_title && _patch_render($scope0_id, "a7", "l");
-	$fg__input_title && _patch_render($scope0_id, "a8", ["m", "f"]);
-	_patch_render($scope0_id, "a10", [$fg__input_flag && "e", $fg__input_title && "f"], $scope0_reason, 0);
-	_patch_render($scope0_id, "a11", [$fg__input_title && "f", $fg__input_alt && "h"], $scope0_reason, 1);
+	$fg__input_title && _patch_render($scope0_id, "a8", "m f");
+	_patch_render($scope0_id, "a10", (($fg__input_flag ? " e" : "") + ($fg__input_title ? " f" : "")).slice(1), $scope0_reason, 0);
+	_patch_render($scope0_id, "a11", (($fg__input_title ? " f" : "") + ($fg__input_alt ? " h" : "")).slice(1), $scope0_reason, 1);
 	_scope($scope0_id, {
 		e: ($ui__input_title || _unfilled_if($scope0_reason, 0)) && input.flag,
 		f: input.title,

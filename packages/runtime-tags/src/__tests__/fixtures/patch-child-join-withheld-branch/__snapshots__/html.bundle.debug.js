@@ -21,7 +21,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 				_html(`<em>${_text_mark($scope2_id, "#text/0", input.a + input.b, 1, $scope0_reason, 0)}</em>`);
 				_unfilled_if($scope0_reason, 5) && _patch_subscribe($scope2_id, "__tests__/tags/child.marko_2_input_a#0:4/subscribe");
 				_unfilled_if($scope0_reason, 6) && _patch_subscribe($scope2_id, "__tests__/tags/child.marko_2_input_b#0:5/subscribe");
-				_patch_render($scope2_id, "__tests__/tags/child.marko_2_input_a#0:4_input_b#0:5/setup", [_filled_guard($scope0_reason, 5) && ">>input_a", _filled_guard($scope0_reason, 6) && ">>input_b"], $scope0_reason, 0);
+				_patch_render($scope2_id, "__tests__/tags/child.marko_2_input_a#0:4_input_b#0:5/setup", ((_filled_guard($scope0_reason, 5) ? " >>input_a" : "") + (_filled_guard($scope0_reason, 6) ? " >>input_b" : "")).slice(1), $scope0_reason, 0);
 				_subscribe(_unfilled_if($scope0_reason, 6) && $input_b__closures, _subscribe(_unfilled_if($scope0_reason, 5) && $input_a__closures, _scope($scope2_id, { _: $wi__input_show__OR__input_a__OR__input_b__OR__input_mode && _scope_with_id($scope1_id) }, "__tests__/tags/child.marko", "2:4"), _client_guard($scope0_reason, 5) && "__tests__/tags/child.marko_2_input_a#0:4/subscribe"), _client_guard($scope0_reason, 6) && "__tests__/tags/child.marko_2_input_b#0:5/subscribe");
 			}, $scope1_id) };
 			_html("<section>");

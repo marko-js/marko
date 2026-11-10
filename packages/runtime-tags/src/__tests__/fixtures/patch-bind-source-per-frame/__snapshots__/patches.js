@@ -9,7 +9,7 @@
       title: "b",
       onClick: _([], "a0")
     },
-    ea1: ">f"
+    e: "a1"
   }
 }
 {
@@ -19,6 +19,6 @@
       title: "b",
       onClick: _([], "a0")
     },
-    ea9: ">f"
+    e: "a9"
   }
 }

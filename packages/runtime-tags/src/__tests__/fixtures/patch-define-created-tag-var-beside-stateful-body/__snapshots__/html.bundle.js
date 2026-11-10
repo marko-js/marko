@@ -25,7 +25,7 @@ var template_default = _template("a", (input) => {
 			}
 		}, $scope2_id, "a", 1, $wg__isOpen, 1, 0, 0, ["a1"], $scope2_reason, 1);
 		const $return = label + (isOpen ? "Y" : "N");
-		_patch_render($scope2_id, "a4", [$fg__isOpen && "d", $fg__label && "e"], $scope2_reason, 0);
+		_patch_render($scope2_id, "a4", (($fg__isOpen ? " d" : "") + ($fg__label ? " e" : "")).slice(1), $scope2_reason, 0);
 		_write_if($scope2_reason, 0) && _scope($scope2_id, {
 			d: ($ui__label || $ui__isOpen__OR__label) && isOpen,
 			e: ($ui__isOpen || $ui__isOpen__OR__label || $ui__label) && label
@@ -65,7 +65,7 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a8");
 	$fg__input_label2 && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "a7", "g");
 	_patch_render($scope0_id, "a9", $fg__input_other && "h", $scope0_reason, 2);
-	_patch_render($scope0_id, "a10", [$fg__input_label2 && "g", $fg__input_other && "l"]);
+	_patch_render($scope0_id, "a10", (($fg__input_label2 ? " g" : "") + ($fg__input_other ? " l" : "")).slice(1));
 	_scope($scope0_id, {
 		g: input.label,
 		i: open,

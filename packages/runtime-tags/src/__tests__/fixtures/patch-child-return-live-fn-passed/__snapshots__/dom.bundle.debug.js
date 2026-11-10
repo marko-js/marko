@@ -14,7 +14,7 @@ var make_default = /*@__PURE__*/ _template("__tests__/tags/make.marko", "", "", 
 const $template$1 = "<button class=call>call</button><pre></pre>";
 const $walks$1 = " b b";
 const $setup$1 = ($_) => {};
-const $input_fn__script = _script("__tests__/tags/reader.marko_0_input_fn#4", ($scope) => {
+const $input_fn__script = _script_patch("__tests__/tags/reader.marko_0_input_fn#4 input_fn", ($scope) => {
 	{
 		const el = _el_read($scope["#pre/1"]);
 		el.textContent += el.fn === $scope.input_fn ? "same;" : "new;";

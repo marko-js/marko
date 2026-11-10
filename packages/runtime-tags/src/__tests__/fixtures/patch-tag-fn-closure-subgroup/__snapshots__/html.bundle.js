@@ -12,18 +12,8 @@ var code_block_default = _template("b", (input) => {
 		return t + input.a + input.b + input.c;
 	}, "b0", $scope0_id);
 	_html(`<div>${_text_mark($scope0_id, "a", f(input.d), 1, $scope0_reason, 4)}</div>`);
-	_patch_render($scope0_id, "b1", [
-		$fg__input_a && "d",
-		$fg__input_b && "e",
-		$fg__input_c && "f"
-	], $scope0_reason, 0);
-	_patch_render($scope0_id, "b2", [
-		$fg__input_d && "h",
-		$fg__input_a__OR__input_b__OR__input_c && "i",
-		$fg__input_a && "d",
-		$fg__input_b && "e",
-		$fg__input_c && "f"
-	], $scope0_reason, 4);
+	_patch_render($scope0_id, "b1", (($fg__input_a ? " d" : "") + ($fg__input_b ? " e" : "") + ($fg__input_c ? " f" : "")).slice(1), $scope0_reason, 0);
+	_patch_render($scope0_id, "b2", (($fg__input_d ? " h" : "") + ($fg__input_a__OR__input_b__OR__input_c ? " i" : "") + ($fg__input_a ? " d" : "") + ($fg__input_b ? " e" : "") + ($fg__input_c ? " f" : "")).slice(1), $scope0_reason, 4);
 	_scope($scope0_id, {
 		d: ($ui__input_b__OR__input_c__OR__input_d || $ui__input_a__OR__input_b__OR__input_c || $ui__input_a__OR__input_b__OR__input_c__OR__input_d) && input.a,
 		e: ($ui__input_a__OR__input_c__OR__input_d || $ui__input_a__OR__input_b__OR__input_c || $ui__input_a__OR__input_b__OR__input_c__OR__input_d) && input.b,

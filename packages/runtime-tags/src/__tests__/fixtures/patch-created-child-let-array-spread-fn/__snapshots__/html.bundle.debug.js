@@ -28,9 +28,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope1_id = _scope_id();
 			_set_scope_reason(_updates_from($scope0_reason, 2) << 1);
 			const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
-			card_default({ opts: _patch_live($childScope, { list: [...input.items, () => "f:" + input.label] }, $scope1_id, ">input_items >input_label") });
+			card_default({ opts: { list: [...input.items, () => "f:" + input.label] } });
 			_patch_child_end();
-			_patch_render($scope1_id, "__tests__/template.marko_1_input_items#0:4_input_label#0:5/setup", [_filled_guard($scope0_reason, 5) && ">input_items", _filled_guard($scope0_reason, 6) && ">input_label"], $scope0_reason, 2);
+			_patch_render($scope1_id, "__tests__/template.marko_1_input_items#0:4_input_label#0:5/setup", ((_filled_guard($scope0_reason, 5) ? " >input_items" : "") + (_filled_guard($scope0_reason, 6) ? " >input_label" : "")).slice(1), $scope0_reason, 2);
 			_scope($scope1_id, {
 				_: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id),
 				"#childScope/0": _existing_scope($childScope)

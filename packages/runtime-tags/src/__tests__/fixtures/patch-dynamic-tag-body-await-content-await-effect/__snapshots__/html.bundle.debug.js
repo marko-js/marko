@@ -73,7 +73,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					{ _: $scope($scope1_id) },
 					{ _: $scope($scope2_id) }
 				] : []), 0, _write_guard($scope0_reason, 6), $scope0_reason, 6, 0, void 0, 0, 0, "__tests__/template.marko_4*content");
-				_script($scope3_id, "__tests__/template.marko_3_w#3", 1, $fg__input_w, "w");
+				_script($scope3_id, "__tests__/template.marko_3_w#3", 1, $fg__input_w);
 				$fg__input_w && _patch_subscribers($scope3_id, "__tests__/template.marko_3_w#3/subscribers", "w");
 				_unfilled_if($scope0_reason, 6) && _patch_subscribe($scope3_id, "__tests__/template.marko_3_input_inner#0:6/subscribe", $cg__input_inner);
 				_subscribe(_unfilled_if($scope0_reason, 6) && $input_inner__closures, _scope($scope3_id, {

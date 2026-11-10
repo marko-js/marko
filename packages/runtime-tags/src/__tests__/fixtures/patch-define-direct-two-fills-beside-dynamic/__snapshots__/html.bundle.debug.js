@@ -42,13 +42,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, 8);
 	_html(`<button>toggle</button>${_el_mark($scope0_id, "#button/2")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	_patch_render($scope0_id, "__tests__/template.marko_0_input_show#5_input_label#6_input_rest#7/setup", [
-		$fg__input_show && "input_show",
-		$fg__input_label && "input_label",
-		$fg__input_rest && "input_rest"
-	], $scope0_reason, 2);
+	_patch_render($scope0_id, "__tests__/template.marko_0_input_show#5_input_label#6_input_rest#7/setup", (($fg__input_show ? " input_show" : "") + ($fg__input_label ? " input_label" : "") + ($fg__input_rest ? " input_rest" : "")).slice(1), $scope0_reason, 2);
 	_patch_render($scope0_id, "__tests__/template.marko_0_input_other#9_Panel#11/setup", $fg__input_other && "input_other", $scope0_reason, 6);
-	_patch_render($scope0_id, "__tests__/template.marko_0_input_label#6_open#10_Tag#13/setup", [$fg__input_label && "input_label", $fg__input_other && "Tag"]);
+	_patch_render($scope0_id, "__tests__/template.marko_0_input_label#6_open#10_Tag#13/setup", (($fg__input_label ? " input_label" : "") + ($fg__input_other ? " Tag" : "")).slice(1));
 	_scope($scope0_id, {
 		input_show: _write_if($scope0_reason, 1) && input.show,
 		input_label: input.label,

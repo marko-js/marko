@@ -3,7 +3,7 @@ const $template$2 = "<div><!></div><pre></pre>";
 const $walks$2 = " D%l b";
 const $setup$2 = ($_) => {};
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
-const $input_content__script = _script("__tests__/tags/shows.marko_0_input_content#5", ($scope) => {
+const $input_content__script = _script_patch("__tests__/tags/shows.marko_0_input_content#5 input_content", ($scope) => {
 	if ($scope.input_content) _el_read($scope["#pre/2"]).textContent = _el_read($scope["#div/0"]).textContent;
 });
 const $input_content = /*@__PURE__*/ _const("input_content", ($scope) => {

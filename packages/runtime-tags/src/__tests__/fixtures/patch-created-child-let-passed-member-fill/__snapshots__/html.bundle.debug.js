@@ -7,7 +7,7 @@ var grand_default = _template("__tests__/tags/grand.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $fg__input_v = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_html(`<div></div>${_el_mark($scope0_id, "#div/0")}`);
-	_script($scope0_id, "__tests__/tags/grand.marko_0_input_v#3", 1, $fg__input_v, "input_v");
+	_script($scope0_id, "__tests__/tags/grand.marko_0_input_v#3", 1, $fg__input_v);
 	_scope($scope0_id, { input_v: input.v }, "__tests__/tags/grand.marko", 0, { input_v: ["input.v"] }) || $fg__input_v && _patch_write($scope0_id, "PatchMarkedWrite:input_v", input.v, !_server_guard($scope0_reason, 0));
 });
 
@@ -44,10 +44,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope1_id = _scope_id();
 			_set_scope_reason(_updates_from($scope0_reason, 1) << 1);
 			const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
-			child_default({ opts: _patch_live($childScope, {
+			child_default({ opts: {
 				label: input.label,
 				n: "SECRET_"
-			}, $scope1_id, ">input_label") });
+			} });
 			_patch_child_end();
 			_client_guard($scope0_reason, 1) && _patch_render($scope1_id, "__tests__/template.marko_1_input_label#0:4/setup");
 			_scope($scope1_id, {

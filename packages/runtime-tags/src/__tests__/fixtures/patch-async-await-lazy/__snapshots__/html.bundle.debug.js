@@ -28,7 +28,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, 1, "__tests__/template.marko_3*content", _unfilled_if($scope0_reason, 0) && 2, 1);
 		_unfilled_if($scope0_reason, 4) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_related#0:8/subscribe", 1);
 		_unfilled_if($scope0_reason, 5) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_slow#0:9/subscribe", 1);
-		_patch_render($scope1_id, "__tests__/template.marko_1_input_related#0:8_input_slow#0:9/setup", [_filled_guard($scope0_reason, 4) && ">input_related", _filled_guard($scope0_reason, 5) && ">input_slow"], $scope0_reason, 0);
+		_patch_render($scope1_id, "__tests__/template.marko_1_input_related#0:8_input_slow#0:9/setup", ((_filled_guard($scope0_reason, 4) ? " >input_related" : "") + (_filled_guard($scope0_reason, 5) ? " >input_slow" : "")).slice(1), $scope0_reason, 0);
 		$wi__input_related__OR__input_slow && _subscribe(_unfilled_if($scope0_reason, 5) && $input_slow__closures, _subscribe(_unfilled_if($scope0_reason, 4) && $input_related__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "7:6"), _client_guard($scope0_reason, 4) && "__tests__/template.marko_1_input_related#0:8/subscribe", 0), _client_guard($scope0_reason, 5) && "__tests__/template.marko_1_input_slow#0:9/subscribe", 0);
 		$wi__input_related__OR__input_slow && _resume_branch($scope1_id);
 	}, () => {
@@ -44,7 +44,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, 1, "__tests__/template.marko_4*content", $ui__input_slow__OR__input_note && 2, 1);
 	_html(`</footer><button>Count ${_text_mark($scope0_id, "#text/4", count, 2)}</button>${_el_mark($scope0_id, "#button/3")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	_patch_render($scope0_id, "__tests__/template.marko_0_input_slow#9_input_note#10/setup", [$fg__input_slow && "input_slow", $fg__input_note && "input_note"], $scope0_reason, 2);
+	_patch_render($scope0_id, "__tests__/template.marko_0_input_slow#9_input_note#10/setup", (($fg__input_slow ? " input_slow" : "") + ($fg__input_note ? " input_note" : "")).slice(1), $scope0_reason, 2);
 	_scope($scope0_id, {
 		input_related: ($ui__input_slow || $ui__input_related__OR__input_slow) && input.related,
 		input_slow: ($ui__input_related__OR__input_note || $ui__input_related__OR__input_slow || $ui__input_slow__OR__input_note) && input.slow,

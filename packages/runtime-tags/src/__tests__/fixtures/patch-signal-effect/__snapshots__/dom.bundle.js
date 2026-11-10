@@ -1,5 +1,5 @@
 // template.marko
-const $input_label__OR__count__script = _script("a1", ($scope) => {
+const $input_label__OR__count__script = _script_patch("a1 e", ($scope) => {
 	$signalReset($scope, 0);
 	{
 		const ac = new AbortController();

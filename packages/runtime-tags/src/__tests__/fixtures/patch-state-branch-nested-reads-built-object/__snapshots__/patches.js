@@ -1,7 +1,6 @@
 // PATCH
 {
-  Sa2: "e",
-  xe: "b",
+  Sa2: "g",
   xg: {
     value: "b"
   }
@@ -9,8 +8,7 @@
 
 // PATCH
 {
-  Sa2: "e",
-  xe: "c",
+  Sa2: "g",
   xg: {
     value: "c"
   }

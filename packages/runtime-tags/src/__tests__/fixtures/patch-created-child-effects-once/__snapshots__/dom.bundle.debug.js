@@ -3,12 +3,12 @@ const $template$1 = "<span><!> <!></span>";
 const $walks$1 = "D%c%l";
 const $setup__script$1 = _script("__tests__/tags/child.marko_0", ($scope) => console.log("setup"));
 const $setup$1 = $setup__script$1;
-const $input_label__script = _script("__tests__/tags/child.marko_0_input_label#4", ($scope) => console.log("label", $scope.input_label));
+const $input_label__script = _script_patch("__tests__/tags/child.marko_0_input_label#4 input_label", ($scope) => console.log("label", $scope.input_label));
 const $input_label = /*@__PURE__*/ _const("input_label", ($scope) => {
 	_text($scope["#text/0"], $scope.input_label);
 	$input_label__script($scope);
 });
-const $input_count__script = _script("__tests__/tags/child.marko_0_input_count#5", ($scope) => console.log("count", $scope.input_count));
+const $input_count__script = _script_patch("__tests__/tags/child.marko_0_input_count#5 input_count", ($scope) => console.log("count", $scope.input_count));
 const $input_count = /*@__PURE__*/ _const("input_count", ($scope) => {
 	_text($scope["#text/1"], $scope.input_count);
 	$input_count__script($scope);

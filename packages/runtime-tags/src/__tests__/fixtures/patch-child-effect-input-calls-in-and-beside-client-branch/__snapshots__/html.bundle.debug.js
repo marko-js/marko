@@ -31,7 +31,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 			if (isOpen) {
 				const $scope4_id = _scope_id();
 				_html(`<em>${_text_mark($scope4_id, "#text/0", fmt(label), 1, $scope3_reason, 2)}</em>`);
-				_patch_render($scope4_id, "__tests__/tags/card.marko_4_fmt#3:4_label#3:5/setup", [_filled_guard($scope3_reason, 5) && ">fmt", _filled_guard($scope3_reason, 6) && ">label"], $scope3_reason, 2);
+				_patch_render($scope4_id, "__tests__/tags/card.marko_4_fmt#3:4_label#3:5/setup", ((_filled_guard($scope3_reason, 5) ? " >fmt" : "") + (_filled_guard($scope3_reason, 6) ? " >label" : "")).slice(1), $scope3_reason, 2);
 				_scope($scope4_id, { _: _write_if($scope3_reason, 2) && _scope_with_id($scope3_id) }, "__tests__/tags/card.marko", "3:4");
 				return 0;
 			}
@@ -86,7 +86,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 	}, $scope0_id, "#text/2", 1, 1, 0, 0, 1);
 	_html(`<button class=toggle>toggle</button>${_el_mark($scope0_id, "#button/3")}`);
 	_script($scope0_id, "__tests__/tags/card.marko_0");
-	_script($scope0_id, "__tests__/tags/card.marko_0_input_label#7", 1, $fg__input_label, "input_label");
+	_script($scope0_id, "__tests__/tags/card.marko_0_input_label#7", 1, $fg__input_label);
 	$fg__input_fmt && $cg__input_show && _patch_render($scope0_id, "__tests__/tags/card.marko_1_input_fmt#0:6/setup", "input_fmt");
 	$fg__input_label && $cg__input_show && _patch_render($scope0_id, "__tests__/tags/card.marko_1_input_label#0:7/setup", "input_label");
 	$fg__input_label && _patch_render($scope0_id, "__tests__/tags/card.marko_2_input_label#0:7/setup", "input_label");

@@ -5,7 +5,7 @@ const $if_content2__setup = ($scope) => {
 	$scope.a._ = $scope._;
 	$Info_content__setup($scope.a);
 };
-const $if_content__input_a__script = _script("b5", ($scope) => $scope.a.textContent = "s:" + $scope._.f);
+const $if_content__input_a__script = _script_patch("b5 >f", ($scope) => $scope.a.textContent = "s:" + $scope._.f);
 const $if_content__input_a = /*@__PURE__*/ _if_closure_patch("b6", 1, 0, $if_content__input_a__script);
 const $if_content__setup = $if_content__input_a;
 const $Info_content__input_a__OR__input_b = /*@__PURE__*/ _or_patch("b3", 1, ($scope) => _text($scope.a, $scope._.f + ":" + $scope._.g));

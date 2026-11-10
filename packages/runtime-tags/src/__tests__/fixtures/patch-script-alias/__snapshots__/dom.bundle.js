@@ -1,2 +1,2 @@
 // template.marko
-const $alias = _script("a0", ($scope) => document.title = $scope.f);
+const $alias = _script_patch("a0 f", ($scope) => document.title = $scope.f);

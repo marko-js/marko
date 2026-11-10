@@ -5,6 +5,5 @@
     title: "B",
     class: "two"
   },
-  ab$src: "/b?w=2",
-  ea0: "e f g"
+  ab$src: "/b?w=2"
 }

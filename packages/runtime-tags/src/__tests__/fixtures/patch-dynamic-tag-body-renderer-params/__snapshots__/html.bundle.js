@@ -26,7 +26,7 @@ var host_default = _template("b", (input) => {
 				_unfilled_if($scope0_reason, 7) && _patch_subscribe($scope3_id, "b2", $cg__input_label);
 				_subscribe(_unfilled_if($scope0_reason, 7) && $input_label__closures, _scope($scope3_id, { _: $wi__input_wrap__OR__input_show__OR__input_native__OR__input_label && _scope_with_id($scope2_id) }), $cg__input_label && "b2");
 			}, $scope2_id, ($scope) => $scope0_page ? [{ i: input.label }, { _: $scope($scope0_id) }] : []), 0, $wg__input_wrap__OR__input_native, $scope0_reason, 1, 0, void 0, 0, 0, "b1");
-			_patch_render($scope2_id, "b3", [_filled_guard($scope0_reason, 4) && ">f", _filled_guard($scope0_reason, 6) && ">h"], $scope0_reason, 1);
+			_patch_render($scope2_id, "b3", ((_filled_guard($scope0_reason, 4) ? " >f" : "") + (_filled_guard($scope0_reason, 6) ? " >h" : "")).slice(1), $scope0_reason, 1);
 			$wi__input_wrap__OR__input_show__OR__input_native__OR__input_label && _scope($scope2_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}

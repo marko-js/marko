@@ -7,7 +7,7 @@ var combo_default = _template("__tests__/tags/combo/index.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $ui__input_label__OR__input_qty = _unfilled_if($scope0_reason, 0), $ui__input_qty = _unfilled_if($scope0_reason, 2), $ui__input_label = _unfilled_if($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 1), $fg__input_qty = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	_html(`<p>${_text_mark($scope0_id, "#text/0", input.label + input.qty, 1, $scope0_reason, 0)}</p>`);
-	_patch_render($scope0_id, "__tests__/tags/combo/index.marko_0_input_label#3_input_qty#4/setup", [$fg__input_label && "input_label", $fg__input_qty && "input_qty"], $scope0_reason, 0);
+	_patch_render($scope0_id, "__tests__/tags/combo/index.marko_0_input_label#3_input_qty#4/setup", (($fg__input_label ? " input_label" : "") + ($fg__input_qty ? " input_qty" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		input_label: ($ui__input_qty || $ui__input_label__OR__input_qty) && input.label,
 		input_qty: ($ui__input_label || $ui__input_label__OR__input_qty) && input.qty

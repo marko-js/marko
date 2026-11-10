@@ -2,7 +2,7 @@
 const $template$1 = "<output> </output>";
 const $walks$1 = " D l";
 const $setup$1 = ($_) => {};
-const $get__script = _script("__tests__/tags/label-view.marko_0_get#4", ($scope) => _el_read($scope["#output/0"]).dataset.kind = typeof $scope.get);
+const $get__script = _script_patch("__tests__/tags/label-view.marko_0_get#4 get", ($scope) => _el_read($scope["#output/0"]).dataset.kind = typeof $scope.get);
 const $get = /*@__PURE__*/ _const("get", ($scope) => {
 	_text($scope["#text/1"], $scope.get());
 	$get__script($scope);

@@ -32,11 +32,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id(), $ui__input_a = _unfilled_if($scope0_reason, 0), $fg__input_a = _filled_guard($scope0_reason, 0);
 		const $scope1_reason = _scope_reason(), $uf__on = _updates_from($scope1_reason, 0), $fg__on = _filled_guard($scope1_reason, 0);
 		_html(`<span>${_text_mark($scope1_id, "#text/0", on && f(), 1, ($uf__input_a | $uf__on) << 1, 0)}</span>`);
-		_patch_render($scope1_id, "__tests__/template.marko_1_f#0:6_on#3/setup", [
-			$fg__input_a && ">f",
-			$fg__input_a && ">input_a",
-			$fg__on && "on"
-		], ($uf__input_a | $uf__on) << 1, 0);
+		_patch_render($scope1_id, "__tests__/template.marko_1_f#0:6_on#3/setup", (($fg__input_a ? " >f" : "") + ($fg__input_a ? " >input_a" : "") + ($fg__on ? " on" : "")).slice(1), ($uf__input_a | $uf__on) << 1, 0);
 		_subscribe(_unfilled_if(($uf__input_a | $uf__on) << 1, 0) && $wi__input_a && $f2__closures, _scope($scope1_id, {
 			on: ($ui__input_a || _unfilled_if($scope1_reason, 0)) && on,
 			_: ($wi__input_a || _write_if($scope1_reason, 0)) && _scope_with_id($scope0_id)

@@ -18,7 +18,7 @@
       "PatchBranch:#text/0": [{
         "PatchDynamicTag:#text/0": _.a,
         "PatchChild:BranchScopes:#text/0": {
-          "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-created-content-caller-effect/tags/child.marko_1_input_count#0:4": ">input_count"
+          "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-created-content-caller-effect/tags/child.marko_1_input_count#0:4"
         }
       }, _.b]
     },

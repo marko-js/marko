@@ -30,7 +30,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 			$ui__input_mode && _patch_write($scope1_id, "PatchWrite:frag_content", frag.content, 1);
 			$fg__input_b && _patch_subscribers($scope1_id, "__tests__/tags/child.marko_1_c#2/subscribers", "c");
 			$cg__input_b && _patch_render($scope1_id, "__tests__/tags/child.marko_1_input_b#0:4/setup");
-			_patch_render($scope1_id, "__tests__/tags/child.marko_1_input_a#0:5_c#2/setup", [_filled_guard($scope0_reason, 7) && ">input_a", $fg__input_b && "c"], $scope0_reason, 1);
+			_patch_render($scope1_id, "__tests__/tags/child.marko_1_input_a#0:5_c#2/setup", ((_filled_guard($scope0_reason, 7) ? " >input_a" : "") + ($fg__input_b ? " c" : "")).slice(1), $scope0_reason, 1);
 			_client_guard($scope0_reason, 8) && _patch_render($scope1_id, "__tests__/tags/child.marko_1_input_mode#0:6_frag_content#5/setup");
 			_scope($scope1_id, {
 				c: ($ui__input_a__OR__input_mode || _unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 6)) && c,

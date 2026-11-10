@@ -1,5 +1,5 @@
 // tags/child.marko
-const $body_content__input_count__script = _script("b0", ($scope) => console.log("content count", $scope._.e));
+const $body_content__input_count__script = _script_patch("b0 >e", ($scope) => console.log("content count", $scope._.e));
 const $body_content__input_count = /*@__PURE__*/ _closure_get_patch("b1", 5, $body_content__input_count__script, 0, "b3", 0);
 const $body_content = _content$1("b2", "<p>body</p>", 0, $body_content__input_count);
 const $input_count__closure = /*@__PURE__*/ _closure($body_content__input_count);

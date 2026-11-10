@@ -18,21 +18,13 @@ var code_block_default = _template("b", (input) => {
 		if (input.text.length > 2) {
 			const $scope1_id = _scope_id();
 			_html(`<div>${_html_mark($scope1_id, "a", highlight(input.text), 1, (2 | $uf__input_cursor__OR__input_text) << 1, 0)}</div>`);
-			_patch_render($scope1_id, "b1", [
-				_filled_guard($scope0_reason, 2) && ">e",
-				_filled_guard((2 | $uf__input_cursor) << 1, 0) && ">g",
-				_filled_guard($scope0_reason, 1) && ">d"
-			], (2 | $uf__input_cursor__OR__input_text) << 1, 0);
+			_patch_render($scope1_id, "b1", ((_filled_guard($scope0_reason, 2) ? " >e" : "") + (_filled_guard((2 | $uf__input_cursor) << 1, 0) ? " >g" : "") + (_filled_guard($scope0_reason, 1) ? " >d" : "")).slice(1), (2 | $uf__input_cursor__OR__input_text) << 1, 0);
 			_scope($scope1_id, { _: ($scope0_page || $wi__input_cursor__OR__input_text) && _scope_with_id($scope0_id) });
 			return 0;
 		} else {
 			const $scope2_id = _scope_id();
 			_html(`<span>${_html_mark($scope2_id, "a", highlight(input.text), 1, (2 | $uf__input_cursor__OR__input_text) << 1, 0)}</span>`);
-			_patch_render($scope2_id, "b2", [
-				_filled_guard($scope0_reason, 2) && ">e",
-				_filled_guard((2 | $uf__input_cursor) << 1, 0) && ">g",
-				_filled_guard($scope0_reason, 1) && ">d"
-			], (2 | $uf__input_cursor__OR__input_text) << 1, 0);
+			_patch_render($scope2_id, "b2", ((_filled_guard($scope0_reason, 2) ? " >e" : "") + (_filled_guard((2 | $uf__input_cursor) << 1, 0) ? " >g" : "") + (_filled_guard($scope0_reason, 1) ? " >d" : "")).slice(1), (2 | $uf__input_cursor__OR__input_text) << 1, 0);
 			_scope($scope2_id, { _: ($scope0_page || $wi__input_cursor__OR__input_text) && _scope_with_id($scope0_id) });
 			return 1;
 		}
@@ -40,8 +32,8 @@ var code_block_default = _template("b", (input) => {
 	_fill_global_subscribe("b5", $scope0_id, _client_guard($scope0_reason, 1));
 	$fg__input_text && $cg__input_text_length && _patch_render($scope0_id, "b6", "e");
 	$fg__input_text && $cg__input_text_length && _patch_render($scope0_id, "b7", "e");
-	_filled_guard((2 | $uf__input_cursor) << 1, 0) && $cg__input_text_length && _patch_render($scope0_id, "b8", [_filled_guard((2 | $uf__input_cursor) << 1, 0) && "g", $fg__input_cursor && "d"]);
-	_filled_guard((2 | $uf__input_cursor) << 1, 0) && $cg__input_text_length && _patch_render($scope0_id, "b9", [_filled_guard((2 | $uf__input_cursor) << 1, 0) && "g", $fg__input_cursor && "d"]);
+	_filled_guard((2 | $uf__input_cursor) << 1, 0) && $cg__input_text_length && _patch_render($scope0_id, "b8", ((_filled_guard((2 | $uf__input_cursor) << 1, 0) ? " g" : "") + ($fg__input_cursor ? " d" : "")).slice(1));
+	_filled_guard((2 | $uf__input_cursor) << 1, 0) && $cg__input_text_length && _patch_render($scope0_id, "b9", ((_filled_guard((2 | $uf__input_cursor) << 1, 0) ? " g" : "") + ($fg__input_cursor ? " d" : "")).slice(1));
 	_scope($scope0_id, {
 		d: $ui__input_cursor__OR__input_text && input.cursor,
 		e: ($ui__input_cursor || $ui__input_cursor__OR__input_text || _unfilled_if()) && input.text,

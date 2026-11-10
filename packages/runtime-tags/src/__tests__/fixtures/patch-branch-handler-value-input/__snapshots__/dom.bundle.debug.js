@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<button class=toggle>toggle</button><!><output> </output>";
 const $walks = " b%bD l";
-const $if_content__input_mode__script = _script("__tests__/template.marko_1_input_mode#0:5", ($scope) => _on($scope["#button/0"], "click", $scope._.input_mode === "a" ? function() {
+const $if_content__input_mode__script = _script_patch("__tests__/template.marko_1_input_mode#0:5 >input_mode", ($scope) => _on($scope["#button/0"], "click", $scope._.input_mode === "a" ? function() {
 	$out($scope._, "A");
 } : function() {
 	$out($scope._, "B");

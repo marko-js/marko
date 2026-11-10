@@ -50,7 +50,7 @@ var template_default = _template("a", (input) => {
 			});
 			_patch_child_end();
 			_client_guard($scope0_reason, 5) && _patch_render($scope1_id, "a4");
-			_patch_render($scope1_id, "a5", [_filled_guard($scope0_reason, 4) && ">g", _filled_guard($scope0_reason, 5) && ">h"], $scope0_reason, 2);
+			_patch_render($scope1_id, "a5", ((_filled_guard($scope0_reason, 4) ? " >g" : "") + (_filled_guard($scope0_reason, 5) ? " >h" : "")).slice(1), $scope0_reason, 2);
 			_scope($scope1_id, {
 				_: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id),
 				a: _existing_scope($childScope),
@@ -70,7 +70,7 @@ var template_default = _template("a", (input) => {
 	$fg__input_a && $cg__input_show && _patch_render($scope0_id, "a7", "g");
 	$fg__input_b && $cg__input_show && _patch_render($scope0_id, "a4", "h");
 	_patch_render($scope0_id, "a8", $fg__input_other && "i", $scope0_reason, 6);
-	_patch_render($scope0_id, "a9", [$fg__input_label && "j", $fg__input_other && "n"]);
+	_patch_render($scope0_id, "a9", (($fg__input_label ? " j" : "") + ($fg__input_other ? " n" : "")).slice(1));
 	_scope($scope0_id, {
 		g: _write_if($scope0_reason, 1) && input.a,
 		h: _write_if($scope0_reason, 0) && input.b,

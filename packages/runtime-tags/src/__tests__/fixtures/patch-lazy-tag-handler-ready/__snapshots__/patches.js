@@ -6,7 +6,7 @@ a, {
       title: "second",
       onClick: _(["b"], "a0")
     },
-    ea1: "d"
+    e: "a1"
   }
 }
 
@@ -18,6 +18,6 @@ a, {
       title: "third",
       onClick: _(["b"], "a0")
     },
-    ea1: "d"
+    e: "a1"
   }
 }

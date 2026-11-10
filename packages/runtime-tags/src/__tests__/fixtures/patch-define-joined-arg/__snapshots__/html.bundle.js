@@ -15,7 +15,7 @@ var template_default = _template("a", (input) => {
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	Card.content({ href: input.q + input.item });
 	_patch_child_end();
-	_patch_render($scope0_id, "a1", [$fg__input_q && "d", $fg__input_item && "e"], $scope0_reason, 0);
+	_patch_render($scope0_id, "a1", (($fg__input_q ? " d" : "") + ($fg__input_item ? " e" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		d: ($ui__input_item || $ui__input_q__OR__input_item) && input.q,
 		e: ($ui__input_q || $ui__input_q__OR__input_item) && input.item,

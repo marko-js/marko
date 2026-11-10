@@ -29,7 +29,7 @@ var child_default = _template("b", (input) => {
 			$ui__input_mode && _patch_write($scope1_id, "wf", frag.content, 1);
 			$fg__input_b && _patch_subscribers($scope1_id, "b2", "c");
 			$cg__input_b && _patch_render($scope1_id, "b3");
-			_patch_render($scope1_id, "b4", [_filled_guard($scope0_reason, 7) && ">f", $fg__input_b && "c"], $scope0_reason, 1);
+			_patch_render($scope1_id, "b4", ((_filled_guard($scope0_reason, 7) ? " >f" : "") + ($fg__input_b ? " c" : "")).slice(1), $scope0_reason, 1);
 			_client_guard($scope0_reason, 8) && _patch_render($scope1_id, "b5");
 			_scope($scope1_id, {
 				c: ($ui__input_a__OR__input_mode || _unfilled_if($scope0_reason, 1) || _unfilled_if($scope0_reason, 6)) && c,

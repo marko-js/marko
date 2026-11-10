@@ -23,15 +23,8 @@ var template_default = _template("a", (input) => {
 		}, "a1")
 	}, 9, 0, 0, _write_guard($scope0_reason, 0), $scope0_reason, 0, 0, 14);
 	_script($scope0_id, "a2");
-	_patch_render($scope0_id, "a3", [
-		$fg__input_tag && "g",
-		$fg__input_cls && "h",
-		$fg__input_sty && "i",
-		$fg__input_title && "j",
-		$fg__input_x && "k",
-		$fg__input_hidden && "l"
-	], $scope0_reason, 7);
-	_patch_render($scope0_id, "a4", [$fg__input_field && "n", $fg__input_checked && "o"], $scope0_reason, 0);
+	_patch_render($scope0_id, "a3", (($fg__input_tag ? " g" : "") + ($fg__input_cls ? " h" : "") + ($fg__input_sty ? " i" : "") + ($fg__input_title ? " j" : "") + ($fg__input_x ? " k" : "") + ($fg__input_hidden ? " l" : "")).slice(1), $scope0_reason, 7);
+	_patch_render($scope0_id, "a4", (($fg__input_field ? " n" : "") + ($fg__input_checked ? " o" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		g: ($ui__input_cls__OR__input_sty__OR__input_title__OR__input_x__OR__input_hidden || $ui__input_tag__OR__input_cls__OR__input_sty__OR__input_title__OR__input_x__OR__input_hidden) && input.tag,
 		h: ($ui__input_tag__OR__input_sty__OR__input_title__OR__input_x__OR__input_hidden || $ui__input_tag__OR__input_cls__OR__input_sty__OR__input_title__OR__input_x__OR__input_hidden) && input.cls,

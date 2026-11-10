@@ -21,7 +21,7 @@ var gate_default = _template("b", (input) => {
 	_html(`<p>${_text_mark($scope0_id, "b", flag && input.on ? "on" : "off", 1, (2 | $uf__input_on) << 1, 0)}</p>`);
 	_fill_global_subscribe("b1", $scope0_id);
 	$ui__input_on && _patch_write($scope0_id, "we", input.on, 1);
-	_patch_render($scope0_id, "b2", [_filled_guard($scope0_reason, 0) && "e", "f"], (2 | $uf__input_on) << 1, 0);
+	_patch_render($scope0_id, "b2", "f" + (_filled_guard($scope0_reason, 0) ? " e" : ""), (2 | $uf__input_on) << 1, 0);
 	_scope($scope0_id, {
 		e: $ui__input_on && input.on,
 		f: $ui__input_on && flag

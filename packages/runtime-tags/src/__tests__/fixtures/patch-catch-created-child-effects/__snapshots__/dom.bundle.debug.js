@@ -3,14 +3,14 @@ const $template$1 = "<span> </span>";
 const $walks$1 = "D l";
 const $setup__script$1 = _script("__tests__/tags/child.marko_0", ($scope) => console.log("setup"));
 const $setup$1 = $setup__script$1;
-const $input_message__script = _script("__tests__/tags/child.marko_0_input_message#3", ($scope) => console.log("message", $scope.input_message));
+const $input_message__script = _script_patch("__tests__/tags/child.marko_0_input_message#3 input_message", ($scope) => console.log("message", $scope.input_message));
 const $input_message = /*@__PURE__*/ _const("input_message", ($scope) => {
 	_text($scope["#text/0"], $scope.input_message);
 	$input_message__script($scope);
 });
-const $input_label__script = _script("__tests__/tags/child.marko_0_input_label#4", ($scope) => console.log("label", $scope.input_label));
+const $input_label__script = _script_patch("__tests__/tags/child.marko_0_input_label#4 input_label", ($scope) => console.log("label", $scope.input_label));
 const $input_label = /*@__PURE__*/ _const("input_label", $input_label__script);
-const $input_count__script = _script("__tests__/tags/child.marko_0_input_count#5", ($scope) => console.log("count", $scope.input_count));
+const $input_count__script = _script_patch("__tests__/tags/child.marko_0_input_count#5 input_count", ($scope) => console.log("count", $scope.input_count));
 const $input_count = /*@__PURE__*/ _const("input_count", $input_count__script);
 const $input$1 = ($scope, input) => {
 	$input_message($scope, input.message);

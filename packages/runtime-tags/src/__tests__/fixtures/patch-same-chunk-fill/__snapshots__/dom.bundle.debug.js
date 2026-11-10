@@ -5,7 +5,7 @@ const $settled = _let("settled/5", ($scope) => _text($scope["#text/1"], $scope.s
 function $setup$1($scope) {
 	$settled($scope, false);
 }
-const $input_promise__script = _script("__tests__/tags/probe.marko_0_input_promise#4", ($scope) => {
+const $input_promise__script = _script_patch("__tests__/tags/probe.marko_0_input_promise#4 input_promise", ($scope) => {
 	_el_read($scope["#div/0"]);
 	$scope.input_promise.then(() => {
 		$settled($scope, true);

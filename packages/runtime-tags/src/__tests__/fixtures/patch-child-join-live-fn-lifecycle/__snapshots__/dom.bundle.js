@@ -1,5 +1,5 @@
 // tags/child.marko
-const $input_b__OR__fmt__script = _script("b1", ($scope) => _lifecycle($scope, { onUpdate: function() {
+const $input_b__OR__fmt__script = _script_patch("b1 e f d", ($scope) => _lifecycle($scope, { onUpdate: function() {
 	console.log("update", $scope.f() + $scope.e);
 } }));
 const $input_b__OR__fmt = /*@__PURE__*/ _or_patch("b2", 6, ($scope) => {

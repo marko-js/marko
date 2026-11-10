@@ -23,7 +23,7 @@ var template_default = _template("a", (input) => {
 			}
 		}, $scope2_id, "a", 1, $wg__isOpen__OR__hidden, 1, 0, 0, ["a1"], $scope2_reason, 0);
 		$fg__label && _client_guard($scope2_reason, 0) && _patch_render($scope2_id, "a0", "e");
-		_patch_render($scope2_id, "a4", [$fg__isOpen && "d", $fg__hidden && "f"], $scope2_reason, 0);
+		_patch_render($scope2_id, "a4", (($fg__isOpen ? " d" : "") + ($fg__hidden ? " f" : "")).slice(1), $scope2_reason, 0);
 		_write_if($scope2_reason, 0) && _scope($scope2_id, {
 			d: ($ui__hidden || $ui__isOpen__OR__hidden) && isOpen,
 			e: ($ui__isOpen__OR__hidden || _unfilled_if($scope2_reason, 2)) && label,
@@ -60,11 +60,7 @@ var template_default = _template("a", (input) => {
 	$fg__input_open && $cg__input_show && _patch_render($scope0_id, "a5", "g");
 	$fg__input_label && $cg__input_show && _patch_render($scope0_id, "a6", "h");
 	_patch_render($scope0_id, "a8", $fg__input_other && "i", $scope0_reason, 4);
-	_patch_render($scope0_id, "a9", [
-		$fg__input_label && "h",
-		$fg__input_hidden && "j",
-		$fg__input_other && "n"
-	]);
+	_patch_render($scope0_id, "a9", (($fg__input_label ? " h" : "") + ($fg__input_hidden ? " j" : "") + ($fg__input_other ? " n" : "")).slice(1));
 	_scope($scope0_id, {
 		g: ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.open,
 		h: input.label,

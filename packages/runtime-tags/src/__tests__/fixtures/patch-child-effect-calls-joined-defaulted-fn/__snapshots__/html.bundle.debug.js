@@ -9,12 +9,8 @@ var label_view_default = _template("__tests__/tags/label-view.marko", (input) =>
 	const get = input.flag ? input.a : input.b;
 	const h = get ?? _resume(() => "none", "__tests__/tags/label-view.marko_0/h");
 	_html(`<output></output>${_el_mark($scope0_id, "#output/0")}`);
-	_script($scope0_id, "__tests__/tags/label-view.marko_0_h#8", 1, $fg__input_flag__OR__input_a__OR__input_b, "h");
-	_patch_render($scope0_id, "__tests__/tags/label-view.marko_0_input_flag#3_input_a#4_input_b#5/setup", [
-		$fg__input_flag && "input_flag",
-		$fg__input_a && "input_a",
-		$fg__input_b && "input_b"
-	], $scope0_reason, 3);
+	_script($scope0_id, "__tests__/tags/label-view.marko_0_h#8", 1, $fg__input_flag__OR__input_a__OR__input_b);
+	_patch_render($scope0_id, "__tests__/tags/label-view.marko_0_input_flag#3_input_a#4_input_b#5/setup", (($fg__input_flag ? " input_flag" : "") + ($fg__input_a ? " input_a" : "") + ($fg__input_b ? " input_b" : "")).slice(1), $scope0_reason, 3);
 	_scope($scope0_id, {
 		input_flag: ($ui__input_a__OR__input_b || $ui__input_flag__OR__input_a__OR__input_b) && input.flag,
 		input_a: ($ui__input_flag__OR__input_b || $ui__input_flag__OR__input_a__OR__input_b) && input.a,
@@ -50,11 +46,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_patch_child_end();
 	_html(`<button>toggle</button>${_el_mark($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	_patch_render($scope0_id, "__tests__/template.marko_0_upper#5_up#6_low#7/setup", [
-		$fg__input_title && "up",
-		$fg__input_title && "input_title",
-		$fg__input_title && "low"
-	]);
+	_patch_render($scope0_id, "__tests__/template.marko_0_upper#5_up#6_low#7/setup", (($fg__input_title ? " up" : "") + ($fg__input_title ? " input_title" : "") + ($fg__input_title ? " low" : "")).slice(1));
 	_scope($scope0_id, {
 		input_title: input.title,
 		upper,

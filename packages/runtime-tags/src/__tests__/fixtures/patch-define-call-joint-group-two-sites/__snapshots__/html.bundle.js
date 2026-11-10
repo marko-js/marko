@@ -11,8 +11,8 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id(), $ui__input_y = _unfilled_if($scope0_reason, 2);
 		const $scope1_reason = _scope_reason(), $uf__b = _updates_from($scope1_reason, 2), $ui__b = _unfilled_if($scope1_reason, 2), $ui__a__OR__b = _unfilled_if($scope1_reason, 0), $ui__a = _unfilled_if($scope1_reason, 1), $fg__b = _filled_guard($scope1_reason, 2), $fg__a = _filled_guard($scope1_reason, 1);
 		_html(`<p>${_text_mark($scope1_id, "a", a + b, 1, $scope1_reason, 0)}</p><em>${_text_mark($scope1_id, "b", input.y + b, 1, ($uf__input_y | $uf__b) << 1, 0)}</em>`);
-		_patch_render($scope1_id, "a1", [_filled_guard($scope0_reason, 2) && ">f", $fg__b && "f"], ($uf__input_y | $uf__b) << 1, 0);
-		_patch_render($scope1_id, "a2", [$fg__a && "e", $fg__b && "f"], $scope1_reason, 0);
+		_patch_render($scope1_id, "a1", ((_filled_guard($scope0_reason, 2) ? " >f" : "") + ($fg__b ? " f" : "")).slice(1), ($uf__input_y | $uf__b) << 1, 0);
+		_patch_render($scope1_id, "a2", (($fg__a ? " e" : "") + ($fg__b ? " f" : "")).slice(1), $scope1_reason, 0);
 		_subscribe(_unfilled_if(($uf__input_y | $uf__b) << 1, 0) && $wi__input_y && $input_y__closures, _scope($scope1_id, {
 			e: ($ui__b || $ui__a__OR__b) && a,
 			f: ($ui__input_y || $ui__a || $ui__b || $ui__a__OR__b) && b,

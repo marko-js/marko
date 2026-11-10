@@ -1,5 +1,5 @@
 // template.marko
-const $input_other__OR__x__script = _script("a0", ($scope) => console.log("run", $scope.i, $scope.f));
+const $input_other__OR__x__script = _script_patch("a0 f e", ($scope) => console.log("run", $scope.i, $scope.f));
 const $input_other__OR__x = /*@__PURE__*/ _or_patch("a3", 9, $input_other__OR__x__script);
 const $x = /*@__PURE__*/ _const(8, ($scope) => {
 	_text($scope.b, $scope.i);

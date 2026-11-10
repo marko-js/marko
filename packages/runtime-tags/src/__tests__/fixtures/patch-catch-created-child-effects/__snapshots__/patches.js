@@ -4,8 +4,7 @@
   kc: [{
     ca: {
       ta: "b",
-      eb1: "e",
-      eb2: "d",
+      e: "b1 b2",
       xd: "b",
       xe: "b"
     },

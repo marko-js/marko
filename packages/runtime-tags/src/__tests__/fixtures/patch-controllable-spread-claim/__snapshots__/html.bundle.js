@@ -10,7 +10,7 @@ var template_default = _template("a", (input) => {
 	}, "a", $scope0_id, "input", 1, $scope0_reason, 0)}>${_el_mark($scope0_id, "a")}<p id=out>-</p><button>interactive</button>${_el_mark($scope0_id, "b")}`);
 	_script($scope0_id, "a0");
 	_script($scope0_id, "a1");
-	_patch_render($scope0_id, "a2", [$fg__input_attrs && "e", $fg__input_on && "f"], $scope0_reason, 0);
+	_patch_render($scope0_id, "a2", (($fg__input_attrs ? " e" : "") + ($fg__input_on ? " f" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		e: ($ui__input_on || $ui__input_attrs__OR__input_on) && input.attrs,
 		f: ($ui__input_attrs || $ui__input_attrs__OR__input_on) && input.on

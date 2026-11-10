@@ -30,15 +30,15 @@ const $Body_content__walks = "b";
 const $Body_content__template = "<b>define</b>";
 const $template = "<button> </button><!><!>";
 const $walks = " D l%c";
-const $for_content3__item__script = _script("__tests__/template.marko_8_item#1", ($scope) => console.log("tag body row setup", $scope.item));
+const $for_content3__item__script = _script_patch("__tests__/template.marko_8_item#1 item", ($scope) => console.log("tag body row setup", $scope.item));
 const $for_content3__item = /*@__PURE__*/ _const("item", $for_content3__item__script);
 const $for_content3__$params = ($scope, $params4) => $for_content3__item($scope, $params4[0]);
-const $for_content2__item__script = _script("__tests__/template.marko_7_item#1", ($scope) => console.log("content row setup", $scope.item));
+const $for_content2__item__script = _script_patch("__tests__/template.marko_7_item#1 item", ($scope) => console.log("content row setup", $scope.item));
 const $for_content2__item = /*@__PURE__*/ _const("item", $for_content2__item__script);
 const $for_content2__$params = ($scope, $params3) => $for_content2__item($scope, $params3[0]);
 const $if_content2__setup__script = _script("__tests__/template.marko_6", ($scope) => console.log("nested setup"));
 const $if_content2__setup = $if_content2__setup__script;
-const $for_content__item__script = _script("__tests__/template.marko_5_item#2", ($scope) => console.log("row setup", $scope.item));
+const $for_content__item__script = _script_patch("__tests__/template.marko_5_item#2 item", ($scope) => console.log("row setup", $scope.item));
 const $for_content__item = /*@__PURE__*/ _const("item", ($scope) => {
 	_text($scope["#text/0"], $scope.item);
 	$for_content__item__script($scope);

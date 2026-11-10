@@ -26,7 +26,7 @@ var template_default = _template("a", (input) => {
 	_html("<main>");
 	_dynamic_tag($scope0_id, "a", input.on ? card_default : "div", { n: input.n }, 1, 0, 0, $wg__input_on__OR__input_n, $scope0_reason, 0);
 	_html("</main>");
-	_patch_render($scope0_id, "a0", [$fg__input_on && "d", $fg__input_n && "e"], $scope0_reason, 0);
+	_patch_render($scope0_id, "a0", (($fg__input_on ? " d" : "") + ($fg__input_n ? " e" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		d: ($ui__input_n || $ui__input_on__OR__input_n) && input.on,
 		e: ($ui__input_on || $ui__input_on__OR__input_n) && input.n

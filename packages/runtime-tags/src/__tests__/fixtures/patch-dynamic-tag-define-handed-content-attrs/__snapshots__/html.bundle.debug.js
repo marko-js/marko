@@ -17,7 +17,7 @@ var one_default = _template("__tests__/tags/one.marko", (input) => {
 		const $scope1_reason = _scope_reason(), $wg__t = _write_guard($scope1_reason, 0), $uf__t = _updates_from($scope1_reason, 0), $fg__t = _filled_guard($scope1_reason, 0);
 		_dynamic_tag($scope1_id, "#text/0", input.content, { title: t }, 1, 0, 0, $wg__input_content || $wg__t, ($uf__input_content | $uf__t) << 1, 0, 0, 0, $scope0_reason);
 		_unfilled_if(($uf__input_content | $uf__t) << 1, 0) && _patch_subscribe($scope1_id, "__tests__/tags/one.marko_1_input_content#0:3/subscribe");
-		_patch_render($scope1_id, "__tests__/tags/one.marko_1_input_content#0:3_t#3/setup", [_filled_guard($scope0_reason, 0) && ">input_content", $fg__t && "t"], ($uf__input_content | $uf__t) << 1, 0);
+		_patch_render($scope1_id, "__tests__/tags/one.marko_1_input_content#0:3_t#3/setup", ((_filled_guard($scope0_reason, 0) ? " >input_content" : "") + ($fg__t ? " t" : "")).slice(1), ($uf__input_content | $uf__t) << 1, 0);
 		($wi__input_content || _write_if($scope1_reason, 0)) && _subscribe(_unfilled_if(($uf__input_content | $uf__t) << 1, 0) && $wi__input_content && $input_content__closures, _scope($scope1_id, {
 			t: ($ui__input_content || _unfilled_if($scope1_reason, 0)) && t,
 			_: _scope_with_id($scope0_id)

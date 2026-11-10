@@ -2,38 +2,30 @@
 {
   ta: "c",
   cb: {
-    eb0: ">f >e",
+    e: "b0",
     xc: {
-      a: _.a = {
+      a: {
         y: "b"
       },
-      b: _.b = {
+      b: {
         x: "c"
       }
     }
-  },
-  xe: "c",
-  xf: "b",
-  xg: _.a,
-  xh: _.b
+  }
 }
 
 // PATCH
 {
   ta: "c",
   cb: {
-    eb0: ">f >e",
+    e: "b0",
     xc: {
-      a: _.a = {
+      a: {
         y: "d"
       },
-      b: _.b = {
+      b: {
         x: "c"
       }
     }
-  },
-  xe: "c",
-  xf: "d",
-  xg: _.a,
-  xh: _.b
+  }
 }

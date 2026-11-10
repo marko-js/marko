@@ -10,7 +10,7 @@ var layout_default = _template("a", (input) => {
 	_dynamic_tag($scope0_id, "a", input.nav, { label: input.label }, 1, 0, 0, $wg__input_nav__OR__input_label, $scope0_reason, 0, 0, 2);
 	_dynamic_tag($scope0_id, "b", input.content, {}, 10, 0, 0, $wg__input_content, $scope0_reason, 4);
 	_html("</main>"), _trailers("</body></html>");
-	_patch_render($scope0_id, "a0", [$fg__input_nav && "e", $fg__input_label && "f"], $scope0_reason, 0);
+	_patch_render($scope0_id, "a0", (($fg__input_nav ? " e" : "") + ($fg__input_label ? " f" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		e: ($ui__input_label || $ui__input_nav__OR__input_label) && input.nav,
 		f: ($ui__input_nav || $ui__input_nav__OR__input_label) && input.label

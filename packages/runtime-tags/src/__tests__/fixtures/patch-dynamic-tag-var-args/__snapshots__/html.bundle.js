@@ -29,7 +29,7 @@ var template_default = _template("b", (input) => {
 	let n = _dynamic_tag($scope0_id, "a", input.on ? counter_default : null, [input.start], 1, 0, 1, 1, $scope0_reason, 0, 0, void 0, 0, "b0");
 	_var($scope0_id, "b", $inputoncounternull_scope, "b0");
 	_html(`<p>${_text_mark($scope0_id, "c", n)}</p></main>`);
-	_patch_render($scope0_id, "b1", [$fg__input_on && "f", $fg__input_start && "g"], $scope0_reason, 0);
+	_patch_render($scope0_id, "b1", (($fg__input_on ? " f" : "") + ($fg__input_start ? " g" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		f: ($ui__input_start || $ui__input_on__OR__input_start) && input.on,
 		g: ($ui__input_on || $ui__input_on__OR__input_start) && input.start

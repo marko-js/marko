@@ -11,3 +11,7 @@ LOG "run" "b"
 ```
 
 # Update `{"title":"b"}`
+## Console
+```
+LOG "run" "b"
+```

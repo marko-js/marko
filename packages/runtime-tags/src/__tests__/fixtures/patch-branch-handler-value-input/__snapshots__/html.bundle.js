@@ -10,7 +10,7 @@ var template_default = _template("a", (input) => {
 		{
 			const $scope1_id = _scope_id();
 			_html(`<button class=go>go</button>${_el_mark($scope1_id, "a")}`);
-			_script($scope1_id, "a0", 1, _filled_guard($scope0_reason, 0), ">f");
+			_script($scope1_id, "a0", 1, _filled_guard($scope0_reason, 0));
 			_client_guard($scope0_reason, 0) && _patch_render($scope1_id, "a1");
 			_scope($scope1_id, {});
 			return 0;

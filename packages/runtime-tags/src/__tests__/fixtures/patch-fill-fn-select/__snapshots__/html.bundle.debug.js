@@ -23,13 +23,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id, "#text/0", 1, 1, 0, 0, 1);
 	_html(`<button>+</button>${_el_mark($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$fg__input_title__OR__input_upper && _patch_render($scope0_id, "__tests__/template.marko_1_pick#0:9/setup", ["pick", $fg__input_title && "input_title"]);
-	_patch_render($scope0_id, "__tests__/template.marko_0_input_upper#5_up#6_low#7/setup", [
-		$fg__input_upper && "input_upper",
-		$fg__input_title && "up",
-		$fg__input_title && "input_title",
-		$fg__input_title && "low"
-	], $scope0_reason, 0);
+	$fg__input_title__OR__input_upper && _patch_render($scope0_id, "__tests__/template.marko_1_pick#0:9/setup", "pick" + ($fg__input_title ? " input_title" : ""));
+	_patch_render($scope0_id, "__tests__/template.marko_0_input_upper#5_up#6_low#7/setup", (($fg__input_upper ? " input_upper" : "") + ($fg__input_title ? " up" : "") + ($fg__input_title ? " input_title" : "") + ($fg__input_title ? " low" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		input_title: input.title,
 		input_upper: ($ui__input_title || $ui__input_title__OR__input_upper) && input.upper,

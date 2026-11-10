@@ -7,7 +7,7 @@ var one_default = _template("__tests__/tags/one.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_content__OR__input_attrs = _write_guard($scope0_reason, 0), $ui__input_content__OR__input_attrs = _unfilled_if($scope0_reason, 0), $ui__input_attrs = _unfilled_if($scope0_reason, 2), $ui__input_content = _unfilled_if($scope0_reason, 1), $fg__input_content = _filled_guard($scope0_reason, 1), $fg__input_attrs = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	_dynamic_tag($scope0_id, "#text/0", input.content, input.attrs, 1, 0, 0, $wg__input_content__OR__input_attrs, $scope0_reason, 0, 0, 1);
-	_patch_render($scope0_id, "__tests__/tags/one.marko_0_input_content#3_input_attrs#4/setup", [$fg__input_content && "input_content", $fg__input_attrs && "input_attrs"], $scope0_reason, 0);
+	_patch_render($scope0_id, "__tests__/tags/one.marko_0_input_content#3_input_attrs#4/setup", (($fg__input_content ? " input_content" : "") + ($fg__input_attrs ? " input_attrs" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		input_content: ($ui__input_attrs || $ui__input_content__OR__input_attrs) && input.content,
 		input_attrs: ($ui__input_content || $ui__input_content__OR__input_attrs) && input.attrs
@@ -30,7 +30,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_set_scope_reason($uf__input_y << 1 | $uf__input_y << 5);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/1", 0);
 	one_default({
-		attrs: _patch_live($childScope, { title: input.y }, $scope0_id, "input_y"),
+		attrs: { title: input.y },
 		content: _content_resume("__tests__/template.marko_1*content", () => {
 			const $scope1_reason = _scope_reason();
 			const $scope1_id = _scope_id();
@@ -42,5 +42,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope($scope0_id, {
 		z,
 		"#childScope/1": _existing_scope($childScope)
-	}, "__tests__/template.marko", 0, { z: "1:6" }) || _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_y", input.y, !_server_guard($scope0_reason, 0));
+	}, "__tests__/template.marko", 0, { z: "1:6" });
 }, 1);

@@ -54,7 +54,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	$fg__input_title && _patch_render($scope0_id, "__tests__/template.marko_1_chars#0:6/setup", "chars");
 	$fg__input_title && _patch_render($scope0_id, "__tests__/template.marko_1_items#0:8/setup", "items");
-	$fg__input_title && _patch_render($scope0_id, "__tests__/template.marko_1_tag#0:9/setup", ["tag", "input_title"]);
+	$fg__input_title && _patch_render($scope0_id, "__tests__/template.marko_1_tag#0:9/setup", "tag input_title");
 	_scope($scope0_id, {
 		input_title: input.title,
 		chars,

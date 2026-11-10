@@ -6,7 +6,7 @@
   },
   "PatchText:#text/0": "Store",
   "PatchBranch:#text/1": [{
-    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-branch-script-mixed/template.marko_1_input_value#0:6_$global_brand#0:8": ">input_value"
+    "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-branch-script-mixed/template.marko_1_input_value#0:6_$global_brand#0:8"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-script-mixed/template.marko_1*shell"],
   "PatchMarkedWrite:input_value": "b"
 }
@@ -19,7 +19,7 @@
   },
   "PatchText:#text/0": "Store!",
   "PatchBranch:#text/1": [{
-    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-branch-script-mixed/template.marko_1_input_value#0:6_$global_brand#0:8": ">input_value"
+    "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-branch-script-mixed/template.marko_1_input_value#0:6_$global_brand#0:8"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-script-mixed/template.marko_1*shell"],
   "PatchMarkedWrite:input_value": "b"
 }
@@ -31,7 +31,7 @@
   },
   "PatchText:#text/0": "Store",
   "PatchBranch:#text/1": [{
-    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-branch-script-mixed/template.marko_1_input_value#0:6_$global_brand#0:8": ">input_value"
+    "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-branch-script-mixed/template.marko_1_input_value#0:6_$global_brand#0:8"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-script-mixed/template.marko_1*shell"],
   "PatchMarkedWrite:input_value": "b"
 }
@@ -43,7 +43,7 @@
   },
   "PatchText:#text/0": "Store",
   "PatchBranch:#text/1": [{
-    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-branch-script-mixed/template.marko_1_input_value#0:6_$global_brand#0:8": ">input_value"
+    "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-branch-script-mixed/template.marko_1_input_value#0:6_$global_brand#0:8"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-branch-script-mixed/template.marko_1*shell"],
   "PatchMarkedWrite:input_value": "c"
 }

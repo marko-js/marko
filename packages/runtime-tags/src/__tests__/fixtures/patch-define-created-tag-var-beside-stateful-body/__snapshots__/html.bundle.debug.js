@@ -26,7 +26,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}
 		}, $scope2_id, "#text/0", 1, $wg__isOpen, 1, 0, 0, ["__tests__/template.marko_3*shell"], $scope2_reason, 1);
 		const $return = label + (isOpen ? "Y" : "N");
-		_patch_render($scope2_id, "__tests__/template.marko_2_isOpen#3_label#4/setup", [$fg__isOpen && "isOpen", $fg__label && "label"], $scope2_reason, 0);
+		_patch_render($scope2_id, "__tests__/template.marko_2_isOpen#3_label#4/setup", (($fg__isOpen ? " isOpen" : "") + ($fg__label ? " label" : "")).slice(1), $scope2_reason, 0);
 		_write_if($scope2_reason, 0) && _scope($scope2_id, {
 			isOpen: ($ui__label || $ui__isOpen__OR__label) && isOpen,
 			label: ($ui__isOpen || $ui__isOpen__OR__label || $ui__label) && label
@@ -77,7 +77,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	$fg__input_label2 && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "__tests__/template.marko_1_input_label#0:6/setup", "input_label");
 	_patch_render($scope0_id, "__tests__/template.marko_0_input_other#7_Panel#9/setup", $fg__input_other && "input_other", $scope0_reason, 2);
-	_patch_render($scope0_id, "__tests__/template.marko_0_input_label#6_open#8_Tag#11/setup", [$fg__input_label2 && "input_label", $fg__input_other && "Tag"]);
+	_patch_render($scope0_id, "__tests__/template.marko_0_input_label#6_open#8_Tag#11/setup", (($fg__input_label2 ? " input_label" : "") + ($fg__input_other ? " Tag" : "")).slice(1));
 	_scope($scope0_id, {
 		input_label: input.label,
 		open,

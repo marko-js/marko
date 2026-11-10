@@ -35,7 +35,7 @@ const $await_content__$params = ($scope, $params2) => $await_content__v($scope, 
 const $await_content__v__closure = /*@__PURE__*/ _closure($inputonCarddiv_content__v);
 const $await_content__v = /*@__PURE__*/ _const("v", $await_content__v__closure);
 const $input_note__closure = /*@__PURE__*/ _closure($inputonCarddiv_content__input_note);
-const $input_note__script = _script("__tests__/template.marko_0_input_note#4", ($scope) => _el_read($scope["#div/0"]).textContent = $scope.input_note);
+const $input_note__script = _script_patch("__tests__/template.marko_0_input_note#4 input_note", ($scope) => _el_read($scope["#div/0"]).textContent = $scope.input_note);
 const $input_note = /*@__PURE__*/ _const("input_note", ($scope) => {
 	$input_note__closure($scope);
 	$input_note__script($scope);

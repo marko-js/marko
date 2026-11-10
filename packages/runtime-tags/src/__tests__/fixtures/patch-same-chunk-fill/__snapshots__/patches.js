@@ -1,7 +1,7 @@
 // PATCH
 {
   cc: {
-    eb0: "e",
+    e: "b0",
     xe: (p => p = new Promise((f, r) => _.a = {
       f,
       r(e) {
@@ -24,7 +24,7 @@
 // PATCH
 {
   cc: {
-    eb0: "e",
+    e: "b0",
     xe: (p => p = new Promise((f, r) => _.a = {
       f,
       r(e) {
@@ -47,7 +47,7 @@
 // PATCH
 {
   cc: {
-    eb0: "e",
+    e: "b0",
     xe: (p => p = new Promise((f, r) => _.a = {
       f,
       r(e) {
@@ -70,7 +70,7 @@
 // PATCH
 {
   cc: {
-    eb0: "e",
+    e: "b0",
     xe: (p => p = new Promise((f, r) => _.a = {
       f,
       r(e) {

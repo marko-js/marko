@@ -20,7 +20,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 		}
 	}, $scope0_id, "#text/1", 1, _write_guard($scope0_reason, 4), 1, 0, 0, ["__tests__/tags/child.marko_1*shell"], $scope0_reason, 4);
 	$fg__input_a && _client_guard($scope0_reason, 4) && _patch_render($scope0_id, "__tests__/tags/child.marko_1_input_a#0:4/setup", "input_a");
-	_patch_render($scope0_id, "__tests__/tags/child.marko_0_input_a#4_input_b#5/setup", [$fg__input_a && "input_a", $fg__input_b && "input_b"], $scope0_reason, 0);
+	_patch_render($scope0_id, "__tests__/tags/child.marko_0_input_a#4_input_b#5/setup", (($fg__input_a ? " input_a" : "") + ($fg__input_b ? " input_b" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		input_a: ($ui__input_b__OR__input_show || $ui__input_a__OR__input_b || $ui__input_a) && input.a,
 		input_b: ($ui__input_a || $ui__input_a__OR__input_b) && input.b

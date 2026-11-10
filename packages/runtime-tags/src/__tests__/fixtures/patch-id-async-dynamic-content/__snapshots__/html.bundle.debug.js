@@ -69,7 +69,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					{ _: $scope($scope2_id) }
 				]), 0, $wg__input_items__OR__input_loaded, $scope0_reason, 0);
 				_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope3_id, "__tests__/template.marko_3_input_loaded#0:4/subscribe");
-				_patch_render($scope3_id, "__tests__/template.marko_3_input_loaded#0:4_ready#2/setup", [_filled_guard($scope0_reason, 2) && ">>>input_loaded", $fg__input_items && "ready"], $scope0_reason, 0);
+				_patch_render($scope3_id, "__tests__/template.marko_3_input_loaded#0:4_ready#2/setup", ((_filled_guard($scope0_reason, 2) ? " >>>input_loaded" : "") + ($fg__input_items ? " ready" : "")).slice(1), $scope0_reason, 0);
 				$wi__input_items__OR__input_loaded && _subscribe($ui__input_loaded && $input_loaded__closures, _scope($scope3_id, { ready: ($ui__input_loaded || _unfilled_if($scope0_reason, 0)) && ready }, "__tests__/template.marko", "5:4", { ready: "5:10" }), _client_guard($scope0_reason, 2) && "__tests__/template.marko_3_input_loaded#0:4/subscribe", $wg__input_items__OR__input_loaded);
 			}, 1, "__tests__/template.marko_3*content", $ui__input_items, 0, 1);
 			_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope2_id, "__tests__/template.marko_2_item_promise#1:3/subscribe", 1);

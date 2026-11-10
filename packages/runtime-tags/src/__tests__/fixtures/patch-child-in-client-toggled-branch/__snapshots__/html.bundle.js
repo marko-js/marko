@@ -14,7 +14,7 @@ var my_tag_default = _template("b", (input) => {
 		}
 	}, $scope0_id, "a", 1, 1, 0, 0, 1);
 	_html(`<span>${_text_mark($scope0_id, "b", input.value, 1, $scope0_reason, 0)}</span>`);
-	_script($scope0_id, "b1", 1, $fg__input_value, "e");
+	_script($scope0_id, "b1", 1, $fg__input_value);
 	$fg__input_value && _patch_render($scope0_id, "b0", "e");
 	_patch_fill($scope0_id, "vb2", open, 1);
 	_scope($scope0_id, { e: input.value }) || $fg__input_value && _patch_write($scope0_id, "xe", input.value, !_server_guard($scope0_reason, 0));

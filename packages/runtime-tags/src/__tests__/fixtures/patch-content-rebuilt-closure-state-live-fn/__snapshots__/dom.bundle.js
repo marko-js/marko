@@ -5,7 +5,7 @@ const $for = /*@__PURE__*/ _for_of_unkeyed(0, "<!><!><!>", "b%", 0, $for_content
 const $input_item = ($scope, input_item) => $for($scope, [input_item]);
 
 // tags/probe.marko
-const $get__script = _script("d0", ($scope) => {
+const $get__script = _script_patch("d0 d", ($scope) => {
 	$scope.a.textContent = $scope.d();
 	console.log("run", $scope.d());
 });

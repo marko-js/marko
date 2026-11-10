@@ -19,7 +19,7 @@ var template_default = _template("a", (input) => {
 	_if(() => {}, $scope0_id, "c", 1, 1, 0, 0, 1);
 	_html(`<button>${_text_mark($scope0_id, "e", count)}</button>${_el_mark($scope0_id, "d")}`);
 	_script($scope0_id, "a2");
-	_script($scope0_id, "a3", 1, $fg__input_label, "h");
+	_script($scope0_id, "a3");
 	$fg__input_label && _patch_render($scope0_id, "a1", "h");
 	_scope($scope0_id, {
 		h: input.label,

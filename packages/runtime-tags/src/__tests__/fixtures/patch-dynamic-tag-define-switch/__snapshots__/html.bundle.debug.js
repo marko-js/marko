@@ -36,7 +36,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id) };
 	_dynamic_tag($scope0_id, "#text/0", input.which ? Counter : Other, { label: input.label }, 1, 0, 0, $wg__input_label__OR__input_which, $scope0_reason, 0);
 	$fg__input_label && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_label#3/subscribers", "input_label");
-	_patch_render($scope0_id, "__tests__/template.marko_0_input_label#3_input_which#4_Counter#5_Other#6/setup", [$fg__input_label && "input_label", $fg__input_which && "input_which"], $scope0_reason, 0);
+	_patch_render($scope0_id, "__tests__/template.marko_0_input_label#3_input_which#4_Counter#5_Other#6/setup", (($fg__input_label ? " input_label" : "") + ($fg__input_which ? " input_which" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		input_label: ($ui__input_which || $ui__input_label__OR__input_which || $ui__input_label) && input.label,
 		input_which: ($ui__input_label || $ui__input_label__OR__input_which) && input.which,

@@ -29,7 +29,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_dynamic_tag($scope0_id, "#text/2", input.on ? card_default : "div", { items: input.items }, 1, 0, 0, _write_guard($scope0_reason, 0), $scope0_reason, 0);
 	_html("</main>");
 	_script($scope0_id, "__tests__/template.marko_0");
-	_patch_render($scope0_id, "__tests__/template.marko_0_input_on#5_input_items#6/setup", [$fg__input_on && "input_on", $fg__input_items && "input_items"], $scope0_reason, 0);
+	_patch_render($scope0_id, "__tests__/template.marko_0_input_on#5_input_items#6/setup", (($fg__input_on ? " input_on" : "") + ($fg__input_items ? " input_items" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		input_on: ($ui__input_items || $ui__input_on__OR__input_items) && input.on,
 		input_items: ($ui__input_on || $ui__input_on__OR__input_items) && input.items,

@@ -15,4 +15,4 @@ const $s = /*@__PURE__*/ _fill_let("c10", 7, /* @__PURE__ */ _closure($if_conten
 const $setup__script = _script("c7", ($scope) => _on($scope.b, "click", function() {
 	$s($scope, +$scope.h + 1);
 }));
-const $input_b__script = _script("c8", ($scope) => document.body.dataset.b = String($scope.g));
+const $input_b__script = _script_patch("c8 g", ($scope) => document.body.dataset.b = String($scope.g));

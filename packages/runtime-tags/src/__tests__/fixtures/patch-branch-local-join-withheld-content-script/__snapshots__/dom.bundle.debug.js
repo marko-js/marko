@@ -11,7 +11,7 @@ const $frag_content__setup = ($scope) => {
 const $frag_content__c = /*@__PURE__*/ _closure_get_patch("__tests__/tags/child.marko_2_c#1:2/subscribe", "c/10", $frag_content__input_a__OR__c, 0, "__tests__/tags/child.marko_1_c#2/subscribers", 0);
 const $frag_content = _content("__tests__/tags/child.marko_2*content", "<em> </em>", "D ", $frag_content__setup);
 const $if_content__c__closure = /*@__PURE__*/ _closure($frag_content__c);
-const $if_content__c__script = _script("__tests__/tags/child.marko_1_c#2", ($scope) => _el_read($scope["#div/0"]).textContent = "s:" + $scope.c);
+const $if_content__c__script = _script_patch("__tests__/tags/child.marko_1_c#2 c", ($scope) => _el_read($scope["#div/0"]).textContent = "s:" + $scope.c);
 const $if_content__c = /*@__PURE__*/ _const("c", ($scope) => {
 	$if_content__c__closure($scope);
 	$if_content__c__script($scope);

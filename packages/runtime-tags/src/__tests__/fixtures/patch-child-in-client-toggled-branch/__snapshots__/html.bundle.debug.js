@@ -17,7 +17,7 @@ var my_tag_default = _template("__tests__/tags/my-tag.marko", (input) => {
 		}
 	}, $scope0_id, "#text/0", 1, 1, 0, 0, 1);
 	_html(`<span>${_text_mark($scope0_id, "#text/1", input.value, 1, $scope0_reason, 0)}</span>`);
-	_script($scope0_id, "__tests__/tags/my-tag.marko_0_input_value#4", 1, $fg__input_value, "input_value");
+	_script($scope0_id, "__tests__/tags/my-tag.marko_0_input_value#4", 1, $fg__input_value);
 	$fg__input_value && _patch_render($scope0_id, "__tests__/tags/my-tag.marko_1_input_value#0:4/setup", "input_value");
 	_patch_fill($scope0_id, "PatchFill:__tests__/tags/my-tag.marko_0_open#5/fill", open, 1);
 	_scope($scope0_id, { input_value: input.value }, "__tests__/tags/my-tag.marko", 0, { input_value: ["input.value"] }) || $fg__input_value && _patch_write($scope0_id, "PatchMarkedWrite:input_value", input.value, !_server_guard($scope0_reason, 0));

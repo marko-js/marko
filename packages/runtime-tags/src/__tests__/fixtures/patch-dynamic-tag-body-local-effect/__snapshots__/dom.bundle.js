@@ -10,4 +10,4 @@ const $setup__script = _script("b1", ($scope) => _on($scope.a, "click", function
 // template.marko
 const $inputonCarddiv_content__x = /*@__PURE__*/ _closure_get_patch("a1", 8, ($scope) => _text($scope.a, $scope._.c), 0, "a3", 0);
 const $inputonCarddiv_content = _content$1("a0", "<em> </em>", "D ", $inputonCarddiv_content__x);
-const $if_content__x__script = _script("a2", ($scope) => $scope.a.textContent = $scope.c);
+const $if_content__x__script = _script_patch("a2 c", ($scope) => $scope.a.textContent = $scope.c);

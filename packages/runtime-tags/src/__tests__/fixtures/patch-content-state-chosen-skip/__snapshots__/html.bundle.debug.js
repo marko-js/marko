@@ -48,8 +48,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_attrs_partial_content(attrs, { id: 1 }, "#section/3", $scope0_id, "section", 2);
 	const status = `${input.b}: ${takeRenders()} content renders`;
 	_html(`</section>${_el_mark($scope0_id, "#section/3")}`);
-	_script($scope0_id, "__tests__/template.marko_0_status#13", 1, $fg__input_b, "status");
-	_script($scope0_id, "__tests__/template.marko_0_attrs#12", 1, $sg__input_b && 2, "input_b");
+	_script($scope0_id, "__tests__/template.marko_0_status#13", 1, $fg__input_b);
+	_script($scope0_id, "__tests__/template.marko_0_attrs#12", 1, $sg__input_b && 2);
 	_script($scope0_id, "__tests__/template.marko_0");
 	$fg__input_b && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_b#6/subscribers", "input_b");
 	_patch_render($scope0_id, "__tests__/template.marko_0_input_b#6_mode#7_one#8_two#9/setup", $fg__input_b && "input_b");

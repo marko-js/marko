@@ -57,7 +57,7 @@ var template_default = _template("a", (input) => {
 		$wg__input_on || $wi__input_note__OR__input_v__OR__input_on && _resume_branch($scope1_id);
 	}, 1, "a5", _unfilled_if($scope0_reason, 3), 1, 1);
 	_html("</main>");
-	_script($scope0_id, "a7", 1, $fg__input_note, "e");
+	_script($scope0_id, "a7", 1, $fg__input_note);
 	$fg__input_note && _patch_subscribers($scope0_id, "a8", "e");
 	_scope($scope0_id, {
 		e: input.note,

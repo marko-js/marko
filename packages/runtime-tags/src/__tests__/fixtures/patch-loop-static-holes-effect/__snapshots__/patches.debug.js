@@ -3,10 +3,10 @@
 {
   "PatchLoop:#ul/0": [{
     "PatchText:#text/2": "b",
-    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-loop-static-holes-effect/template.marko_1_input_note#0:5": ">input_note"
+    "PatchEffect:": _.a = "packages/runtime-tags/src/__tests__/fixtures/patch-loop-static-holes-effect/template.marko_1_input_note#0:5"
   }, {
     "PatchText:#text/2": "b",
-    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-loop-static-holes-effect/template.marko_1_input_note#0:5": ">input_note"
+    "PatchEffect:": _.a
   }],
   "PatchBranch:#text/2": [{
     "PatchLoop:#div/0": [{
@@ -29,10 +29,10 @@
 {
   "PatchLoop:#ul/0": [{
     "PatchText:#text/2": "c",
-    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-loop-static-holes-effect/template.marko_1_input_note#0:5": ">input_note"
+    "PatchEffect:": _.a = "packages/runtime-tags/src/__tests__/fixtures/patch-loop-static-holes-effect/template.marko_1_input_note#0:5"
   }, {
     "PatchText:#text/2": "c",
-    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-loop-static-holes-effect/template.marko_1_input_note#0:5": ">input_note"
+    "PatchEffect:": _.a
   }],
   "PatchBranch:#text/2": [{
     "PatchLoop:#div/0": [{
@@ -54,10 +54,10 @@
 {
   "PatchLoop:#ul/0": [{
     "PatchText:#text/2": "d",
-    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-loop-static-holes-effect/template.marko_1_input_note#0:5": ">input_note"
+    "PatchEffect:": _.a = "packages/runtime-tags/src/__tests__/fixtures/patch-loop-static-holes-effect/template.marko_1_input_note#0:5"
   }, {
     "PatchText:#text/2": "d",
-    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-loop-static-holes-effect/template.marko_1_input_note#0:5": ">input_note"
+    "PatchEffect:": _.a
   }],
   "PatchBranch:#text/2": 0,
   "PatchMarkedWrite:input_note": "d"
@@ -67,10 +67,10 @@
 {
   "PatchLoop:#ul/0": [{
     "PatchText:#text/2": "e",
-    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-loop-static-holes-effect/template.marko_1_input_note#0:5": ">input_note"
+    "PatchEffect:": _.a = "packages/runtime-tags/src/__tests__/fixtures/patch-loop-static-holes-effect/template.marko_1_input_note#0:5"
   }, {
     "PatchText:#text/2": "e",
-    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-loop-static-holes-effect/template.marko_1_input_note#0:5": ">input_note"
+    "PatchEffect:": _.a
   }],
   "PatchBranch:#text/2": [{
     "PatchLoop:#div/0": [{

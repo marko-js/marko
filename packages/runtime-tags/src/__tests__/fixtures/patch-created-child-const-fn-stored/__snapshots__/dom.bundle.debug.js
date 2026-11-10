@@ -1,7 +1,7 @@
 // tags/card.marko
 const $template$1 = "<output></output><button>toggle</button>";
 const $walks$1 = " b b";
-const $g2__script = _script("__tests__/tags/card.marko_0_g#7", ($scope) => {
+const $g2__script = _script_patch("__tests__/tags/card.marko_0_g#7 input_fn", ($scope) => {
 	_el_read($scope["#output/0"]).textContent = $scope.g();
 	console.log("run", $scope.g());
 });

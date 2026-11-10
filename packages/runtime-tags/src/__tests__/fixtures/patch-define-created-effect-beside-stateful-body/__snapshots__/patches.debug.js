@@ -8,7 +8,7 @@
           "PatchText:#text/0": "k"
         }
       }, _.a = "packages/runtime-tags/src/__tests__/fixtures/patch-define-created-effect-beside-stateful-body/template.marko_3*shell"],
-      "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-define-created-effect-beside-stateful-body/template.marko_2_label#4": "label",
+      "PatchEffect:": _.b = "packages/runtime-tags/src/__tests__/fixtures/patch-define-created-effect-beside-stateful-body/template.marko_2_label#4",
       "PatchSetup:": {
         "PatchWrite:label": "k"
       }
@@ -17,7 +17,7 @@
       "PatchBranch:#text/0": [{
         "PatchText:#text/0": "b"
       }, _.a],
-      "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-define-created-effect-beside-stateful-body/template.marko_2_label#4": "label",
+      "PatchEffect:": _.b,
       "PatchMarkedWrite:label": "b"
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-define-created-effect-beside-stateful-body/template.marko_1*shell"],
@@ -37,7 +37,7 @@
           "PatchText:#text/0": "k"
         }
       }, _.a = "packages/runtime-tags/src/__tests__/fixtures/patch-define-created-effect-beside-stateful-body/template.marko_3*shell"],
-      "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-define-created-effect-beside-stateful-body/template.marko_2_label#4": "label",
+      "PatchEffect:": _.b = "packages/runtime-tags/src/__tests__/fixtures/patch-define-created-effect-beside-stateful-body/template.marko_2_label#4",
       "PatchSetup:": {
         "PatchWrite:label": "k"
       }
@@ -46,7 +46,7 @@
       "PatchBranch:#text/0": [{
         "PatchText:#text/0": "c"
       }, _.a],
-      "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-define-created-effect-beside-stateful-body/template.marko_2_label#4": "label",
+      "PatchEffect:": _.b,
       "PatchMarkedWrite:label": "c"
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-define-created-effect-beside-stateful-body/template.marko_1*shell"],
@@ -74,7 +74,7 @@
           "PatchText:#text/0": "k"
         }
       }, _.a = "packages/runtime-tags/src/__tests__/fixtures/patch-define-created-effect-beside-stateful-body/template.marko_3*shell"],
-      "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-define-created-effect-beside-stateful-body/template.marko_2_label#4": "label",
+      "PatchEffect:": _.b = "packages/runtime-tags/src/__tests__/fixtures/patch-define-created-effect-beside-stateful-body/template.marko_2_label#4",
       "PatchSetup:": {
         "PatchWrite:label": "k"
       }
@@ -83,7 +83,7 @@
       "PatchBranch:#text/0": [{
         "PatchText:#text/0": "e"
       }, _.a],
-      "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-define-created-effect-beside-stateful-body/template.marko_2_label#4": "label",
+      "PatchEffect:": _.b,
       "PatchMarkedWrite:label": "e"
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-define-created-effect-beside-stateful-body/template.marko_1*shell"],

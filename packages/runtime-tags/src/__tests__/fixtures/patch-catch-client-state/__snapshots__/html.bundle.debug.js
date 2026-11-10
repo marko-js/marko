@@ -30,7 +30,7 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 		_html(`<button class=inc>${_text_mark($scope1_id, "#text/1", text, 1, (2 | $uf__input_label) << 1, 0)} ${_text_mark($scope1_id, "#text/2", n, 2)}</button>${_el_mark($scope1_id, "#button/0")}`);
 		_script($scope1_id, "__tests__/tags/panel.marko_1");
 		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "__tests__/tags/panel.marko_1_input_label#0:3/subscribe");
-		_patch_render($scope1_id, "__tests__/tags/panel.marko_1_input_label#0:3_err_message#5/setup", [_filled_guard($scope0_reason, 0) && ">input_label", "err_message"], (2 | $uf__input_label) << 1, 0);
+		_patch_render($scope1_id, "__tests__/tags/panel.marko_1_input_label#0:3_err_message#5/setup", "err_message" + (_filled_guard($scope0_reason, 0) ? " >input_label" : ""), (2 | $uf__input_label) << 1, 0);
 		_patch_fill($scope1_id, "PatchFill:__tests__/tags/panel.marko_1_n#7/fill", n, 1);
 		_subscribe($ui__input_label && $input_label__closures, _scope($scope1_id, {
 			err_message: $ui__input_label && err?.message,

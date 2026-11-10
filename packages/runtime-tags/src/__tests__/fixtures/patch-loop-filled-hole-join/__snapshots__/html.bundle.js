@@ -18,7 +18,7 @@ var feed_list_default = _template("b", (input) => {
 		$fg__input_items && _patch_write($scope1_id, "xf", item?.id, !_server_guard($scope0_reason, 1));
 		_html(`<li${hovered === item.id ? " class=hovered" : ""}><a${_attr("href", link(input.data, item.id), $scope1_id, "b", $scope0_reason, 0)}>${_text_mark($scope1_id, "c", item.id, 1, $scope0_reason, 1)}</a>${_el_mark($scope1_id, "b", _updates_from($scope0_reason, 0))}</li>${_el_mark($scope1_id, "a")}`);
 		_script($scope1_id, "b0");
-		_patch_render($scope1_id, "b1", [_filled_guard($scope0_reason, 2) && ">e", $fg__input_items && "f"], $scope0_reason, 0);
+		_patch_render($scope1_id, "b1", ((_filled_guard($scope0_reason, 2) ? " >e" : "") + ($fg__input_items ? " f" : "")).slice(1), $scope0_reason, 0);
 		_patch_render($scope1_id, "b2", $fg__input_items && "f");
 		_scope($scope1_id, {
 			f: item?.id,

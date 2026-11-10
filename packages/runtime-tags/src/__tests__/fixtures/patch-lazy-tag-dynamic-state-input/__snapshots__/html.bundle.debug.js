@@ -24,7 +24,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_dynamic_tag($scope0_id, "#text/2", input.show ? $Child_withLoadAssets : null, { label: `${input.label}${n}` });
 	_html("</main>");
 	_script($scope0_id, "__tests__/template.marko_0");
-	_patch_render($scope0_id, "__tests__/template.marko_0_input_show#5_input_label#6_n#7/setup", [$fg__input_show && "input_show", $fg__input_label && "input_label"]);
+	_patch_render($scope0_id, "__tests__/template.marko_0_input_show#5_input_label#6_n#7/setup", (($fg__input_show ? " input_show" : "") + ($fg__input_label ? " input_label" : "")).slice(1));
 	_scope($scope0_id, {
 		input_show: input.show,
 		input_label: input.label,

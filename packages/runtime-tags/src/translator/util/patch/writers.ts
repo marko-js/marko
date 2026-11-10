@@ -211,7 +211,7 @@ export function getEffectEntryArgs(
   ) {
     return [absentArg(0)];
   }
-  const { reads, written } = writes;
+  const { written } = writes;
   // The entry mounts the effect in a created scope where no render of the
   // scope queues it: one its caller passes client state does.
   const queued = isQueuedOnCreate(section, signal.referencedBindings);
@@ -244,12 +244,25 @@ export function getEffectEntryArgs(
             t.numericLiteral(1),
           )
         : undefined;
-  const entryArg = entry
-    ? andGuard(guard, entry)
-    : guard || t.numericLiteral(1);
-  return rendered
-    ? [entryArg]
-    : [entryArg, getReads(section, reads, check, group)];
+  return [entry ? andGuard(guard, entry) : guard || t.numericLiteral(1)];
+}
+
+// What an effect's entry re-runs it on, as hops from its section, where some call's
+// patch fills it: its registration names them (`_script_patch`), as a function's do.
+export function getEffectReads(section: Section, signal: Signal) {
+  const hops = new Set<string>();
+  const writes = getEffectWrites(section, signal);
+  if (writes) {
+    for (const root of writes.reads.reduce(
+      addFilledReads,
+      new Set<Binding>(),
+    )) {
+      if (getCallerGroupBit(section, "_filled_guard", root.sources) !== 0) {
+        hops.add(getWriteHop(section, root)!);
+      }
+    }
+  }
+  return [...hops].join(" ");
 }
 
 // The sources an effect re-runs on where one is a param a calling tag passes.
@@ -480,11 +493,7 @@ export function writePatchResumeStatements(
                 ? t.logicalExpression(
                     "||",
                     rendered,
-                    toSequenceExpression(
-                      scripts.map((args) =>
-                        callRuntime("_script", ...args, t.cloneNode(reads)),
-                      ),
-                    ),
+                    toSequenceExpression(scripts.map(buildScriptCall)),
                   )
                 : rendered
               : callRuntime(
@@ -571,6 +580,10 @@ export function writePatchResumeStatements(
       body.push(t.expressionStatement(write));
     }
   });
+}
+
+function buildScriptCall(args: (t.Expression | undefined)[]) {
+  return callRuntime("_script", ...args);
 }
 
 // A controlled `<let>`'s value, a fill while its handler controls it and the

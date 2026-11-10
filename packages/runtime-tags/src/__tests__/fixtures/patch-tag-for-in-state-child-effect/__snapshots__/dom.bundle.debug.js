@@ -57,7 +57,7 @@ function $setup($scope) {
 const $for = /*@__PURE__*/ _for_in("#text/0", "<!><!><!>", "b%", $for_content__setup, $for_content__$params);
 const $input_obj = ($scope, input_obj) => $for($scope, [input_obj]);
 const $input_b__closure = /*@__PURE__*/ _closure($if_content__input_b);
-const $input_b__script = _script("__tests__/tags/shape.marko_0_input_b#6", ($scope) => document.body.dataset.b = String($scope.input_b));
+const $input_b__script = _script_patch("__tests__/tags/shape.marko_0_input_b#6 input_b", ($scope) => document.body.dataset.b = String($scope.input_b));
 const $input_b = /*@__PURE__*/ _const("input_b", ($scope) => {
 	$input_b__closure($scope);
 	$input_b__script($scope);

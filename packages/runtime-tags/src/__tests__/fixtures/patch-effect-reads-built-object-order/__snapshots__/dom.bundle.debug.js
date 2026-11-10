@@ -2,7 +2,7 @@
 const $template = "<p> </p>";
 const $walks = "D l";
 const $setup = ($_) => {};
-const $c__script = _script("__tests__/template.marko_0_c#8", ($scope) => console.log($scope.c));
+const $c__script = _script_patch("__tests__/template.marko_0_c#8 c", ($scope) => console.log($scope.c));
 const $c = /*@__PURE__*/ _const("c", $c__script);
 const $a__OR__b = /*@__PURE__*/ _or_patch("__tests__/template.marko_0_a#5_b#6/setup", 7, ($scope) => $c($scope, {
 	a: $scope.a,

@@ -1,6 +1,6 @@
 // tags/counter/index.marko
 const $if_content__count = /*@__PURE__*/ _let_change(2, ($scope) => _text($scope.a, $scope.c));
-const $if_content__input_onCount__script = _script("b0", ($scope) => {
+const $if_content__input_onCount__script = _script_patch("b0 >e", ($scope) => {
 	{
 		const log = document.getElementById("log");
 		log.textContent += log.fn === $scope._.e ? "same;" : "new;";

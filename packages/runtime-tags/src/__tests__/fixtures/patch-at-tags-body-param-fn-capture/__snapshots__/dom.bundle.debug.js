@@ -2,7 +2,7 @@
 const $template$2 = "<output></output>";
 const $walks$2 = " b";
 const $setup$2 = ($_) => {};
-const $get__script = _script("__tests__/tags/reader.marko_0_get#3", ($scope) => _el_read($scope["#output/0"]).textContent = $scope.get());
+const $get__script = _script_patch("__tests__/tags/reader.marko_0_get#3 get", ($scope) => _el_read($scope["#output/0"]).textContent = $scope.get());
 const $get$1 = /*@__PURE__*/ _const("get", $get__script);
 const $input$2 = ($scope, input) => $get$1($scope, input.get);
 var reader_default = /*@__PURE__*/ _template("__tests__/tags/reader.marko", $template$2, " b", 0, $input$2);

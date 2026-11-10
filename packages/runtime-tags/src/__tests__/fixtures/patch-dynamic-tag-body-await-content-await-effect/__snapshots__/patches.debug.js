@@ -60,7 +60,7 @@
             },
             "PatchBind:input_content": "^packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-content-await-effect/template.marko_4*content"
           },
-          "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-content-await-effect/template.marko_3_w#3": "w",
+          "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-content-await-effect/template.marko_3_w#3",
           "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-content-await-effect/template.marko_3_w#3/subscribers": "w"
         }
       }

@@ -6,7 +6,7 @@ var probe_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $fg__input_label = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_html("<p>probe</p>");
-	_script($scope0_id, "b0", 0, $fg__input_label, "c");
+	_script($scope0_id, "b0", 0, $fg__input_label);
 	_scope($scope0_id, { c: input.label }) || $fg__input_label && _patch_write($scope0_id, "xc", input.label, !_server_guard($scope0_reason, 0));
 });
 

@@ -3,7 +3,7 @@ const $template = "<pre id=log></pre><div id=d></div><main><!><button>+</button>
 const $walks = "b bD%b l";
 const $if_content__pick = /*@__PURE__*/ _if_closure_patch("__tests__/template.marko_1_pick#0:9/setup", "#text/1", 0, ($scope) => _text($scope["#text/0"], typeof $scope._.pick));
 const $if_content__setup = $if_content__pick;
-const $pick__script = _script("__tests__/template.marko_0_pick#9", ($scope) => {
+const $pick__script = _script_patch("__tests__/template.marko_0_pick#9 pick", ($scope) => {
 	{
 		const log = document.getElementById("log");
 		log.textContent += log.last === $scope.pick ? "same;" : "new;";

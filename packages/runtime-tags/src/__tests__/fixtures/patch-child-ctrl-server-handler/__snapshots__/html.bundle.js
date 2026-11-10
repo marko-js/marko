@@ -5,7 +5,7 @@ var field_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	_html(`<input${_attr_input_value($scope0_id, "a", input.value, input.valueChange, 3, $scope0_reason, 0)}>${_el_mark($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
-	_patch_render($scope0_id, "b1", [$fg__input_value && "d", $fg__input_valueChange && "e"], $scope0_reason, 0);
+	_patch_render($scope0_id, "b1", (($fg__input_value ? " d" : "") + ($fg__input_valueChange ? " e" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		d: ($ui__input_valueChange || $ui__input_value__OR__input_valueChange) && input.value,
 		e: $ui__input_value__OR__input_valueChange && input.valueChange
@@ -28,7 +28,7 @@ var template_default = _template("a", (input) => {
 	_if(() => {}, $scope0_id, "a", 1, 1, 0, 0, 1);
 	_html(`<button>+</button>${_el_mark($scope0_id, "b")}<output></output></main>`);
 	_script($scope0_id, "a2");
-	$fg__input_prefix && _patch_render($scope0_id, "a1", ["f", "e"]);
+	$fg__input_prefix && _patch_render($scope0_id, "a1", "f e");
 	_scope($scope0_id, {
 		e: input.prefix,
 		f: handle,

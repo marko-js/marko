@@ -1,6 +1,6 @@
 // tags/file-store.marko
 const $files$1 = /*@__PURE__*/ _fill_let("d2", 3, ($scope) => _return($scope, $scope.d));
-const $input_value__script = _script("d1", ($scope) => $files$1($scope, $scope.c));
+const $input_value__script = _script_patch("d1 c", ($scope) => $files$1($scope, $scope.c));
 const $valueChange = ($scope) => (_new_files) => $files$1($scope, _new_files);
 _resumed.d0 = $valueChange;
 

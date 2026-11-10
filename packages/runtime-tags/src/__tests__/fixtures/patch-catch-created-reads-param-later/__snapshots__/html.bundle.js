@@ -18,7 +18,7 @@ var template_default = _template("a", (input) => {
 		_html(`<p>${_text_mark($scope2_id, "a", input.fail ? boom(input.msg) : input.msg, 1, $scope0_reason, 0)}</p>`);
 		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope2_id, "a1");
 		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope2_id, "a2");
-		_patch_render($scope2_id, "a3", [_filled_guard($scope0_reason, 1) && ">d", _filled_guard($scope0_reason, 2) && ">e"], $scope0_reason, 0);
+		_patch_render($scope2_id, "a3", ((_filled_guard($scope0_reason, 1) ? " >d" : "") + (_filled_guard($scope0_reason, 2) ? " >e" : "")).slice(1), $scope0_reason, 0);
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_fail__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_msg__closures, _scope($scope2_id, {
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id),
 			Cf: $wi__input_msg && 1

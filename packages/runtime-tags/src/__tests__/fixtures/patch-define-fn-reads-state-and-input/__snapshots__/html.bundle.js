@@ -10,7 +10,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $fg__fn = _filled_guard($scope1_reason, 1), $fg__label = _filled_guard($scope1_reason, 2);
 		_html(`<p>${_text_mark($scope1_id, "a", fn() + label, 1, $scope1_reason, 0)}</p>`);
-		_patch_render($scope1_id, "a2", [$fg__fn && "d", $fg__label && "e"], $scope1_reason, 0);
+		_patch_render($scope1_id, "a2", (($fg__fn ? " d" : "") + ($fg__label ? " e" : "")).slice(1), $scope1_reason, 0);
 		_scope($scope1_id, {
 			d: _write_if($scope1_reason, 2) && fn,
 			e: _write_if($scope1_reason, 1) && label

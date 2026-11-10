@@ -7,7 +7,7 @@ const $if_content2__setup = ($scope) => {
 	$scope["#childScope/0"]._ = $scope._;
 	$Info_content__setup($scope["#childScope/0"]);
 };
-const $if_content__input_a__script = _script("__tests__/tags/panel.marko_2_input_a#0:5", ($scope) => _el_read($scope["#div/0"]).textContent = "s:" + $scope._.input_a);
+const $if_content__input_a__script = _script_patch("__tests__/tags/panel.marko_2_input_a#0:5 >input_a", ($scope) => _el_read($scope["#div/0"]).textContent = "s:" + $scope._.input_a);
 const $if_content__input_a = /*@__PURE__*/ _if_closure_patch("__tests__/tags/panel.marko_2_input_a#0:5/setup", "#text/1", 0, $if_content__input_a__script);
 const $if_content__setup = $if_content__input_a;
 const $Info_content__input_a__OR__input_b = /*@__PURE__*/ _or_patch("__tests__/tags/panel.marko_1_input_a#0:5_input_b#0:6/setup", 1, ($scope) => _text($scope["#text/0"], $scope._.input_a + ":" + $scope._.input_b));

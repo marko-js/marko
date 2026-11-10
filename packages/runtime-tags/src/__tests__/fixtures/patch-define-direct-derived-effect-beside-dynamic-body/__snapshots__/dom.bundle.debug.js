@@ -3,7 +3,7 @@ const $Panel_content__walks = "D l";
 const $Panel_content__template = "<em> </em>";
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<!><button>toggle</button>`)($Panel_content__template);
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&%b b`)($Panel_content__walks);
-const $Panel_content__shout__script = _script("__tests__/template.marko_1_shout#4", ($scope) => document.body.dataset.label = $scope.shout);
+const $Panel_content__shout__script = _script_patch("__tests__/template.marko_1_shout#4 shout", ($scope) => document.body.dataset.label = $scope.shout);
 const $Panel_content__shout = /*@__PURE__*/ _const("shout", ($scope) => {
 	_text($scope["#text/0"], $scope.shout);
 	$Panel_content__shout__script($scope);

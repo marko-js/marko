@@ -2,7 +2,7 @@
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $setup$1 = ($_) => {};
-const $for_content__it_onPick__script = _script("__tests__/tags/menu.marko_1_it_onPick#5", ($scope) => _on($scope["#button/0"], "click", $scope.it_onPick));
+const $for_content__it_onPick__script = _script_patch("__tests__/tags/menu.marko_1_it_onPick#5 it_onPick", ($scope) => _on($scope["#button/0"], "click", $scope.it_onPick));
 const $for_content__it_onPick = /*@__PURE__*/ _const("it_onPick", $for_content__it_onPick__script);
 const $for_content__$params = ($scope, $params2) => {
 	_attr_class($scope["#button/0"], "b" + $params2[0]?.id);

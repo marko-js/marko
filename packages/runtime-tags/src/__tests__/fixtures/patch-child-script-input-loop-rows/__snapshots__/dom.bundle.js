@@ -4,7 +4,7 @@ const $for_content__input_b = /*@__PURE__*/ _for_closure_patch("b3", 1, $for_con
 const $for_content__setup = $for_content__input_b;
 const $for_content__item = /*@__PURE__*/ _const(2, $for_content__input_b__OR__item);
 const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);
-const $input_b__script = _script("b2", ($scope) => $scope.a.textContent = "s:" + $scope.e);
+const $input_b__script = _script_patch("b2 e", ($scope) => $scope.a.textContent = "s:" + $scope.e);
 const $for = /*@__PURE__*/ _for_of_unkeyed(1, "<p> </p>", "D ", $for_content__setup, $for_content__$params);
 const $input_items = ($scope, input_items) => $for($scope, [input_items]);
 

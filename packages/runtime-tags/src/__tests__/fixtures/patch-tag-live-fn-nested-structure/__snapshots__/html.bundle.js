@@ -29,7 +29,7 @@ var panel_default = _template("b", (input) => {
 					return 0;
 				}
 			}, $scope1_id, "a", 1, $wg__input_y, 1, 0, 0, ["b3"], $scope0_reason, 2);
-			$fg__input_a && $cg__input_y && _patch_render($scope1_id, "b2", ["b", ">f"]);
+			$fg__input_a && $cg__input_y && _patch_render($scope1_id, "b2", "b >f");
 			$cg__input_a && _patch_render($scope1_id, "b5");
 			$cg__input_y && _patch_render($scope1_id, "b6");
 			_scope($scope1_id, {

@@ -8,7 +8,7 @@ const $open = _fill_let_resume("__tests__/tags/my-tag.marko_0_open#5/fill", "ope
 function $setup$1($scope) {
 	$open($scope, true);
 }
-const $input_value__script = _script("__tests__/tags/my-tag.marko_0_input_value#4", ($scope) => console.log("value", $scope.input_value));
+const $input_value__script = _script_patch("__tests__/tags/my-tag.marko_0_input_value#4 input_value", ($scope) => console.log("value", $scope.input_value));
 const $input_value$1 = /*@__PURE__*/ _const("input_value", ($scope) => {
 	$if_content__input_value$1($scope);
 	_text($scope["#text/1"], $scope.input_value);

@@ -23,11 +23,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 				const $scope2_id = _scope_id(), $fg__input_prefix = _filled_guard($scope0_reason, 1);
 				_html(`<span>${_text_mark($scope2_id, "#text/0", fmt(v + s))}</span>`);
 				_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope2_id, "__tests__/tags/card.marko_2_fmt#0:8/subscribe");
-				_patch_render($scope2_id, "__tests__/tags/card.marko_2_s#0:7_fmt#0:8_v#1:4/setup", [
-					$fg__input_prefix && ">>fmt",
-					$fg__input_prefix && ">>input_prefix",
-					_filled_guard($scope0_reason, 2) && ">v"
-				]);
+				_patch_render($scope2_id, "__tests__/tags/card.marko_2_s#0:7_fmt#0:8_v#1:4/setup", (($fg__input_prefix ? " >>fmt" : "") + ($fg__input_prefix ? " >>input_prefix" : "") + (_filled_guard($scope0_reason, 2) ? " >v" : "")).slice(1));
 				_subscribe(_unfilled_if($scope0_reason, 1) && $fmt2__closures, _subscribe($s__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/card.marko", "3:26"), "__tests__/tags/card.marko_2_s#0:7/subscribe"), _client_guard($scope0_reason, 1) && "__tests__/tags/card.marko_2_fmt#0:8/subscribe");
 				return 0;
 			}
@@ -46,7 +42,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 	_html(`<button class=s>+</button>${_el_mark($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/tags/card.marko_0");
 	$fg__input_sel && $cg__input_obj && _patch_render($scope0_id, "__tests__/tags/card.marko_1_input_sel#0:6/setup", "input_sel");
-	$fg__input_prefix2 && ($cg__input_obj || $cg__input_sel) && _patch_subscribers($scope0_id, "__tests__/tags/card.marko_0_fmt#8/subscribers", ["fmt", "input_prefix"]);
+	$fg__input_prefix2 && ($cg__input_obj || $cg__input_sel) && _patch_subscribers($scope0_id, "__tests__/tags/card.marko_0_fmt#8/subscribers", "fmt input_prefix");
 	_patch_fill($scope0_id, "PatchFill:__tests__/tags/card.marko_0_s#7/fill", s, 1);
 	_scope($scope0_id, {
 		input_prefix: input.prefix,
@@ -82,7 +78,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_patch_child_end();
 	_html(`<button class=p>p</button>${_el_mark($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	_patch_render($scope0_id, "__tests__/template.marko_0_input_dyn#6_input_prefix#7_pre#8/setup", [$fg__input_dyn && "input_dyn", $fg__input_prefix && "input_prefix"]);
+	_patch_render($scope0_id, "__tests__/template.marko_0_input_dyn#6_input_prefix#7_pre#8/setup", (($fg__input_dyn ? " input_dyn" : "") + ($fg__input_prefix ? " input_prefix" : "")).slice(1));
 	_scope($scope0_id, {
 		input_dyn: input.dyn,
 		input_prefix: input.prefix,

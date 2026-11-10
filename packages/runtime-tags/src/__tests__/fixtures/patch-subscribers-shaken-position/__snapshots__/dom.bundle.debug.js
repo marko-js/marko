@@ -19,7 +19,7 @@ const $frame_content__input_n = /*@__PURE__*/ _closure_get_patch("__tests__/temp
 const $frame_content__setup = $frame_content__input_n;
 const $frame_content__$params = ($scope, $params2) => _text($scope["#text/0"], $params2[0]);
 const $frame_content = _content("__tests__/template.marko_2*content", "<p><!> <!></p>", "D%c%", $frame_content__setup, $frame_content__$params);
-const $Effect_content__input_n__OR__twice__script = _script("__tests__/template.marko_1_input_n#0:4_twice#0", ($scope) => console.log("effect", $scope._.input_n, $scope.twice));
+const $Effect_content__input_n__OR__twice__script = _script_patch("__tests__/template.marko_1_input_n#0:4_twice#0 >input_n twice", ($scope) => console.log("effect", $scope._.input_n, $scope.twice));
 const $Effect_content__input_n__OR__twice = /*@__PURE__*/ _or(1, $Effect_content__input_n__OR__twice__script);
 const $Effect_content__twice = /*@__PURE__*/ _const("twice", $Effect_content__input_n__OR__twice);
 const $Effect_content__input_n = /*@__PURE__*/ _closure_get("input_n/6", ($scope) => {

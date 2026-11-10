@@ -13,7 +13,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $fg__a = _filled_guard($scope1_reason, 1);
 		_html(`<p>${_text_mark($scope1_id, "#text/0", a + b, 1, $scope1_reason, 0)}</p><div></div>${_el_mark($scope1_id, "#div/1")}`);
-		_script($scope1_id, "__tests__/template.marko_1_a#4", 1, $fg__a, "a");
+		_script($scope1_id, "__tests__/template.marko_1_a#4", 1, $fg__a);
 		_patch_render($scope1_id, "__tests__/template.marko_1_a#4_b#5/setup", $fg__a && "a", $scope1_reason, 0);
 		_scope($scope1_id, {
 			a,

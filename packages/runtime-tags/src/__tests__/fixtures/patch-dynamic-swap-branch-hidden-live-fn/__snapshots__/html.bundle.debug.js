@@ -7,7 +7,7 @@ var probe_default = _template("__tests__/tags/probe.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $fg__input_get = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_html(`<output></output>${_el_mark($scope0_id, "#output/0")}`);
-	_script($scope0_id, "__tests__/tags/probe.marko_0_get#3", 1, $fg__input_get, "get");
+	_script($scope0_id, "__tests__/tags/probe.marko_0_get#3", 1, $fg__input_get);
 	_scope($scope0_id, { get: input.get }, "__tests__/tags/probe.marko", 0, { get: "1:10" }) || $fg__input_get && _patch_write($scope0_id, "PatchMarkedWrite:get", input.get, !_server_guard($scope0_reason, 0));
 });
 
@@ -80,7 +80,7 @@ var w_default = _template("__tests__/tags/w.marko", (input) => {
 	$ui__input_flag__OR__input_x && _patch_write($scope0_id, "PatchWrite:A", A, 1);
 	$ui__input_flag__OR__input_x && _patch_write($scope0_id, "PatchWrite:B", B, 1);
 	$fg__input_show && _patch_subscribers($scope0_id, "__tests__/tags/w.marko_0_input_show#4/subscribers", "input_show");
-	_patch_render($scope0_id, "__tests__/tags/w.marko_0_input_flag#5_input_x#6_A#7_B#8/setup", [$fg__input_flag && "input_flag", $fg__input_x && "input_x"], $scope0_reason, 0);
+	_patch_render($scope0_id, "__tests__/tags/w.marko_0_input_flag#5_input_x#6_A#7_B#8/setup", (($fg__input_flag ? " input_flag" : "") + ($fg__input_x ? " input_x" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		input_show: input.show,
 		input_flag: ($ui__input_x || $ui__input_flag__OR__input_x) && input.flag,

@@ -15,13 +15,13 @@ var child_default = _template("b", (input) => {
 		$fg__input_items && $ui__input_b && _patch_write($scope1_id, "xc", item, !_server_guard($scope0_reason, 2));
 		const d = input.b + item;
 		_html(`<p>${_text_mark($scope1_id, "a", d, 1, $scope0_reason, 0)}</p>`);
-		_patch_render($scope1_id, "b0", [_filled_guard($scope0_reason, 1) && ">e", $fg__input_items && "c"], $scope0_reason, 0);
+		_patch_render($scope1_id, "b0", ((_filled_guard($scope0_reason, 1) ? " >e" : "") + ($fg__input_items ? " c" : "")).slice(1), $scope0_reason, 0);
 		_scope($scope1_id, {
 			c: ($ui__input_b || _unfilled_if($scope0_reason, 0)) && item,
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id)
 		});
 	}, 0, $scope0_id, "b", 1, 1, 1, 0, 0, "b1", $scope0_reason, 2);
-	_script($scope0_id, "b2", 1, $fg__input_b, "e");
+	_script($scope0_id, "b2", 1, $fg__input_b);
 	$fg__input_b && _client_guard($scope0_reason, 2) && _patch_render($scope0_id, "b3", "e");
 	_scope($scope0_id, { e: input.b }) || $fg__input_b && _patch_write($scope0_id, "xe", input.b, !_server_guard($scope0_reason, 1));
 });

@@ -36,7 +36,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let x = _dynamic_tag($scope0_id, "#text/0", input.which ? one_default : two_default, { a: input.a }, 1, 0, 0, 1, $scope0_reason, 0, 0, void 0, 0, "__tests__/template.marko_0_x#8/var");
 	_var($scope0_id, "#scopeOffset/1", $inputwhichonetwo_scope, "__tests__/template.marko_0_x#8/var");
 	_html(`<p>${_text_mark($scope0_id, "#text/2", x)}</p>`);
-	_patch_render($scope0_id, "__tests__/template.marko_0_input_which#5_input_a#6/setup", [$fg__input_which && "input_which", $fg__input_a && "input_a"], $scope0_reason, 0);
+	_patch_render($scope0_id, "__tests__/template.marko_0_input_which#5_input_a#6/setup", (($fg__input_which ? " input_which" : "") + ($fg__input_a ? " input_a" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		input_which: ($ui__input_a || $ui__input_which__OR__input_a) && input.which,
 		input_a: ($ui__input_which || $ui__input_which__OR__input_a) && input.a

@@ -33,7 +33,7 @@ var navx_default = _template("__tests__/tags/navx.marko", (input) => {
 		icon_default({ name: item.icon });
 		_patch_child_end();
 		_html(`<span>${_text_mark($scope1_id, "#text/2", item.label, 1, $scope0_reason, 1)}</span></a>${_el_mark($scope1_id, "#a/0", _updates_from($scope0_reason, 0) || $uf__input_items)}`);
-		_patch_render($scope1_id, "__tests__/tags/navx.marko_1_input_path#0:5_item_href#5/setup", [_filled_guard($scope0_reason, 2) && ">input_path", $fg__input_items && "item_href"], $scope0_reason, 0);
+		_patch_render($scope1_id, "__tests__/tags/navx.marko_1_input_path#0:5_item_href#5/setup", ((_filled_guard($scope0_reason, 2) ? " >input_path" : "") + ($fg__input_items ? " item_href" : "")).slice(1), $scope0_reason, 0);
 		_scope($scope1_id, {
 			item_href: ($ui__input_path || _unfilled_if($scope0_reason, 0)) && item?.href,
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id),

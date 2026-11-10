@@ -49,7 +49,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason(), $wg__c__OR__on = _write_guard($scope2_reason, 0), $ui__c__OR__on = _unfilled_if($scope2_reason, 0), $ui__on = _unfilled_if($scope2_reason, 2), $ui__c = _unfilled_if($scope2_reason, 1), $fg__c = _filled_guard($scope2_reason, 1), $fg__on = _filled_guard($scope2_reason, 2);
 		_dynamic_tag($scope2_id, "#text/0", on ? keeper_default : "div", { content: c }, 1, 0, 0, $wg__c__OR__on, $scope2_reason, 0);
-		_patch_render($scope2_id, "__tests__/tags/card.marko_2_c#3_on#4/setup", [$fg__c && "c", $fg__on && "on"], $scope2_reason, 0);
+		_patch_render($scope2_id, "__tests__/tags/card.marko_2_c#3_on#4/setup", (($fg__c ? " c" : "") + ($fg__on ? " on" : "")).slice(1), $scope2_reason, 0);
 		_write_if($scope2_reason, 0) && _scope($scope2_id, {
 			c: ($ui__on || $ui__c__OR__on) && c,
 			on: ($ui__c || $ui__c__OR__on) && on
@@ -96,7 +96,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id, ($scope) => $scope0_page ? [{ input_note: input.note }] : []), 0, $wg__input_on__OR__input_p, $scope0_reason, 0, 0, void 0, 0, 0, "__tests__/template.marko_1*content");
 	_html("</main>");
 	$fg__input_note && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_note#6/subscribers", "input_note");
-	_patch_render($scope0_id, "__tests__/template.marko_0_input_on#3_input_p#4/setup", [$fg__input_on && "input_on", $fg__input_p && "input_p"], $scope0_reason, 0);
+	_patch_render($scope0_id, "__tests__/template.marko_0_input_on#3_input_p#4/setup", (($fg__input_on ? " input_on" : "") + ($fg__input_p ? " input_p" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		input_on: ($ui__input_p || $ui__input_on__OR__input_p) && input.on,
 		input_p: ($ui__input_on || $ui__input_on__OR__input_p) && input.p,

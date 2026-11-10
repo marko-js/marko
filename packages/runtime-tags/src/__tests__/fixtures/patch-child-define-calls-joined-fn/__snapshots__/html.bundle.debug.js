@@ -16,12 +16,8 @@ var label_view_default = _template("__tests__/tags/label-view.marko", (input) =>
 		const $scope1_reason = _scope_reason(), $ui__a__OR__b__OR__flag = _unfilled_if($scope1_reason, 3), $ui__b__OR__flag = _unfilled_if($scope1_reason, 2), $ui__a__OR__flag = _unfilled_if($scope1_reason, 1), $ui__a__OR__b = _unfilled_if($scope1_reason, 0), $fg__a__OR__b__OR__flag = _filled_guard($scope1_reason, 3), $fg__a = _filled_guard($scope1_reason, 4), $fg__b = _filled_guard($scope1_reason, 5), $fg__flag = _filled_guard($scope1_reason, 6);
 		const get = flag ? a : b;
 		_html(`<output></output>${_el_mark($scope1_id, "#output/0")}`);
-		_script($scope1_id, "__tests__/tags/label-view.marko_1_get#7", 1, $fg__a__OR__b__OR__flag, "get");
-		_patch_render($scope1_id, "__tests__/tags/label-view.marko_1_a#3_b#4_flag#5/setup", [
-			$fg__a && "a",
-			$fg__b && "b",
-			$fg__flag && "flag"
-		], $scope1_reason, 3);
+		_script($scope1_id, "__tests__/tags/label-view.marko_1_get#7", 1, $fg__a__OR__b__OR__flag);
+		_patch_render($scope1_id, "__tests__/tags/label-view.marko_1_a#3_b#4_flag#5/setup", (($fg__a ? " a" : "") + ($fg__b ? " b" : "") + ($fg__flag ? " flag" : "")).slice(1), $scope1_reason, 3);
 		_scope($scope1_id, {
 			a: ($ui__b__OR__flag || $ui__a__OR__b__OR__flag) && a,
 			b: ($ui__a__OR__flag || $ui__a__OR__b__OR__flag) && b,
@@ -67,11 +63,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_patch_child_end();
 	_html(`<button>toggle</button>${_el_mark($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	_patch_render($scope0_id, "__tests__/template.marko_0_upper#5_up#6_low#7/setup", [
-		$fg__input_title && "up",
-		$fg__input_title && "input_title",
-		$fg__input_title && "low"
-	]);
+	_patch_render($scope0_id, "__tests__/template.marko_0_upper#5_up#6_low#7/setup", (($fg__input_title ? " up" : "") + ($fg__input_title ? " input_title" : "") + ($fg__input_title ? " low" : "")).slice(1));
 	_scope($scope0_id, {
 		input_title: input.title,
 		upper,

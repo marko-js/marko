@@ -21,7 +21,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope3_id = _scope_id(), $fg__input_promise = _filled_guard($scope0_reason, 0);
 			$fg__input_promise && _patch_write($scope3_id, "PatchMarkedWrite:value", value, !_server_guard($scope0_reason, 0));
 			_html(`<span id=v>${_text_mark($scope3_id, "#text/0", value, 1, $scope0_reason, 0)}</span>`);
-			_script($scope3_id, "__tests__/template.marko_3_value#2", 1, $fg__input_promise, "value");
+			_script($scope3_id, "__tests__/template.marko_3_value#2", 1, $fg__input_promise);
 			_scope($scope3_id, { value }, "__tests__/template.marko", "4:6", { value: "4:12" });
 		}, 1, "__tests__/template.marko_3*content", $ui__input_promise && 2, 1);
 		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_promise#0:3/subscribe", 1);

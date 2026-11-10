@@ -14,7 +14,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $uf__b = _updates_from($scope1_reason, 2), $fg__b = _filled_guard($scope1_reason, 2), $wi__b = _write_if($scope1_reason, 2);
 		_html(`<p>${_text_mark($scope1_id, "#text/0", a + b, 1, $scope1_reason, 0)}</p><em>${_text_mark($scope1_id, "#text/1", input.y + b, 1, ($uf__input_y | $uf__b) << 1, 0)}</em>`);
-		_patch_render($scope1_id, "__tests__/template.marko_1_input_y#0:4_b#5/setup", [_filled_guard($scope0_reason, 0) && ">input_y", $fg__b && "b"], ($uf__input_y | $uf__b) << 1, 0);
+		_patch_render($scope1_id, "__tests__/template.marko_1_input_y#0:4_b#5/setup", ((_filled_guard($scope0_reason, 0) ? " >input_y" : "") + ($fg__b ? " b" : "")).slice(1), ($uf__input_y | $uf__b) << 1, 0);
 		_patch_render($scope1_id, "__tests__/template.marko_1_a#4_b#5/setup", $fg__b && "b", $scope1_reason, 0);
 		_subscribe(_unfilled_if(($uf__input_y | $uf__b) << 1, 0) && $wi__input_y && $input_y__closures, _scope($scope1_id, {
 			a: $wi__b && a,

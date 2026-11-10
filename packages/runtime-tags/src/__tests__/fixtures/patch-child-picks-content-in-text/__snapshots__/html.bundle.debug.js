@@ -10,11 +10,7 @@ var pick_default = _template("__tests__/tags/pick.marko", (input) => {
 	_html(`<div>${_text_mark($scope0_id, "#text/0", input.title, 1, $scope0_reason, 7)}`);
 	_dynamic_tag($scope0_id, "#text/1", c, {}, 2, 0, 0, _write_guard($scope0_reason, 3), $scope0_reason, 3);
 	_html("</div>");
-	_patch_render($scope0_id, "__tests__/tags/pick.marko_0_input_on#4_input_a#5_input_b#6/setup", [
-		$fg__input_on && "input_on",
-		$fg__input_a && "input_a",
-		$fg__input_b && "input_b"
-	], $scope0_reason, 3);
+	_patch_render($scope0_id, "__tests__/tags/pick.marko_0_input_on#4_input_a#5_input_b#6/setup", (($fg__input_on ? " input_on" : "") + ($fg__input_a ? " input_a" : "") + ($fg__input_b ? " input_b" : "")).slice(1), $scope0_reason, 3);
 	_scope($scope0_id, {
 		input_on: ($ui__input_a__OR__input_b || $ui__input_on__OR__input_a__OR__input_b) && input.on,
 		input_a: ($ui__input_on__OR__input_b || $ui__input_on__OR__input_a__OR__input_b) && input.a,

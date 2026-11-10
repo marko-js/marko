@@ -2,7 +2,7 @@
 const $template$1 = "<p> </p>";
 const $walks$1 = "D l";
 const $setup$1 = ($_) => {};
-const $input_b__OR__fmt__script = _script("__tests__/tags/child.marko_0_input_b#4_fmt#5", ($scope) => _lifecycle($scope, { onUpdate: function() {
+const $input_b__OR__fmt__script = _script_patch("__tests__/tags/child.marko_0_input_b#4_fmt#5 input_b fmt input_a", ($scope) => _lifecycle($scope, { onUpdate: function() {
 	console.log("update", $scope.fmt() + $scope.input_b);
 } }));
 const $input_b__OR__fmt = /*@__PURE__*/ _or_patch("__tests__/tags/child.marko_0_input_b#4_fmt#5/setup", 6, ($scope) => {

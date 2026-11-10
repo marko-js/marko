@@ -1,7 +1,7 @@
 // template.marko
 const $if_content__pick = /*@__PURE__*/ _if_closure_patch("a2", 1, 0, ($scope) => _text($scope.a, typeof $scope._.j));
 const $if_content__setup = $if_content__pick;
-const $pick__script = _script("a3", ($scope) => {
+const $pick__script = _script_patch("a3 j", ($scope) => {
 	{
 		const log = document.getElementById("log");
 		log.textContent += log.last === $scope.j ? "same;" : "new;";

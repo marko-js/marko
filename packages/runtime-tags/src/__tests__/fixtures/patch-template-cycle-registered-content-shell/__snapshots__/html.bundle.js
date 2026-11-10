@@ -54,7 +54,7 @@ var tree_b_default = _template("c", (input) => {
 				show: input.show,
 				depth: input.depth - 1
 			}, 9, 0, 0, $wg__input_show__OR__input_depth, $scope0_reason, 0);
-			_patch_render($scope2_id, "c2", [_filled_guard($scope0_reason, 1) && ">e", _filled_guard($scope0_reason, 2) && ">f"], $scope0_reason, 0);
+			_patch_render($scope2_id, "c2", ((_filled_guard($scope0_reason, 1) ? " >e" : "") + (_filled_guard($scope0_reason, 2) ? " >f" : "")).slice(1), $scope0_reason, 0);
 			$wi__input_show__OR__input_depth && _scope($scope2_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}

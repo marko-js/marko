@@ -19,7 +19,7 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 // tags/child.marko
 const $template = "<button> </button>";
 const $walks = " D l";
-const $input_x__OR__n__script = _script("__tests__/tags/child.marko_0_input_x#4_n#5", ($scope) => console.log("child", $scope.input_x, $scope.n));
+const $input_x__OR__n__script = _script_patch("__tests__/tags/child.marko_0_input_x#4_n#5 input_x", ($scope) => console.log("child", $scope.input_x, $scope.n));
 const $input_x__OR__n = /*@__PURE__*/ _or_patch("__tests__/tags/child.marko_0_input_x#4_n#5/setup", 6, $input_x__OR__n__script);
 const $n = /*@__PURE__*/ _fill_let("__tests__/tags/child.marko_0_n#5/fill", "n/5", ($scope) => {
 	_text($scope["#text/1"], $scope.n);

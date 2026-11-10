@@ -45,7 +45,7 @@ var row_list_default = _template("__tests__/tags/row-list.marko", (input) => {
 				const $scope2_id = _scope_id();
 				_html(`<span>${_text_mark($scope2_id, "#text/0", t + bounty + input.settled)}</span>`);
 				_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope2_id, "__tests__/tags/row-list.marko_2_input_settled#0:8/subscribe");
-				_patch_render($scope2_id, "__tests__/tags/row-list.marko_2_input_settled#0:8_bounty#0:9_t#1:2/setup", [_filled_guard($scope0_reason, 2) && ">>input_settled", _filled_guard($scope0_reason, 0) && ">t"]);
+				_patch_render($scope2_id, "__tests__/tags/row-list.marko_2_input_settled#0:8_bounty#0:9_t#1:2/setup", ((_filled_guard($scope0_reason, 2) ? " >>input_settled" : "") + (_filled_guard($scope0_reason, 0) ? " >t" : "")).slice(1));
 				_subscribe($bounty__closures, _subscribe(_unfilled_if($scope0_reason, 2) && $input_settled__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/row-list.marko", "3:4"), _client_guard($scope0_reason, 2) && "__tests__/tags/row-list.marko_2_input_settled#0:8/subscribe"), "__tests__/tags/row-list.marko_2_bounty#0:9/subscribe");
 				return 0;
 			}

@@ -19,7 +19,7 @@ var child_default = _template("b", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["b2"], $scope0_reason, 1);
-	$fg__input_suffix && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "b1", ["f", "d"]);
+	$fg__input_suffix && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "b1", "f d");
 	_scope($scope0_id, {
 		d: ($ui__input_show || $ui__input_suffix) && input.suffix,
 		f: ($ui__input_show || $ui__input_suffix) && fmt

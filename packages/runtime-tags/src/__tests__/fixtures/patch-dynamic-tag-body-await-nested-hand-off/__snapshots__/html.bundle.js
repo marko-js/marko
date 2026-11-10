@@ -47,12 +47,12 @@ var card_default = _template("b", (input) => {
 			$fg__input_p && $ui__input_p__OR__input_content && _patch_write($scope2_id, "xc", y, !$sg__input_p);
 			_dynamic_tag($scope2_id, "a", y ? keeper_default : "div", { content: c }, 1, 0, 0, $wg__input_p__OR__input_content, $scope0_reason, 0);
 			_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope2_id, "b0");
-			_patch_render($scope2_id, "b1", [_filled_guard($scope0_reason, 0) && ">e", $fg__input_p && "c"], $scope0_reason, 0);
+			_patch_render($scope2_id, "b1", ((_filled_guard($scope0_reason, 0) ? " >e" : "") + ($fg__input_p ? " c" : "")).slice(1), $scope0_reason, 0);
 			$wi__input_p__OR__input_content && _subscribe($ui__input_p__OR__input_content && $await_content__c__closures, _scope($scope2_id, { c: $ui__input_p__OR__input_content && y }), _client_guard($scope0_reason, 0) && "b0", $wg__input_p__OR__input_content);
 		}, 1, "b2", $ui__input_p, 1, 1);
 		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "b6", 1);
 		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "b7");
-		_patch_render($scope1_id, "b8", [_filled_guard($scope0_reason, 2) && ">e", $fg__input_p2 && "c"], $scope0_reason, 0);
+		_patch_render($scope1_id, "b8", ((_filled_guard($scope0_reason, 2) ? " >e" : "") + ($fg__input_p2 ? " c" : "")).slice(1), $scope0_reason, 0);
 		$wi__input_p__OR__input_content && _subscribe($ui__input_content && $input_content__closures, _subscribe($ui__input_p && $input_p__closures, _scope($scope1_id, {
 			c: ($ui__input_content || $ui__input_p__OR__input_content3) && x,
 			e: ($ui__input_p || $ui__input_p__OR__input_content3) && c,
@@ -86,7 +86,7 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id, ($scope) => $scope0_page ? [{ g: input.note }] : []), 0, $wg__input_on__OR__input_p, $scope0_reason, 0, 0, void 0, 0, 0, "a0");
 	_html("</main>");
 	$fg__input_note && _patch_subscribers($scope0_id, "a2", "g");
-	_patch_render($scope0_id, "a3", [$fg__input_on && "d", $fg__input_p && "e"], $scope0_reason, 0);
+	_patch_render($scope0_id, "a3", (($fg__input_on ? " d" : "") + ($fg__input_p ? " e" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		d: ($ui__input_p || $ui__input_on__OR__input_p) && input.on,
 		e: ($ui__input_on || $ui__input_on__OR__input_p) && input.p,

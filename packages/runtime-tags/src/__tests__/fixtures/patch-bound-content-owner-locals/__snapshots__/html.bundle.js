@@ -26,7 +26,7 @@ var host_default = _template("b", (input) => {
 				{ _: $scope($scope0_id) }
 			] : [{ 2: entry?.text }]) }));
 			_dynamic_tag($scope1_id, "a", input.wrap, { item: $item }, 1, 0, 0, $wg__input_wrap__OR__input_items, $scope0_reason, 2, 0, 6, void 0, 0, "b1");
-			_patch_render($scope1_id, "b2", [_filled_guard($scope0_reason, 6) && ">e", _filled_guard($scope0_reason, 7) && ">f"], $scope0_reason, 2);
+			_patch_render($scope1_id, "b2", ((_filled_guard($scope0_reason, 6) ? " >e" : "") + (_filled_guard($scope0_reason, 7) ? " >f" : "")).slice(1), $scope0_reason, 2);
 			$wi__input_show__OR__input_wrap__OR__input_items__OR__input_label && _scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}

@@ -2,7 +2,7 @@
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $setup$1 = ($_) => {};
-const $for_content__input_a__OR__item__script = _script("__tests__/tags/child.marko_1_input_a#0:4_item#3", ($scope) => _el_read($scope["#div/1"]).textContent = "s:" + $scope.item + $scope._.input_a);
+const $for_content__input_a__OR__item__script = _script_patch("__tests__/tags/child.marko_1_input_a#0:4_item#3 >input_a item", ($scope) => _el_read($scope["#div/1"]).textContent = "s:" + $scope.item + $scope._.input_a);
 const $for_content__input_a__OR__item = /*@__PURE__*/ _or_patch("__tests__/tags/child.marko_1_input_a#0:4_item#3/setup", 4, ($scope) => {
 	_text($scope["#text/0"], $scope._.input_a + $scope.item);
 	$for_content__input_a__OR__item__script($scope);

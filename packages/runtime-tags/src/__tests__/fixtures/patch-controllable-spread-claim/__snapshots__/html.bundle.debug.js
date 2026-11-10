@@ -13,7 +13,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, "#input/0", $scope0_id, "input", 1, $scope0_reason, 0)}>${_el_mark($scope0_id, "#input/0")}<p id=out>-</p><button>interactive</button>${_el_mark($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_script($scope0_id, "__tests__/template.marko_0_input_attrs#4_input_on#5");
-	_patch_render($scope0_id, "__tests__/template.marko_0_input_attrs#4_input_on#5/setup", [$fg__input_attrs && "input_attrs", $fg__input_on && "input_on"], $scope0_reason, 0);
+	_patch_render($scope0_id, "__tests__/template.marko_0_input_attrs#4_input_on#5/setup", (($fg__input_attrs ? " input_attrs" : "") + ($fg__input_on ? " input_on" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		input_attrs: ($ui__input_on || $ui__input_attrs__OR__input_on) && input.attrs,
 		input_on: ($ui__input_attrs || $ui__input_attrs__OR__input_on) && input.on

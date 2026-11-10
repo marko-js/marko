@@ -2,7 +2,7 @@
 const $template = "<output></output>";
 const $walks = " b";
 const $setup = ($_) => {};
-const $getTitle2__script = _script("__tests__/template.marko_0_getTitle#4", ($scope) => {
+const $getTitle2__script = _script_patch("__tests__/template.marko_0_getTitle#4 getTitle input_title", ($scope) => {
 	_el_read($scope["#output/0"]).textContent = $scope.getTitle();
 	console.log("run", $scope.getTitle());
 });

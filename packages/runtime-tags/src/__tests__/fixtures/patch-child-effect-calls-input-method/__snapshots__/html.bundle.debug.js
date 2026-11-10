@@ -6,7 +6,7 @@ _shells({ "__tests__/tags/label.marko": "__tests__/tags/label.marko," });
 var label_default = _template("__tests__/tags/label.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $fg__input = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_script($scope0_id, "__tests__/tags/label.marko_0_input#1", 0, $fg__input, "input");
+	_script($scope0_id, "__tests__/tags/label.marko_0_input#1", 0, $fg__input);
 	_scope($scope0_id, { input }, "__tests__/tags/label.marko", 0, { input: 0 }) || $fg__input && _patch_write($scope0_id, "PatchMarkedWrite:input", input, !_server_guard($scope0_reason, 0));
 });
 
@@ -16,16 +16,16 @@ const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)("");
 const $setup = _shell_setup([[], []], ["#childScope/0>", $setup$1]);
 _shells({ "__tests__/template.marko": `__tests__/template.marko${_shell_marker($setup)};${((_w0) => `/${_w0}&`)("")};${""}` });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_title = _server_guard($scope0_reason, 0), $fg__input_title = _filled_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	$fg__input_title && _patch_write($scope0_id, "PatchMarkedWrite:input_title", input.title, !$sg__input_title);
+	_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_title", input.title, !_server_guard($scope0_reason, 0));
 	const getTitle = _bind_resume(() => input.title, "__tests__/template.marko_0/getTitle", $scope0_id);
 	_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
-	label_default(_patch_live($childScope, { get: getTitle }, $scope0_id, "getTitle input_title"));
+	label_default({ get: getTitle });
 	_patch_child_end();
 	_scope($scope0_id, {
 		input_title: input.title,
 		"#childScope/0": _existing_scope($childScope)
-	}, "__tests__/template.marko", 0, { input_title: ["input.title"] }) || $fg__input_title && _patch_write($scope0_id, "PatchMarkedWrite:getTitle", getTitle, !$sg__input_title);
+	}, "__tests__/template.marko", 0, { input_title: ["input.title"] });
 }, 1);

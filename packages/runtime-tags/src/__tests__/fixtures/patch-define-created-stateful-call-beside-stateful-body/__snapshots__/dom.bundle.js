@@ -33,7 +33,7 @@ const $Inner_content__n = /*@__PURE__*/ _fill_let("a6", 5, $if_content2__n);
 const $Inner_content__setup = ($scope) => $Inner_content__n($scope, 1);
 const $Inner_content__if = /*@__PURE__*/ _if(0, "<em><!><!></em><button class=inc>+</button>", "D%b%l ", $if_content2__setup);
 const $Inner_content__isOpen = ($scope, isOpen) => $Inner_content__if($scope, isOpen ? 0 : 1);
-const $Inner_content__text__script = _script("a5", ($scope) => console.log("inner effect", $scope.e));
+const $Inner_content__text__script = _script_patch("a5 e", ($scope) => console.log("inner effect", $scope.e));
 const $Inner_content__text = /*@__PURE__*/ _const(4, ($scope) => {
 	$if_content2__text($scope);
 	$Inner_content__text__script($scope);

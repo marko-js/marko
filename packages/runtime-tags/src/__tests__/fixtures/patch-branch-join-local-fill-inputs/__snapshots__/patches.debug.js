@@ -25,7 +25,7 @@
         "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-branch-join-local-fill-inputs/tags/child.marko_1_m#4/fill": 0
       }
     }, _.a],
-    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-branch-join-local-fill-inputs/tags/child.marko_0_input_a#5": "input_a",
+    "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-branch-join-local-fill-inputs/tags/child.marko_0_input_a#5",
     "PatchMarkedWrite:input_a": "s"
   }
 }
@@ -57,7 +57,7 @@
         "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-branch-join-local-fill-inputs/tags/child.marko_1_m#4/fill": 0
       }
     }, _.a],
-    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-branch-join-local-fill-inputs/tags/child.marko_0_input_a#5": "input_a",
+    "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-branch-join-local-fill-inputs/tags/child.marko_0_input_a#5",
     "PatchMarkedWrite:input_a": "u"
   }
 }

@@ -10,8 +10,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const Row = { content: _content("__tests__/template.marko_1*content", ({ a, b }) => {
 		const $scope1_id = _scope_id(), $fg__input_c = _filled_guard($scope0_reason, 1);
 		const $scope1_reason = _scope_reason(), $fg__a = _filled_guard($scope1_reason, 1), $fg__b = _filled_guard($scope1_reason, 2), $uf__a__OR__b = _updates_from($scope1_reason, 0);
-		_script($scope1_id, "__tests__/template.marko_1_input_c#0:3_a#2", 0, ($fg__input_c || $fg__a) && ($cg__input_c || _client_guard($scope1_reason, 1) ? 2 : 1), [$fg__input_c && ">input_c", $fg__a && "a"], "__tests__/template.marko_1_input_c#0:3_a#2/setup", ($uf__input_c | _updates_from($scope1_reason, 1)) << 1, 0);
-		_script($scope1_id, "__tests__/template.marko_1_input_c#0:3_b#4", 0, ($fg__input_c || $fg__b) && ($cg__input_c || _client_guard($scope1_reason, 2) ? 2 : 1), [$fg__input_c && ">input_c", $fg__b && "b"], "__tests__/template.marko_1_input_c#0:3_b#4/setup", ($uf__input_c | _updates_from($scope1_reason, 2)) << 1, 0);
+		_script($scope1_id, "__tests__/template.marko_1_input_c#0:3_a#2", 0, ($fg__input_c || $fg__a) && ($cg__input_c || _client_guard($scope1_reason, 1) ? 2 : 1), (($fg__input_c ? " >input_c" : "") + ($fg__a ? " a" : "")).slice(1), "__tests__/template.marko_1_input_c#0:3_a#2/setup", ($uf__input_c | _updates_from($scope1_reason, 1)) << 1, 0);
+		_script($scope1_id, "__tests__/template.marko_1_input_c#0:3_b#4", 0, ($fg__input_c || $fg__b) && ($cg__input_c || _client_guard($scope1_reason, 2) ? 2 : 1), (($fg__input_c ? " >input_c" : "") + ($fg__b ? " b" : "")).slice(1), "__tests__/template.marko_1_input_c#0:3_b#4/setup", ($uf__input_c | _updates_from($scope1_reason, 2)) << 1, 0);
 		_subscribe(_unfilled_if(($uf__input_c | $uf__a__OR__b) << 1, 0) && $wi__input_c && $input_c__closures, _scope($scope1_id, {
 			a,
 			b,

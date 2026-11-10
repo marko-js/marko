@@ -9,7 +9,7 @@ function $setup($scope) {
 	$clicks($scope, 0);
 	$setup__script($scope);
 }
-const $input_label__script = _script("__tests__/template.marko_0_input_label#5", ($scope) => {
+const $input_label__script = _script_patch("__tests__/template.marko_0_input_label#5 input_label", ($scope) => {
 	$signalReset($scope, 0);
 	_el_read($scope["#p/2"]).dataset.label = $scope.input_label;
 	_el_read($scope["#button/0"]).addEventListener("click", () => {

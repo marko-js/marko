@@ -30,7 +30,7 @@ var list_default = _template("c", (input) => {
 		$ui__input_items__OR__input_suffix && _var($scope1_id, "b", $childScope, "c0");
 		_patch_child_end();
 		_html(`<p>${_text_mark($scope1_id, "c", label, 1, $scope0_reason, 0)}</p>`);
-		_patch_render($scope1_id, "c1", [_filled_guard($scope0_reason, 2) && ">e", $fg__input_items && "e"], $scope0_reason, 0);
+		_patch_render($scope1_id, "c1", ((_filled_guard($scope0_reason, 2) ? " >e" : "") + ($fg__input_items ? " e" : "")).slice(1), $scope0_reason, 0);
 		_scope($scope1_id, {
 			e: ($ui__input_suffix || $ui__input_items__OR__input_suffix) && item,
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id),

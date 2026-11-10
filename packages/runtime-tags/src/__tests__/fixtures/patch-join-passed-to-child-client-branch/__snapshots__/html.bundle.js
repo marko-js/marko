@@ -37,7 +37,7 @@ var template_default = _template("a", (input) => {
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	child_default({ v: c });
 	_patch_child_end();
-	_patch_render($scope0_id, "a0", [$fg__input_a && "d", $fg__input_b && "e"], $scope0_reason, 0);
+	_patch_render($scope0_id, "a0", (($fg__input_a ? " d" : "") + ($fg__input_b ? " e" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		d: ($ui__input_b || $ui__input_a__OR__input_b) && input.a,
 		e: ($ui__input_a || $ui__input_a__OR__input_b) && input.b,

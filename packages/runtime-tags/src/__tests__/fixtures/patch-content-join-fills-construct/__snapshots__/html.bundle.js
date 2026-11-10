@@ -83,7 +83,7 @@ var page_default = _template("a", (input) => {
 			counter_default({ base: (bonus ?? p.base) + item.n });
 			_patch_child_end();
 			_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope2_id, "a1");
-			_patch_render($scope2_id, "a2", [">>j", _filled_guard($scope0_reason, 0) && ">d"]);
+			_patch_render($scope2_id, "a2", ">>j" + (_filled_guard($scope0_reason, 0) ? " >d" : ""));
 			_subscribe(_unfilled_if($scope0_reason, 0) && $for_content__item_n__closures, _subscribe($bonus__closures, _scope($scope2_id, {
 				_: _scope_with_id($scope1_id),
 				a: _existing_scope($childScope2)

@@ -19,7 +19,7 @@
       }],
       "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-loop-content-bind-linked/tags/list.marko_2_item_content#1:3/setup": "item_content"
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-content-bind-linked/tags/list.marko_1*shell"],
-    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-loop-content-bind-linked/tags/list.marko_0_input_onPick#5": "input_onPick",
+    "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-loop-content-bind-linked/tags/list.marko_0_input_onPick#5",
     "PatchBind:input_onPick": "^packages/runtime-tags/src/__tests__/fixtures/patch-loop-content-bind-linked/template.marko_0/onPick"
   },
   "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-loop-content-bind-linked/template.marko_0_input_note#3/subscribers": "input_note"
@@ -36,7 +36,7 @@
       }],
       "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-loop-content-bind-linked/tags/list.marko_2_item_content#1:3/setup": "item_content"
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-loop-content-bind-linked/tags/list.marko_1*shell"],
-    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-loop-content-bind-linked/tags/list.marko_0_input_onPick#5": "input_onPick",
+    "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-loop-content-bind-linked/tags/list.marko_0_input_onPick#5",
     "PatchBind:input_onPick": "^packages/runtime-tags/src/__tests__/fixtures/patch-loop-content-bind-linked/template.marko_0/onPick"
   },
   "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-loop-content-bind-linked/template.marko_0_input_note#3/subscribers": "input_note"

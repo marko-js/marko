@@ -5,7 +5,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let n = 0;
 	_html(`<button>${_text_mark($scope0_id, "b", n + input.label)}</button>${_el_mark($scope0_id, "a")}<div></div>${_el_mark($scope0_id, "c")}`);
-	_script($scope0_id, "a0", 1, $fg__input_label, "f");
+	_script($scope0_id, "a0", 1, $fg__input_label);
 	_script($scope0_id, "a1");
 	_patch_render($scope0_id, "a2", $fg__input_label && "f");
 	_scope($scope0_id, {

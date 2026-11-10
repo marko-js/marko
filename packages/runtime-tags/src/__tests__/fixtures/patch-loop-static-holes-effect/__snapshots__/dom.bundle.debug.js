@@ -7,7 +7,7 @@ const $for_content2__setup = $for_content2__input_note;
 const $for_content2__$params = ($scope, $params4) => _text($scope["#text/0"], $params4[0]);
 const $if_content__for = /*@__PURE__*/ _for_of_unkeyed("#div/0", "<p><!>:<!></p>", "D%c%", $for_content2__setup, $for_content2__$params);
 const $if_content__setup = ($scope) => $if_content__for($scope, [[1, 2]]);
-const $for_content__input_note__script = _script("__tests__/template.marko_1_input_note#0:5", ($scope) => _el_read($scope["#li/0"]).title = $scope._.input_note);
+const $for_content__input_note__script = _script_patch("__tests__/template.marko_1_input_note#0:5 >input_note", ($scope) => _el_read($scope["#li/0"]).title = $scope._.input_note);
 const $for_content__input_note = /*@__PURE__*/ _for_closure_patch("__tests__/template.marko_1_input_note#0:5/setup", "#ul/0", ($scope) => {
 	_text($scope["#text/2"], $scope._.input_note);
 	$for_content__input_note__script($scope);

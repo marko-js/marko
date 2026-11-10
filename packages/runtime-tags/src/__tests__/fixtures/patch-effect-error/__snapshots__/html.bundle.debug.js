@@ -9,7 +9,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let count = 0;
 	_html(`<p>${_text_mark($scope0_id, "#text/0", input.label, 1, $scope0_reason, 0)}</p><button>${_text_mark($scope0_id, "#text/2", count)}</button>${_el_mark($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	_script($scope0_id, "__tests__/template.marko_0_input_label#5", 1, $fg__input_label, "input_label");
+	_script($scope0_id, "__tests__/template.marko_0_input_label#5", 1, $fg__input_label);
 	_scope($scope0_id, {
 		input_label: input.label,
 		count

@@ -65,7 +65,7 @@ var template_default = _template("a", (input) => {
 		}, $scope1_id, () => [{ 3: b }]) }));
 		_dynamic_tag($scope1_id, "a", input.on ? list_default : list2_default, { item: $item }, 1, 0, 0, $wg__input_on__OR__input_bs, $scope0_reason, 2);
 		$fg__input_as && _patch_subscribers($scope1_id, "a3", "d");
-		_patch_render($scope1_id, "a4", [_filled_guard($scope0_reason, 6) && ">g", _filled_guard($scope0_reason, 7) && ">h"], $scope0_reason, 2);
+		_patch_render($scope1_id, "a4", ((_filled_guard($scope0_reason, 6) ? " >g" : "") + (_filled_guard($scope0_reason, 7) ? " >h" : "")).slice(1), $scope0_reason, 2);
 		$wi__input_as__OR__input_on__OR__input_bs__OR__input_note && _scope($scope1_id, {
 			d: ($ui__input_on__OR__input_bs || _unfilled_if($scope0_reason, 5)) && a,
 			_: _scope_with_id($scope0_id),

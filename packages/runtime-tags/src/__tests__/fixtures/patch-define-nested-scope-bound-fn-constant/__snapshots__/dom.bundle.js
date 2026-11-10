@@ -1,5 +1,5 @@
 // template.marko
-const $Inner_content__fn__script = _script("a2", ($scope) => _on($scope.a, "click", $scope.e));
+const $Inner_content__fn__script = _script_patch("a2 e", ($scope) => _on($scope.a, "click", $scope.e));
 function $fn() {
 	console.log("clicked");
 }

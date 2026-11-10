@@ -23,7 +23,7 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 // tags/card.marko
 const $template = "<button>x</button>";
 const $walks = "/& b";
-const $Panel_content__input_w__OR__k__script = _script("__tests__/tags/card.marko_1_input_w#0:5_k#0:6", ($scope) => console.log("k", $scope._.k, $scope._.input_w));
+const $Panel_content__input_w__OR__k__script = _script_patch("__tests__/tags/card.marko_1_input_w#0:5_k#0:6 >input_w", ($scope) => console.log("k", $scope._.k, $scope._.input_w));
 const $Panel_content__input_w__OR__k = /*@__PURE__*/ _or_patch("__tests__/tags/card.marko_1_input_w#0:5_k#0:6/setup", 0, $Panel_content__input_w__OR__k__script);
 const $Panel_content__input_w = /*@__PURE__*/ _closure_get_patch("__tests__/tags/card.marko_1_input_w#0:5/subscribe", "input_w/7", $Panel_content__input_w__OR__k);
 const $Panel_content__setup = ($scope) => {

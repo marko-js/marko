@@ -32,7 +32,7 @@ const $await_content2__dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1", $input
 const $await_content2__input_inner = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_3_input_inner#0:6/subscribe", "input_inner/10", ($scope) => $await_content2__dynamicTag($scope, $scope._._._.input_inner ? card_default : "section"), ($scope) => $scope._._._, "__tests__/template.marko_0_input_inner#6/subscribers", 0);
 const $await_content2__setup = $await_content2__input_inner;
 const $await_content2__w__closure = /*@__PURE__*/ _closure($inputinnerCardsection_content__w);
-const $await_content2__w__script = _script("__tests__/template.marko_3_w#3", ($scope) => console.log("w", $scope.w));
+const $await_content2__w__script = _script_patch("__tests__/template.marko_3_w#3 w", ($scope) => console.log("w", $scope.w));
 const $await_content2__w = /*@__PURE__*/ _const("w", ($scope) => {
 	$await_content2__w__closure($scope);
 	_text($scope["#text/0"], $scope.w);

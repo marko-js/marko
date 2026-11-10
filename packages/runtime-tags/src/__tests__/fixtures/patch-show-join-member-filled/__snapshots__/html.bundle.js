@@ -29,7 +29,7 @@ var template_default = _template("a", (input) => {
 		_subscribe($wi__input_id && $input_id__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), $cg__input_id && "a0", $wg__input_id);
 	}, void 0, "a2", void 0, "a3", 1);
 	$fg__input_id && _patch_subscribers($scope0_id, "a4", "f");
-	_patch_render($scope0_id, "a5", [$fg__input_which && "e", $fg__input_id && "f"], $scope0_reason, 0);
+	_patch_render($scope0_id, "a5", (($fg__input_which ? " e" : "") + ($fg__input_id ? " f" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		e: ($ui__input_id || _unfilled_if($scope0_reason, 0)) && input.which,
 		f: input.id,

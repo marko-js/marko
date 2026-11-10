@@ -8,7 +8,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let x = input.v;
 	_html(`<p>${_text_mark($scope0_id, "#text/0", x + input.w)}</p>`);
-	_patch_render($scope0_id, "__tests__/template.marko_0_input_w#4_x#5/setup", [$fg__input_w && "input_w", _filled_guard($scope0_reason, 0) && "input_v"]);
+	_patch_render($scope0_id, "__tests__/template.marko_0_input_w#4_x#5/setup", (($fg__input_w ? " input_w" : "") + (_filled_guard($scope0_reason, 0) ? " input_v" : "")).slice(1));
 	_patch_let_change($scope0_id, "PatchFill:__tests__/template.marko_0_x#5/fill", x, 0, 1, $scope0_reason, 0);
 	_scope($scope0_id, {
 		input_w: input.w,

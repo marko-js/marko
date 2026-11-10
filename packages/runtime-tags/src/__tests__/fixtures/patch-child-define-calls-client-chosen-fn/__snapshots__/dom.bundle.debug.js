@@ -4,7 +4,7 @@ const $Show_content__template = "<output></output>";
 const $template$1 = $Show_content__template;
 const $walks$1 = /*@__PURE__*/ ((_w0) => `/${_w0}&`)($Show_content__walks);
 const $setup$1 = ($_) => {};
-const $Show_content__get__script = _script("__tests__/tags/mid-define.marko_1_get#3", ($scope) => {
+const $Show_content__get__script = _script_patch("__tests__/tags/mid-define.marko_1_get#3 get", ($scope) => {
 	_el_read($scope["#output/0"]).textContent = $scope.get();
 	console.log("run", $scope.get());
 });

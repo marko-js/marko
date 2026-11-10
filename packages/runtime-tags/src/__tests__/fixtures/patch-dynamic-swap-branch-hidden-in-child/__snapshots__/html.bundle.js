@@ -59,7 +59,7 @@ var w_default = _template("b", (input) => {
 	$ui__input_flag__OR__input_x && _patch_write($scope0_id, "wg", A, 1);
 	$ui__input_flag__OR__input_x && _patch_write($scope0_id, "wh", B, 1);
 	$fg__input_show && _patch_subscribers($scope0_id, "b8", "d");
-	_patch_render($scope0_id, "b9", [$fg__input_flag && "e", $fg__input_x && "f"], $scope0_reason, 0);
+	_patch_render($scope0_id, "b9", (($fg__input_flag ? " e" : "") + ($fg__input_x ? " f" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		d: ($ui__input_flag__OR__input_x || _unfilled_if($scope0_reason, 2)) && input.show,
 		e: ($ui__input_x || $ui__input_flag__OR__input_x) && input.flag,

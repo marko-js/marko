@@ -2,7 +2,7 @@
 const $template = "<pre id=log></pre><!><!>";
 const $walks = "/&b%c";
 const $placeholder_content = _content("__tests__/template.marko_4*content", "loading");
-const $Use_content__fn__OR__where__script = _script("__tests__/template.marko_3_fn#2_where#3", ($scope) => {
+const $Use_content__fn__OR__where__script = _script_patch("__tests__/template.marko_3_fn#2_where#3 fn >input_x where", ($scope) => {
 	{
 		const el = document.getElementById("log");
 		el.textContent += $scope.where + ":" + (el.last === $scope.fn ? "same;" : "new;");

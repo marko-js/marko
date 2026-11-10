@@ -6,7 +6,7 @@
     "PatchChild:BranchScopes:#text/0": {
       "PatchMarkedWrite:x": "b",
       "PatchText:#text/0": "b",
-      "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-await-created-if-body-effect-update/template.marko_2_x#3": "x",
+      "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-await-created-if-body-effect-update/template.marko_2_x#3",
       "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-await-created-if-body-effect-update/template.marko_3_x#2:3/setup": "x"
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-await-created-if-body-effect-update/template.marko_1*shell"]
@@ -20,7 +20,7 @@
     "PatchChild:BranchScopes:#text/0": {
       "PatchMarkedWrite:x": "c",
       "PatchText:#text/0": "c",
-      "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-await-created-if-body-effect-update/template.marko_2_x#3": "x",
+      "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-await-created-if-body-effect-update/template.marko_2_x#3",
       "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-await-created-if-body-effect-update/template.marko_3_x#2:3/setup": "x"
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-await-created-if-body-effect-update/template.marko_1*shell"]

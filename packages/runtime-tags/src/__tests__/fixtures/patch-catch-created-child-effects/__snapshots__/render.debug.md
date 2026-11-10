@@ -42,8 +42,8 @@ UPDATE: span::text " " => "b"
 ```
 ## Console
 ```
-LOG "label" "b"
 LOG "message" "b"
+LOG "label" "b"
 LOG "setup"
 LOG "count" 1
 ```

@@ -32,7 +32,7 @@ var template_default = _template("a", (input) => {
 			let x = _dynamic_tag($scope1_id, "a", input.which ? one_default : two_default, { a: input.a }, 1, 0, 0, 1, $scope0_reason, 2, 0, void 0, 0, "a0");
 			_var($scope1_id, "b", $inputwhichonetwo_scope, "a0");
 			_html(`<p>${_text_mark($scope1_id, "c", x)}</p>`);
-			_patch_render($scope1_id, "a1", [_filled_guard($scope0_reason, 5) && ">e", _filled_guard($scope0_reason, 6) && ">f"], $scope0_reason, 2);
+			_patch_render($scope1_id, "a1", ((_filled_guard($scope0_reason, 5) ? " >e" : "") + (_filled_guard($scope0_reason, 6) ? " >f" : "")).slice(1), $scope0_reason, 2);
 			_scope($scope1_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id) });
 			return 0;
 		}

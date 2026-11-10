@@ -1,5 +1,5 @@
 // tags/probe.marko
-const $input_label__OR__input_count__script = _script("b0", ($scope) => console.log("probe", $scope.c, $scope.d));
+const $input_label__OR__input_count__script = _script_patch("b0 c d", ($scope) => console.log("probe", $scope.c, $scope.d));
 const $input_label__OR__input_count = /*@__PURE__*/ _or_patch("b1", 4, $input_label__OR__input_count__script);
 const $input_count = /*@__PURE__*/ _const(3, $input_label__OR__input_count);
 

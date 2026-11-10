@@ -9,7 +9,7 @@
       title: "b",
       onClick: _([], "packages/runtime-tags/src/__tests__/fixtures/patch-bind-source-per-frame/template.marko_0/handler")
     },
-    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-bind-source-per-frame/template.marko_1_attrs#2": ">input_title"
+    "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-bind-source-per-frame/template.marko_1_attrs#2"
   }
 }
 {
@@ -19,6 +19,6 @@
       title: "b",
       onClick: _([], "packages/runtime-tags/src/__tests__/fixtures/patch-bind-source-per-frame/template.marko_0/handler")
     },
-    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-bind-source-per-frame/template.marko_2_attrs#2": ">input_title"
+    "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-bind-source-per-frame/template.marko_2_attrs#2"
   }
 }

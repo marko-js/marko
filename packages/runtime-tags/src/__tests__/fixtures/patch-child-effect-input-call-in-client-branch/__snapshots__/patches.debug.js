@@ -1,7 +1,7 @@
 // PATCH
 {
   "PatchChild:#childScope/0": {
-    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-child-effect-input-call-in-client-branch/tags/card.marko_0_input_label#8": "input_label",
+    "PatchEffect:": _.a = "packages/runtime-tags/src/__tests__/fixtures/patch-child-effect-input-call-in-client-branch/tags/card.marko_0_input_label#8",
     "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-child-effect-input-call-in-client-branch/tags/card.marko_1_input_label#0:8/setup": "input_label",
     "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-child-effect-input-call-in-client-branch/tags/card.marko_2_input_label#0:8/setup": "input_label",
     "PatchMarkedWrite:input_label": "b"
@@ -14,7 +14,7 @@
         }]
       }
     }],
-    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-child-effect-input-call-in-client-branch/tags/card.marko_0_input_label#8": "input_label",
+    "PatchEffect:": _.a,
     "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-child-effect-input-call-in-client-branch/tags/card.marko_2_input_label#0:8/setup": "input_label",
     "PatchMarkedWrite:input_label": "b"
   }

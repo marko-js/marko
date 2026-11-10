@@ -8,7 +8,7 @@ var card_default = _template("b", (input) => {
 	let open = true;
 	const g = input.fn;
 	_html(`<p>${_text_mark($scope0_id, "a", g())}</p>`);
-	_script($scope0_id, "b1", 1, $sg__input_fn && 2, "d");
+	_script($scope0_id, "b1", 1, $sg__input_fn && 2);
 	_patch_render($scope0_id, "b2", $fg__input_fn && "d");
 	_patch_fill($scope0_id, "vb3", open, 1);
 	_scope($scope0_id, {

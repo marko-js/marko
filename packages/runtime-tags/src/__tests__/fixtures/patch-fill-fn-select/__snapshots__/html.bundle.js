@@ -14,13 +14,8 @@ var template_default = _template("a", (input) => {
 	_if(() => {}, $scope0_id, "a", 1, 1, 0, 0, 1);
 	_html(`<button>+</button>${_el_mark($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a3");
-	$fg__input_title__OR__input_upper && _patch_render($scope0_id, "a2", ["j", $fg__input_title && "e"]);
-	_patch_render($scope0_id, "a4", [
-		$fg__input_upper && "f",
-		$fg__input_title && "g",
-		$fg__input_title && "e",
-		$fg__input_title && "h"
-	], $scope0_reason, 0);
+	$fg__input_title__OR__input_upper && _patch_render($scope0_id, "a2", "j" + ($fg__input_title ? " e" : ""));
+	_patch_render($scope0_id, "a4", (($fg__input_upper ? " f" : "") + ($fg__input_title ? " g" : "") + ($fg__input_title ? " e" : "") + ($fg__input_title ? " h" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		e: input.title,
 		f: ($ui__input_title || $ui__input_title__OR__input_upper) && input.upper,

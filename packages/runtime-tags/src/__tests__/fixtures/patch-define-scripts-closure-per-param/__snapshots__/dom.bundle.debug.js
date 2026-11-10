@@ -1,9 +1,9 @@
 // template.marko
 const $template = "";
 const $walks = "/&";
-const $Row_content__input_c__OR__a__script = _script("__tests__/template.marko_1_input_c#0:3_a#2", ($scope) => console.log("a", $scope.a + $scope._.input_c));
+const $Row_content__input_c__OR__a__script = _script_patch("__tests__/template.marko_1_input_c#0:3_a#2 >input_c a", ($scope) => console.log("a", $scope.a + $scope._.input_c));
 const $Row_content__input_c__OR__a = /*@__PURE__*/ _or_patch("__tests__/template.marko_1_input_c#0:3_a#2/setup", 3, $Row_content__input_c__OR__a__script);
-const $Row_content__input_c__OR__b__script = _script("__tests__/template.marko_1_input_c#0:3_b#4", ($scope) => console.log("b", $scope.b + $scope._.input_c));
+const $Row_content__input_c__OR__b__script = _script_patch("__tests__/template.marko_1_input_c#0:3_b#4 >input_c b", ($scope) => console.log("b", $scope.b + $scope._.input_c));
 const $Row_content__input_c__OR__b = /*@__PURE__*/ _or_patch("__tests__/template.marko_1_input_c#0:3_b#4/setup", 5, $Row_content__input_c__OR__b__script);
 const $Row_content__input_c = /*@__PURE__*/ _closure_get("input_c/6", ($scope) => {
 	$Row_content__input_c__OR__a($scope);

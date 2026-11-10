@@ -2,7 +2,7 @@
 {
   xf: "b",
   ia8: "i",
-  ia9: "f i",
+  ia9: "k",
   ia3: "l",
   ia4: "n",
   ia5: "o f",
@@ -20,7 +20,7 @@
 {
   xf: "c",
   ia8: "i",
-  ia9: "f i",
+  ia9: "k",
   ia3: "l",
   ia4: "n",
   ia5: "o f",

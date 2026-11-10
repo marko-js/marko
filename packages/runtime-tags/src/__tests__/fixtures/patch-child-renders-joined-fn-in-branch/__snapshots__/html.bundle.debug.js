@@ -20,11 +20,7 @@ var label_view_default = _template("__tests__/tags/label-view.marko", (input) =>
 	_html(`<span>x</span>${_el_mark($scope0_id, "#span/1")}`);
 	_script($scope0_id, "__tests__/tags/label-view.marko_0");
 	$fg__input_flag__OR__input_a__OR__input_b && _patch_render($scope0_id, "__tests__/tags/label-view.marko_1_get#0:9/setup", "get");
-	_patch_render($scope0_id, "__tests__/tags/label-view.marko_0_input_flag#4_input_a#5_input_b#6/setup", [
-		$fg__input_flag && "input_flag",
-		$fg__input_a && "input_a",
-		$fg__input_b && "input_b"
-	], $scope0_reason, 3);
+	_patch_render($scope0_id, "__tests__/tags/label-view.marko_0_input_flag#4_input_a#5_input_b#6/setup", (($fg__input_flag ? " input_flag" : "") + ($fg__input_a ? " input_a" : "") + ($fg__input_b ? " input_b" : "")).slice(1), $scope0_reason, 3);
 	_patch_fill($scope0_id, "PatchFill:__tests__/tags/label-view.marko_0_open#8/fill", open, 1);
 	_scope($scope0_id, {
 		input_flag: ($ui__input_a__OR__input_b || $ui__input_flag__OR__input_a__OR__input_b) && input.flag,
@@ -63,11 +59,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_patch_child_end();
 	_html(`<button>toggle</button>${_el_mark($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	_patch_render($scope0_id, "__tests__/template.marko_0_upper#5_up#6_low#7/setup", [
-		$fg__input_title && "up",
-		$fg__input_title && "input_title",
-		$fg__input_title && "low"
-	]);
+	_patch_render($scope0_id, "__tests__/template.marko_0_upper#5_up#6_low#7/setup", (($fg__input_title ? " up" : "") + ($fg__input_title ? " input_title" : "") + ($fg__input_title ? " low" : "")).slice(1));
 	_scope($scope0_id, {
 		input_title: input.title,
 		upper,

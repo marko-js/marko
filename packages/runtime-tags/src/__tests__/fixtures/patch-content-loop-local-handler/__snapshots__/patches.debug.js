@@ -8,7 +8,7 @@
         "PatchMarkedWrite:x_name": "B",
         "PatchAttr:#button/0 class": "b1",
         "PatchText:#text/1": "B",
-        "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-content-loop-local-handler/template.marko_1_x_name#4": "x_name"
+        "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-content-loop-local-handler/template.marko_1_x_name#4"
       }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-loop-local-handler/tags/menu.marko_1*shell"]
   }
@@ -24,7 +24,7 @@
         "PatchMarkedWrite:x_name": "C",
         "PatchAttr:#button/0 class": "b1",
         "PatchText:#text/1": "C",
-        "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-content-loop-local-handler/template.marko_1_x_name#4": "x_name"
+        "PatchEffect:": _.b = "packages/runtime-tags/src/__tests__/fixtures/patch-content-loop-local-handler/template.marko_1_x_name#4"
       }
     }, {
       "PatchDynamicTag:#text/0": _.a,
@@ -32,7 +32,7 @@
         "PatchMarkedWrite:x_name": "D",
         "PatchAttr:#button/0 class": "b2",
         "PatchText:#text/1": "D",
-        "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-content-loop-local-handler/template.marko_1_x_name#4": "x_name"
+        "PatchEffect:": _.b
       }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-loop-local-handler/tags/menu.marko_1*shell"]
   }

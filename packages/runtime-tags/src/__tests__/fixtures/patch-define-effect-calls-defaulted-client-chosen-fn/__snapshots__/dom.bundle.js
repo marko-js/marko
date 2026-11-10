@@ -1,5 +1,5 @@
 // template.marko
-const $Show_content__g__script = _script("a4", ($scope) => {
+const $Show_content__g__script = _script_patch("a4 >e", ($scope) => {
 	$scope.a.textContent = $scope.e();
 	console.log("run", $scope.e());
 });

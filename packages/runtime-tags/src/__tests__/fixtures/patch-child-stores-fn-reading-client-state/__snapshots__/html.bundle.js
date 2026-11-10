@@ -6,7 +6,7 @@ var card_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	let open = true;
 	const g = input.fn;
-	_script($scope0_id, "b1", 0, $sg__input_fn && 2, "c");
+	_script($scope0_id, "b1", 0, $sg__input_fn && 2);
 	_patch_render($scope0_id, "b2", $fg__input_fn && "c");
 	_patch_fill($scope0_id, "vb3", open, 1);
 	_scope($scope0_id, {

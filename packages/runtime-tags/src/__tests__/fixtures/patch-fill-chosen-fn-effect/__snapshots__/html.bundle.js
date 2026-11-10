@@ -12,7 +12,7 @@ var template_default = _template("a", (input) => {
 	_html(`<pre id=log></pre><div id=d></div>${_el_mark($scope0_id, "a")}<main>`);
 	_if(() => {}, $scope0_id, "b", 1, 1, 0, 0, 1);
 	_html(`<button>+</button>${_el_mark($scope0_id, "c")}</main>`);
-	_script($scope0_id, "a3", 1, $fg__input_upper, "j");
+	_script($scope0_id, "a3", 1, $fg__input_upper);
 	_script($scope0_id, "a4");
 	$fg__input_upper && _patch_render($scope0_id, "a2", "j");
 	_patch_render($scope0_id, "a5", $fg__input_upper && "f", $scope0_reason, 0);

@@ -32,7 +32,7 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 	}, $scope0_id, "#text/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/tags/panel.marko_1*shell"], $scope0_reason, 3);
 	_html(`<p>${_text_mark($scope0_id, "#text/1", input.a + ":" + input.b, 1, $scope0_reason, 2)}</p>`);
 	$fg__input_b && $cg__input_show && _patch_subscribers($scope0_id, "__tests__/tags/panel.marko_0_input_b#5/subscribers", "input_b");
-	_patch_render($scope0_id, "__tests__/tags/panel.marko_0_input_b#5_input_a#6/setup", [$fg__input_b && "input_b", $fg__input_a && "input_a"], $scope0_reason, 2);
+	_patch_render($scope0_id, "__tests__/tags/panel.marko_0_input_b#5_input_a#6/setup", (($fg__input_b ? " input_b" : "") + ($fg__input_a ? " input_a" : "")).slice(1), $scope0_reason, 2);
 	_scope($scope0_id, {
 		input_b: ($ui__input_show__OR__input_a || $ui__input_b__OR__input_a || $ui__input_b) && input.b,
 		input_a: ($ui__input_b || $ui__input_b__OR__input_a) && input.a,

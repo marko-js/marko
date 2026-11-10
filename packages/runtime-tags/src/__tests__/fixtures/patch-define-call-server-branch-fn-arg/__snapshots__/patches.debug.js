@@ -10,7 +10,7 @@
           }, "packages/runtime-tags/src/__tests__/fixtures/patch-define-call-server-branch-fn-arg/tags/card.marko_4*shell"]
         }
       }, "packages/runtime-tags/src/__tests__/fixtures/patch-define-call-server-branch-fn-arg/tags/card.marko_1*shell"],
-      "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-define-call-server-branch-fn-arg/tags/card.marko_0_input_label#8": "input_label",
+      "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-define-call-server-branch-fn-arg/tags/card.marko_0_input_label#8",
       "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-define-call-server-branch-fn-arg/tags/card.marko_2_input_label#0:8/setup": "input_label",
       "PatchMarkedWrite:input_label": "b"
     }

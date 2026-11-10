@@ -5,7 +5,7 @@ const $_return = ($scope) => () => {
 _bind_resume("b0 c", $_return);
 
 // template.marko
-const $fn__script = _script("a1", ($scope) => {
+const $fn__script = _script_patch("a1 h", ($scope) => {
 	{
 		const el = $scope.d;
 		el.textContent += el.fn === $scope.h ? "same;" : "new;";

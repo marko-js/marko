@@ -23,7 +23,7 @@ var show_await_default = _template("b", (input) => {
 			$fg__input_promise && $ui__text && _patch_write($scope2_id, "xc", x, !_server_guard($scope0_reason, 0));
 			_html(`<p>${_text_mark($scope2_id, "a", x + ":" + text, 1, ($uf__input_promise | $uf__text) << 1, 0)}</p>`);
 			_unfilled_if($scope1_reason, 0) && _patch_subscribe($scope2_id, "b0");
-			_patch_render($scope2_id, "b1", [_filled_guard($scope1_reason, 0) && ">d", $fg__input_promise && "c"], ($uf__input_promise | $uf__text) << 1, 0);
+			_patch_render($scope2_id, "b1", ((_filled_guard($scope1_reason, 0) ? " >d" : "") + ($fg__input_promise ? " c" : "")).slice(1), ($uf__input_promise | $uf__text) << 1, 0);
 			_subscribe($ui__text && $Row_content__text__closures, _scope($scope2_id, { c: ($ui__text || _unfilled_if($scope0_reason, 0)) && x }), _client_guard($scope1_reason, 0) && "b0");
 		}, 1, "b2", $ui__input_promise);
 		$cg__input_promise && _patch_render($scope1_id, "b5");

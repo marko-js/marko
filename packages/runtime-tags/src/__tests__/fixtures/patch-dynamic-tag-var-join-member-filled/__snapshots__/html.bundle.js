@@ -48,7 +48,7 @@ var template_default = _template("a", (input) => {
 		_subscribe($wi__input_id && $input_id__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), $cg__input_id && "a1", $wg__input_id);
 	}, void 0, "a3", void 0, "a4", 1);
 	$fg__input_id && _patch_subscribers($scope0_id, "a5", "h");
-	_patch_render($scope0_id, "a6", [$fg__input_which && "g", $fg__input_id && "h"], $scope0_reason, 0);
+	_patch_render($scope0_id, "a6", (($fg__input_which ? " g" : "") + ($fg__input_id ? " h" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		g: ($ui__input_id || _unfilled_if($scope0_reason, 0)) && input.which,
 		h: input.id,

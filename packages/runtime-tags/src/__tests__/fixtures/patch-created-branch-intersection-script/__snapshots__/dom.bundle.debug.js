@@ -2,7 +2,7 @@
 const $template = "<!><!><!>";
 const $walks = "b%c";
 const $setup = ($_) => {};
-const $if_content__input_suffix__OR__inner__script = _script("__tests__/template.marko_1_input_suffix#0:6_inner#1", ($scope) => console.log("inner", $scope.inner, $scope._.input_suffix));
+const $if_content__input_suffix__OR__inner__script = _script_patch("__tests__/template.marko_1_input_suffix#0:6_inner#1 >input_suffix inner", ($scope) => console.log("inner", $scope.inner, $scope._.input_suffix));
 const $if_content__input_suffix__OR__inner = /*@__PURE__*/ _or_patch("__tests__/template.marko_1_input_suffix#0:6_inner#1/setup", 2, $if_content__input_suffix__OR__inner__script);
 const $if_content__inner = /*@__PURE__*/ _const("inner", $if_content__input_suffix__OR__inner);
 const $if_content__input_prefix__OR__input_x = /*@__PURE__*/ _or_patch("__tests__/template.marko_1_input_prefix#0:4_input_x#0:5/setup", 0, ($scope) => $if_content__inner($scope, $scope._.input_prefix + $scope._.input_x));

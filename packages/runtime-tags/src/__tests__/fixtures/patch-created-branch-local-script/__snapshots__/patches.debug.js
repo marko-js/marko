@@ -3,7 +3,7 @@
 {
   "PatchBranch:#main/0": [{
     "PatchMarkedWrite:label": "b!",
-    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-created-branch-local-script/template.marko_1_label#0": "label"
+    "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-created-branch-local-script/template.marko_1_label#0"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-branch-local-script/template.marko_1*shell"]
 }
 ;BAE
@@ -12,6 +12,6 @@
 {
   "PatchBranch:#main/0": [{
     "PatchMarkedWrite:label": "c!",
-    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-created-branch-local-script/template.marko_1_label#0": "label"
+    "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-created-branch-local-script/template.marko_1_label#0"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-branch-local-script/template.marko_1*shell"]
 }

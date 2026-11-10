@@ -41,7 +41,7 @@ var template_default = _template("a", (input) => {
 	_var($scope0_id, "b", $inputwhichCounterOther_scope, "a6");
 	_html(`<p>${_text_mark($scope0_id, "c", count)}</p>`);
 	$fg__input_label && _patch_subscribers($scope0_id, "a7", "f");
-	_patch_render($scope0_id, "a8", [$fg__input_label && "f", $fg__input_which && "g"], $scope0_reason, 0);
+	_patch_render($scope0_id, "a8", (($fg__input_label ? " f" : "") + ($fg__input_which ? " g" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		f: ($ui__input_which || $ui__input_label__OR__input_which || $ui__input_label) && input.label,
 		g: ($ui__input_label || $ui__input_label__OR__input_which) && input.which,

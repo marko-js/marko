@@ -31,10 +31,10 @@ var template_default = _template("a", (input) => {
 		const twice = input.n * 2;
 		$fg__input_n && _patch_write($scope1_id, "xf", twice, !$sg__input_n);
 		_html(`<p>${_text_mark($scope1_id, "b", input.n + input.m, 1, $scope0_reason, 1)}</p>`);
-		_script($scope1_id, "a3", 1, $fg__input_n, [">e", "f"]);
+		_script($scope1_id, "a3", 1, $fg__input_n);
 		_unfilled_if($scope0_reason, 3) && _patch_subscribe($scope1_id, "a4", $cg__input_n);
 		_unfilled_if($scope0_reason, 4) && _patch_subscribe($scope1_id, "a5");
-		_patch_render($scope1_id, "a6", [$fg__input_n && ">e", _filled_guard($scope0_reason, 4) && ">f"], $scope0_reason, 1);
+		_patch_render($scope1_id, "a6", (($fg__input_n ? " >e" : "") + (_filled_guard($scope0_reason, 4) ? " >f" : "")).slice(1), $scope0_reason, 1);
 		$cg__input_n && _patch_render($scope1_id, "a7");
 		_subscribe(_unfilled_if($scope0_reason, 4) && $input_m__closures, _subscribe(_unfilled_if($scope0_reason, 3) && $input_n__closures, _scope($scope1_id, {
 			f: twice,

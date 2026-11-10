@@ -51,7 +51,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id, ($scope) => $scope0_page ? [{ input_user3_name: input.user3?.name }] : []), 0, $wg__input_tag__OR__input_cls, $scope0_reason, 0, 0, 5, void 0, 0, "__tests__/template.marko_2*content");
 	$fg__input_user && _client_guard($scope0_reason, 2) && _patch_render($scope0_id, "__tests__/template.marko_1_input_user#0:6/setup", "input_user");
 	$fg__input_user3_name && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_user3_name#12/subscribers", "input_user3_name");
-	_patch_render($scope0_id, "__tests__/template.marko_0_input_tag#8_input_cls#9/setup", [$fg__input_tag && "input_tag", $fg__input_cls && "input_cls"], $scope0_reason, 0);
+	_patch_render($scope0_id, "__tests__/template.marko_0_input_tag#8_input_cls#9/setup", (($fg__input_tag ? " input_tag" : "") + ($fg__input_cls ? " input_cls" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		input_user: ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.user,
 		input_tag: ($ui__input_cls || $ui__input_tag__OR__input_cls) && input.tag,

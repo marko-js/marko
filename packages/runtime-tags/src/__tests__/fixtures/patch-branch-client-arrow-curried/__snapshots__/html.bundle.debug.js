@@ -22,7 +22,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id, "#text/0", 1, 1, 0, 0, 1);
 	_html(`<button>+</button>${_el_mark($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$fg__input_title && _patch_render($scope0_id, "__tests__/template.marko_1_mk#0:5/setup", ["mk", "input_title"]);
+	$fg__input_title && _patch_render($scope0_id, "__tests__/template.marko_1_mk#0:5/setup", "mk input_title");
 	_scope($scope0_id, {
 		input_title: input.title,
 		mk,

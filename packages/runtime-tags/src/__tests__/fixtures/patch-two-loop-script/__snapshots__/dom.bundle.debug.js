@@ -4,7 +4,7 @@ const $walks = "D%b%l";
 const $setup = ($_) => {};
 const $for_content2__input_title = /*@__PURE__*/ _for_closure_patch("__tests__/template.marko_2_input_title#0:5/setup", "#text/1", ($scope) => _text($scope["#text/0"], $scope._.input_title), 8);
 const $for_content2__setup = $for_content2__input_title;
-const $for_content__input_title__script = _script("__tests__/template.marko_1_input_title#0:5", ($scope) => document.body.dataset.label = $scope._.input_title);
+const $for_content__input_title__script = _script_patch("__tests__/template.marko_1_input_title#0:5 >input_title", ($scope) => document.body.dataset.label = $scope._.input_title);
 const $for_content__input_title = /*@__PURE__*/ _for_closure_patch("__tests__/template.marko_1_input_title#0:5/setup", "#text/0", $for_content__input_title__script, 7);
 const $for_content__setup = $for_content__input_title;
 const $for = /*@__PURE__*/ _for_of_unkeyed("#text/0", 0, 0, $for_content__setup);

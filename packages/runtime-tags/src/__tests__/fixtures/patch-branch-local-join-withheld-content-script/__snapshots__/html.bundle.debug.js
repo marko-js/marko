@@ -24,13 +24,13 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 				_html(`<em>${_text_mark($scope2_id, "#text/0", input.a + c, 1, $scope0_reason, 0)}</em>`);
 				_unfilled_if($scope0_reason, 5) && _patch_subscribe($scope2_id, "__tests__/tags/child.marko_2_input_a#0:5/subscribe");
 				_unfilled_if($scope0_reason, 4) && _patch_subscribe($scope2_id, "__tests__/tags/child.marko_2_c#1:2/subscribe");
-				_patch_render($scope2_id, "__tests__/tags/child.marko_2_input_a#0:5_c#1:2/setup", [_filled_guard($scope0_reason, 5) && ">>input_a", _filled_guard($scope0_reason, 4) && ">c"], $scope0_reason, 0);
+				_patch_render($scope2_id, "__tests__/tags/child.marko_2_input_a#0:5_c#1:2/setup", ((_filled_guard($scope0_reason, 5) ? " >>input_a" : "") + (_filled_guard($scope0_reason, 4) ? " >c" : "")).slice(1), $scope0_reason, 0);
 				_subscribe(_unfilled_if($scope0_reason, 4) && $if_content__c__closures, _subscribe(_unfilled_if($scope0_reason, 5) && $input_a__closures, _scope($scope2_id, { _: $wi__input_show__OR__input_b__OR__input_a__OR__input_mode && _scope_with_id($scope1_id) }, "__tests__/tags/child.marko", "5:4"), _client_guard($scope0_reason, 5) && "__tests__/tags/child.marko_2_input_a#0:5/subscribe"), $cg__input_b && "__tests__/tags/child.marko_2_c#1:2/subscribe");
 			}, $scope1_id) };
 			_html("<section>");
 			_attr_content("#section/1", $scope1_id, input.mode ? frag.content : null, 0, 1, $scope0_reason, 6);
 			_html(`</section>${_el_mark($scope1_id, "#section/1", _updates_from($scope0_reason, 6))}`);
-			_script($scope1_id, "__tests__/tags/child.marko_1_c#2", 1, $fg__input_b, "c");
+			_script($scope1_id, "__tests__/tags/child.marko_1_c#2", 1, $fg__input_b);
 			$ui__input_mode && _patch_write($scope1_id, "PatchWrite:frag_content", frag.content, 1);
 			$fg__input_b && _patch_subscribers($scope1_id, "__tests__/tags/child.marko_1_c#2/subscribers", "c");
 			$cg__input_b && _patch_render($scope1_id, "__tests__/tags/child.marko_1_input_b#0:4/setup");

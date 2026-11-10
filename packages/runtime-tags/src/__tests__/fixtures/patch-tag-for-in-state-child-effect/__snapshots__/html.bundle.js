@@ -39,7 +39,7 @@ var shape_default = _template("c", (input) => {
 				});
 				_patch_child_end();
 				_unfilled_if($scope0_reason, 3) && _patch_subscribe($scope2_id, "c0");
-				_patch_render($scope2_id, "c1", [_filled_guard($scope0_reason, 3) && ">>g", _filled_guard($scope0_reason, 1) && ">e"]);
+				_patch_render($scope2_id, "c1", ((_filled_guard($scope0_reason, 3) ? " >>g" : "") + (_filled_guard($scope0_reason, 1) ? " >e" : "")).slice(1));
 				_subscribe($s__closures, _subscribe(_unfilled_if($scope0_reason, 3) && $input_b__closures, _scope($scope2_id, {
 					_: _scope_with_id($scope1_id),
 					a: _existing_scope($childScope)
@@ -58,7 +58,7 @@ var shape_default = _template("c", (input) => {
 	}, 0, $scope0_id, "a", 1, 1, 1, 0, 0, "c4", $scope0_reason, 1);
 	_html(`<button></button>${_el_mark($scope0_id, "b")}`);
 	_script($scope0_id, "c7");
-	_script($scope0_id, "c8", 1, $fg__input_b, "g");
+	_script($scope0_id, "c8", 1, $fg__input_b);
 	$fg__input_sel && $cg__input_obj && _patch_render($scope0_id, "c6", "f");
 	$fg__input_b && ($cg__input_obj || $cg__input_sel) && _patch_subscribers($scope0_id, "c9", "g");
 	_patch_fill($scope0_id, "vc10", s, 1);

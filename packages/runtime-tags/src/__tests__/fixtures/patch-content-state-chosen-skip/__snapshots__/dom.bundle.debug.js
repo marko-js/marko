@@ -24,7 +24,7 @@ const $one_content__setup = ($scope) => {
 };
 const $one_content = _content("__tests__/template.marko_1*content", "<em>one <!><!></em>", "Db%b%", $one_content__setup);
 const $mode__OR__one__OR__two = /*@__PURE__*/ _or(10, ($scope) => _attr_content($scope, "#section/1", $scope.mode ? $scope.one : $scope.two), 2);
-const $attrs__script = _script("__tests__/template.marko_0_attrs#12", ($scope) => {
+const $attrs__script = _script_patch("__tests__/template.marko_0_attrs#12 input_b", ($scope) => {
 	_attrs_script($scope, "#section/2");
 	_attrs_script($scope, "#section/3");
 });
@@ -58,7 +58,7 @@ function $setup($scope) {
 	$two($scope, { content: $two_content($scope) });
 	$setup__script($scope);
 }
-const $status__script = _script("__tests__/template.marko_0_status#13", ($scope) => console.log($scope.status));
+const $status__script = _script_patch("__tests__/template.marko_0_status#13 status", ($scope) => console.log($scope.status));
 const $status = /*@__PURE__*/ _const("status", $status__script);
 const $input_b__closure = /*@__PURE__*/ _closure($one_content__input_b, $two_content__input_b);
 const $input_b = /*@__PURE__*/ _const("input_b", ($scope) => {

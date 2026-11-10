@@ -1,6 +1,6 @@
 // tags/child.marko
 const $input_a__OR__input_b = /*@__PURE__*/ _or_patch("b1", 6, ($scope) => _text($scope.a, $scope.e + $scope.f));
-const $input_a__script = _script("b0", ($scope) => $scope.b.textContent = "s:" + $scope.e);
+const $input_a__script = _script_patch("b0 e", ($scope) => $scope.b.textContent = "s:" + $scope.e);
 const $input_b = /*@__PURE__*/ _const(5, $input_a__OR__input_b);
 
 // template.marko

@@ -8,7 +8,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let n = 0;
 	_html(`<button>${_text_mark($scope0_id, "#text/1", n + input.label)}</button>${_el_mark($scope0_id, "#button/0")}<div></div>${_el_mark($scope0_id, "#div/2")}`);
-	_script($scope0_id, "__tests__/template.marko_0_input_label#5", 1, $fg__input_label, "input_label");
+	_script($scope0_id, "__tests__/template.marko_0_input_label#5", 1, $fg__input_label);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_patch_render($scope0_id, "__tests__/template.marko_0_input_label#5_n#6/setup", $fg__input_label && "input_label");
 	_scope($scope0_id, {

@@ -72,7 +72,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				$fg__input_v && (_client_branch_if("__tests__/template.marko_3*content", $scope2_id) || $ui__input_on) && _patch_write($scope2_id, "PatchMarkedWrite:v", v, !$sg__input_v);
 				$wg__input_on || $wi__input_show__OR__input_note__OR__input_v__OR__input_on && _resume_branch($scope2_id);
 			}, 1, "__tests__/template.marko_2*content", _unfilled_if($scope0_reason, 6), 0, 1);
-			_script($scope1_id, "__tests__/template.marko_1_x#2", 1, $fg__input_note, "x");
+			_script($scope1_id, "__tests__/template.marko_1_x#2", 1, $fg__input_note);
 			$fg__input_note && _patch_subscribers($scope1_id, "__tests__/template.marko_1_x#2/subscribers", "x");
 			$cg__input_note && _patch_render($scope1_id, "__tests__/template.marko_1_input_note#0:4/setup");
 			$cg__input_v && _patch_render($scope1_id, "__tests__/template.marko_1_input_v#0:5/setup");

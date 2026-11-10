@@ -4,7 +4,7 @@
   "PatchMarkedWrite:input_title": "b",
   "PatchDynamicTag:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-live-fn-stored/tags/reader.marko",
   "PatchChild:BranchScopes:#text/0": {
-    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-live-fn-stored/tags/reader.marko_0_input_fn#4": "input_fn",
+    "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-live-fn-stored/tags/reader.marko_0_input_fn#4",
     "PatchBind:input_fn": "^packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-live-fn-stored/template.marko_0/fn"
   }
 }
@@ -15,7 +15,7 @@
   "PatchMarkedWrite:input_title": "b",
   "PatchDynamicTag:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-live-fn-stored/tags/reader.marko",
   "PatchChild:BranchScopes:#text/0": {
-    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-live-fn-stored/tags/reader.marko_0_input_fn#4": "input_fn",
+    "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-live-fn-stored/tags/reader.marko_0_input_fn#4",
     "PatchBind:input_fn": "^packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-live-fn-stored/template.marko_0/fn"
   }
 }
@@ -25,7 +25,7 @@
   "PatchMarkedWrite:input_title": "c",
   "PatchDynamicTag:#text/0": "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-live-fn-stored/tags/reader.marko",
   "PatchChild:BranchScopes:#text/0": {
-    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-live-fn-stored/tags/reader.marko_0_input_fn#4": "input_fn",
+    "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-live-fn-stored/tags/reader.marko_0_input_fn#4",
     "PatchBind:input_fn": "^packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-live-fn-stored/template.marko_0/fn"
   }
 }

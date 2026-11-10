@@ -14,7 +14,7 @@ var template_default = _template("a", (input) => {
 	_for_of([1, 2], (x) => {
 		const $scope1_id = _scope_id();
 		_html(`<li>${_text_mark($scope1_id, "b", x, 1, 0, 0)}:${_text_mark($scope1_id, "c", input.note, 2, $scope0_reason, 1)}</li>${_el_mark($scope1_id, "a")}`);
-		_script($scope1_id, "a0", 1, _filled_guard($scope0_reason, 1), ">f");
+		_script($scope1_id, "a0", 1, _filled_guard($scope0_reason, 1));
 		$cg__input_note && _patch_render($scope1_id, "a1");
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 	}, 0, $scope0_id, "a", 1, 1, 1, 0, 0, "a2", 0, 0);

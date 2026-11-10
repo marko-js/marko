@@ -12,7 +12,7 @@ var child_default = _template("b", (input) => {
 		{
 			const $scope1_id = _scope_id();
 			_html(`<div></div>${_el_mark($scope1_id, "a")}`);
-			_script($scope1_id, "b0", 1, _filled_guard($scope0_reason, 1), ">f");
+			_script($scope1_id, "b0", 1, _filled_guard($scope0_reason, 1));
 			_client_guard($scope0_reason, 1) && _patch_render($scope1_id, "b1");
 			_scope($scope1_id, {});
 			return 0;
@@ -21,7 +21,7 @@ var child_default = _template("b", (input) => {
 	_html(`<button class=t>t</button>${_el_mark($scope0_id, "c")}`);
 	_script($scope0_id, "b2");
 	$fg__input_a && _patch_render($scope0_id, "b1", "f");
-	_patch_render($scope0_id, "b3", [$fg__input_a && "f", $fg__input_b && "g"], $scope0_reason, 0);
+	_patch_render($scope0_id, "b3", (($fg__input_a ? " f" : "") + ($fg__input_b ? " g" : "")).slice(1), $scope0_reason, 0);
 	_patch_fill($scope0_id, "vb4", open, 1);
 	_scope($scope0_id, {
 		f: input.a,

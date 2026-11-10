@@ -13,7 +13,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $fg__fn = _filled_guard($scope1_reason, 1), $fg__label = _filled_guard($scope1_reason, 2);
 		_html(`<p>${_text_mark($scope1_id, "#text/0", fn() + label, 1, $scope1_reason, 0)}</p>`);
-		_patch_render($scope1_id, "__tests__/template.marko_1_fn#3_label#4/setup", [$fg__fn && "fn", $fg__label && "label"], $scope1_reason, 0);
+		_patch_render($scope1_id, "__tests__/template.marko_1_fn#3_label#4/setup", (($fg__fn ? " fn" : "") + ($fg__label ? " label" : "")).slice(1), $scope1_reason, 0);
 		_scope($scope1_id, {
 			fn: _write_if($scope1_reason, 2) && fn,
 			label: _write_if($scope1_reason, 1) && label

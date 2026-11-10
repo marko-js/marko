@@ -30,11 +30,7 @@ var one_default = _template("c", (input) => {
 		c: input.content,
 		show: input.show
 	}, 1, 0, 0, $wg__input_Tag__OR__input_content__OR__input_show, $scope0_reason, 3, 0, 4);
-	_patch_render($scope0_id, "c0", [
-		$fg__input_Tag && "d",
-		$fg__input_content && "e",
-		$fg__input_show && "f"
-	], $scope0_reason, 3);
+	_patch_render($scope0_id, "c0", (($fg__input_Tag ? " d" : "") + ($fg__input_content ? " e" : "") + ($fg__input_show ? " f" : "")).slice(1), $scope0_reason, 3);
 	_scope($scope0_id, {
 		d: ($ui__input_content__OR__input_show || $ui__input_Tag__OR__input_content__OR__input_show) && input.Tag,
 		e: ($ui__input_Tag__OR__input_show || $ui__input_Tag__OR__input_content__OR__input_show) && input.content,

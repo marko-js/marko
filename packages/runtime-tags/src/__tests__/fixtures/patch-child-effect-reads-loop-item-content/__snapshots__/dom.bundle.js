@@ -1,5 +1,5 @@
 // tags/shows.marko
-const $input_content__script = _script("c0", ($scope) => {
+const $input_content__script = _script_patch("c0 f", ($scope) => {
 	if ($scope.f) $scope.c.textContent = $scope.a.textContent;
 });
 

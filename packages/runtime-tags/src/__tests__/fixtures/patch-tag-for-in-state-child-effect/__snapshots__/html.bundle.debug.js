@@ -39,7 +39,7 @@ var shape_default = _template("__tests__/tags/shape.marko", (input) => {
 				});
 				_patch_child_end();
 				_unfilled_if($scope0_reason, 3) && _patch_subscribe($scope2_id, "__tests__/tags/shape.marko_2_input_b#0:6/subscribe");
-				_patch_render($scope2_id, "__tests__/tags/shape.marko_2_input_b#0:6_s#0:7_v#1:4/setup", [_filled_guard($scope0_reason, 3) && ">>input_b", _filled_guard($scope0_reason, 1) && ">v"]);
+				_patch_render($scope2_id, "__tests__/tags/shape.marko_2_input_b#0:6_s#0:7_v#1:4/setup", ((_filled_guard($scope0_reason, 3) ? " >>input_b" : "") + (_filled_guard($scope0_reason, 1) ? " >v" : "")).slice(1));
 				_subscribe($s__closures, _subscribe(_unfilled_if($scope0_reason, 3) && $input_b__closures, _scope($scope2_id, {
 					_: _scope_with_id($scope1_id),
 					"#childScope/0": _existing_scope($childScope)
@@ -61,7 +61,7 @@ var shape_default = _template("__tests__/tags/shape.marko", (input) => {
 	}, 0, $scope0_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/tags/shape.marko_1*shell", $scope0_reason, 1);
 	_html(`<button></button>${_el_mark($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/tags/shape.marko_0");
-	_script($scope0_id, "__tests__/tags/shape.marko_0_input_b#6", 1, $fg__input_b, "input_b");
+	_script($scope0_id, "__tests__/tags/shape.marko_0_input_b#6", 1, $fg__input_b);
 	$fg__input_sel && $cg__input_obj && _patch_render($scope0_id, "__tests__/tags/shape.marko_1_input_sel#0:5/setup", "input_sel");
 	$fg__input_b && ($cg__input_obj || $cg__input_sel) && _patch_subscribers($scope0_id, "__tests__/tags/shape.marko_0_input_b#6/subscribers", "input_b");
 	_patch_fill($scope0_id, "PatchFill:__tests__/tags/shape.marko_0_s#7/fill", s, 1);

@@ -1,5 +1,5 @@
 // tags/grand.marko
-const $input_v__script = _script("c0", ($scope) => $scope.a.textContent += $scope.d);
+const $input_v__script = _script_patch("c0 d", ($scope) => $scope.a.textContent += $scope.d);
 const $input_v = /*@__PURE__*/ _const(3, $input_v__script);
 
 // tags/child.marko

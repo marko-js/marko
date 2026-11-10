@@ -1,5 +1,5 @@
 // tags/show-await.marko
-const $await_content__x__script = _script("b0", ($scope) => document.title = $scope.c);
+const $await_content__x__script = _script_patch("b0 c", ($scope) => document.title = $scope.c);
 const $await_content__x = /*@__PURE__*/ _const(2, ($scope) => {
 	_text($scope.a, $scope.c);
 	$await_content__x__script($scope);

@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<main><!><!><em> </em></main>";
 const $walks = "D%b%bD m";
-const $await_content2__attrs__script = _script("__tests__/template.marko_2_attrs#2", ($scope) => _attrs_script($scope, "#button/0"));
+const $await_content2__attrs__script = _script_patch("__tests__/template.marko_2_attrs#2 >input_title", ($scope) => _attrs_script($scope, "#button/0"));
 const $await_content2__attrs = /*@__PURE__*/ _const("attrs", ($scope) => {
 	$await_content2__attrs__script($scope);
 	_attrs($scope, "#button/0", {
@@ -19,7 +19,7 @@ const $await_content2__setup = ($scope) => {
 	$await_content2__handler($scope);
 };
 const $await_content2__handler = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_2_handler#0:9/subscribe", "handler/11", $await_content2__input_title__OR__handler);
-const $await_content__attrs__script = _script("__tests__/template.marko_1_attrs#2", ($scope) => _attrs_script($scope, "#button/0"));
+const $await_content__attrs__script = _script_patch("__tests__/template.marko_1_attrs#2 >input_title", ($scope) => _attrs_script($scope, "#button/0"));
 const $await_content__attrs = /*@__PURE__*/ _const("attrs", ($scope) => {
 	$await_content__attrs__script($scope);
 	_attrs($scope, "#button/0", {

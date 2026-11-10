@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<output></output><button>toggle</button>";
 const $walks = " b b";
-const $pick__script = _script("__tests__/template.marko_0_pick#9", ($scope) => {
+const $pick__script = _script_patch("__tests__/template.marko_0_pick#9 input_title up low", ($scope) => {
 	_el_read($scope["#output/0"]).textContent = $scope.pick();
 	console.log("run", $scope.pick());
 });

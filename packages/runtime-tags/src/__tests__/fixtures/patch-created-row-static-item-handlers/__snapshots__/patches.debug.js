@@ -4,7 +4,7 @@
   "PatchBranch:#text/0": [{
     "PatchLoop:#text/0": [{
       "PatchChild:#childScope/0": {
-        "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-created-row-static-item-handlers/tags/field.marko_0_input_onKeyDown#3": _.a = "input_onKeyDown",
+        "PatchEffect:": _.a = "packages/runtime-tags/src/__tests__/fixtures/patch-created-row-static-item-handlers/tags/field.marko_0_input_onKeyDown#3",
         "PatchSetup:": {
           "PatchBind:input_onKeyDown": _.b = "^packages/runtime-tags/src/__tests__/fixtures/patch-created-row-static-item-handlers/template.marko_2/onKeyDown"
         }
@@ -14,7 +14,7 @@
       }
     }, {
       "PatchChild:#childScope/0": {
-        "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-created-row-static-item-handlers/tags/field.marko_0_input_onKeyDown#3": _.a,
+        "PatchEffect:": _.a,
         "PatchSetup:": {
           "PatchBind:input_onKeyDown": _.b
         }

@@ -1,7 +1,7 @@
 // tags/counter-box/index.marko
 const $template$1 = "<span> </span><button class=mode>b</button><button class=go>go</button>";
 const $walks$1 = "D l b b";
-const $input_onA__OR__input_onB__OR__mode__script = _script("__tests__/tags/counter-box/index.marko_0_input_onA#5_input_onB#6_mode#7", ($scope) => _on($scope["#button/2"], "click", $scope.mode === "a" ? $scope.input_onA : $scope.input_onB));
+const $input_onA__OR__input_onB__OR__mode__script = _script_patch("__tests__/tags/counter-box/index.marko_0_input_onA#5_input_onB#6_mode#7 input_onA input_onB", ($scope) => _on($scope["#button/2"], "click", $scope.mode === "a" ? $scope.input_onA : $scope.input_onB));
 const $input_onA__OR__input_onB__OR__mode = /*@__PURE__*/ _or_patch("__tests__/tags/counter-box/index.marko_0_input_onA#5_input_onB#6_mode#7/setup", 8, ($scope) => {
 	_return_change($scope, $scope.mode === "a" ? $scope.input_onA : $scope.input_onB);
 	$input_onA__OR__input_onB__OR__mode__script($scope);

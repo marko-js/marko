@@ -53,10 +53,10 @@ var template_default = _template("a", (input) => {
 				return 0;
 			}
 		}, $scope1_id, "b", 1, $wg__input_x, 1, 0, 0, ["a4"], $scope0_reason, 4);
-		$fg__input_a__OR__input_items && $cg__input_x && _patch_render($scope1_id, "a3", ["g", "f"]);
+		$fg__input_a__OR__input_items && $cg__input_x && _patch_render($scope1_id, "a3", "g f");
 		$cg__input_x && _patch_render($scope1_id, "a9");
 		$cg__input_a && _patch_render($scope1_id, "a10");
-		_patch_render($scope1_id, "a11", [_filled_guard($scope0_reason, 2) && ">g", $fg__input_items && "d"], $scope0_reason, 0);
+		_patch_render($scope1_id, "a11", ((_filled_guard($scope0_reason, 2) ? " >g" : "") + ($fg__input_items ? " d" : "")).slice(1), $scope0_reason, 0);
 		_scope($scope1_id, {
 			d: ($ui__input_a || $ui__input_a__OR__input_items) && item,
 			f: ($ui__input_x || $ui__input_a__OR__input_items) && v,
@@ -86,7 +86,7 @@ var template_default = _template("a", (input) => {
 				return 0;
 			}
 		}, $scope2_id, "a", 1, $wg__input_x, 1, 0, 0, ["a8"], $scope0_reason, 4);
-		$fg__v && $cg__input_x && _patch_render($scope2_id, "a13", ["e", "d"]);
+		$fg__v && $cg__input_x && _patch_render($scope2_id, "a13", "e d");
 		$wi__input_x && _subscribe($ui__input_x2 && $input_x__closures, _scope($scope2_id, {
 			d: ($ui__input_x2 || $ui__v) && v,
 			e: ($ui__input_x2 || $ui__v) && h,
@@ -102,7 +102,7 @@ var template_default = _template("a", (input) => {
 	_patch_child_end();
 	$fg__input_a && $cg__input_items && _patch_render($scope0_id, "a16", "g");
 	$fg__input_x && $cg__input_items && _patch_render($scope0_id, "a9", "i");
-	$fg__input_a && $cg__input_items && _patch_render($scope0_id, "a10", ["k", "g"]);
+	$fg__input_a && $cg__input_items && _patch_render($scope0_id, "a10", "k g");
 	_scope($scope0_id, {
 		g: ($ui__input_items || _unfilled_if($scope0_reason, 0) || $ui__input_a2) && input.a,
 		i: ($ui__input_items || _unfilled_if($scope0_reason, 4)) && input.x,

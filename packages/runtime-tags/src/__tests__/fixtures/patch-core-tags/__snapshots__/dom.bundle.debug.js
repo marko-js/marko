@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<main><p> </p><button>+</button></main>";
 const $walks = " E l l";
-const $input_value__OR__count__script = _script("__tests__/template.marko_0_input_value#5_count#7", ($scope) => _lifecycle($scope, {
+const $input_value__OR__count__script = _script_patch("__tests__/template.marko_0_input_value#5_count#7 input_value", ($scope) => _lifecycle($scope, {
 	onMount: function() {
 		$count($scope, +$scope.count + 1);
 	},

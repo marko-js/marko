@@ -20,6 +20,6 @@ LOG "b" "B1"
 # Update `{"a":"A","b":"B","c":2}`
 ## Console
 ```
-LOG "a" "A2"
 LOG "b" "B2"
+LOG "a" "A2"
 ```

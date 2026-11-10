@@ -4,7 +4,7 @@ const $walks = "b%c";
 const $setup = ($_) => {};
 const $inputtag_content__input_a__OR__n = /*@__PURE__*/ _or_patch("__tests__/template.marko_1_input_a#0:4_n#4/setup", 5, ($scope) => _text($scope["#text/1"], $scope._.input_a + $scope.n));
 const $inputtag_content__input_a__OR__input_b = /*@__PURE__*/ _or_patch("__tests__/template.marko_1_input_a#0:4_input_b#0:5/setup", 3, ($scope) => _text($scope["#text/2"], $scope._.input_a + $scope._.input_b));
-const $inputtag_content__input_a__script = _script("__tests__/template.marko_1_input_a#0:4", ($scope) => document.body.dataset.a = $scope._.input_a);
+const $inputtag_content__input_a__script = _script_patch("__tests__/template.marko_1_input_a#0:4 >input_a", ($scope) => document.body.dataset.a = $scope._.input_a);
 const $inputtag_content__input_a = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_1_input_a#0:4/subscribe", "input_a/6", ($scope) => {
 	$inputtag_content__input_a__OR__n($scope);
 	$inputtag_content__input_a__OR__input_b($scope);

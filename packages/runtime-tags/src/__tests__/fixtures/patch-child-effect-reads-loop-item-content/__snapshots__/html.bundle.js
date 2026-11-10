@@ -9,7 +9,7 @@ var shows_default = _template("c", (input) => {
 	_html("<div>");
 	_dynamic_tag($scope0_id, "b", input.content, {}, 2, 0, 0, _write_guard($scope0_reason, 0), $scope0_reason, 0);
 	_html(`</div>${_el_mark($scope0_id, "a")}<pre></pre>${_el_mark($scope0_id, "c")}`);
-	_script($scope0_id, "c0", 1, $fg__input_content, "f");
+	_script($scope0_id, "c0", 1, $fg__input_content);
 	_scope($scope0_id, { f: input.content }) || $fg__input_content && _patch_write($scope0_id, "xf", input.content, !_server_guard($scope0_reason, 0));
 });
 

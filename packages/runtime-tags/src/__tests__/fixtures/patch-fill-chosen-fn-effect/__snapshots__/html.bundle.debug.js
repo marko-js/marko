@@ -21,7 +21,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}
 	}, $scope0_id, "#text/1", 1, 1, 0, 0, 1);
 	_html(`<button>+</button>${_el_mark($scope0_id, "#button/2")}</main>`);
-	_script($scope0_id, "__tests__/template.marko_0_pick#9", 1, $fg__input_upper, "pick");
+	_script($scope0_id, "__tests__/template.marko_0_pick#9", 1, $fg__input_upper);
 	_script($scope0_id, "__tests__/template.marko_0");
 	$fg__input_upper && _patch_render($scope0_id, "__tests__/template.marko_1_pick#0:9/setup", "pick");
 	_patch_render($scope0_id, "__tests__/template.marko_0_input_upper#5_fa#6_fb#7/setup", $fg__input_upper && "input_upper", $scope0_reason, 0);

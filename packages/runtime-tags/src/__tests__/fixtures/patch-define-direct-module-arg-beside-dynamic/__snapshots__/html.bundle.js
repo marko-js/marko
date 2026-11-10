@@ -27,7 +27,7 @@ var template_default = _template("a", (input) => {
 			if (isOpen) {
 				const $scope3_id = _scope_id();
 				_html(`<em>${_text_mark($scope3_id, "a", fmt(label), 1, $scope2_reason, 2)}</em>`);
-				_patch_render($scope3_id, "a1", [_filled_guard($scope2_reason, 5) && ">e", _filled_guard($scope2_reason, 6) && ">f"], $scope2_reason, 2);
+				_patch_render($scope3_id, "a1", ((_filled_guard($scope2_reason, 5) ? " >e" : "") + (_filled_guard($scope2_reason, 6) ? " >f" : "")).slice(1), $scope2_reason, 2);
 				_scope($scope3_id, { _: _write_if($scope2_reason, 2) && _scope_with_id($scope2_id) });
 				return 0;
 			}
@@ -70,7 +70,7 @@ var template_default = _template("a", (input) => {
 	$fg__input_open && $cg__input_show && _patch_render($scope0_id, "a7", "g");
 	$fg__input_label && $cg__input_show && _patch_render($scope0_id, "a8", "h");
 	_patch_render($scope0_id, "a10", $fg__input_other && "i", $scope0_reason, 4);
-	_patch_render($scope0_id, "a11", [$fg__input_label && "h", $fg__input_other && "m"]);
+	_patch_render($scope0_id, "a11", (($fg__input_label ? " h" : "") + ($fg__input_other ? " m" : "")).slice(1));
 	_scope($scope0_id, {
 		g: ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.open,
 		h: input.label,

@@ -95,10 +95,12 @@ export {
   _fill_let_change_resume,
   _fill_let_resume,
   _fill_var_resume,
+  _filled_id,
   _for_closure_patch,
   _for_selector_patch,
   _if_closure_patch,
   _or_patch,
+  _script_patch,
 } from "./dom/patches/signals";
 export {
   _load_event_trigger,

@@ -13,7 +13,7 @@ var make_default = /*@__PURE__*/ _template("__tests__/tags/make.marko", "", "", 
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<output id=out></output>${_w0}<button class=call>call</button><pre></pre>`)("");
 const $walks = /*@__PURE__*/ ((_w0) => `0${_w0}&b b b`)("");
-const $fn__script = _script("__tests__/template.marko_0_fn#7", ($scope) => {
+const $fn__script = _script_patch("__tests__/template.marko_0_fn#7 fn", ($scope) => {
 	{
 		const el = _el_read($scope["#pre/3"]);
 		el.textContent += el.fn === $scope.fn ? "same;" : "new;";

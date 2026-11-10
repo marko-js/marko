@@ -6,7 +6,7 @@
   },
   "PatchBranch:#text/3": [{
     "PatchChild:#childScope/0": {
-      "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-created-define-mount-caller-effect/template.marko_1_input_page#0:6_label#2": ">input_page label",
+      "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-created-define-mount-caller-effect/template.marko_1_input_page#0:6_label#2",
       "PatchMarkedWrite:label": "b"
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-define-mount-caller-effect/template.marko_2*shell"],
@@ -21,7 +21,7 @@
   },
   "PatchBranch:#text/3": [{
     "PatchChild:#childScope/0": {
-      "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-created-define-mount-caller-effect/template.marko_1_input_page#0:6_label#2": ">input_page label",
+      "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-created-define-mount-caller-effect/template.marko_1_input_page#0:6_label#2",
       "PatchMarkedWrite:label": "b"
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-define-mount-caller-effect/template.marko_2*shell"],

@@ -4,7 +4,7 @@ const $Panel_content__template = "<!><!><!>";
 const $if_content2__label = /*@__PURE__*/ _if_closure_patch("a0", 0, 0, ($scope) => _text($scope.a, $scope._.e));
 const $Panel_content__if = /*@__PURE__*/ _if(0, "<em> </em>", "D ", $if_content2__label);
 const $Panel_content__isOpen = ($scope, isOpen) => $Panel_content__if($scope, isOpen ? 0 : 1);
-const $Panel_content__label__script = _script("a4", ($scope) => console.log("effect", $scope.e));
+const $Panel_content__label__script = _script_patch("a4 e", ($scope) => console.log("effect", $scope.e));
 const $Panel_content__label = /*@__PURE__*/ _const(4, ($scope) => {
 	$if_content2__label($scope);
 	$Panel_content__label__script($scope);

@@ -7,7 +7,7 @@ var reader_default = _template("__tests__/tags/reader.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $fg__input_fn = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_html(`<button class=call>call</button>${_el_mark($scope0_id, "#button/0")}<pre></pre>${_el_mark($scope0_id, "#pre/1")}`);
-	_script($scope0_id, "__tests__/tags/reader.marko_0_input_fn#4", 1, $fg__input_fn, "input_fn");
+	_script($scope0_id, "__tests__/tags/reader.marko_0_input_fn#4", 1, $fg__input_fn);
 	_scope($scope0_id, { input_fn: input.fn }, "__tests__/tags/reader.marko", 0, { input_fn: ["input.fn"] }) || $fg__input_fn && _patch_write($scope0_id, "PatchMarkedWrite:input_fn", input.fn, !_server_guard($scope0_reason, 0));
 });
 
@@ -25,11 +25,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, "__tests__/template.marko_0/fn", $scope0_id);
 	_html("<output id=out></output>");
 	_dynamic_tag($scope0_id, "#text/0", input.alt || reader_default, { fn }, 1, 0, 0, $wg__input_title__OR__input_alt, $scope0_reason, 0);
-	_patch_render($scope0_id, "__tests__/template.marko_0_input_alt#4_fn#5/setup", [
-		$fg__input_alt && "input_alt",
-		$fg__input_title && "fn",
-		$fg__input_title && "input_title"
-	], $scope0_reason, 0);
+	_patch_render($scope0_id, "__tests__/template.marko_0_input_alt#4_fn#5/setup", (($fg__input_alt ? " input_alt" : "") + ($fg__input_title ? " fn" : "") + ($fg__input_title ? " input_title" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		input_title: input.title,
 		input_alt: ($ui__input_title || $ui__input_title__OR__input_alt) && input.alt,

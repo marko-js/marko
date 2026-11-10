@@ -1,5 +1,5 @@
 // tags/probe.marko
-const $get__script = _script("b0", ($scope) => {
+const $get__script = _script_patch("b0 d", ($scope) => {
 	$scope.a.textContent = $scope.d();
 	console.log("run", $scope.d());
 });

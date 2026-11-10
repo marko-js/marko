@@ -8,7 +8,7 @@
           "PatchText:#text/0": "k"
         }
       }, "packages/runtime-tags/src/__tests__/fixtures/patch-define-created-return-effect-beside-stateful-body/template.marko_3*shell"],
-      "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-define-created-return-effect-beside-stateful-body/template.marko_1_isOpen#3_label#4": "isOpen label",
+      "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-define-created-return-effect-beside-stateful-body/template.marko_1_isOpen#3_label#4",
       "PatchSetup:": {
         "PatchWrite:isOpen": !0,
         "PatchWrite:label": "k"
@@ -35,7 +35,7 @@
           "PatchText:#text/0": "k"
         }
       }, "packages/runtime-tags/src/__tests__/fixtures/patch-define-created-return-effect-beside-stateful-body/template.marko_3*shell"],
-      "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-define-created-return-effect-beside-stateful-body/template.marko_1_isOpen#3_label#4": "isOpen label",
+      "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-define-created-return-effect-beside-stateful-body/template.marko_1_isOpen#3_label#4",
       "PatchSetup:": {
         "PatchWrite:isOpen": !0,
         "PatchWrite:label": "k"
@@ -71,7 +71,7 @@
           "PatchText:#text/0": "k"
         }
       }, "packages/runtime-tags/src/__tests__/fixtures/patch-define-created-return-effect-beside-stateful-body/template.marko_3*shell"],
-      "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-define-created-return-effect-beside-stateful-body/template.marko_1_isOpen#3_label#4": "isOpen label",
+      "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-define-created-return-effect-beside-stateful-body/template.marko_1_isOpen#3_label#4",
       "PatchSetup:": {
         "PatchWrite:isOpen": !0,
         "PatchWrite:label": "k"

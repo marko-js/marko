@@ -2,7 +2,7 @@
 const $template = "<button class=open>inc</button><!><!>";
 const $walks = " b%c";
 const $if_content__n__OR__y = /*@__PURE__*/ _or_patch("__tests__/template.marko_1_n#0:6_y#1/setup", 2, ($scope) => _text($scope["#text/0"], $scope.y + $scope._.n));
-const $if_content__y__script = _script("__tests__/template.marko_1_y#1", ($scope) => console.log("const", $scope.y));
+const $if_content__y__script = _script_patch("__tests__/template.marko_1_y#1 y", ($scope) => console.log("const", $scope.y));
 const $if_content__y = /*@__PURE__*/ _const("y", ($scope) => {
 	$if_content__n__OR__y($scope);
 	$if_content__y__script($scope);

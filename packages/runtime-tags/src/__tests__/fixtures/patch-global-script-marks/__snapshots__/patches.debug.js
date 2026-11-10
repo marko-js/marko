@@ -17,7 +17,7 @@
   "PatchText:#text/11": 1,
   "PatchText:#text/12": 1,
   "PatchText:#text/13": "Marko",
-  "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-global-script-marks/template.marko_0_input_label#28": "input_label",
+  "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-global-script-marks/template.marko_0_input_label#28",
   "PatchMarkedWrite:input_label": "one"
 }
 
@@ -40,6 +40,6 @@
   "PatchText:#text/11": 2,
   "PatchText:#text/12": 2,
   "PatchText:#text/13": "Marko",
-  "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-global-script-marks/template.marko_0_input_label#28": "input_label",
+  "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-global-script-marks/template.marko_0_input_label#28",
   "PatchMarkedWrite:input_label": "one"
 }

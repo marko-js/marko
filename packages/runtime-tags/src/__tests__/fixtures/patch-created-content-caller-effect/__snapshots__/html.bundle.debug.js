@@ -44,7 +44,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 			const $scope1_reason = _scope_reason();
 			const $scope1_id = _scope_id();
 			_html("<p>body</p>");
-			_script($scope1_id, "__tests__/tags/child.marko_1_input_count#0:4", 0, _filled_guard($scope0_reason, 1), ">input_count");
+			_script($scope1_id, "__tests__/tags/child.marko_1_input_count#0:4", 0, _filled_guard($scope0_reason, 1));
 			_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "__tests__/tags/child.marko_1_input_count#0:4/subscribe", $cg__input_count);
 			_subscribe(_unfilled_if($scope0_reason, 1) && $input_count__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/child.marko", "2:4"), $cg__input_count && "__tests__/tags/child.marko_1_input_count#0:4/subscribe", 0);
 			_resume_branch($scope1_id);

@@ -17,7 +17,7 @@ const $Card_content__walks = "b%c";
 const $Card_content__template = "<!><!><!>";
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Card_content__template);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Card_content__walks);
-const $if_content__x__script = _script("__tests__/tags/wrap.marko_2_x#1:1", ($scope) => console.log("effect", $scope._.x));
+const $if_content__x__script = _script_patch("__tests__/tags/wrap.marko_2_x#1:1 >x", ($scope) => console.log("effect", $scope._.x));
 const $if_content__x = /*@__PURE__*/ _if_closure_patch("__tests__/tags/wrap.marko_2_x#1:1/setup", "#text/0", 0, ($scope) => {
 	_text($scope["#text/0"], $scope._.x);
 	$if_content__x__script($scope);

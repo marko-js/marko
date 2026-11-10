@@ -17,7 +17,7 @@ const $template = "<!><!><!>";
 const $walks = "b%c";
 const $setup = ($_) => {};
 const $if_content__input_a__OR__c = /*@__PURE__*/ _or_patch("__tests__/tags/child.marko_1_input_a#0:5_c#2/setup", 3, ($scope) => _text($scope["#text/0"], $scope._.input_a + $scope.c));
-const $if_content__c__script = _script("__tests__/tags/child.marko_1_c#2", ($scope) => _el_read($scope["#div/1"]).textContent = "s:" + $scope.c);
+const $if_content__c__script = _script_patch("__tests__/tags/child.marko_1_c#2 c", ($scope) => _el_read($scope["#div/1"]).textContent = "s:" + $scope.c);
 const $if_content__c = /*@__PURE__*/ _const("c", ($scope) => {
 	$if_content__input_a__OR__c($scope);
 	$if_content__c__script($scope);

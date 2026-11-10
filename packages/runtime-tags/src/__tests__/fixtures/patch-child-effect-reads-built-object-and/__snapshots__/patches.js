@@ -1,23 +1,19 @@
 // PATCH
 {
   ca: {
-    eb0: ">d >e",
+    e: "b0",
     xd: {
       t: "b"
     }
-  },
-  xd: !0,
-  xe: "b"
+  }
 }
 
 // PATCH
 {
   ca: {
-    eb0: ">d >e",
+    e: "b0",
     xd: {
       t: "b"
     }
-  },
-  xd: !0,
-  xe: "b"
+  }
 }

@@ -49,8 +49,8 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 		_dynamic_tag($scope1_id, "#text/0", x ? keeper_default : "div", { content: c }, 1, 0, 0, $wg__input, $scope0_reason, 0);
 		$ui__input_p && _patch_write($scope1_id, "PatchWrite:c", c, 1);
 		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "__tests__/tags/card.marko_1_input#0:2/subscribe");
-		_patch_render($scope1_id, "__tests__/tags/card.marko_1_input#0:2_x#2/setup", [$fg__input && ">input", $fg__input_p && "x"], $scope0_reason, 0);
-		_patch_render($scope1_id, "__tests__/tags/card.marko_1_x#2_c#5/setup", [$fg__input_p && "x", $fg__input && "c"], $scope0_reason, 0);
+		_patch_render($scope1_id, "__tests__/tags/card.marko_1_input#0:2_x#2/setup", (($fg__input ? " >input" : "") + ($fg__input_p ? " x" : "")).slice(1), $scope0_reason, 0);
+		_patch_render($scope1_id, "__tests__/tags/card.marko_1_x#2_c#5/setup", (($fg__input_p ? " x" : "") + ($fg__input ? " c" : "")).slice(1), $scope0_reason, 0);
 		$wi__input && _subscribe($ui__input && $input__closures, _scope($scope1_id, {
 			x: $ui__input && x,
 			c: ($ui__input_p || $ui__input) && c
@@ -84,7 +84,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id, ($scope) => $scope0_page ? [{ input_note: input.note }] : []), 0, $wg__input_on__OR__input_p, $scope0_reason, 0, 0, void 0, 0, 0, "__tests__/template.marko_1*content");
 	_html("</main>");
 	$fg__input_note && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_note#6/subscribers", "input_note");
-	_patch_render($scope0_id, "__tests__/template.marko_0_input_on#3_input_p#4/setup", [$fg__input_on && "input_on", $fg__input_p && "input_p"], $scope0_reason, 0);
+	_patch_render($scope0_id, "__tests__/template.marko_0_input_on#3_input_p#4/setup", (($fg__input_on ? " input_on" : "") + ($fg__input_p ? " input_p" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		input_on: ($ui__input_p || $ui__input_on__OR__input_p) && input.on,
 		input_p: ($ui__input_on || $ui__input_on__OR__input_p) && input.p,

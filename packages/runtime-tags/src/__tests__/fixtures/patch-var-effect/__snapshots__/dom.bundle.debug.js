@@ -18,7 +18,7 @@ function $setup($scope) {
 	$count($scope, 0);
 	$setup__script($scope);
 }
-const $label__script = _script("__tests__/template.marko_0_label#8", ($scope) => {
+const $label__script = _script_patch("__tests__/template.marko_0_label#8 label", ($scope) => {
 	{
 		const el = document.querySelector("main");
 		el.dataset.log = (el.dataset.log || "") + $scope.label;

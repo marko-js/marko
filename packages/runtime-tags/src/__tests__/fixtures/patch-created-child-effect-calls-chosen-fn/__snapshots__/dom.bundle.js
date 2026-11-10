@@ -1,5 +1,5 @@
 // tags/child.marko
-const $fn__script = _script("b0", ($scope) => $scope.d());
+const $fn__script = _script_patch("b0 d", ($scope) => $scope.d());
 
 // template.marko
 const $flag = _let(7, ($scope) => _text($scope.b, $scope.h));

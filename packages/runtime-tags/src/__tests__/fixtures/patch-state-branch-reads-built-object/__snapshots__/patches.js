@@ -1,7 +1,6 @@
 // PATCH
 {
-  ia0: "e",
-  xe: "b",
+  ia0: "g",
   xg: {
     value: "b"
   }
@@ -9,8 +8,7 @@
 
 // PATCH
 {
-  ia0: "e",
-  xe: "c",
+  ia0: "g",
   xg: {
     value: "c"
   }

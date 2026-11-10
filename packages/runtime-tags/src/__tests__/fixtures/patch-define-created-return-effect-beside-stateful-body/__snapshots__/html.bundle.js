@@ -22,7 +22,7 @@ var template_default = _template("a", (input) => {
 			}
 		}, $scope1_id, "a", 1, $wg__isOpen, 1, 0, 0, ["a0"], $scope1_reason, 1);
 		const $return = label + "!";
-		_script($scope1_id, "a3", $wg__isOpen, $fg__isOpen || $fg__label, [$fg__isOpen && "d", $fg__label && "e"]);
+		_script($scope1_id, "a3", $wg__isOpen, $fg__isOpen || $fg__label);
 		_scope($scope1_id, {
 			d: isOpen,
 			e: label
@@ -52,7 +52,7 @@ var template_default = _template("a", (input) => {
 	_html(`<button id=t>toggle</button>${_el_mark($scope0_id, "c")}`);
 	_script($scope0_id, "a4");
 	_patch_render($scope0_id, "a5", $fg__input_other && "g", $scope0_reason, 1);
-	_patch_render($scope0_id, "a6", [$fg__input_label && "h", $fg__input_other && "l"]);
+	_patch_render($scope0_id, "a6", (($fg__input_label ? " h" : "") + ($fg__input_other ? " l" : "")).slice(1));
 	_scope($scope0_id, {
 		h: input.label,
 		i: open,

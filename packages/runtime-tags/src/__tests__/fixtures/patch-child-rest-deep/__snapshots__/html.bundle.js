@@ -18,7 +18,7 @@ var template_default = _template("a", (input) => {
 	_html("<main>");
 	_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
-	echo_default({ cfg: _patch_live($childScope, { label: input.label }, $scope0_id, "d") });
+	echo_default({ cfg: { label: input.label } });
 	_patch_child_end();
 	_html("</main>");
 	_scope($scope0_id, { a: _existing_scope($childScope) });

@@ -1,11 +1,11 @@
 // PATCH
 {
-  ea2: "i",
+  e: "a2",
   xi: "[a]"
 }
 
 // PATCH
 {
-  ea2: "i",
+  e: "a2",
   xi: "[b]"
 }

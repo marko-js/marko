@@ -7,7 +7,7 @@ var reader_default = _template("__tests__/tags/reader.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $fg__input_get = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_html(`<output></output>${_el_mark($scope0_id, "#output/0")}`);
-	_script($scope0_id, "__tests__/tags/reader.marko_0_get#3", 1, $fg__input_get, "get");
+	_script($scope0_id, "__tests__/tags/reader.marko_0_get#3", 1, $fg__input_get);
 	_scope($scope0_id, { get: input.get }, "__tests__/tags/reader.marko", 0, { get: "1:10" }) || $fg__input_get && _patch_write($scope0_id, "PatchMarkedWrite:get", input.get, !_server_guard($scope0_reason, 0));
 });
 
@@ -36,7 +36,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 				_html(`<em>${_text_mark($scope2_id, "#text/0", input.a + c, 1, $scope0_reason, 0)}</em><i>${_text_mark($scope2_id, "#text/1", c, 1, $scope0_reason, 4)}</i>`);
 				_unfilled_if($scope0_reason, 5) && _patch_subscribe($scope2_id, "__tests__/tags/child.marko_2_input_a#0:5/subscribe");
 				_unfilled_if($scope0_reason, 4) && _patch_subscribe($scope2_id, "__tests__/tags/child.marko_2_c#1:2/subscribe", $cg__input_b);
-				_patch_render($scope2_id, "__tests__/tags/child.marko_2_input_a#0:5_c#1:2/setup", [_filled_guard($scope0_reason, 5) && ">>input_a", _filled_guard($scope0_reason, 4) && ">c"], $scope0_reason, 0);
+				_patch_render($scope2_id, "__tests__/tags/child.marko_2_input_a#0:5_c#1:2/setup", ((_filled_guard($scope0_reason, 5) ? " >>input_a" : "") + (_filled_guard($scope0_reason, 4) ? " >c" : "")).slice(1), $scope0_reason, 0);
 				_subscribe(_unfilled_if($scope0_reason, 4) && $if_content__c__closures, _subscribe(_unfilled_if($scope0_reason, 5) && $input_a__closures, _scope($scope2_id, { _: $wi__input_show__OR__input_b__OR__input_a__OR__input_mode && _scope_with_id($scope1_id) }, "__tests__/tags/child.marko", "3:4"), _client_guard($scope0_reason, 5) && "__tests__/tags/child.marko_2_input_a#0:5/subscribe"), $cg__input_b && "__tests__/tags/child.marko_2_c#1:2/subscribe");
 			}, $scope1_id) };
 			_html("<section>");

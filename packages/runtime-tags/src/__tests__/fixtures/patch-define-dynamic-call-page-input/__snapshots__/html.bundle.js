@@ -46,11 +46,7 @@ var template_default = _template("a", (input) => {
 	}, 9, 0, 0, _write_guard($scope0_reason, 3), $scope0_reason, 3);
 	_html(`<button>toggle</button>${_el_mark($scope0_id, "c")}`);
 	_script($scope0_id, "a4");
-	_patch_render($scope0_id, "a5", [
-		$fg__input_label && "f",
-		$fg__input_show && "h",
-		$fg__input_other && "m"
-	], $scope0_reason, 3);
+	_patch_render($scope0_id, "a5", (($fg__input_label ? " f" : "") + ($fg__input_show ? " h" : "") + ($fg__input_other ? " m" : "")).slice(1), $scope0_reason, 3);
 	_scope($scope0_id, {
 		f: ($ui__input_other__OR__input_show || $ui__input_label__OR__input_other__OR__input_show) && input.label,
 		h: ($ui__input_label__OR__input_other || $ui__input_label__OR__input_other__OR__input_show) && input.show,

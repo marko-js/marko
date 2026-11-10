@@ -26,7 +26,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope2_id = _scope_id();
 			const $scope2_reason = _scope_reason();
 			_html(`<p>${_text_mark($scope2_id, "#text/0", input.label + x + z, 1, (1 | ($uf__input_label | $uf__x)) << 1, 0)}</p>`);
-			_patch_render($scope2_id, "__tests__/template.marko_2_input_label#0:4_x#1:4_z#3/setup", [_filled_guard($scope0_reason, 0) && ">>input_label", _filled_guard($scope1_reason, 1) && ">x"], (1 | ($uf__input_label | $uf__x)) << 1, 0);
+			_patch_render($scope2_id, "__tests__/template.marko_2_input_label#0:4_x#1:4_z#3/setup", ((_filled_guard($scope0_reason, 0) ? " >>input_label" : "") + (_filled_guard($scope1_reason, 1) ? " >x" : "")).slice(1), (1 | ($uf__input_label | $uf__x)) << 1, 0);
 			_subscribe(_unfilled_if((1 | $uf__x) << 1, 0) && $wi__x && $Outer_content__x__closures, _subscribe(_unfilled_if((1 | ($uf__input_label | $uf__x)) << 1, 0) && $wi__input_label && $input_label__closures, _scope($scope2_id, {
 				z,
 				_: ($wi__input_label || $wi__x || _write_if($scope2_reason, 0)) && _scope_with_id($scope1_id)

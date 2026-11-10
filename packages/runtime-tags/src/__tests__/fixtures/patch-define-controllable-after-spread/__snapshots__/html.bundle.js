@@ -15,7 +15,7 @@ var template_default = _template("a", (input) => {
 		}, "a", $scope1_id, "input", 0, $scope1_reason, 3)}>${_el_mark($scope1_id, "a")}`);
 		_script($scope1_id, "a2");
 		_script($scope1_id, "a3");
-		_patch_render($scope1_id, "a4", [_filled_guard($scope1_reason, 1) && "d", $fg__valueChange && "e"], $scope1_reason, 0);
+		_patch_render($scope1_id, "a4", ((_filled_guard($scope1_reason, 1) ? " d" : "") + ($fg__valueChange ? " e" : "")).slice(1), $scope1_reason, 0);
 		_scope($scope1_id, {
 			d: $ui__value__OR__valueChange && value,
 			e: $ui__value__OR__valueChange && valueChange

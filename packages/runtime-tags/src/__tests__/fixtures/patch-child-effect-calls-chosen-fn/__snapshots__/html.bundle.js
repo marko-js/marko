@@ -6,7 +6,7 @@ var label_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $fg__input_get = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_html(`<output></output>${_el_mark($scope0_id, "a")}`);
-	_script($scope0_id, "b0", 1, $fg__input_get, "d");
+	_script($scope0_id, "b0", 1, $fg__input_get);
 	_scope($scope0_id, { d: input.get }) || $fg__input_get && _patch_write($scope0_id, "xd", input.get, !_server_guard($scope0_reason, 0));
 });
 
@@ -23,12 +23,7 @@ var template_default = _template("a", (input) => {
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	label_default({ get: input.upper ? up : low });
 	_patch_child_end();
-	_patch_render($scope0_id, "a2", [
-		$fg__input_upper && "e",
-		$fg__input_title && "f",
-		$fg__input_title && "d",
-		$fg__input_title && "g"
-	], $scope0_reason, 0);
+	_patch_render($scope0_id, "a2", (($fg__input_upper ? " e" : "") + ($fg__input_title ? " f" : "") + ($fg__input_title ? " d" : "") + ($fg__input_title ? " g" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		d: input.title,
 		e: ($ui__input_title || $ui__input_title__OR__input_upper) && input.upper,

@@ -8,11 +8,7 @@ var label_view_default = _template("__tests__/tags/label-view.marko", (input) =>
 	const $scope0_id = _scope_id();
 	const get = input.flag ? input.a : input.b;
 	_html(`<p>${_text_mark($scope0_id, "#text/0", get(), 1, $scope0_reason, 3)}</p>`);
-	_patch_render($scope0_id, "__tests__/tags/label-view.marko_0_input_flag#3_input_a#4_input_b#5/setup", [
-		$fg__input_flag && "input_flag",
-		$fg__input_a && "input_a",
-		$fg__input_b && "input_b"
-	], $scope0_reason, 3);
+	_patch_render($scope0_id, "__tests__/tags/label-view.marko_0_input_flag#3_input_a#4_input_b#5/setup", (($fg__input_flag ? " input_flag" : "") + ($fg__input_a ? " input_a" : "") + ($fg__input_b ? " input_b" : "")).slice(1), $scope0_reason, 3);
 	_scope($scope0_id, {
 		input_flag: ($ui__input_a__OR__input_b || $ui__input_flag__OR__input_a__OR__input_b) && input.flag,
 		input_a: ($ui__input_flag__OR__input_b || $ui__input_flag__OR__input_a__OR__input_b) && input.a,

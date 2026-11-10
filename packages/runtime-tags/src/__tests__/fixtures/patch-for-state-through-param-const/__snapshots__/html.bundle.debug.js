@@ -17,7 +17,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, "id", $scope0_id, "#text/1", 1, 1, 0, 0, 1);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_patch_render($scope0_id, "__tests__/template.marko_0_sessions#6_ws#7/setup", $fg__input_workspace && "ws");
-	_patch_render($scope0_id, "__tests__/template.marko_0_input_active#5_shown#9/setup", [$fg__input_active && "input_active", $fg__input_workspace && "ws"]);
+	_patch_render($scope0_id, "__tests__/template.marko_0_input_active#5_shown#9/setup", "shown" + ($fg__input_active ? " input_active" : "") + ($fg__input_workspace ? " ws" : ""));
 	_scope($scope0_id, {
 		input_active: input.active,
 		sessions: _write_if($scope0_reason, 0) && sessions,

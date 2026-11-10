@@ -17,9 +17,9 @@
 ```
 ## Change
 ```
-UPDATE: div[title] "a1" => "b1"
 REMOVE: div::text("x:a1")
 INSERT: div::text("x:b1")
+UPDATE: div[title] "a1" => "b1"
 ```
 
 # Update `{"page":"b","n":1,"$global":{"user":{"name":"y"},"serializedGlobals":["user"]}}`

@@ -2,7 +2,7 @@
 const $template = "<!><!><!><!><!><!>";
 const $walks = "b%b%b%b%c";
 const $placeholder_content = _content("__tests__/template.marko_6*content", "<em>loading</em>");
-const $await_content2__input_n__script = _script("__tests__/template.marko_5_input_n#0:7", ($scope) => document.body.dataset.n = $scope._.input_n);
+const $await_content2__input_n__script = _script_patch("__tests__/template.marko_5_input_n#0:7 >input_n", ($scope) => document.body.dataset.n = $scope._.input_n);
 const $await_content2__input_n = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_5_input_n#0:7/subscribe", "input_n/8", $await_content2__input_n__script);
 const $await_content2__setup = $await_content2__input_n;
 const $for_content__for = /*@__PURE__*/ _for_to_unkeyed("#text/0");

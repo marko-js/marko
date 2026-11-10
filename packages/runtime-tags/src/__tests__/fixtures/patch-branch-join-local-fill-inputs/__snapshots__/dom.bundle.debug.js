@@ -26,7 +26,7 @@ const $if_content__input_b = /*@__PURE__*/ _if_closure_patch("__tests__/tags/chi
 });
 const $if = /*@__PURE__*/ _if("#text/0", "<p> </p><em> </em><button class=m>m</button>", "D lD l ", $if_content__setup);
 const $input_show$1 = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
-const $input_a__script = _script("__tests__/tags/child.marko_0_input_a#5", ($scope) => _el_read($scope["#div/1"]).textContent = "s:" + $scope.input_a);
+const $input_a__script = _script_patch("__tests__/tags/child.marko_0_input_a#5 input_a", ($scope) => _el_read($scope["#div/1"]).textContent = "s:" + $scope.input_a);
 const $input_a = /*@__PURE__*/ _const("input_a", ($scope) => {
 	$if_content__input_a($scope);
 	$input_a__script($scope);

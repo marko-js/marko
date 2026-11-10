@@ -7,7 +7,7 @@ const $for_content__input_b = /*@__PURE__*/ _for_closure_patch("__tests__/tags/c
 const $for_content__setup = $for_content__input_b;
 const $for_content__item = /*@__PURE__*/ _const("item", $for_content__input_b__OR__item);
 const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);
-const $input_b__script = _script("__tests__/tags/child.marko_0_input_b#4", ($scope) => _el_read($scope["#div/0"]).textContent = "s:" + $scope.input_b);
+const $input_b__script = _script_patch("__tests__/tags/child.marko_0_input_b#4 input_b", ($scope) => _el_read($scope["#div/0"]).textContent = "s:" + $scope.input_b);
 const $input_b$1 = /*@__PURE__*/ _const("input_b", ($scope) => {
 	$for_content__input_b($scope);
 	$input_b__script($scope);

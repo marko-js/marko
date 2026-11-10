@@ -1,7 +1,7 @@
 // template.marko
 const $Panel_content__walks = "D l";
 const $Panel_content__template = "<em> </em>";
-const $Panel_content__shout__script = _script("a1", ($scope) => document.body.dataset.label = $scope.e);
+const $Panel_content__shout__script = _script_patch("a1 e", ($scope) => document.body.dataset.label = $scope.e);
 const $Panel_content__shout = /*@__PURE__*/ _const(4, ($scope) => {
 	_text($scope.a, $scope.e);
 	$Panel_content__shout__script($scope);

@@ -22,7 +22,7 @@ var template_default = _template("a", (input) => {
 				return 0;
 			}
 		}, $scope2_id, "a", 1, $wg__isOpen, 1, 0, 0, ["a1"], $scope2_reason, 0);
-		_script($scope2_id, "a4", $wg__isOpen, $fg__label, "e");
+		_script($scope2_id, "a4", $wg__isOpen, $fg__label);
 		$fg__label && _client_guard($scope2_reason, 0) && _patch_render($scope2_id, "a0", "e");
 		_scope($scope2_id, { e: label }) || $fg__label && _patch_write($scope2_id, "xe", label, !_server_guard($scope2_reason, 1));
 	}, $scope0_id) };

@@ -44,7 +44,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_var($scope0_id, "#scopeOffset/1", $inputwhichCounterOther_scope, "__tests__/template.marko_0_count#10/var");
 	_html(`<p>${_text_mark($scope0_id, "#text/2", count)}</p>`);
 	$fg__input_label && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_label#5/subscribers", "input_label");
-	_patch_render($scope0_id, "__tests__/template.marko_0_input_label#5_input_which#6_Counter#7_Other#8/setup", [$fg__input_label && "input_label", $fg__input_which && "input_which"], $scope0_reason, 0);
+	_patch_render($scope0_id, "__tests__/template.marko_0_input_label#5_input_which#6_Counter#7_Other#8/setup", (($fg__input_label ? " input_label" : "") + ($fg__input_which ? " input_which" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		input_label: ($ui__input_which || $ui__input_label__OR__input_which || $ui__input_label) && input.label,
 		input_which: ($ui__input_label || $ui__input_label__OR__input_which) && input.which,

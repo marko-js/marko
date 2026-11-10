@@ -7,7 +7,7 @@ var frame_default = _template("__tests__/tags/frame.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_content__OR__input_x = _write_guard($scope0_reason, 0), $ui__input_content__OR__input_x = _unfilled_if($scope0_reason, 0), $ui__input_x = _unfilled_if($scope0_reason, 2), $ui__input_content = _unfilled_if($scope0_reason, 1), $fg__input_content = _filled_guard($scope0_reason, 1), $fg__input_x = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	_dynamic_tag($scope0_id, "#text/0", input.content, [input.x], 1, 0, 1, $wg__input_content__OR__input_x, $scope0_reason, 0, 0, 1);
-	_patch_render($scope0_id, "__tests__/tags/frame.marko_0_input_content#3_input_x#4/setup", [$fg__input_content && "input_content", $fg__input_x && "input_x"], $scope0_reason, 0);
+	_patch_render($scope0_id, "__tests__/tags/frame.marko_0_input_content#3_input_x#4/setup", (($fg__input_content ? " input_content" : "") + ($fg__input_x ? " input_x" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		input_content: ($ui__input_x || $ui__input_content__OR__input_x) && input.content,
 		input_x: ($ui__input_content || $ui__input_content__OR__input_x) && input.x
@@ -30,7 +30,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id(), $fg__input_n = _filled_guard($scope0_reason, 1);
 		const $scope1_reason = _scope_reason();
 		const twice = input.n * 2;
-		_script($scope1_id, "__tests__/template.marko_1_input_n#0:4_twice#0", 0, $fg__input_n, [">input_n", "twice"]);
+		_script($scope1_id, "__tests__/template.marko_1_input_n#0:4_twice#0", 0, $fg__input_n);
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_n__closures, _scope($scope1_id, {
 			twice,
 			_: _scope_with_id($scope0_id)

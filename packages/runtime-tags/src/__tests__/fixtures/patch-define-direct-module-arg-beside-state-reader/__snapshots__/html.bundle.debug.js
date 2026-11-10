@@ -29,7 +29,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			if (isOpen) {
 				const $scope3_id = _scope_id();
 				_html(`<em>${_text_mark($scope3_id, "#text/0", fmt(label), 1, $scope2_reason, 2)}</em>`);
-				_patch_render($scope3_id, "__tests__/template.marko_3_fmt#2:4_label#2:5/setup", [_filled_guard($scope2_reason, 5) && ">fmt", _filled_guard($scope2_reason, 6) && ">label"], $scope2_reason, 2);
+				_patch_render($scope3_id, "__tests__/template.marko_3_fmt#2:4_label#2:5/setup", ((_filled_guard($scope2_reason, 5) ? " >fmt" : "") + (_filled_guard($scope2_reason, 6) ? " >label" : "")).slice(1), $scope2_reason, 2);
 				_scope($scope3_id, { _: _write_if($scope2_reason, 2) && _scope_with_id($scope2_id) }, "__tests__/template.marko", "4:4");
 				return 0;
 			}

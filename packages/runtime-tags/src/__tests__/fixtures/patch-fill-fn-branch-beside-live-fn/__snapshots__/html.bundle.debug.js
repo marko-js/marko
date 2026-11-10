@@ -62,9 +62,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	$fg__input_flag__OR__input_title && _patch_render($scope0_id, "__tests__/template.marko_1_fmt#0:9/setup", "fmt");
 	$fg__input_title__OR__input_alt && _patch_render($scope0_id, "__tests__/template.marko_1_alt#0:10/setup", "alt");
 	$fg__input_title && _patch_render($scope0_id, "__tests__/template.marko_1_last#0:11/setup", "last");
-	$fg__input_title && _patch_render($scope0_id, "__tests__/template.marko_1_tag#0:12/setup", ["tag", "input_title"]);
-	_patch_render($scope0_id, "__tests__/template.marko_0_input_flag#4_input_title#5/setup", [$fg__input_flag && "input_flag", $fg__input_title && "input_title"], $scope0_reason, 0);
-	_patch_render($scope0_id, "__tests__/template.marko_0_input_title#5_input_alt#7/setup", [$fg__input_title && "input_title", $fg__input_alt && "input_alt"], $scope0_reason, 1);
+	$fg__input_title && _patch_render($scope0_id, "__tests__/template.marko_1_tag#0:12/setup", "tag input_title");
+	_patch_render($scope0_id, "__tests__/template.marko_0_input_flag#4_input_title#5/setup", (($fg__input_flag ? " input_flag" : "") + ($fg__input_title ? " input_title" : "")).slice(1), $scope0_reason, 0);
+	_patch_render($scope0_id, "__tests__/template.marko_0_input_title#5_input_alt#7/setup", (($fg__input_title ? " input_title" : "") + ($fg__input_alt ? " input_alt" : "")).slice(1), $scope0_reason, 1);
 	_scope($scope0_id, {
 		input_flag: ($ui__input_title || _unfilled_if($scope0_reason, 0)) && input.flag,
 		input_title: input.title,

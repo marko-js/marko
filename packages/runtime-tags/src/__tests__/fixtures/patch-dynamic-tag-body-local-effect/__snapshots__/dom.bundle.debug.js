@@ -25,7 +25,7 @@ const $inputonCarddiv_content__x = /*@__PURE__*/ _closure_get_patch("__tests__/t
 const $inputonCarddiv_content__setup = $inputonCarddiv_content__x;
 const $inputonCarddiv_content = _content("__tests__/template.marko_2*content", "<em> </em>", "D ", $inputonCarddiv_content__setup);
 const $if_content__x__closure = /*@__PURE__*/ _closure($inputonCarddiv_content__x);
-const $if_content__x__script = _script("__tests__/template.marko_1_x#2", ($scope) => _el_read($scope["#div/0"]).textContent = $scope.x);
+const $if_content__x__script = _script_patch("__tests__/template.marko_1_x#2 x", ($scope) => _el_read($scope["#div/0"]).textContent = $scope.x);
 const $if_content__x = /*@__PURE__*/ _const("x", ($scope) => {
 	$if_content__x__closure($scope);
 	$if_content__x__script($scope);

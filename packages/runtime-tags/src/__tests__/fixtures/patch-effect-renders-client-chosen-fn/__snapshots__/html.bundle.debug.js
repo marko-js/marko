@@ -13,16 +13,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const pick = upper ? up : low;
 	_html(`<output>${_text_mark($scope0_id, "#text/0", pick())}</output><button>toggle</button>${_el_mark($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	_script($scope0_id, "__tests__/template.marko_0_pick#9", 1, $sg__input_title && 2, [
-		"input_title",
-		"up",
-		"low"
-	]);
-	_patch_render($scope0_id, "__tests__/template.marko_0_upper#5_up#6_low#7/setup", [
-		$fg__input_title && "up",
-		$fg__input_title && "input_title",
-		$fg__input_title && "low"
-	]);
+	_script($scope0_id, "__tests__/template.marko_0_pick#9", 1, $sg__input_title && 2);
+	_patch_render($scope0_id, "__tests__/template.marko_0_upper#5_up#6_low#7/setup", (($fg__input_title ? " up" : "") + ($fg__input_title ? " input_title" : "") + ($fg__input_title ? " low" : "")).slice(1));
 	_scope($scope0_id, {
 		input_title: input.title,
 		upper,

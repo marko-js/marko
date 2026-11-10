@@ -19,7 +19,7 @@ var template_default = _template("a", (input) => {
 				$fg__input_label && _patch_write($scope2_id, "xd", x, !$sg__input_label);
 				_html(`<p>${_text_mark($scope2_id, "a", x, 1, $scope0_reason, 1)}</p>`);
 				_if(() => {}, $scope2_id, "b", 1, 1, 0, 0, 1);
-				_script($scope2_id, "a2", 1, $fg__input_label, "d");
+				_script($scope2_id, "a2", 1, $fg__input_label);
 				$fg__input_label && _patch_render($scope2_id, "a0", "d");
 				_subscribe($n__closures, _scope($scope2_id, { d: x }), "a3");
 			}, 1, "a4", _unfilled_if($scope0_reason, 1));

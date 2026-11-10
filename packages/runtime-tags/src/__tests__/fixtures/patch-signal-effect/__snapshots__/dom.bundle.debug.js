@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<div></div><button>+</button>";
 const $walks = " b b";
-const $input_label__OR__count__script = _script("__tests__/template.marko_0_input_label#4_count#5", ($scope) => {
+const $input_label__OR__count__script = _script_patch("__tests__/template.marko_0_input_label#4_count#5 input_label", ($scope) => {
 	$signalReset($scope, 0);
 	{
 		const ac = new AbortController();

@@ -56,7 +56,7 @@ var chooser_default = _template("__tests__/tags/chooser.marko", (input) => {
 		if (show) {
 			const $scope1_id = _scope_id();
 			_dynamic_tag($scope1_id, "#text/0", input.Tag, { label: input.label }, 0, 0, 0, $wg__input_Tag__OR__input_label);
-			_patch_render($scope1_id, "__tests__/tags/chooser.marko_1_input_Tag#0:4_input_label#0:5/setup", [_filled_guard($scope0_reason, 1) && ">input_Tag", _filled_guard($scope0_reason, 2) && ">input_label"], $scope0_reason, 0);
+			_patch_render($scope1_id, "__tests__/tags/chooser.marko_1_input_Tag#0:4_input_label#0:5/setup", ((_filled_guard($scope0_reason, 1) ? " >input_Tag" : "") + (_filled_guard($scope0_reason, 2) ? " >input_label" : "")).slice(1), $scope0_reason, 0);
 			_scope($scope1_id, {}, "__tests__/tags/chooser.marko", "3:2");
 			return 0;
 		}
@@ -92,7 +92,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		label: input.label
 	});
 	_patch_child_end();
-	_patch_render($scope0_id, "__tests__/template.marko_0_input_which#4_input_label#5/setup", [$fg__input_which && "input_which", $fg__input_label && "input_label"], $scope0_reason, 0);
+	_patch_render($scope0_id, "__tests__/template.marko_0_input_which#4_input_label#5/setup", (($fg__input_which ? " input_which" : "") + ($fg__input_label ? " input_label" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		input_which: ($ui__input_label || $ui__input_which__OR__input_label) && input.which,
 		input_label: ($ui__input_which || $ui__input_which__OR__input_label) && input.label,

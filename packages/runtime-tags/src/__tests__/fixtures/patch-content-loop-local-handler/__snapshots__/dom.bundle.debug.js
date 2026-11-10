@@ -16,7 +16,7 @@ const $item_content__setup__script = _script("__tests__/template.marko_1", ($sco
 	$picked($scope._, $scope.x_name);
 }));
 const $item_content__setup = $item_content__setup__script;
-const $item_content__x_name__script = _script("__tests__/template.marko_1_x_name#4", ($scope) => _el_read($scope["#span/2"]).textContent = "script:" + $scope.x_name);
+const $item_content__x_name__script = _script_patch("__tests__/template.marko_1_x_name#4 x_name", ($scope) => _el_read($scope["#span/2"]).textContent = "script:" + $scope.x_name);
 const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__tests__/template.marko_1*content", "<button> </button><span></span>", " D l ", $item_content__setup), {
 	x_id: ($scope) => _attr_class($scope["#button/0"], "b" + $scope.x_id),
 	x_name($scope) {

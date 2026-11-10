@@ -47,7 +47,7 @@ var card_default = _template("__tests__/tags/card.marko", (input) => {
 		$fg__input_p && $ui__input_content && _patch_write($scope1_id, "PatchMarkedWrite:x", x, !_server_guard($scope0_reason, 1));
 		_dynamic_tag($scope1_id, "#text/0", x ? keeper_default : "div", { content: input.content }, 1, 0, 0, $wg__input_p__OR__input_content, $scope0_reason, 0);
 		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "__tests__/tags/card.marko_1_c#0:4/subscribe");
-		_patch_render($scope1_id, "__tests__/tags/card.marko_1_c#0:4_x#2/setup", [_filled_guard($scope0_reason, 2) && ">c", $fg__input_p && "x"], $scope0_reason, 0);
+		_patch_render($scope1_id, "__tests__/tags/card.marko_1_c#0:4_x#2/setup", ((_filled_guard($scope0_reason, 2) ? " >c" : "") + ($fg__input_p ? " x" : "")).slice(1), $scope0_reason, 0);
 		_write_if($scope0_reason, 0) && _subscribe($ui__input_content && $c__closures, _scope($scope1_id, { x: ($ui__input_content || _unfilled_if($scope0_reason, 0)) && x }, "__tests__/tags/card.marko", "2:2", { x: "2:8" }), _client_guard($scope0_reason, 2) && "__tests__/tags/card.marko_1_c#0:4/subscribe", $wg__input_p__OR__input_content);
 	}, 1, "__tests__/tags/card.marko_1*content", $ui__input_p, 1, 1);
 	_scope($scope0_id, {
@@ -78,7 +78,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id, ($scope) => $scope0_page ? [{ input_note: input.note }] : []), 0, $wg__input_on__OR__input_p, $scope0_reason, 0, 0, void 0, 0, 0, "__tests__/template.marko_1*content");
 	_html("</main>");
 	$fg__input_note && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_note#6/subscribers", "input_note");
-	_patch_render($scope0_id, "__tests__/template.marko_0_input_on#3_input_p#4/setup", [$fg__input_on && "input_on", $fg__input_p && "input_p"], $scope0_reason, 0);
+	_patch_render($scope0_id, "__tests__/template.marko_0_input_on#3_input_p#4/setup", (($fg__input_on ? " input_on" : "") + ($fg__input_p ? " input_p" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		input_on: ($ui__input_p || $ui__input_on__OR__input_p) && input.on,
 		input_p: ($ui__input_on || $ui__input_on__OR__input_p) && input.p,

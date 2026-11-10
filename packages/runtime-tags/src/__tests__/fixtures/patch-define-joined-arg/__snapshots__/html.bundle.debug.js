@@ -18,7 +18,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	Card.content({ href: input.q + input.item });
 	_patch_child_end();
-	_patch_render($scope0_id, "__tests__/template.marko_0_input_q#3_input_item#4/setup", [$fg__input_q && "input_q", $fg__input_item && "input_item"], $scope0_reason, 0);
+	_patch_render($scope0_id, "__tests__/template.marko_0_input_q#3_input_item#4/setup", (($fg__input_q ? " input_q" : "") + ($fg__input_item ? " input_item" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		input_q: ($ui__input_item || $ui__input_q__OR__input_item) && input.q,
 		input_item: ($ui__input_q || $ui__input_q__OR__input_item) && input.item,

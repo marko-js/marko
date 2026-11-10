@@ -12,7 +12,7 @@ var text_field_default = _template("b", (input) => {
 	}, "a", $scope0_id, "input", 0, $scope0_reason, 3)}>${_el_mark($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
 	_script($scope0_id, "b1");
-	_patch_render($scope0_id, "b2", [$fg__input_value && "d", $fg__input_valueChange && "e"], $scope0_reason, 0);
+	_patch_render($scope0_id, "b2", (($fg__input_value ? " d" : "") + ($fg__input_valueChange ? " e" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		d: ($ui__input_valueChange || $ui__input_value__OR__input_valueChange) && value,
 		e: $ui__input_value__OR__input_valueChange && valueChange

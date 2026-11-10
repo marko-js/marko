@@ -52,7 +52,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_subscribe($wi__input_id && $input_id__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "6:4"), $cg__input_id && "__tests__/template.marko_1_input_id#0:5/subscribe", $wg__input_id);
 	}, void 0, "__tests__/template.marko_1*content", void 0, "__tests__/template.marko_2*content", 1);
 	$fg__input_id && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_id#5/subscribers", "input_id");
-	_patch_render($scope0_id, "__tests__/template.marko_0_input_which#4_input_id#5/setup", [$fg__input_which && "input_which", $fg__input_id && "input_id"], $scope0_reason, 0);
+	_patch_render($scope0_id, "__tests__/template.marko_0_input_which#4_input_id#5/setup", (($fg__input_which ? " input_which" : "") + ($fg__input_id ? " input_id" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		input_which: ($ui__input_id || _unfilled_if($scope0_reason, 0)) && input.which,
 		input_id: input.id,

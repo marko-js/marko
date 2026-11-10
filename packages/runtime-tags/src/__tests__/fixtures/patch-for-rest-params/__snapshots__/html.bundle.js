@@ -12,7 +12,7 @@ var my_for_default = _template("b", (input) => {
 		const $scope1_id = _scope_id(), $ui__input_content = _unfilled_if($scope0_reason, 2), $fg__input_to = _filled_guard($scope0_reason, 1);
 		$fg__input_to && $ui__input_content && _patch_write($scope1_id, "xb", args, !_server_guard($scope0_reason, 1));
 		_dynamic_tag($scope1_id, "a", input.content, [...args], 1, 0, 1, $wg__input_to__OR__input_content, $scope0_reason, 0, 0, 2);
-		_patch_render($scope1_id, "b0", [_filled_guard($scope0_reason, 2) && ">e", $fg__input_to && "b"], $scope0_reason, 0);
+		_patch_render($scope1_id, "b0", ((_filled_guard($scope0_reason, 2) ? " >e" : "") + ($fg__input_to ? " b" : "")).slice(1), $scope0_reason, 0);
 		_write_if($scope0_reason, 0) && _scope($scope1_id, {
 			b: ($ui__input_content || _unfilled_if($scope0_reason, 0)) && args,
 			_: _scope_with_id($scope0_id)

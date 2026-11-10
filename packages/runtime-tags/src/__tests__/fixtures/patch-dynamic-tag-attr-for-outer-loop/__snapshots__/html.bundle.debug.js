@@ -74,7 +74,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, $scope1_id, () => [{ b }]) }));
 		_dynamic_tag($scope1_id, "#text/0", input.on ? list_default : list2_default, { item: $item }, 1, 0, 0, $wg__input_on__OR__input_bs, $scope0_reason, 2);
 		$fg__input_as && _patch_subscribers($scope1_id, "__tests__/template.marko_1_a#3/subscribers", "a");
-		_patch_render($scope1_id, "__tests__/template.marko_1_input_on#0:6_input_bs#0:7/setup", [_filled_guard($scope0_reason, 6) && ">input_on", _filled_guard($scope0_reason, 7) && ">input_bs"], $scope0_reason, 2);
+		_patch_render($scope1_id, "__tests__/template.marko_1_input_on#0:6_input_bs#0:7/setup", ((_filled_guard($scope0_reason, 6) ? " >input_on" : "") + (_filled_guard($scope0_reason, 7) ? " >input_bs" : "")).slice(1), $scope0_reason, 2);
 		$wi__input_as__OR__input_on__OR__input_bs__OR__input_note && _scope($scope1_id, {
 			a: ($ui__input_on__OR__input_bs || _unfilled_if($scope0_reason, 5)) && a,
 			_: _scope_with_id($scope0_id),

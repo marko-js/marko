@@ -17,7 +17,7 @@ var wrap_default = _template("c", (input) => {
 	_html("<section>");
 	_dynamic_tag($scope0_id, "a", input.content, { label: input.label }, 1, 0, 0, $wg__input_content__OR__input_label, $scope0_reason, 0, 0, 1);
 	_html("</section>");
-	_patch_render($scope0_id, "c0", [$fg__input_content && "d", $fg__input_label && "e"], $scope0_reason, 0);
+	_patch_render($scope0_id, "c0", (($fg__input_content ? " d" : "") + ($fg__input_label ? " e" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		d: ($ui__input_label || $ui__input_content__OR__input_label) && input.content,
 		e: ($ui__input_content || $ui__input_content__OR__input_label) && input.label

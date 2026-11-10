@@ -31,7 +31,7 @@ var card_default = _template("b", (input) => {
 			if (isOpen) {
 				const $scope4_id = _scope_id();
 				_html(`<em>${_text_mark($scope4_id, "a", fmt(label), 1, $scope3_reason, 2)}</em>`);
-				_patch_render($scope4_id, "b0", [_filled_guard($scope3_reason, 5) && ">e", _filled_guard($scope3_reason, 6) && ">f"], $scope3_reason, 2);
+				_patch_render($scope4_id, "b0", ((_filled_guard($scope3_reason, 5) ? " >e" : "") + (_filled_guard($scope3_reason, 6) ? " >f" : "")).slice(1), $scope3_reason, 2);
 				_scope($scope4_id, { _: _write_if($scope3_reason, 2) && _scope_with_id($scope3_id) });
 				return 0;
 			}

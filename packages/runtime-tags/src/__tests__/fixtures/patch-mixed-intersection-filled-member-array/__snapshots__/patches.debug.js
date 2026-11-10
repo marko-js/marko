@@ -10,10 +10,9 @@
         "PatchSetup:": {
           "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-mixed-intersection-filled-member-array/tags/panel.marko_2_input_a#0:5/subscribe": 0
         },
-        "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-mixed-intersection-filled-member-array/tags/panel.marko_2_input_a#0:5_b#0:6/setup": ">>input_b"
+        "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-mixed-intersection-filled-member-array/tags/panel.marko_2_input_a#0:5_b#0:6/setup": ">>b"
       }, "packages/runtime-tags/src/__tests__/fixtures/patch-mixed-intersection-filled-member-array/tags/panel.marko_2*shell"]
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-mixed-intersection-filled-member-array/tags/panel.marko_1*shell"],
-    "PatchMarkedWrite:input_b": "b",
     "PatchMarkedWrite:b": ["b"]
   }
 }
@@ -30,10 +29,9 @@
         "PatchSetup:": {
           "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-mixed-intersection-filled-member-array/tags/panel.marko_2_input_a#0:5/subscribe": 0
         },
-        "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-mixed-intersection-filled-member-array/tags/panel.marko_2_input_a#0:5_b#0:6/setup": ">>input_b"
+        "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-mixed-intersection-filled-member-array/tags/panel.marko_2_input_a#0:5_b#0:6/setup": ">>b"
       }, "packages/runtime-tags/src/__tests__/fixtures/patch-mixed-intersection-filled-member-array/tags/panel.marko_2*shell"]
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-mixed-intersection-filled-member-array/tags/panel.marko_1*shell"],
-    "PatchMarkedWrite:input_b": "c",
     "PatchMarkedWrite:b": ["c"]
   }
 }

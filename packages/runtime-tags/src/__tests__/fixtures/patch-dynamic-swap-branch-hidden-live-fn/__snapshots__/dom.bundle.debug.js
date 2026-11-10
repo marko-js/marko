@@ -18,7 +18,7 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 const $template$1 = "<output></output>";
 const $walks$1 = " b";
 const $setup$1 = ($_) => {};
-const $get__script = _script("__tests__/tags/probe.marko_0_get#3", ($scope) => {
+const $get__script = _script_patch("__tests__/tags/probe.marko_0_get#3 get", ($scope) => {
 	_el_read($scope["#output/0"]).textContent = $scope.get();
 	console.log("run", $scope.get());
 });

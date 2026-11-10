@@ -13,7 +13,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (open) {
 			const $scope1_id = _scope_id();
 			_html(`<button class=go>go</button>${_el_mark($scope1_id, "#button/0")}`);
-			_script($scope1_id, "__tests__/template.marko_1_input_mode#0:5", 1, _filled_guard($scope0_reason, 0), ">input_mode");
+			_script($scope1_id, "__tests__/template.marko_1_input_mode#0:5", 1, _filled_guard($scope0_reason, 0));
 			_client_guard($scope0_reason, 0) && _patch_render($scope1_id, "__tests__/template.marko_1_input_mode#0:5/setup");
 			_scope($scope1_id, {}, "__tests__/template.marko", "4:2");
 			return 0;

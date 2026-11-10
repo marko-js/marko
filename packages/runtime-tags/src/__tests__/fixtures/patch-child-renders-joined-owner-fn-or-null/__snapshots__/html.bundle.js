@@ -7,7 +7,7 @@ var label_view_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	const get = input.flag ? input.a : null;
 	_html(`<p>${_text_mark($scope0_id, "a", get && get(), 1, $scope0_reason, 0)}</p>`);
-	_patch_render($scope0_id, "b0", [$fg__input_flag && "d", $fg__input_a && "e"], $scope0_reason, 0);
+	_patch_render($scope0_id, "b0", (($fg__input_flag ? " d" : "") + ($fg__input_a ? " e" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		d: ($ui__input_a || $ui__input_flag__OR__input_a) && input.flag,
 		e: ($ui__input_flag || $ui__input_flag__OR__input_a) && input.a

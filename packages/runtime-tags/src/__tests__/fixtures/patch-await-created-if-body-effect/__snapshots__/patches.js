@@ -10,7 +10,7 @@ a, [`b3 b2!b>a0;b%b/ D%c%l&b;<!><!><button class=child><!>:<!></button><!>`, `b5
           va1: 0
         }
       },
-      eb0: "d",
+      e: "b0",
       ib1: "d"
     }
   }, "b5"]

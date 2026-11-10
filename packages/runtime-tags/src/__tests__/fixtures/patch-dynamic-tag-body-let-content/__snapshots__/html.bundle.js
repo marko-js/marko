@@ -57,7 +57,7 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id, ($scope) => $scope0_page ? [{ g: input.note }] : []), 0, $wg__input_on__OR__input_p, $scope0_reason, 0, 0, void 0, 0, 0, "a0");
 	_html("</main>");
 	$fg__input_note && _patch_subscribers($scope0_id, "a2", "g");
-	_patch_render($scope0_id, "a3", [$fg__input_on && "d", $fg__input_p && "e"], $scope0_reason, 0);
+	_patch_render($scope0_id, "a3", (($fg__input_on ? " d" : "") + ($fg__input_p ? " e" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		d: ($ui__input_p || $ui__input_on__OR__input_p) && input.on,
 		e: ($ui__input_on || $ui__input_on__OR__input_p) && input.p,

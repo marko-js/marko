@@ -25,7 +25,7 @@ var child_default = _template("c", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_html(`<p>${_text_mark($scope1_id, "a", input.a + input.b, 1, $scope0_reason, 2)}</p>`);
-			_patch_render($scope1_id, "c0", [_filled_guard($scope0_reason, 4) && ">e", _filled_guard($scope0_reason, 7) && ">i"], $scope0_reason, 2);
+			_patch_render($scope1_id, "c0", ((_filled_guard($scope0_reason, 4) ? " >e" : "") + (_filled_guard($scope0_reason, 7) ? " >i" : "")).slice(1), $scope0_reason, 2);
 			_scope($scope1_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id) });
 			return 0;
 		}
@@ -36,7 +36,7 @@ var child_default = _template("c", (input) => {
 	_patch_child_end();
 	$fg__input_a && $cg__input_show && _patch_render($scope0_id, "c2", "e");
 	$fg__input_b && $cg__input_show && _patch_render($scope0_id, "c3", "i");
-	_patch_render($scope0_id, "c4", [$fg__input_a && "e", $fg__input_d && "f"], $scope0_reason, 0);
+	_patch_render($scope0_id, "c4", (($fg__input_a ? " e" : "") + ($fg__input_d ? " f" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		e: ($ui__input_d__OR__input_show__OR__input_b || $ui__input_a__OR__input_d || $ui__input_a__OR__input_b) && input.a,
 		f: ($ui__input_a || $ui__input_a__OR__input_d) && input.d,

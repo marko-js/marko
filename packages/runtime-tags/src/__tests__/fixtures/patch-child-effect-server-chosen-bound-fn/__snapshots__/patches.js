@@ -1,7 +1,7 @@
 // PATCH
 {
   ca: {
-    eb0: "c d",
+    e: "b0",
     dc: "^a1",
     xd: "2"
   }
@@ -10,7 +10,7 @@
 // PATCH
 {
   ca: {
-    eb0: "c d",
+    e: "b0",
     dc: "^a1",
     xd: "3"
   }

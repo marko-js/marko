@@ -11,7 +11,7 @@ var counter_box_default = _template("b", (input) => {
 	_html(`<span>${_text_mark($scope0_id, "a", mode)}</span><button class=mode>b</button>${_el_mark($scope0_id, "b")}`);
 	const $return = mode;
 	_script($scope0_id, "b0");
-	_patch_render($scope0_id, "b1", [$fg__input_onA && "e", $fg__input_onB && "f"]);
+	_patch_render($scope0_id, "b1", (($fg__input_onA ? " e" : "") + ($fg__input_onB ? " f" : "")).slice(1));
 	const $valueChange = _patch_bind($scope0_id, "wU", input.onA || void 0, 0, 0);
 	_patch_fill($scope0_id, "vb2", mode, 1);
 	_scope($scope0_id, {

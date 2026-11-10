@@ -49,7 +49,7 @@ var template_default = _template("a", (input) => {
 		get: getTitle
 	});
 	_patch_child_end();
-	_script($scope0_id, "a1", 0, $fg__input_title, ["e", "d"]);
+	_script($scope0_id, "a1", 0, $fg__input_title);
 	_scope($scope0_id, {
 		d: input.title,
 		e: getTitle,

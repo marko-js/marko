@@ -20,7 +20,7 @@ var child_default = _template("b", (input) => {
 		}
 	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 4), 1, 0, 0, ["b1"], $scope0_reason, 4);
 	$fg__input_a && _client_guard($scope0_reason, 4) && _patch_render($scope0_id, "b0", "e");
-	_patch_render($scope0_id, "b2", [$fg__input_a && "e", $fg__input_b && "f"], $scope0_reason, 0);
+	_patch_render($scope0_id, "b2", (($fg__input_a ? " e" : "") + ($fg__input_b ? " f" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		e: ($ui__input_b__OR__input_show || $ui__input_a__OR__input_b || $ui__input_a) && input.a,
 		f: ($ui__input_a || $ui__input_a__OR__input_b) && input.b

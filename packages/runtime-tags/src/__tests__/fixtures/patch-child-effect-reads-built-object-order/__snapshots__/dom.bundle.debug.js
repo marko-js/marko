@@ -23,7 +23,7 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 const $template = "";
 const $walks = "";
 const $setup = ($_) => {};
-const $input_value__script = _script("__tests__/tags/child.marko_0_input_value#2", ($scope) => console.log($scope.input_value));
+const $input_value__script = _script_patch("__tests__/tags/child.marko_0_input_value#2 input_value", ($scope) => console.log($scope.input_value));
 const $input_value = /*@__PURE__*/ _const("input_value", $input_value__script);
 const $input = ($scope, input) => $input_value($scope, input.value);
 var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", "", "", 0, $input);

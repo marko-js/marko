@@ -15,7 +15,7 @@ var one_default = _template("__tests__/tags/one.marko", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $wg__content__OR__t = _write_guard($scope1_reason, 0), $ui__content__OR__t = _unfilled_if($scope1_reason, 0), $ui__t = _unfilled_if($scope1_reason, 2), $ui__content = _unfilled_if($scope1_reason, 1), $fg__content = _filled_guard($scope1_reason, 1), $fg__t = _filled_guard($scope1_reason, 2);
 		_dynamic_tag($scope1_id, "#text/0", content, { title: t }, 1, 0, 0, $wg__content__OR__t, $scope1_reason, 0, 0, 1);
-		_patch_render($scope1_id, "__tests__/tags/one.marko_1_content#3_t#4/setup", [$fg__content && "content", $fg__t && "t"], $scope1_reason, 0);
+		_patch_render($scope1_id, "__tests__/tags/one.marko_1_content#3_t#4/setup", (($fg__content ? " content" : "") + ($fg__t ? " t" : "")).slice(1), $scope1_reason, 0);
 		_write_if($scope1_reason, 0) && _scope($scope1_id, {
 			content: ($ui__t || $ui__content__OR__t) && content,
 			t: ($ui__content || $ui__content__OR__t) && t

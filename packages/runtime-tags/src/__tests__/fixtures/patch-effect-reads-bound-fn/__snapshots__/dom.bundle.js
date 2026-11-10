@@ -1,5 +1,5 @@
 // template.marko
-const $getTitle2__script = _script("a1", ($scope) => {
+const $getTitle2__script = _script_patch("a1 e d", ($scope) => {
 	$scope.a.textContent = $scope.e();
 	console.log("run", $scope.e());
 });

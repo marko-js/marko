@@ -2,7 +2,7 @@
 `a0`
 {
   pb: 1,
-  ea7: "e",
+  e: "a7",
   Sa8: "e",
   xe: "b",
   cAb: {
@@ -22,7 +22,7 @@
 `b !b1; b%;<button class=toggle>toggle</button><!><!>`
 {
   pb: 1,
-  ea7: "e",
+  e: "a7",
   Sa8: "e",
   xe: "c",
   cAb: {
@@ -43,7 +43,7 @@
 // PATCH holding CxI
 {
   pb: 1,
-  ea7: "e",
+  e: "a7",
   Sa8: "e",
   xe: "d",
   cAb: {

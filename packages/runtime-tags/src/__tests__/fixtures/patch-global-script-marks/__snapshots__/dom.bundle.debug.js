@@ -27,7 +27,7 @@ const $setup__$global_brand = /*@__PURE__*/ _fill_global("__tests__/template.mar
 	_text($scope["#text/13"], $scope.$global.brand);
 }, "brand");
 const $setup = $setup__$global_brand;
-const $input_label__script = _script("__tests__/template.marko_0_input_label#28", ($scope) => {
+const $input_label__script = _script_patch("__tests__/template.marko_0_input_label#28 input_label", ($scope) => {
 	{
 		const el = document.querySelector("main");
 		el.dataset.runs = (el.dataset.runs || "") + "(" + $scope.input_label + ")";

@@ -7,7 +7,7 @@ var field_default = _template("__tests__/tags/field.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $fg__input_onKeyDown = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_html(`<textarea></textarea>${_el_mark($scope0_id, "#textarea/0")}`);
-	_script($scope0_id, "__tests__/tags/field.marko_0_input_onKeyDown#3", 1, $fg__input_onKeyDown, "input_onKeyDown");
+	_script($scope0_id, "__tests__/tags/field.marko_0_input_onKeyDown#3", 1, $fg__input_onKeyDown);
 	_scope($scope0_id, { input_onKeyDown: input.onKeyDown }, "__tests__/tags/field.marko", 0, { input_onKeyDown: ["input.onKeyDown"] }) || $fg__input_onKeyDown && _patch_write($scope0_id, "PatchMarkedWrite:input_onKeyDown", input.onKeyDown, !_server_guard($scope0_reason, 0));
 });
 

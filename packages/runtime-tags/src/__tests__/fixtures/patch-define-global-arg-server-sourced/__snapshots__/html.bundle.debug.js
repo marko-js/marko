@@ -23,7 +23,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				return 0;
 			}
 		}, $scope1_id, "#text/1", 1, 1, 0, 0, 1);
-		_script($scope1_id, "__tests__/template.marko_1_text#4", 1, 1, "text");
+		_script($scope1_id, "__tests__/template.marko_1_text#4", 1, 1);
 		_patch_render($scope1_id, "__tests__/template.marko_2_text#1:4/setup", "text");
 		_subscribe($open__closures, _scope($scope1_id, {
 			text,

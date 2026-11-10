@@ -10,7 +10,7 @@ var layout_default = _template("__tests__/layout.marko", (input) => {
 	_dynamic_tag($scope0_id, "#text/0", input.nav, { label: input.label }, 1, 0, 0, $wg__input_nav__OR__input_label, $scope0_reason, 0, 0, 2);
 	_dynamic_tag($scope0_id, "#text/1", input.content, {}, 10, 0, 0, $wg__input_content, $scope0_reason, 4);
 	_html("</main>"), _trailers("</body></html>");
-	_patch_render($scope0_id, "__tests__/layout.marko_0_input_nav#4_input_label#5/setup", [$fg__input_nav && "input_nav", $fg__input_label && "input_label"], $scope0_reason, 0);
+	_patch_render($scope0_id, "__tests__/layout.marko_0_input_nav#4_input_label#5/setup", (($fg__input_nav ? " input_nav" : "") + ($fg__input_label ? " input_label" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		input_nav: ($ui__input_label || $ui__input_nav__OR__input_label) && input.nav,
 		input_label: ($ui__input_nav || $ui__input_nav__OR__input_label) && input.label

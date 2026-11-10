@@ -24,7 +24,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				return 0;
 			}
 		}, $scope2_id, "#text/0", _write_guard($scope2_reason, 0), $wg__isOpen, 0, 0, 1);
-		_script($scope2_id, "__tests__/template.marko_2_label#4", $wg__isOpen, $fg__label, "label");
+		_script($scope2_id, "__tests__/template.marko_2_label#4", $wg__isOpen, $fg__label);
 		$fg__label && _patch_render($scope2_id, "__tests__/template.marko_3_label#2:4/setup", "label");
 		_scope($scope2_id, { label }, "__tests__/template.marko", "2:2", { label: "2:25" }) || $fg__label && _patch_write($scope2_id, "PatchMarkedWrite:label", label, !_server_guard($scope2_reason, 2));
 	}, $scope0_id) };

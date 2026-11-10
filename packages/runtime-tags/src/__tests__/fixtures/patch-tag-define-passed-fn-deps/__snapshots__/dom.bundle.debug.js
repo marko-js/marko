@@ -3,7 +3,7 @@ const $TextField_content__walks = " b";
 const $TextField_content__template = "<input>";
 const $template$1 = $TextField_content__template;
 const $walks$1 = /*@__PURE__*/ ((_w0) => `/${_w0}&/&`)($TextField_content__walks);
-const $Log_content__log__OR__value__script = _script("__tests__/tags/field.marko_2_log#2_value#3", ($scope) => $scope.log($scope.value));
+const $Log_content__log__OR__value__script = _script_patch("__tests__/tags/field.marko_2_log#2_value#3 log >input_hint value", ($scope) => $scope.log($scope.value));
 const $Log_content__log__OR__value = /*@__PURE__*/ _or_patch("__tests__/tags/field.marko_2_log#2_value#3/setup", 4, $Log_content__log__OR__value__script);
 const $Log_content__log = /*@__PURE__*/ _const("log", $Log_content__log__OR__value);
 const $Log_content__value = /*@__PURE__*/ _const("value", $Log_content__log__OR__value);

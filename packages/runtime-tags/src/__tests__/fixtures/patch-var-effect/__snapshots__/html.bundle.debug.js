@@ -27,7 +27,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_patch_child_end();
 	_html(`<button>${_text_mark($scope0_id, "#text/3", count)}</button>${_el_mark($scope0_id, "#button/2")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	_script($scope0_id, "__tests__/template.marko_0_label#8", 1, $fg__input_title, "label");
+	_script($scope0_id, "__tests__/template.marko_0_label#8", 1, $fg__input_title);
 	_scope($scope0_id, {
 		count,
 		label,

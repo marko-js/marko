@@ -1,5 +1,5 @@
 // template.marko
-const $n__OR__pick__script = _script("a3", ($scope) => console.log("run", $scope.j(), $scope.f));
+const $n__OR__pick__script = _script_patch("a3 d g h", ($scope) => console.log("run", $scope.j(), $scope.f));
 const $n__OR__pick = /*@__PURE__*/ _or(10, $n__OR__pick__script);
 const $pick = /*@__PURE__*/ _const(9, $n__OR__pick);
 const $upper__OR__up__OR__low = /*@__PURE__*/ _or_patch("a4", 8, ($scope) => $pick($scope, $scope.e ? $scope.g : $scope.h), 2);

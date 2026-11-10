@@ -39,7 +39,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 		_patch_child_end();
 		$fg__input_items__OR__input_v && $cg__input_on && _patch_subscribers($scope1_id, "__tests__/tags/child.marko_1_v#4/subscribers", "v");
 		$cg__input_on && _patch_render($scope1_id, "__tests__/tags/child.marko_1_input_on#0:5/setup");
-		_patch_render($scope1_id, "__tests__/tags/child.marko_1_input_v#0:4_item#2/setup", [_filled_guard($scope0_reason, 3) && ">input_v", $fg__input_items && "item"], $scope0_reason, 0);
+		_patch_render($scope1_id, "__tests__/tags/child.marko_1_input_v#0:4_item#2/setup", ((_filled_guard($scope0_reason, 3) ? " >input_v" : "") + ($fg__input_items ? " item" : "")).slice(1), $scope0_reason, 0);
 		_scope($scope1_id, {
 			item: ($ui__input_v || $ui__input_items__OR__input_v) && item,
 			v: ($ui__input_on || $ui__input_items__OR__input_v) && v,

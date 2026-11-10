@@ -81,7 +81,7 @@ var template_default = _template("a", (input) => {
 	_html("<ul>");
 	_dynamic_tag($scope0_id, "a", input.deep ? tree_default : Card, { node: input.node }, 1, 0, 0, $wg__input_deep__OR__input_node, $scope0_reason, 0);
 	_html("</ul>");
-	_patch_render($scope0_id, "a1", [$fg__input_deep && "d", $fg__input_node && "e"], $scope0_reason, 0);
+	_patch_render($scope0_id, "a1", (($fg__input_deep ? " d" : "") + ($fg__input_node ? " e" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		d: ($ui__input_node || $ui__input_deep__OR__input_node) && input.deep,
 		e: ($ui__input_deep || $ui__input_deep__OR__input_node) && input.node,

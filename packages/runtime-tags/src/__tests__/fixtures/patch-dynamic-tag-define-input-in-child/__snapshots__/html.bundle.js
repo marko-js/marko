@@ -24,7 +24,7 @@ var picker_default = _template("b", (input) => {
 	_dynamic_tag($scope0_id, "a", input.useA ? Card : Other, { record: input.record }, 1, 0, 0, $wg__input_useA__OR__input_record, $scope0_reason, 0);
 	$ui__input_useA__OR__input_record && _patch_write($scope0_id, "wf", Card, 1);
 	$ui__input_useA__OR__input_record && _patch_write($scope0_id, "wg", Other, 1);
-	_patch_render($scope0_id, "b2", [$fg__input_useA && "d", $fg__input_record && "e"], $scope0_reason, 0);
+	_patch_render($scope0_id, "b2", (($fg__input_useA ? " d" : "") + ($fg__input_record ? " e" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		d: ($ui__input_record || $ui__input_useA__OR__input_record) && input.useA,
 		e: ($ui__input_useA || $ui__input_useA__OR__input_record) && input.record,

@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<button>toggle</button>";
 const $walks = " b";
-const $n__OR__pick__script = _script("__tests__/template.marko_0_n#5_pick#9", ($scope) => console.log("run", $scope.pick(), $scope.n));
+const $n__OR__pick__script = _script_patch("__tests__/template.marko_0_n#5_pick#9 input_title up low", ($scope) => console.log("run", $scope.pick(), $scope.n));
 const $n__OR__pick = /*@__PURE__*/ _or(10, $n__OR__pick__script);
 const $pick = /*@__PURE__*/ _const("pick", $n__OR__pick);
 const $upper__OR__up__OR__low = /*@__PURE__*/ _or_patch("__tests__/template.marko_0_upper#4_up#6_low#7/setup", 8, ($scope) => $pick($scope, $scope.upper ? $scope.up : $scope.low), 2);

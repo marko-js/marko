@@ -2,7 +2,7 @@
 const $template$1 = "<output></output>";
 const $walks$1 = " b";
 const $setup$1 = ($_) => {};
-const $input__script = _script("__tests__/tags/label-view.marko_0_input#2", ($scope) => {
+const $input__script = _script_patch("__tests__/tags/label-view.marko_0_input#2 input", ($scope) => {
 	_el_read($scope["#output/0"]).textContent = $scope.input.get();
 	console.log("run", $scope.input.get());
 });

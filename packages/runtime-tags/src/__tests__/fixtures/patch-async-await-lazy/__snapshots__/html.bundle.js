@@ -25,7 +25,7 @@ var template_default = _template("a", (input) => {
 		}, 1, "a1", _unfilled_if($scope0_reason, 0) && 2, 1);
 		_unfilled_if($scope0_reason, 4) && _patch_subscribe($scope1_id, "a6", 1);
 		_unfilled_if($scope0_reason, 5) && _patch_subscribe($scope1_id, "a7", 1);
-		_patch_render($scope1_id, "a8", [_filled_guard($scope0_reason, 4) && ">i", _filled_guard($scope0_reason, 5) && ">j"], $scope0_reason, 0);
+		_patch_render($scope1_id, "a8", ((_filled_guard($scope0_reason, 4) ? " >i" : "") + (_filled_guard($scope0_reason, 5) ? " >j" : "")).slice(1), $scope0_reason, 0);
 		$wi__input_related__OR__input_slow && _subscribe(_unfilled_if($scope0_reason, 5) && $input_slow__closures, _subscribe(_unfilled_if($scope0_reason, 4) && $input_related__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 4) && "a6", 0), _client_guard($scope0_reason, 5) && "a7", 0);
 		$wi__input_related__OR__input_slow && _resume_branch($scope1_id);
 	}, () => {
@@ -41,7 +41,7 @@ var template_default = _template("a", (input) => {
 	}, 1, "a0", $ui__input_slow__OR__input_note && 2, 1);
 	_html(`</footer><button>Count ${_text_mark($scope0_id, "e", count, 2)}</button>${_el_mark($scope0_id, "d")}</main>`);
 	_script($scope0_id, "a9");
-	_patch_render($scope0_id, "a10", [$fg__input_slow && "j", $fg__input_note && "k"], $scope0_reason, 2);
+	_patch_render($scope0_id, "a10", (($fg__input_slow ? " j" : "") + ($fg__input_note ? " k" : "")).slice(1), $scope0_reason, 2);
 	_scope($scope0_id, {
 		i: ($ui__input_slow || $ui__input_related__OR__input_slow) && input.related,
 		j: ($ui__input_related__OR__input_note || $ui__input_related__OR__input_slow || $ui__input_slow__OR__input_note) && input.slow,

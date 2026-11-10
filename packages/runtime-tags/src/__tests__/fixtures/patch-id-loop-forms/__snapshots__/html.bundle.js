@@ -124,7 +124,7 @@ var template_default = _template("a", (input) => {
 		!$cg__input_items__OR__input_record__OR__input_end__OR__input_start && _unfilled_if() && _patch_write($scope0_id, "wq", heading);
 		_scope($scope8_id, { a: _existing_scope($childScope8) });
 	}, (i) => "until-" + i, $scope0_id, "i", 1, 1, 1, 0, 0, "a7", $scope0_reason, 0);
-	_patch_render($scope0_id, "a8", [$fg__input_end && "n", $fg__input_start && "o"], $scope0_reason, 0);
+	_patch_render($scope0_id, "a8", (($fg__input_end ? " n" : "") + ($fg__input_start ? " o" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		n: ($ui__input_start || $ui__input_end__OR__input_start) && input.end,
 		o: ($ui__input_end || $ui__input_end__OR__input_start) && input.start,

@@ -1,5 +1,5 @@
 // template.marko
-const $input_label__OR__count__script = _script("a1", ($scope) => $scope.a.textContent = `${$scope.e}:${$scope.f}`);
+const $input_label__OR__count__script = _script_patch("a1 e", ($scope) => $scope.a.textContent = `${$scope.e}:${$scope.f}`);
 const $input_label__OR__count = /*@__PURE__*/ _or_patch("a2", 6, $input_label__OR__count__script);
 const $count = _let(5, $input_label__OR__count);
 const $setup__script = _script("a0", ($scope) => _on($scope.b, "click", function() {

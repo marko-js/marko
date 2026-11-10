@@ -11,7 +11,7 @@
       }),
       "PatchAttr:#button/0 class": "b1",
       "PatchText:#text/1": "B",
-      "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-content-loop-local-attr-handler/tags/menu.marko_1_it_onPick#5": "it_onPick"
+      "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-content-loop-local-attr-handler/tags/menu.marko_1_it_onPick#5"
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-loop-local-attr-handler/tags/menu.marko_1*shell"]
   }
 }
@@ -29,7 +29,7 @@
       }),
       "PatchAttr:#button/0 class": "b1",
       "PatchText:#text/1": "C",
-      "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-content-loop-local-attr-handler/tags/menu.marko_1_it_onPick#5": "it_onPick"
+      "PatchEffect:": _.c = "packages/runtime-tags/src/__tests__/fixtures/patch-content-loop-local-attr-handler/tags/menu.marko_1_it_onPick#5"
     }, {
       "PatchMarkedWrite:it_onPick": _([], "packages/runtime-tags/src/__tests__/fixtures/patch-content-loop-local-attr-handler/template.marko_0/onPick", _.b = {
         "x/6": {
@@ -39,7 +39,7 @@
       }),
       "PatchAttr:#button/0 class": "b2",
       "PatchText:#text/1": "D",
-      "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-content-loop-local-attr-handler/tags/menu.marko_1_it_onPick#5": "it_onPick"
+      "PatchEffect:": _.c
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-content-loop-local-attr-handler/tags/menu.marko_1*shell"]
   }
 }

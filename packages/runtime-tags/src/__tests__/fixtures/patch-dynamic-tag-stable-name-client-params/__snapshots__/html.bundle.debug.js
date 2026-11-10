@@ -14,7 +14,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		let n = 0;
 		_html(`<button>${_text_mark($scope1_id, "#text/1", show ? label + n : "-")}</button>${_el_mark($scope1_id, "#button/0")}`);
 		_script($scope1_id, "__tests__/template.marko_1");
-		_patch_render($scope1_id, "__tests__/template.marko_1_show#4_label#5_n#6/setup", ["show", "label"]);
+		_patch_render($scope1_id, "__tests__/template.marko_1_show#4_label#5_n#6/setup", "show label");
 		_scope($scope1_id, {
 			show,
 			label,
@@ -29,7 +29,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		show: input.show,
 		label: input.label
 	}, 1, 0, 0, $wg__input_show__OR__input_label, $scope0_reason, 0, 0, 0, 0);
-	_patch_render($scope0_id, "__tests__/template.marko_0_input_show#3_input_label#4_Tag#12/setup", [$fg__input_show && "input_show", $fg__input_label && "input_label"], $scope0_reason, 0);
+	_patch_render($scope0_id, "__tests__/template.marko_0_input_show#3_input_label#4_Tag#12/setup", (($fg__input_show ? " input_show" : "") + ($fg__input_label ? " input_label" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		input_show: ($ui__input_label || $ui__input_show__OR__input_label) && input.show,
 		input_label: ($ui__input_show || $ui__input_show__OR__input_label) && input.label,

@@ -26,7 +26,7 @@ var template_default = _template("c", (input) => {
 	_dynamic_tag($scope0_id, "a", input.mode === "a" ? card_a_default : card_b_default, { label: input.label }, 1, 0, 0, _write_guard($scope0_reason, 0), $scope0_reason, 0);
 	_html(`<button>${_text_mark($scope0_id, "c", n)}</button>${_el_mark($scope0_id, "b")}</main>`);
 	_script($scope0_id, "c0");
-	_patch_render($scope0_id, "c1", [$fg__input_mode && "f", $fg__input_label && "g"], $scope0_reason, 0);
+	_patch_render($scope0_id, "c1", (($fg__input_mode ? " f" : "") + ($fg__input_label ? " g" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		f: ($ui__input_label || $ui__input_mode__OR__input_label) && input.mode,
 		g: ($ui__input_mode || $ui__input_mode__OR__input_label) && input.label,

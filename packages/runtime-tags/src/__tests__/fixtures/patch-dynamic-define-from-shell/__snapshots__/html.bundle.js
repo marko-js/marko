@@ -43,7 +43,7 @@ var template_default = _template("a", (input) => {
 	_html("<main>");
 	_dynamic_tag($scope0_id, "a", input.useA ? Card : Other, { user: input.user }, 9, 0, 0, _write_guard($scope0_reason, 0), $scope0_reason, 0);
 	_html(`<output>${_text_mark($scope0_id, "b", picked)}</output></main>`);
-	_patch_render($scope0_id, "a3", [$fg__input_useA && "e", $fg__input_user && "f"], $scope0_reason, 0);
+	_patch_render($scope0_id, "a3", (($fg__input_useA ? " e" : "") + ($fg__input_user ? " f" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		e: ($ui__input_user || $ui__input_useA__OR__input_user) && input.useA,
 		f: ($ui__input_useA || $ui__input_useA__OR__input_user) && input.user,

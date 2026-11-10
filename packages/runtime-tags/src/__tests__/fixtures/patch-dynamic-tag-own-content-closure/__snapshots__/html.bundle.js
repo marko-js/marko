@@ -23,7 +23,7 @@ var template_default = _template("a", (input) => {
 	_dynamic_tag($scope0_id, "a", input.show ? Content : "span", { label: input.label }, 1, 0, 0, _write_guard($scope0_reason, 0), $scope0_reason, 0);
 	_html(`<button>${_text_mark($scope0_id, "c", n)}</button>${_el_mark($scope0_id, "b")}`);
 	_script($scope0_id, "a4");
-	_patch_render($scope0_id, "a5", [$fg__input_show && "f", $fg__input_label && "g"], $scope0_reason, 0);
+	_patch_render($scope0_id, "a5", (($fg__input_show ? " f" : "") + ($fg__input_label ? " g" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		f: ($ui__input_label || $ui__input_show__OR__input_label) && input.show,
 		g: ($ui__input_show || $ui__input_show__OR__input_label) && input.label,

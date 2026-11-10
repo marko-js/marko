@@ -1,7 +1,7 @@
 // PATCH
 {
   "PatchChild:#childScope/2": {
-    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-same-chunk-fill/tags/probe.marko_0_input_promise#4": "input_promise",
+    "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-same-chunk-fill/tags/probe.marko_0_input_promise#4",
     "PatchMarkedWrite:input_promise": (p => p = new Promise((f, r) => _.a = {
       f,
       r(e) {
@@ -24,7 +24,7 @@
 // PATCH
 {
   "PatchChild:#childScope/2": {
-    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-same-chunk-fill/tags/probe.marko_0_input_promise#4": "input_promise",
+    "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-same-chunk-fill/tags/probe.marko_0_input_promise#4",
     "PatchMarkedWrite:input_promise": (p => p = new Promise((f, r) => _.a = {
       f,
       r(e) {
@@ -47,7 +47,7 @@
 // PATCH
 {
   "PatchChild:#childScope/2": {
-    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-same-chunk-fill/tags/probe.marko_0_input_promise#4": "input_promise",
+    "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-same-chunk-fill/tags/probe.marko_0_input_promise#4",
     "PatchMarkedWrite:input_promise": (p => p = new Promise((f, r) => _.a = {
       f,
       r(e) {
@@ -70,7 +70,7 @@
 // PATCH
 {
   "PatchChild:#childScope/2": {
-    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-same-chunk-fill/tags/probe.marko_0_input_promise#4": "input_promise",
+    "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-same-chunk-fill/tags/probe.marko_0_input_promise#4",
     "PatchMarkedWrite:input_promise": (p => p = new Promise((f, r) => _.a = {
       f,
       r(e) {

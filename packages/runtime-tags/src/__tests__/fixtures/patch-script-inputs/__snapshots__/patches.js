@@ -1,7 +1,7 @@
 // PATCH
 {
   ta: "Store!",
-  ea0: "e f",
+  e: "a0",
   xe: "x",
   xf: "y"
 }
@@ -9,7 +9,7 @@
 // PATCH
 {
   ta: "Store!",
-  ea0: "e f",
+  e: "a0",
   xe: "z",
   xf: "w"
 }
@@ -17,7 +17,7 @@
 // PATCH
 {
   ta: "Store!",
-  ea0: "e f",
+  e: "a0",
   xe: "x",
   xf: "w"
 }

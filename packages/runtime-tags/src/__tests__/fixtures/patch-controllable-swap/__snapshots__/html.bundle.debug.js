@@ -14,7 +14,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, "__tests__/template.marko_0/loud");
 	_html(`<main><h1>${_text_mark($scope0_id, "#text/0", input.title, 1, $scope0_reason, 1)}</h1><input${_attr_input_value($scope0_id, "#input/1", input.value, input.big ? loud : plain, 3, $scope0_reason, 0)}>${_el_mark($scope0_id, "#input/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	_patch_render($scope0_id, "__tests__/template.marko_0_input_value#5_input_big#6_plain#7_loud#8/setup", [$fg__input_value && "input_value", $fg__input_big && "input_big"], $scope0_reason, 0);
+	_patch_render($scope0_id, "__tests__/template.marko_0_input_value#5_input_big#6_plain#7_loud#8/setup", (($fg__input_value ? " input_value" : "") + ($fg__input_big ? " input_big" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		input_value: ($ui__input_big || $ui__input_value__OR__input_big) && input.value,
 		input_big: $ui__input_value__OR__input_big && input.big,

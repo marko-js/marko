@@ -15,7 +15,7 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 const $template = "<output></output>";
 const $walks = " b";
 const $setup = ($_) => {};
-const $input_item__script = _script("__tests__/tags/child.marko_0_input_item#3", ($scope) => {
+const $input_item__script = _script_patch("__tests__/tags/child.marko_0_input_item#3 input_item", ($scope) => {
 	_el_read($scope["#output/0"]).textContent = JSON.stringify($scope.input_item);
 	console.log("run", JSON.stringify($scope.input_item));
 });

@@ -2,7 +2,7 @@
 const $template$1 = "<textarea></textarea>";
 const $walks$1 = " b";
 const $setup$1 = ($_) => {};
-const $input_onKeyDown__script = _script("__tests__/tags/field.marko_0_input_onKeyDown#3", ($scope) => _on($scope["#textarea/0"], "keydown", $scope.input_onKeyDown));
+const $input_onKeyDown__script = _script_patch("__tests__/tags/field.marko_0_input_onKeyDown#3 input_onKeyDown", ($scope) => _on($scope["#textarea/0"], "keydown", $scope.input_onKeyDown));
 const $input_onKeyDown = /*@__PURE__*/ _const("input_onKeyDown", $input_onKeyDown__script);
 const $input$1 = ($scope, input) => $input_onKeyDown($scope, input.onKeyDown);
 var field_default = /*@__PURE__*/ _template("__tests__/tags/field.marko", $template$1, " b", 0, $input$1);

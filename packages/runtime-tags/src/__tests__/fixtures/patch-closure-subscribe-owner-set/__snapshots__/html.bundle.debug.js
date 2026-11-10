@@ -60,11 +60,7 @@ var shop_default = _template("__tests__/shop.marko", (input) => {
 					_patch_child_end();
 					_patch_write($scope3_id, "PatchWrite:part", part, 1);
 					_patch_render($scope3_id, "__tests__/shop.marko_3_p#0:4_drops#0:9_part#5/setup", ">>>p");
-					_patch_render($scope3_id, "__tests__/shop.marko_3_proj#0:7_now#0:8_have#7/setup", [
-						">>>proj",
-						"have",
-						">>>p"
-					]);
+					_patch_render($scope3_id, "__tests__/shop.marko_3_proj#0:7_now#0:8_have#7/setup", ">>>proj have >>>p");
 					_subscribe($drops__closures, _subscribe($now__closures, _scope($scope3_id, {
 						part,
 						have,

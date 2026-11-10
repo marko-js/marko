@@ -7,7 +7,6 @@
     title: "b",
     onClick: _([], "a0")
   },
-  ea3: "h",
   ia1: "h"
 }
 
@@ -20,6 +19,5 @@
     title: "c",
     onClick: _([], "a0")
   },
-  ea3: "h",
   ia1: "h"
 }

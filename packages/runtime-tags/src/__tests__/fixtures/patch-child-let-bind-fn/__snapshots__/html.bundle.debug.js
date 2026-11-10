@@ -22,7 +22,7 @@ var picker_default = _template("__tests__/tags/picker.marko", (input) => {
 	}, 0, $scope0_id, "#ul/1", 1, 1, 1, "</ul>", 1);
 	_script($scope0_id, "__tests__/tags/picker.marko_0");
 	_patch_write($scope0_id, "PatchWrite:load", load, 1);
-	_patch_render($scope0_id, "__tests__/tags/picker.marko_0_input_refreshing#4_input_refreshingChange#5/setup", [$fg__input_refreshing && "input_refreshing", $fg__input_refreshingChange && "input_refreshingChange"], $scope0_reason, 0);
+	_patch_render($scope0_id, "__tests__/tags/picker.marko_0_input_refreshing#4_input_refreshingChange#5/setup", (($fg__input_refreshing ? " input_refreshing" : "") + ($fg__input_refreshingChange ? " input_refreshingChange" : "")).slice(1), $scope0_reason, 0);
 	const $refreshingChange = input.refreshingChange || void 0;
 	_patch_let_change($scope0_id, "PatchFill:__tests__/tags/picker.marko_0_refreshing#7/fill", refreshing, "PatchWrite:TagVariableChange:refreshing", $refreshingChange, $scope0_reason, 0);
 	_patch_fill($scope0_id, "PatchFill:__tests__/tags/picker.marko_0_catalog#9/fill", catalog, 1);

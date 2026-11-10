@@ -8,7 +8,7 @@ var child_default = _template("b", (input) => {
 	const $global$1 = $global();
 	_html(`<p>${_text_mark($scope0_id, "a", input.a + input.b + $global$1.g, 1, (2 | _updates_from($scope0_reason, 0)) << 1, 0)}</p>`);
 	_fill_global_subscribe("b0", $scope0_id, _client_guard($scope0_reason, 0));
-	_patch_render($scope0_id, "b1", [$fg__input_a && "d", $fg__input_b && "e"], $scope0_reason, 0);
+	_patch_render($scope0_id, "b1", (($fg__input_a ? " d" : "") + ($fg__input_b ? " e" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		d: $ui__input_a__OR__input_b && input.a,
 		e: $ui__input_a__OR__input_b && input.b

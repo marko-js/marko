@@ -17,7 +17,7 @@ const $one_content__setup = ($scope) => {
 };
 const $one_content = _content("a0", "<em>one <!><!></em>", "Db%b%", $one_content__setup);
 const $mode__OR__one__OR__two = /*@__PURE__*/ _or(10, ($scope) => _attr_content($scope, "b", $scope.h ? $scope.i : $scope.j), 2);
-const $attrs__script = _script("a5", ($scope) => {
+const $attrs__script = _script_patch("a5 g", ($scope) => {
 	_attrs_script($scope, "c");
 	_attrs_script($scope, "d");
 });
@@ -37,4 +37,4 @@ const $mode = _let(7, ($scope) => {
 const $setup__script = _script("a6", ($scope) => _on($scope.a, "click", function() {
 	$mode($scope, !$scope.h);
 }));
-const $status__script = _script("a4", ($scope) => console.log($scope.n));
+const $status__script = _script_patch("a4 n", ($scope) => console.log($scope.n));

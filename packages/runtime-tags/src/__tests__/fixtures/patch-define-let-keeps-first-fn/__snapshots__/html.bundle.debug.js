@@ -20,18 +20,18 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id) };
 	_set_scope_reason($uf__input_label << 1);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
-	Card.content({ opts: _patch_live($childScope, { fn() {
+	Card.content({ opts: { fn() {
 		return "root:" + input.label;
-	} }, $scope0_id, "input_label") });
+	} } });
 	_patch_child_end();
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_set_scope_reason($uf__input_label << 1);
 			const $childScope2 = _peek_scope_id($scope1_id, "#childScope/0", 1);
-			Card.content({ opts: _patch_live($childScope2, { fn() {
+			Card.content({ opts: { fn() {
 				return "if:" + input.label;
-			} }, $scope1_id, ">input_label") });
+			} } });
 			_patch_child_end();
 			_client_guard($scope0_reason, 0) && _patch_render($scope1_id, "__tests__/template.marko_1_input_label#0:4/setup");
 			_scope($scope1_id, {

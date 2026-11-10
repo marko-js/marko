@@ -43,7 +43,7 @@ var template_default = _template("a", (input) => {
 			const inner = input.prefix + "!";
 			$fg__input_prefix && _patch_write($scope1_id, "xb", inner, !$sg__input_prefix);
 			_html(`<div></div>${_el_mark($scope1_id, "a")}`);
-			_script($scope1_id, "a0", 1, $fg__input_prefix, "b");
+			_script($scope1_id, "a0", 1, $fg__input_prefix);
 			_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "a1", $cg__input_prefix);
 			_subscribe(_unfilled_if($scope0_reason, 2) && $input_prefix__closures, _scope($scope1_id, {
 				b: inner,

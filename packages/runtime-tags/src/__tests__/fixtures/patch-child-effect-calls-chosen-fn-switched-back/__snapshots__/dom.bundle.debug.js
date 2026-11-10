@@ -3,7 +3,7 @@ const $template$1 = "<span> </span>";
 const $walks$1 = "D l";
 const $setup$1 = ($_) => {};
 const $label = ($scope, label) => _text($scope["#text/0"], label);
-const $fn__script = _script("__tests__/tags/child.marko_0_fn#3", ($scope) => {
+const $fn__script = _script_patch("__tests__/tags/child.marko_0_fn#3 fn", ($scope) => {
 	{
 		const m = document.querySelector("main");
 		const seen = m.seen ||= new Set();

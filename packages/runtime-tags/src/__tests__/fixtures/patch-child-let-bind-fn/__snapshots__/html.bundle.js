@@ -22,7 +22,7 @@ var picker_default = _template("b", (input) => {
 	}, 0, $scope0_id, "b", 1, 1, 1, "</ul>", 1);
 	_script($scope0_id, "b1");
 	_patch_write($scope0_id, "wk", load, 1);
-	_patch_render($scope0_id, "b2", [$fg__input_refreshing && "e", $fg__input_refreshingChange && "f"], $scope0_reason, 0);
+	_patch_render($scope0_id, "b2", (($fg__input_refreshing ? " e" : "") + ($fg__input_refreshingChange ? " f" : "")).slice(1), $scope0_reason, 0);
 	const $refreshingChange = input.refreshingChange || void 0;
 	_patch_let_change($scope0_id, "vb3", refreshing, "wi", $refreshingChange, $scope0_reason, 0);
 	_patch_fill($scope0_id, "vb4", catalog, 1);

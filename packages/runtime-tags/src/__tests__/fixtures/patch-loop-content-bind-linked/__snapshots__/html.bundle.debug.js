@@ -29,7 +29,7 @@ var list_default = _template("__tests__/tags/list.marko", (input) => {
 			_: _scope_with_id($scope0_id)
 		}, "__tests__/tags/list.marko", "4:2", { item_content: ["item.content", "4:6"] });
 	}, 0, $scope0_id, "#text/2", 1, 1, 1, 0, 0, "__tests__/tags/list.marko_1*shell", $scope0_reason, 1);
-	_script($scope0_id, "__tests__/tags/list.marko_0_input_onPick#5", 1, $fg__input_onPick, "input_onPick");
+	_script($scope0_id, "__tests__/tags/list.marko_0_input_onPick#5", 1, $fg__input_onPick);
 	_script($scope0_id, "__tests__/tags/list.marko_0");
 	_patch_fill($scope0_id, "PatchFill:__tests__/tags/list.marko_0_open#7/fill", open, 1);
 	_scope($scope0_id, {

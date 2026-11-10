@@ -32,7 +32,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, void 0, "__tests__/template.marko_1*content", void 0, "__tests__/template.marko_2*content", 1);
 	_script($scope0_id, "__tests__/template.marko_0_input_which#4_input_id#5");
 	$fg__input_id && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_id#5/subscribers", "input_id");
-	_patch_render($scope0_id, "__tests__/template.marko_0_input_which#4_input_id#5/setup", [$fg__input_which && "input_which", $fg__input_id && "input_id"], $scope0_reason, 0);
+	_patch_render($scope0_id, "__tests__/template.marko_0_input_which#4_input_id#5/setup", (($fg__input_which ? " input_which" : "") + ($fg__input_id ? " input_id" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		input_which: ($ui__input_id || _unfilled_if($scope0_reason, 0)) && input.which,
 		input_id: input.id,

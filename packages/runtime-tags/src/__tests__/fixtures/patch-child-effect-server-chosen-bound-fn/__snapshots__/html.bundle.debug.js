@@ -6,7 +6,7 @@ _shells({ "__tests__/tags/child.marko": "__tests__/tags/child.marko," });
 var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $fg__input_fn = _filled_guard($scope0_reason, 1), $fg__input_v = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
-	_script($scope0_id, "__tests__/tags/child.marko_0_fn#2_v#3", 0, ($fg__input_fn || $fg__input_v) && (_client_guard($scope0_reason, 1) || _client_guard($scope0_reason, 2) ? 2 : 1), [$fg__input_fn && "fn", $fg__input_v && "v"], "__tests__/tags/child.marko_0_fn#2_v#3/setup", $scope0_reason, 0);
+	_script($scope0_id, "__tests__/tags/child.marko_0_fn#2_v#3", 0, ($fg__input_fn || $fg__input_v) && (_client_guard($scope0_reason, 1) || _client_guard($scope0_reason, 2) ? 2 : 1), (($fg__input_fn ? " fn" : "") + ($fg__input_v ? " v" : "")).slice(1), "__tests__/tags/child.marko_0_fn#2_v#3/setup", $scope0_reason, 0);
 	_scope($scope0_id, {
 		fn: input.fn,
 		v: input.v

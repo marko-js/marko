@@ -2,7 +2,7 @@
 {
   "PatchChild:#childScope/0": {
     "PatchChild:BranchScopes:#text/0": {
-      "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-effect-beside-join-content/template.marko_1_input_a#0:3": ">input_a",
+      "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-effect-beside-join-content/template.marko_1_input_a#0:3",
       "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-effect-beside-join-content/template.marko_1_input_a#0:3_n#3/setup": ">input_a"
     }
   },
@@ -13,7 +13,7 @@
 {
   "PatchChild:#childScope/0": {
     "PatchChild:BranchScopes:#text/0": {
-      "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-effect-beside-join-content/template.marko_1_input_a#0:3": ">input_a",
+      "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-effect-beside-join-content/template.marko_1_input_a#0:3",
       "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-effect-beside-join-content/template.marko_1_input_a#0:3_n#3/setup": ">input_a"
     }
   },
@@ -24,7 +24,7 @@
 {
   "PatchChild:#childScope/0": {
     "PatchChild:BranchScopes:#text/0": {
-      "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-effect-beside-join-content/template.marko_1_input_a#0:3": ">input_a",
+      "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-effect-beside-join-content/template.marko_1_input_a#0:3",
       "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-effect-beside-join-content/template.marko_1_input_a#0:3_n#3/setup": ">input_a"
     }
   },

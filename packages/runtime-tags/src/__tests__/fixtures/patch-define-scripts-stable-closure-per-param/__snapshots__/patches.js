@@ -1,8 +1,7 @@
 // PATCH
 {
   ca: {
-    ea2: "c",
-    ea1: "e",
+    e: "a2 a1",
     xc: "A",
     xe: "b"
   }
@@ -11,8 +10,7 @@
 // PATCH
 {
   ca: {
-    ea2: "c",
-    ea1: "e",
+    e: "a2 a1",
     xc: "A",
     xe: "B"
   }

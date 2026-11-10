@@ -4,7 +4,7 @@
   ba: [{
     xc: "b!",
     pb: "a5",
-    ea8: "c",
+    e: "a8",
     Sa9: "c",
     cAb: {
       fa: [">div", "a0"],
@@ -26,7 +26,7 @@
   ba: [{
     xc: "c!",
     pb: "a5",
-    ea8: "c",
+    e: "a8",
     Sa9: "c",
     cAb: {
       fa: ["b", "a0"],
@@ -49,7 +49,7 @@
   ba: [{
     xc: "d!",
     pb: "a5",
-    ea8: "c",
+    e: "a8",
     Sa9: "c",
     cAb: {
       fa: [">div", "a0"],

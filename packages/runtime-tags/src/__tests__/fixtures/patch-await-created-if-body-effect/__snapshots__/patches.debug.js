@@ -10,7 +10,7 @@
           "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-await-created-if-body-effect/lazy.marko_0_count#6/fill": 0
         }
       },
-      "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-await-created-if-body-effect/template.marko_2_x#3": "x",
+      "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-await-created-if-body-effect/template.marko_2_x#3",
       "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-await-created-if-body-effect/template.marko_2_n#0:6_x#3/setup": "x"
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-await-created-if-body-effect/template.marko_1*shell"]

@@ -20,7 +20,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	thing.content({ x: input.n });
 	_patch_child_end();
 	_html(`<div${_attr_class([input.cls, { on: input.on }], $scope0_id, "#div/1", $scope0_reason, 0)}${_attr_style({ color: input.color }, $scope0_id, "#div/1", $scope0_reason, 5)}>x</div>${_el_mark($scope0_id, "#div/1", _updates_from($scope0_reason, 0) || _updates_from($scope0_reason, 5))}`);
-	_patch_render($scope0_id, "__tests__/template.marko_0_input_cls#6_input_on#7/setup", [$fg__input_cls && "input_cls", $fg__input_on && "input_on"], $scope0_reason, 0);
+	_patch_render($scope0_id, "__tests__/template.marko_0_input_cls#6_input_on#7/setup", (($fg__input_cls ? " input_cls" : "") + ($fg__input_on ? " input_on" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		input_cls: ($ui__input_on || $ui__input_cls__OR__input_on) && input.cls,
 		input_on: ($ui__input_cls || $ui__input_cls__OR__input_on) && input.on,

@@ -6,12 +6,7 @@ var pick_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_on__OR__input_a__OR__input_b__OR__input_title = _write_guard($scope0_reason, 4), $ui__input_on__OR__input_a__OR__input_b__OR__input_title = _unfilled_if($scope0_reason, 4), $ui__input_a__OR__input_b__OR__input_title = _unfilled_if($scope0_reason, 3), $ui__input_on__OR__input_b__OR__input_title = _unfilled_if($scope0_reason, 2), $ui__input_on__OR__input_a__OR__input_title = _unfilled_if($scope0_reason, 1), $ui__input_on__OR__input_a__OR__input_b = _unfilled_if($scope0_reason, 0), $fg__input_on = _filled_guard($scope0_reason, 5), $fg__input_a = _filled_guard($scope0_reason, 6), $fg__input_b = _filled_guard($scope0_reason, 7), $fg__input_title = _filled_guard($scope0_reason, 8);
 	const $scope0_id = _scope_id();
 	_dynamic_tag($scope0_id, "a", input.on ? input.a : input.b, { title: input.title }, 1, 0, 0, $wg__input_on__OR__input_a__OR__input_b__OR__input_title, $scope0_reason, 4);
-	_patch_render($scope0_id, "b0", [
-		$fg__input_on && "d",
-		$fg__input_a && "e",
-		$fg__input_b && "f",
-		$fg__input_title && "g"
-	], $scope0_reason, 4);
+	_patch_render($scope0_id, "b0", (($fg__input_on ? " d" : "") + ($fg__input_a ? " e" : "") + ($fg__input_b ? " f" : "") + ($fg__input_title ? " g" : "")).slice(1), $scope0_reason, 4);
 	_scope($scope0_id, {
 		d: ($ui__input_a__OR__input_b__OR__input_title || $ui__input_on__OR__input_a__OR__input_b__OR__input_title) && input.on,
 		e: ($ui__input_on__OR__input_b__OR__input_title || $ui__input_on__OR__input_a__OR__input_b__OR__input_title) && input.a,

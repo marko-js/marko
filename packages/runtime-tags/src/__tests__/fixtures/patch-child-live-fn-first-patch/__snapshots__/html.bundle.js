@@ -7,7 +7,7 @@ var reader_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $fg__input_fn = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_html(`<button class=call>call</button>${_el_mark($scope0_id, "a")}<pre></pre>${_el_mark($scope0_id, "b")}`);
-	_script($scope0_id, "b0", 1, $fg__input_fn, "e");
+	_script($scope0_id, "b0", 1, $fg__input_fn);
 	_scope($scope0_id, { e: input.fn }) || $fg__input_fn && _patch_write($scope0_id, "xe", input.fn, !_server_guard($scope0_reason, 0));
 });
 

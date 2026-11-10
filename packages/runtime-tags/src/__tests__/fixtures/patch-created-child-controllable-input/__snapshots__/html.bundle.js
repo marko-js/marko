@@ -9,7 +9,7 @@ var demo_card_default = _template("b", (input) => {
 	let selected = input.tab;
 	_html(`<button>tab=${_text_mark($scope0_id, "b", String(selected), 2)}</button>${_el_mark($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
-	_patch_render($scope0_id, "b1", [$fg__input_tab && "e", $fg__input_tabChange && "f"], $scope0_reason, 0);
+	_patch_render($scope0_id, "b1", (($fg__input_tab ? " e" : "") + ($fg__input_tabChange ? " f" : "")).slice(1), $scope0_reason, 0);
 	const $selectedChange = input.tabChange || void 0;
 	_patch_let_change($scope0_id, "vb2", selected, "wi", $selectedChange, $scope0_reason, 0);
 	_scope($scope0_id, {

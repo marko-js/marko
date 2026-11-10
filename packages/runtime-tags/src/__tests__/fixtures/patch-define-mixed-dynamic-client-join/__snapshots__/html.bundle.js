@@ -11,7 +11,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id(), $ui__input_title = _unfilled_if($scope0_reason, 0);
 		const $scope1_reason = _scope_reason(), $uf__value = _updates_from($scope1_reason, 0), $fg__value = _filled_guard($scope1_reason, 0);
 		_html(`<p>${_text_mark($scope1_id, "a", value + input.title, 1, ($uf__input_title | $uf__value) << 1, 0)}</p>`);
-		_patch_render($scope1_id, "a1", [_filled_guard($scope0_reason, 0) && ">f", $fg__value && "d"], ($uf__input_title | $uf__value) << 1, 0);
+		_patch_render($scope1_id, "a1", ((_filled_guard($scope0_reason, 0) ? " >f" : "") + ($fg__value ? " d" : "")).slice(1), ($uf__input_title | $uf__value) << 1, 0);
 		_subscribe(_unfilled_if(($uf__input_title | $uf__value) << 1, 0) && $wi__input_title && $input_title__closures, _scope($scope1_id, {
 			d: ($ui__input_title || _unfilled_if($scope1_reason, 0)) && value,
 			_: _scope_with_id($scope0_id)

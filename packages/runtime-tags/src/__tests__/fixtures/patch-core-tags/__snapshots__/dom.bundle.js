@@ -1,5 +1,5 @@
 // template.marko
-const $input_value__OR__count__script = _script("a1", ($scope) => _lifecycle($scope, {
+const $input_value__OR__count__script = _script_patch("a1 f", ($scope) => _lifecycle($scope, {
 	onMount: function() {
 		$count($scope, +$scope.h + 1);
 	},

@@ -55,7 +55,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		($wi__input_suffix || $wi__value) && _var($scope1_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_1_label#7/var");
 		_patch_child_end();
 		_html(`<p>${_text_mark($scope1_id, "#text/2", label, $wg__input_suffix || $wg__value)}</p>`);
-		_patch_render($scope1_id, "__tests__/template.marko_1_input_suffix#0:3_value#5/setup", [_filled_guard($scope0_reason, 0) && ">input_suffix", "value"], (2 | $uf__input_suffix) << 1, 0);
+		_patch_render($scope1_id, "__tests__/template.marko_1_input_suffix#0:3_value#5/setup", "value" + (_filled_guard($scope0_reason, 0) ? " >input_suffix" : ""), (2 | $uf__input_suffix) << 1, 0);
 		_subscribe($wi__input_suffix && $input_suffix__closures, _scope($scope1_id, {
 			value: $wi__input_suffix && value,
 			_: _scope_with_id($scope0_id),

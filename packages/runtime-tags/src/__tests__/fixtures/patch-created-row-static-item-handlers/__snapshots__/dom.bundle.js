@@ -1,5 +1,5 @@
 // tags/field.marko
-const $input_onKeyDown__script = _script("b0", ($scope) => _on($scope.a, "keydown", $scope.d));
+const $input_onKeyDown__script = _script_patch("b0 d", ($scope) => _on($scope.a, "keydown", $scope.d));
 
 // template.marko
 const $for_content__setup__script = _script("a1", ($scope) => _on($scope.b, "click", function() {

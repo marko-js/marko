@@ -4,6 +4,6 @@
     brand: "bmce"
   },
   ta: "bmce",
-  ea1: "b",
+  e: "a1",
   xb: "bmce"
 }

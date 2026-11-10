@@ -12,7 +12,7 @@ const $if_content__setup = ($scope) => {
 const $if_content__input_a = /*@__PURE__*/ _if_closure_patch("__tests__/tags/child.marko_1_input_a#0:6/setup", "#text/0", 0, $if_content__input_a__OR__c);
 const $if = /*@__PURE__*/ _if("#text/0", "<p> </p>", "D ", $if_content__setup);
 const $input_show$1 = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
-const $input_a__script = _script("__tests__/tags/child.marko_0_input_a#6", ($scope) => _el_read($scope["#div/1"]).textContent = "s:" + $scope.input_a);
+const $input_a__script = _script_patch("__tests__/tags/child.marko_0_input_a#6 input_a", ($scope) => _el_read($scope["#div/1"]).textContent = "s:" + $scope.input_a);
 const $input_a = /*@__PURE__*/ _const("input_a", ($scope) => {
 	$if_content__input_a($scope);
 	$input_a__script($scope);

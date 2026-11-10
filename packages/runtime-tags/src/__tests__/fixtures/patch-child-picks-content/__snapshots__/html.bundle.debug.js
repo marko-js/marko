@@ -7,11 +7,7 @@ var pick_default = _template("__tests__/tags/pick.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_on__OR__input_a__OR__input_b = _write_guard($scope0_reason, 3), $ui__input_on__OR__input_a__OR__input_b = _unfilled_if($scope0_reason, 3), $ui__input_a__OR__input_b = _unfilled_if($scope0_reason, 2), $ui__input_on__OR__input_b = _unfilled_if($scope0_reason, 1), $ui__input_on__OR__input_a = _unfilled_if($scope0_reason, 0), $fg__input_on = _filled_guard($scope0_reason, 4), $fg__input_a = _filled_guard($scope0_reason, 5), $fg__input_b = _filled_guard($scope0_reason, 6);
 	const $scope0_id = _scope_id();
 	_dynamic_tag($scope0_id, "#text/0", input.on ? input.a : input.b, {}, 2, 0, 0, $wg__input_on__OR__input_a__OR__input_b, $scope0_reason, 3);
-	_patch_render($scope0_id, "__tests__/tags/pick.marko_0_input_on#3_input_a#4_input_b#5/setup", [
-		$fg__input_on && "input_on",
-		$fg__input_a && "input_a",
-		$fg__input_b && "input_b"
-	], $scope0_reason, 3);
+	_patch_render($scope0_id, "__tests__/tags/pick.marko_0_input_on#3_input_a#4_input_b#5/setup", (($fg__input_on ? " input_on" : "") + ($fg__input_a ? " input_a" : "") + ($fg__input_b ? " input_b" : "")).slice(1), $scope0_reason, 3);
 	_scope($scope0_id, {
 		input_on: ($ui__input_a__OR__input_b || $ui__input_on__OR__input_a__OR__input_b) && input.on,
 		input_a: ($ui__input_on__OR__input_b || $ui__input_on__OR__input_a__OR__input_b) && input.a,

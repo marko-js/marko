@@ -12,7 +12,7 @@ const $if_content__setup = ($scope) => {
 	_var($scope, "#childScope/0", $if_content__r);
 };
 const $Panel_content__if = /*@__PURE__*/ _if("#text/0", "<em> </em>", "D ", $if_content2__setup);
-const $Panel_content__isOpen__OR__label__script = _script("__tests__/template.marko_1_isOpen#3_label#4", ($scope) => console.log("effect", $scope.label, $scope.isOpen));
+const $Panel_content__isOpen__OR__label__script = _script_patch("__tests__/template.marko_1_isOpen#3_label#4 isOpen label", ($scope) => console.log("effect", $scope.label, $scope.isOpen));
 const $Panel_content__isOpen__OR__label = /*@__PURE__*/ _or(5, $Panel_content__isOpen__OR__label__script);
 const $Panel_content__isOpen = /*@__PURE__*/ _const("isOpen", ($scope) => {
 	$Panel_content__if($scope, $scope.isOpen ? 0 : 1);

@@ -13,7 +13,7 @@ var text_field_default = _template("__tests__/tags/text-field.marko", (input) =>
 	}, "#input/0", $scope0_id, "input", 0, $scope0_reason, 3)}>${_el_mark($scope0_id, "#input/0")}`);
 	_script($scope0_id, "__tests__/tags/text-field.marko_0_attrs#6");
 	_script($scope0_id, "__tests__/tags/text-field.marko_0");
-	_patch_render($scope0_id, "__tests__/tags/text-field.marko_0_value#3_valueChange#4/setup", [$fg__input_value && "value", $fg__input_valueChange && "valueChange"], $scope0_reason, 0);
+	_patch_render($scope0_id, "__tests__/tags/text-field.marko_0_value#3_valueChange#4/setup", (($fg__input_value ? " value" : "") + ($fg__input_valueChange ? " valueChange" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		value: ($ui__input_valueChange || $ui__input_value__OR__input_valueChange) && value,
 		valueChange: $ui__input_value__OR__input_valueChange && valueChange

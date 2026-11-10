@@ -1,5 +1,5 @@
 // template.marko
-const $if_content__input_mode__script = _script("a0", ($scope) => _on($scope.a, "click", $scope._.f === "a" ? function() {
+const $if_content__input_mode__script = _script_patch("a0 >f", ($scope) => _on($scope.a, "click", $scope._.f === "a" ? function() {
 	$out($scope._, "A");
 } : function() {
 	$out($scope._, "B");

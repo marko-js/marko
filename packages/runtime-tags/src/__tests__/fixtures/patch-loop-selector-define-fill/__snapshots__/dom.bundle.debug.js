@@ -3,7 +3,7 @@ const $List_content__walks = " b b";
 const $List_content__template = "<ul></ul><button class=add>+</button>";
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<button class=toggle>toggle</button>`)($List_content__template);
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}& b`)($List_content__walks);
-const $for_content__selected__OR__flag__script = _script("__tests__/template.marko_2_selected#1:4_flag#1:5", ($scope) => _el_read($scope["#li/0"]).className = $scope._.flag && $scope._.selected === $scope["#LoopKey"] ? "sel" : "");
+const $for_content__selected__OR__flag__script = _script_patch("__tests__/template.marko_2_selected#1:4_flag#1:5 >selected", ($scope) => _el_read($scope["#li/0"]).className = $scope._.flag && $scope._.selected === $scope["#LoopKey"] ? "sel" : "");
 const $for_content__selected__OR__flag = /*@__PURE__*/ _or_patch("__tests__/template.marko_2_selected#1:4_flag#1:5/setup", 2, $for_content__selected__OR__flag__script);
 const $for_content__selected = /*@__PURE__*/ _for_selector_patch("__tests__/template.marko_2_selected#1:4/setup", "#ul/0", "selected", $for_content__selected__OR__flag);
 const $for_content__setup = ($scope) => {

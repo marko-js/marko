@@ -2,7 +2,7 @@
 const $template$1 = "<p> </p>";
 const $walks$1 = "D l";
 const $setup$1 = ($_) => {};
-const $get__script = _script("__tests__/tags/label-view.marko_0_get#7", ($scope) => console.log("run", $scope.get()));
+const $get__script = _script_patch("__tests__/tags/label-view.marko_0_get#7 get", ($scope) => console.log("run", $scope.get()));
 const $get = /*@__PURE__*/ _const("get", ($scope) => {
 	_text($scope["#text/0"], $scope.get());
 	$get__script($scope);

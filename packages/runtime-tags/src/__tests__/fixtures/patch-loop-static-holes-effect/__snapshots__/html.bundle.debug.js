@@ -17,7 +17,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_for_of([1, 2], (x) => {
 		const $scope1_id = _scope_id();
 		_html(`<li>${_text_mark($scope1_id, "#text/1", x, 1, 0, 0)}:${_text_mark($scope1_id, "#text/2", input.note, 2, $scope0_reason, 1)}</li>${_el_mark($scope1_id, "#li/0")}`);
-		_script($scope1_id, "__tests__/template.marko_1_input_note#0:5", 1, _filled_guard($scope0_reason, 1), ">input_note");
+		_script($scope1_id, "__tests__/template.marko_1_input_note#0:5", 1, _filled_guard($scope0_reason, 1));
 		$cg__input_note && _patch_render($scope1_id, "__tests__/template.marko_1_input_note#0:5/setup");
 		_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:4");
 	}, 0, $scope0_id, "#ul/0", 1, 1, 1, 0, 0, "__tests__/template.marko_1*shell", 0, 0);

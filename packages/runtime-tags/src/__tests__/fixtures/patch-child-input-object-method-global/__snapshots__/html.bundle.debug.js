@@ -19,21 +19,13 @@ var code_block_default = _template("__tests__/tags/code-block.marko", (input) =>
 		if (input.text.length > 2) {
 			const $scope1_id = _scope_id();
 			_html(`<div>${_html_mark($scope1_id, "#text/0", highlight(input.text), 1, (2 | $uf__input_cursor__OR__input_text) << 1, 0)}</div>`);
-			_patch_render($scope1_id, "__tests__/tags/code-block.marko_1_input_text#0:4_highlight#0:6/setup", [
-				_filled_guard($scope0_reason, 2) && ">input_text",
-				_filled_guard((2 | $uf__input_cursor) << 1, 0) && ">highlight",
-				_filled_guard($scope0_reason, 1) && ">input_cursor"
-			], (2 | $uf__input_cursor__OR__input_text) << 1, 0);
+			_patch_render($scope1_id, "__tests__/tags/code-block.marko_1_input_text#0:4_highlight#0:6/setup", ((_filled_guard($scope0_reason, 2) ? " >input_text" : "") + (_filled_guard((2 | $uf__input_cursor) << 1, 0) ? " >highlight" : "") + (_filled_guard($scope0_reason, 1) ? " >input_cursor" : "")).slice(1), (2 | $uf__input_cursor__OR__input_text) << 1, 0);
 			_scope($scope1_id, { _: ($scope0_page || $wi__input_cursor__OR__input_text) && _scope_with_id($scope0_id) }, "__tests__/tags/code-block.marko", "4:2");
 			return 0;
 		} else {
 			const $scope2_id = _scope_id();
 			_html(`<span>${_html_mark($scope2_id, "#text/0", highlight(input.text), 1, (2 | $uf__input_cursor__OR__input_text) << 1, 0)}</span>`);
-			_patch_render($scope2_id, "__tests__/tags/code-block.marko_2_input_text#0:4_highlight#0:6/setup", [
-				_filled_guard($scope0_reason, 2) && ">input_text",
-				_filled_guard((2 | $uf__input_cursor) << 1, 0) && ">highlight",
-				_filled_guard($scope0_reason, 1) && ">input_cursor"
-			], (2 | $uf__input_cursor__OR__input_text) << 1, 0);
+			_patch_render($scope2_id, "__tests__/tags/code-block.marko_2_input_text#0:4_highlight#0:6/setup", ((_filled_guard($scope0_reason, 2) ? " >input_text" : "") + (_filled_guard((2 | $uf__input_cursor) << 1, 0) ? " >highlight" : "") + (_filled_guard($scope0_reason, 1) ? " >input_cursor" : "")).slice(1), (2 | $uf__input_cursor__OR__input_text) << 1, 0);
 			_scope($scope2_id, { _: ($scope0_page || $wi__input_cursor__OR__input_text) && _scope_with_id($scope0_id) }, "__tests__/tags/code-block.marko", "7:2");
 			return 1;
 		}
@@ -41,8 +33,8 @@ var code_block_default = _template("__tests__/tags/code-block.marko", (input) =>
 	_fill_global_subscribe("__tests__/tags/code-block.marko_0_input_cursor#3_$global_theme#8", $scope0_id, _client_guard($scope0_reason, 1));
 	$fg__input_text && $cg__input_text_length && _patch_render($scope0_id, "__tests__/tags/code-block.marko_1_input_text#0:4/setup", "input_text");
 	$fg__input_text && $cg__input_text_length && _patch_render($scope0_id, "__tests__/tags/code-block.marko_2_input_text#0:4/setup", "input_text");
-	_filled_guard((2 | $uf__input_cursor) << 1, 0) && $cg__input_text_length && _patch_render($scope0_id, "__tests__/tags/code-block.marko_1_highlight#0:6/setup", [_filled_guard((2 | $uf__input_cursor) << 1, 0) && "highlight", $fg__input_cursor && "input_cursor"]);
-	_filled_guard((2 | $uf__input_cursor) << 1, 0) && $cg__input_text_length && _patch_render($scope0_id, "__tests__/tags/code-block.marko_2_highlight#0:6/setup", [_filled_guard((2 | $uf__input_cursor) << 1, 0) && "highlight", $fg__input_cursor && "input_cursor"]);
+	_filled_guard((2 | $uf__input_cursor) << 1, 0) && $cg__input_text_length && _patch_render($scope0_id, "__tests__/tags/code-block.marko_1_highlight#0:6/setup", ((_filled_guard((2 | $uf__input_cursor) << 1, 0) ? " highlight" : "") + ($fg__input_cursor ? " input_cursor" : "")).slice(1));
+	_filled_guard((2 | $uf__input_cursor) << 1, 0) && $cg__input_text_length && _patch_render($scope0_id, "__tests__/tags/code-block.marko_2_highlight#0:6/setup", ((_filled_guard((2 | $uf__input_cursor) << 1, 0) ? " highlight" : "") + ($fg__input_cursor ? " input_cursor" : "")).slice(1));
 	_scope($scope0_id, {
 		input_cursor: $ui__input_cursor__OR__input_text && input.cursor,
 		input_text: ($ui__input_cursor || $ui__input_cursor__OR__input_text || _unfilled_if()) && input.text,

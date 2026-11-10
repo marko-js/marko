@@ -5,8 +5,7 @@
       name: "x"
     }
   },
-  ea1: "d e",
-  ea0: "d e",
+  e: "a1 a0",
   xd: "b",
   xe: 1
 }
@@ -18,8 +17,7 @@
       name: "y"
     }
   },
-  ea1: "d e",
-  ea0: "d e",
+  e: "a1 a0",
   xd: "b",
   xe: 1
 }

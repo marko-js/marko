@@ -26,7 +26,7 @@ var template_default = _template("a", (input) => {
 				return 0;
 			}
 		}, $scope2_id, "a", 1, $wg__isOpen, 1, 0, 0, ["a1"], $scope2_reason, 0);
-		_script($scope2_id, "a5", $wg__isOpen, $fg__text, "e");
+		_script($scope2_id, "a5", $wg__isOpen, $fg__text);
 		_patch_fill($scope2_id, "va6", n, 1);
 		_scope($scope2_id, {
 			e: text,

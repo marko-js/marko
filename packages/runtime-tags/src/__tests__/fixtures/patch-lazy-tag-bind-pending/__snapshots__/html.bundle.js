@@ -12,7 +12,7 @@ var child_default = _template("a", (input) => {
 		onClick: handler
 	};
 	_html(`<button${_attrs(attrs, "a", $scope0_id, "button", 0, $scope0_reason, 0)}>go</button>${_el_mark($scope0_id, "a")}`);
-	_script($scope0_id, "a1", 1, $fg__input_title, "d");
+	_script($scope0_id, "a1", 1, $fg__input_title);
 	_scope($scope0_id, { d: input.title });
 });
 

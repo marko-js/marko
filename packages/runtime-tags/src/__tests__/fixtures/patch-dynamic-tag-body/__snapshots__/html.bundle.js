@@ -32,7 +32,7 @@ var template_default = _template("a", (input) => {
 		_subscribe(_unfilled_if($scope0_reason, 6) && $input_note__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }), $cg__input_note && "a2");
 	}, $scope0_id, 0), 0, $wg__input_wrap, $scope0_reason, 5);
 	$fg__input_note && _client_guard($scope0_reason, 5) && _patch_subscribers($scope0_id, "a3", "i");
-	_patch_render($scope0_id, "a4", [$fg__input_tag && "e", $fg__input_cls && "f"], $scope0_reason, 0);
+	_patch_render($scope0_id, "a4", (($fg__input_tag ? " e" : "") + ($fg__input_cls ? " f" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		e: ($ui__input_cls || $ui__input_tag__OR__input_cls) && input.tag,
 		f: ($ui__input_tag || $ui__input_tag__OR__input_cls) && input.cls,

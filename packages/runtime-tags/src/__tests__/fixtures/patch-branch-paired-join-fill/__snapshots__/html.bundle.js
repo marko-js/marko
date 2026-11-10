@@ -22,7 +22,7 @@ var panel_default = _template("b", (input) => {
 			_client_guard($scope0_reason, 3) && _patch_render($scope1_id, "b1");
 			_patch_render($scope1_id, "b2", $fg__input_x && "d");
 			_patch_render($scope1_id, "b3", $fg__input_y && "f");
-			_patch_render($scope1_id, "b4", [$fg__input_x && "d", $fg__input_y && "f"], $scope0_reason, 0);
+			_patch_render($scope1_id, "b4", (($fg__input_x ? " d" : "") + ($fg__input_y ? " f" : "")).slice(1), $scope0_reason, 0);
 			_scope($scope1_id, {
 				d: a,
 				f: b,

@@ -46,7 +46,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	$fg__input_label && _patch_render($scope0_id, "__tests__/template.marko_1_input_label#0:6/setup", "input_label");
 	_patch_render($scope0_id, "__tests__/template.marko_0_input_other#7_Panel#10/setup", $fg__input_other && "input_other", $scope0_reason, 1);
-	_patch_render($scope0_id, "__tests__/template.marko_0_input_label#6_open#8_Tag#12/setup", [$fg__input_label && "input_label", $fg__input_other && "Tag"]);
+	_patch_render($scope0_id, "__tests__/template.marko_0_input_label#6_open#8_Tag#12/setup", (($fg__input_label ? " input_label" : "") + ($fg__input_other ? " Tag" : "")).slice(1));
 	_scope($scope0_id, {
 		input_label: input.label,
 		open,

@@ -1,5 +1,5 @@
 // tags/label.marko
-const $input__script = _script("b0", ($scope) => console.log("run", $scope.b.get()));
+const $input__script = _script_patch("b0 b", ($scope) => console.log("run", $scope.b.get()));
 
 // template.marko
 const $getTitle = ($scope) => () => $scope.d;

@@ -51,11 +51,7 @@ var template_default = _template("a", (input) => {
 		});
 		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "a0");
 		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "a1");
-		_patch_render($scope1_id, "a2", [
-			_filled_guard($scope0_reason, 0) && ">f",
-			_filled_guard($scope0_reason, 1) && ">g",
-			"d"
-		]);
+		_patch_render($scope1_id, "a2", "d" + (_filled_guard($scope0_reason, 0) ? " >f" : "") + (_filled_guard($scope0_reason, 1) ? " >g" : ""));
 		_subscribe($count__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_label__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $input_large__closures, _scope($scope1_id, {
 			d: err?.message,
 			_: _scope_with_id($scope0_id)

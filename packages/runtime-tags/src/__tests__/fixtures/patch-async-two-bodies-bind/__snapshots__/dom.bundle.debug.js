@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<main><!><!></main>";
 const $walks = "D%b%l";
-const $await_content2__attrs__script = _script("__tests__/template.marko_2_attrs#6", ($scope) => _attrs_script($scope, "#button/0"));
+const $await_content2__attrs__script = _script_patch("__tests__/template.marko_2_attrs#6 second", ($scope) => _attrs_script($scope, "#button/0"));
 const $await_content2__attrs = /*@__PURE__*/ _const("attrs", ($scope) => {
 	$await_content2__attrs__script($scope);
 	_attrs($scope, "#button/0", $scope.attrs);

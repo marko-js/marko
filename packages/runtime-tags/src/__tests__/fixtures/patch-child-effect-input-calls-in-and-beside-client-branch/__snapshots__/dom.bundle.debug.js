@@ -54,7 +54,7 @@ const $input_fmt = /*@__PURE__*/ _const("input_fmt", ($scope) => {
 	$Panel_content__tag_input_fmt($scope["#childScope/0"], $scope.input_fmt);
 	$if_content__input_fmt($scope);
 });
-const $input_label__script = _script("__tests__/tags/card.marko_0_input_label#7", ($scope) => console.log("label", $scope.input_label));
+const $input_label__script = _script_patch("__tests__/tags/card.marko_0_input_label#7 input_label", ($scope) => console.log("label", $scope.input_label));
 const $input_label$1 = /*@__PURE__*/ _const("input_label", ($scope) => {
 	$if_content2__input_label($scope);
 	$Panel_content__tag_input_label($scope["#childScope/0"], $scope.input_label);

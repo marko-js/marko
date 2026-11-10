@@ -13,7 +13,7 @@ var template_default = _template("a", (input) => {
 		$fg__input_items && _patch_write($scope1_id, "xd", item.name, !$sg__input_items);
 		$fg__input_items && _patch_write($scope1_id, "xe", item.id, !$sg__input_items);
 		_html(`<p>${_text_mark($scope1_id, "a", item.name + "/" + item.id + "#0")}</p>`);
-		_patch_render($scope1_id, "a0", [$fg__input_items && "d", $fg__input_items && "e"]);
+		_patch_render($scope1_id, "a0", (($fg__input_items ? " d" : "") + ($fg__input_items ? " e" : "")).slice(1));
 		_scope($scope1_id, {
 			d: item.name,
 			e: item.id,

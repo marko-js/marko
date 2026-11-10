@@ -27,7 +27,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if ($global$1.meta.headings) {
 			const $scope1_id = _scope_id();
 			_html(`<a href=#main>Skip to content</a>${_el_mark($scope1_id, "#a/0")}`);
-			_script($scope1_id, "__tests__/template.marko_1_input_msg#0:5", 1, _filled_guard($scope0_reason, 0), ">input_msg");
+			_script($scope1_id, "__tests__/template.marko_1_input_msg#0:5", 1, _filled_guard($scope0_reason, 0));
 			$cg__input_msg && _patch_render($scope1_id, "__tests__/template.marko_1_input_msg#0:5/setup");
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:6");
 			return 0;
@@ -41,7 +41,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			site_footer_default({});
 			_patch_child_end();
 			_html(`<p></p>${_el_mark($scope2_id, "#p/1")}`);
-			_script($scope2_id, "__tests__/template.marko_2_input_msg#0:5", 1, _filled_guard($scope0_reason, 0), ">input_msg");
+			_script($scope2_id, "__tests__/template.marko_2_input_msg#0:5", 1, _filled_guard($scope0_reason, 0));
 			$cg__input_msg && _patch_render($scope2_id, "__tests__/template.marko_2_input_msg#0:5/setup");
 			_scope($scope2_id, {
 				_: _scope_with_id($scope0_id),

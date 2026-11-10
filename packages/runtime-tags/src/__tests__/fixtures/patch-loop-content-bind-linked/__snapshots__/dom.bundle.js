@@ -7,7 +7,7 @@ const $open = /*@__PURE__*/ _fill_let("b4", 7, $for_content__open);
 const $setup__script = _script("b3", ($scope) => _on($scope.a, "click", function() {
 	$open($scope, !$scope.h);
 }));
-const $input_onPick__script = _script("b2", ($scope) => _on($scope.b, "click", $scope.f));
+const $input_onPick__script = _script_patch("b2 f", ($scope) => _on($scope.b, "click", $scope.f));
 
 // template.marko
 const $item_content__input_note = /*@__PURE__*/ _closure_get_patch("a1", 5, ($scope) => _text($scope.b, $scope._.d), 0, "a3", 0);

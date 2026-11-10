@@ -14,11 +14,7 @@ var level_watch_default = _template("__tests__/tags/level-watch.marko", (input) 
 	_if(() => {
 		if (input.projection) {
 			const $scope1_id = _scope_id();
-			_script($scope1_id, "__tests__/tags/level-watch.marko_1_input_projection_skill#0:6_input_baseXp#0:7_input_playerId#0:8_shown#0:9", 0, 0, [
-				_filled_guard($scope0_reason, 1) && ">input_projection_skill",
-				_filled_guard($scope0_reason, 2) && ">input_baseXp",
-				_filled_guard($scope0_reason, 3) && ">input_playerId"
-			], "__tests__/tags/level-watch.marko_1_input_projection_skill#0:6_input_baseXp#0:7_input_playerId#0:8_shown#0:9/setup");
+			_script($scope1_id, "__tests__/tags/level-watch.marko_1_input_projection_skill#0:6_input_baseXp#0:7_input_playerId#0:8_shown#0:9", 0, 0, ((_filled_guard($scope0_reason, 1) ? " >input_projection_skill" : "") + (_filled_guard($scope0_reason, 2) ? " >input_baseXp" : "") + (_filled_guard($scope0_reason, 3) ? " >input_playerId" : "")).slice(1), "__tests__/tags/level-watch.marko_1_input_projection_skill#0:6_input_baseXp#0:7_input_playerId#0:8_shown#0:9/setup");
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/level-watch.marko", "4:2");
 			return 0;
 		}

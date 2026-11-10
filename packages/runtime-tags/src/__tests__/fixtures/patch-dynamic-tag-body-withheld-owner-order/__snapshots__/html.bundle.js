@@ -59,7 +59,7 @@ var template_default = _template("a", (input) => {
 		const $return = X;
 		$ui__input_on && _patch_write($scope1_id, "wh", X, 1);
 		$fg__label && _patch_subscribers($scope1_id, "a3", "e");
-		_patch_render($scope1_id, "a4", [_filled_guard($scope0_reason, 0) && ">f", $fg__prev && "f"], $uf__input_on << 1, 0);
+		_patch_render($scope1_id, "a4", ((_filled_guard($scope0_reason, 0) ? " >f" : "") + ($fg__prev ? " f" : "")).slice(1), $uf__input_on << 1, 0);
 		($wi__input_on || _write_if($scope1_reason, 0)) && _subscribe(_unfilled_if($uf__input_on << 1, 0) && $wi__input_on && $input_on__closures, _scope($scope1_id, {
 			e: ($ui__input_on || _unfilled_if($scope1_reason, 1)) && label,
 			f: $ui__input_on && prev,

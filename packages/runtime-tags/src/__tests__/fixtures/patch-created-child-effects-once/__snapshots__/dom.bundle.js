@@ -1,7 +1,7 @@
 // tags/child.marko
 const $setup__script$1 = _script("b2", ($scope) => console.log("setup"));
-const $input_label__script = _script("b1", ($scope) => console.log("label", $scope.e));
-const $input_count__script = _script("b0", ($scope) => console.log("count", $scope.f));
+const $input_label__script = _script_patch("b1 e", ($scope) => console.log("label", $scope.e));
+const $input_count__script = _script_patch("b0 f", ($scope) => console.log("count", $scope.f));
 const $input_count = /*@__PURE__*/ _const(5, ($scope) => {
 	_text($scope.b, $scope.f);
 	$input_count__script($scope);

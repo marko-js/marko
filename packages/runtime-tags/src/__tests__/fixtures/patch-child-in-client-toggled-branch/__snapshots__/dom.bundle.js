@@ -7,7 +7,7 @@ const $open = _fill_let("b2", 5, ($scope) => $if$1($scope, $scope.f ? 0 : 1));
 function $setup($scope) {
 	$open($scope, true);
 }
-const $input_value__script = _script("b1", ($scope) => console.log("value", $scope.e));
+const $input_value__script = _script_patch("b1 e", ($scope) => console.log("value", $scope.e));
 const $input_value = /*@__PURE__*/ _const(4, ($scope) => {
 	$if_content__input_value$1($scope);
 	_text($scope.b, $scope.e);

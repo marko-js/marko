@@ -27,10 +27,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope1_id = _scope_id();
 			_set_scope_reason(_updates_from($scope0_reason, 1) << 1);
 			const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
-			card_default({ opts: _patch_live($childScope, {
+			card_default({ opts: {
 				list: [() => "f:" + input.label],
 				label: input.label
-			}, $scope1_id, ">input_label") });
+			} });
 			_patch_child_end();
 			_client_guard($scope0_reason, 1) && _patch_render($scope1_id, "__tests__/template.marko_1_input_label#0:4/setup");
 			_scope($scope1_id, {

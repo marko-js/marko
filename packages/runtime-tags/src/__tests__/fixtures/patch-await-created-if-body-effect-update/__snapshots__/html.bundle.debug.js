@@ -30,7 +30,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 						return 0;
 					}
 				}, $scope2_id, "#text/1", 1, 1, 0, 0, 1);
-				_script($scope2_id, "__tests__/template.marko_2_x#3", 1, $fg__input_label, "x");
+				_script($scope2_id, "__tests__/template.marko_2_x#3", 1, $fg__input_label);
 				$fg__input_label && _patch_render($scope2_id, "__tests__/template.marko_3_x#2:3/setup", "x");
 				_subscribe($n__closures, _scope($scope2_id, { x }, "__tests__/template.marko", "4:4", { x: "4:10" }), "__tests__/template.marko_2_n#0:6/subscribe");
 			}, 1, "__tests__/template.marko_2*content", _unfilled_if($scope0_reason, 1));

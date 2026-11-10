@@ -6,7 +6,7 @@ var child_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $fg__input_name = _filled_guard($scope0_reason, 1), $fg__input_item = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	_html(`<div${_attr_class(input.name, $scope0_id, "a", $scope0_reason, 1)}></div>${_el_mark($scope0_id, "a", _updates_from($scope0_reason, 1))}`);
-	_script($scope0_id, "a0", 1, ($fg__input_name || $fg__input_item) && (_client_guard($scope0_reason, 1) || _client_guard($scope0_reason, 2) ? 2 : 1), [$fg__input_name && "d", $fg__input_item && "e"], "a1", $scope0_reason, 0);
+	_script($scope0_id, "a0", 1, ($fg__input_name || $fg__input_item) && (_client_guard($scope0_reason, 1) || _client_guard($scope0_reason, 2) ? 2 : 1), (($fg__input_name ? " d" : "") + ($fg__input_item ? " e" : "")).slice(1), "a1", $scope0_reason, 0);
 	_scope($scope0_id, {
 		d: input.name,
 		e: input.item
@@ -34,7 +34,7 @@ var template_default = _template("b", (input) => {
 	const $childScope = _peek_scope_id($scope0_id, "b", 0);
 	$Child_withLoadAssets({
 		name: "a",
-		item: _patch_live($childScope, item, $scope0_id, "f")
+		item
 	});
 	_patch_child_end();
 	_try($scope0_id, "c", () => {
@@ -47,7 +47,7 @@ var template_default = _template("b", (input) => {
 			const $childScope2 = _peek_scope_id($scope2_id, "c", 1);
 			$Child_withLoadAssets({
 				name: "c",
-				item: _patch_live($childScope2, item, $scope2_id, ">>f")
+				item
 			});
 			_patch_child_end();
 			_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope2_id, "b0", $cg__input_label);
@@ -66,5 +66,5 @@ var template_default = _template("b", (input) => {
 		b: _existing_scope($childScope),
 		j: _write_if($scope0_reason, 1) && _unfilled_if($scope0_reason, 1) && $item__closures,
 		i: _write_if($scope0_reason, 2) && _unfilled_if($scope0_reason, 2) && $input_promise__closures
-	}) || _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "xf", input.label, !_server_guard($scope0_reason, 1));
+	});
 }, 1);

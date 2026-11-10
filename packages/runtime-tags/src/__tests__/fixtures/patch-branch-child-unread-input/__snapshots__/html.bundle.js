@@ -31,7 +31,7 @@ var toggle_default = _template("d", (input) => {
 	let open = false;
 	_html(`<button>${_text_mark($scope0_id, "b", input.user.name)}</button>${_el_mark($scope0_id, "a")}`);
 	_script($scope0_id, "d0");
-	_patch_render($scope0_id, "d1", [$fg__input_user_bio && "f", $fg__input_user_name && "g"]);
+	_patch_render($scope0_id, "d1", (($fg__input_user_bio ? " f" : "") + ($fg__input_user_name ? " g" : "")).slice(1));
 	_patch_fill($scope0_id, "vd2", open, 1);
 	_scope($scope0_id, {
 		f: input.user?.bio,

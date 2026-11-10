@@ -1,5 +1,5 @@
 // tags/label-view.marko
-const $fmt2__script = _script("b1", ($scope) => {
+const $fmt2__script = _script_patch("b1 e", ($scope) => {
 	$scope.a.textContent = $scope.e();
 	console.log("run", $scope.e());
 });

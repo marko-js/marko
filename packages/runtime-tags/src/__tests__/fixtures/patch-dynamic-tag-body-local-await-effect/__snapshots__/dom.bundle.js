@@ -16,4 +16,4 @@ const $inputonCarddiv_content__setup = ($scope) => {
 const $inputonCarddiv_content__v = /*@__PURE__*/ _closure_get_patch("a2", 11, ($scope) => _text($scope.b, $scope._.c), 0, "a3", 0);
 const $inputonCarddiv_content = _content$1("a0", "<em><!> <!></em>", "D%c%", $inputonCarddiv_content__setup);
 _content_resume($inputonCarddiv_content);
-const $if_content__x__script = _script("a8", ($scope) => $scope.a.textContent = $scope.c);
+const $if_content__x__script = _script_patch("a8 c", ($scope) => $scope.a.textContent = $scope.c);

@@ -4,7 +4,7 @@
   "PatchBranch:#text/2": [{
     "PatchChild:#childScope/0": {
       "PatchText:#text/0": "b",
-      "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-effects-once/tags/child.marko_0_input_label#4": "input_label",
+      "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-created-child-effects-once/tags/child.marko_0_input_label#4",
       "PatchMarkedWrite:input_label": "b"
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-child-effects-once/template.marko_1*shell"]
@@ -16,7 +16,7 @@
   "PatchBranch:#text/2": [{
     "PatchChild:#childScope/0": {
       "PatchText:#text/0": "c",
-      "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-created-child-effects-once/tags/child.marko_0_input_label#4": "input_label",
+      "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-created-child-effects-once/tags/child.marko_0_input_label#4",
       "PatchMarkedWrite:input_label": "c"
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-child-effects-once/template.marko_1*shell"]

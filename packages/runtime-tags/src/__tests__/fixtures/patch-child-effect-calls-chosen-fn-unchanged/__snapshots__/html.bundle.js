@@ -6,7 +6,7 @@ var child_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $fg__input_fn = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_html(`<span>${_text_mark($scope0_id, "a", input.label, 1, $scope0_reason, 1)}</span>`);
-	_script($scope0_id, "b0", 1, $fg__input_fn, "d");
+	_script($scope0_id, "b0", 1, $fg__input_fn);
 	_scope($scope0_id, { d: input.fn }) || $fg__input_fn && _patch_write($scope0_id, "xd", input.fn, !_server_guard($scope0_reason, 0));
 });
 

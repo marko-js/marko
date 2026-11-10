@@ -8,7 +8,7 @@ a, `b1 !b>a1;D%b/ b&l;<main><!><button>go</button></main>`
         title: "b",
         onClick: _(["Aa", "b"], "a0")
       },
-      ea1: "d"
+      e: "a1"
     }
   }, "b1"]
 }
@@ -28,7 +28,7 @@ a, {
         title: "c",
         onClick: _(["Aa", "b"], "a0")
       },
-      ea1: "d"
+      e: "a1"
     }
   }, "b1"]
 }

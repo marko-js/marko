@@ -11,7 +11,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, "__tests__/template.marko_0/handler");
 	_html(`<main><h1>${_text_mark($scope0_id, "#text/0", input.title, 1, $scope0_reason, 1)}</h1><input${_attr_input_value($scope0_id, "#input/1", input.value, input.wire ? handler : undefined, 3, $scope0_reason, 0)}>${_el_mark($scope0_id, "#input/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	_patch_render($scope0_id, "__tests__/template.marko_0_input_value#5_input_wire#6_handler#7/setup", [$fg__input_value && "input_value", $fg__input_wire && "input_wire"], $scope0_reason, 0);
+	_patch_render($scope0_id, "__tests__/template.marko_0_input_value#5_input_wire#6_handler#7/setup", (($fg__input_value ? " input_value" : "") + ($fg__input_wire ? " input_wire" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		input_value: ($ui__input_wire || $ui__input_value__OR__input_wire) && input.value,
 		input_wire: $ui__input_value__OR__input_wire && input.wire,

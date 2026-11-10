@@ -15,7 +15,7 @@ const $seen = _let("seen/4", ($scope) => _text($scope["#text/0"], $scope.seen));
 function $setup($scope) {
 	$seen($scope, "");
 }
-const $input_label__script = _script("__tests__/tags/probe.marko_0_input_label#3", ($scope) => $seen($scope, `${$scope.input_label}!`));
+const $input_label__script = _script_patch("__tests__/tags/probe.marko_0_input_label#3 input_label", ($scope) => $seen($scope, `${$scope.input_label}!`));
 const $input_label = /*@__PURE__*/ _const("input_label", $input_label__script);
 const $input = ($scope, input) => $input_label($scope, input.label);
 var probe_default = /*@__PURE__*/ _template("__tests__/tags/probe.marko", $template, "D l", $setup, $input);

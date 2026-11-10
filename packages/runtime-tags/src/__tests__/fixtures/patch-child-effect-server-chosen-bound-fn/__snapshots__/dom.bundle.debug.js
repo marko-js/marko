@@ -2,7 +2,7 @@
 const $template$1 = "";
 const $walks$1 = "";
 const $setup$1 = ($_) => {};
-const $input_fn__OR__input_v__script = _script("__tests__/tags/child.marko_0_fn#2_v#3", ($scope) => $scope.fn($scope.v));
+const $input_fn__OR__input_v__script = _script_patch("__tests__/tags/child.marko_0_fn#2_v#3 fn v", ($scope) => $scope.fn($scope.v));
 const $input_fn__OR__input_v = /*@__PURE__*/ _or_patch("__tests__/tags/child.marko_0_fn#2_v#3/setup", 4, $input_fn__OR__input_v__script);
 const $fn = /*@__PURE__*/ _const("fn", $input_fn__OR__input_v);
 const $v = /*@__PURE__*/ _const("v", $input_fn__OR__input_v);

@@ -37,7 +37,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, 0, $scope0_id, "#text/2", 1, 1, 1, 0, 0, "__tests__/template.marko_3*shell", $scope0_reason, 1);
 	_await($scope0_id, "#text/3", input.p, (b) => {
 		const $scope5_id = _scope_id();
-		_script($scope5_id, "__tests__/template.marko_5_input_n#0:7", 0, _filled_guard($scope0_reason, 1), ">input_n");
+		_script($scope5_id, "__tests__/template.marko_5_input_n#0:7", 0, _filled_guard($scope0_reason, 1));
 		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope5_id, "__tests__/template.marko_5_input_n#0:7/subscribe", $cg__input_n);
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_n__closures, _scope($scope5_id, {}, "__tests__/template.marko", "13:2"), $cg__input_n && "__tests__/template.marko_5_input_n#0:7/subscribe", 0);
 		_resume_branch($scope5_id);

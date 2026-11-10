@@ -1,5 +1,5 @@
 // tags/reader.marko
-const $get__script = _script("c0", ($scope) => $scope.a.textContent = $scope.d());
+const $get__script = _script_patch("c0 d", ($scope) => $scope.a.textContent = $scope.d());
 
 // tags/child.marko
 const $frag_content__input_a__OR__c = /*@__PURE__*/ _or_patch("b4", 2, ($scope) => _text($scope.a, $scope._._.f + $scope._.c));

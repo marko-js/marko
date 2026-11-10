@@ -56,14 +56,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, 17, 0, 0, _write_guard($scope0_reason, 6), $scope0_reason, 6, 0, 11);
 	_dynamic_tag($scope0_id, "#text/5", input.none ? card_a_default : null, { user: input.hidden }, 25, 0, 0, _write_guard($scope0_reason, 5), $scope0_reason, 5);
 	_script($scope0_id, "__tests__/template.marko_0");
-	_patch_render($scope0_id, "__tests__/template.marko_0_input_which#8_input_user#9/setup", [$fg__input_which && "input_which", $fg__input_user && "input_user"], $scope0_reason, 0);
-	_patch_render($scope0_id, "__tests__/template.marko_0_input_tag#13_input_cls#14_input_title#15/setup", [
-		$fg__input_tag && "input_tag",
-		$fg__input_cls && "input_cls",
-		$fg__input_title && "input_title"
-	], $scope0_reason, 6);
-	_patch_render($scope0_id, "__tests__/template.marko_0_input_none#17_input_hidden#18/setup", [$fg__input_none && "input_none", $fg__input_hidden && "input_hidden"], $scope0_reason, 5);
-	_patch_render($scope0_id, "__tests__/template.marko_0_input_alt#11_input_user2#12_Row#21_Alt#22/setup", [$fg__input_alt && "input_alt", $fg__input_user2 && "input_user2"], $scope0_reason, 1);
+	_patch_render($scope0_id, "__tests__/template.marko_0_input_which#8_input_user#9/setup", (($fg__input_which ? " input_which" : "") + ($fg__input_user ? " input_user" : "")).slice(1), $scope0_reason, 0);
+	_patch_render($scope0_id, "__tests__/template.marko_0_input_tag#13_input_cls#14_input_title#15/setup", (($fg__input_tag ? " input_tag" : "") + ($fg__input_cls ? " input_cls" : "") + ($fg__input_title ? " input_title" : "")).slice(1), $scope0_reason, 6);
+	_patch_render($scope0_id, "__tests__/template.marko_0_input_none#17_input_hidden#18/setup", (($fg__input_none ? " input_none" : "") + ($fg__input_hidden ? " input_hidden" : "")).slice(1), $scope0_reason, 5);
+	_patch_render($scope0_id, "__tests__/template.marko_0_input_alt#11_input_user2#12_Row#21_Alt#22/setup", (($fg__input_alt ? " input_alt" : "") + ($fg__input_user2 ? " input_user2" : "")).slice(1), $scope0_reason, 1);
 	_scope($scope0_id, {
 		input_which: ($ui__input_user || $ui__input_which__OR__input_user) && input.which,
 		input_user: ($ui__input_which || $ui__input_which__OR__input_user) && input.user,

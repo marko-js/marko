@@ -20,7 +20,7 @@ var child_default = _template("b", (input) => {
 	_html(`<p>${_text_mark($scope0_id, "b", x, 1, $scope0_reason, 0)}</p><button class=t>t</button>${_el_mark($scope0_id, "c")}`);
 	_script($scope0_id, "b1");
 	$fg__input_a && _patch_render($scope0_id, "b0", "f");
-	_patch_render($scope0_id, "b2", [$fg__input_a && "f", $fg__input_c && "g"], $scope0_reason, 0);
+	_patch_render($scope0_id, "b2", (($fg__input_a ? " f" : "") + ($fg__input_c ? " g" : "")).slice(1), $scope0_reason, 0);
 	_patch_fill($scope0_id, "vb3", open, 1);
 	_scope($scope0_id, {
 		f: input.a,

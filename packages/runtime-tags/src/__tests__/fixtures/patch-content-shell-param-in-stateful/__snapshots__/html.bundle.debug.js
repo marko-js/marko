@@ -20,7 +20,7 @@ var wrap_default = _template("__tests__/tags/wrap.marko", (input) => {
 	_html("<section>");
 	_dynamic_tag($scope0_id, "#text/0", input.content, { label: input.label }, 1, 0, 0, $wg__input_content__OR__input_label, $scope0_reason, 0, 0, 1);
 	_html("</section>");
-	_patch_render($scope0_id, "__tests__/tags/wrap.marko_0_input_content#3_input_label#4/setup", [$fg__input_content && "input_content", $fg__input_label && "input_label"], $scope0_reason, 0);
+	_patch_render($scope0_id, "__tests__/tags/wrap.marko_0_input_content#3_input_label#4/setup", (($fg__input_content ? " input_content" : "") + ($fg__input_label ? " input_label" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		input_content: ($ui__input_label || $ui__input_content__OR__input_label) && input.content,
 		input_label: ($ui__input_content || $ui__input_content__OR__input_label) && input.label

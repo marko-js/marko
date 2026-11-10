@@ -28,7 +28,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			id: "one",
 			...attrs
 		}, "#button/0", $scope1_id, "button", 0, $scope0_reason, 0)}>one</button>${_el_mark($scope1_id, "#button/0")}`);
-		_script($scope1_id, "__tests__/template.marko_1_attrs#2", 1, _filled_guard($scope0_reason, 0), ">input_title");
+		_script($scope1_id, "__tests__/template.marko_1_attrs#2", 1, _filled_guard($scope0_reason, 0));
 		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_title#0:5/subscribe");
 		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_handler#0:9/subscribe");
 		$cg__input_title && _patch_render($scope1_id, "__tests__/template.marko_1_input_title#0:5_handler#0:9/setup");
@@ -44,7 +44,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			id: "two",
 			...attrs
 		}, "#button/0", $scope2_id, "button", 0, $scope0_reason, 0)}>two</button>${_el_mark($scope2_id, "#button/0")}`);
-		_script($scope2_id, "__tests__/template.marko_2_attrs#2", 1, _filled_guard($scope0_reason, 0), ">input_title");
+		_script($scope2_id, "__tests__/template.marko_2_attrs#2", 1, _filled_guard($scope0_reason, 0));
 		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope2_id, "__tests__/template.marko_2_input_title#0:5/subscribe");
 		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope2_id, "__tests__/template.marko_2_handler#0:9/subscribe");
 		$cg__input_title && _patch_render($scope2_id, "__tests__/template.marko_2_input_title#0:5_handler#0:9/setup");

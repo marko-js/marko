@@ -25,10 +25,10 @@ var template_default = _template("a", (input) => {
 			const $scope1_id = _scope_id();
 			_set_scope_reason(_updates_from($scope0_reason, 1) << 1);
 			const $childScope = _peek_scope_id($scope1_id, "a", 0);
-			child_default({ data: _patch_live($childScope, {
+			child_default({ data: {
 				a: { b: input.b },
 				n: "SECRET_"
-			}, $scope1_id, ">e") });
+			} });
 			_patch_child_end();
 			_client_guard($scope0_reason, 1) && _patch_render($scope1_id, "a0");
 			_scope($scope1_id, {

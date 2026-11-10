@@ -12,7 +12,7 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 const $template = "<p>probe</p>";
 const $walks = "b";
 const $setup = ($_) => {};
-const $input_label__script = _script("__tests__/tags/probe.marko_0_input_label#2", ($scope) => console.log("probe", $scope.input_label));
+const $input_label__script = _script_patch("__tests__/tags/probe.marko_0_input_label#2 input_label", ($scope) => console.log("probe", $scope.input_label));
 const $input_label = /*@__PURE__*/ _const("input_label", $input_label__script);
 const $input = ($scope, input) => $input_label($scope, input.label);
 var probe_default = /*@__PURE__*/ _template("__tests__/tags/probe.marko", $template, "b", 0, $input);

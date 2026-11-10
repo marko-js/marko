@@ -27,7 +27,7 @@ var template_default = _template("a", (input) => {
 			const $scope1_id = _scope_id();
 			_set_scope_reason(_updates_from($scope0_reason, 1) << 1);
 			const $childScope = _peek_scope_id($scope1_id, "a", 0, 1);
-			let v = card_default({ opts: _patch_live($childScope, { label: input.label }, $scope1_id, ">e") });
+			let v = card_default({ opts: { label: input.label } });
 			_var($scope1_id, "b", $childScope, "a0");
 			_patch_child_end();
 			_html(`<p>${_text_mark($scope1_id, "c", v)}</p><button>log</button>${_el_mark($scope1_id, "d")}`);

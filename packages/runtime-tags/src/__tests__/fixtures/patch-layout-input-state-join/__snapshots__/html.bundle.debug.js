@@ -14,7 +14,7 @@ var layout_default = _template("__tests__/layout.marko", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_html(`<p>${_text_mark($scope1_id, "#text/0", input.a + input.b, 1, $scope0_reason, 2)}</p>`);
-			_patch_render($scope1_id, "__tests__/layout.marko_1_input_a#0:5_input_b#0:6/setup", [_filled_guard($scope0_reason, 5) && ">input_a", _filled_guard($scope0_reason, 6) && ">input_b"], $scope0_reason, 2);
+			_patch_render($scope1_id, "__tests__/layout.marko_1_input_a#0:5_input_b#0:6/setup", ((_filled_guard($scope0_reason, 5) ? " >input_a" : "") + (_filled_guard($scope0_reason, 6) ? " >input_b" : "")).slice(1), $scope0_reason, 2);
 			_scope($scope1_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id) }, "__tests__/layout.marko", "4:8");
 			return 0;
 		}

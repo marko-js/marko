@@ -12,7 +12,7 @@ var panel_default = _template("b", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_html(`<em>${_text_mark($scope1_id, "a", input.a + ":" + input.b, 1, $scope0_reason, 2)}</em>`);
-			_patch_render($scope1_id, "b0", [_filled_guard($scope0_reason, 5) && ">e", _filled_guard($scope0_reason, 6) && ">f"], $scope0_reason, 2);
+			_patch_render($scope1_id, "b0", ((_filled_guard($scope0_reason, 5) ? " >e" : "") + (_filled_guard($scope0_reason, 6) ? " >f" : "")).slice(1), $scope0_reason, 2);
 			_scope($scope1_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id) });
 			return 0;
 		}

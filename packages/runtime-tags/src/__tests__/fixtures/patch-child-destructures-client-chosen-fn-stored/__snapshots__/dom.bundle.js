@@ -1,5 +1,5 @@
 // tags/label-view.marko
-const $get__script = _script("b0", ($scope) => $scope.a.dataset.kind = typeof $scope.e);
+const $get__script = _script_patch("b0 e", ($scope) => $scope.a.dataset.kind = typeof $scope.e);
 const $get = /*@__PURE__*/ _const(4, ($scope) => {
 	_text($scope.b, $scope.e());
 	$get__script($scope);

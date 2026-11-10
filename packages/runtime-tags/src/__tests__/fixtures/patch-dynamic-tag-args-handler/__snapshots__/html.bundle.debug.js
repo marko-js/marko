@@ -16,7 +16,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, 1, 0, 0, _write_guard($scope0_reason, 0), $scope0_reason, 0, 0, 1);
 	_html(`<button>${_text_mark($scope0_id, "#text/2", n)}</button>${_el_mark($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	_patch_render($scope0_id, "__tests__/template.marko_0_input_tag#5_input_title#6/setup", [$fg__input_tag && "input_tag", $fg__input_title && "input_title"], $scope0_reason, 0);
+	_patch_render($scope0_id, "__tests__/template.marko_0_input_tag#5_input_title#6/setup", (($fg__input_tag ? " input_tag" : "") + ($fg__input_title ? " input_title" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		input_tag: ($ui__input_title || _unfilled_if($scope0_reason, 0)) && input.tag,
 		input_title: input.title,

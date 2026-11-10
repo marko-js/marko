@@ -10,11 +10,7 @@ var probe_default = _template("b", (input) => {
 		items: []
 	};
 	_html("<p>probe</p>");
-	_script($scope0_id, "b0", 0, $fg__input_label, [
-		"c",
-		"e",
-		"f"
-	]);
+	_script($scope0_id, "b0", 0, $fg__input_label);
 	_scope($scope0_id, {
 		c: input.label,
 		e: opts.items,

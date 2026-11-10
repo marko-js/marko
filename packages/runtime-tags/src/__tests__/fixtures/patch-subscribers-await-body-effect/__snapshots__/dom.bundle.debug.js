@@ -9,7 +9,7 @@ const $Label_content__setup = ($scope) => {
 	$Label_content__v($scope);
 };
 const $Label_content__v = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_2_v#1:4/subscribe", "v/8", ($scope) => _text($scope["#text/0"], $scope._.v));
-const $await_content__input_n__OR__twice__script = _script("__tests__/template.marko_1_input_n#0:4_twice#5", ($scope) => console.log("effect", $scope._.input_n, $scope.twice));
+const $await_content__input_n__OR__twice__script = _script_patch("__tests__/template.marko_1_input_n#0:4_twice#5 >input_n twice", ($scope) => console.log("effect", $scope._.input_n, $scope.twice));
 const $await_content__input_n__OR__twice = /*@__PURE__*/ _or_patch("__tests__/template.marko_1_input_n#0:4_twice#5/setup", 6, $await_content__input_n__OR__twice__script);
 const $await_content__twice = /*@__PURE__*/ _const("twice", $await_content__input_n__OR__twice);
 const $await_content__input_n__OR__input_m = /*@__PURE__*/ _or_patch("__tests__/template.marko_1_input_n#0:4_input_m#0:5/setup", 2, ($scope) => _text($scope["#text/1"], $scope._.input_n + $scope._.input_m));

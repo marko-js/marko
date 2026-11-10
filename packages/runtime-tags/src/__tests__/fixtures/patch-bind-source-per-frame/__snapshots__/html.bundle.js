@@ -25,7 +25,7 @@ var template_default = _template("a", (input) => {
 			id: "one",
 			...attrs
 		}, "a", $scope1_id, "button", 0, $scope0_reason, 0)}>one</button>${_el_mark($scope1_id, "a")}`);
-		_script($scope1_id, "a1", 1, _filled_guard($scope0_reason, 0), ">f");
+		_script($scope1_id, "a1", 1, _filled_guard($scope0_reason, 0));
 		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "a2");
 		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "a3");
 		$cg__input_title && _patch_render($scope1_id, "a4");
@@ -41,7 +41,7 @@ var template_default = _template("a", (input) => {
 			id: "two",
 			...attrs
 		}, "a", $scope2_id, "button", 0, $scope0_reason, 0)}>two</button>${_el_mark($scope2_id, "a")}`);
-		_script($scope2_id, "a9", 1, _filled_guard($scope0_reason, 0), ">f");
+		_script($scope2_id, "a9", 1, _filled_guard($scope0_reason, 0));
 		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope2_id, "a10");
 		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope2_id, "a11");
 		$cg__input_title && _patch_render($scope2_id, "a12");

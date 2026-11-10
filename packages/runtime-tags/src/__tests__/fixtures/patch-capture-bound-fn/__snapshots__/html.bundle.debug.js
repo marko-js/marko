@@ -23,10 +23,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 0));
 	_set_scope_reason($uf__input_label << 1 | $uf__input_label << 3);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
-	child_default(_patch_live($childScope, {
+	child_default({
 		fn: _bind_resume(() => input.label, "__tests__/template.marko_0/fn", $scope0_id),
 		label: input.label
-	}, $scope0_id, "input_label"));
+	});
 	_patch_child_end();
 	_scope($scope0_id, {
 		input_label: input.label,

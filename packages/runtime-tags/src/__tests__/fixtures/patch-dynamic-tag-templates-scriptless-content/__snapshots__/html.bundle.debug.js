@@ -41,7 +41,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_dynamic_tag($scope1_id, "#text/0", input.bold ? bold_default : italic_default, { label: input.label }, 1, 0, 0, $wg__input_bold__OR__input_label, $scope0_reason, 2);
 		_unfilled_if($scope0_reason, 5) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_bold#0:4/subscribe");
 		_unfilled_if($scope0_reason, 6) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_label#0:5/subscribe");
-		_patch_render($scope1_id, "__tests__/template.marko_1_input_bold#0:4_input_label#0:5/setup", [_filled_guard($scope0_reason, 5) && ">input_bold", _filled_guard($scope0_reason, 6) && ">input_label"], $scope0_reason, 2);
+		_patch_render($scope1_id, "__tests__/template.marko_1_input_bold#0:4_input_label#0:5/setup", ((_filled_guard($scope0_reason, 5) ? " >input_bold" : "") + (_filled_guard($scope0_reason, 6) ? " >input_label" : "")).slice(1), $scope0_reason, 2);
 		$wi__input_tag__OR__input_bold__OR__input_label && _subscribe(_unfilled_if($scope0_reason, 6) && $input_label__closures, _subscribe(_unfilled_if($scope0_reason, 5) && $input_bold__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4"), _client_guard($scope0_reason, 5) && "__tests__/template.marko_1_input_bold#0:4/subscribe", $wg__input_bold__OR__input_label), _client_guard($scope0_reason, 6) && "__tests__/template.marko_1_input_label#0:5/subscribe", $wg__input_bold__OR__input_label);
 		$wg__input_bold__OR__input_label || $wi__input_tag__OR__input_bold__OR__input_label && _resume_branch($scope1_id);
 	}, $scope0_id, ($scope) => $scope0_page ? [{

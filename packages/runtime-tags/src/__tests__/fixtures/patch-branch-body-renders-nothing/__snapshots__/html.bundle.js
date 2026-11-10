@@ -34,7 +34,7 @@ var template_default = _template("a", (input) => {
 	}, 0, $scope0_id, "c", 1, 1, 1, 0, 0, "a6", $scope0_reason, 1);
 	_await($scope0_id, "d", input.p, (b) => {
 		const $scope5_id = _scope_id();
-		_script($scope5_id, "a8", 0, _filled_guard($scope0_reason, 1), ">h");
+		_script($scope5_id, "a8", 0, _filled_guard($scope0_reason, 1));
 		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope5_id, "a9", $cg__input_n);
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_n__closures, _scope($scope5_id, {}), $cg__input_n && "a9", 0);
 		_resume_branch($scope5_id);

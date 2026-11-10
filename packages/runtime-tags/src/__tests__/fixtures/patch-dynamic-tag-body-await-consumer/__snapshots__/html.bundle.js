@@ -27,7 +27,7 @@ var card_default = _template("b", (input) => {
 		}, $scope1_id, "a");
 		$fg__input_p__OR__input_content && _patch_render($scope1_id, "b0", "e");
 		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "b1");
-		_patch_render($scope1_id, "b2", [_filled_guard($scope0_reason, 2) && ">f", $fg__input_p && "c"], $scope0_reason, 0);
+		_patch_render($scope1_id, "b2", ((_filled_guard($scope0_reason, 2) ? " >f" : "") + ($fg__input_p ? " c" : "")).slice(1), $scope0_reason, 0);
 		_subscribe($open__closures, _subscribe($ui__input_content && $input_content__closures, _scope($scope1_id, {
 			c: ($ui__input_content || _unfilled_if($scope0_reason, 0)) && x,
 			e: c
@@ -62,7 +62,7 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id, ($scope) => $scope0_page ? [{ g: input.note }] : []), 0, $wg__input_on__OR__input_p, $scope0_reason, 0, 0, void 0, 0, 0, "a0");
 	_html("</main>");
 	$fg__input_note && _patch_subscribers($scope0_id, "a2", "g");
-	_patch_render($scope0_id, "a3", [$fg__input_on && "d", $fg__input_p && "e"], $scope0_reason, 0);
+	_patch_render($scope0_id, "a3", (($fg__input_on ? " d" : "") + ($fg__input_p ? " e" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		d: ($ui__input_p || $ui__input_on__OR__input_p) && input.on,
 		e: ($ui__input_on || $ui__input_on__OR__input_p) && input.p,

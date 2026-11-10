@@ -34,11 +34,7 @@ var one_default = _template("__tests__/tags/one.marko", (input) => {
 		c: input.content,
 		show: input.show
 	}, 1, 0, 0, $wg__input_Tag__OR__input_content__OR__input_show, $scope0_reason, 3, 0, 4);
-	_patch_render($scope0_id, "__tests__/tags/one.marko_0_input_Tag#3_input_content#4_input_show#5/setup", [
-		$fg__input_Tag && "input_Tag",
-		$fg__input_content && "input_content",
-		$fg__input_show && "input_show"
-	], $scope0_reason, 3);
+	_patch_render($scope0_id, "__tests__/tags/one.marko_0_input_Tag#3_input_content#4_input_show#5/setup", (($fg__input_Tag ? " input_Tag" : "") + ($fg__input_content ? " input_content" : "") + ($fg__input_show ? " input_show" : "")).slice(1), $scope0_reason, 3);
 	_scope($scope0_id, {
 		input_Tag: ($ui__input_content__OR__input_show || $ui__input_Tag__OR__input_content__OR__input_show) && input.Tag,
 		input_content: ($ui__input_Tag__OR__input_show || $ui__input_Tag__OR__input_content__OR__input_show) && input.content,

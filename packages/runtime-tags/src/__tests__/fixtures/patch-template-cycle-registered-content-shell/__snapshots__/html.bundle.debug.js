@@ -55,7 +55,7 @@ var tree_b_default = _template("__tests__/tags/tree-b.marko", (input) => {
 				show: input.show,
 				depth: input.depth - 1
 			}, 9, 0, 0, $wg__input_show__OR__input_depth, $scope0_reason, 0);
-			_patch_render($scope2_id, "__tests__/tags/tree-b.marko_2_input_show#0:4_input_depth#0:5/setup", [_filled_guard($scope0_reason, 1) && ">input_show", _filled_guard($scope0_reason, 2) && ">input_depth"], $scope0_reason, 0);
+			_patch_render($scope2_id, "__tests__/tags/tree-b.marko_2_input_show#0:4_input_depth#0:5/setup", ((_filled_guard($scope0_reason, 1) ? " >input_show" : "") + (_filled_guard($scope0_reason, 2) ? " >input_depth" : "")).slice(1), $scope0_reason, 0);
 			$wi__input_show__OR__input_depth && _scope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/tree-b.marko", "2:2");
 			return 0;
 		}

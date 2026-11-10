@@ -9,7 +9,7 @@
             "PatchText:#text/0": "const"
           }
         }, "packages/runtime-tags/src/__tests__/fixtures/patch-define-created-stateful-call-beside-stateful-body/template.marko_4*shell"],
-        "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-define-created-stateful-call-beside-stateful-body/template.marko_2_text#4": "text",
+        "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-define-created-stateful-call-beside-stateful-body/template.marko_2_text#4",
         "PatchSetupValues:": {
           "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-define-created-stateful-call-beside-stateful-body/template.marko_2_n#5/fill": 1
         },
@@ -35,7 +35,7 @@
             "PatchText:#text/0": "const"
           }
         }, "packages/runtime-tags/src/__tests__/fixtures/patch-define-created-stateful-call-beside-stateful-body/template.marko_4*shell"],
-        "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-define-created-stateful-call-beside-stateful-body/template.marko_2_text#4": "text",
+        "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-define-created-stateful-call-beside-stateful-body/template.marko_2_text#4",
         "PatchSetupValues:": {
           "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-define-created-stateful-call-beside-stateful-body/template.marko_2_n#5/fill": 1
         },
@@ -65,7 +65,7 @@
             "PatchText:#text/0": "const"
           }
         }, "packages/runtime-tags/src/__tests__/fixtures/patch-define-created-stateful-call-beside-stateful-body/template.marko_4*shell"],
-        "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-define-created-stateful-call-beside-stateful-body/template.marko_2_text#4": "text",
+        "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-define-created-stateful-call-beside-stateful-body/template.marko_2_text#4",
         "PatchSetupValues:": {
           "PatchFill:packages/runtime-tags/src/__tests__/fixtures/patch-define-created-stateful-call-beside-stateful-body/template.marko_2_n#5/fill": 1
         },

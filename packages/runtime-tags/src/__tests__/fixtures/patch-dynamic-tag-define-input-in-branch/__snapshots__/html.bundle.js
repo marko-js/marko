@@ -27,7 +27,7 @@ var template_default = _template("a", (input) => {
 			_dynamic_tag($scope1_id, "a", input.useA ? Card : Other, { record: input.record }, 1, 0, 0, $wg__input_useA__OR__input_record, $scope0_reason, 2);
 			!$cg__input_show__OR__input_useA__OR__input_record && _unfilled_if() && _patch_write($scope0_id, "wg", Card);
 			!$cg__input_show__OR__input_useA__OR__input_record && _unfilled_if() && _patch_write($scope0_id, "wh", Other);
-			_patch_render($scope1_id, "a2", [_filled_guard($scope0_reason, 5) && ">e", _filled_guard($scope0_reason, 6) && ">f"], $scope0_reason, 2);
+			_patch_render($scope1_id, "a2", ((_filled_guard($scope0_reason, 5) ? " >e" : "") + (_filled_guard($scope0_reason, 6) ? " >f" : "")).slice(1), $scope0_reason, 2);
 			_write_if($scope0_reason, 3) && _scope($scope1_id, { _: _write_if($scope0_reason, 2) && _scope_with_id($scope0_id) });
 			return 0;
 		}

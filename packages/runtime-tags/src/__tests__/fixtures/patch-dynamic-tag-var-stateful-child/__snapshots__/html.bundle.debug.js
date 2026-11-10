@@ -43,7 +43,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_var($scope0_id, "#scopeOffset/1", $inputwhichcounterother_scope, "__tests__/template.marko_0_count#9/var");
 	_html(`<p>${_text_mark($scope0_id, "#text/3", count)}</p>${_el_mark($scope0_id, "#p/2")}`);
 	_script($scope0_id, "__tests__/template.marko_0_count#9");
-	_patch_render($scope0_id, "__tests__/template.marko_0_input_which#6_input_label#7/setup", [$fg__input_which && "input_which", $fg__input_label && "input_label"], $scope0_reason, 0);
+	_patch_render($scope0_id, "__tests__/template.marko_0_input_which#6_input_label#7/setup", (($fg__input_which ? " input_which" : "") + ($fg__input_label ? " input_label" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		input_which: ($ui__input_label || $ui__input_which__OR__input_label) && input.which,
 		input_label: ($ui__input_which || $ui__input_which__OR__input_label) && input.label,

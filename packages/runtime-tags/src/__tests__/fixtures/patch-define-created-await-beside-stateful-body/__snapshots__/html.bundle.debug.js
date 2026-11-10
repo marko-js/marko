@@ -72,7 +72,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	$fg__input_promise && $cg__input_show && _patch_render($scope0_id, "__tests__/template.marko_1_input_promise#0:6/setup", "input_promise");
 	$fg__input_label && $cg__input_show && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_label#7/subscribers", "input_label");
 	_patch_render($scope0_id, "__tests__/template.marko_0_input_other#8_Panel#10/setup", $fg__input_other && "input_other", $scope0_reason, 5);
-	_patch_render($scope0_id, "__tests__/template.marko_0_input_label#7_open#9_Tag#12/setup", [$fg__input_label && "input_label", $fg__input_other && "Tag"]);
+	_patch_render($scope0_id, "__tests__/template.marko_0_input_label#7_open#9_Tag#12/setup", (($fg__input_label ? " input_label" : "") + ($fg__input_other ? " Tag" : "")).slice(1));
 	_scope($scope0_id, {
 		input_promise: ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.promise,
 		input_label: input.label,

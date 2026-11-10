@@ -47,7 +47,7 @@ var template_default = _template("c", (input) => {
 	_html("<main>");
 	_dynamic_tag($scope0_id, "a", input.page === "b" ? b_default : a_default, { promise: input.promise }, 1, 0, 0, $wg__input_page__OR__input_promise, $scope0_reason, 0);
 	_html("</main>");
-	_patch_render($scope0_id, "c0", [$fg__input_page && "d", $fg__input_promise && "e"], $scope0_reason, 0);
+	_patch_render($scope0_id, "c0", (($fg__input_page ? " d" : "") + ($fg__input_promise ? " e" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		d: ($ui__input_promise || $ui__input_page__OR__input_promise) && input.page,
 		e: ($ui__input_page || $ui__input_page__OR__input_promise) && input.promise

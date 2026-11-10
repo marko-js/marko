@@ -7,7 +7,7 @@ var label_default = _template("__tests__/tags/label.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $fg__input_get = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_html(`<output></output>${_el_mark($scope0_id, "#output/0")}`);
-	_script($scope0_id, "__tests__/tags/label.marko_0_get#3", 1, $fg__input_get, "get");
+	_script($scope0_id, "__tests__/tags/label.marko_0_get#3", 1, $fg__input_get);
 	_scope($scope0_id, { get: input.get }, "__tests__/tags/label.marko", 0, { get: "1:10" }) || $fg__input_get && _patch_write($scope0_id, "PatchMarkedWrite:get", input.get, !_server_guard($scope0_reason, 0));
 });
 
@@ -26,12 +26,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	label_default({ get: input.upper ? up : low });
 	_patch_child_end();
-	_patch_render($scope0_id, "__tests__/template.marko_0_input_upper#4_up#5_low#6/setup", [
-		$fg__input_upper && "input_upper",
-		$fg__input_title && "up",
-		$fg__input_title && "input_title",
-		$fg__input_title && "low"
-	], $scope0_reason, 0);
+	_patch_render($scope0_id, "__tests__/template.marko_0_input_upper#4_up#5_low#6/setup", (($fg__input_upper ? " input_upper" : "") + ($fg__input_title ? " up" : "") + ($fg__input_title ? " input_title" : "") + ($fg__input_title ? " low" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		input_title: input.title,
 		input_upper: ($ui__input_title || $ui__input_title__OR__input_upper) && input.upper,

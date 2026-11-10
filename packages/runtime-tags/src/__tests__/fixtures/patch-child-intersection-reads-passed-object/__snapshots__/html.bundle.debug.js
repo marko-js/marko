@@ -22,7 +22,7 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 					_html(`<i>${_text_mark($scope2_id, "#text/0", input.a + ":" + JSON.stringify(input.b), 1, $scope0_reason, 2)}</i>`);
 					_unfilled_if($scope0_reason, 5) && _patch_subscribe($scope2_id, "__tests__/tags/panel.marko_2_input_a#0:4/subscribe");
 					_unfilled_if($scope0_reason, 6) && _patch_subscribe($scope2_id, "__tests__/tags/panel.marko_2_input_b#0:5/subscribe");
-					_patch_render($scope2_id, "__tests__/tags/panel.marko_2_input_a#0:4_input_b#0:5/setup", [_filled_guard($scope0_reason, 5) && ">>input_a", _filled_guard($scope0_reason, 6) && ">>input_b"], $scope0_reason, 2);
+					_patch_render($scope2_id, "__tests__/tags/panel.marko_2_input_a#0:4_input_b#0:5/setup", ((_filled_guard($scope0_reason, 5) ? " >>input_a" : "") + (_filled_guard($scope0_reason, 6) ? " >>input_b" : "")).slice(1), $scope0_reason, 2);
 					_subscribe(_unfilled_if($scope0_reason, 6) && $input_b__closures, _subscribe(_unfilled_if($scope0_reason, 5) && $input_a__closures, _scope($scope2_id, { _: $wi__input_show__OR__input_a__OR__input_b && _scope_with_id($scope1_id) }, "__tests__/tags/panel.marko", "3:6"), _client_guard($scope0_reason, 5) && "__tests__/tags/panel.marko_2_input_a#0:4/subscribe"), _client_guard($scope0_reason, 6) && "__tests__/tags/panel.marko_2_input_b#0:5/subscribe");
 					return 0;
 				}
@@ -59,7 +59,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	panel_default({
 		a: count,
-		b: _patch_live($childScope, { value: input.x }, $scope0_id, "input_x"),
+		b: { value: input.x },
 		show: input.show
 	});
 	_patch_child_end();
@@ -68,5 +68,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope($scope0_id, {
 		count,
 		"#childScope/0": _existing_scope($childScope)
-	}, "__tests__/template.marko", 0, { count: "1:6" }) || _filled_guard($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_x", input.x, !_server_guard($scope0_reason, 1));
+	}, "__tests__/template.marko", 0, { count: "1:6" });
 }, 1);

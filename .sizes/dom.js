@@ -1,4 +1,4 @@
-// size: 27178 (min) 10052 (brotli)
+// size: 27246 (min) 10063 (brotli)
 // packages/runtime-tags/dist/dom.mjs
 let unsafeStyleAttrReg = /[\\;]/g;
 let replaceUnsafeStyleAttr = (c) => (c === ";" ? "\\3B " : "\\\\");
@@ -2322,11 +2322,20 @@ function _fill_let(key, id, fn, fillFn) {
 function _fill_let_change(key, id, fn, fillFn) {
   return fill(key, _let_change(id, fn), id, fillFn ?? fn ?? 0);
 }
-function _bind_resume(key, factory) {
+function _filled_id(key) {
   let sep = key.indexOf(" "),
-    id = key.slice(0, sep),
     reads = key.slice(sep + 1);
-  ((filledReferences[id] = (owner) => readChanged(owner, reads)), (_resumed[id] = factory));
+  return (
+    (filledReferences[(key = key.slice(0, sep))] = (owner, stop) =>
+      readChanged(owner, reads, stop)),
+    key
+  );
+}
+function _bind_resume(key, factory) {
+  _resumed[_filled_id(key)] = factory;
+}
+function _script_patch(key, fn) {
+  return _script(_filled_id(key), fn);
 }
 function _or_patch(setupId, id, fn, defaultPending, scopeIdAccessor) {
   let scopeIdKey = scopeIdAccessor ? decodeAccessor(scopeIdAccessor) : "L";

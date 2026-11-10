@@ -12,7 +12,7 @@ const $Outer_content__$temp = ($scope, $temp2) => {
 	$Outer_content__fn($scope, $temp2.fn);
 	$Outer_content__label($scope, $temp2.label);
 };
-const $Inner_content__fn__script = _script("__tests__/template.marko_1_fn#4", ($scope) => _on($scope["#button/0"], "click", $scope.fn));
+const $Inner_content__fn__script = _script_patch("__tests__/template.marko_1_fn#4 fn", ($scope) => _on($scope["#button/0"], "click", $scope.fn));
 const $Inner_content__fn = /*@__PURE__*/ _const("fn", $Inner_content__fn__script);
 const $Inner_content__label = ($scope, label) => _text($scope["#text/1"], label);
 const $Inner_content__$params = ($scope, $params2) => $Inner_content__$temp($scope, $params2[0]);

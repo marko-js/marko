@@ -1,5 +1,5 @@
 // tags/child.marko
-const $for_content__input_count__OR__item__script = _script("b0", ($scope) => console.log("row count", $scope.c, $scope._.e));
+const $for_content__input_count__OR__item__script = _script_patch("b0 >e c", ($scope) => console.log("row count", $scope.c, $scope._.e));
 const $for_content__input_count__OR__item = /*@__PURE__*/ _or_patch("b1", 3, $for_content__input_count__OR__item__script);
 const $for_content__input_count = /*@__PURE__*/ _for_closure_patch("b3", 0, $for_content__input_count__OR__item, 5);
 const $input_count = /*@__PURE__*/ _const(4, $for_content__input_count);

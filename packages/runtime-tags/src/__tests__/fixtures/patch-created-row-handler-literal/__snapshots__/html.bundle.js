@@ -7,7 +7,7 @@ var row_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $fg__input_onPick = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_html(`<li><span>${_text_mark($scope0_id, "a", input.item.name, 1, $scope0_reason, 0)}</span><button>Pick</button>${_el_mark($scope0_id, "b")}</li>`);
-	_script($scope0_id, "b0", 1, $fg__input_onPick, "g");
+	_script($scope0_id, "b0", 1, $fg__input_onPick);
 	_scope($scope0_id, { g: input.onPick }) || $fg__input_onPick && _patch_write($scope0_id, "xg", input.onPick, !_server_guard($scope0_reason, 1));
 });
 

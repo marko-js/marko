@@ -5,15 +5,15 @@
     la: [{
       xd: "r",
       ta: "cr",
-      eb0: ">e d"
+      e: "b0"
     }, {
       xd: "q",
       ta: "cq",
-      eb0: ">e d"
+      e: "b0"
     }, {
       xd: "s",
       ta: "cs",
-      eb0: ">e d"
+      e: "b0"
     }, "b2"],
     xe: "c"
   },
@@ -38,19 +38,19 @@
     la: [{
       xd: "u",
       ta: "eu",
-      eb0: ">e d"
+      e: "b0"
     }, {
       xd: "q",
       ta: "eq",
-      eb0: ">e d"
+      e: "b0"
     }, {
       xd: "s",
       ta: "es",
-      eb0: ">e d"
+      e: "b0"
     }, {
       xd: "t",
       ta: "et",
-      eb0: ">e d"
+      e: "b0"
     }, "b2"],
     xe: "e"
   },

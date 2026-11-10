@@ -10,7 +10,7 @@ const $if_content2__x = /*@__PURE__*/ _if_closure_patch("__tests__/template.mark
 const $await_content__if = /*@__PURE__*/ _if("#text/1", "<em><!>:<!></em>", "D%c%", $if_content2__setup);
 const $await_content__n = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_2_n#0:6/subscribe", "n/8", ($scope) => $await_content__if($scope, $scope._._.n % 2 ? 0 : 1), ($scope) => $scope._._);
 const $await_content__setup = $await_content__n;
-const $await_content__x__script = _script("__tests__/template.marko_2_x#3", ($scope) => console.log("await", $scope.x));
+const $await_content__x__script = _script_patch("__tests__/template.marko_2_x#3 x", ($scope) => console.log("await", $scope.x));
 const $await_content__x = /*@__PURE__*/ _const("x", ($scope) => {
 	$if_content2__x($scope);
 	_text($scope["#text/0"], $scope.x);

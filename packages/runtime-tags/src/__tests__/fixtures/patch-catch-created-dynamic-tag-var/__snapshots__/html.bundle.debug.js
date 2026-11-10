@@ -60,7 +60,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html(`<i>${_text_mark($scope1_id, "#text/3", v)}</i>`);
 		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_big#0:3/subscribe");
 		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_label#0:4/subscribe");
-		_patch_render($scope1_id, "__tests__/template.marko_1_input_big#0:3_input_label#0:4/setup", [_filled_guard($scope0_reason, 1) && ">input_big", _filled_guard($scope0_reason, 2) && ">input_label"], $scope0_reason, 0);
+		_patch_render($scope1_id, "__tests__/template.marko_1_input_big#0:3_input_label#0:4/setup", ((_filled_guard($scope0_reason, 1) ? " >input_big" : "") + (_filled_guard($scope0_reason, 2) ? " >input_label" : "")).slice(1), $scope0_reason, 0);
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_label__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_big__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "8:4"), _client_guard($scope0_reason, 1) && "__tests__/template.marko_1_input_big#0:3/subscribe"), _client_guard($scope0_reason, 2) && "__tests__/template.marko_1_input_label#0:4/subscribe");
 	}, 0, "__tests__/template.marko_1*content", "__tests__/template.marko_2*content", 1, 1, 1);
 	$fg__input_big && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_big#3/subscribers", "input_big");

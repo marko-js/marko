@@ -10,7 +10,7 @@ function $setup($scope) {
 	$n($scope, 0);
 	$setup__script($scope);
 }
-const $input_label__OR__input_other__script = _script("__tests__/template.marko_0_input_label#5_input_other#6", ($scope) => _el_read($scope["#div/2"]).textContent = "script:" + $scope.input_label + $scope.input_other);
+const $input_label__OR__input_other__script = _script_patch("__tests__/template.marko_0_input_label#5_input_other#6 input_label input_other", ($scope) => _el_read($scope["#div/2"]).textContent = "script:" + $scope.input_label + $scope.input_other);
 const $input_label__OR__input_other = /*@__PURE__*/ _or_patch("__tests__/template.marko_0_input_label#5_input_other#6/setup", 7, $input_label__OR__input_other__script);
 const $input_label = /*@__PURE__*/ _const("input_label", ($scope) => {
 	$input_label__OR__n($scope);

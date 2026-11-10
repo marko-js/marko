@@ -6,7 +6,7 @@ var tabs_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_tab__OR__input_selected = _write_guard($scope0_reason, 0), $ui__input_tab__OR__input_selected = _unfilled_if($scope0_reason, 0), $ui__input_selected = _unfilled_if($scope0_reason, 2), $ui__input_tab = _unfilled_if($scope0_reason, 1), $fg__input_tab = _filled_guard($scope0_reason, 1), $fg__input_selected = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	_dynamic_tag($scope0_id, "a", [...input.tab].find((t) => t.id === input.selected)?.content, {}, 2, 0, 0, $wg__input_tab__OR__input_selected, $scope0_reason, 0);
-	_patch_render($scope0_id, "b0", [$fg__input_tab && "d", $fg__input_selected && "e"], $scope0_reason, 0);
+	_patch_render($scope0_id, "b0", (($fg__input_tab ? " d" : "") + ($fg__input_selected ? " e" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		d: ($ui__input_selected || $ui__input_tab__OR__input_selected) && input.tab,
 		e: ($ui__input_tab || $ui__input_tab__OR__input_selected) && input.selected

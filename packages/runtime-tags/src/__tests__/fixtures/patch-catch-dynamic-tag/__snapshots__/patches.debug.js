@@ -7,7 +7,7 @@
       "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-dynamic-tag/template.marko_1_input_large#0:5/subscribe": 0,
       "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-dynamic-tag/template.marko_1_input_label#0:6/subscribe": 0
     },
-    "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-catch-dynamic-tag/template.marko_1_input_large#0:5_input_label#0:6_count#0:8_err_message#3/setup": ">input_large >input_label err_message"
+    "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-catch-dynamic-tag/template.marko_1_input_large#0:5_input_label#0:6_count#0:8_err_message#3/setup": "err_message >input_large >input_label"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-catch-dynamic-tag/template.marko_1*content"],
   "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-dynamic-tag/template.marko_0_input_large#5/subscribers": "input_large",
   "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-dynamic-tag/template.marko_0_input_label#6/subscribers": "input_label",
@@ -24,7 +24,7 @@
       "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-dynamic-tag/template.marko_1_input_large#0:5/subscribe": 0,
       "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-dynamic-tag/template.marko_1_input_label#0:6/subscribe": 0
     },
-    "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-catch-dynamic-tag/template.marko_1_input_large#0:5_input_label#0:6_count#0:8_err_message#3/setup": ">input_large >input_label err_message"
+    "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-catch-dynamic-tag/template.marko_1_input_large#0:5_input_label#0:6_count#0:8_err_message#3/setup": "err_message >input_large >input_label"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-catch-dynamic-tag/template.marko_1*content"],
   "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-dynamic-tag/template.marko_0_input_large#5/subscribers": "input_large",
   "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-dynamic-tag/template.marko_0_input_label#6/subscribers": "input_label",
@@ -40,7 +40,7 @@
       "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-dynamic-tag/template.marko_1_input_large#0:5/subscribe": 0,
       "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-dynamic-tag/template.marko_1_input_label#0:6/subscribe": 0
     },
-    "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-catch-dynamic-tag/template.marko_1_input_large#0:5_input_label#0:6_count#0:8_err_message#3/setup": ">input_large >input_label err_message"
+    "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-catch-dynamic-tag/template.marko_1_input_large#0:5_input_label#0:6_count#0:8_err_message#3/setup": "err_message >input_large >input_label"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-catch-dynamic-tag/template.marko_1*content"],
   "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-dynamic-tag/template.marko_0_input_large#5/subscribers": "input_large",
   "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-dynamic-tag/template.marko_0_input_label#6/subscribers": "input_label",

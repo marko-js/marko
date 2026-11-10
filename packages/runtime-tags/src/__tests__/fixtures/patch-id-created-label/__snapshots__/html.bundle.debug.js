@@ -87,7 +87,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope($scope5_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "13:2");
 	}, "id", $scope0_id, "#text/3", 1, 1, 1, 0, 0, "__tests__/template.marko_5*shell", $scope0_reason, 5);
 	$fg__input_show && _client_guard($scope0_reason, 2) && _patch_render($scope0_id, "__tests__/template.marko_1_input_show#0:7/setup", "input_show");
-	_patch_render($scope0_id, "__tests__/template.marko_0_input_show#7_input_on#8_Field#10/setup", [$fg__input_show && "input_show", $fg__input_on && "input_on"], $scope0_reason, 1);
+	_patch_render($scope0_id, "__tests__/template.marko_0_input_show#7_input_on#8_Field#10/setup", (($fg__input_show ? " input_show" : "") + ($fg__input_on ? " input_on" : "")).slice(1), $scope0_reason, 1);
 	_scope($scope0_id, {
 		input_show: ($ui__input_items__OR__input_on || $ui__input_show__OR__input_on || $ui__input_show2) && input.show,
 		input_on: ($ui__input_show2 || $ui__input_show__OR__input_on) && input.on,

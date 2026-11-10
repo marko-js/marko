@@ -20,7 +20,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "#text/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/tags/child.marko_1*shell"], $scope0_reason, 1);
-	$fg__input_suffix && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "__tests__/tags/child.marko_1_fmt#0:5/setup", ["fmt", "input_suffix"]);
+	$fg__input_suffix && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "__tests__/tags/child.marko_1_fmt#0:5/setup", "fmt input_suffix");
 	_scope($scope0_id, {
 		input_suffix: ($ui__input_show || $ui__input_suffix) && input.suffix,
 		fmt: ($ui__input_show || $ui__input_suffix) && fmt

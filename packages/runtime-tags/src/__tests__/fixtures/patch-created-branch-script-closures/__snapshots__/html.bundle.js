@@ -14,11 +14,7 @@ var level_watch_default = _template("b", (input) => {
 	_if(() => {
 		if (input.projection) {
 			const $scope1_id = _scope_id();
-			_script($scope1_id, "b0", 0, 0, [
-				_filled_guard($scope0_reason, 1) && ">g",
-				_filled_guard($scope0_reason, 2) && ">h",
-				_filled_guard($scope0_reason, 3) && ">i"
-			], "b1");
+			_script($scope1_id, "b0", 0, 0, ((_filled_guard($scope0_reason, 1) ? " >g" : "") + (_filled_guard($scope0_reason, 2) ? " >h" : "") + (_filled_guard($scope0_reason, 3) ? " >i" : "")).slice(1), "b1");
 			_scope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}

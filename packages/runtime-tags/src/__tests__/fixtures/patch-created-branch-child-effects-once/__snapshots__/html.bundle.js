@@ -75,7 +75,7 @@ var template_default = _template("a", (input) => {
 				const $scope5_id = _scope_id(), $fg__input_items = _filled_guard($scope0_reason, 4);
 				$fg__input_items && _patch_write($scope5_id, "xc", item, !$sg__input_items);
 				_html(`<i>${_text_mark($scope5_id, "a", item, 1, $scope0_reason, 4)}</i>`);
-				_script($scope5_id, "a2", 1, $fg__input_items, "c");
+				_script($scope5_id, "a2", 1, $fg__input_items);
 				_scope($scope5_id, { c: item });
 			}, 0, $scope1_id, "c", 1, 1, 1, 0, 0, "a3", $scope0_reason, 4);
 			_if(() => {
@@ -96,7 +96,7 @@ var template_default = _template("a", (input) => {
 				_for_of(input.items, (item) => {
 					const $scope7_id = _scope_id(), $fg__input_items2 = _filled_guard($scope0_reason, 4);
 					$fg__input_items2 && _patch_write($scope7_id, "xb", item, !$sg__input_items);
-					_script($scope7_id, "a11", 0, $fg__input_items2, "b");
+					_script($scope7_id, "a11", 0, $fg__input_items2);
 					_scope($scope7_id, { b: item });
 				}, 0, $scope2_id, "a", 1, 1, 1, 0, 0, "a8", $scope0_reason, 4);
 				_script($scope2_id, "a12");
@@ -113,7 +113,7 @@ var template_default = _template("a", (input) => {
 				_for_of(input.items, (item) => {
 					const $scope8_id = _scope_id(), $fg__input_items3 = _filled_guard($scope0_reason, 4);
 					$fg__input_items3 && _patch_write($scope8_id, "xb", item, !$sg__input_items);
-					_script($scope8_id, "a14", 0, $fg__input_items3, "b");
+					_script($scope8_id, "a14", 0, $fg__input_items3);
 					_scope($scope8_id, { b: item });
 				}, 0, $scope3_id, "b", 1, 1, 1, 0, 0, "a9", $scope0_reason, 4);
 				_script($scope3_id, "a15");

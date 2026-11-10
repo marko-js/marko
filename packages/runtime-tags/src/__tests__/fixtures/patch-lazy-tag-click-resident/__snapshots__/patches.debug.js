@@ -8,7 +8,7 @@
         title: "b",
         onClick: _(["BranchScopes:#text/0", "#childScope/1"], "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-click-resident/child.marko_0/handler")
       },
-      "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-click-resident/child.marko_0_attrs#5": "input_title"
+      "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-click-resident/child.marko_0_attrs#5"
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-click-resident/template.marko_1*shell"]
 }
@@ -28,7 +28,7 @@
         title: "c",
         onClick: _(["BranchScopes:#text/0", "#childScope/1"], "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-click-resident/child.marko_0/handler")
       },
-      "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-click-resident/child.marko_0_attrs#5": "input_title"
+      "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-click-resident/child.marko_0_attrs#5"
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-click-resident/template.marko_1*shell"]
 }

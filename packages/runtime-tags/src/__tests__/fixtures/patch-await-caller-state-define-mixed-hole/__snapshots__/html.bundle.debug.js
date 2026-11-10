@@ -23,7 +23,7 @@ var show_await_default = _template("__tests__/tags/show-await.marko", (input) =>
 			$fg__input_promise && $ui__text && _patch_write($scope2_id, "PatchMarkedWrite:x", x, !_server_guard($scope0_reason, 0));
 			_html(`<p>${_text_mark($scope2_id, "#text/0", x + ":" + text, 1, ($uf__input_promise | $uf__text) << 1, 0)}</p>`);
 			_unfilled_if($scope1_reason, 0) && _patch_subscribe($scope2_id, "__tests__/tags/show-await.marko_2_text#1:3/subscribe");
-			_patch_render($scope2_id, "__tests__/tags/show-await.marko_2_text#1:3_x#2/setup", [_filled_guard($scope1_reason, 0) && ">text", $fg__input_promise && "x"], ($uf__input_promise | $uf__text) << 1, 0);
+			_patch_render($scope2_id, "__tests__/tags/show-await.marko_2_text#1:3_x#2/setup", ((_filled_guard($scope1_reason, 0) ? " >text" : "") + ($fg__input_promise ? " x" : "")).slice(1), ($uf__input_promise | $uf__text) << 1, 0);
 			_subscribe($ui__text && $Row_content__text__closures, _scope($scope2_id, { x: ($ui__text || _unfilled_if($scope0_reason, 0)) && x }, "__tests__/tags/show-await.marko", "2:4", { x: "2:10" }), _client_guard($scope1_reason, 0) && "__tests__/tags/show-await.marko_2_text#1:3/subscribe");
 		}, 1, "__tests__/tags/show-await.marko_2*content", $ui__input_promise);
 		$cg__input_promise && _patch_render($scope1_id, "__tests__/tags/show-await.marko_1_input_promise#0:3/subscribe");

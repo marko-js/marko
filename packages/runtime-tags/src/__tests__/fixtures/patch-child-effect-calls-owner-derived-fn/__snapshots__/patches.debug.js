@@ -2,7 +2,7 @@
 {
   "PatchMarkedWrite:title": "b!",
   "PatchChild:#childScope/0": {
-    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-child-effect-calls-owner-derived-fn/tags/label.marko_0_get#3": "get",
+    "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-child-effect-calls-owner-derived-fn/tags/label.marko_0_get#3",
     "PatchBind:get": "^packages/runtime-tags/src/__tests__/fixtures/patch-child-effect-calls-owner-derived-fn/template.marko_0/get"
   }
 }
@@ -11,7 +11,7 @@
 {
   "PatchMarkedWrite:title": "b!",
   "PatchChild:#childScope/0": {
-    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-child-effect-calls-owner-derived-fn/tags/label.marko_0_get#3": "get",
+    "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-child-effect-calls-owner-derived-fn/tags/label.marko_0_get#3",
     "PatchBind:get": "^packages/runtime-tags/src/__tests__/fixtures/patch-child-effect-calls-owner-derived-fn/template.marko_0/get"
   }
 }

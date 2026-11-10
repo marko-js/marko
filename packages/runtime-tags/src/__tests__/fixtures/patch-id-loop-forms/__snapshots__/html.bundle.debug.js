@@ -127,7 +127,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		!$cg__input_items__OR__input_record__OR__input_end__OR__input_start && _unfilled_if() && _patch_write($scope0_id, "PatchWrite:heading", heading);
 		_scope($scope8_id, { "#childScope/0": _existing_scope($childScope8) }, "__tests__/template.marko", "9:2");
 	}, (i) => "until-" + i, $scope0_id, "#text/8", 1, 1, 1, 0, 0, "__tests__/template.marko_8*shell", $scope0_reason, 0);
-	_patch_render($scope0_id, "__tests__/template.marko_0_input_end#13_input_start#14/setup", [$fg__input_end && "input_end", $fg__input_start && "input_start"], $scope0_reason, 0);
+	_patch_render($scope0_id, "__tests__/template.marko_0_input_end#13_input_start#14/setup", (($fg__input_end ? " input_end" : "") + ($fg__input_start ? " input_start" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		input_end: ($ui__input_start || $ui__input_end__OR__input_start) && input.end,
 		input_start: ($ui__input_end || $ui__input_end__OR__input_start) && input.start,

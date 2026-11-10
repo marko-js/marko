@@ -24,7 +24,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id, "#text/0", 1, 1, 0, 0, 1);
 	_html(`<button>+</button>${_el_mark($scope0_id, "#button/1")}<output></output></main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$fg__input_prefix && _patch_render($scope0_id, "__tests__/template.marko_1_onChange#0:5/setup", ["onChange", "input_prefix"]);
+	$fg__input_prefix && _patch_render($scope0_id, "__tests__/template.marko_1_onChange#0:5/setup", "onChange input_prefix");
 	_scope($scope0_id, {
 		input_prefix: input.prefix,
 		onChange,

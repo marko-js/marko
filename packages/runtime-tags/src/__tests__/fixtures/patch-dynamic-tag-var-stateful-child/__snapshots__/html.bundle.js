@@ -34,7 +34,7 @@ var template_default = _template("a", (input) => {
 	_var($scope0_id, "b", $inputwhichcounterother_scope, "a0");
 	_html(`<p>${_text_mark($scope0_id, "d", count)}</p>${_el_mark($scope0_id, "c")}`);
 	_script($scope0_id, "a1");
-	_patch_render($scope0_id, "a2", [$fg__input_which && "g", $fg__input_label && "h"], $scope0_reason, 0);
+	_patch_render($scope0_id, "a2", (($fg__input_which ? " g" : "") + ($fg__input_label ? " h" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		g: ($ui__input_label || $ui__input_which__OR__input_label) && input.which,
 		h: ($ui__input_which || $ui__input_which__OR__input_label) && input.label,

@@ -75,7 +75,7 @@ var template_default = _template("d", (input) => {
 		label: input.label
 	});
 	_patch_child_end();
-	_patch_render($scope0_id, "d0", [$fg__input_which && "e", $fg__input_label && "f"], $scope0_reason, 0);
+	_patch_render($scope0_id, "d0", (($fg__input_which ? " e" : "") + ($fg__input_label ? " f" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		e: ($ui__input_label || $ui__input_which__OR__input_label) && input.which,
 		f: ($ui__input_which || $ui__input_which__OR__input_label) && input.label,

@@ -14,8 +14,8 @@ var child_default = _template("b", (input) => {
 		const d = input.b + item;
 		$fg__input_items__OR__input_b && $ui__input_a && _patch_write($scope1_id, "xe", d, !_server_guard($scope0_reason, 0));
 		_html(`<p>${_text_mark($scope1_id, "a", input.a + d, 1, $scope0_reason, 1)}</p>`);
-		_patch_render($scope1_id, "b0", [_filled_guard($scope0_reason, 3) && ">e", $fg__input_items && "c"], $scope0_reason, 0);
-		_patch_render($scope1_id, "b1", [_filled_guard($scope0_reason, 4) && ">f", $fg__input_items__OR__input_b && "e"], $scope0_reason, 1);
+		_patch_render($scope1_id, "b0", ((_filled_guard($scope0_reason, 3) ? " >e" : "") + ($fg__input_items ? " c" : "")).slice(1), $scope0_reason, 0);
+		_patch_render($scope1_id, "b1", ((_filled_guard($scope0_reason, 4) ? " >f" : "") + ($fg__input_items__OR__input_b ? " e" : "")).slice(1), $scope0_reason, 1);
 		_scope($scope1_id, {
 			c: ($ui__input_b || _unfilled_if($scope0_reason, 0)) && item,
 			e: ($ui__input_a || _unfilled_if($scope0_reason, 1)) && d,

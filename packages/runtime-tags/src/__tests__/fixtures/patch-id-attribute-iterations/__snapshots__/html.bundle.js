@@ -76,11 +76,7 @@ var template_default = _template("a", (input) => {
 	const $childScope5 = _peek_scope_id($scope0_id, "a", 5);
 	Content.content({ item: $item });
 	_patch_child_end();
-	_patch_render($scope0_id, "a6", [
-		$fg__input_items && "d",
-		$fg__input_record && "e",
-		$fg__input_end && "f"
-	], $scope0_reason, 3);
+	_patch_render($scope0_id, "a6", (($fg__input_items ? " d" : "") + ($fg__input_record ? " e" : "") + ($fg__input_end ? " f" : "")).slice(1), $scope0_reason, 3);
 	_scope($scope0_id, {
 		d: ($ui__input_record__OR__input_end || $ui__input_items__OR__input_record__OR__input_end) && input.items,
 		e: ($ui__input_items__OR__input_end || $ui__input_items__OR__input_record__OR__input_end) && input.record,

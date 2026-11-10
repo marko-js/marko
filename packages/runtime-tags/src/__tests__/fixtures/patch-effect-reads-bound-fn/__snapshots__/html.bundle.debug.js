@@ -9,7 +9,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	$fg__input_title && _patch_write($scope0_id, "PatchMarkedWrite:input_title", input.title, !$sg__input_title);
 	const getTitle = _bind_resume(() => input.title, "__tests__/template.marko_0/getTitle", $scope0_id);
 	_html(`<output></output>${_el_mark($scope0_id, "#output/0")}`);
-	_script($scope0_id, "__tests__/template.marko_0_getTitle#4", 1, $fg__input_title, ["getTitle", "input_title"]);
+	_script($scope0_id, "__tests__/template.marko_0_getTitle#4", 1, $fg__input_title);
 	_scope($scope0_id, {
 		input_title: input.title,
 		getTitle

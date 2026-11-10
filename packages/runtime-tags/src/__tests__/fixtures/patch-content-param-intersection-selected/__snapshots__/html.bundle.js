@@ -6,7 +6,7 @@ var pass_on_default = _template("c", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_content__OR__input_x = _write_guard($scope0_reason, 0), $ui__input_content__OR__input_x = _unfilled_if($scope0_reason, 0), $ui__input_x = _unfilled_if($scope0_reason, 2), $ui__input_content = _unfilled_if($scope0_reason, 1), $fg__input_content = _filled_guard($scope0_reason, 1), $fg__input_x = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	_dynamic_tag($scope0_id, "a", input.content, [input.x], 1, 0, 1, $wg__input_content__OR__input_x, $scope0_reason, 0, 0, 1);
-	_patch_render($scope0_id, "c0", [$fg__input_content && "d", $fg__input_x && "e"], $scope0_reason, 0);
+	_patch_render($scope0_id, "c0", (($fg__input_content ? " d" : "") + ($fg__input_x ? " e" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		d: ($ui__input_x || $ui__input_content__OR__input_x) && input.content,
 		e: ($ui__input_content || $ui__input_content__OR__input_x) && input.x
@@ -40,7 +40,7 @@ var owner_default = _template("b", (input) => {
 					const $scope2_id = _scope_id();
 					_html(`<p>${_text_mark($scope2_id, "a", input.a + x, 1, (2 | $uf__input_a) << 1, 0)}</p>`);
 					_unfilled_if($scope0_reason, 5) && _patch_subscribe($scope2_id, "b0");
-					_patch_render($scope2_id, "b1", [_filled_guard($scope0_reason, 5) && ">>f", ">c"], (2 | $uf__input_a) << 1, 0);
+					_patch_render($scope2_id, "b1", ">c" + (_filled_guard($scope0_reason, 5) ? " >>f" : ""), (2 | $uf__input_a) << 1, 0);
 					_subscribe(_unfilled_if($scope0_reason, 5) && $input_a__closures, _scope($scope2_id, { _: ($wi__input_x__OR__input_show__OR__input_a || $wi__x) && _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 5) && "b0");
 					return 0;
 				}

@@ -9,7 +9,7 @@ var file_store_default = _template("__tests__/tags/file-store.marko", (input) =>
 	const $scope0_id = _scope_id();
 	let files = [];
 	const $return = files;
-	_script($scope0_id, "__tests__/tags/file-store.marko_0_input_value#2", 0, $fg__input_value, "input_value");
+	_script($scope0_id, "__tests__/tags/file-store.marko_0_input_value#2", 0, $fg__input_value);
 	const $valueChange2 = _patch_bind($scope0_id, "PatchWrite:#TagVariableChange", _resume((_new_files) => files = _new_files, "__tests__/tags/file-store.marko_0/valueChange", $scope0_id) || void 0, 0, 0);
 	_patch_fill($scope0_id, "PatchFill:__tests__/tags/file-store.marko_0_files#3/fill", files, 1);
 	_scope($scope0_id, {
@@ -31,7 +31,7 @@ var file_tabs_default = _template("__tests__/tags/file-tabs.marko", (input) => {
 	let tabs = input.files;
 	_html(`<p>${_text_mark($scope0_id, "#text/0", tabs.map((tab) => tab.path).join())}</p><button>+</button>${_el_mark($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/tags/file-tabs.marko_0");
-	_patch_render($scope0_id, "__tests__/tags/file-tabs.marko_0_input_files#4_input_filesChange#5/setup", [$fg__input_files && "input_files", $fg__input_filesChange && "input_filesChange"], $scope0_reason, 0);
+	_patch_render($scope0_id, "__tests__/tags/file-tabs.marko_0_input_files#4_input_filesChange#5/setup", (($fg__input_files ? " input_files" : "") + ($fg__input_filesChange ? " input_filesChange" : "")).slice(1), $scope0_reason, 0);
 	const $tabsChange = input.filesChange || void 0;
 	_patch_let_change($scope0_id, "PatchFill:__tests__/tags/file-tabs.marko_0_tabs#7/fill", tabs, "PatchWrite:TagVariableChange:tabs", $tabsChange, $scope0_reason, 0);
 	_scope($scope0_id, {

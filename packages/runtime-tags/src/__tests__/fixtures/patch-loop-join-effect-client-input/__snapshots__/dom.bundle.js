@@ -1,5 +1,5 @@
 // tags/child.marko
-const $for_content__input_a__OR__item__script = _script("b0", ($scope) => $scope.b.textContent = "s:" + $scope.d + $scope._.e);
+const $for_content__input_a__OR__item__script = _script_patch("b0 >e d", ($scope) => $scope.b.textContent = "s:" + $scope.d + $scope._.e);
 const $for_content__input_a__OR__item = /*@__PURE__*/ _or_patch("b1", 4, ($scope) => {
 	_text($scope.a, $scope._.e + $scope.d);
 	$for_content__input_a__OR__item__script($scope);

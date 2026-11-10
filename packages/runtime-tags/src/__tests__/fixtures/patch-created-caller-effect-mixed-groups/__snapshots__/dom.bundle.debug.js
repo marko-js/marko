@@ -2,7 +2,7 @@
 const $template$1 = "<p>probe</p>";
 const $walks$1 = "b";
 const $setup$1 = ($_) => {};
-const $input_label__OR__input_count__script = _script("__tests__/tags/probe.marko_0_input_label#2_input_count#3", ($scope) => console.log("probe", $scope.input_label, $scope.input_count));
+const $input_label__OR__input_count__script = _script_patch("__tests__/tags/probe.marko_0_input_label#2_input_count#3 input_label input_count", ($scope) => console.log("probe", $scope.input_label, $scope.input_count));
 const $input_label__OR__input_count = /*@__PURE__*/ _or_patch("__tests__/tags/probe.marko_0_input_label#2_input_count#3/setup", 4, $input_label__OR__input_count__script);
 const $input_label$1 = /*@__PURE__*/ _const("input_label", $input_label__OR__input_count);
 const $input_count = /*@__PURE__*/ _const("input_count", $input_label__OR__input_count);

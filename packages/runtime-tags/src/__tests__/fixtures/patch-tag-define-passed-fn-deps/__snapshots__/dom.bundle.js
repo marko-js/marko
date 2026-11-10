@@ -1,5 +1,5 @@
 // tags/field.marko
-const $Log_content__log__OR__value__script = _script("b7", ($scope) => $scope.c($scope.d));
+const $Log_content__log__OR__value__script = _script_patch("b7 c >e d", ($scope) => $scope.c($scope.d));
 const $Log_content__log__OR__value = /*@__PURE__*/ _or_patch("b8", 4, $Log_content__log__OR__value__script);
 const $Log_content__value = /*@__PURE__*/ _const(3, $Log_content__log__OR__value);
 const $TextField_content__value__OR__valueChange = /*@__PURE__*/ _or_patch("b5", 5, ($scope) => _attr_input_value($scope, "a", $scope.d, $scope.e));

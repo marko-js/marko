@@ -17,7 +17,7 @@ function $setup$4($scope) {
 	_return_change($scope, $valueChange($scope));
 	$files$1($scope, []);
 }
-const $input_value__script = _script("__tests__/tags/file-store.marko_0_input_value#2", ($scope) => $files$1($scope, $scope.input_value));
+const $input_value__script = _script_patch("__tests__/tags/file-store.marko_0_input_value#2 input_value", ($scope) => $files$1($scope, $scope.input_value));
 const $input_value = /*@__PURE__*/ _const("input_value", $input_value__script);
 const $input$3 = ($scope, input) => $input_value($scope, input.value);
 const $valueChange = ($scope) => (_new_files) => $files$1($scope, _new_files);

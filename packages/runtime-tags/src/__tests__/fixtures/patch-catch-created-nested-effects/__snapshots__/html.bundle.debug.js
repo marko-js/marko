@@ -41,7 +41,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html(`<p>${_text_mark($scope5_id, "#text/0", input.fail ? boom(input.msg) : input.msg, 1, $scope0_reason, 1)}</p>`);
 		_unfilled_if($scope0_reason, 5) && _patch_subscribe($scope5_id, "__tests__/template.marko_5_input_fail#0:6/subscribe");
 		_unfilled_if($scope0_reason, 6) && _patch_subscribe($scope5_id, "__tests__/template.marko_5_input_msg#0:7/subscribe");
-		_patch_render($scope5_id, "__tests__/template.marko_5_input_fail#0:6_input_msg#0:7/setup", [_filled_guard($scope0_reason, 5) && ">input_fail", _filled_guard($scope0_reason, 6) && ">input_msg"], $scope0_reason, 1);
+		_patch_render($scope5_id, "__tests__/template.marko_5_input_fail#0:6_input_msg#0:7/setup", ((_filled_guard($scope0_reason, 5) ? " >input_fail" : "") + (_filled_guard($scope0_reason, 6) ? " >input_msg" : "")).slice(1), $scope0_reason, 1);
 		_subscribe(_unfilled_if($scope0_reason, 6) && $input_msg__closures, _subscribe(_unfilled_if($scope0_reason, 5) && $input_fail__closures, _scope($scope5_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:2"), _client_guard($scope0_reason, 5) && "__tests__/template.marko_5_input_fail#0:6/subscribe"), _client_guard($scope0_reason, 6) && "__tests__/template.marko_5_input_msg#0:7/subscribe");
 	}, void 0, (err) => {
 		const $scope1_reason = _scope_reason();
@@ -70,7 +70,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_html(`<u>${_text_mark($scope3_id, "#text/0", x, 1, $scope0_reason, 4)}</u>`);
 			_script($scope3_id, "__tests__/template.marko_3_input_v#0:3_x#2");
 			_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope3_id, "__tests__/template.marko_3_input_v#0:3/subscribe");
-			_patch_render($scope3_id, "__tests__/template.marko_3_input_v#0:3_x#2/setup", [_filled_guard($scope0_reason, 2) && ">>input_v", $fg__input_items && "x"], $scope0_reason, 0);
+			_patch_render($scope3_id, "__tests__/template.marko_3_input_v#0:3_x#2/setup", ((_filled_guard($scope0_reason, 2) ? " >>input_v" : "") + ($fg__input_items ? " x" : "")).slice(1), $scope0_reason, 0);
 			_subscribe(_unfilled_if($scope0_reason, 2) && $input_v__closures, _scope($scope3_id, {
 				x,
 				_: _scope_with_id($scope1_id),

@@ -11,7 +11,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_reason = _scope_reason(), $fg__label = _filled_guard($scope1_reason, 0);
 		const shout = label + "!";
 		_html(`<em>${_text_mark($scope1_id, "a", shout, 1, $scope1_reason, 0)}</em>`);
-		_script($scope1_id, "a1", 1, $fg__label, "e");
+		_script($scope1_id, "a1", 1, $fg__label);
 		_scope($scope1_id, { e: shout }) || $fg__label && _patch_write($scope1_id, "xe", shout, !_server_guard($scope1_reason, 0));
 	}, $scope0_id) };
 	_set_scope_reason(_updates_from($scope0_reason, 0) << 1);

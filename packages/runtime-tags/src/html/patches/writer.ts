@@ -1049,8 +1049,8 @@ export function _patch_write(
   return "";
 }
 
-// An effect, and in a patch render its entry (`1`, or `2` queued) valued by the writes
-// it depends on that the patch fills, unless its intersection's render runs it (`1`).
+// An effect, and in a patch render its id in its scope's list (`1`, or `2` queued), whose
+// reads its registration names, unless its intersection's render entry runs it by `reads` (`1`).
 export function _script(
   scopeId: number,
   registryId: string,
@@ -1066,12 +1066,9 @@ export function _script(
   _base_script(scopeId, registryId, markerGuard);
   const state = getState();
   if (entry && state instanceof PatchRenderState) {
-    writePatchEntry(
-      state,
-      scopeId,
-      (entry > 1 ? PatchKey.QueuedEffect : PatchKey.Effect) + registryId,
-      reads || "",
-    );
+    const patch = ensureScopePatch(state, scopeId);
+    const key = entry > 1 ? PatchKey.QueuedEffect : PatchKey.Effect;
+    patch[key] = patch[key] ? patch[key] + " " + registryId : registryId;
   }
 }
 

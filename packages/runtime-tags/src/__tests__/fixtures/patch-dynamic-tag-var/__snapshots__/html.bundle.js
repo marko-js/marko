@@ -25,7 +25,7 @@ var template_default = _template("a", (input) => {
 	let x = _dynamic_tag($scope0_id, "a", input.which ? one_default : two_default, { a: input.a }, 1, 0, 0, 1, $scope0_reason, 0, 0, void 0, 0, "a0");
 	_var($scope0_id, "b", $inputwhichonetwo_scope, "a0");
 	_html(`<p>${_text_mark($scope0_id, "c", x)}</p>`);
-	_patch_render($scope0_id, "a1", [$fg__input_which && "f", $fg__input_a && "g"], $scope0_reason, 0);
+	_patch_render($scope0_id, "a1", (($fg__input_which ? " f" : "") + ($fg__input_a ? " g" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		f: ($ui__input_a || $ui__input_which__OR__input_a) && input.which,
 		g: ($ui__input_which || $ui__input_which__OR__input_a) && input.a

@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<main><!><button>+</button></main>";
 const $walks = "D%b l";
-const $if_content__input_title__script = _script("__tests__/template.marko_1_input_title#0:4", ($scope) => document.querySelector("main").dataset.title = $scope._.input_title);
+const $if_content__input_title__script = _script_patch("__tests__/template.marko_1_input_title#0:4 >input_title", ($scope) => document.querySelector("main").dataset.title = $scope._.input_title);
 const $if_content__input_title = /*@__PURE__*/ _if_closure_patch("__tests__/template.marko_1_input_title#0:4/setup", "#text/0", 0, $if_content__input_title__script);
 const $if_content__setup = $if_content__input_title;
 const $if = /*@__PURE__*/ _if("#text/0", "<p>big</p>", 0, $if_content__setup);

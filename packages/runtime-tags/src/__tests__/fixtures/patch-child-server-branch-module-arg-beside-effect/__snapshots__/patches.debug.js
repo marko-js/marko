@@ -9,7 +9,7 @@
         }, "packages/runtime-tags/src/__tests__/fixtures/patch-child-server-branch-module-arg-beside-effect/tags/card.marko_4*shell"]
       }
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-child-server-branch-module-arg-beside-effect/tags/card.marko_1*shell"],
-    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-child-server-branch-module-arg-beside-effect/tags/card.marko_0_input_label#7": "input_label",
+    "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-child-server-branch-module-arg-beside-effect/tags/card.marko_0_input_label#7",
     "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-child-server-branch-module-arg-beside-effect/tags/card.marko_2_input_label#0:7/setup": "input_label",
     "PatchMarkedWrite:input_label": "b"
   }

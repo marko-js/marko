@@ -13,18 +13,8 @@ var code_block_default = _template("__tests__/tags/code-block.marko", (input) =>
 		return t + input.a + input.b + input.c;
 	}, "__tests__/tags/code-block.marko_0/f", $scope0_id);
 	_html(`<div>${_text_mark($scope0_id, "#text/0", f(input.d), 1, $scope0_reason, 4)}</div>`);
-	_patch_render($scope0_id, "__tests__/tags/code-block.marko_0_input_a#3_input_b#4_input_c#5/setup", [
-		$fg__input_a && "input_a",
-		$fg__input_b && "input_b",
-		$fg__input_c && "input_c"
-	], $scope0_reason, 0);
-	_patch_render($scope0_id, "__tests__/tags/code-block.marko_0_input_d#7_f#8/setup", [
-		$fg__input_d && "input_d",
-		$fg__input_a__OR__input_b__OR__input_c && "f",
-		$fg__input_a && "input_a",
-		$fg__input_b && "input_b",
-		$fg__input_c && "input_c"
-	], $scope0_reason, 4);
+	_patch_render($scope0_id, "__tests__/tags/code-block.marko_0_input_a#3_input_b#4_input_c#5/setup", (($fg__input_a ? " input_a" : "") + ($fg__input_b ? " input_b" : "") + ($fg__input_c ? " input_c" : "")).slice(1), $scope0_reason, 0);
+	_patch_render($scope0_id, "__tests__/tags/code-block.marko_0_input_d#7_f#8/setup", (($fg__input_d ? " input_d" : "") + ($fg__input_a__OR__input_b__OR__input_c ? " f" : "") + ($fg__input_a ? " input_a" : "") + ($fg__input_b ? " input_b" : "") + ($fg__input_c ? " input_c" : "")).slice(1), $scope0_reason, 4);
 	_scope($scope0_id, {
 		input_a: ($ui__input_b__OR__input_c__OR__input_d || $ui__input_a__OR__input_b__OR__input_c || $ui__input_a__OR__input_b__OR__input_c__OR__input_d) && input.a,
 		input_b: ($ui__input_a__OR__input_c__OR__input_d || $ui__input_a__OR__input_b__OR__input_c || $ui__input_a__OR__input_b__OR__input_c__OR__input_d) && input.b,

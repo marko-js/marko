@@ -22,7 +22,7 @@ var template_default = _template("a", (input) => {
 		_html("<b>B</b>");
 	}, $scope0_id) };
 	_dynamic_tag($scope0_id, "a", input.flag ? B : A, { x: input.a }, 1, 0, 0, $wg__input_flag__OR__input_a, $scope0_reason, 0);
-	_patch_render($scope0_id, "a4", [$fg__input_flag && "d", $fg__input_a && "e"], $scope0_reason, 0);
+	_patch_render($scope0_id, "a4", (($fg__input_flag ? " d" : "") + ($fg__input_a ? " e" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		d: ($ui__input_a || $ui__input_flag__OR__input_a) && input.flag,
 		e: ($ui__input_flag || $ui__input_flag__OR__input_a) && input.a,

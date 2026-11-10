@@ -12,7 +12,7 @@ var menu_default = _template("b", (input) => {
 		const $scope1_id = _scope_id(), $fg__input_item = _filled_guard($scope0_reason, 0);
 		$fg__input_item && _patch_write($scope1_id, "xf", it?.onPick, !_server_guard($scope0_reason, 0));
 		_html(`<button${_attr_class("b" + it.id, $scope1_id, "a", $scope0_reason, 0)}>${_text_mark($scope1_id, "b", it.label, 1, $scope0_reason, 0)}</button>${_el_mark($scope1_id, "a")}`);
-		_script($scope1_id, "b0", 1, $fg__input_item, "f");
+		_script($scope1_id, "b0", 1, $fg__input_item);
 		_scope($scope1_id, { f: it?.onPick });
 	}, 0, $scope0_id, "a", 1, 1, 1, 0, 0, "b1", $scope0_reason, 0);
 	_scope($scope0_id, {});

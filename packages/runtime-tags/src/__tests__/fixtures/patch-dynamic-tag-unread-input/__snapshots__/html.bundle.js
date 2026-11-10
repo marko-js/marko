@@ -47,14 +47,10 @@ var template_default = _template("c", (input) => {
 	}, 17, 0, 0, _write_guard($scope0_reason, 6), $scope0_reason, 6, 0, 11);
 	_dynamic_tag($scope0_id, "f", input.none ? card_a_default : null, { user: input.hidden }, 25, 0, 0, _write_guard($scope0_reason, 5), $scope0_reason, 5);
 	_script($scope0_id, "c2");
-	_patch_render($scope0_id, "c3", [$fg__input_which && "i", $fg__input_user && "j"], $scope0_reason, 0);
-	_patch_render($scope0_id, "c4", [
-		$fg__input_tag && "n",
-		$fg__input_cls && "o",
-		$fg__input_title && "p"
-	], $scope0_reason, 6);
-	_patch_render($scope0_id, "c5", [$fg__input_none && "r", $fg__input_hidden && "s"], $scope0_reason, 5);
-	_patch_render($scope0_id, "c6", [$fg__input_alt && "l", $fg__input_user2 && "m"], $scope0_reason, 1);
+	_patch_render($scope0_id, "c3", (($fg__input_which ? " i" : "") + ($fg__input_user ? " j" : "")).slice(1), $scope0_reason, 0);
+	_patch_render($scope0_id, "c4", (($fg__input_tag ? " n" : "") + ($fg__input_cls ? " o" : "") + ($fg__input_title ? " p" : "")).slice(1), $scope0_reason, 6);
+	_patch_render($scope0_id, "c5", (($fg__input_none ? " r" : "") + ($fg__input_hidden ? " s" : "")).slice(1), $scope0_reason, 5);
+	_patch_render($scope0_id, "c6", (($fg__input_alt ? " l" : "") + ($fg__input_user2 ? " m" : "")).slice(1), $scope0_reason, 1);
 	_scope($scope0_id, {
 		i: ($ui__input_user || $ui__input_which__OR__input_user) && input.which,
 		j: ($ui__input_which || $ui__input_which__OR__input_user) && input.user,

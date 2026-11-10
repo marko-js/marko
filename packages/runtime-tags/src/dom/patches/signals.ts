@@ -18,6 +18,7 @@ import {
   _let,
   _let_change,
   _or,
+  _script,
   type Signal,
   type SignalFn,
 } from "../signals";
@@ -76,16 +77,30 @@ export {
   _fill_let_change as _fill_let_change_resume,
 };
 
-// Per registration of a function with filled references: whether a patch changed one on its owner.
-export const filledReferences: Record<string, (owner: Scope) => unknown> = {};
+// Per registration with filled references, a function's or an effect's: whether a patch
+// changed one on its owner (in the response `stop` names).
+export const filledReferences: Record<
+  string,
+  (owner: Scope, stop?: Parameters<typeof readChanged>[2]) => unknown
+> = {};
+
+// Records a registration's filled references (`id read …`) under its id, which it returns.
+export function _filled_id(key: string) {
+  const sep = key.indexOf(" ");
+  const reads = key.slice(sep + 1);
+  filledReferences[(key = key.slice(0, sep))] = (owner, stop) =>
+    readChanged(owner, reads, stop);
+  return key;
+}
 
 // A registration of a function with filled references (`patches/marked-bind`): `id read …`.
 export function _bind_resume(key: string, factory: (owner: Scope) => unknown) {
-  const sep = key.indexOf(" ");
-  const id = key.slice(0, sep);
-  const reads = key.slice(sep + 1);
-  filledReferences[id] = (owner: Scope) => readChanged(owner, reads);
-  _resumed[id] = factory;
+  _resumed[_filled_id(key)] = factory;
+}
+
+// An effect with filled references (`patches/effect`), keyed as a function's.
+export function _script_patch(key: string, fn: (scope: Scope) => void) {
+  return _script(_filled_id(key), fn);
 }
 
 // An intersection a flush renders by this id, after whatever members arrive: a created

@@ -11,3 +11,7 @@ LOG "run" "{\"label\":\"b\"}"
 ```
 
 # Update `{"title":"b"}`
+## Console
+```
+LOG "run" "{\"label\":\"b\"}"
+```

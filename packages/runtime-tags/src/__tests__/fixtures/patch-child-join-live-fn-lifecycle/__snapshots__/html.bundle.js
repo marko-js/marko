@@ -8,11 +8,7 @@ var child_default = _template("b", (input) => {
 	$fg__input_a && _patch_write($scope0_id, "xd", input.a, !$sg__input_a);
 	const fmt = _bind_resume(() => input.a + "!", "b0", $scope0_id);
 	_html(`<p>${_text_mark($scope0_id, "a", fmt() + input.b, 1, $scope0_reason, 0)}</p>`);
-	_script($scope0_id, "b1", 1, ($fg__input_b || $fg__input_a) && (_client_guard($scope0_reason, 2) || _client_guard($scope0_reason, 1) ? 2 : 1), [
-		$fg__input_b && "e",
-		$fg__input_a && "f",
-		$fg__input_a && "d"
-	], "b2", $scope0_reason, 0);
+	_script($scope0_id, "b1", 1, ($fg__input_b || $fg__input_a) && (_client_guard($scope0_reason, 2) || _client_guard($scope0_reason, 1) ? 2 : 1), (($fg__input_b ? " e" : "") + ($fg__input_a ? " f" : "") + ($fg__input_a ? " d" : "")).slice(1), "b2", $scope0_reason, 0);
 	_scope($scope0_id, {
 		d: input.a,
 		e: input.b,

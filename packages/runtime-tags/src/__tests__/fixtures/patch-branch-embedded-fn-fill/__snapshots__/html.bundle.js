@@ -15,7 +15,7 @@ var template_default = _template("a", (input) => {
 	_if(() => {}, $scope0_id, "a", 1, 1, 0, 0, 1);
 	_html(`<button>show</button>${_el_mark($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a3");
-	$fg__input_title && _patch_render($scope0_id, "a1", "e");
+	$fg__input_title && _patch_render($scope0_id, "a1", "f");
 	$fg__input_title && _patch_render($scope0_id, "a2", "g");
 	_scope($scope0_id, {
 		e: input.title,

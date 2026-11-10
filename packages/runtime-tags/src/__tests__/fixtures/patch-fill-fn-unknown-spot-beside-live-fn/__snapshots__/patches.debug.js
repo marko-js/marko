@@ -2,7 +2,7 @@
 {
   "PatchMarkedWrite:input_title": "b",
   "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-fill-fn-unknown-spot-beside-live-fn/template.marko_1_key#0:8/setup": "key",
-  "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-fill-fn-unknown-spot-beside-live-fn/template.marko_1_o#0:10/setup": "input_title key",
+  "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-fill-fn-unknown-spot-beside-live-fn/template.marko_1_o#0:10/setup": "o",
   "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-fill-fn-unknown-spot-beside-live-fn/template.marko_1_o_key#0:11/setup": "o_key",
   "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-fill-fn-unknown-spot-beside-live-fn/template.marko_1_first#0:13/setup": "first",
   "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-fill-fn-unknown-spot-beside-live-fn/template.marko_1_tag#0:14/setup": "tag input_title",
@@ -20,7 +20,7 @@
 {
   "PatchMarkedWrite:input_title": "c",
   "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-fill-fn-unknown-spot-beside-live-fn/template.marko_1_key#0:8/setup": "key",
-  "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-fill-fn-unknown-spot-beside-live-fn/template.marko_1_o#0:10/setup": "input_title key",
+  "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-fill-fn-unknown-spot-beside-live-fn/template.marko_1_o#0:10/setup": "o",
   "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-fill-fn-unknown-spot-beside-live-fn/template.marko_1_o_key#0:11/setup": "o_key",
   "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-fill-fn-unknown-spot-beside-live-fn/template.marko_1_first#0:13/setup": "first",
   "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-fill-fn-unknown-spot-beside-live-fn/template.marko_1_tag#0:14/setup": "tag input_title",

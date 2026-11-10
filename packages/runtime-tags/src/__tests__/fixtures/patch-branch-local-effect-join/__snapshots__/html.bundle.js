@@ -14,9 +14,9 @@ var child_default = _template("b", (input) => {
 			const c = input.b + "!";
 			$fg__input_b && _patch_write($scope1_id, "xc", c, !$sg__input_b);
 			_html(`<p>${_text_mark($scope1_id, "a", input.a + c, 1, $scope0_reason, 1)}</p><div></div>${_el_mark($scope1_id, "b")}`);
-			_script($scope1_id, "b0", 1, $fg__input_b, "c");
+			_script($scope1_id, "b0", 1, $fg__input_b);
 			_client_guard($scope0_reason, 3) && _patch_render($scope1_id, "b1");
-			_patch_render($scope1_id, "b2", [_filled_guard($scope0_reason, 4) && ">f", $fg__input_b && "c"], $scope0_reason, 1);
+			_patch_render($scope1_id, "b2", ((_filled_guard($scope0_reason, 4) ? " >f" : "") + ($fg__input_b ? " c" : "")).slice(1), $scope0_reason, 1);
 			_scope($scope1_id, {
 				c,
 				_: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id)

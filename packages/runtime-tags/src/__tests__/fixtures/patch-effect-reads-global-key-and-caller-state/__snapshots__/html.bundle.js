@@ -7,7 +7,7 @@ var child_default = _template("b", (input) => {
 	const $scope0_id = _scope_id();
 	$global();
 	_html(`<div></div>${_el_mark($scope0_id, "a")}`);
-	_script($scope0_id, "b1", 1, ($fg__input_page || $fg__input_n) && ($cg__input_page || $cg__input_n ? 2 : 1), [$fg__input_page && "d", $fg__input_n && "e"], "b2", $scope0_reason, 0) || _script($scope0_id, "b0", 1, ($fg__input_page || $fg__input_n) && ($cg__input_page || $cg__input_n ? 2 : 1), [$fg__input_page && "d", $fg__input_n && "e"]);
+	_script($scope0_id, "b1", 1, ($fg__input_page || $fg__input_n) && ($cg__input_page || $cg__input_n ? 2 : 1), (($fg__input_page ? " d" : "") + ($fg__input_n ? " e" : "")).slice(1), "b2", $scope0_reason, 0) || _script($scope0_id, "b0", 1, ($fg__input_page || $fg__input_n) && ($cg__input_page || $cg__input_n ? 2 : 1));
 	_scope($scope0_id, {
 		d: input.page,
 		e: input.n

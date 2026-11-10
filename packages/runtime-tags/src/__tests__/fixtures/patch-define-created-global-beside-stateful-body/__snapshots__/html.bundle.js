@@ -24,7 +24,7 @@ var template_default = _template("a", (input) => {
 		}, $scope2_id, "a", 1, _write_guard($scope2_reason, 1), 1, 0, 0, ["a0"], $scope2_reason, 1);
 		_html(`<span>${_text_mark($scope2_id, "b", isOpen ? label : "-", 1, $scope2_reason, 0)}</span>`);
 		$fg__label && _client_guard($scope2_reason, 1) && _patch_render($scope2_id, "a3", "f");
-		_patch_render($scope2_id, "a4", [$fg__isOpen && "e", $fg__label && "f"], $scope2_reason, 0);
+		_patch_render($scope2_id, "a4", (($fg__isOpen ? " e" : "") + ($fg__label ? " f" : "")).slice(1), $scope2_reason, 0);
 		_scope($scope2_id, {
 			e: ($ui__label || $ui__isOpen__OR__label) && isOpen,
 			f: ($ui__isOpen || $ui__isOpen__OR__label) && label
@@ -66,7 +66,7 @@ var template_default = _template("a", (input) => {
 	_html(`<button>toggle</button>${_el_mark($scope0_id, "c")}`);
 	_script($scope0_id, "a7");
 	_patch_render($scope0_id, "a8", $fg__input_other && "g", $scope0_reason, 1);
-	_patch_render($scope0_id, "a9", [$fg__input_label && "h", $fg__input_other && "l"]);
+	_patch_render($scope0_id, "a9", (($fg__input_label ? " h" : "") + ($fg__input_other ? " l" : "")).slice(1));
 	_scope($scope0_id, {
 		h: input.label,
 		i: open,

@@ -5,6 +5,5 @@ a, {
       label: "b"
     }
   },
-  xg: "b",
   xh: _.a
 }

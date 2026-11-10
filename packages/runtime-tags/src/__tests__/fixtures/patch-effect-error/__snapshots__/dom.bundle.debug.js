@@ -9,7 +9,7 @@ function $setup($scope) {
 	$count($scope, 0);
 	$setup__script($scope);
 }
-const $input_label__script = _script("__tests__/template.marko_0_input_label#5", ($scope) => {
+const $input_label__script = _script_patch("__tests__/template.marko_0_input_label#5 input_label", ($scope) => {
 	if ($scope.input_label === "b") throw new Error("effect failed");
 });
 const $input_label = /*@__PURE__*/ _const("input_label", ($scope) => {

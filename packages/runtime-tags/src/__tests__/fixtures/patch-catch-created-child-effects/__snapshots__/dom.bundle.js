@@ -2,14 +2,14 @@
 const $template = "<span> </span>";
 const $setup__script$1 = _script("b3", ($scope) => console.log("setup"));
 const $setup = $setup__script$1;
-const $input_message__script = _script("b2", ($scope) => console.log("message", $scope.d));
+const $input_message__script = _script_patch("b2 d", ($scope) => console.log("message", $scope.d));
 const $input_message = /*@__PURE__*/ _const(3, ($scope) => {
 	_text($scope.a, $scope.d);
 	$input_message__script($scope);
 });
-const $input_label__script = _script("b1", ($scope) => console.log("label", $scope.e));
+const $input_label__script = _script_patch("b1 e", ($scope) => console.log("label", $scope.e));
 const $input_label = /*@__PURE__*/ _const(4, $input_label__script);
-const $input_count__script = _script("b0", ($scope) => console.log("count", $scope.f));
+const $input_count__script = _script_patch("b0 f", ($scope) => console.log("count", $scope.f));
 const $input_count = /*@__PURE__*/ _const(5, $input_count__script);
 
 // template.marko

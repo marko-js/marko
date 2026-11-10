@@ -6,7 +6,7 @@ var probe_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $fg__input_get = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_html(`<output></output>${_el_mark($scope0_id, "a")}`);
-	_script($scope0_id, "b0", 1, $fg__input_get, "d");
+	_script($scope0_id, "b0", 1, $fg__input_get);
 	_scope($scope0_id, { d: input.get }) || $fg__input_get && _patch_write($scope0_id, "xd", input.get, !_server_guard($scope0_reason, 0));
 });
 
@@ -79,7 +79,7 @@ var w_default = _template("c", (input) => {
 	$ui__input_flag__OR__input_x && _patch_write($scope0_id, "wh", A, 1);
 	$ui__input_flag__OR__input_x && _patch_write($scope0_id, "wi", B, 1);
 	$fg__input_show && _patch_subscribers($scope0_id, "c9", "e");
-	_patch_render($scope0_id, "c10", [$fg__input_flag && "f", $fg__input_x && "g"], $scope0_reason, 0);
+	_patch_render($scope0_id, "c10", (($fg__input_flag ? " f" : "") + ($fg__input_x ? " g" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		e: input.show,
 		f: ($ui__input_x || $ui__input_flag__OR__input_x) && input.flag,

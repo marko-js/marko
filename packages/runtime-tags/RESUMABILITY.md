@@ -72,7 +72,12 @@ patch, fill, structural param, shell).
   dispatches each entry by its key prefix (`PatchKey`, debug spelled
   `Patch<Kind>:`) into `patchers`, one `dom/patches/*.feat.ts` module per kind,
   imported only where a template emits that kind. A scope a flush creates
-  applies through `setupPatchers`, where every entry is required.
+  applies through `setupPatchers`, where every entry is required. On a live
+  scope a write marks its slot only when the value changed (`!==`, as main's
+  `_const` compares), and functions and effects invalidate by one check
+  (`readChanged`) over the marked slots their registrations name, their
+  referenced bindings a patch fills (`_bind_resume`, `_script_patch`): a bind
+  makes a function anew, and an effect's entry re-runs it, only on such a change.
 - **Shells.** Structure a server-rendered branch expression decides (a
   branch, a loop body, a dynamic tag's content) is created client-side from a shell: the section's
   template and walk plus the register ids a fresh scope runs, decided per

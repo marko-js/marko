@@ -55,10 +55,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				return 0;
 			}
 		}, $scope1_id, "#text/1", 1, $wg__input_x, 1, 0, 0, ["__tests__/template.marko_4*shell"], $scope0_reason, 4);
-		$fg__input_a__OR__input_items && $cg__input_x && _patch_render($scope1_id, "__tests__/template.marko_4_g#1:6/setup", ["g", "v"]);
+		$fg__input_a__OR__input_items && $cg__input_x && _patch_render($scope1_id, "__tests__/template.marko_4_g#1:6/setup", "g v");
 		$cg__input_x && _patch_render($scope1_id, "__tests__/template.marko_1_input_x#0:8/setup");
 		$cg__input_a && _patch_render($scope1_id, "__tests__/template.marko_1_f#0:10/setup");
-		_patch_render($scope1_id, "__tests__/template.marko_1_input_a#0:6_item#3/setup", [_filled_guard($scope0_reason, 2) && ">input_a", $fg__input_items && "item"], $scope0_reason, 0);
+		_patch_render($scope1_id, "__tests__/template.marko_1_input_a#0:6_item#3/setup", ((_filled_guard($scope0_reason, 2) ? " >input_a" : "") + ($fg__input_items ? " item" : "")).slice(1), $scope0_reason, 0);
 		_scope($scope1_id, {
 			item: ($ui__input_a || $ui__input_a__OR__input_items) && item,
 			v: ($ui__input_x || $ui__input_a__OR__input_items) && v,
@@ -92,7 +92,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				return 0;
 			}
 		}, $scope2_id, "#text/0", 1, $wg__input_x, 1, 0, 0, ["__tests__/template.marko_5*shell"], $scope0_reason, 4);
-		$fg__v && $cg__input_x && _patch_render($scope2_id, "__tests__/template.marko_5_h#2:4/setup", ["h", "v"]);
+		$fg__v && $cg__input_x && _patch_render($scope2_id, "__tests__/template.marko_5_h#2:4/setup", "h v");
 		$wi__input_x && _subscribe($ui__input_x2 && $input_x__closures, _scope($scope2_id, {
 			v: ($ui__input_x2 || $ui__v) && v,
 			h: ($ui__input_x2 || $ui__v) && h,
@@ -111,7 +111,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_patch_child_end();
 	$fg__input_a && $cg__input_items && _patch_render($scope0_id, "__tests__/template.marko_1_input_a#0:6/setup", "input_a");
 	$fg__input_x && $cg__input_items && _patch_render($scope0_id, "__tests__/template.marko_1_input_x#0:8/setup", "input_x");
-	$fg__input_a && $cg__input_items && _patch_render($scope0_id, "__tests__/template.marko_1_f#0:10/setup", ["f", "input_a"]);
+	$fg__input_a && $cg__input_items && _patch_render($scope0_id, "__tests__/template.marko_1_f#0:10/setup", "f input_a");
 	_scope($scope0_id, {
 		input_a: ($ui__input_items || _unfilled_if($scope0_reason, 0) || $ui__input_a2) && input.a,
 		input_x: ($ui__input_items || _unfilled_if($scope0_reason, 4)) && input.x,

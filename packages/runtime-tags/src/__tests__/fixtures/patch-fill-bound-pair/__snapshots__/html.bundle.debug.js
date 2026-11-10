@@ -16,20 +16,15 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (open) {
 			const $scope1_id = _scope_id(), $fg__input_a = _filled_guard($scope0_reason, 1), $fg__input_b = _filled_guard($scope0_reason, 2);
 			_html(`<p>${_text_mark($scope1_id, "#text/0", fa() + ":" + fb(), $wg__input_a__OR__input_b)}</p>`);
-			_patch_render($scope1_id, "__tests__/template.marko_1_fa#0:6_fb#0:7/setup", [
-				$fg__input_a && ">fa",
-				$fg__input_a && ">input_a",
-				$fg__input_b && ">fb",
-				$fg__input_b && ">input_b"
-			], $scope0_reason, 0);
+			_patch_render($scope1_id, "__tests__/template.marko_1_fa#0:6_fb#0:7/setup", (($fg__input_a ? " >fa" : "") + ($fg__input_a ? " >input_a" : "") + ($fg__input_b ? " >fb" : "") + ($fg__input_b ? " >input_b" : "")).slice(1), $scope0_reason, 0);
 			_scope($scope1_id, {}, "__tests__/template.marko", "5:4");
 			return 0;
 		}
 	}, $scope0_id, "#text/0", 1, 1, 0, 0, 1);
 	_html(`<button>+</button>${_el_mark($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$fg__input_a2 && _patch_render($scope0_id, "__tests__/template.marko_1_fa#0:6/setup", ["fa", "input_a"]);
-	$fg__input_b2 && _patch_render($scope0_id, "__tests__/template.marko_1_fb#0:7/setup", ["fb", "input_b"]);
+	$fg__input_a2 && _patch_render($scope0_id, "__tests__/template.marko_1_fa#0:6/setup", "fa input_a");
+	$fg__input_b2 && _patch_render($scope0_id, "__tests__/template.marko_1_fb#0:7/setup", "fb input_b");
 	_scope($scope0_id, {
 		input_a: input.a,
 		input_b: input.b,

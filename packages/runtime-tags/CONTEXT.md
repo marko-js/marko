@@ -456,12 +456,15 @@ params mapped to what its calls pass (`mapBodyParams`), a guarded one where its
 caller group leaves the reads unfilled (`_unfilled_if`); always where a `<let>` keeps
 content reading it, and where a consumer renders the content reading it as a
 client branch (`_client_branch_if`). What the client runs on a filled slot is
-named by the scope's entries, each valued by the filled reads it depends on
-(`_script`, `_patch_render`, `_patch_subscribers`): an effect's, which also mounts it in a scope its flush
-created whose shell names no effect reading what a patch fills (one the created
-scope's own render queues ships as a `QueuedEffect`, which only re-runs it); a
+named by the scope's entries: its effects' (one list of ids, `PatchKey.Effect`), which
+also mounts each in a scope its flush created whose shell names no effect reading what
+a patch fills (those the created scope's own render queues list as `QueuedEffect`,
+which only re-runs them); a
 render, a filled intersection's or an `<if>`/`<for>` closure's; and the walk
-over a dynamic closure's subscribed scopes (`PatchSubscribers`). The html gates
+over a dynamic closure's subscribed scopes (`PatchSubscribers`). Each runs once a
+filled read it depends on changed: one the effect's registration names (_filled
+references_), or one a render's or walk's entry carries (`_patch_render`,
+`_patch_subscribers`). The html gates
 say which side acts on a param group:
 `_filled_guard` (a patch fills it: server-sourced, or constant where a created
 scope needs the seed), `_unfilled_if` (no patch fills it: the group is
@@ -571,9 +574,9 @@ member the client's side needs is written in place on its slot.
 **Marked write / marked bind**:
 A live scope's write (`PatchKey.MarkedWrite`) sets the slot and, only when the value
 changed, records the response in the slot's _change mark_
-(`AccessorPrefix.PatchChanged` + accessor), which the scope's entries read
-(`readChanged`). A created scope's setup writes go plain (`PatchKey.Write`), since
-nothing it holds has run. A bind (`PatchKey.Bind`) sends a registration with owner
+(`AccessorPrefix.PatchChanged` + accessor), which the reads its entries carry and
+its registrations name check (`readChanged`). A created scope's setup writes go
+plain (`PatchKey.Write`), since nothing it holds has run. A bind (`PatchKey.Bind`) sends a registration with owner
 hops; on a page linking `patches/marked-bind`, where a holder compares a function's
 identity, it keeps one function per owner and registration (`AccessorPrefix.BoundFn` +
 id on the owner scope, filled as resume revives one), so it marks only a new function.
@@ -582,11 +585,14 @@ owner scope (an owner-bound entry), not main's two-way binding (`:=`).
 _Avoid_: dirty flag, version (a mark names its response)
 
 **Filled references**:
-The bindings a registered function references that a patch may fill
-(`getFilledReferences`, `hasFilledReferences`). Its registration names them as
-reads (`_bind_resume`, keyed `id read …`), and a bind of it makes a new function only
-when one of them changed in that response, shared per owner and registration (marked
-bind); a function reading client state is the client's and has none.
+The bindings a registered function or an effect references, as its referenced
+bindings name them, and those of the functions they may hold, that a patch may
+fill (`getFilledReferences`, `hasFilledReferences`, `getEffectReads`). Its
+registration names them as reads, keyed `id read …` (`_bind_resume`,
+`_script_patch`, or `_filled_id` for a `$global` script): a bind of a function
+makes a new one, and an effect's entry re-runs the effect, only when one of them
+changed in that response; a bound function is shared per owner and registration
+(marked bind); a function reading client state is the client's and has none.
 _Avoid_: written references, written captures, live function, live bind, held function
 
 **Patch pairing**:

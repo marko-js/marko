@@ -27,7 +27,7 @@ var host_default = _template("__tests__/tags/host.marko", (input) => {
 				{ _: $scope($scope0_id) }
 			] : [{ entry_text: entry?.text }]) }));
 			_dynamic_tag($scope1_id, "#text/0", input.wrap, { item: $item }, 1, 0, 0, $wg__input_wrap__OR__input_items, $scope0_reason, 2, 0, 6, void 0, 0, "__tests__/tags/host.marko_2*content");
-			_patch_render($scope1_id, "__tests__/tags/host.marko_1_input_wrap#0:4_input_items#0:5/setup", [_filled_guard($scope0_reason, 6) && ">input_wrap", _filled_guard($scope0_reason, 7) && ">input_items"], $scope0_reason, 2);
+			_patch_render($scope1_id, "__tests__/tags/host.marko_1_input_wrap#0:4_input_items#0:5/setup", ((_filled_guard($scope0_reason, 6) ? " >input_wrap" : "") + (_filled_guard($scope0_reason, 7) ? " >input_items" : "")).slice(1), $scope0_reason, 2);
 			$wi__input_show__OR__input_wrap__OR__input_items__OR__input_label && _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/host.marko", "1:2");
 			return 0;
 		}

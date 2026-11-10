@@ -8,7 +8,7 @@ var probe_default = _template("__tests__/tags/probe.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let seen = "";
 	_html(`<p>${_text_mark($scope0_id, "#text/0", seen, 1, 0, 0, 1)}</p>`);
-	_script($scope0_id, "__tests__/tags/probe.marko_0_input_label#3", 1, $fg__input_label, "input_label");
+	_script($scope0_id, "__tests__/tags/probe.marko_0_input_label#3", 1, $fg__input_label);
 	_scope($scope0_id, { input_label: input.label }, "__tests__/tags/probe.marko", 0, { input_label: ["input.label"] }) || $fg__input_label && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 0));
 });
 

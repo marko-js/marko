@@ -23,7 +23,7 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 const $template = "<button>go</button>";
 const $walks = " b";
 const $setup = ($_) => {};
-const $attrs__script = _script("__tests__/child.marko_0_attrs#5", ($scope) => _attrs_script($scope, "#button/0"));
+const $attrs__script = _script_patch("__tests__/child.marko_0_attrs#5 input_title", ($scope) => _attrs_script($scope, "#button/0"));
 const $attrs = /*@__PURE__*/ _const("attrs", ($scope) => {
 	$attrs__script($scope);
 	_attrs($scope, "#button/0", $scope.attrs);

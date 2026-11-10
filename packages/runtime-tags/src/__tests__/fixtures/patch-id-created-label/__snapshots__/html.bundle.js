@@ -81,7 +81,7 @@ var template_default = _template("a", (input) => {
 		_scope($scope5_id, { a: _existing_scope($childScope) });
 	}, "id", $scope0_id, "d", 1, 1, 1, 0, 0, "a5", $scope0_reason, 5);
 	$fg__input_show && _client_guard($scope0_reason, 2) && _patch_render($scope0_id, "a6", "h");
-	_patch_render($scope0_id, "a7", [$fg__input_show && "h", $fg__input_on && "i"], $scope0_reason, 1);
+	_patch_render($scope0_id, "a7", (($fg__input_show ? " h" : "") + ($fg__input_on ? " i" : "")).slice(1), $scope0_reason, 1);
 	_scope($scope0_id, {
 		h: ($ui__input_items__OR__input_on || $ui__input_show__OR__input_on || $ui__input_show2) && input.show,
 		i: ($ui__input_show2 || $ui__input_show__OR__input_on) && input.on,

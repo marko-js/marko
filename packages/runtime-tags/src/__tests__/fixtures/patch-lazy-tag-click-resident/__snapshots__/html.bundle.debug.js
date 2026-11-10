@@ -13,7 +13,7 @@ var child_default = _template("__tests__/child.marko", (input) => {
 		onClick: handler
 	};
 	_html(`<button${_attrs(attrs, "#button/0", $scope0_id, "button", 0, $scope0_reason, 0)}>go</button>${_el_mark($scope0_id, "#button/0")}`);
-	_script($scope0_id, "__tests__/child.marko_0_attrs#5", 1, $fg__input_title, "input_title");
+	_script($scope0_id, "__tests__/child.marko_0_attrs#5", 1, $fg__input_title);
 	_scope($scope0_id, { input_title: input.title }, "__tests__/child.marko", 0, {
 		input_title: ["input.title"],
 		"EventAttributes:#button/0": ["...attrs", "3:12"]

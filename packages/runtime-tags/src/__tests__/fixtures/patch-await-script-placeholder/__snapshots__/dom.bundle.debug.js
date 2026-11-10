@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<main><!></main>";
 const $walks = "D%l";
-const $await_content__value__script = _script("__tests__/template.marko_3_value#2", ($scope) => document.querySelector("main").dataset.seen = $scope.value);
+const $await_content__value__script = _script_patch("__tests__/template.marko_3_value#2 value", ($scope) => document.querySelector("main").dataset.seen = $scope.value);
 const $await_content__value = /*@__PURE__*/ _const("value", ($scope) => {
 	_text($scope["#text/0"], $scope.value);
 	$await_content__value__script($scope);

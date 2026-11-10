@@ -91,7 +91,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}, void 0, "__tests__/template.marko_2*content", void 0, "__tests__/template.marko_3*content");
 			_unfilled_if($scope0_reason, 3) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_which#0:4/subscribe");
 			_unfilled_if($scope0_reason, 4) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_id#0:5/subscribe");
-			_patch_render($scope1_id, "__tests__/template.marko_1_input_which#0:4_input_id#0:5/setup", [_filled_guard($scope0_reason, 3) && ">input_which", _filled_guard($scope0_reason, 4) && ">input_id"], $scope0_reason, 1);
+			_patch_render($scope1_id, "__tests__/template.marko_1_input_which#0:4_input_id#0:5/setup", ((_filled_guard($scope0_reason, 3) ? " >input_which" : "") + (_filled_guard($scope0_reason, 4) ? " >input_id" : "")).slice(1), $scope0_reason, 1);
 			_subscribe(_unfilled_if($scope0_reason, 4) && $input_id__closures, _subscribe(_unfilled_if($scope0_reason, 3) && $input_which__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:2"), _client_guard($scope0_reason, 3) && "__tests__/template.marko_1_input_which#0:4/subscribe", $wg__input_which__OR__input_id), $cg__input_id && "__tests__/template.marko_1_input_id#0:5/subscribe", $wg__input_which__OR__input_id);
 			$wg__input_which__OR__input_id || _resume_branch($scope1_id);
 		}, $scope0_id)

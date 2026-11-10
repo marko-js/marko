@@ -16,11 +16,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_reason = _scope_reason();
 		let n = 0;
 		_html(`<button>${_text_mark($scope1_id, "#text/1", input.a + n)}</button>${_el_mark($scope1_id, "#button/0")}<p>${_text_mark($scope1_id, "#text/2", input.a + input.b, 1, $scope0_reason, 1)}</p>`);
-		_script($scope1_id, "__tests__/template.marko_1_input_a#0:4", 1, $fg__input_a, ">input_a");
+		_script($scope1_id, "__tests__/template.marko_1_input_a#0:4", 1, $fg__input_a);
 		_script($scope1_id, "__tests__/template.marko_1");
 		_unfilled_if($scope0_reason, 3) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_a#0:4/subscribe", $cg__input_a);
 		_unfilled_if($scope0_reason, 4) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_b#0:5/subscribe");
-		_patch_render($scope1_id, "__tests__/template.marko_1_input_a#0:4_input_b#0:5/setup", [$fg__input_a && ">input_a", _filled_guard($scope0_reason, 4) && ">input_b"], $scope0_reason, 1);
+		_patch_render($scope1_id, "__tests__/template.marko_1_input_a#0:4_input_b#0:5/setup", (($fg__input_a ? " >input_a" : "") + (_filled_guard($scope0_reason, 4) ? " >input_b" : "")).slice(1), $scope0_reason, 1);
 		_patch_render($scope1_id, "__tests__/template.marko_1_input_a#0:4_n#4/setup", $fg__input_a && ">input_a");
 		_patch_fill($scope1_id, "PatchFill:__tests__/template.marko_1_n#4/fill", n, 1);
 		_subscribe(_unfilled_if($scope0_reason, 4) && $input_b__closures, _subscribe(_unfilled_if($scope0_reason, 3) && $input_a__closures, _scope($scope1_id, {

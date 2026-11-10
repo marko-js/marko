@@ -10,11 +10,7 @@ var code_block_default = _template("b", (input) => {
 		return text.replace(input.cursor.test, (m) => `<b>${input.cursor.content((s) => s)}</b>`);
 	}, "b0", $scope0_id);
 	_html(`<div>${_html_mark($scope0_id, "a", highlight(input.text), 1, $scope0_reason, 0)}</div>`);
-	_patch_render($scope0_id, "b1", [
-		$fg__input_text && "e",
-		$fg__input_cursor && "f",
-		$fg__input_cursor && "d"
-	], $scope0_reason, 0);
+	_patch_render($scope0_id, "b1", (($fg__input_text ? " e" : "") + ($fg__input_cursor ? " f" : "") + ($fg__input_cursor ? " d" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		d: ($ui__input_text || $ui__input_cursor__OR__input_text) && input.cursor,
 		e: ($ui__input_cursor || $ui__input_cursor__OR__input_text) && input.text,

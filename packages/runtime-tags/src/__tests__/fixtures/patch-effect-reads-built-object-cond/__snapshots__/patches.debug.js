@@ -1,8 +1,6 @@
 // PATCH
 {
-  "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-effect-reads-built-object-cond/template.marko_0_item#6": "input_flag input_title",
-  "PatchMarkedWrite:input_flag": !0,
-  "PatchMarkedWrite:input_title": "b",
+  "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-effect-reads-built-object-cond/template.marko_0_item#6",
   "PatchMarkedWrite:item": {
     t: "b"
   }
@@ -10,9 +8,7 @@
 
 // PATCH
 {
-  "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-effect-reads-built-object-cond/template.marko_0_item#6": "input_flag input_title",
-  "PatchMarkedWrite:input_flag": !0,
-  "PatchMarkedWrite:input_title": "b",
+  "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-effect-reads-built-object-cond/template.marko_0_item#6",
   "PatchMarkedWrite:item": {
     t: "b"
   }

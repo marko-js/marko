@@ -42,7 +42,7 @@ var under_wrapper_default = _template("__tests__/under-wrapper.marko", (input) =
 		}, 1, "__tests__/under-wrapper.marko_2*content", 2);
 		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "__tests__/under-wrapper.marko_1_input_second#0:4/subscribe", 1);
 		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "__tests__/under-wrapper.marko_1_input_first#0:5/subscribe", 1);
-		_patch_render($scope1_id, "__tests__/under-wrapper.marko_1_input_second#0:4_input_first#0:5_showSecond#0:6/setup", [_filled_guard($scope0_reason, 0) && ">input_second", _filled_guard($scope0_reason, 1) && ">input_first"]);
+		_patch_render($scope1_id, "__tests__/under-wrapper.marko_1_input_second#0:4_input_first#0:5_showSecond#0:6/setup", ((_filled_guard($scope0_reason, 0) ? " >input_second" : "") + (_filled_guard($scope0_reason, 1) ? " >input_first" : "")).slice(1));
 		_subscribe($showSecond__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_first__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $input_second__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/under-wrapper.marko", "3:4"), _client_guard($scope0_reason, 0) && "__tests__/under-wrapper.marko_1_input_second#0:4/subscribe", 0), _client_guard($scope0_reason, 1) && "__tests__/under-wrapper.marko_1_input_first#0:5/subscribe", 0), "__tests__/under-wrapper.marko_1_showSecond#0:6/subscribe", 0);
 		_resume_branch($scope1_id);
 	}, $scope0_id, 0) });

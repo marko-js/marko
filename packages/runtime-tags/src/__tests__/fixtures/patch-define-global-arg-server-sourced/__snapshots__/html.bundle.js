@@ -13,7 +13,7 @@ var template_default = _template("a", (input) => {
 		_write_guard($scope1_reason, 0);
 		_html(`<p>${_text_mark($scope1_id, "a", text, 1, $scope1_reason, 0)}</p>`);
 		_if(() => {}, $scope1_id, "b", 1, 1, 0, 0, 1);
-		_script($scope1_id, "a1", 1, 1, "e");
+		_script($scope1_id, "a1", 1, 1);
 		_patch_render($scope1_id, "a2", "e");
 		_subscribe($open__closures, _scope($scope1_id, {
 			e: text,

@@ -20,7 +20,7 @@ var template_default = _template("a", (input) => {
 		const $scope2_id = _scope_id();
 		const $scope2_reason = _scope_reason(), $fg__fmt = _filled_guard($scope2_reason, 1);
 		_html(`<em>${_text_mark($scope2_id, "a", fmt(label), 1, $scope2_reason, 0)}</em>`);
-		_patch_render($scope2_id, "a1", [$fg__fmt && "d", _filled_guard($scope2_reason, 2) && "e"], $scope2_reason, 0);
+		_patch_render($scope2_id, "a1", (($fg__fmt ? " d" : "") + (_filled_guard($scope2_reason, 2) ? " e" : "")).slice(1), $scope2_reason, 0);
 		_scope($scope2_id, {
 			d: (_unfilled_if($scope2_reason, 2, 1) || _unfilled_if($scope2_reason, 0, 1)) && fmt,
 			e: _unfilled_if($scope2_reason, 0) && label

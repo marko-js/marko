@@ -11,7 +11,7 @@ var template_default = _template("a", (input) => {
 			const $scope1_id = _scope_id(), $fg__input_a = _filled_guard($scope0_reason, 1);
 			let n = 0;
 			_html(`<button class=n>n</button>${_el_mark($scope1_id, "a")}<p class=j>${_text_mark($scope1_id, "b", input.a + n)}</p><div class=e></div>${_el_mark($scope1_id, "c")}`);
-			_script($scope1_id, "a0", 1, $fg__input_a, ">e");
+			_script($scope1_id, "a0", 1, $fg__input_a);
 			_script($scope1_id, "a1");
 			_client_guard($scope0_reason, 1) && _patch_render($scope1_id, "a2");
 			_patch_render($scope1_id, "a3", $fg__input_a && ">e");

@@ -14,7 +14,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_html(`<p>${_text_mark($scope1_id, "#text/0", input.a + input.b, 1, $scope0_reason, 1)}</p>`);
-			_patch_render($scope1_id, "__tests__/tags/child.marko_1_input_a#0:6_input_b#0:7/setup", [_filled_guard($scope0_reason, 3) && ">input_a", _filled_guard($scope0_reason, 4) && ">input_b"], $scope0_reason, 1);
+			_patch_render($scope1_id, "__tests__/tags/child.marko_1_input_a#0:6_input_b#0:7/setup", ((_filled_guard($scope0_reason, 3) ? " >input_a" : "") + (_filled_guard($scope0_reason, 4) ? " >input_b" : "")).slice(1), $scope0_reason, 1);
 			_scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }, "__tests__/tags/child.marko", "2:2");
 			return 0;
 		}
@@ -23,7 +23,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 		if (open) {
 			const $scope2_id = _scope_id();
 			_html(`<div></div>${_el_mark($scope2_id, "#div/0")}`);
-			_script($scope2_id, "__tests__/tags/child.marko_2_input_a#0:6", 1, _filled_guard($scope0_reason, 3), ">input_a");
+			_script($scope2_id, "__tests__/tags/child.marko_2_input_a#0:6", 1, _filled_guard($scope0_reason, 3));
 			_client_guard($scope0_reason, 3) && _patch_render($scope2_id, "__tests__/tags/child.marko_2_input_a#0:6/setup");
 			_scope($scope2_id, {}, "__tests__/tags/child.marko", "5:2");
 			return 0;

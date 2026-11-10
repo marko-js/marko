@@ -6,7 +6,7 @@ var frame_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_content__OR__input_x = _write_guard($scope0_reason, 0), $ui__input_content__OR__input_x = _unfilled_if($scope0_reason, 0), $ui__input_x = _unfilled_if($scope0_reason, 2), $ui__input_content = _unfilled_if($scope0_reason, 1), $fg__input_content = _filled_guard($scope0_reason, 1), $fg__input_x = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	_dynamic_tag($scope0_id, "a", input.content, [input.x], 1, 0, 1, $wg__input_content__OR__input_x, $scope0_reason, 0, 0, 1);
-	_patch_render($scope0_id, "b0", [$fg__input_content && "d", $fg__input_x && "e"], $scope0_reason, 0);
+	_patch_render($scope0_id, "b0", (($fg__input_content ? " d" : "") + ($fg__input_x ? " e" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		d: ($ui__input_x || $ui__input_content__OR__input_x) && input.content,
 		e: ($ui__input_content || $ui__input_content__OR__input_x) && input.x
@@ -31,7 +31,7 @@ var panel_default = _template("c", (input) => {
 		const $scope1_id = _scope_id(), $fg__input_n = _filled_guard($scope0_reason, 1);
 		_scope_reason();
 		const twice = input.n * 2;
-		_script($scope1_id, "c1", 0, $fg__input_n, [">e", "a"]);
+		_script($scope1_id, "c1", 0, $fg__input_n);
 		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "c2", $cg__input_n);
 		$cg__input_n && _patch_render($scope1_id, "c3");
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_n__closures, _scope($scope1_id, {

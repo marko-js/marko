@@ -12,13 +12,8 @@ var stepper_default = _template("__tests__/tags/stepper.marko", (input) => {
 	let current = input.value;
 	_html(`<input${_attr_input_value($scope0_id, "#input/0", current, _bind_resume((_new_current) => current = clamp(_new_current), "__tests__/tags/stepper.marko_0/valueChange", $scope0_id))} type=number>${_el_mark($scope0_id, "#input/0")}`);
 	_script($scope0_id, "__tests__/tags/stepper.marko_0");
-	_patch_render($scope0_id, "__tests__/tags/stepper.marko_0_input_value#4_input_valueChange#5/setup", [$fg__input_value && "input_value", $fg__input_valueChange && "input_valueChange"], $scope0_reason, 0);
-	_patch_render($scope0_id, "__tests__/tags/stepper.marko_0_clamp#7_current#8/setup", [
-		$fg__input_max && "clamp",
-		$fg__input_max && "input_max",
-		$fg__input_value && "input_value",
-		$fg__input_valueChange && "input_valueChange"
-	]);
+	_patch_render($scope0_id, "__tests__/tags/stepper.marko_0_input_value#4_input_valueChange#5/setup", (($fg__input_value ? " input_value" : "") + ($fg__input_valueChange ? " input_valueChange" : "")).slice(1), $scope0_reason, 0);
+	_patch_render($scope0_id, "__tests__/tags/stepper.marko_0_clamp#7_current#8/setup", (($fg__input_max ? " clamp" : "") + ($fg__input_max ? " input_max" : "") + ($fg__input_value ? " input_value" : "") + ($fg__input_valueChange ? " input_valueChange" : "")).slice(1));
 	const $currentChange = input.valueChange || void 0;
 	_patch_let_change($scope0_id, "PatchFill:__tests__/tags/stepper.marko_0_current#8/fill", current, "PatchWrite:TagVariableChange:current", $currentChange, $scope0_reason, 0);
 	_scope($scope0_id, {

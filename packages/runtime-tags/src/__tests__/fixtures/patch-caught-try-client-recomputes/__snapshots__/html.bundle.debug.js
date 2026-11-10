@@ -7,7 +7,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $ui__input_label__OR__input_count = _unfilled_if($scope0_reason, 0), $ui__input_count = _unfilled_if($scope0_reason, 2), $ui__input_label = _unfilled_if($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 1), $fg__input_count = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $return = input.label + input.count;
-	_patch_render($scope0_id, "__tests__/tags/child.marko_0_input_label#2_input_count#3/setup", [$fg__input_label && "input_label", $fg__input_count && "input_count"], $scope0_reason, 0);
+	_patch_render($scope0_id, "__tests__/tags/child.marko_0_input_label#2_input_count#3/setup", (($fg__input_label ? " input_label" : "") + ($fg__input_count ? " input_count" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		input_label: ($ui__input_count || $ui__input_label__OR__input_count) && input.label,
 		input_count: ($ui__input_label || $ui__input_label__OR__input_count) && input.count
@@ -61,7 +61,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html(`<i>${_text_mark($scope1_id, "#text/3", text, 1, $scope0_reason, 0)}</i>`);
 		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_label#0:4/subscribe", $cg__input_label);
 		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_count#0:5/subscribe", $cg__input_count);
-		_patch_render($scope1_id, "__tests__/template.marko_1_input_label#0:4_err_message#6/setup", [_filled_guard($scope0_reason, 1) && ">input_label", "err_message"], (2 | $uf__input_label) << 1, 0);
+		_patch_render($scope1_id, "__tests__/template.marko_1_input_label#0:4_err_message#6/setup", "err_message" + (_filled_guard($scope0_reason, 1) ? " >input_label" : ""), (2 | $uf__input_label) << 1, 0);
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_count__closures, _subscribe($ui__input_label && $input_label__closures, _scope($scope1_id, {
 			err_message: $ui__input_label && err?.message,
 			_: _scope_with_id($scope0_id),
@@ -90,7 +90,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html(`<i>${_text_mark($scope3_id, "#text/3", text, 1, $scope0_reason, 0)}</i>`);
 		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope3_id, "__tests__/template.marko_3_input_label#0:4/subscribe", $cg__input_label);
 		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope3_id, "__tests__/template.marko_3_input_count#0:5/subscribe", $cg__input_count);
-		_patch_render($scope3_id, "__tests__/template.marko_3_input_label#0:4_err_message#6/setup", [_filled_guard($scope0_reason, 1) && ">input_label", "err_message"], (2 | $uf__input_label) << 1, 0);
+		_patch_render($scope3_id, "__tests__/template.marko_3_input_label#0:4_err_message#6/setup", "err_message" + (_filled_guard($scope0_reason, 1) ? " >input_label" : ""), (2 | $uf__input_label) << 1, 0);
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_count__closures, _subscribe($ui__input_label2 && $input_label__closures, _scope($scope3_id, {
 			err_message: $ui__input_label2 && err?.message,
 			_: _scope_with_id($scope0_id),

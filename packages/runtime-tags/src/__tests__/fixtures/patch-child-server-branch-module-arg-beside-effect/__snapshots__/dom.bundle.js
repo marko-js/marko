@@ -6,4 +6,4 @@ const $open = /*@__PURE__*/ _fill_let("b11", 8, ($scope) => $if2($scope, $scope.
 const $setup__script = _script("b9", ($scope) => _on($scope.c, "click", function() {
 	$open($scope, !$scope.i);
 }));
-const $input_label__script = _script("b10", ($scope) => console.log("label", $scope.h));
+const $input_label__script = _script_patch("b10 h", ($scope) => console.log("label", $scope.h));

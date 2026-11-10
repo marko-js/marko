@@ -23,7 +23,7 @@ var holder_default = _template("__tests__/tags/holder.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $fg__input_fn = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_html(`<button class=call>call</button>${_el_mark($scope0_id, "#button/0")}<pre></pre>${_el_mark($scope0_id, "#pre/1")}`);
-	_script($scope0_id, "__tests__/tags/holder.marko_0_input_fn#4", 1, $fg__input_fn, "input_fn");
+	_script($scope0_id, "__tests__/tags/holder.marko_0_input_fn#4", 1, $fg__input_fn);
 	_scope($scope0_id, { input_fn: input.fn }, "__tests__/tags/holder.marko", 0, { input_fn: ["input.fn"] }) || $fg__input_fn && _patch_write($scope0_id, "PatchMarkedWrite:input_fn", input.fn, !_server_guard($scope0_reason, 0));
 });
 

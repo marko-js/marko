@@ -10,7 +10,7 @@ var card_default = _template("b", (input) => {
 	const g = input.fn;
 	_html(`<output></output>${_el_mark($scope0_id, "a")}<button>toggle</button>${_el_mark($scope0_id, "b")}`);
 	_script($scope0_id, "b1");
-	_script($scope0_id, "b2", 1, $sg__input_fn && 2, "e");
+	_script($scope0_id, "b2", 1, $sg__input_fn && 2);
 	_patch_render($scope0_id, "b3", $fg__input_fn && "e");
 	_patch_fill($scope0_id, "vb4", open, 1);
 	_scope($scope0_id, {

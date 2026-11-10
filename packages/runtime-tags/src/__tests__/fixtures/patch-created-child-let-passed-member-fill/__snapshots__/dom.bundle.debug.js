@@ -20,7 +20,7 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 const $template$1 = "<div></div>";
 const $walks$1 = " b";
 const $setup$1 = ($_) => {};
-const $input_v__script = _script("__tests__/tags/grand.marko_0_input_v#3", ($scope) => _el_read($scope["#div/0"]).textContent += $scope.input_v);
+const $input_v__script = _script_patch("__tests__/tags/grand.marko_0_input_v#3 input_v", ($scope) => _el_read($scope["#div/0"]).textContent += $scope.input_v);
 const $input_v = /*@__PURE__*/ _const("input_v", $input_v__script);
 const $input$1 = ($scope, input) => $input_v($scope, input.v);
 var grand_default = /*@__PURE__*/ _template("__tests__/tags/grand.marko", $template$1, " b", 0, $input$1);

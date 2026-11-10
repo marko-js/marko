@@ -88,7 +88,7 @@ var page_default = _template("__tests__/page.marko", (input) => {
 			counter_default({ base: (bonus ?? p.base) + item.n });
 			_patch_child_end();
 			_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope2_id, "__tests__/page.marko_2_item_n#1:3/subscribe");
-			_patch_render($scope2_id, "__tests__/page.marko_2_bonus#0:7_p_base#0:9_item_n#1:3/setup", [">>p_base", _filled_guard($scope0_reason, 0) && ">item_n"]);
+			_patch_render($scope2_id, "__tests__/page.marko_2_bonus#0:7_p_base#0:9_item_n#1:3/setup", ">>p_base" + (_filled_guard($scope0_reason, 0) ? " >item_n" : ""));
 			_subscribe(_unfilled_if($scope0_reason, 0) && $for_content__item_n__closures, _subscribe($bonus__closures, _scope($scope2_id, {
 				_: _scope_with_id($scope1_id),
 				"#childScope/0": _existing_scope($childScope2)

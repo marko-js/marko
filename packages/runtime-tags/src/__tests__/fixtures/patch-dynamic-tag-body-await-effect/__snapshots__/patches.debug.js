@@ -2,7 +2,7 @@
 `packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-effect/template.marko_2*content`
 {
   "PatchPending:#text/1": 1,
-  "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-effect/template.marko_0_input_note#4": "input_note",
+  "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-effect/template.marko_0_input_note#4",
   "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-effect/template.marko_0_input_note#4/subscribers": "input_note",
   "PatchMarkedWrite:input_note": "b",
   "PatchChild:BranchScopes:#text/1": {
@@ -22,7 +22,7 @@
 `packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-effect/tags/card.marko !packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-effect/tags/card.marko_0; b%;<button class=toggle>toggle</button><!><!>`
 {
   "PatchPending:#text/1": 1,
-  "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-effect/template.marko_0_input_note#4": "input_note",
+  "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-effect/template.marko_0_input_note#4",
   "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-effect/template.marko_0_input_note#4/subscribers": "input_note",
   "PatchMarkedWrite:input_note": "c",
   "PatchChild:BranchScopes:#text/1": {
@@ -43,7 +43,7 @@
 // PATCH holding CxE
 {
   "PatchPending:#text/1": 1,
-  "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-effect/template.marko_0_input_note#4": "input_note",
+  "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-effect/template.marko_0_input_note#4",
   "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-dynamic-tag-body-await-effect/template.marko_0_input_note#4/subscribers": "input_note",
   "PatchMarkedWrite:input_note": "d",
   "PatchChild:BranchScopes:#text/1": {

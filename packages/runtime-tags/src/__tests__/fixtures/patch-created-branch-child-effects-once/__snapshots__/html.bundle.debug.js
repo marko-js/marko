@@ -80,7 +80,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope5_id = _scope_id(), $fg__input_items = _filled_guard($scope0_reason, 4);
 				$fg__input_items && _patch_write($scope5_id, "PatchMarkedWrite:item", item, !$sg__input_items);
 				_html(`<i>${_text_mark($scope5_id, "#text/0", item, 1, $scope0_reason, 4)}</i>`);
-				_script($scope5_id, "__tests__/template.marko_5_item#2", 1, $fg__input_items, "item");
+				_script($scope5_id, "__tests__/template.marko_5_item#2", 1, $fg__input_items);
 				_scope($scope5_id, { item }, "__tests__/template.marko", "11:4", { item: "11:8" });
 			}, 0, $scope1_id, "#text/2", 1, 1, 1, 0, 0, "__tests__/template.marko_5*shell", $scope0_reason, 4);
 			_if(() => {
@@ -101,7 +101,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_for_of(input.items, (item) => {
 					const $scope7_id = _scope_id(), $fg__input_items2 = _filled_guard($scope0_reason, 4);
 					$fg__input_items2 && _patch_write($scope7_id, "PatchMarkedWrite:item", item, !$sg__input_items);
-					_script($scope7_id, "__tests__/template.marko_7_item#1", 0, $fg__input_items2, "item");
+					_script($scope7_id, "__tests__/template.marko_7_item#1", 0, $fg__input_items2);
 					_scope($scope7_id, { item }, "__tests__/template.marko", "23:8", { item: "23:12" });
 				}, 0, $scope2_id, "#text/0", 1, 1, 1, 0, 0, "__tests__/template.marko_7*shell", $scope0_reason, 4);
 				_script($scope2_id, "__tests__/template.marko_2");
@@ -118,7 +118,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_for_of(input.items, (item) => {
 					const $scope8_id = _scope_id(), $fg__input_items3 = _filled_guard($scope0_reason, 4);
 					$fg__input_items3 && _patch_write($scope8_id, "PatchMarkedWrite:item", item, !$sg__input_items);
-					_script($scope8_id, "__tests__/template.marko_8_item#1", 0, $fg__input_items3, "item");
+					_script($scope8_id, "__tests__/template.marko_8_item#1", 0, $fg__input_items3);
 					_scope($scope8_id, { item }, "__tests__/template.marko", "31:6", { item: "31:10" });
 				}, 0, $scope3_id, "#text/1", 1, 1, 1, 0, 0, "__tests__/template.marko_8*shell", $scope0_reason, 4);
 				_script($scope3_id, "__tests__/template.marko_3");

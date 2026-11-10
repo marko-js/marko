@@ -2,7 +2,7 @@
 const $template$1 = "<div></div>";
 const $walks$1 = " b";
 const $setup$1 = ($_) => {};
-const $input_name__OR__input_item__script = _script("__tests__/child.marko_0_input_name#3_input_item#4", ($scope) => document.querySelector("." + $scope.input_name).dataset.item = JSON.stringify($scope.input_item));
+const $input_name__OR__input_item__script = _script_patch("__tests__/child.marko_0_input_name#3_input_item#4 input_name input_item", ($scope) => document.querySelector("." + $scope.input_name).dataset.item = JSON.stringify($scope.input_item));
 const $input_name__OR__input_item = /*@__PURE__*/ _or_patch("__tests__/child.marko_0_input_name#3_input_item#4/setup", 5, $input_name__OR__input_item__script);
 const $input_name = /*@__PURE__*/ _const("input_name", ($scope) => {
 	_attr_class($scope["#div/0"], $scope.input_name);

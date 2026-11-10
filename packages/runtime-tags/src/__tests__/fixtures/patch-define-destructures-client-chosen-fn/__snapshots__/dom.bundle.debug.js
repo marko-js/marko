@@ -3,7 +3,7 @@ const $Show_content__walks = " b";
 const $Show_content__template = "<output></output>";
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<button>toggle</button>`)($Show_content__template);
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}& b`)($Show_content__walks);
-const $Show_content__get__script = _script("__tests__/template.marko_1_get#3", ($scope) => {
+const $Show_content__get__script = _script_patch("__tests__/template.marko_1_get#3 >input_title", ($scope) => {
 	_el_read($scope["#output/0"]).textContent = $scope.get();
 	console.log("run", $scope.get());
 });

@@ -5,6 +5,5 @@
       label: "b"
     }
   },
-  "PatchMarkedWrite:input_label": "b",
   "PatchMarkedWrite:item": _.a
 }

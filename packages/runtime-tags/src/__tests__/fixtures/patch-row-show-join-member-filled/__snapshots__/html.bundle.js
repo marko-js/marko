@@ -16,7 +16,7 @@ var template_default = _template("a", (input) => {
 		_show_start($show, 1, $wg__input_items__OR__input_id, "</div>");
 		_html("shown");
 		_show_end($scope1_id, "a", $show, 1, $wg__input_items__OR__input_id, "</div>", 0, 1, $scope0_reason, 0);
-		_patch_render($scope1_id, "a0", [_filled_guard($scope0_reason, 2) && ">f", $fg__input_items && "d"], $scope0_reason, 0);
+		_patch_render($scope1_id, "a0", ((_filled_guard($scope0_reason, 2) ? " >f" : "") + ($fg__input_items ? " d" : "")).slice(1), $scope0_reason, 0);
 		_scope($scope1_id, {
 			d: ($ui__input_id || _unfilled_if($scope0_reason, 0)) && item?.on,
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id)

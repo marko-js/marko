@@ -1,6 +1,6 @@
 // tags/probe.marko
 const $settled = _let(5, ($scope) => _text($scope.b, $scope.f ? "settled" : "pending"));
-const $input_promise__script = _script("b0", ($scope) => {
+const $input_promise__script = _script_patch("b0 e", ($scope) => {
 	$scope.a;
 	$scope.e.then(() => {
 		$settled($scope, true);

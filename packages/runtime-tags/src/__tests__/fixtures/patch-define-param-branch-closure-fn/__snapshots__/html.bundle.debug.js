@@ -52,7 +52,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $childScope2 = _peek_scope_id($scope0_id, "#childScope/1", 1);
 	counter_default({});
 	_patch_child_end();
-	$fg__input_a && _client_guard($scope0_reason, 1) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_f#6/subscribers", ["f", "input_a"]);
+	$fg__input_a && _client_guard($scope0_reason, 1) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_f#6/subscribers", "f input_a");
 	_scope($scope0_id, {
 		input_a: ($ui__input_x || $ui__input_a) && input.a,
 		f: ($ui__input_x || $ui__input_a) && f,

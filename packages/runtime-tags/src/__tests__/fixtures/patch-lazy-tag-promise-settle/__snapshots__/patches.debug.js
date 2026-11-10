@@ -1,7 +1,7 @@
 // PATCH
 "ready:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-promise-settle/probe.marko", {
   "PatchChild:#childScope/1": {
-    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-promise-settle/probe.marko_0_input_promise#3": "input_promise",
+    "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-lazy-tag-promise-settle/probe.marko_0_input_promise#3",
     "PatchMarkedWrite:input_promise": (p => p = new Promise((f, r) => _.a = {
       f,
       r(e) {

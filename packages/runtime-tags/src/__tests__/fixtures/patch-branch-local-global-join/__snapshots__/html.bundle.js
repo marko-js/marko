@@ -16,11 +16,7 @@ var child_default = _template("b", (input) => {
 			$ui__input_a__OR__input_b && _patch_write($scope1_id, "xb", c);
 			_html(`<p>${_text_mark($scope1_id, "a", input.a + input.b + c, 1, (2 | $uf__input_a__OR__input_b) << 1, 0)}</p>`);
 			_fill_global_subscribe("b0", $scope1_id);
-			_patch_render($scope1_id, "b1", [
-				_filled_guard($scope0_reason, 3) && ">e",
-				_filled_guard($scope0_reason, 4) && ">f",
-				"b"
-			], (2 | $uf__input_a__OR__input_b) << 1, 0);
+			_patch_render($scope1_id, "b1", "b" + (_filled_guard($scope0_reason, 3) ? " >e" : "") + (_filled_guard($scope0_reason, 4) ? " >f" : ""), (2 | $uf__input_a__OR__input_b) << 1, 0);
 			_scope($scope1_id, {
 				b: $ui__input_a__OR__input_b && c,
 				_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id)

@@ -12,7 +12,7 @@ var template_default = _template("a", (input) => {
 	_if(() => {}, $scope0_id, "a", 1, 1, 0, 0, 1);
 	_html(`<button>+</button>${_el_mark($scope0_id, "b")}<output></output></main>`);
 	_script($scope0_id, "a3");
-	$fg__input_prefix && _patch_render($scope0_id, "a2", ["f", "e"]);
+	$fg__input_prefix && _patch_render($scope0_id, "a2", "f e");
 	_scope($scope0_id, {
 		e: input.prefix,
 		f: onChange,

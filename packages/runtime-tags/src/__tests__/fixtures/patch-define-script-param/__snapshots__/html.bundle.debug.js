@@ -12,7 +12,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $fg__label = _filled_guard($scope1_reason, 0);
 		_html(`<div>box</div>${_el_mark($scope1_id, "#div/0")}`);
-		_script($scope1_id, "__tests__/template.marko_1_label#3", 1, $fg__label, "label");
+		_script($scope1_id, "__tests__/template.marko_1_label#3", 1, $fg__label);
 		_scope($scope1_id, { label }, "__tests__/template.marko", "1:2", { label: "1:15" }) || $fg__label && _patch_write($scope1_id, "PatchMarkedWrite:label", label, !_server_guard($scope1_reason, 0));
 	}, $scope0_id) };
 	_set_scope_reason(_updates_from($scope0_reason, 0) << 1);

@@ -9,11 +9,7 @@ var panel_default = _template("b", (input) => {
 		label: input.label,
 		items: input.items
 	}, 1, 0, 0, $wg__input_content__OR__input_label__OR__input_items, $scope0_reason, 3, 0, 4);
-	_patch_render($scope0_id, "b0", [
-		$fg__input_content && "d",
-		$fg__input_label && "e",
-		$fg__input_items && "f"
-	], $scope0_reason, 3);
+	_patch_render($scope0_id, "b0", (($fg__input_content ? " d" : "") + ($fg__input_label ? " e" : "") + ($fg__input_items ? " f" : "")).slice(1), $scope0_reason, 3);
 	_scope($scope0_id, {
 		d: ($ui__input_label__OR__input_items || $ui__input_content__OR__input_label__OR__input_items) && input.content,
 		e: ($ui__input_content__OR__input_items || $ui__input_content__OR__input_label__OR__input_items) && input.label,

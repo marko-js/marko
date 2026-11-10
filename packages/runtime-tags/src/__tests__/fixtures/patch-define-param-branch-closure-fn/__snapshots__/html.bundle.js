@@ -50,7 +50,7 @@ var template_default = _template("a", (input) => {
 	const $childScope2 = _peek_scope_id($scope0_id, "b", 1);
 	counter_default({});
 	_patch_child_end();
-	$fg__input_a && _client_guard($scope0_reason, 1) && _patch_subscribers($scope0_id, "a4", ["g", "e"]);
+	$fg__input_a && _client_guard($scope0_reason, 1) && _patch_subscribers($scope0_id, "a4", "g e");
 	_scope($scope0_id, {
 		e: ($ui__input_x || $ui__input_a) && input.a,
 		g: ($ui__input_x || $ui__input_a) && f,

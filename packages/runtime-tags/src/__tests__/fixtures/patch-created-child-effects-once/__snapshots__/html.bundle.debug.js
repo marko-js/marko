@@ -7,8 +7,8 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $fg__input_label = _filled_guard($scope0_reason, 0), $fg__input_count = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_html(`<span>${_text_mark($scope0_id, "#text/0", input.label, 1, $scope0_reason, 0)} ${_text_mark($scope0_id, "#text/1", input.count, 2, $scope0_reason, 1)}</span>`);
-	_script($scope0_id, "__tests__/tags/child.marko_0_input_count#5", 1, $fg__input_count, "input_count");
-	_script($scope0_id, "__tests__/tags/child.marko_0_input_label#4", 1, $fg__input_label, "input_label");
+	_script($scope0_id, "__tests__/tags/child.marko_0_input_count#5", 1, $fg__input_count);
+	_script($scope0_id, "__tests__/tags/child.marko_0_input_label#4", 1, $fg__input_label);
 	_script($scope0_id, "__tests__/tags/child.marko_0");
 	_scope($scope0_id, {
 		input_label: input.label,

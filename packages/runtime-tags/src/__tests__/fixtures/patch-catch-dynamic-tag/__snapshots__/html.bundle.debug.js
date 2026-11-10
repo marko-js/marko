@@ -60,11 +60,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		});
 		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_large#0:5/subscribe");
 		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_label#0:6/subscribe");
-		_patch_render($scope1_id, "__tests__/template.marko_1_input_large#0:5_input_label#0:6_count#0:8_err_message#3/setup", [
-			_filled_guard($scope0_reason, 0) && ">input_large",
-			_filled_guard($scope0_reason, 1) && ">input_label",
-			"err_message"
-		]);
+		_patch_render($scope1_id, "__tests__/template.marko_1_input_large#0:5_input_label#0:6_count#0:8_err_message#3/setup", "err_message" + (_filled_guard($scope0_reason, 0) ? " >input_large" : "") + (_filled_guard($scope0_reason, 1) ? " >input_label" : ""));
 		_subscribe($count__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_label__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $input_large__closures, _scope($scope1_id, {
 			err_message: err?.message,
 			_: _scope_with_id($scope0_id)

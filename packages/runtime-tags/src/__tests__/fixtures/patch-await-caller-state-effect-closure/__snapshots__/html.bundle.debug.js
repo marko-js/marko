@@ -14,7 +14,7 @@ var show_await_default = _template("__tests__/tags/show-await.marko", (input) =>
 	_await($scope0_id, "#text/0", input.promise, (x) => {
 		const $scope1_id = _scope_id();
 		_html(`<p>${_text_mark($scope1_id, "#text/0", x, 1, $scope0_reason, 0)}</p>`);
-		_script($scope1_id, "__tests__/tags/show-await.marko_1_input_label#0:4", 1, _filled_guard($scope0_reason, 1), ">input_label");
+		_script($scope1_id, "__tests__/tags/show-await.marko_1_input_label#0:4", 1, _filled_guard($scope0_reason, 1));
 		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "__tests__/tags/show-await.marko_1_input_label#0:4/subscribe", $cg__input_label);
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_label__closures, _scope($scope1_id, {}, "__tests__/tags/show-await.marko", "1:2"), $cg__input_label && "__tests__/tags/show-await.marko_1_input_label#0:4/subscribe");
 	}, 1, "__tests__/tags/show-await.marko_1*content", _unfilled_if($scope0_reason, 0), 1);

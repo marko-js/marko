@@ -14,7 +14,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_reason = _scope_reason(), $fg__label = _filled_guard($scope1_reason, 0);
 		const shout = label + "!";
 		_html(`<em>${_text_mark($scope1_id, "#text/0", shout, 1, $scope1_reason, 0)}</em>`);
-		_script($scope1_id, "__tests__/template.marko_1_shout#4", 1, $fg__label, "shout");
+		_script($scope1_id, "__tests__/template.marko_1_shout#4", 1, $fg__label);
 		_scope($scope1_id, { shout }, "__tests__/template.marko", "2:2", { shout: "3:10" }) || $fg__label && _patch_write($scope1_id, "PatchMarkedWrite:shout", shout, !_server_guard($scope1_reason, 0));
 	}, $scope0_id) };
 	_set_scope_reason(_updates_from($scope0_reason, 0) << 1);

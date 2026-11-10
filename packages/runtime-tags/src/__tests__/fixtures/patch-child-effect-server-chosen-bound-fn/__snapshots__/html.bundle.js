@@ -4,7 +4,7 @@ _shells({ b: "b," });
 var child_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $fg__input_fn = _filled_guard($scope0_reason, 1), $fg__input_v = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
-	_script($scope0_id, "b0", 0, ($fg__input_fn || $fg__input_v) && (_client_guard($scope0_reason, 1) || _client_guard($scope0_reason, 2) ? 2 : 1), [$fg__input_fn && "c", $fg__input_v && "d"], "b1", $scope0_reason, 0);
+	_script($scope0_id, "b0", 0, ($fg__input_fn || $fg__input_v) && (_client_guard($scope0_reason, 1) || _client_guard($scope0_reason, 2) ? 2 : 1), (($fg__input_fn ? " c" : "") + ($fg__input_v ? " d" : "")).slice(1), "b1", $scope0_reason, 0);
 	_scope($scope0_id, {
 		c: input.fn,
 		d: input.v

@@ -35,7 +35,7 @@ var template_default = _template("a", (input) => {
 			_html(`<p>${_text_mark($scope2_id, "a", value)}</p>`);
 			_scope($scope2_id, {});
 		}, 1, "a0", 2);
-		_patch_render($scope1_id, "a1", [_filled_guard($scope0_reason, 0) && ">e", _filled_guard($scope0_reason, 1) && ">f"]);
+		_patch_render($scope1_id, "a1", ((_filled_guard($scope0_reason, 0) ? " >e" : "") + (_filled_guard($scope0_reason, 1) ? " >f" : "")).slice(1));
 		_subscribe($showSecond__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_first__closures, _subscribe(_unfilled_if($scope0_reason, 0) && $input_second__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 0) && "a2", 0), _client_guard($scope0_reason, 1) && "a3", 0), "a4", 0);
 		_resume_branch($scope1_id);
 	}, $scope0_id) });

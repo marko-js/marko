@@ -15,7 +15,7 @@ var navlist_default = _template("__tests__/tags/navlist.marko", (input) => {
 		const active = item.href === input.path;
 		_html(`<a${_attr_class(["link", { active }], $scope1_id, "#a/0", $scope0_reason, 0)}${_attr("href", item.href, $scope1_id, "#a/0", $scope0_reason, 1)}>${_text_mark($scope1_id, "#text/1", item.label, 1, $scope0_reason, 1)}</a>${_el_mark($scope1_id, "#a/0")}`);
 		_script($scope1_id, "__tests__/tags/navlist.marko_1");
-		_patch_render($scope1_id, "__tests__/tags/navlist.marko_1_input_path#0:4_item_href#4/setup", [_filled_guard($scope0_reason, 2) && ">input_path", $fg__input_items && "item_href"], $scope0_reason, 0);
+		_patch_render($scope1_id, "__tests__/tags/navlist.marko_1_input_path#0:4_item_href#4/setup", ((_filled_guard($scope0_reason, 2) ? " >input_path" : "") + ($fg__input_items ? " item_href" : "")).slice(1), $scope0_reason, 0);
 		_scope($scope1_id, {
 			item_href: item?.href,
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id)

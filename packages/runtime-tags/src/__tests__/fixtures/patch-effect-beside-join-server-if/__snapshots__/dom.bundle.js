@@ -1,6 +1,6 @@
 // template.marko
 const $if_content__input_a__OR__n = /*@__PURE__*/ _or_patch("a3", 4, ($scope) => _text($scope.b, $scope._.e + $scope.d));
-const $if_content__input_a__script = _script("a0", ($scope) => {
+const $if_content__input_a__script = _script_patch("a0 >e", ($scope) => {
 	$scope.c.textContent = String($scope._.e);
 	$scope.c.dataset.runs = String(+($scope.c.dataset.runs || 0) + 1);
 });

@@ -2,7 +2,7 @@
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $setup$1 = ($_) => {};
-const $if_content__input_count__script = _script("__tests__/tags/child.marko_1_input_count#0:4", ($scope) => console.log("count", $scope._.input_count));
+const $if_content__input_count__script = _script_patch("__tests__/tags/child.marko_1_input_count#0:4 >input_count", ($scope) => console.log("count", $scope._.input_count));
 const $if_content__input_count = /*@__PURE__*/ _if_closure_patch("__tests__/tags/child.marko_1_input_count#0:4/setup", "#text/0", 0, $if_content__input_count__script);
 const $if_content__setup = $if_content__input_count;
 const $if = /*@__PURE__*/ _if("#text/0", "<p>shown</p>", 0, $if_content__setup);

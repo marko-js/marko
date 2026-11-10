@@ -46,7 +46,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const inner = input.prefix + "!";
 			$fg__input_prefix && _patch_write($scope1_id, "PatchMarkedWrite:inner", inner, !$sg__input_prefix);
 			_html(`<div></div>${_el_mark($scope1_id, "#div/0")}`);
-			_script($scope1_id, "__tests__/template.marko_1_inner#1", 1, $fg__input_prefix, "inner");
+			_script($scope1_id, "__tests__/template.marko_1_inner#1", 1, $fg__input_prefix);
 			_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_prefix#0:4/subscribe", $cg__input_prefix);
 			_subscribe(_unfilled_if($scope0_reason, 2) && $input_prefix__closures, _scope($scope1_id, {
 				inner,

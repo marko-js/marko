@@ -9,7 +9,7 @@ const $try_content__setup = ($scope) => {
 	$try_content__input_promise($scope);
 	$await_content($scope);
 };
-const $placeholder_content__input_title__script = _script("__tests__/template.marko_1_input_title#0:4", ($scope) => console.log("placeholder shown: " + $scope._.input_title));
+const $placeholder_content__input_title__script = _script_patch("__tests__/template.marko_1_input_title#0:4 >input_title", ($scope) => console.log("placeholder shown: " + $scope._.input_title));
 const $placeholder_content__input_title = /*@__PURE__*/ _closure_get_patch("__tests__/template.marko_1_input_title#0:4/subscribe", "input_title/6", ($scope) => {
 	_text($scope["#text/0"], $scope._.input_title);
 	$placeholder_content__input_title__script($scope);

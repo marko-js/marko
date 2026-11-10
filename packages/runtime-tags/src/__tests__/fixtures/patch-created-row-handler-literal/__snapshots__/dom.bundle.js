@@ -1,5 +1,5 @@
 // tags/row.marko
-const $input_onPick__script = _script("b0", ($scope) => _on($scope.b, "click", $scope.g));
+const $input_onPick__script = _script_patch("b0 g", ($scope) => _on($scope.b, "click", $scope.g));
 
 // template.marko
 const $selected = _let(5, ($scope) => _text($scope.a, $scope.f));

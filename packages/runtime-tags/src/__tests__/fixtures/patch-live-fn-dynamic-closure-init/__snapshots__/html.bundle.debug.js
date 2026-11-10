@@ -31,7 +31,7 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 		}
 	}, $scope0_id, "#text/0", 1, _write_guard($scope0_reason, 1), 1, 0, 0, ["__tests__/tags/panel.marko_1*shell"], $scope0_reason, 1);
 	_html(`<output>${_text_mark($scope0_id, "#text/1", out, 1, 0, 0, 1)}</output>`);
-	$fg__input_a && _client_guard($scope0_reason, 1) && _patch_subscribers($scope0_id, "__tests__/tags/panel.marko_0_f#6/subscribers", ["f", "input_a"]);
+	$fg__input_a && _client_guard($scope0_reason, 1) && _patch_subscribers($scope0_id, "__tests__/tags/panel.marko_0_f#6/subscribers", "f input_a");
 	_scope($scope0_id, {
 		input_a: input.a,
 		f,

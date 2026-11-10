@@ -6,7 +6,7 @@ const $input$1 = ($scope, input) => {
 	_text($scope["#text/0"], JSON.stringify(input));
 	$input_label($scope, input.label);
 };
-const $input_label__script = _script("__tests__/tags/dump/index.marko_0_input_label#3", ($scope) => {
+const $input_label__script = _script_patch("__tests__/tags/dump/index.marko_0_input_label#3 input_label", ($scope) => {
 	{
 		const el = document.querySelector("main");
 		el.dataset.log = (el.dataset.log || "") + "[" + $scope.input_label + "]";

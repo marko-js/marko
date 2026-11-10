@@ -42,7 +42,7 @@ var shape_default = _template("__tests__/tags/shape.marko", (input) => {
 	_patch_child_end();
 	_html(`<button>${_text_mark($scope0_id, "#text/3", n)}</button>${_el_mark($scope0_id, "#button/2")}`);
 	_script($scope0_id, "__tests__/tags/shape.marko_0");
-	$fg__input_a && _client_guard($scope0_reason, 0) && _patch_subscribers($scope0_id, "__tests__/tags/shape.marko_0_f#10/subscribers", ["f", "input_a"]);
+	$fg__input_a && _client_guard($scope0_reason, 0) && _patch_subscribers($scope0_id, "__tests__/tags/shape.marko_0_f#10/subscribers", "f input_a");
 	_patch_fill($scope0_id, "PatchFill:__tests__/tags/shape.marko_0_n#9/fill", n, 1);
 	_scope($scope0_id, {
 		input_a: ($ui__input_x__OR__input_y || $ui__input_a) && input.a,

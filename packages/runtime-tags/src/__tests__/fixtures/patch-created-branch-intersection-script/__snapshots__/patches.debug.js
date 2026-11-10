@@ -3,7 +3,7 @@
 {
   "PatchBranch:#text/0": [{
     "PatchMarkedWrite:inner": "b1",
-    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-created-branch-intersection-script/template.marko_1_input_suffix#0:6_inner#1": ">input_suffix inner"
+    "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-created-branch-intersection-script/template.marko_1_input_suffix#0:6_inner#1"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-branch-intersection-script/template.marko_1*shell"],
   "PatchMarkedWrite:input_suffix": "s"
 }
@@ -13,7 +13,7 @@
 {
   "PatchBranch:#text/0": [{
     "PatchMarkedWrite:inner": "b12",
-    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-created-branch-intersection-script/template.marko_1_input_suffix#0:6_inner#1": ">input_suffix inner"
+    "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-created-branch-intersection-script/template.marko_1_input_suffix#0:6_inner#1"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-branch-intersection-script/template.marko_1*shell"],
   "PatchMarkedWrite:input_suffix": "s"
 }
@@ -22,7 +22,7 @@
 {
   "PatchBranch:#text/0": [{
     "PatchMarkedWrite:inner": "b12",
-    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-created-branch-intersection-script/template.marko_1_input_suffix#0:6_inner#1": ">input_suffix inner"
+    "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-created-branch-intersection-script/template.marko_1_input_suffix#0:6_inner#1"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-branch-intersection-script/template.marko_1*shell"],
   "PatchMarkedWrite:input_suffix": "s"
 }
@@ -31,7 +31,7 @@
 {
   "PatchBranch:#text/0": [{
     "PatchMarkedWrite:inner": "b12",
-    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-created-branch-intersection-script/template.marko_1_input_suffix#0:6_inner#1": ">input_suffix inner"
+    "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-created-branch-intersection-script/template.marko_1_input_suffix#0:6_inner#1"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-branch-intersection-script/template.marko_1*shell"],
   "PatchMarkedWrite:input_suffix": "t"
 }
@@ -46,7 +46,7 @@
 {
   "PatchBranch:#text/0": [{
     "PatchMarkedWrite:inner": "c3",
-    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-created-branch-intersection-script/template.marko_1_input_suffix#0:6_inner#1": ">input_suffix inner"
+    "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-created-branch-intersection-script/template.marko_1_input_suffix#0:6_inner#1"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-branch-intersection-script/template.marko_1*shell"],
   "PatchMarkedWrite:input_suffix": "u"
 }
@@ -55,7 +55,7 @@
 {
   "PatchBranch:#text/0": [{
     "PatchMarkedWrite:inner": "d3",
-    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-created-branch-intersection-script/template.marko_1_input_suffix#0:6_inner#1": ">input_suffix inner"
+    "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-created-branch-intersection-script/template.marko_1_input_suffix#0:6_inner#1"
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-branch-intersection-script/template.marko_1*shell"],
   "PatchMarkedWrite:input_suffix": "u"
 }

@@ -1,7 +1,7 @@
 // PATCH
 {
-  ea4: "n",
-  ha5: "g",
+  e: "a4",
+  h: "a5",
   Sa7: "g",
   ia8: "g",
   xg: "b2",
@@ -10,8 +10,8 @@
 
 // PATCH
 {
-  ea4: "n",
-  ha5: "g",
+  e: "a4",
+  h: "a5",
   Sa7: "g",
   ia8: "g",
   xg: "b3",

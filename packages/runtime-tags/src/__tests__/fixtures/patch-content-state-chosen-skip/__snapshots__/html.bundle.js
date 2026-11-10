@@ -45,8 +45,8 @@ var template_default = _template("a", (input) => {
 	_attrs_partial_content(attrs, { id: 1 }, "d", $scope0_id, "section", 2);
 	const status = `${input.b}: ${takeRenders()} content renders`;
 	_html(`</section>${_el_mark($scope0_id, "d")}`);
-	_script($scope0_id, "a4", 1, $fg__input_b, "n");
-	_script($scope0_id, "a5", 1, $sg__input_b && 2, "g");
+	_script($scope0_id, "a4", 1, $fg__input_b);
+	_script($scope0_id, "a5", 1, $sg__input_b && 2);
 	_script($scope0_id, "a6");
 	$fg__input_b && _patch_subscribers($scope0_id, "a7", "g");
 	_patch_render($scope0_id, "a8", $fg__input_b && "g");

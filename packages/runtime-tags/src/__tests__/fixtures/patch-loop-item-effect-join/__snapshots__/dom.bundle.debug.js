@@ -17,7 +17,7 @@ const $setup = ($_) => {};
 const $for_content__input_a__OR__item = /*@__PURE__*/ _or_patch("__tests__/tags/child.marko_1_input_a#0:4_item#3/setup", 4, ($scope) => _text($scope["#text/0"], $scope._.input_a + $scope.item));
 const $for_content__input_a = /*@__PURE__*/ _for_closure_patch("__tests__/tags/child.marko_1_input_a#0:4/setup", "#text/0", $for_content__input_a__OR__item, 5);
 const $for_content__setup = $for_content__input_a;
-const $for_content__item__script = _script("__tests__/tags/child.marko_1_item#3", ($scope) => _el_read($scope["#div/1"]).textContent = "s:" + $scope.item);
+const $for_content__item__script = _script_patch("__tests__/tags/child.marko_1_item#3 item", ($scope) => _el_read($scope["#div/1"]).textContent = "s:" + $scope.item);
 const $for_content__item = /*@__PURE__*/ _const("item", ($scope) => {
 	$for_content__input_a__OR__item($scope);
 	$for_content__item__script($scope);

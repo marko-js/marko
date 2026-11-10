@@ -1,2 +1,2 @@
 // template.marko
-const $c__script = _script("a0", ($scope) => console.log($scope.i));
+const $c__script = _script_patch("a0 i", ($scope) => console.log($scope.i));

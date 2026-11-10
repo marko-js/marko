@@ -5,7 +5,7 @@
     "PatchLoop:#text/2": [{
       "PatchMarkedWrite:item": "a",
       "PatchText:#text/0": "a",
-      "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-created-branch-child-effects-once/template.marko_5_item#2": "item"
+      "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-created-branch-child-effects-once/template.marko_5_item#2"
     }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-branch-child-effects-once/template.marko_5*shell"],
     "PatchBranch:#text/3": "packages/runtime-tags/src/__tests__/fixtures/patch-created-branch-child-effects-once/template.marko_6*shell",
     "PatchChild:#childScope/4": {
@@ -13,7 +13,7 @@
       "PatchChild:BranchScopes:#text/0": {
         "PatchLoop:#text/0": [{
           "PatchMarkedWrite:item": "a",
-          "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-created-branch-child-effects-once/template.marko_7_item#1": "item"
+          "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-created-branch-child-effects-once/template.marko_7_item#1"
         }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-branch-child-effects-once/template.marko_7*shell"]
       }
     },
@@ -21,7 +21,7 @@
     "PatchChild:BranchScopes:#text/5": {
       "PatchLoop:#text/1": [{
         "PatchMarkedWrite:item": "a",
-        "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-created-branch-child-effects-once/template.marko_8_item#1": "item"
+        "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-created-branch-child-effects-once/template.marko_8_item#1"
       }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-branch-child-effects-once/template.marko_8*shell"]
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-created-branch-child-effects-once/template.marko_1*shell"],

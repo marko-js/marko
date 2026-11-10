@@ -63,7 +63,7 @@ var template_default = _template("a", (input) => {
 				$fg__input_v && (_client_branch_if("a0", $scope2_id) || $ui__input_on) && _patch_write($scope2_id, "xc", v, !$sg__input_v);
 				$wg__input_on || $wi__input_show__OR__input_note__OR__input_v__OR__input_on && _resume_branch($scope2_id);
 			}, 1, "a5", _unfilled_if($scope0_reason, 6), 0, 1);
-			_script($scope1_id, "a8", 1, $fg__input_note, "c");
+			_script($scope1_id, "a8", 1, $fg__input_note);
 			$fg__input_note && _patch_subscribers($scope1_id, "a9", "c");
 			$cg__input_note && _patch_render($scope1_id, "a10");
 			$cg__input_v && _patch_render($scope1_id, "a11");

@@ -20,13 +20,13 @@ var template_default = _template("a", (input) => {
 	let shown = "";
 	_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
-	reader_default(_patch_live($childScope, {
+	reader_default({
 		read: _bind_resume(() => input.label, "a0", $scope0_id),
 		onRead: _resume(function(v) {
 			shown = v;
 		}, "a1", $scope0_id),
 		opt: attrTag({ v: input.label })
-	}, $scope0_id, "e"));
+	});
 	_patch_child_end();
 	_html(`<p>${_text_mark($scope0_id, "b", shown)}</p>`);
 	_scope($scope0_id, {

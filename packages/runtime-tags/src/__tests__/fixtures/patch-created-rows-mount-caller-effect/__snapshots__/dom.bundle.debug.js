@@ -14,7 +14,7 @@ var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $temp
 const $template = "<!><!><!>";
 const $walks = "b%c";
 const $setup = ($_) => {};
-const $for_content__it_label__script = _script("__tests__/tags/list.marko_1_it_label#3", ($scope) => console.log("row", $scope.it_label));
+const $for_content__it_label__script = _script_patch("__tests__/tags/list.marko_1_it_label#3 it_label", ($scope) => console.log("row", $scope.it_label));
 const $for_content__it_label = /*@__PURE__*/ _const("it_label", ($scope) => {
 	_text($scope["#text/0"], $scope.it_label);
 	$for_content__it_label__script($scope);

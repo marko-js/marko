@@ -22,7 +22,7 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 			_client_guard($scope0_reason, 3) && _patch_render($scope1_id, "__tests__/tags/panel.marko_1_input_y#0:6/setup");
 			_patch_render($scope1_id, "__tests__/tags/panel.marko_1_count#0:7_a#3/setup", $fg__input_x && "a");
 			_patch_render($scope1_id, "__tests__/tags/panel.marko_1_count#0:7_b#5/setup", $fg__input_y && "b");
-			_patch_render($scope1_id, "__tests__/tags/panel.marko_1_a#3_b#5/setup", [$fg__input_x && "a", $fg__input_y && "b"], $scope0_reason, 0);
+			_patch_render($scope1_id, "__tests__/tags/panel.marko_1_a#3_b#5/setup", (($fg__input_x ? " a" : "") + ($fg__input_y ? " b" : "")).slice(1), $scope0_reason, 0);
 			_scope($scope1_id, {
 				a,
 				b,

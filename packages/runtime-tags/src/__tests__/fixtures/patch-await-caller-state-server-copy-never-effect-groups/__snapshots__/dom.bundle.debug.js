@@ -3,7 +3,7 @@ const $Row_content__walks = "b%c";
 const $Row_content__template = "<!><!><!>";
 const $template$1 = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Row_content__template);
 const $walks$1 = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Row_content__walks);
-const $await_content__x__script = _script("__tests__/tags/show-await.marko_2_x#2", ($scope) => document.body.dataset.v = String($scope.x));
+const $await_content__x__script = _script_patch("__tests__/tags/show-await.marko_2_x#2 x", ($scope) => document.body.dataset.v = String($scope.x));
 const $await_content__x = /*@__PURE__*/ _const("x", ($scope) => {
 	_text($scope["#text/0"], $scope.x);
 	$await_content__x__script($scope);

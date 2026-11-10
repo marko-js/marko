@@ -3,7 +3,7 @@
 {
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {
-      "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-created-caller-effect-literal/tags/probe.marko_0_input_label#2": "input_label",
+      "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-created-caller-effect-literal/tags/probe.marko_0_input_label#2",
       "PatchSetup:": {
         "PatchWrite:input_label": "x"
       }

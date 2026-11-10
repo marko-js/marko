@@ -1,7 +1,7 @@
 // tags/child.marko
 const $template$1 = "<p> </p><!><button class=t>t</button>";
 const $walks$1 = "D l%b b";
-const $if_content__input_a__script = _script("__tests__/tags/child.marko_1_input_a#0:5", ($scope) => _el_read($scope["#div/0"]).textContent = "s:" + $scope._.input_a);
+const $if_content__input_a__script = _script_patch("__tests__/tags/child.marko_1_input_a#0:5 >input_a", ($scope) => _el_read($scope["#div/0"]).textContent = "s:" + $scope._.input_a);
 const $if_content__input_a = /*@__PURE__*/ _if_closure_patch("__tests__/tags/child.marko_1_input_a#0:5/setup", "#text/1", 0, $if_content__input_a__script);
 const $if_content__setup = $if_content__input_a;
 const $if = /*@__PURE__*/ _if("#text/1", "<div></div>", " ", $if_content__setup);

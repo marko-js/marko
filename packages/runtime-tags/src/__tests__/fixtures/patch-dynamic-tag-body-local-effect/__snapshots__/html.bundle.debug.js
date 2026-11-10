@@ -56,7 +56,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope2_id, "__tests__/template.marko_2_x#1:2/subscribe", $cg__input_note);
 				_subscribe(_unfilled_if($scope0_reason, 2) && $if_content__x__closures, _scope($scope2_id, { _: $wi__input_note__OR__input_on && _scope_with_id($scope1_id) }, "__tests__/template.marko", "7:8"), $cg__input_note && "__tests__/template.marko_2_x#1:2/subscribe");
 			}, $scope1_id), 0, _write_guard($scope0_reason, 3), $scope0_reason, 3);
-			_script($scope1_id, "__tests__/template.marko_1_x#2", 1, $fg__input_note, "x");
+			_script($scope1_id, "__tests__/template.marko_1_x#2", 1, $fg__input_note);
 			$fg__input_note && _patch_subscribers($scope1_id, "__tests__/template.marko_1_x#2/subscribers", "x");
 			$cg__input_note && _patch_render($scope1_id, "__tests__/template.marko_1_input_note#0:4/setup");
 			_client_guard($scope0_reason, 3) && _patch_render($scope1_id, "__tests__/template.marko_1_input_on#0:5/setup");

@@ -23,11 +23,7 @@ var card_default = _template("b", (input) => {
 				const $scope2_id = _scope_id(), $fg__input_prefix = _filled_guard($scope0_reason, 1);
 				_html(`<span>${_text_mark($scope2_id, "a", fmt(v + s))}</span>`);
 				_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope2_id, "b1");
-				_patch_render($scope2_id, "b2", [
-					$fg__input_prefix && ">>i",
-					$fg__input_prefix && ">>e",
-					_filled_guard($scope0_reason, 2) && ">e"
-				]);
+				_patch_render($scope2_id, "b2", (($fg__input_prefix ? " >>i" : "") + ($fg__input_prefix ? " >>e" : "") + (_filled_guard($scope0_reason, 2) ? " >e" : "")).slice(1));
 				_subscribe(_unfilled_if($scope0_reason, 1) && $fmt2__closures, _subscribe($s__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "b3"), _client_guard($scope0_reason, 1) && "b1");
 				return 0;
 			}
@@ -43,7 +39,7 @@ var card_default = _template("b", (input) => {
 	_html(`<button class=s>+</button>${_el_mark($scope0_id, "b")}`);
 	_script($scope0_id, "b8");
 	$fg__input_sel && $cg__input_obj && _patch_render($scope0_id, "b7", "g");
-	$fg__input_prefix2 && ($cg__input_obj || $cg__input_sel) && _patch_subscribers($scope0_id, "b9", ["i", "e"]);
+	$fg__input_prefix2 && ($cg__input_obj || $cg__input_sel) && _patch_subscribers($scope0_id, "b9", "i e");
 	_patch_fill($scope0_id, "vb10", s, 1);
 	_scope($scope0_id, {
 		e: input.prefix,
@@ -72,7 +68,7 @@ var template_default = _template("a", (input) => {
 	_patch_child_end();
 	_html(`<button class=p>p</button>${_el_mark($scope0_id, "b")}`);
 	_script($scope0_id, "a0");
-	_patch_render($scope0_id, "a1", [$fg__input_dyn && "g", $fg__input_prefix && "h"]);
+	_patch_render($scope0_id, "a1", (($fg__input_dyn ? " g" : "") + ($fg__input_prefix ? " h" : "")).slice(1));
 	_scope($scope0_id, {
 		g: input.dyn,
 		h: input.prefix,

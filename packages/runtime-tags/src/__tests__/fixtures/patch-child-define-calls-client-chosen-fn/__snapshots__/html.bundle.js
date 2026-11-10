@@ -15,7 +15,7 @@ var mid_define_default = _template("b", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $fg__get = _filled_guard($scope1_reason, 0);
 		_html(`<output></output>${_el_mark($scope1_id, "a")}`);
-		_script($scope1_id, "b1", 1, $fg__get, "d");
+		_script($scope1_id, "b1", 1, $fg__get);
 		_scope($scope1_id, { d: get }) || $fg__get && _patch_write($scope1_id, "xd", get, !_server_guard($scope1_reason, 0));
 	}, $scope0_id, 0) };
 	_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
@@ -41,11 +41,7 @@ var template_default = _template("a", (input) => {
 	_patch_child_end();
 	_html(`<button>toggle</button>${_el_mark($scope0_id, "b")}`);
 	_script($scope0_id, "a2");
-	_patch_render($scope0_id, "a3", [
-		$fg__input_title && "g",
-		$fg__input_title && "e",
-		$fg__input_title && "h"
-	]);
+	_patch_render($scope0_id, "a3", (($fg__input_title ? " g" : "") + ($fg__input_title ? " e" : "") + ($fg__input_title ? " h" : "")).slice(1));
 	_scope($scope0_id, {
 		e: input.title,
 		f: upper,

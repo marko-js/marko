@@ -7,7 +7,7 @@ const $if_content2__label = /*@__PURE__*/ _if_closure_patch("__tests__/template.
 const $if_content2__setup = $if_content2__label;
 const $Panel_content__if = /*@__PURE__*/ _if("#text/0", "<em> </em>", "D ", $if_content2__setup);
 const $Panel_content__isOpen = ($scope, isOpen) => $Panel_content__if($scope, isOpen ? 0 : 1);
-const $Panel_content__label__script = _script("__tests__/template.marko_2_label#4", ($scope) => console.log("effect", $scope.label));
+const $Panel_content__label__script = _script_patch("__tests__/template.marko_2_label#4 label", ($scope) => console.log("effect", $scope.label));
 const $Panel_content__label = /*@__PURE__*/ _const("label", ($scope) => {
 	$if_content2__label($scope);
 	$Panel_content__label__script($scope);

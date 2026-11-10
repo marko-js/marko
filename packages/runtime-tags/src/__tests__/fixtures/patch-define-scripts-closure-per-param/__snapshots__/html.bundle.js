@@ -7,8 +7,8 @@ var template_default = _template("a", (input) => {
 	const Row = { content: _content("a0", ({ a, b }) => {
 		const $scope1_id = _scope_id(), $fg__input_c = _filled_guard($scope0_reason, 1);
 		const $scope1_reason = _scope_reason(), $fg__a = _filled_guard($scope1_reason, 1), $fg__b = _filled_guard($scope1_reason, 2), $uf__a__OR__b = _updates_from($scope1_reason, 0);
-		_script($scope1_id, "a2", 0, ($fg__input_c || $fg__a) && ($cg__input_c || _client_guard($scope1_reason, 1) ? 2 : 1), [$fg__input_c && ">d", $fg__a && "c"], "a3", ($uf__input_c | _updates_from($scope1_reason, 1)) << 1, 0);
-		_script($scope1_id, "a1", 0, ($fg__input_c || $fg__b) && ($cg__input_c || _client_guard($scope1_reason, 2) ? 2 : 1), [$fg__input_c && ">d", $fg__b && "e"], "a4", ($uf__input_c | _updates_from($scope1_reason, 2)) << 1, 0);
+		_script($scope1_id, "a2", 0, ($fg__input_c || $fg__a) && ($cg__input_c || _client_guard($scope1_reason, 1) ? 2 : 1), (($fg__input_c ? " >d" : "") + ($fg__a ? " c" : "")).slice(1), "a3", ($uf__input_c | _updates_from($scope1_reason, 1)) << 1, 0);
+		_script($scope1_id, "a1", 0, ($fg__input_c || $fg__b) && ($cg__input_c || _client_guard($scope1_reason, 2) ? 2 : 1), (($fg__input_c ? " >d" : "") + ($fg__b ? " e" : "")).slice(1), "a4", ($uf__input_c | _updates_from($scope1_reason, 2)) << 1, 0);
 		_subscribe(_unfilled_if(($uf__input_c | $uf__a__OR__b) << 1, 0) && $wi__input_c && $input_c__closures, _scope($scope1_id, {
 			c: a,
 			e: b,

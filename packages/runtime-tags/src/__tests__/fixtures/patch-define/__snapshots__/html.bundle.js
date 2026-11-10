@@ -17,7 +17,7 @@ var template_default = _template("a", (input) => {
 	thing.content({ x: input.n });
 	_patch_child_end();
 	_html(`<div${_attr_class([input.cls, { on: input.on }], $scope0_id, "b", $scope0_reason, 0)}${_attr_style({ color: input.color }, $scope0_id, "b", $scope0_reason, 5)}>x</div>${_el_mark($scope0_id, "b", _updates_from($scope0_reason, 0) || _updates_from($scope0_reason, 5))}`);
-	_patch_render($scope0_id, "a2", [$fg__input_cls && "g", $fg__input_on && "h"], $scope0_reason, 0);
+	_patch_render($scope0_id, "a2", (($fg__input_cls ? " g" : "") + ($fg__input_on ? " h" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		g: ($ui__input_on || $ui__input_cls__OR__input_on) && input.cls,
 		h: ($ui__input_cls || $ui__input_cls__OR__input_on) && input.on,

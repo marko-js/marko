@@ -47,7 +47,7 @@ var template_default = _template("a", (input) => {
 		($wi__input_suffix || $wi__value) && _var($scope1_id, "b", $childScope, "a0");
 		_patch_child_end();
 		_html(`<p>${_text_mark($scope1_id, "c", label, $wg__input_suffix || $wg__value)}</p>`);
-		_patch_render($scope1_id, "a1", [_filled_guard($scope0_reason, 0) && ">d", "f"], (2 | $uf__input_suffix) << 1, 0);
+		_patch_render($scope1_id, "a1", "f" + (_filled_guard($scope0_reason, 0) ? " >d" : ""), (2 | $uf__input_suffix) << 1, 0);
 		_subscribe($wi__input_suffix && $input_suffix__closures, _scope($scope1_id, {
 			f: $wi__input_suffix && value,
 			_: _scope_with_id($scope0_id),

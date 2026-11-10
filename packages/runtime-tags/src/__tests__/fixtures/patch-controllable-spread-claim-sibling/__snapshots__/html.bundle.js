@@ -11,7 +11,7 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a0");
 	_script($scope0_id, "a1");
 	_script($scope0_id, "a2");
-	_patch_render($scope0_id, "a3", [$fg__input_attrs && "f", $fg__input_on && "g"], $scope0_reason, 0);
+	_patch_render($scope0_id, "a3", (($fg__input_attrs ? " f" : "") + ($fg__input_on ? " g" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		f: ($ui__input_on || $ui__input_attrs__OR__input_on) && input.attrs,
 		g: ($ui__input_attrs || $ui__input_attrs__OR__input_on) && input.on

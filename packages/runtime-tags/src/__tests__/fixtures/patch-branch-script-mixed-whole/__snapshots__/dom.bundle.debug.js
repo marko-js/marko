@@ -2,7 +2,7 @@
 const $template = "<main><h1> </h1><!></main>";
 const $walks = "E l%l";
 const $setup = ($_) => {};
-const $if_content__input_value__$global__script = _fill_global_script("__tests__/template.marko_1_input_value#0:6_$global#0:7", ($scope) => {
+const $if_content__input_value__$global__script = _fill_global_script(_filled_id("__tests__/template.marko_1_input_value#0:6_$global#0:7 >input_value"), ($scope) => {
 	{
 		const g = $scope.$global;
 		const el = document.querySelector("main");

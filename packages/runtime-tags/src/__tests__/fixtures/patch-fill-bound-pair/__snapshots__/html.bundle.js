@@ -14,8 +14,8 @@ var template_default = _template("a", (input) => {
 	_if(() => {}, $scope0_id, "a", 1, 1, 0, 0, 1);
 	_html(`<button>+</button>${_el_mark($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a3");
-	$fg__input_a2 && _patch_render($scope0_id, "a4", ["g", "e"]);
-	$fg__input_b2 && _patch_render($scope0_id, "a5", ["h", "f"]);
+	$fg__input_a2 && _patch_render($scope0_id, "a4", "g e");
+	$fg__input_b2 && _patch_render($scope0_id, "a5", "h f");
 	_scope($scope0_id, {
 		e: input.a,
 		f: input.b,

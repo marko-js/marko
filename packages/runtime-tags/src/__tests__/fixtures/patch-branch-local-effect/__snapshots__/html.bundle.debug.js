@@ -21,7 +21,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				if (input.inner) {
 					const $scope2_id = _scope_id();
 					_html("<span>inner</span>");
-					_script($scope2_id, "__tests__/template.marko_2_label#1:2", 0, _filled_guard($scope0_reason, 2), ">label");
+					_script($scope2_id, "__tests__/template.marko_2_label#1:2", 0, _filled_guard($scope0_reason, 2));
 					$cg__input_title && _patch_render($scope2_id, "__tests__/template.marko_2_label#1:2/setup");
 					_scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "5:6");
 					return 0;

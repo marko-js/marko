@@ -6,7 +6,7 @@ var grand_default = _template("c", (input) => {
 	const $scope0_reason = _scope_reason(), $fg__input_v = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_html(`<div></div>${_el_mark($scope0_id, "a")}`);
-	_script($scope0_id, "c0", 1, $fg__input_v, "d");
+	_script($scope0_id, "c0", 1, $fg__input_v);
 	_scope($scope0_id, { d: input.v }) || $fg__input_v && _patch_write($scope0_id, "xd", input.v, !_server_guard($scope0_reason, 0));
 });
 
@@ -40,10 +40,10 @@ var template_default = _template("a", (input) => {
 			const $scope1_id = _scope_id();
 			_set_scope_reason(_updates_from($scope0_reason, 1) << 1);
 			const $childScope = _peek_scope_id($scope1_id, "a", 0);
-			child_default({ opts: _patch_live($childScope, {
+			child_default({ opts: {
 				label: input.label,
 				n: "SECRET_"
-			}, $scope1_id, ">e") });
+			} });
 			_patch_child_end();
 			_client_guard($scope0_reason, 1) && _patch_render($scope1_id, "a0");
 			_scope($scope1_id, {

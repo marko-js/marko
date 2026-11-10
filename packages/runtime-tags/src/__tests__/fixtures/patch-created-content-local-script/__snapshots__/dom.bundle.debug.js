@@ -13,7 +13,7 @@ var list_default = /*@__PURE__*/ _template("__tests__/tags/list.marko", $templat
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c");
 const $setup = ($_) => {};
-const $item_content__label__script = _script("__tests__/template.marko_1_label#0", ($scope) => document.body.dataset.seen = $scope.label);
+const $item_content__label__script = _script_patch("__tests__/template.marko_1_label#0 label", ($scope) => document.body.dataset.seen = $scope.label);
 const $item_content = /*@__PURE__*/ _content_closures(/*@__PURE__*/ _content("__tests__/template.marko_1*content", "<p>item</p>"), { label: $item_content__label__script });
 const $input_labels = /*@__PURE__*/ _const("input_labels", ($scope) => {
 	let $item;

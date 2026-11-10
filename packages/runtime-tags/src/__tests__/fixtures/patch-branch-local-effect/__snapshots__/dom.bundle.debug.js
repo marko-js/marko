@@ -2,7 +2,7 @@
 const $template = "<main></main>";
 const $walks = " b";
 const $setup = ($_) => {};
-const $if_content2__label__script = _script("__tests__/template.marko_2_label#1:2", ($scope) => document.querySelector("main").dataset.label = $scope._.label);
+const $if_content2__label__script = _script_patch("__tests__/template.marko_2_label#1:2 >label", ($scope) => document.querySelector("main").dataset.label = $scope._.label);
 const $if_content2__label = /*@__PURE__*/ _if_closure_patch("__tests__/template.marko_2_label#1:2/setup", "#text/1", 0, $if_content2__label__script);
 const $if_content2__setup = $if_content2__label;
 const $if_content__label = /*@__PURE__*/ _const("label", ($scope) => {

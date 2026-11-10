@@ -6,7 +6,7 @@ var label_view_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $fg__input = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_html(`<output></output>${_el_mark($scope0_id, "a")}`);
-	_script($scope0_id, "b0", 1, $fg__input, "c");
+	_script($scope0_id, "b0", 1, $fg__input);
 	_scope($scope0_id, { c: input }) || $fg__input && _patch_write($scope0_id, "xc", input, !_server_guard($scope0_reason, 0));
 });
 
@@ -20,9 +20,9 @@ var mid_default = _template("c", (input) => {
 	const $scope0_id = _scope_id();
 	_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
-	label_view_default(_patch_live($childScope, { get: input.get }, $scope0_id, "d"));
+	label_view_default({ get: input.get });
 	_patch_child_end();
-	_scope($scope0_id, { a: _existing_scope($childScope) }) || _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "xd", input.get, !_server_guard($scope0_reason, 0));
+	_scope($scope0_id, { a: _existing_scope($childScope) });
 });
 
 // template.marko
@@ -42,12 +42,7 @@ var template_default = _template("a", (input) => {
 	_html(`<button>inc</button>${_el_mark($scope0_id, "b")}`);
 	_script($scope0_id, "a2");
 	_patch_render($scope0_id, "a3", $fg__input_title && "e");
-	_patch_render($scope0_id, "a4", [
-		$fg__input_upper && "f",
-		"i",
-		$fg__input_title && "e",
-		$fg__input_title && "j"
-	]);
+	_patch_render($scope0_id, "a4", "i" + ($fg__input_upper ? " f" : "") + ($fg__input_title ? " e" : "") + ($fg__input_title ? " j" : ""));
 	_scope($scope0_id, {
 		e: input.title,
 		f: input.upper,

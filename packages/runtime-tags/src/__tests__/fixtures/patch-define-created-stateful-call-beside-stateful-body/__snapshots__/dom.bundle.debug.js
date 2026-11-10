@@ -35,7 +35,7 @@ const $Inner_content__n = /*@__PURE__*/ _fill_let("__tests__/template.marko_2_n#
 const $Inner_content__setup = ($scope) => $Inner_content__n($scope, 1);
 const $Inner_content__if = /*@__PURE__*/ _if("#text/0", "<em><!><!></em><button class=inc>+</button>", "D%b%l ", $if_content2__setup);
 const $Inner_content__isOpen = ($scope, isOpen) => $Inner_content__if($scope, isOpen ? 0 : 1);
-const $Inner_content__text__script = _script("__tests__/template.marko_2_text#4", ($scope) => console.log("inner effect", $scope.text));
+const $Inner_content__text__script = _script_patch("__tests__/template.marko_2_text#4 text", ($scope) => console.log("inner effect", $scope.text));
 const $Inner_content__text = /*@__PURE__*/ _const("text", ($scope) => {
 	$if_content2__text($scope);
 	$Inner_content__text__script($scope);

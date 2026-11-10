@@ -14,7 +14,7 @@ var template_default = _template("a", (input) => {
 			const label = input.title + "!";
 			$fg__input_title && _patch_write($scope1_id, "xa", label, !$sg__input_title);
 			_html("<p>shown</p>");
-			_script($scope1_id, "a0", 0, $fg__input_title, "a");
+			_script($scope1_id, "a0", 0, $fg__input_title);
 			_client_guard($scope0_reason, 1) && _patch_render($scope1_id, "a1");
 			_scope($scope1_id, {
 				a: label,

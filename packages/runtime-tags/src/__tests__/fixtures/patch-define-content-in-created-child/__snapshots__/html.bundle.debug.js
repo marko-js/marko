@@ -12,7 +12,7 @@ var wrap_default = _template("__tests__/tags/wrap.marko", (input) => {
 		if (open) {
 			const $scope1_id = _scope_id();
 			_dynamic_tag($scope1_id, "#text/0", input.row, { label: input.label }, 0, 0, 0, $wg__input_row__OR__input_label);
-			_patch_render($scope1_id, "__tests__/tags/wrap.marko_1_input_row#0:4_input_label#0:5/setup", [_filled_guard($scope0_reason, 1) && ">input_row", _filled_guard($scope0_reason, 2) && ">input_label"], $scope0_reason, 0);
+			_patch_render($scope1_id, "__tests__/tags/wrap.marko_1_input_row#0:4_input_label#0:5/setup", ((_filled_guard($scope0_reason, 1) ? " >input_row" : "") + (_filled_guard($scope0_reason, 2) ? " >input_label" : "")).slice(1), $scope0_reason, 0);
 			_scope($scope1_id, {}, "__tests__/tags/wrap.marko", "3:2");
 			return 0;
 		}

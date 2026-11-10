@@ -22,7 +22,7 @@ var wrap_default = _template("b", (input) => {
 			if (input.show) {
 				const $scope2_id = _scope_id();
 				_html(`<p>${_text_mark($scope2_id, "a", x, 1, $scope0_reason, 1)}</p>`);
-				_script($scope2_id, "b0", 1, _filled_guard($scope0_reason, 1), ">b");
+				_script($scope2_id, "b0", 1, _filled_guard($scope0_reason, 1));
 				$cg__input_label && _patch_render($scope2_id, "b1");
 				_scope($scope2_id, { _: _scope_with_id($scope1_id) });
 				return 0;

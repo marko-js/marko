@@ -11,7 +11,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $fg__b = _filled_guard($scope1_reason, 2);
 		_html(`<p>${_text_mark($scope1_id, "a", a() + b(), 1, $scope1_reason, 0)}</p>`);
-		_patch_render($scope1_id, "a3", [$fg__b && "e", _filled_guard($scope0_reason, 0) && ">e"], $scope1_reason, 0);
+		_patch_render($scope1_id, "a3", (($fg__b ? " e" : "") + (_filled_guard($scope0_reason, 0) ? " >e" : "")).slice(1), $scope1_reason, 0);
 		_scope($scope1_id, {
 			d: _write_if($scope1_reason, 2) && a,
 			e: _write_if($scope1_reason, 1) && b

@@ -25,7 +25,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_reason = _scope_reason(), $uf__content = _updates_from($scope1_reason, 1), $fg__content = _filled_guard($scope1_reason, 1);
 		_html(`<span>${_text_mark($scope1_id, "a", n, 1, $scope1_reason, 0)}</span>`);
 		_dynamic_tag($scope1_id, "b", content, { title: input.t }, 1, 0, 0, _write_guard($scope0_reason, 0) || _write_guard($scope1_reason, 1), ($uf__input_t | $uf__content) << 1, 0, 0, 1, $scope1_reason);
-		_patch_render($scope1_id, "a3", [_filled_guard($scope0_reason, 0) && ">d", $fg__content && "f"], ($uf__input_t | $uf__content) << 1, 0);
+		_patch_render($scope1_id, "a3", ((_filled_guard($scope0_reason, 0) ? " >d" : "") + ($fg__content ? " f" : "")).slice(1), ($uf__input_t | $uf__content) << 1, 0);
 		_subscribe(_unfilled_if(($uf__input_t | $uf__content) << 1, 0) && $wi__input_t && $input_t__closures, _scope($scope1_id, {
 			f: ($ui__input_t || _unfilled_if($scope1_reason, 1)) && content,
 			_: ($wi__input_t || _write_if($scope1_reason, 1)) && _scope_with_id($scope0_id)

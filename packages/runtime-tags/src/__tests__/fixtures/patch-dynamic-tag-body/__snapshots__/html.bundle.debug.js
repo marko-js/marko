@@ -38,7 +38,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_subscribe(_unfilled_if($scope0_reason, 6) && $input_note__closures, _scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4"), $cg__input_note && "__tests__/template.marko_1_input_note#0:8/subscribe");
 	}, $scope0_id, 0), 0, $wg__input_wrap, $scope0_reason, 5);
 	$fg__input_note && _client_guard($scope0_reason, 5) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_note#8/subscribers", "input_note");
-	_patch_render($scope0_id, "__tests__/template.marko_0_input_tag#4_input_cls#5/setup", [$fg__input_tag && "input_tag", $fg__input_cls && "input_cls"], $scope0_reason, 0);
+	_patch_render($scope0_id, "__tests__/template.marko_0_input_tag#4_input_cls#5/setup", (($fg__input_tag ? " input_tag" : "") + ($fg__input_cls ? " input_cls" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		input_tag: ($ui__input_cls || $ui__input_tag__OR__input_cls) && input.tag,
 		input_cls: ($ui__input_tag || $ui__input_tag__OR__input_cls) && input.cls,

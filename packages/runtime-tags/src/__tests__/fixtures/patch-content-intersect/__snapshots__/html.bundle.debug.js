@@ -33,7 +33,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope2_reason = _scope_reason();
 				const $scope2_id = _scope_id();
 				_html(`<p>${_text_mark($scope2_id, "#text/0", input.a + ":" + input.b, $wg__input_a__OR__input_b)}</p>`);
-				_patch_render($scope2_id, "__tests__/template.marko_2_input_a#0:4_input_b#0:5/setup", [_filled_guard($scope0_reason, 1) && ">>input_a", _filled_guard($scope0_reason, 2) && ">>input_b"], $scope0_reason, 0);
+				_patch_render($scope2_id, "__tests__/template.marko_2_input_a#0:4_input_b#0:5/setup", ((_filled_guard($scope0_reason, 1) ? " >>input_a" : "") + (_filled_guard($scope0_reason, 2) ? " >>input_b" : "")).slice(1), $scope0_reason, 0);
 				_subscribe($wi__input_b && $input_b__closures, _subscribe($wi__input_a && $input_a__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "4:6"), _client_guard($scope0_reason, 1) && "__tests__/template.marko_2_input_a#0:4/subscribe", $wg__input_a__OR__input_b), _client_guard($scope0_reason, 2) && "__tests__/template.marko_2_input_b#0:5/subscribe", $wg__input_a__OR__input_b);
 				$wg__input_a__OR__input_b || (_write_guard($scope0_reason, 1) || _write_guard($scope0_reason, 2)) && _resume_branch($scope2_id);
 			}, $scope1_id) });

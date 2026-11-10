@@ -14,7 +14,7 @@ var child_default = _template("b", (input) => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_html(`<p>${_text_mark($scope1_id, "a", input.a + input.b, 1, $scope0_reason, 1)}</p>`);
-			_patch_render($scope1_id, "b0", [_filled_guard($scope0_reason, 3) && ">g", _filled_guard($scope0_reason, 4) && ">h"], $scope0_reason, 1);
+			_patch_render($scope1_id, "b0", ((_filled_guard($scope0_reason, 3) ? " >g" : "") + (_filled_guard($scope0_reason, 4) ? " >h" : "")).slice(1), $scope0_reason, 1);
 			_scope($scope1_id, { _: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id) });
 			return 0;
 		}
@@ -23,7 +23,7 @@ var child_default = _template("b", (input) => {
 		{
 			const $scope2_id = _scope_id();
 			_html(`<div></div>${_el_mark($scope2_id, "a")}`);
-			_script($scope2_id, "b2", 1, _filled_guard($scope0_reason, 3), ">g");
+			_script($scope2_id, "b2", 1, _filled_guard($scope0_reason, 3));
 			_client_guard($scope0_reason, 3) && _patch_render($scope2_id, "b3");
 			_scope($scope2_id, {});
 			return 0;

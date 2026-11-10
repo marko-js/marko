@@ -11,7 +11,7 @@
     "PatchBranch:#text/0": [{
       "PatchText:#text/0": "sr!"
     }, _.a],
-    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-branch-local-join-client-input/tags/child.marko_0_input_a#6": "input_a",
+    "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-branch-local-join-client-input/tags/child.marko_0_input_a#6",
     "PatchMarkedWrite:input_a": "s"
   }
 }
@@ -29,7 +29,7 @@
     "PatchBranch:#text/0": [{
       "PatchText:#text/0": "ut!"
     }, _.a],
-    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-branch-local-join-client-input/tags/child.marko_0_input_a#6": "input_a",
+    "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-branch-local-join-client-input/tags/child.marko_0_input_a#6",
     "PatchMarkedWrite:input_a": "u"
   }
 }

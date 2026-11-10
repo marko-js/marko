@@ -32,7 +32,7 @@ var panel_default = _template("b", (input) => {
 	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["b2"], $scope0_reason, 3);
 	_html(`<p>${_text_mark($scope0_id, "b", input.a + ":" + input.b, 1, $scope0_reason, 2)}</p>`);
 	$fg__input_b && $cg__input_show && _patch_subscribers($scope0_id, "b4", "f");
-	_patch_render($scope0_id, "b5", [$fg__input_b && "f", $fg__input_a && "g"], $scope0_reason, 2);
+	_patch_render($scope0_id, "b5", (($fg__input_b ? " f" : "") + ($fg__input_a ? " g" : "")).slice(1), $scope0_reason, 2);
 	_scope($scope0_id, {
 		f: ($ui__input_show__OR__input_a || $ui__input_b__OR__input_a || $ui__input_b) && input.b,
 		g: ($ui__input_b || $ui__input_b__OR__input_a) && input.a,

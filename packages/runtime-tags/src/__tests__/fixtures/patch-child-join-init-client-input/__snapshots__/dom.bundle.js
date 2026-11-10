@@ -1,5 +1,5 @@
 // tags/child.marko
-const $if_content__input_a__script = _script("b0", ($scope) => $scope.a.textContent = "s:" + $scope._.f);
+const $if_content__input_a__script = _script_patch("b0 >f", ($scope) => $scope.a.textContent = "s:" + $scope._.f);
 const $if_content__input_a = /*@__PURE__*/ _if_closure_patch("b1", 1, 0, $if_content__input_a__script);
 const $if = /*@__PURE__*/ _if(1, "<div></div>", " ", $if_content__input_a);
 const $open = /*@__PURE__*/ _fill_let("b4", 8, ($scope) => $if($scope, $scope.i ? 0 : 1));

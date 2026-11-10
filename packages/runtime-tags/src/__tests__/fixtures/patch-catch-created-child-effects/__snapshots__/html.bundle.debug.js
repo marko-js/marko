@@ -7,9 +7,9 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $fg__input_message = _filled_guard($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 1), $fg__input_count = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	_html(`<span>${_text_mark($scope0_id, "#text/0", input.message, 1, $scope0_reason, 0)}</span>`);
-	_script($scope0_id, "__tests__/tags/child.marko_0_input_count#5", 1, $fg__input_count, "input_count");
-	_script($scope0_id, "__tests__/tags/child.marko_0_input_label#4", 1, $fg__input_label, "input_label");
-	_script($scope0_id, "__tests__/tags/child.marko_0_input_message#3", 1, $fg__input_message, "input_message");
+	_script($scope0_id, "__tests__/tags/child.marko_0_input_count#5", 1, $fg__input_count);
+	_script($scope0_id, "__tests__/tags/child.marko_0_input_label#4", 1, $fg__input_label);
+	_script($scope0_id, "__tests__/tags/child.marko_0_input_message#3", 1, $fg__input_message);
 	_script($scope0_id, "__tests__/tags/child.marko_0");
 	_scope($scope0_id, {
 		input_message: input.message,
@@ -48,7 +48,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html(`<p>${_text_mark($scope2_id, "#text/0", input.fail ? boom(input.msg) : input.msg, 1, $scope0_reason, 0)}</p>`);
 		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope2_id, "__tests__/template.marko_2_input_msg#0:5/subscribe");
 		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope2_id, "__tests__/template.marko_2_input_fail#0:6/subscribe");
-		_patch_render($scope2_id, "__tests__/template.marko_2_input_msg#0:5_input_fail#0:6/setup", [_filled_guard($scope0_reason, 1) && ">input_msg", _filled_guard($scope0_reason, 2) && ">input_fail"], $scope0_reason, 0);
+		_patch_render($scope2_id, "__tests__/template.marko_2_input_msg#0:5_input_fail#0:6/setup", ((_filled_guard($scope0_reason, 1) ? " >input_msg" : "") + (_filled_guard($scope0_reason, 2) ? " >input_fail" : "")).slice(1), $scope0_reason, 0);
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_fail__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_msg__closures, _scope($scope2_id, {
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id),
 			"ClosureSignalIndex:input_msg/8": $wi__input_msg && 1

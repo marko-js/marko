@@ -2,7 +2,7 @@
 const $template = "<main><h1> </h1><!></main>";
 const $walks = "E l%l";
 const $setup = ($_) => {};
-const $if_content__input_value__$global_brand__script = _fill_global_script("__tests__/template.marko_1_input_value#0:6_$global_brand#0:8", ($scope) => {
+const $if_content__input_value__$global_brand__script = _fill_global_script(_filled_id("__tests__/template.marko_1_input_value#0:6_$global_brand#0:8 >input_value"), ($scope) => {
 	{
 		const el = document.querySelector("main");
 		el.dataset.log = (el.dataset.log || "") + "[" + $scope._.input_value + ":" + _global_read($scope.$global, "brand") + "]";

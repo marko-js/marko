@@ -7,7 +7,7 @@ const $frame_content__input_n = /*@__PURE__*/ _closure_get_patch("c6", 7, ($scop
 const $frame_content__setup = $frame_content__input_n;
 const $frame_content__$params = ($scope, $params2) => _text($scope.a, $params2[0]);
 const $frame_content = _content$1("c5", "<p><!> <!></p>", "D%c%", $frame_content__setup, $frame_content__$params);
-const $Info_content__input_n__OR__twice__script = _script("c1", ($scope) => console.log("effect", $scope._.e, $scope.a));
+const $Info_content__input_n__OR__twice__script = _script_patch("c1 >e a", ($scope) => console.log("effect", $scope._.e, $scope.a));
 const $Info_content__input_n__OR__twice = /*@__PURE__*/ _or_patch("c3", 1, $Info_content__input_n__OR__twice__script);
 const $Info_content__twice = /*@__PURE__*/ _const(0, $Info_content__input_n__OR__twice);
 const $Info_content__input_n = /*@__PURE__*/ _closure_get_patch("c2", 7, ($scope) => {

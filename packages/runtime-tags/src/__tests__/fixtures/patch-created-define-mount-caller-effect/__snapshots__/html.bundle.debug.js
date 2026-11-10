@@ -19,7 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_reason = _scope_reason(), $fg__label = _filled_guard($scope1_reason, 0), $uf__label = _updates_from($scope1_reason, 0);
 		_html("<p>info</p>");
 		_unfilled_if(($uf__input_page | $uf__label) << 1, 0) && _patch_subscribe($scope1_id, "__tests__/template.marko_1_input_page#0:6/subscribe");
-		_script($scope1_id, "__tests__/template.marko_1_input_page#0:6_label#2", 0, ($fg__input_page || $fg__label) && (_client_guard($scope0_reason, 1) || _client_guard($scope1_reason, 0) ? 2 : 1), [$fg__input_page && ">input_page", $fg__label && "label"], "__tests__/template.marko_1_input_page#0:6_label#2/setup", ($uf__input_page | $uf__label) << 1, 0);
+		_script($scope1_id, "__tests__/template.marko_1_input_page#0:6_label#2", 0, ($fg__input_page || $fg__label) && (_client_guard($scope0_reason, 1) || _client_guard($scope1_reason, 0) ? 2 : 1), (($fg__input_page ? " >input_page" : "") + ($fg__label ? " label" : "")).slice(1), "__tests__/template.marko_1_input_page#0:6_label#2/setup", ($uf__input_page | $uf__label) << 1, 0);
 		_subscribe(_unfilled_if(($uf__input_page | $uf__label) << 1, 0) && $wi__input_page && $input_page__closures, _scope($scope1_id, {
 			label,
 			_: _scope_with_id($scope0_id)

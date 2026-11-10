@@ -23,7 +23,7 @@ const $opts = ($scope, opts) => {
 };
 const $opts_items = /*@__PURE__*/ _const("opts_items");
 const $opts_label = /*@__PURE__*/ _const("opts_label");
-const $input_label__OR__opts_items__OR__opts_label__script = _script("__tests__/tags/probe.marko_0_input_label#2_opts_items#4_opts_label#5", ($scope) => {
+const $input_label__OR__opts_items__OR__opts_label__script = _script_patch("__tests__/tags/probe.marko_0_input_label#2_opts_items#4_opts_label#5 input_label opts_items opts_label", ($scope) => {
 	$scope.opts_items.push("x");
 	document.body.dataset.seen = $scope.opts_label + ":" + $scope.input_label;
 });

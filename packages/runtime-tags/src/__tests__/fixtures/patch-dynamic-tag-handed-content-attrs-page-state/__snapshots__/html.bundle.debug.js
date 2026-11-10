@@ -7,7 +7,7 @@ var one_default = _template("__tests__/tags/one.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_content__OR__input_t = _write_guard($scope0_reason, 0), $ui__input_content__OR__input_t = _unfilled_if($scope0_reason, 0), $ui__input_t = _unfilled_if($scope0_reason, 2), $ui__input_content = _unfilled_if($scope0_reason, 1), $fg__input_content = _filled_guard($scope0_reason, 1), $fg__input_t = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	_dynamic_tag($scope0_id, "#text/0", input.content, { title: input.t }, 1, 0, 0, $wg__input_content__OR__input_t, $scope0_reason, 0, 0, 1);
-	_patch_render($scope0_id, "__tests__/tags/one.marko_0_input_content#3_input_t#4/setup", [$fg__input_content && "input_content", $fg__input_t && "input_t"], $scope0_reason, 0);
+	_patch_render($scope0_id, "__tests__/tags/one.marko_0_input_content#3_input_t#4/setup", (($fg__input_content ? " input_content" : "") + ($fg__input_t ? " input_t" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		input_content: ($ui__input_t || $ui__input_content__OR__input_t) && input.content,
 		input_t: ($ui__input_content || $ui__input_content__OR__input_t) && input.t

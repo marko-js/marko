@@ -12,7 +12,7 @@ var child_default = _template("b", (input) => {
 		const $scope1_id = _scope_id(), $fg__input_items = _filled_guard($scope0_reason, 1), $fg__input_count = _filled_guard($scope0_reason, 2);
 		$fg__input_items && _patch_write($scope1_id, "xc", item, !_server_guard($scope0_reason, 1));
 		_html(`<p>${_text_mark($scope1_id, "a", item, 1, $scope0_reason, 1)}</p>`);
-		_script($scope1_id, "b0", 1, ($fg__input_count || $fg__input_items) && (_client_guard($scope0_reason, 2) || $cg__input_items ? 2 : 1), [$fg__input_count && ">e", $fg__input_items && "c"], "b1", $scope0_reason, 0);
+		_script($scope1_id, "b0", 1, ($fg__input_count || $fg__input_items) && (_client_guard($scope0_reason, 2) || $cg__input_items ? 2 : 1), (($fg__input_count ? " >e" : "") + ($fg__input_items ? " c" : "")).slice(1), "b1", $scope0_reason, 0);
 		_scope($scope1_id, {
 			c: item,
 			_: _scope_with_id($scope0_id)

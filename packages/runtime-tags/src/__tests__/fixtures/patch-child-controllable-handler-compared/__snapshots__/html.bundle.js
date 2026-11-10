@@ -12,7 +12,7 @@ var counter_default = _template("b", (input) => {
 			const $scope1_id = _scope_id();
 			let count = 0;
 			_html(`<span>Seen ${_text_mark($scope1_id, "a", count, 2)}</span><button class=add>+</button>${_el_mark($scope1_id, "b")}`);
-			_script($scope1_id, "b0", 1, _filled_guard($scope0_reason, 0), ">e");
+			_script($scope1_id, "b0", 1, _filled_guard($scope0_reason, 0));
 			_script($scope1_id, "b1");
 			_client_guard($scope0_reason, 0) && _patch_render($scope1_id, "b2");
 			_scope($scope1_id, {

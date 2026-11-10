@@ -3,7 +3,7 @@
 {
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {
-      "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-define-created-param-fill-effect/template.marko_2_label#4": "label",
+      "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-define-created-param-fill-effect/template.marko_2_label#4",
       "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-define-created-param-fill-effect/template.marko_3_label#2:4/setup": "label",
       "PatchMarkedWrite:label": "b"
     }
@@ -15,7 +15,7 @@
 {
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {
-      "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-define-created-param-fill-effect/template.marko_2_label#4": "label",
+      "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-define-created-param-fill-effect/template.marko_2_label#4",
       "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-define-created-param-fill-effect/template.marko_3_label#2:4/setup": "label",
       "PatchMarkedWrite:label": "c"
     }
@@ -31,7 +31,7 @@
 {
   "PatchBranch:#text/0": [{
     "PatchChild:#childScope/0": {
-      "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-define-created-param-fill-effect/template.marko_2_label#4": "label",
+      "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-define-created-param-fill-effect/template.marko_2_label#4",
       "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-define-created-param-fill-effect/template.marko_3_label#2:4/setup": "label",
       "PatchMarkedWrite:label": "e"
     }

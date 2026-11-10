@@ -1,7 +1,7 @@
 // PATCH
 {
   "PatchChild:#childScope/0": {
-    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-subscribers-shaken-position/template.marko_1_input_n#0:4_twice#0": ">input_n twice",
+    "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-subscribers-shaken-position/template.marko_1_input_n#0:4_twice#0",
     "PatchMarkedWrite:twice": 4
   },
   "PatchChild:#childScope/1": {

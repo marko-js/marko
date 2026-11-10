@@ -8,7 +8,7 @@ var tab_editor_default = _template("c", (input) => {
 	const $scope0_id = _scope_id();
 	let selected = input.tab;
 	_html(`<p>sel=${_text_mark($scope0_id, "a", String(selected), 2)}</p>`);
-	_patch_render($scope0_id, "c0", [$fg__input_tab && "d", $fg__input_tabChange && "e"], $scope0_reason, 0);
+	_patch_render($scope0_id, "c0", (($fg__input_tab ? " d" : "") + ($fg__input_tabChange ? " e" : "")).slice(1), $scope0_reason, 0);
 	_patch_let_change($scope0_id, "vc1", selected, 0, input.tabChange, $scope0_reason, 0);
 	_scope($scope0_id, {
 		d: ($ui__input_tabChange || $ui__input_tab__OR__input_tabChange) && input.tab,

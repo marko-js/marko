@@ -5,7 +5,7 @@ var child_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $ui__input_label__OR__input_count = _unfilled_if($scope0_reason, 0), $ui__input_count = _unfilled_if($scope0_reason, 2), $ui__input_label = _unfilled_if($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 1), $fg__input_count = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $return = input.label + input.count;
-	_patch_render($scope0_id, "b0", [$fg__input_label && "c", $fg__input_count && "d"], $scope0_reason, 0);
+	_patch_render($scope0_id, "b0", (($fg__input_label ? " c" : "") + ($fg__input_count ? " d" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		c: ($ui__input_count || $ui__input_label__OR__input_count) && input.label,
 		d: ($ui__input_label || $ui__input_label__OR__input_count) && input.count
@@ -53,7 +53,7 @@ var template_default = _template("a", (input) => {
 		_html(`<i>${_text_mark($scope1_id, "d", text, 1, $scope0_reason, 0)}</i>`);
 		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope1_id, "a1", $cg__input_label);
 		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope1_id, "a2", $cg__input_count);
-		_patch_render($scope1_id, "a3", [_filled_guard($scope0_reason, 1) && ">e", "g"], (2 | $uf__input_label) << 1, 0);
+		_patch_render($scope1_id, "a3", "g" + (_filled_guard($scope0_reason, 1) ? " >e" : ""), (2 | $uf__input_label) << 1, 0);
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_count__closures, _subscribe($ui__input_label && $input_label__closures, _scope($scope1_id, {
 			g: $ui__input_label && err?.message,
 			_: _scope_with_id($scope0_id),
@@ -82,7 +82,7 @@ var template_default = _template("a", (input) => {
 		_html(`<i>${_text_mark($scope3_id, "d", text, 1, $scope0_reason, 0)}</i>`);
 		_unfilled_if($scope0_reason, 1) && _patch_subscribe($scope3_id, "a8", $cg__input_label);
 		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope3_id, "a9", $cg__input_count);
-		_patch_render($scope3_id, "a10", [_filled_guard($scope0_reason, 1) && ">e", "g"], (2 | $uf__input_label) << 1, 0);
+		_patch_render($scope3_id, "a10", "g" + (_filled_guard($scope0_reason, 1) ? " >e" : ""), (2 | $uf__input_label) << 1, 0);
 		_subscribe(_unfilled_if($scope0_reason, 2) && $input_count__closures, _subscribe($ui__input_label2 && $input_label__closures, _scope($scope3_id, {
 			g: $ui__input_label2 && err?.message,
 			_: _scope_with_id($scope0_id),

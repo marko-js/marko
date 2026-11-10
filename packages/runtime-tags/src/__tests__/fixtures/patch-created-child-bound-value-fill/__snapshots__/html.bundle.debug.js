@@ -8,7 +8,7 @@ var text_area_default = _template("__tests__/tags/text-area.marko", (input) => {
 	const $scope0_id = _scope_id();
 	_html(`<textarea>${_attr_textarea_value($scope0_id, "#textarea/0", input.value, input.valueChange, 3, $scope0_reason, 0)}</textarea>${_el_mark($scope0_id, "#textarea/0")}`);
 	_script($scope0_id, "__tests__/tags/text-area.marko_0");
-	_patch_render($scope0_id, "__tests__/tags/text-area.marko_0_input_value#3_input_valueChange#4/setup", [$fg__input_value && "input_value", $fg__input_valueChange && "input_valueChange"], $scope0_reason, 0);
+	_patch_render($scope0_id, "__tests__/tags/text-area.marko_0_input_value#3_input_valueChange#4/setup", (($fg__input_value ? " input_value" : "") + ($fg__input_valueChange ? " input_valueChange" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		input_value: ($ui__input_valueChange || $ui__input_value__OR__input_valueChange) && input.value,
 		input_valueChange: $ui__input_value__OR__input_valueChange && input.valueChange

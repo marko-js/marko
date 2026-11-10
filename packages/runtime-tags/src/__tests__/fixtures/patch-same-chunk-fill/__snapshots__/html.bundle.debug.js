@@ -8,7 +8,7 @@ var probe_default = _template("__tests__/tags/probe.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let settled = false;
 	_html(`<div>${_text_mark($scope0_id, "#text/1", settled ? "settled" : "pending", 1, 0, 0, 1)}</div>${_el_mark($scope0_id, "#div/0")}`);
-	_script($scope0_id, "__tests__/tags/probe.marko_0_input_promise#4", 1, $fg__input_promise, "input_promise");
+	_script($scope0_id, "__tests__/tags/probe.marko_0_input_promise#4", 1, $fg__input_promise);
 	_scope($scope0_id, { input_promise: input.promise }, "__tests__/tags/probe.marko", 0, { input_promise: ["input.promise"] }) || $fg__input_promise && _patch_write($scope0_id, "PatchMarkedWrite:input_promise", input.promise, !_server_guard($scope0_reason, 0));
 });
 

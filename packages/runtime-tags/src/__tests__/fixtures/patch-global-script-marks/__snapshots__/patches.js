@@ -17,7 +17,7 @@
   tl: 1,
   tm: 1,
   tn: "Marko",
-  ea1: "a2",
+  e: "a1",
   xa2: "one"
 }
 
@@ -40,6 +40,6 @@
   tl: 2,
   tm: 2,
   tn: "Marko",
-  ea1: "a2",
+  e: "a1",
   xa2: "one"
 }

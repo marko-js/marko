@@ -3,7 +3,7 @@ const $template$1 = "<li><span> </span><button>Pick</button></li>";
 const $walks$1 = "E l l";
 const $setup$1 = ($_) => {};
 const $input_item_name = ($scope, input_item_name) => _text($scope["#text/0"], input_item_name);
-const $input_onPick__script = _script("__tests__/tags/row.marko_0_input_onPick#6", ($scope) => _on($scope["#button/1"], "click", $scope.input_onPick));
+const $input_onPick__script = _script_patch("__tests__/tags/row.marko_0_input_onPick#6 input_onPick", ($scope) => _on($scope["#button/1"], "click", $scope.input_onPick));
 const $input_onPick = /*@__PURE__*/ _const("input_onPick", $input_onPick__script);
 const $input$1 = ($scope, input) => {
 	$input_item($scope, input.item);

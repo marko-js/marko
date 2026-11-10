@@ -7,8 +7,8 @@ var child_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $fg__input_a = _filled_guard($scope0_reason, 1), $ui__input_a = _unfilled_if($scope0_reason, 1), $fg__input_b = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	_html(`<p>${_text_mark($scope0_id, "a", input.a + input.b, 1, $scope0_reason, 0)}</p><div></div>${_el_mark($scope0_id, "b")}`);
-	_script($scope0_id, "b0", 1, $fg__input_a, "e");
-	_patch_render($scope0_id, "b1", [$fg__input_a && "e", $fg__input_b && "f"], $scope0_reason, 0);
+	_script($scope0_id, "b0", 1, $fg__input_a);
+	_patch_render($scope0_id, "b1", (($fg__input_a ? " e" : "") + ($fg__input_b ? " f" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		e: input.a,
 		f: ($ui__input_a || _unfilled_if($scope0_reason, 0)) && input.b

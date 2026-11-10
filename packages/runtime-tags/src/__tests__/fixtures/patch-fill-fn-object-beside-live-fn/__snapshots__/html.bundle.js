@@ -94,7 +94,7 @@ var template_default = _template("a", (input) => {
 	$fg__input_title && _patch_render($scope0_id, "a12", "k");
 	$fg__input_title && _patch_render($scope0_id, "a13", "m");
 	$fg__input_title && _patch_render($scope0_id, "a14", "n");
-	$fg__input_title && _patch_render($scope0_id, "a15", ["o", "e"]);
+	$fg__input_title && _patch_render($scope0_id, "a15", "o e");
 	_scope($scope0_id, {
 		e: input.title,
 		g: fmt,

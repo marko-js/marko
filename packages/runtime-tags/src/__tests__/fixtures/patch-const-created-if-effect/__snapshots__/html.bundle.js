@@ -14,7 +14,7 @@ var template_default = _template("a", (input) => {
 			const y = input.label + "!";
 			$fg__input_label && _patch_write($scope1_id, "xb", y, !$sg__input_label);
 			_html(`<p>${_text_mark($scope1_id, "a", y + n)}</p>`);
-			_script($scope1_id, "a0", 1, $fg__input_label, "b");
+			_script($scope1_id, "a0", 1, $fg__input_label);
 			_client_guard($scope0_reason, 1) && _patch_render($scope1_id, "a1");
 			_patch_render($scope1_id, "a2", $fg__input_label && "b");
 			_scope($scope1_id, {

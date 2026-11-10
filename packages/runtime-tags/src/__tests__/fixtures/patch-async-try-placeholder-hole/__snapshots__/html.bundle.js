@@ -26,7 +26,7 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		_html(`<em>loading ${_text_mark($scope1_id, "a", input.title, $wg__input_title * 2)}</em>`);
-		_script($scope1_id, "a0", $wg__input_title, _filled_guard($scope0_reason, 0), ">e");
+		_script($scope1_id, "a0", $wg__input_title, _filled_guard($scope0_reason, 0));
 		$cg__input_title && _patch_render($scope1_id, "a1");
 		_subscribe($wi__input_title && $input_title__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), $cg__input_title && "a1", $wg__input_title);
 	}, void 0, "a6", void 0, "a4", 1);

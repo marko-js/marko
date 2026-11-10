@@ -1,7 +1,7 @@
 // PATCH
 {
   ca: {
-    ea1: ">e a",
+    e: "a1",
     xa: 4
   },
   cb: {

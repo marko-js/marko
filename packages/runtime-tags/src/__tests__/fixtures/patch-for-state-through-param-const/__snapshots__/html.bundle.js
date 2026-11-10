@@ -14,7 +14,7 @@ var template_default = _template("a", (input) => {
 	}, "id", $scope0_id, "b", 1, 1, 0, 0, 1);
 	_script($scope0_id, "a0");
 	_patch_render($scope0_id, "a1", $fg__input_workspace && "h");
-	_patch_render($scope0_id, "a2", [$fg__input_active && "f", $fg__input_workspace && "h"]);
+	_patch_render($scope0_id, "a2", "j" + ($fg__input_active ? " f" : "") + ($fg__input_workspace ? " h" : ""));
 	_scope($scope0_id, {
 		f: input.active,
 		g: _write_if($scope0_reason, 0) && sessions,

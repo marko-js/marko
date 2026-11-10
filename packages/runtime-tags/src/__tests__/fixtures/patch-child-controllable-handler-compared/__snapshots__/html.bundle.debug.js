@@ -12,7 +12,7 @@ var counter_default = _template("__tests__/tags/counter/index.marko", (input) =>
 			const $scope1_id = _scope_id();
 			let count = 0;
 			_html(`<span>Seen ${_text_mark($scope1_id, "#text/0", count, 2)}</span><button class=add>+</button>${_el_mark($scope1_id, "#button/1")}`);
-			_script($scope1_id, "__tests__/tags/counter/index.marko_1_input_onCount#0:4", 1, _filled_guard($scope0_reason, 0), ">input_onCount");
+			_script($scope1_id, "__tests__/tags/counter/index.marko_1_input_onCount#0:4", 1, _filled_guard($scope0_reason, 0));
 			_script($scope1_id, "__tests__/tags/counter/index.marko_1");
 			_client_guard($scope0_reason, 0) && _patch_render($scope1_id, "__tests__/tags/counter/index.marko_1_input_onCount#0:4/setup");
 			_scope($scope1_id, {

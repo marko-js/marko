@@ -23,7 +23,7 @@ var template_default = _template("a", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "a", 1, 1, 0, 0, 1);
-	_patch_render($scope0_id, "a1", [$fg__input_selected && "d", $fg__input_selectedChange && "e"], $scope0_reason, 0);
+	_patch_render($scope0_id, "a1", (($fg__input_selected ? " d" : "") + ($fg__input_selectedChange ? " e" : "")).slice(1), $scope0_reason, 0);
 	const $selectedChange = input.selectedChange || void 0;
 	_patch_let_change($scope0_id, "va2", selected, "wj", $selectedChange, $scope0_reason, 0);
 	_scope($scope0_id, {

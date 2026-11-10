@@ -6,7 +6,7 @@ var reader_default = _template("c", (input) => {
 	const $scope0_reason = _scope_reason(), $fg__input_get = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_html(`<output></output>${_el_mark($scope0_id, "a")}`);
-	_script($scope0_id, "c0", 1, $fg__input_get, "d");
+	_script($scope0_id, "c0", 1, $fg__input_get);
 	_scope($scope0_id, { d: input.get }) || $fg__input_get && _patch_write($scope0_id, "xd", input.get, !_server_guard($scope0_reason, 0));
 });
 
@@ -34,7 +34,7 @@ var child_default = _template("b", (input) => {
 				_html(`<em>${_text_mark($scope2_id, "a", input.a + c, 1, $scope0_reason, 0)}</em><i>${_text_mark($scope2_id, "b", c, 1, $scope0_reason, 4)}</i>`);
 				_unfilled_if($scope0_reason, 5) && _patch_subscribe($scope2_id, "b2");
 				_unfilled_if($scope0_reason, 4) && _patch_subscribe($scope2_id, "b3", $cg__input_b);
-				_patch_render($scope2_id, "b4", [_filled_guard($scope0_reason, 5) && ">>f", _filled_guard($scope0_reason, 4) && ">c"], $scope0_reason, 0);
+				_patch_render($scope2_id, "b4", ((_filled_guard($scope0_reason, 5) ? " >>f" : "") + (_filled_guard($scope0_reason, 4) ? " >c" : "")).slice(1), $scope0_reason, 0);
 				_subscribe(_unfilled_if($scope0_reason, 4) && $if_content__c__closures, _subscribe(_unfilled_if($scope0_reason, 5) && $input_a__closures, _scope($scope2_id, { _: $wi__input_show__OR__input_b__OR__input_a__OR__input_mode && _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 5) && "b2"), $cg__input_b && "b3");
 			}, $scope1_id) };
 			_html("<section>");

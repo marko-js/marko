@@ -4,7 +4,7 @@ const $Box_content__template = "<div>box</div>";
 const $template = $Box_content__template;
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)($Box_content__walks);
 const $setup = ($_) => {};
-const $Box_content__label__script = _script("__tests__/template.marko_1_label#3", ($scope) => _el_read($scope["#div/0"]).dataset.x = $scope.label);
+const $Box_content__label__script = _script_patch("__tests__/template.marko_1_label#3 label", ($scope) => _el_read($scope["#div/0"]).dataset.x = $scope.label);
 const $Box_content__label = /*@__PURE__*/ _const("label", $Box_content__label__script);
 const $Box_content__$params = ($scope, $params2) => $Box_content__$temp($scope, $params2[0]);
 const $Box_content__$temp = ($scope, $temp) => $Box_content__label($scope, $temp.label);

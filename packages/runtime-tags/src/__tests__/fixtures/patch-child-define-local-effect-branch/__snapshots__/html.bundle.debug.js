@@ -22,7 +22,7 @@ var wrap_default = _template("__tests__/tags/wrap.marko", (input) => {
 			if (input.show) {
 				const $scope2_id = _scope_id();
 				_html(`<p>${_text_mark($scope2_id, "#text/0", x, 1, $scope0_reason, 1)}</p>`);
-				_script($scope2_id, "__tests__/tags/wrap.marko_2_x#1:1", 1, _filled_guard($scope0_reason, 1), ">x");
+				_script($scope2_id, "__tests__/tags/wrap.marko_2_x#1:1", 1, _filled_guard($scope0_reason, 1));
 				$cg__input_label && _patch_render($scope2_id, "__tests__/tags/wrap.marko_2_x#1:1/setup");
 				_scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/wrap.marko", "3:4");
 				return 0;

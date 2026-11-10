@@ -6,7 +6,7 @@
         "PatchText:#text/0": "b!"
       }]
     },
-    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-child-effect-input-calls-in-and-beside-client-branch/tags/card.marko_0_input_label#7": "input_label",
+    "PatchEffect:": _.a = "packages/runtime-tags/src/__tests__/fixtures/patch-child-effect-input-calls-in-and-beside-client-branch/tags/card.marko_0_input_label#7",
     "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-child-effect-input-calls-in-and-beside-client-branch/tags/card.marko_1_input_label#0:7/setup": "input_label",
     "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-child-effect-input-calls-in-and-beside-client-branch/tags/card.marko_2_input_label#0:7/setup": "input_label",
     "PatchMarkedWrite:input_label": "b"
@@ -24,7 +24,7 @@
         }]
       }
     }],
-    "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-child-effect-input-calls-in-and-beside-client-branch/tags/card.marko_0_input_label#7": "input_label",
+    "PatchEffect:": _.a,
     "PatchRender:packages/runtime-tags/src/__tests__/fixtures/patch-child-effect-input-calls-in-and-beside-client-branch/tags/card.marko_2_input_label#0:7/setup": "input_label",
     "PatchMarkedWrite:input_label": "b"
   }

@@ -6,7 +6,7 @@ var template_default = _template("a", (input) => {
 	let count = 0;
 	_html(`<p>${_text_mark($scope0_id, "a", input.label, 1, $scope0_reason, 0)}</p><button>${_text_mark($scope0_id, "c", count)}</button>${_el_mark($scope0_id, "b")}`);
 	_script($scope0_id, "a0");
-	_script($scope0_id, "a1", 1, $fg__input_label, "f");
+	_script($scope0_id, "a1", 1, $fg__input_label);
 	_scope($scope0_id, {
 		f: input.label,
 		g: count

@@ -27,7 +27,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				return 0;
 			}
 		}, $scope1_id, "#text/0", 1, $wg__input_x, 1, 0, 0, ["__tests__/template.marko_3*shell"], $scope0_reason, 0);
-		$fg__v && $cg__input_x && _patch_render($scope1_id, "__tests__/template.marko_3_f#1:4/setup", ["f", "v"]);
+		$fg__v && $cg__input_x && _patch_render($scope1_id, "__tests__/template.marko_3_f#1:4/setup", "f v");
 		$cg__input_x && _patch_render($scope1_id, "__tests__/template.marko_1_input_x#0:4/subscribe");
 		_subscribe($ui__input_x && $input_x__closures, _scope($scope1_id, {
 			v: ($ui__input_x || $ui__v) && v,

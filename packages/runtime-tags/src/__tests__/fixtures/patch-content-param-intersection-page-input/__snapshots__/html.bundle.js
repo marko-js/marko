@@ -6,7 +6,7 @@ var pass_on_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $wg__input_content__OR__input_obj_x = _write_guard($scope0_reason, 0), $ui__input_content__OR__input_obj_x = _unfilled_if($scope0_reason, 0), $ui__input_obj_x = _unfilled_if($scope0_reason, 2), $ui__input_content = _unfilled_if($scope0_reason, 1), $fg__input_content = _filled_guard($scope0_reason, 1), $fg__input_obj_x = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	_dynamic_tag($scope0_id, "a", input.content, [input.obj.x], 1, 0, 1, $wg__input_content__OR__input_obj_x, $scope0_reason, 0, 0, 1);
-	_patch_render($scope0_id, "b0", [$fg__input_content && "d", $fg__input_obj_x && "f"], $scope0_reason, 0);
+	_patch_render($scope0_id, "b0", (($fg__input_content ? " d" : "") + ($fg__input_obj_x ? " f" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		d: ($ui__input_obj_x || $ui__input_content__OR__input_obj_x) && input.content,
 		f: ($ui__input_content || $ui__input_content__OR__input_obj_x) && input.obj?.x
@@ -31,7 +31,7 @@ var template_default = _template("a", (input) => {
 			$ui__input_a && _patch_write($scope1_id, "xd", x);
 			_html(`<i>${_text_mark($scope1_id, "a", input.b, 1, $scope0_reason, 2)}</i><p>${_text_mark($scope1_id, "b", input.a + x, 1, (2 | $uf__input_a) << 1, 0)}</p>`);
 			$cg__input_b && _patch_render($scope1_id, "a0");
-			_patch_render($scope1_id, "a1", [_filled_guard($scope0_reason, 3) && ">f", "d"], (2 | $uf__input_a) << 1, 0);
+			_patch_render($scope1_id, "a1", "d" + (_filled_guard($scope0_reason, 3) ? " >f" : ""), (2 | $uf__input_a) << 1, 0);
 			_subscribe($ui__input_a && $input_a__closures, _subscribe(_unfilled_if($scope0_reason, 2) && $input_b__closures, _scope($scope1_id, {
 				d: $ui__input_a && x,
 				_: (_write_if($scope0_reason, 0) || _write_if($scope1_reason, 0)) && _scope_with_id($scope0_id)

@@ -33,7 +33,7 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 					const $scope2_id = _scope_id();
 					_html(`<i>${_text_mark($scope2_id, "#text/0", input.a + ":" + JSON.stringify(b), 1, $scope0_reason, 2)}</i>`);
 					_unfilled_if($scope0_reason, 6) && _patch_subscribe($scope2_id, "__tests__/tags/panel.marko_2_input_a#0:5/subscribe");
-					_patch_render($scope2_id, "__tests__/tags/panel.marko_2_input_a#0:5_b#1:2/setup", [_filled_guard($scope0_reason, 6) && ">>input_a", _filled_guard($scope0_reason, 5) && ">>input_b"], $scope0_reason, 2);
+					_patch_render($scope2_id, "__tests__/tags/panel.marko_2_input_a#0:5_b#1:2/setup", ((_filled_guard($scope0_reason, 6) ? " >>input_a" : "") + (_filled_guard($scope0_reason, 5) ? " >b" : "")).slice(1), $scope0_reason, 2);
 					_subscribe(_unfilled_if($scope0_reason, 6) && $input_a__closures, _scope($scope2_id, { _: $wi__input_show__OR__input_b__OR__input_a && _scope_with_id($scope1_id) }, "__tests__/tags/panel.marko", "9:6"), _client_guard($scope0_reason, 6) && "__tests__/tags/panel.marko_2_input_a#0:5/subscribe");
 					return 0;
 				}
@@ -57,7 +57,7 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 	}, "__tests__/tags/panel.marko", 0, {
 		input_b: ["input.b"],
 		input_a: ["input.a"]
-	}) || ($fg__input_b && _patch_write($scope0_id, "PatchMarkedWrite:input_b", input.b, !$sg__input_b), $fg__input_a && $ui__input_show__OR__input_b && _patch_write($scope0_id, "PatchMarkedWrite:input_a", input.a, !_server_guard($scope0_reason, 6)));
+	}) || ($fg__input_b && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_b", input.b, !$sg__input_b), $fg__input_a && $ui__input_show__OR__input_b && _patch_write($scope0_id, "PatchMarkedWrite:input_a", input.a, !_server_guard($scope0_reason, 6)));
 });
 
 // template.marko

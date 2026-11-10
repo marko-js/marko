@@ -37,14 +37,14 @@ const $Child_withLoadAssets = withLoadAssets(() => child_default, "__tests__/chi
 const $setup = _shell_setup([[], ["__tests__/template.marko_0"]], ["#childScope/3>", $setup$1]);
 _shells({ "__tests__/template.marko": `__tests__/template.marko${_shell_marker($setup)};${((_w0) => ` D l%b/${_w0}&b`)($walks$1)};${((_w0) => `<button> </button><!>${_w0}<!>`)($template$1)}` });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_label = _server_guard($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const item = { label: input.label };
 	let count = 0;
 	_html(`<button>${_text_mark($scope0_id, "#text/1", count)}</button>${_el_mark($scope0_id, "#button/0")}`);
 	_set_scope_reason(_updates_from($scope0_reason, 0) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/3", 0);
-	$Child_withLoadAssets({ item: _patch_live($childScope, item, $scope0_id, "input_label") });
+	$Child_withLoadAssets({ item });
 	_patch_child_end();
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
@@ -54,5 +54,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, "__tests__/template.marko", 0, {
 		item: "3:8",
 		count: "4:6"
-	}) || ($fg__input_label && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !$sg__input_label), $fg__input_label && _patch_write($scope0_id, "PatchMarkedWrite:item", item, !$sg__input_label));
+	}) || _filled_guard($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:item", item, !_server_guard($scope0_reason, 0));
 }, 1);

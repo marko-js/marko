@@ -4,7 +4,7 @@
   "PatchLoop:#text/0": [{
     "PatchMarkedWrite:v": "b",
     "PatchChild:#childScope/0": {
-      "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-row-param-shadowed/tags/label.marko_0_get#3": "get",
+      "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-row-param-shadowed/tags/label.marko_0_get#3",
       "PatchBind:get": "^packages/runtime-tags/src/__tests__/fixtures/patch-row-param-shadowed/template.marko_1/get"
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-row-param-shadowed/template.marko_1*shell"]
@@ -16,7 +16,7 @@
   "PatchLoop:#text/0": [{
     "PatchMarkedWrite:v": "b",
     "PatchChild:#childScope/0": {
-      "PatchEffect:packages/runtime-tags/src/__tests__/fixtures/patch-row-param-shadowed/tags/label.marko_0_get#3": "get",
+      "PatchEffect:": "packages/runtime-tags/src/__tests__/fixtures/patch-row-param-shadowed/tags/label.marko_0_get#3",
       "PatchBind:get": "^packages/runtime-tags/src/__tests__/fixtures/patch-row-param-shadowed/template.marko_1/get"
     }
   }, "packages/runtime-tags/src/__tests__/fixtures/patch-row-param-shadowed/template.marko_1*shell"]

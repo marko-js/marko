@@ -39,7 +39,7 @@ var template_default = _template("a", (input) => {
 	_html(`<button>t</button>${_el_mark($scope0_id, "b")}</main>`);
 	_script($scope0_id, "a3");
 	$fg__input_title && _patch_render($scope0_id, "a1", "e");
-	$fg__input_title && _patch_render($scope0_id, "a2", ["f", "e"]);
+	$fg__input_title && _patch_render($scope0_id, "a2", "f e");
 	_scope($scope0_id, {
 		e: input.title,
 		f: tag,

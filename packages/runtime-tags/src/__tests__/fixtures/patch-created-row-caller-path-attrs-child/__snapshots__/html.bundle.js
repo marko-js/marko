@@ -32,7 +32,7 @@ var navx_default = _template("c", (input) => {
 		icon_default({ name: item.icon });
 		_patch_child_end();
 		_html(`<span>${_text_mark($scope1_id, "c", item.label, 1, $scope0_reason, 1)}</span></a>${_el_mark($scope1_id, "a", _updates_from($scope0_reason, 0) || $uf__input_items)}`);
-		_patch_render($scope1_id, "c0", [_filled_guard($scope0_reason, 2) && ">f", $fg__input_items && "f"], $scope0_reason, 0);
+		_patch_render($scope1_id, "c0", ((_filled_guard($scope0_reason, 2) ? " >f" : "") + ($fg__input_items ? " f" : "")).slice(1), $scope0_reason, 0);
 		_scope($scope1_id, {
 			f: ($ui__input_path || _unfilled_if($scope0_reason, 0)) && item?.href,
 			_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id),

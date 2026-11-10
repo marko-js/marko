@@ -18,7 +18,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, "#input/0", $scope1_id, "input", 0, $scope1_reason, 3)}>${_el_mark($scope1_id, "#input/0")}`);
 		_script($scope1_id, "__tests__/template.marko_1_attrs#6");
 		_script($scope1_id, "__tests__/template.marko_1");
-		_patch_render($scope1_id, "__tests__/template.marko_1_value#3_valueChange#4/setup", [_filled_guard($scope1_reason, 1) && "value", $fg__valueChange && "valueChange"], $scope1_reason, 0);
+		_patch_render($scope1_id, "__tests__/template.marko_1_value#3_valueChange#4/setup", ((_filled_guard($scope1_reason, 1) ? " value" : "") + ($fg__valueChange ? " valueChange" : "")).slice(1), $scope1_reason, 0);
 		_scope($scope1_id, {
 			value: $ui__value__OR__valueChange && value,
 			valueChange: $ui__value__OR__valueChange && valueChange

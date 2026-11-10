@@ -69,7 +69,7 @@ var template_default = _template("a", (input) => {
 	$fg__input_promise && $cg__input_show && _patch_render($scope0_id, "a7", "g");
 	$fg__input_label && $cg__input_show && _patch_subscribers($scope0_id, "a9", "h");
 	_patch_render($scope0_id, "a10", $fg__input_other && "i", $scope0_reason, 5);
-	_patch_render($scope0_id, "a11", [$fg__input_label && "h", $fg__input_other && "m"]);
+	_patch_render($scope0_id, "a11", (($fg__input_label ? " h" : "") + ($fg__input_other ? " m" : "")).slice(1));
 	_scope($scope0_id, {
 		g: ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.promise,
 		h: input.label,

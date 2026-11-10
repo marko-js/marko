@@ -32,7 +32,7 @@ var template_default = _template("a", (input) => {
 		_html(`<p>${_text_mark($scope2_id, "a", input.fail ? boom(new Error(input.msg)) : "ok", 1, $scope0_reason, 0)}</p>`);
 		_unfilled_if($scope0_reason, 2) && _patch_subscribe($scope2_id, "a2");
 		_unfilled_if($scope0_reason, 3) && _patch_subscribe($scope2_id, "a3");
-		_patch_render($scope2_id, "a4", [_filled_guard($scope0_reason, 2) && ">g", _filled_guard($scope0_reason, 3) && ">h"], $scope0_reason, 0);
+		_patch_render($scope2_id, "a4", ((_filled_guard($scope0_reason, 2) ? " >g" : "") + (_filled_guard($scope0_reason, 3) ? " >h" : "")).slice(1), $scope0_reason, 0);
 		_subscribe(_unfilled_if($scope0_reason, 3) && $input_msg__closures, _subscribe(_unfilled_if($scope0_reason, 2) && $input_fail__closures, _scope($scope2_id, { _: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id) }), _client_guard($scope0_reason, 2) && "a2"), _client_guard($scope0_reason, 3) && "a3");
 	}, void 0, (err) => {
 		_scope_reason();

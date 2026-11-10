@@ -24,7 +24,7 @@ var tree_default = /*@__PURE__*/ _template("__tests__/tags/tree.marko", $templat
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `<!>${_w0}`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&`)($walks$1);
-const $getTitle2__script = _script("__tests__/template.marko_0_getTitle#4", ($scope) => console.log("run", $scope.getTitle()));
+const $getTitle2__script = _script_patch("__tests__/template.marko_0_getTitle#4 getTitle input_title", ($scope) => console.log("run", $scope.getTitle()));
 const $getTitle2 = /*@__PURE__*/ _const("getTitle", ($scope) => {
 	$input_get($scope["#childScope/0"], $scope.getTitle);
 	$getTitle2__script($scope);

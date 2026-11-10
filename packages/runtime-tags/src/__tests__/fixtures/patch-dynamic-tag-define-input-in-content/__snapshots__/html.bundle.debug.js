@@ -46,7 +46,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_dynamic_tag($scope1_id, "#text/0", input.useA ? Card : Other, { record: input.record }, 1, 0, 0, $wg__input_useA__OR__input_record, $scope0_reason, 0);
 		!$cg__input_useA__OR__input_record && _unfilled_if() && _patch_write($scope0_id, "PatchWrite:Card", Card);
 		!$cg__input_useA__OR__input_record && _unfilled_if() && _patch_write($scope0_id, "PatchWrite:Other", Other);
-		_patch_render($scope1_id, "__tests__/template.marko_1_input_useA#0:3_input_record#0:4_Card#0:5_Other#0:6/setup", [_filled_guard($scope0_reason, 1) && ">input_useA", _filled_guard($scope0_reason, 2) && ">input_record"], $scope0_reason, 0);
+		_patch_render($scope1_id, "__tests__/template.marko_1_input_useA#0:3_input_record#0:4_Card#0:5_Other#0:6/setup", ((_filled_guard($scope0_reason, 1) ? " >input_useA" : "") + (_filled_guard($scope0_reason, 2) ? " >input_record" : "")).slice(1), $scope0_reason, 0);
 		_write_if($scope0_reason, 0) && _subscribe(_unfilled_if($scope0_reason, 2) && $input_record__closures, _subscribe(_unfilled_if($scope0_reason, 1) && $input_useA__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "7:2"), _client_guard($scope0_reason, 1) && "__tests__/template.marko_1_input_useA#0:3/subscribe", $wg__input_useA__OR__input_record), _client_guard($scope0_reason, 2) && "__tests__/template.marko_1_input_record#0:4/subscribe", $wg__input_useA__OR__input_record);
 	}, $scope0_id) });
 	_patch_child_end();

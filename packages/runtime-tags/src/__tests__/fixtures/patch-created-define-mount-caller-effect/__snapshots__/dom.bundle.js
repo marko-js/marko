@@ -1,5 +1,5 @@
 // template.marko
-const $Info_content__input_page__OR__label__script = _script("a1", ($scope) => console.log("info", $scope.c, $scope._.g));
+const $Info_content__input_page__OR__label__script = _script_patch("a1 >g c", ($scope) => console.log("info", $scope.c, $scope._.g));
 const $Info_content__input_page__OR__label = /*@__PURE__*/ _or_patch("a3", 3, $Info_content__input_page__OR__label__script);
 const $Info_content__label = /*@__PURE__*/ _const(2, $Info_content__input_page__OR__label);
 const $count = _let(9, ($scope) => {

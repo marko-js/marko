@@ -38,7 +38,7 @@ var template_default = _template("a", (input) => {
 			_scope_reason();
 			const $scope2_id = _scope_id();
 			_html(`<p>${_text_mark($scope2_id, "a", check(input.title, input.fail), $wg__input_title__OR__input_fail)}</p>`);
-			_patch_render($scope2_id, "a0", [_filled_guard($scope0_reason, 1) && ">>d", _filled_guard($scope0_reason, 2) && ">>e"], $scope0_reason, 0);
+			_patch_render($scope2_id, "a0", ((_filled_guard($scope0_reason, 1) ? " >>d" : "") + (_filled_guard($scope0_reason, 2) ? " >>e" : "")).slice(1), $scope0_reason, 0);
 			_subscribe($wi__input_fail && $input_fail__closures, _subscribe($wi__input_title && $input_title__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), _client_guard($scope0_reason, 1) && "a1", $wg__input_title__OR__input_fail), _client_guard($scope0_reason, 2) && "a2", $wg__input_title__OR__input_fail);
 			$wg__input_title__OR__input_fail || (_write_guard($scope0_reason, 1) || _write_guard($scope0_reason, 2)) && _resume_branch($scope2_id);
 		}, void 0, (err) => {

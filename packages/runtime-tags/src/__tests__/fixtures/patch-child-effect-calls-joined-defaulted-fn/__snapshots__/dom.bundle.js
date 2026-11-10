@@ -1,5 +1,5 @@
 // tags/label-view.marko
-const $h2__script = _script("b1", ($scope) => {
+const $h2__script = _script_patch("b1 i", ($scope) => {
 	$scope.a.textContent = $scope.i();
 	console.log("run", $scope.i());
 });

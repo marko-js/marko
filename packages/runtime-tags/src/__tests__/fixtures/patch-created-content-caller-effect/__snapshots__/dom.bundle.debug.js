@@ -17,7 +17,7 @@ var wrap_default = /*@__PURE__*/ _template("__tests__/tags/wrap.marko", $templat
 // tags/child.marko
 const $template$1 = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$2);
 const $walks$1 = /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c");
-const $body_content__input_count__script = _script("__tests__/tags/child.marko_1_input_count#0:4", ($scope) => console.log("content count", $scope._.input_count));
+const $body_content__input_count__script = _script_patch("__tests__/tags/child.marko_1_input_count#0:4 >input_count", ($scope) => console.log("content count", $scope._.input_count));
 const $body_content__input_count = /*@__PURE__*/ _closure_get_patch("__tests__/tags/child.marko_1_input_count#0:4/subscribe", "input_count/5", $body_content__input_count__script, 0, "__tests__/tags/child.marko_0_input_count#4/subscribers", 0);
 const $body_content__setup = $body_content__input_count;
 const $body_content = _content("__tests__/tags/child.marko_1*content", "<p>body</p>", 0, $body_content__setup);

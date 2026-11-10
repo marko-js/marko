@@ -29,7 +29,7 @@ const $await_content2__dynamicTag = /*@__PURE__*/ _dynamic_tag(1, $inputinnerCar
 const $await_content2__input_inner = /*@__PURE__*/ _closure_get_patch("a5", 10, ($scope) => $await_content2__dynamicTag($scope, $scope._._._.g ? card_default : "section"), ($scope) => $scope._._._, "a14", 0);
 const $await_content2__setup = $await_content2__input_inner;
 const $await_content2__w__closure = /*@__PURE__*/ _closure($inputinnerCardsection_content__w);
-const $await_content2__w__script = _script("a3", ($scope) => console.log("w", $scope.d));
+const $await_content2__w__script = _script_patch("a3 d", ($scope) => console.log("w", $scope.d));
 const $await_content2__w = /*@__PURE__*/ _const(3, ($scope) => {
 	$await_content2__w__closure($scope);
 	_text($scope.a, $scope.d);

@@ -40,8 +40,8 @@ var card_default = _template("b", (input) => {
 		_dynamic_tag($scope1_id, "a", x ? keeper_default : "div", { content: c }, 1, 0, 0, $wg__input, $scope0_reason, 0);
 		$ui__input_p && _patch_write($scope1_id, "wf", c, 1);
 		_unfilled_if($scope0_reason, 0) && _patch_subscribe($scope1_id, "b0");
-		_patch_render($scope1_id, "b1", [$fg__input && ">c", $fg__input_p && "c"], $scope0_reason, 0);
-		_patch_render($scope1_id, "b2", [$fg__input_p && "c", $fg__input && "f"], $scope0_reason, 0);
+		_patch_render($scope1_id, "b1", (($fg__input ? " >c" : "") + ($fg__input_p ? " c" : "")).slice(1), $scope0_reason, 0);
+		_patch_render($scope1_id, "b2", (($fg__input_p ? " c" : "") + ($fg__input ? " f" : "")).slice(1), $scope0_reason, 0);
 		$wi__input && _subscribe($ui__input && $input__closures, _scope($scope1_id, {
 			c: $ui__input && x,
 			f: ($ui__input_p || $ui__input) && c
@@ -69,7 +69,7 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id, ($scope) => $scope0_page ? [{ g: input.note }] : []), 0, $wg__input_on__OR__input_p, $scope0_reason, 0, 0, void 0, 0, 0, "a0");
 	_html("</main>");
 	$fg__input_note && _patch_subscribers($scope0_id, "a2", "g");
-	_patch_render($scope0_id, "a3", [$fg__input_on && "d", $fg__input_p && "e"], $scope0_reason, 0);
+	_patch_render($scope0_id, "a3", (($fg__input_on ? " d" : "") + ($fg__input_p ? " e" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		d: ($ui__input_p || $ui__input_on__OR__input_p) && input.on,
 		e: ($ui__input_on || $ui__input_on__OR__input_p) && input.p,

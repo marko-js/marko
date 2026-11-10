@@ -11,7 +11,7 @@ var template_default = _template("a", (input) => {
 		let n = 0;
 		_html(`<button>${_text_mark($scope1_id, "b", show ? label + n : "-")}</button>${_el_mark($scope1_id, "a")}`);
 		_script($scope1_id, "a1");
-		_patch_render($scope1_id, "a2", ["e", "f"]);
+		_patch_render($scope1_id, "a2", "e f");
 		_scope($scope1_id, {
 			e: show,
 			f: label,
@@ -22,7 +22,7 @@ var template_default = _template("a", (input) => {
 		show: input.show,
 		label: input.label
 	}, 1, 0, 0, $wg__input_show__OR__input_label, $scope0_reason, 0, 0, 0, 0);
-	_patch_render($scope0_id, "a3", [$fg__input_show && "d", $fg__input_label && "e"], $scope0_reason, 0);
+	_patch_render($scope0_id, "a3", (($fg__input_show ? " d" : "") + ($fg__input_label ? " e" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		d: ($ui__input_label || $ui__input_show__OR__input_label) && input.show,
 		e: ($ui__input_show || $ui__input_show__OR__input_label) && input.label,

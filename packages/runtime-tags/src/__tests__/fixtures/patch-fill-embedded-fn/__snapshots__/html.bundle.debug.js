@@ -22,7 +22,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id, "#text/0", 1, 1, 0, 0, 1);
 	_html(`<button>+</button>${_el_mark($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	$fg__input_title && _patch_render($scope0_id, "__tests__/template.marko_1_bag#0:6/setup", ["mk", "input_title"]);
+	$fg__input_title && _patch_render($scope0_id, "__tests__/template.marko_1_bag#0:6/setup", "bag input_title");
 	_scope($scope0_id, {
 		input_title: input.title,
 		bag,
@@ -31,5 +31,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_title: ["input.title"],
 		bag: "2:8",
 		open: "3:6"
-	}) || ($fg__input_title && _patch_write($scope0_id, "PatchMarkedWrite:mk", mk, !$sg__input_title), $fg__input_title && _patch_write($scope0_id, "PatchMarkedWrite:bag", bag, !$sg__input_title));
+	}) || $fg__input_title && _patch_write($scope0_id, "PatchMarkedWrite:bag", bag, !$sg__input_title);
 }, 1);

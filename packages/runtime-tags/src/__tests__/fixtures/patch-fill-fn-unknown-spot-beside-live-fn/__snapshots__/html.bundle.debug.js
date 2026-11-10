@@ -47,7 +47,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_client_guard($scope0_reason, 0) && _patch_render($scope1_id, "__tests__/template.marko_1_o_key#0:11/setup");
 			_client_guard($scope0_reason, 1) && _patch_render($scope1_id, "__tests__/template.marko_1_first#0:13/setup");
 			_client_guard($scope0_reason, 4) && _patch_render($scope1_id, "__tests__/template.marko_1_tag#0:14/setup");
-			_patch_render($scope1_id, "__tests__/template.marko_1_key#0:8_o#0:10/setup", [_filled_guard($scope0_reason, 3) && ">key", _filled_guard($scope0_reason, 4) && ">input_title"], $scope0_reason, 0);
+			_patch_render($scope1_id, "__tests__/template.marko_1_key#0:8_o#0:10/setup", ((_filled_guard($scope0_reason, 3) ? " >key" : "") + (_filled_guard($scope0_reason, 0) ? " >o" : "")).slice(1), $scope0_reason, 0);
 			_scope($scope1_id, {
 				"#childScope/0": _write_if($scope0_reason, 0) && _existing_scope($childScope),
 				"#childScope/1": _write_if($scope0_reason, 1) && _existing_scope($childScope2),
@@ -59,12 +59,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(`<button>t</button>${_el_mark($scope0_id, "#button/1")}</main>`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	$fg__input_key && _patch_render($scope0_id, "__tests__/template.marko_1_key#0:8/setup", "key");
-	$fg__input_key__OR__input_title && _patch_render($scope0_id, "__tests__/template.marko_1_o#0:10/setup", [$fg__input_title && "input_title", $fg__input_key && "key"]);
+	$fg__input_key__OR__input_title && _patch_render($scope0_id, "__tests__/template.marko_1_o#0:10/setup", "o");
 	$fg__input_key__OR__input_title && _patch_render($scope0_id, "__tests__/template.marko_1_o_key#0:11/setup", "o_key");
 	$fg__input_title__OR__input_pre && _patch_render($scope0_id, "__tests__/template.marko_1_first#0:13/setup", "first");
-	$fg__input_title && _patch_render($scope0_id, "__tests__/template.marko_1_tag#0:14/setup", ["tag", "input_title"]);
-	_patch_render($scope0_id, "__tests__/template.marko_0_input_title#5_input_pre#6/setup", [$fg__input_title && "input_title", $fg__input_pre && "input_pre"], $scope0_reason, 1);
-	_patch_render($scope0_id, "__tests__/template.marko_0_input_title#5_key#8/setup", [$fg__input_title && "input_title", $fg__input_key && "key"], $scope0_reason, 0);
+	$fg__input_title && _patch_render($scope0_id, "__tests__/template.marko_1_tag#0:14/setup", "tag input_title");
+	_patch_render($scope0_id, "__tests__/template.marko_0_input_title#5_input_pre#6/setup", (($fg__input_title ? " input_title" : "") + ($fg__input_pre ? " input_pre" : "")).slice(1), $scope0_reason, 1);
+	_patch_render($scope0_id, "__tests__/template.marko_0_input_title#5_key#8/setup", (($fg__input_title ? " input_title" : "") + ($fg__input_key ? " key" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		input_title: input.title,
 		input_pre: $wi__input_title && input.pre,
