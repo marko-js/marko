@@ -16,6 +16,7 @@ import {
 } from "./reasons";
 import { callRuntime, type HTMLRuntimeHelpers } from "./runtime";
 import {
+  findParamReasonGroupIndex,
   getParamReasonGroupIndex,
   isOptionalBranch,
   isSameOrAncestorSection,
@@ -360,11 +361,12 @@ function isCrossSection(section: Section, reason: Sources) {
 }
 
 // The constant every render of a `<define>` body's group passes, where each call passes
-// the same; a recursive call's is no constant. Asked by the body's own group.
+// the same; none for a recursive call, or params no guard groups (a function's readers').
 function getStaticGroupBit(body: Section, group: ParamReasonGroup) {
-  return getBodyGroupBit(
-    body.paramReasonGroups![getParamReasonGroupIndex(body, group)],
-  );
+  const index = findParamReasonGroupIndex(body, group);
+  return index === -1
+    ? undefined
+    : getBodyGroupBit(body.paramReasonGroups![index]);
 }
 
 const [getBodyGroupBit] = createAnalysisMemo((group: ParamReasonGroup) => {

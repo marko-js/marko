@@ -1,0 +1,10 @@
+<define/D|{ show, inner, v, w }|>
+  <if=show>
+    <const/f=(x) => x + "!"/>
+    <if=inner>
+      <let/y=f(v)/>
+      <p>${y + w}</p>
+    </if>
+  </if>
+</define>
+<D show=input.show inner=input.inner v=input.v w=input.w/>
