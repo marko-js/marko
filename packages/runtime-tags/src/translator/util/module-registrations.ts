@@ -320,9 +320,12 @@ function resolveTemplateReason(exprExtras: Set<t.NodeExtra>) {
   for (const exprExtra of exprExtras) {
     const extra = getCanonicalExpr(exprExtra);
     if (!extra.isEffect) {
+      // A dynamic tag reads its attributes as one; one its known templates read
+      // derives where the template goes past the call.
+      const passed = exprExtra.derives ? exprExtra : extra;
       reason = mergeSources(
         reason,
-        isPatch() && (landsRetainedAsInput(extra) || landsInitialValue(extra))
+        isPatch() && (landsRetainedAsInput(passed) || landsInitialValue(passed))
           ? ALWAYS
           : getReasonForExpr(extra),
       );

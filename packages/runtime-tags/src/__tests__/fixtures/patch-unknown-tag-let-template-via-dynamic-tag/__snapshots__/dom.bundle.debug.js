@@ -46,9 +46,6 @@ var frame_default = /*@__PURE__*/ _template("__tests__/tags/frame.marko", $templ
 // tags/v:item.marko.register-default.js
 _resumed["__tests__/tags/item.marko"] = item_default;
 
-// tags/v:frame.marko.register-default.js
-_resumed["__tests__/tags/frame.marko"] = frame_default;
-
 // template.marko
 const $template = "<!><!><!>";
 const $walks = "b%c";

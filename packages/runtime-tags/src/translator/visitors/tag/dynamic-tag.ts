@@ -38,6 +38,7 @@ import {
 import { isOptimize, isOutputHTML, isPatch } from "../../util/marko-config";
 import { analyzeAttributeTags } from "../../util/nested-attribute-tags";
 import { concat, type Opt, toArray } from "../../util/optional";
+import { getParamsTreeAt } from "../../util/params-tree";
 import {
   keepsSeededMarker,
   linkHolePatcher,
@@ -48,11 +49,16 @@ import {
   getExprRootGroupArgs,
   getRendererGroupArgs,
 } from "../../util/patch/writers";
-import { addAlwaysReason, addReasonExprs } from "../../util/reasons";
+import {
+  addAlwaysReason,
+  addReasonExprs,
+  type KnownExprs,
+} from "../../util/reasons";
 import {
   getAllTagReferenceNodes,
   isTagVarUsed,
   mergeReferences,
+  setDerivedFrom,
   trackParamsReferences,
   trackVarReferences,
   getReferencedBindings,
@@ -262,6 +268,7 @@ export default {
           });
         }
       }
+      deriveKnownTemplateInputs(node, tagExtra);
       trackParamsReferences(tagBody, BindingType.param);
       if (usesVar) addAlwaysReason(nodeBinding);
       addReasonExprs(ensureSlot(nodeBinding), tagExtra);
@@ -797,6 +804,30 @@ function getDynamicTagInputBindings(tagExtra: t.MarkoTagExtra): Opt<Binding> {
     if (inputBinding) inputBindings = concat(inputBindings, inputBinding);
   }
   return inputBindings;
+}
+
+// Each attribute derives the input property the name's templates read it as, as at
+// a known tag, though the tag reads its attributes as one.
+function deriveKnownTemplateInputs(
+  node: t.MarkoTag,
+  tagExtra: t.MarkoTagExtra,
+) {
+  const exprs: KnownExprs = { value: tagExtra };
+  for (const childExtra of tagExtra.tagNameTemplates || []) {
+    const inputTree = childExtra.paramsTree?.properties?.[0];
+    if (!inputTree) continue;
+    for (const attr of node.attributes) {
+      const tree =
+        attr.type === "MarkoAttribute" && getParamsTreeAt(inputTree, attr.name);
+      if (tree) {
+        setDerivedFrom(
+          tree === true ? inputTree.binding : tree.binding,
+          (attr.value.extra ??= {}),
+          exprs,
+        );
+      }
+    }
+  }
 }
 
 // Whether the child's variable is wired back to this tag on resume: only once
