@@ -149,6 +149,7 @@ import {
   getBranchWriteReason,
   getWriteReason,
   isBranchAlwaysMarked,
+  ifEver,
   isSameReason,
   getSlotWriteReason,
   getSectionWriteReason,
@@ -1961,19 +1962,21 @@ export function writeHTMLResumeStatements(
               t.stringLiteral(
                 getResumeRegistryId(section, closure, "subscribe"),
               );
+            // A value a patch fills can change before the subscriber resumes.
+            const resumes = ifEver(
+              resumeId && callerGroups && !fillSubscribes(closure, section)
+                ? andGuard(
+                    getCallerGroupGuard(section, "_client_guard", readSources),
+                    resumeId,
+                  )
+                : resumeId,
+            );
             return callRuntime(
               "_subscribe",
               subscribed,
               expr,
-              // A value a patch fills can change before the subscriber resumes.
-              resumeId && callerGroups && !fillSubscribes(closure, section)
-                ? t.logicalExpression(
-                    "&&",
-                    getCallerGroupGuard(section, "_client_guard", readSources)!,
-                    resumeId,
-                  )
-                : resumeId,
-              resumeId && markerGuard,
+              resumes,
+              resumes && markerGuard,
             );
           });
         }
@@ -1983,6 +1986,10 @@ export function writeHTMLResumeStatements(
 
   // A scope with client work reading `$global` keys enters their readers.
   for (const [id, unfilled] of getGlobalSignals(section)) {
+    const clientGuard =
+      unfilled === true
+        ? t.numericLiteral(1)
+        : unfilled && getCallerGroupGuard(section, "_client_guard", unfilled);
     body.push(
       t.expressionStatement(
         callRuntime(
@@ -1991,10 +1998,7 @@ export function writeHTMLResumeStatements(
           subscribesLoopOwner(section)
             ? getScopeIdIdentifier(section.parent!)
             : scopeIdIdentifier,
-          unfilled === true
-            ? t.numericLiteral(1)
-            : unfilled &&
-                getCallerGroupGuard(section, "_client_guard", unfilled),
+          ifEver(clientGuard),
         ),
       ),
     );

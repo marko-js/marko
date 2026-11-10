@@ -1,5 +1,6 @@
 import { types as t } from "@marko/compiler";
 
+import { UpdatesFrom } from "../../common/types";
 import {
   type Binding,
   getDebugNames,
@@ -54,12 +55,8 @@ const groupCheckPrefixes = {
   _filled_guard: "fg",
   _unfilled_if: "ui",
 } satisfies Partial<Record<HTMLRuntimeHelpers, string>>;
-type GroupCheck = keyof typeof groupCheckPrefixes;
+export type GroupCheck = keyof typeof groupCheckPrefixes;
 type MaskCheck = Exclude<GroupCheck, "_filled_guard" | "_unfilled_if">;
-
-export function isGroupCheck(check: string): check is GroupCheck {
-  return check in groupCheckPrefixes;
-}
 
 // Keyed by param reason group: a section's guard for a set of params is
 // that group's check, whatever else the reason reads.
@@ -222,7 +219,7 @@ export function getWriteGuard(
         );
   }
 
-  const bit = getGroupsBit(reason.param);
+  const bit = getGroupsBit(reason.param, "_write_guard");
   if (bit === 1 || (bit === 0 && !reason.global)) {
     return bit && omitUnconditional ? undefined : t.numericLiteral(bit);
   }
@@ -269,7 +266,7 @@ export function getExprIfWritten(
     return ownReason && expr;
   }
 
-  const bit = getGroupsBit(ownReason.param);
+  const bit = getGroupsBit(ownReason.param, "_write_if");
   if (bit === 1) return expr;
   if (bit === 0 && !ownReason.global) return undefined;
   return andGuard(getDynamicGuard(section, ownReason, "_write_if"), expr);
@@ -378,19 +375,8 @@ function orMaskGroup(
 export function isEverWritten(section: Section, reason: undefined | Reason) {
   const ownReason = mapBodyParams(section, reason);
   return isGuardedReason(ownReason)
-    ? !!ownReason.global ||
-        reduceParamGroups(ownReason.param, isGroupEverWritten, false)
+    ? !!ownReason.global || getGroupsBit(ownReason.param, "_write_if") !== 0
     : !!ownReason;
-}
-
-// A group every call passes as a constant is never written, in a patch build too:
-// its guards keep the check, but `0` turns on neither `_write_if` nor `_unfilled_if`.
-function isGroupEverWritten(
-  written: boolean,
-  section: Section,
-  group: ParamReasonGroup,
-) {
-  return written || getStaticGroupValue(section, group) !== 0;
 }
 
 // Whether a guard on `reason` in a known tag's template writes for every render
@@ -430,30 +416,28 @@ export function isWrittenForCall(
 // The constant a reason's guard folds to: `0` unwritten, `1` always written.
 export function getWriteBit(section: Section, reason: undefined | Reason) {
   if (!isDynamicWriteGuard(section, reason)) return reason ? 1 : 0;
-  const bit = getGroupsBit(reason.param);
+  const bit = getGroupsBit(reason.param, "_write_guard");
   // A patch build's global dimension gates a page render apart from the params.
   return bit === 0 && reason.global ? undefined : bit;
 }
 
-// `1` where some group is always written, `0` where every group never is.
-function getGroupsBit(params: Sources["param"]) {
-  return reduceParamGroups(params, addGroupBit, 0 as number | undefined);
+// `1` where some group's `check` always holds, `0` where every group's never does.
+function getGroupsBit(params: Sources["param"], check: GroupCheck) {
+  return reduceParamGroups(
+    params,
+    (bit: number | undefined, section, group) => {
+      const groupBit = getStaticGroupBit(section, group, check);
+      return bit === 1 || groupBit === 1
+        ? 1
+        : bit === 0 && groupBit === 0
+          ? 0
+          : undefined;
+    },
+    0,
+  );
 }
 
-function addGroupBit(
-  bit: number | undefined,
-  section: Section,
-  group: ParamReasonGroup,
-) {
-  const groupBit = getStaticGroupBit(section, group);
-  return bit === 1 || groupBit === 1
-    ? 1
-    : bit === 0 && groupBit === 0
-      ? 0
-      : undefined;
-}
-
-// Each param group's `check`, or-ed together, but for a group never written.
+// Each param group's `check`, or-ed together.
 function orEachParamGroup(
   params: Sources["param"],
   check: keyof typeof orGroupChecks,
@@ -464,7 +448,6 @@ function orEachParamGroup(
 const orGroupChecks = {
   _write_guard: orGroupCheck("_write_guard"),
   _write_if: orGroupCheck("_write_if"),
-  _client_guard: orGroupCheck("_client_guard"),
 };
 
 function orGroupCheck(check: MaskCheck) {
@@ -472,24 +455,41 @@ function orGroupCheck(check: MaskCheck) {
     expr: t.Expression | undefined,
     section: Section,
     group: ParamReasonGroup,
-  ) =>
-    getStaticGroupBit(section, group) === 0
-      ? expr
-      : orGuard(expr, getOrShareSectionGuard(section, group, check));
+  ) => orGuard(expr, getOrShareSectionGuard(section, group, check));
 }
 
+// A check folded to `1` holds always, so the guard does; one folded to `0` adds nothing.
 export function orGuard(guard: t.Expression | undefined, other: t.Expression) {
-  return guard ? t.logicalExpression("||", guard, other) : other;
+  return !guard || isNever(guard) || isAlways(other)
+    ? other
+    : isNever(other) || isAlways(guard)
+      ? guard
+      : t.logicalExpression("||", guard, other);
 }
 
-// A guard folded to `1` holds always.
+// A guard folded to `1` holds always and one folded to `0` never; what is never stays so.
 export function andGuard(
   guard: t.Expression | undefined | false,
   expr: t.Expression,
 ) {
-  return guard && !t.isNumericLiteral(guard, { value: 1 })
-    ? t.logicalExpression("&&", guard, expr)
-    : expr;
+  return !guard || isAlways(guard) || isNever(expr)
+    ? expr
+    : isNever(guard)
+      ? guard
+      : t.logicalExpression("&&", guard, expr);
+}
+
+// The guarded expression where it ever holds: none where a guard folds to never.
+export function ifEver(expr: t.Expression | undefined | false) {
+  return expr && !isNever(expr) ? expr : undefined;
+}
+
+export function isNever(guard: t.Expression) {
+  return t.isNumericLiteral(guard, { value: 0 });
+}
+
+export function isAlways(guard: t.Expression) {
+  return t.isNumericLiteral(guard, { value: 1 });
 }
 
 // A check of the mask alone, shared beside its group's reason.
@@ -528,6 +528,8 @@ function shareGroupCheck(
   check: GroupCheck,
 ): t.Expression {
   if (!section.paramReasonGroups) return scopeReasonIdentifier(section);
+  const bit = getStaticGroupBit(section, params, check);
+  if (bit !== undefined) return t.numericLiteral(bit);
 
   let tracking = guards.shares.get(check);
   if (!tracking) guards.shares.set(check, (tracking = createGuardShares()));
@@ -583,10 +585,34 @@ const [getBodyGroupValue] = createAnalysisMemo((group: ParamReasonGroup) => {
   return isOnlyCalled(body) ? getCallsValue(body, group) : undefined;
 }, undefined);
 
-// A plain build's checks read the write bit alone; a patch build's also read the
-// render (a patch writes no resume data) and the whole mask.
-function getStaticGroupBit(section: Section, group: ParamReasonGroup) {
-  return isPatch() ? undefined : getStaticGroupValue(section, group);
+// What `check` returns for a group every call passes the same constant, where that
+// decides it: in a plain build its write bit, in a patch build its value's answer.
+function getStaticGroupBit(
+  section: Section,
+  group: ParamReasonGroup,
+  check: GroupCheck,
+) {
+  const value = getStaticGroupValue(section, group);
+  return value === undefined || !isPatch()
+    ? value
+    : getPatchCheckBit(check, value);
+}
+
+// What a patch build's check returns for a group's value, where that decides it; others
+// also read whether a page renders, the whole mask or the render context.
+export function getPatchCheckBit(check: GroupCheck, value: number) {
+  switch (check) {
+    case "_client_guard":
+      return value & UpdatesFrom.Client;
+    case "_server_guard":
+      return +(value === UpdatesFrom.Server);
+    case "_unfilled_if":
+      return value & UpdatesFrom.Client || (value ? undefined : 0);
+    case "_filled_guard":
+      return value ? +(value === UpdatesFrom.Server) : undefined;
+    case "_write_if":
+      return value ? undefined : 0;
+  }
 }
 
 // What every call passes in its mask for the group, where each passes the same constant:

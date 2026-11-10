@@ -100,9 +100,13 @@ import {
   getGroupsConstant,
   getOrShareGroupCheck,
   getOrShareSectionGuard,
+  getPatchCheckBit,
   getWriteReason,
+  type GroupCheck,
   isDynamicWriteGuard,
-  isGroupCheck,
+  isAlways,
+  ifEver,
+  isNever,
   getSectionWriteReason,
   orGuard,
 } from "../write-guard";
@@ -213,6 +217,8 @@ export function getEffectEntryArgs(
   const group = written && getSoleCallerGroup(section, written);
   const guard =
     written && orCallerGroupGuards(section, undefined, check, written);
+  // No call's patch writes what the effect reads.
+  if (!rendered && guard && isNever(guard)) return;
   const callerSources =
     !queued && getEffectCallerSources(section, signal.referencedBindings);
   // A group the guard fills is no client group there.
@@ -225,15 +231,16 @@ export function getEffectEntryArgs(
       callerSources,
       new Set(group ? [group] : []),
     );
-  const entry = queued
-    ? t.numericLiteral(2)
-    : clientGuard
-      ? t.conditionalExpression(
-          clientGuard,
-          t.numericLiteral(2),
-          t.numericLiteral(1),
-        )
-      : undefined;
+  const entry =
+    queued || (clientGuard && isAlways(clientGuard))
+      ? t.numericLiteral(2)
+      : clientGuard
+        ? t.conditionalExpression(
+            clientGuard,
+            t.numericLiteral(2),
+            t.numericLiteral(1),
+          )
+        : undefined;
   const entryArg = entry
     ? andGuard(guard, entry)
     : guard || t.numericLiteral(1);
@@ -397,39 +404,39 @@ export function writePatchResumeStatements(
     forEach(binding.closureSections, (closureSection) => {
       if (runsClosureByWrite(binding, closureSection)) {
         const { sources } = binding;
-        body.push(
-          t.expressionStatement(
+        const render = ifEver(
+          andGuard(
+            getCallerGroupGuard(section, "_filled_guard", sources),
             andGuard(
-              getCallerGroupGuard(section, "_filled_guard", sources),
-              andGuard(
-                // A call may hand the client param-selected structure.
-                orCallerGroupGuards(
-                  section,
-                  undefined,
-                  "_client_guard",
-                  fromIter(
-                    getCallerSelectedStructure(binding, closureSection) || [],
-                  ),
+              // A call may hand the client param-selected structure.
+              orCallerGroupGuards(
+                section,
+                undefined,
+                "_client_guard",
+                fromIter(
+                  getCallerSelectedStructure(binding, closureSection) || [],
                 ),
-                callRuntime(
-                  "_patch_render",
-                  getScopeIdIdentifier(section),
-                  t.stringLiteral(
-                    getResumeRegistryId(closureSection, binding, "setup"),
-                  ),
-                  getReads(
-                    section,
-                    [binding],
-                    "_filled_guard",
-                    isGuardedReason(sources) &&
-                      !sources.global &&
-                      getSoleCallerGroup(section, sources),
-                  ),
+              ),
+              callRuntime(
+                "_patch_render",
+                getScopeIdIdentifier(section),
+                t.stringLiteral(
+                  getResumeRegistryId(closureSection, binding, "setup"),
+                ),
+                getReads(
+                  section,
+                  [binding],
+                  "_filled_guard",
+                  isGuardedReason(sources) &&
+                    !sources.global &&
+                    getSoleCallerGroup(section, sources),
                 ),
               ),
             ),
           ),
         );
+        // None where no call's patch fills the value.
+        if (render) body.push(t.expressionStatement(render));
       }
     });
   });
@@ -685,11 +692,12 @@ function getClientBranchCall(section: Section, binding: Binding) {
   return contents && t.logicalExpression("&&", contents, call);
 }
 
-// The marked write of a value a patch writes, gated like the root's writes.
+// The marked write of a value a patch writes, gated like the root's writes: none where
+// its guards fold to never.
 function buildLocalWrite(section: Section, binding: Binding) {
   const write =
     getPatchWrite(binding).write && getUnfilledPatchWrite(section, binding);
-  return write && andGuard(getFilledGuard(section, binding), write);
+  return ifEver(write && andGuard(getFilledGuard(section, binding), write));
 }
 
 // A value a patch fills every client read of: a page ships it for the
@@ -732,8 +740,7 @@ function buildUnfilledIfWritten(
 ) {
   const ownReason = mapBodyParams(section, reason);
   if (structure === false || !isDynamicWriteGuard(section, ownReason)) return;
-  return t.logicalExpression(
-    "&&",
+  return andGuard(
     getUnfilledGuard(
       section,
       ownReason.param,
@@ -1035,26 +1042,25 @@ function buildWriteGroupValue({ groups, ungated, seed }: WriteGroups) {
 // writes), or undefined when no caller group gates a write in `section`.
 export function getCallerGroupGuard(
   section: Section,
-  check: HTMLRuntimeHelpers,
+  check: GroupCheck,
   sources: Sources | undefined,
 ) {
   const write = getWriteGroups(section, sources);
   if (!write) return;
   // One caller group's check is shared, as a write guard is.
-  if (write.groups.length === 1 && !write.ungated && isGroupCheck(check)) {
+  if (write.groups.length === 1 && !write.ungated) {
     const [groupSection, group] = write.groups[0];
     return getOrShareGroupCheck(section, groupSection, group, check);
   }
-  // A constant mask the client contributes to holds both checks of its bit; the
-  // server's alone leaves `_unfilled_if` the render context.
-  if (check === "_client_guard" || check === "_unfilled_if") {
-    const value = getGroupsConstant(
-      write.groups,
-      write.ungated ? UpdatesFrom.Server : 0,
-    );
-    if (value !== undefined && value & UpdatesFrom.Client) {
-      return t.numericLiteral(1);
-    }
+  // A constant mask decides the check, as a constant group does; the server's alone
+  // leaves `_unfilled_if` the render context.
+  const value = getGroupsConstant(
+    write.groups,
+    write.ungated ? UpdatesFrom.Server : 0,
+  );
+  if (value !== undefined) {
+    const bit = getPatchCheckBit(check, value);
+    if (bit !== undefined) return t.numericLiteral(bit);
     if (value === UpdatesFrom.Server && check === "_unfilled_if") {
       return callRuntime("_unfilled_if");
     }
@@ -1072,7 +1078,7 @@ function getFilledGuard(section: Section, binding: Binding) {
 function orCallerGroupGuards(
   section: Section,
   guard: t.Expression | undefined,
-  check: HTMLRuntimeHelpers,
+  check: GroupCheck,
   list: Opt<Sources>,
   checked = new Set<ParamReasonGroup>(),
   own?: OwnParamGroup,
@@ -1093,11 +1099,11 @@ function buildGroupCheck(
   paramSection: Section,
   group: ParamReasonGroup,
   index: number,
-  check: HTMLRuntimeHelpers,
+  check: GroupCheck,
   own: OwnParamGroup | undefined,
 ) {
   const ownArg = getOwnGroupArg(own, paramSection);
-  return !ownArg && isGroupCheck(check)
+  return !ownArg
     ? getOrShareGroupCheck(section, paramSection, group, check)
     : callRuntime(check, ...getGroupArgs(paramSection, group, index), ownArg);
 }
@@ -1289,7 +1295,9 @@ function isLet(binding: Binding) {
 // A constant group's value seeds a created scope alone: a live one holds it.
 function getConstantSetup(section: Section, binding: Binding) {
   const guard = getCallerGroupGuard(section, "_server_guard", binding.sources);
-  if (guard) return t.unaryExpression("!", guard);
+  if (guard && !isAlways(guard)) {
+    return isNever(guard) ? t.numericLiteral(1) : t.unaryExpression("!", guard);
+  }
 }
 
 // What an entry depends on, as shells' hops (`>` per owner up), each where this instance's
@@ -1297,7 +1305,7 @@ function getConstantSetup(section: Section, binding: Binding) {
 function getReads(
   section: Section,
   roots: Binding[],
-  check: HTMLRuntimeHelpers,
+  check: GroupCheck,
   entryGroup?: ParamReasonGroup | false,
 ) {
   const reads: t.Expression[] = [];
@@ -1305,7 +1313,7 @@ function getReads(
     const hop = getWriteHop(section, root);
     if (hop) {
       const sources = root.sources!;
-      reads.push(
+      const read = ifEver(
         entryGroup &&
           !sources.global &&
           isGuardedReason(sources) &&
@@ -1316,6 +1324,8 @@ function getReads(
               t.stringLiteral(hop),
             ),
       );
+      // A read no call's patch fills names nothing.
+      if (read) reads.push(read);
     }
   }
   return reads.length > 1 ? t.arrayExpression(reads) : reads[0];
