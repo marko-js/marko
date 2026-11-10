@@ -15,6 +15,7 @@ import {
 } from "./bindings";
 import buildStringExpression from "./build-string-expression";
 import { createAnalysisMemo } from "./cyclic-memo";
+import { hasClientWork } from "./entry-builder";
 import { isOptimize, isPatch } from "./marko-config";
 import { forEach, some, type SortedOpt } from "./optional";
 import {
@@ -356,7 +357,7 @@ export function inCreatedCatch(section: Section) {
 // with it links the module, which registers it.
 function clientRegisters(section: Section) {
   return (
-    !!getProgram().node.extra.includesClientWork &&
+    includesClientWork(getFile()) &&
     registersOnClient(section) &&
     !includesLazyMarkup(section)
   );
@@ -368,14 +369,28 @@ export function namesRegisteredTemplates(
   section: Section,
   tagExtra: t.MarkoTagExtra,
 ) {
-  const programExtra = getProgram().node.extra;
   return (
     !!tagExtra.tagNameTemplates?.length &&
-    !!programExtra.includesClientWork &&
+    includesClientWork(getFile()) &&
     tagExtra.tagNameTemplates.every(hasRootMarkup) &&
     (registersOnClient(section) ||
       tagExtra.tagNameTemplates.every(isRegisteredImport))
   );
+}
+
+// It or a template it imports has client work (`hasClientWork`), asked in translate
+// once every template of an import cycle has analyzed.
+const [includesClientWork] = createAnalysisMemo(
+  (file: t.BabelFile): boolean =>
+    hasClientWork(file.path.node.extra) || importsClientWork(file),
+  false,
+);
+
+function importsClientWork(file: t.BabelFile) {
+  for (const tag of file.metadata.marko.analyzedTags || []) {
+    if (includesClientWork(loadFileForImport(file, tag)!)) return true;
+  }
+  return false;
 }
 
 // A template whose client template is its root shell's markup.

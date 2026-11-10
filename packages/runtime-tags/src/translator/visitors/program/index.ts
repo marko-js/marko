@@ -142,7 +142,7 @@ export default {
       // A template with no setup work lets its callers skip its setup export
       // (checked when this template translates).
       finalizeSetupWork();
-      if (isPatch()) finalizePageLinks(programExtra);
+      if (isPatch()) finalizePageLinks();
     },
   },
   translate: {

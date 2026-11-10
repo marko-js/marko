@@ -22,8 +22,6 @@ declare module "@marko/compiler/dist/types" {
     isInteractive?: boolean;
     hasClientStatement?: boolean;
     page?: boolean;
-    /** It or a template it imports has client work (`hasClientWork`). */
-    includesClientWork?: boolean;
   }
 }
 
