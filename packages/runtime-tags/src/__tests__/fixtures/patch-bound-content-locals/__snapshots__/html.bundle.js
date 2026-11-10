@@ -41,7 +41,7 @@ var template_default = _template("a", (input) => {
 				_subscribe($n__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }), "a0");
 			}, $scope1_id, () => [{ 2: item?.text }]) }));
 			const $childScope = _peek_scope_id($scope1_id, "a", 0);
-			list_default({ item: $item });
+			list_default({ item: _patch_live($childScope, $item, $scope1_id, ">f") });
 			_patch_child_end();
 			_client_guard($scope0_reason, 1) && _patch_render($scope1_id, "a2");
 			_scope($scope1_id, {

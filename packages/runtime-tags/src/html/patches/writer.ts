@@ -1026,12 +1026,14 @@ export function _resume_locals<T extends WeakKey>(
     : _base_resume_locals(val, id, locals, ownerScopeId);
 }
 
-// A patched scope write, a created scope's seed (`setup`) in its setup envelope.
+// A patched scope write, a created scope's seed (`setup`) in its setup envelope; a rest
+// copy names the object it `copies`.
 export function _patch_write(
   scopeId: number,
   key: string,
   value: unknown,
-  setup?: 1,
+  setup?: 1 | 0,
+  copies?: object,
 ) {
   const state = getState();
   if (state instanceof PatchRenderState) {
@@ -1042,7 +1044,7 @@ export function _patch_write(
       ).length,
     );
     // A built object's readers depend on its sources, which the call recorded.
-    const reads = getBuiltObjectReads(state, scopeId, value);
+    const reads = getBuiltObjectReads(state, scopeId, copies || value);
     if (reads) ((state.filledReads ??= {})[scopeId] ??= {})[accessor] = reads;
     if (setup && !inCreatable()) return "";
     const bind = bindEntry(state, scopeId, value);
@@ -1190,7 +1192,8 @@ export function _bind_resume<T extends WeakKey>(
   return _resume(val, id, scopeId);
 }
 
-// A built object a call passes its child: its readers there depend on its sources.
+// A built object a call passes its child, or a member of one: its readers there depend
+// on its sources (a member that is no object keeps its own).
 export function _patch_live<T>(
   scopeId: number,
   value: T,
@@ -1198,7 +1201,7 @@ export function _patch_live<T>(
   sources: string,
 ) {
   const state = getState();
-  if (state instanceof PatchRenderState) {
+  if (state instanceof PatchRenderState && value && typeof value === "object") {
     const args = (state.liveArgs ??= new Map());
     let values = args.get(scopeId);
     if (!values) args.set(scopeId, (values = new Map()));

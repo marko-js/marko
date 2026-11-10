@@ -35,7 +35,7 @@ var template_default = _template("a", (input) => {
 		}, "a0", { g: x }, $scope0_id)
 	}));
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
-	menu_default({ item: $item });
+	menu_default({ item: _patch_live($childScope, $item, $scope0_id, "e") });
 	_patch_child_end();
 	_html(`<p>${_text_mark($scope0_id, "b", picked)}</p>`);
 	_scope($scope0_id, { a: _existing_scope($childScope) });

@@ -45,7 +45,7 @@ var wrap_default = _template("c", (input) => {
 		}), _client_guard($scope0_reason, 2) && "c0");
 	}, $scope0_id, 0) }));
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
-	my_list_default({ row: $row });
+	my_list_default({ row: _patch_live($childScope, $row, $scope0_id, "d") });
 	_patch_child_end();
 	_script($scope0_id, "c3", 0);
 	$fg__input_label && _client_guard($scope0_reason, 1) && _patch_subscribers($scope0_id, "c4", "e");

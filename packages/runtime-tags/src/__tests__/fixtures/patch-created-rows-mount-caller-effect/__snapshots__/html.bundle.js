@@ -28,7 +28,7 @@ var template_default = _template("a", (input) => {
 	let $item;
 	forOf(input.items, (x) => $item = attrTags($item, { label: x.name }));
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
-	list_default({ item: $item });
+	list_default({ item: _patch_live($childScope, $item, $scope0_id, "d") });
 	_patch_child_end();
 	_scope($scope0_id, { a: _existing_scope($childScope) });
 }, 1);

@@ -138,7 +138,7 @@ declare module "@marko/compiler/dist/types" {
      * body, or a `<meta>`'s attribute), so its effect never reads it. */
     rendersContent?: true;
     /** Some branch of it builds a new object each time it runs (an object or
-     * array literal); set once per expression root. */
+     * array literal, an attribute tag); set once per expression root. */
     buildsObject?: boolean;
     /** Its value renders into its tag's node (an attribute, a text, a comment's
      * or a style's), which the node's slot lists among its reason expressions. */
@@ -959,7 +959,7 @@ function mergeInto(
   const fnReadsByExpression = getFunctionReadsByExpression();
   let reads = readsByExpression.get(targetExtra);
   let exprFnReads = fnReadsByExpression.get(targetExtra);
-  let { isEffect, retained } = targetExtra;
+  let { isEffect, retained, buildsObject } = targetExtra;
 
   for (const node of nodes) {
     if (!node) continue;
@@ -971,6 +971,7 @@ function mergeInto(
       const additionalReads = readsByExpression.get(extra);
       const additionalExprFnReads = fnReadsByExpression.get(extra);
       isEffect ||= extra.isEffect;
+      buildsObject ||= extra.buildsObject;
       if (additionalReads) {
         forEach(additionalReads, (read) => {
           const bindingReads = read.binding.reads;
@@ -1006,6 +1007,7 @@ function mergeInto(
   readsByExpression.set(targetExtra, reads);
   targetExtra.isEffect = isEffect;
   targetExtra.retained = retained;
+  targetExtra.buildsObject = buildsObject;
   targetExtra.spreadFrom = getSpreadOnlyBindings(reads);
   targetExtra.section = section;
 

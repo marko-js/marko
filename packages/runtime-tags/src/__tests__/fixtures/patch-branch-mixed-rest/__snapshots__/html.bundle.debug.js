@@ -26,5 +26,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, "__tests__/template.marko", 0, {
 		count: "1:6",
 		rest: "2:20"
-	}) || $fg__rest && _patch_write($scope0_id, "PatchMarkedWrite:rest", rest, !_server_guard($scope0_reason, 1));
+	}) || $fg__rest && _patch_write($scope0_id, "PatchMarkedWrite:rest", rest, !_server_guard($scope0_reason, 1), input);
 }, 1);

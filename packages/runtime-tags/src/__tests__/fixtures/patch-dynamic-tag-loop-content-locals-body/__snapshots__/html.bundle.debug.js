@@ -76,7 +76,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 1);
 	tabs_default({
 		selected: input.selected,
-		tab: $tab
+		tab: _patch_live($childScope, $tab, $scope0_id, "input_items")
 	});
 	_patch_child_end();
 	$fg__input_wrap && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_wrap#5/subscribers", "input_wrap");

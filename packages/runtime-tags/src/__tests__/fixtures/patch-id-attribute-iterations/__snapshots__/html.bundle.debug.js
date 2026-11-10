@@ -77,7 +77,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope($scope6_id, { "#childScope/0": _existing_scope($childScope4) }, "__tests__/template.marko", "6:26");
 	}, $scope0_id, 0) }));
 	const $childScope5 = _peek_scope_id($scope0_id, "#childScope/0", 5);
-	Content.content({ item: $item });
+	Content.content({ item: _patch_live($childScope5, $item, $scope0_id, "input_items input_record input_end") });
 	_patch_child_end();
 	_patch_render($scope0_id, "__tests__/template.marko_0_input_items#3_input_record#4_input_end#5/setup", [
 		$fg__input_items && "input_items",

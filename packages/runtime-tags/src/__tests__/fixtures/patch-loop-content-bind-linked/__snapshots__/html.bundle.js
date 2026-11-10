@@ -60,7 +60,7 @@ var template_default = _template("a", (input) => {
 		onPick: _bind_resume(function() {
 			console.log(input.note);
 		}, "a0", $scope0_id),
-		item: $item
+		item: _patch_live($childScope, $item, $scope0_id, "e")
 	});
 	_patch_child_end();
 	$fg__input_note && _patch_subscribers($scope0_id, "a3", "d");

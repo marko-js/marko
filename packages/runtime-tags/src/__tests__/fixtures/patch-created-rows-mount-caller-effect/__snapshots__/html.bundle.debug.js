@@ -31,7 +31,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let $item;
 	forOf(input.items, (x) => $item = attrTags($item, { label: x.name }));
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
-	list_default({ item: $item });
+	list_default({ item: _patch_live($childScope, $item, $scope0_id, "input_items") });
 	_patch_child_end();
 	_scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", 0);
 }, 1);

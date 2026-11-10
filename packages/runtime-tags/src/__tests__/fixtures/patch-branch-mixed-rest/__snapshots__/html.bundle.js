@@ -13,5 +13,5 @@ var template_default = _template("a", (input) => {
 	_scope($scope0_id, {
 		f: count,
 		h: rest
-	}) || $fg__rest && _patch_write($scope0_id, "xh", rest, !_server_guard($scope0_reason, 1));
+	}) || $fg__rest && _patch_write($scope0_id, "xh", rest, !_server_guard($scope0_reason, 1), input);
 }, 1);

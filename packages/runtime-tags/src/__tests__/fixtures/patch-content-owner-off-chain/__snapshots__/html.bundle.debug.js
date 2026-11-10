@@ -32,7 +32,7 @@ var src_default = _template("__tests__/tags/src.marko", (input) => {
 		_subscribe($count__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/src.marko", "4:6"), "__tests__/tags/src.marko_1_count#0:5/subscribe");
 	}, $scope0_id, 0) }));
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0, $ui__input_items && 1);
-	let h = holder_default({ tab: $tab });
+	let h = holder_default({ tab: _patch_live($childScope, $tab, $scope0_id, "input_items") });
 	$ui__input_items && _var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/tags/src.marko_0_h#6/var");
 	_patch_child_end();
 	const $return = h;

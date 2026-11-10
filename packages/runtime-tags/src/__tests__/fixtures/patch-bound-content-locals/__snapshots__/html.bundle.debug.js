@@ -44,7 +44,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_subscribe($n__closures, _scope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "6:8"), "__tests__/template.marko_2_n#0:6/subscribe");
 			}, $scope1_id, () => [{ item_text: item?.text }]) }));
 			const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
-			list_default({ item: $item });
+			list_default({ item: _patch_live($childScope, $item, $scope1_id, ">input_items") });
 			_patch_child_end();
 			_client_guard($scope0_reason, 1) && _patch_render($scope1_id, "__tests__/template.marko_1_input_items#0:5/setup");
 			_scope($scope1_id, {

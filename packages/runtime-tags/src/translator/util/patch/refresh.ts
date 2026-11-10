@@ -17,6 +17,7 @@ import {
   someBindingRead,
   someDerivedRead,
   someReadIn,
+  somePart,
 } from "../bindings";
 import { createAnalysisMemo, createPassMemo } from "../cyclic-memo";
 import { readsValuesOnResume } from "../finalize-references";
@@ -953,13 +954,9 @@ export function runsEffectOnPatch(binding: Binding) {
 
 // What a value a call passes depends on (a built object's sources, else itself),
 // as hops from `section`; the call records a built object's (`_patch_live`).
-export function getPassedReads(section: Section, extra: t.NodeExtra) {
+export function getPassedReads(section: Section, refs: ReferencedBindings) {
   const hops = new Set<string>();
-  for (const read of reduce(
-    getReferencedBindings(extra),
-    addFilledReads,
-    new Set<Binding>(),
-  )) {
+  for (const read of reduce(refs, addFilledReads, new Set<Binding>())) {
     const hop = getWriteHop(section, read);
     if (hop) hops.add(hop);
   }
@@ -1034,13 +1031,32 @@ function rendersByWriteRead(read: ReferencedExtra, binding: Binding) {
   );
 }
 
-// A source of a built object an effect reads, here or as another template's input:
-// the object's readers depend on its sources (`holdsBuiltObject`).
+// A source of a built object an effect reads, or a member of one, here or as another
+// template's input: the object's readers depend on its sources (`holdsBuiltObject`).
 function buildsEffectReadObject(binding: Binding) {
   return someDerivedRead(binding, (derived, expr) => {
     const built = getBuiltObject(derived, binding, expr);
-    return !!built && someReached(built, isFilledForEffect);
+    return !!built && readsInEffectAsBuilt(built);
   });
+}
+
+// An effect reads the built object, a member or a rest copy of it, past no `<let>` it
+// initializes.
+export function readsInEffectAsBuilt(built: Binding) {
+  return somePart(built, reachesFilledEffect);
+}
+
+function reachesFilledEffect(part: Binding) {
+  return someReached(part, isCopyFilledForEffect, undefined, followsValue);
+}
+
+function isCopyFilledForEffect(reached: Binding) {
+  return someAlias(reached, isFilledForEffect, undefined);
+}
+
+// A `<let>` it initializes keeps its initial value, not the object's later ones.
+function followsValue(_binding: Binding, expr: ReferencedExtra) {
+  return !expr.initialValue;
 }
 
 function isFilledForEffect(reached: Binding) {

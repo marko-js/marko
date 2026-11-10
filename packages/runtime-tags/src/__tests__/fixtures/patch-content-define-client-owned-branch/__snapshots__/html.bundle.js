@@ -18,7 +18,7 @@ var template_default = _template("a", (input) => {
 				return 0;
 			}
 		}, $scope2_id, "a", _write_guard($scope2_reason, 0), $wg__open);
-		$fg__body && _patch_render($scope2_id, "a1", "e");
+		$fg__body && _patch_render($scope2_id, "a1");
 		_write_if($scope2_reason, 1) && _scope($scope2_id, { e: body }) || $fg__body && _patch_write($scope2_id, "xe", body, 1);
 	}, $scope0_id) };
 	_html("<main>");

@@ -90,7 +90,7 @@ var heading_default = _template("__tests__/tags/heading.marko", (input) => {
 		$wg__input_type || ($wi__input_n__OR__input_type || $wi__i) && _resume_branch($scope1_id);
 	}, $scope0_id, 0) }));
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 1);
-	list_default({ item: $item });
+	list_default({ item: _patch_live($childScope, $item, $scope0_id, "input_n") });
 	_patch_child_end();
 	$fg__input_n && _patch_subscribers($scope0_id, "__tests__/tags/heading.marko_0_input_n#3/subscribers", "input_n");
 	$fg__input_type && $cg__input_n && _patch_subscribers($scope0_id, "__tests__/tags/heading.marko_0_input_type#4/subscribers", "input_type");

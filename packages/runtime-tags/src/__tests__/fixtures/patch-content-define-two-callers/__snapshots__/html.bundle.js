@@ -23,7 +23,7 @@ var template_default = _template("a", (input) => {
 				return 0;
 			}
 		}, $scope3_id, "a", 1, $wg__open, 1, 0, 0, ["a0"], $scope3_reason, 1);
-		$fg__body && _client_guard($scope3_reason, 1) && _patch_render($scope3_id, "a4", "e");
+		$fg__body && _client_guard($scope3_reason, 1) && _patch_render($scope3_id, "a4");
 		_write_if($scope3_reason, 1) && _scope($scope3_id, { e: $ui__open && body }) || $fg__body && $ui__open && _patch_write($scope3_id, "xe", body, 1);
 	}, $scope0_id) };
 	_html("<main>");

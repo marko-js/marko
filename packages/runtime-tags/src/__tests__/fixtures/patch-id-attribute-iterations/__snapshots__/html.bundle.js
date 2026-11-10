@@ -74,7 +74,7 @@ var template_default = _template("a", (input) => {
 		_scope($scope6_id, { a: _existing_scope($childScope4) });
 	}, $scope0_id, 0) }));
 	const $childScope5 = _peek_scope_id($scope0_id, "a", 5);
-	Content.content({ item: $item });
+	Content.content({ item: _patch_live($childScope5, $item, $scope0_id, "d e f") });
 	_patch_child_end();
 	_patch_render($scope0_id, "a6", [
 		$fg__input_items && "d",

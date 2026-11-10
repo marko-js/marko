@@ -65,7 +65,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		onPick: _bind_resume(function() {
 			console.log(input.note);
 		}, "__tests__/template.marko_0/onPick", $scope0_id),
-		item: $item
+		item: _patch_live($childScope, $item, $scope0_id, "input_labels")
 	});
 	_patch_child_end();
 	$fg__input_note && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_note#3/subscribers", "input_note");

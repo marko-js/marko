@@ -40,7 +40,7 @@ var template_default = _template("a", (input) => {
 	_html(`<button class=s>s</button>${_el_mark($scope0_id, "a")}`);
 	_set_scope_reason(_updates_from($scope0_reason, 1) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "b", 0);
-	tabs_default({ tab: attrTags(attrTag({
+	tabs_default({ tab: _patch_live($childScope, attrTags(attrTag({
 		active: input.x === 1,
 		content: _content("a2", () => {
 			_scope_reason();
@@ -57,7 +57,7 @@ var template_default = _template("a", (input) => {
 			_html(`B${_text_mark($scope2_id, "a", s, 2)}`);
 			_subscribe($s__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }), "a1");
 		}, $scope0_id, 0)
-	}) });
+	}), $scope0_id, "e") });
 	_patch_child_end();
 	_script($scope0_id, "a4");
 	$fg__input_y && _client_guard($scope0_reason, 1) && _patch_subscribers($scope0_id, "a5", "f");

@@ -12,6 +12,7 @@ import {
   getNearestDeclared,
   type Intersection,
   isInvokeOnlyBinding,
+  isRest,
   isSectionParam,
   isStateSourced,
   type ReferencedBindings,
@@ -847,6 +848,15 @@ function buildPatchFill(
   );
 }
 
+// The object a rest copies as html reads it: a value no name declares, which its pattern
+// destructures as written, is read as the one read it is (`<const/{ k, ...rest }=input.item/>`).
+function getCopiedObject(copied: Binding) {
+  if (getNearestDeclared(copied)) return getDeclaredBindingExpression(copied);
+  const { derivedFrom } = copied;
+  const read = !Array.isArray(derivedFrom) && derivedFrom && derivedFrom.read;
+  return read && getDeclaredBindingExpression(read.binding);
+}
+
 // A value's patch write under `key` (`MarkedWrite` where entries read its change mark);
 // a `setup` applies it only to a scope the flush creates.
 function buildPatchWrite(
@@ -854,13 +864,15 @@ function buildPatchWrite(
   binding: Binding,
   key: string,
   setup?: t.Expression,
+  copies?: t.Expression | false,
 ) {
   return callRuntime(
     "_patch_write",
     getScopeIdIdentifier(section),
     t.stringLiteral(key + getScopeAccessor(binding)),
     getDeclaredBindingExpression(binding),
-    setup,
+    copies ? setup || absentArg(0) : setup,
+    copies,
   );
 }
 
@@ -1277,6 +1289,8 @@ function getUnfilledPatchWrite(section: Section, binding: Binding) {
         binding,
         getPatchKey().MarkedWrite,
         getConstantSetup(section, binding),
+        // A rest is a copy: its readers depend on what the object it copies is built from.
+        isRest(binding) && getCopiedObject(binding.aliasOf!),
       ),
     );
   }

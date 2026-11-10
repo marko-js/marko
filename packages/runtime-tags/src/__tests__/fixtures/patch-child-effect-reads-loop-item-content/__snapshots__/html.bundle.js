@@ -47,7 +47,7 @@ var template_default = _template("a", (input) => {
 		_scope($scope1_id, {});
 	}, $scope0_id, () => [{ 1: x }]) }));
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
-	first_default({ item: $item });
+	first_default({ item: _patch_live($childScope, $item, $scope0_id, "d") });
 	_patch_child_end();
 	_scope($scope0_id, { a: _existing_scope($childScope) });
 }, 1);

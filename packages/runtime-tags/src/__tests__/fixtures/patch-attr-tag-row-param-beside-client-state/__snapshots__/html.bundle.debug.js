@@ -46,7 +46,7 @@ var wrap_default = _template("__tests__/tags/wrap.marko", (input) => {
 		}, "__tests__/tags/wrap.marko", "3:6", { item: "2:8" }), _client_guard($scope0_reason, 2) && "__tests__/tags/wrap.marko_1_input_label#0:4/subscribe");
 	}, $scope0_id, 0) }));
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
-	my_list_default({ row: $row });
+	my_list_default({ row: _patch_live($childScope, $row, $scope0_id, "input_items") });
 	_patch_child_end();
 	_script($scope0_id, "__tests__/tags/wrap.marko_0", 0);
 	$fg__input_label && _client_guard($scope0_reason, 1) && _patch_subscribers($scope0_id, "__tests__/tags/wrap.marko_0_input_label#4/subscribers", "input_label");

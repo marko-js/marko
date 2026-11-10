@@ -56,7 +56,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, "__tests__/template.marko", "4:6", { label: "3:8" }), $cg__input_show && "__tests__/template.marko_1_input_show#0:6/subscribe"), "__tests__/template.marko_1_n#0:7/subscribe");
 	}, $scope0_id, 0) }));
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
-	list_default({ item: $item });
+	list_default({ item: _patch_live($childScope, $item, $scope0_id, "input_labels") });
 	_patch_child_end();
 	_html(`<button>${_text_mark($scope0_id, "#text/2", n)}</button>${_el_mark($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");

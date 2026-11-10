@@ -51,7 +51,7 @@ var template_default = _template("a", (input) => {
 		_subscribe(_unfilled_if($scope0_reason, 1) && $input_note__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), $cg__input_note && "a0");
 	}, $scope0_id, () => [{ 2: label }]) }));
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
-	list_default({ item: $item });
+	list_default({ item: _patch_live($childScope, $item, $scope0_id, "d") });
 	_patch_child_end();
 	$fg__input_note && _patch_subscribers($scope0_id, "a2", "e");
 	_scope($scope0_id, {

@@ -141,7 +141,7 @@ var template_default = _template("a", (input) => {
 		_scope($scope7_id, { a: _existing_scope($childScope5) });
 	}, $scope0_id, 0) }));
 	const $childScope6 = _peek_scope_id($scope0_id, "c", 6);
-	Content.content({ item: $item });
+	Content.content({ item: _patch_live($childScope6, $item, $scope0_id, "i") });
 	_patch_child_end();
 	_set_scope_reason(0);
 	const $childScope8 = _peek_scope_id($scope0_id, "d", 8);

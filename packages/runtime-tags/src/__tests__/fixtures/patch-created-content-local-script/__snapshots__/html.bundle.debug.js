@@ -39,7 +39,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope($scope1_id, { label }, "__tests__/template.marko", "3:6", { label: "2:8" });
 	}, $scope0_id, 0) }));
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
-	list_default({ item: $item });
+	list_default({ item: _patch_live($childScope, $item, $scope0_id, "input_labels") });
 	_patch_child_end();
 	_scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", 0);
 }, 1);

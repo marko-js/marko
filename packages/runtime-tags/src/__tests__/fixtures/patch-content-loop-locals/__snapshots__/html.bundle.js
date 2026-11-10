@@ -53,7 +53,7 @@ var template_default = _template("a", (input) => {
 		}), $cg__input_show && "a3"), "a5");
 	}, $scope0_id, 0) }));
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
-	list_default({ item: $item });
+	list_default({ item: _patch_live($childScope, $item, $scope0_id, "f") });
 	_patch_child_end();
 	_html(`<button>${_text_mark($scope0_id, "c", n)}</button>${_el_mark($scope0_id, "b")}`);
 	_script($scope0_id, "a6");

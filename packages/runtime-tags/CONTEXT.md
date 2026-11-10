@@ -590,10 +590,11 @@ _Avoid_: written references, written captures, live function, live bind, held fu
 
 **Built object**:
 A value an object or array literal builds, one a branch may yield one from
-(either arm of `?:`, either side of `||` or `??`, the right of `&&`), or the
-input a call builds: its readers depend on its sources, not its identity. A call
-records the built objects it passes (`_patch_live`), so a child's entries name
-their sources.
+(either arm of `?:`, either side of `||` or `??`, the right of `&&`), an
+attribute tag, or the input a call builds: its readers, and those of a member or
+rest copy of it, depend on its sources, not its identity. A call records the
+built objects it passes and the members of one it spreads (`_patch_live`), and a
+rest's write names the object it copies, so a child's entries name their sources.
 _Avoid_: fresh object, identity-less value
 
 **Patch pairing**:

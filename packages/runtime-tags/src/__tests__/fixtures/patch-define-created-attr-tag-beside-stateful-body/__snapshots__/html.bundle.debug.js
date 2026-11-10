@@ -29,7 +29,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				return 0;
 			}
 		}, $scope2_id, "#text/0", 1, $wg__isOpen, 1, 0, 0, ["__tests__/template.marko_3*shell"], $scope2_reason, 0);
-		$fg__item && _client_guard($scope2_reason, 0) && _patch_render($scope2_id, "__tests__/template.marko_3_item#2:4/setup", "item");
+		$fg__item && _client_guard($scope2_reason, 0) && _patch_render($scope2_id, "__tests__/template.marko_3_item#2:4/setup");
 		_write_if($scope2_reason, 0) && _scope($scope2_id, { item: $ui__isOpen && item }, "__tests__/template.marko", "2:2", { item: "2:25" }) || $fg__item && $ui__isOpen && _patch_write($scope2_id, "PatchMarkedWrite:item", item, !_server_guard($scope2_reason, 1));
 	}, $scope0_id) };
 	_if(() => {

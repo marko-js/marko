@@ -48,7 +48,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 		$wg__input_show || $wi__input_items__OR__input_show && _resume_branch($scope1_id);
 	}, $scope0_id, 0) }));
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
-	list_default({ item: $item });
+	list_default({ item: _patch_live($childScope, $item, $scope0_id, "input_items") });
 	_patch_child_end();
 	$fg__input_show && _client_guard($scope0_reason, 1) && _patch_subscribers($scope0_id, "__tests__/tags/child.marko_0_input_show#4/subscribers", "input_show");
 	_scope($scope0_id, {

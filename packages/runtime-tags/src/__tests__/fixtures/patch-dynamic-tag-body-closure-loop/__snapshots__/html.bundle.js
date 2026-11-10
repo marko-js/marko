@@ -77,7 +77,7 @@ var heading_default = _template("c", (input) => {
 		$wg__input_type || ($wi__input_n__OR__input_type || $wi__i) && _resume_branch($scope1_id);
 	}, $scope0_id, 0) }));
 	const $childScope = _peek_scope_id($scope0_id, "a", 1);
-	list_default({ item: $item });
+	list_default({ item: _patch_live($childScope, $item, $scope0_id, "d") });
 	_patch_child_end();
 	$fg__input_n && _patch_subscribers($scope0_id, "c6", "d");
 	$fg__input_type && $cg__input_n && _patch_subscribers($scope0_id, "c7", "e");

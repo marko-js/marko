@@ -26,7 +26,7 @@ var template_default = _template("a", (input) => {
 				return 0;
 			}
 		}, $scope2_id, "a", 1, $wg__isOpen, 1, 0, 0, ["a2"], $scope2_reason, 0);
-		$fg__item && _client_guard($scope2_reason, 0) && _patch_render($scope2_id, "a4", "e");
+		$fg__item && _client_guard($scope2_reason, 0) && _patch_render($scope2_id, "a4");
 		_write_if($scope2_reason, 0) && _scope($scope2_id, { e: $ui__isOpen && item }) || $fg__item && $ui__isOpen && _patch_write($scope2_id, "xe", item, !_server_guard($scope2_reason, 1));
 	}, $scope0_id) };
 	_if(() => {

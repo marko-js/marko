@@ -29,7 +29,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(`<button class=s>s</button>${_el_mark($scope0_id, "#button/0")}`);
 	_set_scope_reason(_updates_from($scope0_reason, 1) << 1);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/1", 0);
-	tabs_default({ tab: attrTags(attrTag({
+	tabs_default({ tab: _patch_live($childScope, attrTags(attrTag({
 		active: input.x === 1,
 		content: _content("__tests__/template.marko_1*content", () => {
 			const $scope1_reason = _scope_reason();
@@ -46,7 +46,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_html(`B${_text_mark($scope2_id, "#text/0", s, 2)}`);
 			_subscribe($s__closures, _scope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "5:4"), "__tests__/template.marko_2_s#0:6/subscribe");
 		}, $scope0_id, 0)
-	}) });
+	}), $scope0_id, "input_x") });
 	_patch_child_end();
 	_script($scope0_id, "__tests__/template.marko_0");
 	$fg__input_y && _client_guard($scope0_reason, 1) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_y#5/subscribers", "input_y");

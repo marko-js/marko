@@ -47,7 +47,7 @@ var child_default = _template("b", (input) => {
 		$wg__input_show || $wi__input_items__OR__input_show && _resume_branch($scope1_id);
 	}, $scope0_id, 0) }));
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
-	list_default({ item: $item });
+	list_default({ item: _patch_live($childScope, $item, $scope0_id, "d") });
 	_patch_child_end();
 	$fg__input_show && _client_guard($scope0_reason, 1) && _patch_subscribers($scope0_id, "b3", "e");
 	_scope($scope0_id, {

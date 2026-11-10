@@ -20,6 +20,7 @@ import {
 import { setTagContentDerives } from "./content-derives";
 import { createPassMemo } from "./cyclic-memo";
 import { generateUidIdentifier } from "./generate-uid";
+import { getDeclaredBindingExpression } from "./get-declared-binding-expression";
 import { getTagName, getTagNameHint } from "./get-tag-name";
 import { isOptimize, isPage, isPatch } from "./marko-config";
 import { getModuleRead } from "./module-read";
@@ -59,6 +60,7 @@ import {
   getFilledReferences,
   hasFilledReferences,
   holdsBuiltObject,
+  readsInEffectAsBuilt,
   runsEffectOnPatch,
   holdsRegisteredFn,
   namesBodyOwner,
@@ -154,7 +156,11 @@ import {
   createOutputState,
 } from "./state";
 import { hasScopeOffset } from "./structure";
-import { toMemberExpression, toObjectProperty } from "./to-property-name";
+import {
+  getLiteralName,
+  toMemberExpression,
+  toObjectProperty,
+} from "./to-property-name";
 import {
   addDynamicAttrTagStatements,
   addAttrTag,
@@ -497,37 +503,94 @@ export function knownTagTranslateHTML(
 
     writeSlot(childScopeSlot, callRuntime("_existing_scope", peekScopeId));
 
-    // An object the call builds anew from what a patch fills: the child's readers
-    // depend on its sources.
+    // An object the call builds anew from what a patch fills, as analysis read each
+    // input: the child's readers depend on its sources.
     if (isPatch() && patchFillsSection(section)) {
-      const inputReads = new Set<string>();
+      const live = (value: t.Expression, reads: Set<string>) =>
+        callRuntime(
+          "_patch_live",
+          peekScopeId,
+          value,
+          getScopeIdIdentifier(section),
+          t.stringLiteral([...reads].join(" ")),
+        );
+      const known =
+        tagExtra[kKnownExprs]!.known?.[tag.node.arguments?.length || 0]?.known;
       for (const prop of properties) {
         if (t.isObjectProperty(prop) && t.isExpression(prop.value)) {
-          const { extra } = prop.value;
-          if (!extra) continue;
-          const reads = getPassedReads(section, extra);
-          for (const read of reads) inputReads.add(read);
-          if (reads.size && isBuiltObjectExpr(extra)) {
-            prop.value = callRuntime(
-              "_patch_live",
-              peekScopeId,
-              prop.value,
-              getScopeIdIdentifier(section),
-              t.stringLiteral([...reads].join(" ")),
-            );
-          }
+          const extra = known?.[getLiteralName(prop.key)!]?.value;
+          const reads =
+            extra &&
+            isBuiltObjectExpr(extra) &&
+            getPassedReads(section, getReferencedBindings(extra));
+          if (reads && reads.size) prop.value = live(prop.value, reads);
         }
       }
       // A child reading its whole input: the object the call builds anew.
+      const inputReads = getPassedReads(
+        section,
+        getReferencedBindings(tagExtra),
+      );
       if (inputReads.size && some(tagExtra.derives, runsEffectOnPatch)) {
-        liveInput = (input) =>
-          callRuntime(
-            "_patch_live",
-            peekScopeId,
-            input,
-            getScopeIdIdentifier(section),
-            t.stringLiteral([...inputReads].join(" ")),
-          );
+        liveInput = (input) => live(input, inputReads);
+      }
+      // A built object the call spreads: each member of it an effect reads is built
+      // with it, read off the spread binding or the input holding it.
+      let spreadObject: t.Expression | undefined;
+      let spreadReads: Set<string> | false = false;
+      for (const attr of node.attributes) {
+        if (attr.type === "MarkoSpreadAttribute") {
+          const spread = attr.extra?.knownSpread;
+          if (spread) {
+            spreadObject = getDeclaredBindingExpression(spread);
+            spreadReads =
+              holdsBuiltObject(spread) && getPassedReads(section, spread);
+          } else {
+            spreadReads =
+              isBuiltObjectExpr(tagExtra) &&
+              getPassedReads(section, getReferencedBindings(tagExtra));
+          }
+        }
+      }
+      const members: string[] = [];
+      if (spreadReads && spreadReads.size && attrsTree?.properties) {
+        for (const name in attrsTree.properties) {
+          if (readsInEffectAsBuilt(attrsTree.properties[name].binding)) {
+            members.push(name);
+          }
+        }
+      }
+      if (spreadReads && members.length) {
+        const reads = spreadReads;
+        const register = (object: t.Expression) => {
+          for (const name of members) {
+            statements.push(
+              t.expressionStatement(
+                live(toMemberExpression(t.cloneNode(object), name), reads),
+              ),
+            );
+          }
+        };
+        if (spreadObject) {
+          register(spreadObject);
+        } else {
+          const wholeInput = liveInput;
+          liveInput = (input) => {
+            const inputId = generateUidIdentifier(
+              `${getTagName(tag) || "tag"}_input`,
+            );
+            statements.push(
+              t.variableDeclaration("const", [
+                t.variableDeclarator(
+                  inputId,
+                  wholeInput ? wholeInput(input) : input,
+                ),
+              ]),
+            );
+            register(inputId);
+            return t.cloneNode(inputId);
+          };
+        }
       }
     }
 
@@ -1413,6 +1476,8 @@ function analyzeAttrs(
       }
 
       const groupExtra = mergeReferences(section, node, referenceNodes);
+      // The call builds each attribute tag anew as it renders.
+      groupExtra.buildsObject = true;
       const groupKnownValue: KnownExprs = { value: groupExtra };
       rootAttrExprs.add(groupExtra);
 

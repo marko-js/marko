@@ -29,7 +29,7 @@ var src_default = _template("d", (input) => {
 		_subscribe($count__closures, _scope($scope1_id, { _: _scope_with_id($scope0_id) }), "d1");
 	}, $scope0_id, 0) }));
 	const $childScope = _peek_scope_id($scope0_id, "a", 0, $ui__input_items && 1);
-	let h = holder_default({ tab: $tab });
+	let h = holder_default({ tab: _patch_live($childScope, $tab, $scope0_id, "e") });
 	$ui__input_items && _var($scope0_id, "b", $childScope, "d3");
 	_patch_child_end();
 	const $return = h;

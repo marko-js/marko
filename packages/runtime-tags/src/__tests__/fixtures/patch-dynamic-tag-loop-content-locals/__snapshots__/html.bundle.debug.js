@@ -59,7 +59,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
 	tabs_default({
 		selected: input.selected,
-		tab: $tab
+		tab: _patch_live($childScope, $tab, $scope0_id, "input_items")
 	});
 	_patch_child_end();
 	_scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", 0);

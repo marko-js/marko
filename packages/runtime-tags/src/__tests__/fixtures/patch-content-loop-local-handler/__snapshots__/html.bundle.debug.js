@@ -44,7 +44,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, "__tests__/template.marko", "4:6", { x_name: 0 });
 	}, $scope0_id, 0) }));
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);
-	menu_default({ item: $item });
+	menu_default({ item: _patch_live($childScope, $item, $scope0_id, "input_items") });
 	_patch_child_end();
 	_html(`<p>${_text_mark($scope0_id, "#text/1", picked)}</p>`);
 	_scope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", 0);
