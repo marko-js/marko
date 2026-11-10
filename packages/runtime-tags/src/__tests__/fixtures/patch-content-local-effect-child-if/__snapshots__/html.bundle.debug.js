@@ -33,7 +33,7 @@ _shells({
 	"__tests__/template.marko": `__tests__/template.marko${_shell_marker($setup)};${((_w0) => `b/${_w0}&b`)("b%c")};${((_w0) => `<!>${_w0}<!>`)($template$1)}`
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_prefix = _client_guard($scope0_reason, 2), $uf__input_show = _updates_from($scope0_reason, 1), $sg__input_prefix = _server_guard($scope0_reason, 2), $fg__input_prefix2 = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $cg__input_prefix = _client_guard($scope0_reason, 2), $uf__input_show = _updates_from($scope0_reason, 1), $sg__input_prefix = _server_guard($scope0_reason, 2), $ui__input_show = _unfilled_if($scope0_reason, 1), $fg__input_prefix2 = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_prefix__closures = new Set();
 	_set_scope_reason($uf__input_show << 1 | $uf__input_show << 3);
@@ -57,8 +57,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_patch_child_end();
 	$fg__input_prefix2 && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_prefix#4/subscribers", "input_prefix");
 	_scope($scope0_id, {
-		input_prefix: _write_if($scope0_reason, 1) && input.prefix,
+		input_prefix: ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.prefix,
 		"ClosureScopes:input_prefix/5": _write_if($scope0_reason, 2) && $input_prefix__closures,
 		"#childScope/0": _existing_scope($childScope)
-	}, "__tests__/template.marko", 0, { input_prefix: ["input.prefix"] }) || $fg__input_prefix2 && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_prefix", input.prefix, !$sg__input_prefix);
+	}, "__tests__/template.marko", 0, { input_prefix: ["input.prefix"] }) || $fg__input_prefix2 && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_prefix", input.prefix, !$sg__input_prefix);
 }, 1);

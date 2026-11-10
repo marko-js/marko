@@ -2,6 +2,7 @@
 [`packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-nested-effects/template.marko_1*content !packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-nested-effects/template.marko_1_input_v#0:3`, `packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-nested-effects/template.marko_2*shell !packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-nested-effects/template.marko_2_input_v#0:3;D ;<i> </i>`, `packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-nested-effects/template.marko_3*shell !packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-nested-effects/template.marko_3_input_v#0:3_x#2;D ;<u> </u>`, `packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-nested-effects/template.marko_4*content !packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-nested-effects/template.marko_4_input_v#0:3`]
 {
   "PatchCatch:#text/0": [{
+    "PatchMarkedWrite:w": 10,
     "PatchText:#text/0": "b",
     "PatchBranch:#text/1": [{
       "PatchText:#text/0": 10,
@@ -27,7 +28,6 @@
       }
     },
     "PatchSetup:": {
-      "PatchWrite:w": 10,
       "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-nested-effects/template.marko_1_input_v#0:3/subscribe": 0,
       "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-nested-effects/template.marko_1_input_show#0:4/subscribe": 0,
       "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-nested-effects/template.marko_1_input_items#0:5/subscribe": 0
@@ -45,6 +45,7 @@
 // PATCH holding Dzw
 {
   "PatchCatch:#text/0": [{
+    "PatchMarkedWrite:w": 20,
     "PatchText:#text/0": "c",
     "PatchBranch:#text/1": [{
       "PatchText:#text/0": 20,
@@ -76,7 +77,6 @@
       }
     },
     "PatchSetup:": {
-      "PatchWrite:w": 20,
       "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-nested-effects/template.marko_1_input_v#0:3/subscribe": 0,
       "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-nested-effects/template.marko_1_input_show#0:4/subscribe": 0,
       "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-nested-effects/template.marko_1_input_items#0:5/subscribe": 0

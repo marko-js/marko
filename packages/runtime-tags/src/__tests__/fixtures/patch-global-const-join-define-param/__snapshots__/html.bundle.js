@@ -10,7 +10,7 @@ var template_default = _template("a", (input) => {
 	_html(`<button>toggle</button>${_el_mark($scope0_id, "a")}`);
 	const Show = { content: _content("a0", ({ v }) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason(), $scope1_page = _page_render(), $wg__v = _write_guard($scope1_reason, 0), $ui__v = _unfilled_if($scope1_reason, 0);
+		const $scope1_reason = _scope_reason(), $scope1_page = _page_render(), $wg__v = _write_guard($scope1_reason, 0), $wi__v = _write_if($scope1_reason, 0), $ui__v = _unfilled_if($scope1_reason, 0);
 		const flag = $global$1.flag;
 		_if(() => {
 			if (flag && v) {
@@ -24,8 +24,8 @@ var template_default = _template("a", (input) => {
 		$ui__v && _patch_write($scope1_id, "wd", v, 1);
 		_patch_render($scope1_id, "a2", [_filled_guard($scope1_reason, 0) && "d", "e"], 6, 0);
 		_scope($scope1_id, {
-			d: $ui__v && v,
-			e: $ui__v && flag
+			d: $wi__v && v,
+			e: $wi__v && flag
 		}) || $ui__v && _patch_write($scope1_id, "xe", flag);
 	}, $scope0_id) };
 	_set_scope_reason(2);

@@ -49,7 +49,7 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id) };
 	const Wrapper = { content: _content("a9", ({ a, b, depth }) => {
 		const $scope3_id = _scope_id();
-		const $scope3_reason = _scope_reason(), $uf__a__OR__b = _updates_from($scope3_reason, 0), $uf__b = _updates_from($scope3_reason, 3), $uf__a = _updates_from($scope3_reason, 2), $wg__depth = _write_guard($scope3_reason, 4), $wi__depth = _write_if($scope3_reason, 4), $ui__depth = _unfilled_if($scope3_reason, 4);
+		const $scope3_reason = _scope_reason(), $uf__a__OR__b = _updates_from($scope3_reason, 0), $uf__b = _updates_from($scope3_reason, 3), $uf__a = _updates_from($scope3_reason, 2), $wg__depth = _write_guard($scope3_reason, 4), $ui__depth = _unfilled_if($scope3_reason, 4), $wi__depth = _write_if($scope3_reason, 4);
 		const Relay = { content: _content("a5", ({ a, b, depth }) => {
 			const $scope4_id = _scope_id();
 			const $scope4_reason = _scope_reason();
@@ -95,7 +95,7 @@ var template_default = _template("a", (input) => {
 		}, $scope3_id, "b", 1, $wg__depth, 1, 0, 0, ["a8"], $scope3_reason, 4);
 		$ui__depth && _patch_write($scope3_id, "wf", b, 1);
 		_scope($scope3_id, {
-			e: $wi__depth && a,
+			e: ($ui__depth || _unfilled_if($scope3_reason, 2)) && a,
 			f: ($ui__depth || _unfilled_if($scope3_reason, 3)) && b,
 			_: $wi__depth && _scope_with_id($scope0_id),
 			a: _existing_scope($childScope3)

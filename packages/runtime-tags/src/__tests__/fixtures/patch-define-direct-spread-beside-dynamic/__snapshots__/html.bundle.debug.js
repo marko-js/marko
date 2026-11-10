@@ -49,7 +49,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_rest: _write_if($scope0_reason, 1) && input.rest,
 		input_label: input.label,
 		open,
-		Panel: _write_if($scope0_reason, 3) && Panel,
+		Panel: _unfilled_if($scope0_reason, 3) && Panel,
 		Tag,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, {

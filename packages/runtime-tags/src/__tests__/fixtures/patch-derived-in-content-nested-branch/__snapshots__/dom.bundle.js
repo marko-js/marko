@@ -4,6 +4,6 @@ const $if_content__if = /*@__PURE__*/ _if(0, "<p> </p>", "D ", $if_content2__lab
 const $if_content__count__OR__label = /*@__PURE__*/ _or_patch("a1", 1, ($scope) => $if_content__if($scope, $scope._._.f > 0 && $scope._.b ? 0 : 1));
 const $if_content__count = /*@__PURE__*/ _closure_get_patch("a2", 7, $if_content__count__OR__label, ($scope) => $scope._._);
 const $count = _let(5, /* @__PURE__ */ _closure($if_content__count));
-const $setup__script = _script("a8", ($scope) => _on($scope.b, "click", function() {
+const $setup__script = _script("a7", ($scope) => _on($scope.b, "click", function() {
 	$count($scope, +$scope.f + 1);
 }));

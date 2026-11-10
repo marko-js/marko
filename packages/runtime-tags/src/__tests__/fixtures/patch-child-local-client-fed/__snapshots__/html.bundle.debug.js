@@ -7,7 +7,7 @@ _shells({
 	"__tests__/tags/child.marko_1*shell": "__tests__/tags/child.marko_1*shell __tests__/tags/child.marko_1_c#0:6/setup;D ;<p> </p>"
 });
 var child_default = _template("__tests__/tags/child.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_label = _server_guard($scope0_reason, 1), $fg__input_label2 = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $sg__input_label = _server_guard($scope0_reason, 1), $ui__input_show = _unfilled_if($scope0_reason, 0), $fg__input_label2 = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	let c = 0;
 	_html("<div>");
@@ -31,12 +31,12 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	$fg__input_label2 && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "__tests__/tags/child.marko_1_input_label#0:5/setup", "input_label");
 	_patch_fill($scope0_id, "PatchFill:__tests__/tags/child.marko_0_c#6/fill", c, 1);
 	_scope($scope0_id, {
-		input_label: _write_if($scope0_reason, 0) && input.label,
+		input_label: ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.label,
 		c
 	}, "__tests__/tags/child.marko", 0, {
 		input_label: ["input.label"],
 		c: "1:6"
-	}) || $fg__input_label2 && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !$sg__input_label);
+	}) || $fg__input_label2 && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !$sg__input_label);
 });
 
 // template.marko

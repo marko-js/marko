@@ -26,7 +26,7 @@ var rowsx_default = _template("__tests__/tags/rowsx.marko", (input) => {
 	let suffix = "s";
 	const Panel = { content: _content("__tests__/tags/rowsx.marko_2*content", ({ isOpen, fmt, label }) => {
 		const $scope2_id = _scope_id();
-		const $scope2_reason = _scope_reason(), $wg__isOpen = _write_guard($scope2_reason, 4), $ui__isOpen__OR__label = _unfilled_if($scope2_reason, 1), $ui__isOpen__OR__fmt = _unfilled_if($scope2_reason, 0), $fg__fmt = _filled_guard($scope2_reason, 5), $fg__label = _filled_guard($scope2_reason, 6), $cg__isOpen = _client_guard($scope2_reason, 4);
+		const $scope2_reason = _scope_reason(), $wg__isOpen = _write_guard($scope2_reason, 4), $fg__fmt = _filled_guard($scope2_reason, 5), $fg__label = _filled_guard($scope2_reason, 6), $cg__isOpen = _client_guard($scope2_reason, 4);
 		_if(() => {
 			if (isOpen) {
 				const $scope3_id = _scope_id();
@@ -39,12 +39,12 @@ var rowsx_default = _template("__tests__/tags/rowsx.marko", (input) => {
 		$fg__fmt && $cg__isOpen && _patch_render($scope2_id, "__tests__/tags/rowsx.marko_3_fmt#2:4/setup", "fmt");
 		$fg__label && $cg__isOpen && _patch_render($scope2_id, "__tests__/tags/rowsx.marko_3_label#2:5/setup", "label");
 		_write_if($scope2_reason, 3) && _scope($scope2_id, {
-			fmt: ($ui__isOpen__OR__label || _unfilled_if($scope2_reason, 6)) && fmt,
-			label: ($ui__isOpen__OR__fmt || _unfilled_if($scope2_reason, 2)) && label
+			fmt: _write_if($scope2_reason, 1) && fmt,
+			label: _write_if($scope2_reason, 0) && label
 		}, "__tests__/tags/rowsx.marko", "3:2", {
 			fmt: "3:25",
 			label: "3:30"
-		}) || ($fg__fmt && $ui__isOpen__OR__label && _patch_write($scope2_id, "PatchMarkedWrite:fmt", fmt, !_server_guard($scope2_reason, 5)), $fg__label && $ui__isOpen__OR__fmt && _patch_write($scope2_id, "PatchMarkedWrite:label", label, !_server_guard($scope2_reason, 6)));
+		}) || ($fg__fmt && _unfilled_if($scope2_reason, 1) && _patch_write($scope2_id, "PatchMarkedWrite:fmt", fmt, !_server_guard($scope2_reason, 5)), $fg__label && _unfilled_if($scope2_reason, 0) && _patch_write($scope2_id, "PatchMarkedWrite:label", label, !_server_guard($scope2_reason, 6)));
 	}, $scope0_id, 0) };
 	_for_of(input.items, (x) => {
 		const $scope1_id = _scope_id(), $fg__input_items = _filled_guard($scope0_reason, 0);

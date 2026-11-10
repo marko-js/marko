@@ -72,7 +72,6 @@ const $content = (input) => {
 	keeper_default({ content: input.content });
 	_patch_child_end();
 	$fg__input_n && _patch_subscribers($scope0_id, "c6", "e");
-	$fg__input_n && $cg__input_n && _patch_render($scope0_id, "c3", "e");
 	$fg__input_label && _patch_subscribers($scope0_id, "c7", "f");
 	$fg__input_label && $cg__input_n && _patch_render($scope0_id, "c4", "f");
 	_scope($scope0_id, {

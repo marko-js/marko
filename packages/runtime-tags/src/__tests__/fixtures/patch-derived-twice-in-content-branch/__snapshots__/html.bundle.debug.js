@@ -52,7 +52,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		count,
-		"ClosureScopes:input_label/6": _write_if($scope0_reason, 0) && $input_label__closures,
+		"ClosureScopes:input_label/6": _write_if($scope0_reason, 0) && _unfilled_if($scope0_reason, 0) && $input_label__closures,
 		"ClosureScopes:count/7": $count__closures,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, { count: "1:6" });

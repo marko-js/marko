@@ -22,7 +22,7 @@ var template_default = _template("a", (input) => {
 			_unfilled_if(6, 0) && _patch_subscribe($scope2_id, "a1");
 			_patch_render($scope2_id, "a2");
 			_subscribe($wi__value && $Outer_content__value__closures, _scope($scope2_id, {
-				d: _unfilled_if($scope1_reason, 0) && y,
+				d: $wi__value && y,
 				_: ($wi__value || _write_if($scope2_reason, 0)) && _scope_with_id($scope1_id)
 			}), "a1");
 		}, $scope1_id, 0) };

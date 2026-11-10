@@ -55,7 +55,7 @@ var template_default = _template("a", (input) => {
 	_patch_child_end();
 	_html(`<p>${_text_mark($scope0_id, "b", shown)}</p>`);
 	_scope($scope0_id, {
-		g: _write_if($scope0_reason, 0) && $input_label__closures,
+		g: _write_if($scope0_reason, 0) && _unfilled_if($scope0_reason, 0) && $input_label__closures,
 		a: _existing_scope($childScope2)
 	});
 }, 1);

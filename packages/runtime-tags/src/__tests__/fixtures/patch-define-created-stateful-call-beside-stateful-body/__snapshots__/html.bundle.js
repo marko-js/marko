@@ -4,9 +4,9 @@ const $Inner_content__template = "<!><!><!>";
 const $Outer_content__walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&%c`)($Inner_content__walks);
 const $Outer_content__template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!><!>`)($Inner_content__template);
 _shells({
-	a: "a !a11;b%b%b%b ;<!><!><!><!><button id=t>toggle</button>",
+	a: "a !a10;b%b%b%b ;<!><!><!><!><button id=t>toggle</button>",
 	a2: `a2;${/*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Outer_content__walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Outer_content__template)}`,
-	a1: "a1 a13!a0;D%b%l ;<em><!><!></em><button class=inc>+</button>",
+	a1: "a1 a12!a0;D%b%l ;<em><!><!></em><button class=inc>+</button>",
 	a3: "a3;D ;<i> </i>"
 });
 var template_default = _template("a", (input) => {
@@ -27,15 +27,14 @@ var template_default = _template("a", (input) => {
 			}
 		}, $scope2_id, "a", 1, $wg__isOpen, 1, 0, 0, ["a1"], $scope2_reason, 0);
 		_script($scope2_id, "a5", $wg__isOpen, $fg__text, "e");
-		$fg__text && _client_guard($scope2_reason, 0) && _patch_render($scope2_id, "a6", "e");
-		_patch_fill($scope2_id, "va7", n, 1);
+		_patch_fill($scope2_id, "va6", n, 1);
 		_scope($scope2_id, {
 			e: text,
 			f: n
 		}) || $fg__text && _patch_write($scope2_id, "xe", text, !_server_guard($scope2_reason, 1));
 		$wg__isOpen || _resume_branch($scope2_id);
 	}, $scope0_id) };
-	const Outer = { content: _content_resume("a9", ({ on, label }) => {
+	const Outer = { content: _content_resume("a8", ({ on, label }) => {
 		const $scope3_id = _scope_id();
 		const $scope3_reason = _scope_reason(), $wg__on = _write_guard($scope3_reason, 0), $ui__on = _unfilled_if($scope3_reason, 0);
 		_set_scope_reason(0);
@@ -49,7 +48,7 @@ var template_default = _template("a", (input) => {
 			if (on) {
 				const $scope5_id = _scope_id();
 				_html(`<i>${_text_mark($scope5_id, "a", label, 1, $scope3_reason, 1)}</i>`);
-				_client_guard($scope3_reason, 1) && _patch_render($scope5_id, "a8");
+				_client_guard($scope3_reason, 1) && _patch_render($scope5_id, "a7");
 				_scope($scope5_id, { _: _write_if($scope3_reason, 1) && _scope_with_id($scope3_id) });
 				return 0;
 			}
@@ -70,7 +69,7 @@ var template_default = _template("a", (input) => {
 				label: input.label
 			});
 			_patch_child_end();
-			_client_guard($scope0_reason, 1) && _patch_render($scope1_id, "a10");
+			_client_guard($scope0_reason, 1) && _patch_render($scope1_id, "a9");
 			_scope($scope1_id, {
 				_: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id),
 				a: _existing_scope($childScope2)
@@ -87,8 +86,8 @@ var template_default = _template("a", (input) => {
 		text: "u"
 	}, 24);
 	_html(`<button id=t>toggle</button>${_el_mark($scope0_id, "d")}`);
-	_script($scope0_id, "a11");
-	$fg__input_label && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "a10", "h");
+	_script($scope0_id, "a10");
+	$fg__input_label && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "a9", "h");
 	_scope($scope0_id, {
 		h: ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.label,
 		i: open,

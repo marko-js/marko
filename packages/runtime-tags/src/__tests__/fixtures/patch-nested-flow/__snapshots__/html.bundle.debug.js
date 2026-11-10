@@ -69,7 +69,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	badge_default({ label: input.badge });
 	_patch_child_end();
 	_html("</main>");
-	$fg__input_detail && ($cg__input_summary || $cg__input_detail) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_detail#7/subscribers", "input_detail");
+	$fg__input_detail && $cg__input_summary && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_detail#7/subscribers", "input_detail");
 	$fg__input_detail && $cg__input_summary && _patch_render($scope0_id, "__tests__/template.marko_1_input_detail#0:7/setup", "input_detail");
 	_scope($scope0_id, {
 		input_detail: ($ui__input_summary || $ui__input_detail) && input.detail,

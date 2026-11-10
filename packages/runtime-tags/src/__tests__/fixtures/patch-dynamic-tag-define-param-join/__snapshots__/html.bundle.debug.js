@@ -25,7 +25,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_unfilled_if(6, 0) && _patch_subscribe($scope2_id, "__tests__/template.marko_2_value#1:4/subscribe");
 			_patch_render($scope2_id, "__tests__/template.marko_2_value#1:4_y#3/setup");
 			_subscribe($wi__value && $Outer_content__value__closures, _scope($scope2_id, {
-				y: _unfilled_if($scope1_reason, 0) && y,
+				y: $wi__value && y,
 				_: ($wi__value || _write_if($scope2_reason, 0)) && _scope_with_id($scope1_id)
 			}, "__tests__/template.marko", "3:4", { y: "3:19" }), 1 && "__tests__/template.marko_2_value#1:4/subscribe");
 		}, $scope1_id, 0) };

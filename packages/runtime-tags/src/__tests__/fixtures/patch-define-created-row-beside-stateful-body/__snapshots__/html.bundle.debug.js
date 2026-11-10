@@ -29,8 +29,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_write_if($scope2_reason, 0) && _scope($scope2_id, { label: ($ui__isOpen || _unfilled_if($scope2_reason, 1)) && label }, "__tests__/template.marko", "2:2", { label: "2:25" }) || $fg__label && $ui__isOpen && _patch_write($scope2_id, "PatchMarkedWrite:label", label, !_server_guard($scope2_reason, 1));
 	}, $scope0_id) };
 	_for_of(input.rows, (row) => {
-		const $scope1_id = _scope_id(), $fg__input_rows = _filled_guard($scope0_reason, 2);
-		$fg__input_rows && _unfilled_if($scope0_reason, 4) && _patch_write($scope1_id, "PatchMarkedWrite:row", row, !_server_guard($scope0_reason, 2));
+		const $scope1_id = _scope_id(), $ui__input_label = _unfilled_if($scope0_reason, 4), $fg__input_rows = _filled_guard($scope0_reason, 2);
+		$fg__input_rows && $ui__input_label && _patch_write($scope1_id, "PatchMarkedWrite:row", row, !_server_guard($scope0_reason, 2));
 		_set_scope_reason(_updates_from($scope0_reason, 3) << 1 | _updates_from($scope0_reason, 0) << 3);
 		const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 		Panel.content({
@@ -41,7 +41,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_client_guard($scope0_reason, 3) && _patch_render($scope1_id, "__tests__/template.marko_1_input_open#0:6/setup");
 		_patch_render($scope1_id, "__tests__/template.marko_1_input_label#0:7_row#2/setup", [_filled_guard($scope0_reason, 4) && ">input_label", $fg__input_rows && "row"], $scope0_reason, 0);
 		_scope($scope1_id, {
-			row: _write_if($scope0_reason, 4) && row,
+			row: ($ui__input_label || _unfilled_if($scope0_reason, 0)) && row,
 			_: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id),
 			"#childScope/0": _existing_scope($childScope)
 		}, "__tests__/template.marko", "7:2", { row: "7:6" });
@@ -61,7 +61,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_open: ($ui__input_rows || _unfilled_if($scope0_reason, 3)) && input.open,
 		input_label: input.label,
 		open,
-		Panel: _write_if($scope0_reason, 5) && Panel,
+		Panel: _unfilled_if($scope0_reason, 5) && Panel,
 		Tag
 	}, "__tests__/template.marko", 0, {
 		input_open: ["input.open"],

@@ -85,7 +85,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	_scope($scope0_id, {
 		open,
-		"ClosureScopes:input_label/6": $wi__input_label && $input_label__closures,
+		"ClosureScopes:input_label/6": $wi__input_label && _unfilled_if($scope0_reason, 0) && $input_label__closures,
 		"ClosureScopes:open/7": $open__closures,
 		"#childScope/0": _existing_scope($childScope2)
 	}, "__tests__/template.marko", 0, { open: "1:6" });

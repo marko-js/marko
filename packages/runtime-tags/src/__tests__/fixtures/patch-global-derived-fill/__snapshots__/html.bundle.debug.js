@@ -23,12 +23,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	_filled_guard((2 | $uf__input_name) << 1, 0) && _patch_render($scope0_id, "__tests__/template.marko_1_greeting#0:5/setup", _filled_guard((2 | $uf__input_name) << 1, 0) && "greeting");
 	_scope($scope0_id, {
-		input_name: _write_if($scope0_reason, 0) && input.name,
+		input_name: _unfilled_if($scope0_reason, 0) && input.name,
 		greeting,
 		count
 	}, "__tests__/template.marko", 0, {
 		input_name: ["input.name"],
 		greeting: "1:8",
 		count: "2:6"
-	}) || (_filled_guard($scope0_reason, 0) && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_name", input.name, !_server_guard($scope0_reason, 0)), _filled_guard((2 | $uf__input_name) << 1, 0) && _patch_write($scope0_id, "PatchMarkedWrite:greeting", greeting, !_server_guard((2 | $uf__input_name) << 1, 0)));
+	}) || _filled_guard((2 | $uf__input_name) << 1, 0) && _patch_write($scope0_id, "PatchMarkedWrite:greeting", greeting, !_server_guard((2 | $uf__input_name) << 1, 0));
 }, 1);

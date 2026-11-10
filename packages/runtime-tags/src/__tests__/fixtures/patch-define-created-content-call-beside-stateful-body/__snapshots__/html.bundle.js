@@ -77,7 +77,7 @@ var template_default = _template("a", (input) => {
 	_scope($scope0_id, {
 		g: ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.label,
 		i: open,
-		j: _write_if($scope0_reason, 3) && Panel,
+		j: _unfilled_if($scope0_reason, 3) && Panel,
 		l: Tag,
 		n: _write_if($scope0_reason, 2) && $input_label__closures,
 		a: _existing_scope($childScope2)

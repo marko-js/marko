@@ -75,7 +75,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope($scope0_id, {
 		input_label: input.label,
 		open,
-		Panel: _write_if($scope0_reason, 2) && Panel,
+		Panel: _unfilled_if($scope0_reason, 2) && Panel,
 		Tag,
 		"ClosureScopes:input_label/13": $wi__input_label && $input_label__closures,
 		"ClosureScopes:input_fail/14": $wi__input_fail && _unfilled_if($scope0_reason, 1) && $input_fail__closures

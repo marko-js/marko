@@ -72,7 +72,7 @@ var template_default = _template("a", (input) => {
 	_scope($scope0_id, {
 		f: input.label,
 		i: open,
-		j: _write_if($scope0_reason, 2) && Panel,
+		j: _unfilled_if($scope0_reason, 2) && Panel,
 		l: Tag,
 		n: $wi__input_label && $input_label__closures,
 		o: $wi__input_fail && _unfilled_if($scope0_reason, 1) && $input_fail__closures

@@ -67,7 +67,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope($scope0_id, {
 		input_x: input.x,
 		"#childScope/0": _existing_scope($childScope),
-		"ClosureScopes:fn/8": _write_if($scope0_reason, 1) && $fn2__closures,
+		"ClosureScopes:fn/8": _write_if($scope0_reason, 1) && _unfilled_if($scope0_reason, 1) && $fn2__closures,
 		"ClosureScopes:input_promise/7": _write_if($scope0_reason, 2) && _unfilled_if($scope0_reason, 2) && $input_promise__closures
 	}, "__tests__/template.marko", 0, { input_x: ["input.x"] });
 }, 1);

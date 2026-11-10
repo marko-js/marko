@@ -74,7 +74,7 @@ var template_default = _template("a", (input) => {
 		g: ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.promise,
 		h: input.label,
 		j: open,
-		k: _write_if($scope0_reason, 5) && Panel,
+		k: _unfilled_if($scope0_reason, 5) && Panel,
 		m: Tag,
 		p: _write_if($scope0_reason, 4) && $input_label__closures
 	}) || ($fg__input_promise && $ui__input_show && _patch_write($scope0_id, "xg", input.promise, !_server_guard($scope0_reason, 3)), $fg__input_label && _patch_write($scope0_id, "xh", input.label, !_server_guard($scope0_reason, 4)), $fg__input_other && _patch_write($scope0_id, "xm", Tag, !_server_guard($scope0_reason, 5)));

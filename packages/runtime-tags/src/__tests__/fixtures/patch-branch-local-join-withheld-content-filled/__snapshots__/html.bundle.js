@@ -7,7 +7,7 @@ _shells({
 	b7: "b7; ;<section></section>"
 });
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_b = _client_guard($scope0_reason, 5), $wi__input_show__OR__input_b__OR__input_a__OR__input_mode = _write_if($scope0_reason, 3), $wg__input_show = _write_guard($scope0_reason, 4), $sg__input_b = _server_guard($scope0_reason, 5), $ui__input_show = _unfilled_if($scope0_reason, 4), $ui__input_show__OR__input_b__OR__input_mode = _unfilled_if($scope0_reason, 2), $fg__input_b2 = _filled_guard($scope0_reason, 5), $fg__input_a = _filled_guard($scope0_reason, 6), $fg__input_mode = _filled_guard($scope0_reason, 7), $cg__input_show = _client_guard($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $cg__input_b = _client_guard($scope0_reason, 5), $wi__input_show__OR__input_b__OR__input_a__OR__input_mode = _write_if($scope0_reason, 3), $wg__input_show = _write_guard($scope0_reason, 4), $ui__input_show = _unfilled_if($scope0_reason, 4), $sg__input_b = _server_guard($scope0_reason, 5), $ui__input_show__OR__input_b__OR__input_mode = _unfilled_if($scope0_reason, 2), $fg__input_b2 = _filled_guard($scope0_reason, 5), $fg__input_a = _filled_guard($scope0_reason, 6), $fg__input_mode = _filled_guard($scope0_reason, 7), $cg__input_show = _client_guard($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	const $input_a__closures = /* @__PURE__ */ new Set();
 	_if(() => {
@@ -45,7 +45,7 @@ var child_default = _template("b", (input) => {
 	$fg__input_a && _patch_subscribers($scope0_id, "b8", "f");
 	$fg__input_mode && $cg__input_show && _patch_render($scope0_id, "b9", "g");
 	_scope($scope0_id, {
-		e: _write_if($scope0_reason, 4) && input.b,
+		e: ($ui__input_show || _unfilled_if($scope0_reason, 5)) && input.b,
 		f: ($ui__input_show__OR__input_b__OR__input_mode || _unfilled_if($scope0_reason, 0)) && input.a,
 		g: ($ui__input_show || _unfilled_if($scope0_reason, 7)) && input.mode,
 		i: _write_if($scope0_reason, 6) && $input_a__closures

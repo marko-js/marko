@@ -4,7 +4,7 @@ const $walks$1 = "b%b b";
 const $setup$1 = [[], ["__tests__/tags/label-view.marko_0"]];
 _shells({ "__tests__/tags/label-view.marko": "__tests__/tags/label-view.marko !__tests__/tags/label-view.marko_0;b%b ;<!><!><span>x</span>" });
 var label_view_default = _template("__tests__/tags/label-view.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_flag__OR__input_a__OR__input_b = _write_guard($scope0_reason, 3), $fg__input_flag__OR__input_a__OR__input_b = _filled_guard($scope0_reason, 3), $fg__input_flag = _filled_guard($scope0_reason, 4), $fg__input_a = _filled_guard($scope0_reason, 5), $fg__input_b = _filled_guard($scope0_reason, 6);
+	const $scope0_reason = _scope_reason(), $wg__input_flag__OR__input_a__OR__input_b = _write_guard($scope0_reason, 3), $ui__input_flag__OR__input_a__OR__input_b = _unfilled_if($scope0_reason, 3), $ui__input_a__OR__input_b = _unfilled_if($scope0_reason, 2), $ui__input_flag__OR__input_b = _unfilled_if($scope0_reason, 1), $ui__input_flag__OR__input_a = _unfilled_if($scope0_reason, 0), $fg__input_flag__OR__input_a__OR__input_b = _filled_guard($scope0_reason, 3), $fg__input_flag = _filled_guard($scope0_reason, 4), $fg__input_a = _filled_guard($scope0_reason, 5), $fg__input_b = _filled_guard($scope0_reason, 6);
 	const $scope0_id = _scope_id();
 	let open = true;
 	const get = input.flag ? input.a : input.b;
@@ -27,9 +27,9 @@ var label_view_default = _template("__tests__/tags/label-view.marko", (input) =>
 	], $scope0_reason, 3);
 	_patch_fill($scope0_id, "PatchFill:__tests__/tags/label-view.marko_0_open#8/fill", open, 1);
 	_scope($scope0_id, {
-		input_flag: _write_if($scope0_reason, 2) && input.flag,
-		input_a: _write_if($scope0_reason, 1) && input.a,
-		input_b: _write_if($scope0_reason, 0) && input.b,
+		input_flag: ($ui__input_a__OR__input_b || $ui__input_flag__OR__input_a__OR__input_b) && input.flag,
+		input_a: ($ui__input_flag__OR__input_b || $ui__input_flag__OR__input_a__OR__input_b) && input.a,
+		input_b: ($ui__input_flag__OR__input_a || $ui__input_flag__OR__input_a__OR__input_b) && input.b,
 		open,
 		get
 	}, "__tests__/tags/label-view.marko", 0, {
@@ -38,7 +38,7 @@ var label_view_default = _template("__tests__/tags/label-view.marko", (input) =>
 		input_b: ["input.b"],
 		open: "1:6",
 		get: "2:8"
-	}) || ($fg__input_flag && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_flag", input.flag, !_server_guard($scope0_reason, 4)), $fg__input_a && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_a", input.a, !_server_guard($scope0_reason, 5)), $fg__input_b && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_b", input.b, !_server_guard($scope0_reason, 6)), $fg__input_flag__OR__input_a__OR__input_b && _patch_write($scope0_id, "PatchMarkedWrite:get", get, !_server_guard($scope0_reason, 3)));
+	}) || ($fg__input_flag && $ui__input_a__OR__input_b && _patch_write($scope0_id, "PatchMarkedWrite:input_flag", input.flag, !_server_guard($scope0_reason, 4)), $fg__input_a && $ui__input_flag__OR__input_b && _patch_write($scope0_id, "PatchMarkedWrite:input_a", input.a, !_server_guard($scope0_reason, 5)), $fg__input_b && $ui__input_flag__OR__input_a && _patch_write($scope0_id, "PatchMarkedWrite:input_b", input.b, !_server_guard($scope0_reason, 6)), $fg__input_flag__OR__input_a__OR__input_b && _patch_write($scope0_id, "PatchMarkedWrite:get", get, !_server_guard($scope0_reason, 3)));
 });
 
 // template.marko

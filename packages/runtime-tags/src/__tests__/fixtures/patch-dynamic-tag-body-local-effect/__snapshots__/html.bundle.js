@@ -30,7 +30,7 @@ _shells({
 	a6: "a6; b%;<div></div><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_note = _client_guard($scope0_reason, 2), $wi__input_note__OR__input_on = _write_if($scope0_reason, 0), $wg__input_show = _write_guard($scope0_reason, 1), $sg__input_note = _server_guard($scope0_reason, 2), $ui__input_show = _unfilled_if($scope0_reason, 1), $fg__input_note2 = _filled_guard($scope0_reason, 2), $fg__input_on = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_note = _client_guard($scope0_reason, 2), $wi__input_note__OR__input_on = _write_if($scope0_reason, 0), $wg__input_show = _write_guard($scope0_reason, 1), $ui__input_show = _unfilled_if($scope0_reason, 1), $sg__input_note = _server_guard($scope0_reason, 2), $fg__input_note2 = _filled_guard($scope0_reason, 2), $fg__input_on = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_html("<main>");
 	_if(() => {
@@ -63,7 +63,7 @@ var template_default = _template("a", (input) => {
 	$fg__input_note2 && $cg__input_show && _patch_render($scope0_id, "a4", "e");
 	$fg__input_on && $cg__input_show && _patch_render($scope0_id, "a5", "f");
 	_scope($scope0_id, {
-		e: _write_if($scope0_reason, 1) && input.note,
+		e: ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.note,
 		f: ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.on
 	}) || ($fg__input_note2 && $ui__input_show && _patch_write($scope0_id, "xe", input.note, !$sg__input_note), $fg__input_on && $ui__input_show && _patch_write($scope0_id, "xf", input.on, !_server_guard($scope0_reason, 3)));
 }, 1);

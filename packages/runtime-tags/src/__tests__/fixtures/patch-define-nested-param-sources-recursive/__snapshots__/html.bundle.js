@@ -47,7 +47,7 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id) };
 	const Wrapper = { content: _content("a8", ({ a, b, depth }) => {
 		const $scope3_id = _scope_id();
-		const $scope3_reason = _scope_reason(), $uf__a__OR__b = _updates_from($scope3_reason, 0), $uf__b = _updates_from($scope3_reason, 3), $uf__a = _updates_from($scope3_reason, 2), $wg__depth = _write_guard($scope3_reason, 4), $wi__depth = _write_if($scope3_reason, 4), $ui__depth = _unfilled_if($scope3_reason, 4);
+		const $scope3_reason = _scope_reason(), $uf__a__OR__b = _updates_from($scope3_reason, 0), $uf__b = _updates_from($scope3_reason, 3), $uf__a = _updates_from($scope3_reason, 2), $wg__depth = _write_guard($scope3_reason, 4), $ui__depth = _unfilled_if($scope3_reason, 4);
 		_set_scope_reason($uf__a__OR__b << 1 | $uf__a << 3 | $uf__b << 5);
 		const $childScope2 = _peek_scope_id($scope3_id, "a", 1, 0, $scope0_id);
 		Outer.content({
@@ -76,9 +76,9 @@ var template_default = _template("a", (input) => {
 			}
 		}, $scope3_id, "b", 1, $wg__depth, 1, 0, 0, ["a7"], $scope3_reason, 4);
 		_scope($scope3_id, {
-			e: $wi__depth && a,
-			f: $wi__depth && b,
-			_: $wi__depth && _scope_with_id($scope0_id),
+			e: ($ui__depth || _unfilled_if($scope3_reason, 2)) && a,
+			f: ($ui__depth || _unfilled_if($scope3_reason, 3)) && b,
+			_: _write_if($scope3_reason, 4) && _scope_with_id($scope0_id),
 			a: _existing_scope($childScope2)
 		}) || (_filled_guard($scope3_reason, 2) && $ui__depth && _patch_write($scope3_id, "xe", a, !_server_guard($scope3_reason, 2)), _filled_guard($scope3_reason, 3) && $ui__depth && _patch_write($scope3_id, "xf", b, !_server_guard($scope3_reason, 3)));
 	}, $scope0_id) };

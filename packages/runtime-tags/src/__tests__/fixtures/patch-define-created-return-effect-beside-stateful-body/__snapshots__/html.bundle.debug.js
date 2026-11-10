@@ -26,7 +26,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, $scope1_id, "#text/0", 1, $wg__isOpen, 1, 0, 0, ["__tests__/template.marko_3*shell"], $scope1_reason, 1);
 		const $return = label + "!";
 		_script($scope1_id, "__tests__/template.marko_1_isOpen#3_label#4", $wg__isOpen, $fg__isOpen || $fg__label, [$fg__isOpen && "isOpen", $fg__label && "label"]);
-		$fg__label && _client_guard($scope1_reason, 1) && _patch_render($scope1_id, "__tests__/template.marko_3_label#1:4/setup", "label");
 		_scope($scope1_id, {
 			isOpen,
 			label
@@ -63,7 +62,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope($scope0_id, {
 		input_label: input.label,
 		open,
-		Panel: _write_if($scope0_reason, 1) && Panel,
+		Panel: _unfilled_if($scope0_reason, 1) && Panel,
 		Tag
 	}, "__tests__/template.marko", 0, {
 		input_label: ["input.label"],

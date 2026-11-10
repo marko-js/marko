@@ -47,7 +47,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope($scope0_id, {
 		input_label: input.label,
 		open,
-		Panel: _write_if($scope0_reason, 2) && Panel,
+		Panel: _unfilled_if($scope0_reason, 2) && Panel,
 		Tag,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, {

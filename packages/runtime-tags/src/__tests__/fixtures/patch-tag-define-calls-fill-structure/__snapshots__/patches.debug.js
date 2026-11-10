@@ -9,8 +9,7 @@
       "PatchBranch:#text/0": [{
         "PatchText:#text/0": "B"
       }, "packages/runtime-tags/src/__tests__/fixtures/patch-tag-define-calls-fill-structure/tags/shape.marko_2*shell"]
-    },
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-tag-define-calls-fill-structure/tags/shape.marko_0_f#10/subscribers": "f input_a"
+    }
   }
 }
 ;CAI
@@ -27,7 +26,6 @@
       "PatchBranch:#text/0": [{
         "PatchText:#text/0": "C"
       }, _.a]
-    },
-    "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-tag-define-calls-fill-structure/tags/shape.marko_0_f#10/subscribers": "f input_a"
+    }
   }
 }

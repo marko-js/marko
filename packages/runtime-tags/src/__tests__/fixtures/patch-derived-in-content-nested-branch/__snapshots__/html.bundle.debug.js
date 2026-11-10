@@ -52,7 +52,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}
 		}, $scope1_id, "#text/0", 1, $wg__input_label, 1, 0, 0, ["__tests__/template.marko_2*shell"], $scope0_reason, 0);
 		$fg__input_label && _patch_subscribers($scope1_id, "__tests__/template.marko_1_label#1/subscribers", "label");
-		$fg__input_label && $cg__input_label && _patch_render($scope1_id, "__tests__/template.marko_2_label#1:1/setup", "label");
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope1_id, {
 			label,
 			_: _scope_with_id($scope0_id),
@@ -66,7 +65,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope($scope0_id, {
 		count,
 		"ClosureScopes:count/7": $count__closures,
-		"ClosureScopes:input_label/6": $wi__input_label && $input_label__closures,
+		"ClosureScopes:input_label/6": $wi__input_label && _unfilled_if($scope0_reason, 0) && $input_label__closures,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, { count: "1:6" });
 }, 1);

@@ -67,7 +67,7 @@ var template_default = _template("a", (input) => {
 	badge_default({ label: input.badge });
 	_patch_child_end();
 	_html("</main>");
-	$fg__input_detail && ($cg__input_summary || $cg__input_detail) && _patch_subscribers($scope0_id, "a7", "h");
+	$fg__input_detail && $cg__input_summary && _patch_subscribers($scope0_id, "a7", "h");
 	$fg__input_detail && $cg__input_summary && _patch_render($scope0_id, "a6", "h");
 	_scope($scope0_id, {
 		h: ($ui__input_summary || $ui__input_detail) && input.detail,

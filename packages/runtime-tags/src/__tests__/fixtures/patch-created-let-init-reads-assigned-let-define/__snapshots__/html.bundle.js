@@ -17,13 +17,13 @@ var template_default = _template("a", (input) => {
 			let y = x;
 			const Body = { content: _content("a0", ({ v, w }) => {
 				const $scope2_id = _scope_id();
-				const $scope2_reason = _scope_reason(), $ui__v = _unfilled_if($scope2_reason, 1), $fg__w = _filled_guard($scope2_reason, 2);
+				const $scope2_reason = _scope_reason(), $fg__w = _filled_guard($scope2_reason, 2);
 				_html(`<span>${_text_mark($scope2_id, "a", v + w, 1, $scope2_reason, 0)}</span>`);
 				_patch_render($scope2_id, "a1", [_filled_guard($scope2_reason, 1) && "d", $fg__w && "e"], $scope2_reason, 0);
 				_scope($scope2_id, {
-					d: (_unfilled_if($scope2_reason, 2) || _unfilled_if($scope2_reason, 0)) && v,
-					e: $ui__v && w
-				}) || $fg__w && $ui__v && _patch_write($scope2_id, "xe", w, !_server_guard($scope2_reason, 2));
+					d: _write_if($scope2_reason, 2) && v,
+					e: _write_if($scope2_reason, 1) && w
+				}) || $fg__w && _unfilled_if($scope2_reason, 1) && _patch_write($scope2_id, "xe", w, !_server_guard($scope2_reason, 2));
 			}, $scope1_id, 0) };
 			_set_scope_reason(10);
 			const $childScope = _peek_scope_id($scope1_id, "a", 0);

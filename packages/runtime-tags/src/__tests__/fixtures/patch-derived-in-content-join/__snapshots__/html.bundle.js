@@ -39,7 +39,7 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a4");
 	_scope($scope0_id, {
 		f: count,
-		g: _write_if($scope0_reason, 0) && $input_label__closures,
+		g: _write_if($scope0_reason, 0) && _unfilled_if($scope0_reason, 0) && $input_label__closures,
 		h: $count__closures,
 		a: _existing_scope($childScope)
 	});

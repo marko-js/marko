@@ -56,7 +56,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		$fg__label2 && $cg__show && _patch_render($scope2_id, "__tests__/template.marko_3_label#2:4/setup", "label");
 		_write_if($scope2_reason, 3) && _scope($scope2_id, {
 			isOpen: ($ui__show || _unfilled_if($scope2_reason, 1)) && isOpen,
-			label
+			label: ($ui__show || _unfilled_if($scope2_reason, 2)) && label
 		}, "__tests__/template.marko", "7:2", {
 			isOpen: "7:17",
 			label: "7:25"
@@ -82,7 +82,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope($scope0_id, {
 		input_label: input.label,
 		open,
-		Inner: _write_if($scope0_reason, 4) && Inner,
+		Inner: _unfilled_if($scope0_reason, 4) && Inner,
 		Tag,
 		"#childScope/0": _existing_scope($childScope2)
 	}, "__tests__/template.marko", 0, {

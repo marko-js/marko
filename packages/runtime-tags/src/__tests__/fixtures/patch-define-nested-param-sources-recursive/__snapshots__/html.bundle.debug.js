@@ -50,7 +50,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id) };
 	const Wrapper = { content: _content("__tests__/template.marko_3*content", ({ a, b, depth }) => {
 		const $scope3_id = _scope_id();
-		const $scope3_reason = _scope_reason(), $uf__a__OR__b = _updates_from($scope3_reason, 0), $uf__b = _updates_from($scope3_reason, 3), $uf__a = _updates_from($scope3_reason, 2), $wg__depth = _write_guard($scope3_reason, 4), $wi__depth = _write_if($scope3_reason, 4), $ui__depth = _unfilled_if($scope3_reason, 4);
+		const $scope3_reason = _scope_reason(), $uf__a__OR__b = _updates_from($scope3_reason, 0), $uf__b = _updates_from($scope3_reason, 3), $uf__a = _updates_from($scope3_reason, 2), $wg__depth = _write_guard($scope3_reason, 4), $ui__depth = _unfilled_if($scope3_reason, 4);
 		_set_scope_reason($uf__a__OR__b << 1 | $uf__a << 3 | $uf__b << 5);
 		const $childScope2 = _peek_scope_id($scope3_id, "#childScope/0", 1, 0, $scope0_id);
 		Outer.content({
@@ -79,9 +79,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}
 		}, $scope3_id, "#text/1", 1, $wg__depth, 1, 0, 0, ["__tests__/template.marko_4*shell"], $scope3_reason, 4);
 		_scope($scope3_id, {
-			a: $wi__depth && a,
-			b: $wi__depth && b,
-			_: $wi__depth && _scope_with_id($scope0_id),
+			a: ($ui__depth || _unfilled_if($scope3_reason, 2)) && a,
+			b: ($ui__depth || _unfilled_if($scope3_reason, 3)) && b,
+			_: _write_if($scope3_reason, 4) && _scope_with_id($scope0_id),
 			"#childScope/0": _existing_scope($childScope2)
 		}, "__tests__/template.marko", "8:2", {
 			a: "8:19",

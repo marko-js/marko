@@ -39,7 +39,7 @@ _shells({
 	b1: "b1,<span>shown</span>"
 });
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 1), $cg__input_show = _client_guard($scope0_reason, 1), $wi__input_show = _write_if($scope0_reason, 1), $sg__input_show = _server_guard($scope0_reason, 1), $fg__input_show2 = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 1), $cg__input_show = _client_guard($scope0_reason, 1), $wi__input_show = _write_if($scope0_reason, 1), $sg__input_show = _server_guard($scope0_reason, 1), $ui__input_on = _unfilled_if($scope0_reason, 0), $fg__input_show2 = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	let items = [1, 2];
 	_html(`<button>add</button>${_el_mark($scope0_id, "a")}`);
@@ -91,9 +91,9 @@ var child_default = _template("b", (input) => {
 	$fg__input_show2 && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "b6", "f");
 	_patch_fill($scope0_id, "vb8", items, 1);
 	_scope($scope0_id, {
-		f: _write_if($scope0_reason, 0) && input.show,
+		f: ($ui__input_on || _unfilled_if($scope0_reason, 1)) && input.show,
 		g: items
-	}) || $fg__input_show2 && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xf", input.show, !$sg__input_show);
+	}) || $fg__input_show2 && $ui__input_on && _patch_write($scope0_id, "xf", input.show, !$sg__input_show);
 });
 
 // template.marko

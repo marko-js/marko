@@ -7,7 +7,7 @@ _shells({
 	"__tests__/tags/panel.marko_1*shell": "__tests__/tags/panel.marko_1*shell __tests__/tags/panel.marko_1_count#0:7/setup;D lD lD ;<p> </p><p> </p><em> </em>"
 });
 var panel_default = _template("__tests__/tags/panel.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_show = _write_if($scope0_reason, 1), $sg__input_x = _server_guard($scope0_reason, 2), $sg__input_y = _server_guard($scope0_reason, 3), $ui__input_show = _unfilled_if($scope0_reason, 1), $fg__input_x2 = _filled_guard($scope0_reason, 2), $fg__input_y2 = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $ui__input_show = _unfilled_if($scope0_reason, 1), $sg__input_x = _server_guard($scope0_reason, 2), $sg__input_y = _server_guard($scope0_reason, 3), $fg__input_x2 = _filled_guard($scope0_reason, 2), $fg__input_y2 = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	let count = 0;
 	_if(() => {
@@ -40,8 +40,8 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 	$fg__input_y2 && $cg__input_show && _patch_render($scope0_id, "__tests__/tags/panel.marko_1_input_y#0:6/setup", "input_y");
 	_patch_fill($scope0_id, "PatchFill:__tests__/tags/panel.marko_0_count#7/fill", count, 1);
 	_scope($scope0_id, {
-		input_x: $wi__input_show && input.x,
-		input_y: $wi__input_show && input.y,
+		input_x: ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.x,
+		input_y: ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.y,
 		count
 	}, "__tests__/tags/panel.marko", 0, {
 		input_x: ["input.x"],

@@ -77,7 +77,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_label: input.label,
 		input_hidden: input.hidden,
 		open,
-		Panel: _write_if($scope0_reason, 4) && Panel,
+		Panel: _unfilled_if($scope0_reason, 4) && Panel,
 		Tag
 	}, "__tests__/template.marko", 0, {
 		input_open: ["input.open"],

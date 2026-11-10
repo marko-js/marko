@@ -3,9 +3,9 @@ const $Inner_content__walks = "b%c";
 const $Inner_content__template = "<!><!><!>";
 const $Outer_content__walks = /*@__PURE__*/ ((_w0) => `b/${_w0}&%c`)($Inner_content__walks);
 const $Outer_content__template = /*@__PURE__*/ ((_w0) => `<!>${_w0}<!><!>`)($Inner_content__template);
-const $if_content3__label = /*@__PURE__*/ _if_closure_patch("a8", 1, 0, ($scope) => _text($scope.a, $scope._.f));
+const $if_content3__label = /*@__PURE__*/ _if_closure_patch("a7", 1, 0, ($scope) => _text($scope.a, $scope._.f));
 const $if_content3__setup = $if_content3__label;
-const $if_content2__text = /*@__PURE__*/ _if_closure_patch("a6", 0, 0, ($scope) => _text($scope.a, $scope._.e));
+const $if_content2__text = /*@__PURE__*/ _if_closure_patch("a13", 0, 0, ($scope) => _text($scope.a, $scope._.e));
 const $if_content2__setup__script = _script("a0", ($scope) => _on($scope.c, "click", function() {
 	$Inner_content__n($scope._, +$scope._.f + 1);
 }));
@@ -14,7 +14,7 @@ const $if_content2__setup = ($scope) => {
 	$if_content2__n._($scope);
 	$if_content2__setup__script($scope);
 };
-const $if_content2__n = /*@__PURE__*/ _if_closure_patch("a13", 0, 0, ($scope) => _text($scope.b, $scope._.f));
+const $if_content2__n = /*@__PURE__*/ _if_closure_patch("a12", 0, 0, ($scope) => _text($scope.b, $scope._.f));
 const $Outer_content__setup = ($scope) => {
 	$Inner_content__setup($scope.a);
 	$Inner_content__isOpen($scope.a, true);
@@ -28,8 +28,8 @@ const $Outer_content__$temp = ($scope, $temp2) => {
 	$Outer_content__on($scope, $temp2.on);
 	$Outer_content__tag_input_label($scope, $temp2.label);
 };
-const $Outer_content = _content$1("a9", $Outer_content__template, $Outer_content__walks, $Outer_content__setup, $Outer_content__$params);
-const $Inner_content__n = /*@__PURE__*/ _fill_let("a7", 5, $if_content2__n);
+const $Outer_content = _content$1("a8", $Outer_content__template, $Outer_content__walks, $Outer_content__setup, $Outer_content__$params);
+const $Inner_content__n = /*@__PURE__*/ _fill_let("a6", 5, $if_content2__n);
 const $Inner_content__setup = ($scope) => $Inner_content__n($scope, 1);
 const $Inner_content__if = /*@__PURE__*/ _if(0, "<em><!><!></em><button class=inc>+</button>", "D%b%l ", $if_content2__setup);
 const $Inner_content__isOpen = ($scope, isOpen) => $Inner_content__if($scope, isOpen ? 0 : 1);
@@ -61,6 +61,6 @@ const $open = _let(8, ($scope) => {
 	$open__OR__T($scope);
 	$open__OR__Inner($scope);
 });
-const $setup__script = _script("a11", ($scope) => _on($scope.d, "click", function() {
+const $setup__script = _script("a10", ($scope) => _on($scope.d, "click", function() {
 	$open($scope, !$scope.i);
 }));

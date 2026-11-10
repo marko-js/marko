@@ -53,7 +53,7 @@ var template_default = _template("a", (input) => {
 		$fg__label2 && $cg__show && _patch_render($scope2_id, "a5", "e");
 		_write_if($scope2_reason, 3) && _scope($scope2_id, {
 			d: ($ui__show || _unfilled_if($scope2_reason, 1)) && isOpen,
-			e: label
+			e: ($ui__show || _unfilled_if($scope2_reason, 2)) && label
 		}) || ($fg__isOpen && $ui__show && _patch_write($scope2_id, "xd", isOpen, !_server_guard($scope2_reason, 1)), $fg__label2 && $ui__show && _patch_write($scope2_id, "xe", label, !_server_guard($scope2_reason, 2)));
 	}, $scope0_id) };
 	_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 1) << 3 | _updates_from($scope0_reason, 2) << 5 | _updates_from($scope0_reason, 3) << 7);
@@ -76,7 +76,7 @@ var template_default = _template("a", (input) => {
 	_scope($scope0_id, {
 		g: input.label,
 		j: open,
-		k: _write_if($scope0_reason, 4) && Inner,
+		k: _unfilled_if($scope0_reason, 4) && Inner,
 		m: Tag,
 		a: _existing_scope($childScope2)
 	}) || ($fg__input_label && _patch_write($scope0_id, "xg", input.label, !_server_guard($scope0_reason, 2)), $fg__input_other && _patch_write($scope0_id, "xm", Tag, !_server_guard($scope0_reason, 4)));

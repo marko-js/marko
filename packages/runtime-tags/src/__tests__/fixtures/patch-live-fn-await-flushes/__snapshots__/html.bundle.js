@@ -61,7 +61,7 @@ var template_default = _template("a", (input) => {
 	_scope($scope0_id, {
 		e: input.x,
 		a: _existing_scope($childScope),
-		i: _write_if($scope0_reason, 1) && $fn2__closures,
+		i: _write_if($scope0_reason, 1) && _unfilled_if($scope0_reason, 1) && $fn2__closures,
 		h: _write_if($scope0_reason, 2) && _unfilled_if($scope0_reason, 2) && $input_promise__closures
 	});
 }, 1);

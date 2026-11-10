@@ -4,7 +4,7 @@ _shells({
 	b2: "b2; ;<i></i>"
 });
 var gm_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $uf__input_v = _updates_from($scope0_reason, 0), $scope0_page = _page_render(), $wi__input_v = _write_if($scope0_reason, 0), $ui__input_v = _unfilled_if($scope0_reason, 0), $cg__input_v = _client_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $uf__input_v = _updates_from($scope0_reason, 0), $scope0_page = _page_render(), $ui__input_v = _unfilled_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
 	const z = input.v + $global$1.flag;
@@ -15,16 +15,17 @@ var gm_default = _template("b", (input) => {
 			_html(`<i${_attr("data-z", z + $global$1.mark, $scope1_id, "a", (2 | $uf__input_v) << 1, 0)}></i>${_el_mark($scope1_id, "a")}`);
 			_fill_global_subscribe("b0", $scope1_id);
 			_client_guard((2 | $uf__input_v) << 1, 0) && _patch_render($scope1_id, "b1");
-			_scope($scope1_id, { _: ($scope0_page || $wi__input_v) && _scope_with_id($scope0_id) });
+			_scope($scope1_id, { _: ($scope0_page || _write_if($scope0_reason, 0)) && _scope_with_id($scope0_id) });
 			return 0;
 		}
 	}, $scope0_id, "b", 1, _write_guard($scope0_reason, 0), 1, 0, 0, ["b2"], $scope0_reason, 0);
-	_fill_global_subscribe("b3", $scope0_id, $cg__input_v);
-	_filled_guard((2 | $uf__input_v) << 1, 0) && $cg__input_v && _patch_render($scope0_id, "b1", _filled_guard((2 | $uf__input_v) << 1, 0) && "g");
+	_fill_global_subscribe("b3", $scope0_id, _client_guard($scope0_reason, 0));
+	$ui__input_v && _patch_write($scope0_id, "we", input.v, 1);
+	_unfilled_if((2 | $uf__input_v) << 1, 0) && _patch_write($scope0_id, "wg", z, 1);
 	_scope($scope0_id, {
-		e: $wi__input_v && input.v,
+		e: $ui__input_v && input.v,
 		g: ($ui__input_v || _unfilled_if()) && z
-	}) || (_filled_guard($scope0_reason, 0) && $ui__input_v && _patch_write($scope0_id, "xe", input.v, !_server_guard($scope0_reason, 0)), _filled_guard((2 | $uf__input_v) << 1, 0) && $ui__input_v && _patch_write($scope0_id, "xg", z, !_server_guard((2 | $uf__input_v) << 1, 0)));
+	});
 });
 
 // template.marko

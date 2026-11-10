@@ -31,7 +31,7 @@ var wrap_default = _template("b", (input) => {
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
 	Panel.content({ open: input.open });
 	_patch_child_end();
-	$fg__input_title && _patch_subscribers($scope0_id, "b3", "d");
+	$fg__input_title && _client_guard($scope0_reason, 1) && _patch_subscribers($scope0_id, "b3", "d");
 	_scope($scope0_id, {
 		d: ($ui__input_open || _unfilled_if($scope0_reason, 0)) && input.title,
 		f: $wi__input_title && $input_title__closures,

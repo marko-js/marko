@@ -12,7 +12,7 @@ var wrapper_default = _template("b", (input) => {
 });
 
 // template.marko
-const $setup = _shell_setup([[], ["a8"]], ["a>", $setup$1]);
+const $setup = _shell_setup([[], ["a7"]], ["a>", $setup$1]);
 _shells({
 	a: `a${_shell_marker($setup)};${((_w0) => `/${_w0}& b`)("D%l")};${((_w0) => `${_w0}<button>+</button>`)($template)}`,
 	a3: "a3 a2;b%;<!><!><!>"
@@ -25,7 +25,7 @@ var template_default = _template("a", (input) => {
 	let count = 0;
 	_set_scope_reason(0);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);
-	wrapper_default({ content: _content("a7", () => {
+	wrapper_default({ content: _content("a6", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id(), $fg__input_label = _filled_guard($scope0_reason, 0);
 		const $wrapper_content__label__closures = /* @__PURE__ */ new Set();
@@ -41,21 +41,20 @@ var template_default = _template("a", (input) => {
 			}
 		}, $scope1_id, "a", 1, $wg__input_label, 1, 0, 0, ["a3"], $scope0_reason, 0);
 		$fg__input_label && _patch_subscribers($scope1_id, "a4", "b");
-		$fg__input_label && $cg__input_label && _patch_render($scope1_id, "a5", "b");
 		_subscribe(_unfilled_if($scope0_reason, 0) && $input_label__closures, _scope($scope1_id, {
 			b: label,
 			_: _scope_with_id($scope0_id),
 			i: $wi__input_label && $wrapper_content__label__closures
-		}), $cg__input_label && "a6", $wg__input_label);
+		}), $cg__input_label && "a5", $wg__input_label);
 		$wg__input_label || _resume_branch($scope1_id);
 	}, $scope0_id) });
 	_patch_child_end();
 	_html(`<button>+</button>${_el_mark($scope0_id, "b")}`);
-	_script($scope0_id, "a8");
+	_script($scope0_id, "a7");
 	_scope($scope0_id, {
 		f: count,
 		h: $count__closures,
-		g: $wi__input_label && $input_label__closures,
+		g: $wi__input_label && _unfilled_if($scope0_reason, 0) && $input_label__closures,
 		a: _existing_scope($childScope)
 	});
 }, 1);

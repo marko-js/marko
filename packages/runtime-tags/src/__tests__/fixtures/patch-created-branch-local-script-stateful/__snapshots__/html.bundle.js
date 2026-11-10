@@ -4,7 +4,7 @@ _shells({
 	a2: "a2,<p>shown</p>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0), $sg__input_title = _server_guard($scope0_reason, 1), $fg__input_title2 = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 0), $sg__input_title = _server_guard($scope0_reason, 1), $ui__input_show = _unfilled_if($scope0_reason, 0), $fg__input_title2 = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	let clicks = 0;
 	_html(`<button>${_text_mark($scope0_id, "b", clicks)}</button>${_el_mark($scope0_id, "a")}<main>`);
@@ -27,7 +27,7 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a3");
 	$fg__input_title2 && _client_guard($scope0_reason, 0) && _patch_render($scope0_id, "a1", "g");
 	_scope($scope0_id, {
-		g: _write_if($scope0_reason, 0) && input.title,
+		g: ($ui__input_show || _unfilled_if($scope0_reason, 1)) && input.title,
 		h: clicks
-	}) || $fg__input_title2 && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xg", input.title, !$sg__input_title);
+	}) || $fg__input_title2 && $ui__input_show && _patch_write($scope0_id, "xg", input.title, !$sg__input_title);
 }, 1);

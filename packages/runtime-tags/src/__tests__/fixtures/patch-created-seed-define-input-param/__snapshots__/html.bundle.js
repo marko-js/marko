@@ -10,13 +10,14 @@ _shells({
 	b1: "b1;D ;<span> </span>"
 });
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_v = _client_guard($scope0_reason, 2), $wi__input_v = _write_if($scope0_reason, 2), $wg__input_show = _write_guard($scope0_reason, 1), $ui__input_show = _unfilled_if($scope0_reason, 1), $fg__input_v = _filled_guard($scope0_reason, 2), $fg__input_on = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_v = _client_guard($scope0_reason, 2), $wi__input_v = _write_if($scope0_reason, 2), $cg__input_on = _client_guard($scope0_reason, 3), $wg__input_show = _write_guard($scope0_reason, 1), $ui__input_show = _unfilled_if($scope0_reason, 1), $sg__input_v = _server_guard($scope0_reason, 2), $fg__input_v2 = _filled_guard($scope0_reason, 2), $fg__input_on = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.show) {
-			const $scope1_id = _scope_id(), $ui__input_on = _unfilled_if($scope0_reason, 3);
+			const $scope1_id = _scope_id(), $ui__input_on = _unfilled_if($scope0_reason, 3), $fg__input_v = _filled_guard($scope0_reason, 2);
 			const $if_content__v__closures = /* @__PURE__ */ new Set();
 			const v = `${input.v}!`;
+			$fg__input_v && $ui__input_on && _patch_write($scope1_id, "xb", v, !$sg__input_v);
 			const D = { content: _content("b2", ({ on }) => {
 				const $scope2_id = _scope_id();
 				const $scope2_reason = _scope_reason(), $wg__on = _write_guard($scope2_reason, 0), $wi__on = _write_if($scope2_reason, 0);
@@ -35,9 +36,9 @@ var child_default = _template("b", (input) => {
 			const $childScope = _peek_scope_id($scope1_id, "a", 0);
 			D.content({ on: input.on });
 			_patch_child_end();
-			$ui__input_on && _patch_write($scope1_id, "wb", v, 1);
-			$cg__input_v && _patch_render($scope1_id, "b4");
-			_client_guard($scope0_reason, 3) && _patch_render($scope1_id, "b5");
+			$fg__input_v && $cg__input_on && _patch_subscribers($scope1_id, "b4", "b");
+			$cg__input_v && _patch_render($scope1_id, "b5");
+			$cg__input_on && _patch_render($scope1_id, "b6");
 			_scope($scope1_id, {
 				b: ($ui__input_on || _unfilled_if($scope0_reason, 2)) && v,
 				_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id),
@@ -47,12 +48,12 @@ var child_default = _template("b", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "a", 1, $wg__input_show, 1, 0, 0, ["b3"], $scope0_reason, 1);
-	$fg__input_v && $cg__input_show && _patch_render($scope0_id, "b4", "e");
-	$fg__input_on && $cg__input_show && _patch_render($scope0_id, "b5", "f");
+	$fg__input_v2 && $cg__input_show && _patch_render($scope0_id, "b5", "e");
+	$fg__input_on && $cg__input_show && _patch_render($scope0_id, "b6", "f");
 	_scope($scope0_id, {
 		e: ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.v,
 		f: ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.on
-	}) || ($fg__input_v && $ui__input_show && _patch_write($scope0_id, "xe", input.v, !_server_guard($scope0_reason, 2)), $fg__input_on && $ui__input_show && _patch_write($scope0_id, "xf", input.on, !_server_guard($scope0_reason, 3)));
+	}) || ($fg__input_v2 && $ui__input_show && _patch_write($scope0_id, "xe", input.v, !$sg__input_v), $fg__input_on && $ui__input_show && _patch_write($scope0_id, "xf", input.on, !_server_guard($scope0_reason, 3)));
 });
 
 // template.marko

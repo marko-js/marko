@@ -4,7 +4,7 @@ const $D_content__template = "<!><!><!>";
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $setup$1 = ($_) => {};
-const $if_content2__v = /*@__PURE__*/ _closure_get_patch("__tests__/tags/child.marko_3_v#1:1/subscribe", "v/8", ($scope) => _text($scope["#text/0"], $scope._._.v), ($scope) => $scope._._);
+const $if_content2__v = /*@__PURE__*/ _closure_get_patch("__tests__/tags/child.marko_3_v#1:1/subscribe", "v/8", ($scope) => _text($scope["#text/0"], $scope._._.v), ($scope) => $scope._._, "__tests__/tags/child.marko_1_v#1/subscribers", 0);
 const $if_content2__setup = $if_content2__v;
 const $D_content__if = /*@__PURE__*/ _if("#text/0", "<span> </span>", "D ", $if_content2__setup);
 const $D_content__on = ($scope, on) => $D_content__if($scope, on ? 0 : 1);

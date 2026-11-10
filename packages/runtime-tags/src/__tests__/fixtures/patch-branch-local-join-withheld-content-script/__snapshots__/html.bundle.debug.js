@@ -8,7 +8,7 @@ _shells({
 	"__tests__/tags/child.marko_1*shell": "__tests__/tags/child.marko_1*shell; b ;<div></div><section></section>"
 });
 var child_default = _template("__tests__/tags/child.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_b = _client_guard($scope0_reason, 4), $wi__input_show__OR__input_b__OR__input_a__OR__input_mode = _write_if($scope0_reason, 2), $wg__input_show = _write_guard($scope0_reason, 3), $sg__input_b = _server_guard($scope0_reason, 4), $ui__input_show = _unfilled_if($scope0_reason, 3), $ui__input_show__OR__input_b__OR__input_mode = _unfilled_if($scope0_reason, 1), $fg__input_b2 = _filled_guard($scope0_reason, 4), $fg__input_a = _filled_guard($scope0_reason, 5), $fg__input_mode = _filled_guard($scope0_reason, 6), $cg__input_show = _client_guard($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $cg__input_b = _client_guard($scope0_reason, 4), $wi__input_show__OR__input_b__OR__input_a__OR__input_mode = _write_if($scope0_reason, 2), $wg__input_show = _write_guard($scope0_reason, 3), $ui__input_show = _unfilled_if($scope0_reason, 3), $sg__input_b = _server_guard($scope0_reason, 4), $ui__input_show__OR__input_b__OR__input_mode = _unfilled_if($scope0_reason, 1), $fg__input_b2 = _filled_guard($scope0_reason, 4), $fg__input_a = _filled_guard($scope0_reason, 5), $fg__input_mode = _filled_guard($scope0_reason, 6), $cg__input_show = _client_guard($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	const $input_a__closures = new Set();
 	_if(() => {
@@ -51,7 +51,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	$fg__input_a && _patch_subscribers($scope0_id, "__tests__/tags/child.marko_0_input_a#5/subscribers", "input_a");
 	$fg__input_mode && $cg__input_show && _patch_render($scope0_id, "__tests__/tags/child.marko_1_input_mode#0:6/setup", "input_mode");
 	_scope($scope0_id, {
-		input_b: _write_if($scope0_reason, 3) && input.b,
+		input_b: ($ui__input_show || _unfilled_if($scope0_reason, 4)) && input.b,
 		input_a: ($ui__input_show__OR__input_b__OR__input_mode || _unfilled_if($scope0_reason, 0)) && input.a,
 		input_mode: ($ui__input_show || _unfilled_if($scope0_reason, 6)) && input.mode,
 		"ClosureScopes:input_a/8": _write_if($scope0_reason, 5) && $input_a__closures

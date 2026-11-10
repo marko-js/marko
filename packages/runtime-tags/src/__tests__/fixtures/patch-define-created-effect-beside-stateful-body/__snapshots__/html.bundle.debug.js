@@ -69,9 +69,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_patch_render($scope0_id, "__tests__/template.marko_0_open#9_Tag#12/setup", $fg__input_other && "Tag");
 	_scope($scope0_id, {
 		input_open: ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.open,
-		input_label: _write_if($scope0_reason, 1) && input.label,
+		input_label: ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.label,
 		open,
-		Panel: _write_if($scope0_reason, 4) && Panel,
+		Panel: _unfilled_if($scope0_reason, 4) && Panel,
 		Tag
 	}, "__tests__/template.marko", 0, {
 		input_open: ["input.open"],

@@ -62,7 +62,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_label: input.label,
 		input_open: ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.open,
 		open,
-		Panel: _write_if($scope0_reason, 4) && Panel,
+		Panel: _unfilled_if($scope0_reason, 4) && Panel,
 		Tag,
 		"ClosureScopes:input_label/14": $wi__input_label && $input_label__closures
 	}, "__tests__/template.marko", 0, {

@@ -3,7 +3,7 @@ _shells({ a: "a !a4;b bD%b ;<pre id=log></pre><div id=d></div><main><!><button>+
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason();
 	_write_guard($scope0_reason, 0);
-	const $wi__input_upper = _write_if($scope0_reason, 0), $fg__input_upper = _filled_guard($scope0_reason, 0);
+	const $ui__input_upper = _unfilled_if($scope0_reason, 0), $fg__input_upper = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const fa = _resume(() => "a:" + ((el) => el())(_el_read_error).id, "a0", $scope0_id);
 	const fb = _resume(() => "b:" + ((el) => el())(_el_read_error).id, "a1", $scope0_id);
@@ -17,8 +17,8 @@ var template_default = _template("a", (input) => {
 	$fg__input_upper && _patch_render($scope0_id, "a2", "j");
 	_patch_render($scope0_id, "a5", $fg__input_upper && "f", $scope0_reason, 0);
 	_scope($scope0_id, {
-		g: $wi__input_upper && fa,
-		h: $wi__input_upper && fb,
+		g: $ui__input_upper && fa,
+		h: $ui__input_upper && fb,
 		j: pick,
 		k: open
 	}) || $fg__input_upper && _patch_write($scope0_id, "xj", pick, !_server_guard($scope0_reason, 0));

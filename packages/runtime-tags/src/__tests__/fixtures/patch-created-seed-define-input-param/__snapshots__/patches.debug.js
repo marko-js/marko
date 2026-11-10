@@ -12,8 +12,9 @@
   },
   "PatchChild:#childScope/2": {
     "PatchBranch:#text/0": [{
+      "PatchMarkedWrite:v": "b!",
+      "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-seed-define-input-param/tags/child.marko_1_v#1/subscribers": "v",
       "PatchSetup:": {
-        "PatchWrite:v": "b!",
         "PatchRender:": "packages/runtime-tags/src/__tests__/fixtures/patch-created-seed-define-input-param/tags/child.marko_1_input_on#0:5/setup"
       }
     }, _.a]
@@ -32,8 +33,9 @@
   },
   "PatchChild:#childScope/2": {
     "PatchBranch:#text/0": [{
+      "PatchMarkedWrite:v": "b!",
+      "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-seed-define-input-param/tags/child.marko_1_v#1/subscribers": "v",
       "PatchSetup:": {
-        "PatchWrite:v": "b!",
         "PatchRender:": "packages/runtime-tags/src/__tests__/fixtures/patch-created-seed-define-input-param/tags/child.marko_1_input_on#0:5/setup"
       }
     }, _.a]
@@ -53,8 +55,9 @@
   },
   "PatchChild:#childScope/2": {
     "PatchBranch:#text/0": [{
+      "PatchMarkedWrite:v": "b!",
+      "PatchSubscribers:packages/runtime-tags/src/__tests__/fixtures/patch-created-seed-define-input-param/tags/child.marko_1_v#1/subscribers": "v",
       "PatchSetup:": {
-        "PatchWrite:v": "b!",
         "PatchRender:": "packages/runtime-tags/src/__tests__/fixtures/patch-created-seed-define-input-param/tags/child.marko_1_input_on#0:5/setup"
       }
     }, _.a]

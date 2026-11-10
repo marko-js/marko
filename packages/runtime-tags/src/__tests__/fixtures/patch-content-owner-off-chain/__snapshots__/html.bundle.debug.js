@@ -56,10 +56,11 @@ _shells({
 	"__tests__/tags/view.marko_2*shell": "__tests__/tags/view.marko_2*shell;b%;<!><!><!>"
 });
 var view_default = _template("__tests__/tags/view.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_tabs = _write_guard($scope0_reason, 1), $wg__input_selected = _write_guard($scope0_reason, 2), $wi__input_tabs__OR__input_selected = _write_if($scope0_reason, 0), $ui__input_tabs = _unfilled_if($scope0_reason, 1), $fg__input_selected = _filled_guard($scope0_reason, 2), $cg__input_tabs = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_tabs = _write_guard($scope0_reason, 1), $wg__input_selected = _write_guard($scope0_reason, 2), $cg__input_selected = _client_guard($scope0_reason, 2), $wi__input_tabs__OR__input_selected = _write_if($scope0_reason, 0), $ui__input_tabs = _unfilled_if($scope0_reason, 1), $fg__input_selected = _filled_guard($scope0_reason, 2), $cg__input_tabs = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_for_of(input.tabs, (tab, i) => {
-		const $scope1_id = _scope_id(), $ui__input_selected = _unfilled_if($scope0_reason, 2);
+		const $scope1_id = _scope_id(), $ui__input_selected = _unfilled_if($scope0_reason, 2), $fg__input_tabs = _filled_guard($scope0_reason, 1);
+		$fg__input_tabs && $ui__input_selected && _patch_write($scope1_id, "PatchMarkedWrite:tab_content", tab?.content, !_server_guard($scope0_reason, 1));
 		_if(() => {
 			if (i === input.selected) {
 				const $scope2_id = _scope_id();
@@ -69,7 +70,8 @@ var view_default = _template("__tests__/tags/view.marko", (input) => {
 				return 0;
 			}
 		}, $scope1_id, "#text/0", 1, $wg__input_selected, 1, 0, 0, ["__tests__/tags/view.marko_2*shell"], $scope0_reason, 0);
-		_client_guard($scope0_reason, 2) && _patch_render($scope1_id, "__tests__/tags/view.marko_1_input_selected#0:4/setup");
+		$fg__input_tabs && $cg__input_selected && _patch_render($scope1_id, "__tests__/tags/view.marko_2_tab_content#1:3/setup", "tab_content");
+		$cg__input_selected && _patch_render($scope1_id, "__tests__/tags/view.marko_1_input_selected#0:4/setup");
 		$wi__input_tabs__OR__input_selected && _scope($scope1_id, {
 			tab_content: ($ui__input_selected || _unfilled_if($scope0_reason, 1)) && tab?.content,
 			"#LoopKey": $ui__input_selected && i,

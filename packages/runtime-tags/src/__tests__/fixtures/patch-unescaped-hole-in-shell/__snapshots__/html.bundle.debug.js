@@ -58,7 +58,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}
 	}, $scope0_id, "#main/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/template.marko_1*shell"], $scope0_reason, 1);
 	_html(`</main>${_el_mark($scope0_id, "#main/0", $wg__input_show)}`);
-	$fg__input_html && ($cg__input_show || $cg__input_html) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_html#4/subscribers", "input_html");
+	$fg__input_html && $cg__input_show && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_html#4/subscribers", "input_html");
 	$fg__input_html && $cg__input_show && _patch_render($scope0_id, "__tests__/template.marko_1_input_html#0:4/setup", "input_html");
 	_scope($scope0_id, {
 		input_html: ($ui__input_show || $ui__input_html) && input.html,

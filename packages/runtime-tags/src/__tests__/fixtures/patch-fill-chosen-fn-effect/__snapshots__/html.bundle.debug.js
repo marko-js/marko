@@ -4,7 +4,7 @@ const $walks = "b bD%b l";
 const $setup = [[], ["__tests__/template.marko_0"]];
 _shells({ "__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0;b bD%b ;<pre id=log></pre><div id=d></div><main><!><button>+</button></main>" });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_upper = _write_guard($scope0_reason, 0), $wi__input_upper = _write_if($scope0_reason, 0), $fg__input_upper = _filled_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_upper = _write_guard($scope0_reason, 0), $ui__input_upper = _unfilled_if($scope0_reason, 0), $fg__input_upper = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const fa = _resume(() => "a:" + ((el) => el())(_el_read_error).id, "__tests__/template.marko_0/fa", $scope0_id);
 	const fb = _resume(() => "b:" + ((el) => el())(_el_read_error).id, "__tests__/template.marko_0/fb", $scope0_id);
@@ -26,8 +26,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	$fg__input_upper && _patch_render($scope0_id, "__tests__/template.marko_1_pick#0:9/setup", "pick");
 	_patch_render($scope0_id, "__tests__/template.marko_0_input_upper#5_fa#6_fb#7/setup", $fg__input_upper && "input_upper", $scope0_reason, 0);
 	_scope($scope0_id, {
-		fa: $wi__input_upper && fa,
-		fb: $wi__input_upper && fb,
+		fa: $ui__input_upper && fa,
+		fb: $ui__input_upper && fb,
 		pick,
 		open
 	}, "__tests__/template.marko", 0, {

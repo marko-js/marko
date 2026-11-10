@@ -62,7 +62,7 @@ var template_default = _template("a", (input) => {
 	_scope($scope0_id, {
 		g: input.label,
 		i: open,
-		j: _write_if($scope0_reason, 3) && Panel,
+		j: _unfilled_if($scope0_reason, 3) && Panel,
 		l: Tag
 	}) || ($fg__input_label && _patch_write($scope0_id, "xg", input.label, !_server_guard($scope0_reason, 2)), $fg__input_other && _patch_write($scope0_id, "xl", Tag, !_server_guard($scope0_reason, 3)));
 }, 1);

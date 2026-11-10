@@ -86,7 +86,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_open: ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.open,
 		input_label: input.label,
 		open,
-		Inner: _write_if($scope0_reason, 4) && Inner,
+		Inner: _unfilled_if($scope0_reason, 4) && Inner,
 		Tag
 	}, "__tests__/template.marko", 0, {
 		input_open: ["input.open"],

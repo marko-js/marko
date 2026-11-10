@@ -4,7 +4,7 @@ _shells({
 	a3: "a3,"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 4), $fg__input_prefix = _filled_guard($scope0_reason, 5), $fg__input_x = _filled_guard($scope0_reason, 6), $cg__input_show = _client_guard($scope0_reason, 4), $fg__input_suffix2 = _filled_guard($scope0_reason, 7);
+	const $scope0_reason = _scope_reason(), $wg__input_show = _write_guard($scope0_reason, 4), $ui__input_prefix__OR__input_x = _unfilled_if($scope0_reason, 2), $ui__input_show__OR__input_x = _unfilled_if($scope0_reason, 1), $ui__input_show__OR__input_prefix = _unfilled_if($scope0_reason, 0), $fg__input_prefix = _filled_guard($scope0_reason, 5), $fg__input_x = _filled_guard($scope0_reason, 6), $cg__input_show = _client_guard($scope0_reason, 4), $fg__input_suffix2 = _filled_guard($scope0_reason, 7);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.show) {
@@ -24,8 +24,8 @@ var template_default = _template("a", (input) => {
 	$fg__input_x && $cg__input_show && _patch_render($scope0_id, "a5", "f");
 	$fg__input_suffix2 && $cg__input_show && _patch_render($scope0_id, "a6", "g");
 	_scope($scope0_id, {
-		e: _write_if($scope0_reason, 1) && input.prefix,
-		f: _write_if($scope0_reason, 0) && input.x,
+		e: ($ui__input_show__OR__input_x || $ui__input_prefix__OR__input_x) && input.prefix,
+		f: ($ui__input_show__OR__input_prefix || $ui__input_prefix__OR__input_x) && input.x,
 		g: input.suffix
-	}) || ($fg__input_prefix && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.prefix, !_server_guard($scope0_reason, 5)), $fg__input_x && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xf", input.x, !_server_guard($scope0_reason, 6)), $fg__input_suffix2 && _patch_write($scope0_id, "xg", input.suffix, !_server_guard($scope0_reason, 7)));
+	}) || ($fg__input_prefix && $ui__input_show__OR__input_x && _patch_write($scope0_id, "xe", input.prefix, !_server_guard($scope0_reason, 5)), $fg__input_x && $ui__input_show__OR__input_prefix && _patch_write($scope0_id, "xf", input.x, !_server_guard($scope0_reason, 6)), $fg__input_suffix2 && _patch_write($scope0_id, "xg", input.suffix, !_server_guard($scope0_reason, 7)));
 }, 1);

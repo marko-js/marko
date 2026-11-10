@@ -46,7 +46,7 @@ var template_default = _template("a", (input) => {
 		g: _write_if($scope0_reason, 1) && input.rest,
 		j: input.label,
 		k: open,
-		l: _write_if($scope0_reason, 3) && Panel,
+		l: _unfilled_if($scope0_reason, 3) && Panel,
 		n: Tag,
 		a: _existing_scope($childScope)
 	}) || ($fg__input_show && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xf", input.show, !_server_guard($scope0_reason, 1)), $fg__input_rest && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xg", input.rest, !_server_guard($scope0_reason, 2)), $fg__input_label && _patch_write($scope0_id, "xj", input.label, !_server_guard($scope0_reason, 4)), $fg__input_other && _patch_write($scope0_id, "xn", Tag, !_server_guard($scope0_reason, 3)));

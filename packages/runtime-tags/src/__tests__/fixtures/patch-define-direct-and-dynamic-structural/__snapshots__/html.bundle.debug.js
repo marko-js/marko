@@ -9,7 +9,7 @@ _shells({
 	"__tests__/template.marko_2*shell": "__tests__/template.marko_2*shell;D ;<em> </em>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wi__input_other = _write_if($scope0_reason, 1), $fg__input_other = _filled_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $ui__input_other = _unfilled_if($scope0_reason, 1), $fg__input_other = _filled_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	let open = false;
 	const Panel = { content: _content_resume("__tests__/template.marko_1*content", ({ isOpen, label }) => {
@@ -52,8 +52,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope($scope0_id, {
 		input_label: input.label,
 		open,
-		Panel: $wi__input_other && Panel,
-		Other: $wi__input_other && Other,
+		Panel: $ui__input_other && Panel,
+		Other: $ui__input_other && Other,
 		Tag,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, {

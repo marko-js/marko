@@ -8,16 +8,16 @@ var template_default = _template("a", (input) => {
 	const $input_y__closures = /* @__PURE__ */ new Set();
 	let n = 0;
 	const Row = { content: _content("a0", ({ a, b }) => {
-		const $scope1_id = _scope_id(), $ui__input_y = _unfilled_if($scope0_reason, 0);
-		const $scope1_reason = _scope_reason(), $uf__b = _updates_from($scope1_reason, 2), $ui__b = _unfilled_if($scope1_reason, 2), $ui__a__OR__b = _unfilled_if($scope1_reason, 0), $ui__a = _unfilled_if($scope1_reason, 1), $fg__b = _filled_guard($scope1_reason, 2), $fg__a = _filled_guard($scope1_reason, 1);
+		const $scope1_id = _scope_id();
+		const $scope1_reason = _scope_reason(), $uf__b = _updates_from($scope1_reason, 2), $fg__b = _filled_guard($scope1_reason, 2), $fg__a = _filled_guard($scope1_reason, 1), $wi__b = _write_if($scope1_reason, 2);
 		_html(`<p>${_text_mark($scope1_id, "a", a + b, 1, $scope1_reason, 0)}</p><em>${_text_mark($scope1_id, "b", input.y + b, 1, ($uf__input_y | $uf__b) << 1, 0)}</em>`);
 		_patch_render($scope1_id, "a1", [_filled_guard($scope0_reason, 0) && ">e", $fg__b && "f"], ($uf__input_y | $uf__b) << 1, 0);
 		_patch_render($scope1_id, "a2", [$fg__a && "e", $fg__b && "f"], $scope1_reason, 0);
 		_subscribe(_unfilled_if(($uf__input_y | $uf__b) << 1, 0) && $wi__input_y && $input_y__closures, _scope($scope1_id, {
-			e: ($ui__b || $ui__a__OR__b) && a,
-			f: ($ui__input_y || $ui__a || $ui__b || $ui__a__OR__b) && b,
-			_: ($wi__input_y || _write_if($scope1_reason, 2)) && _scope_with_id($scope0_id)
-		}), _client_guard(($uf__input_y | $uf__b) << 1, 0) && "a3") || ($fg__a && $ui__b && _patch_write($scope1_id, "xe", a, !_server_guard($scope1_reason, 1)), $fg__b && ($ui__input_y || $ui__a) && _patch_write($scope1_id, "xf", b, !_server_guard($scope1_reason, 2)));
+			e: $wi__b && a,
+			f: ($wi__input_y || _write_if($scope1_reason, 1)) && b,
+			_: ($wi__input_y || $wi__b) && _scope_with_id($scope0_id)
+		}), _client_guard(($uf__input_y | $uf__b) << 1, 0) && "a3") || ($fg__a && _unfilled_if($scope1_reason, 2) && _patch_write($scope1_id, "xe", a, !_server_guard($scope1_reason, 1)), $fg__b && (_unfilled_if($scope0_reason, 0) || _unfilled_if($scope1_reason, 1)) && _patch_write($scope1_id, "xf", b, !_server_guard($scope1_reason, 2)));
 	}, $scope0_id) };
 	_set_scope_reason(14 | _updates_from($scope0_reason, 1) << 5);
 	const $childScope = _peek_scope_id($scope0_id, "a", 0);

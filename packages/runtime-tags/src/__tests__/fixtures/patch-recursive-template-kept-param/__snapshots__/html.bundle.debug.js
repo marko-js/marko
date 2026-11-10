@@ -75,7 +75,6 @@ const $content = (input) => {
 	keeper_default({ content: input.content });
 	_patch_child_end();
 	$fg__input_n && _patch_subscribers($scope0_id, "__tests__/tags/level.marko_0_input_n#4/subscribers", "input_n");
-	$fg__input_n && $cg__input_n && _patch_render($scope0_id, "__tests__/tags/level.marko_1_input_n#0:4/setup", "input_n");
 	$fg__input_label && _patch_subscribers($scope0_id, "__tests__/tags/level.marko_0_input_label#5/subscribers", "input_label");
 	$fg__input_label && $cg__input_n && _patch_render($scope0_id, "__tests__/tags/level.marko_1_input_label#0:5/setup", "input_label");
 	_scope($scope0_id, {

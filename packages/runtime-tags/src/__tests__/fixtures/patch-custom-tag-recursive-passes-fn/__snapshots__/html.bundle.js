@@ -7,7 +7,7 @@ _shells({
 	b2: `b2${_shell_marker([[], []], ["a>", $setup$1])};${/*@__PURE__*/ ((_w0) => `b/${_w0}&`)($walks)};${/*@__PURE__*/ ((_w0) => `<!>${_w0}`)($template)}`
 });
 const $content = (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_get = _filled_guard($scope0_reason, 2), $cg__input_depth = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $ui__input_depth = _unfilled_if($scope0_reason, 1), $fg__input_get = _filled_guard($scope0_reason, 2), $cg__input_depth = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.depth) {
@@ -30,7 +30,7 @@ const $content = (input) => {
 	}, $scope0_id, "a", 1, _write_guard($scope0_reason, 1), 1, 0, 0, ["b2"], $scope0_reason, 1);
 	_html(`<span>${_text_mark($scope0_id, "b", input.depth, 1, $scope0_reason, 1)}</span>`);
 	$fg__input_get && $cg__input_depth && _patch_render($scope0_id, "b1", "f");
-	_scope($scope0_id, { f: _write_if($scope0_reason, 1) && input.get }) || $fg__input_get && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xf", input.get, !_server_guard($scope0_reason, 2));
+	_scope($scope0_id, { f: ($ui__input_depth || _unfilled_if($scope0_reason, 2)) && input.get }) || $fg__input_get && $ui__input_depth && _patch_write($scope0_id, "xf", input.get, !_server_guard($scope0_reason, 2));
 };
 var tree_default = _template("b", $content);
 

@@ -11,13 +11,14 @@ _shells({
 	"__tests__/tags/child.marko_3*shell": "__tests__/tags/child.marko_3*shell;D ;<span> </span>"
 });
 var child_default = _template("__tests__/tags/child.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_v = _client_guard($scope0_reason, 2), $wi__input_v = _write_if($scope0_reason, 2), $wg__input_show = _write_guard($scope0_reason, 1), $ui__input_show = _unfilled_if($scope0_reason, 1), $fg__input_v = _filled_guard($scope0_reason, 2), $fg__input_on = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_v = _client_guard($scope0_reason, 2), $wi__input_v = _write_if($scope0_reason, 2), $cg__input_on = _client_guard($scope0_reason, 3), $wg__input_show = _write_guard($scope0_reason, 1), $ui__input_show = _unfilled_if($scope0_reason, 1), $sg__input_v = _server_guard($scope0_reason, 2), $fg__input_v2 = _filled_guard($scope0_reason, 2), $fg__input_on = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.show) {
-			const $scope1_id = _scope_id(), $ui__input_on = _unfilled_if($scope0_reason, 3);
+			const $scope1_id = _scope_id(), $ui__input_on = _unfilled_if($scope0_reason, 3), $fg__input_v = _filled_guard($scope0_reason, 2);
 			const $if_content__v__closures = new Set();
 			const v = `${input.v}!`;
+			$fg__input_v && $ui__input_on && _patch_write($scope1_id, "PatchMarkedWrite:v", v, !$sg__input_v);
 			const D = { content: _content("__tests__/tags/child.marko_2*content", ({ on }) => {
 				const $scope2_id = _scope_id();
 				const $scope2_reason = _scope_reason(), $wg__on = _write_guard($scope2_reason, 0), $wi__on = _write_if($scope2_reason, 0);
@@ -36,9 +37,9 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 			const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);
 			D.content({ on: input.on });
 			_patch_child_end();
-			$ui__input_on && _patch_write($scope1_id, "PatchWrite:v", v, 1);
+			$fg__input_v && $cg__input_on && _patch_subscribers($scope1_id, "__tests__/tags/child.marko_1_v#1/subscribers", "v");
 			$cg__input_v && _patch_render($scope1_id, "__tests__/tags/child.marko_1_input_v#0:4/setup");
-			_client_guard($scope0_reason, 3) && _patch_render($scope1_id, "__tests__/tags/child.marko_1_input_on#0:5/setup");
+			$cg__input_on && _patch_render($scope1_id, "__tests__/tags/child.marko_1_input_on#0:5/setup");
 			_scope($scope1_id, {
 				v: ($ui__input_on || _unfilled_if($scope0_reason, 2)) && v,
 				_: _write_if($scope0_reason, 0) && _scope_with_id($scope0_id),
@@ -48,7 +49,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "#text/0", 1, $wg__input_show, 1, 0, 0, ["__tests__/tags/child.marko_1*shell"], $scope0_reason, 1);
-	$fg__input_v && $cg__input_show && _patch_render($scope0_id, "__tests__/tags/child.marko_1_input_v#0:4/setup", "input_v");
+	$fg__input_v2 && $cg__input_show && _patch_render($scope0_id, "__tests__/tags/child.marko_1_input_v#0:4/setup", "input_v");
 	$fg__input_on && $cg__input_show && _patch_render($scope0_id, "__tests__/tags/child.marko_1_input_on#0:5/setup", "input_on");
 	_scope($scope0_id, {
 		input_v: ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.v,
@@ -56,7 +57,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	}, "__tests__/tags/child.marko", 0, {
 		input_v: ["input.v"],
 		input_on: ["input.on"]
-	}) || ($fg__input_v && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_v", input.v, !_server_guard($scope0_reason, 2)), $fg__input_on && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_on", input.on, !_server_guard($scope0_reason, 3)));
+	}) || ($fg__input_v2 && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_v", input.v, !$sg__input_v), $fg__input_on && $ui__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_on", input.on, !_server_guard($scope0_reason, 3)));
 });
 
 // template.marko

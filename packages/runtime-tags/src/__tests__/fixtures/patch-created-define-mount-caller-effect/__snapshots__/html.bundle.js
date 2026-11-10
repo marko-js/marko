@@ -6,7 +6,7 @@ _shells({
 	a5: `a5 >a>;${/*@__PURE__*/ ((_w0) => `/${_w0}&`)($Info_content__walks)};${$Info_content__template}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $uf__input_page = _updates_from($scope0_reason, 1), $fg__input_page2 = _filled_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 2), $wi__input_page = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $uf__input_page = _updates_from($scope0_reason, 1), $ui__input_show = _unfilled_if($scope0_reason, 2), $fg__input_page2 = _filled_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 2), $wi__input_page = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_page__closures = /* @__PURE__ */ new Set();
 	let count = 0;
@@ -47,9 +47,9 @@ var template_default = _template("a", (input) => {
 	$fg__input_label && $cg__input_show && _patch_render($scope0_id, "a4", "i");
 	_scope($scope0_id, {
 		g: input.page,
-		i: _write_if($scope0_reason, 2) && input.label,
+		i: ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.label,
 		j: count,
 		k: $wi__input_page && $input_page__closures,
 		c: _existing_scope($childScope)
-	}) || ($fg__input_page2 && _patch_write($scope0_id, "xg", input.page, !_server_guard($scope0_reason, 1)), $fg__input_label && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xi", input.label, !_server_guard($scope0_reason, 3)));
+	}) || ($fg__input_page2 && _patch_write($scope0_id, "xg", input.page, !_server_guard($scope0_reason, 1)), $fg__input_label && $ui__input_show && _patch_write($scope0_id, "xi", input.label, !_server_guard($scope0_reason, 3)));
 }, 1);

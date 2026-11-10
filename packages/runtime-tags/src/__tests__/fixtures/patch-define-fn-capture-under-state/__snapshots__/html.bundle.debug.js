@@ -7,13 +7,13 @@ _shells({
 	"__tests__/template.marko_3*shell": "__tests__/template.marko_3*shell;D ;<span> </span>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_x = _write_guard($scope0_reason, 0), $cg__input_x = _client_guard($scope0_reason, 0), $fg__input_x = _filled_guard($scope0_reason, 0), $fg__input_a = _filled_guard($scope0_reason, 1), $wi__input_x = _write_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $wg__input_x = _write_guard($scope0_reason, 0), $cg__input_x = _client_guard($scope0_reason, 0), $fg__input_x = _filled_guard($scope0_reason, 0), $fg__input_a = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_x__closures = new Set();
 	let show = true;
 	const Show = { content: _content("__tests__/template.marko_1*content", ({ v }) => {
 		const $scope1_id = _scope_id(), $ui__input_x = _unfilled_if($scope0_reason, 0);
-		const $scope1_reason = _scope_reason(), $sg__v = _server_guard($scope1_reason, 0), $fg__v = _filled_guard($scope1_reason, 0);
+		const $scope1_reason = _scope_reason(), $ui__v = _unfilled_if($scope1_reason, 0), $sg__v = _server_guard($scope1_reason, 0), $fg__v = _filled_guard($scope1_reason, 0);
 		$fg__v && $ui__input_x && _patch_write($scope1_id, "PatchMarkedWrite:v", v, !$sg__v);
 		const f = _bind_resume(function() {
 			return v;
@@ -30,8 +30,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		$fg__v && $cg__input_x && _patch_render($scope1_id, "__tests__/template.marko_3_f#1:4/setup", ["f", "v"]);
 		$cg__input_x && _patch_render($scope1_id, "__tests__/template.marko_1_input_x#0:4/subscribe");
 		_subscribe($ui__input_x && $input_x__closures, _scope($scope1_id, {
-			v: $wi__input_x && v,
-			f: ($ui__input_x || _unfilled_if($scope1_reason, 0)) && f,
+			v: ($ui__input_x || $ui__v) && v,
+			f: ($ui__input_x || $ui__v) && f,
 			_: _scope_with_id($scope0_id)
 		}, "__tests__/template.marko", "2:2", {
 			v: "2:16",
@@ -59,7 +59,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_x: input.x,
 		input_a: input.a,
 		show,
-		"ClosureScopes:input_x/7": $wi__input_x && $input_x__closures
+		"ClosureScopes:input_x/7": _write_if($scope0_reason, 0) && $input_x__closures
 	}, "__tests__/template.marko", 0, {
 		input_x: ["input.x"],
 		input_a: ["input.a"],

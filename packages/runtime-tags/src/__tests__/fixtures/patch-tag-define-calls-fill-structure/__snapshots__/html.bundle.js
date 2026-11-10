@@ -10,7 +10,7 @@ _shells({
 	b2: "b2;D ;<span> </span>"
 });
 var shape_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_a = _client_guard($scope0_reason, 1), $wi__input_a = _write_if($scope0_reason, 1), $ui__input_x__OR__input_y = _unfilled_if($scope0_reason, 0), $sg__input_a = _server_guard($scope0_reason, 1), $fg__input_a = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_a = _client_guard($scope0_reason, 1), $wi__input_a = _write_if($scope0_reason, 1), $ui__input_x__OR__input_y = _unfilled_if($scope0_reason, 0), $ui__input_a = _unfilled_if($scope0_reason, 1), $sg__input_a = _server_guard($scope0_reason, 1), $fg__input_a = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $f2__closures = /* @__PURE__ */ new Set();
 	$fg__input_a && $ui__input_x__OR__input_y && _patch_write($scope0_id, "xg", input.a, !$sg__input_a);
@@ -42,12 +42,12 @@ var shape_default = _template("b", (input) => {
 	_patch_child_end();
 	_html(`<button>${_text_mark($scope0_id, "d", n)}</button>${_el_mark($scope0_id, "c")}`);
 	_script($scope0_id, "b4");
-	$fg__input_a && _patch_subscribers($scope0_id, "b5", ["k", "g"]);
+	$fg__input_a && _client_guard($scope0_reason, 0) && _patch_subscribers($scope0_id, "b5", ["k", "g"]);
 	_patch_fill($scope0_id, "vb6", n, 1);
 	_scope($scope0_id, {
-		g: _write_if($scope0_reason, 0) && input.a,
+		g: ($ui__input_x__OR__input_y || $ui__input_a) && input.a,
 		j: n,
-		k: ($ui__input_x__OR__input_y || _unfilled_if($scope0_reason, 1)) && f,
+		k: ($ui__input_x__OR__input_y || $ui__input_a) && f,
 		l: $wi__input_a && $f2__closures,
 		a: _existing_scope($childScope),
 		b: _existing_scope($childScope2)

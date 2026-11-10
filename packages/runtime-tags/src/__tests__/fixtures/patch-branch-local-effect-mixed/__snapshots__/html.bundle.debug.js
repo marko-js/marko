@@ -8,7 +8,7 @@ _shells({
 	"__tests__/template.marko_2*shell": "__tests__/template.marko_2*shell,<span>inner</span>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_suffix = _client_guard($scope0_reason, 4), $cg__input_title = _client_guard($scope0_reason, 2), $cg__input_inner = _client_guard($scope0_reason, 3), $wg__input_show = _write_guard($scope0_reason, 1), $sg__input_title = _server_guard($scope0_reason, 2), $ui__input_show = _unfilled_if($scope0_reason, 1), $fg__input_title3 = _filled_guard($scope0_reason, 2), $fg__input_inner = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 1), $fg__input_suffix2 = _filled_guard($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $cg__input_suffix = _client_guard($scope0_reason, 4), $cg__input_title = _client_guard($scope0_reason, 2), $cg__input_inner = _client_guard($scope0_reason, 3), $wg__input_show = _write_guard($scope0_reason, 1), $ui__input_show = _unfilled_if($scope0_reason, 1), $sg__input_title = _server_guard($scope0_reason, 2), $fg__input_title3 = _filled_guard($scope0_reason, 2), $fg__input_inner = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 1), $fg__input_suffix2 = _filled_guard($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	const $input_suffix__closures = new Set();
 	_html("<main>");
@@ -44,7 +44,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	$fg__input_inner && $cg__input_show && _patch_render($scope0_id, "__tests__/template.marko_1_input_inner#0:5/setup", "input_inner");
 	$fg__input_suffix2 && ($cg__input_show || $cg__input_inner) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_suffix#6/subscribers", "input_suffix");
 	_scope($scope0_id, {
-		input_title: _write_if($scope0_reason, 1) && input.title,
+		input_title: ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.title,
 		input_inner: ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.inner,
 		input_suffix: input.suffix,
 		"ClosureScopes:input_suffix/9": _write_if($scope0_reason, 4) && $input_suffix__closures

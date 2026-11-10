@@ -8,7 +8,7 @@ _shells({
 	a1: "a1;D ;<em> </em>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $ui__input_other = _unfilled_if($scope0_reason, 5), $ui__input_label__OR__input_other__OR__input_show = _unfilled_if($scope0_reason, 3), $ui__input_label__OR__input_other = _unfilled_if($scope0_reason, 0), $ui__input_label__OR__input_show = _unfilled_if($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 4), $fg__input_show = _filled_guard($scope0_reason, 6), $fg__input_other = _filled_guard($scope0_reason, 5);
+	const $scope0_reason = _scope_reason(), $ui__input_label__OR__input_other__OR__input_show = _unfilled_if($scope0_reason, 3), $ui__input_other = _unfilled_if($scope0_reason, 5), $ui__input_other__OR__input_show = _unfilled_if($scope0_reason, 2), $ui__input_label__OR__input_other = _unfilled_if($scope0_reason, 0), $ui__input_label__OR__input_show = _unfilled_if($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 4), $fg__input_show = _filled_guard($scope0_reason, 6), $fg__input_other = _filled_guard($scope0_reason, 5);
 	const $scope0_id = _scope_id();
 	let open = false;
 	const Panel = { content: _content_resume("a3", ({ isOpen, label }) => {
@@ -52,12 +52,12 @@ var template_default = _template("a", (input) => {
 		$fg__input_other && "m"
 	], $scope0_reason, 3);
 	_scope($scope0_id, {
-		f: _write_if($scope0_reason, 2) && input.label,
+		f: ($ui__input_other__OR__input_show || $ui__input_label__OR__input_other__OR__input_show) && input.label,
 		h: ($ui__input_label__OR__input_other || $ui__input_label__OR__input_other__OR__input_show) && input.show,
 		i: open,
 		j: $ui__input_other && Panel,
 		k: $ui__input_other && Other,
 		m: ($ui__input_label__OR__input_show || $ui__input_label__OR__input_other__OR__input_show) && Tag,
 		a: _existing_scope($childScope)
-	}) || ($fg__input_label && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xf", input.label, !_server_guard($scope0_reason, 4)), $fg__input_show && $ui__input_label__OR__input_other && _patch_write($scope0_id, "xh", input.show, !_server_guard($scope0_reason, 6)), $fg__input_other && $ui__input_label__OR__input_show && _patch_write($scope0_id, "xm", Tag, !_server_guard($scope0_reason, 5)));
+	}) || ($fg__input_label && $ui__input_other__OR__input_show && _patch_write($scope0_id, "xf", input.label, !_server_guard($scope0_reason, 4)), $fg__input_show && $ui__input_label__OR__input_other && _patch_write($scope0_id, "xh", input.show, !_server_guard($scope0_reason, 6)), $fg__input_other && $ui__input_label__OR__input_show && _patch_write($scope0_id, "xm", Tag, !_server_guard($scope0_reason, 5)));
 }, 1);

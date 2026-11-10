@@ -5,7 +5,7 @@ _shells({
 	a3: "a3,<span>inner</span>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_suffix = _client_guard($scope0_reason, 4), $cg__input_title = _client_guard($scope0_reason, 2), $cg__input_inner = _client_guard($scope0_reason, 3), $wg__input_show = _write_guard($scope0_reason, 1), $sg__input_title = _server_guard($scope0_reason, 2), $ui__input_show = _unfilled_if($scope0_reason, 1), $fg__input_title3 = _filled_guard($scope0_reason, 2), $fg__input_inner = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 1), $fg__input_suffix2 = _filled_guard($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $cg__input_suffix = _client_guard($scope0_reason, 4), $cg__input_title = _client_guard($scope0_reason, 2), $cg__input_inner = _client_guard($scope0_reason, 3), $wg__input_show = _write_guard($scope0_reason, 1), $ui__input_show = _unfilled_if($scope0_reason, 1), $sg__input_title = _server_guard($scope0_reason, 2), $fg__input_title3 = _filled_guard($scope0_reason, 2), $fg__input_inner = _filled_guard($scope0_reason, 3), $cg__input_show = _client_guard($scope0_reason, 1), $fg__input_suffix2 = _filled_guard($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	const $input_suffix__closures = /* @__PURE__ */ new Set();
 	_html("<main>");
@@ -41,7 +41,7 @@ var template_default = _template("a", (input) => {
 	$fg__input_inner && $cg__input_show && _patch_render($scope0_id, "a7", "f");
 	$fg__input_suffix2 && ($cg__input_show || $cg__input_inner) && _patch_subscribers($scope0_id, "a8", "g");
 	_scope($scope0_id, {
-		e: _write_if($scope0_reason, 1) && input.title,
+		e: ($ui__input_show || _unfilled_if($scope0_reason, 2)) && input.title,
 		f: ($ui__input_show || _unfilled_if($scope0_reason, 3)) && input.inner,
 		g: input.suffix,
 		j: _write_if($scope0_reason, 4) && $input_suffix__closures

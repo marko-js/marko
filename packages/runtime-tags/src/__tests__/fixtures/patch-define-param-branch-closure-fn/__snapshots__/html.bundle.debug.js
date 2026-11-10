@@ -24,7 +24,7 @@ _shells({
 	"__tests__/template.marko_2*shell": "__tests__/template.marko_2*shell;D ;<span> </span>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_a = _client_guard($scope0_reason, 0), $wi__input_a = _write_if($scope0_reason, 0), $ui__input_x = _unfilled_if($scope0_reason, 1), $sg__input_a = _server_guard($scope0_reason, 0), $fg__input_a = _filled_guard($scope0_reason, 0);
+	const $scope0_reason = _scope_reason(), $cg__input_a = _client_guard($scope0_reason, 0), $wi__input_a = _write_if($scope0_reason, 0), $ui__input_x = _unfilled_if($scope0_reason, 1), $ui__input_a = _unfilled_if($scope0_reason, 0), $sg__input_a = _server_guard($scope0_reason, 0), $fg__input_a = _filled_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $f2__closures = new Set();
 	$fg__input_a && $ui__input_x && _patch_write($scope0_id, "PatchMarkedWrite:input_a", input.a, !$sg__input_a);
@@ -52,10 +52,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $childScope2 = _peek_scope_id($scope0_id, "#childScope/1", 1);
 	counter_default({});
 	_patch_child_end();
-	$fg__input_a && _patch_subscribers($scope0_id, "__tests__/template.marko_0_f#6/subscribers", ["f", "input_a"]);
+	$fg__input_a && _client_guard($scope0_reason, 1) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_f#6/subscribers", ["f", "input_a"]);
 	_scope($scope0_id, {
-		input_a: _write_if($scope0_reason, 1) && input.a,
-		f: ($ui__input_x || _unfilled_if($scope0_reason, 0)) && f,
+		input_a: ($ui__input_x || $ui__input_a) && input.a,
+		f: ($ui__input_x || $ui__input_a) && f,
 		"ClosureScopes:f/7": $wi__input_a && $f2__closures,
 		"#childScope/0": _existing_scope($childScope),
 		"#childScope/1": _existing_scope($childScope2)

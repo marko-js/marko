@@ -7,7 +7,7 @@ _shells({
 	b2: "b2 b8;D ;<p> </p>"
 });
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_label = _filled_guard($scope0_reason, 4), $fg__input_other = _filled_guard($scope0_reason, 5), $cg__input_show = _client_guard($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $ui__input_label__OR__input_other = _unfilled_if($scope0_reason, 2), $ui__input_show__OR__input_other = _unfilled_if($scope0_reason, 1), $ui__input_show__OR__input_label = _unfilled_if($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 4), $fg__input_other = _filled_guard($scope0_reason, 5), $cg__input_show = _client_guard($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	let c = 0;
 	_html("<div>");
@@ -32,10 +32,10 @@ var child_default = _template("b", (input) => {
 	$fg__input_other && $cg__input_show && _patch_render($scope0_id, "b5", "g");
 	_patch_fill($scope0_id, "vb6", c, 1);
 	_scope($scope0_id, {
-		f: _write_if($scope0_reason, 1) && input.label,
-		g: _write_if($scope0_reason, 0) && input.other,
+		f: ($ui__input_show__OR__input_other || $ui__input_label__OR__input_other) && input.label,
+		g: ($ui__input_show__OR__input_label || $ui__input_label__OR__input_other) && input.other,
 		h: c
-	}) || ($fg__input_label && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xf", input.label, !_server_guard($scope0_reason, 4)), $fg__input_other && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xg", input.other, !_server_guard($scope0_reason, 5)));
+	}) || ($fg__input_label && $ui__input_show__OR__input_other && _patch_write($scope0_id, "xf", input.label, !_server_guard($scope0_reason, 4)), $fg__input_other && $ui__input_show__OR__input_label && _patch_write($scope0_id, "xg", input.other, !_server_guard($scope0_reason, 5)));
 });
 
 // template.marko

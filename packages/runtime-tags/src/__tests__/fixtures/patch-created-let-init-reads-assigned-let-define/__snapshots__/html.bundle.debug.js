@@ -20,16 +20,16 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			let y = x;
 			const Body = { content: _content("__tests__/template.marko_2*content", ({ v, w }) => {
 				const $scope2_id = _scope_id();
-				const $scope2_reason = _scope_reason(), $ui__v = _unfilled_if($scope2_reason, 1), $fg__w = _filled_guard($scope2_reason, 2);
+				const $scope2_reason = _scope_reason(), $fg__w = _filled_guard($scope2_reason, 2);
 				_html(`<span>${_text_mark($scope2_id, "#text/0", v + w, 1, $scope2_reason, 0)}</span>`);
 				_patch_render($scope2_id, "__tests__/template.marko_2_v#3_w#4/setup", [_filled_guard($scope2_reason, 1) && "v", $fg__w && "w"], $scope2_reason, 0);
 				_scope($scope2_id, {
-					v: (_unfilled_if($scope2_reason, 2) || _unfilled_if($scope2_reason, 0)) && v,
-					w: $ui__v && w
+					v: _write_if($scope2_reason, 2) && v,
+					w: _write_if($scope2_reason, 1) && w
 				}, "__tests__/template.marko", "5:4", {
 					v: "5:18",
 					w: "5:21"
-				}) || $fg__w && $ui__v && _patch_write($scope2_id, "PatchMarkedWrite:w", w, !_server_guard($scope2_reason, 2));
+				}) || $fg__w && _unfilled_if($scope2_reason, 1) && _patch_write($scope2_id, "PatchMarkedWrite:w", w, !_server_guard($scope2_reason, 2));
 			}, $scope1_id, 0) };
 			_set_scope_reason(10);
 			const $childScope = _peek_scope_id($scope1_id, "#childScope/0", 0);

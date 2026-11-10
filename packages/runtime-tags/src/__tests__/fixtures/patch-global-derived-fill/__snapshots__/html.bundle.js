@@ -19,8 +19,8 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a2");
 	_filled_guard((2 | $uf__input_name) << 1, 0) && _patch_render($scope0_id, "a0", _filled_guard((2 | $uf__input_name) << 1, 0) && "f");
 	_scope($scope0_id, {
-		e: _write_if($scope0_reason, 0) && input.name,
+		e: _unfilled_if($scope0_reason, 0) && input.name,
 		f: greeting,
 		g: count
-	}) || (_filled_guard($scope0_reason, 0) && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xe", input.name, !_server_guard($scope0_reason, 0)), _filled_guard((2 | $uf__input_name) << 1, 0) && _patch_write($scope0_id, "xf", greeting, !_server_guard((2 | $uf__input_name) << 1, 0)));
+	}) || _filled_guard((2 | $uf__input_name) << 1, 0) && _patch_write($scope0_id, "xf", greeting, !_server_guard((2 | $uf__input_name) << 1, 0));
 }, 1);

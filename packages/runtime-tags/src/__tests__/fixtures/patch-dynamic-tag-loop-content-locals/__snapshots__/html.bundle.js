@@ -7,10 +7,11 @@ _shells({
 	b1: "b1;b%;<!><!><!>"
 });
 var tabs_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_tab = _write_guard($scope0_reason, 1), $wg__input_selected = _write_guard($scope0_reason, 2), $wi__input_tab__OR__input_selected = _write_if($scope0_reason, 0), $ui__input_tab = _unfilled_if($scope0_reason, 1), $fg__input_selected = _filled_guard($scope0_reason, 2), $cg__input_tab = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_tab = _write_guard($scope0_reason, 1), $wg__input_selected = _write_guard($scope0_reason, 2), $cg__input_selected = _client_guard($scope0_reason, 2), $wi__input_tab__OR__input_selected = _write_if($scope0_reason, 0), $ui__input_tab = _unfilled_if($scope0_reason, 1), $fg__input_selected = _filled_guard($scope0_reason, 2), $cg__input_tab = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_for_of(input.tab, (tab, i) => {
-		const $scope1_id = _scope_id(), $ui__input_selected = _unfilled_if($scope0_reason, 2);
+		const $scope1_id = _scope_id(), $ui__input_selected = _unfilled_if($scope0_reason, 2), $fg__input_tab = _filled_guard($scope0_reason, 1);
+		$fg__input_tab && $ui__input_selected && _patch_write($scope1_id, "xd", tab?.content, !_server_guard($scope0_reason, 1));
 		_if(() => {
 			if (i === input.selected) {
 				const $scope2_id = _scope_id();
@@ -20,7 +21,8 @@ var tabs_default = _template("b", (input) => {
 				return 0;
 			}
 		}, $scope1_id, "a", 1, $wg__input_selected, 1, 0, 0, ["b1"], $scope0_reason, 0);
-		_client_guard($scope0_reason, 2) && _patch_render($scope1_id, "b3");
+		$fg__input_tab && $cg__input_selected && _patch_render($scope1_id, "b0", "d");
+		$cg__input_selected && _patch_render($scope1_id, "b3");
 		$wi__input_tab__OR__input_selected && _scope($scope1_id, {
 			d: ($ui__input_selected || _unfilled_if($scope0_reason, 1)) && tab?.content,
 			M: $ui__input_selected && i,

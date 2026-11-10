@@ -21,7 +21,7 @@ _shells({
 	"__tests__/tags/tree.marko_1*shell": `__tests__/tags/tree.marko_1*shell${_shell_marker([[], []], ["#childScope/0>", $setup$2], ["#childScope/1>", $setup$1])};${/*@__PURE__*/ ((_w0, _w1) => `/${_w0}&/${_w1}&b`)($walks$2, "b%c")};${/*@__PURE__*/ ((_w0, _w1) => `${_w0}${_w1}<!>`)($template$2, $template$1)}`
 });
 const $content = (input) => {
-	const $scope0_reason = _scope_reason(), $uf__input_fn = _updates_from($scope0_reason, 2), $wg__input_depth = _write_guard($scope0_reason, 1), $fg__input_fn = _filled_guard($scope0_reason, 2), $cg__input_depth = _client_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $uf__input_fn = _updates_from($scope0_reason, 2), $wg__input_depth = _write_guard($scope0_reason, 1), $ui__input_depth = _unfilled_if($scope0_reason, 1), $fg__input_fn = _filled_guard($scope0_reason, 2), $cg__input_depth = _client_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	_if(() => {
 		if (input.depth) {
@@ -48,7 +48,7 @@ const $content = (input) => {
 		}
 	}, $scope0_id, "#text/0", 1, $wg__input_depth, 1, 0, 0, ["__tests__/tags/tree.marko_1*shell"], $scope0_reason, 1);
 	$fg__input_fn && $cg__input_depth && _patch_render($scope0_id, "__tests__/tags/tree.marko_1_input_fn#0:4/setup", "input_fn");
-	_scope($scope0_id, { input_fn: _write_if($scope0_reason, 1) && input.fn }, "__tests__/tags/tree.marko", 0, { input_fn: ["input.fn"] }) || $fg__input_fn && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_fn", input.fn, !_server_guard($scope0_reason, 2));
+	_scope($scope0_id, { input_fn: ($ui__input_depth || _unfilled_if($scope0_reason, 2)) && input.fn }, "__tests__/tags/tree.marko", 0, { input_fn: ["input.fn"] }) || $fg__input_fn && $ui__input_depth && _patch_write($scope0_id, "PatchMarkedWrite:input_fn", input.fn, !_server_guard($scope0_reason, 2));
 };
 var tree_default = _template("__tests__/tags/tree.marko", $content);
 

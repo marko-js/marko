@@ -2,15 +2,13 @@
 <script>
   WALKER_RUNTIME("M")("_").patchBuild = "b";
   M._.r = [_ => [1, {
-      a: _.a = {
-        y: "b"
-      },
-      b: _.b = {
-        x: "a"
-      },
       c: {
-        a: _.a,
-        b: _.b
+        a: {
+          y: "b"
+        },
+        b: {
+          x: "a"
+        }
       }
     }],
     "packages/runtime-tags/src/__tests__/fixtures/patch-effect-reads-built-object-order/template.marko_0_c#8 1"

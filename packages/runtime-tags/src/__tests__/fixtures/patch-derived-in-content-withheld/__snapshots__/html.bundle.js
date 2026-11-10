@@ -79,7 +79,7 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a6");
 	_scope($scope0_id, {
 		f: open,
-		g: $wi__input_label && $input_label__closures,
+		g: $wi__input_label && _unfilled_if($scope0_reason, 0) && $input_label__closures,
 		h: $open__closures,
 		a: _existing_scope($childScope2)
 	});

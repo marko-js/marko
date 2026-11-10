@@ -52,7 +52,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id) };
 	const Wrapper = { content: _content("__tests__/template.marko_3*content", ({ a, b, depth }) => {
 		const $scope3_id = _scope_id();
-		const $scope3_reason = _scope_reason(), $uf__a__OR__b = _updates_from($scope3_reason, 0), $uf__b = _updates_from($scope3_reason, 3), $uf__a = _updates_from($scope3_reason, 2), $wg__depth = _write_guard($scope3_reason, 4), $wi__depth = _write_if($scope3_reason, 4), $ui__depth = _unfilled_if($scope3_reason, 4);
+		const $scope3_reason = _scope_reason(), $uf__a__OR__b = _updates_from($scope3_reason, 0), $uf__b = _updates_from($scope3_reason, 3), $uf__a = _updates_from($scope3_reason, 2), $wg__depth = _write_guard($scope3_reason, 4), $ui__depth = _unfilled_if($scope3_reason, 4), $wi__depth = _write_if($scope3_reason, 4);
 		const Relay = { content: _content("__tests__/template.marko_4*content", ({ a, b, depth }) => {
 			const $scope4_id = _scope_id();
 			const $scope4_reason = _scope_reason();
@@ -98,7 +98,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, $scope3_id, "#text/1", 1, $wg__depth, 1, 0, 0, ["__tests__/template.marko_5*shell"], $scope3_reason, 4);
 		$ui__depth && _patch_write($scope3_id, "PatchWrite:b", b, 1);
 		_scope($scope3_id, {
-			a: $wi__depth && a,
+			a: ($ui__depth || _unfilled_if($scope3_reason, 2)) && a,
 			b: ($ui__depth || _unfilled_if($scope3_reason, 3)) && b,
 			_: $wi__depth && _scope_with_id($scope0_id),
 			"#childScope/0": _existing_scope($childScope3)

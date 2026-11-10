@@ -1,7 +1,7 @@
 // template.marko
 const $Panel_content__walks = "b%c";
 const $Panel_content__template = "<!><!><!>";
-const $if_content2__label = /*@__PURE__*/ _if_closure_patch("a4", 0, 0, ($scope) => _text($scope.a, $scope._.e));
+const $if_content2__label = /*@__PURE__*/ _if_closure_patch("a8", 0, 0, ($scope) => _text($scope.a, $scope._.e));
 const $if_content2__setup = $if_content2__label;
 const $if_content__r = _var_resume("a9", ($scope, r) => _text($scope.c, r));
 const $Panel_content__if = /*@__PURE__*/ _if(0, "<em> </em>", "D ", $if_content2__setup);
@@ -23,11 +23,11 @@ const $Panel_content__$temp = ($scope, $temp) => {
 };
 const $Panel_content = _content$1("a2", $Panel_content__template, $Panel_content__walks, 0, $Panel_content__$params);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag(1);
-const $input_label__OR__open__OR__Tag = /*@__PURE__*/ _or_patch("a7", 12, ($scope) => $dynamicTag($scope, $scope.l, ($_) => ({
+const $input_label__OR__open__OR__Tag = /*@__PURE__*/ _or_patch("a6", 12, ($scope) => $dynamicTag($scope, $scope.l, ($_) => ({
 	isOpen: !$scope.i,
 	label: $scope.h
 })), 2);
 const $open = _let(8, $input_label__OR__open__OR__Tag);
-const $setup__script = _script("a5", ($scope) => _on($scope.c, "click", function() {
+const $setup__script = _script("a4", ($scope) => _on($scope.c, "click", function() {
 	$open($scope, !$scope.i);
 }));

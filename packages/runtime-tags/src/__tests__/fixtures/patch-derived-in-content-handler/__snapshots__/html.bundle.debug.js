@@ -39,7 +39,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_patch_child_end();
 	_html(`<p>${_text_mark($scope0_id, "#text/1", shown)}</p>`);
 	_scope($scope0_id, {
-		"ClosureScopes:input_label/6": _write_if($scope0_reason, 0) && $input_label__closures,
+		"ClosureScopes:input_label/6": _write_if($scope0_reason, 0) && _unfilled_if($scope0_reason, 0) && $input_label__closures,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0);
 }, 1);

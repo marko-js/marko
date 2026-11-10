@@ -7,7 +7,7 @@ _shells({
 	"__tests__/tags/child.marko_1*shell": "__tests__/tags/child.marko_1*shell __tests__/tags/child.marko_1_c#0:7/setup;D ;<p> </p>"
 });
 var child_default = _template("__tests__/tags/child.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $fg__input_label = _filled_guard($scope0_reason, 4), $fg__input_other = _filled_guard($scope0_reason, 5), $cg__input_show = _client_guard($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $ui__input_label__OR__input_other = _unfilled_if($scope0_reason, 2), $ui__input_show__OR__input_other = _unfilled_if($scope0_reason, 1), $ui__input_show__OR__input_label = _unfilled_if($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 4), $fg__input_other = _filled_guard($scope0_reason, 5), $cg__input_show = _client_guard($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	let c = 0;
 	_html("<div>");
@@ -32,14 +32,14 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	$fg__input_other && $cg__input_show && _patch_render($scope0_id, "__tests__/tags/child.marko_1_input_other#0:6/setup", "input_other");
 	_patch_fill($scope0_id, "PatchFill:__tests__/tags/child.marko_0_c#7/fill", c, 1);
 	_scope($scope0_id, {
-		input_label: _write_if($scope0_reason, 1) && input.label,
-		input_other: _write_if($scope0_reason, 0) && input.other,
+		input_label: ($ui__input_show__OR__input_other || $ui__input_label__OR__input_other) && input.label,
+		input_other: ($ui__input_show__OR__input_label || $ui__input_label__OR__input_other) && input.other,
 		c
 	}, "__tests__/tags/child.marko", 0, {
 		input_label: ["input.label"],
 		input_other: ["input.other"],
 		c: "1:6"
-	}) || ($fg__input_label && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 4)), $fg__input_other && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_other", input.other, !_server_guard($scope0_reason, 5)));
+	}) || ($fg__input_label && $ui__input_show__OR__input_other && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 4)), $fg__input_other && $ui__input_show__OR__input_label && _patch_write($scope0_id, "PatchMarkedWrite:input_other", input.other, !_server_guard($scope0_reason, 5)));
 });
 
 // template.marko

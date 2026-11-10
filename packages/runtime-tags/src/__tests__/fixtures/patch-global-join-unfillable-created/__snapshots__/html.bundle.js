@@ -15,7 +15,7 @@ var template_default = _template("a", (input) => {
 		_patch_write($scope1_id, "xe", value);
 		let count = 0;
 		const Inner = { content: _content("a0", ({ y }) => {
-			const $scope2_id = _scope_id(), $ui__value = _unfilled_if($scope1_reason, 0);
+			const $scope2_id = _scope_id();
 			const $scope2_reason = _scope_reason();
 			const b = value + y;
 			_html(`<p>${_text_mark($scope2_id, "a", b + $global$1.suffix, 1, 6, 0)}</p>`);
@@ -24,8 +24,8 @@ var template_default = _template("a", (input) => {
 			_unfilled_if(6, 0) && _patch_subscribe($scope2_id, "a2");
 			_patch_render($scope2_id, "a3");
 			_subscribe($wi__value && $Outer_content__value__closures, _scope($scope2_id, {
-				d: $ui__value && y,
-				f: ($ui__value || _unfilled_if($scope2_reason, 0)) && b,
+				d: $wi__value && y,
+				f: (_unfilled_if($scope1_reason, 0) || _unfilled_if($scope2_reason, 0)) && b,
 				_: ($wi__value || _write_if($scope2_reason, 0)) && _scope_with_id($scope1_id)
 			}), "a2");
 		}, $scope1_id, 0) };
