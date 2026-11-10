@@ -64,7 +64,7 @@ import {
 import * as structure from "../util/structure";
 import { toOnlyExpressionOrBlock } from "../util/to-only-or-block";
 import { translateByTarget } from "../util/visitors";
-import { getWriteGuard } from "../util/write-guard";
+import { andGuard, getWriteGuard, ifEver } from "../util/write-guard";
 import * as writer from "../util/writer";
 
 export default {
@@ -249,7 +249,7 @@ function getPendingArgs(bodySection: Section): Array<t.Expression | Falsy> {
   // no patch fills it: the server's copy renders only the body's holes as data.
   const unfilled = hasStatefulBranchExpr(bodySection)
     ? t.numericLiteral(1)
-    : getCallerGroupGuard(bodySection.parent!, "_unfilled_if", sources);
+    : ifEver(getCallerGroupGuard(bodySection.parent!, "_unfilled_if", sources));
   const unwritten =
     unfilled &&
     getUnwrittenBodies(
@@ -261,13 +261,7 @@ function getPendingArgs(bodySection: Section): Array<t.Expression | Falsy> {
     // Where the promise updates from the client, `2`: no render of the body writes what the
     // client lacks; `3`: only a created one does, writing the body's setup work.
     unwritten
-      ? t.isNumericLiteral(unfilled)
-        ? t.numericLiteral(unwritten === "all" ? 2 : 3)
-        : t.logicalExpression(
-            "&&",
-            unfilled,
-            t.numericLiteral(unwritten === "all" ? 2 : 3),
-          )
+      ? andGuard(unfilled, t.numericLiteral(unwritten === "all" ? 2 : 3))
       : unfilled,
     // An always-pairing body's Pending entry drops its creation id outside
     // structure a flush may create.

@@ -150,6 +150,7 @@ import {
   getWriteReason,
   isBranchAlwaysMarked,
   ifEver,
+  isNever,
   isSameReason,
   getSlotWriteReason,
   getSectionWriteReason,
@@ -1956,6 +1957,8 @@ export function writeHTMLResumeStatements(
                 subscribeArg,
               )
             : subscribeArg;
+          // A scope no call leaves the read unfilled for joins no set.
+          if (isNever(subscribed)) return;
           addWriteScopeBuilder(section, (expr) => {
             const resumeId =
               changeable &&
@@ -2059,9 +2062,11 @@ export function writeHTMLResumeStatements(
     const accessor = getScopeAccessor(binding);
     const value = getDeclaredBindingExpression(binding);
     pendingProperties.delete(accessor);
-    const written =
+    // Where a patch build's unfilled guard applies it decides, also where it folds to never.
+    const written = ifEver(
       (isPatch() && getExprIfUnfilled(section, binding, reason, value)) ||
-      ifWritten(reason, value);
+        ifWritten(reason, value),
+    );
     if (written) scopeProperties.push(toObjectProperty(accessor, written));
 
     if (debug) {

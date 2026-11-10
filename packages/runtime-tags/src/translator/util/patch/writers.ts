@@ -107,6 +107,7 @@ import {
   isAlways,
   ifEver,
   isNever,
+  notGuard,
   getSectionWriteReason,
   orGuard,
 } from "../write-guard";
@@ -322,12 +323,11 @@ export function writePatchResumeStatements(
           ),
         )
       : inPlace &&
-        t.logicalExpression(
-          "&&",
+        andGuard(
           inPlace,
           buildPatchWrite(section, binding, getPatchKey().Write),
         );
-    if (entry) body.push(t.expressionStatement(entry));
+    pushIfEver(body, entry);
   });
 
   // An enclosing scope's constant this scope's client code reads, which the page ships
@@ -343,14 +343,13 @@ export function writePatchResumeStatements(
         "_client_guard",
         reason,
       );
-      body.push(
-        t.expressionStatement(
+      pushIfEver(
+        body,
+        andGuard(
+          client && notGuard(client),
           andGuard(
-            client && t.unaryExpression("!", client),
-            andGuard(
-              callRuntime("_unfilled_if"),
-              buildPatchWrite(closure.section, closure, getPatchKey().Write),
-            ),
+            callRuntime("_unfilled_if"),
+            buildPatchWrite(closure.section, closure, getPatchKey().Write),
           ),
         ),
       );
@@ -372,29 +371,28 @@ export function writePatchResumeStatements(
     });
     if (walks) {
       const { sources } = binding;
-      body.push(
-        t.expressionStatement(
+      pushIfEver(
+        body,
+        andGuard(
+          getCallerGroupGuard(section, "_filled_guard", sources),
           andGuard(
-            getCallerGroupGuard(section, "_filled_guard", sources),
-            andGuard(
-              orCallerGroupGuards(
+            orCallerGroupGuards(
+              section,
+              undefined,
+              "_client_guard",
+              fromIter(structure || []),
+            ),
+            callRuntime(
+              "_patch_subscribers",
+              getScopeIdIdentifier(section),
+              t.stringLiteral(getClosureSubscribersId(binding)),
+              getReads(
                 section,
-                undefined,
-                "_client_guard",
-                fromIter(structure || []),
-              ),
-              callRuntime(
-                "_patch_subscribers",
-                getScopeIdIdentifier(section),
-                t.stringLiteral(getClosureSubscribersId(binding)),
-                getReads(
-                  section,
-                  [binding],
-                  "_filled_guard",
-                  isGuardedReason(sources) &&
-                    !sources.global &&
-                    getSoleCallerGroup(section, sources),
-                ),
+                [binding],
+                "_filled_guard",
+                isGuardedReason(sources) &&
+                  !sources.global &&
+                  getSoleCallerGroup(section, sources),
               ),
             ),
           ),
@@ -404,7 +402,10 @@ export function writePatchResumeStatements(
     forEach(binding.closureSections, (closureSection) => {
       if (runsClosureByWrite(binding, closureSection)) {
         const { sources } = binding;
-        const render = ifEver(
+        // None where no call's patch fills the value, or where no call hands the client
+        // the param-selected structure.
+        pushIfEver(
+          body,
           andGuard(
             getCallerGroupGuard(section, "_filled_guard", sources),
             andGuard(
@@ -435,8 +436,6 @@ export function writePatchResumeStatements(
             ),
           ),
         );
-        // None where no call's patch fills the value.
-        if (render) body.push(t.expressionStatement(render));
       }
     });
   });
@@ -490,13 +489,12 @@ export function writePatchResumeStatements(
           ),
         );
       } else if (setup.setup === "client") {
-        body.push(
-          t.expressionStatement(
-            buildClientSetup(
-              section,
-              getSetupSources(ref),
-              getCreatedSetupId(section, ref),
-            ),
+        pushIfEver(
+          body,
+          buildClientSetup(
+            section,
+            getSetupSources(ref),
+            getCreatedSetupId(section, ref),
           ),
         );
       }
@@ -505,13 +503,12 @@ export function writePatchResumeStatements(
         t.expressionStatement(buildSubscribe(section, ref, setup.subscribe)),
       );
     } else if (setupFromClient(section, ref, setup.setup)) {
-      body.push(
-        t.expressionStatement(
-          buildClientSetup(
-            section,
-            getSetupSources(ref),
-            getCreatedSetupId(section, ref),
-          ),
+      pushIfEver(
+        body,
+        buildClientSetup(
+          section,
+          getSetupSources(ref),
+          getCreatedSetupId(section, ref),
         ),
       );
     }
@@ -561,9 +558,18 @@ export function writePatchResumeStatements(
     for (const write of change
       ? buildLetChangeWrites(section, binding, change)
       : buildLetSeeds(section, binding)) {
-      body.push(t.expressionStatement(write));
+      pushIfEver(body, write);
     }
   });
+}
+
+// A statement the patch writes, where its guards ever hold.
+function pushIfEver(
+  body: t.Statement[],
+  expr: t.Expression | false | undefined,
+) {
+  const ever = ifEver(expr);
+  if (ever) body.push(t.expressionStatement(ever));
 }
 
 // A controlled `<let>`'s value, a fill while its handler controls it and the
@@ -1295,9 +1301,7 @@ function isLet(binding: Binding) {
 // A constant group's value seeds a created scope alone: a live one holds it.
 function getConstantSetup(section: Section, binding: Binding) {
   const guard = getCallerGroupGuard(section, "_server_guard", binding.sources);
-  if (guard && !isAlways(guard)) {
-    return isNever(guard) ? t.numericLiteral(1) : t.unaryExpression("!", guard);
-  }
+  return guard && ifEver(notGuard(guard));
 }
 
 // What an entry depends on, as shells' hops (`>` per owner up), each where this instance's

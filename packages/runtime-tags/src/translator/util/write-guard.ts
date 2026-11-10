@@ -484,6 +484,15 @@ export function ifEver(expr: t.Expression | undefined | false) {
   return expr && !isNever(expr) ? expr : undefined;
 }
 
+// A guard's negation, folded where the guard is.
+export function notGuard(guard: t.Expression) {
+  return isAlways(guard)
+    ? t.numericLiteral(0)
+    : isNever(guard)
+      ? t.numericLiteral(1)
+      : t.unaryExpression("!", guard);
+}
+
 export function isNever(guard: t.Expression) {
   return t.isNumericLiteral(guard, { value: 0 });
 }

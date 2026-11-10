@@ -164,6 +164,7 @@ import translateVar, {
 } from "./translate-var";
 import {
   andGuard,
+  ifEver,
   buildGroupsValue,
   buildGroupMask,
   getExprIfWritten,
@@ -472,7 +473,7 @@ export function knownTagTranslateHTML(
                 // Only a patch render of a section the patch fills reads these two.
                 (patchFillsSection(section) &&
                   varId &&
-                  guardVar(t.numericLiteral(1))) ||
+                  ifEver(guardVar(t.numericLiteral(1)))) ||
                   absentArg(0),
                 patchFillsSection(section) &&
                   childSection.parent !== section &&
@@ -520,10 +521,11 @@ export function knownTagTranslateHTML(
       }
     }
 
-    if (varId) {
-      // Below the render call, `_var` mints the scope offset's post-render id;
-      // guarded, as its registration ships only where the guard holds.
-      varStatement = t.expressionStatement(
+    // Below the render call, `_var` mints the scope offset's post-render id;
+    // guarded, as its registration ships only where the guard holds.
+    const varCall =
+      varId &&
+      ifEver(
         guardVar(
           callRuntime(
             "_var",
@@ -532,9 +534,9 @@ export function knownTagTranslateHTML(
             peekScopeId,
             varId,
           ),
-        )!,
+        ),
       );
-    }
+    if (varCall) varStatement = t.expressionStatement(varCall);
   } else if (isPatch()) {
     statements.push(
       t.expressionStatement(
