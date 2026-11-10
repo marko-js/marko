@@ -84,15 +84,20 @@ export function exposeParamsTree(
   return tree;
 }
 
-// A binding read only by a name-only `<${binding}/>` is always a `_content(...)` renderer
+// A binding read only as the whole name of a name-only `<${binding}/>` is always a `_content(...)` renderer
 // (only known-parent `input`/`<define>` params reach here) — use the leaner `_dynamic_tag_content` signal.
 function isDirectContentBinding(binding: Binding) {
   if (binding.reads.size !== 1) {
     return false;
   }
 
-  const [read] = binding.reads.keys();
-  return read.nameOnly && read.section === binding.section;
+  const [[expr, read]] = binding.reads;
+  return (
+    expr.nameOnly &&
+    expr.section === binding.section &&
+    !Array.isArray(read) &&
+    !!read!.extra.tagName
+  );
 }
 
 // Pruning keeps an alias of an analyzed body only if something reads it or an

@@ -63,8 +63,8 @@ declare module "@marko/compiler/dist/types" {
       /** The signal of each of the template's param bindings, a property of
        * one included. */
       params: Map<Binding, string>;
-      /** The `_dynamic_tag_content` signal of each binding only a name-only
-       * dynamic tag reads. */
+      /** The `_dynamic_tag_content` signal of each binding read only as the
+       * whole name of a name-only dynamic tag. */
       directContent: Map<Binding, string>;
     };
     styleFile?: string;
