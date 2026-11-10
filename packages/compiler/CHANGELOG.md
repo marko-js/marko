@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.42.18
+
+### Patch Changes
+
+- [#4668](https://github.com/marko-js/marko/pull/4668) [`fcb6837`](https://github.com/marko-js/marko/commit/fcb6837e73458e202b8eb575b94f02185573d44a) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Allow an empty nested control flow tag beside attribute tags under a control flow tag.
+
 ## 5.42.17
 
 ### Patch Changes
