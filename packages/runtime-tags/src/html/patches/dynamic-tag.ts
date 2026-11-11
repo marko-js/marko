@@ -97,7 +97,7 @@ export function _dynamic_tag(
     patched & 3
       ? writeDynamicTagEntry(
           scopeId,
-          accessor,
+          PatchKey.DynamicTag + accessor,
           tag,
           patched & 1 && inputOrArgs,
           content ? content[RendererProp.Id]! : 0,
@@ -365,11 +365,11 @@ function keepHoles(fn: ServerRenderer, scopeId: number, section: number) {
   return renderer;
 }
 
-// The dynamic tag entry of `input` content: a shell ships its id
-// alone, a registered renderer rides the serializer, `0` marks none.
+// The entry (`key`) of a dynamic tag or a native tag's content: a shell ships its
+// id alone, a registered renderer rides the serializer, `0` marks none.
 export function writeDynamicTagEntry(
   scopeId: number,
-  accessor: Accessor,
+  key: string,
   tag: unknown,
   args: unknown,
   contentId: string | 0,
@@ -430,7 +430,6 @@ export function writeDynamicTagEntry(
       }
       while (entry.length > 1 && !entry[entry.length - 1]) entry.pop();
       const value = entry.length > 1 ? entry : entry[0];
-      const key = PatchKey.DynamicTag + accessor;
       // Client state names the tag: only a scope the flush creates takes it.
       if (createdOnly) {
         ensurePatchSetup(state, scopeId)[key] = value;

@@ -1,12 +1,12 @@
 // PATCH
 {
-  fc: 0
+  Cc: 0
 }
 
 // PATCH
 `a0`
 {
-  fc: "^a0",
+  Cc: "^a0",
   cAc: {
     ta: "SHOWN_r3"
   }

@@ -4,24 +4,26 @@ import {
   AccessorPrefix,
   AccessorProp,
   PatchKey,
+  RendererProp,
   type Scope,
 } from "../../common/types";
-import { _dynamic_tag } from "../control-flow";
+import { _dynamic_tag, rendererKey } from "../control-flow";
+import type { Renderer } from "../renderer";
 // The tag's branch pairs through a `PatchChild` entry.
 import "./child.feat";
 import { getRegisteredWithScope } from "../resume";
 import { setupPatchers, patchers } from "./apply";
-import { getContent } from "./shells";
+import { getContent, getContentAt } from "./shells";
 
-// `[renderer, contentId, input, varId]` or bare; `>div` is native, `^id`/`^^id`
-// bind the tag's scope/owner; `hop… id` steps down, `^F N id` up to a row.
+// `[renderer, contentId, input, varId]` or bare; `>div` is native, else a
+// content id (`getContentAt`).
 patchers[PatchKey.DynamicTag] = setupPatchers[PatchKey.DynamicTag] = (
   scope,
   accessor,
   entry,
 ) => {
   let [renderer, contentId, input, varId] = toArray(entry) as [
-    unknown,
+    string | Renderer | 0 | undefined,
     string | 0 | undefined,
     unknown,
     string | 0 | undefined,
@@ -30,41 +32,18 @@ patchers[PatchKey.DynamicTag] = setupPatchers[PatchKey.DynamicTag] = (
     if (renderer[0] === ">") {
       renderer = renderer.slice(1);
     } else {
-      let id = renderer;
-      let owner: Scope | undefined;
-      while (id[0] === "^") {
-        owner = owner ? owner[AccessorProp.Owner]! : scope;
-        id = id.slice(1);
-      }
-      const hops = id.split(" ");
-      id = hops.pop()!;
-      if (hops.length) {
-        if (!owner) {
-          for (owner = scope; owner[AccessorProp.Owner];) {
-            owner = owner[AccessorProp.Owner]!;
-          }
-        }
-        for (const hop of hops) owner = owner[hop] as Scope;
-      }
+      renderer = getContentAt(scope, renderer);
       if (
         !input &&
-        // The live branch renders this content for this owner (`rendererKey`).
+        // The live branch renders this content for this owner.
         scope[AccessorPrefix.ConditionalRenderer + accessor] ===
-          (owner ? id + " " + owner[AccessorProp.Id] : id)
+          rendererKey(renderer)
       ) {
         // Linked like one this created, for entries walking up through it.
         (scope[AccessorPrefix.BranchScopes + accessor] as Scope)[
           AccessorProp.Owner
-        ] = owner || scope;
+        ] = renderer[RendererProp.Owner] || scope;
         return;
-      }
-      renderer = getContent(id, owner);
-      // Every template of the build has a record; the transport refuses
-      // another build's patch, so an unresolved id is a bug.
-      if (MARKO_DEBUG && !renderer) {
-        throw new Error(
-          `A patch names content "${id}" the page cannot resolve.`,
-        );
       }
     }
   }

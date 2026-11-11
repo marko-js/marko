@@ -98,6 +98,32 @@ export const getContent = (id: string, owner?: Scope) => {
     | undefined;
   return typeof registered === "function" ? registered(owner) : registered;
 };
+// A content id's renderer: `^id`/`^^id` bind the tag's scope/owner, `hop… id`
+// steps down, `^F N id` up to a row.
+export const getContentAt = (scope: Scope, id: string) => {
+  let owner: Scope | undefined;
+  while (id[0] === "^") {
+    owner = owner ? owner[AccessorProp.Owner]! : scope;
+    id = id.slice(1);
+  }
+  const hops = id.split(" ");
+  id = hops.pop()!;
+  if (hops.length) {
+    if (!owner) {
+      for (owner = scope; owner[AccessorProp.Owner];) {
+        owner = owner[AccessorProp.Owner]!;
+      }
+    }
+    for (const hop of hops) owner = owner[hop] as Scope;
+  }
+  const renderer = getContent(id, owner);
+  // Every template of the build has a record; the transport refuses
+  // another build's patch, so an unresolved id is a bug.
+  if (MARKO_DEBUG && !renderer) {
+    throw new Error(`A patch names content "${id}" the page cannot resolve.`);
+  }
+  return renderer!;
+};
 export const getShell = (id: string) =>
   (_resumed["=" + id] as ContentFactory | undefined)?.[RendererProp.Shell];
 

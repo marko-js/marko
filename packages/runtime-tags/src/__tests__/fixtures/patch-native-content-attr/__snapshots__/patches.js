@@ -1,7 +1,7 @@
 // PATCH
 `a,<em>alpha</em>`
 {
-  fa: "a",
+  Ca: "a",
   tb: "two"
 }
 ;BgA
@@ -9,7 +9,7 @@
 // PATCH holding BgA
 `b,<strong>beta</strong>`
 {
-  fa: "b",
+  Ca: "b",
   tb: "three"
 }
 ;BwM

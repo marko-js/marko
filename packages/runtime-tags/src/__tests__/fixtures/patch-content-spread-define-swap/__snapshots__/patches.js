@@ -1,7 +1,7 @@
 // PATCH
 `a2`
 {
-  fa: "^a2",
+  Ca: "^a2",
   ja: {},
   cAa: {
     ta: "t2"
@@ -14,7 +14,7 @@
 // PATCH holding BgI
 `a0`
 {
-  fa: "^a0",
+  Ca: "^a0",
   ja: {},
   cAa: {
     ta: "t3"

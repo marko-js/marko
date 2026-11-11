@@ -1,7 +1,7 @@
 // PATCH
 `a0;D ;<em> </em>`
 {
-  fa: "^a0",
+  Ca: "^a0",
   cAa: {
     ta: "two"
   },
@@ -11,13 +11,13 @@
 
 // PATCH holding BAE
 {
-  fa: 0,
+  Ca: 0,
   tb: "three"
 }
 
 // PATCH holding BAE
 {
-  fa: "^a0",
+  Ca: "^a0",
   cAa: {
     ta: "four"
   },

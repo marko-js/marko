@@ -2,7 +2,7 @@
 [`a0; b ;<label>body</label><input>`, `a1; ;<div></div>`, `a2; ;<section></section>`]
 {
   la: [{
-    fa: "^^a0",
+    Ca: "^^a0",
     cAa: {
       s: {
         aa$for: "sM_0UA",
@@ -10,7 +10,7 @@
       }
     }
   }, {
-    fa: "^^a0",
+    Ca: "^^a0",
     cAa: {
       s: {
         aa$for: "sM_1UA",
@@ -19,7 +19,7 @@
     }
   }, "a1"],
   lb: [{
-    fa: "^^a0",
+    Ca: "^^a0",
     cAa: {
       s: {
         aa$for: "sM_0VA",
@@ -27,7 +27,7 @@
       }
     }
   }, {
-    fa: "^^a0",
+    Ca: "^^a0",
     cAa: {
       s: {
         aa$for: "sM_1VA",
@@ -41,7 +41,7 @@
 // PATCH holding CQ4
 {
   la: [{
-    fa: "^^a0",
+    Ca: "^^a0",
     cAa: {
       s: {
         aa$for: "sM_0UA",
@@ -50,7 +50,7 @@
     }
   }, "a1"],
   lb: [{
-    fa: "^^a0",
+    Ca: "^^a0",
     cAa: {
       s: {
         aa$for: "sM_0VA",

@@ -3,6 +3,8 @@
 export const Attr = "a";
 // A spread's whole attribute set: the client re-applies it as a render.
 export const Attrs = "j";
+// A native tag's content: its id (`getContentAt`), or `0` for none.
+export const AttrContent = "C";
 // A function a patch binds to a slot or a fill, by its registration and owner hops.
 export const Bind = "d";
 export const BindFill = "u";

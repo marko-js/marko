@@ -4,7 +4,7 @@
   cc: {
     ka: [{
       ta: "SHOWN_message",
-      fb: "^^^a2",
+      Cb: "^^^a2",
       s: {
         jb: {}
       },
@@ -26,7 +26,7 @@
   cc: {
     ka: [{
       ta: "SHOWN_message",
-      fb: "^^^a2",
+      Cb: "^^^a2",
       s: {
         jb: {}
       },
@@ -47,7 +47,7 @@
   cc: {
     ka: [{
       ta: "SHOWN_message",
-      fb: "^^^a2",
+      Cb: "^^^a2",
       s: {
         jb: {}
       },

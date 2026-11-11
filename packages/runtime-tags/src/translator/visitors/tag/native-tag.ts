@@ -430,7 +430,7 @@ export default {
         if (content !== undefined) {
           const contentExtra = (attributes[content].value.extra ??= {});
           contentExtra.rendersContent = true;
-          linkHolePatcher(tagSection, contentExtra, "patches/dynamic-tag");
+          linkHolePatcher(tagSection, contentExtra, "patches/attr-content");
         }
 
         if (spread) {
@@ -447,7 +447,7 @@ export default {
               tag,
               attrAt(attributes, content),
               isTextOnly,
-            ) && "patches/dynamic-tag",
+            ) && "patches/attr-content",
             // A spread owning the element's controllable (no static one
             // survives the merge) re-claims it at run time.
             !controllable &&
@@ -899,8 +899,8 @@ export default {
           write`>`;
           htmlContentAttrTags.add(tag.node);
           const content = contentAttr.value;
-          // A `content=` a patch writes renders from a dynamic tag entry, like
-          // a dynamic tag (the client signal shape is the same).
+          // A `content=` a patch writes ships an `AttrContent` entry, which the
+          // client applies through `_attr_content`, as its own signal does.
           const patches = fillsHole(tagSection, content.extra);
           const scopeId = getScopeIdIdentifier(tagSection);
           const markerGuard =

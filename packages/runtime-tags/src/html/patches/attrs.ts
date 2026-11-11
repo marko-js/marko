@@ -208,8 +208,8 @@ function writeAttrsFill(
   return "";
 }
 
-// A native tag's `content=` a patch writes passes its group and ships as a
-// dynamic tag entry; other content renders as an unpaired dynamic tag's does.
+// A native tag's `content=` a patch writes passes its group and ships as an
+// `AttrContent` entry; other content renders as an unpaired dynamic tag's does.
 export function _attr_content(
   accessor: Accessor,
   scopeId: number,
@@ -230,7 +230,7 @@ export function _attr_content(
 }
 
 // A spread that may carry `content`: the set patches as attributes and
-// the content as a dynamic tag entry, the way a static `content=` does.
+// the content as an `AttrContent` entry, the way a static `content=` does.
 export function _attrs_content(
   data: Record<string, unknown>,
   accessor: Accessor,
@@ -288,7 +288,16 @@ function getContentPairing(
 ) {
   return group === undefined
     ? PatchPairing.Skip
-    : writeDynamicTagEntry(scopeId, accessor, content, 0, 0, 0, mask, group);
+    : writeDynamicTagEntry(
+        scopeId,
+        PatchKey.AttrContent + accessor,
+        content,
+        0,
+        0,
+        0,
+        mask,
+        group,
+      );
 }
 
 // The content renderer never rides the set: its own entry carries it, and a

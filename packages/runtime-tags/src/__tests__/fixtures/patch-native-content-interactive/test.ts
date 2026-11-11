@@ -5,7 +5,7 @@ const click = (document: Document) => {
 };
 
 // An interactive page links its features through the dom module, so a
-// server-fed `content=` must import the dynamic tag patcher there.
+// server-fed `content=` must import its patcher (`patches/attr-content`) there.
 export const config: TestConfig = {
   patches: true,
   steps: [{ html: "a" }, click, { html: "b" }, click, { html: "a" }],

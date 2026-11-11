@@ -145,6 +145,7 @@ export const domRuntimeFeatures = [
 export const domPatchRuntimeFeatures = [
   "patches/attr",
   "patches/attrs",
+  "patches/attr-content",
   "patches/await",
   "patches/branch",
   "patches/catch",

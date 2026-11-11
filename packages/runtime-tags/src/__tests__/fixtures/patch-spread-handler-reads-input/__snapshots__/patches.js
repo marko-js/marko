@@ -2,7 +2,7 @@
 {
   xh: "b",
   ta: "b",
-  fb: 0,
+  Cb: 0,
   jb: {
     title: "b",
     onClick: _([], "a0")
@@ -14,7 +14,7 @@
 {
   xh: "c",
   ta: "c",
-  fb: 0,
+  Cb: 0,
   jb: {
     title: "c",
     onClick: _([], "a0")

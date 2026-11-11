@@ -4,7 +4,7 @@
   "PatchChild:#childScope/2": {
     "PatchCatch:#text/0": [{
       "PatchText:#text/0": "SHOWN_message",
-      "PatchDynamicTag:#div/1": "^^^packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-content-attr/template.marko_1*content",
+      "PatchAttrContent:#div/1": "^^^packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-content-attr/template.marko_1*content",
       "PatchChild:BranchScopes:#div/1": {
         "PatchText:#text/0": "b",
         "PatchSetup:": {
@@ -23,7 +23,7 @@
   "PatchChild:#childScope/2": {
     "PatchCatch:#text/0": [{
       "PatchText:#text/0": "SHOWN_message",
-      "PatchDynamicTag:#div/1": "^^^packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-content-attr/template.marko_1*content",
+      "PatchAttrContent:#div/1": "^^^packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-content-attr/template.marko_1*content",
       "PatchChild:BranchScopes:#div/1": {
         "PatchText:#text/0": "c",
         "PatchSetup:": {
@@ -41,7 +41,7 @@
   "PatchChild:#childScope/2": {
     "PatchCatch:#text/0": [{
       "PatchText:#text/0": "SHOWN_message",
-      "PatchDynamicTag:#div/1": "^^^packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-content-attr/template.marko_1*content",
+      "PatchAttrContent:#div/1": "^^^packages/runtime-tags/src/__tests__/fixtures/patch-catch-created-content-attr/template.marko_1*content",
       "PatchChild:BranchScopes:#div/1": {
         "PatchText:#text/0": "e",
         "PatchSetup:": {

@@ -5,7 +5,7 @@ const click = (document: Document) => {
 };
 
 // A spread that may carry `content` on a native tag: the set patches as
-// attributes and the content as a dynamic tag entry.
+// attributes and the content as an `AttrContent` entry.
 export const config: TestConfig = {
   patches: true,
   steps: [
