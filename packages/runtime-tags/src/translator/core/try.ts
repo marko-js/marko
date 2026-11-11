@@ -83,6 +83,17 @@ export default {
               `The ${coreTagLink(tag)}'s \`<${getTagName(child)}>\` takes no attributes, only content.`,
             );
         }
+        if (
+          child.isMarkoTag() &&
+          child.node.body.params.length &&
+          getTagName(child) === "@placeholder"
+        ) {
+          throw child
+            .get("name")
+            .buildCodeFrameError(
+              `The ${coreTagLink(tag)}'s \`<@placeholder>\` takes no parameters: nothing passes it arguments.`,
+            );
+        }
       }
     }
     assertHasBody(tag);
