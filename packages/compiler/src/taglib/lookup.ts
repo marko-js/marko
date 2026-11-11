@@ -237,6 +237,7 @@ export class Layer {
   readonly translators: ProgramHooks;
   readonly manualTagsDirs: Set<string> | undefined;
   #tags = new Map<string, TagDefinition | null>();
+  #errors: Map<string, Error> | undefined;
 
   constructor(
     registry: Registry,
@@ -271,10 +272,21 @@ export class Layer {
   resolve(name: string): TagDefinition | null {
     let tag = this.#tags.get(name);
     if (tag === undefined) {
-      tag = this.#find(name);
+      try {
+        tag = this.#find(name);
+      } catch (err) {
+        // A tag that fails to load is not found, and `getError` has why.
+        tag = null;
+        (this.#errors ||= new Map()).set(name, err as Error);
+      }
       this.#tags.set(name, tag);
     }
     return tag;
+  }
+
+  /** Why a tag `resolve` did not find failed to load, if it did. */
+  getError(name: string) {
+    return this.#errors?.get(name);
   }
 
   /** Whether this layer or one below it loaded the taglib file. */
@@ -310,7 +322,10 @@ export class Layer {
       }
     }
 
-    const base = this.parent ? this.parent.resolve(name) : null;
+    const { parent } = this;
+    const base = parent ? parent.resolve(name) : null;
+    const err = parent?.getError(name);
+    if (err) throw err;
     return exts ? extendTag(base, exts) : base;
   }
 }
@@ -388,6 +403,18 @@ export class TaglibLookup extends Layer implements TaglibLookupAPI {
     }
   }
 
+  /**
+   * Why a tag `getTag` did not find failed to load, if it did: a compile
+   * throws it for a template that uses the tag.
+   */
+  getTagError(name: string): Error | undefined {
+    const i = name.lastIndexOf(":");
+    return (
+      this.getError(name) ||
+      (i === -1 ? undefined : this.getTagError(name.slice(0, i)))
+    );
+  }
+
   // Released language servers still call these; remove once none do.
   getAttribute(): undefined {}
   forEachAttribute(): void {}
@@ -402,11 +429,8 @@ export class TaglibLookup extends Layer implements TaglibLookupAPI {
       sorted = [];
       for (const name of names) {
         // A tag that fails to load is reported where it is used, not here.
-        try {
-          sorted.push(this.resolve(name)!);
-        } catch {
-          // ignore
-        }
+        const tag = this.resolve(name);
+        if (tag) sorted.push(tag);
       }
 
       this.#sorted = sorted.sort(compareTagNames);

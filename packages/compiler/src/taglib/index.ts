@@ -64,6 +64,16 @@ export function buildLookup(
   } catch (err) {
     if (!onError) throw err;
     onError(err as Error);
+
+    // The closest directory above whose taglibs do load still has its tags.
+    for (let dir = dirname, parent; (parent = path.dirname(dir)) !== dir;) {
+      try {
+        return registry.lookup((dir = parent));
+      } catch {
+        // ignore
+      }
+    }
+
     return registry.empty;
   }
 }
