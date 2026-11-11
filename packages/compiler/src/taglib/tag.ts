@@ -8,9 +8,10 @@ import type {
   TagDefinition,
 } from "@marko/compiler/babel-utils";
 import markoModules from "@marko/compiler/modules";
-import { type ResolveOptions, resolveSync } from "resolve-sync";
+import { resolveSync } from "resolve-sync";
 
-import { exists, type FileSystem, isFile, realpath } from "../util/fs";
+import { exists, type FileSystem } from "../util/fs";
+import { mainField, resolveFrom, resolveFS } from "../util/resolve";
 import { isProps, type Props } from "./json";
 import type { Taglib } from "./taglib";
 
@@ -297,10 +298,6 @@ class TagDef implements Tag {
   }
 }
 
-type ResolveFS = NonNullable<ResolveOptions["fs"]>;
-// Each file system as resolve-sync reads it, reused by every renderer it resolves.
-const resolveFileSystems = new WeakMap<FileSystem, ResolveFS>();
-const mainField = ["main"];
 const defaultExtensions = { ".js": 0, ".json": 0 };
 const dashedChar = /-([a-z])/g;
 const whitespace = /\s+/;
@@ -448,31 +445,15 @@ function resolveTemplate(fs: FileSystem, dirname: string, value: string) {
 function resolveRenderer(fs: FileSystem, dirname: string, value: string) {
   if (value[0] !== ".") return value;
 
-  let resolveFS = resolveFileSystems.get(fs);
-  if (!resolveFS) resolveFileSystems.set(fs, (resolveFS = toResolveFS(fs)));
   return (
     resolveSync(value, {
-      from: nodePath.join(realpath(fs, dirname), "_"),
+      from: resolveFrom(fs, dirname),
       exts: requireExtensions(),
       fields: mainField,
       silent: true,
-      fs: resolveFS,
+      fs: resolveFS(fs),
     }) || value
   );
-}
-
-function toResolveFS(fs: FileSystem): ResolveFS {
-  return {
-    isFile: (file) => isFile(fs, file),
-    readPkg: (file) => {
-      try {
-        return JSON.parse(fs.readFileSync(file, "utf8"));
-      } catch {
-        return undefined;
-      }
-    },
-    realpath: (file) => realpath(fs, file),
-  };
 }
 
 // Read each time, since more can be registered.

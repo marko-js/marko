@@ -7,8 +7,10 @@ import type {
   TaglibLookup as TaglibLookupAPI,
 } from "@marko/compiler/babel-utils";
 import markoModules from "@marko/compiler/modules";
+import { resolveSync } from "resolve-sync";
 
 import { exists, type FileSystem, isDirectory, realpath } from "../util/fs";
+import { mainField, resolveFrom, resolveFS } from "../util/resolve";
 import { type Props, readJSON } from "./json";
 import { createAttribute, definesTag, mergeTag } from "./tag";
 import {
@@ -535,7 +537,16 @@ function findInstalledTaglib(
   dir: string,
   nodeModules: string[] | undefined,
 ) {
-  if (!nodeModules) return markoModules.tryResolve(name + "/marko.json", dir);
+  // Found by resolution where there is no `node_modules` (eg Yarn PnP).
+  if (!nodeModules) {
+    return resolveSync(name + "/marko.json", {
+      from: resolveFrom(fs, dir),
+      require: true,
+      fields: mainField,
+      silent: true,
+      fs: resolveFS(fs),
+    });
+  }
 
   // Joined by hand, as `path.join` would: the folders are already normalized,
   // so only a scoped name's slash needs the platform's separator.

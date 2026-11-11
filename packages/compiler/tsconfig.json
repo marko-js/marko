@@ -1,6 +1,12 @@
 {
   "extends": "../../tsconfig.json",
-  "include": ["*.d.ts", "src/taglib", "src/util/fs.ts", "src/taglib/*.json"],
+  "include": [
+    "*.d.ts",
+    "src/taglib",
+    "src/util/fs.ts",
+    "src/util/resolve.ts",
+    "src/taglib/*.json"
+  ],
   "compilerOptions": {
     "skipLibCheck": false,
     "outDir": "../../dist/compiler",

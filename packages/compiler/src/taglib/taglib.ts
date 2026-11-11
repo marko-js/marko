@@ -5,9 +5,10 @@ import type {
   PluginDefinition,
   TagDefinition,
 } from "@marko/compiler/babel-utils";
-import markoModules from "@marko/compiler/modules";
+import { resolveSync } from "resolve-sync";
 
 import { exists, type FileSystem, isDirectory } from "../util/fs";
+import { mainField, resolveFrom, resolveFS } from "../util/resolve";
 import { isProps, type Props, readJSON } from "./json";
 import { addHooks, createTemplateTag, loadTag, propName, toHook } from "./tag";
 
@@ -375,7 +376,14 @@ function loadImports(taglib: Taglib, specs: unknown[], imported: Set<string>) {
 
   for (const spec of specs) {
     if (typeof spec !== "string") continue;
-    const path = markoModules.tryResolve(spec, taglib.dirname);
+    // As `require` resolves it, through the file system the taglib is read by.
+    const path = resolveSync(spec, {
+      from: resolveFrom(taglib.fs, taglib.dirname),
+      require: true,
+      fields: mainField,
+      silent: true,
+      fs: resolveFS(taglib.fs),
+    });
     if (!path) {
       throw new Error(`Import not found: ${spec} (from ${taglib.dirname})`);
     }

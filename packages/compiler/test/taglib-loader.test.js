@@ -665,6 +665,7 @@ describe("compiler/taglib-loader", () => {
     it("loads a dependency's taglib once when a marko.json also imports it", () => {
       write({
         "package.json": { name: "app", dependencies: { hooked: "*" } },
+        "node_modules/hooked/package.json": { name: "hooked" },
         "node_modules/hooked/marko.json": {
           transform: "./t.js",
           "<hooked-tag>": { template: "./t.marko" },
@@ -683,6 +684,7 @@ describe("compiler/taglib-loader", () => {
 
     it("follows the exports of an installed taglib a marko.json imports", () => {
       write({
+        "node_modules/unlisted/package.json": { name: "unlisted" },
         "node_modules/unlisted/marko.json": { exports: "./dist" },
         "node_modules/unlisted/dist/unlisted-tag.marko": "",
         "marko.json": { "taglib-imports": ["unlisted/marko.json"] },
@@ -1023,6 +1025,27 @@ describe("compiler/taglib-loader", () => {
       } finally {
         fs.statSync = statSync;
       }
+    });
+
+    it("resolves a taglib import through the file system it is given", () => {
+      write({ "marko.json": { "taglib-imports": ["./lib/marko.json"] } });
+      const virtual = {
+        [file("lib/marko.json")]: JSON.stringify({
+          "<virtual-tag>": { template: "./virtual.marko" },
+        }),
+        [file("lib/virtual.marko")]: "",
+      };
+      const fileSystem = {
+        readFileSync: (path, encoding) =>
+          path in virtual ? virtual[path] : fs.readFileSync(path, encoding),
+        readdirSync: fs.readdirSync,
+        statSync: (path) =>
+          path in virtual ? { isDirectory: () => false } : fs.statSync(path),
+      };
+      const tag = taglib
+        .buildLookup(dir, tagsTranslator, undefined, fileSystem)
+        .getTag("virtual-tag");
+      assert.equal(tag.template, file("lib/virtual.marko"));
     });
 
     it("resolves a renderer through the file system it is given", () => {

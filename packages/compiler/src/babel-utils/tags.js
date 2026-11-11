@@ -4,6 +4,7 @@ import { types as t } from "@marko/compiler";
 import markoModules from "@marko/compiler/modules";
 
 import { Hash } from "../util/quick-hash";
+import { resolveImport } from "../util/resolve";
 import { diagnosticWarn } from "./diagnostics";
 import { resolveRelativePath } from "./imports";
 import { getTagDefForTagName } from "./taglib";
@@ -256,10 +257,22 @@ export function loadFileForTag(tag) {
 export function loadFileForImport(file, request) {
   const relativeRequest = resolveTagImport(file.path, request);
   if (relativeRequest) {
-    const filename =
-      relativeRequest[0] === "."
-        ? resolve(file.opts.filename, "..", relativeRequest)
-        : markoModules.resolve(relativeRequest, dirname(file.opts.filename));
+    let filename;
+    if (relativeRequest[0] === ".") {
+      filename = resolve(file.opts.filename, "..", relativeRequest);
+    } else {
+      // A package's template, through the file system the compile reads.
+      filename = resolveImport(
+        file.markoOpts.fileSystem,
+        dirname(file.opts.filename),
+        relativeRequest,
+      );
+      if (!filename) {
+        throw new Error(
+          `Cannot find module '${relativeRequest}' from '${file.opts.filename}'`,
+        );
+      }
+    }
     return resolveMarkoFile(file, filename);
   }
 }

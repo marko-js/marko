@@ -1,15 +1,13 @@
 packages:
   - packages/*
 linkWorkspacePackages: true
-# @zcov/* and htmljs-parser are first-party: the release-age gate guards
-# against a compromised third-party publish, which is not the threat model for
-# what we publish.
+# @zcov/*, htmljs-parser and resolve-sync are first-party: the release-age gate
+# guards against a compromised third-party publish, which is not the threat
+# model for what we publish.
 minimumReleaseAgeExclude:
   - "@zcov/*"
   - htmljs-parser
-  # Checked by hand: npm provenance ties it to jsdom's release workflow at the
-  # v31.0.0 tag. Drop once it is a day old (2026-11-06 12:15 UTC).
-  - jsdom@31.0.0
+  - resolve-sync
 # The patched generator requires htmljs-parser for `escapeText`; declared so it
 # does not resolve only through pnpm's hidden hoisting of every package.
 packageExtensions:
