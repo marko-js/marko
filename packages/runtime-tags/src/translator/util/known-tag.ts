@@ -141,6 +141,7 @@ import { findSlot, ensureSlot, SlotKind } from "./slots";
 import {
   hasCallerParamSource,
   hasParamOrGlobalSource,
+  hasUngatedSource,
   mergeSources,
   type Sources,
   withSources,
@@ -1063,10 +1064,13 @@ function getGroupSourcesValue<R>(
       ? UpdatesFrom.Client | UpdatesFrom.Server
       : UpdatesFrom.Client;
   }
-  // Params this section's callers pass compose their groups' bits; `$global` adds a server bit.
+  // Params this section's callers pass compose their groups' bits; an ungated source adds a server bit.
   const callerGroups = getCallerParamGroupsAt(sources?.param, section);
   if (callerGroups.length) {
-    return combine(callerGroups, sources!.global ? UpdatesFrom.Server : 0);
+    return combine(
+      callerGroups,
+      hasUngatedSource(sources) ? UpdatesFrom.Server : 0,
+    );
   }
   return isUngatedGroup(sources) ? UpdatesFrom.Server : 0;
 }
