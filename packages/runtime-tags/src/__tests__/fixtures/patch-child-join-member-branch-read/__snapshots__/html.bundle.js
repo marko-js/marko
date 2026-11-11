@@ -7,7 +7,7 @@ _shells({
 	b1: "b1;D ;<em> </em>"
 });
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $ui__input_a = _unfilled_if($scope0_reason, 2), $ui__input_a__OR__input_b = _unfilled_if($scope0_reason, 0), $ui__input_b__OR__input_show = _unfilled_if($scope0_reason, 1), $fg__input_a = _filled_guard($scope0_reason, 2), $fg__input_b = _filled_guard($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $ui__input_a__OR__input_b = _unfilled_if($scope0_reason, 0), $ui__input_b__OR__input_show = _unfilled_if($scope0_reason, 1), $ui__input_a = _unfilled_if($scope0_reason, 2), $fg__input_a = _filled_guard($scope0_reason, 2), $fg__input_b = _filled_guard($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	_html(`<p>${_text_mark($scope0_id, "a", input.a + input.b, 1, $scope0_reason, 0)}</p>`);
 	_if(() => {
@@ -23,7 +23,7 @@ var child_default = _template("b", (input) => {
 	_patch_render($scope0_id, "b2", (($fg__input_a ? " e" : "") + ($fg__input_b ? " f" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		e: ($ui__input_b__OR__input_show || $ui__input_a__OR__input_b || $ui__input_a) && input.a,
-		f: ($ui__input_a || $ui__input_a__OR__input_b) && input.b
+		f: $ui__input_a__OR__input_b && input.b
 	}) || ($fg__input_a && $ui__input_b__OR__input_show && _patch_write($scope0_id, "xe", input.a, !_server_guard($scope0_reason, 2)), $fg__input_b && $ui__input_a && _patch_write($scope0_id, "xf", input.b, !_server_guard($scope0_reason, 3)));
 });
 

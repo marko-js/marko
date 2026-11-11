@@ -11,7 +11,7 @@ var reader_default = _template("b", (input) => {
 // template.marko
 _shells({ a: "a;b%;<output id=out></output><!><!>" });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_title__OR__input_alt = _write_guard($scope0_reason, 0), $ui__input_title__OR__input_alt = _unfilled_if($scope0_reason, 0), $ui__input_title = _unfilled_if($scope0_reason, 1), $ui__input_alt = _unfilled_if($scope0_reason, 2), $sg__input_title = _server_guard($scope0_reason, 1), $fg__input_title = _filled_guard($scope0_reason, 1), $fg__input_alt = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_title__OR__input_alt = _write_guard($scope0_reason, 0), $ui__input_title__OR__input_alt = _unfilled_if($scope0_reason, 0), $sg__input_title = _server_guard($scope0_reason, 1), $fg__input_title = _filled_guard($scope0_reason, 1), $fg__input_alt = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	$fg__input_title && _patch_write($scope0_id, "xd", input.title, !$sg__input_title);
 	const fn = _bind_resume(() => {
@@ -22,7 +22,7 @@ var template_default = _template("a", (input) => {
 	_patch_render($scope0_id, "a1", (($fg__input_alt ? " e" : "") + ($fg__input_title ? " f" : "") + ($fg__input_title ? " d" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
 		d: input.title,
-		e: ($ui__input_title || $ui__input_title__OR__input_alt) && input.alt,
-		f: ($ui__input_alt || $ui__input_title__OR__input_alt) && fn
-	}) || ($fg__input_alt && $ui__input_title && _patch_write($scope0_id, "xe", input.alt, !_server_guard($scope0_reason, 2)), $fg__input_title && $ui__input_alt && _patch_write($scope0_id, "xf", fn, !$sg__input_title));
+		e: $ui__input_title__OR__input_alt && input.alt,
+		f: $ui__input_title__OR__input_alt && fn
+	}) || ($fg__input_alt && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.alt, !_server_guard($scope0_reason, 2)), $fg__input_title && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xf", fn, !$sg__input_title));
 }, 1);

@@ -4,7 +4,7 @@ const $walks$1 = "b%bD l b";
 const $setup$1 = [[], ["__tests__/tags/child.marko_0"]];
 _shells({ "__tests__/tags/child.marko": "__tests__/tags/child.marko !__tests__/tags/child.marko_0;b%bD l ;<!><!><p> </p><button class=t>t</button>" });
 var child_default = _template("__tests__/tags/child.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_a = _write_guard($scope0_reason, 1), $ui__input_a = _unfilled_if($scope0_reason, 1), $fg__input_a = _filled_guard($scope0_reason, 1), $fg__input_c = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_a = _write_guard($scope0_reason, 1), $fg__input_a = _filled_guard($scope0_reason, 1), $fg__input_c = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	let open = true;
 	_if(() => {
@@ -24,13 +24,13 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	_patch_fill($scope0_id, "PatchFill:__tests__/tags/child.marko_0_open#8/fill", open, 1);
 	_scope($scope0_id, {
 		input_a: input.a,
-		input_c: ($ui__input_a || _unfilled_if($scope0_reason, 0)) && input.c,
+		input_c: _unfilled_if($scope0_reason, 0) && input.c,
 		open
 	}, "__tests__/tags/child.marko", 0, {
 		input_a: ["input.a"],
 		input_c: ["input.c"],
 		open: "1:6"
-	}) || ($fg__input_a && _patch_write($scope0_id, "PatchMarkedWrite:input_a", input.a, !_server_guard($scope0_reason, 1)), $fg__input_c && $ui__input_a && _patch_write($scope0_id, "PatchMarkedWrite:input_c", input.c, !_server_guard($scope0_reason, 2)));
+	}) || ($fg__input_a && _patch_write($scope0_id, "PatchMarkedWrite:input_a", input.a, !_server_guard($scope0_reason, 1)), $fg__input_c && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_c", input.c, !_server_guard($scope0_reason, 2)));
 });
 
 // template.marko

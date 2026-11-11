@@ -9,7 +9,7 @@ _shells({
 });
 _stateful_return("__tests__/template.marko_1*content");
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 1), $wi__input_label__OR__input_which = _write_if($scope0_reason, 0), $ui__input_label = _unfilled_if($scope0_reason, 1), $ui__input_label__OR__input_which = _unfilled_if($scope0_reason, 0), $ui__input_which = _unfilled_if($scope0_reason, 2), $fg__input_label = _filled_guard($scope0_reason, 1), $fg__input_which = _filled_guard($scope0_reason, 2), $wi__input_label = _write_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $cg__input_label = _client_guard($scope0_reason, 1), $wi__input_label__OR__input_which = _write_if($scope0_reason, 0), $ui__input_label__OR__input_which = _unfilled_if($scope0_reason, 0), $ui__input_label = _unfilled_if($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 1), $fg__input_which = _filled_guard($scope0_reason, 2), $wi__input_label = _write_if($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $input_label__closures = new Set();
 	const Counter = { content: _content_resume("__tests__/template.marko_1*content", () => {
@@ -45,8 +45,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(`<p>${_text_mark($scope0_id, "#text/2", count)}</p>`);
 	_patch_render($scope0_id, "__tests__/template.marko_0_input_label#5_input_which#6_Counter#7_Other#8/setup", (($fg__input_label ? " input_label" : "") + ($fg__input_which ? " input_which" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		input_label: ($ui__input_which || $ui__input_label__OR__input_which || $ui__input_label) && input.label,
-		input_which: ($ui__input_label || $ui__input_label__OR__input_which) && input.which,
+		input_label: ($ui__input_label__OR__input_which || $ui__input_label) && input.label,
+		input_which: $ui__input_label__OR__input_which && input.which,
 		Counter: $ui__input_label__OR__input_which && Counter,
 		Other: $ui__input_label__OR__input_which && Other,
 		"ClosureScopes:input_label/11": $wi__input_label && $input_label__closures
@@ -55,5 +55,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_which: ["input.which"],
 		Counter: "1:9",
 		Other: "6:9"
-	}) || ($fg__input_label && $ui__input_which && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 1)) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_label#5/subscribers", "input_label"), $fg__input_which && $ui__input_label && _patch_write($scope0_id, "PatchMarkedWrite:input_which", input.which, !_server_guard($scope0_reason, 2)));
+	}) || ($fg__input_label && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 1)) && _patch_subscribers($scope0_id, "__tests__/template.marko_0_input_label#5/subscribers", "input_label"), $fg__input_which && $ui__input_label && _patch_write($scope0_id, "PatchMarkedWrite:input_which", input.which, !_server_guard($scope0_reason, 2)));
 }, 1);

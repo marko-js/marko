@@ -24,7 +24,7 @@ _shells({
 	a: "a;b1bD l%;<!><!><span> </span><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_id = _write_guard($scope0_reason, 2), $cg__input_id = _client_guard($scope0_reason, 2), $wi__input_id = _write_if($scope0_reason, 2), $ui__input_id = _unfilled_if($scope0_reason, 2), $fg__input_which = _filled_guard($scope0_reason, 1), $fg__input_id = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_id = _write_guard($scope0_reason, 2), $cg__input_id = _client_guard($scope0_reason, 2), $wi__input_id = _write_if($scope0_reason, 2), $fg__input_which = _filled_guard($scope0_reason, 1), $fg__input_id = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $input_id__closures = /* @__PURE__ */ new Set();
 	const $inputwhichOneTwo_scope = _peek_scope_id();
@@ -49,8 +49,8 @@ var template_default = _template("a", (input) => {
 	}, void 0, "a3", void 0, "a4", 1);
 	_patch_render($scope0_id, "a6", (($fg__input_which ? " g" : "") + ($fg__input_id ? " h" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		g: ($ui__input_id || _unfilled_if($scope0_reason, 0)) && input.which,
+		g: _unfilled_if($scope0_reason, 0) && input.which,
 		h: input.id,
 		k: $wi__input_id && $input_id__closures
-	}) || ($fg__input_which && $ui__input_id && _patch_write($scope0_id, "xg", input.which, !_server_guard($scope0_reason, 1)), $fg__input_id && _patch_write($scope0_id, "xh", input.id, !_server_guard($scope0_reason, 2)) && _patch_subscribers($scope0_id, "a5", "h"));
+	}) || ($fg__input_which && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xg", input.which, !_server_guard($scope0_reason, 1)), $fg__input_id && _patch_write($scope0_id, "xh", input.id, !_server_guard($scope0_reason, 2)) && _patch_subscribers($scope0_id, "a5", "h"));
 }, 1);

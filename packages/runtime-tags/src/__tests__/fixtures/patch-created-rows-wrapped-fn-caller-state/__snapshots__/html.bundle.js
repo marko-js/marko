@@ -44,8 +44,8 @@ var rowsx_default = _template("b", (input) => {
 		}) || ($fg__fmt && $ui__isOpen__OR__label && _patch_write($scope3_id, "xe", fmt, 1), $fg__label && $ui__isOpen__OR__fmt && _patch_write($scope3_id, "xf", label, !_server_guard($scope3_reason, 6)));
 	}, $scope0_id, 0) };
 	_for_of(input.items, (x) => {
-		const $scope1_id = _scope_id(), $ui__input_label = _unfilled_if($scope0_reason, 4), $fg__input_items = _filled_guard($scope0_reason, 2);
-		$fg__input_items && $ui__input_label && _patch_write($scope1_id, "xc", x, !_server_guard($scope0_reason, 2));
+		const $scope1_id = _scope_id(), $fg__input_items = _filled_guard($scope0_reason, 2);
+		$fg__input_items && _unfilled_if($scope0_reason, 4) && _patch_write($scope1_id, "xc", x, !_server_guard($scope0_reason, 2));
 		_set_scope_reason($uf__input_open << 1 | $uf__input_items__OR__input_open__OR__input_label << 3 | $uf__input_items__OR__input_label << 5 | $uf__input_items__OR__input_open__OR__input_label << 7 | $uf__input_open << 9 | $uf__input_items__OR__input_label << 13);
 		const $childScope = _peek_scope_id($scope1_id, "a", 0);
 		Panel.content({
@@ -57,7 +57,7 @@ var rowsx_default = _template("b", (input) => {
 		_client_guard($scope0_reason, 3) && _patch_render($scope1_id, "b7");
 		_patch_render($scope1_id, "b8", ((_filled_guard($scope0_reason, 4) ? " >h" : "") + ($fg__input_items ? " c" : "")).slice(1), $scope0_reason, 0);
 		_scope($scope1_id, {
-			c: ($ui__input_label || _unfilled_if($scope0_reason, 0)) && x,
+			c: _unfilled_if($scope0_reason, 0) && x,
 			_: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id),
 			a: _existing_scope($childScope)
 		});

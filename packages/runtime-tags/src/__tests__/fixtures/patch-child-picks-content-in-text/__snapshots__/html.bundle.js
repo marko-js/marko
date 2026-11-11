@@ -4,7 +4,7 @@ const $walks = "D%b%l";
 const $setup$1 = [[], []];
 _shells({ b: "b;D%b%;<div><!><!></div>" });
 var pick_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $ui__input_on__OR__input_a__OR__input_b = _unfilled_if($scope0_reason, 3), $ui__input_a__OR__input_b = _unfilled_if($scope0_reason, 2), $ui__input_on__OR__input_b = _unfilled_if($scope0_reason, 1), $ui__input_on__OR__input_a = _unfilled_if($scope0_reason, 0), $fg__input_on = _filled_guard($scope0_reason, 4), $fg__input_a = _filled_guard($scope0_reason, 5), $fg__input_b = _filled_guard($scope0_reason, 6);
+	const $scope0_reason = _scope_reason(), $ui__input_on__OR__input_a__OR__input_b = _unfilled_if($scope0_reason, 3), $fg__input_on = _filled_guard($scope0_reason, 4), $fg__input_a = _filled_guard($scope0_reason, 5), $fg__input_b = _filled_guard($scope0_reason, 6);
 	const $scope0_id = _scope_id();
 	const c = input.on ? input.a : input.b;
 	_html(`<div>${_text_mark($scope0_id, "a", input.title, 1, $scope0_reason, 7)}`);
@@ -12,10 +12,10 @@ var pick_default = _template("b", (input) => {
 	_html("</div>");
 	_patch_render($scope0_id, "b0", (($fg__input_on ? " e" : "") + ($fg__input_a ? " f" : "") + ($fg__input_b ? " g" : "")).slice(1), $scope0_reason, 3);
 	_scope($scope0_id, {
-		e: ($ui__input_a__OR__input_b || $ui__input_on__OR__input_a__OR__input_b) && input.on,
-		f: ($ui__input_on__OR__input_b || $ui__input_on__OR__input_a__OR__input_b) && input.a,
-		g: ($ui__input_on__OR__input_a || $ui__input_on__OR__input_a__OR__input_b) && input.b
-	}) || ($fg__input_on && $ui__input_a__OR__input_b && _patch_write($scope0_id, "xe", input.on, !_server_guard($scope0_reason, 4)), $fg__input_a && $ui__input_on__OR__input_b && _patch_write($scope0_id, "xf", input.a, !_server_guard($scope0_reason, 5)), $fg__input_b && $ui__input_on__OR__input_a && _patch_write($scope0_id, "xg", input.b, !_server_guard($scope0_reason, 6)));
+		e: $ui__input_on__OR__input_a__OR__input_b && input.on,
+		f: $ui__input_on__OR__input_a__OR__input_b && input.a,
+		g: $ui__input_on__OR__input_a__OR__input_b && input.b
+	}) || ($fg__input_on && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xe", input.on, !_server_guard($scope0_reason, 4)), $fg__input_a && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xf", input.a, !_server_guard($scope0_reason, 5)), $fg__input_b && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xg", input.b, !_server_guard($scope0_reason, 6)));
 });
 
 // template.marko

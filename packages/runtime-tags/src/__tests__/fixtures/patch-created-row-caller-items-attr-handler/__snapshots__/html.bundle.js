@@ -6,7 +6,7 @@ _shells({
 	b2: "b2 !b0; D ;<a class=link> </a>"
 });
 var navlist_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $ui__input_items = _unfilled_if($scope0_reason, 1), $fg__input_path = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $fg__input_path = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	_for_of(input.items, (item) => {
 		const $scope1_id = _scope_id(), $fg__input_items = _filled_guard($scope0_reason, 1);
@@ -21,7 +21,7 @@ var navlist_default = _template("b", (input) => {
 		});
 	}, 0, $scope0_id, "a", 1, 1, 1, 0, 0, "b2", $scope0_reason, 1);
 	$fg__input_path && _client_guard($scope0_reason, 1) && _patch_render($scope0_id, "b3", "e");
-	_scope($scope0_id, { e: ($ui__input_items || _unfilled_if($scope0_reason, 0)) && input.path }) || $fg__input_path && $ui__input_items && _patch_write($scope0_id, "xe", input.path, !_server_guard($scope0_reason, 2));
+	_scope($scope0_id, { e: _unfilled_if($scope0_reason, 0) && input.path }) || $fg__input_path && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.path, !_server_guard($scope0_reason, 2));
 });
 
 // template.marko

@@ -11,7 +11,7 @@ _shells({
 	"__tests__/template.marko_2*shell": "__tests__/template.marko_2*shell;D ;<em> </em>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $ui__input_label__OR__input_other__OR__input_show = _unfilled_if($scope0_reason, 3), $ui__input_other = _unfilled_if($scope0_reason, 5), $ui__input_other__OR__input_show = _unfilled_if($scope0_reason, 2), $ui__input_label__OR__input_other = _unfilled_if($scope0_reason, 0), $ui__input_label__OR__input_show = _unfilled_if($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 4), $fg__input_show = _filled_guard($scope0_reason, 6), $fg__input_other = _filled_guard($scope0_reason, 5);
+	const $scope0_reason = _scope_reason(), $ui__input_label__OR__input_other__OR__input_show = _unfilled_if($scope0_reason, 3), $ui__input_other = _unfilled_if($scope0_reason, 5), $fg__input_label = _filled_guard($scope0_reason, 4), $fg__input_show = _filled_guard($scope0_reason, 6), $fg__input_other = _filled_guard($scope0_reason, 5);
 	const $scope0_id = _scope_id();
 	let open = false;
 	const Panel = { content: _content_resume("__tests__/template.marko_1*content", ({ isOpen, label }) => {
@@ -51,12 +51,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	_patch_render($scope0_id, "__tests__/template.marko_0_input_label#5_input_show#7_Tag#12/setup", (($fg__input_label ? " input_label" : "") + ($fg__input_show ? " input_show" : "") + ($fg__input_other ? " Tag" : "")).slice(1), $scope0_reason, 3);
 	_scope($scope0_id, {
-		input_label: ($ui__input_other__OR__input_show || $ui__input_label__OR__input_other__OR__input_show) && input.label,
-		input_show: ($ui__input_label__OR__input_other || $ui__input_label__OR__input_other__OR__input_show) && input.show,
+		input_label: $ui__input_label__OR__input_other__OR__input_show && input.label,
+		input_show: $ui__input_label__OR__input_other__OR__input_show && input.show,
 		open,
 		Panel: $ui__input_other && Panel,
 		Other: $ui__input_other && Other,
-		Tag: ($ui__input_label__OR__input_show || $ui__input_label__OR__input_other__OR__input_show) && Tag,
+		Tag: $ui__input_label__OR__input_other__OR__input_show && Tag,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, {
 		input_label: ["input.label"],
@@ -65,5 +65,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		Panel: "2:9",
 		Other: "7:9",
 		Tag: "11:8"
-	}) || ($fg__input_label && $ui__input_other__OR__input_show && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 4)), $fg__input_show && $ui__input_label__OR__input_other && _patch_write($scope0_id, "PatchMarkedWrite:input_show", input.show, !_server_guard($scope0_reason, 6)), $fg__input_other && $ui__input_label__OR__input_show && _patch_write($scope0_id, "PatchMarkedWrite:Tag", Tag, !_server_guard($scope0_reason, 5)));
+	}) || ($fg__input_label && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 4)), $fg__input_show && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_show", input.show, !_server_guard($scope0_reason, 6)), $fg__input_other && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:Tag", Tag, !_server_guard($scope0_reason, 5)));
 }, 1);

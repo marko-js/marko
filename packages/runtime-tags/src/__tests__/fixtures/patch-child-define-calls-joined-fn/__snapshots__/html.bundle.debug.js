@@ -13,22 +13,22 @@ var label_view_default = _template("__tests__/tags/label-view.marko", (input) =>
 	const $scope0_id = _scope_id();
 	const Show = { content: _content("__tests__/tags/label-view.marko_1*content", ({ a, b, flag }) => {
 		const $scope1_id = _scope_id();
-		const $scope1_reason = _scope_reason(), $ui__a__OR__b__OR__flag = _unfilled_if($scope1_reason, 3), $ui__b__OR__flag = _unfilled_if($scope1_reason, 2), $ui__a__OR__flag = _unfilled_if($scope1_reason, 1), $ui__a__OR__b = _unfilled_if($scope1_reason, 0), $fg__a__OR__b__OR__flag = _filled_guard($scope1_reason, 3), $fg__a = _filled_guard($scope1_reason, 4), $fg__b = _filled_guard($scope1_reason, 5), $fg__flag = _filled_guard($scope1_reason, 6);
+		const $scope1_reason = _scope_reason(), $ui__a__OR__b__OR__flag = _unfilled_if($scope1_reason, 3), $fg__a__OR__b__OR__flag = _filled_guard($scope1_reason, 3), $fg__a = _filled_guard($scope1_reason, 4), $fg__b = _filled_guard($scope1_reason, 5), $fg__flag = _filled_guard($scope1_reason, 6);
 		const get = flag ? a : b;
 		_html(`<output></output>${_el_mark($scope1_id, "#output/0")}`);
 		_script($scope1_id, "__tests__/tags/label-view.marko_1_get#7", 1, $fg__a__OR__b__OR__flag);
 		_patch_render($scope1_id, "__tests__/tags/label-view.marko_1_a#3_b#4_flag#5/setup", (($fg__a ? " a" : "") + ($fg__b ? " b" : "") + ($fg__flag ? " flag" : "")).slice(1), $scope1_reason, 3);
 		_scope($scope1_id, {
-			a: ($ui__b__OR__flag || $ui__a__OR__b__OR__flag) && a,
-			b: ($ui__a__OR__flag || $ui__a__OR__b__OR__flag) && b,
-			flag: ($ui__a__OR__b || $ui__a__OR__b__OR__flag) && flag,
+			a: $ui__a__OR__b__OR__flag && a,
+			b: $ui__a__OR__b__OR__flag && b,
+			flag: $ui__a__OR__b__OR__flag && flag,
 			get
 		}, "__tests__/tags/label-view.marko", "1:2", {
 			a: "1:16",
 			b: "1:19",
 			flag: "1:22",
 			get: "2:10"
-		}) || ($fg__a && $ui__b__OR__flag && _patch_write($scope1_id, "PatchMarkedWrite:a", a, !_server_guard($scope1_reason, 4)), $fg__b && $ui__a__OR__flag && _patch_write($scope1_id, "PatchMarkedWrite:b", b, !_server_guard($scope1_reason, 5)), $fg__flag && $ui__a__OR__b && _patch_write($scope1_id, "PatchMarkedWrite:flag", flag, !_server_guard($scope1_reason, 6)), $fg__a__OR__b__OR__flag && _patch_write($scope1_id, "PatchMarkedWrite:get", get, !_server_guard($scope1_reason, 3)));
+		}) || ($fg__a && _unfilled_if($scope1_reason, 2) && _patch_write($scope1_id, "PatchMarkedWrite:a", a, !_server_guard($scope1_reason, 4)), $fg__b && _unfilled_if($scope1_reason, 1) && _patch_write($scope1_id, "PatchMarkedWrite:b", b, !_server_guard($scope1_reason, 5)), $fg__flag && _unfilled_if($scope1_reason, 0) && _patch_write($scope1_id, "PatchMarkedWrite:flag", flag, !_server_guard($scope1_reason, 6)), $fg__a__OR__b__OR__flag && _patch_write($scope1_id, "PatchMarkedWrite:get", get, !_server_guard($scope1_reason, 3)));
 	}, $scope0_id, 0) };
 	_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 1) << 3 | _updates_from($scope0_reason, 2) << 5 | _updates_from($scope0_reason, 3) << 7 | _updates_from($scope0_reason, 4) << 9 | _updates_from($scope0_reason, 5) << 11 | _updates_from($scope0_reason, 6) << 13);
 	const $childScope = _peek_scope_id($scope0_id, "#childScope/0", 0);

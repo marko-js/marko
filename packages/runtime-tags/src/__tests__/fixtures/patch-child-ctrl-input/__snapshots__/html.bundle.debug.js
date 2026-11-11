@@ -4,19 +4,19 @@ const $walks$1 = " bD l";
 const $setup$1 = [[], ["__tests__/tags/field/index.marko_0"]];
 _shells({ "__tests__/tags/field/index.marko": "__tests__/tags/field/index.marko !__tests__/tags/field/index.marko_0; bD ;<input><em> </em>" });
 var field_default = _template("__tests__/tags/field/index.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $ui__input_value__OR__input_valueChange = _unfilled_if($scope0_reason, 0), $ui__input_valueChange = _unfilled_if($scope0_reason, 2), $fg__input_value = _filled_guard($scope0_reason, 1), $fg__input_valueChange = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $ui__input_value__OR__input_valueChange = _unfilled_if($scope0_reason, 0), $fg__input_value = _filled_guard($scope0_reason, 1), $fg__input_valueChange = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	_html(`<input${_attr_input_value($scope0_id, "#input/0", input.value, input.valueChange, 3, $scope0_reason, 0)}>${_el_mark($scope0_id, "#input/0")}<em>${_text_mark($scope0_id, "#text/1", input.value, 1, $scope0_reason, 1)}</em>`);
 	_script($scope0_id, "__tests__/tags/field/index.marko_0");
 	_patch_render($scope0_id, "__tests__/tags/field/index.marko_0_input_value#4_input_valueChange#5/setup", (($fg__input_value ? " input_value" : "") + ($fg__input_valueChange ? " input_valueChange" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		input_value: ($ui__input_valueChange || $ui__input_value__OR__input_valueChange) && input.value,
+		input_value: $ui__input_value__OR__input_valueChange && input.value,
 		input_valueChange: $ui__input_value__OR__input_valueChange && input.valueChange
 	}, "__tests__/tags/field/index.marko", 0, {
 		input_value: ["input.value"],
 		input_valueChange: ["input.valueChange"],
 		"ControlledHandler:#input/0": ["valueChange"]
-	}) || ($fg__input_value && $ui__input_valueChange && _patch_write($scope0_id, "PatchMarkedWrite:input_value", input.value, !_server_guard($scope0_reason, 1)), $fg__input_valueChange && $ui__input_value__OR__input_valueChange && _patch_write($scope0_id, "PatchMarkedWrite:input_valueChange", input.valueChange, !_server_guard($scope0_reason, 2)));
+	}) || ($fg__input_value && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_value", input.value, !_server_guard($scope0_reason, 1)), $fg__input_valueChange && $ui__input_value__OR__input_valueChange && _patch_write($scope0_id, "PatchMarkedWrite:input_valueChange", input.valueChange, !_server_guard($scope0_reason, 2)));
 });
 
 // template.marko

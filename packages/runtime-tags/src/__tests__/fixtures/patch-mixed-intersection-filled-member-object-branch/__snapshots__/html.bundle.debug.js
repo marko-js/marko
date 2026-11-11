@@ -52,7 +52,7 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 	_scope($scope0_id, {
 		input_b: ($ui__input_show || _unfilled_if($scope0_reason, 5)) && input.b,
 		input_a: ($ui__input_show__OR__input_b || $ui__input_b__OR__input_a) && input.a,
-		"ClosureScopes:input_a/8": _write_if($scope0_reason, 6) && (_unfilled_if($scope0_reason, 6) || $ui__input_b__OR__input_a || $ui__input_show) && $input_a__closures
+		"ClosureScopes:input_a/8": _write_if($scope0_reason, 6) && ($ui__input_b__OR__input_a || $ui__input_show) && $input_a__closures
 	}, "__tests__/tags/panel.marko", 0, {
 		input_b: ["input.b"],
 		input_a: ["input.a"]

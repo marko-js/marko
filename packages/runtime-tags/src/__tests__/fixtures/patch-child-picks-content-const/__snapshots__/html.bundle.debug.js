@@ -4,20 +4,20 @@ const $walks$1 = "b%c";
 const $setup$1 = [[], []];
 _shells({ "__tests__/tags/pick.marko": "__tests__/tags/pick.marko;b%;<!><!><!>" });
 var pick_default = _template("__tests__/tags/pick.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_on__OR__input_a__OR__input_b = _write_guard($scope0_reason, 3), $ui__input_on__OR__input_a__OR__input_b = _unfilled_if($scope0_reason, 3), $ui__input_a__OR__input_b = _unfilled_if($scope0_reason, 2), $ui__input_on__OR__input_b = _unfilled_if($scope0_reason, 1), $ui__input_on__OR__input_a = _unfilled_if($scope0_reason, 0), $fg__input_on = _filled_guard($scope0_reason, 4), $fg__input_a = _filled_guard($scope0_reason, 5), $fg__input_b = _filled_guard($scope0_reason, 6);
+	const $scope0_reason = _scope_reason(), $wg__input_on__OR__input_a__OR__input_b = _write_guard($scope0_reason, 3), $ui__input_on__OR__input_a__OR__input_b = _unfilled_if($scope0_reason, 3), $fg__input_on = _filled_guard($scope0_reason, 4), $fg__input_a = _filled_guard($scope0_reason, 5), $fg__input_b = _filled_guard($scope0_reason, 6);
 	const $scope0_id = _scope_id();
 	const c = input.on ? input.a : input.b;
 	_dynamic_tag($scope0_id, "#text/0", c, {}, 2, 0, 0, $wg__input_on__OR__input_a__OR__input_b, $scope0_reason, 3);
 	_patch_render($scope0_id, "__tests__/tags/pick.marko_0_input_on#3_input_a#4_input_b#5/setup", (($fg__input_on ? " input_on" : "") + ($fg__input_a ? " input_a" : "") + ($fg__input_b ? " input_b" : "")).slice(1), $scope0_reason, 3);
 	_scope($scope0_id, {
-		input_on: ($ui__input_a__OR__input_b || $ui__input_on__OR__input_a__OR__input_b) && input.on,
-		input_a: ($ui__input_on__OR__input_b || $ui__input_on__OR__input_a__OR__input_b) && input.a,
-		input_b: ($ui__input_on__OR__input_a || $ui__input_on__OR__input_a__OR__input_b) && input.b
+		input_on: $ui__input_on__OR__input_a__OR__input_b && input.on,
+		input_a: $ui__input_on__OR__input_a__OR__input_b && input.a,
+		input_b: $ui__input_on__OR__input_a__OR__input_b && input.b
 	}, "__tests__/tags/pick.marko", 0, {
 		input_on: ["input.on"],
 		input_a: ["input.a"],
 		input_b: ["input.b"]
-	}) || ($fg__input_on && $ui__input_a__OR__input_b && _patch_write($scope0_id, "PatchMarkedWrite:input_on", input.on, !_server_guard($scope0_reason, 4)), $fg__input_a && $ui__input_on__OR__input_b && _patch_write($scope0_id, "PatchMarkedWrite:input_a", input.a, !_server_guard($scope0_reason, 5)), $fg__input_b && $ui__input_on__OR__input_a && _patch_write($scope0_id, "PatchMarkedWrite:input_b", input.b, !_server_guard($scope0_reason, 6)));
+	}) || ($fg__input_on && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_on", input.on, !_server_guard($scope0_reason, 4)), $fg__input_a && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_a", input.a, !_server_guard($scope0_reason, 5)), $fg__input_b && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_b", input.b, !_server_guard($scope0_reason, 6)));
 });
 
 // template.marko

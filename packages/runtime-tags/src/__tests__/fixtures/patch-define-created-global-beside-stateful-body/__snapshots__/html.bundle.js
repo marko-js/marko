@@ -13,7 +13,7 @@ var template_default = _template("a", (input) => {
 	let open = false;
 	const Panel = { content: _content_resume("a2", ({ isOpen, label }) => {
 		const $scope2_id = _scope_id();
-		const $scope2_reason = _scope_reason(), $ui__isOpen__OR__label = _unfilled_if($scope2_reason, 0), $ui__label = _unfilled_if($scope2_reason, 2), $ui__isOpen = _unfilled_if($scope2_reason, 1), $fg__label = _filled_guard($scope2_reason, 2), $fg__isOpen = _filled_guard($scope2_reason, 1);
+		const $scope2_reason = _scope_reason(), $ui__isOpen__OR__label = _unfilled_if($scope2_reason, 0), $fg__label = _filled_guard($scope2_reason, 2), $fg__isOpen = _filled_guard($scope2_reason, 1);
 		_if(() => {
 			if (isOpen) {
 				const $scope3_id = _scope_id();
@@ -26,9 +26,9 @@ var template_default = _template("a", (input) => {
 		$fg__label && _client_guard($scope2_reason, 1) && _patch_render($scope2_id, "a3", "f");
 		_patch_render($scope2_id, "a4", (($fg__isOpen ? " e" : "") + ($fg__label ? " f" : "")).slice(1), $scope2_reason, 0);
 		_scope($scope2_id, {
-			e: ($ui__label || $ui__isOpen__OR__label) && isOpen,
-			f: ($ui__isOpen || $ui__isOpen__OR__label) && label
-		}) || ($fg__isOpen && $ui__label && _patch_write($scope2_id, "xe", isOpen, !_server_guard($scope2_reason, 1)), $fg__label && $ui__isOpen && _patch_write($scope2_id, "xf", label, !_server_guard($scope2_reason, 2)));
+			e: $ui__isOpen__OR__label && isOpen,
+			f: $ui__isOpen__OR__label && label
+		}) || ($fg__isOpen && _unfilled_if($scope2_reason, 2) && _patch_write($scope2_id, "xe", isOpen, !_server_guard($scope2_reason, 1)), $fg__label && _unfilled_if($scope2_reason, 1) && _patch_write($scope2_id, "xf", label, !_server_guard($scope2_reason, 2)));
 	}, $scope0_id) };
 	_if(() => {
 		if (input.show) {

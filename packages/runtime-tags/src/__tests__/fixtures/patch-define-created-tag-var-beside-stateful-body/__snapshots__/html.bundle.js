@@ -14,7 +14,7 @@ var template_default = _template("a", (input) => {
 	let open = false;
 	const Panel = { content: _content_resume("a3", ({ isOpen, label }) => {
 		const $scope2_id = _scope_id();
-		const $scope2_reason = _scope_reason(), $wg__isOpen = _write_guard($scope2_reason, 1), $ui__isOpen__OR__label = _unfilled_if($scope2_reason, 0), $ui__label = _unfilled_if($scope2_reason, 2), $ui__isOpen = _unfilled_if($scope2_reason, 1), $fg__isOpen = _filled_guard($scope2_reason, 1), $fg__label = _filled_guard($scope2_reason, 2);
+		const $scope2_reason = _scope_reason(), $wg__isOpen = _write_guard($scope2_reason, 1), $ui__isOpen__OR__label = _unfilled_if($scope2_reason, 0), $ui__label = _unfilled_if($scope2_reason, 2), $fg__isOpen = _filled_guard($scope2_reason, 1), $fg__label = _filled_guard($scope2_reason, 2);
 		_if(() => {
 			if (isOpen) {
 				const $scope3_id = _scope_id();
@@ -27,9 +27,9 @@ var template_default = _template("a", (input) => {
 		const $return = label + (isOpen ? "Y" : "N");
 		_patch_render($scope2_id, "a4", (($fg__isOpen ? " d" : "") + ($fg__label ? " e" : "")).slice(1), $scope2_reason, 0);
 		_write_if($scope2_reason, 0) && _scope($scope2_id, {
-			d: ($ui__label || $ui__isOpen__OR__label) && isOpen,
-			e: ($ui__isOpen || $ui__isOpen__OR__label || $ui__label) && label
-		}) || ($fg__isOpen && $ui__label && _patch_write($scope2_id, "xd", isOpen, !_server_guard($scope2_reason, 1)), $fg__label && $ui__isOpen && _patch_write($scope2_id, "xe", label, !_server_guard($scope2_reason, 2)));
+			d: $ui__isOpen__OR__label && isOpen,
+			e: ($ui__isOpen__OR__label || $ui__label) && label
+		}) || ($fg__isOpen && $ui__label && _patch_write($scope2_id, "xd", isOpen, !_server_guard($scope2_reason, 1)), $fg__label && _unfilled_if($scope2_reason, 1) && _patch_write($scope2_id, "xe", label, !_server_guard($scope2_reason, 2)));
 		return $return;
 	}, $scope0_id) };
 	_if(() => {

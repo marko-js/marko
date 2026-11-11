@@ -24,7 +24,7 @@ const $walks$2 = "D l b";
 const $setup$3 = [[], ["e0"]];
 _shells({ e: "e !e0;D l ;<p> </p><button>+</button>" });
 var file_tabs_default = _template("e", (input) => {
-	const $scope0_reason = _scope_reason(), $ui__input_files__OR__input_filesChange = _unfilled_if($scope0_reason, 0), $ui__input_filesChange = _unfilled_if($scope0_reason, 2), $ui__input_files = _unfilled_if($scope0_reason, 1), $fg__input_files = _filled_guard($scope0_reason, 1), $fg__input_filesChange = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $ui__input_files__OR__input_filesChange = _unfilled_if($scope0_reason, 0), $fg__input_files = _filled_guard($scope0_reason, 1), $fg__input_filesChange = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	let tabs = input.files;
 	_html(`<p>${_text_mark($scope0_id, "a", tabs.map((tab) => tab.path).join())}</p><button>+</button>${_el_mark($scope0_id, "b")}`);
@@ -33,11 +33,11 @@ var file_tabs_default = _template("e", (input) => {
 	const $tabsChange = input.filesChange || void 0;
 	_patch_let_change($scope0_id, "ve2", tabs, "wi", $tabsChange, $scope0_reason, 0);
 	_scope($scope0_id, {
-		e: ($ui__input_filesChange || $ui__input_files__OR__input_filesChange) && input.files,
-		f: ($ui__input_files || $ui__input_files__OR__input_filesChange) && input.filesChange,
+		e: $ui__input_files__OR__input_filesChange && input.files,
+		f: $ui__input_files__OR__input_filesChange && input.filesChange,
 		h: tabs,
 		i: $tabsChange
-	}) || ($fg__input_files && $ui__input_filesChange && _patch_write($scope0_id, "xe", input.files, !_server_guard($scope0_reason, 1)), $fg__input_filesChange && $ui__input_files && _patch_write($scope0_id, "xf", input.filesChange, !_server_guard($scope0_reason, 2)));
+	}) || ($fg__input_files && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xe", input.files, !_server_guard($scope0_reason, 1)), $fg__input_filesChange && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xf", input.filesChange, !_server_guard($scope0_reason, 2)));
 });
 
 // tags/file-panes.marko

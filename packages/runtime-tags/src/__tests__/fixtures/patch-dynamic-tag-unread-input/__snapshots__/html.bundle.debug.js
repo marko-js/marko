@@ -32,7 +32,7 @@ _shells({
 	"__tests__/template.marko": "__tests__/template.marko !__tests__/template.marko_0; D l%b%b%b%;<button class=inc> </button><!><!><!><!><!>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $ui__input_which__OR__input_user = _unfilled_if($scope0_reason, 0), $ui__input_alt__OR__input_user = _unfilled_if($scope0_reason, 1), $ui__input_tag__OR__input_cls__OR__input_title = _unfilled_if($scope0_reason, 6), $ui__input_none__OR__input_hidden = _unfilled_if($scope0_reason, 5), $ui__input_user = _unfilled_if($scope0_reason, 8), $ui__input_which = _unfilled_if($scope0_reason, 7), $ui__input_user2 = _unfilled_if($scope0_reason, 10), $ui__input_alt = _unfilled_if($scope0_reason, 9), $ui__input_cls__OR__input_title = _unfilled_if($scope0_reason, 4), $ui__input_tag__OR__input_title = _unfilled_if($scope0_reason, 3), $ui__input_tag__OR__input_cls = _unfilled_if($scope0_reason, 2), $ui__input_hidden = _unfilled_if($scope0_reason, 15), $ui__input_none = _unfilled_if($scope0_reason, 14), $fg__input_which = _filled_guard($scope0_reason, 7), $fg__input_user = _filled_guard($scope0_reason, 8), $fg__input_tag = _filled_guard($scope0_reason, 11), $fg__input_cls = _filled_guard($scope0_reason, 12), $fg__input_title = _filled_guard($scope0_reason, 13), $fg__input_none = _filled_guard($scope0_reason, 14), $fg__input_hidden = _filled_guard($scope0_reason, 15), $fg__input_alt = _filled_guard($scope0_reason, 9), $fg__input_user2 = _filled_guard($scope0_reason, 10);
+	const $scope0_reason = _scope_reason(), $ui__input_which__OR__input_user = _unfilled_if($scope0_reason, 0), $ui__input_alt__OR__input_user = _unfilled_if($scope0_reason, 1), $ui__input_tag__OR__input_cls__OR__input_title = _unfilled_if($scope0_reason, 6), $ui__input_none__OR__input_hidden = _unfilled_if($scope0_reason, 5), $fg__input_which = _filled_guard($scope0_reason, 7), $fg__input_user = _filled_guard($scope0_reason, 8), $fg__input_tag = _filled_guard($scope0_reason, 11), $fg__input_cls = _filled_guard($scope0_reason, 12), $fg__input_title = _filled_guard($scope0_reason, 13), $fg__input_none = _filled_guard($scope0_reason, 14), $fg__input_hidden = _filled_guard($scope0_reason, 15), $fg__input_alt = _filled_guard($scope0_reason, 9), $fg__input_user2 = _filled_guard($scope0_reason, 10);
 	const $scope0_id = _scope_id();
 	let n = 0;
 	_html(`<button class=inc>${_text_mark($scope0_id, "#text/1", n)}</button>${_el_mark($scope0_id, "#button/0")}`);
@@ -61,15 +61,15 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_patch_render($scope0_id, "__tests__/template.marko_0_input_none#17_input_hidden#18/setup", (($fg__input_none ? " input_none" : "") + ($fg__input_hidden ? " input_hidden" : "")).slice(1), $scope0_reason, 5);
 	_patch_render($scope0_id, "__tests__/template.marko_0_input_alt#11_input_user2#12_Row#21_Alt#22/setup", (($fg__input_alt ? " input_alt" : "") + ($fg__input_user2 ? " input_user2" : "")).slice(1), $scope0_reason, 1);
 	_scope($scope0_id, {
-		input_which: ($ui__input_user || $ui__input_which__OR__input_user) && input.which,
-		input_user: ($ui__input_which || $ui__input_which__OR__input_user) && input.user,
-		input_alt: ($ui__input_user2 || $ui__input_alt__OR__input_user) && input.alt,
-		input_user2: ($ui__input_alt || $ui__input_alt__OR__input_user) && input.user2,
-		input_tag: ($ui__input_cls__OR__input_title || $ui__input_tag__OR__input_cls__OR__input_title) && input.tag,
-		input_cls: ($ui__input_tag__OR__input_title || $ui__input_tag__OR__input_cls__OR__input_title) && input.cls,
-		input_title: ($ui__input_tag__OR__input_cls || $ui__input_tag__OR__input_cls__OR__input_title) && input.title,
-		input_none: ($ui__input_hidden || $ui__input_none__OR__input_hidden) && input.none,
-		input_hidden: ($ui__input_none || $ui__input_none__OR__input_hidden) && input.hidden,
+		input_which: $ui__input_which__OR__input_user && input.which,
+		input_user: $ui__input_which__OR__input_user && input.user,
+		input_alt: $ui__input_alt__OR__input_user && input.alt,
+		input_user2: $ui__input_alt__OR__input_user && input.user2,
+		input_tag: $ui__input_tag__OR__input_cls__OR__input_title && input.tag,
+		input_cls: $ui__input_tag__OR__input_cls__OR__input_title && input.cls,
+		input_title: $ui__input_tag__OR__input_cls__OR__input_title && input.title,
+		input_none: $ui__input_none__OR__input_hidden && input.none,
+		input_hidden: $ui__input_none__OR__input_hidden && input.hidden,
 		n,
 		Row: $ui__input_alt__OR__input_user && Row,
 		Alt: $ui__input_alt__OR__input_user && Alt
@@ -86,5 +86,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		n: "4:6",
 		Row: "6:9",
 		Alt: "7:9"
-	}) || ($fg__input_which && $ui__input_user && _patch_write($scope0_id, "PatchMarkedWrite:input_which", input.which, !_server_guard($scope0_reason, 7)), $fg__input_user && $ui__input_which && _patch_write($scope0_id, "PatchMarkedWrite:input_user", input.user, !_server_guard($scope0_reason, 8)), $fg__input_alt && $ui__input_user2 && _patch_write($scope0_id, "PatchMarkedWrite:input_alt", input.alt, !_server_guard($scope0_reason, 9)), $fg__input_user2 && $ui__input_alt && _patch_write($scope0_id, "PatchMarkedWrite:input_user2", input.user2, !_server_guard($scope0_reason, 10)), $fg__input_tag && $ui__input_cls__OR__input_title && _patch_write($scope0_id, "PatchMarkedWrite:input_tag", input.tag, !_server_guard($scope0_reason, 11)), $fg__input_cls && $ui__input_tag__OR__input_title && _patch_write($scope0_id, "PatchMarkedWrite:input_cls", input.cls, !_server_guard($scope0_reason, 12)), $fg__input_title && $ui__input_tag__OR__input_cls && _patch_write($scope0_id, "PatchMarkedWrite:input_title", input.title, !_server_guard($scope0_reason, 13)), $fg__input_none && $ui__input_hidden && _patch_write($scope0_id, "PatchMarkedWrite:input_none", input.none, !_server_guard($scope0_reason, 14)), $fg__input_hidden && $ui__input_none && _patch_write($scope0_id, "PatchMarkedWrite:input_hidden", input.hidden, !_server_guard($scope0_reason, 15)));
+	}) || ($fg__input_which && _unfilled_if($scope0_reason, 8) && _patch_write($scope0_id, "PatchMarkedWrite:input_which", input.which, !_server_guard($scope0_reason, 7)), $fg__input_user && _unfilled_if($scope0_reason, 7) && _patch_write($scope0_id, "PatchMarkedWrite:input_user", input.user, !_server_guard($scope0_reason, 8)), $fg__input_alt && _unfilled_if($scope0_reason, 10) && _patch_write($scope0_id, "PatchMarkedWrite:input_alt", input.alt, !_server_guard($scope0_reason, 9)), $fg__input_user2 && _unfilled_if($scope0_reason, 9) && _patch_write($scope0_id, "PatchMarkedWrite:input_user2", input.user2, !_server_guard($scope0_reason, 10)), $fg__input_tag && _unfilled_if($scope0_reason, 4) && _patch_write($scope0_id, "PatchMarkedWrite:input_tag", input.tag, !_server_guard($scope0_reason, 11)), $fg__input_cls && _unfilled_if($scope0_reason, 3) && _patch_write($scope0_id, "PatchMarkedWrite:input_cls", input.cls, !_server_guard($scope0_reason, 12)), $fg__input_title && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_title", input.title, !_server_guard($scope0_reason, 13)), $fg__input_none && _unfilled_if($scope0_reason, 15) && _patch_write($scope0_id, "PatchMarkedWrite:input_none", input.none, !_server_guard($scope0_reason, 14)), $fg__input_hidden && _unfilled_if($scope0_reason, 14) && _patch_write($scope0_id, "PatchMarkedWrite:input_hidden", input.hidden, !_server_guard($scope0_reason, 15)));
 }, 1);

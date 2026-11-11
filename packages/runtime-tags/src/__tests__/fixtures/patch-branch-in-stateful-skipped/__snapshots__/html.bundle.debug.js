@@ -4,7 +4,7 @@ const $walks$1 = "b%c";
 const $setup$1 = [[], []];
 _shells({ "__tests__/tags/panel.marko": "__tests__/tags/panel.marko;b%;<!><!><!>" });
 var panel_default = _template("__tests__/tags/panel.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_content__OR__input_label__OR__input_items = _write_guard($scope0_reason, 3), $ui__input_content__OR__input_label__OR__input_items = _unfilled_if($scope0_reason, 3), $ui__input_label__OR__input_items = _unfilled_if($scope0_reason, 2), $ui__input_content__OR__input_items = _unfilled_if($scope0_reason, 1), $ui__input_content__OR__input_label = _unfilled_if($scope0_reason, 0), $fg__input_content = _filled_guard($scope0_reason, 4), $fg__input_label = _filled_guard($scope0_reason, 5), $fg__input_items = _filled_guard($scope0_reason, 6);
+	const $scope0_reason = _scope_reason(), $wg__input_content__OR__input_label__OR__input_items = _write_guard($scope0_reason, 3), $ui__input_content__OR__input_label__OR__input_items = _unfilled_if($scope0_reason, 3), $fg__input_content = _filled_guard($scope0_reason, 4), $fg__input_label = _filled_guard($scope0_reason, 5), $fg__input_items = _filled_guard($scope0_reason, 6);
 	const $scope0_id = _scope_id();
 	_dynamic_tag($scope0_id, "#text/0", input.content, {
 		label: input.label,
@@ -12,14 +12,14 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 	}, 1, 0, 0, $wg__input_content__OR__input_label__OR__input_items, $scope0_reason, 3, 0, 4);
 	_patch_render($scope0_id, "__tests__/tags/panel.marko_0_input_content#3_input_label#4_input_items#5/setup", (($fg__input_content ? " input_content" : "") + ($fg__input_label ? " input_label" : "") + ($fg__input_items ? " input_items" : "")).slice(1), $scope0_reason, 3);
 	_scope($scope0_id, {
-		input_content: ($ui__input_label__OR__input_items || $ui__input_content__OR__input_label__OR__input_items) && input.content,
-		input_label: ($ui__input_content__OR__input_items || $ui__input_content__OR__input_label__OR__input_items) && input.label,
-		input_items: ($ui__input_content__OR__input_label || $ui__input_content__OR__input_label__OR__input_items) && input.items
+		input_content: $ui__input_content__OR__input_label__OR__input_items && input.content,
+		input_label: $ui__input_content__OR__input_label__OR__input_items && input.label,
+		input_items: $ui__input_content__OR__input_label__OR__input_items && input.items
 	}, "__tests__/tags/panel.marko", 0, {
 		input_content: ["input.content"],
 		input_label: ["input.label"],
 		input_items: ["input.items"]
-	}) || ($fg__input_content && $ui__input_label__OR__input_items && _patch_write($scope0_id, "PatchMarkedWrite:input_content", input.content, !_server_guard($scope0_reason, 4)), $fg__input_label && $ui__input_content__OR__input_items && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 5)), $fg__input_items && $ui__input_content__OR__input_label && _patch_write($scope0_id, "PatchMarkedWrite:input_items", input.items, !_server_guard($scope0_reason, 6)));
+	}) || ($fg__input_content && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_content", input.content, !_server_guard($scope0_reason, 4)), $fg__input_label && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 5)), $fg__input_items && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_items", input.items, !_server_guard($scope0_reason, 6)));
 });
 
 // template.marko

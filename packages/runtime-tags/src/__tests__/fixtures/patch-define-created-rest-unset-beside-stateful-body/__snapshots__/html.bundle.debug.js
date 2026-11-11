@@ -15,7 +15,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let open = false;
 	const Panel = { content: _content_resume("__tests__/template.marko_2*content", ({ isOpen, hidden, ...rest }) => {
 		const $scope2_id = _scope_id();
-		const $scope2_reason = _scope_reason(), $wg__isOpen__OR__hidden = _write_guard($scope2_reason, 0), $ui__isOpen__OR__hidden = _unfilled_if($scope2_reason, 0), $ui__hidden = _unfilled_if($scope2_reason, 2), $ui__isOpen = _unfilled_if($scope2_reason, 1), $fg__rest = _filled_guard($scope2_reason, 3), $fg__isOpen = _filled_guard($scope2_reason, 1), $fg__hidden = _filled_guard($scope2_reason, 2);
+		const $scope2_reason = _scope_reason(), $wg__isOpen__OR__hidden = _write_guard($scope2_reason, 0), $ui__isOpen__OR__hidden = _unfilled_if($scope2_reason, 0), $fg__rest = _filled_guard($scope2_reason, 3), $fg__isOpen = _filled_guard($scope2_reason, 1), $fg__hidden = _filled_guard($scope2_reason, 2);
 		_if(() => {
 			if (isOpen && !hidden) {
 				const $scope3_id = _scope_id();
@@ -29,14 +29,14 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		$fg__rest && _client_guard($scope2_reason, 0) && _patch_render($scope2_id, "__tests__/template.marko_3_rest#2:6/setup", "rest");
 		_patch_render($scope2_id, "__tests__/template.marko_2_isOpen#3_hidden#4/setup", (($fg__isOpen ? " isOpen" : "") + ($fg__hidden ? " hidden" : "")).slice(1), $scope2_reason, 0);
 		_write_if($scope2_reason, 0) && _scope($scope2_id, {
-			isOpen: ($ui__hidden || $ui__isOpen__OR__hidden) && isOpen,
-			hidden: ($ui__isOpen || $ui__isOpen__OR__hidden) && hidden,
+			isOpen: $ui__isOpen__OR__hidden && isOpen,
+			hidden: $ui__isOpen__OR__hidden && hidden,
 			rest: ($ui__isOpen__OR__hidden || _unfilled_if($scope2_reason, 3)) && rest
 		}, "__tests__/template.marko", "2:2", {
 			isOpen: "2:17",
 			hidden: "2:25",
 			rest: "2:36"
-		}) || ($fg__isOpen && $ui__hidden && _patch_write($scope2_id, "PatchMarkedWrite:isOpen", isOpen, !_server_guard($scope2_reason, 1)), $fg__hidden && $ui__isOpen && _patch_write($scope2_id, "PatchMarkedWrite:hidden", hidden, !_server_guard($scope2_reason, 2)), $fg__rest && $ui__isOpen__OR__hidden && _patch_write($scope2_id, "PatchMarkedWrite:rest", rest, !_server_guard($scope2_reason, 3)));
+		}) || ($fg__isOpen && _unfilled_if($scope2_reason, 2) && _patch_write($scope2_id, "PatchMarkedWrite:isOpen", isOpen, !_server_guard($scope2_reason, 1)), $fg__hidden && _unfilled_if($scope2_reason, 1) && _patch_write($scope2_id, "PatchMarkedWrite:hidden", hidden, !_server_guard($scope2_reason, 2)), $fg__rest && $ui__isOpen__OR__hidden && _patch_write($scope2_id, "PatchMarkedWrite:rest", rest, !_server_guard($scope2_reason, 3)));
 	}, $scope0_id) };
 	_if(() => {
 		if (input.show) {

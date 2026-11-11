@@ -4,17 +4,17 @@ const $walks$1 = "b%c";
 const $setup$1 = [[], []];
 _shells({ "__tests__/tags/tabs.marko": "__tests__/tags/tabs.marko;b%;<!><!><!>" });
 var tabs_default = _template("__tests__/tags/tabs.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_tab__OR__input_selected = _write_guard($scope0_reason, 0), $ui__input_tab__OR__input_selected = _unfilled_if($scope0_reason, 0), $ui__input_selected = _unfilled_if($scope0_reason, 2), $ui__input_tab = _unfilled_if($scope0_reason, 1), $fg__input_tab = _filled_guard($scope0_reason, 1), $fg__input_selected = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_tab__OR__input_selected = _write_guard($scope0_reason, 0), $ui__input_tab__OR__input_selected = _unfilled_if($scope0_reason, 0), $fg__input_tab = _filled_guard($scope0_reason, 1), $fg__input_selected = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	_dynamic_tag($scope0_id, "#text/0", [...input.tab].find((t) => t.id === input.selected)?.content, {}, 2, 0, 0, $wg__input_tab__OR__input_selected, $scope0_reason, 0);
 	_patch_render($scope0_id, "__tests__/tags/tabs.marko_0_input_tab#3_input_selected#4/setup", (($fg__input_tab ? " input_tab" : "") + ($fg__input_selected ? " input_selected" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		input_tab: ($ui__input_selected || $ui__input_tab__OR__input_selected) && input.tab,
-		input_selected: ($ui__input_tab || $ui__input_tab__OR__input_selected) && input.selected
+		input_tab: $ui__input_tab__OR__input_selected && input.tab,
+		input_selected: $ui__input_tab__OR__input_selected && input.selected
 	}, "__tests__/tags/tabs.marko", 0, {
 		input_tab: ["input.tab"],
 		input_selected: ["input.selected"]
-	}) || ($fg__input_tab && $ui__input_selected && _patch_write($scope0_id, "PatchMarkedWrite:input_tab", input.tab, !_server_guard($scope0_reason, 1)), $fg__input_selected && $ui__input_tab && _patch_write($scope0_id, "PatchMarkedWrite:input_selected", input.selected, !_server_guard($scope0_reason, 2)));
+	}) || ($fg__input_tab && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_tab", input.tab, !_server_guard($scope0_reason, 1)), $fg__input_selected && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_selected", input.selected, !_server_guard($scope0_reason, 2)));
 });
 
 // template.marko

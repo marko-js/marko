@@ -4,7 +4,7 @@ const $walks = "b%c";
 const $setup = [[], []];
 _shells({ "__tests__/template.marko": "__tests__/template.marko !;b%;<!><!><!>" });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $ui__input_selected__OR__input_selectedChange = _unfilled_if($scope0_reason, 0), $ui__input_selectedChange = _unfilled_if($scope0_reason, 2), $ui__input_selected = _unfilled_if($scope0_reason, 1), $fg__input_selected = _filled_guard($scope0_reason, 1), $fg__input_selectedChange = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $ui__input_selected__OR__input_selectedChange = _unfilled_if($scope0_reason, 0), $fg__input_selected = _filled_guard($scope0_reason, 1), $fg__input_selectedChange = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	let rows = [
 		{ id: 1 },
@@ -30,8 +30,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $selectedChange = input.selectedChange || void 0;
 	_patch_let_change($scope0_id, "PatchFill:__tests__/template.marko_0_selected#8/fill", selected, "PatchWrite:TagVariableChange:selected", $selectedChange, $scope0_reason, 0);
 	_scope($scope0_id, {
-		input_selected: ($ui__input_selectedChange || $ui__input_selected__OR__input_selectedChange) && input.selected,
-		input_selectedChange: ($ui__input_selected || $ui__input_selected__OR__input_selectedChange) && input.selectedChange,
+		input_selected: $ui__input_selected__OR__input_selectedChange && input.selected,
+		input_selectedChange: $ui__input_selected__OR__input_selectedChange && input.selectedChange,
 		selected,
 		"TagVariableChange:selected": $selectedChange
 	}, "__tests__/template.marko", 0, {
@@ -39,5 +39,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		input_selectedChange: ["input.selectedChange"],
 		selected: "2:6",
 		"TagVariableChange:selected": ["selectedChange", "2:6"]
-	}) || ($fg__input_selected && $ui__input_selectedChange && _patch_write($scope0_id, "PatchMarkedWrite:input_selected", input.selected, !_server_guard($scope0_reason, 1)), $fg__input_selectedChange && $ui__input_selected && _patch_write($scope0_id, "PatchMarkedWrite:input_selectedChange", input.selectedChange, !_server_guard($scope0_reason, 2)));
+	}) || ($fg__input_selected && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_selected", input.selected, !_server_guard($scope0_reason, 1)), $fg__input_selectedChange && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_selectedChange", input.selectedChange, !_server_guard($scope0_reason, 2)));
 }, 1);

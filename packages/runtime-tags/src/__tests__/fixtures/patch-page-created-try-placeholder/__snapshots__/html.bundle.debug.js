@@ -51,17 +51,17 @@ const $walks = "D%l";
 const $setup = [[], []];
 _shells({ "__tests__/template.marko": "__tests__/template.marko;D%;<main><!></main>" });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_page__OR__input_promise = _write_guard($scope0_reason, 0), $ui__input_page__OR__input_promise = _unfilled_if($scope0_reason, 0), $ui__input_promise = _unfilled_if($scope0_reason, 2), $ui__input_page = _unfilled_if($scope0_reason, 1), $fg__input_page = _filled_guard($scope0_reason, 1), $fg__input_promise = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_page__OR__input_promise = _write_guard($scope0_reason, 0), $ui__input_page__OR__input_promise = _unfilled_if($scope0_reason, 0), $fg__input_page = _filled_guard($scope0_reason, 1), $fg__input_promise = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	_html("<main>");
 	_dynamic_tag($scope0_id, "#text/0", input.page === "b" ? b_default : a_default, { promise: input.promise }, 1, 0, 0, $wg__input_page__OR__input_promise, $scope0_reason, 0);
 	_html("</main>");
 	_patch_render($scope0_id, "__tests__/template.marko_0_input_page#3_input_promise#4/setup", (($fg__input_page ? " input_page" : "") + ($fg__input_promise ? " input_promise" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		input_page: ($ui__input_promise || $ui__input_page__OR__input_promise) && input.page,
-		input_promise: ($ui__input_page || $ui__input_page__OR__input_promise) && input.promise
+		input_page: $ui__input_page__OR__input_promise && input.page,
+		input_promise: $ui__input_page__OR__input_promise && input.promise
 	}, "__tests__/template.marko", 0, {
 		input_page: ["input.page"],
 		input_promise: ["input.promise"]
-	}) || ($fg__input_page && $ui__input_promise && _patch_write($scope0_id, "PatchMarkedWrite:input_page", input.page, !_server_guard($scope0_reason, 1)), $fg__input_promise && $ui__input_page && _patch_write($scope0_id, "PatchMarkedWrite:input_promise", input.promise, !_server_guard($scope0_reason, 2)));
+	}) || ($fg__input_page && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_page", input.page, !_server_guard($scope0_reason, 1)), $fg__input_promise && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_promise", input.promise, !_server_guard($scope0_reason, 2)));
 }, 1);

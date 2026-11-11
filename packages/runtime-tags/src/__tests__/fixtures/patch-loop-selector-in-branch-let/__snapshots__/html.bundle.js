@@ -1,7 +1,7 @@
 // template.marko
 _shells({ a: "a !;b%;<!><!><!>" });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $ui__input_selected__OR__input_selectedChange = _unfilled_if($scope0_reason, 0), $ui__input_selectedChange = _unfilled_if($scope0_reason, 2), $ui__input_selected = _unfilled_if($scope0_reason, 1), $fg__input_selected = _filled_guard($scope0_reason, 1), $fg__input_selectedChange = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $ui__input_selected__OR__input_selectedChange = _unfilled_if($scope0_reason, 0), $fg__input_selected = _filled_guard($scope0_reason, 1), $fg__input_selectedChange = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	let rows = [
 		{ id: 1 },
@@ -27,9 +27,9 @@ var template_default = _template("a", (input) => {
 	const $selectedChange = input.selectedChange || void 0;
 	_patch_let_change($scope0_id, "va2", selected, "wj", $selectedChange, $scope0_reason, 0);
 	_scope($scope0_id, {
-		d: ($ui__input_selectedChange || $ui__input_selected__OR__input_selectedChange) && input.selected,
-		e: ($ui__input_selected || $ui__input_selected__OR__input_selectedChange) && input.selectedChange,
+		d: $ui__input_selected__OR__input_selectedChange && input.selected,
+		e: $ui__input_selected__OR__input_selectedChange && input.selectedChange,
 		i: selected,
 		j: $selectedChange
-	}) || ($fg__input_selected && $ui__input_selectedChange && _patch_write($scope0_id, "xd", input.selected, !_server_guard($scope0_reason, 1)), $fg__input_selectedChange && $ui__input_selected && _patch_write($scope0_id, "xe", input.selectedChange, !_server_guard($scope0_reason, 2)));
+	}) || ($fg__input_selected && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xd", input.selected, !_server_guard($scope0_reason, 1)), $fg__input_selectedChange && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.selectedChange, !_server_guard($scope0_reason, 2)));
 }, 1);

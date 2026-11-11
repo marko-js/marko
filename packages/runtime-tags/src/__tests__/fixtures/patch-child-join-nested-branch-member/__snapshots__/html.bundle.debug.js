@@ -8,7 +8,7 @@ _shells({
 	"__tests__/tags/panel.marko_2*shell": "__tests__/tags/panel.marko_2*shell;D ;<em> </em>"
 });
 var panel_default = _template("__tests__/tags/panel.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_b = _client_guard($scope0_reason, 4), $wg__input_show = _write_guard($scope0_reason, 3), $wi__input_show__OR__input_b = _write_if($scope0_reason, 0), $ui__input_b__OR__input_a = _unfilled_if($scope0_reason, 2), $ui__input_b = _unfilled_if($scope0_reason, 4), $ui__input_show__OR__input_a = _unfilled_if($scope0_reason, 1), $cg__input_show = _client_guard($scope0_reason, 3), $fg__input_b = _filled_guard($scope0_reason, 4), $fg__input_a = _filled_guard($scope0_reason, 5);
+	const $scope0_reason = _scope_reason(), $cg__input_b = _client_guard($scope0_reason, 4), $wg__input_show = _write_guard($scope0_reason, 3), $wi__input_show__OR__input_b = _write_if($scope0_reason, 0), $ui__input_b__OR__input_a = _unfilled_if($scope0_reason, 2), $ui__input_show__OR__input_a = _unfilled_if($scope0_reason, 1), $cg__input_show = _client_guard($scope0_reason, 3), $ui__input_b = _unfilled_if($scope0_reason, 4), $fg__input_b = _filled_guard($scope0_reason, 4), $fg__input_a = _filled_guard($scope0_reason, 5);
 	const $scope0_id = _scope_id();
 	const $input_b__closures = new Set();
 	_if(() => {
@@ -34,8 +34,8 @@ var panel_default = _template("__tests__/tags/panel.marko", (input) => {
 	_patch_render($scope0_id, "__tests__/tags/panel.marko_0_input_b#5_input_a#6/setup", (($fg__input_b ? " input_b" : "") + ($fg__input_a ? " input_a" : "")).slice(1), $scope0_reason, 2);
 	_scope($scope0_id, {
 		input_b: ($ui__input_show__OR__input_a || $ui__input_b__OR__input_a || $ui__input_b) && input.b,
-		input_a: ($ui__input_b || $ui__input_b__OR__input_a) && input.a,
-		"ClosureScopes:input_b/9": _write_if($scope0_reason, 4) && ($ui__input_b || $ui__input_b__OR__input_a || _unfilled_if($scope0_reason, 3)) && $input_b__closures
+		input_a: $ui__input_b__OR__input_a && input.a,
+		"ClosureScopes:input_b/9": _write_if($scope0_reason, 4) && ($ui__input_b__OR__input_a || _unfilled_if($scope0_reason, 3)) && $input_b__closures
 	}, "__tests__/tags/panel.marko", 0, {
 		input_b: ["input.b"],
 		input_a: ["input.a"]

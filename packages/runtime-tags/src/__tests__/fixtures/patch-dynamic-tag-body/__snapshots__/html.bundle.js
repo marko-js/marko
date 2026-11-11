@@ -16,7 +16,7 @@ _shells({
 	a: "a;b%b%;<!><!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $cg__input_note = _client_guard($scope0_reason, 6), $wg__input_tag__OR__input_cls = _write_guard($scope0_reason, 0), $wg__input_wrap = _write_guard($scope0_reason, 5), $ui__input_tag__OR__input_cls = _unfilled_if($scope0_reason, 0), $ui__input_cls = _unfilled_if($scope0_reason, 4), $ui__input_tag = _unfilled_if($scope0_reason, 3), $ui__input_wrap = _unfilled_if($scope0_reason, 5), $fg__input_tag = _filled_guard($scope0_reason, 3), $fg__input_cls = _filled_guard($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $cg__input_note = _client_guard($scope0_reason, 6), $wg__input_tag__OR__input_cls = _write_guard($scope0_reason, 0), $wg__input_wrap = _write_guard($scope0_reason, 5), $ui__input_tag__OR__input_cls = _unfilled_if($scope0_reason, 0), $ui__input_wrap = _unfilled_if($scope0_reason, 5), $fg__input_tag = _filled_guard($scope0_reason, 3), $fg__input_cls = _filled_guard($scope0_reason, 4);
 	const $scope0_id = _scope_id();
 	const $input_note__closures = /* @__PURE__ */ new Set();
 	_dynamic_tag($scope0_id, "a", input.tag, { class: input.cls }, 1, _content_resume("a0", () => {
@@ -33,9 +33,9 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id, 0), 0, $wg__input_wrap, $scope0_reason, 5);
 	_patch_render($scope0_id, "a4", (($fg__input_tag ? " e" : "") + ($fg__input_cls ? " f" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		e: ($ui__input_cls || $ui__input_tag__OR__input_cls) && input.tag,
-		f: ($ui__input_tag || $ui__input_tag__OR__input_cls) && input.cls,
+		e: $ui__input_tag__OR__input_cls && input.tag,
+		f: $ui__input_tag__OR__input_cls && input.cls,
 		i: ($ui__input_wrap || _unfilled_if($scope0_reason, 6)) && input.note,
 		j: _write_if($scope0_reason, 6) && $input_note__closures
-	}) || ($fg__input_tag && $ui__input_cls && _patch_write($scope0_id, "xe", input.tag, !_server_guard($scope0_reason, 3)), $fg__input_cls && $ui__input_tag && _patch_write($scope0_id, "xf", input.cls, !_server_guard($scope0_reason, 4)), _filled_guard($scope0_reason, 6) && $ui__input_wrap && _patch_write($scope0_id, "xi", input.note, !_server_guard($scope0_reason, 6)) && _client_guard($scope0_reason, 5) && _patch_subscribers($scope0_id, "a3", "i"));
+	}) || ($fg__input_tag && _unfilled_if($scope0_reason, 4) && _patch_write($scope0_id, "xe", input.tag, !_server_guard($scope0_reason, 3)), $fg__input_cls && _unfilled_if($scope0_reason, 3) && _patch_write($scope0_id, "xf", input.cls, !_server_guard($scope0_reason, 4)), _filled_guard($scope0_reason, 6) && $ui__input_wrap && _patch_write($scope0_id, "xi", input.note, !_server_guard($scope0_reason, 6)) && _client_guard($scope0_reason, 5) && _patch_subscribers($scope0_id, "a3", "i"));
 }, 1);

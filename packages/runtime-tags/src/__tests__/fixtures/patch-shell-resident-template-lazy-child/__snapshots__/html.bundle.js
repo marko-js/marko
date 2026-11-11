@@ -65,7 +65,7 @@ var chooser_default = _template("e", (input) => {
 const $setup = _shell_setup([[], []], ["b>", $setup$1]);
 _shells({ d: `d${_shell_marker($setup)};${((_w0) => `b%b/${_w0}&b`)($walks)};${((_w0) => `<!><!>${_w0}<!>`)($template)}` });
 var template_default = _template("d", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_which__OR__input_label = _write_guard($scope0_reason, 0), $ui__input_which__OR__input_label = _unfilled_if($scope0_reason, 0), $ui__input_label = _unfilled_if($scope0_reason, 2), $ui__input_which = _unfilled_if($scope0_reason, 1), $fg__input_which = _filled_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_which__OR__input_label = _write_guard($scope0_reason, 0), $ui__input_which__OR__input_label = _unfilled_if($scope0_reason, 0), $fg__input_which = _filled_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	_dynamic_tag($scope0_id, "a", input.which ? counter_default : other_default, { label: input.label }, 1, 0, 0, $wg__input_which__OR__input_label, $scope0_reason, 0);
 	_set_scope_reason(_updates_from($scope0_reason, 0) << 1 | _updates_from($scope0_reason, 1) << 3 | _updates_from($scope0_reason, 2) << 5);
@@ -77,8 +77,8 @@ var template_default = _template("d", (input) => {
 	_patch_child_end();
 	_patch_render($scope0_id, "d0", (($fg__input_which ? " e" : "") + ($fg__input_label ? " f" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		e: ($ui__input_label || $ui__input_which__OR__input_label) && input.which,
-		f: ($ui__input_which || $ui__input_which__OR__input_label) && input.label,
+		e: $ui__input_which__OR__input_label && input.which,
+		f: $ui__input_which__OR__input_label && input.label,
 		b: _existing_scope($childScope)
-	}) || ($fg__input_which && $ui__input_label && _patch_write($scope0_id, "xe", input.which, !_server_guard($scope0_reason, 1)), $fg__input_label && $ui__input_which && _patch_write($scope0_id, "xf", input.label, !_server_guard($scope0_reason, 2)));
+	}) || ($fg__input_which && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xe", input.which, !_server_guard($scope0_reason, 1)), $fg__input_label && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xf", input.label, !_server_guard($scope0_reason, 2)));
 }, 1);

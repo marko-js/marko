@@ -28,7 +28,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html(`<em>${_text_mark($scope3_id, "#text/0", fmt(label), 1, $scope3_reason, 0)}</em>`);
 		_patch_render($scope3_id, "__tests__/template.marko_3_fmt#3_label#4/setup", (($fg__fmt ? " fmt" : "") + (_filled_guard($scope3_reason, 2) ? " label" : "")).slice(1), $scope3_reason, 0);
 		_scope($scope3_id, {
-			fmt: (_unfilled_if($scope3_reason, 2, 1) || _unfilled_if($scope3_reason, 0, 1)) && fmt,
+			fmt: _unfilled_if($scope3_reason, 0, 1) && fmt,
 			label: _unfilled_if($scope3_reason, 0) && label
 		}, "__tests__/template.marko", "3:2", {
 			fmt: "3:17",

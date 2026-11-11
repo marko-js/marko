@@ -2,14 +2,14 @@
 const $setup = [[], []];
 _shells({ b: "b," });
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $ui__input_label__OR__input_count = _unfilled_if($scope0_reason, 0), $ui__input_count = _unfilled_if($scope0_reason, 2), $ui__input_label = _unfilled_if($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 1), $fg__input_count = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $ui__input_label__OR__input_count = _unfilled_if($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 1), $fg__input_count = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $return = input.label + input.count;
 	_patch_render($scope0_id, "b0", (($fg__input_label ? " c" : "") + ($fg__input_count ? " d" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		c: ($ui__input_count || $ui__input_label__OR__input_count) && input.label,
-		d: ($ui__input_label || $ui__input_label__OR__input_count) && input.count
-	}) || ($fg__input_label && $ui__input_count && _patch_write($scope0_id, "xc", input.label, !_server_guard($scope0_reason, 1)), $fg__input_count && $ui__input_label && _patch_write($scope0_id, "xd", input.count, !_server_guard($scope0_reason, 2)));
+		c: $ui__input_label__OR__input_count && input.label,
+		d: $ui__input_label__OR__input_count && input.count
+	}) || ($fg__input_label && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xc", input.label, !_server_guard($scope0_reason, 1)), $fg__input_count && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xd", input.count, !_server_guard($scope0_reason, 2)));
 	return $return;
 });
 

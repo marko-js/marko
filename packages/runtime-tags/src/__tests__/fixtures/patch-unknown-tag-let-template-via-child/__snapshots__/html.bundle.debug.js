@@ -40,7 +40,7 @@ const $walks$1 = "b%c";
 const $setup$1 = [[], []];
 _shells({ "__tests__/tags/host.marko": "__tests__/tags/host.marko;b%;<!><!><!>" });
 var host_default = _template("__tests__/tags/host.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_frame__OR__input_item__OR__input_label = _write_guard($scope0_reason, 3), $ui__input_frame__OR__input_item__OR__input_label = _unfilled_if($scope0_reason, 3), $ui__input_item__OR__input_label = _unfilled_if($scope0_reason, 2), $ui__input_frame__OR__input_label = _unfilled_if($scope0_reason, 1), $ui__input_frame__OR__input_item = _unfilled_if($scope0_reason, 0), $fg__input_frame = _filled_guard($scope0_reason, 4), $fg__input_item = _filled_guard($scope0_reason, 5), $fg__input_label = _filled_guard($scope0_reason, 6);
+	const $scope0_reason = _scope_reason(), $wg__input_frame__OR__input_item__OR__input_label = _write_guard($scope0_reason, 3), $ui__input_frame__OR__input_item__OR__input_label = _unfilled_if($scope0_reason, 3), $fg__input_frame = _filled_guard($scope0_reason, 4), $fg__input_item = _filled_guard($scope0_reason, 5), $fg__input_label = _filled_guard($scope0_reason, 6);
 	const $scope0_id = _scope_id();
 	_dynamic_tag($scope0_id, "#text/0", input.frame, {
 		item: input.item,
@@ -48,14 +48,14 @@ var host_default = _template("__tests__/tags/host.marko", (input) => {
 	}, 1, 0, 0, $wg__input_frame__OR__input_item__OR__input_label, $scope0_reason, 3, 0, 4);
 	_patch_render($scope0_id, "__tests__/tags/host.marko_0_input_frame#3_input_item#4_input_label#5/setup", (($fg__input_frame ? " input_frame" : "") + ($fg__input_item ? " input_item" : "") + ($fg__input_label ? " input_label" : "")).slice(1), $scope0_reason, 3);
 	_scope($scope0_id, {
-		input_frame: ($ui__input_item__OR__input_label || $ui__input_frame__OR__input_item__OR__input_label) && input.frame,
-		input_item: ($ui__input_frame__OR__input_label || $ui__input_frame__OR__input_item__OR__input_label) && input.item,
-		input_label: ($ui__input_frame__OR__input_item || $ui__input_frame__OR__input_item__OR__input_label) && input.label
+		input_frame: $ui__input_frame__OR__input_item__OR__input_label && input.frame,
+		input_item: $ui__input_frame__OR__input_item__OR__input_label && input.item,
+		input_label: $ui__input_frame__OR__input_item__OR__input_label && input.label
 	}, "__tests__/tags/host.marko", 0, {
 		input_frame: ["input.frame"],
 		input_item: ["input.item"],
 		input_label: ["input.label"]
-	}) || ($fg__input_frame && $ui__input_item__OR__input_label && _patch_write($scope0_id, "PatchMarkedWrite:input_frame", input.frame, !_server_guard($scope0_reason, 4)), $fg__input_item && $ui__input_frame__OR__input_label && _patch_write($scope0_id, "PatchMarkedWrite:input_item", input.item, !_server_guard($scope0_reason, 5)), $fg__input_label && $ui__input_frame__OR__input_item && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 6)));
+	}) || ($fg__input_frame && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_frame", input.frame, !_server_guard($scope0_reason, 4)), $fg__input_item && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_item", input.item, !_server_guard($scope0_reason, 5)), $fg__input_label && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 6)));
 });
 
 // template.marko

@@ -74,7 +74,7 @@ _shells({
 	"__tests__/template.marko": "__tests__/template.marko;D%;<ul><!></ul>"
 });
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_deep__OR__input_node = _write_guard($scope0_reason, 0), $ui__input_deep__OR__input_node = _unfilled_if($scope0_reason, 0), $ui__input_node = _unfilled_if($scope0_reason, 2), $ui__input_deep = _unfilled_if($scope0_reason, 1), $fg__input_deep = _filled_guard($scope0_reason, 1), $fg__input_node = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_deep__OR__input_node = _write_guard($scope0_reason, 0), $ui__input_deep__OR__input_node = _unfilled_if($scope0_reason, 0), $fg__input_deep = _filled_guard($scope0_reason, 1), $fg__input_node = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const Card = { content: _content_resume("__tests__/template.marko_1*content", ({ node }) => {
 		const $scope1_id = _scope_id();
@@ -87,12 +87,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html("</ul>");
 	_patch_render($scope0_id, "__tests__/template.marko_0_input_deep#3_input_node#4_Card#5/setup", (($fg__input_deep ? " input_deep" : "") + ($fg__input_node ? " input_node" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		input_deep: ($ui__input_node || $ui__input_deep__OR__input_node) && input.deep,
-		input_node: ($ui__input_deep || $ui__input_deep__OR__input_node) && input.node,
+		input_deep: $ui__input_deep__OR__input_node && input.deep,
+		input_node: $ui__input_deep__OR__input_node && input.node,
 		Card: $ui__input_deep__OR__input_node && Card
 	}, "__tests__/template.marko", 0, {
 		input_deep: ["input.deep"],
 		input_node: ["input.node"],
 		Card: "2:9"
-	}) || ($fg__input_deep && $ui__input_node && _patch_write($scope0_id, "PatchMarkedWrite:input_deep", input.deep, !_server_guard($scope0_reason, 1)), $fg__input_node && $ui__input_deep && _patch_write($scope0_id, "PatchMarkedWrite:input_node", input.node, !_server_guard($scope0_reason, 2)));
+	}) || ($fg__input_deep && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_deep", input.deep, !_server_guard($scope0_reason, 1)), $fg__input_node && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_node", input.node, !_server_guard($scope0_reason, 2)));
 }, 1);

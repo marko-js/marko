@@ -22,13 +22,13 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	_attr_content("#section/0", $scope0_id, input.mode ? frag.content : null, 0, 1, $scope0_reason, 4);
 	_html(`</section>${_el_mark($scope0_id, "#section/0", _updates_from($scope0_reason, 4))}`);
 	_for_of(input.items, (item) => {
-		const $scope2_id = _scope_id(), $ui__input_b = _unfilled_if($scope0_reason, 3), $fg__input_items = _filled_guard($scope0_reason, 5);
-		$fg__input_items && $ui__input_b && _patch_write($scope2_id, "PatchMarkedWrite:item", item, !_server_guard($scope0_reason, 5));
+		const $scope2_id = _scope_id(), $fg__input_items = _filled_guard($scope0_reason, 5);
+		$fg__input_items && _unfilled_if($scope0_reason, 3) && _patch_write($scope2_id, "PatchMarkedWrite:item", item, !_server_guard($scope0_reason, 5));
 		const d = input.b + item;
 		_html(`<p>${_text_mark($scope2_id, "#text/0", d, 1, $scope0_reason, 1)}</p>`);
 		_patch_render($scope2_id, "__tests__/tags/child.marko_2_input_b#0:4_item#2/setup", ((_filled_guard($scope0_reason, 3) ? " >input_b" : "") + ($fg__input_items ? " item" : "")).slice(1), $scope0_reason, 1);
 		_scope($scope2_id, {
-			item: ($ui__input_b || _unfilled_if($scope0_reason, 1)) && item,
+			item: _unfilled_if($scope0_reason, 1) && item,
 			_: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id)
 		}, "__tests__/tags/child.marko", "3:2", { item: "3:6" });
 	}, 0, $scope0_id, "#text/1", 1, 1, 1, 0, 0, "__tests__/tags/child.marko_2*shell", $scope0_reason, 5);

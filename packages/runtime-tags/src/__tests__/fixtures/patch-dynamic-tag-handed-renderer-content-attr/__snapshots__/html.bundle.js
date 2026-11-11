@@ -24,7 +24,7 @@ const $template = "<!><!><!>";
 const $setup$1 = [[], []];
 _shells({ c: "c;b%;<!><!><!>" });
 var one_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_Tag__OR__input_content__OR__input_show = _write_guard($scope0_reason, 3), $ui__input_Tag__OR__input_content__OR__input_show = _unfilled_if($scope0_reason, 3), $ui__input_content__OR__input_show = _unfilled_if($scope0_reason, 2), $ui__input_Tag__OR__input_show = _unfilled_if($scope0_reason, 1), $ui__input_Tag__OR__input_content = _unfilled_if($scope0_reason, 0), $fg__input_Tag = _filled_guard($scope0_reason, 4), $fg__input_content = _filled_guard($scope0_reason, 5), $fg__input_show = _filled_guard($scope0_reason, 6);
+	const $scope0_reason = _scope_reason(), $wg__input_Tag__OR__input_content__OR__input_show = _write_guard($scope0_reason, 3), $ui__input_Tag__OR__input_content__OR__input_show = _unfilled_if($scope0_reason, 3), $fg__input_Tag = _filled_guard($scope0_reason, 4), $fg__input_content = _filled_guard($scope0_reason, 5), $fg__input_show = _filled_guard($scope0_reason, 6);
 	const $scope0_id = _scope_id();
 	_dynamic_tag($scope0_id, "a", input.Tag, {
 		c: input.content,
@@ -32,10 +32,10 @@ var one_default = _template("c", (input) => {
 	}, 1, 0, 0, $wg__input_Tag__OR__input_content__OR__input_show, $scope0_reason, 3, 0, 4);
 	_patch_render($scope0_id, "c0", (($fg__input_Tag ? " d" : "") + ($fg__input_content ? " e" : "") + ($fg__input_show ? " f" : "")).slice(1), $scope0_reason, 3);
 	_scope($scope0_id, {
-		d: ($ui__input_content__OR__input_show || $ui__input_Tag__OR__input_content__OR__input_show) && input.Tag,
-		e: ($ui__input_Tag__OR__input_show || $ui__input_Tag__OR__input_content__OR__input_show) && input.content,
-		f: ($ui__input_Tag__OR__input_content || $ui__input_Tag__OR__input_content__OR__input_show) && input.show
-	}) || ($fg__input_Tag && $ui__input_content__OR__input_show && _patch_write($scope0_id, "xd", input.Tag, !_server_guard($scope0_reason, 4)), $fg__input_content && $ui__input_Tag__OR__input_show && _patch_write($scope0_id, "xe", input.content, !_server_guard($scope0_reason, 5)), $fg__input_show && $ui__input_Tag__OR__input_content && _patch_write($scope0_id, "xf", input.show, !_server_guard($scope0_reason, 6)));
+		d: $ui__input_Tag__OR__input_content__OR__input_show && input.Tag,
+		e: $ui__input_Tag__OR__input_content__OR__input_show && input.content,
+		f: $ui__input_Tag__OR__input_content__OR__input_show && input.show
+	}) || ($fg__input_Tag && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xd", input.Tag, !_server_guard($scope0_reason, 4)), $fg__input_content && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.content, !_server_guard($scope0_reason, 5)), $fg__input_show && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xf", input.show, !_server_guard($scope0_reason, 6)));
 });
 
 // template.marko

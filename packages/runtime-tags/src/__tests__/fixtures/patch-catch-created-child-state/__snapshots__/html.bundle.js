@@ -18,7 +18,7 @@ _shells({
 	a: "a !a6; D l%;<button> </button><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $ui__input_fail__OR__input_msg = _unfilled_if($scope0_reason, 0), $ui__input_msg = _unfilled_if($scope0_reason, 2), $ui__input_fail = _unfilled_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $ui__input_fail__OR__input_msg = _unfilled_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $count__closures = /* @__PURE__ */ new Set();
 	const $input_fail__closures = /* @__PURE__ */ new Set();
@@ -51,11 +51,11 @@ var template_default = _template("a", (input) => {
 	}, 0, "a4", "a5", 1, 1, 1);
 	_script($scope0_id, "a6");
 	_scope($scope0_id, {
-		f: ($ui__input_msg || $ui__input_fail__OR__input_msg) && input.fail,
-		g: ($ui__input_fail || $ui__input_fail__OR__input_msg) && input.msg,
+		f: $ui__input_fail__OR__input_msg && input.fail,
+		g: $ui__input_fail__OR__input_msg && input.msg,
 		h: count,
 		k: $count__closures,
-		i: _write_if($scope0_reason, 1) && ($ui__input_fail || $ui__input_fail__OR__input_msg) && $input_fail__closures,
-		j: _write_if($scope0_reason, 2) && ($ui__input_msg || $ui__input_fail__OR__input_msg) && $input_msg__closures
-	}) || (_filled_guard($scope0_reason, 1) && $ui__input_msg && _patch_write($scope0_id, "xf", input.fail, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && $ui__input_fail && _patch_write($scope0_id, "xg", input.msg, !_server_guard($scope0_reason, 2)));
+		i: _write_if($scope0_reason, 1) && $ui__input_fail__OR__input_msg && $input_fail__closures,
+		j: _write_if($scope0_reason, 2) && $ui__input_fail__OR__input_msg && $input_msg__closures
+	}) || (_filled_guard($scope0_reason, 1) && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xf", input.fail, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xg", input.msg, !_server_guard($scope0_reason, 2)));
 }, 1);

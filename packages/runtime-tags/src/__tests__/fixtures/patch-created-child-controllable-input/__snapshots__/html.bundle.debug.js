@@ -4,7 +4,7 @@ const $walks$2 = " Db%l";
 const $setup$2 = [[], ["__tests__/tags/demo-card.marko_0"]];
 _shells({ "__tests__/tags/demo-card.marko": "__tests__/tags/demo-card.marko !__tests__/tags/demo-card.marko_0; Db%;<button>tab=<!></button>" });
 var demo_card_default = _template("__tests__/tags/demo-card.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $ui__input_tab__OR__input_tabChange = _unfilled_if($scope0_reason, 0), $ui__input_tabChange = _unfilled_if($scope0_reason, 2), $ui__input_tab = _unfilled_if($scope0_reason, 1), $fg__input_tab = _filled_guard($scope0_reason, 1), $fg__input_tabChange = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $ui__input_tab__OR__input_tabChange = _unfilled_if($scope0_reason, 0), $fg__input_tab = _filled_guard($scope0_reason, 1), $fg__input_tabChange = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	let selected = input.tab;
 	_html(`<button>tab=${_text_mark($scope0_id, "#text/1", String(selected), 2)}</button>${_el_mark($scope0_id, "#button/0")}`);
@@ -13,8 +13,8 @@ var demo_card_default = _template("__tests__/tags/demo-card.marko", (input) => {
 	const $selectedChange = input.tabChange || void 0;
 	_patch_let_change($scope0_id, "PatchFill:__tests__/tags/demo-card.marko_0_selected#7/fill", selected, "PatchWrite:TagVariableChange:selected", $selectedChange, $scope0_reason, 0);
 	_scope($scope0_id, {
-		input_tab: ($ui__input_tabChange || $ui__input_tab__OR__input_tabChange) && input.tab,
-		input_tabChange: ($ui__input_tab || $ui__input_tab__OR__input_tabChange) && input.tabChange,
+		input_tab: $ui__input_tab__OR__input_tabChange && input.tab,
+		input_tabChange: $ui__input_tab__OR__input_tabChange && input.tabChange,
 		selected,
 		"TagVariableChange:selected": $selectedChange
 	}, "__tests__/tags/demo-card.marko", 0, {
@@ -22,7 +22,7 @@ var demo_card_default = _template("__tests__/tags/demo-card.marko", (input) => {
 		input_tabChange: ["input.tabChange"],
 		selected: "2:6",
 		"TagVariableChange:selected": ["selectedChange", "2:6"]
-	}) || ($fg__input_tab && $ui__input_tabChange && _patch_write($scope0_id, "PatchMarkedWrite:input_tab", input.tab, !_server_guard($scope0_reason, 1)), $fg__input_tabChange && $ui__input_tab && _patch_write($scope0_id, "PatchMarkedWrite:input_tabChange", input.tabChange, !_server_guard($scope0_reason, 2)));
+	}) || ($fg__input_tab && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_tab", input.tab, !_server_guard($scope0_reason, 1)), $fg__input_tabChange && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_tabChange", input.tabChange, !_server_guard($scope0_reason, 2)));
 });
 
 // tags/page-b.marko

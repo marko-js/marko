@@ -15,7 +15,7 @@ _shells({
 	a: "a;D%bD ;<main><!><output> </output></main>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $ui__input_useA__OR__input_user = _unfilled_if($scope0_reason, 0), $ui__input_user = _unfilled_if($scope0_reason, 2), $ui__input_useA = _unfilled_if($scope0_reason, 1), $fg__input_useA = _filled_guard($scope0_reason, 1), $fg__input_user = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $ui__input_useA__OR__input_user = _unfilled_if($scope0_reason, 0), $fg__input_useA = _filled_guard($scope0_reason, 1), $fg__input_user = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	let picked = "";
 	const Card = { content: _content_resume("a0", ({ user }) => {
@@ -45,9 +45,9 @@ var template_default = _template("a", (input) => {
 	_html(`<output>${_text_mark($scope0_id, "b", picked)}</output></main>`);
 	_patch_render($scope0_id, "a3", (($fg__input_useA ? " e" : "") + ($fg__input_user ? " f" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		e: ($ui__input_user || $ui__input_useA__OR__input_user) && input.useA,
-		f: ($ui__input_useA || $ui__input_useA__OR__input_user) && input.user,
+		e: $ui__input_useA__OR__input_user && input.useA,
+		f: $ui__input_useA__OR__input_user && input.user,
 		h: $ui__input_useA__OR__input_user && Card,
 		i: $ui__input_useA__OR__input_user && Other
-	}) || ($fg__input_useA && $ui__input_user && _patch_write($scope0_id, "xe", input.useA, !_server_guard($scope0_reason, 1)), $fg__input_user && $ui__input_useA && _patch_write($scope0_id, "xf", input.user, !_server_guard($scope0_reason, 2)));
+	}) || ($fg__input_useA && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xe", input.useA, !_server_guard($scope0_reason, 1)), $fg__input_user && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xf", input.user, !_server_guard($scope0_reason, 2)));
 }, 1);

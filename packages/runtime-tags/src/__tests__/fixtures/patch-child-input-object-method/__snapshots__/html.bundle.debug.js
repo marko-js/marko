@@ -4,7 +4,7 @@ const $walks$1 = "D l";
 const $setup$1 = [[], []];
 _shells({ "__tests__/tags/code-block.marko": "__tests__/tags/code-block.marko;D ;<div> </div>" });
 var code_block_default = _template("__tests__/tags/code-block.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $ui__input_cursor__OR__input_text = _unfilled_if($scope0_reason, 0), $ui__input_text = _unfilled_if($scope0_reason, 2), $ui__input_cursor = _unfilled_if($scope0_reason, 1), $sg__input_cursor = _server_guard($scope0_reason, 1), $fg__input_cursor = _filled_guard($scope0_reason, 1), $fg__input_text = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $ui__input_cursor__OR__input_text = _unfilled_if($scope0_reason, 0), $ui__input_text = _unfilled_if($scope0_reason, 2), $sg__input_cursor = _server_guard($scope0_reason, 1), $fg__input_cursor = _filled_guard($scope0_reason, 1), $fg__input_text = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	$fg__input_cursor && $ui__input_text && _patch_write($scope0_id, "PatchMarkedWrite:input_cursor", input.cursor, !$sg__input_cursor);
 	const highlight = _bind_resume(function(text) {
@@ -13,14 +13,14 @@ var code_block_default = _template("__tests__/tags/code-block.marko", (input) =>
 	_html(`<div>${_html_mark($scope0_id, "#text/0", highlight(input.text), 1, $scope0_reason, 0)}</div>`);
 	_patch_render($scope0_id, "__tests__/tags/code-block.marko_0_input_text#4_highlight#5/setup", (($fg__input_text ? " input_text" : "") + ($fg__input_cursor ? " highlight" : "") + ($fg__input_cursor ? " input_cursor" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		input_cursor: ($ui__input_text || $ui__input_cursor__OR__input_text) && input.cursor,
-		input_text: ($ui__input_cursor || $ui__input_cursor__OR__input_text) && input.text,
-		highlight: ($ui__input_text || $ui__input_cursor__OR__input_text) && highlight
+		input_cursor: $ui__input_cursor__OR__input_text && input.cursor,
+		input_text: $ui__input_cursor__OR__input_text && input.text,
+		highlight: $ui__input_cursor__OR__input_text && highlight
 	}, "__tests__/tags/code-block.marko", 0, {
 		input_cursor: ["input.cursor"],
 		input_text: ["input.text"],
 		highlight: "1:8"
-	}) || ($fg__input_text && $ui__input_cursor && _patch_write($scope0_id, "PatchMarkedWrite:input_text", input.text, !_server_guard($scope0_reason, 2)), $fg__input_cursor && $ui__input_text && _patch_write($scope0_id, "PatchMarkedWrite:highlight", highlight, !$sg__input_cursor));
+	}) || ($fg__input_text && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_text", input.text, !_server_guard($scope0_reason, 2)), $fg__input_cursor && $ui__input_text && _patch_write($scope0_id, "PatchMarkedWrite:highlight", highlight, !$sg__input_cursor));
 });
 
 // template.marko

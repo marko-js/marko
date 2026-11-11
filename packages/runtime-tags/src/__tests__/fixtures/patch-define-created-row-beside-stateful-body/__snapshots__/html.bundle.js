@@ -26,8 +26,8 @@ var template_default = _template("a", (input) => {
 		_write_if($scope2_reason, 0) && _scope($scope2_id, { e: ($ui__isOpen || _unfilled_if($scope2_reason, 1)) && label }) || $fg__label && $ui__isOpen && _patch_write($scope2_id, "xe", label, !_server_guard($scope2_reason, 1));
 	}, $scope0_id) };
 	_for_of(input.rows, (row) => {
-		const $scope1_id = _scope_id(), $ui__input_label = _unfilled_if($scope0_reason, 4), $fg__input_rows = _filled_guard($scope0_reason, 2);
-		$fg__input_rows && $ui__input_label && _patch_write($scope1_id, "xc", row, !_server_guard($scope0_reason, 2));
+		const $scope1_id = _scope_id(), $fg__input_rows = _filled_guard($scope0_reason, 2);
+		$fg__input_rows && _unfilled_if($scope0_reason, 4) && _patch_write($scope1_id, "xc", row, !_server_guard($scope0_reason, 2));
 		_set_scope_reason(_updates_from($scope0_reason, 3) << 1 | _updates_from($scope0_reason, 0) << 3);
 		const $childScope = _peek_scope_id($scope1_id, "a", 0);
 		Panel.content({
@@ -38,7 +38,7 @@ var template_default = _template("a", (input) => {
 		_client_guard($scope0_reason, 3) && _patch_render($scope1_id, "a4");
 		_patch_render($scope1_id, "a5", ((_filled_guard($scope0_reason, 4) ? " >h" : "") + ($fg__input_rows ? " c" : "")).slice(1), $scope0_reason, 0);
 		_scope($scope1_id, {
-			c: ($ui__input_label || _unfilled_if($scope0_reason, 0)) && row,
+			c: _unfilled_if($scope0_reason, 0) && row,
 			_: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id),
 			a: _existing_scope($childScope)
 		});

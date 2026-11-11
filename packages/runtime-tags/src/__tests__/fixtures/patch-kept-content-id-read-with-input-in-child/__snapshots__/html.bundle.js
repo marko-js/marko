@@ -1,14 +1,14 @@
 // tags/field.marko
 _shells({ c: "c; b D ;<input><label> </label>" });
 var field_default = _template("c", (input) => {
-	const $scope0_reason = _scope_reason(), $uf__input_id = _updates_from($scope0_reason, 1), $ui__input_id__OR__input_label = _unfilled_if($scope0_reason, 0), $ui__input_label = _unfilled_if($scope0_reason, 2), $ui__input_id = _unfilled_if($scope0_reason, 1), $fg__input_id = _filled_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $uf__input_id = _updates_from($scope0_reason, 1), $ui__input_id__OR__input_label = _unfilled_if($scope0_reason, 0), $fg__input_id = _filled_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	_html(`<input${_attr("id", input.id, $scope0_id, "a", $scope0_reason, 1)}${_attr("title", input.label + " " + input.id, $scope0_id, "a", $scope0_reason, 0)}>${_el_mark($scope0_id, "a", $uf__input_id || _updates_from($scope0_reason, 0))}<label${_attr("for", input.id, $scope0_id, "b", $scope0_reason, 1)}>${_text_mark($scope0_id, "c", input.label, 1, $scope0_reason, 2)}</label>${_el_mark($scope0_id, "b", $uf__input_id)}`);
 	_patch_render($scope0_id, "c0", (($fg__input_id ? " f" : "") + ($fg__input_label ? " g" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		f: ($ui__input_label || $ui__input_id__OR__input_label) && input.id,
-		g: ($ui__input_id || $ui__input_id__OR__input_label) && input.label
-	}) || ($fg__input_id && $ui__input_label && _patch_write($scope0_id, "xf", input.id, !_server_guard($scope0_reason, 1)), $fg__input_label && $ui__input_id && _patch_write($scope0_id, "xg", input.label, !_server_guard($scope0_reason, 2)));
+		f: $ui__input_id__OR__input_label && input.id,
+		g: $ui__input_id__OR__input_label && input.label
+	}) || ($fg__input_id && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xf", input.id, !_server_guard($scope0_reason, 1)), $fg__input_label && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xg", input.label, !_server_guard($scope0_reason, 2)));
 });
 
 // tags/card.marko

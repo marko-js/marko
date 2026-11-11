@@ -4,7 +4,7 @@ const $walks$1 = " b";
 const $setup$1 = [[], ["__tests__/tags/stepper.marko_0"]];
 _shells({ "__tests__/tags/stepper.marko": "__tests__/tags/stepper.marko !__tests__/tags/stepper.marko_0; ;<input type=number>" });
 var stepper_default = _template("__tests__/tags/stepper.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $ui__input_value__OR__input_valueChange = _unfilled_if($scope0_reason, 0), $sg__input_max = _server_guard($scope0_reason, 1), $fg__input_max = _filled_guard($scope0_reason, 1), $ui__input_valueChange = _unfilled_if($scope0_reason, 3), $ui__input_value = _unfilled_if($scope0_reason, 2), $fg__input_value = _filled_guard($scope0_reason, 2), $fg__input_valueChange = _filled_guard($scope0_reason, 3);
+	const $scope0_reason = _scope_reason(), $ui__input_value__OR__input_valueChange = _unfilled_if($scope0_reason, 0), $sg__input_max = _server_guard($scope0_reason, 1), $fg__input_max = _filled_guard($scope0_reason, 1), $fg__input_value = _filled_guard($scope0_reason, 2), $fg__input_valueChange = _filled_guard($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	$fg__input_max && _patch_write($scope0_id, "PatchMarkedWrite:input_max", input.max, !$sg__input_max);
 	const clamp = _bind_resume((v) => Math.min(input.max, Number(v)), "__tests__/tags/stepper.marko_0/clamp", $scope0_id);
@@ -18,8 +18,8 @@ var stepper_default = _template("__tests__/tags/stepper.marko", (input) => {
 	_patch_let_change($scope0_id, "PatchFill:__tests__/tags/stepper.marko_0_current#8/fill", current, "PatchWrite:TagVariableChange:current", $currentChange, $scope0_reason, 0);
 	_scope($scope0_id, {
 		input_max: input.max,
-		input_value: ($ui__input_valueChange || $ui__input_value__OR__input_valueChange) && input.value,
-		input_valueChange: ($ui__input_value || $ui__input_value__OR__input_valueChange) && input.valueChange,
+		input_value: $ui__input_value__OR__input_valueChange && input.value,
+		input_valueChange: $ui__input_value__OR__input_valueChange && input.valueChange,
 		clamp,
 		current: _write_if($scope0_reason, 1) && current,
 		"TagVariableChange:current": $currentChange
@@ -31,7 +31,7 @@ var stepper_default = _template("__tests__/tags/stepper.marko", (input) => {
 		current: "2:6",
 		"TagVariableChange:current": ["currentChange", "2:6"],
 		"ControlledHandler:#input/0": ["valueChange"]
-	}) || ($fg__input_value && $ui__input_valueChange && _patch_write($scope0_id, "PatchMarkedWrite:input_value", input.value, !_server_guard($scope0_reason, 2)), $fg__input_valueChange && $ui__input_value && _patch_write($scope0_id, "PatchMarkedWrite:input_valueChange", input.valueChange, !_server_guard($scope0_reason, 3)));
+	}) || ($fg__input_value && _unfilled_if($scope0_reason, 3) && _patch_write($scope0_id, "PatchMarkedWrite:input_value", input.value, !_server_guard($scope0_reason, 2)), $fg__input_valueChange && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_valueChange", input.valueChange, !_server_guard($scope0_reason, 3)));
 });
 
 // template.marko

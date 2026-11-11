@@ -4,17 +4,17 @@ const $walks$1 = "";
 const $setup$1 = [[], []];
 _shells({ "__tests__/tags/child.marko": "^__tests__/tags/child.marko," });
 var child_default = _template("__tests__/tags/child.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $ui__input_label__OR__input_count = _unfilled_if($scope0_reason, 0), $ui__input_count = _unfilled_if($scope0_reason, 2), $ui__input_label = _unfilled_if($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 1), $fg__input_count = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $ui__input_label__OR__input_count = _unfilled_if($scope0_reason, 0), $fg__input_label = _filled_guard($scope0_reason, 1), $fg__input_count = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $return = input.label + input.count;
 	_patch_render($scope0_id, "__tests__/tags/child.marko_0_input_label#2_input_count#3/setup", (($fg__input_label ? " input_label" : "") + ($fg__input_count ? " input_count" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		input_label: ($ui__input_count || $ui__input_label__OR__input_count) && input.label,
-		input_count: ($ui__input_label || $ui__input_label__OR__input_count) && input.count
+		input_label: $ui__input_label__OR__input_count && input.label,
+		input_count: $ui__input_label__OR__input_count && input.count
 	}, "__tests__/tags/child.marko", 0, {
 		input_label: ["input.label"],
 		input_count: ["input.count"]
-	}) || ($fg__input_label && $ui__input_count && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 1)), $fg__input_count && $ui__input_label && _patch_write($scope0_id, "PatchMarkedWrite:input_count", input.count, !_server_guard($scope0_reason, 2)));
+	}) || ($fg__input_label && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_label", input.label, !_server_guard($scope0_reason, 1)), $fg__input_count && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_count", input.count, !_server_guard($scope0_reason, 2)));
 	return $return;
 });
 

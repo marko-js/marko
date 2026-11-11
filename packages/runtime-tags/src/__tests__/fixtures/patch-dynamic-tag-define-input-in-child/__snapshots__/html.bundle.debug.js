@@ -8,7 +8,7 @@ _shells({
 	"__tests__/tags/picker.marko": "__tests__/tags/picker.marko;b%;<!><!><!>"
 });
 var picker_default = _template("__tests__/tags/picker.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_useA__OR__input_record = _write_guard($scope0_reason, 0), $ui__input_useA__OR__input_record = _unfilled_if($scope0_reason, 0), $ui__input_record = _unfilled_if($scope0_reason, 2), $ui__input_useA = _unfilled_if($scope0_reason, 1), $fg__input_useA = _filled_guard($scope0_reason, 1), $fg__input_record = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_useA__OR__input_record = _write_guard($scope0_reason, 0), $ui__input_useA__OR__input_record = _unfilled_if($scope0_reason, 0), $fg__input_useA = _filled_guard($scope0_reason, 1), $fg__input_record = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const Card = { content: _content_resume("__tests__/tags/picker.marko_1*content", ({ record }) => {
 		const $scope1_id = _scope_id();
@@ -27,8 +27,8 @@ var picker_default = _template("__tests__/tags/picker.marko", (input) => {
 	$ui__input_useA__OR__input_record && _patch_write($scope0_id, "PatchWrite:Other", Other, 1);
 	_patch_render($scope0_id, "__tests__/tags/picker.marko_0_input_useA#3_input_record#4_Card#5_Other#6/setup", (($fg__input_useA ? " input_useA" : "") + ($fg__input_record ? " input_record" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		input_useA: ($ui__input_record || $ui__input_useA__OR__input_record) && input.useA,
-		input_record: ($ui__input_useA || $ui__input_useA__OR__input_record) && input.record,
+		input_useA: $ui__input_useA__OR__input_record && input.useA,
+		input_record: $ui__input_useA__OR__input_record && input.record,
 		Card: $ui__input_useA__OR__input_record && Card,
 		Other: $ui__input_useA__OR__input_record && Other
 	}, "__tests__/tags/picker.marko", 0, {
@@ -36,7 +36,7 @@ var picker_default = _template("__tests__/tags/picker.marko", (input) => {
 		input_record: ["input.record"],
 		Card: "1:9",
 		Other: "4:9"
-	}) || ($fg__input_useA && $ui__input_record && _patch_write($scope0_id, "PatchMarkedWrite:input_useA", input.useA, !_server_guard($scope0_reason, 1)), $fg__input_record && $ui__input_useA && _patch_write($scope0_id, "PatchMarkedWrite:input_record", input.record, !_server_guard($scope0_reason, 2)));
+	}) || ($fg__input_useA && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "PatchMarkedWrite:input_useA", input.useA, !_server_guard($scope0_reason, 1)), $fg__input_record && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "PatchMarkedWrite:input_record", input.record, !_server_guard($scope0_reason, 2)));
 });
 
 // template.marko

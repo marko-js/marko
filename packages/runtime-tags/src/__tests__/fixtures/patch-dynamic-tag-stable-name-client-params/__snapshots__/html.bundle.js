@@ -1,7 +1,7 @@
 // template.marko
 _shells({ a: "a;b%;<!><!><!>" });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show__OR__input_label = _write_guard($scope0_reason, 0), $ui__input_show__OR__input_label = _unfilled_if($scope0_reason, 0), $ui__input_label = _unfilled_if($scope0_reason, 2), $ui__input_show = _unfilled_if($scope0_reason, 1), $fg__input_show = _filled_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_show__OR__input_label = _write_guard($scope0_reason, 0), $ui__input_show__OR__input_label = _unfilled_if($scope0_reason, 0), $fg__input_show = _filled_guard($scope0_reason, 1), $fg__input_label = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const Box = { content: _content_resume("a0", ({ show, label }) => {
 		const $scope1_id = _scope_id();
@@ -24,8 +24,8 @@ var template_default = _template("a", (input) => {
 	}, 1, 0, 0, $wg__input_show__OR__input_label, $scope0_reason, 0, 0, 0, 0);
 	_patch_render($scope0_id, "a3", (($fg__input_show ? " d" : "") + ($fg__input_label ? " e" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		d: ($ui__input_label || $ui__input_show__OR__input_label) && input.show,
-		e: ($ui__input_show || $ui__input_show__OR__input_label) && input.label,
+		d: $ui__input_show__OR__input_label && input.show,
+		e: $ui__input_show__OR__input_label && input.label,
 		f: $ui__input_show__OR__input_label && Box
-	}) || ($fg__input_show && $ui__input_label && _patch_write($scope0_id, "xd", input.show, !_server_guard($scope0_reason, 1)), $fg__input_label && $ui__input_show && _patch_write($scope0_id, "xe", input.label, !_server_guard($scope0_reason, 2)));
+	}) || ($fg__input_show && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xd", input.show, !_server_guard($scope0_reason, 1)), $fg__input_label && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.label, !_server_guard($scope0_reason, 2)));
 }, 1);

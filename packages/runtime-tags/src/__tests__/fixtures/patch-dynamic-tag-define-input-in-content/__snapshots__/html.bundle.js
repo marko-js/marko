@@ -19,7 +19,7 @@ _shells({
 	a: `a${_shell_marker($setup)};${((_w0) => `/${_w0}&`)("D%l")};${$template}`
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_useA__OR__input_record = _write_guard($scope0_reason, 0), $ui__input_useA__OR__input_record = _unfilled_if($scope0_reason, 0), $cg__input_useA__OR__input_record = _client_guard($scope0_reason, 0), $ui__input_record = _unfilled_if($scope0_reason, 2), $ui__input_useA = _unfilled_if($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $wg__input_useA__OR__input_record = _write_guard($scope0_reason, 0), $ui__input_useA__OR__input_record = _unfilled_if($scope0_reason, 0), $cg__input_useA__OR__input_record = _client_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	const $input_useA__closures = /* @__PURE__ */ new Set();
 	const $input_record__closures = /* @__PURE__ */ new Set();
@@ -48,12 +48,12 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id) });
 	_patch_child_end();
 	_scope($scope0_id, {
-		d: ($ui__input_record || $ui__input_useA__OR__input_record) && input.useA,
-		e: ($ui__input_useA || $ui__input_useA__OR__input_record) && input.record,
+		d: $ui__input_useA__OR__input_record && input.useA,
+		e: $ui__input_useA__OR__input_record && input.record,
 		f: $ui__input_useA__OR__input_record && Card,
 		g: $ui__input_useA__OR__input_record && Other,
-		h: _write_if($scope0_reason, 1) && ($ui__input_useA || $ui__input_useA__OR__input_record) && $input_useA__closures,
-		i: _write_if($scope0_reason, 2) && ($ui__input_record || $ui__input_useA__OR__input_record) && $input_record__closures,
+		h: _write_if($scope0_reason, 1) && $ui__input_useA__OR__input_record && $input_useA__closures,
+		i: _write_if($scope0_reason, 2) && $ui__input_useA__OR__input_record && $input_record__closures,
 		a: _existing_scope($childScope)
-	}) || (_filled_guard($scope0_reason, 1) && $ui__input_record && _patch_write($scope0_id, "xd", input.useA, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && $ui__input_useA && _patch_write($scope0_id, "xe", input.record, !_server_guard($scope0_reason, 2)));
+	}) || (_filled_guard($scope0_reason, 1) && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xd", input.useA, !_server_guard($scope0_reason, 1)), _filled_guard($scope0_reason, 2) && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.record, !_server_guard($scope0_reason, 2)));
 }, 1);

@@ -23,7 +23,7 @@ _shells({
 	a0: "a0;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $ui__input_items__OR__input_record__OR__input_end = _unfilled_if($scope0_reason, 3), $ui__input_record__OR__input_end = _unfilled_if($scope0_reason, 2), $ui__input_items__OR__input_end = _unfilled_if($scope0_reason, 1), $ui__input_items__OR__input_record = _unfilled_if($scope0_reason, 0), $fg__input_items = _filled_guard($scope0_reason, 4), $fg__input_record = _filled_guard($scope0_reason, 5), $fg__input_end = _filled_guard($scope0_reason, 6);
+	const $scope0_reason = _scope_reason(), $ui__input_items__OR__input_record__OR__input_end = _unfilled_if($scope0_reason, 3), $fg__input_items = _filled_guard($scope0_reason, 4), $fg__input_record = _filled_guard($scope0_reason, 5), $fg__input_end = _filled_guard($scope0_reason, 6);
 	const $scope0_id = _scope_id();
 	const Content = { content: _content("a5", ({ item: items }) => {
 		const $scope1_id = _scope_id();
@@ -78,9 +78,9 @@ var template_default = _template("a", (input) => {
 	_patch_child_end();
 	_patch_render($scope0_id, "a6", (($fg__input_items ? " d" : "") + ($fg__input_record ? " e" : "") + ($fg__input_end ? " f" : "")).slice(1), $scope0_reason, 3);
 	_scope($scope0_id, {
-		d: ($ui__input_record__OR__input_end || $ui__input_items__OR__input_record__OR__input_end) && input.items,
-		e: ($ui__input_items__OR__input_end || $ui__input_items__OR__input_record__OR__input_end) && input.record,
-		f: ($ui__input_items__OR__input_record || $ui__input_items__OR__input_record__OR__input_end) && input.end,
+		d: $ui__input_items__OR__input_record__OR__input_end && input.items,
+		e: $ui__input_items__OR__input_record__OR__input_end && input.record,
+		f: $ui__input_items__OR__input_record__OR__input_end && input.end,
 		a: _existing_scope($childScope5)
-	}) || ($fg__input_items && $ui__input_record__OR__input_end && _patch_write($scope0_id, "xd", input.items, !_server_guard($scope0_reason, 4)), $fg__input_record && $ui__input_items__OR__input_end && _patch_write($scope0_id, "xe", input.record, !_server_guard($scope0_reason, 5)), $fg__input_end && $ui__input_items__OR__input_record && _patch_write($scope0_id, "xf", input.end, !_server_guard($scope0_reason, 6)));
+	}) || ($fg__input_items && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xd", input.items, !_server_guard($scope0_reason, 4)), $fg__input_record && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.record, !_server_guard($scope0_reason, 5)), $fg__input_end && _unfilled_if($scope0_reason, 0) && _patch_write($scope0_id, "xf", input.end, !_server_guard($scope0_reason, 6)));
 }, 1);

@@ -35,8 +35,8 @@ var panel_default = _template("b", (input) => {
 	_scope($scope0_id, {
 		e: ($ui__input_show__OR__input_b || $ui__input_a__OR__input_b) && input.a,
 		f: ($ui__input_show__OR__input_a || $ui__input_a__OR__input_b) && input.b,
-		h: _write_if($scope0_reason, 5) && (_unfilled_if($scope0_reason, 5) || $ui__input_a__OR__input_b || $ui__input_show) && $input_a__closures,
-		i: _write_if($scope0_reason, 6) && (_unfilled_if($scope0_reason, 6) || $ui__input_a__OR__input_b || $ui__input_show) && $input_b__closures
+		h: _write_if($scope0_reason, 5) && ($ui__input_a__OR__input_b || $ui__input_show) && $input_a__closures,
+		i: _write_if($scope0_reason, 6) && ($ui__input_a__OR__input_b || $ui__input_show) && $input_b__closures
 	}) || (_filled_guard($scope0_reason, 5) && $ui__input_show__OR__input_b && _patch_write($scope0_id, "xe", input.a, !_server_guard($scope0_reason, 5)) && $cg__input_show && _patch_subscribers($scope0_id, "b6", "e"), _filled_guard($scope0_reason, 6) && $ui__input_show__OR__input_a && _patch_write($scope0_id, "xf", input.b, !_server_guard($scope0_reason, 6)) && $cg__input_show && _patch_subscribers($scope0_id, "b7", "f"));
 });
 

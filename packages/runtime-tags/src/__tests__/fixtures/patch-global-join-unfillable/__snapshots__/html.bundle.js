@@ -5,7 +5,7 @@ _shells({
 	a: "a;b%;<!><!><!>"
 });
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $wg__input_show__OR__input_n = _write_guard($scope0_reason, 0), $ui__input_show__OR__input_n = _unfilled_if($scope0_reason, 0), $ui__input_n = _unfilled_if($scope0_reason, 2), $ui__input_show = _unfilled_if($scope0_reason, 1), $fg__input_show = _filled_guard($scope0_reason, 1), $fg__input_n = _filled_guard($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $wg__input_show__OR__input_n = _write_guard($scope0_reason, 0), $ui__input_show__OR__input_n = _unfilled_if($scope0_reason, 0), $fg__input_show = _filled_guard($scope0_reason, 1), $fg__input_n = _filled_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
 	const Outer = { content: _content_resume("a4", ({ value }) => {
@@ -46,8 +46,8 @@ var template_default = _template("a", (input) => {
 	_dynamic_tag($scope0_id, "a", input.show && Outer, { value: input.n }, 9, 0, 0, $wg__input_show__OR__input_n, $scope0_reason, 0);
 	_patch_render($scope0_id, "a8", (($fg__input_show ? " d" : "") + ($fg__input_n ? " e" : "")).slice(1), $scope0_reason, 0);
 	_scope($scope0_id, {
-		d: ($ui__input_n || $ui__input_show__OR__input_n) && input.show,
-		e: ($ui__input_show || $ui__input_show__OR__input_n) && input.n,
+		d: $ui__input_show__OR__input_n && input.show,
+		e: $ui__input_show__OR__input_n && input.n,
 		f: $ui__input_show__OR__input_n && Outer
-	}) || ($fg__input_show && $ui__input_n && _patch_write($scope0_id, "xd", input.show, !_server_guard($scope0_reason, 1)), $fg__input_n && $ui__input_show && _patch_write($scope0_id, "xe", input.n, !_server_guard($scope0_reason, 2)));
+	}) || ($fg__input_show && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xd", input.show, !_server_guard($scope0_reason, 1)), $fg__input_n && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.n, !_server_guard($scope0_reason, 2)));
 }, 1);

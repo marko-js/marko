@@ -13,9 +13,9 @@ var child_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $cg__input_items__OR__input_v = _client_guard($scope0_reason, 0), $wi__input_items__OR__input_v = _write_if($scope0_reason, 0), $cg__input_on = _client_guard($scope0_reason, 4), $ui__input_items = _unfilled_if($scope0_reason, 2), $fg__input_v = _filled_guard($scope0_reason, 3), $fg__input_on = _filled_guard($scope0_reason, 4), $cg__input_items = _client_guard($scope0_reason, 2);
 	const $scope0_id = _scope_id();
 	_for_of(input.items, (item) => {
-		const $scope1_id = _scope_id(), $ui__input_on = _unfilled_if($scope0_reason, 4), $ui__input_items__OR__input_v = _unfilled_if($scope0_reason, 0), $ui__input_v = _unfilled_if($scope0_reason, 3), $fg__input_items = _filled_guard($scope0_reason, 2);
+		const $scope1_id = _scope_id(), $ui__input_on = _unfilled_if($scope0_reason, 4), $ui__input_items__OR__input_v = _unfilled_if($scope0_reason, 0), $fg__input_items = _filled_guard($scope0_reason, 2);
 		const $for_content__v__closures = /* @__PURE__ */ new Set();
-		$fg__input_items && $ui__input_v && _patch_write($scope1_id, "xc", item, !_server_guard($scope0_reason, 2));
+		$fg__input_items && _unfilled_if($scope0_reason, 3) && _patch_write($scope1_id, "xc", item, !_server_guard($scope0_reason, 2));
 		const v = `${item}${input.v}!`;
 		_filled_guard($scope0_reason, 0) && $ui__input_on && _patch_write($scope1_id, "xe", v, !_server_guard($scope0_reason, 0)) && $cg__input_on && _patch_subscribers($scope1_id, "b0", "e");
 		const D = { content: _content("b3", ({ on }) => {
@@ -39,7 +39,7 @@ var child_default = _template("b", (input) => {
 		$cg__input_on && _patch_render($scope1_id, "b5");
 		_patch_render($scope1_id, "b6", ((_filled_guard($scope0_reason, 3) ? " >e" : "") + ($fg__input_items ? " c" : "")).slice(1), $scope0_reason, 0);
 		_scope($scope1_id, {
-			c: ($ui__input_v || $ui__input_items__OR__input_v) && item,
+			c: $ui__input_items__OR__input_v && item,
 			e: ($ui__input_on || $ui__input_items__OR__input_v) && v,
 			_: _write_if($scope0_reason, 1) && _scope_with_id($scope0_id),
 			i: $wi__input_items__OR__input_v && $for_content__v__closures,
@@ -49,7 +49,7 @@ var child_default = _template("b", (input) => {
 	$fg__input_v && $cg__input_items && _patch_render($scope0_id, "b7", "e");
 	$fg__input_on && $cg__input_items && _patch_render($scope0_id, "b5", "f");
 	_scope($scope0_id, {
-		e: ($ui__input_items || _unfilled_if($scope0_reason, 0)) && input.v,
+		e: _unfilled_if($scope0_reason, 0) && input.v,
 		f: ($ui__input_items || _unfilled_if($scope0_reason, 4)) && input.on
 	}) || ($fg__input_v && $ui__input_items && _patch_write($scope0_id, "xe", input.v, !_server_guard($scope0_reason, 3)), $fg__input_on && $ui__input_items && _patch_write($scope0_id, "xf", input.on, !_server_guard($scope0_reason, 4)));
 });

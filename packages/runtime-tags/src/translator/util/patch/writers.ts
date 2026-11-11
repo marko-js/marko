@@ -1206,11 +1206,23 @@ function getUnfilledGuard(
     checked.add(paramSection.paramReasonGroups![index]);
     groups.push([paramSection, group, index]);
   });
+  const wider = getCallerGroups(section, structure, checked, []);
   const guard = orGroupChecks(
     section,
     undefined,
     "_unfilled_if",
-    getCallerGroups(section, structure, checked, groups),
+    // A structure group holding a params group of its section gets the client bit, or any
+    // bit, wherever the params group does, so its check implies the params group's.
+    groups
+      .filter(
+        ([paramSection, params]) =>
+          !wider.some(
+            ([groupSection, group]) =>
+              groupSection === paramSection &&
+              bindingUtil.isSuperset(group, params),
+          ),
+      )
+      .concat(wider),
     own,
   );
   return unpatched ? orGuard(guard, callRuntime("_unfilled_if")) : guard!;

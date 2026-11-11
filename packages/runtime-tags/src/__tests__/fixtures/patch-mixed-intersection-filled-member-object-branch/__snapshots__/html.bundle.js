@@ -51,7 +51,7 @@ var panel_default = _template("b", (input) => {
 	_scope($scope0_id, {
 		e: ($ui__input_show || _unfilled_if($scope0_reason, 5)) && input.b,
 		f: ($ui__input_show__OR__input_b || $ui__input_b__OR__input_a) && input.a,
-		i: _write_if($scope0_reason, 6) && (_unfilled_if($scope0_reason, 6) || $ui__input_b__OR__input_a || $ui__input_show) && $input_a__closures
+		i: _write_if($scope0_reason, 6) && ($ui__input_b__OR__input_a || $ui__input_show) && $input_a__closures
 	}) || ($fg__input_b && $ui__input_show && _patch_write($scope0_id, "xe", input.b, !$sg__input_b), _filled_guard($scope0_reason, 6) && $ui__input_show__OR__input_b && _patch_write($scope0_id, "xf", input.a, !_server_guard($scope0_reason, 6)) && $cg__input_show && _patch_subscribers($scope0_id, "b8", "f"));
 });
 

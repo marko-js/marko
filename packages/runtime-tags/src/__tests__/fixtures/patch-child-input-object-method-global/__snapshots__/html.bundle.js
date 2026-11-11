@@ -7,7 +7,7 @@ _shells({
 	b4: "b4;D ;<span> </span>"
 });
 var code_block_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $uf__input_cursor__OR__input_text = _updates_from($scope0_reason, 0), $scope0_page = _page_render(), $uf__input_cursor = _updates_from($scope0_reason, 1), $wi__input_cursor__OR__input_text = _write_if($scope0_reason, 0), $wg__input_text_length = _write_guard($scope0_reason, 3), $ui__input_cursor__OR__input_text = _unfilled_if($scope0_reason, 0), $ui__input_cursor = _unfilled_if($scope0_reason, 1), $ui__input_text = _unfilled_if($scope0_reason, 2), $fg__input_text = _filled_guard($scope0_reason, 2), $cg__input_text_length = _client_guard($scope0_reason, 3), $fg__input_cursor = _filled_guard($scope0_reason, 1);
+	const $scope0_reason = _scope_reason(), $uf__input_cursor__OR__input_text = _updates_from($scope0_reason, 0), $scope0_page = _page_render(), $uf__input_cursor = _updates_from($scope0_reason, 1), $wi__input_cursor__OR__input_text = _write_if($scope0_reason, 0), $wg__input_text_length = _write_guard($scope0_reason, 3), $ui__input_cursor__OR__input_text = _unfilled_if($scope0_reason, 0), $fg__input_text = _filled_guard($scope0_reason, 2), $cg__input_text_length = _client_guard($scope0_reason, 3), $fg__input_cursor = _filled_guard($scope0_reason, 1);
 	const $scope0_id = _scope_id();
 	const $global$1 = $global();
 	$fg__input_cursor && $ui__input_cursor__OR__input_text && _patch_write($scope0_id, "xd", input.cursor, !_server_guard($scope0_reason, 1));
@@ -36,9 +36,9 @@ var code_block_default = _template("b", (input) => {
 	_filled_guard((2 | $uf__input_cursor) << 1, 0) && $cg__input_text_length && _patch_render($scope0_id, "b9", ((_filled_guard((2 | $uf__input_cursor) << 1, 0) ? " g" : "") + ($fg__input_cursor ? " d" : "")).slice(1));
 	_scope($scope0_id, {
 		d: $ui__input_cursor__OR__input_text && input.cursor,
-		e: ($ui__input_cursor || $ui__input_cursor__OR__input_text || _unfilled_if()) && input.text,
-		g: ($ui__input_text || $ui__input_cursor__OR__input_text) && highlight
-	}) || ($fg__input_text && $ui__input_cursor && _patch_write($scope0_id, "xe", input.text, !_server_guard($scope0_reason, 2)), _filled_guard((2 | $uf__input_cursor) << 1, 0) && $ui__input_text && _patch_write($scope0_id, "xg", highlight, !_server_guard((2 | $uf__input_cursor) << 1, 0)));
+		e: ($ui__input_cursor__OR__input_text || _unfilled_if()) && input.text,
+		g: $ui__input_cursor__OR__input_text && highlight
+	}) || ($fg__input_text && _unfilled_if($scope0_reason, 1) && _patch_write($scope0_id, "xe", input.text, !_server_guard($scope0_reason, 2)), _filled_guard((2 | $uf__input_cursor) << 1, 0) && _unfilled_if($scope0_reason, 2) && _patch_write($scope0_id, "xg", highlight, !_server_guard((2 | $uf__input_cursor) << 1, 0)));
 });
 
 // template.marko

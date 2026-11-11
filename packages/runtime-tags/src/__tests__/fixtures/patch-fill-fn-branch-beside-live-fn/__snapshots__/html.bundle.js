@@ -60,9 +60,9 @@ var template_default = _template("a", (input) => {
 	_patch_render($scope0_id, "a10", (($fg__input_flag ? " e" : "") + ($fg__input_title ? " f" : "")).slice(1), $scope0_reason, 0);
 	_patch_render($scope0_id, "a11", (($fg__input_title ? " f" : "") + ($fg__input_alt ? " h" : "")).slice(1), $scope0_reason, 1);
 	_scope($scope0_id, {
-		e: ($ui__input_title || _unfilled_if($scope0_reason, 0)) && input.flag,
+		e: _unfilled_if($scope0_reason, 0) && input.flag,
 		f: input.title,
-		h: ($ui__input_title || _unfilled_if($scope0_reason, 1)) && input.alt,
+		h: _unfilled_if($scope0_reason, 1) && input.alt,
 		j: fmt,
 		k: alt,
 		l: last,

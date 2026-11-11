@@ -22,17 +22,17 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id) };
 	const Wrap = { content: _content("__tests__/template.marko_3*content", ({ on, content }) => {
 		const $scope3_id = _scope_id();
-		const $scope3_reason = _scope_reason(), $wg__on__OR__content = _write_guard($scope3_reason, 0), $ui__on__OR__content = _unfilled_if($scope3_reason, 0), $ui__on = _unfilled_if($scope3_reason, 1), $fg__content = _filled_guard($scope3_reason, 2);
+		const $scope3_reason = _scope_reason(), $wg__on__OR__content = _write_guard($scope3_reason, 0), $ui__on__OR__content = _unfilled_if($scope3_reason, 0), $fg__content = _filled_guard($scope3_reason, 2);
 		const Tag = on ? "p" : "div";
 		_dynamic_tag($scope3_id, "#text/0", Tag, { content }, 1, 0, 0, $wg__on__OR__content, $scope3_reason, 0);
 		_patch_render($scope3_id, "__tests__/template.marko_3_content#4_Tag#5/setup", (($fg__content ? " content" : "") + (_filled_guard($scope3_reason, 1) ? " Tag" : "")).slice(1), $scope3_reason, 0);
 		_write_if($scope3_reason, 0) && _scope($scope3_id, {
-			content: ($ui__on || $ui__on__OR__content) && content,
+			content: $ui__on__OR__content && content,
 			Tag: $ui__on__OR__content && Tag
 		}, "__tests__/template.marko", "2:2", {
 			content: "2:20",
 			Tag: "3:10"
-		}) || $fg__content && $ui__on && _patch_write($scope3_id, "PatchMarkedWrite:content", content, 1);
+		}) || $fg__content && _unfilled_if($scope3_reason, 1) && _patch_write($scope3_id, "PatchMarkedWrite:content", content, 1);
 	}, $scope0_id) };
 	_for_of(input.items, (item) => {
 		const $scope2_id = _scope_id();
