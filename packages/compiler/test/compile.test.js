@@ -228,6 +228,10 @@ describe("compiler/compile", () => {
       });
       fs.mkdirSync(path.join(project, "pkg"));
       fs.writeFileSync(
+        path.join(project, "node_modules", "dep", "package.json"),
+        JSON.stringify({ name: "dep" }),
+      );
+      fs.writeFileSync(
         path.join(project, "node_modules", "dep", "tag.marko"),
         "<span>dep</span>",
       );
@@ -262,6 +266,49 @@ describe("compiler/compile", () => {
         compileImport(path.join(link, "x.marko")),
         /dep\/tag\.marko/,
       );
+    });
+
+    it("finds a package's template added after an import of it failed", () => {
+      const importLate = () =>
+        compileSync(
+          'import Late from "late/tag.marko"\n<Late/>',
+          path.join(project, "late.marko"),
+          { translator, output: "html", cache: new Map() },
+        ).code;
+      assert.throws(importLate, /Cannot find module 'late\/tag\.marko'/);
+      const dir = path.join(project, "node_modules", "late");
+      fs.mkdirSync(dir);
+      fs.writeFileSync(path.join(dir, "package.json"), '{"name":"late"}');
+      fs.writeFileSync(path.join(dir, "tag.marko"), "<span>late</span>");
+      assert.match(importLate(), /late\/tag\.marko/);
+    });
+
+    it("keeps where a package's template is until the caches are cleared", () => {
+      const importMoving = () =>
+        compileSync(
+          'import Moving from "moving/tag.marko"\n<Moving/>',
+          path.join(project, "moving.marko"),
+          { translator, output: "html", cache: new Map() },
+        ).code;
+      const dir = path.join(project, "node_modules", "moving");
+      const setTarget = (target) =>
+        fs.writeFileSync(
+          path.join(dir, "package.json"),
+          JSON.stringify({
+            name: "moving",
+            exports: { "./tag.marko": `./${target}` },
+          }),
+        );
+      fs.mkdirSync(dir);
+      fs.writeFileSync(path.join(dir, "a.marko"), "<span>a</span>");
+      setTarget("a.marko");
+      assert.match(importMoving(), /moving\/tag\.marko/);
+
+      fs.renameSync(path.join(dir, "a.marko"), path.join(dir, "b.marko"));
+      setTarget("b.marko");
+      assert.throws(importMoving, /Unable to find entry point/);
+      taglib.clearCaches();
+      assert.match(importMoving(), /moving\/tag\.marko/);
     });
 
     it("finds a dependency's tags past a package.json that only sets a type", () =>
@@ -308,6 +355,27 @@ describe("compiler/compile", () => {
       it("finds the root package and taglibs there", () => {
         setDependencies({ dep: "*" });
         assert.match(compileTag(), /dep\/tag\.marko/);
+      });
+
+      it("imports a package's template that only the file system holds", () => {
+        setDependencies({});
+        files[path.join(app, "node_modules", "virtual", "package.json")] =
+          JSON.stringify({ name: "virtual" });
+        files[path.join(app, "node_modules", "virtual", "tag.marko")] =
+          "<span>virtual</span>";
+        assert.match(
+          compileSync(
+            'import Virtual from "virtual/tag.marko"\n<Virtual/>',
+            path.join(app, "x.marko"),
+            {
+              translator,
+              output: "html",
+              cache: new Map(),
+              fileSystem: fromMemory(files),
+            },
+          ).code,
+          /virtual\/tag\.marko/,
+        );
       });
 
       it("reads the root package again once the taglib caches are cleared", () => {

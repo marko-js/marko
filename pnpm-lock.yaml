@@ -168,8 +168,8 @@ importers:
         specifier: ^5.39.51
         version: link:../runtime-class
       resolve-sync:
-        specifier: ^1.2.2
-        version: 1.2.2
+        specifier: ^1.3.0
+        version: 1.3.0
 
   packages/runtime-class:
     dependencies:
@@ -2060,6 +2060,9 @@ packages:
 
   resolve-sync@1.2.2:
     resolution: {integrity: sha512-qq4M0+Gxgiohxw0MUYprQiNWzYKMqCvVgpZO0Imwd1TttPIWT9NxUco8UUtIiRpiJpHPWRhhYIaiuo7EYBcv5Q==}
+
+  resolve-sync@1.3.0:
+    resolution: {integrity: sha512-ya+kf0m+C4k12q4vo2D5hxob3nSFMkKJb8BZh7RU9KME3iLLcX0BCPnFt3neduTlZqUiJtsG1vThsKw9EE7z3w==}
 
   resolve.exports@2.0.3:
     resolution: {integrity: sha512-OcXjMsGdhL4XnbShKpAcSqPMzQoYkYyhbEaeSko47MjRP9NfEQMhZkXL1DoFlt9LWQn4YttrdnV6X2OiyzBi+A==}
@@ -4042,6 +4045,10 @@ snapshots:
   require-from-string@2.0.2: {}
 
   resolve-sync@1.2.2:
+    dependencies:
+      resolve.exports: 2.0.3
+
+  resolve-sync@1.3.0:
     dependencies:
       resolve.exports: 2.0.3
 

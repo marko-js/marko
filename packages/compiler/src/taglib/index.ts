@@ -4,6 +4,7 @@ import markoModules from "@marko/compiler/modules";
 
 import { globalConfig } from "../config";
 import type { FileSystem } from "../util/fs";
+import { clearImportCache } from "../util/resolve";
 import tryLoadTranslator from "../util/try-load-translator";
 import { type Props, readJSON } from "./json";
 import { Registry, type TaglibLookup, type Translator } from "./lookup";
@@ -84,6 +85,7 @@ export function excludePackage(name: string) {
 
 export function clearCaches() {
   registries = undefined;
+  clearImportCache();
 }
 
 export function resolveOptionalTaglibs(
