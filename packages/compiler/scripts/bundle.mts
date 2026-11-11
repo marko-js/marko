@@ -18,7 +18,7 @@ if (fs.existsSync(distDir)) {
   }
 }
 
-const bundled = /^(?:entities|resolve-sync|resolve\.exports)(?:\/|$)/;
+const bundled = /^entities(?:\/|$)/;
 
 const selfReferences: Record<string, string> = {
   "@marko/compiler": "src/index.js",
@@ -169,9 +169,10 @@ await Promise.all([
     // out through the package exports and into another chunk, and that cycle
     // deadlocks rolldown's lazy chunk init. `modules` (a published root file)
     // and `internal/babel` (its own bundle) stay external.
-    // Dev dependencies are bundled, with what they import (`#` imports and
-    // `resolve.exports`): `entities` is ESM only, so bundling it keeps this CJS
-    // output requirable.
+    // `entities` is bundled because it is ESM only, keeping this CJS output
+    // requirable. `resolve-sync` stays a dependency: its environment's
+    // resolver picks its Node or browser defaults, which bundling it here
+    // would lock to Node's.
     external: (id) =>
       /^[^./#]/.test(id) && !bundled.test(id) && !(id in selfReferences),
     plugins: [

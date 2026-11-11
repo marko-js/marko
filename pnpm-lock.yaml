@@ -160,6 +160,9 @@ importers:
       relative-import-path:
         specifier: ^1.0.1
         version: 1.0.1
+      resolve-sync:
+        specifier: ^1.3.0
+        version: 1.3.0
     devDependencies:
       entities:
         specifier: ^9.0.0
@@ -167,9 +170,6 @@ importers:
       marko:
         specifier: ^5.40.0
         version: link:../runtime-class
-      resolve-sync:
-        specifier: ^1.3.0
-        version: 1.3.0
 
   packages/runtime-class:
     dependencies:
