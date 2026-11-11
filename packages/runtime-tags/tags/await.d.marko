@@ -1,6 +1,14 @@
-/** File for types only, not actual implementation **/
+/* File for types only, not actual implementation */
 
+/**
+ * Unwraps the promise in its `value=` and renders its content with the result,
+ * passed as a tag parameter. Inside a `<try>`, its `@placeholder` shows while
+ * the promise is pending and its `@catch` if it rejects.
+ *
+ * [Marko docs](https://markojs.com/docs/reference/core-tag#await)
+ */
 export interface Input<T> {
+  /** The promise to wait for. */
   value: T;
   content: Marko.Body<[Awaited<T>]>
 }

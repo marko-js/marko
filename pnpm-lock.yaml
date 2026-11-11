@@ -145,9 +145,6 @@ importers:
 
   packages/compiler:
     dependencies:
-      '@luxass/strip-json-comments':
-        specifier: ^2.0.2
-        version: 2.0.2
       htmljs-parser:
         specifier: ^5.20.0
         version: 5.20.0
@@ -160,9 +157,6 @@ importers:
       magic-string:
         specifier: ^1.4.5
         version: 1.4.5
-      raptor-util:
-        specifier: ^3.2.0
-        version: 3.2.0
       relative-import-path:
         specifier: ^1.0.1
         version: 1.0.1
@@ -173,6 +167,9 @@ importers:
       marko:
         specifier: ^5.39.51
         version: link:../runtime-class
+      resolve-sync:
+        specifier: ^1.2.2
+        version: 1.2.2
 
   packages/runtime-class:
     dependencies:
@@ -878,10 +875,6 @@ packages:
 
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
-
-  '@luxass/strip-json-comments@2.0.2':
-    resolution: {integrity: sha512-EWtlxDlLx1LYFLwS47FEb92DeXdQiIGJBTrxHiL4v1ajZ4ZuTlIuA+my6b1OZkXgDXNILqvHskzIsk4Nii/XaQ==}
-    engines: {node: '>=24'}
 
   '@manypkg/find-root@3.1.0':
     resolution: {integrity: sha512-BcSqCyKhBVZ5YkSzOiheMCV41kqAFptW6xGqYSTjkVTl9XQpr+pqHhwgGCOHQtjDCv7Is6EFyA14Sm5GVbVABA==}
@@ -3116,8 +3109,6 @@ snapshots:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.6.0
-
-  '@luxass/strip-json-comments@2.0.2': {}
 
   '@manypkg/find-root@3.1.0':
     dependencies:

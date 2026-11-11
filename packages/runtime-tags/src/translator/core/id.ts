@@ -121,14 +121,5 @@ export default {
   parseOptions: {
     openTagOnly: true,
   },
-  attributes: {},
-  autocomplete: [
-    {
-      displayText: "id/<name>",
-      description: "Use to create a unique identifier.",
-      snippet: "id/${1:name}",
-      descriptionMoreURL: "https://markojs.com/docs/reference/core-tag#id",
-    },
-  ],
   types: runtimeInfo.name + "/tags/id.d.marko",
 } as Tag;

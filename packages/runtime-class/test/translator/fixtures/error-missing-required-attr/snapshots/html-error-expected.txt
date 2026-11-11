@@ -1,5 +1,0 @@
-CompileError: 
-    at __tests__/template.marko:1:2
-    > 1 | <custom-tag/>
-        |  ^^^^^^^^^^ The "name" attribute is required.
-      2 |

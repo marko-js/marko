@@ -8,7 +8,6 @@ var VNode = require("./VNode");
 var isTextOnly = require("./is-text-only");
 var ATTR_XLINK_HREF = "xlink:href";
 var xmlnsRegExp = /^xmlns(:|$)/;
-var hasOwnProperty = Object.prototype.hasOwnProperty;
 var NS_XLINK = "http://www.w3.org/1999/xlink";
 var NS_HTML = "http://www.w3.org/1999/xhtml";
 var NS_MATH = "http://www.w3.org/1998/Math/MathML";
@@ -19,7 +18,6 @@ var DEFAULT_NS = {
 };
 
 var FLAG_SIMPLE_ATTRS = 1;
-var FLAG_CUSTOM_ELEMENT = 2;
 var FLAG_SPREAD_ATTRS = 4;
 
 var ATTR_HREF = "href";
@@ -70,14 +68,6 @@ function normalizeValue(value) {
   }
 
   return value + "";
-}
-
-function assign(a, b) {
-  for (var key in b) {
-    if (hasOwnProperty.call(b, key)) {
-      a[key] = b[key];
-    }
-  }
 }
 
 function VElementClone(other) {
@@ -174,30 +164,25 @@ VElement.prototype = {
     var attributes = this.___attributes;
     var namespaceURI = DEFAULT_NS[tagName] || parentNamespaceURI || NS_HTML;
 
-    var flags = this.___flags;
     var el = (host.ownerDocument || host).createElementNS(
       namespaceURI,
       tagName,
     );
 
-    if (flags & FLAG_CUSTOM_ELEMENT) {
-      assign(el, attributes);
-    } else {
-      for (var attrName in attributes) {
-        var attrValue = normalizeValue(attributes[attrName]);
+    for (var attrName in attributes) {
+      var attrValue = normalizeValue(attributes[attrName]);
 
-        if (attrValue !== undefined) {
-          if (attrName == ATTR_XLINK_HREF) {
-            el.setAttributeNS(NS_XLINK, ATTR_HREF, attrValue);
-          } else {
-            el.setAttribute(attrName, attrValue);
-          }
+      if (attrValue !== undefined) {
+        if (attrName == ATTR_XLINK_HREF) {
+          el.setAttributeNS(NS_XLINK, ATTR_HREF, attrValue);
+        } else {
+          el.setAttribute(attrName, attrValue);
         }
       }
+    }
 
-      if (isTextOnly(tagName)) {
-        el.textContent = this.___textContent;
-      }
+    if (isTextOnly(tagName)) {
+      el.textContent = this.___textContent;
     }
 
     vElementByDOMNode.set(el, this);
@@ -265,10 +250,6 @@ VElement.___morphAttrs = function (fromEl, vFromEl, toEl) {
   var fromFlags = vFromEl.___flags;
   var toFlags = toEl.___flags;
   var attrs = toEl.___attributes;
-
-  if (toFlags & FLAG_CUSTOM_ELEMENT) {
-    return assign(fromEl, attrs);
-  }
 
   var props = toEl.___properties;
   var attrName;

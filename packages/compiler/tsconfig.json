@@ -1,8 +1,9 @@
 {
   "extends": "../../tsconfig.json",
-  "include": ["*.d.ts"],
+  "include": ["*.d.ts", "src/taglib", "src/util/fs.ts", "src/taglib/*.json"],
   "compilerOptions": {
     "skipLibCheck": false,
+    "outDir": "../../dist/compiler",
     "tsBuildInfoFile": "../../dist/tsconfig.compiler.tsbuildinfo"
   }
 }

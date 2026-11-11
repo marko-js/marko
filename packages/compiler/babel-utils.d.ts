@@ -1,24 +1,15 @@
 import type { Config, types as t } from "@marko/compiler";
 
+/** An attribute a class API tag declares; only the class API reads these. */
 export interface AttributeDefinition {
-  allowExpressions: boolean;
-  filePath?: string;
   name: string;
-  type?: string;
-  html?: boolean;
-  enum?: string[];
-  pattern?: RegExp;
-  required: boolean;
-  setFlag?: string;
+  /** The `*` attribute, which gathers undeclared attributes into `targetProperty`. */
+  dynamicAttribute: boolean;
+  targetProperty?: string;
+  preserveName?: boolean;
+  removeDashes?: boolean;
   defaultValue?: unknown;
-  description?: string;
-  deprecated?: boolean;
-  autocomplete?: Array<{
-    displayText: string;
-    snippet: string;
-    description: string;
-    descriptionMoreURL?: string;
-  }>;
+  pattern?: RegExp;
 }
 export interface PluginDefinition<T = any> {
   path?: string;
@@ -29,31 +20,8 @@ export interface ParsePluginDefinition<T = any> {
   hook: ParsePlugin<T>;
 }
 export interface TagDefinition {
-  dir: string;
-  filePath: string;
-  attributeGroups?: string[];
-  patternAttributes?: AttributeDefinition[];
-  attributes: { [x: string]: AttributeDefinition };
-  description?: string;
-  nestedTags?: {
-    [x: string]: TagDefinition & {
-      isNestedTag: true;
-      isRepeated: boolean;
-      targetProperty: string;
-    };
-  };
-  autocomplete?: Array<{
-    displayText: string;
-    snippet: string;
-    description: string;
-    descriptionMoreURL?: string;
-  }>;
-  htmlType?: "html" | "svg" | "math";
-  html?: boolean;
   name: string;
-  isNestedTag?: boolean;
-  isRepeated?: boolean;
-  targetProperty?: string;
+  filePath: string;
   taglibId: string;
   /** Set when the taglib was discovered by resolving an installed package. */
   packageName?: string;
@@ -62,13 +30,8 @@ export interface TagDefinition {
   types?: string;
   template?: string;
   renderer?: string;
-  deprecated?: boolean;
-  openTagOnly?: boolean;
-  analyzer?: PluginDefinition<t.MarkoTag>;
-  translator?: PluginDefinition<t.MarkoTag>;
-  parser?: ParsePluginDefinition<t.MarkoTag>;
-  transformers?: PluginDefinition<t.MarkoTag>[];
-  migrators?: PluginDefinition<t.MarkoTag>[];
+  html?: boolean;
+  htmlType?: "html" | "svg" | "math";
   parseOptions?: {
     text?: boolean;
     statement?: boolean;
@@ -77,66 +40,67 @@ export interface TagDefinition {
     rawOpenTag?: boolean;
     preserveWhitespace?: boolean;
   };
+  analyzer?: PluginDefinition<t.MarkoTag>;
+  translator?: PluginDefinition<t.MarkoTag>;
+  parser?: ParsePluginDefinition<t.MarkoTag>;
+  transformers?: PluginDefinition<t.MarkoTag>[];
+  migrators?: PluginDefinition<t.MarkoTag>[];
+  /** @deprecated Marko 5 (class API) only; currently inert under Marko 6. */
+  attributes?: { [x: string]: AttributeDefinition };
+  /** @deprecated Marko 5 (class API) only; currently inert under Marko 6. */
+  patternAttributes?: AttributeDefinition[];
+  /** @deprecated Marko 5 (class API) only; currently inert under Marko 6. */
+  nestedTags?: {
+    [x: string]: TagDefinition & {
+      isNestedTag: true;
+      targetProperty: string;
+    };
+  };
+  /** @deprecated Marko 5 (class API) only; currently inert under Marko 6. */
+  isNestedTag?: boolean;
+  /** @deprecated Marko 5 (class API) only; currently inert under Marko 6. */
+  isRepeated?: boolean;
+  /** @deprecated Marko 5 (class API) only; currently inert under Marko 6. */
+  targetProperty?: string;
 }
 
 export interface TaglibLookup {
   getTagsSorted(): TagDefinition[];
   getTag(tagName: string): undefined | TagDefinition;
-  getAttribute(
-    tagName: string,
-    attrName: string,
-  ): undefined | AttributeDefinition;
-  forEachAttribute(
-    tagName: string,
-    callback: (attr: AttributeDefinition, tag: TagDefinition) => void,
-  ): void;
+  migrators: PluginDefinition<t.Program>[];
+  transformers: PluginDefinition<t.Program>[];
+  translators: PluginDefinition<t.Program>[];
+  /** The `marko.json` files its directories load, with their imports, which its compiles watch. */
+  watchFiles: string[];
   exclusiveTagDiscoveryDirs: undefined | false | string;
   discoveryDirs: undefined | string[];
   manualTagsDirs: undefined | Set<string>;
 }
 
+/** An attribute a class API tag declares; only the class API reads these. */
 export interface Attribute {
-  allowExpressions?: boolean;
-  type?: string;
-  html?: boolean;
-  enum?: string[];
-  pattern?: RegExp;
-  required?: boolean;
+  targetProperty?: string;
+  preserveName?: boolean;
+  removeDashes?: boolean;
   defaultValue?: unknown;
-  description?: string;
-  deprecated?: boolean;
-  autocomplete?: Array<{
-    displayText?: string;
-    snippet?: string;
-    description?: string;
-    descriptionMoreURL?: string;
-  }>;
+  pattern?: boolean;
 }
 
 export interface Tag {
-  attributeGroups?: string[];
-  patternAttributes?: Attribute[];
+  /** @deprecated Marko 5 (class API) only; currently inert under Marko 6. */
   attributes?: { [x: string]: Attribute };
-  description?: string;
+  /** @deprecated Marko 5 (class API) only; currently inert under Marko 6. */
   nestedTags?: {
     [x: string]: Tag & {
       isRepeated?: boolean;
       targetProperty?: string;
     };
   };
-  autocomplete?: Array<{
-    displayText?: string;
-    snippet?: string;
-    description?: string;
-    descriptionMoreURL?: string;
-  }>;
   htmlType?: "html" | "svg" | "math";
   html?: boolean;
   types?: string;
   template?: string;
   renderer?: string;
-  deprecated?: boolean;
-  openTagOnly?: boolean;
   analyze?: Plugin<t.MarkoTag>;
   translate?: Plugin<t.MarkoTag>;
   parse?: ParsePlugin<t.MarkoTag>;

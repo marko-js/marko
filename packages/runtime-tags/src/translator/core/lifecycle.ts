@@ -89,13 +89,5 @@ export default {
   parseOptions: {
     openTagOnly: true,
   },
-  attributes: {},
-  autocomplete: [
-    {
-      description: "Use to create side effects.",
-      descriptionMoreURL:
-        "https://markojs.com/docs/reference/core-tag#lifecycle",
-    },
-  ],
   types: runtimeInfo.name + "/tags/lifecycle.d.marko",
 } as Tag;

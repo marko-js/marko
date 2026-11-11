@@ -13,7 +13,7 @@ import HTMLCommentTag from "./html-comment";
 import HTMLScriptTag from "./html-script";
 import HTMLStyleTag from "./html-style";
 import IdTag from "./id";
-import { ElseIfTag, ElseTag, IfTag } from "./if";
+import { IfTag } from "./if";
 import ImportTag from "./import";
 import LetTag from "./let";
 import LifecycleTag from "./lifecycle";
@@ -36,8 +36,8 @@ export default {
   "<debug>": DebugTag,
   "<define>": DefineTag,
   "<effect>": EffectTag,
-  "<else-if>": ElseIfTag,
-  "<else>": ElseTag,
+  "<else-if>": IfTag,
+  "<else>": IfTag,
   "<export>": ExportTag,
   "<for>": ForTag,
   "<html-comment>": HTMLCommentTag,

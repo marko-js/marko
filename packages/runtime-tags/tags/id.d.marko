@@ -1,6 +1,16 @@
-/** File for types only, not actual implementation **/
+/* File for types only, not actual implementation */
 
+/**
+ * Exposes a short unique id string through its tag variable, for `id=` and
+ * aria attributes.
+ *
+ * [Marko docs](https://markojs.com/docs/reference/core-tag#id)
+ */
 export interface Input {
+  /**
+   * Used instead of the generated id when it is a non-empty string; `null`,
+   * `false` and `""` fall back to the generated one.
+   */
   value?: string | null | false;
 }
 

@@ -1,11 +1,28 @@
+/**
+ * Renders asynchronously with the result of the promise in its argument:
+ * `@then` with the value it resolves to, `@catch` with the error it rejects
+ * with, and `@placeholder` while it is pending.
+ *
+ * [Marko 5 docs](https://v5.markojs.com/docs/core-tags/#await)
+ */
 export type Input<T> = {
   value: readonly [T];
+  /** Rendered with the value the promise resolves to. */
   then?: Marko.AttrTag<{ renderBody: Marko.Body<[Awaited<T>]> }>;
+  /** Rendered with the error the promise rejects with. */
   catch?: Marko.AttrTag<{ renderBody: Marko.Body<[unknown]> }>;
+  /** Displayed while the promise is pending. */
   placeholder?: Marko.AttrTag<{ renderBody: Marko.Body }>;
+  /**
+   * Sends the content after this tag without waiting for the promise, and
+   * moves this tag's content into place in the browser once it settles.
+   */
   "client-reorder"?: boolean;
+  /** Names this tag for debugging and for another tag's `show-after`. */
   name?: string;
+  /** Rejects with a `TimeoutError` after this many milliseconds (10,000 by default). */
   timeout?: number;
+  /** With `client-reorder`, keeps this tag after the `<await>` with this name. */
   "show-after"?: string;
 } | {
   value: T;

@@ -1,8 +1,5 @@
 import { types as t } from "@marko/compiler";
-import {
-  getTagDef,
-  normalizeTemplateString,
-} from "@marko/compiler/babel-utils";
+import { normalizeTemplateString } from "@marko/compiler/babel-utils";
 
 import * as FLAGS from "../../util/runtime-flags";
 import write from "../../util/vdom-out-write";
@@ -184,15 +181,6 @@ function tagArguments(path) {
     !node.preserveAttrs
   ) {
     runtimeFlags |= FLAGS.HAS_SIMPLE_ATTRS;
-  }
-
-  const tagDef = getTagDef(path);
-
-  if (tagDef) {
-    const { htmlType } = tagDef;
-    if (htmlType === "custom-element") {
-      runtimeFlags |= FLAGS.IS_CUSTOM_ELEMENT;
-    }
   }
 
   writeArgs.push(t.numericLiteral(runtimeFlags));

@@ -1,7 +1,0 @@
-{
-  "html": true,
-  "htmlType": "custom-element",
-  "parseOptions": {
-    "import": "./init.js"
-  }
-}

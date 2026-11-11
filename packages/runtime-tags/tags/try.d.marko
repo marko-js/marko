@@ -1,9 +1,17 @@
-/** File for types only, not actual implementation **/
+/* File for types only, not actual implementation */
 
+/**
+ * Catches errors thrown while rendering its content, and shows a placeholder
+ * while an `<await>` in it is pending.
+ *
+ * [Marko docs](https://markojs.com/docs/reference/core-tag#try)
+ */
 export interface Input {
   content: Marko.Body,
+  /** Displayed while an `<await>` in the content is pending. */
   placeholder?: Marko.AttrTag<{ content?: Marko.Body }>,
   // `any` keeps the documented `${err.message}` working; annotating the
   // parameter as `|err: unknown|` opts a catch into narrowing.
+  /** Replaces the content when it throws, with the error as its tag parameter. */
   catch?: Marko.AttrTag<{ content?: Marko.Body<[any]> }>,
 }

@@ -92,13 +92,6 @@ export default {
   parseOptions: {
     openTagOnly: true,
   },
-  attributes: {},
-  autocomplete: [
-    {
-      description: "Use to create a constant binding.",
-      descriptionMoreURL: "https://markojs.com/docs/reference/core-tag#const",
-    },
-  ],
   types: runtimeInfo.name + "/tags/const.d.marko",
 } as Tag;
 

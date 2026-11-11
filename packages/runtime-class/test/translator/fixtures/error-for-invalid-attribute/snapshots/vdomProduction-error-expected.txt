@@ -1,6 +1,0 @@
-CompileError: 
-    at __tests__/template.marko:1:25
-    > 1 | <for|key, value| in=obj x=1>
-        |                         ^^^ <for> does not support the "x" attribute.
-      2 |   <div/>
-      3 | </for>

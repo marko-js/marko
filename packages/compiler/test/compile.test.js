@@ -37,7 +37,11 @@ const fromMemory = (files) => {
       : fs.readFileSync(file, encoding);
   };
   return {
-    statSync: fs.statSync,
+    // Its files stat as files, since a package.json is stat checked before it is read.
+    statSync: (file) =>
+      Object.hasOwn(files, file)
+        ? { isFile: () => true, isDirectory: () => false }
+        : fs.statSync(file),
     readdirSync: fs.readdirSync,
     readFileSync,
     readFile: (file, encoding, cb) => cb(null, readFileSync(file, encoding)),

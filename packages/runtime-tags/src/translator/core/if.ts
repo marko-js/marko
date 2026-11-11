@@ -234,40 +234,7 @@ export const IfTag = {
     },
   }),
   parseOptions: { controlFlow: true },
-  autocomplete: [
-    {
-      snippet: "if=${1:condition}",
-      description: "Use to display content only if the condition is met.",
-      descriptionMoreURL:
-        "https://markojs.com/docs/reference/core-tag#if--else",
-    },
-  ],
 } as Tag;
-
-export const ElseIfTag = {
-  ...IfTag,
-  autocomplete: [
-    {
-      snippet: "else-if=${1:condition}",
-      description:
-        "Use after an <if> or <else-if> tag to display content if those conditions do not match and this one does.",
-      descriptionMoreURL:
-        "https://markojs.com/docs/reference/core-tag#if--else",
-    },
-  ],
-};
-
-export const ElseTag = {
-  ...IfTag,
-  autocomplete: [
-    {
-      description:
-        "Use after an <if> or <else-if> tag to display content if those conditions do not match.",
-      descriptionMoreURL:
-        "https://markojs.com/docs/reference/core-tag#if--else",
-    },
-  ],
-};
 
 // Collapse a text-only `<if>`/`<else-if>`/`<else>` chain into a single text
 // placeholder, avoiding the branch scopes and `_if` runtime entirely.

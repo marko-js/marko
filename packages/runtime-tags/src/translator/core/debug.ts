@@ -39,12 +39,5 @@ export default {
   parseOptions: {
     openTagOnly: true,
   },
-  attributes: {},
-  autocomplete: [
-    {
-      description: "Debug on value change.",
-      descriptionMoreURL: "https://markojs.com/docs/reference/core-tag#debug",
-    },
-  ],
   types: runtimeInfo.name + "/tags/debug.d.marko",
 } as Tag;

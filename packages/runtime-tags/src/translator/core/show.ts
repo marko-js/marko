@@ -246,14 +246,6 @@ export default {
     },
   }),
   parseOptions: { controlFlow: true },
-  autocomplete: [
-    {
-      snippet: "show=${1:condition}",
-      description:
-        "Use to render content that is always mounted but only displayed when the condition is met.",
-      descriptionMoreURL: "https://markojs.com/docs/reference/core-tag#show",
-    },
-  ],
   types: runtimeInfo.name + "/tags/show.d.marko",
 } as Tag;
 

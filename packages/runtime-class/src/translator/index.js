@@ -1,5 +1,3 @@
-import { resolve } from "path";
-
 import { types as t } from "@marko/compiler";
 import {
   findParentTag,
@@ -39,6 +37,9 @@ const CLASS_HYDRATION_DESCENDANT = "descendant";
 
 export const version = markoPkg.version;
 export const tagDiscoveryDirs = ["components"];
+// Its taglibs declare attributes, nested tags and renderers, and its tag folders
+// take renderers, hook files and older template names.
+export const classTaglibs = true;
 export { optionalTaglibs, default as taglibs } from "./taglib";
 export { entryBuilder as internalEntryBuilder } from "./util/add-dependencies";
 
@@ -105,19 +106,7 @@ export const analyze = {
     let relativePath;
 
     if (tagDef) {
-      if (tagDef.html && !tagDef.template && !tagDef.renderer) {
-        if (tagDef.htmlType === "custom-element") {
-          if (tagDef.parseOptions && tagDef.parseOptions.import) {
-            // TODO: the taglib should be updated to support this as a top level option.
-            meta.deps.push(
-              resolve(
-                tagDef.dir,
-                resolve(tagDef.dir, tagDef.parseOptions.import),
-              ),
-            );
-          }
-        }
-      } else if (t.isStringLiteral(tag.node.name)) {
+      if (!isNativeTag(tag)) {
         relativePath = resolveRelativeTagEntry(file, tagDef);
       }
 

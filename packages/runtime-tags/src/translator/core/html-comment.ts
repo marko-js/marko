@@ -150,14 +150,6 @@ export default {
     text: true,
   },
   types: runtimeInfo.name + "/tags/html-comment.d.marko",
-  autocomplete: [
-    {
-      description:
-        "Use to create an html comment that is not stripped from the output.",
-      descriptionMoreURL:
-        "https://markojs.com/docs/reference/core-tag#html-comment",
-    },
-  ],
 } as Tag;
 
 // Whether the body may render empty and so needs padding. Static text and a

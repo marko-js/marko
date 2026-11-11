@@ -1,6 +1,6 @@
 import path from "path";
 
-import { type Config, taglib, types as t } from "@marko/compiler";
+import { type Config, types as t } from "@marko/compiler";
 import {
   getFile,
   loadFileForImport,
@@ -48,12 +48,12 @@ export function createInteropTranslator(translate5: any) {
       ...translate6.tagDiscoveryDirs,
       ...translate5.tagDiscoveryDirs,
     ],
-    // translate5 is the runtime-class translator, which always provides
-    // optionalTaglibs; a missing field should surface loudly, not be masked.
+    classTaglibs: translate5.classTaglibs,
+    // Resolved by the compiler, which loads them after both translators'
+    // taglibs and keeps their hooks' paths.
+    optionalTaglibs: translate5.optionalTaglibs,
     taglibs: mergeTaglibs(
-      taglib
-        .resolveOptionalTaglibs(translate5.optionalTaglibs)
-        .concat(translate5.taglibs) as Taglibs,
+      translate5.taglibs,
       (translate6.taglibs as Taglibs).concat([
         ["marko-interop", { migrate: migrateOutGlobal }],
       ]),

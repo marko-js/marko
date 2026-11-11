@@ -1,5 +1,11 @@
-/** File for types only, not actual implementation **/
+/* File for types only, not actual implementation */
 
+/**
+ * Displays its content only while its `value=` is truthy. Unlike `<if>`, the
+ * content stays rendered and mounted, so its state persists across toggles.
+ *
+ * [Marko docs](https://markojs.com/docs/reference/core-tag#show)
+ */
 export interface Input {
   value: unknown;
   content: Marko.Body;

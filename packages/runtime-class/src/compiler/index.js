@@ -147,8 +147,6 @@ exports.compileFileForBrowser = compileFileForBrowser;
 exports.configure = configure;
 
 exports.taglibLookup = taglib.lookup;
-exports.taglibLoader = taglib.loader;
-exports.taglibFinder = taglib.finder;
 exports.buildTaglibLookup = taglib.lookup.buildLookup;
 exports.clearCaches = function clearCaches() {
   compiler._clearDefaults();

@@ -8,7 +8,8 @@ import type {
   parseTypeParams,
   TagDefinition,
 } from "./babel-utils";
-import type { CompileResult, types } from "./index";
+import type { CompileResult, taglib, types } from "./index";
+import type * as taglibImplementation from "./src/taglib";
 
 type Equal<A, B> =
   (<T>() => T extends A ? 1 : 2) extends <T>() => T extends B ? 1 : 2
@@ -30,10 +31,9 @@ export type CompileResultTests = [
 
 export type TaglibTests = [
   Expect<Equal<TagDefinition["html"], boolean | undefined>>,
-  Expect<Equal<TagDefinition["deprecated"], boolean | undefined>>,
-  Expect<Equal<TagDefinition["openTagOnly"], boolean | undefined>>,
-  Expect<Equal<AttributeDefinition["filePath"], string | undefined>>,
-  Expect<Equal<AttributeDefinition["setFlag"], string | undefined>>,
+  Expect<Equal<TagDefinition["isRepeated"], boolean | undefined>>,
+  Expect<Equal<AttributeDefinition["dynamicAttribute"], boolean>>,
+  Expect<Equal<AttributeDefinition["defaultValue"], unknown>>,
   Expect<
     Equal<
       ReturnType<typeof parseTypeArgs>,
@@ -46,4 +46,8 @@ export type TaglibTests = [
       types.TSTypeParameterDeclaration | [types.MarkoParseError]
     >
   >,
+];
+
+export type TaglibImplementationTests = [
+  Expect<[typeof taglibImplementation] extends [typeof taglib] ? true : false>,
 ];

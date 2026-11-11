@@ -1,5 +1,0 @@
-CompileError: 
-    at __tests__/template.marko:1:23
-    > 1 | <custom-tag name="hi" x=1/>
-        |                       ^^^ <custom-tag> does not support the "x" attribute.
-      2 |

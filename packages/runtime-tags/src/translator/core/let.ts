@@ -178,13 +178,6 @@ export default {
   parseOptions: {
     openTagOnly: true,
   },
-  attributes: {},
-  autocomplete: [
-    {
-      description: "Use to create a mutable binding.",
-      descriptionMoreURL: "https://markojs.com/docs/reference/core-tag#let",
-    },
-  ],
   types: runtimeInfo.name + "/tags/let.d.marko",
 } as Tag;
 

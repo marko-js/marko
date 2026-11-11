@@ -98,6 +98,8 @@ export namespace taglib {
     dirname: string,
     translator?: unknown,
     onError?: (err: Error) => void,
+    /** Defaults to the configured `fileSystem`. */
+    fileSystem?: Config["fileSystem"],
   ): TaglibLookup;
   export function clearCaches(): void;
 }

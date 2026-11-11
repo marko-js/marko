@@ -110,7 +110,6 @@ export default {
     rawOpenTag: true,
     preserveWhitespace: true,
   },
-  attributes: {},
 } as Tag;
 
 function analyzeDynamicStyle(tag: t.NodePath<t.MarkoTag>, names: string[]) {

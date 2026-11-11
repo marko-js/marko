@@ -9,5 +9,8 @@
   "@default2": {
     "type": "integer",
     "default-value": 100
+  },
+  "@dashed-default": {
+    "default-value": "Dashed"
   }
 }

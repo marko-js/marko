@@ -10,6 +10,7 @@ if (process.env.BUNDLE || typeof document === "object") {
   exports.resolve = null;
   exports.tryResolve = null;
   exports.getRootPackage = null;
+  exports.readPackage = null;
 } else {
   const fs = require("fs");
   const path = require("path");
@@ -35,6 +36,7 @@ if (process.env.BUNDLE || typeof document === "object") {
   exports.pkg = pkg;
   exports.require = require;
   exports.getRootPackage = getRootPackage;
+  exports.readPackage = readPackage;
   exports.resolve = (id, from) => getRequire(from || root).resolve(id);
   exports.tryResolve = (id, from) => {
     try {
@@ -67,7 +69,8 @@ if (process.env.BUNDLE || typeof document === "object") {
     }
   }
 
-  // Skips a package.json that only marks a module type, as `{"type":"module"}` does.
+  // The package.json in `dir`, skipped when it only marks a module type, as
+  // `{"type":"module"}` does.
   function readPackage(dir, fileSystem) {
     let source;
     try {

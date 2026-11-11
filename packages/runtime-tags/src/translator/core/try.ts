@@ -216,14 +216,6 @@ export default {
       },
     },
   }),
-  attributes: {},
-  autocomplete: [
-    {
-      description:
-        "Used to capture errors and display placeholders for nested content.",
-      descriptionMoreURL: "https://markojs.com/docs/reference/core-tag#try",
-    },
-  ],
   types: runtimeInfo.name + "/tags/try.d.marko",
 } as Tag;
 

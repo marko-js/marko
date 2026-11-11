@@ -1,5 +1,12 @@
-/** File for types only, not actual implementation **/
+/* File for types only, not actual implementation */
 
+/**
+ * Introduces mutable state through its tag variable, starting from its
+ * `value=`. Updating the variable re-runs everything that reads it, and a
+ * `valueChange=` makes the state controllable.
+ *
+ * [Marko docs](https://markojs.com/docs/reference/core-tag#let)
+ */
 export type Input<T = undefined, K = T> =
   | { value: T; valueChange?: ((newValue: K) => void) | false | null }
   | { value?: undefined; valueChange?: ((newValue: K) => void) | false | null };
